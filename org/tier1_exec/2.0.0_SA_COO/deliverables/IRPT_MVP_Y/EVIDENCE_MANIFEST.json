@@ -1,6 +1,6 @@
 {
   "schema_version": "irpt-y-local-evidence.v1",
-  "scope": "retained publication recovery and public-wire replacement; not integrated journey acceptance",
+  "scope": "Pinned local evidence history plus current bounded custody consumer; not integrated journey acceptance",
   "owner": "2.0.0_SA_COO~Y",
   "backend_pin": "33b2fbe528",
   "portal_pin": "12acb3f4",
@@ -85,21 +85,11 @@
     "ui_shared_adapter_integration": "7411ada3 consumed via303d3fde; UI7a5b24e7 independent Y-UI01 closure1ebdadd0d4"
   },
   "current_candidate": {
-    "backend": "ef9e8f51c4",
-    "portal": "7a5b24e7",
-    "M_resolver": "703e82ea01",
-    "M_merge": "48f04a00eb",
-    "P_portal": "7411ada3",
-    "P_portal_merge": "303d3fde",
-    "acceptance_tests_pass": 60,
-    "acceptance_subtests_pass": 39,
-    "acceptance_independent_review": "1ebdadd0d4 exact5a2b531645: bounded28 independent/60supplied39subtests PASS; not inherited by ef9 configuration change",
-    "UI_base_tests_pass": 31,
-    "UI_base_assertions": 177,
-    "UI01_repair_unchanged_probe_tests_pass": 9,
-    "UI01_repair_assertions": 48,
-    "UI01_independent_closure": "1ebdadd0d4 CLOSED exact7a5b24e7: unchanged9 controls48assertions; supplied31tests177assertions and app TS PASS",
-    "UI01_initial_review": "c387a06e2d; 8 PASS / 1 FAIL / 47 assertions at5c935bd6"
+    "backend": "53662d6c07169bbb02428e98dce162f8b29a51c0",
+    "scope": "Paired P custody4911 and Y04ac consumer with retained custody integration tests; synthetic sources/storage, production assembly unproven",
+    "portal": "7a5b24e705f79d5df872f9a443b6a552e9de62b9",
+    "portal_note": "Historical Y portal tree, not P current UI or deployed proof",
+    "production_factory_installed": false
   },
   "independent_source_reviews": {
     "M": "e64d917252",
@@ -153,5 +143,523 @@
       "integrated_criteria": "0 PASS / 0 FAIL / 14 NOT_EVALUATED",
       "authority_change": false
     }
+  },
+  "prior_candidate_before_custody": {
+    "backend": "ef9e8f51c4",
+    "portal": "7a5b24e7",
+    "M_resolver": "703e82ea01",
+    "M_merge": "48f04a00eb",
+    "P_portal": "7411ada3",
+    "P_portal_merge": "303d3fde",
+    "acceptance_tests_pass": 60,
+    "acceptance_subtests_pass": 39,
+    "acceptance_independent_review": "1ebdadd0d4 exact5a2b531645: bounded28 independent/60supplied39subtests PASS; not inherited by ef9 configuration change",
+    "UI_base_tests_pass": 31,
+    "UI_base_assertions": 177,
+    "UI01_repair_unchanged_probe_tests_pass": 9,
+    "UI01_repair_assertions": 48,
+    "UI01_independent_closure": "1ebdadd0d4 CLOSED exact7a5b24e7: unchanged9 controls48assertions; supplied31tests177assertions and app TS PASS",
+    "UI01_initial_review": "c387a06e2d; 8 PASS / 1 FAIL / 47 assertions at5c935bd6"
+  },
+  "custody_consumer_candidate": {
+    "candidate_pin": "04ac22aed70672a5a49e8dee0f91f930c97b81a1",
+    "parent_shared_integration": "e1918aac50bf7ca70374eb3343163161100a5917",
+    "consumed_p_pin": "dc51d8920dd25d4c11bf48737cdca31ada3e8a63",
+    "commits": [
+      "b357e0ba8fac8c817cc2a0fc0ba7ba2c1f0084ea",
+      "e7c429af85cfea60240d426e63444bf6f89ed1c6",
+      "04ac22aed70672a5a49e8dee0f91f930c97b81a1"
+    ],
+    "measured_at_utc": "2026-09-23T14:18:54.486261+00:00",
+    "hash_basis": "Exact committed Git blob bytes, not checkout line-ending conversion; working tree diff equals final pin for every listed path",
+    "files": [
+      {
+        "path": "infra/aws/lambda/investor-reporting/intake/portfolio.py",
+        "kind": "source",
+        "changed_in_candidate": true,
+        "git_blob": "55c443956b8fc9928e6d5b7e681c1673b1850009",
+        "sha256": "a925da08456eff5845089f8bc6fbcf11b3047d74d25b59e6ce64502781667a5c",
+        "byte_length": 14325
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/intake/tests/test_portfolio.py",
+        "kind": "test",
+        "changed_in_candidate": false,
+        "git_blob": "43e9525fb09122a627558e70e1f02cde35dc7899",
+        "sha256": "bb0ea2f5082b5d06e990ddf54b8e1ef8fbe601710ba388737da7016054fd1568",
+        "byte_length": 10128
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py",
+        "kind": "source",
+        "changed_in_candidate": true,
+        "git_blob": "e186c20f4fdedaa582d1f7f4a3fa4b11e5eeec32",
+        "sha256": "50f5d11cd8ffb8161b9f42af61bdfcdffe698cfc4e66b5cc3338048572563606",
+        "byte_length": 2791
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/entry.py",
+        "kind": "source",
+        "changed_in_candidate": true,
+        "git_blob": "8ac17ab2f6d5468260968e444cf3ebfbf57ffea8",
+        "sha256": "477b1fb4d949311121ad483b17eca8bace9913c9d36155467ccebe8cac2f9bc5",
+        "byte_length": 8390
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/recipe_snapshot.py",
+        "kind": "source",
+        "changed_in_candidate": true,
+        "git_blob": "fdc714648cbc9f2cf0817354a003421341b21ea7",
+        "sha256": "1073b299c6262840e8dac616a0cdf3fbe03d6ec8fbf7457832b35782d1178ea4",
+        "byte_length": 7602
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py",
+        "kind": "source",
+        "changed_in_candidate": true,
+        "git_blob": "4daa217039d259c800eb43435791fa2ed9eaf6c2",
+        "sha256": "9c9ae002b04eb52040954425f0e215869d4a28349b8ef9bbded176a7fc96e032",
+        "byte_length": 7632
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_composition_admission.py",
+        "kind": "test",
+        "changed_in_candidate": false,
+        "git_blob": "3bbf54d8d6ca025194af9eb3f81afd6bff0e3673",
+        "sha256": "e6e4e4a48c8e15afdd3900ade174ecc9b0402a4aaba8b543b35a48546a508ffc",
+        "byte_length": 5964
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_composition.py",
+        "kind": "test",
+        "changed_in_candidate": true,
+        "git_blob": "6d7a703743582558db9e173faf451682f033c478",
+        "sha256": "15dc0e59fd3bb8afb347b4596077334df0ff6fc9a6f8c3925bae53022b97094c",
+        "byte_length": 7102
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_entry.py",
+        "kind": "test",
+        "changed_in_candidate": true,
+        "git_blob": "7fdab82c4589a5a719b7725e974f05297b2654de",
+        "sha256": "1178609a84d78ab9c4c6f098d1828545c2e8c03a5a1af360951627a24872436b",
+        "byte_length": 5870
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_frozen_worker.py",
+        "kind": "test",
+        "changed_in_candidate": false,
+        "git_blob": "103eb0712346b5043817562395eea4a4837dbd0c",
+        "sha256": "2f73a108e8104f47d0e6dc5ecc31f26ee39233b843d8789bd30583c0788d37cf",
+        "byte_length": 10570
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_recipe_snapshot.py",
+        "kind": "test",
+        "changed_in_candidate": false,
+        "git_blob": "e5fd4a1f9bcdf9a1a26a9d528622e8685145b95c",
+        "sha256": "1cd4e0a8c924f814668229a74ae5a1cc21feb81b6d359ce9bb5ddf81485bee2f",
+        "byte_length": 6127
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_submission.py",
+        "kind": "test",
+        "changed_in_candidate": false,
+        "git_blob": "e26d72bf6ee1250f27d05cbe280f934d631de9bc",
+        "sha256": "b40967d1b40079bb1039f69639c35d52fd7ffc2ea2f6d7c30e2320b5b41305c6",
+        "byte_length": 13713
+      }
+    ],
+    "validation": [
+      {
+        "scope": "PRE_FINAL_TRANSIENT_WORKTREE",
+        "candidate_pin": null,
+        "command": "python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests infra/aws/lambda/investor-reporting/intake/tests -q",
+        "tests_pass": 234,
+        "subtests_pass": 50,
+        "exit_code": 0,
+        "limitation": "Before final recipe descriptor and admission changes; no immutable composite worktree pin captured for this run. Not the final-candidate suite result."
+      },
+      {
+        "scope": "FINAL_DESCRIPTOR_AND_CUSTODY",
+        "candidate_pin": "e7c429af85cfea60240d426e63444bf6f89ed1c6",
+        "command": "python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_composition.py infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_recipe_snapshot.py -q",
+        "tests_pass": 40,
+        "exit_code": 0
+      },
+      {
+        "scope": "FINAL_ADMISSION_AND_FROZEN_WORKER",
+        "candidate_pin": "04ac22aed70672a5a49e8dee0f91f930c97b81a1",
+        "command": "python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_composition_admission.py infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_frozen_worker.py -q",
+        "tests_pass": 34,
+        "exit_code": 0
+      },
+      {
+        "scope": "EXACT_ENTRY_CONFIGURATION",
+        "candidate_pin": "b357e0ba8fac8c817cc2a0fc0ba7ba2c1f0084ea",
+        "command": "python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_entry.py -q",
+        "tests_pass": 12,
+        "exit_code": 0,
+        "limitation": "Actual Entry/guard, offline directory and recording submission service; no durable acceptance proof."
+      }
+    ],
+    "pending_p_contract": {
+      "status": "CONSUMED_AND_BOUNDED_PAIRED_TESTED",
+      "owner": "2.0.0_SA_COO~P",
+      "access": "CustodyAccess(request, ctx, entry, selection_ref, snapshot_id, *, authorize_snapshot)",
+      "resolve_owner": "resolve_owner(browser, request, scope, event, ctx) returns current principal and custody owner after joining client to accepted selected accounts; exact implementation signature to verify against pin",
+      "current_authorization": "authorize_current(principal, owner) reloads coherent directory, ownership, policy and retained selection; requires trusted authorize_snapshot(principal, owner) is True",
+      "profile_authorization": "profile_authorizer(expected_input_ref, authorize_retained_input) binds trusted retained-input callback(principal, owner, input_ref) is True before and after current custody checks",
+      "profile_functions": [
+        "snapshot_custody_profile_sources",
+        "resolve_custody_profile_fields"
+      ],
+      "actor_and_tenant": "owner.firm_id is authorized report/storage registry tenant; principal_id is real subject; home_firm_id preserves verified actor home; OPAL_GLOBAL advisor_id null; no prospect_input_id",
+      "owner_fields": [
+        "schema_version=custody-owner-v1",
+        "firm_id",
+        "principal_id",
+        "principal_class",
+        "advisor_id",
+        "home_firm_id",
+        "account_ids",
+        "account_set_id",
+        "directory_revision",
+        "entitlement_revision",
+        "snapshot_id",
+        "ownership_fingerprint"
+      ],
+      "fingerprint_contract": "P reports digest over complete owner excluding ownership_fingerprint",
+      "opal_descriptor_binding": [
+        "firm_id",
+        "principal_id",
+        "principal_class",
+        "advisor_id",
+        "home_firm_id"
+      ],
+      "other_descriptor_binding": [
+        "firm_id",
+        "principal_id",
+        "principal_class",
+        "advisor_id"
+      ],
+      "browser_intent": "selected_tenant and account_set_id are query/event intent outside closed browser body; Global selection resolves to concrete tenant, no Global report tenant",
+      "normalized_binding": "document.owner == resolved.owner; source.lane CUSTODY; source.snapshot_id == owner.snapshot_id == browser.snapshot_id; exact source/owner/browser account set",
+      "schema": "P paired RequestComposition.schema.json and reports/request_composition.py validators must admit exact custody arm and preserve existing prospect refusal",
+      "replay": "Current owner/input authorization and retention required on retry/history/reopen; frozen source projections reused rather than current profile recapture",
+      "source_pin": "4911c398d9eb1a60934372a577bde697cc398ad8"
+    },
+    "maintained_organization_dependency": {
+      "state": "CTO_SOURCE_ADOPTED_P_READER_IMPLEMENTED_AWAITING_COMMITTED_PIN",
+      "inventory_pin": "7015e0d6267987ac1139f9dd8471740f5185235b",
+      "inventory_path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/PRODUCER_ORGANIZATION_INVENTORY_20260923.md",
+      "receipt_path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/OPAL_ORGANIZATION_STORAGE_20260923.json",
+      "receipt_reported_projection_sha256": "7cf0b38b85f49588bef4a8e4d2d783f3625074cc0bd751c7812ef45e966ed767",
+      "table": "opal-users-v2",
+      "key": {
+        "PK": "FIRM#opal-capital",
+        "SK": "CONFIG#defaults"
+      },
+      "read_contract": "Adopted organization metadata only; exact-key consistent GetItem, explicit identity/display/provenance; no security/defaults or deprecated reader; user active required but organization active flag absent, immutable upstream revision UNAVAILABLE.",
+      "adoption_owners": [
+        "1.0.0_SA_CTO",
+        "0.7.0_AE_CloudOps"
+      ],
+      "shared_writer": "2.0.0_SA_COO~P",
+      "generation_consumer": "2.0.0_SA_COO~Y",
+      "runtime_requirement": "Canonical active actor PROFILE must match actual home; preserve organization source scope separately from selected report tenant and freeze exact provenance; exact preparer package and read-permission delta require P evidence",
+      "live_read_provenance": "M reported read-only projected GetItem; Y inspected committed receipt, made no live read",
+      "adoption_pin": "f55641bea9cf8beb1584191e4c171876ab46689b",
+      "reader_report": "P145901: CanonicalProfileReaders.get_organization exact eight-field strong GetItem; no fabricated organization active flag; commit pending. Not consumed by Y yet."
+    },
+    "integration_regression": {
+      "state": "BOUNDED_OFFLINE_PAIRED_PASS",
+      "candidate_pin": "53662d6c07169bbb02428e98dce162f8b29a51c0",
+      "commands": [
+        {
+          "command": "python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_retained.py -q",
+          "tests_pass": 10,
+          "exit_code": 0
+        },
+        {
+          "command": "python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests infra/aws/lambda/investor-reporting/intake/tests -q",
+          "tests_pass": 245,
+          "subtests_pass": 50,
+          "exit_code": 0
+        },
+        {
+          "command": "python -m pytest infra/aws/lambda/investor-reporting/_scope/tests -q",
+          "tests_pass": 123,
+          "subtests_pass": 57,
+          "exit_code": 0,
+          "candidate_pin": "caa4c03709151abd823ff592874a5ad60f3273af"
+        },
+        {
+          "command": "python -m pytest infra/aws/lambda/investor-reporting/directory/tests/test_custody_owner.py infra/aws/lambda/investor-reporting/_contracts/test_request_composition.py -q",
+          "tests_pass": 56,
+          "exit_code": 0,
+          "candidate_pin": "caa4c03709151abd823ff592874a5ad60f3273af"
+        }
+      ],
+      "initial_combined_run": {
+        "tests_failed": 14,
+        "tests_pass": 344,
+        "subtests_pass": 107,
+        "exit_code": 1,
+        "cause": "Scope tests imported same-name fixtures from other test roots; isolated scope123PASS57subtests. Do not run these suites in one Python process."
+      },
+      "claims": [
+        "Actual stored selection/CustodyAccess and maintained custody profile transform",
+        "Actual normalized artifact/retention and DynamoAcceptance serializers",
+        "Actual submit_analysis, retained retry, OwnedRequestReader and fenced FrozenCompositionWorker.recipe_inputs",
+        "Snapshot/selection/actor/directory revocation before reads; snapshot revocation during blob read; foreign snapshot/client/accounts and prospect refusal"
+      ],
+      "limits": [
+        "Synthetic accepted snapshot and source metadata; get_organization SDK reader not yet consumed",
+        "Synthetic S3/Dynamo and ACTIVE retention policy; production factory not installed",
+        "Already-held lease; no queue send/vendor/browser/live cloud evidence",
+        "Not a full history-list or live integrated acceptance verdict"
+      ],
+      "lint": "Initial E402 imports failed safe-commit; repository-root dependent imports annotated, ordinary gate1/1 passed; no bypass"
+    },
+    "independent_review": {
+      "state": "IN_PROGRESS",
+      "reviewer": "3.0.0_SA_CVO~Y",
+      "target": "04ac22aed70672a5a49e8dee0f91f930c97b81a1",
+      "entry_report": "141510 message reports 24 independent plus12 supplied PASS on b357; durable review pin pending; not transferred to later composition changes"
+    },
+    "production_factory_installed": false,
+    "live_calls": false,
+    "integrated_acceptance": "NOT_EVALUATED",
+    "push_state": "LOCAL",
+    "observed_origin_cloud": "365ab567ba1250a6a3569df38cb75d12fe2e8d0e",
+    "evidence_document": "CUSTODY_CONSUMPTION_20260923.md",
+    "paired_candidate_pin": "53662d6c07169bbb02428e98dce162f8b29a51c0",
+    "paired_merge_pin": "caa4c03709151abd823ff592874a5ad60f3273af",
+    "paired_files": [
+      {
+        "path": "docs/contracts/investor-reporting/v1/RequestComposition.schema.json",
+        "git_blob": "e3d6a8e4b35cf207f98b7342dc5af9bd2acfb26d",
+        "sha256": "6de584ef04e5480725827deda455e5c6846788e87deafc8c18ab9eddb7fda8e3",
+        "byte_length": 18964
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/_authz/served.py",
+        "git_blob": "76c17617841fd377176c1dbf454d6c840b2ddb98",
+        "sha256": "e518af43b2c3358bb788b32ddd7f57b3f0c7e47afd7138ad9ed967e03531052f",
+        "byte_length": 56909
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/test_request_composition.py",
+        "git_blob": "82ddc52218a5a083fd490900adf86c9248ed4104",
+        "sha256": "e70e7eac635121658c7e9f0735c4c79048756437afeb803b9e626456fa6c71c1",
+        "byte_length": 14138
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/_scope/custody.py",
+        "git_blob": "a3bf975326271adc176df8a34804e057c78f7a77",
+        "sha256": "23cda6b0e3dd88df3b837545f94efacf600db857a5509ddd458ff40cc7870394",
+        "byte_length": 7216
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py",
+        "git_blob": "7f1f423f5842d196722738ef640f6238cade1649",
+        "sha256": "b5e3ac4a544a549cbccedfa9b0a0e44bcd527adeeb83f5694b64e7d42e14e771",
+        "byte_length": 22648
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/_scope/owner_reads.py",
+        "git_blob": "0f07089298c8a3bfa8f350f079439f2a87b1270b",
+        "sha256": "f9e1f5d3274ee4396932aa1b1bf80b08be09c6afd183ab14c81b766b5d90ed0f",
+        "byte_length": 2727
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/directory/tests/test_bootstrap_browse.py",
+        "git_blob": "335fe61ee4495ca5036d8771a4d0d731fc67f155",
+        "sha256": "90cd6f0c8fe6951e07484db0d152026855119de35b77cb079b7809c5ae95914b",
+        "byte_length": 6323
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/directory/tests/test_custody_owner.py",
+        "git_blob": "b817d6afaf17701514bd9df7f4f0c6a38596a9e3",
+        "sha256": "aa8e76e6bf2ad9dd82c3ea1edc152380a1732165d1e86bcafb86935b6a10ed9e",
+        "byte_length": 9735
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/directory/tests/test_opal_context.py",
+        "git_blob": "8b94a296f552e5ebc5036c726a56b572dfa34ab9",
+        "sha256": "4db100415a259140a386e179609d885449067a6513b6e19e958867ac05dee172",
+        "byte_length": 6541
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/directory/tests/test_selection_entry.py",
+        "git_blob": "d479281e31b349678ac946bed9ecc77cdac11808",
+        "sha256": "1f9db8e5494c6e7014a045b388cf38ea3488de69af05a09972371a618d950387",
+        "byte_length": 3881
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/holdings/entry.py",
+        "git_blob": "edee5209a2b6e8d01ef14f5ff821009e6ec602f3",
+        "sha256": "ddd1b72ac9ea9f630fc1147a2b418c50204f2058c3f91d672310593d62cb0fc2",
+        "byte_length": 4519
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/intake/portfolio.py",
+        "git_blob": "55c443956b8fc9928e6d5b7e681c1673b1850009",
+        "sha256": "a925da08456eff5845089f8bc6fbcf11b3047d74d25b59e6ce64502781667a5c",
+        "byte_length": 14325
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/intake/tests/test_portfolio.py",
+        "git_blob": "43e9525fb09122a627558e70e1f02cde35dc7899",
+        "sha256": "bb0ea2f5082b5d06e990ddf54b8e1ef8fbe601710ba388737da7016054fd1568",
+        "byte_length": 10128
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/intake/tests/test_uploads.py",
+        "git_blob": "aae4d06ce1f45c28c038a74259f847b4374a8edd",
+        "sha256": "663b72521df15bd7014a050026a0e9e3f5c8442a21d8ace8c9959125ffdd3bc0",
+        "byte_length": 15596
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ops/owned_requests.py",
+        "git_blob": "991664571adc017fe99a2fe90d87766f85c0d2b6",
+        "sha256": "716c0fe3d67a819caa71d5cf5c814b0ca245b28ed26ffe3f89b22cad44996bef",
+        "byte_length": 7961
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ops/tests/test_owned_requests.py",
+        "git_blob": "726df04533afcfb86ad7d2c5e344d52134b1a081",
+        "sha256": "9ef9999b1f8812c470a276c66cc1c0847afa390dddedab6abb214edf41f04539",
+        "byte_length": 8672
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/reports/composition.py",
+        "git_blob": "e07421146bd95dd6170072e004808bf96f404b47",
+        "sha256": "6d2c3696d0305bee1bc0e95e11c8462d822dae356e1c11ed4253a3d93c699792",
+        "byte_length": 2079
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/reports/repository.py",
+        "git_blob": "5ffaca861040d8c0f7d0004bc931cee61711f9f7",
+        "sha256": "c98091e89d556cf191114c49dd1c1d6e7873711d487740e3ea116311eeb54a2a",
+        "byte_length": 22561
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/reports/request_composition.py",
+        "git_blob": "4a345435ff8a44e6f1e8bb21f0023c3d9eae4494",
+        "sha256": "cddfd3044fa3208b57cf4bf11f58c0c4ccd3007a03317c9cacef7b811a91595d",
+        "byte_length": 10257
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/reports/retention.py",
+        "git_blob": "a3f8a3ff7e6e4f9cd2f12f80a558b1ad68185ec3",
+        "sha256": "d360f570dad07a716d754c8fcb377fe39f84fbe7f557adc6f013239be9ba29ae",
+        "byte_length": 15558
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/reports/tests/test_repository.py",
+        "git_blob": "b7e6f5081fa669eee6a5f5b921f993d0ffc3a364",
+        "sha256": "1d60dd5f28238b556e90915305813229b7e04824e1535062fcf80164b2fa1680",
+        "byte_length": 18911
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/reports/tests/test_retention.py",
+        "git_blob": "d90c0e99f28f8d1257892fccc7d1e5e3432fc225",
+        "sha256": "ac4d371c0d4691f28ecbf256729acd0ee100fac8007e7d2342aba3f0fc117a5c",
+        "byte_length": 14816
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py",
+        "git_blob": "6bf3ec1a85bc10ac60608d4997663820b7845498",
+        "sha256": "eeb01ee15cb04e70293c6cf6877d6dc8e5cd1a7c02beff97226cf3154757e9fd",
+        "byte_length": 9303
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py",
+        "git_blob": "e186c20f4fdedaa582d1f7f4a3fa4b11e5eeec32",
+        "sha256": "50f5d11cd8ffb8161b9f42af61bdfcdffe698cfc4e66b5cc3338048572563606",
+        "byte_length": 2791
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py",
+        "git_blob": "e02678b6372cd1717703d6654c4d8421591dcc59",
+        "sha256": "be80c64310047a50143276772eff2b872e02b8fb2d4e7b5142eebab380134393",
+        "byte_length": 11463
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/entry.py",
+        "git_blob": "8ac17ab2f6d5468260968e444cf3ebfbf57ffea8",
+        "sha256": "477b1fb4d949311121ad483b17eca8bace9913c9d36155467ccebe8cac2f9bc5",
+        "byte_length": 8390
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/frozen_worker.py",
+        "git_blob": "793d212f1fdf764a77b80e81629cbf189d18fb4e",
+        "sha256": "1058644251214e293355dc76cf1b689da334b3f2b7e038edf7b2c1b571cfce84",
+        "byte_length": 6039
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/recipe_snapshot.py",
+        "git_blob": "fdc714648cbc9f2cf0817354a003421341b21ea7",
+        "sha256": "1073b299c6262840e8dac616a0cdf3fbe03d6ec8fbf7457832b35782d1178ea4",
+        "byte_length": 7602
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py",
+        "git_blob": "4daa217039d259c800eb43435791fa2ed9eaf6c2",
+        "sha256": "9c9ae002b04eb52040954425f0e215869d4a28349b8ef9bbded176a7fc96e032",
+        "byte_length": 7632
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py",
+        "git_blob": "52d554ffcc215c64e1f352e2304f4618e36e1f96",
+        "sha256": "b843bebc07a84d17134b0c39f8e3cc34b12d2c27e57f3f25d8e7bce4f2ee00c9",
+        "byte_length": 8441
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_composition_admission.py",
+        "git_blob": "3bbf54d8d6ca025194af9eb3f81afd6bff0e3673",
+        "sha256": "e6e4e4a48c8e15afdd3900ade174ecc9b0402a4aaba8b543b35a48546a508ffc",
+        "byte_length": 5964
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_composition.py",
+        "git_blob": "6d7a703743582558db9e173faf451682f033c478",
+        "sha256": "15dc0e59fd3bb8afb347b4596077334df0ff6fc9a6f8c3925bae53022b97094c",
+        "byte_length": 7102
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_entry.py",
+        "git_blob": "7fdab82c4589a5a719b7725e974f05297b2654de",
+        "sha256": "1178609a84d78ab9c4c6f098d1828545c2e8c03a5a1af360951627a24872436b",
+        "byte_length": 5870
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_retained.py",
+        "git_blob": "ceb998b9a992eb779566f7acba70c7a787a361c7",
+        "sha256": "06b5d86e64e532d68762ec74c798472581749772e817344d852d8cd57dc64546",
+        "byte_length": 10850
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_frozen_worker.py",
+        "git_blob": "103eb0712346b5043817562395eea4a4837dbd0c",
+        "sha256": "2f73a108e8104f47d0e6dc5ecc31f26ee39233b843d8789bd30583c0788d37cf",
+        "byte_length": 10570
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_recipe_snapshot.py",
+        "git_blob": "e5fd4a1f9bcdf9a1a26a9d528622e8685145b95c",
+        "sha256": "1cd4e0a8c924f814668229a74ae5a1cc21feb81b6d359ce9bb5ddf81485bee2f",
+        "byte_length": 6127
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_submission.py",
+        "git_blob": "e26d72bf6ee1250f27d05cbe280f934d631de9bc",
+        "sha256": "b40967d1b40079bb1039f69639c35d52fd7ffc2ea2f6d7c30e2320b5b41305c6",
+        "byte_length": 13713
+      }
+    ],
+    "paired_hash_basis": "Committed Git blob bytes at paired_candidate_pin; SHA256 not CRLF checkout bytes. Original files[] retains04ac candidate hashes."
   }
 }

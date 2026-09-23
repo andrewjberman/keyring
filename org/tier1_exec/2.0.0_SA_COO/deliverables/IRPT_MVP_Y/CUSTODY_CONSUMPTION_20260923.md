@@ -1,4 +1,43 @@
-# IRPT Y custody consumption candidate
+# IRPT Y paired custody consumption
+
+Current LOCAL paired candidate `53662d6c07`, merge `caa4c03709` of P `4911c398d9`
+with Y `04ac22aed7`. Exact committed source/test SHA256 and Git blobs are in
+`EVIDENCE_MANIFEST.json`, custody_consumer_candidate.paired_files.
+
+Ten new integration cases exercise actual accepted selection/CustodyAccess,
+maintained custody profile transformation, normalized input, retained repositories,
+DynamoAcceptance, submit_analysis, replay, OwnedRequestReader and fenced worker
+recipe consumption. Frozen12.03 dollars and actual actor/home attribution survive
+source changes; revoked selection/snapshot/actor/directory and foreign browser
+basis refuse. Synthetic directory/snapshot/organization/AWS and a pre-acquired
+lease remain explicit. No production factory, queue delivery, live source, vendor,
+browser or full history-list acceptance is asserted.
+
+Validation at this pair: generate/intake245PASS50subtests (includes new10);
+isolated shared scope123PASS57subtests; actual custody/schema56PASS. Earlier
+combined process failed14 due to same-name fixture-module collision; the
+isolated suite passes, and the failed run remains in the manifest. Initial E402
+commit gate was repaired using the established root-dependent import annotations;
+ordinary gate1/1 passes. Final annotation-only edit does not change executable code.
+
+CTO `f55641bea9` admits exact organization-only metadata from opal-users-v2,
+FIRM#opal-capital / CONFIG#defaults. This resolves source choice. P145901 reports
+CanonicalProfileReaders.get_organization implemented, exact commit pending.
+There is no source organization active flag: user must be active, organization
+identity/display and provenance are checked without inventing that flag. Mutable
+row metadata is retained; upstream immutable revision is UNAVAILABLE. Y has not
+yet consumed that replacement or proven its SDK/packaged runtime integration.
+P sole shared writer; Y consumes request-local snapshot/retained-input ports.
+
+P4911 includes Holdings4c53 and it is consumed. No new Holdings verdict is claimed
+from Y's generation tests. All work LOCAL; origin CLOUD measured
+365ab567ba1250a6a3569df38cb75d12fe2e8d0e. No push/deployment/cloud write/vendor call.
+The historical pre-final234/40/34 scopes below remain separate and superseded
+only for current dependency status by this dated update.
+
+---
+
+# Historical 14:10 custody candidate
 
 Owner: `2.0.0_SA_COO~Y`. Recorded 2026-09-23 14:10 UTC. Authority:
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
