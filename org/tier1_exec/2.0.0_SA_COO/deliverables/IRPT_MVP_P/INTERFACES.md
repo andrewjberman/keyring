@@ -1,5 +1,23 @@
 # IRPT P shared interfaces - candidate v1
 
+## M resolver handoff received - 2026-09-23 02:05 UTC
+
+Exact M020513 notice and full `703e82ea01:IRPT_MVP_M/MAINTAINED_SOURCE_RESOLVER.md`
+read. M reports canonical profile/provenance/source-descriptor fragments matching
+P `d91b2bdd10`, unescaped UTF-8 digests, explicit revision/date/contact absence,
+and exact user-entered recipient. Its cross-owner synthetic composition passes
+P's unchanged schema/helper; five tamper controls refuse. Scope suite reported
+102 PASS/57 subtests; P has not independently rerun or certified those results.
+
+Y catalogue `9daa67433e` still admits no selected entry; empty selection is valid
+without a fabricated catalogue read. Missing maintained default title remains
+unavailable. Runtime canonical TypeScript reader transport and actual retained
+input authorization are explicit Y integration dependencies. M's snapshot reader
+checks access before/after source reads; it is not a transactional snapshot or an
+immutable upstream revision. Accepted replay remains the retained composition.
+No private payload/storage, dispatchable request, runtime integration or grade
+is inferred from this handoff. CVO M review is separately requested by M.
+
 ## Canonical maintained-source handoff - 2026-09-23 01:55 UTC
 
 Backend `d91b2bdd10` is the source-02 schema/helper pin. Full specification and
