@@ -1,6 +1,6 @@
 # IRPT Holdings current state
 
-Owner:2.0.0_SA_COO~M. Updated2026-09-23 after CTO214306 publication verification.
+Owner:2.0.0_SA_COO~M. Updated2026-09-23 21:58UTC.
 **archetype:** IMPLEMENT
 
 ## Outcome and first failing hop
@@ -26,7 +26,9 @@ Exact installed evidence and native publication action prepared at a86430e39e.
 - X10c2678d975f:36destination census/PENDING_ENFORCEMENT. Native Holdings is independent.
 - INF55145056df exact2account/3datepair value bridge6/6PASS; no broad date/currency inference.
 - Tax55145056df exact bounded activationrecipe. CTO98209e201b now grants existing
-  taxsma_membership.py S3store and its test to M; implementation remains next owned step.
+  taxsma_membership.py S3store and its test to M. Bounded versioned/CAS store now
+  implemented;36 membership tests pass, including7 focused persistence cases. See
+  TAX_STORE_SOURCE_20260923.md; source-only, no Tax cloud write or activation.
 
 ## Next executable work
 
@@ -39,9 +41,14 @@ Do not republish. COT_AUTHENTICATED_PROOF_20260923.md pins the exact current-cli
 selection/GET sequence and expected57security screen, dates, totals and reload checks.
 This is prepared proof, not a claim that API/browser acceptance has run.
 P has precise existing5765 package/role/environment delta and requested cutover receipt.
+P reports33member candidateba0b8694 actual native readback; no runtime completion.
+M5c2773e97b consumes exact two manifest drafts and verifies3build/4stage hashes from
+committed originals, clearing the reported stale-manifest build blocker. P owns upload
+and actual package/IAM plan. The candidate report is not an independent deployed proof.
 M follows accepted publication receipt through current grants, real-login API and visible
 57security drill, refresh/reopen. No one-account replacement of completefirm index.
-Continue bounded Tax store implementation after consuming exact98209 grant; no fullMDPF
+Next M step: narrow existing-module Tax one-shot runner and receipt; gateway/runtime
+owners via CTO still owe canonical capability/permission assessment. No fullMDPF
 scheduler/category rebuild or historicalbackdating.49F source still needs custody adapter,
 exact cash/currency handling and dated Tax join; SmartX is modelauthority exceptTaxworkbook.
 All threefirm journeys remain required, not completed by firstCOT milestone.
