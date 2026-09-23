@@ -1,5 +1,24 @@
 # IRPT P status - 2026-09-22
 
+## Exact replacement handoff - 2026-09-23 01:31 UTC
+
+Public-wire replacement pair is committed: backend `960f5f2a4501eff2670bcd0b5951926836093447`
+and portal `c09fea54e9f4613d44b874724e93b79c443f8cc8`. M's exact owner patch
+`483a2fee0a` consumed as `0c2a7938cc`; both source blobs equal the tested patch.
+P schema/doc/test commit960f completes the backend pair; backend tree is clean.
+Actual refusal captures/generated type are in portalc09. Both CVO P/Y received
+the exact pair and original evidence pins a050df00e5/64a2c522ef for unchanged tests.
+CVO P013019 reports retest started. R-P11/Y-W01 and Y-W02 remain HOLD pending
+independent verdicts; no runtime package recertification or broader acceptance.
+The earlier pending-M/dirty-backend checkpoint is superseded by this handoff.
+
+CTO012847 and CVO Y review `a0fd560594` retain a separate publisher integration
+obligation: post-transaction lease loss can refuse a return while leaving a report
+write. Recovery must account for that write; no rollback or server-race claim.
+Worker must prove accepted-input/settings/holdings-fingerprint-to-readback binding.
+Shared repository semantics recorded in INTERFACES and sent to Y. Publisher
+6c3bfae3e6 remains a separately reviewed candidate, not runtime activation.
+
 ## Maintained-source assignment - 2026-09-23 01:28 UTC
 
 Read full CTO ruling0429af3604. P claimed canonical RequestComposition schema,

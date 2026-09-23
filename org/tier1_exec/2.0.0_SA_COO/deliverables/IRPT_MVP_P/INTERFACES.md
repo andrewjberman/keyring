@@ -1,5 +1,32 @@
 # IRPT P shared interfaces - candidate v1
 
+## Repaired public pair and publication outcome - 2026-09-23 01:31 UTC
+
+Exact backend960f5f2a45/portalc09fea54 now includes the canonical M source unit
+483a2fee0a (consumed0c2a7938cc), public refusal schema/document correction and
+regenerated actual output captures/types. This supersedes the pending source pin
+below. Both public-wire HOLDs remain until independent CVO P/Y unchanged retests.
+
+`ReportRepository.persist` may refuse after `index.publish` has committed, because
+it verifies the accepted immutable object after publication. CVO Y bounded review
+a0fd560594 of publisher6c3bfae3e6 observes a retained write when the lease is lost
+after a successful simulated transaction. A refusal is not proof of rollback.
+Worker recovery must preserve accepted request/composition, recheck current access
+and retention plus applicable lease/fencing/publication conditions, and verify the
+exact prior report/provenance before idempotent continuation. Do not infer READY,
+blindly create a replacement or claim server-side race protection from doubles.
+Y owns worker checkpoint/READY orchestration; P owns the existing repository,
+not a second publisher. Effective-input fingerprint/settings-to-accepted-bytes and
+actual readback binding remains a distinct worker proof with mismatch controls.
+
+Y's MAINTAINED_CONSUMER_REQUIREMENTS.md was read at01:30 (document pin pending).
+Required prepared_by/organization/prepared_for/report_title cannot be defaulted;
+primary_name remains derived by recipe.portfolio_name. Optional contact/custom
+absence remains distinguishable in stored source, blank only at the vendor edge
+after agreement. Ordered comparisons require explicit vendor_id/name/security_type
+and evidence-backed mapping. This is a consumer requirement, not source authority.
+Final descriptor placement/schema still awaits M's concrete maintained examples.
+
 ## Maintained source composition claim - 2026-09-23 01:28 UTC
 
 Full CTO ruling `0429af3604` read. P owns the canonical
