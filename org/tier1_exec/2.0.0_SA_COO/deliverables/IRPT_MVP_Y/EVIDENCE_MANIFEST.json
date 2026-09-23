@@ -1112,6 +1112,12 @@
       "count": 11,
       "status": "prepared specification, not executed",
       "implementation_dependency": "exact original-position producer interface from M proposal; no located production adapter"
+    },
+    "actual_position_proposal": {
+      "pin": "a20a1a1bd28c2cf76d5b80aae0d9a745ab5c7d2c",
+      "status": "M source families located for all3 firms; CTO adjudication and concrete accepted producer/interface pending",
+      "source_module_proposed": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+      "does_not_establish": "current security census, runtime callback, live availability or snapshot authorization"
     }
   },
   "cto_direct_review": {
