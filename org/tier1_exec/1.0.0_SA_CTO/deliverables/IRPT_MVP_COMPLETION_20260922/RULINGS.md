@@ -563,3 +563,12 @@ CTO independently reran exact b933 function /121b8407 native layer /common5 in L
 ## IRPT-HOLDINGS-LIVE-READER-20260923
 
 CTO actual AWS readback: irpt-holdings Active/Successful at22:10:08Z, exact vLP7cZN61JWOOmiCGmCjnOM43296i8qDt1hL1ZE8yUs=, reviewed environment and both reader IAM policies equal saved plan; current artifact version e7XAGneq1_KKe2tnBVK45FsEFNItS2NF matches. HOLDINGS_READER_CTO_LIVE_READBACK.json records evidence. M proceeds authenticated selection/API/screen/drill/reload. Localhost5174 returns200; current computer-use inventory has no connected browsers. This is deployment configuration proof, not a fabricated-auth or browser PASS.
+
+
+## IRPT-HOLDINGS-ACTUAL-FAIL-20260923
+
+Andrew authenticated Anna Holdings NOT_READY is actual journey FAIL. HOLDINGS_AUTHENTICATED_FAILURE.md records exact evidence and limits. M owns selection/date/coverage trace and supported full COT build; P shared reason contract. No happy-account substitution, identity collapse or fake empty values. Prior code/IAM parity is not withdrawn or inflated to journey PASS.
+
+## IRPT-X10-ACTIVATION-OWNER-20260923
+
+CTO owns enforcement acceptance; M is existing exact registry writer with CRO incumbents preserved. Global irpt-x10-v1 has12families/3firms; enforcement_ref must be full accepted receipt commit, not arbitrary source/bucket-create. P proceeds callable/claim/least-privilege plan and shared enforcement matrix for all36destinations with precise deployed writer coverage. Minimal COT permissions alone do not prove global enforcement. Physical_disposal OPEN remains separate, not a new first-thread gate. No ACTIVE mutation in this ruling.
