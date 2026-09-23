@@ -535,6 +535,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "This cell's own section 1 frames exactly two causes for 'no listing bronze object': CODE (the capture is not wired on a path) or SESSIONS (the path never reached a listing call live) -- and rules that whichever publisher this cell finds wired is attributed to SESSIONS, full stop, per RUN_REPORT.",
     "world_is": "For sa specifically, RUN_REPORT.md shows the listing call WAS reached, repeatedly, before the 502 (a SESSIONS-shaped event on a LATER article fetch) -- but the listing pages already captured in memory never reached bronze because of WHERE worker.py places the persist call, which is a CODE-shaped placement question, not a session-health question. The two-cause dichotomy this cell settles does not have a slot for 'wired, exercised, discarded by a later exception elsewhere in the same job' -- sa's true cause is closer to CODE (an exception-fragile persist point) than to pure SESSIONS, and this row exists so that distinction is not lost inside a plain 'SESSIONS' attribution.",
     "notes": "Not fixed here -- worker.py is READ-ONLY under this cell's <paths> and this cell's own bounds say it fixes nothing. This is a round-3 candidate: move (or checkpoint) the harvest-listing persist to run per listing page as it is captured, or wrap the per-article loop so a later exception cannot discard earlier, already-captured listings. Filed as OBSERVATION/ARMED because it will keep discarding real listing pages on every future run that hits ANY mid-job exception after page 1, on ANY publisher, not just sa."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S3",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-23T02:23Z",
+    "one_line": "HVST-r-2's verdict line reads 'as_received_proof PARTIAL paths_proven 2 of 5', a sentence whose subject is PATHS, while its evidence population is only the 14 bronze objects the live act landed; the issuer's own independent S3 metadata census over the FULL bronze article prefix reads 103 objects: 14 as_received, 83 normalised_record, and 6 carrying NO received-form metadata key at all (every one of the 6 under seeking-alpha, the same path the cell grades PROVEN).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "issuer's own census, boto3 list_objects_v2 over bucket opal-data-harvest filtered to keys containing '/harvest/bronze/article/', then head_object per key: denominator 103 objects; received-form distribution {normalised_record: 83, as_received: 14, no received-form key: 6}; metadata keys seen across the 103: schema-version 103, received-form 97, document-sha256 103",
+        "the 6 objects with no received-form key are all under the seeking-alpha prefix (keys printed in the census output, article_hash partitions 098f999b..., 28bc5644..., 4bdd69a3..., 6c598625..., cdd15cdc..., f6be7eef...)",
+        "instrument difference, deliberate: the cell's checker reaches its per-publisher counts through the LOCAL capture rows in .runtime/opal-data-harvest/progress.sqlite3 and compares hashes; this census never opens that database and reads only S3 object metadata, so the 14 as_received agreeing across both is corroboration and not repetition",
+        "the cell's own AC2 output, quoted in worker 0.9.0_WK_AMGT_HARVST~12's report: 'as_received_proof PARTIAL paths_proven 2 of 5' with 'sa 3/3, wsj 11/11, mismatch 0 both; bbg/barrons/ft objects 0' and a printed denominator of 14 of 14 local capture rows examined, 0 could_not"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HVST-r-2 ruled a printed per-publisher check over 'EVERY bronze article object the live act landed', with a verdict line 'as_received_proof <PROVEN|PARTIAL|UNPROVEN> paths_proven <n> of 5'. The cell delivered exactly that and its flip was deliberately not conditioned on PROVEN, so nothing here is a failure of the cell.",
+    "world_is": "The verdict's GRAMMAR is wider than its population. 'paths_proven 2 of 5' names paths; the evidence covers the 14 objects landed by one authorised act, 14 of a 103-object bronze article population. For seeking-alpha the two readings diverge materially: the path grades PROVEN on 3 objects while 6 further sa objects carry no received-form key at all and 83 objects estate-wide are labelled normalised_record, so any consumer that reads bronze as as-received WHOLESALE would be wrong for 89 of 103 objects. Whether such a consumer exists is UNMEASURED here, which is why this is an EXPOSURE and not an incident.",
+    "notes": "Not a defect in HVST-r-2 and not a request to re-cut it; the cell's population was the right one for row Z-S1's remediation. Recorded so the verdict is never restated as a claim about the paths' whole history. DISARM, this seat's, by either arm: (a) a consumer census over the estate showing no reader treats bronze article bytes as as-received without checking the received-form key, which converts this to INERT; or (b) the label becoming universal, which only new capture can do and which needs a vendor act nobody has granted. The third possibility is a wording fix in whatever artifact next restates the verdict: say 'proven for the objects the live act landed' rather than 'paths_proven', which costs nothing and is the cheapest of the three."
   }
 ]
 ```
