@@ -486,6 +486,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "AC6's <expect> text is the authority for what 'nothing outside the currently-authorised files changed' means.",
     "world_is": "Each phase amendment that widens BOUNDS' editable-file set requires AC6's <expect> to be updated in the SAME amendment, or it silently falls one phase behind again -- exactly the mechanism row -S7 already named, now recurring on its own fix. This cell graded AC6 by INTENT (nothing outside Phase 0c's own named editable set touched) rather than by the stale literal list, same as it did for -S7, and states that reasoning on AC6's own acceptance row.",
     "notes": "Not fixed here (no authority to rewrite the TO's own criteria). Disarm suggestion, sharpened from -S7's: word AC6 generically ('nothing outside the CURRENT phase's own BOUNDS-authorised set') so it never needs editing again when BOUNDS grows, rather than re-enumerating the file list on every amendment."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W13-S1",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~13",
+    "surfaced_at": "2026-09-23T02:06Z",
+    "one_line": "The 14 already-landed silver article rows row -S8/-S9/-S10's fix moved from pending to uploaded (exactly the '14 new silver rows' this cell's own task order names) carry `first_discovered_at` as a plain ISO-8601 STRING, not a tz-aware datetime -- and mention_rows' _lag_hours crashed on it (str - datetime) BEFORE this cell's own rebuild could write a single row, hiding 992_HK_Equity from the gold mention snapshot entirely rather than merely mis-scoring it.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/harvest/publication_gold.py:194 (pre-fix) TypeError: unsupported operand type(s) for -: 'str' and 'datetime.datetime', raised from build_mention -> mention_rows -> _lag_hours, measured this session running build-mention against live silver",
+        "a full scan of _iter_latest_articles() (97 rows total, this session) found exactly 14 with a non-datetime first_discovered_at, all str: 3 sa (4429803, 4411819, 4411320) and 11 wsj (6d60459e.., e57b5a3a.., 9f87460d.., e23ed60f.., 30f54945.., d8782cf8.., 8afb25e6.., 956d169a.., a24b8784.., 78005dc6.., 18490ef2..) -- the same 3+11=14 count and the same wsj/sa split row -S9's -S10's own commit message reports moving from pending to uploaded",
+        "3 of the 11 wsj titles read verbatim 'Lenovo Posts Record Revenue...'/'Lenovo Targets $100 Billion...'/'Lenovo Posts Earnings Beat...' -- confirming this IS the Lenovo batch the task order's section 1 item 4 names",
+        "lib/opal_data_harvest/publishers.py:197 mints first_discovered_at as dt.datetime.now(dt.timezone.utc).isoformat() (a STRING) on the discovery link record; lib/opal_data_harvest/uploads.py:385 normally re-parses it via harvest_grammar.parse_timestamp before uploads.py:392 writes silver's own first_discovered_at as min(...) of the parsed datetimes -- for this batch the string survived that re-parse into silver_from_bronze.py:226's row['first_discovered_at'] = d.get('first_discovered_at') unconverted; publishers.py and uploads.py are OUT OF BOUNDS for this cell (not in <paths>), so the mechanism is read, not fixed, at its source"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's section 1 item 4: 'No vendor call: silver already holds everything' -- the rebuild is expected to run cleanly off already-landed silver alone.",
+    "world_is": "Already-landed silver is not internally type-uniform on this field across the batch that made 992_HK_Equity reachable: 83 of 97 article rows carry a tz-aware datetime, 14 carry an ISO-8601 string of the identical shape. Fixed defensively INSIDE this cell's own editable file (a new _coerce_utc_datetime, applied to all three clock fields article_row-side in mention_rows -- lib/research/harvest/publication_gold.py, this commit) rather than upstream, since silver_from_bronze.py/publishers.py/uploads.py sit outside <paths>; a positive-result test (test_string_clock_fields_coerced_not_dropped) and a live re-run of build-mention against the same silver are this row's own evidence that the fix holds. Left UNDER_INVESTIGATION rather than self-GRADUATED: this worker holds no adjudication authority, and the root mechanism upstream (why THIS batch's uploads.py path skipped the parse_timestamp re-normalisation) is read but not traced to a specific code path -- that trace is the disarm owner's to close or delegate.",
+    "notes": "Non-application check run before generalising: sa/bbg/ft/barrons rows in the same 97-row population were NOT affected (all 3 sa outliers here are pre-existing SA rows, not new Lenovo ones, so the defect is not SA-specific either) -- the affected set is exactly the 14 rows row -S8/-S9/-S10's WSJ-fix-and-replay moved from pending to uploaded, which is the discriminating fact for whoever traces the upstream path."
   }
 ]
 ```
