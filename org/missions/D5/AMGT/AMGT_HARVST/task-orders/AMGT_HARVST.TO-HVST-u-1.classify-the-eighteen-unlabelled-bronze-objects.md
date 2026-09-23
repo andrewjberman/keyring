@@ -192,7 +192,7 @@ more.**
 3. **AC4 exists because of the breach, not because of a suspicion.** A read-only cell that proves it could not have
    written is cheap, and it is the right shape to normalise while the hard stop is live.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <slot>~18</slot>
 <fabric>site-z</fabric>
