@@ -4,28 +4,28 @@ Seat `2.0.0_SA_COO~Y` (CODEX). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 version 1.3. Current reviewer `1.0.0_SA_CTO` under Andrew's direct-review instruction;
 matching CVO seat remains `3.0.0_SA_CVO~Y`.
-As of 2026-09-23T17:50Z.
+As of 2026-09-23T18:14Z.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working branch / worktree | `irpt-mvp-y-20260922` at `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922` |
-| Workspace candidate pin | Y production `85af5eb95d72051c363727229981c4dc1a35cad9`, paired tests `4ea95d1117`; prior custody source `10627906f2` integrated by P at `411256e41c` |
+| Workspace candidate pin | Y dual-owner source `1385a126e7`, includes Entry repairs `104d9472f1` and actual-viewer source `85af5eb95d`; prior custody source `10627906f2` integrated by P at `411256e41c` |
 | Portal candidate pin | No new Portal candidate in this custody-consumer tranche |
 | Deployed artifact pin | Y accepted-custody consumer NOT DEPLOYED |
-| Push state | LOCAL; no new remote measurement or push in this turn |
+| Push state | LOCAL; origin CLOUD measured `365ab567ba1250a6a3569df38cb75d12fe2e8d0e`; no push |
 | Package evidence | P reports measured package `e3ad48ca23`, evidence `b639e430d0` |
 | Bounded consumer review | CTO `36131adb48`: 306 tests / 50 subtests, exact P reader enabled, no skips |
 | Actual-viewer source review | CTO `8b7d43d5eb`: independent 475 tests / 50 subtests on `85af5eb95d`, zero skips; later storage pairing is Y evidence `4ea95d1117` |
 
 ## Live thread
 
-State: NOT LIVE (no live-thread proof consumed by Y). Last authoritative constraint:
-contract v1.3 section 0 at `f0fcc4516c`; first failing hop is shared
-authentication -> scope/bootstrap, owned by COO~P under the live-scope exception.
-P's local 78-member package and composed replay report do not prove this hop live.
-Real backend, real data and real login are required; frontend may be local or DEV.
+State: full linked journey NOT PROVEN. CTO `f50aff2ce1` relays Andrew's confirmation
+of Global/Select Firm and investor-list bootstrap on served `10141` / deployed
+`o590`. That bounded symptom is confirmed; pagination, selection persistence,
+tabs, generation and full-access acceptance remain unproved here. No duplicate
+sign-in prompt is required. Real backend, real data and real login remain required.
 
 ## Acceptance IDs
 
@@ -52,41 +52,40 @@ Offline-only work grades no acceptance ID until the live thread is live.
 
 Controlling ruling `5ad99c7d30` grants verified interactive Opal users all IRPT
 functions across firms; Global/firm selection filters inputs/views, not authority.
-P owns shared enforcement. Y consumed P's `9a3ec2a11f` and committed actual-viewer
-read/upload/freezer/submission adapters at `85af5eb95d`. Final separate suites:
-479 tests and 50 subtests passed, no skips. See `OPAL_ACCESS_HANDOFF_20260923.md`
-for exact signatures, pinned-source tests and boundaries. P supplied actual
-storage source `dd6edfc3aa`; paired Global storage controls pass at `4ea95d1117`.
-Shared Entry wiring is still pending. This is
-bounded offline evidence, not certification of the complete corrected access path.
+P owns shared enforcement. Y source `1385a126e7` adds new actual-submitter
+acceptance from another creator's retained prospect input, preserving original
+bytes/ref/owner and separately recording the acting submitter. Actual P Entry
+`4ec461a2e9` is paired; Y repairs `104d9472f1` accept selected_tenant and preserve
+legacy ordinary upload principal shape. Exact P schema/validator/storage
+`37526d36ae` and M maintained sources `485b69c061` pass 20 new paired controls.
+Combined generation/intake/ops coverage: 505 tests and 50 subtests pass; the one
+initial missing-env intake skip was resolved with its exact pinned-reader run.
+See `DUAL_OWNER_HANDOFF_20260923.md`. Evidence remains bounded offline.
 Ordinary restrictions, forged-identity refusals and immutable attribution remain.
 
 ## Write claims
 
-No active code edits. The completed 13-file Y adapter claim is pinned at
-`85af5eb95d`. Y retains intake, generation and owned-read consumer ownership.
+No active code edits. Dual-owner factory/service/worker/date source is pinned at
+`1385a126e7`. Y retains intake, generation and owned-read consumer ownership.
 P's shared scope/bootstrap, repository, schemas and package paths were not edited.
 
 ## Next proof
 
-Under CTO sequencing ruling `5edf991c06`, P measures/fixes the real login ->
-auth/scope/bootstrap -> real firm/investor data -> screen path at localhost5174,
-recording exact served revisions and a sanitized failing boundary. Y's next
-proof is the verified-Opal prospect and other-owner path paired with P's pending
-shared Entry candidate. Y's dependent source is complete at `85af5eb95d`;
-P's actual `dd6edfc3aa` storage port passed Y paired replay at `4ea95d1117`.
-P retains the authorized first-hop priority. Exact ports and residual attribution
-capabilities are recorded in `OPAL_ACCESS_HANDOFF_20260923.md`.
-Deeper custody source/package work remains parked.
+P consumes the exact combined Y/P/M candidate and installs ProspectSubmissionFactory
+with real retained repositories, upload reader, canonical profile readers and
+ordinary authorizer. CTO directly reviews the combined candidate under
+`f50aff2ce1`; Y's source/tests are complete and handed off. Live generation,
+queue delivery, browser continuity and vendor results remain unproved. The
+previous bootstrap symptom is confirmed; deeper custody work stays parked.
 
 ## Dependencies
 
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
-| First live auth/scope/bootstrap hop | COO~P | Contract v1.3 section 0 | AWAITED live proof |
-| Full-access viewer/prospect authority | COO~P | `9a3ec2a11f` | CONSUMED in Y adapters; shared Entry wiring awaited |
-| Actual-viewer cross-firm retained storage | COO~P | `dd6edfc3aa`, Y paired test `4ea95d1117` | CONSUMED offline; Entry integration awaited |
-| New submission of another creator's input | COO~P contract; M profile semantics; Y consumer | CTO `8b7d43d5eb`: actual submitter separate from retained input attribution | REQUIRED capability; AWAITED exact P contract, no reupload/impersonation workaround |
+| First live auth/scope/bootstrap hop | COO~P | CTO `f50aff2ce1` | Andrew confirmed bounded Global/firm/list symptom |
+| Full-access viewer/prospect authority | COO~P | `9a3ec2a11f`, Entry `4ec461a2e9` | CONSUMED, actual Entry paired offline |
+| Actual-viewer cross-firm retained storage | COO~P | `37526d36ae`, prior `dd6edfc3aa` | CONSUMED offline |
+| New submission of another creator's input | P contract/schema; M profiles; Y consumer | `e07a5ca692`, `37526d36ae`, `485b69c061`, Y `1385a126e7` | IMPLEMENTED, 20 paired controls pass; P runtime integration and CTO combined review next |
 | Paired private reader | COO~P / COO~M | `e36b007fa1`, accepted-custody-input-v1 | CONSUMED offline |
 | Integrated package review | CTO / COO~P | P evidence `b639e430d0`, package `e3ad48ca23` | PARKED under `5edf991c06` |
 | Actual economic/source evidence | COO~M / COO~P, CTO interpretations | Mandatory reader economic ports | BLOCKED on real capability |

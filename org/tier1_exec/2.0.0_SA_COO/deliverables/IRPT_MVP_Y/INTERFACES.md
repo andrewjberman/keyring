@@ -1,6 +1,6 @@
 # IRPT Y -- current interfaces
 
-Owner `2.0.0_SA_COO~Y`. Contract v1.3. Y production source `85af5eb95d72051c363727229981c4dc1a35cad9`, paired evidence `4ea95d1117`.
+Owner `2.0.0_SA_COO~Y`. Contract v1.3. Y production source `1385a126e7`, including actual Entry repairs `104d9472f1` and prior viewer adapters `85af5eb95d`.
 P reports prior custody source `10627906f2` integrated at `411256e41c` and packaged at `e3ad48ca23`.
 This is the current schema/consumer record; historical proposals and prior
 examples are retained unchanged in `INTERFACES_HISTORY.md`.
@@ -13,8 +13,21 @@ Y consumed P's verified viewer/prospect interface `9a3ec2a11f`; exact new read,
 upload, placement and Entry ports are in `OPAL_ACCESS_HANDOFF_20260923.md`.
 Current source supports the real viewer separately from retained owner and
 explicit `data_firm` lookups. P's actual cross-firm storage `dd6edfc3aa` passes
-paired replay; shared Entry wiring remains pending. Preserve real actor and each input/report firm/account/source
+paired replay; actual shared Entry `4ec461a2e9` is now exercised. Preserve real actor and each input/report firm/account/source
 attribution. No browser field grants access; offline tests do not prove live access.
+
+## Acting submitter and original input
+
+`ycharts/generate/prospect_submission.py::ProspectSubmissionFactory.submit` is
+the concrete caller of M `485b69c061` viewer-aware profile/comparison ports.
+P contract `e07a5ca692` and closed schema/validator `37526d36ae` bind
+`resolved.owner` to the actual submitter and `resolved.input_owner` to the
+unchanged normalized base owner. Recipe/settings bind submitter; M sources bind
+original input while actor-specific source_scope records the actual actor/home.
+`build_prospect_entry(*, load_prospect_owner, **ports)` explicitly installs the
+service in the existing guarded Entry. Exact required ports, source extraction
+and 20 paired acceptance/retry/worker/date controls are recorded in
+`DUAL_OWNER_HANDOFF_20260923.md`. No implicit runtime clients or fallback stores.
 
 ## Versioned contracts and owners
 
