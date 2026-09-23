@@ -26,7 +26,7 @@ One active shared writer; no competing edits. If two ready patches conflict, one
 
 | Dependency | Owner / next action | Boundary |
 |---|---|---|
-| SmartX actual49F account/selected-set request, identity/units/method | CRO targeted source-backed delta with P consuming adapter; no duplicate broad research | Blocks49F actual-performance slice, not COT/INF implementation |
+| SmartX actual49F account/selected-set request, identity/units/method | CRO3a31788024 finds no retained actual-account return; exact per-use capture plan being made concrete (credential, windows, account, true call count). P implements COT/INF meanwhile; no model-return or silent BD substitute | Blocks49F actual-performance slice, not COT/INF implementation |
 | COT currency/null-value and model-key facts; INF identity/date/membership | M targeted source checks; CRO only if exact fact remains unavailable | No inferred values; accepted/blocked accounts explicit |
 | YCharts D1/session and upload/lookup behavior | Y drives assembly; P shared runtime; CRO targeted briefs already active | Andrew6fc3f5f785 approves dedicated always-on host and standing host workflow calls/D1; CTOf1add routes Y product/P shared runtime; exact installer/apply/readback required |
 | Canonical security identity/dated USD share-class price facade | M/P future exact source interface; PARKED from Holdings critical path | Unparks for Analysis Shares milestone or a concrete current-hop requirement; Shares visibly unavailable meanwhile |
@@ -49,3 +49,9 @@ Completion requires actual user flow on real backend/data/login, immutable repor
 - P bounded listing B3/F1 approved with current entitlement revalidation and identity/session isolation. Andrew also approved the broader speed recommendations; exact runtime/config and B8 cache-key/revocation plan required. Shared generation connection takes priority; Reporting keeps its provider thread.
 
 Evidence: DIRECT_REVIEW_1958_20260923/REVIEW.md and LISTING_AND_GENERATION_RULING_20260923.md. These offline source grades are not live product completion. All three products remain INCOMPLETE.
+
+## New handoffs awaiting the next direct review
+
+Yebf8d339859466b48e0f5f2c4ce9a834ddfff290 / handoffeda1adaca1: upload first-hop implementation and paired repository evidence received20:00; not yet CTO accepted. Y continues resident worker assembly, P receives exact shared package requirements. M reports10-minute drive helper emitted unrelated Anatomy alerts, stopped its exact timer and routed MSTR195910; M continues source work. This is a runtime-helper defect, not evidence M is unresponsive.
+
+Dispatch receipts: listing195216(P)/195219(Y)/195222(CRO); always-on195610(Y)/195612(P)/195614(MSTR); source verdict200008(M)/200009(Y)/200011(P); recorder remediation200032(O) cites existing IRPT_MVP.TO-RECORDER-SCOPE-O. First O send was refused for omitted task-order citation and was corrected; no permission or new order needed. Exact new-review queue remains open; source grades do not close the three products.
