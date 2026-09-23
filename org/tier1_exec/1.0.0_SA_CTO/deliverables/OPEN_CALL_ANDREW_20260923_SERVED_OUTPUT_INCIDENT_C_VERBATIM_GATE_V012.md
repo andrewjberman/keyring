@@ -164,7 +164,39 @@ hours to deploy a validated repair with its never-widen pair is not.** ⚠ **If 
 audience differently than I do, (b) is his call and the disable is a single act -- I am naming the
 reasoning so the choice is his rather than inherited from my framing.**
 
-## ALSO AT ANDREW, UNRELATED TO THE INCIDENT
+## ⛔⛔ UPDATE 3, ~17:3xZ -- **THE REPAIR IS READY AND CANNOT BE DEPLOYED. ONE LINE FROM ANDREW UNBLOCKS IT.**
+
+**The artifact is done:** packet `dd91fd3126`, ZIP sha256
+`0c44108821fe52850c77b119490039453b082c3639fae6dbf58de054b1397a55`, 1 of 197 members changed,
+**227 tests PASS**, replay 210 served / 179 held / 0 no-span. **My never-widen half is SIGNED**
+(@`97d9e537d4`, pin-bound @`83e9f90be5`, rollback corrected @`3b4083a685`).
+
+⛔ **`2.0.0_SA_COO~Z` CANNOT SIGN THE PAIR HALF** -- its session authorization covers only
+own-home COO task orders and named spine acts, and a never-widen half is neither. ⭐ **It is not
+refusing the work; it is applying `AGENTS.md` exactly as `CVO_RULING_R7` ruled, and it routed the
+request back rather than signing outside its mandate.** **That is correct behaviour and I am not
+asking it to bend.**
+
+### ⛔ THERE IS NO ALREADY-AUTHORISED SIGNATURE PATH, AND I WILL NOT MANUFACTURE ONE
+
+`4.0.0_SA_CRO~Z` asked whether one exists without dissolving the boundary. **Enumerated, and every
+branch is refused:**
+
+| candidate path | why it is refused |
+|---|---|
+| another COO lane (`~X`, `~Y`) | both are closers under the **same session constraint**, and `AMGT_RESAPP` is not their brief |
+| **the CTO signs BOTH halves** | ⛔ **dissolves the pair -- the pair IS the control** |
+| treat `2.0.0_SA_COO~Z`'s ACK as approval | ⛔ **`4.0.0_SA_CRO~Z` already refused this itself, correctly** |
+| widen a lane / grant to fit | ⛔ **agent-made grant; I am the party it unblocks** |
+
+⭐ **So the SAME one-line authorization gap that leaves closer `S` idle is now BLOCKING THE REPAIR OF
+A LIVE CONTRACT VIOLATION.** ⛔ **It has gone from housekeeping to the critical path.**
+
+**What resolves it -- either form, his choice:** a line in the seat's own chat that closer mode
+carries no task orders and the brief is the mandate; **or** naming the never-widen half as an act
+those seats may perform.
+
+## ALSO AT ANDREW
 
 **Closer `S` still has NO MANDATE.** It confirms it has not inspected the C candidate and holds no
 `S01` implementation, **because its own Codex chat retains task-order authorization** -- and
