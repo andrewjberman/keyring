@@ -11,7 +11,7 @@ CONTROL.md apply; CTO reviews directly (no CVO queue). Goal + loop authority:
 | What | Value |
 |---|---|
 | Working branch / worktree | `irpt-mvp-y-20260922` at `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922` |
-| Workspace candidate pin | `635af92b76` (current-authority consumer, CANDIDATE for CTO direct review) over `2874e37647` (CTO accepted 2dd385ed59 / 3d9f451) |
+| Workspace candidate pin | `c4564aad17` (consumption-test stub tracks the reader's projection) over `635af92b76` (current-authority consumer, CANDIDATE for CTO direct review) over `2874e37647` (CTO accepted 2dd385ed59 / 3d9f451) |
 | P integration pin | `b3fc529601` on `irpt-smoke-p-backend-20260923`: 31 Y files; 85 of 85 tracked `ycharts/` files at 2874 hash-match P HEAD |
 | Portal candidate pin | `7a5b24e7` (no new Portal candidate) |
 | Deployed artifact pin | `irpt-ycharts-generate` CodeSha256 `1L60sG1G9IaFfwe+LPNdE84DarlWCHKkdE8M5CyVI8o=`, LastModified 2026-09-19T14:29Z -- predates every Y commit; source map at HEAD says `CJ6aBh7B...` |
@@ -63,6 +63,7 @@ the installed factory + cutover receipt; until then each loop tick re-measures t
 | Host tag `AutoShutdown = "disabled"` on the runner Terraform resource, plan to CTO, safe-apply; nobody starts the host before the tag and the resident install are ready | 2.0.0_SA_COO~P | CTO d78fdb2f1c item 5; Y 99801 adds the second writer `aws_ec2_instance_state.runner` (`stopped`) | BLOCKED at P |
 | Generation path: deploy HEAD submit entry, `sqs:SendMessage` on submit role, `IRPT_LIVE_YCHARTS_CALL`, `/analysis/*` routes live | 2.0.0_SA_COO~P | CRO 6fc3f5f785 item 5; RESIDENT_ASSEMBLY_HANDOFF items 2, 4 | AWAITED (measured absent 23:2xZ) |
 | 31-path owned-path grant for the copied Y files | 2.0.0_SA_COO~P | b3fc529601 | CONSUMED |
+| Grant extension to the Y template-upload batch: intake/{portfolio,uploads,resolution_broker,resolution_kimi,security_resolution,template_reader}.py, intake/tests/test_{resolution_kimi,security_resolution,template_reader,template_uploads}.py, ops/prospect_dates.py (8 Y commits, 84c6e63806..85af5eb95d) | 1.0.0_SA_CTO grants, 2.0.0_SA_COO~P merges | import census 93 reachable / 4 MISSING / 3 diverged; resident_session.py cannot import in P's tree | BLOCKED (sent tick 2) |
 
 ## Parked
 
