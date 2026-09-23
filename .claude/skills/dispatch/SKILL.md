@@ -86,6 +86,8 @@ chain, the provenance: they stay in the file for the gates and are not given to 
 | (c) | at most one further criterion the cell genuinely needs |
 | — | a fourth only with a one-line reason on the face |
 
+A difference-control arm (spine L6) is part of the criterion it controls, not a fourth check (v3.17).
+
 - **No repo-wide hygiene on the face.** Typecheck, lint, the full suite and `py_compile` are YOUR drain checks,
   run once per merge in Step 5, never criteria on an order. You also re-run the live thread trace once per round
   at the drain.

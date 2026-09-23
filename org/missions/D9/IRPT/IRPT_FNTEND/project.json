@@ -37,5 +37,6 @@
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md",
-  "counterpart": "IRPT_BCKEND"
+  "counterpart": "IRPT_BCKEND",
+  "closer_contract": "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md"
 }
