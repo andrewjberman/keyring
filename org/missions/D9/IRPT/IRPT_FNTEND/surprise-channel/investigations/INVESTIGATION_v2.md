@@ -6285,6 +6285,51 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
-  }
+  },
+{
+  "id": "IRPT_FNTEND-W40-S1",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_FNTEND~40",
+  "surfaced_at": "2026-09-22T20:30:35Z",
+  "one_line": "Building FE-s-90's checker, `bun test <path>` treats a bare (no leading \"./\") relative path argument that does not match bun's own test-name discovery convention (\".test.\"/\".spec.\") as a case-insensitive substring FILTER against files it already discovered, never as an instruction to run that exact file -- so a `.fixture.ts` file addressed by its full, correct, bare relative path is silently treated as zero matches ('did not match any test files') rather than run, and a caller that does not check the summary line for this exact message could misread that as a genuine pass or an intended skip.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The task order's suggested invocation shape, `node scripts/suite-complete-check.mjs <bun-test-command...>`, and its four required controls, imply that naming a specific fixture file's path on the `bun test` command line runs that file.",
+  "world_is": "Measured (this worker, 2026-09-22, bun 1.3.9, this worktree's portal): `bash -lc 'C:/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/passing.fixture.ts'` -> stderr/stdout: \"The following filters did not match any test files ... 2016 files were searched\", \"note: Tests need \\\".test\\\", \\\"_test_\\\", \\\".spec\\\" or \\\"_spec_\\\" in the filename\", \"note: To treat the ... filter as a path, run \\\"bun test ./<path>\\\"\"; rc=1. The identical command with a leading \"./\" prefix on the same path -> \"1 pass, 0 fail, Ran 1 test across 1 file\", rc=0. This project's own fixture files in this cell are named `.fixture.ts` specifically so a directory-scan invocation (F90-AC2, F90-AC4) never discovers and runs them; the checker and this cell's test file both always prefix an explicit fixture path with \"./\" to force bun to treat it as a literal target regardless of naming convention.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured (this worker, 2026-09-22): `bash -lc 'C:/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/passing.fixture.ts'` (bare path, no ./) -> rc=1, \"did not match any test files\", \"To treat the ... filter as a path, run bun test ./<path>\"",
+      "measured (this worker, 2026-09-22): the same command with `./` prefixed -> rc=0, \"1 pass, 0 fail, Ran 1 test across 1 file\"",
+      "C:/tmp/wk-irpt_fntend-15-2-fe-s-90/portal/src/pages/InvestorReporting/__tests__/fe-s-90/suite-complete-check.test.ts (this worktree HEAD) -- FIXTURE_* constants, each prefixed \"./\", with a comment citing this exact finding",
+      "C:/tmp/wk-irpt_fntend-15-2-fe-s-90/portal/src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/passing.fixture.ts (this worktree HEAD) -- header comment recording the same live-verified discovery-glob behaviour"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_FNTEND-W40-S2",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_FNTEND~40",
+  "surfaced_at": "2026-09-22T20:30:35Z",
+  "one_line": "Node/Bun's `child_process.spawnSync(cmd, args, opts)`, called from CODE running inside an already-started bun/node process (as opposed to typed at a bash prompt or spawned by bash itself), calls Windows CreateProcess directly with no MSYS path translation -- an MSYS-style absolute path (`/c/Users/...`, the form this project's own task orders write in every acceptance invocation this round) fails ENOENT from that call site even though the identical string works perfectly when bash itself is the one resolving and exec'ing it; the Windows-native forward-slash form (`C:/Users/...`) resolves correctly from both call sites and is also roughly 8-10x faster per spawn (no shell startup) when a shell is not otherwise needed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The task order names the bun binary as `/c/Users/AndrewBerman/.bun/bin/bun` in every acceptance invocation (F90-AC1..AC4) with no caveat that this exact string is unusable as a `spawnSync` argument from inside a running node/bun process.",
+  "world_is": "Measured (this worker, 2026-09-22): `spawnSync('/c/Users/AndrewBerman/.bun/bin/bun', ['-e','console.log(1)'], {encoding:'utf8'})` called from a running bun process -> `error: ENOENT: no such file or directory, uv_spawn '/c/Users/AndrewBerman/.bun/bin/bun'`, `errno: -4058`, `code: 'ENOENT'`. The same call with `command` rewritten to `'C:/Users/AndrewBerman/.bun/bin/bun'` -> succeeds, ~113ms. Routing the MSYS-style path through `spawnSync('bash', ['-lc', '<cmd string>'], ...)` also succeeds (bash performs its own translation), at a measured ~800-1000ms bash-login-shell-startup cost per call versus ~113ms for the direct native-path call. This cell's own `scripts/suite-complete-check.mjs` still routes its OWN child spawn through `bash -lc` (needed there, since its command can carry a `timeout N ...` shell prefix), but this cell's test harness spawns the checker itself directly with the Windows-native path form, once this was found, to avoid an unnecessary extra shell hop.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured (this worker, 2026-09-22): `spawnSync('/c/Users/AndrewBerman/.bun/bin/bun', ...)` from a running bun process -> ENOENT, errno -4058, code ENOENT",
+      "measured (this worker, 2026-09-22): the identical call with `'C:/Users/AndrewBerman/.bun/bin/bun'` -> succeeds, ~113ms",
+      "measured (this worker, 2026-09-22): `spawnSync('bash', ['-lc', 'echo hi'])` -> succeeds, ~860-1000ms wall time (login-shell startup cost)",
+      "C:/tmp/wk-irpt_fntend-15-2-fe-s-90/portal/src/pages/InvestorReporting/__tests__/fe-s-90/suite-complete-check.test.ts (this worktree HEAD) -- BUN_BIN constant's own comment citing this exact finding and the direct-native-spawn design it drove",
+      "C:/tmp/wk-irpt_fntend-15-2-fe-s-90/portal/scripts/suite-complete-check.mjs (this worktree HEAD) -- the checker's own child spawn still uses `spawnSync('bash', ['-lc', joined], ...)`, documented and unaffected by this finding since it needs shell interpretation for a `timeout N ...` prefix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
 ]
 ```
