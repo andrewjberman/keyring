@@ -148,7 +148,7 @@ lanes:
       - 4.0.0_SA_CRO~SWEEP
       - 2.0.0_SA_COO~Y
       - 2.0.0_SA_COO~P
-    description: "Temporary CTO grant IRPT-Y-ACCESS-INTEGRATION-20260923: preserve Y and AE incumbents, add exact COO~P on thirteen named files for combined full-access integration and compatibility only. No other Y paths or deployment grant. CTO removes P integration grant after accepted handoff."
+    description: "Temporary CTO grant IRPT-Y-ACCESS-INTEGRATION-20260923: preserve Y and AE incumbents, add exact COO~P on sixteen named files for combined full-access integration and compatibility only. No other Y paths or deployment grant. CTO removes P integration grant after accepted handoff."
 
   IRPT_COMPLETION_Y:
     permitted_agents:
@@ -1050,6 +1050,15 @@ lanes:
     description: 'Project tree, deliverables/<SERIAL>/** -- NOBODY by enumeration. The owner is in the PATH (s.6 option ii, RULED): owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it). A file directly under deliverables/ with no serial folder is refused -- the convention is the gate.'
 
 paths:
+  "infra/aws/lambda/investor-reporting/ycharts/generate/frozen_worker.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO direct dual-owner review: exact Y1385a126e7 integration by P; incumbent owners retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO direct dual-owner review: exact Y1385a126e7 integration by P; incumbent owners retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_prospect_submission.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO direct dual-owner review: exact Y1385a126e7 integration by P; incumbent owners retained; no deploy grant."
   "org/standards/NAMING_LEGACY_READS.json":
     lane: NAMING_LEGACY_READ_AUTHORITY
     note: "LEGACY-READ-03 at ec80b01ca4929ff9a23fd093d221dccb2fb1f826: exact authority carrier only, narrowed from the existing standards lane. Read committed HEAD authority; no self-grant by the mechanism implementer."
