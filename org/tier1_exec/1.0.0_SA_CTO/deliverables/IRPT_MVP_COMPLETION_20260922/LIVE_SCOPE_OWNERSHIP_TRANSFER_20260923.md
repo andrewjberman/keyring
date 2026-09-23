@@ -21,3 +21,11 @@ CVO~M and CVO~P remain independent reviewers. The unchanged reproduction at 0081
 ## Resume rule
 
 If M recovers, its older queued implementation GO is superseded for these transferred surfaces. M must not resume conflicting edits. Read this exception and obtain an explicit CTO handback before changing these surfaces; unrelated already-authorized work remains separate. P's ownership lasts until that handback or repair closure. No account-credit purchase, account change, model swap, new seat or process termination is authorized by this document.
+
+## Concrete source grants
+
+The workspace path registry now assigns only `directory/**`, `_scope/**`, `_ids/**`, and common non-render `_authz/**` under `infra/aws/lambda/investor-reporting/` to `IRPT_LIVE_SCOPE_P`, preserving all incumbent permissions and adding exact COO~P. Holdings, naming registry and render-specific identity paths are not reassigned. M retains registry membership but the operational no-edit/resume rule above applies. This is a source-commit grant; runtime authority remains separately bounded. The grantee consumes this committed registry correction before ordinary safe-commit. Evidence: `LIVE_SCOPE_GRANT_EVIDENCE_20260923.json`.
+
+Portal grant explicitly covers `src/pages/InvestorReporting/header/**`, `state/selection.ts`, `global/useFirmContext.ts`, `global/firm*.ts`, and scope/header integration in `index.tsx`, with directly corresponding regression tests. P already owns shared API/adapter/schema integration. Neither canonical Portal nor P isolated Portal has `.owned-paths.yaml`; no artificial registry or hook is introduced there. Contract ownership is operative for these surfaces.
+
+Andrew's CloudFront review correction relayed by P at 05:56:57 UTC and recorded `aac0c7d368` is accepted: review through CloudFront-served DEV, preserving OPSEC202609 controls. No localhost bypass.
