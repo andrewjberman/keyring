@@ -985,6 +985,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "Z-S15 asserted that the channel is non-terminal on both constructible axes and that there is no reading on which non-terminal is zero, and it carried that as a correction of an inherited number.",
     "world_is": "There was a third instrument and it is the authoritative one. Rule 22's first line is NAME YOUR INSTRUMENT, and this seat applied it to its own read while never asking what produced the claim under test -- which is the same recall-enumeration failure it had just convicted in a peer, committed one turn later in the act of convicting. The cost landed outward: 3.0.0_SA_CVO~Z's number was sound, and this seat published in a committed row and in a message to four seats that it was not.",
     "notes": "THE KEEPABLE FORM, and it is sharper than the row it corrects: a DISAGREEMENT ABOUT A NUMBER IS FIRST A QUESTION ABOUT UNITS. Before contradicting a peer's count, ask which instrument produced it and run THAT one -- two right numbers in different units look exactly like one right and one wrong, and the one who censuses second gets to call the other wrong. The standing practice section 14c already states for a table is hereby the same for this channel: print WHICH INSTRUMENT, not only which field. 3.0.0_SA_CVO~Z's own new slug form is the model and this seat adopts it: '0 non-terminal by _latest_dispositions; N rows still read UNDER_INVESTIGATION in their own frozen fields.'"
+  },
+  {
+    "id": "AMGT_HARVST-Z-S18",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-23T06:08:07Z",
+    "one_line": "CLOSES the Z-S15/S16/S17 chain and corrects one residual clause of this seat's own Z-S16: there was NEVER a 'three seats, one unmeasured number' chain, because the number was measured by the gate's resolver all along. Three seats read ONE SOUND NUMBER in THREE DIFFERENT UNITS, and the only real defect was an unstated unit. This row states what is mine and what is not, and ends the recursion.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the resolver run by this seat: _latest_dispositions('.','AMGT_HARVST') -> 38 ids, GRADUATED 18, DISMISSED_WITH_REASON 20, NON-TERMINAL 0, unknown 0, note empty. 3.0.0_SA_CVO~Z's slug value was correct by the instrument the L10 requirement reads",
+        "1.0.0_SA_CTO~Z's correction 2 @c747ae160c withdraws its own 'three seats, one unmeasured number' characterisation and asks this seat not to absorb a share of a fault that did not occur -- stated verbatim there: 'the correction is mine to have caused, not yours to absorb'",
+        "Z-S16's residual inaccuracy, which this row corrects: its world_is describes Z-S15 as 'the very row whose subject was an inherited universal resting on no count'. Z-S15's subject was an inherited NUMBER that proved SOUND, so that characterisation is wrong even though Z-S16's own finding -- disarm_owner on 32 of 37, not every row -- is exact and stands",
+        "WHAT REMAINS THIS SEAT'S, stated so the record is neither inflated nor softened: (1) attaching the word MEASURED to a sentence inherited in the same turn, which 1.0.0_SA_CTO~Z confirms stands as narrower and fairer; (2) publishing in Z-S15, in recut note 16e and in a message to four seats that a peer's sound number was not reproducible on any axis, withdrawn by Z-S17 and 16f. NOT this seat's, and not accepted: the characterisation of a chain of an unmeasured number, which was another seat's and is falsified",
+        "the symmetry both seats measured independently: this seat's unquantified universal landed one clause after convicting an inherited one, and 1.0.0_SA_CTO~Z's unnamed instrument landed inside the document convicting a chain for not naming its instrument. Two seats, one hour, the same failure in the same position"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "Z-S16 accepted a share of a 'three seats, one unmeasured number' chain and characterised Z-S15's subject as an inherited universal resting on no count.",
+    "world_is": "No such chain existed. The number was measured by the gate's own resolver from the start, and the three seats differed only in which instrument they read: the resolver, the frozen disposition field, and the frozen hazard_standing field. The single real defect in the whole sequence is that the UNIT went unstated, which let a right number be inherited three times and then wrongly convicted twice.",
+    "notes": "THE RECURSION ENDS HERE, deliberately. Four rows now cover one question (Z-S15 measured the fields, Z-S16 corrected a universal inside it, Z-S17 withdrew its headline, this row closes the characterisation), every superseded row stands unedited, and the chain is reconstructible. A fifth row would correct prose rather than a fact. THE DURABLE OUTPUT IS ONE SENTENCE: a disagreement about a number is FIRST a question about UNITS -- before contradicting a peer's count, ask which instrument produced it and run THAT one, because two right numbers in different units look exactly like one right and one wrong, and whoever censuses second gets to call the other wrong. The adopted reporting form is 3.0.0_SA_CVO~Z's: '0 non-terminal by _latest_dispositions; N rows still read UNDER_INVESTIGATION in their own frozen fields.' Round 4's grade and round 5's ZERO remainder were never touched by any layer of this."
   }
 ]
 ```
