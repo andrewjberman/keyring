@@ -467,3 +467,15 @@ refusal. Worker metadata trust is observed, not accepted-input/vendor read-back
 proof. See RETAINED_PUBLISHER_REVIEW_6c3bfae3.md and its exact JSON/probe.
 Public-wire Y-W01/R-P11 and Y-W02 remain HOLD. All14 integrated rows remain
 0 PASS /0 FAIL /14 NOT_EVALUATED; no READY, cloud, browser, vendor or export grade.
+
+## Public-wire bounded closure, exact960f5f2a45/c09fea54
+
+Y-W01 and Y-W02 CLOSED in Y independent verdict; R-P11 alias still requires
+CVO P separate verdict. Original24 backend controls PASS,4 public-refusal
+observations clear; original20 parser controls53 assertions PASS unchanged from
+64a2c522ef. Added8 projection/internal checks,4 actual selection controls and
+6 portal checks9 assertions PASS; supplied3 backend/21 portal118 assertions PASS.
+Explicit application TypeScript check passes. See OUTER_PAIR_RETEST_960f.md.
+This supersedes the earlier Y public-wire HOLD for this exact pair only.
+0 PASS /0 FAIL /14 NOT_EVALUATED integrated criteria; no package/runtime/browser/
+vendor/render/export/deploy/push lift. Broader reported baseline failures remain.

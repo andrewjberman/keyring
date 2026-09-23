@@ -6,6 +6,13 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 ## Completed preparation
 
+- **Y-W01/Y-W02 CLOSED for exact960f5f2a45/c09fea54** in Y's independent verdict.
+  Original controls unchanged from64a2c522ef:24 backend controls PASS; four raw
+  refusals public-schema clean;20 parser controls/53 assertions PASS (all seven
+  prior failures now refuse). Added8 projection/internal controls,4 actual
+  selection controls and6 parser controls/9 assertions PASS. Supplied backend3,
+  portal21/118 assertions and explicit app TypeScript check PASS. CVO~P's R-P11
+  verdict remains separate; all14NOT_EVALUATED. See `OUTER_PAIR_RETEST_960f.md`.
 - Retained certified publisher `6c3bfae3e6`:29 supplied and16 independent
   controls PASS offline. Actual PDF/evidence/report binding, dependency-first
   refresh promotion, replay and late authorization/lease refusals tested.
@@ -14,10 +21,10 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   binding remains an integration obligation. See
   `RETAINED_PUBLISHER_REVIEW_6c3bfae3.md`. No READY/runtime/integrated grade.
 - Outer pair7915bc9b2c/cf77e5db and separately assembled42412eb8: backend2 supplied
-  and24 closed-schema controls PASS. **Y-W01 aliases peer R-P11 P2 OPEN/HOLD**:
+  and24 closed-schema controls PASS. **Historical Y-W01 aliases peer R-P11 P2**:
   four raw refusals carry schema-marked server-only CID; CTO011346 rules strip
   public field/retain internal diagnostics, P repair and P independent retest.
-  **Y-W02 P2 OPEN**: both portal pins13 PASS/7 FAIL53 assertions; ordinary null/
+  **Historical Y-W02 P2**: both portal pins13 PASS/7 FAIL53 assertions; ordinary null/
   invalid date, safe:false retry and four nested extra-field cases accepted
   despite closed-schema rejection. Assembled12 supplied69 assertions/TS PASS.
   See `OUTER_PAIR_REVIEW_7915.md`. No live exposure/executed retry/regression or

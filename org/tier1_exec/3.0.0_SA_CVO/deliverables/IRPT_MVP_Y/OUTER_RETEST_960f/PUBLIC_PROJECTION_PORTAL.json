@@ -1,0 +1,30 @@
+{
+  "backend_pin": "960f5f2a4501eff2670bcd0b5951926836093447",
+  "portal_pin": "c09fea54e9f4613d44b874724e93b79c443f8cc8",
+  "results": [
+    {
+      "name": "fresh actual selection success and refusal retain facts",
+      "outcome": "PASS"
+    },
+    {
+      "name": "history public parser rejects injected server-only correlation",
+      "outcome": "PASS"
+    },
+    {
+      "name": "read public parser rejects injected server-only correlation",
+      "outcome": "PASS"
+    },
+    {
+      "name": "sections public parser rejects injected server-only correlation",
+      "outcome": "PASS"
+    },
+    {
+      "name": "status public parser rejects injected server-only correlation",
+      "outcome": "PASS"
+    },
+    {
+      "name": "selection public parser rejects injected server-only correlation",
+      "outcome": "PASS"
+    }
+  ]
+}
