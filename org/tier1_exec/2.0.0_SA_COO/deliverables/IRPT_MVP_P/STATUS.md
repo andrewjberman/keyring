@@ -1,5 +1,48 @@
 # IRPT P status - 2026-09-22
 
+## Checkpoint 2026-09-23 01:02 UTC
+
+Product remains incomplete and LOCAL. No deployment, vendor call, policy activation
+or push. Origin CLOUD observed at `b8136f26dca101d9f0f74818df109f25cae5354d`.
+This checkpoint supersedes the inventory HOLD and pending-date statements below.
+
+- R-P10 strict digest-type repair `fdd02de5b2`, independently reviewed by CVO M
+  `a793bb6099`, consumed as `ff247a24fe`. Replacement package `f0f391d6a5`
+  independently closed by CVO P `e00d957e7c`: original 22 unchanged inventory
+  cases PASS, previous 7+3 reviewer cases PASS, four valid-string controls PASS.
+  Independent reconstruction confirms 31 members/17 Python closure, exact source,
+  only publication.py member bytes changed, 215 other function objects/root metadata
+  and three holdings Terraform files unchanged. Inventory HOLD `dfc19fdd84` lifted
+  only at this exact tested package boundary. Economics and full product remain open.
+- Owned Entry source review `9d40f1bd68` reports 28 supplied/42 independent PASS.
+  P contract reconciliation `7915bc9b2c` validates complete actual success/refusal
+  outputs: required unprojected_grant map, public success status, separate existing
+  BoundaryRefusal family, canonical schema refs. Backend generated captures stay
+  in runtime; committed tests regenerate them on explicit output paths. Initial
+  fixture placement was refused by ownership and naming gates; no override used.
+- Y retained date derivation `f4f16b283f` consumed as `dc1c29cd5d`; paired backend
+  date-schema/actual-Entry/owned-Entry suite 70 PASS. Portal `cf77e5db` commits
+  actual output captures, strict outer parsing, date preservation and shared
+  static-render checks. This is offline storage/producer evidence, not live HTTP.
+- Y history/reopening UI `628e3571`/`38a3ea24` consumed as `eb67e57f`/`b290e6a1`:
+  fresh owned request read before separately bound sections, bounded 25-row pages,
+  cancellation and explicit refresh. Combined portal suite 34 PASS/153 assertions,
+  TypeScript 5.9 noEmit PASS. These helper/static-render tests do not prove mounted
+  lifecycle behavior. Pending history/read routes still make zero live transport.
+- Independent Y-DT01 found ordinary business date missing from the job-status DOM.
+  Y repair `8dbc742b` consumed as `42412eb8`; independent unchanged mount retest
+  remains pending. Prospect date list is unchanged. No backend date reclassification.
+
+Latest backend `7915bc9b2c`, portal `42412eb8`. Shared success status omits internal
+correlation; existing raw BoundaryRefusal still carries the opaque diagnostic in
+its separate status family. The reconciliation documents that existing behavior;
+it does not claim that all refusal transport strips it. Paired independent date,
+outer-contract and history lifecycle acceptance remain open. Runtime factory
+installation, IAM/layers, full upload/generation/history assembly, custody economics,
+SMARTX account capability, branded PDF/render, S7 physical disposal and full grades
+remain open. S7 remains PENDING_ENFORCEMENT. Backend risk map about 4h; portal/root
+map about 41h stale (PARTIAL_OR_BLIND), not frontend validation.
+
 ## Checkpoint 2026-09-23 00:34 UTC
 
 Product remains incomplete and LOCAL. No deployment/vendor call/push or acceptance

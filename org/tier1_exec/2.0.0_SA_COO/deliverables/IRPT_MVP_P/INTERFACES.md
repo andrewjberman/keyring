@@ -1,5 +1,33 @@
 # IRPT P shared interfaces - candidate v1
 
+## Paired owned Entry and date boundary - 2026-09-23 01:02 UTC
+
+Backend `7915bc9b2c` includes Y retained-date source `f4f16b283f` consumed as
+`dc1c29cd5d`. Portal parser/generated contracts/captures are `cf77e5db`; assembled
+history and ordinary-date display endpoint is `42412eb8`. Earlier prospect date
+agreement below remains the exact wire vocabulary; no date or identity was inferred.
+
+All 16 success response schemas require the existing unprojected_grant object:
+nonnegative integer count/denominator and reason-to-count kinds map. Public success
+status uses PublicStatusEnvelope, omitting internal_correlation_id. Existing
+served.refuse output is a distinct closed BoundaryRefusal: ok=false, version,
+operation, optional firm_id, StatusEnvelope; no data or grant. Its existing opaque
+internal correlation diagnostic remains in that raw refusal family. Browser parsing
+does not render it. No shared producer mutation or new disclosure is implied.
+
+Actual outputs of four owned Entry operations validate as complete response/refusal
+families in `_contracts/test_owned_outer_contracts.py`. Set explicit output paths in
+IRPT_WRITE_OWNED_OUTER_FIXTURE and IRPT_WRITE_OWNED_DATE_OUTER_FIXTURE to regenerate
+the actual offline captures; portal copies live in mvp-selection/tests. Five date
+captures cover undated, mixed section dates, ordinary single date, old consumer and
+not-ready. Schema/parser/static-render pairing does not prove runtime installation,
+real browser timing, PDF rendering or live retention enforcement.
+
+Y owned-history UI source628e3571/38a3ea24 is consumed as eb67e57f/b290e6a1; ordinary
+business-date display repair8dbc742b as42412eb8. History reads remain separately
+owner-checked before report sections and use pending routes without live transport.
+Y-DT01 independent mounted retest and paired contract review are still open.
+
 Owner: `2.0.0_SA_COO~P`. Authority: CTO completion CONTRACT v1.2 at `4688c59ef2`.
 Status: proposed producer/consumer agreement, not a deployed interface. 2026-09-22.
 Source baseline: workspace `1ca9d3edfecaeead06ef1286df4354098f0f0885`, portal
