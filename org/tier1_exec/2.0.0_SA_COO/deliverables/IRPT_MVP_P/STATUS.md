@@ -6,16 +6,20 @@ Owner `2.0.0_SA_COO~P`. 2026-09-23 20:12Z. Andrew invoked closer for Performance
 
 One selected Cottonwood account ? exact period and series ? immutable retained report ? authorized API ? real-login screen. Backend base7c7aaef354; Portal base10141b6d0b. Candidate adds parameterized single-account calculations, COT-only authenticated transport, selected-firm request support, final Opal roster recheck, actual period/value adaptation, percentage display and selection-bound rendering.
 
-**Failing hop: custody account ? BD Performance account.** Andrew approved exact plan a237c5f7a49e6dda7d72bef6cea40e2b40f4675ee13b28a8ecd600bb82e88d11 for September1?22,2026, one account and no retries. Token acquisition succeeded; performancePeriod returned HTTP200 with EMPTY accounts/levels and dataDate0001-01-01. Response SHA d94a5ecd795b0e35b3b738b7ba1bb442d1844a3b997aa806d2405d436e697061 (80 bytes). Stopped before series; no retry or report publication. Source mapping is M's versioned fact_model_assignment, not a guessed identity. Namespace/currency proof absent; CRO/M own source evidence, P consumer. See PERFORMANCE_TRACE_20260923.md.
+**Anna positive control: provider hop WORKS; report storage/screen remain incomplete.** Andrew directed the active Anna accounts. Retained model mapping resolved Anna Thiessen - Individual (strategy Anna *9237); one new bounded token+period+series run, no retries, returned the exact numeric and external account IDs on BOTH responses. September 1-22, 2026: cumulative TWR -0.004613806 (-0.4613806%); 15 daily-series points end at exactly the same return. Provider dataDate is September22. Plan SHA ae975bcee7cd84f63dc220dd0b17e2c425eb4cf053a0a44c6cd0e7328c363319. Private evidence remains under .runtime/performance-cot-anna. No report published and no further vendor use implied.
+
+The earlier arbitrary account returned empty200; it was not a known-working positive control. That result does not establish a general Cottonwood connection, entitlement or request-format failure. Its account-specific cause remains unknown. Anna also has is_managed=false in retained mapping, so that flag does not explain the difference. Currency is not stated in either retained response; source clarification remains with CRO.
+
+CTO12945 external-ID repair: calculator now requires a nonempty server mapping external key before I/O and exact parity in BOTH responses; bad period stops before series. Matching/missing/different identity and pre-I/O mapping controls:13 PASS,14 deselected. Actual Anna response bytes independently pass the same repaired identity gate offline, with no vendor calls.
 
 Offline: backend Performance93 PASS; exact frontend fe-s-5 suite23 PASS; mounted account/firm/period/refresh/late-response/failure test PASS; TypeScript PASS. Synthetic/historical shapes only. Initial broad Bun substring also matched fe-s-50..59 with unrelated missing schema-root/legacy-envelope failures; no whole-tree PASS. No new backend deployed.
 
 ## Next motion
 
-1. Obtain actual COT Performance identity/entitlement/currency evidence after the empty response. The approved attempt is consumed; further vendor use needs its own exact word. No silent account/credential substitution.
+1. Carry the proven Anna period/series through canonical retained report composition. Currency remains an exact source-contract gap; no assumed USD. Both consumed plans remain non-retryable. Further vendor calls require their own per-use authority.
 2. Wire calculation through canonical retained report/evidence repositories and final release checks; prove exact-version reopening and revocation while source evidence resolves.
 3. Publish candidate pins for CTO review, then install reviewed callable package under concrete deployment scope and exercise real login ? selected account ? screen. No fixture/replay fallback.
-4. Remaining mandate: COT sets/benchmarks/PDF;49F SmartX PRIMARY with BD verifier;INF Orion. CRO3a31788024 SmartX contract BLOCKED: model-only evidence; actual-account/set request, entitlement, units/window/completeness unknown. No model-return substitute or BD primary.
+4. Remaining mandate: COT sets/benchmarks/PDF;49F SmartX PRIMARY with BD verifier;INF Orion. SmartX capture ebf1/c12 now proves one account PTD; custom-window account/set remains unavailable. Provider-as-of and fee/method absent. No model-return substitute or BD primary.
 
 ## Shared queue ? bounded batches, Performance between batches
 
@@ -29,4 +33,8 @@ Offline: backend Performance93 PASS; exact frontend fe-s-5 suite23 PASS; mounted
 
 Andrew confirmed Global/Select Firm and investor list, not Performance. Recorder order45a93c3ae OPEN: O2967772 fails unchanged-source negative control per CTO76480a2a35. Preserve source-map/accidental audit; RS3 quarantine only after exact snapshot remeasure. No recorder rerun. Invalid untracked CHANGELOG untouched. Push hold RELEASED(MSTR184102/CTO299015a832); MSTR sole shared push owner.
 
-DrivePID21512 started19:56Z interval600. Launcher detector/heartbeat unchanged. Helper wrongly monitors obsolete CTO~Y/CRO~Y; defect routed MSTR20:02Z, no replacement monitor. Tick requires inbox clear; consumed messages move to read after successor/action captured here. Timer liveness is not completion/review.
+Corrected canonical drive PID3520, interval600, seat_only=True, mission main handoff2026-09-23_2017Z.md. MSTR6a439656c1 repaired obsolete peer targeting. Existing thread exceeds app-server16MiB frame cap; MSTR owns fresh-thread recovery and Andrew has been informed. Manual inbox sweep while active; helper liveness alone does not prove nudge delivery.
+
+## Ready source queue update 20:44Z
+
+CTO47e0f95 accepts caller84c6 overebf8, M Portal e560 exact2files, recorder0b8784. CTO69f518471f accepts Y resident57b228 exact5files with process-enforced deadline. M206b5329de supplies two-file shared Holdings taxonomy projection preserving hierarchy_path. Integrate as bounded batches; no full deployment verdict. SmartXc12/d3f7: captured account PTD has decimal units on1account/4periods, provider-as-of absent; retrieval time is not dated-as-of proof. Window-end completeness44/44 and42/42; no fabricated selected-set aggregation.
