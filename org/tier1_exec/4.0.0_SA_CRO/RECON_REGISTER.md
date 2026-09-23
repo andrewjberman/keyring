@@ -30,6 +30,7 @@ directory an engagement's artifacts live in.
 | **RCN-0011** | 2026-09-19 | **`_authz` LAYER design fork** (IRPT) -- answered empirically for `1.0.0_SA_CTO`: no layer for fork prevention | 1 (`deliverables/RCN-0011_AUTHZ_LAYER_FORK_RESEARCH_20260919.md` + addendum) | `holdings/lambda.tf` read; 7 routes | `4.0.0_SA_CRO` (base, CLOUD fabric) | **DELIVERED** -- POINTER ROW ONLY, added 2026-09-22 by `4.0.0_SA_CRO~F` after an id collision; the section is the base seat's to write |
 | **RCN-0012** | 2026-09-22 | **Claude for Financial Services** -- Anthropic's open-source FSI plugin marketplace + the LLY pack Yang built with it, and how its channels thread into AMGT_RESAPP | 2 briefs + 1 evidence folder (endpoint discovery card + JSON) | repo @574ed36 (19 entries, 5 `.mcp.json`, 3 SKILL.md); LLY pack 58 files (README/SOURCES in full, 3 xlsx, 2 docx); 12 of 12 MCP servers probed unauthenticated; 9 public doc pages; CTO~W card 1 | `4.0.0_SA_CRO~F` | **DELIVERED as CTO intake -- PROPOSAL ONLY, nothing dispatched.** Plugin = files not access (12 OAuth-gated vendor servers); LLY pack built from PUBLIC sources; core `.mcp.json` malformed at that vintage; 4 open calls at Andrew |
 | **RCN-0014** | 2026-09-23 | **`opal_ai`** -- the Opal Analyst as a microproduct: one agent + one indexed MCP in three slices (Opal -> Template -> Clients), tying Opal Analyst, D6 GraphQL, NFRA_OPLGTW, NFRA_MCPINDEX, the vendor-access paths and The Walk into one repo | 1 L1 brief (`docs/briefs/opal-ai-microproduct-repo-brief-20260923.md`) | repo reads only @`1b1244cecf`: 3 PRDs + 2 briefs + the 09-22 assessment; gateway code layout; the BG seat's prompt/refs/fence; 3 vendor designs-of-record + 2 standards; RCN-0001/0002 tooling; comp-which + its harness; RCN-0012 | `4.0.0_SA_CRO~X` | **DELIVERED as CTO intake -- nothing dispatched.** 12 outcomes, candidate thread = one Teams question answered through the MCP; 8 calls at Andrew (one repo vs the 09-22 `opal_analyst` naming; slice-first layout; the monitor conflict in the Third-Party Standard) |
+| **RCN-0015** | 2026-09-23 | **The GitOps split of `opal_ai` from `ajb_workspace`** -- portal-shaped (contained, separate, tooled), and what the portal's current wiring does and does not give a nested repo | 1 L1 brief (`docs/briefs/opal-ai-gitops-split-brief-20260923.md`) | local git + repo reads @`bd282e03e9`: `.gitmodules`, gitlinks, portal hooks/CI/branches, the owned-paths hook, safe-commit/safe-merge, wk-provision, both EC2 deploy scripts + manifest, the gateway's parent reaches, the launcher and parent `.claude` | `4.0.0_SA_CRO~X` | **DELIVERED as CTO intake -- nothing dispatched.** The portal is a nested clone + gitlink, not a submodule; its commits skip every parent git gate; the lane check fails open there; both deploy guards read the parent; 24 work items, 8 calls |
 
 ---
 
@@ -912,3 +913,16 @@ client slice is Andrew's own 08-19 client data-access design. Two conflicts are 
 `opal_analyst` naming versus today's single `opal_ai` repo, and the Third-Party Standard's alarm step versus the monitor
 moratorium. **Status: DELIVERED as CTO intake. Nothing dispatched, no repo created, no project registered. Repo reads only
 -- no AWS, gateway, Teams or GitHub read.**
+
+## RCN-0015 -- the GitOps split of `opal_ai`: portal-shaped, done properly
+
+**Date:** 2026-09-23. **Produced under:** `4.0.0_SA_CRO~X`, SITEZ. **Commissioned:** Andrew-direct at this terminal
+~22:0xZ; verbatim record `deliverables/ANDREW_DIRECT_20260923_220xZ_OPAL_AI_GITOPS_SPLIT_SPEC.md` @`bd282e03e9`.
+**Package:** `docs/briefs/opal-ai-gitops-split-brief-20260923.md`, for `1.0.0_SA_CTO~Z`. Companion to RCN-0014.
+
+**Finding in one line:** "the same structure as the portal" gives a nested repo containment and separation but only part
+of the tooling. The portal is a nested clone plus a gitlink, with `.gitmodules` at 0 bytes. It has 0 active git hooks,
+so no parent git gate grades its commits. The lane check `WARN`s and skips inside it. Both EC2 deploy guards read the
+parent's git, so a nested source would pass the clean-tree check over uncommitted edits and record the wrong commit.
+The brief recommends a real submodule and names 24 items that make it "tooled" as well. **Status: DELIVERED as CTO
+intake. Nothing created, moved or dispatched. Local reads only -- no GitHub read, nothing deployed.**
