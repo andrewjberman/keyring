@@ -96,7 +96,7 @@ See commit messages: `59d833bd88`, `60dde3b252`, `f0d533e084`, `6f8958909a`, `03
 `39cd826599`, `8e5612576b`, `3e33937f78`, `73259627c4`. All under
 `org/tier1_exec/3.0.0_SA_CVO/deliverables/` plus the AMGT_RESAPP surprise channel.
 
-⚠ **One commit (`39cd826599`) carried a FOREIGN ROW** (`AMGT_RESAPP-Z-S237`, by
+WARN: **One commit (`39cd826599`) carried a FOREIGN ROW** (`AMGT_RESAPP-Z-S237`, by
 `0.1.0_DE_MarketIntelligence`) under the audited `surprise-row-override`. It sat uncommitted in the
 shared tree and was blocking every later append. Carried at its author's exact bytes, nothing
 edited, disclosed to `1.0.0_SA_CTO~Z` in the same turn, and **ratified** by that seat.
