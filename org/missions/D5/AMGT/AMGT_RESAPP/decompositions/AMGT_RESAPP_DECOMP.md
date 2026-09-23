@@ -5085,3 +5085,115 @@ ranked items are blocked behind ONE lane call (39a) and one measured unknown (39
 through a `worker_grant` that consults no lane, would be this seat delegating authority it does not hold -- which is
 the exact move CVO ruling R5 and the CTO's msg 24396 forbid, three days after this seat was convicted of the
 adjacent defect. **The card goes up in the same turn as this issuance; the two cells below start now.**
+
+## 40. ROUND 32 -- FROM THE CTO'S ROUND-31 ANALYSIS @`623fbedd89` (`1.0.0_SA_CTO~Z`, msg 24454)
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 31 closed 2 of 2 (12/0/0). ⛔ **THE LANE GRANT HAS NOT LANDED** -- measured at
+this cut, not assumed: `.owned-paths.yaml:1944` still reads `lane: POD_DE_ANY`, the file's last commit is
+`f7fe05777f` **2026-09-14**, and `get_live_agents` returns 7 seats with **no `_DE_` among them**. So the CTO's
+stated fallback applies verbatim: **round 32 is a SERVER-SIDE round**, and all three ranked items (`C-S400`,
+`Z-S227`, `rk-124`'s client half) wait.
+
+⛔ **ROUND 32 IS ONE CELL AND TWO CARDS, AND THAT IS THE MEASUREMENT'S DOING, NOT A SHORTFALL.** The CTO named
+three server-side candidates. **Two of them dissolved into calls when measured at the cut** (40a, 40b). Padding the
+round with cells whose acceptance depends on an unmade ruling is the `Z-S235` defect; the CTO graded round 31's
+honest two-cell shape as the right instinct and this round applies it again.
+
+### 40a. THE FILINGS CHAIN DISSOLVED INTO A CONTRACT CALL -- measured, n=1, and it GROWS
+
+`rk-118` ran correctly **with** the identity `rk-121` wired: AC0 read `cik 932477`, `web_address www.lenovo.com`,
+`legal_name LENOVO GROUP LTD`, `precursor_rk121_applied True`. Its step 2 is a **TRIAL FINDING**: Bloomberg CIK
+`932477` **RESOLVES to EDGAR entity "LENOVO GROUP LTD"** -- a name the PRD calls "not an SEC filer" -- **but no
+10-K exists in the window**, because Lenovo is HK-listed and files with HKEX, which msg 24257 excludes. The
+classification MOVED (`filing_identity.source: 'none' -> 'battery'`) while the served status stayed
+`UNRESOLVED-SOURCE`, so `rk-105`'s rule correctly reported **CHANGED-HELD and wrote nothing**.
+
+⛔ **THE CONSEQUENCE IS A SERVED SENTENCE THAT IS NOW FALSE.** Lenovo's Thesis tab serves
+`drafting_reason = "filing_identity.source is 'none': no cik and expected form to fetch by"` (`rk-118` AC5,
+statusCode 200). **We HAVE the cik and it RESOLVES.** Same family as `C-S400`: the page asserting something untrue,
+not merely saying nothing.
+
+⭐ **THE POPULATION READ, and it is the opposite of what "stale marker" suggests.** Signature = *served reason says
+"no cik" while the crosswalk HAS one*, run over the whole store:
+
+| measure | value |
+|---|---|
+| `filing_attempt` objects | **180** |
+| content vintage `retrieved_at` | **178 at 2026-09-17**, 1 at 09-19, 1 at 09-21 |
+| carrying the `"no cik"` reason | **178** |
+| crosswalk records / with `security_key` / **with a cik** | 96 / 36 / **3** |
+| ⛔ **SIGNATURE: reason says "no cik" while a cik EXISTS** | ⭐ **1 of 180 -- `992_HK_Equity` ONLY** |
+
+⚠ **SO IT IS NOT SYSTEMIC STALENESS. The other 178 carry the same sentence and it is still TRUE for them** -- they
+genuinely have no cik. **The defect exists precisely BECAUSE we enriched Lenovo**, which is the trial's whole job.
+⭐ **THE FORWARD POINT IS THE REAL ONE: only 3 of 96 records carry a cik today, so EVERY FUTURE IDENTITY
+ENRICHMENT FALSIFIES A SERVED REASON THE SAME WAY.** The contract question matters more prospectively than the
+single instance does today.
+
+⚠ **A GRAIN TRAP MEASURED HERE AND WORTH KEEPING:** all 180 objects carry S3 `LastModified` of **2026-09-22**
+(today) while their CONTENT `retrieved_at` reads **2026-09-17**. **The storage grain says fresh; the content grain
+says five days old. The content is the claim.** A vintage read off `LastModified` would have reported every one of
+these as current.
+
+**WHY THIS IS A CARD AND NOT A CELL:** the remedy is either (a) amend `rk-105`'s held-write rule so a REASON change
+is publishable when the STATUS does not move, or (b) publish the corrected reason under a never-widen pair. **(a)
+is a contract change and is the CTO's; (b) moves served bytes and needs a pair the CTO co-signs.** Neither is this
+seat's to take unilaterally, and cutting a cell against an unmade ruling is exactly what round 31 was praised for
+refusing.
+
+### 40b. `Z-S229` IS NOT CUTTABLE IN LANE -- restated from s.38b item 3, unchanged
+
+The served PRICE axis is DynamoDB ranked rows and `price_axis_pull.py` is **cohort-wide by construction** (34
+MEASURED tickers, chunked, one generation, a `_CURRENT` pointer). Ranking a cohort of one is meaningless and
+running it rewrites EVERY name's served rows -- a fleet act, far outside Lenovo's blast radius, against the
+no-fleet-run word. It needs its own pair AND Andrew's scope word. `rk-117` answered the BRONZE half only.
+
+### 40c. THE MAPPING -- one cell, inside this seat's lane
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| the `bestdata` vintage read | `AMGT-rk-126` | ~126 | A1 | **Substrate card S1**, carried by the CTO at msg 24402 and deferred while round 30 was frozen: can Bloomberg's dated `bestdata` vintages give the consensus REVISION series? ⭐ **BOTH HALVES ARE ANSWERABLE TODAY AT ZERO SPEND, which this seat did not know when the cell was drafted** -- see 40f. The cell reads `rk-116`'s Lenovo object AND diffs the three EXISTING two-vintage pairs. ⛔ **It SPENDS NOTHING and pulls nothing** | none -- read-only, no served bytes, no pair |
+
+### 40f. WHAT THE PRE-ISSUANCE EXERCISE CHANGED, BEFORE THE ORDER WAS WRITTEN
+
+⛔ **THIS CELL WAS DRAFTED ON A FALSE PREMISE AND THE EXERCISE CAUGHT IT.** The first draft said *"the 'diff the
+NEXT vintage' half requires a second pull, which is sized and REFUSED here"* -- reasoning from the CTO's msg 24402
+phrasing (*"then diff the NEXT vintage"*) and from Lenovo having exactly one. **Listing the store first shows
+otherwise: 7 objects, and THREE securities already carry TWO vintages each** --
+`CAT_US_Equity`, `CSL_AU_Equity` and `6861_JP_Equity`, each at `20260919T1248xxZ` and `20260919T1521xxZ`.
+**So S1's second half needs no pull at all and the refusal this cell was going to make was unnecessary.**
+
+⚠ **AND THE INSTRUMENT'S LIMIT IS NAMED RATHER THAN DISCOVERED BY THE WORKER: the two vintages are ~33 MINUTES
+APART ON THE SAME DAY.** Consensus does not move in 33 minutes. **A same-day pair can establish that the store
+PRESERVES DISTINCT VINTAGES and that the reader can diff them; it CANNOT establish that a consensus REVISION would
+be captured** -- that needs vintages days or weeks apart. The cell must report both answers separately and must not
+let the cheap one stand in for the expensive one. **That distinction is the whole value of S1 and is why the card
+exists.**
+
+COST of the exercise: one `list_objects_v2`. It removed a refusal, widened the cell from 1 name to 4, and named the
+limit that would otherwise have been the worker's surprise row.
+
+### 40d. SURFACE CENSUS
+
+| | rk-126 |
+|---|---|
+| `bloomberg/harvest/bronze/bestdata/**` | **READ ONLY** |
+| `org/.../deliverables/0.9.0_WK_AMGT_RESAPP~126/**` | W |
+| the append-only surprise channel | shared, by design |
+
+- **No code file is written.** No deploy, no AWS mutation, no vendor call, no Bloomberg call, **zero spend**.
+- ⛔ **`portal/**` is NOT NAMED and may not be** -- lane `POD_DE_ANY`, which this seat does not hold (s.39a).
+
+### 40e. FAN-OUT
+
+```
+fanout:
+  cap: 8
+  orders_total: 1                   # rk-126
+  chains_total: 1
+  wave_1: [rk-126]
+  blocked_on_andrews_lane_grant: [C-S400, Z-S227, rk-124 client half]
+  blocked_on_a_cto_contract_call: [the filings served-reason correction (40a)]
+  blocked_on_a_fleet_scope_word: [Z-S229 (40b)]
+  no_fleet_run: true
+```
