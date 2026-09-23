@@ -193,6 +193,100 @@ so the Scope value excludes accrual. Body: `orion_value_check_live.bin`, sha256 
   that treats a file's key or `asOfDate` as its valuation date is one trading day late. I did not read the builder's
   date binding for this.
 
+## Update ~21:3xZ: COT section C, the 5,694 blank-value rows are CLOSED POSITIONS the vendor keeps listing
+
+Requested by `1.0.0_SA_CTO` (20:48Z, "COT missing-value cause"). Opal S3 only, no vendor call. Measured by this seat.
+
+- **The blanks are the vendor's, not Opal's.**
+  - The raw workbook `s3://opal-data-cot/forwardfill_v2/holdings/HOLDINGS_DAILY_2026-09-22.xlsx` (VersionId
+    `ZwJ.7IP7tbNR3XsRBdJac2g1xG3i_Er9`) has 19,610 data rows, the same as silver.
+  - Market Value, Units, Unaccrued Market Value and Accrual are all EMPTY on the same 5,694 rows. That was read with
+    formulas preserved: 0 formula cells, 13,916 numbers and 5,694 empty in each of the four columns.
+  - The silver partition `fact_holdings/date=2026-09-22` (VersionId `tGurdOTYhnuidIUgThZYlJxOcaqNTuKl`) converts it 1:1
+    from one `_source_file`.
+  - The workbook's own Timestamps sheet: template `Assets_Dim`, Start 9/8/2026, End 9/22/2026.
+- **Blank Units too**, so this is not "held but unpriced". There is no position fact at all on the end date.
+- **They are positions that were held and then closed.**
+  - **Recently closed:** 223 of the 5,673 distinct blank (AccountID, AssetID) pairs had a value on a window day
+    (09-08 to 09-21). 203 of the 223 carry a Sale or Transfer Out in `silver/transactions/2026-09-23.parquet` (VersionId
+    `VDudguIuLivlA06ADpHsMB6zU.XFZR6f`), and 211 carry some transaction. Positive control: only 2,890 of the 13,837
+    pairs valued on 09-22 carry any transaction in that file.
+  - **Long closed:** 5,380 of the 5,673 had a value in at least one of 14 earlier sampled partitions (06-09, 07-01,
+    08-03, 09-04, and 09-08 to 09-21). 4,538 were valued on 06-09 and are still listed blank on 09-22.
+  - **Not placed:** 293 were never valued in the 15 sampled partitions, out of 78 in total. They were UNMEASURED
+    on the other 63 days.
+- **They are NOT confined to the 14-day window. The listing only grows.**
+  - Of 19,435 pairs present in any earlier sample, 8 are absent on 09-22.
+  - Of 4,544 pairs valued on 06-09 and not valued on 09-22, 4,538 are still listed and 6 dropped.
+  - The blank count went 110 (06-09), 236 (07-01), 3,466 (08-03), 5,494 (09-04), 5,694 (09-22).
+  - The July jump is not explained here.
+- **Vendor semantics, INFERRED from that behavior:** the template (VersionId `y3iiUIqP...`) has queryTypeId 1, levels
+  Relationship > Portfolio > Account > Holding, and the four facts. `includeAll: true` returns every account-holding
+  pair in BD's holding dimension, with empty facts where there is no position on the end date. BD documents none of
+  this.
+- **Consequence for Holdings:** a blank row is a closed position. It is neither a $0 holding nor an unpriced live
+  holding. Excluding it from current holdings loses nothing Cottonwood holds on the end date. A holding count or
+  weight that includes these rows is wrong.
+- **Contrary text:** `data/cot/scripts/silver/cot_silver_merge.py` `_read_sheet_data_only` describes BD formula cells
+  in Holdings. That is not so for this file: 0 formula cells.
+- **Andrew-direct, ~21:3xZ 2026-09-23, at the 4.0.0_SA_CRO terminal, VERBATIM:**
+  - *"Cottonwood only has data from maybe a couple months ago, they dont have full data in BD yet as far as I am
+    aware"*
+  - *"come october we should check again"*
+
+  **What this changes.** The closed-position reading is **MEASURED** only for the 223 recent closures, which carry
+  sale or transfer evidence. For the long-standing blanks it is **INFERRED**. The row growth (10,183 on 06-09 to
+  19,610 on 09-22) and the July jump in blanks may reflect BD ONBOARDING (accounts and history still being loaded or
+  transitioned) rather than ordinary trading.
+
+  The Holdings rule is unchanged either way: a blank row has no position on the end date.
+
+  **RE-CHECK PARKED:** owner `4.0.0_SA_CRO`, due October 2026, per Andrew's word. Re-run the three measurements
+  above (raw blank count, 1:1 silver conversion, recent-closure sale/transfer tie) on an October partition. Also ask
+  whether BD's COT history is complete by then.
+
+## Update ~21:5xZ: Andrew-authorized BD check, how much Cottonwood data BD holds in 2025
+
+**Authorization, Andrew-direct at the 4.0.0_SA_CRO terminal, ~21:4xZ 2026-09-23, VERBATIM:** *"actually, maybe worth
+just doing a little egress, check right now and see how much cottonwood data there is in 2025"*. That is a per-use
+vendor authorization for this check only.
+
+**How the check ran:**
+- It reused the production COT ingest's own flow, imported from `data/cot/scripts/bronze/cot_bronze_ingest.py`:
+  - the existing `blackdiamond/cot/session` session;
+  - the PERSISTED templates (`code/bronze/templates/{holdings,transactions}.json`), so no template was created;
+  - only the Custom window was moved.
+- `land_to_s3` was never called, so nothing was written.
+- Exports were parsed in memory and only the counts below were kept. Script: this seat's scratchpad
+  `cot_2025_probe.py`.
+- **Calls:** 1 token GET, then for each of 7 runs a template GET, a run POST, status polls and an export GET. All
+  returned 200 or complete, with no error.
+- **Not measured:** whether a run with a persisted templateId re-stores the run's dates on the template. The daily
+  run re-stamps its own Custom dates in any case.
+
+| as-of (14-day Custom window end) | rows listed | rows with a value | accounts with a value | accounts listed | market value |
+|---|---|---|---|---|---|
+| 2025-03-31 | 19,610 | 35 | 29 | 981 | $9.85M |
+| 2025-06-30 | 19,610 | 35 | 29 | 981 | $9.74M |
+| 2025-09-30 | 19,610 | 57 | 41 | 981 | $14.45M |
+| 2025-12-31 | 19,610 | 83 | 56 | 981 | $21.35M |
+| 2026-03-31 | 19,610 | 84 | 57 | 981 | $21.38M |
+| 2026-05-29 | 19,610 | 8,979 | 652 | 981 | $314.47M |
+
+Transactions, 2025-12-17 to 2025-12-31: 55 rows across 29 accounts, every trade dated 12/31/2025.
+
+- **BD holds only a sliver of Cottonwood before spring 2026:** 29 to 57 accounts and $10M to $21M through
+  2026-03-31. The bulk (652 accounts, $314M) appears between 2026-03-31 and 2026-05-29. That matches Andrew's "only
+  has data from maybe a couple months ago". **2025 is NOT usable history for Cottonwood reporting.**
+- **This settles the blank-row semantics that the section above held as INFERRED; they are now MEASURED.** Every
+  export returns the SAME 19,610 rows, the same count as today's feed, whatever the as-of date, and puts values only
+  on pairs with a position at that end date (35 of 19,610 in March 2025). So `includeAll: true` lists BD's CURRENT
+  account-holding dimension, and a blank row is a pair with no position on the end date.
+  - Discriminating: a window-bounded listing would have returned far fewer rows in 2025.
+- **For Performance:** a Cottonwood period starting before about May 2026 covers only the ~29-57 accounts BD held
+  then. Any since-inception or YTD-2026 figure for most accounts starts at their BD onboarding, not at the real
+  inception. That is a disclosure item, not measured further here.
+
 ## Update ~21:1xZ: COT section D correction, and the cause of the first empty response
 
 - **Correction:** a Cottonwood PortfolioReporting body IS retained. `.runtime/codex-seats/4.0.0_SA_CRO/performance-recon/bd_refreshed_period_live.bin`
