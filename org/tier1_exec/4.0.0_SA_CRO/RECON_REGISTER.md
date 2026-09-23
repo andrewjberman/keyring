@@ -29,6 +29,7 @@ directory an engagement's artifacts live in.
 | **RCN-0008** | 2026-09-09 | **Investor Reporting & Data Unification** — Andrew's proposal docx → the L1 BRIEF for the D14 directive (wraps D1/D2/D3; the client workflow leaves Advisor Intelligence) | 3 (brief, citable source text, Andrew-direct record) | Andrew's proposal (80,251 B docx, sha256 `db4168a6…f0e8`, 450 blocks extracted) + directives board (13 live) + registry (355 JSONs / 48 open / 86 open TOs) + 6 PRD §1–§2 reads + 5 comp-find censuses over 152,3xx files + `comp-trigger --list` (142 rules + 19 schedules) + `comp-schedule` (26 gates) + 1 `comp-read` | `4.0.0_SA_CRO` | **DELIVERED at L1** — consumer `1.0.0_SA_CTO` `/endpoint --forward`. Nothing dispatched, no register row written (D14 is MSTR's cell). ADVI_PERFRP read to its header only (standing 08-24 restriction names this seat; surfaced, not adjudicated) |
 | **RCN-0011** | 2026-09-19 | **`_authz` LAYER design fork** (IRPT) -- answered empirically for `1.0.0_SA_CTO`: no layer for fork prevention | 1 (`deliverables/RCN-0011_AUTHZ_LAYER_FORK_RESEARCH_20260919.md` + addendum) | `holdings/lambda.tf` read; 7 routes | `4.0.0_SA_CRO` (base, CLOUD fabric) | **DELIVERED** -- POINTER ROW ONLY, added 2026-09-22 by `4.0.0_SA_CRO~F` after an id collision; the section is the base seat's to write |
 | **RCN-0012** | 2026-09-22 | **Claude for Financial Services** -- Anthropic's open-source FSI plugin marketplace + the LLY pack Yang built with it, and how its channels thread into AMGT_RESAPP | 2 briefs + 1 evidence folder (endpoint discovery card + JSON) | repo @574ed36 (19 entries, 5 `.mcp.json`, 3 SKILL.md); LLY pack 58 files (README/SOURCES in full, 3 xlsx, 2 docx); 12 of 12 MCP servers probed unauthenticated; 9 public doc pages; CTO~W card 1 | `4.0.0_SA_CRO~F` | **DELIVERED as CTO intake -- PROPOSAL ONLY, nothing dispatched.** Plugin = files not access (12 OAuth-gated vendor servers); LLY pack built from PUBLIC sources; core `.mcp.json` malformed at that vintage; 4 open calls at Andrew |
+| **RCN-0014** | 2026-09-23 | **`opal_ai`** -- the Opal Analyst as a microproduct: one agent + one indexed MCP in three slices (Opal -> Template -> Clients), tying Opal Analyst, D6 GraphQL, NFRA_OPLGTW, NFRA_MCPINDEX, the vendor-access paths and The Walk into one repo | 1 L1 brief (`docs/briefs/opal-ai-microproduct-repo-brief-20260923.md`) | repo reads only @`1b1244cecf`: 3 PRDs + 2 briefs + the 09-22 assessment; gateway code layout; the BG seat's prompt/refs/fence; 3 vendor designs-of-record + 2 standards; RCN-0001/0002 tooling; comp-which + its harness; RCN-0012 | `4.0.0_SA_CRO~X` | **DELIVERED as CTO intake -- nothing dispatched.** 12 outcomes, candidate thread = one Teams question answered through the MCP; 8 calls at Andrew (one repo vs the 09-22 `opal_analyst` naming; slice-first layout; the monitor conflict in the Third-Party Standard) |
 
 ---
 
@@ -894,3 +895,20 @@ never-widen and specific external operating bounds while removing repetitive rou
 The first representative report and full-population MVP have separate milestones; timing is explicitly
 an initial conditional estimate. Authenticated live browser/export, fresh vendor/model runs and full
 outcome acceptance were not exercised by this research. LOCAL; origin/SITEZ measured `95be3bc7a9`.
+
+## RCN-0014 -- `opal_ai`: the Opal Analyst as a microproduct in three slices
+
+**Date:** 2026-09-23. **Produced under:** `4.0.0_SA_CRO~X`, SITEZ. **Commissioned:** Andrew-direct at this terminal
+~18:5xZ; verbatim record `deliverables/ANDREW_DIRECT_20260923_185xZ_OPAL_AI_MICROPRODUCT_REPO_BRIEF.md` @`6ae5ab5fd3`.
+**Package:** the L1 brief `docs/briefs/opal-ai-microproduct-repo-brief-20260923.md`, for `1.0.0_SA_CTO~Z`'s
+`/endpoint --forward`. **Builds on** `4.0.0_SA_CRO~Z`'s 09-22 templating assessment @`20de682ede` (seven recs approved).
+
+**Finding in one line:** the three things he named are already one stack -- a Claude seat whose only external surface is
+the Opal Gateway MCP, and an index layer being built inside that gateway -- so `opal_ai` gathers existing prior art into one
+repo; nothing in it is a new product. The template's MCP half is extracting configuration into one instance manifest; its
+vendor half is the ratified Third-Party Standard plus the documented access paths (official REST; cookie-riding REST with an
+EC2 re-auth box; standing session box; file delivery; rendered page last); The Walk is RCN-0001/0002's HAR profiler; the
+client slice is Andrew's own 08-19 client data-access design. Two conflicts are named, not resolved: the 09-22
+`opal_analyst` naming versus today's single `opal_ai` repo, and the Third-Party Standard's alarm step versus the monitor
+moratorium. **Status: DELIVERED as CTO intake. Nothing dispatched, no repo created, no project registered. Repo reads only
+-- no AWS, gateway, Teams or GitHub read.**
