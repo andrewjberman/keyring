@@ -417,9 +417,17 @@ def js_literals(src, added):
 def tf_literals(src, added):
     """Terraform string literals on added lines, each with its block context: a label is marked, a string in a
     module block whose source is the opal_name module is permitted, and a resource's own-name attribute gives
-    the node type as the hint."""
+    the node type as the hint.
+
+    THE HCL LOOKUP CONTEXT (2026-09-23, 0.0.0_AB_MSTR, on 1.0.0_SA_CTO's 22:29Z routing of P's retained.tf):
+    the Python side permits a literal inside a lookup() call (BUILDERS); this is its Terraform twin. A literal
+    is permitted when it is the key of `lookup(local.X, "<key>")` or of `local.X["<key>"]` AND local.X is fed,
+    in the same file, from jsondecode(file(".../logic/registry/<name>.json")) -- the canonical registry the
+    Python lookup() reads. A local fed from a hand-typed map, or a lookup over anything else, stays graded:
+    the same rule as the Python branch, no new permission class."""
     toks = scan(src, "tf")
     blocks, stmt, attr, bracket, out = [], [], None, 0, []
+    registry_locals, ctxs = set(), []
     for kind, v, raw, ln in toks:
         if kind == "nl":
             if bracket == 0:
@@ -459,17 +467,33 @@ def tf_literals(src, added):
             continue
         lit = Lit(v, raw, ln)
         lit.block = list(blocks)
+        ctxs.append((lit, [(k, x if k != "lit" else None) for k, x in stmt[-5:]]))
         stmt.append(("lit", lit))
         inner = blocks[-1] if blocks else None
         if inner and inner.get("block") and inner.get("kind") == "module" and attr == "source" and "opal_name" in v:
             inner["opal"] = True
+        if _TF_REGISTRY_FILE.search(v) and any(b.get("block") and b.get("kind") == "locals" for b in blocks):
+            local_name = inner.get("map_attr") if inner and not inner.get("block") else attr
+            if local_name:
+                registry_locals.add(local_name)
         lit.hint = _tf_hint(blocks, attr)
         if ln in added:
             out.append(lit)
     for lit in out:
         if any(b.get("block") and b.get("kind") == "module" and b.get("opal") for b in lit.block):
             lit.permitted = True
+    for lit, ctx in ctxs:
+        if lit.permitted or lit not in out:
+            continue
+        if (len(ctx) >= 5 and ctx[-5:-1] == [("word", "lookup"), ("sym", "("), ("word", "local"), ("word", ctx[-2][1])]
+                and ctx[-1] == ("sym", ",") and ctx[-2][1] in registry_locals):
+            lit.permitted = True  # lookup(local.X, "<key>") over a registry-fed local
+        elif len(ctx) >= 3 and ctx[-3] == ("word", "local") and ctx[-1] == ("sym", "[") and ctx[-2][1] in registry_locals:
+            lit.permitted = True  # local.X["<key>"] over a registry-fed local
     return [lit for lit in out if not lit.label]
+
+
+_TF_REGISTRY_FILE = re.compile(r"(^|/)logic/registry/[A-Za-z0-9_.-]+\.json$")
 
 
 def _tf_hint(blocks, attr):
