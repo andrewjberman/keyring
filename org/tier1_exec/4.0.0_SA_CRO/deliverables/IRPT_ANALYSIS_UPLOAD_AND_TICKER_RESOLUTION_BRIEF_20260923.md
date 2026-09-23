@@ -306,9 +306,16 @@ calls them, and a tester or ops seat can call them directly with a list of symbo
     proposed first next time, with no Kimi call. The library grows with use.
   - Both stores take names and addresses from `lib/opal_naming.py` `name()` and `address()` (CLAUDE.md Rule 30). A builder
     refusal means adding a registry row, never a hand-typed name.
-- **One YCharts session.**
-  - All three routes reach YCharts through ONE session under the IRPT lease, NOT through a second login, so a lookup
-    cannot evict a report job.
+- **`check` needs NO YCharts session (measured 2026-09-23, second authorized capture).** `securities_info` returned HTTP
+  200 with the full row both with no cookie and with a junk session cookie (fixtures `05_no_cookie.json` and
+  `06_invalid_session.json`). So:
+  - the `/securities/check` lookup runs sessionless, with no seat, no lease, no eviction risk and no refresh;
+  - it is the fastest and least fragile piece of the flow.
+
+  Whether `search/suggest/main` is equally open is unmeasured. The report generation certainly needs the session.
+- **One YCharts session, for the calls that need one.**
+  - Those calls reach YCharts through ONE session under the IRPT lease, NOT through a second login, so a lookup cannot
+    evict a report job.
   - **Today that can only be `ycharts/credentials`, the one live session (section 4).** The IRPT session secret is
     empty and its runner is not deployed.
   - **Decision for the CTO:** deploy the IRPT runner so `ycharts/session/current` is maintained, or bind the lease to

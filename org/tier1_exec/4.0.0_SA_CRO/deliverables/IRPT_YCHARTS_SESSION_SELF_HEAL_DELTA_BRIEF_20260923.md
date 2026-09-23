@@ -131,9 +131,15 @@ a pull fails, need to see what error messages they send in failed pull if its 40
 | HTTP 404 on a data endpoint | **bad symbol or route** (measured 05-26: `/indices/table_data` 404 on unresolved symbols, `org/tier2_senior/0.1.0_DS_MarketIntelligence/logs/2026-05-26/yalp_macros_002_ycharts_test_pulls.md:98`) | not staleness; for the lookup it is NOT_FOUND |
 | HTTP 429 or a timeout | transient | back off with jitter; no refresh |
 
+- **Measured 2026-09-23 (the 2-call capture, on Andrew's word): `securities_info` succeeds with NO session.** With no
+  cookie and with a junk session cookie it returned HTTP 200 and the full row. So:
+  - (a) the ticker lookup needs no session at all and is outside this controller's scope;
+  - (b) **a lookup success says nothing about session freshness.** Staleness is only observable on AUTHENTICATED pulls
+    (the `/indices/table_data` probe, portfolio and report calls), and W1's classifier applies to those only.
 - **Still UNCAPTURED, so the classifier's defaults must be conservative:**
   - the body when a cookie simply expires with age (today's 84-day-old cookie was still live);
-  - the response to a request with no cookie or an invalid one;
+  - the response to a request with no cookie or an invalid one ON AN AUTHENTICATED endpoint (the 2-call capture hit
+    `securities_info`, which turned out to be open);
   - whether YCharts ever sends 401, since every observed auth failure so far was 403.
 - **Unknown-body default:** a 401 or 403 whose body matches no row is treated as SIGNED OUT, refreshed once, then sent
   to attention.
