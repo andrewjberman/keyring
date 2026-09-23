@@ -1,14 +1,14 @@
 # Investor Reporting - CTO control sheet
 
-As of2026-09-23 approximately19:40UTC. Owner/reviewer1.0.0_SA_CTO. Active objective: drive the three existing COOs to E2E completion under /closer. No product is currently verified complete. This file is current state, not a journal. RULINGS.md is the decision history. No independent CVO queue under Andrew's direct-review instruction.
+As of2026-09-23 approximately19:59UTC. Owner/reviewer1.0.0_SA_CTO. Active objective: drive the three existing COOs to E2E completion under /closer. No product is currently verified complete. This file is current state, not a journal. RULINGS.md is the decision history. No independent CVO queue under Andrew's direct-review instruction.
 
 ## Current measured state and next live proof
 
 | Tab / owner | Evidence available | First unclosed connection | Next proof |
 |---|---|---|---|
 | Reporting / P | Direct current candidate7c7aaef354 source read: handler.run intentionally returns no report for SMARTX/BD/ORION; guarded selected/date path exists; export submit still NOT_READY. Shared repository/auth/package work exists. | Authenticated exact-account/date provider request -> retained normalized result -> typed visible report.49F actual SmartX contract unproved. | One COT BD account/period -> provider result -> immutable revision -> Reporting screen; CRO targeted49F contract research concurrently. |
-| Holdings / M | M restartb14966e203 and new candidate35999d31a4 pending CTO review; source repairs/publication adapters exist. M's19:19-19:27 audit reports empty live prefixes/indexes, disabled schedule, missing COT currency/null values and membership joins. Those live observations are attributed, not remeasured here. | Validated actual custody producer -> accepted publication consumed by authorized tab. | One unambiguous real INF account with independent custody reconciliation, explicit attribution/unknowns and source/API/UI trace; COT currency/null coverage and49F custody integration proceed. M reports876/876 INF totals reconcile; not CTO live proof. |
-| Analysis / Y | Direct435+50 offline source controls; Kimi deadline closed5609/df23 with190+18 intake.4173322 broker54tests + regression passed but causal-failure finding remains openf21ee2. New causal repairfe0ec628c2 / evidence30fa786e20 is queued for CTO review. Prior retained input/access/publisher/UI source proofs exist. | Installed input->queue->worker/session->vendor PDF->certified published report->screen chain; current source callbacks are not live installation. | Valid dollar-upload Overview, real backend/session/provider, persisted native report and reload. Then custody, remaining units/variants and export. |
+| Holdings / M | M99c9e12f98 (includes35999) bounded CTO source PASS,100 economic/snapshot tests; source repairs/publication adapters exist. M's19:19-19:27 audit reports empty live prefixes/indexes, disabled schedule, missing COT currency/null values and membership joins. Those live observations are attributed, not remeasured here. | Validated actual custody producer -> accepted publication consumed by authorized tab. | One unambiguous real INF account with independent custody reconciliation, explicit attribution/unknowns and source/API/UI trace; COT currency/null coverage and49F custody integration proceed. M reports876/876 INF totals reconcile; not CTO live proof. |
+| Analysis / Y | Direct435+50 offline source controls; Kimi deadline closed5609/df23 with190+18 intake.fe0ec628c2 closes causal-failure finding with CTO65 session and236 generation+32 subtests PASS. Prior retained input/access/publisher/UI source proofs exist. | Installed input->queue->worker/session->vendor PDF->certified published report->screen chain; current source callbacks are not live installation. | Valid dollar-upload Overview, real backend/session/provider, persisted native report and reload. Then custody, remaining units/variants and export. |
 
 Shared bootstrap: Andrew confirmed Global/Select Firm and investor list on local frontend10141 with directory artifacto590; full pagination/selection persistence/all-tab access still needs trace. Opal may perform every function across firms; firm users remain scoped. This symptom-level live evidence is not a three-tab pass.
 
@@ -28,9 +28,9 @@ One active shared writer; no competing edits. If two ready patches conflict, one
 |---|---|---|
 | SmartX actual49F account/selected-set request, identity/units/method | CRO targeted source-backed delta with P consuming adapter; no duplicate broad research | Blocks49F actual-performance slice, not COT/INF implementation |
 | COT currency/null-value and model-key facts; INF identity/date/membership | M targeted source checks; CRO only if exact fact remains unavailable | No inferred values; accepted/blocked accounts explicit |
-| YCharts D1/session and upload/lookup behavior | Y drives assembly; P shared runtime; CRO targeted briefs already active | Existing per-use/live authority remains; prepare exact run |
+| YCharts D1/session and upload/lookup behavior | Y drives assembly; P shared runtime; CRO targeted briefs already active | Andrew6fc3f5f785 approves dedicated always-on host and standing host workflow calls/D1; CTOf1add routes Y product/P shared runtime; exact installer/apply/readback required |
 | Canonical security identity/dated USD share-class price facade | M/P future exact source interface; PARKED from Holdings critical path | Unparks for Analysis Shares milestone or a concrete current-hop requirement; Shares visibly unavailable meanwhile |
-| Recorder explicit-scope repair | CloudOps~O candidate0116b83bc0 (fix2967772cad), CTO review queued; P is issuer/integration owner | RS1/RS2 reported9/9; RS3 recovery plan awaits review; preserve audit and P evidence. Not a reason to stop source implementation |
+| Recorder explicit-scope repair | CloudOps~O candidate0116b83bc0 (fix2967772cad), RS2 repair required; P issuer/integration owner | Supplied9/9 reproduced; CTO unchanged-source control FAILS membership/reconcile: source fix returned to O. RS3 remeasure and hash-preserving quarantine allowed per direct review; keep audit and intended stamp. Not a reason to stop source implementation |
 | Historical naming/migration/tooling cleanup | Existing owners, PARKED | Only unpark if it prevents a named live hop |
 
 ## Control loop and done test
@@ -41,10 +41,11 @@ CTO consumes those changes, resolves owned-surface forks, directly reviews pins,
 
 Completion requires actual user flow on real backend/data/login, immutable report/publication identity, correct selected scope/source economics, current/revoked access controls, recovery/reopen and required branded export. Verify all named firms/units/variants/cases, not merely the first milestone. Each lane supplies a linked completion manifest; CTO declares individual and combined completion only on that evidence. All three products currently INCOMPLETE.
 
-## Immediate CTO review queue
+## Current decisions and next handoffs
 
-1. M35999d31a4 actual Holdings tree/source evidence, to unblock first INF runtime candidate.
-2. Yfe0ec628c2 causal observation repair, replay the concrete failure and paired stale/mutation controls.
-3. CloudOps0116b83bc0 explicit recorder scope and RS3 recovery procedure, via P issuer; no replay before review.
+- M99c9e12f98 bounded source accepted; first real INF positions/currency/publication/API/UI candidate next. COT and49F remain.
+- Yfe0ec628c2 causal recovery closed; integrate all four source files and drive resident host consumer under Andrew6fc3f5f785 / CTOf1add564fd. One session owner, no inbound, no legacy-probe shadow; host stays running.
+- CloudOps recorder2967772cad has CTO unchanged-source omission finding; repair exact resolved-set propagation, no wider tooling rewrite. P owns reviewed RS3 evidence recovery, no recorder replay from that grant.
+- P bounded listing B3/F1 approved with current entitlement revalidation and identity/session isolation. Andrew also approved the broader speed recommendations; exact runtime/config and B8 cache-key/revocation plan required. Shared generation connection takes priority; Reporting keeps its provider thread.
 
-None of these newly received candidates is accepted by this queue entry. CTO returns one scoped verdict per candidate and routes the next actual hop.
+Evidence: DIRECT_REVIEW_1958_20260923/REVIEW.md and LISTING_AND_GENERATION_RULING_20260923.md. These offline source grades are not live product completion. All three products remain INCOMPLETE.

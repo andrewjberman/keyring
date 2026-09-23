@@ -1,0 +1,12 @@
+{
+  "rc": 0,
+  "stamped": [
+    "irpt-directory-search"
+  ],
+  "changelog_functions": [],
+  "changelog_artifacts": [
+    "irpt-directory-search"
+  ],
+  "reconcile_functions": null,
+  "aws_called": ""
+}
