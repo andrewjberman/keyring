@@ -339,6 +339,77 @@ the rows are **uniformly mislabelled, not ambiguous**, and no investigation is r
 rows, which is a near-total rewrite in practice and is stated here rather than left to read as a
 small change.** Pre- and post-counts are printed by the migration.
 
+**`C-HV-DAILY-STATUS` -- AMENDMENT 2, same day, correcting the amendment above.**
+
+⛔ **AMENDMENT 1 WAS ENUM-ONLY AND AN ENUM-ONLY CHANGE DOES NOT HOLD.** `2.0.0_SA_COO~Y`'s probe
+measured **falsey state promotion and writer publication after an ENUM-ONLY simulation**: adding
+`NO_COVERAGE` and `UNDETERMINED` to the vocabulary leaves the writer publishing exactly as before,
+because nothing assigns the new members and the promotion path is untouched.
+
+⭐ **An enum member is a VOCABULARY. Publication is a BEHAVIOUR. The defect lives in the behaviour.**
+⛔ **And this is the rule Amendment 1 states about `DENIED` -- *a member the producer cannot populate
+is decorative* -- violated four paragraphs later by `UNDETERMINED`.** The rule was right; its author
+did not apply it to his own addition.
+
+## ⛔ AND THE DEEPER DEFECT IS **GRAIN** -- FOUND INDEPENDENTLY BY `4.0.0_SA_CRO~Z` AND `2.0.0_SA_COO~Y`
+
+⛔ **Amendment 1 enumerated `UNDETERMINED` on `data_status`, which lives at the `(security, UTC day)`
+grain, and justified it by citing `generation_writer.py:269` -- which defaults the
+`COMPLETE | EMPTY | FAILED` **GENERATION** state, a DIFFERENT domain at a DIFFERENT grain.**
+
+⛔ **A DAILY ENUM CANNOT CLOSE THE GENERATION WRITER'S DEFAULT.** `2.0.0_SA_COO~Y`'s packet
+`cc5d696265` proves it: **an enum-only change still writes the pointer.**
+
+⭐ **This is Rule 24 postulate (ii), SAME GRAIN -- broken inside an amendment whose own
+four-postulate record asserts grain coherence.** Two seats found it on two instruments within a
+minute of each other.
+
+**So the remedy is TWO contracts, not one enum:**
+
+### A. DAILY GRAIN -- `data_status` on `(security, day)`
+The four values of Amendment 1 stand: `COMPLETE | PARTIAL | NO_COVERAGE | UNDETERMINED`, with
+`DENIED` retired and a genuine refusal deferred.
+
+### B. ⛔ GENERATION GRAIN -- A SEPARATE CONTRACT, OWED AND NOT YET WRITTEN
+**Required, and an inference from the daily enum does not supply any of it:** the shared
+**generation state**; the **terminal publication rule**; the **marker key and type**; the **receipt
+state**; and the **caller contract for Price and the legacy republisher, which omit state entirely.**
+
+⛔ **AND ONE TRAP NAMED BY `2.0.0_SA_COO~Y` THAT THE OBVIOUS FIX WALKS INTO: writing a blanket
+explicit `COMPLETE` in the non-gold `else` WOULD PRESERVE THE WRAPPER BYPASS.** **It converts an
+implicit promotion into an explicit one and reads as a fix while changing nothing that matters.**
+
+**So the contract requires, and a conforming implementation is not reached without them:**
+
+1. ⛔ **`UNDETERMINED` MUST NOT PUBLISH.** A generation whose coverage state is undetermined is
+   **withheld**, not emitted with a computed status. This is a **writer** obligation, not a value.
+2. ⛔ **THE PROMOTION PATH IS CLOSED.** `state or (STATE_COMPLETE if rows else STATE_EMPTY)` promotes
+   **any falsey state** -- `None` and, by the same mechanism, any future empty value -- into the
+   strongest available assertion. **The writer distinguishes "no state was determined" from "a state
+   was determined and is falsey", and refuses to publish the former.**
+3. **Something must ASSIGN the new members.** `NO_COVERAGE` is assigned by the existing `else`
+   branch; **`UNDETERMINED` is assigned wherever the coverage computation is skipped** -- including
+   the `count_fn is gold_daily_mention_scores` identity miss. **An unassigned member is decorative
+   and this contract does not admit one.**
+
+**WHAT THIS AMENDMENT STILL OWES BEFORE L4-R, STATED RATHER THAN IMPLIED.** `3.0.0_SA_CVO~Z` set its
+terms before drafting; three are not yet satisfied and are named here with their owner:
+
+- ⛔ **CONSUMER IMPACT, NOT A CONSUMER LIST.** Amendment 1 names two modules and one test and
+  **grades none**. *"A consumer census that names three and grades none is a list, not an impact."*
+  **Each of Chatter, Price and the legacy republisher is graded BREAKS / DEGRADES / DOES NOT NOTICE.**
+  ⚠ Note also that those three are **logical consumers**, a different grain from Amendment 1's
+  **code modules** -- both are needed and neither substitutes.
+- ⛔ **ASKED AGAINST THE DEPLOYED STATE, NOT THE REPO.** Amendment 1 is written from repo bytes. **The
+  question is what PRODUCTION does today**, on the same re-basing the served-output incident forced:
+  an amendment is not reviewed as narrow in a plane where production already behaves otherwise.
+- **MECE AS A SUBTRACTION FROM A PRINTED DENOMINATOR** -- `2.0.0_SA_COO~Y`'s **221-file bounded
+  census** stated as that denominator.
+
+**UNCHANGED FROM AMENDMENT 1:** the four values and their definitions; `DENIED` retired rather than
+split; a genuine publisher refusal deferred until the harvester fetch-result lineage exists;
+migration scope **1,595 of 1,596 rows**, `COMPLETE`/`PARTIAL` untouched.
+
 **`C-HV-EVENT-SPINE`.**
 - The gold `chatter_event` table (`s3://opal-data-harvest/amgt/harvest/gold/chatter_event/date=2026-09-22`, builder
   output) holds clustered runs of UTC days for one security.
