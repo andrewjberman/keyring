@@ -55,6 +55,36 @@ s.3, read-only). This is the comparison bar, never a list you copy:
 - **The KPI lexicon:** the term keys of `research_docx_kpi_census.json` in the scan directory (a list of rows, each with a
   `kpi` dict). Cite its path and sha256 in `inputs`. Add no term the scan did not count.
 
+**ISSUER AMENDMENT (the order is REOPENED on its own worker's refusal, row `AMGT_CORPUS-Z-W4-S1`): BUSINESS TYPE IS A
+PROPERTY OF THE SECURITY, READ FROM ITS WORKBOOK -- NOT OF THE REPORT.** The first run measured the report-level source
+correctly and REFUSED correctly: 0 of 13 business types reached a report, because 45 of 51 non-OTHER reports carry no
+`Sector:` field. That was the ISSUER's cut defect: the brief's scan read the sector from each name's WORKBOOK `Sector`
+cell. **Measured by the issuer on the stored extractions before this amendment:** 43 XLSX extractions carry 48 labels
+equal to `Sector` (case-insensitive, trailing colon ignored), and the label that FOLLOWS each in its sheet's `labels`
+order yields a value for **33 of 33** resolved securities. The values that bridge through `taxonomy.scanner_sectors_for`
+include Information Technology x7, Consumer Staples x6, Financials x5, Energy x5, Utilities x4, Health Care x2 and
+Industrials x1. `Communications`, `Energy Minerals`, `Electronic Technology`, `Consumer Non-Durables`,
+`Technology Services` and two `#NAME?` Excel errors return an EMPTY sector tuple. **9 securities carry more than one
+distinct value.** So, replacing `business_type_of(record)` above:
+- **`business_type_of_security(security_key)`**: collect the value following every `Sector` label in that security's
+  XLSX extractions (the labels are coordinate-free, so this ADJACENCY is a stated working rule; print it, and cite the
+  extraction key and label index for each value). Map each value through `taxonomy.scanner_sectors_for(value)`, which
+  returns `(sectors_tuple, basis)`; an EMPTY tuple means unmapped. The security's business type is the map's own output:
+  - one sector -> that sector;
+  - several sectors from one value (for example `Consumer Discretionary`) -> ONE type keyed on the sorted sectors
+    joined by `+`, exactly as the map returned them, never a choice among them;
+  - an empty tuple or an Excel error such as `#NAME?` -> `unmapped` with the raw value;
+  - two DIFFERENT mapped types across the security's workbooks -> `unmapped` with reason `conflict: <types>`. Never
+    pick one.
+  - Report-level `sector_as_written` (c-3's) is carried as evidence only. It never overrides the workbook.
+- **Every non-OTHER report of the security inherits that type.** The `reports <n> of <total>` denominator and everything
+  else in `build(business_type)` are unchanged.
+- **Output budget, because AC2 reads `tail -60`:** `--show-first-graded` prints the `business_type ... reports <n> of
+  <total>` line, then at most the TOP 20 `kpi` lines by count, then at most the TOP 20 `section` lines by count, then
+  `kpis_total <k> sections_total <s>`. The stored artifact keeps everything; only the printout is capped.
+- The `--write` summary adds `securities_typed <t> of 33 unmapped_securities <u> conflicts <c>`.
+- **NO S3 DELETE.** The first run's `business_type=unmapped` object stays. A new method_version gives new keys.
+
 **THE GOLD ARTIFACT SHAPE, shared by every gold cell of this round:**
 ```
 { "artifact": "research-sector-template", "method_version": "<n>",
