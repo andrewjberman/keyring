@@ -6,6 +6,13 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 ## Completed preparation
 
+- Retained certified publisher `6c3bfae3e6`:29 supplied and16 independent
+  controls PASS offline. Actual PDF/evidence/report binding, dependency-first
+  refresh promotion, replay and late authorization/lease refusals tested.
+  Post-transaction refusal does not undo the persisted report. Worker-supplied
+  effective-input metadata is trusted here; accepted-input/vendor read-back
+  binding remains an integration obligation. See
+  `RETAINED_PUBLISHER_REVIEW_6c3bfae3.md`. No READY/runtime/integrated grade.
 - Outer pair7915bc9b2c/cf77e5db and separately assembled42412eb8: backend2 supplied
   and24 closed-schema controls PASS. **Y-W01 aliases peer R-P11 P2 OPEN/HOLD**:
   four raw refusals carry schema-marked server-only CID; CTO011346 rules strip

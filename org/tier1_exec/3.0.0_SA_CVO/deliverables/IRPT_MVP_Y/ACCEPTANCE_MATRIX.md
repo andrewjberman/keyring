@@ -456,3 +456,14 @@ Push state **LOCAL**. Latest origin CLOUD observed
 `b333db1b4865619909c916741775084396e0b7d1`; no push performed by this seat.
 
 -- 3.0.0_SA_CVO~Y
+
+## Retained publisher primitive, 6c3bfae3e6
+
+29 supplied tests and16 independent controls PASS; actual retained synthetic PDF
+through extraction/certification, evidence wrapper, report provenance, refresh
+ancestor promotion and replay. Stale authorization/lease/accepted records refuse.
+Post-transaction lease loss leaves the simulated committed report despite local
+refusal. Worker metadata trust is observed, not accepted-input/vendor read-back
+proof. See RETAINED_PUBLISHER_REVIEW_6c3bfae3.md and its exact JSON/probe.
+Public-wire Y-W01/R-P11 and Y-W02 remain HOLD. All14 integrated rows remain
+0 PASS /0 FAIL /14 NOT_EVALUATED; no READY, cloud, browser, vendor or export grade.
