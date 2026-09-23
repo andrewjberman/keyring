@@ -486,6 +486,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "AC6's <expect> text is the authority for what 'nothing outside the currently-authorised files changed' means.",
     "world_is": "Each phase amendment that widens BOUNDS' editable-file set requires AC6's <expect> to be updated in the SAME amendment, or it silently falls one phase behind again -- exactly the mechanism row -S7 already named, now recurring on its own fix. This cell graded AC6 by INTENT (nothing outside Phase 0c's own named editable set touched) rather than by the stale literal list, same as it did for -S7, and states that reasoning on AC6's own acceptance row.",
     "notes": "Not fixed here (no authority to rewrite the TO's own criteria). Disarm suggestion, sharpened from -S7's: word AC6 generically ('nothing outside the CURRENT phase's own BOUNDS-authorised set') so it never needs editing again when BOUNDS grows, rather than re-enumerating the file list on every amendment."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W11-S1",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~11",
+    "surfaced_at": "2026-09-23T02:05Z",
+    "one_line": "The missions-tree-check pre-commit hook reads the WORKTREE by a physical directory walk of org/missions, so this worker's dispatched sparse cone (only org/missions/D5/AMGT/AMGT_HARVST materialized) made every OTHER org/projects/*.json's home register INDEX-ORPHAN (24 false violations) and BLOCKED a correct, in-scope commit -- resolved by temporarily widening the sparse cone to the full org/missions tree, committing, then narrowing it back.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this worker's dispatched sparse cone (git sparse-checkout list, this worktree): .tools docs/doctrine infra/logic lib org/missions/D5/AMGT/AMGT_HARVST org/modules org/projects org/ref org/standards org/surprise_channel -- no other org/missions/D* directory materialized",
+        "python .tools/missions-tree-index.py check, run before any cone change: 'tree=1 project(s) under 1 directive folder(s), 1 valid' and 24 [INDEX-ORPHAN] lines, one per org/projects/*.json whose home path (org/missions/D8/ADVI/ADVI_FIRMBKTS, org/missions/D0/NFRA/NFRA_CLDGRPH, etc.) is not materialized in this worktree; RESULT: 24 violation(s)",
+        "the safe-commit attempt at that state printed: 'BLOCKED: missions-tree-check -- the project tree's validator REFUSES this commit', rc=1, nothing committed (verified: git log had no new commit for the staged file)",
+        "git sparse-checkout add org/missions (widening to the full mission tree, no content change), then the identical check command: 'tree=25 project(s) under 9 directive folder(s), 25 valid ... RESULT: 0 violation(s)' -- the same repository state, same staged file, only the LOCAL MATERIALIZATION changed",
+        "safe-commit re-run at that widened state succeeded: commit 7d92646ac4 (verified via git log -1 --format=%h~%an~%s 7d92646ac4, positive control, plus a negative-control lookup on a bogus hash returning rc=128 'unknown revision'); git sparse-checkout set <original ten paths> restored the dispatched cone afterward with git status --porcelain showing no dirty path"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order dispatches this worker into a NAMED sparse cone covering exactly the paths its cell needs (including org/missions/D5/AMGT/AMGT_HARVST), implying a normal safe-commit of a file under that granted path runs cleanly, as HVST-h-8's round-1 commit (in what this row infers was a wider or full checkout) did with 'missions-tree-check OK (0 violations)'.",
+    "world_is": "missions-tree-check.sh's own comment states its bound plainly: 'check reads the WORKTREE, not the staged index.' .tools/missions-tree-index.py's tree walk is rooted at the physical org/missions directory, so a sparse cone that omits other directive folders makes the checker unable to find their tree rows at all -- it does not know they are merely uncommitted-here, it reports every one of their flat-index entries as an orphan. The hook is wired to fire on any staged path under org/missions/D<n>/ or org/projects/*.json (exactly this cell's deliverable path), so ANY L7 worker dispatched with a cone narrower than the full org/missions tree, committing anything under its own project's tree folder, hits this identical false BLOCKED verdict. This row's own commit succeeded only after a local, temporary cone widening outside what the task order granted -- a workaround performed in-session, not a fix to the checker or to how sparse cones are dispatched.",
+    "notes": "Not resolved by editing missions-tree-index.py or missions-tree-check.sh (both out of this cell's <paths> intent -- this is a shared mechanism, not this project's content). No BLOCKING row filed because a working escape (temporarily expand cone, verify 0 violations, commit, narrow back) exists and was exercised successfully within this turn, and this cell's own commit landed clean. Left ARMED: the underlying mismatch between the missions-tree-check hook's full-tree assumption and the sparse-cone dispatch convention (memory: 'a full worktree checkout OOMs under memory pressure -- use a sparse cone') is structural and will recur for every future sparse-cone worker touching org/missions/D*/, not specific to this cell. Disarm is the issuer's/CVO's: either the checker gains a mode that treats an unmaterialized directory as UNKNOWN rather than ORPHAN (e.g. read tree rows via `git ls-tree -r HEAD org/missions` instead of a filesystem walk, so sparse-checkout cannot hide a real row), or the dispatch convention for any worker whose cell touches org/missions/D*/ names the full org/missions tree in its cone rather than a single project's slice."
   }
 ]
 ```
