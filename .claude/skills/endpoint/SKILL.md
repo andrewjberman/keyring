@@ -145,6 +145,23 @@ Agreed with `3.0.0_SA_CVO` 2026-09-01 as the precondition for `outcome_ref` on t
 route tokens that field once rode with were retired at spine v3.0, and the permanence contract stands on its
 own.
 
+⛔ **FOR A PRODUCT OR A PIPELINE, `FWD-1` IS THE THREAD** (spine v3.16, L2). One named person's one journey,
+at coarse resolution, on the deployed stack through every real hop, ending in the rendered result. The brief
+names the candidate thread; cut it first, then cut the other outcomes as below — the enrichment rounds serve
+those.
+
+```
+  FWD-1  <person> can <do the journey> end to end on the live product
+         DONE WHEN  EXERCISED -- one live trace, on the deployed stack, ending in the rendered result
+         ACCEPT     every hop in the trace is a real call; a hop fed by a fixture fails the outcome
+         SOURCE     brief <line naming the thread>
+```
+
+Why: IRPT ran 15 frontend and 18 backend rounds with zero journeys working end to end, because no outcome
+owned the seam between the two halves; the thread puts every seam inside `FWD-1`. For a pipeline with no
+product surface the thread is source to served artifact. NON-APPLICATION: a pure infrastructure or
+governance project, which has no journey.
+
 ```
   FWD-3  Advisors can see per-client performance without opening Black Diamond
          DONE WHEN  EXERCISED -- an advisor has actually read one
