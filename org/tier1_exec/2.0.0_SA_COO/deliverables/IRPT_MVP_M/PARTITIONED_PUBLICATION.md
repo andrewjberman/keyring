@@ -13,3 +13,14 @@ Pure layout evaluation on the unreconciled real 49F input produced **95 parts**,
 Tests extend actual land -> reader -> guarded Entry with partitioned output, selected-only part access, corrupt-part refusal, failed part verification preserving the prior index and oversized selection refusing whole. The independent v1 review remains `c462d8b4df` for `62139c3a1a`; it does not cover this new v2 candidate. P's package/IAM candidate `0fb7e56629` is separately attributed and not deployed.
 
 The source receipt bundle can optionally be bound to the snapshot revision and retained in the manifest. The Gold caller's actual input-capture/historical-cutoff patch remains separate and naming-gate-blocked under CTO ruling `f1c95444ce`; this publication delta does not bypass that gate. The runner's canonical primary-home correction and three-firm caller tests remain with that separate patch. Full M1/M4/M7 and accepted Y custody normalization remain open.
+
+CVO independently found that `9e57397730` checked all account memberships but
+validated object reference metadata only for selected parts. A validly repinned
+manifest could therefore omit or corrupt an unselected part reference and still
+serve the selected response. The remedy validates every inventory reference's
+canonical location, version, hash shape and byte bound without fetching unselected
+objects. Gold reference metadata is checked too, with no Gold read or IAM widening.
+M replayed the CVO driver with only its checkout path changed: all 22 assertions
+pass. The supplied suite now has 96 passing tests, including seven new actual Entry
+reference-metadata faults. Independent closure at the remedy pin remains owed;
+existing final-index timeout and versioning ambiguity findings are unchanged.
