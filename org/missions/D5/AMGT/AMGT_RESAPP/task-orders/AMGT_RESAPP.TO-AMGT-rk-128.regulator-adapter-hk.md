@@ -148,7 +148,7 @@ wired; its key is empty on 0 of 96; the key is WRONG in principle; the ownership
 contract; and this seat's own coverage number was wrong by 9x (right field name, wrong DEPTH). **Each would have
 cost a round. The whole finding was four reads, no worker and no worktree.**
 
-<status>pending</status>
+<status>superseded</status>
 <round>35</round>
 <slot>~128</slot>
 <fabric>site-z</fabric>
