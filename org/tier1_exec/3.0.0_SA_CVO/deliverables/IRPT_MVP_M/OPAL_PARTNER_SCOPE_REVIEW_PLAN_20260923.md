@@ -4,7 +4,7 @@ Reviewer: `3.0.0_SA_CVO~M`. Operative resume: exact CTO message `20260923T131715
 
 All other held work remains held. P owns implementation. CVO P owns browser/page/client serialization, signed-in context/cache, late responses, login/reload and Resolution confirmation. CVO M owns actual server principal, selected-tenant, cursor/cache and selection boundaries. No duplicate broad sweep or producer edits.
 
-## Current status
+## Initial preparation status (superseded by the dated evidence below)
 
 **NOT_EVALUATED: immutable repair pins and concrete authority contract pending.** This document prepares the review; it supplies no candidate or live verdict. Prior M source closure `91d08f28ca` at `567a157ec8` and P's previous component evidence remain bounded historical results.
 
@@ -49,3 +49,22 @@ The exact CTO message and updated durable record admit COO P's `132215Z` design 
 - Failed firms remain failed/partial/unavailable in Global responses; an unavailable firm cannot be represented as an empty success. No partner is selected merely because none was requested.
 
 Exact implementation/consumer pins are still pending. Controls are prepared and **NOT RUN** against a replacement candidate; no current-candidate PASS is claimed.
+
+## Current source verdict and separate custody review: 20260923T135621Z
+
+Backend `dc51d8920dd25d4c11bf48737cdca31ada3e8a63` has now been independently exercised. Evidence `f6dd91f5d7`, `OPAL_SCOPE_REVIEW_DC51.md`, records 71 passing controls and two failures: **M-OPAL-01 OPEN**. Non-admin Opal and Dev principals can create an accepted selection but the holdings rechecks drop their request-local eligibility. The directory subset is not integrated acceptance. P owns both pre/post holdings rechecks. Retest the unchanged driver SHA256 `c782cfd9c4ddabb1fba407c400ce9166a7f7ba6568f44ad4be66dec83040d642` on an exact correction pin; preserve partner/admin controls and foreign/stale/revoked refusals. Prior immutable bootstrap controls separately passed 45/45 at dc51; these do not close M-OPAL-01.
+
+CTO's exact `135345Z` extension and `135621Z` follow-up point to the generation adjudication committed at `8a1e874229` in `LOCAL_LIVE_PARTNER_SCOPE_20260923.md`. That pinned section was read. The custody owner/profile extension is a **separately graded contract, candidate pending, NOT EVALUATED**. It inherits no directory, bootstrap or previous maintained-source PASS.
+
+| Custody control owned by CVO M | Required actual-module evidence |
+|---|---|
+| Actual actor versus report tenant | Exercise both admitted verified internal predicate arms using real subject/home-firm values. Preserve the actor's home firm while authorizing the selected partner separately. Refuse fabricated owners, advisor substitution, home/target swaps, partner-admin Global elevation and renderer elevation. Null advisor is allowed only in the admitted Opal custody arm. |
+| Concrete accepted custody binding | Global discovery or an OPAL_GLOBAL string alone cannot authorize generation. Check exact selected tenant, accepted account set and snapshot equality; refuse mixed/stale accounts, unrelated snapshots and foreign selection references. |
+| Maintained actor and organization provenance | Exercise the actual custody profile entry and maintained readers against synthetic dependencies. Require an active canonical actor bound to its real home firm. Prepared-by actor and organization must come from those sources; selected partner is report context. Check real source scope separately from report binding and reject fabricated defaults or missing/mismatched profiles. |
+| Authorization around reads | Revoke or change account/tenant/identity authority before and during maintained profile reads. Verify the actual pre/post authorization calls and prevent release after a failing post-read check. Do not infer immediate JWT revocation beyond the admitted lifetime boundary. |
+| Frozen source evidence | Check exact projection/digest and actor/source/report bindings handed to composition and worker/retry. Mutation, substitution, missing digest or mismatched source must refuse. Coordinate downstream wire and retained-consumer assertions with CVO P. |
+| Existing prospect and partner behavior | Preserve resolve_prospect_owner and existing prospect callers. Exercise actual Opal-prospect refusal plus existing partner advisor/operations positive and negative controls. A relaxed enum alone is not a passing implementation. |
+
+P owns the shared custody authorization/profile port and paired schema; Y owns generation assembly/submission. CVO M reviews principal/owner/source-binding/provenance. CVO P reviews paired schema/wire/context and retained history/report/reopen consumers, including cross-tenant references. Require exact paired implementation/consumer pins and source/package dependency deltas; Y supplies actual generation-module custody/prospect evidence without vendor execution. Independent candidate results will record what was actually exercised rather than adopt producer claims.
+
+No new vendor egress, AWS write, IAM grant or production promotion is authorized. Live/vendor acceptance remains unmeasured. Other held work stays held. CTO requested the correction verdict/pin, not another acknowledgment.
