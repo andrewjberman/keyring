@@ -6,6 +6,14 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 ## Completed preparation
 
+- Narrow resumed custody Entry b357e0ba8f: 24 independent and 12 supplied PASS.
+  Actual Entry/guard with offline loaders and recording service; actor home,
+  selected tenant, explicit prospect configuration and warm isolation pass.
+  Accepted account/snapshot ownership remains an installed-service obligation,
+  not established by forwarding. See `CUSTODY_ENTRY_REVIEW_b357.md`.
+  Reviewer initial missing import corrected with failed receipt preserved.
+  Peer M roster closure766719cb49 and P separate R-P13 open are attributed only.
+  All14 unchanged; custody composition04ac22aed7 review is separate.
 - Canonical SDK profile consumercdbd4de74d:19independent controls and99focused
   supplied45subtests PASS. Actual M SDK/retained authorizer through Y/P service,
   frozen config/worker; synthetic storage/policy/dispatch/held lease. Wrong or
