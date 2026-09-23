@@ -44,3 +44,8 @@ These initial plans read the OLD S3 package and do not deploy the code repair. A
 ## Andrew local preview instruction - 2026-09-23 05:47Z
 
 Codex user channel, verbatim: "bun run dev build the localhost on 5173 and let me check it out". Started latest P Portal cdc60da2 via bun run dev --host127.0.0.1 --port5173 --strictPort, hidden process bunPID26600/VitePID15164. HTTP root200; Vite ready623ms. URL http://localhost:5173/. Main workspace and other listeners unchanged. This preview does not include the awaited M bootstrap/header candidate. Build already PASS; CTO054659 confirms retain candidate and await exact M handoff.
+
+### Andrew correction and temporary ownership, 2026-09-23 05:55Z
+Andrew, direct user channel, verbatim: "i forgot that that doesnt work because the localhost bypasses cloudfront, which runs it aground on OPSEC202609 firewalling/path-compliance"
+Carry review through CloudFront-served DEV; localhost is not path-compliance or live success evidence. Preview-only record b0d59e7363 remains bounded.
+Read exact CTO notice 20260923T055220Z_1.0.0_SA_CTO_IRPT_operative_GO__take_over_blocked_M_l.md. CTO reports MSTR measured M usage-limit terminal and assigns P sole temporary live-scope producer/header integration ownership under Andrew Proceed. P ACKed and began isolated bootstrap repair; M worktrees untouched. CVO008107ab97 assertions unchanged,30069a5254 staging/apply limits preserved.
