@@ -1,12 +1,12 @@
 # Y review of accepted custody reader draft
 
-Reviewed P `7e9baf3064`, `IRPT_MVP_P/ACCEPTED_CUSTODY_READER_DRAFT_20260923.md`, in response to exact P160015.
+Reviewed P `f6babe048f`, `IRPT_MVP_P/ACCEPTED_CUSTODY_READER_DRAFT_20260923.md`, following original request P160015 and paired publication P160937.
 Y source: `819c9e399086cffb2876a21fbc2cee01724b0bd7`; producer helper: M `b3e63a795e0b8c7399619dbc545745786add4eb7`.
 Status: CONDITIONAL INTERFACE AGREEMENT; no consumer implementation, schema emission or activation. Current field proposal incorporates M review44e3a52fa3353ea94b3a473547efef77847e0d52 and supersedes the earlier flat Y economic-fact aliases.
 
 ## Accepted structure and required binding checks
 
-Keep `AcceptedCustodyReader.authorize_snapshot(principal, owner)` and `read(principal, owner)`, plus the existing Y `load_normalized(browser, principal, owner)` callback. The proposed top-level fields are sufficient if the closed definitions below and their evidence are bound to the immutable reader result. M's private DataFrame result remains outside this interface.
+Keep `AcceptedCustodyReader.authorize_snapshot(principal, owner)` and `read(principal, owner)`, plus the existing Y `load_normalized(browser, principal, owner)` callback. P f6babe incorporates the nested facts and correspondence requirements below. One additional exact selection-fingerprint field is needed for the existing freezer source contract, as detailed below. M's private DataFrame result remains outside this interface.
 
 The reader must return exact `owner` equality, not a subset: actor principal and home firm, concrete report firm, canonical selected account set, account-set ID, directory/entitlement revisions, snapshot ID and ownership fingerprint. Match top-level snapshot to owner and browser; never derive tenant from an arbitrary position. Match actual_custody.firm_id and account_ids to owner, unique sorted canonical sets. All original rows, positions, census and reconciliation must cover that exact selection without foreign accounts; proved empty accounts must be represented explicitly. No actor or snapshot identity may be cached across callers.
 
@@ -63,6 +63,28 @@ P's immutable receipt metadata must pin each consumed numeric column's exact `so
 The normalized output/upload bridge retains its existing positive exact-string limit: length128, coefficient digits80 and absolute exponent80. Totals and aggregated positions must meet it and reconcile exactly before dispatch; do not inherit the default Decimal context or sum floats. Account reconciliation uses the separately admitted maximum0.01 USD tolerance against independent same-date evidence; this never licenses row rounding or duplicate approximate equality. `tolerance_usd` should remain decimal text `"0.01"` (or an explicitly stricter admitted value), not a JSON float.
 
 ## Before consumer implementation
+
+### Concrete retained provenance mapping for P/Y agreement
+
+Inspection at Y819c shows `intake/portfolio.py:_source` requires `source_revision`, `selected_set_fingerprint`, `as_of`, and account IDs for CUSTODY, deep-copies the source, and the freezer hashes the entire document. The published RequestComposition resolved.document schema is an object whose semantic validation belongs to Y, not a closed source-field schema. Thus the following is structurally compatible, but requires P/Y semantic agreement and validation before implementation; structural pass-through is not authority.
+
+The reader draft does not yet return the exact selected-set fingerprint. `_scope/selection.py:_view` returns `selected_account_set_fingerprint` using account IDs, entitlement revision, viewer policy and verified firm. `_scope/custody.py`'s owner instead has `ownership_fingerprint`, a digest of the full owner. These are different identities. Add top-level `selected_account_set_fingerprint` to the closed AcceptedCustodyInputV1, obtained from the current verified selection and bound to the reader result. Do not substitute ownership_fingerprint, permitted-account fingerprint, account_set_id or an ad hoc account-list hash. Y can then map it to the freezer's existing `source.selected_set_fingerprint` without guessing.
+
+For the new accepted-reader branch only, propose exact normalized document.source fields:
+
+| Existing/new source member | Exact mapping |
+| --- | --- |
+| `lane` | `CUSTODY` |
+| `source_revision` | accepted.snapshot_revision, the original complete snapshot digest |
+| `selected_set_fingerprint` | accepted.selected_account_set_fingerprint from P's current verified selection |
+| `as_of` | accepted.actual_custody.custody_as_of, with the admitted valuation-date rule already checked |
+| `account_ids` | exact canonical accepted.owner.account_ids, sorted as the existing freezer requires |
+| `snapshot_id` | accepted.snapshot_id == owner.snapshot_id == browser.snapshot_id |
+| `accepted_custody` | Deep copy of the complete selected-only, closed AcceptedCustodyInputV1 result including owner, both immutable revisions, original_rows, positions, census/reconciliation, resolved facts and opaque receipt references |
+
+Embedding the already closed selected reader result avoids inventing a second provenance schema or a new retained family. It must contain only its admitted opaque/internal evidence, never M's private raw-ID frame or storage locations. Validate all outer/embedded duplicate fields for exact agreement; rehashing cannot substitute a different snapshot, owner or binding. Existing `NORMALIZED_PORTFOLIO` bytes/hash then retain all evidence, and the composition's artifact reference continues to bind those exact bytes. Retained replay validates the same embedded contract and current authorization without loading a newer source. Existing historical documents and other source lanes are not rewritten or reinterpreted.
+
+Original relationship rows must be retained in source.accepted_custody.original_rows but must NOT all be added as separate normalized money rows: that would double-count equal relationships. After original eligibility and exact correspondence checks, the trusted parsed adapter emits one row per valid economic position, retaining its position_id and source_rows; existing later same-security aggregation preserves those contribution rows. This is a required future consumer behavior, not a newly implemented adapter.
 
 P/M should close the concrete nested economic fields, Y canonical security-key/mapping-receipt additions, source numeric metadata, and original-to-position correspondence above. Pin the closed internal schema and the trusted accepted binding writer/store/reader with source and policy evidence. Missing prerequisites refuse; callbacks remain unconfigured. Y can then implement original-row eligibility and the trusted parsed-row adapter without weakening the existing freezer or importing the gold producer into Lambda.
 
