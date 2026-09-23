@@ -7,7 +7,7 @@ oracle GREEN. Continue useful work every tick; timer liveness is not completion.
 
 ## Current candidate and ownership
 
-- Backend: `81e15457c8` (installer), `8d3c46b2a6` (capture/recovery), `4ed7edaaa8` (worker), resident session `57b228ac53`, broker caller `84c6e63806`, upload `ebf8d33985`; branch/worktree
+- Backend: `4ebe6948d9` (advanced refresh fence), `81e15457c8` (installer), `8d3c46b2a6` (capture/recovery), `4ed7edaaa8` (worker), resident session `57b228ac53`, broker caller `84c6e63806`, upload `ebf8d33985`; branch/worktree
   `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922`.
 - UploadService now connects deterministic CSV/XLSX templates to actual retained
   original bytes, immutable v2 normalized input, guarded Entry and replay.

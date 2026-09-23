@@ -1,7 +1,7 @@
 ﻿# IRPT Y -- current interfaces
 
 Owner2.0.0_SA_COO~Y. CONTRACT v1.4/f1add564fd. Current Y source
-`81e15457c8` on8d3c46b2a6/4ed7edaaa8/57b228ac53/84c6e63806/ebf8d33985; P shared integration pending. Concrete executable, factory, canonical capture, literal installer and rollback: RESIDENT_ASSEMBLY_HANDOFF_20260923.md. BrokerSecurityCheck + UploadTemplateResolver concrete caller: BROKER_TEMPLATE_CALLER_20260923.md.
+`4ebe6948d9` on81e15457c8/8d3c46b2a6/4ed7edaaa8/57b228ac53/84c6e63806/ebf8d33985; P shared integration pending. Concrete executable, factory, canonical capture, literal installer and rollback: RESIDENT_ASSEMBLY_HANDOFF_20260923.md. BrokerSecurityCheck + UploadTemplateResolver concrete caller: BROKER_TEMPLATE_CALLER_20260923.md.
 
 Template input first hop: TEMPLATE_UPLOAD_HANDOFF_20260923.md is the exact
 request/result/retention/source-file batch and executable consumer. The new

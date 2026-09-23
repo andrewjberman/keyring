@@ -1,6 +1,6 @@
 # Resident Analysis assembly -- exact installer handoff
 
-Current Y source `81e15457c8` (installer), over `8d3c46b2a6` (canonical capture/recovery), `4ed7edaaa8` (connected worker), `57b228ac53` / `84c6e63806` / `ebf8d33985` / inseparable causal batch `fe0ec628c2`, in `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922`.
+Current Y source `4ebe6948d9` (advanced capture fence and remaining wall-clock budget), over `81e15457c8` (installer), `8d3c46b2a6` (canonical capture/recovery), `4ed7edaaa8` (connected worker), `57b228ac53` / `84c6e63806` / `ebf8d33985` / inseparable causal batch `fe0ec628c2`, in `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922`.
 Authority: closer CONTRACT v1.4 `f1add564fd`, Andrew always-on approval `6fc3f5f785`, build-first `d44d9f3876`; CTO caller review `47e0f95` consumed.
 
 ## Executable Y candidate
@@ -34,5 +34,7 @@ The maintained census is 195040 bytes, above a 32768-byte checkpoint. This batch
 10 targeted checks PASS in 5.21 seconds: actual frozen recipe + ResidentSession/OperationLease + recipe functions + actual retained repository/certifier/publication through READY; repeat delivery; ambiguous create with no repeat; large-census retained PDF recovery without vendor acquisition; prior publication recovery controls. AWS conditional effects, HTTP and PDF specimen are offline doubles. Ruff and entrypoint import/help pass. No broad suite repeated.
 
 Capture/recovery follow-on:9 targeted checks PASS4.39s, including the connected worker, exact causal eviction/second-eviction refusal, initial missing-session bootstrap, generic401 refusal, actual operation lease arbitration/cooldown/quarantine with the host process replaced by an offline control. Installer `bash -n` and Python commit checks pass. This does not measure Linux process-group cleanup or a real Node/vendor login.
+
+Final explicit guard: a new session generation with an unchanged publication fence is refused before resumed generation; its focused check passes0.69s at4ebe6948d9. Capture subprocess timeout uses the remaining absolute budget after process creation.
 
 Not claimed: installed service, live login/session recovery, live two-row PDF contents, browser E2E, all-firm publication, complete holdings readback beyond upload echo, full variants/units/corrections/export matrix. First live proof remains AAPL10.01 + VNQ2.02 =12.03 Dollars Overview through certified Analysis screen/reload. Concrete blocker for that live run is the shared installed factory/package/host upload boundary and controlled cutover receipt, now routed to P. Y owns consuming that installation and completing the tab journey.
