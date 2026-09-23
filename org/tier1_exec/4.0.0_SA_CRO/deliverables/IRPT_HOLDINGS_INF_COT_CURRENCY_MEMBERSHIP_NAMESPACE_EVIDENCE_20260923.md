@@ -11,7 +11,36 @@
 parquet count (D1). Repo pins are at HEAD `e4b28c17c4`; `holdings_snapshot.py` is at the `ajb_irpt_m` worktree
 `99c9e12f98`.
 
-## A. INF valuation currency: NOT ESTABLISHED by any existing source
+## A. CORRECTION (~20:45Z): INF currency HAS retained evidence. The original verdict below was WRONG
+
+**The original search missed three places:** the browser HAR captures in Downloads, the gitignored `.runtime/`
+performance-recon bodies, and the committed performance fixtures. It also missed a currency setting stored as a setting
+NAME rather than as a key. **The retained evidence:**
+
+1. **Currency labels on returned amounts:**
+   - `POST /api/v1/Reporting/Scope` returns `currencyCode: "USD"` / `currencyName: "US Dollar"` on every
+     `calculated-activity` node, beside value, price and units. That is **25 of 25 in the committed fixtures**
+     (re-counted by this seat at HEAD: 9 + 12 + 4, no other code), and 37 of 37 including an uncommitted run. It spans
+     1 household and 2 accounts, dated 2026-06-10, 06-18 and 09-09.
+   - Committed (identifiers scrubbed): `infra/aws/lambda/investor-reporting/performance/fixtures/{orion_value_check,orion_daily,orion_captured_scope}.json`
+     @`de87f0976d`. Raw bodies in `.runtime/codex-seats/4.0.0_SA_CRO/performance-recon/`.
+2. **The tenant setting:**
+   - `C:\Users\AndrewBerman\Downloads\orionpt2.har`, entry 227, `GET /api/v1/Settings/EntityOptions/Database/0/Categories/Reports`,
+     200, captured 2026-09-10T13:41:52Z.
+   - It carries `RDEFCURR` "Default Currency" = `1` (an id; mapping it to USD is INFERRED) and `RB3MULTICURRENCY`
+     "Allow Multi Currency" = `False`.
+
+**The remaining gap is narrower.** `positions_mv` comes from `/Portfolio/Clients/{cid}/Assets/{date}`, a different
+endpoint with no currency field. The zero-vendor-call bridge: for the 2 Scope accounts, compare Scope Ending Market
+Value against the sum of `currentValue` in `s3://opal-data-inf/bronze/positions/{date}.parquet` for the same account and
+date. Check the file's as-of first, since 09-09 may be T-1. A match ties `positions_mv` to amounts Orion labels USD, and
+Allow-Multi-Currency=False extends that to the tenant (INFERRED).
+
+**Identity (measured):** the Orion session user is `userDetailId` 11662220, which equals `ORION_USER_ID` at
+`infra/aws/lambda/inf-pipeline/inf-jwt-trigger/lambda_function.py:40`. That is Andrew's named login; the pipeline
+identity is a person's login, not a separate service account.
+
+## A (ORIGINAL TEXT, SUPERSEDED BY THE CORRECTION ABOVE). INF valuation currency: NOT ESTABLISHED by any existing source
 
 - **Orion Assets:** silver copies all 58 source columns
   (`infra/aws/lambda/inf-pipeline/inf-accounts-v2-daily/convert_orion_api_to_silver.py:789`), and the Orion Assets
@@ -93,6 +122,27 @@ parquet count (D1). Repo pins are at HEAD `e4b28c17c4`; `holdings_snapshot.py` i
   account_id`. A mismatch refuses, never remaps. That check IS the namespace proof.
 - **Shared-key fallback:** `externalId` is the key already exercised against DataMining `AccountID` ("exercised
   296/296", `COTTONWOOD_BASIS_METHODOLOGY_20260723.md:33-34`).
+
+## Update ~20:45Z: C (COT currency) and D (COT namespace)
+
+- **C: still NOT ESTABLISHED, and now measured more widely.** Zero currency keys and zero USD/"$" values across:
+  - 98 JSON bodies in the BD HARs (`dashboard_exploration_bdpt1/2/3.har`);
+  - the portfolioreporting `performancePeriod` and `performanceSeries` replays (465 / 148 key paths);
+  - the retained 49F reporting file (447 paths);
+  - `s3://opal-data-cot/code/bronze/endpoint_catalog/endpoint_sweep_result.json`;
+  - the qt6 catalog (0 of 183 fields);
+  - template 226355.
+
+  `/datamining/request/v1/settings` and `/firm` return 404. **No retained or documented endpoint returns a BD currency
+  setting or currency labels on amounts.** `DimensionsFacts {"queryTypeId":1}` can only show whether a field EXISTS, so
+  it is not proof. BD currency stays NOT ESTABLISHED until a firm setting or an attestation outside the API is found.
+- **Exposure:** `infra/aws/lambda/investor-reporting/performance/bd_adapter.py:258` and `holdings/snapshot.py:223,275`
+  hardcode `"USD"`, an assumed value.
+- **Identity:** the COT session is minted from `blackdiamond/cot/credentials` = login `Andrew.Opal` (`FirmUser` 19035081,
+  2026-07-08), a named person's login.
+- **D: resolved by `2.0.0_SA_COO~P`'s live positive control (20:42Z):**
+  - the active account `z0926705231` / `26705231` returned performance matching BOTH identifiers;
+  - the earlier empty response was account-specific, not a general COT entitlement or namespace failure.
 
 ## Per-use captures that would close the rest (all need Andrew's word; none performed)
 
