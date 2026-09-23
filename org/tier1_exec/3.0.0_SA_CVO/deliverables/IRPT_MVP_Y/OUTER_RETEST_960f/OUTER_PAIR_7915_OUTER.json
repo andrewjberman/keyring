@@ -1,0 +1,201 @@
+{
+  "provenance": "Actual owned Entry and retained readers with offline storage doubles; no HTTP/live claim",
+  "cases": {
+    "history": {
+      "success": {
+        "contract_version": "v1",
+        "operation": "analysis-request-history",
+        "firm_id": "fir_c9fc04650e2134d6ea033da2",
+        "data": {
+          "items": [
+            {
+              "identity": {
+                "destination_policy_revision": "offline-v1",
+                "immutable": true,
+                "ingestion_gate_revision": "v1",
+                "request_id": "REQ-edb604b066eeb6ba507947ef",
+                "revision": 1,
+                "tenant_firm_id": "49financial"
+              },
+              "accepted_at": 1800000000
+            }
+          ],
+          "next_cursor": null
+        },
+        "unprojected_grant": {
+          "count": 0,
+          "denominator": 0,
+          "kinds": {}
+        }
+      },
+      "refusal": {
+        "ok": false,
+        "contract_version": "v1",
+        "operation": "analysis-request-history",
+        "status": {
+          "operation": {
+            "operation_id": "analysis-request-history",
+            "operation_kind": "read",
+            "revision": "v1"
+          },
+          "state": "UNAVAILABLE",
+          "source_dates": {
+            "source_completion_date": null
+          },
+          "actions": [
+            {
+              "action": "NONE",
+              "safe": true,
+              "description": "no retry or recovery action is offered for this outcome"
+            }
+          ],
+          "public_reason_code": "CONTRACT_VERSION"
+        }
+      }
+    },
+    "read": {
+      "success": {
+        "contract_version": "v1",
+        "operation": "analysis-request-read",
+        "firm_id": "fir_c9fc04650e2134d6ea033da2",
+        "data": {
+          "identity": {
+            "destination_policy_revision": "offline-v1",
+            "immutable": true,
+            "ingestion_gate_revision": "v1",
+            "request_id": "REQ-edb604b066eeb6ba507947ef",
+            "revision": 1,
+            "tenant_firm_id": "49financial"
+          },
+          "accepted_at": 1800000000
+        },
+        "unprojected_grant": {
+          "count": 0,
+          "denominator": 0,
+          "kinds": {}
+        }
+      },
+      "refusal": {
+        "ok": false,
+        "contract_version": "v1",
+        "operation": "analysis-request-read",
+        "status": {
+          "operation": {
+            "operation_id": "analysis-request-read",
+            "operation_kind": "read",
+            "revision": "v1"
+          },
+          "state": "UNAVAILABLE",
+          "source_dates": {
+            "source_completion_date": null
+          },
+          "actions": [
+            {
+              "action": "NONE",
+              "safe": true,
+              "description": "no retry or recovery action is offered for this outcome"
+            }
+          ],
+          "public_reason_code": "CONTRACT_VERSION"
+        }
+      }
+    },
+    "sections": {
+      "success": {
+        "contract_version": "v1",
+        "operation": "analysis-report",
+        "firm_id": "fir_c9fc04650e2134d6ea033da2",
+        "data": {
+          "request_ref": {
+            "attempt_id": "ATT-example",
+            "attempt_number": 1,
+            "request_id": "REQ-edb604b066eeb6ba507947ef",
+            "request_revision": 1
+          },
+          "sections": [],
+          "extraction_validation": {
+            "checks_failed": 0,
+            "checks_run": 1,
+            "status": "CERTIFIED"
+          }
+        },
+        "unprojected_grant": {
+          "count": 0,
+          "denominator": 0,
+          "kinds": {}
+        }
+      },
+      "refusal": {
+        "ok": false,
+        "contract_version": "v1",
+        "operation": "analysis-report",
+        "status": {
+          "operation": {
+            "operation_id": "analysis-report",
+            "operation_kind": "read",
+            "revision": "v1"
+          },
+          "state": "UNAVAILABLE",
+          "source_dates": {
+            "source_completion_date": null
+          },
+          "actions": [
+            {
+              "action": "NONE",
+              "safe": true,
+              "description": "no retry or recovery action is offered for this outcome"
+            }
+          ],
+          "public_reason_code": "CONTRACT_VERSION"
+        }
+      }
+    },
+    "status": {
+      "success": {
+        "contract_version": "v1",
+        "operation": "status-job",
+        "firm_id": "fir_c9fc04650e2134d6ea033da2",
+        "data": {
+          "operation": {
+            "operation_id": "REQ-edb604b066eeb6ba507947ef",
+            "operation_kind": "analysis_generate",
+            "revision": "1"
+          },
+          "state": "UNAVAILABLE",
+          "source_dates": {},
+          "actions": [],
+          "public_reason_code": "ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE"
+        },
+        "unprojected_grant": {
+          "count": 0,
+          "denominator": 0,
+          "kinds": {}
+        }
+      },
+      "refusal": {
+        "ok": false,
+        "contract_version": "v1",
+        "operation": "status-job",
+        "status": {
+          "operation": {
+            "operation_id": "status-job",
+            "operation_kind": "read",
+            "revision": "v1"
+          },
+          "state": "UNAVAILABLE",
+          "source_dates": {
+            "source_completion_date": null
+          },
+          "actions": [
+            {
+              "action": "NONE",
+              "safe": true,
+              "description": "no retry or recovery action is offered for this outcome"
+            }
+          ],
+          "public_reason_code": "CONTRACT_VERSION"
+        }
+      }
+    }
+  }
+}

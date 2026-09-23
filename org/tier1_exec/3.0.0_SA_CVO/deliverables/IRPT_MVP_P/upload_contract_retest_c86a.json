@@ -1,0 +1,75 @@
+{
+  "seat": "3.0.0_SA_CVO~P",
+  "backend_pin": "5add22ca9fb36545d4ed0b857e17217644d10c98",
+  "portal_pin": "c86a5eb53df6e48906def496df2d4dcdc0f47404",
+  "snapshot": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-upload-cb62-scxvpqu_",
+  "independent_sha256": "13ef33af34b8d20e806c0d8c25194a5158055d44a74f6ca20f2355bea543f5ea",
+  "runs": [
+    {
+      "label": "actual-producer-schema",
+      "command": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "infra/aws/lambda/investor-reporting/_contracts/test_upload_contract.py"
+      ],
+      "exit_code": 0,
+      "stdout": "........                                                                 [100%]\n8 passed in 1.10s\n",
+      "stderr": ""
+    },
+    {
+      "label": "independent-producer-capture",
+      "command": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "capture.py"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"states\": [\"NORMALIZED\", \"NEEDS_CORRECTION\"], \"input_sha256\": \"2ec1ad0a9eea0141396d4350380e9c71ba892427dff991e93dc421307cee3fd3\"}\n",
+      "stderr": ""
+    },
+    {
+      "label": "supplied-browser",
+      "command": [
+        "bun",
+        "test",
+        "src/pages/InvestorReporting/__tests__/mvp-upload/upload.test.ts",
+        "src/pages/InvestorReporting/__tests__/mvp-selection/selection.test.ts",
+        "src/pages/InvestorReporting/__tests__/mvp-selection/coverage.test.ts",
+        "src/pages/InvestorReporting/__tests__/fe-s-9/resolve.test.ts"
+      ],
+      "exit_code": 0,
+      "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\nREFS RESOLVED: 1 of 1\nRENDERED PERFORMANCE DOCUMENT: 18347 bytes\nMISSING PAYLOAD: investor-reporting-render/1.0.0 cannot render reportKind 'performance-report': areq-5510/r3 is absent\n",
+      "stderr": "\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\fe-s-9\\resolve.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mF9-AC9 -- resolveBundle over the FE-s-1 ExportBundle fixture\u001b[2m >\u001b[0m\u001b[1m every referenced report resolves (REFS RESOLVED: n of n) and the document shows the summary values\u001b[0m \u001b[0m\u001b[2m[\u001b[1m188.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mF9-AC9 -- resolveBundle over the FE-s-1 ExportBundle fixture\u001b[2m >\u001b[0m\u001b[1m a bundle referencing a revision the adapter cannot serve raises MissingPayloadError naming that revision\u001b[0m \u001b[0m\u001b[2m[\u001b[1m15.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\coverage.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m full document and response slice keep undated rows and census-only coverage visible\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m legacy reports gain neither synthetic coverage nor invented dates\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\selection.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m POST preserves the requested group/subset and returns distinct server identity\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m actual partial-group refusal stays a public refusal with no data\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m rejects malformed selected identity instead of deriving it from the fingerprint\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m custody requests use the retained ID and never substitute the fingerprint\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m fixture mode refuses to invent durable selection records\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m canonical producer route table and all browser routes match\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m generator resolves local defs and refuses broken or cyclic references\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-upload\\upload.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual guarded producer success and correction retain distinct meanings\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m wire serializes frozen token/body exactly and explicit refresh retains lineage\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m runtime factory absence refuses before authenticated transport\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m normalized responses require bound input and immutable artifact receipts\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m explicit fixture callback receives accepted upload bytes without invented response\u001b[0m \u001b[0m\u001b[2m[\u001b[1m15.00ms\u001b[0m\u001b[2m]\u001b[0m\n\n\u001b[0m\u001b[32m 16 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 64 expect() calls\nRan 16 tests across 4 files. \u001b[0m\u001b[2m[\u001b[1m2.03s\u001b[0m\u001b[2m]\u001b[0m\n"
+    },
+    {
+      "label": "independent-browser",
+      "command": [
+        "bun",
+        "test",
+        "reviewer-upload.test.ts"
+      ],
+      "exit_code": 0,
+      "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+      "stderr": "\u001b[0m\nreviewer-upload.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m independently regenerated guarded producer success and correction parse unchanged\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m complete route status, verb and path denominator equals pinned backend\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m bound hash must identify both top-level and nested input, not merely agree with artifact hash\u001b[0m \u001b[0m\u001b[2m[\u001b[1m31.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m malformed receipt family refuses\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m malformed receipt mutable refuses\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m malformed receipt version refuses\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m malformed receipt length refuses\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m malformed receipt source refuses\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m correction cannot carry an accepted input reference or document\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m hidden retry serializes identical body and explicit lineage is preserved\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m unavailable route refuses repeated attempts with zero transport calls\u001b[0m\n\n\u001b[0m\u001b[32m 11 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 17 expect() calls\nRan 11 tests across 1 file. \u001b[0m\u001b[2m[\u001b[1m341.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+    }
+  ],
+  "actual_capture_sha256": "a06685ee8b910028ec794ffa18dd1498cdaf66c4aa19ea51b6b545b077bcd0a0",
+  "source_sha256": {
+    "docs/contracts/investor-reporting/v1/AnalysisUploadRequest.schema.json": "41a41343a8623e043c53133b70c28622774d19397d1058f6df817bfb51191114",
+    "docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json": "204fbc47bd1b5e13cee392b5460438d4dc7029e18da264b1b94c04348f658f3b",
+    "docs/contracts/investor-reporting/v1/responses/analysis-input-upload.response.schema.json": "241f8bb110442b04a44940a20c2117ebc571c5f26cd80c71a5a1e75c2aeedf0b",
+    "docs/contracts/investor-reporting/v1/routes.json": "ba494828fb41f22dc43f11fcb73377ac4c2db9680f4a2bd748bb0f80633d78b4",
+    "infra/aws/lambda/investor-reporting/intake/portfolio.py": "aa23e204e6641e00d66595ecf17ed256cbf85d4bbbe348c39db997fee0e1e2ac",
+    "infra/aws/lambda/investor-reporting/intake/upload_entry.py": "62c3002688bf1c34021db0d266163de7145b89869ad958d189a728609daaf870",
+    "infra/aws/lambda/investor-reporting/intake/uploads.py": "af0a7e18d8e44453e84eb69d3641db11081902e95f92e62f83cb6109717adafe",
+    "src/api/endpoints/investor-reporting.ts": "9749cba2ff16137aa38fac58efb7be30333486d4889cc4d475dbd6b343432e72",
+    "src/pages/InvestorReporting/contracts/envelope.ts": "774f1a72745ead7c9124809500ec14952495418a49dfa9577eb16316e3e5c586",
+    "src/pages/InvestorReporting/contracts/wire/AnalysisUploadRequest.ts": "e823b811961b45d89501784e9d1baca16581a7119b8fb9e1f7c0dc4f05844dd0",
+    "src/pages/InvestorReporting/contracts/wire/AnalysisUploadResult.ts": "a858e61cb651c5ecf5d39973fc4b12e65385727431f56d881f1703ffb789f91d"
+  },
+  "timestamp_utc": "2026-09-22T23:30:09.155667+00:00",
+  "limits": "Actual guarded producer with supplied owner/storage doubles and schema; actual browser parser with regenerated responses. Route unavailable; no live transport, mounted upload UI, retained runtime, queue, provider or full S7 proof."
+}

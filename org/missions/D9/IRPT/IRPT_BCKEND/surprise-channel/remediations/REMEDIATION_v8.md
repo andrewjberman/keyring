@@ -48,11 +48,11 @@ Naming row W16-S4 stays ARMED, disarm/remediation owner COO~G by LGIC_ENFORCE re
     "owner": "2.0.0_SA_COO~B",
     "round": "v17",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v17"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W15-S5",
@@ -233,11 +233,11 @@ Naming row W16-S4 stays ARMED, disarm/remediation owner COO~G by LGIC_ENFORCE re
     "owner": "2.0.0_SA_COO~B",
     "round": "v17",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v17"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-C-S210",

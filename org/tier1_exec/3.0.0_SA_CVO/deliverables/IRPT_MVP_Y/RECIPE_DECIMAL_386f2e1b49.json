@@ -1,0 +1,300 @@
+{
+  "candidate_pin": "386f2e1b495f629f4e53584566fd6a2aa2eae0cd",
+  "baseline_pin": "bfe5a33e17486e01186bd97d3d8e801442485fad",
+  "candidate_file_sha256": {
+    "infra/aws/lambda/investor-reporting/intake/settings.json": "a05bcea4d3cdfda972a35bf3bf088c6794728b426d924cbd2069a94ab33aed44",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py": "f2d318109816408b6fd3f8ab1e2c30f334a0e8578b24d923fc3a30afc4d5c321",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py": "433853279df4a862f828b22145052b2f0d80b390809ca8185af87bbab8335590",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/entry.py": "e62414a92cdaec63275137e81e85ac01f5df9480cb61b20fccbad21d81d16ba9",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/FIXTURE_MANIFEST.json": "8d5769b67c96f83f33cea26c79233a0b4c733a7aae2e6aa90d8cd63deb40a0c0",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/collection.json": "50e52bcb67cdde4b1b0c7ce871394d25c5551563330fad4dcb14a45660aceaef",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/create_201.json": "f79334c0555e7e3cbe4a9c30426e4e37e6c131eb1b3e7366608bc8661271f1d4",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/create_422_fee.json": "db6564e1ba482454fd45f05f92d9dfd7938b8626945f632888645865660c15d7",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/dashboard.json": "193b1781dcb25c14a317e5e19fa6c191eb6a1b57155ff8b9d508b323a6fd2fed",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/decision_branches.json": "0eb2d483ad6203c3c05c0f8aa62c249e22c0971510f56f32b1beaded60aa5fdd",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/generate_201.json": "e893624268336ca4b0390c995768c0ae9582965ec50507aed500600e4300e123",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/generate_404_minimal.json": "9daf1c91692ccfc07773d0db4b3aba50918ee64cbe4623c1f179002ea6238f31",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/report.pdf": "ed5300adc866c91b1d87be0f52346f346fc53d92bd389cf313c3830707ce85fc",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/status_drifted.json": "a9b0ae40b0aa3bada6ba86d80228a8144debac585ff1236bcd09a5c228af8b45",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/status_ok.json": "2c54fef26689b22ab8a118bbe2a47c2bae10067b3225f2ca8cc6f5d56de72039",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/templates.json": "0c62f032799e200d2d347eb56ce2701a112bbfd70e8061681b7d7180aaadb128",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/upload_ok.json": "0bfa27432af8c03272c17a805b84ddbfe399b1ca00c7d815a316212e3db664ab",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/validate_200.json": "f69be554e959d3cd36eacf77fa50b00fe7d72006cc877082767bccc97457224f",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/job.py": "8403a175d54f408184aea1416ea27d26f495b186fb2cbf1e418259a18556c6cf",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py": "2a367ee2795914e782ccebe8743d15453df6daa5e5b781339ca1277a1bfc5b5c",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py": "3fb7083b7d35978598edb1f77e46c26dfbcea91854a8f18c7838ca6a3102f4eb",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py": "8f4a39e99be355c58b2afc17480880dfb04e43ca59380d39fda9fba3bcc3f89e",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/templates.json": "02e9f2dba08bddb201d048ce20aee8d3f1941c44a12f1db3446bbd9529e4bb44",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/netguard.py": "aeef9d595ebd2850e7270c8d5e5c7c82660f379c3115149b87147e44a2be4bab",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/run_offline_suite.py": "0a1d472d024e657b83e970711f0a387479f93e3e9dab13c195111bc6baeefa54",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_durable_job.py": "aadf0b47f3f60ec0f9243d2fe3a5358c003235b447a2a1e33a94f5fa9e30c7e4",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_recipe_decimal.py": "29be5c305defb33f0f7d53828aa7dacbff7d62bf68a90bb37a7fd2059fc9c35d",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_submission.py": "1b1e550b45ce2893ce89261cb8b4bf04b2b31e1df16b5c297f6ab57f53bfd6db",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py": "186949c4fbf66209eb781ffe92c9af2d7f598dc776862c112765b472a0f3ba9e"
+  },
+  "baseline_file_sha256": {
+    "infra/aws/lambda/investor-reporting/intake/settings.json": "a05bcea4d3cdfda972a35bf3bf088c6794728b426d924cbd2069a94ab33aed44",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py": "f2d318109816408b6fd3f8ab1e2c30f334a0e8578b24d923fc3a30afc4d5c321",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py": "433853279df4a862f828b22145052b2f0d80b390809ca8185af87bbab8335590",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/entry.py": "e62414a92cdaec63275137e81e85ac01f5df9480cb61b20fccbad21d81d16ba9",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/FIXTURE_MANIFEST.json": "8d5769b67c96f83f33cea26c79233a0b4c733a7aae2e6aa90d8cd63deb40a0c0",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/collection.json": "50e52bcb67cdde4b1b0c7ce871394d25c5551563330fad4dcb14a45660aceaef",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/create_201.json": "f79334c0555e7e3cbe4a9c30426e4e37e6c131eb1b3e7366608bc8661271f1d4",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/create_422_fee.json": "db6564e1ba482454fd45f05f92d9dfd7938b8626945f632888645865660c15d7",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/dashboard.json": "193b1781dcb25c14a317e5e19fa6c191eb6a1b57155ff8b9d508b323a6fd2fed",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/decision_branches.json": "0eb2d483ad6203c3c05c0f8aa62c249e22c0971510f56f32b1beaded60aa5fdd",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/generate_201.json": "e893624268336ca4b0390c995768c0ae9582965ec50507aed500600e4300e123",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/generate_404_minimal.json": "9daf1c91692ccfc07773d0db4b3aba50918ee64cbe4623c1f179002ea6238f31",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/report.pdf": "ed5300adc866c91b1d87be0f52346f346fc53d92bd389cf313c3830707ce85fc",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/status_drifted.json": "a9b0ae40b0aa3bada6ba86d80228a8144debac585ff1236bcd09a5c228af8b45",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/status_ok.json": "2c54fef26689b22ab8a118bbe2a47c2bae10067b3225f2ca8cc6f5d56de72039",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/templates.json": "0c62f032799e200d2d347eb56ce2701a112bbfd70e8061681b7d7180aaadb128",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/upload_ok.json": "0bfa27432af8c03272c17a805b84ddbfe399b1ca00c7d815a316212e3db664ab",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/validate_200.json": "f69be554e959d3cd36eacf77fa50b00fe7d72006cc877082767bccc97457224f",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/job.py": "8403a175d54f408184aea1416ea27d26f495b186fb2cbf1e418259a18556c6cf",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py": "fd5b40cb6bccbc98f59b0b5a057f16fed75ba3ac19a616699af55063d1db85ee",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py": "3fb7083b7d35978598edb1f77e46c26dfbcea91854a8f18c7838ca6a3102f4eb",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py": "8f4a39e99be355c58b2afc17480880dfb04e43ca59380d39fda9fba3bcc3f89e",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/templates.json": "02e9f2dba08bddb201d048ce20aee8d3f1941c44a12f1db3446bbd9529e4bb44",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/netguard.py": "aeef9d595ebd2850e7270c8d5e5c7c82660f379c3115149b87147e44a2be4bab",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/run_offline_suite.py": "0a1d472d024e657b83e970711f0a387479f93e3e9dab13c195111bc6baeefa54",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_durable_job.py": "aadf0b47f3f60ec0f9243d2fe3a5358c003235b447a2a1e33a94f5fa9e30c7e4",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_submission.py": "1b1e550b45ce2893ce89261cb8b4bf04b2b31e1df16b5c297f6ab57f53bfd6db",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py": "4fc7de0dca8896b048eb1b8acbfafe09fa06b39ace3f457057784cb0523b0440"
+  },
+  "supplied_suite": {
+    "exit_code": 0,
+    "stdout": "...................                                                      [100%]\n19 passed in 0.08s\n",
+    "stderr": ""
+  },
+  "controls": [
+    {
+      "name": "original_one_cent_echo_mismatch",
+      "passed": true,
+      "observed": {
+        "source_amount": "9007199254740993.01",
+        "echo_amount": "9007199254740993.02",
+        "baseline": {
+          "step": "upload",
+          "ok": true,
+          "status": 200,
+          "reconciled": true,
+          "rows_sent": 1,
+          "rows_echoed": 1,
+          "weight_unit_echoed": "Dollars",
+          "multipart_field": "holdings",
+          "multipart_field_source": "PRD v0.8 SUPP VI.5 @d67e9813b5 -- MEASURED, not invented",
+          "response_keys": [
+            "errors",
+            "rows",
+            "status",
+            "upload_record_id",
+            "weight"
+          ],
+          "parsed": {
+            "status": "ok",
+            "errors": 0,
+            "rows": 1,
+            "weight": "Dollars",
+            "upload_record_id": 1,
+            "isExtractedHoldings": null
+          },
+          "upload_record_id": 1,
+          "rows": [
+            {
+              "security_id": "S:AAPL",
+              "display_security_id": "S:AAPL",
+              "display_name": "Synthetic",
+              "weighting": 9007199254740994.0
+            }
+          ]
+        },
+        "candidate": {
+          "step": "upload",
+          "ok": false,
+          "status": 200,
+          "reconciled": false,
+          "rows_sent": 1,
+          "rows_echoed": 1,
+          "weight_unit_echoed": "Dollars",
+          "multipart_field": "holdings",
+          "multipart_field_source": "PRD v0.8 SUPP VI.5 @d67e9813b5 -- MEASURED, not invented",
+          "response_keys": [
+            "errors",
+            "rows",
+            "status",
+            "upload_record_id",
+            "weight"
+          ],
+          "parsed": {
+            "status": "ok",
+            "errors": 0,
+            "rows": 1,
+            "weight": "Dollars",
+            "upload_record_id": 1,
+            "isExtractedHoldings": null
+          },
+          "upload_record_id": 1,
+          "rows": []
+        }
+      }
+    },
+    {
+      "name": "original_large_cent_through_checkpoint_and_actual_step_create",
+      "passed": true,
+      "observed": {
+        "upload_ok": true,
+        "create_ok": true,
+        "checkpoint_rows": [
+          {
+            "security_id": "S:AAPL",
+            "display_security_id": "S:AAPL",
+            "display_name": "Synthetic",
+            "weighting": "9007199254740993.01"
+          }
+        ],
+        "csv": "Symbol,Dollars,Cost Basis Per Share,Performance Proxy\r\nS:AAPL,9007199254740993.01,,\r\n",
+        "actual_items_json": "[{\"name\":\"Synthetic\",\"weighting\":9007199254740993.01,\"weight_text\":\"9007199254740993.01\",\"target_weighting\":null,\"current_weighting\":null,\"dollars_weighting\":null,\"shares_weighting\":null,\"security_id\":\"S:AAPL\",\"display_security_id\":\"S:AAPL\",\"avg_cost_basis\":null}]",
+        "actual_route": "/model_portfolios/fixed/",
+        "actual_method": "POST",
+        "values": {
+          "S:AAPL": "9007199254740993.01"
+        },
+        "numeric_not_strings": true,
+        "text_matches_number": true
+      }
+    },
+    {
+      "name": "one_cent_through_checkpoint_and_actual_step_create",
+      "passed": true,
+      "observed": {
+        "upload_ok": true,
+        "create_ok": true,
+        "checkpoint_rows": [
+          {
+            "security_id": "S:AAPL",
+            "display_security_id": "S:AAPL",
+            "display_name": "Synthetic",
+            "weighting": "0.01"
+          }
+        ],
+        "csv": "Symbol,Dollars,Cost Basis Per Share,Performance Proxy\r\nS:AAPL,0.01,,\r\n",
+        "actual_items_json": "[{\"name\":\"Synthetic\",\"weighting\":0.01,\"weight_text\":\"0.01\",\"target_weighting\":null,\"current_weighting\":null,\"dollars_weighting\":null,\"shares_weighting\":null,\"security_id\":\"S:AAPL\",\"display_security_id\":\"S:AAPL\",\"avg_cost_basis\":null}]",
+        "actual_route": "/model_portfolios/fixed/",
+        "actual_method": "POST",
+        "values": {
+          "S:AAPL": "0.01"
+        },
+        "numeric_not_strings": true,
+        "text_matches_number": true
+      }
+    },
+    {
+      "name": "high_precision_fraction_through_checkpoint_and_actual_step_create",
+      "passed": true,
+      "observed": {
+        "upload_ok": true,
+        "create_ok": true,
+        "checkpoint_rows": [
+          {
+            "security_id": "S:AAPL",
+            "display_security_id": "S:AAPL",
+            "display_name": "Synthetic",
+            "weighting": "0.1000000000000000000000000001"
+          }
+        ],
+        "csv": "Symbol,Dollars,Cost Basis Per Share,Performance Proxy\r\nS:AAPL,0.1000000000000000000000000001,,\r\n",
+        "actual_items_json": "[{\"name\":\"Synthetic\",\"weighting\":0.1000000000000000000000000001,\"weight_text\":\"0.1000000000000000000000000001\",\"target_weighting\":null,\"current_weighting\":null,\"dollars_weighting\":null,\"shares_weighting\":null,\"security_id\":\"S:AAPL\",\"display_security_id\":\"S:AAPL\",\"avg_cost_basis\":null}]",
+        "actual_route": "/model_portfolios/fixed/",
+        "actual_method": "POST",
+        "values": {
+          "S:AAPL": "0.1000000000000000000000000001"
+        },
+        "numeric_not_strings": true,
+        "text_matches_number": true
+      }
+    },
+    {
+      "name": "reordered_security_and_cash_through_checkpoint_and_actual_step_create",
+      "passed": true,
+      "observed": {
+        "upload_ok": true,
+        "create_ok": true,
+        "checkpoint_rows": [
+          {
+            "security_id": "$:CASH",
+            "display_security_id": "$:CASH",
+            "display_name": "Synthetic",
+            "weighting": "123.45"
+          },
+          {
+            "security_id": "S:AAPL",
+            "display_security_id": "S:AAPL",
+            "display_name": "Synthetic",
+            "weighting": "9007199254740993.01"
+          }
+        ],
+        "csv": "Symbol,Dollars,Cost Basis Per Share,Performance Proxy\r\nS:AAPL,9007199254740993.01,,\r\n$:CASH,123.45,,\r\n",
+        "actual_items_json": "[{\"name\":\"Synthetic\",\"weighting\":123.45,\"weight_text\":\"123.45\",\"target_weighting\":null,\"current_weighting\":null,\"dollars_weighting\":null,\"shares_weighting\":null,\"security_id\":\"$:CASH\",\"display_security_id\":\"$:CASH\",\"avg_cost_basis\":null},{\"name\":\"Synthetic\",\"weighting\":9007199254740993.01,\"weight_text\":\"9007199254740993.01\",\"target_weighting\":null,\"current_weighting\":null,\"dollars_weighting\":null,\"shares_weighting\":null,\"security_id\":\"S:AAPL\",\"display_security_id\":\"S:AAPL\",\"avg_cost_basis\":null}]",
+        "actual_route": "/model_portfolios/fixed/",
+        "actual_method": "POST",
+        "values": {
+          "$:CASH": "123.45",
+          "S:AAPL": "9007199254740993.01"
+        },
+        "numeric_not_strings": true,
+        "text_matches_number": true
+      }
+    },
+    {
+      "name": "duplicate_echo_refused",
+      "passed": true,
+      "observed": {
+        "result": {
+          "step": "upload",
+          "ok": false,
+          "status": 200,
+          "reconciled": false,
+          "rows_sent": 1,
+          "rows_echoed": 1,
+          "weight_unit_echoed": "Dollars",
+          "multipart_field": "holdings",
+          "multipart_field_source": "PRD v0.8 SUPP VI.5 @d67e9813b5 -- MEASURED, not invented",
+          "response_keys": [
+            "errors",
+            "rows",
+            "status",
+            "upload_record_id",
+            "weight"
+          ],
+          "parsed": {
+            "status": "ok",
+            "errors": 0,
+            "rows": 2,
+            "weight": "Dollars",
+            "upload_record_id": 1,
+            "isExtractedHoldings": null
+          },
+          "upload_record_id": 1,
+          "rows": []
+        }
+      }
+    },
+    {
+      "name": "duplicate_source_refused_before_transport",
+      "passed": true,
+      "observed": {
+        "reason": "nonempty unique CSV-safe security identities required",
+        "transport_calls": 0
+      }
+    }
+  ],
+  "passed": 7,
+  "total": 7,
+  "limits": [
+    "Actual recipe upload/create and transport multipart serializer; injected offline replies",
+    "Original numeric scenario reproduced independently; no producer probe file supplied",
+    "JSON checkpoint is local serialization, not persistent worker restart",
+    "Socket connections forbidden; no vendor/session access or worker assembly proof"
+  ]
+}

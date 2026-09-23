@@ -1,0 +1,68 @@
+{
+  "seat": "3.0.0_SA_CVO~P",
+  "portal_pin": "52786a7a4e16d0faec2f1f0b3e587d6e88c496cd",
+  "backend_contract_pin": "c5eace08c76176c6d9ebb78dd31ced3b0e57ea2d",
+  "snapshot": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-mounted-5278-_rzynf5e",
+  "origin": "http://127.0.0.1:61122",
+  "runs": [
+    {
+      "label": "focused-supplied",
+      "command": [
+        "bun",
+        "test",
+        "src/pages/InvestorReporting/__tests__/m-selection/selectionRequest.test.ts",
+        "src/pages/InvestorReporting/__tests__/mvp-selection/selection.test.ts",
+        "src/pages/InvestorReporting/__tests__/mvp-selection/coverage.test.ts"
+      ],
+      "exit_code": 0,
+      "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+      "stderr": "\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\m-selection\\selectionRequest.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mselection request preserves user intent\u001b[2m >\u001b[0m\u001b[1m partly authorized client submits whole client identity, never permitted-account intersection\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mselection request preserves user intent\u001b[2m >\u001b[0m\u001b[1m relationship identity is preserved even when no member is currently visible\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mselection request preserves user intent\u001b[2m >\u001b[0m\u001b[1m explicit account narrowing supersedes the group identity\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mselection request preserves user intent\u001b[2m >\u001b[0m\u001b[1m a firm row cannot silently expand to every account\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\coverage.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m full document and response slice keep undated rows and census-only coverage visible\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m legacy reports gain neither synthetic coverage nor invented dates\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\selection.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m POST preserves the requested group/subset and returns distinct server identity\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m actual partial-group refusal stays a public refusal with no data\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m rejects malformed selected identity instead of deriving it from the fingerprint\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m custody requests use the retained ID and never substitute the fingerprint\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m fixture mode refuses to invent durable selection records\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m canonical producer route table and all browser routes match\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m generator resolves local defs and refuses broken or cyclic references\u001b[0m\n\n\u001b[0m\u001b[32m 13 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 42 expect() calls\nRan 13 tests across 3 files. \u001b[0m\u001b[2m[\u001b[1m148.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+    },
+    {
+      "label": "supplied-mounted:header-race.mjs",
+      "command": [
+        "node",
+        "src/pages/InvestorReporting/__tests__/m-selection/header-race.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: actual header waits for acceptance; whole-client request; sel_ identity separate from fingerprint; changed selection clears; late response and context reset suppressed; refusal hides data.\n",
+      "stderr": "(node:20648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "label": "supplied-mounted:holdings-race.mjs",
+      "command": [
+        "node",
+        "src/pages/InvestorReporting/__tests__/m-selection/holdings-race.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: mounted selection A->B, clear, late response, date change, root change, failed request; no stale body, no page errors.\n",
+      "stderr": "(node:35592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "label": "independent-mounted",
+      "command": [
+        "node",
+        "reviewer-mounted.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"checks\":[\"no eager custody calls\",\"accepted selection reaches mounted performance\",\"explicit dates replace bootstrap sentinel\",\"refresh preserves exact request\",\"only active custody tab fetches\",\"late rejected selection cannot replace current success\",\"context reset clears accepted state\",\"prospect analysis mounts without custody fetch\"],\"page_errors\":[],\"blocked_network\":[],\"calls\":[{\"kind\":\"selection\",\"request\":{\"scope_kind\":\"CLIENT\",\"scope_ids\":[\"client-Alpha\"]}},{\"kind\":\"performance\",\"request\":{\"tenant\":\"tenant-a1\",\"accountSetId\":\"sel_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"scopeFingerprint\":\"selected-a\",\"revision\":\"directory-accepted\",\"start\":\"2026-01-01\",\"end\":\"2026-09-22\"}},{\"kind\":\"performance\",\"request\":{\"tenant\":\"tenant-a1\",\"accountSetId\":\"sel_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"scopeFingerprint\":\"selected-a\",\"revision\":\"directory-accepted\",\"start\":\"2026-01-01\",\"end\":\"2026-09-22\"}},{\"kind\":\"holdings\",\"request\":{\"tenant\":\"tenant-a1\",\"accountSetId\":\"sel_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"scopeFingerprint\":\"selected-a\",\"revision\":\"directory-accepted\"}},{\"kind\":\"selection\",\"request\":{\"scope_kind\":\"CLIENT\",\"scope_ids\":[\"client-Beta\"]}},{\"kind\":\"selection\",\"request\":{\"scope_kind\":\"CLIENT\",\"scope_ids\":[\"client-Gamma\"]}},{\"kind\":\"holdings\",\"request\":{\"tenant\":\"tenant-a1\",\"accountSetId\":\"sel_cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\",\"scopeFingerprint\":\"selected-c\",\"revision\":\"directory-accepted\"}}]}\n",
+      "stderr": "(node:27140) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    }
+  ],
+  "independent_sha256": "1bd95283a55f5c0fd0d8727de6f6f3cf6460b0156a18ef1c175947b1afb6c761",
+  "host_sha256": "24f893ada81af05345879e15cb64ccea57bb16742e1ae671f08bedc985324403",
+  "source_sha256": {
+    "src/pages/InvestorReporting/__tests__/m-selection/header-race.html": "22fb922ad3d4ab2ff9b173586a3098617790f59dd67c6ec89c33aff193c9510d",
+    "src/pages/InvestorReporting/__tests__/m-selection/header-race.mjs": "77b8b19b86485eaf114d7be4df890a2a72e54ea295a7e4d9432b59ce9f8c1fe6",
+    "src/pages/InvestorReporting/__tests__/m-selection/holdings-race.html": "0cb93d78eaf749b5218449da31d720ca4954ea934cdad5cf3e79a485d1faa534",
+    "src/pages/InvestorReporting/__tests__/m-selection/holdings-race.mjs": "4ed1d6287c9240540083db457ff934f620e2a58cc8e9c362f262204359c72822",
+    "src/pages/InvestorReporting/__tests__/m-selection/selectionRequest.test.ts": "af1a987dca12b89d90a65e36c8b96c52fe8432c9c66bc47c98bc028fa28d6aa8",
+    "src/pages/InvestorReporting/index.tsx": "bf6e4c5c86a357fe3b313558fbfa2540f490ee2ded45431293ec629317f512b3",
+    "src/pages/InvestorReporting/tabs/TabShell.tsx": "885c787266f926b760803239caf00187be415455e6c35363ab06fd2426c791e6",
+    "src/pages/InvestorReporting/tabs/analysis/AnalysisTab.tsx": "7cc3ffb9f8ce4dddbf0d4f343d998de54b64eff05b325a8a5ec1912dfb684cf8",
+    "src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx": "4e1f2348c9f58ba3199f3fe3617200d17d09254d52cf29fd6cd8cdddf96013fa"
+  },
+  "timestamp_utc": "2026-09-22T22:51:45.480970+00:00",
+  "server_log": "(node:37420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:37420) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.\n6:51:32 PM [vite] (client) \u2728 new dependencies optimized: react-dom/client, react-router-dom, @tanstack/react-query, lucide-react, @headlessui/react, clsx, class-variance-authority, tailwind-merge, recharts\n6:51:32 PM [vite] (client) \u2728 optimized dependencies changed. reloading\n[BABEL] Note: The code generator has deoptimised the styling of C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-mounted-5278-_rzynf5e\\.vite-review\\deps\\react-dom_client.js?v=c29db1d1 as it exceeds the max of 500KB.\n[BABEL] Note: The code generator has deoptimised the styling of C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-mounted-5278-_rzynf5e\\.vite-review\\deps\\react-dom_client.js?v=4c7403ab as it exceeds the max of 500KB.\n",
+  "limits": "Actual pinned React components in headless Edge; controlled API harness, no LiveClient/authenticated fetch/backend/provider integration. Local Vite config with no proxy, existing dependencies. No live or full P/S acceptance."
+}

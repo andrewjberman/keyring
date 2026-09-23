@@ -1,0 +1,121 @@
+.................F..........F...F..........F.............F.............. [ 84%]
+.............                                                            [100%]
+================================== FAILURES ===================================
+______ test_grade_agrees_with_every_worked_case[inf-silver-chain|LAMBDA] ______
+
+case = {'canonical_form': '{system}-inf-silver-chain-lambda', 'name': 'inf-silver-chain', 'type': 'LAMBDA', 'verdict': 'OUT-OF-PATTERN', ...}
+
+    @pytest.mark.parametrize("case", CASES, ids=["%s|%s" % (c["name"], c["type"]) for c in CASES])
+    def test_grade_agrees_with_every_worked_case(case):
+        mod = _shipped_lib()
+        if case["verdict"] == "RAISE":
+            with pytest.raises(mod.RaiseDefect):
+                mod.grade(case["name"], case["type"])
+            return
+        verdict, canon = mod.grade(case["name"], case["type"])
+        assert verdict == case["verdict"]
+        if verdict != "NOT-GRADED":
+>           assert canon == case["canonical_form"]
+E           AssertionError: assert 'orion-inf-si...-chain-lambda' == '{system}-inf...-chain-lambda'
+E             
+E             - {system}-inf-silver-chain-lambda
+E             ? ^^^^^^^^
+E             + orion-inf-silver-chain-lambda
+E             ? ^^^^^
+
+lib\tests\test_opal_naming.py:134: AssertionError
+_ test_grade_agrees_with_every_worked_case[opal-portal-data-proxy-api|API_GW] _
+
+case = {'canonical_form': 'opal-portal-data-proxy-api', 'name': 'opal-portal-data-proxy-api', 'type': 'API_GW', 'verdict': 'CONFORMANT', ...}
+
+    @pytest.mark.parametrize("case", CASES, ids=["%s|%s" % (c["name"], c["type"]) for c in CASES])
+    def test_grade_agrees_with_every_worked_case(case):
+        mod = _shipped_lib()
+        if case["verdict"] == "RAISE":
+            with pytest.raises(mod.RaiseDefect):
+                mod.grade(case["name"], case["type"])
+            return
+        verdict, canon = mod.grade(case["name"], case["type"])
+>       assert verdict == case["verdict"]
+E       AssertionError: assert 'OUT-OF-PATTERN' == 'CONFORMANT'
+E         
+E         - CONFORMANT
+E         + OUT-OF-PATTERN
+
+lib\tests\test_opal_naming.py:132: AssertionError
+_ test_grade_agrees_with_every_worked_case[Inflection-SilverChain-DimConversionFailure|CW_ALARM] _
+
+case = {'canonical_form': '{system}-inf-silver-chain-dim-conversion-failure-alarm', 'name': 'Inflection-SilverChain-DimConversionFailure', 'type': 'CW_ALARM', 'verdict': 'OUT-OF-PATTERN', ...}
+
+    @pytest.mark.parametrize("case", CASES, ids=["%s|%s" % (c["name"], c["type"]) for c in CASES])
+    def test_grade_agrees_with_every_worked_case(case):
+        mod = _shipped_lib()
+        if case["verdict"] == "RAISE":
+            with pytest.raises(mod.RaiseDefect):
+                mod.grade(case["name"], case["type"])
+            return
+        verdict, canon = mod.grade(case["name"], case["type"])
+        assert verdict == case["verdict"]
+        if verdict != "NOT-GRADED":
+>           assert canon == case["canonical_form"]
+E           AssertionError: assert 'orion-inf-si...failure-alarm' == '{system}-inf...failure-alarm'
+E             
+E             - {system}-inf-silver-chain-dim-conversion-failure-alarm
+E             ? ^^^^^^^^
+E             + orion-inf-silver-chain-dim-conversion-failure-alarm
+E             ? ^^^^^
+
+lib\tests\test_opal_naming.py:134: AssertionError
+_ test_grade_agrees_with_every_worked_case[wsb-49f-model-aua-pull-daily|SCHEDULE] _
+
+case = {'canonical_form': '{system}-49f-wsb-model-aua-pull-daily', 'name': 'wsb-49f-model-aua-pull-daily', 'residue_class': 'workstream-schedule', 'type': 'SCHEDULE', ...}
+
+    @pytest.mark.parametrize("case", CASES, ids=["%s|%s" % (c["name"], c["type"]) for c in CASES])
+    def test_grade_agrees_with_every_worked_case(case):
+        mod = _shipped_lib()
+        if case["verdict"] == "RAISE":
+            with pytest.raises(mod.RaiseDefect):
+                mod.grade(case["name"], case["type"])
+            return
+        verdict, canon = mod.grade(case["name"], case["type"])
+        assert verdict == case["verdict"]
+        if verdict != "NOT-GRADED":
+>           assert canon == case["canonical_form"]
+E           AssertionError: assert 'mdpf-49f-wsb...ua-pull-daily' == '{system}-49f...ua-pull-daily'
+E             
+E             - {system}-49f-wsb-model-aua-pull-daily
+E             ? ------ ^
+E             + mdpf-49f-wsb-model-aua-pull-daily
+E             ?  ^^^
+
+lib\tests\test_opal_naming.py:134: AssertionError
+____ test_grade_agrees_with_every_worked_case[inf/otp-relay/token|SECRET] _____
+
+case = {'canonical_form': '{system}/inf/otp-relay/token', 'name': 'inf/otp-relay/token', 'type': 'SECRET', 'verdict': 'OUT-OF-PATTERN', ...}
+
+    @pytest.mark.parametrize("case", CASES, ids=["%s|%s" % (c["name"], c["type"]) for c in CASES])
+    def test_grade_agrees_with_every_worked_case(case):
+        mod = _shipped_lib()
+        if case["verdict"] == "RAISE":
+            with pytest.raises(mod.RaiseDefect):
+                mod.grade(case["name"], case["type"])
+            return
+        verdict, canon = mod.grade(case["name"], case["type"])
+        assert verdict == case["verdict"]
+        if verdict != "NOT-GRADED":
+>           assert canon == case["canonical_form"]
+E           AssertionError: assert 'portal/inf/otp-relay/token' == '{system}/inf/otp-relay/token'
+E             
+E             - {system}/inf/otp-relay/token
+E             ? ^^^^ ^^^
+E             + portal/inf/otp-relay/token
+E             ? ^^^ ^^
+
+lib\tests\test_opal_naming.py:134: AssertionError
+=========================== short test summary info ===========================
+FAILED lib\tests\test_opal_naming.py::test_grade_agrees_with_every_worked_case[inf-silver-chain|LAMBDA]
+FAILED lib\tests\test_opal_naming.py::test_grade_agrees_with_every_worked_case[opal-portal-data-proxy-api|API_GW]
+FAILED lib\tests\test_opal_naming.py::test_grade_agrees_with_every_worked_case[Inflection-SilverChain-DimConversionFailure|CW_ALARM]
+FAILED lib\tests\test_opal_naming.py::test_grade_agrees_with_every_worked_case[wsb-49f-model-aua-pull-daily|SCHEDULE]
+FAILED lib\tests\test_opal_naming.py::test_grade_agrees_with_every_worked_case[inf/otp-relay/token|SECRET]
+5 failed, 80 passed, 8 deselected in 0.34s

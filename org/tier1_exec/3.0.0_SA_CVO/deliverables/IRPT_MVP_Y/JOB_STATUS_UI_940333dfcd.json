@@ -1,0 +1,89 @@
+{
+  "pin": "940333dfcd12dd4329a35c4b3834ebb9dafa791c",
+  "method": "Actual component/effect functions with manual React hook storage, deferred promises and controlled timer callbacks; static markup. No browser scheduler/runtime/status persistence proof.",
+  "source_sha256": {
+    "src/pages/InvestorReporting/tabs/analysis/ProspectJobStatus.tsx": "c5c857a700abc1863f6eed033b62cb495ce757c986478a3d8e4e4a4ffc6f0507",
+    "src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx": "6fda7fe270a6ca4eab05ea796604137cbfb845431b33c203641c1524aab8439a"
+  },
+  "controls": [
+    {
+      "name": "LOADING makes at most twelve serial ID-only reads at five-second intervals",
+      "outcome": "PASS",
+      "scheduled_delays": [
+        5000,
+        5000,
+        5000,
+        5000,
+        5000,
+        5000,
+        5000,
+        5000,
+        5000,
+        5000,
+        5000
+      ]
+    },
+    {
+      "name": "an unresolved read blocks overlap and the status button until it settles",
+      "outcome": "PASS",
+      "scheduled_delays": [
+        5000
+      ]
+    },
+    {
+      "name": "READY and refusal states stop polling after LOADING",
+      "outcome": "PASS",
+      "scheduled_delays": [
+        5000,
+        5000
+      ]
+    },
+    {
+      "name": "transport error clears old status, stops polls and explicit check restarts",
+      "outcome": "PASS",
+      "scheduled_delays": [
+        5000
+      ]
+    },
+    {
+      "name": "unmount clears a pending timer without another read",
+      "outcome": "PASS",
+      "scheduled_delays": [
+        5000
+      ]
+    },
+    {
+      "name": "unmount ignores late successful and failed in-flight responses",
+      "outcome": "PASS",
+      "scheduled_delays": []
+    },
+    {
+      "name": "request/API change ignores the old late response and retains new issued ID",
+      "outcome": "PASS",
+      "scheduled_delays": []
+    },
+    {
+      "name": "explicit check cancels waiting timer and resets a bounded twelve-read cycle",
+      "outcome": "PASS",
+      "scheduled_delays": [
+        5000,
+        5000,
+        5000,
+        5000,
+        5000,
+        5000,
+        5000,
+        5000,
+        5000,
+        5000,
+        5000,
+        5000
+      ]
+    },
+    {
+      "name": "missing reader and empty issued ID make no status request or timer",
+      "outcome": "PASS",
+      "scheduled_delays": []
+    }
+  ]
+}

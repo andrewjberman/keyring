@@ -1,0 +1,41 @@
+{
+  "seat": "3.0.0_SA_CVO~P",
+  "candidate": "bd7c9f1b2c23737566f90a519634f904ff89f201",
+  "source_sha256": {
+    "infra/aws/lambda/investor-reporting/reports/retention.py": "f30be89e1246b1e0158dfd66324f0441e741ee1d6c8365aec1c8848dd6dbd674",
+    "infra/aws/lambda/investor-reporting/reports/repository.py": "805805dd922e9cd77a9873c4c77aa1f8a857469b2d9440ebed6fd64ec55ed2ba",
+    "infra/aws/lambda/investor-reporting/reports/tests/test_retention.py": "a02dc39d53f41730d61e066ec92492922c892766afb6a549c88cdd5e09ea9a0d"
+  },
+  "reviewer_sha256": "a4ce15e3852ec4e96fa91981e08ed7a2898cf25416393fb4669542a2101a39e0",
+  "snapshot": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retention-bd7c-mwxyq15g",
+  "supplied_suite": {
+    "command": [
+      "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retention-bd7c-mwxyq15g\\tests\\test_retention.py"
+    ],
+    "exit_code": 0,
+    "stdout": "............                                                             [100%]\n12 passed in 0.40s\n",
+    "stderr": ""
+  },
+  "independent_suite": {
+    "command": [
+      "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retention-bd7c-mwxyq15g\\tests\\test_independent_review.py"
+    ],
+    "exit_code": 1,
+    "stdout": "F........                                                                [100%]\n================================== FAILURES ===================================\n_______ test_successful_write_crossing_reserved_expiry_cannot_resurrect _______\n\nworld = namespace(policy=<retention.RetentionPolicy object at 0x0000014FC5ED3F20>, table=<test_retention.Table object at 0x000... 'principal_id': 'advisor', 'account_ids': ['acc-a']}, principal={'firm_id': '49financial', 'principal_id': 'advisor'})\n\n    def test_successful_write_crossing_reserved_expiry_cannot_resurrect(world):\n        ref = reserve(world)\n        expires = world.policy.require_live(world.principal, ref)[\"expires_at\"]\n        world.state.now = expires - 1\n        original_put = world.table.put_item\n    \n        def delayed_put(*args, **kwargs):\n            if \"ExpressionAttributeValues\" in kwargs:\n                world.state.now = expires  # condition still receives the previously sampled :now\n            return original_put(*args, **kwargs)\n    \n        world.table.put_item = delayed_put\n        promoted = live = False\n        try:\n            world.policy.promote(world.principal, ref)\n            promoted = True\n        except (RetentionExpired, RetentionRefused):\n            pass\n        try:\n            world.policy.require_live(world.principal, ref, accepted=True)\n            live = True\n        except (RetentionExpired, RetentionRefused):\n            pass\n        row = next(iter(world.table.rows.values()))\n        print(json.dumps({\"promotion_returned_success\": promoted, \"accepted_read_succeeds\": live,\n                          \"old_reserved_expiry\": expires, \"now\": world.state.now,\n                          \"stored_state\": row[\"state\"], \"stored_expiry\": row[\"expires_at\"]}))\n>       assert not promoted and not live\nE       assert (not True)\n\ntests\\test_independent_review.py:38: AssertionError\n---------------------------- Captured stdout call -----------------------------\n{\"promotion_returned_success\": true, \"accepted_read_succeeds\": true, \"old_reserved_expiry\": 1802592000, \"now\": 1802592000, \"stored_state\": \"ACCEPTED\", \"stored_expiry\": 2020752000}\n=========================== short test summary info ===========================\nFAILED tests/test_independent_review.py::test_successful_write_crossing_reserved_expiry_cannot_resurrect\n1 failed, 8 passed in 0.34s\n",
+    "stderr": ""
+  },
+  "timestamp_utc": "2026-09-22T22:15:32.868463+00:00",
+  "limits": "Exact retention/repository modules; synthetic policy/owner/clock/transport and actual boto3 serialization/Stubber. No repository lifecycle composition, concurrent workers, physical cleanup, live AWS or vendor execution."
+}
