@@ -476,3 +476,8 @@ CTO independently replayed d8173c1b9c on seven exact real S3 versions:57position
 ## 2026-09-23 21:25 UTC - paired source repairs closed
 
 P-SOURCE-01 CLOSED5765ea21a5 with6focused fidelity/composition checks0.74s. M-P-MAP-01 CLOSED9b3fb2a actualS3 callback into latestP5765 request constructor, full receipt retained. Final P package consumes9b3 mapper, not older614 included in5765. Source and adapter readiness clears these defects, not storage policy/live journey. P prepares exact cutover; M retains full Holdings publication/API/UI responsibility under1960 mandate update.
+
+
+## 2026-09-23 21:28 UTC - bounded Tax store writer and Reporting infrastructure
+
+55145056df recipe accepted for source implementation. Exact Tax membership module and its test narrowed from ANY to M-only in .owned-paths with CONTRACT; no fourthCOO/fullTaxround/scheduler/livecall. One-shot runner reuses whole existing canonical modules, no fabricated capability envelope/history. P canonical reporting bucket NoSuchBucket evidence is accepted as next infrastructure task under existing IRPT core Terraform ownership; prepare minimal exact plan, keep policy pending until cutover adjudication.

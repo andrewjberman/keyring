@@ -99,3 +99,32 @@ CRO current corroboration is source evidence, not accepted complete Tax AUM: nin
 ## Cottonwood currency - Andrew direct 2026-09-23
 
 ANDREW_COT_USD_20260923.md records Andrew's explicit confirmation that all COT report amounts are USD. This closes the COT denomination gap for Black Diamond market values/cash flows. P centralizes this firm-specific authority with provenance; M consumes it for COT holdings. Vendor bodies remain unchanged and the source of the USD assertion is Andrew's attestation, not an absent provider field. INF/49F currency, missing amounts, dated census/reconciliation and valuation-basis checks remain separate. Do not hold COT implementation for another currency lookup.
+
+
+## Bounded Tax dependency implementation - 2026-09-23
+
+Owner M, under Andrew Tax B and CTO worker-fork adjudication. Canonical recipe
+TAX_BOUNDED_ACTIVATION_RECIPE_20260923.md@55145056df is accepted for implementation
+preparation. Exactly data/mdpf/scripts/gold/taxsma_membership.py (S3DispositionStore
+and necessary serializers) and data/mdpf/tests/taxsma/test_taxsma_membership.py are
+M-only under matching IRPT_TAX_MEMBERSHIP_M rows in this commit. These two rows
+narrow former data/** ANY; historical T is wound down. No fourth seat or full Tax
+round restart. No active shared writer is displaced by this assignment.
+
+M may build the one-shot runner under its existing investor_reporting source area,
+reusing unchanged complete gateway/snapshot/Silver modules and production stores.
+Conditional creation/update with bounded conflict retries, idempotent logical events,
+exact-version readback and existing first-observed/out-of-order/conflict semantics
+are required. Preserve the original snapshot and complete typed row census. No
+backdating, manual research-envelope conversion or parallel publisher. No full Gold
+consolidator/scheduler change. Exact runtime capability/permissions/readback plan is
+next; this implementation grant does not execute a vendor capability call, cloud
+write or provisioning. Complete first COT publication/runtime preparation remains M's
+primary live thread; Tax is the bounded current49F dependency, not a replacement.
+
+Reporting storage infrastructure is P's existing investor-reporting/core Terraform
+surface under IRPT_COMPLETION_P; no additional owner lookup or alternate bucket is
+needed. Canonical bucket absence is a concrete build/provisioning task. P prepares
+the minimal versioned/private/encrypted bucket and least-privilege actual consumer
+plan, preserving pending policy until concrete cutover review. No new apply occurs
+through this contract amendment.
