@@ -184,7 +184,7 @@ with the message file written by the Write tool.
 3 or more reports and the CVO reads the full run at AC3. If banks do not reach 3 reports through the bridge, that is a
 finding, never a relaxed threshold.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
