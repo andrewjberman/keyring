@@ -464,6 +464,43 @@ to state, never to assume.
    It DOES satisfy clause 3, so the **safety half is met and the semantic half is not.** The
    `no_coverage` counter is the remedy because it puts the day on the **counted path, where the score is
    written exactly as `DENIED`'s is** -- which is how implementing clause 1 properly also closes H-a.
+6. STOP: **A RETAINED GOLD ROW CARRYING THE LEGACY `DENIED` LABEL IS READ AS `no_coverage`, AND THE
+   READER'S `states`, `counts` AND `complete` ARE THEREFORE IDENTICAL BEFORE AND AFTER THE RELABEL. THAT
+   INVARIANCE IS THE CONTRACT, NOT AN IMPLEMENTATION DETAIL.** Added by **AMENDMENT 4b**, proposed by
+   `3.0.0_SA_CVO~Z` (msg 25091) and adopted substantially as proposed. The `denied` counter is fed **only
+   by genuine access-denial on the legacy path** and reads **0 from the gold path**.
+
+   ⛔ **WHY THIS IS NOT DERIVABLE FROM CLAUSES 1-5, WHICH IS THE WHOLE REASON IT IS RATIFIED:** a literal
+   implementer would map `DENIED` -> `denied` and `NO_COVERAGE` -> `no_coverage`, **entirely defensible
+   against the text above**, and that **DESTROYS the invariance** -- the same day counts under `denied`
+   before the migration and `no_coverage` after. **So the property that makes a 1,595-row relabel safe
+   rested on a choice the contract did not contain.**
+
+   ⭐ **AND THAT IS THE R8 SHAPE AGAIN: a successor tidying the map against clause 2's plain words would
+   read the alias AS THE BUG, remove it, PASS EVERY TEST THAT DOES NOT COMPARE ACROSS THE TWO LABELS, and
+   reintroduce a migration-visible change -- with nothing in the text to stop them.** A test suite scoped
+   to one label at a time cannot see an invariance BETWEEN labels.
+
+   **WHY THE MAPPING IS SAFE, cited so a successor need not re-derive it:** Amendment 1 established that
+   **no refusal is ever observed on that writer's path, whose only input is `publisher_spans`** -- so a
+   retained gold `DENIED` row recording a *genuine* refusal **cannot exist**. The mapping rests on a fact
+   already measured and ratified, not on an assumption.
+
+   **AND THE TWO PATHS CANNOT COLLIDE, verified structurally by `3.0.0_SA_CVO~Z` at source rather than
+   accepted from a description:** genuine access denial travels an S3 **error CODE** through
+   `_DENIED_CODES` (`:81-87`) to `DeniedReadError` (`:162-163`) to `_state_of(exc)` returning `"denied"`
+   (`:327-329`) -- **exception classification, on the legacy path**. A gold day travels a row's
+   `data_status` **FIELD VALUE** through `_GOLD_DAY_STATE_MAP` (`:625-626`) -- **a dict lookup, in
+   `gold_window_read`**. ⭐ **A `data_status` string never becomes a `DeniedReadError` and an S3 error
+   code never becomes a `data_status` value**, so `denied` stays reachable and meaningful for a genuine
+   refusal while reading 0 from the gold path, exactly as clause 2 reserves it. **The separation is a
+   property of the code's SHAPE, not of anyone's account of it.**
+
+   ⛔ **THE GAP CLASS, NOW TWICE IN ONE EVENING AND WORTH MORE THAN EITHER INSTANCE: clauses 1-4
+   specified the COUNTER and were silent on the SCORE; clauses 1-5 specified the FUTURE and were silent
+   on the RETAINED CORPUS. A CONTRACT THAT SPECIFIES ONLY THE FORWARD PATH LEAVES THE EXISTING CORPUS TO
+   THE IMPLEMENTATION.** COST: one clause. NON-APPLICATION: a corpus with no retained rows in the old
+   vocabulary.
 
 STOP: **CLASSIFIED EXPOSURE, NOT INCIDENT, and the classification is `3.0.0_SA_CVO~Z`'s with its own
 limit carried:** nothing in the repo emits `NO_COVERAGE` yet, so no reader has been misled. ⚠ **That is
