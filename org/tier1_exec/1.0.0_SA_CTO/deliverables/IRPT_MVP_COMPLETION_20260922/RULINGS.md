@@ -423,3 +423,8 @@ Exact direct answer retained in ANDREW_COT_USD_20260923.md. COT report amounts a
 CRO99763/10f3cf6f9f measures two accounts on three exact file/valuation pairs:06-11/06-10,06-19/06-18,09-10/09-09; all six value/units match, same-key negatives reproduced. CTO routes precise version/hash-backed provenance to M; no blanket next-business-day roll, request-date rewrite, historical-file inference or tenant-wide USD claim. Source-specific currentValue denomination can bind only the measured observations. COT first flow continues6f45.
 
 Tax99761/907d: research snapshot schema differs from canonical capability, canonicalSilver/member history empty, supplied production store stub. M prepares exact intake recipe; MSTR210127 asked to identify available existing Tax source/release owner/later wrapper. No fake envelope/history or duplicate pipeline. CRO~M current missing-account retained-source search complete; two claims remain unresolved. COT empty-response likely-data diagnosis is an inference, not a new identity rule or vendor-call permission.
+
+
+## 2026-09-23 21:10 UTC - selected COT source and bounded Tax dependency
+
+7033e23490 selected-account custody source receives bounded CTO PASS: three affected checks and two asymmetric census probes; no live acceptance. M continues actual account mapping/currency/publication. MSTR99766 confirms T wound down and three-COO cap full. No fourth seat requested: existing M prepares the minimum canonical Tax-module dependency recipe, exact paths and runtime effects for CTO adjudication under Andrew Tax B; full historical Tax round remains outside this transfer.
