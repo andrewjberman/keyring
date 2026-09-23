@@ -111,6 +111,7 @@ org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-t-1.listing-per
   <criterion id="AC2" cell_refs="HVST-t-1"><invocation>cd "$(git rev-parse --show-toplevel)" && for t in test_retrieval_provenance test_bronze_capture test_silver_from_bronze test_legacy_upload test_harvest_grammar test_worker test_catalog test_verification test_poison_control test_check_as_received test_listing_capture_census; do echo "$t :: $(python -m pytest lib/opal_data_harvest/$t.py -q --color=no -p no:cacheprovider 2>&1 | tail -1)"; done</invocation><expect>each line's passed and failed counts EQUAL its AC0 line: the placement change altered no existing test's outcome and neither pre-existing failure grew</expect></criterion>
   <criterion id="AC3" cell_refs="HVST-t-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/t1/ac3.py</invocation><expect>"outside_allowed []" -- only worker.py and the two named test files changed, nothing else under lib; each changed file prints "compiles True crlf 0 non_ascii 0"</expect></criterion>
   <criterion id="AC4" cell_refs="HVST-t-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/t1/ac4.py</invocation><expect>"vendor_calls 0" read from a counter, and a POSITIVE CONTROL showing each of PacedSession.get, SessionManager.refresh and subprocess.run RAISES when deliberately tripped; the script states which of the three the package conftest already covers rather than duplicating it</expect></criterion>
+  <criterion id="AC5" cell_refs="HVST-t-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/opal_data_harvest/test_listing_persist_durability.py -v --color=no -p no:cacheprovider 2>&1 | tail -20</invocation><expect>an arm proving the finally block CANNOT MASK the propagating exception: with the persist made to raise (its own write or db call failing) WHILE a mid-loop UpstreamUnavailable is propagating, the exception that escapes run_job is STILL the original upstream one, and the persist failure is visible but subordinate; and every other arm in the file still passes</expect></criterion>
 </proof_of_spec>
 
 Write `.scratch/t1/ac3.py` (diff from `git merge-base HEAD SITEZ` over `lib`, an allowed set, and a compile, CRLF and
@@ -128,6 +129,42 @@ non-ASCII print per changed file) and `.scratch/t1/ac4.py` (the poison counter a
    why you chose per-page persist or a checkpoint. **Say plainly that the pages round 1 discarded are not
    recovered.**
 
+
+## 7. AMENDMENT 1 -- issued by `2.0.0_SA_COO~Y` after grading, BEFORE this is drained
+
+**WHY, and it is a defect this cell's own change INTRODUCED.** The fix moves
+`_write_harvest_listings(client.listings)` into a `finally` wrapping the per-article loop. That is the right
+placement and its criteria all passed. **But `_write_harvest_listings` CAN RAISE** -- `entry["raw_bytes"]` is a bare
+subscript, `listing_path.write_bytes` is disk IO, and `self.db.execute` / `commit` are sqlite -- **and it is not
+guarded inside the `finally`.**
+
+**In Python, an exception raised inside a `finally` REPLACES the one that was propagating.** So a disk-full or a
+sqlite error during the persist would now surface INSTEAD of the upstream 502 that actually stopped the job, with
+the original demoted to `__context__`. **The old post-loop placement could never do this**, because it only ran on
+the success path. So this is a NEW reachable state on the failure path, created by a correct fix.
+
+**RULED:** guard the persist inside the `finally` so it cannot displace a propagating exception -- catch its own
+failure, make that failure VISIBLE (a log line, a recorded status, or a re-raise only when nothing else is
+propagating), and let the original exception continue. **Do not swallow the persist failure silently:** a listing
+persist that fails must not read as a success.
+
+**AC5 is added for it.** The row for the finding is the issuer's (`AMGT_HARVST-Z-S10`); do not file a duplicate.
+**Your `<status>` is set back to `pending` by this amendment** -- re-flip it to `complete` only when AC0 through AC5
+all pass. Nothing else in this order changes, and your existing five criteria stand as graded.
+
+
+**AMENDMENT 1a -- the issuer's own defect in AMENDMENT 1, fixed here.** AC5's `<invocation>` was written with
+HTML-escaped operators (`&amp;&amp;` and `2>&amp;1`) while AC0 through AC4 carry the raw `&&` and `2>&1`. The worker
+caught it, disclosed it rather than hiding it, and mirrored the escaped text into its instance so the checker's
+literal comparison would match. **That is the right call on a bad order and the wrong thing to leave in the
+record**, because the instance then names a command that is not the one that produced the evidence.
+**The invocation is un-escaped here. Re-record AC5's `invocation` field in your instance to the RAW text and
+re-grade.** Nothing else changes and no criterion's verdict moves.
+
+**AND THE INSTRUMENT POINT, for whoever reads this later:** the checker's invocation-alignment compares the
+INSTANCE against the ORDER. When both carry the same wrong text it PASSES. **It certifies agreement, never
+runnability.**
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES (L5/L6):**
@@ -138,7 +175,7 @@ non-ASCII print per changed file) and `.scratch/t1/ac4.py` (the poison counter a
 3. **The cone for this worktree includes `org/missions` WHOLE and `integrations`**, so neither the missions hook
    nor the seekingalpha import can produce a false finding this time.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~16</slot>
 <fabric>site-z</fabric>
