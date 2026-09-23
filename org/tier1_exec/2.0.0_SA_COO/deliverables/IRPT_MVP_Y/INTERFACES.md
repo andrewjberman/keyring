@@ -537,3 +537,16 @@ single source business date retains ordinary dated contract. No timestamp/defaul
 or parsing/provenance failure qualifies. P shared schema/client pin pending;
 Y retained derivation/paired fixtures in progress. All integrated criteria remain
 NOT_EVALUATED; READY additionally requires accepted verified report.
+
+Implementation follow-up00:50Z: P schema1a5dc91462 and portalb290db5a consumed;
+Y sourcef4f16b283f, UI mount586cca01. Actual Entry data fixtures are retained at
+ops/tests/fixtures/prospect_status_dates.json; regenerate with environment
+IRPT_REGENERATE_DATE_WIRES=1 and python -m pytest
+infra/aws/lambda/investor-reporting/ops/tests/test_prospect_dates.py -q.
+The producer proves the bounded complete CSV identifier/value/optional currency
+shape is undated, not merely that the normalized parser omitted a date. Unknown
+preambles/extra columns/skips/price valuations stay UNAVAILABLE. It checks actual
+retained composition/input/original/report bytes and owner references. Every
+dated/undated report section is counted exactly once; malformed dates/duplicate
+IDs refuse. Final metadata/grants/retention checks remain sequential, not atomic.
+Independent date/consumer/installed boundary acceptance is pending.

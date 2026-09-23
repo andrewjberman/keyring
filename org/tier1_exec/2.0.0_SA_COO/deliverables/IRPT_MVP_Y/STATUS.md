@@ -287,6 +287,35 @@ No new workers, no push, no deployment or vendor egress.
   original summary guard preserved. Runtime installation/route activation remains
   P-owned and pending; no deployed HTTP or browser acceptance claimed.
 
+## Integration update (2026-09-23 00:50Z)
+
+- P backend status schema/public projection1a5dc91462 consumed via canonical
+  merge7c629fe392; portal client/history/date rendererb290db5a via2e571e4f.
+  Mounted shared source-date rendering in ProspectJobStatus at586cca01;
+  TypeScript5.9 noEmit PASS. P reports consumptiondc13b6db with the same check.
+- CVO owned Entry review9d40f1bd68:28 supplied+42 independent controls PASS
+  against8e8498c9c0. This is a bounded local review, not atomic history or installed
+  HTTP proof. P is pairing the actual closed outer response (unprojected_grant)
+  and public CID stripping; no CID exposure is a repair.
+- Retained date derivationf4f16b283f reads actual accepted composition, normalized
+  portfolio, original CSV and accepted report. Full owner/hash/reference binding,
+  complete unique section date census, final metadata/current grant/retention
+  checks. Positive undated proof is bounded to entire identifier/value/optional
+  currency CSV columns, with no preamble/extra columns/skips/price valuation.
+  Unknown source date semantics remain UNAVAILABLE; unavailable/corrupt retained
+  evidence refuses and never becomes UNDATED_INPUT. Same actual date on every
+  report section with no undated sections uses ordinary business_date; mixed dates
+  or dated/undated sections use PER_SECTION; all-null/empty uses UNDATED_INPUT.
+- Exact status-job capability header only. Missing/unknown/duplicate header
+  preserves ordinary UNAVAILABLE. No change to worker phase or legacy summary.
+  143 combined local tests PASS before final paired fixture addition;35 date tests
+  PASS including reproducibility, actual Entry and internal/public schema pairing.
+  Reproducible wires at ops/tests/fixtures/prospect_status_dates.json. Initial
+  safe-commit rejected six test-format E701 lint errors; corrected, all5 Python
+  files passed gate and all6 changed paths passed risk scan (3.9h map).
+- Source and fixture pins sent P/CVO for consumer and independent review. All14
+  integrated criteria remain NOT_EVALUATED. No live/vendor/route activation.
+
 ## Compiler observations
 
 Earlier candidates and findings (superseded where the current section says so):
