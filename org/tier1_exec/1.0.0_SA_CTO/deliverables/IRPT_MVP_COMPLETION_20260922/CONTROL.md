@@ -10,7 +10,9 @@ As of 2026-09-23 21:36 UTC. CTO owns direct review and adjudication. All three p
 
 ## Current operational dependency
 
-MSTR99739 diagnosed P thread exceeding16MiB frame cap: inbox delivery failed since18:11 although seat GREEN and actively editing. This is DELIVERY-BLOCKED, not unresponsive. MSTR owns handoff-preserving fresh-thread recovery with Andrew at its terminal. P handoff2026-09-23_2017Z.md is saved; manual inbox drain measured to5 unread despite same thread; newest P report consumed d44 testing and a62 taxonomy. Y also has a measured 17,462,817-byte frame exceeding 16,777,216, despite GREEN9/9; MSTR was notified210324 for handoff-preserving delivery recovery. No duplicate writer/helper or resetting edits. Recovery must prove a delivered new turn; status GREEN alone was insufficient.
+P remains on its oversized thread while Andrew works at that terminal; MSTR says migration waits for his word. P continues manual delivery handling and is producing commits. Do not label it unresponsive.
+
+Y recovery99771 independently rechecked21:42Z: fresh thread01a0d037-6dbd-7c90-8433-f2b426d941dd, endpoint58180, heartbeat33548, bridge33676, detector34768; seat oracle9/9GREEN, stderr0bytes. MSTR measured first new-thread turn/steer injection; agent-side read/reply is still pending. Worktree4ebe6948d9 and drive4876 preserved. This closes observed oversized-frame transport failure, not the outstanding secret-read/capture repair or live Analysis journey. No duplicate runtime helpers/writers.
 
 ## Shared writer and integration order
 
