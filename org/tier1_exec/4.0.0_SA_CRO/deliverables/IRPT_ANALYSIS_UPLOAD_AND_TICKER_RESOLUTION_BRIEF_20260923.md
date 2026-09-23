@@ -53,7 +53,14 @@ completion effort Andrew has already authorized.
 
 > Yes do a small ycharts test now, may need to run the ec2 browser run if the cookie is stale
 
-The capture that last line authorized has been run. Its record is
+> On lookup, the sign is if somehting doesnt come back, that is clearly the sign that the security isnt there, that is
+> what triggers kimi call 1. Regarding BREIT, yes, the point is whether or not it techncially exists, we have to be able
+> to get the data, being behind a paywall or whatever is the same as not having it practically. The runner host needs to
+> be set up with the same pattern as we do elsewhere with ec2 rerun on stale cookie, followed by self-healing retry. THat
+> should be featured potentially in a second brief if that framework is not already worked into the YCharts workflow
+> here (which it may very well already be done, so be careful to not duplicate if so).
+
+The capture Andrew authorized ("Yes do a small ycharts test now") has been run. Its record is
 `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260923_YCHARTS_TICKER_LOOKUP_TEST_PER_USE_AUTHORIZATION.md`,
 and its results are folded into sections 4, 5.3, 5.4 and 8 below.
 
@@ -155,8 +162,8 @@ fixtures in `org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_YCHARTS_LOOKUP_CAPTUR
 | Probe | Result | What it means for the design |
 |---|---|---|
 | `securities_info` with `AAPL, ALPPL, VNQ, BREIT, $:CASH` | 3 rows returned: AAPL `stock`, VNQ `etf`, `$:CASH` `cash`. **ALPPL and BREIT are simply ABSENT** -- no error entry, no null row | NOT_FOUND = the symbols sent minus the symbols returned. A check that waits for an error row never fires |
-| `suggest/main?q=ALPPL` | all ten category lists empty | **YCharts has no typo tolerance.** "Did you mean AAPL?" must come from Kimi call 1 |
-| `suggest/main?q=BREIT` | 9 mutual-fund share classes, `M:BREIT.S`, `M:BREIT.D`, ... each `features_needed: ["evergreenFundData"]`, `all_features_required: true` | a private REIT can be **known but feature-gated**; funds are namespaced `M:<ticker>` |
+| `suggest/main?q=ALPPL` | all ten category lists empty | for this typo the typeahead offered nothing. One probe, not a general property, but enough that the "Did you mean AAPL?" cannot rely on YCharts: it comes from Kimi call 1 |
+| `suggest/main?q=BREIT` | 9 mutual-fund share classes, `M:BREIT.S`, `M:BREIT.D`, ... each `features_needed: ["evergreenFundData"]`, `all_features_required: true` | a private REIT can be **known but feature-gated**, which Andrew rules is the same as absent: it goes to check and swap. Funds are namespaced `M:<ticker>` |
 
 **The seat constraint:**
 - YCharts allows ONE concurrent session per login; a second sign-in evicts the first with a "concurrent sign in" 403
@@ -167,13 +174,13 @@ fixtures in `org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_YCHARTS_LOOKUP_CAPTUR
   running report job.
 - The measured-safe request spacing is 2.0 s (`ycharts_client.py:46`).
 - **Measured 2026-09-23:**
-  - The IRPT session secret `ycharts/session/current` has **never been populated**: no `AWSCURRENT` version, last
-    changed 2026-05-21.
+  - The IRPT session secret `ycharts/session/current` holds **no current session**: no `AWSCURRENT` version, last
+    changed 2026-05-21. Whether it ever held one historically is not established.
   - Its browser runner host `irpt-ycharts-runner` exists, but the runner application is **not deployed on it**. SSM
     `irpt-ycharts-run` failed rc 127, `/opt/investor-reporting-ycharts/run-ycharts-session.sh: No such file or
     directory`, and the document has no prior runs on record.
-  - The **only live YCharts session is `ycharts/credentials`** (last changed 2026-07-01, live after 84 days). It is the
-    single seat shared with Alyssa and the gateway.
+  - Of the two YCharts session secrets the code uses, the **live one is `ycharts/credentials`** (last changed
+    2026-07-01, live after 84 days). It is the single seat shared with Alyssa and the gateway.
 
 ## 5. Desired state
 
@@ -247,10 +254,13 @@ upload parsed -> CHECK ALL SYMBOLS (one batch, no AI)            -> every symbol
   1. The approved-substitution library and the resolution cache (section 5.4).
   2. Opal security reference data (`dim_security`, `bd-securities`).
   3. YCharts `securities_info` for whatever is left, in ONE batched call.
-  - **How to read the batch result (measured):**
-    - A symbol absent from the response is NOT_FOUND. Nothing else signals it.
-    - A returned row with a non-empty `features_needed` is FOUND-BUT-GATED; treat it as not usable unless the seat is
-      shown to hold the feature.
+  - **How to read the batch result (measured, and ruled by Andrew):**
+    - **A symbol that does not come back is NOT_FOUND, and that is what triggers Kimi call 1.** Andrew: *"if somehting
+      doesnt come back, that is clearly the sign that the security isnt there, that is what triggers kimi call 1"*.
+      Nothing else signals it.
+    - **A gated identity counts as NOT_FOUND.** A row, or a namespaced match, with a non-empty `features_needed` is data
+      we cannot get. It takes the same path. Andrew: *"being behind a paywall or whatever is the same as not having it
+      practically"*.
     - For a symbol that looks like a fund, retry once as `M:<ticker>` before calling it NOT_FOUND. Whether that retry is
       needed is unmeasured.
 - **Kimi call 1, "check":**

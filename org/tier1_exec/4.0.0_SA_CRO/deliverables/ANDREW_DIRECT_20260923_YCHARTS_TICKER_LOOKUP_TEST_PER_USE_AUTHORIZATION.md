@@ -40,7 +40,8 @@ It answers the brief's section 7/8 open item, the capture of what YCharts return
 - **Result:** **Failed, rc 127**: `/opt/investor-reporting-ycharts/run-ycharts-session.sh: No such file or directory`.
   The runner application is NOT deployed on the host, so nothing reached ycharts.com.
 - **The IRPT session secret:** `ycharts/session/current` has no `AWSCURRENT` version (`VersionIdsToStages` null; last
-  changed 2026-05-21T14:47Z). It has never been populated.
+  changed 2026-05-21T14:47Z). So it holds no current session today. That does NOT show it was never populated: an earlier
+  version could have existed and been deprecated. (Corrected per `1.0.0_SA_CTO`, msg of 18:31Z.)
 
 **The vendor calls: exactly FOUR, all HTTP 200.** Session: `ycharts/credentials` (last changed 2026-07-01T22:14Z,
 84 days old, still live).
@@ -64,8 +65,11 @@ It answers the brief's section 7/8 open item, the capture of what YCharts return
 1. **An unknown symbol is SILENTLY OMITTED by `securities_info`.** 5 symbols were sent and 3 returned (AAPL `stock`,
    VNQ `etf`, `$:CASH` `cash`). `ALPPL` and `BREIT` are simply absent, with no error entry and no null row. "Not
    found" must therefore be computed as the set difference between what was sent and what came back.
-2. **YCharts' typeahead has NO typo tolerance.** `suggest?q=ALPPL` returned all ten category lists empty (`alt, r, cs,
-   mp, pmp, sa, co, ind, idx, mf`). A "Did you mean AAPL?" cannot come from YCharts, so the Kimi check call is required.
+2. **For `ALPPL`, YCharts' typeahead returned NO candidates.** `suggest?q=ALPPL` returned all ten category lists empty
+   (`alt, r, cs, mp, pmp, sa, co, ind, idx, mf`). That is ONE probe. It shows the typeahead did not rescue this typo; it
+   does NOT establish that the typeahead has no typo tolerance in general. (Corrected per `1.0.0_SA_CTO`, msg of 18:31Z;
+   this seat's first draft said "NO typo tolerance".) For the design it is enough that YCharts cannot be relied on for
+   the suggestion, so the Kimi check call stays.
 3. **A private REIT is KNOWN but gated.** `suggest?q=BREIT` returned 9 mutual-fund share classes (`M:BREIT.S`,
    `M:BREIT.L`, ... `M:BREIT.I`). All 9 carry `features_needed: ["evergreenFundData"]` with `all_features_required:
    true`, and the bare `BREIT` is not found by exact lookup. Whether this seat has that feature is unmeasured; if it does
@@ -73,5 +77,8 @@ It answers the brief's section 7/8 open item, the capture of what YCharts return
 4. **Fund identifiers are namespaced.** Mutual funds appear as `M:<ticker>` in the search results. Whether
    `securities_info` resolves a bare mutual-fund ticker without the `M:` prefix is unmeasured; this capture stayed
    inside its 5-symbol bound.
-5. **The session:** the 84-day-old `ycharts/credentials` session is live. The IRPT session path cannot run today: the
-   secret is empty and the runner application is not deployed.
+5. **The session:** the 84-day-old `ycharts/credentials` session is live. The IRPT session path cannot run today: its
+   secret has no current version and the runner application is not deployed.
+6. **Exact-lookup absence is a different fact from a namespaced or gated identity.** `BREIT` is absent from the exact
+   lookup (item 1), while `M:BREIT.*` exists behind a feature gate (item 3). A resolver treats these as two different
+   states, not one.
