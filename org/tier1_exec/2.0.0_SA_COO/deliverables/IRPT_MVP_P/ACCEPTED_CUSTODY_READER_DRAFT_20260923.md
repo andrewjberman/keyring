@@ -3,15 +3,15 @@
 Status: LOCAL DRAFT FOR M/Y CONTRACT REVIEW. This document adds no runtime,
 schema fields, storage authority, producer acceptance or deployment permission.
 
-Paired review incorporated: Y `b799b5a6fc`,
+Paired review incorporated: Y `605449f4cc` (supersedes `b799b5a6fc`),
 `IRPT_MVP_Y/ACCEPTED_READER_REVIEW_20260923.md`; M
 `44e3a52fa3353ea94b3a473547efef77847e0d52`,
 `IRPT_MVP_M/ACCEPTED_READER_FIELD_REVIEW_20260923.md`. Both preserve the methods
-below. P proposes Y's resolved economic fields plus M's native quantity evidence,
-and the stricter 1100-character transport limit. These two choices still need
-consumer/producer agreement; source facts and a trusted binding are not supplied
-by a field definition. This revision supersedes the field placeholders in
-`7e9baf3064`.
+below. P adopts M/Y's nested economic facts and 1100-character transport limit
+for this paired interface draft, with Y's canonical security-key and actual
+mapping-receipt requirements in the one nested security object. Source facts
+and a trusted binding are not supplied by a field definition. This revision
+supersedes `7e9baf3064` and the crossed flat-field proposal in `34a9c33800`.
 
 ## Measured boundary
 
@@ -77,7 +77,7 @@ Exactly these top-level fields are proposed:
 All original rows must be represented, including relationship duplicates, zero
 and negative values. No target/model/allocation positions replace actual rows.
 Each original row has exactly `account_id`, `position_id`, `source_security_id`,
-`market_value`, `quantity`, `source_row`, `economic_facts`, `security_resolution`.
+`market_value`, `quantity`, `source_row`, `economic_facts`.
 `source_row` is singular `{source_receipt_id, row_index, relationship_id}`;
 positions retain plural `source_rows`. Both original and unique positions carry
 the resolved economics/security below; duplicates must agree across all consumed
@@ -146,17 +146,25 @@ spelling cannot leave the reader. Neither form is a canonical security resolutio
 
 ### Resolved facts and private source evidence
 
-P proposes Y's closed `economic_facts` names with one M evidence object:
+`economic_facts` has exactly the five M/Y nested members below. EvidenceRef is
+`{source_receipt_id: string, row_index: integer >= 0}` inside the exact binding.
+Source-field names identify columns, not storage locations. Null preserves an
+unknown observed fact; an unknown required interpretation cannot pass acceptance.
 
 | Field | Required interpretation |
 | --- | --- |
-| `cash_classification` | `CASH` or `NON_CASH` from admitted source interpretation; a Cash Equivalent flag alone establishes neither literal cash nor a blanket NON_CASH default |
-| `position_side` | `LONG`, `SHORT`, or `NOT_APPLICABLE`; every value requires a bound sign rule, including absence of a vendor side column; never apply an already supplied sign twice |
-| `value_basis` | literal `SIGNED_NATIVE_USD`; no reconstructed share-price value or weight notional |
-| `accrual_treatment` | `INCLUDED`, `EXCLUDED`, or `NOT_APPLICABLE`, from an exact reviewed source equation; COT native MV = UMV + Accrual, with no second addition |
-| `policy_revision` | exact admitted source/firm interpretation revision bound to this input, not a new label declared by the reader |
-| `source_rows` | nonempty scoped row references supporting the source facts, with receipt roles checked; policy interpretation separately traced by revision |
-| `source_quantity` | M object `{value, source_field, source_units, unit_rule_revision, evidence}`; exact native signed decimal text or null, source field/units/rule nullable when unavailable, scoped evidence references |
+| `cash` | `{source_field: string|null, source_value: boolean|null, classification: CASH|CASH_EQUIVALENT|NON_CASH|null, evidence: EvidenceRef[]}`; classification requires bound interpretation; a Cash Equivalent flag alone proves neither literal cash nor blanket NON_CASH |
+| `side` | `{source_field: string|null, source_value: string|null, position_side: LONG|SHORT|null, sign_rule_revision: string|null, evidence: EvidenceRef[]}`; absent source side may use an exact admitted signed-value rule, never fabricated LONG/NOT_APPLICABLE or a second application of sign |
+| `security` | `{resolution_revision: string|null, resolved_identifier: {namespace: string, value: string}|null, evidence: EvidenceRef[], security_key: string|null, resolution_source_receipt_id: string|null}`; this is the sole canonical resolution authority; absent/ambiguous required mapping refuses |
+| `source_quantity` | `{value: decimal-text|null, source_field: string|null, source_units: string|null, unit_rule_revision: string|null, evidence: EvidenceRef[]}`; retain signed native quantity even when SHARES interpretation is unavailable |
+| `accrual` | `{treatment: INCLUDED_IN_MARKET_VALUE|EXCLUDED_FROM_MARKET_VALUE|null, value: decimal-text|null, unaccrued_market_value: decimal-text|null, rule_revision: string|null, evidence: EvidenceRef[]}`; COT MV = UMV + Accrual, included once; other treatment requires its actual admitted source equation |
+
+The binding must resolve the exact economic interpretation revisions and
+underlying source evidence, including supplied native USD value basis. Policy
+revision labels cannot be invented by the reader. This first adapter uses
+native signed dollar value, never reconstructed share-price value or notional;
+no parallel `value_basis` alias is added to rows. A null side is usable only
+when its bound sign rule independently establishes all necessary semantics.
 
 The top-level `quantity` is SHARES only when the exact asset/source unit rule
 establishes it. Preserve supplied native quantity in `source_quantity` even when
@@ -168,19 +176,16 @@ check correspondence with resolved quantity where supplied, and reject negative
 quantity or SHORT for the present recipe even with positive MV. Zero quantity
 does not by itself establish cash or zero value.
 
-Keep M's raw cash flag, side spelling, source field, UMV/accrual observations and
-their evidence in the private binding's source interpretation records. They
-support these resolved fields rather than introducing a second competing
-`cash`/`side`/`security`/`accrual` shape on the accepted boundary. Unknown required
-resolved facts refuse the whole input; do not turn null into a default enum.
-
-`security_resolution` has exactly `identity_kind: CANONICAL_SECURITY`,
-`security_key`, `canonical_identifier`, `canonical_identifier_namespace`
-(`TICKER`, `CUSIP`, `CASH`), `resolution_revision`,
-`resolution_source_receipt_id`. This receipt must identify actual admitted
-immutable mapping evidence. No fabricated ticker crosswalk. CASH requires
-`$:CASH` and sourced CASH classification; noncash cannot use that identifier.
-Conflicting canonical key/identifier assignments or unavailable evidence refuse.
+The nested security member projects to existing Y canonical fields without
+inference: `identity_kind: CANONICAL_SECURITY`, `security_key`,
+`canonical_identifier = resolved_identifier.value`,
+`canonical_identifier_namespace = resolved_identifier.namespace` (restricted
+to `TICKER`, `CUSIP`, `CASH`) and `resolution_revision`. No parallel top-level
+`security_resolution` exists. `resolution_source_receipt_id` must identify actual
+admitted immutable mapping evidence, not a fabricated ticker crosswalk. CASH
+requires `$:CASH` and sourced CASH classification; CASH_EQUIVALENT keeps its
+actual resolved instrument. Conflicting keys/identifiers or unavailable required
+evidence refuse. Unknown resolved facts never become default enums.
 
 ### Numeric transport versus recipe eligibility
 
@@ -190,9 +195,9 @@ ASCII string-only grammar, matched as a whole string:
 [+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?
 ```
 
-P counterproposal selects M's stricter source-evidence cap: 1100 characters,
+Paired source-evidence cap: 1100 characters,
 1000 Decimal coefficient digits, absolute Decimal exponent <= 1000, finite.
-Y proposed 2048 characters; this cap is an explicit pending agreement, not an
+Y `605449f4cc` accepts M's 1100 in place of its earlier 2048. This is not an
 assertion of measured vendor precision. Parse directly as Decimal. No whitespace,
 JSON numbers/bools, separators, nonfinite values, rounding, quantization, float
 conversion or scale stripping to fit. Preserve signed zero/trailing scale.
@@ -270,7 +275,7 @@ capability is currently unavailable, so actual empty inputs continue to refuse.
 | Blocker | Current evidence and owner |
 | --- | --- |
 | Trusted accepted binding writer/store/read surface | P: absent; current mutable/date publication cannot stand in for an immutable snapshot lookup |
-| Economic field pairing and 1100 versus 2048 text cap | P coordinates M/Y against these exact definitions; still conditional |
+| Economic interface versus actual evidence | Nested names and 1100 text cap aligned with M44e3/Y6054; admitted rules and actual evidence remain absent; Y's security key/receipt additions require concrete maintained mapping |
 | COT source contract | M source review: B01 has no currency/side declaration, Cash Equivalent is insufficient, Units is not universal SHARES; adding Currency would require a source-map amendment, not a helper default |
 | INF source contract | M source review: optional facts, missing stable mandatory instrument grain/currency/side; builder zero accrued income is not vendor economic proof |
 | 49F source contract | M source review: l_s exists but signed-value rule, security-join uniqueness, cash non-overlap, currency/units and pending accrual ruling remain unresolved |
