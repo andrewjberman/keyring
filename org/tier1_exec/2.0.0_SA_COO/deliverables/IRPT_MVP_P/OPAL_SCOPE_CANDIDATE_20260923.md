@@ -52,3 +52,9 @@ to shared served.py require explicit dependency repins in each selected consumer
 artifact; changing directory source alone cannot update report Lambdas.
 Current-owner prospect/history rules remain unchanged and do not acquire a new
 Opal ownership grant from this directory repair.
+
+## M-OPAL-01 replacement
+
+Independent CVO M evidence f6dd91f5d7 found two valid-flow failures at dc51: Holdings constructed a new Enforcer with the static roster. Both pre-read and post-read selection checks now receive the already verified request-local Context roster. No Entry mutation and no dropped dependency reads. Repository census found no other operation Entry constructing this static-roster recheck; ops/status and holdings/snapshot legacy factory helpers are not this served operation recheck.
+
+Replayed unchanged CVO driver (source SHA c782cfd9c4ddabb1fba407c400ce9166a7f7ba6568f44ad4be66dec83040d642), changing only its ROOT to this isolated tree: 73 PASS. This proves reaching the guarded economic loader and preserving foreign/stale/revoked refusals, not economic source availability or live deployment. Replacement requires independent retest.
