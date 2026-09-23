@@ -36,7 +36,7 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "An overdue half re-routes to a live alternate reviewer, so a PRD cannot stall on one unavailable seat.",
     "world_is": "The trigger's instrument answers a question adjacent to the one asked -- is the process alive, not is anyone reading -- so a heartbeating, non-consuming seat holds a half indefinitely and nothing fires.",
-    "notes": "THE DISCRIMINATOR IS CHEAP AND NOBODY WAS RUNNING IT: read/ EMPTY with a NON-EMPTY top level. Liveness is a heartbeat; read/ is consumption. A staleness trigger reads the second. ⚠ A row records the defect; it does not build the fix -- the trigger is fabric machinery outside this project and outside any AMGT lane, so its owner is the fabric's, not this project's, and no gate is built here. The immediate block was cleared by hand (1.0.0_SA_CTO~Z re-routed the brief half to 2.0.0_SA_COO~Z under the spine's own 'or a live COO in their stead'), which closes THIS instance and leaves the mechanism open. Seating of 4.0.0_SA_CRO~G is 0.0.0_AB_MSTR~Z's."
+    "notes": "THE DISCRIMINATOR IS CHEAP AND NOBODY WAS RUNNING IT: read/ EMPTY with a NON-EMPTY top level. Liveness is a heartbeat; read/ is consumption. A staleness trigger reads the second. \u26a0 A row records the defect; it does not build the fix -- the trigger is fabric machinery outside this project and outside any AMGT lane, so its owner is the fabric's, not this project's, and no gate is built here. The immediate block was cleared by hand (1.0.0_SA_CTO~Z re-routed the brief half to 2.0.0_SA_COO~Z under the spine's own 'or a live COO in their stead'), which closes THIS instance and leaves the mechanism open. Seating of 4.0.0_SA_CRO~G is 0.0.0_AB_MSTR~Z's."
   },
   {
     "id": "AMGT_CORPUS-Z-S2",
@@ -58,7 +58,32 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "A delivery names the artifact a reviewer is being asked to review, at its current bytes.",
     "world_is": "It names a superseded version and a pointer that errors, while prd-signoff stamps HEAD -- so a reviewer who followed the notice would hit an already-fixed defect and then sign different bytes than the ones it read.",
-    "notes": "TWO PRECISIONS ON 1.0.0_SA_CTO~Z's msg 24497, measured here rather than restated. (1) It is the COORDINATES that are frozen, not the whole payload: the REVIEW notices carry 6 DISTINCT md5s, so other bytes do move while version, commit and brief_ref do not -- which is why ten deliveries never looked stale. (2) ⚠ I CANNOT SOURCE THE OVERDUE COUNTER AND SO I ASSERT NOTHING ABOUT IT: the 00:18:34Z notice reads 'owed for 69 minutes' and the 00:51:23Z notice ALSO reads 69, 33 minutes later; msg 24497 reports 124 at 01:14Z. Owed-since ~20:01Z would give 137 / 170 / 193. The figure is neither monotonic nor anchored to any origin I can identify. It is recorded as an OPEN QUESTION, not a second defect -- asserting a defect from a number I cannot source is exactly tonight's pattern, and this row will not add an instance of it. Owner of the notifier is the fabric's, not this project's; no gate is built here."
+    "notes": "TWO PRECISIONS ON 1.0.0_SA_CTO~Z's msg 24497, measured here rather than restated. (1) It is the COORDINATES that are frozen, not the whole payload: the REVIEW notices carry 6 DISTINCT md5s, so other bytes do move while version, commit and brief_ref do not -- which is why ten deliveries never looked stale. (2) \u26a0 I CANNOT SOURCE THE OVERDUE COUNTER AND SO I ASSERT NOTHING ABOUT IT: the 00:18:34Z notice reads 'owed for 69 minutes' and the 00:51:23Z notice ALSO reads 69, 33 minutes later; msg 24497 reports 124 at 01:14Z. Owed-since ~20:01Z would give 137 / 170 / 193. The figure is neither monotonic nor anchored to any origin I can identify. It is recorded as an OPEN QUESTION, not a second defect -- asserting a defect from a number I cannot source is exactly tonight's pattern, and this row will not add an instance of it. Owner of the notifier is the fabric's, not this project's; no gate is built here."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S3",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-23T01:46Z",
+    "one_line": "The L4-R notifier's severity is WORSE than Z-S1/S2 record: it is still sending [L4-R OVERDUE] notices for v0.1's brief half at 01:44:43Z while prd-signoff reads the PRD ADMITTED at v0.3 with BOTH halves SIGNED and current. Its OVERDUE condition is computed from the same frozen snapshot as its coordinates, so COMPLETING THE WORK DOES NOT STOP IT -- the nudge is unterminating, not merely stale.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "STATE AT 01:45Z, this seat's own read: `python .tools/prd-signoff.py status AMGT_CORPUS` -> `v0.3 @c94a6bb2ef ... ADMITTED`, ratified-text SIGNED current (3.0.0_SA_CVO~Z), brief SIGNED current (2.0.0_SA_COO~Z).",
+        "THE NOTICE AT THE SAME MINUTE: subject `[L4-R OVERDUE] AMGT_CORPUS v0.1 @03918b5b3e -- sign or refuse the brief half (in 4.0.0_SA_CRO's stead)`, body `prd_version v0.1`, `commit 03918b5b3e2823d10fb9bb2eb10187f503e697b5`.",
+        "SO THE NOTIFIER IS DEMANDING A SIGNATURE THAT ALREADY EXISTS, ON A VERSION THAT NO LONGER EXISTS, THROUGH A brief_ref PIN THAT RETURNS rc=128 (Z-S2's finding).",
+        "WHY THIS RAISES THE SEVERITY RATHER THAN REPEATING Z-S1/S2: those rows establish the coordinates are frozen. This row establishes the TERMINATION CONDITION is frozen too. A stale pointer misleads a reader once; an unterminating nudge pollutes every recipient's inbox indefinitely and CANNOT be cleared by doing the work it asks for.",
+        "COUNT AT THIS ROW: eleven L4-R deliveries 20:00:43Z -> 01:44:43Z, the last TWO of them after the brief half was SIGNED."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The L4 notifier delivers each half STILL OWED to its routed reviewer and nudges an OVERDUE half after 60 minutes with the CTO copied (spine v3.15). 'Still owed' and 'overdue' are conditions on the CURRENT sign-off state.",
+    "world_is": "Both halves are SIGNED and current, and the notifier continues to deliver OVERDUE notices for one of them. The condition is evaluated against an arm-time snapshot rather than against prd-signoff's live status, so no amount of signing satisfies it.",
+    "disarm_owner": "THE FABRIC, not this project and not any AMGT lane -- the notifier and the overdue-half re-route are the same machinery Z-S1 names, outside every AMGT boundary, so by the boundary this seat drew at the portal grant and .scratch/ it is not this seat's to change. 1.0.0_SA_CTO~Z holds the row and has carried it to Andrew on the estate card. NOTHING IS BUILT HERE.",
+    "notes": "DELIBERATELY NOT FILED: the overdue COUNTER's own arithmetic (69 min at 00:18 AND 69 at 00:51; 124 at 01:14, against true ages of ~137/170/193). Neither this seat nor 3.0.0_SA_CVO~Z can source it from the artifacts, and asserting a defect from a number neither can source is the exact pattern that produced four wrong carriers this night. It stays an OPEN QUESTION on Z-S2, answerable by whoever owns the notifier in one read of the code. ALSO RECORDED: this project's PRD reached ADMITTED and its L4->L5 seating ask went to 0.0.0_AB_MSTR~Z at 01:3xZ, so the notifier's noise is now the only AMGT_CORPUS item that is neither done nor owned."
   }
 ]
 ```
