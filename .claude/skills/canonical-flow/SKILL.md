@@ -1,9 +1,15 @@
 ---
 name: canonical-flow
-description: Pick up a project already in flight or in limbo at the limb the invoking seat owns: `/canonical-flow <PROJECT_CODE>` locates it on both roots, measures its limb from artifacts (never status prose), names its limbo class, and either proceeds through the normal gates or hands off to the limb's owner. Covers the dirty-tree and unfinished-edits read after a crash. `--report-only` measures without acting. Never for a new project (those enter via /brief-create). Tier-1 seats; MSTR reports and routes; a worker subagent never runs it.
+description: "Pick up a project already in flight or in limbo at the limb the invoking seat owns: `/canonical-flow {PROJECT_CODE}` locates it on both roots, measures its limb from artifacts (never status prose), names its limbo class, and either proceeds through the normal gates or hands off to the limb's owner. Covers the dirty-tree and unfinished-edits read after a crash. `--report-only` measures without acting. Never for a new project (those enter via /brief-create). Tier-1 seats; MSTR reports and routes; a worker subagent never runs it."
 ---
 
 # /canonical-flow -- pick up an in-flight or limbo project at your limb
+
+## Runtime
+
+- **Claude:** limb handoffs are MCP `send_message`; v3 workers are Claude subagents the COO spawns under `/dispatch`.
+- **Codex:** implement directly -- no subagents (the worker grammar below is what you MEASURE, not what you run);
+  mail arrives through the launcher's inbox bridge (`org/mcp/CODEX_INBOX_MONITOR.md`); sends go through `org/mcp/codex-send.ps1`.
 
 **Purpose (Andrew-direct, 2026-09-03 ~05:0xZ, MSTR terminal, verbatim):** *"I think we should make
 /canonical-flow skill which is basically just a reference to the doc with the instruction that the agent to

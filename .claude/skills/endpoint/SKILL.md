@@ -1,9 +1,15 @@
 ---
 name: endpoint
-description: Project a directive's TERMINAL STATE -- if every open task order completes as written, what do we have -- as numbered capability outcomes tagged DESIRED/APPLIED/EXERCISED with an UNCOVERED partition, then compute the delta to the endpoint Andrew wants as a CUT/AMEND/RETIRE package handed to 2.0.0_SA_COO (never dispatched here). `--forward <brief>` runs at L2 on a CRO brief and emits the qualitative endpoint the PRD carries. `/endpoint D2`, `/endpoint D2 D8`, `/endpoint <CODE>`, `/endpoint --forward <brief>`. Not /exec-sum (stage), not /directives-check (register), not /to-check (open TOs).
+description: "Project a directive's TERMINAL STATE -- if every open task order completes as written, what do we have -- as numbered capability outcomes tagged DESIRED/APPLIED/EXERCISED with an UNCOVERED partition, then compute the delta to the endpoint Andrew wants as a CUT/AMEND/RETIRE package handed to 2.0.0_SA_COO (never dispatched here). `--forward {brief}` runs at L2 on a CRO brief and emits the qualitative endpoint the PRD carries. `/endpoint D2`, `/endpoint D2 D8`, `/endpoint {CODE}`, `/endpoint --forward {brief}`. Not /exec-sum (stage), not /directives-check (register), not /to-check (open TOs)."
 ---
 
 # /endpoint -- the terminal-state projector
+
+## Runtime
+
+- **Claude:** `query_project` in Step 1 is an MCP broker call; messaging a seat is an MCP `send_message`.
+- **Codex:** no broker MCP. Count a project's open task orders by reading `<status>` in its task-order files
+  directly (not `to-check --project`, the defect named in Step 1); mail arrives through the launcher's inbox bridge (`org/mcp/CODEX_INBOX_MONITOR.md`); sends go through `org/mcp/codex-send.ps1`.
 
 **The question:** *if every active task order completes exactly as written, what do we have --
 and is that the thing we want?*

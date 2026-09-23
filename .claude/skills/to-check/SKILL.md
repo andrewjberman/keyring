@@ -1,6 +1,6 @@
 ---
 name: to-check
-description: Active task-order view: `/to-check` (hot PRD projects, <=14d); `/to-check --all` (every non-complete TO workspace-wide); `--project CODE`; `--assignee SERIAL` (filters compose). Each TO with status, id, age, title, assignee, issuer, plus a BY AGENT rollup; never drops a file. Also renders the Desktop TO dashboard. Read-only, never dispatches. Companion to /prd-check. Engine `.tools/to-check.py`.
+description: "Active task-order view: `/to-check` (hot PRD projects, PRDs up to 14d old); `/to-check --all` (every non-complete TO workspace-wide); `--project CODE`; `--assignee SERIAL` (filters compose). Each TO with status, id, age, title, assignee, issuer, plus a BY AGENT rollup; never drops a file. Also renders the Desktop TO dashboard. Read-only, never dispatches. Companion to /prd-check. Engine `.tools/to-check.py`."
 ---
 
 # /to-check -- active task order view
