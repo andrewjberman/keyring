@@ -128,3 +128,15 @@ needed. Canonical bucket absence is a concrete build/provisioning task. P prepar
 the minimal versioned/private/encrypted bucket and least-privilege actual consumer
 plan, preserving pending policy until concrete cutover review. No new apply occurs
 through this contract amendment.
+
+
+## Analysis cross-firm publisher integration - 2026-09-23
+
+CTO directly reviewed 2874e37647: twelve affected offline cases pass. P receives
+exact integration ownership of infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py
+under IRPT_Y_ACCESS_INTEGRATION_P in the same commit as this contract. The other
+three changed files already have that grant. Y remains semantic implementation
+owner. Preserve actual current actor, accepted data firm and immutable original
+input owner separately. No principal synthesis from queue tenant. P integrates
+with bfe6469b1e and supplies the current-authority host/installer boundary; Y owns
+the real-login Analysis journey. Source PASS is not live completion or deploy GO.

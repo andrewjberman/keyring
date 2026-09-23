@@ -1176,6 +1176,9 @@ paths:
   "infra/aws/lambda/investor-reporting/ycharts/generate/job.py":
     lane: IRPT_Y_ACCESS_INTEGRATION_P
     note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-CROSS-FIRM-PUBLICATION-20260923: exact reviewed publisher integration by P; Y semantic ownership retained; no deployment grant."
   "infra/aws/lambda/investor-reporting/ycharts/generate/publication_worker.py":
     lane: IRPT_Y_ACCESS_INTEGRATION_P
     note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."

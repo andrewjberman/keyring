@@ -506,3 +506,15 @@ MSTR99771 recovered Y to fresh thread01a0d037 with preserved4ebe source/drive487
 ## 2026-09-23 21:50 UTC - live reporting storage and two narrow repair closures
 
 CTO independently verified new opal-data-irpt versioning/KMS/BPA4/TLS after exact reviewed P apply. Bucket absence CLOSED; policy activation/consumer runtime not implied. P-PACK-01 CLOSED5cdb/v4b9333947 on actual extracted59member artifact/Python-I unchanged destination probe. Y capture secret-read finding CLOSEDbfe6469b1e with10focused adapter-worker cases2.55s; exact3files already P-integrable under existing grant. No vendor calls; no live product completion. See direct review storage JSON/report and appended HOST_CAPTURE_FINDING/P_PACKAGE_NAMING_REVIEW closures. Browser connection absent this turn; authenticated screen proof remains pending.
+
+
+## IRPT-CROSS-FIRM-PUBLICATION-20260923
+
+CTO directly reviewed 2874e37647: twelve affected offline cases pass. P receives
+exact integration ownership of infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py
+under IRPT_Y_ACCESS_INTEGRATION_P in the same commit as this contract. The other
+three changed files already have that grant. Y remains semantic implementation
+owner. Preserve actual current actor, accepted data firm and immutable original
+input owner separately. No principal synthesis from queue tenant. P integrates
+with bfe6469b1e and supplies the current-authority host/installer boundary; Y owns
+the real-login Analysis journey. Source PASS is not live completion or deploy GO.
