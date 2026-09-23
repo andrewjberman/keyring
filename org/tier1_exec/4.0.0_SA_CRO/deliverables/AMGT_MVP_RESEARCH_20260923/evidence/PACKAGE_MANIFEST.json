@@ -1,8 +1,8 @@
 [
   {
     "path": "CLOSER_CONTRACT.md",
-    "sha256": "782376f12bd0fdf37e37f09ee447b70f1d65183eb78fdfb2e2bca969a20f405f",
-    "bytes": 11456
+    "sha256": "6f52bb42cd35cc37291c966f1eb0c9c04cd35e143e06e64ff5f0cbfc9222d1f9",
+    "bytes": 11932
   },
   {
     "path": "CLOUD_PRECEDENT.md",
@@ -40,6 +40,11 @@
     "bytes": 3292
   },
   {
+    "path": "evidence/ROUND36_UPDATE_SOURCES.json",
+    "sha256": "5a55a6de62a9b8b88f8ea8317fcc23656f0b8910a4b931b86aa06082427c0949",
+    "bytes": 843
+  },
+  {
     "path": "evidence/S3_INVENTORY.csv",
     "sha256": "824a9f29fb5da0fe2f341224f19ab4ab9e51bf87c8ae968539e4d4f64eadf084",
     "bytes": 222906
@@ -51,8 +56,8 @@
   },
   {
     "path": "GAPS.csv",
-    "sha256": "4f053be6dccf5394181bbd3a6db1d0bb0a87088cc220369d357ad874f048cd15",
-    "bytes": 6124
+    "sha256": "5ac4c5541f9bcf4533e690b18348ef9a0b3b3ea2dc0f82de1d71af92efe67667",
+    "bytes": 6304
   },
   {
     "path": "IMPLEMENTATION_SCHEDULE.md",
@@ -66,8 +71,8 @@
   },
   {
     "path": "README.md",
-    "sha256": "c19cb93d70107236f46d203ae3d96745987807e72c2a1f0971b4259a150716f8",
-    "bytes": 6320
+    "sha256": "a44af4046de5e6ea77775cd1c0c9dcca52c5708f8b3bb61bfe55ca8db1bd9a9a",
+    "bytes": 6703
   },
   {
     "path": "REPORT_EXPERIENCE_END_TO_END.md",
@@ -75,8 +80,13 @@
     "bytes": 6309
   },
   {
+    "path": "ROUND36_CLOSER_CONTEXT_UPDATE.md",
+    "sha256": "b2ac8ee05461b1a953de95acbba5ae6cd0f3ac6fa675eeb570615fb004b9ecb9",
+    "bytes": 3743
+  },
+  {
     "path": "SECURITY_DATA_END_TO_END.md",
-    "sha256": "995ab5381c2378ebaf6c03d4e3fef124c7aae6fc6048e4e0503707422ab8b3fe",
-    "bytes": 7346
+    "sha256": "26cf38dc20e855c6eeac308abef7723718b77f0e277ce598b229cae407ef3980",
+    "bytes": 7650
   }
 ]

@@ -9,5 +9,13 @@
   "errors": [],
   "scope": "document consistency and evidence integrity only; no application acceptance tests",
   "identifier_check": "standalone plan IDs only; existing project Z-S14 is a separately cited source row",
-  "collector_ruff_check": "PASS"
+  "collector_ruff_check": "PASS",
+  "round36_update": {
+    "recorded_at": "2026-09-23T15:16:42.001695+00:00",
+    "links_checked": true,
+    "gap_rows": 21,
+    "dependencies_acyclic": true,
+    "errors": [],
+    "scope": "dated documentation update; no application acceptance rerun"
+  }
 }

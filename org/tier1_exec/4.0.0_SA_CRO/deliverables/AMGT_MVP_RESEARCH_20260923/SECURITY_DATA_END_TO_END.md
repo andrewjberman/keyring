@@ -17,6 +17,8 @@
 
 ## What to retain and what remains open
 
+**Round-36 preservation update:** keep the accepted `battery_extra` win path; do not reorder battery steps merely to consume step 5's late `seeds`. [The dated update](ROUND36_CLOSER_CONTEXT_UPDATE.md) records round closure at `46cf98a9d1`; a live Lenovo annual-filing-to-Thesis result remains unproven.
+
 Retain the identity resolver and builders, generated harvest prefixes, filing family/acceptance logic, typed numeric readers, check-face and existing print renderer. Do not replace them with a parallel research stack. The September 23 round-36 packet at `ledger/ROUND36_L8_PACKET_20260923.md` and `ROUND_ANALYSIS.round35.md` distinguish a fixed discovery mechanism from a proven final report. The packet also identifies reproduction scratch outside the committed tree; accepted closure must retain reproducible evidence durably.
 
 Current `project.json` phase wording lags the available round-36 packet. This package uses exact orders and artifacts, not the phase sentence, for present state. The pending Lusha order rk-49 names its own website/key constraints; it is not justification to block unrelated reporting work. Prior records of shared-surface grant conflicts must be rechecked against current ownership before implementation, not inherited as facts about today's locks.
