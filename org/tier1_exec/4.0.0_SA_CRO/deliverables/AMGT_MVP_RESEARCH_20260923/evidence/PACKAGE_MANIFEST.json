@@ -1,8 +1,8 @@
 [
   {
     "path": "CLOSER_CONTRACT.md",
-    "sha256": "05361052c73eaefe5c870e11542ee0ebc84d743220828cdf45464431544b6711",
-    "bytes": 13945
+    "sha256": "1cd63d2ae274d8c3fea8867890cda066075ff086ca6cf75664720c1759ed908b",
+    "bytes": 14381
   },
   {
     "path": "CLOUD_PRECEDENT.md",
@@ -55,6 +55,11 @@
     "bytes": 3368
   },
   {
+    "path": "evidence/ROUND36_RETRACTION_SOURCES.json",
+    "sha256": "2b0c5fb02b0e7ad22e62c91835687b39b57df5db7a319e9962e5c248e8ca86e6",
+    "bytes": 1083
+  },
+  {
     "path": "evidence/ROUND36_UPDATE_SOURCES.json",
     "sha256": "5a55a6de62a9b8b88f8ea8317fcc23656f0b8910a4b931b86aa06082427c0949",
     "bytes": 843
@@ -96,8 +101,8 @@
   },
   {
     "path": "ROUND36_CLOSER_CONTEXT_UPDATE.md",
-    "sha256": "82b622ae333daa951115df240ff754315725dae4947d376c38f290f083a32983",
-    "bytes": 6563
+    "sha256": "5d0a5b83b909f02379f73be8dc52506b286fd7a54d9e84fb7eab0215a7396016",
+    "bytes": 8964
   },
   {
     "path": "SECURITY_DATA_END_TO_END.md",
