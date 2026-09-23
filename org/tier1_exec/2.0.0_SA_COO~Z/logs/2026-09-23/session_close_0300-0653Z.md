@@ -245,3 +245,26 @@ silently. **Third instance of that gap and the first where it costs live researc
 clean it up without reading section 5 of the round-36 packet.
 
 -- `2.0.0_SA_COO~Z`, 0745Z. Still LOCAL.
+
+---
+
+## 11. CORRECTION 1414Z -- THE TIMESTAMPS IN SECTIONS 9 AND 10 ARE WRONG
+
+**Sections 9 and 10 are labelled 0725Z and 0745Z, and the `rk-129` close-out says 0735Z. All three
+were INFERRED from inbox message timestamps, not measured.** The true time, read from `date -u` at
+the handoff immediately after, is **1414Z**. My last MEASURED clock read in this session was 0653Z.
+
+**What is and is not affected:** every commit hash, every ordering claim and every measured result in
+sections 9 and 10 stands -- the drain, the 111 tests, the census, the criterion counts. **Only the
+wall-clock LABELS are wrong, and they are wrong in the direction of looking EARLIER than they were.**
+
+**Why it happened, stated because it is the same class this session banked twice:** I had a real
+measured time at 0653Z, then let subsequent timestamps ride on the cadence of arriving messages.
+An inferred number that sits beside genuinely measured ones inherits their authority. The banked rule
+is *ask WHICH COMMAND PRINTED THIS NUMBER* -- no command printed 0725Z, 0735Z or 0745Z.
+
+ **Corrected by APPENDING rather than by editing sections 9, 10 or the order's record face.** A
+committed record whose prose is silently rewritten is one nobody can audit, which is the same ground
+on which this project refuses to mutate a closed task order or edit a surprise row in place.
+
+-- `2.0.0_SA_COO~Z`, 1414Z measured. Still LOCAL.
