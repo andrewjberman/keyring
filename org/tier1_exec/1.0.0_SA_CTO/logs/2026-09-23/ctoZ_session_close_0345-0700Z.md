@@ -155,4 +155,67 @@ exposure.
 that graded 6 blocks as 7 while the issuance gate printed 7.** Both estate-shaped, both need an owner
 who is not an AMGT project.
 
+---
+
+## ⛔ SUPERSESSION, ~07:5xZ -- THE "ONE BLOCKED DEPENDENCY" ABOVE IS **CLOSED**. READ THIS BEFORE THE HANDOFF.
+
+**Current State above names Lenovo's filings battery as the one blocked dependency "with TWO STACKED
+CAUSES." Round 36 drained after this log was written and CLOSED BOTH.** `2.0.0_SA_COO~Z` flagged the
+supersession itself; a successor reading that section alone would carry a dead blocker forward.
+
+**Round 36** (`rk-129`): packet @`12f98aa11d`, drain @`e452864e6a`, order terminal @`2c07e79688`.
+**9 of 9 PASS, rc=0 VALID, 9/9 alignment, 111 tests on the COO's own instrument in the merged tree.**
+Census by subtraction: **191 orders -> complete 181, superseded 8, withdrawn 1, pending 1** (`rk-49`,
+held by design). **`AMGT_RESAPP` has ONE open order and it is the parked one.**
+
+### ⭐ BLOCKER A WAS AN **ID-SPACE** ERROR, NOT A PARAMETER ERROR
+
+HKEXnews' `stockId` never accepted the LISTED stock code -- it requires HKEXnews' own **internal
+predictive-search id** (the `"i"` field of `activestock_sehk_e.json`). **Lenovo, listed `00992`, carries
+internal id `2325`.** Single-variable swap, every other round-35 parameter byte-identical:
+
+| `stockId` | recordCnt |
+|---|---|
+| `"00992"` -- round 35's exact shape | **0** |
+| `"2325"` -- internal id | **1117** |
+
+⛔ **So round 35 was never wrong about its PARAMETERS -- it was wrong about the ID SPACE.** ⭐ **Which is
+precisely why a tuning pass could never have found it: tuning varies the parameters, and the parameters
+were correct.** `Z-W128-S1` -- *"should not assume query-tuning alone resolves it"* -- was the
+load-bearing call of the last two rounds and is now **vindicated at the bytes**; it disarms **with its
+reason**, not silently.
+
+⭐ **And the POSITIVE CONTROL is what made the swap interpretable:** AC0 proved the interface answers at
+all (drop `stockId`, `searchType=0`, a date range -> **recordCnt 14376**) **before** any conclusion about
+Lenovo. Without it, `0` and `1117` are two numbers from two guesses. **The order made that control
+mandatory and refused an unmeasured zero -- that bound is why this round closed instead of producing a
+fourth half-fix.**
+
+### ⚠ WHAT IS **NOT** CLAIMED
+
+**The route is CAPABLE of resolving. That is NOT "Lenovo resolved today."** The adapter inherits round
+35's most-recent-filing selection, so a live win depends on the newest filing being an annual report on
+the day. ⭐ **The worker NAMED that limitation rather than silently widening its cell to fix it**, which
+is why limb 2 is fixture-proven. **`FWD-3` is UNBLOCKED IN MECHANISM, not demonstrated end-to-end** --
+`3.0.0_SA_CVO~Z`'s judgment at L9, not mine.
+
+### ⛔ MY RECOMMENDATION TO ANDREW WAS WRONG, WITHIN THE HOUR
+
+I recommended **PARK** twice, the second time saying it was *firmer* than three hours earlier. **It was
+reversed by the next round.** He had not acted on it. ⚠ **The rec was reasonable on the evidence I had
+and it was still wrong** -- that evidence was two seats' shared assumption that a zero meant the issuer,
+and what broke it was a control nobody had run. **Recorded here because a log carrying the
+recommendation but not its reversal is the handoff defect this addendum exists to fix.**
+
+### AND ONE CARD ROW GOT STRONGER
+
+The **ten** `.scratch/r129/` scripts behind AC0-AC7 were **REFUSED by `owned-paths-check`** and exist
+**only** in `C:/tmp/wk-amgt-36-129`, which is **deliberately NOT removed** against `safe-merge`'s own
+closing advice, because removing it discards untracked files silently. ⛔ **Third instance of the
+`.scratch/**` lane gap and the FIRST where it costs LIVE RESEARCH EVIDENCE rather than convenience.**
+
+**OWED NEXT:** `3.0.0_SA_CVO~Z`'s L9, then its slug, then **this seat's round-36 analysis** -- not
+pre-empted here, because the L10 order is slug -> analysis -> recut and cutting the analysis off the
+packet is the deadlock shape Rule 27 names.
+
 -- `1.0.0_SA_CTO~Z`
