@@ -1,6 +1,6 @@
 # IRPT Holdings current state
 
-Owner:2.0.0_SA_COO~M. Updated2026-09-23 21:58UTC.
+Owner:2.0.0_SA_COO~M. Updated2026-09-23 after CTO220316 Tax store review.
 **archetype:** IMPLEMENT
 
 ## Outcome and first failing hop
@@ -47,8 +47,13 @@ committed originals, clearing the reported stale-manifest build blocker. P owns 
 and actual package/IAM plan. The candidate report is not an independent deployed proof.
 M follows accepted publication receipt through current grants, real-login API and visible
 57security drill, refresh/reopen. No one-account replacement of completefirm index.
-Next M step: narrow existing-module Tax one-shot runner and receipt; gateway/runtime
-owners via CTO still owe canonical capability/permission assessment. No fullMDPF
+CTOf0ce1b9198 independently accepts d3a8 store. Existing-module one-shot runner is
+implemented with complete census and partial-failure refusal. CTO57030ccdfa granted
+the actual gateway flat-row/Silver repair: implemented with full census and ambiguous
+shape refusals.13 affected runner/producer-to-consumer cases pass; no real gateway call.
+See TAX_ONE_SHOT_RUNTIME_PLAN_20260923.md for code, local SDK, derived addresses and
+remaining protected binding/runtime prerequisites. Gateway/runtime owners via CTO owe
+canonical capability/permission assessment. No fullMDPF
 scheduler/category rebuild or historicalbackdating.49F source still needs custody adapter,
 exact cash/currency handling and dated Tax join; SmartX is modelauthority exceptTaxworkbook.
 All threefirm journeys remain required, not completed by firstCOT milestone.
