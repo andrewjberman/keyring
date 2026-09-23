@@ -74,3 +74,30 @@ Evidence, pins, commands, driver hashes and all 29 source hashes are recorded in
 `CTO_DIRECT_REVIEW_20260923.json`. Original tests and source were extracted into
 a unique local temporary directory. This record does not claim that localhost
 has the candidate installed, that production is fixed, or that E2E MVP is done.
+
+## Direct runtime follow-up, 2026-09-23 11:37 Eastern
+
+**Bounded local artifact/runtime PASS**, superseding the pending packaging grade
+above for P's exact final handoff `f0075287c426cbe9eea04f0165bc179147918ce1`.
+CTO read both verification scripts, reconstructed all 74 source-package members
+from pinned Git blobs and reproduced the exact ZIP hash:
+`7419db6052e33b79729343aa8b1b4db5fc9c4f63742e9658469977c04eca3c16`.
+The dependency ZIP is
+`d17ae439a182b58b82e607108686bde53fd185aa04cddf0bccf365250cfc64bd`;
+all 151 extracted dependency members matched the committed manifest hashes.
+
+CTO ran the pinned checker directly: the complete package returned enforced
+PASS; omitting custody.py returned exit 1 naming that missing dependency.
+CTO then ran the extracted artifact pair through the committed verifier in the
+digest-pinned AWS Lambda Python 3.12.14 Linux image, with network disabled,
+read-only mounts/root and no production credentials. All six declared dependency
+versions imported from `/opt/python`; native rpds, JSON Schema positive/negative
+controls and factory construction from `/var/task` passed. The recreated source
+archive was used, rather than trusting a worker's mutable extraction directory.
+
+Full command, image digest, checker hashes, stdout and positive/negative closure
+results are in `CTO_RUNTIME_REVIEW_20260923.json`. This closes the local dependency
+and factory-construction question. It does not publish a layer, attach it to a
+function, install an actual preparer, invoke a request, prove source/economic
+acceptance or authorize cloud changes. Actual snapshot/normalized-position ports,
+comparisons and production configuration/IAM wiring remain separate open work.

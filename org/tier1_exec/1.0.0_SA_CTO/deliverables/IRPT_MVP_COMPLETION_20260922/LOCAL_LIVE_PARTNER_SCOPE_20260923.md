@@ -270,3 +270,47 @@ shared integration/package ownership. Production callbacks remain closed until
 exact accepted snapshot identity and complete security-level custody source are
 implemented and directly reviewed by CTO. The bounded source review at
 `8653eb6cd4` does not lift this condition or authorize cloud changes.
+
+## CTO actual-position source tranche, 2026-09-23 11:36 Eastern
+
+Read M proposal `a20a1a1bd28c2cf76d5b80aae0d9a745ab5c7d2c`,
+`ACTUAL_POSITION_REPAIR_PROPOSAL_20260923.md`, and the existing builder.
+Authorize M's bounded local implementation in these existing paths only:
+
+- `data/assets/scripts/gold/investor_reporting/holdings_snapshot.py`
+- `data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py`
+- `data/assets/scripts/gold/investor_reporting/tests/test_economic_regressions.py`
+- `data/assets/scripts/gold/investor_reporting/tests/test_source_inputs.py`
+
+Implement source loading, actual custody projection/census and pre-publication
+refusal controls, preserving separate model/target bases and unresolved actual
+value. Source readers may be exercised with offline fixtures; no production
+producer invocation or cloud read/write is included. No upstream B00/B01/B03 or
+runner_common edits, standing dual writer or new destination. P retains the
+holdings Entry exception, shared authorization, schema/API and package; Y owns
+freezing and recipe eligibility. Agree exact minimal S2 fields with P/Y before
+emitting additions to the closed public schema.
+
+Retain existing `RECON_TOLERANCE_USD = 0.01` as the maximum account-level USD
+reconciliation tolerance. It does not excuse missing values, conflicting rows,
+unproved completeness, incompatible dates or ambiguous economics. B03's 1bp
+provisional flags and VARIANCE-EXPLAINED are not admission gates. No tuning to
+make a fixture or live result pass.
+
+All three firms' production eligibility remains conditional. For 49F, the
+located Schwab 08335338 chain is a bounded source, not evidence of all-master
+coverage: require exact selected-account mapping, supported sign/factor/cash
+non-overlap, currency and independent balance before admission. It does not
+change SmartX-primary performance and separate Black Diamond verification.
+For COT, implement strict relationship-grain conflict/null checks and require
+same-vintage independent account totals; known subtotals cannot hide null rows.
+For INF, unestablished stable position identity/currency and unreliable or
+coerced-zero ending_mv remain explicit upstream prerequisites. Never reconstruct
+the independent total from the same positions to manufacture reconciliation.
+
+Use owner-approved semantics or refuse the affected account/selected portfolio;
+do not implement an inferred upstream repair. Exact live receipts, source
+completion and run roots remain unmeasured. MSTR is asked to route unresolved
+upstream semantics to the current DS owner; historical author suffixes do not
+activate a worker. M can progress the local guarded adapter and failure controls
+while those prerequisites remain open. CTO directly reviews the pinned candidate.
