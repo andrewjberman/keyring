@@ -5,9 +5,9 @@
  "macro_code": "NFRA",
  "fabric": "laptop",
  "dep_stage": "EXECUTING",
- "status": "active",
+ "status": "closed",
  "name": "Cloud-resident KuzuDB projection + gateway traversal -- the projection is compiled in the cloud as a consumer of the branch-head marker, served from a small always-on service on the existing opal-globgrph cluster, reached through the gateway as a thin proxy; the local copy and the local full/inc rebuild commands retire",
  "generated_from": "org/missions/D0/NFRA/NFRA_CLDGRPH/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-09T18:13:39Z"
+ "generated_at": "2026-09-23T17:15:55Z"
 }

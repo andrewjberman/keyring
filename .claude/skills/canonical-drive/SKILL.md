@@ -27,6 +27,8 @@ incidents and instrument traps: `org/tier1_exec/2.0.0_SA_COO/DRIVE.md`; pre-rewr
   ON for the base COO from LD-0530 (supersedes LD-0288's OFF). A lane COO ticks its own team's project.
 - **Scope:** projects with a tree home under `org/missions/D*/<MACRO>/<CODE>/` in those stages. Flat projects wait for
   `/canonical-flow`. Never touch `ADVI_BDAPIMIG` `ADVI_TAGATTR` `DATA_SSOTMG` `MDPF_BASISSWITCH` (Andrew 2026-07-10).
+  ⛔ **OUT OF SCOPE: a row reading `status: closed`, whatever its `dep_stage`** -- a close on Andrew's word keeps the
+  measured stage and cites its record in `closed_by` (e.g. `ETFS_GUARDRAIL`, `NFRA_CLDGRPH`, D11); never drive it.
   ⛔ **OUT OF SCOPE: a project whose `project.json` carries `closer_contract`** (spine v3.17, Closer) -- the closer
   owns it until hand-back: no recut, no issuance, no nudge. Its state is the contract's STATUS files (`/closer status`).
 

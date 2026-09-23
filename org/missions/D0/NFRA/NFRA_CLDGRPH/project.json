@@ -4,7 +4,7 @@
   "directive": "D0",
   "fabric": "laptop",
   "pipeline": "globgrph",
-  "status": "active",
+  "status": "closed",
   "dep_stage": "EXECUTING",
   "created": "2026-09-02",
   "registered_under_tree": "2026-09-03",
@@ -57,5 +57,8 @@
   "coo_lane": "2.0.0_SA_COO~A",
   "fabric_ruling": "ANDREW-DIRECT 2026-09-02 ~19:3xZ at the 1.0.0_SA_CTO~A terminal, VERBATIM: \"laptop\" -- in reply to the one-line call 'Set fabric on org/projects/NFRA_CLDGRPH.json: (a) laptop, or (b) site-z?' (rec (a)). Record: org/tier1_exec/1.0.0_SA_CTO~A/deliverables/ENDPOINT_FORWARD_GLOBGRPH_CLOUD_COMPILE_20260902.md, ANDREW-DIRECT #3.",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-09-23",
+  "closed_by": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260923_CLOSE_CLDGRPH_AND_D11_D9_STAYS_IRPT_CLOSES_ON_LAPTOP.md",
+  "close_note": "CLOSED 2026-09-23 on Andrew-direct at the 1.0.0_SA_CTO~C terminal (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260923_CLOSE_CLDGRPH_AND_D11_D9_STAYS_IRPT_CLOSES_ON_LAPTOP.md): a close on his word, not a graded close -- dep_stage keeps its measured value and no outcome is claimed REALIZED (precedent ETFS_GUARDRAIL)."
 }

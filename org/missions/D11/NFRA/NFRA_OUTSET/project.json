@@ -4,7 +4,7 @@
   "directive": "D11",
   "fabric": "laptop",
   "pipeline": "estate-report",
-  "status": "active",
+  "status": "closed",
   "dep_stage": "EXECUTING",
   "created": "2026-09-04",
   "registered_under_tree": "2026-09-04",
@@ -60,5 +60,8 @@
   "coo_lane": "2.0.0_SA_COO",
   "fabric_ruling": "laptop -- the D11 placement row, as NFRA_COMPEFFICACY under the same directive and macro; the work is repository-local tooling plus one read-only federated query against a plane NFRA_CLDGRPH owns, so no site-Z placement question arises. Stated at registration by 1.0.0_SA_CTO; no Andrew ruling was sought or needed.",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "closed": "2026-09-23",
+  "closed_by": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260923_CLOSE_CLDGRPH_AND_D11_D9_STAYS_IRPT_CLOSES_ON_LAPTOP.md",
+  "close_note": "CLOSED 2026-09-23 on Andrew-direct at the 1.0.0_SA_CTO~C terminal (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260923_CLOSE_CLDGRPH_AND_D11_D9_STAYS_IRPT_CLOSES_ON_LAPTOP.md): a close on his word, not a graded close -- dep_stage keeps its measured value and no outcome is claimed REALIZED (precedent ETFS_GUARDRAIL)."
 }
