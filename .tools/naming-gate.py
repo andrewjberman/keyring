@@ -779,6 +779,31 @@ def _resolves_to_tracked(value):
     return ok
 
 
+def _packaged_citations(post_text):
+    """The `packaged_as` names of a packaging manifest whose `repo_path` resolves to a tracked file at HEAD
+    (2026-09-23, 0.0.0_AB_MSTR, on 2.0.0_SA_COO~P 99805: lambda-source-map.json rows such as
+    {"repo_path": ".../performance/bd_live.py", "packaged_as": "bd_live.py"} and the member lists that
+    repeat those names). The packaged name is the in-zip spelling of a file already committed under its
+    repo_path, so it is the same citation R-11 already recognises for the repo_path itself -- renaming it
+    would break the module's imports and mints nothing. A row whose repo_path does NOT resolve cites nothing,
+    and its packaged_as stays graded. Any other JSON string is unaffected."""
+    try:
+        doc = json.loads(post_text)
+    except ValueError:
+        return set()
+    out, stack = set(), [doc]
+    while stack:
+        node = stack.pop()
+        if isinstance(node, dict):
+            rp, pk = node.get("repo_path"), node.get("packaged_as")
+            if isinstance(rp, str) and isinstance(pk, str) and _resolves_to_tracked(rp):
+                out.add(pk)
+            stack.extend(node.values())
+        elif isinstance(node, list):
+            stack.extend(node)
+    return out
+
+
 _GITATTR_BINARY_TOKENS = ("binary", "-diff")
 
 
@@ -1380,6 +1405,10 @@ def grade_file(nm, f, post_from_index):
                      "top level carries format_version, terraform_version and resource_changes or"
                      " planned_values (a terraform show -json artifact): not graded", "PASS")]
         lits = json_literals(added)
+        cited = _packaged_citations(post_text)
+        for lit in lits:
+            if lit.value in cited:
+                lit.permitted = True  # the packaged name of a tracked source: a citation (R-11), not a mint
     else:
         lits = yaml_literals(added)
     waivers = waivers_for(path, post_text) if path.endswith(".py") else {}
