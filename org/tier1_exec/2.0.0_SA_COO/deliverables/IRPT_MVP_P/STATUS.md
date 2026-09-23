@@ -1,5 +1,51 @@
 # IRPT P status - 2026-09-22
 
+## Checkpoint 2026-09-23 00:34 UTC
+
+Product remains incomplete and LOCAL. No deployment/vendor call/push or acceptance
+lift. Latest holdings consumer HOLD is R-P10: CVO `142e5a27a4` reports numeric64-digit
+unselected/Gold sha256 metadata accepted at package `f8860f9839` (20/22 new cases
+pass, two fail), routed by CTO00:33:38. M owns strict-type repair; P will consume the
+independently reviewed endpoint and renew package proof. M-PART-01 source closure
+`95d2117e97` at fd469 remains bounded. Prior package198d9a29 was held by dfc19fdd84.
+
+Committed/integrated since prior checkpoint:
+- Explicit SMARTX primary refusal source `cf11337d2e`, package `f7e0a07c43`, portal
+  `33e13925`; CVO bounded refusal/schema/package PASS `d13ccbe`. No actual provider
+  calculation claimed. COT/INF also refuse unproven selected-source paths.
+- M multipart554fc/9e573 consumed8d66/afb924 and packagec9e4529. Then reviewed fd469
+  consumed55fae26e37 and replacement packagef8860f9839:31members/17py closure,
+  215other function objects/root metadata unchanged, ten supplied malformed inventory
+  negatives PASS and96holdings tests PASS. Independent R-P10 above overrides any
+  acceptance inference; those local controls missed numeric digest metadata.
+- Valuation schemas `71329fd469` and portal `bfed0e09` preserve signed source facts,
+  dates/revisions/scope without replacing custody totals. M producer/UI not yet wired;
+  M-FACT-01 is separately open/repaired candidate, not accepted economics.
+- Y normalized-upload bridgec2a01fb3 consumed01a1e3623a; guarded identity/prospect UI
+  2ddf1114 consumed0acd8e7c; issued-job polling940333df consumedc937249d.
+- Owned readers e933/9ac/156a consumed0403/e3d4/2b6a, numeric receipt repair745c
+  consumedf6a8883e60; M current-owner Entry6ad consumed003df3635a. Y durable status
+  a352 consumedee4ef77f4d and Entry factory8e8498c9 consumed2290082721.
+  Current owned-entry/read/report/status + date-schema targeted suite:93PASS.
+- Shared owned history/read schemas `47472824b6`, portal `29c729dd`:7 paired tests,
+  23assertions and TS5.9 noEmit PASS. Exact issued request/report binding;
+  history routes remain NO-HANDLER-AT-HEAD, zero live transport.
+- Prospect date rulingdea338a397 implemented in mirrored shared schemas1a5dc91462;
+  five shape/dated-regression/public-projection tests PASS. Paired Y retained
+  derivation, old-consumer compatibility and full UI review remain pending.
+  Browser local history/date13tests44assertions and TS5.9 noEmit PASS; exact portal
+  commit is `b290db5a`. Agreement recorded in INTERFACES.md.
+
+R-P09 independently closed65a3aedf72 (upload consumer only). R-P05/06/07/08 bounded
+closures remain; none proves runtime/full retention. S7 PENDING_ENFORCEMENT and
+physical disposal OPEN. SmartX account capability, real-source custody economics,
+installed IAM/layers, full upload/generation/history runtime, branded PDF render and
+all integrated completion grades remain open. No artificial business dates, model
+returns or BD fallback. Portal risk map40h stale; frontend validation above is from
+language tests/typecheck, not the risk hook. Backend map~3.6h; all package pins use
+committed source blobs.
+
+
 Seat: `2.0.0_SA_COO~P`. Direct mandate: completion CONTRACT v1.2 at `4688c59ef2`.
 Startup complete after canonical six-file manifest repair `9b99dc12cd`.
 Readiness measured GREEN 9/9; no extra helper or model-side timer.

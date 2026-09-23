@@ -235,3 +235,54 @@ forwarding import from P `_contracts/opal_naming_runtime.py`, exposing canonical
 address/lookup without duplicating rules. Holdings reader needs no Gold/pyarrow.
 The31-member proof covers selected guarded/versioned retrieval and negatives;
 IAM declaration and package evidence are separate from deployed authorization.
+
+
+## Owned request reads and prospect dates - 2026-09-23 00:34 UTC
+
+Owned request/history schema pin `47472824b6`; portal client `29c729dd`.
+The accepted identity is immutable and retains the producer tenant spelling.
+The envelope's issued opaque firm ID is server-bound; the browser never invents
+that crosswalk. GET `/analysis/requests` accepts limit1..50 (default25), optional
+opaque cursor<=2048. It returns one bounded current-owner page `{items:[{identity,
+accepted_at}],next_cursor}`. Empty items with a cursor is valid. GET
+`/analysis/requests/{requestId}` returns one such projection. Both remain pending
+HTTP runtime composition. `getOwnedAnalysisReport(REQ)` uses the existing sections
+route and returns AnalysisReportSliceView, not the private full report. Response
+request identity must match the issued requested ID. Internal Y report reader
+verifies retained request, READY receipt, report kind, owner, and current retention.
+
+IRPT-Y-DATES-01 authority is CTO ruling `dea338a397fc71efc2cddee0d711e99effbefdfa`,
+not the historical PRD. P proposal00:22:09, Y agreement00:23:05 and correction00:24:02
+fix the following source contract. Shared schema pin `1a5dc91462` updates both
+runtime/document copies and all referencing response schemas. Internal status
+retains all six obligations; PublicStatusEnvelope removes schema-marked server-only
+correlation identity, matching the existing public projection.
+
+- Only `status-job`, inner operation_kind `prospect_analysis`, can emit the new
+  date branch. operation_id is the issued request ID; revision is its decimal string.
+- `source_dates.date_basis` is UNDATED_INPUT or PER_SECTION; business_date is absent,
+  never null. Ordinary single-date and custody/performance statuses keep business_date.
+- Closed `prospect_analysis` binding carries source_lane=PROSPECT_ANALYSIS,
+  input_id=`portfolio_<64hex>`, content_sha256 (same suffix), request_id and positive
+  integer request_revision, report_id=RPT32hex, report_revision=64hex, immutable=true.
+  The source lane derives from verified retained CSV_UPLOAD plus input-only accepted
+  composition, never a browser-declared string or missing date.
+- `section_dates` (<=1000) carries unique stable section_id (1..200 chars) and actual
+  ISO as_of_date or explicit null. UNDATED_INPUT has only nulls (empty valid).
+  PER_SECTION has a real date and either distinct dates or at least one undated
+  section. A valid common source date uses the ordinary branch instead.
+- Producer validates retained provenance and complete section census. Schema validates
+  closed shapes; browser also validates digest/request equality, dates, unique IDs
+  and basis consistency. Neither shape checker proves retained provenance.
+- Explicit compatibility request header: `X-IRPT-Status-Dates: prospect-v1`, only
+  status-job. Absent/unknown capability receives ordinary v1 UNAVAILABLE with no
+  extension. No new wire form reaches an old closed-schema consumer. Until paired
+  actual Entry derivation is integrated, the boundary remains unavailable.
+- P owns schemas/shared parser/types and ProspectSourceDates screen/print component;
+  Y owns retained derivation and mounting the shared component in ProspectJobStatus.
+  No lease/accepted/retrieval/process timestamp becomes a source date. This agreement
+  does not authorize live activation, vendor calls, report certification or export.
+
+Shared date consumer/component pin `b290db5a`; generated18 documents/16 response
+envelopes,13history/date tests44assertions and TypeScript5.9noEmit PASS. Actual Y
+retained derivation and mounted end-to-end compatibility evidence are pending.
