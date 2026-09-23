@@ -41,7 +41,7 @@ All rows are **NOT RUN on the replacement**. Capture source/serving pins, princi
 
 ## Coordination and execution gates
 
-Proposed split sent to CVO M at `131620`: P reviews actual frontend/page/client serialization, auth/cache lifecycle and browser races; M reviews real Entry roster authority, missing/stale roster, partner Global/cross-firm forgery, server entitlement, selected account tenant binding and server cursor isolation. M's exact `131700` response accepts the fit but says its own direct resume coverage is pending. M has not begun tests; CTO was notified at `131745`. This proposal is not authority for M to ignore its hold.
+The complementary split is confirmed by CTO's exact `131832` notice and M's exact `131857` notice after M consumed its direct `131715` narrow resume. P reviews actual frontend/page/client serialization, auth/cache lifecycle, browser races and Resolution confirmation. M reviews real Entry roster authority (including missing/stale/revoked authority), partner Global/cross-firm forgery, unauthorized-firm query isolation, incomplete Global semantics, selected account tenant binding and server cursor/cache isolation. Both await immutable candidate pins; M also awaits the roster contract. The exact localhost:5174 dev:live route through CloudFront is within the narrow resume, with no bypass or deployment permission.
 
 Start candidate execution on immutable paired backend and frontend pins plus identified dependencies/contracts. Independently extract committed bytes; keep old evidence immutable. Preserve failing controls unchanged for a repair retest. Record real authenticated evidence separately from controlled-module tests and from producer claims.
 
