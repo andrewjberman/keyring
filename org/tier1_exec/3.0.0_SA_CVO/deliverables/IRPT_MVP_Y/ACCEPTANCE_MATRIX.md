@@ -500,3 +500,15 @@ All4catalogue entries remain explicitly unverified with no current permissions.
 Actual mapping, resolver admission, retained composition, worker, cover/UI and
 renderer/vendor limits remain ungraded. See RECIPIENT_CATALOGUE_REVIEW_70ea_9daa.md.
 Integrated denominator remains0PASS/0FAIL/14NOT_EVALUATED.
+
+## Recipient UI5c935bd6 bounded failure
+
+Y-UI01 P2 OPEN: late A custody response overwrites B request status after a
+recipient edit/new submission. Original actual-handler controls8PASS/1FAIL,
+47assertions; supplied31PASS177assertions and app TypeScript PASS. Exact text,
+retry identity, prospect reset, prohibited characters, static markup escaping
+and actual LiveClient request validation pass within the offline harness.
+See RECIPIENT_UI_REVIEW_5c935bd6.md. No backend/worker/browser/vendor/cover/export
+grade. Peer P c5c3393b1f and M e64d917252 source reviews are separately attributed;
+actual admission/dependencies/frozen replay remain pending at5a2b531645.
+Integrated denominator remains0PASS/0FAIL/14NOT_EVALUATED.

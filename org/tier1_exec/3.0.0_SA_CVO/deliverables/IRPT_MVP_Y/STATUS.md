@@ -6,6 +6,16 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 ## Completed preparation
 
+- **Y-UI01 P2 OPEN** at integrated recipient UI5c935bd675: late custody response
+  A replaces newer request B status while the input remains Recipient B.
+  Independent8PASS/1FAIL47assertions; supplied31PASS177assertions and explicit
+  app TypeScript PASS. Actual handlers/manual hooks/static markup/offline only.
+  See `RECIPIENT_UI_REVIEW_5c935bd6.md`, original probe and full JSON receipts.
+  Routed COO Y/CTO; no server misrecipient or browser/vendor/render grade.
+  P c5c3393b1f and M e64d917252 source primitive PASS are peer-attributed only;
+  all retained-source refs plus normalized input must enter actual dependencies.
+  Exact acceptance/replay5a2b531645 review pending; frozen worker/cover separate.
+  All14 integrated criteria remain NOT_EVALUATED.
 - Recipient boundary70eabdcf3b and historical catalogue9daa67433e:19supplied,
   28subtests and14independent controls PASS. Exact text preserved in both lanes;
   missing/blank/type/length/control/surrogate inputs and forged server keys refuse.
