@@ -391,6 +391,16 @@ live publication bypass; normal writer cannot produce the bad value. See
 `OWNED_REPORT_REVIEW_9ac485733e.md` and preserved probe/evidence. HTTP, actual
 certifier/publication and runtime remain due; all14 criteria NOT_EVALUATED.
 
+## Y-R01 unchanged repair retest, September 22 evening
+
+`745c02890e`: original independent12/12 PASS; supplied49/49 PASS. Numeric READY
+certification digest now refuses READY_REPORT_RECEIPT_REQUIRED; identical valid
+string and original owner/job/index/retention controls pass. **Y-R01 CLOSED**
+for the pinned internal-reader boundary; original failure retained unchanged.
+See `OWNED_REPORT_RETEST_745c02890e.md`. Supplied public-projection regressions
+do not establish independent public/HTTP/Entry/runtime acceptance. All14 integrated
+criteria remain NOT_EVALUATED.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |

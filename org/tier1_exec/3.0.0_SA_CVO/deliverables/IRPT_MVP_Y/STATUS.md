@@ -126,12 +126,18 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   HTTP/status/report routes remain unproved. See
   `OWNED_REQUESTS_REVIEW_e93300e34b.md`; all14 integrated criteria NOT_EVALUATED.
 - Owned report reader `9ac485733e365452960b47d18cf0fba04ef73f7e`: supplied44
-  PASS; independent11 PASS/1 FAIL. Y-R01 P2 OPEN: numeric64-digit
+  PASS; independent11 PASS/1 FAIL. Historical Y-R01 P2: numeric64-digit
   certification_sha256 passes string-coerced READY regex and releases the
   retained report, while canonical READY writer rejects that same value.
   Malformed persisted metadata injected offline; no access leak/live publication
   bypass claimed. Other owner/job/index/retention/current-auth controls pass.
   See `OWNED_REPORT_REVIEW_9ac485733e.md`; routed COO~Y for typed-receipt repair.
+- Y-R01 repair `745c02890e`: unchanged original independent12/12 PASS;
+  supplied49/49 PASS. Numeric certification digest now refuses
+  READY_REPORT_RECEIPT_REQUIRED; paired string and all original controls pass.
+  Y-R01 CLOSED for the pinned offline internal-reader boundary. Supplied
+  public-projection tests are not independent HTTP/Entry/runtime acceptance.
+  See `OWNED_REPORT_RETEST_745c02890e.md`; all14 criteria NOT_EVALUATED.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
