@@ -461,3 +461,8 @@ Andrew-direct relayed by CRO at f307d58415, verbatim:
 "actually, maybe worth just doing a little egress, check right now and see how much cottonwood data there is in 2025"
 That per-use CRO check is already executed and does not authorize another use.
 October recheck remains parked with CRO, not a blocker to current IRPT completion.
+
+
+## 2026-09-23 21:19 UTC - M/P mapping seam
+
+M-P-MAP-01 reproduced on614ad2f16b paired9e1bc3a751: M source_revision dict rejected by published P string interface. M keeps source_revision as exact source SHA256 string and carries full receipt under source_provenance. P preserves full mapping evidence. One actual callback-to-consumer request-construction control closes it; no new vendor use. Real selected COT build remains M-reported, not CTO-live acceptance.
