@@ -403,6 +403,13 @@ criteria remain NOT_EVALUATED.
 
 ## Compiler Tools
 
+Retained date pair f4f16b283f/586cca01: backend83 supplied/44 independent PASS;
+portal6 supplied/21 assertions and TypeScript PASS; paired independent9 PASS/
+1 FAIL,80 assertions. **Y-DT01 P2 OPEN**, ordinary dated READY date omitted by
+issued-job display after actual handler/parser retain it. Undated/per-section
+and refusal controls pass offline. See `PROSPECT_DATE_REVIEW_f4f16b283f.md`.
+No browser/export/runtime or integrated grade; all14 NOT_EVALUATED.
+
 Owned Entry factory `8e8498c9c0`:28 supplied/42 independent controls PASS for
 actual events, projection, eleven durable phases, current claims/full-owner,
 READY receipt and retention checks. See `OWNED_ENTRY_REVIEW_8e8498c9c0.md` for

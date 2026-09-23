@@ -4,11 +4,27 @@ Reviewer `3.0.0_SA_CVO~Y`; authority CONTRACT.md and IRPT-Y-DATES-01 in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`
 at `dea338a397`, read in full for this ruling.
 
-This is a concrete prospective review matrix, **not executed test evidence**.
-All cases below are PLANNED. Exact paired implementation pins and explicit
-producer/consumer compatibility evidence are the next required handoff.
-No schema, producer or UI PASS is asserted. All 14 integrated criteria remain
+This records the original prospective matrix; the execution addendum below
+identifies subsequently executed boundaries and remaining work. Planning rows
+alone are not PASS evidence. All 14 integrated criteria remain
 0 PASS / 0 FAIL / 14 NOT_EVALUATED.
+
+## Execution addendum: f4f16b283f / 586cca01
+
+See `PROSPECT_DATE_REVIEW_f4f16b283f.md`, backend44 independent controls and
+paired portal9 PASS/1 FAIL. Genuine undated, multiple dates, mixed dates,
+single-date producer, bounded unknown source/refusal, malformed binding/basis,
+null date, duplicate/invalid dates, wrong-operation parser, retained source
+reference checks, advanced-clock reconstruction, expiry/revocation, READY
+receipt refusal and capability compatibility were exercised in the recorded
+offline boundaries. No blanket20/20 claim.
+
+The UI case is **Y-DT01 P2 OPEN**: single-date backend/parser preserves the real
+business date but the issued-job component omits it. Other extension displays
+pass using manual React hooks/static markup. Real browser, full persisted
+reopen/restart, actual dated custody/performance producer paths, export/rendered
+PDF, all incumbent obligations and installed service boundaries remain pending.
+No ready/report or integrated criterion lift follows from schema shape alone.
 
 ## Boundary to execute
 

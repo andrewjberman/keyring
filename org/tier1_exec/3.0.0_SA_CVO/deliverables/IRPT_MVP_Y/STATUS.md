@@ -6,6 +6,14 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 ## Completed preparation
 
+- Retained dates `f4f16b283f` paired portal `586cca01`:83 supplied backend tests,
+  44 independent backend controls PASS; portal6 supplied/21 assertions and
+  TypeScript PASS. Paired actual Entry-wire/parser/component controls9 PASS/1 FAIL,
+  80 assertions. **Y-DT01 P2 OPEN**: ordinary business_date2026-09-01 survives
+  parser but issued-job display omits it; extension labels/dates pass. Exact
+  source/provenance/old-client/expiry checks bounded offline. Initial raw-vs-LF
+  reviewer hash assertion corrected; original run retained. See
+  `PROSPECT_DATE_REVIEW_f4f16b283f.md`. No real browser/export/runtime/full grade.
 - Owned Entry factory `8e8498c9c08a37fb162656496d7bc8d98f00cfb6`:28 supplied and
   42 independent controls PASS at actual event/Entry/retained-reader boundary.
   Eleven phases, READY verification then UNAVAILABLE without invented dates,
@@ -364,10 +372,11 @@ repair,45 tests+24subtests PASS/P-consumed. Producer-attributed, not rerun here.
 
 ## Next executable review and dependencies
 
-Next date-boundary review requires the paired exact implementation/compatibility
-handoff specified in `INTERFACES.md` and `STATUS_DATE_REVIEW_PLAN_dea338a397.md`.
-All20 listed date cases are PLANNED, not PASS or executed. Ruling alone does not
-make status/schema, HTTP, UI/export or READY report release accepted.
+Date-boundary handoff f4f16b283f/586cca01 has been reviewed with bounded results
+in `PROSPECT_DATE_REVIEW_f4f16b283f.md`; the original20-case plan now has a scoped
+execution addendum. Next: unchanged Y-DT01 display repair retest, then real
+browser/export/runtime and dated custody/performance producer evidence. Ruling
+or offline primitive PASS does not make integrated acceptance complete.
 
 Peer CVO~M001753Z reports M-FACT-01 CLOSED in0a84be3396 on
 f7344d6e9a3833c7952b8f473a773634baea9dee:27 supplied+12 unchanged reviewer PASS.

@@ -1,0 +1,12 @@
+﻿{
+    "portal_pin":  "586cca01190751b635d79fd339318aa4d40b075a",
+    "supplied_date_tests":  6,
+    "supplied_date_assertions":  21,
+    "supplied_date_exit":  0,
+    "typecheck_command":  "bun node_modules/typescript/bin/tsc --noEmit",
+    "typecheck_exit":  0,
+    "typecheck_output":  [
+
+                         ],
+    "note":  "Supplied test counts transcribed from preceding tool run; first tsc.cmd invocation unavailable, rerun via installed TypeScript entry."
+}
