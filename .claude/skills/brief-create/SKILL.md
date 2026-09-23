@@ -1,6 +1,6 @@
 ---
 name: brief-create
-description: Write the L1 BRIEF that starts the canonical loop, from a plain-English prompt: `/brief-create {what to look into}`; `--midstream` for a project already in flight (authored blind to the open task-order set). Its consumer is `/endpoint --forward` at L2, which cuts outcomes from it, so the brief must be citable and outcome-shaped. Self-contained. 4.0.0_SA_CRO.
+description: "Write the L1 BRIEF that starts the canonical loop, from a plain-English prompt: `/brief-create {what to look into}`; `--midstream` for a project already in flight (authored blind to the open task-order set). Its consumer is `/endpoint --forward` at L2, which cuts outcomes from it, so the brief must be citable and outcome-shaped. Self-contained. 4.0.0_SA_CRO."
 ---
 
 # /brief-create — step 1 of the canonical fabric loop
