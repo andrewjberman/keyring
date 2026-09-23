@@ -433,3 +433,31 @@ Tax99761/907d: research snapshot schema differs from canonical capability, canon
 ## 2026-09-23 21:16 UTC - Performance source fidelity and policy activation
 
 9e1bc3a751 composition has five focused CTO PASS checks, but P-SOURCE-01 REWORK: parsed JSON retained without original response bytes/digests does not satisfy X10 source family. P supplies exact transport/evidence repair and existing approved reply replay; no new vendor call. Policy activation remains tied to exact enforcement/package/role/destination proof, not a broad state flip from fixtures. Physical disposal stays OPEN under existing X10 and is not a new first-thread prerequisite. P prepares concrete bounded cutover; M retains registry ownership; CTO reviews directly.
+
+
+## 2026-09-23 21:15 UTC - COT no-position rows and available history
+
+Consumed CRO99769 evidence f307d5841512f8de005b2dd5272350029d1f1b11.
+Ruling: for the measured canonical COT Assets_Dim/includeAll export contract,
+rows with all four position facts (Market Value, Units, Unaccrued Market Value,
+Accrual) absent are dimension-only/no-position-at-as-of rows. Exclude them from
+active holdings facts, counts and weights; retain original bytes and excluded row
+ordinals/counts in private evidence. Do not convert to zero holdings. Partially
+missing facts, held-but-unpriced rows, conflicting duplicates and failed independent
+account reconciliation remain failures. Check selected account census against the
+independent account valuation before publication. Do not assert every such row
+represents a historically closed position: the export also lists later/onboarding
+accounts for earlier dates. M implements this narrow producer interpretation.
+
+P: Cottonwood historical availability is account/window-specific. Sparse pre-May2026
+coverage does not make every 2025 account invalid, nor does onboarding establish
+real inception. Show provider coverage and unavailable periods honestly; never
+relabel a partial onboarding window as requested full YTD/since-inception. Current
+positive COT account remains the first thread, without another blind vendor retry.
+
+Andrew-direct relayed by CRO at f307d58415, verbatim:
+"Cottonwood only has data from maybe a couple months ago, they dont have full data in BD yet as far as I am aware"
+"come october we should check again"
+"actually, maybe worth just doing a little egress, check right now and see how much cottonwood data there is in 2025"
+That per-use CRO check is already executed and does not authorize another use.
+October recheck remains parked with CRO, not a blocker to current IRPT completion.
