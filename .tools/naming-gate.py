@@ -905,6 +905,17 @@ def _binds_of(node, name):
         elif isinstance(n, ast.Delete):
             out += [("del", n) for t in n.targets for x in ast.walk(t)
                     if isinstance(x, ast.Name) and x.id == name]
+        # NOTE: A match/case PATTERN BINDS THROUGH A PLAIN STRING FIELD, NOT AN ast.Name. MatchAs and
+        # MatchStar carry `name`, and MatchMapping carries `rest`; none of them is a Name node, so a
+        # census built on Name/Store walks straight past them. 1.0.0_SA_CTO defeated the previous
+        # version three ways on exactly this (`case bucket:`, `case _latest_date_partition:`,
+        # `case {**bucket}:`). This is ordinary syntactic binding, not the accepted dataflow limit.
+        # Guarded by getattr because these node types do not exist before Python 3.10 and this file
+        # is linted at py39.
+        for attr, field in (("MatchAs", "name"), ("MatchStar", "name"), ("MatchMapping", "rest")):
+            node_type = getattr(ast, attr, None)
+            if node_type is not None and isinstance(n, node_type) and getattr(n, field, None) == name:
+                out.append(("match-pattern", n))
         # NOTE: EVERY ast.arguments UNDER THE SCOPE IS A BINDING SITE -- a nested def, an async def and a
         # lambda all bind their parameter names, and 2.0.0_SA_COO~G's G-1 defeated the previous
         # version on exactly that: `def _probe(bucket): return <approved call>` then
@@ -1128,6 +1139,15 @@ def legacy_read_ok(entry, post_text):
         return False, "%r in %s is bound by %s, not a plain assignment" % (bname, encl, kind)
     if not (isinstance(node.value, ast.Constant) and node.value.value == bvalue):
         return False, "%r in %s is not assigned the approved constant %r" % (bname, encl, bvalue)
+
+    # NOTE: AND THE APPROVED FUNCTION CARRIES NO match STATEMENT AT ALL. Enumerating the three known
+    # pattern binders above fixes the cases measured; refusing the statement outright is what makes
+    # the recognizer safe against pattern node types this code has never seen. The approved case
+    # contains no match, so this costs the authorized read nothing.
+    match_type = getattr(ast, "Match", None)
+    if match_type is not None and any(isinstance(n, match_type) for n in ast.walk(fn)):
+        return False, ("%s contains a match statement; pattern-matching syntax is not supported for this"
+                       " narrow approved case" % encl)
 
     # NOTE: THE APPROVED CALL MUST SIT DIRECTLY IN THE ENCLOSING FUNCTION'S OWN BODY, never inside a
     # nested def, lambda or class. ast.walk descends into them, so without this the site could be
