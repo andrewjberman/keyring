@@ -1095,7 +1095,7 @@
     "producer_handoff": "abfb3eaf8242cf5df26c7e1074e0e555245d969a",
     "production_callbacks": "unconfigured/refusing; exact snapshot binding and accepted security census missing",
     "signed_policy_proposal": "CUSTODY_SIGNED_VALUE_PROPOSAL_20260923.md",
-    "proposal_status": "CTO review requested; no numerical acceptance change",
+    "proposal_status": "Current positive-only eligibility adopted by CTO7a3fd28e11; no numeric admission expansion",
     "peer_package_report": {
       "sender": "2.0.0_SA_COO~P",
       "pin": "e47aed7f71",
@@ -1106,6 +1106,23 @@
       "flat_members": 73,
       "scope": "P reported local import/construction with refusing synthetic source callbacks; not Y rerun",
       "runtime_installed": false
+    },
+    "eligibility_controls": {
+      "artifact": "CUSTODY_ELIGIBILITY_CONTROLS_20260923.md",
+      "count": 11,
+      "status": "prepared specification, not executed",
+      "implementation_dependency": "exact original-position producer interface from M proposal; no located production adapter"
     }
+  },
+  "cto_direct_review": {
+    "commit": "8653eb6cd4d4da9e4e36b447a77822e0bf2df71f",
+    "reviewer": "1.0.0_SA_CTO",
+    "verdict": "bounded source PASS; complete custody generation and runtime open",
+    "factory_pass": 30,
+    "scalar_driver_pass": 20,
+    "portal_pass": 49,
+    "portal_assertions": 67,
+    "scope": "CTO actual executions, not Y rerun",
+    "package_limit": "generate import gate UNENFORCED; missing BUILD_MANIFEST.json and declared jsonschema/referencing dependencies; P owns runtime closure"
   }
 }
