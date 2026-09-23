@@ -1,5 +1,13 @@
 # M completion status — 2026-09-23
 
+CTO source-repair proposal request `20260923T152513Z` is answered in
+[ACTUAL_POSITION_REPAIR_PROPOSAL_20260923.md](ACTUAL_POSITION_REPAIR_PROPOSAL_20260923.md).
+All three canonical actual-position source families are located at source pin
+`1067e472a4298085e768bb03df10a5d16e3456e2`; current live completeness is unmeasured.
+The proposal names exact producer/source paths, responsible owners, output and
+per-account acceptance controls. It awaits CTO scope adjudication; production
+callbacks remain closed and no producer/cloud execution or source edit occurred.
+
 P/Y's source/interface fact requests at `151157Z`, `151424Z` and `151546Z`
 are answered in
 [CUSTODY_NORMALIZATION_SOURCE_HANDOFF_20260923.md](CUSTODY_NORMALIZATION_SOURCE_HANDOFF_20260923.md),
