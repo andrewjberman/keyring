@@ -1,6 +1,6 @@
 ﻿# IRPT Y - current product status
 
-Seat `2.0.0_SA_COO~Y`, September 23, 2026, 18:02 Eastern. Analysis remains INCOMPLETE.
+Seat `2.0.0_SA_COO~Y`, September 23, 2026, 18:31 Eastern. Analysis remains INCOMPLETE.
 Contract v1.4 and COO_Y mandate apply; CTO reviews directly. Fresh-thread load
 completed; exact serial matches environment and readiness oracle GREEN 9/9.
 Existing launcher helpers and 600-second seat-only drive were preserved.
@@ -35,11 +35,15 @@ Browser template -> installed guarded UploadService is still not live-proven.
 P owns shared current-authority/repository factory, host upload boundary,
 package/IAM/routes and sole-consumer cutover receipt. Current CTO control and
 215058 message confirm runtime/enforcement pending despite newly provisioned
-report storage. P integration tree `irpt-smoke-p-backend-20260923` at
-`85d8031728` currently contains no resident module or build_resident_runtime
-factory under investor-reporting; the working changes are deployment records.
-Next missing interface is P's actual installed MODULE:build_resident_runtime,
-paired package digest and measured sole-consumer cutover receipt. See INTERFACES.
+report storage. P222939 reports31 accepted generation/session paths consumed.
+Four critical working files independently hash-match2874 in P integration tree
+`irpt-smoke-p-backend-20260923`, HEAD068e9ccd85: resident_worker,
+publication_worker, publisher and resident_session. Source consumption is real;
+installed factory/package/cutover remains pending. Exact current fork is the
+resident's non-HTTP current-authority reader: accepted owner.principal_id and
+home_firm_id identify the submitter, but retained fields are not current grants.
+Y supplied the precise fields/profile-reader limits to P and CTO223108/223111.
+See INTERFACES for the concrete maintained reader and its authority gap.
 No replacement shared writer or duplicate session consumer.
 
 ## ONE next proof

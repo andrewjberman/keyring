@@ -42,15 +42,35 @@ ports. Actual submitter and original immutable input owner remain separate.
 
 ## Runtime and next proof
 
-Next missing installed interface (measured September 23, 18:02 Eastern): P's
-`irpt-smoke-p-backend-20260923` tree at `85d8031728` has no resident module or
-build_resident_runtime factory under investor-reporting. No installed boundary is
-inferred from its Performance native dependency/package work. P returns the
-actual MODULE:build_resident_runtime path, source/package/census digests, current
-submitter authority and retained repository bindings, and measured cutover receipt
-for the one service/queue consumer. Factory shape above and literal installer in
-the resident handoff are unchanged. A second request/schema or Y-owned duplicate
-shared factory is unnecessary. Y runs the live journey once those bytes are installed.
+P222939 reports31 accepted source paths consumed; four critical worker/publication/
+session files hash-match2874 in P's tree at HEAD068e9ccd85 (18:31 Eastern).
+Factory work is underway; no installed boundary is inferred from copied source.
+The next exact missing interface is current authority for the queued actor without
+HTTP headers. P returns its concrete authority reader with the installed
+MODULE:build_resident_runtime path, package/census digests and cutover receipt.
+
+Accepted dual-owner prospect record fields, source2874/1385:
+- `record.owner.principal_id`: actual submitting normalized email.
+- `record.owner.home_firm_id`: actor home organization, retained by P9a3
+  InteractiveAccess.prospect_owner and UploadService.repository_owner.
+- `record.owner.firm_id` / `record.identity.tenant_firm_id`: concrete storage firm.
+- `resolved.owner`: same accepted request owner in the immutable composition.
+- `resolved.input_owner` / `resolved.document.owner`: original input creator.
+
+No top-level actor field or stable auth PK/SK/Cognito subject is persisted. Retained
+principal_class/advisor_id/fingerprint are attribution, never refreshed grants.
+The existing concrete `_scope/canonical_profile_reads.py:CanonicalProfileReaders`
+`get_user(record.owner.principal_id)` queries opal-users-v2 email-index (eventually
+consistent) then strongly reads PROFILE. It returns email/firmId/status/name/
+updatedAt, dropping PK/SK and not projecting role/entitlement authority. This is
+maintained profile evidence, not a queue-safe current-authority adapter. Y has
+not supplied such an adapter. P's InteractiveAccess requires current verified
+HTTP headers; do not synthesize them from the accepted record. CTO has this
+exact shared-authority fork. A legacy record with no proven actor locator must
+not fall back to input owner. No replacement callback/schema is proposed here.
+
+Factory shape and literal installer are unchanged. Y runs the live journey once
+the real shared authority, repository and sole-consumer boundary is installed.
 
 Dedicated always-on i-0167fd745ad906a66, one session owner/generation consumer,
 no inbound. Standing host workflow/D1 approved under Andrew6fc3f5f785; generation
