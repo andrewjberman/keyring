@@ -1,5 +1,27 @@
 # IRPT paired integration for Andrew's visual smoke
 
+## Production publication verified, 2026-09-23 05:07Z
+
+The earlier provisional Portal3e5 pin is superseded by `a538217980cdb5d15dc67cdcc98794baeb5e2517`: final typecheck caught a missing node env import in the test-only workspace override, repaired at a538 before any publication. Full `bun run typecheck`, full ESLint (0 errors/106 warnings), and `bun run build` then completed successfully on the repaired tree (Vite14.54s). Independent bounded review9d1575ac70 reproduced80 tests/377 assertions and preserved human page/print/nav restrictions.
+
+MSTR published the full multi-author a538 candidate to DEV. Aligning the main DEV checkout through canonical safe-merge created metadata-only `3a298311dfab63928e7b912e0f62355ec8b7ce59`; its tree is byte-identical to a538. P published that sole P-authored commit with the skill's audited Andrew-direct annotation. DEV CI35820519811 completed success.
+
+Canonical `/prod-deploy` sequence: fresh origin PROD base `f2ff7a0af2245cac624ff8a340d5d5e0b10e14aa`; derived ephemeral worktree `.runtmp/portal-promote-20260923T045952Z`; foreground Bun1.3.9 install377 packages completed116.62s; guarded no-ff merge; empty DEV/PROD tree diff; pre-push provenance, VALGATE and TypeScript passed; PROD push succeeded.
+
+| Receipt | Exact value |
+| --- | --- |
+| DEV | `3a298311dfab63928e7b912e0f62355ec8b7ce59` |
+| PROD | `e83ebbfe4f83228f42925b24f77f43e6b6d2a037` |
+| Annotated release tag | `portal-v2.1.184`, peeled and equal to PROD |
+| PROD workflow | `35820826235`, Deploy to Production, completed/success |
+| Job results | Build Production Assets, Deploy to S3 + CloudFront, Tag Deployment: all success |
+| Workflow enumeration | Exact PROD SHA has one returned workflow, success |
+| Backend consolidation | MSTR merge `92982f4d46` preserves current CLOUD and cd8; remote CLOUD independently read at `3bb0bbdc8ea1c5687e41ceb4546b71356bb1906e` |
+| Canonical gitlink commit | `b06c6cd8b6`, portal points to DEV3a298311; MSTR push requested |
+| Main portal branch | DEV throughout |
+
+Two inherited backend test failures were independently diagnosed by M/CVO as first-route-per-function fixture selection with a missing selection POST body, reproduced on original M8e2. This is separate from portal deployment; no production guard was weakened. Exact test-only repair f0aead3dcf is a post-freeze follow-up, excluded from this published candidate. No backend render/key/full-E2E hold is lifted. Andrew performs visual smoke.
+
 ## Superseding Andrew instruction and assembled publication pins, 2026-09-23 04:46Z
 
 Andrew directly instructed this exact P session:
