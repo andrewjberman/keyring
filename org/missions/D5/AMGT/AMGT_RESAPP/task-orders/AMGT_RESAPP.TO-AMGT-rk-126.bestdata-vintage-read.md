@@ -59,8 +59,11 @@ earlier against the later. Report, per security: fields present in both, fields 
 VALUE moved, with old -> new**. Print the denominator each time.
 
 ⛔ **AND THE PART THAT DECIDES WHETHER THIS ANSWERS S1 AT ALL -- DO NOT LET Q2's CHEAP ANSWER STAND IN FOR THE
-EXPENSIVE ONE.** The two vintages are **~33 MINUTES APART ON THE SAME DAY** (`12:48` and `15:21` on 2026-09-19).
-**Consensus does not move in 33 minutes.** So:
+EXPENSIVE ONE.** The two vintages are **~152.5 MINUTES (2:32:29) APART ON THE SAME DAY** (`12:48:48` and
+`15:21:17` on 2026-09-19, identical to the second across all three pairs). **Consensus does not move in an
+afternoon.** ⚠ **THIS LINE SAID "~33 MINUTES" AT ISSUANCE AND THE NUMBER WAS THE ISSUER'S, NEVER COMPUTED** --
+wrong by 4.6x, corrected here post-drain on row `Z-W126-S1`, which the worker measured and filed. The conclusion
+is unchanged, which is precisely why nobody had cause to check it. So:
 
 - A DIFFERENCE would be surprising and is a finding in its own right (it would mean something other than consensus
   revision moves these fields intraday -- say so, do not assume).
@@ -95,7 +98,7 @@ which the issuing seat does not hold.
 <proof_of_spec>
   <criterion id="AC0" cell_refs="AMGT-rk-126"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python .scratch/r126/ac0.py</invocation><expect>the store census reproduced independently, with its denominator: 7 objects across 4 securities, and the per-security vintage lists matching the table in s.1 exactly -- 992_HK_Equity ONE, and CAT_US_Equity / CSL_AU_Equity / 6861_JP_Equity TWO each. If the counts DIFFER from the issuer's, that is a finding to report, not a discrepancy to silently adopt: print both</expect></criterion>
   <criterion id="AC1" cell_refs="AMGT-rk-126"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python .scratch/r126/ac1.py</invocation><expect>Q1 answered on Lenovo's object: every BEST_* field enumerated with its value, the DENOMINATOR of fields printed, and estimate-count / analyst-count fields named where present and named as ABSENT where not. A statement of which fields a revision series would require and whether each is present</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-rk-126"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python .scratch/r126/ac2.py</invocation><expect>Q2 answered for ALL THREE two-vintage securities: per security, fields in both / added / removed / VALUE-MOVED with old -&gt; new, each with its denominator. The elapsed interval between the two vintages PRINTED per security (expect ~33 minutes). An explicit per-security verdict of IDENTICAL or DIFFERING -- and if IDENTICAL, it is stated as such and NOT dressed up as a revision finding</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-rk-126"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python .scratch/r126/ac2.py</invocation><expect>Q2 answered for ALL THREE two-vintage securities: per security, fields in both / added / removed / VALUE-MOVED with old -&gt; new, each with its denominator. The elapsed interval between the two vintages PRINTED per security (MEASURED ~152.5 minutes / 2:32:29; the order originally said ~33 and was wrong -- row Z-W126-S1). An explicit per-security verdict of IDENTICAL or DIFFERING -- and if IDENTICAL, it is stated as such and NOT dressed up as a revision finding</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-rk-126"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; cat org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~126/SUBSTRATE_S1_READ.md</invocation><expect>S1 answered in THREE SEPARATE, clearly-labelled parts: (a) what a vintage CONTAINS; (b) what the store DEMONSTRABLY PRESERVES on a ~33-minute interval; (c) what remains UNANSWERED about consensus REVISION, with the interval and pull count a real test would need, stated for the CTO to card and NOT sized as an act to take. ⛔ A report that lets (b) answer (c) FAILS this criterion</expect></criterion>
   <criterion id="AC4" cell_refs="AMGT-rk-126"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; git status --short &amp;&amp; git diff --name-only $(git rev-parse HEAD) -- lib integrations infra .tools portal</invocation><expect>the diff list is EMPTY -- this cell writes no code file anywhere. git status shows only your own deliverables / .scratch. Anything under lib, integrations, infra, .tools or portal is a BLOCKING row against yourself</expect></criterion>
   <criterion id="AC5" cell_refs="AMGT-rk-126"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; grep -c "PacedSession\|blp\|ReferenceDataRequest" .scratch/r126/*.py ; echo "SPEND-CHECK-DONE"</invocation><expect>ZERO Bloomberg call machinery in any script this cell ran -- the grep returns 0 for every file (a count of 0 per file, or no match at all), and you state plainly: 0 pulls, 0 requests, 0 spend this cell. A non-zero count is a BLOCKING row against yourself</expect></criterion>
@@ -124,7 +127,17 @@ printed intervals, and part (c) of your S1 answer verbatim.
 4. **Round 32 is ONE cell by measurement, not by shortfall** -- s.40a and s.40b record why the other two server-side
    candidates dissolved into calls.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, `2.0.0_SA_COO~Z`, 2026-09-23 ~00:1xZ (post-drain @`2d6e07be55`).** Flipped `pending` ->
+`complete` BY THE ISSUER, because the worker could not: ⛔ **s.6 above instructs the worker to flip its own
+`<status>`, but this order's `<paths>` grant does not name `task-orders/`** -- so the instruction was unperformable
+as written. The worker refused it correctly and filed row `Z-W126-S2` rather than reaching outside its grant.
+**That is a third defect of this seat's in one order**, beside `Z-W126-S1` (the `~33 minutes` figure, wrong by
+4.6x) and `Z-W126-S3` (`.scratch/**` has no static lane entry, so the validator refuses a path this order grants).
+⭐ **All six criteria PASS, proof-of-spec rc=0, and this seat verified AC2's substance on its own instrument**:
+48 leaf fields per vintage, **3 moved and all three are envelope fetch timestamps**, **0 of the consensus fields
+moved**, and **0 contributor/analyst-count fields exist anywhere in the schema.**
+
+<status>complete</status>
 <round>32</round>
 <slot>~126</slot>
 <fabric>site-z</fabric>

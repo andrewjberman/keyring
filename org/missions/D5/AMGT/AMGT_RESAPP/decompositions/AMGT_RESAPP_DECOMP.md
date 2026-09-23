@@ -5163,12 +5163,23 @@ otherwise: 7 objects, and THREE securities already carry TWO vintages each** --
 `CAT_US_Equity`, `CSL_AU_Equity` and `6861_JP_Equity`, each at `20260919T1248xxZ` and `20260919T1521xxZ`.
 **So S1's second half needs no pull at all and the refusal this cell was going to make was unnecessary.**
 
-⚠ **AND THE INSTRUMENT'S LIMIT IS NAMED RATHER THAN DISCOVERED BY THE WORKER: the two vintages are ~33 MINUTES
-APART ON THE SAME DAY.** Consensus does not move in 33 minutes. **A same-day pair can establish that the store
-PRESERVES DISTINCT VINTAGES and that the reader can diff them; it CANNOT establish that a consensus REVISION would
-be captured** -- that needs vintages days or weeks apart. The cell must report both answers separately and must not
+⚠ **AND THE INSTRUMENT'S LIMIT IS NAMED RATHER THAN DISCOVERED BY THE WORKER: the two vintages are HOURS APART ON
+THE SAME DAY.** Consensus does not move in an afternoon. **A same-day pair can establish that the store PRESERVES
+DISTINCT VINTAGES and that the reader can diff them; it CANNOT establish that a consensus REVISION would be
+captured** -- that needs vintages days or weeks apart. The cell must report both answers separately and must not
 let the cheap one stand in for the expensive one. **That distinction is the whole value of S1 and is why the card
 exists.**
+
+⛔ **CORRECTED 2026-09-23 ~00:1xZ -- THIS LINE SAID "~33 MINUTES" AND THAT NUMBER WAS THIS SEAT'S, NEVER COMPUTED.**
+The measured interval is **2:32:29 -- ~152.5 minutes**, identical to the second across all three pairs
+(`12:48:48 -> 15:21:17` and siblings). **Wrong by 4.6x**, and asserted in FOUR places: this section, the `rk-126`
+order body, AC2's own `<expect>`, the issuance commit message and the message to three seats. Found by
+`0.9.0_WK_AMGT_RESAPP~126` (row `Z-W126-S1`) and re-measured here on this seat's own instrument before accepting
+it. ⭐ **THE CONCLUSION IS UNCHANGED AND THAT IS EXACTLY WHY IT SURVIVED FOUR RESTATEMENTS** -- 152 minutes is
+still one afternoon and still uninformative about consensus revision, so no reader had cause to check the figure.
+**A wrong number that does not change the argument is the hardest kind to catch**, and it is the same family as
+this seat's `s.39a` "last 60 commits" (the LIMIT read as a count). ⚠ **The tell both times: a number stated in
+prose that no line of output ever printed.**
 
 COST of the exercise: one `list_objects_v2`. It removed a refusal, widened the cell from 1 name to 4, and named the
 limit that would otherwise have been the worker's surprise row.
