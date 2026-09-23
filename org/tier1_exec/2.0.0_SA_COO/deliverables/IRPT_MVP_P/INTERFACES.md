@@ -1,5 +1,27 @@
 # IRPT P shared interfaces - candidate v1
 
+## Source review and acceptance candidate received - 2026-09-23 02:13 UTC
+
+Exact M021341 notice and CVO M `e64d917252` review findings/boundaries read.
+Bounded SOURCE PASS for M `703e82ea015d840ce773d473a7b4909e275785c0`, paired with
+P `d91b2bdd10fe05a0e241ccbfb8f6d7f1b35a872c` and Y catalogue
+`9daa67433e2d41b07c4b2221694bbaf71340a80d`:44 independent controls plus
+102 supplied/57 subtests, pinned synthetic schema/helper probe PASS. This is a
+source primitive verdict, not an integrated acceptance/retention/worker grade.
+Runtime reader transport and exact-input authorizer remain unproven; every
+selected comparison remains unavailable. Final schema validation, collision
+refusal and retained dependency/replay checks remain accepting-caller duties.
+
+Exact Y021359 notice reports acceptance `5a2b531645`, consuming P d91b2 and M703e82
+via48f04, and UI `5c935bd6` after shared portal7411/ee728 via303d3fde and Y907f.
+Y reports closed composition/binding and normalized-document hash checks before
+write, collection of all input/source retention references, stable principal/firm,
+and frozen-byte/dependency rechecks on replay without refreshing sources.
+Reported60 tests/39 subtests and portal31 tests/177 assertions/app TypeScript PASS.
+These are Y-reported candidate results, not a P rerun or inherited review.
+Y has submitted acceptance to CVO Y; integration verdict pending. No runtime,
+live, full-worker, comparison-capability or existing-hold lift is implied.
+
 ## Exact schema/storage/shared-boundary review - 2026-09-23 02:08 UTC
 
 CVO P `c5c3393b1f` independently passes backendd91b2bdd10/portal7411ada3

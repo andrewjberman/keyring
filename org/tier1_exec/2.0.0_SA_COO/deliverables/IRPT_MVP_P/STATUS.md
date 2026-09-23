@@ -1,5 +1,19 @@
 # IRPT P status - 2026-09-22
 
+## Acceptance integration candidate - 2026-09-23 02:13 UTC
+
+M source703e82ea01 receives bounded independent SOURCE PASS e64d917252
+(44 independent +102 supplied/57 subtests), exactly paired with P d91b2/Y9daa.
+Y now reports actual acceptance integration candidate5a2b531645 and UI5c935bd6,
+with60 tests/39 subtests and31 portal tests/177 assertions/app TypeScript PASS.
+Acceptance reportedly validates canonical schema/bindings and normalized bytes,
+retains every declared input/source dependency, and replays frozen bytes under
+current checks. This supersedes 'no implementation candidate' only; P has not
+consumed or independently validated these candidates. CVO Y review is pending.
+Runtime canonical readers/authorizer, full worker and selected comparisons remain
+unproven/unavailable; broader holds are unchanged. Exact notices and evidence
+distinctions are recorded in INTERFACES.md.
+
 ## Source-02 bounded independent review - 2026-09-23 02:08 UTC
 
 Read exact CVO P020814 notice and full review `c5c3393b1f` at
