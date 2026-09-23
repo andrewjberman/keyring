@@ -10,13 +10,19 @@ Candidate worktree: `C:/tmp/amgt-r-20260923`, branch `closer/amgt-r-20260923`, b
 
 **PASS, offline exercise:** 15 unittest cases; Ruff check passes. These are synthetic controlled cases, not retained-data, provider, browser or deployed acceptance. [Evidence](EVIDENCE.json) records the exact source hashes and exercised results. The component has no production caller yet; its first intended consumer is the per-part report producer. It neither authorizes publication nor resolves whether an input is acceptable.
 
+First slice committed locally at `5bc243ead6`; H returned independent routine **PASS, offline** at `0b6d27ef26`. R read that pinned review and verified its two code hashes against the candidate Git objects. This acceptance covers the freshness component only.
+
+Second slice: `claims.py` implements CTO 24807's figure/prose discriminator offline. Figure candidates select a trusted I2 row by ID and cannot smuggle in arbitrary text or numbers; prose continues through passage validation and the existing verbatim check. Twelve new tests cover accepted figures, accepted quoted prose, held no-span prose and refused interpretation/unknown/foreign/unchecked/hash-mismatched cases. Total: **27 offline tests PASS**, Ruff PASS. No serving caller is wired; CVO/L4-R acceptance and actual I2 integration remain outstanding. See [EVIDENCE_CLAIMS.json](EVIDENCE_CLAIMS.json).
+
+CTO 24815's historical census is measured: twelve of twelve stored objects match their original hashes; **179 no-span sentences recovered, 0 released, 179 held**. The no-span pipeline behavior matches the operative PRD; schema-only validation is weaker. [Detailed result and limitations](HELD_AND_CONTRACT_REVIEW.md).
+
 Exact-seat lane preflight allowed the new report module/test paths and this deliverable home. A negative control rejected `portal/src/pages/SecurityAnalysis/Report.tsx` as POD_DE_ANY. The validator did not reject the tested registry path, but that does **not** settle its explicitly undecided owner; R makes no registry change.
 
 ## Next work and dependencies
 
-1. Independent H review of this component; CVO review of I5/I6 examples once the typed-claim decision is settled.
+1. CVO/L4-R review of the implemented typed-claim examples and exact 179-sentence census. CTO settled semantics in 24807 and narrowed the served-change requirement in 24815; serving authorization has not followed.
 2. Consume C's I4 positive/absent/stale examples, retaining the actual five-member shape. Artifact semantic hashes and retained-byte hashes must remain distinct.
-3. Complete report schema, producer, evidence gates and immutable history/store against the accepted contract; integrate S/H source examples. Review the figure/synthesis semantic fork in [INTERFACES.md](INTERFACES.md).
+3. Complete report schema, producer, evidence gates and immutable history/store against the accepted contract; integrate S/H source examples. Carry the figure/prose distinction in [INTERFACES.md](INTERFACES.md); synthesis prose does not escape the gate.
 4. Prepare authorized serving/export changes; portal authoring and canonical registry publication need the named owners/grants.
 5. Obtain readable model/input/fund-form rulings and a bounded per-use run before live synthesis. Complete deployed, browser, export and full-population proof afterwards.
 

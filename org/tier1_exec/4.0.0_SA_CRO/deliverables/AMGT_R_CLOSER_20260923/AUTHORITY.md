@@ -16,4 +16,6 @@ Execution proceeds from `../AMGT_MVP_RESEARCH_20260923/REPORT_EXPERIENCE_END_TO_
 
 CTO message 24805 at `8d33ad1cc5` names H (`2.0.0_SA_COO~Y`) to review routine R work, and R to review routine S work. CVO~Z owns interface acceptance, retained-data integrity, deployed cutover and final journey, subject to that seat's response. No implementer accepts its own work. R has no predecessor handoff; the empty own-seat handoff directory is expected, not a missing prerequisite.
 
+CTO message 24812 adds the accepted narrowings: a cutover needs its CTO+COO never-widen pair **before** CVO review; CVO acceptance is additional, not a substitute. An ungraded boundary stays NOT_EVALUATED; silence is not consent. CTO 24807 authorizes offline typed-figure/prose discriminator examples, preserving the served gate until the applicable L4-R sign-off.
+
 Known boundaries: no portal authoring grant; registry writer undecided; no live model run on laptop-only `7303be1bbb` until the applicable rulings are readable on this fabric. c-11 is transferred to C personally; rk-49 remains parked. R touches neither implementation. No vendor run, cloud mutation, deployment, notifier, fleet retry or shared-branch push is performed by this slice.
