@@ -199,7 +199,7 @@ org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-c-4.backlog-fol
 3. **`gold.py` and `conftest.py` are foundations.** Every gold cell writes through the former and every test runs
    under the latter. A defect in either is inherited by six cells, which is why each carries its own negative arm here.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
