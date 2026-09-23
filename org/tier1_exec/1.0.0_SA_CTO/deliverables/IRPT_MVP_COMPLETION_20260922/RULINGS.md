@@ -558,3 +558,8 @@ vendor/cloud write. Return the pinned repair and exact runner/runtime plan.
 ## IRPT-PERFORMANCE-LINUX-20260923
 
 CTO independently reran exact b933 function /121b8407 native layer /common5 in Lambda Python3.12 Linux with networking disabled: mapping and retained response calculator/schema PASS,1period15points. Combined uncompressed239627841bytes. PERFORMANCE_LINUX_CTO_REVIEW records hashes and limits. Native compatibility closes only for these bytes; deployed factory/role/storage/browser remain open. CONTROL refreshed to measured current state.
+
+
+## IRPT-HOLDINGS-LIVE-READER-20260923
+
+CTO actual AWS readback: irpt-holdings Active/Successful at22:10:08Z, exact vLP7cZN61JWOOmiCGmCjnOM43296i8qDt1hL1ZE8yUs=, reviewed environment and both reader IAM policies equal saved plan; current artifact version e7XAGneq1_KKe2tnBVK45FsEFNItS2NF matches. HOLDINGS_READER_CTO_LIVE_READBACK.json records evidence. M proceeds authenticated selection/API/screen/drill/reload. Localhost5174 returns200; current computer-use inventory has no connected browsers. This is deployment configuration proof, not a fabricated-auth or browser PASS.
