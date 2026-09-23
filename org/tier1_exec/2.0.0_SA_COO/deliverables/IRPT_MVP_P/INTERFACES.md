@@ -23,6 +23,14 @@ composer.ts/GenerateComposer/ProspectComposer/prospect helpers; P owns schema,
 generated wire and shared client/parser. No concurrent edits to Y's components.
 All old missing-label requests remain unavailable for new dispatch as ruled.
 
+Final shared portal pin `7411ada3356d1e0c8a69d6eb7b0b41f91396d336` includes
+`ee728767`: closed request parser in `contracts/submission-request.ts`, actual
+LiveClient check before transport, adapt.ts explicit preparedFor projection and
+eight-key denominator, generated typed descriptors/comparisons. Five focused
+tests/37 assertions plus TypeScript5.9 build noEmit PASS. Y consumes both commits
+before its composer integration. No UI-component ownership transfer or mounted
+UI claim. CVO P received exact backendd91b2/portal7411 pair for independent review.
+
 R-P11/Y-W01/Y-W02 bounded holds below are superseded by exact960f/c09 independent
 closures0525841ab3/9a7b938c2c/7c5fa24adc and CTO014544. Later integrated candidates
 require their own review; no runtime/deployment or full-product lift.

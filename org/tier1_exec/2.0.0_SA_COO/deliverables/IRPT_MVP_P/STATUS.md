@@ -11,7 +11,16 @@ Full source-02 ruling `51b5d63a81` read: explicit user-designated prepared_for,
 Y catalogue ownership, no inferred comparison identity/entitlement. M/Y received
 the committed schema. M015313 confirms mapping and correctly keeps immutable
 revision unavailable when the actual reader lacks a verified revision receipt.
-Portal generated types/shared pre-transport parser are being finalized separately.
+Portal `7411ada3356d1e0c8a69d6eb7b0b41f91396d336` (after `ee728767`)
+completes generated21 documents/16 response types, closed pre-transport parser
+and exact eight-field recipient adapter. Five tests/37 assertions and explicit
+TypeScript5.9 build noEmit PASS. Generator typed source/comparison maps now
+preserve declared value shapes; existing grant-kinds/vendor-ID maps become
+number/string according to unchanged schemas. Y received both portal pins;
+its owned UI/composer integration is still required (P tree's old composer is
+not a newly dispatchable recipient-enabled UI). CVO P has the exact paired
+candidate for independent review. Push state LOCAL; measured origin CLOUD
+`b8136f26dca101d9f0f74818df109f25cae5354d` unchanged.
 Actual M resolver/Y acceptance-to-worker integration is pending; synthetic examples
 do not establish source authority or dispatch readiness.
 
