@@ -243,6 +243,50 @@ No new workers, no push, no deployment or vendor egress.
   internal producer and ops composition. Existing sections status-loader mapping
   remains to replace when Entry is composed. All14 criteria NOT_EVALUATED.
 
+## Integration update (2026-09-23 00:16Z)
+
+- P corrected its earlier proposal: public analysis-report is a closed sections
+  projection, not the full internal AnalysisReport. Backend156a01e114 adds
+  sections() and paired fixture; exact existing schema pairing PASS.
+- CVO446aed5ba8 found Y-R01 P2 in9ac485733e: str coercion accepted a numeric
+  64-digit certification digest although the canonical READY writer refuses
+  numeric. Malformed stored checkpoint injection; no owner leak/live bypass
+  demonstrated. Backend745c02890e requires actual strings before matching all
+  READY fields.49 combined tests PASS; independent unchanged retest pending.
+- M supplied planned exact ports: owner_read_modes plus record_id_parameters;
+  load_record_owner(verified_registry_tenant,operation,issued_reference) returns
+  retained full owner, authorize_record_owner(current_principal,retained_owner)
+  checks current grants. Both run before/after compute. Await source pin before
+  composition; no assumed route behavior installed.
+- Existing status loader uses legacy lease data. Durable status needs agreed
+  source-date semantics: lease expiry/accepted_at are not portfolio business dates,
+  and successful undated reports need explicit treatment under StatusEnvelope.
+  Concrete question/proposal sent P at00:10:52; no shared schema change invented.
+
+## Integration update (2026-09-23 00:30Z)
+
+- CVO independently closed Y-R01 at745c02890e in6a9d38ffad: unchanged original
+  probe12/12PASS,49 suppliedPASS; original446aed5ba8 failure retained.
+- a352e27012 adds durable owned status using accepted composition/job, actual
+  report verification for READY, current owner and final retention checks. No
+  process timestamp becomes a business date.92 combined tests PASS. At this pin
+  undated READY remains compatible UNAVAILABLE pending date contract pairing.
+- M6ad86009fe consumed via canonical safe merge ca934b4919. A narrow recommit
+  correctly refused M-owned paths; only that attempted patch was discarded before
+  merging original M history.26 merged paths; four conflicts preserve M's grant,
+  appended ruling, selected-account canonical loader and keyword test shim.
+ 34 owner/prospect tests and18 holdings Entry controls PASS; sparse source-map and
+  Terraform prerequisites restored from HEAD after initial harness errors.
+- CTO IRPT-Y-DATES-01 dea338a397 read in full. P/Y agree prospect_analysis
+  operation, immutable accepted input/request/report binding, unique section date
+  census and capability header X-IRPT-Status-Dates: prospect-v1 on status-job only.
+  Existing input spelling portfolio_<64hex> preserved. P owns mirrored schemas,
+  public StatusEnvelope projection, generated types/parser/UI and compatibility;
+  Y derives from retained source and verifies report, with paired fixtures due.
+- Owned Entry factory8e8498c9c0:28 actual handler/event/read controls PASS,
+  original summary guard preserved. Runtime installation/route activation remains
+  P-owned and pending; no deployed HTTP or browser acceptance claimed.
+
 ## Compiler observations
 
 Earlier candidates and findings (superseded where the current section says so):
