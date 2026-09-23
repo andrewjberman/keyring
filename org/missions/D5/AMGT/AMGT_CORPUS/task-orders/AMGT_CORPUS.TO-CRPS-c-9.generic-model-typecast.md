@@ -153,7 +153,7 @@ with the message file written by the Write tool.
 **ISSUER NOTES:** the 90% / 25% thresholds are working rules stated in the artifact, not tuned. The scan's figures are
 the comparison bar for the CVO's judgment, never the answer the worker is asked to reproduce.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
