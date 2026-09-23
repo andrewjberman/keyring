@@ -4,8 +4,9 @@
 handoff (msg 24518; acknowledged 24530/24531). **Directive:** D5. **Fabric:** site-z, branch `SITEZ`.
 **Consumes:** PRD s. SURFACE MANIFEST R1-R11 at `org/missions/D5/AMGT/AMGT_CORPUS/prd/AMGT_CORPUS_PRD.md` **v0.4
 @8fbb066b62** (landed by `1.0.0_SA_CTO~Z`, msg 24539). v0.3 @c94a6bb2ef was read first, when both halves were SIGNED.
-v0.4 changes FWD-4 only, and the manifest rows are byte-identical to v0.3. At this write `prd-signoff.py status`
-reads WITHHELD: ratified-text STALE (owed by `3.0.0_SA_CVO~Z`), brief SIGNED current. v0.4's terms, as ruled in 24532:
+v0.4 changes FWD-4 only, and the manifest rows are byte-identical to v0.3. `prd-signoff.py status` read WITHHELD at
+v0.4's landing, then ADMITTED once `3.0.0_SA_CVO~Z` re-signed the ratified half @ca6b233108 (brief half current,
+`2.0.0_SA_COO~Z`). v0.4's terms, as ruled in 24532:
 - **FWD-4 ends at the EXECUTABLE REQUEST.** For one backlog name, one command produces the exact induction request
   (what it will add, an ambiguous identity refused), executable by the seat holding the universe. The induction act
   itself is `AMGT_RESAPP`'s: it writes that project's surfaces and spends its vendor budget.
@@ -87,7 +88,7 @@ carries UNRESOLVED (the ticker was not measurable from the folder's one-pager). 
 satisfiable on these numbers. The 60 are a question of INDUCTION (FWD-4's path, v0.4), not of resolution. Reported to
 `1.0.0_SA_CTO~Z` in msg 24530 and adopted in 24532.
 
-**FWD-4's induction path.** `lib/research/identity/add_security.py` (AMGT-rk-31) is the estate's only add-a-security
+**FWD-4's induction path.** `lib/research/identity/add_security.py` (an `AMGT_RESAPP` cell's build) is the estate's only add-a-security
 act. It makes ONE Bloomberg `reference_data` call per name, including under `--dry-run`, and writes the layer's
 `registrations.json` and the crosswalk pool. It already accepts `--folder "<library folder>"`. That fact produced the
 v0.4 ruling above.
@@ -106,7 +107,7 @@ R9 gold/research-model-typecast          s3://opal-data-harvest/amgt/harvest/gol
 ```
 The partition values above are the builder's probe arguments. Each cell prints the address it actually wrote.
 
-**The ONE writer.** `lib/research/harvest/store.py` (AMGT-rk-81) is the shared bronze and silver writer:
+**The ONE writer.** `lib/research/harvest/store.py` (an `AMGT_RESAPP` cell's build) is the shared bronze and silver writer:
 - `bronze_put(source, request, partition, object_name, body, ...)` is a conditional, never-overwrite put. The same
   sha256 is a no-op; different bytes raise `BronzeImmutableError`.
 - `silver_append(source, table, rows, record_key_fields, run_stamp)` writes parquet partitioned `date=` BY FETCH DATE.
@@ -196,14 +197,19 @@ the identity layer and the harvest writer live in this fabric's tree. No cell ex
 
 ```
   chain A:  CRPS-c-4 -> CRPS-c-1 -> CRPS-c-2 -> CRPS-c-3 -> CRPS-c-6 -> CRPS-c-10 -> CRPS-c-11
-  chain B:  CRPS-c-4 -> CRPS-c-5
+  chain B:  CRPS-c-2 -> CRPS-c-5
   chain C:  CRPS-c-2 -> CRPS-c-9 -> CRPS-c-10
   chain D:  CRPS-c-3 -> CRPS-c-7 -> CRPS-c-10
   chain E:  CRPS-c-3 -> CRPS-c-8 -> CRPS-c-10
 ```
 - **c-1 after c-4:** bronze is partitioned by security key, which only the backlog's resolution supplies. c-1 also
   reads c-4's `library.py`.
-- **c-5 after c-4:** its population is c-4's unresolved set, and it reads `library.py`.
+- **c-5 after c-2 (amended at the cut, v1.0 before issuance; it read "after c-4" at @3c09ae6ce8):** its population is
+  c-4's unresolved set. But `add_security --folder` alone cannot induct an UNRESOLVED folder, because `_discover` reads
+  the same one-pager whose ticker already failed and returns UNRESOLVED ("the identifier is NOT guessed from the folder
+  name"). So the request must carry an EVIDENCED `--bloomberg` candidate, read from the `Ticker:` header of the team's
+  own report for that name. Those folders' files are not ingested (ruling 4), so c-5 reads them `"rb"` and parses them
+  with c-2's extractor, which puts it after c-2.
 - **c-2 after c-1:** an extraction names its bronze parent.
 - **c-3 after c-2:** the typed record's class, fund, sector and period are read from the extraction.
 - **c-9 after c-2:** the typecast reads the workbook extractions only. It needs no typed record.
@@ -220,11 +226,14 @@ the identity layer and the harvest writer live in this fabric's tree. No cell ex
 - **Round 1 covers all 11 cells in ONE issuance.** Five worker slots:
   - `~1` drains chain A in order (c-4, c-1, c-2, c-3, c-6, c-10, c-11). It is continued, not respawned, so the
     ingestion context carries into the derivations and the proof.
-  - `~2` c-5, spawned on c-4's valid drain.
-  - `~3` c-9, spawned on c-2's valid drain.
+  - `~2` c-5 and `~3` c-9, both spawned on c-2's valid drain.
   - `~4` c-7 and `~5` c-8, spawned on c-3's valid drain.
 - Fan-out line for the issuance commit:
-  `fanout: 5 of 5 chains, cap 8, reason: M is the widest antichain after c-3; chain A is one continued worker; c-5, c-9, c-7 and c-8 each spawn on their predecessor's valid drain.`
+  `fanout: 5 of 5 chains, cap 8, reason: M is the widest antichain after c-3; chain A is one continued worker; c-5 and c-9 spawn on c-2's valid drain, c-7 and c-8 on c-3's.`
+- **Drain duty owed by this seat, not by a worker:** before continuing `~1` onto `CRPS-c-10`, merge the drained c-7, c-8
+  and c-9 branches into `~1`'s worktree branch, since c-10 reads their modules. When `CRPS-c-5` drains VALID, hand its
+  `induction_request.json` to `AMGT_RESAPP`'s COO by file and message. When `CRPS-c-11` drains, name the write-denied
+  copy's path to the operator for cleanup (recursive deletion is an operator act).
 - The surprise channel is `org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md`. It is
   already open, with seat rows `Z-S1..Z-S3`. Workers mint `AMGT_CORPUS-Z-W<n>-S<k>`.
 
