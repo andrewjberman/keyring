@@ -38,11 +38,13 @@ branches and the existing Y stash; no cleanup or shared merge is part of this ha
    Prior prospect upload, issued-status/source dates and owned reopen/history are
    also in the head; ancestry alone must not be mistaken for a new delta over P.
 4. M portal `d4fca0e5692730e9f79c3fa013159ffa63ba5b6b` is **not** an ancestor of
-   Y7a5. Its missing product history includes `e2df1c04` stale-holdings clearing,
-   `e001b6d5` typed retained-selection API and `d4fca0e5` shared header/custody tabs.
-   P must obtain M's exact review/dirty/claim receipt and reconcile its selection
-   state with Y recipient/request/status/reopen behavior in the isolated pair.
-   Do not substitute either tree wholesale for the other.
+   Y7a5, but **all three commits have patch equivalents in Y7a5**. P043536
+   identified this and Y reproduced `git cherry 7a5b24e705f79d5df872f9a443b6a552e9de62b9
+   d4fca0e5692730e9f79c3fa013159ffa63ba5b6b`: minus-prefixed results for
+   `e2df1c04`, `e001b6d5` and `d4fca0e5`. Do not replay them. The original handoff
+   inferred a behavior gap from missing ancestry; that inference was incorrect.
+   Integrated selection/recipient/request/status/reopen regression checks still
+   apply, but no missing-M-patch blocker follows from those three commits.
 5. Shared portal DEV is observed at `8e6e2e38cc299c4415d42b0fe627edc50ec35e1b`,
    the F code baseline and an ancestor of Y7a5. It is not the integrated M/P/Y
    candidate. The registered old F/B task worktrees are not proof of additional
@@ -90,3 +92,8 @@ Compiler limits: bare routing/read tools were used. Portal comp-diff fell back t
 the baked backend tool and traversed its backend corpus, not a reliable portal
 delta; exact git diff/ancestry above are the repository evidence. Compiler graph
 matches and zero results are not acceptance or impact-clearance claims.
+
+P043536 additionally reports its isolated candidate incorporates remote DEVb3d5
+while preserving SecurityAnalysis/MFA and admin/internal/Dev gates. This is
+peer-reported integration progress, not Y verification of that candidate or a
+shared promotion. No shared mutation or push reported.

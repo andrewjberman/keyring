@@ -602,6 +602,17 @@
   "y_active_code_writers": [],
   "y_active_work": "base documentary handoff only; code pins stable for P integration",
   "other_seat_writer_state": "not established by git worktree registration; obtain M/P/F/B owner receipts",
-  "m_portal_not_in_y": "d4fca0e5692730e9f79c3fa013159ffa63ba5b6b",
-  "all_integrated_criteria": "0 PASS / 0 FAIL / 14 NOT_EVALUATED"
+  "all_integrated_criteria": "0 PASS / 0 FAIL / 14 NOT_EVALUATED",
+  "m_portal_not_in_y_ancestry": "d4fca0e5692730e9f79c3fa013159ffa63ba5b6b",
+  "m_portal_patch_equivalence": {
+    "command": "git cherry 7a5b24e705f79d5df872f9a443b6a552e9de62b9 d4fca0e5692730e9f79c3fa013159ffa63ba5b6b",
+    "measured_output": [
+      "- e2df1c04a26028516559b72a0f0b62842867497f",
+      "- e001b6d59ed08522d6ba98a4fa5a6b695bb065eb",
+      "- d4fca0e5692730e9f79c3fa013159ffa63ba5b6b"
+    ],
+    "interpretation": "All three patches have equivalents in Y7a5; do not replay. Original behavior-gap inference from missing ancestry was incorrect.",
+    "notice": "P043536, independently reproduced by Y",
+    "production_or_render_grade": false
+  }
 }
