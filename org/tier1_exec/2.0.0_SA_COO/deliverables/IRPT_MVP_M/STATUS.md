@@ -1,5 +1,16 @@
 # M completion status — 2026-09-23
 
+P/Y's source/interface fact requests at `151157Z`, `151424Z` and `151546Z`
+are answered in
+[CUSTODY_NORMALIZATION_SOURCE_HANDOFF_20260923.md](CUSTODY_NORMALIZATION_SOURCE_HANDOFF_20260923.md),
+with a companion two-pin source inventory. Publication retrieval and current
+selection checks exist; concrete snapshot-identity authorization and accepted
+custody-to-frozen-portfolio callbacks are not implemented in the inspected
+production subtree. The three-firm display tree does not establish a complete
+actual security portfolio, and the existing freezer rejects signed/zero values.
+Y factory `819c9e3990` injects these ports explicitly. This is a bounded missing
+source/adapter handoff to P/Y/CTO, not shared-code work or a fresh live verdict.
+
 Current bounded assignment (CTO `20260923T134609Z`): read-only three-firm
 directory/ownership producer-data audit. Completed measurement and findings:
 [DIRECTORY_DATA_AUDIT_20260923.md](DIRECTORY_DATA_AUDIT_20260923.md), with exact

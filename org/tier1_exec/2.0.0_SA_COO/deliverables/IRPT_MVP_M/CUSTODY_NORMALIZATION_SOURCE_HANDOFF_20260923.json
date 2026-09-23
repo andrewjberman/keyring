@@ -1,0 +1,591 @@
+{
+  "kind": "bounded_custody_source_handoff",
+  "pins": {
+    "workspace": "a28305aefcf62589f0c1be3a076e73f5c64d5629",
+    "consumer": "819c9e399086cffb2876a21fbc2cee01724b0bd7"
+  },
+  "network_reads": 0,
+  "production_modules_invoked": 0,
+  "sources": {
+    "workspace": [
+      {
+        "path": "infra/aws/lambda/investor-reporting/holdings/publication.py",
+        "present": true,
+        "sha256": "25f3d4ed8d41505ed595d4e9dfb32156df6ef4a6b6f410a61a25fa8a04a255c7",
+        "git_blob": "d01dcc00b69f08ca0954c0121c7fbaa6e19e1fc2",
+        "definitions": [
+          {
+            "name": "load",
+            "line": 301,
+            "args": [
+              "self"
+            ],
+            "keyword_only": [
+              "as_of",
+              "account_ids"
+            ]
+          },
+          {
+            "name": "_load_parts",
+            "line": 334,
+            "args": [
+              "self",
+              "manifest",
+              "partition",
+              "revision",
+              "account_ids"
+            ],
+            "keyword_only": []
+          }
+        ]
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/holdings/snapshot.py",
+        "present": true,
+        "sha256": "7df65ee90167454532b6c0ea51fdcbd7c597d1ce6f2023036dfc636beb72ee69",
+        "git_blob": "65e6d3cf7fcce2eee23bfdc4b018b582777764c6",
+        "definitions": [
+          {
+            "name": "load_contract",
+            "line": 90,
+            "args": [],
+            "keyword_only": []
+          },
+          {
+            "name": "load_snapshot",
+            "line": 127,
+            "args": [
+              "firm_id",
+              "prefix",
+              "as_of",
+              "s3_client"
+            ],
+            "keyword_only": [
+              "account_ids"
+            ]
+          },
+          {
+            "name": "project",
+            "line": 164,
+            "args": [
+              "snapshot",
+              "scope"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "clocks_are_distinct",
+            "line": 296,
+            "args": [
+              "slice_doc"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "require_reconciled",
+            "line": 351,
+            "args": [
+              "snapshot"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "load_policy",
+            "line": 324,
+            "args": [
+              "tenant"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "load_directory",
+            "line": 396,
+            "args": [
+              "tenant"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "snapshot_loader",
+            "line": 404,
+            "args": [
+              "request",
+              "scope"
+            ],
+            "keyword_only": []
+          }
+        ]
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/holdings/entry.py",
+        "present": true,
+        "sha256": "098e41bacc40f86f53f1b9e5cffb7f707c3fea4ca5cd5b47aeee73a81172c6d4",
+        "git_blob": "2681bdeadf9a51a9f141efb55f825f35612ec713",
+        "definitions": [
+          {
+            "name": "_current_selection",
+            "line": 38,
+            "args": [
+              "request",
+              "tenant",
+              "reference"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "holdings_snapshot",
+            "line": 58,
+            "args": [
+              "request",
+              "scope",
+              "event",
+              "ctx"
+            ],
+            "keyword_only": []
+          }
+        ]
+      },
+      {
+        "path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+        "present": true,
+        "sha256": "5f310f5c26f66fbe66d62598253afbe8b8781fd4d4f86441086863147478190f",
+        "git_blob": "8a2011533d1b8ef173d2fcc0cb39bb07cfc58a7d",
+        "definitions": [
+          {
+            "name": "stamp_clocks",
+            "line": 323,
+            "args": [
+              "nodes",
+              "custody_as_of",
+              "overlay_as_of"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "assert_clocks_carried",
+            "line": 342,
+            "args": [
+              "snapshot"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "build_snapshot",
+            "line": 1151,
+            "args": [
+              "firm_id",
+              "s3",
+              "as_of"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "reconcile_before_after",
+            "line": 1210,
+            "args": [
+              "snapshot"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "load_contract",
+            "line": 1238,
+            "args": [],
+            "keyword_only": []
+          },
+          {
+            "name": "validate_snapshot",
+            "line": 1262,
+            "args": [
+              "snapshot"
+            ],
+            "keyword_only": []
+          }
+        ]
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
+        "present": true,
+        "sha256": "682f3eb2dd82ff20d6ee15519ec8fb8b8e9d937b921350de9cba38aed968e3c0",
+        "git_blob": "373cc13a4b3ecde01e27b1b5ac92565c06245589"
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/_scope/selection.py",
+        "present": true,
+        "sha256": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af",
+        "git_blob": "284fb70dc50929a663abb67d3c0d2ced6acabfa5",
+        "definitions": []
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/intake/portfolio.py",
+        "present": true,
+        "sha256": "d5313311bce0a166ed63bf7e75627673952817eb3f89ab34b5ed150dfd1c97ba",
+        "git_blob": "25aadb154cbe6ccb533d450a67eb53c40d57e5db",
+        "definitions": [
+          {
+            "name": "_security_resolution",
+            "line": 83,
+            "args": [
+              "resolution"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "_source",
+            "line": 112,
+            "args": [
+              "source",
+              "parsed"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "freeze_parsed_portfolio",
+            "line": 133,
+            "args": [
+              "parsed",
+              "owner",
+              "source",
+              "resolve_security"
+            ],
+            "keyword_only": [
+              "declared_currency",
+              "prices",
+              "price_date",
+              "reference_notional"
+            ]
+          }
+        ]
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/_scope/custody.py",
+        "present": false
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/custody_submission.py",
+        "present": false
+      }
+    ],
+    "consumer": [
+      {
+        "path": "infra/aws/lambda/investor-reporting/holdings/publication.py",
+        "present": true,
+        "sha256": "25f3d4ed8d41505ed595d4e9dfb32156df6ef4a6b6f410a61a25fa8a04a255c7",
+        "git_blob": "d01dcc00b69f08ca0954c0121c7fbaa6e19e1fc2",
+        "definitions": [
+          {
+            "name": "load",
+            "line": 301,
+            "args": [
+              "self"
+            ],
+            "keyword_only": [
+              "as_of",
+              "account_ids"
+            ]
+          },
+          {
+            "name": "_load_parts",
+            "line": 334,
+            "args": [
+              "self",
+              "manifest",
+              "partition",
+              "revision",
+              "account_ids"
+            ],
+            "keyword_only": []
+          }
+        ]
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/holdings/snapshot.py",
+        "present": true,
+        "sha256": "7df65ee90167454532b6c0ea51fdcbd7c597d1ce6f2023036dfc636beb72ee69",
+        "git_blob": "65e6d3cf7fcce2eee23bfdc4b018b582777764c6",
+        "definitions": [
+          {
+            "name": "load_contract",
+            "line": 90,
+            "args": [],
+            "keyword_only": []
+          },
+          {
+            "name": "load_snapshot",
+            "line": 127,
+            "args": [
+              "firm_id",
+              "prefix",
+              "as_of",
+              "s3_client"
+            ],
+            "keyword_only": [
+              "account_ids"
+            ]
+          },
+          {
+            "name": "project",
+            "line": 164,
+            "args": [
+              "snapshot",
+              "scope"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "clocks_are_distinct",
+            "line": 296,
+            "args": [
+              "slice_doc"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "require_reconciled",
+            "line": 351,
+            "args": [
+              "snapshot"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "load_policy",
+            "line": 324,
+            "args": [
+              "tenant"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "load_directory",
+            "line": 396,
+            "args": [
+              "tenant"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "snapshot_loader",
+            "line": 404,
+            "args": [
+              "request",
+              "scope"
+            ],
+            "keyword_only": []
+          }
+        ]
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/holdings/entry.py",
+        "present": true,
+        "sha256": "ddd1b72ac9ea9f630fc1147a2b418c50204f2058c3f91d672310593d62cb0fc2",
+        "git_blob": "edee5209a2b6e8d01ef14f5ff821009e6ec602f3",
+        "definitions": [
+          {
+            "name": "_current_selection",
+            "line": 38,
+            "args": [
+              "request",
+              "tenant",
+              "reference",
+              "opal_principal_ids"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "holdings_snapshot",
+            "line": 58,
+            "args": [
+              "request",
+              "scope",
+              "event",
+              "ctx"
+            ],
+            "keyword_only": []
+          }
+        ]
+      },
+      {
+        "path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+        "present": true,
+        "sha256": "5f310f5c26f66fbe66d62598253afbe8b8781fd4d4f86441086863147478190f",
+        "git_blob": "8a2011533d1b8ef173d2fcc0cb39bb07cfc58a7d",
+        "definitions": [
+          {
+            "name": "stamp_clocks",
+            "line": 323,
+            "args": [
+              "nodes",
+              "custody_as_of",
+              "overlay_as_of"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "assert_clocks_carried",
+            "line": 342,
+            "args": [
+              "snapshot"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "build_snapshot",
+            "line": 1151,
+            "args": [
+              "firm_id",
+              "s3",
+              "as_of"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "reconcile_before_after",
+            "line": 1210,
+            "args": [
+              "snapshot"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "load_contract",
+            "line": 1238,
+            "args": [],
+            "keyword_only": []
+          },
+          {
+            "name": "validate_snapshot",
+            "line": 1262,
+            "args": [
+              "snapshot"
+            ],
+            "keyword_only": []
+          }
+        ]
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
+        "present": true,
+        "sha256": "682f3eb2dd82ff20d6ee15519ec8fb8b8e9d937b921350de9cba38aed968e3c0",
+        "git_blob": "373cc13a4b3ecde01e27b1b5ac92565c06245589"
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/_scope/selection.py",
+        "present": true,
+        "sha256": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af",
+        "git_blob": "284fb70dc50929a663abb67d3c0d2ced6acabfa5",
+        "definitions": []
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/intake/portfolio.py",
+        "present": true,
+        "sha256": "a925da08456eff5845089f8bc6fbcf11b3047d74d25b59e6ce64502781667a5c",
+        "git_blob": "55c443956b8fc9928e6d5b7e681c1673b1850009",
+        "definitions": [
+          {
+            "name": "_security_resolution",
+            "line": 83,
+            "args": [
+              "resolution"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "_source",
+            "line": 112,
+            "args": [
+              "source",
+              "parsed"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "freeze_parsed_portfolio",
+            "line": 133,
+            "args": [
+              "parsed",
+              "owner",
+              "source",
+              "resolve_security"
+            ],
+            "keyword_only": [
+              "declared_currency",
+              "prices",
+              "price_date",
+              "reference_notional"
+            ]
+          }
+        ]
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/_scope/custody.py",
+        "present": true,
+        "sha256": "23cda6b0e3dd88df3b837545f94efacf600db857a5509ddd458ff40cc7870394",
+        "git_blob": "a3bf975326271adc176df8a34804e057c78f7a77",
+        "definitions": [
+          {
+            "name": "current_custody_principal",
+            "line": 24,
+            "args": [
+              "headers",
+              "tenant"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "_current_selection_owner",
+            "line": 63,
+            "args": [
+              "self"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "current",
+            "line": 90,
+            "args": [
+              "self"
+            ],
+            "keyword_only": []
+          },
+          {
+            "name": "authorize_current",
+            "line": 117,
+            "args": [
+              "self",
+              "principal",
+              "owner"
+            ],
+            "keyword_only": []
+          }
+        ]
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/ycharts/generate/custody_submission.py",
+        "present": true,
+        "sha256": "8c8d1e5c3809d277f192a729221bdc7ec95a0b1a79a35b7630d657ffe9840ab4",
+        "git_blob": "637779a5c3632f51141542300af13291cbf3840d",
+        "definitions": [
+          {
+            "name": "build_custody_entry",
+            "line": 127,
+            "args": [],
+            "keyword_only": []
+          }
+        ]
+      }
+    ]
+  },
+  "callback_definition_census": {
+    "workspace": {
+      "production_python_files": 103,
+      "exact_named_implementations": [],
+      "limitation": "Exact AST definition names in this pinned subtree only; injected differently named adapters elsewhere are not ruled out."
+    },
+    "consumer": {
+      "production_python_files": 105,
+      "exact_named_implementations": [],
+      "limitation": "Exact AST definition names in this pinned subtree only; injected differently named adapters elsewhere are not ruled out."
+    }
+  }
+}
