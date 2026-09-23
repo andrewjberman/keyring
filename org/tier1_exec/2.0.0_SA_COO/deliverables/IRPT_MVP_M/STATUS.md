@@ -13,9 +13,19 @@ CTO follow-through `140502Z` / `141018Z` is documented in
 exact producer/owner source pins, bounded repair proposals and the actor-home
 organization reader gap. The existing Opal CONFIG#defaults metadata was also
 read with a strongly consistent, projected GetItem; existence is established,
-but maintained reporting-source adoption remains unestablished. No producer or
+and CTO subsequently admitted the exact organization-only record for P's
+maintained custody reader in message `20260923T141855Z`. Current CloudOps owner
+contract confirmation is routed through MSTR; reader implementation and deployed
+acceptance are not established by this source admission. No producer or
 deprecated reader was invoked and no shared code or cloud state was modified.
 P's exact `holdings/entry.py` exception at `bfa0575910` is preserved.
+
+CTO accepted inventory `7015e0d626` and closed this bounded assignment. Further
+producer repairs require exact cause-specific scope; P remains sole shared writer.
+The reload inbox reconciliation is recorded in
+[INBOX_RECONCILIATION_20260923.md](INBOX_RECONCILIATION_20260923.md). Historical
+requests are reconciled against later pinned evidence, without replaying source
+changes, lifting package/live gates, or reopening already closed findings.
 
 Andrew directly lifted the overnight hold. CTO ownership-transfer ruling
 `09b9573688` remains operative: P is sole writer for the current directory,
