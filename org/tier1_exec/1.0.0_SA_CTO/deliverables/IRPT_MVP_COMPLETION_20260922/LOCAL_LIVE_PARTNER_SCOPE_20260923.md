@@ -244,3 +244,29 @@ is retained as evidence, not a required additional gate. P/M/Y implementation
 ownership remains unchanged; new candidates and findings go to CTO. No release
 or cloud authorization changes. Relayed to CVO P/M/Y, COO P/Y and MSTR at
 11:18 Eastern; separate CVO review runs instructed to stop and preserve work.
+
+## CTO signed-value disposition, 2026-09-23 11:31 Eastern
+
+Consumed Y proposal `5d7da1aa49`,
+`CUSTODY_SIGNED_VALUE_PROPOSAL_20260923.md`, and M source handoff
+`abfb3eaf8242cf5df26c7e1074e0e555245d969a`. Adopt the proposed conservative
+eligibility boundary for the existing positive-only recipe. Preserve the exact
+actual signed/zero source facts and refuse the whole selected portfolio when
+any actual row is unsupported, before combining equal securities or accounts.
+No absolute values, dropped rows, invented cash, model substitution or hidden
+offsetting. Unknown value is never zero. This is an explicit current limitation,
+not completion of signed-position reporting or a claim about vendor capability.
+
+Do not globally relax the shared positive-number helpers, alter historical
+frozen requests, create a new retained artifact family or add public refusal
+enums under this disposition. Keep existing supported refusal envelopes;
+P owns any future paired public mapping. A future signed recipe needs an
+explicit economic policy and complete transport/readback/report proof.
+
+The actual-position source proposal remains M's bounded read-only assignment.
+Y may prepare owned eligibility controls against the original row census, but
+must identify the concrete producer interface before implementation. P keeps
+shared integration/package ownership. Production callbacks remain closed until
+exact accepted snapshot identity and complete security-level custody source are
+implemented and directly reviewed by CTO. The bounded source review at
+`8653eb6cd4` does not lift this condition or authorize cloud changes.
