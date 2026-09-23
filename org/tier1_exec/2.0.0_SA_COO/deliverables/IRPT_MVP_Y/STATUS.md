@@ -7,13 +7,13 @@ oracle GREEN. Continue useful work every tick; timer liveness is not completion.
 
 ## Current candidate and ownership
 
-- Backend: `ebf8d339859466b48e0f5f2c4ce9a834ddfff290`, branch/worktree
+- Backend: `84c6e63806` (parent upload `ebf8d33985`), branch/worktree
   `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922`.
 - UploadService now connects deterministic CSV/XLSX templates to actual retained
   original bytes, immutable v2 normalized input, guarded Entry and replay.
   Full intake suite: 206 tests +18 subtests pass, offline only.
 - Causal session repair: `fe0ec628c24af3cc8915bfe6899c5295f50a64f9`;
-  CTO195610 reports65 session tests PASS; final review record pending.
+  CTO76480a2a35 closes CTO-Y-W1-CORRELATION-01:65 session and236 generation +32 subtests PASS. Integrate all four fe0 files together.
   Kimi deadline source5609/CTOdf23 is closed; no repeated unchanged review.
 - P backend last measured: `7c7aaef354754ddc4152db4f61ff9d583b9cd175`.
   Portal last measured Y pin `7a5b24e7`; no new Portal candidate this tranche.
@@ -29,7 +29,7 @@ Browser template -> installed guarded UploadService is not live-proven. Source
 assembly exists at ebf8; shared upload request/result schema, ORIGINAL_HOLDINGS
 registry admission and real resolver/runtime installation remain dependencies.
 Concrete current interface: TEMPLATE_UPLOAD_HANDOFF_20260923.md.
-Y next assembles resident consumer/actual session transport/frozen recipe and
+Broker lookup/UploadService adapter now source84c6e63806; guarded upload -> actual broker/operation lease -> retained input/reopen/retry passes offline. Session85 PASS; generation236 +32subtests PASS. See BROKER_TEMPLATE_CALLER_20260923.md. Y next assembles resident consumer/actual total-deadline transport/frozen recipe and
 certified publisher. Existing GenerationJob's raw-PDF READY must not substitute
 for the durable store's required certified-report READY. No in-memory runtime.
 
@@ -65,3 +65,4 @@ certified sections, history/reload and same-revision branded export. Preserve
 actual actor versus immutable input owner. Stop the drive only after intended
 journeys pass or Andrew changes the instruction; a bounded source PASS is not
 completion. Route concrete shared blockers while continuing unaffected Y work.
+

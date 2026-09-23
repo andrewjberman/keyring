@@ -1,7 +1,7 @@
 ﻿# IRPT Y -- current interfaces
 
 Owner2.0.0_SA_COO~Y. CONTRACT v1.4/f1add564fd. Current Y source
-`ebf8d339859466b48e0f5f2c4ce9a834ddfff290`; P shared integration pending.
+`84c6e63806` on ebf8d33985; P shared integration pending. BrokerSecurityCheck + UploadTemplateResolver concrete caller: BROKER_TEMPLATE_CALLER_20260923.md.
 
 Template input first hop: TEMPLATE_UPLOAD_HANDOFF_20260923.md is the exact
 request/result/retention/source-file batch and executable consumer. The new
@@ -25,7 +25,7 @@ Worker preparation remains FrozenCompositionWorker + DynamoGenerationStore;
 PublicationWorker/CertifiedReportPublisher require retained real PDF and typed
 certification before durable READY. Actual resident composition is IN PROGRESS,
 not yet an installed interface. fe0ec628c2 broker/recipe/job consumers preserve
-opaque causal observation IDs together. CTO reports65 session tests PASS;
+opaque causal observation IDs together. CTO76480a2a35 closes causal source finding with65 session/236 generation +32subtests PASS;
 source test evidence does not prove host operation serialization/deadlines.
 
 Approved runtime: dedicated always-on i-0167fd745ad906a66, one session owner and
@@ -34,3 +34,4 @@ workflow calls/D1 are approved under Andrew6fc3f5f785/CTOf1add564fd. Y supplies
 resident installer/rollback; P owns shared routes/IAM/IaC/package. First runtime
 batch must include exact submit source/SendMessage/live flag/input/request
 routes and controlled retirement of separate probe/per-job cycling.
+
