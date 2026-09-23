@@ -1118,6 +1118,24 @@
       "status": "M source families located for all3 firms; CTO adjudication and concrete accepted producer/interface pending",
       "source_module_proposed": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
       "does_not_establish": "current security census, runtime callback, live availability or snapshot authorization"
+    },
+    "interface_coordination": {
+      "artifact": "CUSTODY_PRODUCER_INTERFACE_DRAFT_20260923.md",
+      "M_message": "20260923T153807Z",
+      "P_message": "20260923T153734Z",
+      "Y_replies": [
+        "20260923T153907Z",
+        "20260923T153908Z"
+      ],
+      "state": "M spellings accepted in principle, exact decimal/census requirements sent; concrete signature/schema/snapshot reader pending",
+      "code_implemented": false
+    },
+    "peer_generate_runtime_repair": {
+      "pin": "f0075287c4",
+      "source": "P153734 report",
+      "scope": "generate only, enforced positive/missing-custody negative and extracted artifact in pinned Lambda Linux3.12 network-disabled",
+      "review": "CTO directly reviewing; no Y rerun",
+      "production_binding": false
     }
   },
   "cto_direct_review": {

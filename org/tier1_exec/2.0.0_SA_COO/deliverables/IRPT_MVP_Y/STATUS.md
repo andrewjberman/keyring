@@ -6,7 +6,8 @@ Current LOCAL factory candidate `819c9e3990` consumes P scalar reader `48946e797
 Original SDK admission6FAIL14PASS preserved; scalar-only adapted original driver20PASS.
 M source handoff abfb3eaf82 confirms missing exact snapshot adapter and accepted security-level custody source. Both production source callbacks remain unconfigured/refusing. P reports e47aed7f71 flat73-member import/construction and paired30/265PASS; runtime remains uninstalled. CTO final review, producer scope and live acceptance remain open.
 CTO adopted current positive-only eligibility at7a3fd28e11; [CUSTODY_ELIGIBILITY_CONTROLS_20260923.md](CUSTODY_ELIGIBILITY_CONTROLS_20260923.md) prepares11 controls. Implementation awaits concrete original-position producer interface; no numeric admission expansion.
-CTO direct review8653eb6cd4: bounded factory30PASS/scalar20PASS/Portal49PASS. Package member hashes verified, but generate import gate was UNENFORCED; declared dependencies and isolated runtime proof remain P-owned open work.
+CTO direct review8653eb6cd4: bounded factory30PASS/scalar20PASS/Portal49PASS. That review found generate import gate UNENFORCED. P153734 subsequently reports generate-only enforced/runtime repair f0075287c4, pending CTO direct review; no Y rerun or production binding.
+[CUSTODY_PRODUCER_INTERFACE_DRAFT_20260923.md](CUSTODY_PRODUCER_INTERFACE_DRAFT_20260923.md) records M153807 field mapping and Y exact-decimal/census conditions. Concrete producer signature, shared schema and immutable snapshot reader remain pending owner agreement.
 Review route updated by CTO151855 Andrew-direct relay: CTO directly reviews current factory/consumer; no CVO approval wait.
 No production factory installed or cloud/vendor action.
 

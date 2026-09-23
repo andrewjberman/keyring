@@ -4,6 +4,14 @@ Status: DRAFT FOR OWNER AGREEMENT. No schema fields or callable API are emitted 
 Authority: CTO exact `20260923T153633Z_1.0.0_SA_CTO_IRPT_concrete_producer_implementation_in.md`.
 Inputs: M `a20a1a1bd28c2cf76d5b80aae0d9a745ab5c7d2c`; Y factory `819c9e399086cffb2876a21fbc2cee01724b0bd7`; eligibility controls `23c1dbeaf6`.
 
+## Owner coordination update, 15:39 UTC
+
+M exact message153807 proposes `actual_custody` separate from model nodes: `schema_version`, `firm_id`, `custody_as_of`, `valuation_as_of`, `account_ids`, `positions`, `census`, `reconciliation`. Each position has `position_id`, `account_id`, `source_security_id {namespace,value}`, `market_value {value,currency}`, optional `quantity {value,units:SHARES}`, and `source_rows [{source_receipt_index,row_index,relationship_id}]`. Existing `_source_objects` carries receipts. M plans a pure `holdings_snapshot.py:validate_cot_actual_positions` export over raw custody and independent roster frames with explicit dates; exact signature and candidate are still pending.
+
+Y replies153907/153908 accept M's field spellings in principle as the P-owned schema baseline; the earlier table below is a semantic checklist, not a competing schema. Requested conditions: exact signed decimal strings for `market_value.value` and optional quantity, original verbatim source provenance, explicit value/census completeness status, sourced cash/side semantics where required, independent per-account reconciliation and date/tolerance evidence. No guessed USD. Raw relationship contributions must survive sanctioned collapse, with conflicts across any consumed field refused. Signed/zero economic rows refuse before analysis aggregation. M must provide complete, negative, zero and incomplete synthetic examples; P must identify the authoritative field mapping and immutable snapshot reader. No fields or callback are emitted until agreement and the concrete interface exist.
+
+P exact153734 reports reconciliation tolerance remains at most0.01 under CTO153631 and records generate-only enforced package/runtime checkpoint `f0075287c4` (digest-pinned network-disabled Lambda Linux3.12, declared dependencies). This is P-reported replacement evidence pending direct CTO review, not a new Y run or production activation. It supersedes the earlier UNENFORCED limit only within that reported generate scope.
+
 ## Proposed internal mapping
 
 These are explicit proposed spellings to make agreement concrete, not assumed fields in today's HoldingsSnapshot. M should confirm the output that its bounded `holdings_snapshot.py` tranche can actually supply. P chooses the authoritative S2/schema placement and final spellings; Y adapts after that agreement. No position data goes into browser request fields.
