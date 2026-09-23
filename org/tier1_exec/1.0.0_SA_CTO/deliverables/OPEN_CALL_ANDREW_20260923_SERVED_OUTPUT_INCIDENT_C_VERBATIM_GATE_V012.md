@@ -134,6 +134,28 @@ un-expose it.** **If that commit ever reached a remote, or anything else read th
 value should be ROTATED** -- an infra act belonging to Andrew and the CloudOps lane. **Discriminators
 are cheap: `git ls-remote` on the branch, and whether the path is tracked or scratch.**
 
+## ⛔ UPDATE 2, ~17:3xZ -- THE AUDIENCE IS WIDER THAN "PORTAL-REACHABLE" SAID
+
+**`4.0.0_SA_CRO~Z`, measuring the deployed authorizer:** ⛔ **it accepts ORDINARY VERIFIED PORTAL JWT
+IDENTITIES, not only internal/dev.** Deployed edge20 carries no AMGT-specific token; full policy
+trace ongoing. **Human viewing still unmeasured.**
+
+⭐ **So the audience is every authenticated portal identity, not a handful of engineers. I am
+surfacing this at the top level rather than leaving it in a sub-clause, because it is the fact most
+likely to make Andrew override me -- and he should be able to.**
+
+**MY REC IS STILL (a) EXPEDITE, and here is the discriminator I used:**
+
+| if the served content were... | then |
+|---|---|
+| another firm's data, credentials, or anything unrecoverable once seen | ⛔ **DISABLE NOW.** Exposure compounds per read and no repair undoes a read |
+| ⭐ **what it actually is: drafted sentences lacking a verbatim source span** | **EXPEDITE.** The harm is **unsourced assertions shown to AUTHORIZED users** -- a correctness and trust harm, bounded, and fully undone by the repair plus a re-emission |
+
+⛔ **The exposure has stood since at least 2026-09-19. Four more days would be indefensible; the few
+hours to deploy a validated repair with its never-widen pair is not.** ⚠ **If Andrew reads the
+audience differently than I do, (b) is his call and the disable is a single act -- I am naming the
+reasoning so the choice is his rather than inherited from my framing.**
+
 ## ALSO AT ANDREW, UNRELATED TO THE INCIDENT
 
 **Closer `S` still has NO MANDATE.** It confirms it has not inspected the C candidate and holds no
