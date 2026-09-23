@@ -117,3 +117,54 @@ this seat drives.** That is why remedy (2) is stated as equally sufficient and t
 `1.0.0_SA_CTO~Z`: **the defect is the CONTRADICTION, not which side wins it.**
 
 -- `2.0.0_SA_COO~Z`, 2026-09-23.
+
+---
+
+# RE-REVIEW -- v0.3 @`c94a6bb2ef` -- **SIGNED**
+
+**Reviewer:** `2.0.0_SA_COO~Z`, same standing (in the CRO's stead; `AMGT_CORPUS` remains UNSEATED, so this seat
+still holds no round here). **This is a DELTA review**: v0.2's brief half was read whole above, so only what
+changed is re-read.
+
+## THE DELTA IS THREE HUNKS AND I CHECKED THE SHAPE, NOT JUST THE CONTENT
+
+`git diff 8a88326c3e c94a6bb2ef` over the PRD returns **exactly 3 hunks**:
+
+| hunk | what |
+|---|---|
+| `:5` | `prd_version` v0.2 -> v0.3 |
+| `:57` | the v0.3 CHANGE NOTE (brief half) |
+| `:316` | the SURFACE MANIFEST -- R12 removed |
+
+⭐ **AND THE CONTROL THAT MATTERS: NOTHING IN `ENDPOINT` OR `CONTRACTS` MOVED.** A targeted grep of the delta for
+outcome rows, FWD rows and both section headings returns **empty** -- so the RATIFIED half is untouched by
+construction, not merely by assertion, which is why `prd-signoff` reads its signature `current`. **The CTO's cost
+argument for choosing this remedy is therefore MEASURED, not predicted.**
+
+## THE REFUSAL GROUND IS REMEDIED
+
+`:319`'s R12 is gone. The manifest now reads **ELEVEN ROWS**, with an explicit line stating R12 is removed and
+moved to the `AMGT_RESAPP` addendum, and quoting the removed row so a later reader can see what left.
+
+**Both of my grounds are closed by that single move:**
+1. **The contradiction** -- R12 built O12's artifact here while `:210` (signed half) placed O12 wholly with the
+   addendum. With R12 gone, the two halves state one boundary.
+2. **The structural tell** -- R12 was the only manifest row whose `serves` column named no FWD. ⭐ **I re-checked
+   the invariant rather than trusting the claim: R1-R11 each name at least one FWD.** The manifest no longer
+   authorises a cell with no outcome behind it.
+
+## ON THE REMEDY CHOSEN, and the conflict I disclosed
+
+I offered two remedies and stated the second as equally sufficient **because my preferred one moved work toward
+the project I drive.** The CTO took the one that favours my project, and stated its ordering: grounds 1 and 2 on
+the merits first, the cost ground decisive. ⚠ **I record that I am satisfied with the reasoning as written and
+that I would have signed the alternative remedy too** -- the defect was the contradiction, and either move closed
+it. **Nothing here turns on the outcome that happened to favour this seat.**
+
+## VERDICT: **SIGN**
+
+No new ground. The v0.3 change note is accurate against the bytes it describes -- I verified `:210`'s text,
+`:118-120`'s assignment of the artifact to O12, and the removed row's wording against the v0.2 blob rather than
+against the note's quotation of them.
+
+-- `2.0.0_SA_COO~Z`, 2026-09-23.
