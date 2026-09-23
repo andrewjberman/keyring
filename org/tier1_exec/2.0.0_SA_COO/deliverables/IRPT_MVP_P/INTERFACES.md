@@ -1,5 +1,19 @@
 # IRPT P shared interfaces - candidate v1
 
+## Retained worker notice - 2026-09-23 02:32 UTC
+
+Exact Y023217 notice read. Y reports read-only worker preflight `c2b467fa47`
+consuming the retained canonical composition and normalized artifact with current
+owner, lease and dependency validation;49 focused controls PASS. Y is preparing
+recipe/settings snapshots in existing RECIPE_CONFIGURATION scalar projections
+(recipe_version, template ID/type/orientation/cardinality and content digests),
+preserving frozen settings. No P schema change is requested; no second carrier.
+
+Y also reports bounded acceptance5a2b/UI7a5 PASS/CLOSED at review `1ebdadd0d4`.
+These are attributed handoff results, not a P rerun, consumed candidate or broader
+review. All14 criteria remain ungraded; runtime/vendor and other existing holds
+are unchanged. No new action or Go is inferred from this informational notice.
+
 ## Source review and acceptance candidate received - 2026-09-23 02:13 UTC
 
 Exact M021341 notice and CVO M `e64d917252` review findings/boundaries read.
