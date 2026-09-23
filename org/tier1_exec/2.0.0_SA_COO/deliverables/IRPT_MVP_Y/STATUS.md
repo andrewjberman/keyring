@@ -519,3 +519,31 @@ dispatch/comparison holds and frozen reuse. All14 NOT_EVALUATED.
 5a2b bounded28 independent/60supplied39subtests PASS. Scope remains offline
 prospect Overview and manual-hook/static UI, no actual browser/queue/worker.
 Next candidate frozen worker input/cover consumption. All14 NOT_EVALUATED.
+
+02:39Z worker/configuration update: LOCAL backend ef9e8f51c4, portal7a5b24e7.
+FrozenCompositionWorker at c2b467fa47 reads actual retained acceptance/composition/
+normalized input, validates browser hash/derived request ID, exact owner and every
+nonnull declared source dependency, checks current grants/retention and the durable
+lease before and after preparation. Exact recipient/profile/provenance/settings and
+canonical dollar upload rows are detached; nullable contact values remain null in
+retained source and become empty vendor cover strings. No write or vendor port.
+CVO Y35db29fd25 read in full: exact c2b4 bounded26independent/49supplied PASS,
+including late grant/fence/record/policy and source-grant recursive refusal. This is
+read-only preparation, modeled transactions/already-held lease, not atomicity or
+runtime/READY. UI Y-UI01 CLOSED exact7a5 by1ebdadd0d4; admission5a2 bounded review
+remains separately pinned. No automatic inheritance to the newer service change.
+
+ef9e8f51c4 adds capture_configuration from the existing maintained templates.json
+and intake/settings.json. SubmissionService optional resolve_configuration executes
+only before new acceptance, rejects descriptor ID collisions and freezes full seven
+settings plus template fields in the existing P scalar projections. Source file hashes
+are observed content, not immutable upstream revision or authority: revision/date
+explicitly UNAVAILABLE. Frozen worker recipe_inputs reads no mutable config files;
+validates seven settings/types/domains and reconstructed recorded template. Actual
+portfolio_body/generation_body consume the result in offline controls. Changing files
+after acceptance leaves retries unchanged. No client tax-status claim is inferred.
+97 tests plus39subtests PASS; Ruff and precommit5of5 PASS. Independent exact ef9 review
+requested; current vendor template/settings readback and effecting worker still pending.
+M023759 confirms canonical Python source-reader transport/current exact-input authorizer
+not implemented by703e82ea and owns returning concrete adapter/dependency. No duplicate
+source query authored by Y. All14 NOT_EVALUATED; no live calls/push/deployment/hold lift.

@@ -85,7 +85,7 @@
     "ui_shared_adapter_integration": "7411ada3 consumed via303d3fde; current UI7a5b24e7 independent repair retest pending"
   },
   "current_candidate": {
-    "backend": "5a2b531645",
+    "backend": "ef9e8f51c4",
     "portal": "7a5b24e7",
     "M_resolver": "703e82ea01",
     "M_merge": "48f04a00eb",
@@ -93,7 +93,7 @@
     "P_portal_merge": "303d3fde",
     "acceptance_tests_pass": 60,
     "acceptance_subtests_pass": 39,
-    "acceptance_independent_review": "1ebdadd0d4: bounded28 independent /60 supplied39subtests PASS; mocked acceptance/dispatch and synthetic readers",
+    "acceptance_independent_review": "1ebdadd0d4 exact5a2b531645: bounded28 independent/60supplied39subtests PASS; not inherited by ef9 configuration change",
     "UI_base_tests_pass": 31,
     "UI_base_assertions": 177,
     "UI01_repair_unchanged_probe_tests_pass": 9,
@@ -105,5 +105,22 @@
     "M": "e64d917252",
     "P": "c5c3393b1f",
     "Y_recipient_catalogue": "189d81952f"
-  }
+  },
+  "frozen_worker_review": {
+    "candidate": "c2b467fa474d6e8ffb2b3ac6b26c41ddd0850b28",
+    "review": "35db29fd25",
+    "independent_pass": 26,
+    "supplied_pass": 49,
+    "scope": "Read-only retained preparation; modeled effects and held lease; no runtime/READY"
+  },
+  "recorded_configuration_candidate": {
+    "candidate": "ef9e8f51c4",
+    "tests_pass": 97,
+    "subtests_pass": 39,
+    "ruff": "PASS",
+    "commit_gate": "5/5 PASS",
+    "independent_review": "PENDING",
+    "scope": "Existing recorded configuration frozen at acceptance; current vendor template/settings readback and effecting runtime unproven"
+  },
+  "runtime_dependency": "M023759: actual canonical Python source-reader transport and exact-input authorizer not implemented by703e82ea; M owns returning concrete adapter/dependency"
 }
