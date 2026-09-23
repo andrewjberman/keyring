@@ -1,0 +1,25 @@
+[
+  {
+    "wireInputPin": "7dd3d067",
+    "generatorPin": "8e6e2e38",
+    "generatedWrites": 6,
+    "error": null,
+    "outputNames": [
+      "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\portal\\src\\pages\\InvestorReporting\\fixtures\\smoke\\fe-s-18-frozen.json",
+      "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\portal\\src\\pages\\InvestorReporting\\fixtures\\smoke\\fe-s-18-holdings-observed.json",
+      "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\portal\\src\\pages\\InvestorReporting\\fixtures\\smoke\\fe-s-18-holdings-target.json",
+      "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\portal\\src\\pages\\InvestorReporting\\fixtures\\smoke\\fe-s-18-holdings-missing-attribution.json",
+      "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\portal\\src\\pages\\InvestorReporting\\__tests__\\fe-s-32\\holdings-no-answer.json",
+      "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\portal\\src\\pages\\InvestorReporting\\fixtures\\smoke\\fe-s-16-print-prehistory.json"
+    ]
+  },
+  {
+    "wireInputPin": "8e6e2e38",
+    "generatorPin": "8e6e2e38",
+    "generatedWrites": 1,
+    "error": "SyntaxError: JSON Parse error: Unexpected identifier \"undefined\"",
+    "outputNames": [
+      "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\portal\\src\\pages\\InvestorReporting\\fixtures\\smoke\\fe-s-18-frozen.json"
+    ]
+  }
+]

@@ -53,6 +53,17 @@ PROJECT_GLOB = "D*/*/*/project.json"
 ANDREW_DIRECT_MARKER_RE = re.compile(r"^\s*ANDREW[- _]DIRECT\b", re.I)
 ANDREW_DIRECT_RECORD_RE = re.compile(
     r"org/tier1_exec/3\.0\.0_SA_CVO(?:~[A-Za-z0-9]+)?/deliverables/ANDREW_DIRECT_[A-Za-z0-9_.-]*\.md")
+# Andrew's 2026-09-22 P/M/Y completion assignment explicitly permits peer
+# coordination, with CTO retaining governance. This exact-seat, cited-contract
+# exception does not change the old B/F canonical-round correspondence rule.
+IRPT_COMPLETION_CONTRACT = (
+    "org/tier1_exec/1.0.0_SA_CTO/deliverables/"
+    "IRPT_MVP_COMPLETION_20260922/CONTRACT.md"
+)
+IRPT_COMPLETION_REVIEWERS = frozenset(f"3.0.0_SA_CVO~{lane}" for lane in "PMY")
+IRPT_COMPLETION_PEERS = IRPT_COMPLETION_REVIEWERS | frozenset(
+    f"2.0.0_SA_COO~{lane}" for lane in "PMY"
+)
 
 
 def andrew_direct_relay(subject, body) -> bool:
@@ -121,6 +132,11 @@ def cvo_worker_send_refusal(from_agent: str, recipients, executing: tuple, subje
         return None
     if andrew_direct_relay(subject, body):
         return None  # the law's own carrier: the same-turn broadcast of his recorded word (F1, 94134)
+    if (from_agent in IRPT_COMPLETION_REVIEWERS
+            and all(recipient in IRPT_COMPLETION_PEERS for recipient in others)
+            and re.match(r"^IRPT\b", subject or "", re.I)
+            and IRPT_COMPLETION_CONTRACT in (body or "")):
+        return None  # bounded direct assignment; sender identity remains caller-validated
     codes, note = executing
     stage_word = ("census did not run (%s)" % note) if codes is None else (
         ("%d tree project(s) EXECUTING: %s" % (len(codes), ", ".join(codes))) if codes else "no tree project EXECUTING")
@@ -280,6 +296,25 @@ def _self_test() -> int:
     dead = (None, "git ls-files rc=128")
     ref = cvo_worker_send_refusal
     arms = [
+        ("IRPT assigned reviewers -> all six assigned peers plus CTO: admitted with contract",
+         lambda: all(ref(sender, sorted(IRPT_COMPLETION_PEERS) + [CTO_SERIAL], exe,
+                         subject="IRPT shared acceptance", body=IRPT_COMPLETION_CONTRACT) is None
+                     for sender in IRPT_COMPLETION_REVIEWERS)),
+        ("IRPT without contract citation: refused",
+         lambda: ref("3.0.0_SA_CVO~M", ["2.0.0_SA_COO~M"], exe,
+                     subject="IRPT M findings", body="findings only") is not None),
+        ("IRPT contract citation without IRPT subject: refused",
+         lambda: ref("3.0.0_SA_CVO~M", ["2.0.0_SA_COO~M"], exe,
+                     subject="unrelated assignment", body=IRPT_COMPLETION_CONTRACT) is not None),
+        ("IRPT exception does not admit B/F/base reviewers",
+         lambda: all(ref(sender, ["2.0.0_SA_COO~P"], exe,
+                         subject="IRPT findings", body=IRPT_COMPLETION_CONTRACT) is not None
+                     for sender in (CVO_SERIAL, "3.0.0_SA_CVO~B", "3.0.0_SA_CVO~F"))),
+        ("IRPT exception refuses entire mixed send with out-of-assignment recipient",
+         lambda: all(ref("3.0.0_SA_CVO~Y", [CTO_SERIAL, "2.0.0_SA_COO~Y", other], exe,
+                         subject="IRPT Y findings", body=IRPT_COMPLETION_CONTRACT) is not None
+                     for other in ("0.7.0_AE_CloudOps", "0.0.0_AB_MSTR", "2.0.0_SA_COO~B",
+                                   "2.0.0_SA_COO~F", "3.0.0_SA_CVO~Z", "2.0.0_SA_COO"))),
         # ---- spine v3.1 L8: the CVO's one send is the slug to the CTO, at every stage ----
         ("CVO -> CTO while EXECUTING: admitted (the slug)", lambda: ref("3.0.0_SA_CVO", ["1.0.0_SA_CTO"], exe) is None),
         ("CVO -> CTO with no project EXECUTING: admitted", lambda: ref("3.0.0_SA_CVO", ["1.0.0_SA_CTO"], idle) is None),

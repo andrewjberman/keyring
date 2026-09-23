@@ -1,0 +1,149 @@
+{
+  "candidate_pin": "318e140fb9b7417ea28d2de5057c6c85a9ebfd57",
+  "source_evidence": "org\\tier1_exec\\3.0.0_SA_CVO\\deliverables\\IRPT_MVP_Y\\UPLOAD_CONSUMER_318e140fb9.json",
+  "source_evidence_sha256": "44cbe7fe4730a415eb4245265654489c748d13f6e7e5f933605863049415eba3",
+  "verified_snapshot_files": 283,
+  "controls": [
+    {
+      "name": "actual_guarded_entry_refresh_preserves_parent_receipt",
+      "passed": true,
+      "observed": {
+        "original": {
+          "input_id": "portfolio_dc473576c70bf187016c3f9a81d6fd774d62025224a4f3e3747cd9da39b29744",
+          "content_sha256": "dc473576c70bf187016c3f9a81d6fd774d62025224a4f3e3747cd9da39b29744",
+          "artifact_ref": {
+            "artifact_id": "ART-3e0e658ba303748840b3e1080d9eae1541f85c6a713ebbcb72df8eeadf5b3403",
+            "byte_length": 2650,
+            "content_type": "application/json",
+            "family": "NORMALIZED_PORTFOLIO",
+            "immutable": true,
+            "sha256": "dc473576c70bf187016c3f9a81d6fd774d62025224a4f3e3747cd9da39b29744",
+            "version_id": "version-2"
+          }
+        },
+        "refreshed": {
+          "input_id": "portfolio_5b656318e974b7186a746c0a859d1798f02c86a96ed1337dd884e77f7dffc152",
+          "content_sha256": "5b656318e974b7186a746c0a859d1798f02c86a96ed1337dd884e77f7dffc152",
+          "artifact_ref": {
+            "artifact_id": "ART-e47c8dc8f69586804f3bcd5f873fa5aef153d9986b8eb023909bdfd24dd6097a",
+            "byte_length": 3152,
+            "content_type": "application/json",
+            "family": "NORMALIZED_PORTFOLIO",
+            "immutable": true,
+            "sha256": "5b656318e974b7186a746c0a859d1798f02c86a96ed1337dd884e77f7dffc152",
+            "version_id": "version-4"
+          }
+        },
+        "original_dollars": "20",
+        "refreshed_dollars": "40"
+      }
+    },
+    {
+      "name": "restart_replays_both_frozen_revisions_without_dependency_calls",
+      "passed": true,
+      "observed": {
+        "refreshed_equal": true,
+        "original_equal": true,
+        "additional_blob_puts": 0
+      }
+    },
+    {
+      "name": "second_refresh_keeps_immediate_lineage_and_all_prior_values",
+      "passed": true,
+      "observed": {
+        "totals": [
+          "20",
+          "40",
+          "60"
+        ],
+        "third_input": {
+          "input_id": "portfolio_be06c090698eb95adfc9aa8c92c5cd5f6bb6df4bd69e97468da87a730c67fa7d",
+          "content_sha256": "be06c090698eb95adfc9aa8c92c5cd5f6bb6df4bd69e97468da87a730c67fa7d",
+          "artifact_ref": {
+            "artifact_id": "ART-420ae670664e1c5b56b121b5f8416bbe27e8bb9796ed5ad6ea3d02baa4064d0a",
+            "byte_length": 3152,
+            "content_type": "application/json",
+            "family": "NORMALIZED_PORTFOLIO",
+            "immutable": true,
+            "sha256": "be06c090698eb95adfc9aa8c92c5cd5f6bb6df4bd69e97468da87a730c67fa7d",
+            "version_id": "version-6"
+          }
+        },
+        "third_parent": {
+          "artifact_ref": {
+            "artifact_id": "ART-e47c8dc8f69586804f3bcd5f873fa5aef153d9986b8eb023909bdfd24dd6097a",
+            "byte_length": 3152,
+            "content_type": "application/json",
+            "family": "NORMALIZED_PORTFOLIO",
+            "immutable": true,
+            "sha256": "5b656318e974b7186a746c0a859d1798f02c86a96ed1337dd884e77f7dffc152",
+            "version_id": "version-4"
+          },
+          "content_sha256": "5b656318e974b7186a746c0a859d1798f02c86a96ed1337dd884e77f7dffc152",
+          "input_id": "portfolio_5b656318e974b7186a746c0a859d1798f02c86a96ed1337dd884e77f7dffc152"
+        }
+      }
+    },
+    {
+      "name": "parent_content_hash_rebound_after_publication",
+      "passed": true,
+      "observed": {
+        "outcome": "LINEAGE_BINDING",
+        "error_type": "UploadRefused",
+        "additional_blob_puts": 0
+      }
+    },
+    {
+      "name": "parent_artifact_receipt_rebound_after_publication",
+      "passed": true,
+      "observed": {
+        "outcome": "LINEAGE_BINDING",
+        "error_type": "UploadRefused",
+        "additional_blob_puts": 0
+      }
+    },
+    {
+      "name": "parent_owner_changed_after_publication",
+      "passed": true,
+      "observed": {
+        "outcome": "INPUT_UNAVAILABLE",
+        "error_type": "PermissionError",
+        "additional_blob_puts": 0
+      }
+    },
+    {
+      "name": "parent_index_missing_after_publication",
+      "passed": true,
+      "observed": {
+        "outcome": "INPUT_UNAVAILABLE",
+        "error_type": "PermissionError",
+        "additional_blob_puts": 0
+      }
+    },
+    {
+      "name": "access_revoked_after_parent_artifact_read",
+      "passed": true,
+      "observed": {
+        "outcome": "prospect record is not owned by the current principal",
+        "error_type": "ProspectOwnershipRefused",
+        "additional_blob_puts": 0
+      }
+    },
+    {
+      "name": "unmodified_parent_restored_positive",
+      "passed": true,
+      "observed": {
+        "same_document": true
+      }
+    }
+  ],
+  "passed": 9,
+  "total": 9,
+  "limits": [
+    "Actual M guarded entry, Y upload/normalization and P repository code",
+    "AWS-shaped conditional/version/Decimal-aware doubles; offline only",
+    "Revocation injected after real local repository read",
+    "Immediate prior receipt controls; no expiry/lifecycle/transitive-retention proof",
+    "No real browser, concurrent server, process crash or integrated acceptance"
+  ]
+}

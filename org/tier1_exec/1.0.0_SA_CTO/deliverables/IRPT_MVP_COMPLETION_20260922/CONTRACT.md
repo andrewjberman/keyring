@@ -1,4 +1,4 @@
-# IRPT MVP completion contract — version 1.1
+# IRPT MVP completion contract — version 1.2
 
 Authority: [Andrew's instruction](AUTHORITY.md). Owner/adjudicator: `1.0.0_SA_CTO`. Implementers: COO~P, COO~M, COO~Y. Independent reviewers: matching CVO suffixes. This contract and each seat's mandate are the current narrow instructions for these six seats.
 
@@ -71,6 +71,8 @@ A breaking interface change needs: exact producer/consumer paths, proposed schem
 ## 6. Coordination, logs, and progress
 
 Canonical peer send: `org/mcp/codex-send.ps1 -To '<exact serial>' -Subject 'IRPT <lane>: <specific seam/finding>' -BodyFile '<file>'`. Use RAVC for actual requests. Send on interface changes, dependency readiness, blockers, and review handoffs; do not flood peers with routine status or ACK loops. Include path@commit, owner, requested action, and affected acceptance IDs. Surprise channel is CTO; report out-of-scope findings in one line and continue your job.
+
+For CVO P/M/Y direct peer coordination, the canonical send guard admits the new assignment only when the subject starts `IRPT` and the body cites this exact path: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`. Recipients are restricted to the six exact P/M/Y COO/CVO seats and the already permitted CTO route. A mixed send including another seat is refused whole. This implements Andrew's explicit peer-coordination instruction; old B/F/base CVO restrictions, sender identity validation and worker-order rules remain. No force flag, alternate inbox write or broker restart is needed on the one-shot `codex-send.ps1` path. CVO final findings still reach CTO for integrated governance.
 
 Each COO owns `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_<P|M|Y>/` for INTERFACES.md, STATUS.md, evidence manifest and COMPLETION.md. Each CVO owns the matching directory under `org/tier1_exec/3.0.0_SA_CVO/deliverables/`. Do not co-edit a shared status file. Keep canonical session logs under the base role's dated logs with exact serial/lane in the filename. No secrets or raw client payloads in MCP/logs; use protected evidence references.
 

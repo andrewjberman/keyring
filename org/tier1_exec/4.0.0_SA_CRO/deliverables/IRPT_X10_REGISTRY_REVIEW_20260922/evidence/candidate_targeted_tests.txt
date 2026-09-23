@@ -1,0 +1,199 @@
+..............................................EEEEEEEEEEEE.E             [100%]
+=================================== ERRORS ====================================
+_ ERROR at setup of test_active_candidate_requires_enforcement_record_and_fresh_disable _
+
+self = WindowsPath('C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/test_tmp/targeted')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\test_tmp\\targeted'
+
+C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: FileNotFoundError
+_ ERROR at setup of test_registry_validation_refuses_malformed_policy[<lambda>0] _
+
+self = WindowsPath('C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/test_tmp/targeted')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\test_tmp\\targeted'
+
+C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: FileNotFoundError
+_ ERROR at setup of test_registry_validation_refuses_malformed_policy[<lambda>1] _
+
+self = WindowsPath('C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/test_tmp/targeted')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\test_tmp\\targeted'
+
+C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: FileNotFoundError
+_ ERROR at setup of test_registry_validation_refuses_malformed_policy[<lambda>2] _
+
+self = WindowsPath('C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/test_tmp/targeted')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\test_tmp\\targeted'
+
+C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: FileNotFoundError
+_ ERROR at setup of test_registry_validation_refuses_malformed_policy[<lambda>3] _
+
+self = WindowsPath('C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/test_tmp/targeted')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\test_tmp\\targeted'
+
+C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: FileNotFoundError
+_ ERROR at setup of test_registry_validation_refuses_malformed_policy[<lambda>4] _
+
+self = WindowsPath('C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/test_tmp/targeted')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\test_tmp\\targeted'
+
+C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: FileNotFoundError
+_ ERROR at setup of test_registry_validation_refuses_malformed_policy[<lambda>5] _
+
+self = WindowsPath('C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/test_tmp/targeted')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\test_tmp\\targeted'
+
+C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: FileNotFoundError
+_ ERROR at setup of test_registry_validation_refuses_malformed_policy[<lambda>6] _
+
+self = WindowsPath('C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/test_tmp/targeted')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\test_tmp\\targeted'
+
+C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: FileNotFoundError
+_ ERROR at setup of test_registry_validation_refuses_malformed_policy[<lambda>7] _
+
+self = WindowsPath('C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/test_tmp/targeted')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\test_tmp\\targeted'
+
+C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: FileNotFoundError
+_ ERROR at setup of test_registry_validation_refuses_malformed_policy[<lambda>8] _
+
+self = WindowsPath('C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/test_tmp/targeted')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\test_tmp\\targeted'
+
+C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: FileNotFoundError
+_ ERROR at setup of test_registry_validation_refuses_malformed_policy[<lambda>9] _
+
+self = WindowsPath('C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/test_tmp/targeted')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\test_tmp\\targeted'
+
+C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: FileNotFoundError
+_ ERROR at setup of test_policy_changes_do_not_change_default_custody_or_platinum_homes _
+
+self = WindowsPath('C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/test_tmp/targeted')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\test_tmp\\targeted'
+
+C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: FileNotFoundError
+_ ERROR at setup of test_older_default_home_reader_does_not_require_reporting_policy _
+
+self = WindowsPath('C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/test_tmp/targeted')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\test_tmp\\targeted'
+
+C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1311: FileNotFoundError
+=========================== short test summary info ===========================
+ERROR lib\tests\test_irpt_destination.py::test_active_candidate_requires_enforcement_record_and_fresh_disable
+ERROR lib\tests\test_irpt_destination.py::test_registry_validation_refuses_malformed_policy[<lambda>0]
+ERROR lib\tests\test_irpt_destination.py::test_registry_validation_refuses_malformed_policy[<lambda>1]
+ERROR lib\tests\test_irpt_destination.py::test_registry_validation_refuses_malformed_policy[<lambda>2]
+ERROR lib\tests\test_irpt_destination.py::test_registry_validation_refuses_malformed_policy[<lambda>3]
+ERROR lib\tests\test_irpt_destination.py::test_registry_validation_refuses_malformed_policy[<lambda>4]
+ERROR lib\tests\test_irpt_destination.py::test_registry_validation_refuses_malformed_policy[<lambda>5]
+ERROR lib\tests\test_irpt_destination.py::test_registry_validation_refuses_malformed_policy[<lambda>6]
+ERROR lib\tests\test_irpt_destination.py::test_registry_validation_refuses_malformed_policy[<lambda>7]
+ERROR lib\tests\test_irpt_destination.py::test_registry_validation_refuses_malformed_policy[<lambda>8]
+ERROR lib\tests\test_irpt_destination.py::test_registry_validation_refuses_malformed_policy[<lambda>9]
+ERROR lib\tests\test_irpt_destination.py::test_policy_changes_do_not_change_default_custody_or_platinum_homes
+ERROR lib\tests\test_irpt_destination.py::test_older_default_home_reader_does_not_require_reporting_policy
+47 passed, 13 errors in 1.15s

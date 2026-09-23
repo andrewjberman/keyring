@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0",
+  "to_id": "IRPT-X10_REGISTRY_REVIEW_20260922",
+  "phase": "NON-BUILD-OTHER",
+  "spec_ref": {
+    "doc": "org/tier1_exec/4.0.0_SA_CRO/task_orders/IRPT-X10_REGISTRY_REVIEW_20260922.md",
+    "group": "OTHER",
+    "vintage_commit": "8529764a5d3a5bf924237328a4af87c6243ed07e"
+  },
+  "assignee": "4.0.0_SA_CRO",
+  "artifacts_produced": [
+    {
+      "path_or_key": "org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/REVIEW.md",
+      "kind": "doc",
+      "commit_or_etag": "4d6a4338aed7f6a3623b8b3f3c195a19338fd39e",
+      "deployed_state": "COMMITTED-NOT-DEPLOY-SCOPE",
+      "deploy_evidence": "Read-only owner review; no source, carrier, runtime or deployment changes.",
+      "introduces": [
+        "# IRPT X10 registry-owner review"
+      ],
+      "artifact_covered_by": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ]
+    }
+  ],
+  "acceptance": [
+    {
+      "criterion_id": "C1",
+      "criterion_verbatim": "Verify exact candidate and evidence pins, provenance and unchanged baseline identity against canonical X10.",
+      "method": "command",
+      "invocation": "python -B org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/semantic_checks.py",
+      "output_evidence": "Exact pins in input_manifest.json; candidate parent equals baseline 78a48596640f32d908955941a2c52dbb713235c6. Consumed CTO grant blobs/author match original grant; canonical X10 705dae3202 and ruling resolve exactly. Fresh shared comparison at 45b0908ccc595bf72dc3cbfdf74f94d8d7272526 matches incumbent scopes and library. semantic_checks.json: 34 checks, 34 true, zero failures.",
+      "denominator": "7 primary pins, 34 semantic/provenance checks",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "C2",
+      "criterion_verbatim": "Review only the admitted IRPT product row and twelve-family semantics, three private firms, pending non-writable policy and all retained X10 conditions; identify every divergence.",
+      "method": "manual_read_with_citation",
+      "invocation": "python -B org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/semantic_checks.py",
+      "output_evidence": "Bounded owner PASS only for PENDING_ENFORCEMENT candidate 587e782bc6. Exact 12 families/3 firms/10 state/2 platinum and all family retention metadata match X10; enforcement_ref null, disposal OPEN. 36/36 writers refuse, 36/36 previews private/nonwritable, seven negatives refuse, nine default firm homes unchanged. REVIEW.md condition matrix distinguishes metadata and current refusals from unproven authorization, retention/dependency/race, IAM, byte secrecy, immutable storage and activation controls.",
+      "denominator": "12 families, 3 firms, 36 writer/preview pairs, 7 negative inputs, 9 default homes",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "C3",
+      "criterion_verbatim": "Verify non-IRPT equality and explicitly classify all ten generated carriers, independently distinguishing inherited baseline drift from candidate-induced changes.",
+      "method": "command",
+      "invocation": "python -B org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/semantic_checks.py",
+      "output_evidence": "20/20 generated output hashes reproduced by independent baseline/candidate runs. Nine stamp-only deltas; five Python ASTs equal; Terraform adds exactly four IRPT maps. Baseline harvest/stamp/whitespace drift independently reproduced without IRPT. Ten source carriers unchanged; non-IRPT scopes and five incumbent registry blobs equal. Targeted tests 60 PASS; canonical validate rc0/33 warnings. CRO core naming suite both 80 PASS/same 5 FAIL/8 deselected; CVO full-suite evidence eb00a0c6b2 reports 88 PASS/same 5 FAIL, separately attributed. No uncovered full-suite result represented as CRO PASS.",
+      "denominator": "10 carriers, 20 output hashes, 5 Python ASTs, 60 targeted tests, 85/93 CRO naming cases",
+      "status": "PASS"
+    },
+    {
+      "criterion_id": "C4",
+      "criterion_verbatim": "Commit a bounded PASS, FAIL or NOT_EVALUATED owner verdict and proof, naming exact defects and limits, and return the immutable report pin to COO M, CTO and CVO M.",
+      "method": "command",
+      "invocation": "org/mcp/codex-send.ps1 -To <each of COO~M, CTO, CVO~M> -Subject \"IRPT X10 owner verdict PASS for pending candidate\" -BodyFile org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/review_notice.md",
+      "output_evidence": "Message delivered to 2.0.0_SA_COO~M (inbox 2.0.0_SA_COO/~M): 20260922T223358Z_4.0.0_SA_CRO_IRPT_X10_owner_verdict_PASS_for_pending_.md (filesystem) [sender unverified: this one-shot process is unregistered; seat identity and fresh launcher liveness checked by codex-send. Expected advisory; do not register a second process]\nMessage delivered to 1.0.0_SA_CTO (inbox 1.0.0_SA_CTO): 20260922T223359Z_4.0.0_SA_CRO_IRPT_X10_owner_verdict_PASS_for_pending_.md (filesystem) [sender unverified: this one-shot process is unregistered; seat identity and fresh launcher liveness checked by codex-send. Expected advisory; do not register a second process]\nMessage delivered to 3.0.0_SA_CVO~M (inbox 3.0.0_SA_CVO/~M): 20260922T223401Z_4.0.0_SA_CRO_IRPT_X10_owner_verdict_PASS_for_pending_.md (filesystem) [sender unverified: this one-shot process is unregistered; seat identity and fresh launcher liveness checked by codex-send. Expected advisory; do not register a second process]\n",
+      "denominator": "3 required recipient seats; 1 report and 1 proof",
+      "status": "PASS"
+    }
+  ],
+  "controls": {
+    "mutant": {
+      "description": "The documentary owner-review order names no mutant; existing targeted negative controls and independent refusal probes were exercised.",
+      "expected": "N/A: no new mutation requirement in this order.",
+      "observed": "36 writer refusals and seven independent invalid-input refusals; 60 producer tests independently rerun.",
+      "status": "N/A-SPEC-NAMES-NONE"
+    },
+    "determinism": {
+      "method": "N/A: documentary review; baseline and candidate are distinct pinned inputs, not misrepresented as repeated same-input runs.",
+      "observed": "All 20 hashes independently match producer baseline/candidate inventory; no runtime determinism claim.",
+      "status": "N/A-WITH-REASON"
+    }
+  },
+  "declared_exclusions": [
+    {
+      "item": "Runtime enforcement, ACTIVE policy, source/carrier integration, provisioning, deployment and product acceptance",
+      "reason": "Explicitly outside review authority; X10 conditions remain pending and disposal OPEN."
+    },
+    {
+      "item": "Eight deployment/plane-dependent cases in the 93-case naming suite",
+      "reason": "CRO extracted snapshots lack full tracked source-map/Terraform fixtures. Ran 85 core cases at both pins and separately cited CVO full-suite evidence; initial harness failures are retained and not attributed to candidate."
+    },
+    {
+      "item": "Consumer R-P07 expiry-crossing finding",
+      "reason": "Reported in independent CVO review; not rerun in registry-owner scope and not cleared by this verdict."
+    }
+  ],
+  "surprises": [],
+  "session_log": "org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/REVIEW.md",
+  "compiler_tools": [
+    {
+      "tool": "comp-which",
+      "invocation": "comp-which \"Read IRPT-X10_REGISTRY_REVIEW_20260922 order and pinned candidate evidence for registry owner review\"",
+      "result": "No curated match; selected comp-read by document concern."
+    },
+    {
+      "tool": "comp-read",
+      "invocation": "comp-read org/tier1_exec/4.0.0_SA_CRO/task_orders/IRPT-X10_REGISTRY_REVIEW_20260922.md --for \"criteria paths proof baseline review\" --top 10",
+      "result": "Read order shape followed by exact committed full bytes."
+    },
+    {
+      "tool": "opal_naming.py validate/generate",
+      "invocation": "python -B org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/review_checks.py",
+      "result": "Exact baseline/candidate generation reproduced 20 hashes; candidate validate rc0 with 33 warnings. Final core-suite invocation explicitly excludes eight out-of-snapshot fixtures."
+    }
+  ]
+}

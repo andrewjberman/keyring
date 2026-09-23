@@ -1,0 +1,289 @@
+{
+  "pins": {
+    "baseline": "78a48596640f32d908955941a2c52dbb713235c6",
+    "candidate": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+    "generated_evidence": "3c14153eeb3b41ac3c7dbcd5c35cc5b969b28c83",
+    "x10": "705dae3202cac873a133825bee9d0381c7dd6b7f",
+    "ruling": "3c55f378007dba8e0d2e8f68798333911df75fbb",
+    "order": "8529764a5d3a5bf924237328a4af87c6243ed07e",
+    "grant": "820f35ec695fe31e343187b7ad2db7d3a348e1ee"
+  },
+  "files": [
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": ".tools/ds-precommit-check.py",
+      "sha256": "4c4f234518ecce0443dc56a249278ee590a341eb45cea15dfd074ddc8fd40261"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "data/assets/scripts/gold/investor_reporting/directory_runner.py",
+      "sha256": "95bd6043c7bca2ab04a28f55175e0af40d9eccf34b9558c72f6a9a8364045360"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+      "sha256": "83a24247fc2068cc88afccea829f6b58193bb8245c4d342d0dec5079a2ebe3a7"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py",
+      "sha256": "38af7f7200062f6ec95f5c71bc03239b1f9a5260993ff071e8acf654954b8109"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "data/firm_registry.json",
+      "sha256": "5a4c0c3da26fffe55d8a3ec2a8a7248bd0b1dd936af5425ab35426bc5d277fc0"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "infra/aws/lambda-edge/_shared/firm-config.mjs",
+      "sha256": "53f67663048d17e46d1a628014bf8a64a50ceb9fda1a801ce111a870640c17ee"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+      "sha256": "c0451638b048694267981691a9f6db38df8e0c64e1a6bf681d84b0e1ce55c3d4"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "infra/aws/terraform/modules/opal_name/generated_locals.tf",
+      "sha256": "f6afc7599bd5c6e7495e09b5dc50596f75602fbc6b3fb86ce1acab88629f73d0"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "infra/aws/terraform/modules/opal_name/tests/opal_name.tftest.hcl",
+      "sha256": "2f0964d8dc5b7ec246941355935eb9d8a3145268789ec70ace0bc205ca61de2b"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "infra/aws/terraform/modules/opal_name/tests/vectors.json",
+      "sha256": "c68a6060137c006c11ad3a234ac66c5673bab4d59cf97f640f454257af06c10e"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "infra/logic/registry/exemptions.json",
+      "sha256": "f51629e32f5d261f28b07dab9714c6f826265cf3e3aed0ff288b724abd1eeb50"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "infra/logic/registry/remediations.json",
+      "sha256": "67b49f4332fb676847b2b92af9b4bdc85fd7107e5132421d93f3ea8bb0a09481"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "infra/logic/registry/resources.json",
+      "sha256": "471e106af27bb34d1712180ad67d4441e5154236ed2230b12cdeceb5e1981592"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "infra/logic/registry/scopes.json",
+      "sha256": "5ea881534f1f89658ecef55049dbaee78dbf4c829ae72fbc0d758012dc203c60"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "infra/logic/registry/systems.json",
+      "sha256": "41d5138fd0d4c0644edef51f53644c7c4d5cb230daad5e6bccaa3c65d02b42eb"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "infra/logic/registry/tiers.json",
+      "sha256": "d3d51e30150a4baefd9405ddfe9adfa1740e084dfb1857c8fcb0e87a3c1188f3"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "lib/opal_naming.py",
+      "sha256": "b0ac3031629ec03a64db697b1a4fc63a197dc04e1aa463322d0c375e14406261"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "lib/tests/test_opal_naming.py",
+      "sha256": "a28b15dfd2c66e3cc08285b81f21cb4bd099e5a803f1c1a34e90a1342b72551c"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md",
+      "sha256": "68926a1223a57e619510198fa131cda45606ccc9c967a42cfd62882b23298de9"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "org/missions/DIRECTIVES.yaml",
+      "sha256": "3fdacacf88021b8e4ac6c6b15b932bc6066ead82b96bc73b50e43a4bcbb895fa"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "org/standards/NAMING_SCHEMA.json",
+      "sha256": "2c8834a98f7453fd1843eebe9baa45630aeb31cca708c114646678fdce480f33"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": ".tools/ds-precommit-check.py",
+      "sha256": "4c4f234518ecce0443dc56a249278ee590a341eb45cea15dfd074ddc8fd40261"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "data/assets/scripts/gold/investor_reporting/directory_runner.py",
+      "sha256": "95bd6043c7bca2ab04a28f55175e0af40d9eccf34b9558c72f6a9a8364045360"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+      "sha256": "83a24247fc2068cc88afccea829f6b58193bb8245c4d342d0dec5079a2ebe3a7"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py",
+      "sha256": "38af7f7200062f6ec95f5c71bc03239b1f9a5260993ff071e8acf654954b8109"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "data/firm_registry.json",
+      "sha256": "5a4c0c3da26fffe55d8a3ec2a8a7248bd0b1dd936af5425ab35426bc5d277fc0"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "infra/aws/lambda-edge/_shared/firm-config.mjs",
+      "sha256": "53f67663048d17e46d1a628014bf8a64a50ceb9fda1a801ce111a870640c17ee"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+      "sha256": "c0451638b048694267981691a9f6db38df8e0c64e1a6bf681d84b0e1ce55c3d4"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "infra/aws/terraform/modules/opal_name/generated_locals.tf",
+      "sha256": "f6afc7599bd5c6e7495e09b5dc50596f75602fbc6b3fb86ce1acab88629f73d0"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "infra/aws/terraform/modules/opal_name/tests/opal_name.tftest.hcl",
+      "sha256": "2f0964d8dc5b7ec246941355935eb9d8a3145268789ec70ace0bc205ca61de2b"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "infra/aws/terraform/modules/opal_name/tests/vectors.json",
+      "sha256": "c68a6060137c006c11ad3a234ac66c5673bab4d59cf97f640f454257af06c10e"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "infra/logic/registry/exemptions.json",
+      "sha256": "f51629e32f5d261f28b07dab9714c6f826265cf3e3aed0ff288b724abd1eeb50"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "infra/logic/registry/remediations.json",
+      "sha256": "67b49f4332fb676847b2b92af9b4bdc85fd7107e5132421d93f3ea8bb0a09481"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "infra/logic/registry/reporting_policies.json",
+      "sha256": "481cc513038b73f5e0444baafea76fc97e3ac9e19624f3f6822fb6f362cacbc3"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "infra/logic/registry/resources.json",
+      "sha256": "471e106af27bb34d1712180ad67d4441e5154236ed2230b12cdeceb5e1981592"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "infra/logic/registry/scopes.json",
+      "sha256": "a4e0637257b6c50adf23de75d3f344b3d39db6bf9a024f4b47dd825131532be9"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "infra/logic/registry/systems.json",
+      "sha256": "41d5138fd0d4c0644edef51f53644c7c4d5cb230daad5e6bccaa3c65d02b42eb"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "infra/logic/registry/tiers.json",
+      "sha256": "d3d51e30150a4baefd9405ddfe9adfa1740e084dfb1857c8fcb0e87a3c1188f3"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "lib/opal_naming.py",
+      "sha256": "f3f9e813fc445b7c9d9ce3fdae4dc38319c26fd64196e9a15bfe51dbe79892a4"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "lib/tests/test_irpt_destination.py",
+      "sha256": "8cd084f091f06ec3b9bc95ac4fdc0363e95b3c16d635a2e020403edeafcf9db6"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "lib/tests/test_opal_naming.py",
+      "sha256": "a28b15dfd2c66e3cc08285b81f21cb4bd099e5a803f1c1a34e90a1342b72551c"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md",
+      "sha256": "68926a1223a57e619510198fa131cda45606ccc9c967a42cfd62882b23298de9"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "org/missions/DIRECTIVES.yaml",
+      "sha256": "3fdacacf88021b8e4ac6c6b15b932bc6066ead82b96bc73b50e43a4bcbb895fa"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "org/standards/NAMING_SCHEMA.json",
+      "sha256": "2c8834a98f7453fd1843eebe9baa45630aeb31cca708c114646678fdce480f33"
+    },
+    {
+      "snapshot": "baseline",
+      "pin": "78a48596640f32d908955941a2c52dbb713235c6",
+      "path": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json",
+      "sha256": "8a1796003c4c616e43b74c3ddd8fcdf8eb501cdd6f96b6e1375a3e3163c992db"
+    },
+    {
+      "snapshot": "candidate",
+      "pin": "587e782bc6a1d2e8253b79c689abf51e77b46073",
+      "path": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json",
+      "sha256": "8a1796003c4c616e43b74c3ddd8fcdf8eb501cdd6f96b6e1375a3e3163c992db"
+    }
+  ]
+}

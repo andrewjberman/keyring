@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "_note": "Per-case LEGACY-READ waiver carrier for .tools/naming-gate.py. Consumed in EXACTLY ONE place: judge()'s EXISTING-under-live-remediation branch. An entry authorizes ONE literal at ONE call site in ONE file until its cutoff. It is NOT a read exemption, it does not advance or close any remediation, and it cannot reach a NEW or CHANGED literal, a duplicated occurrence, an alternate helper, or a write. The gate reads THIS FILE FROM COMMITTED HEAD, so an entry must land in an earlier separately reviewed commit -- a commit cannot grant itself a waiver. Renewal is a new recorded adjudication, never an edit of as_of_cutoff.",
+  "entries": [
+    {
+      "id": "IRPT-M-LEGACY-READ-01",
+      "file": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+      "literal": "silver/api_dims/accounts_v2/",
+      "remediation": "ADVI_FIRMBKTS",
+      "purpose": "The Inflection custody dimension partition probe. The data still lives at this address and the migration that moves it is ADVI_FIRMBKTS's own work; removing or repointing the literal would break a working read, which is the guessed source repoint the ruling refuses.",
+      "authority": {
+        "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/LEGACY_READ_AUTHORITY_20260923.md",
+        "pin": "15157a666c0f1cd0f720e2c3f678cc9f71c05715"
+      },
+      "as_of_cutoff": "2026-09-23",
+      "owner": "1.0.0_SA_CTO",
+      "read_context": {
+        "helper": "_latest_date_partition",
+        "helper_body_sha256": "e9c932d9af7eefa45a866cafea80da29a464f35bf4bb02a3888764e24e6e1a78",
+        "arg_index": 2,
+        "enclosing_function": "build_inf",
+        "bucket_arg": {
+          "name": "bucket",
+          "value": "opal-data-inf"
+        },
+        "occurrences": 1
+      }
+    }
+  ]
+}

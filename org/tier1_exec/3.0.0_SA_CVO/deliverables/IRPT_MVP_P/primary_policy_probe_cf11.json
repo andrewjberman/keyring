@@ -1,0 +1,169 @@
+{
+  "backend": "cf11337d2e651a63623336ca29fdb67472983b37",
+  "package": "f7e0a07c437d352b5891337a29d8d46bc916719a",
+  "portal": "33e139259d06438674b1d10d48f5a221c26e44f7",
+  "functions_total": 216,
+  "unchanged_other_functions": 215,
+  "changed_functions": [
+    "irpt-performance-adapter"
+  ],
+  "changed_fields": [
+    "_build_note",
+    "files",
+    "note",
+    "staged_from"
+  ],
+  "members": {
+    "bd_adapter.py": {
+      "sha256": "437b5b3827a5989a266684513900dd467c859b0872a25296f3e8c460f97238df",
+      "staged": false
+    },
+    "handler.py": {
+      "sha256": "9ac98cb985600d68a4389d40811a01b7d447e2dc33e4d077c3da8f42ecc9a79d",
+      "staged": true
+    },
+    "normalize.py": {
+      "sha256": "203fddcd33939861e553cd4f03ed43f0f7a3057bf2417c011a102a2dd965ceb8",
+      "staged": false
+    },
+    "orion_adapter.py": {
+      "sha256": "3ea1d42e73ccdf705f9cfb3239d97ee7fc08424c579bc837b74ffff58c8f15ca",
+      "staged": false
+    },
+    "tenants.py": {
+      "sha256": "38812b9686ec45d9033f7001e9fc82d35da0e282e4d5b76cb778b21614077241",
+      "staged": true
+    },
+    "transport.py": {
+      "sha256": "52abf66933e29747000611c41b02a3a1fb9ecfaa78c483c7a1c89620fae048ec",
+      "staged": false
+    },
+    "units.py": {
+      "sha256": "1a21813a964cb40167c99050fcf052ef963a21d0cbb2cfe75249621a4dce13a8",
+      "staged": false
+    },
+    "fixtures/FIXTURE_MANIFEST.json": {
+      "sha256": "d319f80a859594c5f9d0c9723a8afaede814855ce6ce70776bf7c0f22261a697",
+      "staged": false
+    },
+    "fixtures/bd_period.json": {
+      "sha256": "33390d6d7029917b4f5dc88a21ddda49f3030fbc37a5ccab00f3d3bb333a9d72",
+      "staged": false
+    },
+    "fixtures/bd_series.json": {
+      "sha256": "39685b27d38488197610770d650d7fdb537a7ff70b72bdf54f359fd6ec730ff8",
+      "staged": false
+    },
+    "fixtures/orion_captured_scope.json": {
+      "sha256": "74ffda60ea1894786c9b93306c77c4dac0dbadef4880b04590176970f276d96b",
+      "staged": false
+    },
+    "fixtures/orion_daily.json": {
+      "sha256": "f99f92ec79ebe73f6d54002d344aa1d4a8a1580da3f50ecc3e982025af9d982c",
+      "staged": false
+    },
+    "fixtures/orion_value_check.json": {
+      "sha256": "2c5dd0742dad72f3d6e30fa8133deabf8f8af49f4eab7a8458f4aa02a5f17837",
+      "staged": false
+    },
+    "entry.py": {
+      "sha256": "2f49ea88c2a5e30ae174b1d19000f806c9c4cf48192f0fd1583f9ad5357f12f0",
+      "staged": false
+    },
+    "served.py": {
+      "sha256": "f6a66c318a08872256b6be0e6588b33d4272e44531a62ada16ce84de26cdb409",
+      "staged": true
+    },
+    "loaders.py": {
+      "sha256": "0c086052e6e65d2cb411f15362862b1656bad0b2320f9756be6a32444b665765",
+      "staged": true
+    },
+    "enforce.py": {
+      "sha256": "18f04af84b9c5e87362f9cf87ee2ef5bc3680ccbaea66b1a2ee4e6579e6b1e7b",
+      "staged": true
+    },
+    "errors.py": {
+      "sha256": "784ee313ed7013e6fdf535a373e7941f4c672f4467e4dfcb4e8ad0634b1646a2",
+      "staged": true
+    },
+    "resolve.py": {
+      "sha256": "e7a2389d5af9f3e05a0a17a76f6f3ecdc814f3a808e41d28c8d9accb50849fc0",
+      "staged": true
+    },
+    "ids.py": {
+      "sha256": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6",
+      "staged": true
+    },
+    "data/custodian_key_seam.json": {
+      "sha256": "87f2f92f3c71f7761b387574a3df721474120465b1b0da8028cfc201b619923a",
+      "staged": true
+    },
+    "raw_keys.json": {
+      "sha256": "f81db571b5d92ca66b960047d96b38cc74c173cb7bf8be0c20e9cd3973acaf89",
+      "staged": true
+    },
+    "firm_registry.json": {
+      "sha256": "5a4c0c3da26fffe55d8a3ec2a8a7248bd0b1dd936af5425ab35426bc5d277fc0",
+      "staged": true
+    },
+    "selection.py": {
+      "sha256": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af",
+      "staged": true
+    },
+    "selection_store.py": {
+      "sha256": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c",
+      "staged": true
+    },
+    "prospect.py": {
+      "sha256": "b7e5c9335caad7a01eb66c73305f70a6497d0b72110ad7268dad1757358287a8",
+      "staged": true
+    },
+    "keys.py": {
+      "sha256": "56ee3cc22e802579ebb8d4cba53edec8045603396a48fe952d6b83df0f08ab2a",
+      "staged": true
+    },
+    "PerformanceReport.schema.json": {
+      "sha256": "5493d31259dde3f9b7932cd81e27be3e7f58ec6ca91b9e61a94b3f546cb41bd1",
+      "staged": true
+    }
+  },
+  "runs": [
+    {
+      "label": "supplied_performance_tests",
+      "exit_code": 0,
+      "stdout": ".........................................................                [100%]\n57 passed in 1.40s\n",
+      "stderr": ""
+    },
+    {
+      "label": "canonical_package_closure",
+      "exit_code": 0,
+      "stdout": "  OK: import-closure -- 18 packaged .py file(s), every top-level import satisfied by package/stdlib/runtime/layer. (Nested lazy imports exempt by design.)\n",
+      "stderr": ""
+    },
+    {
+      "label": "supplied_flat_guarded_entry",
+      "exit_code": 0,
+      "stdout": "{\"function\": \"irpt-performance-adapter\", \"imports_from_flat_package\": true, \"actual_guarded_entry\": true, \"network\": false}\n",
+      "stderr": ""
+    },
+    {
+      "label": "additional_flat_controls",
+      "exit_code": 0,
+      "stdout": "{\"checks\": [\"49F_recorded_no_provider_or_transport\", \"49F_live_no_provider_or_transport\", \"49F_legacy_lambda_cannot_serve_capture\", \"COT_recorded_no_provider_or_transport\", \"COT_live_no_provider_or_transport\", \"COT_legacy_lambda_cannot_serve_capture\", \"INF_recorded_no_provider_or_transport\", \"INF_live_no_provider_or_transport\", \"INF_legacy_lambda_cannot_serve_capture\", \"49F_explicit_primary_and_separate_verifier\", \"no_verifier_for_other_tenants\", \"unsupported_primary_no_adapter_fallback\", \"empty_duplicate_or_wider_selected_set_refused\", \"actual_guarded_entry_no_capture_release\", \"actual_entry_passes_only_retained_selection_and_explicit_dates\", \"missing_selection_and_query_transport_override_refused_before_provider\", \"revoked_selection_refused_before_provider\", \"capture_rejects_changed_set_subset_or_window\"], \"check_count\": 18, \"forbidden_calls\": [], \"guarded_refusal\": {\"ok\": false, \"contract_version\": \"v1\", \"operation\": \"performance-report\", \"status\": {\"operation\": {\"operation_id\": \"performance-report\", \"operation_kind\": \"read\", \"revision\": \"v1\"}, \"state\": \"UNAVAILABLE\", \"source_dates\": {\"source_completion_date\": null, \"business_date\": \"2026-09-22\"}, \"actions\": [{\"action\": \"NONE\", \"safe\": true, \"description\": \"no retry or recovery action is offered for this outcome\"}], \"public_reason_code\": \"OBJECT_NOT_COVERED\", \"internal_correlation_id\": \"corr-61e618c64d20\"}, \"firm_id\": \"fir_c9fc04650e2134d6ea033da2\"}, \"network\": false}\n",
+      "stderr": ""
+    },
+    {
+      "label": "exact_wire_regeneration",
+      "exit_code": 0,
+      "stdout": "Pinned SMARTX PerformanceReport wire regenerates exactly\n",
+      "stderr": ""
+    }
+  ],
+  "assertions_sha256": "8b89843adc1280a10077dae2f4ae28f3ab1fbb9ecd05bf11d7ea95cb996b5da5",
+  "schema_sha256": {
+    "docs\\contracts\\investor-reporting\\v1\\PerformanceReport.schema.json": "4567d508ffa27ee52f8084ac49eb6d940cab1948c8ff2a91e2374a7ee7381dea",
+    "infra\\aws\\lambda\\investor-reporting\\_contracts\\PerformanceReport.schema.json": "408134767df5b175b9b0e3090ddd59af6a908ed66262fd065e07a4a13848dd7d",
+    "flat\\PerformanceReport.schema.json": "5493d31259dde3f9b7932cd81e27be3e7f58ec6ca91b9e61a94b3f546cb41bd1"
+  },
+  "limits": "Actual source/flat entry with synthetic scope and storage; source-map reconstruction only. No deployed/layer/IAM or current vendor calculation proof. Additional controls reuse pinned supplied entry setup. No broader readiness."
+}

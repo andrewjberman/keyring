@@ -1,0 +1,45 @@
+{
+  "supplied_suite": {
+    "command": [
+      "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-entry-f7f5-o_c1yj05\\infra\\aws\\lambda\\investor-reporting\\performance\\tests\\test_entry_selection.py"
+    ],
+    "exit_code": 0,
+    "stdout": "...................                                                      [100%]\n19 passed in 0.29s\n",
+    "stderr": ""
+  },
+  "independent_suite": {
+    "command": [
+      "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-entry-f7f5-o_c1yj05\\infra\\aws\\lambda\\investor-reporting\\performance\\tests\\test_independent_review.py"
+    ],
+    "exit_code": 0,
+    "stdout": "......                                                                   [100%]\n6 passed in 0.25s\n",
+    "stderr": ""
+  },
+  "seat": "3.0.0_SA_CVO~P",
+  "candidate": "8b913a9414b60a2feb1815efa701a358027ab20a",
+  "timestamp_utc": "2026-09-22T21:52:10.817782+00:00",
+  "snapshot": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-entry-f7f5-o_c1yj05",
+  "git_archive_sha256": "4965d270be23e964602fd4d7dd112d418d92d007995dba2efe5428d109cfec27",
+  "source_sha256": {
+    "performance/entry.py": "2f49ea88c2a5e30ae174b1d19000f806c9c4cf48192f0fd1583f9ad5357f12f0",
+    "performance/tests/test_entry_selection.py": "33c980e8416eb4ad29d34ea123aabc3f62912624791c4d28db122e5b48fa3cec",
+    "_authz/served.py": "f6a66c318a08872256b6be0e6588b33d4272e44531a62ada16ce84de26cdb409",
+    "_authz/enforce.py": "18f04af84b9c5e87362f9cf87ee2ef5bc3680ccbaea66b1a2ee4e6579e6b1e7b",
+    "_scope/selection.py": "e13d372b5c1b3cb77b56ed4447a51aa57c9fee10375aa0873775f93ae6766f58",
+    "_scope/selection_store.py": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c"
+  },
+  "reviewer_cases_sha256": "35087f9c70a989527f8c96ba89d50c05149d84ed0288dfac4f77d8e2648778e5",
+  "limits": "Actual entry/Enforcer/M resolver. Synthetic storage, provider argument recorder. No deployed zip, browser, real provider, IAM evaluation, report persistence/export, vendor or cloud calls."
+}

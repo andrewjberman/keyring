@@ -1,0 +1,97 @@
+[
+  {
+    "name": "passing",
+    "args": [
+      "C:/Users/AndrewBerman/.bun/bin/bun",
+      "test",
+      "./src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/passing.fixture.ts"
+    ],
+    "status": 0,
+    "error": "",
+    "stdout": "RUNNING: C:/Users/AndrewBerman/.bun/bin/bun test ./src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/passing.fixture.ts\nALLOW-LIST: []\nPRODUCER-RC: 0\nCOMPLETION-LINE: present (\"Ran 1 tests across 1 files.\")\nSUMMARY-COUNTS: pass=1 skip=0 fail=0 (X-lines observed: 0)\nDECLARED-KEY VALIDITY: 0 allow-listed id(s) declared: []\nEXERCISED FULFILMENT: 0 of 0 observed failures actually matched an allow-listed id by name\nSUITE-COMPLETE: yes | PASS: 1 SKIP: 0 UNEXPECTED-FAIL: 0\n",
+    "stderr": ""
+  },
+  {
+    "name": "unexpected-failure",
+    "args": [
+      "C:/Users/AndrewBerman/.bun/bin/bun",
+      "test",
+      "./src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/unexpected-failure.fixture.ts"
+    ],
+    "status": 1,
+    "error": "",
+    "stdout": "RUNNING: C:/Users/AndrewBerman/.bun/bin/bun test ./src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/unexpected-failure.fixture.ts\nALLOW-LIST: []\nPRODUCER-RC: 1\nCOMPLETION-LINE: present (\"Ran 2 tests across 1 files.\")\nSUMMARY-COUNTS: pass=1 skip=0 fail=1 (X-lines observed: 1)\nDECLARED-KEY VALIDITY: 0 allow-listed id(s) declared: []\nEXERCISED FULFILMENT: 0 of 1 observed failures actually matched an allow-listed id by name\nSUITE-COMPLETE: no | REASON: unreconciled-failure: fe-s-90-fixture-unexpected > one genuinely unexpected failure\n",
+    "stderr": ""
+  },
+  {
+    "name": "allowed-failure",
+    "args": [
+      "C:/Users/AndrewBerman/.bun/bin/bun",
+      "test",
+      "./src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/allowed-failure.fixture.ts",
+      "--allow",
+      "fe-s-90-known-allowed-failure"
+    ],
+    "status": 0,
+    "error": "",
+    "stdout": "RUNNING: C:/Users/AndrewBerman/.bun/bin/bun test ./src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/allowed-failure.fixture.ts\nALLOW-LIST: [fe-s-90-known-allowed-failure]\nPRODUCER-RC: 1\nCOMPLETION-LINE: present (\"Ran 2 tests across 1 files.\")\nSUMMARY-COUNTS: pass=1 skip=0 fail=1 (X-lines observed: 1)\nDECLARED-KEY VALIDITY: 1 allow-listed id(s) declared: [fe-s-90-known-allowed-failure]\nEXERCISED FULFILMENT: 1 of 1 observed failures actually matched an allow-listed id by name\nSUITE-COMPLETE: yes | PASS: 1 SKIP: 0 UNEXPECTED-FAIL: 0\n",
+    "stderr": ""
+  },
+  {
+    "name": "slow",
+    "args": [
+      "timeout",
+      "3",
+      "C:/Users/AndrewBerman/.bun/bin/bun",
+      "test",
+      "./src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/slow.fixture.ts"
+    ],
+    "status": 1,
+    "error": "",
+    "stdout": "RUNNING: timeout 3 C:/Users/AndrewBerman/.bun/bin/bun test ./src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/slow.fixture.ts\nALLOW-LIST: []\nPRODUCER-RC: 124\nCOMPLETION-LINE: MISSING\nSUITE-COMPLETE: no | REASON: timeout: producer rc=124 (killed by `timeout`), completion-line MISSING\n",
+    "stderr": ""
+  },
+  {
+    "name": "crash-no-summary",
+    "args": [
+      "C:/Users/AndrewBerman/.bun/bin/bun",
+      "C:/Users/AndrewBerman/Desktop/ajb_workspace/.runtime/codex-seats/3.0.0_SA_CVO~F/r15-checker/crash.mjs"
+    ],
+    "status": 1,
+    "error": "",
+    "stdout": "RUNNING: C:/Users/AndrewBerman/.bun/bin/bun C:/Users/AndrewBerman/Desktop/ajb_workspace/.runtime/codex-seats/3.0.0_SA_CVO~F/r15-checker/crash.mjs\nALLOW-LIST: []\nPRODUCER-RC: 7\nCOMPLETION-LINE: MISSING\nSUITE-COMPLETE: no | REASON: crash: producer rc=7, no completion summary\n",
+    "stderr": ""
+  },
+  {
+    "name": "empty-success",
+    "args": [
+      "C:/Users/AndrewBerman/.bun/bin/bun",
+      "C:/Users/AndrewBerman/Desktop/ajb_workspace/.runtime/codex-seats/3.0.0_SA_CVO~F/r15-checker/empty.mjs"
+    ],
+    "status": 1,
+    "error": "",
+    "stdout": "RUNNING: C:/Users/AndrewBerman/.bun/bin/bun C:/Users/AndrewBerman/Desktop/ajb_workspace/.runtime/codex-seats/3.0.0_SA_CVO~F/r15-checker/empty.mjs\nALLOW-LIST: []\nPRODUCER-RC: 0\nCOMPLETION-LINE: MISSING\nSUITE-COMPLETE: no | REASON: incomplete-output: producer rc=0 but no completion summary found\n",
+    "stderr": ""
+  },
+  {
+    "name": "allowed-plus-unhandled-module-error",
+    "args": [
+      "C:/Users/AndrewBerman/.bun/bin/bun",
+      "test",
+      "C:/Users/AndrewBerman/Desktop/ajb_workspace/.runtime/codex-seats/3.0.0_SA_CVO~F/r15-checker/allowed.test.ts",
+      "C:/Users/AndrewBerman/Desktop/ajb_workspace/.runtime/codex-seats/3.0.0_SA_CVO~F/r15-checker/broken.test.ts",
+      "--allow",
+      "CVO-KNOWN"
+    ],
+    "status": 0,
+    "error": "",
+    "stdout": "RUNNING: C:/Users/AndrewBerman/.bun/bin/bun test C:/Users/AndrewBerman/Desktop/ajb_workspace/.runtime/codex-seats/3.0.0_SA_CVO~F/r15-checker/allowed.test.ts C:/Users/AndrewBerman/Desktop/ajb_workspace/.runtime/codex-seats/3.0.0_SA_CVO~F/r15-checker/broken.test.ts\nALLOW-LIST: [CVO-KNOWN]\nPRODUCER-RC: 1\nCOMPLETION-LINE: present (\"Ran 2 tests across 2 files.\")\nSUMMARY-COUNTS: pass=0 skip=0 fail=2 (X-lines observed: 1)\nDECLARED-KEY VALIDITY: 1 allow-listed id(s) declared: [CVO-KNOWN]\nEXERCISED FULFILMENT: 1 of 1 observed failures actually matched an allow-listed id by name\nSUITE-COMPLETE: yes | PASS: 0 SKIP: 0 UNEXPECTED-FAIL: 0\n",
+    "stderr": ""
+  },
+  {
+    "name": "direct-allowed-plus-unhandled-module-error",
+    "status": 1,
+    "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+    "stderr": "\u001b[0m\n..\\.runtime\\codex-seats\\3.0.0_SA_CVO~F\\r15-checker\\allowed.test.ts:\n\u001b[0m\u001b[31merror\u001b[0m\u001b[2m:\u001b[0m \u001b[1m\u001b[2mexpect(\u001b[0m\u001b[31mreceived\u001b[0m\u001b[2m).\u001b[0mtoBe\u001b[2m(\u001b[0m\u001b[32mexpected\u001b[0m\u001b[2m)\u001b[0m\n\nExpected: \u001b[32m2\u001b[0m\nReceived: \u001b[31m1\u001b[0m\n\u001b[0m\n\u001b[0m\u001b[31m✗\u001b[0m\u001b[0m\u001b[1m CVO-KNOWN\u001b[0m\n\u001b[0m\n..\\.runtime\\codex-seats\\3.0.0_SA_CVO~F\\r15-checker\\broken.test.ts:\n\u001b[0m\n\u001b[1m\u001b[2m#\u001b[0m \u001b[31m\u001b[1mUnhandled error\u001b[0m\u001b[2m between tests\u001b[0m\n\u001b[2m-------------------------------\u001b[0m\n\u001b[0m\u001b[1m1 |\u001b[0m \u001b[0m\u001b[35mthrow\u001b[0m \u001b[0m\u001b[35mnew\u001b[0m \u001b[0m\u001b[1mError\u001b[0m(\u001b[0m\u001b[32m'CVO unhandled module-load error'\u001b[0m)\u001b[0m\u001b[2m;\u001b[0m\n              \u001b[31m\u001b[1m^\u001b[0m\n\u001b[0m\u001b[31merror\u001b[0m\u001b[2m:\u001b[0m \u001b[1mCVO unhandled module-load error\u001b[0m\n\u001b[0m      \u001b[2mat \u001b[0m\u001b[0m\u001b[36mC:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\.runtime\\codex-seats\\3.0.0_SA_CVO~F\\r15-checker\\broken.test.ts\u001b[0m\u001b[2m:\u001b[0m\u001b[33m1\u001b[0m\u001b[2m:\u001b[33m11\u001b[0m\n\u001b[0m      \u001b[2mat \u001b[0m\u001b[0m\u001b[1m\u001b[3mloadAndEvaluateModule\u001b[0m\u001b[2m (\u001b[0m\u001b[0m\u001b[36m\u001b[0m\u001b[33m2\u001b[0m\u001b[2m:\u001b[33m1\u001b[0m\u001b[2m)\u001b[0m\n\u001b[0m\u001b[2m-------------------------------\u001b[0m\n\n\n 0 pass\u001b[0m\n\u001b[0m\u001b[31m 2 fail\u001b[0m\n \u001b[0m\u001b[31m1 error\u001b[0m\n 1 expect() calls\nRan 2 tests across 2 files. \u001b[0m\u001b[2m[\u001b[1m59.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+  }
+]

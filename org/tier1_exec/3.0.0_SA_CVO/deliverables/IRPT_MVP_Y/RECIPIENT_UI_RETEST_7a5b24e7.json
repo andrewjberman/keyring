@@ -1,0 +1,84 @@
+{
+  "pin": "7a5b24e705f79d5df872f9a443b6a552e9de62b9",
+  "results": [
+    {
+      "name": "both composers require an explicit empty initial recipient",
+      "outcome": "PASS"
+    },
+    {
+      "name": "custody exact retry and recipient edit bind distinct actual bodies",
+      "outcome": "PASS"
+    },
+    {
+      "name": "prospect exact retry is cleared by recipient edit",
+      "outcome": "PASS"
+    },
+    {
+      "name": "prospect recipient edit clears previously issued child status",
+      "outcome": "PASS"
+    },
+    {
+      "name": "busy prospect prevents recipient editing while a request is pending",
+      "outcome": "PASS"
+    },
+    {
+      "name": "custody late response for previous recipient cannot replace newer request status",
+      "outcome": "PASS"
+    },
+    {
+      "name": "both actual input markups escape hostile text without altering state",
+      "outcome": "PASS"
+    },
+    {
+      "name": "component guard and shared guard agree on complete prohibited character sweep",
+      "outcome": "PASS"
+    },
+    {
+      "name": "actual LiveClient rejects invalid body before transport and sends exact recipient",
+      "outcome": "PASS"
+    }
+  ],
+  "observations": [
+    {
+      "name": "custody_out_of_order_recipient",
+      "calls": [
+        {
+          "request_id": "areq-8f78ceb4",
+          "client_id": "C-one",
+          "account_ids": [
+            "A-one"
+          ],
+          "snapshot_id": "SNAP-one",
+          "variant": "auto",
+          "comparison_keys": [],
+          "report_title": null,
+          "prepared_for": "Recipient A"
+        },
+        {
+          "request_id": "areq-51cd82fb",
+          "client_id": "C-one",
+          "account_ids": [
+            "A-one"
+          ],
+          "snapshot_id": "SNAP-one",
+          "variant": "auto",
+          "comparison_keys": [],
+          "report_title": null,
+          "prepared_for": "Recipient B"
+        }
+      ],
+      "current_label": "Recipient B",
+      "final_job_text": "Queued -- areq-51cd82fb"
+    },
+    {
+      "name": "prohibited_sweep",
+      "controls": 65,
+      "surrogates": 2048,
+      "validators": 2
+    }
+  ],
+  "limitations": [
+    "Manual hooks and React static markup, not a real browser",
+    "Offline transport sentinel; no backend acceptance/worker/vendor/render/export grade"
+  ]
+}

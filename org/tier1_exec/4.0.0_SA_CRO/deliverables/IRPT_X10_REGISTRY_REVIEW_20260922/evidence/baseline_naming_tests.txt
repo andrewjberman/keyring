@@ -1,0 +1,444 @@
+.................F..........F...F..........F.....F...FFF.F.............. [ 77%]
+.............FFFFFF.F                                                    [100%]
+================================== FAILURES ===================================
+______ test_grade_agrees_with_every_worked_case[inf-silver-chain|LAMBDA] ______
+
+case = {'canonical_form': '{system}-inf-silver-chain-lambda', 'name': 'inf-silver-chain', 'type': 'LAMBDA', 'verdict': 'OUT-OF-PATTERN', ...}
+
+    @pytest.mark.parametrize("case", CASES, ids=["%s|%s" % (c["name"], c["type"]) for c in CASES])
+    def test_grade_agrees_with_every_worked_case(case):
+        mod = _shipped_lib()
+        if case["verdict"] == "RAISE":
+            with pytest.raises(mod.RaiseDefect):
+                mod.grade(case["name"], case["type"])
+            return
+        verdict, canon = mod.grade(case["name"], case["type"])
+        assert verdict == case["verdict"]
+        if verdict != "NOT-GRADED":
+>           assert canon == case["canonical_form"]
+E           AssertionError: assert 'orion-inf-si...-chain-lambda' == '{system}-inf...-chain-lambda'
+E             
+E             - {system}-inf-silver-chain-lambda
+E             ? ^^^^^^^^
+E             + orion-inf-silver-chain-lambda
+E             ? ^^^^^
+
+lib\tests\test_opal_naming.py:134: AssertionError
+_ test_grade_agrees_with_every_worked_case[opal-portal-data-proxy-api|API_GW] _
+
+case = {'canonical_form': 'opal-portal-data-proxy-api', 'name': 'opal-portal-data-proxy-api', 'type': 'API_GW', 'verdict': 'CONFORMANT', ...}
+
+    @pytest.mark.parametrize("case", CASES, ids=["%s|%s" % (c["name"], c["type"]) for c in CASES])
+    def test_grade_agrees_with_every_worked_case(case):
+        mod = _shipped_lib()
+        if case["verdict"] == "RAISE":
+            with pytest.raises(mod.RaiseDefect):
+                mod.grade(case["name"], case["type"])
+            return
+        verdict, canon = mod.grade(case["name"], case["type"])
+>       assert verdict == case["verdict"]
+E       AssertionError: assert 'OUT-OF-PATTERN' == 'CONFORMANT'
+E         
+E         - CONFORMANT
+E         + OUT-OF-PATTERN
+
+lib\tests\test_opal_naming.py:132: AssertionError
+_ test_grade_agrees_with_every_worked_case[Inflection-SilverChain-DimConversionFailure|CW_ALARM] _
+
+case = {'canonical_form': '{system}-inf-silver-chain-dim-conversion-failure-alarm', 'name': 'Inflection-SilverChain-DimConversionFailure', 'type': 'CW_ALARM', 'verdict': 'OUT-OF-PATTERN', ...}
+
+    @pytest.mark.parametrize("case", CASES, ids=["%s|%s" % (c["name"], c["type"]) for c in CASES])
+    def test_grade_agrees_with_every_worked_case(case):
+        mod = _shipped_lib()
+        if case["verdict"] == "RAISE":
+            with pytest.raises(mod.RaiseDefect):
+                mod.grade(case["name"], case["type"])
+            return
+        verdict, canon = mod.grade(case["name"], case["type"])
+        assert verdict == case["verdict"]
+        if verdict != "NOT-GRADED":
+>           assert canon == case["canonical_form"]
+E           AssertionError: assert 'orion-inf-si...failure-alarm' == '{system}-inf...failure-alarm'
+E             
+E             - {system}-inf-silver-chain-dim-conversion-failure-alarm
+E             ? ^^^^^^^^
+E             + orion-inf-silver-chain-dim-conversion-failure-alarm
+E             ? ^^^^^
+
+lib\tests\test_opal_naming.py:134: AssertionError
+_ test_grade_agrees_with_every_worked_case[wsb-49f-model-aua-pull-daily|SCHEDULE] _
+
+case = {'canonical_form': '{system}-49f-wsb-model-aua-pull-daily', 'name': 'wsb-49f-model-aua-pull-daily', 'residue_class': 'workstream-schedule', 'type': 'SCHEDULE', ...}
+
+    @pytest.mark.parametrize("case", CASES, ids=["%s|%s" % (c["name"], c["type"]) for c in CASES])
+    def test_grade_agrees_with_every_worked_case(case):
+        mod = _shipped_lib()
+        if case["verdict"] == "RAISE":
+            with pytest.raises(mod.RaiseDefect):
+                mod.grade(case["name"], case["type"])
+            return
+        verdict, canon = mod.grade(case["name"], case["type"])
+        assert verdict == case["verdict"]
+        if verdict != "NOT-GRADED":
+>           assert canon == case["canonical_form"]
+E           AssertionError: assert 'mdpf-49f-wsb...ua-pull-daily' == '{system}-49f...ua-pull-daily'
+E             
+E             - {system}-49f-wsb-model-aua-pull-daily
+E             ? ------ ^
+E             + mdpf-49f-wsb-model-aua-pull-daily
+E             ?  ^^^
+
+lib\tests\test_opal_naming.py:134: AssertionError
+_ test_grade_agrees_with_every_worked_case[platinum/firm/header_metrics.json|S3Key] _
+
+case = {'canonical_form': 'advi/{scope}/platinum/firm/header_metrics.json', 'form': 'legacy-served', 'name': 'platinum/firm/header_metrics.json', 'type': 'S3Key', ...}
+
+    @pytest.mark.parametrize("case", CASES, ids=["%s|%s" % (c["name"], c["type"]) for c in CASES])
+    def test_grade_agrees_with_every_worked_case(case):
+        mod = _shipped_lib()
+        if case["verdict"] == "RAISE":
+            with pytest.raises(mod.RaiseDefect):
+                mod.grade(case["name"], case["type"])
+            return
+>       verdict, canon = mod.grade(case["name"], case["type"])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+lib\tests\test_opal_naming.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+lib\opal_naming.py:1588: in grade
+    canon, placeholder, aliased = _GRAMMARS[grammar](name, type, v)  # V-1: the canonical form, by the
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib\opal_naming.py:1561: in <lambda>
+    "B": lambda n, t, v: _grade_bucket(n, v), "K": lambda n, t, v: _grade_key(n, v)}
+                                                                   ^^^^^^^^^^^^^^^^
+lib\opal_naming.py:1502: in _grade_key
+    srcs = [e[0] for e in _legacy_list(v) if _on_list([e[3:]], tail, prefix)]
+                          ^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+v = <opal_naming_lib._Vocab object at 0x000002342FEDC140>
+
+    def _legacy_list(v):
+        path = os.path.join(REPO, *v.list_home.split("/"))
+        if not os.path.isfile(path):
+>           raise RaiseDefect("K7: the LIST %s is absent and this key's verdict turns on membership" % v.list_home)
+E           opal_naming_lib.RaiseDefect: K7: the LIST org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json is absent and this key's verdict turns on membership
+
+lib\opal_naming.py:1398: RaiseDefect
+_ test_grade_agrees_with_every_worked_case[advi/49financial/platinum/advisors/advisor_id=A123/positions.json|S3Key] _
+
+case = {'canonical_form': 'advi/49financial/platinum/advisors/advisor_id=A123/positions.json', 'form': 'entity-partition', 'name': 'advi/49financial/platinum/advisors/advisor_id=A123/positions.json', 'specimen': True, ...}
+
+    @pytest.mark.parametrize("case", CASES, ids=["%s|%s" % (c["name"], c["type"]) for c in CASES])
+    def test_grade_agrees_with_every_worked_case(case):
+        mod = _shipped_lib()
+        if case["verdict"] == "RAISE":
+            with pytest.raises(mod.RaiseDefect):
+                mod.grade(case["name"], case["type"])
+            return
+>       verdict, canon = mod.grade(case["name"], case["type"])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+lib\tests\test_opal_naming.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+lib\opal_naming.py:1588: in grade
+    canon, placeholder, aliased = _GRAMMARS[grammar](name, type, v)  # V-1: the canonical form, by the
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib\opal_naming.py:1561: in <lambda>
+    "B": lambda n, t, v: _grade_bucket(n, v), "K": lambda n, t, v: _grade_key(n, v)}
+                                                                   ^^^^^^^^^^^^^^^^
+lib\opal_naming.py:1546: in _grade_key
+    if _on_list(_legacy_list(v), out + rest, prefix):
+                ^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+v = <opal_naming_lib._Vocab object at 0x000002342FEDC140>
+
+    def _legacy_list(v):
+        path = os.path.join(REPO, *v.list_home.split("/"))
+        if not os.path.isfile(path):
+>           raise RaiseDefect("K7: the LIST %s is absent and this key's verdict turns on membership" % v.list_home)
+E           opal_naming_lib.RaiseDefect: K7: the LIST org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json is absent and this key's verdict turns on membership
+
+lib\opal_naming.py:1398: RaiseDefect
+_ test_grade_agrees_with_every_worked_case[advi/49financial/platinum/firm/fee_efficiency.json|S3Key] _
+
+case = {'canonical_form': 'advi/49financial/platinum/firm/fee_efficiency.json', 'form': 'legacy-served', 'name': 'advi/49financial/platinum/firm/fee_efficiency.json', 'pair': 'on-list', ...}
+
+    @pytest.mark.parametrize("case", CASES, ids=["%s|%s" % (c["name"], c["type"]) for c in CASES])
+    def test_grade_agrees_with_every_worked_case(case):
+        mod = _shipped_lib()
+        if case["verdict"] == "RAISE":
+            with pytest.raises(mod.RaiseDefect):
+                mod.grade(case["name"], case["type"])
+            return
+>       verdict, canon = mod.grade(case["name"], case["type"])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+lib\tests\test_opal_naming.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+lib\opal_naming.py:1588: in grade
+    canon, placeholder, aliased = _GRAMMARS[grammar](name, type, v)  # V-1: the canonical form, by the
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib\opal_naming.py:1561: in <lambda>
+    "B": lambda n, t, v: _grade_bucket(n, v), "K": lambda n, t, v: _grade_key(n, v)}
+                                                                   ^^^^^^^^^^^^^^^^
+lib\opal_naming.py:1546: in _grade_key
+    if _on_list(_legacy_list(v), out + rest, prefix):
+                ^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+v = <opal_naming_lib._Vocab object at 0x000002342FEDC140>
+
+    def _legacy_list(v):
+        path = os.path.join(REPO, *v.list_home.split("/"))
+        if not os.path.isfile(path):
+>           raise RaiseDefect("K7: the LIST %s is absent and this key's verdict turns on membership" % v.list_home)
+E           opal_naming_lib.RaiseDefect: K7: the LIST org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json is absent and this key's verdict turns on membership
+
+lib\opal_naming.py:1398: RaiseDefect
+_ test_grade_agrees_with_every_worked_case[advi/49financial/platinum/firm/top_holdings.json|S3Key] _
+
+case = {'canonical_form': 'advi/49financial/platinum/firm/top-holdings.json', 'name': 'advi/49financial/platinum/firm/top_holdings.json', 'pair': 'off-list', 'specimen': True, ...}
+
+    @pytest.mark.parametrize("case", CASES, ids=["%s|%s" % (c["name"], c["type"]) for c in CASES])
+    def test_grade_agrees_with_every_worked_case(case):
+        mod = _shipped_lib()
+        if case["verdict"] == "RAISE":
+            with pytest.raises(mod.RaiseDefect):
+                mod.grade(case["name"], case["type"])
+            return
+>       verdict, canon = mod.grade(case["name"], case["type"])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+lib\tests\test_opal_naming.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+lib\opal_naming.py:1588: in grade
+    canon, placeholder, aliased = _GRAMMARS[grammar](name, type, v)  # V-1: the canonical form, by the
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib\opal_naming.py:1561: in <lambda>
+    "B": lambda n, t, v: _grade_bucket(n, v), "K": lambda n, t, v: _grade_key(n, v)}
+                                                                   ^^^^^^^^^^^^^^^^
+lib\opal_naming.py:1546: in _grade_key
+    if _on_list(_legacy_list(v), out + rest, prefix):
+                ^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+v = <opal_naming_lib._Vocab object at 0x000002342FEDC140>
+
+    def _legacy_list(v):
+        path = os.path.join(REPO, *v.list_home.split("/"))
+        if not os.path.isfile(path):
+>           raise RaiseDefect("K7: the LIST %s is absent and this key's verdict turns on membership" % v.list_home)
+E           opal_naming_lib.RaiseDefect: K7: the LIST org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json is absent and this key's verdict turns on membership
+
+lib\opal_naming.py:1398: RaiseDefect
+____ test_grade_agrees_with_every_worked_case[inf/otp-relay/token|SECRET] _____
+
+case = {'canonical_form': '{system}/inf/otp-relay/token', 'name': 'inf/otp-relay/token', 'type': 'SECRET', 'verdict': 'OUT-OF-PATTERN', ...}
+
+    @pytest.mark.parametrize("case", CASES, ids=["%s|%s" % (c["name"], c["type"]) for c in CASES])
+    def test_grade_agrees_with_every_worked_case(case):
+        mod = _shipped_lib()
+        if case["verdict"] == "RAISE":
+            with pytest.raises(mod.RaiseDefect):
+                mod.grade(case["name"], case["type"])
+            return
+        verdict, canon = mod.grade(case["name"], case["type"])
+        assert verdict == case["verdict"]
+        if verdict != "NOT-GRADED":
+>           assert canon == case["canonical_form"]
+E           AssertionError: assert 'portal/inf/otp-relay/token' == '{system}/inf/otp-relay/token'
+E             
+E             - {system}/inf/otp-relay/token
+E             ? ^^^^ ^^^
+E             + portal/inf/otp-relay/token
+E             ? ^^^ ^^
+
+lib\tests\test_opal_naming.py:134: AssertionError
+_________ test_targets_report_covers_every_known_target_exactly_once __________
+
+    def test_targets_report_covers_every_known_target_exactly_once():
+        mod = _shipped_lib()
+        known = [v[0] for v in mod.VIEWS] + [mod.LOCALS_PATH, mod.VECTORS_PATH, mod.TFTEST_PATH]
+>       rows = mod.targets_report()
+               ^^^^^^^^^^^^^^^^^^^^
+
+lib\tests\test_opal_naming.py:322: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+lib\opal_naming.py:1894: in targets_report
+    sdc = _sdc()
+          ^^^^^^
+lib\opal_naming.py:1775: in _sdc
+    spec.loader.exec_module(mod)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000002342FED6870>
+path = 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\snapshots\\baseline\\.tools\\safe_deploy_core.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\snapshots\\baseline\\.tools\\safe_deploy_core.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+_____________ test_targets_report_s3_rows_equal_safe_deploy_core ______________
+
+    def test_targets_report_s3_rows_equal_safe_deploy_core():
+        mod = _shipped_lib()
+>       sdc = mod._sdc()
+              ^^^^^^^^^^
+
+lib\tests\test_opal_naming.py:329: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+lib\opal_naming.py:1775: in _sdc
+    spec.loader.exec_module(mod)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000002342FED6D80>
+path = 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\snapshots\\baseline\\.tools\\safe_deploy_core.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\snapshots\\baseline\\.tools\\safe_deploy_core.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+___________ test_targets_report_fixtures_are_repo_only_with_a_plane ___________
+
+    def test_targets_report_fixtures_are_repo_only_with_a_plane():
+        mod = _shipped_lib()
+>       rows = {r[2]: r for r in mod.targets_report()}
+                                 ^^^^^^^^^^^^^^^^^^^^
+
+lib\tests\test_opal_naming.py:341: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+lib\opal_naming.py:1894: in targets_report
+    sdc = _sdc()
+          ^^^^^^
+lib\opal_naming.py:1775: in _sdc
+    spec.loader.exec_module(mod)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000002342FED6600>
+path = 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\snapshots\\baseline\\.tools\\safe_deploy_core.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\snapshots\\baseline\\.tools\\safe_deploy_core.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+______ test_targets_report_extra_target_no_plane_claims_is_unclassified _______
+
+    def test_targets_report_extra_target_no_plane_claims_is_unclassified():
+>       rows = _shipped_lib().targets_report(["zz-unclaimed/nowhere.txt"])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+lib\tests\test_opal_naming.py:348: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+lib\opal_naming.py:1894: in targets_report
+    sdc = _sdc()
+          ^^^^^^
+lib\opal_naming.py:1775: in _sdc
+    spec.loader.exec_module(mod)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000002342FED6000>
+path = 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\snapshots\\baseline\\.tools\\safe_deploy_core.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\snapshots\\baseline\\.tools\\safe_deploy_core.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+______ test_lambda_plane_consumers_is_import_aware_not_a_bare_substring _______
+
+    def test_lambda_plane_consumers_is_import_aware_not_a_bare_substring():
+        # _authz/loaders.py: seven functions declare it as a build input with no local copy of their own.
+        mod = _shipped_lib()
+>       consumers = mod.lambda_plane_consumers("infra/aws/lambda/investor-reporting/_authz/loaders.py")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+lib\tests\test_opal_naming.py:355: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+lib\opal_naming.py:1815: in lambda_plane_consumers
+    for fname, f in sorted(_lambda_source_map().items()):
+                           ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def _lambda_source_map():
+        """The Lambda plane's own record: infra/aws/lambda/ci/lambda-source-map.json's `functions` dict."""
+>       with open(os.path.join(REPO, *LAMBDA_SOURCE_MAP_PATH.split("/")), encoding="utf-8") as fh:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\snapshots\\baseline\\infra\\aws\\lambda\\ci\\lambda-source-map.json'
+
+lib\opal_naming.py:1781: FileNotFoundError
+______ test_terraform_plane_consumers_finds_the_declared_consuming_root _______
+
+    def test_terraform_plane_consumers_finds_the_declared_consuming_root():
+        mod = _shipped_lib()
+        roots = mod.terraform_plane_consumers(mod.LOCALS_PATH)
+>       assert "infra/aws/terraform/shared-infra" in roots
+E       AssertionError: assert 'infra/aws/terraform/shared-infra' in []
+
+lib\tests\test_opal_naming.py:364: AssertionError
+_______________ test_cmd_targets_exit_code_tracks_unclassified ________________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x000002342FEA8D40>
+
+    def test_cmd_targets_exit_code_tracks_unclassified(capsys):
+        mod = _shipped_lib()
+>       assert mod.cmd_targets() == 0
+               ^^^^^^^^^^^^^^^^^
+
+lib\tests\test_opal_naming.py:377: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+lib\opal_naming.py:1925: in cmd_targets
+    rows = targets_report([extra_target] if extra_target else None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib\opal_naming.py:1894: in targets_report
+    sdc = _sdc()
+          ^^^^^^
+lib\opal_naming.py:1775: in _sdc
+    spec.loader.exec_module(mod)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x000002342FEAB0B0>
+path = 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\snapshots\\baseline\\.tools\\safe_deploy_core.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\snapshots\\baseline\\.tools\\safe_deploy_core.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED lib\tests\test_opal_naming.py::test_grade_agrees_with_every_worked_case[inf-silver-chain|LAMBDA]
+FAILED lib\tests\test_opal_naming.py::test_grade_agrees_with_every_worked_case[opal-portal-data-proxy-api|API_GW]
+FAILED lib\tests\test_opal_naming.py::test_grade_agrees_with_every_worked_case[Inflection-SilverChain-DimConversionFailure|CW_ALARM]
+FAILED lib\tests\test_opal_naming.py::test_grade_agrees_with_every_worked_case[wsb-49f-model-aua-pull-daily|SCHEDULE]
+FAILED lib\tests\test_opal_naming.py::test_grade_agrees_with_every_worked_case[platinum/firm/header_metrics.json|S3Key]
+FAILED lib\tests\test_opal_naming.py::test_grade_agrees_with_every_worked_case[advi/49financial/platinum/advisors/advisor_id=A123/positions.json|S3Key]
+FAILED lib\tests\test_opal_naming.py::test_grade_agrees_with_every_worked_case[advi/49financial/platinum/firm/fee_efficiency.json|S3Key]
+FAILED lib\tests\test_opal_naming.py::test_grade_agrees_with_every_worked_case[advi/49financial/platinum/firm/top_holdings.json|S3Key]
+FAILED lib\tests\test_opal_naming.py::test_grade_agrees_with_every_worked_case[inf/otp-relay/token|SECRET]
+FAILED lib\tests\test_opal_naming.py::test_targets_report_covers_every_known_target_exactly_once
+FAILED lib\tests\test_opal_naming.py::test_targets_report_s3_rows_equal_safe_deploy_core
+FAILED lib\tests\test_opal_naming.py::test_targets_report_fixtures_are_repo_only_with_a_plane
+FAILED lib\tests\test_opal_naming.py::test_targets_report_extra_target_no_plane_claims_is_unclassified
+FAILED lib\tests\test_opal_naming.py::test_lambda_plane_consumers_is_import_aware_not_a_bare_substring
+FAILED lib\tests\test_opal_naming.py::test_terraform_plane_consumers_finds_the_declared_consuming_root
+FAILED lib\tests\test_opal_naming.py::test_cmd_targets_exit_code_tracks_unclassified
+16 failed, 77 passed in 1.51s

@@ -1,0 +1,26 @@
+{
+  "ok": false,
+  "contract_version": "v1",
+  "operation": "selection-create",
+  "status": {
+    "operation": {
+      "operation_id": "selection-create",
+      "operation_kind": "read",
+      "revision": "v1"
+    },
+    "state": "UNAVAILABLE",
+    "source_dates": {
+      "source_completion_date": null,
+      "business_date": "2026-09-22"
+    },
+    "actions": [
+      {
+        "action": "NONE",
+        "safe": true,
+        "description": "no retry or recovery action is offered for this outcome"
+      }
+    ],
+    "public_reason_code": "OBJECT_NOT_COVERED"
+  },
+  "firm_id": "fir_c9fc04650e2134d6ea033da2"
+}
