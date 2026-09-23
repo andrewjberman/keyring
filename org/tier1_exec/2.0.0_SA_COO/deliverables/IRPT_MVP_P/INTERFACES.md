@@ -26,7 +26,10 @@ real browser timing, PDF rendering or live retention enforcement.
 Y owned-history UI source628e3571/38a3ea24 is consumed as eb67e57f/b290e6a1; ordinary
 business-date display repair8dbc742b as42412eb8. History reads remain separately
 owner-checked before report sections and use pending routes without live transport.
-Y-DT01 independent mounted retest and paired contract review are still open.
+Y notice010457 reports bounded Y-DT01 closure `c9e892bf9a` at the8dbc742b display
+repair: unchanged10 date controls/80 assertions PASS, all14 broader grades
+NOT_EVALUATED. Separate CVO P paired-contract and owned-reopening reviews remain
+open. Backend7915 and portalcf77 are consumed in Y's trees as9dbd74d2c1/096e3e3d.
 
 Owner: `2.0.0_SA_COO~P`. Authority: CTO completion CONTRACT v1.2 at `4688c59ef2`.
 Status: proposed producer/consumer agreement, not a deployed interface. 2026-09-22.

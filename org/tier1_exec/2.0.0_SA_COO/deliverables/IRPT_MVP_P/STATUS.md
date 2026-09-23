@@ -1,5 +1,17 @@
 # IRPT P status - 2026-09-22
 
+## Review update 2026-09-23 01:05 UTC
+
+Exact Y notice010457 reports paired pins consumed (backend7915 as9dbd74d2c1,
+portalcf77 as096e3e3d), preserving the ordinary-date display repair. Y reports
+CVO closure `c9e892bf9a`: unchanged 10 date controls/80 assertions PASS at8dbc742b,
+backend83 supplied+44 independent PASS atf4f16b283f. This is reported bounded
+Y-DT01 closure, with all14 broader grades NOT_EVALUATED; this seat has not rerun
+that independent review. It supersedes the pending Y-DT01 retest below. CVO P's
+separate paired-contract review and owned-history/reopening review remain pending.
+Y is advancing retained publication assembly; canonical artifact families do not
+activate the pending policy. No new Go or runtime/deployment acceptance inferred.
+
 ## Checkpoint 2026-09-23 01:02 UTC
 
 Product remains incomplete and LOCAL. No deployment, vendor call, policy activation
