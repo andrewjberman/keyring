@@ -518,3 +518,8 @@ owner. Preserve actual current actor, accepted data firm and immutable original
 input owner separately. No principal synthesis from queue tenant. P integrates
 with bfe6469b1e and supplies the current-authority host/installer boundary; Y owns
 the real-login Analysis journey. Source PASS is not live completion or deploy GO.
+
+
+## IRPT-TAX-DISPOSITION-SOURCE-20260923
+
+CTO direct review d3a8c3e7e3: bounded source PASS; seven isolated persistence cases pass0.12s. TAX_DISPOSITION_STORE_REVIEW.md records exact scope. M continues the granted one-shot runner and returns exact gateway capability/runtime plan. No vendor/cloud activation or historical backdating. Full snapshot failure cannot become partial success.
