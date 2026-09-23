@@ -1,0 +1,108 @@
+{
+  "kind": "REAL_SOURCE_BUILD_NOT_LIVE_ACCEPTANCE",
+  "account_id": "acc_f91fd04e6f6534fb0270bdcb",
+  "as_of": "2026-09-23",
+  "clocks": {
+    "business_date": "2026-09-22",
+    "as_of_timestamp": "2026-09-23T21:13:50Z",
+    "custody_as_of": "2026-09-22",
+    "overlay_as_of": "2026-09-23",
+    "source_as_of": [
+      {
+        "source": "blackdiamond/cottonwood/silver (custody)",
+        "as_of": "2026-09-22"
+      },
+      {
+        "source": "blackdiamond/cottonwood/silver (overlay)",
+        "as_of": "2026-09-23"
+      }
+    ]
+  },
+  "totals": {
+    "unique_account_count": 1,
+    "unique_position_count": 3,
+    "total_market_value": {
+      "value": 1165.21,
+      "currency": "USD"
+    },
+    "deduplicated": true
+  },
+  "schema_valid": true,
+  "schema_errors": [],
+  "reconciliation": [
+    true,
+    1165.21,
+    1165.21
+  ],
+  "source_receipts": [
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_allocations/date=2026-09-22/data.parquet",
+      "version_id": "WeqLRnnXcg_R5QpfSy_2fZMVwGn1sOL.",
+      "byte_length": 128660,
+      "sha256": "0fadd50e65c26c202015707e83f7acbf0d57fbb91e76a81932fdd26209486a6f"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+      "version_id": "tGurdOTYhnuidIUgThZYlJxOcaqNTuKl",
+      "byte_length": 457679,
+      "sha256": "737c2ccdacd85b5c44a560830d7a92750945714ebd8c50995b66bf90d0abe174"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_model_assignment/date=2026-09-23/data.parquet",
+      "version_id": "ppIXtvdE7sscxrSR4VZ8ADJkBKtdxZIp",
+      "byte_length": 50441,
+      "sha256": "a560410f86e384c7c3157c8ec32b20ae9fb1a111e1acd2a1f73f26037049ecfe"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_model_blend/date=2026-09-23/data.parquet",
+      "version_id": "KVIN1oY6LQQn5BmAAP8sOMko6o2Hg.ut",
+      "byte_length": 10484,
+      "sha256": "945a1e10b6a0713bd994c26d41929416b6df5377dfcc03af7709be2fcb7001d3"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_model_roster/date=2026-09-23/data.parquet",
+      "version_id": "uFnWreJn3KZ7Dq3jbB4q3eWuS3JE0VBR",
+      "byte_length": 14130,
+      "sha256": "e74b6b556cfb3cd19b4ca932ba0b20a03d07b0e33678d700593b43cee74b7628"
+    },
+    {
+      "bucket": "opal-data-cot",
+      "key": "investor-reporting/directory/2026-09-17/directory.json",
+      "version_id": "seN3sLdnz.jBxbQorQBtzEwqhrTLypC9",
+      "byte_length": 418144,
+      "sha256": "90b742a3764fc433e7187244a280baa5da0e2d18d18a570ad228ddfa2a809076"
+    },
+    {
+      "bucket": "opal-data-cot",
+      "key": "investor-reporting/directory/latest.json",
+      "version_id": "7BlMhJbQUufinpGu.73FkvnFZdA9PPD3",
+      "byte_length": 270,
+      "sha256": "f9d4410aefb1ac0a33b8345c05436971844be4ce0b2832fbe3f454decb307e20"
+    }
+  ],
+  "currency_authority": {
+    "schema_version": "firm-currency-attestation-v1",
+    "firm_id": "cottonwood",
+    "currency": "USD",
+    "authority": "ANDREW_ATTESTATION",
+    "reference": "6f45e8fbc917de35aa5e1d29139f3e4d44b79f1c:org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/ANDREW_COT_USD_20260923.md",
+    "attested_at": "2026-09-23T20:57:59.993881+00:00",
+    "scope": "Firm report market values and cash flows; not security-native currency or FX conversion."
+  },
+  "mapping_source_revision": {
+    "bucket": "opal-data-assets",
+    "key": "blackdiamond/cottonwood/silver/fact_model_assignment/date=2026-09-23/data.parquet",
+    "version_id": "ppIXtvdE7sscxrSR4VZ8ADJkBKtdxZIp",
+    "byte_length": 50441,
+    "sha256": "a560410f86e384c7c3157c8ec32b20ae9fb1a111e1acd2a1f73f26037049ecfe",
+    "source_date": "2026-09-23"
+  },
+  "private_artifact_sha256": "9895e71ca11799c7cbf501a2cc1d7f9435ae8567cc70401b58a4c2f8437fff99",
+  "vendor_calls": 0,
+  "cloud_writes": 0
+}

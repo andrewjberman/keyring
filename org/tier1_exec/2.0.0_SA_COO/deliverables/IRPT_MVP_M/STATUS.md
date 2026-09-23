@@ -1,72 +1,37 @@
-# IRPT Holdings ? current state
+# IRPT Holdings current state
 
-Owner: 2.0.0_SA_COO~M. Updated 2026-09-23 16:48 Eastern.
+Owner:2.0.0_SA_COO~M. Updated2026-09-23 21:15UTC.
 **archetype:** IMPLEMENT
 
-## Outcome
+Outcome remains open: authenticated Holdings across49F/COT/INF through Models, SMAs,
+Client and security drill. No live Holdings PASS yet.
 
-Open: one real authenticated Holdings journey per firm, custody through Models /
-SMAs / Client into the full security tree. No live Holdings PASS yet.
+## Current source proof
 
-## Current pins
+7033e23490 adds selected COT construction; CTO8b85d78635 bounded PASS.
+Current candidate consumes P currency binding9e1bc3a751 and adds original-producer
+crosswalk callback. Real selected COT account acc_f91fd04e6f6534fb0270bdcb builds:
+3positions,$1165.21 exact independent total, schema PASS,7 version/hash source receipts.
+17 focused controls pass. See COT_RUNTIME_HANDOFF_20260923.md and source proof JSON.
+UI e5604c03 remains bounded-reviewed; P owns shared runtime/package/projection.
+All work LOCAL; no cloud publication/deploy or vendor calls. Last origin CLOUD b475b96309.
 
-- Backend own branch codex/irpt-m-completion: fec4f688e1, including b411e6f31e.
-  Inflection actual-position dispatch and Cottonwood canonical Client projection.
-- Own UI codex/irpt-m-ui: e5604c03, multi-account roots and signed/zero drill.
-- Shared UI projection patch for P: HOLDINGS_TAXONOMY_PROJECTION_FOR_P.patch@206b5329de.
-- Latest focused validation:18 passed,71 deselected. Earlier17 INF/Eclipse checks passed.
-- All LOCAL; no cloud publication/deploy/push in this turn.
+## Next proof and dependencies
 
-## Ownership and dependencies
+M expands COT source admission using CRO f307d58415 evidence: all-four-null BD rows
+are absent end-date positions, not numeric zero. Partial-null/conflicting rows still refuse.
+P integrates source callback and current authorization, accepted publication/read and
+actual screen drill. Bounded one-account evidence cannot overwrite complete firm population.
 
-M owns actual holdings producers and owned UI. P exclusively owns shared entry,
-scope/auth/contracts/projection/packaging/routes/IAM and integrates supplied pins.
-CTO3de4395fb5 resolved locator reuse; helper/cutoff gate no longer blocks M commit.
-CRO owns existing-source currency/cash evidence; CTO rules on any residual calls.
-
-INF: builder requires exact currency and independent reconciliation. CRO8246 now
-has retained USD Scope evidence for2accounts. M's6same-account/date comparisons
-FAIL to reconcile; see INF_CURRENCY_BRIDGE_20260923.json. No currency propagation.
-Still open: source semantic bridge, selected/historical census incl82inactive,
-per-account availability, model/security membership and actual accepted publication.
-
-49F: dated actual08335338 inventory now measured:7522accounts,106499positions;
-SmartX covers5912accounts,1610without mapping remain in custody base. Exact
-cash/currency semantics and26balance exceptions remain open. See source JSON.
-
-COT: actual Client tree implemented; all5694 original blank-value rows stay unknown.
-P214ddd6b3f reports a live positive performance dual-ID control, so source/reporting
-namespace demonstrated for that account. Currency setting/attestation remains CTO
-call. No new vendor retry inferred from that control.
-
-## Next proof
-
-Resolve one dated INF currency/valuation comparison, bind only proven scope,
-publish accepted actual snapshot under current authorization, integrate P's runtime
-package and taxonomy projection, then exercise the authenticated full drill.
-Continue49F custody adapter with whole master base and SmartX-only model mapping.
-Andrew B relayed99757@d70decd6b2 adds workbook-traded Tax SMA under SMAs/ALT/Tax;
-canonical custody values only. Exact retained membership source requestedCRO~M;
-CTO amendment d9fddeed8e is consumed: classify supported exact custody once under
-SMAs/ALT/Tax, removing identical value from Client; never add custody twice.
-Integration intake requires the accepted canonical snapshot/reader and dated
-FIRST_OBSERVED_UTC membership evidence. Current workbook YES alone cannot backdate
-Sept22 membership. Missing claims/value/history remain explicit. No parallel MDPF
-publisher or new workbook token owner. CRO~M holds the exact retained-source request.
-No target/model AUM substitutes for actual custody; no inferred zeros or USD.
+INF corrected exact3file/twoaccount bridge independently reconciles6/6 values with zero
+USD difference. No blanket day offset or raw asOfDate rewrite. Exact evidence remains local
+pending durable handoff; current broad INF currency/valuation not established.
+49F source inventory7522accounts/106499positions,5912 SmartX-matched and1610 outsideSmartX.
+Currency/cash semantics,26balance exceptions and dated Tax intake remain open.
+Tax canonical research input refuses schema; supplied production history store is stub.
+CTO requests smallest existing-module runtime/path recipe; M has no additional path grant yet.
 
 ## Drive
 
-Requested600-second repository-local drive is active, last verified PID30160.
-Mission is CTO COO_M.md. It ends only on verified three-firm completion or Andrew's
-changed instruction. No duplicate launcher helpers or subagents.
-
-Current handoff: NEXT_STEPS_20260923.md. Historical prose lives in git history.
-
-## Tax intake measured 17:00 Eastern
-
-CRO~M99760 retained snapshot hash verified. Canonical silver build_silver at
-bc5efb655d refuses original research bytes SOURCE_SCHEMA_INVALID; both canonical
-silver/history prefixes independently empty. Supplied f96d5f6cd4 production
-S3DispositionStore append/read are stubs. Exact source/release intake prerequisite
-is TAX_MEMBERSHIP_INTAKE_CHECK_20260923.md; routedCTO, no parallel publisher.
+600-second repository-local drive active, PID30160 last verified. No duplicate helpers.
+Stops only on verified three-firm completion or changed Andrew instruction.
