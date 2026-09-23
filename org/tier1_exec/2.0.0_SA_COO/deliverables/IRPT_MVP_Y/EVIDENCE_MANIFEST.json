@@ -410,10 +410,8 @@
       "initial_factory_driver_result": "2FAIL28PASS: test expected ok:true on success but actual Entry success is data envelope; assertion corrected without production change"
     },
     "independent_review": {
-      "state": "HANDOFF_PENDING",
-      "reviewer": "3.0.0_SA_CVO~Y",
-      "target": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
-      "entry_report": "141510 message reports 24 independent plus12 supplied PASS on b357; durable review pin pending; not transferred to later composition changes"
+      "state": "SUPERSEDED_FOR_CURRENT_FINAL_REVIEW",
+      "note": "Historical CVO evidence retained; current final review routed to CTO per151855 relay"
     },
     "production_factory_installed": false,
     "live_calls": false,
@@ -1076,6 +1074,20 @@
     },
     "local_factory_installed_tested": true,
     "runtime_factory_handoff": "CUSTODY_FACTORY_20260923.md",
-    "module_manifest": "CUSTODY_FACTORY_MODULES_20260923.json"
+    "module_manifest": "CUSTODY_FACTORY_MODULES_20260923.json",
+    "prior_review_route": {
+      "state": "HANDOFF_PENDING",
+      "reviewer": "3.0.0_SA_CVO~Y",
+      "target": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+      "entry_report": "141510 message reports 24 independent plus12 supplied PASS on b357; durable review pin pending; not transferred to later composition changes"
+    },
+    "current_review": {
+      "reviewer": "1.0.0_SA_CTO",
+      "state": "IN_REVIEW",
+      "target": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+      "authority_message": "20260923T151855Z_1.0.0_SA_CTO_IRPT_Andrew-direct_CTO_reviews_current_f.md",
+      "relayed_word": "No independent review, you are the reviewer here.",
+      "instruction": "Continue implementation/source-adapter coordination; do not await CVO approval; no deployment change"
+    }
   }
 }

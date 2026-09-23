@@ -4,7 +4,8 @@ Current LOCAL factory candidate `819c9e3990` consumes P scalar reader `48946e797
 [CUSTODY_FACTORY_20260923.md](CUSTODY_FACTORY_20260923.md) names exact installed-local exports, ports, module hashes and remaining seams.
 30 paired/factory PASS; generate/intake265PASS50subtests; isolated scope148PASS57subtests; custody/schema60PASS.
 Original SDK admission6FAIL14PASS preserved; scalar-only adapted original driver20PASS.
-Actual accepted snapshot/normalized producer adapter (M/Y), flat package and runtime installation (P/Y), independent review and live acceptance remain open.
+Actual accepted snapshot/normalized producer adapter (M/Y), flat package and runtime installation (P/Y), CTO final review and live acceptance remain open.
+Review route updated by CTO151855 Andrew-direct relay: CTO directly reviews current factory/consumer; no CVO approval wait.
 No production factory installed or cloud/vendor action.
 
 Owner `2.0.0_SA_COO~Y`, 2026-09-22. Direct completion mandate CONTRACT v1.2.
