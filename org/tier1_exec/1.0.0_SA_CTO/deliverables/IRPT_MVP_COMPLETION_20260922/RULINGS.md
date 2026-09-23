@@ -385,3 +385,10 @@ Andrew at CRO, record ebf1a0f6b5, verbatim: "All approved, go now". Capture and 
 ## 2026-09-23 20:27 UTC - COT external identity parity
 
 P a70f6e3b71 returns contract_validated=true when accountInfo.externalId is absent or conflicts with the mapping. P repairs both period/series checks and pre-I/O mapping completeness; numeric ID alone does not settle the unproven COT namespace. Evidence DIRECT_REVIEW_2020_20260923/P_PERFORMANCE_REVIEW.md. No broad suite requested; source/retention composition continues.
+
+
+## 2026-09-23 20:29 UTC - concrete source blockers
+
+CRO c12fe7099b clarifies retained SmartX data: account PTD decimal evidence1account/4periods; provider-as-of absent, retrieval time only. Do not fill dated-as-of contract with retrieval time. Window-end open roster matching44/44 and42/42 settles only that denominator; whole-window closed-account completeness remains narrower than a general completeness claim. Large-flow association does not establish the precise return formula: carry provider method unknown and preserve provider value. Eastern calendar-date bounds measured; do not silently treat provider midnight epochs as UTC dates. No additional capture requested.
+
+M actual INF positions reader is blocked by NEW legacy source literals. Existing NAMING_LEGACY_READS intentionally cannot admit new sites. G is the bounded naming-owner route for a truthful existing landed-read locator or smallest exact mechanism proposal; CTO will adjudicate it. Do not insert an ineffective waiver, guess a canonical repoint, hide literals or bypass gates. This is a live-thread blocker, not general naming enrichment.
