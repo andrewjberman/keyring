@@ -6,6 +6,13 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 ## Completed preparation
 
+- Canonical SDK profile consumercdbd4de74d:19independent controls and99focused
+  supplied45subtests PASS. Actual M SDK/retained authorizer through Y/P service,
+  frozen config/worker; synthetic storage/policy/dispatch/held lease. Wrong or
+  changing source/retention refuses before composition storage; accepted values
+  remain frozen without SDK rereads/writes and unrelated private fields excluded.
+  See `CANONICAL_CONSUMER_REVIEW_cdbd.md`; peer M a8f8a15e6c separately attributed.
+  No installed factory/IAM/current policy/custody/effecting/vendor/runtime grade.
 - Recorded recipe snapshotef9e8f51c4:34independent controls and97supplied+
   39subtests PASS. Exact config hashes/seven settings/body mapping and stored
   replay survive corrupted source files without new writes. Strict setting/

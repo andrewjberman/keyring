@@ -550,3 +550,13 @@ expectation corrected; initial/diagnostic receipts preserved. See
 RECIPE_SNAPSHOT_REVIEW_ef9e.md. No current template/settings/vendor permission,
 installed factory, effecting worker/render/runtime grade. Integrated denominator
 remains0PASS/0FAIL/14NOT_EVALUATED.
+
+## Canonical SDK profile consumercdbd4de74d bounded PASS
+
+19independent controls and99focused supplied45subtests PASS. Actual M SDK reader/
+retained authorizer through Y/P admission/configuration/frozen worker preserves
+exact accepted values without recapture; SDK ambiguity/identity drift and original
+dependency loss refuse before composition writes. Extra private fields excluded.
+See CANONICAL_CONSUMER_REVIEW_cdbd.md; M a8f8a15e6c remains peer-attributed only.
+Synthetic SDK/storage/ACTIVE policy/dispatch/held lease, no installed factory/IAM/
+live policy/custody/effecting/vendor/render/runtime grade. All14NOT_EVALUATED.
