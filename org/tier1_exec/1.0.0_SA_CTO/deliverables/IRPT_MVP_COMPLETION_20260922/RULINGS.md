@@ -486,3 +486,8 @@ P-SOURCE-01 CLOSED5765ea21a5 with6focused fidelity/composition checks0.74s. M-P-
 ## 2026-09-23 21:36 UTC - first native Holdings publication and empty Reporting storage
 
 CTO direct review accepts a86430e39e bounded initial COT publication under exact selected-account/date/source-result checks, absent-index CAS and version readback; M owns execution/API/screen, P exact reader package plan. Source controls5PASS0.62s; live old Lambda/index absence independently confirmed. P f4a1dd60a3 binary storage plan c7639c4c06ba726a8df246c4c5742da6c70e22890940fdbbd38535c8f8329a90 independently reviewed5create0change0destroy; exact safe-apply permitted with readbacks, no automatic policy activation/data-write/runtime deployment. Review: DIRECT_REVIEW_2020_20260923/COT_PUBLICATION_AND_STORAGE_PLAN_REVIEW.md. All products incomplete.
+
+
+## 2026-09-23 21:42 UTC - Reporting package dependency
+
+P-PACK-01: exact9cc2d2d9 candidate omits org/standards/NAMING_SCHEMA.json; fresh extracted canonical destination probe fails. Adding only pinned schema in scratch makes identical probe pass. P repairs both review/canonical package, returns final manifest/hash and one probe. Source/mapping acceptance and73c40 empty-storage apply remain intact; no vendor call needed. See DIRECT_REVIEW_2020_20260923/P_PACKAGE_NAMING_REVIEW.md.
