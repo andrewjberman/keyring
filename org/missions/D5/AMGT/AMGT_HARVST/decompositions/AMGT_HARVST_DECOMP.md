@@ -600,3 +600,64 @@ control?** It is a write to an existing key against a never-overwrite preconditi
 (versioning is Enabled), and it destroys nothing. **This seat does NOT decide it**: asked of `1.0.0_SA_CTO~Z` in
 the same turn as this cut, with the alternative stated -- that the 18 stay unlabelled and `Z-S1`'s backward half
 closes as a DISCLOSED STATE in the record rather than as a metadata change, which needs no write at all.
+
+## 16. ROUND 5 (v1.4) -- AN ISSUANCE OF NOTHING, and the read that earns it
+
+**From the L10 round-4 analysis @`2b196119f8`.** That analysis asked one thing of this seat before any cut:
+*"before proposing a fourth vendor act, ask whether the coverage question is answerable from the 479 objects already
+held."* **It is. So round 5 issues ZERO orders, which the analysis states is a legal L6 act when the coverage read
+closes it.**
+
+### 16a. Rule 24 record -- the subtraction that yields ZERO
+
+**Printed denominator: the round-4 analysis's round-5 list carries THREE items.**
+- MINUS **`Z-S3`'s wording bound**, which the analysis CARRIES rather than cuts and whose disarm is a wording
+  discipline no cell can execute.
+- MINUS **the coverage question**, ANSWERED at zero egress by this seat before the cut and recorded as row
+  `Z-S14`.
+- MINUS **the channel**, measured at **36 rows, 0 non-terminal.**
+- **REMAINDER: ZERO.** No cell is invented to fill the round.
+
+### 16b. The coverage read, and it reframes the vendor question rather than answering it yes
+
+**Silver article census, 86 parquet objects, ROWS DENOMINATOR 97.** Rows whose `discovered_for` contains
+`992_HK_Equity`: **14 -- seeking-alpha 3, wsj 11.** Rows per publisher overall: barrons 15, bbg 19, ft 14, sa 23,
+wsj 26. **So barrons, bbg and ft hold 48 rows for OTHER securities and ZERO for Lenovo.**
+
+**The run report closes the other half.** All five publishers were asked for Lenovo in ONE invocation and each
+reached its own recorded terminal outcome: sa stopped on an HTTP 502 with 3 genuinely new; **bbg** took a
+verification challenge on the job's own first fetch; **ft** returned **HTTP 403 from its search endpoint**; wsj
+expired, re-authenticated successfully and accepted 11; **barrons** expired, **re-authenticated SUCCESSFULLY, and
+its replayed first attempt was still rejected.** The report states plainly that bbg, ft and barrons fetched zero
+pages worth of content.
+
+**SO THE THREE ARE NOT UNMEASURED.** They were asked, and access was refused three different ways, leaving nothing
+held to evaluate. **STOP: the discriminator that matters is that only bbg's failure is plausibly session-shaped.**
+A fresh session does not change a 403 on a search path, and it demonstrably did not change barrons, whose
+re-authentication already succeeded once with the rejection following it.
+
+**This seat is NOT asking for a vendor act.** The row exists so that if anyone raises one, the question starts from
+this measurement rather than from the sentence the round-3 analysis withdrew.
+
+### 16c. WHERE THE PROJECT ACTUALLY STANDS, stated plainly
+
+**Every item this project can finish alone is finished.** Two consecutive rounds ran at zero egress and zero writes,
+each closing an item with a measurement rather than an argument. What remains is held OUTSIDE the project:
+
+| held | owner | what it waits on |
+|---|---|---|
+| the timeline BUILD cell | Andrew, through `1.0.0_SA_CTO~Z` | approval of the AMENDED spec |
+| any further publisher access | Andrew, through `1.0.0_SA_CTO~Z` | his word -- and `Z-S14` now says a session-shaped act addresses at most ONE of the three refusals |
+| the served chatter switch | `1.0.0_SA_CTO~Z` and this seat, with `2.0.0_SA_COO~Z` | a never-widen pair, the gold read grant, `AMGT_RESAPP`'s retirement window |
+| the S3-delete breach on the SIBLING project | Andrew | unadjudicated; this project measured clear of it (section 14a) |
+| `Z-W14-S2`, `Z-W9-S1`, `Z-W8-S2` | the estate card / this seat | unchanged |
+
+**`FWD-1` stays NOT REALIZED**, and its remaining cause is now stated per publisher rather than as a single
+sentence about sessions. **`FWD-5` and `FWD-6`'s spec is complete and its build is Andrew's call.**
+
+### 16d. What round 5 does NOT do
+
+- **It does not invent a cell to look productive.** An issuance of nothing is the honest act when the remainder is
+  zero, and inventing work here would spend a worker slot to produce a report.
+- **It does not ask for egress**, and it does not restate the withdrawn sentence.
+- **It does not close `FWD-1`**, and it does not claim the project is complete -- only that its in-boundary work is.
