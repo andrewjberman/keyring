@@ -1,6 +1,6 @@
 ﻿# IRPT Y - current product status
 
-Seat `2.0.0_SA_COO~Y`, September 23, 2026, 17:53 Eastern. Analysis remains INCOMPLETE.
+Seat `2.0.0_SA_COO~Y`, September 23, 2026, 18:02 Eastern. Analysis remains INCOMPLETE.
 Contract v1.4 and COO_Y mandate apply; CTO reviews directly. Fresh-thread load
 completed; exact serial matches environment and readiness oracle GREEN 9/9.
 Existing launcher helpers and 600-second seat-only drive were preserved.
@@ -27,13 +27,20 @@ connected cases cover both creator classes, certified READY/reopen, revocation,
 ownership tampering and retained-PDF recovery without vendor reacquisition.
 Combined bootstrap/cross-firm check:18 PASS13.68s. Existing same-firm connected
 case and three publisher ancestry/revocation checks pass. Ruff/commit gates pass.
-New cross-firm candidate awaits CTO review; this is offline source evidence.
+CTO `2dd385ed59` independently accepts exact `2874e37647`: eight cross-firm
+cases PASS3.69s plus four existing controls PASS2.22s. Exact publisher.py P
+integration grant landed with the contract. This is bounded source PASS only.
 
 Browser template -> installed guarded UploadService is still not live-proven.
 P owns shared current-authority/repository factory, host upload boundary,
 package/IAM/routes and sole-consumer cutover receipt. Current CTO control and
 215058 message confirm runtime/enforcement pending despite newly provisioned
-report storage. No replacement shared writer or duplicate session consumer.
+report storage. P integration tree `irpt-smoke-p-backend-20260923` at
+`85d8031728` currently contains no resident module or build_resident_runtime
+factory under investor-reporting; the working changes are deployment records.
+Next missing interface is P's actual installed MODULE:build_resident_runtime,
+paired package digest and measured sole-consumer cutover receipt. See INTERFACES.
+No replacement shared writer or duplicate session consumer.
 
 ## ONE next proof
 

@@ -61,5 +61,10 @@ P owns the current shared repositories/authority factory, package and sole-consu
 cutover receipt on approved always-on `i-0167fd745ad906a66`. Y consumes the concrete
 installed boundary and proves AAPL 10.01 + VNQ 2.02 Dollars Overview through real
 login, queue, vendor PDF, retained certified Analysis report, screen and reload.
-CTO reviews this exact source delta; the bootstrap closure is already accepted.
+CTO review `2dd385ed59` accepts exact `2874e37647` as bounded source PASS:
+eight cross-firm cases PASS3.69s and four existing controls PASS2.22s in an isolated
+exact-pin tree. The same commit grants publisher.py integration to P; the other
+three paths were already covered. Bootstrap closure remains accepted at3d9f451.
+The next missing installed MODULE:build_resident_runtime interface and readbacks
+are recorded in current INTERFACES.md; no new factory signature is requested.
 All Y1-Y7/S1-S7 remaining firm/input/unit/variant/recovery/export cases remain open.

@@ -1,7 +1,8 @@
 ﻿# IRPT Y - current interfaces
 
 Owner `2.0.0_SA_COO~Y`; source `2874e37647` over `bfe6469b1e`/`4ebe6948d9`.
-CTO directly reviews under current CONTRACT v1.4. Current executable delta is
+CTO bounded source PASS `2dd385ed59` covers exact `2874e37647`; publisher.py's
+remaining P integration grant is in the same commit. Current executable delta is
 CROSS_FIRM_PUBLICATION_HANDOFF_20260923.md; full literal installer and pinned
 host capture/census contract is RESIDENT_ASSEMBLY_HANDOFF_20260923.md.
 
@@ -40,6 +41,16 @@ DUAL_OWNER_HANDOFF_20260923.md pins real P storage/admission/access and M profil
 ports. Actual submitter and original immutable input owner remain separate.
 
 ## Runtime and next proof
+
+Next missing installed interface (measured September 23, 18:02 Eastern): P's
+`irpt-smoke-p-backend-20260923` tree at `85d8031728` has no resident module or
+build_resident_runtime factory under investor-reporting. No installed boundary is
+inferred from its Performance native dependency/package work. P returns the
+actual MODULE:build_resident_runtime path, source/package/census digests, current
+submitter authority and retained repository bindings, and measured cutover receipt
+for the one service/queue consumer. Factory shape above and literal installer in
+the resident handoff are unchanged. A second request/schema or Y-owned duplicate
+shared factory is unnecessary. Y runs the live journey once those bytes are installed.
 
 Dedicated always-on i-0167fd745ad906a66, one session owner/generation consumer,
 no inbound. Standing host workflow/D1 approved under Andrew6fc3f5f785; generation
