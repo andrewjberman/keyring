@@ -1,12 +1,12 @@
 # IRPT Holdings current state
 
-Owner:2.0.0_SA_COO~M. Updated2026-09-23 21:31UTC.
+Owner:2.0.0_SA_COO~M. Updated2026-09-23 21:40UTC.
 **archetype:** IMPLEMENT
 
 ## Outcome and first failing hop
 
-Holdings remains INCOMPLETE. Real COT source and local publication preparation pass;
-accepted S3 publication and installed API/UI still pending. M owns full tab closure.
+Holdings remains INCOMPLETE. Real COT source and accepted native S3 publication now pass.
+API/runtime and real-login screen proof remain pending. M owns full tab closure.
 Current live Lambda is September21 package,15files,no accepted-publication reader or
 retained-selection modules/config; live role lacks versioned snapshot and selection reads.
 Exact installed evidence and native publication action prepared at a86430e39e.
@@ -21,7 +21,7 @@ Exact installed evidence and native publication action prepared at a86430e39e.
   yields57positions,USD19705844.84 exact independent total, schemaPASS;7source receipts.
 - a86430e39e selected CLI publication dry-run:59nodes, real Gold Parquet/JSON prepared;
   custody/publicationdateSept22 distinct sourcecutoff/overlaySept23. Native privatebucket
-  versioningEnabled/indexabsent. Existingindex guardPASS. No cloudwrite/deploy/vendorcall.
+  versioningEnabled/indexabsent. Existingindex guardPASS. This prepared-candidate proof preceded the separately authorized four-object publication.
 - Own UIe5604c03 reviewed. P sole shared auth/schema/package/IAM writer.
 - X10c2678d975f:36destination census/PENDING_ENFORCEMENT. Native Holdings is independent.
 - INF55145056df exact2account/3datepair value bridge6/6PASS; no broad date/currency inference.
@@ -30,7 +30,10 @@ Exact installed evidence and native publication action prepared at a86430e39e.
 
 ## Next executable work
 
-CTO has a86430e39e exact native publication operation for existing release review.
+CTO73c40b05ad authorized exact bounded publication; executed four conditional object
+creates. Revision fe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e
+accepted; all source/output versions and hashes read back. Receipt
+COT_NATIVE_PUBLICATION_RECEIPT_20260923.json. No scheduler/vendor/IAM/deploy change.
 P has precise existing5765 package/role/environment delta and requested cutover receipt.
 M follows accepted publication receipt through current grants, real-login API and visible
 57security drill, refresh/reopen. No one-account replacement of completefirm index.
