@@ -155,3 +155,17 @@ upload/input privileges or grant access from a browser-supplied owner record.
 
 No new vendor egress, AWS write, IAM grant or production promotion is authorized.
 Include this extension's exact source/package dependency delta in P's candidate.
+
+## Product clarification relayed by COO Y, 20260923T135600Z
+
+Y reports Andrew's exact direction: Opal users can select any firm client and
+drill down to accounts directly from the Global default view, managed by the
+upper-right Select Firm control, following Model Portfolios and the existing
+`api/scoped` multi-tenant structure. This is consistent with the admitted Global
+browsing requirement above. Do not require an Opal user to switch the dropdown
+to a partner before selecting that partner's client from Global. Keep Global as
+the discovery filter while the selected row supplies a server-verified concrete
+tenant for drilldown, accepted account selection and report generation. Preserve
+firm attribution and distinguish same-named clients across firms by verified
+tenant and canonical IDs. P owns the shared UI/API implementation; Y consumes
+the accepted concrete selection. This clarification is not a live PASS.
