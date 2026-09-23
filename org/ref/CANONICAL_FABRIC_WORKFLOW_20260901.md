@@ -14,7 +14,11 @@ an issuance. A task order has a **worker face**, the part a worker is given and 
 **record face**, the part the gates read and a worker never sees. A **track** is one of the three concurrent lines of
 work inside a round, the COO's, the CVO's and the CTO's; tracks share files and never messages. The **slug** is the
 CVO's one artifact of a round; the **round-N analysis** and the **PRD addendum** are the CTO's two possible answers
-to it. A **gate** refuses at commit or at completion; a **notifier** delivers and never blocks; **binds by reading**
+to it. The **thread** is one named person's one journey through a product at coarse resolution, run on the deployed
+stack through every real hop from the screen to the data and back, and proven by one trace artifact that records each
+hop's request and response and ends in the rendered result; a thread with any hop fed by a fixture is not done. An
+**enrichment round** is any round after the first: it adds the capabilities the CTO's round-N analysis names in its
+enrichment list, with the thread kept working. A **gate** refuses at commit or at completion; a **notifier** delivers and never blocks; **binds by reading**
 means the sentence has no mechanical carrier. The register's `dep_stage` enum (`REGISTERED`, `PRD`, `DECOMP`,
 `EXECUTING`, `ROUND_CLOSE`, `CLOSED`) is data; its limb mapping is in section 3.
 
@@ -28,7 +32,10 @@ the flat index entry `org/projects/<CODE>.json` is generated from it and carries
 
 ## 1. The ten limbs
 
-**The shape of a round.** L1 to L5 run once, in order, each handing its artifact to the next. L6 cuts every task
+**The shape of a round.** L1 to L5 run once, in order, each handing its artifact to the next. **Round 1 builds the
+thread, the whole journey end to end at coarse resolution, rough and incomplete but working; every later round is an
+enrichment round.** The product is known to work from the first round, and each later round adds to something that
+already runs, instead of proving components one at a time and joining them last. L6 cuts every task
 order of the decomposition in one issuance. Three tracks then run at once and share only files: the COO spawns the
 workers, feeds each its queue, merges each finished task order and sends nothing until its drain-end read; the CVO
 reads the surprise channel as rows land, investigates as deeply as a row needs, compiles the round's remediations
@@ -72,7 +79,8 @@ travels to the worker.
 - **Owner:** `4.0.0_SA_CRO`. **Not engaged:** every other seat.
 - **Input:** the topic, discussed with Andrew. **Output:** the brief at `org/missions/D<n>/<MACRO>/<CODE>/brief/<slug>.md`
   (`docs/briefs/<slug>.md` and a sovereign-word record `org/tier<n>_<tier>/<serial>/deliverables/ANDREW_DIRECT_<slug>.md`
-  are the two other admitted shapes), every line citable.
+  are the two other admitted shapes), every line citable. A brief for a product or pipeline names its candidate
+  thread: which person, which journey, at coarse grain, so L2 has something to cut the first outcome from.
 - **Tool:** `/brief-create`.
 - **Gate:** none at L1. The brief's path shape is refused at L6 by the PRD header pattern if it is none of the three.
 - **Handoff:** the brief's path and vintage, `<path>@<commit>`, become the PRD header's `brief_ref`.
@@ -82,6 +90,11 @@ travels to the worker.
 - **Owner:** `1.0.0_SA_CTO`. **Not engaged:** `2.0.0_SA_COO`, `3.0.0_SA_CVO`, every worker.
 - **Input:** the brief. **Output:** numbered qualitative outcomes `FWD-1..n`, each citing a brief line, carrying no
   numbers, each disputable; ids are permanent and never reused.
+- **THE THREAD IS THE FIRST OUTCOME.** For a product or a pipeline, `FWD-1` is the thread, its `DONE WHEN` reading
+  `EXERCISED -- one live trace, on the deployed stack, ending in the rendered result`; every other outcome is cut as
+  before and is served by the enrichment rounds. The seam between any two components lies inside the thread by
+  construction, so it always has an owner. For a pipeline with no product surface the thread is source to served
+  artifact. COST: one outcome. NON-APPLICATION: a pure infrastructure or governance project, which has no journey.
 - ⛔ **NO FWD IS A WAIT.** Every outcome is PROVABLE BY AN ACT A SEAT CAN TAKE ON DEMAND. An outcome whose only proof is an event nobody
   controls -- a failure, a rare condition, a calendar -- is written WRONG, and the remedy is not patience: it is re-cut so its MECHANISM is
   DRIVEN DELIBERATELY, with the organic case kept as the negative arm. **THE ACT MAY BE A DRIVEN RUN OR A READ OF EXISTING HISTORY** -- driving is
@@ -128,7 +141,11 @@ travels to the worker.
 - **Input:** the brief and the endpoint. **Output:** `org/missions/D<n>/<MACRO>/<CODE>/prd/<CODE>_PRD.md`: the
   fenced PRD_HEADER json block first (`org/standards/PRD_HEADER.schema.json`: `project`, `directive`, `fabric`,
   `prd_version`, `step`, `brief_ref`, `endpoint_outcomes`, `status`), the endpoint section, the project arc with its
-  defined outcome, and the surface manifest, one row per engine. Every specification decision is closed in the PRD;
+  defined outcome, the surface manifest, one row per engine, and for a product or pipeline two further sections: the
+  **THREAD**, the hop list of the first outcome written `N. A -> B`, one line per hop, and the **ENRICHMENT BACKLOG**,
+  everything off the thread, ordered, one line each. Both sit in the brief half of the sign-off below. A new product
+  is one journey in one project, never split into a frontend project and a backend project; where such a split
+  already exists, the two PRDs name one project as the owner of each seam hop. Every specification decision is closed in the PRD;
   a decision that is an enumeration is closed as data in `org/standards/` and cited; a PRD carries no open
   decide-first question into L5. Any substantive edit bumps `prd_version`; a PRD addendum from L10 is such an edit,
   by the same owner, and re-enters L5 through the same notifier as a first PRD.
@@ -200,13 +217,19 @@ travels to the worker.
 
 - **Owner:** `2.0.0_SA_COO`. **Not engaged:** `1.0.0_SA_CTO`, `3.0.0_SA_CVO`, `0.0.0_AB_MSTR`, every worker. No seat
   certifies the decomposition before L6; the COO may run the sealed-mutant harness as a self-check that no seat waits on.
-- **Input:** the PRD's surface manifest. **Output:** `org/missions/D<n>/<MACRO>/<CODE>/decompositions/<CODE>_DECOMP.md`:
-  the rectangle over the manifest's surfaces, every cell carrying a status from a vocabulary that has a
+- **Input:** the PRD's thread and surface manifest. **Output:** `org/missions/D<n>/<MACRO>/<CODE>/decompositions/<CODE>_DECOMP.md`:
+  the rectangle of THIS ROUND. Round 1's rectangle is over the thread's hops, one cell per adapter to build or repair,
+  so the first issuance builds the journey and not a layer of it; an enrichment round's rectangle is over the
+  enrichment list the round-N analysis names, and over the manifest's surfaces where an item spans them. A project
+  with no thread (L2's non-application) keeps the rectangle over the manifest's surfaces. The decomposition carries
+  every cell with a status from a vocabulary that has a
   not-evaluated value, cell ids per `org/standards/DECOMP_CELL_ID_CONVENTION.md`, the Rule 24 four-postulate record,
   a placement axis (which fabric executes each cell), dependency edges keyed to observed completion, and a battery
   disposition per lens: the mandatory core `comp-schedule`, `comp-iam`, `comp-adversary`, each `RUN` with a
   denominator or blindness statement or `DECLARED-NOT-APPLICABLE` with a reason, plus any lens of the admitted
-  catalog. A lens whose neighborhood is not the cell's dependency chain, its dependencies' proof instances and the
+  catalog. On round 1 of a threaded project every lens defaults to `DECLARED-NOT-APPLICABLE` with the reason "thread
+  round; the lens runs on the enrichment round that touches its surface", except `comp-iam`, which is `RUN` whenever
+  the thread touches IAM. A lens whose neighborhood is not the cell's dependency chain, its dependencies' proof instances and the
   PRD rows it cites, but the filesystem around a cited path, states that blindness in its disposition. No cell is
   owned by a seat; every cell is served by a worker at L7. The dependency edges are the input L6 derives its fan-out
   from: a maximal path through them is a chain, and two cells on one chain never run at once. The decomposition is
@@ -238,8 +261,9 @@ travels to the worker.
   commit's message: it carries the fan-out as data, `fanout: N of M chains, cap K, reason: <one line>`, where M is
   the number of dependency-independent chains in the decomposition's edge set, N is the number of workers spawned,
   and K is the cap the COO states; the default cap is eight, and a larger cap is stated with its reason in the same
-  line. Two task orders on one chain belong to one worker's queue; two chains may take two workers. No cell is left
-  for a later round; a later round exists only when the CTO's round-N analysis sends work back.
+  line. Two task orders on one chain belong to one worker's queue; two chains may take two workers. The issuance
+  covers every cell of THIS ROUND's decomposition: round 1's decomposition is the thread, and every later round's is
+  the enrichment list the CTO's round-N analysis names.
 - **Tool:** the task-order protocol; then, per worker slot, the harness's subagent call with the worker agent type and
   a HAND-CUT worktree off CLOUD (`git worktree add -b wk-<code>-<round>-<n> /c/tmp/<slot> CLOUD`, its path in the prompt;
   never the harness's own isolation option, which bases on origin/main with no `org/` or `.tools/`), its prompt the worker face of the slot's first task order verbatim plus the identity line of
@@ -254,6 +278,18 @@ travels to the worker.
   author's issuance; lane `TREE_PROJECT_ROW` admits the COO to the row for the `EXECUTING` flip.
 - **Handoff:** `dep_stage: EXECUTING`, flipped by the COO in the issuance commit, so the guards that key on the stage
   arm with the act that starts it.
+- **THE VERIFICATION DIET -- A TASK ORDER IS MOSTLY THE BUILD.** A build task order carries at most THREE mechanical
+  criteria: the built behaviour; the hop's seam probe against its REAL neighbour where that neighbour is reachable, a
+  fixture only where it is not; and at most one further criterion the cell genuinely needs. A fourth carries a
+  one-line reason on the face. Repo-wide
+  hygiene -- typecheck, lint, the full suite, `py_compile` -- is never a criterion on an order: the COO runs it once per
+  merge at the drain, beside `safe-merge.sh`'s row gate, and re-runs the live thread trace once per round there. A
+  judgment criterion appears only where the outcome needs judgment, a user-facing reading or a design-conformance
+  grade, and is not a default slot on every face. An instrument, record or style repair is one cell per round, never
+  a round of its own (L10). The refusal clause, the difference control and the proof-of-spec instance below are kept
+  unchanged: the diet removes volume, not those controls. This is a rule of the cut, carried by the task-order
+  protocol and `/dispatch`; no gate counts criteria. COST: none -- a smaller face. NON-APPLICATION: a task order whose
+  whole subject is a control, where its difference arm is the build.
 - ⛔ **A SEAM PROVED TO DELIVER ITS INPUT IS NOT A SEAM PROVED TO HAVE AN EFFECT. A criterion NAMES THE OUTCOME, never only the
   MECHANISM.** "The value reaches the function" and "the value changes what the function decides" are DIFFERENT CLAIMS, and an
   arm that proves the first reads exactly like an arm that proves the second. Every criterion asserting a control, a fence, a
@@ -442,12 +478,19 @@ travels to the worker.
   taken together, reach its `DONE WHEN`; this is the same read as the close's grades, one verdict per outcome, against
   the exercised artifact, never the report. Then one of two answers. An outcome no cell ever served takes a PRD
   addendum: the CTO bumps `prd_version`, the L4 notifier delivers the header to the two reviewers and, once both re-sign (L4-R), to the COO, and the loop runs forward from
-  L4; this is rare by design, because an uncovered outcome means L5 missed it and the decomposition is over the manifest
-  the CTO wrote. Otherwise the CTO writes `ledger/ROUND_ANALYSIS.round<N>.md`: per outcome, the expectation against
+  L4; this is rare by design, because an uncovered outcome means L5 missed it and the decomposition is over the thread
+  and the manifest the CTO wrote. Otherwise the CTO writes `ledger/ROUND_ANALYSIS.round<N>.md`: per outcome, the expectation against
   what was delivered, what the remediations file says about it, what the adjudications say of each judgment criterion,
   and what the next drain should carry; and hands it to the COO with the remediations file, one message, two artifacts.
-- **The recut.** The COO reads both, adds or recuts task orders as its own judgment dictates, a re-decomposed cell, a
-  re-issued task order, new cells for an addendum, and issues them as one issuance again under L6, covering every
+  The analysis ends in an **ENRICHMENT LIST for round N+1**: the capabilities that round adds, taken from the PRD's
+  enrichment backlog (the next firm, the next window, the second screen, export), one item per cell, ordered by what a
+  user gains, each keeping the thread working. Remediations ride in the same issuance under two rules: a remediation
+  that breaks the thread goes first, and every remediation that concerns only a verification instrument, a record or a
+  style residual is batched into ONE cell for the round, never a round of its own. Andrew may re-order or replace the
+  list at any time by his word; no limb waits on him. A round whose every outcome grades `REALIZED` is closed, not
+  enriched.
+- **The recut.** The COO reads both, decomposes the enrichment list as the round's rectangle, and adds or recuts task
+  orders as its own judgment dictates, a re-decomposed cell, a re-issued task order, new cells for an addendum, and issues them as one issuance again under L6, covering every
   affected cell; the choice between a re-decomposition and a re-issue is the COO's and is recorded in the issuance
   commit, never routed. The round runs again from the three tracks. A finding whose remedy lies outside this project's
   chain is not recut and no analysis targets another project: the row's `disarm_owner` fixes it in place when the fix
@@ -494,6 +537,38 @@ task order, with the CVO validating each against the task order's criteria, and 
 unfinished edit. Then the COO re-dispatches the non-terminal task orders to fresh slots under L6, the CVO re-arms its
 watcher from its watermark, and the CTO does nothing. `/canonical-flow` is the instrument of this read for every seat.
 
+### Closer — a product in flight, on Andrew's word
+
+- **When:** a product whose components exist but on which no journey works end to end, and Andrew names it for
+  closing. It runs in place of L5 to L9 for the named journeys; L1 to L4 are not re-run, and the project's register
+  row, PRD and channel stay where they are. NON-APPLICATION: greenfield work, where round 1 already builds the thread,
+  and a single-surface fix.
+- **Four artifacts, one owner each.** (1) A **trace brief** per product surface, by `4.0.0_SA_CRO` or any Tier-1 seat:
+  the current state read from the DEPLOYED bytes, an adapter map, and a numbered hop walk, each hop graded `WORKS`,
+  `INCOMPLETE`, `MISSING` or `MISMATCHED` and ending in the change that closes it; any new address or name in it is
+  the naming builder's output. (2) A **contract** of at most two pages, by `1.0.0_SA_CTO`: the outcome journeys; the
+  operating mode, implement directly with no task orders and no recut for an in-scope fix; the table of one writer
+  per shared surface, which is also the path grant and lands in the same commit; the shared semantic contracts, which
+  double as acceptance ids; a breaking change settled by one exchange between peers and then the CTO's ruling. (3) A
+  one-page **mandate** per implementing seat, by the CTO: its first act, its acceptance ids, its write surface. (4)
+  **Execution and review**: each implementing seat, a `2.0.0_SA_COO` instance, implements directly and publishes
+  pinned candidates; a `3.0.0_SA_CVO` instance per implementing seat grades each pinned candidate `PASS`, `FAIL` or
+  `NOT_EVALUATED`, and offline success is never called a deployed end-to-end pass; the CTO integrates and rules. The
+  COO implementing directly, rather than through workers, is the one departure from L7, and Andrew's word naming the
+  product is its authority.
+- **Three rules.** **LIVE FIRST:** the first milestone is the deployed thread through the shared first hop (the
+  authentication, scope and bootstrap every screen crosses), owned by one seat and proven live before any offline
+  closure counts toward an acceptance id; offline closures are allowed and grade nothing until then. **FILES OVER
+  MAIL:** each seat keeps one fixed-shape STATUS file overwritten in place (pins, write claims, next proof,
+  dependencies with owner, limits) and an INTERFACES file holding only the current schema and example, superseded text
+  moved to a history file; a message carries an interface published, a blocker or a review handoff and nothing else,
+  never an acknowledgement; the CTO's rulings append to one rulings file and go out as one message per batch. **NO
+  SIDE-QUESTS:** a naming, registry or storage-policy question that is not on the thread is parked with an owner and
+  the condition that un-parks it, never run as a review chain inside the sprint.
+- **Hand-back:** once the thread and the named journeys pass live, the remaining work returns to canonical enrichment
+  rounds under L10, or to the close.
+- **Tool:** `/closer`, in both runtimes; its templates are the four artifacts.
+
 ### Cross-cutting — the integrator
 
 `0.0.0_AB_MSTR` retains write access to the directive register WITHOUT holding a gate over it, opens and closes the push windows on the shared branch, and seats
@@ -513,6 +588,7 @@ measured property of every done test, read by `ls-remote`, never a cell of a dec
 | L8–L9, the slug | `3.0.0_SA_CVO` | lane `TREE_CVO` on `remediations/` and `adjudications/`; `investigations/` and `cards/` admit every seat | the CVO's one message of a round is the slug to the CTO; the same-turn broadcast of an Andrew-direct at its terminal is the law's carrier, not a message of the round |
 | L10 read, close | `1.0.0_SA_CTO` | lane `TREE_LEDGER` on `ledger/`; lane `ANY_CTO` on `prd/` | the CTO's one message of a round is the round-N analysis to the COO |
 | integrator | `0.0.0_AB_MSTR` | the pre-push deploy gate on deploy scope | binds by reading |
+| closer (on Andrew's word) | trace brief `4.0.0_SA_CRO` or a Tier-1 seat; contract, mandates and rulings `1.0.0_SA_CTO`; implementation `2.0.0_SA_COO` instances; review `3.0.0_SA_CVO` instances | the path grant the contract's writer table lands in its own commit | binds by reading; messages carry an interface published, a blocker or a review handoff, never an acknowledgement |
 
 Three simultaneous projects are one CTO, one COO per project (the base and its lanes), and one CVO across them until a
 measured channel backlog says otherwise.
@@ -602,3 +678,4 @@ verdict, read against the last round under the prior text on the same instrument
 | 3.13 | 2026-09-10 | `2.0.0_SA_COO~A`'s audit of its OWN just-drained round against v3.12 (95066), an hour after the clause landed and the round closed | v3.12 gains three qualifiers, all from that audit: a POSITIVE control is not a DIFFERENCE control and does not discharge the clause (measured 2 of 16 mechanical criteria carry the real shape, not the 6 of 20 a loose count gives, so the adoption cost is real); a CENSUS is a NON-APPLICATION because its outcome IS its count; and the clause DOES NOT BIND RETROACTIVELY -- a round is graded against the law in force at its cut, the L9 and L10 grade with any audit in hand and RECORD THE BOUNDARY IN THE GRADE, and no drained round is re-cut for a later law. No step, owner or gate changes. |
 | 3.14 | 2026-09-10 | Andrew-direct ~21:2xZ at the `1.0.0_SA_CTO` terminal, VERBATIM *"I dont want to ask shit this should be entirely automatic and gated, CRO and CVO should have to sign off on PRD before COO gets it"* (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_212xZ_PRD_SIGNOFF_IS_A_GATE_CRO_AND_CVO_BEFORE_COO.md`); measured cause: `3.0.0_SA_CVO` d0e72ccd56 and `4.0.0_SA_CRO` e975e96fc0 / 637b2f8178 on the two IRPT PRDs, thirteen corrections in three unrequested passes | L4 gains **THE PRD SIGN-OFF GATE (L4-R)**: the brief's author signs the coverage map for CONTENT carriage, the verifier signs the ENDPOINT section against the ratified pins and the CONTRACTS section against the counterpart; both sign-offs are files in the reviewers' own lane `TREE_PRD_SIGNOFF`, version-bound to the PRD; `prd-header-notify.py` withholds the COO delivery until both exist and `to-pipeline-gate.py` LIMB 6 refuses a task order from an unsigned PRD. The CTO cannot sign its own document. Two mechanical carriers, one new lane, no new owner; non-retroactive for rounds already cut. |
 | 3.15 | 2026-09-11 | Andrew-direct ~05:2xZ-05:3xZ at the `1.0.0_SA_CTO` terminal: "look critically at the sign-off process ... it is very loose right now and unclear. I want to tighten it up. How do we move the gating process along naturally so i dont have to be buzzing around asking agents what theyre doing?"; "CVO should always be included. If CRO is not online, can do COO in their stead"; "make sure the spine operation works properly, that the scripts work properly and the agents know how to use them to do their stamp. make sure there are clear expectations here". Measured: thirteen PRD versions in one night, the brief half re-signed three times unchanged; the notifier never triggered on a sign-off commit (fixed 973ad3770f); the reviewers were nudged by Andrew by hand | L4-R tightened: TWO HALVES bound to their bytes (`half_hash`), not to `prd_version`; ONE rule in `.tools/prd_signoff_lib.py` called by the gate, the notifier and the new stamp `.tools/prd-signoff.py` (`sign` / `refuse` / `status`); reviewers ROUTED per half (CVO always; CRO or a live COO not holding the round in its stead); a 60-minute window with automatic OVERDUE nudges (CTO copied) and re-routing; the addendum path re-opens only the half it changed; the vintage boundary (`f8337502a9`) in code; reviewer expectations stated. No new owner. |
+| 3.16 | 2026-09-23 | Andrew-direct at the `1.0.0_SA_CTO~C` terminal (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260923_CANONICAL_FLOW_OPS_AND_CLOSER_FLOW.md` @c564b6262a): *"we need to focus on one round bringing a product or pipeline to MVP status ... subsequent rounds are all about enrichment"* and the closer flow formalised lightly; the brief he commissioned, `org/tier1_exec/4.0.0_SA_CRO/deliverables/BRIEF_CANONICAL_FLOW_SPEED_CLOSER_FLOW_SKILLS_PARITY_20260923.md` @ea031c3987 (R1-R4). Measured cause: IRPT_FNTEND 15 rounds and IRPT_BCKEND 18 rounds with zero journeys end to end and zero outcomes REALIZED, both PRDs leaving the frontend/backend seam jointly unowned; the frontend BUILD share of criteria falling from 68% in round 1 to 0% by round 15; the closer run reaching code in under an hour and then both live contacts failing on the shared first hop after about 8.5 hours offline | **THE THREAD FIRST**: a product's `FWD-1` is one live journey end to end on the deployed stack; the PRD gains THREAD and ENRICHMENT BACKLOG sections (brief half); a new product is one journey in one project; round 1's rectangle is over the thread's hops, with the battery defaulting to not-applicable except `comp-iam`. **ENRICHMENT ROUNDS**: the round-N analysis ends in an enrichment list for round N+1; remediations ride along, thread-breaking first and instrument/record/style repairs batched into one cell; the L6 sentence that made every later round a repair loop is replaced by one that covers THIS round's decomposition. **THE VERIFICATION DIET**: at most three mechanical criteria per build task order; repo-wide hygiene and the thread trace run at the drain; judgment only where needed; by prompting, no gate. **CLOSER**: a subsection beside Midstream for a product in flight on Andrew's word, its four artifacts, LIVE FIRST, FILES OVER MAIL and NO SIDE-QUESTS, and its hand-back to enrichment rounds; `/closer` is its instrument. Non-retroactive: a round already cut finishes under its cut task orders. No new gate or owner. |

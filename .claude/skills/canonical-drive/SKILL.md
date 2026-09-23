@@ -62,7 +62,10 @@ plus asking where the keys go. NON-APPLICATION: a seat that has answered this ti
 
 1. **Round-N analysis in hand -> ONE issuance SAME TICK** (spine v3.0 L10): the choice between a
    re-decomposition and a re-issue is the COO's own, recorded in the issuance commit; the route tokens are
-   retired. Never scheduled for later.
+   retired. Never scheduled for later. **The recut reads the analysis's ENRICHMENT LIST as the round's
+   rectangle** (spine v3.16 L10): one cell per list item, plus the remediations, thread-breaking first and
+   instrument/record/style repairs batched into ONE cell. Round 1 of a threaded project is the THREAD, not the
+   manifest.
 2. **WIDTH at L6.** Every uncovered cell serving an ungraded FWD with no unmet dependency is cut THIS tick, one order per
    cell, one cell per lane, through `.tools/to-pipeline-gate.py`; under spine v3.0 the workers are
    subagents the COO spawns in worktrees, fan-out `N of M chains, cap K` stated in the issuance commit
