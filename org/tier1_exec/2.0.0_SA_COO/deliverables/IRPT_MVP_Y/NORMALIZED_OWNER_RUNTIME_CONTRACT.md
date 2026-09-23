@@ -118,3 +118,14 @@ not reproduce the import failure. Function source existence is separately
 established by the bounded source reads above. No graph node resolved and no
 impact-clear result is claimed. A quiet git status is not proof that a tracked
 sparse-excluded dependency exists on disk.
+
+
+MSTR correction99630 (`20260923T030045Z`): the earlier reported0 was the exit
+status of the final `head` command in a pipeline. MSTR reports a direct invocation
+in this worktree returned3, while the piped invocation returned0. Preserve that
+attribution alongside Y's observed execution-wrapper exit1 above; Y has not
+independently reconciled those invocation-boundary exit codes. No contract decision
+here depends on their numerical equivalence. The measured semantic result remains
+served-graph `NOT-FOUND` / `SUBJECT_ABSENT_FROM_CORPUS`, and the sparse dependency
+import failure remains resolved. No further action was requested unless that
+exit-code distinction becomes material; no new implementation or Go is inferred.
