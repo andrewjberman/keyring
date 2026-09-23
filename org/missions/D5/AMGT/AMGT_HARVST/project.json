@@ -6,10 +6,10 @@
   "fabric": "site-z",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "ROUND_CLOSE",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-09-23T04:15:25Z",
+  "last_updated": "2026-09-23T04:51:22Z",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -60,8 +60,8 @@
   "leads": [
     "REGISTERED 2026-09-22 under D5/AMGT. Andrew-direct at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'I think this project needs to be run on the side of AMGT_RESAPP. I would make a new project for this called AMGT_HARVST. Then I would have COO~Y drive it to completion.' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_144xZ_AMGT_HARVST_NEW_PROJECT_COO_Y_DRIVES.md."
   ],
-  "phase": "Round 4 issued by 2.0.0_SA_COO~Y from recut v1.3 @8cef65cc00: ONE cell, HVST-u-1, READ-ONLY -- classify the 18 unlabelled bronze objects across five seeking-alpha subtrees and produce the labelling plan. No write of any kind, no delete, no vendor call. Round 3 closed 2 of 2 terminal at 10/0/0.",
-  "blocking": "The metadata WRITE that would label those 18 objects is NOT cut and NOT decided: it is a write to an existing key against bronze_put's never-overwrite precondition, the same guard a sibling project's worker deleted 123 objects to escape tonight, so it is asked of 1.0.0_SA_CTO~Z rather than authorized in an order (decomp 15e). Also held and unchanged: the timeline BUILD cell and a fourth vendor act on Andrew's word, the served chatter switch. FWD-1 stays NOT REALIZED and round 4 does not close it -- three of five publishers remain unmeasured live and the listing pages round 1 discarded are gone.",
+  "phase": "Round 4 DRAINED by 2.0.0_SA_COO~Y: 1 of 1 terminal, 5 of 5 criteria PASS, zero writes of any kind, zero vendor calls. HVST-u-1 classified all 18 unlabelled bronze objects and labelled nothing; AC5 proved they ARE the store's entire MISSING bucket at object grain. The issuer's shape test then killed the inference the result invites: normalised_record is 0 of 83 canonical, so shape cannot separate harvester output from vendor bytes. Packet at org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND4_L8_PACKET_20260923.md.",
+  "blocking": "Awaiting 3.0.0_SA_CVO~Z's L9 for round 4. Z-S1's backward half stays GRADUATED AND UNREMEDIATED per 1.0.0_SA_CTO~Z's ruling @4d7ef9f79e, and round 4 is the measurement that makes that a recorded state. Held and unchanged: the timeline BUILD cell and a fourth vendor act on Andrew's word, the served chatter switch. FWD-1 stays NOT REALIZED -- three of five publishers unmeasured live, the round-1 listing pages gone. The S3-delete breach on the sibling project stays carried to Andrew and unadjudicated; this project is measured clear of it (decomp 14a). One EXPOSURE recorded, not owned here: received-form has three writers and one validator, and bright_data_serp's value appears on 0 of 2231 objects.",
   "threads": [],
   "thread_counter": 0
 }
