@@ -146,7 +146,7 @@ the scan file. Scratch in `.scratch/c3/`. Commit with
 **ISSUER NOTES:** the class enum's four postulates are in the decomposition's s.2 (OTHER is the subtraction's
 remainder). R3's partition-versus-column reconciliation (ruling 2) is reported to the CTO in the drain-end read.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
