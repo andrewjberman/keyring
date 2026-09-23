@@ -654,6 +654,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "Each of the five round-2 task orders dispatched its worker into a named worktree and treated that worktree as equivalent to the repository for the purpose of running a suite, a hook or a census -- every BOUNDS baseline count in those orders was measured by this seat in the FULL shared tree and stated to the worker without qualification.",
     "world_is": "A sparse cone is NOT equivalent to the repository for anything that reads the FILESYSTEM rather than the index: a commit hook that walks a directory, a test that imports from a sibling tree, and Python's own module resolution all change behaviour. The three rows above are one defect wearing three faces, and the shape is dangerous because each face looks like a finding ABOUT THE CODE to the worker that meets it -- a hook verdict, a test failure, an import bug -- so it gets filed as a repository fact by a seat with no way to see the full tree. This seat chose the cone deliberately (a full checkout OOMs under memory pressure on this device) and so owns every consequence of it.",
     "notes": "No cell is at fault and no cell's grade changes: r-1, r-2, r-3, r-4 and r-5 all graded VALID and every one of their criteria was met against the population their order named. DISARM, this seat's, is a DISPATCH-RECIPE change and it is cheap: any future cone must include org/missions whole (manifestation 1) and integrations/ (manifestation 2), or the orders must state their baselines AS MEASURED IN A FULL TREE and tell the worker that a divergence is an environment finding rather than a repository one. The standing lesson is the general one: a baseline measured in one checkout is not a baseline for another, and the issuer must say which checkout it measured."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S5",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-23T02:41Z",
+    "one_line": "The amended timeline spec closes the Z-S227 half of its own judgment criterion (an error EXISTS on the wire and a distinct state is DRAWN) and does NOT name the C-S400 half (a TYPED CHANNEL carrying the error to the surface that renders it). Measured over all eight sections: no clause names a component contract, a prop, an interface or the rendering surface RECEIVING the error, and section 7 explicitly leaves the shared charting component undecided.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "issuer's own read of org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~8/SPEC_SECTION_timeline.md at HEAD after the r-1 drain @59d6347d37: eight sections (Placement, The line, Dissecting a day, Event spans, The API shape, States, What this spec does not decide, Acceptance)",
+        "a full-file line scan for prop, props, component, contract, receives, receive, passed to, type contract, interface, signature returned 5 lines and NONE of them is an error channel: :34 and :238-240 discuss a possibly SHARED CHARTING component and :240 says the spec does not require or forbid one; :130 contrasts list components; :223 is about thresholds. The word prop, the word interface and any statement that the rendering surface RECEIVES the error are ABSENT",
+        "what the spec DOES carry, from the same read: section 5's envelope {\"error\": true, \"error_code\": <string>, \"message\": <string>} with the rule that error: true is never merged into series, events or articles; section 6's state 'The timeline request itself failed' drawing a distinct page-level error rather than a blank chart, empty series or zero-height line",
+        "the distinction and its consequence are 1.0.0_SA_CTO~Z's own correction of the remedy it authored (msg 24565) and 2.0.0_SA_COO~Z's measurement of both rows (msg 24562): an API error envelope is the WIRE and is Z-S227's half, while C-S400's half is the COMPONENT CONTRACT, and the overlay that carries the false sentence today has bundle and isLoading props only, so a branch is not expressible there no matter what the API returns"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HVST-r-1's AC4 asks whether the amended spec draws EVERY state, including the timeline call's own failure, such that a BUILD CANNOT REPRODUCE the Z-S227 / C-S400 defect on this new surface. The cell was ruled to deliver one state in section 6 and one error envelope in section 5, and it delivered exactly that.",
+    "world_is": "Those two deliverables close ONE of the two cited defects. A build can satisfy every word of this spec, draw the failed-call state correctly, and still hand the rendering surface a props shape with no error field -- at which point the state is unreachable in the same way C-S400's overlay is unreachable today. The cell is not at fault: it built what the order ruled, and the order quoted a remedy whose own author has now corrected it as half an answer. The gap is in the SPEC's coverage and therefore in MY cut.",
+    "notes": "Filed as EVIDENCE for a grade this seat does not hold: AC4 is 3.0.0_SA_CVO~Z's and nothing here proposes a verdict. Not fixed now, deliberately: the round is CLOSED at drain-end, the spec is frozen outside a cell, and amending a graded deliverable off-process would be worse than carrying the gap visibly. DISARM is one clause in a round-3 cell, and the clause is cheap: the spec must state that every surface it names RECEIVES the error through a typed channel, not merely that a failed state is drawn. The generalisation worth keeping is 1.0.0_SA_CTO~Z's discriminating question -- not 'does the spec draw the failure state' but 'can an error REACH the thing that renders it'."
   }
 ]
 ```
