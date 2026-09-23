@@ -1,0 +1,28 @@
+carrier helper sha      : e9c932d9af7eefa4
+helper sha @ad628 source: 7225ec2df6530652 DIFF
+helper sha M-patched    : e9c932d9af7eefa4 MATCH
+helper sha spliced      : e9c932d9af7eefa4 MATCH
+ok P0 baseline (unmutated ad628 post-image)     expect PASS   got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+ok D1 decorator added to the helper             expect REFUSE got REFUSE the read helper '_latest_date_partition' carries a decorator, which is outside the reviewed bytes
+ok D2 nested def param rebinds bucket           expect REFUSE got REFUSE 'bucket' is bound 2 time(s) in build_inf (assign, nested-param), approved exactly 1: an ambiguous bucket is no
+ok D3 nested def param rebinds helper           expect REFUSE got REFUSE the read helper name '_latest_date_partition' is bound 2 time(s) in this module (def, nested-param), approved 
+XX D4 globals() rebind of helper (dataflow)     expect REFUSE got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+ok D5 decorator on enclosing build_inf          expect REFUSE got REFUSE build_inf carries a decorator, which is outside the reviewed bytes
+ok D6 lambda default param rebinds bucket       expect REFUSE got REFUSE 'bucket' is bound 2 time(s) in build_inf (assign, lambda-param), approved exactly 1: an ambiguous bucket is no
+ok D7 class body rebinds bucket                 expect REFUSE got REFUSE 'bucket' is bound 2 time(s) in build_inf (assign, assign), approved exactly 1: an ambiguous bucket is not auth
+
+authority_ok substring probe:
+  id 'LEGACY' -> (False, "the record at pin ec80b01ca492 does not contain the ruling id 'LEGACY' as a whole token")
+  id 'IRPT-M-LEGACY-READ-0' -> (False, "the record at pin ec80b01ca492 does not contain the ruling id 'IRPT-M-LEGACY-READ-0' as a whole token")
+XX M1 match/case capture rebinds bucket         expect REFUSE got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+XX M2 match/case capture rebinds helper         expect REFUSE got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+XX M3 match mapping **rest rebinds bucket       expect REFUSE got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+XX M4 match sequence *star rebinds bucket       expect REFUSE got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+XX M5 match class keyword capture rebinds bucket expect REFUSE got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+ok MP match with no capture (control)           expect PASS   got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+XX T1 type alias rebinds bucket                 expect REFUSE got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+XX T2 type alias rebinds helper (module)        expect REFUSE got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+XX T3 nested generic def type param bucket      expect REFUSE got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+XX M6 module-level match rebinds helper         expect REFUSE got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+
+ARMS 18, AS-EXPECTED 8, UNEXPECTED 10
