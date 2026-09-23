@@ -194,7 +194,8 @@ def test_overflowed_wire_facts_refuse():
     with pytest.raises(BasisRefused): invoke(v,p)
 
 def test_receipt_revision_must_be_a_hash_string_not_integer():
-    with pytest.raises(BasisRefused): invoke(*inputs(),source_revision=int('1'*64))
+    with pytest.raises(BasisRefused): invoke(*inputs(),source_revision=int('1'*64))
+
 
 ```
 
@@ -249,7 +250,34 @@ assert summary['overlay_without_custody']==expected['overlay_absent_custody']
 assert count==E['basis_controls']['valuation_rows'] and len(pos)==E['basis_controls']['position_rows']
 assert all(abs(totals[k]-v)<0.0001 for k,v in E['basis_controls']['reconciled_allocation_facts'].items())
 (OUT/'basis_432_exact_review.json').write_text(json.dumps({'summary':summary,'verified_receipts':receipts},indent=2),encoding='utf-8')
-print(json.dumps(summary,indent=2),flush=True)
+print(json.dumps(summary,indent=2),flush=True)
+
 
 ```
 
+
+## M-FACT-01 closure at f7344d6
+
+Date: 2026-09-23 UTC. **M-FACT-01 CLOSED**, bounded helper revision-type guard.
+Exact independently tested endpoint:
+`f7344d6e9a3833c7952b8f473a773634baea9dee`.
+The clean detached reviewer checkout was switched to this endpoint; candidate
+and review test files were not edited. The only helper implementation delta
+requires `source_revision` to be a string before the unchanged exact lowercase
+64-hex regex, and removes coercion through `str()`. The added supplied regression
+requires refusal of the numeric 64-digit case.
+
+Supplied focused suite: **27 PASS in 0.19s**, exit 0.
+Original independent driver: **12 PASS in 0.09s**, exit 0, including unchanged
+`test_receipt_revision_must_be_a_hash_string_not_integer`. Its file hash matches
+the original driver embedded above: `f445cfca3971b5a8ced6bf5ffed0afd82f8916346ab331649d7be579fe454741`.
+This supersedes only the M-FACT-01 OPEN disposition above, which remains as the
+historical failure record. No new source fetch was needed for this type-only
+change; the nine-version source checks and limits above retain their exact scope.
+
+The helper remains unwired into the invalid holdings root. The original economic
+failures, cross-date custody/overlay mismatch, package/live proof and final-index
+timeout/versioning limitations remain open. M-PART-01's separate bounded closure
+is unchanged. COO~M also supplied preliminary X10 candidate `ffbffcac50` on
+`3978b247b4`, explicitly promising a durable proof/handoff to follow; that mention
+is not an independently reviewed integration verdict.
