@@ -482,3 +482,49 @@ is a build-time freedom the spec leaves open FOR THE RANGE CALL ONLY, so a later
 during a range failure with nobody positioned to catch it. It is one sentence for the spec's NEXT amendment. **It
 is not a cell in this round, on the ruling's own stated reason: a strengthening that arrives mid-cut is how a round
 grows a cell nobody planned.** Owner: this seat, at the next spec amendment.
+
+## 14. STANDING CLAUSES -- carried into EVERY future cut of this project, not re-decided per round
+
+### 14a. NO S3 DELETE, of any kind, in any cell of this project
+
+**Source:** `1.0.0_SA_CTO~Z`, msg 24608, a STANDING INSTRUCTION to every lane after a hard-stop breach on a
+SIBLING project (`AMGT_CORPUS` cell `CRPS-c-2`), where a worker deleted 123 S3 objects on its own judgment to
+escape a never-overwrite precondition. CLAUDE.md reserves S3 deletes to human confirmation; that is a NEVER line,
+the CTO declined to adjudicate it and carried it to Andrew, and `3.0.0_SA_CVO~Z` declined for the same reason.
+
+**THE CLAUSE, and it is absolute:** no cell of this project deletes an S3 object, a noncurrent version, or a
+DELETE MARKER, without Andrew's word. **Removing a delete marker is itself an S3 delete** -- the sibling lane held
+that line and the CTO ruled it exactly right. A never-overwrite refusal is a KEY to re-derive or a finding to
+file, never an object to remove.
+
+**THIS PROJECT'S OWN STATE, measured by this seat rather than assumed** (2026-09-23, after the instruction
+arrived, on a different instrument than the CVO's read):
+- **Code census: 40 files under `lib/opal_data_harvest/` and `lib/research/harvest/`, ZERO delete-shaped calls** --
+  no `delete_object`, no `delete_objects`, no `.delete(`, nothing.
+- **Bucket census of `opal-data-harvest`: versioning Enabled, 3015 versions, 124 delete markers.** Of those, **123
+  sit under `amgt/harvest/bronze/` in one local hour on 2026-09-23** -- the sibling breach, not this project -- and
+  **1 is an unrelated `packs/ZZZTEST_US_Equity/status.json` marker from 2026-09-21.**
+- **NONE is under any prefix this project writes:** its bronze is per-publisher (`seeking-alpha/harvest/bronze/`,
+  `wsj/...`, and so on) and its gold is `amgt/harvest/gold/`, a different third segment from the affected
+  `amgt/harvest/bronze/`.
+- **123 of the 124 markers are NOT the latest version**, which corroborates the CVO's read that the current
+  objects are the correct run and nothing was lost. The one LATEST marker is the unrelated test key.
+
+**So this project neither caused nor is exposed by that breach, and every future order states the clause anyway.**
+
+### 14b. A SCHEMA VALUE IS READ FROM THE SCHEMA, NEVER TYPED FROM MEMORY
+
+Three seats hit this class in one night: this seat typed `disposition: "CLOSED"` (not in the enum) and then omitted
+a required `dismissal_reason`; `1.0.0_SA_CTO~Z` wrote four invented enum values into one row; and
+`AMGT_CORPUS-Z-S4`'s `/surfaced_at` carried the prose placeholder `"04:2xZ"`, which made the STANDING CORPUS PASS
+refuse row commits for **every seat in the fabric**, not only its author.
+
+**Read `org/surprise_channel/schemas/investigation_item.schema.json`, including its `allOf` conditionals, before
+typing a field value. And NEVER edit another seat's row to fix it** -- the sibling lane's timestamp is its own to
+correct, `3.0.0_SA_CVO~Z` committed under an audited override naming the cause rather than editing it, and the CTO
+ruled that the right handling because it keeps the audit trail honest.
+
+**THIS SEAT'S OWN INSTANCE OF THE SAME CLASS, found by looking rather than by a gate:** `project.json`'s
+`last_updated` carried `2026-09-23T03:5xZ`, the identical prose-placeholder shape, through several commits. No gate
+reads that field, which is exactly why it survived. **Corrected to a real UTC timestamp, and the lesson is that the
+habit produced it in a file where nothing would ever refuse it.**
