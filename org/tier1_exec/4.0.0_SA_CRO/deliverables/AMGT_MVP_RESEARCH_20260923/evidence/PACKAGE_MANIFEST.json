@@ -1,8 +1,8 @@
 [
   {
     "path": "CLOSER_CONTRACT.md",
-    "sha256": "9554a3d161a1d7afb25830c6cdcde761df975f2b2b9947f9e802ca0bab60203f",
-    "bytes": 12870
+    "sha256": "ee0250238a288cce75ee8e3ad58f5d548e5da0646b611a894703a57926a45198",
+    "bytes": 13455
   },
   {
     "path": "CLOUD_PRECEDENT.md",
@@ -50,6 +50,11 @@
     "bytes": 3292
   },
   {
+    "path": "evidence/ROUND36_HANDOFF_UPDATE_SOURCES.json",
+    "sha256": "f8808f5f3566bbaee3d66f8b8738788ce4b26fc2b97d318558a5ba86807b1834",
+    "bytes": 3368
+  },
+  {
     "path": "evidence/ROUND36_UPDATE_SOURCES.json",
     "sha256": "5a55a6de62a9b8b88f8ea8317fcc23656f0b8910a4b931b86aa06082427c0949",
     "bytes": 843
@@ -91,8 +96,8 @@
   },
   {
     "path": "ROUND36_CLOSER_CONTEXT_UPDATE.md",
-    "sha256": "b2ac8ee05461b1a953de95acbba5ae6cd0f3ac6fa675eeb570615fb004b9ecb9",
-    "bytes": 3743
+    "sha256": "82b622ae333daa951115df240ff754315725dae4947d376c38f290f083a32983",
+    "bytes": 6563
   },
   {
     "path": "SECURITY_DATA_END_TO_END.md",

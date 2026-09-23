@@ -1,0 +1,124 @@
+{
+  "recorded_at": "2026-09-23T15:25:55.672149+00:00",
+  "serial": "4.0.0_SA_CRO~Z",
+  "sources": [
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO~Z/handoffs/2026-09-23_1414Z.md",
+      "git_commit": "ec3f9f7b7ac78479dffe910b66a38965998f1f14",
+      "sha256_git_blob": "15c5cf7653349e03cda6219f760ae796303505a40332f537635b7014b1dd3cc5",
+      "bytes": 12904
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v44.md",
+      "git_commit": "1500ced6b814af93c027936a8f3443b7b253fa4d",
+      "sha256_git_blob": "67b9e9726633b30814290e598fa3b170b347fc954b08146559198708f1953e52",
+      "bytes": 7722
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v44.md",
+      "git_commit": "ec3f9f7b7ac78479dffe910b66a38965998f1f14",
+      "sha256_git_blob": "67b9e9726633b30814290e598fa3b170b347fc954b08146559198708f1953e52",
+      "bytes": 7722
+    },
+    {
+      "path": "lib/research/filings/battery.py",
+      "git_commit": "c56cc0c48c109ee08e8149f9f95b527076985a92",
+      "sha256_git_blob": "f33b7011ff5c4466ec0bf83926cc024132ab2cdccc02fc745cf074ea7f123896",
+      "bytes": 77078
+    },
+    {
+      "path": "lib/research/filings/battery.py",
+      "git_commit": "ec3f9f7b7ac78479dffe910b66a38965998f1f14",
+      "sha256_git_blob": "dc520db08e2e6dfa6c7a952fa1c21ddf3f3763f24e300c5872bf55d640ef4324",
+      "bytes": 83418
+    }
+  ],
+  "ast_counts": [
+    {
+      "pin": "c56cc0c48c109ee08e8149f9f95b527076985a92",
+      "function": "_hk_national_regulator",
+      "return_count": 5,
+      "passed_values": [
+        {
+          "line": 1325,
+          "value": false
+        },
+        {
+          "line": 1276,
+          "value": false
+        },
+        {
+          "line": 1286,
+          "value": false
+        },
+        {
+          "line": 1307,
+          "value": false
+        },
+        {
+          "line": 1297,
+          "value": false
+        }
+      ]
+    },
+    {
+      "pin": "ec3f9f7b7ac78479dffe910b66a38965998f1f14",
+      "function": "_hk_national_regulator",
+      "return_count": 10,
+      "passed_values": [
+        {
+          "line": 1445,
+          "value": true
+        },
+        {
+          "line": 1322,
+          "value": false
+        },
+        {
+          "line": 1332,
+          "value": false
+        },
+        {
+          "line": 1353,
+          "value": false
+        },
+        {
+          "line": 1370,
+          "value": false
+        },
+        {
+          "line": 1383,
+          "value": false
+        },
+        {
+          "line": 1394,
+          "value": false
+        },
+        {
+          "line": 1431,
+          "value": false
+        },
+        {
+          "line": 1343,
+          "value": false
+        },
+        {
+          "line": 1412,
+          "value": false
+        }
+      ]
+    }
+  ],
+  "message": {
+    "id": 24774,
+    "archived_path": "org/mcp/inbox/4.0.0_SA_CRO/~Z/read/20260923T152220Z_1.0.0_SA_CTO_Z__ONE_MORE_FOR_THE_PACKAGE_--_a_VINTAGE_T.md",
+    "sha256": "9c46cac51ba635c57aad3908588cd70539bbefdad9efdbe3b36cdebb82f37267"
+  },
+  "same_pin_discrepancy": "ADJUDICATION_v44 exists at ec3f9f7b7a despite handoff stating no L9 adjudication artifact",
+  "not_tested": [
+    "remediation stamp absence",
+    "live adapter run",
+    "vendor fetch"
+  ],
+  "scope": "local pinned-source inspection only"
+}

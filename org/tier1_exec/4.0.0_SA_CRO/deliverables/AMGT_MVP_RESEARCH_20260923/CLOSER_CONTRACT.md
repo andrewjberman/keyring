@@ -67,6 +67,8 @@ Each lane maintains its own `STATUS.md`, `INTERFACES.md`, `COMPLETION.md` and ev
 
 Every result records candidate workspace/portal pins, actual deployed artifact/configuration, source keys/hashes, exact request/response or browser trace, case denominator and expected/observed result. Grades are **PASS / FAIL / NOT_EVALUATED**, with an evidence level: source, offline exercise, retained-data read, deployed configuration, or actual end-to-end. A fixture PASS is not live end-to-end PASS; an honest ABSENT result is not a realized positive outcome.
 
+**Pin the counted implementation and its unit.** The HKEX adapter has five all-false return paths at pre-fix `c56cc0c48c` and ten paths with one true return at post-fix `ec3f9f7b7a`; both were independently counted in the [handoff update](ROUND36_CLOSER_CONTEXT_UPDATE.md). Distinguish a source-version difference from a same-pin contradiction. Two seats repeating one premise are not two independent instruments. Use the revised COO~Z handoff at `ec3f9f7b7a` with the documented stale-block/artifact corrections; do not reopen round 36 or cut round 37 from superseded handoff lines.
+
 Stop only the dependent act for ambiguous identity, ungranted external access, unresolved source/contract ownership, potential source-library mutation, unsupported provenance relabeling, or a failed acceptance gate. Preserve the last good serving revision and retained inputs. No S3 deletes, automatic broad retries, unapproved fleet run or new notifier is authorized here.
 
 ## Launch defects and unfinished independent review
