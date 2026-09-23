@@ -1,10 +1,13 @@
 ﻿# IRPT Y - current interfaces
 
 Owner `2.0.0_SA_COO~Y`; source `2874e37647` over `bfe6469b1e`/`4ebe6948d9`.
-CTO bounded source PASS `2dd385ed59` covers exact `2874e37647`; publisher.py's
-remaining P integration grant is in the same commit. Current executable delta is
-CROSS_FIRM_PUBLICATION_HANDOFF_20260923.md; full literal installer and pinned
-host capture/census contract is RESIDENT_ASSEMBLY_HANDOFF_20260923.md.
+CTO bounded source PASS `2dd385ed59` covers exact `2874e37647`. P consumed the
+whole set: `b3fc529601` on `irpt-smoke-p-backend-20260923` integrates 31 Y files
+and every one of the 85 tracked files under
+`infra/aws/lambda/investor-reporting/ycharts/` at 2874 hash-matches P HEAD
+(85 MATCH / 0 DIFF / 0 ABSENT, measured 2026-09-23 23:2xZ). Current executable
+delta is CROSS_FIRM_PUBLICATION_HANDOFF_20260923.md; full literal installer and
+pinned host capture/census contract is RESIDENT_ASSEMBLY_HANDOFF_20260923.md.
 
 ## Resident factory and storage
 
@@ -42,17 +45,29 @@ ports. Actual submitter and original immutable input owner remain separate.
 
 ## Runtime and next proof
 
-P222939 reports31 accepted source paths consumed; four critical worker/publication/
-session files hash-match2874 in P's tree at HEAD068e9ccd85 (18:31 Eastern).
-Factory work is underway; no installed boundary is inferred from copied source.
-P223931 closes the Codex session for a Claude successor. Its named closing log
-reports all31 copied paths still uncommitted following an owned-path gate
-refusal. Exact publisher.py grant2dd385ed59 does not establish permission for
-every copied path. P's successor owns resolving the grant and shared factory;
-MSTR owns the runtime transition. Preserve P's source/worktrees and staged lock.
-The next exact missing interface is current authority for the queued actor without
-HTTP headers. P returns its concrete authority reader with the installed
-MODULE:build_resident_runtime path, package/census digests and cutover receipt.
+Copied-source grant CONSUMED: P `b3fc529601` commits all 31 paths unchanged.
+No `build_resident_runtime` implementation exists in P's tree (only the
+docstring in resident_main.py and the test doubles), so the installed factory,
+package/census digests and sole-consumer cutover receipt remain P's next
+delivery. The always-on host `i-0167fd745ad906a66` is STOPPED: the enforcer
+stopped it at 21:21:18Z (no `AutoShutdown=disabled` tag, the enforcer's only
+exemption) and `ycharts/instance.tf:131-135` still declares `stopped`; both
+writers must move to `running` under Andrew `6fc3f5f785` before any consumer
+can run. Deployed `irpt-ycharts-generate` (LastModified 2026-09-19) predates
+every Y commit and its role carries no `sqs:SendMessage`; `IRPT_LIVE_YCHARTS_CALL`
+is unset. These are P shared surfaces; Y's exact requirements are unchanged in
+RESIDENT_ASSEMBLY_HANDOFF items 2-5. Current authority for the queued actor
+is ADJUDICATED by CTO d78fdb2f1c item 4: P projects createdAt/role/userType
+from CanonicalProfileReaders.get_user (created_at fallback) and writes the
+dynamodb:Query/GetItem grants on opal-users-v2; Y consumes at job start, final
+release and every durable dispatch -- REFUSE when user is None, status != active,
+user.firmId != record.owner.home_firm_id, or createdAt parses later than the
+record's accepted time; a missing/unparseable createdAt does not refuse but is
+recorded as createdAt_absent in the decision evidence. Class: OPAL_GLOBAL iff
+firmId == opal-capital or userType == Dev, otherwise own firmId only; a non-Opal
+job whose data firm != firmId refuses with a defined code. Retained owner fields
+are lookup locators only, never synthesized claims. The sha256(PK|createdAt)
+binding and the admin-descendant Scan are parked enrichment.
 
 Accepted dual-owner prospect record fields, source2874/1385:
 - `record.owner.principal_id`: actual submitting normalized email.
