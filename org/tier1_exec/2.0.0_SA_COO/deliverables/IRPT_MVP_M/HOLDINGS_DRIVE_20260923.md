@@ -37,3 +37,18 @@ Scope update received from CRO~M Msg-ID99731, record e5cf6d6549: Andrew answers
 Endpoint therefore includes public Models / SMAs / Client, with third-party and
 unattributed membership under Client. Unknown custody values or currency are
 not fabricated by the plug. CTO owns the corresponding contract amendment.
+
+## Runtime repair and activation, 20:08Z
+
+MSTR repaired canonical driver at6a439656c1 (Msg-ID99734). Exact-seat-only mode
+now avoids Anatomy/peer monitoring, supports MissionFile, and records its config.
+Canonical helper started PID30160 with IntervalSeconds600, NudgeAfterMinutes10,
+and repository-local mission
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/COO_M.md`.
+A repeated identical helper invocation reported RUNNING with the same PID.
+The log measured seat_only=True and delivered tick20260923T200806Z to this exact
+seat. This supersedes the paused-timer state above. Launcher helpers untouched.
+
+Drive remains active until the intended three-firm Holdings journey is verified
+or Andrew changes the instruction. Current contractd44d9f3876 requires fast
+targeted behavior/interface checks; no routine full-suite runs each edit.

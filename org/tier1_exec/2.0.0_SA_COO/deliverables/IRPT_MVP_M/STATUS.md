@@ -84,3 +84,20 @@ CRO~M relayed Andrew taxonomy e5cf6d6549: public Models / SMAs / Client plug
 replaces Unresolved. Earlier unresolved vocabulary above describes the existing
 implementation, not the intended endpoint. Missing numeric custody facts are
 not zero or made complete by a label change. Consume CTO amendment when ready.
+
+## Active drive and next owned implementation, 20:10Z
+
+Drive repaired6a439656c1 and verified running PID30160 at600s with current COO_M
+mandate as mission, first seat-only tick delivered200806. Timer is ACTIVE.
+UI candidate ajb_irpt_m_portal e5604c03 makes all account roots reachable and
+keeps signed/zero-denominator table drill functional.9 focused mounted tests,
+32 exact Holdings slice/drill/source-bound checks and typecheck passed. P and
+CTO received the exact UI pin. No browser or deployed acceptance claimed.
+
+CRO0d0fd51b33 establishes no source-backed INF/COT currency in current landed
+records. Eclipse membership was never ingested: vendor simple shape is limited,
+not an Opal flattening loss. CTO addresses exact source facts; no vendor call
+is authorized by that finding. Continue adapter/UI implementation locally.
+Contracta62f5e54a7 taxonomy and d44d9f3876 fast targeted checks apply.
+
+COT same-row original-value diagnostic: {"rows": 19610, "missing_market_value_rows": 5694, "all_four_blank_rows": 5694, "within_missing_mv_null_counts": {"Market Value": 5694, "Unaccrued Market Value": 5694, "Units": 5694, "Accrual": 5694}, "within_missing_mv_nonzero_counts": {"Market Value": 0, "Unaccrued Market Value": 0, "Units": 0, "Accrual": 0}, "interpretation": "Null census is not zero-valued custody or sold/closed evidence."}
