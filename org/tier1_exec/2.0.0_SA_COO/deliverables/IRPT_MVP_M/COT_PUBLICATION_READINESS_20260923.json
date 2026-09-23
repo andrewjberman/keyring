@@ -1,0 +1,14 @@
+{
+  "location": [
+    "opal-data-cottonwood",
+    "irpt/cottonwood/platinum/holdings/current/manifest.json"
+  ],
+  "versioning": {
+    "Status": "Enabled"
+  },
+  "index": {
+    "etag": null,
+    "document": null
+  },
+  "writes": 0
+}
