@@ -11,7 +11,7 @@ CONTROL.md apply; CTO reviews directly (no CVO queue). Goal + loop authority:
 | What | Value |
 |---|---|
 | Working branch / worktree | `irpt-mvp-y-20260922` at `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922` |
-| Workspace candidate pin | `2874e37647` (over `bfe6469b1e`, `4ebe6948d9`); CTO accepted 2dd385ed59 / 3d9f451 |
+| Workspace candidate pin | `635af92b76` (current-authority consumer, CANDIDATE for CTO direct review) over `2874e37647` (CTO accepted 2dd385ed59 / 3d9f451) |
 | P integration pin | `b3fc529601` on `irpt-smoke-p-backend-20260923`: 31 Y files; 85 of 85 tracked `ycharts/` files at 2874 hash-match P HEAD |
 | Portal candidate pin | `7a5b24e7` (no new Portal candidate) |
 | Deployed artifact pin | `irpt-ycharts-generate` CodeSha256 `1L60sG1G9IaFfwe+LPNdE84DarlWCHKkdE8M5CyVI8o=`, LastModified 2026-09-19T14:29Z -- predates every Y commit; source map at HEAD says `CJ6aBh7B...` |
@@ -42,10 +42,9 @@ Offline-only work grades nothing until the live thread is live.
 
 ## Write claims
 
-Current-authority consumer per CTO d78fdb2f1c item 4 (2)(3), under `infra/aws/lambda/investor-reporting/ycharts/generate/`
-in the Y worktree: the decision function that grades the projected profile against the accepted record at job start,
-final release and durable dispatch, plus its five focused cases in `tests/test_resident_worker.py`. Y's paths at 2874
-are integrated unchanged in P's branch (b3fc529601); the new pin supersedes 2874 for P's next integration batch. Untracked and preserved:
+None in flight. Landed at `635af92b76`: `generate/current_authority.py` (new), `generate/resident_worker.py`
+(`profile_for` port, decision replayed at start / every guard / release / reopen), `generate/tests/test_resident_worker.py`.
+P's next integration batch takes these three files over the 31 already at b3fc529601. Untracked and preserved:
 `.tools/irpt-y-portfolio-commit-message.txt`, `.tools/irpt-y-submission-commit-message.txt`.
 
 ## Next proof
@@ -60,7 +59,7 @@ the installed factory + cutover receipt; until then each loop tick re-measures t
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
 | Installed `MODULE:build_resident_runtime` factory with real `principal_for`, repositories, session ports; package/census digests; sole-consumer cutover receipt | 2.0.0_SA_COO~P | RESIDENT_ASSEMBLY_HANDOFF_20260923.md items 1-3, 5 | AWAITED (no implementation in P tree) |
-| Non-HTTP current authority: P projects `createdAt`/`role`/`userType` from `CanonicalProfileReaders.get_user`; Y refuses on user None / status != active / firmId != home_firm_id / createdAt after acceptance, records createdAt_absent, classes OPAL_GLOBAL iff firmId == opal-capital or userType == Dev | 1.0.0_SA_CTO ruled d78fdb2f1c (item 4); P (1)(4), Y (2)(3) | RULINGS.md "Claude CTO takeover batch" | ADJUDICATED -- Y consumer side IN PROGRESS this tick |
+| Non-HTTP current authority: P projects `createdAt`/`role`/`userType` from `CanonicalProfileReaders.get_user`; Y refuses on user None / status != active / firmId != home_firm_id / createdAt after acceptance, records createdAt_absent, classes OPAL_GLOBAL iff firmId == opal-capital or userType == Dev | 1.0.0_SA_CTO ruled d78fdb2f1c (item 4); P (1)(4), Y (2)(3) | Y side: `635af92b76`, 37 passed; P side: `_USER_FIELDS` projection + IAM plan | Y CANDIDATE awaiting CTO review; P (1)(4) AWAITED |
 | Host tag `AutoShutdown = "disabled"` on the runner Terraform resource, plan to CTO, safe-apply; nobody starts the host before the tag and the resident install are ready | 2.0.0_SA_COO~P | CTO d78fdb2f1c item 5; Y 99801 adds the second writer `aws_ec2_instance_state.runner` (`stopped`) | BLOCKED at P |
 | Generation path: deploy HEAD submit entry, `sqs:SendMessage` on submit role, `IRPT_LIVE_YCHARTS_CALL`, `/analysis/*` routes live | 2.0.0_SA_COO~P | CRO 6fc3f5f785 item 5; RESIDENT_ASSEMBLY_HANDOFF items 2, 4 | AWAITED (measured absent 23:2xZ) |
 | 31-path owned-path grant for the copied Y files | 2.0.0_SA_COO~P | b3fc529601 | CONSUMED |
