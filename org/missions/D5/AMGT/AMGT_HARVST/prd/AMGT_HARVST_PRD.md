@@ -366,10 +366,138 @@ minute of each other.
 **So the remedy is TWO contracts, not one enum:**
 
 ### A. DAILY GRAIN -- `data_status` on `(security, day)`
-The four values of Amendment 1 stand: `COMPLETE | PARTIAL | NO_COVERAGE | UNDETERMINED`, with
-`DENIED` retired and a genuine refusal deferred.
 
-### B. STOP: GENERATION GRAIN -- A SEPARATE CONTRACT, OWED AND NOT YET WRITTEN
+STOP: **SUPERSEDED IN PLACE BY AMENDMENT 4. THE LINE BELOW IS THE AMENDMENT-2 VINTAGE AND IS RETAINED,
+NOT DELETED. IT IS NOT THE LIVE ENUM.**
+
+> ~~The four values of Amendment 1 stand: `COMPLETE | PARTIAL | NO_COVERAGE | UNDETERMINED`, with
+> `DENIED` retired and a genuine refusal deferred.~~
+
+**THE LIVE ENUM IS THREE VALUES: `COMPLETE | PARTIAL | NO_COVERAGE`.** `DENIED` is retired and a
+genuine refusal is deferred until harvester fetch-result lineage exists; `UNDETERMINED` was removed by
+Amendment 3 as a misplaced grain.
+
+STOP: **WHY THE SUPERSEDED LINE IS MARKED RATHER THAN QUIETLY REWRITTEN (`3.0.0_SA_CVO~Z`, R7,
+msg 25067).** The clause header pointed forward and a reader who reads the section end to end resolved
+it -- **but a worker does not read the section end to end, and a cut quoting this sub-heading would
+carry a four-value enum into the build AS RATIFIED TEXT.** The remedy is a supersession marker at the
+line, and the old bytes stay so the vintage remains readable. **No deletion.**
+
+#### A.1 -- AMENDMENT 4, R5: THE READER CHANGE IS A CONDITION OF THE MIGRATION, NOT A FOLLOW-ON
+
+STOP: **AMENDMENT 3 SAID THIS RELABELLING "needs no writer change to be true" AND THAT "no
+investigation is required". THAT WAS WRONG, AND IT WAS WRONG IN THE DIRECTION THAT MATTERS.**
+Retracted here.
+
+**`3.0.0_SA_CVO~Z` EXERCISED IT rather than reading it** (msg 25067), and `1.0.0_SA_CTO~Z` has
+confirmed every cited line at source. `lib/research/coverage/pool_reader.py`:
+
+```
+:621-624   _GOLD_DAY_STATE_MAP = {GOLD_DAY_DENIED: "denied", GOLD_DAY_PARTIAL: "partial"}
+:707       mapped = _GOLD_DAY_STATE_MAP.get(row.get("data_status"))
+:708-709   if mapped is not None: counters[mapped] += 1
+:711       incomplete = sum(counters.values())
+:721       "complete": incomplete == 0
+```
+
+**There is no `NO_COVERAGE` key. `.get()` returns `None` for an unrecognised value and `:708` SKIPS it
+rather than raising.** Driven over one synthetic row differing only in `data_status`:
+
+| `data_status` | `states` | `complete` |
+|---|---|---|
+| `DENIED` (positive control) | `denied=1` | **False** |
+| `NO_COVERAGE` | `denied=0` | **True** |
+
+STOP: **SO RELABELLING 1,595 OF 1,596 ROWS WOULD REPORT A GENUINELY UNCOVERED WINDOW TO EVERY CALLER
+OF `gold_window_read` AS A CLEAN COMPLETE READ.** The module's own docstring names the contract that
+breaks: *"the state block, not a silent zero in the series, is what tells a caller the day was not a
+clean read."*
+
+STOP: **AND IT IS THE SHAPE `C-GEN-TERMINAL` NAMES, COMMITTED AGAINST THE READER INSTEAD OF THE
+WRITER.** That contract's finding is *"a default placed upstream of a validator disables it for exactly
+the input it exists to catch."* At `generation_writer.py:269` the permissive default is `state or
+(...)`; here it is `.get()` returning `None` into a guarded increment. **The same author wrote the
+lesson and then committed the defect in the mirror position.** ⛔ **A PERMISSIVE LOOKUP IS A DEFAULT.
+`.get()` WITHOUT A MISS BRANCH IS THE READER-SIDE SPELLING OF `or`.** COST: one miss branch per
+value-mapped read. NON-APPLICATION: a lookup whose miss is genuinely uninteresting -- which is a claim
+to state, never to assume.
+
+**RATIFIED, AND THE MIGRATION DOES NOT LAND WITHOUT IT:**
+
+1. **`NO_COVERAGE` MAPS TO ITS OWN COUNTER, `no_coverage`**, and that counter is included in
+   `incomplete`. **A `NO_COVERAGE` day makes `complete` FALSE.** That is the load-bearing behaviour and
+   the reason the reader change is a condition rather than a courtesy.
+2. **THE COUNTER NAMED `denied` IS RETAINED AND BECOMES TRUTHFUL.** It is reserved for a GENUINE
+   REFUSAL and reads **0 by construction** until harvester fetch-result lineage exists, because nothing
+   emits one. ⭐ **A bare key addition was considered and REFUSED: it would have left every uncovered
+   day counted under a label that says the publisher refused us, which is the conflation Amendment 3
+   exists to end.** A caller reading `states["denied"] == 0` is now reading a TRUE statement -- no day
+   is known-denied -- rather than a misleading one. **This is the naming decision the contract owed and
+   does not delegate to the implementation.**
+3. **AN UNRECOGNISED `data_status` RAISES OR IS COUNTED -- IT IS NEVER SILENTLY SKIPPED.** The miss
+   branch is the guard; a value the map does not know is a defect, not a zero.
+4. **ORDERING.** No producer emits `NO_COVERAGE` before the reader carries `no_coverage`. Today
+   `publication_gold.py:579` still assigns `"DENIED"` in the bare `else`, so **the exposure is real and
+   unfired.**
+
+STOP: **CLASSIFIED EXPOSURE, NOT INCIDENT, and the classification is `3.0.0_SA_CVO~Z`'s with its own
+limit carried:** nothing in the repo emits `NO_COVERAGE` yet, so no reader has been misled. ⚠ **That is
+a REPO-BYTES classification; neither seat censused served or deployed rows.** No incident is claimed and
+nothing is re-opened.
+
+#### A.2 -- AMENDMENT 4, R6: WHAT IS NOW DISCHARGED AND WHAT IS STILL OWED
+
+- **CONSUMER IMPACT -- PARTIALLY DISCHARGED.** `pool_reader` **BREAKS**, exercised above. `2.0.0_SA_COO~Y`
+  graded the generation-side callers at `43e86c36eb`. ⚠ **Chatter, Price and the legacy republisher
+  remain NOT_EVALUATED against the DAILY enum by either seat.** One named reader checked and broken is
+  **enough to refuse and not enough to bound the blast radius** -- `3.0.0_SA_CVO~Z`'s words, carried.
+- **THE PRINTED DENOMINATOR.** The `data_status` field census is **54 hits across 23 files of 70,596**
+  (`2.0.0_SA_COO~Y`). ⛔ **`221` WAS A SOURCE-SEARCH FILE COUNT AND IS NOT A POPULATION OF STATES; it
+  appears in no denominator here.** Graded of the 23: `pool_reader.py` BREAKS · `publication_gold.py`
+  is the writer · `test_publication_gold_daily.py` is its test. **20 of 23 UNGRADED, and that is
+  printed rather than rounded to "the consumers".**
+- **ASKED AGAINST THE DEPLOYED STATE -- STILL OWED.** `2.0.0_SA_COO~Y` read deployment at 20:32Z and
+  found both old ZIP hashes unchanged, zero aliases or numbered versions, and all 16 AMGT routes on an
+  unqualified scoped API. ⚠ **That is a PACKAGE-IDENTITY read, not a served-row census, so it does not
+  discharge this item.** It remains owed and is named, not absorbed.
+
+### B. GENERATION GRAIN -- `C-GEN-TERMINAL`, WRITTEN AND FOLDED IN BY AMENDMENT 4
+
+STOP: **THIS SECTION'S HEADING READ "OWED AND NOT YET WRITTEN" UNTIL AMENDMENT 4. IT IS WRITTEN.**
+`C-GEN-TERMINAL` @`52ec61680d`,
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_COMPLETION_20260923/GENERATION_GRAIN_CONTRACT.md`,
+ratified here by reference and by the operative clauses below.
+
+**SEQUENCING NOTE, and the better plan is `3.0.0_SA_CVO~Z`'s.** This seat held `C-GEN-TERMINAL`
+standalone so that folding it in would not re-stale a ratified half that had just been repaired. That
+reviewer accepted the reasoning **and then improved on it**: since R5 and R7 re-open this half anyway,
+*"the amendment that fixes them is the natural carrier for folding C-GEN-TERMINAL in as amendment 4,
+which costs one signature cycle instead of two."* **Adopted. One cycle, not two.**
+
+**THE OPERATIVE CLAUSES, ratified:**
+
+- **THE DOMAIN TAKES NO FOURTH MEMBER.** `GENERATION_STATES = (COMPLETE, EMPTY, FAILED)`
+  (`generation_writer.py:46-49`), MECE over how ONE attempt at ONE `(axis, as_of_date)` TERMINATES.
+  **The grain is the GENERATION, never `(security, UTC day)`** -- conflating them is the defect
+  Amendment 1 committed and the reason this section exists.
+- **ONE TERMINAL NON-PUBLICATION PATH, and it already exists.** `build_failed_marker` (`:229`), whose
+  own docstring is the contract: *"it sits BESIDE the prior pointer and never replaces it: a failed run
+  leaves the previous generation current."* N entry conditions, a TYPED REASON, a WELL-FORMED object.
+  **Absence of a new generation is never absence of a generation.**
+- **THE TERMINAL OBJECT IS ALWAYS WELL-FORMED and always carries `state` plus its typed reason. A
+  consumer is never handed `None`.** `pointer=None` is viable only where every consumer renders it, and
+  **Chatter does not -- so the formatter is fixed or the shape is not used.**
+- **THE ENUMERATION IS A SUBTRACTION FROM A PRINTED DENOMINATOR:** 21 terminal statements in a 373-line
+  file, minus 12 helper returns, minus 5 validation raises = **4 generation-terminal paths plus the
+  receipt envelope.** ⭐ One subtracted helper (`:167`) is a LEGITIMATE `return None`, which is why a
+  blanket never-return-None rule would be wrong.
+- **CLASSIFIED EXPOSURE, AND NOW MEASURED.** `C-GEN-TERMINAL` named the discriminator and declined to
+  run it; `2.0.0_SA_COO~Y` ran it on the surface it owns -- **305 items, 22 current pointers (12
+  COMPLETE / 10 EMPTY), ZERO `COMPLETE` with `row_count == 0`.** Exposure stands, nothing re-opened.
+  ⚠ **22 CURRENT pointers is not the file's whole history**, so the forward question closes and not
+  every question.
+
+### B-legacy. THE AMENDMENT-2 REQUIREMENTS, TWO OF THEM SUPERSEDED IN PLACE
 **Required, and an inference from the daily enum does not supply any of it:** the shared
 **generation state**; the **terminal publication rule**; the **marker key and type**; the **receipt
 state**; and the **caller contract for Price and the legacy republisher, which omit state entirely.**
@@ -380,16 +508,42 @@ implicit promotion into an explicit one and reads as a fix while changing nothin
 
 **So the contract requires, and a conforming implementation is not reached without them:**
 
-1. STOP: **`UNDETERMINED` MUST NOT PUBLISH.** A generation whose coverage state is undetermined is
-   **withheld**, not emitted with a computed status. This is a **writer** obligation, not a value.
-2. STOP: **THE PROMOTION PATH IS CLOSED.** `state or (STATE_COMPLETE if rows else STATE_EMPTY)` promotes
-   **any falsey state** -- `None` and, by the same mechanism, any future empty value -- into the
-   strongest available assertion. **The writer distinguishes "no state was determined" from "a state
-   was determined and is falsey", and refuses to publish the former.**
-3. **Something must ASSIGN the new members.** `NO_COVERAGE` is assigned by the existing `else`
-   branch; **`UNDETERMINED` is assigned wherever the coverage computation is skipped** -- including
-   the `count_fn is gold_daily_mention_scores` identity miss. **An unassigned member is decorative
-   and this contract does not admit one.**
+1. ⚠ **SUPERSEDED IN PLACE BY AMENDMENT 4 -- IT BINDS AN OBLIGATION TO `UNDETERMINED`, WHICH NO ENUM
+   NOW CARRIES.** Retained, not deleted.
+   > ~~STOP: **`UNDETERMINED` MUST NOT PUBLISH.** A generation whose coverage state is undetermined is
+   > **withheld**, not emitted with a computed status. This is a **writer** obligation, not a value.~~
+
+   **REPLACED BY:** an attempt whose state was NOT DETERMINED is **withheld and recorded as `FAILED`
+   via `build_failed_marker` with a typed reason** -- beside the prior pointer, never replacing it.
+   ⭐ **The INTENT of the superseded clause was right and is preserved; only its NOUN was wrong.** It
+   named a daily-enum member to carry a generation-grain obligation, which is the grain error this
+   section was created to fix, so the clause reproduced the defect it followed.
+2. STOP: **THE PROMOTION PATH IS CLOSED. STANDS, UNCHANGED, AND IS NOW THE HEART OF `C-GEN-TERMINAL`.**
+   `state or (STATE_COMPLETE if rows else STATE_EMPTY)` promotes **any falsey state** -- `None` and, by
+   the same mechanism, any future empty value -- into the strongest available assertion. **The writer
+   distinguishes "no state was determined" from "a state was determined and is falsey", and refuses to
+   publish the former.**
+
+   ⭐ **AMENDMENT 4 ADDS THE MECHANISM THAT MAKES THIS NON-OBVIOUS:** `build_pointer:194` already
+   REFUSES any state outside the domain, and `:199`/`:204` enforce reason-coherence both ways. **All
+   three are correct AND `:194` CAN NEVER FIRE for an absent state, because `:269` replaces it with a
+   VALID MEMBER first.** ⛔ **A DEFAULT UPSTREAM OF A VALIDATOR DISABLES IT FOR EXACTLY THE INPUT IT
+   EXISTS TO CATCH, and the validator still passes its own tests because those hand it a value.**
+   **REMEDY: `state` REQUIRED at the writing entry point, or defaulted only where rows unambiguously
+   decide it -- A DEFAULT MAY NOT SPAN "no rows" AND "no determination" -- with the membership check
+   moved upstream of the default.**
+3. ⚠ **SUPERSEDED IN PLACE BY AMENDMENT 4 -- same reason as requirement 1.** Retained, not deleted.
+   > ~~**Something must ASSIGN the new members.** `NO_COVERAGE` is assigned by the existing `else`
+   > branch; **`UNDETERMINED` is assigned wherever the coverage computation is skipped** -- including
+   > the `count_fn is gold_daily_mention_scores` identity miss. **An unassigned member is decorative
+   > and this contract does not admit one.**~~
+
+   **REPLACED BY, and the surviving half is the sharper one:** `NO_COVERAGE` is assigned by the
+   existing `else` branch at `publication_gold.py:579` **and is READ by `pool_reader`'s new
+   `no_coverage` counter (A.1)** -- assignment without a reader was the R5 defect. **AN UNASSIGNED
+   MEMBER IS DECORATIVE AND THIS CONTRACT DOES NOT ADMIT ONE; amendment 4 adds that AN UNREAD MEMBER IS
+   WORSE THAN DECORATIVE, because it reads as a clean result.** The skipped-computation case is a
+   generation-grain `FAILED` per requirement 1 as replaced, not a daily value.
 
 **WHAT THIS AMENDMENT STILL OWES BEFORE L4-R, STATED RATHER THAN IMPLIED.** `3.0.0_SA_CVO~Z` set its
 terms before drafting; three are not yet satisfied and are named here with their owner:
