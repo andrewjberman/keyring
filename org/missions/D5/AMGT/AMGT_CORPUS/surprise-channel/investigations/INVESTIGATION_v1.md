@@ -245,6 +245,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "A worker's write surface is exactly the <paths> its order names.",
     "world_is": "The same order also directs, in its own section 6, two specific writes to a path outside that list -- a standing pattern across this project's prior orders, not unique to this one, so it reads as an intentional, universal exception (the deliverables directory) rather than a conflict to refuse on.",
     "notes": "Not treated as a BLOCKING row: refusing to write the required proof-of-spec instance would leave the order permanently unprovable, which is a worse outcome than a well-precedented directory exception. Filed so the pattern is on record rather than silently assumed."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S1",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-23T05:35Z",
+    "one_line": "AC2's literal --show-first-graded finds ZERO business types with any report through the GICS11_TO_SCANNER13_v1 bridge: 45 of 51 non-OTHER silver reports carry no 'Sector:' field in their own extracted text at all, and the 6 that do use FactSet/RBICS-shaped strings ('Energy Minerals', 'Technology Services', 'Consumer Non-Durables', 'Communications', 'Consumer Discretionary') the bridge does not cover -- and even grading the 51-report 'unmapped' bucket itself blows AC2's own tail -60 budget (681 total lines, 664 distinct sections at count>=2, aggregating every business type's headings at once).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This worker's own --write run, this worktree, 2026-09-23: 'business_type unmapped reports 51 of 123 sections 664 kpis 16 charts 12 put_performed True' then 'types 0 reports_typed 0 unmapped_reports 51 other_excluded 72' -- zero non-unmapped business types produced.",
+        "This worker's own direct measurement of the store.silver_latest rows, same worktree, 2026-09-23: of the 51 non-OTHER silver rows, 45 carry sector_absent_reason \"no 'Sector:' label found in extracted text\"; the remaining 6 carry sector_as_written 'Energy Minerals' (x2), 'Consumer Discretionary', 'Consumer Non-Durables', 'Technology Services', 'Communications' -- none a member of lib.research.peers.taxonomy.SCANNER_SECTORS, and 'Consumer Discretionary' is the only GICS_TO_SCANNER key among them, resolving to TWO scanner sectors (ambiguous, correctly unmapped).",
+        "AC2's literal invocation, run exactly as written in this worktree: 'python -m lib.research.corpus.sector_template --show-first-graded 2>&1 | tail -60' prints only 'no business_type with >= 3 reports at the current inputs' (rc 0) -- does not satisfy AC2's <expect> regex.",
+        "Grading 'unmapped' instead (51 reports, clearing the >=3 threshold) was tried and also fails: its unmodified --show-first-graded output is 681 lines with 664 distinct 'section ...' lines at count>=2, so 'tail -60' drops the leading 'business_type ...' and 'kpi ...' lines entirely -- checked directly against AC2's regex."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2 expects 'python -m lib.research.corpus.sector_template --show-first-graded 2>&1 | tail -60' to print a business_type with reports N of total, then one kpi line per KPI each 'count C of N', then one section line per section -- implying at least one business type reaches >=3 reports through the bridge on the real corpus (the ISSUER NOTES: 'AC2 grades the first type with 3 or more reports').",
+    "world_is": "On the real 123-object corpus the non-OTHER (class A-D) reports overwhelmingly carry no 'Sector:' field in their own text (45 of 51) -- that field lives almost entirely in the xlsx one-pager files, which classify OTHER and are excluded from 'reports' -- and the 6 reports that do carry a sector string use FactSet/RBICS granular names the GICS11_TO_SCANNER13_v1 bridge (a GICS<->scanner-13 map) does not reach. business_type_of() therefore maps zero of 51 non-OTHER reports to a real business type; 'unmapped' (51 reports) is the only bucket clearing the >=3 threshold, and it separately fails AC2's own tail -60 budget because it aggregates every business type's headings at once. Neither the bridge nor the criterion was relaxed or repaired to force a pass; AC2 is reported FAIL with this measurement.",
+    "notes": "This cell REFUSES AC2 exactly as measured, per the order's own bound ('REFUSE a criterion you cannot satisfy as written ... never repair or widen it'). AC1, AC4 and AC5 pass. AC3 (judgment) carries this --write summary and AC2's actual failing output verbatim for the CVO's own read on whether the unmapped residue is 'small enough to trust the types' -- here zero types are produced at all, which is itself the finding for the CVO to weigh."
   }
 ]
 ```
