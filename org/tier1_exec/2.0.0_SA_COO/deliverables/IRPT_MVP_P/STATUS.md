@@ -1,6 +1,43 @@
 # IRPT P status - 2026-09-22
 
-## Current Opal local integration - 2026-09-23 15:33 UTC
+## Current Opal local integration - 2026-09-23 16:29 UTC
+
+CTO ruling999998e448 authorizes the local private binding tranche. P00b54afab1
+implements `_scope/custody_binding.py` and `accepted_custody.py`; integration
+8845b7ef23 merges M3539ad2ae5 exact acceptance capture/replay plus its reviewed
+source-guard ancestry. Paired interface75bbe9cc2d includes the exact selected
+fingerprint, nested economic facts and retained source projection.
+
+Existing IRPT_REQUESTS_TABLE uses CUSTODY_BINDING namespace, canonical JSON,
+300000-byte cap, conditional create, strong readback and exact retry equality.
+Server writer generates cst_ identity. Reader replays pinned index/manifest via
+M's real service and checks owner, selected fingerprint, source/economic
+revisions and current authorization before/after source and final store reads.
+No HTTP writer or production economic ports are installed.
+
+Focused merged seam run:115 PASS (16 P tests plus99 M holdings tests). Actual M
+capture/load_pinned runs through P store/reader on versioned synthetic S3; old
+same-date source survives a new publication, and unavailable/tampered index or
+unaccepted manifest rows refuse. Conditional conflict/readback, wrong actor,
+changed fingerprint and authorization revocation controls pass. Economic
+interpretation/validation in these storage tests is explicitly a synthetic stub,
+not complete AcceptedCustodyInputV1/source capability proof. Y received the exact
+implemented callback interface and is the pending consumer integration seam.
+CTO direct reviewbb43292167 confirms M3539ad2ae5 publication-history scope with
+99 unchanged tests in an isolated archive. A post-PUT index readback failure
+means an uncertain write outcome without a receipt, not rollback; no cloud
+write was performed in this tranche.
+
+Concrete source gap: COT B01 has no admitted Currency column/declaration; cash,
+sign/unit/security mapping and source numeric interpretation also remain
+unestablished. No USD default or model display substitution is allowed. Both
+economic admission ports are mandatory and fail closed when absent; existing
+display publication cannot establish actual custody. CTO direct review remains
+the closure gate; no independent CVO required, no production activation.
+
+The following package evidence describes the earlier f0075287c4 artifact, not
+the newly added binding modules; final integrated package declaration/proof
+remains pending Y's consumer pin.
 
 Backend source e47aed7f71 integrates Y factory819c9e3990 plus separate evidence
 history4be8608939, scalar reader48946 and custody4911. Portal e0531491 includes
@@ -26,11 +63,10 @@ PASS. Runtime evidence records image digest, both archive hashes, exact command
 and probe hash. OPAL_RUNTIME_DEPENDENCIES_20260923.json pins every dependency
 member. This is local runtime dependency/construction proof, not deployment.
 
-Production remains blocked on the concrete M abfb3eaf82 findings: exact current
-snapshot-owner adapter and accepted actual security-level custody census are
-absent. No model/target substitution, hash/revision conflation or dropping/abs
-of signed positions is allowed. Y signed-value proposal5d7da1aa49 is pending CTO
-and changes no source. Nonempty comparison resolver and actual preparer
+Production remains blocked on accepted actual security-level source capability.
+No model/target substitution, hash/revision conflation or dropping/abs of signed
+positions is allowed. The paired interface preserves signed custody but the
+existing positive-only recipe remains unchanged. Nonempty comparison resolver and actual preparer
 configuration/IAM/queue/current source installation remain open. The local
 dependency artifact is neither a published irpt-common layer nor an applied
 attachment. Published hashes, cloud resources and vendor state are unchanged.
