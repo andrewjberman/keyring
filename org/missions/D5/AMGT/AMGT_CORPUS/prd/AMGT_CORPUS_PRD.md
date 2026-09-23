@@ -5,7 +5,7 @@
   "project": "AMGT_CORPUS",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.3",
+  "prd_version": "v0.4",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md@6c52138c2f (36,007 bytes)",
   "endpoint_outcomes": [
@@ -23,8 +23,8 @@
 }
 ```
 
-**author** `1.0.0_SA_CTO~Z` (L2 endpoint and L4 PRD). **driver** UNSEATED -- a third Tier-2 COO lane is asked of
-`0.0.0_AB_MSTR~Z` at the L4->L5 handoff and never before.
+**author** `1.0.0_SA_CTO~Z` (L2 endpoint and L4 PRD). **driver** `2.0.0_SA_COO~X` -- the third Tier-2 COO lane on
+this box, seated by `0.0.0_AB_MSTR~Z` at the L4->L5 handoff on 2026-09-23 ~01:5xZ, within Andrew's 3-lane cap.
 
 | | |
 |---|---|
@@ -98,6 +98,36 @@ to be weighed rather than discovered, and it is the reason the refusal can be ad
 with *"and"*, and O13 names resolution, induction and printing the unresolved **in one sentence**. **The splits
 follow the brief's own commas.**
 
+### v0.4 CHANGE NOTE -- 2026-09-23 ~02:0xZ, `1.0.0_SA_CTO~Z`
+
+**Raised by `2.0.0_SA_COO~X` within its first hour on the seat (msg 24530), at L5, before cutting.** ⛔ **THE THIRD
+SELF-CONTRADICTION THIS PRD HAS YIELDED, and the first inside the RATIFIED half** -- `C-NO-VENDOR-CALL` says
+*"Nothing in this project calls an external vendor API"*, while `FWD-4` required an induction act that **makes one
+Bloomberg `reference_data` call per name, even under `--dry-run`.** **`FWD-4` was unachievable without breaking a
+contract in the same document.**
+
+**TWO AMENDMENTS, both to `FWD-4`. `C-NO-VENDOR-CALL` IS NOT TOUCHED.**
+
+**1. THE BOUNDARY.** The seat proposed carving the one call out of the contract by name. ⛔ **REFUSED, because the
+decisive fact was in its own message: `add_security` also writes `registrations.json` and the crosswalk pool --
+`AMGT_RESAPP`'s OWN surfaces.** So `FWD-4` had THIS project writing ANOTHER project's surfaces. ⭐ **That is
+exactly the R12 defect ruled two hours earlier in v0.3, and ruling the identical shape differently because the
+remedy is less convenient here would make that ruling worthless.** The induction ACT is `AMGT_RESAPP`'s; this
+project's half **ends at the executable request**.
+
+⭐ **A contract that says "nothing here calls a vendor" is worth more INTACT than with one named exception -- the
+exception is the crack a later reader widens.** No Andrew word is needed for this project, because it makes no
+call; the per-use word belongs to `AMGT_RESAPP` when it inducts.
+
+**2. THE POPULATION.** ⭐ **The seat ran a premise check on this outcome that its author never did:** *"the
+crosswalk IS built from the universe, so resolved-and-absent may be an EMPTY set."* **If it is, `FWD-4` grades
+NOT_REALIZED by construction, whatever anyone builds.** The population is re-pointed at the backlog folders the
+universe carries UNRESOLVED (**60 of 93**, measured at L5), and `CRPS-c-5` **measures the resolved-absent set and
+prints BOTH denominators** -- if non-empty, the original population stands beside the new one.
+
+⚠ **This version touches ENDPOINT, so `3.0.0_SA_CVO~Z`'s ratified half goes STALE and is re-signed.** Unavoidable
+and cheap: **two clauses, no new outcome, and no contract weakened.**
+
 ### The problem, in Andrew's and the team's terms
 
 The firm has written up 93 names by hand and filed the reports in the SharePoint Research library. The voice memo is
@@ -168,15 +198,34 @@ the corpus is a static local library and every artifact below is derived by a ru
          SOURCE     Andrew ~18:3xZ "every single company listed in the Asset
                     Management/Research/ bucket"; brief O13, Part V row 2
 
-  FWD-4  A resolved name that the harvest universe does not carry is inducted,
-         on demand, one name at a time
-         DONE WHEN  EXERCISED -- for one resolved backlog name absent from the
-                    universe, a single deliberate act adds it and the universe
-                    read-back shows it; the act prints what it will add BEFORE
-                    it adds it, and refuses a name whose identity is ambiguous
+  FWD-4  A backlog name the universe does not yet carry can be INDUCTED BY ONE
+         COMMAND -- and this project produces that command's exact request,
+         complete and executable, without calling any vendor
+         DONE WHEN  EXERCISED -- for one backlog name the universe carries
+                    UNRESOLVED, a single act produces the induction request:
+                    it PRINTS what the induction WILL add before anything is
+                    added, REFUSES a name whose identity is ambiguous, and is
+                    driven end to end with a REFUSING TRANSPORT and the poison
+                    POSITIVE-CONTROLLED, so the run COULD NOT have reached the
+                    network rather than merely having not
          ACCEPT     Closing the gap between "we wrote this up" and "the page
-                    knows about it" is one command per name, not a project.
+                    knows about it" is one command per name, not a project --
+                    and the command is ready here even though the firing of it
+                    is not this project's act.
          SOURCE     brief O13, Part V row 2; the Lenovo trial's induction shape
+         ⛔ BOUNDARY (v0.4): the induction ACT ITSELF is AMGT_RESAPP's, not
+                    this project's. `add_security` writes that project's
+                    `registrations.json` and crosswalk pool and spends its
+                    vendor budget (one Bloomberg reference_data call per name,
+                    even under --dry-run). THIS PROJECT'S HALF ENDS AT THE
+                    EXECUTABLE REQUEST. C-NO-VENDOR-CALL is therefore UNTOUCHED.
+         ⚠ POPULATION (v0.4): "resolved but absent from the universe" may be
+                    EMPTY BY CONSTRUCTION -- the crosswalk is BUILT from the
+                    universe. The population is therefore the backlog folders
+                    the universe carries UNRESOLVED (measured 60 of 93 by
+                    2.0.0_SA_COO~X at L5). CRPS-c-5 measures the resolved-absent
+                    set and PRINTS BOTH DENOMINATORS; if it is non-empty, the
+                    original population stands beside this one.
 
   FWD-5  For a name the team has written up, its OWN thesis pillars, KPI set,
          fund of record and last stated position are readable as typed data,
