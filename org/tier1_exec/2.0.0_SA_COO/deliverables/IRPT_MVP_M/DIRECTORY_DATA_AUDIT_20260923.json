@@ -1,0 +1,408 @@
+{
+  "calendar": {
+    "basis": "Conservative prior trading day; not an assumed producer SLA.",
+    "prior_completed_trading_day": "2026-09-22",
+    "source": "NYSE/pandas_market_calendars"
+  },
+  "completed_at_utc": "2026-09-23T13:55:00.618657+00:00",
+  "firms": {
+    "49financial": {
+      "directory": {
+        "actual_entry_count": 4576,
+        "business_date": "2026-09-17",
+        "canonical_opaque_firm_matches": true,
+        "content_revision_sha256": "fcb3311a433ecdbfc7173c1cb3bdcc712401bd0f734976a3ba175497e0dd7a49",
+        "declared_entry_count": 4576,
+        "declared_registry_tenant": null,
+        "declared_revision": "irpt-dir/49financial/2026-09-17/1.0",
+        "entry_business_date_counts": {
+          "2026-09-17": 4576
+        },
+        "entry_firm_mismatch_count": 0,
+        "entry_revision_mismatch_count": 0,
+        "entry_source_completion_date_counts": {
+          "2026-09-17": 4576
+        },
+        "freshness": "DATED_BEHIND_PRIOR_TRADING_DAY",
+        "nonissued_unique_account_count": 0,
+        "opaque_firm_id": "fir_c9fc04650e2134d6ea033da2",
+        "pointer_metadata_matches": {
+          "as_of_business_date": true,
+          "directory_revision": true,
+          "entry_count": true,
+          "generated_at": true,
+          "source_completion_date": true
+        },
+        "population": {
+          "account_rows": 7532,
+          "duplicates_collapsed": 0,
+          "entries_excluded_cross_firm": 0,
+          "unique_accounts": 7532
+        },
+        "schema": "opal://irpt/contracts/DirectoryEntry.schema.json",
+        "schema_error_counts": {},
+        "schema_invalid_entries": 0,
+        "schema_valid_entries": 4576,
+        "schema_version": "1.0",
+        "source_completion_date": "2026-09-17",
+        "source_revision": "49f-gold-runners/dim_relationship@2026-09-17",
+        "state": "READABLE_NONEMPTY",
+        "trading_days_behind_prior_completed_day": 3
+      },
+      "directory_object": {
+        "bucket": "opal-data-bd",
+        "bytes": 6464753,
+        "exact_version_verified": true,
+        "key": "investor-reporting/directory/2026-09-17/directory.json",
+        "last_modified_utc": "2026-09-18T16:41:10+00:00",
+        "sha256": "aa002cb917b1689656a8c758413cc2d43f5d719467759ffade816cb955fac742",
+        "version_id": "KM0ObKDodUCHU2khf0j2VFuDCNMS1_V6"
+      },
+      "ownership": {
+        "account_grant_rows": 22468,
+        "advisor_count": 179,
+        "advisor_nonempty_count": 179,
+        "declared_firm_matches_if_present": true,
+        "generated_at": "2026-09-23T05:13:11.698236+00:00",
+        "individual_key_diagnostic": {
+          "account": {
+            "directory_matches": 5015,
+            "key_projection_error_counts": {
+              "EMPTY_RAW_KEY": 287
+            },
+            "key_projection_error_stage_counts": {
+              "BUNDLED_SEAM_TARGET": 287
+            },
+            "not_in_directory": 1262,
+            "note": "Independent per-key diagnostic only; never a fallback grant or relaxation of advisor_grant.",
+            "unique_projected_values": 6277,
+            "unique_raw_values": 6564,
+            "unmatched_reason_counts": {
+              "NOT-IN-DIRECTORY": 32,
+              "UNPROJECTED-ID": 1230
+            }
+          },
+          "relationship": {
+            "directory_matches": 0,
+            "key_projection_error_counts": {},
+            "key_projection_error_stage_counts": {},
+            "not_in_directory": 3105,
+            "note": "Independent per-key diagnostic only; never a fallback grant or relaxation of advisor_grant.",
+            "unique_projected_values": 3105,
+            "unique_raw_values": 3105
+          }
+        },
+        "projection_error_advisor_counts": {
+          "EMPTY_RAW_KEY": 69
+        },
+        "projection_seam": "custodian_key_seam",
+        "relationship_grant_rows": 10396,
+        "schema_version": 1,
+        "seam_index_count": 6202,
+        "state": "PRESENT_NONEMPTY",
+        "still_current_after_projection": true,
+        "successful_advisor_helper_compatibility": {
+          "advisor_denominator": 110,
+          "directory_accounts_without_any_projected_advisor_grant": 6111,
+          "note": "Only advisors whose entire canonical advisor_grant call returned. Any rejected account or relationship makes that whole call fail. Not a principal authorization or complete raw-account overlap census.",
+          "projected_account_matches": 1421,
+          "projected_relationship_matches": 0,
+          "union_accounts_reachable_by_any_advisor": 1421,
+          "unmatched_account_reason_counts": {
+            "NOT-IN-DIRECTORY": 8,
+            "UNPROJECTED-ID": 692
+          },
+          "unmatched_projected_relationships": 1096,
+          "unprojected_direct_account_matches": 0
+        },
+        "top_level_fields": [
+          "advisors",
+          "firm_id",
+          "generated_at",
+          "schema_version"
+        ],
+        "unique_projected_accounts": 2121,
+        "unique_projected_relationships": 1096,
+        "unique_raw_accounts": 6564,
+        "unique_raw_relationships": 3105
+      },
+      "ownership_object": {
+        "bucket": "opal-data-bd",
+        "bytes": 445511,
+        "exact_version_verified": true,
+        "key": "platinum/49financial/ownership_map.json",
+        "last_modified_utc": "2026-09-23T05:13:12+00:00",
+        "sha256": "e133a77b2b6729471eac67e39175036ab6455aa0e990327ff52def52615d8ea6",
+        "version_id": "QT7Y96_1JVVKNDFclMdQ2rD5DNEkceAN"
+      },
+      "pointer": {
+        "bucket": "opal-data-bd",
+        "bytes": 272,
+        "exact_version_verified": true,
+        "key": "investor-reporting/directory/latest.json",
+        "last_modified_utc": "2026-09-18T16:41:10+00:00",
+        "sha256": "7e850bd3c02933ddd5f3b3f765a1cc97fe72f3464e03f887dc9d221742492e19",
+        "still_current_after_target_read": true,
+        "version_id": "zS462b.owAFAH14qMgc997hcyTONESWC"
+      },
+      "registry": {
+        "bucket": "opal-data-bd",
+        "enabled": true,
+        "firm_id": "49financial",
+        "kind": "client"
+      }
+    },
+    "cottonwood": {
+      "directory": {
+        "actual_entry_count": 260,
+        "business_date": "2026-09-17",
+        "canonical_opaque_firm_matches": true,
+        "content_revision_sha256": "38aa784674b3d2df87befd9213299eca61089d119a214b30b96ce0f54c8302c3",
+        "declared_entry_count": 260,
+        "declared_registry_tenant": null,
+        "declared_revision": "irpt-dir/cottonwood/2026-09-17/1.0",
+        "entry_business_date_counts": {
+          "2026-09-17": 260
+        },
+        "entry_firm_mismatch_count": 0,
+        "entry_revision_mismatch_count": 0,
+        "entry_source_completion_date_counts": {
+          "2026-09-17": 260
+        },
+        "freshness": "DATED_BEHIND_PRIOR_TRADING_DAY",
+        "nonissued_unique_account_count": 0,
+        "opaque_firm_id": "fir_0fe2a06331f1b4a68133fcb2",
+        "pointer_metadata_matches": {
+          "as_of_business_date": true,
+          "directory_revision": true,
+          "entry_count": true,
+          "generated_at": true,
+          "source_completion_date": true
+        },
+        "population": {
+          "account_rows": 856,
+          "duplicates_collapsed": 14,
+          "entries_excluded_cross_firm": 0,
+          "unique_accounts": 842
+        },
+        "schema": "opal://irpt/contracts/DirectoryEntry.schema.json",
+        "schema_error_counts": {},
+        "schema_invalid_entries": 0,
+        "schema_valid_entries": 260,
+        "schema_version": "1.0",
+        "source_completion_date": "2026-09-17",
+        "source_revision": "cot-silver/fact_allocations@2026-09-17",
+        "state": "READABLE_NONEMPTY",
+        "trading_days_behind_prior_completed_day": 3
+      },
+      "directory_object": {
+        "bucket": "opal-data-cot",
+        "bytes": 418144,
+        "exact_version_verified": true,
+        "key": "investor-reporting/directory/2026-09-17/directory.json",
+        "last_modified_utc": "2026-09-18T16:41:05+00:00",
+        "sha256": "90b742a3764fc433e7187244a280baa5da0e2d18d18a570ad228ddfa2a809076",
+        "version_id": "seN3sLdnz.jBxbQorQBtzEwqhrTLypC9"
+      },
+      "ownership": {
+        "account_grant_rows": 0,
+        "advisor_count": 0,
+        "advisor_nonempty_count": 0,
+        "declared_firm_matches_if_present": true,
+        "generated_at": "2026-09-23T11:35:08.763704+00:00",
+        "individual_key_diagnostic": {
+          "account": {
+            "directory_matches": 0,
+            "key_projection_error_counts": {},
+            "key_projection_error_stage_counts": {},
+            "not_in_directory": 0,
+            "note": "Independent per-key diagnostic only; never a fallback grant or relaxation of advisor_grant.",
+            "unique_projected_values": 0,
+            "unique_raw_values": 0,
+            "unmatched_reason_counts": {}
+          },
+          "relationship": {
+            "directory_matches": 0,
+            "key_projection_error_counts": {},
+            "key_projection_error_stage_counts": {},
+            "not_in_directory": 0,
+            "note": "Independent per-key diagnostic only; never a fallback grant or relaxation of advisor_grant.",
+            "unique_projected_values": 0,
+            "unique_raw_values": 0
+          }
+        },
+        "projection_error_advisor_counts": {},
+        "projection_seam": null,
+        "relationship_grant_rows": 0,
+        "schema_version": 1,
+        "state": "PRESENT_EMPTY",
+        "still_current_after_projection": true,
+        "successful_advisor_helper_compatibility": {
+          "advisor_denominator": 0,
+          "directory_accounts_without_any_projected_advisor_grant": 842,
+          "note": "Only advisors whose entire canonical advisor_grant call returned. Any rejected account or relationship makes that whole call fail. Not a principal authorization or complete raw-account overlap census.",
+          "projected_account_matches": 0,
+          "projected_relationship_matches": 0,
+          "union_accounts_reachable_by_any_advisor": 0,
+          "unmatched_account_reason_counts": {},
+          "unmatched_projected_relationships": 0,
+          "unprojected_direct_account_matches": 0
+        },
+        "top_level_fields": [
+          "advisors",
+          "firm_id",
+          "generated_at",
+          "schema_version"
+        ],
+        "unique_projected_accounts": 0,
+        "unique_projected_relationships": 0,
+        "unique_raw_accounts": 0,
+        "unique_raw_relationships": 0
+      },
+      "ownership_object": {
+        "bucket": "opal-data-cot",
+        "bytes": 107,
+        "exact_version_verified": true,
+        "key": "platinum/cottonwood/ownership_map.json",
+        "last_modified_utc": "2026-09-23T11:35:09+00:00",
+        "sha256": "048982f4fc7f6e3c66e7aac1c9c13f2367df5a67c06b52226df7d9cb686461b5",
+        "version_id": "dE2Cv74Cf4xJSfR7.2HpRaWT2XvEXsqo"
+      },
+      "pointer": {
+        "bucket": "opal-data-cot",
+        "bytes": 270,
+        "exact_version_verified": true,
+        "key": "investor-reporting/directory/latest.json",
+        "last_modified_utc": "2026-09-18T16:41:05+00:00",
+        "sha256": "f9d4410aefb1ac0a33b8345c05436971844be4ce0b2832fbe3f454decb307e20",
+        "still_current_after_target_read": true,
+        "version_id": "7BlMhJbQUufinpGu.73FkvnFZdA9PPD3"
+      },
+      "registry": {
+        "bucket": "opal-data-cot",
+        "enabled": true,
+        "firm_id": "cottonwood",
+        "kind": "client"
+      }
+    },
+    "inflection": {
+      "directory": {
+        "actual_entry_count": 291,
+        "business_date": "2026-09-17",
+        "canonical_opaque_firm_matches": true,
+        "content_revision_sha256": "e7c8504f9d845dcd8dfdd16ac26b1af2fb1007ccad1c64521adb5a1fd780870c",
+        "declared_entry_count": 291,
+        "declared_registry_tenant": null,
+        "declared_revision": "irpt-dir/inflection/2026-09-17/1.0",
+        "entry_business_date_counts": {
+          "2026-09-17": 291
+        },
+        "entry_firm_mismatch_count": 0,
+        "entry_revision_mismatch_count": 0,
+        "entry_source_completion_date_counts": {
+          "2026-09-17": 291
+        },
+        "freshness": "DATED_BEHIND_PRIOR_TRADING_DAY",
+        "nonissued_unique_account_count": 0,
+        "opaque_firm_id": "fir_b6b200b4395e94aaa604d5fa",
+        "pointer_metadata_matches": {
+          "as_of_business_date": true,
+          "directory_revision": true,
+          "entry_count": true,
+          "generated_at": true,
+          "source_completion_date": true
+        },
+        "population": {
+          "account_rows": 875,
+          "duplicates_collapsed": 0,
+          "entries_excluded_cross_firm": 0,
+          "unique_accounts": 875
+        },
+        "schema": "opal://irpt/contracts/DirectoryEntry.schema.json",
+        "schema_error_counts": {},
+        "schema_invalid_entries": 0,
+        "schema_valid_entries": 291,
+        "schema_version": "1.0",
+        "source_completion_date": "2026-09-17",
+        "source_revision": "inf-api-dims/accounts_v2@2026-09-17",
+        "state": "READABLE_NONEMPTY",
+        "trading_days_behind_prior_completed_day": 3
+      },
+      "directory_object": {
+        "bucket": "opal-data-inf",
+        "bytes": 447976,
+        "exact_version_verified": true,
+        "key": "investor-reporting/directory/2026-09-17/directory.json",
+        "last_modified_utc": "2026-09-18T09:02:14+00:00",
+        "sha256": "09e349d2886bdc5bfeb79069cf747e616c6bfbf9fe7bb03506b83b4aae9e57c7",
+        "version_id": "QQ4Ce4ROS2MrkjEF1cj8H0VOhacR8JYo"
+      },
+      "ownership_failure": {
+        "bucket": "opal-data-inf",
+        "error_code": "NoSuchKey",
+        "http_status": 404,
+        "key": "platinum/inflection/ownership_map.json",
+        "state": "ABSENT"
+      },
+      "pointer": {
+        "bucket": "opal-data-inf",
+        "bytes": 270,
+        "exact_version_verified": true,
+        "key": "investor-reporting/directory/latest.json",
+        "last_modified_utc": "2026-09-18T09:02:14+00:00",
+        "sha256": "f793dc2d80c02bd7ea0c82af395db9a939237ddb207a0626fbf789eb596b3ba4",
+        "still_current_after_target_read": true,
+        "version_id": "WAkBxEYNTbtbw.gN9COdLynB60vXZeBE"
+      },
+      "registry": {
+        "bucket": "opal-data-inf",
+        "enabled": true,
+        "firm_id": "inflection",
+        "kind": "client"
+      }
+    }
+  },
+  "measured_at_utc": "2026-09-23T13:54:39.991735+00:00",
+  "mode": "READ_ONLY_AGGREGATE_DATA_AUDIT_NOT_AUTHORIZATION_OR_E2E",
+  "runtime_configuration": {
+    "access_limit": "Operator S3 reads; no Lambda execution-role simulation or HTTP invocation.",
+    "code_sha256_base64": "iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s=",
+    "directory_bucket_map": {
+      "49financial": "opal-data-bd",
+      "cottonwood": "opal-data-cot",
+      "inflection": "opal-data-inf"
+    },
+    "directory_prefix": "investor-reporting/directory",
+    "function": "irpt-directory-search",
+    "id_namespace": "IRPT_DIRECTORY_ID_NS_V1",
+    "last_modified": "2026-09-23T06:26:25.000+0000",
+    "ownership_key_template": "platinum/{firm}/ownership_map.json"
+  },
+  "source_files": {
+    "data/firm_registry.json": {
+      "sha256": "5a4c0c3da26fffe55d8a3ec2a8a7248bd0b1dd936af5425ab35426bc5d277fc0"
+    },
+    "docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json": {
+      "sha256": "7ed220ff87a787c6b596bcc66bc90a8a5a69fe2ec7da88e145207297011aab24"
+    },
+    "infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json": {
+      "sha256": "87f2f92f3c71f7761b387574a3df721474120465b1b0da8028cfc201b619923a"
+    },
+    "infra/aws/lambda/investor-reporting/_ids/ids.py": {
+      "sha256": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6"
+    },
+    "infra/aws/lambda/investor-reporting/_ids/raw_keys.json": {
+      "sha256": "f81db571b5d92ca66b960047d96b38cc74c173cb7bf8be0c20e9cd3973acaf89"
+    },
+    "infra/aws/lambda/investor-reporting/_scope/resolve.py": {
+      "sha256": "24b407fa00ff0fc342d57b1ca2bd986d7c802fe8a96b30fe57c06520523ccdeb"
+    },
+    "infra/aws/lambda/investor-reporting/_scope/selection.py": {
+      "sha256": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af"
+    },
+    "lib/trading_calendar.py": {
+      "sha256": "41b1c0c12651c62e59d27537a5bafb5bc34a3bb6562d94d57029a2f77ccac4c6"
+    }
+  },
+  "source_pin": "dc51d8920dd25d4c11bf48737cdca31ada3e8a63"
+}

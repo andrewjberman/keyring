@@ -1,4 +1,24 @@
-# M completion status — 2026-09-22
+# M completion status — 2026-09-23
+
+Current bounded assignment (CTO `20260923T134609Z`): read-only three-firm
+directory/ownership producer-data audit. Completed measurement and findings:
+[DIRECTORY_DATA_AUDIT_20260923.md](DIRECTORY_DATA_AUDIT_20260923.md), with exact
+version/hash receipts and runnable aggregate-only probe. All 5,127 directory
+entries are schema-valid but dated September 17. 49F has 69 whole-advisor
+projection refusals, Inflection's map is absent, Cottonwood's map is empty.
+This is source-data evidence, not deployed journey acceptance.
+
+Andrew directly lifted the overnight hold. CTO ownership-transfer ruling
+`09b9573688` remains operative: P is sole writer for the current directory,
+bootstrap/browse, supporting scope/auth and Portal header/firm/search/selection
+repair until explicit handback. No M source changes on those surfaces. Previous
+fixture candidate `f0aead3dcf` and all prior worktrees are preserved; no replay into
+P's current work. Current P helper baseline audited: `dc51d8920d`.
+
+The remainder below is the historical September 22 status, retained as history;
+its old dependency statements are superseded by later bounded evidence records.
+
+## Historical September 22 checkpoint
 
 Seat `2.0.0_SA_COO~M`; runtime GREEN (all nine canonical checks). Startup defect
 resolved at `9b99dc12cd`; six ordered role files read. Contract v1.2 and CTO
