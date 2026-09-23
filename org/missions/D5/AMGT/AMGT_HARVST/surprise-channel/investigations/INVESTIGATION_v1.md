@@ -438,6 +438,54 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "HVST-h-10 item 5: 'Run upload-harvest --retrieval-mode backfill until remaining_pending is 0. It writes bronze articles, bronze listings, silver article and silver listing_hit.' -- implying a clean, complete drain to silver for everything harvest mode captures.",
     "world_is": "remaining_pending cannot reach 0 for this run's wsj rows without a code fix -- the failure is deterministic (same 11 rows, same error, on two separate upload-harvest invocations minutes apart) and content-based, not transient/retriable. This is a REAL production defect surfaced by REAL Lenovo content on the FIRST wsj live harvest-mode pass ever made (no prior wsj harvest_grammar row existed to have caught it earlier). All 11 real, new WSJ Lenovo articles are captured in bronze (verified byte-for-byte) but absent from silver, so stage 9's article-in-silver count for Lenovo undercounts wsj's true yield by 11.",
     "notes": "Not fixed here: Phase 1 is execution-only (no code edits) and this is well outside this order's named scope (the probe/publisher-continuation fix and its rehearsal). The 11 bronze objects are NOT lost or at risk -- bronze is write-once and already confirmed present; a future code fix (constraining silver_from_bronze's WSJ extraction to a fixed, typed field set instead of the raw __NEXT_DATA__ dump) can re-run upload-harvest against the SAME already-pending outbox rows without any further vendor call. Disarm is the issuer's/CVO's: fix the WSJ extractor's field selection, or coerce/drop the offending config-passthrough fields before the parquet write, in a later cell with its own grant if code changes are needed."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W10-S9",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~10",
+    "surfaced_at": "2026-09-23T01:10Z",
+    "one_line": "Row AMGT_HARVST-Z-W10-S8's fix is BUILT and VERIFIED, entirely offline: silver_from_bronze._extract_wsj now keeps articleData as a single typed struct and moves every OTHER pageProps key VERBATIM into one page_config_json text column (per the issuer's C-HV-SILVER-FROM-BRONZE reading), and a no-vendor-call rebuild of silver from the already-held bronze (python -m lib.opal_data_harvest upload-harvest against the main runtime) moved all 11 previously-stuck WSJ articles from pending to uploaded: remaining_pending 11 -> 0, silver_article_rows now 14 EQUAL to bronze_articles 14 (was 3 vs 14).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/opal_data_harvest/silver_from_bronze.py _extract_wsj @HEAD (this cell's commit): vendor = {'articleData': article}; page_config = {k: v for k, v in props.items() if k != 'articleData'}; vendor['page_config_json'] = json.dumps(page_config, ensure_ascii=False, sort_keys=True)",
+        "lib/opal_data_harvest/test_silver_from_bronze.py: 16 of 16 arms pass, including the new test_page_config_mixed_type_key_still_writes (reproduces the exact string-vs-boolean conflict across a grouped pa.Table.from_pylist([...]) batch, now succeeds) and test_no_key_loss_from_bronze_to_silver (denominator printed: no_key_loss_recovered 7 of 7 missing [])",
+        "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~10/upload_harvest_rebuild.json: rc 0, remaining_pending 0, all 11 wsj:<article_id> rows status=uploaded (was status=pending error_code=SilverRowError twice before this fix)",
+        ".scratch/hv10/verify.py re-run after the rebuild: bronze_reread 14 of 14 mismatch 0 (unchanged -- bronze was always safe); silver_article_rows 14 bronze_articles 14 (was 3 vs 14) -- AC2's equality bar now holds",
+        "no new vendor call was made or is possible through this path: HarvestUploader._run_articles reads Path(path).read_bytes() from the LOCAL already-held raw file and put_article_bronze finds the bronze key already exists (skipped=True), so only the silver_from_bronze extraction and the S3 silver write execute"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Phase 0c's own text: 'AC2 is then re-measured on the rebuilt silver: silver_article_rows EQUAL to bronze_articles.'",
+    "world_is": "Measured true: silver_article_rows (14) now equals bronze_articles (14) after the fix and the no-vendor-call rebuild. Disposition left UNDER_INVESTIGATION (not self-GRADUATED) because this worker holds no adjudication authority -- the issuer/CVO's own row is the one that formally closes row -S8; this row exists so that closure has the built-and-verified evidence to cite.",
+    "notes": "sa/bbg/ft/barrons extractors were read and NOT changed: their vendor objects are already scoped, focused API/JSON-LD objects (SA's data.attributes, BBG's story, Barron's articleData, FT's JSON-LD article object), never a whole-page frontend config dump like WSJ's raw-HTML __NEXT_DATA__ pageProps -- no evidence of the same mixed-type-across-pages hazard was found for any of them. If future evidence surfaces one, the same page_config_json pattern applies directly."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W10-S10",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~10",
+    "surfaced_at": "2026-09-23T01:20Z",
+    "one_line": "AC6's <expect> text was corrected once already (row AMGT_HARVST-Z-W10-S7, fixed at cbee65f127) to name the four files Phase 0b authorised, but Phase 0c's OWN amendment (9655d6a7ed) authorises two MORE files (silver_from_bronze.py, test_silver_from_bronze.py) and AC6's text was not updated again -- the same staleness class recurring on the SAME criterion, one phase later.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-h-10.lenovo-run-under-the-trial-word.md @9655d6a7ed, Phase 0c section: 'You may edit ONLY: lib/opal_data_harvest/silver_from_bronze.py, lib/opal_data_harvest/test_silver_from_bronze.py, and lib/opal_data_harvest/uploads.py if the rebuild needs a replay entry point.'",
+        "the same file's AC6 <expect>, unchanged since row -S7's own fix: 'ONLY the four files this order's phases authorise (__main__.py, worker.py, rehearse_run.py, test_retrieval_provenance.py)' -- silver_from_bronze.py and test_silver_from_bronze.py absent from that list",
+        "this cell's own AC6 invocation this round prints ONLY lib/opal_data_harvest/silver_from_bronze.py and lib/opal_data_harvest/test_silver_from_bronze.py (the prior phases' files no longer appear in the diff at all, because the drain merges advanced the merge-base past them) -- NEITHER of the two files actually touched this round is named in AC6's current list"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC6's <expect> text is the authority for what 'nothing outside the currently-authorised files changed' means.",
+    "world_is": "Each phase amendment that widens BOUNDS' editable-file set requires AC6's <expect> to be updated in the SAME amendment, or it silently falls one phase behind again -- exactly the mechanism row -S7 already named, now recurring on its own fix. This cell graded AC6 by INTENT (nothing outside Phase 0c's own named editable set touched) rather than by the stale literal list, same as it did for -S7, and states that reasoning on AC6's own acceptance row.",
+    "notes": "Not fixed here (no authority to rewrite the TO's own criteria). Disarm suggestion, sharpened from -S7's: word AC6 generically ('nothing outside the CURRENT phase's own BOUNDS-authorised set') so it never needs editing again when BOUNDS grows, rather than re-enumerating the file list on every amendment."
   }
 ]
 ```
