@@ -67,6 +67,28 @@
     "spec_asserts": "The C01 static instrument counts library-directed write calls across corpus Python source, including ordinary lexical scopes.",
     "world_is": "The original scanner skipped lambda and class bodies and inherited safe globals over same-named parameters. Zero reported writes was therefore insufficient evidence despite passing producer tests.",
     "notes": "Original static-census zero-write claim withdrawn. Candidate visits module/function/async/class/lambda scopes, carries lexical closures while skipping class bindings for methods, and treats all parameter kinds as unknown even when defaults/globals are safe. Local assignments start unknown. Thirteen new controls pass. Corrected producer census28files/27write-like/0library requires H re-review; copied-library execution and period-order evidence remain separate. No actual source-library mutation inferred."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S8",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-23T17:48:27Z",
+    "one_line": "Follow-up to AMGT_CORPUS-Z-S7: comprehension, loop and unpacking targets still inherit safe origins at f28faad15b.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "H review cc5d696265, REVIEW_C_f28faad15b.md/json and review_c_candidate.py: three binding forms remain false-safe.",
+        "SCANNER_BINDING_FIX.json: all three new controls flagged; full178testsPASS; negative_control and RetainedOnlyClient AST unchanged."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The C01 static instrument counts library-directed write calls across corpus Python source, including ordinary lexical scopes.",
+    "world_is": "H cc5d696265 confirms S7 original controls fixed but reproduces three new static binding false negatives at f28faad15b. A direct-Name assignment collector does not cover Python binding forms.",
+    "notes": "Append-only follow-up to AMGT_CORPUS-Z-S7; prior row preserved. Original static-census zero-write claim withdrawn. First scope repair f28faad15b fixed the original three cases, but H then reproduced comprehension/loop/unpacking rebinding inheriting safe globals. Latest candidate conservatively collects binding contexts and comprehension scopes, propagates walrus escape and invalidates global/nonlocal rebindings; ambiguous import aliases cannot erase writes. Forty-two controls added since original candidate; full178testsPASS. SCANNER_BINDING_FIX.json records the new repros. Producer census28files/27write-like/0library still requires H re-review. Copied-library execution and period-order evidence remain separate; no actual source-library mutation inferred."
   }
 ]
 ```
