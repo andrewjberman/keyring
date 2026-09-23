@@ -125,6 +125,13 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   last artifact read. Sequential final metadata checks are not an atomic page;
   HTTP/status/report routes remain unproved. See
   `OWNED_REQUESTS_REVIEW_e93300e34b.md`; all14 integrated criteria NOT_EVALUATED.
+- Owned report reader `9ac485733e365452960b47d18cf0fba04ef73f7e`: supplied44
+  PASS; independent11 PASS/1 FAIL. Y-R01 P2 OPEN: numeric64-digit
+  certification_sha256 passes string-coerced READY regex and releases the
+  retained report, while canonical READY writer rejects that same value.
+  Malformed persisted metadata injected offline; no access leak/live publication
+  bypass claimed. Other owner/job/index/retention/current-auth controls pass.
+  See `OWNED_REPORT_REVIEW_9ac485733e.md`; routed COO~Y for typed-receipt repair.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:

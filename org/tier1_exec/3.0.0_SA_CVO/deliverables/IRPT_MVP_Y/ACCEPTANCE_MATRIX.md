@@ -381,6 +381,16 @@ No atomic metadata snapshot, real Dynamo/IAM/HTTP, browser reload or released
 report proof. See `OWNED_REQUESTS_REVIEW_e93300e34b.md`.
 No full Y6/S4/S7 grade; all14 integrated criteria remain NOT_EVALUATED.
 
+## Owned report reader finding, September 22 evening
+
+`9ac485733e365452960b47d18cf0fba04ef73f7e`:44 supplied PASS; independent11PASS /
+1FAIL. **Y-R01 P2 OPEN**: malformed persisted READY numeric64-digit digest is
+accepted after str coercion; same value refused by canonical writer. Expected
+typed reader refusal before report fetch. No demonstrated unauthorized read or
+live publication bypass; normal writer cannot produce the bad value. See
+`OWNED_REPORT_REVIEW_9ac485733e.md` and preserved probe/evidence. HTTP, actual
+certifier/publication and runtime remain due; all14 criteria NOT_EVALUATED.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |
