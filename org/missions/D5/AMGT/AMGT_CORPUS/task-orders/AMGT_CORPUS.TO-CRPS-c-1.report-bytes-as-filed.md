@@ -134,7 +134,7 @@ only). Scratch in `.scratch/c1/`, never committed. Commit with `bash .tools/safe
 not by care. The backreference in AC2's pattern (`objects (\d+) files \1 match \1`) is the equality FWD-1 names,
 graded by the checker rather than read by eye.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
