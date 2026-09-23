@@ -486,6 +486,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "AC6's <expect> text is the authority for what 'nothing outside the currently-authorised files changed' means.",
     "world_is": "Each phase amendment that widens BOUNDS' editable-file set requires AC6's <expect> to be updated in the SAME amendment, or it silently falls one phase behind again -- exactly the mechanism row -S7 already named, now recurring on its own fix. This cell graded AC6 by INTENT (nothing outside Phase 0c's own named editable set touched) rather than by the stale literal list, same as it did for -S7, and states that reasoning on AC6's own acceptance row.",
     "notes": "Not fixed here (no authority to rewrite the TO's own criteria). Disarm suggestion, sharpened from -S7's: word AC6 generically ('nothing outside the CURRENT phase's own BOUNDS-authorised set') so it never needs editing again when BOUNDS grows, rather than re-enumerating the file list on every amendment."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W15-S1",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~15",
+    "surfaced_at": "2026-09-22T00:00:00Z",
+    "one_line": "worker.py's harvest-mode listing persist (_write_harvest_listings) sits AFTER the whole per-article for-loop over client.articles(), so a job that raises mid-loop (a 502, a challenge, a rejection on any later article) discards every listing page ALREADY captured in memory for that job -- a THIRD failure mode this cell's CODE/SESSIONS dichotomy does not name: capture wired AND exercised, yet never persisted, because of where the persist call sits relative to exception propagation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/opal_data_harvest/worker.py:186 `for article in client.articles(security, limit=...):` -- iterates the SAME generator that internally calls Publisher._record_listing on every listing GET, so an exception raised from ANY point inside this loop (an article-fetch HTTP error, a verification challenge) propagates out through this line @8aaaacd26379",
+        "lib/opal_data_harvest/worker.py:227-228 `if self.config.get(\"harvest_grammar\", False) and hasattr(client, \"listings\"): self._write_harvest_listings(client.listings)` -- placed AFTER the for-loop at :186 completes normally; an exception from the loop skips straight past these two lines to run_job's own except handler, so client.listings (already populated in memory) is never persisted for that job @8aaaacd26379",
+        "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~10/RUN_REPORT.md:37 sa row: 'HTTP 502 from seekingalpha.com stopped further paging. Of the 24 accepted, only 3 were genuinely new' -- sa's job fetched MULTIPLE listing pages successfully (24+6=30 items processed across pages) before the 502 stopped it, so Publisher._record_listing fired more than once for sa in the live run, yet the issuer's own post-run bronze census (section 1 of this cell's task order) counted 'seeking-alpha 0' listing objects",
+        "this cell's own offline census (lib/opal_data_harvest/census_listing_capture.py, run this turn) proves sa's capture step IS wired and IS reached (listing_captured True, would_put True) on a clean, non-raising stub run -- so sa's live zero is not explained by an absent CODE step at the capture site alone; the run_job-level discard above is a code-shaped gap this cell's own scope (drive_listing/would_put on ONE clean pass) cannot exercise, since it never drives a mid-loop exception"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's own section 1 frames exactly two causes for 'no listing bronze object': CODE (the capture is not wired on a path) or SESSIONS (the path never reached a listing call live) -- and rules that whichever publisher this cell finds wired is attributed to SESSIONS, full stop, per RUN_REPORT.",
+    "world_is": "For sa specifically, RUN_REPORT.md shows the listing call WAS reached, repeatedly, before the 502 (a SESSIONS-shaped event on a LATER article fetch) -- but the listing pages already captured in memory never reached bronze because of WHERE worker.py places the persist call, which is a CODE-shaped placement question, not a session-health question. The two-cause dichotomy this cell settles does not have a slot for 'wired, exercised, discarded by a later exception elsewhere in the same job' -- sa's true cause is closer to CODE (an exception-fragile persist point) than to pure SESSIONS, and this row exists so that distinction is not lost inside a plain 'SESSIONS' attribution.",
+    "notes": "Not fixed here -- worker.py is READ-ONLY under this cell's <paths> and this cell's own bounds say it fixes nothing. This is a round-3 candidate: move (or checkpoint) the harvest-listing persist to run per listing page as it is captured, or wrap the per-article loop so a later exception cannot discard earlier, already-captured listings. Filed as OBSERVATION/ARMED because it will keep discarding real listing pages on every future run that hits ANY mid-job exception after page 1, on ANY publisher, not just sa."
   }
 ]
 ```
