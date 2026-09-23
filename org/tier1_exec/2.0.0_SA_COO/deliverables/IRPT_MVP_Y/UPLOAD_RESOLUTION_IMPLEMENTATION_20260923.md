@@ -1,5 +1,11 @@
 # Upload resolution: local implementation and exact integration handoff
 
+Deadline correction: source **5609c2e46a2d36716743f21a8e6a5eec6876e5d8**
+supersedes the Kimi budget implementation below. CTO found the baseline incorrectly
+reset its budget per retry. See `KIMI_TOTAL_DEADLINE_REPAIR_20260923.md` for the
+single-deadline repair,43 focused tests and190 intake tests +18 subtests. Counts
+below are historical measurements at6cfe, not a fresh aggregate at the repair pin.
+
 Y source **6cfe01c3e238e9a90e88d3a501b25ac0eaf41540**, isolated branch
 `irpt-mvp-y-20260922`. Ancestors e203236b6a and54a9262488. Authority fd32cac392,
 57c263bee4 and078349b96c. This is a partial source implementation, not a completed
