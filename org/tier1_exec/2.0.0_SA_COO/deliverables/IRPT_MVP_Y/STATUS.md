@@ -417,3 +417,43 @@ and write claims remain. No integrated Y1-Y7/S1-S7 acceptance is asserted.
 
 Next: independent publisher/paired-wire review; assemble durable queue worker
 and maintained session/readback dependencies; connect frozen report export with P.
+
+## Current recovery and public-wire candidate (2026-09-23 01:36Z)
+
+- Backend LOCAL `33b2fbe528`, portal LOCAL `12acb3f4`. P replacement
+  `960f5f2a45`/`c09fea54` consumed via canonical safe-merge, without conflicts.
+  Earlier public-wire pair is superseded. Y-W01/R-P11 and Y-W02 remain HOLD
+  pending independent unchanged retests; source/schema/strict-parser repair is
+  not independent closure. CTO `54b242b9cd` and CVO `64a2c522ef` read in full.
+- Final merged validation: 99 focused backend tests/4 subtests PASS; portal
+  44 tests/219 assertions PASS and TypeScript PASS. Actual Entry response captures
+  regenerated in PUBLIC_WIRE_REPAIRED_OUTER.json and PUBLIC_WIRE_REPAIRED_DATES.json;
+  hashes and exact commands recorded in EVIDENCE_MANIFEST.json.
+- CVO publisher review `a0fd560594` at exact `6c3bfae3e6`: 29 supplied and16
+  independent controls PASS. Worker effective_inputs holdings fingerprint/settings
+  remain trusted metadata, not independently bound to actual accepted/readback
+  artifacts. Full review and CTO01:28:46/P01:30:58 limits read and retained.
+- Immutable worker checkpoints `d29c893cf1`: five closed 32KiB receipt slots,
+  conditional first write, identical retry only, current fence pre/post reads.
+  These survive mutable status/intent transitions and never clear permanent vendor
+  intents. Durable adapter tests plus publisher/index26PASS/4subtests; gate2/2.
+- Post-download recovery `82792f4864`: PublicationWorker checkpoints an actual
+  owned retained PDF with exact census/metadata, re-extracts/verifies publication
+  after process loss, and records the same receipt. Tests kill after PDF checkpoint,
+  report publication and receipt persistence; new simulated lease recovers one
+  report transaction. Lease loss after successful publication refuses but preserves
+  the write. 33 combined tests/4subtests PASS, Ruff and gate3/3 PASS. No Dynamo
+  server expressions or concurrency proof. This stage intentionally remains
+  CERTIFYING: no metadata-binding proof or READY claim. Dynamo READY writes now
+  additionally require prior CERTIFYING atomically; this alone is not certification.
+- Maintained-source ruling `0429af3604` read in full. M owns maintained resolver,
+  P canonical RequestComposition schema, Y recipe/worker consumption. Concrete
+  consumer handoff is MAINTAINED_CONSUMER_REQUIREMENTS.md. M/P agree explicit
+  optional source absence, blank only at vendor edge; required identity/recipient/
+  organization/title remain unavailable if missing. FIRM_OPERATIONS prepared_by
+  is the verified actual acting user with provenance, never a borrowed advisor.
+  Prospect prepared_for and maintained comparison source remain exact open gaps.
+- Next: independent recovery/public-wire review, M actual maintained descriptor
+  example/P closed schema, actual frozen-input/readback metadata binding and worker
+  assembly, then shared frozen export. All14 integrated criteria NOT_EVALUATED.
+  No vendor/session activation, policy activation, push, deploy or browser proof.

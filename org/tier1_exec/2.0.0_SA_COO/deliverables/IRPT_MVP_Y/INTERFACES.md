@@ -596,3 +596,39 @@ source ancestry, lease/state/request/hash/owner/policy refusal, lease loss durin
 extraction and current-access revocation. Combined actual-PDF and retained-index
 suite29PASS; AWS effects are doubles and Dynamo expressions are not executed.
 Actual X10 enforcement remains pending; no activation or integrated acceptance.
+
+## Worker recovery and replacement public wire (2026-09-23 01:36Z)
+
+DynamoGenerationStore d29c893cf1 adds get_checkpoint(job_id,name) and
+put_checkpoint(job_id,name,value) for upload/portfolio/read_back/pdf/publication.
+Each immutable nonempty JSON receipt is <=32KiB; five slots plus bounded existing
+job detail remain within Dynamo's item ceiling. Conditional first-write plus exact
+same-content retry, accepted composition hash and current owner/fence/expiry.
+Checkpoint reads recheck lease after retrieval. They neither replace intent/state
+fields nor authorize another vendor mutation. Caller owns semantic validation and
+must exclude secrets and signed URLs; large artifacts use retained storage.
+
+PublicationWorker82792f4864 uses the existing CertifiedReportPublisher, not a
+second publisher. checkpoint_pdf verifies actual owned PDF bytes and request/ref
+bindings before freezing pdf_ref/census/metadata. finish recertifies the same bytes,
+reuses any identical retained report and persists publication receipt. It remains
+CERTIFYING; actual worker input/readback metadata binding is still required before
+READY. Checkpoints do not turn unverified settings/fingerprint into facts. No queue,
+session, vendor transport or policy activation is installed by this class.
+READY condition itself now also requires existing CERTIFYING under the same fence.
+
+P01:30:58 agrees that post-publication refusal may coexist with a committed report.
+Recovery must recheck accepted composition, current grants/retention and lease,
+verify retained bytes/provenance and reuse the exact publication. Refusal is not
+rollback and is not permission for a new vendor mutation. Simulated successful
+transactions and replacement leases do not prove Dynamo server races/conditions.
+
+Public wire replacement P960f5f2a45/c09fea54 consumed at33b2fbe528/12acb3f4:
+public refusals strip server-only CID, internal diagnostics retain it; strict
+ordinary status rejects nested unknown members, null/impossible dates and unsafe
+actions. Actual four owned refusal/success and five date examples regenerated as
+PUBLIC_WIRE_REPAIRED_OUTER.json / PUBLIC_WIRE_REPAIRED_DATES.json. Independent
+Y-W01/R-P11/Y-W02 unchanged retests remain required. No runtime/package grade.
+
+Maintained consumer contract handoff is MAINTAINED_CONSUMER_REQUIREMENTS.md;
+M/P/Y must pin actual maintained examples and canonical schema before consumption.
