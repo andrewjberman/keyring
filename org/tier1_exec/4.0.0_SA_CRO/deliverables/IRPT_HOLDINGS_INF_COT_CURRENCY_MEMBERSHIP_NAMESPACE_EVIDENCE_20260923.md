@@ -115,8 +115,9 @@ identity is a person's login, not a separate service account.
   - the reporting payload carries `accountInfo{accountId, accountNumber, externalId}` side by side
     (`infra/aws/lambda/investor-reporting/performance/fixtures/bd_period.json`, values scrubbed).
 - **Conclusion:** Rebalancer `account_id` = `externalId[3:]` holds 973/973. It equals the reporting `accountId` if the
-  documented reporting rule holds for Cottonwood. That rule is unverified for COT, and no COT reporting data is
-  retained anywhere.
+  documented reporting rule holds for Cottonwood. That rule is unverified for COT. ~~and no COT reporting data is
+  retained anywhere~~ **WRONG, corrected ~21:1xZ: a COT PortfolioReporting body IS retained (see "Update ~21:1xZ"
+  below).**
 - **The smallest proof, with no separate capture:** COO~P's adapter already verifies the returned `accountInfo`. On its
   first live COT call, require BOTH `accountInfo.accountId == account_id` AND `accountInfo.externalId == "z09" +
   account_id`. A mismatch refuses, never remaps. That check IS the namespace proof.
@@ -143,6 +144,110 @@ identity is a person's login, not a separate service account.
 - **D: resolved by `2.0.0_SA_COO~P`'s live positive control (20:42Z):**
   - the active account `z0926705231` / `26705231` returned performance matching BOTH identifiers;
   - the earlier empty response was account-specific, not a general COT entitlement or namespace failure.
+
+## Update ~21:1xZ: INF bridge diagnosis. The six misses are a ONE-TRADING-DAY DATE STAMP, and the next-day file ties 6 of 6 to the cent
+
+Requested by `1.0.0_SA_CTO` (20:49Z) on `2.0.0_SA_COO~M`'s `INF_CURRENCY_BRIDGE_20260923.json` @`ce2fd95103`
+(branch `codex/irpt-m-completion`). No vendor call; the inputs are retained bodies and Opal S3 only.
+
+**What the Scope value is.** The value-check cell was copied from the captured request (`orionpt2.har` entry 252,
+`POST /api/v1/Reporting/Scope`, 2026-09-10T13:42Z) by `docs/research/investor_reporting_performance_20260910/probe_performance.py:187-195`.
+It is `activityOption {"$type":"market-value","valuationMethod":"Ending Market Value"}`, `reportCategoryId` 2, with a
+single-day range D..D. The same request carries bond accrual as SEPARATE activities (`Beginning/Ending Bond Accrual`),
+so the Scope value excludes accrual. Body: `orion_value_check_live.bin`, sha256 `84bb8d76...`, the same body COO~M used.
+
+**The comparable quantity.** Scope Ending Market Value for date D, per Orion account, equals `sum(currentValue)` over
+`s3://opal-data-inf/bronze/positions/<NEXT trading-day key>.parquet` for the same `accountId`. The units equal
+`sum(currentShares)`. Measured by this seat on 6 of 6 account-dates, value difference **$0.00** and unit difference
+**0.00** on every one:
+
+| Scope date D | file compared | versionId | value diff (both accounts) | unit diff |
+|---|---|---|---|---|
+| 2026-06-10 | `2026-06-11.parquet` | `EforuoMTf6AN9EymB40zvhztC20ZAwsI` | 0.00 / 0.00 | 0.00 / 0.00 |
+| 2026-06-18 | `2026-06-19.parquet` | `59fmbYgwUSVZ9ctmAr4v4E4QYctdchRW` | 0.00 / 0.00 | 0.00 / 0.00 |
+| 2026-09-09 | `2026-09-10.parquet` | `wTUeIRAdt3gdKaoaJ3lQO40yMu63loLv` | 0.00 / 0.00 | 0.00 / 0.00 |
+
+- **Negative arm, same instrument:** the same-key comparison reproduces COO~M's six differences exactly (positions
+  minus Scope: +327.16, +311.14, -341.74, -322.36, +198.98, +189.47).
+  - On 06-10 and 09-09 the units are equal, so the difference is pure price.
+  - 06-18 is the first day in the window with a nonzero net intraday amount (the probe picked it for that reason,
+    `probe_performance.py:186`). There the same-key file is also short **108.00 / 102.68 units**. The next-day file
+    carries those units and ties.
+- **Mechanism:** the daily pull writes key D ON day D before the close and stamps `asOfDate` = D. The file's
+  LastModified times are 06-10 08:54, 06-18 08:54 and 09-09 07:25 ET. At that hour the latest available valuation is
+  the prior close. **So `asOfDate` in bronze positions is the REQUEST date, not the valuation date.**
+- **COVERAGE, printed.** There are 2,344 parquet keys under `bronze/positions/` (one listing, not truncated; 4,683 keys
+  including `.jsonl.gz`):
+  - **141 daily keys** (key date >= 2026-05-06), all written ON their key date: 97 before 09:30 ET, 43 between 09:30
+    and 16:00 ET, 1 after 16:00 ET (2026-06-29, 17:26 ET).
+    - The lag is **MEASURED on 3 morning files (6/6)**.
+    - It is **INFERRED** for the other 137 written before 16:00.
+    - It is **UNMEASURED** for the 06-29 after-close file.
+  - **2,203 history keys**: 2,202 were written on a later day (a backfill), 1 on its key date between 09:30 and 16:00
+    ET. The convention is **UNMEASURED** for all of them; a key written after its date may carry that date's own close.
+- **Accrual:** positions `currentValue` ties to the accrual-excluding Ending Market Value for these two accounts.
+  Whether either account holds a bond was not checked, so this does not prove accrual treatment in general.
+- **Currency, scoped:** this ties positions `currentValue` to amounts Orion labels USD for **these 2 accounts on 3
+  valuation dates**. It is not a tenant-wide extension (the CTO's 20:48Z boundary stands).
+- **Consequence for Holdings (a check for COO~M, not measured here):** any INF input built from these daily pulls
+  that treats a file's key or `asOfDate` as its valuation date is one trading day late. I did not read the builder's
+  date binding for this.
+
+## Update ~21:1xZ: COT section D correction, and the cause of the first empty response
+
+- **Correction:** a Cottonwood PortfolioReporting body IS retained. `.runtime/codex-seats/4.0.0_SA_CRO/performance-recon/bd_refreshed_period_live.bin`
+  is a live replay from 2026-09-10 (HTTP 200, 176,999 bytes, sha256 `31b1727620da...`) of `performancePeriod`, from
+  `dashboard_exploration_bdpt2.har` entry 114. **Re-read by this seat:** 35 of 35 `accountInfo` nodes carry an 8-digit
+  `accountId` with `externalId == "z09" + accountId` (1 distinct account). That is BD's own namespace rule, exercised
+  on COT 7 days before COO~P's positive control. The stale sentence came from the same `.runtime/`-blind search as
+  the section A error.
+- **Cause of COO~P's first empty response: most likely DATA, not access.** Measured by this seat's read-only research
+  subagent over Opal S3 only (instrument: parquet reads; not re-derived by this seat; scratch copies deleted):
+  - the account first probed is 1 of only 2 of the 973 Rebalancer accounts absent from the COT holdings silver of
+    09-22;
+  - it has 0 rows in each of 5 holdings snapshots (06-08, 07-01, 08-03, 09-01, 09-22), in the compacted transactions
+    (04-22 to 06-08), in the 09-23 transactions and in `account_attributes` 08-19 (943 rows);
+  - in the Rebalancer its strategy is `--` and `can_rebalance` is False.
+
+  The same user and the same request shape returned data on a sibling account, which rules out namespace.
+  Account-level access for that one account is not separately tested. No follow-up vendor call is proposed: COO~P
+  picks accounts with holdings in the window.
+
+## Update ~21:1xZ: 49F Schwab currency and `net_credit_debit` (for COO~M, request of 20:0xZ)
+
+A read-only repo sweep by this seat's research subagent at HEAD `d9fddeed8e`:
+
+- **No Schwab vendor specification exists in the repo.** The D1 field spec says its catalog came "via live `01_raw/`
+  enumeration (not an SI2 vendor spec)" (`docs/architecture/DATA_PLATFORM_D1_schwab_field_spec.md:5,52`).
+- **Currency: no currency column in either master's raw ACC or RPS sections** (inventory
+  `org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/OPAL_RUNNERS_W4_COLUMN_INVENTORY_BOTH_MASTERS_20260714.json`).
+  The only near-matches are `acct_mailing_ctry_code` and `security_valuation_unit`. Silver pins the full vendor column
+  set and fails on unknown columns (`data/assets/scripts/silver/schwab_schemas.py:164-259,1305-1309`), so none was
+  dropped. "USD" appears only in Opal's own gateway description (`infra/aws/ec2/opal-gateway/app/integrations/schwab/datasets.json:56,82-113`).
+  **USD for 49F is `held`/`inferred` until a Schwab document or a CTO ruling says otherwise.**
+- **`net_credit_debit`: no definition anywhere (UNKNOWN).**
+  - It is a raw RPS section 2 column (`schwab_schemas.py:236`).
+  - "Total" is `net_mv_plus_cash` (`b00_canonical_valuation.py:53,62`).
+  - The repo never derives total = `net_mv_positions` + `net_credit_debit`. COO~M's 7,498 of 7,522 tie is the first
+    measurement of that identity found.
+  - Overlap is measured: RPS positions include money-market and sweep rows (`data/canonical/schwab/docs/02_FACT_TABLES.md:33-34`).
+  - The additive cash rebuild left 4,362 of 7,238 account-days unexplained on 2026-08-07
+    (`PROOF_OF_SPEC_P1_B2_GROUPB_20260811.json:27,53`).
+  - Opal's rule: never add different balance fields (`.../schwab/semantics.py:9-10`).
+  - INFERRED: `money_mkt_funds` sits inside `net_mv_positions`, and `net_credit_debit` is the cash/credit leg outside
+    positions, which fits the 321 cash-only accounts.
+- **Duplicates and side:**
+  - RPS carries one row per cash, margin or short sub-position. The canonical build numbers them `position_seq`
+    (`data/canonical/schwab/silver/build_fact_position.py:13-14,67`); `accounting_rule_code` carries CASH/MARGIN/SHORT.
+  - A blank `l_s` is vendor bytes as delivered (`schwab_schemas.py:48-49`), contradicting the gateway's "always L or S"
+    (`datasets.json:32`).
+  - A prior sighting of the position-vs-balance gap found 23 accounts on 08-07.
+- **Next checks, Opal data only:**
+  1. Re-key the 14 duplicates on `accounting_rule_code`.
+  2. Per account on 09-22, compare the summed value of `fact_rps` rows where `mnymk_code` is not blank against
+     `money_mkt_funds`. `dim_position` drops `mnymk_code` (`schwab_projections.py:43-51`), which is why `fact_rps`
+     is used.
+  3. Regress `net_credit_debit` on the settled-cash, margin, sweep and bank-cash fields.
 
 ## Per-use captures that would close the rest (all need Andrew's word; none performed)
 
