@@ -17,6 +17,7 @@ As of 2026-09-23T17:50Z.
 | Push state | LOCAL; no new remote measurement or push in this turn |
 | Package evidence | P reports measured package `e3ad48ca23`, evidence `b639e430d0` |
 | Bounded consumer review | CTO `36131adb48`: 306 tests / 50 subtests, exact P reader enabled, no skips |
+| Actual-viewer source review | CTO `8b7d43d5eb`: independent 475 tests / 50 subtests on `85af5eb95d`, zero skips; later storage pairing is Y evidence `4ea95d1117` |
 
 ## Live thread
 
@@ -85,6 +86,7 @@ Deeper custody source/package work remains parked.
 | First live auth/scope/bootstrap hop | COO~P | Contract v1.3 section 0 | AWAITED live proof |
 | Full-access viewer/prospect authority | COO~P | `9a3ec2a11f` | CONSUMED in Y adapters; shared Entry wiring awaited |
 | Actual-viewer cross-firm retained storage | COO~P | `dd6edfc3aa`, Y paired test `4ea95d1117` | CONSUMED offline; Entry integration awaited |
+| New submission of another creator's input | COO~P contract; M profile semantics; Y consumer | CTO `8b7d43d5eb`: actual submitter separate from retained input attribution | REQUIRED capability; AWAITED exact P contract, no reupload/impersonation workaround |
 | Paired private reader | COO~P / COO~M | `e36b007fa1`, accepted-custody-input-v1 | CONSUMED offline |
 | Integrated package review | CTO / COO~P | P evidence `b639e430d0`, package `e3ad48ca23` | PARKED under `5edf991c06` |
 | Actual economic/source evidence | COO~M / COO~P, CTO interpretations | Mandatory reader economic ports | BLOCKED on real capability |
