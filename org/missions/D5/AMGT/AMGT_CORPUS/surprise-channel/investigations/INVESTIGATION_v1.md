@@ -291,6 +291,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "AC2 expects 'python -m lib.research.corpus.sector_template --show-first-graded 2>&1 | tail -60' to print a business_type with reports N of total, then one kpi line per KPI each 'count C of N', then one section line per section -- implying at least one business type reaches >=3 reports through the bridge on the real corpus (the ISSUER NOTES: 'AC2 grades the first type with 3 or more reports').",
     "world_is": "On the real 123-object corpus the non-OTHER (class A-D) reports overwhelmingly carry no 'Sector:' field in their own text (45 of 51) -- that field lives almost entirely in the xlsx one-pager files, which classify OTHER and are excluded from 'reports' -- and the 6 reports that do carry a sector string use FactSet/RBICS granular names the GICS11_TO_SCANNER13_v1 bridge (a GICS<->scanner-13 map) does not reach. business_type_of() therefore maps zero of 51 non-OTHER reports to a real business type; 'unmapped' (51 reports) is the only bucket clearing the >=3 threshold, and it separately fails AC2's own tail -60 budget because it aggregates every business type's headings at once. Neither the bridge nor the criterion was relaxed or repaired to force a pass; AC2 is reported FAIL with this measurement.",
     "notes": "This cell REFUSES AC2 exactly as measured, per the order's own bound ('REFUSE a criterion you cannot satisfy as written ... never repair or widen it'). AC1, AC4 and AC5 pass. AC3 (judgment) carries this --write summary and AC2's actual failing output verbatim for the CVO's own read on whether the unmapped residue is 'small enough to trust the types' -- here zero types are produced at all, which is itself the finding for the CVO to weigh."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S2",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-23T06:06:33Z",
+    "one_line": "The reopen's own instruction ('several sectors from one value -> ONE type keyed on the sorted sectors joined by +') names the JOIN but not whether each sector is kebabbed before joining, and its literal output ('consumer-cyclicals+consumer-services') carries a '+' -- ASCII and lowercase, but outside the 'lowercase kebab ASCII' description the shared GOLD ARTIFACT SHAPE section (unchanged by the amendment) gives for the partition value.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The order's RULED 'THE GOLD ARTIFACT SHAPE' section (unchanged text): 'Object name: ... The partition value is lowercase kebab ASCII.' Kebab-case conventionally admits only lowercase letters, digits and hyphens -- a bare '+' is not one of those characters.",
+        "The ISSUER AMENDMENT: 'several sectors from one value (for example Consumer Discretionary) -> ONE type keyed on the sorted sectors joined by +, exactly as the map returned them, never a choice among them' -- names the join operator but not the per-piece formatting.",
+        "Resolved by kebabbing each scanner sector name individually (the same _kebab() this module already applies to a single-sector business type) and joining the sorted results with '+': BABA_US_Equity and RMS_FP_Equity's 'Consumer Discretionary' both produced business_type 'consumer-cyclicals+consumer-services'; 9433_JP_Equity, KPN_NA_Equity and ST_SP_Equity's 'Communication Services' produced 'consumer-services+telecommunications'.",
+        "lib/opal_naming.py's `_segment()` (key()'s own validator: non-empty ASCII, no '/', no outer space) accepts '+' -- confirmed LIVE, not just read: `python -m lib.research.corpus.sector_template --write` against opal-data-harvest put both compound-id objects successfully (put_performed True on the first run, False on an identical idempotent re-run)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "THE GOLD ARTIFACT SHAPE: 'The partition value is lowercase kebab ASCII.' (unchanged by the reopen).",
+    "world_is": "The reopen's own explicit instruction ('joined by +') produces a partition value carrying a '+' character for any security whose Sector value bridges to more than one scanner sector -- ASCII and lowercase, satisfying the LETTER of 'lowercase ... ASCII' but not the narrower 'kebab' convention (hyphen-only word separation) the same sentence also names. This cell followed the newer, more specific, explicit instruction over the older general description, and confirmed live that the naming layer's own validator has no narrower rule that would refuse it.",
+    "notes": "Not filed as a defect: the amendment is explicit and post-dates the general shape description, and 'exactly as the map returned them, never a choice among them' reads most naturally as governing the SECTOR NAMES chosen (never picking one over the others), not as silent license to invent a different join character. Two real business types in the corpus carry this form today (consumer-cyclicals+consumer-services, consumer-services+telecommunications); AC3's judgment carries both in the --write summary for 3.0.0_SA_CVO~Z's own read on whether that shape is the team's own."
   }
 ]
 ```
