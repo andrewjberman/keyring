@@ -101,3 +101,38 @@ is authorized by that finding. Continue adapter/UI implementation locally.
 Contracta62f5e54a7 taxonomy and d44d9f3876 fast targeted checks apply.
 
 COT same-row original-value diagnostic: {"rows": 19610, "missing_market_value_rows": 5694, "all_four_blank_rows": 5694, "within_missing_mv_null_counts": {"Market Value": 5694, "Unaccrued Market Value": 5694, "Units": 5694, "Accrual": 5694}, "within_missing_mv_nonzero_counts": {"Market Value": 0, "Unaccrued Market Value": 0, "Units": 0, "Accrual": 0}, "interpretation": "Null census is not zero-valued custody or sold/closed evidence."}
+
+## Actual INF adapter candidate, 20:24Z
+
+INF_ACTUAL_ADAPTER_20260923.md describes production dispatch now requiring native
+positions and independent custody controls; portfolio-only construction is private
+evidence.12 focused adapter/dispatch checks and17 existing INF/Eclipse checks pass.
+Unmodified real inputs refuse missing currency as required. First failing hop is
+now the source-backed currency binding, followed by actual accepted publication.
+Roster-based selected/historical admission, per-account availability and Models/SMA
+position placement remain open; no full-census or live claim.
+
+## Source candidate commit boundary, 20:29Z
+
+The actual INF implementation remains an UNCOMMITTED owned working diff. Compiler/
+lint controls pass after adding the required future import and formatting tests;
+naming-gate refuses two NEW positions_mv read literals at the real existing source
+address. CTO202806 routed the exact bounded fork to G; M supplied both helper
+contexts and source version/hash202857. Original legacy-read01 build_inf context
+is preserved; the production dispatch wrapper is build_inf_actual and reuses the
+original accounts frame. No path hiding, force, guessed canonical repoint or
+self-authored read grant. Commit is pending the approved source locator mechanism.
+
+P-owned literal projection delta is HOLDINGS_TAXONOMY_PROJECTION_FOR_P.patch with
+four targeted consumer expectations in its .md. No shared code was edited by M.
+CTO47e0f95 accepted owned UI e5604c03; P integration remains pending. P reports its
+approved COT Performance request returned empty accounts/levels and sentinel date,
+so existing source-side identity relation is still not an exercised Performance
+identity/currency proof. No retry authorized or requested by M.
+
+49F read-only existing-source prefix check found no fact_holdings under the two
+Black Diamond silver roots in opal-data-assets:49financial has three insurance
+families;49f has dim_account_xref,dim_advisor_fee_role,fact_bd_allocation and
+fact_taxsma_report. Continue exact0833 custody inventory; do not substitute SmartX
+AUM for the complete custody base. comp-freshness chain bd produced no rows because
+its config is held; that is NOT a freshness verdict and no override was applied.
