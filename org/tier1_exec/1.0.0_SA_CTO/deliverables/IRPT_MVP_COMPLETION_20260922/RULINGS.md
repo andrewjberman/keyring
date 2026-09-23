@@ -580,3 +580,7 @@ CTO independently reproduced bcb3 IndexError at /var/task and passed exact sourc
 
 ## 2026-09-23 Holdings exact schema package apply
 P GO for saved plan30f1d202bf7a50fa063e7d96eee2e6ae5ed7465c23471cf1d670230f780d5f02 only: one Lambda code update to exact97f190ac artifact, no IAM/config/routes changes. CTO downloaded final33memberS3version and passed actual /var/task runtime import/schema load. See HOLDINGS_SCHEMA_REPLACEMENT_REVIEW.md; independent live readback and actual user journey remain required.
+
+
+## 2026-09-23 COT supported coverage exact GO
+M may publish exact93f930c265ed242d7e38cb48a7ed4baf267025e8c4dfd06ff39739c6a8f55217 per a509946936:19conditionalwrites, oneSept22indexCAS, nootherdatesorversionsremoved. CTO independently reconciled all841accounts/13793positions to retainedsource, everyGoldJSONnode and15partitionhashes; actualreader localbothAnna matrixPASS. Source-refused140accounts andactualauthenticatedproofremainOPEN. See COT_EXPANDED_COVERAGE_REVIEW.md.

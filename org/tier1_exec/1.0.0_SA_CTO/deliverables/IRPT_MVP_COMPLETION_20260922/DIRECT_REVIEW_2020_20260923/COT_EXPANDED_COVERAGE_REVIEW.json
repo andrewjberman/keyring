@@ -1,0 +1,81 @@
+{
+  "revision": "93f930c265ed242d7e38cb48a7ed4baf267025e8c4dfd06ff39739c6a8f55217",
+  "source_digests": 7,
+  "accounts": 841,
+  "positions": 13793,
+  "all_account_totals_independently_reconciled": true,
+  "total_source_precision": "548412662.5919",
+  "gold_json_all_nodes_equal": true,
+  "parts": 15,
+  "header_part_hashes_match": true,
+  "current_index_unchanged": "JhtDD.AAg1AO0kdvVkxVZN.zWdjwDkkA",
+  "anna": [
+    {
+      "account_id": "acc_0698a3de842dbe7b3d48c787",
+      "positions": 30,
+      "value": "26303302.1722"
+    },
+    {
+      "account_id": "acc_d486fc9455d6b2aa18e13af1",
+      "positions": 57,
+      "value": "19705844.8433"
+    }
+  ],
+  "limitations": "138 no-active-position and 2 duplicate accounts excluded explicitly; not all-firm completion; no cloud publication or authenticated proof.",
+  "schema_valid": true,
+  "publisher_reader_local_matrix": [
+    {
+      "accounts": 1,
+      "date": null,
+      "nodes": 32,
+      "result": "PASS"
+    },
+    {
+      "accounts": 1,
+      "date": "2026-09-22",
+      "nodes": 32,
+      "result": "PASS"
+    },
+    {
+      "accounts": 1,
+      "date": "2026-09-23",
+      "result": "EXPECTED_REFUSAL"
+    },
+    {
+      "accounts": 1,
+      "date": null,
+      "nodes": 59,
+      "result": "PASS"
+    },
+    {
+      "accounts": 1,
+      "date": "2026-09-22",
+      "nodes": 59,
+      "result": "PASS"
+    },
+    {
+      "accounts": 1,
+      "date": "2026-09-23",
+      "result": "EXPECTED_REFUSAL"
+    },
+    {
+      "accounts": 2,
+      "date": null,
+      "nodes": 91,
+      "result": "PASS"
+    },
+    {
+      "accounts": 2,
+      "date": "2026-09-22",
+      "nodes": 91,
+      "result": "PASS"
+    },
+    {
+      "accounts": 2,
+      "date": "2026-09-23",
+      "result": "EXPECTED_REFUSAL"
+    }
+  ],
+  "conditional_writes": 19,
+  "prior_index_preserved": true
+}
