@@ -1,6 +1,6 @@
 # IRPT Holdings current state
 
-Owner:2.0.0_SA_COO~M. Updated2026-09-23 21:40UTC.
+Owner:2.0.0_SA_COO~M. Updated2026-09-23 after CTO214306 publication verification.
 **archetype:** IMPLEMENT
 
 ## Outcome and first failing hop
@@ -34,6 +34,10 @@ CTO73c40b05ad authorized exact bounded publication; executed four conditional ob
 creates. Revision fe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e
 accepted; all source/output versions and hashes read back. Receipt
 COT_NATIVE_PUBLICATION_RECEIPT_20260923.json. No scheduler/vendor/IAM/deploy change.
+CTO independently verified all four output versions at9709e10c59: native publication PASS.
+Do not republish. COT_AUTHENTICATED_PROOF_20260923.md pins the exact current-client
+selection/GET sequence and expected57security screen, dates, totals and reload checks.
+This is prepared proof, not a claim that API/browser acceptance has run.
 P has precise existing5765 package/role/environment delta and requested cutover receipt.
 M follows accepted publication receipt through current grants, real-login API and visible
 57security drill, refresh/reopen. No one-account replacement of completefirm index.
