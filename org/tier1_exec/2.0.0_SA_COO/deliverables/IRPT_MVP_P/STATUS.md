@@ -1,6 +1,29 @@
 # IRPT P status - 2026-09-22
 
-## Current Opal local integration - 2026-09-23 publication clarification integrated
+## Current Opal local integration - 2026-09-23 composed accepted custody package
+
+Measured source e3ad48ca23 integrates Y10627906f2 (merge411256e41c), P reader/store
+and M's reviewed publication replay. New evidence is
+`ACCEPTED_CUSTODY_PACKAGE_EVIDENCE_20260923.json`: 36 changed paths hashed as exact
+Git bytes at that pin, separate archive/member hashes, and extracted Linux proof.
+The 78-member source archive SHA256 is
+`5af54f4769e4b062ab7a286a947262c4e897804297b2ef5b97b3218bef3c96b6`.
+It includes custody_portfolio.py, its parse.py dependency, accepted_custody.py,
+custody_binding.py, updated portfolio.py and native custody_submission.py.
+Enforced import closure/cold import pass. Network-disabled Python3.12 Linux proof
+constructs both factories, imports these exact flat members and refuses absent
+source capability with the separately pinned dependency archive.
+
+Merged generation210/32 and intake93/18 pass with three opt-in paired tests
+initially skipped; focused reruns with IRPT_ACCEPTED_READER_TEST_ROOT set pass
+32 generation and39 intake cases with zero skips (overlapping counts, not extra
+unique tests). P17 tests pass including actual M publication -> P binding -> Y
+normalizer, same-date replacement, two retained originals/one position and
+revocation refusal. Storage/economic/authority inputs remain synthetic. CTO
+reviews d8d88388ab and36131adb48 cover the earlier bounded components; integrated
+package review is pending. No actual source, global entry or runtime activation.
+
+Prior binding-only evidence follows; its Y-pending state is superseded above.
 
 CTO ruling999998e448 authorizes the local private binding tranche. P00b54afab1
 implements `_scope/custody_binding.py` and `accepted_custody.py`; integration

@@ -1,6 +1,9 @@
 # Accepted custody reader: exact interface draft
 
-Status: LOCAL P/M STORAGE IMPLEMENTED; Y CONSUMER INTEGRATION PENDING.
+Status: LOCAL P/M/Y CONSUMER COMPOSED; INTEGRATED REVIEW PENDING.
+Measured source `e3ad48ca23` includes Y consumer `10627906f2`; source package
+closure and extracted Linux factory construction pass. Exact source/archive
+hashes and composed control are in `ACCEPTED_CUSTODY_PACKAGE_EVIDENCE_20260923.json`.
 CTO ruling `999998e448` authorizes this local tranche. P `00b54afab1` implements
 the private store/reader; `c607ee7461` records 115 passing offline seam tests.
 Integration `515fba746a` includes M's wording-only correction `200ba442f5`.
@@ -37,7 +40,7 @@ suite. M's private evidence and optional expected raw account IDs are not
 independently authorized census. Audited COT currency remains unestablished.
 Empty inputs refuse; no accepted complete empty-account census capability exists.
 
-## Implemented export and pending consumer composition
+## Implemented export and consumer composition
 
 P owns `_scope/accepted_custody.py` with these internal methods:
 
@@ -348,12 +351,12 @@ capability is currently unavailable, so actual empty inputs continue to refuse.
 | 49F source contract | M source review: l_s exists but signed-value rule, security-join uniqueness, cash non-overlap, currency/units and pending accrual ruling remain unresolved |
 | Current numeric schema and security mapping receipts | Not supplied by either review; P cannot invent a receipt or conversion policy; M identifies source capability, CTO adjudicates needed source interpretation |
 | Empty-account census | No admitted complete-zero receipt capability; actual empty inputs refuse |
-| Retained revision/provenance implementation | Exact source mapping now specified from Yff982; adapter/embedded semantic validation/replay still unimplemented |
+| Retained revision/provenance implementation | Y10627906f2 implements adapter/embedded semantic validation/reconstruction; composed source e3ad48ca23 tested with actual M/P/Y code and synthetic evidence. Integrated review pending |
 
 These are source-located findings from the exact M review, not fresh cloud
 measurements. No producer execution or new source-read authority is inferred.
-The local binding mechanism is implemented. Next integrate Y's consumer and
-prove actual economic source evidence separately; storage success does not
+The local binding mechanism and Y consumer are composed. Next obtain integrated
+review and prove actual economic source evidence separately; storage success does not
 supply that evidence. CTO remains direct
 reviewer. No cloud write, production source activation, IAM change, vendor
 request or public field emission follows from this draft.
