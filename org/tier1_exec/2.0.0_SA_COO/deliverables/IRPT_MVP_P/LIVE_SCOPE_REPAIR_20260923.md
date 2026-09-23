@@ -17,3 +17,14 @@ P independently read AWS account313476888478/us-east-1: directory Lambda Active/
 Agreed P/M GET /api/scoped/investor-reporting/directory/browse, operation directory-browse; q (empty initial browse), cursor (opaque), limit default25/max100. Response data: entries, next_cursor, directory_revision, scope_fingerprint. Existing v1 outer envelope, including unprojected_grant, preserved. Client rejects malformed or cross-context/stale pages. Server reauthorizes every page and owns cursor binding. No fixture catalogue fallback.
 
 Runtime plan in preparation: target only directory function/dependencies, exact new browse/selection routes and selection storage IAM. Preserve other live routes, integrations, scheduled refresh and held render. No blanket root apply. Awaiting M producer/headers and concrete executable packaging proof; all source-only tests remain distinct from live acceptance.
+
+## Executed targeted Terraform plans (read-only, 2026-09-23 05:31Z)
+
+Worktree canonical Terraform1.9.8 initialized existing API/directory backends; provider5.100.0. Targeting is bounded incident repair, not full-root convergence. API refreshes seven integration data dependencies but CHANGES ONLY two routes; render has no mutation.
+
+- api plan SHA256 `156c4b2a46569336bfbab6a5188d090b57824a662bf21c379ea68ef250217652`: aws_apigatewayv2_route.irpt["GET /api/scoped/investor-reporting/directory/browse"] create; aws_apigatewayv2_route.irpt["POST /api/scoped/investor-reporting/selections"] create
+- directory plan SHA256 `c058a53307141c93ffbbe1bbd4601ae905bff8693c9f75a14e78e076d1f27e67`: aws_iam_role_policy.directory_selection create; module.irpt_directory_search.aws_lambda_function.this update
+
+API: GET directory/browse and POST selections, both CUSTOM naqxlm to existing g9302sp; no authorizer, existing route or invoke-policy widening. Directory: add IRPT_REQUESTS_TABLE=irpt-requests to existing function and create directory_selection inline policy. DynamoDB GetItem/PutItem limited to exact irpt-requests ARN and registry client LeadingKeys; KMS exact core key, ViaService=dynamodb.us-east-1.amazonaws.com, encryption-context tableName=irpt-requests. No Scan/Query/Delete/Update permission, destruction or scheduling changes.
+
+These initial plans read the OLD S3 package and do not deploy the code repair. After immutable M/P candidate and ZIP review: canonical single-function build/upload, refresh these targets, verify only exact code hash/version plus environment/policy/routes, obtain scoped CTO adjudication, apply through safe-apply, verify live hash and guarded HTTP journey. No apply yet.
