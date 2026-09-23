@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~Y` (CODEX). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 version 1.3. Current reviewer `1.0.0_SA_CTO` under Andrew's direct-review instruction;
 matching CVO seat remains `3.0.0_SA_CVO~Y`.
-As of 2026-09-23T18:14Z.
+As of 2026-09-23T18:25Z.
 
 ## Pins
 
@@ -18,6 +18,8 @@ As of 2026-09-23T18:14Z.
 | Package evidence | P reports measured package `e3ad48ca23`, evidence `b639e430d0` |
 | Bounded consumer review | CTO `36131adb48`: 306 tests / 50 subtests, exact P reader enabled, no skips |
 | Actual-viewer source review | CTO `8b7d43d5eb`: independent 475 tests / 50 subtests on `85af5eb95d`, zero skips; later storage pairing is Y evidence `4ea95d1117` |
+| Combined dual-owner review | CTO `583d2da`: fresh archive of Y1385 with all P/M dependencies, 505 tests / 50 subtests, no skips; bounded source PASS |
+| Upload/ticker proposal | `c083bfdd5d`: exact proposed paths and four directly reproduced real-template cases, sent CTO under `4cdac345db` |
 
 ## Live thread
 
@@ -73,8 +75,8 @@ P's shared scope/bootstrap, repository, schemas and package paths were not edite
 
 P consumes the exact combined Y/P/M candidate and installs ProspectSubmissionFactory
 with real retained repositories, upload reader, canonical profile readers and
-ordinary authorizer. CTO directly reviews the combined candidate under
-`f50aff2ce1`; Y's source/tests are complete and handed off. Live generation,
+ordinary authorizer. CTO accepted the source handoff at `583d2da` and granted P
+the three exact additional Y paths; P must return installer/package proof. Live generation,
 queue delivery, browser continuity and vendor results remain unproved. The
 previous bootstrap symptom is confirmed; deeper custody work stays parked.
 
@@ -85,7 +87,7 @@ previous bootstrap symptom is confirmed; deeper custody work stays parked.
 | First live auth/scope/bootstrap hop | COO~P | CTO `f50aff2ce1` | Andrew confirmed bounded Global/firm/list symptom |
 | Full-access viewer/prospect authority | COO~P | `9a3ec2a11f`, Entry `4ec461a2e9` | CONSUMED, actual Entry paired offline |
 | Actual-viewer cross-firm retained storage | COO~P | `37526d36ae`, prior `dd6edfc3aa` | CONSUMED offline |
-| New submission of another creator's input | P contract/schema; M profiles; Y consumer | `e07a5ca692`, `37526d36ae`, `485b69c061`, Y `1385a126e7` | IMPLEMENTED, 20 paired controls pass; P runtime integration and CTO combined review next |
+| New submission of another creator's input | P contract/schema; M profiles; Y consumer | `e07a5ca692`, `37526d36ae`, `485b69c061`, Y `1385a126e7` | CTO bounded source PASS `583d2da`; P runtime installer/package proof next |
 | Paired private reader | COO~P / COO~M | `e36b007fa1`, accepted-custody-input-v1 | CONSUMED offline |
 | Integrated package review | CTO / COO~P | P evidence `b639e430d0`, package `e3ad48ca23` | PARKED under `5edf991c06` |
 | Actual economic/source evidence | COO~M / COO~P, CTO interpretations | Mandatory reader economic ports | BLOCKED on real capability |

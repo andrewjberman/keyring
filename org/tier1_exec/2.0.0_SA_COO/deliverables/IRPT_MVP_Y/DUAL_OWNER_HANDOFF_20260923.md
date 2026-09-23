@@ -104,8 +104,12 @@ test directories separately with `python -m pytest <directory> -q`.
 
 ## Next owner and live boundary
 
-P consumes this exact combined candidate and installs real ports/package wiring.
-CTO is direct reviewer under `f50aff2ce1`; no additional CVO gate is introduced.
+CTO `583d2da` independently replayed the committed combined candidate in a fresh
+archive: 505 tests / 50 subtests, no skips; bounded source PASS. The source
+handoff is accepted for integration, not product completion. CTO added the three
+exact Y paths to P's ordinary integration grant. P installs real ports/package
+wiring and returns runtime installer/package proof. CTO remains direct reviewer
+under `f50aff2ce1`; no additional CVO gate is introduced.
 Andrew confirmed the bounded Global/Select Firm and investor-list bootstrap
 symptom. Full browser continuity, selection/account drilldown, queue/vendor and
 report/export journey remain unproved by this handoff. CLOUD push remains held.
