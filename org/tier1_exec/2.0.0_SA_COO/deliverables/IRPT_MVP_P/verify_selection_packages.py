@@ -55,6 +55,14 @@ else:
     event = {'headers': headers, 'routeKey': next(iter(entry.ROUTES)),
              'pathParameters': {'accountSetId': selected['account_set_id']},
              'queryStringParameters': {'start': '2026-01-01', 'end': '2026-09-22'}}
+    selected_scope = dict(scope, resolved_scope={'scope_kind': 'ACCOUNT_SET', 'scope_ids': [a]})
+    actual = entry._handler.run(selected_scope, requested_start='2026-01-01', requested_end='2026-09-22')
+    assert actual['report'] is None and actual['lineage']['provider'] == 'SMARTX', actual
+    assert actual['coverage']['outcome'] == 'SMARTX_ACCOUNT_CAPABILITY_UNPROVEN'
+    answer = entry.lambda_handler(event)
+    assert answer.get('ok') is False and 'data' not in answer, answer
+    schema = json.loads((pathlib.Path(sys.argv[1]) / 'PerformanceReport.schema.json').read_text())
+    assert 'SMARTX' in schema['properties']['lineage']['properties']['provider']['enum']
     calls = []
     def provider(scope, **kwargs):
         assert scope['resolved_scope']['scope_ids'] == [a]
@@ -86,22 +94,24 @@ def main():
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--before-ref", required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--consumers", nargs="+", default=CONSUMERS)
     args = parser.parse_args()
     root = args.root.resolve()
     before = json.loads(git_blob(root, args.before_ref, MAP))
     after = json.loads((root / MAP).read_text(encoding="utf-8"))
     changed = [name for name in before["functions"]
                if before["functions"][name] != after["functions"].get(name)]
-    assert sorted(changed) == sorted(CONSUMERS)
+    assert sorted(changed) == sorted(args.consumers)
     assert set(before["functions"]) == set(after["functions"])
     assert {k: v for k, v in before.items() if k != "functions"} == {
         k: v for k, v in after.items() if k != "functions"}
     evidence = {"before_ref": args.before_ref, "changed_consumers": changed,
                 "non_irpt_equality": True, "deployment_metadata_unchanged": True,
                 "member_diff": {}, "probes": []}
-    for name in CONSUMERS:
+    evidence["unchanged_other_functions"] = len(after["functions"]) - len(changed)
+    for name in args.consumers:
         old, item = before["functions"][name], after["functions"][name]
-        for field in set(old).union(item) - {"files", "staged_from", "_staged_from_note", "_build_note"}:
+        for field in set(old).union(item) - {"files", "staged_from", "_staged_from_note", "_build_note", "note"}:
             assert old.get(field) == item.get(field), (name, field)
         evidence["member_diff"][name] = {key: {"before": old.get(key), "after": item.get(key)}
                                          for key in set(old).union(item) if old.get(key) != item.get(key)}
