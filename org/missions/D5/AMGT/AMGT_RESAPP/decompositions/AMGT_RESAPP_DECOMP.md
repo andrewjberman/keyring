@@ -5444,3 +5444,110 @@ fanout:
   no_fleet_run: true
   no_s3_deletes: true               # standing, from this cut forward
 ```
+
+## 44. ROUND 36 -- HKEXNEWS AS A RESEARCH QUESTION. One cell, and the finding that reshaped it before it was cut
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s ROUND-35 ANALYSIS @`401d59ce04` (msg 24721), with `AMGT_RESAPP`
+v0.24 @`ddb93dd170` reading **ADMITTED** -- both halves SIGNED and current, **re-read at this cut, not inherited
+from s.43.** LIMB 6 does not refuse a newly-added order.
+
+The CTO's direction: *"A RESEARCH cell on HKEXnews's interface -- not a tuning pass (`Z-W128-S1`, unsoftened)."*
+⭐ **That direction is correct and it is NOT SUFFICIENT, and 44a is why.**
+
+### 44a. ⛔ THE HK ROUTE HAS **TWO** BLOCKERS, AND THE ONE WE MEASURED **MASKS** THE ONE WE DID NOT
+
+Measured at HEAD before this order existed, `lib/research/filings/battery.py`:
+
+| | blocker | how it was known |
+|---|---|---|
+| **A** | HKEXnews title search returns `recordCnt=0` | **REPORTED** -- round 35's AC4, the whole of `Z-W128-S1` |
+| **B** | ⛔ **the adapter CANNOT WIN under ANY search result, and its `seeds` are UNREADABLE BY CONSTRUCTION** | ⛔ **NEVER REPORTED, by any of the three seats** |
+
+**B, at the bytes:**
+
+- `_hk_national_regulator` (`:1252-1334`) has **FIVE return paths and all five carry `"passed": False`** --
+  including the branch where the search SUCCEEDS and populates `seeds` (`:1325-1334`).
+- `seeds` is created at `:1441` and passed **BY REFERENCE into step 4's lambda** (`:1449`). **Step 4 is its only
+  reader.**
+- Step 5 runs at `:1451`, **AFTER step 4.** Its returned seeds merge at `:1460-1462` into that same list -- ⛔ **a
+  list whose sole consumer has already executed. Step 5 writes its seeds into the past.**
+- `winner_extra` is set only on `cached["passed"]` (`:1463`), never true here, so the run falls to `:1473` and
+  `battery_block` is built from `attempts` alone (`:1476`). **`seeds` appears nowhere in the returned object.**
+
+⭐ **THE DISCRIMINATOR, AND IT IS WHY THIS WAS INVISIBLE FROM ROUND 35's EVIDENCE: a round-36 cell that researched
+the query and SUCCEEDED COMPLETELY would produce `recordCnt > 0`, a populated `seeds`, `passed` STILL FALSE, the
+route STILL UNRESOLVED, and nothing downstream different.** The packet would read *"query solved, route still
+unresolved"* and the next seat would hunt a THIRD cause that does not exist.
+
+⛔ **AND B IS MINE, NOT THE WORKER'S.** It follows from the round-35 order's own egress bound -- ONE live HKEX
+fetch, spent on the search -- which makes fetching the found document impossible, which makes `acceptance()`
+unreachable, which makes `passed: True` unreachable. **The worker implemented that bound correctly and DOCUMENTED
+IT EXACTLY**, at `:1267-1272`: *"this order's egress bound is ONE live HKEX fetch, already spent on the search ...
+and no branch here ever wins."*
+
+⚠ **So the sentence naming blocker B sat in the deliverable the whole time, in the worker's own docstring, and
+three seats read that file without reading it.** Round 35's packet attributed the failure ENTIRELY to A. That was
+not WRONG about A; it was **incomplete in the one direction that would have cost round 36.**
+
+⭐ **THE CLASS, for the annex: when a route fails at the FIRST of two stacked blockers, the second is INVISIBLE TO
+EVERY INSTRUMENT AIMED AT THE ROUTE, because the route never reaches it.** Only reading the code path PAST the
+observed failure finds it. **Rule 22's shared-dependency blindness, rotated:** not a defect BENEATH the members,
+but a defect DOWNSTREAM of the stop. COST: one read past the failure point. NON-APPLICATION: a route with a single
+failure mode already proven exhaustive.
+
+### 44b. THE MAPPING
+
+| cell | id | serves | what it must answer |
+|---|---|---|---|
+| HKEXnews interface research + the win path | `AMGT-rk-129` | FWD-3 (Lenovo FILINGS -> Thesis tab); `rk-49`'s real dependency | whether HKEXnews can be made to return records AT ALL, and -- **independently** -- whether the adapter can WIN when it does |
+
+### 44c. THE BOUNDS THAT ARE NOT NEGOTIABLE, and why each is here
+
+1. ⛔ **A POSITIVE CONTROL COMES FIRST; THE CELL IS REFUSED WITHOUT ONE.** `recordCnt=0` today is
+   **NON-DISCRIMINATING** -- it reads identically for wrong params, wrong endpoint, a required session/cookie, a
+   silent block, and a genuine absence of filings. **Find ANY query to `titleSearchServlet.do` returning
+   `recordCnt > 0`** -- any issuer, any range, the interface's own defaults. Until one exists, every conclusion
+   about Lenovo is unfalsifiable. This is `Z-W128-S1`'s *"not a tuning pass"* made mechanical.
+2. ⛔ **THE WIN PATH IS PROVEN AGAINST A FIXTURE, NEVER AGAINST THE LIVE SEARCH.** Limb 2 must be gradeable
+   **whether or not limb 1 succeeds** -- a stubbed HKEXnews reply carrying one known-good record, exactly as round
+   35 proved test (c) with a purpose-built synthetic `SC 13D`. ⭐ **This is the whole point of 44a: the two
+   blockers are decoupled so neither can mask the other again.**
+3. **Acceptance test (c) still BINDS** -- a document is accepted only if the issuer is the SUBJECT, not merely the
+   filer. Round 35 proved it adversarially; widening the win path must not loosen it.
+4. **Steps 1-4 do not move.** Signatures and call sites byte-identical, `STEP_ORDER` untouched, `_attempt`
+   untouched -- negative-controlled by printing them before and after, as in round 35.
+5. **Egress:** HKEX is a PUBLIC regulator interface, like EDGAR -- ⭐ **no vendor word needed** (`1.0.0_SA_CTO~Z`
+   @`401d59ce04`, explicit). The bound rises from ONE fetch to a NAMED, PRINTED budget, **because the one-fetch
+   bound is the direct cause of blocker B.** 0 Bloomberg calls.
+6. ⛔ **STANDING, from the rk-128 cut forward: NO S3 DELETE OF ANY KIND** -- no object, no version, no delete
+   marker (removing a delete marker is itself a delete). Andrew's word only.
+7. ⛔ **STANDING: no hunting for a key, secret or session to forge a portal RS256 bearer.** If HKEXnews turns out
+   to require a session, that is a **FINDING TO REPORT**, never a thing to manufacture.
+
+### 44d. WHY BOTH LIMBS ARE ONE CELL AND NOT TWO ROUNDS
+
+They are one cell because **cutting them apart re-creates the exact masking 44a just found.** A round shipping limb
+1 alone ends at *"records now returned, route still unresolved"* -- which is where round 35 ended, one cause later.
+A round shipping limb 2 alone cannot be graded live. ⭐ **Bound 2 is what makes one cell honest: limb 2 is
+fixture-proven, so the cell delivers a gradeable result even if HKEXnews defeats limb 1 entirely.**
+
+⚠ **AND THE HONEST STATEMENT OF WHAT THIS ROUND CAN DELIVER: if limb 1 finds HKEXnews genuinely unusable without
+credentials, the route is CORRECTLY ABANDONED, and that is a FULL RESULT, not a failure** -- it retires a half-fix
+that has now consumed parts of three rounds. **This cell is cut to be able to say NO.**
+
+### 44e. FAN-OUT
+
+```
+fanout:
+  cap: 8
+  orders_total: 1                   # rk-129
+  chains_total: 1
+  wave_1: [rk-129]
+  rationale: one cell, two limbs, strict internal dependency (44d); no second chain exists to run beside it
+  still_blocked_on_andrews_registry_card: [C-S400, Z-S227, rk-124 client half, Z-W126-S3, portal/**, .scratch/**, infra/logic/**]
+  needs_an_owner_outside_this_project: [Z-W128-S2 duplicate-id collapse, the `pending` two-meanings label, to-pipeline-gate STATUS_RE fail-open]
+  parked_on_ratified_scope: [the America Movil induction request -- s.12, until the trial is graded]
+  no_fleet_run: true
+  no_s3_deletes: true               # standing
+  no_bearer_forging: true           # standing
+```
