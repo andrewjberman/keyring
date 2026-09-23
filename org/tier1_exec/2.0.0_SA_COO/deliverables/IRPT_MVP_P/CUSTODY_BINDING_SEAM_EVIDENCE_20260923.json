@@ -1,9 +1,9 @@
 {
     "schema_version":  "irpt-local-binding-seam-evidence-v1",
     "baseline":  "f0075287c426cbe9eea04f0165bc179147918ce1",
-    "integrated_parent":  "8845b7ef23cabfe9c73a3f8109f0c1c2c829e3af",
+    "integrated_parent":  "515fba746a3eaaf016ba0a6b0f5340928cce3dc0",
     "implementation_pin":  "00b54afab1",
-    "publication_source_pin":  "3539ad2ae5fec01a9efecc7c5fa49845d5cb64d6",
+    "publication_source_pin":  "200ba442f56d6dd70aaa07b1f9173898893dc8cf",
     "cto_publication_review":  "bb43292167",
     "ruling":  "999998e448",
     "tests":  {
@@ -62,8 +62,8 @@
                           },
                           {
                               "path":  "infra/aws/lambda/investor-reporting/holdings/publication.py",
-                              "sha256":  "5d9c941a577ae57bbb67d1c11f205e939e0316e35f327e342e7cebdb90953344",
-                              "git_blob":  "11b0a14fc0e02e8d8292f0edb3ba2b63a1e2cc7a"
+                              "sha256":  "ca49ec495cb5936a2f881170d08543469cbfc4ec7c28d0a6024cbf48264f9e95",
+                              "git_blob":  "9b169a9ee1bbd75583b75cbe60522e7ed9ebb6bb"
                           },
                           {
                               "path":  "infra/aws/lambda/investor-reporting/holdings/snapshot.py",
@@ -147,13 +147,14 @@
                           },
                           {
                               "path":  "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/ACCEPTED_CUSTODY_READER_DRAFT_20260923.md",
-                              "sha256":  "b5fbb2d1939be629416b5cb2a45a87f4d739461bfc9f9e149908dae1cf742354",
-                              "git_blob":  "2de6efa5b5e7f0b40d14edc7e609b04641564359"
+                              "sha256":  "232ca08d254efee005d66209069e5fce841b262962b88b78197f2fdfbeb24053",
+                              "git_blob":  "2fffaf6fbb3c2d1bad1a112072808cf57c9c86b9"
                           },
                           {
                               "path":  "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md",
-                              "sha256":  "addb12aaa8fb5e810ff41bd0e2fcec4e4b8d6c62757ce620157b7dbc9c4f5782",
-                              "git_blob":  "235a5ce2042f34448ff36acda911eaab9653b5bb"
+                              "sha256":  "adf20b4127b8a857a16dca835f494012f9e898fea02fc4c3f5aad586c04f46a4",
+                              "git_blob":  "4a25f471fd0e5f5f335b62fa41fba4210678d9fc"
                           }
-                      ]
+                      ],
+    "documentation_delta":  "200ba442f5 changes publish docstring only; 115-test runtime result from c607ee7461 retained without redundant rerun."
 }

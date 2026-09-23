@@ -1,11 +1,13 @@
 # IRPT P status - 2026-09-22
 
-## Current Opal local integration - 2026-09-23 16:29 UTC
+## Current Opal local integration - 2026-09-23 publication clarification integrated
 
 CTO ruling999998e448 authorizes the local private binding tranche. P00b54afab1
 implements `_scope/custody_binding.py` and `accepted_custody.py`; integration
 8845b7ef23 merges M3539ad2ae5 exact acceptance capture/replay plus its reviewed
-source-guard ancestry. Paired interface75bbe9cc2d includes the exact selected
+source-guard ancestry. Integration515fba746a additionally consumes M200ba442f5's
+docstring-only correction of unconfirmed post-PUT outcomes; no runtime change
+or redundant suite rerun. Paired interface75bbe9cc2d includes the exact selected
 fingerprint, nested economic facts and retained source projection.
 
 Existing IRPT_REQUESTS_TABLE uses CUSTODY_BINDING namespace, canonical JSON,

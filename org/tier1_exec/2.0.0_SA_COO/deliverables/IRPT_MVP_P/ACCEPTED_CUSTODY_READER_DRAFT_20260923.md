@@ -1,7 +1,11 @@
 # Accepted custody reader: exact interface draft
 
-Status: LOCAL DRAFT FOR M/Y CONTRACT REVIEW. This document adds no runtime,
-schema fields, storage authority, producer acceptance or deployment permission.
+Status: LOCAL P/M STORAGE IMPLEMENTED; Y CONSUMER INTEGRATION PENDING.
+CTO ruling `999998e448` authorizes this local tranche. P `00b54afab1` implements
+the private store/reader; `c607ee7461` records 115 passing offline seam tests.
+Integration `515fba746a` includes M's wording-only correction `200ba442f5`.
+Economic ports in the successful storage tests are synthetic. Actual source
+admission, a production installation and deployment permission are not proved.
 
 Paired review incorporated: Y `ff982c0e3012c611d96f3ef5b0ac541dbb0ed11d`
 (includes `605449f4cc`, supersedes `b799b5a6fc`),
@@ -14,7 +18,8 @@ mapping-receipt requirements in the one nested security object. Source facts
 and a trusted binding are not supplied by a field definition. This revision
 supersedes `7e9baf3064` and the crossed flat-field proposal in `34a9c33800`.
 The selected fingerprint and retained-source mapping below correct the omission
-in `f6babe048f`; no runtime implementation is implied.
+in `f6babe048f`. The implementation status above supersedes the original draft's
+absent-store statement; the economic requirements below remain mandatory.
 
 ## Measured boundary
 
@@ -32,12 +37,15 @@ suite. M's private evidence and optional expected raw account IDs are not
 independently authorized census. Audited COT currency remains unestablished.
 Empty inputs refuse; no accepted complete empty-account census capability exists.
 
-## Proposed export and composition
+## Implemented export and pending consumer composition
 
-P owns proposed `_scope/accepted_custody.py` with these internal methods:
+P owns `_scope/accepted_custody.py` with these internal methods:
 
 ```python
 class AcceptedCustodyReader:
+    def __init__(self, store, *, current_selection, publication_for,
+                 interpret_source=None, validate_evidence=None): ...
+    def create(self, principal, selection_owner, *, as_of) -> dict: ...
     def authorize_snapshot(self, principal, owner) -> bool: ...
     def read(self, principal, owner) -> dict: ...
 ```
@@ -48,6 +56,14 @@ binding/current-authority checks and returns literal True only on success.
 Neither method accepts browser rows, raw account mappings, bucket/key, dates as
 lookup substitutes, or a caller-provided manifest. The installation is a
 request-local server configuration; no warm caller's identity is retained.
+
+`create` generates the snapshot ID on the server, captures the exact M
+publication receipt and conditionally persists the immutable private binding.
+No HTTP writer is installed. `current_selection(principal, owner)` must resolve
+the current verified selection fingerprint. `publication_for(firm)` supplies
+M's capture/load_pinned service. Both economic callbacks are mandatory for a
+successful create/read; missing capability refuses. Their production source
+implementation and the canonical selection adapter remain integration work.
 
 Y supplies the existing factory callback:
 
@@ -98,8 +114,9 @@ original is allowed. This corrects the earlier blanket duplicate-reference rule.
 ## Immutable binding requirements
 
 1. Resolve `(report firm, snapshot_id)` only through a server-controlled accepted
-   binding. The concrete lookup/store and publication writer are NOT implemented
-   or authorized by this draft. Absent binding means refuse. Never fall back to
+   binding. P implements the local conditional store/reader under ruling999998;
+   M implements exact publication capture/replay. Absent binding means refuse.
+   Never fall back to
    a date's current index, newest object, browser manifest or unversioned key.
 2. The binding must pin original snapshot revision, exact canonical account
    census/mapping revision, source-set revision and ordered immutable receipts.
@@ -324,7 +341,7 @@ capability is currently unavailable, so actual empty inputs continue to refuse.
 
 | Blocker | Current evidence and owner |
 | --- | --- |
-| Trusted accepted binding writer/store/read surface | P: absent; current mutable/date publication cannot stand in for an immutable snapshot lookup |
+| Trusted accepted binding writer/store/read surface | P local implementation00b54afab1 and real M replay integrated515fba746a; 115 offline tests. Production adapters/installation remain absent |
 | Economic interface versus actual evidence | Nested names and 1100 text cap aligned with M44e3/Y6054; admitted rules and actual evidence remain absent; Y's security key/receipt additions require concrete maintained mapping |
 | COT source contract | M source review: B01 has no currency/side declaration, Cash Equivalent is insufficient, Units is not universal SHARES; adding Currency would require a source-map amendment, not a helper default |
 | INF source contract | M source review: optional facts, missing stable mandatory instrument grain/currency/side; builder zero accrued income is not vendor economic proof |
@@ -335,7 +352,8 @@ capability is currently unavailable, so actual empty inputs continue to refuse.
 
 These are source-located findings from the exact M review, not fresh cloud
 measurements. No producer execution or new source-read authority is inferred.
-Next implementable contract needs a concrete trusted binding and actual economic
-source evidence; a closed schema alone cannot supply either. CTO remains direct
+The local binding mechanism is implemented. Next integrate Y's consumer and
+prove actual economic source evidence separately; storage success does not
+supply that evidence. CTO remains direct
 reviewer. No cloud write, production source activation, IAM change, vendor
 request or public field emission follows from this draft.
