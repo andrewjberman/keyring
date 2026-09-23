@@ -127,7 +127,7 @@ non-ASCII print per changed file.
 3. **The poison is required even though nothing here intends a call**, because four instances in round 1 came from tests
    that also did not intend one.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>
