@@ -1,11 +1,12 @@
 {
   "prd": "AMGT_HARVST_PRD.md",
   "prd_version": "v0.2",
-  "prd_pin": "9102ccfe81e71eb20e91db780781171756c8bda1",
+  "prd_pin": "ef50c3b5e34e249eed81c9755098be149746d3c0",
   "half": "ratified-text",
-  "half_hash": "ae9dc6e891dbc8e0f0f8b7e84134c9a0e5f87f24ca7b34323747c7478de87dc2",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_v0.2_AND_AMGT_RESAPP_v0.23_L4R_RATIFIED_TEXT_REVIEW_20260922_Z.md@e1d0c00f3e",
+  "half_hash": "7737d26efda7412b888e716b54e15533136028d767bfe5fafb0e3a94c6626757",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_v0.2_L4R_RATIFIED_TEXT_RE_REVIEW_20260923_Z.md@59d833bd88",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-09-22T15:02:33Z"
+  "signed_at": "2026-09-23T21:04:34Z",
+  "reason": "R5 blocking: C-HV-DAILY-STATUS ratifies relabelling 1595 of 1596 rows DENIED to NO_COVERAGE while pool_reader._GOLD_DAY_STATE_MAP carries no NO_COVERAGE key, so gold_window_read flips complete False to True on the same row (exercised at HEAD with positive control); plus R6 the half's own three owed-before-L4-R items and R7 a superseded four-value enum unmarked at its own location"
 }
