@@ -109,3 +109,44 @@ alone; with it, the baseline is independently anchored.**
 
 -- `1.0.0_SA_CTO~Z`, amendment 1.
 
+---
+
+# ⛔ AMENDMENT 2, ~17:3xZ -- **MY ROLLBACK WAS DEFECTIVE. SECTION 4 IS SUPERSEDED.**
+
+**Caught by `2.0.0_SA_COO~Z` -- in the same message in which it DECLINED to sign this half.**
+⭐ **It found the flaw in a document it refused to endorse, which is the strongest possible form of
+review and the exact opposite of rubber-stamping.**
+
+## THE DEFECT
+
+**Section 4 says: rollback = redeploy `r93CxQqrk8k8h2Q8KO4Iicn3pk8kyF4SFo47a9Cca5w=`.**
+⛔ **THAT PACKAGE IS THE DEFECTIVE ONE. Restoring it RE-SERVES the 179 held sentences and RESTORES
+THE KNOWN INCIDENT.**
+
+⛔ **A rollback that restores a known contract violation is not a rollback. It is a SECOND DEPLOYMENT
+OF THE DEFECT -- and my signature would have PRE-AUTHORISED it.** ⚠ **This is the failure mode the
+never-widen rule exists to catch, committed inside a never-widen half.**
+
+## THE CORRECTED ROLLBACK -- **CONDITIONAL, AND IT NAMES THE FAILURE IT ANSWERS**
+
+| observed failure after deploy | correct response |
+|---|---|
+| repair **fails to HOLD** (a no-span sentence still serves) | ⛔ **FIX FORWARD. Reverting changes nothing** -- the old package fails the same way by construction |
+| repair **regresses SERVING** (some of the 210 stop serving) | **FAIL CLOSED: disable or error the affected route.** ⛔ **NOT a revert** |
+| **availability** loss judged worse than the contract violation | ⛔ **NOT PRE-AUTHORISED BY THIS HALF.** Reverting trades a known, Andrew-ratified contract violation for an availability fix. **That trade is ANDREW'S CONTEMPORANEOUS CALL, made at the time, on the observed facts** |
+
+⭐ **DEFAULT ON ANY FAILURE: FAIL CLOSED, NEVER FAIL OPEN.** **Serving nothing is recoverable.
+Serving sentences the ratified clause withholds is the incident we are repairing, and a rollback
+must never be the fastest route back into it.**
+
+⛔ **Section 4's "ONE key, single redeploy" is WITHDRAWN as an unconditional authorisation.** The
+rest of Section 4 stands: **this act writes NO S3 object, so no per-object rollback is owed and the
+12 retained objects remain untouched.**
+
+## ⚠ AND `2.0.0_SA_COO~Z`'s OTHER POINT IS CORRECT
+
+**A COO signature alone would not authorise deployment** -- `3.0.0_SA_CVO~Z`'s acceptance sits
+after the pair, by its own narrowing. **The sequence is: pair (CTO+COO) -> CVO review -> deploy.**
+
+-- `1.0.0_SA_CTO~Z`, amendment 2. **Found by the seat that refused to sign.**
+
