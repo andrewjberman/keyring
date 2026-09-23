@@ -46,6 +46,17 @@ completion effort Andrew has already authorized.
 > upload flow, should be smoother. We should have endpoints for that to manage this operation, that should be explored by
 > you right now and worked into the brief.
 
+> Kimi should work fine, just model structure from the Kimi Estate Pipeline as we discussed regarding to how the json is
+> set up/api call format
+
+> K3 is the model we want to use
+
+> Yes do a small ycharts test now, may need to run the ec2 browser run if the cookie is stale
+
+The capture that last line authorized has been run. Its record is
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260923_YCHARTS_TICKER_LOOKUP_TEST_PER_USE_AUTHORIZATION.md`,
+and its results are folded into sections 4, 5.3, 5.4 and 8 below.
+
 **Prior requirement, same lane:** Andrew-direct 2026-09-21, recorded at
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260921_2021Z_SENSITIVITY_ANALYSIS_EXCEL_UPLOAD_REQUIREMENT.md`:
 *"the ability to upload excel sheets with Securities ($Ticker) in column A (starting in A2), and either dollars or shares
@@ -138,6 +149,15 @@ identical at V1 and V2):
 | YCharts per-holding Performance Proxy | holdings CSV column `Performance Proxy` (`recipe.py:402,410`, sent empty); item fields `exposure_proxy_security_id`, `is_valid` (HAR evidence `:1187-1189`) | YCharts' OWN proxy mechanism | never exercised |
 | Opal security reference data | `bd-securities` DynamoDB, per-firm `dim_security` (e.g. `data/assets/scripts/gold/runners_49f/a03_dim_security.py`), `data/black_diamond/scripts/silver/security_ticker_mapping_final.py` | ticker/CUSIP/type for held securities | exists; not wired to IRPT |
 
+**MEASURED LIVE, 2026-09-23** (4 read-only calls on Andrew's per-use word, all HTTP 200, under 1 s each; responses kept as
+fixtures in `org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_YCHARTS_LOOKUP_CAPTURE_20260923/`):
+
+| Probe | Result | What it means for the design |
+|---|---|---|
+| `securities_info` with `AAPL, ALPPL, VNQ, BREIT, $:CASH` | 3 rows returned: AAPL `stock`, VNQ `etf`, `$:CASH` `cash`. **ALPPL and BREIT are simply ABSENT** -- no error entry, no null row | NOT_FOUND = the symbols sent minus the symbols returned. A check that waits for an error row never fires |
+| `suggest/main?q=ALPPL` | all ten category lists empty | **YCharts has no typo tolerance.** "Did you mean AAPL?" must come from Kimi call 1 |
+| `suggest/main?q=BREIT` | 9 mutual-fund share classes, `M:BREIT.S`, `M:BREIT.D`, ... each `features_needed: ["evergreenFundData"]`, `all_features_required: true` | a private REIT can be **known but feature-gated**; funds are namespaced `M:<ticker>` |
+
 **The seat constraint:**
 - YCharts allows ONE concurrent session per login; a second sign-in evicts the first with a "concurrent sign in" 403
   (`ycharts_client.py:164-166`, gateway `integration.py:35-39`).
@@ -146,6 +166,14 @@ identical at V1 and V2):
 - **Whether those two are the same YCharts user is unmeasured.** If they are, a lookup through the gateway can evict a
   running report job.
 - The measured-safe request spacing is 2.0 s (`ycharts_client.py:46`).
+- **Measured 2026-09-23:**
+  - The IRPT session secret `ycharts/session/current` has **never been populated**: no `AWSCURRENT` version, last
+    changed 2026-05-21.
+  - Its browser runner host `irpt-ycharts-runner` exists, but the runner application is **not deployed on it**. SSM
+    `irpt-ycharts-run` failed rc 127, `/opt/investor-reporting-ycharts/run-ycharts-session.sh: No such file or
+    directory`, and the document has no prior runs on record.
+  - The **only live YCharts session is `ycharts/credentials`** (last changed 2026-07-01, live after 84 days). It is the
+    single seat shared with Alyssa and the gateway.
 
 ## 5. Desired state
 
@@ -219,6 +247,12 @@ upload parsed -> CHECK ALL SYMBOLS (one batch, no AI)            -> every symbol
   1. The approved-substitution library and the resolution cache (section 5.4).
   2. Opal security reference data (`dim_security`, `bd-securities`).
   3. YCharts `securities_info` for whatever is left, in ONE batched call.
+  - **How to read the batch result (measured):**
+    - A symbol absent from the response is NOT_FOUND. Nothing else signals it.
+    - A returned row with a non-empty `features_needed` is FOUND-BUT-GATED; treat it as not usable unless the seat is
+      shown to hold the feature.
+    - For a symbol that looks like a fund, retry once as `M:<ticker>` before calling it NOT_FOUND. Whether that retry is
+      needed is unmeasured.
 - **Kimi call 1, "check":**
   - **Input:** the unresolved symbol; YCharts typeahead candidates for it, if any (`search/suggest/main` or the
     portfolio item picker); the other symbols in the file, as context.
@@ -263,16 +297,21 @@ calls them, and a tester or ops seat can call them directly with a list of symbo
   - Both stores take names and addresses from `lib/opal_naming.py` `name()` and `address()` (CLAUDE.md Rule 30). A builder
     refusal means adding a registry row, never a hand-typed name.
 - **One YCharts session.**
-  - All three routes reach YCharts through the IRPT session broker (`ycharts/session/current`) under its lease, NOT
-    through a second login, so a lookup cannot evict a report job.
+  - All three routes reach YCharts through ONE session under the IRPT lease, NOT through a second login, so a lookup
+    cannot evict a report job.
+  - **Today that can only be `ycharts/credentials`, the one live session (section 4).** The IRPT session secret is
+    empty and its runner is not deployed.
+  - **Decision for the CTO:** deploy the IRPT runner so `ycharts/session/current` is maintained, or bind the lease to
+    `ycharts/credentials`. Either way it is one seat shared with Alyssa, and only one automation drives it at a time.
   - Keep the 2.0 s spacing. Batch `securities_info`.
   - When the lease is held by a generation step, return `503` with `retry-after`.
 - **Asynchronous where Kimi is involved.**
   - Keep `kimi-k3` behind a poll: `202` with a resolution id, then `GET .../securities/resolutions/{id}`.
   - The reason: the estate runner measured a `kimi-k3` call taking ~195 s (`estate_report_runner.py:119`), and a route
     behind an API gateway has a ~30 s integration limit. `check` stays synchronous.
-  - Measure the real latency on the first QA call. A faster Kimi model id for call 1 is a config change, not a design
-    change.
+  - Measure the real latency on the first QA call. The model is `kimi-k3` for both calls, per Andrew ("K3 is the model
+    we want to use").
+  - The YCharts lookups themselves are fast (the four live calls took 0.07-0.53 s), so `check` stays synchronous.
 - **A test harness.** A small script, for example `.tools/irpt-ticker-check.py <file-or-symbols>`, calls `check` (and
   optionally `suggest`/`substitute`) on a list and prints the result table with its denominator. This is how the ticker
   database is exercised "without having to do whole upload flow". It can also back a small QA panel on the tab later.
@@ -286,7 +325,14 @@ configuration (`infra/aws/terraform/estate-report/instance.tf:133-135`).
   `astn/kimi/api-key` (Andrew: *"same API key and everything"*).
 - **Grant:** the resolver Lambda role gets `secretsmanager:GetSecretValue` on EXACTLY that ARN. The pattern is the
   gateway's exact-ARN grant in `infra/aws/terraform/opal-gateway/ycharts-iam.tf`.
-- **Model:** a config value, as in the estate runner (`ESTATE_KIMI_MODEL`, default `kimi-k3`).
+- **Model: `kimi-k3`** (Andrew). It is held as a config value, the way the estate runner holds `ESTATE_KIMI_MODEL`.
+- **Request and JSON shape: copy the estate pipeline exactly** (Andrew: *"model structure from the Kimi Estate Pipeline
+  ... how the json is set up/api call format"*):
+  - an OpenAI-style `chat/completions` POST: `{"model", "temperature": 1, "max_tokens", "messages": [{"role": "user",
+    "content": <prompt>}]}` with `Authorization: Bearer`;
+  - the prompt asks for ONE JSON object;
+  - the reply is read from `choices[0].message.content`;
+  - token usage is read from `usage` and `completion_tokens_details.reasoning_tokens`.
 - **Call mechanics, copied from `call_kimi_sub`:**
   - per-call token budgets and timeouts;
   - transient retry once, and a timeout is terminal;
@@ -362,9 +408,12 @@ full generation.
   4. the frozen portfolio;
   5. YCharts generation;
   6. the stand-in disclosed on screen and in the PDF.
-- **First step, before any fixture of a rejection can exist:** capture what YCharts actually returns for an unknown
-  symbol, at both `securities_info` and the holdings upload. It has never been captured (`investor-reporting-ycharts-
-  design-20260910.md:171,181`). **This needs Andrew's per-use word** (section 8).
+- **Capture of YCharts' unknown-symbol response:**
+  - **`securities_info`: DONE, 2026-09-23.** The fixtures are in `IRPT_YCHARTS_LOOKUP_CAPTURE_20260923/`: silent
+    omission, empty typeahead for a typo, a gated fund.
+  - **The holdings-UPLOAD rejection shape is still uncaptured** (`investor-reporting-ycharts-design-20260910.md:171,181`).
+    It needs an upload call, which creates a vendor record, so it is a mutation outside the read-only test Andrew
+    authorized. **It needs its own per-use word.**
 
 ## 8. Authorizations and open items
 
@@ -377,11 +426,15 @@ full generation.
    - **Agent-initiated YCharts calls stay under the 2026-07-09 prohibition**
      (`org/tier1_exec/2.0.0_SA_COO/deliverables/INCIDENT_unsanctioned_vendor_api_ycharts_20260709.md:13-17`: no
      `ycharts_*` call, "one-off probes ... and pre-flight checks" included, without his per-use word).
-   - **The one capture in section 7 therefore waits on Andrew's word.** Proposed bound: 3-5 symbols (one known, one typo,
-     one private or bond), through the IRPT session, with the responses retained as fixtures.
-3. **Seat identity.** Measure whether `ycharts/credentials` and `ycharts/session/current` are the same YCharts user. Read
-   the secret metadata, not the values. That decides whether the gateway's `ycharts_search` may ever run beside
-   generation.
+   - **The read-only capture has been run on Andrew's word** (four calls, record
+     `ANDREW_DIRECT_20260923_YCHARTS_TICKER_LOOKUP_TEST_PER_USE_AUTHORIZATION.md`). The upload-rejection capture still
+     needs its own word (section 7).
+3. **Seat and session.** Measured:
+   - `ycharts/session/current` is empty and its runner is undeployed;
+   - `ycharts/credentials` is the one live session.
+
+   The CTO decides whether to deploy the IRPT runner or bind the lease to `ycharts/credentials` (section 5.4). The
+   `irpt-ycharts-runner` host was started for this test and is left as Andrew directs.
 4. **Kimi web search on `kimi-k3`:** unproven (5.5).
 5. **The YCharts Performance Proxy option:** never exercised. Test whether YCharts accepts an unrecognized holding
    carrying a proxy ETF. If it does, the original name survives into the report with YCharts computing on the proxy.
@@ -389,7 +442,8 @@ full generation.
 
 ## 9. What this brief does not claim
 
-- No live upload, YCharts call, Kimi call or browser walk-through was made.
+- No live upload, Kimi call or browser walk-through was made.
+- The only YCharts contact was the four read-only calls recorded in section 4, made on Andrew's per-use word.
 - Every "current state" line is from source at the pins above, or from the offline run.
 - Whether Excel's own CSV export matches the approximate CSVs in the run is inferred.
 - The owner of the resolution service is the CTO's call under contract section 3; section 6 gives a recommendation only.

@@ -1,0 +1,56 @@
+{
+ "label": "securities_info",
+ "path": "/securities/securities_info?securities=AAPL%2CALPPL%2CVNQ%2CBREIT%2C%24%3ACASH",
+ "utc": "2026-09-23T18:24:51Z",
+ "http_status": 200,
+ "final_url_path": "/securities/securities_info",
+ "elapsed_s": 0.09,
+ "bytes": 1003,
+ "json": [
+  {
+   "securitylist_security_id": "C12",
+   "instance_id": 12,
+   "id": "AAPL",
+   "detailed_security_type": "stock",
+   "display_security_id": "AAPL",
+   "features_needed": [],
+   "security_id": "AAPL",
+   "security_name": "Apple, Inc.",
+   "inception_date": "1990-01-02",
+   "end_date": null,
+   "start_date": null,
+   "benchmark": "S&P 500 Total Return",
+   "sharing": null
+  },
+  {
+   "securitylist_security_id": "C7974",
+   "instance_id": 7974,
+   "id": "VNQ",
+   "detailed_security_type": "etf",
+   "display_security_id": "VNQ",
+   "features_needed": [],
+   "security_id": "VNQ",
+   "security_name": "Vanguard Real Estate ETF",
+   "inception_date": "2004-09-29",
+   "end_date": null,
+   "start_date": null,
+   "benchmark": "MSCI World Net Total Return",
+   "sharing": null
+  },
+  {
+   "securitylist_security_id": "$1",
+   "instance_id": 1,
+   "id": "$:CASH",
+   "detailed_security_type": "cash",
+   "display_security_id": "$:CASH",
+   "features_needed": [],
+   "security_id": "$:CASH",
+   "security_name": "Cash",
+   "inception_date": null,
+   "end_date": null,
+   "start_date": null,
+   "benchmark": null,
+   "sharing": null
+  }
+ ]
+}
