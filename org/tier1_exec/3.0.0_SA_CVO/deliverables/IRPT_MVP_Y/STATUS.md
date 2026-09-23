@@ -6,6 +6,15 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 ## Completed preparation
 
+- Outer pair7915bc9b2c/cf77e5db and separately assembled42412eb8: backend2 supplied
+  and24 closed-schema controls PASS. **Y-W01 aliases peer R-P11 P2 OPEN/HOLD**:
+  four raw refusals carry schema-marked server-only CID; CTO011346 rules strip
+  public field/retain internal diagnostics, P repair and P independent retest.
+  **Y-W02 P2 OPEN**: both portal pins13 PASS/7 FAIL53 assertions; ordinary null/
+  invalid date, safe:false retry and four nested extra-field cases accepted
+  despite closed-schema rejection. Assembled12 supplied69 assertions/TS PASS.
+  See `OUTER_PAIR_REVIEW_7915.md`. No live exposure/executed retry/regression or
+  integrated grade claimed. Original date/reopen closures unchanged.
 - Owned reopen portal `38a3ea24412310165f0dfb09912e1997de445631`:9 independent
   controls/37 assertions,5 focused supplied/18 assertions and TypeScript PASS.
   Actual component with manual hooks/deferred typed reads ignores late results,
@@ -389,7 +398,9 @@ repair,45 tests+24subtests PASS/P-consumed. Producer-attributed, not rerun here.
 Date-boundary handoff f4f16b283f/586cca01 has been reviewed with bounded results
 in `PROSPECT_DATE_REVIEW_f4f16b283f.md`; the original20-case plan now has a scoped
 execution addendum; Y-DT01 unchanged repair retest and bounded owned-reopen
-UI38a3ea24 review are complete. Next: real browser/export/runtime and dated
+UI38a3ea24 review are complete. Next: exact P public-refusal and strict-parser
+repair pins for unchanged Y-W01/R-P11 and Y-W02 retests, then real
+browser/export/runtime and dated
 custody/performance producer evidence. Ruling
 or offline primitive PASS does not make integrated acceptance complete.
 
