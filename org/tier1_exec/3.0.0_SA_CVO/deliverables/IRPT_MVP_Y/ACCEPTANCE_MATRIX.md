@@ -479,3 +479,14 @@ Explicit application TypeScript check passes. See OUTER_PAIR_RETEST_960f.md.
 This supersedes the earlier Y public-wire HOLD for this exact pair only.
 0 PASS /0 FAIL /14 NOT_EVALUATED integrated criteria; no package/runtime/browser/
 vendor/render/export/deploy/push lift. Broader reported baseline failures remain.
+
+## Merged wire confirmation and retained recovery
+
+33b2fbe528/12acb3f4 independently passes the unchanged original wire controls and
+added selection/projection checks; Y-W01/Y-W02 remain closed for that exact merged
+pair, separately from960f/c09. See OUTER_PAIR_MERGED_REVIEW_33b2.md.
+Recovery82792f4864:30supplied+4subtests and12independent controls PASS, offline
+exception cut points and modeled Dynamo effects; no READY, OS process death,
+vendor readback or server race grade. PUBLICATION_RECOVERY_REVIEW_8279.md records
+scope and the future maintained-source51b5d63a81 obligations. These do not grade
+any of the14 integrated rows:0PASS/0FAIL/14NOT_EVALUATED remains unchanged.

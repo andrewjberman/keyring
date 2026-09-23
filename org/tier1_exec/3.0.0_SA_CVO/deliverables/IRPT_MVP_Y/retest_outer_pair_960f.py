@@ -14,12 +14,14 @@ import zipfile
 def main():
     own = Path(__file__).resolve().parent
     root = own.parents[4]
-    output = own / 'OUTER_RETEST_960f'
+    output = own / os.environ.get('IRPT_RETEST_DIRECTORY', 'OUTER_RETEST_960f')
+    assert output.resolve().is_relative_to(own.resolve())
     output.mkdir(exist_ok=True)
     baseline = '64a2c522ef6144de657f6afccb5e7a3536b9aa49'
-    backend_pin = subprocess.check_output(['git', 'rev-parse', '960f5f2a45'], cwd=root, text=True).strip()
+    backend_pin = subprocess.check_output(['git', 'rev-parse', os.environ.get('IRPT_RETEST_BACKEND', '960f5f2a45')], cwd=root, text=True).strip()
     portal_repo = Path('C:/Users/AndrewBerman/Desktop/irpt-mvp-p-portal-20260922')
-    portal_pin = 'c09fea54e9f4613d44b874724e93b79c443f8cc8'
+    portal_pin = subprocess.check_output(['git', 'rev-parse', os.environ.get('IRPT_RETEST_PORTAL',
+        'c09fea54e9f4613d44b874724e93b79c443f8cc8')], cwd=portal_repo, text=True).strip()
     original = own / 'probe_outer_pair.py'
     original_text = original.read_text(encoding='utf-8')
     committed = subprocess.check_output(['git', 'show', baseline + ':' + original.relative_to(root).as_posix()],
@@ -42,7 +44,7 @@ def main():
     assert backend['pin'] == backend_pin
     assert len(backend['controls']) == 24 and all(r['passed'] for r in backend['controls'])
     # The legacy artifact basename is kept solely for the unchanged TS reader.
-    # Every JSON records the replacement full pin; baseline artifacts stay intact.
+    # Review and validation receipts record the full pin; baseline artifacts stay intact.
     for result in backend['public_refusal_contract_conflicts']:
         assert not result['exposed_server_only_fields'], result
         assert not result['raw_refusal_status_public_schema_errors'], result

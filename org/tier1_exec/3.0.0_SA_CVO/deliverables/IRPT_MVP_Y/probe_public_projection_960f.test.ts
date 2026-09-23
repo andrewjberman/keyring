@@ -32,5 +32,5 @@ for (const [kind, pair] of Object.entries({ ...outer.cases, selection }) as any)
   })
 }
 afterAll(() => writeFileSync(resolve(own, 'PUBLIC_PROJECTION_PORTAL.json'), JSON.stringify({
-  backend_pin: selection.pin, portal_pin: 'c09fea54e9f4613d44b874724e93b79c443f8cc8', results,
+  backend_pin: selection.pin, portal_pin: JSON.parse(readFileSync(resolve(root, 'review-source-hashes.json'), 'utf8')).pin, results,
 }, null, 2) + '\n'))

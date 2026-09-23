@@ -6,6 +6,17 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 ## Completed preparation
 
+- Merged public-wire endpoint33b2fbe528/12acb3f4 independently confirms closure:
+  original24 backend controls,4 clean refusal observations,20parser53assertions,
+  added8projection/4selection/6portal9assertions PASS; supplied3backend,
+  21portal118assertions and app TypeScript PASS. See
+  `OUTER_PAIR_MERGED_REVIEW_33b2.md`; original controls unchanged.
+- Post-download recovery82792f4864:30supplied+4subtests and12independent controls
+  PASS. Frozen checkpoints survive three simulated interruption points and caller
+  census/settings mutation; replacement lease reuses one retained report and
+  remains CERTIFYING. No OS process kill/server race/vendor/readback grade.
+  See `PUBLICATION_RECOVERY_REVIEW_8279.md`; maintained-source51b5d63a81 future
+  input/cover/catalogue controls recorded, not graded without an exact candidate.
 - **Y-W01/Y-W02 CLOSED for exact960f5f2a45/c09fea54** in Y's independent verdict.
   Original controls unchanged from64a2c522ef:24 backend controls PASS; four raw
   refusals public-schema clean;20 parser controls/53 assertions PASS (all seven

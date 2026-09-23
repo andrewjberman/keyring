@@ -13,7 +13,7 @@ from probe_recipe_decimal import deny_network, load
 def main():
     own = Path(__file__).resolve().parent
     root = own.parents[4]
-    pin = '960f5f2a4501eff2670bcd0b5951926836093447'
+    pin = os.environ.get('IRPT_SELECTION_BACKEND', '960f5f2a4501eff2670bcd0b5951926836093447')
     snap = root / '.runtime/codex-seats/3.0.0_SA_CVO~Y/outer-pair-backend' / pin
     socket.socket.connect = deny_network
     socket.socket.connect_ex = deny_network
@@ -41,13 +41,16 @@ def main():
         private['status']['internal_correlation_id'] = 'review-private-selection'
         assert list(schema.iter_errors(private))
         controls.append('selection_public_schema_rejects_reintroduced_cid')
-    portal = root / '.runtime/codex-seats/3.0.0_SA_CVO~Y/outer-pair-portal/c09fea54e9f4613d44b874724e93b79c443f8cc8'
+    portal = root / '.runtime/codex-seats/3.0.0_SA_CVO~Y/outer-pair-portal' / os.environ.get(
+        'IRPT_SELECTION_PORTAL', 'c09fea54e9f4613d44b874724e93b79c443f8cc8')
     supplied = json.loads((portal / 'src/pages/InvestorReporting/__tests__/mvp-selection/tests/producer-selection.json').read_text())
     assert supplied['refusal'] == refusal
     controls.append('fresh_selection_refusal_equals_repaired_portal_capture')
     doc = dict(pin=pin, success=success, refusal=refusal, controls=controls,
                limitation='Actual Entry with directory/ownership/persistence doubles; not deployed route or custody grade')
-    (own / 'OUTER_RETEST_960f/SELECTION.json').write_text(json.dumps(doc, indent=2) + '\n', encoding='utf-8')
+    output = own / os.environ.get('IRPT_SELECTION_DIRECTORY', 'OUTER_RETEST_960f') / 'SELECTION.json'
+    assert output.resolve().is_relative_to(own.resolve())
+    output.write_text(json.dumps(doc, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(dict(pin=pin, controls=controls), indent=2))
 
 

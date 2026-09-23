@@ -16,7 +16,8 @@ It changes only Python candidate and output-directory bindings in memory; no
 case, mutation, assertion or expected result is changed. TypeScript uses its
 existing environment bindings without code changes. Fresh actual Entry outputs
 go under `OUTER_RETEST_960f/`; their legacy7915 basenames allow the original
-reader to run unchanged, while each JSON records the new exact backend pin.
+reader to run unchanged, while the review and validation receipts record the
+new exact backend pin and bind the regenerated wire files to it.
 The original failed-run artifacts remain intact in the parent directory.
 
 Results:
