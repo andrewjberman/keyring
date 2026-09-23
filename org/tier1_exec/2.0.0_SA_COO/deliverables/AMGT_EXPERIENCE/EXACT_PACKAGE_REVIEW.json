@@ -1,0 +1,94 @@
+{
+  "source_pin": "dd91fd3126318f1056b0e5f426e855d84ee0d424",
+  "plane": "independent local exact-ZIP review",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "win32",
+  "candidate_sha256": "0c44108821fe52850c77b119490039453b082c3639fae6dbf58de054b1397a55",
+  "before_sha256_base64": "r93CxQqrk8k8h2Q8KO4Iicn3pk8kyF4SFo47a9Cca5w=",
+  "zip_members": 197,
+  "changed_members": [
+    "lib/research/api/scoped_amgt.py"
+  ],
+  "changed_functions": [
+    "_drafting_block",
+    "read_drafted_sections"
+  ],
+  "other_ast_identical": true,
+  "functions_match_pinned_source": true,
+  "original_functions_match_pre_repair": true,
+  "api_sha256": "6c98b25ba5cf51558d3c28db1f9e0fecf5acef1aefeb5c3b3cdc896fefb29a38",
+  "deployed_python_census": {
+    "python_files": 126,
+    "parse_failures": [],
+    "drafted_sections_writers": [
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "line": 1604
+      }
+    ],
+    "drafting_calls": [
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "line": 1696,
+        "function": "_drafting_block",
+        "injected_drafting": false
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "line": 1636,
+        "function": "_drafting_block",
+        "injected_drafting": false
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "line": 1645,
+        "function": "_drafting_block",
+        "injected_drafting": false
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "line": 1649,
+        "function": "_drafting_block",
+        "injected_drafting": false
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "line": 1967,
+        "function": "read_description",
+        "injected_drafting": false
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "line": 2067,
+        "function": "read_drafted_sections",
+        "injected_drafting": false
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "line": 2991,
+        "function": "read_drafted_sections",
+        "injected_drafting": false
+      }
+    ]
+  },
+  "repository_only_fixture_count": 10,
+  "test_files": [
+    "test_drafted_sections.py",
+    "test_description_line.py",
+    "test_scoped_amgt.py",
+    "test_scoped_amgt_mount.py",
+    "test_route_boundary_identity.py"
+  ],
+  "pytest_exit_code": 0,
+  "pytest_summary": [
+    "76 passed in 0.74s"
+  ],
+  "retained_replay_exit_code": 0,
+  "retained_replay": {
+    "plane": "local candidate reader, exact retained S3 versions",
+    "documents": 12,
+    "served": 210,
+    "held_at_read": 179,
+    "served_no_span": 0
+  }
+}
