@@ -6,6 +6,15 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 ## Completed preparation
 
+- Owned reopen portal `38a3ea24412310165f0dfb09912e1997de445631`:9 independent
+  controls/37 assertions,5 focused supplied/18 assertions and TypeScript PASS.
+  Actual component with manual hooks/deferred typed reads ignores late results,
+  rechecks request before sections, clears prior view on reopening/refusal,
+  supports empty-page continuation and reset, and uses native section rendering.
+  Parent scope key inspected; child status ID/key tested, not browser/lifecycle
+  or integrated proof. See `OWNED_REOPEN_REVIEW_38a3ea24.md`. Later paired P
+  backend7915bc9b2c/Y9dbd74d2c1 and portalcf77e5db/Y096e3e3d counts are producer-
+  attributed only. Date closure remains scoped to8dbc; all14 NOT_EVALUATED.
 - **Y-DT01 CLOSED** at portal `8dbc742bb1a89a277fc41183efc0f785bb9027f6`:
   original unchanged paired probe10/10 controls,80 assertions PASS; TypeScript
   PASS. Same actual backend single-date wire now visibly renders Business date:
@@ -379,8 +388,8 @@ repair,45 tests+24subtests PASS/P-consumed. Producer-attributed, not rerun here.
 
 Date-boundary handoff f4f16b283f/586cca01 has been reviewed with bounded results
 in `PROSPECT_DATE_REVIEW_f4f16b283f.md`; the original20-case plan now has a scoped
-execution addendum; Y-DT01 unchanged repair retest is complete. Next: queued
-owned-reopen UI38a3ea24 review, then real browser/export/runtime and dated
+execution addendum; Y-DT01 unchanged repair retest and bounded owned-reopen
+UI38a3ea24 review are complete. Next: real browser/export/runtime and dated
 custody/performance producer evidence. Ruling
 or offline primitive PASS does not make integrated acceptance complete.
 

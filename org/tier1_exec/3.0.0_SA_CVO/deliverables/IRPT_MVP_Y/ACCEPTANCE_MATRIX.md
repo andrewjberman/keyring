@@ -403,6 +403,12 @@ criteria remain NOT_EVALUATED.
 
 ## Compiler Tools
 
+Owned reopen38a3ea24:9 independent/37 assertions,5 focused supplied/18 assertions
+and TypeScript PASS. Late reads/access loss/page transitions/native section
+rendering bounded under manual effects and typed API doubles. See
+`OWNED_REOPEN_REVIEW_38a3ea24.md`; no real browser/current-service/parent remount
+or integrated grade. All14 remain NOT_EVALUATED.
+
 Y-DT01 CLOSED at8dbc742b: original paired probe unchanged10/10 controls,
 80 assertions PASS; TypeScript PASS. Ordinary date now visible without
 reclassification. See `PROSPECT_DATE_RETEST_8dbc742b.md`. Earlier finding below
