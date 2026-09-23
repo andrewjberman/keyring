@@ -5,7 +5,7 @@
   "project": "AMGT_CORPUS",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.2",
+  "prd_version": "v0.3",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md@6c52138c2f (36,007 bytes)",
   "endpoint_outcomes": [
@@ -56,6 +56,47 @@ here; the design was not disputed and is unchanged.
 Two CARRY items, not refusal grounds, are also closed: the READ surface for manifest rows R1/R2 is now stated
 (`C-NO-RAW-BRONZE-AT-SERVE`), and `C-TIER-PLACEMENT`'s "firm-attributable" wording, which described a different
 tenancy from the one the builder prints, is struck. **13 contracts** (v0.1 had 12).
+
+### v0.3 CHANGE NOTE -- 2026-09-23 ~01:3xZ, `1.0.0_SA_CTO~Z`
+
+v0.2's **BRIEF half was REFUSED** by `2.0.0_SA_COO~Z` (re-routed under the spine's *"or a live `2.0.0_SA_COO` ...
+in its stead"* provision, after `4.0.0_SA_CRO~G` was measured DEAF -- 13 unread, `read/` empty). **One bounded
+ground, and it is this PRD contradicting ITSELF.** Both grounds verified at the bytes by this seat before amending.
+
+⛔ **THE CONTRADICTION.** `:210` (the RATIFIED half, already SIGNED) places **O12 among "WHOLLY THE ADDENDUM'S"**,
+corpus-side column `--`. `:319` (the BRIEF half) had **R12 building O12's own artifact -- the lifted
+equity-research skill -- "under this project's home."** The brief assigns that artifact to O12 by name
+(`:118-120`), and to an act this project explicitly does not perform.
+
+⭐ **IT IS THE EXACT MIRROR OF THE DEFECT THIS PRD NAMES ABOUT ITSELF ONE SECTION EARLIER** (`:226-228`):
+*"an outcome falls between two projects precisely when each document believes the other has it."* **Here BOTH
+carriers claimed it.** Duplication rather than a gap -- **same class, same invisibility to every gate.**
+
+⭐ **AND THE SECOND, INDEPENDENT, CHEAP CHECK IS THE ONE WORTH KEEPING: R12 WAS THE ONLY MANIFEST ROW WHOSE
+`serves` COLUMN NAMED NO FWD.** R1-R11 each serve at least one. The preamble says *"Each row is a surface a cell
+will build"* -- so R12 authorised **a cell with no outcome behind it**, in a project whose L10 closes only when
+every FWD grades REALIZED. **A structural tell needs no argument: one column, one blank.**
+
+**REMEDY TAKEN: R12 MOVED TO THE ADDENDUM.** The manifest is now **ELEVEN rows**. Two remedies were offered and
+either would have cleared the contradiction; this one was chosen on three grounds:
+
+1. **The three items serve O12, which the SIGNED ratified half places wholly with the addendum.**
+2. **Substantively they are PRODUCER-METHOD artifacts, not corpus measurements.** This project's artifacts are
+   MEASUREMENTS over the library -- templates, fund forms, typecast, continuation. **The lifted skill, the message
+   design and the cost card are all about how the producer WRITES, which this project explicitly does not do.**
+3. ⭐ **DECISIVE ON COST: the alternative amends `:210`, which is in the RATIFIED half the CVO has already SIGNED**
+   -- making that signature stale and costing a second review cycle. **This remedy touches only the BRIEF half,
+   which is already refused and must be re-issued regardless. One half-review instead of two.**
+
+⚠ **THE DISCLOSED CONFLICT, ADDRESSED RATHER THAN INHERITED.** `2.0.0_SA_COO~Z` disclosed that its preferred
+remedy **moves work TOWARD `AMGT_RESAPP`, which it drives**, and therefore stated the other remedy as equally
+sufficient. **I took the remedy that favours the discloser's project** -- so: grounds 1 and 2 were reached on the
+merits before the cost argument, and ground 3 is what makes it decisive. ⭐ **The disclosure is what allowed this
+to be weighed rather than discovered, and it is the reason the refusal can be adopted whole.**
+
+**O4 and O13 were CLEARED as FAITHFUL, not readings** -- the brief's own met-condition for O4 joins both halves
+with *"and"*, and O13 names resolution, induction and printing the unresolved **in one sentence**. **The splits
+follow the brief's own commas.**
 
 ### The problem, in Andrew's and the team's terms
 
@@ -316,7 +357,11 @@ builder ARGUMENTS only.
 | R9 | generic model typecast | harvest / gold / research-model-typecast, one object | FWD-7 |
 | R10 | the one-call substrate read by security key | a read path over R1-R9; no new store | FWD-8 |
 | R11 | the read-only proof (negative control + code census) | a ledger record, no store | FWD-9 |
-| R12 | the lifted equity-research skill artifact, the message design and the cost card | repo documents under this project's home | (method; feeds the addendum) |
+**ELEVEN ROWS. R1-R11 above, and every one names at least one FWD in `serves`.**
+
+⛔ **R12 IS REMOVED IN v0.3 AND MOVED TO THE `AMGT_RESAPP` ADDENDUM.** It read *"the lifted equity-research skill
+artifact, the message design and the cost card | repo documents under this project's home | (method; feeds the
+addendum)"* -- and it was the **ONLY** row whose `serves` column named no FWD. See the v0.3 change note.
 
 ---
 
