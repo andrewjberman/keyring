@@ -1,37 +1,47 @@
 # IRPT P status - 2026-09-22
 
-## Current Opal local integration - 2026-09-23 15:15 UTC
+## Current Opal local integration - 2026-09-23 15:24 UTC
 
-Backend source6070889b29 incorporates custody4911, Y consumer04ac, adopted
-organization readerbc3727, scalar-only projection correction48946e7972, and
-original Y SDK reproducer02501a68ec. Portal e0531491 follows strict parser910ebf36
-and regenerates the custody composition wire from the unchanged closed backend
-schema (TypeScript build passes). No cloud changes or publication in this repair.
+Source e47aed7f71 integrates exact Y factory819c9e3990 and its separate evidence
+history4be8608939, corrected scalar organization reader48946 and custody4911.
+Portal e0531491 follows strict parser910ebf36 and regenerates custody composition
+wire (TypeScript build passes). All source remains LOCAL; no cloud mutation.
 
-The reader correction preserves all eight exact metadata values and fixes the
-closed scalar projection mismatch. Focused reader/custody74 tests pass. Literal
-original SDK reproducer gives10 passes and10 setup errors because its assertion
-requires the superseded nested metadata object; this is not consumer success.
-Y reports20 passes after changing only that assertion to all eight scalar values.
-CTO151143 admits that test-layout adaptation with unchanged negative controls;
-exact committed handoff and independent CVO Y review remain pending.
+Measured here after source integration: actual guarded Entry/SDK retained suite
+30 PASS; full generation/intake265 PASS and50 subtests. Original02501 failure
+and obsolete-layout setup-error evidence remain preserved in Y handoff.
+The factory tests use synthetic storage/current source, SDK Stubber and pre-held
+lease; these counts are not live generation, queue delivery or producer proof.
+CTO151854 relays Andrew's direct review arrangement: CTO reviews this work;
+there is no wait for separate CVO approval.
 
-Declared local package candidate adds missing current scope/selection/custody
-modules, directory contract, narrative keys and generation submission dependency.
-All seven immutable flat packages pass closure and isolated entry cold import;
-OPAL_PACKAGE_EVIDENCE_20260923.json records source6070889b29, manifest digest,
-member pins and hashes. Published artifact hashes are unchanged. This proves
-imports only, not installed factory, AWS invocation or end-to-end generation.
-Reproduce: python verify_opal_packages.py --repo <backend> --out <receipt.json>.
+The expanded generation declaration has73 members, including all29 factory
+modules and published schemas. Exact handoff hashes match every factory module.
+All seven flat packages pass canonical import closure and isolated entry import;
+the generation factory also constructs from the flat package with a real stubbed
+SDK and synthetic refusing source ports. Native files remain native; only
+external sources use staged_from, preserving canonical builder cleanup behavior.
+OPAL_PACKAGE_EVIDENCE_20260923.json pins source, manifest and member hashes, plus
+deterministic source-only archive hashes. These local archives are NOT deployable
+runtime artifacts. Published artifact hashes remain unchanged.
 
-Y owns the new request-local custody factory. Exact factory module/configuration
-handoff and current snapshot authorization/normalized holdings source binding
-remain open. Existing generate role has no Opal profile-table read grant; actual
-preparer role and bounded IAM declaration must follow concrete runtime binding.
-Prospect authority and vendor consent remain unchanged. All broader release and
-independent review requirements remain in force. Historical checkpoints below
-are scoped to their recorded pins and do not supersede this checkpoint.
+Concrete unresolved installation boundaries:
+- M source handoff abfb3eaf82 establishes absent exact current snapshot-owner and
+  accepted normalized custody adapters. Same-day publication changes and selected
+  projection hashes cannot silently substitute for accepted snapshot identity.
+- COT/INF display builders have no SECURITY construction;49F allocation positions
+  do not establish complete actual custody census. Never substitute model/target
+  leaves or abs/drop signed positions to satisfy Y's positive-only freezer.
+- The canonical files-only builder does not install jsonschema/referencing and
+  their dependencies. Local factory import uses host Python packages; it does
+  not establish deployed Python3.12 dependency completeness.
+- Actual preparer role/IAM, concrete source ports, explicit packaged settings/
+  template paths and nonempty comparison source remain required for activation.
 
+CTO received the exact producer/cause and packaging gaps152224. P retains shared
+integration; Y owns normalization semantics. Runtime source ports remain
+unconfigured/fail-closed pending concrete accepted inputs. No production or
+overall completion claim. Historical checkpoints below retain their own scope.
 
 ## Acceptance integration candidate - 2026-09-23 02:13 UTC
 
