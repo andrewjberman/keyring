@@ -1,6 +1,6 @@
 # IRPT P -- current status
 
-Seat2.0.0_SA_COO~P. Live-first5edf991c06; full-access5ad99c7d30; staging18e2835c5f/applye186d7ea22. CTO direct reviewer. As of2026-09-23T18:08Z.
+Seat2.0.0_SA_COO~P. Live-first5edf991c06; full-access5ad99c7d30; staging18e2835c5f/applye186d7ea22. CTO direct reviewer. As of2026-09-23T18:18Z.
 
 ## Live first hop
 
@@ -10,15 +10,17 @@ Exact saved plan c5ef7ef7357ad194bdc38dabd827dd170cc5544e923fd573cb9436c0d40348c
 
 ## Canonical recording blocker
 
-Ledger4917bed568 irpt-directory-bootstrap-20260923 remains OPEN. Staging, exact plan and Lambda deployment legs proven; V1 recorder and B1 remaining journey proof open. Scoped canonical recorder stamped1/9 correctly then widened CHANGELOG/reconcile to5functions9artifacts and modified unrelated irpt-ycharts-generate hash. Interrupted before commit, child processes quiescent. Partial outputs, diff and audit preserved in.runtime/directory-review/recorder-*. No broadened record committed or bypass used. CTO175051 confirmed defect and routed canonical repair to MSTR. CTO5cc9fa65e4 containment completed: sole accidental Y artifact hash restored to pre-recorder value, all other bytes unchanged. RECORDER_CONTAINMENT_20260923.json pins proof. Canonical recorder repair remains pending; no reset/erasure/manual record.
+Ledger4917bed568 irpt-directory-bootstrap-20260923 remains OPEN. Staging, exact plan and Lambda deployment legs proven; V1 recorder and B1 remaining journey proof open. Scoped canonical recorder stamped1/9 correctly then widened CHANGELOG/reconcile to5functions9artifacts and modified unrelated irpt-ycharts-generate hash. Interrupted before commit, child processes quiescent. Partial outputs, diff and audit preserved in.runtime/directory-review/recorder-*. No broadened record committed or bypass used. CTO175051 confirmed defect and routed canonical repair to MSTR. CTO5cc9fa65e4 containment completed: sole accidental Y artifact hash restored to pre-recorder value, all other bytes unchanged. RECORDER_CONTAINMENT_20260923.json pins proof. Bounded recorder support order45a93c3ae9 issued to exact CloudOps~O and delivered20260923T181819Z through canonical send guard. Offline fix/regression/recovery proposal only; direct CTO review before recording. Canonical recorder repair remains pending; no reset/erasure/manual record.
 
 ## Full-access source
 
 - P trusted viewer9a3ec2a11f:8source controls.
 - P explicit storage placement dd6edfc3aa:49tests PASS including8 real viewer/repository/retention controls. data_firm get/list/head/require_live/promote; actual viewer and frozen owner distinct.
 - P shared Entry4ec461a2e9:59tests+12subtests PASS including10 actual Entry controls. current_owner is actual viewer, prospect_owner stored/create owner. Final actor/owner rechecks retained.
-- Exact Y85af/4ea/104 deltas tested locally:485PASS+50subtests, zero skips; commit blocked by P-on-Y owned-path gate, routed CTO without bypass.
+- Exact Y85af/4ea/104 deltas tested locally:485PASS+50subtests, zero skips; integration committed03de809d50 under exact CTO7019d61360 grant consumed via safe-merge82cd5f5b9a; no ownership override. Prior gate refusal resolved.
 - P37526d36ae dual-owner schema/validator50PASS; standalone generation212PASS+32subtests after change. Broader legacy paired-seam suite has30 failures, retained in ACCESS_INTEGRATION_20260923.md. Y/M paired dual-owner factory proof pending.
 - ACTING_SUBMITTER_CONTRACT_20260923.md defines explicit resolved.input_owner versus actual request owner for new submissions of other-creators retained input. Y/M consume; no reupload or impersonation.
 
 These source changes are not in the deployed bootstrap ZIP. All source admission/runtime packaging/deploy gates remain applicable. Maintained-profile/multi-firm composition gaps remain bounded owned work, no unrelated producer restart. No additional cloud mutation or promotion is authorized.
+
+Y181259 reports20 dual-owner actual factory/retention/replay/dispatch controls PASS with P37526+M485b; exact new source handoff awaited, not P-verified yet. M source integration pending direct CTO review. No new cloud action.
