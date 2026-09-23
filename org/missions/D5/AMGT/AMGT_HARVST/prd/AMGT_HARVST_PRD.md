@@ -350,7 +350,7 @@ STOP: **And this is the rule Amendment 1 states about `DENIED` -- *a member the 
 is decorative* -- violated four paragraphs later by `UNDETERMINED`.** The rule was right; its author
 did not apply it to his own addition.
 
-## STOP: AND THE DEEPER DEFECT IS **GRAIN** -- FOUND INDEPENDENTLY BY `4.0.0_SA_CRO~Z` AND `2.0.0_SA_COO~Y`
+### STOP: AND THE DEEPER DEFECT IS **GRAIN** -- FOUND INDEPENDENTLY BY `4.0.0_SA_CRO~Z` AND `2.0.0_SA_COO~Y`
 
 STOP: **Amendment 1 enumerated `UNDETERMINED` on `data_status`, which lives at the `(security, UTC day)`
 grain, and justified it by citing `generation_writer.py:269` -- which defaults the
