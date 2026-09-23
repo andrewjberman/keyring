@@ -37,6 +37,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "An overdue half re-routes to a live alternate reviewer, so a PRD cannot stall on one unavailable seat.",
     "world_is": "The trigger's instrument answers a question adjacent to the one asked -- is the process alive, not is anyone reading -- so a heartbeating, non-consuming seat holds a half indefinitely and nothing fires.",
     "notes": "THE DISCRIMINATOR IS CHEAP AND NOBODY WAS RUNNING IT: read/ EMPTY with a NON-EMPTY top level. Liveness is a heartbeat; read/ is consumption. A staleness trigger reads the second. ⚠ A row records the defect; it does not build the fix -- the trigger is fabric machinery outside this project and outside any AMGT lane, so its owner is the fabric's, not this project's, and no gate is built here. The immediate block was cleared by hand (1.0.0_SA_CTO~Z re-routed the brief half to 2.0.0_SA_COO~Z under the spine's own 'or a live COO in their stead'), which closes THIS instance and leaves the mechanism open. Seating of 4.0.0_SA_CRO~G is 0.0.0_AB_MSTR~Z's."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S2",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-23T01:25Z",
+    "one_line": "Extends S1: across TEN L4-R deliveries the notifier re-served the SAME PRD COORDINATES -- v0.1 @03918b5b3e with brief_ref @42c05cd8a8, the pin that returns rc=128 and is the exact defect v0.1 was REFUSED for -- so the machinery spent the night re-advertising a superseded PRD via a pointer that errors.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured by this seat over org/mcp/inbox/4.0.0_SA_CRO/~G/: 10 L4-R notices from 20:00:43Z to 00:51:23Z; the first and last carry IDENTICAL coordinates -- prd_version v0.1, commit 03918b5b3e..., brief_ref docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md@42c05cd8a8.",
+        "git cat-file -e 42c05cd8a8:docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md -> rc=128, 'exists on disk, but not in 42c05cd8a8' -- re-verified here; this is R1 of the v0.1 ratified-text refusal (@2ded8cf4ae).",
+        "The current PRD is v0.2 @8a88326c3e, whose ratified-text half this seat SIGNED (half hash 4329ac0b64ca) and whose brief_ref is the corrected @6c52138c2f (36,007 bytes)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A delivery names the artifact a reviewer is being asked to review, at its current bytes.",
+    "world_is": "It names a superseded version and a pointer that errors, while prd-signoff stamps HEAD -- so a reviewer who followed the notice would hit an already-fixed defect and then sign different bytes than the ones it read.",
+    "notes": "TWO PRECISIONS ON 1.0.0_SA_CTO~Z's msg 24497, measured here rather than restated. (1) It is the COORDINATES that are frozen, not the whole payload: the REVIEW notices carry 6 DISTINCT md5s, so other bytes do move while version, commit and brief_ref do not -- which is why ten deliveries never looked stale. (2) ⚠ I CANNOT SOURCE THE OVERDUE COUNTER AND SO I ASSERT NOTHING ABOUT IT: the 00:18:34Z notice reads 'owed for 69 minutes' and the 00:51:23Z notice ALSO reads 69, 33 minutes later; msg 24497 reports 124 at 01:14Z. Owed-since ~20:01Z would give 137 / 170 / 193. The figure is neither monotonic nor anchored to any origin I can identify. It is recorded as an OPEN QUESTION, not a second defect -- asserting a defect from a number I cannot source is exactly tonight's pattern, and this row will not add an instance of it. Owner of the notifier is the fabric's, not this project's; no gate is built here."
   }
 ]
 ```
