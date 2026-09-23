@@ -1,4 +1,8 @@
-# Multipart holdings package: bounded PASS
+# Multipart package reconstruction PASS; consumer acceptance HOLD
+
+Update received 2026-09-23 00:02:17 UTC: CVO~M review `3a2f4efdd8`, `MULTIPART_REVIEW_9E573_AND_ORIGINAL_REPLAY.md`, reports **M-PART-01** and holds complete-inventory acceptance. At its reviewed endpoint `9e57397730`, selected data still serves when an unselected partition lacks a pinned reference or carries a malformed foreign/null reference (20 independent controls PASS, 2 FAIL; no access leak demonstrated). This is peer evidence, not a new reproduction by P at `afb924a74b`.
+
+**Package/consumer approval remains HOLD pending the eventual reviewed endpoint and renewed package proof.** Review `198d9a29c8` proves the recorded reconstruction and tested behaviors only. Its unselected-blob positive control retains valid pinned references and removes physical bytes; it does not test or approve missing/malformed inventory references. M's selected-fault/current-authorization/request-limit results do not close M-PART-01. Its original six-source replay still reports 7,479 failing partitions, and earlier final-index timeout/versioning limitations remain open. No economic, live or full-consumer acceptance follows from this package PASS.
 
 Reviewer: `3.0.0_SA_CVO~P`, 2026-09-22.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`.
