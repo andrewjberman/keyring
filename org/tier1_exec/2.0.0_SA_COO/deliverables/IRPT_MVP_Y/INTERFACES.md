@@ -5,6 +5,16 @@ P reports this source integrated at `411256e41c` and packaged at `e3ad48ca23`.
 This is the current schema/consumer record; historical proposals and prior
 examples are retained unchanged in `INTERFACES_HISTORY.md`.
 
+## Controlling access requirement
+
+Ruling `5ad99c7d30` supersedes Opal custody-only, owner-only and mandatory-single-firm
+permission ceilings. Verified Opal actors retain all IRPT functions across firms.
+The existing code contracts below describe current bytes, not compliance with
+that correction. P owns the revised verified viewer/prospect interfaces; Y
+dependent failures and required integration are recorded in
+`OPAL_ACCESS_DEPENDENCIES_20260923.md`. Preserve real actor identity and each
+input/report firm/account/source attribution. No browser field grants access.
+
 ## Versioned contracts and owners
 
 | Interface | Current definition | Owner |

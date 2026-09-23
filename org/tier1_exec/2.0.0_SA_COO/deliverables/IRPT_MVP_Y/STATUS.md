@@ -47,6 +47,16 @@ Real backend, real data and real login are required; frontend may be local or DE
 
 Offline-only work grades no acceptance ID until the live thread is live.
 
+## Current access correction
+
+Controlling ruling `5ad99c7d30` grants verified interactive Opal users all IRPT
+functions across firms; Global/firm selection filters inputs/views, not authority.
+P owns shared enforcement; Y has reproduced a pre-authorizer foreign-owner
+request denial and identified prospect/upload/freezer dependencies. See
+`OPAL_ACCESS_DEPENDENCIES_20260923.md`. Current code is NOT certified against
+this corrected access requirement; historical denial tests must change. Ordinary
+firm restrictions, forged-identity refusals and immutable attribution remain.
+
 ## Write claims
 
 No active code edits. Y retains intake/portfolio and custody consumer/factory
@@ -59,15 +69,18 @@ write claim is acquired by the law notice.
 Under CTO sequencing ruling `5edf991c06`, P measures/fixes the real login ->
 auth/scope/bootstrap -> real firm/investor data -> screen path at localhost5174,
 recording exact served revisions and a sanitized failing boundary. Y's next
-proof is limited to reproducing and fixing a concrete first-hop dependency
-identified by that trace. None is currently assigned to Y. Deeper custody
-consumer/package review is parked; no new offline tranche is opened.
+proof is the verified-Opal prospect and other-owner reader path under the
+shared interface P supplies for the access correction. The concrete owner and
+prospect blockers are recorded in `OPAL_ACCESS_DEPENDENCIES_20260923.md` and
+sent to P. Consume the exact shared pin, then fix owned consumers and tests.
+Deeper custody source/package work remains parked.
 
 ## Dependencies
 
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
 | First live auth/scope/bootstrap hop | COO~P | Contract v1.3 section 0 | AWAITED live proof |
+| Full-access viewer/prospect authority | COO~P | Controlling `5ad99c7d30`; exact interface requested | AWAITED |
 | Paired private reader | COO~P / COO~M | `e36b007fa1`, accepted-custody-input-v1 | CONSUMED offline |
 | Integrated package review | CTO / COO~P | P evidence `b639e430d0`, package `e3ad48ca23` | PARKED under `5edf991c06` |
 | Actual economic/source evidence | COO~M / COO~P, CTO interpretations | Mandatory reader economic ports | BLOCKED on real capability |
