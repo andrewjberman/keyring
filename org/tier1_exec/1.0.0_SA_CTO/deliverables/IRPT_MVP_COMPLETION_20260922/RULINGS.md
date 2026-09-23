@@ -528,3 +528,28 @@ CTO direct review d3a8c3e7e3: bounded source PASS; seven isolated persistence ca
 ## IRPT-HOLDINGS-READER-APPLY-20260923
 
 CTO grants P bounded GO for exact saved ca2a907770c081a244cb1eddc854db95cdb80523655989093264c9e20f905301 plan only. HOLDINGS_READER_PLAN_REVIEW.md/JSON carry artifact bcb3fb71, immutable version, exact pre/postapply conditions and independently exercised native read. One create/three updates/no destroy, read permissions only. Deferred artifact lookup requires exact version/hash guard; drift stops closure. M retains real authenticated API/browser proof.
+
+
+## IRPT-TAX-SILVER-SEAM-20260923
+
+CTO inspected gateway app/taxsma_workbook.py@6abf60e5d5 and the current Silver
+consumer: _snapshot emits seven flat business fields alongside row metadata,
+while _typed_row requires nested business and refuses that producer shape. The
+current synthetic Silver fixtures manufacture the nested object. used_rows in
+the canonical producer includes the header, so complete data rows equal used_rows-1.
+This is a concrete adapter mismatch on the authorized Tax Holdings thread.
+
+M is sole writer for exactly data/mdpf/scripts/silver/taxsma_workbook.py and
+data/mdpf/tests/taxsma/test_taxsma_workbook_silver.py under IRPT_TAX_MEMBERSHIP_M,
+recorded in .owned-paths.yaml in this same commit. Consume actual canonical flat
+rows, preserve original Bronze bytes/digest and all seven typed business columns,
+row metadata and full census. Explicitly refuse incomplete/mixed/contradictory
+shapes rather than silently choose one. Any retained nested-fixture compatibility
+must be explicit and unambiguous; do not claim that compatibility proves the
+production seam. Validate the actual producer output through the Silver boundary
+with one focused positive and malformed/partial negative controls. No broad suite.
+
+This adds only the necessary Silver adapter/census and tests to the existing
+bounded one-shot runner preparation. Do not change Gateway, manufacture a new
+Bronze envelope, backdate observation, schedule the full pipeline or perform a
+vendor/cloud write. Return the pinned repair and exact runner/runtime plan.

@@ -54,7 +54,7 @@ lanes:
   IRPT_TAX_MEMBERSHIP_M:
     permitted_agents:
       - 2.0.0_SA_COO~M
-    description: "CTO bounded IRPT Tax dependency grant 2026-09-23 under Andrew Tax B and worker-fork delegation. Only exact membership module/test below; M is sole writer. Narrows former data/** ANY for these two files. Existing local semantics retained; implement production store only, no full MDPF_TAXSMA round, schedule, gateway deployment or live activation."
+    description: "CTO bounded IRPT Tax dependency grant 2026-09-23 under Andrew Tax B and worker-fork delegation. Only exact membership and Silver module/test rows below; M is sole writer. Narrows former data/** ANY. Production store and actual gateway-to-Silver flat-row repair only; no full MDPF_TAXSMA round, schedule, gateway deployment or live activation."
 
 
   NAMING_LEGACY_READ_AUTHORITY:
@@ -1056,6 +1056,12 @@ lanes:
     description: 'Project tree, deliverables/<SERIAL>/** -- NOBODY by enumeration. The owner is in the PATH (s.6 option ii, RULED): owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it). A file directly under deliverables/ with no serial folder is refused -- the convention is the gate.'
 
 paths:
+  "data/mdpf/scripts/silver/taxsma_workbook.py":
+    lane: IRPT_TAX_MEMBERSHIP_M
+    note: "CTO IRPT-TAX-SILVER-SEAM-20260923: consume exact canonical flat rows with original Bronze intact and full census; no live activation."
+  "data/mdpf/tests/taxsma/test_taxsma_workbook_silver.py":
+    lane: IRPT_TAX_MEMBERSHIP_M
+    note: "CTO IRPT-TAX-SILVER-SEAM-20260923: focused real producer-to-consumer contract checks; no vendor call."
   "data/mdpf/scripts/gold/taxsma_membership.py":
     lane: IRPT_TAX_MEMBERSHIP_M
     note: "S3DispositionStore implementation and directly necessary serialization helpers only; current IRPT dependency; no mutation of ratified business/date semantics."
