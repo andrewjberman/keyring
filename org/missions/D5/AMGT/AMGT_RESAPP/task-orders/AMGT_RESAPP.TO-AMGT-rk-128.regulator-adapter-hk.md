@@ -148,7 +148,31 @@ wired; its key is empty on 0 of 96; the key is WRONG in principle; the ownership
 contract; and this seat's own coverage number was wrong by 9x (right field name, wrong DEPTH). **Each would have
 cost a round. The whole finding was four reads, no worker and no worktree.**
 
-<status>superseded</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-23 (post-drain @5f007c467f).** Flipped by the ISSUER as s.5
+instructed -- the paths grant does not name task-orders/ and the worker correctly left it alone. All six criteria
+PASS, proof-of-spec rc=0, 111 tests pass in the MERGED shared tree. VERIFIED ON THIS SEAT OWN INSTRUMENT:
+build_battery_source_object takes no bronze_sink, so AC0 answer NO holds and Rule 30 never fired; step 5 widened
+to (keys, run_date, http_get, timeout) dispatching on the RECORD-LEVEL exchange field; steps 1-4 signatures
+byte-identical at :718, :796, :900, :1007.
+
+THE CELL REAL RESULT: the adapter does NOT resolve a filing. The live HKEXnews fetch returned HTTP 200 with
+recordCnt 0. So the three things this cell was cut to unblock are NOT unblocked -- the filings stage is still
+UNRESOLVED, rk-127 marker still has no run to produce it, and rk-49 still has no verified site. THIRD half-fix in
+six rounds, labelled as one. Row Z-W128-S1 (ARMED) is the part not to soften: 0 records under EVERY parameter
+combination tried, so the next attempt is a RESEARCH question about the HKEX interface, not a tuning pass.
+
+ORDER DEFECT, MINE: this order carries SEVEN criterion blocks and SIX distinct ids -- a duplicate AC1, added when
+editing and never removed. Row Z-W128-S2 records that proof-of-spec-check collapses same-id blocks to the
+last-declared one, grading six at rc 0, while the issuance gate NOTE printed seven. Two tools, two denominators,
+neither flagging the disagreement. The blocks are LEFT AS THE WORKER WAS GRADED AGAINST THEM: mutating a closed
+order changes what the instance was graded on, which is the same class as editing a history entry in place.
+
+AND A SECOND DEFECT, ALSO MINE: an earlier draft of this note QUOTED THE CRITERION TAG LITERALLY, and the gate
+parser read that prose quote as an additional criterion block -- which is what refused the flip twice. I
+misdiagnosed it as a frozen-instance deadlock and told three seats so. A status-only edit committed cleanly. The
+tag is deliberately NOT quoted here.
+
+<status>complete</status>
 <round>35</round>
 <slot>~128</slot>
 <fabric>site-z</fabric>
