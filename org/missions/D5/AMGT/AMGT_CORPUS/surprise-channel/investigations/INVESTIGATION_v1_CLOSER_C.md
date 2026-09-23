@@ -45,6 +45,28 @@
     "spec_asserts": "FWD-2 requires a security query to return reports in period order; C02 requires period reconciliation.",
     "world_is": "All 123 admitted lineages match, but the format prefix FY defeats chronological ordering; the checker mirrors the same lexical premise.",
     "notes": "CTO 24824 policy implemented in candidate: declared year and comparable-unit sequence, stable or explicit filing-date rendering for incomparable periods, separate tie evidence, independent all-pairs validator. Five regression controls pass including the planted 2026-before-FY2025 reversal and a Q3/FY/Q1 inversion. Candidate remains subject to independent review; no dates or identities are invented."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S7",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-23T17:36:00Z",
+    "one_line": "H independently reproduced scanner false negatives in lambda/class scopes and parameters shadowing safe globals at d382f2a30e.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "H review b04336c4d8: REVIEW_C_d382f2a30e.md/json and review_c_candidate.py in AMGT_HARVST_CLOSER_Y_20260923.",
+        "New test_nested_scopes_and_parameter_shadowing_fail_closed reproduces the three reports and related closure/argument cases; corrected focused suite38PASS, full corpus149PASS."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The C01 static instrument counts library-directed write calls across corpus Python source, including ordinary lexical scopes.",
+    "world_is": "The original scanner skipped lambda and class bodies and inherited safe globals over same-named parameters. Zero reported writes was therefore insufficient evidence despite passing producer tests.",
+    "notes": "Original static-census zero-write claim withdrawn. Candidate visits module/function/async/class/lambda scopes, carries lexical closures while skipping class bindings for methods, and treats all parameter kinds as unknown even when defaults/globals are safe. Local assignments start unknown. Thirteen new controls pass. Corrected producer census28files/27write-like/0library requires H re-review; copied-library execution and period-order evidence remain separate. No actual source-library mutation inferred."
   }
 ]
 ```
