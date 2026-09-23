@@ -1,6 +1,6 @@
 # AMGT EXPERIENCE + SERVED RUNTIME
 
-Seat `2.0.0_SA_COO~Z` (Codex). Contract `AMGT_COMPLETION_20260923/CONTRACT.md` v1.0 at `0e33cea24b`. Reviewer `3.0.0_SA_CVO~Z`. As of 2026-09-23T20:57Z.
+Seat `2.0.0_SA_COO~Z` (Codex). Contract `AMGT_COMPLETION_20260923/CONTRACT.md` v1.0 at `0e33cea24b`. Reviewer `3.0.0_SA_CVO~Z`. Updated after independent exact-package review, 2026-09-23.
 
 ## Pins
 
@@ -19,26 +19,26 @@ NOT_EVALUATED by this session. Operator-reported Boeing render is not independen
 
 ## Acceptance IDs
 
-E0; L1-L4, W1, F1, T1, M1, P1, N1, O1; R1-R4: NOT_EVALUATED. No implementation or independent artifact acceptance has yet been claimed by this session.
+E0; L1-L4, W1, F1, T1, M1, P1, N1, O1; R1-R4: live acceptance NOT_EVALUATED. Exact no-span repair artifact independently accepted within `NEVERWIDEN_COO_HALF.md`: 76 focused tests passed, all 12 exact retained versions replayed, 210 served / 179 held / zero spanless served, source hashes unchanged. This is not deployed or browser acceptance.
 
 ## Write claims
 
-Only this `deliverables/AMGT_EXPERIENCE/` evidence home is being written. No edits to another seat's active worktree. Price handback is awaited before editing `lib/research/price/**`.
+Only this `deliverables/AMGT_EXPERIENCE/` evidence home is being written. No edits to another seat's active worktree. Y froze Price edits and supplied immutable patch blob `5969b4bc5e12feb660c946399cf1436c77132321`, SHA256 `c823c390ba2896fe4c472b3d4a03b0a32fb439f475fa9c4f498f97d03dab65ce`; normal handback commit still awaited before editing Price. R9 at `3c7fa06601` ratifies the ownership return.
 
 ## Next proof
 
-Independently verify the exact Lambda repair ZIP, two-function delta, both consumers, present/absent-span controls and failure handling; record a bounded COO never-widen decision. This incident repair is prerequisite to admissible live acceptance, not the whole product.
+Deliver the signed exact-package review to CVO and R, then capture the real E0 route/backend/render trace and integrate the frozen Price and corpus handoffs. The incident repair is prerequisite to admissible live acceptance, not the whole product.
 
 ## Dependencies
 
 | Need | Owner | State |
 |---|---|---|
 | Direct session closer authority | User | RESOLVED; verbatim record in AUTHORITY.md |
-| Exact repair and package | `4.0.0_SA_CRO~Z` | Received; independent review IN_PROGRESS |
-| CTO half | `1.0.0_SA_CTO~Z` | Amendments `83e9f90be5`, `3b4083a685`; review pending |
+| Exact repair and package | `4.0.0_SA_CRO~Z` | Independent exact-package review PASS; COO half signed |
+| CTO half | `1.0.0_SA_CTO~Z` | Amendments `83e9f90be5`, `3b4083a685` accepted by bounded COO half |
 | Cutover acceptance | `3.0.0_SA_CVO~Z` | After the pair; no deployment authorization inferred |
 | Real permitted admin + Dev browser identity | User / existing portal session | Not yet exercised; latest ruling reports operator render |
-| Price loan handback pin | `2.0.0_SA_COO~Y` | AWAITED on activation |
+| Price loan handback pin | `2.0.0_SA_COO~Y` | Frozen patch received; final handback commit awaited |
 | Corpus integration | `2.0.0_SA_COO~X` | Producer `4599b05795`; patch not yet reviewed or integrated |
 
 ## Parked
