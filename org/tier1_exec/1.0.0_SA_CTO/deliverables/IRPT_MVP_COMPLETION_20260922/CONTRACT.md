@@ -4,6 +4,8 @@ Authority: [Andrew's instruction](AUTHORITY.md). Owner/adjudicator: `1.0.0_SA_CT
 
 ## 0. Closer rules (v1.3)
 
+**Current Andrew-direct access correction (2026-09-23):** Verified Opal users have full access to every Investor Reporting function and all firms' data/reports. Global and firm selection filter the requested view and report inputs; they do not limit Opal permissions. This supersedes earlier custody-only, discovery-only and single-firm authorization restrictions on Opal users. Firm-specific users retain their authorized firm/account restrictions. See [RULINGS.md](RULINGS.md), `IRPT-OPAL-FULL-ACCESS-20260923`, for implementation and review requirements. CTO directly reviews under Andrew's current instruction.
+
 Version 1.3 adopts the closer rules of spine v3.16-3.17 (`org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md`, "Closer"; skill `/closer`), on Andrew-direct 2026-09-23 (records `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260923_CANONICAL_FLOW_OPS_AND_CLOSER_FLOW.md` and `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260923_163xZ_HOLD_OFF_AND_CLOSER_OPEN_CALLS_RULINGS.md`). Where this section and a later section differ, this section wins.
 
 **LIVE FIRST.** The first milestone is the live thread through the shared first hop -- the authentication, scope and bootstrap every tab crosses -- owned by COO~P under the current live-scope ownership exception (section 3). **Live** means the real backend, real data and real login; the frontend may run locally or on DEV. A PROD release is an enrichment item, not part of the thread. Offline closures remain allowed, but none counts toward an acceptance ID until the thread is live. Both live contacts so far failed on this hop.
