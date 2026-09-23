@@ -50,8 +50,7 @@
     "original_parser_assertions": 53
   },
   "open_findings": [
-    "Actual accepted-input/readback binding and full worker assembly remain incomplete",
-    "Maintained-source acceptance integration and independent review pending"
+    "Actual accepted-input/readback binding and full worker assembly remain incomplete"
   ],
   "limits": [
     "All14 integrated Y/S criteria NOT_EVALUATED",
@@ -59,7 +58,7 @@
     "Recovery stage remains CERTIFYING and does not write READY",
     "AWS effects and replacement leases are simulated, not server-expression/concurrency evidence",
     "No browser/current-service/export/session/vendor/policy activation",
-    "P canonical composition contract consumed; M actual resolver and full composition integration pending",
+    "M/P primitives and retained acceptance composed offline; installed canonical reader transport/runtime assembly unproven",
     "LOCAL only; no push or deployment"
   ],
   "merged_wire_and_recovery_review": {
@@ -83,6 +82,28 @@
     "selected_candidates": "UNVERIFIED and unavailable",
     "ui_tests_pass": 16,
     "ui_assertions": 87,
-    "ui_shared_adapter_integration": "PENDING"
+    "ui_shared_adapter_integration": "7411ada3 consumed via303d3fde; current UI7a5b24e7 independent repair retest pending"
+  },
+  "current_candidate": {
+    "backend": "5a2b531645",
+    "portal": "7a5b24e7",
+    "M_resolver": "703e82ea01",
+    "M_merge": "48f04a00eb",
+    "P_portal": "7411ada3",
+    "P_portal_merge": "303d3fde",
+    "acceptance_tests_pass": 60,
+    "acceptance_subtests_pass": 39,
+    "acceptance_independent_review": "1ebdadd0d4: bounded28 independent /60 supplied39subtests PASS; mocked acceptance/dispatch and synthetic readers",
+    "UI_base_tests_pass": 31,
+    "UI_base_assertions": 177,
+    "UI01_repair_unchanged_probe_tests_pass": 9,
+    "UI01_repair_assertions": 48,
+    "UI01_independent_closure": "1ebdadd0d4 CLOSED exact7a5b24e7: unchanged9 controls48assertions; supplied31tests177assertions and app TS PASS",
+    "UI01_initial_review": "c387a06e2d; 8 PASS / 1 FAIL / 47 assertions at5c935bd6"
+  },
+  "independent_source_reviews": {
+    "M": "e64d917252",
+    "P": "c5c3393b1f",
+    "Y_recipient_catalogue": "189d81952f"
   }
 }

@@ -653,3 +653,25 @@ entitlement states UNVERIFIED and empty permitted firm/principal classes.
 No new vendor call is authorized. M received exact candidate and title-source
 requirements. UI16 tests/87assertions and explicit app TypeScript PASS; shared
 P adapter pin remains pending. All14 NOT_EVALUATED; local only.
+
+02:17Z update: backend `5a2b531645` consumes M703e82ea01 via48f04a00eb.
+CompositionAdmission plus actual SubmissionService requires closed P schema,
+bindings and normalized-document digest before retained write/accept; replay reads
+stored bytes, owner/browser and declared source dependencies. No profile/settings
+re-resolution. Normalized input AND all source retention refs are collected; stable
+firm/principal and current grants checked.60 tests/39subtests PASS, Ruff/gate6of6.
+Fixtures exercise actual M/P/Y functions with synthetic reader/storage callbacks;
+installed canonical-reader transport and runtime factory are still unproven.
+Old nonretained success fixtures now assert refusal; retained actual-Entry
+false/timeout dispatch tests preserve the acceptance identity. CVO Y review pending.
+CVO M bounded source e64d917252 and CVO P exact schema c5c3393b1f were read fully;
+no independent grade is inherited to this integration.
+
+Recipient/catalogue independent `189d81952f` bounded PASS at70eabdcf/9daa674.
+Portal own907f260f + P7411ada3 via303d3fde + controls5c935bd6 passes31tests/
+177assertions and app TypeScript. CVO UI review found Y-UI01 P2: late custody
+response for recipient A overwrote newer B status. Exact repair `7a5b24e7` binds
+response to latest sequence/current composition and hides unrelated saved jobs.
+Original CVO probe unchanged on working repair:9PASS48assertions; appTSPASS.
+Y_UI01_RETEST_WORKING.json is producer evidence only; independent closure pending.
+Full frozen worker/cover/readback/export/runtime assembly and all14 remain pending.
