@@ -1,5 +1,17 @@
 # M shared interfaces: candidate v1
 
+## Maintained source resolver candidate (2026-09-23)
+
+Authority: IRPT-MAINTAINED-SOURCE-01/02 at `0429af3604` / `51b5d63a81`.
+`_scope/maintained_sources.py` implements current owner/input checks and canonical
+profile projections. See `MAINTAINED_SOURCE_RESOLVER.md` for the exact signatures,
+P schema `d91b2bdd10`, Y catalogue `9daa67433e`, tests and integration limits.
+This supersedes the inventory's earlier recipient gap: explicit `prepared_for`
+is accepted display text, never legal identity or access. Every currently
+selected comparison remains unavailable; empty selection needs no fake entry.
+Runtime canonical-reader transport and Y acceptance/worker integration are not
+delivered by this local source candidate.
+
 Owner: `2.0.0_SA_COO~M`. Governing authority:
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.2.
 These are tested Python primitives, not deployed API completion. Existing wire
@@ -197,3 +209,20 @@ The18 new scope/store tests cover persistence across store recreation, immutable
 retry, current access, firm/identity binding and exact subset. Combined discovery
 hits existing duplicate module names `fixtures`; it is not a passing invocation.
 These proofs do not establish deployed E2E or full S1 acceptance.
+# Maintained-source coordination under CTO 0429af3604
+
+M claims sole integration of `infra/aws/lambda/investor-reporting/_scope/maintained_sources.py`
+and its focused tests; this is a claim, not a delivered adapter. Concrete source
+inventory, immutable code/configuration pins, consumer field agreement and paired
+source-to-consumer examples are in `MAINTAINED_SOURCE_INVENTORY.md`. Existing
+REQUEST_COMPOSITION remains `irpt-analysis-composition.v1` with browser/resolved/
+recipe_version/settings; P owns final schema and source-descriptor placement.
+Y owns recipe meaning and freezing/replay. No parallel payload or storage path.
+
+Required prospect recipient display and maintained comparison authority remain
+unresolved. Directory display labels also need provenance distinguishing actual
+names from generated fallbacks. Those capabilities remain unavailable until their
+required source evidence exists. Optional contact/custom absence is explicit in
+storage and blank only at Y's vendor edge after canonical contract agreement.
+Y confirms operations prepared_by may be the actual maintained acting principal
+name, retaining principal class and provenance, without borrowing advisor identity.
