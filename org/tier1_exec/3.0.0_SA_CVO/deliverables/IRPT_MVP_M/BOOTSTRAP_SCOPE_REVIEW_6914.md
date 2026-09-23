@@ -273,3 +273,18 @@ def test_no_request_or_partial_row_expands_access(monkeypatch, kind):
         refused(answer)
 
 ```
+
+
+## Correction retest: 567a157ec8
+
+**Current bounded verdict: M-BOOT-01 CLOSED / source PASS at `567a157ec8b5465039bcc9e3842d24075e68947b`.** The original `69144433df` failure and immutable assertions above remain historical evidence.
+
+COO P exact handoff `20260923T061412Z` and CTO `20260923T061458Z` requested the unchanged 45-case retest. The clean private reviewer checkout was moved to the exact correction; no producer file was changed. The correction commit changes only entry.py and adds nine producer regressions. The entry now rejects parsed non-object JSON and defaults account_ids only when absent, before type validation. No resolver, guard, browse or selected-set algorithm was changed by this correction.
+
+The final unchanged driver SHA-256 remains `945787544ffad0e88ad72b6c7d38cc80d77445e569c36d3631888dba7cc17adb` before and after retest. **45 PASS in 0.80 seconds**, including all eight original failures, the six three-firm/principal controls, explicit empty-array bootstrap, exact selected scope and cursor isolation. An additional direct actual-Entry diagnostic verified each of the original eight malformed requests returns public `INVALID_INPUT` and no data. The same supplied browse/selection files now give **28 PASS in 0.27 seconds** (19 prior plus nine added). P's reported 30-test total is not substituted for this independently selected denominator.
+
+Corrected entry Git-byte SHA-256: `de11d6c889db438a493355cef0efaaf3759b2e9161488bd173c247c1ebab758a`. New immutable runtime JUnit receipt `bootstrap_567_review.xml` SHA-256: `d3a44266af98efc4c3d1b4f68c326ef1528f7ebc01ad9196f7c14593b9a0e581`. Original failing receipt is preserved. Review checkout remains clean at this pin.
+
+Between the initial and corrected review pins there is also an intervening lambda-source-map.json change. Its shared dependencies are pinned to `69144433df`; the actual entry is now `567a157ec8`. This source retest exercises checkout composition, not the flat staged artifact. P and CTO explicitly superseded the old artifact/plans and require fresh corrected composition proof and exact-artifact plans. No package or runtime approval is inferred from this closure.
+
+CVO P owns parser replay and assembled HTTP/UI review. Its prior R-P12 closure remains attributed to the prior exact pair; this report does not extend that frontend verdict to an untested pair. Header/UI, CloudFront-served DEV, deployed HTTP and Andrew visual smoke remain open. No live apply or full-product PASS is claimed.
