@@ -62,3 +62,11 @@ Mission is CTO COO_M.md. It ends only on verified three-firm completion or Andre
 changed instruction. No duplicate launcher helpers or subagents.
 
 Current handoff: NEXT_STEPS_20260923.md. Historical prose lives in git history.
+
+## Tax intake measured 17:00 Eastern
+
+CRO~M99760 retained snapshot hash verified. Canonical silver build_silver at
+bc5efb655d refuses original research bytes SOURCE_SCHEMA_INVALID; both canonical
+silver/history prefixes independently empty. Supplied f96d5f6cd4 production
+S3DispositionStore append/read are stubs. Exact source/release intake prerequisite
+is TAX_MEMBERSHIP_INTAKE_CHECK_20260923.md; routedCTO, no parallel publisher.

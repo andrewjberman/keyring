@@ -1,0 +1,27 @@
+{
+  "source_sha256": "84ffd98a82a68c47fcb22325309f0782e2975994d8b4616d716e41ec447f0716",
+  "source_bytes": 5804,
+  "observed_at": "2026-09-23T20:54:47Z",
+  "row_count": 21,
+  "silver_source_commit": "bc5efb655d",
+  "silver_module_sha256": "a3afa0c9aaea60f1bb49f2903122d3445f78b81c8a37bc4428505c3785e92342",
+  "reader_result": "REFUSED",
+  "reader_reason": "SOURCE_SCHEMA_INVALID",
+  "existing_source_probes": [
+    {
+      "bucket": "opal-data-assets",
+      "prefix": "gateway/49financial/silver/taxsma_workbook/",
+      "returned_keys": 0,
+      "truncated": false
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "prefix": "mdpf/49financial/state/taxsma_membership/",
+      "returned_keys": 0,
+      "truncated": false
+    }
+  ],
+  "membership_source_commit": "f96d5f6cd4",
+  "production_store_at_supplied_pin": "S3DispositionStore.append and events_for raise NotImplementedError",
+  "boundary": "Research capture is not canonical capability response; no envelope fabricated, no source writes, no historical membership accepted."
+}
