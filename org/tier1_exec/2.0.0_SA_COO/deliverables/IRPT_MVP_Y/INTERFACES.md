@@ -1,7 +1,7 @@
 ﻿# IRPT Y -- current interfaces
 
 Owner2.0.0_SA_COO~Y. CONTRACT v1.4/f1add564fd. Current Y source
-`57b228ac53` on84c6e63806/ebf8d33985; P shared integration pending. BrokerSecurityCheck + UploadTemplateResolver concrete caller: BROKER_TEMPLATE_CALLER_20260923.md.
+`81e15457c8` on8d3c46b2a6/4ed7edaaa8/57b228ac53/84c6e63806/ebf8d33985; P shared integration pending. Concrete executable, factory, canonical capture, literal installer and rollback: RESIDENT_ASSEMBLY_HANDOFF_20260923.md. BrokerSecurityCheck + UploadTemplateResolver concrete caller: BROKER_TEMPLATE_CALLER_20260923.md.
 
 Template input first hop: TEMPLATE_UPLOAD_HANDOFF_20260923.md is the exact
 request/result/retention/source-file batch and executable consumer. The new
@@ -23,8 +23,7 @@ handoffs. No new custody source evidence is asserted.
 
 Worker preparation remains FrozenCompositionWorker + DynamoGenerationStore;
 PublicationWorker/CertifiedReportPublisher require retained real PDF and typed
-certification before durable READY. Actual resident composition is IN PROGRESS,
-not yet an installed interface. fe0ec628c2 broker/recipe/job consumers preserve
+certification before durable READY. ResidentAssembly now constructs these actual components; resident_main polls the closed queue. The factory takes real shared repositories/admission/current-actor resolver, session and pinned census. Source composition passes targeted controls; the installed factory/package is not yet measured. fe0ec628c2 broker/recipe/job consumers preserve
 opaque causal observation IDs together. CTO76480a2a35 closes causal source finding with65 session/236 generation +32subtests PASS;
 source test evidence does not prove host operation serialization/deadlines.
 
@@ -56,6 +55,4 @@ host boundary; no live call authority is inferred for packaging elsewhere.
 Exact existing host actions required for this seam: SecretsManager GetSecretValue
 on canonical session and Dynamo GetItem/UpdateItem on the jobs table with system
 KMS permissions. P must preserve _opal operation rows without TTL. Resident
-consumer/sign-in/certifier and shared route/package deployment remain pending;
-this is a build batch, not a new micro-review gate. Five changed-seam checks pass;
-prior broad proof stays pinned. No live host claim or cutover yet.
+consumer/sign-in/certifier now have executable assembly and canonical host-capture invocation. Call ResidentSession.install_capture with exact wrapper/library pins; the worker bounds bootstrap/causal refresh with permanent job intent and durable account cooldown. Shared factory/route/package installation and live verification remain pending. Installer and receipt shape are in the current handoff; no broad rerun or live claim. Prior broad proof stays pinned.

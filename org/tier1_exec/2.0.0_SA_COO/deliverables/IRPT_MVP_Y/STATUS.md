@@ -7,7 +7,7 @@ oracle GREEN. Continue useful work every tick; timer liveness is not completion.
 
 ## Current candidate and ownership
 
-- Backend: `4ed7edaaa8` (resident session `57b228ac53`, broker caller `84c6e63806`, upload `ebf8d33985`), branch/worktree
+- Backend: `81e15457c8` (installer), `8d3c46b2a6` (capture/recovery), `4ed7edaaa8` (worker), resident session `57b228ac53`, broker caller `84c6e63806`, upload `ebf8d33985`; branch/worktree
   `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922`.
 - UploadService now connects deterministic CSV/XLSX templates to actual retained
   original bytes, immutable v2 normalized input, guarded Entry and replay.
@@ -30,7 +30,7 @@ assembly exists at ebf8; shared upload request/result schema, ORIGINAL_HOLDINGS
 registry admission and real resolver/runtime installation remain dependencies.
 Concrete current interface: TEMPLATE_UPLOAD_HANDOFF_20260923.md.
 Broker lookup/UploadService adapter now source84c6e63806; guarded upload -> actual broker/operation lease -> retained input/reopen/retry passes offline. Session85 PASS; generation236 +32subtests PASS. See BROKER_TEMPLATE_CALLER_20260923.md. Resident session assembly now57b228ac53: actual process deadline (child kill/reap), canonical-secret transport and conditional operation store on existing irpt-jobs. Five focused checks pass in1.09s; no broad rerun under Andrew d44d9f3876. Host installation remains unproved. Y next assembles resident consumer/frozen recipe and
-certified publisher: assembled executable now `4ed7edaaa8`, with real frozen recipe/session/retained publication and 10 targeted checks PASS5.21s. Exact executable/factory/IAM/census/cutover/rollback handoff: RESIDENT_ASSEMBLY_HANDOFF_20260923.md. Full census is retained separately from the bounded checkpoint. No host installation or automatic login/refresh claim; these and the actual browser upload route remain open. Existing GenerationJob's raw-PDF READY must not substitute
+certified publisher: assembled executable `4ed7edaaa8`, real frozen recipe/session/retained publication and 10 targeted checks PASS5.21s. Capture/recovery `8d3c46b2a6` now connects the canonical host wrapper with operation lease, hard process deadline, durable cooldown and single causal refresh;9 focused checks PASS4.39s. Literal dedicated-host installer `81e15457c8` syntax-checks. Exact executable/factory/IAM/census/cutover/rollback handoff: RESIDENT_ASSEMBLY_HANDOFF_20260923.md. Full census is retained separately from the bounded checkpoint. P's installed shared factory/package/host upload boundary and controlled cutover receipt are the concrete next live blocker; actual host/login and browser trace remain unmeasured. Existing GenerationJob's raw-PDF READY must not substitute
 for the durable store's required certified-report READY. No in-memory runtime.
 
 ## ONE next live proof
