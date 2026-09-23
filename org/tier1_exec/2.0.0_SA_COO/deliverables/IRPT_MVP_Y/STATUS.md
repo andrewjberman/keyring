@@ -1,69 +1,57 @@
-﻿# IRPT Y -- current product status
+﻿# IRPT Y - current product status
 
-Seat `2.0.0_SA_COO~Y`. Contract v1.4 at `f1add564fd`; CTO direct review. Andrew build-first instruction d44d9f3876: minimal changed-behavior/interface checks, reuse pinned evidence; broad tests only assembled release/integration boundary or named failure. ebf8 bounded source PASS fb0a760ef9.
-As of 2026-09-23. Andrew requested a 10-minute drive loop until the intended
-end-to-end product works. Driver confirmed running PID4876 with interval600; readiness
-oracle GREEN. Continue useful work every tick; timer liveness is not completion.
+Seat `2.0.0_SA_COO~Y`, September 23, 2026, 17:53 Eastern. Analysis remains INCOMPLETE.
+Contract v1.4 and COO_Y mandate apply; CTO reviews directly. Fresh-thread load
+completed; exact serial matches environment and readiness oracle GREEN 9/9.
+Existing launcher helpers and 600-second seat-only drive were preserved.
 
-## Current candidate and ownership
+## Pins and active paths
 
-- Backend: `4ebe6948d9` (advanced refresh fence), `81e15457c8` (installer), `8d3c46b2a6` (capture/recovery), `4ed7edaaa8` (worker), resident session `57b228ac53`, broker caller `84c6e63806`, upload `ebf8d33985`; branch/worktree
-  `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922`.
-- UploadService now connects deterministic CSV/XLSX templates to actual retained
-  original bytes, immutable v2 normalized input, guarded Entry and replay.
-  Full intake suite: 206 tests +18 subtests pass, offline only.
-- Causal session repair: `fe0ec628c24af3cc8915bfe6899c5295f50a64f9`;
-  CTO76480a2a35 closes CTO-Y-W1-CORRELATION-01:65 session and236 generation +32 subtests PASS. Integrate all four fe0 files together.
-  Kimi deadline source5609/CTOdf23 is closed; no repeated unchanged review.
-- P backend last measured: `7c7aaef354754ddc4152db4f61ff9d583b9cd175`.
-  Portal last measured Y pin `7a5b24e7`; no new Portal candidate this tranche.
-- Current deployed source/package digest: NOT MEASURED. No Y deployment or push
-  in this tranche. Older package/source evidence is not current live proof.
-- Y owns complete Analysis API/UI, upload/normalization, resident session and
-  queue-worker assembly, extraction/certification/publication consumer.
-  P is single shared route/schema/storage/IAM/IaC/package writer; M owns custody.
+Backend `2874e37647` over `bfe6469b1e` and `4ebe6948d9`, worktree
+`C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922`.
+Active Y delta: generate/{resident_worker,publication_worker,publisher}.py,
+session/resident_session.py and generate/tests/test_resident_worker.py.
+Portal last Y pin `7a5b24e7`; no new Portal candidate this turn.
+Deployed package/source digest NOT MEASURED. Push state LOCAL;
+origin CLOUD `b475b96309c0034b513f19393138984d05716d0e`. No push/deploy/vendor call.
 
-## First incomplete hop and immediate work
+## Last proof and first failing hop
 
-Browser template -> installed guarded UploadService is not live-proven. Source
-assembly exists at ebf8; shared upload request/result schema, ORIGINAL_HOLDINGS
-registry admission and real resolver/runtime installation remain dependencies.
-Concrete current interface: TEMPLATE_UPLOAD_HANDOFF_20260923.md.
-Broker lookup/UploadService adapter now source84c6e63806; guarded upload -> actual broker/operation lease -> retained input/reopen/retry passes offline. Session85 PASS; generation236 +32subtests PASS. See BROKER_TEMPLATE_CALLER_20260923.md. Resident session assembly now57b228ac53: actual process deadline (child kill/reap), canonical-secret transport and conditional operation store on existing irpt-jobs. Five focused checks pass in1.09s; no broad rerun under Andrew d44d9f3876. Host installation remains unproved. Y next assembles resident consumer/frozen recipe and
-certified publisher: assembled executable `4ed7edaaa8`, real frozen recipe/session/retained publication and 10 targeted checks PASS5.21s. Capture/recovery `8d3c46b2a6` now connects the canonical host wrapper with operation lease, hard process deadline, durable cooldown and single causal refresh;9 focused checks PASS4.39s. Literal dedicated-host installer `81e15457c8` syntax-checks. Exact executable/factory/IAM/census/cutover/rollback handoff: RESIDENT_ASSEMBLY_HANDOFF_20260923.md. Full census is retained separately from the bounded checkpoint. P's installed shared factory/package/host upload boundary and controlled cutover receipt are the concrete next live blocker; actual host/login and browser trace remain unmeasured. Existing GenerationJob's raw-PDF READY must not substitute
-for the durable store's required certified-report READY. No in-memory runtime.
+CTO `3d9f451` independently CLOSED the secret-read bootstrap finding at
+`bfe6469b1e`: explicit missing is the only bootstrap condition; failed/invalid
+reads cause no login or refresh/upload intent. Ten focused cases passed.
 
-## ONE next live proof
+`2874e37647` removes same-firm resident/publication lookup assumptions and
+preserves actual actor versus original retained input owner. Eight paired
+connected cases cover both creator classes, certified READY/reopen, revocation,
+ownership tampering and retained-PDF recovery without vendor reacquisition.
+Combined bootstrap/cross-firm check:18 PASS13.68s. Existing same-firm connected
+case and three publisher ancestry/revocation checks pass. Ruff/commit gates pass.
+New cross-firm candidate awaits CTO review; this is offline source evidence.
 
-Authenticated browser CSV `Ticker,Dollars` with AAPL10.01 and VNQ2.02 -> displayed
-12.03 frozen input -> accepted Overview request -> real irpt-generation delivery
--> resident runner/session -> vendor PDF -> retained extraction/certification ->
-AnalysisReport -> Analysis screen and reload/history. Record deployed digests,
-request/input/report revisions, queue/worker receipt and screenshot. Supported
-symbols and Dollars avoid optional Kimi and Shares price dependencies.
+Browser template -> installed guarded UploadService is still not live-proven.
+P owns shared current-authority/repository factory, host upload boundary,
+package/IAM/routes and sole-consumer cutover receipt. Current CTO control and
+215058 message confirm runtime/enforcement pending despite newly provisioned
+report storage. No replacement shared writer or duplicate session consumer.
 
-## Authority and installation
+## ONE next proof
 
-Andrew6fc3f5f785, consumed CTO f1add564fd, approves dedicated always-on
-`i-0167fd745ad906a66`, standing HOST workflow calls and D1 first automated sign-in.
-Keep it running, no inbound, no opal-gateway cohosting. Controlled single-owner
-cutover replaces per-job power cycling and separate six-hour session probe.
-Agent ad hoc YCharts calls outside the host are not covered. No re-asking the
-approved topology/calls. Y supplies executable resident artifact, installer and
-rollback; P installs shared deltas. Generation first: exact submit source,
-SendMessage grant, consumer, IRPT_LIVE_YCHARTS_CALL, inputs/requests routes.
-Shared push remains MSTR-owned; preserve existing deployment/path controls.
+Real-login browser CSV AAPL10.01 + VNQ2.02 Dollars -> retained12.03 input ->
+Overview acceptance -> irpt-generation -> always-on resident/session -> vendor
+PDF -> retained certified AnalysisReport -> screen and reload/history.
+Record deployed digests, request/input/report revisions and visible result.
+Y consumes P's concrete installed factory/cutover receipt and runs this journey.
 
-## Completion remains open
+## Interfaces and limits
 
-Y1-Y7 and S1-S7 have bounded source evidence only, not complete live acceptance.
-After first Overview, finish every firm/client/account via Global/Select Firm,
-both custody and owned upload lanes, CSV/XLSX, dollars/shares/target/current
-weights, dated prices/reference-notional disclosures, complete bad-row and
-security correction flow, all three variants, retries/recovery/revocation,
-certified sections, history/reload and same-revision branded export. Preserve
-actual actor versus immutable input owner. Stop the drive only after intended
-journeys pass or Andrew changes the instruction; a bounded source PASS is not
-completion. Route concrete shared blockers while continuing unaffected Y work.
+Current delta: CROSS_FIRM_PUBLICATION_HANDOFF_20260923.md. Literal installer,
+factory, pins and rollback: RESIDENT_ASSEMBLY_HANDOFF_20260923.md, amended by it.
+Approved host i-0167fd745ad906a66 remains always on, no inbound, generation first,
+one owner; standing host workflow/D1 approved by Andrew6fc3f5f785. Agent ad hoc
+vendor calls are outside that authorization. Old B/F canonical cycles stay held.
 
-
+All firms, both input lanes, units, corrections, three variants, live recovery,
+revocation and same-revision branded export remain required under Y1-Y7/S1-S7.
+No live-product completion from tests or source review. P shared installation is
+a dependency; Y retains ownership of the whole Analysis journey.

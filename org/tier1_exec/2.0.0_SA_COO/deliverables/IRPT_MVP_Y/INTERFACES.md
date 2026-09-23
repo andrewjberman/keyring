@@ -1,58 +1,52 @@
-﻿# IRPT Y -- current interfaces
+﻿# IRPT Y - current interfaces
 
-Owner2.0.0_SA_COO~Y. CONTRACT v1.4/f1add564fd. Current Y source
-`4ebe6948d9` on81e15457c8/8d3c46b2a6/4ed7edaaa8/57b228ac53/84c6e63806/ebf8d33985; P shared integration pending. Concrete executable, factory, canonical capture, literal installer and rollback: RESIDENT_ASSEMBLY_HANDOFF_20260923.md. BrokerSecurityCheck + UploadTemplateResolver concrete caller: BROKER_TEMPLATE_CALLER_20260923.md.
+Owner `2.0.0_SA_COO~Y`; source `2874e37647` over `bfe6469b1e`/`4ebe6948d9`.
+CTO directly reviews under current CONTRACT v1.4. Current executable delta is
+CROSS_FIRM_PUBLICATION_HANDOFF_20260923.md; full literal installer and pinned
+host capture/census contract is RESIDENT_ASSEMBLY_HANDOFF_20260923.md.
 
-Template input first hop: TEMPLATE_UPLOAD_HANDOFF_20260923.md is the exact
-request/result/retention/source-file batch and executable consumer. The new
-UploadService resolve_template(principal,owner,symbols) port consumes exact
-SecurityResolver results and retains irpt-normalized-portfolio.v2. Legacy
-csv_base64/v1 remains supported. New file_base64 + file_type csv/xlsx is exclusive
-with legacy. Test example AAPL10.01/VNQ2.02 freezes12.03 without price enrichment.
-P owns closed public schema/registry/common adapter installation; source presence
-is not route/package installation. ORIGINAL_HOLDINGS admission is pending.
+## Resident factory and storage
 
-Existing actual-viewer and dual-owner submission interfaces remain as pinned in
-DUAL_OWNER_HANDOFF_20260923.md: ProspectSubmissionFactory/build_prospect_entry,
-P37526d36ae schema/storage, P4ec461a2e9 guarded Entry, M485b69c061 maintained
-profile ports. Actual submitter and original immutable input owner remain
-separate; Global/firm selection filters Opal views, not Opal authority.
-Custody adapter contracts remain unchanged at accepted-custody-input-v1; history
-and detailed prior examples remain in INTERFACES_HISTORY.md and referenced
-handoffs. No new custody source evidence is asserted.
+`resident_main.py --factory MODULE:build_resident_runtime` expects exactly
+`{assembly: ResidentAssembly(...), sqs: boto_client, queue_url: canonical_url}`.
+Assembly ports: requests, reports, admission, session, dynamo_client, jobs_table,
+requests_table, principal_for(record), census_bytes, census_sha256; optional clock.
+P constructs real current-actor/shared repository ports. Y constructs frozen
+worker, certified publisher, retained-PDF recovery and fenced publication.
 
-Worker preparation remains FrozenCompositionWorker + DynamoGenerationStore;
-PublicationWorker/CertifiedReportPublisher require retained real PDF and typed
-certification before durable READY. ResidentAssembly now constructs these actual components; resident_main polls the closed queue. The factory takes real shared repositories/admission/current-actor resolver, session and pinned census. Source composition passes targeted controls; the installed factory/package is not yet measured. fe0ec628c2 broker/recipe/job consumers preserve
-opaque causal observation IDs together. CTO76480a2a35 closes causal source finding with65 session/236 generation +32subtests PASS;
-source test evidence does not prove host operation serialization/deadlines.
+`principal_for(record)` resolves the accepted submitter's CURRENT actual shared
+authority. It must not impersonate the immutable input owner or queue tenant.
+Concrete placement comes from the accepted job tenant. Cross-firm artifact/report
+get and retention require_live/promote receive `data_firm=tenant`, using existing
+P37526d36ae-compatible interfaces; same-firm calls retain old signatures.
+Example: actual Opal actor in Global, original49financial input creator, request
+owned by actual submitter in49financial storage. Composition preserves original
+input_owner. Both retained identities and all current grants are checked.
 
-Approved runtime: dedicated always-on i-0167fd745ad906a66, one session owner and
-irpt-generation consumer, canonical session secret/runner, no inbound. Host
-workflow calls/D1 are approved under Andrew6fc3f5f785/CTOf1add564fd. Y supplies
-resident installer/rollback; P owns shared routes/IAM/IaC/package. First runtime
-batch must include exact submit source/SendMessage/live flag/input/request
-routes and controlled retirement of separate probe/per-job cycling.
+`ResidentSession(secrets_client=..., dynamo_client=..., jobs_table=...,
+enrolled_user_id=...)` uses canonical session and existing durable operation row.
+Install capture with actual canonical wrapper/library SHA256 pins. Only explicit
+ResourceNotFound is missing; failed reads are sanitized unavailable and invalid
+configuration cannot trigger bootstrap. CTO3d9f451 closes this exact boundary.
+No factory signature or queue schema changes in the current delta.
 
+## Upload and submission
 
-Resident source57b228ac53 adds session/resident_session.py and
-session/deadline_transport.py with generate/transport.py in one package.
-ResidentSession(secrets_client,dynamo_client,jobs_table,enrolled_user_id) uses
-canonical ycharts/session/current, existing irpt-jobs tenant_opal and
-PROVIDER_OPERATION#account-hash row; strong read/conditional operation_version,
-no TTL/delete. .acquire(request_budget=60,ttl=120) returns actual fenced
-OperationTransport with ProcessDeadlineInvoke; .template_resolver(identity,
-source_revision,cache=None) is UploadService's concrete callback. Budget/TTL
-must be chosen for each recipe step and renewed under the job lease.
-ProcessDeadlineInvoke.download wraps the existing credential-free PDF reader.
-The HTTP child receives session/request via pipes and cannot read/publish secrets;
-parent merges returned cookie state only after successful completion, retaining
-its opener's jar object. Timeout kills/reaps child; uncertainty remains fenced.
+TEMPLATE_UPLOAD_HANDOFF_20260923.md is the paired upload schema/family batch;
+BROKER_TEMPLATE_CALLER_20260923.md supplies actual session-bound resolver caller.
+CSV/XLSX file_base64/file_type is exclusive with legacy csv_base64. AAPL10.01 +
+VNQ2.02 Dollars freezes12.03 without Shares prices or optional Kimi replacement.
+DUAL_OWNER_HANDOFF_20260923.md pins real P storage/admission/access and M profile
+ports. Actual submitter and original immutable input owner remain separate.
 
-These runtime callers are for the dedicated authorized HOST, not ad hoc agent
-or Lambda vendor calls. Public UploadService invocation must reach that installed
-host boundary; no live call authority is inferred for packaging elsewhere.
-Exact existing host actions required for this seam: SecretsManager GetSecretValue
-on canonical session and Dynamo GetItem/UpdateItem on the jobs table with system
-KMS permissions. P must preserve _opal operation rows without TTL. Resident
-consumer/sign-in/certifier now have executable assembly and canonical host-capture invocation. Call ResidentSession.install_capture with exact wrapper/library pins; the worker bounds bootstrap/causal refresh with permanent job intent and durable account cooldown. Shared factory/route/package installation and live verification remain pending. Installer and receipt shape are in the current handoff; no broad rerun or live claim. Prior broad proof stays pinned.
+## Runtime and next proof
+
+Dedicated always-on i-0167fd745ad906a66, one session owner/generation consumer,
+no inbound. Standing host workflow/D1 approved under Andrew6fc3f5f785; generation
+first. P integrates exact shared schema/family/factory/routes/IAM/package and
+supplies measured single-consumer cutover receipt; Y supplies installer/rollback
+and exercises the complete browser-to-certified-report/reload journey.
+
+Current source checks use offline AWS/vendor fixtures. Installed host, live
+session recovery, all-firm browser journeys and branded export remain unproved.
+Historical interfaces are in INTERFACES_HISTORY.md and the cited pinned handoffs.
