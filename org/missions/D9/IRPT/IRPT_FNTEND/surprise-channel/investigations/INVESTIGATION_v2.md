@@ -6239,6 +6239,52 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not escalated as BLOCKING because the ACCEPTANCE CRITERIA text is unambiguous about WHICH act it requires -- only BOUNDS's enumerated grant list is silent on the file that act touches -- and the exception taken is bounded, self-reverting and verified net-zero before this row's own commit."
+    },
+    {
+    "id": "IRPT_FNTEND-W39-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~39",
+    "surfaced_at": "2026-09-22T20:33:22Z",
+    "one_line": "This order's own F89-AC2 invocation names a path outside this order's own BOUNDS Grant, so the exact literal invocation cannot resolve without a write outside this cell's write surface.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-89.fixture-key-grammar-reconciliation.md, F89-AC2: \"invocation: `cd WS/portal && /c/Users/AndrewBerman/.bun/bin/bun __tests__/fe-s-89/verify-key-validity.mjs`\" -- a path relative to the portal ROOT (`cd WS/portal`), i.e. `portal/__tests__/fe-s-89/verify-key-validity.mjs`. The SAME order's BOUNDS section grants only `portal/src/pages/InvestorReporting/__tests__/fe-s-89/` -- the fully qualified, nested path -- and lists no `portal/__tests__/` entry anywhere.",
+    "world_is": "Measured (this worker, 2026-09-22, portal HEAD 7dd3d067a17ee00b878ecfceff23c557649a2331 plus this cell's own commits): `git ls-tree -r HEAD --name-only` over the whole portal tree shows 220 tracked files under `src/pages/InvestorReporting/__tests__/` and 0 under a root-level `__tests__/` -- no top-level `__tests__/` directory has ever existed in this repo's history (`git log --all --oneline -- '__tests__/*'` returns nothing). Built the real checker at the GRANTED path (`portal/src/pages/InvestorReporting/__tests__/fe-s-89/verify-key-validity.mjs`); run there (`cd portal && bun src/pages/InvestorReporting/__tests__/fe-s-89/verify-key-validity.mjs`) it correctly prints all five target denominators (`default.json: 12 of 12`, `reporting-answer-bearing.json: 3 of 3`, `reporting-qualified.json: 3 of 3`, `fe-s-13-wire.json: 9 of 9`, `fe-s-14-print-v1.json: 2 of 2`), rc=0. Run with the EXACT literal invocation the order names (`cd WS/portal && bun __tests__/fe-s-89/verify-key-validity.mjs`): `error: Module not found \"__tests__/fe-s-89/verify-key-validity.mjs\"`, rc=1 -- does not match the criterion's `<expect>` regex. Writing a second copy of the checker at `portal/__tests__/fe-s-89/` to satisfy the literal invocation would be a write outside this order's own Grant, which the order elsewhere forbids (\"Never edit outside the task order's <paths>\"). hazard_standing is INERT, not ARMED: the conflict is confined to this one order's own two sections and creates no standing risk to future normal operation once the issuer corrects either the Grant or the invocation text.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IRPT_FNTEND.TO-FE-s-89.fixture-key-grammar-reconciliation.md, F89-AC2 invocation line and BOUNDS 'Grant:' line (this worktree, task-order file as issued)",
+        "measured (this worker, 2026-09-22): `git ls-tree -r HEAD --name-only` in portal -- 220 files under `src/pages/InvestorReporting/__tests__/`, 0 under a root-level `__tests__/`",
+        "measured (this worker, 2026-09-22): `git log --all --oneline -- '__tests__/*'` in portal -- zero commits, no top-level `__tests__/` directory has ever existed",
+        "measured (this worker, 2026-09-22): `cd portal && bun src/pages/InvestorReporting/__tests__/fe-s-89/verify-key-validity.mjs` -> rc=0, five target denominators printed exactly",
+        "measured (this worker, 2026-09-22): `cd portal && bun __tests__/fe-s-89/verify-key-validity.mjs` (the order's exact literal invocation) -> `error: Module not found \"__tests__/fe-s-89/verify-key-validity.mjs\"`, rc=1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W39-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~39",
+    "surfaced_at": "2026-09-22T20:33:22Z",
+    "one_line": "C-S147's bare-prefix fixture-key defect this order names on 4 files also exists, unrepaired, on 23 OTHER committed InvestorReporting fixture files outside this order's grant -- the round-14 CVO review's denominators covered only this cell's four, not the class.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "This order's own framing: \"round 14's classifier fix (FE-s-86) correctly requires a concrete key to match a declared template SEGMENT FOR SEGMENT ... But four fixture files were never updated to match\" -- naming exactly `fixtures/smoke/reporting-answer-bearing.json`, `__tests__/fe-s-84/fixtures/reporting-qualified.json`, `fixtures/smoke/fe-s-13-wire.json`, `fixtures/smoke/fe-s-14-print-v1.json` as the affected set.",
+    "world_is": "Measured (this worker, 2026-09-22): a census of every `*.json` file under `src/pages/InvestorReporting/` whose directory name contains `smoke` or `fixtures`, checking each top-level key for the shape `/api/scoped/investor-reporting/<segment>/` (bare, trailing-slash, <=5 path segments -- the same truncated-prefix shape round 14's classifier now rejects) finds 23 files carrying it, NONE of them among this order's four named files and none inside this cell's BOUNDS grant: `__tests__/fe-s-63/fixtures/export-ready.json`, `__tests__/fe-s-63/fixtures/print-ready.json`, `__tests__/fe-s-69/fixtures/firm.json`, `__tests__/fe-s-69/fixtures/firm.one-firm.json`, `__tests__/fe-s-71/fixtures/export-flow.json`, `__tests__/fe-s-72/fixtures/withheld.json`, `__tests__/fe-s-74/fixtures/one-bad-key.json`, `__tests__/fe-s-78/fixtures/cohort-selected.json`, `fixtures/smoke/fe-s-14-49financial.json`, `fixtures/smoke/fe-s-14-cottonwood.json`, `fixtures/smoke/fe-s-14-global.json`, `fixtures/smoke/fe-s-14-inflection.json`, `fixtures/smoke/fe-s-15-clean.json`, `fixtures/smoke/fe-s-15-needs-correction.json`, `fixtures/smoke/fe-s-16-print-narrative.json`, `fixtures/smoke/fe-s-16-print-prehistory.json`, `fixtures/smoke/fe-s-16-ready.json`, `fixtures/smoke/fe-s-18-frozen.json`, `fixtures/smoke/fe-s-18-holdings-missing-attribution.json`, `fixtures/smoke/fe-s-18-holdings-observed.json`, `fixtures/smoke/fe-s-18-holdings-target.json`, `fixtures/smoke/fe-s-21-queued.json`, `fixtures/smoke/reporting-answer-bearing-partial.json`. Not fixed here -- none is in this order's BOUNDS Grant, and this order's own risk warning (fixture-serving is a SUBSTRING match, so a wrong concrete value silently stops serving) applies to each of these too, meaning a future classifier-strictness change (or a future worker running this order's own remedy pattern blind to the wider class) could repeat the same partial-coverage gap this order itself was cut to close. C-S147's own text (REMEDIATION_v11.md) and the round-14 CVO review's denominator table both speak only to this order's four files; neither states or measures the wider 23-file population, so the CVO's 'KEY-VALIDITY' framing for C-S147 reads as if it covers the defect CLASS when it covers one order's SUBSET.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured (this worker, 2026-09-22): python census over `src/pages/InvestorReporting/**/*.json` in `smoke`/`fixtures` directories, testing every top-level key against `/api/scoped/investor-reporting/<segment>/` (bare prefix, <=5 segments) -- 23 files hit, 0 overlap with this order's 4 named files",
+        "portal (this worktree HEAD before this worker's edits) -- e.g. `src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json` keys: `/api/scoped/investor-reporting/performance/`, `/api/scoped/investor-reporting/analysis/`, `/api/scoped/investor-reporting/narrative/`, `/api/scoped/investor-reporting/status/`, `/api/scoped/investor-reporting/export/`, `/api/scoped/investor-reporting/holdings/` -- all bare prefixes, same shape as this order's four named files before this worker's fix",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-89.fixture-key-grammar-reconciliation.md, opening paragraph and 'Measured denominators' table -- names exactly four files, no wider census stated",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v11.md and org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND14_L8_L9_20260922.md -- C-S147's text and the round-14 KEY-VALIDITY denominators cover only this order's four files"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
