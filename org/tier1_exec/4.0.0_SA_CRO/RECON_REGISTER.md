@@ -864,3 +864,33 @@ SharePoint earnings-report corpus as the format authority and backfill source, s
 `docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md` (MIDSTREAM on AMGT_RESAPP, eleven outcomes O1-O11, for
 `1.0.0_SA_CTO~Z`'s `/endpoint --forward`). On Andrew's word at ~17:3xZ no site-Z seat is notified yet; he carries the brief to
 the CTO himself.
+
+## RCN-0013 -- AMGT current state and a direct closer program for MVP
+
+**Date:** 2026-09-23. **Produced under:** `4.0.0_SA_CRO~Z`, device OPAL_BLOOMBERG, SITEZ.
+**Commissioned:** Andrew-direct at this terminal; verbatim record
+`deliverables/ANDREW_DIRECT_20260923_AMGT_CURRENT_STATE_AND_CLOSER_MVP_PLAN.md` @`58bfd6f882`.
+**Package:** [AMGT measured state and MVP program](deliverables/AMGT_MVP_RESEARCH_20260923/README.md).
+Four end-to-end pipeline briefs, CLOUD precedent index, proposed shared-surface closer contract,
+dependency schedule, 21-row gap register, timestamped measurements, complete S3 metadata inventory,
+source hashes and read-only reproduction instruments. **Status: DELIVERED research / PROPOSED execution;
+no closers seated, orders issued, vendor/model calls, deployments, source-library writes or push.**
+
+**Evidence:** source baseline `5deabdefa9`, portal DEV `b3d5f59b45`, fetched CLOUD `365ab567ba`;
+all three canonical AMGT homes and anchored task-status census (RESAPP 191: 181 complete, 8 superseded,
+1 withdrawn, 1 pending; HARVST 18 complete; CORPUS 10 complete / 1 pending); all 2,277 current objects
+in opal-data-harvest; selected retained-object hashes/Parquet counts; actual Lambda ZIP/code comparison
+(44/48 inspected API members match local), role policies, 16 deployed AMGT routes, AWS/local schedule
+configuration and local library metadata (93 folders / 351 files). CTO message 24746 supplies a clearly
+attributed outstanding-review correction; current path-rule definitions were independently read.
+
+**Conclusion:** landed components and closed task orders do not establish the full report. No platinum
+objects exist in the measured bucket; corpus currently retains 123 files across 33 resolved names with
+60 folders unresolved; the deployed Chatter path remains legacy despite landed gold; refresh declares
+its carrier without enqueuing; recent API fixes are not yet deployed. Proposed four direct closers:
+security data/filings, publications/chatter, corpus, report/page/export, with sole shared integration
+owners and independent acceptance. Preserve pre-implementation schema/denominator checks, L4-R,
+never-widen and specific external operating bounds while removing repetitive routine recutting.
+The first representative report and full-population MVP have separate milestones; timing is explicitly
+an initial conditional estimate. Authenticated live browser/export, fresh vendor/model runs and full
+outcome acceptance were not exercised by this research. LOCAL; origin/SITEZ measured `95be3bc7a9`.

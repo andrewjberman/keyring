@@ -1,0 +1,13 @@
+{
+  "gap_rows": 21,
+  "all_owners_present": true,
+  "dependency_graph_acyclic": true,
+  "s3_inventory_rows": 2277,
+  "source_hashes_checked": 21,
+  "local_markdown_links_checked": true,
+  "collector_syntax_checked": true,
+  "errors": [],
+  "scope": "document consistency and evidence integrity only; no application acceptance tests",
+  "identifier_check": "standalone plan IDs only; existing project Z-S14 is a separately cited source row",
+  "collector_ruff_check": "PASS"
+}

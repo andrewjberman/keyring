@@ -1,0 +1,42 @@
+{
+  "measured_at": "2026-09-23T13:48:50.368522+00:00",
+  "source": ".owned-paths.yaml",
+  "sha256": "4f75afc647f3db3e9c64883e922ab0a83f87ca92e3862e5037691bdf62ee9226",
+  "paths": {
+    "infra/logic/**": {
+      "lane": "PLATFORM_LOGIC_DOCS",
+      "note": "D14 Platform Logic foundation -- DOCUMENTS ONLY. Narrower than infra/** and displaces it by longest-match; infra/aws/** and all other infra paths stay CLOUD_OPS_OR_ETL, unchanged."
+    },
+    "portal": {
+      "lane": "ANY",
+      "note": "portal submodule pointer file (parent-repo SHA) \u2014 DT bumps on portal push; CTO/AE may bump for portal-pointer hotfixes. Added 2026-04-30 ADHC_OWNPTH.005 phase-2 flip (DT 0.4 hit UNDEFINED multiple times in audit log)."
+    },
+    "portal/**": {
+      "lane": "POD_DE_ANY",
+      "note": "Any pod DE can author portal; DT pushes (DEV/PROD submodule branches)"
+    }
+  },
+  "lanes": {
+    "PLATFORM_LOGIC_DOCS": {
+      "permitted_agents": [
+        "4.0.0_SA_CRO",
+        "4.0.0_SA_CRO~A",
+        "4.0.0_SA_CRO~B",
+        "4.0.0_SA_CRO~C",
+        "4.0.0_SA_CRO~D"
+      ]
+    },
+    "ANY": {
+      "permitted_agents": "*"
+    },
+    "POD_DE_ANY": {
+      "permitted_agents": [
+        "0.1.0_DE_MarketIntelligence",
+        "0.2.0_DE_PortfolioAnalytics",
+        "0.3.0_DE_TradingOperations",
+        "0.4.0_DE_ClientPlatform"
+      ]
+    }
+  },
+  "limitation": "rule definitions only; no future exact-seat effective grant simulated"
+}

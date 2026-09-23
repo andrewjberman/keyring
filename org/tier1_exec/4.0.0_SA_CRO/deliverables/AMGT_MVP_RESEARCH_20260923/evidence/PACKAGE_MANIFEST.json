@@ -1,0 +1,82 @@
+[
+  {
+    "path": "CLOSER_CONTRACT.md",
+    "sha256": "782376f12bd0fdf37e37f09ee447b70f1d65183eb78fdfb2e2bca969a20f405f",
+    "bytes": 11456
+  },
+  {
+    "path": "CLOUD_PRECEDENT.md",
+    "sha256": "b784211ff3609ba90ed3f18e84fb137978841b3334b2e7fb568dca9f0d5ed9d9",
+    "bytes": 4611
+  },
+  {
+    "path": "CORPUS_END_TO_END.md",
+    "sha256": "a1e83cd38e10d5e22d0433c26345b2d48043c05cae5f5f968123693a3f43cc5b",
+    "bytes": 4125
+  },
+  {
+    "path": "evidence/collect_readonly.py",
+    "sha256": "75f9e6d707a8637efe7ba86f01923e692689c030c58cc2adb5aad9058e60dc06",
+    "bytes": 9275
+  },
+  {
+    "path": "evidence/collect_supplement.py",
+    "sha256": "4d784cab7b02c028bf1134f8ce8ad6c9fa0c576aaf062e5f1a489b4cce31257f",
+    "bytes": 5630
+  },
+  {
+    "path": "evidence/MEASUREMENTS.json",
+    "sha256": "dc60528733e1375d5626af2f8c425b62525b60a8e03363ce718405f1c207ad23",
+    "bytes": 61139
+  },
+  {
+    "path": "evidence/OWNERSHIP.json",
+    "sha256": "cb82a428c98bfe4c4a552b654bd2b48deb2aac08d3a1704607d77f405106aff2",
+    "bytes": 1440
+  },
+  {
+    "path": "evidence/README.md",
+    "sha256": "48a1f6cd798cd850934db975787c055c2c85a0859942d48a6d3f55dca6391715",
+    "bytes": 3292
+  },
+  {
+    "path": "evidence/S3_INVENTORY.csv",
+    "sha256": "824a9f29fb5da0fe2f341224f19ab4ab9e51bf87c8ae968539e4d4f64eadf084",
+    "bytes": 222906
+  },
+  {
+    "path": "evidence/SOURCE_MANIFEST.json",
+    "sha256": "29821434073caa5f20959efdf1b67a18fbcfda5f61186ead6e8b6cab442f0cb7",
+    "bytes": 3633
+  },
+  {
+    "path": "GAPS.csv",
+    "sha256": "4f053be6dccf5394181bbd3a6db1d0bb0a87088cc220369d357ad874f048cd15",
+    "bytes": 6124
+  },
+  {
+    "path": "IMPLEMENTATION_SCHEDULE.md",
+    "sha256": "666b07a55f6afb649a3970995a87966cc2681c35e5d04e398ee89abe30d07d12",
+    "bytes": 9443
+  },
+  {
+    "path": "PUBLICATIONS_END_TO_END.md",
+    "sha256": "15b2f6fe0267212a1fde02b596775d98b2a187621ab5986e400f81474222ad9a",
+    "bytes": 5727
+  },
+  {
+    "path": "README.md",
+    "sha256": "c19cb93d70107236f46d203ae3d96745987807e72c2a1f0971b4259a150716f8",
+    "bytes": 6320
+  },
+  {
+    "path": "REPORT_EXPERIENCE_END_TO_END.md",
+    "sha256": "3d01e9dd2b65d8dafb804e1a9caac13f8863600461c5c1e556ba5b287df56927",
+    "bytes": 6309
+  },
+  {
+    "path": "SECURITY_DATA_END_TO_END.md",
+    "sha256": "995ab5381c2378ebaf6c03d4e3fef124c7aae6fc6048e4e0503707422ab8b3fe",
+    "bytes": 7346
+  }
+]

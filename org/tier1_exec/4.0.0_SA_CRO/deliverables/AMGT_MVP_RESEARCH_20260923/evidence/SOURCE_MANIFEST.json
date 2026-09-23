@@ -1,0 +1,107 @@
+[
+  {
+    "path": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md",
+    "sha256": "d046ca15fa676dd5fe73003347ded730af723e653792677e3a47f19cd88040b1",
+    "bytes": 36007
+  },
+  {
+    "path": "lib/research/api/scoped_amgt.py",
+    "sha256": "e67e84256e5941204e3774548e580419bfbabc4f04fbd0fc341568bd3d941758",
+    "bytes": 196319
+  },
+  {
+    "path": "lib/research/identity/crosswalk.py",
+    "sha256": "d0641d5107f201d8eea5564fabc11549cda874bc77af83e07c0ae7a4c591f0d4",
+    "bytes": 45141
+  },
+  {
+    "path": "lib/research/coverage/pool_reader.py",
+    "sha256": "f56aa10f21991ab35efc27f47c251305dcce527f1b85093c9ccaaf97ad70d689",
+    "bytes": 30850
+  },
+  {
+    "path": "lib/research/metrics/chatter_axis.py",
+    "sha256": "074b3886bc114d8ba876b2b009955c2cbb29f8f51d0179d64b1eb82986574c0e",
+    "bytes": 40666
+  },
+  {
+    "path": "lib/research/filings/battery.py",
+    "sha256": "dc520db08e2e6dfa6c7a952fa1c21ddf3f3763f24e300c5872bf55d640ef4324",
+    "bytes": 83418
+  },
+  {
+    "path": "lib/research/corpus/substrate.py",
+    "sha256": "7b3fc551d57f84adec132439add285af6e1cfaf1b13e34c60be1504f001960d7",
+    "bytes": 24615
+  },
+  {
+    "path": "integrations/bloomberg/research/pull_consumer.py",
+    "sha256": "debaefcb57ec6b6425d0b01214850c130ce0ec97f754bca77cbec67ea219905c",
+    "bytes": 6672
+  },
+  {
+    "path": "portal/src/api/endpoints/amgt-lead-panel.ts",
+    "sha256": "4a5f751998e880bdaa0bae805ea149e42d6160149214b620fe4ba88439ec60d8",
+    "bytes": 8361
+  },
+  {
+    "path": "portal/src/pages/SecurityAnalysis/SecurityAnalysis.tsx",
+    "sha256": "cf11b29f2316b22b0f2f13227a85cf863b30e14cfcb4f02ff7095e1c22961e49",
+    "bytes": 4476
+  },
+  {
+    "path": "portal/src/pages/SecurityAnalysis/components/PrintExportAction.tsx",
+    "sha256": "66858f7a189f5f00766cc620232d903e89b9b278a1e8b1f5e754af800b17aed6",
+    "bytes": 4316
+  },
+  {
+    "path": "org/missions/D5/AMGT/AMGT_CORPUS/project.json",
+    "sha256": "85af2be8a644b27406375d39f4d70c76752accc810724674087871772f86ffa6",
+    "bytes": 5319
+  },
+  {
+    "path": "org/missions/D5/AMGT/AMGT_CORPUS/prd/AMGT_CORPUS_PRD.md",
+    "sha256": "90cb75f63de706471e764e4eba195c6be71ab12e77d66af029cdd3bbf90b2b71",
+    "bytes": 32635
+  },
+  {
+    "path": "org/missions/D5/AMGT/AMGT_HARVST/project.json",
+    "sha256": "9e49c22541eea507f34155759ead118e1a580b7d3645542b92d2fc316306d116",
+    "bytes": 5296
+  },
+  {
+    "path": "org/missions/D5/AMGT/AMGT_HARVST/prd/AMGT_HARVST_PRD.md",
+    "sha256": "e4b979aa3ed3f460c7b20b3e5f7ecded12bd7b70587b26d4f5dc9f04072b4e9c",
+    "bytes": 22700
+  },
+  {
+    "path": "org/missions/D5/AMGT/AMGT_RESAPP/project.json",
+    "sha256": "65b9f89ef0dbbfc373532d865172c0227bad3e6500b613eb5c9d8cfbf204038e",
+    "bytes": 17289
+  },
+  {
+    "path": "org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md",
+    "sha256": "72bd8734d63e357b6df14f63c5e53242c85d1133daeba4844cdd63670a60561b",
+    "bytes": 175450
+  },
+  {
+    "path": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND36_L8_PACKET_20260923.md",
+    "sha256": "699d3d948199746fb138400af9720316909f5851feaf24b655dd31cc60d6882e",
+    "bytes": 5347
+  },
+  {
+    "path": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round35.md",
+    "sha256": "8d06ee51885746cd32fbdf8fe6218da2e97eae8d4e331b0b7666656d9f1b2cd9",
+    "bytes": 13184
+  },
+  {
+    "path": "org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND_ANALYSIS.round4.md",
+    "sha256": "df4fffb55effda8b9b7edd1e3b8e3a99fcbcd3cc1cda41177ebbcd3f8625bc3b",
+    "bytes": 12295
+  },
+  {
+    "path": ".owned-paths.yaml",
+    "sha256": "4f75afc647f3db3e9c64883e922ab0a83f87ca92e3862e5037691bdf62ee9226",
+    "bytes": 212032
+  }
+]
