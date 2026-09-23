@@ -371,7 +371,13 @@ the bytes were not).
 
 **Brief half:** `C-UNIT-MAP-MEASURED` amended (built for every name); `C-MODEL-FORECASTS` and `C-MODEL-WINDOW-AND-ROWS`
 added; `C-VERBATIM-GATE` replaced (every pass count prints its split; a sentence with no span is served LABELLED, and whether
-it is instead HELD is Andrew's card); `C-SERVER-SIDE-RANKING` amended (no rank without signal; `empty_reason`);
+it is instead HELD is Andrew's card) -- ⛔ **THAT LAST CLAUSE IS SUPERSEDED: Andrew answered the card
+(*"Agreed, yes."*, ~19:4xZ) and **v0.12 makes a no-span sentence HELD, never served** -- read
+`C-VERBATIM-GATE` at `:1107-1114`, not this note. Measured blast radius of the HELD rule: **179 of 389
+sentences (46%) across 12 served documents.** ⚠ **This note is TRUE AT ITS OWN VINTAGE (v0.11) and a
+reader scanning change notes for this contract finds it FIRST; `3.0.0_SA_CVO~Z` came one sentence from
+ruling the figure branch already admissible on it, 2026-09-23.** ⭐ **A change note ages past the clause
+it describes, and nothing in a preamble announces which entry is newest for a given contract** --; `C-SERVER-SIDE-RANKING` amended (no rank without signal; `empty_reason`);
 `C-PRICE-BREAKOUT-FLOOR`, `C-PRICE-DAILY-LEG` (Andrew's Lead Panel cards B and A) and `C-DESCRIPTION-LINE` added; the
 section-9 condition *"measure one Bloomberg-pulled filing"* marked superseded; and a new **section 10, THE INSTANTIATION
 STAGES**, with `C-INSTANTIATION-ENTRY`, `C-PRODUCTION-HOME` and `C-VALIDATION-NAMES`. In this preamble, the five stale `:353`
