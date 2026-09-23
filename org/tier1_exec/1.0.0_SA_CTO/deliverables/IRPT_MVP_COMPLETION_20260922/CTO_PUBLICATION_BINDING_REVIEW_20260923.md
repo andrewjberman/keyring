@@ -53,3 +53,14 @@ exact-version reconciliation; do not imply rollback or recommend a blind retry.
 This is a nonblocking documentation correction for local integration. No
 additional suite run is required for a docstring-only correction. Any behavioral
 change requires its own focused evidence.
+
+## Documentation correction verified
+
+Directly inspected complete commit
+`200ba442f56d6dd70aaa07b1f9173898893dc8cf`: its only change is the requested
+`HoldingsPublication.publish` docstring. It now accurately states that index
+readback follows conditional write, failure returns no receipt but may follow a
+successful write, and exact-version reconciliation precedes retry. Correction
+closed; runtime code is unchanged by this commit. The 99-test evidence above
+remains applicable without a redundant test run. M reports the corrected pin
+was sent to P for local integration; this is not a deployment receipt.
