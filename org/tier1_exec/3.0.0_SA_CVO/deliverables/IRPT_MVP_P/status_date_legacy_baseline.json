@@ -1,0 +1,375 @@
+{
+  "pin": "dea338a397fc71efc2cddee0d711e99effbefdfa",
+  "schema": "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json",
+  "schema_sha256": "f06c0029cd20ceb1cc08500f456cf3122a63dc9562f9df284b360f252895008a",
+  "cases": [
+    {
+      "case": "unchanged_recorded_positive",
+      "valid": true,
+      "expected_valid": true,
+      "errors": []
+    },
+    {
+      "case": "READY_missing_business_date",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "required"
+        }
+      ]
+    },
+    {
+      "case": "READY_null_business_date",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates",
+            "business_date"
+          ],
+          "validator": "type"
+        }
+      ]
+    },
+    {
+      "case": "READY_new_basis_is_incompatible",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "additionalProperties"
+        },
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "required"
+        }
+      ]
+    },
+    {
+      "case": "PARTIAL_missing_business_date",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "required"
+        }
+      ]
+    },
+    {
+      "case": "PARTIAL_null_business_date",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates",
+            "business_date"
+          ],
+          "validator": "type"
+        }
+      ]
+    },
+    {
+      "case": "PARTIAL_new_basis_is_incompatible",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "additionalProperties"
+        },
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "required"
+        }
+      ]
+    },
+    {
+      "case": "STALE_missing_business_date",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "required"
+        }
+      ]
+    },
+    {
+      "case": "STALE_null_business_date",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates",
+            "business_date"
+          ],
+          "validator": "type"
+        }
+      ]
+    },
+    {
+      "case": "STALE_new_basis_is_incompatible",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "additionalProperties"
+        },
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "required"
+        }
+      ]
+    },
+    {
+      "case": "NEEDS_CORRECTION_missing_business_date",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "required"
+        }
+      ]
+    },
+    {
+      "case": "NEEDS_CORRECTION_null_business_date",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates",
+            "business_date"
+          ],
+          "validator": "type"
+        }
+      ]
+    },
+    {
+      "case": "NEEDS_CORRECTION_new_basis_is_incompatible",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "additionalProperties"
+        },
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "required"
+        }
+      ]
+    },
+    {
+      "case": "UNCERTAIN_missing_business_date",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "required"
+        }
+      ]
+    },
+    {
+      "case": "UNCERTAIN_null_business_date",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates",
+            "business_date"
+          ],
+          "validator": "type"
+        }
+      ]
+    },
+    {
+      "case": "UNCERTAIN_new_basis_is_incompatible",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "additionalProperties"
+        },
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "required"
+        }
+      ]
+    },
+    {
+      "case": "QUEUED_no_source_date_allowed",
+      "valid": true,
+      "expected_valid": true,
+      "errors": []
+    },
+    {
+      "case": "QUEUED_null_business_date_rejected",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates",
+            "business_date"
+          ],
+          "validator": "type"
+        }
+      ]
+    },
+    {
+      "case": "RUNNING_no_source_date_allowed",
+      "valid": true,
+      "expected_valid": true,
+      "errors": []
+    },
+    {
+      "case": "RUNNING_null_business_date_rejected",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates",
+            "business_date"
+          ],
+          "validator": "type"
+        }
+      ]
+    },
+    {
+      "case": "UNAVAILABLE_no_source_date_allowed",
+      "valid": true,
+      "expected_valid": true,
+      "errors": []
+    },
+    {
+      "case": "UNAVAILABLE_null_business_date_rejected",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates",
+            "business_date"
+          ],
+          "validator": "type"
+        }
+      ]
+    },
+    {
+      "case": "FAILED_no_source_date_allowed",
+      "valid": true,
+      "expected_valid": true,
+      "errors": []
+    },
+    {
+      "case": "FAILED_null_business_date_rejected",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates",
+            "business_date"
+          ],
+          "validator": "type"
+        }
+      ]
+    },
+    {
+      "case": "UNDATED_INPUT_unknown_even_with_existing_date",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "additionalProperties"
+        }
+      ]
+    },
+    {
+      "case": "PER_SECTION_unknown_even_with_existing_date",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "additionalProperties"
+        }
+      ]
+    },
+    {
+      "case": "closed_top_level_preserved",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [],
+          "validator": "additionalProperties"
+        }
+      ]
+    },
+    {
+      "case": "completion_and_retrieval_do_not_satisfy_business_date",
+      "valid": false,
+      "expected_valid": false,
+      "errors": [
+        {
+          "path": [
+            "source_dates"
+          ],
+          "validator": "required"
+        }
+      ]
+    }
+  ],
+  "passed": 28,
+  "limits": "Old JSON schema and existing fixture only. No new accepted prospect example, actual handler, browser parser/UI, export, frozen reopen, negotiation or paired compatibility proof."
+}
