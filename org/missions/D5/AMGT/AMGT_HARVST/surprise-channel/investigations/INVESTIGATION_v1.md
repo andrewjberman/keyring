@@ -883,6 +883,32 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "My order asserted that an object's received-form value could be derived from what its stored bytes look like, and asked the worker to print that derivation as a proposal.",
     "world_is": "received-form records WHOSE bytes an object holds, which is a fact about the act that wrote it and not about the bytes. The shape of a body is consistent with either provenance. So the instruction was unanswerable as written, and the danger is that it was answerable-LOOKING: a worker would have produced a plausible value per object, AC2 would have graded it PASS, and the output would have read as a labelling plan ready to execute.",
     "notes": "THIRD order defect by this seat in this project, and the pattern across the three is the useful part rather than any one of them. Z-S10: the order did not name what a moved call may do to a propagating exception. Z-S11: the order's invocation was unrunnable and the gate compared it only against itself. Z-S13: the order asked for a value the field cannot hold. NONE was caught by a gate, ALL THREE were caught by reading the artifact after the gates said PASS, and two of the three were caught only after the order was already with a worker. STANDING REMEDY ADOPTED: before issuing, for every criterion, ask what the named field or artifact actually RECORDS and read its definition at the bytes -- for an enum, read the enum. That is the same discipline as section 14b one level up, applied to what a criterion ASKS FOR rather than to what a row's field ACCEPTS."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S14",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-23T05:14:33Z",
+    "one_line": "THE COVERAGE QUESTION IS ANSWERED AT ZERO EGRESS, and the answer reframes the vendor case: the three publishers with zero Lenovo coverage are NOT unmeasured. All five were asked in ONE invocation and each reached a distinct recorded ACCESS-LAYER outcome -- and TWO of the three failures are NOT session-expiry, so a fourth vendor act premised on fresh sessions would be spent on paths whose last recorded outcome a fresh session does not change.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "silver article census by this seat, 86 parquet objects, ROWS DENOMINATOR 97: rows whose discovered_for CONTAINS 992_HK_Equity number 14 -- sa 3 and wsj 11. Rows per publisher overall: barrons 15, bbg 19, ft 14, sa 23, wsj 26. So barrons, bbg and ft hold 48 rows for OTHER securities and ZERO for Lenovo",
+        "RUN_REPORT.md from the one authorised Lenovo run, per-publisher table read by this seat: sa upstream_unavailable (HTTP 502 from seekingalpha.com, 24 accepted of which 3 genuinely new); bbg error (HTTPError, a real verification challenge on the JOB'S OWN first fetch, separate from the CLI probe's); ft request_rejected (HTTP 403 from www.ft.com/search); wsj complete_candidates (session expired, real re-authentication SUCCEEDED, replayed job accepted 11); barrons request_rejected (session expired, real re-authentication SUCCEEDED, replayed job's first real attempt STILL rejected)",
+        "the same report, :107 verbatim: 'bbg/ft/barrons fetched 0 pages worth of content before their respective stops' -- and :44, every publisher reached its own recorded outcome in ONE invocation. So all five WERE asked for Lenovo and none was skipped",
+        "THE DISCRIMINATOR THAT MATTERS FOR THE VENDOR QUESTION: of the three zero-coverage publishers, only bbg's failure is plausibly session-shaped (a verification challenge). ft returned HTTP 403 from a SEARCH ENDPOINT, and barrons was rejected on the replay AFTER a re-authentication that the report records as SUCCEEDED with network_auth_corroborated true. A fresh session does not change a 403 on a search path, and it demonstrably did not change barrons -- the re-auth already succeeded once and the rejection followed it",
+        "ALSO MEASURED, and it is a separate fact worth recording: the discovered_for column carries INCONSISTENT identifier forms -- BA 34, COST 25, HD 25 as BARE TICKERS and 992_HK_Equity 14 as a FULL SECURITY KEY. Three of four distinct values are bare tickers. Any consumer joining that column on a security key matches Lenovo and misses the other three",
+        "MY OWN MANUFACTURED ZERO, recorded because it is the fifth of this class tonight: my first read counted a security_key column, which does NOT exist on the silver article schema, and returned a confident 0 of 97 for Lenovo. It is the identical wrong-column zero 3.0.0_SA_CVO~Z recorded earlier tonight on this same table. Caught only because the same script printed the column list beside the count"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "The round-3 analysis stated that FWD-1's listing half remained open because 'three of five publishers remain unmeasured', and the round-4 analysis withdrew that sentence as unsupportable while asking whether the coverage question is answerable from the 479 bronze objects already held.",
+    "world_is": "It is answerable, and the answer is not that those publishers are unmeasured. Each was asked in the same invocation and each produced a distinct, recorded, terminal ACCESS-LAYER outcome with zero pages of content. So there is nothing held to evaluate for them -- not because coverage was never attempted, but because access was refused three different ways. The sentence that should replace the withdrawn one is narrower and harder: for two of the three, a fresh session is not the remedy, because the recorded failures are a search-endpoint 403 and a post-re-authentication rejection.",
+    "notes": "NO CELL IS OWED BY THIS ROW and this seat is not asking for a vendor act. The row exists so the vendor question, if anyone raises it, starts from the measurement rather than from the withdrawn sentence: bbg is the only one of the three whose recorded failure a fresh session plausibly addresses. GRADUATED because the finding is now a durable input to that decision rather than an open investigation. The identifier-form inconsistency in discovered_for is stated, not filed as a defect and not asked of anyone -- no consumer is measured as joining on it today, so it is an EXPOSURE, and naming it costs nothing."
   }
 ]
 ```
