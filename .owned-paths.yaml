@@ -101,6 +101,23 @@ lanes:
       - 4.0.0_SA_CRO~SWEEP
       - 2.0.0_SA_COO~P
     description: "IRPT P direct implementation only. Grantor 1.0.0_SA_CTO; authority IRPT_MVP_COMPLETION_20260922/AUTHORITY.md and CONTRACT.md v1.2. Incumbent CLOUD_OPS_OR_ETL members retained; no base COO, other lane, reviewer, or deploy grant. Shared file/function claims and accepted B/F preservation remain mandatory."
+  IRPT_LIVE_SCOPE_P:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP
+      - 2.0.0_SA_COO~M
+      - 2.0.0_SA_COO~P
+    description: "CTO grantor under 09b9573688 LIVE_SCOPE_OWNERSHIP_TRANSFER_20260923.md. Exact P source grant for directory/bootstrap/browse, scope, identity and common non-render authorization repair. Existing M and AE permissions preserved; M operational edit hold remains. No holdings, naming, vendor, renderer or deployment expansion. Temporary until explicit CTO handback; gate is path-level, semantic scope enforced by review."
+
   IRPT_COMPLETION_M:
     permitted_agents:
       - 0.5.0_AE_OpalETL
@@ -1055,17 +1072,17 @@ paths:
     lane: IRPT_COMPLETION_P
     note: "CTO grantor; exact P owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
   "infra/aws/lambda/investor-reporting/_scope/**":
-    lane: IRPT_COMPLETION_M
-    note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO temporary P grant 09b9573688; incumbent permissions retained. Live-scope repair only; no deploy grant. Explicit CTO handback required."
   "infra/aws/lambda/investor-reporting/_ids/**":
-    lane: IRPT_COMPLETION_M
-    note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO temporary P grant 09b9573688; incumbent permissions retained. Live-scope repair only; no deploy grant. Explicit CTO handback required."
   "infra/aws/lambda/investor-reporting/_authz/**":
-    lane: IRPT_COMPLETION_M
-    note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO temporary P grant 09b9573688; incumbent permissions retained. Live-scope repair only; no deploy grant. Explicit CTO handback required."
   "infra/aws/lambda/investor-reporting/directory/**":
-    lane: IRPT_COMPLETION_M
-    note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO temporary P grant 09b9573688; incumbent permissions retained. Live-scope repair only; no deploy grant. Explicit CTO handback required."
   "infra/aws/lambda/investor-reporting/holdings/**":
     lane: IRPT_COMPLETION_M
     note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."

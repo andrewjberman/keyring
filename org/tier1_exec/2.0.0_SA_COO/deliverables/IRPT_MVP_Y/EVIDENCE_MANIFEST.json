@@ -82,10 +82,10 @@
     "selected_candidates": "UNVERIFIED and unavailable",
     "ui_tests_pass": 16,
     "ui_assertions": 87,
-    "ui_shared_adapter_integration": "7411ada3 consumed via303d3fde; current UI7a5b24e7 independent repair retest pending"
+    "ui_shared_adapter_integration": "7411ada3 consumed via303d3fde; UI7a5b24e7 independent Y-UI01 closure1ebdadd0d4"
   },
   "current_candidate": {
-    "backend": "5a2b531645",
+    "backend": "ef9e8f51c4",
     "portal": "7a5b24e7",
     "M_resolver": "703e82ea01",
     "M_merge": "48f04a00eb",
@@ -93,7 +93,7 @@
     "P_portal_merge": "303d3fde",
     "acceptance_tests_pass": 60,
     "acceptance_subtests_pass": 39,
-    "acceptance_independent_review": "1ebdadd0d4: bounded28 independent /60 supplied39subtests PASS; mocked acceptance/dispatch and synthetic readers",
+    "acceptance_independent_review": "1ebdadd0d4 exact5a2b531645: bounded28 independent/60supplied39subtests PASS; not inherited by ef9 configuration change",
     "UI_base_tests_pass": 31,
     "UI_base_assertions": 177,
     "UI01_repair_unchanged_probe_tests_pass": 9,
@@ -105,5 +105,53 @@
     "M": "e64d917252",
     "P": "c5c3393b1f",
     "Y_recipient_catalogue": "189d81952f"
+  },
+  "frozen_worker_review": {
+    "candidate": "c2b467fa474d6e8ffb2b3ac6b26c41ddd0850b28",
+    "review": "35db29fd25",
+    "independent_pass": 26,
+    "supplied_pass": 49,
+    "scope": "Read-only retained preparation; modeled effects and held lease; no runtime/READY"
+  },
+  "recorded_configuration_candidate": {
+    "candidate": "ef9e8f51c4",
+    "tests_pass": 97,
+    "subtests_pass": 39,
+    "ruff": "PASS",
+    "commit_gate": "5/5 PASS",
+    "independent_review": "03e220f29b: bounded PASS exactef9e8f51c4fe81b60c89f7a1a3a6ec575e3cc182",
+    "scope": "Existing recorded configuration frozen at acceptance; current vendor template/settings readback and effecting runtime unproven",
+    "independent_controls_pass": 34,
+    "reviewer_correction": "Initial/diagnostic33PASS1FAIL preserved; oldest_available expectation corrected to documented oldest mapping. No product defect or implementation edit."
+  },
+  "runtime_dependency": "M023759: actual canonical Python source-reader transport and exact-input authorizer not implemented by703e82ea; M owns returning concrete adapter/dependency",
+  "canonical_profile_consumption": {
+    "m_source_pin": "8e2ba7830352b2a34c97ec96984d043654cab340",
+    "y_p_prior_pin": "ef9e8f51c4fe81b60c89f7a1a3a6ec575e3cc182",
+    "safe_merge_pin": "86d7b6ca41",
+    "consumer_test_pin": "cdbd4de74d",
+    "combined_tests_pass": 222,
+    "combined_subtests_pass": 96,
+    "unchanged_retained_probe_pass": 19,
+    "final_consumer_tests_pass": 2,
+    "ruff": "PASS",
+    "ordinary_gates": "PASS",
+    "independent_m_review": "a8f8a15e6c",
+    "independent_review_scope": "BOUNDED SOURCE PASS exact M8e2 with Y/Pef9; not inherited by merged candidate",
+    "evidence": "CANONICAL_PROFILE_CONSUMPTION.md",
+    "production_factory_installed": false,
+    "live_calls": false,
+    "integrated_criteria": "all fourteen NOT_EVALUATED",
+    "independent_y_review": {
+      "review_pin": "64c5bc59a3",
+      "candidate_pin": "cdbd4de74d86c03463eed8068e57c41e0bf8abc1",
+      "verdict": "BOUNDED PASS",
+      "independent_controls_pass": 19,
+      "focused_supplied_tests_pass": 99,
+      "focused_supplied_subtests_pass": 45,
+      "scope": "synthetic 49financial advisor prospect Overview; actual M SDK/authorizer and Y/P consumer code, modeled storage/transactions/ACTIVE policy/dispatch/held lease",
+      "integrated_criteria": "0 PASS / 0 FAIL / 14 NOT_EVALUATED",
+      "authority_change": false
+    }
   }
 }

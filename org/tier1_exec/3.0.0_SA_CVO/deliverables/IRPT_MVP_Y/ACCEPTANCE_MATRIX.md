@@ -531,3 +531,32 @@ and app TypeScript PASS. The original late A response no longer replaces newer
 B status. See RECIPIENT_UI_RETEST_7a5b.md. Supersedes Y-UI01 OPEN only for this
 exact portal pin; retains failure c387a06e2d and all14 NOT_EVALUATED. Manual hooks
 and static markup do not establish browser/vendor/render/export acceptance.
+
+## Frozen worker preparationc2b467fa bounded PASS
+
+26independent and49supplied PASS. Exact retained sources/profile/cover/settings/
+normalized bytes detached without writes; late access/fence/deadline/record/
+policy and missing-source dependency controls refuse. Actual generation_body
+cover equality tested with synthetic template. See FROZEN_WORKER_REVIEW_c2b4.md.
+Modeled transaction effects/already-held lease, no atomicity/race/vendor/render/
+runtime/READY grade. All14 integrated criteria remain0PASS/0FAIL/14NOT_EVALUATED.
+
+## Recorded configuration snapshotef9e bounded PASS
+
+34independent controls and97supplied+39subtests PASS. Exact source digests/seven
+settings/body mapping and frozen replay survive file corruption; setting/template/
+binding/source collision refusals pass. Reviewer OLDEST_AVAILABLE mapping
+expectation corrected; initial/diagnostic receipts preserved. See
+RECIPE_SNAPSHOT_REVIEW_ef9e.md. No current template/settings/vendor permission,
+installed factory, effecting worker/render/runtime grade. Integrated denominator
+remains0PASS/0FAIL/14NOT_EVALUATED.
+
+## Canonical SDK profile consumercdbd4de74d bounded PASS
+
+19independent controls and99focused supplied45subtests PASS. Actual M SDK reader/
+retained authorizer through Y/P admission/configuration/frozen worker preserves
+exact accepted values without recapture; SDK ambiguity/identity drift and original
+dependency loss refuse before composition writes. Extra private fields excluded.
+See CANONICAL_CONSUMER_REVIEW_cdbd.md; M a8f8a15e6c remains peer-attributed only.
+Synthetic SDK/storage/ACTIVE policy/dispatch/held lease, no installed factory/IAM/
+live policy/custody/effecting/vendor/render/runtime grade. All14NOT_EVALUATED.

@@ -1,0 +1,129 @@
+{
+  "recorded_at": "2026-09-23T06:32:58.209318+00:00",
+  "authority": "f6f34824d4; recorder exception 1c686165e1",
+  "source": "567a157ec8b5465039bcc9e3842d24075e68947b",
+  "frontend": "dcf5e177f6513612f5e39ce90c016d098cc41aab",
+  "recording": {
+    "actual_tool": "record-deploy-scope.py --function irpt-directory-search",
+    "wrapper_executed": false,
+    "recorded_by_caveat": "Canonical scope helper hardcodes record-terraform-deploy.sh; actual invocation was helper directly under CTO exception.",
+    "non_search_rows_unchanged": 215,
+    "refresh_row_unchanged": true,
+    "reconcile_command": "comp-lambdamap reconcile-deployed --functions irpt-directory-search --deployed-commit 567a157ec8b5465039bcc9e3842d24075e68947b --settle-retry-seconds 45",
+    "reconcile_result": "0 reconciled, 0 HELD, 1 already-in-parity; canonical tool emitted no new mutation audit entry"
+  },
+  "directory": {
+    "FunctionName": "irpt-directory-search",
+    "CodeSha256": "iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s=",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "LastModified": "2026-09-23T06:26:25.000+0000",
+    "RevisionId": "8851109e-7f1f-4915-ae2b-0dff01d276c5",
+    "Environment": {
+      "Variables": {
+        "IRPT_DIRECTORY_BUCKET_MAP": "{\"49financial\":\"opal-data-bd\",\"cottonwood\":\"opal-data-cot\",\"inflection\":\"opal-data-inf\"}",
+        "IRPT_DIRECTORY_PREFIX": "investor-reporting/directory",
+        "IRPT_REQUESTS_TABLE": "irpt-requests",
+        "IRPT_CONTRACTS_DIR": "/var/task/contracts"
+      }
+    },
+    "Role": "arn:aws:iam::313476888478:role/irpt-directory-role",
+    "Handler": "entry.lambda_handler",
+    "Runtime": "python3.12",
+    "selection_policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": [
+            "dynamodb:GetItem",
+            "dynamodb:PutItem"
+          ],
+          "Condition": {
+            "ForAllValues:StringEquals": {
+              "dynamodb:LeadingKeys": [
+                "49financial",
+                "inflection",
+                "cottonwood"
+              ]
+            }
+          },
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests"
+          ],
+          "Sid": "RetainSelectionWithinRegisteredTenant"
+        },
+        {
+          "Action": [
+            "kms:Decrypt",
+            "kms:GenerateDataKey"
+          ],
+          "Condition": {
+            "StringEquals": {
+              "kms:EncryptionContext:aws:dynamodb:tableName": "irpt-requests",
+              "kms:ViaService": "dynamodb.us-east-1.amazonaws.com"
+            }
+          },
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111"
+          ],
+          "Sid": "RequestTableEncryptionViaDynamoOnly"
+        }
+      ]
+    },
+    "measured_at": "2026-09-23T06:28:36.620070+00:00"
+  },
+  "api": {
+    "measured_at": "2026-09-23T06:29:20.970537+00:00",
+    "api_id": "7k3ed8px20",
+    "routes": [
+      {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": "naqxlm",
+        "RouteId": "4ybqnt2",
+        "RouteKey": "GET /api/scoped/investor-reporting/directory/browse",
+        "Target": "integrations/g9302sp"
+      },
+      {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": "naqxlm",
+        "RouteId": "k8em63s",
+        "RouteKey": "POST /api/scoped/investor-reporting/selections",
+        "Target": "integrations/g9302sp"
+      }
+    ]
+  },
+  "post_apply_targeted_plans": {
+    "api": {
+      "exit_code": 0,
+      "no_changes": true
+    },
+    "directory": {
+      "exit_code": 0,
+      "no_changes": true
+    }
+  },
+  "plans": {
+    "directory": "d5307a61e5401aff2d1c57f5b2bcf1a55daf51650990a82d788c2caa9e0b1d08",
+    "api": "1ff3899eab068613c3404b01e03da3127fea365d4325a52e9f9ae49a2699b2b5"
+  },
+  "artifact": {
+    "version": "RXChd66RsDjV1jhG1ZsFlOGnXeIDxApp",
+    "sha256": "iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s=",
+    "member_count": 17
+  },
+  "rollback": {
+    "artifact_version": "4FHLOwjjMQh5LNUWnJRG6La1dJxen2kD",
+    "code_sha256": "cmh6XwybmdXSiWQkQZMeer7wtw0QW/1lXnAIJlPjJKg="
+  },
+  "acceptance": {
+    "CVO_M": "91d08f28ca 45PASS",
+    "CVO_P": "169301f2cd exact567a/dcf5 replay and mounted PASS",
+    "authenticated_cloudfront_http": "OPEN",
+    "Andrew_smoke": "OPEN"
+  },
+  "ledger_timing": "Completion ledger opened retrospectively at06:31Z after exact runtime applies; no claim it was opened before apply."
+}
