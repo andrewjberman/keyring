@@ -5,8 +5,15 @@ param(
     [int]$IntervalSeconds = 300,
     [int]$NudgeAfterMinutes = 5,
     [switch]$DriveMode,
-    [switch]$Once
+    [switch]$Once,
+    [string]$MissionFile = ''
 )
+
+# The roster/P2-TO-05 pass below is the ORIGINAL owner's: it reads docs_abcdeg paths and mails
+# 4.0.0_SA_CRO / 1.5.0_SA_FI~Y. It runs ONLY for this serial. Any other serial started through the
+# drive skill gets the generic exact-seat tick (Invoke-SeatDriveTick) and nothing else -- 2026-09-23
+# 0.0.0_AB_MSTR, on 2.0.0_SA_COO~M's report that a COO~M drive sent Anatomy alerts under its name.
+$RosterOwnerSerial = '1.0.0_SA_CTO~Y'
 
 $ErrorActionPreference = 'Stop'
 
@@ -659,6 +666,44 @@ Required next motion: sweep the exact current-seat root inbox. If work has stopp
     Write-DriverState -Path $StatePath -State $state
 }
 
+function Invoke-SeatDriveTick {
+    param(
+        [string]$Root,
+        [string]$Driver,
+        [int]$NudgeMinutes,
+        [string]$LogPath,
+        [string]$StatePath,
+        [string]$Mission
+    )
+
+    $state = Read-DriverState -Path $StatePath
+    $lastNudgeState = $state['last_nudge']
+    $nowEpoch = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
+    $unread = Get-InboxUnreadState -Root $Root -Serial $Driver
+    Write-DriverLog -Path $LogPath -Message "seat-tick pass serial=$Driver unread_md=$($unread.Count) oldest=$($unread.OldestAgeSeconds)s mission=$Mission"
+
+    if ($unread.Count -le 0) {
+        $key = "DRIVE-TICK-$Driver"
+        $lastEpoch = if ($lastNudgeState.ContainsKey($key)) { [int64]$lastNudgeState[$key] } else { 0 }
+        if (($nowEpoch - $lastEpoch) -ge ($NudgeMinutes * 60)) {
+            $missionLine = if ([string]::IsNullOrWhiteSpace($Mission)) { '- mission file: (none)' } else { "- mission file: $Mission" }
+            $body = @"
+DRIVE TICK: continue repository-local drive mode for exact seat $Driver.
+
+Measured state:
+- current seat root unread .md count: $($unread.Count)
+$missionLine
+
+Required next motion: sweep the exact current-seat root inbox. If work has stopped on this seat, perform the next authorized action, verify it, and route the resulting artifact. If the next motion belongs to another seat, verify that dependency and nudge or route it canonically. Do not end on a status-only report while an authorized action remains.
+"@
+            Send-DriverMessage -Root $Root -From $Driver -To $Driver -Subject 'DRIVE TICK continue active seat motion' -Body $body -LogPath $LogPath
+            $lastNudgeState[$key] = $nowEpoch
+        }
+    }
+
+    Write-DriverState -Path $StatePath -State $state
+}
+
 $root = Resolve-Workspace -Candidate $Workspace
 $runtimeRoot = Join-Path $root ('.runtime\codex-operational-driver\' + ($DriverSerial -replace '[^A-Za-z0-9_.~-]', '_'))
 New-Item -ItemType Directory -Force -Path $runtimeRoot | Out-Null
@@ -668,11 +713,30 @@ $pidPath = Join-Path $runtimeRoot 'driver.pid'
 $modePath = Join-Path $runtimeRoot 'driver.mode'
 Set-Content -LiteralPath $pidPath -Encoding ascii -Value ([string]$PID)
 Set-Content -LiteralPath $modePath -Encoding ascii -Value $(if ($DriveMode) { 'drive' } else { 'monitor' })
-Write-DriverLog -Path $logPath -Message "start pid=$PID interval_seconds=$IntervalSeconds nudge_after_minutes=$NudgeAfterMinutes drive_mode=$DriveMode once=$Once"
+# driver.config.json is what the drive skill's start_drive.ps1 compares, so a repeat start with the same
+# arguments reports 'running' instead of restarting the driver.
+$configPath = Join-Path $runtimeRoot 'driver.config.json'
+[pscustomobject]@{
+    serial = $DriverSerial
+    pid = $PID
+    interval_seconds = $IntervalSeconds
+    nudge_after_minutes = $NudgeAfterMinutes
+    drive_mode = [bool]$DriveMode
+    mission_file = $MissionFile
+} | ConvertTo-Json -Compress | Set-Content -LiteralPath $configPath -Encoding ascii
+$seatOnly = $DriverSerial -ne $RosterOwnerSerial
+Write-DriverLog -Path $logPath -Message "start pid=$PID interval_seconds=$IntervalSeconds nudge_after_minutes=$NudgeAfterMinutes drive_mode=$DriveMode once=$Once seat_only=$seatOnly mission=$MissionFile"
 
 do {
     try {
-        Invoke-DriverPass -Root $root -Driver $DriverSerial -NudgeMinutes $NudgeAfterMinutes -LogPath $logPath -StatePath $statePath -EnableDriveTick $DriveMode.IsPresent
+        if ($seatOnly) {
+            if ($DriveMode) {
+                Invoke-SeatDriveTick -Root $root -Driver $DriverSerial -NudgeMinutes $NudgeAfterMinutes -LogPath $logPath -StatePath $statePath -Mission $MissionFile
+            }
+        }
+        else {
+            Invoke-DriverPass -Root $root -Driver $DriverSerial -NudgeMinutes $NudgeAfterMinutes -LogPath $logPath -StatePath $statePath -EnableDriveTick $DriveMode.IsPresent
+        }
     }
     catch {
         Write-DriverLog -Path $logPath -Message "ERROR $($_.Exception.Message)"
