@@ -661,3 +661,28 @@ sentence about sessions. **`FWD-5` and `FWD-6`'s spec is complete and its build 
   zero, and inventing work here would spend a worker slot to produce a report.
 - **It does not ask for egress**, and it does not restate the withdrawn sentence.
 - **It does not close `FWD-1`**, and it does not claim the project is complete -- only that its in-boundary work is.
+
+### 14c. ANY COUNT OVER THE SILVER ARTICLE TABLE PRINTS ITS COLUMN LIST BESIDE THE NUMBER
+
+**Elevated by `1.0.0_SA_CTO~Z` (msg 24692) from two incidents to a PROPERTY OF THE ARTIFACT, and it binds every
+future cut of this project.**
+
+**The measured history: TWO independent seats, ONE table, the SAME wrong column, hours apart.** `3.0.0_SA_CVO~Z`
+counted a `security_key` column on the silver `article` schema and got a confident zero; this seat did the identical
+thing later the same night and got **0 of 97** for Lenovo. **The real column is `discovered_for`, and it is a LIST
+per row, so the correct test is membership rather than equality** (list-length distribution: 96 rows at 1, one row
+at 2).
+
+**Each was caught ONLY because the script happened to print the column list beside the count.** The CTO's ruling on
+it: *"That is not two lapses in care. It is one property of the artifact, and 'be more careful' is the remedy that
+has now failed twice."*
+
+**THE CLAUSE:** any criterion, row, packet or report of this project that states a count over the silver `article`
+table **prints the column list it read beside the number.** It is free, it is the only thing that caught either
+instance, and it is the same shape as printing a denominator: **print the path you read, not just the number you
+got.**
+
+**Correct values for reference, so a future reader does not re-derive them:** silver `article` carries 32 columns
+including `article_key`, `publisher`, `discovered_for`, `bronze_key` and `record_hash`, and does **NOT** carry
+`security_key`. Lenovo's coverage is 14 rows of 97 -- `sa` 3, `wsj` 11 -- and `barrons`, `bbg` and `ft` hold 48 rows
+for other securities and zero for Lenovo (`Z-S14`).
