@@ -4,11 +4,11 @@
 # Used by the pre-commit hook (.tools/git-hooks/owned-paths-check.sh) to validate
 # that committed paths match the declared --author agent's lane.
 #
-# SCHEMA: PRD Â§6.1 (docs/architecture/ADHC_OWNPTH.md)
+# SCHEMA: PRD §6.1 (docs/architecture/ADHC_OWNPTH.md)
 # VERSION: 1
 # DATE: 2026-04-24
 # AUTHORED_BY: 1.0.0_SA_CTO
-# COMP_LEARNS_HALF: reconstructed from PRD Â§6.1 schema (draft not present in ajb_workspace)
+# COMP_LEARNS_HALF: reconstructed from PRD §6.1 schema (draft not present in ajb_workspace)
 #
 # ROLLOUT PHASE:
 #   1 = warn-mode (fail-open): violations logged to org/git-author-override-audit.log, commit proceeds
@@ -208,7 +208,7 @@ lanes:
       - 2.0.0_SA_COO
       - 3.0.0_SA_CVO
       - 4.0.0_SA_CRO   # Added 2026-08-05 by 1.0.0_SA_CTO as GRANTOR (SoD: CRO is grantee and did NOT self-land). Andrew-direct 2026-08-05 VERBATIM: "Also all process architecture (care not control, doctrine, claude.md, etc) i want you added to ownpaths for it so you can make adjustments as requested." CRO measured its own lane state with a FIRING negative control before asking. Scope NOT widened beyond the ask: TIER0_MSTR (org/tier0/ledger/**) deliberately NOT granted -- MSTR constitutional record, CRO explicitly declined it.
-    description: "Base workspace execs â€” CTO + COO + CVO (not project-scoped). 3.0.0_SA_CVO added 2026-05-23 by COO: CVO is now a Tier-1 Claude-agent exec per Andrew 2026-05-22 ruling (was Codex no-commit under prior model); lane membership catches up. Closes the gap caught by CVO /spot-check cycle 1 on ANY_EXEC_OR_AE REGISTRY-write attempt."
+    description: "Base workspace execs — CTO + COO + CVO (not project-scoped). 3.0.0_SA_CVO added 2026-05-23 by COO: CVO is now a Tier-1 Claude-agent exec per Andrew 2026-05-22 ruling (was Codex no-commit under prior model); lane membership catches up. Closes the gap caught by CVO /spot-check cycle 1 on ANY_EXEC_OR_AE REGISTRY-write attempt."
 
   WS_CONTRACT_AUTHORS:
     permitted_agents:
@@ -237,7 +237,7 @@ lanes:
       - 1.1.0_SA_CTO
       - 3.1.0_SA_CVO
       - 4.0.0_SA_CRO   # Added 2026-08-05 by 1.0.0_SA_CTO as GRANTOR (SoD: CRO is grantee and did NOT self-land). Andrew-direct 2026-08-05 VERBATIM: "Also all process architecture (care not control, doctrine, claude.md, etc) i want you added to ownpaths for it so you can make adjustments as requested." CRO measured its own lane state with a FIRING negative control before asking. Scope NOT widened beyond the ask: TIER0_MSTR (org/tier0/ledger/**) deliberately NOT granted -- MSTR constitutional record, CRO explicitly declined it.
-    description: "Tier-0 + Tier-1 startup-protocol docs â€” MSTR + ws CTO/COO/CVO + CL CTO/COO/CVO. Per Andrew direct 2026-05-26 (LD-0099 cluster): 'all tier 0 and tier 1 agents need to be able to modify XXX.md and startup docs'. Routed to ws CTO for BASE_EXEC lane authorship (MSTR was blocked on BASE_EXEC for the LD-0099 c7dee9cd5 XXX.md edits + had to route them via MSTR [BLOCKED-ASK] ASK 1 cluster 2026-05-26T~13:05Z). Applies to org/XXX.md + org/ref/COO_STARTUP.md + org/ref/RAVC_PROTOCOL.md + org/ref/SESSION_LOG_STANDARD.md + org/ref/TASK_ORDER_PROTOCOL.md + org/ref/PROMPT_CONSTRUCTION_PROCESS.md. Added 2026-05-26 by ws CTO."
+    description: "Tier-0 + Tier-1 startup-protocol docs — MSTR + ws CTO/COO/CVO + CL CTO/COO/CVO. Per Andrew direct 2026-05-26 (LD-0099 cluster): 'all tier 0 and tier 1 agents need to be able to modify XXX.md and startup docs'. Routed to ws CTO for BASE_EXEC lane authorship (MSTR was blocked on BASE_EXEC for the LD-0099 c7dee9cd5 XXX.md edits + had to route them via MSTR [BLOCKED-ASK] ASK 1 cluster 2026-05-26T~13:05Z). Applies to org/XXX.md + org/ref/COO_STARTUP.md + org/ref/RAVC_PROTOCOL.md + org/ref/SESSION_LOG_STANDARD.md + org/ref/TASK_ORDER_PROTOCOL.md + org/ref/PROMPT_CONSTRUCTION_PROCESS.md. Added 2026-05-26 by ws CTO."
 
   MSTR_ARTIFACT_PATHS:
     permitted_agents:
@@ -276,7 +276,7 @@ lanes:
       - 1.1.0_SA_CTO
       - 3.1.0_SA_CVO
       - 4.0.0_SA_CRO
-    description: "Any exec agent â€” base or project-scoped CTO/COO/CVO/CRO. 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; same gap as BASE_EXEC + ANY_EXEC_OR_AE. 4.0.0_SA_CRO added 2026-07-22 by 0.0.0_AB_MSTR (grantor; CRO is grantee â€” SoD): new Tier-1 Chief Research Officer per Andrew-direct 2026-07-22, enabling cross-exec task_order authoring. NOTE: ANY_EXEC_OR_AE membership was DELIBERATELY WITHHELD pending Andrew's ruling on whether the CRO registers research projects in org/projects/ directly or routes through CTO/COO â€” the CRO itself declined to lobby for it. LD-0331."
+    description: "Any exec agent — base or project-scoped CTO/COO/CVO/CRO. 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; same gap as BASE_EXEC + ANY_EXEC_OR_AE. 4.0.0_SA_CRO added 2026-07-22 by 0.0.0_AB_MSTR (grantor; CRO is grantee — SoD): new Tier-1 Chief Research Officer per Andrew-direct 2026-07-22, enabling cross-exec task_order authoring. NOTE: ANY_EXEC_OR_AE membership was DELIBERATELY WITHHELD pending Andrew's ruling on whether the CRO registers research projects in org/projects/ directly or routes through CTO/COO — the CRO itself declined to lobby for it. LD-0331."
 
   # ISCK_LEDGER_BUILD (2026-08-28 10:47Z-12:47Z) STRUCK by its grantor 1.0.0_SA_CTO~X on the issuer's
   # completion flip of TO NFRA_C3MATERIALIZE.TO-WP3-2-DTX @33074c3e0d: ANY_EXEC + 0.4.0_DT_ClientPlatform~X
@@ -308,7 +308,7 @@ lanes:
       - 1.1.0_SA_CTO
       - 4.0.0_SA_CRO   # Added 2026-08-05 by 1.0.0_SA_CTO as GRANTOR (SoD: CRO is grantee and did NOT self-land). Andrew-direct 2026-08-05 VERBATIM: "Also all process architecture (care not control, doctrine, claude.md, etc) i want you added to ownpaths for it so you can make adjustments as requested." CRO measured its own lane state with a FIRING negative control before asking. Scope NOT widened beyond the ask: TIER0_MSTR (org/tier0/ledger/**) deliberately NOT granted -- MSTR constitutional record, CRO explicitly declined it.
       - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
-    description: "Any CTO (base, ~B C-suite, or COMP_LEARNS) â€” architecture docs"
+    description: "Any CTO (base, ~B C-suite, or COMP_LEARNS) — architecture docs"
 
   POD1:
     permitted_agents:
@@ -321,7 +321,7 @@ lanes:
       - 0.1.0_DS_MarketIntelligence~E
       - 0.1.0_DT_MarketIntelligence
       - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
-    description: "Pod 1 â€” MarketIntelligence (DE + DS + DT); DS tilde-lanes ~A-E added 2026-05-26 per Andrew direct YALP per-page parallelization mandate (Wave 1)"
+    description: "Pod 1 — MarketIntelligence (DE + DS + DT); DS tilde-lanes ~A-E added 2026-05-26 per Andrew direct YALP per-page parallelization mandate (Wave 1)"
 
   POD1_OR_AE:
     permitted_agents:
@@ -333,7 +333,7 @@ lanes:
       - 0.6.1_AE_PartnerETL
       - 0.6.2_AE_PartnerETL
       - 0.7.0_AE_CloudOps
-    description: "news-pipeline + market-overview Lambda source â€” POD1 (DE/DS/DT) authors Lambda code, AE owns deployment infra; both permitted. Parallels POD4_OR_AE pattern. Added 2026-05-12 (Andrew authorized â€” news-trending recency/crypto-cut session)."
+    description: "news-pipeline + market-overview Lambda source — POD1 (DE/DS/DT) authors Lambda code, AE owns deployment infra; both permitted. Parallels POD4_OR_AE pattern. Added 2026-05-12 (Andrew authorized — news-trending recency/crypto-cut session)."
 
   POD2:
     permitted_agents:
@@ -341,14 +341,14 @@ lanes:
       - 0.2.0_DS_PortfolioAnalytics
       - 0.2.0_DS_PortfolioAnalytics~A
       - 0.2.0_DT_PortfolioAnalytics
-    description: "Pod 2 â€” PortfolioAnalytics (DE + DS + DT). ~A = Andrew-spawned DS sub-lane (YALP_MDSRC.F1)."
+    description: "Pod 2 — PortfolioAnalytics (DE + DS + DT). ~A = Andrew-spawned DS sub-lane (YALP_MDSRC.F1)."
 
   POD3:
     permitted_agents:
       - 0.3.0_DE_TradingOperations
       - 0.3.0_DS_TradingOperations
       - 0.3.0_DT_TradingOperations
-    description: "Pod 3 â€” TradingOperations (DE + DS + DT)"
+    description: "Pod 3 — TradingOperations (DE + DS + DT)"
 
   POD4:
     permitted_agents:
@@ -368,7 +368,7 @@ lanes:
       - 0.4.2_RD_AdvisorIntelligence~C
       - 0.4.2_RD_AdvisorIntelligence~D
       - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
-    description: "Pod 4 â€” ClientPlatform (DE + DE~B + DS + DS~A-~D + DT + RD + RD~B/~C). 0.4.0_DE_ClientPlatform~B added 2026-05-21 by CTO~B: DE~B's home-folder logs/** commits were owned-paths-blocked (the ~B variant was enumerated in POD4_OR_EXEC for task_orders but not in plain POD4 for logs). Tilde-lane owned-paths-gap pattern. 0.4.2_RD_AdvisorIntelligence~B + ~C added 2026-06-02 by ws CTO: same gap â€” RD~B (INFNNA W2) + RD~C (INFPRM W1) spawned for the 3 parallel Inflection PRDs; base RD was enumerated but the tilde lanes weren't, blocking their own home-folder logs/** + task_orders/** self-commits (RD~B [BLOCKED-ASK] via COO). 0.4.0_DE_ClientPlatform~A added 2026-06-05 by 2.0.0_SA_COO (POD4 + POD4_OR_EXEC): same tilde-lane gap â€” DE~A (MDPF_COUNTS lane) home-folder logs/** self-commit blocked; DE base + DE~B were enumerated but ~A wasn't ([BLOCKED-ASK] via COO)."
+    description: "Pod 4 — ClientPlatform (DE + DE~B + DS + DS~A-~D + DT + RD + RD~B/~C). 0.4.0_DE_ClientPlatform~B added 2026-05-21 by CTO~B: DE~B's home-folder logs/** commits were owned-paths-blocked (the ~B variant was enumerated in POD4_OR_EXEC for task_orders but not in plain POD4 for logs). Tilde-lane owned-paths-gap pattern. 0.4.2_RD_AdvisorIntelligence~B + ~C added 2026-06-02 by ws CTO: same gap — RD~B (INFNNA W2) + RD~C (INFPRM W1) spawned for the 3 parallel Inflection PRDs; base RD was enumerated but the tilde lanes weren't, blocking their own home-folder logs/** + task_orders/** self-commits (RD~B [BLOCKED-ASK] via COO). 0.4.0_DE_ClientPlatform~A added 2026-06-05 by 2.0.0_SA_COO (POD4 + POD4_OR_EXEC): same tilde-lane gap — DE~A (MDPF_COUNTS lane) home-folder logs/** self-commit blocked; DE base + DE~B were enumerated but ~A wasn't ([BLOCKED-ASK] via COO)."
 
   POD4_OR_AE:
     permitted_agents:
@@ -386,7 +386,7 @@ lanes:
       - 0.6.1_AE_PartnerETL
       - 0.6.2_AE_PartnerETL
       - 0.7.0_AE_CloudOps
-    description: "inf-pipeline Lambda source â€” POD4 (DE/DS/DT/RD) authors Lambda code, AE owns deployment infra; both permitted"
+    description: "inf-pipeline Lambda source — POD4 (DE/DS/DT/RD) authors Lambda code, AE owns deployment infra; both permitted"
 
   POD_DE_ANY:
     permitted_agents:
@@ -394,7 +394,7 @@ lanes:
       - 0.2.0_DE_PortfolioAnalytics
       - 0.3.0_DE_TradingOperations
       - 0.4.0_DE_ClientPlatform
-    description: "Any pod DE â€” portal authoring (DT pushes submodule)"
+    description: "Any pod DE — portal authoring (DT pushes submodule)"
 
   ANY_POD:
     permitted_agents:
@@ -433,7 +433,7 @@ lanes:
       - 0.3.4_RD_SecurityScanner
       - 0.4.1_RD_ModelPortfolios
       - 0.4.2_RD_AdvisorIntelligence
-    description: "Any pod agent (all pods). 0.3.1_RD_PortfolioManagement~B + ~C added 2026-06-03 by ws COO: same tilde-lane owned-paths-gap as the 0.4.0_DS~A-~E + 0.4.2_RD~B/~C precedents â€” RD~B (PMTRDX.001 x100 trade-bug, MSTR-spawned) was blocked committing its own org/tier3_rd/0.3.1_RD_PortfolioManagement/{logs,task_orders}/** (base enumerated, tilde lanes not). RD~B [BLOCKED-ASK] via COO per feedback_tilde_lane_owned_paths_gap_route_to_coo."
+    description: "Any pod agent (all pods). 0.3.1_RD_PortfolioManagement~B + ~C added 2026-06-03 by ws COO: same tilde-lane owned-paths-gap as the 0.4.0_DS~A-~E + 0.4.2_RD~B/~C precedents — RD~B (PMTRDX.001 x100 trade-bug, MSTR-spawned) was blocked committing its own org/tier3_rd/0.3.1_RD_PortfolioManagement/{logs,task_orders}/** (base enumerated, tilde lanes not). RD~B [BLOCKED-ASK] via COO per feedback_tilde_lane_owned_paths_gap_route_to_coo."
 
   SHARED_OPAL_ETL:
     permitted_agents:
@@ -458,7 +458,7 @@ lanes:
       - 0.7.0_AE_CloudOps~A
       - 0.7.0_AE_CloudOps~B
       - 0.7.0_AE_CloudOps~C
-    description: "CloudOps shared service (AE 0.7.0 + ~A + ~B + ~C sub-lanes) â€” infra, EC2_MANIFEST, Terraform. 0.7.0_AE_CloudOps~C added 2026-05-22 by COO~C: the ~C lane needs its 0.7.0_AE_CloudOps home folder (session logs) for ADVI_DEMOV1.001 â€” same tilde-lane gap as the CLOUD_OPS_OR_ETL ~C add. 0.7.0_AE_CloudOps~A added 2026-05-27 by COO: AE~A spawned per /allocation #4 18:01Z for FIND_INSURE Phase 2A workload-balance; needs CloudOps home folder for per-tick work logs + lane-scoped session logs. Tilde-lane gap pattern."
+    description: "CloudOps shared service (AE 0.7.0 + ~A + ~B + ~C sub-lanes) — infra, EC2_MANIFEST, Terraform. 0.7.0_AE_CloudOps~C added 2026-05-22 by COO~C: the ~C lane needs its 0.7.0_AE_CloudOps home folder (session logs) for ADVI_DEMOV1.001 — same tilde-lane gap as the CLOUD_OPS_OR_ETL ~C add. 0.7.0_AE_CloudOps~A added 2026-05-27 by COO: AE~A spawned per /allocation #4 18:01Z for FIND_INSURE Phase 2A workload-balance; needs CloudOps home folder for per-tick work logs + lane-scoped session logs. Tilde-lane gap pattern."
 
   CLOUD_OPS_OR_ETL:
     permitted_agents:
@@ -473,7 +473,7 @@ lanes:
       - 0.7.0_AE_CloudOps~C
       - 0.8.0_AE_CloudComp
       - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
-    description: "Any AE agent â€” infra/aws, pipeline Terraform, hook wiring. 0.7.0_AE_CloudOps~A added 2026-05-21 by COO: the lane is literally 'any AE agent' and ~A is one â€” the ~A suffix simply was not enumerated (tilde-lane owned-paths gap). A correct permanent add, not an exception. 0.7.0_AE_CloudOps~C added 2026-05-22 by COO~C: same gap â€” ~C is the ADVI_DEMOV1 AE lane running ADVI_DEMOV1.001 (infra/aws shared-infra TF + lambda-edge) under COO~C GO. 0.8.0_AE_CloudComp added 2026-06-26 by COO (2.0.0_SA_COO): the SAME enumeration gap â€” 0.8.0_AE_CloudComp is an AE agent (Andrew-direct LD-0218 made it the UNIFIED AWS+MS compiler/AE owner) and the lane is 'any AE agent'; it simply was not enumerated. A correct permanent add (it owns the globgrph-MS infra going forward, NFRA_MSGRAPH S2+ extract_ms_cloud in infra/aws/globgrph/). Grantee does not commit its own grant (SoD) â€” landed by COO grantor; CC CTO arch-awareness."
+    description: "Any AE agent — infra/aws, pipeline Terraform, hook wiring. 0.7.0_AE_CloudOps~A added 2026-05-21 by COO: the lane is literally 'any AE agent' and ~A is one — the ~A suffix simply was not enumerated (tilde-lane owned-paths gap). A correct permanent add, not an exception. 0.7.0_AE_CloudOps~C added 2026-05-22 by COO~C: same gap — ~C is the ADVI_DEMOV1 AE lane running ADVI_DEMOV1.001 (infra/aws shared-infra TF + lambda-edge) under COO~C GO. 0.8.0_AE_CloudComp added 2026-06-26 by COO (2.0.0_SA_COO): the SAME enumeration gap — 0.8.0_AE_CloudComp is an AE agent (Andrew-direct LD-0218 made it the UNIFIED AWS+MS compiler/AE owner) and the lane is 'any AE agent'; it simply was not enumerated. A correct permanent add (it owns the globgrph-MS infra going forward, NFRA_MSGRAPH S2+ extract_ms_cloud in infra/aws/globgrph/). Grantee does not commit its own grant (SoD) — landed by COO grantor; CC CTO arch-awareness."
 
   DECK:
     permitted_agents:
@@ -502,14 +502,14 @@ lanes:
       - 0.5.0_AE_OpalETL
       - 0.5.0_AE_OpalETL~B
       - 0.7.0_AE_CloudOps
-    description: "Trade-pipeline Lambda source (infra/aws/lambda/trade-pipeline/**) â€” DT 0.3.0 authorized for code edits until TRSB_TFIMPT.W3 Terraform migration; AE 0.5/0.7 (+ 0.5 ~B sub-lane, TRSB_LEDGER.009 re-route 2026-05-20) for infra. TRSB_PATHFIX scope (COO ruling 2026-05-01)."
+    description: "Trade-pipeline Lambda source (infra/aws/lambda/trade-pipeline/**) — DT 0.3.0 authorized for code edits until TRSB_TFIMPT.W3 Terraform migration; AE 0.5/0.7 (+ 0.5 ~B sub-lane, TRSB_LEDGER.009 re-route 2026-05-20) for infra. TRSB_PATHFIX scope (COO ruling 2026-05-01)."
 
   YCHARTS_PULL_MODULE:
     permitted_agents:
       - 0.1.0_DS_MarketIntelligence
       - 0.2.0_DS_PortfolioAnalytics
       - 0.7.0_AE_CloudOps
-    description: "YCharts market-data pull Lambda source (infra/aws/lambda/ycharts-market-data-pull/**) â€” YALP_MDSRC.C2 co-owners 0.1.0_DS + 0.2.0_DS authorized for code edits (the C2 TO 353b00116 assigns the DS pair to BUILD the pull module); 0.7.0_AE_CloudOps for infra/Terraform/deploy. Mirrors the TRADE_PIPELINE_INFRA DS-code/AE-infra split. COO ruling 2026-05-22 (YALP_MDSRC.C2 owned-paths gap)."
+    description: "YCharts market-data pull Lambda source (infra/aws/lambda/ycharts-market-data-pull/**) — YALP_MDSRC.C2 co-owners 0.1.0_DS + 0.2.0_DS authorized for code edits (the C2 TO 353b00116 assigns the DS pair to BUILD the pull module); 0.7.0_AE_CloudOps for infra/Terraform/deploy. Mirrors the TRADE_PIPELINE_INFRA DS-code/AE-infra split. COO ruling 2026-05-22 (YALP_MDSRC.C2 owned-paths gap)."
 
   YANG_PIPELINE_DEPLOY:
     permitted_agents:
@@ -525,7 +525,7 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 0.2.0_DT_PortfolioAnalytics
       - 0.2.0_DS_PortfolioAnalytics
-    description: "yang-pipeline deploy lane â€” the full AE CLOUD_OPS_OR_ETL set (PRESERVED verbatim, so AE deploys of all pipelines via the shared source map are unaffected) PLUS 0.2.0_DT_PortfolioAnalytics, who holds Full DT Authority over yang-pipeline and whose lambda deploys MECHANICALLY write the source map + yang TF CHANGELOG. SCOPED to yang-pipeline â€” NOT a blanket infra/aws grant. Closes the DT-enum gap (3 audited GIT_COMMIT_AUTHOR_OVERRIDE on the clean yang-v2.4.12 deploy 2026-06-26 â€” a repeat override for a STANDING role-authorized action = a coverage gap to close). Mirrors the TRADE_PIPELINE_INFRA (DT 0.3.0) + YCHARTS (DS) code-owner-gets-scoped-infra precedents. Drafted by 0.2.0_DT per COO approval 20260626T154102Z; CTO arch-gated 2026-06-26 â€” DT authority SOURCE-VERIFIED (prompt.md:39 'yang-pipeline â€” Full DT Authority' + deliverables/deployment_map.xml:26 module name=yang-pipeline authority=full), and AE set verified == CLOUD_OPS_OR_ETL exactly (no AE regression on the shared source map). Grantor-landed (SoD: grantee does not commit its own permission grant). 0.8.0_AE_CloudComp added 2026-07-02 by 2.0.0_SA_COO~B: base 0.8.0 is an AE (LD-0218 unified AWS+MS compiler/AE owner of infra/aws/globgrph) now deploying a globgrph lambda (opal-globgrph-tool-activity-freshness, NFRA_TOOLHEALTH emit-wiring L4 a0e340134) whose deploy MECHANICALLY writes the shared source map (Rule 4) -- the same code-owner-gets-the-shared-source-map use as the DT-yang precedent; scoped to the ONE source-map file by the exact-file longest-match; cross-pipeline mis-writes bounded by the CI drift detection like every lane member. Same recurring AE-enumeration gap as the ANY_EXEC_OR_AE base-0.8.0 add earlier this session. CC CTO. 0.2.0_DS_PortfolioAnalytics added 2026-08-03 by 2.0.0_SA_COO (grantor, SoD): STANDING code-lane role -- org toolkit routes Lambda SOURCE to pod DS (DS codes, DT deploys), CTO monpub-w2 TO assigns DS this Lambda, Andrew-direct scoped the yang benchmarks Lambda to DS per the 05dcbe7651 lane-note; repeat audited GIT_COMMIT_AUTHOR_OVERRIDE 2026-08-03T15:47:54Z = coverage gap per this lane's own doctrine. COO ruled permanent-scoped; CTO ARCH-GATE PASS 20260803T155644Z (permanent, not TO-temporary -- a temporary grant would re-manufacture the next override outside MDLP). Code lane only; TF deploy mechanism unchanged (DT/AE)."
+    description: "yang-pipeline deploy lane — the full AE CLOUD_OPS_OR_ETL set (PRESERVED verbatim, so AE deploys of all pipelines via the shared source map are unaffected) PLUS 0.2.0_DT_PortfolioAnalytics, who holds Full DT Authority over yang-pipeline and whose lambda deploys MECHANICALLY write the source map + yang TF CHANGELOG. SCOPED to yang-pipeline — NOT a blanket infra/aws grant. Closes the DT-enum gap (3 audited GIT_COMMIT_AUTHOR_OVERRIDE on the clean yang-v2.4.12 deploy 2026-06-26 — a repeat override for a STANDING role-authorized action = a coverage gap to close). Mirrors the TRADE_PIPELINE_INFRA (DT 0.3.0) + YCHARTS (DS) code-owner-gets-scoped-infra precedents. Drafted by 0.2.0_DT per COO approval 20260626T154102Z; CTO arch-gated 2026-06-26 — DT authority SOURCE-VERIFIED (prompt.md:39 'yang-pipeline — Full DT Authority' + deliverables/deployment_map.xml:26 module name=yang-pipeline authority=full), and AE set verified == CLOUD_OPS_OR_ETL exactly (no AE regression on the shared source map). Grantor-landed (SoD: grantee does not commit its own permission grant). 0.8.0_AE_CloudComp added 2026-07-02 by 2.0.0_SA_COO~B: base 0.8.0 is an AE (LD-0218 unified AWS+MS compiler/AE owner of infra/aws/globgrph) now deploying a globgrph lambda (opal-globgrph-tool-activity-freshness, NFRA_TOOLHEALTH emit-wiring L4 a0e340134) whose deploy MECHANICALLY writes the shared source map (Rule 4) -- the same code-owner-gets-the-shared-source-map use as the DT-yang precedent; scoped to the ONE source-map file by the exact-file longest-match; cross-pipeline mis-writes bounded by the CI drift detection like every lane member. Same recurring AE-enumeration gap as the ANY_EXEC_OR_AE base-0.8.0 add earlier this session. CC CTO. 0.2.0_DS_PortfolioAnalytics added 2026-08-03 by 2.0.0_SA_COO (grantor, SoD): STANDING code-lane role -- org toolkit routes Lambda SOURCE to pod DS (DS codes, DT deploys), CTO monpub-w2 TO assigns DS this Lambda, Andrew-direct scoped the yang benchmarks Lambda to DS per the 05dcbe7651 lane-note; repeat audited GIT_COMMIT_AUTHOR_OVERRIDE 2026-08-03T15:47:54Z = coverage gap per this lane's own doctrine. COO ruled permanent-scoped; CTO ARCH-GATE PASS 20260803T155644Z (permanent, not TO-temporary -- a temporary grant would re-manufacture the next override outside MDLP). Code lane only; TF deploy mechanism unchanged (DT/AE)."
 
   DATA_REFRESH_DEPLOY:
     permitted_agents:
@@ -584,7 +584,7 @@ lanes:
     permitted_agents:
       - 0.0.0_AB_MSTR
       - 1.0.0_SA_CTO
-    description: "The directive register FILE ONLY -- org/missions/DIRECTIVES.yaml. Added 2026-09-02 by 0.0.0_AB_MSTR as GRANTOR (SoD: 1.0.0_SA_CTO is the grantee and did NOT self-land; CTO attempted the edit, was refused by this gate, REVERTED rather than overriding, and asked -- the behaviour the gate exists to produce). AUTHORITY: Andrew-direct 2026-09-02 at the 0.0.0_AB_MSTR terminal, VERBATIM: \"I also need you to address with CTO's request, they shold have directives.yaml edit access\", answering CTO 92488 which relays his word at the CTO terminal: \"You need to have permissions for that, ask MSTR to make the necessary adjustments.\" >> WHY A ONE-FILE LANE AND NOT ADDING CTO TO TIER0_MSTR: that lane also carries org/tier0/ledger/**, org/tier0/cycles/**, org/tier0/reviews/**, the org/tier0/** catch-all AND the whole org/missions/** tree. Andrew named ONE file. Widening TIER0_MSTR would have granted the MSTR constitutional ledger on a request for a register row -- the same reasoning this file already records for the ATOM_DECOMP grant (\"a one-path lane grants exactly what Andrew asked for and nothing else\") and for OPAL_ANALYST_DE_RUNS. << >> âš  THIS IS A DISPLACEMENT, AND THE INCUMBENT IS RE-ASSERTED DELIBERATELY: a longest-match path rule REPLACES the broader lane rather than adding to it, so a grant naming only 1.0.0_SA_CTO would have SILENTLY REVOKED 0.0.0_AB_MSTR -- the register's owner and sole writer -- on the register's own file. 0.0.0_AB_MSTR is listed FIRST above for that reason, not as decoration. This file's own rule, learned at OPAL_ANALYST_DE_RUNS: the control that catches a grant is not the one that confirms the grantee, it is the one that confirms the INCUMBENTS. << GATE EXERCISED BEFORE LANDING, both directions, baseline captured at @54e0058551 BEFORE the edit so a dead arm cannot read as a passing one: grantee 1.0.0_SA_CTO on org/missions/DIRECTIVES.yaml REFUSE->PERMIT (reproduces the exact refusal CTO reported); incumbent 0.0.0_AB_MSTR PERMIT->PERMIT (not displaced); 1.0.0_SA_CTO~Z REFUSE->PERMIT (confirms the documented base-auto-permits-tilde lane-stripping rather than trusting the claim); NEG 1.0.0_SA_CTO on org/tier0/ledger/LD-0001.md REFUSE->REFUSE (the ledger did NOT come with it); NEG 1.0.0_SA_CTO on org/missions/README.md and org/missions/DIRECTIVES_RETIRED.yaml REFUSE->REFUSE (the mission tree did NOT come with it -- the grant is one file, and DIRECTIVES_RETIRED.yaml is deliberately excluded, a cut-to-retired act still routes through MSTR); NEG 2.0.0_SA_COO on org/missions/DIRECTIVES.yaml REFUSE->REFUSE (no incidental widening to other execs). SCOPE: this one file. A second register file needs a second grant."
+    description: "The directive register FILE ONLY -- org/missions/DIRECTIVES.yaml. Added 2026-09-02 by 0.0.0_AB_MSTR as GRANTOR (SoD: 1.0.0_SA_CTO is the grantee and did NOT self-land; CTO attempted the edit, was refused by this gate, REVERTED rather than overriding, and asked -- the behaviour the gate exists to produce). AUTHORITY: Andrew-direct 2026-09-02 at the 0.0.0_AB_MSTR terminal, VERBATIM: \"I also need you to address with CTO's request, they shold have directives.yaml edit access\", answering CTO 92488 which relays his word at the CTO terminal: \"You need to have permissions for that, ask MSTR to make the necessary adjustments.\" >> WHY A ONE-FILE LANE AND NOT ADDING CTO TO TIER0_MSTR: that lane also carries org/tier0/ledger/**, org/tier0/cycles/**, org/tier0/reviews/**, the org/tier0/** catch-all AND the whole org/missions/** tree. Andrew named ONE file. Widening TIER0_MSTR would have granted the MSTR constitutional ledger on a request for a register row -- the same reasoning this file already records for the ATOM_DECOMP grant (\"a one-path lane grants exactly what Andrew asked for and nothing else\") and for OPAL_ANALYST_DE_RUNS. << >> ⚠ THIS IS A DISPLACEMENT, AND THE INCUMBENT IS RE-ASSERTED DELIBERATELY: a longest-match path rule REPLACES the broader lane rather than adding to it, so a grant naming only 1.0.0_SA_CTO would have SILENTLY REVOKED 0.0.0_AB_MSTR -- the register's owner and sole writer -- on the register's own file. 0.0.0_AB_MSTR is listed FIRST above for that reason, not as decoration. This file's own rule, learned at OPAL_ANALYST_DE_RUNS: the control that catches a grant is not the one that confirms the grantee, it is the one that confirms the INCUMBENTS. << GATE EXERCISED BEFORE LANDING, both directions, baseline captured at @54e0058551 BEFORE the edit so a dead arm cannot read as a passing one: grantee 1.0.0_SA_CTO on org/missions/DIRECTIVES.yaml REFUSE->PERMIT (reproduces the exact refusal CTO reported); incumbent 0.0.0_AB_MSTR PERMIT->PERMIT (not displaced); 1.0.0_SA_CTO~Z REFUSE->PERMIT (confirms the documented base-auto-permits-tilde lane-stripping rather than trusting the claim); NEG 1.0.0_SA_CTO on org/tier0/ledger/LD-0001.md REFUSE->REFUSE (the ledger did NOT come with it); NEG 1.0.0_SA_CTO on org/missions/README.md and org/missions/DIRECTIVES_RETIRED.yaml REFUSE->REFUSE (the mission tree did NOT come with it -- the grant is one file, and DIRECTIVES_RETIRED.yaml is deliberately excluded, a cut-to-retired act still routes through MSTR); NEG 2.0.0_SA_COO on org/missions/DIRECTIVES.yaml REFUSE->REFUSE (no incidental widening to other execs). SCOPE: this one file. A second register file needs a second grant."
   OPAL_ANALYST_DE_RUNS:
     permitted_agents:
       - 0.1.0_DE_MarketIntelligence
@@ -595,13 +595,13 @@ lanes:
       - 0.5.0_AE_OpalETL
       - 0.8.0_AE_CloudComp
       - 0.0.0_AB_MSTR
-    description: "OPAL_ANALYST atom_decomp run homes for units ISSUED TO 0.1.0_DE_MarketIntelligence~Z -- portal-page-security-scanner/** (W4a) and portal-page-ticket-center/** (W4c-1). >> RENAMED + WIDENED 2026-08-12 FROM OPAL_ANALYST_W4A_RUN, WHICH WAS A LIVE BLOCK: the original was scoped to the W4a path alone, so when the same seat was issued W4c-1 the grant did not follow the assignment and safe-commit REFUSED them mid-run. THE GRANT WAS SCOPED TO A UNIT WHEN THE THING THAT PERSISTS IS THE SEAT-PLUS-PROGRAM -- a per-unit grant silently expires at the next unit, and the failure surfaces only when live work is already blocked. Exercised both paths + incumbents + a negative control before landing. << Added 2026-08-12 by 1.0.0_SA_CTO~Z as GRANTOR (SoD: DE is grantee and did NOT self-land). >> WHY A ONE-PATH LANE RATHER THAN ADDING DE TO ANY_EXEC_OR_AE: that lane carries ALL of workflows/**, project JSONs and hook-config -- widening it for one TO would grant far beyond the ask, the same reasoning this file already records for the CRO/ATOM_DECOMP grant. << REASON: W4a was re-routed from 0.5.0_AE_OpalETL~Z to 0.1.0_DE_MarketIntelligence~Z (CTO role-fit call, 2026-08-12 ~0143Z) so the portal program does not stall on a single seat's availability; W4a is control-sized, pure-read, and the one W4 unit whose axis fits today. GATE EXERCISED BEFORE THE GRANT with both controls discriminating: DE~Z on this path FALSE / AE~Z TRUE; NEG control (COO on tier0/ledger) FALSE reproduces a documented refusal, POS control (DE~Z on its own deliverables) TRUE proves the harness was not refusing DE everywhere. SCOPE: this path and nothing else -- W4b and W4c are NOT covered and were explicitly excluded in the role-fit call; a further unit needs a further grant. >> âš  THE SIX SEATS BELOW DE ARE NOT A WIDENING -- THEY ARE A REVOCATION REPAIR, AND THE FIRST DRAFT OF THIS GRANT WAS A LIVE REGRESSION. A longest-match path override REPLACES the broader lane rather than adding to it, so granting DE alone SILENTLY REVOKED every seat ANY_EXEC_OR_AE had already permitted here -- including 3.0.0_SA_CVO, WHO MUST WRITE certification.json INTO THIS RUN HOME. A grant written to ADD one author would have BROKEN CERTIFICATION for the very run it was enabling, and nothing about the edit looks like a revocation. Caught pre-commit only because the exercise carried an explicit 'AE~Z still permitted' control alongside the intended-effect check: THE CONTROL THAT CATCHES A GRANT IS NOT THE ONE THAT CONFIRMS THE GRANTEE, IT IS THE ONE THAT CONFIRMS THE INCUMBENTS. Any future narrow override of a broad lane must re-assert the incumbents it displaces and exercise them. Tilde-lane note: ~Z is enumerated redundantly (base auto-permits per the documented lane-stripping at owned-paths-validate.py) -- kept as documentation, NOT as evidence enumeration was required. >> âš  **2026-08-12 ~1810Z -- THE GRANT WAS WIDENED A SECOND TIME, AND THE SECOND WIDENING WAS ALSO A LIVE BLOCK BEFORE IT LANDED. My own description above DIAGNOSED the per-unit-grant class -- 'a per-unit grant silently expires at the next unit, and the failure surfaces only when live work is already blocked' -- AND THEN I REPAIRED A PER-UNIT GRANT WITH ANOTHER PER-UNIT GRANT, one instance wider. safe-commit refused 0.1.0_DE_MarketIntelligence~Z's W4c-3 bar+prediction, blocking the run's FIRST act (the ordering property C1 requires the bar be committed BEFORE any enumeration, so the seat correctly refused to work around it). The grantee flagged the class rather than the inconvenience and did NOT self-land. Third instance of this shape in one session; notable because THE NOTE PREDICTING IT IS IN THE SAME FIELD AS THE GRANT THAT FAILED.** << >> **WHY ENUMERATION OF THE REMAINING ROSTER AND NOT `portal-page-*/**` -- MEASURED, NOT PREFERRED. A wildcard override displaces `ANY_EXEC_OR_AE` across every present AND FUTURE page run: measured 10 entries / 8 DISTINCT BASE SERIALS revoked (0.6.0/0.6.1/0.6.2_AE_PartnerETL, 0.7.0_AE_CloudOps, 1.1.0_SA_CTO, 2.1.0_SA_COO, 3.1.0_SA_CVO, 4.0.0_SA_CRO), compared on BASE because base auto-permits tilde. THE PROGRAM'S PAGE ROSTER IS CLOSED (16 units; 12 certified, 1 in flight, 3 remaining), SO ENUMERATION TERMINATES AND IS NOT THE TREADMILL THE GRANTEE CORRECTLY OBJECTED TO -- it completes the grant across the remaining roster in one act instead of expiring per unit.** << >> **THE DISPLACEMENT IS REAL, CONTAINED, AND NAMED RATHER THAN GLOSSED: on these 3 new paths the same 8 base serials ARE revoked -- exercised, 0.7.0_AE_CloudOps and 4.0.0_SA_CRO~Z both REFUSED on all three. No displaced seat has a demonstrated need (none authors atom_decomp page runs; CRO~Z's W8 writes its own deliverables dir), so this is accepted rather than repaired -- BUT ANY DISPLACED SEAT THAT NEEDS A PAGE-RUN PATH IS ADDED ON ASK, and a future grantor must not read this acceptance as evidence the displacement did not occur.** << GATE EXERCISED BEFORE LANDING, both directions, per this lane's own rule that the control which catches a grant is the one confirming the INCUMBENTS: grantee DE~Z PERMITTED on all 3; incumbents CVO~Z (certifier -- writes certification.json), 0.5.0_AE_OpalETL~Z (author of W4c-2/W4c-4), CTO~Z (gate) and COO~Z (driver) PERMITTED on all 3; NEG control DE~Z on org/tier0/ledger/** REFUSED (harness discriminates); YAML re-validated 57 lanes / 244 path rules, all lane refs resolve. Landed by 1.0.0_SA_CTO~Z as GRANTOR (SoD: DE is grantee and did NOT self-land)."
+    description: "OPAL_ANALYST atom_decomp run homes for units ISSUED TO 0.1.0_DE_MarketIntelligence~Z -- portal-page-security-scanner/** (W4a) and portal-page-ticket-center/** (W4c-1). >> RENAMED + WIDENED 2026-08-12 FROM OPAL_ANALYST_W4A_RUN, WHICH WAS A LIVE BLOCK: the original was scoped to the W4a path alone, so when the same seat was issued W4c-1 the grant did not follow the assignment and safe-commit REFUSED them mid-run. THE GRANT WAS SCOPED TO A UNIT WHEN THE THING THAT PERSISTS IS THE SEAT-PLUS-PROGRAM -- a per-unit grant silently expires at the next unit, and the failure surfaces only when live work is already blocked. Exercised both paths + incumbents + a negative control before landing. << Added 2026-08-12 by 1.0.0_SA_CTO~Z as GRANTOR (SoD: DE is grantee and did NOT self-land). >> WHY A ONE-PATH LANE RATHER THAN ADDING DE TO ANY_EXEC_OR_AE: that lane carries ALL of workflows/**, project JSONs and hook-config -- widening it for one TO would grant far beyond the ask, the same reasoning this file already records for the CRO/ATOM_DECOMP grant. << REASON: W4a was re-routed from 0.5.0_AE_OpalETL~Z to 0.1.0_DE_MarketIntelligence~Z (CTO role-fit call, 2026-08-12 ~0143Z) so the portal program does not stall on a single seat's availability; W4a is control-sized, pure-read, and the one W4 unit whose axis fits today. GATE EXERCISED BEFORE THE GRANT with both controls discriminating: DE~Z on this path FALSE / AE~Z TRUE; NEG control (COO on tier0/ledger) FALSE reproduces a documented refusal, POS control (DE~Z on its own deliverables) TRUE proves the harness was not refusing DE everywhere. SCOPE: this path and nothing else -- W4b and W4c are NOT covered and were explicitly excluded in the role-fit call; a further unit needs a further grant. >> ⚠ THE SIX SEATS BELOW DE ARE NOT A WIDENING -- THEY ARE A REVOCATION REPAIR, AND THE FIRST DRAFT OF THIS GRANT WAS A LIVE REGRESSION. A longest-match path override REPLACES the broader lane rather than adding to it, so granting DE alone SILENTLY REVOKED every seat ANY_EXEC_OR_AE had already permitted here -- including 3.0.0_SA_CVO, WHO MUST WRITE certification.json INTO THIS RUN HOME. A grant written to ADD one author would have BROKEN CERTIFICATION for the very run it was enabling, and nothing about the edit looks like a revocation. Caught pre-commit only because the exercise carried an explicit 'AE~Z still permitted' control alongside the intended-effect check: THE CONTROL THAT CATCHES A GRANT IS NOT THE ONE THAT CONFIRMS THE GRANTEE, IT IS THE ONE THAT CONFIRMS THE INCUMBENTS. Any future narrow override of a broad lane must re-assert the incumbents it displaces and exercise them. Tilde-lane note: ~Z is enumerated redundantly (base auto-permits per the documented lane-stripping at owned-paths-validate.py) -- kept as documentation, NOT as evidence enumeration was required. >> ⚠ **2026-08-12 ~1810Z -- THE GRANT WAS WIDENED A SECOND TIME, AND THE SECOND WIDENING WAS ALSO A LIVE BLOCK BEFORE IT LANDED. My own description above DIAGNOSED the per-unit-grant class -- 'a per-unit grant silently expires at the next unit, and the failure surfaces only when live work is already blocked' -- AND THEN I REPAIRED A PER-UNIT GRANT WITH ANOTHER PER-UNIT GRANT, one instance wider. safe-commit refused 0.1.0_DE_MarketIntelligence~Z's W4c-3 bar+prediction, blocking the run's FIRST act (the ordering property C1 requires the bar be committed BEFORE any enumeration, so the seat correctly refused to work around it). The grantee flagged the class rather than the inconvenience and did NOT self-land. Third instance of this shape in one session; notable because THE NOTE PREDICTING IT IS IN THE SAME FIELD AS THE GRANT THAT FAILED.** << >> **WHY ENUMERATION OF THE REMAINING ROSTER AND NOT `portal-page-*/**` -- MEASURED, NOT PREFERRED. A wildcard override displaces `ANY_EXEC_OR_AE` across every present AND FUTURE page run: measured 10 entries / 8 DISTINCT BASE SERIALS revoked (0.6.0/0.6.1/0.6.2_AE_PartnerETL, 0.7.0_AE_CloudOps, 1.1.0_SA_CTO, 2.1.0_SA_COO, 3.1.0_SA_CVO, 4.0.0_SA_CRO), compared on BASE because base auto-permits tilde. THE PROGRAM'S PAGE ROSTER IS CLOSED (16 units; 12 certified, 1 in flight, 3 remaining), SO ENUMERATION TERMINATES AND IS NOT THE TREADMILL THE GRANTEE CORRECTLY OBJECTED TO -- it completes the grant across the remaining roster in one act instead of expiring per unit.** << >> **THE DISPLACEMENT IS REAL, CONTAINED, AND NAMED RATHER THAN GLOSSED: on these 3 new paths the same 8 base serials ARE revoked -- exercised, 0.7.0_AE_CloudOps and 4.0.0_SA_CRO~Z both REFUSED on all three. No displaced seat has a demonstrated need (none authors atom_decomp page runs; CRO~Z's W8 writes its own deliverables dir), so this is accepted rather than repaired -- BUT ANY DISPLACED SEAT THAT NEEDS A PAGE-RUN PATH IS ADDED ON ASK, and a future grantor must not read this acceptance as evidence the displacement did not occur.** << GATE EXERCISED BEFORE LANDING, both directions, per this lane's own rule that the control which catches a grant is the one confirming the INCUMBENTS: grantee DE~Z PERMITTED on all 3; incumbents CVO~Z (certifier -- writes certification.json), 0.5.0_AE_OpalETL~Z (author of W4c-2/W4c-4), CTO~Z (gate) and COO~Z (driver) PERMITTED on all 3; NEG control DE~Z on org/tier0/ledger/** REFUSED (harness discriminates); YAML re-validated 57 lanes / 244 path rules, all lane refs resolve. Landed by 1.0.0_SA_CTO~Z as GRANTOR (SoD: DE is grantee and did NOT self-land)."
   ATOM_DECOMP:
     permitted_agents:
       - 0.0.0_AB_MSTR
       - 4.0.0_SA_CRO
       - 4.0.0_SA_CRO~A
-    description: "Andrew's ATOM_DECOMP research folder (projects/ATOM_DECOMP/**) -- MSTR (unchanged, from the 2026-08-06 lock) PLUS the CRO as author. Added 2026-08-07 by 1.0.0_SA_CTO~D as GRANTOR (SoD: CRO is grantee and did NOT self-land). Andrew-direct ~0450Z at the CVO~C terminal, VERBATIM: \"it already lives in the /projects folder we can just have MSTR give 4.0.0_SA_CRO ownpaths to /projects/atom_decomp or whatever. I don't really understand the question seems like a formality that doesn't really matter.\" He named MSTR as one route and CTO~D as the doer (\"Have your CTO~D do it when they have a second\"); .owned-paths.yaml is ANY_EXEC_OR_AE (:1783) so either closes it. Confirmed on follow-up: \"Go ahead with your recs.\" >> WHY A DEDICATED LANE RATHER THAN ADDING CRO TO TIER0_MSTR: that lane also carries org/tier0/ledger/** -- the MSTR constitutional record -- so widening it would have granted far beyond the ask. CRO declined a comparable widening when offered (see ANY_EXEC :74). A one-path lane grants exactly what Andrew asked for and nothing else. << The 2026-08-06 LOCK RATIONALE STANDS: this is still his folder, locked deliberately; 2026-08-07 ADDS one named grantee. >> 2026-08-07 LATER: ADDED 4.0.0_SA_CRO~A by 1.0.0_SA_CTO as GRANTOR (SoD: CRO is grantee and did not self-land; same grantor seat as the ~D grant above). Andrew-direct at the base CTO terminal -- a dedicated ~A seat to go through the ATOM_DECOMP corpus (72 tracked at grant time; 68 GPT-authored at import @66d83132d5 -- the audit subject. â›” THIS READ '89 tracked files' AND WAS WRONG WHEN WRITTEN, corrected 2026-08-07 by 1.0.0_SA_CTO on 4.0.0_SA_CRO~A's find + CRO's re-derivation: 89 was `git ls-files | grep -c ATOM_DECOMP`, i.e. every REPO PATH CONTAINING THE STRING -- inbox messages and cross-references included -- reported as files in the corpus. A count whose frame was 'paths matching a string' quoted as a corpus denominator, overstating the audit subject by 31%. It travelled four hops -- grant commit -> this description -> MSTR broadcast -> CRO's briefing -> ~A's launcher -- gaining authority at each and measured at none. Two digits are kept here deliberately because they answer different questions) because it is GPT-authored and he wants it examined and possibly refined. WITHOUT THIS LINE THE AUDIT SUBJECT ITSELF IS REFUSED: the lane is enumeration-based and does not cover tilde seats. The lock rationale is UNCHANGED and this is still his folder -- one more named grantee, scoped to the same single path, granting nothing beyond it."
+    description: "Andrew's ATOM_DECOMP research folder (projects/ATOM_DECOMP/**) -- MSTR (unchanged, from the 2026-08-06 lock) PLUS the CRO as author. Added 2026-08-07 by 1.0.0_SA_CTO~D as GRANTOR (SoD: CRO is grantee and did NOT self-land). Andrew-direct ~0450Z at the CVO~C terminal, VERBATIM: \"it already lives in the /projects folder we can just have MSTR give 4.0.0_SA_CRO ownpaths to /projects/atom_decomp or whatever. I don't really understand the question seems like a formality that doesn't really matter.\" He named MSTR as one route and CTO~D as the doer (\"Have your CTO~D do it when they have a second\"); .owned-paths.yaml is ANY_EXEC_OR_AE (:1783) so either closes it. Confirmed on follow-up: \"Go ahead with your recs.\" >> WHY A DEDICATED LANE RATHER THAN ADDING CRO TO TIER0_MSTR: that lane also carries org/tier0/ledger/** -- the MSTR constitutional record -- so widening it would have granted far beyond the ask. CRO declined a comparable widening when offered (see ANY_EXEC :74). A one-path lane grants exactly what Andrew asked for and nothing else. << The 2026-08-06 LOCK RATIONALE STANDS: this is still his folder, locked deliberately; 2026-08-07 ADDS one named grantee. >> 2026-08-07 LATER: ADDED 4.0.0_SA_CRO~A by 1.0.0_SA_CTO as GRANTOR (SoD: CRO is grantee and did not self-land; same grantor seat as the ~D grant above). Andrew-direct at the base CTO terminal -- a dedicated ~A seat to go through the ATOM_DECOMP corpus (72 tracked at grant time; 68 GPT-authored at import @66d83132d5 -- the audit subject. ⛔ THIS READ '89 tracked files' AND WAS WRONG WHEN WRITTEN, corrected 2026-08-07 by 1.0.0_SA_CTO on 4.0.0_SA_CRO~A's find + CRO's re-derivation: 89 was `git ls-files | grep -c ATOM_DECOMP`, i.e. every REPO PATH CONTAINING THE STRING -- inbox messages and cross-references included -- reported as files in the corpus. A count whose frame was 'paths matching a string' quoted as a corpus denominator, overstating the audit subject by 31%. It travelled four hops -- grant commit -> this description -> MSTR broadcast -> CRO's briefing -> ~A's launcher -- gaining authority at each and measured at none. Two digits are kept here deliberately because they answer different questions) because it is GPT-authored and he wants it examined and possibly refined. WITHOUT THIS LINE THE AUDIT SUBJECT ITSELF IS REFUSED: the lane is enumeration-based and does not cover tilde seats. The lock rationale is UNCHANGED and this is still his folder -- one more named grantee, scoped to the same single path, granting nothing beyond it."
   TIER0_RATIFY:
     permitted_agents:
       - 3.0.0_SA_CVO
@@ -625,7 +625,7 @@ lanes:
     permitted_agents:
       - 0.0.0_AB_MSTR
       - 1.0.0_SA_CTO
-    description: "RETIRED-IN-PLACE 2026-09-03 (LD-0525, Andrew-direct at the 0.0.0_AB_MSTR terminal ~05:2xZ: the /ws-charter skill is deleted and the CTO launch row no longer names it; MSTR 93153 routed the lane to the grantor). The audit log this lane guards is HISTORY and nobody writes it again; the lane and its one path rule are KEPT only so the path resolves in every census (an UNDEFINED rule reads as a registry gap), permitted set unchanged and unused. ORIGINAL: ws-charter HARD-BLOCK audit log (org/ws-charter-hard-block-audit.log) -- MSTR-owned header content (TIER0_LAW-equivalent per /ws-charter SKILL.md Step 4a Meta-catches Â§3); ws CTO appends per-fire HARD-EXIT entries. Init at LD-0080 (10f7ed154); lane added 2026-05-26 by ws CTO per MSTR INIT-REQUEST + LD-0080 authorization chain."
+    description: "RETIRED-IN-PLACE 2026-09-03 (LD-0525, Andrew-direct at the 0.0.0_AB_MSTR terminal ~05:2xZ: the /ws-charter skill is deleted and the CTO launch row no longer names it; MSTR 93153 routed the lane to the grantor). The audit log this lane guards is HISTORY and nobody writes it again; the lane and its one path rule are KEPT only so the path resolves in every census (an UNDEFINED rule reads as a registry gap), permitted set unchanged and unused. ORIGINAL: ws-charter HARD-BLOCK audit log (org/ws-charter-hard-block-audit.log) -- MSTR-owned header content (TIER0_LAW-equivalent per /ws-charter SKILL.md Step 4a Meta-catches §3); ws CTO appends per-fire HARD-EXIT entries. Init at LD-0080 (10f7ed154); lane added 2026-05-26 by ws CTO per MSTR INIT-REQUEST + LD-0080 authorization chain."
 
   CVO_WORKSPACE:
     permitted_agents:
@@ -657,7 +657,7 @@ lanes:
       - 1.0.0_SA_CTO~Y
       - 3.0.0_SA_CVO~Y
       - 0.0.0_AB_MSTR
-    description: "Home for 1.7.0_SA_KRN (org/tier1_exec/1.7.0_SA_KRN/**) -- C3 boundary / deterministic-kernel producer seat on the Y fabric, live lane 1.7.0_SA_KRN~Y. Minted 2026-09-10 by 0.0.0_AB_MSTR as GRANTOR on 1.0.0_SA_CTO~Y's concrete provisioning request (msg 95303), under Andrew's standing grant the same day ('yes you can give them their agents (1.0.0_SA_CTO~Y)') and his direct follow-up ('I need the agent for 1.0.0_SA_CTO~Y, you never minted it for them'). THE GRANTEE DID NOT COMMIT ITS OWN GRANT -- Andrew's SoD ruling, carried on this file's own ANY_EXEC_OR_AE lane; exact CRO_WORKSPACE precedent where MSTR was likewise grantor. 1.0.0_SA_CTO~Y is the issuer and integration owner and 3.0.0_SA_CVO~Y the validator, both enumerated so they can author task orders and review records into the home -- mirroring CRO_WORKSPACE, where CTO+COO retain write access for gate-review reports. The base serial alone covers its tilde lanes (this file's agent side strips one tilde, header ~line 43), so ~Y needs no separate member. â›” NOT A REVIVAL of the six Phase 2 lanes (KJ, A0, ADP, GATE, FI, TRN) retired by 1.0.0_SA_CTO~Y the same day; the issuer asked explicitly for a fresh serial and their charters stay untouched. â›” AND THE HOME RULE IS PART OF MINTING, NOT A FOLLOW-UP: the seat's runtime came up fine without it because codex-seat-load resolves off the filesystem, but the commit gate refused its scaffolding with UNDEFINED -- a seat that can run and cannot commit is a seat whose output dies with its window. LD-0331's lesson restated: a new exec's home must be ENUMERATED or safe-commit returns UNDEFINED."
+    description: "Home for 1.7.0_SA_KRN (org/tier1_exec/1.7.0_SA_KRN/**) -- C3 boundary / deterministic-kernel producer seat on the Y fabric, live lane 1.7.0_SA_KRN~Y. Minted 2026-09-10 by 0.0.0_AB_MSTR as GRANTOR on 1.0.0_SA_CTO~Y's concrete provisioning request (msg 95303), under Andrew's standing grant the same day ('yes you can give them their agents (1.0.0_SA_CTO~Y)') and his direct follow-up ('I need the agent for 1.0.0_SA_CTO~Y, you never minted it for them'). THE GRANTEE DID NOT COMMIT ITS OWN GRANT -- Andrew's SoD ruling, carried on this file's own ANY_EXEC_OR_AE lane; exact CRO_WORKSPACE precedent where MSTR was likewise grantor. 1.0.0_SA_CTO~Y is the issuer and integration owner and 3.0.0_SA_CVO~Y the validator, both enumerated so they can author task orders and review records into the home -- mirroring CRO_WORKSPACE, where CTO+COO retain write access for gate-review reports. The base serial alone covers its tilde lanes (this file's agent side strips one tilde, header ~line 43), so ~Y needs no separate member. ⛔ NOT A REVIVAL of the six Phase 2 lanes (KJ, A0, ADP, GATE, FI, TRN) retired by 1.0.0_SA_CTO~Y the same day; the issuer asked explicitly for a fresh serial and their charters stay untouched. ⛔ AND THE HOME RULE IS PART OF MINTING, NOT A FOLLOW-UP: the seat's runtime came up fine without it because codex-seat-load resolves off the filesystem, but the commit gate refused its scaffolding with UNDEFINED -- a seat that can run and cannot commit is a seat whose output dies with its window. LD-0331's lesson restated: a new exec's home must be ENUMERATED or safe-commit returns UNDEFINED."
 
   RCG_OPERATOR:
     permitted_agents:
@@ -673,7 +673,7 @@ lanes:
   # CTO/COO author task orders into lane folders; lane owner edits status post-receipt.
   # ADHC_OWNPTH.005 false-positive fix 2026-04-30: COO authoring TOs into pod folders
   # was the dominant warn-mode WARN class (~12 entries on 2026-04-29). These lanes open
-  # task_orders/ files only â€” parent agent home folder remains lane-strict.
+  # task_orders/ files only — parent agent home folder remains lane-strict.
   # -----------------------------------------------------------------------
 
   POD1_OR_EXEC:
@@ -792,7 +792,7 @@ lanes:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
-    description: "Any pod agent + any exec (tier3 task_orders authoring â€” exec dispatch + RD self-edit; ADHC_OWNPTH 48h scan FP-4 fix 2026-05-04)"
+    description: "Any pod agent + any exec (tier3 task_orders authoring — exec dispatch + RD self-edit; ADHC_OWNPTH 48h scan FP-4 fix 2026-05-04)"
 
   SHARED_PARTNER_ETL_OR_EXEC:
     permitted_agents:
@@ -806,7 +806,7 @@ lanes:
       - 3.0.0_SA_CVO
       - 3.1.0_SA_CVO
       - 4.0.0_SA_CRO   # Added 2026-08-12 by 0.0.0_AB_MSTR as GRANTOR (SoD: CRO is grantee and did NOT self-land -- and the gate would have LET them, exercised with a firing negative control). Andrew-direct 2026-08-12 at the CRO terminal, VERBATIM: "furthermore CRO needs to be added to any and all EXEC-coded groups." Record @32e3d952b8. TIER0_EXEC deliberately NOT included here -- it is not an exec-permission group, it is MSTR's own agent home folder (org/tier0_exec/**, holds ONLY 0.0.0_AB_MSTR/); routed to Andrew rather than decided by its own owner.
-    description: "PartnerETL AEs + any exec (task_orders/ authoring). CVO (3.0.0/3.1.0) added 2026-06-10 by CVO per MSTR dispatch + COO LANE-GAP 20260610T133546Z: 'any exec' must enumerate CVO â€” gap blocked a CVO-originator MDPF_CADENCE close TO-flip."
+    description: "PartnerETL AEs + any exec (task_orders/ authoring). CVO (3.0.0/3.1.0) added 2026-06-10 by CVO per MSTR dispatch + COO LANE-GAP 20260610T133546Z: 'any exec' must enumerate CVO — gap blocked a CVO-originator MDPF_CADENCE close TO-flip."
 
   SHARED_CLOUD_OPS_OR_EXEC:
     permitted_agents:
@@ -826,7 +826,7 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
-    description: "Cloud Compiler Tester (ws-fabric Tier-2 worker) home folder. Created 2026-05-27 by COO per LD-0119 â€” Andrew sovereign 2026-05-27T~19:25Z + CL CVO architectural ask 19:30Z + MSTR LD-0119 materialization + ws CTO [OWNED-PATHS AMEND ASK] 19:55Z. ws CTO authors initial substrate (prompt.md + README); ws COO routes ferry-test TOs (task_orders/**); 0.8.0_AE_CloudComp self-commits ferry results + session logs + deliverables. Tilde-lane variants deferred to future per-instance amend cycles."
+    description: "Cloud Compiler Tester (ws-fabric Tier-2 worker) home folder. Created 2026-05-27 by COO per LD-0119 — Andrew sovereign 2026-05-27T~19:25Z + CL CVO architectural ask 19:30Z + MSTR LD-0119 materialization + ws CTO [OWNED-PATHS AMEND ASK] 19:55Z. ws CTO authors initial substrate (prompt.md + README); ws COO routes ferry-test TOs (task_orders/**); 0.8.0_AE_CloudComp self-commits ferry results + session logs + deliverables. Tilde-lane variants deferred to future per-instance amend cycles."
 
   SYSTEM_CURRENT_REGEN:
     permitted_agents:
@@ -849,7 +849,7 @@ lanes:
   ANY_EXEC_OR_AE:
     permitted_agents:
       - 1.0.0_SA_CTO
-      - 1.0.0_SA_CTO~C   # Added 2026-07-29 by 2.0.0_SA_COO (grantor; ~C is grantee -- SoD; ~C declined to self-land under Andrew's ~1714Z "do absolutely whatever you need", correctly: a lane whose first commit widens its own grant is the wrong precedent however right the grant). Andrew-direct ~1705-1740Z put the whole comp-tool package on ~C. >> âš  **THIS ENTRY IS REDUNDANT AND I AM LEAVING IT ONLY AS DOCUMENTATION -- DO NOT CITE IT AS EVIDENCE THAT ENUMERATION WAS REQUIRED.** I landed it on the inference "~C is not enumerated, therefore BLOCKED" and NEVER EXERCISED THE GATE. Exercised afterwards, with a positive control: `check_agent('1.0.0_SA_CTO~C', 'org/modules/graph/comp_*.py')` returns **True WITHOUT this entry**; control `check_agent('2.0.0_SA_COO','org/tier0/ledger/*')` returns False (reproducing a real refusal, so the harness discriminates). MECHANISM, source-confirmed at `.tools/owned-paths-validate.py:125-160`: after an exact-match miss, `check_agent` strips ONE trailing `_<alnum>` lane segment and re-tests, so **a tilde lane is permitted wherever its BASE serial is enumerated** -- deliberate, documented, additive-only, RV-0030 F-003 (ws CTO, 2026-06-08). << **THE GOVERNANCE CONSEQUENCE, which is the part worth keeping: A TILDE LANE CANNOT BE SCOPED BELOW ITS BASE BY OMISSION.** I withheld ANY_CTO here as "least-privilege over parity" -- that withholding is a NO-OP; ~C already holds ANY_CTO, ANY_EXEC and this lane through base `1.0.0_SA_CTO`. Any future attempt to give a lane LESS than its base needs a real mechanism, not an absent enumeration. **Grants dated BEFORE 2026-06-08 (the auto-permit) were live; tilde-lane grants after it may be no-ops -- check the date before citing any of them as precedent.**
+      - 1.0.0_SA_CTO~C   # Added 2026-07-29 by 2.0.0_SA_COO (grantor; ~C is grantee -- SoD; ~C declined to self-land under Andrew's ~1714Z "do absolutely whatever you need", correctly: a lane whose first commit widens its own grant is the wrong precedent however right the grant). Andrew-direct ~1705-1740Z put the whole comp-tool package on ~C. >> ⚠ **THIS ENTRY IS REDUNDANT AND I AM LEAVING IT ONLY AS DOCUMENTATION -- DO NOT CITE IT AS EVIDENCE THAT ENUMERATION WAS REQUIRED.** I landed it on the inference "~C is not enumerated, therefore BLOCKED" and NEVER EXERCISED THE GATE. Exercised afterwards, with a positive control: `check_agent('1.0.0_SA_CTO~C', 'org/modules/graph/comp_*.py')` returns **True WITHOUT this entry**; control `check_agent('2.0.0_SA_COO','org/tier0/ledger/*')` returns False (reproducing a real refusal, so the harness discriminates). MECHANISM, source-confirmed at `.tools/owned-paths-validate.py:125-160`: after an exact-match miss, `check_agent` strips ONE trailing `_<alnum>` lane segment and re-tests, so **a tilde lane is permitted wherever its BASE serial is enumerated** -- deliberate, documented, additive-only, RV-0030 F-003 (ws CTO, 2026-06-08). << **THE GOVERNANCE CONSEQUENCE, which is the part worth keeping: A TILDE LANE CANNOT BE SCOPED BELOW ITS BASE BY OMISSION.** I withheld ANY_CTO here as "least-privilege over parity" -- that withholding is a NO-OP; ~C already holds ANY_CTO, ANY_EXEC and this lane through base `1.0.0_SA_CTO`. Any future attempt to give a lane LESS than its base needs a real mechanism, not an absent enumeration. **Grants dated BEFORE 2026-06-08 (the auto-permit) were live; tilde-lane grants after it may be no-ops -- check the date before citing any of them as precedent.**
       - 2.0.0_SA_COO
       - 3.0.0_SA_CVO
       - 4.0.0_SA_CRO   # Andrew-direct 2026-07-22 "You can register projects yes." -> ~~SCOPED TO PROJECT REGISTRATION~~ **SUPERSEDED 2026-08-12** (Andrew-direct: "CRO needs to be added to any and all EXEC-coded groups", record @32e3d952b8) -- the narrowing below is HISTORICAL ONLY and MUST NOT be read as live scope. It was also prose narrowing an ENUMERATION-based gate that never enforced it (check_agent returns True across the whole lane, measured). Original text follows: SCOPED TO PROJECT REGISTRATION (org/projects/REGISTRY.md + org/projects/*.json). The CRO explicitly did NOT claim the lane's other surfaces (hook-config etc.) and its membership must NOT be read as blanket. Granted by 0.0.0_AB_MSTR (grantor; CRO is grantee -- SoD). LD-0331.
@@ -870,7 +870,7 @@ lanes:
       - 0.8.0_AE_CloudComp~E
       - 0.8.0_AE_CloudComp
       - 0.0.0_AB_MSTR
-    description: "Execs + AEs â€” used for project JSONs (AE updates own project state) and hook-config files (AE 0.7 implements hook ecosystem). 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; enables CVO /spot-check fix-authorized alignment-metadata commits without routing every diff to COO. 0.7.0_AE_CloudOps~C added 2026-05-23 by COO: ~C is the ADVI_DEMOV1 AE infra lane (LD-0008 spawn); shares same tilde-lane gap pattern. 0.8.0_AE_CloudComp~C added 2026-06-30 by 2.0.0_SA_COO~B: the dedicated NFRA_COMPUNIFY build lane (MSTR spawn) needs to self-commit the comp-coverage-map.yaml ledger (S0->S3); same recurring tilde-lane gap. 0.8.0_AE_CloudComp~D added 2026-06-30 by 2.0.0_SA_COO~B: the Andrew-provisioned dedicated NFRA_GRAPHUNI build lane self-commits its deliverables (org/projects/NFRA_GRAPHUNI/** below, task_orders/ excluded). base 0.8.0_AE_CloudComp ADDED 2026-07-02 by 2.0.0_SA_COO~B: MSTR spawned BASE (not a tilde-lane) for the NFRA_TOOLHEALTH TH-B comp-tool build (org/modules/graph/comp_tool_health.py); base is an AE (LD-0218 unified AWS+MS compiler/AE owner), the lane is Execs+AEs, all its tilde-lanes already members -- a correct permanent enumeration add (the recurring tilde-lane/base gap). Supersedes the prior 'flagged to base-COO, out of NFRA_COMP* scope' note (base is now doing NFRA_COMP* work directly); this same add ALSO satisfies the previously-pending NFRA_COMPDIFF relocation grant. CC CTO arch-awareness. 0.0.0_AB_MSTR ADDED 2026-07-16 by 2.0.0_SA_COO (grantor â€” grantee does not commit its own grant, SoD) per ANDREW-DIRECT verbatim 'also i bless the override, put MSTR on the any exec or ae lane' (~14:1xZ, MSTR terminal, ruling open-call #5 / RV-0043 F-002). MSTR is Tier-0 governance and reconciles project JSONs + REGISTRY.md as a standing function (comp-state protocol pt 5: 'REGISTRY rows + project JSONs = SA/COO reconciliation lane'); the enumeration gap forced 7 audited GIT_COMMIT_AUTHOR_OVERRIDE uses this window alone â€” most recently 0b47765bb (the OPAL_LCLRPO record reconciliation). A repeat override for a STANDING role-authorized action = a coverage gap to close, the same rationale as the DT-yang (3 overrides) and 0.8.0-base precedents. Andrew ruled ENUMERATE over bless-the-override."
+    description: "Execs + AEs — used for project JSONs (AE updates own project state) and hook-config files (AE 0.7 implements hook ecosystem). 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; enables CVO /spot-check fix-authorized alignment-metadata commits without routing every diff to COO. 0.7.0_AE_CloudOps~C added 2026-05-23 by COO: ~C is the ADVI_DEMOV1 AE infra lane (LD-0008 spawn); shares same tilde-lane gap pattern. 0.8.0_AE_CloudComp~C added 2026-06-30 by 2.0.0_SA_COO~B: the dedicated NFRA_COMPUNIFY build lane (MSTR spawn) needs to self-commit the comp-coverage-map.yaml ledger (S0->S3); same recurring tilde-lane gap. 0.8.0_AE_CloudComp~D added 2026-06-30 by 2.0.0_SA_COO~B: the Andrew-provisioned dedicated NFRA_GRAPHUNI build lane self-commits its deliverables (org/projects/NFRA_GRAPHUNI/** below, task_orders/ excluded). base 0.8.0_AE_CloudComp ADDED 2026-07-02 by 2.0.0_SA_COO~B: MSTR spawned BASE (not a tilde-lane) for the NFRA_TOOLHEALTH TH-B comp-tool build (org/modules/graph/comp_tool_health.py); base is an AE (LD-0218 unified AWS+MS compiler/AE owner), the lane is Execs+AEs, all its tilde-lanes already members -- a correct permanent enumeration add (the recurring tilde-lane/base gap). Supersedes the prior 'flagged to base-COO, out of NFRA_COMP* scope' note (base is now doing NFRA_COMP* work directly); this same add ALSO satisfies the previously-pending NFRA_COMPDIFF relocation grant. CC CTO arch-awareness. 0.0.0_AB_MSTR ADDED 2026-07-16 by 2.0.0_SA_COO (grantor — grantee does not commit its own grant, SoD) per ANDREW-DIRECT verbatim 'also i bless the override, put MSTR on the any exec or ae lane' (~14:1xZ, MSTR terminal, ruling open-call #5 / RV-0043 F-002). MSTR is Tier-0 governance and reconciles project JSONs + REGISTRY.md as a standing function (comp-state protocol pt 5: 'REGISTRY rows + project JSONs = SA/COO reconciliation lane'); the enumeration gap forced 7 audited GIT_COMMIT_AUTHOR_OVERRIDE uses this window alone — most recently 0b47765bb (the OPAL_LCLRPO record reconciliation). A repeat override for a STANDING role-authorized action = a coverage gap to close, the same rationale as the DT-yang (3 overrides) and 0.8.0-base precedents. Andrew ruled ENUMERATE over bless-the-override."
 
   COMPILER_MANIFEST_CHECK:
     permitted_agents:
@@ -899,7 +899,7 @@ lanes:
       - 0.4.0_DS_ClientPlatform~C
       - 0.4.0_DS_ClientPlatform~D
       - 0.4.0_DS_ClientPlatform~E
-    description: "ANY_EXEC_OR_AE + DS 0.4.0 (incl. tilde lanes) for the comp-manifest-check tool family. 0.8.0_AE_CloudComp family (base + ~A-~E) added 2026-07-09 by 1.0.0_SA_CTO (grantor -- grantee does not commit its own grant, SoD): the lane DECLARES 'ANY_EXEC_OR_AE + DS' but was a STALE COPY (created 06-12) that never inherited ANY_EXEC_OR_AE's later 0.8.0 adds (~C/~D 06-30, base 07-02), a forked list silently drifting from its declared source for a month -- it owned-paths-blocked 0.8.0's own NFRA_COMP* manifest_check_cli.py landing (the routable-completeness gate). Synced to ANY_EXEC_OR_AE current membership. DURABLE FIX FILED to the owned-paths-hook owner: the hook should COMPOSE lane references (this lane = ANY_EXEC_OR_AE + DS) rather than copy them, so it can never drift again -- exactly the declared-vs-enforced fork-drift class the routable gate 0.8.0 just built kills, one layer up in governance. DS owns the NFRA_GRAPHS.D6 deliverable per CTO dispatch, but manifest_check_cli.py resolved to *_cli.py (ANY_EXEC_OR_AE) and manifest_check_config.yaml fell through to org/modules/** (ANY_EXEC) â€” neither includes DS, forcing 2 audited ANY_EXEC overrides 2026-06-11 (27e5fe7c5, 98d3c4fe9). Same gap class as the 6ce03b7f7 graph_*.py base-AE add, one file-set over. Added 2026-06-12 by 2.0.0_SA_COO per MSTR RV-0033 F-002 corrective."
+    description: "ANY_EXEC_OR_AE + DS 0.4.0 (incl. tilde lanes) for the comp-manifest-check tool family. 0.8.0_AE_CloudComp family (base + ~A-~E) added 2026-07-09 by 1.0.0_SA_CTO (grantor -- grantee does not commit its own grant, SoD): the lane DECLARES 'ANY_EXEC_OR_AE + DS' but was a STALE COPY (created 06-12) that never inherited ANY_EXEC_OR_AE's later 0.8.0 adds (~C/~D 06-30, base 07-02), a forked list silently drifting from its declared source for a month -- it owned-paths-blocked 0.8.0's own NFRA_COMP* manifest_check_cli.py landing (the routable-completeness gate). Synced to ANY_EXEC_OR_AE current membership. DURABLE FIX FILED to the owned-paths-hook owner: the hook should COMPOSE lane references (this lane = ANY_EXEC_OR_AE + DS) rather than copy them, so it can never drift again -- exactly the declared-vs-enforced fork-drift class the routable gate 0.8.0 just built kills, one layer up in governance. DS owns the NFRA_GRAPHS.D6 deliverable per CTO dispatch, but manifest_check_cli.py resolved to *_cli.py (ANY_EXEC_OR_AE) and manifest_check_config.yaml fell through to org/modules/** (ANY_EXEC) — neither includes DS, forcing 2 audited ANY_EXEC overrides 2026-06-11 (27e5fe7c5, 98d3c4fe9). Same gap class as the 6ce03b7f7 graph_*.py base-AE add, one file-set over. Added 2026-06-12 by 2.0.0_SA_COO per MSTR RV-0033 F-002 corrective."
 
   NFRA_PIPESCRIPT_TOOL:
     permitted_agents:
@@ -971,7 +971,7 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 0.4.0_DS_ClientPlatform~B
       - 0.7.0_AE_CloudOps
-    description: "NFRA_TOOLCHECK.P4 build surface -- the AC-0 universe doc (org/modules/graph/comp-tool-universe.md) + the per-tool negative-control fixtures (org/modules/graph/tests/**) that P4 Â§4 makes the deliverable of every comp-tool verdict. Same-tool grant per the NFRA_TSGRAPH_SPIKE / NFRA_HEATMAP convention (CTO-ratified 2026-06-15: when a build assigns a graph-module-adjacent surface to DS/AE, COO adds the inclusive lane rule at decompose-time). Longest-match overrides org/modules/** ANY_EXEC. WHY, and it is the whole point: 0.8.0_AE_CloudComp sat BLOCKED on this lane with gate-clean work (41 tests, 5 mutants killed by CVO, all four CVO findings closed) 'awaiting COO~B' -- a lane with 7 undelivered messages, 0 armed watcher, and no broker registration. That is the SAME DEAD SERIAL on which CTO ruled 2026-07-09T23:28Z that 'SoD BY ROUTING IS NOT SoD; delivered IS NOT read.' The block recurred on the identical lane inside four hours. A permission that can only be exercised by an agent that does not exist is not a control; it is a stall. CTO ratified lane-ADD (no file move, no --force) 2026-07-10T~02:15Z. Do-er/verifier separation is UNCHANGED and is where it belongs: 0.8.0 authors, 3.0.0_SA_CVO verifies by mutation test, 1.0.0_SA_CTO arch-gates. DS~B added for its P4 graph-engine charge (same TO, fixtures under the same tree). Added 2026-07-10 by 2.0.0_SA_COO. >> 0.7.0_AE_CloudOps ADDED 2026-07-30 by 2.0.0_SA_COO (NFRA_VELOCITY_ESTATE WS-E4, Andrew-direct GATE 0) -- THE SAME CLASS THIS LANE'S OWN TEXT WARNS ABOUT, RECURRING A THIRD TIME. 0.7.0 landed E4.1 (3/3 conditions), E4.2 and E4.3 with 33 mutant traps across three suites, every suite proven able to go RED before green was trusted, restores sha256-verified byte-identical -- and then TWO gate-clean test files (test_e413_dual_basis_preservation.py, 10 traps; test_e42_fail_kind_separation.py, 11 traps) were UNCOMMITTABLE, leaving 21 of the 33 traps OUT OF THE TREE. An unpersisted mutant is a diary entry under TRIGGER_LAYER: it proved the guard could fail ONCE, in a session, and then stopped existing -- which is precisely the state this lane exists to prevent. 0.7.0 did NOT use --force and routed the ask, correctly. Grant landed by COO because SoD is that the grantee never lands its own grant; do-er/verifier separation UNCHANGED (0.7.0 authors, 3.0.0_SA_CVO verifies by mutation test, CTO~C arch-gates ESTATE). Note the tilde auto-permit (check_agent RV-0030 F-003) means this covers 0.7.0_AE_CloudOps~A on the same tree without a second row. Same remedy shape as the CTO-ratified 2026-07-10 lane-ADD: no file move, no --force, no file authored across lanes -- 0.7.0 commits its own test files under its own author line."
+    description: "NFRA_TOOLCHECK.P4 build surface -- the AC-0 universe doc (org/modules/graph/comp-tool-universe.md) + the per-tool negative-control fixtures (org/modules/graph/tests/**) that P4 §4 makes the deliverable of every comp-tool verdict. Same-tool grant per the NFRA_TSGRAPH_SPIKE / NFRA_HEATMAP convention (CTO-ratified 2026-06-15: when a build assigns a graph-module-adjacent surface to DS/AE, COO adds the inclusive lane rule at decompose-time). Longest-match overrides org/modules/** ANY_EXEC. WHY, and it is the whole point: 0.8.0_AE_CloudComp sat BLOCKED on this lane with gate-clean work (41 tests, 5 mutants killed by CVO, all four CVO findings closed) 'awaiting COO~B' -- a lane with 7 undelivered messages, 0 armed watcher, and no broker registration. That is the SAME DEAD SERIAL on which CTO ruled 2026-07-09T23:28Z that 'SoD BY ROUTING IS NOT SoD; delivered IS NOT read.' The block recurred on the identical lane inside four hours. A permission that can only be exercised by an agent that does not exist is not a control; it is a stall. CTO ratified lane-ADD (no file move, no --force) 2026-07-10T~02:15Z. Do-er/verifier separation is UNCHANGED and is where it belongs: 0.8.0 authors, 3.0.0_SA_CVO verifies by mutation test, 1.0.0_SA_CTO arch-gates. DS~B added for its P4 graph-engine charge (same TO, fixtures under the same tree). Added 2026-07-10 by 2.0.0_SA_COO. >> 0.7.0_AE_CloudOps ADDED 2026-07-30 by 2.0.0_SA_COO (NFRA_VELOCITY_ESTATE WS-E4, Andrew-direct GATE 0) -- THE SAME CLASS THIS LANE'S OWN TEXT WARNS ABOUT, RECURRING A THIRD TIME. 0.7.0 landed E4.1 (3/3 conditions), E4.2 and E4.3 with 33 mutant traps across three suites, every suite proven able to go RED before green was trusted, restores sha256-verified byte-identical -- and then TWO gate-clean test files (test_e413_dual_basis_preservation.py, 10 traps; test_e42_fail_kind_separation.py, 11 traps) were UNCOMMITTABLE, leaving 21 of the 33 traps OUT OF THE TREE. An unpersisted mutant is a diary entry under TRIGGER_LAYER: it proved the guard could fail ONCE, in a session, and then stopped existing -- which is precisely the state this lane exists to prevent. 0.7.0 did NOT use --force and routed the ask, correctly. Grant landed by COO because SoD is that the grantee never lands its own grant; do-er/verifier separation UNCHANGED (0.7.0 authors, 3.0.0_SA_CVO verifies by mutation test, CTO~C arch-gates ESTATE). Note the tilde auto-permit (check_agent RV-0030 F-003) means this covers 0.7.0_AE_CloudOps~A on the same tree without a second row. Same remedy shape as the CTO-ratified 2026-07-10 lane-ADD: no file move, no --force, no file authored across lanes -- 0.7.0 commits its own test files under its own author line."
 
   SCTY:
     permitted_agents:
@@ -986,7 +986,7 @@ lanes:
 # =========================================================================
 # PATHS
 # Listed roughly from most-specific to most-general within each top-level group.
-# Longest match wins â€” more specific globs override broader ones at hook eval time.
+# Longest match wins — more specific globs override broader ones at hook eval time.
 # =========================================================================
   LOOP_MECHANISM:
     permitted_agents:
@@ -1390,7 +1390,7 @@ paths:
 
   "org/missions/**":
     lane: TIER0_MSTR
-    note: "MSTR mission tree -- org/missions/{GROUP}/{SUB_GROUP}/ (commits.jsonl Â· state.yaml Â· execsum.yaml) + README. Andrew-direct 2026-07-28; the durable form of the mission register (org/tier0/MISSIONS.md, LD-0341). MSTR is the SOLE writer; no other lane writes here and none is asked to -- it creates no gate, no hook and no obligation on any lane, which is the register's founding constraint. GRANTED BY 1.0.0_SA_CTO as grantor, MSTR as grantee, per SoD -- MSTR requested it rather than adding it, on the same principle as the 4.0.0_SA_CRO grant (LD-0331) and this file's own record-path ruling: a gate whose subject can amend its scope is a suggestion with an audit log. MSTR could have written this rule in ten seconds and declined to. Scoped EXPLICITLY to org/missions/** rather than anything broader: per the enumeration discriminator, a path rule that decays toward MORE friction (a new tree blocked, loudly, at commit) is the safe direction -- unlike a serving allowlist, which decays toward silent unavailability. Added 2026-07-28 by ws CTO."
+    note: "MSTR mission tree -- org/missions/{GROUP}/{SUB_GROUP}/ (commits.jsonl · state.yaml · execsum.yaml) + README. Andrew-direct 2026-07-28; the durable form of the mission register (org/tier0/MISSIONS.md, LD-0341). MSTR is the SOLE writer; no other lane writes here and none is asked to -- it creates no gate, no hook and no obligation on any lane, which is the register's founding constraint. GRANTED BY 1.0.0_SA_CTO as grantor, MSTR as grantee, per SoD -- MSTR requested it rather than adding it, on the same principle as the 4.0.0_SA_CRO grant (LD-0331) and this file's own record-path ruling: a gate whose subject can amend its scope is a suggestion with an audit log. MSTR could have written this rule in ten seconds and declined to. Scoped EXPLICITLY to org/missions/** rather than anything broader: per the enumeration discriminator, a path rule that decays toward MORE friction (a new tree blocked, loudly, at commit) is the safe direction -- unlike a serving allowlist, which decays toward silent unavailability. Added 2026-07-28 by ws CTO."
   "org/tier0_exec/**":
     lane: TIER0_EXEC
     note: "MSTR agent home folder -- the broker-resolvable directory (org/mcp/server.py TIER_DIRS). Holds ONLY 0.0.0_AB_MSTR/; deliberately separate from org/tier0/ so the law + control-plane subdirs are never scanned as agent folders."
@@ -1418,17 +1418,17 @@ paths:
 
   "org/ws-charter-hard-block-audit.log":
     lane: WS_CHARTER_AUDIT
-    note: "/ws-charter HARD-BLOCK audit log -- MSTR-owned header content (TIER0_LAW-equivalent enumeration per /ws-charter SKILL.md Step 4a Meta-catches Â§3); ws CTO appends HARD-EXIT entries per fire. Init landed at LD-0080 (10f7ed154); lane added per LD-0080 authorization chain + MSTR INIT-REQUEST 2026-05-26."
+    note: "/ws-charter HARD-BLOCK audit log -- MSTR-owned header content (TIER0_LAW-equivalent enumeration per /ws-charter SKILL.md Step 4a Meta-catches §3); ws CTO appends HARD-EXIT entries per fire. Init landed at LD-0080 (10f7ed154); lane added per LD-0080 authorization chain + MSTR INIT-REQUEST 2026-05-26."
 
   # -----------------------------------------------------------------------
   # Task-order authoring overrides (more-specific than parent home-folder rules)
   # CTO/COO author task orders into target agents' folders for dispatch.
   # Lane owners edit <status>/<evidence> after receipt. Both must be permitted.
-  # ADHC_OWNPTH.005 false-positive fix 2026-04-30 â€” opens task_orders/*.md only.
+  # ADHC_OWNPTH.005 false-positive fix 2026-04-30 — opens task_orders/*.md only.
   # -----------------------------------------------------------------------
   "org/tier1_exec/*/task_orders/*.md":
     lane: ANY_EXEC
-    note: "Task orders into exec home folders â€” any exec may author (cross-exec dispatch)"
+    note: "Task orders into exec home folders — any exec may author (cross-exec dispatch)"
 
   "org/tier2_senior/0.1.0_*/task_orders/*.md":
     lane: POD1_OR_EXEC
@@ -1452,7 +1452,7 @@ paths:
     lane: SHARED_CLOUD_OPS_OR_EXEC
 
   # -----------------------------------------------------------------------
-  # org/tier1_exec â€” exec agent home folders
+  # org/tier1_exec — exec agent home folders
   # -----------------------------------------------------------------------
   # Workstream-contract authoring override (more-specific than the CTO home rule below).
   # Same shape as the task_orders override at the top of this section: one subfolder of an
@@ -1461,11 +1461,11 @@ paths:
   # Narrow on purpose: this pattern only, named agents only, parent home untouched.
   "org/tier1_exec/1.0.0_SA_CTO/deliverables/ws_c*_contracts/*.md":
     lane: WS_CONTRACT_AUTHORS
-    note: "NFRA_VELOCITY workstream contracts â€” the workstream owner authors; CTO gates"
+    note: "NFRA_VELOCITY workstream contracts — the workstream owner authors; CTO gates"
 
   "org/tier1_exec/1.0.0_SA_CTO/**":
     lane: BASE_EXEC
-    note: "Base CTO home â€” logs, task orders, prompt, briefs"
+    note: "Base CTO home — logs, task orders, prompt, briefs"
 
   # TILDE-LANE HOME DIRECTORIES (tier-1). Andrew-direct 2026-08-10 ("yes fix the owned-paths gap").
   # THIS GRANTS NO NEW AUTHORITY. The AGENT side of this file already strips one tilde (see the
@@ -1495,83 +1495,83 @@ paths:
   # holds -- CTO~B raised it and did not author its own grant.
   "org/tier1_exec/1.0.0_SA_CTO~*/**":
     lane: BASE_EXEC
-    note: "CTO tilde-lane homes (~A/~B/~Z/...) â€” same lane as the base CTO home above."
+    note: "CTO tilde-lane homes (~A/~B/~Z/...) — same lane as the base CTO home above."
 
   "org/tier1_exec/2.0.0_SA_COO/**":
     lane: BASE_EXEC
-    note: "Base COO home â€” logs, task orders, prompt, briefs"
+    note: "Base COO home — logs, task orders, prompt, briefs"
 
   "org/tier1_exec/2.0.0_SA_COO~*/**":
     lane: BASE_EXEC
-    note: "COO tilde-lane homes â€” same lane as the base COO home above. See the tilde-lane block."
+    note: "COO tilde-lane homes — same lane as the base COO home above. See the tilde-lane block."
 
-  # 1.7.0_SA_KRN â€” minted 2026-09-10 by 0.0.0_AB_MSTR on 1.0.0_SA_CTO~Y's provisioning
+  # 1.7.0_SA_KRN — minted 2026-09-10 by 0.0.0_AB_MSTR on 1.0.0_SA_CTO~Y's provisioning
   # request (msg 95303), under Andrew's standing grant the same day: "yes you can give them
   # their agents (1.0.0_SA_CTO~Y)". C3 boundary / deterministic-kernel producer lane on the
   # Y fabric; issuer and integration owner 1.0.0_SA_CTO~Y, validation 3.0.0_SA_CVO~Y.
-  # â›” THE HOME RULE IS PART OF MINTING A SEAT, not an afterthought. The seat's runtime came
-  # up fine without it â€” codex-seat-load resolves off the FILESYSTEM â€” but the commit gate
+  # ⛔ THE HOME RULE IS PART OF MINTING A SEAT, not an afterthought. The seat's runtime came
+  # up fine without it — codex-seat-load resolves off the FILESYSTEM — but the commit gate
   # refused the scaffolding with "UNDEFINED (no matching path rule)". Directory on disk and
   # ownership in this file are two different acts and only the second makes the seat's work
   # committable. Both belong in the same turn as the spawn.
   "org/tier1_exec/1.7.0_SA_KRN/**":
     lane: KRN_WORKSPACE
-    note: "1.7.0_SA_KRN home â€” C3/kernel producer seat. Minted 2026-09-10; see the block above."
+    note: "1.7.0_SA_KRN home — C3/kernel producer seat. Minted 2026-09-10; see the block above."
 
   "org/tier1_exec/1.7.0_SA_KRN~*/**":
     lane: KRN_WORKSPACE
-    note: "1.7.0_SA_KRN tilde-lane homes (~Y is the live lane at mint) â€” same lane as its base."
+    note: "1.7.0_SA_KRN tilde-lane homes (~Y is the live lane at mint) — same lane as its base."
 
   "org/tier1_exec/1.1.0_SA_CTO/**":
     lane: COMP_LEARNS
-    note: "COMP_LEARNS CTO home â€” PRDs, session logs, drafts (incident #3/#4 root path)"
+    note: "COMP_LEARNS CTO home — PRDs, session logs, drafts (incident #3/#4 root path)"
 
   "org/tier1_exec/1.1.0_SA_CTO~*/**":
     lane: COMP_LEARNS
-    note: "COMP_LEARNS CTO tilde-lane homes â€” same lane as its base. See the tilde-lane block."
+    note: "COMP_LEARNS CTO tilde-lane homes — same lane as its base. See the tilde-lane block."
 
   "org/tier1_exec/2.1.0_SA_COO/**":
     lane: COMP_LEARNS
-    note: "COMP_LEARNS COO home â€” TOs, session logs"
+    note: "COMP_LEARNS COO home — TOs, session logs"
 
   "org/tier1_exec/2.1.0_SA_COO~*/**":
     lane: COMP_LEARNS
-    note: "COMP_LEARNS COO tilde-lane homes â€” same lane as its base. See the tilde-lane block."
+    note: "COMP_LEARNS COO tilde-lane homes — same lane as its base. See the tilde-lane block."
 
   "org/tier1_exec/3.0.0_SA_CVO/**":
     lane: CVO_WORKSPACE
-    note: "Workspace-wide CVO home â€” inbox, responses, templates, AND continuous-loop cycle logs. CVO commits its own loop logs under the MCP-loop model (Andrew 2026-05-22, VALIDATION_LOOP.md). Lane changed BASE_EXEC -> CVO_WORKSPACE 2026-05-22 by COO (the old BASE_EXEC mapping blocked the CVO from committing its own logs)."
+    note: "Workspace-wide CVO home — inbox, responses, templates, AND continuous-loop cycle logs. CVO commits its own loop logs under the MCP-loop model (Andrew 2026-05-22, VALIDATION_LOOP.md). Lane changed BASE_EXEC -> CVO_WORKSPACE 2026-05-22 by COO (the old BASE_EXEC mapping blocked the CVO from committing its own logs)."
 
   "org/tier1_exec/3.0.0_SA_CVO~*/**":
     lane: CVO_WORKSPACE
-    note: "CVO tilde-lane homes (~Z et al) â€” same lane as the base CVO home above."
+    note: "CVO tilde-lane homes (~Z et al) — same lane as the base CVO home above."
 
   "org/surprise_channel/*/INVESTIGATION_v*.md":
     lane: ANY
     note: "LEGACY FLAT SURPRISE CHANNEL, INVESTIGATION files ONLY (INVESTIGATION_v{N}.md and the site-Z INVESTIGATION_v{N}.Z.md): the row is appended by the SEAT THAT SEES THE SURPRISE -- a Tier-2 worker included -- exactly as the tree rule org/missions/*/*/*/surprise-channel/investigations/** already does. AUTHORITY: Andrew-direct 2026-09-03 ~03:1xZ at the 3.0.0_SA_CVO terminal (VERBATIM: 'claude.md should not have that rule to do this over mcp + any gate with proof of spec surprises field to prevent this should be implemented now'; law @6e8805eb90 -- a broker message is NEVER the carrier, the ROW is) + the tree ruling Andrew-direct 2026-09-02 23:0xZ (keep ANY; the surprise-row gate is the control, a path gate cannot name the worker). Before this rule the flat channel resolved to CVO_WORKSPACE [CVO, CTO, COO] and REFUSED the worker (1.0.0_SA_CTO finding 92981(b), owner 2.0.0_SA_COO as registry grantor), so on a flat project the ISSUER had to append the worker's row -- one message hop re-introduced under a law that forbids it. GRANTED 2026-09-03 ~03:2xZ by 2.0.0_SA_COO AS REGISTRY GRANTOR; SoD: the grantee is the Tier-2 worker class, which cannot self-grant. MEASURED before/after on one harness (.tools/owned-paths-validate.py --check-agent x 4 serials x 5 paths): BEFORE 0.8.0_AE_CloudComp and 0.4.0_DS_ClientPlatform REFUSED on INVESTIGATION_v1.md / INVESTIGATION_v1.Z.md / REMEDIATION_v1.md; AFTER both PERMITTED on the two INVESTIGATION files and still REFUSED on REMEDIATION_v1.md (negative control) and on schemas/ (LOOP_MECHANISM, unchanged); 3.0.0_SA_CVO permitted throughout (positive control); 2.0.0_SA_COO refused on schemas/ throughout. INCUMBENTS RE-ASSERTED, because longest-match DISPLACES: ANY permits every serial, so CVO, CTO and COO keep write here; nothing is revoked. NOT WIDENED: REMEDIATION_v*.md stays CVO_WORKSPACE (a remediation row is CVO's L9 act; routing is L10) and schemas/ + surprise-watch.sh stay LOOP_MECHANISM. The surprise-row gate (.tools/surprise-row-gate.py) validates every row regardless of lane; the proof-of-spec SURPRISES limb (@7968221ef5) binds the instance to the row id."
   "org/surprise_channel/**":
     lane: CVO_WORKSPACE
-    note: "THE FORMALIZED SURPRISE CHANNEL's document tree (investigation docs + the remediation doc), minted per Andrew's 2026-08-21 ratification of the DIRECTIVE EXECUTION PIPELINE (verbatim: 'I agree with this framework lets get it formalized properly' + 'I do not want to be dealing with this shit ever again'); protocol at org/ref/DIRECTIVE_EXECUTION_PIPELINE.md + CLAUDE.md Rule 27. GRANTED 2026-08-21 by 2.0.0_SA_COO AS REGISTRY GRANTOR -- SoD honored: 3.0.0_SA_CVO is the GRANTEE (channel owner-designate) and did NOT self-grant; the grant was routed to the registry owner by CTO on the ratification. WHY A GRANT WAS NEEDED AT ALL: this tree did not exist and matched no glob, so its lane was UNDEFINED, which under rollout_phase 2 is EXIT 1 -- CVO would have been blocked on the FIRST commit of a protocol Andrew had just ratified. LANE REUSED, NOT MINTED (Build Ladder rung 2): CVO_WORKSPACE already carries exactly the right semantics -- CVO owns and commits, CTO+COO retain write for exec oversight -- so a new lane would have been a duplicate of one sitting beside it. SCOPE NOTE -- ***CORRECTED 2026-08-21T21:1xZ BY 2.0.0_SA_COO (the same seat that wrote it, hours earlier). THE ORIGINAL SENTENCE WAS FALSE AND IT ASSERTED A CONTROL THAT DOES NOT EXIST.*** It read: 'SCOPE DELIBERATELY NOT WIDENED: 3.0.0_SA_CVO~Z is NOT included ... RECORDED SO IT READS AS A DECISION, NOT AN OVERSIGHT.' >> ***MEASURED, BY EXERCISING check_agent() DIRECTLY WITH BOTH CONTROLS DISCRIMINATING: 3.0.0_SA_CVO~Z IS PERMITTED ON THIS PATH AND ALWAYS WAS.*** Positive controls 3.0.0_SA_CVO / 2.0.0_SA_COO / 1.0.0_SA_CTO all True; NEGATIVE controls 0.4.0_DS_ClientPlatform and 0.7.0_AE_CloudOps both False, so the harness discriminates rather than permitting everyone. >> MECHANISM: RV-0030 F-003's tilde/underscore lane-suffix auto-permit (owned-paths-validate.py:143-158) normalizes '3.0.0_SA_CVO~Z' -> '3.0.0_SA_CVO_Z', strips one trailing lane segment -> '3.0.0_SA_CVO', and that IS enumerated in CVO_WORKSPACE. A TILDE LANE IS PERMITTED WHEREVER ITS BASE IS ENUMERATED. >> â›” THE CLASS, AND IT IS WHY THIS CORRECTION IS LONG: THE NOTE DESCRIBED A SCOPE DECISION THE MECHANISM NEVER IMPLEMENTED, AND IT DESCRIBED IT CONFIDENTLY -- 'RECORDED SO IT READS AS A DECISION' is the exact phrasing that stops the next reader from checking. Two concrete harms: (1) a reader needing CVO~Z to write here grants redundantly, widening the registry for nothing; (2) FAR WORSE -- a reader who WANTED CVO~Z excluded (e.g. reasoning from LD-0325) would believe the exclusion was in force. IT IS NOT. AN ASSERTED CONTROL THAT DOES NOT EXIST IS WORSE THAN NO CONTROL, because it terminates the search that would have found the gap. >> ON LD-0325, since the original invoked it: it confines CVO~Z's COMMS ROUTING ({~Z} + {MSTR} + {0.8.0_AE}; drift verdicts and main-channel coord via MSTR) -- IT SAYS NOTHING ABOUT REPO WRITE PATHS, so it neither granted nor blocked this. Citing it for a path question was a category error in the original note. >> OPERATIVE TODAY: CVO~Z may write org/surprise_channel/** including the INVESTIGATION_v1.Z.md / REMEDIATION_v1.Z.md files that CTO's 2026-08-21 cross-fabric rename ruling requires of them. NO GRANT WAS MADE FOR THIS AND NONE IS NEEDED -- the registry is UNCHANGED by this correction; only the note is. >> IF A FUTURE SEAT ACTUALLY WANTS CVO~Z EXCLUDED HERE, PROSE CANNOT DO IT: it takes a narrower path rule that RE-ASSERTS EVERY INCUMBENT (this file's own lesson -- a longest-match override REPLACES the broader lane rather than adding to it, and the control that catches a grant is the one confirming the incumbents, not the grantee). ALSO CHECKED AND DELIBERATELY NOT GRANTED: org/ref/SURPRISE_CHANNEL_PROTOCOL.md needs no new rule -- org/ref/** is ANY_EXEC and 3.0.0_SA_CVO is already permitted there, so CVO can author the protocol doc today. The whole write surface of the GO assignment was enumerated before granting, not just the part that was asked for."
+    note: "THE FORMALIZED SURPRISE CHANNEL's document tree (investigation docs + the remediation doc), minted per Andrew's 2026-08-21 ratification of the DIRECTIVE EXECUTION PIPELINE (verbatim: 'I agree with this framework lets get it formalized properly' + 'I do not want to be dealing with this shit ever again'); protocol at org/ref/DIRECTIVE_EXECUTION_PIPELINE.md + CLAUDE.md Rule 27. GRANTED 2026-08-21 by 2.0.0_SA_COO AS REGISTRY GRANTOR -- SoD honored: 3.0.0_SA_CVO is the GRANTEE (channel owner-designate) and did NOT self-grant; the grant was routed to the registry owner by CTO on the ratification. WHY A GRANT WAS NEEDED AT ALL: this tree did not exist and matched no glob, so its lane was UNDEFINED, which under rollout_phase 2 is EXIT 1 -- CVO would have been blocked on the FIRST commit of a protocol Andrew had just ratified. LANE REUSED, NOT MINTED (Build Ladder rung 2): CVO_WORKSPACE already carries exactly the right semantics -- CVO owns and commits, CTO+COO retain write for exec oversight -- so a new lane would have been a duplicate of one sitting beside it. SCOPE NOTE -- ***CORRECTED 2026-08-21T21:1xZ BY 2.0.0_SA_COO (the same seat that wrote it, hours earlier). THE ORIGINAL SENTENCE WAS FALSE AND IT ASSERTED A CONTROL THAT DOES NOT EXIST.*** It read: 'SCOPE DELIBERATELY NOT WIDENED: 3.0.0_SA_CVO~Z is NOT included ... RECORDED SO IT READS AS A DECISION, NOT AN OVERSIGHT.' >> ***MEASURED, BY EXERCISING check_agent() DIRECTLY WITH BOTH CONTROLS DISCRIMINATING: 3.0.0_SA_CVO~Z IS PERMITTED ON THIS PATH AND ALWAYS WAS.*** Positive controls 3.0.0_SA_CVO / 2.0.0_SA_COO / 1.0.0_SA_CTO all True; NEGATIVE controls 0.4.0_DS_ClientPlatform and 0.7.0_AE_CloudOps both False, so the harness discriminates rather than permitting everyone. >> MECHANISM: RV-0030 F-003's tilde/underscore lane-suffix auto-permit (owned-paths-validate.py:143-158) normalizes '3.0.0_SA_CVO~Z' -> '3.0.0_SA_CVO_Z', strips one trailing lane segment -> '3.0.0_SA_CVO', and that IS enumerated in CVO_WORKSPACE. A TILDE LANE IS PERMITTED WHEREVER ITS BASE IS ENUMERATED. >> ⛔ THE CLASS, AND IT IS WHY THIS CORRECTION IS LONG: THE NOTE DESCRIBED A SCOPE DECISION THE MECHANISM NEVER IMPLEMENTED, AND IT DESCRIBED IT CONFIDENTLY -- 'RECORDED SO IT READS AS A DECISION' is the exact phrasing that stops the next reader from checking. Two concrete harms: (1) a reader needing CVO~Z to write here grants redundantly, widening the registry for nothing; (2) FAR WORSE -- a reader who WANTED CVO~Z excluded (e.g. reasoning from LD-0325) would believe the exclusion was in force. IT IS NOT. AN ASSERTED CONTROL THAT DOES NOT EXIST IS WORSE THAN NO CONTROL, because it terminates the search that would have found the gap. >> ON LD-0325, since the original invoked it: it confines CVO~Z's COMMS ROUTING ({~Z} + {MSTR} + {0.8.0_AE}; drift verdicts and main-channel coord via MSTR) -- IT SAYS NOTHING ABOUT REPO WRITE PATHS, so it neither granted nor blocked this. Citing it for a path question was a category error in the original note. >> OPERATIVE TODAY: CVO~Z may write org/surprise_channel/** including the INVESTIGATION_v1.Z.md / REMEDIATION_v1.Z.md files that CTO's 2026-08-21 cross-fabric rename ruling requires of them. NO GRANT WAS MADE FOR THIS AND NONE IS NEEDED -- the registry is UNCHANGED by this correction; only the note is. >> IF A FUTURE SEAT ACTUALLY WANTS CVO~Z EXCLUDED HERE, PROSE CANNOT DO IT: it takes a narrower path rule that RE-ASSERTS EVERY INCUMBENT (this file's own lesson -- a longest-match override REPLACES the broader lane rather than adding to it, and the control that catches a grant is the one confirming the incumbents, not the grantee). ALSO CHECKED AND DELIBERATELY NOT GRANTED: org/ref/SURPRISE_CHANNEL_PROTOCOL.md needs no new rule -- org/ref/** is ANY_EXEC and 3.0.0_SA_CVO is already permitted there, so CVO can author the protocol doc today. The whole write surface of the GO assignment was enumerated before granting, not just the part that was asked for."
 
   "org/tier1_exec/3.1.0_SA_CVO/**":
     lane: COMP_LEARNS
-    note: "COMP_LEARNS CVO home â€” responses, reviews"
+    note: "COMP_LEARNS CVO home — responses, reviews"
 
   "org/tier1_exec/3.1.0_SA_CVO~*/**":
     lane: COMP_LEARNS
-    note: "COMP_LEARNS CVO tilde-lane homes â€” same lane as its base. See the tilde-lane block."
+    note: "COMP_LEARNS CVO tilde-lane homes — same lane as its base. See the tilde-lane block."
 
   "org/estate-reports/**":
     lane: CVO_WORKSPACE
-    note: "Estate-pull canonical day-record home (estate-report daily records). Before this rule the path had NO rule at all â€” safe-commit blocked the first-ever day record (CVO finding G9, first live exercise of the 07-30 manifest flip, 2026-08-04). Lane CVO_WORKSPACE = 3.0.0_SA_CVO + CTO + COO. Added 2026-08-04 by 2.0.0_SA_COO (grantor; CVO is grantee â€” SoD, grantee never commits its own grant) per CVO request 051922Z under the Andrew-approved Kimi close path (MSTR broadcast 050326Z)."
+    note: "Estate-pull canonical day-record home (estate-report daily records). Before this rule the path had NO rule at all — safe-commit blocked the first-ever day record (CVO finding G9, first live exercise of the 07-30 manifest flip, 2026-08-04). Lane CVO_WORKSPACE = 3.0.0_SA_CVO + CTO + COO. Added 2026-08-04 by 2.0.0_SA_COO (grantor; CVO is grantee — SoD, grantee never commits its own grant) per CVO request 051922Z under the Andrew-approved Kimi close path (MSTR broadcast 050326Z)."
 
   "org/tier1_exec/4.0.0_SA_CRO/**":
     lane: CRO_WORKSPACE
-    note: "Workspace-wide CRO home â€” charter, prompt, logs, task_orders, deliverables, briefs, threads, handoffs, scripts, and the append-only RECON_REGISTER.md. New Tier-1 exec (Chief Research Officer) established Andrew-direct 2026-07-22; before this rule safe-commit returned 'UNDEFINED (no matching path rule; agent=4.0.0_SA_CRO)' and blocked the entire home. THE REGISTRY IS ENUMERATION-BASED, NOT TIER-BASED â€” there is no org/tier1_exec/*/** wildcard, so a title is not a grant and every exec home is listed individually. Added 2026-07-22 by 0.0.0_AB_MSTR (grantor; CRO is grantee â€” SoD). LD-0331."
+    note: "Workspace-wide CRO home — charter, prompt, logs, task_orders, deliverables, briefs, threads, handoffs, scripts, and the append-only RECON_REGISTER.md. New Tier-1 exec (Chief Research Officer) established Andrew-direct 2026-07-22; before this rule safe-commit returned 'UNDEFINED (no matching path rule; agent=4.0.0_SA_CRO)' and blocked the entire home. THE REGISTRY IS ENUMERATION-BASED, NOT TIER-BASED — there is no org/tier1_exec/*/** wildcard, so a title is not a grant and every exec home is listed individually. Added 2026-07-22 by 0.0.0_AB_MSTR (grantor; CRO is grantee — SoD). LD-0331."
 
   "org/tier1_exec/4.0.0_SA_CRO~*/**":
     lane: CRO_WORKSPACE
-    note: "CRO tilde-lane homes (~A/~SWEEP/...) â€” same lane as the base CRO home above. See the tilde-lane block near the CTO home. NOTE the 2026-07-22 note above is UNCHANGED and still binds: this is not an org/tier1_exec/*/** wildcard, it binds one named exec's own tilde lanes only."
+    note: "CRO tilde-lane homes (~A/~SWEEP/...) — same lane as the base CRO home above. See the tilde-lane block near the CTO home. NOTE the 2026-07-22 note above is UNCHANGED and still binds: this is not an org/tier1_exec/*/** wildcard, it binds one named exec's own tilde lanes only."
 
   "org/tier1_exec/4.0.0_SA_CRO~Z/**":
     lane: CRO_WORKSPACE
@@ -1630,7 +1630,7 @@ paths:
 
   "org/tier2_senior/0.6.2_*/**":
     lane: SHARED_PARTNER_ETL
-    note: "PartnerETL AE 0.6.2 agent folder (Cottonwood) â€” provisioned 2026-06-08 Andrew-direct"
+    note: "PartnerETL AE 0.6.2 agent folder (Cottonwood) — provisioned 2026-06-08 Andrew-direct"
 
   "org/tier2_senior/0.7.0_*/**":
     lane: SHARED_CLOUD_OPS
@@ -1663,14 +1663,14 @@ paths:
     note: "Base COO also has a tier2_senior folder (historical placement)"
 
   # -----------------------------------------------------------------------
-  # org/tier3 â€” tier3 junior + RD folders (any pod agent)
+  # org/tier3 — tier3 junior + RD folders (any pod agent)
   # -----------------------------------------------------------------------
   # Specific override (longest-match-wins): tier3 task_orders/*.md authoring
-  # mirrors tier2_senior pattern â€” exec dispatch + RD self-edit.
+  # mirrors tier2_senior pattern — exec dispatch + RD self-edit.
   # Added 2026-05-04 per ADHC_OWNPTH 48h scan FP-4.
   "org/tier3_junior/*/task_orders/*.md":
     lane: ANY_POD_OR_EXEC
-    note: "Tier3 task orders â€” any pod or any exec (CTO/COO dispatch + RD self-edit on receipt)"
+    note: "Tier3 task orders — any pod or any exec (CTO/COO dispatch + RD self-edit on receipt)"
 
   "org/tier3_junior/**":
     lane: ANY_POD
@@ -1679,15 +1679,15 @@ paths:
     lane: ANY_POD
 
   # -----------------------------------------------------------------------
-  # org/ shared surfaces â€” specific overrides before org/** catch-all
+  # org/ shared surfaces — specific overrides before org/** catch-all
   # -----------------------------------------------------------------------
   "org/projects/REGISTRY.md":
     lane: ANY_EXEC_OR_AE
-    note: "Project registry â€” execs + AEs (AE may update own-project rows + closure)"
+    note: "Project registry — execs + AEs (AE may update own-project rows + closure)"
 
   "org/projects/*.json":
     lane: ANY_EXEC_OR_AE
-    note: "Per-project JSON â€” execs + AEs (AE may update own-project phase/blocking/status; ADHC_OWNPTH.005 fix 2026-04-30 widened from ANY_EXEC after multiple AE 0.6.1 WARN entries on ADVI_ORIAPI.json)"
+    note: "Per-project JSON — execs + AEs (AE may update own-project phase/blocking/status; ADHC_OWNPTH.005 fix 2026-04-30 widened from ANY_EXEC after multiple AE 0.6.1 WARN entries on ADVI_ORIAPI.json)"
 
   "org/projects/**":
     lane: ANY_EXEC
@@ -1718,17 +1718,17 @@ paths:
 
   "org/critical_paths/**":
     lane: ANY
-    note: "Critical-surfaces ledger (NFRA_GRAPHS Â§10.6, Andrew-direct 2026-06-12) â€” entries are written STRUCTURALLY by the mechanism that fires under the committing agent's author (SURFACE_ACK approval / comp-xref resign / scan finding / staleness), so any agent's legitimate ack or scan must not be lane-blocked. Append-only event files; README/skeleton CTO-authored."
+    note: "Critical-surfaces ledger (NFRA_GRAPHS §10.6, Andrew-direct 2026-06-12) — entries are written STRUCTURALLY by the mechanism that fires under the committing agent's author (SURFACE_ACK approval / comp-xref resign / scan finding / staleness), so any agent's legitimate ack or scan must not be lane-blocked. Append-only event files; README/skeleton CTO-authored."
 
   # debtscan: findings .md = scan-runner-committable; EVERYTHING ELSE (suppression config,
   # canon-patterns, yaml) stays exec-locked. Specific .md rule BEFORE the ** rule (longest-match-wins).
   "org/modules/graph/debtscan/*.md":
     lane: ANY
-    note: "NFRA_DEBTSCAN findings ledgers (CTO ruling 2026-06-12, COO route 185544Z) â€” per-sweep dated findings files are append-only records written by the scan-runner (DS/AE) under their own author; exec batch-committing each one is friction without governance value. GOVERNANCE BOUNDARY: only the findings .md files â€” suppression configs / canon-patterns / any .yaml stay ANY_EXEC below, because a scan-runner who can edit suppressions can silently hide their own finding class."
+    note: "NFRA_DEBTSCAN findings ledgers (CTO ruling 2026-06-12, COO route 185544Z) — per-sweep dated findings files are append-only records written by the scan-runner (DS/AE) under their own author; exec batch-committing each one is friction without governance value. GOVERNANCE BOUNDARY: only the findings .md files — suppression configs / canon-patterns / any .yaml stay ANY_EXEC below, because a scan-runner who can edit suppressions can silently hide their own finding class."
 
   "org/modules/graph/debtscan/**":
     lane: ANY_EXEC
-    note: "debtscan config surface (suppressions, scan config, any non-.md) â€” exec-locked per the governance boundary above; canon-patterns.yaml is CTO-authored (lives at org/modules/graph/, not here)."
+    note: "debtscan config surface (suppressions, scan config, any non-.md) — exec-locked per the governance boundary above; canon-patterns.yaml is CTO-authored (lives at org/modules/graph/, not here)."
 
   "org/modules/graph/debtscan/summary_corpus.py":
     lane: ANY_EXEC_OR_AE
@@ -1740,11 +1740,11 @@ paths:
 
   "org/compiler-tools-log.md":
     lane: ANY
-    note: "Append-only compiler tools log â€” any agent appends after each session"
+    note: "Append-only compiler tools log — any agent appends after each session"
 
   "org/git-author-override-audit.log":
     lane: ANY
-    note: "Append-only override audit log â€” hook writes, agents may read"
+    note: "Append-only override audit log — hook writes, agents may read"
 
   "org/CROSS_POD_COORDINATION.md":
     lane: ANY_EXEC
@@ -1754,7 +1754,7 @@ paths:
 
   "org/XXX.md":
     lane: TIER0_TIER1_STARTUP_DOCS
-    note: "Universal agent startup protocol â€” MSTR + Tier-1 execs across both fabrics. Lane widened BASE_EXEC -> TIER0_TIER1_STARTUP_DOCS 2026-05-26 by ws CTO per Andrew direct via LD-0099 + MSTR [BLOCKED-ASK] ASK 1 cluster (Andrew direct quote: 'all tier 0 and tier 1 agents need to be able to modify XXX.md and startup docs'). Closes the gap that forced LD-0099 c7dee9cd5 to ship 'excl org/XXX.md' + route to ws CTO."
+    note: "Universal agent startup protocol — MSTR + Tier-1 execs across both fabrics. Lane widened BASE_EXEC -> TIER0_TIER1_STARTUP_DOCS 2026-05-26 by ws CTO per Andrew direct via LD-0099 + MSTR [BLOCKED-ASK] ASK 1 cluster (Andrew direct quote: 'all tier 0 and tier 1 agents need to be able to modify XXX.md and startup docs'). Closes the gap that forced LD-0099 c7dee9cd5 to ship 'excl org/XXX.md' + route to ws CTO."
 
   "AGENTS.md":
     lane: TIER0_TIER1_STARTUP_DOCS
@@ -1789,7 +1789,7 @@ paths:
 
   "org/mcp/**":
     lane: BASE_EXEC
-    note: "MCP server source, inbox infrastructure, broker â€” base exec owns"
+    note: "MCP server source, inbox infrastructure, broker — base exec owns"
 
   "org/modules/graph/comp_*.py":
     lane: ANY_EXEC_OR_AE
@@ -1805,11 +1805,11 @@ paths:
 
   "org/modules/graph/extract_*.py":
     lane: ANY_EXEC_OR_AE
-    note: "Compiler tool engine implementations (extract_validate.py, extract_pipeline.py, etc.) â€” back-end paired with the *_cli.py entrypoints. AE owns extensions per ADHC_COMPIL_V4 family (009 symbolic-rule resolver in extract_validate.py 2026-05-08)."
+    note: "Compiler tool engine implementations (extract_validate.py, extract_pipeline.py, etc.) — back-end paired with the *_cli.py entrypoints. AE owns extensions per ADHC_COMPIL_V4 family (009 symbolic-rule resolver in extract_validate.py 2026-05-08)."
 
   "org/modules/compdiff/**":
     lane: ANY_EXEC_OR_AE
-    note: "NFRA_COMPDIFF (comp-xray) engine + freeze-monitor. AE owns build (0.8.0_AE per NFRA_COMPDIFF.P1 TO); CTO ruled the dir = org/modules/compdiff/ (2026-06-29). Mirrors the org/modules/graph/comp_*.py comp-tool-implementation precedent (AE builds comp-tools in org/modules/, ANY_EXEC_OR_AE; more specific than org/modules/** ANY_EXEC). Grant added by COO to honor CTO's dir-ruling â€” comp-xray engine lives with the other comp-tools, not infra/aws/."
+    note: "NFRA_COMPDIFF (comp-xray) engine + freeze-monitor. AE owns build (0.8.0_AE per NFRA_COMPDIFF.P1 TO); CTO ruled the dir = org/modules/compdiff/ (2026-06-29). Mirrors the org/modules/graph/comp_*.py comp-tool-implementation precedent (AE builds comp-tools in org/modules/, ANY_EXEC_OR_AE; more specific than org/modules/** ANY_EXEC). Grant added by COO to honor CTO's dir-ruling — comp-xray engine lives with the other comp-tools, not infra/aws/."
 
   "org/modules/graph/potion/**":
     lane: ANY_EXEC_OR_AE
@@ -1837,7 +1837,7 @@ paths:
 
   "integrations/**":
     lane: ANY_EXEC_OR_AE
-    note: "/integrations/ -- Andrew-direct 2026-08-12 ~1855Z at the CRO~Z terminal, VERBATIM: \"we need a /bloomberg folder created in a root /integrations folder and all of this information and scripts should be organized in there.\" First occupant integrations/bloomberg/{mcp,pipeline,auth} (17 files git-mv'd from .tools/bloomberg-mcp/ + workflows/bloomberg/ @1ed08a1960). Same CLASS of surface as workflows/** -- a cross-cutting integration home authored by whichever seat owns the integration -> execs + AEs. Added 2026-08-12 ~1902Z by 1.0.0_SA_CTO~Z as GRANTOR (SoD: 4.0.0_SA_CRO~Z is grantee and did NOT self-land; it committed the MOVE under the documented GIT_COMMIT_AUTHOR_OVERRIDE=ANY_EXEC_OR_AE escape, audited at org/git-author-override-audit.log -- BLOCK 18:57:59Z with 18 UNDEFINED violations, OVERRIDE 18:59:18Z -- and routed the rule to me, which is the convention working). >> âš  **THIS IS A NARROWING FOR PART OF THE MOVED SET, NOT A RESTORATION, AND THE GRANTEE'S OWN FRAMING WAS HALF RIGHT.** They reasoned \"the override restores the lane they already had.\" TRUE for the workflows/bloomberg/ files (workflows/** is ANY_EXEC_OR_AE). **FALSE for the .tools/bloomberg-mcp/ files: `.tools/**` is lane ANY -- BROADER -- so those files move ANY -> ANY_EXEC_OR_AE.** Measured by resolving both source globs before landing rather than accepting the restoration claim. << >> **THE NARROWING IS DELIBERATE AND IS AN IMPROVEMENT, WHICH IS WHY I DID NOT GRANT `ANY` TO PRESERVE THE LANE: the moved set includes auth/bbg_credentials.py and auth/terminal_signin.py, which held ANY under .tools/** -- a pre-existing over-grant on credential-adjacent code. Least privilege is the correct default for a NEW root, and tightening auth code is the right direction.** << >> **NO INCUMBENT IS DISPLACED, and the displacement doctrine on OPAL_ANALYST_DE_RUNS does NOT apply here -- structurally, not by luck: `integrations/**` matched NOTHING before this rule (every path under it resolved UNDEFINED and was refused for EVERY agent), so a first rule on an unmatched root is PURELY ADDITIVE. Displacement requires a broader matching rule to override; there was none.** << The grantee correctly warned that a CRO-only grant would revoke the seat that OPERATES this pipeline (0.0.3_BG_BBGTerminal + the /terminal-upload flow) -- right instinct, and **discharged by a different mechanism than a grant: 0.0.3_BG_BBGTerminal appears NOWHERE in this file (it holds no lane to lose) and its own PreToolUse fence denies ALL git mutation from that seat (bg-concierge-gate G2, exercised 34/34). Its files reach git by integrator sweep, so it neither needs nor can use an owned-paths grant.** EXERCISED before landing: CRO~Z PERMITTED on integrations/bloomberg/**; the pre-rule state re-confirmed UNDEFINED for the same path; NEG control a non-exec/non-AE seat REFUSED. Any seat with a demonstrated need is added on ask, or the rule is split per-subtree."
+    note: "/integrations/ -- Andrew-direct 2026-08-12 ~1855Z at the CRO~Z terminal, VERBATIM: \"we need a /bloomberg folder created in a root /integrations folder and all of this information and scripts should be organized in there.\" First occupant integrations/bloomberg/{mcp,pipeline,auth} (17 files git-mv'd from .tools/bloomberg-mcp/ + workflows/bloomberg/ @1ed08a1960). Same CLASS of surface as workflows/** -- a cross-cutting integration home authored by whichever seat owns the integration -> execs + AEs. Added 2026-08-12 ~1902Z by 1.0.0_SA_CTO~Z as GRANTOR (SoD: 4.0.0_SA_CRO~Z is grantee and did NOT self-land; it committed the MOVE under the documented GIT_COMMIT_AUTHOR_OVERRIDE=ANY_EXEC_OR_AE escape, audited at org/git-author-override-audit.log -- BLOCK 18:57:59Z with 18 UNDEFINED violations, OVERRIDE 18:59:18Z -- and routed the rule to me, which is the convention working). >> ⚠ **THIS IS A NARROWING FOR PART OF THE MOVED SET, NOT A RESTORATION, AND THE GRANTEE'S OWN FRAMING WAS HALF RIGHT.** They reasoned \"the override restores the lane they already had.\" TRUE for the workflows/bloomberg/ files (workflows/** is ANY_EXEC_OR_AE). **FALSE for the .tools/bloomberg-mcp/ files: `.tools/**` is lane ANY -- BROADER -- so those files move ANY -> ANY_EXEC_OR_AE.** Measured by resolving both source globs before landing rather than accepting the restoration claim. << >> **THE NARROWING IS DELIBERATE AND IS AN IMPROVEMENT, WHICH IS WHY I DID NOT GRANT `ANY` TO PRESERVE THE LANE: the moved set includes auth/bbg_credentials.py and auth/terminal_signin.py, which held ANY under .tools/** -- a pre-existing over-grant on credential-adjacent code. Least privilege is the correct default for a NEW root, and tightening auth code is the right direction.** << >> **NO INCUMBENT IS DISPLACED, and the displacement doctrine on OPAL_ANALYST_DE_RUNS does NOT apply here -- structurally, not by luck: `integrations/**` matched NOTHING before this rule (every path under it resolved UNDEFINED and was refused for EVERY agent), so a first rule on an unmatched root is PURELY ADDITIVE. Displacement requires a broader matching rule to override; there was none.** << The grantee correctly warned that a CRO-only grant would revoke the seat that OPERATES this pipeline (0.0.3_BG_BBGTerminal + the /terminal-upload flow) -- right instinct, and **discharged by a different mechanism than a grant: 0.0.3_BG_BBGTerminal appears NOWHERE in this file (it holds no lane to lose) and its own PreToolUse fence denies ALL git mutation from that seat (bg-concierge-gate G2, exercised 34/34). Its files reach git by integrator sweep, so it neither needs nor can use an owned-paths grant.** EXERCISED before landing: CRO~Z PERMITTED on integrations/bloomberg/**; the pre-rule state re-confirmed UNDEFINED for the same path; NEG control a non-exec/non-AE seat REFUSED. Any seat with a demonstrated need is added on ask, or the rule is split per-subtree."
 
   "workflows/**":
     lane: ANY_EXEC_OR_AE
@@ -1865,7 +1865,7 @@ paths:
 
   "org/modules/graph/graph_*.py":
     lane: ANY_EXEC_OR_AE
-    note: "Compiler-tool shared SUPPORT modules (graph_cache.py freshness/query-vs-rebuild contract, etc.) imported by the *_cli.py entrypoints. AE owns per ADHC_COMPIL_V4 / NFRA_GRAPHS D2-D3 (graph_cache.py 2026-06-11). Structural completion of the comp_*/extract_*/cli.py AE-glob set â€” NOT a new grant; AE authoring comp-graph-tool code is long-established. Excludes graph-call-manifest.yaml (CTO D1 artifact; .yaml, not .py). Added by COO 2026-06-11 unblocking base-AE D2/D3 commit; same gap-class as the prior comp_*/extract_* adds."
+    note: "Compiler-tool shared SUPPORT modules (graph_cache.py freshness/query-vs-rebuild contract, etc.) imported by the *_cli.py entrypoints. AE owns per ADHC_COMPIL_V4 / NFRA_GRAPHS D2-D3 (graph_cache.py 2026-06-11). Structural completion of the comp_*/extract_*/cli.py AE-glob set — NOT a new grant; AE authoring comp-graph-tool code is long-established. Excludes graph-call-manifest.yaml (CTO D1 artifact; .yaml, not .py). Added by COO 2026-06-11 unblocking base-AE D2/D3 commit; same gap-class as the prior comp_*/extract_* adds."
 
   "org/modules/graph/kuzu_*.py":
     lane: ANY_EXEC_OR_AE
@@ -1901,7 +1901,7 @@ paths:
 
   "org/modules/graph/comp-tools-segment-scope.md":
     lane: ANY_EXEC_OR_AE
-    note: "1-page agent reference card paired with comp-tools.yaml â€” segment-scope tier guidance + cross-cutting axes. AE-authored per ADHC_COMPIL_V4.017."
+    note: "1-page agent reference card paired with comp-tools.yaml — segment-scope tier guidance + cross-cutting axes. AE-authored per ADHC_COMPIL_V4.017."
 
   "org/modules/graph/trace_graph.py":
     lane: ANY_EXEC_OR_AE
@@ -1917,7 +1917,7 @@ paths:
 
   "org/modules/graph/aws-shapes/**":
     lane: ANY_EXEC_OR_AE
-    note: "ADHC_CMPAWS AWS-shape hand-audit fixtures + live-AWS cross-check records (s3-hand-audit-fixture-*.yaml, s3-live-aws-crosscheck-*.md). Co-owned: ws CTO design/schema, 0.7.0_AE live-AWS cross-check (the *-AE.md records), 3.0.0_SA_CVO hand-audit/certify. Was falling through to org/modules/** ANY_EXEC (which excludes AE), stranding AE's crosscheck record (RV-0030 F-003 â€” exec-record-path enumeration gap; AE base not in ANY_EXEC at all, so the tilde base-fallback can't reach it). Added 2026-06-08 by ws CTO. Longest-match overrides org/modules/** ANY_EXEC."
+    note: "ADHC_CMPAWS AWS-shape hand-audit fixtures + live-AWS cross-check records (s3-hand-audit-fixture-*.yaml, s3-live-aws-crosscheck-*.md). Co-owned: ws CTO design/schema, 0.7.0_AE live-AWS cross-check (the *-AE.md records), 3.0.0_SA_CVO hand-audit/certify. Was falling through to org/modules/** ANY_EXEC (which excludes AE), stranding AE's crosscheck record (RV-0030 F-003 — exec-record-path enumeration gap; AE base not in ANY_EXEC at all, so the tilde base-fallback can't reach it). Added 2026-06-08 by ws CTO. Longest-match overrides org/modules/** ANY_EXEC."
 
   "org/modules/graph/compproof/**":
     lane: ANY_EXEC_OR_AE
@@ -1931,7 +1931,7 @@ paths:
 
   "org/modules/graph/tests/**":
     lane: NFRA_TOOLCHECK_P4
-    note: "Per-tool negative-control fixtures. P4 Â§4: a tool is not verified without a STORED, CI-run fixture the tool MUST go RED on, a positive control, and R2 -- the control on the control (0.7.0_AE_CloudOps: 'R1's zero is only evidence if the recorder can ever see a one'). The author of a fixture is not its verifier: CVO mutation-tests it. Added 2026-07-10 by 2.0.0_SA_COO."
+    note: "Per-tool negative-control fixtures. P4 §4: a tool is not verified without a STORED, CI-run fixture the tool MUST go RED on, a positive control, and R2 -- the control on the control (0.7.0_AE_CloudOps: 'R1's zero is only evidence if the recorder can ever see a one'). The author of a fixture is not its verifier: CVO mutation-tests it. Added 2026-07-10 by 2.0.0_SA_COO."
 
   "org/modules/graph/comp_toolgraph_census.json":
     lane: NFRA_TOOLCHECK_P4
@@ -1958,23 +1958,23 @@ paths:
   # Longest-match-wins over the org/ref/** ANY_EXEC catch-all.
   "org/ref/COO_STARTUP.md":
     lane: TIER0_TIER1_STARTUP_DOCS
-    note: "COO startup ground-truth-reconciliation protocol â€” Tier-0+Tier-1 startup-doc class"
+    note: "COO startup ground-truth-reconciliation protocol — Tier-0+Tier-1 startup-doc class"
 
   "org/ref/RAVC_PROTOCOL.md":
     lane: TIER0_TIER1_STARTUP_DOCS
-    note: "RAVC inter-agent protocol â€” Tier-0+Tier-1 startup-doc class"
+    note: "RAVC inter-agent protocol — Tier-0+Tier-1 startup-doc class"
 
   "org/ref/SESSION_LOG_STANDARD.md":
     lane: TIER0_TIER1_STARTUP_DOCS
-    note: "Session-log standard â€” Tier-0+Tier-1 startup-doc class"
+    note: "Session-log standard — Tier-0+Tier-1 startup-doc class"
 
   "org/ref/TASK_ORDER_PROTOCOL.md":
     lane: TIER0_TIER1_STARTUP_DOCS
-    note: "Task-order protocol â€” Tier-0+Tier-1 startup-doc class"
+    note: "Task-order protocol — Tier-0+Tier-1 startup-doc class"
 
   "org/ref/PROMPT_CONSTRUCTION_PROCESS.md":
     lane: TIER0_TIER1_STARTUP_DOCS
-    note: "Prompt-construction process â€” Tier-0+Tier-1 startup-doc class"
+    note: "Prompt-construction process — Tier-0+Tier-1 startup-doc class"
 
   "org/ref/**":
     lane: ANY_EXEC
@@ -2008,7 +2008,7 @@ paths:
 
   "org/templates/**":
     lane: BASE_EXEC
-    note: "PRD + session-log templates â€” CTO/COO authorship (ADHC_COMPIL.003; ADHC_OWNPTH.009)"
+    note: "PRD + session-log templates — CTO/COO authorship (ADHC_COMPIL.003; ADHC_OWNPTH.009)"
 
   "org/threads/**":
     lane: ANY
@@ -2034,15 +2034,15 @@ paths:
     lane: ANY
 
   # -----------------------------------------------------------------------
-  # data/ â€” pipeline scripts and data artifacts
+  # data/ — pipeline scripts and data artifacts
   # -----------------------------------------------------------------------
-  # Black Diamond (BD) scripts â€” Pod 4 DS owns; incident history: DS~A + DS~B tilde lanes
+  # Black Diamond (BD) scripts — Pod 4 DS owns; incident history: DS~A + DS~B tilde lanes
   # Specific override (longest-match-wins): dispatch orchestrator is AE-maintained ops
   # infra, not a DS data script. Mirrors orion-gold-dispatch.sh reclassification
   # (2026-04-30). Authorized by same COO lane-violation flag precedent.
   "data/black_diamond/scripts/gold/gold_dispatch.sh":
     lane: CLOUD_OPS_OR_ETL
-    note: "BD gold dispatch orchestrator â€” AE-maintained, not a DS data script"
+    note: "BD gold dispatch orchestrator — AE-maintained, not a DS data script"
 
   "data/black_diamond/scripts/gold/run_gold_layer.sh":
     lane: CLOUD_OPS_OR_ETL
@@ -2050,11 +2050,11 @@ paths:
 
   "data/black_diamond/scripts/gold/**":
     lane: POD4
-    note: "BD gold scripts â€” DS 0.4.0 primary author (Rule 13/14 in CLAUDE.md)"
+    note: "BD gold scripts — DS 0.4.0 primary author (Rule 13/14 in CLAUDE.md)"
 
   "data/black_diamond/scripts/silver/**":
     lane: POD4
-    note: "BD silver scripts â€” DS 0.4.0 primary author"
+    note: "BD silver scripts — DS 0.4.0 primary author"
 
   "data/black_diamond/scripts/bronze/**":
     lane: POD4
@@ -2062,54 +2062,54 @@ paths:
   "data/black_diamond/**":
     lane: POD4
 
-  # Orion (Inflection) gold dispatch orchestrator â€” SHARED DS+AE seam (POD4_OR_AE).
+  # Orion (Inflection) gold dispatch orchestrator — SHARED DS+AE seam (POD4_OR_AE).
   # History: AE-reclassified 2026-04-30 (orchestration plumbing = AE, --run-date flag work).
   # Re-SHARED 2026-06-12 (2.0.0_SA_COO, ADVI_INFETL P0 BRONZE-FIX): tonight proved this file
-  # is a genuine recurring data/infra seam â€” AE shipped #9 (runner shutdown, 555ea1e44) AND DS
-  # ships #7 (ChainFailed FATAL emitter â€” data-chain failure SIGNAL) AND #6 (sentinel re-key)
+  # is a genuine recurring data/infra seam — AE shipped #9 (runner shutdown, 555ea1e44) AND DS
+  # ships #7 (ChainFailed FATAL emitter — data-chain failure SIGNAL) AND #6 (sentinel re-key)
   # touches it too. The AE-only split would re-block DS's TO-assigned data-chain-observability
   # work every time. Same POD4_OR_AE consolidation as data/inf/scripts/bronze/** (line ~900) =
   # the divergence-resolving pattern. PENDING CTO RATIFICATION + AE review (inverts a deliberate
-  # AE-reclassification while AE is session-closed; CC CTO 230904Z; reversible â€” if CTO/AE rule
+  # AE-reclassification while AE is session-closed; CC CTO 230904Z; reversible — if CTO/AE rule
   # dispatcher-observability is AE-lane, revert + reassign #6). AE retains orchestration-plumbing
   # primacy; DS permitted for data-chain-signal/sentinel work the TOs assign.
   "data/inf/scripts/gold/orion-gold-dispatch.sh":
     lane: POD4_OR_AE
-    note: "Orion gold dispatcher â€” SHARED DS+AE seam (data-chain signal/sentinel = DS; orchestration plumbing = AE). Re-shared 2026-06-12, pending CTO ratification"
+    note: "Orion gold dispatcher — SHARED DS+AE seam (data-chain signal/sentinel = DS; orchestration plumbing = AE). Re-shared 2026-06-12, pending CTO ratification"
 
-  # Specific overrides: manual_api ops infrastructure â€” AE-maintained, not DS data scripts.
+  # Specific overrides: manual_api ops infrastructure — AE-maintained, not DS data scripts.
   # jwt_freshness.py + run_backfill_orchestrator.py reclassified 2026-05-01 (CTO ruling,
-  # ADVI_JWTRES.002 â€” AE 0.7.0 adds recover_or_exit() + backfill startup wiring).
+  # ADVI_JWTRES.002 — AE 0.7.0 adds recover_or_exit() + backfill startup wiring).
   "data/inf/manual_api/jwt_freshness.py":
     lane: CLOUD_OPS_OR_ETL
-    note: "JWT token freshness utility â€” AE-maintained ops infra; originally DS Phase 1, AE owns Phase 2 recovery logic"
+    note: "JWT token freshness utility — AE-maintained ops infra; originally DS Phase 1, AE owns Phase 2 recovery logic"
 
   "data/inf/manual_api/run_backfill_orchestrator.py":
     lane: CLOUD_OPS_OR_ETL
-    note: "Bronze backfill orchestrator â€” AE-maintained ops infra"
+    note: "Bronze backfill orchestrator — AE-maintained ops infra"
 
   "data/inf/manual_api/pull_inflection_assets.py":
     lane: CLOUD_OPS_OR_ETL
-    note: "Inflection assets puller â€” AE-maintained ops infra (HISTBF Wave B IAM gap fix flagged 2026-05-04 in ADHC_OWNPTH 48h scan FP-3)"
+    note: "Inflection assets puller — AE-maintained ops infra (HISTBF Wave B IAM gap fix flagged 2026-05-04 in ADHC_OWNPTH 48h scan FP-3)"
 
   "data/inf/scripts/gold/**":
     lane: POD4
-    note: "Orion/Inflection gold scripts â€” DS 0.4.0 primary author"
+    note: "Orion/Inflection gold scripts — DS 0.4.0 primary author"
 
   "data/inf/scripts/silver/**":
     lane: POD4
 
-  # inf bronze orchestration + deploy-contract â€” POD4 (DS) authors data + owns the deploy
+  # inf bronze orchestration + deploy-contract — POD4 (DS) authors data + owns the deploy
   # cycle; AE 0.6 owns the bronze structural/hardening work (TOOL-03, BRONZE-FIX #1/#2, the
-  # orchestrator hardening port + bronze_required_dims contract). Both permitted â€” same
+  # orchestrator hardening port + bronze_required_dims contract). Both permitted — same
   # POD4_OR_AE pattern as the inf-pipeline Lambda lane. Added 2026-06-12 (2.0.0_SA_COO,
   # ADVI_INFETL P0 BRONZE-FIX): the AE-infra-copy vs POD4-data-copy lane SPLIT is what created
-  # the orchestrator twin divergence (FINDING 1 hardening regression) â€” consolidating AE onto
+  # the orchestrator twin divergence (FINDING 1 hardening regression) — consolidating AE onto
   # the CANONICAL data/inf bronze copy (infra twin retiring per CTO 1a1d555f2) structurally
   # prevents recurrence. CC CTO. DS retains deploy-cycle ownership (fires on push).
   "data/inf/scripts/bronze/**":
     lane: POD4_OR_AE
-    note: "inf bronze â€” DS (data+deploy) + AE 0.6 (structural/hardening) both permitted; twin-consolidation"
+    note: "inf bronze — DS (data+deploy) + AE 0.6 (structural/hardening) both permitted; twin-consolidation"
 
   "data/inf/scripts/**":
     lane: POD4
@@ -2117,18 +2117,18 @@ paths:
   "data/inf/**":
     lane: POD4
 
-  # Schwab scripts â€” Pod 4 DS owns (NNA enrichment work)
+  # Schwab scripts — Pod 4 DS owns (NNA enrichment work)
   "data/schwab/**":
     lane: POD4
 
-  # Yang scripts â€” Pod 2 (PortfolioAnalytics)
+  # Yang scripts — Pod 2 (PortfolioAnalytics)
   "data/yang/**":
     lane: POD2
 
   "data/yang_pkl/**":
     lane: POD2
 
-  # SmartX backend â€” 0.5.0_AE OpalETL lane.
+  # SmartX backend — 0.5.0_AE OpalETL lane.
   # Andrew direct ruling 2026-05-15: "smartx (backend) is a 0.5.0_AE lane."
   # SmartX = shared Opal resources -> the Opal ETL agent owns the backend
   # (REST pull flow, manual_api-style pull scripts). Was POD3 (TradingOperations).
@@ -2136,7 +2136,7 @@ paths:
   "data/smartx/**":
     lane: SHARED_OPAL_ETL
 
-  # Seeking Alpha â€” Pod 1 (MarketIntelligence)
+  # Seeking Alpha — Pod 1 (MarketIntelligence)
   "data/seeking-alpha/**":
     lane: POD1
 
@@ -2155,33 +2155,33 @@ paths:
     note: "Catch-all for any unspecified data subdirectory"
 
   # -----------------------------------------------------------------------
-  # infra/ â€” infrastructure (Terraform, IAM, EC2)
+  # infra/ — infrastructure (Terraform, IAM, EC2)
   # -----------------------------------------------------------------------
   "infra/aws/ec2/EC2_MANIFEST.json":
     lane: SHARED_CLOUD_OPS
-    note: "EC2 manifest â€” AE 0.7.0 is sole owner (CLAUDE.md Rule 8)"
+    note: "EC2 manifest — AE 0.7.0 is sole owner (CLAUDE.md Rule 8)"
 
   "infra/aws/lambda/inf-*/**":
     lane: POD4_OR_AE
-    note: "All inf-* Lambda source dirs (inf-portal-publisher, inf-portal-advisor-publisher, inf-client-detail, inf-gold-trigger, future LAMBDA-DIMS per-dim Lambdas) â€” DS/DE author code, AE 0.7 deploys. Widened from inf-pipeline/** to inf-*/** (COO URGENT 2026-05-07). Longest-match overrides infra/aws/** AE-only rule."
+    note: "All inf-* Lambda source dirs (inf-portal-publisher, inf-portal-advisor-publisher, inf-client-detail, inf-gold-trigger, future LAMBDA-DIMS per-dim Lambdas) — DS/DE author code, AE 0.7 deploys. Widened from inf-pipeline/** to inf-*/** (COO URGENT 2026-05-07). Longest-match overrides infra/aws/** AE-only rule."
 
-  # Pod 1 news-pipeline + market-overview Lambdas â€” DS authors data logic, AE deploys.
+  # Pod 1 news-pipeline + market-overview Lambdas — DS authors data logic, AE deploys.
   # Mirrors POD4_OR_AE pattern for inf-*. Added 2026-05-12 (Andrew authorized).
   "infra/aws/lambda/news_*/**":
     lane: POD1_OR_AE
-    note: "News-pipeline Lambda source (news_ingestion_scheduler, news_layer3_curation, news_trending_analysis, news_semantic_clustering, etc.) â€” POD1 DS authors, AE deploys. Longest-match overrides infra/aws/** AE-only rule."
+    note: "News-pipeline Lambda source (news_ingestion_scheduler, news_layer3_curation, news_trending_analysis, news_semantic_clustering, etc.) — POD1 DS authors, AE deploys. Longest-match overrides infra/aws/** AE-only rule."
 
   "infra/aws/lambda/keyword_*/**":
     lane: POD1_OR_AE
-    note: "Keyword intelligence + drilldown Lambdas â€” POD1 DS authors, AE deploys."
+    note: "Keyword intelligence + drilldown Lambdas — POD1 DS authors, AE deploys."
 
   "infra/aws/lambda/semantic-news-*/**":
     lane: POD1_OR_AE
-    note: "Semantic news-pipeline Lambdas (currently inactive but kept in lane) â€” POD1 DS authors, AE deploys."
+    note: "Semantic news-pipeline Lambdas (currently inactive but kept in lane) — POD1 DS authors, AE deploys."
 
   "infra/aws/lambda/v2_portal/01_market_overview/**":
     lane: POD1_OR_AE
-    note: "Market Overview Lambdas (tiered-generator, rsi-tiered-generator, regime-classifier, fear-greed-fetcher) â€” POD1 DS authors, AE deploys."
+    note: "Market Overview Lambdas (tiered-generator, rsi-tiered-generator, regime-classifier, fear-greed-fetcher) — POD1 DS authors, AE deploys."
 
   "infra/aws/lambda/v2_portal/yang_pipeline/**":
     lane: YANG_PIPELINE_DEPLOY
@@ -2189,7 +2189,7 @@ paths:
 
   "infra/aws/lambda/trade-pipeline/**":
     lane: TRADE_PIPELINE_INFRA
-    note: "Trade-pipeline Lambda source â€” DT 0.3.0 authorized for code edits until TRSB_TFIMPT.W3; longest-match overrides infra/aws/** AE-only rule (COO ruling 2026-05-01 TRSB_PATHFIX)"
+    note: "Trade-pipeline Lambda source — DT 0.3.0 authorized for code edits until TRSB_TFIMPT.W3; longest-match overrides infra/aws/** AE-only rule (COO ruling 2026-05-01 TRSB_PATHFIX)"
 
   # etfs-pipeline Lambda source -- POD4 (DS) authors the producer code, AE owns deploy.
   # Added 2026-08-19 (2.0.0_SA_COO, D4c Phase A). FOURTH instance of one recurring gap: the
@@ -2204,7 +2204,7 @@ paths:
 
   "infra/aws/lambda/ycharts-market-data-pull/**":
     lane: YCHARTS_PULL_MODULE
-    note: "YCharts pull Lambda source â€” C2 co-owners 0.1.0_DS + 0.2.0_DS author code, 0.7.0_AE deploys; longest-match overrides the infra/aws/** AE-only rule (COO ruling 2026-05-22 YALP_MDSRC.C2)"
+    note: "YCharts pull Lambda source — C2 co-owners 0.1.0_DS + 0.2.0_DS author code, 0.7.0_AE deploys; longest-match overrides the infra/aws/** AE-only rule (COO ruling 2026-05-22 YALP_MDSRC.C2)"
 
   "infra/aws/terraform/yang-pipeline/**":
     lane: YANG_PIPELINE_DEPLOY
@@ -2236,14 +2236,14 @@ paths:
 
   "infra/aws/**":
     lane: CLOUD_OPS_OR_ETL
-    note: "AWS infra (Terraform, IAM, Lambda) â€” AE 0.5/0.6/0.6.1/0.7 only"
+    note: "AWS infra (Terraform, IAM, Lambda) — AE 0.5/0.6/0.6.1/0.7 only"
 
   "infra/ec2/**":
     lane: SHARED_CLOUD_OPS
 
   "infra/system/**":
     lane: ANY_EXEC_OR_AE
-    note: "NFRA_SYSTEM / NFRA_LOCALROOT docs-home -- the SYSTEM CONTENT knowledge-class home + the comp-system 06_current_state runtime output. DOCS-HOMES-EXEC-COMMITTABLE carve (CTO ruling 2026-07-08 + NFRA_LOCALROOT-P2 Â§4, CTO arch-gate GO 225633Z c345f4038): infra/{system,project-docs} = exec/owner-committable DOCUMENTATION (distinct from infra/aws CODE = AE-owned). ANY_EXEC_OR_AE gives exec (COO~B via 2.0.0_SA_COO tilde-strip owns+commits the SYSTEM docs + the 06 output per SoD) + retains the AE set (0.8.0~D's comp-system compiler stages the 06). Longest-match (16) overrides infra/** (8) CLOUD_OPS_OR_ETL. SoD: grantor-landed by 2.0.0_SA_COO (base), grantee COO~B commits. Added 2026-07-08 by 2.0.0_SA_COO."
+    note: "NFRA_SYSTEM / NFRA_LOCALROOT docs-home -- the SYSTEM CONTENT knowledge-class home + the comp-system 06_current_state runtime output. DOCS-HOMES-EXEC-COMMITTABLE carve (CTO ruling 2026-07-08 + NFRA_LOCALROOT-P2 §4, CTO arch-gate GO 225633Z c345f4038): infra/{system,project-docs} = exec/owner-committable DOCUMENTATION (distinct from infra/aws CODE = AE-owned). ANY_EXEC_OR_AE gives exec (COO~B via 2.0.0_SA_COO tilde-strip owns+commits the SYSTEM docs + the 06 output per SoD) + retains the AE set (0.8.0~D's comp-system compiler stages the 06). Longest-match (16) overrides infra/** (8) CLOUD_OPS_OR_ETL. SoD: grantor-landed by 2.0.0_SA_COO (base), grantee COO~B commits. Added 2026-07-08 by 2.0.0_SA_COO."
 
   "infra/system/06_current_state*":
     lane: SYSTEM_CURRENT_REGEN
@@ -2251,11 +2251,11 @@ paths:
 
   "infra/README.md":
     lane: ANY_EXEC_OR_AE
-    note: "The /infra index (DOCUMENTATION). Docs-homes-exec-committable carve, RECIPROCAL of the infra/system/** carve (336731af4): infra docs-homes = exec/owner-committable, infra/aws CODE stays AE-owned (LOCALROOT-P3 Â§4 rule, CTO docs-vs-code ruling 2026-07-08). Exact-file longest-match overrides infra/** (8) CLOUD_OPS_OR_ETL. SoD: grantor-landed by 2.0.0_SA_COO~B (the other COO), grantee 2.0.0_SA_COO commits the index edit (grantee doesn't self-land its grant). Added 2026-07-09 by 2.0.0_SA_COO~B."
+    note: "The /infra index (DOCUMENTATION). Docs-homes-exec-committable carve, RECIPROCAL of the infra/system/** carve (336731af4): infra docs-homes = exec/owner-committable, infra/aws CODE stays AE-owned (LOCALROOT-P3 §4 rule, CTO docs-vs-code ruling 2026-07-08). Exact-file longest-match overrides infra/** (8) CLOUD_OPS_OR_ETL. SoD: grantor-landed by 2.0.0_SA_COO~B (the other COO), grantee 2.0.0_SA_COO commits the index edit (grantee doesn't self-land its grant). Added 2026-07-09 by 2.0.0_SA_COO~B."
 
   "infra/architectural_docs/**":
     lane: ANY_EXEC_OR_AE
-    note: "Infra architecture decision-records (DOCUMENTATION). Docs-homes-exec-committable carve (reciprocal of infra/system/**): infra arch-docs = exec/owner-committable, infra/aws CODE stays AE (LOCALROOT-P3 Â§4; CTO arch-doc routing rule = infra decision-record -> here, PRD/broad -> docs/architecture). Longest-match overrides infra/** CLOUD_OPS_OR_ETL; infra/aws/** (more specific) stays AE -- scope is TIGHT, only these two doc paths carve. SoD: grantor-landed by 2.0.0_SA_COO~B, grantee 2.0.0_SA_COO commits. Added 2026-07-09 by 2.0.0_SA_COO~B."
+    note: "Infra architecture decision-records (DOCUMENTATION). Docs-homes-exec-committable carve (reciprocal of infra/system/**): infra arch-docs = exec/owner-committable, infra/aws CODE stays AE (LOCALROOT-P3 §4; CTO arch-doc routing rule = infra decision-record -> here, PRD/broad -> docs/architecture). Longest-match overrides infra/** CLOUD_OPS_OR_ETL; infra/aws/** (more specific) stays AE -- scope is TIGHT, only these two doc paths carve. SoD: grantor-landed by 2.0.0_SA_COO~B, grantee 2.0.0_SA_COO commits. Added 2026-07-09 by 2.0.0_SA_COO~B."
   "infra/logic/**":
     lane: PLATFORM_LOGIC_DOCS
     note: "D14 Platform Logic foundation -- DOCUMENTS ONLY. Narrower than infra/** and displaces it by longest-match; infra/aws/** and all other infra paths stay CLOUD_OPS_OR_ETL, unchanged."
@@ -2266,40 +2266,40 @@ paths:
     note: "General infra catch-all"
 
   # -----------------------------------------------------------------------
-  # portal/ â€” React frontend (submodule)
+  # portal/ — React frontend (submodule)
   # -----------------------------------------------------------------------
   "portal":
     lane: ANY
-    note: "portal submodule pointer file (parent-repo SHA) â€” DT bumps on portal push; CTO/AE may bump for portal-pointer hotfixes. Added 2026-04-30 ADHC_OWNPTH.005 phase-2 flip (DT 0.4 hit UNDEFINED multiple times in audit log)."
+    note: "portal submodule pointer file (parent-repo SHA) — DT bumps on portal push; CTO/AE may bump for portal-pointer hotfixes. Added 2026-04-30 ADHC_OWNPTH.005 phase-2 flip (DT 0.4 hit UNDEFINED multiple times in audit log)."
 
   "portal/**":
     lane: POD_DE_ANY
     note: "Any pod DE can author portal; DT pushes (DEV/PROD submodule branches)"
 
   # -----------------------------------------------------------------------
-  # docs/ â€” documentation
+  # docs/ — documentation
   # -----------------------------------------------------------------------
   # Project-scoped detail docs come BEFORE the generic docs/architecture/** rule (longest-match-wins).
-  # Pattern: docs/architecture/{PROJECT_CODE_PREFIX}_*.md â†’ resolves to the project's owning lane.
+  # Pattern: docs/architecture/{PROJECT_CODE_PREFIX}_*.md → resolves to the project's owning lane.
   # Add new entries here when a project authorizes pod-level authoring of detail/inventory/matrix docs
   # alongside CTO-authored top-level PRDs (which still match docs/architecture/{PROJECT_CODE}.md
   # via the catch-all below).
 
   "docs/architecture/COMP_LEARNS_*":
     lane: COMP_LEARNS
-    note: "COMP_LEARNS PRDs â€” project lane gated (prevents base CTO sweep incident #3 recurrence)"
+    note: "COMP_LEARNS PRDs — project lane gated (prevents base CTO sweep incident #3 recurrence)"
 
   "docs/architecture/INFLEC_*":
     lane: POD4
-    note: "Inflection partner detail docs (DATA_INVENTORY, PORTAL_FIELD_USAGE, BD_PARITY_MATRIX) â€” POD4 owned per ADVI_INFPRTY scope (CTO ruling 2026-04-27, response to DE 0c241ee0 sweep WARN). Top-level ADVI_INFLEC.md PRD remains under docs/architecture/** ANY_CTO catch-all."
+    note: "Inflection partner detail docs (DATA_INVENTORY, PORTAL_FIELD_USAGE, BD_PARITY_MATRIX) — POD4 owned per ADVI_INFPRTY scope (CTO ruling 2026-04-27, response to DE 0c241ee0 sweep WARN). Top-level ADVI_INFLEC.md PRD remains under docs/architecture/** ANY_CTO catch-all."
 
   "docs/architecture/INFETL_*":
     lane: POD4_OR_AE
-    note: "INFETL detail/matrix docs â€” co-owned by POD4 DS (SHAPE-VERIFY, MDR deliverables) and AE (DAILY-AUDIT, LAMBDA-DIMS). Andrew direct 2026-05-07: DS should be in this path. Top-level ADVI_INFETL.md PRD remains under docs/architecture/** ANY_CTO catch-all."
+    note: "INFETL detail/matrix docs — co-owned by POD4 DS (SHAPE-VERIFY, MDR deliverables) and AE (DAILY-AUDIT, LAMBDA-DIMS). Andrew direct 2026-05-07: DS should be in this path. Top-level ADVI_INFETL.md PRD remains under docs/architecture/** ANY_CTO catch-all."
 
   "docs/architecture/ADVI_FIRMSEP_*":
     lane: CLOUD_OPS_OR_ETL
-    note: "FIRMSEP detail/audit docs (PHASE0_AUDIT, ONBOARDING_PLAYBOOK, etc.) â€” AE-owned per ADVI_FIRMSEP TO authorization (COO 2026-05-07). Top-level ADVI_FIRMSEP.md PRD remains under docs/architecture/** ANY_CTO catch-all. Mirrors INFETL_*/INFLEC_* precedent."
+    note: "FIRMSEP detail/audit docs (PHASE0_AUDIT, ONBOARDING_PLAYBOOK, etc.) — AE-owned per ADVI_FIRMSEP TO authorization (COO 2026-05-07). Top-level ADVI_FIRMSEP.md PRD remains under docs/architecture/** ANY_CTO catch-all. Mirrors INFETL_*/INFLEC_* precedent."
 
   "docs/architecture/OPAL_ASSETS_*_PRD.md":
     lane: ANY_CTO
@@ -2307,7 +2307,7 @@ paths:
 
   "docs/architecture/OPAL_ASSETS_*":
     lane: POD4_OR_AE
-    note: "OPAL_ASSETS detail/contract docs (V2_LAMBDA_CONTRACT etc.) â€” co-owned by AE (0.7.0 TF-side, 0.5.0 smartx feeds) and POD4 DS (V2-8 converter half). CTO grant 2026-07-14 per 0.7.0 ask 074500Z (V2-7/V2-8 lambda contract co-cited by both TOs). Mirrors INFETL_* precedent (Andrew-direct 2026-05-07: DS should be in this path). Top-level OPAL_ASSETS*.md PRDs remain under docs/architecture/** ANY_CTO catch-all."
+    note: "OPAL_ASSETS detail/contract docs (V2_LAMBDA_CONTRACT etc.) — co-owned by AE (0.7.0 TF-side, 0.5.0 smartx feeds) and POD4 DS (V2-8 converter half). CTO grant 2026-07-14 per 0.7.0 ask 074500Z (V2-7/V2-8 lambda contract co-cited by both TOs). Mirrors INFETL_* precedent (Andrew-direct 2026-05-07: DS should be in this path). Top-level OPAL_ASSETS*.md PRDs remain under docs/architecture/** ANY_CTO catch-all."
 
   "docs/architecture/ADHC_COMPIL_V4_017_*":
     lane: ANY_EXEC_OR_AE
@@ -2315,11 +2315,11 @@ paths:
 
   "docs/architecture/CASE_FIND_QUARANTINE_IMPL.md":
     lane: ANY_EXEC_OR_AE
-    note: "LD-0067 Workstream-B implementation spec â€” AE-authored per MSTR LD-0084 RATIFY of WB-1 design-readout (4ae1fa61f). Companion to CTO-authored CASE_FIND_SECURITY_PROTOCOL.md (which stays ANY_CTO via catch-all). COO unblock ws CTO+CVO observable per AE [BLOCKED-ASK] 2026-05-26T~03:53Z."
+    note: "LD-0067 Workstream-B implementation spec — AE-authored per MSTR LD-0084 RATIFY of WB-1 design-readout (4ae1fa61f). Companion to CTO-authored CASE_FIND_SECURITY_PROTOCOL.md (which stays ANY_CTO via catch-all). COO unblock ws CTO+CVO observable per AE [BLOCKED-ASK] 2026-05-26T~03:53Z."
 
   "docs/architecture/TELEMETRY_LIVENESS_IMPL.md":
     lane: ANY_EXEC_OR_AE
-    note: "LD-0070 Workstream-B implementation spec â€” AE-authored per MSTR LD-0084 RATIFY of WB-1 design-readout (4ae1fa61f). Companion to CTO-authored TELEMETRY_LIVENESS_FRAMEWORK.md (which stays ANY_CTO via catch-all). COO unblock ws CTO+CVO observable per AE [BLOCKED-ASK] 2026-05-26T~03:53Z."
+    note: "LD-0070 Workstream-B implementation spec — AE-authored per MSTR LD-0084 RATIFY of WB-1 design-readout (4ae1fa61f). Companion to CTO-authored TELEMETRY_LIVENESS_FRAMEWORK.md (which stays ANY_CTO via catch-all). COO unblock ws CTO+CVO observable per AE [BLOCKED-ASK] 2026-05-26T~03:53Z."
 
   "docs/architecture/*_SCORECARD.md":
     lane: ANY_EXEC_OR_AE
@@ -2327,32 +2327,32 @@ paths:
 
   "docs/architecture/**":
     lane: ANY_CTO
-    note: "Architecture PRDs â€” either CTO (base or project-scoped)"
+    note: "Architecture PRDs — either CTO (base or project-scoped)"
 
   "docs/deployment/**":
     lane: BASE_EXEC
-    note: "Deployment protocols â€” base exec only"
+    note: "Deployment protocols — base exec only"
 
   "docs/briefs/**":
     lane: ANY
 
   "docs/**":
     lane: ANY
-    note: "All other docs â€” any agent (analysis, guides, runbooks, etc.)"
+    note: "All other docs — any agent (analysis, guides, runbooks, etc.)"
 
   # -----------------------------------------------------------------------
-  # comp/ â€” COMP_LEARNS research project (incident #4 root: AE swept ~50 files)
+  # comp/ — COMP_LEARNS research project (incident #4 root: AE swept ~50 files)
   # -----------------------------------------------------------------------
   "comp/**":
     lane: COMP_LEARNS
-    note: "COMP_LEARNS project root â€” project lane only (incident #4: AE 0.7 swept 4032 deletions)"
+    note: "COMP_LEARNS project root — project lane only (incident #4: AE 0.7 swept 4032 deletions)"
 
   # -----------------------------------------------------------------------
-  # .tools/ â€” shared tooling (any agent may extend; AE wires hooks)
+  # .tools/ — shared tooling (any agent may extend; AE wires hooks)
   # -----------------------------------------------------------------------
   ".tools/git-hooks/**":
     lane: ANY_EXEC_OR_AE
-    note: "Hook scripts â€” AE 0.7 implements (ADHC_OWNPTH.003); execs may revise (mode flips, exception adds). Widened 2026-04-30 from CLOUD_OPS_OR_ETL during TO 5 phase-2 flip."
+    note: "Hook scripts — AE 0.7 implements (ADHC_OWNPTH.003); execs may revise (mode flips, exception adds). Widened 2026-04-30 from CLOUD_OPS_OR_ETL during TO 5 phase-2 flip."
 
   ".tools/**":
     lane: ANY
@@ -2360,14 +2360,14 @@ paths:
   "design/**":
     lane: ANY
     note: "The workspace DESIGN repository (brand captures, DESIGN.md drafts, design tokens) -- D13 Design (LAPTOP), Andrew-direct 2026-09-11 at the 0.1.1_RD_MarketPerformance terminal. Had NO path rule until 2026-09-11 (lane UNDEFINED; d4b20a28ba needed an audited BASE_EXEC override to land). Not a served surface: writers are scoped by the D13 project's task orders once cut; until then ANY, like .tools/**. 1.0.0_SA_CTO 2026-09-11 on 0.1.1_RD_MarketPerformance 95899 gate gap B."
-    note: "Shared .tools/ â€” any agent may contribute tooling (in PATH via .bashrc)"
+    note: "Shared .tools/ — any agent may contribute tooling (in PATH via .bashrc)"
 
   "ajb.ps1":
     lane: BASE_EXEC
     note: "Root-level launcher SHIM -- a 12-line thin wrapper that dot-sources the canonical launcher at .tools/ajb.ps1 (which is lane ANY). Exists only because Andrew dot-sources from the repo root (81660e0f2a). A SHIM not a COPY: the root copy had silently gone stale (missing LD-0375 + LD-0381 rows) and MSTR~Z falsified a claim against it -- two launcher copies = DERIVED_UNIVERSE drift; the shim makes drift inexpressible (one launcher). Added 2026-08-06 by 1.0.0_SA_CTO (BASE_EXEC gate) on MSTR's ask, unblocking a commit owned-paths correctly refused as UNDEFINED. Lane = BASE_EXEC (CTO/COO/CVO/CRO -- NOT MSTR; a root-level file warrants more restriction than .tools/'s ANY). MSTR maintains launcher LOGIC in the CANONICAL .tools/ajb.ps1 (lane ANY -- they edit it there freely); the root SHIM is a stable pointer that rarely changes, and when it does it is an arch decision a BASE_EXEC seat commits. (Corrected at authoring: a negative-control check caught my own mis-memory that MSTR was in BASE_EXEC -- they are in GOVERNANCE_AUDIT, not BASE_EXEC. Verify-before-assert, on my own rule.) >> DELIBERATE NON-DECISION on MSTR's 'add a root-singleton catch-all' suggestion: NOT added, on purpose. UNDEFINED-on-an-unlisted-ROOT-file is CORRECT for a sensitive location -- it forces a deliberate lane assignment per file (this entry IS that, working as intended). A blanket root catch-all would trade a SAFE friction (BASE_EXEC assigns each root file a lane consciously) for an UNSAFE default (a future sensitive root file -- a new .gitignore/CLAUDE.md-class artifact -- silently inherits write access from the catch-all). The recurrence (.gitmodules, ajb.ps1) is the gate demanding a per-file decision, not a bug to paper over. Add the specific rule as each root file appears; that is the intended workflow."
 
   # -----------------------------------------------------------------------
-  # deck_generation/ â€” DeckGeneration pipeline
+  # deck_generation/ — DeckGeneration pipeline
   # -----------------------------------------------------------------------
   ".claude/skills/deck-prompt/**":
     lane: DECK
@@ -2382,103 +2382,103 @@ paths:
     note: "DECK macro-owned tooling (from-primitives composer + DESIGN_BIBLE). Re-laned off CLOUD_OPS_OR_ETL 2026-06-17 (CTO 203617Z); the DECK macro 86606a545 postdates the old AE-only lane. 0.4.2_RD composer-author self-commits; live Lambda/TF infra leg stays AE-reachable via DECK AE members."
 
   # -----------------------------------------------------------------------
-  # projects/ â€” workspace-infra projects (LD-0067 family + future siblings).
-  # Most of /projects/ is gitignored (vendor / external â€” see .gitignore);
+  # projects/ — workspace-infra projects (LD-0067 family + future siblings).
+  # Most of /projects/ is gitignored (vendor / external — see .gitignore);
   # explicit per-subpath entries below cover workspace-infra subpaths that
   # are git-tracked + consumed by skills.
   # -----------------------------------------------------------------------
   "projects/case_find_bridge/**":
     lane: ANY_EXEC_OR_AE
-    note: "LD-0067 v1 bridge for /case-find external material quarantine â€” AE 0.7 owns the bridge code; CL CVO consumes via /case-find skill body; execs (incl CVO) author review-edits. Supersedes when projects/case_find_quarantine/ lands per WS-B (CASE_FIND_SECURITY_PROTOCOL.md Â§10 companion-docs). Added 2026-05-26 by COO per AE 0.7 [OWNED-PATHS-ASK] (Andrew Path-1 directive 2026-05-26T~0040Z 'Path 1 go'; tilde-lane-gap-style 1-line lane add pattern)."
+    note: "LD-0067 v1 bridge for /case-find external material quarantine — AE 0.7 owns the bridge code; CL CVO consumes via /case-find skill body; execs (incl CVO) author review-edits. Supersedes when projects/case_find_quarantine/ lands per WS-B (CASE_FIND_SECURITY_PROTOCOL.md §10 companion-docs). Added 2026-05-26 by COO per AE 0.7 [OWNED-PATHS-ASK] (Andrew Path-1 directive 2026-05-26T~0040Z 'Path 1 go'; tilde-lane-gap-style 1-line lane add pattern)."
 
   # -----------------------------------------------------------------------
-  # gold/ â€” gold outputs / meta
+  # gold/ — gold outputs / meta
   # -----------------------------------------------------------------------
   "gold/**":
     lane: POD4
-    note: "Gold layer outputs â€” DS 0.4.0 primary (black diamond gold chain)"
+    note: "Gold layer outputs — DS 0.4.0 primary (black diamond gold chain)"
 
   # -----------------------------------------------------------------------
-  # etf_netassets_watch/ â€” ETFS_NETAST net-assets probe (DS~C-built)
+  # etf_netassets_watch/ — ETFS_NETAST net-assets probe (DS~C-built)
   # -----------------------------------------------------------------------
   "etf_netassets_watch/**":
     lane: POD4
-    note: "ETF net-assets probe + pull scripts + parquet data â€” Pod 4 DS owns (DS~C built it, ETFS_NETAST project, Andrew-directed 2026-05-15). AE 0.7.0's ETFS_NETAST infra work lives in infra/aws/** (already AE-laned). Added by CTO 2026-05-15 â€” path was UNDEFINED; DS~C's da4931c85 commit needed an audited override."
+    note: "ETF net-assets probe + pull scripts + parquet data — Pod 4 DS owns (DS~C built it, ETFS_NETAST project, Andrew-directed 2026-05-15). AE 0.7.0's ETFS_NETAST infra work lives in infra/aws/** (already AE-laned). Added by CTO 2026-05-15 — path was UNDEFINED; DS~C's da4931c85 commit needed an audited override."
 
   # -----------------------------------------------------------------------
-  # goldfish/ â€” agent orchestration tooling
+  # goldfish/ — agent orchestration tooling
   # -----------------------------------------------------------------------
   "goldfish/**":
     lane: BASE_EXEC
-    note: "Goldfish agent orchestration â€” base exec controls"
+    note: "Goldfish agent orchestration — base exec controls"
 
   # -----------------------------------------------------------------------
-  # tests/ â€” test suite
+  # tests/ — test suite
   # -----------------------------------------------------------------------
   "tests/**":
     lane: ANY
-    note: "Tests â€” any agent contributing to test coverage"
+    note: "Tests — any agent contributing to test coverage"
 
   # -----------------------------------------------------------------------
-  # timeseries/ â€” market data JSON files (read-mostly)
+  # timeseries/ — market data JSON files (read-mostly)
   # -----------------------------------------------------------------------
   "timeseries/**":
     lane: ANY
-    note: "Market timeseries data files â€” any agent (data refresh pipeline writes)"
+    note: "Market timeseries data files — any agent (data refresh pipeline writes)"
 
   # -----------------------------------------------------------------------
-  # research/ â€” research documents
+  # research/ — research documents
   # -----------------------------------------------------------------------
   "research/**":
     lane: ANY
 
   # -----------------------------------------------------------------------
-  # scripts/ â€” root-level ad-hoc scripts
+  # scripts/ — root-level ad-hoc scripts
   # -----------------------------------------------------------------------
   "scripts/**":
     lane: ANY
-    note: "Root-level ad-hoc scripts â€” any agent (no strict ownership per historical usage)"
+    note: "Root-level ad-hoc scripts — any agent (no strict ownership per historical usage)"
 
   # -----------------------------------------------------------------------
-  # models/ â€” factor scanner, tax strategy models
+  # models/ — factor scanner, tax strategy models
   # -----------------------------------------------------------------------
   "models/**":
     lane: ANY
 
   # -----------------------------------------------------------------------
-  # logs/ â€” legacy session/audit logs
+  # logs/ — legacy session/audit logs
   # -----------------------------------------------------------------------
   "logs/**":
     lane: ANY
 
   # -----------------------------------------------------------------------
-  # tools/ â€” (distinct from .tools/) higher-level analytics tools
+  # tools/ — (distinct from .tools/) higher-level analytics tools
   # -----------------------------------------------------------------------
   "tools/**":
     lane: ANY
 
   # -----------------------------------------------------------------------
-  # users/ â€” user configs and templates
+  # users/ — user configs and templates
   # -----------------------------------------------------------------------
   "users/**":
     lane: ANY
 
   # -----------------------------------------------------------------------
-  # .github/ â€” CI/CD workflows
+  # .github/ — CI/CD workflows
   # -----------------------------------------------------------------------
   ".github/**":
     lane: BASE_EXEC
-    note: "CI/CD â€” base exec controls GitHub Actions"
+    note: "CI/CD — base exec controls GitHub Actions"
 
   # -----------------------------------------------------------------------
-  # .claude/ â€” Claude Code settings
+  # .claude/ — Claude Code settings
   # -----------------------------------------------------------------------
   ".claude/**":
     lane: ANY
-    note: "Claude Code settings â€” any agent may update local settings"
+    note: "Claude Code settings — any agent may update local settings"
 
   # -----------------------------------------------------------------------
-  # .smart-lint-backup/ â€” temporary lint state (any agent)
+  # .smart-lint-backup/ — temporary lint state (any agent)
   # -----------------------------------------------------------------------
   ".smart-lint-backup/**":
     lane: ANY
@@ -2488,7 +2488,7 @@ paths:
   # -----------------------------------------------------------------------
   "CLAUDE.md":
     lane: BASE_EXEC
-    note: "Workspace-wide rules â€” base exec only (CLAUDE.md is the rule file itself)"
+    note: "Workspace-wide rules — base exec only (CLAUDE.md is the rule file itself)"
 
   "pytest.ini":
     lane: ANY
@@ -2498,7 +2498,7 @@ paths:
 
   ".gitmodules":
     lane: BASE_EXEC
-    note: "Submodule config â€” base exec controls"
+    note: "Submodule config — base exec controls"
 
   ".gitignore":
     lane: BASE_EXEC
@@ -2512,7 +2512,7 @@ paths:
 
   ".owned-paths.yaml":
     lane: ANY_EXEC_OR_AE
-    note: "Owned-paths YAML itself â€” execs (lane definitions) + AEs (hook integration). Widened 2026-04-30 during TO 5 phase-2 flip after AE 0.7 WARN on bootstrap commit."
+    note: "Owned-paths YAML itself — execs (lane definitions) + AEs (hook integration). Widened 2026-04-30 during TO 5 phase-2 flip after AE 0.7 WARN on bootstrap commit."
 
   "comp-constants.config.yaml":
     lane: ANY_EXEC_OR_AE
@@ -2520,14 +2520,14 @@ paths:
 
   ".mcp.json":
     lane: BASE_EXEC
-    note: "MCP server config â€” base exec controls"
+    note: "MCP server config — base exec controls"
 
   ".sync_state.json":
     lane: ANY
 
   "org/XXX.md":
     lane: TIER0_TIER1_STARTUP_DOCS
-    note: "Duplicate entry for clarity â€” same path as above (widened 2026-05-26)"
+    note: "Duplicate entry for clarity — same path as above (widened 2026-05-26)"
   .tools/surprise-row-gate.py:
     lane: LOOP_MECHANISM
     note: Step-7/10 row gate. Was UNCLAIMED. Andrew-direct 2026-09-02 'All recs approved' (CALL 1).
