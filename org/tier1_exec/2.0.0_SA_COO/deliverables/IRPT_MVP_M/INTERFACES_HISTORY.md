@@ -230,3 +230,22 @@ required source evidence exists. Optional contact/custom absence is explicit in
 storage and blank only at Y's vendor edge after canonical contract agreement.
 Y confirms operations prepared_by may be the actual maintained acting principal
 name, retaining principal class and provenance, without borrowing advisor identity.
+
+
+## Superseded integration boundary before P174849 viewer agreement
+
+## Integration boundary and next action
+
+M proposes the maintained-profile adapter changes above for exact coordination
+with P/Y. Current callback `authorize_input(owner, input_ref)` and descriptors bind
+one owner; silently redefining it as a viewer would corrupt attribution. P/Y must
+identify the concrete invoking adapter and agree the current-viewer/retained-input
+separation before M changes it. No parallel signature or field-name draft is cut.
+The first-hop work remains active; deeper source/recipe work stays parked unless
+P's trace makes it a required dependency. No producer work was restarted.
+
+CTO directly reviews. Source inspections establish the listed branches only;
+no new tests, cloud reads/writes, vendor calls, package changes or deployment were
+performed for this review. The prior 99 publication tests and 114 local COT tests
+are offline evidence and do not establish actual custody or Opal live acceptance.
+CLOUD push remains held. Ordinary firm-user and forged-identity refusals remain.

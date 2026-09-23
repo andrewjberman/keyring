@@ -75,6 +75,13 @@ custody preparation also binds acting principal to original creator. Concrete
 adapter coordination with P/Y must separate current viewer from retained input
 attribution. No shared source edit, producer restart or new test run accompanied
 this review. Superseded interface text is preserved in INTERFACES_HISTORY.md.
+P174849 supplied the viewer/owner roles. Current INTERFACES.md now specifies the
+optional `current_viewer()` / `authorize_viewer_input(viewer, input_owner, input_ref)`
+mode for maintained profiles and comparisons, with the original two-argument
+authorize_input callback unchanged in legacy mode. This is a signature proposal,
+not implementation. P/Y must pin the invoking adapter; stored owner/placement and
+frozen profile output remain intact. P reports first-hop directory apply under
+CTO `e186d7ea22`; M has not independently verified that live result.
 
 ## Parked
 
