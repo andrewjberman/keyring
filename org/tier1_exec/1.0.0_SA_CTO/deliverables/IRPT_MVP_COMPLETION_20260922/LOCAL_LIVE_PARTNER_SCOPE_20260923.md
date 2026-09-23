@@ -169,3 +169,22 @@ tenant for drilldown, accepted account selection and report generation. Preserve
 firm attribution and distinguish same-named clients across firms by verified
 tenant and canonical IDs. P owns the shared UI/API implementation; Y consumes
 the accepted concrete selection. This clarification is not a live PASS.
+
+## Exact source grant: COO P request 20260923T135842Z
+
+Grant P ordinary commit access to the exact source path
+`infra/aws/lambda/investor-reporting/holdings/entry.py`, using the existing
+`IRPT_LIVE_SCOPE_P` lane. Scope is M-OPAL-01 request-local eligible-roster
+continuity through the existing pre-read and post-read authorization checks.
+Preserve actor, selected tenant, snapshot/account binding and revocation checks;
+do not mutate a module roster. Other holdings paths remain M-owned. Existing M
+and incumbent permissions are preserved; this does not hand shared scope back
+to M or grant deployment authority.
+
+`_scope/maintained_sources.py` already matches `_scope/**` in that same P lane.
+Its custody-only profile-port work is admitted by the generation adjudication
+above; no additional path grant or prospect authorization expansion is needed.
+P must consume this registry change in its isolated worktree and use ordinary
+pathspec safe-commit. No hook bypass is authorized or necessary. P's reported
+73 passing checks are implementer evidence. M-OPAL-01 remains OPEN until CVO M
+independently reruns the unchanged driver against the committed correction.
