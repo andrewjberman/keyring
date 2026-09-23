@@ -119,7 +119,7 @@ org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-r-1.timeline-sp
 3. **The spec file lives in `~8`'s deliverables folder** and is edited in place, because it is ONE document that the page
    build reads; a second copy in `~11`'s folder would fork the spec.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~11</slot>
 <fabric>site-z</fabric>
