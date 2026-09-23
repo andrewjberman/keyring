@@ -717,3 +717,35 @@ subtraction was wrong, which is the shape that survives review precisely because
 **THE CLAUSE THIS ADDS, section 14c one level up:** any statement about this channel **prints WHICH FIELD it counted
 and that field's distribution**, never a bare "n non-terminal". `hazard_standing` records what a row SAID WHEN
 FILED; it is never a current-state field.
+
+### 16f. CORRECTION NOTE 2 -- 16e's own headline is WITHDRAWN, by its author
+
+**Section 16e says "The zero is not reproducible on either axis." THAT IS FALSE, and row `Z-S17` carries the
+withdrawal.**
+
+**"0 non-terminal" IS reproducible -- on the gate's OWN resolver, which is the instrument the L10 requirement
+reads.** Run here rather than adopted from the message that caught it:
+`surprise-row-gate.py::_latest_dispositions('.', 'AMGT_HARVST')` returns **38 ids, GRADUATED 18,
+DISMISSED_WITH_REASON 20, NON-TERMINAL 0, unknown 0, note empty, 13 files read.**
+
+**Why the resolver sees a zero the row fields cannot:** it **folds ADJUDICATION rows**, so a CVO ruling that names
+an id dispositions that id -- while the append-only channel forbids editing the original, whose own frozen
+`disposition` keeps reading UNDER_INVESTIGATION forever. **30 of 38 ids reading differently between the two
+instruments is the DESIGN, not a discrepancy.**
+
+**So `3.0.0_SA_CVO~Z`'s number was RIGHT, and this seat published in a committed row that it was not.** The word
+**"constructible"** in 16e was doing the work: this seat searched the ROW FIELDS for axes, found two, and **never
+asked which instrument produced the claim it was testing.** Rule 22's first line is *name your instrument*, applied
+here to the reader's own read and not to the claim under test.
+
+**WHAT SURVIVES 16e AND `Z-S15`, untouched:** `hazard_standing` records what a row **said when filed**, is never a
+current-state field, and a census of it is an **UPPER BOUND** on live hazards -- `Z-S4` ARMED against `Z-S9` INERT
+is the proven pair. The field distributions are exact and remain the right answer to a different question.
+
+**WHAT NEVER MOVED THROUGH ANY OF THE THREE LAYERS: round 5's remainder is ZERO**, resting on `Z-S14` answering the
+coverage question and on `Z-S3` being carried -- **not on the channel count.** Round 4's grade stands.
+
+**THE CLAUSE THIS REPLACES 16e's WITH:** any statement about this channel **names the INSTRUMENT, not only the
+field** -- `3.0.0_SA_CVO~Z`'s form is the model and is adopted here: *"0 non-terminal by `_latest_dispositions`; N
+rows still read UNDER_INVESTIGATION in their own frozen fields."* **A disagreement about a number is first a
+question about UNITS.**

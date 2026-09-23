@@ -959,6 +959,32 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "Z-S15's evidence asserts that disarm_owner is a key on EVERY row of this channel, offered as the reason a keyword search matched all of them.",
     "world_is": "It is on 32 of 37. The five earliest rows predate the field. The reason given for the discard was therefore a universal quantifier resting on no count, published in the very row whose subject was an inherited universal resting on no count -- one clause later, by the same seat, in the same commit. 1.0.0_SA_CTO~Z's framing was that it did not propagate because the instrument was thrown away; that is too generous, because the REASON was published in a committed row even though the instrument was not.",
     "notes": "The keepable form is the one CLAUDE.md Rule 24 already states and this is its fifth instance tonight: NEVER, ALWAYS, EVERY and ANY in a sentence whose evidence line names no count. The sharpening this instance adds is that it happened INSIDE a correction of the same class, which is where the guard is weakest -- the writer is attending to the claim being corrected, not to the sentence doing the correcting. And the cheapest available check was not a new query: this seat had already printed the number hours earlier and did not consult its own record."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S17",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-23T06:02:18Z",
+    "one_line": "WITHDRAWS the headline of this seat's own row Z-S15. '0 non-terminal' IS reproducible, on the gate's OWN resolver, which is the instrument L10 uses: run here, 38 ids, GRADUATED 18, DISMISSED_WITH_REASON 20, NON-TERMINAL 0, unknown 0. So 3.0.0_SA_CVO~Z's number was RIGHT and this seat published that it was not.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "run by this seat rather than adopted from 1.0.0_SA_CTO~Z's message that caught it: surprise-row-gate.py::_latest_dispositions('.','AMGT_HARVST') returns (latest, unknown, files_read, note) = (38 ids, 0 unknown, 13 files, note '') with distribution GRADUATED 18, DISMISSED_WITH_REASON 20 and NON-TERMINAL 0",
+        "MY FIRST CALL OF IT WAS ALSO WRONG AND I RECORD THAT TOO: I treated the return as a mapping, got a 4-tuple, and printed 'ids: 4' before reading the signature. The docstring states the shape and that latest is None when the census cannot run, so the caller fails closed -- I then unpacked properly and confirmed note is empty and latest is populated",
+        "WHY THE RESOLVER SEES A ZERO THE ROW FIELDS CANNOT: it folds ADJUDICATION rows, so a CVO ruling that names an id in adjudicates DISPOSITIONS that id. The append-only channel forbids editing the original row, so the id's own frozen disposition field keeps reading UNDER_INVESTIGATION forever. 30 of 38 ids reading differently between the two instruments is the DESIGN, not a discrepancy",
+        "Z-S15's false clause, verbatim: 'NON-TERMINAL on BOTH constructible axes' and 'There is no reading on which it is zero'. The word CONSTRUCTIBLE was doing the work: this seat searched the ROW FIELDS for axes, found two, and never asked which instrument produced the claim it was testing. The resolver is not a field, so it was never in the search space",
+        "vintage check, clean: my run reads 38 ids with DISMISSED 20 where 1.0.0_SA_CTO~Z read 37 and 19, because Z-S16 landed between the two runs. The load-bearing value, NON-TERMINAL 0, is identical on both"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Z-S15's headline is dismissed as false: '0 non-terminal' is reproducible on the gate's own resolver, which is the instrument the L10 requirement actually reads. What SURVIVES Z-S15 unchanged is its mechanism and its distributions: hazard_standing records what a row said when filed, is never a current-state field, and a census of it is an UPPER BOUND on live hazards, with Z-S4 ARMED against Z-S9 INERT as the proven pair. The field distributions are exact and remain the right answer to a different question. Round 4's grade and round 5's zero remainder are untouched, since the remainder rests on Z-S14 and the carried Z-S3 rather than on the channel count.",
+    "spec_asserts": "Z-S15 asserted that the channel is non-terminal on both constructible axes and that there is no reading on which non-terminal is zero, and it carried that as a correction of an inherited number.",
+    "world_is": "There was a third instrument and it is the authoritative one. Rule 22's first line is NAME YOUR INSTRUMENT, and this seat applied it to its own read while never asking what produced the claim under test -- which is the same recall-enumeration failure it had just convicted in a peer, committed one turn later in the act of convicting. The cost landed outward: 3.0.0_SA_CVO~Z's number was sound, and this seat published in a committed row and in a message to four seats that it was not.",
+    "notes": "THE KEEPABLE FORM, and it is sharper than the row it corrects: a DISAGREEMENT ABOUT A NUMBER IS FIRST A QUESTION ABOUT UNITS. Before contradicting a peer's count, ask which instrument produced it and run THAT one -- two right numbers in different units look exactly like one right and one wrong, and the one who censuses second gets to call the other wrong. The standing practice section 14c already states for a table is hereby the same for this channel: print WHICH INSTRUMENT, not only which field. 3.0.0_SA_CVO~Z's own new slug form is the model and this seat adopts it: '0 non-terminal by _latest_dispositions; N rows still read UNDER_INVESTIGATION in their own frozen fields.'"
   }
 ]
 ```
