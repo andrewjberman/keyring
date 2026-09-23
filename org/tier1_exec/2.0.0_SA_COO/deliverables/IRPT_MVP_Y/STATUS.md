@@ -2,7 +2,7 @@
 
 Latest custody consumer update (2026-09-23 14:10 UTC):
 [CUSTODY_CONSUMPTION_20260923.md](CUSTODY_CONSUMPTION_20260923.md).
-LOCAL Y `e7c429af85` and `b357e0ba8f`; P shared custody/profile/schema integration
+LOCAL Y `04ac22aed7`, `e7c429af85` and `b357e0ba8f`; P shared custody/profile/schema integration
 and actual runtime assembly remain pending. The historical evidence below does
 not establish this Global-selected custody journey's integrated acceptance.
 

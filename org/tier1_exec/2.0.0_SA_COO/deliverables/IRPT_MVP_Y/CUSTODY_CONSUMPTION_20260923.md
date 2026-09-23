@@ -9,7 +9,7 @@ Andrew's verbatim Global/client/account instruction is recorded at
 ## Implemented Y candidate
 
 Backend worktree `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922`, branch
-`irpt-mvp-y-20260922`, LOCAL `e7c429af85`, following `b357e0ba8f`.
+`irpt-mvp-y-20260922`, LOCAL `04ac22aed7`, following `e7c429af85` and `b357e0ba8f`.
 P's shared candidate `dc51d8920d` was consumed by merge `e1918aac50`.
 No Y Portal change or runtime factory activation in this candidate.
 
@@ -31,6 +31,9 @@ No Y Portal change or runtime factory activation in this candidate.
   `OPAL_GLOBAL`, exactly P's 14:07:46 five-field contract. Global configuration
   source scope remains null; selecting a partner does not make that partner
   the preparer's home organization.
+- `04ac22aed7` makes closed admission repeat these composition checks on retained
+  replay and frozen-worker reads. It does not rely solely on the checks performed
+  when the request was first submitted. Admission/worker regression: 34 PASS.
 
 ## Measured evidence and limits
 
@@ -78,5 +81,7 @@ metadata, not otherwise authorized Global browse/selection.
 
 Y also reported to P the existing `holdings/entry.py` current-selection reload
 using the empty warm `ENTRY.opal_principal_ids` rather than the request-local
-roster. Y made no change in that shared/M-owned surface. P should verify the
-downstream Global-selected holdings route in its paired repair.
+roster. Y made no change in that shared/M-owned surface. P identified this as the
+already tracked M-OPAL-01 and reported correction `4c53e0ebcf4d224fc68fe04a2766fe04ae9d685b`
+with 73 local tests passing, sent to CVO M. That correction has not yet been
+consumed or independently reproduced by Y.
