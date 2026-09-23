@@ -258,3 +258,329 @@ P180405 reports combined Y85af5eb95d/4ea95d1117/104d9472f11 with P4ec461a2e9/dd6
 CTO ran the actual owned-path resolver: all thirteen permit P and incumbent Y/AE identities; base COO, M and CVO P/Y refuse. Unlisted intake/parser.py, generation/job.py and the recorder still refuse P. All original lanes/path rules are unchanged; registry validator passes81lanes/316rules. This is measured permission repair, not a hook override or a source review verdict.
 
 MSTR99710 relays Andrew's explicit authorization to bring CloudOps online for the bounded recorder repair and instructs CTO to message it once live. MSTR99711 confirms exact0.7.0_AE_CloudOps~O live at18:05:16Z. The canonical send guard refused CTO's ACT message because LD-0529 requires a COO-issued task order in that Tier-2 seat's own home; no message was delivered. Route the repair through COO~P as issuer: cut the bounded supporting task order for exact CloudOps~O and dispatch with its canonical order reference. This does not restart held B/F rounds or change the product's closer status. Work scope is solely the canonical recorder's explicit scope propagation and offline sibling-isolation regression proof already described in RECORDER-CONTAINMENT and CTO message to MSTR17:50:50Z. Coordinate with P before touching its evidence, preserve all records, no AWS mutation, no rerun until CTO reviews the pinned repair, no remote push. CloudOps prepares the fix; CTO remains direct reviewer. No user reauthorization is required for this already requested repair.
+
+## IRPT-ANALYSIS-UPLOAD-OWNER-20260923 — CRO99712 intake and bounded ownership
+
+Authority: Andrew's standing delegation to CTO to adjudicate worker forks; CRO99712 reports Andrew's direction for brief fa42eb206f, org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_ANALYSIS_UPLOAD_AND_TICKER_RESOLUTION_BRIEF_20260923.md. This entry records the exact message body; the linked brief and its source measurements have not yet been directly reviewed by CTO. They are reported findings, not CTO-verified results.
+
+Decision: COO~Y owns the IRPT security-resolution service and upload/ticker-resolution proposal. Existing P ownership of shared contracts/runtime and existing M ownership of source semantics remain; Y must identify exact shared paths and obtain the ordinary coordinated integration route. Live-first section0 remains the priority. This intake does not interrupt the current combined actual-viewer/acting-submitter closure or restart B/F canonical rounds.
+
+Record of reported Andrew authorization: Kimi check/swap should mirror estate_report_runner.call_kimi_sub using the existing astn/kimi/api-key, with exact-ARN secret read for the resolver role. This is the requested design authority, not evidence that provider web search works, a new IAM grant has been applied, or a deployment is approved. Kimi suggestions/substitutions require explicit user acceptance on a new revision and report/PDF disclosure. Do not automatically substitute holdings. Preserve Target Weight versus Current Weight bases and show all findings.
+
+Y proposal must preserve deterministic cache -> Opal reference -> one securities_info batch before the two Kimi call types; check suggestions shown only when FOUND; proposed check/suggest/substitute endpoints and standalone harness; shared IRPT session-broker lease, no second YCharts login; bounded three-round vendor-rejection retry. Directly measure the reported parser/route gaps and candidate compatibility before claiming closure. Kimi web-search support and credential/session-user identity remain unproven.
+
+Boundary: live YCharts rejection-shape capture of3-5 symbols remains an explicit per-use Andrew call as reported by CRO; this receipt grants no such capture. No cloud mutation, secret access, live vendor call or CLOUD push is initiated by this intake. CTO remains the direct reviewer under Andrew's latest instruction; return a concrete pinned proposal and exact paths before shared-surface implementation/deployment adjudication.
+
+## IRPT-DUAL-OWNER-SOURCE-20260923 — direct CTO review and integration delta
+
+BOUNDED SOURCE PASS: Y1385a126e7d9bbc9b4fe211cc708a52a93ce64e6 paired with exact P37526d36ae schema/storage, P9a3 access/P4ec Entry, M485b69c061 maintained sources, prior dd6 storage controls and8845 reader controls. CTO extracted fresh committed bytes into an isolated temporary archive and ran the unchanged suites separately with every declared environment installed: generation232+32subtests (29.11s), ops179 (20.15s), intake94+18subtests (1.10s). Total505 tests and50 subtests, no skips. Evidence DUAL_OWNER_CTO_REVIEW_20260923.json records full pins, extraction environment, output and hashes.
+
+Reviewed behavior: verified actual submitter owns the new accepted request; original normalized input bytes/ref/creator and storage firm are preserved; retained input access/owner/expiry are rechecked before acceptance and dispatch entry. Frozen retry skips maintained profile/organization/recipe reads, worker/date reads use original input owner, recipe attribution follows actual submitter. Source descriptors preserve their explicit owner bindings. Actual guarded Entry is exercised offline. This does not establish a queue lease/send, live vendor generation, browser continuity, complete report/export, or full product acceptance. The30 earlier paired-seam failures reported by P remain carried findings, not closed by these505 tests.
+
+Integration adjudication: P may consume exact Y1385a126e7 and M485b69c061 into its combined runtime candidate through ordinary owner gates. Added only three literal Y rules: ycharts/generate/frozen_worker.py, ycharts/generate/prospect_submission.py and ycharts/generate/tests/test_prospect_submission.py under infra/aws/lambda/investor-reporting/. Prior thirteen-file grant retained. Actual resolver confirmed existing IRPT_LIVE_SCOPE_P already permits maintained_sources.py; no additional M grant is needed. Semantic ownership remains Y/M; integration does not authorize unrelated edits. Registry validation and positive/negative actual-resolver checks passed; all incumbents preserved, base COO/M/CVO denied on the three new Y paths, unrelated parser/job/recorder paths still denied to P. Temporary integration membership is removed after accepted handoff.
+
+Next: P returns the committed combined pin, real installer/port mapping and exact package manifest/cold-import proof. Preserve original authorizer semantics and carry the30 seam failures with precise applicability. No new deployment/vendor use/CLOUD push is authorized by this source verdict. CTO reviews the resulting artifact directly.
+
+Recorder: P reports canonical supporting order45a93c3ae90b86ac224596a9e76d015a005fc260 delivered to exact CloudOps~O by receipt181819. This is dispatch evidence, not completed repair; fixed recorder/regressions/recovery proposal remain due for CTO review.
+
+## IRPT-UPLOAD-RESOLUTION-IMPLEMENTATION-20260923 — direct proposal adjudication
+
+Reviewed pinned Y proposal c083bfdd5d (UPLOAD_RESOLUTION_PROPOSAL_20260923.md and reproduction JSON) and CRO brief fa42eb206f, including Andrew's verbatim section0 instructions. Authorize bounded LOCAL implementation under the existing IRPT completion mandate and CTO fork authority. This supersedes4cdac345db's proposal-only boundary for the work below. Existing paired runtime integration remains P's first priority. No new independent reviewer gate.
+
+Approved design: dedicated A/B-only CSV/XLSX template adapter (not a change to generic attachment parsing); four explicit B1 bases; Dollars is USD by declared template contract; current/target weights stay distinct. Preserve original file and row provenance; v2 normalized inputs with unchanged v1 replay; mutually exclusive new file_base64/file_type and legacy csv_base64 arms. Approve declared initial bounds1MiB file/8MiB expansion/2000 rows/200 symbols with explicit findings, no truncation; +/-0.001 weight tolerance, disclosed proportional factor/residual/reference notional, no implicit cash plug; percentage conversion and other corrections require a new approved revision. Cash-label normalization and duplicates retain census and notices. Shares need dated canonical price evidence. Existing signed custody-source policy is unchanged; this is the prospect template contract.
+
+Approve complete findings, deterministic cache -> canonical Opal reference -> one unresolved YCharts batch; identity evidence is not provider-availability evidence. UNKNOWN/UNAVAILABLE cannot become NOT_FOUND. Check and swap are separate advisory call kinds; suggestions/proxies displayed only after deterministic FOUND validation. Each correction/substitution/exclusion is user-approved on a new revision bound to original bytes, actual actor and retained proposal/provider evidence. Screen and PDF disclosures are mandatory for publication. Preserve original input creator and actual submitter separation already reviewed583d2da. Approve asynchronous Kimi work and authorized polling, three generation-rejection rounds with new request/input lineage, and offline-default standalone endpoint harness.
+
+Kimi authority correction/confirmation: CRO section0 records Andrew explicitly authorizing Kimi for this feature using the same API key. Record this as feature-specific RUNTIME model-use authority (not merely design preference), limited to unresolved symbols and optional other symbols, no amounts/client/firm/actor identifiers. Exact-ARN resolver-role read of existing astn/kimi/api-key belongs in P's concrete plan; no applied IAM/deployment or secret read is established here. Preserve existing estate call mechanics while bounding retries to transient failures. Kimi web-search capability is unproven; propose exact provider QA invocation and expected evidence before execution. No silent alternate vendor. Agent-initiated YCharts calls still require Andrew's distinct per-use word; no capture/probe is granted by this ruling.
+
+Writer adjudication: Y owns its proposal's template/normalization, resolver/advisory, worker/rejection/status, analysis-UI and focused test/harness paths. P owns public schema/wire/client/adapt/display/export integration, retained storage and runtime/infra installation. M supplies canonical security identity/classification/dated-price reader interfaces with exact source/path provenance; no parallel Y crosswalk or invented prices. Coordinate pin/path claims before overlapping file edits, using established ordinary commit gates.
+
+Shared lease decision: actual current ownership maps ycharts/session/broker.py to IRPT_COMPLETION_Y, not P. Y is the single writer of provider-operation arbitration and broker/generation/resolver consumers; P supplies the shared conditional storage/runtime/resource installer and records the exact interface. Existing session publication fence and per-job lease remain distinct and are not misrepresented as global operation serialization. Start with broker.py and an explicitly named ycharts/session/operation_lease.py plus focused tests if needed; no capture-host/login rewrite. One account/session operation boundary must gate all these consumers, enforce globally shared2s spacing, renew/assert/release with fencing and bounded timeout, and refuse stale ownership. Release before waiting on Kimi, reacquire/revalidate for provider candidate checks. Offline concurrent-job/resolver, expiry, stale-fence, contention and crash-recovery controls are required. Return the pinned shared interface and exact storage/resource requirements; no cloud mutation authorized. No P-on-Y broker grant is necessary or granted.
+
+Acceptance remains the proposal's exact paired offline matrix plus actual package/runtime evidence and subsequently authorized live trace; proposal reproduction findings are Y-reported and source-attributed, not a new CTO-run template test. Current served route availability must be measured on P's current runtime instead of assuming the older NO-HANDLER source observation still describes it. CLOUD push remains held. Missing live evidence is not a reason to park authorized local implementation.
+
+## IRPT-LOOKUP-CAPTURE-20260923 — CRO99713 evidence and runtime direction
+
+Read CRO99713, pinned authorization/updated brief d7d044ba7a, and committed securities_info/ALPPL fixtures. Andrew's recorded per-use word authorized CRO's small lookup test; it was performed. The earlier blanket statement that lookup capture still awaits authorization is superseded for this completed capture only. Do not repeat it or expand it into upload/report/vendor mutations. Holdings-upload rejection capture remains a separate per-use call; no new vendor action here.
+
+Fixture scope: the completed five-symbol HTTP200 batch returned AAPL/VNQ/$:CASH and omitted ALPPL/BREIT. ALPPL typeahead returned ten empty lists. These establish those concrete cases, not a universal theorem that YCharts never tolerates typos. For a validated complete successful batch, compute absent identifiers from the requested-versus-returned set; malformed/incomplete/error responses stay UNAVAILABLE. Exact lookup absence is not proof a security does not exist under another identifier. CRO reports BREIT typeahead with nine M:BREIT.* classes requiring evergreenFundData: distinguish identity from availability/entitlement, preserve class/namespace, do not invent a share class or infer entitlement from HTTP200. Namespaced retries must be explicit, bounded and evidenced, not an unmeasured live probe. Y consumes the committed capture as offline regression fixtures.
+
+Andrew pins kimi-k3 for BOTH check and swap, using the estate request/JSON/API mechanics and same key. No faster-model substitution without a new direction. Web-search capability remains unproved; source-shaped mocks are not proof of tools or grounded citations.
+
+Runtime architecture decision: retain the canonical IRPT broker/session contract and complete the existing runner deployment path, rather than add a resolver-only credential/login bypass. P prepares an exact runner artifact/configuration/role/SSM installation and rollback plan for CTO review with the incumbent owner; Y supplies broker compatibility and shared operation-lease requirements. Any required CloudOps execution is a separately scoped COO-issued order, not an expansion of its recorder-repair order. Before any browser/login action the plan must identify the shared provider account, existing gateway/Alyssa consumers and how one session authority avoids eviction; if this cannot be demonstrated, return that concrete blocker before applying. The observed working credentials session is QA evidence, not permission to copy secrets or start a second login. No install, login, IAM change, host stop, capture or CLOUD push is authorized by this design decision.
+
+CRO-reported runtime state: no AWSCURRENT on ycharts/session/current; SSM command05309085-4a7a-41d4-b070-b8d1b76832cf on i-0167fd745ad906a66 failed127 due to missing /opt/investor-reporting-ycharts/run-ycharts-session.sh. This shows a currently unavailable path, not by itself proof that the secret was never populated historically. Host remains running after CRO's test. CRO retains the originating test/cleanup disposition record and routes its outstanding host-stop decision to Andrew; CTO has neither stopped it nor reused the per-use capture word as deployment authority.
+
+Current paired Opal runtime integration and authorized offline upload-resolution implementation continue; live generation readiness is not established by the lookup capture.
+
+## IRPT-SESSION-DELTA-20260923 — CRO99714 and Andrew availability rulings
+
+Read exact CRO99714 and pinned delta brief d401c1a768. CRO confirms prior evidence corrections applied. Andrew's reported explicit product direction supersedes any flow distinction that would leave a missing or feature-gated security stranded: a symbol absent from a completed valid lookup triggers Kimi check; a security unusable behind entitlement/paywall enters the same check/swap resolution path. Retain internal provenance/reason (exact miss, known gated identity, namespace/class) for cache policy, explanation and disclosure; do not pretend the security does not exist. Service outage, malformed response or route error remains UNAVAILABLE, not a symbol miss.
+
+Session implementation delta: retain existing ycharts/login/credentials and ycharts/session/current; preserve legacy credentials consumers. No new secret namespace, second runner or Lambda login. Existing library/broker/SSM/IAM artifacts are reused after exact inventory; CRO's source/deployment statements remain attributed pending P's concrete artifact/runtime check. D1 is the missing runner installation plus bounded first session run, D2 the missing durable refresh controller, W1 caller recovery wiring. P's existing plan assignment57c263bee4 includes D1 exact artifact/config/SSM/rollback plus runtime/resource/control-plane installer for D2. Y remains single writer of session/broker/operation-arbitration logic and W1 generation/resolver consumers, and may implement D2 controller logic offline within ycharts/session/ with a pinned exact-path/interface manifest coordinated with P. Do not reimplement library login, fencing or publication rules. No new CloudOps execution without separately issued bounded order.
+
+Recovery contract: classify EACH failed pull by status and verified response shape/body; a healthy probe cannot override a failed application endpoint. Verified concurrent-sign-in or signed-out response may request one existing bounded refresh; verify new session generation/fence before idempotent continuation. Recognizable login-page response is distinct from generic HTML/WAF. Entitlement is not staleness and never requests login. WAF uses the existing browser/challenge path, not a password retry loop.429/timeouts back off within limits; ambiguous mutations reconcile before replay. Unknown401/403, unclassified HTML or a possibly wrong-route404 require bounded diagnostic/attention behavior, not an automatic login or a false NOT_FOUND. This narrows the brief's proposed unknown-body SIGNED_OUT default and its blanket404 lookup classification; return concrete contrary measured evidence for adjudication. Never contest a human login with repeated reacquisition.
+
+D2 durable wait/continuation and shared operation lease must be reviewed together: one refresh in flight per shared account, monotonically fenced completion, idempotent resumes, bounded retry/timeout and concurrency tests. Host stop logic must distinguish a host started by this operation from an already-running/operator-owned host and must not stop work belonging to another owner. This is offline implementation authority only; it does not activate EC2/SSM/host-stop/login permissions. D1 sign-in and the proposed two failed-pull captures remain Andrew's separate pending per-use calls; CRO retains current host disposition. Offline D2/W1 work may proceed while D1's concrete plan is prepared; deployment/live exercise follows actual prerequisites, not a new approval waterfall for local work.
+
+## IRPT-PUSH-HOLD-RELEASE-20260923 — Andrew-direct via MSTR99715
+
+Read exact MSTR99715 (20260923T184102Z). Andrew directs laptop-led DEV and CLOUD pushes, with SITEZ pulling/merging laptop CLOUD; no reverse SITEZ integration on this device. Record pointer supplied by MSTR: org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260923_1845Z_PUSH_DEV_AND_CLOUD_LAPTOP_LEADS_SITEZ_MERGES.md @5c70b8a322. The earlier push hold is RELEASED. Prior rulings saying CLOUD push remains held are historical and superseded on this point.
+
+MSTR is the single push coordinator and reports CLOUD push underway; this entry is not proof that either remote push completed. CTO replied with prior directly reviewed localhost frontend10141b6d0bbb007d5dd9e758f11f785216e11339 as the DEV candidate, with no newer reviewed frontend substitute known. P must name any concrete newer candidate to MSTR. Source parity and bounded Global/SelectFirm bootstrap evidence do not establish full IRPT generation readiness. Backend dual-owner/runtime and upload/session implementation continue under their exact review boundaries. No duplicate push from this seat; cloud apply/login/vendor/host-stop authority is unchanged by this repository push direction.
+
+Y184114 acknowledges078349 and claims ycharts/session/controller.py plus ycharts/session/tests/test_controller.py under the investor-reporting root for local D2 implementation; P supplies runtime/SSM/host ownership proof. This is an implementation claim/ACK, not a completed controller or control-plane action.
+
+## IRPT-UPLOAD-RESOLUTION-SOURCE-20260923 â€” direct CTO partial review
+
+Read exact Y190653; reviewed source6cfe01c3e238e9a90e88d3a501b25ac0eaf41540 and handoff8228a253e2. Fresh archived source with pinned paired dependencies passed435 tests+50subtests, no skips. Offline CRO fixture and synthetic harness replays completed. Evidence: UPLOAD_RESOLUTION_REVIEW_20260923/REVIEW.md and retained outputs. This is partial-source evidence, not feature/runtime/global-account-serialization acceptance.
+
+CTO-Y-KIMI-DEADLINE-01 is OPEN: fake-clock check returns success after238s against promised120s total limit because retry resets its budget. Y receives bounded local repair with one absolute deadline, remaining-time transport budget, telemetry/exhaustion/late-result controls for both kinds. Receipt191250. Known W1 status-only legacy broker fallback stays OPEN; controller and legacy-regression passes cannot close it.
+
+P proceeds with concrete shared admission/storage/CAS/outbox/transport/D2 runtime mapping and exact artifact evidence under its existing scope, carrying this defect until repaired. Y completes caller wiring, approval/revision/lineage and UI under its existing mandate. M canonical identity/dated-share-class price facade remains missing; Shares explicitly unavailable. No live QA, secret access, cloud mutation, login, host stop or broad acceptance granted by this review. CTO remains reviewer.
+
+## IRPT-KIMI-DEADLINE-CLOSURE-20260923 â€” CTO-Y-KIMI-DEADLINE-01
+
+Direct review of Y5609c2e46a2d36716743f21a8e6a5eec6876e5d8 (handoffc0867388b4) closes the bounded SOURCE defect opened7c8484466c. Fresh archive focused43 PASS; full intake190 PASS+18subtests, no skips (focused suite is a subset). Original CTO119s503+119s valid-response control now passes only1s remaining to retry and returns null/KIMI_TIMEOUT. One total monotonic deadline covers preparation, telemetry, both attempts and parsing. Evidence KIMI_DEADLINE_CLOSURE_20260923/REVIEW.md and outputs.
+
+This does not prove real I/O interruption: injected blocking callbacks cannot be interrupted by this synchronous source; installed transport must enforce remaining wall time. P may consume this exact repaired source under existing local integration authority. All other partial-source/runtime/W1/canonical-price/UI gaps remain open. No live vendor, secret, deploy, session or host action authorized by this bounded closure.
+
+## IRPT-HOLDINGS-JOURNEY-RESTART-20260923 â€” Andrew-direct record via M
+
+Consumed exact M192923 and HOLDINGS_RESTART_20260923.md@b14966e203, including the recorded verbatim Andrew instruction to decide and implement the Holdings journey. Preserve M's sequence: first real Cottonwood custody account, then49F08335338 custody with SmartX as sole model authority, then INF Orion custody with Eclipse overlay. All three remain required; custody census must include assets outside model-platform coverage. No targets relabeled actual, missing value inferred zero, assumed currency or invented strategy/model mapping. Accepted and blocked accounts remain explicit.
+
+Existing CONTRACT.md ownership applies: M custody/overlay adapters and Holdings presentation; P shared runtime/package/status/selection/accepted-reader integration under current exception. P notified193013 to coordinate exact M candidate and complete source revision -> publication -> authorized API -> real-login rendered screen. No new canonical round. Security-reference/analysis-export enrichment is off the Holdings critical path; preserve it in respective lanes without making it a Holdings prerequisite. Prepare exact candidates and apply existing review/operational gates; tests do not activate schedules. CTO remains direct reviewer.
+
+M reports empty serving prefixes and accepted indexes, disabled schedule and September21 Lambda plus specific COT/INF source defects. These are attributed observations from its private source audit, not independently remeasured CTO live findings. Source and live acceptance remain open.
+
+## IRPT-W1-BROKER-REVIEW-20260923 â€” actual body observation and correlation gap
+
+Direct fresh-archive review of4173322f457aeeb390033b410e85bebadc49a3e3 (handoff92fbf25c76):54 session tests PASS; separate rotation/eviction/controls/network-guard regression all_pass true. Status-only/self-reported refresh fallback removal is substantiated within run_with_recovery. Full W1 remains OPEN.
+
+CTO-Y-W1-CORRELATION-01 OPEN: actual wrapper with a synthetic job receiving known signed-out application401 then unrelated healthy diagnostic200 returns NOT_AN_EVICTION despite the application failure. Existing078349 says healthy probes cannot override failed application endpoints. Y193152 receives bounded causal-request correlation repair, with stale/contract/mutation negative controls. This is an offline boundary finding, not a deployed-path claim. Evidence W1_BROKER_REVIEW_20260923/REVIEW.md, exact outputs and probe. No live action/new operational authority from this review.
+
+
+## IRPT-THREE-TAB-DRIVE-20260923 - Andrew-direct closer orchestration
+
+Andrew's current CTO-session instruction: "COO~Y should be driving /closer on "Analysis" (YCharts product), COO~M should be working on "Holdings" (model overlay and holdings product), and lastly COO~P should be working on "Reporting" (the performance reporting project)." He directs CTO as master control plane to keep agents organized and drive E2E completion, with targeted CRO research. Earlier direct-CTO-review instruction remains; no new independent reviewer.
+
+Reviewed desktop package index and all six briefs against current source/handoffs. CONTRACT.md v1.4, COO_P/M/Y.md and CONTROL.md implement this direction without new seats, canonical rounds or path-grant expansion. Historical v1.3 detail preserved in CONTRACT_V1_3_REFERENCE.md. Existing canonical B/F project.json rows already point to this contract; generated index copies omit the field and are not hand-edited here.
+
+First milestones: P Cottonwood BD actual-account report to screen while CRO targets49F SmartX actual-performance uncertainty; M Cottonwood actual custody publication/drill then49F/INF; Y valid dollar-upload Overview through real worker/vendor/certified report/screen. All prior three-firm, unit/variant/export acceptance stays required. SmartX remains49F primary, BD verification only. P retains shared writer responsibilities with explicit integration queue; M/Y remain owners of complete product assembly and consuming the result. Security-reference enrichment is parked off Holdings critical path; other Analysis units remain required later. No ACK-only messages; publish current STATUS and interface/blocker/review handoffs.
+
+Current source confirms Reporting still deliberately returns source-unproven for all providers and export submit NOT_READY. Analysis has bounded source proofs, not installed live chain; Holdings source gaps/live emptiness are M's attributed audit. No fresh deployed-byte or browser completion certification is claimed. Existing reserved operational authority and push coordinator remain; prepare exact actionable runs, do not ask Andrew to repeat existing permissions.
+
+Latest M193625 evidence changes the first Holdings proof to one unambiguous INF account: M reports876/876 account totals reconcile to positions, while COT currency and null-value coverage block truthful acceptance. CTO accepts this sequencing fork within delegated authority; COT/49F remain mandatory and proceed on source gaps. This supersedes the COT-first sentence immediately above. Contract v1.4, CONTROL and M mandate already reflect INF-first.
+
+Routing receipts194210(P/M),194211(Y),194212(CRO) delivered c7265d2bef instructions. New candidates M35999d31a4, Yfe0ec628c2 and CloudOps0116b83bc0 are queued for direct CTO review, not accepted by this dispatch. CloudOps broader JSON_TOOL fallback surprise is parked with tooling owner pending a concrete platform need; its exact recorder repair/recovery candidate remains on the active review queue.
+
+
+## 2026-09-23 20:20 UTC - reviewed deltas and SmartX method boundary
+
+CTO accepts bounded source deltas Y84c6, M Portal e560 and recorder0b8784 per DIRECT_REVIEW_2020_20260923/REVIEW.md. P integrates exact files through existing grants; no live product PASS. P delivery failure is measured frame-cap saturation, MSTR recovery owner; preserve handoff/edits.
+
+Andrew at CRO, record ebf1a0f6b5, verbatim: "All approved, go now". Capture and named personal-login calls were approved; selected-set SmartX unavailability accepted. Do not fabricate custom-window account returns by summing or averaging sleeves. Provider period-to-date statistics may be implemented with their own verified units/as-of/identity; allocation decimal evidence does not automatically establish account-statistic units. Carry method/fee basis as not stated. Current-roster absence is insufficient to prove historical completeness; explain the two missing allocations from retained opening dates/historical census, and distinguish provider date semantics from UTC timestamp equality. Nine unexplained monthly formula exceptions remain evidence, not a license to relabel method as TWR. CRO clarifies using retained capture; no further call or general personal-credential runtime grant inferred from this bounded capture.
+
+
+## 2026-09-23 20:27 UTC - COT external identity parity
+
+P a70f6e3b71 returns contract_validated=true when accountInfo.externalId is absent or conflicts with the mapping. P repairs both period/series checks and pre-I/O mapping completeness; numeric ID alone does not settle the unproven COT namespace. Evidence DIRECT_REVIEW_2020_20260923/P_PERFORMANCE_REVIEW.md. No broad suite requested; source/retention composition continues.
+
+
+## 2026-09-23 20:29 UTC - concrete source blockers
+
+CRO c12fe7099b clarifies retained SmartX data: account PTD decimal evidence1account/4periods; provider-as-of absent, retrieval time only. Do not fill dated-as-of contract with retrieval time. Window-end open roster matching44/44 and42/42 settles only that denominator; whole-window closed-account completeness remains narrower than a general completeness claim. Large-flow association does not establish the precise return formula: carry provider method unknown and preserve provider value. Eastern calendar-date bounds measured; do not silently treat provider midnight epochs as UTC dates. No additional capture requested.
+
+M actual INF positions reader is blocked by NEW legacy source literals. Existing NAMING_LEGACY_READS intentionally cannot admit new sites. G is the bounded naming-owner route for a truthful existing landed-read locator or smallest exact mechanism proposal; CTO will adjudicate it. Do not insert an ineffective waiver, guess a canonical repoint, hide literals or bypass gates. This is a live-thread blocker, not general naming enrichment.
+
+
+## 2026-09-23 20:35 UTC - INF source locator: reuse the producer's key helper
+
+MSTR99749 confirms G orderly CLOSED. CTO now resolves the fork directly. No new naming seat or gate amendment is needed for the proposed route: data/inf/scripts/silver/_orion_api_silver_lib.py already owns silver_api_dim_s3_key(dim, snapshot_date), and the real write_silver_api_dim_parquet producer calls that same helper (lines350/479). Current source blob6ad80c3b007a3119ac536b94c05b99bffdbba1c9. It formats the actual landed positions_mv key.
+
+M may reuse/import that existing source helper for positions_mv only, as a dependency, rather than adding another literal or a second formatter. Derive the partition-list root from its actual formatted key with an explicit expected partition/file shape check; keep the existing validated cutoff selector and VersionedInputs receipts. The read bucket remains the already-evidenced Inflection source, not an unchecked environment override. Do not invoke producer write functions, copy/extract a new string formatter, repoint data, modify the old01 read context or extend its waiver. This is reuse of an existing producer contract, not a source migration or general read exemption.
+
+Implementation must package/pin the actual helper dependency. Its module constructs an S3 client at import; do not accidentally use that client for the version-bound IRPT read or execute producer side effects. M supplies a focused key-equality/cutoff receipt plus ordinary naming/commit verdict. If that concrete reuse is refused, return the precise gate line; do not silently disguise the literal. Currency remains a separate source fact, with absent data refusing.
+
+
+## IRPT-RESIDENT-INTEGRATION-20260923 and source review 20:48UTC
+
+CTO direct review accepts bounded Y4ed7ed resident assembly, Mb411 native INF adapter/helper reuse, and closes P external-identity defect at214ddd. Exact limits in RESIDENT_ASSEMBLY_REVIEW.md and M_P_SOURCE_REVIEW.md. CONTRACT amended with existing-lane P exact integration rows; semantic Y ownership and reserved runtime proof remain. CRO8246 corrects INF currency evidence: use retained USD Scope only for exact same-account/date positions bridge, not tenant-wide inference. COT currency confirmation is pending Andrew; preserve unavailable denomination and continue independent composition. No extra vendor call, independent review queue, or broad test rerun.
+
+
+## Andrew d70decd6b2 Tax source amendment and20:54 control
+
+Read exact CRO~M99756 and verbatim Andrew B. CONTRACT/COO_M now replace prior Tax-in-Client line: canonical workbook Traded membership -> SMAs/ALT Strategies/Tax, exact dated history and net_mv_plus_cash; unresolved claims preserved. Current M49F work integrates this now; other first flows continue. No workbook AUM as custody total. CRO~M traces two absent traded claims from retained sources. Mce2fd bridge comparisons all six mismatch; targeted CRO valuation semantics assigned. Y8d3 capture-source finding holds new bootstrap only; precise secret-read ambiguity repair sent205113. See HOST_CAPTURE_FINDING.md; no broad test/live replay.
+
+
+## Andrew-direct COT USD 2026-09-23
+
+Exact direct answer retained in ANDREW_COT_USD_20260923.md. COT report amounts are USD; P shared mapping/provenance, M custody consumption. Close denomination blocker and proceed with actual report/custody serving. No vendor-body rewriting, new currency query, or widening to other firms/native security currency. Null/valuation/census proofs remain. First ready Holdings firm/account may proceed; all firms still required.
+
+
+## INF exact valuation bridge and Tax intake 21:02UTC
+
+CRO99763/10f3cf6f9f measures two accounts on three exact file/valuation pairs:06-11/06-10,06-19/06-18,09-10/09-09; all six value/units match, same-key negatives reproduced. CTO routes precise version/hash-backed provenance to M; no blanket next-business-day roll, request-date rewrite, historical-file inference or tenant-wide USD claim. Source-specific currentValue denomination can bind only the measured observations. COT first flow continues6f45.
+
+Tax99761/907d: research snapshot schema differs from canonical capability, canonicalSilver/member history empty, supplied production store stub. M prepares exact intake recipe; MSTR210127 asked to identify available existing Tax source/release owner/later wrapper. No fake envelope/history or duplicate pipeline. CRO~M current missing-account retained-source search complete; two claims remain unresolved. COT empty-response likely-data diagnosis is an inference, not a new identity rule or vendor-call permission.
+
+
+## 2026-09-23 21:10 UTC - selected COT source and bounded Tax dependency
+
+7033e23490 selected-account custody source receives bounded CTO PASS: three affected checks and two asymmetric census probes; no live acceptance. M continues actual account mapping/currency/publication. MSTR99766 confirms T wound down and three-COO cap full. No fourth seat requested: existing M prepares the minimum canonical Tax-module dependency recipe, exact paths and runtime effects for CTO adjudication under Andrew Tax B; full historical Tax round remains outside this transfer.
+
+
+## 2026-09-23 21:16 UTC - Performance source fidelity and policy activation
+
+9e1bc3a751 composition has five focused CTO PASS checks, but P-SOURCE-01 REWORK: parsed JSON retained without original response bytes/digests does not satisfy X10 source family. P supplies exact transport/evidence repair and existing approved reply replay; no new vendor call. Policy activation remains tied to exact enforcement/package/role/destination proof, not a broad state flip from fixtures. Physical disposal stays OPEN under existing X10 and is not a new first-thread prerequisite. P prepares concrete bounded cutover; M retains registry ownership; CTO reviews directly.
+
+
+## 2026-09-23 21:15 UTC - COT no-position rows and available history
+
+Consumed CRO99769 evidence f307d5841512f8de005b2dd5272350029d1f1b11.
+Ruling: for the measured canonical COT Assets_Dim/includeAll export contract,
+rows with all four position facts (Market Value, Units, Unaccrued Market Value,
+Accrual) absent are dimension-only/no-position-at-as-of rows. Exclude them from
+active holdings facts, counts and weights; retain original bytes and excluded row
+ordinals/counts in private evidence. Do not convert to zero holdings. Partially
+missing facts, held-but-unpriced rows, conflicting duplicates and failed independent
+account reconciliation remain failures. Check selected account census against the
+independent account valuation before publication. Do not assert every such row
+represents a historically closed position: the export also lists later/onboarding
+accounts for earlier dates. M implements this narrow producer interpretation.
+
+P: Cottonwood historical availability is account/window-specific. Sparse pre-May2026
+coverage does not make every 2025 account invalid, nor does onboarding establish
+real inception. Show provider coverage and unavailable periods honestly; never
+relabel a partial onboarding window as requested full YTD/since-inception. Current
+positive COT account remains the first thread, without another blind vendor retry.
+
+Andrew-direct relayed by CRO at f307d58415, verbatim:
+"Cottonwood only has data from maybe a couple months ago, they dont have full data in BD yet as far as I am aware"
+"come october we should check again"
+"actually, maybe worth just doing a little egress, check right now and see how much cottonwood data there is in 2025"
+That per-use CRO check is already executed and does not authorize another use.
+October recheck remains parked with CRO, not a blocker to current IRPT completion.
+
+
+## 2026-09-23 21:19 UTC - M/P mapping seam
+
+M-P-MAP-01 reproduced on614ad2f16b paired9e1bc3a751: M source_revision dict rejected by published P string interface. M keeps source_revision as exact source SHA256 string and carries full receipt under source_provenance. P preserves full mapping evidence. One actual callback-to-consumer request-construction control closes it; no new vendor use. Real selected COT build remains M-reported, not CTO-live acceptance.
+
+
+## 2026-09-23 21:23 UTC - actual COT source clears first thread input
+
+CTO independently replayed d8173c1b9c on seven exact real S3 versions:57positions/USD19705844.84 exact reconciliation, schema and all receipts match. Three narrow exclusion controls PASS0.64s. M now drives this same P-positive COT account through accepted publication/API/UI, remaining owner of whole Holdings journey; P only owns shared surfaces. Mandate first-account sequence updated. Portal c70855f3 five receipt/render controls PASS526ms; not live reopen/export. No product marked complete or unapproved publication performed.
+
+
+## 2026-09-23 21:25 UTC - paired source repairs closed
+
+P-SOURCE-01 CLOSED5765ea21a5 with6focused fidelity/composition checks0.74s. M-P-MAP-01 CLOSED9b3fb2a actualS3 callback into latestP5765 request constructor, full receipt retained. Final P package consumes9b3 mapper, not older614 included in5765. Source and adapter readiness clears these defects, not storage policy/live journey. P prepares exact cutover; M retains full Holdings publication/API/UI responsibility under1960 mandate update.
+
+
+## 2026-09-23 21:28 UTC - bounded Tax store writer and Reporting infrastructure
+
+55145056df recipe accepted for source implementation. Exact Tax membership module and its test narrowed from ANY to M-only in .owned-paths with CONTRACT; no fourthCOO/fullTaxround/scheduler/livecall. One-shot runner reuses whole existing canonical modules, no fabricated capability envelope/history. P canonical reporting bucket NoSuchBucket evidence is accepted as next infrastructure task under existing IRPT core Terraform ownership; prepare minimal exact plan, keep policy pending until cutover adjudication.
+
+
+## 2026-09-23 21:36 UTC - first native Holdings publication and empty Reporting storage
+
+CTO direct review accepts a86430e39e bounded initial COT publication under exact selected-account/date/source-result checks, absent-index CAS and version readback; M owns execution/API/screen, P exact reader package plan. Source controls5PASS0.62s; live old Lambda/index absence independently confirmed. P f4a1dd60a3 binary storage plan c7639c4c06ba726a8df246c4c5742da6c70e22890940fdbbd38535c8f8329a90 independently reviewed5create0change0destroy; exact safe-apply permitted with readbacks, no automatic policy activation/data-write/runtime deployment. Review: DIRECT_REVIEW_2020_20260923/COT_PUBLICATION_AND_STORAGE_PLAN_REVIEW.md. All products incomplete.
+
+
+## 2026-09-23 21:42 UTC - Reporting package dependency
+
+P-PACK-01: exact9cc2d2d9 candidate omits org/standards/NAMING_SCHEMA.json; fresh extracted canonical destination probe fails. Adding only pinned schema in scratch makes identical probe pass. P repairs both review/canonical package, returns final manifest/hash and one probe. Source/mapping acceptance and73c40 empty-storage apply remain intact; no vendor call needed. See DIRECT_REVIEW_2020_20260923/P_PACKAGE_NAMING_REVIEW.md.
+
+
+## 2026-09-23 21:42 UTC - native COT publication independently verified
+
+M5e29e43c2c executed bounded initial publication. CTO independently read4exact output versions, verified lengths/hashes/index acceptance/Gold-JSON nodes and selected1account57positionsUSD19705844.84 at2026-09-22. Accepted revisionfe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e. Native storage hop PASS, not authenticated API/browser. P exact reader cutover next; M retains complete Holdings ownership. CONTRACT first-thread row aligned with prior1960/73c40 COT ruling; all firms remain required. Evidence DIRECT_REVIEW_2020_20260923/COT_NATIVE_PUBLICATION_CTO_READBACK.json.
+
+
+## 2026-09-23 21:43 UTC - Analysis runtime recovery
+
+MSTR99771 recovered Y to fresh thread01a0d037 with preserved4ebe source/drive4876 and measured turn/steer injection. CTO rechecked9/9GREEN, new bridge33676/detector34768/heartbeat33548, endpoint58180, stderr0. Agent-side reply/read pending; do not confuse transport recovery with product completion. P continues under Andrew at its current terminal, migration reserved to MSTR on his word.
+
+
+## 2026-09-23 21:50 UTC - live reporting storage and two narrow repair closures
+
+CTO independently verified new opal-data-irpt versioning/KMS/BPA4/TLS after exact reviewed P apply. Bucket absence CLOSED; policy activation/consumer runtime not implied. P-PACK-01 CLOSED5cdb/v4b9333947 on actual extracted59member artifact/Python-I unchanged destination probe. Y capture secret-read finding CLOSEDbfe6469b1e with10focused adapter-worker cases2.55s; exact3files already P-integrable under existing grant. No vendor calls; no live product completion. See direct review storage JSON/report and appended HOST_CAPTURE_FINDING/P_PACKAGE_NAMING_REVIEW closures. Browser connection absent this turn; authenticated screen proof remains pending.
+
+
+## IRPT-CROSS-FIRM-PUBLICATION-20260923
+
+CTO directly reviewed 2874e37647: twelve affected offline cases pass. P receives
+exact integration ownership of infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py
+under IRPT_Y_ACCESS_INTEGRATION_P in the same commit as this contract. The other
+three changed files already have that grant. Y remains semantic implementation
+owner. Preserve actual current actor, accepted data firm and immutable original
+input owner separately. No principal synthesis from queue tenant. P integrates
+with bfe6469b1e and supplies the current-authority host/installer boundary; Y owns
+the real-login Analysis journey. Source PASS is not live completion or deploy GO.
+
+
+## IRPT-TAX-DISPOSITION-SOURCE-20260923
+
+CTO direct review d3a8c3e7e3: bounded source PASS; seven isolated persistence cases pass0.12s. TAX_DISPOSITION_STORE_REVIEW.md records exact scope. M continues the granted one-shot runner and returns exact gateway capability/runtime plan. No vendor/cloud activation or historical backdating. Full snapshot failure cannot become partial success.
+
+
+## IRPT-HOLDINGS-READER-APPLY-20260923
+
+CTO grants P bounded GO for exact saved ca2a907770c081a244cb1eddc854db95cdb80523655989093264c9e20f905301 plan only. HOLDINGS_READER_PLAN_REVIEW.md/JSON carry artifact bcb3fb71, immutable version, exact pre/postapply conditions and independently exercised native read. One create/three updates/no destroy, read permissions only. Deferred artifact lookup requires exact version/hash guard; drift stops closure. M retains real authenticated API/browser proof.
+
+
+## IRPT-TAX-SILVER-SEAM-20260923
+
+CTO inspected gateway app/taxsma_workbook.py@6abf60e5d5 and the current Silver
+consumer: _snapshot emits seven flat business fields alongside row metadata,
+while _typed_row requires nested business and refuses that producer shape. The
+current synthetic Silver fixtures manufacture the nested object. used_rows in
+the canonical producer includes the header, so complete data rows equal used_rows-1.
+This is a concrete adapter mismatch on the authorized Tax Holdings thread.
+
+M is sole writer for exactly data/mdpf/scripts/silver/taxsma_workbook.py and
+data/mdpf/tests/taxsma/test_taxsma_workbook_silver.py under IRPT_TAX_MEMBERSHIP_M,
+recorded in .owned-paths.yaml in this same commit. Consume actual canonical flat
+rows, preserve original Bronze bytes/digest and all seven typed business columns,
+row metadata and full census. Explicitly refuse incomplete/mixed/contradictory
+shapes rather than silently choose one. Any retained nested-fixture compatibility
+must be explicit and unambiguous; do not claim that compatibility proves the
+production seam. Validate the actual producer output through the Silver boundary
+with one focused positive and malformed/partial negative controls. No broad suite.
+
+This adds only the necessary Silver adapter/census and tests to the existing
+bounded one-shot runner preparation. Do not change Gateway, manufacture a new
+Bronze envelope, backdate observation, schedule the full pipeline or perform a
+vendor/cloud write. Return the pinned repair and exact runner/runtime plan.
+
+
+## IRPT-PERFORMANCE-LINUX-20260923
+
+CTO independently reran exact b933 function /121b8407 native layer /common5 in Lambda Python3.12 Linux with networking disabled: mapping and retained response calculator/schema PASS,1period15points. Combined uncompressed239627841bytes. PERFORMANCE_LINUX_CTO_REVIEW records hashes and limits. Native compatibility closes only for these bytes; deployed factory/role/storage/browser remain open. CONTROL refreshed to measured current state.
+
+
+## IRPT-HOLDINGS-LIVE-READER-20260923
+
+CTO actual AWS readback: irpt-holdings Active/Successful at22:10:08Z, exact vLP7cZN61JWOOmiCGmCjnOM43296i8qDt1hL1ZE8yUs=, reviewed environment and both reader IAM policies equal saved plan; current artifact version e7XAGneq1_KKe2tnBVK45FsEFNItS2NF matches. HOLDINGS_READER_CTO_LIVE_READBACK.json records evidence. M proceeds authenticated selection/API/screen/drill/reload. Localhost5174 returns200; current computer-use inventory has no connected browsers. This is deployment configuration proof, not a fabricated-auth or browser PASS.
+
+
+## IRPT-HOLDINGS-ACTUAL-FAIL-20260923
+
+Andrew authenticated Anna Holdings NOT_READY is actual journey FAIL. HOLDINGS_AUTHENTICATED_FAILURE.md records exact evidence and limits. M owns selection/date/coverage trace and supported full COT build; P shared reason contract. No happy-account substitution, identity collapse or fake empty values. Prior code/IAM parity is not withdrawn or inflated to journey PASS.
+
+## IRPT-X10-ACTIVATION-OWNER-20260923
+
+CTO owns enforcement acceptance; M is existing exact registry writer with CRO incumbents preserved. Global irpt-x10-v1 has12families/3firms; enforcement_ref must be full accepted receipt commit, not arbitrary source/bucket-create. P proceeds callable/claim/least-privilege plan and shared enforcement matrix for all36destinations with precise deployed writer coverage. Minimal COT permissions alone do not prove global enforcement. Physical_disposal OPEN remains separate, not a new first-thread gate. No ACTIVE mutation in this ruling.
+
+
+## 2026-09-23 Holdings deployed shallow-layout crash
+CTO independently reproduced bcb3 IndexError at /var/task and passed exact source 3e913e9ce9 in the same Lambda Python 3.12 image. P packages and returns exact one-function plan; M prepares supported COT coverage without replacing the user account. See DIRECT_REVIEW_2020_20260923/HOLDINGS_SHALLOW_RUNTIME_REVIEW.md. Actual user journey remains FAIL.
+
+
+## 2026-09-23 Holdings exact schema package apply
+P GO for saved plan30f1d202bf7a50fa063e7d96eee2e6ae5ed7465c23471cf1d670230f780d5f02 only: one Lambda code update to exact97f190ac artifact, no IAM/config/routes changes. CTO downloaded final33memberS3version and passed actual /var/task runtime import/schema load. See HOLDINGS_SCHEMA_REPLACEMENT_REVIEW.md; independent live readback and actual user journey remain required.
+
+
+## 2026-09-23 COT supported coverage exact GO
+M may publish exact93f930c265ed242d7e38cb48a7ed4baf267025e8c4dfd06ff39739c6a8f55217 per a509946936:19conditionalwrites, oneSept22indexCAS, nootherdatesorversionsremoved. CTO independently reconciled all841accounts/13793positions to retainedsource, everyGoldJSONnode and15partitionhashes; actualreader localbothAnna matrixPASS. Source-refused140accounts andactualauthenticatedproofremainOPEN. See COT_EXPANDED_COVERAGE_REVIEW.md.

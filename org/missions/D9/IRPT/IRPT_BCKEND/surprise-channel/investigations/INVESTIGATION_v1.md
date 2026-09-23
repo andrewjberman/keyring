@@ -8901,3 +8901,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The order's own <to_id>/title/<proof_of_spec> prose says 'IB-rtr-5'; the file this cell was actually spawned against, and the only file of this content that exists on disk at HEAD, is named 'IB-rtr-e' -- the same decomp-cell-id-vs-file-slug drift rows W18-S2 and W20-S3 already documented on this project's other round-18 cells (IB-rtr-b/d). This is the THIRD independent instance of the identical class within this one round-18 batch of five sibling cells (a/b/c/d/e), which suggests the drift is systematic to how this round's task orders were generated rather than a one-off per-file typo. Not self-graduated; filed for the CVO/CTO to consider reconciling decomp-cell-id and file-slug naming estate-wide for this round's remaining and future task-order batches."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S118",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~O",
+  "surfaced_at": "2026-09-23T18:31:36Z",
+  "one_line": "record-terraform-deploy.sh picks its JSON interpreter at :216-228 with a HARDCODED device-specific path as first preference (`[ -x \"/c/Users/AndrewBerman/.bun/bin/bun\" ]`), then falls back to python3 / python / node in that order. But the CHANGELOG writer at :782 invokes `\"$JSON_TOOL\" \"$TMPJS_CHANGELOG\"` where TMPJS_CHANGELOG is a JAVASCRIPT file (mktemp /tmp/rdeploy-changelog-XXXXXX.js, heredoc 'ENDJS'). On any box where that exact bun path is absent but python3 is present -- every CI runner, and every fresh linked worktree on a box without that bun install -- JSON_TOOL resolves to python3 and the script hands a .js file to the Python interpreter. It cannot succeed; it lands in the `else` branch whose only output is the soft line 'Note: CHANGELOG.json write failed -- source map update still committed'. So the CHANGELOG entry is SILENTLY SKIPPED while the run continues, exits 0, and commits the source-map stamp. Found while mapping stub boundaries for the IRPT_MVP.TO-RECORDER-SCOPE-O offline regression; NOT touched, because that order's <scope> admits only the scope-propagation repair and its <do_not> forbids a broader recorder rewrite.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/record-terraform-deploy.sh:216-228 @2967772cad -- `if [ -x \"/c/Users/AndrewBerman/.bun/bin/bun\" ]; then JSON_TOOL=\"/c/Users/AndrewBerman/.bun/bin/bun\"; elif command -v python3 ... JSON_TOOL=\"python3\"; elif ... JSON_TOOL=\"python\"; elif command -v node ... JSON_TOOL=\"node\"`. The first branch is an absolute path containing a specific user profile.",
+      "Same file :782 @2967772cad -- the CHANGELOG step's command is `\"$JSON_TOOL\" \"$TMPJS_CHANGELOG\"`, and :740 sets `TMPJS_CHANGELOG=$(mktemp /tmp/rdeploy-changelog-XXXXXX.js)` written from a `cat > \"$TMPJS_CHANGELOG\" << 'ENDJS'` heredoc whose body is JavaScript (extracted this session: 186 lines, 8712 bytes, `node --check` PASS).",
+      "Same file :783-789 -- the failure branch is `else echo \"Note: CHANGELOG.json write failed -- source map update still committed\"`, with CHANGELOG_WRITTEN left false; the script does not exit non-zero, so the run proceeds to the reconcile and the safe-commit of the source map alone.",
+      "GRAIN/COVERAGE DISCLOSURE -- this row is a SOURCE READ, not an exercise. The failing path was NOT executed: this device HAS the bun binary at that exact path, so JSON_TOOL resolves to bun here and the defect is latent rather than active on this box. The population of boxes where it would fire is NOT measured by this row. Per CLAUDE.md Rule 22's ABSENT-vs-EXERCISED-AGAINST mirror, this is an EXPOSURE, not an INCIDENT: nobody has measured whether it has ever actually fired, and the remedy for the two differs.",
+      "Separately and independently, the hardcoded first branch is the shape CLAUDE.md's NEVER block names ('NEVER write device-specific logic into ajb_workspace/portal -- DERIVE, don't hardcode'), whose own text says the direction is ratified but remediation is NOT authorized -- surface, don't chase. That is exactly what this row does."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "record-terraform-deploy.sh's own comment at :215-216 states the selection rule as 'Detect available JSON tool / Check bun first (always available locally on Windows); python3 on CI' -- i.e. the script asserts python3 is the intended CI interpreter.",
+  "world_is": "python3 is the intended CI interpreter for the two PYTHON heredocs the script also carries (:250 and :448, both `$JSON_TOOL - <<'PYEOF'`), and for those it is correct. The single ONE variable is used for BOTH the Python heredocs AND the JavaScript CHANGELOG file, which are mutually exclusive interpreters -- so the selection can be right for one consumer and wrong for another in the same run, and the script has no branch that reconciles them. On the bun branch both work (bun runs JS, and the PYEOF heredocs are guarded by `if [ \"$JSON_TOOL\" = \"python3\" ] || [ \"$JSON_TOOL\" = \"python\" ]` at :249/:446 with a JS sibling at :348/:463); on the python3 branch the JS-only :782 call has no such guard and no JS sibling. NOT graduated and NOT remediated by this seat: the governing order (IRPT_MVP.TO-RECORDER-SCOPE-O, issued 2026-09-23 by 2.0.0_SA_COO~P) scopes this seat to the scope-propagation repair and explicitly forbids a broader recorder/helper rewrite, so this is filed for 1.0.0_SA_CTO and the issuer to route. Note for whoever takes it: the fix is not simply 'prefer node', because the two PYEOF heredocs need a Python; the honest shape is two separate resolved tools (a PY_TOOL and a JS_TOOL), which is a real change to this script's contract and wants its own order."
+}
+```

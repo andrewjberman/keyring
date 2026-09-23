@@ -1,114 +1,74 @@
-# IRPT Y -- status
+﻿# IRPT Y - current product status
 
-Seat `2.0.0_SA_COO~Y` (CODEX). Contract
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
-version 1.3. Current reviewer `1.0.0_SA_CTO` under Andrew's direct-review instruction;
-matching CVO seat remains `3.0.0_SA_CVO~Y`.
-As of 2026-09-23T17:50Z.
+Seat `2.0.0_SA_COO~Y`, September 23, 2026, 18:40 Eastern. Analysis remains INCOMPLETE.
+Contract v1.4 and COO_Y mandate apply; CTO reviews directly. Fresh-thread load
+completed; exact serial matches environment and readiness oracle GREEN 9/9.
+Existing launcher helpers and 600-second seat-only drive were preserved.
 
-## Pins
+## Pins and active paths
 
-| What | Value |
-|---|---|
-| Working branch / worktree | `irpt-mvp-y-20260922` at `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922` |
-| Workspace candidate pin | Y production `85af5eb95d72051c363727229981c4dc1a35cad9`, paired tests `4ea95d1117`; prior custody source `10627906f2` integrated by P at `411256e41c` |
-| Portal candidate pin | No new Portal candidate in this custody-consumer tranche |
-| Deployed artifact pin | Y accepted-custody consumer NOT DEPLOYED |
-| Push state | LOCAL; no new remote measurement or push in this turn |
-| Package evidence | P reports measured package `e3ad48ca23`, evidence `b639e430d0` |
-| Bounded consumer review | CTO `36131adb48`: 306 tests / 50 subtests, exact P reader enabled, no skips |
-| Actual-viewer source review | CTO `8b7d43d5eb`: independent 475 tests / 50 subtests on `85af5eb95d`, zero skips; later storage pairing is Y evidence `4ea95d1117` |
+Backend `2874e37647` over `bfe6469b1e` and `4ebe6948d9`, worktree
+`C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922`.
+Active Y delta: generate/{resident_worker,publication_worker,publisher}.py,
+session/resident_session.py and generate/tests/test_resident_worker.py.
+Portal last Y pin `7a5b24e7`; no new Portal candidate this turn.
+Deployed package/source digest NOT MEASURED. Push state LOCAL;
+origin CLOUD `b475b96309c0034b513f19393138984d05716d0e`. No push/deploy/vendor call.
 
-## Live thread
+## Last proof and first failing hop
 
-State: NOT LIVE (no live-thread proof consumed by Y). Last authoritative constraint:
-contract v1.3 section 0 at `f0fcc4516c`; first failing hop is shared
-authentication -> scope/bootstrap, owned by COO~P under the live-scope exception.
-P's local 78-member package and composed replay report do not prove this hop live.
-Real backend, real data and real login are required; frontend may be local or DEV.
+CTO `3d9f451` independently CLOSED the secret-read bootstrap finding at
+`bfe6469b1e`: explicit missing is the only bootstrap condition; failed/invalid
+reads cause no login or refresh/upload intent. Ten focused cases passed.
 
-## Acceptance IDs
+`2874e37647` removes same-firm resident/publication lookup assumptions and
+preserves actual actor versus original retained input owner. Eight paired
+connected cases cover both creator classes, certified READY/reopen, revocation,
+ownership tampering and retained-PDF recovery without vendor reacquisition.
+Combined bootstrap/cross-firm check:18 PASS13.68s. Existing same-firm connected
+case and three publisher ancestry/revocation checks pass. Ruff/commit gates pass.
+CTO `2dd385ed59` independently accepts exact `2874e37647`: eight cross-firm
+cases PASS3.69s plus four existing controls PASS2.22s. Exact publisher.py P
+integration grant landed with the contract. This is bounded source PASS only.
 
-| ID | State | Evidence |
-|---|---|---|
-| Y1 Inputs | OFFLINE ONLY | accepted reader consumer `10627906f24aa42db4c08fd66105599f35bf7819`; actual custody evidence capability absent |
-| Y2 Normalization | OFFLINE ONLY | `ACCEPTED_CUSTODY_CONSUMER_EVIDENCE_20260923.json` at `63d5727e89`; bounded CTO review `36131adb48` |
-| Y3 Request/execution | OFFLINE ONLY | guarded factory/retention/retry exercised; no live queue/vendor proof |
-| Y4 Vendor | NOT_EVALUATED live in this tranche | no per-use vendor run performed |
-| Y5 Publication | OFFLINE ONLY | retained certifier/publication work is not live-thread acceptance |
-| Y6 UI/recovery | OFFLINE ONLY | no new authenticated UI proof in this tranche |
-| Y7 Full proof | NOT_EVALUATED | no linked live journey through export |
-| S1 Selection/access | OFFLINE ONLY | actual guarded selection checks with synthetic source ports |
-| S2 Accepted data | OFFLINE ONLY | P/M reader exists; actual economic source facts remain unavailable |
-| S3 Frozen input | OFFLINE ONLY | `10627906f24aa42db4c08fd66105599f35bf7819` preserves originals/provenance and verifies replay |
-| S4 Durable lifecycle | OFFLINE ONLY | factory retained-byte/retry controls, no live service proof |
-| S5 HTTP/UI parity | OFFLINE ONLY | guarded Entry fixture proof, no authenticated live journey |
-| S6 Export | NOT_EVALUATED live in this tranche | P owns shared export proof |
-| S7 Placement | NOT_EVALUATED live in this tranche | no new provisioning or write-location proof |
+Browser template -> installed guarded UploadService is still not live-proven.
+P owns shared current-authority/repository factory, host upload boundary,
+package/IAM/routes and sole-consumer cutover receipt. Current CTO control and
+215058 message confirm runtime/enforcement pending despite newly provisioned
+report storage. P222939 reports31 accepted generation/session paths consumed.
+Four critical working files independently hash-match2874 in P integration tree
+`irpt-smoke-p-backend-20260923`, HEAD068e9ccd85: resident_worker,
+publication_worker, publisher and resident_session. Source consumption is real;
+installed factory/package/cutover remains pending. Exact current fork is the
+resident's non-HTTP current-authority reader: accepted owner.principal_id and
+home_firm_id identify the submitter, but retained fields are not current grants.
+Y supplied the precise fields/profile-reader limits to P and CTO223108/223111.
+See INTERFACES for the concrete maintained reader and its authority gap.
+P223931 and closing log `session_close_P_2017-2238Z.md` record Andrew's
+Codex-to-Claude transition for P. P reports the31 copied Y paths remain
+uncommitted after an owned-path gate refusal; the successor must resolve that
+grant without bypassing the gate. P's shared installation ownership continues.
+CTO has routed the current-authority research to CRO. MSTR owns P's runtime
+transition; P's worktrees, staged lock and copied source must be preserved.
+No replacement shared writer or duplicate session consumer.
 
-Offline-only work grades no acceptance ID until the live thread is live.
+## ONE next proof
 
-## Current access correction
+Real-login browser CSV AAPL10.01 + VNQ2.02 Dollars -> retained12.03 input ->
+Overview acceptance -> irpt-generation -> always-on resident/session -> vendor
+PDF -> retained certified AnalysisReport -> screen and reload/history.
+Record deployed digests, request/input/report revisions and visible result.
+Y consumes P's concrete installed factory/cutover receipt and runs this journey.
 
-Controlling ruling `5ad99c7d30` grants verified interactive Opal users all IRPT
-functions across firms; Global/firm selection filters inputs/views, not authority.
-P owns shared enforcement. Y consumed P's `9a3ec2a11f` and committed actual-viewer
-read/upload/freezer/submission adapters at `85af5eb95d`. Final separate suites:
-479 tests and 50 subtests passed, no skips. See `OPAL_ACCESS_HANDOFF_20260923.md`
-for exact signatures, pinned-source tests and boundaries. P supplied actual
-storage source `dd6edfc3aa`; paired Global storage controls pass at `4ea95d1117`.
-Shared Entry wiring is still pending. This is
-bounded offline evidence, not certification of the complete corrected access path.
-Ordinary restrictions, forged-identity refusals and immutable attribution remain.
+## Interfaces and limits
 
-## Write claims
+Current delta: CROSS_FIRM_PUBLICATION_HANDOFF_20260923.md. Literal installer,
+factory, pins and rollback: RESIDENT_ASSEMBLY_HANDOFF_20260923.md, amended by it.
+Approved host i-0167fd745ad906a66 remains always on, no inbound, generation first,
+one owner; standing host workflow/D1 approved by Andrew6fc3f5f785. Agent ad hoc
+vendor calls are outside that authorization. Old B/F canonical cycles stay held.
 
-No active code edits. The completed 13-file Y adapter claim is pinned at
-`85af5eb95d`. Y retains intake, generation and owned-read consumer ownership.
-P's shared scope/bootstrap, repository, schemas and package paths were not edited.
-
-## Next proof
-
-Under CTO sequencing ruling `5edf991c06`, P measures/fixes the real login ->
-auth/scope/bootstrap -> real firm/investor data -> screen path at localhost5174,
-recording exact served revisions and a sanitized failing boundary. Y's next
-proof is the verified-Opal prospect and other-owner path paired with P's pending
-shared Entry candidate. Y's dependent source is complete at `85af5eb95d`;
-P's actual `dd6edfc3aa` storage port passed Y paired replay at `4ea95d1117`.
-P retains the authorized first-hop priority. Exact ports and residual attribution
-capabilities are recorded in `OPAL_ACCESS_HANDOFF_20260923.md`.
-Deeper custody source/package work remains parked.
-
-## Dependencies
-
-| Needs | From (owner) | Interface / pin | State |
-|---|---|---|---|
-| First live auth/scope/bootstrap hop | COO~P | Contract v1.3 section 0 | AWAITED live proof |
-| Full-access viewer/prospect authority | COO~P | `9a3ec2a11f` | CONSUMED in Y adapters; shared Entry wiring awaited |
-| Actual-viewer cross-firm retained storage | COO~P | `dd6edfc3aa`, Y paired test `4ea95d1117` | CONSUMED offline; Entry integration awaited |
-| New submission of another creator's input | COO~P contract; M profile semantics; Y consumer | CTO `8b7d43d5eb`: actual submitter separate from retained input attribution | REQUIRED capability; AWAITED exact P contract, no reupload/impersonation workaround |
-| Paired private reader | COO~P / COO~M | `e36b007fa1`, accepted-custody-input-v1 | CONSUMED offline |
-| Integrated package review | CTO / COO~P | P evidence `b639e430d0`, package `e3ad48ca23` | PARKED under `5edf991c06` |
-| Actual economic/source evidence | COO~M / COO~P, CTO interpretations | Mandatory reader economic ports | BLOCKED on real capability |
-| Y consumer | COO~Y | `10627906f24aa42db4c08fd66105599f35bf7819` | CONSUMED by P per exact 164914 notice |
-
-## Parked
-
-| Question / work | Owner | Un-parks when |
-|---|---|---|
-| Deeper custody source/package review, including CTO-named `155213fedf` | CTO / COO~P; M/Y retain owned evidence | First hop is live, or its trace names this as a necessary first-hop dependency (`5edf991c06`) |
-
-Existing pins, findings and completed atomic work are preserved. No side review
-chain or peer ACK is opened. CRO notice 99689 is informational: the approved
-backend-only definition does not alter IRPT's frontend/live-thread requirement.
-
-## Limits
-
-CTO's bounded local consumer PASS remains valid as offline evidence; it is not
-live product acceptance. Economic, publication and current-selection callbacks
-in Y's paired tests are synthetic. P reports an actual M/P/Y composed replay test
-with synthetic economics; Y has not independently rerun that package proof.
-No actual custody admission, cloud action, vendor operation, provisioning,
-promotion or runtime activation is claimed. Existing per-use egress and other
-reserved gates remain. Peer messages are interface publication, blocker or
-review handoff only; no peer ACK is required for this law notice.
+All firms, both input lanes, units, corrections, three variants, live recovery,
+revocation and same-revision branded export remain required under Y1-Y7/S1-S7.
+No live-product completion from tests or source review. P shared installation is
+a dependency; Y retains ownership of the whole Analysis journey.

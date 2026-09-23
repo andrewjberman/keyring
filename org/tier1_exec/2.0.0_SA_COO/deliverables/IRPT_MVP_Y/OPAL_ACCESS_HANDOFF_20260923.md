@@ -1,5 +1,10 @@
 # Y actual-viewer adapter handoff
 
+Superseded for current integration by `DUAL_OWNER_HANDOFF_20260923.md` at Y
+source `1385a126e7`: actual shared Entry is paired, and new submission from
+another creator's retained input is implemented. The text below preserves the
+earlier bounded adapter milestone and its original test counts.
+
 Production source: `85af5eb95d72051c363727229981c4dc1a35cad9`; paired test pin
 `4ea95d1117` (descendant) on `irpt-mvp-y-20260922`.
 Controlling access ruling: `5ad99c7d30`. Consumed P interface: `9a3ec2a11f`.

@@ -1,0 +1,50 @@
+record-terraform-deploy: WARNING -- no --author and no SERIAL in .comp-graph/.agent_context; safe-commit will use the git config identity, which may trip the owned-paths author check.
+
+Recording Terraform deploy
+  Pipeline:  investor-reporting
+  Commit:    3c0584f3 (master)
+  Timestamp: 2026-09-23T19:52:51Z
+  TF prefix: infra/aws/terraform/investor-reporting/
+
+Using: /c/Users/AndrewBerman/.bun/bin/bun
+SCOPED DEPLOY RECORD
+  pipeline : investor-reporting
+  basis    : --function
+  DENOMINATOR: 3 row(s) under the pipeline
+
+  + irpt-directory-search              d4c7a4fd80 -> 6f9b1db662
+
+  stamped 1 of 3 rows under investor-reporting: irpt-directory-search
+  2 row(s) under the pipeline were NOT touched by this record.
+  DRY RUN -- nothing written.
+Resolved deployment set (drives stamp + CHANGELOG + reconcile): irpt-directory-search
+SCOPED DEPLOY RECORD
+  pipeline : investor-reporting
+  basis    : --function
+  DENOMINATOR: 3 row(s) under the pipeline
+
+  + irpt-directory-search              d4c7a4fd80 -> 6f9b1db662
+
+  stamped 1 of 3 rows under investor-reporting: irpt-directory-search
+  2 row(s) under the pipeline were NOT touched by this record.
+CHANGELOG.json: wrote entry untagged-3c0584f3 (0 pipeline-scoped commit(s), 0 function(s) updated)
+✓ CHANGELOG.json updated
+  reconcile: SKIP -- empty deployed-function set (fail-safe no-op)
+stub safe-commit: -m ci: record deploy investor-reporting @ 3c0584f3 [skip ci]
+
+Pipeline:  investor-reporting
+Version:   untagged-3c0584f3
+Commit:    3c0584f31658674cbe27c79c6628dcf4c46d33e7
+Branch:    master
+Timestamp: 2026-09-23T19:52:51Z
+Recorded by: record-terraform-deploy.sh -- infra/aws/lambda/ci/lambda-source-map.json infra/aws/terraform/investor-reporting/CHANGELOG.json
+
+✓ Source map + CHANGELOG.json committed with [skip ci]
+
+Next steps:
+  git tag -a untagged-3c0584f3 -m "investor-reporting: <description of changes>"
+  git push origin master --follow-tags
+  terraform plan  # Should show No changes
+warning: in the working copy of 'infra/aws/lambda/ci/lambda-source-map.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'infra/aws/lambda/ci/lambda-source-map.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'infra/aws/terraform/investor-reporting/CHANGELOG.json', LF will be replaced by CRLF the next time Git touches it
