@@ -72,3 +72,53 @@ component.**
 - `2.0.0_SA_COO~Z` may cut it in round 35. **The registry row comes first and its absence is the cell's own AC0.**
 
 -- `1.0.0_SA_CTO~Z`
+
+---
+
+## ⛔ CORRECTION, 2026-09-23 ~04:3xZ, BY THE SEAT THAT ISSUED THIS RULING -- ACT 2 IS VOID AS UNNECESSARY
+
+**Read this before executing anything above.** The ruling's SUBSTANCE stands. **One of its three ACTS does
+not, and the error is instructive enough to state rather than quietly drop.**
+
+**What is void:** *"A PRD amendment carries the route into `C-`-space with the registry-row requirement
+stated."* **There is nothing to carry.** `C-FILINGS-ANALYZER` has read, since Andrew ratified the
+international battery on 2026-09-18
+(`ANDREW_DIRECT_20260918_194xZ_AMGT_RESAPP_SIX_CARDS_ANSWERED.md@4de34f0d95`):
+
+> **"(5) the national regulator, one adapter per jurisdiction, built only for a name that step 4 fails."**
+
+Printed at its bytes: `org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md:782-784` @`8cef65cc00`,
+inside the `## CONTRACTS` section (lines 624-995) -- **the ratified-text half.**
+
+⛔ **THE ERROR IS A GRAIN ERROR AND IT PASSED EVERY CHECK I RAN.** The ruling's own evidence line is sound
+and I would run it again: `battery.py:597`, `:639` and `fetch.py:242` **do** hold only EDGAR and the
+issuer site, and there **is** no regulator abstraction in the code. ⭐ **Every one of those reads was
+correct. I measured the CODE and wrote a sentence about the CONTRACT** -- two objects, two owners, two
+vintages -- **and because the measurement was real, the conclusion arrived looking measured.** Rule 22's
+GRAIN axis, in the exact shape the night kept producing: an instrument answering the question adjacent to
+the one asked.
+
+⚠ **AND THE CHEAP CHECK EXISTED THE WHOLE TIME.** One read of the contract the ruling was amending would
+have caught it. I read the code because the code was the thing that was broken; **the question was whether
+AUTHORITY existed, and code cannot answer that question in either direction.**
+
+**What this CHANGES, all of it in the project's favour:**
+- the true state is **RATIFIED AND UNBUILT** -- a CELL, not a scope change;
+- **no ratified-text re-signature is owed** (measured: the half hash is byte-identical across the v0.24
+  amendment, `8d23896506...`), so `3.0.0_SA_CVO~Z` is not re-opened;
+- **round 35 needs no new authority from Andrew and no sign-off round trip to cut the regulator cell.**
+
+**What STANDS, unchanged:** the ground (Andrew's IEFA/global universe word, not Lenovo's convenience); one
+generalised route with HKEX as its first instance; ADDITIVE and ordered LAST with EDGAR/issuer-site
+precedence untouched; `filing_attempt` write-once and overwrite-refusing; and **Rule 30's registry row as
+the cell's own AC0** -- which binds as LAW and is deliberately NOT restated as a contract, since a PRD
+repeating it would create a second carrier of one obligation.
+
+**A second correction rides with it,** recorded in full at PRD s.12a: the PRD's `(not an SEC filer)` was
+**FALSE**. Measured at `data.sec.gov` (CIK 0000932477, HTTP 200): **LENOVO GROUP LTD, 63 filings
+all-time, 0 of 10-K/20-F/40-F/6-K, and six `ARS` paper placeholders whose newest is 2007.** The entity
+RESOLVES at step (2) and fails acceptance test **(b) CURRENT**. ⛔ **This ruling repeated "no 10-K exists"
+from `rk-118`'s trial finding without exercising it** -- true as far as it went, and it licensed a
+downstream sentence that was not.
+
+-- `1.0.0_SA_CTO~Z`, correcting itself.

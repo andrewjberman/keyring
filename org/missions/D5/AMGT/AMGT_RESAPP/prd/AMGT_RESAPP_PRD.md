@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.23",
+  "prd_version": "v0.24",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -200,6 +200,25 @@ had already ruled cannot work on this box.
 refused it either. Measured independently at both vintages before the fix: the ENDPOINT section holds **2**
 serial-bearing lines at v0.9 of 231 body lines, and **0** at v0.8 of 211. Both were introduced by this bump.
 
+
+### v0.24 CHANGE NOTE -- 2026-09-23 ~04:3xZ, `1.0.0_SA_CTO~Z`: Lenovo IS an EDGAR entity, and the regulator route was already ratified
+
+**BRIEF HALF ONLY. The ratified text is UNTOUCHED -- no ENDPOINT line and no `C-` contract moves.** New
+section **12a** carries both corrections; section 12's stage-3 row is rewritten to match it.
+
+- **Lenovo IS an EDGAR filer.** Section 12 said `(not an SEC filer)`. Measured at the regulator
+  (`data.sec.gov` submissions for CIK 0000932477, HTTP 200): **LENOVO GROUP LTD, 63 filings all-time**
+  (`filings.files` empty, so nothing older is unread), **0 of 10-K / 20-F / 40-F / 6-K**, and **six `ARS`
+  annual-family documents whose newest is 2007** and which are paper placeholders. The entity RESOLVES at
+  step (2); what fails is acceptance test (b) CURRENT, then (c) KNOWN FAMILY. The battery's recorded
+  REASON is served through `rk-127`'s HELD marker, so the false sentence would reach the page.
+- **The regulator route needed no amendment.** `C-FILINGS-ANALYZER` has carried international step (5),
+  the national regulator, since @`4de34f0d95`. The CTO ruling @`0210Z` directed it into `C-`-space; that
+  act is VOID as unnecessary and the ruling's other three limbs stand. ⛔ **The ruling measured the CODE
+  and concluded about the CONTRACT** -- the true state is RATIFIED AND UNBUILT, which is a cell.
+
+⚠ **Consequence for round 35: it needs NO ratified-text re-signature and NO new authority from Andrew.**
+**Placed as a `###` in the preamble, before `## 0.`, so this note moves neither half by itself.**
 
 ### v0.23 CHANGE NOTE -- 2026-09-22 ~15:2xZ, `1.0.0_SA_CTO~Z`: the sibling project AMGT_HARVST
 
@@ -1938,7 +1957,7 @@ each layer it has: identity -> bronze -> silver -> the served object -> the page
 |---|---|---|---|
 | 1 | identity | Bloomberg add-security, with the FIGI family, ISIN, SEDOL and LEI appended to its identity fields | no identity record, no FIGI |
 | 2 | model block | Bloomberg refdata, histdata and bestdata; bronze then silver `model_block`; served block | refdata and histdata 09-16; 3 served blocks; no forecasts; silver not wired |
-| 3 | filings | the battery's non-SEC routes: the issuer's own site and the HKEX filings the issuer publishes; ESEF does not apply (HK) | `filing_attempt` UNRESOLVED-SOURCE (not an SEC filer) |
+| 3 | filings | ⛔ **the battery IN ITS RATIFIED ORDER, EDGAR STEPS INCLUDED -- see s.12a, Lenovo IS an EDGAR entity.** Steps 1-2 run and are expected to RESOLVE the entity and then FAIL acceptance test (b); step 4 is the issuer's own site; step 5 is HKEX, the first instance of the ratified national-regulator route. ESEF does not apply (HK) | `filing_attempt` UNRESOLVED-SOURCE -- the state is right and **its recorded REASON is wrong** (s.12a) |
 | 4 | translation | only for a document the detector reads as non-English | none |
 | 5 | analysis and drafting | the analyzer and the drafter (model calls) | none |
 | 6 | management | the filing's officer section, Bloomberg `COMPANY_EXEC_OFFICERS`, Lusha, the CEO SERP | no `management/v1` object at all |
@@ -1991,3 +2010,65 @@ contracts, before any second security.
 - any deletion;
 - posture;
 - a contract change -- the ratified text is untouched.
+
+### 12a. ADDENDUM v0.24 -- LENOVO **IS** AN EDGAR ENTITY, AND THE REGULATOR ROUTE WAS ALREADY RATIFIED
+
+⛔ **TWO CORRECTIONS, BOTH OF CLAIMS THIS SEAT ITSELF WROTE. Neither changes a contract; both change what a
+cell is told to do.**
+
+#### (1) `(not an SEC filer)` WAS FALSE -- measured at the regulator, not inferred
+
+`GET https://data.sec.gov/submissions/CIK0000932477.json`, 2026-09-23, HTTP 200, 12,943 bytes:
+
+| field | value |
+|---|---|
+| `name` | **LENOVO GROUP LTD** |
+| `cik` | `0000932477` |
+| business address country | **Hong Kong** |
+| `formerNames` | LEGEND GROUP LTD /FI; LEGEND HOLDINGS LTD /FI |
+| `tickers` / `exchanges` | `[]` / `[]` |
+| **filings, all-time denominator** | **63** (`filings.files` is EMPTY, so `recent` IS the whole history -- no older shard unread) |
+| form histogram | `SUPPL` 44, `ARS` 6, `SC 13D/A` 5, `F-6EF` 2, `4` 2, `SC 13D` 1, `3` 1, `12G32BR` 1, `424B3` 1 |
+| **10-K / 20-F / 40-F / 6-K** | **0 / 0 / 0 / 0** |
+
+**So the entity RESOLVES at battery step (2) EDGAR-by-Bloomberg-CIK.** What is absent is not the filer --
+it is a CURRENT annual report. ⭐ **And the sharpest part is that EDGAR DOES hold six annual-family
+documents for Lenovo (`ARS`), and they fail anyway:** every one is an `AUTO-GENERATED PAPER DOCUMENT`
+under a `9999999997-*` placeholder accession, newest **2007-08-07**. So they fail acceptance test **(b)
+CURRENT** (19 years, against an 18-month bar) and test **(c) KNOWN FAMILY** (a paper placeholder has no
+document for the cutter to parse).
+
+⛔ **WHY A WRONG REASON IS NOT COSMETIC HERE.** `C-FILINGS-ANALYZER` already requires UNRESOLVED-SOURCE to
+persist *"every step's attempt, key and failure reason"*, and `rk-127`'s HELD marker puts that reason on
+the **served page**. A battery that records *"not an SEC filer"* writes a **false sentence onto Andrew's
+screen** and tells the next reader the EDGAR steps are inapplicable to Lenovo, when in fact they resolve
+the entity and are the cheapest available identity evidence. The correct recorded reason names the
+resolved entity, the step that resolved it, and the acceptance test the document failed.
+
+⚠ **One live hazard this measurement surfaces, stated not fixed:** five of Lenovo's EDGAR filings are
+`SC 13D`/`SC 13D/A` in which **Lenovo is the FILER about another issuer.** Acceptance test (a) RIGHT
+ENTITY matches on the issuer's name and would PASS such a document; only test **(c) KNOWN FAMILY** rejects
+it. **The guard holds, but on its third leg, not its first** -- so (c) is load-bearing for every non-US
+name and must not be relaxed into a warning.
+
+#### (2) THE REGULATOR ROUTE NEEDED NO `C-` AMENDMENT -- IT WAS RATIFIED ON 2026-09-18
+
+The CTO ruling `CTO_RULING_AMGT_RESAPP_REGULATOR_ROUTE_20260923T0210Z.md` directed that *"a PRD amendment
+carries the route into `C-`-space."* ⛔ **That act is VOID as unnecessary: `C-FILINGS-ANALYZER` has carried
+*"(5) the national regulator, one adapter per jurisdiction, built only for a name that step 4 fails"*
+since Andrew ratified the international battery** (`ANDREW_DIRECT_20260918_194xZ_AMGT_RESAPP_SIX_CARDS_ANSWERED.md@4de34f0d95`),
+and that clause sits INSIDE the CONTRACTS section (ratified-text half).
+
+⭐ **THE ERROR WAS A GRAIN ERROR AND IT IS WORTH NAMING: the ruling MEASURED THE CODE
+(`battery.py:597`/`:639`, `fetch.py:242` -- no regulator abstraction, true) AND CONCLUDED ABOUT THE
+CONTRACT.** Those are different objects with different owners. The true state is **RATIFIED AND UNBUILT**,
+which is a CELL, not a scope change -- so nothing re-opens the ratified-text half and HKEX needs no new
+authority beyond what Andrew already gave. The ruling's OTHER three limbs stand unchanged: the route is
+additive and ordered LAST, EDGAR and issuer-site precedence is untouched, and `filing_attempt` stays
+write-once and overwrite-refusing.
+
+⚠ **Rule 30 still binds the build and is NOT restated as a contract here** -- it is law, and a PRD that
+repeated it would create a second carrier of one obligation. The cell's own AC0 is the registry row;
+`infra/logic/registry/` carries six files and none mentions `hkex` or `regulator`.
+
+**Which half this moves:** the BRIEF half only. No ENDPOINT line and no `C-` contract changes.
