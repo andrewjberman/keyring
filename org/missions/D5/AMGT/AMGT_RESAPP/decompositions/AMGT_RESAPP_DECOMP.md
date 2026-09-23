@@ -5208,3 +5208,80 @@ fanout:
   blocked_on_a_fleet_scope_word: [Z-S229 (40b)]
   no_fleet_run: true
 ```
+
+## 41. ROUND 33 -- FROM THE CTO'S ROUND-32 ANALYSIS @`745c8ed4e6` (`1.0.0_SA_CTO~Z`, msg 24479)
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 32 closed 1 of 1 (6/0/0, zero spend). ⛔ **THE LANE GRANT STILL HAS NOT LANDED** --
+`.owned-paths.yaml:1944` reads `lane: POD_DE_ANY` at HEAD and **0 of 282 static path keys cover `.scratch/`**. So
+this is the **THIRD consecutive server-side round**, and per the CTO's own instruction the thinness is stated
+rather than padded: **ONE cell and ONE card.**
+
+### 41a. THE SCHEMA QUESTION IS ALREADY ANSWERED -- IN-REPO, AT ZERO SPEND, BY THE CTO'S OWN MEASUREMENT
+
+Round 32 left S1 blocked on: *does Bloomberg expose an analyst/estimate-count field for this request type at all,
+and under what name?* ⭐ **It does, and we measured it SEVEN DAYS AGO.**
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_SUBSTRATE_MEASUREMENTS_20260915_W/TAB_SCORE_SOURCING_BLOOMBERG_LUSHA_MEASURED.md:120-122`,
+produced by `instruments/divergence_consensus_probe_period.py` -- whose docstring says field errors are printed
+**"so an invalid name reads as INVALID, not as absent data"**, which is exactly the discriminator this needs:
+
+| mnemonic | verdict | evidence |
+|---|---|---|
+| `BEST_CPS_NUMEST` | ⭐ **VALID, returns real counts** | at `1FY`: BA **4**, COST **5**, HD **5**, SAP **10**, BABA **8**; coverage **29 of 33** |
+| `BEST_EPS_STDDEV` (EPS dispersion) | **VALID** | *"26-38 estimates"*; coverage **33 of 33** |
+| `_STDDEV`/`_NUMEST`/`_HI`/`_LO`/`_MEDIAN` on **both FCF** mnemonics | ⛔ **INVALID** | **33 of 33** |
+
+**So the contributor count EXISTS for EPS and CPS and does NOT exist for FCF.** The `bestdata` object is missing it
+**because we never requested it**, exactly as the CTO predicted -- and the remedy is a field on a request we
+already pay for, not a subscription.
+
+⛔ **BUT IT IS A CARD, NOT A CELL, AND THE REASON IS IN THE CODE'S OWN COMMENT.**
+`integrations/bloomberg/research/model_block_pull.py:179` is
+`FORECAST_FIELDS = ["BEST_EPS", "BEST_SALES", "BEST_EBITDA", "BEST_PE_RATIO", "BEST_DPS"]`, and `:176` anchors it:
+*"AMGT-rk-36, C-MODEL-FORECASTS -- **the PRD's five, in the PRD's order**."* **Adding a sixth mnemonic is a PRD
+contract change, not a free code edit**, and taking it unilaterally is the move this seat has been convicted of
+adjacent to twice tonight. ⚠ **Note also that a `NUMEST` request costs what the existing request costs plus the
+field -- it is not free of the quota, and the sizing is the CTO's to set.**
+
+### 41b. THE MAPPING -- one cell, inside this seat's lane
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| the HELD-MARKER mechanism | `AMGT-rk-127` | ~127 | A1 | `1.0.0_SA_CTO~Z`'s shape-(b) ruling @`a7e2f5ab92`, made real. A run that computes a CHANGED-HELD outcome records it **ADDITIVELY** -- a held-marker beside the served object, **never a mutation of it** -- and the adapter **STATES** that the served outcome is HELD and a NEWER one exists. **The page stops presenting a falsified reason as current.** `rk-105`'s projection and its held-write rule are **NOT TOUCHED** | none -- CODE ONLY, no deploy, no served bytes moved by this cell |
+
+### 41c. WHY THIS CELL AND NOT THE OTHER TWO
+
+- **Lenovo's filings source** is blocked on a SCOPE call: the battery is issuer-site-only by msg 24257 and Lenovo
+  files with HKEX, which that message excludes. Not this seat's to widen.
+- **The contributor-field addition** is 41a's card -- a PRD contract change.
+- **`C-S400`, `Z-S227`, `rk-124`'s client half** are all `portal/**` and wait on Andrew.
+
+⭐ **The held-marker is the one item that is BOTH unblocked AND fixes a live falsehood** -- the same class as
+`C-S400`, one layer down: a served surface asserting something untrue about our own data. It is worth a round on
+its own.
+
+### 41d. SURFACE CENSUS
+
+| | rk-127 |
+|---|---|
+| `lib/research/harvest/filings.py` (the held path) | W |
+| `lib/research/api/scoped_amgt.py` (the adapter's statement) | W |
+| `lib/research/**/tests/**` | W |
+| `org/.../deliverables/0.9.0_WK_AMGT_RESAPP~127/**` | W |
+
+- ⛔ **`rk-105`'s outcome PROJECTION (`_filing_attempt_outcome_fields`) and its SKIP-HELD/CHANGED-HELD decision are
+  OUT OF BOUNDS** -- this cell adds a marker and a statement, it does not change what is held or why.
+- **No deploy, no AWS write, no vendor call, zero spend.** `portal/**` NOT named and may not be written.
+
+### 41e. FAN-OUT
+
+```
+fanout:
+  cap: 8
+  orders_total: 1                   # rk-127
+  chains_total: 1
+  wave_1: [rk-127]
+  carded_not_cut: [the BEST_*_NUMEST field addition (41a) -- a PRD contract change]
+  blocked_on_andrews_registry_card: [C-S400, Z-S227, rk-124 client half, .scratch lane]
+  blocked_on_a_scope_call: [Lenovo filings source -- HKEX is excluded by msg 24257]
+  no_fleet_run: true
+```
