@@ -629,6 +629,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "TO HVST-r-4 section 1 ruling text: 'the module object's attribute, never a dotted-string target' -- names the dotted-string-target hazard but not the absolute-vs-relative-import variant of the same underlying dual-module-object condition.",
     "world_is": "In this worktree, ANY new code added to lib/opal_data_harvest/*.py that imports a sibling module of this package MUST use the relative form (`from .module import X`) to reach the SAME class/module object every existing test file uses; an absolute `lib.opal_data_harvest....` import is silently a different object unless the caller compares identity or (as here) sees a hard failure downstream.",
     "notes": "This row's own hazard is now CONTAINED in HVST-r-4's own two files (conftest.py, test_poison_control.py) by using relative imports throughout -- it does not root-cause or fix the general condition for the rest of the estate, which is why it stays ARMED rather than closed. A durable disarm (e.g. a lib/__init__.py, or a lint rule refusing an absolute lib.opal_data_harvest import inside this package) is outside this cell's BOUNDS (code-only poison build, no production module edits) and is left to the disarm owner."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S4",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-23T02:33Z",
+    "one_line": "THREE round-2 rows filed by three different workers (Z-W11-S1, Z-W14-S1, Z-W14-S2) have ONE root cause, and it is the ISSUER'S dispatch, not the repository: every round-2 worktree was provisioned with a SPARSE CONE of ten paths, and each row is a different surface failing because a path outside that cone is absent. Z-W14-S1 in particular records its finding as 'a third pre-existing failure', which the issuer has now MEASURED to be wrong: the suite reads 7 passed in the full shared tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the dispatched cone, identical for all five worktrees and chosen by this seat: .tools lib infra/logic docs/doctrine org/missions/D5/AMGT/AMGT_HARVST org/modules org/projects org/ref org/standards org/surprise_channel -- 1859 of 40064 tracked paths materialized, 38205 marked skip-worktree",
+        "MANIFESTATION 1 (Z-W11-S1): missions-tree-check walks org/missions physically, so the unmaterialized directive folders read as 24 INDEX-ORPHAN violations and BLOCKED a correct commit; remedied per this seat's dispatch note by widening to org/missions immediately before each commit, then narrowing back",
+        "MANIFESTATION 2 (Z-W14-S1): test_harvest_grammar read '1 failed, 6 passed' in the r-4 worktree. THE DISCRIMINATING MEASUREMENT, run by this seat in the SHARED full checkout at the same repository state: 'test_harvest_grammar :: 7 passed in 0.51s'. The failing arm's own traceback in the worktree is 'ModuleNotFoundError: No module named rest_fetch' at test_harvest_grammar.py:167, importing from integrations/seekingalpha -- a directory the cone never materialized. So the divergence is the cone, not the code and not the cell",
+        "MANIFESTATION 3 (Z-W14-S2): an absolute lib.opal_data_harvest.<mod> import resolving to a namespace-package duplicate module, which the worker fixed inside its own two files with relative imports; this is the same sparse-layout sensitivity one level down",
+        "the FULL-TREE population, which no worker could measure and which is the right one for HVST-r-4's own bar, measured by this seat after the drain with the poison merged and active: retrieval_provenance 18 passed, bronze_capture 12, silver_from_bronze 16, legacy_upload 6, harvest_grammar 7, worker 2 failed 18 passed, catalog 5, verification 1 failed 3 passed, plus poison_control 3, check_as_received 16, listing_capture_census 18 -- every pre-existing count held and both pre-existing failures are unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Each of the five round-2 task orders dispatched its worker into a named worktree and treated that worktree as equivalent to the repository for the purpose of running a suite, a hook or a census -- every BOUNDS baseline count in those orders was measured by this seat in the FULL shared tree and stated to the worker without qualification.",
+    "world_is": "A sparse cone is NOT equivalent to the repository for anything that reads the FILESYSTEM rather than the index: a commit hook that walks a directory, a test that imports from a sibling tree, and Python's own module resolution all change behaviour. The three rows above are one defect wearing three faces, and the shape is dangerous because each face looks like a finding ABOUT THE CODE to the worker that meets it -- a hook verdict, a test failure, an import bug -- so it gets filed as a repository fact by a seat with no way to see the full tree. This seat chose the cone deliberately (a full checkout OOMs under memory pressure on this device) and so owns every consequence of it.",
+    "notes": "No cell is at fault and no cell's grade changes: r-1, r-2, r-3, r-4 and r-5 all graded VALID and every one of their criteria was met against the population their order named. DISARM, this seat's, is a DISPATCH-RECIPE change and it is cheap: any future cone must include org/missions whole (manifestation 1) and integrations/ (manifestation 2), or the orders must state their baselines AS MEASURED IN A FULL TREE and tell the worker that a divergence is an environment finding rather than a repository one. The standing lesson is the general one: a baseline measured in one checkout is not a baseline for another, and the issuer must say which checkout it measured."
   }
 ]
 ```
