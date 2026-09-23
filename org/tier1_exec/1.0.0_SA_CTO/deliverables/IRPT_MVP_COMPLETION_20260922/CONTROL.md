@@ -52,8 +52,10 @@ Evidence: DIRECT_REVIEW_1958_20260923/REVIEW.md and LISTING_AND_GENERATION_RULIN
 
 ## New handoffs awaiting the next direct review
 
-Yebf8d339859466b48e0f5f2c4ce9a834ddfff290 / handoffeda1adaca1: upload first-hop implementation and paired repository evidence received20:00; not yet CTO accepted. Y continues resident worker assembly, P receives exact shared package requirements. M reports10-minute drive helper emitted unrelated Anatomy alerts, stopped its exact timer and routed MSTR195910; M continues source work. This is a runtime-helper defect, not evidence M is unresponsive.
+Yebf8d339859466b48e0f5f2c4ce9a834ddfff290 / handoffeda1adaca1: bounded CTO upload-source PASS206+18; public schema/family/package installation still open. Y continues resident worker assembly, P receives exact shared package requirements. M reports10-minute drive helper emitted unrelated Anatomy alerts, stopped its exact timer and routed MSTR195910; M continues source work. This is a runtime-helper defect, not evidence M is unresponsive.
 
 Dispatch receipts: listing195216(P)/195219(Y)/195222(CRO); always-on195610(Y)/195612(P)/195614(MSTR); source verdict200008(M)/200009(Y)/200011(P); recorder remediation200032(O) cites existing IRPT_MVP.TO-RECORDER-SCOPE-O. First O send was refused for omitted task-order citation and was corrected; no permission or new order needed. Exact new-review queue remains open; source grades do not close the three products.
 
 Current taxonomy: Andrew e5cf6d6549 consumed; CONTRACT Holdings amendment supersedes separate Unresolved bucket. Client absorbs unattributed known custody and third-party models; no null-value/currency invention. M implements first INF three-category view and all-firm canonical taxonomy/drill, P shared schema consumer. Historical source review of99c9 remains bounded economic evidence, not acceptance of the old public category presentation.
+
+P20:06 measured GREEN runtime with35 unread; recent uncommitted Reporting adapter edits19:48-19:50 but stale STATUS18:18. MSTR asked to inspect actual delivery/capacity; no unresponsive assertion or duplicate writer. Next shared batch is exact Y upload wire/family/resident runtime under already-issued approval, while P retains Reporting provider work.
