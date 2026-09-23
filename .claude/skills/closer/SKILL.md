@@ -27,8 +27,8 @@ more."* Brief: `org/tier1_exec/4.0.0_SA_CRO/deliverables/BRIEF_CANONICAL_FLOW_SP
   - A closer is scheduled in SEQUENCE like any project, and **Codex `2.0.0_SA_COO*` seats count toward the laptop's
     three-COO limit** (call 3).
 - **Does not apply:** greenfield work (canonical round 1 already starts with the live thread, spine L2/L5); a
-  single-surface fix (just fix it); a governance project. **A purely backend or infrastructure product is OPEN**
-  (call 5): what "live" means for it is still being defined, so do not start a closer on one until the spine says.
+  single-surface fix (just fix it); a pure governance project. A backend or infrastructure product IS in scope, with
+  "live" as defined under LIVE FIRST below.
 - **Hands back:** once the live thread and every named journey pass CVO review on a pinned candidate, remaining work
   returns to canonical enrichment rounds, or the product closes. **At hand-back the product becomes ONE project** --
   the thread is its first outcome and the other journeys are enrichment -- and any frontend/backend split projects
@@ -140,8 +140,12 @@ before any per-product offline closure counts toward an acceptance ID. Offline c
 nothing until the thread is live. A thread with any fixture-fed hop is not done.
 
 **What "live" means (Andrew, call 5):** for a product with a frontend, the **real backend, real data and real login**;
-the frontend may run locally or on DEV. A PROD release is an enrichment item, not part of the thread. For a purely
-backend or infrastructure product the definition is OPEN.
+the frontend may run locally or on DEV. A PROD release is an enrichment item, not part of the thread. **For a
+backend or infrastructure product (call 5b, spine v3.18):** one named consumer's one real use of the mechanism --
+the real tool at HEAD from an ordinary seat shell, or the deployed component, over real inputs, through the
+consumer's real entry -- ending in the consumer's observed result as one trace. The result may land on one
+machine's working branch or in a QA location; shared-branch availability and production scheduling are enrichment
+items. Served-output writes still carry the never-widen sign-off.
 
 *Measured cost:* about 8.5 h from the contract to first live contact, and **both** live contacts then failed on the
 shared scope/bootstrap hop every tab crosses first (brief section 1.2) -- so no downstream offline closure was worth

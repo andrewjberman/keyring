@@ -167,9 +167,12 @@ enrichment rounds serve those.
 
 Why: IRPT ran 15 frontend and 18 backend rounds with zero journeys working end to end, because no outcome
 owned the seam between the two halves; the thread puts every seam inside `FWD-1`. For a pipeline with no
-product surface the thread is source to served artifact. NON-APPLICATION: a governance project, which has no
-journey. A purely backend or infrastructure product is OPEN (Andrew, 2026-09-23 call 5): until the spine
-defines live for it, cut its outcomes as before.
+product surface the thread is source to served artifact. **For a backend or infrastructure product** (spine
+v3.18) `FWD-1` names one real consumer and its one real use of the mechanism -- the real tool at HEAD from an
+ordinary seat shell, or the deployed component, over real inputs, through the consumer's real entry -- ending
+in the consumer's observed result as one trace; the result may land on one machine's working branch or a QA
+location, and shared-branch availability and production scheduling are enrichment outcomes. NON-APPLICATION:
+a pure governance project, which has no mechanism anyone invokes.
 
 ```
   FWD-3  Advisors can see per-client performance without opening Black Diamond
