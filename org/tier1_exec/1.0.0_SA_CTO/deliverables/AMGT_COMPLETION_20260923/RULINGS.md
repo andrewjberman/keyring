@@ -264,16 +264,47 @@ plus error lines, **with no route and no firm on a successful request.**
 FIRM. No seat promises firm attribution in a future adjudication.** Recorded here rather than left in a
 message, because the seat that needs it is the one writing a blast radius months from now.
 
-## R-11b -- TWO CALLS AT ANDREW, NEITHER URGENT, BOTH HIS BY CLASS
+## R-11b -- ONE CALL AT ANDREW (was two; the second was never his), NOT URGENT
 
 1. **NOTIFICATION.** Four responses over ~25 hours to one client. `3.0.0_SA_CVO~Z` recommends **no
    re-processing of the eleven untouched securities** and states the notification question **turns on
    who the client was, which it cannot determine and will not guess.** ⛔ **This seat does not guess
    either, and does not decide it: it is outward-facing and reputational.**
-2. **WINDOW.** The census covers **09-19 to cutover ONLY**. The defect existed in every earlier build
-   and the artifact history reaches back to **2026-09-15 across 30 versions**, so pre-09-19 requests are
-   **NOT measured -- and ARE measurable**, the logs running to 2026-09-03. Widening is **one re-run of
-   the same method, not new instrumentation.**
+2. ⛔ **WINDOW -- WITHDRAWN AS A CALL. IT WAS NEVER ANDREW'S, AND CARDING IT WAS THIS SEAT'S
+   OVER-RESERVATION.** Closed by `3.0.0_SA_CVO~Z` (msg 25125, record @`8e5612576b`) by MEASURING it.
+
+   > ~~The census covers 09-19 to cutover ONLY ... pre-09-19 requests are NOT measured -- and ARE
+   > measurable, the logs running to 2026-09-03. Widening is one re-run of the same method.~~
+
+   ⭐ **THAT SEAT'S REASONING IS THE CORRECTION AND IT IS ACCEPTED WITHOUT RESERVATION:** *"one turns on
+   who the client was and is genuinely his. The other was a QUESTION, NOT A DECISION -- it needed no
+   authority, cost one read-only census, and carding it would have handed him a choice where a fact was
+   available for the asking."*
+
+   ⛔ **THIS IS THE OVER-RESERVATION DEFECT `/self-drive` NAMES BY NAME, COMMITTED BY THE SEAT RUNNING
+   `/self-drive`.** Andrew's own words, which this seat had quoted back to him hours earlier: *"somehow
+   every single open call falls under 'reserved' versus adjudicable which needs to be assessed better
+   because it renders the skill useless if it cant get calls adjudicated."* ⭐ **THE TEST THIS SEAT
+   FAILED TO APPLY: does closing this need AUTHORITY, or does it need WORK? Authority is reserved. Work
+   is not a call.** A question whose answer is one read-only census is never a sovereign decision, and
+   dressing it as one spends the operator's attention on something a tool could answer.
+   **COST: none -- it removes a card.** **NON-APPLICATION: a measurement that is itself an outward-facing
+   act, or one whose instrument needs a grant.**
+
+   **THE MEASUREMENT: 2026-09-03 to 09-18, 2,222 hourly files, positive control 52,242 rows parsed. 82
+   `/api/scoped/amgt*` requests, 21 thesis/overlay served, and ZERO IN-CORPUS.** A response for a
+   security with no drafted sections cannot serve a no-span sentence, so **realised exposure over the
+   complete measurable history is EXACTLY the five responses already reported.**
+
+   ⭐ **AND IT IS EXHAUSTIVE RATHER THAN MERELY WIDER, which is the part worth keeping: the CloudFront
+   logs begin 2026-09-03, which PREDATES the Lambda's earliest artifact version at 2026-09-15 across 30
+   versions. THE LOG HISTORY PRECEDES THE FUNCTION'S OWN DEPLOYABLE HISTORY, so there is no earlier
+   period in which this surface could have served anything at all.** The window cannot be widened
+   further, and widening it to its limit changed the answer by zero. **"We looked further and found
+   nothing" and "there is nowhere further to look" are different claims, and this is the second.**
+
+   **Recommendation against re-processing the eleven untouched securities is STRENGTHENED: over the full
+   history, eleven of the twelve were never served even once.**
 
 ⚠ **NOT URGENT AND DELIBERATELY NOT ESCALATED MID-BREAK:** the guard is deployed and the exposure is
 closed forward. These are retrospective questions. **The incident CLOSES when the remediation act is
