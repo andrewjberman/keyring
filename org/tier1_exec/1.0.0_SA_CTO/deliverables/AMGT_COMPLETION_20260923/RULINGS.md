@@ -107,6 +107,62 @@ claims nothing.
 
 ---
 
+## R-6 -- ⛔ R-5 IS WITHDRAWN IN ITS FIRST HALF. THE REGISTRY ROW WAS RIGHT AND THIS SEAT'S PARSER WAS BROKEN
+
+**R-5 asserted that `AMGT_RESAPP.json`'s `blocking` string understated the open-order count -- "5
+non-terminal of 191" against its claim of one. THAT WAS WRONG. The row's claim is CORRECT.**
+
+**Measured with an ANCHORED parser, `^<status>\s*([A-Za-z_]+)\s*</status>\s*$` over all 191 order files:
+`complete` 181 · `superseded` 8 · `withdrawn` 1 · `pending` 1. NON-TERMINAL = 1, and it is `rk-49`** --
+exactly what the row says, and exactly what `rk-49`'s own file says of itself (held by design pending
+Andrew's Lusha key-rotation word).
+
+**WHY R-5 GOT 5.** Its parser was `<status>\s*([^<]*)</status>` -- UNANCHORED -- and took the FIRST
+match anywhere in the file. Exactly THREE files disagree between the two parsers, and all three
+disagree for the same reason:
+
+| order | anchored (true) | first unanchored match | loose matches in file |
+|---|---|---|---|
+| `rk-56.status-element-at-issuance` | `complete` | `word` | **10** |
+| `rk-58.direct-act-minted-order` | `complete` | `pending` | 2 |
+| `rk-62.gate-x-direct-act-exemption` | `complete` | `pending` | 3 |
+
+⛔ **THE FILE THAT BROKE IT IS NAMED `status-element-at-issuance` -- A TASK ORDER WHOSE SUBJECT IS THE
+`<status>` ELEMENT ITSELF, so it quotes ten of them in prose and its real one is the eleventh match.**
+An unanchored parser reads a DOCUMENT ABOUT a record face as though the prose were the record face.
+The two orders about direct-act minting and a gate exemption fail the same way for the same reason:
+orders that DISCUSS order mechanics are exactly the orders that quote order tags.
+
+⛔ **AND THE FAILURE WAS NOT SILENT-LOOKING -- IT PRODUCED A CONFIDENT, PLAUSIBLE, DENOMINATOR-BEARING
+NUMBER THAT CONVICTED A CORRECT ARTIFACT.** R-5 then used it to route a "register fix" to
+`0.0.0_AB_MSTR~Z` for a row that needed none, and the whole batch went to six seats. ⭐ **The tell
+available at the time and not taken: `rk-56` read `word`, which IS NOT A STATUS VALUE IN ANY ENUM.**
+A value outside the enum is the parser announcing it read the wrong object, and it was printed in this
+seat's own output and passed over.
+
+⛔ **THE GENERAL RULE, and it is the third instance of ONE class in this seat's session:** an
+unanchored match over a document that may DESCRIBE its own format lands on the description. The
+siblings were the `amgt`-in-`vite.config.ts` name census (a name census answering a coverage
+question) and the 11-export count read as 11 mounted callers. **All three read a real number off the
+wrong object, and all three arrived with a denominator.** COST: anchor the pattern to a full line, and
+treat any value outside the declared enum as a parser failure rather than a finding. NON-APPLICATION:
+a machine-written file with one occurrence by construction -- though that is a property to verify by
+counting matches, not to assume.
+
+**WHAT SURVIVES OF R-5, narrowed and re-attributed.** `AMGT_RESAPP.json`'s `phase`/`blocking` ARE
+stale, but in a DIFFERENT WAY than R-5 claimed and on another seat's measurement, not this seat's:
+**they describe ROUND 35 while ROUND 36 has since closed** (`ledger/ROUND_ANALYSIS.round36.md`:
+*"ROUND 36 IS CLOSED, and the project's canonical phase closes with it"*). The AMGT_CORPUS half of R-5
+-- `phase` reading *"6 of 11 drained"* with five later commits landed -- was measured by a separate
+instrument and is ATTRIBUTED, not re-derived here.
+
+**So the ask to `0.0.0_AB_MSTR~Z` is REPLACED, not merely reduced:** nothing is owed on the
+non-terminal count, and what is owed is a round-vintage refresh on two rows. ⚠ **A correction that
+only shrank the number would have left MSTR~Z hunting a defect that does not exist in the field this
+seat named.**
+
+---
+
 **What these rulings do NOT do.** No CONTRACT is landed (R-1/R-2 are its inputs, and the CONTRACT with its
 `.owned-paths.yaml` grants and the `closer_contract` rows is a separate one-commit act). No MANDATE is
 issued. No task order, no spawn, no cap widening, no deploy, no grant, no vendor call. No seat is
