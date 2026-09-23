@@ -7,7 +7,7 @@
   "fabric": "site-z",
   "prd_version": "v0.4",
   "step": 4,
-  "brief_ref": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md@6c52138c2f (36,007 bytes)",
+  "brief_ref": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md@6c52138c2f",
   "endpoint_outcomes": [
     "FWD-1",
     "FWD-2",
@@ -124,6 +124,16 @@ crosswalk IS built from the universe, so resolved-and-absent may be an EMPTY set
 NOT_REALIZED by construction, whatever anyone builds.** The population is re-pointed at the backlog folders the
 universe carries UNRESOLVED (**60 of 93**, measured at L5), and `CRPS-c-5` **measures the resolved-absent set and
 prints BOTH denominators** -- if non-empty, the original population stands beside the new one.
+
+⚠ **HEADER CORRECTION, same version, recorded rather than version-bumped.** `2.0.0_SA_COO~X` pre-graded its
+first order with the L6 gate's own `check_file()` and got ONE violation -- not in the order, in this PRD's header:
+`brief_ref` carried `" (36,007 bytes)"`, and `org/standards/PRD_HEADER.schema.json` opens `(?![\s\S]*[\s\])`,
+forbidding whitespace anywhere. **The gate was refusing EVERY order against this PRD.** ⭐ **The byte count was
+added at v0.2 because the CVO's own refusal asked for it -- and I put a prose fact inside a schema-constrained
+field when it already lived in the v0.2 change note, where it belongs.** The pin's VALUE is unchanged; only the
+annotation is removed. ⭐ **And the header block is in NEITHER half, so this re-opens nothing** -- the same
+preamble exclusion `2.0.0_SA_COO~Z` measured as an exposure an hour earlier is, here, exactly the behaviour that
+saves a re-sign. No version bump: the version tracks substantive amendments, and the pin did not move.
 
 ⚠ **This version touches ENDPOINT, so `3.0.0_SA_CVO~Z`'s ratified half goes STALE and is re-signed.** Unavoidable
 and cheap: **two clauses, no new outcome, and no contract weakened.**
