@@ -141,6 +141,17 @@
     "evidence": "CANONICAL_PROFILE_CONSUMPTION.md",
     "production_factory_installed": false,
     "live_calls": false,
-    "integrated_criteria": "all fourteen NOT_EVALUATED"
+    "integrated_criteria": "all fourteen NOT_EVALUATED",
+    "independent_y_review": {
+      "review_pin": "64c5bc59a3",
+      "candidate_pin": "cdbd4de74d86c03463eed8068e57c41e0bf8abc1",
+      "verdict": "BOUNDED PASS",
+      "independent_controls_pass": 19,
+      "focused_supplied_tests_pass": 99,
+      "focused_supplied_subtests_pass": 45,
+      "scope": "synthetic 49financial advisor prospect Overview; actual M SDK/authorizer and Y/P consumer code, modeled storage/transactions/ACTIVE policy/dispatch/held lease",
+      "integrated_criteria": "0 PASS / 0 FAIL / 14 NOT_EVALUATED",
+      "authority_change": false
+    }
   }
 }
