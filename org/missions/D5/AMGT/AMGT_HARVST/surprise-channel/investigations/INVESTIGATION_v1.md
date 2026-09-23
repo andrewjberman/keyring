@@ -344,6 +344,76 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "HVST-h-10 row AMGT_HARVST-Z-W10-S1 (and this cell's own Phase-0 fix for it) reads: the probe should run INSIDE a five-publisher run, not instead of it -- i.e. combining --bbg-symbol-probe with a live five-publisher invocation should let all five publishers proceed. AC8's probe_returns_before_worker_run False was read (correctly, on the SUCCESS path) as proof this is achieved.",
     "world_is": "The fix is correct for the SUCCESS path (a probe that returns normally does fall through into Worker.run(), proven by AC7's offline test and by this same defect's own absence when the probe is stubbed). But the probe's FAILURE path -- any exception from bbg_symbol_news_probe() or from constructing its Publisher client, which is exactly what a real vendor call against a stale/challenged session produces -- is not caught, so a probe failure still prevents the five-publisher run from ever starting, in this invocation and in the network-refused replay both. This is a narrower echo of the original -S1 defect: the probe no longer REPLACES the run by design, but it can still PREVENT the run by accident, and this cell's one live-run grant demonstrated exactly that outcome on both its authorized live attempt and its (non-vendor-call) network-refused replay.",
     "notes": "Not resolved by editing __main__.py: Phase 1 (spawn instruction 'PHASE 0 EDITS CODE; PHASE 1 DOES NOT') forbids further code changes in this cell, and BOUNDS section 3 marks lib/opal_data_harvest READ-ONLY outside the three named Phase-0 files already committed. Recorded as a row for the issuer/CVO. Disarm is the issuer's/CVO's: wrap the probe loop body in a try/except that records the failure (mirroring how a per-publisher job failure is already handled inside Worker.run) and falls through to the normal five-publisher fetch regardless of the probe's own outcome -- in a later cell, with its own grant if a further live attempt is authorized. This cell made NO second live vendor-call invocation after the first (item 7 is the network-refused replay the order itself requires, not a second live attempt) -- the ONE-RUN RULE was honored."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W10-S5",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~10",
+    "surfaced_at": "2026-09-23T00:15Z",
+    "one_line": "A FOURTH instance of the same class as row -S3: this Phase 0b cell's first drafts of test_probe_failure_is_recorded_not_raised and test_run_continues_to_every_publisher_after_a_probe_failure omitted the SessionVault.load patch (present in the earlier, already-working test_bbg_symbol_probe_runs_inside_a_five_publisher_run), so the first of the two ran the real canonical-local-harvester subprocess for real again (HarvestFailed after ~346s) before being caught and fixed the same way as -S3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest lib/opal_data_harvest/test_retrieval_provenance.py -k 'test_probe_failure_is_recorded_not_raised or test_run_continues_to_every_publisher_after_a_probe_failure or test_a_challenged_publisher_is_recorded_and_the_run_continues' -v: 1 failed, 2 passed in 345.80s; the failure's own traceback: AssertionError: assert 'VerificationRequired' in 'HarvestFailed: Canonical harvester did not produce a network-corroborated session' -- the REAL SessionManager.get()->refresh() path ran because neither new test patched SessionVault.load, only Worker/Publisher/bbg_symbol_news_probe",
+        "the fix (adding monkeypatch.setattr(SessionVault, 'load', _fake_load) to both tests, the exact pattern test_bbg_symbol_probe_runs_inside_a_five_publisher_run already carried from Phase 0) made the full 18-test suite pass in 1.03-1.17s across three post-fix runs with no subprocess/network signature in any output",
+        "this is the same class of instrument trap as row AMGT_HARVST-Z-W10-S3 (a probe-branch test that omits the SessionVault short-circuit reaches the real refresh() path), recurring even after -S3 was filed and even with the SAFE pattern already present elsewhere in the SAME file to copy from"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Phase 0b's spawn instructions and BOUNDS require CODE, NO NETWORK; row -S3's own notes named the fix (object-attribute patches) but did not name SessionVault.load as a MANDATORY patch for every future test that exercises the --bbg-symbol-probe branch.",
+    "world_is": "Every offline test that reaches __main__.py's probe loop must patch SessionVault.load (or otherwise prevent SessionManager.get() from reaching the real refresh()), not just Publisher/bbg_symbol_news_probe/Worker -- sessions.get('bbg') is the FIRST call in that loop, before Publisher() is ever constructed, and it is real and unpatched unless SessionVault.load is neutralized. This cell hit the same class of incident twice in one session despite -S3 already being filed and disarm-owned; the pattern needs a shared, named helper or an explicit checklist item, not tribal knowledge re-derived per test.",
+    "notes": "Self-caught and self-remediated within the same turn before the checkpoint; no BLOCKING row filed. Left ARMED (same disarm owner as -S3, which this row extends rather than duplicates): the recurrence itself is the evidence that -S3's disarm has not yet happened and the underlying trap is still live for any future test author in this file or a sibling one. Disarm suggestion: a single documented/shared fixture (e.g. a pytest autouse fixture or a named helper function) that neutralizes all three real vendor-call sites (SessionVault.load, SessionManager.refresh, subprocess.run) for any test exercising --bbg-symbol-probe, so the safety is structural rather than remembered per test."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W10-S6",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~10",
+    "surfaced_at": "2026-09-23T00:20Z",
+    "one_line": "The CLI's own upload-harvest command never wires a client= into HarvestUploader, so even with --harvest-grammar correctly engaging harvest mode on the run command (rows -S1/-S2, fixed), a real Phase 1 upload-harvest invocation would build a REAL boto3 S3 client via harvest_grammar's own client-or-default fallback -- an uncontrolled real AWS call outside the three sites (PacedSession.get, SessionManager.refresh, subprocess.run) this order's rehearsal names and poisons.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/opal_data_harvest/__main__.py 'upload-harvest' branch @HEAD: 'receipt = HarvestUploader(root, worker.db).run(args.max_objects, retrieval_mode=args.retrieval_mode)' -- no client= keyword passed, ever, regardless of any --harvest-grammar flag on a PRIOR run invocation (upload-harvest does not even accept that flag)",
+        "lib/opal_data_harvest/uploads.py HarvestUploader.__init__(self, root, db, client=None, record=...) -- client=None is the default",
+        "lib/opal_data_harvest/harvest_grammar.py put_article_bronze/put_listing_bronze and lib/research/harvest/store.py's own writers all do 'client = client or _default_client()' -- a None client silently becomes a REAL boto3.client('s3', region_name='us-east-1')",
+        "this cell's own rehearsal (rehearse_run.py) works around this by calling uploads.HarvestUploader(root, db, client=stub) DIRECTLY, bypassing the CLI's own upload-harvest command entirely, specifically because that command cannot be given a stub/isolated client -- confirmed by reading __main__.py's upload-harvest branch, not merely inferred"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's Phase 1 item 5 says 'Run upload-harvest --retrieval-mode backfill until remaining_pending is 0' as if it were a normal, fully-wired CLI step exactly like item 4's run command (which DOES now accept --harvest-grammar to wire a real client explicitly).",
+    "world_is": "upload-harvest has no equivalent flag and always falls through to a real default S3 client regardless of what item 4 used -- which happens to be CORRECT for the real Phase 1 run (item 5 is supposed to reach the real opal-data-harvest bucket), but means upload-harvest can never be driven safely offline through the CLI itself; any future rehearsal or offline test of the upload step must call HarvestUploader directly (as this cell's rehearse_run.py does), never through 'python -m lib.opal_data_harvest upload-harvest'.",
+    "notes": "Not a defect for Phase 1 itself (the real run is SUPPOSED to reach the real bucket at that step) -- recorded because it is a latent trap for anyone who assumes the CLI's upload-harvest is offline-safe or configurable the same way run is. No code edit made for this row (out of Phase 0b's named scope: only the probe/publisher-continuation fix and the rehearsal harness were asked for). Disarm suggestion: either add a --harvest-grammar-equivalent client override to upload-harvest for symmetry and future rehearsal use, or document plainly that upload-harvest is never offline-safe through the CLI."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W10-S7",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~10",
+    "surfaced_at": "2026-09-23T00:25Z",
+    "one_line": "AC6's <expect> text still names ONLY the three Phase 0 files (__main__.py, worker.py, test_retrieval_provenance.py) as the sole legal diff, even though the SAME amendment (@0616d687ee) that added Phase 0b also authorizes editing a FOURTH file, rehearse_run.py -- so AC6's literal wording was not updated alongside the BOUNDS it is supposed to enforce.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-h-10.lenovo-run-under-the-trial-word.md @0616d687ee, Phase 0b section: 'You may edit ONLY: lib/opal_data_harvest/__main__.py, lib/opal_data_harvest/worker.py, lib/opal_data_harvest/rehearse_run.py, lib/opal_data_harvest/test_retrieval_provenance.py' -- four files",
+        "the same file's AC6 <expect>, unchanged since the original Phase 0 cut: 'ONLY the three Phase 0 files (lib/opal_data_harvest/__main__.py, lib/opal_data_harvest/worker.py, lib/opal_data_harvest/test_retrieval_provenance.py), nothing else under lib' -- three files, rehearse_run.py absent",
+        "this cell's own AC6 invocation at the second checkpoint prints lib/opal_data_harvest/__main__.py, lib/opal_data_harvest/rehearse_run.py and lib/opal_data_harvest/test_retrieval_provenance.py (worker.py untouched, per this cell's own finding that run_job already handles a challenged publisher correctly) -- a literal mismatch against AC6's named set (rehearse_run.py present but not named; worker.py named but not present)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC6's <expect> text is the authority for what 'nothing outside Phase 0's three files changed' means.",
+    "world_is": "AC6 was never updated when Phase 0b's BOUNDS added a fourth editable file, so its literal wording cannot be satisfied by ANY compliant Phase 0b diff that actually uses the newly-granted rehearse_run.py permission. proof-of-spec-check.py does not mechanically grade this criterion (no `expect=` regex populated on the instance row -- self-report mode), so this cell graded AC6 by INTENT (nothing outside the union of Phase 0's three files and Phase 0b's fourth was touched) rather than by AC6's stale literal list, and states that reasoning in the acceptance row rather than silently matching the old text.",
+    "notes": "Not fixed here (no authority to rewrite the TO's own criteria). Disarm is the issuer's/CVO's: update AC6's <expect> to name the CURRENT editable set for whichever phase is active, or state the rule generically ('nothing outside this phase's named editable files') so it does not need editing every time BOUNDS grows. Same shape as the 'a citation ages separately from the text it quotes' hazard CLAUDE.md Rule 27 already names, one level down: here it is a CRITERION aging past the BOUNDS it grades, in the same document, same amendment commit."
   }
 ]
 ```
