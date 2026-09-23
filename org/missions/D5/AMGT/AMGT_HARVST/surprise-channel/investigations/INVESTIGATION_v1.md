@@ -806,6 +806,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "HVST-t-1 was ruled to make the persist survive an exception raised anywhere inside the per-article loop, with the proof a driven mid-loop raise and a negative control. It delivered exactly that. My order said nothing about what the persist may do TO a propagating exception.",
     "world_is": "Making the persist survive the exception and making the exception survive the persist are two different obligations, and my cut named only the first. A finally is the correct structure for the first and is precisely what creates the second.",
     "notes": "NOT a defect in the cell and no grade of its five criteria moves. Handled as AMENDMENT 1 to the order rather than a round-4 cell, because the regression is this round's own and the remedy is one guard: AC5 requires an arm proving that with the persist made to fail WHILE a mid-loop upstream error propagates, the exception that escapes is still the original, and the persist failure is VISIBLE rather than swallowed. The order's status was set back to pending by that amendment and the worker was continued in its own worktree. DISARM: this row closes when AC5 passes and the drain lands. The keepable shape: when a fix changes WHERE code runs, ask what else now runs on the path it was moved onto -- a finally, an except, a signal handler and an atexit all have this property, and none of them is visible in the diff of the line that moved."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S11",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-23T03:45Z",
+    "one_line": "proof-of-spec-check's INVOCATION-ALIGNMENT compares the INSTANCE against the ORDER, so when BOTH carry the same unrunnable text it PASSES. It certifies AGREEMENT, never RUNNABILITY -- and nothing else in the gate chain reads an invocation and asks whether a shell could run it. Found because the issuer wrote AC5's invocation with HTML-escaped operators and the worker, correctly, mirrored the escape into its instance so the comparison would match.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured across all six criteria of TO-HVST-t-1 at the bytes in the worker's worktree: AC0 through AC4 each carry raw '&&' once and AC0/AC1/AC2 carry raw '2>&1'; AC5 alone carried THREE '&amp;' entities and ZERO raw '&&'. AC5 verbatim before the fix: 'cd \"$(git rev-parse --show-toplevel)\" &amp;&amp; python -m pytest lib/opal_data_harvest/test_listing_persist_durability.py -v --color=no -p no:cacheprovider 2>&amp;1 | tail -20'",
+        "the checker's own line on the run that PASSED with the escaped text: 'invocation-alignment (recorded invocation -> criterion text): 5/5 comparable row(s) match modulo placeholder expansion; 0 diverge' -- and it passed again at 6 rows after the worker mirrored the escape, because the instance and the order agreed",
+        "the worker's disclosure, verbatim from its report, which is the only reason this was visible at all: 'the checker compares the instance's recorded invocation string literally against the TO's raw text, so I recorded AC5's invocation field with the same entity-escaped text to match (the actual command I ran to produce the evidence used the real && / 2>&1)'",
+        "the ISSUER's mechanism, stated because it is reproducible and not a typo: the original order was written with a file-writing tool using raw operators; AMENDMENT 1 was written through a python string in which this seat hand-escaped XML entities the rest of the file does not escape. Inconsistent escaping WITHIN ONE FILE, which no gate compares",
+        "NOT AN INCIDENT: the AC5 evidence is sound. The worker ran the real command and its guard is correct (sys.exc_info() read before the persist, the persist in its own try/except, a recorded harvest_listing_persist_failed event, re-raise only when nothing was propagating, plus a mirror arm proving the failure surfaces when nothing else is in flight). What was wrong was the STRING in the record, not the measurement"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every task order in this project states 'PROOF OF SPEC (each invocation LITERAL)', and the fabric's banked lesson is to run every literal invocation once before issuing a slug. Both assume the recorded invocation IS a runnable command.",
+    "world_is": "An invocation can be unrunnable as written and still pass every gate, because the only check that reads it compares it to another copy of itself. A worker that meets a mis-escaped invocation has two options -- mirror the bad text so the comparison matches, or run the real command and record something that DIVERGES -- and the first is what the gate rewards. This worker did the first AND disclosed it, which is the only reason the defect surfaced; a quieter worker would have left a graded instance naming a command that never ran.",
+    "notes": "Fixed for this order by AMENDMENT 1a @dda9837043: the invocation is un-escaped, the worker re-records the field to the raw text and re-grades, and no verdict moves. DISARM, this seat's, is NOT the fix to one order -- it is either a checker limb that attempts to PARSE the recorded invocation (a shlex or a bash -n, which would have refused '&amp;&amp;' instantly) or an issuer discipline of writing every order through one writer. The second is free and this seat adopts it now; the first is a tool change and belongs to 1.0.0_SA_CTO~Z as the gate's owner, so it is stated here as a candidate and not built. SECOND ORDER DEFECT IN THIS ONE CELL by this seat, the other being Z-S10 (the order did not name what the persist may do TO a propagating exception). Both were found at GRADING time by reading the artifact, neither by a gate."
   }
 ]
 ```
