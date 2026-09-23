@@ -499,3 +499,15 @@ is absent from the 28291-node served graph; not an impact clearance. `comp-trace
 performance/entry.py rebuilt after drift but could not find that path in its
 2173-node trace corpus. Exact source review and CVO probe establish the boundary
 defects; graph absence does not negate them.
+
+
+## Live scope repair handoff - 2026-09-23 05:46Z
+
+- Shared backend: LOCAL8827b8730e, includes124c0694b7 on cd8d11825424e45fe82f1e78df0396904c0b9ae0. Browse response/route plus optional directory revision.
+- Shared Portal: LOCALcdc60da2, includes321331c1/504b775e on a538217980cdb5d15dc67cdcc98794baeb5e2517. API/parser, firm/fingerprint/revision binding, wire-level nonempty-row validation. No M header files edited.
+- Validation: 62 tests /259 assertions PASS across12files; latest new boundary suite7tests24assertions; full TypeScript, targeted ESLint, production Vite build PASS (9.83s). Logs in isolated Portal .runtime/live-scope-client-tests.log and live-scope-build.log. No live PASS asserted.
+- Initial read-only Terraform plan receipt475b471784; CTO30069a5254 accepted resource scope and authorized exact single-function artifact staging only AFTER composed regression/package proof. OLD-artifact plans must not be applied. No staging/apply performed yet.
+- CVO008107ab97 assertion files extracted byte-for-byte into isolated backend .runtime/bootstrap-replay. candidate_replay.py changes only driver pins/root/output destinations; assertion source is unchanged. Set IRPT_REPLAY_BACKEND_PIN and IRPT_REPLAY_PORTAL_PIN to exact composed pins before executing. Offline .runtime/prove_directory_package.py stages canonical manifest members and verifies pinned blob hashes, import closure and flat cold import; run after M pin/manifest integration.
+- Remaining external dependency: M owns actual bootstrap/browse producer and header/search/firm changes. Exact committed candidate requested; last received M message051709 was proposal/read-only evidence, not a repair pin. Shared pins sent053507/053904/054346; CTO dependency coordination requested054557. No inferred M liveness failure and no competing edits.
+- Next: merge exact M backend/Portal commits into isolated P branches using safe-merge; run unchanged CVO bootstrap and cursor/auth negative controls; repin exact directory manifest and cold-package proof; canonical single-function upload per30069a5254; refresh exact API/directory plans and return final plan hashes for CTO apply decision; canonical deployment and real guarded HTTP acceptance; Andrew visual smoke.
+- Live diagnostics04:50-05:44Z: two CloudWatch pages,19events, no continuation; six START/END/REPORT sets and no error marker. This does NOT establish success or the authenticated user response. Protected raw window in isolated backend .runtime/live-scope/directory-log-window-protected.json.
