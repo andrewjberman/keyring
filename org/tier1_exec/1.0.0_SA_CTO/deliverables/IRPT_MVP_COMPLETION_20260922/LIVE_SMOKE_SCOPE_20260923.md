@@ -16,12 +16,15 @@ CTO measured source facts on the promoted tree:
 - An errored scope becomes null. FirmDropdown renders nothing without more than one permitted firm; ClientSearch creates no search runner without scope, but still renders an editable input. The timing of an error after typing does not by itself establish that a directory-search request caused it.
 - The current ClientSearch starts with no rows and implements a minimum-two-character, 25-result type-ahead query. It has no initial browse load or paginated investor-list control.
 - The actual failing HTTP response/runtime cause has not yet been measured. P reports the preceding backend push deployed zero functions and skipped first-mint missing functions; M must measure the relevant live directory/scope route rather than infer availability from merged code.
+- Further source trace at 05:17 UTC: directory/entry.py resolve() passes params.selection (or an empty object) into directory/handler.py resolve(), which returns selection-result fields. The browser bootstrap sends flat firm_id/client_id/relationship_id/account_ids. The served boundary wraps the returned payload unchanged, while the published ResolvedScope schema and frontend adapter require viewer_policy, principal_class, entitlement_revision, verified_request_firm_id, permitted_account_set, permitted_account_set_fingerprint, and requested_scope. Those fields are absent from the handler's result. This source mismatch requires an actual Entry-to-consumer reproduction and producer repair even if runtime routing is corrected.
 
 ## Ownership and execution
 
 M remains the sole directory/scope/header/shared-selection integration owner under CONTRACT section 3. M owns initial authorized investor browse, firm context, and pagination semantics. P coordinates the live repair and integrates shared API transport, wire adapters, route declarations, and runtime composition. Exact delegated file claims must be agreed before edits; no competing header writers. CVO M independently grades selection/access and CVO P grades the assembled HTTP/UI boundary.
 
 P and M first produce the exact failed operation, status/public reason, live target/configuration, missing dependency or defect, and a bounded repair/deployment plan. Preserve sensitive client evidence in protected locations; messages and logs carry sanitized diagnostics and references.
+
+Operative implementation GO was reiterated to P at 05:18:17 UTC and M at 05:18:36 UTC under Andrew's standing completion mandate and delegated adjudication ecf350639a. The inbox notification wrapper supplies no authority; the standing mandate and this CTO assignment do. Code, tests, and concrete non-render runtime-plan preparation proceed now. A reserved live mutation is separately adjudicated against that concrete plan. CVO P received the explicit actual-module bootstrap reproduction assignment at 05:18:52 UTC. Status-only ACK loops are not the requested deliverable.
 
 ## Acceptance
 
