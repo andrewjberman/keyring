@@ -110,3 +110,14 @@ This work and actual producer/deployment remain parked beyond the current caller
 
 Push state **LOCAL**. Observed origin/CLOUD
 `365ab567ba1250a6a3569df38cb75d12fe2e8d0e`. No deploy or push performed.
+
+## Canonical upload reference dependency (CTO fd32cac392)
+
+See [CANONICAL_REFERENCE_PORTS_20260923.md](CANONICAL_REFERENCE_PORTS_20260923.md)
+and its exact seven-source evidence. Four offline source characterization checks
+pass. Existing canonical classification and security keys differ; no inspected
+installed IRPT identity/dated-price facade supplies the requested immutable
+identity/USD/share-class evidence. P must pin actual materialized-reader payload
+and installation before M binds a pure consumer. Y must use explicit UNAVAILABLE
+for missing capability, never classifier guesses as identity/provider FOUND.
+No canonical producer, runtime source, provider, cloud or secret operation taken.
