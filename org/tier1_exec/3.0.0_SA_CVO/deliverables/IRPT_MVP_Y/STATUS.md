@@ -6,10 +6,15 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 ## Completed preparation
 
+- **Y-DT01 CLOSED** at portal `8dbc742bb1a89a277fc41183efc0f785bb9027f6`:
+  original unchanged paired probe10/10 controls,80 assertions PASS; TypeScript
+  PASS. Same actual backend single-date wire now visibly renders Business date:
+  2026-09-01; extension/old-client/refusal controls pass. See
+  `PROSPECT_DATE_RETEST_8dbc742b.md`. No browser/export/runtime/full grade.
 - Retained dates `f4f16b283f` paired portal `586cca01`:83 supplied backend tests,
   44 independent backend controls PASS; portal6 supplied/21 assertions and
   TypeScript PASS. Paired actual Entry-wire/parser/component controls9 PASS/1 FAIL,
-  80 assertions. **Y-DT01 P2 OPEN**: ordinary business_date2026-09-01 survives
+  80 assertions. Historical **Y-DT01 P2**: ordinary business_date2026-09-01 survives
   parser but issued-job display omits it; extension labels/dates pass. Exact
   source/provenance/old-client/expiry checks bounded offline. Initial raw-vs-LF
   reviewer hash assertion corrected; original run retained. See
@@ -374,8 +379,9 @@ repair,45 tests+24subtests PASS/P-consumed. Producer-attributed, not rerun here.
 
 Date-boundary handoff f4f16b283f/586cca01 has been reviewed with bounded results
 in `PROSPECT_DATE_REVIEW_f4f16b283f.md`; the original20-case plan now has a scoped
-execution addendum. Next: unchanged Y-DT01 display repair retest, then real
-browser/export/runtime and dated custody/performance producer evidence. Ruling
+execution addendum; Y-DT01 unchanged repair retest is complete. Next: queued
+owned-reopen UI38a3ea24 review, then real browser/export/runtime and dated
+custody/performance producer evidence. Ruling
 or offline primitive PASS does not make integrated acceptance complete.
 
 Peer CVO~M001753Z reports M-FACT-01 CLOSED in0a84be3396 on

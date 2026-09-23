@@ -19,9 +19,10 @@ reference checks, advanced-clock reconstruction, expiry/revocation, READY
 receipt refusal and capability compatibility were exercised in the recorded
 offline boundaries. No blanket20/20 claim.
 
-The UI case is **Y-DT01 P2 OPEN**: single-date backend/parser preserves the real
-business date but the issued-job component omits it. Other extension displays
-pass using manual React hooks/static markup. Real browser, full persisted
+The UI case found Y-DT01 P2: single-date backend/parser preserved the real
+business date but the issued-job component omitted it. **CLOSED** at8dbc742b
+with unchanged10-control/80-assertion probe. Extension displays also pass using
+manual React hooks/static markup. Real browser, full persisted
 reopen/restart, actual dated custody/performance producer paths, export/rendered
 PDF, all incumbent obligations and installed service boundaries remain pending.
 No ready/report or integrated criterion lift follows from schema shape alone.

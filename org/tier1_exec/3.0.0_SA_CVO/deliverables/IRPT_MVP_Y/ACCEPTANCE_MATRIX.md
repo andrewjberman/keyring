@@ -403,6 +403,11 @@ criteria remain NOT_EVALUATED.
 
 ## Compiler Tools
 
+Y-DT01 CLOSED at8dbc742b: original paired probe unchanged10/10 controls,
+80 assertions PASS; TypeScript PASS. Ordinary date now visible without
+reclassification. See `PROSPECT_DATE_RETEST_8dbc742b.md`. Earlier finding below
+is historical; no browser/export/runtime/integrated grade follows.
+
 Retained date pair f4f16b283f/586cca01: backend83 supplied/44 independent PASS;
 portal6 supplied/21 assertions and TypeScript PASS; paired independent9 PASS/
 1 FAIL,80 assertions. **Y-DT01 P2 OPEN**, ordinary dated READY date omitted by
