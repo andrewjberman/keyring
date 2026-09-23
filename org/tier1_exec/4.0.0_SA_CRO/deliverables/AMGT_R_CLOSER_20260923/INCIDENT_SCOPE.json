@@ -1,0 +1,343 @@
+{
+  "observed_at": "2026-09-23T17:16:29.190453+00:00",
+  "full_drafting_prefix": [
+    {
+      "key": "drafting/v1/ASML_NA_Equity.json",
+      "bytes": 12941,
+      "last_modified": "2026-09-17T15:35:17+00:00"
+    },
+    {
+      "key": "drafting/v1/BABA_US_Equity.json",
+      "bytes": 116464,
+      "last_modified": "2026-09-17T02:15:51+00:00"
+    },
+    {
+      "key": "drafting/v1/BA_US_Equity.json",
+      "bytes": 106588,
+      "last_modified": "2026-09-17T22:29:31+00:00"
+    },
+    {
+      "key": "drafting/v1/COST_US_Equity.json",
+      "bytes": 91451,
+      "last_modified": "2026-09-17T02:17:45+00:00"
+    },
+    {
+      "key": "drafting/v1/HAL_US_Equity.json",
+      "bytes": 99837,
+      "last_modified": "2026-09-17T02:20:03+00:00"
+    },
+    {
+      "key": "drafting/v1/HD_US_Equity.json",
+      "bytes": 96542,
+      "last_modified": "2026-09-17T02:21:53+00:00"
+    },
+    {
+      "key": "drafting/v1/INTU_US_Equity.json",
+      "bytes": 94866,
+      "last_modified": "2026-09-17T02:23:43+00:00"
+    },
+    {
+      "key": "drafting/v1/KMB_US_Equity.json",
+      "bytes": 95162,
+      "last_modified": "2026-09-17T02:25:40+00:00"
+    },
+    {
+      "key": "drafting/v1/NU_US_Equity.json",
+      "bytes": 104694,
+      "last_modified": "2026-09-17T02:27:45+00:00"
+    },
+    {
+      "key": "drafting/v1/PBR_US_Equity.json",
+      "bytes": 101647,
+      "last_modified": "2026-09-17T02:29:53+00:00"
+    },
+    {
+      "key": "drafting/v1/SAP_GY_Equity.json",
+      "bytes": 88891,
+      "last_modified": "2026-09-17T02:32:06+00:00"
+    },
+    {
+      "key": "drafting/v1/VLO_US_Equity.json",
+      "bytes": 117931,
+      "last_modified": "2026-09-17T02:34:19+00:00"
+    }
+  ],
+  "distributions_scanned": 2,
+  "amgt_behaviors": [
+    {
+      "id": "EVTSA9VEHNZVH",
+      "domain": "d2n2nzpeqf34ge.cloudfront.net",
+      "aliases": [
+        "opalinvest.dev",
+        "www.opalinvest.dev"
+      ],
+      "enabled": true,
+      "status": "Deployed",
+      "behavior": {
+        "PathPattern": "/api/scoped/amgt/*",
+        "TargetOriginId": "APIGateway-portal",
+        "TrustedSigners": {
+          "Enabled": false,
+          "Quantity": 0
+        },
+        "TrustedKeyGroups": {
+          "Enabled": false,
+          "Quantity": 0
+        },
+        "ViewerProtocolPolicy": "redirect-to-https",
+        "AllowedMethods": {
+          "Quantity": 7,
+          "Items": [
+            "HEAD",
+            "DELETE",
+            "POST",
+            "GET",
+            "OPTIONS",
+            "PUT",
+            "PATCH"
+          ],
+          "CachedMethods": {
+            "Quantity": 2,
+            "Items": [
+              "HEAD",
+              "GET"
+            ]
+          }
+        },
+        "SmoothStreaming": false,
+        "Compress": true,
+        "LambdaFunctionAssociations": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "LambdaFunctionARN": "arn:aws:lambda:us-east-1:313476888478:function:auth-validator-edge:20",
+              "EventType": "viewer-request",
+              "IncludeBody": false
+            }
+          ]
+        },
+        "FunctionAssociations": {
+          "Quantity": 0
+        },
+        "FieldLevelEncryptionId": "",
+        "CachePolicyId": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
+        "OriginRequestPolicyId": "b689b0a8-53d0-40ab-baf2-68738e2966ac",
+        "GrpcConfig": {
+          "Enabled": false
+        }
+      },
+      "origin": {
+        "Id": "APIGateway-portal",
+        "DomainName": "7k3ed8px20.execute-api.us-east-1.amazonaws.com",
+        "OriginPath": "",
+        "CustomHeaders": {
+          "Quantity": 1,
+          "Items": [
+            {
+              "HeaderName": "X-Opal-Origin-Verify",
+              "HeaderValue": "[REDACTED: origin verification credential]"
+            }
+          ]
+        },
+        "CustomOriginConfig": {
+          "HTTPPort": 80,
+          "HTTPSPort": 443,
+          "OriginProtocolPolicy": "https-only",
+          "OriginSslProtocols": {
+            "Quantity": 1,
+            "Items": [
+              "TLSv1.2"
+            ]
+          },
+          "OriginReadTimeout": 30,
+          "OriginKeepaliveTimeout": 5
+        },
+        "ConnectionAttempts": 3,
+        "ConnectionTimeout": 10,
+        "OriginShield": {
+          "Enabled": false
+        },
+        "OriginAccessControlId": ""
+      }
+    }
+  ],
+  "apis": [
+    {
+      "api_id": "7k3ed8px20",
+      "name": "opal-portal-data-proxy-api",
+      "endpoint": "https://7k3ed8px20.execute-api.us-east-1.amazonaws.com",
+      "routes_total": 103,
+      "amgt_routes": [
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "cb228g7",
+          "RouteKey": "GET /api/scoped/amgt/security/{security_key}/compare",
+          "Target": "integrations/352l7td"
+        },
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "cwgw88g",
+          "RouteKey": "GET /api/scoped/amgt/lead-panel/timeseries/{movement}/{subject}",
+          "Target": "integrations/352l7td"
+        },
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "e9mbubj",
+          "RouteKey": "GET /api/scoped/amgt/security/{security_key}/versions",
+          "Target": "integrations/352l7td"
+        },
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "mbb32fo",
+          "RouteKey": "GET /api/scoped/amgt/security/{security_key}/print",
+          "Target": "integrations/352l7td"
+        },
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "mw1ycv5",
+          "RouteKey": "GET /api/scoped/amgt/security/{security_key}/peers",
+          "Target": "integrations/352l7td"
+        },
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "os8gfif",
+          "RouteKey": "GET /api/scoped/amgt/watchlist",
+          "Target": "integrations/352l7td"
+        },
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "rum8f3o",
+          "RouteKey": "GET /api/scoped/amgt/lists",
+          "Target": "integrations/352l7td"
+        },
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "s34zvq5",
+          "RouteKey": "GET /api/scoped/amgt/security/{security_key}/coverage",
+          "Target": "integrations/352l7td"
+        },
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "s94bai1",
+          "RouteKey": "GET /api/scoped/amgt/security/{security_key}/overlay",
+          "Target": "integrations/352l7td"
+        },
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "smrfyxa",
+          "RouteKey": "POST /api/scoped/amgt/watchlist/unstar",
+          "Target": "integrations/352l7td"
+        },
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "t9uv1af",
+          "RouteKey": "GET /api/scoped/amgt/lead-panel/rankings/{movement}/{subject}",
+          "Target": "integrations/352l7td"
+        },
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "w2ghf1j",
+          "RouteKey": "POST /api/scoped/amgt/refresh",
+          "Target": "integrations/352l7td"
+        },
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "wdxwhzj",
+          "RouteKey": "POST /api/scoped/amgt/watchlist/star",
+          "Target": "integrations/352l7td"
+        },
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "wu5ult4",
+          "RouteKey": "GET /api/scoped/amgt/freshness",
+          "Target": "integrations/352l7td"
+        },
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "xdhekhf",
+          "RouteKey": "GET /api/scoped/amgt/security/{security_key}/ledger",
+          "Target": "integrations/352l7td"
+        },
+        {
+          "ApiKeyRequired": false,
+          "AuthorizationType": "CUSTOM",
+          "AuthorizerId": "naqxlm",
+          "RouteId": "y9rq2z5",
+          "RouteKey": "GET /api/scoped/amgt/security/{security_key}/thesis",
+          "Target": "integrations/352l7td"
+        }
+      ],
+      "integrations": [
+        {
+          "IntegrationId": "352l7td",
+          "IntegrationUri": "arn:aws:lambda:us-east-1:313476888478:function:opal-amgt-scoped-api",
+          "IntegrationType": "AWS_PROXY",
+          "PayloadFormatVersion": "2.0"
+        }
+      ],
+      "authorizers": [
+        {
+          "AuthorizerId": "naqxlm",
+          "Name": "portal-jwt-authorizer",
+          "AuthorizerType": "REQUEST",
+          "AuthorizerUri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:313476888478:function:opal-portal-authorizer/invocations",
+          "IdentitySource": [
+            "$request.header.Authorization"
+          ]
+        }
+      ],
+      "stages": [
+        {
+          "ApiGatewayManaged": true,
+          "AutoDeploy": true,
+          "CreatedDate": "2025-12-23 23:00:34+00:00",
+          "DefaultRouteSettings": {
+            "DetailedMetricsEnabled": false
+          },
+          "DeploymentId": "lw7tjv",
+          "LastDeploymentStatusMessage": "Successfully deployed stage with deployment ID 'lw7tjv'",
+          "LastUpdatedDate": "2026-09-23 06:28:34+00:00",
+          "RouteSettings": {},
+          "StageName": "$default",
+          "StageVariables": {},
+          "Tags": {}
+        }
+      ]
+    }
+  ],
+  "lambda_environment_keys": [
+    "HARVEST_ARTICLES_TABLE",
+    "HARVEST_METRICS_TABLE"
+  ],
+  "lambda_reader_overrides": {}
+}

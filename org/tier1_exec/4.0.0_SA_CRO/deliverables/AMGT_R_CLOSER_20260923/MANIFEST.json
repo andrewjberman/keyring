@@ -25,6 +25,11 @@
     "bytes": 5118
   },
   {
+    "path": "H03_INTEGRATION_PACKET.md",
+    "sha256": "7c5a80dd961fd4da8e7ea09f794c02e6f79aca796a5fe7c90ded43e6442b9888",
+    "bytes": 4041
+  },
+  {
     "path": "HELD_AND_CONTRACT_REVIEW.md",
     "sha256": "7d64fa82d1c739ee403bdb5e4cc9b5e8d5633a585af5c90bc9845483907ccb63",
     "bytes": 4075
@@ -35,6 +40,11 @@
     "bytes": 64222
   },
   {
+    "path": "INCIDENT_SCOPE.json",
+    "sha256": "f0b6a2678b8e6c5b6ab11c95a085b98687eb9afae2abd2008179fe19386797dc",
+    "bytes": 10787
+  },
+  {
     "path": "INTERFACES.md",
     "sha256": "d0d572bf520a29917d96948301e7ff063278d6e783cc0bb89896ff0d98f3a628",
     "bytes": 5665
@@ -43,6 +53,21 @@
     "path": "measure_held.py",
     "sha256": "94c5fb5297dd479873ee33babef8ea21d13112d59ef1dbf68a0a6ae3b8998cce",
     "bytes": 6172
+  },
+  {
+    "path": "measure_served.py",
+    "sha256": "73d28bc5b149338ad030a0ea17aaa964f88ed025c84843ea2ef007a53e30c252",
+    "bytes": 5789
+  },
+  {
+    "path": "SERVED_CENSUS.json",
+    "sha256": "7163d605b1ad99571fe7754477d695e475818293f79148f1c0ae223f4243f383",
+    "bytes": 32975
+  },
+  {
+    "path": "SERVING_INCIDENT.md",
+    "sha256": "cb8fccd1c904f90fc579366fba6be5e87b987089eab35dcf88330d970a9c5896",
+    "bytes": 3548
   },
   {
     "path": "STATUS.md",

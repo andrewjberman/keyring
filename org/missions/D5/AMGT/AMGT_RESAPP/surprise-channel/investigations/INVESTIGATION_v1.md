@@ -13106,6 +13106,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The checker's invocation-alignment limb cannot represent that: it resolves one TO invocation per id (last-wins), so the SECOND submitted row for a repeated id is the only one that can structurally match, and the natural one-row-per-clause instance is INVALID (rc=1) through no fault of the evidence itself -- the defect is in how many DISTINCT TO invocations a single criterion_id can carry through this limb, which is exactly one. Worked around by merging the two clauses' proof into the single row the checker can align, with the first clause's own command and full output still quoted verbatim inside that row's output_evidence.",
     "disarm_owner": "the owner of .tools/proof-of-spec-check.py's invocation-alignment limb (_to_invocations, :1327) -- either (1) key the dict on (criterion_id, occurrence-index) and compare instance rows sharing an id by POSITION among same-id rows, or (2) refuse a TO at cut time that declares two <criterion> blocks sharing one id, forcing distinct ids (AC1a/AC1b) instead. Until one lands, any TO that legitimately needs two proof clauses under one id forces a worker to merge them into one row, same as this instance.",
     "notes": "Not BLOCKING: the merge is a legitimate, fully-evidenced workaround (both clauses' invocations and outputs are quoted verbatim in the merged row), and the resulting instance is genuinely VALID (rc=0) with all six criteria PASS-by-output -- this row exists so the NEXT worker who meets a TO with a repeated criterion id does not re-discover the same false 'INVALID' from a content-correct instance."
-  }
+  },
+{
+  "id": "AMGT_RESAPP-Z-S236",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-09-23T17:22Z",
+  "one_line": "Deployed AMGT thesis reader serves 179 no-span sentences among 389 aggregate sentences across the full current 12-document drafting population.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_R_CLOSER_20260923/SERVED_CENSUS.json: twelve actual deployed Lambda GET probes, twelve 200/SERVED, 179 no-span sentences; missing-firm control 401; package hash unchanged.",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_R_CLOSER_20260923/HELD_CENSUS.json: all twelve retained object byte hashes equal the historical ledger hashes.",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_R_CLOSER_20260923/INCIDENT_SCOPE.json: full paginated drafting/v1 prefix is exactly twelve objects; live portal route reaches the affected Lambda behind CUSTOM authorization.",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_R_CLOSER_20260923/SERVING_INCIDENT.md: cause, historical window, repair and acceptance limits."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C-VERBATIM-GATE holds drafted prose with no quoted spans; it must not be served.",
+  "world_is": "The deployed reader validates schema/evidence/source but omits no-span HOLD, allowing vacuous span checks. Actual engineering GET responses serve all 179 affected sentences across 12/12 current stored drafts, 2 to 26 per document.",
+  "disarm_owner": "R repair with CVO independent acceptance and authorized cutover under CTO+COO never-widen pair; independent deployed verification and adjudication.",
+  "notes": "No retained object rewrites. Actual human viewing and first external exposure remain unmeasured. Historical BA evidence establishes this behavior no later than Sep19. Offline figure discriminator releases zero legacy prose but does not repair the deployed reader. Candidate remains local; ARMED."
+}
 ]
 ```
