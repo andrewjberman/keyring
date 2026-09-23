@@ -1,0 +1,335 @@
+{
+  "backend": "cd8d11825424e45fe82f1e78df0396904c0b9ae0",
+  "portal": "a538217980cdb5d15dc67cdcc98794baeb5e2517",
+  "remote_dev_parent": "b3d5f59b4534eb653105f9bedc9e178384111c9f",
+  "snapshot": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-final-a538-xg9zno5z",
+  "runs": [
+    {
+      "label": "focused_gates_consumers",
+      "command": [
+        "bun",
+        "test",
+        "src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts",
+        "src/pages/InvestorReporting/__tests__/fe-s-88/render-claim-admission.test.ts",
+        "src/pages/InvestorReporting/__tests__/mvp-selection",
+        "src/pages/InvestorReporting/__tests__/mvp-upload",
+        "src/pages/InvestorReporting/__tests__/m-selection/selectionRequest.test.ts",
+        "src/pages/InvestorReporting/__tests__/submission-request.test.ts",
+        "src/pages/InvestorReporting/__tests__/fe-s-15/composer.test.ts"
+      ],
+      "exit_code": 0,
+      "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\nBODY KEYS: account_ids, client_id, comparison_keys, prepared_for, report_title, request_id, snapshot_id, variant\nADAPTER DENOMINATOR: account_ids, client_id, comparison_keys, prepared_for, report_title, request_id, snapshot_id, variant\nREQUEST KEYS: 8 of 8\nCLIENT: C-000123; ACCOUNTS: A-0001, A-0002\nSNAPSHOT: body smartx:sx-2026-09-09 | held smartx:sx-2026-09-09\nCOMPARISON KEYS: opal_lt -> opal_st\nTITLE: null (null = derive it server-side)\nFORWARD: opal_lt -> opal_st; REVERSED: opal_st -> opal_lt\nKEYS SCANNED FOR: resolved, viewer_policy, verified_request_firm_id, vendor_ids\nOBJECTS SCANNED: 2\nRESOLVED-KEY LEAKS: 0\nCONTROL HITS: resolved, viewer_policy\nMATERIALIZED: HEAD and 1f3ce9f0 ProtectedRoute.tsx + firmAccess.ts from committed blobs; re-pointed specifiers (each counted once):\n  from '../hooks/useAuth'  ->  from '../../../../../../../../hooks/useAuth'\n  from './LoadingSpinner'  ->  from '../../../../../../../../components/LoadingSpinner'\n  HEAD App.tsx:436 /investor-reporting <ProtectedRoute requireAdmin requireInternal requireDev> as opal-capital Dev admin: CHILDREN\n  HEAD App.tsx:593 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal requireDev allowRenderClaim> as opal-capital Dev admin: CHILDREN\nAN OPAL INTERNAL ADMIN REACHES BOTH ROUTES: 2 of 2\nFIRMS WHOSE ALLOWLIST LISTED /investor-reporting AT DEV 1f3ce9f0 (firmAccess.ts blob): 3 -- 49financial, inflection, cottonwood\n  HEAD App.tsx:436 /investor-reporting <ProtectedRoute requireAdmin requireInternal requireDev> as 49financial admin: REDIRECT -> /market\n  HEAD App.tsx:593 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal requireDev allowRenderClaim> as 49financial admin: REDIRECT -> /market\n  HEAD App.tsx:436 /investor-reporting <ProtectedRoute requireAdmin requireInternal requireDev> as inflection admin: REDIRECT -> /market\n  HEAD App.tsx:593 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal requireDev allowRenderClaim> as inflection admin: REDIRECT -> /market\n  HEAD App.tsx:436 /investor-reporting <ProtectedRoute requireAdmin requireInternal requireDev> as cottonwood admin: REDIRECT -> /market\n  HEAD App.tsx:593 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal requireDev allowRenderClaim> as cottonwood admin: REDIRECT -> /market\nA PARTNER-FIRM ADMIN IS REFUSED ON BOTH ROUTES: 6 of 6\n  HEAD App.tsx:436 /investor-reporting <ProtectedRoute requireAdmin requireInternal requireDev> as opal-capital user (role user): REDIRECT -> /market\n  HEAD App.tsx:593 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal requireDev allowRenderClaim> as opal-capital user (role user): REDIRECT -> /market\n  HEAD App.tsx:436 /investor-reporting <ProtectedRoute requireAdmin requireInternal requireDev> as 49financial user (role user): REDIRECT -> /market\n  HEAD App.tsx:593 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal requireDev allowRenderClaim> as 49financial user (role user): REDIRECT -> /market\n  HEAD App.tsx:436 /investor-reporting <ProtectedRoute requireAdmin requireInternal requireDev> as inflection user (role user): REDIRECT -> /market\n  HEAD App.tsx:593 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal requireDev allowRenderClaim> as inflection user (role user): REDIRECT -> /market\n  HEAD App.tsx:436 /investor-reporting <ProtectedRoute requireAdmin requireInternal requireDev> as cottonwood user (role user): REDIRECT -> /market\n  HEAD App.tsx:593 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal requireDev allowRenderClaim> as cottonwood user (role user): REDIRECT -> /market\n  HEAD App.tsx:436 /investor-reporting <ProtectedRoute requireAdmin requireInternal requireDev> as opal-capital admin (userType not Dev): REDIRECT -> /market\n  HEAD App.tsx:593 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal requireDev allowRenderClaim> as opal-capital admin (userType not Dev): REDIRECT -> /market\nA NON-ADMIN IS REFUSED ON BOTH ROUTES: 10 of 10 (5 identities x 2 routes)\nLIFTED FROM HEAD App.tsx:318 (the nav filter, evaluated unchanged):\nitem => {\n                // Firm-level page-access matrix (opal-capital sees all,\n                // partner firms see only paths in their FIRM_ALLOWED_PATHS).\n                if (!isPathAllowedForFirm(claims?.firmId, item.path)) {\n                  return false\n                }\n                // Check dev requirement\n                if (item.requiresDev && claims?.userType !== 'Dev') {\n                  return false\n                }\n                // Check admin requirement\n                if (item.requiresAdmin && user?.role !== 'admin') {\n                  return false\n                }\n                // Check tier requirement\n                if (item.requiresTier && !hasAccess(item.requiresTier)) {\n                  return false\n                }\n                return true\n              }\nLIFTED FROM HEAD AuthContext.tsx:802 (hasAccess, evaluated unchanged):\n(requiredTier: string) => {\n    if (!state.claims) return false\n    if (requiredTier === 'internal') return state.claims.firmId === 'opal-capital'\n    return true\n  }\n  HEAD nav item in section 'insights' (section requiresDev=false): {\"path\":\"/investor-reporting\",\"label\":\"Investor Reporting\",\"icon\":\"icon:FileText\",\"requiresAdmin\":true,\"requiresTier\":\"internal\",\"requiresDev\":true}\n  NAV (HEAD) for opal-capital Dev admin: SHOWN (1 investor-reporting nav item(s))\n  NAV (HEAD) for opal-capital admin (userType not Dev): HIDDEN (1 investor-reporting nav item(s))\n  NAV (HEAD) for 49financial admin: HIDDEN (1 investor-reporting nav item(s))\n  NAV (HEAD) for inflection admin: HIDDEN (1 investor-reporting nav item(s))\n  NAV (HEAD) for cottonwood admin: HIDDEN (1 investor-reporting nav item(s))\n  NAV (HEAD) for opal-capital user (role user): HIDDEN (1 investor-reporting nav item(s))\n  NAV (HEAD) for 49financial user (role user): HIDDEN (1 investor-reporting nav item(s))\n  NAV (HEAD) for inflection user (role user): HIDDEN (1 investor-reporting nav item(s))\n  NAV (HEAD) for cottonwood user (role user): HIDDEN (1 investor-reporting nav item(s))\n  CONTROL (DEV 1f3ce9f0 nav item + allowlist, same lifted filter): shown to 3 of 3 partner users (49financial, inflection, cottonwood)\nTHE NAV SHOWS INVESTOR REPORTING ONLY TO THE OPAL INTERNAL ADMIN: yes (shown to 1 of 9 identities)\n  1f3ce9f0 App.tsx:421 /investor-reporting <ProtectedRoute> as 49financial user: CHILDREN\n  1f3ce9f0 App.tsx:573 /investor-reporting/print <ProtectedRoute> as 49financial user: REDIRECT -> /market\n  1f3ce9f0 App.tsx:421 /investor-reporting <ProtectedRoute> as 49financial admin: CHILDREN\n  1f3ce9f0 App.tsx:573 /investor-reporting/print <ProtectedRoute> as 49financial admin: REDIRECT -> /market\n  1f3ce9f0 App.tsx:421 /investor-reporting <ProtectedRoute> as inflection user: CHILDREN\n  1f3ce9f0 App.tsx:573 /investor-reporting/print <ProtectedRoute> as inflection user: REDIRECT -> /market\n  1f3ce9f0 App.tsx:421 /investor-reporting <ProtectedRoute> as inflection admin: CHILDREN\n  1f3ce9f0 App.tsx:573 /investor-reporting/print <ProtectedRoute> as inflection admin: REDIRECT -> /market\n  1f3ce9f0 App.tsx:421 /investor-reporting <ProtectedRoute> as cottonwood user: CHILDREN\n  1f3ce9f0 App.tsx:573 /investor-reporting/print <ProtectedRoute> as cottonwood user: REDIRECT -> /market\n  1f3ce9f0 App.tsx:421 /investor-reporting <ProtectedRoute> as cottonwood admin: CHILDREN\n  1f3ce9f0 App.tsx:573 /investor-reporting/print <ProtectedRoute> as cottonwood admin: REDIRECT -> /market\nBEFORE (DEV 1f3ce9f0): A PARTNER-FIRM USER REACHED THE PAGE: yes (6 of 12 renders: 49financial user @ /investor-reporting; 49financial admin @ /investor-reporting; inflection user @ /investor-reporting; inflection admin @ /investor-reporting; cottonwood user @ /investor-reporting; cottonwood admin @ /investor-reporting)\nHEAD App.tsx: 28 <Route> elements, 17 nav entries; minus those not under /investor-reporting: 2 route(s) + 1 nav entr(ies)\n  ROUTE App.tsx:436 /investor-reporting <ProtectedRoute requireAdmin requireInternal requireDev>: CARRIES requireAdmin + requireInternal + requireDev\n  ROUTE App.tsx:593 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal requireDev allowRenderClaim>: CARRIES requireAdmin + requireInternal + requireDev\n  NAV /investor-reporting requiresAdmin=true requiresTier=internal requiresDev=true: CARRIES the predicate\n  ENCLOSING ROUTE App.tsx:595 /* <ProtectedRoute> (wraps DashboardLayout, where /investor-reporting lives)\nOTHER ENTRY POINTS: 39 committed src/ line(s) quote the path; 37 are App.tsx or tests; 2 other, each classified:\n  src/components/ProtectedRoute.tsx:14: * items 1-6). Opt-in per route -- today set ONLY on `/investor-reporting/print` (App.tsx:576).\n    -> COMMENT -- not an entry point\n  src/pages/InvestorReporting/render/PrintEntry.tsx:2: * FE-s-4 -- THE PRINT ENTRY POINT: route `/investor-reporting/print`.\n    -> COMMENT -- not an entry point\n  LINKS/NAVIGATIONS INTO THE PAGE OUTSIDE App.tsx: 0 (each lands on a route element enumerated above)\nEVERY INVESTOR REPORTING ROUTE AND NAV ENTRY CARRIES THE OPAL-ADMIN PREDICATE: 3 of 3\nc29a8b86 src/App.tsx: 5 hunks; 3 gate hunk(s) (a + line names /investor-reporting), 2 unrelated\n  GATE HUNK 1: found at HEAD App.tsx:103; its removed line(s) absent from HEAD: yes\n    c29a8b86+Dev +|      // Opal Admins only (Andrew-direct 2026-09-15 ~04:4xZ): an admin role AND the internal tier (opal-capital). The\n    HEAD:103    |      // Opal Admins only (Andrew-direct 2026-09-15 ~04:4xZ): an admin role AND the internal tier (opal-capital). The\n    c29a8b86+Dev +|      // route below carries the same two requirements, so the page is gated where it lives, not only in this list.\n    HEAD:104    |      // route below carries the same two requirements, so the page is gated where it lives, not only in this list.\n    c29a8b86+Dev +|      { path: '/investor-reporting', label: 'Investor Reporting', icon: FileText, requiresAdmin: true, requiresTier: 'internal', requiresDev: true },\n    HEAD:105    |      { path: '/investor-reporting', label: 'Investor Reporting', icon: FileText, requiresAdmin: true, requiresTier: 'internal', requiresDev: true },\n  GATE HUNK 2: found at HEAD App.tsx:436; its removed line(s) absent from HEAD: yes\n    c29a8b86+Dev +|              <Route path=\"/investor-reporting\" element={<ProtectedRoute requireAdmin requireInternal requireDev><InvestorReporting /></ProtectedRoute>} />\n    HEAD:436    |              <Route path=\"/investor-reporting\" element={<ProtectedRoute requireAdmin requireInternal requireDev><InvestorReporting /></ProtectedRoute>} />\n  GATE HUNK 3: SANCTIONED REWRITE for /investor-reporting/print (PRD v0.10 F9) -- byte-identical: NO; exact prop-set match (AST, old props + [allowRenderClaim]): yes\n    c29a8b86 +|        <Route path=\"/investor-reporting/print\" element={<ProtectedRoute requireAdmin requireInternal><InvestorReportingPrint /></ProtectedRoute>} />\n    HEAD    |expected {requireAdmin=true, requireInternal=true, requireDev=true, allowRenderClaim=true} vs HEAD App.tsx:593 {requireAdmin=true, requireInternal=true, requireDev=true, allowRenderClaim=true} -- prop count matches: yes; every expected value matches exactly: yes\n  UNRELATED HUNKS CARRIED INTO HEAD: 2 of 2 (expected 0: they are not this order's)\n    not ours: +|  ArrowLeftRight,\n    not ours: +|      // Its own mark (Andrew-direct ~04:4xZ): the paper icon belongs to Investor Reporting. /       { path: '/trade-submission', label: 'Trade Submission', icon: ArrowLeftRight },\nAFTER DECLARED Dev-LIMB TRANSFORMATION OF c29a8b86: 2 byte-identical, 1 sanctioned-additive (of 3 gate hunks)\nc29a8b86 IS an ancestor of HEAD; expecting 2 unrelated hunk(s)\n  49financial: DEV 1f3ce9f0 LISTS /investor-reporting; HEAD does not list it\n  inflection: DEV 1f3ce9f0 LISTS /investor-reporting; HEAD does not list it\n  cottonwood: DEV 1f3ce9f0 LISTS /investor-reporting; HEAD does not list it\n  HEAD, every firm in FIRM_ALLOWED_PATHS: 0 of 4 list /investor-reporting (49financial, inflection, cottonwood, demo)\nPARTNER ALLOWLIST ENTRIES GRANTING /investor-reporting: 0 of 3 REMAIN\nENDPOINTS (committed src/api/endpoints/investor-reporting.ts IR_ROUTE_TABLE, the LiveClient's only table): 16\nSHARED BOUNDARY (every entry below runs it):\n  infra/aws/lambda/investor-reporting/_authz/served.py:765 -- the ONLY principal refusal before the guard is an absent verified firm (NOT_AUTHORIZED): found; lines naming x-user-role / 'admin' / opal-capital: 0\n  infra/aws/lambda/investor-reporting/_authz/enforce.py:351 -- resolve_now refuses principal_class UNKNOWN (NO_PRINCIPAL): found\n  infra/aws/lambda/investor-reporting/_scope/resolve.py:286 -- a role=admin caller with ANY verified firm is FIRM_OPERATIONS: found; the condition names opal: no\n  infra/aws/lambda/investor-reporting/_scope/resolve.py:293 -- an advisorId caller (not admin) is FIRM_ADVISOR: found\n  infra/aws/lambda/investor-reporting/_scope/resolve.py:445 -- FIRM_OPERATIONS is served its verified firm's population: found\n  EDGE infra/aws/lambda-edge/auth-validator-edge/index.mjs: 2 line(s) name investor-reporting (no path rule of its own when 0)\n  EDGE infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs: 0 line(s) name investor-reporting (no path rule of its own when 0)\n  EDGE infra/aws/users/lambda/portal-authorizer/index.mjs: 3 line(s) name investor-reporting (no path rule of its own when 0)\n  GET /api/scoped/investor-reporting/analysis/requests [analysis-request-history, investor-reporting.ts:194] -> docs/contracts/investor-reporting/v1/routes.json:165 handler (none) -> admin-only: UNKNOWN -- files searched: docs/contracts/investor-reporting/v1/routes.json, infra/aws/lambda/investor-reporting/_authz/served.py, infra/aws/lambda/investor-reporting/_authz/enforce.py, infra/aws/lambda/investor-reporting/_scope/resolve.py, infra/aws/lambda-edge/auth-validator-edge/index.mjs, infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs, infra/aws/users/lambda/portal-authorizer/index.mjs, infra/aws/lambda/investor-reporting/**/entry.py\n  GET /api/scoped/investor-reporting/analysis/requests/{requestId} [analysis-request-read, investor-reporting.ts:195] -> docs/contracts/investor-reporting/v1/routes.json:175 handler (none) -> admin-only: UNKNOWN -- files searched: docs/contracts/investor-reporting/v1/routes.json, infra/aws/lambda/investor-reporting/_authz/served.py, infra/aws/lambda/investor-reporting/_authz/enforce.py, infra/aws/lambda/investor-reporting/_scope/resolve.py, infra/aws/lambda-edge/auth-validator-edge/index.mjs, infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs, infra/aws/users/lambda/portal-authorizer/index.mjs, infra/aws/lambda/investor-reporting/**/entry.py\n  POST /api/scoped/investor-reporting/analysis/inputs [analysis-input-upload, investor-reporting.ts:196] -> docs/contracts/investor-reporting/v1/routes.json:154 handler (none) -> admin-only: UNKNOWN -- files searched: docs/contracts/investor-reporting/v1/routes.json, infra/aws/lambda/investor-reporting/_authz/served.py, infra/aws/lambda/investor-reporting/_authz/enforce.py, infra/aws/lambda/investor-reporting/_scope/resolve.py, infra/aws/lambda-edge/auth-validator-edge/index.mjs, infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs, infra/aws/users/lambda/portal-authorizer/index.mjs, infra/aws/lambda/investor-reporting/**/entry.py\n  POST /api/scoped/investor-reporting/selections [selection-create, investor-reporting.ts:197] -> docs/contracts/investor-reporting/v1/routes.json:19 handler irpt-directory-search -> admin-only: no -- infra/aws/lambda/investor-reporting/directory/entry.py:218 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:765 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351\n  GET /api/scoped/investor-reporting/directory/search [directory-search, investor-reporting.ts:198] -> docs/contracts/investor-reporting/v1/routes.json:30 handler irpt-directory-search -> admin-only: no -- infra/aws/lambda/investor-reporting/directory/entry.py:218 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:765 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351\n  POST /api/scoped/investor-reporting/directory/resolve [resolve-scope, investor-reporting.ts:199] -> docs/contracts/investor-reporting/v1/routes.json:40 handler irpt-directory-search -> admin-only: no -- infra/aws/lambda/investor-reporting/directory/entry.py:218 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:765 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351\n  GET /api/scoped/investor-reporting/performance/{accountSetId} [performance-report, investor-reporting.ts:200] -> docs/contracts/investor-reporting/v1/routes.json:50 handler irpt-performance-adapter -> admin-only: no -- infra/aws/lambda/investor-reporting/performance/entry.py:148 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:765 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351\n  POST /api/scoped/investor-reporting/analysis [analysis-requests, investor-reporting.ts:201] -> docs/contracts/investor-reporting/v1/routes.json:60 handler irpt-ycharts-generate -> admin-only: no -- infra/aws/lambda/investor-reporting/ycharts/generate/entry.py:159 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:765 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351\n  GET /api/scoped/investor-reporting/analysis/{jobId}/sections [analysis-report, investor-reporting.ts:202] -> docs/contracts/investor-reporting/v1/routes.json:70 handler irpt-status -> admin-only: UNKNOWN -- files searched: docs/contracts/investor-reporting/v1/routes.json, infra/aws/lambda/investor-reporting/_authz/served.py, infra/aws/lambda/investor-reporting/_authz/enforce.py, infra/aws/lambda/investor-reporting/_scope/resolve.py, infra/aws/lambda-edge/auth-validator-edge/index.mjs, infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs, infra/aws/users/lambda/portal-authorizer/index.mjs, infra/aws/lambda/investor-reporting/**/entry.py\n  GET /api/scoped/investor-reporting/narrative/{reportId} [narrative-packet, investor-reporting.ts:203] -> docs/contracts/investor-reporting/v1/routes.json:80 handler irpt-narrative -> admin-only: no -- infra/aws/lambda/investor-reporting/narrative/entry.py:122 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:765 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351\n  GET /api/scoped/investor-reporting/status [status-summary, investor-reporting.ts:204] -> docs/contracts/investor-reporting/v1/routes.json:90 handler irpt-status -> admin-only: UNKNOWN -- files searched: docs/contracts/investor-reporting/v1/routes.json, infra/aws/lambda/investor-reporting/_authz/served.py, infra/aws/lambda/investor-reporting/_authz/enforce.py, infra/aws/lambda/investor-reporting/_scope/resolve.py, infra/aws/lambda-edge/auth-validator-edge/index.mjs, infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs, infra/aws/users/lambda/portal-authorizer/index.mjs, infra/aws/lambda/investor-reporting/**/entry.py\n  GET /api/scoped/investor-reporting/status/{jobId} [status-job, investor-reporting.ts:205] -> docs/contracts/investor-reporting/v1/routes.json:101 handler irpt-status -> admin-only: UNKNOWN -- files searched: docs/contracts/investor-reporting/v1/routes.json, infra/aws/lambda/investor-reporting/_authz/served.py, infra/aws/lambda/investor-reporting/_authz/enforce.py, infra/aws/lambda/investor-reporting/_scope/resolve.py, infra/aws/lambda-edge/auth-validator-edge/index.mjs, infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs, infra/aws/users/lambda/portal-authorizer/index.mjs, infra/aws/lambda/investor-reporting/**/entry.py\n  POST /api/scoped/investor-reporting/export [submit-export, investor-reporting.ts:206] -> docs/contracts/investor-reporting/v1/routes.json:112 handler irpt-export-render -> admin-only: no -- infra/aws/lambda/investor-reporting/export/entry.py:222 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:765 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351\n  GET /api/scoped/investor-reporting/export/{exportId} [export-receipt, investor-reporting.ts:207] -> docs/contracts/investor-reporting/v1/routes.json:122 handler irpt-export-render -> admin-only: no -- infra/aws/lambda/investor-reporting/export/entry.py:222 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:765 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351\n  GET /api/scoped/investor-reporting/export/{exportId}/download [export-download, investor-reporting.ts:208] -> docs/contracts/investor-reporting/v1/routes.json:132 handler irpt-export-render -> admin-only: no -- infra/aws/lambda/investor-reporting/export/entry.py:222 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:765 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351\n  GET /api/scoped/investor-reporting/holdings/{accountSetId} [holdings-snapshot, investor-reporting.ts:209] -> docs/contracts/investor-reporting/v1/routes.json:143 handler irpt-holdings -> admin-only: no -- infra/aws/lambda/investor-reporting/holdings/entry.py:88 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:765 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351\nADMIN-ONLY ANSWERS: yes 0, no 10, UNKNOWN 6 of 16\nEVERY ENDPOINT INVESTOR REPORTING CALLS HAS A PRINTED ADMIN-ONLY ANSWER: 16 of 16\nHEAD src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts:709 \"F49-AC10 -- every endpoint Investor Reporting calls has a printed admin-only answer (READ-ONLY census)\" third argument: 20109\nHEAD src/pages/InvestorReporting/__tests__/fe-s-49/recorded-costs.json: 6 recorded cost(s), 6 usable\n  6703 ms -- the issuer, 2.0.0_SA_COO~F: admin-gate.test.ts alone on an untouched pair (workspace d0a5ad368d, portal 640379b8); timed out at bun's default 5000 ms [row IRPT_FNTEND-S67, org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@ca53c9d094]\n  5938 ms -- the issuer, 2.0.0_SA_COO~F: inside the whole InvestorReporting suite on the same pair (567 pass / 18 skip / 2 fail of 587); timed out at bun's default 5000 ms [row IRPT_FNTEND-S67, org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@ca53c9d094]\n  4907 ms -- 0.9.0_WK_IRPT_FNTEND~2: admin-gate.test.ts alone, run 1 of 3, junit reporter, portal 58033070 plus this amendment's uncommitted edits, provisional timeout 60000 [worker junit report <WS>/.scratch/cost_alone_1.xml, testcase time 4.907]\n  5187 ms -- 0.9.0_WK_IRPT_FNTEND~2: admin-gate.test.ts alone, run 2 of 3, same checkout [worker junit report <WS>/.scratch/cost_alone_2.xml, testcase time 5.187]\n  6343 ms -- 0.9.0_WK_IRPT_FNTEND~2: admin-gate.test.ts alone, run 3 of 3, same checkout [worker junit report <WS>/.scratch/cost_alone_3.xml, testcase time 6.343]\n  6188 ms -- 0.9.0_WK_IRPT_FNTEND~2: inside the whole InvestorReporting suite (608 tests across 106 files, one bun test process), same checkout [worker junit report <WS>/.scratch/cost_suite_1.xml, testcase time 6.188]\n  the issuer's two costs from row S67 (6703, 5938) in the record: 2 of 2\n  TIMEOUT 20109 ms / HIGHEST RECORDED COST 6703 ms = 3.0000 (rule: 3 x, at most 60000 ms)\nTHE CENSUS TEST'S TIMEOUT IS 3 TIMES ITS HIGHEST RECORDED COST: yes\nWITH render-claim token, unauthenticated, print route props: CHILDREN\nWITHOUT any token, unauthenticated, print route props: REDIRECT -> /login\n/market: WITH render-claim token: REDIRECT -> /login; WITHOUT any token: REDIRECT -> /login\n/investor-reporting: WITH render-claim token: REDIRECT -> /login; WITHOUT any token: REDIRECT -> /login\n/investor-reporting with requireAdmin+requireInternal (no allowRenderClaim) + render-claim token: REDIRECT -> /login\ninternal admin on print route (allowRenderClaim set, no renderToken): CHILDREN\npartner advisor on print route (allowRenderClaim set, no renderToken): REDIRECT -> /market\nBEFORE (no allowRenderClaim) internal admin: CHILDREN; advisor: REDIRECT -> /market\ngarbage-shaped token on print route: REDIRECT -> /login\nmalformed (non-JWT-shaped) token on print route: REDIRECT -> /login\ncorrect aud, wrong role (admin) token on print route: REDIRECT -> /login\nwrong aud, correct role token on print route: REDIRECT -> /login\nApp.tsx <Route> element lines: 19; carrying allowRenderClaim: 1\n  App.tsx:593 <Route path=\"/investor-reporting/print\" element={<ProtectedRoute requireAdmin requireInternal requireDev allowRenderClaim><InvestorReportingPrint /></ProtectedRoute>} />\n",
+      "stderr": "\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\submission-request.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m exact recipient survives closed prospect and custody parsing without rewrite\u001b[0m \u001b[0m\u001b[2m[\u001b[1m16.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid text and malformed Unicode refuse, code points count accurately\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m old missing label, source injection, wrong input basis and comparison mismatch refuse\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual client refuses before transport and sends exact valid recipient\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m shared adapter preserves explicit recipient and typed descriptor maps survive generation\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\fe-s-15\\composer.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mthe Generate composer builds the request half\u001b[2m >\u001b[0m\u001b[1m the body carries exactly eight keys including recipient, held snapshot and selected order\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mthe Generate composer builds the request half\u001b[2m >\u001b[0m\u001b[1m ORDER IS THE CONTRACT: a different selection order is a different body\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mthe Generate composer builds the request half\u001b[2m >\u001b[0m\u001b[1m no server-only key reaches the wire from this browser\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mthe Generate composer builds the request half\u001b[2m >\u001b[0m\u001b[1m POSITIVE CONTROL: the scanner FINDS a server-only key when one is there\u001b[0m \u001b[0m\u001b[2m[\u001b[1m16.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\fe-s-49\\admin-gate.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mFE-s-49 -- Investor Reporting is Opal-admin only\u001b[2m >\u001b[0m\u001b[1m F49-AC2 -- an Opal internal admin reaches both routes\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mFE-s-49 -- Investor Reporting is Opal-admin only\u001b[2m >\u001b[0m\u001b[1m F49-AC3 -- a partner-firm admin is refused on both routes\u001b[0m \u001b[0m\u001b[2m[\u001b[1m15.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mFE-s-49 -- Investor Reporting is Opal-admin only\u001b[2m >\u001b[0m\u001b[1m F49-AC4 -- a non-admin is refused on both routes\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mFE-s-49 -- Investor Reporting is Opal-admin only\u001b[2m >\u001b[0m\u001b[1m F49-AC5 -- the nav shows Investor Reporting only to the Opal internal admin\u001b[0m \u001b[0m\u001b[2m[\u001b[1m344.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mFE-s-49 -- Investor Reporting is Opal-admin only\u001b[2m >\u001b[0m\u001b[1m F49-AC6 -- BEFORE (DEV 1f3ce9f0) a partner-firm user reached the page\u001b[0m \u001b[0m\u001b[2m[\u001b[1m16.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mFE-s-49 -- Investor Reporting is Opal-admin only\u001b[2m >\u001b[0m\u001b[1m F49-AC7 -- every Investor Reporting route and nav entry carries the Opal-admin predicate\u001b[0m \u001b[0m\u001b[2m[\u001b[1m93.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mFE-s-49 -- Investor Reporting is Opal-admin only\u001b[2m >\u001b[0m\u001b[1m F49-AC8 -- the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86\u001b[0m \u001b[0m\u001b[2m[\u001b[1m110.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mFE-s-49 -- Investor Reporting is Opal-admin only\u001b[2m >\u001b[0m\u001b[1m F49-AC9 -- partner allowlist entries granting /investor-reporting, before and after\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mFE-s-49 -- Investor Reporting is Opal-admin only\u001b[2m >\u001b[0m\u001b[1m F49-AC10 -- every endpoint Investor Reporting calls has a printed admin-only answer (READ-ONLY census)\u001b[0m \u001b[0m\u001b[2m[\u001b[1m3109.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mFE-s-49 -- Investor Reporting is Opal-admin only\u001b[2m >\u001b[0m\u001b[1m F49-AC13 -- the census test's timeout is 3 times its highest recorded cost\u001b[0m \u001b[0m\u001b[2m[\u001b[1m156.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\fe-s-88\\render-claim-admission.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mFE-s-88 -- the print route admits the counterpart's render-delegate token, on that route ONLY\u001b[2m >\u001b[0m\u001b[1m F88-AC2 -- ARM (a): a render-claim token reaches the print route rendered content (not a redirect)\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mFE-s-88 -- the print route admits the counterpart's render-delegate token, on that route ONLY\u001b[2m >\u001b[0m\u001b[1m F88-AC3 -- ARM (b), the no-widening control: the SAME render-claim token on a non-print protected route changes NOTHING\u001b[0m \u001b[0m\u001b[2m[\u001b[1m15.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mFE-s-88 -- the print route admits the counterpart's render-delegate token, on that route ONLY\u001b[2m >\u001b[0m\u001b[1m F88-AC4 -- ARM (c): a human internal token and a human advisor token behave on the print route EXACTLY as before\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mFE-s-88 -- the print route admits the counterpart's render-delegate token, on that route ONLY\u001b[2m >\u001b[0m\u001b[1m F88-AC5 -- GARBAGE CONTROL: a token carrying neither shape is not admitted anywhere new; the branch fails closed, never open\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mFE-s-88 -- the print route admits the counterpart's render-delegate token, on that route ONLY\u001b[2m >\u001b[0m\u001b[1m WIRING CONTROL -- allowRenderClaim is set on the print route ONLY, in App.tsx\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\m-selection\\selectionRequest.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mselection request preserves user intent\u001b[2m >\u001b[0m\u001b[1m partly authorized client submits whole client identity, never permitted-account intersection\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mselection request preserves user intent\u001b[2m >\u001b[0m\u001b[1m relationship identity is preserved even when no member is currently visible\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mselection request preserves user intent\u001b[2m >\u001b[0m\u001b[1m explicit account narrowing supersedes the group identity\u001b[0m \u001b[0m\u001b[2m[\u001b[1m16.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mselection request preserves user intent\u001b[2m >\u001b[0m\u001b[1m a firm row cannot silently expand to every account\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\coverage.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m full document and response slice keep undated rows and census-only coverage visible\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m legacy reports gain neither synthetic coverage nor invented dates\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\owned-history.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mowned request history paired to Y e93300e34b\u001b[2m >\u001b[0m\u001b[1m preserves accepted identity, original time and bounded continuation\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mowned request history paired to Y e93300e34b\u001b[2m >\u001b[0m\u001b[1m refuses private projection members, duplicate rows and unbounded queries\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mowned request history paired to Y e93300e34b\u001b[2m >\u001b[0m\u001b[1m malformed response becomes typed refusal without carrying private values\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mowned request history paired to Y e93300e34b\u001b[2m >\u001b[0m\u001b[1m pending live history/read routes make no transport call\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mowned request history paired to Y e93300e34b\u001b[2m >\u001b[0m\u001b[1m explicit fixture readers require exact issued request binding\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mowned request history paired to Y e93300e34b\u001b[2m >\u001b[0m\u001b[1m document generator imports sibling contract references\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mowned request history paired to Y e93300e34b\u001b[2m >\u001b[0m\u001b[1m owned sections use issued request only and reject another report identity\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\owned-outer.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m >\u001b[0m\u001b[1m history positive and refusal wires parse without synthesizing a grant or data\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m >\u001b[0m\u001b[1m read positive and refusal wires parse without synthesizing a grant or data\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m >\u001b[0m\u001b[1m sections positive and refusal wires parse without synthesizing a grant or data\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m >\u001b[0m\u001b[1m status positive and refusal wires parse without synthesizing a grant or data\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m >\u001b[0m\u001b[1m grant map carries labels and total counts; missing or invalid counters refuse\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\prospect-dates.test.tsx:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m actual retained Entry outputs survive closed parser and renderer without date loss\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m preserves mixed stable dates through parser and shared screen/print component\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m undated input uses explicit label without reading a clock\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m only status-job advertises capability; old clients never gain it implicitly\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m rejects input/request substitution and arbitrary operation opt-in\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m refuses invalid/duplicate/missing dates and false single-date per-section label\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m dated statuses keep existing business-date reading\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\public-status.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual ordinary status refuses closed-schema mutations before adapting actions\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m all actual public refusals exclude correlation and reject reintroduction\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\selection.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m POST preserves the requested group/subset and returns distinct server identity\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m actual partial-group refusal stays a public refusal with no data\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m rejects malformed selected identity instead of deriving it from the fingerprint\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m custody requests use the retained ID and never substitute the fingerprint\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m fixture mode refuses to invent durable selection records\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m canonical producer route table and all browser routes match\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m generator resolves local defs and refuses broken or cyclic references\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\valuation-facts.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m source valuation facts preserve signed values and never alter custody totals\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-upload\\upload.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual guarded producer success and correction retain distinct meanings\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m wire serializes frozen token/body exactly and explicit refresh retains lineage\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m runtime factory absence refuses before authenticated transport\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m normalized responses require bound input and immutable artifact receipts\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m explicit fixture callback receives accepted upload bytes without invented response\u001b[0m\n\n\u001b[0m\u001b[32m 64 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 290 expect() calls\nRan 64 tests across 13 files. \u001b[0m\u001b[2m[\u001b[1m5.74s\u001b[0m\u001b[2m]\u001b[0m\n"
+    },
+    {
+      "label": "affected_analysis_consumers",
+      "command": [
+        "bun",
+        "test",
+        "src/pages/InvestorReporting/tabs/analysis/tests"
+      ],
+      "exit_code": 0,
+      "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+      "stderr": "\u001b[0m\nsrc\\pages\\InvestorReporting\\tabs\\analysis\\tests\\owned-reopen.test.tsx:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m reopening performs a fresh request read every time, without submitting or accepting history as access\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m revoked request refuses and a separately refused report never synthesizes sections\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m request and report readers bind the selected issued ID\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m initial mounted history has explicit refresh and never claims empty history before reading\u001b[0m \u001b[0m\u001b[2m[\u001b[1m16.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m capability requires all three typed read methods\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\tabs\\analysis\\tests\\prospect.test.tsx:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m CSV preparation preserves exact bytes and shared API retries identical serialized body\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m explicit refresh carries the old input and a distinct user-action token\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m prospect submission has actual input reference and no invented client, account or firm\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m comparison order is retained and invalid or unnormalized requests refuse\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m unsafe filename, oversized file and invalid UTF8 refuse before API\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m initial UI has file and valuation review without claiming a report or accepted request\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m issued status uses only the server request ID and never a submission method\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m unavailable status adapter does not render invented progress or a report link\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\tabs\\analysis\\tests\\recipient.test.tsx:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m recipient preserves exact Unicode and counts code points\u001b[0m \u001b[0m\u001b[2m[\u001b[1m16.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m recipient change changes custody identity, exact retry preserves it\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m missing recipient refuses before either submission path\u001b[0m\n\n\u001b[0m\u001b[32m 16 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 87 expect() calls\nRan 16 tests across 3 files. \u001b[0m\u001b[2m[\u001b[1m259.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+    }
+  ],
+  "remote_dev_preservation": [
+    {
+      "path": "src/components/ProtectedRoute.tsx",
+      "equal": false,
+      "sha256": "9e8a033acadef20dad0d4c107b89dc1e9bd9ccd94d0a88cf8d9370512b5df85e"
+    },
+    {
+      "path": "src/contexts/AuthContext.context.ts",
+      "equal": true,
+      "sha256": "67074a4ae4518a6f6606312d646e9e8a86e718b03f6ad67ce733a20ff9ff8b2b"
+    },
+    {
+      "path": "src/contexts/AuthContext.tsx",
+      "equal": true,
+      "sha256": "f79b65e83ea1ff537e1d510d316cd41fd46513135cc40340676422075c5da2cb"
+    },
+    {
+      "path": "src/lib/firmAccess.ts",
+      "equal": true,
+      "sha256": "895ee78226100d1f5fa95fcbf69393b60c80c2476ea6ad68b711478c0dd92e56"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/SecurityAnalysis.tsx",
+      "equal": true,
+      "sha256": "1f7e909c74e757e5c1866fa683855dd85cce2c457024f18f37ceb4af3120793b"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/assembled.harness.cjs",
+      "equal": true,
+      "sha256": "6ac909d20473f1a0ea40498a99232af2640518c5f99bc6beda26236fbef87883"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/chart.harness.mjs",
+      "equal": true,
+      "sha256": "644ab1f8f82297f03417826a5b05e59e6db3d1bacd6ba345e3d3dc1b2c7e15f0"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/drafting.harness.cjs",
+      "equal": true,
+      "sha256": "567aaaf85231d48d43447941f67b5970f478ab45510c5bf4efff1d2331100038"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/errorEmpty.harness.cjs",
+      "equal": true,
+      "sha256": "55b4b8e9063f3b42279ffe5c81e1445cdcc296a8d85ce5815e047e2efcd9011c"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/exactInput.cjs",
+      "equal": true,
+      "sha256": "bfcb0a3f73f3b8a8f6f53711c7e0e9c7329826f6aa56a495197d6150ac8b2b3b"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/execFallback.harness.cjs",
+      "equal": true,
+      "sha256": "0ec7230d4cbfb6bc3d11d917ce86735ffd6824dc473ac3e23dc881b962c619c1"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/execFixture.6861_JP_Equity.json",
+      "equal": true,
+      "sha256": "2c2f68d1b8aea20cec03aa7070209273b2be5a8028c03edb10638eee4df9ea66"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/execFixture.ASML_NA_Equity.json",
+      "equal": true,
+      "sha256": "91406c2576fd2e86793a4a6c01b3820f44d483106758f0cd977d200ccf7aa858"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/execFixture.CAT_US_Equity.json",
+      "equal": true,
+      "sha256": "192bd317572e3f8296a5ddfa9d9dc99008e3c6a5e08119bb424e1a73c8d9a205"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/execFixture.CSL_AU_Equity.json",
+      "equal": true,
+      "sha256": "d38c453ba87fd78557073ae2ac88aaa2378fd16306fca5e6236b1d70beeb7d27"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/execText.harness.cjs",
+      "equal": true,
+      "sha256": "13089715b7210ee0f46314d928cf262a1751dc4bc0481819178d1e6a4abc6e4c"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/join.harness.mjs",
+      "equal": true,
+      "sha256": "c0df631544d670478d2120b878c2da0f342277de5d9876e12e04690c3dbbeb8d"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/posture.harness.cjs",
+      "equal": true,
+      "sha256": "46bb56d5c4554e7d6ff1774516ba847f60ad7b565e046da57279f7f7564c1228"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/rankSeriesCompleteness.json",
+      "equal": true,
+      "sha256": "b3fea59c1828d9a268d80d0c015832acc2413233ef74c31743e4049a9cade6bf"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs",
+      "equal": true,
+      "sha256": "0ec7a2edf50d161605861ea0c07b47354e94404987f13f570029e63426d07bff"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/tabsFixture.BABA_US_Equity.json",
+      "equal": true,
+      "sha256": "d25cc7d61783e75ac4eea84fe169f3583492fb4bf56cd5abcf76df98058b0d46"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json",
+      "equal": true,
+      "sha256": "553cf20a650ea21ad498785256483947e8c83d8f0cb08f6f2784383ce9e31c52"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/tabsFixture.COST_US_Equity.json",
+      "equal": true,
+      "sha256": "b0bc932fc474ca0c8360de64a0a3bab3daa1bacd292aa36c17e60648baced02b"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/tabsFixture.HD_US_Equity.json",
+      "equal": true,
+      "sha256": "bdafa57ed8d2bdae36a8c7e093a18b52f7aad5dd0e6117726dfd46f305d70914"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/tabsFixture.SAP_GY_Equity.json",
+      "equal": true,
+      "sha256": "04902cdfab4871b3a6af7f263b1ecabcb878e721d7c1b397518e13ce25d19384"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/thesisBundle.BABACVOCTRL_US_Equity.json",
+      "equal": true,
+      "sha256": "6ca3570b231f55ba2ad926a4fc31d5f89350a64713ffd145da0b0a82bf597e25"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/thesisBundle.BABA_US_Equity.json",
+      "equal": true,
+      "sha256": "1dc50a2d2653a9b3649fca5f25603c1adc0f63e407968d432d084c96a61a028d"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__harness__/thesisBundle.drafted.BA_US_Equity.json",
+      "equal": true,
+      "sha256": "3b72c4fdd1919abfa7ffa74456c036d4ef1fedf060a7837cdfc80779897d6440"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/__rendercheck__/renderCheck.tsx",
+      "equal": true,
+      "sha256": "02a2385980dbc28c5a4f74cef4ea3a8416e08fda232a68b5a971b61b5a61a868"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/components/CheckFaceBadge.tsx",
+      "equal": true,
+      "sha256": "ff18198fc69d383e1b11a7133a0b0b997fd0c8e1e0bc992b96aded6d06fc84d8"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/components/GenerationCaption.tsx",
+      "equal": true,
+      "sha256": "a5673f606b9b538f48b985dcdf59c5a5e6aad701656d26028817291447dbc900"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/components/HeaderBrief.tsx",
+      "equal": true,
+      "sha256": "4e98bdce12820a4e5695b0163f0b781f155143c5ab14ae63e3a8bdfb9aeec5eb"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/components/IdentityLine.tsx",
+      "equal": true,
+      "sha256": "a158eddcce7ce855499493066d04f320d5812d83a22fa1384f42bdbc3cd33ed2"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/components/LeadPanel.tsx",
+      "equal": true,
+      "sha256": "789e8ed75dd27cca65d03adea35fe490017c0c5250608ab1645a7181354e265b"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/components/PrintExportAction.tsx",
+      "equal": true,
+      "sha256": "cc6838e1e76659224b2e2d4ebd8b3af1b9bb58a4e6bd8715bf39241dd121590c"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/components/ProvenanceLine.tsx",
+      "equal": true,
+      "sha256": "3d71588b50d3bbaa5517d8600ebbfa7385c8ce1fe0526828d3aa084cb3ee2e0e"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/components/RankedChart.tsx",
+      "equal": true,
+      "sha256": "dd90aa81a8199e1442ddb33a1dd3f5c161729cc61433f901e3b348952f900824"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/components/RankedList.tsx",
+      "equal": true,
+      "sha256": "ec497e1f694c613be480e30db04a32432b8099810d31e9c23f551c639b90514e"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/components/SecurityOverlay.tsx",
+      "equal": true,
+      "sha256": "44cf723f6f1f0afbbc56d3203d60d9e7dd322334ebc7da89f08bea1557181a3c"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/components/StarredList.tsx",
+      "equal": true,
+      "sha256": "d844ec897c8414c7a21fe99183329fd70408de98499729211924b7002d91e6a6"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/components/ThesisDriverChart.tsx",
+      "equal": true,
+      "sha256": "84c79940fef3b03cf5ce3bd72ebc901e7ef77307904b8ba4583be21e459a7125"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/constants.ts",
+      "equal": true,
+      "sha256": "000429c0c537bf24931c791d948a2a9be4baa3404668d63aab5d939697f4ac80"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/cscTable.ts",
+      "equal": true,
+      "sha256": "ae494e5d7b6b7d83e5035b93c168c324b08b69a33cb142615347377f6e2081f6"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/figureIdentity.ts",
+      "equal": true,
+      "sha256": "1fcdf64b10fdb9f9e3fedcfa51d8afcb36f71a8f1dc27ff6cee3655ba849d2a6"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/hooks/useLeadPanelApi.ts",
+      "equal": true,
+      "sha256": "bbab3e4f3e2c34698f5bd8fc4f7bea4344d5fca4c11ea29696cd2bf67435a00c"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/hooks/useSecurityAnalysisState.ts",
+      "equal": true,
+      "sha256": "60359519e472f8fb98f0bd96a184f5f85a1b6c1aa9a82c1c63ab805f715d239a"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/index.ts",
+      "equal": true,
+      "sha256": "c2da54b957cd208ca12fb685dfc9b1831792118b663c15c131cd5447b055fde9"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/modelSheet.ts",
+      "equal": true,
+      "sha256": "284d7fc3d27dc2a5839b924620b9dd5613f5980354d0e08135c6d1052964a01e"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/postureCites.ts",
+      "equal": true,
+      "sha256": "10bfb5018f4d32677c998973e1920942287c842c7538a82de0422cdf320c1ca1"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/readCompleteness.ts",
+      "equal": true,
+      "sha256": "b05ab176f76ba5f4970c779542f4d59e61db761a4622f7398221e41b9367c26f"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/refusalPresentation.ts",
+      "equal": true,
+      "sha256": "b3b7a3544982604e893b40199aa193f27bc57f5d279d2b1ed8f1debc0af18cc9"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/tabs/ExecManagementTab.tsx",
+      "equal": true,
+      "sha256": "d7ea0a0ebcd5786312e147631a47819798a27d002db62e537dd329468b5dfba2"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/tabs/ModelTab.tsx",
+      "equal": true,
+      "sha256": "d190189bfc83a68934eaeab8df5a7bea2e15dcb8fd1ac906b894ee8182b9c555"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/tabs/PeersTab.tsx",
+      "equal": true,
+      "sha256": "58389d307dccd571e4c6c9f0c77a7b228ac096ffed2edc3652b884174b1875e1"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/tabs/PostureTab.tsx",
+      "equal": true,
+      "sha256": "357bd315bf1748a522e9910d153d33e1e6e2a2bca03f37a50558c1945975fdef"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/tabs/ThesisTab.tsx",
+      "equal": true,
+      "sha256": "2949ed464e5aece9d838d2bae9b7ac4771e146bf7ad947301e3afd00b0407c0c"
+    },
+    {
+      "path": "src/pages/SecurityAnalysis/types.ts",
+      "equal": true,
+      "sha256": "b4f8c5fa569ceeb07cd4b987500dac441cfa0c4c2ecc844c103c973c47afee58"
+    },
+    {
+      "path": "src/pages/auth/MfaChallengeForm.tsx",
+      "equal": true,
+      "sha256": "1427298533b60de637c513f59f401cb6da5ae4033564f05e0fd860961ac193c1"
+    },
+    {
+      "path": "src/pages/auth/MfaOptInPrompt.tsx",
+      "equal": true,
+      "sha256": "965b14c3f8e07049da52dfd6a72514acc833529f3e9d70a1fde1c3bbe4b5b162"
+    }
+  ],
+  "carrier_status_after": "",
+  "limits": "Committed exact-pair consumer tests and static React/lifted-nav guard evaluation. No preview, actual browser, render/vendor call, publication or approval gate. Source census does not prove live authorization. Prior render delegate is preserved, not newly security-certified. No all14/runtime/full-product acceptance."
+}
