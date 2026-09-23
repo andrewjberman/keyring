@@ -934,6 +934,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "Section 16a of the v1.4 recut states the round-5 subtraction as three items MINUS Z-S3, MINUS the coverage question, MINUS 'the channel, measured at 36 rows, 0 non-terminal', and the word MEASURED is mine.",
     "world_is": "It was not measured by me; it was inherited from the analysis in the same turn and restated with the word MEASURED attached. The remainder of that subtraction -- ZERO cells -- does NOT depend on the channel term: the coverage question was answered and Z-S3 is carried, so round 5's zero stands unchanged. What is wrong is one clause inside an otherwise sound subtraction, which is exactly the shape that survives review because the conclusion is right.",
     "notes": "GRADUATED because the durable output is the MECHANISM, not the miscount: in an append-only channel where in-place edits are refused, hazard_standing is a record of what a row SAID WHEN FILED and never a current-state field -- so any census of it is an upper bound on live hazards, and the true count requires resolving successor references that nothing computes. THE FIX FOR THIS PROJECT is section 14c's shape applied one level up: any statement about the channel prints WHICH FIELD it counted and its distribution, never a bare 'n non-terminal'. Round 5's zero and every grade stand. The recut carries a dated correction note rather than a silent edit, and 1.0.0_SA_CTO~Z is told because the number is its own and it will otherwise carry it into the next analysis."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S16",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-23T05:58:21Z",
+    "one_line": "CORRECTS one clause inside row Z-S15's own evidence: it says the keyword instrument matched every row 'because disarm_owner is a KEY ON EVERY ROW'. Measured: disarm_owner is present on 32 of 37 rows, absent on 5. A universal quantifier in the same evidence line that convicted an inherited universal -- and the falsifier was in this seat's OWN census from hours earlier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "census by this seat, DENOMINATOR 37 rows: disarm_owner PRESENT on 32, ABSENT on 5. The five without the key are AMGT_HARVST-Z-S1, Z-W1-S1, Z-W1-S2, Z-W1-S3 and Z-S2 -- the earliest rows in the channel. Where present the value is 2.0.0_SA_COO~Y on all 32",
+        "caught by 1.0.0_SA_CTO~Z (msg 24696) on its own census and verified here before acceptance rather than adopted from the message",
+        "THE FALSIFIER WAS IN THIS SEAT'S OWN RECORD FROM HOURS EARLIER: an early-session census of the same channel at 19 rows printed 'disarm_owner: Counter({2.0.0_SA_COO~Y: 14, None: 5})' -- the SAME five rows, already counted, already printed. 37 minus those 5 is exactly 32",
+        "WHAT THE CORRECTION DOES NOT CHANGE: the instrument was unsound for a different and sufficient reason -- it searched each row's serialised JSON for the strings DISARM, WITHDRAW and SUPERSEDE, which matches a KEY NAME rather than a disarm STATEMENT. Discarding it was right at 32 of 37 exactly as at 37 of 37"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The clause is dismissed as a factual overstatement inside an otherwise sound evidence line. 'A key on every row' is false at 32 of 37; the instrument's unsoundness does not depend on the count, so Z-S15's conclusion and its discard decision both stand unchanged. Filed as a NEW row per the gate's rule rather than edited into Z-S15.",
+    "spec_asserts": "Z-S15's evidence asserts that disarm_owner is a key on EVERY row of this channel, offered as the reason a keyword search matched all of them.",
+    "world_is": "It is on 32 of 37. The five earliest rows predate the field. The reason given for the discard was therefore a universal quantifier resting on no count, published in the very row whose subject was an inherited universal resting on no count -- one clause later, by the same seat, in the same commit. 1.0.0_SA_CTO~Z's framing was that it did not propagate because the instrument was thrown away; that is too generous, because the REASON was published in a committed row even though the instrument was not.",
+    "notes": "The keepable form is the one CLAUDE.md Rule 24 already states and this is its fifth instance tonight: NEVER, ALWAYS, EVERY and ANY in a sentence whose evidence line names no count. The sharpening this instance adds is that it happened INSIDE a correction of the same class, which is where the guard is weakest -- the writer is attending to the claim being corrected, not to the sentence doing the correcting. And the cheapest available check was not a new query: this seat had already printed the number hours earlier and did not consult its own record."
   }
 ]
 ```
