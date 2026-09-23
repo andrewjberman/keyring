@@ -71,6 +71,64 @@ All go to `https://api.smartxadvisory.com/api/3.1/`, each with ONE attempt, 2.0 
   the UTC time.
 - Tokens are never stored. Authorization and Cookie headers are removed before anything is kept.
 
+## 6a. ANDREW'S ANSWER, VERBATIM (~20:3xZ, at the `4.0.0_SA_CRO` terminal, recorded BEFORE any call)
+
+> All approved, go now
+
+It answered the three choices below, as put to him in this seat's message:
+- **(1)** the capture: approved;
+- **(2)** `yaliu-bundle` for account-level calls C4/C5: approved, extending the 2026-07-17 pipeline authorization to
+  these IRPT account-level reads;
+- **(3)** if no selected-set endpoint is demonstrated: the contract default, "selected-set aggregate explicitly
+  unavailable" for 49F SmartX, is accepted.
+
+The run is bounded exactly as sections 2-5 state. The results are appended below as section 7.
+
+## 7. RESULTS (run 2026-09-23 20:15:46-20:16:0xZ, exactly as bounded; nothing further called)
+
+**Calls:**
+- **Auth:** 2 in-memory ROPC mints, no write-back (the COEXIST-probed shape):
+  - `opal7`, whose parked JWT was stale, so it was re-minted;
+  - `yaliu-bundle`.
+- **Data:** 5 calls, no stop rule fired.
+- **Manifest** (aggregate-only; field names, statuses, sha256; the private account shown as its sha256 prefix):
+  `IRPT_SMARTX_CAPTURE_20260923/MANIFEST.json`.
+- **Raw bodies:** private only, in `.runtime/.../smartx_capture_plan/raw/` (gitignored).
+
+| # | Lane | HTTP | Bytes | Result |
+|---|---|---|---|---|
+| C1 | opal7 | 200 | 47,759 | 46 allocation rows (40 open, 6 closed); ONE monthly range, 07/01-07/31/2026 |
+| C2 | opal7 | 200 | 179,660 | 55 rows (40 open, 15 closed); EIGHT monthly ranges, 01/01-08/31/2026; `count`=55 = the rows returned; per-row `recordCount` 1-8 |
+| C3 | opal7 | **401** | 323 | as expected (`accountAccess=0`): the service identity's account boundary is documented |
+| C4 | yaliu-bundle | 200 | 5,322 | per-allocation statistics for the private account |
+| C5 | yaliu-bundle | 200 | 1,435 | account-level statistics plus account metadata |
+
+**The unknowns, settled or left:**
+
+| # | Unknown | Outcome |
+|---|---|---|
+| 1 | Credential for allocation performance | **SETTLED for Pathfinder:** `opal7` (the service identity) serves `allocations/performance` for a full-access model. The other 6 models are NOT claimed; the adapter treats entitlement per model at runtime |
+| 2 | Actual-account request | **PARTLY SETTLED:** `accounts/{id}/statistics` and `allocations/statistics?accountId=` serve under `yaliu-bundle`. Both return `returns{today,mtd,qtd,ytd}{dollar,percent}`, `value`, `cash`, `exposure{long,short,net,gross}`. C5 adds `account{brokerageAccountNumber, accountTitle, status, isExcluded, ...}`, a DIRECT custody key. **These are period-to-date statistics; a requested-window account series is NOT available from these endpoints.** The account's windowed series must be built from its allocations' monthly series (`allocations/performance`, see unit 4), and that aggregation is a method decision (section 8) |
+| 3 | Selected-set aggregate | **NOT DEMONSTRATED -> explicitly unavailable for 49F SmartX** (Andrew's choice 3) |
+| 4 | Window, as-of and method fields | **SETTLED:** the window is HONOURED (C1 1 range vs C2 8 ranges, tracking the request). Fields: `performance.range{start,end}{timestamp,friendly}`, `performance.grouping`, `recordCount`, and per month `pnl{dollar,percent}` and `summary{beginningMarketValue, endingMarketValue, increaseByAmount, decreaseByAmount, transactions, fees, isFullRange}`; plus `allocation.openTimestamp`. There is no explicit method field |
+| 5 | Units and method | **Units SETTLED: decimal fraction.** In C1, 46 of 46 month rows satisfy `pnl.percent == pnl.dollar / summary.beginningMarketValue`. In C2, 380 of 389 rows with a non-zero beginning value do (9 full-range exceptions unexplained; 9 more rows had a zero beginning value). **Method: a simple per-month P&L / beginning value on ~98% of rows, NOT stated as TWR.** **Fees: `summary.fees` is null or zero on 0 of 398 entries**, so gross vs net is NOT determinable from this payload and stays unknown ("fee basis not stated by provider") |
+| 6 | Pagination and completeness | **SETTLED for this size:** a top-level `count` equals the rows returned, and there are no paging keys. 40 of the roster's 42 open allocations appear. **The 2 absent ones are also absent from the 2026-08-31 roster, so they opened in September, after both windows (INFERRED from roster membership).** Closed allocations are INCLUDED (6 in July, 15 in Jan-Aug). Large-model paging and the unentitled-id silent-drop hazard are NOT tested |
+| 7 | UUID parity | **SETTLED:** the 40 returned open allocations' `account.id` all match the roster's `account_id` (40/40) |
+
+## 8. What this means for the adapter (for `2.0.0_SA_COO~P` and `1.0.0_SA_CTO`)
+
+- **Allocation (sleeve) level: AVAILABLE** via `opal7`, windowed by month, decimal units, crosswalked 40/40. Each month
+  carries `isFullRange`, so partial months are marked.
+- **Account level:**
+  - **Period-to-date** (today/MTD/QTD/YTD): AVAILABLE via `yaliu-bundle` (`accounts/{id}/statistics`), keyed by
+    `brokerageAccountNumber`.
+  - **A custom-window account return:** NOT a provider calculation. Composing it from the account's sleeves is exactly
+    the "never average/sum account returns into a relationship result" territory, and needs the CTO's method ruling
+    before it is built.
+- **Selected set: explicitly unavailable** (Andrew).
+- **Fee basis unknown; method not stated.** Display both as "not stated by provider".
+- **Not established by this capture:** BD-verification comparability, and SmartX for the other 6 models.
+
 ## 6. The missing user choices (Andrew)
 
 1. **The per-use word for this capture:** at most 2 auth calls and 5 data calls, as bounded above.
