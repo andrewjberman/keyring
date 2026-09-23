@@ -1,7 +1,8 @@
 # PROPOSAL -- the live thread for a purely backend or infrastructure product
 
-**Author:** `4.0.0_SA_CRO`. **UTC:** 2026-09-23 ~17:0xZ. **Status:** PROPOSED. It is put to Andrew as one card; the
-spine wording is `1.0.0_SA_CTO~C`'s to land on his yes.
+**Author:** `4.0.0_SA_CRO`. **UTC:** 2026-09-23 ~17:0xZ. **Status:** APPROVED. Andrew-direct at the `4.0.0_SA_CRO`
+terminal, VERBATIM: *"Your rec is approved on call 5b."* The ruling is recorded in the addendum of
+`ANDREW_DIRECT_20260923_163xZ_HOLD_OFF_AND_CLOSER_OPEN_CALLS_RULINGS.md`. `1.0.0_SA_CTO~C` lands the spine wording.
 
 **Owed by:** Andrew-direct 2026-09-23 ~16:3xZ, call 5, VERBATIM: *"That does apply for projects that have a frontend
 but needs to be considered in the event it's purely a backend/infrastructure product (e.g. NFRA_GLOBGRPH,

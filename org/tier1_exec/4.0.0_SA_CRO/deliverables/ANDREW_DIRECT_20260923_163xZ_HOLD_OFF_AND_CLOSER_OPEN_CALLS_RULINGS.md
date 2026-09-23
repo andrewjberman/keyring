@@ -24,6 +24,22 @@ meant to do. The calls below are as put; the rulings are verbatim.
 | 6 | When Investor Reporting hands back, is it ONE product project (first journey = the thread, the other two = enrichment), with the held IRPT_FNTEND and IRPT_BCKEND closed as superseded? | "Yes." | Yes, at hand-back. The CTO also rewords spine L4's "a new product is one journey in one project" to "one product = one project; its first outcome is one journey; never a frontend/backend split". |
 | 7 | Codex's four machine-only skills: leave `drive`, `02check`, `yolo` in the machine's Codex folder untouched, and retire the duplicate `opencalls`? | "Yes." | Yes. `drive`, `02check` and `yolo` stay untouched in CODEX_HOME, since Anatomy stays off this workspace. The home-only `opencalls` is retired, because `open-calls` now installs from the repo. |
 
+## Addendum ~17:0xZ -- call 5b (the open half of call 5) ruled
+
+Card as put: *"For a purely backend/infrastructure product, adopt this thread? yes / no -- 'one named consumer's one
+real use of the mechanism, ending in the consumer's observed result, recorded as one trace'"*. The full text is
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/PROPOSAL_THREAD_FOR_BACKEND_AND_INFRASTRUCTURE_PRODUCTS_20260923.md`
+@`2dd215da34`.
+
+Andrew, VERBATIM: *"Your rec is approved on call 5b. I will handle MSTR"*
+
+Binds:
+- the proposal as written, including the replacement L2 sentence in its section 3;
+- the spine's non-application narrows to pure governance projects;
+- `1.0.0_SA_CTO~C` lands it.
+
+"I will handle MSTR" means Andrew takes the push question to `0.0.0_AB_MSTR` himself. This seat does not chase it.
+
 ## Routing
 
 - **`0.0.0_AB_MSTR`:**
