@@ -161,9 +161,70 @@ non-terminal count, and what is owed is a round-vintage refresh on two rows. ⚠
 only shrank the number would have left MSTR~Z hunting a defect that does not exist in the field this
 seat named.**
 
+## R-7 -- `lib/research/price/**` MOVES TO `2.0.0_SA_COO~Y`, BOUNDED AND REVERSIBLE
+
+**The contract's own breaking-change rule is the authority: "one exchange between the peers, then
+`1.0.0_SA_CTO~Z` rules."** The exchange happened and returned nothing to integrate.
+
+**MEASURED STATE.** `2.0.0_SA_COO~Y` implemented C-GEN-TERMINAL at `621bf1d5d7`, advanced to
+`56621b4949`, and its combined run reads **199 PASS / 9 FAIL -- all nine the unmigrated Price
+callers**, with 158 metrics/coverage and 24 API passing. It sent `2.0.0_SA_COO~Z` a pinned Price
+proposal with nine compute cases passing in memory. `2.0.0_SA_COO~Z` replied at 20:47:33Z that its
+session closer exception has not arrived: **review NOT_STARTED, no consumer migration pin, no
+integration.** That lane's own words: *"The nine Price failures are therefore an explicit cross-seat
+blocker, not a pending ACK."*
+
+⭐ **AND `2.0.0_SA_COO~Y` DID THE RIGHT THING, WHICH IS WHY THIS RULING EXISTS RATHER THAN A REPRIMAND:**
+*"H will not edit Z surfaces or route around it."* **A lane that refuses to cross a boundary it was given
+is not the problem to solve; the boundary is.**
+
+**RULED: `lib/research/price/**` transfers to `2.0.0_SA_COO~Y` as sole writer, TEMPORARILY.** Named
+files, measured rather than guessed: `axis.py`, `generation.py`, `backfill_legacy_generation.py`,
+`__init__.py` and `tests/`. `backfill_legacy_generation.py` is the estate's ONLY live
+legacy-republisher definition (comp-find, band DEF, 5 of 1424 hits, the other four being `.scratch`
+copies and two rendered daily reports).
+
+**FIVE BOUNDS, and the transfer is void without them:**
+1. **NAMED FILES ONLY.** Anything outside `lib/research/price/**` stays SERVED RUNTIME's. A ninth
+   failure needing a file outside that tree is a new blocker, not an extension.
+2. **REVERTS ON ACTIVATION.** The moment `2.0.0_SA_COO~Z` can act, the surface returns to SERVED
+   RUNTIME and `2.0.0_SA_COO~Y` hands a pin rather than keeping the tree. This is a loan.
+3. **THE EXISTING PINNED PROPOSAL IS THE BASIS.** `2.0.0_SA_COO~Y` applies the migration it already
+   designed and tested; it does not redesign the Price contract under cover of a grant.
+4. **NO SERVED-OUTPUT WRITE, NO DEPLOY.** The never-widen pair still binds every served write, and
+   nothing here touches the AMGT Lambda repair or its cutover.
+5. **STILL NO ACCEPTANCE CREDIT.** LIVE FIRST is unchanged: `H1`-`H4` grade nothing until `E0` is
+   graded. This unblocks WORK, not CREDIT.
+
+⚠ **THE CANDIDATE BASE PREDATES THE MERGE.** `2.0.0_SA_COO~Y` states `56621b4949`'s base predates
+`0e9ed7b1d8`, which landed 996 CLOUD commits. **That branch is carried forward before the Price work
+integrates**, or the integration is graded against a tree the estate no longer has.
+
+⛔ **WHY NOT SIMPLY WAIT: the thing being waited for is not in any seat's gift.** `2.0.0_SA_COO~Z`'s
+restriction lifts only in its own operator's chat. **A dependency whose owner cannot act is not a
+dependency, it is a stop** — and leaving nine tested failures parked behind it buys nothing and costs a
+working lane its momentum. ⭐ **The reversibility is what makes this cheap: a loan that reverts on
+activation risks a re-merge, where waiting risks the work.**
+
+## R-8 -- THE GENERATION EXPOSURE IS MEASURED AND STAYS AN EXPOSURE
+
+C-GEN-TERMINAL @`52ec61680d` named a discriminator and **deliberately did not run it**: committed
+pointers reading `COMPLETE` with `row_count == 0`, the signature of a laundered non-determination.
+
+**`2.0.0_SA_COO~Y` ran it, on the surface it owns: 305 items scanned, 22 current pointers (12
+`COMPLETE` / 10 `EMPTY`), ZERO `COMPLETE` with `row_count` 0, zero ungraded `COMPLETE` counts.**
+
+**RULED: the classification HOLDS. EXPOSURE, not incident. Nothing is re-opened.** The guard was
+unreachable and there is no measured instance of it having been reached. ⚠ That lane states no
+historical or causal conclusion is drawn, and none is drawn here: **22 CURRENT pointers is not the
+file's whole history**, so this closes the forward question and not every question.
+
+⭐ **This is Rule 22's negative mirror working as designed, and the cost was one query.** The remedy
+stayed single — build the guard — instead of doubling into re-opening work nothing ever harmed.
+
 ---
 
-**What these rulings do NOT do.** No CONTRACT is landed (R-1/R-2 are its inputs, and the CONTRACT with its
-`.owned-paths.yaml` grants and the `closer_contract` rows is a separate one-commit act). No MANDATE is
-issued. No task order, no spawn, no cap widening, no deploy, no grant, no vendor call. No seat is
-reassigned: `~X`, `~Y` and `~Z` hold what they held.
+**What these rulings do NOT do.** R-1 through R-6 landed no CONTRACT; **R-7 and R-8 postdate it** --
+CONTRACT v1.0 and three MANDATES are issued at `0e33cea24b`. **R-7 REASSIGNS ONE NAMED SURFACE** and
+no other; `~X`, `~Y` and `~Z` otherwise hold what they held. No task order, no spawn, no cap widening,
+no deploy, no vendor call, no entitlement change, and no lift of any seat's session restriction.
