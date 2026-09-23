@@ -84,6 +84,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "Both halves are SIGNED and current, and the notifier continues to deliver OVERDUE notices for one of them. The condition is evaluated against an arm-time snapshot rather than against prd-signoff's live status, so no amount of signing satisfies it.",
     "disarm_owner": "THE FABRIC, not this project and not any AMGT lane -- the notifier and the overdue-half re-route are the same machinery Z-S1 names, outside every AMGT boundary, so by the boundary this seat drew at the portal grant and .scratch/ it is not this seat's to change. 1.0.0_SA_CTO~Z holds the row and has carried it to Andrew on the estate card. NOTHING IS BUILT HERE.",
     "notes": "DELIBERATELY NOT FILED: the overdue COUNTER's own arithmetic (69 min at 00:18 AND 69 at 00:51; 124 at 01:14, against true ages of ~137/170/193). Neither this seat nor 3.0.0_SA_CVO~Z can source it from the artifacts, and asserting a defect from a number neither can source is the exact pattern that produced four wrong carriers this night. It stays an OPEN QUESTION on Z-S2, answerable by whoever owns the notifier in one read of the code. ALSO RECORDED: this project's PRD reached ADMITTED and its L4->L5 seating ask went to 0.0.0_AB_MSTR~Z at 01:3xZ, so the notifier's noise is now the only AMGT_CORPUS item that is neither done nor owned."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S1",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-23T03:42Z",
+    "one_line": "The corpus's Bloomberg/FactSet field argument is a CELL REFERENCE to a label cell (e.g. '=+_xll.BDP(C1,Z2)' with Z2 holding the text PX_LAST), not a literal quoted string in the call, so CRPS-c-2's ruled token-scan method finds real quoted tokens (BDH/BDS override params like EQY_CONSOLIDATED, PER) but reads 0 FactSet-prefixed codes even though FF_/FG_/FE_ labels are pervasive in the corpus (measured: 81 in one workbook alone).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Direct read of amgt/harvest/bronze/research-report/security_key=2317_TT_Equity/26f46b9f1061ea61/Hon Hai International Dividend One Pagers.xlsx, sheet Overview, cell D2: formula '=+_xll.BDP(C1,Z2)'; cell Z2's own value (read_only, data_only=False) is the plain string 'PX_LAST' -- the mnemonic sits in a referenced cell, not inside the call's own parens.",
+        "amgt/harvest/bronze/research-report/security_key=9433_JP_Equity/5fcbd2c424654dde/KDDI FactSet Based ONE PAGER TEMPLATE 2026 03 09_v1.xlsx sheet 'Model NEW VERSION': 81 plain-string cell values matching ^[A-Z][A-Z0-9_]{2,}$ in column A/AD/AF alone (FF_SALES, FE_ESTIMATE, FG_FACTSET_SECTOR, ... ), each a label cell referenced by an adjoining _xll.FDS(...) array formula ('=_xll.FDS($D$2,$A79&\"(ANN_R,\"&D$75&\")\")' at D79, $A79 == 'FF_SALES') rather than embedding the code as a literal.",
+        "Genuine literal quoted tokens DO occur inside real BDH calls in the same corpus (e.g. '=+_xll.BDH($C$1,$A103,C$68,C$68,\"EQY_CONSOLIDATED\",$S$99,\"ACCOUNTING_STANDARD_OVERRIDE\",$S$98,\"PER\",$A$68,\"DAYS=A\")') -- these are override PARAMETER names, never F[FGE]_-prefixed instrument mnemonics, so the ruled extraction method is not idle, it is measuring a real but narrower population than K4 asks about.",
+        "A second, mechanical defect was caught and fixed in the same pass before --write's first (wrong) run was left standing: openpyxl represents an array formula as an ArrayFormula OBJECT, never a plain str, so a naive isinstance(value, str) scan silently skips it; over this corpus that bug alone produced with_mnemonics 0 / factset_coded 0 on the first --write. Fixed by reading value.text for ArrayFormula cells; the 122 wrongly-shaped extraction objects the first run had already landed were deleted (bronze_put's never-overwrite precondition otherwise pins them forever) and --write re-run clean: bronze_objects 123 extractions 123 missing 0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-c-2's ruled design: 'mnemonics: quoted upper-case tokens [A-Z][A-Z0-9_]{2,} inside formula calls (BDP, BDH, BDS, FDS, FDSC, FQL, and any other call you MEASURE in the corpus)'; 'factset_codes: the subset matching ^F[FGE]_'.",
+    "world_is": "The corpus's own primary mnemonic argument to BDP/FDS is a cell reference, not a literal quoted string, so the ruled method structurally cannot see the FactSet-coded variant K4 asks about (23 workbooks per the CRO's scan) -- it correctly reads with_mnemonics 37 of 43 (real quoted override-parameter tokens exist) and factset_coded 0 of 43 (true under the ruled method, understating the corpus's actual FactSet-code density). Typing mnemonics onto standard mnemonics via cell-reference resolution is out of this cell's scope (CRPS-c-9's, per the order's own boundary) -- this row is the handoff.",
+    "notes": "AC2's expect regex (\\d+ on every count) is satisfied either way -- this is a FIDELITY gap in what K4 measures, not a criterion failure, and is stated plainly in this order's K3/K4 card. Refused nothing: the ruled method was implemented and run exactly as specified; this row documents that its output, read alone, understates FactSet-code coverage and names why."
   }
 ]
 ```
