@@ -1,5 +1,32 @@
 # IRPT P shared interfaces - candidate v1
 
+## Canonical maintained-source handoff - 2026-09-23 01:55 UTC
+
+Backend `d91b2bdd10` is the source-02 schema/helper pin. Full specification and
+real firm-descriptor mapping: `docs/contracts/investor-reporting/v1/REQUEST_COMPOSITION.md`.
+Paired synthetic retained artifact: `examples/RequestComposition.synthetic.json`
+under that directory; 21 actual schema/storage/integrity controls PASS.
+Keep existing root schema_version/browser/resolved/recipe_version/settings;
+profile, profile_provenance, comparison_catalog, source_descriptors, recipe_source_id
+and settings_source_id live in resolved. Source revision/date absence and source
+scope are explicit; no immutable-revision claim from login updatedAt or digest.
+M remains source/policy resolver; Y owns catalogue meaning, acceptance/replay and
+actual recipe/settings validation. P's helper follows closed schema validation;
+it does not grant authority. ArtifactRepository REQUEST_COMPOSITION remains the
+single storage interface with all retained source and input dependencies.
+
+Exact browser prepared_for agreement with Y015025: 200 Unicode code points,
+nonblank, no C0/C1 controls or lone surrogates; preserve exact text. This is app
+policy, not an evidenced vendor maximum. No narrower local vendor cap was found
+by Y. Recipient is display metadata, never scope/identity authority. Y owns
+composer.ts/GenerateComposer/ProspectComposer/prospect helpers; P owns schema,
+generated wire and shared client/parser. No concurrent edits to Y's components.
+All old missing-label requests remain unavailable for new dispatch as ruled.
+
+R-P11/Y-W01/Y-W02 bounded holds below are superseded by exact960f/c09 independent
+closures0525841ab3/9a7b938c2c/7c5fa24adc and CTO014544. Later integrated candidates
+require their own review; no runtime/deployment or full-product lift.
+
 ## Repaired public pair and publication outcome - 2026-09-23 01:31 UTC
 
 Exact backend960f5f2a45/portalc09fea54 now includes the canonical M source unit

@@ -1,5 +1,31 @@
 # IRPT P status - 2026-09-22
 
+## Maintained-source contract and bounded closures - 2026-09-23 01:55 UTC
+
+P backend `d91b2bdd10fe05a0e241ccbfb8f6d7f1b35a872c` pins closed
+AnalysisSubmissionRequest/RequestComposition schemas, exact descriptor mappings,
+synthetic paired example and retained-byte integrity helper. 21 offline tests PASS
+including actual artifact write/read, source mutation, denied owner, expired
+retention, ordered comparisons, optional absence and Unicode recipient checks.
+Full source-02 ruling `51b5d63a81` read: explicit user-designated prepared_for,
+Y catalogue ownership, no inferred comparison identity/entitlement. M/Y received
+the committed schema. M015313 confirms mapping and correctly keeps immutable
+revision unavailable when the actual reader lacks a verified revision receipt.
+Portal generated types/shared pre-transport parser are being finalized separately.
+Actual M resolver/Y acceptance-to-worker integration is pending; synthetic examples
+do not establish source authority or dispatch readiness.
+
+Independent R-P11 is CLOSED on exact backend960f/portalc09 by CVO P
+`0525841ab3` plus actual-selection addendum `9a7b938c2c`. CVO Y closes Y-W01/Y-W02
+on the same pair at `7c5fa24adc1ef8daa6fc73b747dbb4d52318e16c`. CTO014544 confirms
+these bounded holds closed. This supersedes the pending-verdict statements below.
+Y separately reports independent merged33b2fbe528/12acb3f4 closure and bounded
+recovery82792f4864 PASS at review `a77d910928ab4f72af5efc558d7a2dd9430a3028`;
+this does not become a P integrated-head or runtime certification.
+Recovery remains CERTIFYING; deterministic cuts are not process-kill/server-race
+proof. Broader baseline failures, all14 NOT_EVALUATED, physical disposal,
+legacy/runtime/browser/vendor/render/export/deploy/full-product holds remain.
+
 ## Exact replacement handoff - 2026-09-23 01:31 UTC
 
 Public-wire replacement pair is committed: backend `960f5f2a4501eff2670bcd0b5951926836093447`
