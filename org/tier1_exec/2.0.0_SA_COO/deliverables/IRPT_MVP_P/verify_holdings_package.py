@@ -11,7 +11,7 @@ import tempfile
 MAP = "infra/aws/lambda/ci/lambda-source-map.json"
 NAME = "irpt-holdings"
 PROBE = r'''
-import io, json, pathlib, sys, socket, subprocess
+import io, json, pathlib, sys, socket, subprocess, copy
 from types import SimpleNamespace
 def no_network(*a, **kw): raise AssertionError('network forbidden')
 socket.create_connection = no_network
@@ -62,7 +62,8 @@ s3=Storage(); store=publication.HoldingsPublication(s3,firm)
 date=doc['clocks']['custody_as_of']; body=publication.canonical_bytes(doc); revision=publication.digest(body)
 platinum=s3.add(store.location('platinum','date='+date,revision+'.json'),body)
 manifest={'schema_version':'irpt-holdings-manifest-v1','firm_id':firm,'business_date':date,
-          'revision':revision,'platinum':platinum,'gold':{'fixture':'reader does not fetch Gold'},
+          'revision':revision,'platinum':platinum,
+          'gold':s3.add(store.location('gold','date='+date,revision+'.parquet'),b'offline-gold-fixture'),
           'source_set_revision':doc['source_set_revision'],'clocks':doc['clocks']}
 manifest_ref=s3.add(store.location('platinum','date='+date,revision+'.manifest.json'),publication.canonical_bytes(manifest))
 s3.add(store.location('platinum','current','manifest.json'),publication.canonical_bytes({
@@ -97,6 +98,46 @@ assert answer['data']['scope']['account_ids']==[accounts[0]], answer
 assert len(s3.calls)==4 and all(row['VersionId']=='version-1' for row in s3.calls[1:])
 unselected={part['object']['key'] for part in manifest['partitions'] if accounts[0] not in part['account_ids']}
 assert unselected and not unselected.intersection(row['Key'] for row in s3.calls)
+# M-PART-01: repin malformed inventory so hash drift cannot explain refusal.
+valid_manifest=copy.deepcopy(manifest)
+def repin(candidate):
+    ref=s3.add(store.location('platinum','date='+date,revision+'.manifest.json'),publication.canonical_bytes(candidate))
+    s3.add(store.location('platinum','current','manifest.json'),publication.canonical_bytes({
+        'schema_version':'irpt-holdings-index-v1','firm_id':firm,'latest_date':date,
+        'dates':{date:{'revision':revision,'manifest':ref}}}))
+negative_count=0
+for mutation in ('missing','null','foreign_bucket','foreign_key','missing_version','bad_hash','bad_length'):
+    candidate=copy.deepcopy(valid_manifest)
+    part=next(p for p in candidate['partitions'] if accounts[0] not in p['account_ids'])
+    if mutation=='missing': part.pop('object')
+    elif mutation=='null': part['object']=None
+    else:
+        field,value={'foreign_bucket':('bucket','other-tenant'),'foreign_key':('key','wrong'),
+            'missing_version':('version_id',None),'bad_hash':('sha256','bad'),
+            'bad_length':('byte_length',0)}[mutation]
+        part['object'][field]=value
+    repin(candidate);s3.calls=[]
+    answer=entry.lambda_handler(event)
+    assert answer.get('ok') is False and 'data' not in answer,(mutation,answer)
+    assert not unselected.intersection(row['Key'] for row in s3.calls)
+    assert not any(row['Key'].endswith('.parquet') for row in s3.calls)
+    negative_count+=1
+for gold in (None,{},dict(valid_manifest['gold'],bucket='other-tenant')):
+    candidate=copy.deepcopy(valid_manifest);candidate['gold']=gold
+    repin(candidate);s3.calls=[]
+    answer=entry.lambda_handler(event)
+    assert answer.get('ok') is False and 'data' not in answer,answer
+    assert not any(row['Key'].endswith('.parquet') for row in s3.calls)
+    negative_count+=1
+repin(valid_manifest)
+# Valid metadata does not require unselected physical objects to be fetched.
+unselected_ref=next(p['object'] for p in valid_manifest['partitions'] if accounts[0] not in p['account_ids'])
+unselected_location=(unselected_ref['bucket'],unselected_ref['key'])
+unselected_body=s3.rows.pop(unselected_location);s3.calls=[]
+answer=entry.lambda_handler(event)
+assert answer['data']['scope']['account_ids']==[accounts[0]],answer
+assert not unselected.intersection(row['Key'] for row in s3.calls)
+s3.rows[unselected_location]=unselected_body
 selected_part=next(part['object'] for part in manifest['partitions'] if accounts[0] in part['account_ids'])
 location=(selected_part['bucket'],selected_part['key']); saved=s3.rows.pop(location)
 answer=entry.lambda_handler(event)
@@ -124,7 +165,8 @@ assert missing.returncode != 0 and 'scopes.json' in missing.stderr, missing.stde
 print(json.dumps({'guarded_selected_read':True,'versioned_reads':True,'corrupt_refusal':True,
     'release_revocation_refusal':True,'missing_registry_refusal':True,'canonical_locations':locations,
     'v2_selected_parts_only':True,'missing_selected_part_refusal':True,
-    'selected_request_limit_refusal':True,'reader_imports_pyarrow':False,'network':False}))
+    'selected_request_limit_refusal':True,'complete_inventory_negative_cases':negative_count,
+    'unselected_physical_blob_not_required':True,'reader_imports_pyarrow':False,'network':False}))
 '''
 
 
