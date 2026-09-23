@@ -1,5 +1,25 @@
 # IRPT P shared interfaces - candidate v1
 
+## Public-wire correction - 2026-09-23 01:24 UTC
+
+CTO `54b242b9cd` supersedes the conflicting caller-facing CID description below.
+Exact conflict: docs/contracts/investor-reporting/v1/CONTRACT.md error-envelope
+table row listed internal_correlation_id on caller status, while the StatusEnvelope
+field row and x-server-only annotation made it server-only. The prepared backend
+repair rewrites the error row to public BoundaryRefusal/PublicStatusEnvelope and
+labels the StatusEnvelope table internal. It preserves the internal builder and
+projects CID out in shared served.refuse. BoundaryRefusal neither requires nor
+permits CID. No replacement public identifier or widened schema.
+
+Portal replacement `c09fea54` includes regenerated type and actual Entry captures,
+and validates ordinary public status before adaptation: closed objects, non-null
+calendar-valid business dates where required, safe=true actions, closed grant map.
+Admitted prospect extensions and no-answer old-consumer states remain valid.
+Backend source owner pin is pending from M due the canonical path gate; do not
+pair this strict consumer with old7915 raw refusals. R-P11/Y-W01 and Y-W02 remain
+HOLD under unchanged CVO P/Y retests at the forthcoming exact pair. Original
+evidence: a050df00e5 and64a2c522ef. Existing unrelated bounded closures remain.
+
 ## Paired owned Entry and date boundary - 2026-09-23 01:02 UTC
 
 Backend `7915bc9b2c` includes Y retained-date source `f4f16b283f` consumed as

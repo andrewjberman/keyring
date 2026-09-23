@@ -1,5 +1,37 @@
 # IRPT P status - 2026-09-22
 
+## Public-wire repair checkpoint 2026-09-23 01:24 UTC
+
+R-P11/Y-W01 public-refusal and Y-W02 strict-parser acceptance are HOLD. CVO P
+`a050df00e5` and CVO Y `64a2c522ef` establish the same four refusal CID conflicts;
+Y additionally establishes seven invalid ordinary-status forms accepted by both
+cf77e5db and42412eb8. CTO ruling `54b242b9cd` supersedes the old caller-facing
+CID error row; internal diagnostics must retain correlation, public wire excludes it.
+Previous statements that documenting existing raw CID settled the contract are
+superseded. No claim of live credential exposure or executed unsafe retry.
+
+Portal repair `c09fea54` is committed: public refusal type/captures, closed nested
+status/operation/source/grant validation, calendar-valid dates and safe=true actions
+before adaptation. Local36 tests/179 assertions and TypeScript5.9 PASS. This includes
+the assembled owned-history/date display endpoint; it is a new exact candidate.
+Backend working repair71 focused PASS; broader guarded entries128 PASS/2 FAIL.
+Both directory-selection OBJECT_NOT_COVERED failures reproduce identically with
+the committed7915 refusal implementation restored in-process; retained separately.
+
+Canonical ownership gate refused P's shared `_authz/served.py` and guarded-entry
+test commit. No override. M acknowledged narrow edit coordination and received
+the exact tested patch at P backend `.runtime/rp11-m-owner.patch` for owner commit.
+P's remaining schema/document/test changes await that source pin before paired
+handoff. Backend worktree is deliberately dirty for this bounded repair. New portal
+must not be paired with the old raw-CID backend. Both independent unchanged retests
+remain required before closure. No package/runtime/route/deployment/push lift.
+
+Y retained publisher candidate `6c3bfae3e6` is recorded for subsequent assembly;
+reported29 combined controls PASS, independent review pending. Its verification
+digest preserves build_publication evidence; certification_sha256 hashes complete
+retained wrapper bytes and equals the EXTRACTION_EVIDENCE artifact digest. No
+READY transition or pending-policy activation is inferred.
+
 ## Review update 2026-09-23 01:05 UTC
 
 Exact Y notice010457 reports paired pins consumed (backend7915 as9dbd74d2c1,
