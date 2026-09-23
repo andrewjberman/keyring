@@ -1,0 +1,116 @@
+{
+  "observed_at": "2026-09-23T22:16:09.068578+00:00",
+  "function": "irpt-holdings",
+  "review": "58259f0dc1",
+  "plan_sha256": "ca2a907770c081a244cb1eddc854db95cdb80523655989093264c9e20f905301",
+  "applied": {
+    "create": 1,
+    "update": 3,
+    "destroy": 0
+  },
+  "code_sha256": "vLP7cZN61JWOOmiCGmCjnOM43296i8qDt1hL1ZE8yUs=",
+  "artifact_version": "e7XAGneq1_KKe2tnBVK45FsEFNItS2NF",
+  "environment": {
+    "IRPT_DIRECTORY_BUCKET_MAP": "{\"49financial\":\"opal-data-bd\",\"cottonwood\":\"opal-data-cot\",\"inflection\":\"opal-data-inf\"}",
+    "IRPT_DIRECTORY_KEY": "investor-reporting/directory/latest.json",
+    "IRPT_HOLDINGS_PREFIX": "investor-reporting/holdings",
+    "IRPT_REQUESTS_TABLE": "irpt-requests",
+    "IRPT_CONTRACTS_DIR": "/var/task/contracts",
+    "IRPT_FIRM_REGISTRY": "/var/task/firm_registry.json"
+  },
+  "role": "arn:aws:iam::313476888478:role/irpt-holdings-role",
+  "policies": {
+    "irpt-holdings-firm-read": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": [
+            "s3:GetObject"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:s3:::opal-data-49financial/irpt/49financial/platinum/holdings/current/manifest.json",
+            "arn:aws:s3:::opal-data-inflection/irpt/inflection/platinum/holdings/current/manifest.json",
+            "arn:aws:s3:::opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json"
+          ],
+          "Sid": "ReadCurrentPublicationIndex"
+        },
+        {
+          "Action": [
+            "s3:GetObjectVersion"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:s3:::opal-data-49financial/irpt/49financial/platinum/holdings/date=*/*",
+            "arn:aws:s3:::opal-data-inflection/irpt/inflection/platinum/holdings/date=*/*",
+            "arn:aws:s3:::opal-data-cottonwood/irpt/cottonwood/platinum/holdings/date=*/*"
+          ],
+          "Sid": "ReadAcceptedPlatinumVersions"
+        },
+        {
+          "Action": [
+            "s3:GetObject"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:s3:::opal-data-bd/investor-reporting/directory/*",
+            "arn:aws:s3:::opal-data-bd/platinum/49financial/ownership_map.json",
+            "arn:aws:s3:::opal-data-inf/investor-reporting/directory/*",
+            "arn:aws:s3:::opal-data-inf/platinum/inflection/ownership_map.json",
+            "arn:aws:s3:::opal-data-cot/investor-reporting/directory/*",
+            "arn:aws:s3:::opal-data-cot/platinum/cottonwood/ownership_map.json"
+          ],
+          "Sid": "ReadCurrentScopeDependencies"
+        }
+      ]
+    },
+    "irpt-holdings-selection-read-policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": [
+            "dynamodb:GetItem"
+          ],
+          "Condition": {
+            "ForAllValues:StringEquals": {
+              "dynamodb:LeadingKeys": [
+                "49financial",
+                "inflection",
+                "cottonwood"
+              ]
+            }
+          },
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests"
+          ],
+          "Sid": "ReadRetainedSelectionByTenantKey"
+        },
+        {
+          "Action": [
+            "kms:Decrypt"
+          ],
+          "Condition": {
+            "StringEquals": {
+              "kms:EncryptionContext:aws:dynamodb:tableName": "irpt-requests",
+              "kms:ViaService": "dynamodb.us-east-1.amazonaws.com"
+            }
+          },
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111"
+          ],
+          "Sid": "DecryptRequestTableViaDynamoOnly"
+        }
+      ]
+    }
+  },
+  "state": "Active",
+  "last_update_status": "Successful",
+  "post_plan": "no changes",
+  "recorder_commit": "2d6b5881e5",
+  "recorder_source": "0b8784cea8",
+  "recorder_regression": "13/13 PASS",
+  "source_map_reconcile": "1 already-in-parity; 0 HELD",
+  "boundary": "Runtime install only; M owns actual authenticated API/browser proof. No vendor calls or fabricated auth events."
+}
