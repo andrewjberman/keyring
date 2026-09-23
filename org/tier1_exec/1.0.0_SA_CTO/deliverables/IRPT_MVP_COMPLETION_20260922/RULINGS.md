@@ -466,3 +466,8 @@ October recheck remains parked with CRO, not a blocker to current IRPT completio
 ## 2026-09-23 21:19 UTC - M/P mapping seam
 
 M-P-MAP-01 reproduced on614ad2f16b paired9e1bc3a751: M source_revision dict rejected by published P string interface. M keeps source_revision as exact source SHA256 string and carries full receipt under source_provenance. P preserves full mapping evidence. One actual callback-to-consumer request-construction control closes it; no new vendor use. Real selected COT build remains M-reported, not CTO-live acceptance.
+
+
+## 2026-09-23 21:23 UTC - actual COT source clears first thread input
+
+CTO independently replayed d8173c1b9c on seven exact real S3 versions:57positions/USD19705844.84 exact reconciliation, schema and all receipts match. Three narrow exclusion controls PASS0.64s. M now drives this same P-positive COT account through accepted publication/API/UI, remaining owner of whole Holdings journey; P only owns shared surfaces. Mandate first-account sequence updated. Portal c70855f3 five receipt/render controls PASS526ms; not live reopen/export. No product marked complete or unapproved publication performed.

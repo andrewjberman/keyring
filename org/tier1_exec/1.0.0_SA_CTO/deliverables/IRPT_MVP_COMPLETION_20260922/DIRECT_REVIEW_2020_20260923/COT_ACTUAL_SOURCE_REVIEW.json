@@ -1,0 +1,116 @@
+{
+  "pin": "d8173c1b9c",
+  "schema_valid": true,
+  "schema_errors": [],
+  "reconciliation": [
+    true,
+    19705844.84,
+    19705844.84
+  ],
+  "totals": {
+    "unique_account_count": 1,
+    "unique_position_count": 57,
+    "total_market_value": {
+      "value": 19705844.84,
+      "currency": "USD"
+    },
+    "deduplicated": true
+  },
+  "receipts_match": true,
+  "dimension_census": {
+    "source_rule": "COT_ASSETS_DIM_INCLUDE_ALL_NO_POSITION_AT_AS_OF",
+    "authority": "5ee54ac0d4",
+    "source_evidence": "f307d5841512f8de005b2dd5272350029d1f1b11",
+    "selected_dimension_row_count": 78,
+    "active_original_row_count": 57,
+    "excluded_no_position_count": 21,
+    "excluded_source_origins": [
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        17989
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18006
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18009
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18010
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18011
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18015
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18017
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18019
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18021
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18024
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18038
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18039
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18040
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18041
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18043
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18047
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18049
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18057
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18059
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18062
+      ],
+      [
+        "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+        18063
+      ]
+    ]
+  },
+  "vendor_calls": 0,
+  "cloud_writes": 0
+}
