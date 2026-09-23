@@ -78,3 +78,37 @@ selection confirmation and reload. Prior fixture passes cannot close this gap.
 No cloud apply or Portal production promotion is authorized by this record.
 Prepare a concrete minimal runtime plan for CTO adjudication if the deployed
 backend needs changes. Keep the localhost instance available for the next smoke.
+
+## CTO design adjudication: COO P proposal 20260923T132215Z
+
+Admitted for implementation and independent review. The established internal
+predicate is exactly verified `firmId == opal-capital OR userType == Dev`;
+`auth-validator-edge/aggregate_gate.mjs` defines it, and `index.mjs` overwrites
+the downstream identity headers after JWT verification. An admin role, email
+suffix, browser claim, or caller-supplied origin marker alone does not qualify.
+This is a source-grounded design decision, not a new live edge-version verdict.
+
+- Preserve the authenticated subject and verified origin prerequisite. Preserve
+  the existing distinct renderer/delegate restrictions; the internal predicate
+  must not elevate a render token into a full Global user.
+- A request-local eligible-subject roster may bridge the existing scope resolver.
+  Never mutate the module's Entry roster, a shared resolver or cached entitlement
+  state. Test an Opal request followed by a partner request in the same warm process.
+- Admit an explicit discriminated Global directory-context response on the
+  existing resolve route: per-firm authorized outcomes/scopes, never a synthetic
+  union ResolvedScope. Publish and test the paired schema/parser arm; existing
+  single-firm success and refusal validation must remain strict.
+- `selected_tenant` is a registry slug and request intent, separate from opaque
+  IDs. Validate it against server authority on every relevant operation. Reject
+  ambiguous/conflicting selector carriers, foreign-firm selection references and
+  cross-context cursors; bind pagination/cache identity to user, selected tenant,
+  filter and applicable entitlement/directory revisions.
+- Keep partial Global outcomes visible. Do not render a failed firm as an empty
+  success or use a default partner when no partner was requested.
+- The current verified JWT lifetime is the identity freshness boundary. Do not
+  claim immediate identity revocation during that lifetime. Current directory
+  ownership/entitlement checks still apply on each request.
+
+No new route, edge modification, roster service or TTL is required by this
+design. P must identify any actual deployment/package delta in the candidate;
+this admission grants no cloud apply or production promotion.
