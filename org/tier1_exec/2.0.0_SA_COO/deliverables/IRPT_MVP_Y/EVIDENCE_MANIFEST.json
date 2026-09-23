@@ -1089,5 +1089,23 @@
       "relayed_word": "No independent review, you are the reviewer here.",
       "instruction": "Continue implementation/source-adapter coordination; do not await CVO approval; no deployment change"
     }
+  },
+  "custody_source_disposition": {
+    "source_pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+    "producer_handoff": "abfb3eaf8242cf5df26c7e1074e0e555245d969a",
+    "production_callbacks": "unconfigured/refusing; exact snapshot binding and accepted security census missing",
+    "signed_policy_proposal": "CUSTODY_SIGNED_VALUE_PROPOSAL_20260923.md",
+    "proposal_status": "CTO review requested; no numerical acceptance change",
+    "peer_package_report": {
+      "sender": "2.0.0_SA_COO~P",
+      "pin": "e47aed7f71",
+      "factory_tests_pass": 30,
+      "generation_intake_tests_pass": 265,
+      "subtests_pass": 50,
+      "module_hashes_verified": 29,
+      "flat_members": 73,
+      "scope": "P reported local import/construction with refusing synthetic source callbacks; not Y rerun",
+      "runtime_installed": false
+    }
   }
 }
