@@ -5285,3 +5285,82 @@ fanout:
   blocked_on_a_scope_call: [Lenovo filings source -- HKEX is excluded by msg 24257]
   no_fleet_run: true
 ```
+
+## 42. ROUND 34 -- **NO CELL.** The emptiness is the finding, and it is MEASURED, not conceded
+
+**Cut by `2.0.0_SA_COO~Z`** on the CTO's round-33 analysis @`6c2ec34633` (msg 24522), whose operative sentence is
+adopted here verbatim as the round's whole content:
+
+> ⛔ **TWO HALF-FIXES IN THREE ROUNDS, BOTH CORRECT CODE, BOTH BLOCKED OUTSIDE THIS PROJECT.**
+
+⛔ **ROUND 34 ISSUES ZERO ORDERS. THAT IS THE DECISION, TAKEN AT L6, AND IT IS RECORDED RATHER THAN DEFERRED.**
+The CTO's analysis is explicit -- *"NOT more server-side cells cut to keep a round non-empty ... a round that names
+it beats a round padded to look productive"* -- and this seat agrees on its own reading of the candidates below.
+**An issuance of nothing, with every candidate's blocker measured, is an L6 act; an issuance of filler is a
+defect.**
+
+### 42a. EVERY CANDIDATE, WITH ITS BLOCKER MEASURED AT THIS CUT
+
+| candidate | state | blocker, and whose |
+|---|---|---|
+| `C-S400` (the overlay's FALSE sentence) | promoted above `Z-S227` by the CTO | ⛔ `portal/**`, lane `POD_DE_ANY` -- **ANDREW'S registry card** |
+| `Z-S227` (0 of 5 tabs carry an `isError` branch) | brief written, packet §2 | ⛔ same |
+| `rk-124`'s CLIENT half | server half landed @`7bbb76b273` | ⛔ same |
+| Lenovo's filings source | blocks the Thesis stage | ⛔ **HKEX scope call -- `1.0.0_SA_CTO~Z` takes it next** (msg 24522 item 1) |
+| `rk-127`'s first real marker | mechanism landed @`eac425c5d0` | ⛔ needs a battery re-run, which the HKEX call gates |
+| `Z-S229` (price axis) | bronze half answered by `rk-117` | ⛔ cohort-wide re-rank = a FLEET act; its own pair **plus Andrew's scope word** |
+| the `BEST_*_NUMEST` field | APPROVED IN PRINCIPLE, REFUSED AS WRITTEN | ⛔ **PRD contract change, `1.0.0_SA_CTO~Z`'s**, under three conditions @`4801aa4af4` |
+| `Z-W126-S3` (`.scratch/` has no lane entry) | 0 of 282 static path keys cover it | ⛔ **estate-wide registry act -- Andrew's, same card** |
+| `Z-S230` (the Bloomberg credential) | code fixed; 4 artifacts still carry it | ⛔ scrub is destructive + rotation deferred -- **human word per act** |
+| stage 9's GOLD rebuild | silver landed, 14 rows | ⛔ **`2.0.0_SA_COO~Y`'s**, rides that seat's recut -- not this project's |
+
+### 42b. ⭐ ONE CANDIDATE WAS CHECKED AND FOUND ALREADY DONE -- `Z-W126-S1`'s sibling, `Z-W120-S1`
+
+**This is the only row from rounds 30-33 whose disarm_owner names this seat AND whose remedy is code in
+`lib/**`** -- i.e. the one place a genuine in-boundary cell could have hidden. **It is already closed, verified at
+the bytes at this cut:**
+
+- `add_security.py:180` **DOES** pass `document=document` -- Issuer Amendment 1 @`ae4b5d95ba` landed and holds. The
+  production registration path IS validated.
+- `build_universe.py:918` writes to `UNIVERSE_PREFIX` with a **union document against a different schema** and is
+  deliberately NOT validated -- Amendment 2 @`c69c628c9f` struck that instruction after the worker refused it.
+
+**So `Z-W120-S1` needs a DISARM BY RECORD, not a cell.** Its standing flip is the CVO's at L9, as with the five
+`Z-S235` members.
+
+⚠ **AND A WRONG-DOMAIN TRAP THIS SEAT WALKED UP TO AND STOPPED AT, recorded because the stopping is the lesson.**
+A census of `write_pool(` returns **16 hits, 10 non-test call sites**, of which only `crosswalk.py:1094` and
+`add_security.py:180` pass `document=`. **Read naively that is "a guard covering 2 of 10 production writers" -- a
+dramatic finding, and FALSE.** `write_pool` is a GENERIC pool writer: `analyze.py`, `enrich.py`, `universe.py` and
+`run_scores.py` write ANALYSIS, MANAGEMENT, PEERS and SCORES documents. **Passing `document=` there would validate
+them against the CROSSWALK schema, which is the wrong schema.** ⭐ **The population is not "callers of
+`write_pool`"; it is "callers writing a CROSSWALK document" -- and over THAT domain the guard covers 2 of 3, the
+third deliberately excluded.** **The denominator was one `sed` away from a false finding in a decomposition.**
+
+### 42c. WHAT THIS ROUND ACTUALLY RECORDS
+
+⭐ **The constraint IS the finding, and after three consecutive server-side rounds it is no longer a scheduling
+observation -- it is the project's state.** Three rounds of sound, tested, merged code that **a user cannot see**,
+because every visible surface is behind `portal/**` and every remaining data path is behind a scope call.
+
+⛔ **THIS IS THE REGISTRY CARD'S SHAPE ONE LEVEL UP** (the CTO's words, adopted): the project can only build the
+HALF of each fix that sits inside its own boundary. **It is not answered by cutting more cells.**
+
+**NOTHING IS STALLED THAT THIS SEAT CAN UNSTALL.** Round 35 is cut when one of the three calls lands -- Andrew's
+registry card, the CTO's HKEX scope call, or the CTO's `NUMEST` contract decision -- **and not before.**
+
+### 42d. FAN-OUT
+
+```
+fanout:
+  cap: 8
+  orders_total: 0                   # DELIBERATE. See 42a for every candidate's blocker.
+  chains_total: 0
+  blocked_on_andrews_registry_card: [C-S400, Z-S227, rk-124 client half, Z-W126-S3]
+  blocked_on_the_cto_hkex_scope_call: [Lenovo filings source, rk-127's first marker, the Thesis stage]
+  blocked_on_the_cto_numest_contract_call: [the contributor-count field]
+  blocked_on_a_human_word: [Z-S230 rotation, Z-S229's fleet re-rank]
+  not_this_project: [stage 9 gold rebuild -- 2.0.0_SA_COO~Y]
+  already_done_disarm_by_record: [Z-W120-S1]
+  no_fleet_run: true
+```
