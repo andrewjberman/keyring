@@ -4,6 +4,13 @@ Seat `2.0.0_SA_COO~M` (CODEX). IRPT contract v1.3:
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 at `f0fcc4516c`. Reviewer: `1.0.0_SA_CTO`, per Andrew's direct assignment.
 Current sequencing: CTO ruling batch `5edf991c06`, message `20260923T165545Z`.
+Controlling access correction: `IRPT-OPAL-FULL-ACCESS-20260923` at `5ad99c7d30`.
+Verified Opal users may use every IRPT function across firms, including prospect
+uploads, other-owner reports, history and exports. Global/firm selection filters
+inputs and views; it is not an Opal permission ceiling. Preserve actor identity,
+exact selection, per-input firm/account/source attribution and audit history.
+Ordinary firm-user restrictions and forged-Opal refusals remain. Missing workflow
+capability must not be presented as a valid Opal user's permission denial.
 
 ## Pins
 
@@ -55,6 +62,7 @@ suites or circulate field-name drafts.
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
 | Exact first-hop dependency, if M is needed | COO~P | Current live trace and served revisions under `5edf991c06` | AWAITED |
+| Exact dependent M data/selection change for full Opal access | COO~P shared authorization/UI/API owner | `5ad99c7d30`; no specific M implementation delta supplied yet | AWAITED; no takeover of shared ownership |
 | Private publication integration | COO~P | `capture` / `load_pinned`, `3539ad2ae5` plus `200ba442f5` correction | HANDED OFF; deeper review PARKED |
 | Direct review | CTO | `bb43292167` bounded publication PASS | CONSUMED; no new CVO wait |
 
@@ -79,3 +87,7 @@ unproved by M's pins. No cloud read/write, producer invocation, new IAM, vendor
 call, activation, promotion or deployment follows from the hold lift. Existing
 gates remain. CRO message `20260923T165608Z` changes backend-only thread guidance
 and explicitly does not change frontend-bearing IRPT.
+The Opal access correction authorizes the coordinated implementation, not deployed
+behavior or cross-firm economic aggregation by inference. Per-firm publication
+receipt identity remains a data-attribution check, not an actor-home permission
+rule. CLOUD push remains held under MSTR's `8a5c01207d` relay.
