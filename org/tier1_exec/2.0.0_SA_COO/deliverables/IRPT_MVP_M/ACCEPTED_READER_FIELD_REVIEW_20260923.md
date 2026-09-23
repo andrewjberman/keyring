@@ -7,6 +7,11 @@ Review request: exact P message 20260923T160015Z. Reviewed draft `7e9baf3064`,
 ACTUAL_POSITION_REPAIR_PROPOSAL_20260923.json). Read-only source review; no code,
 producer, cloud, shared schema, binding store or callback changes.
 
+Current interface reconciliation: Y `605449f4cc` adopts these nested fields and
+1100-character transport bound. M accepts Y's canonical-security additions and
+original-row correspondence below for P's closed-schema decision. This supersedes
+Y's earlier flat field proposal; it supplies no missing source authority.
+
 ## Signature and boundary: retain, with these corrections
 
 P's proposed `AcceptedCustodyReader.authorize_snapshot(principal, owner) -> bool`
@@ -43,8 +48,10 @@ partial accepted envelope. Legacy input without actual custody remains unavailab
 
 ## Exact proposed economic-fact additions (internal draft only)
 
-Retain P's agreed `market_value`, nullable `quantity`, `source_security_id` and
-`source_rows`. Add `economic_facts` to BOTH each original row and each unique
+Retain P's agreed `market_value`, nullable `quantity` and `source_security_id`.
+Each original row has singular `source_row` with scoped `source_receipt_id`,
+nonnegative physical `row_index` and nullable `relationship_id`; positions retain
+plural `source_rows`. Add `economic_facts` to BOTH each original row and each unique
 position; these facts participate in duplicate equality. The shapes below are
 proposed for P/Y agreement, not implemented or emitted fields. `EvidenceRef` is
 P's scoped `{source_receipt_id: string, row_index: integer >= 0}`; column names
@@ -54,7 +61,7 @@ below identify fields within those exact rows, not a public object location.
 |---|---|---|
 | `cash` | object `{source_field: string|null, source_value: boolean|null, classification: "CASH"|"CASH_EQUIVALENT"|"NON_CASH"|null, evidence: EvidenceRef[]}` | Preserve the exact typed flag. A classification needs a bound source interpretation; unknown is null, not NON_CASH. CASH_EQUIVALENT must never become the literal cash security. |
 | `side` | object `{source_field: string|null, source_value: string|null, position_side: "LONG"|"SHORT"|null, sign_rule_revision: string|null, evidence: EvidenceRef[]}` | Preserve vendor position side. No side from transaction direction, positive net, or sign guessing. A bound sign rule must state whether value/quantity are already signed; do not apply a sign twice. A source without a separate side field needs an explicit owner-admitted signed-value rule, not a fabricated LONG. |
-| `security` | object `{resolution_revision: string|null, resolved_identifier: {namespace: string, value: string}|null, evidence: EvidenceRef[]}` | Source identifier is still separate in source_security_id. Resolution must be maintained, firm/vendor scoped and tied to that identifier; no fabricated ticker-based provider ID. Unknown resolution prevents recipes requiring it. |
+| `security` | object `{resolution_revision: string|null, resolved_identifier: {namespace: "TICKER"|"CUSIP"|"CASH", value: string}|null, security_key: string|null, resolution_source_receipt_id: string|null, evidence: EvidenceRef[]}` | Source identifier is still separate in source_security_id. Resolution must be maintained, firm/vendor scoped and tied to that identifier; no fabricated ticker-based provider ID. Key and receipt are Y's required additions; null preserves an unresolved draft fact, never an accepted recipe identity. |
 | `source_quantity` | object `{value: decimal-text|null, source_field: string|null, source_units: string|null, unit_rule_revision: string|null, evidence: EvidenceRef[]}` | Retain signed native numeric quantity even when its unit interpretation is unavailable. Populate the existing `quantity` SHARES object only when this exact source/asset supports SHARES; otherwise quantity is null. No guessing from column label alone for every instrument. |
 | `accrual` | object `{treatment: "INCLUDED_IN_MARKET_VALUE"|"EXCLUDED_FROM_MARKET_VALUE"|null, value: decimal-text|null, unaccrued_market_value: decimal-text|null, rule_revision: string|null, evidence: EvidenceRef[]}` | Native value plus an explicit interpretation; no default zero. COT equation is MV=UMV+Accrual, with accrual already in MV. EXCLUDED is a possible declared fact, not permission to add accrual automatically or change a firm's valuation law. |
 
@@ -71,6 +78,21 @@ crosswalk reference if its raw spelling cannot leave the reader.
 These internal proposed enum spellings do not authorize new public refusal enums.
 Use existing refusal envelopes; missing required facts refuse the whole requested
 input. Cash/side/unit/security facts cannot be inferred from a successful MV tie.
+
+The one security object projects to Y's existing CANONICAL_SECURITY identity;
+resolved_identifier supplies its canonical identifier and namespace. The mapping
+receipt must resolve to actual immutable maintained mapping evidence within the
+binding. No such accepted mapping receipt has been established by M's source
+review. CASH requires sourced classification and `$:CASH`; cash equivalents keep
+their resolved instrument identity. There is no parallel resolution authority.
+
+Each original physical receipt/row pair occurs once and belongs to exactly one
+economic position. Reusing that reference in its position's source_rows is
+required correspondence, not an illegal duplicate. The union of position refs
+equals all original refs; consumed facts agree before relationship collapse.
+Known SHORT or negative native quantity refuses Y's positive-only recipe even
+when MV is positive or interpreted SHARES quantity is null. Signed custody facts
+remain intact; unknown interpretation never becomes LONG or an eligibility fact.
 
 ## What the pinned sources establish, and what they do not
 
@@ -157,6 +179,18 @@ not a claim of exact vendor decimals. Missing source p/s does not license a
 fabricated scale, and a schema declaration alone does not prove monetary units.
 No exact per-firm source p/s is currently established by the inspected code.
 
+Y605449f4cc accepts this transport proposal and specifies string-only full-match
+ASCII grammar `[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?`.
+No whitespace, JSON numeric coercion, NaN or infinity. This does not widen M's
+existing float-finiteness guard. Separately, Y's current original-dollar analysis
+domain is strictly positive, at most 28 coefficient digits and absolute exponent
+18; its normalized output bridge has 128 characters, 80 digits and exponent 80.
+These are consumer constraints reported in Y's pinned review, not newly exercised
+by M. Quantity is not a dollar amount; preserve its sign and admitted unit rule.
+Do not strip trailing zeros or round to fit any bound. The accepted interface's
+reconciliation tolerance should be decimal text "0.01" or an admitted stricter
+value; M's current PRIVATE float tolerance metadata is not that interface.
+
 ## Handoff disposition
 
 Retain P's proposed signatures and accepted-vs-local separation. Add the concrete
@@ -169,3 +203,6 @@ Complete empty-account proof and its census receipt capability remain unavailabl
 local empty inputs refuse. Immutable binding writer/store and public S2/schema
 remain P-owned unresolved. This review proposes corrections only; callbacks stay
 closed and no shared runtime edits are requested by this document.
+P can now close the proposed field shape using Y605449f4cc and this review;
+source mapping receipts, numeric contracts and admitted economic interpretation
+remain acceptance prerequisites, not a new authority to activate the reader.
