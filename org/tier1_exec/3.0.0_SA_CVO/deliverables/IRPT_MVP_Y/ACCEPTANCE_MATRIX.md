@@ -490,3 +490,13 @@ exception cut points and modeled Dynamo effects; no READY, OS process death,
 vendor readback or server race grade. PUBLICATION_RECOVERY_REVIEW_8279.md records
 scope and the future maintained-source51b5d63a81 obligations. These do not grade
 any of the14 integrated rows:0PASS/0FAIL/14NOT_EVALUATED remains unchanged.
+
+## Recipient validation and historical comparison candidate
+
+70eabdcf3b boundary /9daa67433e catalogue:19supplied+28subtests and14independent
+controls PASS, bounded to application validation and static candidate metadata.
+Exact label text survives without scope/title changes; prohibited values refuse.
+All4catalogue entries remain explicitly unverified with no current permissions.
+Actual mapping, resolver admission, retained composition, worker, cover/UI and
+renderer/vendor limits remain ungraded. See RECIPIENT_CATALOGUE_REVIEW_70ea_9daa.md.
+Integrated denominator remains0PASS/0FAIL/14NOT_EVALUATED.

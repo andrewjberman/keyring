@@ -6,6 +6,13 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 ## Completed preparation
 
+- Recipient boundary70eabdcf3b and historical catalogue9daa67433e:19supplied,
+  28subtests and14independent controls PASS. Exact text preserved in both lanes;
+  missing/blank/type/length/control/surrogate inputs and forged server keys refuse.
+  Catalogue4entries retain historical values, UNVERIFIED identity/entitlement,
+  empty permissions and null verification refs. No vendor mapping, resolver
+  enforcement, canonical frozen composition, worker/cover/UI or render safety
+  grade. See `RECIPIENT_CATALOGUE_REVIEW_70ea_9daa.md`; all14NOT_EVALUATED.
 - Merged public-wire endpoint33b2fbe528/12acb3f4 independently confirms closure:
   original24 backend controls,4 clean refusal observations,20parser53assertions,
   added8projection/4selection/6portal9assertions PASS; supplied3backend,
