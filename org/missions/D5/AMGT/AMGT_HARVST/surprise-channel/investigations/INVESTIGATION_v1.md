@@ -857,6 +857,32 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "Z-S3 presented a printed denominator of 103 and used it to characterise this project's bronze population and the share of it that is not as-received.",
     "world_is": "103 was the ARTICLE subtree. The filter was a substring test for '/harvest/bronze/article/' and it swept exactly what it claimed, but the sentences built on it silently widened to bronze and to the project. A second label, bbg-client-json, exists on 115 objects and was invisible to that filter entirely, so the row could not have seen it at any threshold. The correction arrived only because 3.0.0_SA_CVO~Z counted the population instead of accepting a row's stated scope, and 1.0.0_SA_CTO~Z recorded the general form: a row's stated scope is a HYPOTHESIS and the census is the MEASUREMENT.",
     "notes": "Filed as a NEW row citing the old id, per the gate's rule that corrections are new items. Z-S3 stands unmodified. THE CUT CONSEQUENCE, which is why this row exists before round 4 rather than after it: the round-4 population is 18 objects across FIVE seeking-alpha subtrees (article, analysis, news, report, symbol), not 6 and not one subtree, so a cell scoped to article alone would cover 6 of 18 and report a clean pass. The analysis states 18 and does not decompose it; this row decomposes it and the order will carry the breakdown. NON-APPLICATION of the lesson: a census whose sentence names the same set it swept."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S13",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-23T04:30:37Z",
+    "one_line": "HVST-u-1's order told the worker to PROPOSE a received-form value from a BYTE-SHAPE read. received-form is a PROVENANCE claim -- whose bytes these are -- and shape cannot answer it, so the instruction asked for a manufactured claim indistinguishable from a genuinely observed one. Struck mid-flight by AMENDMENT 1 @d384fc3fe5, the issuer's THIRD order defect in this project and the second found only after the order was already with a worker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "harvest_grammar.py:70 read at the bytes by this seat, not taken from the ruling: RECEIVED_FORMS = frozenset({\"as_received\", \"normalised_record\"}), and :79 refuses any value outside it -- so the enum has exactly TWO legal values and no value for 'never observed'",
+        "the two are the two a back-fill cannot distinguish: as_received means the vendor's bytes and normalised_record means the HARVESTER'S OWN OUTPUT. Both can be seeking-alpha and both share the key shape, so no property of the stored bytes separates them",
+        "put_article_bronze's signature, read at the bytes: received_form=\"as_received\" is the DEFAULT -- so the cheapest correct-looking relabel writes the vendor-provenance claim onto every object, silently wrong on however many are actually the harvester's own output",
+        "the order's struck text, verbatim: 'proposes the received-form value that object WOULD take, and prints it as a PROPOSAL', with AC2 expecting a 'proposed label' per object. A shape classifier producing a provenance value is a category error the criterion would have graded PASS",
+        "1.0.0_SA_CTO~Z's ruling @4d7ef9f79e reached the same conclusion independently and states that all three seats held the false premise, including itself; its round-3 analysis had ranked this work first as '18 unlabelled objects, no vendor call', which reads as a remedy in reach"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The proposal element is struck rather than remediated, because there is nothing to propose: the field's enum has no value for an unobserved provenance and inferring either legal value would manufacture an unknown that no consumer could distinguish from a measured one. The cell keeps its byte-shape classification, which is a real and separate question, and gains AC5 proving the disclosure already exists at object grain through check_as_received.py's MISSING bucket with zero writes. The row is dismissed as an order defect corrected before any output was produced, not as a finding about the store.",
+    "spec_asserts": "My order asserted that an object's received-form value could be derived from what its stored bytes look like, and asked the worker to print that derivation as a proposal.",
+    "world_is": "received-form records WHOSE bytes an object holds, which is a fact about the act that wrote it and not about the bytes. The shape of a body is consistent with either provenance. So the instruction was unanswerable as written, and the danger is that it was answerable-LOOKING: a worker would have produced a plausible value per object, AC2 would have graded it PASS, and the output would have read as a labelling plan ready to execute.",
+    "notes": "THIRD order defect by this seat in this project, and the pattern across the three is the useful part rather than any one of them. Z-S10: the order did not name what a moved call may do to a propagating exception. Z-S11: the order's invocation was unrunnable and the gate compared it only against itself. Z-S13: the order asked for a value the field cannot hold. NONE was caught by a gate, ALL THREE were caught by reading the artifact after the gates said PASS, and two of the three were caught only after the order was already with a worker. STANDING REMEDY ADOPTED: before issuing, for every criterion, ask what the named field or artifact actually RECORDS and read its definition at the bytes -- for an enum, read the enum. That is the same discipline as section 14b one level up, applied to what a criterion ASKS FOR rather than to what a row's field ACCEPTS."
   }
 ]
 ```
