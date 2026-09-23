@@ -37,3 +37,5 @@ new measured rule. Original byte receipts and excluded physical ordinals retaine
 Three targeted controls prove narrow exclusion, partial-null refusal and independent
 total mismatch refusal. Evidence COT_END_DATE_POSITIONS_PROOF_20260923.json.
 Please prefer this account for the shared authenticated cross-tab journey.
+
+M-P-MAP-01 repaired: source_revision is the exact SHA256 string; the full source receipt plus date is source_provenance. ActualS3 callback passed unchanged P bd_selected.requests_for@9e1bc3a751 for the named57-position account, constructing both request bodies with no vendor calls. See COT_MAPPING_PAIRED_PROOF_20260923.json.
