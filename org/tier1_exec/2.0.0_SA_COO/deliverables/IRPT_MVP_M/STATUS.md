@@ -1,4 +1,62 @@
-# M completion status — 2026-09-22
+# M completion status — 2026-09-23
+
+CTO source-repair proposal request `20260923T152513Z` is answered in
+[ACTUAL_POSITION_REPAIR_PROPOSAL_20260923.md](ACTUAL_POSITION_REPAIR_PROPOSAL_20260923.md).
+All three canonical actual-position source families are located at source pin
+`1067e472a4298085e768bb03df10a5d16e3456e2`; current live completeness is unmeasured.
+The proposal names exact producer/source paths, responsible owners, output and
+per-account acceptance controls. It awaits CTO scope adjudication; production
+callbacks remain closed and no producer/cloud execution or source edit occurred.
+
+P/Y's source/interface fact requests at `151157Z`, `151424Z` and `151546Z`
+are answered in
+[CUSTODY_NORMALIZATION_SOURCE_HANDOFF_20260923.md](CUSTODY_NORMALIZATION_SOURCE_HANDOFF_20260923.md),
+with a companion two-pin source inventory. Publication retrieval and current
+selection checks exist; concrete snapshot-identity authorization and accepted
+custody-to-frozen-portfolio callbacks are not implemented in the inspected
+production subtree. The three-firm display tree does not establish a complete
+actual security portfolio, and the existing freezer rejects signed/zero values.
+Y factory `819c9e3990` injects these ports explicitly. This is a bounded missing
+source/adapter handoff to P/Y/CTO, not shared-code work or a fresh live verdict.
+
+Current bounded assignment (CTO `20260923T134609Z`): read-only three-firm
+directory/ownership producer-data audit. Completed measurement and findings:
+[DIRECTORY_DATA_AUDIT_20260923.md](DIRECTORY_DATA_AUDIT_20260923.md), with exact
+version/hash receipts and runnable aggregate-only probe. All 5,127 directory
+entries are schema-valid but dated September 17. 49F has 69 whole-advisor
+projection refusals, Inflection's map is absent, Cottonwood's map is empty.
+This is source-data evidence, not deployed journey acceptance.
+
+CTO follow-through `140502Z` / `141018Z` is documented in
+[PRODUCER_ORGANIZATION_INVENTORY_20260923.md](PRODUCER_ORGANIZATION_INVENTORY_20260923.md):
+exact producer/owner source pins, bounded repair proposals and the actor-home
+organization reader gap. The existing Opal CONFIG#defaults metadata was also
+read with a strongly consistent, projected GetItem; existence is established,
+and CTO subsequently admitted the exact organization-only record for P's
+maintained custody reader in message `20260923T141855Z`. Current CloudOps owner
+contract confirmation is routed through MSTR; reader implementation and deployed
+acceptance are not established by this source admission. No producer or
+deprecated reader was invoked and no shared code or cloud state was modified.
+P's exact `holdings/entry.py` exception at `bfa0575910` is preserved.
+
+CTO accepted inventory `7015e0d626` and closed this bounded assignment. Further
+producer repairs require exact cause-specific scope; P remains sole shared writer.
+The reload inbox reconciliation is recorded in
+[INBOX_RECONCILIATION_20260923.md](INBOX_RECONCILIATION_20260923.md). Historical
+requests are reconciled against later pinned evidence, without replaying source
+changes, lifting package/live gates, or reopening already closed findings.
+
+Andrew directly lifted the overnight hold. CTO ownership-transfer ruling
+`09b9573688` remains operative: P is sole writer for the current directory,
+bootstrap/browse, supporting scope/auth and Portal header/firm/search/selection
+repair until explicit handback. No M source changes on those surfaces. Previous
+fixture candidate `f0aead3dcf` and all prior worktrees are preserved; no replay into
+P's current work. Current P helper baseline audited: `dc51d8920d`.
+
+The remainder below is the historical September 22 status, retained as history;
+its old dependency statements are superseded by later bounded evidence records.
+
+## Historical September 22 checkpoint
 
 Seat `2.0.0_SA_COO~M`; runtime GREEN (all nine canonical checks). Startup defect
 resolved at `9b99dc12cd`; six ordered role files read. Contract v1.2 and CTO
