@@ -1,25 +1,24 @@
 # IRPT P ? current state
 
-Owner `2.0.0_SA_COO~P`. 2026-09-23 20:12Z. Andrew invoked closer for Performance and a 600-second drive until the intended end-to-end product works. CTO direct review; CONTRACT v1.4 / COO_P / CONTROL c7265d2bef; resident-runtime amendment f1add564fd. No product completion claimed.
+Owner2.0.0_SA_COO~P. Updated2026-09-23 21:38Z. Andrew's Performance closer and600-second drive remain active. Product not complete. User confirmed scope bootstrap only.
 
-## First live Performance journey
+## Performance live thread
 
-One selected Cottonwood account ? exact period and series ? immutable retained report ? authorized API ? real-login screen. Backend base7c7aaef354; Portal base10141b6d0b. Candidate adds parameterized single-account calculations, COT-only authenticated transport, selected-firm request support, final Opal roster recheck, actual period/value adaptation, percentage display and selection-bound rendering.
+Anna positive control WORKS: exact COT account26705231/externalz0926705231, canonicalacc_d486fc9455d6b2aa18e13af1. September1?22 cumulativeTWR -0.004613806,15daily points. The arbitrary earlier account's empty200 does not prove a general COT entitlement/connection failure; CRO10f3 indicates no-position history as likely data cause. Completed probes cannot be retried without new per-use authority.
 
-**Anna positive control: provider hop WORKS; report storage/screen remain incomplete.** Andrew directed the active Anna accounts. Retained model mapping resolved Anna Thiessen - Individual (strategy Anna *9237); one new bounded token+period+series run, no retries, returned the exact numeric and external account IDs on BOTH responses. September 1-22, 2026: cumulative TWR -0.004613806 (-0.4613806%); 15 daily-series points end at exactly the same return. Provider dataDate is September22. Plan SHA ae975bcee7cd84f63dc220dd0b17e2c425eb4cf053a0a44c6cd0e7328c363319. Private evidence remains under .runtime/performance-cot-anna. No report published and no further vendor use implied.
+USD CLOSED by Andrew6f45e8fbc9: all COT report amounts USD. Shared currency_authority/CurrencyAuthorities preserves this separately from raw vendor bytes; conflict refuses. No currency assumption or FX conversion.
 
-The earlier arbitrary account returned empty200; it was not a known-working positive control. That result does not establish a general Cottonwood connection, entitlement or request-format failure. Its account-specific cause remains unknown. Anna also has is_managed=false in retained mapping, so that flag does not explain the difference. Currency is not stated in either retained response; source clarification remains with CRO.
+Backendsource08f9738226: canonical RetainedPerformance + guarded Entry factory; exact original-byte evidence with SHA/length and parser from those bytes; source promotion + report persistence + exact immutable readback/final authorization. M9b3 mapper consumed unchanged (digest-string revision plus full version receipt). Full maintained dependency tree included. CTO51504 closes P-SOURCE-01 and M-P-MAP-01.42affected controls passed before bounded history update;33calculator/storage controls passed after. Only verified selected period published; no fabricated YTD/inception coverage. Frontendc70855f3 carries retained report identity/revision separately from source hash;5wirechecks+typecheck pass.
 
-CTO12945 external-ID repair: calculator now requires a nonempty server mapping external key before I/O and exact parity in BOTH responses; bad period stops before series. Matching/missing/different identity and pre-I/O mapping controls:13 PASS,14 deselected. Actual Anna response bytes independently pass the same repaired identity gate offline, with no vendor calls.
+Final local58member package9cc2d2d9aeaf57b935c914f760515cded4efd3e1c4f523af6f05910725d02bc6@08f973 cold-imported outside repository, read actual Anna versioned mapping and replayed already-approved exact responses. Source revision8da7736ac8c399551fec6068c1f9282bb44113e56f212e2f234b76ba12c478f2; original period162a35b0? and series754d46c0? unchanged. Real schema PASS,1period/15points, no vendorcalls/cloudwrites. Nativecp312 dependency wheels are separately pinned/measured236210596bytes; Linux execution and canonical deployment package remain open.
 
-Offline: backend Performance93 PASS; exact frontend fe-s-5 suite23 PASS; mounted account/firm/period/refresh/late-response/failure test PASS; TypeScript PASS. Synthetic/historical shapes only. Initial broad Bun substring also matched fe-s-50..59 with unrelated missing schema-root/legacy-envelope failures; no whole-tree PASS. No new backend deployed.
+## Current deployment blocker and next motion
 
-## Next motion
+Canonical X10 policy stillPENDING_ENFORCEMENT. All36 destinations deriveopal-data-irpt, which AWS confirms absent. Deployed Performance remainsSept21jVktMAiR?/commonlayer5 with onlylogging+legacydirectory/ownership reads. No current source/store permissions. Source success cannot enable the product.
 
-1. Carry the proven Anna period/series through canonical retained report composition. Currency remains an exact source-contract gap; no assumed USD. Both consumed plans remain non-retryable. Further vendor calls require their own per-use authority.
-2. Wire calculation through canonical retained report/evidence repositories and final release checks; prove exact-version reopening and revocation while source evidence resolves.
-3. Publish candidate pins for CTO review, then install reviewed callable package under concrete deployment scope and exercise real login ? selected account ? screen. No fixture/replay fallback.
-4. Remaining mandate: COT sets/benchmarks/PDF;49F SmartX PRIMARY with BD verifier;INF Orion. SmartX capture ebf1/c12 now proves one account PTD; custom-window account/set remains unavailable. Provider-as-of and fee/method absent. No model-return substitute or BD primary.
+Core candidatef4a1dd60a3 creates private/versioned/encrypted registered bucket under existing P ownership98209e201b. Full savedplan:5create0change0destroy, SHA c7639c4c06ba726a8df246c4c5742da6c70e22890940fdbbd38535c8f8329a90. Exact path.runtime/performance-retained-package-v2/core-storage.tfplan. Routed CTO21:33 for exact disposition. No apply. See PERFORMANCE_CUTOVER_20260923.md and measured JSONs.
+
+Next: canonical storage disposition/apply/readback; consumerIAM and full package/handler closure; accepted enforcement activation covering12families/3firms; authenticated selected-account report and retained reopening/export/screen. A new calculation needs per-use authority; existing capture is offline evidence, not an automatic live fallback. No alternate storage or fixture UI. Remaining mandate includes sets/benchmarks/PDF and other providers; first Anna thread first.
 
 ## Shared queue ? bounded batches, Performance between batches
 

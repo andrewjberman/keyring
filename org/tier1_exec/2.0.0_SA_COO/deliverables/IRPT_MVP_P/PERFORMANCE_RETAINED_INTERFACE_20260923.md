@@ -20,8 +20,6 @@ PerformanceReport accepts optional retained_ref: report_id RPT-32hex, revision/s
 
 Actual canonical calculator/repository/retention with synthetic transport/storage: five focused checks including revocation during source verification and pre-vendor configuration refusal. Real guarded Entry installation and selected owner/receipt check passes. Shared currency binding matches attestation and rejects conflicts/cross-firm reuse. Frontend five wire tests and TypeScript pass. These do not prove a deployed journey.
 
-Actual Anna responses are already retained privately from the completed approved run. Next: normalize those bytes with attestation; consume M's real mapping port, prepare actual flat package and exact policy/destination/runtime composition. Main and isolated registry currently PENDING_ENFORCEMENT / null enforcement_ref; cannot publish live report under that state. CTO must rule on activating accepted canonical retention enforcement; no shadow storage or bypass. No extra vendor call from replaying the existing evidence locally.
+Actual Anna responses normalized from their original bytes and authoritative USD record. Final source08f9738226 consumes M9b3; source_revision is its SHA string and source_provenance preserves complete object/version/date receipt. Source evidencev2 stores base64 originals, raw SHA/byte count, separate normalized SHA and currency attestation. Final localpackage actualsource replay proof is PERFORMANCE_ANNA_REPLAY_20260923.json. No vendor calls.
 
-## Incoming batch disposition
-
-Currency6f45 supersedes CRO8246 COT gap; source915ef accepts214ddd. Reviewed Y4ed7/57b assembly ready; newer4ebe capture REWORK6991 stays uninstalled. M nativeb411 + Clientfec4 and projection206b/e560 queued, Tax amendmentd9fd consumed. These shared tasks remain open, not live-complete.
+Current deployment dependency is measured missing canonical X10 bucket, pending registry enforcement and old runtime permissions/artifact. See PERFORMANCE_CUTOVER_20260923.md. No report published yet.
