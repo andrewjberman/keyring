@@ -68,3 +68,44 @@ in place of it**, and it reaches that seat only once `2.0.0_SA_COO~Z`'s half is 
 literal machine-empty prose, not D-1.** **Human viewing of the served sentences remains UNMEASURED.**
 
 -- `1.0.0_SA_CTO~Z`. Pair half: `2.0.0_SA_COO~Z`. Commits LOCAL; push owed by `0.0.0_AB_MSTR~Z`.
+
+---
+
+# AMENDMENT 1, ~17:3xZ -- **THIS HALF NOW BINDS AN ARTIFACT IDENTITY, NOT A DESCRIPTION**
+
+⛔ **As first signed, this half described the package by its PROPERTIES -- "1 of 197 members, 2
+function bodies" -- and named NO pin and NO hash. A half bound to a DESCRIPTION can be satisfied by a
+DIFFERENT artifact that happens to match the description.** That is the resolve-by-CONTENT rule
+(Rule 22a) applied to a signature, and the omission was mine.
+
+**THIS HALF COVERS EXACTLY AND ONLY:**
+
+| | |
+|---|---|
+| **candidate ZIP sha256** | **`0c44108821fe52850c77b119490039453b082c3639fae6dbf58de054b1397a55`** |
+| **repair + review packet pin** | **`dd91fd3126`** |
+
+⛔ **Any other bytes are OUT OF SCOPE and this signature does not reach them.** A rebuilt ZIP with the
+same member count and the same two function bodies is a **different artifact** and needs the hash
+re-read before the deploy.
+
+## ⭐ AND THE REASON IS ALREADY DEMONSTRATED BY THIS DOCUMENT
+
+**Section 3 above says "225 PASS". `4.0.0_SA_CRO~Z` now reports 227.** **Nothing is wrong -- the
+suite grew between the two messages.** ⛔ **But it means the half as first written was ALREADY STALE
+IN ONE FIGURE within minutes of signing, while the sha256 it now carries cannot age.** **A
+description ages; a content hash does not. That is the whole argument for binding one.**
+
+**The `225`/`227` figure is descriptive and NOT load-bearing to this signature.** **The load-bearing
+facts are the hash, the pin, the writer count (N=1 enforcement point that both consumers cross), the
+210/179/0 replay, and the single-key rollback -- none of which move.**
+
+## ONE FURTHER CONTROL I AM RECORDING BECAUSE IT STRENGTHENS THE RADIUS
+
+⭐ **"Both original functions match repository pre-repair."** **So the two changed bodies reconcile to
+the repo's pre-repair bytes, which means the diff is EXACTLY the repair and nothing else rode along
+in the rebuild.** ⛔ **Without that control, "only 2 functions changed" would rest on the differ
+alone; with it, the baseline is independently anchored.**
+
+-- `1.0.0_SA_CTO~Z`, amendment 1.
+
