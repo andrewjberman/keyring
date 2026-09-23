@@ -1,47 +1,40 @@
 # IRPT P status - 2026-09-22
 
-## Current Opal local integration - 2026-09-23 15:24 UTC
+## Current Opal local integration - 2026-09-23 15:33 UTC
 
-Source e47aed7f71 integrates exact Y factory819c9e3990 and its separate evidence
-history4be8608939, corrected scalar organization reader48946 and custody4911.
-Portal e0531491 follows strict parser910ebf36 and regenerates custody composition
-wire (TypeScript build passes). All source remains LOCAL; no cloud mutation.
+Backend source e47aed7f71 integrates Y factory819c9e3990 plus separate evidence
+history4be8608939, scalar reader48946 and custody4911. Portal e0531491 includes
+strict parser910ebf36 and regenerated custody wire; TypeScript build passed.
+P measured30 guarded Entry/SDK retained tests and265 generation/intake tests
+with50 subtests. CTO direct review8653eb6cd4 measured30 factory,20 exact scalar
+assertion-adapted original driver,1 actual Entry capture and49 portal parser/
+context tests. R-P13 tested cases close at source. No separate CVO gate.
 
-Measured here after source integration: actual guarded Entry/SDK retained suite
-30 PASS; full generation/intake265 PASS and50 subtests. Original02501 failure
-and obsolete-layout setup-error evidence remain preserved in Y handoff.
-The factory tests use synthetic storage/current source, SDK Stubber and pre-held
-lease; these counts are not live generation, queue delivery or producer proof.
-CTO151854 relays Andrew's direct review arrangement: CTO reviews this work;
-there is no wait for separate CVO approval.
+Final local generation declaration has74 files, including29 exact Y factory
+modules, schemas and BUILD_MANIFEST.json pinned at d7b885b74e. Canonical closure
+is now ENFORCED and passes; omitting custody.py returns1 and names the missing
+dependency. Correction: earlier closure return0 without a manifest was advisory,
+not an enforced PASS. Seven entry cold-import results remain valid within their
+recorded host environment; the receipt now labels enforcement separately.
 
-The expanded generation declaration has73 members, including all29 factory
-modules and published schemas. Exact handoff hashes match every factory module.
-All seven flat packages pass canonical import closure and isolated entry import;
-the generation factory also constructs from the flat package with a real stubbed
-SDK and synthetic refusing source ports. Native files remain native; only
-external sources use staged_from, preserving canonical builder cleanup behavior.
-OPAL_PACKAGE_EVIDENCE_20260923.json pins source, manifest and member hashes, plus
-deterministic source-only archive hashes. These local archives are NOT deployable
-runtime artifacts. Published artifact hashes remain unchanged.
+The final source-only zip plus six exact irpt-common dependency distributions
+(151 dependency members) were hash-verified, extracted and run in digest-pinned
+AWS Lambda Linux Python3.12.14 with network disabled, read-only mounts and no
+host Python dependencies/credentials mounted. All six imports resolve inside
+/opt/python; native rpds, schema positive/negative and flat factory construction
+PASS. Runtime evidence records image digest, both archive hashes, exact command
+and probe hash. OPAL_RUNTIME_DEPENDENCIES_20260923.json pins every dependency
+member. This is local runtime dependency/construction proof, not deployment.
 
-Concrete unresolved installation boundaries:
-- M source handoff abfb3eaf82 establishes absent exact current snapshot-owner and
-  accepted normalized custody adapters. Same-day publication changes and selected
-  projection hashes cannot silently substitute for accepted snapshot identity.
-- COT/INF display builders have no SECURITY construction;49F allocation positions
-  do not establish complete actual custody census. Never substitute model/target
-  leaves or abs/drop signed positions to satisfy Y's positive-only freezer.
-- The canonical files-only builder does not install jsonschema/referencing and
-  their dependencies. Local factory import uses host Python packages; it does
-  not establish deployed Python3.12 dependency completeness.
-- Actual preparer role/IAM, concrete source ports, explicit packaged settings/
-  template paths and nonempty comparison source remain required for activation.
-
-CTO received the exact producer/cause and packaging gaps152224. P retains shared
-integration; Y owns normalization semantics. Runtime source ports remain
-unconfigured/fail-closed pending concrete accepted inputs. No production or
-overall completion claim. Historical checkpoints below retain their own scope.
+Production remains blocked on the concrete M abfb3eaf82 findings: exact current
+snapshot-owner adapter and accepted actual security-level custody census are
+absent. No model/target substitution, hash/revision conflation or dropping/abs
+of signed positions is allowed. Y signed-value proposal5d7da1aa49 is pending CTO
+and changes no source. Nonempty comparison resolver and actual preparer
+configuration/IAM/queue/current source installation remain open. The local
+dependency artifact is neither a published irpt-common layer nor an applied
+attachment. Published hashes, cloud resources and vendor state are unchanged.
+P retains shared integration; CTO reviews exact final local evidence.
 
 ## Acceptance integration candidate - 2026-09-23 02:13 UTC
 

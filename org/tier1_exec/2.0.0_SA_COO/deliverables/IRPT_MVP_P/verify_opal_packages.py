@@ -47,6 +47,17 @@ for name, row in manifest['functions'].items():
             bundle.writestr(info, (package / member).read_bytes())
     closure = subprocess.run([sys.executable, str(root / 'infra/aws/lambda/ci/import-closure-check.py'),
                               str(package), *row['files']], capture_output=True, text=True)
+    enforcing = (package / 'BUILD_MANIFEST.json').is_file()
+    negative = None
+    if name == 'irpt-ycharts-generate':
+        assert enforcing, 'Factory closure requires an enforced BUILD_MANIFEST.json'
+        assert 'ADVISORY' not in closure.stdout and 'UNENFORCED' not in closure.stdout
+        omitted = [member for member in row['files'] if member != 'custody.py']
+        rejected = subprocess.run([sys.executable, str(root / 'infra/aws/lambda/ci/import-closure-check.py'),
+                                   str(package), *omitted], capture_output=True, text=True)
+        assert rejected.returncode == 1 and 'custody' in rejected.stdout
+        negative = dict(omitted_member='custody.py', rc=rejected.returncode,
+                        output=rejected.stdout + rejected.stderr)
     env = {k: v for k, v in os.environ.items() if not k.startswith('IRPT_') and k != 'PYTHONPATH'}
     env.update(IRPT_CONTRACTS_DIR=str(package / 'contracts'), IRPT_FIRM_REGISTRY=str(package / 'firm_registry.json'),
                AWS_EC2_METADATA_DISABLED='true')
@@ -86,7 +97,8 @@ print('EXTRACTED_FACTORY_CONSTRUCTION_OK; synthetic refusing ports; no request o
                   local_source_archive=dict(path=str(archive), sha256=hashlib.sha256(archive.read_bytes()).hexdigest(),
                                             bytes=archive.stat().st_size,
                                             kind='offline source-only proof; not a deployable artifact'),
-                  closure=dict(rc=closure.returncode, output=closure.stdout + closure.stderr),
+                  closure=dict(rc=closure.returncode, enforced=enforcing,
+                               output=closure.stdout + closure.stderr, missing_module_control=negative),
                   cold_import=dict(rc=cold.returncode, output=cold.stdout + cold.stderr))
     out.append(record)
     print(name, 'closure', closure.returncode, 'cold', cold.returncode)
