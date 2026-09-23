@@ -3,7 +3,8 @@
 Status: LOCAL DRAFT FOR M/Y CONTRACT REVIEW. This document adds no runtime,
 schema fields, storage authority, producer acceptance or deployment permission.
 
-Paired review incorporated: Y `605449f4cc` (supersedes `b799b5a6fc`),
+Paired review incorporated: Y `ff982c0e3012c611d96f3ef5b0ac541dbb0ed11d`
+(includes `605449f4cc`, supersedes `b799b5a6fc`),
 `IRPT_MVP_Y/ACCEPTED_READER_REVIEW_20260923.md`; M
 `44e3a52fa3353ea94b3a473547efef77847e0d52`,
 `IRPT_MVP_M/ACCEPTED_READER_FIELD_REVIEW_20260923.md`. Both preserve the methods
@@ -12,6 +13,8 @@ for this paired interface draft, with Y's canonical security-key and actual
 mapping-receipt requirements in the one nested security object. Source facts
 and a trusted binding are not supplied by a field definition. This revision
 supersedes `7e9baf3064` and the crossed flat-field proposal in `34a9c33800`.
+The selected fingerprint and retained-source mapping below correct the omission
+in `f6babe048f`; no runtime implementation is implied.
 
 ## Measured boundary
 
@@ -53,6 +56,7 @@ def load_normalized(browser, principal, owner):
     accepted = reader.read(principal, owner)
     # Verify exact browser selection/snapshot equality, then evaluate every
     # original row's recipe prerequisites before any aggregation or freezing.
+    # Emit one money row per admitted economic position, not per relationship.
     # Return existing verified frozen-portfolio envelope; otherwise refuse.
 ```
 
@@ -71,6 +75,7 @@ Exactly these top-level fields are proposed:
 | `snapshot_id` | exact owner snapshot ID |
 | `snapshot_revision` | digest of the original complete accepted snapshot bytes, never a selected projection hash |
 | `binding_revision` | immutable accepted binding record digest, covering ordered receipts and canonical account mapping |
+| `selected_account_set_fingerprint` | exact fingerprint from current verified `_scope/selection.py` selection result, bound to this accepted result |
 | `actual_custody` | selected-only economics/census/reconciliation shape below |
 | `original_rows` | one normalized evidence row per original selected-account economic row, before collapse |
 
@@ -124,8 +129,53 @@ interpretation and selected binding semantics. Opaque receipt IDs only resolve
 inside that bound scope and source role. A selected old snapshot never advances
 silently to a later publication. Its current authorization is a separate check.
 Both snapshot and binding revisions, and relevant opaque receipt references,
-must survive normalization/retention. The precise existing source/provenance
-extension for that is still a P/Y schema task; no new artifact family is proposed.
+must survive normalization/retention using the mapping below. No new artifact
+family is proposed.
+
+The selected fingerprint comes from `resolve_selection(...)._view` under current
+verified scope: canonical account IDs, entitlement revision, viewer policy and
+verified request firm. It is NOT the owner's `ownership_fingerprint`, the
+permitted-account fingerprint, account_set_id or an ad hoc account-list digest.
+The reader must bind and recheck this exact selection result before return and
+release; current `CustodyAccess` owner alone does not carry it. Reader
+implementation must obtain it through the canonical verified selection path.
+
+## Retained source projection for the new accepted-reader branch
+
+Y's proposed projection is adopted into this interface specification:
+
+| Normalized document.source member | Exact value |
+| --- | --- |
+| `lane` | `CUSTODY` |
+| `source_revision` | accepted.snapshot_revision, the original complete snapshot digest |
+| `selected_set_fingerprint` | accepted.selected_account_set_fingerprint |
+| `as_of` | accepted.actual_custody.custody_as_of, after the admitted valuation-date rule passes |
+| `account_ids` | sorted exact accepted.owner.account_ids |
+| `snapshot_id` | accepted.snapshot_id, equal to owner and browser snapshot IDs |
+| `accepted_custody` | full deep copy of the selected-only closed AcceptedCustodyInputV1 |
+
+The embedded contract retains owner, both revisions, selection fingerprint,
+economic facts, originals, positions, census/reconciliation and scoped opaque
+receipt references. No raw account/storage IDs or private DataFrame are copied.
+All duplicate outer/embedded fields must match exactly; rehashing a substituted
+owner, snapshot, binding or selected fingerprint cannot establish acceptance.
+Validate the same embedded contract and current authority at retained replay;
+never reload a newer source to reconstruct the old evidence.
+
+Source inspection at P's unchanged runtime baseline confirms
+`intake/portfolio.py:_source` deep-copies CUSTODY source, requires
+source_revision/selected_set_fingerprint/as_of and validates/sorts account IDs.
+This is structural preservation, not validation of this new embedded contract.
+Y's future adapter/replay path must enforce its full semantics; the existing
+freezer hash and NORMALIZED_PORTFOLIO reference retain the resulting exact bytes.
+Existing historical documents and other source lanes are not reinterpreted.
+
+Preserve every original relationship row inside source.accepted_custody, but
+emit exactly one money row per admitted economic position only AFTER original
+eligibility, complete correspondence and duplicate-fact equality checks. Retain
+its position_id and source_rows in contribution provenance. Existing subsequent
+same-security aggregation may then combine these economic contributions. Two
+equal relationship rows of 100 produce one contribution of 100, never 200.
 
 ## Agreed mapping and remaining choices
 
@@ -281,7 +331,7 @@ capability is currently unavailable, so actual empty inputs continue to refuse.
 | 49F source contract | M source review: l_s exists but signed-value rule, security-join uniqueness, cash non-overlap, currency/units and pending accrual ruling remain unresolved |
 | Current numeric schema and security mapping receipts | Not supplied by either review; P cannot invent a receipt or conversion policy; M identifies source capability, CTO adjudicates needed source interpretation |
 | Empty-account census | No admitted complete-zero receipt capability; actual empty inputs refuse |
-| Retained revision/provenance shape | P/Y must pin exact schema-compatible normalized source extension |
+| Retained revision/provenance implementation | Exact source mapping now specified from Yff982; adapter/embedded semantic validation/replay still unimplemented |
 
 These are source-located findings from the exact M review, not fresh cloud
 measurements. No producer execution or new source-read authority is inferred.
