@@ -44,9 +44,11 @@ else records the fan-out.
 the second depends on the first. Two chains may take two workers. **So N is bounded above by M** — asking
 for more workers than there are independent chains buys nothing and serialises anyway.
 
-⛔ **NO CELL IS LEFT FOR A LATER ROUND.** The issuance covers the whole decomposition. A later round
-exists only when the CTO's round-N analysis sends work back. If you cannot cover a cell, you are not
-ready to issue.
+⛔ **THE ISSUANCE COVERS EVERY CELL OF THIS ROUND'S DECOMPOSITION** (spine v3.16, L6). Round 1's
+decomposition is the THREAD — one cell per hop adapter to build or repair, so the first round ships a rough
+journey that works end to end, not a layer of it. Every later round's decomposition is the ENRICHMENT LIST
+the CTO's round-N analysis names, plus that analysis's remediations (thread-breaking first; instrument,
+record and style repairs batched into ONE cell). If you cannot cover a cell, you are not ready to issue.
 
 ## Step 2 — Cut the task orders: two faces, one file
 
@@ -73,6 +75,29 @@ The worker face carries, and a face missing any of these is not cut:
 
 **The record face never travels.** Status, seating, the preflight's disposition narrative, the authority
 chain, the provenance: they stay in the file for the gates and are not given to the worker.
+
+⛔ **THE VERIFICATION DIET — A TASK ORDER IS MOSTLY THE BUILD** (spine v3.16, L6). Cut each build order with
+**at most THREE mechanical criteria**:
+
+| # | criterion |
+|---|---|
+| (a) | the built behaviour |
+| (b) | the hop's seam probe against its REAL neighbour where reachable; a fixture only where it is not |
+| (c) | at most one further criterion the cell genuinely needs |
+| — | a fourth only with a one-line reason on the face |
+
+A difference-control arm (spine L6) is part of the criterion it controls, not a fourth check (v3.17).
+
+- **No repo-wide hygiene on the face.** Typecheck, lint, the full suite and `py_compile` are YOUR drain checks,
+  run once per merge in Step 5, never criteria on an order. You also re-run the live thread trace once per round
+  at the drain.
+- **Judgment criteria only where the outcome needs judgment**: a user-facing reading, a design-conformance
+  grade. Not a default slot.
+- **Keep, unchanged:** the refusal clause, the difference control for a criterion that asserts a control, the
+  proof-of-spec instance.
+
+Why: in IRPT_FNTEND 53.8% of 788 criteria were verification, `typecheck` sat on 83 of 91 orders, and a one-token
+style fix became an eight-criterion order. No gate counts criteria; this is how you cut.
 
 ⛔ **THREE REFUSALS AT THE CUT. TWO ARE NOW MECHANICAL** (`.tools/to-pipeline-gate.py` @`b4299fa5aa`,
 verified at HEAD via `git show`), on **NEWLY ADDED tree orders only** — flat orders and existing files
@@ -336,6 +361,11 @@ another seat's staged work, because that union is not the one you mean to grade.
 ⛔ **NOTHING INVOKES IT FOR YOU.** `git merge` still runs no hook, so a bare merge lands a collision
 exactly as v3's first drain did. The script converts "remember to check" into "one command that checks";
 that is smaller than a gate and larger than a paragraph, and the difference matters when you are tired.
+
+**THE DRAIN CHECKS THE DIET MOVED OFF THE FACE** (spine v3.16). After each merge, run the repo-wide hygiene
+the touched surface needs — typecheck, lint, the suite, `py_compile` — ONCE, here, not per order. Once per
+round, after the last merge, re-run the live THREAD trace and keep its artifact. A red here is a surprise row
+under your serial, never a silent re-cut; a broken thread is the first item of the next round.
 
 > ⭐ **AND IF YOU EVER BUILD A CHECK OF YOUR OWN HERE — FEED YOUR CHECKER BEFORE YOU TRUST IT.**
 > `safe-merge.sh` shipped calling the row gate **bare**. The gate takes its targets from argv, so it

@@ -1,0 +1,70 @@
+{
+  "seat": "3.0.0_SA_CVO~P",
+  "candidate": "284436ca11140a0ede1ef3d53f8b3aa855d4a7a3",
+  "snapshot": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retained-aa1c-au51xrn3",
+  "source_sha256": {
+    "infra/aws/lambda/investor-reporting/reports/composition.py": "6d2c3696d0305bee1bc0e95e11c8462d822dae356e1c11ed4253a3d93c699792",
+    "infra/aws/lambda/investor-reporting/reports/repository.py": "c98091e89d556cf191114c49dd1c1d6e7873711d487740e3ea116311eeb54a2a",
+    "infra/aws/lambda/investor-reporting/reports/retention.py": "d360f570dad07a716d754c8fcb377fe39f84fbe7f557adc6f013239be9ba29ae",
+    "infra/aws/lambda/investor-reporting/reports/tests/test_repository.py": "1d60dd5f28238b556e90915305813229b7e04824e1535062fcf80164b2fa1680",
+    "infra/aws/lambda/investor-reporting/reports/tests/test_retained_repository.py": "a51322c71af6924ad2dd64401b48876a60ed7f627c46841c4ed62ad9fba51a85",
+    "infra/aws/lambda/investor-reporting/reports/tests/test_retention.py": "ac4d371c0d4691f28ecbf256729acd0ee100fac8007e7d2342aba3f0fc117a5c"
+  },
+  "reviewer_sha256": {
+    "retention_independent_cases.py": "a4ce15e3852ec4e96fa91981e08ed7a2898cf25416393fb4669542a2101a39e0",
+    "retention_receipt_cases.py": "14ff47c5c1164171cd091007505b42f4230ef814dd851ea318be10e823f787bf",
+    "retained_repository_cases.py": "de5dbe8fe55dec95def8bd858b43985d8a292e03bfe06a6dad38e31bfc47cd57"
+  },
+  "runs": [
+    {
+      "label": "supplied",
+      "command": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retained-aa1c-au51xrn3\\infra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_repository.py",
+        "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retained-aa1c-au51xrn3\\infra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_retention.py",
+        "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retained-aa1c-au51xrn3\\infra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_retained_repository.py"
+      ],
+      "exit_code": 0,
+      "stdout": "..................................................                       [100%]\n50 passed in 0.59s\n",
+      "stderr": ""
+    },
+    {
+      "label": "unchanged_regressions",
+      "command": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retained-aa1c-au51xrn3\\infra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_original_review.py",
+        "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retained-aa1c-au51xrn3\\infra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_receipt_review.py"
+      ],
+      "exit_code": 0,
+      "stdout": ".....................                                                    [100%]\n21 passed in 0.28s\n",
+      "stderr": ""
+    },
+    {
+      "label": "independent_composition",
+      "command": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retained-aa1c-au51xrn3\\infra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_composition_review.py"
+      ],
+      "exit_code": 0,
+      "stdout": "........                                                                 [100%]\n8 passed in 0.33s\n",
+      "stderr": ""
+    }
+  ],
+  "timestamp_utc": "2026-09-22T23:01:16.658301+00:00",
+  "limits": "Exact repository/retention/composition modules; synthetic ACTIVE policy/destination/clock/access and serialized/versioned storage doubles. No live services, runtime factories, IAM, disposal or full S7 acceptance."
+}

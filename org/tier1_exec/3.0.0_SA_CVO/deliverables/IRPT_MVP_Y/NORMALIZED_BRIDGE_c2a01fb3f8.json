@@ -1,0 +1,160 @@
+{
+  "pin": "c2a01fb3f8ae179a38c55a695894390ad9442c97",
+  "source_sha256": {
+    "infra/aws/lambda/investor-reporting/intake/checkpoint.py": "ba19eec556e9cdc2b049e9d39900bf6d736bc12cd340c542cc0323797a7feb18",
+    "infra/aws/lambda/investor-reporting/intake/corrections.py": "8e6a2edf795bb1cf58ea5dfbe4599209233124023ecee7ebd93f9253079e9996",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/FIXTURE_MANIFEST.json": "cf66c289cf145a708ed6630f460731301e61b2d7cf2ca0efbda4b586c04c1400",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/attachments/att-0001.bin": "a219bb01478a5d898156ff7aa7e0cd1e676ae4e63e89d80fc58ea7407c239bbf",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/attachments/att-0002.bin": "5f52306fe07c7745e19a7889974e22644e1be8ab81369e5508ab5f54d4cf187a",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/attachments/att-0003.bin": "5f52306fe07c7745e19a7889974e22644e1be8ab81369e5508ab5f54d4cf187a",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/attachments/att-0005.bin": "a219bb01478a5d898156ff7aa7e0cd1e676ae4e63e89d80fc58ea7407c239bbf",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/attachments/list_AAMk-49f-0001.json": "39d8710c308ea08609cebbe6245fdeda6cb528c3accf38a86f0761d4b7fe4abb",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/attachments/list_AAMk-49f-0005.json": "a00cc779429cd95e2090abb38ec39a0099e3c72897605800ba6927420bd65e8d",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/attachments/list_AAMk-cot-0003.json": "61d54228a1874b3f212501fed0205302264e5b2a3cda8dc57610dd459f4c347a",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/attachments/list_AAMk-opal-0004.json": "ba417f04ceabecffad748ad5d0b0e6610be2c4a733c5f1b436b971517f0d648d",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/attachments/list_AAMk-spoof-0002.json": "81d6b5b261bc520c4aec399a410fd3c300c9190359263bbf740635244f12df94",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/delta_final1.json": "922f20d698638ab42cabde1824be2e425426ccf80c89402036d384def7dcf2c3",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/delta_final2.json": "7e1921dfef204056a1a97b9332644ecd3c38b11bc4bcac1b259ff265bf5e2671",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/delta_page1.json": "6c0e80c996d176873ff4836f96080729e43f87be089ca0437c610b7984d98271",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/delta_page2.json": "be85f78a6caa1648c2348f2929b226657cb409b5ca6446cf3f207e14568d1e01",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/delta_page3.json": "df850cc54bd1b83ece677036d8cd77551bc21c76d8df75e37e6426123be57cff",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/mime/AAMk-49f-0001.eml": "64af4e8f0a9adfb3428977d615cf7fc349c27f07fc3a37490d2c6a59d8e04f74",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/mime/AAMk-49f-0005.eml": "fe75eeaafda78716d8a039ede4e8addef95f4526ab0293553147fbe5fe33160e",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/mime/AAMk-cot-0003.eml": "44f429ecb10a09ea9ca1867bd4197e6e9de7626772bc56c9ebf110b8dbe907e5",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/mime/AAMk-opal-0004.eml": "bc3f8aa7f0bccca33ce621bcab9198230e7650a2613ed36dc71ca6a175da1e8c",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/graph/mime/AAMk-spoof-0002.eml": "5b49de52b6408d7b86c6468202048a90b105b1583404e6da17a4687924112905",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/holdings/FIXTURE_MANIFEST.json": "7e5836f4966a9b10cf4eb0ab802b353d9722f48a2b9050c4ce155eeb2fe43152",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/holdings/generate_rt11_specimens.py": "f435fe11ce2ec479c45abd8c252a6d749b0667a91987552fb73b5d1e349d0f58",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/holdings/holdings_ambiguous_total.csv": "9093ccb28d9f0c9296154c654def7be3de6fde5d7cdcee85e33a3240d668d3ee",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/holdings/holdings_clean.csv": "43eb65920ebfdad3369b9dee67f5e57bf2375e9ae1240f714ce95b3fb47a327c",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/holdings/holdings_multi_sheet.xlsx": "309ca1eaee3eb7e791dfbe50123186cf08d76cb73f68988563a71d2b705e3d51",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/holdings/holdings_no_header.csv": "99cc5ccd13ed60c9ce5bee5c48e27557c22551ee043738c79a9e21768b640d32",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/holdings/holdings_non_usd.csv": "5a9bd49bb30f11fd084239ec4ecafdc97104ae248e73ef4bc81272c154b04222",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/holdings/holdings_share_class.csv": "aaab6a83cc85537799945c80692ab39b900f069a564d2af23b058cbccf8bdac1",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/holdings/holdings_subtotals.csv": "c40b86e303bcf64e25ae59628058eb8f2431b88ea3a89abc7726c3ab7bcc3d96",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/holdings/holdings_unmatched.csv": "eb4b427728aae54241f3eba3bc1e121af924de629c73462ff00969f5cd1a89dc",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/holdings/holdings_weights.xlsx": "a7683ee013692cc39e7f4cf536b2ed455fd5cdce5f0e70f654362c306d53c000",
+    "infra/aws/lambda/investor-reporting/intake/fixtures/holdings/security_mapping.json": "0e908f95e22ada68986b41274aceeb0639976a7603799feb88e8d8f3fc696801",
+    "infra/aws/lambda/investor-reporting/intake/graph_client.py": "ba91a778f64788aac2180847918c1f7836aeaced2f0326d1b4c9dda906268df1",
+    "infra/aws/lambda/investor-reporting/intake/ib_s_6_graph_inspection.md": "d4c4d6f966eeb6987227eb1558aca9704b887de9c63d2c74a0e9a93da791bd27",
+    "infra/aws/lambda/investor-reporting/intake/outbox.py": "f56b6dfbbb4057e9193d1a2bc6aaa33bb4658bfdf68ffbbdb87a568e3a4e1fdd",
+    "infra/aws/lambda/investor-reporting/intake/parse.py": "2841f570b362a3bc6c1d364cc54b8c89bfbaee5c773dc46f45d1d5c13177d923",
+    "infra/aws/lambda/investor-reporting/intake/poller.py": "3151a81fe0fb2eca6782f9477f385c58ba2f498a36c4440bdd3cd211d77c40ae",
+    "infra/aws/lambda/investor-reporting/intake/portfolio.py": "d5313311bce0a166ed63bf7e75627673952817eb3f89ab34b5ed150dfd1c97ba",
+    "infra/aws/lambda/investor-reporting/intake/settings.json": "a05bcea4d3cdfda972a35bf3bf088c6794728b426d924cbd2069a94ab33aed44",
+    "infra/aws/lambda/investor-reporting/intake/tests/netguard.py": "8a619189e94c49f5933f06eb608066eeaea172fe63c10e06d2afb11568666ae3",
+    "infra/aws/lambda/investor-reporting/intake/tests/run_offline_suite.py": "0e19c783223c0fac57326e0dfa2238e5d9918a1c0c73fd584404c634151593c3",
+    "infra/aws/lambda/investor-reporting/intake/tests/test_parse.py": "ba465a19a2002d0af4a19a5c463657207fbdce80a5c9a9f372a25c8ac65e2007",
+    "infra/aws/lambda/investor-reporting/intake/tests/test_portfolio.py": "bb0ea2f5082b5d06e990ddf54b8e1ef8fbe601710ba388737da7016054fd1568",
+    "infra/aws/lambda/investor-reporting/intake/tests/test_retained_uploads.py": "95f17742600ad9aa1f403907e19fe95cf247783d1604deede77e924ff4b8e005",
+    "infra/aws/lambda/investor-reporting/intake/tests/test_uploads.py": "456f11073bbc6a60f52a41dae02d4106e3ab044f2df3b8fa62b7397308a651b5",
+    "infra/aws/lambda/investor-reporting/intake/upload_entry.py": "62c3002688bf1c34021db0d266163de7145b89869ad958d189a728609daaf870",
+    "infra/aws/lambda/investor-reporting/intake/uploads.py": "af0a7e18d8e44453e84eb69d3641db11081902e95f92e62f83cb6109717adafe",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py": "eeb01ee15cb04e70293c6cf6877d6dc8e5cd1a7c02beff97226cf3154757e9fd",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py": "433853279df4a862f828b22145052b2f0d80b390809ca8185af87bbab8335590",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/entry.py": "e62414a92cdaec63275137e81e85ac01f5df9480cb61b20fccbad21d81d16ba9",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/FIXTURE_MANIFEST.json": "8d5769b67c96f83f33cea26c79233a0b4c733a7aae2e6aa90d8cd63deb40a0c0",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/collection.json": "50e52bcb67cdde4b1b0c7ce871394d25c5551563330fad4dcb14a45660aceaef",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/create_201.json": "f79334c0555e7e3cbe4a9c30426e4e37e6c131eb1b3e7366608bc8661271f1d4",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/create_422_fee.json": "db6564e1ba482454fd45f05f92d9dfd7938b8626945f632888645865660c15d7",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/dashboard.json": "193b1781dcb25c14a317e5e19fa6c191eb6a1b57155ff8b9d508b323a6fd2fed",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/decision_branches.json": "0eb2d483ad6203c3c05c0f8aa62c249e22c0971510f56f32b1beaded60aa5fdd",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/generate_201.json": "e893624268336ca4b0390c995768c0ae9582965ec50507aed500600e4300e123",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/generate_404_minimal.json": "9daf1c91692ccfc07773d0db4b3aba50918ee64cbe4623c1f179002ea6238f31",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/report.pdf": "ed5300adc866c91b1d87be0f52346f346fc53d92bd389cf313c3830707ce85fc",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/status_drifted.json": "a9b0ae40b0aa3bada6ba86d80228a8144debac585ff1236bcd09a5c228af8b45",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/status_ok.json": "2c54fef26689b22ab8a118bbe2a47c2bae10067b3225f2ca8cc6f5d56de72039",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/templates.json": "0c62f032799e200d2d347eb56ce2701a112bbfd70e8061681b7d7180aaadb128",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/upload_ok.json": "0bfa27432af8c03272c17a805b84ddbfe399b1ca00c7d815a316212e3db664ab",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/validate_200.json": "f69be554e959d3cd36eacf77fa50b00fe7d72006cc877082767bccc97457224f",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/job.py": "8403a175d54f408184aea1416ea27d26f495b186fb2cbf1e418259a18556c6cf",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py": "fd115bc07033d25c3da95f5441314d4e51308dfc92f2cda806dd2006d2828e14",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py": "2a367ee2795914e782ccebe8743d15453df6daa5e5b781339ca1277a1bfc5b5c",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/report_index.py": "daf1b76ed208be7b60dfbec7275c0e050c28459fc9cd30546422d32268542c4c",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py": "3fb7083b7d35978598edb1f77e46c26dfbcea91854a8f18c7838ca6a3102f4eb",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py": "9fe164e0753daf52ac5d7e87a7e37c9d8175b55b8c32fcc96702aa032325ae33",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/templates.json": "02e9f2dba08bddb201d048ce20aee8d3f1941c44a12f1db3446bbd9529e4bb44",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/netguard.py": "aeef9d595ebd2850e7270c8d5e5c7c82660f379c3115149b87147e44a2be4bab",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/run_offline_suite.py": "0a1d472d024e657b83e970711f0a387479f93e3e9dab13c195111bc6baeefa54",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_durable_job.py": "aadf0b47f3f60ec0f9243d2fe3a5358c003235b447a2a1e33a94f5fa9e30c7e4",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_normalized_input.py": "dad12233577aea34809720a2f8e3bf87502de486c61ef76cadad7def8d4c2809",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_recipe_decimal.py": "29be5c305defb33f0f7d53828aa7dacbff7d62bf68a90bb37a7fd2059fc9c35d",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_report_index.py": "393124e0b51167e54a1da82a676ba6004e72dfead5d04ec42d3ac08b3d858abd",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_retained_report_index.py": "a6c2ee423a74a5d067dd07ccf4603027e1a9c4e5c7d2d1f53e7306a6b98c48e9",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_submission.py": "1d4c8fc9cc72728fae26a25e50e5fe2657240f43fce32a745f1539fb06acb4c9",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py": "186949c4fbf66209eb781ffe92c9af2d7f598dc776862c112765b472a0f3ba9e"
+  },
+  "independent_controls": [
+    {
+      "name": "actual_upload_checkpoint_binding_create_wire_exact_dollars",
+      "outcome": "PASS",
+      "total": "9007199254740994.11",
+      "items_payload": "[{\"name\":\"Synthetic\",\"weighting\":9007199254740993.11,\"weight_text\":\"9007199254740993.11\",\"target_weighting\":null,\"current_weighting\":null,\"dollars_weighting\":null,\"shares_weighting\":null,\"security_id\":\"AAPL\",\"display_security_id\":\"AAPL\",\"avg_cost_basis\":null},{\"name\":\"Synthetic\",\"weighting\":1,\"weight_text\":\"1\",\"target_weighting\":null,\"current_weighting\":null,\"dollars_weighting\":null,\"shares_weighting\":null,\"security_id\":\"$:CASH\",\"display_security_id\":\"$:CASH\",\"avg_cost_basis\":null}]",
+      "input_id": "portfolio_f45973f2478e85dd8b380b674f895001afd5c11605a12a4faaa954042a302358",
+      "calls": [
+        "/model_portfolios/fixed/holdings_upload/client",
+        "/model_portfolios/fixed/"
+      ]
+    },
+    {
+      "name": "bound_copy_isolated_from_checkpoint_and_prepared_mutation",
+      "outcome": "PASS"
+    },
+    {
+      "name": "retained_document_change_rejected_without_rehash",
+      "outcome": "PASS",
+      "reason": "FROZEN_INPUT_CHANGED"
+    },
+    {
+      "name": "retained_input_id_change_rejected",
+      "outcome": "PASS",
+      "reason": "FROZEN_INPUT_CHANGED"
+    },
+    {
+      "name": "coherent_other_upload_same_amounts_refused",
+      "outcome": "PASS",
+      "reason": "unproven vendor security identity"
+    },
+    {
+      "name": "display_or_equal_amount_cannot_infer_prefixed_vendor_identity",
+      "outcome": "PASS",
+      "reason": "unproven vendor security identity"
+    },
+    {
+      "name": "checkpoint_cent_change_refused_despite_true_reconciled_flags",
+      "outcome": "PASS",
+      "reason": "vendor upload differs from retained normalized input"
+    },
+    {
+      "name": "display_labels_do_not_remap_exact_echo_identity",
+      "outcome": "PASS",
+      "labels_are_passed_through_not_crosswalk": true
+    },
+    {
+      "name": "upstream_out_of_range_tiny_value_refuses",
+      "outcome": "PASS",
+      "reason": "NON_POSITIVE_OR_INVALID_AMOUNT at row 2"
+    },
+    {
+      "name": "declared_cusip_leading_zeros_and_cent_survive_create",
+      "outcome": "PASS",
+      "items_payload": "[{\"name\":\"Synthetic\",\"weighting\":0.01,\"weight_text\":\"0.01\",\"target_weighting\":null,\"current_weighting\":null,\"dollars_weighting\":null,\"shares_weighting\":null,\"security_id\":\"001234567\",\"display_security_id\":\"001234567\",\"avg_cost_basis\":null}]"
+    },
+    {
+      "name": "frozen_share_price_result_bound_without_reresolution",
+      "outcome": "PASS",
+      "dollars": "24.70"
+    }
+  ],
+  "supplied_tests": {
+    "returncode": 0,
+    "stdout": "..............................................                    [100%]\n46 passed, 7 subtests passed in 0.51s\n",
+    "stderr": ""
+  },
+  "limitations": [
+    "Local resolver fixtures, no actual M source or current-access ports",
+    "Pure bridge consumes caller-verified frozen data and checkpoint; no storage authorization proof",
+    "Actual recipe multipart captured by offline transport; no vendor calls",
+    "No fenced worker/runtime installation, mutation intent or process recovery proof"
+  ]
+}

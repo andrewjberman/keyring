@@ -1,0 +1,70 @@
+{
+  "seat": "3.0.0_SA_CVO~P",
+  "candidate": "aa1cfaea6b063acac5fc974d397d6a278daa17a0",
+  "snapshot": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retained-aa1c-s30jmojw",
+  "source_sha256": {
+    "infra/aws/lambda/investor-reporting/reports/composition.py": "6d2c3696d0305bee1bc0e95e11c8462d822dae356e1c11ed4253a3d93c699792",
+    "infra/aws/lambda/investor-reporting/reports/repository.py": "414814f40128328567425453310aa88fb378b70d14af140c0ddd7a3f0f37e7c8",
+    "infra/aws/lambda/investor-reporting/reports/retention.py": "d360f570dad07a716d754c8fcb377fe39f84fbe7f557adc6f013239be9ba29ae",
+    "infra/aws/lambda/investor-reporting/reports/tests/test_repository.py": "1d60dd5f28238b556e90915305813229b7e04824e1535062fcf80164b2fa1680",
+    "infra/aws/lambda/investor-reporting/reports/tests/test_retained_repository.py": "a51322c71af6924ad2dd64401b48876a60ed7f627c46841c4ed62ad9fba51a85",
+    "infra/aws/lambda/investor-reporting/reports/tests/test_retention.py": "ac4d371c0d4691f28ecbf256729acd0ee100fac8007e7d2342aba3f0fc117a5c"
+  },
+  "reviewer_sha256": {
+    "retention_independent_cases.py": "a4ce15e3852ec4e96fa91981e08ed7a2898cf25416393fb4669542a2101a39e0",
+    "retention_receipt_cases.py": "14ff47c5c1164171cd091007505b42f4230ef814dd851ea318be10e823f787bf",
+    "retained_repository_cases.py": "de5dbe8fe55dec95def8bd858b43985d8a292e03bfe06a6dad38e31bfc47cd57"
+  },
+  "runs": [
+    {
+      "label": "supplied",
+      "command": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retained-aa1c-s30jmojw\\infra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_repository.py",
+        "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retained-aa1c-s30jmojw\\infra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_retention.py",
+        "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retained-aa1c-s30jmojw\\infra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_retained_repository.py"
+      ],
+      "exit_code": 0,
+      "stdout": "..................................................                       [100%]\n50 passed in 0.58s\n",
+      "stderr": ""
+    },
+    {
+      "label": "unchanged_regressions",
+      "command": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retained-aa1c-s30jmojw\\infra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_original_review.py",
+        "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retained-aa1c-s30jmojw\\infra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_receipt_review.py"
+      ],
+      "exit_code": 0,
+      "stdout": ".....................                                                    [100%]\n21 passed in 0.27s\n",
+      "stderr": ""
+    },
+    {
+      "label": "independent_composition",
+      "command": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retained-aa1c-s30jmojw\\infra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_composition_review.py"
+      ],
+      "exit_code": 1,
+      "stdout": "FF......                                                                 [100%]\n================================== FAILURES ===================================\n________ test_history_rechecks_earlier_items_at_final_release[expiry] _________\n\nworld = namespace(policy=<retention.RetentionPolicy object at 0x000001E61E660950>, table=<test_retention.Table object at 0x000...ry.ReportRepository object at 0x000001E61DF934D0>, retention=<retention.RetentionPolicy object at 0x000001E61E660A40>))\nboundary = 'expiry'\n\n    @pytest.mark.parametrize(\"boundary\", [\"expiry\", \"revocation\"])\n    def test_history_rechecks_earlier_items_at_final_release(world, boundary):\n        source = put(world)\n        world.stores.retention.promote(world.principal, source[\"retention_ref\"])\n        refs = []\n        for name in (\"REQ-one\", \"REQ-two\"):\n            value = report(name)\n            refs.append(world.stores.reports.persist(world.principal, world.owner, \"ANALYSIS\",\n                        value[\"request_ref\"], value, {\"fixture\": \"independent-review\"},\n                        retention_dependencies=[source[\"retention_ref\"]]))\n        assert len(world.stores.reports.list(world.principal)[\"items\"]) == 2\n        deadline = world.state.now + 2555 * DAY\n        reads = []\n    \n        def change_during_second_blob():\n            reads.append(True)\n            if len(reads) == 2:\n                if boundary == \"expiry\":\n                    world.state.now = deadline\n                else:\n                    world.state.access = False\n    \n        world.s3.on_get = change_during_second_blob\n        try:\n            result = world.stores.reports.list(world.principal)\n        except ReportDenied:\n            result = {\"items\": []}\n        world.s3.on_get = None\n        unreadable = 0\n        for ref in refs:\n            with pytest.raises(ReportDenied):\n                world.stores.reports.get(world.principal, ref[\"report_id\"], ref[\"revision\"])\n            unreadable += 1\n        print(json.dumps({\"boundary\": boundary, \"blob_reads\": len(reads), \"returned_items\": result[\"items\"],\n                          \"now\": world.state.now, \"access\": world.state.access, \"fresh_gets_refused\": unreadable}))\n>       assert result[\"items\"] == []\nE       AssertionError: assert [{'immutable'...a98ded', ...}] == []\nE         \nE         Left contains one more item: {'immutable': True, 'report_id': 'RPT-09da0ca2e4576ccdf23abf31403b6a64', 'report_kind': 'ANALYSIS', 'revision': '2e0527e08438f2851dc22bd208be1558aedbcc69bc57b3cb0bd9defd3aa98ded', ...}\nE         Use -v to get more diff\n\ninfra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_composition_review.py:49: AssertionError\n---------------------------- Captured stdout call -----------------------------\n{\"boundary\": \"expiry\", \"blob_reads\": 2, \"returned_items\": [{\"immutable\": true, \"report_id\": \"RPT-09da0ca2e4576ccdf23abf31403b6a64\", \"report_kind\": \"ANALYSIS\", \"revision\": \"2e0527e08438f2851dc22bd208be1558aedbcc69bc57b3cb0bd9defd3aa98ded\", \"sha256\": \"2e0527e08438f2851dc22bd208be1558aedbcc69bc57b3cb0bd9defd3aa98ded\"}], \"now\": 2020752000, \"access\": true, \"fresh_gets_refused\": 2}\n______ test_history_rechecks_earlier_items_at_final_release[revocation] _______\n\nworld = namespace(policy=<retention.RetentionPolicy object at 0x000001E61AC14950>, table=<test_retention.Table object at 0x000...ry.ReportRepository object at 0x000001E61E6615E0>, retention=<retention.RetentionPolicy object at 0x000001E61D0F5B20>))\nboundary = 'revocation'\n\n    @pytest.mark.parametrize(\"boundary\", [\"expiry\", \"revocation\"])\n    def test_history_rechecks_earlier_items_at_final_release(world, boundary):\n        source = put(world)\n        world.stores.retention.promote(world.principal, source[\"retention_ref\"])\n        refs = []\n        for name in (\"REQ-one\", \"REQ-two\"):\n            value = report(name)\n            refs.append(world.stores.reports.persist(world.principal, world.owner, \"ANALYSIS\",\n                        value[\"request_ref\"], value, {\"fixture\": \"independent-review\"},\n                        retention_dependencies=[source[\"retention_ref\"]]))\n        assert len(world.stores.reports.list(world.principal)[\"items\"]) == 2\n        deadline = world.state.now + 2555 * DAY\n        reads = []\n    \n        def change_during_second_blob():\n            reads.append(True)\n            if len(reads) == 2:\n                if boundary == \"expiry\":\n                    world.state.now = deadline\n                else:\n                    world.state.access = False\n    \n        world.s3.on_get = change_during_second_blob\n        try:\n            result = world.stores.reports.list(world.principal)\n        except ReportDenied:\n            result = {\"items\": []}\n        world.s3.on_get = None\n        unreadable = 0\n        for ref in refs:\n            with pytest.raises(ReportDenied):\n                world.stores.reports.get(world.principal, ref[\"report_id\"], ref[\"revision\"])\n            unreadable += 1\n        print(json.dumps({\"boundary\": boundary, \"blob_reads\": len(reads), \"returned_items\": result[\"items\"],\n                          \"now\": world.state.now, \"access\": world.state.access, \"fresh_gets_refused\": unreadable}))\n>       assert result[\"items\"] == []\nE       AssertionError: assert [{'immutable'...a98ded', ...}] == []\nE         \nE         Left contains one more item: {'immutable': True, 'report_id': 'RPT-09da0ca2e4576ccdf23abf31403b6a64', 'report_kind': 'ANALYSIS', 'revision': '2e0527e08438f2851dc22bd208be1558aedbcc69bc57b3cb0bd9defd3aa98ded', ...}\nE         Use -v to get more diff\n\ninfra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_composition_review.py:49: AssertionError\n---------------------------- Captured stdout call -----------------------------\n{\"boundary\": \"revocation\", \"blob_reads\": 2, \"returned_items\": [{\"immutable\": true, \"report_id\": \"RPT-09da0ca2e4576ccdf23abf31403b6a64\", \"report_kind\": \"ANALYSIS\", \"revision\": \"2e0527e08438f2851dc22bd208be1558aedbcc69bc57b3cb0bd9defd3aa98ded\", \"sha256\": \"2e0527e08438f2851dc22bd208be1558aedbcc69bc57b3cb0bd9defd3aa98ded\"}], \"now\": 1800000000, \"access\": false, \"fresh_gets_refused\": 2}\n=========================== short test summary info ===========================\nFAILED infra/aws/lambda/investor-reporting/reports/tests/test_composition_review.py::test_history_rechecks_earlier_items_at_final_release[expiry]\nFAILED infra/aws/lambda/investor-reporting/reports/tests/test_composition_review.py::test_history_rechecks_earlier_items_at_final_release[revocation]\n2 failed, 6 passed in 0.42s\n",
+      "stderr": ""
+    }
+  ],
+  "timestamp_utc": "2026-09-22T22:55:26.309299+00:00",
+  "limits": "Exact repository/retention/composition modules; synthetic ACTIVE policy/destination/clock/access and serialized/versioned storage doubles. No live services, runtime factories, IAM, disposal or full S7 acceptance."
+}

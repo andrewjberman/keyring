@@ -1,0 +1,103 @@
+{
+  "controls": [
+    {
+      "key": "/api/scoped/investor-reporting/holdings/A-0001",
+      "valid": 1,
+      "total": 1
+    },
+    {
+      "key": "/api/scoped/investor-reporting/holdings/A-0001/not-a-declared-operation",
+      "valid": 0,
+      "total": 1
+    },
+    {
+      "key": "/api/scoped/investor-reporting/status/REQ-1",
+      "valid": 1,
+      "total": 1
+    },
+    {
+      "key": "/api/scoped/investor-reporting/holdings/",
+      "valid": 0,
+      "total": 1
+    }
+  ],
+  "staticSuffix": {
+    "valid": 0,
+    "total": 1
+  },
+  "fixtures": [
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/default.json",
+      "valid": 12,
+      "total": 12,
+      "invalid": []
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/reporting-answer-bearing.json",
+      "valid": 1,
+      "total": 3,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-84/fixtures/reporting-qualified.json",
+      "valid": 1,
+      "total": 3,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json",
+      "valid": 3,
+      "total": 9,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/analysis/",
+        "/api/scoped/investor-reporting/narrative/",
+        "/api/scoped/investor-reporting/status/",
+        "/api/scoped/investor-reporting/export/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-14-print-v1.json",
+      "valid": 0,
+      "total": 2,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/narrative/"
+      ]
+    }
+  ],
+  "before": [
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/default.json",
+      "valid": 12,
+      "total": 12
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/reporting-answer-bearing.json",
+      "valid": 3,
+      "total": 3
+    },
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-84/fixtures/reporting-qualified.json",
+      "valid": 3,
+      "total": 3
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json",
+      "valid": 9,
+      "total": 9
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-14-print-v1.json",
+      "valid": 2,
+      "total": 2
+    }
+  ]
+}

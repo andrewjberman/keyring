@@ -1,9 +1,15 @@
 ---
 name: handoff
-description: Emit a REINSTANTIATION TEXT BLOCK so a fresh session of this seat (or a successor) resumes with zero ramp -- gate-forward (what is waiting on whom), self-scoped, grounded on hashes and artifacts. Bare `/handoff`; `/handoff brief`; `/handoff <CODE>`; `/handoff save` (persists to org/{tier}/{serial}/handoffs/). Not /log (the durable record) and not /overview (fabric status). Any agent.
+description: "Emit a REINSTANTIATION TEXT BLOCK so a fresh session of this seat (or a successor) resumes with zero ramp -- gate-forward (what is waiting on whom), self-scoped, grounded on hashes and artifacts. Bare `/handoff`; `/handoff brief`; `/handoff {CODE}`; `/handoff save` (persists to org/{tier}/{serial}/handoffs/). Not /log (the durable record) and not /overview (fabric status). Any agent."
 ---
 
 # /handoff — reinstantiation text block
+
+## Runtime
+
+- **Claude:** the MCP broker calls in Step 1 and Step 3 (`get_live_agents`, `get_org_summary`, `heartbeat`).
+- **Codex:** no broker MCP. Roster: `python .tools/fabric-check.py`; open task orders: `python .tools/to-check.py --all`;
+  skip `heartbeat` (the launcher's heartbeat companion owns liveness); mail arrives through the launcher's inbox bridge (`org/mcp/CODEX_INBOX_MONITOR.md`); sends go through `org/mcp/codex-send.ps1`.
 
 Produce the paste-block a fresh session needs to CONTINUE your work seamlessly. The reader has
 done nothing yet and has none of your session context — the block must carry everything load-bearing:

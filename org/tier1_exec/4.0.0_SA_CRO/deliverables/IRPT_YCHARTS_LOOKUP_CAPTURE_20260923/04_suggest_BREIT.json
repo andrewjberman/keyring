@@ -1,0 +1,166 @@
+{
+ "label": "suggest_BREIT",
+ "path": "/search/suggest/main?q=BREIT",
+ "utc": "2026-09-23T18:24:55Z",
+ "http_status": 200,
+ "final_url_path": "/search/suggest/main",
+ "elapsed_s": 0.07,
+ "bytes": 3527,
+ "json": {
+  "alt": [],
+  "r": [],
+  "cs": [],
+  "mp": [],
+  "pmp": [],
+  "sa": [],
+  "co": [],
+  "ind": [],
+  "idx": [],
+  "mf": [
+   {
+    "desc": "",
+    "display_security_id": "BREIT.S",
+    "id": 184380,
+    "name": "Blackstone Real Estate Income Trust, Inc. (S)",
+    "search_id": "M:BREIT.S",
+    "securitylist_security_id": "M184380",
+    "type": "mutual_fund",
+    "url": "/mutual_funds/M:BREIT.S",
+    "always_display": false,
+    "all_features_required": true,
+    "features_needed": [
+     "evergreenFundData"
+    ],
+    "feature_needed": "evergreenFundData"
+   },
+   {
+    "desc": "",
+    "display_security_id": "BREIT.L",
+    "id": 184385,
+    "name": "Blackstone Real Estate Income Trust, Inc. (L)",
+    "search_id": "M:BREIT.L",
+    "securitylist_security_id": "M184385",
+    "type": "mutual_fund",
+    "url": "/mutual_funds/M:BREIT.L",
+    "always_display": false,
+    "all_features_required": true,
+    "features_needed": [
+     "evergreenFundData"
+    ],
+    "feature_needed": "evergreenFundData"
+   },
+   {
+    "desc": "",
+    "display_security_id": "BREIT.S-2",
+    "id": 184396,
+    "name": "Blackstone Real Estate Income Trust, Inc. (S-2)",
+    "search_id": "M:BREIT.S-2",
+    "securitylist_security_id": "M184396",
+    "type": "mutual_fund",
+    "url": "/mutual_funds/M:BREIT.S-2",
+    "always_display": false,
+    "all_features_required": true,
+    "features_needed": [
+     "evergreenFundData"
+    ],
+    "feature_needed": "evergreenFundData"
+   },
+   {
+    "desc": "",
+    "display_security_id": "BREIT.D-2",
+    "id": 184407,
+    "name": "Blackstone Real Estate Income Trust, Inc. (D-2)",
+    "search_id": "M:BREIT.D-2",
+    "securitylist_security_id": "M184407",
+    "type": "mutual_fund",
+    "url": "/mutual_funds/M:BREIT.D-2",
+    "always_display": false,
+    "all_features_required": true,
+    "features_needed": [
+     "evergreenFundData"
+    ],
+    "feature_needed": "evergreenFundData"
+   },
+   {
+    "desc": "",
+    "display_security_id": "BREIT.C",
+    "id": 184412,
+    "name": "Blackstone Real Estate Income Trust, Inc. (C)",
+    "search_id": "M:BREIT.C",
+    "securitylist_security_id": "M184412",
+    "type": "mutual_fund",
+    "url": "/mutual_funds/M:BREIT.C",
+    "always_display": false,
+    "all_features_required": true,
+    "features_needed": [
+     "evergreenFundData"
+    ],
+    "feature_needed": "evergreenFundData"
+   },
+   {
+    "desc": "",
+    "display_security_id": "BREIT.D",
+    "id": 184417,
+    "name": "Blackstone Real Estate Income Trust, Inc. (D)",
+    "search_id": "M:BREIT.D",
+    "securitylist_security_id": "M184417",
+    "type": "mutual_fund",
+    "url": "/mutual_funds/M:BREIT.D",
+    "always_display": false,
+    "all_features_required": true,
+    "features_needed": [
+     "evergreenFundData"
+    ],
+    "feature_needed": "evergreenFundData"
+   },
+   {
+    "desc": "",
+    "display_security_id": "BREIT.T",
+    "id": 184418,
+    "name": "Blackstone Real Estate Income Trust, Inc. (T)",
+    "search_id": "M:BREIT.T",
+    "securitylist_security_id": "M184418",
+    "type": "mutual_fund",
+    "url": "/mutual_funds/M:BREIT.T",
+    "always_display": false,
+    "all_features_required": true,
+    "features_needed": [
+     "evergreenFundData"
+    ],
+    "feature_needed": "evergreenFundData"
+   },
+   {
+    "desc": "",
+    "display_security_id": "BREIT.T-2",
+    "id": 184424,
+    "name": "Blackstone Real Estate Income Trust, Inc. (T-2)",
+    "search_id": "M:BREIT.T-2",
+    "securitylist_security_id": "M184424",
+    "type": "mutual_fund",
+    "url": "/mutual_funds/M:BREIT.T-2",
+    "always_display": false,
+    "all_features_required": true,
+    "features_needed": [
+     "evergreenFundData"
+    ],
+    "feature_needed": "evergreenFundData"
+   },
+   {
+    "desc": "",
+    "display_security_id": "BREIT.I",
+    "id": 184430,
+    "name": "Blackstone Real Estate Income Trust, Inc. (I)",
+    "search_id": "M:BREIT.I",
+    "securitylist_security_id": "M184430",
+    "type": "mutual_fund",
+    "url": "/mutual_funds/M:BREIT.I",
+    "always_display": false,
+    "all_features_required": true,
+    "features_needed": [
+     "evergreenFundData"
+    ],
+    "feature_needed": "evergreenFundData"
+   }
+  ]
+ }
+}

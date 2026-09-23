@@ -1,6 +1,6 @@
 ---
 name: seams
-description: Integration QA on a SEAM -- the connection between two components, from one function boundary to a full pipeline -- on three pass/fail axes: MECHANICAL (does the connection carry the flow), DECLARATIVE (does the record match the implementation), SEMANTIC (is the payload the correct content with validated quality). Grounds against the deployed/served artifact; exercise-or-evidence. Output: a seam report with per-axis verdicts and the believed-vs-true delta. `/seams <target>` or `/seams <A> -> <B>`. Any agent; CVO primary. /molecule is the node; this is the edge.
+description: "Integration QA on a SEAM -- the connection between two components, from one function boundary to a full pipeline -- on three pass/fail axes: MECHANICAL (does the connection carry the flow), DECLARATIVE (does the record match the implementation), SEMANTIC (is the payload the correct content with validated quality). Grounds against the deployed/served artifact; exercise-or-evidence. Output: a seam report with per-axis verdicts and the believed-vs-true delta. `/seams {target}` or `/seams {A} to {B}` (one directed seam). Any agent; CVO primary. /molecule is the node; this is the edge."
 ---
 
 # /seams — Integration Deep-Dive on the Connective Tissue

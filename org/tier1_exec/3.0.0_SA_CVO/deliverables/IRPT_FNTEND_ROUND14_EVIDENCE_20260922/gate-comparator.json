@@ -1,0 +1,27 @@
+[
+  {
+    "name": "current",
+    "comparatorMatches": 3,
+    "hunks": 3
+  },
+  {
+    "name": "removeInternal",
+    "comparatorMatches": 2,
+    "hunks": 3
+  },
+  {
+    "name": "removeAdmin",
+    "comparatorMatches": 2,
+    "hunks": 3
+  },
+  {
+    "name": "internalFalse",
+    "comparatorMatches": 3,
+    "hunks": 3
+  },
+  {
+    "name": "adminFalse",
+    "comparatorMatches": 3,
+    "hunks": 3
+  }
+]

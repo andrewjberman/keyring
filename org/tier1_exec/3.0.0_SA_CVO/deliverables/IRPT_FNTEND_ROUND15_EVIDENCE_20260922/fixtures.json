@@ -1,0 +1,334 @@
+{
+  "pin": "8e6e2e38cc299c4415d42b0fe627edc50ec35e1b",
+  "maps": [
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-32/holdings-no-answer.json",
+      "valid": 3,
+      "total": 9,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/analysis/",
+        "/api/scoped/investor-reporting/narrative/",
+        "/api/scoped/investor-reporting/status/",
+        "/api/scoped/investor-reporting/export/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-59/smoke-fixtures.json",
+      "valid": 1,
+      "total": 1,
+      "invalid": []
+    },
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-63/fixtures/export-ready.json",
+      "valid": 1,
+      "total": 3,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-63/fixtures/print-ready.json",
+      "valid": 0,
+      "total": 2,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/narrative/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-65/fixtures/dead.json",
+      "valid": 0,
+      "total": 1,
+      "invalid": [
+        "/api/scoped/investor-reporting/no-such-operation"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-69/fixtures/firm.json",
+      "valid": 1,
+      "total": 3,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-69/fixtures/firm.one-firm.json",
+      "valid": 1,
+      "total": 3,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-71/fixtures/export-flow.json",
+      "valid": 2,
+      "total": 4,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-72/fixtures/withheld.json",
+      "valid": 1,
+      "total": 3,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-74/fixtures/one-bad-key.json",
+      "valid": 3,
+      "total": 9,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/analysis/",
+        "/api/scoped/investor-reporting/narrative/",
+        "/api/scoped/investor-reporting/status/",
+        "/api/scoped/investor-reporting/export/",
+        "/api/scoped/investor-reporting/not-a-real-route"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-78/fixtures/cohort-non-authoritative.json",
+      "valid": 2,
+      "total": 2,
+      "invalid": []
+    },
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-78/fixtures/cohort-selected.json",
+      "valid": 2,
+      "total": 4,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-84/fixtures/reporting-qualified.json",
+      "valid": 3,
+      "total": 3,
+      "invalid": []
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/default.json",
+      "valid": 12,
+      "total": 12,
+      "invalid": []
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json",
+      "valid": 9,
+      "total": 9,
+      "invalid": []
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-14-49financial.json",
+      "valid": 1,
+      "total": 2,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-14-cottonwood.json",
+      "valid": 1,
+      "total": 2,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-14-global.json",
+      "valid": 2,
+      "total": 4,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-14-inflection.json",
+      "valid": 1,
+      "total": 2,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-14-print-v1.json",
+      "valid": 2,
+      "total": 2,
+      "invalid": []
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-15-clean.json",
+      "valid": 2,
+      "total": 5,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/holdings/",
+        "/api/scoped/investor-reporting/analysis/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-15-needs-correction.json",
+      "valid": 2,
+      "total": 5,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/holdings/",
+        "/api/scoped/investor-reporting/analysis/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-16-print-narrative.json",
+      "valid": 0,
+      "total": 2,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/narrative/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-16-print-prehistory.json",
+      "valid": 0,
+      "total": 2,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/narrative/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-16-ready.json",
+      "valid": 1,
+      "total": 3,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/export/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json",
+      "valid": 3,
+      "total": 9,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/analysis/",
+        "/api/scoped/investor-reporting/narrative/",
+        "/api/scoped/investor-reporting/status/",
+        "/api/scoped/investor-reporting/export/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-missing-attribution.json",
+      "valid": 3,
+      "total": 9,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/analysis/",
+        "/api/scoped/investor-reporting/narrative/",
+        "/api/scoped/investor-reporting/status/",
+        "/api/scoped/investor-reporting/export/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json",
+      "valid": 3,
+      "total": 9,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/analysis/",
+        "/api/scoped/investor-reporting/narrative/",
+        "/api/scoped/investor-reporting/status/",
+        "/api/scoped/investor-reporting/export/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-target.json",
+      "valid": 3,
+      "total": 9,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/analysis/",
+        "/api/scoped/investor-reporting/narrative/",
+        "/api/scoped/investor-reporting/status/",
+        "/api/scoped/investor-reporting/export/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-21-queued.json",
+      "valid": 3,
+      "total": 9,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/analysis/",
+        "/api/scoped/investor-reporting/narrative/",
+        "/api/scoped/investor-reporting/status/",
+        "/api/scoped/investor-reporting/export/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-3-loading.json",
+      "valid": 0,
+      "total": 1,
+      "invalid": [
+        "/api/scoped/investor-reporting/resolve-scope"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/fe-s-6-ready.json",
+      "valid": 0,
+      "total": 5,
+      "invalid": [
+        "/api/scoped/investor-reporting/resolve-scope",
+        "/api/scoped/investor-reporting/performance-report",
+        "/api/scoped/investor-reporting/holdings-snapshot",
+        "/api/scoped/investor-reporting/analysis-requests",
+        "/api/scoped/investor-reporting/analysis-report"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/reporting-answer-bearing-partial.json",
+      "valid": 1,
+      "total": 3,
+      "invalid": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    },
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/reporting-answer-bearing.json",
+      "valid": 3,
+      "total": 3,
+      "invalid": []
+    }
+  ],
+  "bindings": [
+    {
+      "file": "src/pages/InvestorReporting/fixtures/smoke/reporting-answer-bearing.json",
+      "fingerprint": "3a7bd3e2360a3d29eea436fcfb7e44c735d117c42d1c1835420b6b9942dd4f1b",
+      "performanceKeyMatches": true,
+      "holdingsKeyMatches": true
+    },
+    {
+      "file": "src/pages/InvestorReporting/__tests__/fe-s-84/fixtures/reporting-qualified.json",
+      "fingerprint": "3a7bd3e2360a3d29eea436fcfb7e44c735d117c42d1c1835420b6b9942dd4f1b",
+      "performanceKeyMatches": true,
+      "holdingsKeyMatches": true
+    }
+  ],
+  "strictClassifierUnchanged": true,
+  "defaultUnchanged": true
+}

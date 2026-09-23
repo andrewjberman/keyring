@@ -1,0 +1,11 @@
+WROTE data/firm_registry.json (5326 bytes)
+WROTE infra/aws/lambda-edge/_shared/firm-config.mjs (5533 bytes)
+WROTE data/assets/scripts/gold/investor_reporting/directory_runner.py (50255 bytes)
+WROTE data/assets/scripts/gold/investor_reporting/holdings_snapshot.py (81200 bytes)
+WROTE infra/aws/lambda/investor-reporting/_authz/loaders.py (10084 bytes)
+WROTE data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py (7114 bytes)
+WROTE .tools/ds-precommit-check.py (43407 bytes)
+WROTE infra/aws/terraform/modules/opal_name/generated_locals.tf (2973 bytes)
+WROTE infra/aws/terraform/modules/opal_name/tests/vectors.json (7013 bytes)
+WROTE infra/aws/terraform/modules/opal_name/tests/opal_name.tftest.hcl (15402 bytes)
+GENERATE: 10 written, 0 skipped, into C:\Users\AndrewBerman\Desktop\ajb_workspace\org\tier1_exec\4.0.0_SA_CRO\deliverables\IRPT_X10_REGISTRY_REVIEW_20260922\generated\candidate at registry@48a6181380b5d20c over all 7 registry file(s) -- each file's own mark is scoped to the registry files THAT target reads

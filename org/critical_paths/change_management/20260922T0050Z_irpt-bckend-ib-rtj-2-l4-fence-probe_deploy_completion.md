@@ -1,0 +1,29 @@
+# Deploy Completion Record
+**Date opened:** 2026-09-22T00:50:12.565612+00:00
+**Status:** CLOSED -- nothing stranded -- closed 20260922T020531Z
+**Deploy:** IRPT_BCKEND.TO-IB-rtj-2 -- the L4 bounded test principal: role irpt-fence-probe-l4-role (lib/opal_naming.py name('irpt',None,'fence-probe','role','l4')) + inline policy irpt-fence-probe-l4-policy = {"Statement":[{"Action":"s3:ListBucket","Effect":"Allow","Resource":["arn:aws:s3:::opal-data-inflection","arn:aws:s3:::opal-data-cottonwood","arn:aws:s3:::opal-313476888478-lambda-artifacts"],"Sid":"ListBucketOnlyThreeBuckets"}],"Version":"2012-10-17"}; trust = sts:AssumeRole by user/Andrew_Berman only. Root infra/aws/terraform/investor-reporting/l4-fence-probe (own state key). NOTHING APPLIES UNTIL the CTO + CRO halves are at HEAD naming packet NEVER_WIDEN_SIGNOFF_PACKET_IB-rtj-2.md. ENDS WITH: plan -destroy (exactly 2 deletions) -> safe-apply apply <destroy plan> -> aws iam get-role returns NoSuchEntity (printed) -> the root's .tf files removed and committed. Closes leg L4 of 20260918T1949Z_irpt-bckend-ib-rte-3-lgic-firm-buckets if it discriminates (CTO 99312 CALL 1).
+**Authored by:** 0.7.0_AE_CloudOps~V
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 8.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| L1 | activation | infra/aws/terraform/investor-reporting/l4-fence-probe: aws_iam_role.l4_fence_probe + aws_iam_role_policy.l4_fence_probe_listbucket | both halves at HEAD naming the packet; saved plan EXACTLY 2 creates; safe-apply rc=0 'Apply complete! Resources: 2 added'; get-role + get-role-policy read back == the packet's policies | Halves at HEAD naming packet blob e2f521e5: 1.0.0_SA_CTO @088669b331 (blob 50ebbfd57d), 2.0.0_SA_COO~F in the CRO's stead @580fd0f374 (blob 61407bf2bd); 4.0.0_SA_CRO's own half then landed @dba9199222. Saved plan gated in code EXACT: 2 creates, policy + trust byte-identical to the packet. .tools/safe-apply.sh apply rc=0 01:57:54Z-01:58:39Z 'Apply complete! Resources: 2 added, 0 changed, 0 destroyed.' Read back: role arn:aws:iam::313476888478:role/irpt-fence-probe-l4-role created 2026-09-22T01:58:40Z, trust = user/Andrew_Berman sts:AssumeRole only; inline policy irpt-fence-probe-l4-policy = s3:ListBucket on the 3 bucket ARNs verbatim; attached policies 0; inline policies 1 | CLOSED 20260922T015939Z |
+| L2 | verify | positive arm: control opal-313476888478-lambda-artifacts | list-objects-v2 under the assumed role session SUCCEEDS, wire result printed | POSITIVE ARM 01:59:48Z under session arn:aws:sts::313476888478:assumed-role/irpt-fence-probe-l4-role/ib-rtj-2-l4-probe: list-objects-v2 opal-313476888478-lambda-artifacts -> OK, KeyCount 5 IsTruncated True (key names not printed). PASS (IB-rtj-2_arms_output.txt) | CLOSED 20260922T020045Z |
+| L3 | verify | negative arms: opal-data-inflection + opal-data-cottonwood (2 of 2) + attribution control opal-data-assets | each fenced bucket AccessDenied with S3 error context 'explicit deny in a resource-based policy' (CloudTrail if a data-event trail covers them); control bucket AccessDenied 'no identity-based policy allows' | NEGATIVE ARMS 2 of 2 under the SAME session, S3 error context verbatim: opal-data-inflection AccessDenied '... s3:ListBucket on resource: arn:aws:s3:::opal-data-inflection with an explicit deny in a resource-based policy'; opal-data-cottonwood AccessDenied '... arn:aws:s3:::opal-data-cottonwood with an explicit deny in a resource-based policy' -> attributed 2 of 2. ATTRIBUTION CONTROL opal-data-assets AccessDenied '... because no identity-based policy allows the s3:ListBucket action' -> the wording discriminates the two causes | CLOSED 20260922T020045Z |
+| L4 | activation | DESTROY infra/aws/terraform/investor-reporting/l4-fence-probe | saved plan -destroy EXACTLY 2 deletions; safe-apply apply <destroy plan> rc=0 'Resources: 0 added, 0 changed, 2 destroyed' | DESTROY in the same session: saved plan -destroy gated EXACT (2 deletes: aws_iam_role.l4_fence_probe + aws_iam_role_policy.l4_fence_probe_listbucket); .tools/safe-apply.sh apply <destroy plan> rc=0 02:01:35Z-02:02:21Z 'Apply complete! Resources: 0 added, 0 changed, 2 destroyed.' (IB-rtj-2_destroy_output.txt) | CLOSED 20260922T020303Z |
+| L5 | verify | role gone + declaration removed | aws iam get-role --role-name irpt-fence-probe-l4-role -> NoSuchEntity, printed verbatim; the root's .tf files deleted and committed | VERIFIED after destroy: iam get-role --role-name irpt-fence-probe-l4-role -> 'An error occurred (NoSuchEntity) when calling the GetRole operation: The role with name irpt-fence-probe-l4-role cannot be found.' rc=255 (IB-rtj-2_nosuchentity.txt). Declaration removed @d1fa987b2d (main.tf + role.tf deleted; HEAD holds 0 files under the root), so no later apply recreates it | CLOSED 20260922T020531Z |
+
+## Log
+
+- 20260922T005012Z OPENED by 0.7.0_AE_CloudOps~V with 5 leg(s)
+- 20260922T015939Z LEG L1 closed: Halves at HEAD naming packet blob e2f521e5: 1.0.0_SA_CTO @088669b331 (blob 50ebbfd57d), 2.0.0_SA_COO~F in the CRO's stea
+- 20260922T020045Z LEG L2 closed: POSITIVE ARM 01:59:48Z under session arn:aws:sts::313476888478:assumed-role/irpt-fence-probe-l4-role/ib-rtj-2-l4-probe: 
+- 20260922T020045Z LEG L3 closed: NEGATIVE ARMS 2 of 2 under the SAME session, S3 error context verbatim: opal-data-inflection AccessDenied '... s3:ListBu
+- 20260922T020303Z LEG L4 closed: DESTROY in the same session: saved plan -destroy gated EXACT (2 deletes: aws_iam_role.l4_fence_probe + aws_iam_role_poli
+- 20260922T020531Z LEG L5 closed: VERIFIED after destroy: iam get-role --role-name irpt-fence-probe-l4-role -> 'An error occurred (NoSuchEntity) when call
+- 20260922T020531Z CLOSED -- all 5 legs proven

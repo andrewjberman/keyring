@@ -1,0 +1,61 @@
+{
+  "pin": "33b2fbe5288a2e6326dd93266a676019bad8a9bb",
+  "success": {
+    "contract_version": "v1",
+    "operation": "selection-create",
+    "firm_id": "fir_c9fc04650e2134d6ea033da2",
+    "data": {
+      "schema_version": "selected-accounts-v1",
+      "firm_id": "49financial",
+      "account_ids": [
+        "acc_3b159acd1084e64e3e789fc5"
+      ],
+      "directory_revision": "187729b8d94fd4e95fab33d079e4515468ae5ccc306c33e381fba1ddedfcf8a2",
+      "account_set_id": "sel_ecd5b096e79795777120d59ced7147356d52959f5760c7a4828dce274bfbc5d0",
+      "selected_account_ids": [
+        "acc_3b159acd1084e64e3e789fc5"
+      ],
+      "selected_account_set_fingerprint": "86a731ba7285282d0a7c2303b5f06b99c3486e01d1987a84d8d5f4ccd2ee6414",
+      "permitted_account_set_fingerprint": "3159302f8e90b717ad4314120cba3bce014471589d92ae794cfa61ffda8b9fe0",
+      "entitlement_revision": "irpt-ent-fixture-1"
+    },
+    "unprojected_grant": {
+      "count": 0,
+      "denominator": 2,
+      "kinds": {}
+    }
+  },
+  "refusal": {
+    "ok": false,
+    "contract_version": "v1",
+    "operation": "selection-create",
+    "status": {
+      "operation": {
+        "operation_id": "selection-create",
+        "operation_kind": "read",
+        "revision": "v1"
+      },
+      "state": "UNAVAILABLE",
+      "source_dates": {
+        "source_completion_date": null,
+        "business_date": "2026-09-22"
+      },
+      "actions": [
+        {
+          "action": "NONE",
+          "safe": true,
+          "description": "no retry or recovery action is offered for this outcome"
+        }
+      ],
+      "public_reason_code": "OBJECT_NOT_COVERED"
+    },
+    "firm_id": "fir_c9fc04650e2134d6ea033da2"
+  },
+  "controls": [
+    "actual_selection_success_exact_selected_set",
+    "actual_selection_partial_scope_refusal_public_schema_no_cid_no_write",
+    "selection_public_schema_rejects_reintroduced_cid",
+    "fresh_selection_refusal_equals_repaired_portal_capture"
+  ],
+  "limitation": "Actual Entry with directory/ownership/persistence doubles; not deployed route or custody grade"
+}

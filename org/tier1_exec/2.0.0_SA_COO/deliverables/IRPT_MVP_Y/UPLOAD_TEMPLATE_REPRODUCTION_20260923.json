@@ -1,0 +1,166 @@
+{
+  "y_source": "1385a126e7d9bbc9b4fe211cc708a52a93ce64e6",
+  "template_path": "C:\\Users\\AndrewBerman\\Downloads\\ychart template.xlsx",
+  "template_sha256": "2b8d09e5485081580b39a155a765307ee64b77281e632ba4e26794857957718d",
+  "measurements": [
+    {
+      "unit": "Dollars",
+      "finding_codes": {
+        "AMBIGUOUS_CURRENCY": 4,
+        "ROW_SKIPPED_NOT_A_HOLDING": 1,
+        "UNPARSEABLE_QUANTITY": 1
+      },
+      "findings": [
+        {
+          "code": "AMBIGUOUS_CURRENCY",
+          "detail": "row 2 carries a money value at holdings_template!B2 whose currency CANNOT be established: the only currency signal is a SYMBOL, which is ambiguous across ARS, AUD, CAD, CLP, COP, HKD, MXN, NZD, SGD, USD, UYU; the cell's law forbids inferring a currency from one. Candidates seen: ARS, AUD, CAD, CLP, COP, HKD, MXN, NZD, SGD, USD, UYU. No unit is claimed and the row is quarantined -- picking one candidate is the defect.",
+          "severity": "UNCERTAIN"
+        },
+        {
+          "code": "AMBIGUOUS_CURRENCY",
+          "detail": "row 3 carries a money value at holdings_template!B3 whose currency CANNOT be established: the only currency signal is a SYMBOL, which is ambiguous across ARS, AUD, CAD, CLP, COP, HKD, MXN, NZD, SGD, USD, UYU; the cell's law forbids inferring a currency from one. Candidates seen: ARS, AUD, CAD, CLP, COP, HKD, MXN, NZD, SGD, USD, UYU. No unit is claimed and the row is quarantined -- picking one candidate is the defect.",
+          "severity": "UNCERTAIN"
+        },
+        {
+          "code": "AMBIGUOUS_CURRENCY",
+          "detail": "row 4 carries a money value at holdings_template!B4 whose currency CANNOT be established: the only currency signal is a SYMBOL, which is ambiguous across ARS, AUD, CAD, CLP, COP, HKD, MXN, NZD, SGD, USD, UYU; the cell's law forbids inferring a currency from one. Candidates seen: ARS, AUD, CAD, CLP, COP, HKD, MXN, NZD, SGD, USD, UYU. No unit is claimed and the row is quarantined -- picking one candidate is the defect.",
+          "severity": "UNCERTAIN"
+        },
+        {
+          "code": "AMBIGUOUS_CURRENCY",
+          "detail": "row 5 carries a money value at holdings_template!B5 whose currency CANNOT be established: the only currency signal is a SYMBOL, which is ambiguous across ARS, AUD, CAD, CLP, COP, HKD, MXN, NZD, SGD, USD, UYU; the cell's law forbids inferring a currency from one. Candidates seen: ARS, AUD, CAD, CLP, COP, HKD, MXN, NZD, SGD, USD, UYU. No unit is claimed and the row is quarantined -- picking one candidate is the defect.",
+          "severity": "UNCERTAIN"
+        },
+        {
+          "code": "ROW_SKIPPED_NOT_A_HOLDING",
+          "detail": "row 7 is a grouping header ('Target Weight'), carried as the group of the rows below it",
+          "severity": "INFO"
+        },
+        {
+          "code": "UNPARSEABLE_QUANTITY",
+          "detail": "row 11 (holdings_template!A11) carries no readable number in any column; the row is reported, never dropped",
+          "severity": "BLOCKING"
+        }
+      ],
+      "needs_correction": true
+    },
+    {
+      "unit": "Shares",
+      "finding_codes": {
+        "ROW_SKIPPED_NOT_A_HOLDING": 1,
+        "UNPARSEABLE_QUANTITY": 1
+      },
+      "findings": [
+        {
+          "code": "ROW_SKIPPED_NOT_A_HOLDING",
+          "detail": "row 7 is a grouping header ('Target Weight'), carried as the group of the rows below it",
+          "severity": "INFO"
+        },
+        {
+          "code": "UNPARSEABLE_QUANTITY",
+          "detail": "row 11 (holdings_template!A11) carries no readable number in any column; the row is reported, never dropped",
+          "severity": "BLOCKING"
+        }
+      ],
+      "needs_correction": true
+    },
+    {
+      "unit": "Target Weight",
+      "finding_codes": {
+        "UNITS_UNDETERMINED": 4,
+        "ROW_SKIPPED_NOT_A_HOLDING": 1,
+        "UNPARSEABLE_QUANTITY": 1
+      },
+      "findings": [
+        {
+          "code": "UNITS_UNDETERMINED",
+          "detail": "row 2 carries a number in column B under header 'target weight', which is not in the declared units vocabulary; the holding is kept and its units are left null rather than assumed",
+          "severity": "UNCERTAIN"
+        },
+        {
+          "code": "UNITS_UNDETERMINED",
+          "detail": "row 3 carries a number in column B under header 'target weight', which is not in the declared units vocabulary; the holding is kept and its units are left null rather than assumed",
+          "severity": "UNCERTAIN"
+        },
+        {
+          "code": "UNITS_UNDETERMINED",
+          "detail": "row 4 carries a number in column B under header 'target weight', which is not in the declared units vocabulary; the holding is kept and its units are left null rather than assumed",
+          "severity": "UNCERTAIN"
+        },
+        {
+          "code": "UNITS_UNDETERMINED",
+          "detail": "row 5 carries a number in column B under header 'target weight', which is not in the declared units vocabulary; the holding is kept and its units are left null rather than assumed",
+          "severity": "UNCERTAIN"
+        },
+        {
+          "code": "ROW_SKIPPED_NOT_A_HOLDING",
+          "detail": "row 7 is a grouping header ('Target Weight'), carried as the group of the rows below it",
+          "severity": "INFO"
+        },
+        {
+          "code": "UNPARSEABLE_QUANTITY",
+          "detail": "row 11 (holdings_template!A11) carries no readable number in any column; the row is reported, never dropped",
+          "severity": "BLOCKING"
+        }
+      ],
+      "needs_correction": true
+    },
+    {
+      "unit": "Current Weight",
+      "finding_codes": {
+        "UNITS_UNDETERMINED": 4,
+        "ROW_SKIPPED_NOT_A_HOLDING": 1,
+        "UNPARSEABLE_QUANTITY": 1
+      },
+      "findings": [
+        {
+          "code": "UNITS_UNDETERMINED",
+          "detail": "row 2 carries a number in column B under header 'current weight', which is not in the declared units vocabulary; the holding is kept and its units are left null rather than assumed",
+          "severity": "UNCERTAIN"
+        },
+        {
+          "code": "UNITS_UNDETERMINED",
+          "detail": "row 3 carries a number in column B under header 'current weight', which is not in the declared units vocabulary; the holding is kept and its units are left null rather than assumed",
+          "severity": "UNCERTAIN"
+        },
+        {
+          "code": "UNITS_UNDETERMINED",
+          "detail": "row 4 carries a number in column B under header 'current weight', which is not in the declared units vocabulary; the holding is kept and its units are left null rather than assumed",
+          "severity": "UNCERTAIN"
+        },
+        {
+          "code": "UNITS_UNDETERMINED",
+          "detail": "row 5 carries a number in column B under header 'current weight', which is not in the declared units vocabulary; the holding is kept and its units are left null rather than assumed",
+          "severity": "UNCERTAIN"
+        },
+        {
+          "code": "ROW_SKIPPED_NOT_A_HOLDING",
+          "detail": "row 7 is a grouping header ('Target Weight'), carried as the group of the rows below it",
+          "severity": "INFO"
+        },
+        {
+          "code": "UNPARSEABLE_QUANTITY",
+          "detail": "row 11 (holdings_template!A11) carries no readable number in any column; the row is reported, never dropped",
+          "severity": "BLOCKING"
+        }
+      ],
+      "needs_correction": true
+    }
+  ],
+  "live_vendor_calls": 0,
+  "secret_reads": 0,
+  "template": {
+    "sheets": [
+      "holdings_template"
+    ],
+    "sheet": "holdings_template",
+    "A1": "Symbol",
+    "B1": "Dollars",
+    "dimensions": "A1:AY305",
+    "B2_format": "\"$\"#,##0.00_);[Red]\\(\"$\"#,##0.00\\)"
+  },
+  "upload_validation": {
+    "error_class": "UploadRefused",
+    "reason": "CSV_FILENAME"
+  }
+}

@@ -1,0 +1,32 @@
+﻿{
+    "pin":  "42412eb8a17068a6b0bac8342cb23cfc35556176",
+    "supplied_exit":  0,
+    "supplied_output":  [
+                            "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m",
+                            "\u001b[0m",
+                            "src\\pages\\InvestorReporting\\__tests__\\mvp-selection\\owned-outer.test.ts:",
+                            "\u001b[0m\u001b[32m✓\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m \u003e\u001b[0m\u001b[1m history positive and refusal wires parse without synthesizing a grant or data\u001b[0m",
+                            "\u001b[0m\u001b[32m✓\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m \u003e\u001b[0m\u001b[1m read positive and refusal wires parse without synthesizing a grant or data\u001b[0m",
+                            "\u001b[0m\u001b[32m✓\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m \u003e\u001b[0m\u001b[1m sections positive and refusal wires parse without synthesizing a grant or data\u001b[0m",
+                            "\u001b[0m\u001b[32m✓\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m \u003e\u001b[0m\u001b[1m status positive and refusal wires parse without synthesizing a grant or data\u001b[0m",
+                            "\u001b[0m\u001b[32m✓\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m \u003e\u001b[0m\u001b[1m grant map carries labels and total counts; missing or invalid counters refuse\u001b[0m",
+                            "\u001b[0m",
+                            "src\\pages\\InvestorReporting\\__tests__\\mvp-selection\\prospect-dates.test.tsx:",
+                            "\u001b[0m\u001b[32m✓\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m \u003e\u001b[0m\u001b[1m actual retained Entry outputs survive closed parser and renderer without date loss\u001b[0m \u001b[0m\u001b[2m[\u001b[1m15.00ms\u001b[0m\u001b[2m]\u001b[0m",
+                            "\u001b[0m\u001b[32m✓\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m \u003e\u001b[0m\u001b[1m preserves mixed stable dates through parser and shared screen/print component\u001b[0m",
+                            "\u001b[0m\u001b[32m✓\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m \u003e\u001b[0m\u001b[1m undated input uses explicit label without reading a clock\u001b[0m",
+                            "\u001b[0m\u001b[32m✓\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m \u003e\u001b[0m\u001b[1m only status-job advertises capability; old clients never gain it implicitly\u001b[0m",
+                            "\u001b[0m\u001b[32m✓\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m \u003e\u001b[0m\u001b[1m rejects input/request substitution and arbitrary operation opt-in\u001b[0m",
+                            "\u001b[0m\u001b[32m✓\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m \u003e\u001b[0m\u001b[1m refuses invalid/duplicate/missing dates and false single-date per-section label\u001b[0m",
+                            "\u001b[0m\u001b[32m✓\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m \u003e\u001b[0m\u001b[1m dated statuses keep existing business-date reading\u001b[0m",
+                            "System.Management.Automation.RemoteException",
+                            "\u001b[0m\u001b[32m 12 pass\u001b[0m",
+                            "\u001b[0m\u001b[2m 0 fail\u001b[0m",
+                            " 69 expect() calls",
+                            "Ran 12 tests across 2 files. \u001b[0m\u001b[2m[\u001b[1m172.00ms\u001b[0m\u001b[2m]\u001b[0m"
+                        ],
+    "typecheck_exit":  0,
+    "typecheck_output":  [
+
+                         ]
+}

@@ -1,0 +1,37 @@
+{
+  "reviewer": "1.0.0_SA_CTO",
+  "candidate": "b3e63a795e0b8c7399619dbc545745786add4eb7",
+  "parent": "a20a1a1bd28c2cf76d5b80aae0d9a745ab5c7d2c",
+  "authority": "6fa9ce525f four-file local producer tranche",
+  "result": "BOUNDED_LOCAL_SOURCE_CONTROLS_PASS",
+  "files": [
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+      "sha256": "a133e3922a0417085f3db5548702bfc58f886edb0fc3714849f65b8f6ec0a938"
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/tests/test_economic_regressions.py",
+      "sha256": "69e09e4de45ec24dcc4ea4c95173098c37bbb4caa703f56fefa8fa149dbbdb45"
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py",
+      "sha256": "ae8ff802b844c937acd2dfbd98dc9c17abaa414544a3282d820b08adf25598a8"
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/tests/test_source_inputs.py",
+      "sha256": "e191e0eb0eafca5164d5d6b2492ff74352f3f3c83ddbfc437d26b40b593f6d22"
+    }
+  ],
+  "command": "python -m pytest -q data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py data/assets/scripts/gold/investor_reporting/tests/test_economic_regressions.py data/assets/scripts/gold/investor_reporting/tests/test_source_inputs.py data/assets/scripts/gold/investor_reporting/tests/test_holdouts.py",
+  "exit_code": 0,
+  "passed": 114,
+  "snapshot": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\irpt-cto-cot-_v76curz\\source",
+  "harness_note": "Initial archive omitted org/standards/NAMING_SCHEMA.json:112passed,2FileNotFoundErrors. Added org/standards from same candidate pin and reran unchanged suite:114passed. No candidate/test changes.",
+  "limits": [
+    "Synthetic offline source data; no cloud reads/writes or producer operational invocation.",
+    "Pure helper optionally checks caller-supplied raw account census; build_cot does not pass independently authorized expected_account_ids.",
+    "Supplied date equality is checked; authoritative source currency, security/cash identity and full/empty account census remain unestablished.",
+    "Internal raw IDs and source-object references are not authorized public S2 fields.",
+    "No factory callback, schema emission, production integration or economic/live acceptance."
+  ]
+}

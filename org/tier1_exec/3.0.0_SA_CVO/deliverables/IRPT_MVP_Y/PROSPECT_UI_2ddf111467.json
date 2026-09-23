@@ -1,0 +1,47 @@
+{
+  "pin": "2ddf111467348c4c81ae28e0c0b8aa80e1239152",
+  "method": "Actual component functions and handlers with manual React hook storage and static DOM markup. No browser scheduler, runtime transport, reload persistence or live API proof.",
+  "source_sha256": {
+    "src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx": "14338457a898d8d7d3a0e576292e875fdd0a7575d7c8b386385ef16918569497",
+    "src/pages/InvestorReporting/tabs/analysis/prospect.ts": "eb1a12fb9983d6e1084eba415015d5fae900c9597751e3129a6023875e5a1a3b",
+    "src/pages/InvestorReporting/tabs/analysis/AnalysisTab.tsx": "e126cd0aaf3e8e17fa2e3ac4da921bda105973943679511dd0426520278ae75a"
+  },
+  "checks": [
+    {
+      "name": "ambiguous upload retries exactly and same-tick repeated click sends once",
+      "outcome": "PASS"
+    },
+    {
+      "name": "refresh clears old result, keeps parent and freezes ambiguous refresh retry",
+      "outcome": "PASS"
+    },
+    {
+      "name": "analysis retry freezes exact input-only body; deliberate title edit creates new request",
+      "outcome": "PASS"
+    },
+    {
+      "name": "successful analysis shows acceptance and disables a second submit",
+      "outcome": "PASS"
+    },
+    {
+      "name": "correction hides generate; deliberate option correction issues distinct upload",
+      "outcome": "PASS"
+    },
+    {
+      "name": "last file selection wins even when an earlier file read completes later",
+      "outcome": "PASS"
+    },
+    {
+      "name": "exact source amount strings render without number conversion; row cap is explicit",
+      "outcome": "PASS"
+    },
+    {
+      "name": "live upload with NO-HANDLER performs zero transport and exposes retry state",
+      "outcome": "PASS"
+    },
+    {
+      "name": "remount demonstrably loses in-memory attempt; persistence is not claimed",
+      "outcome": "PASS"
+    }
+  ]
+}

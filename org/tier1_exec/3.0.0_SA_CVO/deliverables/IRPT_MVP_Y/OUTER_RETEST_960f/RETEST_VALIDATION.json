@@ -1,0 +1,68 @@
+{
+  "backend_pin": "960f5f2a4501eff2670bcd0b5951926836093447",
+  "portal_pin": "c09fea54e9f4613d44b874724e93b79c443f8cc8",
+  "original_review": "64a2c522ef6144de657f6afccb5e7a3536b9aa49",
+  "original_python_sha256": "40887e32e0ed6f1f96423b18d65c22bb5f2caf092d70a5ffbaf268645480b67f",
+  "original_ts_sha256": "bf904186d7341785b360f8d5568f835baf936a7c6fad44248881e0180da30db7",
+  "bindings_only": [
+    [
+      "'7915bc9b2c'",
+      "'960f5f2a4501eff2670bcd0b5951926836093447'"
+    ],
+    [
+      "own = Path(__file__).resolve().parent",
+      "own = Path('C:\\\\Users\\\\AndrewBerman\\\\Desktop\\\\ajb_workspace\\\\org\\\\tier1_exec\\\\3.0.0_SA_CVO\\\\deliverables\\\\IRPT_MVP_Y\\\\OUTER_RETEST_960f')"
+    ]
+  ],
+  "extra_controls": [
+    {
+      "name": "history_public_schema_rejects_reinserted_cid",
+      "passed": true
+    },
+    {
+      "name": "history_internal_diagnostic_retained_exact_public_projection",
+      "passed": true
+    },
+    {
+      "name": "read_public_schema_rejects_reinserted_cid",
+      "passed": true
+    },
+    {
+      "name": "read_internal_diagnostic_retained_exact_public_projection",
+      "passed": true
+    },
+    {
+      "name": "sections_public_schema_rejects_reinserted_cid",
+      "passed": true
+    },
+    {
+      "name": "sections_internal_diagnostic_retained_exact_public_projection",
+      "passed": true
+    },
+    {
+      "name": "status_public_schema_rejects_reinserted_cid",
+      "passed": true
+    },
+    {
+      "name": "status_internal_diagnostic_retained_exact_public_projection",
+      "passed": true
+    }
+  ],
+  "independent": {
+    "exit_code": 0,
+    "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+    "stderr": "\u001b[0m\norg\\tier1_exec\\3.0.0_SA_CVO\\deliverables\\IRPT_MVP_Y\\probe_outer_pair.test.ts:\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m history actual success and refusal parse\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m read actual success and refusal parse\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m sections actual success and refusal parse\u001b[0m \u001b[0m\u001b[2m[\u001b[1m31.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m status actual success and refusal parse\u001b[0m \u001b[0m\u001b[2m[\u001b[1m16.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m undated actual date outer success preserves producer facts\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m per_section actual date outer success preserves producer facts\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m single_date actual date outer success preserves producer facts\u001b[0m \u001b[0m\u001b[2m[\u001b[1m15.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m old_consumer actual date outer success preserves producer facts\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m not_ready actual date outer success preserves producer facts\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m outer_unknown schema-invalid wire must be refused by strict parser\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m missing_grant schema-invalid wire must be refused by strict parser\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m data_unknown schema-invalid wire must be refused by strict parser\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m operation_unknown_field schema-invalid wire must be refused by strict parser\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m null_business_date schema-invalid wire must be refused by strict parser\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m invalid_calendar schema-invalid wire must be refused by strict parser\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m source_unknown_field schema-invalid wire must be refused by strict parser\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m unsafe_action schema-invalid wire must be refused by strict parser\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m grant_unknown schema-invalid wire must be refused by strict parser\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m wrong_lane schema-invalid wire must be refused by strict parser\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m null_extension_date schema-invalid wire must be refused by strict parser\u001b[0m\n\n\u001b[0m\u001b[32m 20 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 53 expect() calls\nRan 20 tests across 1 file. \u001b[0m\u001b[2m[\u001b[1m295.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+  },
+  "supplied": {
+    "exit_code": 0,
+    "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+    "stderr": "\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\owned-history.test.ts:\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mowned request history paired to Y e93300e34b\u001b[2m >\u001b[0m\u001b[1m preserves accepted identity, original time and bounded continuation\u001b[0m \u001b[0m\u001b[2m[\u001b[1m15.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mowned request history paired to Y e93300e34b\u001b[2m >\u001b[0m\u001b[1m refuses private projection members, duplicate rows and unbounded queries\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mowned request history paired to Y e93300e34b\u001b[2m >\u001b[0m\u001b[1m malformed response becomes typed refusal without carrying private values\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mowned request history paired to Y e93300e34b\u001b[2m >\u001b[0m\u001b[1m pending live history/read routes make no transport call\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mowned request history paired to Y e93300e34b\u001b[2m >\u001b[0m\u001b[1m explicit fixture readers require exact issued request binding\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mowned request history paired to Y e93300e34b\u001b[2m >\u001b[0m\u001b[1m document generator imports sibling contract references\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mowned request history paired to Y e93300e34b\u001b[2m >\u001b[0m\u001b[1m owned sections use issued request only and reject another report identity\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\owned-outer.test.ts:\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m >\u001b[0m\u001b[1m history positive and refusal wires parse without synthesizing a grant or data\u001b[0m \u001b[0m\u001b[2m[\u001b[1m16.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m >\u001b[0m\u001b[1m read positive and refusal wires parse without synthesizing a grant or data\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m >\u001b[0m\u001b[1m sections positive and refusal wires parse without synthesizing a grant or data\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m >\u001b[0m\u001b[1m status positive and refusal wires parse without synthesizing a grant or data\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m >\u001b[0m\u001b[1m grant map carries labels and total counts; missing or invalid counters refuse\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\prospect-dates.test.tsx:\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m actual retained Entry outputs survive closed parser and renderer without date loss\u001b[0m \u001b[0m\u001b[2m[\u001b[1m15.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m preserves mixed stable dates through parser and shared screen/print component\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m undated input uses explicit label without reading a clock\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m only status-job advertises capability; old clients never gain it implicitly\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m rejects input/request substitution and arbitrary operation opt-in\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m refuses invalid/duplicate/missing dates and false single-date per-section label\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m dated statuses keep existing business-date reading\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\public-status.test.ts:\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m actual ordinary status refuses closed-schema mutations before adapting actions\u001b[0m \u001b[0m\u001b[2m[\u001b[1m16.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u00e2\u0153\u201c\u001b[0m\u001b[0m\u001b[1m all actual public refusals exclude correlation and reject reintroduction\u001b[0m\n\n\u001b[0m\u001b[32m 21 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 118 expect() calls\nRan 21 tests across 4 files. \u001b[0m\u001b[2m[\u001b[1m627.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+  },
+  "typecheck": {
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "original_controls_unchanged": true,
+  "scope": "Offline actual Entry/source-schema/parser; no browser/runtime/package recertification or integrated grade"
+}

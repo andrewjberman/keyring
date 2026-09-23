@@ -1,0 +1,152 @@
+{
+  "schema_version": "1.0",
+  "project": "IRPT_FNTEND",
+  "round": 10,
+  "seat": "3.0.0_SA_CVO~F",
+  "written_utc": "2026-09-21T23:27:12Z",
+  "trigger": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v7.md@e1fbcf38d0; intake msg99314",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "L8",
+      "started_utc": "2026-09-21 (exact per-act start not retained)",
+      "ended_utc": "2026-09-21 (before L10 delivery at 23:25:03Z)",
+      "act": "Read the exact COO~F round-10 packet and compiled 13 new investigation items; measured both roots and four terminal orders against their issuance.",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "99314: 20260921T230324Z_2.0.0_SA_COO_F__DRIVE_IRPT_FNTEND_round_10__L8_packet__.md"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "round-10 issuance fcf38f866b; decomposition v0.10"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND10_L8_L9_20260921.md@e1fbcf38d0"
+        }
+      ],
+      "spine_clause": "L8 compilation; canonical-flow receiving check",
+      "note": "Four receiving checks ACCEPT; separately supplied exact governing criterion IDs to proof-of-spec-check: VALID, 28 criteria across 5/9/8/6 rows. 64 project orders, zero open."
+    },
+    {
+      "seq": 2,
+      "limb": "L9",
+      "started_utc": "2026-09-21 (exact per-act start not retained)",
+      "ended_utc": "2026-09-21 (before L10 delivery at 23:25:03Z)",
+      "act": "Independently read fixture-fed captures, source and census; ran the full frontend suite, typecheck and a read-only print-envelope causal probe.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "portal@243089eb8f49514e99c97360259ce70c0772c859"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "IRPT_FNTEND_PRD.md v0.9@5fd2dc9ab5"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND10_L8_L9_20260921.md@e1fbcf38d0"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND10_CHECKS_20260921.ts@e1fbcf38d0"
+        }
+      ],
+      "spine_clause": "L9 adjudication and independent verification",
+      "note": "612 pass, 22 skip, zero fail; typecheck exit 0. Read-only probe exit 0. No own browser captures or live-backend validation. Old print diagnostic and replacement already share route keys; old envelope lacks unprojected_grant. Adding only that field accepts UNCERTAIN, not READY."
+    },
+    {
+      "seq": 3,
+      "limb": "L9",
+      "started_utc": "2026-09-21 (exact per-act start not retained)",
+      "ended_utc": "2026-09-21 (before L10 delivery at 23:25:03Z)",
+      "act": "Graded four judgment criteria and authored 16 adjudication carriers: all 13 incoming items disposed, two own findings, grades and causal correction recorded.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "FE-s-61..64 governing orders and worker results at intake HEAD 0a28a5d1b4"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v3.md@e1fbcf38d0"
+        }
+      ],
+      "spine_clause": "L9 judgment criteria and dispositions",
+      "note": "F61-AC5 and F62-AC9 NOT_EVALUATED for missing required rendered evidence. F63-AC8 and F64-AC6 PASS evidence-record criteria only. Incoming: 12 graduated, one dismissed. Seven existing carrier objects preserved."
+    },
+    {
+      "seq": 4,
+      "limb": "L10",
+      "started_utc": "2026-09-21 (exact per-act start not retained)",
+      "ended_utc": "2026-09-21 (before L10 delivery at 23:25:03Z)",
+      "act": "Committed the adjudication, detailed report, probe and 14-row remediation slug through safe-commit without override.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND10_L8_L9_20260921.md@e1fbcf38d0"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v7.md@e1fbcf38d0"
+        },
+        {
+          "kind": "GATE_OUTPUT",
+          "ref": "surprise-row-gate L10 ADMITTED: 64 task orders at HEAD on both roots, zero open; 276 investigation items across 12 channel files, zero undispositioned"
+        }
+      ],
+      "spine_clause": "L10 precondition; one slug after all orders terminal and all items dispositioned",
+      "note": "Commit e1fbcf38d0. 12 OPEN and two REMEDIATED/DISARMED remedies. Nonblocking warning: 65 older owned OPEN remediation rows unchanged for at least two rounds. Generic commit-gate coverage zero of four files is not frontend validation. Corrected all-fence schema validation passed after two unsuccessful inline parser attempts. Unrelated concurrent peer commit preserved."
+    },
+    {
+      "seq": 5,
+      "limb": "L10",
+      "started_utc": "2026-09-21 (exact per-act start not retained)",
+      "ended_utc": "2026-09-21T23:25:03Z",
+      "act": "Delivered the one L10 slug to CTO using canonical codex-send, carrying grades, open remedies, validation and the older-backlog warning.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v7.md@e1fbcf38d0"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "Filesystem delivery to 1.0.0_SA_CTO: 20260921T232503Z_3.0.0_SA_CVO_F_L10_IRPT_FNTEND_round_10_adjudication_an.md"
+        }
+      ],
+      "spine_clause": "L10 one send to CTO; section 2 role exclusivity",
+      "note": "codex-send exit 0; fresh launcher liveness checked. Expected one-shot sender-unregistered advisory, no second registration. No mid-round ACK or worker message. Last measured origin/CLOUD 438312b0855f798c3456b3577179eed91d98df2c at 23:19:32Z; no push or deploy."
+    },
+    {
+      "seq": 6,
+      "limb": "L10",
+      "started_utc": "2026-09-21 (exact per-act start not retained)",
+      "ended_utc": "2026-09-21T23:25:44Z",
+      "act": "Archived only the exact processed incoming packet after the act and successful CTO handoff.",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "99314"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "RECORD",
+          "ref": "org/mcp/inbox/3.0.0_SA_CVO/~F/read/20260921T230324Z_2.0.0_SA_COO_F__DRIVE_IRPT_FNTEND_round_10__L8_packet__.md (gitignored device-local carrier)"
+        }
+      ],
+      "spine_clause": "L10 handoff; Codex runtime read-after-act archival",
+      "note": "Source was present and exact destination absent before Move-Item. No other inbox body read. Four committed output paths verified clean."
+    }
+  ]
+}

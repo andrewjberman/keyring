@@ -1,0 +1,438 @@
+{
+  "target": "org/standards/NAMING_LEGACY_READS.json",
+  "lane": "NAMING_LEGACY_READ_AUTHORITY",
+  "all_existing_config_unchanged": true,
+  "agent_controls": [
+    {
+      "agent": "0.0.0_AB_MSTR",
+      "allowed": false
+    },
+    {
+      "agent": "0.0.0_AB_MSTR~Z",
+      "allowed": false
+    },
+    {
+      "agent": "0.1.0_DE_MarketIntelligence",
+      "allowed": false
+    },
+    {
+      "agent": "0.1.0_DE_MarketIntelligence~Z",
+      "allowed": false
+    },
+    {
+      "agent": "0.1.0_DS_MarketIntelligence",
+      "allowed": false
+    },
+    {
+      "agent": "0.1.0_DS_MarketIntelligence~A",
+      "allowed": false
+    },
+    {
+      "agent": "0.1.0_DS_MarketIntelligence~B",
+      "allowed": false
+    },
+    {
+      "agent": "0.1.0_DS_MarketIntelligence~C",
+      "allowed": false
+    },
+    {
+      "agent": "0.1.0_DS_MarketIntelligence~D",
+      "allowed": false
+    },
+    {
+      "agent": "0.1.0_DS_MarketIntelligence~E",
+      "allowed": false
+    },
+    {
+      "agent": "0.1.0_DT_MarketIntelligence",
+      "allowed": false
+    },
+    {
+      "agent": "0.1.1_RD_MarketPerformance",
+      "allowed": false
+    },
+    {
+      "agent": "0.1.2_RD_CausalityEngine",
+      "allowed": false
+    },
+    {
+      "agent": "0.1.3_RD_CapitalMarketAssumptions",
+      "allowed": false
+    },
+    {
+      "agent": "0.2.0_DE_PortfolioAnalytics",
+      "allowed": false
+    },
+    {
+      "agent": "0.2.0_DS_PortfolioAnalytics",
+      "allowed": false
+    },
+    {
+      "agent": "0.2.0_DS_PortfolioAnalytics~A",
+      "allowed": false
+    },
+    {
+      "agent": "0.2.0_DT_PortfolioAnalytics",
+      "allowed": false
+    },
+    {
+      "agent": "0.2.1_RD_Positioning",
+      "allowed": false
+    },
+    {
+      "agent": "0.2.2_RD_Attribution",
+      "allowed": false
+    },
+    {
+      "agent": "0.2.3_RD_FactorTilts",
+      "allowed": false
+    },
+    {
+      "agent": "0.2.4_RD_Valuation",
+      "allowed": false
+    },
+    {
+      "agent": "0.2.5_RD_Macroeconomics",
+      "allowed": false
+    },
+    {
+      "agent": "0.2.6_RD_Correlation",
+      "allowed": false
+    },
+    {
+      "agent": "0.3.0_DE_TradingOperations",
+      "allowed": false
+    },
+    {
+      "agent": "0.3.0_DS_TradingOperations",
+      "allowed": false
+    },
+    {
+      "agent": "0.3.0_DT_TradingOperations",
+      "allowed": false
+    },
+    {
+      "agent": "0.3.1_RD_PortfolioManagement",
+      "allowed": false
+    },
+    {
+      "agent": "0.3.1_RD_PortfolioManagement~B",
+      "allowed": false
+    },
+    {
+      "agent": "0.3.1_RD_PortfolioManagement~C",
+      "allowed": false
+    },
+    {
+      "agent": "0.3.2_RD_TradeSubmission",
+      "allowed": false
+    },
+    {
+      "agent": "0.3.3_RD_DataRefresh",
+      "allowed": false
+    },
+    {
+      "agent": "0.3.4_RD_SecurityScanner",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.0_DE_ClientPlatform",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.0_DE_ClientPlatform~A",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.0_DE_ClientPlatform~B",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.0_DS_ClientPlatform",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.0_DS_ClientPlatform_A",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.0_DS_ClientPlatform_B",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.0_DS_ClientPlatform_C",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.0_DS_ClientPlatform_D",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.0_DS_ClientPlatform~A",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.0_DS_ClientPlatform~B",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.0_DS_ClientPlatform~C",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.0_DS_ClientPlatform~D",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.0_DS_ClientPlatform~E",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.0_DT_ClientPlatform",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.1_RD_ModelPortfolios",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.2_RD_AdvisorIntelligence",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.2_RD_AdvisorIntelligence~A",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.2_RD_AdvisorIntelligence~B",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.2_RD_AdvisorIntelligence~C",
+      "allowed": false
+    },
+    {
+      "agent": "0.4.2_RD_AdvisorIntelligence~D",
+      "allowed": false
+    },
+    {
+      "agent": "0.5.0_AE_OpalETL",
+      "allowed": false
+    },
+    {
+      "agent": "0.5.0_AE_OpalETL~B",
+      "allowed": false
+    },
+    {
+      "agent": "0.6.0_AE_PartnerETL",
+      "allowed": false
+    },
+    {
+      "agent": "0.6.1_AE_PartnerETL",
+      "allowed": false
+    },
+    {
+      "agent": "0.6.2_AE_PartnerETL",
+      "allowed": false
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps",
+      "allowed": false
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~A",
+      "allowed": false
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~B",
+      "allowed": false
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~C",
+      "allowed": false
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~Z",
+      "allowed": false
+    },
+    {
+      "agent": "0.8.0_AE_CloudComp",
+      "allowed": false
+    },
+    {
+      "agent": "0.8.0_AE_CloudComp~A",
+      "allowed": false
+    },
+    {
+      "agent": "0.8.0_AE_CloudComp~B",
+      "allowed": false
+    },
+    {
+      "agent": "0.8.0_AE_CloudComp~C",
+      "allowed": false
+    },
+    {
+      "agent": "0.8.0_AE_CloudComp~D",
+      "allowed": false
+    },
+    {
+      "agent": "0.8.0_AE_CloudComp~E",
+      "allowed": false
+    },
+    {
+      "agent": "1.0.0_SA_CTO",
+      "allowed": true
+    },
+    {
+      "agent": "1.0.0_SA_CTO~B",
+      "allowed": true
+    },
+    {
+      "agent": "1.0.0_SA_CTO~C",
+      "allowed": true
+    },
+    {
+      "agent": "1.0.0_SA_CTO~PROBE",
+      "allowed": true
+    },
+    {
+      "agent": "1.0.0_SA_CTO~Y",
+      "allowed": true
+    },
+    {
+      "agent": "1.0.0_SA_CTO~Z",
+      "allowed": true
+    },
+    {
+      "agent": "1.1.0_DS_CompLearns",
+      "allowed": false
+    },
+    {
+      "agent": "1.1.0_SA_CTO",
+      "allowed": false
+    },
+    {
+      "agent": "1.2.0_DS_CompLearns",
+      "allowed": false
+    },
+    {
+      "agent": "1.3.0_DS_CompLearns",
+      "allowed": false
+    },
+    {
+      "agent": "1.4.0_DS_CompLearns",
+      "allowed": false
+    },
+    {
+      "agent": "1.7.0_SA_KRN",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO~M",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO~P",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO~Y",
+      "allowed": false
+    },
+    {
+      "agent": "2.1.0_SC_CompLearns",
+      "allowed": false
+    },
+    {
+      "agent": "3.0.0_SA_CVO",
+      "allowed": false
+    },
+    {
+      "agent": "3.0.0_SA_CVO~M",
+      "allowed": false
+    },
+    {
+      "agent": "3.0.0_SA_CVO~P",
+      "allowed": false
+    },
+    {
+      "agent": "3.0.0_SA_CVO~Y",
+      "allowed": false
+    },
+    {
+      "agent": "3.0.0_SA_CVO~Z",
+      "allowed": false
+    },
+    {
+      "agent": "3.1.0_SA_CVO",
+      "allowed": false
+    },
+    {
+      "agent": "4.0.0_SA_CRO",
+      "allowed": false
+    },
+    {
+      "agent": "4.0.0_SA_CRO~A",
+      "allowed": false
+    },
+    {
+      "agent": "4.0.0_SA_CRO~B",
+      "allowed": false
+    },
+    {
+      "agent": "4.0.0_SA_CRO~C",
+      "allowed": false
+    },
+    {
+      "agent": "4.0.0_SA_CRO~D",
+      "allowed": false
+    },
+    {
+      "agent": "4.0.0_SA_CRO~SWEEP",
+      "allowed": false
+    }
+  ],
+  "canonical_cli": [
+    {
+      "agent": "1.0.0_SA_CTO",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "agent": "0.0.0_AB_MSTR",
+      "exit_code": 1,
+      "stdout": "VIOLATION: org/standards/NAMING_LEGACY_READS.json -- lane=NAMING_LEGACY_READ_AUTHORITY (LEGACY-READ-03 protective narrowing: only the CTO role may author the exact NAMING_LEGACY_READS.json carrier. Existing canonical CTO suffix inheritance remains; no MSTR/COO/CVO/CRO grant. This lane does not activate a waiver or alter the naming gate.); agent=0.0.0_AB_MSTR not in permitted_agents\n",
+      "stderr": ""
+    },
+    {
+      "agent": "2.0.0_SA_COO~M",
+      "exit_code": 1,
+      "stdout": "VIOLATION: org/standards/NAMING_LEGACY_READS.json -- lane=NAMING_LEGACY_READ_AUTHORITY (LEGACY-READ-03 protective narrowing: only the CTO role may author the exact NAMING_LEGACY_READS.json carrier. Existing canonical CTO suffix inheritance remains; no MSTR/COO/CVO/CRO grant. This lane does not activate a waiver or alter the naming gate.); agent=2.0.0_SA_COO~M not in permitted_agents\n",
+      "stderr": ""
+    },
+    {
+      "agent": "3.0.0_SA_CVO~Y",
+      "exit_code": 1,
+      "stdout": "VIOLATION: org/standards/NAMING_LEGACY_READS.json -- lane=NAMING_LEGACY_READ_AUTHORITY (LEGACY-READ-03 protective narrowing: only the CTO role may author the exact NAMING_LEGACY_READS.json carrier. Existing canonical CTO suffix inheritance remains; no MSTR/COO/CVO/CRO grant. This lane does not activate a waiver or alter the naming gate.); agent=3.0.0_SA_CVO~Y not in permitted_agents\n",
+      "stderr": ""
+    },
+    {
+      "agent": "4.0.0_SA_CRO",
+      "exit_code": 1,
+      "stdout": "VIOLATION: org/standards/NAMING_LEGACY_READS.json -- lane=NAMING_LEGACY_READ_AUTHORITY (LEGACY-READ-03 protective narrowing: only the CTO role may author the exact NAMING_LEGACY_READS.json carrier. Existing canonical CTO suffix inheritance remains; no MSTR/COO/CVO/CRO grant. This lane does not activate a waiver or alter the naming gate.); agent=4.0.0_SA_CRO not in permitted_agents\n",
+      "stderr": ""
+    }
+  ],
+  "neighbor_controls": 392,
+  "limits": [
+    "Existing CTO suffix inheritance remains; not exact-seat isolation.",
+    "No worker task-order grant was introduced; ordinary canonical task-order fallback is unchanged.",
+    "Ownership policy remains mutable by its existing registry owners; no tamper-proof guarantee.",
+    "No carrier entry or naming implementation activated."
+  ]
+}

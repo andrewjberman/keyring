@@ -21,6 +21,7 @@ REQUIRED_CONTRACTS = (
     "org/XXX.md",
     "org/mcp/CODEX_INBOX_MONITOR.md",
 )
+ROLE_FILES_MANIFEST = "org/mcp/codex-seat-role-files.json"
 
 
 class SeatLoadError(ValueError):
@@ -66,6 +67,46 @@ def _relative(workspace: Path, path: Path) -> str:
     return path.relative_to(workspace).as_posix()
 
 
+def _role_files(workspace: Path, role_home: Path, serial: str) -> tuple[list[str], str]:
+    """Use a checked-in exact-seat reading list when declared; preserve other seats."""
+    manifest = workspace / ROLE_FILES_MANIFEST
+    if manifest.is_file():
+        try:
+            document = json.loads(manifest.read_text(encoding="utf-8-sig"))
+        except (ValueError, OSError) as exc:
+            raise SeatLoadError(f"invalid role-files manifest {manifest}: {exc}") from exc
+        if (not isinstance(document, dict) or document.get("version") != 1
+                or not isinstance(document.get("seats"), dict)):
+            raise SeatLoadError(f"invalid role-files manifest structure: {manifest}")
+        seats = document["seats"]
+        if serial in seats:
+            entries = seats[serial]
+            if (not isinstance(entries, list) or not entries
+                    or any(not isinstance(item, str) or not item for item in entries)):
+                raise SeatLoadError(f"invalid role_files list for {serial}")
+            resolved = []
+            for item in entries:
+                path = (workspace / item).resolve()
+                if Path(item).is_absolute() or not path.is_relative_to(workspace):
+                    raise SeatLoadError(f"role file must be workspace-relative: {item}")
+                if not path.is_file():
+                    raise SeatLoadError(f"missing declared role file for {serial}: {item}")
+                resolved.append(_relative(workspace, path))
+            required = {_relative(workspace, role_home / name)
+                        for name in ("README.md", "prompt.md")}
+            if not required.issubset(resolved) or len(resolved) != len(set(resolved)):
+                raise SeatLoadError(
+                    f"role_files for {serial} must include base README.md/prompt.md once "
+                    "and contain no duplicate paths"
+                )
+            return resolved, ROLE_FILES_MANIFEST
+    return ([
+        _relative(workspace, item)
+        for item in sorted(role_home.iterdir(), key=lambda entry: entry.name)
+        if item.is_file() and not item.name.startswith(".")
+    ], "base-role-root")
+
+
 def build_context(workspace: Path, serial: str) -> dict[str, object]:
     workspace = workspace.resolve()
     base, lane = parse_serial(serial)
@@ -85,11 +126,7 @@ def build_context(workspace: Path, serial: str) -> dict[str, object]:
     if lane:
         inbox = inbox / f"~{lane}"
 
-    role_files = [
-        _relative(workspace, item)
-        for item in sorted(role_home.iterdir(), key=lambda entry: entry.name)
-        if item.is_file() and not item.name.startswith(".")
-    ]
+    role_files, role_files_source = _role_files(workspace, role_home, serial)
     runtime_serial = re.sub(r"[^A-Za-z0-9_.~-]", "_", serial)
 
     return {
@@ -102,6 +139,7 @@ def build_context(workspace: Path, serial: str) -> dict[str, object]:
         "role_home": _relative(workspace, role_home),
         "seat_home": _relative(workspace, seat_home),
         "role_files": role_files,
+        "role_files_source": role_files_source,
         "task_orders": _relative(workspace, seat_home / "task_orders"),
         "logs": _relative(workspace, seat_home / "logs"),
         "deliverables": _relative(workspace, seat_home / "deliverables"),

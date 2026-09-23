@@ -1,0 +1,45 @@
+{
+  "reviewer": "1.0.0_SA_CTO",
+  "verdict": "BOUNDED_SOURCE_PASS",
+  "source_pins": {
+    "1385a126e7": "1385a126e7d9bbc9b4fe211cc708a52a93ce64e6",
+    "37526d36ae": "37526d36aeb9a1299d0046355aa3c1e96e852b4f",
+    "9a3ec2a11f": "9a3ec2a11f47cebd9c1fbc2b0096674fda111be0",
+    "4ec461a2e9": "4ec461a2e9aa06b380592c43cffd03687e9f536a",
+    "485b69c061": "485b69c061d896c22ac59b7bc54033091f110572",
+    "dd6edfc3aa": "dd6edfc3aae94bfcb85cd5ed573e81977c58f9f0",
+    "8845b7ef23": "8845b7ef23cabfe9c73a3f8109f0c1c2c829e3af"
+  },
+  "scratch_root": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\irpt-cto-dual-owner-_w9s_y6z",
+  "environment": {
+    "IRPT_DUAL_OWNER_TEST_ROOT": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\irpt-cto-dual-owner-_w9s_y6z\\paired\\dual",
+    "IRPT_INTERACTIVE_ACCESS_TEST_ROOT": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\irpt-cto-dual-owner-_w9s_y6z\\paired\\access",
+    "IRPT_INTERACTIVE_ENTRY_TEST_ROOT": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\irpt-cto-dual-owner-_w9s_y6z\\paired\\entry",
+    "IRPT_INTERACTIVE_STORAGE_TEST_ROOT": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\irpt-cto-dual-owner-_w9s_y6z\\paired\\storage",
+    "IRPT_ACCEPTED_READER_TEST_ROOT": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\irpt-cto-dual-owner-_w9s_y6z\\paired\\reader"
+  },
+  "tests": [
+    {
+      "suite": "ycharts-generate-tests.txt",
+      "sha256": "e8cf320c9ad1c72764d8da25b4efef8e721940ec7b5f092eb8fd6904930d2df9",
+      "output": "........................................................................ [ 31%]\r\n.................................................................... [ 60%]\r\n........................................................................ [ 91%]\r\n....................                         [100%]\r\n232 passed, 32 subtests passed in 29.11s\r\n"
+    },
+    {
+      "suite": "ops-tests.txt",
+      "sha256": "58b2e70a478c236dc4ddd90bb38c607a1ad3403f3fbb992741490374439cce0a",
+      "output": "........................................................................ [ 40%]\r\n........................................................................ [ 80%]\r\n...................................                                      [100%]\r\n179 passed in 20.15s\r\n"
+    },
+    {
+      "suite": "intake-tests.txt",
+      "sha256": "ebac97b88562d6943a70a9215ae9d505d7f8794a5ff1f52aac74ff19e0f4321c",
+      "output": "................................................................. [ 69%]\r\n.............................                                 [100%]\r\n94 passed, 18 subtests passed in 1.10s\r\n"
+    }
+  ],
+  "limits": [
+    "Offline source composition only",
+    "No live queue lease or delivery proof",
+    "No vendor generation, report/export or browser journey proof",
+    "30 earlier paired-seam failures remain carried; not rerun or resolved here",
+    "Runtime installer and package wiring remain P work"
+  ]
+}

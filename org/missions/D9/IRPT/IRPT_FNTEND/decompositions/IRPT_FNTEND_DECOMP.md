@@ -1,21 +1,21 @@
-# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 10 -- v0.10
+# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 15 -- v0.15
 
 ```json
 {
  "project": "IRPT_FNTEND",
  "directive": "D9",
  "fabric": "laptop",
- "round": 10,
- "decomp_version": "v0.10",
+ "round": 15,
+ "decomp_version": "v0.15",
  "round_1_header_retained_below": true,
- "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@5fd2dc9ab5",
- "prd_version": "v0.9",
+ "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@4bc62712f2",
+ "prd_version": "v0.10",
  "brief_ref": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-8", "FWD-11", "FWD-12"],
- "cells": 4,
+ "cells": 3,
  "cell_id_shape": "FE-s-<n>",
- "code_repo": "portal (nested git repo, gitlink in the workspace; branch DEV @ddb172bf)",
- "record_repo": "workspace (branch CLOUD @e3fdcb516d)"
+ "code_repo": "portal (nested git repo, gitlink in the workspace; branch DEV @243089eb)",
+ "record_repo": "workspace (branch CLOUD, this round's issuance commit)"
 }
 ```
 
@@ -2104,3 +2104,562 @@ surfaces FWD-12's DONE WHEN names plus its census limb, not a cap-fill`.**
 - **PORTAL FROZEN:** local DEV commits only. No CLOUD push, no SITEZ merge, until Andrew's word.
 - **`COMPLETION_REPORT.round1.json`** is ungraded history, superseded by round 9 (CTO, msg 99254). Left as it is.
 - **The CVO seat for this project is `3.0.0_SA_CVO~F`** (Andrew-direct 2026-09-21; identity resolved to the Codex seat, PID 28148).
+
+
+---
+
+## R11 -- ROUND 11 (decomposition v0.11): the FWD-12 remediation pass
+
+**Source.** `3.0.0_SA_CVO~F`'s round-10 L10 slug (`surprise-channel/remediations/REMEDIATION_v7.md` @`e1fbcf38d0`, 14 rows) and `1.0.0_SA_CTO`'s round-10 analysis
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_FNTEND_ROUND_10_20260921.md` @`3020f2a580`, msg 99318; shape accepted with one condition in msg 99324).
+Round 10 closed with FWD-12 `NOT_REALIZED`: grounded C3, C8 and C12 violations remain on shipped surfaces and the Reporting tab's answer-bearing state was never rendered.
+The other seven outcomes stay `NOT_EVALUATED` on the IRPT_BCKEND crossing and are NOT re-cut here (they wait, named so the wait is a record).
+
+### R11.1 THE RECTANGLE -- nine cells
+
+| cell | write surface | serves | wave | slot | depends_on |
+|---|---|---|---|---|---|
+| `FE-s-65` | evidence: `deliverables/0.9.0_WK_IRPT_FNTEND~15/`; portal: `scripts/ui-smoke.mjs` (additive) and its own `__tests__/fe-s-65/` | the instrument (a1) | 1 | 1 | none -- READY ROOT, every other visual cell depends on this |
+| `FE-s-66` | `fixtures/smoke/` and `__tests__/fe-s-66/` | fixture classification + answer-bearing pair (a2) | 1 | 2 | none -- READY ROOT |
+| `FE-s-73` | evidence: `deliverables/0.9.0_WK_IRPT_FNTEND~23/`; `__tests__/fe-s-73/`; NO component edit | census reasons (g) | 1 | 9 | none -- READY ROOT |
+| `FE-s-67` | `index.tsx`, `tabs/StatusPanel.tsx`, `tabs/analysis/GenerateComposer.tsx`, `tabs/holdings/DrillTree.tsx`, `__tests__/fe-s-67/` | shared C12 error presentation (b) | 2 | 3 | FE-s-65 |
+| `FE-s-68` | `tabs/reporting/`, `header/ScopeSummary.tsx`, the fe-s-42/48/59 pins, `__tests__/fe-s-68/` | Reporting answer-bearing + scope strip (c) | 2 | 4 | FE-s-65, FE-s-66 |
+| `FE-s-69` | `components/ui/PageSurfaceControl.tsx` (additive), `header/FirmDropdown.tsx`, `pages/ModelPortfolios.tsx` (dropdown className only), `__tests__/fe-s-3/`, `__tests__/fe-s-69/` | shared dropdown class token (d) | 2 | 5 | FE-s-65 |
+| `FE-s-71` | `export/` (whole folder), `__tests__/fe-s-16/mounted-states.test.ts` (one assertion), `__tests__/fe-s-71/` | export modal chrome + receipt flow state (e) | 2 | 7 | FE-s-65 |
+| `FE-s-72` | evidence: `__tests__/fe-s-72/` only, NO source write | Holdings withheld + reachable Analysis states (f) | 2 | 8 | FE-s-65 |
+| `FE-s-70` | `components/CategoryViewTree.tsx`, `tabs/holdings/DrillTree.tsx` (one line), `__tests__/fe-s-70/` | CategoryViewTree light variant (d2) | 3 | 6 | FE-s-65, FE-s-69 |
+
+
+**Why the instrument is a cell of its own (FE-s-65).** The CTO's criterion rule (a)-(d) is unmeetable with `scripts/ui-smoke.mjs` as it stands: its `TEXT:` line is
+`document.body.innerText.slice(0, 160)` and its `CANVAS:` line is `getComputedStyle(document.body)`, the page field. Rule (b) needs content asserted by selector or text and rule (d)
+needs the ground of a route's own container. The instrument is additive, its grammar is fixed in FE-s-65's order, and every other visual cell is cut against that exact grammar.
+
+**Where the write paths were partitioned (the CTO left B/D to this decomposition).** Two workers never share a write path:
+- `tabs/holdings/DrillTree.tsx` belongs to B WHOLLY (its C12 error text AND its purple breadcrumb, the C8 half of W12-S2). D2 edits the shared `CategoryViewTree` container only.
+- `header/ScopeSummary.tsx` belongs to C (the scope strip's partial-disclosure fact is captured there, so the strip's own style residuals travel with it: W11-S4's ScopeSummary part). D keeps only the dropdown part of W11-S4.
+- `export/` belongs to E WHOLLY: C-S130 (chrome) and S69 (receipt states) both live in `ExportModal.tsx` and `ReceiptPanel.tsx`, so they are ONE cell rather than a chain.
+- F and G write no source at all (evidence and deliverables only), so they conflict with nothing.
+- The instrument (FE-s-65) is the only cell that writes `portal/scripts/`; the fixtures (FE-s-66) are the only cell that writes `fixtures/smoke/`.
+
+**Not cut.** `PageSurfaceControl`'s own `surfaceBase` (`font-medium`, C1): six production importers, four of them AdvisorIntelligence partner dashboards outside the product. Ruled out of IRPT's
+scope and parked by `1.0.0_SA_CTO` (msg 99324); row `IRPT_FNTEND-S70` (commit `117c3dac03`) carries the six-file census. No round-11 cell touches it.
+
+### R11.2 BOUNDS -- ALL ROUND-11 CELLS (rounds 1-10 bounds stand)
+
+```
+  the criterion rule     every VISUAL criterion carries (a) wire match (`FIXTURES-MATCH: matched N of N`), (b) named content by selector or text, (c) a wrong-state negative
+                         control that must FAIL (`ASSERT-CONTENT: 0 of N met`), and (d) the ground measured on the actual route container with a wrong-ground control
+                         (`--inject-css` silver; the same assertion prints FAIL rgb(196, 203, 219)). A criterion missing any of the four is refused at the cut. The PNG is
+                         still read, but it is a JUDGMENT input, never the pass/fail line.
+  a control is a claim   a control that passes proves the assertion cannot tell the states apart: the worker says so and fixes the assertion, never reports it as met.
+  instrument first       every visual cell depends on FE-s-65's flags; a worktree whose `ui-smoke.mjs` refuses `--expect` has the wrong base and stops.
+  fixes                  a defect on the cell's OWN surface may be fixed with a BEFORE capture kept and an AFTER beside it; a fix needing another cell's file is ONE ROW.
+                         A test inside the cell's grant that pins the OLD behaviour is updated in the same commit and named in the result. A shared component's fix names
+                         EVERY consumer's exact-class test and carries before/after captures of each consumer (the CTO's rule for D and D2).
+  dev servers            each worker's own server on its own port block (5900-5989, outside the derived range 5400-5899 the browser-gated tests use), set as an INLINE
+                         PREFIX on the server command and never exported; stopped, and the port verified closed, before the whole-suite criterion.
+  judgment               the last criterion of each order is JUDGMENT: record the evidence, no verdict; the CVO grades it at L9.
+  context                a worker keeps its context small (a prior worker stalled twice on an oversized one): at most the PNGs its criteria need, long output to files.
+```
+
+### R11.3 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-65 <- (none)               READY ROOT   wave 1
+  FE-s-66 <- (none)               READY ROOT   wave 1
+  FE-s-73 <- (none)               READY ROOT   wave 1
+  FE-s-67 <- FE-s-65                            wave 2
+  FE-s-68 <- FE-s-65, FE-s-66                   wave 2
+  FE-s-69 <- FE-s-65                            wave 2
+  FE-s-71 <- FE-s-65                            wave 2
+  FE-s-72 <- FE-s-65                            wave 2
+  FE-s-70 <- FE-s-65, FE-s-69                   wave 3
+
+  weakly connected components: 1 (every cell traces to FE-s-65 or is itself a root)
+  ready roots at issuance: 3 (FE-s-65, FE-s-66, FE-s-73)
+  max concurrent width: 5 (wave 2, once wave 1 drains)
+
+```
+
+**Fan-out: `3 of 9 cells cut ready NOW (wave 1), 5 more gated on FE-s-65 (wave 2), 1 gated on FE-s-65 AND FE-s-69 (wave 3), cap 8`.**
+The count is 9 because the CTO's round-10 analysis named 9 surfaces (the instrument, the fixtures, 5 defect families, the census, and the container-variant split of one of them); it is not a cap-fill. Two workers never share a write path: `DrillTree.tsx` is split between B (its C12 text and breadcrumb) and D2 (one line passing a new prop), and each order's `<paths>` says so explicitly.
+
+### R11.4 RULE 24 RECORD (round 11)
+
+| postulate | how |
+|---|---|
+| (i) MECE by subtraction | The slug carries 14 rows. Subtract the two REMEDIATED (`W13-S1`, `W13-S3`) and `W13-S2` (its class hazard is carried by the criterion rule's (d); its local fix landed at portal `8894e765`): 11 rows remain, each assigned to at least one cell. `W11-S1`,`W12-S1` -> FE-s-66; `W11-S2` -> FE-s-68 (its precondition, the answer-bearing fixture, is FE-s-66); `W11-S3`,`W12-S3` -> FE-s-67; `W11-S4` -> FE-s-68 (ScopeSummary) AND FE-s-69 (dropdown), one row split across two cells on purpose; `W12-S2` -> FE-s-70 (container) AND FE-s-67 (the breadcrumb, C8); `W14-S2` -> FE-s-73; `S69`,`C-S130` -> FE-s-71; `C-S129` -> FE-s-72. 11 assigned - 11 = 0 uncovered. `S70` is deliberately unassigned (parked, ruled out of scope). |
+| (ii) same grain | each cell is one surface family with one write-path set; the two split rows are split BY FILE, not by intent |
+| (iii) intent coherence | every cell is a fix-with-proof of one clause family (C12 error presentation; C3/C8 shared style; the answer-bearing state; the instrument; the fixtures; the receipt state; the reachable states; the census reasons) |
+| (iv) state coherence | what a cell does NOT move is named in its order: FE-s-69 does not touch `surfaceBase`; FE-s-70 keeps canonical data colours; FE-s-72 builds no request-list route (C-S129 ruling); FE-s-73 edits no component |
+
+**The older open rows a cell touches** (the CTO asked the issuance to name them, no bulk close). By the latest row per id across `REMEDIATION_v1..v7`, MY count is
+67 older open rows against the CTO's 65; the two instruments differ (I read each id's latest `remediation.state`) and I have not reconciled them. The list below is a
+NAME MATCH (the row's text names a file a cell edits), not a reading of each row: each cell's order carries its list, tells the worker to read them, and to say in its result which
+its change resolves. Nothing is closed here; the CVO dispositions.
+
+| cell | older open rows it may touch |
+|---|---|
+| `FE-s-65` | W1-S51, W1-S52, W2-S23, W3-S26 |
+| `FE-s-66` | W1-S51, W1-S53, W2-S27, W2-S29, W5-S7 |
+| `FE-s-67` | W1-S19, W1-S35, W1-S46, W1-S51, W2-S21, W2-S23, W2-S33, W3-S6 |
+| `FE-s-68` | W2-S33, W3-S29, W3-S30, W3-S31, W3-S6 |
+| `FE-s-69` | (none named) |
+| `FE-s-70` | (none named) |
+| `FE-s-71` | W1-S11, W2-S27, W2-S33, W3-S29, W3-S30, W3-S31 |
+| `FE-s-72` | W1-S46, W2-S21, W2-S33 |
+| `FE-s-73` | C-S43, S42, W1-S11, W1-S46, W1-S57, W3-S26, W3-S33, W3-S37, W4-S11, W4-S15, W6-S1, W8-S2 |
+
+
+### R11.5 HOLDS
+
+- **PORTAL FROZEN:** local DEV commits only. No CLOUD push, no SITEZ merge, until Andrew's word. (`0.0.0_AB_MSTR` pushes.)
+- **C-S129:** the Analysis request LIST has no declared backend route; FNTEND does not invent one. If an FWD's DONE WHEN needs the list it is an IRPT_BCKEND dependency, routed to `2.0.0_SA_COO~B` as information (CTO ruling).
+- **W13-S2** disarms when a round-11 criterion exercises (d) with a wrong-ground control: FE-s-65 builds that control and the visual cells use it.
+- **The CVO seat for this project is `3.0.0_SA_CVO~F`** (the Codex seat).
+
+## R12 -- ROUND 12 (decomposition v0.12): the instrument's own two false-pass classes, then the design residuals it was hiding
+
+**Source.** `3.0.0_SA_CVO~F`'s round-11 L10 slug (`surprise-channel/remediations/REMEDIATION_v8.md` @`631b1308cb`, 18 rows: 12 OPEN, 6 REMEDIATED)
+and `1.0.0_SA_CTO`'s round-11 analysis (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_FNTEND_ROUND_11_20260922.md` @`ce01e0f219`,
+msg 99397). Round 11 closed with FWD-12 still `NOT_REALIZED`: 7 of 9 judgment criteria PASS but two FAIL (F65-AC18, F71-AC17), and the CVO's own
+production-function probe found the instrument itself has two false-pass classes (a composited/gradient ground reads white; an absent selector's
+inequality check reads PASS). Everything downstream inherited whichever of those the CVO's independent probe could reach; round 12 fixes the
+instrument FIRST, then the seven design residuals it was concealing.
+
+### R12.1 THE RECTANGLE -- six cells
+
+| cell | write surface | serves | wave | slot | depends_on |
+|---|---|---|---|---|---|
+| `FE-s-74` | `scripts/ui-smoke.mjs` (hardening, not a rewrite), `__tests__/fe-s-74/` | fail-closed ground measurement + key-validity/fulfilment split (W20-S2, C-S146, C-S147) | 1 | 1 | none -- READY ROOT, every round-12 cell depends on this |
+| `FE-s-75` | `fixtures/smoke/default.json`, `__tests__/fe-s-75/` | default fixture repair or retirement + parse control (W17-S3) | 2 | 2 | FE-s-74 |
+| `FE-s-76` | `tabs/holdings/DrillTree.tsx` (breadcrumb only), `components/CategoryViewTree.tsx` (the `:936` panel rule + the `:563-570`/`:665-666` comments), `__tests__/fe-s-76/` | breadcrumb NAVY + panel-border removal (C-S149) + the revision-mismatch component test (W17-S1) | 2 | 3 | FE-s-74 |
+| `FE-s-77` | `export/` (whole folder), `__tests__/fe-s-77/` | export modal's actual C5 inversion + exercised scroll reachability + one primary action (C-S148, C-S151) | 2 | 4 | FE-s-74 |
+| `FE-s-78` | `header/ScopeSummary.tsx`, `tabs/reporting/`, `render/print.css`, `__tests__/fe-s-78/` | cohort chip radius + truthful fixture (W18-S1) + screen-report residuals + narrow-width reachability (C-S150) | 2 | 5 | FE-s-74 |
+| `FE-s-79` | `tabs/analysis/RequestList.tsx`, `tabs/holdings/HoldingsTab.tsx`, `tabs/holdings/SliceTable.tsx`, `__tests__/fe-s-79/` | noncanonical OKLCH text roles measured against actual grounds (W22-S1) | 2 | 6 | FE-s-74 |
+
+**Why the instrument is a cell of its own again (FE-s-74).** The CVO's own co-committed production-function probe (not a browser render) executed
+`ui-smoke.mjs`'s real `groundColor()` and found it returns white for BOTH an opaque OKLCH background-color (its regex parser is RGB-only) and a
+composited/gradient paint (it reads only `backgroundColor`, never `backgroundImage` -- W20-S2's original finding, now shown to be one instance of a
+wider class). Separately, C-S146 found `--expect-style`'s inequality branch (`!=`) reads `PASS` when the selector matches NOTHING (`null !== expected`
+is `true`), and C-S147 found the instrument's `FIXTURES-MATCH` line counts URL-substring hits, never validates the keys against `consumed.ts`'s actual
+operation keys -- so an arbitrary invalid key can read `matched 1 of 1`. Every visual criterion in every round-12 design cell depends on this instrument
+being fail-closed on all four of these paths before its own PASS lines can be trusted; the CTO's ruling is explicit that wave 2 waits on wave 1.
+
+**Where the write paths were partitioned.** `DrillTree.tsx` is granted to FE-s-76 for the breadcrumb ONLY (round 11's C12 error text and its shared
+`__tests__/fe-s-67/` grant are already drained and out of scope); `CategoryViewTree.tsx` is granted to the SAME cell (FE-s-76) since the CTO's ruling ties
+the breadcrumb's colour law directly to `:936`'s panel-border removal ("the same clause decides C-S149's top rule") -- splitting them across two workers
+would cite the same DESIGN.md clause from two different orders for no reason. `export/` is granted WHOLLY to FE-s-77 (C-S148 and C-S151 both live in
+`ExportModal.tsx`/`ReceiptPanel.tsx`, exactly as round 11's single E cell reasoned). `ScopeSummary.tsx` and `tabs/reporting/` are granted together to
+FE-s-78 because W18-S1's cohort chip and C-S150's report residuals are both under the CTO's "screen report styling" umbrella and neither collides with
+another cell's grant. FE-s-79's three files (`RequestList.tsx`, `HoldingsTab.tsx`, `SliceTable.tsx`) are the exact three source lines W22-S1 named.
+
+**Not cut.** The 67 older OPEN rows are not bulk-closed (CTO ruling, carried); a cell names any it happens to touch, per its own `<paths>` grant. S70
+stays parked outside IRPT scope (unchanged since round 11).
+
+### R12.2 BOUNDS -- ALL ROUND-12 CELLS (rounds 1-11 bounds stand)
+
+```
+  the criterion rule     UNCHANGED four parts (wire match, named content, wrong-state control, route-container ground) PLUS the CTO's round-11
+                         addition: any colour or style criterion also carries an ABSENT-SELECTOR control -- run the same assertion against a state
+                         where the target element genuinely does not exist, and confirm the (now-hardened) instrument prints UNMEASURABLE/FAILS
+                         rather than a vacuous PASS. A criterion missing any of the five is refused at the cut.
+  the instrument's own bar FE-s-74 does not merely add a check: an unsupported or composited ground (gradient, opaque OKLCH, any multi-layer paint)
+                         MUST print `UNMEASURABLE` and exit non-zero, never a colour. `--expect-style`'s `!=` branch MUST fail when the selector
+                         resolves to nothing (never treat absence as satisfying an inequality). Negative controls for FE-s-74 itself: a real dark
+                         gradient, a real opaque-OKLCH background, a genuinely absent selector, and a wrong-but-resolved colour -- all four, not
+                         the silver-paint control alone (W20-S2's own point: solid-colour injection cannot exercise a gradient-blind reader).
+  key validity vs fulfilment  FE-s-74 also exposes a validator that checks a fixture's declared keys against `contracts/wire/consumed.ts`'s actual
+                         operation keys (key VALIDITY), kept separate from counting which keys were actually requested (FULFILMENT, what
+                         `FIXTURES-MATCH` already measured). Print both denominators; a delayed-but-not-yet-fulfilled key is named, not silently
+                         short-counted; every fixture certified by a later cell's criteria is run through the key-validity check at least once.
+  instrument first        every round-12 design cell (75-79) depends on FE-s-74's hardened flags; a worktree whose `ui-smoke.mjs` still reads the
+                         OLD (unhardened) grammar has the wrong base and stops, exactly as FE-s-65 established last round.
+  a control is a claim    unchanged: a control that passes proves nothing if it cannot fail under the wrong state; say so and fix the assertion.
+  fixes                   unchanged: a defect on the cell's OWN surface may be fixed with a BEFORE capture kept and an AFTER beside it; a fix
+                         needing another cell's file is ONE ROW, never a wider grant.
+  dev servers             each worker's own server, port block below, INLINE PREFIX, never exported; stopped and closed-port-verified before the
+                         whole-suite criterion.
+  judgment                the last criterion of each order is JUDGMENT: record the evidence, no verdict; the CVO grades it at L9.
+  context                 keep it small: at most the PNGs a criterion needs, long output to files.
+```
+
+Port blocks (5900-5989 block, outside the derived 5400-5899 range): `FE-s-74` 5900-5909, `FE-s-75` 5910-5919, `FE-s-76` 5920-5929, `FE-s-77` 5930-5939,
+`FE-s-78` 5940-5949, `FE-s-79` 5950-5959.
+
+### R12.3 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-74 <- (none)               READY ROOT   wave 1
+  FE-s-75 <- FE-s-74                            wave 2
+  FE-s-76 <- FE-s-74                            wave 2
+  FE-s-77 <- FE-s-74                            wave 2
+  FE-s-78 <- FE-s-74                            wave 2
+  FE-s-79 <- FE-s-74                            wave 2
+
+  weakly connected components: 1 (every cell traces to FE-s-74 or is itself the root)
+  ready roots at issuance: 1 (FE-s-74)
+  max concurrent width: 5 (wave 2, once wave 1 drains)
+```
+
+**Fan-out: `1 of 6 cells cut ready NOW (wave 1), 5 more gated on FE-s-74 (wave 2), cap 8`.**
+
+### R12.4 RULE 24 RECORD (round 12)
+
+| postulate | how |
+|---|---|
+| (i) MECE by subtraction | REMEDIATION_v8 carries 18 rows: 12 OPEN, 6 REMEDIATED. Subtract the 6 REMEDIATED (`W15-S1`, `W15-S2`, `W17-S2`, `W17-S5`, `W20-S1`, `S69`, already closed): 12 OPEN remain (the slug's own count). Of those: `W16-S1` is a decomposition-authoring fix (this section's own dependency table names FE-s-65-class predecessors explicitly, not a worker cell); the CTO's own six `C-S1xx` findings plus `W17-S1`, `W17-S3`, `W18-S1`, `W20-S2`, `W22-S1` map to the five design cells and one instrument cell above. 1 (W16-S1, addressed by this table) + 1 (FE-s-74: W20-S2, C-S146, C-S147) + 5 (FE-s-75..79: W17-S3, C-S149+W17-S1, C-S148+C-S151, W18-S1+C-S150, W22-S1) = every OPEN row named. 0 uncovered. |
+| (ii) same grain | each cell is one surface family with one write-path set, per R12.1's partition note |
+| (iii) intent coherence | every cell fixes one clause family: the instrument's own fail-closed contract; a fixture's contract validity; C8's colour law on two adjacent surfaces; C5's actual inversion plus one-primary-action; a cohort control's radius plus report residuals; C3/C9 measured against real grounds |
+| (iv) state coherence | what a cell does NOT move: FE-s-74 does not touch any design cell's source; FE-s-76 does not touch the data palette (lilac/teal/amber, C6) or Model Portfolios' dark default; FE-s-77 does not touch the idle/submitting/receipt state split itself (S69 stays REMEDIATED); FE-s-79 does not touch C6's data-colour exemption |
+
+**The older open rows a cell touches** (unchanged discipline: name-match only, nothing closed here, the CVO dispositions):
+
+| cell | older open rows it may touch |
+|---|---|
+| `FE-s-74` | W20-S2, C-S146, C-S147 (this round's own) |
+| `FE-s-75` | W17-S3 (this round's own) |
+| `FE-s-76` | W12-S2, C-S149 (this round's own), W17-S1 |
+| `FE-s-77` | C-S130, S69 (already REMEDIATED -- do not reopen), C-S148, C-S151 |
+| `FE-s-78` | W11-S4, W18-S1, C-S150 |
+| `FE-s-79` | C-S129 (do not invent a route), W22-S1 |
+
+### R12.5 HOLDS
+
+- **PORTAL FROZEN:** local DEV commits only. No CLOUD push, no SITEZ merge, until Andrew's word. (`0.0.0_AB_MSTR` pushes.)
+- **C-S129 stands:** the Analysis request LIST has no declared backend route; FE-s-79 does not invent one.
+- **S69 is REMEDIATED, closed:** FE-s-77 does not reopen the idle/submitting/receipt split; it fixes C-S148 (inversion) and C-S151 (one primary action) only.
+- **W20-S1 is REMEDIATED/DISARMED, closed:** FE-s-74 does not need to re-fix the targeting selector FE-s-70 already corrected; it fixes the CLASS of gap
+  (gradient/OKLCH blindness) that W20-S2 shows survives underneath.
+- **The CVO seat for this project is `3.0.0_SA_CVO~F`** (the Codex seat).
+
+## R13 -- ROUND 13 (decomposition v0.13): the classifier's own template gap, then the five residuals it and round 12 left behind
+
+**Source.** `3.0.0_SA_CVO~B`'s round-12 interim L10 slug (`surprise-channel/remediations/REMEDIATION_v9.md` @`d5f199a499`, 12 rows: 7 REMEDIATED,
+5 OPEN) and `1.0.0_SA_CTO`'s round-12 analysis (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_FNTEND_ROUND_12_20260922.md`
+@`94680a3bf2`, msg 99436). Round 12 closed with FWD-12 still `NOT_REALIZED`: five of six judgment criteria PASS, one (`F78-AC7`) `NOT_EVALUATED` for
+a missing evidence pair, not a real failure. No PRD addendum -- every gap is a cell under FWD-12. **Round 13's L8/L9 go to `3.0.0_SA_CVO~F`**
+(relaunched, GREEN; round 12 was `3.0.0_SA_CVO~B`'s disclosed, reversible interim for that round only, per the CTO's single-grader ruling msg 99420).
+
+### R13.1 THE RECTANGLE -- five cells, two waves
+
+| cell | write surface | serves | wave | slot | depends_on |
+|---|---|---|---|---|---|
+| `FE-s-80` | `scripts/ui-smoke.mjs` (hardening, not a rewrite), `__tests__/fe-s-80/` | key classifier now matches concrete parameterised paths against `consumed.ts` templates (C-S166/C-S147); parent-colour command rebuilt with a wrong-colour control (W27-S2); visibility command rebuilt to actually scroll and assert far-edge content (W27-S3) | 1 | 1 | none -- READY ROOT |
+| `FE-s-81` | `__tests__/fe-s-13/gen-corpus.ts`, `__tests__/fe-s-81/` | the fixture generator emits (or refuses to overwrite) the repaired `unprojected_grant` field on every entry it produces (W25-S1) | 1 | 2 | none -- READY ROOT, independent of FE-s-80 |
+| `FE-s-82` | `tabs/holdings/DrillTree.tsx` (breadcrumb weight only), `__tests__/fe-s-76/` (the existing predicate-only test, upgraded in place), `__tests__/fe-s-82/` | current breadcrumb crumb at weight 700 not 600 (C-S164); a MOUNTED `DrillTree` integration test replacing the predicate-only one (W17-S1) | 2 | 3 | FE-s-80 |
+| `FE-s-83` | `components/CategoryViewTree.tsx` (the `:574`/`:677` link-colour only), `__tests__/fe-s-83/` | the light-ground "View breakdown" link re-hued navy, underlined on hover/focus, focus ring stays indigo (C-S165) | 2 | 4 | FE-s-80 |
+| `FE-s-84` | `tabs/reporting/` (whole folder), `__tests__/fe-s-84/` | `F78-AC7` re-evaluated at 390px with the fixed scroll instrument, before/after pair committed; report styling finished (noncanonical slate/amber roles in `AnswerStatus.tsx`) under the existing clauses (C-S150) | 2 | 5 | FE-s-80 |
+
+**Why two wave-1 roots, not one.** `FE-s-80`'s instrument fixes and `FE-s-81`'s generator fix touch disjoint files (`scripts/ui-smoke.mjs` vs.
+`__tests__/fe-s-13/gen-corpus.ts`) and serve disjoint findings (a classifier bug vs. a fixture-authoring pipeline bug) -- neither cell's fix is a
+precondition for the other's. Wave 2 depends on `FE-s-80` alone: none of `C-S164`/`W17-S1`/`C-S165`/`F78-AC7`/`C-S150` names the fixture generator or
+`default.json`'s repaired field, so wave 2 is READY as soon as `FE-s-80` drains, whether or not `FE-s-81` has finished.
+
+**Where the write paths were partitioned.** `FE-s-82` gets `DrillTree.tsx` for the breadcrumb weight ONLY, plus `__tests__/fe-s-76/`'s own existing
+test file (upgraded, not replaced, per the CTO's "this completes this seat's round-11 ruling" framing -- the file stays under the cell that owns its
+subject, not a fresh directory) -- both are the SAME finding family (the breadcrumb) the CTO's round-11 ruling already opened. `FE-s-83` gets
+`CategoryViewTree.tsx` alone, disjoint from `FE-s-82`'s files, for the one link-colour finding the FE-s-76 worker correctly left out of its own
+grant and recorded. `FE-s-84` gets the whole `tabs/reporting/` folder (the same grant FE-s-78 held) because `F78-AC7`'s re-evaluation and `C-S150`'s
+styling residuals are both under that cell's own prior "screen report styling" umbrella and neither collides with `FE-s-82`/`FE-s-83`.
+
+**Not cut.** `C-S146` is carried, DISARMED but OPEN -- it closes automatically once any round-13 style criterion exercises the absent-selector
+control on the now-fixed instrument (no cell owns it directly). `S70` stays parked outside IRPT scope. The 70 older OPEN rows are not bulk-closed.
+
+### R13.2 BOUNDS -- ALL ROUND-13 CELLS (rounds 1-12 bounds stand)
+
+```
+  the criterion rule     UNCHANGED five parts from round 12 (wire match, named content, wrong-state control, route-container ground, absent-
+                         selector control). A criterion missing any of the five is refused at the cut.
+  the classifier's own bar FE-s-80 does not merely widen a check: a concrete key satisfying a PARAMETERISED consumed.ts template (the template's
+                         static prefix up to its first `{param}`) must be recognised as valid, not just the bare prefix itself. Required
+                         controls, all three, denominator printed: a positive (a concrete key satisfying its template), a negative (a key with
+                         NO matching template at all), a wrong-shape key (resembles a route but matches none). A STATIC route (no `{param}`) still
+                         requires an EXACT match -- widening prefix-matching to static routes would let an unrelated key masquerade as valid.
+  the colour/scroll commands FE-s-80's rebuilt parent-colour command must FAIL under a wrong-colour control (W27-S2 measured it inheriting navy
+                         both before and after a real fix, proving nothing). The rebuilt visibility command must perform a REAL `scrollLeft`/
+                         `scrollIntoView` displacement and assert far-edge content, not merely measure capacity (W27-S3's exact gap).
+  instrument first        FE-s-82/83/84 all depend on FE-s-80's hardened flags; a worktree whose `ui-smoke.mjs` still reads the OLD grammar has
+                         the wrong base and stops, exactly as FE-s-74 established last round.
+  a control is a claim    unchanged: a control that passes proves nothing if it cannot fail under the wrong state; say so and fix the assertion.
+  fixes                   unchanged: a defect on the cell's OWN surface may be fixed with a BEFORE capture kept and an AFTER beside it; a fix
+                         needing another cell's file is ONE ROW, never a wider grant.
+  dev servers             each worker's own server, port block below, INLINE PREFIX, never exported; stopped and closed-port-verified before the
+                         whole-suite criterion.
+  judgment                the last criterion of each order is JUDGMENT: record the evidence, no verdict; the CVO grades it at L9.
+  context                 keep it small: at most the PNGs a criterion needs, long output to files.
+```
+
+Port blocks (5960-5989 block, outside the derived 5400-5899 range and outside round 12's 5900-5959): `FE-s-80` 5960-5964, `FE-s-81` 5965-5969,
+`FE-s-82` 5970-5974, `FE-s-83` 5975-5979, `FE-s-84` 5980-5984.
+
+### R13.3 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-80 <- (none)               READY ROOT   wave 1
+  FE-s-81 <- (none)               READY ROOT   wave 1
+  FE-s-82 <- FE-s-80                            wave 2
+  FE-s-83 <- FE-s-80                            wave 2
+  FE-s-84 <- FE-s-80                            wave 2
+
+  weakly connected components: 2 (FE-s-80's component contains FE-s-82/83/84; FE-s-81 is its own component)
+  ready roots at issuance: 2 (FE-s-80, FE-s-81)
+  max concurrent width: 3 (wave 2, once FE-s-80 drains) -- or 4 if FE-s-81 is still running when wave 2 starts
+```
+
+**Fan-out: `2 of 5 cells cut ready NOW (wave 1), 3 more gated on FE-s-80 only (wave 2), cap 8`.**
+
+### R13.4 RULE 24 RECORD (round 13)
+
+| postulate | how |
+|---|---|
+| (i) MECE by subtraction | REMEDIATION_v9 carries 12 rows: 7 REMEDIATED (W24-S1, W27-S1, W27-S4, W28-S1, W28-S2, W28-S3, W29-S1, already closed this round).
+Subtract those 7: 5 OPEN remain (the slug's own count) -- `W25-S1`, `W27-S2`, `W27-S3`, `C-S164`, `C-S165`. The CTO's analysis adds `F78-AC7`
+(NOT_EVALUATED, not counted in REMEDIATION_v9's OPEN set since it is a judgment gap, not a row) and `C-S150` (carried from round 12, never closed).
+Map: `W27-S2` + `W27-S3` + `C-S166`/`C-S147` (the classifier gap named in the CTO's own analysis, not a REMEDIATION_v9 row) -> `FE-s-80`; `W25-S1`
+-> `FE-s-81`; `C-S164` + `W17-S1` -> `FE-s-82`; `C-S165` -> `FE-s-83`; `F78-AC7` + `C-S150` -> `FE-s-84`. 3 (FE-s-80's three items) + 1 (FE-s-81) +
+2 (FE-s-82's two) + 1 (FE-s-83) + 2 (FE-s-84's two) = 9 named items, every OPEN row and every CTO-analysis item covered. 0 uncovered. |
+| (ii) same grain | each cell is one surface family with one write-path set, per R13.1's partition note |
+| (iii) intent coherence | every cell fixes one clause family: the shared instrument's own template-matching and discrimination contract; a
+fixture-generation pipeline's field contract; C1's weight law on one breadcrumb; C8's colour law on one action link; C3/C9's report-styling
+residuals plus an exercised-scroll evidence gap |
+| (iv) state coherence | what a cell does NOT move: FE-s-80 does not touch any design cell's source; FE-s-81 does not touch `default.json` itself
+(already repaired, round 12); FE-s-82 does not touch the link colours FE-s-83 owns; FE-s-83 does not touch the data palette (C6) or Model
+Portfolios' dark default; FE-s-84 does not invent summary card values the wire shape does not carry |
+
+**The older open rows a cell touches** (unchanged discipline: name-match only, nothing closed here, the CVO dispositions):
+
+| cell | older open rows it may touch |
+|---|---|
+| `FE-s-80` | C-S147, W27-S2, W27-S3 (this round's own) |
+| `FE-s-81` | W25-S1 (this round's own) |
+| `FE-s-82` | C-S164, W17-S1 (this round's own) |
+| `FE-s-83` | C-S165 (this round's own) |
+| `FE-s-84` | F78-AC7, C-S150 (this round's own) |
+
+### R13.5 HOLDS
+
+- **PORTAL FROZEN:** local DEV commits only. No CLOUD push, no SITEZ merge, until Andrew's word. (`0.0.0_AB_MSTR` pushes.)
+- **C-S146 is DISARMED but OPEN, carried, owned by no single cell:** closes when any round-13 style criterion exercises the absent-selector control
+  on FE-s-80's fixed instrument -- FE-s-82/83/84 all do this by construction (R13.2's criterion rule).
+- **S70 stays parked** outside IRPT scope (unchanged since round 11).
+- **The CVO seat for this project is `3.0.0_SA_CVO~F`** (relaunched, GREEN; round 12's interim grader `3.0.0_SA_CVO~B` does not grade this round).
+
+## R14 -- ROUND 14 (decomposition v0.14): round 13's four OPEN remedies, plus F9 (PRD v0.10, admitted at cut)
+
+**Source.** `3.0.0_SA_CVO~F`'s round-13 L10 slug (`surprise-channel/remediations/REMEDIATION_v10.md` @`66cf49b513`,
+4 OPEN: W25-S1, C-S147, C-S150, C-S176; 8 bounded closures accepted) and `1.0.0_SA_CTO`'s round-13 analysis
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_FNTEND_ROUND_13_20260922.md` @`4bc62712f2`, msg
+99518). Round 13 closed with FWD-12 still `NOT_REALIZED`: F80-AC6 FAILED (the classifier's wrong-tail false
+positive), three other judgment criteria PASS. The SAME commit lands PRD v0.10's CONTRACTS addendum (F9, the
+print-route render-delegate branch owed to `IRPT_BCKEND` v0.17 item 5); its ratified-text half re-signed by
+`3.0.0_SA_CVO~B` @`7605d9d7ab` (msg 99522) BEFORE this cut, so F9 rides this round per the CTO's own stated
+condition ("only if v0.10 reads ADMITTED when the COO cuts" -- measured `prd-signoff.py status` ADMITTED at cut
+time, both halves SIGNED). **Round 14's L8/L9 go to `3.0.0_SA_CVO~F`** (continuing round 13's grader).
+
+### R14.1 THE RECTANGLE -- four cells, one wave, all independent
+
+| cell | write surface | what it fixes | wave | slot | depends_on |
+|---|---|---|---|---|---|
+| `FE-s-85` | `fixtures/smoke/fe-s-13-wire.json`, `fixtures/smoke/fe-s-14-print-v1.json` | the round-13-fixed generator's two sibling outputs never landed as committed bytes (`unprojected_grant` reads 0/9 and 0/2 at the git object); regenerate and COMMIT so the acceptance -- read from the git object, not the worktree -- passes (W25-S1) | 1 | 1 | none -- READY ROOT |
+| `FE-s-86` | `scripts/ui-smoke.mjs` (the two classifier functions only), `__tests__/fe-s-80/key-classifier.test.ts` (upgraded in place) | the round-13 prefix widening (`startsWith`) accepts an undeclared trailing segment (`holdings/A-0001/not-a-declared-operation`); replace with a segment-for-segment template matcher, four CTO-named controls (C-S147/F80-AC6) | 1 | 2 | none -- READY ROOT |
+| `FE-s-87` | `tabs/reporting/AnswerStatus.tsx` (the two font-weight classes only) | the state-label badge (600) and qualifier badge (500) both violate C1's 400/700-only rule; state-label -> 700, qualifier -> 400, full C-S176 five-part control discipline applied (C-S150) | 1 | 3 | none -- READY ROOT |
+| `FE-s-88` | `App.tsx` (print route line only), `ProtectedRoute.tsx` (one new branch), `AuthContext.tsx`/`.context.ts` (only if needed) | the print route's `requireAdmin`/`requireInternal` gates turn away `IRPT_BCKEND`'s render-delegate token; one narrowly-scoped admit branch, three CTO-named acceptance arms plus a no-widening control (F9, PRD v0.10 CONTRACTS) | 1 | 4 | none -- READY ROOT |
+
+**Why one wave, four independent roots.** All four cells were left OPEN or newly opened by round 13's own close, and
+none names another cell's write surface: `FE-s-85` writes two JSON fixture files, `FE-s-86` writes
+`ui-smoke.mjs`'s classifier functions plus its own upgraded unit test, `FE-s-87` writes one component's weight
+classes, `FE-s-88` writes the print route's auth wrapper. No cell's criterion reads another cell's output. Unlike
+round 13 (whose wave 2 depended on wave 1's hardened instrument), nothing here needs `FE-s-86`'s classifier fix to
+run FIRST -- `FE-s-85`'s and `FE-s-87`'s criteria never call `checkKeyValidity`, and `FE-s-88`'s auth branch is
+independent of route-key classification entirely.
+
+**Where the write paths were partitioned.** `FE-s-86` gets `scripts/ui-smoke.mjs`'s classifier functions ONLY --
+the SAME file `FE-s-80` touched last round, but a narrower slice (two functions, not the whole instrument); no
+other cell touches this file. `FE-s-85` gets exactly the two fixture files the round-13 defect named, not the
+generator source itself (already correct, read-only this round). `FE-s-87` gets `AnswerStatus.tsx`'s two weight
+classes, disjoint from every other cell's surface (the same file FE-s-84 already touched for its background-colour
+fix, round 13 -- this round's grant is narrower still, weight only). `FE-s-88` is the only cell touching
+routing/auth infrastructure (`App.tsx`, `ProtectedRoute.tsx`) this round, and its grant is explicitly scoped to the
+print route's own element line plus one new branch -- every other route and every other check in `ProtectedRoute.tsx`
+must stay reachable and unchanged.
+
+**Not cut.** `C-S146` closed automatically this round (round 13's own style criteria exercised the absent-selector
+control on the fixed instrument, per R13.5's own stated closing condition -- confirmed at L9, not re-opened here).
+`S70` stays parked outside IRPT scope. Round-13's eight bounded closures and round-12/earlier's older OPEN rows are
+not bulk-closed.
+
+### R14.2 BOUNDS -- ALL ROUND-14 CELLS
+
+```
+  C-S176 (this round's own CTO ruling)  every VISUAL criterion carries the five-part control (wire match, named content,
+                         wrong-state control, ground-on-actual-container, absent-selector control) UNLESS declared NOT
+                         APPLICABLE, WITH REASON, IN THE TASK ORDER AT CUT TIME -- never waived silently in a result.
+                         Applied in full to FE-s-87 (the one genuinely visual/style criterion this round). FE-s-85,
+                         FE-s-86 and FE-s-88 each carry an explicit N/A declaration with reason in their own BOUNDS
+                         (data-object, pure-logic and routing/auth criteria respectively -- none is a rendered visual
+                         assertion). Results report DECLARED-KEY VALIDITY and EXERCISED FULFILMENT as two SEPARATE
+                         figures, never conflated; no retroactive N/A.
+  the classifier's own bar  FE-s-86's fix must reject an undeclared trailing segment while still accepting a genuine
+                         parameterised instantiation -- segment-for-segment, never a bare prefix/startsWith test.
+  W25-S1's own bar       FE-s-85's acceptance reads the GIT OBJECT at the worker's own commit, never the working tree --
+                         this is the exact defect round 13 shipped (source fixed, output never committed).
+  F9's own bar            FE-s-88's branch is print-route-scoped ONLY and is explicitly NOT a security control -- the
+                         counterpart's edge/authorizer already verified the token; this branch only lets the page render.
+  a control is a claim   unchanged: a control that passes proves nothing if it cannot fail under the wrong state; say so
+                         and fix the assertion.
+  fixes                  unchanged: a defect on the cell's OWN surface may be fixed with a BEFORE capture kept and an
+                         AFTER beside it; a fix needing another cell's file is ONE ROW, never a wider grant.
+  dev servers             each worker's own server, port block below, INLINE PREFIX, never exported; stopped and
+                         closed-port-verified before the whole-suite criterion.
+  judgment                the last criterion of each order is JUDGMENT: record the evidence, no verdict; the CVO
+                         grades it at L9.
+  context                 keep it small: at most the PNGs/output a criterion needs, long output to files.
+```
+
+Port blocks (5990-6009 block, outside the derived 5400-5899 range and outside rounds 12-13's 5900-5989): `FE-s-85`
+5990-5994, `FE-s-86` 5995-5999, `FE-s-87` 6000-6004, `FE-s-88` 6005-6009.
+
+### R14.3 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-85 <- (none)               READY ROOT   wave 1
+  FE-s-86 <- (none)               READY ROOT   wave 1
+  FE-s-87 <- (none)               READY ROOT   wave 1
+  FE-s-88 <- (none)               READY ROOT   wave 1
+
+  weakly connected components: 4 (every cell is its own component -- no cell reads another's output)
+  ready roots at issuance: 4 (all four)
+  max concurrent width: 4
+```
+
+**Fan-out: `4 of 4 cells cut ready NOW (wave 1), cap 8`.**
+
+### R14.4 RULE 24 RECORD (round 14)
+
+| postulate | how |
+|---|---|
+| (i) MECE by subtraction | REMEDIATION_v10 carries 4 JSON records, all OPEN (`W33-S1`/`W32-S1`/`W34-S1` closed this same slug, not OPEN); the CTO's round-13 analysis names four OPEN items by row id: `W25-S1`, `C-S147` (= `F80-AC6`'s failure), `C-S150`, `C-S176`. Subtract the three CLOSED slug records: 0 remain unaccounted among the slug's own rows. The CTO's analysis ADDS the fifth item, `F9`, named as "the only outcome no cell served" -- not a slug row, a fresh PRD addendum. Map: `W25-S1` -> `FE-s-85`; `C-S147`/`F80-AC6` -> `FE-s-86`; `C-S150` -> `FE-s-87`; `F9` -> `FE-s-88`. `C-S176` is NOT mapped to a standalone cell -- it is a CTO RULING on how every criterion is authored, applied as BOUNDS discipline across FE-s-87 (and declared N/A with reason on the other three); this is stated explicitly in R14.1 and R14.2, not silently dropped. 4 named work items (W25-S1, C-S147, C-S150, F9) map to 4 cells, 1:1. 0 uncovered. |
+| (ii) same grain | each cell is one surface family with one write-path set: a fixture pair, a classifier function pair, a component's weight classes, a route's auth branch |
+| (iii) intent coherence | every cell closes one clause family: a committed-output gap; a template-matching correctness gap; C1's weight law on one status family; a cross-project auth-admission contract |
+| (iv) state coherence | what a cell does NOT move: `FE-s-85` does not touch the generator source or `default.json`; `FE-s-86` does not touch any other `ui-smoke.mjs` flag or the exact/static route set's own logic; `FE-s-87` does not touch `AnswerStatus.tsx`'s border/background/icon classes; `FE-s-88` does not touch any route besides the print route, and does not widen `ProtectedRoute.tsx`'s behaviour for any existing token shape |
+
+**The older open rows a cell touches** (unchanged discipline: name-match only, nothing closed here, the CVO dispositions):
+
+| cell | older open rows it may touch |
+|---|---|
+| `FE-s-85` | W25-S1 (this round's own) |
+| `FE-s-86` | C-S147 (this round's own) |
+| `FE-s-87` | C-S150, C-S176 (this round's own) |
+| `FE-s-88` | none named (F9 is a fresh PRD addendum, no prior row) |
+
+### R14.5 HOLDS
+
+- **PORTAL FROZEN:** local DEV commits only. No CLOUD push, no SITEZ merge, until Andrew's word. (`0.0.0_AB_MSTR` pushes.)
+- **F9 rode this round because PRD v0.10 was measured ADMITTED at cut time** (`prd-signoff.py status IRPT_FNTEND` ->
+  `ADMITTED`, both halves SIGNED, checked by this seat immediately before cutting) -- had it still read WITHHELD,
+  this cell would defer to round 15 per the CTO's own stated condition, and round 14 would not have waited for it.
+- **C-S176 is a CROSS-CELL AUTHORING DISCIPLINE, not a cell** -- see R14.1/R14.2/R14.4(i). Any future round citing
+  it as an uncovered item is reading this decomposition wrong.
+- **S70 stays parked** outside IRPT scope (unchanged since round 11).
+- **The CVO seat for this project is `3.0.0_SA_CVO~F`** (continuing from round 13).
+
+## R15 -- ROUND 15 (decomposition v0.15): round 14's three OPEN remedies -- two instrument defects, one fixture gap
+
+**Source.** `3.0.0_SA_CVO~F`'s round-14 L10 slug (`surprise-channel/remediations/REMEDIATION_v11.md` @`f7546b6aec`,
+3 OPEN: C-S147, C-S188, C-S190; 10 bounded closures accepted) and `1.0.0_SA_CTO`'s round-14 analysis
+(`org/missions/D9/IRPT/IRPT_FNTEND/ledger/ROUND_ANALYSIS.round14.md` @`8b1b0d6832`, msg routed 19:00Z). Round 14
+closed with FWD-12 still `NOT_REALIZED`; all four judgment criteria PASS/bounded, no PRD addendum, PRD v0.10
+stays ADMITTED. **Round 15's L8/L9 go to `3.0.0_SA_CVO~F`** (continuing from round 14).
+
+### R15.1 THE RECTANGLE -- three cells, one wave, all independent
+
+| cell | write surface | what it fixes | wave | slot | depends_on |
+|---|---|---|---|---|---|
+| `FE-s-89` | 4 fixture files (`reporting-answer-bearing.json`, `fe-s-84/fixtures/reporting-qualified.json`, `fe-s-13-wire.json`, `fe-s-14-print-v1.json`), `gen-corpus.ts`'s map generators | round 14's stricter classifier correctly rejects these fixtures' leftover PREFIX-style keys; reconcile without weakening the classifier or breaking the substring-based fixture-serving mechanism that currently depends on those same keys (C-S147) | 1 | 1 | none -- READY ROOT |
+| `FE-s-90` | new `scripts/suite-complete-check.mjs`, its own test dir | the round-14 suite-isolation filter (built by THIS seat, twice-amended already) still reads "0 unexpected" on a timed-out/crashed/incomplete run because a process that never printed any `✗` line trivially satisfies "zero minus zero is zero" -- build a real, reusable, tested instrument that requires genuine completion (C-S188) | 1 | 2 | none -- READY ROOT |
+| `FE-s-91` | `__tests__/fe-s-49/admin-gate.test.ts`'s `SANCTIONED_ADDITIONS` carve-out (introduced round 14) | the carve-out's substring check cannot detect a required prop flipped to `false`, and its summary line falsely claims full byte-identity for a hunk that only matched via the lenient carve-out; tighten to exact comparison and honest labels, add false-value and extra-prop negative controls (C-S190) | 1 | 3 | none -- READY ROOT |
+
+**Why one wave, three independent roots.** All three remedies were opened or newly found by round 14's own
+close, and none names another cell's write surface: `FE-s-89` writes fixture JSON files plus (narrowly)
+`gen-corpus.ts`'s two map-generating functions; `FE-s-90` writes one wholly new script and its own tests;
+`FE-s-91` writes one existing test file's carve-out logic. No cell's criterion depends on another cell's output
+landing first.
+
+**Where the write paths were partitioned.** `FE-s-89` is the only cell touching fixture JSON or the generator
+this round. `FE-s-90` is the only cell touching `scripts/` (a NEW file, not `ui-smoke.mjs` -- that file's
+classifier logic is explicitly READ-ONLY to every cell this round, since round 14 already fixed it correctly
+and no remedy asks for it to change). `FE-s-91` is the only cell touching `fe-s-49/admin-gate.test.ts`, and its
+own grant is narrowed to the ONE carve-out block plus summary line -- `F49-AC7` and every other test in that
+file stays read-only even to this cell.
+
+**Not cut.** Nothing carried from round 14 remains OPEN beyond these three (all ten round-14 bounded closures
+are accepted, not reopened here). `S70` stays parked outside IRPT scope.
+
+### R15.2 BOUNDS -- ALL ROUND-15 CELLS
+
+```
+  classifier stays strict   scripts/ui-smoke.mjs's checkKeyValidity/routeKeyCandidates are READ-ONLY to every cell
+                             this round -- round 14 fixed them correctly; no remedy here re-widens that fix.
+  the fixture-serving risk  FE-s-89's fix must not silently break the substring-based fixture-serving match
+                             (ui-smoke.mjs:158, url.includes(key)) that real browser tests currently depend on --
+                             the whole-suite regression criterion is the safety net, not a formality.
+  the timeout control        FE-s-90's own control set is INCOMPLETE without a real subprocess genuinely killed by
+                             `timeout` mid-run -- this is the exact case that exposed C-S188; a checker that cannot
+                             make this control fail has not fixed the defect.
+  revert discipline          FE-s-91's negative controls are temporarily-committed mutations; every one MUST be
+                             `git revert`-ed cleanly before the final report, mirroring this round's own established
+                             pattern (never a history rewrite, never left in an uncommitted or unreverted state).
+  C-S176 (carried, unchanged) every VISUAL criterion still carries the five-part control unless declared N/A with
+                             reason at cut time. All three round-15 cells declare N/A -- none produces a rendered
+                             visual assertion this round (data-object, instrument-build and AST/logic checks
+                             respectively).
+  dev servers                each worker's own server, port block below, INLINE PREFIX, never exported; stopped and
+                             closed-port-verified before the whole-suite criterion.
+  judgment                   the last criterion of each order is JUDGMENT: record the evidence, no verdict; the CVO
+                             grades it at L9.
+  context                    keep it small: write long outputs to files, read their tails.
+```
+
+Port blocks (6010-6024 block, outside every prior round's range): `FE-s-89` 6010-6014, `FE-s-90` 6015-6019,
+`FE-s-91` 6020-6024.
+
+### R15.3 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-89 <- (none)               READY ROOT   wave 1
+  FE-s-90 <- (none)               READY ROOT   wave 1
+  FE-s-91 <- (none)               READY ROOT   wave 1
+
+  weakly connected components: 3 (every cell is its own component)
+  ready roots at issuance: 3 (all three)
+  max concurrent width: 3
+```
+
+**Fan-out: `3 of 3 cells cut ready NOW (wave 1), cap 8`.**
+
+### R15.4 RULE 24 RECORD (round 15)
+
+| postulate | how |
+|---|---|
+| (i) MECE by subtraction | REMEDIATION_v11 names exactly 3 OPEN items: `C-S147`, `C-S188`, `C-S190` (the 10 bounded closures are not OPEN, subtracted from the slug's own count). CTO's round-14 analysis names the identical three under "Round-15 remedy requirements", confirming no fourth item exists. Map: `C-S147` -> `FE-s-89`; `C-S188` -> `FE-s-90`; `C-S190` -> `FE-s-91`. 3 named remedies map to 3 cells, 1:1. 0 uncovered. |
+| (ii) same grain | each cell is one surface family with one write-path set: a fixture/generator pair, a wholly new script, one test file's carve-out logic |
+| (iii) intent coherence | every cell closes one clause family: fixture-key grammar compatibility with an already-strict classifier; a suite-completion instrument's own soundness; a security-gate carve-out's precision and honesty |
+| (iv) state coherence | what a cell does NOT move: `FE-s-89` does not touch the classifier itself or `default.json`; `FE-s-90` does not touch or retrofit any already-drained round-14 criterion; `FE-s-91` does not touch `F49-AC7` or any other test in its file |
+
+**The older open rows a cell touches** (unchanged discipline: name-match only, nothing closed here, the CVO dispositions):
+
+| cell | older open rows it may touch |
+|---|---|
+| `FE-s-89` | C-S147 (carried from round 13, this round's own resolution attempt) |
+| `FE-s-90` | C-S188 (this round's own) |
+| `FE-s-91` | C-S190 (this round's own) |
+
+### R15.5 HOLDS
+
+- **PORTAL FROZEN:** local DEV commits only. No CLOUD push, no SITEZ merge, until Andrew's word. (`0.0.0_AB_MSTR` pushes.)
+- **The classifier (`scripts/ui-smoke.mjs`'s `checkKeyValidity`/`routeKeyCandidates`) is READ-ONLY across all
+  three cells this round** -- see R15.2. Any future round citing a need to touch it is reading round 14's own
+  closure wrong; open a fresh, explicitly-scoped remedy instead.
+- **S70 stays parked** outside IRPT scope (unchanged since round 11).
+- **The CVO seat for this project is `3.0.0_SA_CVO~F`** (continuing from round 14).

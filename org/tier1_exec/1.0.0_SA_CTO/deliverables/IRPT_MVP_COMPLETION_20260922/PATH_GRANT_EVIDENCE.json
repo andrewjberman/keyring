@@ -1,0 +1,183 @@
+{
+  "date": "2026-09-22",
+  "grantor": "1.0.0_SA_CTO",
+  "checks_passed": 489,
+  "path_rule_count": 17,
+  "rules": [
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/reports/**",
+      "owner": "2.0.0_SA_COO~P",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/performance/**",
+      "owner": "2.0.0_SA_COO~P",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/export/**",
+      "owner": "2.0.0_SA_COO~P",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/_render_identity/**",
+      "owner": "2.0.0_SA_COO~P",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/_contracts/**",
+      "owner": "2.0.0_SA_COO~P",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/PATH_MANIFEST.json",
+      "owner": "2.0.0_SA_COO~P",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/DEPENDENCY_REGISTER.md",
+      "owner": "2.0.0_SA_COO~P",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/README.md",
+      "owner": "2.0.0_SA_COO~P",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/terraform/investor-reporting/**",
+      "owner": "2.0.0_SA_COO~P",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/_scope/**",
+      "owner": "2.0.0_SA_COO~M",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/_ids/**",
+      "owner": "2.0.0_SA_COO~M",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/_authz/**",
+      "owner": "2.0.0_SA_COO~M",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/directory/**",
+      "owner": "2.0.0_SA_COO~M",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/holdings/**",
+      "owner": "2.0.0_SA_COO~M",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/intake/**",
+      "owner": "2.0.0_SA_COO~Y",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/ycharts/**",
+      "owner": "2.0.0_SA_COO~Y",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    },
+    {
+      "pattern": "infra/aws/lambda/investor-reporting/ops/**",
+      "owner": "2.0.0_SA_COO~Y",
+      "before": "REFUSED",
+      "after": "PERMITTED",
+      "incumbents": "PRESERVED",
+      "other_COO_CVO": "REFUSED"
+    }
+  ],
+  "actual_hook_controls": [
+    {
+      "agent": "2.0.0_SA_COO~P",
+      "path": "infra/aws/lambda/investor-reporting/reports/permission_probe.py",
+      "expected_rc": 0,
+      "actual_rc": 0
+    },
+    {
+      "agent": "2.0.0_SA_COO~M",
+      "path": "infra/aws/lambda/investor-reporting/reports/permission_probe.py",
+      "expected_rc": 1,
+      "actual_rc": 1
+    },
+    {
+      "agent": "2.0.0_SA_COO~M",
+      "path": "infra/aws/lambda/investor-reporting/_scope/permission_probe.py",
+      "expected_rc": 0,
+      "actual_rc": 0
+    },
+    {
+      "agent": "2.0.0_SA_COO~Y",
+      "path": "infra/aws/lambda/investor-reporting/_scope/permission_probe.py",
+      "expected_rc": 1,
+      "actual_rc": 1
+    },
+    {
+      "agent": "2.0.0_SA_COO~Y",
+      "path": "infra/aws/lambda/investor-reporting/intake/permission_probe.py",
+      "expected_rc": 0,
+      "actual_rc": 0
+    },
+    {
+      "agent": "2.0.0_SA_COO~P",
+      "path": "infra/aws/lambda/investor-reporting/intake/permission_probe.py",
+      "expected_rc": 1,
+      "actual_rc": 1
+    }
+  ],
+  "limits": "Source commit permission only. No deployment, runtime or product acceptance test."
+}

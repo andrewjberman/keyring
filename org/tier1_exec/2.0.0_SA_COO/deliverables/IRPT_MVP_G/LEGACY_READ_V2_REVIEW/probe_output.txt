@@ -1,0 +1,18 @@
+carrier helper sha      : e9c932d9af7eefa4
+helper sha @ad628 source: 7225ec2df6530652 DIFF
+helper sha M-patched    : e9c932d9af7eefa4 MATCH
+helper sha spliced      : e9c932d9af7eefa4 MATCH
+ok P0 baseline (unmutated ad628 post-image)     expect PASS   got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+XX D1 decorator added to the helper             expect REFUSE got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+XX D2 nested def param rebinds bucket           expect REFUSE got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+XX D3 nested def param rebinds helper           expect REFUSE got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+XX D4 globals() rebind of helper (dataflow)     expect REFUSE got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+XX D5 decorator on enclosing build_inf          expect REFUSE got PASS   the single occurrence is positional arg 2 of _latest_date_partition(bucket=...) inside build_inf, helper text 
+ok D6 lambda default param rebinds bucket       expect REFUSE got REFUSE 'bucket' is bound 2 time(s) in build_inf (assign, lambda-param), approved exactly 1: an ambiguous bucket is no
+ok D7 class body rebinds bucket                 expect REFUSE got REFUSE 'bucket' is bound 2 time(s) in build_inf (assign, assign), approved exactly 1: an ambiguous bucket is not auth
+
+authority_ok substring probe:
+  id 'LEGACY' -> (True, 'pin ec80b01ca492 resolves and its RULINGS.md carries LEGACY')
+  id 'IRPT-M-LEGACY-READ-0' -> (True, 'pin ec80b01ca492 resolves and its RULINGS.md carries IRPT-M-LEGACY-READ-0')
+
+ARMS 8, AS-EXPECTED 3, UNEXPECTED 5

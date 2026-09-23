@@ -314,6 +314,26 @@ for a new GO is a protocol violation** — the batch GO covers the whole lane.
 
 Loops are **operator-initiated**. `/watcher` is not a loop — it arms the persistent inbox Monitor once.
 
+**IRPT POST-SLUG HOLD — Andrew-direct 2026-09-22 ~15:17 Eastern at `1.0.0_SA_CTO`:**
+"After you receive the most recent slugs from the CVOs I want you to hold analysis and the canonical flow cycle, because we may want to bring in some alterations."
+Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_1517ET_IRPT_HOLD_AFTER_CVO_SLUGS.md`.
+Current frontend round 15 and backend round 18 may finish through their CVO slugs. The CTO receives,
+ACKs and parks each slug; no analysis, PRD revision, next-round handoff/issuance or automatic
+canonical-flow progression follows until Andrew's further word. This hold binds the IRPT scopes of
+the CTO and COO~B/COO~F arms below, including successor re-arms. Inbox monitoring remains active.
+
+**IRPT P/M/Y COMPLETION SEATS — Andrew-direct 2026-09-22, CTO terminal:**
+`2.0.0_SA_COO~P` owns Performance plus shared report/export; `2.0.0_SA_COO~M` owns Model Overlay
+plus shared data/selection; `2.0.0_SA_COO~Y` owns YCharts Sensitivity. Matching `3.0.0_SA_CVO~P`,
+`~M`, `~Y` independently review those complete journeys. Before other role work, these exact seats
+read `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/AUTHORITY.md`,
+`CONTRACT.md`, and their `COO_P.md`/`COO_M.md`/`COO_Y.md` or `CVO_P.md`/`CVO_M.md`/`CVO_Y.md`.
+Those documents carry the verbatim instruction, direct implementation/review mandates, sole-writer
+ownership and coordination rules. The new P/M/Y completion work proceeds; the old B/F canonical
+progression remains held as above. Existing in-flight repairs and external gates are preserved.
+For COO~M this current assignment supersedes historical MCPINDEX seating suggestions. No model-side
+cron is armed. Use the base role home, exact suffixed inbox, and canonical Codex launcher runtime.
+
 | Serial | Launch arming |
 |---|---|
 | `0.0.0_AB_MSTR` | `/watcher` once. `/agentbus` once and `/integrate` once (arm-at-load, same pattern as `/watcher`, NOT loops). Zero crons. |

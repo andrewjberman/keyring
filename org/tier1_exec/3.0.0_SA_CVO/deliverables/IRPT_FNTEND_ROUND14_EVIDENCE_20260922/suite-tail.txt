@@ -1,0 +1,24 @@
+bun test process per file, --reporter=junit; every test cost goes to the ledger
+» F46-AC5 -- the two files under load (the load run only) > 3 runs with 4 more copies 
+of the two files at once, and the same load once on the DEV blobs (BEFORE, recorded)
+» LEDGER -- this load run's costs, appended to the working-tree ledger (the load run only) 
+> append every cost MEASURE and F46-AC5 recorded, each with its run, to ./recorded-costs.json
+» F58-AC5 -- Global mode, cross-firm selection, count>0, badge visible > a real 
+browser, a two-firm scope, Global resolved by useFirmContext, badge visible
+» F80-AC4 -- the reusable scroll-exercise driver, against the export modal preview > 
+a real, non-equal scrollLeft displacement occurred
+» F80-AC4 -- the reusable scroll-exercise driver, against the export modal preview > 
+before/after content assertions differ -- previously off-screen content becomes visible
+» F83-AC3 -- "View breakdown" label: no underline at rest, underline ON A REAL HOVER (no click), 
+underline releases when the pointer moves away > rest=none, hovered=underline, released=none -- all three 
+read off the SAME element
+» F84-AC3 -- the reusable scroll-exercise driver, against the Reporting tab report body at 
+390px > a real, non-equal scrollLeft displacement occurred
+» F84-AC3 -- the reusable scroll-exercise driver, against the Reporting tab report body at 
+390px > before/after content assertions differ -- previously off-screen content becomes visible
+
+ 661 pass
+ 27 skip
+ 0 fail
+ 2739 expect() calls
+Ran 688 tests across 128 files. [149.40s]

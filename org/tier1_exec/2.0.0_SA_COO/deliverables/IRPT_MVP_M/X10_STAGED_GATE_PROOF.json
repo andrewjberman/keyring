@@ -1,0 +1,17 @@
+{
+  "candidate": "ffbffcac503eb7f74de0b296e52f2088c02dfea8",
+  "command": "python .tools/naming-gate.py --post-from-index --enforce --diff .runtime/x10-final.diff",
+  "diff_sha256": "f15e18a26cbc58f59df16cce7ab220d2060bad33c08727649323e0ae0941fefc",
+  "paths": [
+    "lib/opal_naming.py",
+    "lib/tests/test_irpt_destination.py",
+    "infra/logic/registry/scopes.json",
+    "infra/logic/registry/reporting_policies.json",
+    "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+    "infra/aws/lambda/investor-reporting/_authz/loaders.py"
+  ],
+  "exit_code": 0,
+  "output": "DENOMINATOR: 6 path(s) in this diff; declaration-tree domain = 6 MINUS EXCLUDED(org/, docs/, run-artifact dirs ^workflows/[^/]+/[^/]+/[0-9]{8}T[0-9]{6}Z-[0-9a-f]{7,40}/) 0 = 6 path(s) [of the excluded, 0 are run artifacts and 0 are org//docs/]\nCOVERAGE: 0 path(s) in the declaration domain the gate could not see (extension outside its graded set and not .gitattributes); 6 seen\nNAMING-GATE: PASS 0 graded\n",
+  "push_state": "LOCAL",
+  "origin_CLOUD": "b8136f26dca101d9f0f74818df109f25cae5354d\trefs/heads/CLOUD"
+}

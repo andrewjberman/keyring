@@ -1,0 +1,90 @@
+# PARITY.yaml -- ONE skill source, BOTH runtimes (R5 of
+# org/tier1_exec/4.0.0_SA_CRO/deliverables/BRIEF_CANONICAL_FLOW_SPEED_CLOSER_FLOW_SKILLS_PARITY_20260923.md).
+#
+# One row per fabric skill that has a parity obligation. Read by
+# org/mcp/install-codex-load-skill.py at every Codex seat launch: rows with
+# runtime `both` or `codex` are projected byte-exact into CODEX_HOME/skills/<name>;
+# rows with runtime `claude` are never projected and carry `equivalent` (what a
+# Codex seat uses instead) as their whole parity obligation.
+#
+# Fields:
+#   name           the skill name; must equal the SKILL.md frontmatter `name`
+#   source         repo-relative directory: .claude/skills/<x> or org/mcp/codex-skills/<x>
+#   runtime        both | claude | codex
+#   equivalent     required on a single-runtime row: what the OTHER runtime uses
+#   required       true = a missing or malformed source FAILS the Codex launch
+#                  (load and log only); otherwise the installer prints SKIP: and continues
+#   not_projected  source files referenced by repo path and deliberately not copied
+#   note           a standing constraint on the row
+#
+# Grammar: this file is parsed by a stdlib reader in the installer (PyYAML is not
+# guaranteed on every interpreter). Keep it to `key: value` scalars, double-quoted
+# strings (escapes: \" and \\), `true`/`false`, integers and flow lists [a, b].
+#
+# NOT IN THIS MANIFEST, DELIBERATELY: the home-only Codex skills `drive`, `02check`
+# and `yolo` (and the home-only `opencalls`, superseded here by the `open-calls` row).
+# They live only in CODEX_HOME. Moving them into the repo and renaming the Codex
+# `drive` (an Anatomy loop that collides by name with the Claude `/drive` alias) is
+# deferred to Andrew; Anatomy work stays off this workspace. The installer never
+# touches a skill directory this manifest does not name.
+
+version: 1
+skills:
+  - name: closer
+    source: .claude/skills/closer
+    runtime: both
+  - name: brief-create
+    source: .claude/skills/brief-create
+    runtime: both
+  - name: endpoint
+    source: .claude/skills/endpoint
+    runtime: both
+  - name: canonical-flow
+    source: .claude/skills/canonical-flow
+    runtime: both
+  - name: to-check
+    source: .claude/skills/to-check
+    runtime: both
+    not_projected: [render_to_dashboard.py]
+  - name: prd-check
+    source: .claude/skills/prd-check
+    runtime: both
+  - name: verify
+    source: .claude/skills/verify
+    runtime: both
+    note: "Andrew-direct 2026-09-02 Call 2(b), NOT LIFTED: a Codex-runtime seat issues no comp-tool-grounded adjudication (grade, verdict, certification or broadcast whose evidence is a comp-tool search or inspection) until a Codex rail exists. A Codex seat grades on a live trace, the deployed bytes or a test run instead (spine v3.17). org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260902_230xZ_OPEN_CALLS_x2_TREE_LANES_ANY_CODEX_RAIL.md"
+  - name: seams
+    source: .claude/skills/seams
+    runtime: both
+    note: "Andrew-direct 2026-09-02 Call 2(b), NOT LIFTED: a Codex-runtime seat issues no comp-tool-grounded adjudication (grade, verdict, certification or broadcast whose evidence is a comp-tool search or inspection) until a Codex rail exists. A Codex seat grades on a live trace, the deployed bytes or a test run instead (spine v3.17). org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260902_230xZ_OPEN_CALLS_x2_TREE_LANES_ANY_CODEX_RAIL.md"
+  - name: handoff
+    source: .claude/skills/handoff
+    runtime: both
+  - name: open-calls
+    source: .claude/skills/open-calls
+    runtime: both
+  - name: next-calls
+    source: .claude/skills/next-calls
+    runtime: both
+  - name: log
+    source: org/mcp/codex-skills/log
+    runtime: both
+    required: true
+    equivalent: ".claude/skills/log (the Claude /log; this Codex-specific source is kept for Codex)"
+  - name: dispatch
+    source: .claude/skills/dispatch
+    runtime: claude
+    equivalent: "direct implementation under /closer (a Codex seat implements; it spawns no subagents)"
+  - name: canonical-drive
+    source: .claude/skills/canonical-drive
+    runtime: claude
+    equivalent: "direct implementation under /closer (the COO loop rides Claude subagents and Monitor)"
+  - name: watcher
+    source: .claude/skills/watcher
+    runtime: claude
+    equivalent: "the launcher's inbox bridge (org/mcp/start-codex-seat.ps1, org/mcp/CODEX_INBOX_MONITOR.md)"
+  - name: load
+    source: org/mcp/codex-skills/load
+    runtime: codex
+    required: true
+    equivalent: "the Claude seat's startup read of org/XXX.md (no skill)"
