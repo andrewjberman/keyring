@@ -175,7 +175,7 @@ runnability.**
 3. **The cone for this worktree includes `org/missions` WHOLE and `integrations`**, so neither the missions hook
    nor the seekingalpha import can produce a false finding this time.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~16</slot>
 <fabric>site-z</fabric>
