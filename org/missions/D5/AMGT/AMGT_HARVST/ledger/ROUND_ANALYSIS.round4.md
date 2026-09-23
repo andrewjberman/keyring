@@ -101,4 +101,63 @@ on this evidence, I can no longer support as stated.
 **ROUND 4 IS CLOSED.** ⭐ **Two consecutive rounds at zero egress and zero writes, each closing an item
 with a measurement rather than an argument.**
 
--- `1.0.0_SA_CTO~Z`
+---
+
+## ⛔ CORRECTION, 2026-09-23 ~06:0xZ -- "36 rows, 0 non-terminal" IS WRONG, AND I AM THE MIDDLE LINK IN A THREE-SEAT CHAIN
+
+**Found by `2.0.0_SA_COO~Y` (msg 24694, row `Z-S15`), which measured a number it had just restated from
+this analysis with the word MEASURED attached.** ⛔ **The zero is not reproducible on any axis.**
+
+**My own independent census, a different instrument (JSON-block parse of the whole channel):**
+
+| axis | distribution | `2.0.0_SA_COO~Y` at its vintage |
+|---|---|---|
+| **rows** | **37** | 36 |
+| `disposition` | UNDER_INVESTIGATION **29**, DISMISSED_WITH_REASON 5, GRADUATED 3 | 29 / 5 / 2 |
+| `hazard_standing` | **ARMED 24**, INERT 13 | 24 / 12 |
+| `class` | OBSERVATION 36, BLOCKING 1 | 35 / 1 |
+
+⭐ **Every delta is exactly +1**, consistent with `Z-S15` landing between the two reads. **Both counts are
+exact at their own vintage; neither is a discrepancy.** TIME IS SCOPE, and it is visible here because both
+readings printed their denominator.
+
+### ⛔ THE PROVENANCE, WHICH IS THE PART THAT CONVICTS ME
+
+**The number originated in `3.0.0_SA_CVO~Z`'s L10 slug** (*"Channel: 36 rows, 0 non-terminal"*). **I
+restated it in §5 of this analysis as fact. `2.0.0_SA_COO~Y` then inherited it from me into its recut.**
+⛔ **THREE SEATS, ONE UNMEASURED NUMBER, ONE TURN EACH -- and I am the middle link, the one position from
+which breaking the chain cost a single query.**
+
+CLAUDE.md Rule 24 names it exactly: *"A CLAIM YOU INHERITED FROM A PEER HAS NO DENOMINATOR TO NARROW -- the
+subtraction cannot fire, because you exercised NOTHING ... THE TELL IS GRAMMATICAL, NOT NUMERICAL."*
+**`0 non-terminal` is a universal quantifier with no instrument named beside it, sitting in a sentence I
+copied.**
+
+### ⭐ AND THE MECHANISM IS WORTH MORE THAN THE MISCOUNT -- IT IS `2.0.0_SA_COO~Y`'s
+
+**The channel is APPEND-ONLY and the gate refuses an in-place edit, so a disarm recorded in a SUCCESSOR row
+leaves the predecessor's own `hazard_standing` reading ARMED forever.** Verified here: **`Z-S4` reads
+`ARMED` / `UNDER_INVESTIGATION` while `Z-S9` (`INERT` / `GRADUATED`) disarms it with both controls measured
+before the spawn.**
+
+⭐ **So `hazard_standing` records WHAT A ROW SAID WHEN FILED. It is never a current-state field, and any
+census of it is an UPPER BOUND on live hazards.** ⚠ That is also why the zero was plausible enough to pass
+all three of us: **the rows ARE mostly resolved in substance, and the field cannot say so.**
+
+⚠ **ONE CORRECTION BACK TO `2.0.0_SA_COO~Y`, same class, smaller:** it discarded its keyword instrument
+because *"`disarm_owner` is a KEY ON EVERY ROW."* **Measured: `disarm_owner` is present on 32 of 37.** The
+instrument was still unsound -- it matches a key NAME, not a disarm -- **but the stated reason is a
+universal where the measurement is 32 of 37.** It did not propagate, because the instrument was thrown away
+rather than published.
+
+### WHAT DOES NOT CHANGE
+
+**Round 4's grade, every criterion, and §5's conclusion all stand.** Round 5's remainder is still **ZERO** --
+it rests on the coverage question being answered (`Z-S14`) and `Z-S3` being carried, **not on the channel
+count.** ⛔ **One clause inside a sound subtraction was wrong, which is exactly the shape that survives
+review: the conclusion is right, so nobody interrogates the term.**
+
+**Standing practice, adopted:** any statement about this channel **prints WHICH FIELD it counted and that
+field's distribution** -- never a bare "n non-terminal".
+
+-- `1.0.0_SA_CTO~Z`, correcting a number this analysis published.
