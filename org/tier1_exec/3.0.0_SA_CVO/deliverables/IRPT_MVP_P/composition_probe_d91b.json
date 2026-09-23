@@ -1,0 +1,58 @@
+{
+  "backend": "d91b2bdd10fe05a0e241ccbfb8f6d7f1b35a872c",
+  "portal": "7411ada3356d1e0c8a69d6eb7b0b41f91396d336",
+  "snapshot": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-composition-d91b-mubva08e",
+  "assertions": {
+    "composition_cases_d91b.py": "af222bc20ffab0796d86177bc3a183eae6db8275044f58671c8a57f3612a13f5",
+    "composition_cases_d91b.test.ts": "842b4147781b62329b96c24189c4a03ee8da45fdc0c0ab15e4dbd3ffa60a6c08"
+  },
+  "runs": [
+    {
+      "label": "supplied_backend",
+      "exit_code": 0,
+      "stdout": ".....................                                                    [100%]\n21 passed in 1.42s\n",
+      "stderr": ""
+    },
+    {
+      "label": "independent_backend",
+      "exit_code": 0,
+      "stdout": "...............................................                          [100%]\n47 passed in 2.67s\n",
+      "stderr": ""
+    },
+    {
+      "label": "supplied_portal",
+      "exit_code": 0,
+      "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+      "stderr": "\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\submission-request.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m exact recipient survives closed prospect and custody parsing without rewrite\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid text and malformed Unicode refuse, code points count accurately\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m old missing label, source injection, wrong input basis and comparison mismatch refuse\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual client refuses before transport and sends exact valid recipient\u001b[0m \u001b[0m\u001b[2m[\u001b[1m16.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m shared adapter preserves explicit recipient and typed descriptor maps survive generation\u001b[0m\n\n\u001b[0m\u001b[32m 5 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 37 expect() calls\nRan 5 tests across 1 file. \u001b[0m\u001b[2m[\u001b[1m426.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+    },
+    {
+      "label": "independent_portal",
+      "exit_code": 0,
+      "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+      "stderr": "\u001b[0m\nreviewer-composition.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m fresh actual retained prospect fixture is admitted and deeply detached\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m exact Unicode recipient survives client serialization \"A\"\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m exact Unicode recipient survives client serialization \"\u00e9\"\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m exact Unicode recipient survives client serialization \"e\u0301\"\u001b[0m \u001b[0m\u001b[2m[\u001b[1m16.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m exact Unicode recipient survives client serialization \"\ud83c\udf0d\ud83c\udf0d\ud83c\udf0d\ud83c\udf0d\ud83c\udf0d\ud83c\udf0d\ud83c\udf0d\ud83c\udf0d\ud83c\udf0d\ud83c\udf0d\ud83c\udf0d\ud83c\udf0d\ud83c\udf0d\ud83c\udf0d\ud83c\udf0d\ud83c\udf0d\ud83c\udf0d\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m exact Unicode recipient survives client serialization \"  <>&\\\" recipient  \"\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 0\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 1\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 2\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 3\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 4\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 5\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 6\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 7\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 8\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 9\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 10\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 11\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 12\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 13\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 14\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid boundary refuses before transport 15\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m missing required recipient refuses; title cannot substitute\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m valid custody keeps title recipient and selected identities separate\u001b[0m\n\n\u001b[0m\u001b[32m 24 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 43 expect() calls\nRan 24 tests across 1 file. \u001b[0m\u001b[2m[\u001b[1m317.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+    },
+    {
+      "label": "generator_reproduction",
+      "exit_code": 0,
+      "stdout": "{\"documents\":21,\"responses\":16,\"routes\":16}\n",
+      "stderr": ""
+    },
+    {
+      "label": "portal_app_typescript",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "capture_sha256": "1b6706f66ddc42f6c34d4fc7b041ff6906283984cb90e7693d1f2a2a1ac38d5d",
+  "capture_equals_committed_example": true,
+  "generated_wire_differences": [],
+  "source_sha256": {
+    "docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json": "51c8cc8c280ae22eb39f8cc747117f30c1a984f3501b57c32859050ed4c10d90",
+    "docs/contracts/investor-reporting/v1/RequestComposition.schema.json": "1f251b5eb1654d1a8c0c744e6bee2240478f79db85d7c360648766df74406f82",
+    "infra/aws/lambda/investor-reporting/_contracts/test_request_composition.py": "248cc5bed107e50a76587607ddf78ef27f4b11b3923d24d96f607d735b037461",
+    "infra/aws/lambda/investor-reporting/reports/request_composition.py": "290f4fb9530b8c3e8cdf1fc161d898b26b5d18389e2506f5c9740d795019a69f",
+    "src/pages/InvestorReporting/contracts/submission-request.ts": "f4c25907f8d51f7044680ff6fefe8bf13febb52183a72c2253d3ea05f54cbb73"
+  },
+  "limits": "Local actual repository with synthetic source descriptors, storage/time/auth doubles and modeled client transport. No maintained authority, actual worker acceptance/UI, deployed package, live provider, vendor text limit, rendering or full-product proof."
+}
