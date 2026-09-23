@@ -3,6 +3,16 @@
 Status: LOCAL DRAFT FOR M/Y CONTRACT REVIEW. This document adds no runtime,
 schema fields, storage authority, producer acceptance or deployment permission.
 
+Paired review incorporated: Y `b799b5a6fc`,
+`IRPT_MVP_Y/ACCEPTED_READER_REVIEW_20260923.md`; M
+`44e3a52fa3353ea94b3a473547efef77847e0d52`,
+`IRPT_MVP_M/ACCEPTED_READER_FIELD_REVIEW_20260923.md`. Both preserve the methods
+below. P proposes Y's resolved economic fields plus M's native quantity evidence,
+and the stricter 1100-character transport limit. These two choices still need
+consumer/producer agreement; source facts and a trusted binding are not supplied
+by a field definition. This revision supersedes the field placeholders in
+`7e9baf3064`.
+
 ## Measured boundary
 
 P baseline `f0075287c426cbe9eea04f0165bc179147918ce1` has mandatory factory
@@ -66,12 +76,19 @@ Exactly these top-level fields are proposed:
 
 All original rows must be represented, including relationship duplicates, zero
 and negative values. No target/model/allocation positions replace actual rows.
-`original_rows` references the same scoped `source_receipt_id` and zero-based
-per-object `row_index` as positions. It carries canonical account ID, source
-security identity, exact signed value/quantity and authoritative economic facts
-needed by Y. Missing cash/side/security/unit facts remain unavailable; positive
-market value alone does not prove eligibility. Exact economic-fact field names
-are still required from M/Y before closing this internal schema.
+Each original row has exactly `account_id`, `position_id`, `source_security_id`,
+`market_value`, `quantity`, `source_row`, `economic_facts`, `security_resolution`.
+`source_row` is singular `{source_receipt_id, row_index, relationship_id}`;
+positions retain plural `source_rows`. Both original and unique positions carry
+the resolved economics/security below; duplicates must agree across all consumed
+economic and identity fields. Row-level evidence references can differ because
+the physical origins differ.
+
+Every original receipt/row pair occurs once in `original_rows`, belongs to exactly
+one position, and the union of positions' provenance equals the original set.
+Reuse from an original into its position or economic evidence is expected and
+is not a duplicate-input error. No orphan, omitted, extra or multiply assigned
+original is allowed. This corrects the earlier blanket duplicate-reference rule.
 
 ## Immutable binding requirements
 
@@ -86,7 +103,9 @@ are still required from M/Y before closing this internal schema.
 3. P issues opaque scoped `source_receipt_id` values in that binding; they are
    immutable references, not array indexes. Changing receipt order, bytes,
    version or account mapping changes the binding revision. Multi-file row zero
-   is distinct per receipt. Repeated identical receipt/row references refuse.
+   is distinct per receipt. Duplicate original entries or assignment of one
+   original to multiple positions refuse; legitimate cross-structure references
+   to the same original remain required.
 4. Read the exact pinned bytes and verify hashes/versions before parsing. Preserve
    per-object physical row ordinal before filtering, sorting or concatenation.
    Validate raw-to-canonical mapping and exact requested account coverage using
@@ -98,6 +117,15 @@ are still required from M/Y before closing this internal schema.
 6. Recheck current principal/home/report firm, selection, directory/entitlement
    revisions and exact binding before returning. Revocation or changed owner
    refuses. The factory's later release checks remain necessary.
+
+The binding digest also covers the admitted economic policy/version, exact
+security resolution and raw-to-canonical mapping evidence, numeric column
+interpretation and selected binding semantics. Opaque receipt IDs only resolve
+inside that bound scope and source role. A selected old snapshot never advances
+silently to a later publication. Its current authorization is a separate check.
+Both snapshot and binding revisions, and relevant opaque receipt references,
+must survive normalization/retention. The precise existing source/provenance
+extension for that is still a P/Y schema task; no new artifact family is proposed.
 
 ## Agreed mapping and remaining choices
 
@@ -111,9 +139,80 @@ Positions preserve stable source-grain `position_id`, canonical `account_id`,
 explicitly sourced `units: SHARES`) and `source_rows`. Provenance is scoped
 `source_receipt_id`, integer `row_index >= 0`, nullable `relationship_id`.
 Relationship identifiers must be scoped opaque identifiers if exposed outside
-the private reader. Exact decimal size/scale limits remain an explicit M/Y
-agreement item; values must never be rounded to fit a limit. Decimal/text
-preserves typed Parquet values, not historical pre-Parquet lexical formatting.
+the private reader. The private-account-ID prohibition does not remove the
+instrument identity required by `source_security_id`: use scoped vendor identity
+inside this internal boundary, or a bound opaque instrument reference when raw
+spelling cannot leave the reader. Neither form is a canonical security resolution.
+
+### Resolved facts and private source evidence
+
+P proposes Y's closed `economic_facts` names with one M evidence object:
+
+| Field | Required interpretation |
+| --- | --- |
+| `cash_classification` | `CASH` or `NON_CASH` from admitted source interpretation; a Cash Equivalent flag alone establishes neither literal cash nor a blanket NON_CASH default |
+| `position_side` | `LONG`, `SHORT`, or `NOT_APPLICABLE`; every value requires a bound sign rule, including absence of a vendor side column; never apply an already supplied sign twice |
+| `value_basis` | literal `SIGNED_NATIVE_USD`; no reconstructed share-price value or weight notional |
+| `accrual_treatment` | `INCLUDED`, `EXCLUDED`, or `NOT_APPLICABLE`, from an exact reviewed source equation; COT native MV = UMV + Accrual, with no second addition |
+| `policy_revision` | exact admitted source/firm interpretation revision bound to this input, not a new label declared by the reader |
+| `source_rows` | nonempty scoped row references supporting the source facts, with receipt roles checked; policy interpretation separately traced by revision |
+| `source_quantity` | M object `{value, source_field, source_units, unit_rule_revision, evidence}`; exact native signed decimal text or null, source field/units/rule nullable when unavailable, scoped evidence references |
+
+The top-level `quantity` is SHARES only when the exact asset/source unit rule
+establishes it. Preserve supplied native quantity in `source_quantity` even when
+that rule is unavailable; null SHARES must not erase a negative native quantity.
+Missing mandatory unit/sign interpretation refuses accepted input. Absent
+quantity may be permitted only by an explicit admitted native-USD policy; no
+zero is fabricated. Y must evaluate native quantity sign before aggregation,
+check correspondence with resolved quantity where supplied, and reject negative
+quantity or SHORT for the present recipe even with positive MV. Zero quantity
+does not by itself establish cash or zero value.
+
+Keep M's raw cash flag, side spelling, source field, UMV/accrual observations and
+their evidence in the private binding's source interpretation records. They
+support these resolved fields rather than introducing a second competing
+`cash`/`side`/`security`/`accrual` shape on the accepted boundary. Unknown required
+resolved facts refuse the whole input; do not turn null into a default enum.
+
+`security_resolution` has exactly `identity_kind: CANONICAL_SECURITY`,
+`security_key`, `canonical_identifier`, `canonical_identifier_namespace`
+(`TICKER`, `CUSIP`, `CASH`), `resolution_revision`,
+`resolution_source_receipt_id`. This receipt must identify actual admitted
+immutable mapping evidence. No fabricated ticker crosswalk. CASH requires
+`$:CASH` and sourced CASH classification; noncash cannot use that identifier.
+Conflicting canonical key/identifier assignments or unavailable evidence refuse.
+
+### Numeric transport versus recipe eligibility
+
+ASCII string-only grammar, matched as a whole string:
+
+```text
+[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?
+```
+
+P counterproposal selects M's stricter source-evidence cap: 1100 characters,
+1000 Decimal coefficient digits, absolute Decimal exponent <= 1000, finite.
+Y proposed 2048 characters; this cap is an explicit pending agreement, not an
+assertion of measured vendor precision. Parse directly as Decimal. No whitespace,
+JSON numbers/bools, separators, nonfinite values, rounding, quantization, float
+conversion or scale stripping to fit. Preserve signed zero/trailing scale.
+M's stricter float-finiteness guard remains unchanged and is not overridden.
+Use exact arithmetic with explicit sufficient precision for exponent alignment
+and the actual bounded row count; detect inexact/rounded operations and refuse.
+Neither caller-default Decimal context nor an unbounded row population is valid.
+
+Pin each consumed column's Arrow type, precision/scale when declared, schema
+receipt and numeric interpretation revision privately in the immutable binding.
+Binary-float shortest-string conversion is not exact vendor-decimal recovery;
+absent an admitted conversion/precision rule, refuse that numeric source. String
+sources require an admitted grammar; no invented p/s or monetary-unit inference.
+
+Y's existing dollar analysis domain stays strictly positive, <= 28 coefficient
+digits and absolute exponent <= 18, evaluated on every original before collapse.
+The normalized output/upload bounds stay 128 characters, 80 digits and absolute
+exponent <= 80. Source acceptance cannot widen either consumer domain. Aggregated
+values must satisfy those bounds exactly. Independent account tolerance of 0.01
+does not authorize approximate duplicate equality, row rounding or changed sums.
 
 Per-account census fields: `account_id`, `raw_row_count`,
 `unique_position_count` (integer or null on invalid collapse),
@@ -158,11 +257,30 @@ capability is currently unavailable, so actual empty inputs continue to refuse.
 | No rows plus both exact empty proofs | All counts 0 | Valid custody in principle; current empty-portfolio recipe still refuses |
 | Account missing from both frames | Expected census not covered | Refuse |
 | Unknown currency | No currency substitution | Refuse |
-| Different objects, each physical row 0 | Distinct immutable receipts | Keep both distinct; repeated same receipt/row refuses |
+| Different objects, each physical row 0 | Distinct immutable receipts | Keep both distinct; duplicate original entry refuses |
+| Original receipt reused in its position | Expected correspondence | Allow; reject assignment to a second position |
+| Negative native quantity, positive MV | Preserve sign even without SHARES | Current recipe refuses; missing unit policy also blocks accepted input |
+| Positive positions omit a negative original | Broken complete correspondence | Refuse |
+| Cash label conflicts with canonical security | Inconsistent admitted facts | Refuse |
+| 29-digit dollar or exponent 19 | May fit source transport | Current Y analysis refuses without normalization to fit |
+| Changed policy/mapping/binding revision | Exact evidence mismatch | Refuse |
 
-Before implementation: M/Y confirm remaining economic-fact names and decimal
-bounds; P identifies concrete trusted binding writer/store and read surface,
-then pins the complete closed schema and unchanged-factory adapter contract.
-No accepted reader is claimed merely by defining callbacks. CTO remains direct
+## Concrete source blockers, with owners
+
+| Blocker | Current evidence and owner |
+| --- | --- |
+| Trusted accepted binding writer/store/read surface | P: absent; current mutable/date publication cannot stand in for an immutable snapshot lookup |
+| Economic field pairing and 1100 versus 2048 text cap | P coordinates M/Y against these exact definitions; still conditional |
+| COT source contract | M source review: B01 has no currency/side declaration, Cash Equivalent is insufficient, Units is not universal SHARES; adding Currency would require a source-map amendment, not a helper default |
+| INF source contract | M source review: optional facts, missing stable mandatory instrument grain/currency/side; builder zero accrued income is not vendor economic proof |
+| 49F source contract | M source review: l_s exists but signed-value rule, security-join uniqueness, cash non-overlap, currency/units and pending accrual ruling remain unresolved |
+| Current numeric schema and security mapping receipts | Not supplied by either review; P cannot invent a receipt or conversion policy; M identifies source capability, CTO adjudicates needed source interpretation |
+| Empty-account census | No admitted complete-zero receipt capability; actual empty inputs refuse |
+| Retained revision/provenance shape | P/Y must pin exact schema-compatible normalized source extension |
+
+These are source-located findings from the exact M review, not fresh cloud
+measurements. No producer execution or new source-read authority is inferred.
+Next implementable contract needs a concrete trusted binding and actual economic
+source evidence; a closed schema alone cannot supply either. CTO remains direct
 reviewer. No cloud write, production source activation, IAM change, vendor
 request or public field emission follows from this draft.
