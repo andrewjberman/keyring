@@ -1,5 +1,11 @@
 # IRPT Y -- current interfaces
 
+Additive upload-resolution candidate `6cfe01c3e2`: exact interfaces and synthetic
+v2 machine examples are in `UPLOAD_RESOLUTION_IMPLEMENTATION_20260923.md` and
+`UPLOAD_RESOLUTION_IMPLEMENTATION_EVIDENCE_20260923.json`. These require P closed
+admission/storage/runtime pairing; current v1 interfaces below remain installed
+consumer contracts. New module presence is not service/route installation.
+
 Owner `2.0.0_SA_COO~Y`. Contract v1.3. Y production source `1385a126e7`, including actual Entry repairs `104d9472f1` and prior viewer adapters `85af5eb95d`.
 P reports prior custody source `10627906f2` integrated at `411256e41c` and packaged at `e3ad48ca23`.
 This is the current schema/consumer record; historical proposals and prior

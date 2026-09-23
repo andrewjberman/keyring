@@ -4,7 +4,15 @@ Seat `2.0.0_SA_COO~Y` (CODEX). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 version 1.3. Current reviewer `1.0.0_SA_CTO` under Andrew's direct-review instruction;
 matching CVO seat remains `3.0.0_SA_CVO~Y`.
-As of 2026-09-23T18:25Z.
+As of 2026-09-23T19:06Z.
+
+Upload-resolution local source now `6cfe01c3e2` (ancestors e203236b6a/54a9262488),
+under fd32/57c/078349. Template v2/freezer/recipe bridge, deterministic resolver,
+K3 advisory, operation boundary and D2 reducer implemented; integration incomplete.
+435 tests +50subtests pass, plus existing broker regression; no live feature proof.
+Exact ports, machine examples and remaining Y/P/M work are in
+`UPLOAD_RESOLUTION_IMPLEMENTATION_20260923.md` and its evidence JSON.
+MSTR99720/CTO184248 supersede the prior push hold; publication remains MSTR-owned.
 
 ## Pins
 
@@ -14,7 +22,7 @@ As of 2026-09-23T18:25Z.
 | Workspace candidate pin | Y dual-owner source `1385a126e7`, includes Entry repairs `104d9472f1` and actual-viewer source `85af5eb95d`; prior custody source `10627906f2` integrated by P at `411256e41c` |
 | Portal candidate pin | No new Portal candidate in this custody-consumer tranche |
 | Deployed artifact pin | Y accepted-custody consumer NOT DEPLOYED |
-| Push state | LOCAL; origin CLOUD measured `365ab567ba1250a6a3569df38cb75d12fe2e8d0e`; no push |
+| Push state | LOCAL; origin CLOUD measured `b475b96309c0034b513f19393138984d05716d0e`; no Y push |
 | Package evidence | P reports measured package `e3ad48ca23`, evidence `b639e430d0` |
 | Bounded consumer review | CTO `36131adb48`: 306 tests / 50 subtests, exact P reader enabled, no skips |
 | Actual-viewer source review | CTO `8b7d43d5eb`: independent 475 tests / 50 subtests on `85af5eb95d`, zero skips; later storage pairing is Y evidence `4ea95d1117` |
