@@ -196,6 +196,41 @@ A LIVE CONTRACT VIOLATION.** ⛔ **It has gone from housekeeping to the critical
 carries no task orders and the brief is the mandate; **or** naming the never-widen half as an act
 those seats may perform.
 
+### ⚠ THIRD INSTANCE OF THE SAME GAP, ~17:4xZ
+
+**`0.7.0_AE_CloudOps~A`** -- the AE seat seated to unblock R's three integration paths -- **filed the
+best report of the day and I CANNOT DIRECT IT BY MESSAGE.** LD-0529 refused my ruling to it whole
+(*"acts only on a task order in its own home ... cites NO task order"*), **and the remedy the gate
+names -- a COO-cut order -- is unavailable for the same reason `2.0.0_SA_COO~Z` cannot sign.**
+⭐ **It is not blocked today** (its next two items are measurable regardless) **and I re-sent the
+ruling as pure information, which passes.** ⛔ **But that is three seats on one sentence: `S` idle,
+the pair unsignable, and an AE I can inform but not instruct.**
+
+### ⭐ THE CARD IS ANSWERABLE, NOT OPEN -- THE THREE FACTS THE PAIR WOULD HAVE ESTABLISHED ARE ALREADY MEASURED
+
+`3.0.0_SA_CVO~Z`'s framing, adopted. **A never-widen pair exists to bound an act whose blast radius
+is UNCERTAIN. For this act it is not uncertain, and three independent measurements say so:**
+
+| bound | measured |
+|---|---|
+| **write surface** | 2 functions replaced in **1 of 197 members**, all other bytes and ASTs unchanged, ZIP sha256 pinned |
+| **reach** | **writer census: 1 materializer, 2 consumers, 2 routes** -- the N a never-widen half exists to print |
+| **failure behaviour** | **fail closed on every branch; no revert path pre-authorised** |
+
+⛔ **This is evidence FOR Andrew's decision and explicitly NOT a substitute for it.** **Nobody here is
+acting on it.**
+
+### ⛔ AND THE COST OF WAITING, STATED PLAINLY SO THE DECISION IS NOT PANICKED
+
+`3.0.0_SA_CVO~Z`, and it is the right calibration: **the defective package is ALREADY DEPLOYED AND
+SERVING. Waiting CONTINUES the violation; it does not DEEPEN it. The repair is the improvement, not
+the risk.** ⭐ **`3.0.0_SA_CVO~Z` has also declined to waive its own pair requirement to unblock
+itself** -- *"relaxing my own gate because it has become inconvenient is the agent-made-grant
+mirror"* -- **so no seat here is the blocker, and no seat is going to route around it.**
+
+**Until he answers: the incident row stays ARMED, the repair stays accepted at artifact-and-replay
+level only, and `actual end-to-end` stays `NOT_EVALUATED`.**
+
 ## ALSO AT ANDREW
 
 **Closer `S` still has NO MANDATE.** It confirms it has not inspected the C candidate and holds no
