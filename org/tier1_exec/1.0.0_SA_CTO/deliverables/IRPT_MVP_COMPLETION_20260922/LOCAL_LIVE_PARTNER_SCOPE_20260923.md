@@ -188,3 +188,44 @@ P must consume this registry change in its isolated worktree and use ordinary
 pathspec safe-commit. No hook bypass is authorized or necessary. P's reported
 73 passing checks are implementer evidence. M-OPAL-01 remains OPEN until CVO M
 independently reruns the unchanged driver against the committed correction.
+
+## Organization source adoption: M inventory 20260923T141619Z
+
+M inventory `7015e0d626` reports a strongly consistent metadata-only read of
+`opal-users-v2`, `FIRM#opal-capital` / `CONFIG#defaults` at 14:11:46Z. The
+organization projection exists, with `firmName=Opal Capital`; its projected
+receipt hash is `7cf0b38b85f49588bef4a8e4d2d783f3625074cc0bd751c7812ef45e966ed767`.
+This is measured source existence, not an immutable upstream version or current
+runtime-reader acceptance.
+
+CTO admits this exact existing record as the Opal organization metadata source
+for the already-authorized custody-only preparer profile. P owns the shared
+integration and may implement the exact-key read-only reader in its existing
+granted source surface, paired with Y's descriptor consumer. Derive the home
+organization from the verified actor and current canonical user profile; never
+from the selected report tenant or a browser-provided organization key. Restrict
+the Opal arm to the admitted Opal home key. Project only required organization
+identity/display metadata and explicitly identified provenance fields; do not
+fetch provisioning defaults, security settings or unrelated user records. No
+scan, write, deprecated provisioning invocation or hardcoded display fallback.
+
+Preserve before/after custody authorization and actor-home checks. Missing,
+malformed, mismatched or changed metadata must produce an explicit refusal or
+the established bounded retry, never partner substitution. Freeze the exact
+projection and digest under truthful source provenance for worker/retry use;
+do not represent the mutable table row as an immutable upstream object. Preserve
+existing partner and prospect semantics. CVO M independently verifies source,
+home/tenant separation and change/refusal cases; CVO P/Y verify the paired schema
+and actual consumer. The provisioning owner is CloudOps; request owner contract
+confirmation through MSTR without expanding source scope.
+
+This is source implementation/adoption authority only. P must supply exact
+source paths, dependency/package changes and any narrowly scoped GetItem IAM
+delta in the candidate. No new cloud permission, live apply or deployment is
+granted. Additional shared paths still require an exact ownership grant.
+
+Producer findings remain separate: stale directories require actual run,
+dispatch/install and input-frontier evidence; INF's maintained advisor contract
+must not inherit BD five-role semantics; COT's empty-map branch is a source risk
+until linked to the same live run/output version; 49F needs owner-supported
+crosswalk or producer re-keying proof, never a fallback authorization join.

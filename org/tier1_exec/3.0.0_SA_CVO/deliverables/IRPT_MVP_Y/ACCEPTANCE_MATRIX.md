@@ -560,3 +560,13 @@ dependency loss refuse before composition writes. Extra private fields excluded.
 See CANONICAL_CONSUMER_REVIEW_cdbd.md; M a8f8a15e6c remains peer-attributed only.
 Synthetic SDK/storage/ACTIVE policy/dispatch/held lease, no installed factory/IAM/
 live policy/custody/effecting/vendor/render/runtime grade. All14NOT_EVALUATED.
+
+## Narrow resumed custody Entry b357 bounded PASS
+
+24 independent controls and 12 supplied tests PASS at exact b357e0ba8f.
+Actual Entry retains actor/home and selected tenant, refuses implicit prospect,
+and keeps warm Opal eligibility request-local. Recording service does not validate
+accepted accounts/snapshot; observed unaccepted values reaching that seam are not
+an authorization PASS. See CUSTODY_ENTRY_REVIEW_b357.md and preserved initial
+reviewer-import failure receipt. Peer M roster closure and P parser failure remain
+separately attributed. All14 integrated criteria remain NOT_EVALUATED.
