@@ -6,6 +6,16 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 ## Completed preparation
 
+- Owned Entry factory `8e8498c9c08a37fb162656496d7bc8d98f00cfb6`:28 supplied and
+  42 independent controls PASS at actual event/Entry/retained-reader boundary.
+  Eleven phases, READY verification then UNAVAILABLE without invented dates,
+  data projection, actual claim/full-owner changes and expiry/refusal controls
+  pass. Initial history assertion changed separate fixture claims after service
+  return; preserved as a boundary observation, not a principal-change defect.
+  Raw closed response schemas reject outer unprojected_grant; raw status schema
+  requires server-only CID absent from public data. P public schema/parser and
+  runtime assembly remain due; no contract/HTTP/date-extension/integrated grade.
+  See `OWNED_ENTRY_REVIEW_8e8498c9c0.md` and both retained evidence JSONs.
 - Canonical startup GREEN 9/9; exact lane identity and nested inbox measured.
 - Six relevant role contracts and six product briefs covered; actual submit and
   composer source read. Historical vendor/cloud evidence remains attributed.

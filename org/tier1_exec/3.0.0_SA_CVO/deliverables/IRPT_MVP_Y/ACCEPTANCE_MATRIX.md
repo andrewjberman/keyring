@@ -403,6 +403,13 @@ criteria remain NOT_EVALUATED.
 
 ## Compiler Tools
 
+Owned Entry factory `8e8498c9c0`:28 supplied/42 independent controls PASS for
+actual events, projection, eleven durable phases, current claims/full-owner,
+READY receipt and retention checks. See `OWNED_ENTRY_REVIEW_8e8498c9c0.md` for
+initial assertion correction and retained history post-service limitation.
+Raw outer schema mismatches and P public contract/assembly remain due. This is
+not date-extension or installed runtime proof. All14 criteria NOT_EVALUATED.
+
 | Tool | Result | Limitation |
 |---|---|---|
 | comp-which, exact startup-contract query | Candidate list returned; near tie with irrelevant candidates; suggested comp-find | Did not identify a specific contract reader |
