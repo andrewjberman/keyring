@@ -1,38 +1,62 @@
 # Investor Reporting - CTO control sheet
 
-As of 2026-09-23 21:36 UTC. CTO owns direct review and adjudication. All three products remain INCOMPLETE. Current CONTRACT and COO mandates govern; this is current state, not a journal.
+Current 2026-09-23 22:14 UTC. All three products INCOMPLETE. CTO reviews directly;
+no independent CVO queue. Contract and exact path grants govern implementation.
 
-| Product / owner | Current evidence | Next executable result / blocker |
+| Product / owner | Measured current evidence | Next executable result |
 |---|---|---|
-| Reporting / COO~P | Backend214ddd6b3f closes externalId parity (CTO13 focused PASS). Portal a0fa8137 bounded wire PASS. P reports Andrew-directed live positive account period/series; prior empty response account-specific. Andrew confirmed COT report amounts USD; retained handler composition remains open. | Candidate9e1bc3a751 composition5focusedPASS0.58s; P-SOURCE-01 source fidelity CLOSED5765ea21a5 (6focusedPASS0.74s). P exact storage plan f4a1dd60a3/c7639c4c applied; CTO independently verified live bucket/versioning/KMS/BPA4/TLS controls. P finishes zero-diff/ledger closeout. Consumer package/IAM/Linux closure and canonical policy activation remain open. P-PACK-01 CLOSED5cdb889b5e: exact59member v4b9333947 isolated Python-I destination probe PASS. Finish canonical retained report composition. COT positive account identity and denomination are established; retain source/attestation evidence, no blind retry. SmartX provider period-to-date account response now captured at ebf1a0f6b5; normalize only supported semantics. |
-| Holdings / COO~M | Native-position sourceb411e6f31e bounded PASS; actual producer helper gate cleared, cutoff/version and dispatch checked. Portal e5604c03 bounded navigation PASS. INF82 inactive historical accounts preserved. CRO10f3cf6f9f now measures six exact value/unit matches on three versioned next-key files; valuation/request dates separate. USD/date bridge limited to those exact observations. | CTO real S3 replayd8173c1b9c proves shared P-positive COT57positions/USD19705844.84 at7exact versions; M5e29e43c2c published native revisionfe328763. CTO independently verified all4output versions/hashes, accepted index chain, Gold/JSON equality,1account/57positions/USD19705844.84. P reader runtime plan remains required; M owns authenticated tab proof. Old Sept21 reader package is not completion. Mapping seam CLOSED9b3fb2a paired5765 on CTO actualS3 callback; final package must include corrected mapper. COTUSD confirmed; CROf307d establishes all-four-blank dimension rows have no position at as-of. M excludes only this shape with preserved counts and independent selected reconciliation, binds exact INF receipts and builds49Fcustody. Tax owner T is wound down; M has exact membership module/test grant98209e201b, without a fourth COO or restarting the full Tax round. All firms remain required. |
-| Analysis / COO~Y | Connected resident4ed7edaaa8 bounded source PASS:3 focused assembly/recovery checks2.05s; prior57b228 session/deadline evidence reused. Same-firm publication only so far; auto session recovery and live install remain open. | Y owns complete resident host/session/queue/worker/PDF/certifier assembly. P integrates exact schema/family/factory/routes/package. First Dollars12.03 Overview -> native report/reload with real login/backend/provider. |
+| Analysis / COO~Y | bfe6469b1e secret-read failure refusal accepted3d9f451; 2874e37647 actual-actor/cross-firm publication accepted2dd385ed59 after12focused checks. Retained PDF recovery and original input ownership preserved. | P integrates reviewed exact files into actual authority/repositories and sole resident host. Y exercises real-login12.03 Overview from upload/queue through vendorPDF/certification/immutable report/screen/reload, then all remaining firm/input/unit/variant/export journeys. |
+| Holdings / COO~M | Native COT fe328 publication independently verified9709e10c59:1account,57positions,USD19705844.84, four exact output versions, Gold/JSON equality. Uploaded reader bcb3fb71 cold-read actual publication with schema/reconcile/date checks. | P has exact ca2a9077 reader plan GO58259f0dc1, guarded by immutable artifact version/hash before and after apply. M owns current-selection API/browser/drill/reload evidence after deployed receipt. Other49F/INF and full categories remain required. |
+| Reporting / COO~P | Original-source fidelity and mapper repaired5765/9b3; v4package b933 naming closure3d9f451. Canonical private/versioned/encrypted bucket created and independently verified. CTO Linux replay now proves exact native layer121b8407, function b933 and commonlayer5:1supported period/15points, schema PASS; combined239627841bytes. | Finish actual runtime factory/handler, canonical package, effective IAM and accepted storage-policy enforcement, then authenticated COT selected report with immutable persistence/reopen/export. All providers/sets/benchmarks remain in scope. Offline replay is not a new vendor calculation. |
 
-## Current operational dependency
+## Ownership and immediate dependencies
 
-P remains on its oversized thread while Andrew works at that terminal; MSTR says migration waits for his word. P continues manual delivery handling and is producing commits. Do not label it unresponsive.
+P is sole shared auth/header/schema/routes/IAM/build/storage/export writer, with
+exact reviewed Y/M integration grants. Y and M retain semantic implementation and
+full-tab exercise responsibility. P performs bounded ready integration batches
+while advancing Reporting. No broad branch grant or second queue/session consumer.
 
-Y recovery99771 independently rechecked21:42Z: fresh thread01a0d037-6dbd-7c90-8433-f2b426d941dd, endpoint58180, heartbeat33548, bridge33676, detector34768; seat oracle9/9GREEN, stderr0bytes. MSTR99772 relayed Y agent-side receipt at21:43:15Z: handoff/current files and six unread messages read; narrow secret-read/bootstrap repair resumed. Recovery CLOSED. Worktree4ebe6948d9 and drive4876 preserved. This closes observed oversized-frame transport failure, not the outstanding secret-read/capture repair or live Analysis journey. No duplicate runtime helpers/writers.
+M Tax dependency: d3a8c3e7e3 S3DispositionStore source acceptedf0ce1b9198 after7focused
+persistence cases. Runner preparation found actual gateway flat-row versus Silver
+nested-business mismatch. CTO57030ccdfa grants only Silver module and its test,
+adding to original98209 membership pair. M repairs that seam and builds complete
+canonical snapshot/Silver/history runner. Original Bronze stays unchanged, full
+census includes all data rows (used_rows-1), first-observed dates cannot be backdated.
+Runtime capability/permissions and exact execution still require concrete review;
+no research-envelope conversion, full Tax restart or fourth COO.
 
-## Shared writer and integration order
+## Decisions retained
 
-P remains sole shared auth/header/schema/routes/IAM/build/storage/export writer. Current bounded batch: exact accepted Y fe0ec628+ebf8+84c6+57b228+4ed7ed upload/resident assembly. CONTRACT and .owned-paths enumerate temporary P integration files. Y retains semantic ownership. Consume M e560 two-file UI delta and any ready first-account source separately; no broad branch grant. P continues Reporting composition between ready batches. Each lane owns exercising its complete tab; shared dependency is named with exact file/interface/example, not outsourced accountability.
+- Opal has every function across all firms, clients and accounts; Global defaults.
+  Firm viewers remain limited by current server-verified grants.
+- Holdings categories: Models / SMAs / Client(plug). Actual signed custody values,
+  original dates, full census and reconciliation; no missing-as-zero or inferred USD.
+- Andrew confirms all COT report amounts USD (6f45e8fbc9). Other firm currency remains
+  evidence-bound. COT all-four-null no-position rows may be excluded with counts;
+  partial-null/conflicting source rows refuse. Exact INF six observations only;
+  no blanket one-day date adjustment.
+- Andrew Tax B d70decd6b2:49F Traded=YES under SMAs/ALT Strategies/Tax, canonical
+  dated membership and b00 net_mv_plus_cash. Workbook AUM/leverage do not set custody
+  values; missing accounts remain visible/unavailable. First observation is not
+  retrospective historical membership.
+- Y dedicated always-on host i-0167fd745ad906a66 approved6fc3f5f785. One session owner,
+  no inbound/gateway cohosting; actual installer/cutover/readback still needed.
+- SmartX account PTD and allocation monthly results differ. No synthetic custom
+  windows or set returns from sleeve averaging; unknown method/fees stay unknown.
+- MSTR alone pushes shared branches and handles seat recovery. P thread remains
+  active via manual inbox while Andrew uses terminal; do not label unresponsive.
+  Y fresh-thread recovery99771/99772 is closed on actual agent-side receipt.
+- Recorder0b8784 accepted; preserve prior source-map/audit forensic residue. Broader
+  tooling, B8 auth cache and unrelated naming work stay parked off the live thread.
 
-CloudOps recorder0b8784cea8 now passes CTO's two discriminating cases. P may integrate exact recorder repair under IRPT_MVP.TO-RECORDER-SCOPE-O. RS3 only after remeasuring exact paths/counts and both preserved hashes; prefer outside-repo quarantine of untracked invalid CHANGELOG, preserve correct stamp/audit. No live recorder replay. S118 interpreter and broader tooling remain parked.
+## Review and completion rules
 
-## Decisions carried forward
+Each owner keeps concise STATUS with exact pins, current files, first failing hop,
+next proof, dependency owner and limits. Messages only interface/blocker/handoff;
+no ACK chain. Use fast affected checks and reuse pinned evidence; no test quota.
+All current review artifacts are in DIRECT_REVIEW_2020_20260923. Source acceptance
+and infrastructure deployment do not prove an authenticated user journey.
 
-- Opal has all functions across firms, clients and accounts; firm users remain restricted to current server-verified grants. Global is the Opal default.
-- Holdings public categories are Models / SMAs / Client(plug). Client absorbs known unattributed custody; missing values/currency never become fabricated zero/USD. Canonical taxonomy, SmartX49F plus Andrew d70decd6b2 canonical Tax SMA workbook exception, and dated COT Rebalancer membership; no false inferred identities.
-- Andrew6fc3f5f785 approves always-on dedicated Y host i-0167fd745ad906a66 and standing host workflows including D1. One session owner, no inbound, no gateway cohosting; replace old probe at controlled cutover. Exact installer/apply/readback still required.
-- Listing immutable directory reuse with fresh ownership/policy; token refresh preserves same stable identity context. No cached grants or shared page cache. B8 authorizer cache needs exact key/revocation design; not a blocker to generation.
-- SmartX capture authorized by Andrew at CRO, ebf1a0f6b5: 'All approved, go now'. Selected-set unavailable accepted. Provider account period-to-date and allocation monthly shapes are distinct; no synthetic custom-window account returns from sleeve averaging/summing. Method/fee basis unknown. See RULINGS current amendment.
-- INF14 multi-account Eclipse memberships were never ingested by the simple vendor shape; not lost by Opal flattening. Not prerequisite to first single-account/Client journey.
-
-## Review queue and completion
-
-New selected-COT source7033e23490: three affected checks PASS1.06s plus two asymmetric census refusal probes. See DIRECT_REVIEW_2020_20260923/COT_SELECTED_CUSTODY_REVIEW.md. M mapping and P retained-report code are actively changing; no moving-byte acceptance. Latest CTO source reviews: DIRECT_REVIEW_2020_20260923/RESIDENT_ASSEMBLY_REVIEW.md and M_P_SOURCE_REVIEW.md. P identity finding closed214ddd; Y connected resident accepted4ed7ed; M native adapter acceptedb411. These are bounded source results, not product/live completion. CRO10f3cf6f9f reproduces six same-key negatives and ties six value/unit pairs using source06-11->valuation06-10,06-19->06-18,09-10->09-09. M consumes only those measured versioned observations, no global date shift or tenant-wide USD inference. M continues49F custody and Andrew d70decd6b2 Tax classification. M907d measured canonical intake empty, old production history store stub and research snapshot schema mismatch; M prepares exact existing-module intake recipe, MSTR99766 confirms historical owner T is wound down. Existing M prepares narrow dependency paths/recipe for CTO ownership adjudication; no entire Tax backlog or new seat transfer. No parallel Tax publisher. Andrew directly confirmed all COT report amounts USD; consume ANDREW_COT_USD_20260923.md. COT currency research closed; null valuation/census/basis checks remain. P continues actual retained report composition and exact ready integration batch. Y removes same-firm publication restriction and finishes session-owner recovery/host proof. Capture secret-read finding CLOSED at bfe6469b1e: CTO10focused tests PASS2.55s; no capture/intent on failed reads, explicit missing positive preserved. Exact3file P integration is covered by existing grants; installed host and cross-firm live publication still required. Previously accepted4ed7 remains accepted. CRO SmartXc12fe retained semantics stay in force: decimal PTD, unknown method/fees, no fabricated provider-as-of or custom-window sleeve aggregation.
-
-Each owner publishes concise STATUS: pins, active files, first failing hop, next proof, dependency and limits. Notifications only interface/blocker/review handoff; no ACK chain. Simple fast changed-behavior checks after edits, reuse pinned evidence; broad tests only at meaningful integration/release or named risk. Build the real journey, no test quota.
-
-Done means real backend/data/login, correct selected economics/authority, retained immutable artifact, reopen/recovery and required export, across all named firms/units/variants. First live journey is a milestone, not product completion. CTO grades directly; no independent CVO queue.
+Done requires real backend/data/login, correct selected economics and authority,
+retained immutable output, reopen/recovery and required export across every named
+firm/unit/variant. A first live account is a milestone, never substituted for scope.

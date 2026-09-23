@@ -553,3 +553,8 @@ This adds only the necessary Silver adapter/census and tests to the existing
 bounded one-shot runner preparation. Do not change Gateway, manufacture a new
 Bronze envelope, backdate observation, schedule the full pipeline or perform a
 vendor/cloud write. Return the pinned repair and exact runner/runtime plan.
+
+
+## IRPT-PERFORMANCE-LINUX-20260923
+
+CTO independently reran exact b933 function /121b8407 native layer /common5 in Lambda Python3.12 Linux with networking disabled: mapping and retained response calculator/schema PASS,1period15points. Combined uncompressed239627841bytes. PERFORMANCE_LINUX_CTO_REVIEW records hashes and limits. Native compatibility closes only for these bytes; deployed factory/role/storage/browser remain open. CONTROL refreshed to measured current state.
