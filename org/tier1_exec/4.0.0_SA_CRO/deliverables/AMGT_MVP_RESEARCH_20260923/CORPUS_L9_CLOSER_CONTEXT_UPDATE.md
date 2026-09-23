@@ -37,6 +37,10 @@ V2 records **53 acceptance entries across ten instances: 45 mechanical PASS and 
 
 This is a discrepancy in the adjudication's task-status prose, not evidence against its eight judgments. The new L9 does not itself prove every c-10 acceptance boundary; nor does a complete task tag establish independent acceptance. Record c-11's remaining work and any c-10 review requirement separately. Route the status correction to the record owner rather than editing the adjudication or inventing a new grade.
 
+**CTO confirmation, message 24778 at 15:25:14 UTC:** the owner independently confirms exactly one anchored tag per explicit order path at the adjudication pin and HEAD: c-10 complete, c-11 pending. **Only c-11 gates the slug; no additional c-10 judgment is owed. All eight judgment PASSes stand.** CTO reports c-11 unspawned, with the existing named implementer `0.9.0_WK_AMGT_CORPUS~1`; reconcile that assignment before any closer takes its implementation, without creating a duplicate owner. This confirmation resolves the review-status uncertainty above; it does not complete c-11 or close the round.
+
+**Instrument rule for closers:** print exact input paths, command success, match count and the actual status/schema field before interpreting the value. CTO's first attempted read matched both an order and its proof file, then produced a blank from a failed `git show`; that blank was not a status. An empty result is only evidence of absence after the instrument successfully read the intended, counted population. For a task's record face, require one explicit order path and disclose all anchored tag matches before selecting its final tag. This complements version/denominator discipline; it does not replace it.
+
 ## Evidence boundary
 
 `evidence/CORPUS_L9_UPDATE_SOURCES.json` binds the two adjudication blobs and exact task-status reads to their hashes and vintage. The original research inventories remain unchanged. No source library, served identity, cloud data, vendor account or application implementation was changed in this update.

@@ -48,5 +48,14 @@
     "sha256": "ba05667c6e6dd54691f75986810ad39312ce0bdfd179bf2bcd6ec4247217541b"
   },
   "evidence_level": "pinned adjudications and exact status tags read; no data exercise repeated",
-  "discrepancy": "v2 says both c-10 and c-11 pending; exact tags at the same pin and working tree say c-10 complete and c-11 pending"
+  "discrepancy": "v2 says both c-10 and c-11 pending; exact tags at the same pin and working tree say c-10 complete and c-11 pending",
+  "owner_confirmation": {
+    "message_id": 24778,
+    "message_time": "2026-09-23T15:25:14Z",
+    "sender": "1.0.0_SA_CTO~Z",
+    "archived_path": "org/mcp/inbox/4.0.0_SA_CRO/~Z/read/20260923T152514Z_1.0.0_SA_CTO_Z__CONFIRMED_ON_A_THIRD_INSTRUMENT__4.0.0_.md",
+    "sha256": "98f82a576f07ff0315df22b6be667f896cceca6138fbdf22ffba275d4dc1bfba",
+    "ruling": "Only c-11 gates slug; no further c-10 judgment; eight judgments remain PASS",
+    "scope": "source-attributed owner confirmation"
+  }
 }
