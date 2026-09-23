@@ -52,3 +52,10 @@ duplicate kind/scope/date/revision tuple. P owns shared schemas/adapter preserva
 M owns source integration and holdings display. The new helper is intentionally
 not connected to the old overlay-derived custody root. No source migration,
 live write, policy activation, publication or full M1/M3/M7 PASS is asserted.
+
+CVO review `95d2117e97` independently reproduced the complete retained-source
+census and identities above, and found M-FACT-01: converting a numeric receipt
+revision to text for regex checking admitted it, then emitted a number. The remedy
+requires an actual string before checking lowercase 64-hex form. Its explicit
+numeric-hash regression brings focused controls to 27 passes. Independent closure
+is owed; this does not repair the original custody-root implementation.
