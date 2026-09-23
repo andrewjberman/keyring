@@ -17,3 +17,5 @@ P1 exact authenticated provider requests/crosswalks/selected set/dates; P2 provi
 Publish current STATUS/INTERFACES and one linked product trace in IRPT_MVP_P. Return source/Portal pins, actual package/member/import evidence, deployed digest where applied, first failing hop and next proof. Existing operational authority applies; prepare before escalating. No ACK-only messages or another canonical round.
 
 Andrew iteration instruction: build first; quick targeted checks for changed behavior/interface, reuse prior evidence. No routine full suite after each edit or duplicate broad reviewer run. Batch changes into the next executable tab journey; broader checks only at an assembled release boundary or for a named failure/risk. CONTRACT iteration instruction governs.
+
+Andrew-direct currency confirmation ANDREW_COT_USD_20260923.md closes COT denomination. Bind USD to the exact COT server mapping with attestation provenance, preserving raw replies; proceed with retained Reporting composition and live scoped screen. No additional currency research/call. Coordinate one shared currency-authority representation with M; no fabricated provider field.
