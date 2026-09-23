@@ -4,6 +4,8 @@
 
 ## End-to-end assessment
 
+**Execution-binding update:** [first L9 and its qualifiers](CORPUS_L9_CLOSER_CONTEXT_UPDATE.md): do not execute the America Movil `AXMB`/`AMXB` request into a served resolution while CVO v1 rules it UNRESOLVED. c-5's request-quality PASS does not authorize induction. Carry 23 evidenced candidates of 60 with one selected, PDF coverage 52 of 184, and eight sector types over 49 labelled reports with 72 other exclusions. The eight judgments are now graded; this is not full round closure.
+
 | Connector | Fresh evidence | Completion requirement |
 |---|---|---|
 | Local library -> folder/file census | On OPAL_BLOOMBERG: 93 folders, 351 files, 305,749,472 bytes; 184 PDF, 78 XLSX, 71 DOCX, 17 PNG, one HTML. | Resolve the source root per device, preserve it read-only, report a current denominator and exclusions. |

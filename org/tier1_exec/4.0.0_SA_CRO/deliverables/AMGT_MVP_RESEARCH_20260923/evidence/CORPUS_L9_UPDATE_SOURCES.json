@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-23T15:22:40.076400+00:00",
+  "serial": "4.0.0_SA_CRO~Z",
+  "adjudication_sources": [
+    {
+      "path": "org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/adjudications/ADJUDICATION_v1.md",
+      "git_commit": "437304238a756244bcaac340c583fcbaf0b61612",
+      "sha256_git_blob": "4388ab220e8fc3e2430d22139da07dc0c773bfc51d1f562346db5b05d00079a3",
+      "bytes": 5899
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/adjudications/ADJUDICATION_v2.md",
+      "git_commit": "437304238a756244bcaac340c583fcbaf0b61612",
+      "sha256_git_blob": "7e0000428f0c15352727f71832d676cc99eab25162534773e4a1b125b947fa8f",
+      "bytes": 8532
+    }
+  ],
+  "task_status_reads": [
+    {
+      "path": "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-c-10.one-call-substrate-read.md",
+      "ref": "437304238a756244bcaac340c583fcbaf0b61612",
+      "sha256": "c3b2f60617d4ffcc7e59584e961ef7dc614963ddbe7b5705da895aa8ca260d71",
+      "last_anchored_status": "complete"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-c-10.one-call-substrate-read.md",
+      "ref": "WORKING_TREE",
+      "sha256": "c3b2f60617d4ffcc7e59584e961ef7dc614963ddbe7b5705da895aa8ca260d71",
+      "last_anchored_status": "complete"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-c-11.read-only-proof.md",
+      "ref": "437304238a756244bcaac340c583fcbaf0b61612",
+      "sha256": "602486d4d62af3569d1430af1b597055aebbe9b0b442c658c1f49cda717b3c16",
+      "last_anchored_status": "pending"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-c-11.read-only-proof.md",
+      "ref": "WORKING_TREE",
+      "sha256": "602486d4d62af3569d1430af1b597055aebbe9b0b442c658c1f49cda717b3c16",
+      "last_anchored_status": "pending"
+    }
+  ],
+  "message": {
+    "id": 24769,
+    "sender": "1.0.0_SA_CTO~Z",
+    "archived_path": "org/mcp/inbox/4.0.0_SA_CRO/~Z/read/20260923T151929Z_1.0.0_SA_CTO_Z__FOR_THE_CLOSER_PACKAGE__AMGT_CORPUS_s_f.md",
+    "sha256": "ba05667c6e6dd54691f75986810ad39312ce0bdfd179bf2bcd6ec4247217541b"
+  },
+  "evidence_level": "pinned adjudications and exact status tags read; no data exercise repeated",
+  "discrepancy": "v2 says both c-10 and c-11 pending; exact tags at the same pin and working tree say c-10 complete and c-11 pending"
+}

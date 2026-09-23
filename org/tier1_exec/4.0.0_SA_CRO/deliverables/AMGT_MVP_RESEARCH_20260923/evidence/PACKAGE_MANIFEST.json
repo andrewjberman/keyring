@@ -1,8 +1,8 @@
 [
   {
     "path": "CLOSER_CONTRACT.md",
-    "sha256": "6f52bb42cd35cc37291c966f1eb0c9c04cd35e143e06e64ff5f0cbfc9222d1f9",
-    "bytes": 11932
+    "sha256": "9554a3d161a1d7afb25830c6cdcde761df975f2b2b9947f9e802ca0bab60203f",
+    "bytes": 12870
   },
   {
     "path": "CLOUD_PRECEDENT.md",
@@ -11,8 +11,13 @@
   },
   {
     "path": "CORPUS_END_TO_END.md",
-    "sha256": "a1e83cd38e10d5e22d0433c26345b2d48043c05cae5f5f968123693a3f43cc5b",
-    "bytes": 4125
+    "sha256": "62b91fd8a466b92f71fc439df94358a690aa69d80a5b1a2e3d28cf9acbd575b5",
+    "bytes": 4615
+  },
+  {
+    "path": "CORPUS_L9_CLOSER_CONTEXT_UPDATE.md",
+    "sha256": "6439fd102d2f2d26872482f39eef6efbec8e2d2ce463ea46689547b071346b92",
+    "bytes": 4380
   },
   {
     "path": "evidence/collect_readonly.py",
@@ -23,6 +28,11 @@
     "path": "evidence/collect_supplement.py",
     "sha256": "4d784cab7b02c028bf1134f8ce8ad6c9fa0c576aaf062e5f1a489b4cce31257f",
     "bytes": 5630
+  },
+  {
+    "path": "evidence/CORPUS_L9_UPDATE_SOURCES.json",
+    "sha256": "f6cd0c1e00cbf60ce3555e643aa5c87e061bd22c54bcb931bc2c60524ec1956c",
+    "bytes": 2406
   },
   {
     "path": "evidence/MEASUREMENTS.json",
@@ -56,8 +66,8 @@
   },
   {
     "path": "GAPS.csv",
-    "sha256": "5ac4c5541f9bcf4533e690b18348ef9a0b3b3ea2dc0f82de1d71af92efe67667",
-    "bytes": 6304
+    "sha256": "ff5233b892825b1a92c5191d6f493835c951393f77b5bf2dff6a90801a16dcbf",
+    "bytes": 6462
   },
   {
     "path": "IMPLEMENTATION_SCHEDULE.md",
@@ -71,8 +81,8 @@
   },
   {
     "path": "README.md",
-    "sha256": "a44af4046de5e6ea77775cd1c0c9dcca52c5708f8b3bb61bfe55ca8db1bd9a9a",
-    "bytes": 6703
+    "sha256": "b6519975e9ff42b83b9ef2fd6081049c60d69af8355f7eab63a799549971d506",
+    "bytes": 7105
   },
   {
     "path": "REPORT_EXPERIENCE_END_TO_END.md",

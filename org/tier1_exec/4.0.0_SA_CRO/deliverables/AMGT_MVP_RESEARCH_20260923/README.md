@@ -4,6 +4,8 @@
 
 **Downstream update, September 23 after 15:13 UTC:** [Round-36 closer context](ROUND36_CLOSER_CONTEXT_UPDATE.md) records accepted round closure, preserves the deliberate `battery_extra` path and supersedes the earlier round-36 review-pending statement. Closer-mode adoption is recorded; activation conditions remain. The inventories below retain their original measurement vintage.
 
+**Downstream update, September 23 after 15:19 UTC:** [CORPUS first-L9 context](CORPUS_L9_CLOSER_CONTEXT_UPDATE.md) records eight judgment PASSes with their limited populations. It prominently preserves the America Movil identity refusal and distinguishes request quality from induction permission. c-10's exact tag is complete despite the adjudication's pending-status sentence; c-11 remains pending.
+
 AMGT has substantial working components, but no evidence yet of the complete product Andrew requested. Its remaining work crosses three projects and their shared serving surfaces. Closing more isolated task orders will not, by itself, connect the corpus, publications, numeric data, generated report, page and export.
 
 The recommended structure is **four direct implementation closers**, with independent review, under one explicit shared-surface contract. Each closer owns a complete pipeline and its observable result. Routine integration defects stay with that closer; they do not require another round of decomposition. This package prepares that program; it does not seat agents, issue orders, deploy, change schedules or authorize vendor runs.

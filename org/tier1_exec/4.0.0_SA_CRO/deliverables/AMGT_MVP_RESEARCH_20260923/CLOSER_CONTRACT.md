@@ -34,6 +34,8 @@ Changes to a shared file are integrated by its sole owner promptly. A contributo
 
 ## Publish these interfaces before dependent integration
 
+**I1/I4 binding identity carry-forward:** [CORPUS L9 update](CORPUS_L9_CLOSER_CONTEXT_UPDATE.md). A complete/evidenced c-5 request is not authority to induct America Movil from the conflicting `AXMB` folder and `AMXB` report header. Preserve CVO v1's UNRESOLVED/refusal until independently resolved under the applicable scope, per-use and never-widen conditions. S must enforce this at execution; C must carry it with the request.
+
 Extend existing contracts and generators. These are interface deliverables to finalize, not an assertion that new schemas below are already ratified.
 
 | Interface | Owner | Required contents and controls |
@@ -68,6 +70,8 @@ Every result records candidate workspace/portal pins, actual deployed artifact/c
 Stop only the dependent act for ambiguous identity, ungranted external access, unresolved source/contract ownership, potential source-library mutation, unsupported provenance relabeling, or a failed acceptance gate. Preserve the last good serving revision and retained inputs. No S3 deletes, automatic broad retries, unapproved fleet run or new notifier is authorized here.
 
 ## Launch defects and unfinished independent review
+
+**Latest CORPUS update after 15:19 UTC:** [the first L9 now grades all eight stranded judgments PASS](CORPUS_L9_CLOSER_CONTEXT_UPDATE.md), superseding the earlier NOT_EVALUATED description for those judgments. It does not close the round. Exact status tags show c-10 complete and c-11 pending, contrary to the adjudication's statement that both are pending; the discrepancy is preserved and routed, not silently adopted. Remaining activation conditions are separate from the now-completed initial grades.
 
 **Status update after 15:13 UTC on September 23:** [round 36 is now closed at `46cf98a9d1`](ROUND36_CLOSER_CONTEXT_UPDATE.md), superseding that round's pending-review status in the historical paragraph below. Its deliberate `battery_extra` win path is a preservation requirement. CORPUS review remains open at the update's source vintage; actual Lenovo end-to-end acceptance remains unproven. Mode adoption at `79bc33a857` does not itself satisfy remaining activation gates.
 
