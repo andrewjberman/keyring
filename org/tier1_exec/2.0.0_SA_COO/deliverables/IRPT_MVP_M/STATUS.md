@@ -1,138 +1,56 @@
-﻿# IRPT M: Holdings journey restart
+# IRPT Holdings ? current state
 
-Seat 2.0.0_SA_COO~M; worktree ajb_irpt_m; branch codex/irpt-m-completion.
-Andrew-direct restart: HOLDINGS_RESTART_20260923.md (initial record b14966e203).
-Current closer contract v1.4, COO_M.md and CONTROL.md@c7265d2bef apply.
-Reviewer: CTO. Current committed COT candidate35999d31a4; this candidate adds
-the Inflection full-membership census guard. No shared code edits.
+Owner: 2.0.0_SA_COO~M. Updated 2026-09-23 16:48 Eastern.
+**archetype:** IMPLEMENT
 
-## Candidate and write claims
+## Outcome
 
-Owned holdings_snapshot.py and test_economic_regressions.py: Cottonwood actual
-ACCOUNT -> UNRESOLVED -> SECURITY tree, retaining signed/zero values and unique
-AccountID/AssetID positions after strict validation. Targets remain private,
-never the actual custody partition. Public schema unchanged. No edits to P's
-Entry/auth/selection, shared adapters, packaging or IAM. 68 economic tests and
-all 180 Gold tests pass offline; these do not establish real source admission.
+Open: one real authenticated Holdings journey per firm, custody through Models /
+SMAs / Client into the full security tree. No live Holdings PASS yet.
 
-Inflection repair: full.num_of_associated_accounts must be a positive integral
-number agreeing with the simple file's observed membership count. Otherwise
-custody remains visible with unresolved attribution. A flattened singleton can
-no longer license an entire multi-account portfolio value. Current producer
-suite188 PASS, including seven missing/malformed/mismatched count controls and
-one agreeing singleton. Historical managed/excluded fixture now supplies the
-explicit source count. Existing COT candidate's Holdings suite141 PASS.
+## Current pins
 
-Source receipts and aggregate findings: HOLDINGS_SOURCE_CHECK_20260923.json.
-No raw investor rows committed. COT original workbook has 5,694 missing value
-cells and no currency declaration. INF has 876/876 account totals tied to
-positions to one cent; 14 flattened Eclipse memberships are incomplete. Select
-one unambiguous INF account for first live proof while COT/49F adapters continue.
+- Backend own branch codex/irpt-m-completion: fec4f688e1, including b411e6f31e.
+  Inflection actual-position dispatch and Cottonwood canonical Client projection.
+- Own UI codex/irpt-m-ui: e5604c03, multi-account roots and signed/zero drill.
+- Shared UI projection patch for P: HOLDINGS_TAXONOMY_PROJECTION_FOR_P.patch@206b5329de.
+- Latest focused validation:18 passed,71 deselected. Earlier17 INF/Eclipse checks passed.
+- All LOCAL; no cloud publication/deploy/push in this turn.
 
-## First failing hop and ONE next proof
+## Ownership and dependencies
 
-First failing hop: actual Inflection positions plus independently selected
-account totals -> accepted Holdings snapshot. Current build_inf still does not
-consume positions_mv or bind a source currency declaration. Today's876/876
-aggregate tie is evidence for that implementation, not an accepted publication.
-There is no accepted current index for the API to consume.
+M owns actual holdings producers and owned UI. P exclusively owns shared entry,
+scope/auth/contracts/projection/packaging/routes/IAM and integrates supplied pins.
+CTO3de4395fb5 resolved locator reuse; helper/cutoff gate no longer blocks M commit.
+CRO owns existing-source currency/cash evidence; CTO rules on any residual calls.
 
-ONE next proof: one real, unambiguous Inflection account, its exact position and
-account source receipts, reconciled accepted publication, authorized API request,
-and complete real-login Holdings drill as one trace. No schedule activation.
+INF: builder requires exact currency and independent reconciliation. CRO8246 now
+has retained USD Scope evidence for2accounts. M's6same-account/date comparisons
+FAIL to reconcile; see INF_CURRENCY_BRIDGE_20260923.json. No currency propagation.
+Still open: source semantic bridge, selected/historical census incl82inactive,
+per-account availability, model/security membership and actual accepted publication.
 
-## Dependencies and parallel owned work
+49F: dated actual08335338 inventory now measured:7522accounts,106499positions;
+SmartX covers5912accounts,1610without mapping remain in custody base. Exact
+cash/currency semantics and26balance exceptions remain open. See source JSON.
 
-- M: actual INF position adapter and dated Eclipse membership; custody-first
-  49F 08335338 adapter with sole SmartX model overlay; Holdings summary/full tree.
-- M targeted checks: source-bound currency; COT incomplete accounts; Eclipse full
-  associated-account expansion. No guessed currency, residual cash or null-as-zero.
-- P: exact Holdings Entry/selection/public-status package and runtime requirements;
-  shared quantity/name/date/coverage adapter. Concrete request sent at 19:29Z.
-- CTO: exact candidate review; concrete source-authority conflicts if encountered.
-  No new task-order cycle or general research effort requested.
-- CRO: targeted source currency declaration for INF/COT and original Eclipse
-  associated-account list. Exact request sent19:44Z; not a general research round.
+COT: actual Client tree implemented; all5694 original blank-value rows stay unknown.
+P214ddd6b3f reports a live positive performance dual-ID control, so source/reporting
+namespace demonstrated for that account. Currency setting/attestation remains CTO
+call. No new vendor retry inferred from that control.
 
-## Live state and limits
+## Next proof
 
-Three legacy serving prefixes empty; three canonical current indexes absent;
-snapshot scheduler DISABLED today. Deployed Holdings is September21 and conflicts
-with current public-status parsing. No accepted publication, cloud mutation,
-vendor call or live browser proof this turn. M7 NOT_EVALUATED. Missing currency
-and unknown source values still refuse; no current real admission is claimed.
+Resolve one dated INF currency/valuation comparison, bind only proven scope,
+publish accepted actual snapshot under current authorization, integrate P's runtime
+package and taxonomy projection, then exercise the authenticated full drill.
+Continue49F custody adapter with whole master base and SmartX-only model mapping.
+No target/model AUM substitutes for actual custody; no inferred zeros or USD.
 
-Prior source485b69c061/current-viewer paired review and publication3539ad2ae5
-are preserved. Universal reference services and analysis/export enrichment are
-parked unless they block this Holdings thread. Push state LOCAL; MSTR owns shared
-push. No deployment performed.
+## Drive
 
-## Drive and source follow-up at 20:02Z
+Requested600-second repository-local drive is active, last verified PID30160.
+Mission is CTO COO_M.md. It ends only on verified three-firm completion or Andrew's
+changed instruction. No duplicate launcher helpers or subagents.
 
-Andrew requested a 600-second drive cadence; record HOLDINGS_DRIVE_20260923.md.
-Canonical timer delivered a tick, but unrelated Anatomy side effects required
-stopping only its process and routing repository repair to MSTR. Product work
-continues. CTO76480a2a35 accepted bounded35999+99c9 source controls with100 tests;
-this is not a live verdict.
-
-INF_ORIGINAL_SOURCE_CHECK_20260923.json now dispositions all82 extra positions
-accounts: all appear in raw roster, all explicitly inactive, all totals reconcile.
-Retain their census and explain active-population filtering. Three original
-account sources contain no currency declaration. First live proof remains open.
-
-CRO~M relayed Andrew taxonomy e5cf6d6549: public Models / SMAs / Client plug
-replaces Unresolved. Earlier unresolved vocabulary above describes the existing
-implementation, not the intended endpoint. Missing numeric custody facts are
-not zero or made complete by a label change. Consume CTO amendment when ready.
-
-## Active drive and next owned implementation, 20:10Z
-
-Drive repaired6a439656c1 and verified running PID30160 at600s with current COO_M
-mandate as mission, first seat-only tick delivered200806. Timer is ACTIVE.
-UI candidate ajb_irpt_m_portal e5604c03 makes all account roots reachable and
-keeps signed/zero-denominator table drill functional.9 focused mounted tests,
-32 exact Holdings slice/drill/source-bound checks and typecheck passed. P and
-CTO received the exact UI pin. No browser or deployed acceptance claimed.
-
-CRO0d0fd51b33 establishes no source-backed INF/COT currency in current landed
-records. Eclipse membership was never ingested: vendor simple shape is limited,
-not an Opal flattening loss. CTO addresses exact source facts; no vendor call
-is authorized by that finding. Continue adapter/UI implementation locally.
-Contracta62f5e54a7 taxonomy and d44d9f3876 fast targeted checks apply.
-
-COT same-row original-value diagnostic: {"rows": 19610, "missing_market_value_rows": 5694, "all_four_blank_rows": 5694, "within_missing_mv_null_counts": {"Market Value": 5694, "Unaccrued Market Value": 5694, "Units": 5694, "Accrual": 5694}, "within_missing_mv_nonzero_counts": {"Market Value": 0, "Unaccrued Market Value": 0, "Units": 0, "Accrual": 0}, "interpretation": "Null census is not zero-valued custody or sold/closed evidence."}
-
-## Actual INF adapter candidate, 20:24Z
-
-INF_ACTUAL_ADAPTER_20260923.md describes production dispatch now requiring native
-positions and independent custody controls; portfolio-only construction is private
-evidence.12 focused adapter/dispatch checks and17 existing INF/Eclipse checks pass.
-Unmodified real inputs refuse missing currency as required. First failing hop is
-now the source-backed currency binding, followed by actual accepted publication.
-Roster-based selected/historical admission, per-account availability and Models/SMA
-position placement remain open; no full-census or live claim.
-
-## Source candidate commit boundary, 20:29Z
-
-The actual INF implementation remains an UNCOMMITTED owned working diff. Compiler/
-lint controls pass after adding the required future import and formatting tests;
-naming-gate refuses two NEW positions_mv read literals at the real existing source
-address. CTO202806 routed the exact bounded fork to G; M supplied both helper
-contexts and source version/hash202857. Original legacy-read01 build_inf context
-is preserved; the production dispatch wrapper is build_inf_actual and reuses the
-original accounts frame. No path hiding, force, guessed canonical repoint or
-self-authored read grant. Commit is pending the approved source locator mechanism.
-
-P-owned literal projection delta is HOLDINGS_TAXONOMY_PROJECTION_FOR_P.patch with
-four targeted consumer expectations in its .md. No shared code was edited by M.
-CTO47e0f95 accepted owned UI e5604c03; P integration remains pending. P reports its
-approved COT Performance request returned empty accounts/levels and sentinel date,
-so existing source-side identity relation is still not an exercised Performance
-identity/currency proof. No retry authorized or requested by M.
-
-49F read-only existing-source prefix check found no fact_holdings under the two
-Black Diamond silver roots in opal-data-assets:49financial has three insurance
-families;49f has dim_account_xref,dim_advisor_fee_role,fact_bd_allocation and
-fact_taxsma_report. Continue exact0833 custody inventory; do not substitute SmartX
-AUM for the complete custody base. comp-freshness chain bd produced no rows because
-its config is held; that is NOT a freshness verdict and no override was applied.
+Current handoff: NEXT_STEPS_20260923.md. Historical prose lives in git history.
