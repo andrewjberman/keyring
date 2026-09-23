@@ -137,7 +137,7 @@ ingest, and it makes every downstream derivation reproducible from `{key, sha256
 `find_tables` prohibition is an estate lesson (PyMuPDF reports a wrapped Word heading as a 2x2 table), inlined because a
 worker has no memory to read it from.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
