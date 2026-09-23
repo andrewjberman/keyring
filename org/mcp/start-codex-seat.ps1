@@ -461,7 +461,11 @@ Preflight detail: $detail
     Set-CodexSeatTitle -SeatSerial $Serial
 
     if ($ThreadId) {
-        & codex @codexPermissionArgs resume --remote $endpoint -C $Workspace `
+        # codex-cli 0.154 refuses `-c` overrides on a REMOTE resume ("Permission
+        # overrides are not supported when resuming a remote task") and the TUI
+        # exits, taking the seat down. The shared app-server above already carries
+        # $codexPermissionArgs, so the resumed thread inherits them from the host.
+        & codex resume --remote $endpoint -C $Workspace `
           $ThreadId $startupPromptArgument
     }
     else {
