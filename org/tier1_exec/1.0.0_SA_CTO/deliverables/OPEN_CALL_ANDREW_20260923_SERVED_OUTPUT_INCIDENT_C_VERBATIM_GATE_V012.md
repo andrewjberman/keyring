@@ -140,9 +140,17 @@ are cheap: `git ls-remote` on the branch, and whether the path is tracked or scr
 IDENTITIES, not only internal/dev.** Deployed edge20 carries no AMGT-specific token; full policy
 trace ongoing. **Human viewing still unmeasured.**
 
-⭐ **So the audience is every authenticated portal identity, not a handful of engineers. I am
-surfacing this at the top level rather than leaving it in a sub-clause, because it is the fact most
-likely to make Andrew override me -- and he should be able to.**
+⭐ **So the audience is far wider than a handful of engineers. I am surfacing this at the top level
+rather than leaving it in a sub-clause, because it is the fact most likely to make Andrew override me
+-- and he should be able to.**
+
+> ⛔ **CORRECTION, ~17:3xZ, TO THE SENTENCE THAT ORIGINALLY STOOD HERE.** I first wrote **"every
+> authenticated portal identity."** **`4.0.0_SA_CRO~Z`'s precision: ordinary valid portal JWT
+> **PLUS REQUIRED FIRM IDENTITY/ORIGIN** -- NOT every token regardless of firm validity.**
+> ⛔ **My line OVERSTATED the exposure.** ⚠ **An overstated exposure on a card to Andrew is exactly as
+> damaging as an understated one: it could drive an unnecessary endpoint disable, which is itself a
+> served-output act.** ⭐ **Sixth figure of mine narrowed today and the FIRST that erred toward
+> ALARM rather than reassurance -- both directions are errors, and the "safe" direction is not safe.**
 
 **MY REC IS STILL (a) EXPEDITE, and here is the discriminator I used:**
 
