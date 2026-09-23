@@ -1,13 +1,14 @@
 {
- "project_code": "AMGT_RESAPP",
- "home": "org/missions/D5/AMGT/AMGT_RESAPP",
- "directive": "D5",
- "macro_code": "AMGT",
- "fabric": "site-z",
- "dep_stage": "EXECUTING",
- "status": "active",
- "name": "Security Analysis: the research pack, automated -- an analyst opens a covered name and the model block, company description and segment breakdown are already there, every figure defensible from the page, and Adam forwards the printed output without reformatting it.",
- "generated_from": "org/missions/D5/AMGT/AMGT_RESAPP/project.json",
- "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-18T23:36:44Z"
+  "project_code": "AMGT_RESAPP",
+  "home": "org/missions/D5/AMGT/AMGT_RESAPP",
+  "directive": "D5",
+  "macro_code": "AMGT",
+  "fabric": "site-z",
+  "dep_stage": "EXECUTING",
+  "status": "active",
+  "name": "Security Analysis: the research pack, automated -- an analyst opens a covered name and the model block, company description and segment breakdown are already there, every figure defensible from the page, and Adam forwards the printed output without reformatting it.",
+  "generated_from": "org/missions/D5/AMGT/AMGT_RESAPP/project.json",
+  "generated_by": ".tools/missions-tree-index.py",
+  "generated_at": "2026-09-18T23:36:44Z",
+  "blocking": "ROUND 35 (regulator route, HKEX): the L4-R BRIEF half is STALE at PRD v0.24 @ddb93dd170 and to-pipeline-gate LIMB 6 refuses a NEWLY-ADDED order until it is SIGNED. Routed by prd-signoff to 4.0.0_SA_CRO~G; 2.0.0_SA_COO~Y named as the substitute on the 60-minute re-route. The ratified-text half is SIGNED and CURRENT (hash byte-identical across v0.24), so 3.0.0_SA_CVO~Z is not re-opened, and the regulator route needs NO amendment -- it was ratified by Andrew @4de34f0d95 (CTO ruling corrected @ddb93dd170). | AMGT-rk-49 (Lusha, the project's ONLY non-terminal order of 189): its STATED gate 'AMGT-rk-38 complete' is SATISFIED, but the gate's PURPOSE is not -- filings/v1/992_HK_Equity/ holds only UNRESOLVED-SOURCE.source.json and issuer-site/harvest/bronze/document/ is 0 estate-wide, so there is no verified domain. Fed today it would correctly record Lusha NOT ATTEMPTED with zero vendor spend. Its real dependency is the regulator route. | AT ANDREW, not this project's: the portal/** lane grant."
 }
