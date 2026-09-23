@@ -43,3 +43,17 @@ No blanket ACTIVE based on these five synthetic checks. Existing P enforcement a
 M canonical-registry ownership remain; CTO adjudicates the concrete bounded cutover,
 without starting another CVO chain or a parallel repository. No new live write,
 deployment, cleanup or vendor call is performed by this review.
+
+
+## P-SOURCE-01 closure - 5765ea21a5
+
+Exact pinned source export: six affected fidelity/retained-composition checks PASS
+0.74s (27 deselected). Calculator requires original bytes/digest/length, parses
+those exact bytes, retains base64 originals and separate raw/normalized hashes;
+decoy decoded body does not replace input. Byte-distinct equivalent JSON has distinct
+source revision; absent/tampered receipt refuses. P-SOURCE-01 CLOSED at source.
+Previously approved live replies may be replayed without new vendor use.
+This does not prove packaged deployment, all sensitive-payload handling, live storage
+activation or full product completion. P prepares exact final package using M9b3
+rather than the older614 mapping currently included in5765. Current policy remains
+pending until the concrete enforcement/runtime cutover is adjudicated.
