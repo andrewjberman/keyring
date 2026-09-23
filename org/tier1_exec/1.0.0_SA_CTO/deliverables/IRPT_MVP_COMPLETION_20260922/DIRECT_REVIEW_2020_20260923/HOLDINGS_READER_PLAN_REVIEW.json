@@ -1,0 +1,465 @@
+{
+  "plan_sha256": "ca2a907770c081a244cb1eddc854db95cdb80523655989093264c9e20f905301",
+  "managed_actions": {
+    "aws_iam_role.holdings": [
+      "update"
+    ],
+    "aws_iam_role_policy.holdings_firm_read": [
+      "update"
+    ],
+    "aws_iam_role_policy.holdings_selection_read": [
+      "create"
+    ],
+    "module.irpt_holdings.aws_lambda_function.this": [
+      "update"
+    ]
+  },
+  "changes": [
+    {
+      "address": "aws_iam_role.holdings",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "holdings",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "arn": "arn:aws:iam::313476888478:role/irpt-holdings-role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-09-11T16:58:40Z",
+          "description": "IRPT_BCKEND cell IB-rt-7 -- holdings snapshot reader; READ-ONLY on the three client-firm buckets",
+          "force_detach_policies": false,
+          "id": "irpt-holdings-role",
+          "inline_policy": [
+            {
+              "name": "irpt-holdings-firm-read",
+              "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"s3:GetObject\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::opal-data-bd/investor-reporting/*\",\"arn:aws:s3:::opal-data-inf/investor-reporting/*\",\"arn:aws:s3:::opal-data-cot/investor-reporting/*\"],\"Sid\":\"ReadTheProductOnly\"},{\"Action\":[\"s3:ListBucket\"],\"Condition\":{\"StringLike\":{\"s3:prefix\":[\"investor-reporting/holdings/*\",\"investor-reporting/directory/*\"]}},\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::opal-data-bd\",\"arn:aws:s3:::opal-data-inf\",\"arn:aws:s3:::opal-data-cot\"],\"Sid\":\"ListUnderTheProductPrefixOnly\"}]}"
+            },
+            {
+              "name": "irpt-holdings-logs",
+              "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"logs:CreateLogGroup\",\"logs:CreateLogStream\",\"logs:PutLogEvents\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:logs:us-east-1:313476888478:log-group:/aws/lambda/irpt-holdings\",\"arn:aws:logs:us-east-1:313476888478:log-group:/aws/lambda/irpt-holdings:*\"],\"Sid\":\"WriteOwnLogStream\"}]}"
+            }
+          ],
+          "managed_policy_arns": [],
+          "max_session_duration": 3600,
+          "name": "irpt-holdings-role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {},
+          "tags_all": {
+            "ManagedBy": "Terraform",
+            "Project": "OpalPortal",
+            "System": "InvestorReporting"
+          },
+          "unique_id": "AROAUR7FNW6PLHQUVLYZF"
+        },
+        "after": {
+          "arn": "arn:aws:iam::313476888478:role/irpt-holdings-role",
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+          "create_date": "2026-09-11T16:58:40Z",
+          "description": "IRPT holdings reader; canonical product versions and current scope dependencies",
+          "force_detach_policies": false,
+          "id": "irpt-holdings-role",
+          "inline_policy": [
+            {
+              "name": "irpt-holdings-firm-read",
+              "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"s3:GetObject\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::opal-data-bd/investor-reporting/*\",\"arn:aws:s3:::opal-data-inf/investor-reporting/*\",\"arn:aws:s3:::opal-data-cot/investor-reporting/*\"],\"Sid\":\"ReadTheProductOnly\"},{\"Action\":[\"s3:ListBucket\"],\"Condition\":{\"StringLike\":{\"s3:prefix\":[\"investor-reporting/holdings/*\",\"investor-reporting/directory/*\"]}},\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::opal-data-bd\",\"arn:aws:s3:::opal-data-inf\",\"arn:aws:s3:::opal-data-cot\"],\"Sid\":\"ListUnderTheProductPrefixOnly\"}]}"
+            },
+            {
+              "name": "irpt-holdings-logs",
+              "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"logs:CreateLogGroup\",\"logs:CreateLogStream\",\"logs:PutLogEvents\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:logs:us-east-1:313476888478:log-group:/aws/lambda/irpt-holdings\",\"arn:aws:logs:us-east-1:313476888478:log-group:/aws/lambda/irpt-holdings:*\"],\"Sid\":\"WriteOwnLogStream\"}]}"
+            }
+          ],
+          "managed_policy_arns": [],
+          "max_session_duration": 3600,
+          "name": "irpt-holdings-role",
+          "name_prefix": "",
+          "path": "/",
+          "permissions_boundary": "",
+          "tags": {},
+          "tags_all": {
+            "ManagedBy": "Terraform",
+            "Project": "OpalPortal",
+            "System": "InvestorReporting"
+          },
+          "unique_id": "AROAUR7FNW6PLHQUVLYZF"
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "inline_policy": [
+            {},
+            {}
+          ],
+          "managed_policy_arns": [],
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "inline_policy": [
+            {},
+            {}
+          ],
+          "managed_policy_arns": [],
+          "tags": {},
+          "tags_all": {}
+        }
+      }
+    },
+    {
+      "address": "aws_iam_role_policy.holdings_firm_read",
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "holdings_firm_read",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "id": "irpt-holdings-role:irpt-holdings-firm-read",
+          "name": "irpt-holdings-firm-read",
+          "name_prefix": "",
+          "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"s3:GetObject\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::opal-data-bd/investor-reporting/*\",\"arn:aws:s3:::opal-data-inf/investor-reporting/*\",\"arn:aws:s3:::opal-data-cot/investor-reporting/*\"],\"Sid\":\"ReadTheProductOnly\"},{\"Action\":[\"s3:ListBucket\"],\"Condition\":{\"StringLike\":{\"s3:prefix\":[\"investor-reporting/holdings/*\",\"investor-reporting/directory/*\"]}},\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::opal-data-bd\",\"arn:aws:s3:::opal-data-inf\",\"arn:aws:s3:::opal-data-cot\"],\"Sid\":\"ListUnderTheProductPrefixOnly\"}]}",
+          "role": "irpt-holdings-role"
+        },
+        "after": {
+          "id": "irpt-holdings-role:irpt-holdings-firm-read",
+          "name": "irpt-holdings-firm-read",
+          "name_prefix": "",
+          "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"s3:GetObject\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::opal-data-49financial/irpt/49financial/platinum/holdings/current/manifest.json\",\"arn:aws:s3:::opal-data-inflection/irpt/inflection/platinum/holdings/current/manifest.json\",\"arn:aws:s3:::opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json\"],\"Sid\":\"ReadCurrentPublicationIndex\"},{\"Action\":[\"s3:GetObjectVersion\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::opal-data-49financial/irpt/49financial/platinum/holdings/date=*/*\",\"arn:aws:s3:::opal-data-inflection/irpt/inflection/platinum/holdings/date=*/*\",\"arn:aws:s3:::opal-data-cottonwood/irpt/cottonwood/platinum/holdings/date=*/*\"],\"Sid\":\"ReadAcceptedPlatinumVersions\"},{\"Action\":[\"s3:GetObject\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::opal-data-bd/investor-reporting/directory/*\",\"arn:aws:s3:::opal-data-bd/platinum/49financial/ownership_map.json\",\"arn:aws:s3:::opal-data-inf/investor-reporting/directory/*\",\"arn:aws:s3:::opal-data-inf/platinum/inflection/ownership_map.json\",\"arn:aws:s3:::opal-data-cot/investor-reporting/directory/*\",\"arn:aws:s3:::opal-data-cot/platinum/cottonwood/ownership_map.json\"],\"Sid\":\"ReadCurrentScopeDependencies\"}]}",
+          "role": "irpt-holdings-role"
+        },
+        "after_unknown": {},
+        "before_sensitive": {},
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_iam_role_policy.holdings_selection_read",
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "holdings_selection_read",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "irpt-holdings-selection-read-policy",
+          "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"dynamodb:GetItem\"],\"Condition\":{\"ForAllValues:StringEquals\":{\"dynamodb:LeadingKeys\":[\"49financial\",\"inflection\",\"cottonwood\"]}},\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests\"],\"Sid\":\"ReadRetainedSelectionByTenantKey\"},{\"Action\":[\"kms:Decrypt\"],\"Condition\":{\"StringEquals\":{\"kms:EncryptionContext:aws:dynamodb:tableName\":\"irpt-requests\",\"kms:ViaService\":\"dynamodb.us-east-1.amazonaws.com\"}},\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111\"],\"Sid\":\"DecryptRequestTableViaDynamoOnly\"}]}",
+          "role": "irpt-holdings-role"
+        },
+        "after_unknown": {
+          "id": true,
+          "name_prefix": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "module.irpt_holdings.aws_lambda_function.this",
+      "module_address": "module.irpt_holdings",
+      "mode": "managed",
+      "type": "aws_lambda_function",
+      "name": "this",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "architectures": [
+            "x86_64"
+          ],
+          "arn": "arn:aws:lambda:us-east-1:313476888478:function:irpt-holdings",
+          "code_sha256": "1XkzWP6p8OfobrSCI8ZrRCyMxfWgSK6sPZeYjdON50I=",
+          "code_signing_config_arn": "",
+          "dead_letter_config": [],
+          "description": "",
+          "environment": [
+            {
+              "variables": {
+                "IRPT_CONTRACTS_DIR": "/opt/python/irpt_contracts",
+                "IRPT_DIRECTORY_BUCKET_MAP": "{\"49financial\":\"opal-data-bd\",\"cottonwood\":\"opal-data-cot\",\"inflection\":\"opal-data-inf\"}",
+                "IRPT_DIRECTORY_KEY": "investor-reporting/directory/latest.json",
+                "IRPT_FIRM_REGISTRY": "/opt/python/firm_registry.json",
+                "IRPT_HOLDINGS_PREFIX": "investor-reporting/holdings"
+              }
+            }
+          ],
+          "ephemeral_storage": [
+            {
+              "size": 512
+            }
+          ],
+          "file_system_config": [],
+          "filename": null,
+          "function_name": "irpt-holdings",
+          "handler": "entry.lambda_handler",
+          "id": "irpt-holdings",
+          "image_config": [],
+          "image_uri": "",
+          "invoke_arn": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:313476888478:function:irpt-holdings/invocations",
+          "kms_key_arn": "",
+          "last_modified": "2026-09-21T15:04:24.000+0000",
+          "layers": [
+            "arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5"
+          ],
+          "logging_config": [
+            {
+              "application_log_level": "",
+              "log_format": "Text",
+              "log_group": "/aws/lambda/irpt-holdings",
+              "system_log_level": ""
+            }
+          ],
+          "memory_size": 1024,
+          "package_type": "Zip",
+          "publish": false,
+          "qualified_arn": "arn:aws:lambda:us-east-1:313476888478:function:irpt-holdings:$LATEST",
+          "qualified_invoke_arn": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:313476888478:function:irpt-holdings:$LATEST/invocations",
+          "replace_security_groups_on_destroy": null,
+          "replacement_security_group_ids": null,
+          "reserved_concurrent_executions": -1,
+          "role": "arn:aws:iam::313476888478:role/irpt-holdings-role",
+          "runtime": "python3.12",
+          "s3_bucket": "opal-313476888478-lambda-artifacts",
+          "s3_key": "investor-reporting/irpt-holdings.zip",
+          "s3_object_version": "QHzwDQDRggw06hA4MAwmGgR0NVmGVH5F",
+          "signing_job_arn": "",
+          "signing_profile_version_arn": "",
+          "skip_destroy": false,
+          "snap_start": [],
+          "source_code_hash": "1XkzWP6p8OfobrSCI8ZrRCyMxfWgSK6sPZeYjdON50I=",
+          "source_code_size": 135759,
+          "tags": {
+            "Cell": "IB-rt-7",
+            "ManagedBy": "Terraform",
+            "Module": "yang-lambda",
+            "Outcome": "FWD-2",
+            "Project": "OpalPortal",
+            "System": "InvestorReporting"
+          },
+          "tags_all": {
+            "Cell": "IB-rt-7",
+            "ManagedBy": "Terraform",
+            "Module": "yang-lambda",
+            "Outcome": "FWD-2",
+            "Project": "OpalPortal",
+            "System": "InvestorReporting"
+          },
+          "timeout": 29,
+          "timeouts": null,
+          "tracing_config": [
+            {
+              "mode": "PassThrough"
+            }
+          ],
+          "version": "$LATEST",
+          "vpc_config": []
+        },
+        "after": {
+          "architectures": [
+            "x86_64"
+          ],
+          "arn": "arn:aws:lambda:us-east-1:313476888478:function:irpt-holdings",
+          "code_sha256": "1XkzWP6p8OfobrSCI8ZrRCyMxfWgSK6sPZeYjdON50I=",
+          "code_signing_config_arn": "",
+          "dead_letter_config": [],
+          "description": "",
+          "environment": [
+            {
+              "variables": {
+                "IRPT_CONTRACTS_DIR": "/var/task/contracts",
+                "IRPT_DIRECTORY_BUCKET_MAP": "{\"49financial\":\"opal-data-bd\",\"cottonwood\":\"opal-data-cot\",\"inflection\":\"opal-data-inf\"}",
+                "IRPT_DIRECTORY_KEY": "investor-reporting/directory/latest.json",
+                "IRPT_FIRM_REGISTRY": "/var/task/firm_registry.json",
+                "IRPT_HOLDINGS_PREFIX": "investor-reporting/holdings",
+                "IRPT_REQUESTS_TABLE": "irpt-requests"
+              }
+            }
+          ],
+          "ephemeral_storage": [
+            {
+              "size": 512
+            }
+          ],
+          "file_system_config": [],
+          "filename": null,
+          "function_name": "irpt-holdings",
+          "handler": "entry.lambda_handler",
+          "id": "irpt-holdings",
+          "image_config": [],
+          "image_uri": "",
+          "invoke_arn": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:313476888478:function:irpt-holdings/invocations",
+          "kms_key_arn": "",
+          "layers": [
+            "arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5"
+          ],
+          "logging_config": [
+            {
+              "application_log_level": "",
+              "log_format": "Text",
+              "log_group": "/aws/lambda/irpt-holdings",
+              "system_log_level": ""
+            }
+          ],
+          "memory_size": 1024,
+          "package_type": "Zip",
+          "publish": false,
+          "qualified_arn": "arn:aws:lambda:us-east-1:313476888478:function:irpt-holdings:$LATEST",
+          "qualified_invoke_arn": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:313476888478:function:irpt-holdings:$LATEST/invocations",
+          "replace_security_groups_on_destroy": null,
+          "replacement_security_group_ids": null,
+          "reserved_concurrent_executions": -1,
+          "role": "arn:aws:iam::313476888478:role/irpt-holdings-role",
+          "runtime": "python3.12",
+          "s3_bucket": "opal-313476888478-lambda-artifacts",
+          "s3_key": "investor-reporting/irpt-holdings.zip",
+          "signing_job_arn": "",
+          "signing_profile_version_arn": "",
+          "skip_destroy": false,
+          "snap_start": [],
+          "source_code_size": 135759,
+          "tags": {
+            "Cell": "IB-rt-7",
+            "ManagedBy": "Terraform",
+            "Module": "yang-lambda",
+            "Outcome": "FWD-2",
+            "Project": "OpalPortal",
+            "System": "InvestorReporting"
+          },
+          "tags_all": {
+            "Cell": "IB-rt-7",
+            "ManagedBy": "Terraform",
+            "Module": "yang-lambda",
+            "Outcome": "FWD-2",
+            "Project": "OpalPortal",
+            "System": "InvestorReporting"
+          },
+          "timeout": 29,
+          "timeouts": null,
+          "tracing_config": [
+            {
+              "mode": "PassThrough"
+            }
+          ],
+          "version": "$LATEST",
+          "vpc_config": []
+        },
+        "after_unknown": {
+          "architectures": [
+            false
+          ],
+          "dead_letter_config": [],
+          "environment": [
+            {
+              "variables": {}
+            }
+          ],
+          "ephemeral_storage": [
+            {}
+          ],
+          "file_system_config": [],
+          "image_config": [],
+          "last_modified": true,
+          "layers": [
+            false
+          ],
+          "logging_config": [
+            {}
+          ],
+          "s3_object_version": true,
+          "snap_start": [],
+          "source_code_hash": true,
+          "tags": {},
+          "tags_all": {},
+          "tracing_config": [
+            {}
+          ],
+          "vpc_config": []
+        },
+        "before_sensitive": {
+          "architectures": [
+            false
+          ],
+          "dead_letter_config": [],
+          "environment": [
+            {
+              "variables": {}
+            }
+          ],
+          "ephemeral_storage": [
+            {}
+          ],
+          "file_system_config": [],
+          "image_config": [],
+          "layers": [
+            false
+          ],
+          "logging_config": [
+            {}
+          ],
+          "snap_start": [],
+          "tags": {},
+          "tags_all": {},
+          "tracing_config": [
+            {}
+          ],
+          "vpc_config": []
+        },
+        "after_sensitive": {
+          "architectures": [
+            false
+          ],
+          "dead_letter_config": [],
+          "environment": [
+            {
+              "variables": {}
+            }
+          ],
+          "ephemeral_storage": [
+            {}
+          ],
+          "file_system_config": [],
+          "image_config": [],
+          "layers": [
+            false
+          ],
+          "logging_config": [
+            {}
+          ],
+          "snap_start": [],
+          "tags": {},
+          "tags_all": {},
+          "tracing_config": [
+            {}
+          ],
+          "vpc_config": []
+        }
+      }
+    }
+  ],
+  "artifact": {
+    "bucket": "opal-313476888478-lambda-artifacts",
+    "key": "investor-reporting/irpt-holdings.zip",
+    "version_id": "e7XAGneq1_KKe2tnBVK45FsEFNItS2NF",
+    "sha256": "bcb3fb71937ad4958e3a68821a60a39ce338df6f7a8bca83b7584bd5913cc94b",
+    "code_sha256": "vLP7cZN61JWOOmiCGmCjnOM43296i8qDt1hL1ZE8yUs=",
+    "bytes": 261038
+  },
+  "actual_read": {
+    "nodes": 59,
+    "account_id": "acc_d486fc9455d6b2aa18e13af1",
+    "revision": "fe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e",
+    "schema_valid": true,
+    "reconciled": true,
+    "clocks_distinct": true
+  },
+  "limits": "Read under reviewer AWS credentials. No deployed-role or authenticated Entry proof."
+}
