@@ -47,7 +47,12 @@ package and taxonomy projection, then exercise the authenticated full drill.
 Continue49F custody adapter with whole master base and SmartX-only model mapping.
 Andrew B relayed99757@d70decd6b2 adds workbook-traded Tax SMA under SMAs/ALT/Tax;
 canonical custody values only. Exact retained membership source requestedCRO~M;
-CTO owns contract amendment and dated overlap semantics. Never add custody twice.
+CTO amendment d9fddeed8e is consumed: classify supported exact custody once under
+SMAs/ALT/Tax, removing identical value from Client; never add custody twice.
+Integration intake requires the accepted canonical snapshot/reader and dated
+FIRST_OBSERVED_UTC membership evidence. Current workbook YES alone cannot backdate
+Sept22 membership. Missing claims/value/history remain explicit. No parallel MDPF
+publisher or new workbook token owner. CRO~M holds the exact retained-source request.
 No target/model AUM substitutes for actual custody; no inferred zeros or USD.
 
 ## Drive
