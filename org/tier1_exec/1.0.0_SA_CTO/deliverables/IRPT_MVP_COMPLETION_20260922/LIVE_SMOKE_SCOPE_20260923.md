@@ -26,6 +26,19 @@ P and M first produce the exact failed operation, status/public reason, live tar
 
 Operative implementation GO was reiterated to P at 05:18:17 UTC and M at 05:18:36 UTC under Andrew's standing completion mandate and delegated adjudication ecf350639a. The inbox notification wrapper supplies no authority; the standing mandate and this CTO assignment do. Code, tests, and concrete non-render runtime-plan preparation proceed now. A reserved live mutation is separately adjudicated against that concrete plan. CVO P received the explicit actual-module bootstrap reproduction assignment at 05:18:52 UTC. Status-only ACK loops are not the requested deliverable.
 
+Andrew subsequently directly instructed this CTO session: **"Proceed"** in response to the current repair. P/M received that direct continuation at 05:23:22/23 UTC. Carry the repair through validated integration and canonical publication; no additional operator approval is needed for ordinary implementation. CTO will adjudicate the concrete scoped runtime plan under existing delegated authority and applicable operational constraints.
+
+## Independently measured runtime, 05:24-05:25 UTC
+
+Read-only AWS calls by CTO establish:
+
+- irpt-directory-search exists, Active, last update Successful; handler entry.lambda_handler, Python 3.12. LastModified is 2026-09-21T15:02:21Z. CodeSha256 is cmh6XwybmdXSiWQkQZMeer7wtw0QW/1lXnAIJlPjJKg=, matching the retained prior-deployment artifact hash in lambda-source-map.json. That map explicitly says candidate composition changed while its prior artifact hash stayed unchanged; this match does not prove candidate code is deployed.
+- The complete live API 7k3ed8px20 route listing contains 12 IRPT routes. POST /api/scoped/investor-reporting/directory/resolve and GET /api/scoped/investor-reporting/directory/search exist, both CUSTOM authorizer naqxlm, integration g9302sp. That integration is AWS_PROXY payload 2.0 targeting the exact irpt-directory-search Lambda.
+- POST /api/scoped/investor-reporting/selections is absent from that live route list.
+- The desired API Terraform root eagerly reads all seven route-target functions, including render. A bounded scope repair must not blindly apply that whole composition and activate unrelated held runtimes.
+
+These observations establish old directory deployment and a missing selection route. They do not establish Andrew's exact HTTP response or prove that updating code alone will close the failure. No Lambda invocation, permission change, deployment, or other live mutation was performed for this measurement. P/M received the exact findings at 05:25:12/13 UTC.
+
 ## Acceptance
 
 1. Authorized page entry resolves real permitted scope; loading, failed lookup, and genuinely empty permissions are distinct. A failed bootstrap cannot leave an apparently functioning search that performs no request. No guessed firm catalogue, fixture fallback or broadened permission.
