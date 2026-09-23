@@ -101,7 +101,7 @@ No global BLOCKED status: actionable work remains. Exact Holdings approval is no
 
 - Performance Terraform naming gate rejects lookup(local.performance_scopes, cottonwood). Draft uses canonical registry scope, validate/fmt pass. CTO routed repository defect to MSTR. Do not bypass; track reply.
 - Shared infra/logic/registry/reporting_policies.json irpt-x10-v1 remains PENDING_ENFORCEMENT with enforcement_ref null; physical_disposal OPEN. CTO ruling 22:20: M owns registry write, CTO accepts full 36 destination/family enforcement matrix and actual deployed writer coverage; enforcement_ref must be accepted receipt full 40 SHA. Disposal remains separate. P must produce concrete matrix/coverage gap; no fabricated ACTIVE state.
-- Analysis 31-path grant not delivered at close; maintained current-authority resolver absent as explicitly confirmed by Y, research routed CRO. Factory assembly remains local work.
+- Analysis 31-path grant DELIVERED in final close sweep at 22:39Z: b02c9ad5af together WITH f89fac6686 encoding correction. CTO measured all31 working copies equal Y2874 after line-ending normalization; unchanged-source integration only, Y retains semantic ownership, no runtime activation. Manifest DIRECT_REVIEW_2020_20260923/RESIDENT_INTEGRATION_PATH_MANIFEST.json. CRO223752 supplied auth-handler refresh/profile path evidence; successor CTO still must adjudicate the actual current-authority port. Factory assembly remains local work.
 - User-visible NOT_READY code labeling in frontend StatusPanel.tsx/render/Page.tsx requires bounded source inspection and truthful display. No frontend fix made in this window.
 
 ## Current State
@@ -122,3 +122,7 @@ Codex thread 01a0cad9-4570-7a40-b8cb-a40ba2badf83 exceeded app-server frame size
 ## Window accounting
 
 21 unique P-authored implementation/record commits across the two worktree histories since 20:17Z (before this log), with older prerequisite context clearly labeled. At least 15 significant known review/GO/handoff messages covered; not a complete inbox census. Two completed applies (storage and original Holdings); one approved unexecuted replacement apply. All local commits remain LOCAL; this closing workflow did not push.
+
+## Final close addendum - 22:40Z
+
+Read exact CTO message 20260923T223925Z_1.0.0_SA_CTO_Resident_exact31-path_integration_grant_.md. The31-path grant is delivered as above, not a waiting gate. Consume both grant commits before safe-committing the already copied files. Current-authority adjudication is still open. Canonical log first commit5a64d414a4, this addendum supersedes its earlier grant state. No apply or activation started.
