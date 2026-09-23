@@ -144,7 +144,7 @@ scan directory. Scratch in `.scratch/c6/`. Commit with
 three worktrees converge without a shared module they would race to create. `current_inputs` is what makes FWD-8's
 "exactly the artifact that changed" gradable.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
