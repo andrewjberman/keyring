@@ -414,6 +414,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "AC6's <expect> text is the authority for what 'nothing outside Phase 0's three files changed' means.",
     "world_is": "AC6 was never updated when Phase 0b's BOUNDS added a fourth editable file, so its literal wording cannot be satisfied by ANY compliant Phase 0b diff that actually uses the newly-granted rehearse_run.py permission. proof-of-spec-check.py does not mechanically grade this criterion (no `expect=` regex populated on the instance row -- self-report mode), so this cell graded AC6 by INTENT (nothing outside the union of Phase 0's three files and Phase 0b's fourth was touched) rather than by AC6's stale literal list, and states that reasoning in the acceptance row rather than silently matching the old text.",
     "notes": "Not fixed here (no authority to rewrite the TO's own criteria). Disarm is the issuer's/CVO's: update AC6's <expect> to name the CURRENT editable set for whichever phase is active, or state the rule generically ('nothing outside this phase's named editable files') so it does not need editing every time BOUNDS grows. Same shape as the 'a citation ages separately from the text it quotes' hazard CLAUDE.md Rule 27 already names, one level down: here it is a CRITERION aging past the BOUNDS it grades, in the same document, same amendment commit."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W10-S8",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~10",
+    "surfaced_at": "2026-09-23T00:45Z",
+    "one_line": "silver_from_bronze's WSJ extractor pulls the entire __NEXT_DATA__ frontend config blob (100+ keys: feature flags, ads config, optimizely/statsig config, etc.) into the silver row wholesale rather than a fixed article schema, so a page whose config happens to carry a STRING value where sibling pages carry a boolean (measured: one page's field held the literal string 'async' where others held true/false) makes pyarrow's schema inference fail across the grouped batch with pa.ArrowInvalid, wrapped into store.SilverRowError -- and this failed ALL 11 of this run's real WSJ articles (all genuinely new, real Lenovo content), permanently stuck in harvest_raw_outbox as status=pending, even though bronze succeeded for every one of them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "upload_harvest_1.json (this run, two attempts, identical both times): remaining_pending 11, all 11 wsj:<article_id> rows status=pending error_code=SilverRowError",
+        ".scratch/hv10/debug_wsj_group.py (not committed): reproduced the exact failure offline against the SAME 11 real raw files -- silver_from_bronze.article_rows() succeeds per-row (no exception), but pa.Table.from_pylist() on the grouped 11-row batch raises pyarrow.lib.ArrowInvalid: \"Could not convert 'async' with type str: tried to convert to boolean\"",
+        "each extracted row carries >100 keys pulled directly from WSJ's __NEXT_DATA__ JSON (aceConfigs, adsConfig, apolloGraphqlClientName, enableSourcepoint, enableUsp, isProd, optimizelyDecision, statsigProxyUrl, wtrnConfigs, etc. -- confirmed by printing sorted(row.keys()) for all 11 rows), none of which is an article-content field",
+        ".scratch/hv10/verify.py this round: bronze_reread 14 of 14 mismatch 0 (bronze succeeded for all 3 new sa + 11 wsj articles, confirming the failure is isolated to the GROUPED silver_append step, which runs AFTER bronze in uploads.py's _run_articles, in its own try/except that never touches the already-written bronze objects)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HVST-h-10 item 5: 'Run upload-harvest --retrieval-mode backfill until remaining_pending is 0. It writes bronze articles, bronze listings, silver article and silver listing_hit.' -- implying a clean, complete drain to silver for everything harvest mode captures.",
+    "world_is": "remaining_pending cannot reach 0 for this run's wsj rows without a code fix -- the failure is deterministic (same 11 rows, same error, on two separate upload-harvest invocations minutes apart) and content-based, not transient/retriable. This is a REAL production defect surfaced by REAL Lenovo content on the FIRST wsj live harvest-mode pass ever made (no prior wsj harvest_grammar row existed to have caught it earlier). All 11 real, new WSJ Lenovo articles are captured in bronze (verified byte-for-byte) but absent from silver, so stage 9's article-in-silver count for Lenovo undercounts wsj's true yield by 11.",
+    "notes": "Not fixed here: Phase 1 is execution-only (no code edits) and this is well outside this order's named scope (the probe/publisher-continuation fix and its rehearsal). The 11 bronze objects are NOT lost or at risk -- bronze is write-once and already confirmed present; a future code fix (constraining silver_from_bronze's WSJ extraction to a fixed, typed field set instead of the raw __NEXT_DATA__ dump) can re-run upload-harvest against the SAME already-pending outbox rows without any further vendor call. Disarm is the issuer's/CVO's: fix the WSJ extractor's field selection, or coerce/drop the offending config-passthrough fields before the parquet write, in a later cell with its own grant if code changes are needed."
   }
 ]
 ```
