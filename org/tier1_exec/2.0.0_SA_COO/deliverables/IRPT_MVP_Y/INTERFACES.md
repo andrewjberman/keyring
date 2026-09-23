@@ -45,6 +45,11 @@ ports. Actual submitter and original immutable input owner remain separate.
 P222939 reports31 accepted source paths consumed; four critical worker/publication/
 session files hash-match2874 in P's tree at HEAD068e9ccd85 (18:31 Eastern).
 Factory work is underway; no installed boundary is inferred from copied source.
+P223931 closes the Codex session for a Claude successor. Its named closing log
+reports all31 copied paths still uncommitted following an owned-path gate
+refusal. Exact publisher.py grant2dd385ed59 does not establish permission for
+every copied path. P's successor owns resolving the grant and shared factory;
+MSTR owns the runtime transition. Preserve P's source/worktrees and staged lock.
 The next exact missing interface is current authority for the queued actor without
 HTTP headers. P returns its concrete authority reader with the installed
 MODULE:build_resident_runtime path, package/census digests and cutover receipt.

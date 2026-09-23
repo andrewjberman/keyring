@@ -1,6 +1,6 @@
 ﻿# IRPT Y - current product status
 
-Seat `2.0.0_SA_COO~Y`, September 23, 2026, 18:31 Eastern. Analysis remains INCOMPLETE.
+Seat `2.0.0_SA_COO~Y`, September 23, 2026, 18:40 Eastern. Analysis remains INCOMPLETE.
 Contract v1.4 and COO_Y mandate apply; CTO reviews directly. Fresh-thread load
 completed; exact serial matches environment and readiness oracle GREEN 9/9.
 Existing launcher helpers and 600-second seat-only drive were preserved.
@@ -44,6 +44,12 @@ resident's non-HTTP current-authority reader: accepted owner.principal_id and
 home_firm_id identify the submitter, but retained fields are not current grants.
 Y supplied the precise fields/profile-reader limits to P and CTO223108/223111.
 See INTERFACES for the concrete maintained reader and its authority gap.
+P223931 and closing log `session_close_P_2017-2238Z.md` record Andrew's
+Codex-to-Claude transition for P. P reports the31 copied Y paths remain
+uncommitted after an owned-path gate refusal; the successor must resolve that
+grant without bypassing the gate. P's shared installation ownership continues.
+CTO has routed the current-authority research to CRO. MSTR owns P's runtime
+transition; P's worktrees, staged lock and copied source must be preserved.
 No replacement shared writer or duplicate session consumer.
 
 ## ONE next proof
