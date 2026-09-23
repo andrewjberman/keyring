@@ -6,6 +6,12 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 ## Completed preparation
 
+- Frozen worker preparationc2b467fa47:26independent controls and49supplied PASS.
+  Actual accepted-record/reader/admission/retention/store code, modeled effects
+  and already-held lease. Exact frozen detached source/profile/cover/settings/
+  upload preserved without writes; late grants/fences and missing dependencies
+  refuse. See `FROZEN_WORKER_REVIEW_c2b4.md`. Vendor mutation/current template/
+  settings/readback, custody/comparisons/runtime/render remain ungraded.
 - **Y-UI01 CLOSED** at exact portal7a5b24e705: original unchanged9 controls,
   48assertions PASS; supplied31PASS177assertions/app TypeScript PASS. Late A
   response no longer overwrites B status. Original failure c387a06e2d retained.
@@ -448,14 +454,14 @@ repair,45 tests+24subtests PASS/P-consumed. Producer-attributed, not rerun here.
 
 ## Next executable review and dependencies
 
-Date-boundary handoff f4f16b283f/586cca01 has been reviewed with bounded results
-in `PROSPECT_DATE_REVIEW_f4f16b283f.md`; the original20-case plan now has a scoped
-execution addendum; Y-DT01 unchanged repair retest and bounded owned-reopen
-UI38a3ea24 review are complete. Next: exact P public-refusal and strict-parser
-repair pins for unchanged Y-W01/R-P11 and Y-W02 retests, then real
-browser/export/runtime and dated
-custody/performance producer evidence. Ruling
-or offline primitive PASS does not make integrated acceptance complete.
+Date/owned-reopen and public-wire bounded reviews are complete; Y-DT01,
+Y-W01/Y-W02 and Y-UI01 are closed only for their documented exact pins.
+Admission5a2b and read-only frozen worker preparationc2b4 now have independent
+bounded PASS. Next: exact effecting worker integration with current template/
+settings admission and vendor readback, plus real browser/export/runtime and
+dated custody/performance producer evidence. Current source authority and selected
+comparison entitlement remain separate. Offline primitive PASS does not make
+integrated acceptance complete.
 
 Peer CVO~M001753Z reports M-FACT-01 CLOSED in0a84be3396 on
 f7344d6e9a3833c7952b8f473a773634baea9dee:27 supplied+12 unchanged reviewer PASS.
