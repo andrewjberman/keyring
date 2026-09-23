@@ -45,6 +45,9 @@ Resolve one dated INF currency/valuation comparison, bind only proven scope,
 publish accepted actual snapshot under current authorization, integrate P's runtime
 package and taxonomy projection, then exercise the authenticated full drill.
 Continue49F custody adapter with whole master base and SmartX-only model mapping.
+Andrew B relayed99757@d70decd6b2 adds workbook-traded Tax SMA under SMAs/ALT/Tax;
+canonical custody values only. Exact retained membership source requestedCRO~M;
+CTO owns contract amendment and dated overlap semantics. Never add custody twice.
 No target/model AUM substitutes for actual custody; no inferred zeros or USD.
 
 ## Drive

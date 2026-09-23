@@ -55,3 +55,25 @@ or attestation decision to CTO. The5694 blank-value rows remain unsupported, not
 All source candidates are LOCAL. No publish, deploy, vendor call or live Holdings
 acceptance occurred in this turn. First accepted real account publication and
 actual authenticated rendered Holdings remain open for all3firms.
+
+## Andrew Tax SMA instruction received 16:50 Eastern
+
+CRO~M message99757 relays Andrew-direct from its terminal, recorded verbatim at
+ANDREW_DIRECT_20260923_204xZ_IRPT_HOLDINGS_49F_TAX_SMA_FROM_WORKBOOK.md@d70decd6b2.
+The choice was whether to leave49F Tax in Client or show it under SMAs > ALT
+Strategies > Tax from the SharePoint workbook. His answer, verbatim:
+> B
+
+His follow-up, verbatim:
+> Also there is apparently 20m in assets for Tax, so we need to understand what we're missing and where if youre saying 6m. I would check the Yang Tax SMA spreadsheet sharepoint and corroborate real quick.
+
+Consumed current MDPF_TAXSMA_DATA_CONTRACT v0.5.0 membership, category and canonical
+value mapping. Traded=YES is current business membership; Ready is not a gate.
+Historical membership cannot be backdated from today's workbook or modified date.
+Canonical value is net_mv_plus_cash, not workbook AUM. CRO~M reports9traded,
+7in0833custody and2missing from both landed masters; none of14numbered workbook
+accounts in SmartX. Those are attributed CRO measurements, not M's reproduction.
+Requested its exact protected retained snapshot/ETag/hash and canonical reader pin
+for direct reuse. CTO owns amendment of a62f Tax line and the dated overlap semantics.
+For actual Holdings, do not add Tax value on top of custody which already contains
+those accounts; pending mapping must preserve one economic position once.
