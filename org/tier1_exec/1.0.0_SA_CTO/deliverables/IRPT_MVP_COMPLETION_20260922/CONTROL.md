@@ -12,7 +12,7 @@ As of 2026-09-23 21:36 UTC. CTO owns direct review and adjudication. All three p
 
 P remains on its oversized thread while Andrew works at that terminal; MSTR says migration waits for his word. P continues manual delivery handling and is producing commits. Do not label it unresponsive.
 
-Y recovery99771 independently rechecked21:42Z: fresh thread01a0d037-6dbd-7c90-8433-f2b426d941dd, endpoint58180, heartbeat33548, bridge33676, detector34768; seat oracle9/9GREEN, stderr0bytes. MSTR measured first new-thread turn/steer injection; agent-side read/reply is still pending. Worktree4ebe6948d9 and drive4876 preserved. This closes observed oversized-frame transport failure, not the outstanding secret-read/capture repair or live Analysis journey. No duplicate runtime helpers/writers.
+Y recovery99771 independently rechecked21:42Z: fresh thread01a0d037-6dbd-7c90-8433-f2b426d941dd, endpoint58180, heartbeat33548, bridge33676, detector34768; seat oracle9/9GREEN, stderr0bytes. MSTR99772 relayed Y agent-side receipt at21:43:15Z: handoff/current files and six unread messages read; narrow secret-read/bootstrap repair resumed. Recovery CLOSED. Worktree4ebe6948d9 and drive4876 preserved. This closes observed oversized-frame transport failure, not the outstanding secret-read/capture repair or live Analysis journey. No duplicate runtime helpers/writers.
 
 ## Shared writer and integration order
 
