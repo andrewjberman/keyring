@@ -1,51 +1,44 @@
-# IRPT M status
+﻿# IRPT M: Holdings journey restart
 
-Seat `2.0.0_SA_COO~M` (Codex). Worktree ajb_irpt_m, branch
-codex/irpt-m-completion. Contract v1.3 atf0fcc4516c; current access correction
-5ad99c7d30; actual-submitter/input-owner contracte07a5ca692. Reviewer: CTO.
+Seat 2.0.0_SA_COO~M; worktree ajb_irpt_m; branch codex/irpt-m-completion.
+Andrew-direct restart: HOLDINGS_RESTART_20260923.md (initial record b14966e203).
+Existing closer contract v1.3 applies. Reviewer: CTO. Baseline: 1fd1c8f0fb.
 
-## Current result
+## Candidate and write claims
 
-**485b69c061** implements M-owned maintained-source current-viewer ports,
-preserving original normalized input binding while using the actual actor/home
-for new profile preparation. P175350 authorized implementation; Y175601/180039
-named ProspectSubmissionFactory.submit as the concrete production caller.
-**61 tests plus45 subtests pass** against real P InteractiveAccess at9a3ec2a11f
-with offline retained/profile fixtures. Compile/ruff/naming commit gates pass.
-Exact signatures, descriptor distinctions, baseline attribution and commands:
-[INTERFACES.md](INTERFACES.md).
+Owned holdings_snapshot.py and test_economic_regressions.py: Cottonwood actual
+ACCOUNT -> UNRESOLVED -> SECURITY tree, retaining signed/zero values and unique
+AccountID/AssetID positions after strict validation. Targets remain private,
+never the actual custody partition. Public schema unchanged. No edits to P's
+Entry/auth/selection, shared adapters, packaging or IAM. 68 economic tests and
+all 180 Gold tests pass offline; these do not establish real source admission.
 
-Y180533 reports repairing M180451 callback ordering finding. Combined closed-schema
-acceptance, stable retry, revocation-before-dispatch and frozen replay are Y/P's
-next proof. M's detached-projection test is not that full proof. No live success
-or deployed integration is claimed. P owns installation/shared schemas/Entry.
+Source receipts and aggregate findings: HOLDINGS_SOURCE_CHECK_20260923.json.
+No raw investor rows committed. COT original workbook has 5,694 missing value
+cells and no currency declaration. INF has 876/876 account totals tied to
+positions to one cent; 14 flattened Eclipse memberships are incomplete. Select
+one unambiguous INF account for first live proof while COT/49F adapters continue.
 
-## Preserved boundaries
+## Next proof and dependencies
 
-M source file includes existing P custody/profile baseline4911c398d9 +bc3727b3a3
-from9a3ec2a11f. No edits to shared P authorization, browser, schema, repository,
-retention or Y producer code. No single-firm selection widening or live data read.
-Publication3539ad2ae5/doc200ba442f5 remains CTO-reviewed bounded PASSbb43292167.
-Actual custody producer/deployment and unrelated deeper work remain parked.
+- M: actual INF position adapter and dated Eclipse membership; custody-first
+  49F 08335338 adapter with sole SmartX model overlay; Holdings summary/full tree.
+- M targeted checks: source-bound currency; COT incomplete accounts; Eclipse full
+  associated-account expansion. No guessed currency, residual cash or null-as-zero.
+- P: exact Holdings Entry/selection/public-status package and runtime requirements;
+  shared quantity/name/date/coverage adapter. Concrete request sent at 19:29Z.
+- CTO: exact candidate review; concrete source-authority conflicts if encountered.
+  No new task-order cycle or general research effort requested.
 
-## Next owner and local state
+## Live state and limits
 
-Y: pair new caller with485b69c061 and P schema, prove acceptance/replay boundaries.
-P: integrate the exact M source with caller/shared binding changes.
-CTO: review combined pinned candidate directly. M handles a concrete owned-source
-finding if returned; no repetitive ACK or passed-suite rerun without a change.
+Three legacy serving prefixes empty; three canonical current indexes absent;
+snapshot scheduler DISABLED today. Deployed Holdings is September21 and conflicts
+with current public-status parsing. No accepted publication, cloud mutation,
+vendor call or live browser proof this turn. M7 NOT_EVALUATED. Missing currency
+and unknown source values still refuse; no current real admission is claimed.
 
-Push state **LOCAL**. No push/deploy. Observed origin/CLOUD:
-`365ab567ba1250a6a3569df38cb75d12fe2e8d0e`.
-
-## Later receipts and canonical source request
-
-Y reports paired20 controls at1385a126e7. CTO direct paired review583d2da reports
-505+50 checks/no skips; P directed to integrate exact M485b under its existing
-path permission. This does not prove runtime/package/live completion.
-
-CTOfd32 requests canonical identity/classification/dated-price source interfaces.
-M handoff CANONICAL_REFERENCE_PORTS_20260923.md pins seven inspected source files
-and four offline classifier checks. Installed universal ports were not established;
-P actual payload/immutable receipt/currency/share-class installer seam is needed.
-No producer/provider/cloud/secret action. Y can continue with explicit absence.
+Prior source485b69c061/current-viewer paired review and publication3539ad2ae5
+are preserved. Universal reference services and analysis/export enrichment are
+parked unless they block this Holdings thread. Push state LOCAL; MSTR owns shared
+push. No deployment performed.
