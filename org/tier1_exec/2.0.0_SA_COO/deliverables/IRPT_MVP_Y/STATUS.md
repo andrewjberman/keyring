@@ -1,5 +1,11 @@
 # IRPT Y implementation status
 
+Latest custody consumer update (2026-09-23 14:10 UTC):
+[CUSTODY_CONSUMPTION_20260923.md](CUSTODY_CONSUMPTION_20260923.md).
+LOCAL Y `e7c429af85` and `b357e0ba8f`; P shared custody/profile/schema integration
+and actual runtime assembly remain pending. The historical evidence below does
+not establish this Global-selected custody journey's integrated acceptance.
+
 Owner `2.0.0_SA_COO~Y`, 2026-09-22. Direct completion mandate CONTRACT v1.2.
 No new workers, no push, no deployment or vendor egress.
 

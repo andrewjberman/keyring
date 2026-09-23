@@ -1,0 +1,82 @@
+# IRPT Y custody consumption candidate
+
+Owner: `2.0.0_SA_COO~Y`. Recorded 2026-09-23 14:10 UTC. Authority:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
+and its `LOCAL_LIVE_PARTNER_SCOPE_20260923.md` custody adjudication.
+Andrew's verbatim Global/client/account instruction is recorded at
+`ANDREW_GLOBAL_SELECTION_20260923.md`, LOCAL commit `d7898fe63e`.
+
+## Implemented Y candidate
+
+Backend worktree `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922`, branch
+`irpt-mvp-y-20260922`, LOCAL `e7c429af85`, following `b357e0ba8f`.
+P's shared candidate `dc51d8920d` was consumed by merge `e1918aac50`.
+No Y Portal change or runtime factory activation in this candidate.
+
+- `entry.build_entry(service)` supports custody without requiring a prospect
+  owner lookup. Only an explicit `load_prospect_owner` enables the owned-input
+  branch. A custody-only installation refuses a prospect body before service
+  invocation. The shared Entry still establishes current request scope.
+- `compose_frozen_request` admits a null-advisor Opal arm only with the full
+  `custody-owner-v1` binding: actual actor/home, concrete report tenant, accepted
+  account set, directory/entitlement revisions and exact snapshot. Normalized
+  document owner/source must match that binding. A supplied enum or descriptor
+  is not authorization; current P custody access and closed admission remain
+  mandatory before acceptance.
+- `freeze_parsed_portfolio` allows that custody arm only for a `CUSTODY` source
+  with exact accounts and `source.snapshot_id == owner.snapshot_id`. It rejects
+  Opal CSV prospect inputs even if a caller supplies an advisor ID. Existing
+  advisor/operations prospect behavior is preserved.
+- Recipe configuration source bindings add `home_firm_id` only for
+  `OPAL_GLOBAL`, exactly P's 14:07:46 five-field contract. Global configuration
+  source scope remains null; selecting a partner does not make that partner
+  the preparer's home organization.
+
+## Measured evidence and limits
+
+- Actual shared/Y Entry tests: 12 PASS. Offline directory loaders and a recording
+  submission service prove guarded delivery, original actor preservation,
+  concrete selected tenant, warm Opal-to-partner isolation, Global/foreign
+  tenant refusal, renderer/origin refusal and explicit prospect behavior.
+  They do not prove durable submission.
+- Generate plus intake suites: 234 PASS, 50 subtests, before the final recipe
+  descriptor change. After that change, custody-composition and recipe-snapshot
+  suites: 40 PASS. `git diff --check` passed. Commit gates checked the two Entry
+  files and four subsequent consumer files; all passed.
+- Synthetic normalized custody input preserves exact 12.03 dollars. Tests refuse
+  missing home/selection revisions, unrelated snapshots/accounts, invented
+  advisor IDs, prospect substitution and changed normalized owner/source.
+- Both exact candidates were sent to P for integration and CVO Y for independent
+  review. No independent verdict yet at this record's time.
+- All changes LOCAL. `git ls-remote origin refs/heads/CLOUD` at 14:09 UTC measured
+  `365ab567ba1250a6a3569df38cb75d12fe2e8d0e`. No push, vendor call, cloud mutation,
+  deployment or integrated acceptance claim.
+
+## Required shared ports and remaining work
+
+P owns the shared selector/header/api/scoped/schema changes and is implementing
+request-local `CustodyAccess(request, ctx, entry, selection_ref, snapshot_id,
+authorize_snapshot=...)`. Its `resolve_owner` joins the browser's client to the
+accepted accounts in the current directory; current authorization reloads the
+coherent directory/ownership/policy and selected record. Snapshot authorization
+is required. Its profile authorizer also requires a concrete retained-input
+verifier before and after maintained profile reads. Y must consume the exact
+committed port/schema pin and connect these mandatory callbacks to the actual
+submission, retained replay and frozen worker path. No permissive callback is
+an acceptable production assembly.
+
+Query/event intent carries `selected_tenant` and `account_set_id` outside the
+closed browser document. Global discovery itself is not a generation tenant:
+choosing a client/account row supplies its concrete server-verified tenant;
+the user need not first change the dropdown from Global.
+
+P's maintained Opal home-organization port currently lacks an admitted source.
+CTO assigned M a bounded read-only inventory. M reported a historical defaults
+record whose reader is deprecated; that record has not become a maintained
+source or a synthetic default. Missing organization provenance blocks generation
+metadata, not otherwise authorized Global browse/selection.
+
+Y also reported to P the existing `holdings/entry.py` current-selection reload
+using the empty warm `ENTRY.opal_principal_ids` rather than the request-local
+roster. Y made no change in that shared/M-owned surface. P should verify the
+downstream Global-selected holdings route in its paired repair.
