@@ -1,65 +1,33 @@
 # IRPT Holdings current state
 
-Owner:2.0.0_SA_COO~M. Updated2026-09-23 after CTO220316 Tax store review.
+Owner: 2.0.0_SA_COO~M. Updated 2026-09-23 22:31 UTC.
 **archetype:** IMPLEMENT
 
-## Outcome and first failing hop
+## Actual outcome
 
-Holdings remains INCOMPLETE. Real COT source and accepted native S3 publication now pass.
-API/runtime and real-login screen proof remain pending. M owns full tab closure.
-Current live Lambda is September21 package,15files,no accepted-publication reader or
-retained-selection modules/config; live role lacks versioned snapshot and selection reads.
-Exact installed evidence and native publication action prepared at a86430e39e.
+Holdings remains INCOMPLETE. Andrew's real logged-in Cottonwood/Anna test failed with NOT_READY. No authenticated browser PASS has been established. The local 600-second drive remains active; no duplicate inbox helper.
 
-## Pins and concrete proof
+Two measured blockers are being closed:
 
-- M source9b3fb2a includes d8173c1b9c no-position rule and614ad2f16b currency binding.
-- P dependency9e1bc3a751: unchanged currency_authority.py and CurrencyAuthorities.json
-  materialized locally; intentionally uncommitted P-owned dependency bytes. No M constant.
-- CTO independently accepted real COT and paired mapping51504d37e1, mandate1960f42bb6.
-- Shared COTaccount acc_d486fc9455d6b2aa18e13af1:78dimension rows minus21no-position
-  yields57positions,USD19705844.84 exact independent total, schemaPASS;7source receipts.
-- a86430e39e selected CLI publication dry-run:59nodes, real Gold Parquet/JSON prepared;
-  custody/publicationdateSept22 distinct sourcecutoff/overlaySept23. Native privatebucket
-  versioningEnabled/indexabsent. Existingindex guardPASS. This prepared-candidate proof preceded the separately authorized four-object publication.
-- Own UIe5604c03 reviewed. P sole shared auth/schema/package/IAM writer.
-- X10c2678d975f:36destination census/PENDING_ENFORCEMENT. Native Holdings is independent.
-- INF55145056df exact2account/3datepair value bridge6/6PASS; no broad date/currency inference.
-- Tax55145056df exact bounded activationrecipe. CTO98209e201b now grants existing
-  taxsma_membership.py S3store and its test to M. Bounded versioned/CAS store now
-  implemented;36 membership tests pass, including7 focused persistence cases. See
-  TAX_STORE_SOURCE_20260923.md; source-only, no Tax cloud write or activation.
+1. P installed native reader package bcb3 at ee76fa545f, independently verified by CTO85434f5330. P then reproduced a real /var/task contract-loader IndexError from snapshot._HERE.parents[4]. M repair3e913e9ce9 passes27 snapshot tests; CTOc6835d130c independently reproduces old failure and passes repaired source in the actual Lambda image/common5. P owns exact repackage and one-function installation. Source repair is not yet deployed proof.
+2. Accepted COT publication fe328763 covers only acc_d486fc9455d6b2aa18e13af1 (57positions/USD19705844.84). Other Anna account0698 and combined selection refuse. M a509946936 prepares expanded841account candidate93f930c2 from the exact same7 retained source versions:13793positions/USD548412662.59. Both Anna accounts included87positions/USD46009147.02; all59prior account node identities/economics/clocks preserved. Source981accounts partition into841reconciled and140explicit refusals (138no active positions,2same-relationship duplicates). No empty holdings fabricated.
 
-## Next executable work
+## Concrete next action
 
-CTO73c40b05ad authorized exact bounded publication; executed four conditional object
-creates. Revision fe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e
-accepted; all source/output versions and hashes read back. Receipt
-COT_NATIVE_PUBLICATION_RECEIPT_20260923.json. No scheduler/vendor/IAM/deploy change.
-CTO independently verified all four output versions at9709e10c59: native publication PASS.
-Do not republish. COT_AUTHENTICATED_PROOF_20260923.md pins the exact current-client
-selection/GET sequence and expected57security screen, dates, totals and reload checks.
-This is prepared proof, not a claim that API/browser acceptance has run.
-P has precise existing5765 package/role/environment delta and requested cutover receipt.
-P reports33member candidateba0b8694 actual native readback; no runtime completion.
-M5c2773e97b consumes exact two manifest drafts and verifies3build/4stage hashes from
-committed originals, clearing the reported stale-manifest build blocker. P owns upload
-and actual package/IAM plan. The candidate report is not an independent deployed proof.
-M follows accepted publication receipt through current grants, real-login API and visible
-57security drill, refresh/reopen. No one-account replacement of completefirm index.
-CTOf0ce1b9198 independently accepts d3a8 store. Existing-module one-shot runner is
-implemented with complete census and partial-failure refusal. CTO57030ccdfa granted
-the actual gateway flat-row/Silver repair: implemented with full census and ambiguous
-shape refusals.13 affected runner/producer-to-consumer cases pass; no real gateway call.
-See TAX_ONE_SHOT_RUNTIME_PLAN_20260923.md for code, local SDK, derived addresses and
-remaining protected binding/runtime prerequisites. Gateway/runtime owners via CTO owe
-canonical capability/permission assessment. No fullMDPF
-scheduler/category rebuild or historicalbackdating.49F source still needs custody adapter,
-exact cash/currency handling and dated Tax join; SmartX is modelauthority exceptTaxworkbook.
-All threefirm journeys remain required, not completed by firstCOT milestone.
+CTO has COT_EXPANDED_COVERAGE_PLAN_20260923.md and exact candidate/census JSON for19-write conditional publication adjudication. Existing v2 format: Gold, header,15parts,manifest,index. Current index JhtDD.AAg1AO0kdvVkxVZN.zWdjwDkkA / ETag606126dddec555c41e711b18732d3c7f remains unchanged. Zero expanded cloud writes. Preserve other date rows and all immutable history; businessdateSept22, overlaySept23.
 
-## Drive and local state
+Local actual publisher/reader replay COT_EXPANDED_LOCAL_REPLAY_20260923.json exercises19 in-memory writes and tests both Anna accounts individually/combined at default/date22. All6positive reads pass,3date23requests refuse,excludedaccount refuses,oldindexversion retained. This is local mechanism evidence, not AWS/auth proof.
 
-600second repository-local drive verified activePID30160 at21:22UTC. No duplicatehelpers.
-All commitsLOCAL; no sharedpush. Last observedoriginCLOUD b475b96309.
-Driver remains until verified threefirmcompletion or changed Andrewinstruction.
+After exact publication adjudication and repaired reader deployment: actual native reader matrix, then logged-in browser request/response proof. P also owns undefined NOT_READY contract/UI rendering. CUA reports no enabled browsers; CTO's existing Andrew test request should not be duplicated or bypassed with invented authorizer credentials.
+
+## Other retained work
+
+- Own UI e5604c03 reviewed; P sole shared auth/selection/schema/client/package/IAM writer.
+- COT initial conditional publication5e29e43c2c, independent9709e10c59; exact7source receipts in COT_NATIVE_PUBLICATION_RECEIPT_20260923.json. Expanded candidate uses those same bytes.
+- P9e1bc3a751 CurrencyAuthorities.json and reports/currency_authority.py remain intentionally uncommitted dependencies in M worktree. Do not claim their authorship.
+- Tax S3 disposition store d3a8c3e7e3 independently reviewed f0ce1b9198. Runner and actual gateway-to-Silver shape repair c354c33a92 under57030ccdfa:13targeted tests plus corrected existing membership fixture pass. CTO has review handoff. Tax runtime is parked for live Holdings incident; no vendor/cloud run, no invented capability binding.
+- 49F0833 custody exceeds SmartX; SmartX sole model authority apart from explicit canonical Tax source. No blanket currency inference.
+- INF exact55145056df bridge2accounts/3datepairs six measured matches; no general date offset or firmwide USD inference.
+- X10c2678d975f policy36destination census remains distinct from native Holdings publication.
+
+Local candidates and scripts: .runtime/holdings-journey-20260923/coverage in ajb_irpt_m. All source and doc commits local; no shared CLOUD push by M.
