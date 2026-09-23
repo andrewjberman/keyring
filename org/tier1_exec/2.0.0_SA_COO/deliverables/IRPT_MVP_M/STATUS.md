@@ -2,7 +2,9 @@
 
 Seat 2.0.0_SA_COO~M; worktree ajb_irpt_m; branch codex/irpt-m-completion.
 Andrew-direct restart: HOLDINGS_RESTART_20260923.md (initial record b14966e203).
-Existing closer contract v1.3 applies. Reviewer: CTO. Baseline: 1fd1c8f0fb.
+Current closer contract v1.4, COO_M.md and CONTROL.md@c7265d2bef apply.
+Reviewer: CTO. Current committed COT candidate35999d31a4; this candidate adds
+the Inflection full-membership census guard. No shared code edits.
 
 ## Candidate and write claims
 
@@ -13,13 +15,33 @@ never the actual custody partition. Public schema unchanged. No edits to P's
 Entry/auth/selection, shared adapters, packaging or IAM. 68 economic tests and
 all 180 Gold tests pass offline; these do not establish real source admission.
 
+Inflection repair: full.num_of_associated_accounts must be a positive integral
+number agreeing with the simple file's observed membership count. Otherwise
+custody remains visible with unresolved attribution. A flattened singleton can
+no longer license an entire multi-account portfolio value. Current producer
+suite188 PASS, including seven missing/malformed/mismatched count controls and
+one agreeing singleton. Historical managed/excluded fixture now supplies the
+explicit source count. Existing COT candidate's Holdings suite141 PASS.
+
 Source receipts and aggregate findings: HOLDINGS_SOURCE_CHECK_20260923.json.
 No raw investor rows committed. COT original workbook has 5,694 missing value
 cells and no currency declaration. INF has 876/876 account totals tied to
 positions to one cent; 14 flattened Eclipse memberships are incomplete. Select
 one unambiguous INF account for first live proof while COT/49F adapters continue.
 
-## Next proof and dependencies
+## First failing hop and ONE next proof
+
+First failing hop: actual Inflection positions plus independently selected
+account totals -> accepted Holdings snapshot. Current build_inf still does not
+consume positions_mv or bind a source currency declaration. Today's876/876
+aggregate tie is evidence for that implementation, not an accepted publication.
+There is no accepted current index for the API to consume.
+
+ONE next proof: one real, unambiguous Inflection account, its exact position and
+account source receipts, reconciled accepted publication, authorized API request,
+and complete real-login Holdings drill as one trace. No schedule activation.
+
+## Dependencies and parallel owned work
 
 - M: actual INF position adapter and dated Eclipse membership; custody-first
   49F 08335338 adapter with sole SmartX model overlay; Holdings summary/full tree.
@@ -29,6 +51,8 @@ one unambiguous INF account for first live proof while COT/49F adapters continue
   shared quantity/name/date/coverage adapter. Concrete request sent at 19:29Z.
 - CTO: exact candidate review; concrete source-authority conflicts if encountered.
   No new task-order cycle or general research effort requested.
+- CRO: targeted source currency declaration for INF/COT and original Eclipse
+  associated-account list. Exact request sent19:44Z; not a general research round.
 
 ## Live state and limits
 
