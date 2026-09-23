@@ -245,6 +245,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "A worker's write surface is exactly the <paths> its order names.",
     "world_is": "The same order also directs, in its own section 6, two specific writes to a path outside that list -- a standing pattern across this project's prior orders, not unique to this one, so it reads as an intentional, universal exception (the deliverables directory) rather than a conflict to refuse on.",
     "notes": "Not treated as a BLOCKING row: refusing to write the required proof-of-spec instance would leave the order permanently unprovable, which is a worse outcome than a well-precedented directory exception. Filed so the pattern is on record rather than silently assumed."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W5-S1",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~5",
+    "surfaced_at": "2026-09-23T05:20Z",
+    "one_line": "CRPS-c-8's real --write measured PFOE's fund form at 1592 distinct sections over 7 reports (IDVZ 433 over 37), far past the scan's 'fixed five-section skeleton' narrative for PFOE, because CRPS-c-2's PDF heading detector is a font-size/bold heuristic that also tags years, tickers and table cell values as headings, not only true section titles.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`python -m lib.research.corpus.fund_form --write` (this cell, run for real against opal-data-harvest): 'fund IDVZ reports 37 sections 433 put_performed True' / 'fund PFOE reports 7 sections 1592 put_performed True' / 'funds 2 fund_reports 44 absent_fund_reports 79'.",
+        "Direct read of one PFOE report's extraction (security_key=ASML_NA_Equity, report_id=37aa7a78aca3d4fc, s3://opal-data-harvest/amgt/harvest/bronze/research-report-extract/security_key=ASML_NA_Equity/37aa7a78aca3d4fc/extract.json): 1562 `headings` entries, the first twenty including '5_5_2026', '1', 'Ticker', 'ASML-NL', 'Currency Euro', '2016A'..'2023A' -- table/header cell text and bare numbers, not section titles.",
+        "The scan (`RESEARCH_CORPUS_SCAN_20260922.md` s.3, this order's own comparison bar): 'PFOE ... carries a fixed five-section skeleton (Headline results, Geographic highlights, Segment highlights, Headwinds and risks, Guidance)'.",
+        "fund_form.py builds `skeleton` from the extraction's own `headings` list verbatim (case/whitespace normalisation only), per this order's RULED instruction; it invents, filters or re-derives nothing beyond that -- so the measurement is faithful to CRPS-c-2's own output, not a defect in this cell."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-TEMPLATE-IS-MEASURED: 'a fund form ... measured with printed denominators', and the scan's comparison bar describes PFOE as a fixed five-section skeleton.",
+    "world_is": "The printed, denominator-carrying measurement is real and faithful to its stated input (CRPS-c-2's `headings` list), but that input's PDF heading detector is font-size/bold based and sweeps in non-title text, so the fund form's real `sections` count is ~2-3 orders of magnitude past the scan's narrative -- the two are not in conflict about the METHOD, only about what a naive reader would expect the number to be.",
+    "notes": "Not filed as a defect in this cell: the order's RULED text names the extraction's own `headings` list as the sole input and forbids inventing structure beyond case/whitespace normalisation, and CRPS-c-2 (extract.py) is READ-ONLY to this worker and out of this cell's scope to change. AC3 (judgment) will carry this same --write summary beside the scan's description for 3.0.0_SA_CVO~Z's read, with no verdict from this worker. Whether the PDF heading heuristic should be tightened is a call for whoever owns CRPS-c-2/extract.py, not this cell."
   }
 ]
 ```
