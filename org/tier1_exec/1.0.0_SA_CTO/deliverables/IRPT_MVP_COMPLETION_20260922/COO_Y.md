@@ -17,3 +17,5 @@ Y1 selected real custody for every firm and owned browser CSV/XLSX with complete
 Overwrite STATUS and current INTERFACES in IRPT_MVP_Y; include exact source/Portal/package/deployed pins, first failing hop and ONE next proof. Source micro-fixes must name the hop they unlock. No ACK-only traffic. Return a concrete blocker if a shared owner cannot supply the agreed boundary; CTO adjudicates it. Remain accountable until the tab journey, not only your library, works.
 
 Current runtime authority and exact routing: LISTING_AND_GENERATION_RULING_20260923.md Andrew-direct amendment6fc3f5f785. Generation path FIRST; standing host workflow calls approved, agent ad hoc calls not covered.
+
+Andrew iteration instruction: build first; quick targeted checks for changed behavior/interface, reuse prior evidence. No routine full suite after each edit or duplicate broad reviewer run. Batch changes into the next executable tab journey; broader checks only at an assembled release boundary or for a named failure/risk. CONTRACT iteration instruction governs.
