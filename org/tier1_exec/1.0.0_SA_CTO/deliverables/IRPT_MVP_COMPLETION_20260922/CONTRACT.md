@@ -40,6 +40,8 @@ Ownership means the listed seat integrates edits to that surface and answers int
 
 If a file crosses rows, register the exact function/section claim with its owner before editing. Until clarified, the more specific owner integrates it; CTO resolves a genuine tie. CVOs write their own evidence/review files and do not fix the implementation they grade.
 
+**Current narrow ownership exception (2026-09-23 05:52 UTC):** [LIVE_SCOPE_OWNERSHIP_TRANSFER_20260923.md](LIVE_SCOPE_OWNERSHIP_TRANSFER_20260923.md) assigns COO~P sole implementation/integration ownership of the directory/scope/non-render authorization and header/shared-selection surfaces needed for the live scope/bootstrap, firm selector, initial browse and pagination repair. MSTR measured COO~M unable to take a turn because of a usage limit. M's worktrees remain preserved; this does not transfer unrelated custody/model work or CVO independence. This exception supersedes the M-owner row only for the named repair until CTO explicitly hands it back.
+
 ## 4. Shared semantic contracts
 
 These obligations govern the existing wire schemas. Owners publish concrete schema versions and paired producer/consumer examples in their lane's `INTERFACES.md` before consumers integrate. Do not create a competing shadow schema or rename all existing fields to match this prose.
