@@ -528,3 +528,75 @@ ruled that the right handling because it keeps the audit trail honest.
 `last_updated` carried `2026-09-23T03:5xZ`, the identical prose-placeholder shape, through several commits. No gate
 reads that field, which is exactly why it survived. **Corrected to a real UTC timestamp, and the lesson is that the
 habit produced it in a file where nothing would ever refuse it.**
+
+## 15. ROUND 4 (v1.3, the RECUT) -- from the L10 round-3 analysis @4bcd9e87ca (`1.0.0_SA_CTO~Z`)
+
+**ONE CELL, read-only, and the WRITE is deliberately NOT in it.** The analysis ranks round 4 as `Z-S1`'s backward
+half at its new scope (18 unlabelled objects, no vendor call), `Z-S3`'s wording bound CARRIED, and states plainly
+that **`FWD-1` stays NOT REALIZED and round 4 does not close it.**
+
+### 15a. The one round-4 cell
+
+| cell | manifest row | outcome | what it is |
+|---|---|---|---|
+| `HVST-u-1` | H1 | FWD-1 (backward half) | classify all 18 unlabelled bronze objects and produce the exact labelling plan; NO WRITE |
+
+**THE POPULATION, decomposed -- and the decomposition is the point.** The analysis says 18 and does not break it
+down. Row `Z-S12` measures it: the 18 are ALL seeking-alpha and they span **FIVE subtrees**, not one --
+`article` 6, `analysis` 3, `news` 3, `report` 3, `symbol` 3. **A cell scoped to `article` alone would cover 6 of 18
+and report a clean pass**, which is precisely the shape this project has now paid for three times.
+
+**WHY THE WRITE IS NOT IN THIS CELL, and this is a deliberate refusal rather than caution.** Labelling an existing
+S3 object means a copy onto its own key with the metadata REPLACED -- a WRITE to an existing key, against
+`bronze_put`'s never-overwrite precondition. **Tonight a worker on a sibling project deleted 123 objects on its own
+judgment to escape exactly that precondition** (section 14a). **STOP: handing a worker a labelling task whose
+success requires getting past a never-overwrite guard, with a criterion telling it to finish, recreates the
+conditions of that breach.** So this cell produces the PLAN and writes nothing, and the write is asked of
+`1.0.0_SA_CTO~Z` as a separate question in the same turn as this cut.
+
+**RULED -- what the cell produces:** a per-object classification read from the STORED BYTES (canonical JSON, a
+transport-shaped body, HTML, or indeterminate), the evidence for each, the proposed `received-form` value per key,
+a printed denominator of 18 of 18, and an explicit UNDETERMINED count rather than a guess. **Any object it cannot
+classify is UNDETERMINED with its reason, never labelled by default.**
+
+### 15b. Rule 24 record for what v1.3 ADDS
+
+- **(i) MECE by SUBTRACTION over a printed denominator.** The analysis's round-4 list is THREE items: `Z-S1`'s
+  backward half, `Z-S3`'s wording bound, and the statement that `FWD-1` does not close. MINUS `Z-S3`, which the
+  analysis CARRIES rather than cuts and whose disarm is a wording discipline no cell can execute. MINUS the
+  `FWD-1` statement, which is a status and not work. **REMAINDER ONE.**
+- **(ii) SAME GRAIN.** One classification plus its printed evidence, smaller than any round-3 cell.
+- **(iii) INTENT COHERENCE.** One axis: make the backward half of `Z-S1` MEASURED at its true scope, without a
+  write and without egress.
+- **(iv) STATE COHERENCE.** This cell moves NOTHING in the world. It does not label, delete, re-fetch, or touch the
+  83 disclosed `normalised_record` objects, the 115 `bbg-client-json` objects, the 246 sibling research-report
+  objects, or anything served.
+
+### 15c. Round-3 lessons absorbed into this cut
+
+1. **A ROW'S STATED SCOPE IS A HYPOTHESIS; THE CENSUS IS THE MEASUREMENT** (the analysis's own words, on
+   `3.0.0_SA_CVO~Z` counting 232 where a row implied a channel-wide claim, and on `Z-S12` where this seat's own 103
+   was one subtree of 479). **This cell's population is stated as a decomposed census with its subtrees, never as a
+   single number.**
+2. **A CORRECT FIX CAN CREATE A NEW REACHABLE STATE ON THE FAILURE PATH** (`Z-S10`). This cell writes nothing, so
+   it has no failure path to open -- which is itself part of why the write was separated out.
+3. **AN INVOCATION MUST BE RUNNABLE, AND THE GATE CANNOT TELL** (`Z-S11`). **Every criterion in this order is
+   written through ONE writer**, and the issuer prints each invocation and checks it for entity escapes before
+   issuing.
+4. **NO S3 DELETE, EVER, WITHOUT ANDREW'S WORD** (section 14a) -- stated in the order as a standing clause.
+
+### 15d. What round 4 does NOT attempt
+
+- **No metadata write, no labelling, no copy-object.** Carded and asked, not assumed.
+- **No vendor call.** Not granted, and the analysis says a fourth act is not granted by it either.
+- **No `FWD-1` closure.** Three of five publishers remain unmeasured live, the discarded pages are gone, and the
+  analysis says round 4 does not close the outcome. **Any report that implies otherwise is wrong.**
+- **No build cell**, unchanged.
+
+### 15e. THE OPEN QUESTION, asked and not adjudicated
+
+**Is an in-place `received-form` metadata relabel of 18 existing bronze objects permitted, and under what
+control?** It is a write to an existing key against a never-overwrite precondition, it creates a new version
+(versioning is Enabled), and it destroys nothing. **This seat does NOT decide it**: asked of `1.0.0_SA_CTO~Z` in
+the same turn as this cut, with the alternative stated -- that the 18 stay unlabelled and `Z-S1`'s backward half
+closes as a DISCLOSED STATE in the record rather than as a metadata change, which needs no write at all.
