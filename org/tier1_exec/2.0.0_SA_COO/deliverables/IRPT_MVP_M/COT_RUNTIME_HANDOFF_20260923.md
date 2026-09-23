@@ -27,3 +27,13 @@ Holdings drill. M has not published a firm index, deployed, or made vendor calls
 Do not replace a complete firm publication with this bounded one-account candidate.
 CRO f307d58415 now identifies the four-field-null BD rows as absent end-date positions;
 M is incorporating this newly evidenced admission rule separately to expand account coverage.
+
+## Expanded actual account after CTO5ee54ac0d4
+
+The same Cottonwood account already used for P's positive Performance result now
+passes Holdings: acc_d486fc9455d6b2aa18e13af1,57 positions,USD19705844.84.
+78 original dimension rows include21 absent-at-end-date pairs excluded under the
+new measured rule. Original byte receipts and excluded physical ordinals retained.
+Three targeted controls prove narrow exclusion, partial-null refusal and independent
+total mismatch refusal. Evidence COT_END_DATE_POSITIONS_PROOF_20260923.json.
+Please prefer this account for the shared authenticated cross-tab journey.

@@ -18,8 +18,11 @@ All work LOCAL; no cloud publication/deploy or vendor calls. Last origin CLOUD b
 
 ## Next proof and dependencies
 
-M expands COT source admission using CRO f307d58415 evidence: all-four-null BD rows
-are absent end-date positions, not numeric zero. Partial-null/conflicting rows still refuse.
+M implemented CTO5ee54ac0d4 / CROf307d58415: all-four-null BD rows are absent end-date
+positions, retained in excluded physical-row census. Partial-null/conflicting rows refuse.
+Actual P-positive account acc_d486fc9455d6b2aa18e13af1 now passes source builder:
+78dimension rows -21absent =57positions, USD19705844.84 exact independent total.
+Schema PASS;3 affected admission controls PASS. Full screen remains unproven.
 P integrates source callback and current authorization, accepted publication/read and
 actual screen drill. Bounded one-account evidence cannot overwrite complete firm population.
 
