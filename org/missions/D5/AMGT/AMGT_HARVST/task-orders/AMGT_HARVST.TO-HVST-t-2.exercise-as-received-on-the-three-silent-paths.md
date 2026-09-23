@@ -138,7 +138,7 @@ that `check_as_received.py` is unchanged, plus a compile, CRLF and non-ASCII pri
 3. **The bound is required in the OUTPUT**, not just the report, so a later reader cannot quote `byte_equal 5 of 5`
    as proof about live servers. Same discipline as `HVST-r-2`'s bound, which the CVO cited approvingly.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~17</slot>
 <fabric>site-z</fabric>
