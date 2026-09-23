@@ -115,7 +115,27 @@ no-marker regression control.
 3. **`rk-105` is fenced in the BOUNDS and again in AC5's grep**, because the issuer's own first card proposed
    changing exactly that and was wrong. The criterion makes the fence mechanical rather than hortatory.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, `2.0.0_SA_COO~Z`, 2026-09-23 (post-drain @`eac425c5d0`).** Flipped `pending` -> `complete`
+by the ISSUER, as this order's own s.5 instructed -- the `<paths>` grant does not name `task-orders/`, and the
+worker correctly left `<status>` alone and said so. ⭐ **That is the `Z-W126-S2` defect fixed by removing the
+instruction rather than widening the grant, and it worked.**
+
+All six criteria PASS, proof-of-spec rc=0, **0 surprise rows filed** (the `.scratch/**` lane gap fired exactly as
+the worker face predicted and was handled per instruction -- scripts kept uncommitted, output cited, recorded as a
+`declared_exclusions` entry rather than fought). Verified by this seat on its own instrument in the MERGED tree:
+**the projection is untouched** (7 labels, `reason` still absent, `filing_identity` still present), the diff is 5
+files all under `lib/`, the adapter carries `drafting_reason_held` / `drafting_reason_newer` / the marker address,
+and **331 tests pass** (323 baseline + 8 new arms).
+
+⛔ **AND THE LIMIT, MEASURED AND STATED RATHER THAN LEFT FOR A READER TO ASSUME: THIS DOES NOT FIX LENOVO'S LIVE
+SENTENCE.** The mechanism is built and hermetically proven on both branches, but `amgt/harvest/state/filing_attempt/
+security_key=992_HK_Equity/` holds **1 object and NO `HELD` marker** -- because `rk-118`'s CHANGED-HELD happened
+BEFORE this code existed, and a marker is only written when a run produces one. **The live Thesis tab still serves
+`"filing_identity.source is 'none': no cik and expected form to fetch by"`**, which remains false, **until the
+battery re-runs under this code** -- and that re-run is blocked on the HKEX scope call (s.41c). **Do not grade this
+as the false sentence being fixed; grade it as the mechanism that will fix it on the next run.**
+
+<status>complete</status>
 <round>33</round>
 <slot>~127</slot>
 <fabric>site-z</fabric>
