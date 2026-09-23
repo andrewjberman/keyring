@@ -1,74 +1,80 @@
-﻿# IRPT Y - current product status
+# IRPT Analysis (COO~Y) -- status
 
-Seat `2.0.0_SA_COO~Y`, September 23, 2026, 18:40 Eastern. Analysis remains INCOMPLETE.
-Contract v1.4 and COO_Y mandate apply; CTO reviews directly. Fresh-thread load
-completed; exact serial matches environment and readiness oracle GREEN 9/9.
-Existing launcher helpers and 600-second seat-only drive were preserved.
+Seat `2.0.0_SA_COO~Y` (CLAUDE, since 2026-09-23 23:01Z; the Codex seat and its 600 s driver are retired).
+Contract `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.4; COO_Y.md and
+CONTROL.md apply; CTO reviews directly (no CVO queue). Goal + loop authority:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md` @fc17929b64
+(/loop 20m, stop on /verify SOUND or Andrew's stand-down). As of 2026-09-23T23:30Z.
 
-## Pins and active paths
+## Pins
 
-Backend `2874e37647` over `bfe6469b1e` and `4ebe6948d9`, worktree
-`C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922`.
-Active Y delta: generate/{resident_worker,publication_worker,publisher}.py,
-session/resident_session.py and generate/tests/test_resident_worker.py.
-Portal last Y pin `7a5b24e7`; no new Portal candidate this turn.
-Deployed package/source digest NOT MEASURED. Push state LOCAL;
-origin CLOUD `b475b96309c0034b513f19393138984d05716d0e`. No push/deploy/vendor call.
+| What | Value |
+|---|---|
+| Working branch / worktree | `irpt-mvp-y-20260922` at `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922` |
+| Workspace candidate pin | `2874e37647` (over `bfe6469b1e`, `4ebe6948d9`); CTO accepted 2dd385ed59 / 3d9f451 |
+| P integration pin | `b3fc529601` on `irpt-smoke-p-backend-20260923`: 31 Y files; 85 of 85 tracked `ycharts/` files at 2874 hash-match P HEAD |
+| Portal candidate pin | `7a5b24e7` (no new Portal candidate) |
+| Deployed artifact pin | `irpt-ycharts-generate` CodeSha256 `1L60sG1G9IaFfwe+LPNdE84DarlWCHKkdE8M5CyVI8o=`, LastModified 2026-09-19T14:29Z -- predates every Y commit; source map at HEAD says `CJ6aBh7B...` |
+| Push state | LOCAL; origin CLOUD `b475b96309` (ls-remote 23:16Z) |
 
-## Last proof and first failing hop
+## Live thread
 
-CTO `3d9f451` independently CLOSED the secret-read bootstrap finding at
-`bfe6469b1e`: explicit missing is the only bootstrap condition; failed/invalid
-reads cause no login or refresh/upload intent. Ten focused cases passed.
+State: NOT LIVE. Last trace: none (18 focused offline cases + 4 controls at 2874, CTO 2dd385ed59; no installed/live proof).
+First failing hop: 0. Always-on host `i-0167fd745ad906a66` is STOPPED (enforcer StopInstances 21:21:18Z; Terraform
+`ycharts/instance.tf:131-135` declares `stopped`; no `AutoShutdown=disabled` tag) -> nothing consumes `irpt-generation`.
+Next hops measured behind it, all P shared surfaces: deployed generate Lambda is stale against the source map; its
+role has no `sqs:SendMessage`; `IRPT_LIVE_YCHARTS_CALL` is unset; `/analysis/inputs`, `/analysis/requests*` liveness
+UNDETERMINED by comp-routes (one `/api/scoped/investor-reporting/*` behavior to API Gateway).
 
-`2874e37647` removes same-firm resident/publication lookup assumptions and
-preserves actual actor versus original retained input owner. Eight paired
-connected cases cover both creator classes, certified READY/reopen, revocation,
-ownership tampering and retained-PDF recovery without vendor reacquisition.
-Combined bootstrap/cross-firm check:18 PASS13.68s. Existing same-firm connected
-case and three publisher ancestry/revocation checks pass. Ruff/commit gates pass.
-CTO `2dd385ed59` independently accepts exact `2874e37647`: eight cross-firm
-cases PASS3.69s plus four existing controls PASS2.22s. Exact publisher.py P
-integration grant landed with the contract. This is bounded source PASS only.
+## Acceptance IDs
 
-Browser template -> installed guarded UploadService is still not live-proven.
-P owns shared current-authority/repository factory, host upload boundary,
-package/IAM/routes and sole-consumer cutover receipt. Current CTO control and
-215058 message confirm runtime/enforcement pending despite newly provisioned
-report storage. P222939 reports31 accepted generation/session paths consumed.
-Four critical working files independently hash-match2874 in P integration tree
-`irpt-smoke-p-backend-20260923`, HEAD068e9ccd85: resident_worker,
-publication_worker, publisher and resident_session. Source consumption is real;
-installed factory/package/cutover remains pending. Exact current fork is the
-resident's non-HTTP current-authority reader: accepted owner.principal_id and
-home_firm_id identify the submitter, but retained fields are not current grants.
-Y supplied the precise fields/profile-reader limits to P and CTO223108/223111.
-See INTERFACES for the concrete maintained reader and its authority gap.
-P223931 and closing log `session_close_P_2017-2238Z.md` record Andrew's
-Codex-to-Claude transition for P. P reports the31 copied Y paths remain
-uncommitted after an owned-path gate refusal; the successor must resolve that
-grant without bypassing the gate. P's shared installation ownership continues.
-CTO has routed the current-authority research to CRO. MSTR owns P's runtime
-transition; P's worktrees, staged lock and copied source must be preserved.
-No replacement shared writer or duplicate session consumer.
+| ID | State | Evidence |
+|---|---|---|
+| Y1 selected custody + owned CSV/XLSX + disposition + catalogue | OFFLINE ONLY | TEMPLATE_UPLOAD_HANDOFF_20260923.md, UPLOAD_RESOLUTION_IMPLEMENTATION_20260923.md @2874 |
+| Y2 immutable normalized input, corrections, reconciliation | OFFLINE ONLY | normalized_input.py / frozen recipe @2874; 12.03 Dollars freeze offline |
+| Y3 retained acceptance, durable dispatch, idempotency, recovery | OFFLINE ONLY | resident_worker.py, durable_job.py @2874; CTO 2dd385ed59 |
+| Y4 identity/settings/holdings readback, Overview/Comparison/Multi-Comp PDFs | NOT STARTED (live) | session_* @2874 offline only; no vendor PDF ever produced by the resident |
+| Y5 extraction/certification into typed report | OFFLINE ONLY | publisher.py / census 195040 B @2874 |
+| Y6 polling/history/reload/corrections/downloads | NOT STARTED (live) | Portal 7a5b24e7 |
+| Y7 one reconciled full trace per required case | NOT STARTED | none |
 
-## ONE next proof
+Offline-only work grades nothing until the live thread is live.
 
-Real-login browser CSV AAPL10.01 + VNQ2.02 Dollars -> retained12.03 input ->
-Overview acceptance -> irpt-generation -> always-on resident/session -> vendor
-PDF -> retained certified AnalysisReport -> screen and reload/history.
-Record deployed digests, request/input/report revisions and visible result.
-Y consumes P's concrete installed factory/cutover receipt and runs this journey.
+## Write claims
 
-## Interfaces and limits
+Current-authority consumer per CTO d78fdb2f1c item 4 (2)(3), under `infra/aws/lambda/investor-reporting/ycharts/generate/`
+in the Y worktree: the decision function that grades the projected profile against the accepted record at job start,
+final release and durable dispatch, plus its five focused cases in `tests/test_resident_worker.py`. Y's paths at 2874
+are integrated unchanged in P's branch (b3fc529601); the new pin supersedes 2874 for P's next integration batch. Untracked and preserved:
+`.tools/irpt-y-portfolio-commit-message.txt`, `.tools/irpt-y-submission-commit-message.txt`.
 
-Current delta: CROSS_FIRM_PUBLICATION_HANDOFF_20260923.md. Literal installer,
-factory, pins and rollback: RESIDENT_ASSEMBLY_HANDOFF_20260923.md, amended by it.
-Approved host i-0167fd745ad906a66 remains always on, no inbound, generation first,
-one owner; standing host workflow/D1 approved by Andrew6fc3f5f785. Agent ad hoc
-vendor calls are outside that authorization. Old B/F canonical cycles stay held.
+## Next proof
 
-All firms, both input lanes, units, corrections, three variants, live recovery,
-revocation and same-revision branded export remain required under Y1-Y7/S1-S7.
-No live-product completion from tests or source review. P shared installation is
-a dependency; Y retains ownership of the whole Analysis journey.
+Real login -> CSV AAPL 10.01 + VNQ 2.02 Dollars -> frozen 12.03 -> Overview acceptance/queue -> resident worker on the
+running host -> vendor PDF -> certified AnalysisReport -> screen -> reload/history, with deployed package/source
+digests and immutable input/request/report revisions recorded. Runs the moment the host is running and P returns
+the installed factory + cutover receipt; until then each loop tick re-measures the dependencies below from artifacts.
+
+## Dependencies
+
+| Needs | From (owner) | Interface / pin | State |
+|---|---|---|---|
+| Installed `MODULE:build_resident_runtime` factory with real `principal_for`, repositories, session ports; package/census digests; sole-consumer cutover receipt | 2.0.0_SA_COO~P | RESIDENT_ASSEMBLY_HANDOFF_20260923.md items 1-3, 5 | AWAITED (no implementation in P tree) |
+| Non-HTTP current authority: P projects `createdAt`/`role`/`userType` from `CanonicalProfileReaders.get_user`; Y refuses on user None / status != active / firmId != home_firm_id / createdAt after acceptance, records createdAt_absent, classes OPAL_GLOBAL iff firmId == opal-capital or userType == Dev | 1.0.0_SA_CTO ruled d78fdb2f1c (item 4); P (1)(4), Y (2)(3) | RULINGS.md "Claude CTO takeover batch" | ADJUDICATED -- Y consumer side IN PROGRESS this tick |
+| Host tag `AutoShutdown = "disabled"` on the runner Terraform resource, plan to CTO, safe-apply; nobody starts the host before the tag and the resident install are ready | 2.0.0_SA_COO~P | CTO d78fdb2f1c item 5; Y 99801 adds the second writer `aws_ec2_instance_state.runner` (`stopped`) | BLOCKED at P |
+| Generation path: deploy HEAD submit entry, `sqs:SendMessage` on submit role, `IRPT_LIVE_YCHARTS_CALL`, `/analysis/*` routes live | 2.0.0_SA_COO~P | CRO 6fc3f5f785 item 5; RESIDENT_ASSEMBLY_HANDOFF items 2, 4 | AWAITED (measured absent 23:2xZ) |
+| 31-path owned-path grant for the copied Y files | 2.0.0_SA_COO~P | b3fc529601 | CONSUMED |
+
+## Parked
+
+| Question (off-thread) | Owner | Un-parks when |
+|---|---|---|
+| `comp-blast freeze_parsed_portfolio` NOT-FOUND over 28,307 nodes (MSTR 99629/99630) | 2.0.0_SA_COO~Y | a graph question arises for that name; not on the live thread |
+
+## Limits
+
+Not proven: installed service, live login/session recovery, real vendor PDF contents, browser E2E, all-firm
+publication, holdings readback beyond upload echo, the units/variants/corrections/export matrix. Reserved gates still
+ahead: the shared Terraform apply on the ycharts root (P, never-widen), the first automated sign-in (approved under
+6fc3f5f785 as the standing host workflow; agent ad hoc vendor calls stay prohibited), and any shared-branch push
+(0.0.0_AB_MSTR). No acceptance ID is PASS until the CTO grades a pinned live trace.

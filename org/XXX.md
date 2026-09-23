@@ -727,6 +727,40 @@ one lane, one loop, cadence 30m, and `2.0.0_SA_COO~O -> /drive NFRA_OPLGTW`.
 - A successor RE-ARMS ONLY off this line while the scope is not DONE, and re-reads the project's open orders before its
   first tick rather than trusting a count in a log.
 
+`2.0.0_SA_COO~P` **`/loop 20m` DIRECTED over Investor Reporting PERFORMANCE (49 Financial, Inflection, Cottonwood) ONLY.**
+Andrew-direct 2026-09-23 ~22:4xZ at the `2.0.0_SA_COO~P` terminal (first Claude turn after the Codex seat transition),
+VERBATIM: *"I need you to create a /goal to get performance reporting done and linked up for all firm clients at 49
+Financial, Inflection, and COttonwood. Cottonwood only has data back to May 2026 or so, so we don't need it perfect or in
+all the views because they lack data, however it should be structurally sound. then i need you to make a /loop with a 20m
+interval to drive you to the conclusion of that goal."* Record:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`
+@`f7aaa01da1` (broadcast 99776). CADENCE 20m. STOP-CONDITION: `/verify SOUND` on the record's done criteria (real
+signed-in user -> selection -> provider calculation -> retained report -> reopen without a new vendor call -> export, at
+all three firms; Cottonwood structurally sound with its data window disclosed), or Andrew's stand-down. Landed by
+`1.0.0_SA_CTO` (a seat does not author its own row). Every standing gate binds unchanged: vendor per-use word,
+never-widen, MSTR-only shared pushes, the IRPT closer contract v1.4.
+
+`2.0.0_SA_COO~M` **`/loop 20m` DIRECTED over Investor Reporting HOLDINGS with a SNAPSHOT model overlay ONLY.**
+Andrew-direct 2026-09-23 ~22:4xZ at the `2.0.0_SA_COO~M` terminal, VERBATIM: *"write yourself a /goal about how you're
+going to get end to end "Holdings" with model overlay for every 49 and Inflection Client that you can mesh between their
+respective smartx/schwab and eclipse/orion accounts, with structurally correct pipeline for cottonwood (as they dont have
+backfill data at this time). Then, I need you to make a /loop with a 20m interval whose purpose is to keep you driving
+until that is done."* and *"for now, all you need to do for model overlay is be able to show what clients own what models
+and what assets are in those models. its a snapshot view, please reorient the goal to be around just providing snapshot
+model holdings, we do not need time series on Models, snapshot is fine."* Record:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
+@`6890584d29` (broadcast 99780; row requested 99795). CADENCE 20m. STOP-CONDITION: `/verify SOUND` on the signed-in
+Holdings journey at all three firms with the snapshot overlay, or Andrew's stand-down. Landed by `1.0.0_SA_CTO`.
+
+`2.0.0_SA_COO~Y` **`/loop 20m` DIRECTED over Investor Reporting ANALYSIS ONLY.** Andrew-direct 2026-09-23 ~23:0xZ at
+the `2.0.0_SA_COO~Y` terminal, VERBATIM: *"Read your most recnet log and handoff, then ask COO~M how they set up their goal
+and loop and do the same in this session"* -- his word adopts the M shape (a /goal and a 20m /loop) for the Analysis
+product. Record: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`
+@`fc17929b64` (broadcast 99790). CADENCE 20m. STOP-CONDITION: `/verify SOUND` on the real-login Analysis journey
+(dollar template upload -> frozen input -> guarded acceptance -> resident consumer -> vendor PDF -> certified retained
+report -> screen with reload/history and same-revision export) and the COO_Y.md Y1-Y7 matrix, or Andrew's stand-down.
+Y never takes over P's shared installation. Landed by `1.0.0_SA_CTO`.
+
 **Find a stale cron from a prior session? Cancel it:** `CronList` → `CronDelete`.
 
 ---
