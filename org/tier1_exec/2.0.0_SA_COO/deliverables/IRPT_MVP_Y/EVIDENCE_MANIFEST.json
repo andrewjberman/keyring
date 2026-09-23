@@ -410,10 +410,8 @@
       "initial_factory_driver_result": "2FAIL28PASS: test expected ok:true on success but actual Entry success is data envelope; assertion corrected without production change"
     },
     "independent_review": {
-      "state": "HANDOFF_PENDING",
-      "reviewer": "3.0.0_SA_CVO~Y",
-      "target": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
-      "entry_report": "141510 message reports 24 independent plus12 supplied PASS on b357; durable review pin pending; not transferred to later composition changes"
+      "state": "SUPERSEDED_FOR_CURRENT_FINAL_REVIEW",
+      "note": "Historical CVO evidence retained; current final review routed to CTO per151855 relay"
     },
     "production_factory_installed": false,
     "live_calls": false,
@@ -1076,6 +1074,97 @@
     },
     "local_factory_installed_tested": true,
     "runtime_factory_handoff": "CUSTODY_FACTORY_20260923.md",
-    "module_manifest": "CUSTODY_FACTORY_MODULES_20260923.json"
+    "module_manifest": "CUSTODY_FACTORY_MODULES_20260923.json",
+    "prior_review_route": {
+      "state": "HANDOFF_PENDING",
+      "reviewer": "3.0.0_SA_CVO~Y",
+      "target": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+      "entry_report": "141510 message reports 24 independent plus12 supplied PASS on b357; durable review pin pending; not transferred to later composition changes"
+    },
+    "current_review": {
+      "reviewer": "1.0.0_SA_CTO",
+      "state": "IN_REVIEW",
+      "target": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+      "authority_message": "20260923T151855Z_1.0.0_SA_CTO_IRPT_Andrew-direct_CTO_reviews_current_f.md",
+      "relayed_word": "No independent review, you are the reviewer here.",
+      "instruction": "Continue implementation/source-adapter coordination; do not await CVO approval; no deployment change"
+    }
+  },
+  "custody_source_disposition": {
+    "source_pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+    "producer_handoff": "abfb3eaf8242cf5df26c7e1074e0e555245d969a",
+    "production_callbacks": "unconfigured/refusing; exact snapshot binding and accepted security census missing",
+    "signed_policy_proposal": "CUSTODY_SIGNED_VALUE_PROPOSAL_20260923.md",
+    "proposal_status": "Current positive-only eligibility adopted by CTO7a3fd28e11; no numeric admission expansion",
+    "peer_package_report": {
+      "sender": "2.0.0_SA_COO~P",
+      "pin": "e47aed7f71",
+      "factory_tests_pass": 30,
+      "generation_intake_tests_pass": 265,
+      "subtests_pass": 50,
+      "module_hashes_verified": 29,
+      "flat_members": 73,
+      "scope": "P reported local import/construction with refusing synthetic source callbacks; not Y rerun",
+      "runtime_installed": false
+    },
+    "eligibility_controls": {
+      "artifact": "CUSTODY_ELIGIBILITY_CONTROLS_20260923.md",
+      "count": 11,
+      "status": "prepared specification, not executed",
+      "implementation_dependency": "exact original-position producer interface from M proposal; no located production adapter"
+    },
+    "actual_position_proposal": {
+      "pin": "a20a1a1bd28c2cf76d5b80aae0d9a745ab5c7d2c",
+      "status": "M source families located for all3 firms; CTO adjudication and concrete accepted producer/interface pending",
+      "source_module_proposed": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+      "does_not_establish": "current security census, runtime callback, live availability or snapshot authorization"
+    },
+    "interface_coordination": {
+      "artifact": "CUSTODY_PRODUCER_INTERFACE_DRAFT_20260923.md",
+      "M_message": "20260923T153807Z",
+      "P_message": "20260923T153734Z",
+      "Y_replies": [
+        "20260923T153907Z",
+        "20260923T153908Z"
+      ],
+      "state": "M spellings accepted in principle, exact decimal/census requirements sent; concrete signature/schema/snapshot reader pending",
+      "code_implemented": false
+    },
+    "peer_generate_runtime_repair": {
+      "pin": "f0075287c4",
+      "source": "P153734 report",
+      "scope": "generate only, enforced positive/missing-custody negative and extracted artifact in pinned Lambda Linux3.12 network-disabled",
+      "review": "Superseded by CTO direct bounded local runtime PASS6fa9ce525f; no Y rerun",
+      "production_binding": false
+    }
+  },
+  "cto_direct_review": {
+    "commit": "8653eb6cd4d4da9e4e36b447a77822e0bf2df71f",
+    "reviewer": "1.0.0_SA_CTO",
+    "verdict": "bounded source PASS; complete custody generation and runtime open",
+    "factory_pass": 30,
+    "scalar_driver_pass": 20,
+    "portal_pass": 49,
+    "portal_assertions": 67,
+    "scope": "CTO actual executions, not Y rerun",
+    "package_limit": "generate import gate UNENFORCED; missing BUILD_MANIFEST.json and declared jsonschema/referencing dependencies; P owns runtime closure"
+  },
+  "cto_runtime_review": {
+    "commit": "6fa9ce525f7cc21704b052d22e6f7d7b0396dc8d",
+    "package_pin": "f0075287c426cbe9eea04f0165bc179147918ce1",
+    "reviewer": "1.0.0_SA_CTO",
+    "verdict": "bounded local artifact/runtime PASS",
+    "source_members": 74,
+    "dependency_members": 151,
+    "source_zip_sha256": "7419db6052e33b79729343aa8b1b4db5fc9c4f63742e9658469977c04eca3c16",
+    "dependency_zip_sha256": "d17ae439a182b58b82e607108686bde53fd185aa04cddf0bccf365250cfc64bd",
+    "controls": "enforced complete package PASS; missing custody.py exit1; reconstructed package in pinned network-disabled Lambda3.12.14 Linux with no production credentials",
+    "does_not_close": [
+      "production source/snapshot callbacks",
+      "comparisons",
+      "production configuration/IAM wiring",
+      "complete journey"
+    ],
+    "new_y_run": false
   }
 }

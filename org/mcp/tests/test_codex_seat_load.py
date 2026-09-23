@@ -220,16 +220,16 @@ class SkillInstallTests(unittest.TestCase):
             first = skill_install.install_all(REPO_ROOT, codex_home)
             second = skill_install.install_all(REPO_ROOT, codex_home)
 
-            self.assertEqual(
-                [item["skill"] for item in first["skills"]], ["load", "log"]
-            )
-            for name, receipt in zip(
-                skill_install.CANONICAL_SKILLS, first["skills"], strict=True
-            ):
+            # The set is now PARITY.yaml-driven; load and log stay the required pair.
+            first_by_name = {item["skill"]: item for item in first["skills"]}
+            second_by_name = {item["skill"]: item for item in second["skills"]}
+            self.assertTrue({"load", "log"} <= set(first_by_name))
+            for name in ("load", "log"):
+                receipt = first_by_name[name]
                 self.assertEqual(
                     receipt["changed"], ["SKILL.md", "agents/openai.yaml"]
                 )
-                self.assertEqual(second["skills"][["load", "log"].index(name)]["changed"], [])
+                self.assertEqual(second_by_name[name]["changed"], [])
                 for relative in skill_install.EXPECTED_FILES:
                     self.assertEqual(
                         (codex_home / "skills" / name / relative).read_bytes(),

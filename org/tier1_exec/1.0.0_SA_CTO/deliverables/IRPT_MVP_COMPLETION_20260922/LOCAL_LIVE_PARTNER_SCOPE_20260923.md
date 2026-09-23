@@ -229,3 +229,88 @@ dispatch/install and input-frontier evidence; INF's maintained advisor contract
 must not inherit BD five-role semantics; COT's empty-map branch is a source risk
 until linked to the same live run/output version; 49F needs owner-supported
 crosswalk or producer re-keying proof, never a fallback authorization join.
+
+## Andrew-direct review ownership, 2026-09-23 11:18 Eastern
+
+Direct user message at the CTO terminal, verbatim:
+
+> No independent review, you are the reviewer here
+
+This later direction supersedes the separate CVO review assignments and CVO
+approval requirements above for the current resumed IRPT scope/parser,
+organization reader, custody factory and paired integration/package work.
+CTO performs the code, test and artifact review directly. Existing CVO evidence
+is retained as evidence, not a required additional gate. P/M/Y implementation
+ownership remains unchanged; new candidates and findings go to CTO. No release
+or cloud authorization changes. Relayed to CVO P/M/Y, COO P/Y and MSTR at
+11:18 Eastern; separate CVO review runs instructed to stop and preserve work.
+
+## CTO signed-value disposition, 2026-09-23 11:31 Eastern
+
+Consumed Y proposal `5d7da1aa49`,
+`CUSTODY_SIGNED_VALUE_PROPOSAL_20260923.md`, and M source handoff
+`abfb3eaf8242cf5df26c7e1074e0e555245d969a`. Adopt the proposed conservative
+eligibility boundary for the existing positive-only recipe. Preserve the exact
+actual signed/zero source facts and refuse the whole selected portfolio when
+any actual row is unsupported, before combining equal securities or accounts.
+No absolute values, dropped rows, invented cash, model substitution or hidden
+offsetting. Unknown value is never zero. This is an explicit current limitation,
+not completion of signed-position reporting or a claim about vendor capability.
+
+Do not globally relax the shared positive-number helpers, alter historical
+frozen requests, create a new retained artifact family or add public refusal
+enums under this disposition. Keep existing supported refusal envelopes;
+P owns any future paired public mapping. A future signed recipe needs an
+explicit economic policy and complete transport/readback/report proof.
+
+The actual-position source proposal remains M's bounded read-only assignment.
+Y may prepare owned eligibility controls against the original row census, but
+must identify the concrete producer interface before implementation. P keeps
+shared integration/package ownership. Production callbacks remain closed until
+exact accepted snapshot identity and complete security-level custody source are
+implemented and directly reviewed by CTO. The bounded source review at
+`8653eb6cd4` does not lift this condition or authorize cloud changes.
+
+## CTO actual-position source tranche, 2026-09-23 11:36 Eastern
+
+Read M proposal `a20a1a1bd28c2cf76d5b80aae0d9a745ab5c7d2c`,
+`ACTUAL_POSITION_REPAIR_PROPOSAL_20260923.md`, and the existing builder.
+Authorize M's bounded local implementation in these existing paths only:
+
+- `data/assets/scripts/gold/investor_reporting/holdings_snapshot.py`
+- `data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py`
+- `data/assets/scripts/gold/investor_reporting/tests/test_economic_regressions.py`
+- `data/assets/scripts/gold/investor_reporting/tests/test_source_inputs.py`
+
+Implement source loading, actual custody projection/census and pre-publication
+refusal controls, preserving separate model/target bases and unresolved actual
+value. Source readers may be exercised with offline fixtures; no production
+producer invocation or cloud read/write is included. No upstream B00/B01/B03 or
+runner_common edits, standing dual writer or new destination. P retains the
+holdings Entry exception, shared authorization, schema/API and package; Y owns
+freezing and recipe eligibility. Agree exact minimal S2 fields with P/Y before
+emitting additions to the closed public schema.
+
+Retain existing `RECON_TOLERANCE_USD = 0.01` as the maximum account-level USD
+reconciliation tolerance. It does not excuse missing values, conflicting rows,
+unproved completeness, incompatible dates or ambiguous economics. B03's 1bp
+provisional flags and VARIANCE-EXPLAINED are not admission gates. No tuning to
+make a fixture or live result pass.
+
+All three firms' production eligibility remains conditional. For 49F, the
+located Schwab 08335338 chain is a bounded source, not evidence of all-master
+coverage: require exact selected-account mapping, supported sign/factor/cash
+non-overlap, currency and independent balance before admission. It does not
+change SmartX-primary performance and separate Black Diamond verification.
+For COT, implement strict relationship-grain conflict/null checks and require
+same-vintage independent account totals; known subtotals cannot hide null rows.
+For INF, unestablished stable position identity/currency and unreliable or
+coerced-zero ending_mv remain explicit upstream prerequisites. Never reconstruct
+the independent total from the same positions to manufacture reconciliation.
+
+Use owner-approved semantics or refuse the affected account/selected portfolio;
+do not implement an inferred upstream repair. Exact live receipts, source
+completion and run roots remain unmeasured. MSTR is asked to route unresolved
+upstream semantics to the current DS owner; historical author suffixes do not
+activate a worker. M can progress the local guarded adapter and failure controls
+while those prerequisites remain open. CTO directly reviews the pinned candidate.

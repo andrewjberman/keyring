@@ -1,6 +1,22 @@
-# IRPT MVP completion contract — version 1.2
+# IRPT MVP completion contract — version 1.3
 
 Authority: [Andrew's instruction](AUTHORITY.md). Owner/adjudicator: `1.0.0_SA_CTO`. Implementers: COO~P, COO~M, COO~Y. Independent reviewers: matching CVO suffixes. This contract and each seat's mandate are the current narrow instructions for these six seats.
+
+## 0. Closer rules (v1.3)
+
+**Current Andrew-direct access correction (2026-09-23):** Verified Opal users have full access to every Investor Reporting function and all firms' data/reports. Global and firm selection filter the requested view and report inputs; they do not limit Opal permissions. This supersedes earlier custody-only, discovery-only and single-firm authorization restrictions on Opal users. Firm-specific users retain their authorized firm/account restrictions. See [RULINGS.md](RULINGS.md), `IRPT-OPAL-FULL-ACCESS-20260923`, for implementation and review requirements. CTO directly reviews under Andrew's current instruction.
+
+Version 1.3 adopts the closer rules of spine v3.16-3.17 (`org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md`, "Closer"; skill `/closer`), on Andrew-direct 2026-09-23 (records `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260923_CANONICAL_FLOW_OPS_AND_CLOSER_FLOW.md` and `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260923_163xZ_HOLD_OFF_AND_CLOSER_OPEN_CALLS_RULINGS.md`). Where this section and a later section differ, this section wins.
+
+**LIVE FIRST.** The first milestone is the live thread through the shared first hop -- the authentication, scope and bootstrap every tab crosses -- owned by COO~P under the current live-scope ownership exception (section 3). **Live** means the real backend, real data and real login; the frontend may run locally or on DEV. A PROD release is an enrichment item, not part of the thread. Offline closures remain allowed, but none counts toward an acceptance ID until the thread is live. Both live contacts so far failed on this hop.
+
+**FILES OVER MAIL.** STATUS.md is a fixed-shape current-state file overwritten in place (`.claude/skills/closer/templates/STATUS.md`), not a journal; git history is the journal. INTERFACES.md holds only the current versioned schema and one example; superseded text moves to `INTERFACES_HISTORY.md` beside it. A peer message carries one of three things -- an interface published, a blocker, a review handoff -- and nothing else. **No acknowledgement messages between peers.** An acknowledgement Andrew or `0.0.0_AB_MSTR` asks for is still sent. CTO rulings append to [RULINGS.md](RULINGS.md) and go out as one message per batch.
+
+**NO SIDE-QUESTS.** A naming, registry or storage-policy question that is not on the thread is parked -- one line in STATUS.md or RULINGS.md naming the question, its owner and the condition that un-parks it -- and is not run as a review chain inside the sprint. A question on the thread is a blocker message to the CTO, ruled once. The CTO names in RULINGS.md any in-flight chain it parks; an acceptance ID in section 7 is not dropped by parking.
+
+**REVIEW EVIDENCE.** A Codex CVO grades on a live trace, the deployed bytes or a test run, never on a comp-tool read (Andrew-direct 2026-09-02, call 2(b)).
+
+**PROJECT STATE AND HAND-BACK.** While this contract runs, the IRPT_FNTEND and IRPT_BCKEND rows carry `closer_contract` pointing here, and `/canonical-drive` skips both. At hand-back, Investor Reporting becomes ONE product project -- this thread its first outcome, the other journeys its enrichment backlog -- and IRPT_FNTEND and IRPT_BCKEND close as superseded.
 
 ## 1. Outcome and operating mode
 
@@ -72,13 +88,13 @@ A breaking interface change needs: exact producer/consumer paths, proposed schem
 
 ## 6. Coordination, logs, and progress
 
-Canonical peer send: `org/mcp/codex-send.ps1 -To '<exact serial>' -Subject 'IRPT <lane>: <specific seam/finding>' -BodyFile '<file>'`. Use RAVC for actual requests. Send on interface changes, dependency readiness, blockers, and review handoffs; do not flood peers with routine status or ACK loops. Include path@commit, owner, requested action, and affected acceptance IDs. Surprise channel is CTO; report out-of-scope findings in one line and continue your job.
+Canonical peer send: `org/mcp/codex-send.ps1 -To '<exact serial>' -Subject 'IRPT <lane>: <specific seam/finding>' -BodyFile '<file>'`. Use RAVC for actual requests. Send only on an interface published, a blocker, or a review handoff (section 0, FILES OVER MAIL); no peer acknowledgements. Include path@commit, owner, requested action, and affected acceptance IDs. Surprise channel is CTO; report out-of-scope findings in one line and continue your job.
 
 For CVO P/M/Y direct peer coordination, the canonical send guard admits the new assignment only when the subject starts `IRPT` and the body cites this exact path: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`. Recipients are restricted to the six exact P/M/Y COO/CVO seats and the already permitted CTO route. A mixed send including another seat is refused whole. This implements Andrew's explicit peer-coordination instruction; old B/F/base CVO restrictions, sender identity validation and worker-order rules remain. No force flag, alternate inbox write or broker restart is needed on the one-shot `codex-send.ps1` path. CVO final findings still reach CTO for integrated governance.
 
 Each COO owns `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_<P|M|Y>/` for INTERFACES.md, STATUS.md, evidence manifest and COMPLETION.md. Each CVO owns the matching directory under `org/tier1_exec/3.0.0_SA_CVO/deliverables/`. Do not co-edit a shared status file. Keep canonical session logs under the base role's dated logs with exact serial/lane in the filename. No secrets or raw client payloads in MCP/logs; use protected evidence references.
 
-STATUS records current source pins, working branch, exact write claims, completed acceptance IDs, next integrated proof, dependencies with owner, and current limitations. Record meaningful changes and before handoff; no model-side polling loop or invented cron. Launcher inbox monitoring remains the wake mechanism. Persist long-running work state so a resumed seat continues rather than replans.
+STATUS records current source pins, working branch, exact write claims, completed acceptance IDs, next integrated proof, dependencies with owner, and current limitations, overwritten in place (section 0). Update it on meaningful changes and before handoff; no model-side polling loop or invented cron. Launcher inbox monitoring remains the wake mechanism. Persist long-running work state so a resumed seat continues rather than replans.
 
 ## 7. Completion and review
 

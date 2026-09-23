@@ -1,6 +1,6 @@
 ---
 name: verify
-description: Validate that something is actually COMPLETE and correct on three axes -- MECHANICAL (does it really work, run, connect, exist), DECLARATIVE (does the record match the implementation), SEMANTIC (is the output the right thing with validated quality). Grounds against the real artifact or live state, never a self-report; could-not-verify is a finding; the verifier is not the do-er. `/verify <target>`; the completion gate in /goal-set. Any agent.
+description: "Validate that something is actually COMPLETE and correct on three axes -- MECHANICAL (does it really work, run, connect, exist), DECLARATIVE (does the record match the implementation), SEMANTIC (is the output the right thing with validated quality). Grounds against the real artifact or live state, never a self-report; could-not-verify is a finding; the verifier is not the do-er. `/verify {target}`; the completion gate in /goal-set. Any agent."
 ---
 
 # /verify -- is it actually done + right? (mechanical / declarative / semantic)

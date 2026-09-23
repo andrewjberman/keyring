@@ -15,7 +15,7 @@ incidents and instrument traps: `org/tier1_exec/2.0.0_SA_COO/DRIVE.md`; pre-rewr
 
 ## 0. Who, when, over what
 
-- **`2.0.0_SA_COO`** (base + `~lane`) runs COO MODE (obligations 1-7). **`3.0.0_SA_CVO`** (base + lanes) runs CVO MODE
+- **`2.0.0_SA_COO`** (base + `~lane`) runs COO MODE (obligations 1-8). **`3.0.0_SA_CVO`** (base + lanes) runs CVO MODE
   (obligation 6 only). Any other serial halts and MCPs the COO. Tick start: `get_live_agents()`; re-register if absent.
 - `/canonical-drive` = one tick + a cron (`CronList` first); `... 30m|1h`; `... once`; `... off`; `... <scope>` =
   the actuate half of a drive pair (`org/ref/DRIVE_PAIR_PROTOCOL.md`). **`/drive` is the live alias for every form.**
@@ -27,6 +27,10 @@ incidents and instrument traps: `org/tier1_exec/2.0.0_SA_COO/DRIVE.md`; pre-rewr
   ON for the base COO from LD-0530 (supersedes LD-0288's OFF). A lane COO ticks its own team's project.
 - **Scope:** projects with a tree home under `org/missions/D*/<MACRO>/<CODE>/` in those stages. Flat projects wait for
   `/canonical-flow`. Never touch `ADVI_BDAPIMIG` `ADVI_TAGATTR` `DATA_SSOTMG` `MDPF_BASISSWITCH` (Andrew 2026-07-10).
+  ⛔ **OUT OF SCOPE: a row reading `status: closed`, whatever its `dep_stage`** -- a close on Andrew's word keeps the
+  measured stage and cites its record in `closed_by` (e.g. `ETFS_GUARDRAIL`, `NFRA_CLDGRPH`, D11); never drive it.
+  ⛔ **OUT OF SCOPE: a project whose `project.json` carries `closer_contract`** (spine v3.17, Closer) -- the closer
+  owns it until hand-back: no recut, no issuance, no nudge. Its state is the contract's STATUS files (`/closer status`).
 
 ## 1. Measure the limb (artifacts only, never a status word or a seat's summary)
 
@@ -34,7 +38,9 @@ Per project: `dep_stage` + round (`project.json`, L10 stamps in `surprise-channe
 terminal/total + assignee (`task-orders/*.md` faces); cells covered / cells serving an ungraded FWD (latest
 `decompositions/*.md` x the faces' `cell_refs` x the PRD's FWD ids); open/graduated/armed rows (`comp-surprise
 --project <CODE> --json`); the L8 packet and the CVO's READ ack on it (`get_delivery_state`); assignee liveness
-(`get_live_agents()` + commits since the last tick). Row: `project | limb | round | TOs t/T | cells c/F | act fired`.
+(`get_live_agents()` + commits since the last tick); **thread live** -- a trace artifact for `FWD-1` exercised this
+round (spine v3.16), `y` / `n` / `none` for a governance project. Row: `project | limb | round | TOs t/T | cells c/F |
+thread | act fired`.
 
 ⛔ **THEN NAME THE `/canonical-flow` STAGE AND EXACTLY ONE OF ANDREW'S THREE OUTCOMES IN THE TICK ROW** (his
 ~22:2xZ word: *"checking explicitly for project stage in /canonical-flow to either drive forward, parallelize
@@ -62,8 +68,13 @@ plus asking where the keys go. NON-APPLICATION: a seat that has answered this ti
 
 1. **Round-N analysis in hand -> ONE issuance SAME TICK** (spine v3.0 L10): the choice between a
    re-decomposition and a re-issue is the COO's own, recorded in the issuance commit; the route tokens are
-   retired. Never scheduled for later.
-2. **WIDTH at L6.** Every uncovered cell serving an ungraded FWD with no unmet dependency is cut THIS tick, one order per
+   retired. Never scheduled for later. **The recut reads the analysis's ENRICHMENT LIST as the round's
+   rectangle** (spine v3.16 L10): one cell per list item, plus the remediations, thread-breaking first and
+   instrument/record/style repairs batched into ONE cell. Round 1 of a threaded project is the THREAD, not the
+   manifest. Cut under the verification diet (`/dispatch` Step 2); run the drain checks and, once per round, the
+   thread trace (`/dispatch` Step 5).
+2. **WIDTH at L6.** Every uncovered cell of THIS ROUND's rectangle (round 1: the thread's hops; later: the enrichment
+   list) serving an ungraded FWD with no unmet dependency is cut THIS tick, one order per
    cell, one cell per lane, through `.tools/to-pipeline-gate.py`; under spine v3.0 the workers are
    subagents the COO spawns in worktrees, fan-out `N of M chains, cap K` stated in the issuance commit
    (default cap 8); a v2 lane is seated the same tick (`/mstr-spawn`; Codex via `ajb2 <FULL_SERIAL>`) only
@@ -71,6 +82,8 @@ plus asking where the keys go. NON-APPLICATION: a seat that has answered this ti
 3. **Terminal orders -> L8 compile NOW**, by you, handed to the CVO. The compile is an act, never a wait.
 4. **L8 packet at the CVO:** no READ ack at one tick -> nudge with path + hash; two ticks -> `[STUCK]` to `0.0.0_AB_MSTR`.
 5. **Idle lane + uncovered FWD-serving cell = a DEFECT** in this tick's row; the remedy is 2, same tick.
+   ⛔ **On round 1 of a threaded project only FWD-1 is in scope; an ungraded FWD with no cell is enrichment backlog
+   for the round-N analysis, never a WIDTH gap (2) or an idle-lane defect (5).**
 6. **CVO MODE:** packet received -> L9 adjudication + L10 stamp in the tick that reads it; a packet older than one
    tick unstamped is your own defect row; `[STUCK]` to MSTR at two ticks when blocked outside your power.
 7. **ADJUDICATE what surfaced (ported from `/self-drive`).** Every open call or escalation that reached you this tick
@@ -83,6 +96,9 @@ plus asking where the keys go. NON-APPLICATION: a seat that has answered this ti
    rulings (row in the tick log citing the message id), a verdict you believe wrong is executed AND surfaced to MSTR in
    one line, never re-litigated. Adjudicator dark on the broker -> spawn ask to MSTR the same tick, no pitch into a dead
    inbox. **A worker never receives a question back; it receives an order or a ruling.**
+8. **CLOSER CANDIDATE -> PITCH.** A project at 2 or more rounds whose thread is not live (`thread n`) gets ONE pitch to
+   `1.0.0_SA_CTO`, subject `[DRIVE <CODE> tick N] closer candidate: R rounds, 0 live journeys`; the CTO may
+   `/closer propose` it to Andrew (spine v3.17). Keep driving the round meanwhile; the pitch is not a hold.
 
 Then seat triage: an assignee with no commit and no work row since the last tick -> nudge with the order id and the
 ground truth; a second silent tick -> reseat on a live same-lane exec's lane or `[STUCK]` to MSTR; a dead assignee
@@ -95,7 +111,8 @@ with an open order is respawned or reseated this tick. **A dispatch into an unve
   `[STUCK]`; body = project, limb, order id, reason, RAVC window. A gate someone else legitimately holds is a gate;
   verify it is real; a self-inflicted wait is coasting.
 - **Hard gate:** a tick that read a graduated round, an uncompiled terminal order, an unacked packet past one tick, an
-  idle lane beside an uncovered FWD-serving cell, or an unadjudicated call, and fired nothing on it, FAILS. "All
+  idle lane beside an uncovered FWD-serving cell, an unadjudicated call, or an unpitched closer candidate, and fired
+  nothing on it, FAILS. "All
   standing by" is never a terminal state; the same self-resolvable gate re-attested twice is the coast failure.
 - **Log** on substantive ticks only: `org/tier1_exec/{RUNNING_SERIAL}/drive_log_{YYYYMMDDTHHMMZ}.md` (limb table, acts,
   verdicts, findings); commit via `safe-commit.sh` with a non-shell-written message file; verify by your own hash. The
