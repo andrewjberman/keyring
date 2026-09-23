@@ -369,3 +369,51 @@ checkout. No implementation edits existed then. Only its own zero-byte index.loc
 was removed after confirming its git process exited; own HEAD index populated,
 sparse source checkout restored and status verified clean before code edits.
 Other agents' worktrees/index were not modified. Current code is not integrated.
+
+## Current candidate and bounded closures (2026-09-23 01:17Z)
+
+This update supersedes earlier pending statements for the exact seams below.
+Backend LOCAL `6c3bfae3e6`; portal LOCAL `096e3e3d`. Original isolated branches
+and write claims remain. No integrated Y1-Y7/S1-S7 acceptance is asserted.
+
+- Retained dates producer `f4f16b283f` and initial UI `586cca01`: CVO found
+  Y-DT01 (ordinary single business date lost in the mount). Repair `8dbc742b`
+  restores the actual business-date display. CVO unchanged retest `c9e892bf9a`
+  reports 10 controls/80 assertions PASS plus TypeScript. Manual hooks/static
+  markup only; no browser, endpoint, export or runtime grade.
+- Owned request reopening UI `38a3ea24` supports fresh issued-request access,
+  exact report retrieval, bounded cursor pages, refresh, and invalidation on
+  selection/API changes. CVO `c470e652ad` reports 9 independent controls/37
+  assertions, 5 supplied controls/18 assertions and TypeScript PASS. Parent
+  scope key inspected; actual browser/current-service proof remains due.
+- P actual outer wire `7915bc9b2c` and portal `cf77e5db` consumed through
+  `9dbd74d2c1`/`096e3e3d`; ordinary-date repair preserved during portal merge.
+  65 backend boundary/date tests PASS. Portal suite: 41 PASS and one initially
+  failed because isolated worktree contract directory was unset; that exact
+  route-table test passes with existing IRPT_CONTRACTS_DIR pointing at backend
+  contracts. TypeScript PASS. Independent paired-boundary review is pending.
+- Publisher `6c3bfae3e6` joins actual retained PDF retrieval, independent source
+  extraction/certification, retained evidence and actual P ReportRepository with
+  FencedReportIndex. 11 new controls plus 18 existing publication/index controls:
+  29 PASS; Ruff and commit gate 2/2 PASS. A tracked census prerequisite was restored
+  in the sparse worktree before the final successful suite. Refresh ancestors
+  preserve their original input-owner shape while every full retained owner is
+  authorized under current grants. Promotion follows oldest dependency first.
+- P 01:07:20 evidence response agrees an additive versioned internal wrapper
+  around unchanged build_publication evidence. M 01:03:32 pins actual X10
+  ORIGINAL_VENDOR_PDF, EXTRACTION_EVIDENCE and ANALYSIS families; no separate
+  certification family. Canonical policy remains PENDING_ENFORCEMENT. Offline
+  test policy is explicitly synthetic; no actual policy activation.
+- Publisher has no queue handler, vendor calls, session activation, or READY
+  transition. Worker-supplied attempt/readback metadata is schema checked and
+  bound to accepted request/PDF, but this helper does not establish the actual
+  vendor readback. Whole worker/session/composition/export and installed journey
+  remain open. Review handoff is bounded to retained publication, not completion.
+- Compiler comp-diff before add reported no changed tracked files; that is not
+  impact coverage for the two new untracked files. Commit risk reflex checked
+  both paths against 1662 nodes, map age4.4h, PRESENT_WITH_ZERO_RESULTS.
+- Measured origin refs this update: CLOUD `b8136f26dca101d9f0f74818df109f25cae5354d`,
+  portal DEV `b3d5f59b4534eb653105f9bedc9e178384111c9f`. All work LOCAL; no push.
+
+Next: independent publisher/paired-wire review; assemble durable queue worker
+and maintained session/readback dependencies; connect frozen report export with P.

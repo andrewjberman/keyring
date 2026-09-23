@@ -550,3 +550,49 @@ retained composition/input/original/report bytes and owner references. Every
 dated/undated report section is counted exactly once; malformed dates/duplicate
 IDs refuse. Final metadata/grants/retention checks remain sequential, not atomic.
 Independent date/consumer/installed boundary acceptance is pending.
+
+Follow-up01:17Z: portal ordinary business_date mount repaired at8dbc742b;
+CVO unchanged10-control/80-assertion retestc9e892bf9a PASS. P actual owned Entry
+schemas7915bc9b2c and portalcf77e5db consumed at9dbd74d2c1/096e3e3d. Shared raw
+boundary refusals and successful envelopes retain their distinct actual contracts.
+Owned reopen UI38a3ea24 consumes fresh issued request then exact report sections;
+CVO bounded9-control/37-assertion reviewc470e652ad PASS. No runtime/browser grade.
+
+## Retained certified publication (2026-09-23 01:17Z)
+
+Backend6c3bfae3e6 adds ycharts/generate/publisher.py CertifiedReportPublisher.
+Constructor requires OwnedRequestReader with retained artifacts, durable store,
+and retained ReportRepository whose FencedReportIndex uses that same store.
+publish(verified_principal, issued_request_id, pdf_ref, census, metadata) accepts
+keyword-only PDF/census/metadata. PDF must be owned ORIGINAL_VENDOR_PDF immutable
+application/pdf with live retention and actual bytes matching metadata. Metadata
+has only request_ref/vendor_artifact/effective_inputs/release and matches actual
+accepted request identity and expected report ID. Worker still establishes actual
+attempt/settings/readback correctness; this helper does not issue vendor calls.
+
+Actual build_publication reads retained PDF bytes and the frozen census. Its
+fragment joins metadata and must validate as ANALYSIS. Its evidence is retained
+unchanged inside EXTRACTION_EVIDENCE JSON with closed producer fields:
+schema_version=irpt-extraction-evidence.v1, request_identity, pdf_ref, census,
+census_sha256, verification, verification_sha256. This is an internal versioned
+carrier agreed with P01:07:20, not a new public schema or artifact family.
+verification_sha256 is build_publication's digest of the unchanged inner evidence
+(UTF-8, ensure_ascii=False, sorted keys, compact separators, no NaN). Artifact
+sha256 and returned certification_sha256 hash the complete stored wrapper bytes
+using submission.canonical_bytes. These digests are intentionally distinct.
+
+Existing composition and PDF dependency DAGs are promoted oldest-first with
+current full-owner authorization, same stable firm/principal, cycle/size bound,
+and current CERTIFYING lease checks. Refresh ancestors keep original input IDs.
+Evidence depends on accepted composition+PDF; report depends on accepted evidence.
+Report provenance irpt-certified-publication.v1 binds composition_ref/pdf_ref/
+extraction_evidence_ref. Actual repository accepted bytes are read back before
+returning report_ref/extraction_evidence_ref/certification_sha256. No READY state
+is written. Later queue worker must retain that exact receipt under its fence.
+Sequential postchecks do not roll back a successful fenced publication transaction.
+
+11 new offline controls cover source bytes/digests, successful retry, refreshed
+source ancestry, lease/state/request/hash/owner/policy refusal, lease loss during
+extraction and current-access revocation. Combined actual-PDF and retained-index
+suite29PASS; AWS effects are doubles and Dynamo expressions are not executed.
+Actual X10 enforcement remains pending; no activation or integrated acceptance.
