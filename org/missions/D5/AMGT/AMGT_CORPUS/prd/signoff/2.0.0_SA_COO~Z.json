@@ -1,0 +1,13 @@
+{
+  "prd": "AMGT_CORPUS_PRD.md",
+  "prd_version": "v0.2",
+  "prd_pin": "8a88326c3e3c4062d5be76441e425790ad93a35d",
+  "half": "brief",
+  "half_hash": "fbe8a4173d23bef9f6a1d591ef60d3a03afae7ac11ca624bc73844e8963ee339",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_CORPUS_PRD_v0.2_L4R_BRIEF_REVIEW_20260923_Z.md@5709b48686",
+  "signed_by": "2.0.0_SA_COO~Z",
+  "signed_at": "2026-09-23T01:19:41Z",
+  "substitute_for": "4.0.0_SA_CRO",
+  "reason": "R12 (:319) builds O12's lifted skill artifact under this project while the PRD's own Rule 24 record (:210) says O12 is WHOLLY THE ADDENDUM'S with nothing landing here, and R12 is the only manifest row serving no FWD -- move it to the addendum or mint an FWD and split O12; O4 and O13 splits are FAITHFUL and cleared"
+}
