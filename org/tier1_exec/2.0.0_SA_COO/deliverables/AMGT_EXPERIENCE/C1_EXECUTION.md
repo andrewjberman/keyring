@@ -1,0 +1,11 @@
+# Exact no-span deployment receipt
+
+Executed by `2.0.0_SA_COO~Z` on 2026-09-23 under CTO25083/25085 and recorded direct closer authority. The pre-write ledger was committed at `b0f33e7821`.
+
+1. Candidate SHA256 `0c44108821fe52850c77b119490039453b082c3639fae6dbf58de054b1397a55`, 807904 bytes, uploaded unchanged. S3 VersionId `ZacA2Kn0CWoJqOFLvTPe2kzZ4x_ctTYe`; head size/metadata/MD5 and independently downloaded bytes matched. C1_UPLOAD_RECEIPT.json was written immediately after upload, before verification.
+2. Saved plan `C:/tmp/c1-exact-nospan-20260923.tfplan`, SHA256 `e087e85607f682576935cefedc1180c96e2dfe255a7c8523ab9363cea6207646`, updated only `module.scoped_amgt_api.aws_lambda_function.this`. Changed attributes were code hash, S3 object version and computed timestamp. No IAM/configuration delta. Incident targeting kept N=1; the complete stack was checked again afterward.
+3. Canonical command: `.tools/safe-apply.sh -chdir=C:/tmp/closer-amgt-experience-z-20260923/infra/aws/terraform/harvest apply -input=false -no-color C:/tmp/c1-exact-nospan-20260923.tfplan`. Exit 0; 0 added, 1 changed, 0 destroyed. Routine inbox acknowledgement used documented HALT_ACK=1 following its preflight surface; no gate override was set. Naming reported existing-name warnings; tag-authz passed and tombstone gate was clean. Full local command output is `C:/tmp/c1-safe-apply-20260923.log`; it includes unrelated inbox metadata and is not duplicated into this bounded receipt.
+4. At 22:02:49Z live Lambda code hash matched the signed candidate and stored artifact: `DEQQiCH+UoUMd7EZSQA5RTsILDY5+ubb9Y3gVLE5elU=`. The verifier asserted Active/Successful. RevisionId `3fe27dc6-15a0-428f-b084-dd54d98e3c76`.
+5. Full untargeted post-apply plan: zero resource changes. Exit 2 is only an update to the Terraform output `scoped_amgt_route_keys`; no further apply was performed. This does not imply new routes were deployed by this act.
+
+CVO handoff delivered at 22:03:14Z: all twelve served GETs, aggregate 210 anchored sentences and zero spanless, missing-firm 401 and its negative control, both overlay controls. **C4 pending; E0 not evaluated.** No later corpus, Price or NO_COVERAGE source changes are in the deployed ZIP. No retained objects were rewritten. The signed failure-policy correction remains in force: no automatic rollback to the known-defective old package.
