@@ -1,5 +1,35 @@
 # IRPT P shared interfaces - candidate v1
 
+## Maintained source composition claim - 2026-09-23 01:28 UTC
+
+Full CTO ruling `0429af3604` read. P owns the canonical
+`docs/contracts/investor-reporting/v1/RequestComposition.schema.json`, paired
+`_contracts` tests, shared generated contracts and generic retained storage
+interface. The schema path is claimed, not yet implemented: concrete M resolver
+examples/revision descriptors and Y required/optional consumer fields are needed.
+Requests sent to both owners at01:27. M integrates maintained profile/comparison
+resolution; Y owns request acceptance, recipe/worker meaning and frozen replay.
+
+Measured current producer at backend7915:
+`ycharts/generate/submission.py:compose_frozen_request` emits exactly top-level
+`schema_version=irpt-analysis-composition.v1`, `browser`, `resolved`,
+`recipe_version`, `settings` (the resolved portion is not named `server`).
+It validates the browser body and verified owner, binds input identity/digest
+and exact custody selection or input-only prospect basis, then digests canonical
+JSON. `submission_service.py:SubmissionService.submit` stores those exact bytes
+through `ArtifactRepository.put` in REQUEST_COMPOSITION, verifies the returned
+digest and freezes the ref at acceptance. Replays verify accepted composition
+retention and current owner; they do not call the source resolver again.
+
+Existing storage path remains canonical reporting_destination for the registered
+family, with immutable artifact ref and retained input dependency. No second path
+or payload. A closed new schema must incorporate actual maintained source identity,
+revision/provenance, agreed cover/comparison values and recipe/settings semantics;
+none is inferred from templates.json or security_id spelling. Missing required
+source data refuses that capability. A content digest proves bytes, not upstream
+authority/freshness. Unknown/ambiguous IDs, wrong owner, source-change replay and
+expired dependency controls are required for the subsequent exact paired handoff.
+
 ## Public-wire correction - 2026-09-23 01:24 UTC
 
 CTO `54b242b9cd` supersedes the conflicting caller-facing CID description below.

@@ -1,5 +1,15 @@
 # IRPT P status - 2026-09-22
 
+## Maintained-source assignment - 2026-09-23 01:28 UTC
+
+Read full CTO ruling0429af3604. P claimed canonical RequestComposition schema,
+generated contracts and retained storage interface; exact paths/current producer
+shape recorded in INTERFACES.md. M/Y concrete maintained-source outputs, field
+requirements and revision descriptors requested before dependent schema work.
+No catalogue authority, advisor defaults or security_id/vendor_id equivalence
+inferred. Existing canonical composition storage/replay path was inspected and
+will be retained. Public-wire repair and all operational HOLDs continue separately.
+
 ## Public-wire repair checkpoint 2026-09-23 01:24 UTC
 
 R-P11/Y-W01 public-refusal and Y-W02 strict-parser acceptance are HOLD. CVO P
