@@ -27,3 +27,8 @@ Exact-seat lane preflight allowed the new report module/test paths and this deli
 5. Obtain readable model/input/fund-form rulings and a bounded per-use run before live synthesis. Complete deployed, browser, export and full-population proof afterwards.
 
 Gaps R01-R04 and S04 remain open. No historical research measurements are silently refreshed by this implementation status.
+
+
+## Incident update 2026-09-23T17:34Z
+
+S236 ARMED: actual deployed no-span serving incident across all12 current drafts. Source repair and exact one-member deployment artifact are ready for review; see REPAIR_REVIEW.md, WRITER_CENSUS.json and REPAIR_PACKAGE.json. No deployment, no final journey acceptance. H03, H02 review and I4 consumption remain open. Revoked evidence pin84ba660442 is replaced by redacted fa65082078.

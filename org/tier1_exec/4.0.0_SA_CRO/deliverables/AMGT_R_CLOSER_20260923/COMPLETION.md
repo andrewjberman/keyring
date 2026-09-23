@@ -16,3 +16,8 @@ September 23, 2026. **Not complete.**
 | S04 deployed header/held integration | NOT_EVALUATED | No deployment performed |
 
 See [STATUS.md](STATUS.md), [INTERFACES.md](INTERFACES.md), [EVIDENCE.json](EVIDENCE.json) and [EVIDENCE_CLAIMS.json](EVIDENCE_CLAIMS.json). This record separates implemented offline components from the still-open end-to-end report outcome.
+
+
+## Incident update 2026-09-23T17:34Z
+
+S236 ARMED: actual deployed no-span serving incident across all12 current drafts. Source repair and exact one-member deployment artifact are ready for review; see REPAIR_REVIEW.md, WRITER_CENSUS.json and REPAIR_PACKAGE.json. No deployment, no final journey acceptance. H03, H02 review and I4 consumption remain open. Revoked evidence pin84ba660442 is replaced by redacted fa65082078.

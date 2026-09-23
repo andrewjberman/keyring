@@ -1,5 +1,10 @@
 [
   {
+    "path": "AUTH_BOUNDARY.json",
+    "sha256": "8193d9218366742b46ea0129229c9c6bfaf180f414420af803ca290960f873ff",
+    "bytes": 7853
+  },
+  {
     "path": "AUTHORITY.md",
     "sha256": "7cdd642cd99479a8599be1d540dd821ad09196380ed44240925da960ccfcf300",
     "bytes": 2243
@@ -11,8 +16,8 @@
   },
   {
     "path": "COMPLETION.md",
-    "sha256": "25a7df519c06b5432de5c48a3d1f1f5893c098d2260db5e39420d21d17f5c08c",
-    "bytes": 1842
+    "sha256": "f04f614aa699a9e079c5af08cbda58cb9abf3c90e3e50dfcb318baa4570d5f2c",
+    "bytes": 2289
   },
   {
     "path": "EVIDENCE.json",
@@ -60,6 +65,46 @@
     "bytes": 5789
   },
   {
+    "path": "measure_writers.py",
+    "sha256": "5135f5ca0736b3aa059ce4016b6bae8e7500b3288b2575723a0d6583f19479af",
+    "bytes": 4404
+  },
+  {
+    "path": "PACKAGE_REPLAY.json",
+    "sha256": "19b60d1c4f08170cbb22d80d475ef3a5e8951683ddc8ee0626f1d18ca70fbdc4",
+    "bytes": 4210
+  },
+  {
+    "path": "prepare_repair_package.py",
+    "sha256": "e46fc3051c5e376be8bd2de70e678d5515baba948a8cec68ded8874fc0c8511d",
+    "bytes": 4148
+  },
+  {
+    "path": "REPAIR_CHECKS.json",
+    "sha256": "e09a8877fd3ac581b6b137915da935c2688c4f8c16b5809db8220a745689dc69",
+    "bytes": 1113
+  },
+  {
+    "path": "REPAIR_PACKAGE.json",
+    "sha256": "7f4f441216bc3c90bc23df68a123fe488f9d972242fa55c7019be4dfc1b290c6",
+    "bytes": 1041
+  },
+  {
+    "path": "REPAIR_REPLAY.json",
+    "sha256": "c05b57df8c8ded491a7e9a02b54793bb65e686e3781c353b4328d0cc464c0368",
+    "bytes": 4047
+  },
+  {
+    "path": "REPAIR_REVIEW.md",
+    "sha256": "5adf95f4d9e063a38455f8be97233a2153456e3487ec94d587596f92645391f7",
+    "bytes": 6816
+  },
+  {
+    "path": "replay_repair.py",
+    "sha256": "626becb40a0459261ba2c6240e504a95dea27dfb625568435a2e6f89f2f6e23c",
+    "bytes": 3084
+  },
+  {
     "path": "SERVED_CENSUS.json",
     "sha256": "7163d605b1ad99571fe7754477d695e475818293f79148f1c0ae223f4243f383",
     "bytes": 32975
@@ -71,7 +116,12 @@
   },
   {
     "path": "STATUS.md",
-    "sha256": "1740c563d48a4a26a6e8be18d1ef5e3574f01bf55d2c9b99056dd3d5f4af6807",
-    "bytes": 3955
+    "sha256": "05cf678f0eedbcaaa3afad689b2334be85711bc71bc50d2907237ade0f345832",
+    "bytes": 4413
+  },
+  {
+    "path": "WRITER_CENSUS.json",
+    "sha256": "520abae5ee61e6054721c3b178809619c3e91b930084f39799ff580da7c157c2",
+    "bytes": 62152
   }
 ]
