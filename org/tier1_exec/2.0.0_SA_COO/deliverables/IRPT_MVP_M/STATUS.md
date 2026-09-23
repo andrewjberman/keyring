@@ -1,40 +1,46 @@
 # IRPT Holdings current state
 
-Owner:2.0.0_SA_COO~M. Updated2026-09-23 21:15UTC.
+Owner:2.0.0_SA_COO~M. Updated2026-09-23 21:31UTC.
 **archetype:** IMPLEMENT
 
-Outcome remains open: authenticated Holdings across49F/COT/INF through Models, SMAs,
-Client and security drill. No live Holdings PASS yet.
+## Outcome and first failing hop
 
-## Current source proof
+Holdings remains INCOMPLETE. Real COT source and local publication preparation pass;
+accepted S3 publication and installed API/UI still pending. M owns full tab closure.
+Current live Lambda is September21 package,15files,no accepted-publication reader or
+retained-selection modules/config; live role lacks versioned snapshot and selection reads.
+Exact installed evidence and native publication action prepared at a86430e39e.
 
-7033e23490 adds selected COT construction; CTO8b85d78635 bounded PASS.
-Current candidate consumes P currency binding9e1bc3a751 and adds original-producer
-crosswalk callback. Real selected COT account acc_f91fd04e6f6534fb0270bdcb builds:
-3positions,$1165.21 exact independent total, schema PASS,7 version/hash source receipts.
-17 focused controls pass. See COT_RUNTIME_HANDOFF_20260923.md and source proof JSON.
-UI e5604c03 remains bounded-reviewed; P owns shared runtime/package/projection.
-All work LOCAL; no cloud publication/deploy or vendor calls. Last origin CLOUD b475b96309.
+## Pins and concrete proof
 
-## Next proof and dependencies
+- M source9b3fb2a includes d8173c1b9c no-position rule and614ad2f16b currency binding.
+- P dependency9e1bc3a751: unchanged currency_authority.py and CurrencyAuthorities.json
+  materialized locally; intentionally uncommitted P-owned dependency bytes. No M constant.
+- CTO independently accepted real COT and paired mapping51504d37e1, mandate1960f42bb6.
+- Shared COTaccount acc_d486fc9455d6b2aa18e13af1:78dimension rows minus21no-position
+  yields57positions,USD19705844.84 exact independent total, schemaPASS;7source receipts.
+- a86430e39e selected CLI publication dry-run:59nodes, real Gold Parquet/JSON prepared;
+  custody/publicationdateSept22 distinct sourcecutoff/overlaySept23. Native privatebucket
+  versioningEnabled/indexabsent. Existingindex guardPASS. No cloudwrite/deploy/vendorcall.
+- Own UIe5604c03 reviewed. P sole shared auth/schema/package/IAM writer.
+- X10c2678d975f:36destination census/PENDING_ENFORCEMENT. Native Holdings is independent.
+- INF55145056df exact2account/3datepair value bridge6/6PASS; no broad date/currency inference.
+- Tax55145056df exact bounded activationrecipe. CTO98209e201b now grants existing
+  taxsma_membership.py S3store and its test to M; implementation remains next owned step.
 
-M implemented CTO5ee54ac0d4 / CROf307d58415: all-four-null BD rows are absent end-date
-positions, retained in excluded physical-row census. Partial-null/conflicting rows refuse.
-Actual P-positive account acc_d486fc9455d6b2aa18e13af1 now passes source builder:
-78dimension rows -21absent =57positions, USD19705844.84 exact independent total.
-Schema PASS;3 affected admission controls PASS. Full screen remains unproven.
-P integrates source callback and current authorization, accepted publication/read and
-actual screen drill. Bounded one-account evidence cannot overwrite complete firm population.
+## Next executable work
 
-INF corrected exact3file/twoaccount bridge independently reconciles6/6 values with zero
-USD difference. No blanket day offset or raw asOfDate rewrite. Exact evidence remains local
-pending durable handoff; current broad INF currency/valuation not established.
-49F source inventory7522accounts/106499positions,5912 SmartX-matched and1610 outsideSmartX.
-Currency/cash semantics,26balance exceptions and dated Tax intake remain open.
-Tax canonical research input refuses schema; supplied production history store is stub.
-CTO requests smallest existing-module runtime/path recipe; M has no additional path grant yet.
+CTO has a86430e39e exact native publication operation for existing release review.
+P has precise existing5765 package/role/environment delta and requested cutover receipt.
+M follows accepted publication receipt through current grants, real-login API and visible
+57security drill, refresh/reopen. No one-account replacement of completefirm index.
+Continue bounded Tax store implementation after consuming exact98209 grant; no fullMDPF
+scheduler/category rebuild or historicalbackdating.49F source still needs custody adapter,
+exact cash/currency handling and dated Tax join; SmartX is modelauthority exceptTaxworkbook.
+All threefirm journeys remain required, not completed by firstCOT milestone.
 
-## Drive
+## Drive and local state
 
-600-second repository-local drive active, PID30160 last verified. No duplicate helpers.
-Stops only on verified three-firm completion or changed Andrew instruction.
+600second repository-local drive verified activePID30160 at21:22UTC. No duplicatehelpers.
+All commitsLOCAL; no sharedpush. Last observedoriginCLOUD b475b96309.
+Driver remains until verified threefirmcompletion or changed Andrewinstruction.
