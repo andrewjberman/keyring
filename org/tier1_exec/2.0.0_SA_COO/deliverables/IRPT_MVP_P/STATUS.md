@@ -1,5 +1,38 @@
 # IRPT P status - 2026-09-22
 
+## Current Opal local integration - 2026-09-23 15:15 UTC
+
+Backend source6070889b29 incorporates custody4911, Y consumer04ac, adopted
+organization readerbc3727, scalar-only projection correction48946e7972, and
+original Y SDK reproducer02501a68ec. Portal e0531491 follows strict parser910ebf36
+and regenerates the custody composition wire from the unchanged closed backend
+schema (TypeScript build passes). No cloud changes or publication in this repair.
+
+The reader correction preserves all eight exact metadata values and fixes the
+closed scalar projection mismatch. Focused reader/custody74 tests pass. Literal
+original SDK reproducer gives10 passes and10 setup errors because its assertion
+requires the superseded nested metadata object; this is not consumer success.
+Y reports20 passes after changing only that assertion to all eight scalar values.
+CTO151143 admits that test-layout adaptation with unchanged negative controls;
+exact committed handoff and independent CVO Y review remain pending.
+
+Declared local package candidate adds missing current scope/selection/custody
+modules, directory contract, narrative keys and generation submission dependency.
+All seven immutable flat packages pass closure and isolated entry cold import;
+OPAL_PACKAGE_EVIDENCE_20260923.json records source6070889b29, manifest digest,
+member pins and hashes. Published artifact hashes are unchanged. This proves
+imports only, not installed factory, AWS invocation or end-to-end generation.
+Reproduce: python verify_opal_packages.py --repo <backend> --out <receipt.json>.
+
+Y owns the new request-local custody factory. Exact factory module/configuration
+handoff and current snapshot authorization/normalized holdings source binding
+remain open. Existing generate role has no Opal profile-table read grant; actual
+preparer role and bounded IAM declaration must follow concrete runtime binding.
+Prospect authority and vendor consent remain unchanged. All broader release and
+independent review requirements remain in force. Historical checkpoints below
+are scoped to their recorded pins and do not supersede this checkpoint.
+
+
 ## Acceptance integration candidate - 2026-09-23 02:13 UTC
 
 M source703e82ea01 receives bounded independent SOURCE PASS e64d917252
