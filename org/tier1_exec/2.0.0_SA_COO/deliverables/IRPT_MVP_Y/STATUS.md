@@ -1,11 +1,11 @@
 # IRPT Y implementation status
 
-Latest custody consumer update (2026-09-23):
-[CUSTODY_CONSUMPTION_20260923.md](CUSTODY_CONSUMPTION_20260923.md).
-LOCAL paired Y `53662d6c07` consumes P `4911c398d9` through `caa4c03709`.
-Bounded retained custody proof10PASS; generate/intake245PASS50subtests; isolated scope123PASS57subtests and custody/schema56PASS.
-Organization source adopted by CTO `f55641bea9`; P reports reader implemented, exact pin pending.
-Actual source reader consumption, production assembly and live acceptance remain unproven.
+Current LOCAL factory candidate `819c9e3990` consumes P scalar reader `48946e7972`.
+[CUSTODY_FACTORY_20260923.md](CUSTODY_FACTORY_20260923.md) names exact installed-local exports, ports, module hashes and remaining seams.
+30 paired/factory PASS; generate/intake265PASS50subtests; isolated scope148PASS57subtests; custody/schema60PASS.
+Original SDK admission6FAIL14PASS preserved; scalar-only adapted original driver20PASS.
+Actual accepted snapshot/normalized producer adapter (M/Y), flat package and runtime installation (P/Y), independent review and live acceptance remain open.
+No production factory installed or cloud/vendor action.
 
 Owner `2.0.0_SA_COO~Y`, 2026-09-22. Direct completion mandate CONTRACT v1.2.
 No new workers, no push, no deployment or vendor egress.
