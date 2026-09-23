@@ -61,8 +61,8 @@ output prints the per-subtree counts so a reader can see all five were reached.
      transport-shaped JSON body that is not canonical, HTML, or INDETERMINATE;
    - states the EVIDENCE for each verdict in one line (for example: equals `json.dumps(json.loads(body))`, so it is
      canonical; or differs in key order and separators, so it is transport-shaped);
-   - proposes the `received-form` value that object WOULD take, and prints it as a PROPOSAL;
-   - prints per object: `key <key> subtree <s> bytes <n> class <c> proposed <label> evidence <text>`.
+   - prints per object: `key <key> subtree <s> bytes <n> class <c> evidence <text>`.
+   **AMENDMENT 1 STRIKES THE PROPOSAL.** Do NOT propose a `received-form` value for any object. See section 7.
 2. **THE DENOMINATOR AND THE SUBTREE BREAKDOWN**: `objects 18 of 18`, the five per-subtree counts, and an explicit
    `undetermined <n>`. **Any object you cannot classify is UNDETERMINED with its reason. Never label by default and
    never guess.**
@@ -122,9 +122,10 @@ org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-u-1.classify-th
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="HVST-u-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/opal_data_harvest/test_classify_unlabelled_bronze.py -v --color=no -p no:cacheprovider 2>&1 | tail -16</invocation><expect>every arm passes and no "failed" -- including the NEGATIVE CONTROL arms proving the classifier discriminates (a canonically re-serialised body classifies canonical, a deliberately non-canonical one does NOT, an unparseable body reports INDETERMINATE rather than falling into a class)</expect></criterion>
-  <criterion id="AC2" cell_refs="HVST-u-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.opal_data_harvest.classify_unlabelled_bronze</invocation><expect>one line per object carrying key, subtree, bytes, class, proposed label and evidence; "objects 18 of 18" with the five per-subtree counts printed (article, analysis, news, report, symbol); an explicit "undetermined n"; and the population DERIVED by reading metadata rather than from a hard-coded key list</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-u-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.opal_data_harvest.classify_unlabelled_bronze</invocation><expect>one line per object carrying key, subtree, bytes, class and evidence, and NO proposed received-form value for any object; "objects 18 of 18" with the five per-subtree counts printed (article, analysis, news, report, symbol); an explicit "undetermined n"; and the population DERIVED by reading metadata rather than from a hard-coded key list</expect></criterion>
   <criterion id="AC3" cell_refs="HVST-u-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/u1/ac3.py</invocation><expect>"outside_allowed []" -- only classify_unlabelled_bronze.py and test_classify_unlabelled_bronze.py changed, nothing else under lib; each changed file prints "compiles True crlf 0 non_ascii 0"</expect></criterion>
   <criterion id="AC4" cell_refs="HVST-u-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/u1/ac4.py</invocation><expect>"write_calls 0" read from a counter, and a POSITIVE CONTROL showing each of put_object, copy_object, delete_object, delete_objects and upload_file RAISES when deliberately tripped -- proof that the classification wrote nothing and could not have</expect></criterion>
+  <criterion id="AC5" cell_refs="HVST-u-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/u1/ac5.py</invocation><expect>proof that the 18 are ALREADY disclosed at OBJECT GRAIN with zero writes: check_as_received.py's own tally puts every one of them in its MISSING bucket, derived per article_key from the object's metadata, 18 of 18, and MISSING is distinguishable from every value the store actually holds; plus the value census showing which received-form values exist in the store and which of them RECEIVED_FORMS would accept today</expect></criterion>
 </proof_of_spec>
 
 Write `.scratch/u1/ac3.py` (the allowed-set diff from `git merge-base HEAD SITEZ` over `lib`, plus a compile, CRLF and
@@ -142,6 +143,42 @@ non-ASCII print per changed file) and `.scratch/u1/ac4.py` (the write-poison cou
 5. Report once, with the per-subtree counts, the class distribution, the undetermined count, and `write_calls 0`.
    **Say plainly that nothing was labelled and that this does not close FWD-1.**
 
+
+## 7. AMENDMENT 1 -- the PROPOSAL element is STRUCK, on a ruling that corrects a premise the issuer held too
+
+**`1.0.0_SA_CTO~Z`'s ruling @`4d7ef9f79e` (msg 24622) answers the question this cut deliberately left open: NO
+WRITE. `Z-S1`'s backward half stays GRADUATED AND UNREMEDIATED, and the ground is NOT the hard stop** -- so the row
+does not re-open when the S3-delete breach is dispositioned.
+
+**WHY THE PROPOSAL ELEMENT WAS WRONG, verified by the issuer at the bytes rather than taken from the ruling:**
+- `harvest_grammar.py:70` -- `RECEIVED_FORMS = frozenset({"as_received", "normalised_record"})`, and `:79` REFUSES
+  any value outside it. **TWO legal values, and they are the two a back-fill CANNOT tell apart:** `as_received` is
+  the vendor's bytes, `normalised_record` is **the harvester's own output.**
+- `put_article_bronze(...)` DEFAULTS `received_form="as_received"`. **So the cheapest correct-looking relabel
+  writes `as_received` onto all 18 and is silently wrong on however many are actually the harvester's own output.**
+- **`received-form` is therefore a PROVENANCE CLAIM -- whose bytes these are -- and NOT a classification of what
+  the bytes look like.** A byte-shape read cannot answer it. **My order asked you to produce one anyway, and that
+  is my defect, not yours** (issuer row `AMGT_HARVST-Z-S13`).
+
+**WHAT CHANGES, and it is small:** keep the shape classification, which is still worth having -- it states what
+each object's bytes ARE. **Drop every "proposed label" element.** In your report, state in one line that shape does
+NOT determine provenance and that no label can be proposed because the enum has no value for "never observed".
+
+**AND ONE THING IS ADDED, which is strictly better than the plan this cell was going to produce.** The disclosure
+the contract cares about is ALREADY BUILT: `check_as_received.py:177` reads
+`metadata.get("received-form", "MISSING")` and tallies it, **so MISSING is a first-class bucket derived per
+`article_key` FROM THE OBJECT, with zero writes.** AC5 asks you to PROVE that covers all 18 -- a measurement of the
+objects, not a document about them.
+
+**AC5 also asks for a value census**, because the issuer measured something the ruling's premise does not include:
+**the store holds THREE distinct `received-form` values plus MISSING** -- `as_received` 16, `normalised_record` 83,
+and **`bbg-client-json` 115, which is NOT in `RECEIVED_FORMS` and which the writer would refuse today.** Report
+what you find with its denominator. **That fact strengthens the no-write ruling rather than weakening it: the
+field's real value space is wider than its enum, so inferring any value for an unobserved object is less safe, not
+more.**
+
+**Nothing else changes. Your status is set back to `pending`; re-flip it when AC1 through AC5 all pass.**
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES (L5/L6):**
@@ -155,7 +192,7 @@ non-ASCII print per changed file) and `.scratch/u1/ac4.py` (the write-poison cou
 3. **AC4 exists because of the breach, not because of a suspicion.** A read-only cell that proves it could not have
    written is cheap, and it is the right shape to normalise while the hard stop is live.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <slot>~18</slot>
 <fabric>site-z</fabric>
