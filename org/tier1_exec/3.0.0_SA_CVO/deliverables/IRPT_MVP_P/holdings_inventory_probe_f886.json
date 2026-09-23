@@ -1,0 +1,187 @@
+{
+  "pin": "f8860f9839357a80951fa9fce6ca2ed406997734",
+  "before": "55fae26e37",
+  "function_count": 216,
+  "changed_functions": [
+    "irpt-holdings"
+  ],
+  "unchanged_functions": 215,
+  "changed_fields": [
+    "_build_note",
+    "staged_from"
+  ],
+  "members": {
+    "snapshot.py": {
+      "sha256": "7df65ee90167454532b6c0ea51fdcbd7c597d1ce6f2023036dfc636beb72ee69",
+      "staged": true
+    },
+    "enforce.py": {
+      "sha256": "18f04af84b9c5e87362f9cf87ee2ef5bc3680ccbaea66b1a2ee4e6579e6b1e7b",
+      "staged": true
+    },
+    "errors.py": {
+      "sha256": "784ee313ed7013e6fdf535a373e7941f4c672f4467e4dfcb4e8ad0634b1646a2",
+      "staged": true
+    },
+    "resolve.py": {
+      "sha256": "24b407fa00ff0fc342d57b1ca2bd986d7c802fe8a96b30fe57c06520523ccdeb",
+      "staged": true
+    },
+    "handler.py": {
+      "sha256": "e46922a003791d901d037d80c82cf538c313dfe907096194f4fcca556712702e",
+      "staged": true
+    },
+    "stage.py": {
+      "sha256": "d0b82ba074c014ca9fb2c2e3f4b38123ae35116d1562c62486910638b24042bd",
+      "staged": false
+    },
+    "STAGE_MANIFEST.json": {
+      "sha256": "51758ef7cfe3f688cb5e7c544942e7be0a59a45d8ae9b75d9f0c9f163ce8e99f",
+      "staged": false
+    },
+    "BUILD_MANIFEST.json": {
+      "sha256": "44d96b9064c733586d7ac1503886c2b333605df343c8ea48bb35423d739e19b5",
+      "staged": false
+    },
+    "contracts/HoldingsSnapshot.schema.json": {
+      "sha256": "9c0acba985c38b32f0736045936db14b2d251089f2cdb79a818a12bc69259348",
+      "staged": true
+    },
+    "entry.py": {
+      "sha256": "098e41bacc40f86f53f1b9e5cffb7f707c3fea4ca5cd5b47aeee73a81172c6d4",
+      "staged": true
+    },
+    "served.py": {
+      "sha256": "f6a66c318a08872256b6be0e6588b33d4272e44531a62ada16ce84de26cdb409",
+      "staged": true
+    },
+    "loaders.py": {
+      "sha256": "c0451638b048694267981691a9f6db38df8e0c64e1a6bf681d84b0e1ce55c3d4",
+      "staged": true
+    },
+    "ids.py": {
+      "sha256": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6",
+      "staged": true
+    },
+    "data/custodian_key_seam.json": {
+      "sha256": "87f2f92f3c71f7761b387574a3df721474120465b1b0da8028cfc201b619923a",
+      "staged": true
+    },
+    "raw_keys.json": {
+      "sha256": "f81db571b5d92ca66b960047d96b38cc74c173cb7bf8be0c20e9cd3973acaf89",
+      "staged": true
+    },
+    "publication.py": {
+      "sha256": "b4c248c49451b4141d27c8fdc5630ba7e563ea91e264bce6b3c46bb7f3a6e1cb",
+      "staged": true
+    },
+    "selection.py": {
+      "sha256": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af",
+      "staged": true
+    },
+    "selection_store.py": {
+      "sha256": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c",
+      "staged": true
+    },
+    "prospect.py": {
+      "sha256": "b7e5c9335caad7a01eb66c73305f70a6497d0b72110ad7268dad1757358287a8",
+      "staged": true
+    },
+    "keys.py": {
+      "sha256": "56ee3cc22e802579ebb8d4cba53edec8045603396a48fe952d6b83df0f08ab2a",
+      "staged": true
+    },
+    "firm_registry.json": {
+      "sha256": "5a4c0c3da26fffe55d8a3ec2a8a7248bd0b1dd936af5425ab35426bc5d277fc0",
+      "staged": true
+    },
+    "opal_naming.py": {
+      "sha256": "4cbeb3a8920e40cf9caadb11f5bcdcadf087a039b1ec42b1ed6a42743140a610",
+      "staged": true
+    },
+    "lib/opal_naming.py": {
+      "sha256": "f3f9e813fc445b7c9d9ce3fdae4dc38319c26fd64196e9a15bfe51dbe79892a4",
+      "staged": true
+    },
+    "org/standards/NAMING_SCHEMA.json": {
+      "sha256": "2c8834a98f7453fd1843eebe9baa45630aeb31cca708c114646678fdce480f33",
+      "staged": true
+    },
+    "infra/logic/registry/systems.json": {
+      "sha256": "41d5138fd0d4c0644edef51f53644c7c4d5cb230daad5e6bccaa3c65d02b42eb",
+      "staged": true
+    },
+    "infra/logic/registry/scopes.json": {
+      "sha256": "a4e0637257b6c50adf23de75d3f344b3d39db6bf9a024f4b47dd825131532be9",
+      "staged": true
+    },
+    "infra/logic/registry/tiers.json": {
+      "sha256": "d3d51e30150a4baefd9405ddfe9adfa1740e084dfb1857c8fcb0e87a3c1188f3",
+      "staged": true
+    },
+    "infra/logic/registry/exemptions.json": {
+      "sha256": "f51629e32f5d261f28b07dab9714c6f826265cf3e3aed0ff288b724abd1eeb50",
+      "staged": true
+    },
+    "infra/logic/registry/remediations.json": {
+      "sha256": "67b49f4332fb676847b2b92af9b4bdc85fd7107e5132421d93f3ea8bb0a09481",
+      "staged": true
+    },
+    "infra/logic/registry/resources.json": {
+      "sha256": "471e106af27bb34d1712180ad67d4441e5154236ed2230b12cdeceb5e1981592",
+      "staged": true
+    },
+    "infra/logic/registry/reporting_policies.json": {
+      "sha256": "481cc513038b73f5e0444baafea76fc97e3ac9e19624f3f6822fb6f362cacbc3",
+      "staged": true
+    }
+  },
+  "runs": [
+    {
+      "label": "supplied_import_closure",
+      "exit_code": 0,
+      "stdout": "  OK: import-closure -- 17 packaged .py file(s), every top-level import satisfied by package/stdlib/runtime/layer. (Nested lazy imports exempt by design.)\n",
+      "stderr": ""
+    },
+    {
+      "label": "additional_boundary_controls",
+      "exit_code": 1,
+      "stdout": "{\"additional_checks\": [\"injected_snapshot_fixture_zero_product_reads\", \"injected_resolved_scope_zero_product_reads\", \"injected_object_id_zero_product_reads\", \"missing_selection_zero_product_reads\", \"actual_selection_store_tenant_consistent_getitem\", \"actual_scope_loader_calls_all_enabled_identity_firms\", \"canonical_product_locations_and_negative_resource_patterns\"], \"scope_calls\": {\"49financial\": [{\"Bucket\": \"opal-data-bd\", \"Key\": \"investor-reporting/directory/latest.json\"}, {\"Bucket\": \"opal-data-bd\", \"Key\": \"investor-reporting/directory/revision.json\"}, {\"Bucket\": \"opal-data-bd\", \"Key\": \"platinum/49financial/ownership_map.json\"}], \"inflection\": [{\"Bucket\": \"opal-data-inf\", \"Key\": \"investor-reporting/directory/latest.json\"}, {\"Bucket\": \"opal-data-inf\", \"Key\": \"investor-reporting/directory/revision.json\"}, {\"Bucket\": \"opal-data-inf\", \"Key\": \"platinum/inflection/ownership_map.json\"}], \"cottonwood\": [{\"Bucket\": \"opal-data-cot\", \"Key\": \"investor-reporting/directory/latest.json\"}, {\"Bucket\": \"opal-data-cot\", \"Key\": \"investor-reporting/directory/revision.json\"}, {\"Bucket\": \"opal-data-cot\", \"Key\": \"platinum/cottonwood/ownership_map.json\"}]}, \"product_locations\": {\"49financial\": {\"current\": [\"opal-data-49financial\", \"irpt/49financial/platinum/holdings/current/manifest.json\"], \"version\": [\"opal-data-49financial\", \"irpt/49financial/platinum/holdings/date=2026-09-22/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.manifest.json\"], \"version_key_pattern\": \"irpt/49financial/platinum/holdings/date=*/*\"}, \"inflection\": {\"current\": [\"opal-data-inflection\", \"irpt/inflection/platinum/holdings/current/manifest.json\"], \"version\": [\"opal-data-inflection\", \"irpt/inflection/platinum/holdings/date=2026-09-22/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.manifest.json\"], \"version_key_pattern\": \"irpt/inflection/platinum/holdings/date=*/*\"}, \"cottonwood\": {\"current\": [\"opal-data-cottonwood\", \"irpt/cottonwood/platinum/holdings/current/manifest.json\"], \"version\": [\"opal-data-cottonwood\", \"irpt/cottonwood/platinum/holdings/date=2026-09-22/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.manifest.json\"], \"version_key_pattern\": \"irpt/cottonwood/platinum/holdings/date=*/*\"}}, \"network\": false}\n{\"multipart_checks\": [\"missing_unselected_blob_not_read\", \"complete_selected_parts_versioned_exact_read_count\", \"later_selected_corruption_no_partial_release\"], \"selected_parts\": 3, \"network\": false}\n{\"independent_inventory_cases\": [{\"case\": \"unselected_part_missing_reference\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 3, \"response_ok\": false, \"data_released\": false}, {\"case\": \"unselected_part_null_reference\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 3, \"response_ok\": false, \"data_released\": false}, {\"case\": \"unselected_part_foreign_bucket\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 3, \"response_ok\": false, \"data_released\": false}, {\"case\": \"unselected_part_foreign_key\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 3, \"response_ok\": false, \"data_released\": false}, {\"case\": \"unselected_part_null_version\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 3, \"response_ok\": false, \"data_released\": false}, {\"case\": \"unselected_part_literal_null_version\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 3, \"response_ok\": false, \"data_released\": false}, {\"case\": \"unselected_part_numeric_digest\", \"pass\": false, \"whole_response_refused\": false, \"unselected_or_gold_reads\": [], \"read_count\": 4, \"response_ok\": null, \"data_released\": true}, {\"case\": \"unselected_part_short_digest\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 3, \"response_ok\": false, \"data_released\": false}, {\"case\": \"unselected_part_boolean_length\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 3, \"response_ok\": false, \"data_released\": false}, {\"case\": \"unselected_part_string_length\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 3, \"response_ok\": false, \"data_released\": false}, {\"case\": \"unselected_part_zero_length\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 3, \"response_ok\": false, \"data_released\": false}, {\"case\": \"gold_missing_reference\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 2, \"response_ok\": false, \"data_released\": false}, {\"case\": \"gold_null_reference\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 2, \"response_ok\": false, \"data_released\": false}, {\"case\": \"gold_foreign_bucket\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 2, \"response_ok\": false, \"data_released\": false}, {\"case\": \"gold_foreign_key\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 2, \"response_ok\": false, \"data_released\": false}, {\"case\": \"gold_null_version\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 2, \"response_ok\": false, \"data_released\": false}, {\"case\": \"gold_literal_null_version\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 2, \"response_ok\": false, \"data_released\": false}, {\"case\": \"gold_numeric_digest\", \"pass\": false, \"whole_response_refused\": false, \"unselected_or_gold_reads\": [], \"read_count\": 4, \"response_ok\": null, \"data_released\": true}, {\"case\": \"gold_short_digest\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 2, \"response_ok\": false, \"data_released\": false}, {\"case\": \"gold_boolean_length\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 2, \"response_ok\": false, \"data_released\": false}, {\"case\": \"gold_string_length\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 2, \"response_ok\": false, \"data_released\": false}, {\"case\": \"gold_zero_length\", \"pass\": true, \"whole_response_refused\": true, \"unselected_or_gold_reads\": [], \"read_count\": 2, \"response_ok\": false, \"data_released\": false}], \"valid_restored_control\": true, \"all_mutations_manifest_and_index_repinned\": true, \"network\": false}\n",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 350, in <module>\nAssertionError: ['unselected_part_numeric_digest', 'gold_numeric_digest']\n"
+    },
+    {
+      "label": "supplied_guarded_entry_controls",
+      "exit_code": 0,
+      "stdout": "{\"guarded_selected_read\": true, \"versioned_reads\": true, \"corrupt_refusal\": true, \"release_revocation_refusal\": true, \"missing_registry_refusal\": true, \"canonical_locations\": {\"49financial\": [\"opal-data-49financial\", \"irpt/49financial/platinum/holdings/current/manifest.json\"], \"cottonwood\": [\"opal-data-cottonwood\", \"irpt/cottonwood/platinum/holdings/current/manifest.json\"], \"inflection\": [\"opal-data-inflection\", \"irpt/inflection/platinum/holdings/current/manifest.json\"]}, \"v2_selected_parts_only\": true, \"missing_selected_part_refusal\": true, \"selected_request_limit_refusal\": true, \"complete_inventory_negative_cases\": 10, \"unselected_physical_blob_not_required\": true, \"reader_imports_pyarrow\": false, \"network\": false}\n",
+      "stderr": ""
+    }
+  ],
+  "assertions_sha256": "197cd921b156ec20ccb307eea8567cd76f4c6f871b4e34f103e34959bc1e4a3f",
+  "supplied_runner_sha256": "5faf6e1fa1e170abcfe37d26c18b456172c238b6f5709b7f2d3d0d26f4ba75e8",
+  "terraform_source_sha256": {
+    "main.tf": "c037a41196ece4dcdeed228b7f2ee7111275e4fecd18cc06d61d8ade7be45aa4",
+    "iam.tf": "863f0f4a2e3f1553e247e6d3a4e9953693bbd86b38fd57da8c8895d4b63581f3",
+    "lambda.tf": "5c772e22f4970c0c22b4d7447d491da7274183285af136449fabebda8a0a5cdb"
+  },
+  "iam_source_tokens": [
+    "dynamodb:GetItem",
+    "dynamodb:LeadingKeys",
+    "kms:Decrypt",
+    "kms:EncryptionContext:aws:dynamodb:tableName",
+    "kms:ViaService",
+    "s3:GetObject",
+    "s3:GetObjectVersion"
+  ],
+  "limits": "Offline source declarations and synthetic storage; local resource-pattern checks are not an IAM simulator. No deployed policies, remote state, Terraform plan/apply, layers, cloud/server clock, actual publisher or live transport proof. Additional controls reuse supplied guarded-entry setup.",
+  "changed_member_bytes_from_review_198d9a29c8": [
+    "publication.py"
+  ],
+  "terraform_bytes_equal_review_198d9a29c8": true,
+  "prior_assertions_unchanged_sha256": "3b0de64f00ec8f6f505ecd124bee85212c90a4fa662163ef93a686f3c23d274d",
+  "publication_staged_from": {
+    "repo_path": "infra/aws/lambda/investor-reporting/holdings/publication.py",
+    "pin": "fd4690b4ffca23f2616fe5f19d90737af6fe3a58",
+    "packaged_as": "publication.py",
+    "sha256": "b4c248c49451b4141d27c8fdc5630ba7e563ea91e264bce6b3c46bb7f3a6e1cb"
+  }
+}
