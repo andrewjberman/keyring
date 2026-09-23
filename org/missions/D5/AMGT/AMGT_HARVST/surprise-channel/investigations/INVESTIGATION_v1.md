@@ -781,6 +781,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "Z-S4 named its own disarm as a DISPATCH-RECIPE change: any future cone must include org/missions whole and integrations, or the orders must state their baselines as measured in a full tree and tell the worker that a divergence is an environment finding.",
     "world_is": "BOTH arms were done, and the second matters as much as the first. The cone was widened AND both round-3 orders state every baseline count with the checkout it was measured in, plus an explicit instruction that a divergence is an environment finding to file rather than a repository defect to work around. The verification ran BEFORE the spawn, which is the part that distinguishes a disarm from a hope: had either control failed, the fix would have been to the cone and not to a worker's report.",
     "notes": "This row DISARMS the hazard; it does not claim the three round-2 rows were wrong to be filed, and it changes no grade. Z-W11-S1 and Z-W14-S1 stay in the record with their own text, and Z-W14-S2 (the namespace-package duplicate import) is NOT disarmed by this row -- that condition is about Python module resolution under a sparse layout generally, the worker fixed only its own two files with relative imports, and it stays ARMED with this seat as its owner. What a later reader should take: the disarm is cheap, the measurement that licenses it is two commands, and the reason it was owed at all is that the issuer chose the cone."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S10",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-23T03:32Z",
+    "one_line": "HVST-t-1's fix is CORRECT and its five criteria all passed, and the fix INTRODUCES a new reachable state on the failure path that no criterion of mine named: _write_harvest_listings can RAISE, it is unguarded inside the new finally, and an exception raised in a finally REPLACES the one that was propagating -- so a disk or sqlite failure during the persist would surface INSTEAD of the upstream 502 that actually stopped the job. The OLD post-loop placement could never do this, because it only ran on the success path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the change, read by this seat in the worker's own worktree at wk-AMGT_HARVST-3-16 before any drain: worker.py's per-article loop is wrapped in try/finally and the persist call moved from AFTER the loop into the finally; the loop body itself is unchanged apart from indentation (diff over lib/opal_data_harvest/worker.py, 86 lines touched, 0 other production modules)",
+        "the raise sites inside _write_harvest_listings, read at the same bytes: entry['raw_bytes'] is a bare subscript (KeyError on a malformed entry), listing_path.write_bytes is disk IO (OSError, disk full, a locked path), and self.db.execute plus self.db.commit are sqlite (OperationalError, a locked database). The function has no try/except of its own and the finally does not wrap it in one",
+        "the language rule that makes it a defect rather than an inconvenience: an exception raised inside a finally REPLACES the propagating exception, demoting the original to __context__. So the caller's handler sees the persist error, not the upstream one, and any classification keyed on the upstream error (a cooldown, a retry, a 502-specific path) cannot fire",
+        "the DISCRIMINATOR that makes this NEW rather than pre-existing: at the old placement the persist sat after the loop on the success path only, so it could not run at all while an exception was propagating. The hazard is created by a correct fix, which is why no round-2 or round-1 measurement could have found it",
+        "NOT AN INCIDENT, and the distinction is Rule 22's negative mirror: nothing measured here shows this has ever FIRED. It is an EXPOSURE until someone shows a persist failure coincided with an upstream failure in a real run, and no such run exists -- harvest mode has run once, under a grant, and the persist was still post-loop then"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HVST-t-1 was ruled to make the persist survive an exception raised anywhere inside the per-article loop, with the proof a driven mid-loop raise and a negative control. It delivered exactly that. My order said nothing about what the persist may do TO a propagating exception.",
+    "world_is": "Making the persist survive the exception and making the exception survive the persist are two different obligations, and my cut named only the first. A finally is the correct structure for the first and is precisely what creates the second.",
+    "notes": "NOT a defect in the cell and no grade of its five criteria moves. Handled as AMENDMENT 1 to the order rather than a round-4 cell, because the regression is this round's own and the remedy is one guard: AC5 requires an arm proving that with the persist made to fail WHILE a mid-loop upstream error propagates, the exception that escapes is still the original, and the persist failure is VISIBLE rather than swallowed. The order's status was set back to pending by that amendment and the worker was continued in its own worktree. DISARM: this row closes when AC5 passes and the drain lands. The keepable shape: when a fix changes WHERE code runs, ask what else now runs on the path it was moved onto -- a finally, an except, a signal handler and an atexit all have this property, and none of them is visible in the diff of the line that moved."
   }
 ]
 ```
