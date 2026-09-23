@@ -133,6 +133,23 @@ lanes:
       - 4.0.0_SA_CRO~SWEEP
       - 2.0.0_SA_COO~M
     description: "IRPT M direct implementation only. Grantor 1.0.0_SA_CTO; authority IRPT_MVP_COMPLETION_20260922/AUTHORITY.md and CONTRACT.md v1.2. Incumbent CLOUD_OPS_OR_ETL members retained; no base COO, other lane, reviewer, or deploy grant. Shared file/function claims and accepted B/F preservation remain mandatory."
+  IRPT_Y_ACCESS_INTEGRATION_P:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP
+      - 2.0.0_SA_COO~Y
+      - 2.0.0_SA_COO~P
+    description: "Temporary CTO grant IRPT-Y-ACCESS-INTEGRATION-20260923: preserve Y and AE incumbents, add exact COO~P on thirteen named files for combined full-access integration and compatibility only. No other Y paths or deployment grant. CTO removes P integration grant after accepted handoff."
+
   IRPT_COMPLETION_Y:
     permitted_agents:
       - 0.5.0_AE_OpalETL
@@ -1089,6 +1106,45 @@ paths:
   "infra/aws/lambda/investor-reporting/holdings/**":
     lane: IRPT_COMPLETION_M
     note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/intake/portfolio.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/intake/upload_entry.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/intake/uploads.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ops/entry.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ops/owned_report.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ops/owned_requests.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ops/owned_status.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ops/prospect_dates.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ops/tests/test_opal_consumers.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ops/tests/test_owned_report.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_composition.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
   "infra/aws/lambda/investor-reporting/intake/**":
     lane: IRPT_COMPLETION_Y
     note: "CTO grantor; exact Y owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
