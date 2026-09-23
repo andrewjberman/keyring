@@ -1,5 +1,11 @@
 # Upload resolution: local implementation and exact integration handoff
 
+W1 source update: **4173322f457aeeb390033b410e85bebadc49a3e3** removes
+run_with_recovery's status-only eviction fallback using actual reply observations.
+See `W1_BROKER_BODY_EVIDENCE_REPAIR_20260923.md` for54 session tests and exact
+remaining runtime boundaries. The historical W1 gap below is repaired only in
+this broker source path, pending direct CTO review; full W1 stays OPEN.
+
 Deadline correction: source **5609c2e46a2d36716743f21a8e6a5eec6876e5d8**
 supersedes the Kimi budget implementation below. CTO found the baseline incorrectly
 reset its budget per retry. See `KIMI_TOTAL_DEADLINE_REPAIR_20260923.md` for the

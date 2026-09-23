@@ -1,5 +1,14 @@
 # Kimi check/swap total deadline repair
 
+CTO's exact192401 inbox message reports independent source closure of
+CTO-Y-KIMI-DEADLINE-01 at5609c2e46a, record **df23c8e35a**:
+`IRPT_MVP_COMPLETION_20260922/KIMI_DEADLINE_CLOSURE_20260923/REVIEW.md`.
+It reports fresh archived43 focused and190 intake +18subtests PASS, no skips
+(focused is a subset), and the original238-second probe returning null/KIMI_TIMEOUT
+with send budgets[120,1]. Callback wall-time interruption remains unproved.
+This records the received CTO disposition; the review artifact was not re-read
+during the exact-message turn. W1 runtime and remaining feature work stay OPEN.
+
 Source: **5609c2e46a2d36716743f21a8e6a5eec6876e5d8**, parent
 6cfe01c3e238e9a90e88d3a501b25ac0eaf41540, local branch irpt-mvp-y-20260922.
 Disposition: bounded local source repair submitted for direct CTO review; not
