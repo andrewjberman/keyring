@@ -1,5 +1,12 @@
 # W1 broker recovery: actual response evidence
 
+Superseded for correlation by **fe0ec628c24af3cc8915bfe6899c5295f50a64f9**.
+CTO193152 found that the latest-observation approach below lets a healthy
+diagnostic probe hide the failed application read. See
+`W1_CAUSAL_OBSERVATION_REPAIR_20260923.md` for the explicit failed-request ID,
+paired negative controls,65 session tests and236 generation tests +32 subtests.
+This document retains the earlier candidate's evidence and limitations.
+
 Source **4173322f457aeeb390033b410e85bebadc49a3e3**, parent
 5609c2e46a2d36716743f21a8e6a5eec6876e5d8, branch irpt-mvp-y-20260922.
 Bounded LOCAL candidate under the existing broker/W1 mandate; direct CTO review

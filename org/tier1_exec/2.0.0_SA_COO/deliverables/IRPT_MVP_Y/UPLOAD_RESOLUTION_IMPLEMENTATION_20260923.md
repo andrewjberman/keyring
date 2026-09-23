@@ -1,5 +1,11 @@
 # Upload resolution: local implementation and exact integration handoff
 
+Latest W1 candidate: **fe0ec628c24af3cc8915bfe6899c5295f50a64f9** correlates
+recovery to the failed request's opaque observation ID, including actual recipe
+and GenerationJob propagation. See `W1_CAUSAL_OBSERVATION_REPAIR_20260923.md`.
+This supersedes the latest-observation behavior in4173322 below, which CTO found
+could let a healthy diagnostic probe mask the application failure. Full W1 OPEN.
+
 W1 source update: **4173322f457aeeb390033b410e85bebadc49a3e3** removes
 run_with_recovery's status-only eviction fallback using actual reply observations.
 See `W1_BROKER_BODY_EVIDENCE_REPAIR_20260923.md` for54 session tests and exact
