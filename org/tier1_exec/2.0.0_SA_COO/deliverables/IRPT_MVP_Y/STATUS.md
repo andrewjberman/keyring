@@ -216,6 +216,33 @@ No new workers, no push, no deployment or vendor egress.
   Raw header still contains full census and requires guarded projection plus
   before/after current selection checks. No normalized custody adapter delivered.
 
+## Integration update (2026-09-23 00:09Z)
+
+- Backend `e93300e34b` adds bounded owned request read/history plus paired JSON
+  fixtures. Actual acceptance/current-owner/retained-composition checks precede
+  projection; metadata/current grants/retention are checked again after blob I/O
+  and across final page release. One query, limit1..50, owner/tenant-bound untrusted
+  seek cursor; empty continuation permitted.29 producer tests PASS. CVO independent
+  `f3d540b447`:29 supplied and10 scenarios/16 checks PASS, no new defect. Checks are
+  sequential, not an atomic snapshot; order is request key, not accepted time.
+- Backend `9ac485733e` adds owned AnalysisReport retrieval through actual
+  composition-bound Dynamo job and P report repository. Requires READY receipt,
+  full accepted-owner equality, ANALYSIS kind and matching request ID/revision;
+  rechecks job/index/current access/retention after blob retrieval. Returns full
+  typed report; nonREADY is typed unavailable.15 new controls plus29 prior PASS.
+  Synthetic report fixture has actual retained source dependency and schema
+  validation; this does not prove certifier/publication or runtime assembly.
+  Source sent P/CVO; independent report-reader review pending.
+- CVO status UI review `3978b247b4`:13 supplied/59 assertions,9 independent/
+  58 assertions and TypeScript PASS. Controlled timers/manual hooks cover12 serial
+  reads,11 delays, terminal stop/manual restart and stale-result cleanup. No real
+  React/browser/reload proof. Portal source remains `940333dfcd`.
+- M acknowledges current Entry lacks the read seam and is implementing opt-in
+  CURRENT_OWNER_HISTORY and OWNED_RECORD. Await tested pin/signature; no assumed
+  route activation. P owns shared request/history schema/client/routes; Y owns
+  internal producer and ops composition. Existing sections status-loader mapping
+  remains to replace when Entry is composed. All14 criteria NOT_EVALUATED.
+
 ## Compiler observations
 
 Earlier candidates and findings (superseded where the current section says so):

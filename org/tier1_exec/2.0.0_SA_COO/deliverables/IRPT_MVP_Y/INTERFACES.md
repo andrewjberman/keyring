@@ -477,4 +477,34 @@ exact symbol echo; different vendor IDs require separately evidenced crosswalk
 support and currently refuse. Both functions are pure; they do not provide
 authorization, retention, mutation claims, vendor execution or READY publication.
 Flat package dependencies include intake/portfolio.py and recipe/transport.
-15 bridge controls;46 combined tests/7subtests PASS. Independent review pending.
+15 bridge controls;46 combined tests/7subtests PASS. CVO independent1308dd5a64
+reports46 supplied/7subtests and11 independent controls PASS.
+
+## Owned request and report reads (2026-09-23 00:09Z)
+
+Backend e93300e34b exposes OwnedRequestReader.read(verified_principal, issued_id)
+and history(verified_principal, limit=25, cursor=None). Public read is
+{identity: AnalysisRequest.identity, accepted_at: integer epoch seconds}; history
+is {items: read[], next_cursor: string|null}. Fixture:
+ops/tests/fixtures/owned_request_history.json. One consistent tenant query,
+limit1..50; untrusted owner/tenant-bound seek cursor <=2048 characters; empty page
+with continuation allowed. Request-key order is not newest-first order.
+Retained full owner/current grants and composition are verified before release,
+including final checks after all blob I/O. Checks are sequential, not atomic.
+
+Backend9ac485733e OwnedAnalysisReader(requests=reader,reports=retained_reports)
+reads by issued request ID. Actual DynamoGenerationStore binds accepted
+composition hash; READY selects immutable P report ID/revision. Report index
+full owner must equal accepted owner, kind ANALYSIS, and report.request_ref
+request_id/request_revision must equal accepted identity. Actual P get performs
+schema/blob/hash/current-access/retention verification. Final job/index/current
+owner/both retention checks precede returning the complete AnalysisReport.
+NonREADY raises AnalysisUnavailable; this is not a StatusEnvelope. The reader
+does not certify reports or make READY transitions. Runtime package needs
+ops/owned_requests.py, ops/owned_report.py and generate/durable_job.py dependencies.
+
+P agreed GET /analysis/requests (analysis-request-history) and
+GET /analysis/requests/{requestId} (analysis-request-read); sections operation
+analysis-report must use the report reader once composed. M is implementing
+CURRENT_OWNER_HISTORY and OWNED_RECORD opt-in Entry modes. No signature is
+assumed and no route is installed by these producer commits.
