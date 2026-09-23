@@ -178,6 +178,73 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "CRPS-c-9 RULED: 'a FactSet code maps onto a Bloomberg mnemonic ONLY where the SAME row label carries the Bloomberg mnemonic in one workbook and the FactSet code in another. That is measured by label, and the label is the evidence... No hand mapping.'",
     "world_is": "This cell's ONLY permitted input (CRPS-c-2's extraction documents) does not carry the coordinate data 'the same row' requires; I built the closest mechanical, non-hand-picked proxy available (immediate adjacency, both sides unambiguous corpus-wide) and printed it as a stated working rule, exactly as the order's other thresholds (90%/25%) are stated rules. AC2's regex only checks that SOME mapped/unmapped counts are printed (`\\d+`/`\\d+`), so it passes either way; AC1's tests exercise the rule's TWO required behaviours (no-hand-mapping stays unmapped; a genuinely shared label maps and records itself) against crafted fixtures, not the noisy real corpus. AC3 (judgment, no verdict here) is where this reliability gap is handed to the CVO: `factset mapped 4 unmapped 24` is what the RULED method, honestly implemented against this cell's actual input, produces -- not a claim that the 4 mapped pairs are all semantically correct.",
     "notes": "No workbook was re-read from the library or from raw bronze bytes to attempt a coordinate-based fix -- this cell's bound is CRPS-c-2's extraction documents only, and re-reading raw XLSX bytes is outside that bound. Refused nothing: the RULED method was implemented, under the best available operational reading, and run exactly as specified; this row documents that its real-corpus output should not be read as semantically validated per-pair. hazard_standing INERT: no disarm_owner named (the schema requires one only when ARMED) -- whether a future round needs coordinate-bearing input from CRPS-c-2 to measure this soundly is a design call for 2.0.0_SA_COO~X, and the grading of AC3 itself against this measurement is 3.0.0_SA_CVO~Z's at adjudication, neither stated as a disarm clock."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S1",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-23T04:36Z",
+    "one_line": "CRPS-c-5's own quoted evidence rule ('find the header Ticker: value and the Name: value') names ONE label but the real corpus carries TWO DIFFERENT header conventions that can disagree: the Class-A one-pager's colonless 'Ticker'/'Name' field pair (value on the next line, e.g. 'Ticker\\nADBE-US', hyphenated, not Bloomberg-shaped) and a separate, colon-bearing citation on earnings-update reports, '<NAME> (Ticker: <ROOT> <CC> Equity)'. I implemented evidence-gathering against only the second, colon-bearing form, because it is the one the order's own quoted text matches verbatim and it alone yields a candidate that parses as a Bloomberg identifier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Direct read, this worktree: 'Adobe ADBE US/ADBE research pack 7_13_2026.pdf' page 0 text carries 'Ticker\\nADBE-US\\n...\\nName\\nAdobe Inc.' (no colon on either label; the ticker value is hyphenated, so crosswalk._parse_bloomberg('ADBE-US') fails the two-token '<ROOT> <CC>' shape).",
+        "Direct read, same worktree: 'America Movil AXMB MM/America Movil Q2 2026 Earnings Update.pdf' page 0 carries 'AMERICA MOVIL SAB DE C-SER B (Ticker: AMXB MM Equity)' -- a literal colon, and 'AMXB MM Equity' parses cleanly via crosswalk._parse_bloomberg into ('AMXB', 'MM').",
+        "Corpus-wide regex sweep over the 60-folder UNRESOLVED population's .docx/.pdf reports (this worker's own run, 2026-09-23): the colon-bearing '(Ticker: ...)' form is present in exactly the earnings-update reports of 22 of the 60 population folders and absent from the one-pager-only folders (Adobe, Alphabet, Cadence, Eli Lilly, MSCI and others), which under this reading are NO_EVIDENCE rather than candidates.",
+        "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922/RESEARCH_CORPUS_SCAN_20260922.md section 1 names 'Header block: Ticker, Name, Sector, Location, Currency ...' as the Class-A skeleton item -- the SAME label the task order paraphrases -- without disambiguating it from the earnings-update citation."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The candidate evidence is the report's own header 'Ticker:' value and 'Name:' value, found by opening the population folder's .docx/.pdf reports.",
+    "world_is": "Two distinct, non-interchangeable header conventions both answer to that description in the real corpus, and only one of them (the colon-bearing earnings-update citation) both matches the order's literal colon and produces a Bloomberg-parseable candidate; the other (the Class-A one-pager's colonless field pair) would need a transformation (space-for-hyphen) this project's C-rule and add_security.py's own contract both forbid ('NEVER guessed as US', 'nothing is appended and nothing is stripped'). A different, equally literal reading of the same sentence picks a different evidence source and, on this population, a different folder.",
+    "notes": "Not a criterion failure: AC2's regex does not constrain which header convention is used, only the printed shape. Filed because the pick (America Movil AXMB MM, candidate AMXB MM Equity) is downstream of this interpretive choice and a different worker instance reading the same sentence could reasonably choose the other convention and reach NO_EVIDENCE for every population folder instead."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S2",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-23T04:36Z",
+    "one_line": "AC2's own literal invocation pipes the run through '2>&1 | tail -40', but printing the population lines FIRST (as the order's own ordered list requires) followed by one candidate line per population folder produces 80+ lines of combined stdout/stderr on the real 93-folder library, so a straight top-to-bottom print would push resolved_absent/unresolved_in_universe out of the tail -40 window AC2 greps. I restated both denominator lines a second time immediately before the WILL ADD/picked-NONE block so they, the pick, and the counters are all readable together at the tail.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This worker's own first, unmodified run (before the restated block was added): 83 total lines of combined stdout/stderr (60 candidate lines + 3 MuPDF stderr lines + 1 fitz deprecation line + summary lines); `tail -40` of that run starts at 'candidate Netflix NFLX' and never reaches the 'resolved_absent'/'unresolved_in_universe' lines printed at the top.",
+        "AC2's <invocation> in the task order, verbatim: 'python -m lib.research.corpus.induction_request --pick 2>&1 | tail -40'.",
+        "After adding the restated pair immediately before the pick block, `python -m lib.research.corpus.induction_request --pick 2>&1 | tail -40` was checked directly against AC2's <expect> regex with Python's re.search and matched (re-run twice, identical)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "python -m lib.research.corpus.induction_request --pick, piped through 2>&1 | tail -40, prints resolved_absent/unresolved_in_universe, then WILL ADD...REQUEST (or picked NONE), then the four counter lines, in that order, in the captured output.",
+    "world_is": "The population's own size (60 candidate lines on a 60-of-93 population) plus unrelated PyMuPDF/fitz stderr noise means the FIRST printing of the denominator lines, at the top of the run as item 1 of the order's own printed sequence, does not survive a tail -40 of the combined stream. Nothing in the order forbids restating a measured fact a second time, so the fix stays inside the order's own print-order requirement rather than relaxing it.",
+    "notes": "Not a criterion failure -- AC2 passes as re-verified above. Filed because the literal invocation's own `tail -40` and the order's own required print volume are in tension on the real 93-folder library, and a worker who printed the sequence exactly once (as item-by-item literalism might suggest) would fail AC2 on this device despite having measured and reported everything correctly."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S3",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-23T04:36Z",
+    "one_line": "Section 6 of this order directs writing induction_request.json and the proof_of_spec.json instance into org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/, but that directory is not named in section 3's <paths> list, which is elsewhere stated to be a worker's exact write surface. I treated the deliverables directory as a standing grant implied by section 6's own instructions (the same directory every AMGT_CORPUS worker order's own committed instances already use) and included it in .scratch/c5/hyg.py's ALLOWED set accordingly.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Task order section 3 <paths>: lib/research/corpus/induction_request.py, lib/research/corpus/tests/test_induction_request.py, org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md, org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-c-5.induction-request-no-vendor-call.md -- no deliverables path listed.",
+        "Task order section 6, verbatim: 'Instance at org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-c-5.induction-request-no-vendor-call.proof_of_spec.json' and (RULED section 1) 'It also writes the request as induction_request.json into your deliverables dir.'",
+        "The same pattern (deliverables directory used, absent from that order's own <paths>) is already committed for 0.9.0_WK_AMGT_CORPUS~1's three prior CRPS-c cells under this same project, e.g. org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker's write surface is exactly the <paths> its order names.",
+    "world_is": "The same order also directs, in its own section 6, two specific writes to a path outside that list -- a standing pattern across this project's prior orders, not unique to this one, so it reads as an intentional, universal exception (the deliverables directory) rather than a conflict to refuse on.",
+    "notes": "Not treated as a BLOCKING row: refusing to write the required proof-of-spec instance would leave the order permanently unprovable, which is a worse outcome than a well-precedented directory exception. Filed so the pattern is on record rather than silently assumed."
   }
 ]
 ```
