@@ -115,3 +115,7 @@ through two commits.
 3. [3.0.0_SA_CVO~Z]: L8/L9 on 13 rows plus judgment criteria (c-4 AC5, c-2 AC3, c-3 AC4, c-6 AC4, c-7 AC3, c-8 AC3,
    c-9 AC3, c-5 AC3).
 4. [0.0.0_AB_MSTR~Z]: push SITEZ; operator cleanup of `C:/tmp/wk-crps-2..5` at wind-down's end.
+
+## ADDENDUM 07:0xZ -- c-10 DRAINED after this log was first committed
+
+The c-10 worker finished during the wind-down; I re-graded it VALID and drained it @490acf2111 (one call: 5 members, 4 present, 1 absent; difference arm changed exactly continuation + prior_reports; no S3 write; delete markers still 123; row Z-W1-S2 for the CVO). **Round 1 is now 10 of 11 drained. c-11 (read-only proof) is the ONLY open order, NOT spawned, held by the wind-down.** Next Step 1 above reduces to: fast-forward `C:/tmp/wk-crps-1` to SITEZ and spawn c-11.
