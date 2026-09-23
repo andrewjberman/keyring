@@ -283,3 +283,94 @@ proof-of-spec-check.py CELL_ID_RE      10 of 10 ids match; 2 of 3 malformed cont
 | non-English press, social, SERP, any cadence, any deletion | out of scope (PRD s.2) | Andrew | a PRD change, never a cell |
 
 -- `2.0.0_SA_COO~Y`
+
+---
+
+## 10. ROUND 2 (v1.1, the RECUT) -- from the L10 round-1 analysis @f869aa705c (`1.0.0_SA_CTO~Z`)
+
+**Round 1 is CLOSED: 10 of 10 orders terminal, every proof-of-spec instance VALID, 56/1/2 of 59 criteria.**
+**AND `FWD-1` IS NOT REALIZED.** Its bar is every article AND the listing page that found it. The issuer's own census of
+`{source}/harvest/bronze/news_listing/`: **wsj 2, seeking-alpha 0, bloomberg 0, ft 0, barrons 0** -- one of five
+publishers has a listing page at all. The CVO's framing, which the analysis kept and this recut adopts: *"the cell did
+what it was told; the outcome needs publishers that answer."*
+
+**WHAT THIS RECUT IS NOT.** A fourth vendor act is **NOT granted** by that analysis and needs its own word. So **no cell
+here makes a vendor call**, and the question "why did four of five publishers yield nothing" is split deliberately:
+- its CODE half is `HVST-r-5`, settled offline with stubs, so that what remains is genuinely the sessions;
+- its SESSION half is a HOLD (section 11), owned by Andrew through `1.0.0_SA_CTO~Z`, not a cell.
+
+### 10a. The five round-2 cells -- ALL INDEPENDENT (fanout 5 of 5, cap 8, no deferral)
+
+| cell | row | outcome | act | state | round | touches |
+|---|---|---|---|---|---|---|
+| `HVST-r-1` | H8 | FWD-5, FWD-6 | **THE SPEC AMENDMENT, AND IT IS FIRST.** `SPEC_SECTION_timeline.md` fails one clause of its own judgment criterion: EVERY STATE DRAWN. Its section 6 enumerates Loading, a quiet security, the floor clamp, PARTIAL and DENIED, and a never-collected security -- but PARTIAL and DENIED are DATA states read from `chatter_daily`, and there is **NO state for the timeline call itself FAILING**, while section 5 names **no error envelope**. That is `Z-S227`/`C-S400` one project over, the defect the CVO graduated six hours earlier on evidence that its absence made a real outage invisible for days. **One state in section 6, one error envelope in section 5. NO BUILD CELL against this spec until both land.** | OPEN | 2 | docs |
+| `HVST-r-2` | H1 | FWD-1 | **THE AS-RECEIVED PROOF, with a PRINTED CHECK.** Row `-Z-S1` said `raw_bytes` were `json.dumps` re-serialisations, which is `C-HV-BRONZE-AS-RECEIVED`'s own subject. `HVST-h-1` moved capture to `PacedSession.get`, and the analysis still lists the row as open because **remediation is owed a printed check, never inferred from a passing run** (the CVO's bar on `-Z-W10-S2`/`S6`). Prove it per publisher path on the 14 objects the live act landed, print the denominator, and state the bound: a session-layer hash proves bronze equals what the transport received, not what the server sent. | OPEN | 2 | code + S3 read |
+| `HVST-r-3` | H4 | FWD-4, FWD-7 | **THE PUBLISHER COLUMN, then the GOLD REBUILD.** Row `-Z-S2`: the gold mention table carries no publisher column, so `publishers_distinct` parses `article_key`'s prefix -- a schema in disguise, and the issuer's own first re-derivation read a publisher field, got None on all 86 rows and computed 0 events against 5 written. Add the column, settled **with a PRINTED SHAPE READ beside the count** per the standing condition. Then rebuild all three gold snapshots offline, so Lenovo's 14 new silver rows are reflected: today's gold predates them. | OPEN | 2 | code + S3 |
+| `HVST-r-4` | H3 | FWD-3 | **THE CONFTEST POISON, ratified.** Four instances in one round of a test harness reaching the real session path inside a phase specified NO-NETWORK (`-Z-W10-S3`, `-Z-W10-S5`, and two earlier). `1.0.0_SA_CTO~Z` ratified the remedy and named per-test discipline the wrong layer: a **package-level `conftest` poison on `SessionManager.refresh` and `subprocess.run` for the whole `lib/opal_data_harvest` test package**, so an omitted per-test patch cannot reach a real process at all. It CONTAINS `-Z-W10-S3`; it does not explain it, and that row stays ARMED. | OPEN | 2 | code |
+| `HVST-r-5` | H1 | FWD-1 | **THE LISTING-CAPTURE REACHABILITY CENSUS, offline.** Four of five publishers produced no listing page. Two causes are possible and they have different remedies: the capture is not wired on those paths (CODE), or those paths never reached a listing call in the one run (SESSIONS). Settle the code half with stubs: drive each publisher's discovery path with canned responses and assert a listing record is produced and would be put, per publisher, with the denominator printed. **Whatever this cell proves wired, the remaining cause is the sessions, which is section 11's HOLD and not a cell.** | OPEN | 2 | code |
+
+### 10b. Rule 24 record for what v1.1 ADDS
+
+**(i) MECE over a declared domain, by subtraction.** The domain is the analysis's own ranked list of five items
+(@`f869aa705c`): the `h-8` spec amendment; the publishers that yielded nothing; `Z-S1`; `Z-S2`; `Z-W10-S3`'s mechanism.
+Cells = 5 items minus 0 dropped, plus 0 invented. Item 2 is split across `HVST-r-5` (code) and section 11's HOLD
+(sessions), and that split is stated rather than silent. `Z-W9-S1` and `Z-W8-S2` are NOT cells here: the analysis moved
+both to `0.0.0_AB_MSTR~Z`'s estate card.
+
+**(ii) SAME GRAIN.** Every cell is one engine or one document, as in round 1.
+
+**(iii) INTENT COHERENCE.** One axis: close what round 1 left open. No cell adds new capability.
+
+**(iv) STATE COHERENCE -- what these remedies do NOT move.**
+- `HVST-r-1` moves a document. It moves no code and no served object, and it UNBLOCKS nothing by itself: the build cell
+  it gates is cut only after Andrew approves the amended spec.
+- `HVST-r-2` proves a property. It changes no bytes.
+- `HVST-r-3` moves gold rows and the mention schema. It does not touch silver, bronze, or anything served: the chatter
+  switch stays held (section 9).
+- `HVST-r-4` moves test infrastructure only. It contains a hazard; it does not explain it, so `-Z-W10-S3` stays ARMED.
+- `HVST-r-5` moves nothing at all in the world. It is a measurement, and its result decides whether a session hold or a
+  code cell owns the listing half of `FWD-1`.
+
+### 10c. Round-1 lessons absorbed into this cut
+
+1. **A sized plan proves COST, not CORRECTNESS.** Three granted vendor acts were spent to land one, and the control that
+   finally worked -- a no-network rehearsal whose poison was positive-controlled -- should have existed before act 1.
+   **Every cell in this round that could touch a network path carries its poison named, never the absence of permission.**
+2. **A no-network PASS with no poison proven is an ABSENCE, and grades UNVERIFIABLE rather than PASS** (`3.0.0_SA_CVO~Z`,
+   adopted by the CTO). Applied to `HVST-r-5`, whose whole method is stubs.
+3. **Remediation is owed a PRINTED CHECK.** `HVST-r-2` exists because a passing run is consistent with a fix without
+   evidencing it.
+4. **An order that contradicts itself grades the next worker on a coin flip.** My AC6 text fell a phase behind TWICE in
+   round 1 (`-Z-W10-S7`, `-Z-W10-S10`). In this round every criterion that names a file list is written as a pointer to
+   the cell's own BOUNDS, never a second copy of it.
+5. **The issuer's `<paths>` may name only what the issuing seat's lane admits** (AMGT cutting practice @`dbb9fedb27`).
+   Round 1's `h-8` listed another seat's brief and the PRD inside a write grant. Here, read-only references sit in a
+   named READ-ONLY block outside `<paths>`.
+
+### 10d. The round axis, updated
+
+| round | cells | state |
+|---|---|---|
+| 1 | `HVST-h-1`, `h-2`, `h-9`, `h-3`, `h-10`, `h-4`, `h-5`, `h-6`, `h-7`, `h-8` | CLOSED, 10 of 10 terminal, every instance VALID; `FWD-1` NOT REALIZED |
+| 2 | `HVST-r-1`, `r-2`, `r-3`, `r-4`, `r-5` | OPEN, this cut, all five independent, NO vendor call |
+
+### 10e. What round 2 does NOT attempt
+
+- **No vendor act.** Not granted, and needed for the listing half of `FWD-1` and for the publishers that yielded nothing.
+- **No served move.** The chatter projection's switch and the page build both stay held (section 9), and the page build is
+  additionally gated on Andrew approving `HVST-r-1`'s amended spec.
+- **No library fix.** `Z-W9-S1`'s same-second collision in `lib/research/harvest/store.py` is on the estate card now.
+- **No re-litigation of round 1's grades.** 56/1/2 of 59 stands; this cut acts on what the analysis ranked.
+
+---
+
+## 11. ROUND 2 HOLDS, and whose they are
+
+| hold | on | owner | what lifts it |
+|---|---|---|---|
+| the listing half of `FWD-1`, and the publishers that yielded nothing | a FOURTH vendor act. Three of five publishers returned nothing in the one authorised run; sessions were ~7.6 days old and one (bbg) demonstrably challenged | Andrew, through `1.0.0_SA_CTO~Z` | his word for another act. The round-1 analysis @`f869aa705c` states plainly that it is NOT granted by that analysis. `HVST-r-5` first removes the CODE explanation, so the ask is about sessions alone rather than about a maybe-broken capture |
+| a publisher session refresh or browser sign-in | an operator act on this box | the operator, with `0.0.3_BG_BBGTerminal`'s surface for the Terminal | Andrew's word. **No cell of this project may attempt a sign-in, a session repair or a credential entry**, in either round |
+| the timeline BUILD cell (the `.tsx` and the `scoped_amgt.py` route) | Andrew approving the AMENDED spec | Andrew | his approval of `HVST-r-1`'s output. **No build cell is cut against the spec until the failed-call state and the error envelope land**, per @`f869aa705c` |
+| the served chatter move | a never-widen pair, the chatter role's two S3 limbs widened to the gold prefixes, and `AMGT_RESAPP`'s single retirement window | `1.0.0_SA_CTO~Z` and this seat, with `2.0.0_SA_COO~Z` | unchanged from section 9 |
+| `Z-W9-S1` (same-second silver collision) and `Z-W8-S2` (a grading command INVALID on a valid instance) | the estate, not this project | `0.0.0_AB_MSTR~Z`'s estate card, per @`f869aa705c` | that card's own disposition. This project's writers carry a workaround; the library still holds the defect |
+| `-Z-W10-S3`'s mechanism | root cause unknown: a dotted-string monkeypatch target that no-ops for some module attributes and not others | this seat, carried | an explanation, not a containment. `HVST-r-4`'s poison contains it and the row stays ARMED |
