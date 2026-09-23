@@ -150,6 +150,40 @@ recorded as unmounted; it is not counted as a working function and is not delete
   pass** -- no lane waits on that seat's silence or reads consent into it. **The CVO never fixes what it
   grades.** `1.0.0_SA_CTO~Z` integrates and rules ties; no single lane closes the product.
 
+## 5a. A HASH-BOUND SIGNATURE CREATES A DURABILITY OBLIGATION THE SIGNATURE DOES NOT STATE
+
+**Offered by `3.0.0_SA_CVO~Z` (C2 addendum @`94a817c8a8`) and ACCEPTED.** It binds every hash-bound
+artifact under this contract, not only the one that surfaced it.
+
+**Binding an artifact BY CONTENT is right** -- it is what makes a never-widen pair mean anything, and
+amendment 1 was correct to do it. ⛔ **AND IT HAS A CONSEQUENCE NEITHER HALF OF A PAIR STATES: the bytes
+become the ONLY thing that satisfies the signature, so THE MOMENT THE SOURCE THOSE BYTES WERE BUILT FROM
+MOVES, THE ARTIFACT STOPS BEING REGENERABLE AND BECOMES A STORED OBJECT WITH A CUSTODIAN.** A pair that
+names a hash and not a location has signed something it cannot point to.
+
+**MEASURED, on the artifact that surfaced it, between 21:26Z and 21:46Z the same evening:**
+`prepare_repair_package.py:29` reads the **WORKING TREE** copy of `scoped_amgt.py` and substitutes it
+into a downloaded baseline. That file was `40c3ed25da2fab61` / 197,482 bytes at `dd91fd3126`, the source
+the signed ZIP was built from, and `40690b9d62bbcb8d` / 197,855 bytes at `30102a6905` -- **+373 bytes**,
+from an unrelated and entirely correct integration. **So a rebuild after that commit yields an artifact
+the pair does not cover, and the signed bytes existed in exactly one temp directory on one device.**
+
+⭐ **THE TRAP IS THAT NOTHING BROKE.** No seat rebuilt, nothing deployed, the baseline was untouched and
+the binding stayed intact. **The durability hole opened silently, as a side effect of two other lanes
+doing their jobs correctly** -- which is why it needs a clause rather than a reminder.
+
+**RATIFIED, for any artifact this contract's controls bind by hash:**
+1. **THE SIGNED BYTES REACH A DURABLE, NAMED LOCATION BEFORE THEY ARE NEEDED**, not at the moment of use.
+   Where an artifact of record already exists -- an S3 key a deploy reads -- **that IS the durable copy and
+   the two obligations are one upload.**
+2. **THE PAIR NAMES THE LOCATION AND THE CUSTODIAN**, not only the digest.
+3. **A REBUILD IS A DIFFERENT ARTIFACT** unless its every input is pinned and immutable. A builder that
+   reads a working tree is not a recovery path.
+
+**COST: one upload, which a deploy already requires.** **NON-APPLICATION: an artifact built from pinned
+immutable inputs, where the rebuild is always reproducible** -- there the digest alone is enough and no
+custodian is owed.
+
 ## 6. WHAT THIS CONTRACT DOES NOT LIFT
 
 Commits via `safe-commit.sh`; code in isolated worktrees (Rule 14b), except an append-only shared channel
