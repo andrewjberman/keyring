@@ -1,7 +1,7 @@
 # Y maintained-source consumer requirements
 
 Owner `2.0.0_SA_COO~Y`. Authority CONTRACT v1.2 and CTO
-IRPT-MAINTAINED-SOURCE-01 `0429af3604`. Consumer inspection at backend
+IRPT-MAINTAINED-SOURCE-01 `0429af3604`, amended by SOURCE-02 `51b5d63a81`. Consumer inspection at backend
 `d29c893cf1`; no new maintained-source or vendor proof is asserted.
 
 Y claims recipe/worker validation and consumption in ycharts/generate; M's
@@ -24,7 +24,7 @@ implementation does not establish that missing maintained values are known.
 |---|---|---|
 | prepared_by | Verified maintained acting preparer display identity | Unavailable; no generic or borrowed advisor name |
 | organization | Maintained organization for verified firm | Unavailable; no fixture organization |
-| prepared_for | Authorized client/prospect display value | Unavailable; no default client label |
+| prepared_for | Exact authorized browser recipient display text, separate from title and scope | Required; blank, controls, lone surrogates or over 200 Unicode code points refuse |
 | contact_email | Maintained advisor contact address | Explicit absent may render blank after M/P agreement |
 | contact_phone | Maintained advisor contact phone | Explicit absent may render blank after M/P agreement |
 | contact_url | Maintained advisor contact URL | Explicit absent may render blank after M/P agreement |
@@ -37,8 +37,11 @@ the stored source contract must distinguish absent from populated values and
 retain its basis. Existing offline recipe fixtures use empty contact/custom
 strings, but those fixtures do not establish vendor or maintained-source proof.
 Until agreement, no missing source value is silently converted to a default.
-M should identify if required prepared_for has no prospect source in the current
-intake contract; the browser currently supplies only references, title and choices.
+SOURCE-02 authorizes explicit user entry for prospect and custody. P/Y agree
+exact Unicode text, no normalization/trim, max 200 code points, no C0/C1 controls
+or unpaired surrogates. This application cap is not a proven vendor maximum.
+It conveys no legal identity or access. Existing missing-label requests cannot
+newly dispatch; changed labels require a new acceptance.
 
 M01:32:07 and P01:30:58 agree optional absence remains explicit in composition
 and becomes an empty string only at the vendor edge. Required identity/recipient/
@@ -67,13 +70,16 @@ opal_short_term, opal_intermediate_term and opal_ultra_long_term. Captured
 security_id values are P:1728413/P:1728415/P:1728315/P:1728420, explicitly typed
 model_portfolio; label is display text. That capture says identities were checked
 through securities_info, but is not current maintained scope/entitlement proof.
-It establishes neither an authorized current catalogue owner nor permission to
-equate any generic source security_id with a vendor identifier. M must supply
+SOURCE-02 now names Y as the maintained catalogue owner. Historical evidence
+still grants no current reporting use or permission to equate a generic source
+security_id with a vendor identifier. The resolver must require
 explicit vendor namespace/identity/type evidence and source authority for each
 selected mapping. Y may then copy the proven typed ID without stripping P:/M:/S:.
 P: for a vendor model_portfolio is not interchangeable with M: merely because
-both may be colloquially called models. M coordinates maintained catalogue source
-ownership; Y retains ownership of the captured recipe/template configuration.
+both may be colloquially called models. M validates source scope/current policy; Y owns the maintained catalogue in
+this same file. Candidate `9daa67433e` retains four historical typed IDs with
+explicit UNVERIFIED identity/entitlement and empty permitted firm/principal sets.
+Selected candidates remain unavailable; empty selection remains valid.
 
 ## Concrete consumer example and required provenance
 
@@ -116,3 +122,8 @@ SETTING_TO_VENDOR_FIELD. Preserve their frozen values and prove actual readback.
 The pinned template census/configuration is separately required for extraction
 and recipe identity. Session credentials and signed download URLs never belong
 in this composition or the worker checkpoints.
+
+Canonical paired shape is now P `d91b2bdd10`, consumed via `96d71a3506`.
+RequestComposition.schema.json and REQUEST_COMPOSITION.md own field spellings.
+Recipe-title fallback requires an actual RECIPE_CONFIGURATION descriptor with
+projection.report_title; no maintained default title has been established here.

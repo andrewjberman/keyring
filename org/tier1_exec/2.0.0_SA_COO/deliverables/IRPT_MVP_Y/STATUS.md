@@ -457,3 +457,29 @@ and maintained session/readback dependencies; connect frozen report export with 
   example/P closed schema, actual frozen-input/readback metadata binding and worker
   assembly, then shared frozen export. All14 integrated criteria NOT_EVALUATED.
   No vendor/session activation, policy activation, push, deploy or browser proof.
+
+01:40Z independent update: CVO Y exact-pair closure `7c5fa24adc` supersedes Y-W01/
+Y-W02 HOLD for `960f5f2a45`/`c09fea54`. Original unchanged24 backend controls and
+20 parser controls/53 assertions PASS, all seven original parser failures closed.
+Four public refusals clean; additional internal/selection controls pass. P R-P11
+verdict remains separately owned. CVO is reviewing merged `33b2fbe528`/`12acb3f4`
+and recovery `82792f4864` separately; no blind inheritance or integrated grade.
+M inventory `8992447f8f` read by exact Git object; Y agreed descriptor semantics
+to P. Canonical schema and actual resolver implementation remain pending.
+
+02:00Z update: CTO retained CVO P R-P11 closure0525841ab3/selection9a7b938c2c
+separately from CVO Y7c5fa. CVO Y `a77d910928ab4f72af5efc558d7a2dd9430a3028`
+independently passes exact merged33b2fbe528/12acb3f4 unchanged wire controls,
+and bounded recovery82792f4864 (30 supplied/4subtests plus12 independent).
+Recovery remains CERTIFYING; deterministic interruption cuts are not actual
+process-kill/server-race/readback/READY proof. Post-TX refusal preserves writes.
+
+SOURCE-02 `51b5d63a81` assigns Y the maintained catalogue and permits explicit
+user-entered recipient text. Boundary `70eabdcf3b`:19 tests PASS; required exact
+Unicode<=200codepoints/noC0C1/lone surrogates, no trim. P schema `d91b2bdd10`
+consumed `96d71a3506`; acceptance/worker integration is still pending. Candidate
+`9daa67433e` versions existing templates.json with all four current identity and
+entitlement states UNVERIFIED and empty permitted firm/principal classes.
+No new vendor call is authorized. M received exact candidate and title-source
+requirements. UI16 tests/87assertions and explicit app TypeScript PASS; shared
+P adapter pin remains pending. All14 NOT_EVALUATED; local only.

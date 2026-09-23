@@ -8,25 +8,81 @@
   "checkpoint_pin": "d29c893cf1",
   "recovery_pin": "82792f4864",
   "independent_publisher_review": "a0fd560594cf8280e28a202d9aea70d3ed164272",
-  "replacement_pair": {"backend": "960f5f2a45", "portal": "c09fea54e9f4613d44b874724e93b79c443f8cc8"},
+  "replacement_pair": {
+    "backend": "960f5f2a45",
+    "portal": "c09fea54e9f4613d44b874724e93b79c443f8cc8"
+  },
   "public_wire_captures": [
-    {"path": "PUBLIC_WIRE_REPAIRED_OUTER.json", "sha256": "f3be03019c1169806824df50fcd57f6bb3afbcbf98a2a931e8cce079b561d371"},
-    {"path": "PUBLIC_WIRE_REPAIRED_DATES.json", "sha256": "e01467d21c7e78276e1f642a69f33ad09ab80a86b6d46a9c7f21b7607d494101"}
+    {
+      "path": "PUBLIC_WIRE_REPAIRED_OUTER.json",
+      "sha256": "f3be03019c1169806824df50fcd57f6bb3afbcbf98a2a931e8cce079b561d371"
+    },
+    {
+      "path": "PUBLIC_WIRE_REPAIRED_DATES.json",
+      "sha256": "e01467d21c7e78276e1f642a69f33ad09ab80a86b6d46a9c7f21b7607d494101"
+    }
   ],
   "validation": [
-    {"command": "python -m pytest infra/aws/lambda/investor-reporting/_contracts/test_owned_outer_contracts.py infra/aws/lambda/investor-reporting/ops/tests/test_prospect_dates.py infra/aws/lambda/investor-reporting/ops/tests/test_owned_entry.py infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_publication_worker.py infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_durable_job.py infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_publisher.py infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_retained_report_index.py -q --tb=short", "exit_code": 0, "tests_pass": 99, "subtests_pass": 4},
-    {"command": "bun test src/pages/InvestorReporting/__tests__/mvp-selection src/pages/InvestorReporting/tabs/analysis/tests", "environment": "IRPT_CONTRACTS_DIR points to backend docs/contracts/investor-reporting/v1", "exit_code": 0, "tests_pass": 44, "assertions": 219},
-    {"command": "bun node_modules/typescript/bin/tsc --noEmit", "exit_code": 0}
+    {
+      "command": "python -m pytest infra/aws/lambda/investor-reporting/_contracts/test_owned_outer_contracts.py infra/aws/lambda/investor-reporting/ops/tests/test_prospect_dates.py infra/aws/lambda/investor-reporting/ops/tests/test_owned_entry.py infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_publication_worker.py infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_durable_job.py infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_publisher.py infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_retained_report_index.py -q --tb=short",
+      "exit_code": 0,
+      "tests_pass": 99,
+      "subtests_pass": 4
+    },
+    {
+      "command": "bun test src/pages/InvestorReporting/__tests__/mvp-selection src/pages/InvestorReporting/tabs/analysis/tests",
+      "environment": "IRPT_CONTRACTS_DIR points to backend docs/contracts/investor-reporting/v1",
+      "exit_code": 0,
+      "tests_pass": 44,
+      "assertions": 219
+    },
+    {
+      "command": "bun node_modules/typescript/bin/tsc -p tsconfig.app.json --noEmit",
+      "exit_code": 0
+    }
   ],
   "capture_generation": "Actual _contracts/test_owned_outer_contracts.py with IRPT_WRITE_OWNED_OUTER_FIXTURE and IRPT_WRITE_OWNED_DATE_OUTER_FIXTURE set to the capture paths; synthetic storage/ownership/report fixtures",
-  "open_findings": ["Y-W01 alias R-P11 public-refusal HOLD", "Y-W02 strict-parser HOLD pending independent replacement retest"],
+  "public_wire_independent_closure": {
+    "review_pin": "7c5fa24adc1ef8daa6fc73b747dbb4d52318e16c",
+    "verdict": "CLOSED exact960f5f2a45/c09fea54; a77d910928 separately closes exact merged33b2fbe528/12acb3f4",
+    "original_backend_controls_pass": 24,
+    "original_parser_controls_pass": 20,
+    "original_parser_assertions": 53
+  },
+  "open_findings": [
+    "Actual accepted-input/readback binding and full worker assembly remain incomplete",
+    "Maintained-source acceptance integration and independent review pending"
+  ],
   "limits": [
     "All14 integrated Y/S criteria NOT_EVALUATED",
     "Publisher metadata fingerprint/settings are not actual accepted-input/readback proof",
     "Recovery stage remains CERTIFYING and does not write READY",
     "AWS effects and replacement leases are simulated, not server-expression/concurrency evidence",
     "No browser/current-service/export/session/vendor/policy activation",
-    "Maintained profile/catalogue contract awaits actual M/P paired handoff",
+    "P canonical composition contract consumed; M actual resolver and full composition integration pending",
     "LOCAL only; no push or deployment"
-  ]
+  ],
+  "merged_wire_and_recovery_review": {
+    "review_pin": "a77d910928ab4f72af5efc558d7a2dd9430a3028",
+    "wire_pair": [
+      "33b2fbe528",
+      "12acb3f4"
+    ],
+    "recovery_pin": "82792f4864",
+    "recovery_supplied_pass": 30,
+    "recovery_subtests_pass": 4,
+    "recovery_independent_pass": 12,
+    "claim": "Bounded PASS; no READY/readback/process-kill/server-race proof"
+  },
+  "recipient_catalogue_candidate": {
+    "boundary_pin": "70eabdcf3b",
+    "schema_pin": "d91b2bdd10",
+    "schema_merge": "96d71a3506",
+    "catalogue_pin": "9daa67433e",
+    "boundary_tests_pass": 19,
+    "selected_candidates": "UNVERIFIED and unavailable",
+    "ui_tests_pass": 16,
+    "ui_assertions": 87,
+    "ui_shared_adapter_integration": "PENDING"
+  }
 }
