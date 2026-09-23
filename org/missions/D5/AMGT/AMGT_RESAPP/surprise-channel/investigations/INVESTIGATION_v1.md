@@ -13059,6 +13059,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "For any path with NO entry (exact/glob/prefix) anywhere in `.owned-paths.yaml`'s `paths:` table, `owned-paths-validate.py --check-agent` refuses it as UNDEFINED regardless of whether a live, non-terminal, HEAD-committed task order names it in <paths> -- the dynamic worker_grant limb is dead code for such paths, because the CLI wrapper short-circuits on the static lookup first. This worker's own order names `.scratch/r126/**`, and the commit was refused. Worked around: committed only the deliverables + investigation-row paths (which DO carry a static lane and passed rc=0); the three `.scratch/r126/*.py` scripts and their captured `*_out.txt` remain UNCOMMITTED in this worktree, though their full output is captured verbatim in the proof-of-spec instance's own output_evidence fields (AC0/AC1/AC2 rows), so the ACs themselves are unaffected.",
     "disarm_owner": "1.0.0_SA_CTO (or 2.0.0_SA_COO~Z as the granting issuer) -- owns .tools/owned-paths-validate.py and .owned-paths.yaml's `paths:` table. Two independent fixes would close this: (1) add a `.scratch/` static lane entry broad enough that `resolve_lane` no longer returns None for it (then the existing worker_grant logic already handles per-agent/per-order admission correctly, as proven by the deliverables/investigation control above), or (2) reorder `_cmd_check_agent` to attempt the dynamic worker_grant lookup BEFORE declaring UNDEFINED when no static lane matches. ARMED because every future worker order that grants a `.scratch/<slot>/**` path (the estate's own convention, per the many prior AMGT_RESAPP orders read this session) will hit the identical refusal until one of these lands.",
     "notes": "Not a lane violation by this worker -- the path IS named in this order's own committed <paths> block, which the top-level framework treats as the write grant ('<paths> IS your write grant'). The GIT_COMMIT_AUTHOR_OVERRIDE escape was considered and NOT used: it bypasses the check entirely rather than proving the grant, and this worker judged recording the gap + working around it (commit only what the gate currently accepts) as the narrower, more auditable choice given the framework's caution against bypassing a gate failure. If a future seat judges the override the better remedy for this exact class, this row is the citation."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W128-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~128",
+    "surfaced_at": "2026-09-23T05:52Z",
+    "one_line": "HKEXnews' own titleSearchServlet.do search API is LIVE-REACHABLE (HTTP 200, well-formed JSON) for stock 00992 but returns recordCnt=0 under every query-parameter combination tried, because its category/searchType/market taxonomy is undocumented -- a THIRD outcome this cell's own bound (AC4: 'unreachable or refuses ... is a RESULT') does not name: reachable, well-formed, structurally empty.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Direct probe this session (pre-AC4, exploratory, python urllib): https://www1.hkexnews.hk/search/titleSearchServlet.do?...&stockId=00992&category=0&market=SEHK&searchType=1&t1code=40000&t2Gcode=40100&lang=E -> HTTP 200, body {\"result\":\"[]\",...,\"recordCnt\":0}.",
+        "Same session, varied systematically: stockId in {992,0992,00992}; market in {SEHK,MB,main,\"\"}; searchType in {0,1,2}; category=0 with and without t1code/t2Gcode; fromDate/toDate both blank and set to a 1999-2026 span -- every combination returned the SAME body shape, recordCnt 0.",
+        "AC4's own live invocation (.scratch/r128/ac4.py, this instance's AC4 row): battery._step5_national_regulator against the LIVE crosswalk-derived keys for 992_HK_Equity, ONE http_get call, http_status=200, reason 'HKEXnews title search reachable (http_status=200) but returned 0 filing(s) for stock 00992'.",
+        "THESIS_FOREIGN_FILINGS_CHANNELS_20260918.md s.5 (4.0.0_SA_CRO~Z, read this session): 'Lenovo | HK | HKEXnews | annual reports since 1999; no official API' -- an independent source confirming HKEXnews carries no documented/official API, consistent with the undocumented, unresolved taxonomy measured directly above."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AMGT-rk-128 s.5 preflight EGRESS CLASS + AC4's own <expect>: the order anticipates the HKEX fetch landing in one of two shapes -- a real document to run acceptance against, or 'HKEX is unreachable or refuses' recorded as a legitimate RESULT with status and reason.",
+    "world_is": "The live fetch IS reachable and returns a well-formed 200 JSON reply -- neither unreachable nor a refusal in the ordinary sense -- yet still carries no document, because HKEXnews' search taxonomy (category/t1code/t2Gcode/searchType) is undocumented and this cell's guessed parameter combinations (the ones a public scraper could plausibly construct) all resolve to recordCnt=0. This cell's own adapter (_hk_national_regulator, battery.py) handles this shape correctly (a declared-only, non-winning attempt, the same shape _step3_esef_lei already uses) -- so the CELL is not broken. What is left open is whether the RIGHT parameters exist at all for a bare unauthenticated GET, or whether HKEXnews' real search requires session/viewstate state (a JSF POST flow) this order's ONE-fetch bound cannot exercise -- meaning a FUTURE cell that assumes this adapter can be made to WIN by tuning its query string alone may spend a round discovering it cannot.",
+    "disarm_owner": "whoever next issues a cell asking step 5's HK adapter to WIN (produce a RESOLVED outcome) for 992_HK_Equity -- should first re-derive the correct HKEXnews category/searchType codes (or confirm the search genuinely requires a stateful JSF POST flow, in which case a bare-GET adapter cannot win at all and the cell should say so rather than iterating on query strings) before spending a live-fetch budget on it.",
+    "notes": "Filed as OBSERVATION/ARMED, not BLOCKING -- this cell's own acceptance criteria (AC0-AC5) do not require step 5 to WIN, and AC4 explicitly allows an unresolved, measured outcome. The hazard is prospective: a LATER cell that assumes 'the adapter exists, so tuning the query will resolve it' could waste a round on a taxonomy that may not be discoverable by guessing at all."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W128-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~128",
+    "surfaced_at": "2026-09-23T06:04Z",
+    "one_line": "TO-AMGT-rk-128's <proof_of_spec> declares TWO <criterion id=\"AC1\"> blocks (the dispatch-key measurement and the pytest baseline), but .tools/proof-of-spec-check.py's invocation-alignment limb (_to_invocations) builds a plain dict keyed on criterion_id and OVERWRITES on repeat, so it can only ever compare against the LAST-declared AC1 block -- a proof-of-spec instance carrying two separate 'AC1' rows (one per TO clause, the natural reading) fails invocation-alignment on the FIRST row every time, regardless of content.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/proof-of-spec-check.py:1327-1341 (_to_invocations, read this session): `out[cid] = i.group(1).strip() if i else None` inside a `for m in CRITERION_BLOCK_RE.finditer(text)` loop -- plain dict assignment, not append/setdefault, so a SECOND <criterion id=\"AC1\"> block in the TO silently overwrites the first block's invocation in `out`.",
+        "Direct measurement this session: two separate acceptance rows submitted for id 'AC1' (invocations matching the TO's two distinct AC1 <invocation> texts verbatim, including HTML entities) -> `python .tools/proof-of-spec-check.py <instance> AC0,AC1,AC2,AC3,AC4,AC5` printed TWO 'invocation-alignment[AC1]' VIOLATIONs, BOTH quoting the SAME 'TO-CRITERION' text (the pytest command, the TO's SECOND/last AC1 block) -- confirming the dict-overwrite, not a transcription error, was the cause.",
+        "Fix verified: merging both TO clauses into ONE 'AC1' acceptance row whose invocation is byte-identical to the TO's LAST AC1 block (the pytest command, with its output_evidence carrying BOTH clauses' results, the first clause's own invocation quoted inline in output_evidence text) -> re-run: 'invocation-alignment (recorded invocation -> criterion text): 6/6 comparable row(s) match ... 0 diverge' -> 'VALID (rc=0)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The PROOF_OF_SPEC.schema.json acceptance array is a plain list with NO uniqueness constraint on criterion_id (schema :183-259), and this order's own <proof_of_spec> XML declares two <criterion id=\"AC1\"> blocks side by side -- both readings support one row per declared criterion CLAUSE, i.e. two rows sharing id 'AC1'.",
+    "world_is": "The checker's invocation-alignment limb cannot represent that: it resolves one TO invocation per id (last-wins), so the SECOND submitted row for a repeated id is the only one that can structurally match, and the natural one-row-per-clause instance is INVALID (rc=1) through no fault of the evidence itself -- the defect is in how many DISTINCT TO invocations a single criterion_id can carry through this limb, which is exactly one. Worked around by merging the two clauses' proof into the single row the checker can align, with the first clause's own command and full output still quoted verbatim inside that row's output_evidence.",
+    "disarm_owner": "the owner of .tools/proof-of-spec-check.py's invocation-alignment limb (_to_invocations, :1327) -- either (1) key the dict on (criterion_id, occurrence-index) and compare instance rows sharing an id by POSITION among same-id rows, or (2) refuse a TO at cut time that declares two <criterion> blocks sharing one id, forcing distinct ids (AC1a/AC1b) instead. Until one lands, any TO that legitimately needs two proof clauses under one id forces a worker to merge them into one row, same as this instance.",
+    "notes": "Not BLOCKING: the merge is a legitimate, fully-evidenced workaround (both clauses' invocations and outputs are quoted verbatim in the merged row), and the resulting instance is genuinely VALID (rc=0) with all six criteria PASS-by-output -- this row exists so the NEXT worker who meets a TO with a repeated criterion id does not re-discover the same false 'INVALID' from a content-correct instance."
   }
 ]
 ```
