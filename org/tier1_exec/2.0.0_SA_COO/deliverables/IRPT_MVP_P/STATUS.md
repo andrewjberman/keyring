@@ -1,38 +1,23 @@
 # IRPT P -- current status
 
-Seat2.0.0_SA_COO~P. Contractv1.3, live-first5edf991c06; local integration/runtime preparationd2fd024d72; controlling Opal full-access correction5ad99c7d30. CTO direct reviewer. As of2026-09-23T17:39Z.
+Seat2.0.0_SA_COO~P. Live-first5edf991c06; full-access5ad99c7d30; staging18e2835c5f/applye186d7ea22. CTO direct reviewer. As of2026-09-23T17:52Z.
 
-## Current pins and measured state
+## Live first hop
 
-| Surface | State |
-|---|---|
-| Served localhost5174 frontend | Clean10141b6d0bbb007d5dd9e758f11f785216e11339; exact three admitted scope commits integrated canonically; launcher and trace preserved |
-| Frontend checks | Actual-tree typecheck PASS;26parser/context tests PASS; mounted selector/header-race/browse-race PASS; HTTP source readback200 |
-| Live backend | Unchanged iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s=,149956bytes; old bootstrap code |
-| Prepared directory ZIP |155747bytes/20members; o590uh5oisCtHPKzorGMJ/k9VJPcgtLSg4SKfe4KYYs=; source6cd8adb582 |
-| Runtime controls | Python3.12 x86_64 cold handler PASS;41existing controls mechanically PASS; CTO18e2835c5f directly repeated runtime proof; per-firm Global routing negative is valid, not full-access proof |
-| Shared viewer interface |9a3ec2a11f;8focused source controls PASS; published to M/Y; not yet Entry-wired or packaged |
-| Cloud state | Exact directory artifact staged at1ogxCxUa61vTvMPtXB.BehRWB7aJTCnj; saved one-function plan pending CTO apply adjudication; no apply/push; CLOUD held |
+Andrew directly confirmed after reload: Global/Select Firm and investor list appear. Served frontend10141b6d with deployed directory artifact o590uh5oisCtHPKzorGMJ/k9VJPcgtLSg4SKfe4KYYs=. Actual source/list symptom repaired. Agent has no attached real browser; pagination, client/account selection, reload persistence and generation are not yet attested. This does not close S1-S7 or full Opal access.
 
-## Live thread and acceptance
+Exact saved plan c5ef7ef7357ad194bdc38dabd827dd170cc5544e923fd573cb9436c0d40348ca applied through safe-apply:0add1change0destroy. Active/Successful, independent live ZIP download exact, unchanged configuration/environment/role/policy/four routes, target zero-change plan. DIRECTORY_DEPLOYED_20260923.json carries proof and new revision. CLOUD push remains held.
 
-NOT LIVE. Latest real authenticated requests returned HTTP200 UNAVAILABLE/UNEXPECTED with no scope data. Local frontend repair is now served, backend remains old. No new signed-in scope/list/selection/reload success. S1-S7 all remain unclosed; offline tests close none.
+## Canonical recording blocker
 
-Current concrete handoff: DIRECTORY_STAGE_20260923.md/json. Exact canonical staging independently read back; saved candidate plan c5ef7ef7357ad194bdc38dabd827dd170cc5544e923fd573cb9436c0d40348ca changes only directory S3 version/code hash (last_modified computed). Ledger4917bed568 open; S1 staging proven, serving/record/live proof pending. CTO18e2835c5f authorized staging, not apply.
+Ledger4917bed568 irpt-directory-bootstrap-20260923 remains OPEN. Staging, exact plan and Lambda deployment legs proven; V1 recorder and B1 remaining journey proof open. Scoped canonical recorder stamped1/9 correctly then widened CHANGELOG/reconcile to5functions9artifacts and modified unrelated irpt-ycharts-generate hash. Interrupted before commit, child processes quiescent. Partial outputs, diff and audit preserved in.runtime/directory-review/recorder-*. No broadened record committed or bypass used. CTO175051 confirmed defect and routed canonical repair to MSTR. Do not reset tree/erase audit; wait for concrete repair/recovery.
 
-## Active interface work
+## Full-access source
 
-OPAL_ACCESS_INTERFACE_20260923.md and source9a3ec2a11f separate actual viewer/home identity from retained creator and data/storage firm. Verified Opal has all IRPT access; Global and firm choices are filters. Ordinary firm restrictions and forged/service-identity refusals remain. Global placement or unimplemented aggregation is a capability gap, never an Opal permission ceiling.
+- P trusted viewer9a3ec2a11f:8source controls.
+- P explicit storage placement dd6edfc3aa:49tests PASS including8 real viewer/repository/retention controls. data_firm get/list/head/require_live/promote; actual viewer and frozen owner distinct.
+- P shared Entry4ec461a2e9:59tests+12subtests PASS including10 actual Entry controls. current_owner is actual viewer, prospect_owner stored/create owner. Final actor/owner rechecks retained.
+- Y85af5eb95d accepted by CTO8b7d43d5eb. Y paired storage controls4ea95d1117 report479tests50subtests PASS (Y-attributed). Source integration/replay still pending here.
+- ACTING_SUBMITTER_CONTRACT_20260923.md defines explicit resolved.input_owner versus actual request owner for new submissions of other-creators retained input. Y/M consume; no reupload or impersonation.
 
-| Owner | Next exact dependency |
-|---|---|
-| P | Wire trusted viewer/prospect callback into shared Entry and remove obsolete owner/custody-only policy checks; preserve final-release reauthorization |
-| Y | Consume9a3ec2a11f for retained other-owner reads/history, upload/generation owner transport and prospect-versus-custody freezer; findings0152bf7bfb |
-| M | Identify exact attributed selection/data composition changes under full Opal access without restarting unrelated producer work |
-| CTO | Exact saved-plan apply adjudication; no CVO wait |
-
-Current local server/CloudFront transport and sanitized trace remain active. No repeated sign-in prompt. New interface is source-only and not advertised as deployed functionality.
-
-## Parked and limits
-
-Deeper accepted-custody generation ZIP/M-reader closure, checker-provenance and source-economic admission work remains parked under5edf991c06. Existing evidence155213fedf and unexecuted verify_packaged_custody.py are preserved. The bounded directory work does not authorize vendor calls, new infrastructure, mutation of reports, or a cloud/promotion action. Historical runtime apply exceptions are not reused as current authority.
+These source changes are not in the deployed bootstrap ZIP. All source admission/runtime packaging/deploy gates remain applicable. Maintained-profile/multi-firm composition gaps remain bounded owned work, no unrelated producer restart. No additional cloud mutation or promotion is authorized.
