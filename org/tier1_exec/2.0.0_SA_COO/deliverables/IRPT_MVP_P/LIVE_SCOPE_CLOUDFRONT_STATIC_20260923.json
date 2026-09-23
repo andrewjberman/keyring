@@ -1,0 +1,65 @@
+{
+  "checked_at": "2026-09-23T06:46:03.083033+00:00",
+  "url": "https://www.opalinvest.dev",
+  "ci_run": 35828019440,
+  "prod_commit": "a0690a03d7bee06380fec8a49159fa78761fa985",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "sha256": "3fb813801bf6a3653d124e3161b0594a7f9cb4d9151c5dca58bf79a0269ae9d1",
+      "matches_ci_artifact": true,
+      "cloudfront_id_present": true,
+      "cache": "Miss from cloudfront"
+    },
+    {
+      "path": "/assets/index-BFAZki1o.js",
+      "status": 200,
+      "sha256": "239b745e41760830d844db7bc3c31a3ec8d804ac00b1eebdaeeb019dabe0971d",
+      "matches_ci_artifact": true,
+      "cloudfront_id_present": true,
+      "cache": "Miss from cloudfront"
+    },
+    {
+      "path": "/assets/vendor-react-DLAg9veD.js",
+      "status": 200,
+      "sha256": "e9a1f155de97e72a8a7d1e02a7c1689201ccebd8bbac295f3afe2ea026eb9ccf",
+      "matches_ci_artifact": true,
+      "cloudfront_id_present": true,
+      "cache": "Miss from cloudfront"
+    },
+    {
+      "path": "/assets/vendor-query-a03VQeS3.js",
+      "status": 200,
+      "sha256": "4e85b3a162740f100e3f4fed6c8f03d13923356d206c2da3a37cd547cffee378",
+      "matches_ci_artifact": true,
+      "cloudfront_id_present": true,
+      "cache": "Miss from cloudfront"
+    },
+    {
+      "path": "/assets/vendor-recharts-CU90stVT.js",
+      "status": 200,
+      "sha256": "c903f742adeba2311fb13656e5be7828e337f454c222d11b5291b2285b9dd2b2",
+      "matches_ci_artifact": true,
+      "cloudfront_id_present": true,
+      "cache": "Miss from cloudfront"
+    },
+    {
+      "path": "/assets/vendor-ui-BfMlXNSq.js",
+      "status": 200,
+      "sha256": "75cc43e11260dc38593d32ac17b059ebf26af5cd8260b9db7e53449f7a3ad9ce",
+      "matches_ci_artifact": true,
+      "cloudfront_id_present": true,
+      "cache": "Miss from cloudfront"
+    },
+    {
+      "path": "/assets/index-BqqH20IW.css",
+      "status": 200,
+      "sha256": "24d6420efc4fa36d42764abb8aab77d0217de9501b3ab83ad6e6b507bb43bc27",
+      "matches_ci_artifact": true,
+      "cloudfront_id_present": true,
+      "cache": "Miss from cloudfront"
+    }
+  ],
+  "authenticated_scope_http": "not exercised; Andrew visual review pending"
+}
