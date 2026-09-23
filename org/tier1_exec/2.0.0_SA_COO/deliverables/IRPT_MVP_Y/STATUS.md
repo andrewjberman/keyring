@@ -559,3 +559,17 @@ defect or implementation edit. Pure0..5 capture sweep is not comparison admissio
 Optional configuration port still lacks installed factory; recorded bytes confer no
 current template/settings/source/vendor authority. Effecting worker/readback/runtime/
 render/export/READY ungraded; all14NOT_EVALUATED. No Go or hold lift inferred.
+
+
+03:15Z canonical profile SDK consumption: M8e2ba7830352b2a34c97ec96984d043654cab340
+safe-merged as86d7b6ca41, consumer tests committed cdbd4de74d. Actual SDK adapter
+and retained prospect authorizer cross actual Y/P acceptance/configuration/frozen
+worker in offline synthetic fixtures: combined222PASS96subtests, unchanged retained
+probe19PASS, final consumer2PASS and Ruff/gatesPASS. Exact current local backend
+cdbd4de74d. Details and checkout-materialization failures retained in
+CANONICAL_PROFILE_CONSUMPTION.md. M031009 informational receipt supplies CVO-M
+a8f8a15e6c bounded SOURCE PASS exact8e2/ef9; full narrative read, independent
+42 controls are attributed reviewer evidence, not Y reproduction or merged-grade
+inheritance. Actual factory/current grants/IAM/policy/custody/effecting worker/
+readback/vendor/render/runtime remain outstanding; all14NOT_EVALUATED. No live
+call/push/deployment/policy activation/hold lift.

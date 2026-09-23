@@ -124,5 +124,23 @@
     "independent_controls_pass": 34,
     "reviewer_correction": "Initial/diagnostic33PASS1FAIL preserved; oldest_available expectation corrected to documented oldest mapping. No product defect or implementation edit."
   },
-  "runtime_dependency": "M023759: actual canonical Python source-reader transport and exact-input authorizer not implemented by703e82ea; M owns returning concrete adapter/dependency"
+  "runtime_dependency": "M023759: actual canonical Python source-reader transport and exact-input authorizer not implemented by703e82ea; M owns returning concrete adapter/dependency",
+  "canonical_profile_consumption": {
+    "m_source_pin": "8e2ba7830352b2a34c97ec96984d043654cab340",
+    "y_p_prior_pin": "ef9e8f51c4fe81b60c89f7a1a3a6ec575e3cc182",
+    "safe_merge_pin": "86d7b6ca41",
+    "consumer_test_pin": "cdbd4de74d",
+    "combined_tests_pass": 222,
+    "combined_subtests_pass": 96,
+    "unchanged_retained_probe_pass": 19,
+    "final_consumer_tests_pass": 2,
+    "ruff": "PASS",
+    "ordinary_gates": "PASS",
+    "independent_m_review": "a8f8a15e6c",
+    "independent_review_scope": "BOUNDED SOURCE PASS exact M8e2 with Y/Pef9; not inherited by merged candidate",
+    "evidence": "CANONICAL_PROFILE_CONSUMPTION.md",
+    "production_factory_installed": false,
+    "live_calls": false,
+    "integrated_criteria": "all fourteen NOT_EVALUATED"
+  }
 }
