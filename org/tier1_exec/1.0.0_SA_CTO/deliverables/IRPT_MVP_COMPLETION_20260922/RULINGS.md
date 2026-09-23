@@ -416,3 +416,10 @@ Read exact CRO~M99756 and verbatim Andrew B. CONTRACT/COO_M now replace prior Ta
 ## Andrew-direct COT USD 2026-09-23
 
 Exact direct answer retained in ANDREW_COT_USD_20260923.md. COT report amounts are USD; P shared mapping/provenance, M custody consumption. Close denomination blocker and proceed with actual report/custody serving. No vendor-body rewriting, new currency query, or widening to other firms/native security currency. Null/valuation/census proofs remain. First ready Holdings firm/account may proceed; all firms still required.
+
+
+## INF exact valuation bridge and Tax intake 21:02UTC
+
+CRO99763/10f3cf6f9f measures two accounts on three exact file/valuation pairs:06-11/06-10,06-19/06-18,09-10/09-09; all six value/units match, same-key negatives reproduced. CTO routes precise version/hash-backed provenance to M; no blanket next-business-day roll, request-date rewrite, historical-file inference or tenant-wide USD claim. Source-specific currentValue denomination can bind only the measured observations. COT first flow continues6f45.
+
+Tax99761/907d: research snapshot schema differs from canonical capability, canonicalSilver/member history empty, supplied production store stub. M prepares exact intake recipe; MSTR210127 asked to identify available existing Tax source/release owner/later wrapper. No fake envelope/history or duplicate pipeline. CRO~M current missing-account retained-source search complete; two claims remain unresolved. COT empty-response likely-data diagnosis is an inference, not a new identity rule or vendor-call permission.
