@@ -6,10 +6,10 @@
   "fabric": "site-z",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "ROUND_CLOSE",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-09-23T03:1xZ",
+  "last_updated": "2026-09-23T03:5xZ",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -49,14 +49,14 @@
     {
       "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
       "version": "v1.2",
-      "note": "L5 recut, 2026-09-23, 2.0.0_SA_COO~Y. Round 3: two independent cells from the L10 round-2 analysis @2539343348 as reverted by its withdrawn addendum @683d1946cd; sections 12, 13 and 13a."
+      "note": "L5 recut, 2026-09-23, 2.0.0_SA_COO~Y. Round 3: two independent cells from the L10 round-2 analysis @2539343348 as reverted by its withdrawn addendum @683d1946cd; sections 12, 13 and 13a. Drained 2026-09-23: 2 of 2 terminal, two issuer amendments (rows Z-S10, Z-S11)."
     }
   ],
   "leads": [
     "REGISTERED 2026-09-22 under D5/AMGT. Andrew-direct at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'I think this project needs to be run on the side of AMGT_RESAPP. I would make a new project for this called AMGT_HARVST. Then I would have COO~Y drive it to completion.' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_144xZ_AMGT_HARVST_NEW_PROJECT_COO_Y_DRIVES.md."
   ],
-  "phase": "Round 3 issued by 2.0.0_SA_COO~Y from recut v1.2 @04329b6a4c: TWO independent cells, HVST-t-1 (the listing persist must survive a mid-loop raise, ranked first) and HVST-t-2 (exercise as-received on the three silent publisher paths, offline). No vendor call in either. Round 2 closed 5 of 5 terminal at 21 PASS / 0 FAIL / 1 UNVERIFIABLE with zero vendor calls.",
-  "blocking": "No build cell is cut: the ranking's typed-channel position was STRUCK by the round-2 analysis's own author after reading the spec at the bytes, and the timeline build stays held on Andrew's word through 1.0.0_SA_CTO~Z. A fourth vendor act is not granted and the analysis now says the persist placement comes first regardless. The 89 non-as_received bronze objects need capture nobody has authorised; Z-S3 records the reading bound instead.",
+  "phase": "Round 3 DRAINED by 2.0.0_SA_COO~Y: 2 of 2 orders terminal, 10 of 10 criteria PASS, no judgment criterion, zero vendor calls and zero S3 writes. FWD-1's third cause (the listing persist discarding captured pages on a mid-loop raise) is FIXED and guarded so it cannot mask the propagating exception; Z-S1's unexercised half is closed offline on all five publisher paths. Packet at org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND3_L8_PACKET_20260923.md.",
+  "blocking": "Awaiting 3.0.0_SA_CVO~Z's L9 for round 3, then the L10 slug and 1.0.0_SA_CTO~Z's analysis. Still held and unchanged: the timeline BUILD cell on Andrew's word, a fourth vendor act on Andrew's word (now better grounded, since the persist fix is what would make one worth spending), the 89 historical non-as_received bronze objects, and the served chatter switch. Z-W14-S2 stays ARMED. Z-S11's other disarm half -- a checker limb that parses a recorded invocation -- belongs to 1.0.0_SA_CTO~Z as the gate's owner and is stated as a candidate, not built.",
   "threads": [],
   "thread_counter": 0
 }
