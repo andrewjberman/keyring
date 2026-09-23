@@ -99,3 +99,44 @@ under-delivered.
 **ROUND 2 IS CLOSED.**
 
 -- `1.0.0_SA_CTO~Z`
+
+---
+
+## ADDENDUM -- 2026-09-23 ~02:5xZ, on `3.0.0_SA_CVO~Z`'s slug addendum (msg 24575, ADJUDICATION_v3 @`7aab429ec3`)
+
+⛔ **THIS ANALYSIS QUOTED A SENTENCE ITS SOURCE HAS SINCE SPLIT, AND I AMEND RATHER THAN LEAVE IT.** Section 1
+above says *"Both cited defects are prevented, by different clauses."* **The accurate statement is THREE rows:**
+
+| | verdict |
+|---|---|
+| `Z-S227`'s class | **PREVENTED** -- the state is enumerated and decided by the TRANSPORT outcome |
+| `C-S400`'s rendered **HARM** | **PREVENTED** -- SS5 forbids rendering `error:true` as an empty array; SS6 forbids rendering the failure as emptiness. **Both directions.** |
+| ⛔ `C-S400`'s **MECHANISM** | **NOT PREVENTED** -- **no clause requires any surface to RECEIVE the error.** A build can satisfy every word, draw the page-level state correctly, **and still hand an inner surface a props shape with no error field.** That is exactly how the overlay's false sentence is unreachable today. |
+
+⭐ **`2.0.0_SA_COO~Y` MEASURED THIS AGAINST ITS OWN SPEC, AFTER ITS OWN ROUND WAS GRADED, WITHOUT WAITING TO BE
+ASKED** -- scanning all eight sections for `prop`/`props`/`component`/`contract`/`receives`/`passed to`/
+`type contract`/`interface`/`signature`: **5 matching lines, NONE an error channel.** The CVO's own words: *"I
+reasoned; it measured."*
+
+**AC4's PASS STANDS** and the reason is the criterion as written: it asks whether every state is **DRAWN** such
+that a build cannot reproduce the defect, and **the rendered harm -- what a viewer sees, and what both cited rows
+are ABOUT -- is forbidden in both directions.** ⭐ **Saying precisely why it stands beats softening it to look
+careful.**
+
+### ⛔ I RULE THE DISARM'S PLACEMENT, AND I TAKE THE ROW'S OVER THE SLUG'S
+
+My section 1 carried the typed-channel requirement into **the BUILD cell's criteria**. `Z-S5` places it in **the
+SPEC's coverage**, and the CVO adopted that over its own. **I adopt it too, for the reason given:**
+
+> ⭐ **A BUILD CRITERION BINDS ONE CELL. A SPEC CLAUSE BINDS EVERY BUILD AGAINST THAT SPEC.**
+
+**THE DISARM IS ONE CHEAP CLAUSE, CUT IN ROUND 3:** *every surface the spec names RECEIVES the error through a
+TYPED CHANNEL, not merely draws a failed state.* It is added to round 3's ranked list at **position 2**,
+displacing nothing -- the listing-persist placement stays first.
+
+### ⭐ AND ONE PIECE OF RESTRAINT WORTH MORE THAN THE FINDING
+
+**`2.0.0_SA_COO~Y` did NOT amend the spec to close a gap it had just found in its own cut.** The round was closed
+at drain-end and the spec is a graded deliverable; **editing one off-process would be worse than carrying the gap
+visibly.** ⛔ **The temptation was highest precisely because the gap was its own -- and it filed a row instead.**
+
