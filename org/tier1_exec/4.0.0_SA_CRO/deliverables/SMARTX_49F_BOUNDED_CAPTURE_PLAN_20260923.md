@@ -111,9 +111,44 @@ The run is bounded exactly as sections 2-5 state. The results are appended below
 | 2 | Actual-account request | **PARTLY SETTLED:** `accounts/{id}/statistics` and `allocations/statistics?accountId=` serve under `yaliu-bundle`. Both return `returns{today,mtd,qtd,ytd}{dollar,percent}`, `value`, `cash`, `exposure{long,short,net,gross}`. C5 adds `account{brokerageAccountNumber, accountTitle, status, isExcluded, ...}`, a DIRECT custody key. **These are period-to-date statistics; a requested-window account series is NOT available from these endpoints.** The account's windowed series must be built from its allocations' monthly series (`allocations/performance`, see unit 4), and that aggregation is a method decision (section 8) |
 | 3 | Selected-set aggregate | **NOT DEMONSTRATED -> explicitly unavailable for 49F SmartX** (Andrew's choice 3) |
 | 4 | Window, as-of and method fields | **SETTLED:** the window is HONOURED (C1 1 range vs C2 8 ranges, tracking the request). Fields: `performance.range{start,end}{timestamp,friendly}`, `performance.grouping`, `recordCount`, and per month `pnl{dollar,percent}` and `summary{beginningMarketValue, endingMarketValue, increaseByAmount, decreaseByAmount, transactions, fees, isFullRange}`; plus `allocation.openTimestamp`. There is no explicit method field |
-| 5 | Units and method | **Units SETTLED: decimal fraction.** In C1, 46 of 46 month rows satisfy `pnl.percent == pnl.dollar / summary.beginningMarketValue`. In C2, 380 of 389 rows with a non-zero beginning value do (9 full-range exceptions unexplained; 9 more rows had a zero beginning value). **Method: a simple per-month P&L / beginning value on ~98% of rows, NOT stated as TWR.** **Fees: `summary.fees` is null or zero on 0 of 398 entries**, so gross vs net is NOT determinable from this payload and stays unknown ("fee basis not stated by provider") |
-| 6 | Pagination and completeness | **SETTLED for this size:** a top-level `count` equals the rows returned, and there are no paging keys. 40 of the roster's 42 open allocations appear. **The 2 absent ones are also absent from the 2026-08-31 roster, so they opened in September, after both windows (INFERRED from roster membership).** Closed allocations are INCLUDED (6 in July, 15 in Jan-Aug). Large-model paging and the unentitled-id silent-drop hazard are NOT tested |
+| 5 | Units and method | **Units SETTLED: decimal fraction.** In C1, 46 of 46 month rows satisfy `pnl.percent == pnl.dollar / summary.beginningMarketValue`. In C2, 380 of 389 rows with a non-zero beginning value do (9 full-range exceptions unexplained; 9 more rows had a zero beginning value). **Method: flow-adjusted and not stated** (the simple ratio holds only when flows are small; see 7b.3). **Fees: `summary.fees` is null or zero on 0 of 398 entries**, so gross vs net is NOT determinable from this payload and stays unknown ("fee basis not stated by provider") |
+| 6 | Pagination and completeness | **SETTLED for this size:** a top-level `count` equals the rows returned, and there are no paging keys. 40 of the roster's 42 open allocations appear. **Against each window's own end-date roster, completeness is 100%: 44 of 44 (07-31) and 42 of 42 (08-31); see 7b.2.** Closed allocations are INCLUDED (6 in July, 15 in Jan-Aug). Large-model paging and the unentitled-id silent-drop hazard are NOT tested |
 | 7 | UUID parity | **SETTLED:** the 40 returned open allocations' `account.id` all match the roster's `account_id` (40/40) |
+
+## 7b. Clarifications from the RETAINED bodies only (for the CTO's 20:22Z ruling `47e0f95`; no new vendor call)
+
+1. **Account-level (C5) units and as-of.**
+   - **Units:** on the one captured account, all 4 periods (today/mtd/qtd/ytd) satisfy `percent == dollar / (value -
+     dollar)` as a DECIMAL fraction, and none as percentage points. So C5 percent is a decimal fraction relative to the
+     implied period-start value. That is 1 account, 4 of 4 periods; not generalised.
+   - **C4 per-allocation PTD:** mostly decimal, but the formula misses on some YTD rows (INFERRED: flow effects, as in
+     item 3). The allocation-level decimal check does not prove C5; it was measured separately, as above.
+   - **As-of: NOT PROVIDED.** `statistics` carries only `cash, exposure, returns, value`, with no date key. The only
+     time in the body is the response `timestamp` (retrieval time, 20:15:57Z). Any PTD figure must be labelled "as of
+     retrieval; provider as-of not stated", or withheld where a dated as-of is required.
+2. **Historical denominator** (window-end rosters from the same Opal silver crosswalk, one partition per window end):
+   - C1 (July): roster `date=2026-07-31` had **44** open Pathfinder allocations. **44 of 44 appear in C1** (C1 returned
+     46 rows: 40 currently open and 6 closed since).
+   - C2 (Jan-Aug): roster `date=2026-08-31` had **42**. **42 of 42 appear in C2.**
+   - Completeness is therefore MEASURED at 100% against each window's own end-date roster. This supersedes the earlier
+     "absent from the 08-31 roster" inference.
+   - The 2 allocations in today's roster but not in C2 opened after 08-31; their exact opening dates are not in any
+     retained body. The latest `openTimestamp` among returned allocations is 2026-05-13.
+3. **The 9 formula exceptions:**
+   - All 9 are FULL-RANGE months with LARGE flows: `(increaseByAmount + decreaseByAmount) / beginningMarketValue` runs
+     from 0.14 to 1.83, against a C2-wide picture where only 23 of 389 month-rows have flows above 5% of the beginning
+     value.
+   - So SmartX's `pnl.percent` is **flow-adjusted**. It equals the simple P&L / beginning value ratio only when flows
+     are small.
+   - **The method is flow-aware but not stated** (Modified Dietz or TWR cannot be told apart from these bodies). Display
+     "method not stated by provider"; do not recompute.
+4. **Calendar and timezone semantics:**
+   - The provider normalises requested epoch bounds to **US/Eastern midnight**:
+     - requested `2026-07-01T00:00:00Z` came back as `2026-07-01T04:00:00Z` (EDT), friendly `07/01/2026`;
+     - January to March months start at `05:00Z` (EST); April to August at `04:00Z` (EDT).
+   - Ranges are day-granular. The END timestamp is the START of the last included day (`07/31/2026` 00:00 ET), so end
+     dates are inclusive calendar days in America/New_York.
+   - Monthly periods begin on the 1st at ET midnight.
 
 ## 8. What this means for the adapter (for `2.0.0_SA_COO~P` and `1.0.0_SA_CTO`)
 
