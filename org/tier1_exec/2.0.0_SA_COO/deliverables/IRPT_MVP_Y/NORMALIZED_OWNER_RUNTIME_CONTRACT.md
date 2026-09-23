@@ -98,3 +98,23 @@ excluded. This is a bounded source observation, not estate-wide completeness.
 `comp-blast freeze_parsed_portfolio` failed: missing `projection_client` module.
 No graph impact result is claimed and no substitute graph was constructed.
 All14 integrated criteria remain NOT_EVALUATED; no live call or hold lift.
+
+
+## Sparse-checkout correction and exact rerun
+
+MSTR message99629 (`20260923T025746Z`) identifies the earlier import failure as
+an unmaterialized tracked dependency in this worktree's sparse checkout, **not a
+comp-blast implementation defect**. The tooling owner added
+`/infra/aws/globgrph/*`; no Y workaround or replacement graph was used.
+
+Y re-ran bare `comp-which` and then exact `comp-blast freeze_parsed_portfolio`
+in `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922`. The command now accesses
+the served graph and answers `SUBJECT_ABSENT_FROM_CORPUS` / `NOT-FOUND`.
+Measured denominator28307nodes/60722edges, graph vintage
+`2026-09-23T02:11:37.251583+00:00`, manifest
+`b7c647ca4d7d8826a1f8d25e64bac135d348eae753b8109386e934c4b74bf062`.
+The local invocation exited1 for this NOT-FOUND (MSTR had reported0); it did
+not reproduce the import failure. Function source existence is separately
+established by the bounded source reads above. No graph node resolved and no
+impact-clear result is claimed. A quiet git status is not proof that a tracked
+sparse-excluded dependency exists on disk.
