@@ -296,7 +296,7 @@ main runtime's `progress.sqlite3`, opened read-only. It then prints:
      silver prefixes);
    - relays any UNRESOLVED publisher to `1.0.0_SA_CTO~Z` for Andrew, if a re-spend is wanted.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~10</slot>
 <fabric>site-z</fabric>
