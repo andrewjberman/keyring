@@ -1,8 +1,9 @@
 # Y actual-viewer adapter handoff
 
-Source: `85af5eb95d72051c363727229981c4dc1a35cad9` on `irpt-mvp-y-20260922`.
+Production source: `85af5eb95d72051c363727229981c4dc1a35cad9`; paired test pin
+`4ea95d1117` (descendant) on `irpt-mvp-y-20260922`.
 Controlling access ruling: `5ad99c7d30`. Consumed P interface: `9a3ec2a11f`.
-This implements Y's bounded consumer changes; shared Entry/storage wiring and
+This implements Y's bounded consumer changes; shared Entry wiring and
 signed-in live acceptance remain P-owned dependencies. No CLOUD push or deployment.
 
 ## Changed behavior
@@ -61,21 +62,28 @@ All suites run separately from the Y worktree:
 |---|---|
 | `infra/aws/lambda/investor-reporting/ycharts/generate/tests -q` | 212 passed, 32 subtests |
 | `infra/aws/lambda/investor-reporting/intake/tests -q` | 94 passed, 18 subtests |
-| `infra/aws/lambda/investor-reporting/ops/tests -q` | 169 passed |
+| `infra/aws/lambda/investor-reporting/ops/tests -q` | 173 passed |
 
-Total 475 tests and 50 subtests, no skips in final runs. Set
+Total 479 tests and 50 subtests, no skips in final runs. Set
 `IRPT_ACCEPTED_READER_TEST_ROOT` to byte-exact `.runtime/custody-reader-8845b7ef23`
 for the first two suites. Set `IRPT_INTERACTIVE_ACCESS_TEST_ROOT` to
 `.runtime/interactive-access-9a3ec2a11f` for ops. Its module is extracted from
 `9a3ec2a11f:infra/aws/lambda/investor-reporting/_scope/interactive_access.py`;
 SHA256 `bba07a3f4eeb947bf33845653bde95d47bbb8037d65db4059f4f8b70ebabdf56` is asserted.
 
-Twelve new paired controls use the real P viewer predicate. They cover Global,
+Sixteen new paired controls use the real P viewer predicate. They cover Global,
 another selected firm, foreign creator, per-firm cursors, ordinary/forged/service
 refusals, final actor change, explicit placement, Opal CSV creation/retry,
-immutable attribution and prospect composition. Global storage uses labeled
-offline port doubles. A same-firm foreign-creator report/status/date test uses
-the actual existing P repositories/retention with offline Dynamo/S3 doubles.
+immutable attribution and prospect composition. The initial Global controls use
+labeled port doubles. Four additional controls pair the actual P storage source
+`dd6edfc3aae94bfcb85cd5ed573e81977c58f9f0` with Y: real repository/retention
+implementations and offline Dynamo/S3 exercise Global, different selected firm,
+same firm, foreign creator, reports/sections/history/status/date evidence, upload
+creation/retry, retained input read, expiry and identity change during blob I/O.
+Set `IRPT_INTERACTIVE_STORAGE_TEST_ROOT` to `.runtime/storage-dd6edfc3aa`.
+Extract `reports/repository.py` and `reports/retention.py` from the exact P pin;
+their SHA256s are asserted in the committed fixture. These classes are loaded
+under isolated module names; no P-owned tracked source is overwritten.
 The custody-descriptor refusal now tests descriptor/lane mismatch rather than
 an Opal-wide prohibition. The report schema assertion uses the existing
 canonical `opal://` reference; no response schema was changed.
@@ -86,9 +94,11 @@ ruling. The direct adapter controls do not prove live HTTP access.
 
 ## Next owner and exact dependency
 
-P's `20260923T173703Z` message accepts the keyword storage interface, but states
-it is not implemented yet. P first stages the authorized bootstrap artifact and
-saved plan under CTO `18e2835`, then wires shared access/storage. P should consume
-this source pin and return the exact storage/Entry candidate for paired replay.
+P subsequently supplied implemented storage source in its `20260923T174506Z`
+message. Y consumed it and the paired storage checks pass at `4ea95d1117`.
+P's shared Entry current-owner/prospect-owner wiring is still pending while
+its authorized first-hop apply proceeds under CTO `e186d7ea22`. Y has performed
+no apply or cloud action. P should consume the Y source and paired evidence,
+then return the exact Entry candidate for signed-in path validation.
 The first-hop live milestone retains priority; deeper custody work stays parked.
 CTO is the current direct reviewer. CLOUD push remains held.

@@ -4,14 +4,14 @@ Seat `2.0.0_SA_COO~Y` (CODEX). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 version 1.3. Current reviewer `1.0.0_SA_CTO` under Andrew's direct-review instruction;
 matching CVO seat remains `3.0.0_SA_CVO~Y`.
-As of 2026-09-23T17:43Z.
+As of 2026-09-23T17:50Z.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working branch / worktree | `irpt-mvp-y-20260922` at `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922` |
-| Workspace candidate pin | Y `85af5eb95d72051c363727229981c4dc1a35cad9`; prior custody source `10627906f2` integrated by P at `411256e41c` |
+| Workspace candidate pin | Y production `85af5eb95d72051c363727229981c4dc1a35cad9`, paired tests `4ea95d1117`; prior custody source `10627906f2` integrated by P at `411256e41c` |
 | Portal candidate pin | No new Portal candidate in this custody-consumer tranche |
 | Deployed artifact pin | Y accepted-custody consumer NOT DEPLOYED |
 | Push state | LOCAL; no new remote measurement or push in this turn |
@@ -53,9 +53,10 @@ Controlling ruling `5ad99c7d30` grants verified interactive Opal users all IRPT
 functions across firms; Global/firm selection filters inputs/views, not authority.
 P owns shared enforcement. Y consumed P's `9a3ec2a11f` and committed actual-viewer
 read/upload/freezer/submission adapters at `85af5eb95d`. Final separate suites:
-475 tests and 50 subtests passed, no skips. See `OPAL_ACCESS_HANDOFF_20260923.md`
-for exact signatures, pinned-source tests and boundaries. P accepted the concrete
-storage dependency on 20260923T173703Z; shared wiring is still pending. This is
+479 tests and 50 subtests passed, no skips. See `OPAL_ACCESS_HANDOFF_20260923.md`
+for exact signatures, pinned-source tests and boundaries. P supplied actual
+storage source `dd6edfc3aa`; paired Global storage controls pass at `4ea95d1117`.
+Shared Entry wiring is still pending. This is
 bounded offline evidence, not certification of the complete corrected access path.
 Ordinary restrictions, forged-identity refusals and immutable attribution remain.
 
@@ -71,9 +72,9 @@ Under CTO sequencing ruling `5edf991c06`, P measures/fixes the real login ->
 auth/scope/bootstrap -> real firm/investor data -> screen path at localhost5174,
 recording exact served revisions and a sanitized failing boundary. Y's next
 proof is the verified-Opal prospect and other-owner path paired with P's pending
-shared Entry/storage candidate. Y's dependent source is complete at `85af5eb95d`;
-P's `173703Z` message accepts the explicit data-firm storage port and prioritizes
-the authorized bootstrap staging first. Exact ports and residual attribution
+shared Entry candidate. Y's dependent source is complete at `85af5eb95d`;
+P's actual `dd6edfc3aa` storage port passed Y paired replay at `4ea95d1117`.
+P retains the authorized first-hop priority. Exact ports and residual attribution
 capabilities are recorded in `OPAL_ACCESS_HANDOFF_20260923.md`.
 Deeper custody source/package work remains parked.
 
@@ -83,7 +84,7 @@ Deeper custody source/package work remains parked.
 |---|---|---|---|
 | First live auth/scope/bootstrap hop | COO~P | Contract v1.3 section 0 | AWAITED live proof |
 | Full-access viewer/prospect authority | COO~P | `9a3ec2a11f` | CONSUMED in Y adapters; shared Entry wiring awaited |
-| Actual-viewer cross-firm retained storage | COO~P | Agreed keyword `data_firm`, message 173703Z | AWAITED implemented pin |
+| Actual-viewer cross-firm retained storage | COO~P | `dd6edfc3aa`, Y paired test `4ea95d1117` | CONSUMED offline; Entry integration awaited |
 | Paired private reader | COO~P / COO~M | `e36b007fa1`, accepted-custody-input-v1 | CONSUMED offline |
 | Integrated package review | CTO / COO~P | P evidence `b639e430d0`, package `e3ad48ca23` | PARKED under `5edf991c06` |
 | Actual economic/source evidence | COO~M / COO~P, CTO interpretations | Mandatory reader economic ports | BLOCKED on real capability |

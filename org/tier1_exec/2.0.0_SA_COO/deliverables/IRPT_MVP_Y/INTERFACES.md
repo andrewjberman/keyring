@@ -1,6 +1,6 @@
 # IRPT Y -- current interfaces
 
-Owner `2.0.0_SA_COO~Y`. Contract v1.3. Current Y source `85af5eb95d72051c363727229981c4dc1a35cad9`.
+Owner `2.0.0_SA_COO~Y`. Contract v1.3. Y production source `85af5eb95d72051c363727229981c4dc1a35cad9`, paired evidence `4ea95d1117`.
 P reports prior custody source `10627906f2` integrated at `411256e41c` and packaged at `e3ad48ca23`.
 This is the current schema/consumer record; historical proposals and prior
 examples are retained unchanged in `INTERFACES_HISTORY.md`.
@@ -12,8 +12,8 @@ permission ceilings. Verified Opal actors retain all IRPT functions across firms
 Y consumed P's verified viewer/prospect interface `9a3ec2a11f`; exact new read,
 upload, placement and Entry ports are in `OPAL_ACCESS_HANDOFF_20260923.md`.
 Current source supports the real viewer separately from retained owner and
-explicit `data_firm` lookups. P's shared Entry and cross-firm repository wiring
-remain pending. Preserve real actor and each input/report firm/account/source
+explicit `data_firm` lookups. P's actual cross-firm storage `dd6edfc3aa` passes
+paired replay; shared Entry wiring remains pending. Preserve real actor and each input/report firm/account/source
 attribution. No browser field grants access; offline tests do not prove live access.
 
 ## Versioned contracts and owners
