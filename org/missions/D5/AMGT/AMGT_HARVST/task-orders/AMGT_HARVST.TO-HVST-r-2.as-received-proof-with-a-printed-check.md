@@ -119,7 +119,7 @@ and a compile, CRLF and non-ASCII print per changed file.
 3. **The bound is required in the OUTPUT, not just the report**, so a later reader of the artifact cannot quote the hash
    match as proof of server fidelity.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~12</slot>
 <fabric>site-z</fabric>
