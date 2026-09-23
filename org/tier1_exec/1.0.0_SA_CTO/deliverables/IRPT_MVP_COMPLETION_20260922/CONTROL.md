@@ -1,10 +1,10 @@
 # Investor Reporting - CTO control sheet
 
-As of 2026-09-23 20:20 UTC. CTO owns direct review and adjudication. All three products remain INCOMPLETE. Current CONTRACT and COO mandates govern; this is current state, not a journal.
+As of 2026-09-23 20:27 UTC. CTO owns direct review and adjudication. All three products remain INCOMPLETE. Current CONTRACT and COO mandates govern; this is current state, not a journal.
 
 | Product / owner | Current evidence | Next executable result / blocker |
 |---|---|---|
-| Reporting / COO~P | Candidate backend a70f6e3b71 / Portal a0fa8137 handed for CTO review. P reports approved COT request returned HTTP200 with empty accounts/levels and sentinel date; stopped before series. handler.run still unwired. | Finish canonical retained report composition. CRO/M investigate exact COT namespace/entitlement/currency from evidence; no blind retry. SmartX provider period-to-date account response now captured at ebf1a0f6b5; normalize only supported semantics. |
+| Reporting / COO~P | Backend a70f6e3b71 needs externalId parity repair; Portal a0fa8137 bounded wire PASS. P reports approved COT request returned HTTP200 with empty accounts/levels and sentinel date; stopped before series. handler.run still unwired. | Finish canonical retained report composition. CRO/M investigate exact COT namespace/entitlement/currency from evidence; no blind retry. SmartX provider period-to-date account response now captured at ebf1a0f6b5; normalize only supported semantics. |
 | Holdings / COO~M | Source99c9 bounded economic PASS; Portal e5604c03 bounded two-case navigation PASS. INF82 extra accounts all inactive in original roster and reconcile; do not drop historical custody. No vendor currency field found. | One real INF account custody -> Models/SMAs/Client -> accepted publication/API -> authenticated tab. CRO prepares exact currency evidence read; M continues raw-value and runtime composition. All firms remain required. |
 | Analysis / COO~Y | fe0ec628 causal recovery PASS; ebf8 template intake PASS;84c6 broker caller20 targeted checks PASS. All source-only. | Y owns complete resident host/session/queue/worker/PDF/certifier assembly. P integrates exact schema/family/factory/routes/package. First Dollars12.03 Overview -> native report/reload with real login/backend/provider. |
 
@@ -29,7 +29,7 @@ CloudOps recorder0b8784cea8 now passes CTO's two discriminating cases. P may int
 
 ## Review queue and completion
 
-P a70f6e3b71/a0fa8137 is next direct review. Latest completed review: DIRECT_REVIEW_2020_20260923/REVIEW.md. SmartX unit/completeness caveats need targeted CRO clarification from retained bodies; no new capture implied. Currency packet in preparation at CRO.
+P a70f6e3b71 direct review requires externalId parity repair: missing/different response external key incorrectly validates. Seven existing identity controls PASS; Portal a0fa wire four-case check PASS. P_PERFORMANCE_REVIEW.md holds exact bounded finding and small repair check. Latest completed review: DIRECT_REVIEW_2020_20260923/REVIEW.md. SmartX unit/completeness caveats need targeted CRO clarification from retained bodies; no new capture implied. Currency packet in preparation at CRO.
 
 Each owner publishes concise STATUS: pins, active files, first failing hop, next proof, dependency and limits. Notifications only interface/blocker/review handoff; no ACK chain. Simple fast changed-behavior checks after edits, reuse pinned evidence; broad tests only at meaningful integration/release or named risk. Build the real journey, no test quota.
 

@@ -380,3 +380,8 @@ Routing receipts194210(P/M),194211(Y),194212(CRO) delivered c7265d2bef instructi
 CTO accepts bounded source deltas Y84c6, M Portal e560 and recorder0b8784 per DIRECT_REVIEW_2020_20260923/REVIEW.md. P integrates exact files through existing grants; no live product PASS. P delivery failure is measured frame-cap saturation, MSTR recovery owner; preserve handoff/edits.
 
 Andrew at CRO, record ebf1a0f6b5, verbatim: "All approved, go now". Capture and named personal-login calls were approved; selected-set SmartX unavailability accepted. Do not fabricate custom-window account returns by summing or averaging sleeves. Provider period-to-date statistics may be implemented with their own verified units/as-of/identity; allocation decimal evidence does not automatically establish account-statistic units. Carry method/fee basis as not stated. Current-roster absence is insufficient to prove historical completeness; explain the two missing allocations from retained opening dates/historical census, and distinguish provider date semantics from UTC timestamp equality. Nine unexplained monthly formula exceptions remain evidence, not a license to relabel method as TWR. CRO clarifies using retained capture; no further call or general personal-credential runtime grant inferred from this bounded capture.
+
+
+## 2026-09-23 20:27 UTC - COT external identity parity
+
+P a70f6e3b71 returns contract_validated=true when accountInfo.externalId is absent or conflicts with the mapping. P repairs both period/series checks and pre-I/O mapping completeness; numeric ID alone does not settle the unproven COT namespace. Evidence DIRECT_REVIEW_2020_20260923/P_PERFORMANCE_REVIEW.md. No broad suite requested; source/retention composition continues.
