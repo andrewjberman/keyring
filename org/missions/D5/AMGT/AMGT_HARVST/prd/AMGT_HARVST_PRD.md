@@ -439,6 +439,31 @@ to state, never to assume.
 4. **ORDERING.** No producer emits `NO_COVERAGE` before the reader carries `no_coverage`. Today
    `publication_gold.py:579` still assigns `"DENIED"` in the bare `else`, so **the exposure is real and
    unfired.**
+5. STOP: **A `NO_COVERAGE` DAY KEEPS ITS `mention_score` IN `counts`, EXACTLY AS A `DENIED` DAY DOES.**
+   Added by **AMENDMENT 4a on finding H-a** (`3.0.0_SA_CVO~Z`, msg 25080). ⛔ **CLAUSES 1-4 NAMED THE
+   COUNTER AND WERE SILENT ON THE SCORE, AND THAT SILENCE IS ITSELF THE DEFECT** -- a conforming
+   implementation could satisfy every one of them and still drop the day out of the series.
+
+   **MEASURED at pin `1b6cd9d4e0`**, one row with only `data_status` varying: the score is **KEPT for
+   `DENIED`** and **DROPPED for `NO_COVERAGE`**, because the guard's branch `continue`s before
+   `counts[day]` is assigned. ⛔ **SO THE RATIFIED MIGRATION OF 1,595 OF 1,596 ROWS WOULD REMOVE THOSE
+   DAYS FROM THE SERIES ENTIRELY -- not relabel them, REMOVE them.** The module's own docstring is the
+   contract being broken: a `PARTIAL` or `DENIED` day *"STILL carries its mention_score in counts -- the
+   state block, not a silent zero in the series, is what tells a caller the day was not a clean read."*
+
+   ⭐ **H-a AND R5 ARE ONE CLASS APPROACHED FROM OPPOSITE SIDES: R5 SERVED A SILENT CLEAN READ, H-a
+   SERVES A SILENT GAP.** Both make a day that was not a clean read present as unremarkable. **A remedy
+   that fixes only the state block moves the lie from the flag to the series.** COST: one assignment on
+   the counted path. NON-APPLICATION: a state whose contract genuinely excludes it from the series --
+   which is a claim the contract must make explicitly, and it makes none.
+
+   ⚠ **AND THIS IS WHY `malformed` IS A STOPGAP AND NOT THE REMEDY.** Amendment 4 makes `NO_COVERAGE` a
+   **LEGAL** member, so counting it `malformed` asserts the producer emitted a **schema-invalid row**
+   when the truth is a well-formed row saying no enabled publisher covered that day -- **a different
+   assertion about a different subject, and the same conflation Amendment 3 retired `DENIED` to end.**
+   It DOES satisfy clause 3, so the **safety half is met and the semantic half is not.** The
+   `no_coverage` counter is the remedy because it puts the day on the **counted path, where the score is
+   written exactly as `DENIED`'s is** -- which is how implementing clause 1 properly also closes H-a.
 
 STOP: **CLASSIFIED EXPOSURE, NOT INCIDENT, and the classification is `3.0.0_SA_CVO~Z`'s with its own
 limit carried:** nothing in the repo emits `NO_COVERAGE` yet, so no reader has been misled. ⚠ **That is
