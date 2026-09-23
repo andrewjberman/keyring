@@ -13130,6 +13130,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "world_is": "The deployed reader validates schema/evidence/source but omits no-span HOLD, allowing vacuous span checks. Actual engineering GET responses serve all 179 affected sentences across 12/12 current stored drafts, 2 to 26 per document.",
   "disarm_owner": "R repair with CVO independent acceptance and authorized cutover under CTO+COO never-widen pair; independent deployed verification and adjudication.",
   "notes": "No retained object rewrites. Actual human viewing and first external exposure remain unmeasured. Historical BA evidence establishes this behavior no later than Sep19. Offline figure discriminator releases zero legacy prose but does not repair the deployed reader. Candidate remains local; ARMED."
+},
+{
+  "id": "AMGT_RESAPP-Z-S237",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.1.0_DE_MarketIntelligence",
+  "surfaced_at": "2026-09-23T19:10Z",
+  "one_line": "A commit into the portal submodule right now lands on a DETACHED HEAD, not on DEV, and every gate in safe-commit.sh passes rc=0 while it happens -- the only signal is the '[detached HEAD <sha>]' bracket inside git's own success line, which no gate reads and no seat is told to read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Measured this session in portal/ (submodule of the workspace tree): `git rev-parse --abbrev-ref HEAD` read DEV at b3d5f59b at 18:4xZ, BEFORE the edit. After the edit, safe-commit.sh printed the risk-reflex, commit-gate, naming-gate and to-pipeline-gate limbs ALL clean and returned rc=0, and git's own line read '[detached HEAD a9460d1a] AMGT: add /api/scoped/amgt dev proxy'.",
+      "portal/.git reflog, read immediately after: 'HEAD@{1}: checkout: moving from DEV to 10141b6d0bbb007d5dd9e758f11f785216e11339' -- a checkout THIS SEAT DID NOT RUN, landing between its branch read and its commit. 10141b6d is authored by 2.0.0_SA_COO~P ('IRPT: integrate reviewed strict scope parser correction'), i.e. a live peer moved the shared submodule HEAD mid-edit.",
+      "Content hazard measured and ABSENT for this instance: `git rev-parse b3d5f59b:vite.config.ts` and `10141b6d:vite.config.ts` both read blob 30367b0a2b234a1c18145cc076fda0f4b0140071, so the edit applied to identical bytes on either base. This is luck about ONE file, not a property of the mechanism.",
+      "Stranding measured: `git branch --contains a9460d1a` named NO branch (detached HEAD only); local DEV sat at b3d5f59b while `git rev-parse origin/DEV` read 10141b6d, i.e. local DEV was already STALE by one commit before this seat arrived. A subsequent fast-forward of DEV would therefore NOT have carried the commit."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md Git section and the .owned-paths portal rules assume a seat committing portal work is committing ONTO the portal's DEV branch ('portal submodule DEV/PROD'; 'portal/** POD_DE_ANY -- any pod DE can author portal; DT pushes DEV/PROD submodule branches'). Rule 14b's remedy for concurrent seats is a linked worktree per seat, and its measured failure mode is a REFUSED merge -- a loud, correct refusal the acting seat sees.",
+  "world_is": "In the portal SUBMODULE the same contention is SILENT in the opposite direction. A peer's `git checkout <sha>` detaches the shared submodule HEAD underneath any other seat working there; the next commit succeeds, passes every safe-commit limb, and lands on no branch at all. Nothing refuses, nothing warns, and the acting seat's own pre-flight branch read (taken minutes earlier, correctly) is what makes it confident. The commit is then reachable only via HEAD and the reflog, so the NEXT peer checkout strands it, and because local DEV was independently stale the routine 'fast-forward DEV' recovery would not have found it either. This seat kept its commit only by noticing the bracket in git's output and running `git branch a9460d1a <name>` before doing anything else.",
+  "disarm_owner": "whoever owns .tools/safe-commit.sh's gate set -- the cheap disarm is one limb that reads `git symbolic-ref -q HEAD` BEFORE staging and refuses (or loudly WARNs with the branch name) when HEAD is detached, in the submodule as well as the parent. Until that exists the disarm is a reading rule for every seat committing into portal/: run `git rev-parse --abbrev-ref HEAD` IMMEDIATELY BEFORE the commit (not at task start), and after committing run `git branch --contains <sha>` and park the commit on a named branch if it returns nothing.",
+  "notes": "Filed as OBSERVATION/ARMED, not BLOCKING: this seat's own commit was preserved (branch amgt-dev-proxy-0.1.0_DE) and the submodule was restored to exactly the state the peer left it in -- HEAD 10141b6d, clean tree, DEV untouched at b3d5f59b. NOT MEASURED, and the reason this is filed rather than dropped: whether any EARLIER portal commit by any seat is currently stranded on a detached HEAD. That is an EXPOSURE this row does not convert into an incident -- the discriminating query is a reflog/dangling-commit walk of portal/.git (`git fsck --lost-found`, plus `git log --walk-reflogs HEAD`) for commits reachable from no branch, with the denominator printed. Nobody has run it."
+},
+{
+    "id": "AMGT_RESAPP-Z-S238",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-23T22:30Z",
+    "one_line": "opal-amgt-scoped-api returned 28 unhandled 500s in the 09-19..09-23 window, 500s that NO instrument in this estate can attribute to a route or a firm -- and the same blindness is what bounds every future incident reconstruction on this surface.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch log group /aws/lambda/opal-amgt-scoped-api, window 2026-09-19T00:00Z to 2026-09-23T21:58Z, events fetched with auto-pagination and counted CLIENT-SIDE (a `--query length(events)` read returned incoherent per-page counts: a WIDER window reported FEWER events than a narrower one, which is the paginated-length trap CLAUDE.md names).",
+        "Event-shape census over 3,304 log events: START RequestId 1064, END 1064, REPORT 1064, INIT_START 84, and 28 APPLICATION lines. The 28 are all `ERROR: unhandled exception in opal-amgt-scoped-api request_id=<uuid> type=<T> detail=<d>` -- type=ModuleNotFoundError detail='No module named lib.opal_naming', and type=TypeError detail=\"'<' not supported between instances of 'int' and ...\". lambda_function.py's boundary converts these to a 500 with a fixed body rather than a 502.",
+        "ATTRIBUTION BLINDNESS, measured on three instruments: (1) the Lambda log carries NO route and NO firm on a SUCCESSFUL request -- only START/END/REPORT; (2) API Gateway access logging is NOT declared anywhere in infra/aws/terraform (grep for access_log_settings returns no stage config); (3) CloudFront access logs DO exist at s3://opal-data-security/waf-logs/cloudfront-access/ and carry cs-uri-stem and c-ip, but the firm identity is injected by auth-validator-edge DOWNSTREAM of that log, so it appears in no log at all.",
+        "Consequence exercised during the no-span incident remediation the same evening (record 65132a45c7): ROUTE and CLIENT IP were reconstructable from CloudFront logs (521 /api/scoped/amgt* requests, 423x401 / 98x200, thesis 21x200 narrowed to 4 in-corpus responses), but PER-FIRM attribution was not available from any instrument, so the blast radius could be bounded by route and IP and never by firm."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "lambda_function.py's own docstring states the 500 boundary exists so that 'a 502 tells a caller nothing and loses the request id that makes it findable in logs' -- i.e. the request_id is the handle by which an error is meant to be findable. CLAUDE.md Rule 22 requires that a claim about a population print its denominator, and the NEVER-2 / incident discipline requires an incident's reach to be reconstructable.",
+    "world_is": "The request_id IS logged and the error IS findable, but nothing that would make it ACTIONABLE is: the log line carries no route, no security_key and no firm, and a successful request logs none of those either. So a 500 can be counted (28) and never localised. More consequentially, the SAME gap bounds incident reconstruction on this whole surface: ROUTE and CLIENT IP are recoverable from CloudFront, FIRM is recoverable from nothing. An adjudication that promises per-firm blast radius on an /api/scoped/amgt route is promising something no instrument can supply.",
+    "disarm_owner": "2.0.0_SA_COO~Z as sole writer of lib/research/api/scoped_amgt.py and the opal-amgt-scoped-api package under closer CONTRACT v1.0 s.3. The cheap disarm is one structured log line per request carrying route_key, security_key and the edge-injected firm id -- but that is NOT authorised here and MUST NOT be built on this row's word: it is a change to a served package and falls under the never-widen pair plus the standing monitor/alert moratorium's neighbourhood. This row NAMES the gap; it does not licence the fix.",
+    "notes": "Filed as OBSERVATION/ARMED, not BLOCKING, and deliberately NOT chased: found while measuring the no-span incident's blast radius, off that task. The 28 errors are UNRELATED to the no-span repair and did not enter the cutover ZIP. NOT MEASURED and stated so: whether any of the 28 fall on the thesis or overlay routes, which is exactly the question the missing route field makes unanswerable -- the CloudFront log can say which routes returned 5xx, and that cross-join is one re-run of the same method and has not been done. The ModuleNotFoundError for lib.opal_naming is separately a PACKAGING defect (a module imported at runtime but not vendored into the ZIP) and may be a live 500 source on some route today; that too is named, not chased."
 }
 ]
 ```
