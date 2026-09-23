@@ -51,6 +51,11 @@ worker_grant:
 # =========================================================================
 lanes:
 
+  NAMING_LEGACY_READ_AUTHORITY:
+    permitted_agents:
+      - 1.0.0_SA_CTO
+    description: "LEGACY-READ-03 protective narrowing: only the CTO role may author the exact NAMING_LEGACY_READS.json carrier. Existing canonical CTO suffix inheritance remains; no MSTR/COO/CVO/CRO grant. This lane does not activate a waiver or alter the naming gate."
+
   IRPT_COMPLETION_REGISTRY:
     permitted_agents:
       - 4.0.0_SA_CRO
@@ -1011,6 +1016,9 @@ lanes:
     description: 'Project tree, deliverables/<SERIAL>/** -- NOBODY by enumeration. The owner is in the PATH (s.6 option ii, RULED): owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it). A file directly under deliverables/ with no serial folder is refused -- the convention is the gate.'
 
 paths:
+  "org/standards/NAMING_LEGACY_READS.json":
+    lane: NAMING_LEGACY_READ_AUTHORITY
+    note: "LEGACY-READ-03 at ec80b01ca4929ff9a23fd093d221dccb2fb1f826: exact authority carrier only, narrowed from the existing standards lane. Read committed HEAD authority; no self-grant by the mechanism implementer."
   "infra/logic/registry/scopes.json":
     lane: IRPT_COMPLETION_REGISTRY
     note: "CTO exact-file grant IRPT-M-REGISTRY-01; IRPT-only member scope requires explicit equality proof and naming-owner review."
