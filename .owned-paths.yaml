@@ -148,7 +148,7 @@ lanes:
       - 4.0.0_SA_CRO~SWEEP
       - 2.0.0_SA_COO~Y
       - 2.0.0_SA_COO~P
-    description: "Temporary CTO grant IRPT-Y-ACCESS-INTEGRATION-20260923: preserve Y and AE incumbents, add exact COO~P on sixteen named files for combined full-access integration and compatibility only. No other Y paths or deployment grant. CTO removes P integration grant after accepted handoff."
+    description: "Temporary CTO grant IRPT-Y-ACCESS-INTEGRATION-20260923: preserve Y and AE incumbents, add exact COO~P on explicitly enumerated file rows for combined full-access and reviewed resident integration and compatibility only. No other Y paths or deployment grant. CTO removes P integration grant after accepted handoff."
 
   IRPT_COMPLETION_Y:
     permitted_agents:
@@ -1154,6 +1154,54 @@ paths:
   "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_composition.py":
     lane: IRPT_Y_ACCESS_INTEGRATION_P
     note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/intake/resolution_broker.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/intake/tests/test_template_uploads.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/job.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/publication_worker.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/session/broker.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/session/deadline_transport.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_broker_recovery_evidence.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_deadline_transport.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_resident_session.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_resolution_broker.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
   "infra/aws/lambda/investor-reporting/intake/**":
     lane: IRPT_COMPLETION_Y
     note: "CTO grantor; exact Y owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."

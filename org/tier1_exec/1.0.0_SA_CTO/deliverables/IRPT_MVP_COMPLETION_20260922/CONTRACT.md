@@ -61,3 +61,27 @@ Andrew: "tests are good but they should be simple and fast, the point here is to
 Applies to P/M/Y and CTO direct review immediately. After an edit run only the smallest fast check that exercises the changed behavior and any directly affected interface. Reuse already-pinned passing evidence for untouched behavior; no routine full-lane/full-product suite per edit and no duplicate author-plus-CTO broad rerun merely to repeat counts. Add a regression only when a real defect or material untested behavior warrants it; do not build parallel test machinery or mirror trivial implementation.
 
 Batch related implementation into an executable user-visible candidate. Broader checks are for an assembled release/integration boundary or a specific failure/risk that justifies the scope; record why that broader run is needed. A previous gate that explicitly requires a release check still applies at that boundary, not every source edit. CTO reviews the changed code, decisive targeted evidence and actual composition. First useful proof is the real tab journey; large synthetic test totals are not the product milestone. No test-count quota and no repeated review for unchanged code.
+
+## Exact resident integration amendment - 2026-09-23 20:47 UTC
+
+IRPT-RESIDENT-INTEGRATION-20260923: CTO grants P integration/packaging of the exact reviewed Y delta files below, using existing IRPT_Y_ACCESS_INTEGRATION_P. Source candidates fe0ec628c2, ebf8d33985,84c6e63806,57b228ac53,4ed7edaaa8; this is a bounded source/assembly acceptance, not deployed or all-firm completion. Y remains semantic implementation owner; P is the sole shared factory/package/IAM/routes writer. P may consume these pinned bytes and necessary compatibility changes with CTO review. Other Y paths require a concrete delta; do not overwrite concurrent Y edits. Incumbents retained. Remove temporary P grant after accepted integration. This does not itself authorize a deployment beyond the already approved runtime scope or infer missing live receipts.
+
+- `infra/aws/lambda/investor-reporting/intake/resolution_broker.py`
+- `infra/aws/lambda/investor-reporting/intake/tests/test_template_uploads.py`
+- `infra/aws/lambda/investor-reporting/intake/uploads.py`
+- `infra/aws/lambda/investor-reporting/ycharts/generate/job.py`
+- `infra/aws/lambda/investor-reporting/ycharts/generate/publication_worker.py`
+- `infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py`
+- `infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py`
+- `infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py`
+- `infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py`
+- `infra/aws/lambda/investor-reporting/ycharts/generate/transport.py`
+- `infra/aws/lambda/investor-reporting/ycharts/session/broker.py`
+- `infra/aws/lambda/investor-reporting/ycharts/session/deadline_transport.py`
+- `infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py`
+- `infra/aws/lambda/investor-reporting/ycharts/session/tests/test_broker_recovery_evidence.py`
+- `infra/aws/lambda/investor-reporting/ycharts/session/tests/test_deadline_transport.py`
+- `infra/aws/lambda/investor-reporting/ycharts/session/tests/test_resident_session.py`
+- `infra/aws/lambda/investor-reporting/ycharts/session/tests/test_resolution_broker.py`
+
+Y owns automatic session-owner recovery and removing the same-firm-only publication limitation; Opal all-firm functionality remains required. P assembles actual current-actor authority, repositories, exact census and dependencies before returning one concrete installer/cutover/readback package. No second queue/session consumer. Retained PDF recovery and permanent ambiguous-operation intents must survive installation and rollback.
