@@ -116,7 +116,7 @@ lanes:
       - 4.0.0_SA_CRO~SWEEP
       - 2.0.0_SA_COO~M
       - 2.0.0_SA_COO~P
-    description: "CTO grantor under 09b9573688 LIVE_SCOPE_OWNERSHIP_TRANSFER_20260923.md. Exact P source grant for directory/bootstrap/browse, scope, identity and common non-render authorization repair. Existing M and AE permissions preserved; M operational edit hold remains. No holdings, naming, vendor, renderer or deployment expansion. Temporary until explicit CTO handback; gate is path-level, semantic scope enforced by review."
+    description: "CTO grantor under 09b9573688 LIVE_SCOPE_OWNERSHIP_TRANSFER_20260923.md and LOCAL_LIVE_PARTNER_SCOPE_20260923.md. Exact P source grant for directory/bootstrap/browse, scope, identity and common non-render authorization repair, plus holdings/entry.py request-local roster continuity for M-OPAL-01 only. Existing M and AE permissions preserved; shared source ownership remains with P until explicit CTO handback. No other holdings, naming, vendor, renderer or deployment expansion. Temporary; gate is path-level, semantic scope enforced by review."
 
   IRPT_COMPLETION_M:
     permitted_agents:
@@ -1083,6 +1083,9 @@ paths:
   "infra/aws/lambda/investor-reporting/directory/**":
     lane: IRPT_LIVE_SCOPE_P
     note: "CTO temporary P grant 09b9573688; incumbent permissions retained. Live-scope repair only; no deploy grant. Explicit CTO handback required."
+  "infra/aws/lambda/investor-reporting/holdings/entry.py":
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO exact P grant 20260923T135842Z under LOCAL_LIVE_PARTNER_SCOPE_20260923.md: M-OPAL-01 request-local roster continuity before/after reads only. Incumbents preserved; no other holdings or deployment grant. Independent CVO M retest required."
   "infra/aws/lambda/investor-reporting/holdings/**":
     lane: IRPT_COMPLETION_M
     note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
