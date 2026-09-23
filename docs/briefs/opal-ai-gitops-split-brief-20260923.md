@@ -93,8 +93,9 @@ any change to what the gates enforce; the portal's promote flow; client reposito
 
 - **No silent zero.** A tool pointed at the nested repo either sees inside it or says it cannot. Today several read a
   whole nested repository as one unchanged pointer and report "clean" (Part IV finding 5).
-- **No fail-open gate.** A gate that cannot find its configuration inside `opal_ai` refuses the commit. It does not warn
-  and let it through.
+- **No fail-open gate, and no outage by installation.** A gate that cannot find its configuration inside `opal_ai`
+  refuses the commit, and its configuration lands before the gate does, so the refusal never fires on every commit
+  (finding 4).
 - **No second copy.** At no point do two live copies of the gateway exist, one in the parent and one in `opal_ai`.
 - **Separation you can test.** Someone at another firm can clone `opal_ai` and it works without the monolith.
 - **One command, both devices.** The same checkout step works on the laptop and on site Z, and in a sparse worktree.
@@ -138,12 +139,20 @@ any change to what the gates enforce; the portal's promote flow; client reposito
 
    Harmless for a TypeScript frontend with CI. **For `opal_ai`, carrying the 16,185-line Python gateway, it would turn
    Rule 14 ("Universal") into a gate that does not see the product.**
-4. **The lane grant for the nested repo is inert.**
+4. **The lane grant for the nested repo is inert today, and installing the parent's hook there would block every
+   commit.**
    - `.owned-paths.yaml:2172` grants `"portal/**"` to `POD_DE_ANY`. But `owned-paths-check.sh:24-25` reads
      `$REPO_ROOT/.owned-paths.yaml`, where `REPO_ROOT` is `git rev-parse --show-toplevel`: the NESTED repo's root when
      committing inside it.
-   - There it finds no file and does `WARN: ... skipping lane check` (`:137-138`). That is fail-open.
-   - The parent's grant is graded only for the pointer file `portal` (`:2168`).
+   - Today no hook runs there at all (finding 3), so the grant is graded only for the pointer file `portal` (`:2168`).
+   - If the parent's hook were installed in a nested repo that has no lane file, it would print `WARN: ... skipping
+     lane check` (`:138`) and then EXIT 1 in block mode (`:139-142`). Block mode is the DEFAULT:
+     `MODE="${OWNED_PATHS_MODE:-block}"` (`:41`). Only warn mode exits 0 (`:144-146`). **So the missing file is
+     fail-CLOSED by default: installing the hook without a lane file stops every commit on that repo.**
+   - ⚠ **CORRECTED 2026-09-23 ~22:3xZ.** This finding first said the hook "WARNs and skips ... (fail-open)", read from
+     `:137-138` alone. The mode branch is the next line. `3.0.0_SA_CVO~Z` read the full span (msg 25069), and
+     `1.0.0_SA_CTO~Z` ruled on the bytes (msg 25107). Re-verified here by printing `:130-147` and `:41`. The wrong
+     reading ran in the dangerous direction: it would have invited installing the hook expecting a graceful skip.
 5. **From the parent, git sees a nested repo as a single pointer, so every git-based guard reads it as clean or
    empty.**
    - `git diff` or `git log -- portal/...` from the parent sees pointer moves, never file changes. (Banked on this box
@@ -268,10 +277,11 @@ physical dependencies marked with ⊣; ordering is L5's.
 6. **Make the parent's git gates run inside `opal_ai`.** An installer sets the submodule's hooks to a
    submodule-aware version of the parent's, so Rule 14, the ASCII message rule and the surprise-row gate grade commits
    made there. Same act for `portal`, whose commits skip them today (finding 3).
-7. **Make the lane check find its lanes in a nested repo, and fail CLOSED if it cannot.** Either `opal_ai` carries its
-   own `.owned-paths.yaml`, or the hook reads the parent's through `git rev-parse --show-superproject-working-tree` with
-   the submodule prefix. The `WARN ... skipping` branch (`owned-paths-check.sh:137-138`) becomes a refusal for any repo
-   that is a registered submodule.
+7. **Give the lane check its lanes BEFORE its hook is installed in a nested repo** ⊣ item 6 waits on this for the
+   lane hook. Either `opal_ai` carries its own `.owned-paths.yaml`, or the hook reads the parent's through
+   `git rev-parse --show-superproject-working-tree` with the submodule prefix. The missing-file branch is already
+   fail-closed in the default block mode (`owned-paths-check.sh:41,139-142`, finding 4). So installing the hook first
+   would be an outage on every commit in that repo, not a graceful skip, and the same holds for `portal`.
 8. **Exercise `safe-commit.sh` inside a nested repo once** and fix what it does not find there. Its gates load from
    `SCRIPT_DIR`, but its lane file and git state come from `REPO_ROOT`. `safe-merge.sh` already works (the 09-10 fix).
 9. **CI in `opal_ai`**: py_compile, ruff at the py39 target, the gateway's test suite, and RCN-0014's firm-neutrality
@@ -406,7 +416,7 @@ commit.
   PRIOR ART         the portal lifecycle: .claude/skills/prod-deploy/SKILL.md Step 6; portal/.github/workflows/*
                     nested-repo tooling: .tools/safe-merge.sh:47-50; .tools/wk-provision.sh; .claude/skills/dispatch/SKILL.md:198-203;
                               .claude/skills/integrate/SKILL.md:290-300
-                    gates:    .tools/git-hooks/owned-paths-check.sh:24-25,137-138; .tools/safe-commit.sh:149,245-247;
+                    gates:    .tools/git-hooks/owned-paths-check.sh:24-25,41,137-146; .tools/safe-commit.sh:149,245-247;
                               .owned-paths.yaml:2168-2174
                     deploy:   infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:26-27,61-62; infra/aws/ec2/safe-ec2-deploy.sh:23,145,187,207;
                               infra/aws/ec2/EC2_MANIFEST.json (opal-gateway)

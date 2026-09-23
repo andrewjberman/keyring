@@ -53,3 +53,15 @@ seat's commit and `1.0.0_SA_CTO~Z`'s 86bec64938). Both briefs are CTO~Z intake; 
 1. [Andrew] the RCN-0014 and RCN-0015 calls. RCN-0015's call 2 (launch root) re-opens a 09-22 ruling.
 2. [`1.0.0_SA_CTO~Z`] `/endpoint --forward` on either brief, if routed.
 3. [`0.0.0_AB_MSTR~Z`] the push of 40b964f616, on Andrew's word.
+
+## Correction (~22:3xZ), on `1.0.0_SA_CTO~Z`'s ruling, msg 25107
+
+Work Completed item 2 and Decisions Made bullet 2 above both say "the owned-paths fail-open". **That is wrong as a
+general claim.** `owned-paths-check.sh:138` is the WARN echo, and `:139-142` then EXITs 1 in block mode, which is the
+default (`:41`, `MODE="${OWNED_PATHS_MODE:-block}"`). Only warn mode exits 0. This seat read `:137-138` and stopped one
+line short of the branch. `3.0.0_SA_CVO~Z` had it right (msg 25069). Re-verified by printing `:130-147` and `:41`.
+
+What stays true: no hook runs in `portal` today, so none of those gates grade its commits (both seats agree). What
+changes: installing the parent's hook in a nested repo without a lane file is an OUTAGE on every commit there, not a
+graceful skip. The brief's finding 4, Part III bullet 2, Part V item 7 and REFS are corrected in place, with a
+correction note, in the commit that carries this section. The register row and section are corrected the same way.
