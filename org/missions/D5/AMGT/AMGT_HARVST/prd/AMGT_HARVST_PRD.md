@@ -274,10 +274,70 @@ assigned by the decomposition.
   - `baseline_30d_sum` and `baseline_30d_days` (fewer than 30 days flags a short baseline);
   - `cumulative_ytd`;
   - `first_published_utc` and `last_published_utc`;
-  - `data_status` (`COMPLETE | PARTIAL | DENIED`), so a quiet day is never a broken read.
+  - `data_status` (`COMPLETE | PARTIAL | NO_COVERAGE | UNDETERMINED`), so a quiet day is never a broken read
+    **and an unmeasured day is never a confident one** (amended 2026-09-23; see `C-HV-DAILY-STATUS` below).
 - `published_utc` is the only clock that places an article on a day.
 - **Relative figures -- the breakout ratio, z-score and any 0-100 normalisation -- are computed at SERVE time** (the
   chatter Lambda or the API), never stored (Andrew: *"never do relative ... handled in a lambda"*).
+
+**`C-HV-DAILY-STATUS`** (amendment, 2026-09-23, `1.0.0_SA_CTO~Z`; supersedes the three-value enum).
+
+- **`COMPLETE`** -- every enabled publisher's span covers the day.
+- **`PARTIAL`** -- at least one, but not all, cover it.
+- **`NO_COVERAGE`** -- no enabled publisher's span covers the day. **This is what the producer actually
+  measures**, and it replaces `DENIED`.
+- **`UNDETERMINED`** -- no coverage determination was made for the day. **Never a fall-through to
+  `COMPLETE`.**
+
+**Why `DENIED` is retired rather than split.** The writer
+(`lib/research/harvest/publication_gold.py:573-579`) computes `covered = [pub for pub in
+ENABLED_PUBLISHERS if _covers(...)]` and assigns `DENIED` in the bare `else`. **No refusal is ever
+observed on that path** -- the only input is `publisher_spans`, which records what WAS COLLECTED. The
+function's own docstring at `:516` says so: *"`coverage` is `publisher_coverage`'s output, or `None`
+(every day DENIED)."* **So `DENIED` named a CAUSE its writer never measured.** A value must carry its
+claim. **A member cannot be split on a distinction the writer never captured**, so the honest name
+for the `else` branch is `NO_COVERAGE` and nothing is added that the producer cannot populate.
+
+**A genuine publisher refusal is NOT in this enum and is deliberately deferred.** It requires the
+harvester **fetch-result lineage at its own grain**, which does not reach the day grade today.
+`pool_reader.py`'s `_DENIED_CODES` is **NOT** that signal -- it classifies that adapter's own S3
+GET/LIST errors, and wiring it here would claim a vendor refusal from our own storage failure.
+**Until the lineage exists, `DENIED` is absent rather than decorative.**
+
+**Why `UNDETERMINED` is required.** `generation_writer.py:269` defaults `state or (STATE_COMPLETE if
+rows else STATE_EMPTY)`, so `state=None` -- meaning **nobody determined a state** -- renders as the
+strongest available assertion. The coverage block is reached only when `count_fn is
+gold_daily_mention_scores` (an object-identity test), so any wrapper, `functools.partial`, decorated
+form, bound method or second module instance sends control to the `else` branch and publishes
+`COMPLETE` over an uncovered population, with gold numbers present and no error raised. **Hardening
+the identity test guards one door; making the absence of a determination its own state closes every
+door, including the unenumerated ones.** The identity test is retained -- it is the cheapest correct
+check and belongs to the producer.
+
+**Four-postulate record (Rule 24).** (i) **MECE by subtraction over a printed denominator**: the
+domain is every (security, UTC day) row the producer emits; the four values partition it as *all
+covered* / *some covered* / *none covered* / *coverage not determined*, which is the complement set
+of the `covered` computation plus the case where that computation never ran. (ii) **Grain**: one
+(security, day) row, unchanged. (iii) **Intent**: one axis -- *how much of the enabled-publisher
+population was observed for this day*. `UNDETERMINED` is on that axis because it names the absence of
+an observation, not a different subject. (iv) **State coherence**: the migration below moves
+`DENIED` only; it does **not** move `COMPLETE` or `PARTIAL`, and it creates no `UNDETERMINED` rows
+retroactively, since no historical row records whether the determination ran.
+
+**Consumer census (field, not token).** `\bdata_status\b` -> **54 hits across 23 files** of 70,596
+scanned. First-party source: **`lib/research/harvest/publication_gold.py`** (writer) and
+**`lib/research/coverage/pool_reader.py`** (reader; maps at `:707` via `_GOLD_DAY_STATE_MAP`), plus
+**`lib/research/harvest/tests/test_publication_gold_daily.py`**. **Two modules and one test.**
+*(A `\bDENIED\b` token census returns 2,355 hits across 787 files and is the WRONG DOMAIN -- the word
+is overloaded estate-wide across IAM, gates and HTTP. `pool_reader.py` alone carries `_DENIED_CODES`
+and `GOLD_DAY_DENIED` as unrelated notions 728 lines apart.)*
+
+**Migration.** Bounded snapshot: **1,596 rows = 1,595 `DENIED` + 1 `PARTIAL`.** Every `DENIED` row
+re-derives **mechanically** to `NO_COVERAGE` -- the branch is deterministic on `publisher_spans`, so
+the rows are **uniformly mislabelled, not ambiguous**, and no investigation is required.
+`COMPLETE` and `PARTIAL` rows are **not touched**. **The migration therefore rewrites 1,595 of 1,596
+rows, which is a near-total rewrite in practice and is stated here rather than left to read as a
+small change.** Pre- and post-counts are printed by the migration.
 
 **`C-HV-EVENT-SPINE`.**
 - The gold `chatter_event` table (`s3://opal-data-harvest/amgt/harvest/gold/chatter_event/date=2026-09-22`, builder
