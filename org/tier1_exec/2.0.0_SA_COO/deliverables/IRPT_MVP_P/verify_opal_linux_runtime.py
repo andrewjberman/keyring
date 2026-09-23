@@ -61,8 +61,27 @@ def main():
                 templates_path='/var/task/templates.json', settings_path='/var/task/settings.json'))
         assert boundary is not entry.ENTRY
 
+        from accepted_custody import AcceptedCustodyReader
+        from custody_binding import CustodyBindingStore
+        reader = AcceptedCustodyReader(CustodyBindingStore(sdk, 'offline-requests'),
+            current_selection=lambda *args: None, publication_for=lambda *args: None)
+        accepted_boundary = custody_submission.build_accepted_custody_entry(
+            reader, dynamodb=sdk, table=object(), s3=object(), schema_directory='/var/task/contracts',
+            reporting_policy=lambda *args: None,
+            reporting_destination=lambda *args, **kwargs: None,
+            send=lambda *args: None, queue_url='offline-no-send', clock=lambda: 0,
+            ingestion_revision='offline-construction', destination_revision='offline-construction',
+            configuration=lambda owner, browser: capture_configuration(owner, browser,
+                templates_path='/var/task/templates.json', settings_path='/var/task/settings.json'))
+        assert accepted_boundary is not entry.ENTRY
+        assert reader.interpret_source is None and reader.validate_evidence is None
+        assert reader.authorize_snapshot({}, {}) is False
+        for name in ('accepted_custody', 'custody_binding', 'custody_portfolio', 'parse'):
+            assert Path(importlib.import_module(name).__file__).resolve().parent == Path('/var/task')
+
     print(json.dumps(dict(result='PASS', python=sys.version, dependencies=dependency_rows,
         native_rpds='PASS', schema_positive_and_negative='PASS', flat_factory_construction='PASS',
+        accepted_factory_construction='PASS', absent_source_refusal='PASS',
         limits='Synthetic refusing producer ports; no request, storage, queue, vendor or live acceptance.'), indent=2))
 
 
