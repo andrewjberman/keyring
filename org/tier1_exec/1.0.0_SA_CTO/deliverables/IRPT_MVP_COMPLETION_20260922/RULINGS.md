@@ -406,3 +406,8 @@ Implementation must package/pin the actual helper dependency. Its module constru
 ## IRPT-RESIDENT-INTEGRATION-20260923 and source review 20:48UTC
 
 CTO direct review accepts bounded Y4ed7ed resident assembly, Mb411 native INF adapter/helper reuse, and closes P external-identity defect at214ddd. Exact limits in RESIDENT_ASSEMBLY_REVIEW.md and M_P_SOURCE_REVIEW.md. CONTRACT amended with existing-lane P exact integration rows; semantic Y ownership and reserved runtime proof remain. CRO8246 corrects INF currency evidence: use retained USD Scope only for exact same-account/date positions bridge, not tenant-wide inference. COT currency confirmation is pending Andrew; preserve unavailable denomination and continue independent composition. No extra vendor call, independent review queue, or broad test rerun.
+
+
+## Andrew d70decd6b2 Tax source amendment and20:54 control
+
+Read exact CRO~M99756 and verbatim Andrew B. CONTRACT/COO_M now replace prior Tax-in-Client line: canonical workbook Traded membership -> SMAs/ALT Strategies/Tax, exact dated history and net_mv_plus_cash; unresolved claims preserved. Current M49F work integrates this now; other first flows continue. No workbook AUM as custody total. CRO~M traces two absent traded claims from retained sources. Mce2fd bridge comparisons all six mismatch; targeted CRO valuation semantics assigned. Y8d3 capture-source finding holds new bootstrap only; precise secret-read ambiguity repair sent205113. See HOST_CAPTURE_FINDING.md; no broad test/live replay.

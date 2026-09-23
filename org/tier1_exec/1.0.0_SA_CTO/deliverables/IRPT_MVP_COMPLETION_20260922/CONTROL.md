@@ -1,6 +1,6 @@
 # Investor Reporting - CTO control sheet
 
-As of 2026-09-23 20:48 UTC. CTO owns direct review and adjudication. All three products remain INCOMPLETE. Current CONTRACT and COO mandates govern; this is current state, not a journal.
+As of 2026-09-23 20:54 UTC. CTO owns direct review and adjudication. All three products remain INCOMPLETE. Current CONTRACT and COO mandates govern; this is current state, not a journal.
 
 | Product / owner | Current evidence | Next executable result / blocker |
 |---|---|---|
@@ -21,7 +21,7 @@ CloudOps recorder0b8784cea8 now passes CTO's two discriminating cases. P may int
 ## Decisions carried forward
 
 - Opal has all functions across firms, clients and accounts; firm users remain restricted to current server-verified grants. Global is the Opal default.
-- Holdings public categories are Models / SMAs / Client(plug). Client absorbs known unattributed custody; missing values/currency never become fabricated zero/USD. Canonical taxonomy, SmartX49F and dated COT Rebalancer membership; no false inferred identities.
+- Holdings public categories are Models / SMAs / Client(plug). Client absorbs known unattributed custody; missing values/currency never become fabricated zero/USD. Canonical taxonomy, SmartX49F plus Andrew d70decd6b2 canonical Tax SMA workbook exception, and dated COT Rebalancer membership; no false inferred identities.
 - Andrew6fc3f5f785 approves always-on dedicated Y host i-0167fd745ad906a66 and standing host workflows including D1. One session owner, no inbound, no gateway cohosting; replace old probe at controlled cutover. Exact installer/apply/readback still required.
 - Listing immutable directory reuse with fresh ownership/policy; token refresh preserves same stable identity context. No cached grants or shared page cache. B8 authorizer cache needs exact key/revocation design; not a blocker to generation.
 - SmartX capture authorized by Andrew at CRO, ebf1a0f6b5: 'All approved, go now'. Selected-set unavailable accepted. Provider account period-to-date and allocation monthly shapes are distinct; no synthetic custom-window account returns from sleeve averaging/summing. Method/fee basis unknown. See RULINGS current amendment.
@@ -29,7 +29,7 @@ CloudOps recorder0b8784cea8 now passes CTO's two discriminating cases. P may int
 
 ## Review queue and completion
 
-Latest CTO source reviews: DIRECT_REVIEW_2020_20260923/RESIDENT_ASSEMBLY_REVIEW.md and M_P_SOURCE_REVIEW.md. P identity finding closed214ddd; Y connected resident accepted4ed7ed; M native adapter acceptedb411. These are bounded source results, not product/live completion. M consumes CRO8246 retained currency correction and builds exact-account/date bridge. Andrew asked to confirm COT currency; no inferred USD while pending. P continues actual retained report composition and exact ready integration batch. Y removes same-firm publication restriction and finishes session-owner recovery/host proof. CRO SmartXc12fe retained semantics stay in force: decimal PTD, unknown method/fees, no fabricated provider-as-of or custom-window sleeve aggregation.
+Latest CTO source reviews: DIRECT_REVIEW_2020_20260923/RESIDENT_ASSEMBLY_REVIEW.md and M_P_SOURCE_REVIEW.md. P identity finding closed214ddd; Y connected resident accepted4ed7ed; M native adapter acceptedb411. These are bounded source results, not product/live completion. M ce2fd95103 retained bridge has six same-account/date mismatches; no currency propagation. CRO has exact valuation-semantics research request. M continues49F custody and current Andrew d70decd6b2 Tax SMA classification using canonical workbook/Traded history and net_mv_plus_cash. Andrew asked to confirm COT currency; no inferred USD while pending. P continues actual retained report composition and exact ready integration batch. Y removes same-firm publication restriction and finishes session-owner recovery/host proof. New8d3c46 capture candidate has concrete review finding: secret AccessDenied/throttle incorrectly becomes missing and triggers capture; narrow repair assigned205113. Previously accepted4ed7 remains accepted. CRO SmartXc12fe retained semantics stay in force: decimal PTD, unknown method/fees, no fabricated provider-as-of or custom-window sleeve aggregation.
 
 Each owner publishes concise STATUS: pins, active files, first failing hop, next proof, dependency and limits. Notifications only interface/blocker/review handoff; no ACK chain. Simple fast changed-behavior checks after edits, reuse pinned evidence; broad tests only at meaningful integration/release or named risk. Build the real journey, no test quota.
 
