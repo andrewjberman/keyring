@@ -12986,6 +12986,79 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The literal AC1 text, run from ANY starting cwd, always writes its output png inside portal/.scratch/ because of the double toplevel-evaluation stepping through a nested gitlink repo -- this is a property of the TEXT, not of where the worker started. The worker caught it only because it independently ran `git -C portal status --short` right after AC1 (not required by AC1 itself, only by AC5, run later) and worked around it by moving the file into its own worktree's .scratch/r125/ and deleting portal/.scratch/ before proceeding, restoring the clean state AC5 checks.",
     "disarm_owner": "2.0.0_SA_COO~Z -- the worker (0.9.0_WK_AMGT_RESAPP~125, this order's issuer per <issued_by>) is terminal at its drain and cannot hold owner's word (R-18), so the duty passes to the issuer. The worker's own same-turn workaround already restored the clean state this row's world_is describes (file moved out of portal/, portal/.scratch removed, git -C portal status re-confirmed clean before every subsequent capture) -- what remains for the issuer is whether the pre-issuance exercise remedy (Z-S235) should add a working-tree-cleanliness read for any order whose bounds forbid writing outside a named directory.",
     "notes": "Scope: this is the SAME CLASS as Z-S235 (an order-carried invocation that does not behave as its text implies) but the FAILURE MODE is new to that row's catalogue -- a SIDE EFFECT (an unintended write) rather than a non-zero rc or an import/argv error, and it survives an rc+stdout-only pre-issuance exercise. Not folded into Z-S235 itself (append-only, not this seat's row to edit); left here as the instance for whoever owns that row's remedy to decide whether the pre-issuance check should add a working-tree-cleanliness read wherever an order's own bounds forbid writing outside a named directory."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W126-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~126",
+    "surfaced_at": "2026-09-22T21:05Z",
+    "one_line": "The task order's own premise -- the three two-vintage `bestdata` pairs are '~33 MINUTES APART' (12:48 and 15:21 on 2026-09-19) -- is arithmetically false: the measured gap is ~152.5 minutes (2h32m29s), not 33. AC2's <expect> repeats the same '~33 minutes' figure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-AMGT-rk-126 s.2 (this order, WORKER FACE): 'The two vintages are ~33 MINUTES APART ON THE SAME DAY (`12:48` and `15:21` on 2026-09-19)'; AC2 <expect>: 'The elapsed interval between the two vintages PRINTED per security (expect ~33 minutes)'.",
+        "Object keys read directly from s3://opal-data-harvest/bloomberg/harvest/bronze/bestdata/ (list_objects_v2, this session): CAT_US_Equity 20260919T124848Z -> 20260919T152117Z; CSL_AU_Equity 20260919T124852Z -> 20260919T152121Z; 6861_JP_Equity 20260919T124855Z -> 20260919T152125Z.",
+        ".scratch/r126/ac2.py (this cell, run this session): all three pairs print interval '2:32:29 (152.5 minutes)' / '2:32:29' / '2:32:30' -- computed as later_stamp_dt - earlier_stamp_dt via datetime.strptime, no timezone ambiguity (both stamps carry the same 'Z' suffix).",
+        "Independent one-off check, same session: `datetime.strptime('20260919T152117Z',...) - datetime.strptime('20260919T124848Z',...)` prints `2:32:29`, confirming the script's own arithmetic on a second, standalone invocation."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AMGT-rk-126 s.2 and AC2 <expect>: the two `bestdata` vintages per security are ~33 minutes apart (12:48 -> 15:21 on 2026-09-19).",
+    "world_is": "The measured interval for all three two-vintage securities is ~152.5 minutes (2h32m29s-30s), roughly 4.6x the stated ~33 minutes, computed directly from the object-key stamps with two independent invocations in this session. The order's own worked example ('12:48 and 15:21') already subtracts to ~2h33m by clock arithmetic, so the 33-minute figure does not reconcile with the times printed beside it in the same sentence. This does not change this cell's S1(c) conclusion (both 33 min and 152.5 min are far short of the days/weeks a revision test needs, and this cell's deliverable reports the MEASURED ~152.5 min, not the order's stated ~33), but the order's AC2 <expect> literally asks for a number this cell cannot honestly print, so this cell prints the measured value and files this row rather than reporting 33 minutes to match the criterion.",
+    "notes": "Not ARMED: no downstream act depends on 33-minutes-exactly, and reporting the true ~152.5 minutes only strengthens S1(c) (the interval available in the store today is further from a real revision window than the order itself believed, not closer). Left for the issuer (2.0.0_SA_COO~Z) or the CTO card (S1's card owner) to correct the 33-minute figure wherever it is restated upstream, since the order text at HEAD still carries it and a future reader could size a test off the wrong number."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W126-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~126",
+    "surfaced_at": "2026-09-22T21:20Z",
+    "one_line": "TO-AMGT-rk-126 s.6 instructs the worker to flip <status> to complete in the task-order FILE, but that file's own path is NOT named anywhere in the order's <paths> write grant (unlike rk-117's order, which explicitly listed its own TO file) -- this worker cannot perform the flip without writing outside its granted lane.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-AMGT-rk-126 (this order) section 3 <paths>: exactly 3 entries -- 'org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~126/**', 'org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/**', '.scratch/r126/**'. No task-orders/ entry of any kind.",
+        "TO-AMGT-rk-126 section 6 ('WHEN YOU ARE DONE'): '...flip <status> to complete only if every criterion PASSES' -- the <status> tag being flipped (line 127) lives inside org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-126.bestdata-vintage-read.md itself, a path this order's own <paths> does not grant.",
+        "Sibling order org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-117.lenovo-daily-price.md section 'paths' (read this session) explicitly lists its OWN file path ('org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-117.lenovo-daily-price.md') alongside its deliverables path -- confirming the grammar exists and this order simply omits it.",
+        "Top-level worker instructions (this session's system prompt): '<paths> IS your write grant... a path you need that it lacks is a BLOCKING row on that criterion, never an override' and 'Never: edit outside the task order's <paths> and your deliverables folder'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AMGT-rk-126 s.6: 'flip <status> to complete only if every criterion PASSES', naming an act inside the task-order file itself.",
+    "world_is": "The order's own <paths> grant (s.3) does not include the task-orders/ directory or this file, so the worker has no write lane to perform the flip. All 6 criteria (AC0-AC5) PASS and the proof-of-spec instance is VALID (rc=0), but <status> in the task-order file is left as 'pending' by this worker rather than written outside its granted lane; the flip is left for the issuer (2.0.0_SA_COO~Z) at drain, who holds the write lane over task-orders/.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- the issuer holds the lane over task-orders/ and can perform the flip at drain (or amend the order's <paths> for a future cell of this shape); this worker's own proof_of_spec instance is complete and VALID independent of the flip.",
+    "notes": "Not folded into W126-S1 (different class of gap: a lane omission vs a factual premise error). No downstream harm: the proof-of-spec instance and its deliverables are unaffected by whether <status> reads 'pending' or 'complete' in the order file; the issuer/CVO reads the instance's own rc=0 VALID verdict and the acceptance rows directly."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W126-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~126",
+    "surfaced_at": "2026-09-22T21:35Z",
+    "one_line": ".owned-paths.yaml's static `paths:` table has ZERO entries covering `.scratch/` anywhere (0 of 282 keys), so `owned-paths-validate.py --check-agent` refuses EVERY `.scratch/r126/*` path this order's own <paths> block grants at HEAD -- the dynamic `worker_grant` (task-order-paths) limb that exists exactly to admit such a path is never reached, because `_cmd_check_agent` returns UNDEFINED as soon as `resolve_lane()` finds no STATIC lane, before `check_agent()` (which alone consults `worker_grant`) is ever called.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-AMGT-rk-126 <paths> at HEAD (git show HEAD:org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-126.bestdata-vintage-read.md, this session): includes '.scratch/r126/**' verbatim, third of three entries.",
+        "bash .tools/safe-commit.sh --author '0.9.0_WK_AMGT_RESAPP~126 <...>' -F <msgfile> -- <deliverables> <investigation file> .scratch/r126 (this session): 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: .scratch/r126/ac0.py -- UNDEFINED (no matching path rule; agent=0.9.0_WK_AMGT_RESAPP~126)' and 5 more identical VIOLATION lines for ac0_out.txt/ac1.py/ac1_out.txt/ac2.py/ac2_out.txt/commit_msg.txt.",
+        "Direct isolation: `printf '.scratch/r126/ac0.py\\n' | python .tools/owned-paths-validate.py --check-agent 0.9.0_WK_AMGT_RESAPP~126 .owned-paths.yaml` -> rc=1, same VIOLATION -- UNDEFINED line, confirming the gate itself (not safe-commit.sh wrapping) is the source.",
+        "PYTHONPATH=\"$(pwd)\" python -c census (this session): `yaml.safe_load('.owned-paths.yaml')['paths']` has 282 keys; 0 contain the substring 'scratch' case-insensitively; 0 are a bare catch-all ('**'/'*'/'.**').",
+        ".tools/owned-paths-validate.py:411-416 (_cmd_check_agent, read this session): `lane_name = resolve_lane(path, paths_config)` THEN `if lane_name is None: violations.append(...UNDEFINED...); continue` -- this branch returns/continues BEFORE `check_agent()` is called on line 417, so `check_agent`'s own `grant`/`root`/`cache` args (wired for exactly this case, per .owned-paths.yaml's `worker_grant.note`: 'a worker serial ... is admitted to exactly the <paths> a NON-TERMINAL task order ... names at HEAD ... A path the order does not name is a lane refusal') are never reached for a path with no static lane at all.",
+        "Control: the SAME check on this order's deliverables/investigation paths (which DO have a static lane) returns rc=0, 0 violations -- isolating the defect to paths with NO static `paths:` entry, not to the worker_grant logic or this agent's serial in general."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": ".owned-paths.yaml `worker_grant.note` (source task-order-paths): 'a worker serial 0.9.0_WK_<CODE>~<n> is admitted to exactly the <paths> a NON-TERMINAL task order under <CODE>, issued_to that serial, names at HEAD ... A path the order does not name is a lane refusal, and the override stays audited and singular.' -- i.e. the ORDER's <paths> block is asserted to be the operative grant.",
+    "world_is": "For any path with NO entry (exact/glob/prefix) anywhere in `.owned-paths.yaml`'s `paths:` table, `owned-paths-validate.py --check-agent` refuses it as UNDEFINED regardless of whether a live, non-terminal, HEAD-committed task order names it in <paths> -- the dynamic worker_grant limb is dead code for such paths, because the CLI wrapper short-circuits on the static lookup first. This worker's own order names `.scratch/r126/**`, and the commit was refused. Worked around: committed only the deliverables + investigation-row paths (which DO carry a static lane and passed rc=0); the three `.scratch/r126/*.py` scripts and their captured `*_out.txt` remain UNCOMMITTED in this worktree, though their full output is captured verbatim in the proof-of-spec instance's own output_evidence fields (AC0/AC1/AC2 rows), so the ACs themselves are unaffected.",
+    "disarm_owner": "1.0.0_SA_CTO (or 2.0.0_SA_COO~Z as the granting issuer) -- owns .tools/owned-paths-validate.py and .owned-paths.yaml's `paths:` table. Two independent fixes would close this: (1) add a `.scratch/` static lane entry broad enough that `resolve_lane` no longer returns None for it (then the existing worker_grant logic already handles per-agent/per-order admission correctly, as proven by the deliverables/investigation control above), or (2) reorder `_cmd_check_agent` to attempt the dynamic worker_grant lookup BEFORE declaring UNDEFINED when no static lane matches. ARMED because every future worker order that grants a `.scratch/<slot>/**` path (the estate's own convention, per the many prior AMGT_RESAPP orders read this session) will hit the identical refusal until one of these lands.",
+    "notes": "Not a lane violation by this worker -- the path IS named in this order's own committed <paths> block, which the top-level framework treats as the write grant ('<paths> IS your write grant'). The GIT_COMMIT_AUTHOR_OVERRIDE escape was considered and NOT used: it bypasses the check entirely rather than proving the grant, and this worker judged recording the gap + working around it (commit only what the gate currently accepts) as the narrower, more auditable choice given the framework's caution against bypassing a gate failure. If a future seat judges the override the better remedy for this exact class, this row is the citation."
   }
 ]
 ```
