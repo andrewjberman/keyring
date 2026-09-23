@@ -274,20 +274,19 @@ assigned by the decomposition.
   - `baseline_30d_sum` and `baseline_30d_days` (fewer than 30 days flags a short baseline);
   - `cumulative_ytd`;
   - `first_published_utc` and `last_published_utc`;
-  - `data_status` (`COMPLETE | PARTIAL | NO_COVERAGE | UNDETERMINED`), so a quiet day is never a broken read
-    **and an unmeasured day is never a confident one** (amended 2026-09-23; see `C-HV-DAILY-STATUS` below).
+  - `data_status` (`COMPLETE | PARTIAL | NO_COVERAGE`), so a quiet day is never a broken read
+    (amended 2026-09-23; see `C-HV-DAILY-STATUS` below).
 - `published_utc` is the only clock that places an article on a day.
 - **Relative figures -- the breakout ratio, z-score and any 0-100 normalisation -- are computed at SERVE time** (the
   chatter Lambda or the API), never stored (Andrew: *"never do relative ... handled in a lambda"*).
 
-**`C-HV-DAILY-STATUS`** (amendment, 2026-09-23, `1.0.0_SA_CTO~Z`; supersedes the three-value enum).
+**`C-HV-DAILY-STATUS`** (amendment, 2026-09-23, `1.0.0_SA_CTO~Z`; amended twice the same day -- read
+AMENDMENT 3 below, which REMOVED `UNDETERMINED` from this enum).
 
 - **`COMPLETE`** -- every enabled publisher's span covers the day.
 - **`PARTIAL`** -- at least one, but not all, cover it.
 - **`NO_COVERAGE`** -- no enabled publisher's span covers the day. **This is what the producer actually
   measures**, and it replaces `DENIED`.
-- **`UNDETERMINED`** -- no coverage determination was made for the day. **Never a fall-through to
-  `COMPLETE`.**
 
 **Why `DENIED` is retired rather than split.** The writer
 (`lib/research/harvest/publication_gold.py:573-579`) computes `covered = [pub for pub in
@@ -406,9 +405,37 @@ terms before drafting; three are not yet satisfied and are named here with their
 - **MECE AS A SUBTRACTION FROM A PRINTED DENOMINATOR** -- `2.0.0_SA_COO~Y`'s **221-file bounded
   census** stated as that denominator.
 
-**UNCHANGED FROM AMENDMENT 1:** the four values and their definitions; `DENIED` retired rather than
-split; a genuine publisher refusal deferred until the harvester fetch-result lineage exists;
-migration scope **1,595 of 1,596 rows**, `COMPLETE`/`PARTIAL` untouched.
+**UNCHANGED FROM AMENDMENT 1:** `DENIED` retired rather than split; a genuine publisher refusal
+deferred until the harvester fetch-result lineage exists; migration scope **1,595 of 1,596 rows**,
+`COMPLETE`/`PARTIAL` untouched.
+
+---
+
+**`C-HV-DAILY-STATUS` -- AMENDMENT 3, same day. `UNDETERMINED` IS REMOVED FROM THE DAILY ENUM.**
+
+`3.0.0_SA_CVO~Z` refused Amendment 1 and asked the question that resolves this: **if the daily half
+is offered separately, it must show what it fixes WITHOUT the generation change -- because today's
+evidence says the answer may be "nothing."** Answered honestly, the two values split apart:
+
+| change | does it stand alone? |
+|---|---|
+| **`DENIED` -> `NO_COVERAGE`** | **YES.** It corrects what **1,595 of 1,596 rows ASSERT** -- a reader currently infers a publisher refused us, where the truth is that nothing was collected. That is a real, measurable fix at the daily grain, and it needs no writer change to be true |
+| **`UNDETERMINED`** | **NO.** Nothing at the daily grain assigns it. Its whole justification is the generation writer's promotion of a falsey state |
+
+**So `UNDETERMINED` WAS NEVER A DAILY-GRAIN VALUE.** It was placed in the daily enum because that is
+where the author was editing, and **that misplacement IS the grain defect both `2.0.0_SA_COO~Y` and
+`4.0.0_SA_CRO~Z` detected** -- they were reading the symptom of an editing accident, correctly, as a
+contract defect.
+
+**RESULT:**
+- **DAILY GRAIN (this clause) is now self-justifying and stands alone:** three values, `DENIED`
+  retired, 1,595 rows relabelled truthfully. **Its justification no longer cites
+  `generation_writer.py` at all.**
+- **THE UNDETERMINED / NON-PUBLICATION OBLIGATION MOVES WHOLLY INTO THE GENERATION-GRAIN CONTRACT**
+  (section B above), which remains **OWED AND UNWRITTEN**, together with terminal state, marker key
+  and type, receipt state, and the Price and legacy-republisher caller contracts.
+
+**This takes `3.0.0_SA_CVO~Z`'s shape 1 (SPLIT), and the daily half survives the test it set.**
 
 **`C-HV-EVENT-SPINE`.**
 - The gold `chatter_event` table (`s3://opal-data-harvest/amgt/harvest/gold/chatter_event/date=2026-09-22`, builder
