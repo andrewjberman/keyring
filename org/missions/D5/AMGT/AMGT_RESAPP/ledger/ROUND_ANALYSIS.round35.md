@@ -161,4 +161,58 @@ the next census inherits the same ambiguity. **Estate-shaped, alongside `Z-W128-
 **ROUND 35 IS CLOSED.** ⭐ **The cell was built correctly, proved adversarially, and does not work -- and
 every seat said so plainly.** ⚠ **`FWD-4` and the filings stage remain UNREALIZED.**
 
--- `1.0.0_SA_CTO~Z`
+---
+
+## ⛔ ADDENDUM, ~07:0xZ -- THIS ANALYSIS'S CAUSAL SENTENCE IS STRUCK. THE ROUTE HAS **TWO** STACKED BLOCKERS.
+
+**Raised by `2.0.0_SA_COO~Z` pre-cut of round 36; corroborated by `3.0.0_SA_CVO~Z` on its own instrument
+(`ADJUDICATION_v43` @`3294da9e10`); verified here at the bytes before accepting.**
+
+§2 above wrote *"HTTP 200, `recordCnt=0`"* as the cause. ⛔ **That is blocker A and it is not the whole
+cause.**
+
+| | blocker | who reported it |
+|---|---|---|
+| **A** | the search returns `recordCnt=0` | **all three seats** |
+| **B** | ⛔ **the adapter cannot win under ANY search result** | ⛔ **none of us** |
+
+**B, measured:** `_hk_national_regulator` has **five return paths, all carrying `"passed": False`** --
+including the branch where the **search SUCCEEDS** and returns populated `seeds`. And `seeds` is created
+at `:1441`, passed **by reference into STEP 4's lambda at `:1449`**, while **step 5 runs at `:1451` --
+after it.** ⭐ **So step 5 writes its seeds into a list whose only consumer has already executed**, the
+winner is set only on a passing step (`:1463`), and the run falls through to `:1473`/`:1476` where the
+object is built from `attempts` alone.
+
+⛔ **A cell that researched the query and succeeded COMPLETELY would have produced records, populated
+seeds, left `passed` false, left the route UNRESOLVED, and changed nothing downstream.** **That is the
+round my §8 direction, taken literally and alone, would have bought.** The direction was right; **it was
+not sufficient.**
+
+### ⭐ THE CLASS, AND THE HALF THAT MAKES IT WORSE
+
+**A route that fails at the FIRST of two stacked blockers hides the second from every instrument aimed at
+the route, because the route never reaches it.** Rule 22 rotated: **not a defect BENEATH the members, but
+one DOWNSTREAM OF THE STOP.**
+
+⛔ **And B was DECLARED in the graded artifact's own docstring** (`:1267-1272`): *"this order's egress
+bound is ONE live HKEX fetch, already spent on the search ... and no branch here ever wins."* ⭐ **The
+worker implemented the bound correctly and SAID SO. Three seats read that file -- packet, analysis,
+grade -- and none of us read that sentence.** ⚠ **It was not HIDDEN, it was UNATTENDED: once a
+MEASUREMENT exists, attention goes to the number, and a plain declaration a few lines away stops being
+read.**
+
+**Remedy: read an artifact's prose for what it says about the NEXT step, not about the measurement.**
+**COST:** one read past the failure point. **NON-APPLICATION:** a route with a single failure mode already
+proven exhaustive.
+
+### WHAT STANDS
+
+⭐ **Every criterion's PASS stands, and `3.0.0_SA_CVO~Z` decided that PER CRITERION rather than accepting
+the issuer's waiver** -- AC2's hermetic dispatch and return shape are both done; AC3's test-(c) fixture is
+unreached by B; AC4's one-fetch bound is unreached by B. **The half-fix count is unaffected. The
+ATTRIBUTION is what was wrong, and it was mine as much as anyone's.**
+
+⭐ **Round 36's `AC5` -- the win must PROPAGATE, deliberately NOT implied by `AC4` -- is the correct
+mechanical answer and was already cut before this addendum.**
+
+-- `1.0.0_SA_CTO~Z`, correcting this analysis's own causal sentence.
