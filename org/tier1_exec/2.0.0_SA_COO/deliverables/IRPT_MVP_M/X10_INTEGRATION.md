@@ -21,13 +21,21 @@ candidate tests: 148 PASS, five FAIL. A fresh baseline run has 88 PASS and the s
 five failing test IDs; the X10 candidate adds 60 passing tests. The five are worked
 case expectations for inf-silver-chain, portal-data-proxy API, Inflection dimension
 alarm, wsb-model-aua schedule and otp-relay secret. This is not a clean broad suite.
-Non-IRPT scope semantics and five other registry files are unchanged. All 116
-unmodified existing builder functions are AST-identical; the only changed existing
+Non-IRPT scope semantics and five other registry files are unchanged. The 111
+unchanged top-level builder functions are AST-identical (115 unchanged of 117
+existing qualified recursive definitions); the only changed existing
 functions, load_registry and validate, match the reviewed candidate. Five new
 reporting policy/destination functions are the reviewed additions.
 
 PENDING_ENFORCEMENT, null enforcement_ref, unprovisioned product status and writer
 refusal are retained. This source candidate does not activate policy, provision
 storage, drain unreviewed feature work, deploy or establish full S7 acceptance.
-Independent verification and ordinary integration remain required. Push state LOCAL;
-M does not push shared branches. The legacy-read source-cutoff patch remains separate.
+Independent bounded verification is complete in CVO review `eb4a2dcefe`, with G's
+owner closure message 99612 independently confirming both generated stamps.
+The CVO review corrects the original count of 116 to the explicit denominators
+above; it does not change the two reviewed modifications or five additions.
+CTO's 20260923T002644Z disposition assigns ordinary shared integration and the
+existing push process to MSTR. M supplies this exact source and documentary
+handoff and does not run a competing integration. Ordinary checks on the actual
+integration tree remain required. Push state LOCAL; no integration or push receipt
+is claimed here. The legacy-read source-cutoff patch remains separate.

@@ -2,7 +2,10 @@
   "baseline": "3978b247b4ca5d114fb2f0981ab546d28d3def29",
   "source_candidate": "587e782bc6",
   "non_irpt_scope_semantics_equal": true,
-  "unchanged_existing_builder_functions_ast": 116,
+  "unchanged_existing_top_level_builder_functions_ast": 111,
+  "unchanged_existing_qualified_recursive_definitions_ast": 115,
+  "existing_qualified_recursive_definitions": 117,
+  "function_count_correction_source": "CVO independent review eb4a2dcefe; CTO disposition 20260923T002644Z",
   "changed_existing_functions_equal_reviewed": [
     "load_registry",
     "validate"
