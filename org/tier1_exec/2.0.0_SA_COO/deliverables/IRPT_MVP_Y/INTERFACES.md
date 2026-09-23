@@ -1,7 +1,7 @@
 ﻿# IRPT Y -- current interfaces
 
 Owner2.0.0_SA_COO~Y. CONTRACT v1.4/f1add564fd. Current Y source
-`84c6e63806` on ebf8d33985; P shared integration pending. BrokerSecurityCheck + UploadTemplateResolver concrete caller: BROKER_TEMPLATE_CALLER_20260923.md.
+`57b228ac53` on84c6e63806/ebf8d33985; P shared integration pending. BrokerSecurityCheck + UploadTemplateResolver concrete caller: BROKER_TEMPLATE_CALLER_20260923.md.
 
 Template input first hop: TEMPLATE_UPLOAD_HANDOFF_20260923.md is the exact
 request/result/retention/source-file batch and executable consumer. The new
@@ -35,3 +35,27 @@ resident installer/rollback; P owns shared routes/IAM/IaC/package. First runtime
 batch must include exact submit source/SendMessage/live flag/input/request
 routes and controlled retirement of separate probe/per-job cycling.
 
+
+Resident source57b228ac53 adds session/resident_session.py and
+session/deadline_transport.py with generate/transport.py in one package.
+ResidentSession(secrets_client,dynamo_client,jobs_table,enrolled_user_id) uses
+canonical ycharts/session/current, existing irpt-jobs tenant_opal and
+PROVIDER_OPERATION#account-hash row; strong read/conditional operation_version,
+no TTL/delete. .acquire(request_budget=60,ttl=120) returns actual fenced
+OperationTransport with ProcessDeadlineInvoke; .template_resolver(identity,
+source_revision,cache=None) is UploadService's concrete callback. Budget/TTL
+must be chosen for each recipe step and renewed under the job lease.
+ProcessDeadlineInvoke.download wraps the existing credential-free PDF reader.
+The HTTP child receives session/request via pipes and cannot read/publish secrets;
+parent merges returned cookie state only after successful completion, retaining
+its opener's jar object. Timeout kills/reaps child; uncertainty remains fenced.
+
+These runtime callers are for the dedicated authorized HOST, not ad hoc agent
+or Lambda vendor calls. Public UploadService invocation must reach that installed
+host boundary; no live call authority is inferred for packaging elsewhere.
+Exact existing host actions required for this seam: SecretsManager GetSecretValue
+on canonical session and Dynamo GetItem/UpdateItem on the jobs table with system
+KMS permissions. P must preserve _opal operation rows without TTL. Resident
+consumer/sign-in/certifier and shared route/package deployment remain pending;
+this is a build batch, not a new micro-review gate. Five changed-seam checks pass;
+prior broad proof stays pinned. No live host claim or cutover yet.
