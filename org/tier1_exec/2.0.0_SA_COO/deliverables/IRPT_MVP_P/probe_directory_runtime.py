@@ -23,7 +23,7 @@ assert Path(entry.__file__).resolve() == Path('/var/task/entry.py')
 assert Path(owner_reads.__file__).resolve() == Path('/var/task/owner_reads.py')
 assert Path(custody.__file__).resolve() == Path('/var/task/custody.py')
 cold = entry.lambda_handler({'headers': {}}, None)
-cold_body = json.loads(cold['body'])
+cold_body = cold
 assert cold_body['ok'] is False and 'data' not in cold_body
 print('COLD_HANDLER_PASS: actual entry.lambda_handler, no test dependencies or mocks loaded')
 print('RUNTIME_DEPENDENCIES', json.dumps({n: importlib.metadata.version(n) for n in ['boto3', 'botocore']}))
@@ -47,7 +47,7 @@ assert Path(cases.entry.__file__).resolve() == Path('/var/task/entry.py')
 with pytest.MonkeyPatch.context() as patch:
     cases.arrange(patch)
     result = cases.entry.lambda_handler(cases.opal(), None)
-    body = json.loads(result['body'])
+    body = result
     assert body['data']['context_kind'] == 'GLOBAL'
     assert body['data']['completeness'] == 'COMPLETE'
     Path('/tmp/directory-global-wire.json').write_text(json.dumps(body))
