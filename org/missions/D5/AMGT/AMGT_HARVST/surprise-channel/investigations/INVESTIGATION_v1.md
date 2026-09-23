@@ -486,6 +486,52 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "AC6's <expect> text is the authority for what 'nothing outside the currently-authorised files changed' means.",
     "world_is": "Each phase amendment that widens BOUNDS' editable-file set requires AC6's <expect> to be updated in the SAME amendment, or it silently falls one phase behind again -- exactly the mechanism row -S7 already named, now recurring on its own fix. This cell graded AC6 by INTENT (nothing outside Phase 0c's own named editable set touched) rather than by the stale literal list, same as it did for -S7, and states that reasoning on AC6's own acceptance row.",
     "notes": "Not fixed here (no authority to rewrite the TO's own criteria). Disarm suggestion, sharpened from -S7's: word AC6 generically ('nothing outside the CURRENT phase's own BOUNDS-authorised set') so it never needs editing again when BOUNDS grows, rather than re-enumerating the file list on every amendment."
-  }
+  },
+{
+  "id": "AMGT_HARVST-Z-W14-S1",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_HARVST~14",
+  "surfaced_at": "2026-09-23T02:00Z",
+  "one_line": "The order's preflight/AC0 asserted 'measured at this cut: ... test_harvest_grammar 7 [passed]', but re-measured in this worktree at HEAD (8aaaacd26379) it is '1 failed, 6 passed' -- a THIRD pre-existing failure the order does not name (only test_worker's 2 and test_verification's 1 are called out as not-mine-to-fix).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_data_harvest/test_harvest_grammar.py::test_one_writer_for_both_channels @8aaaacd26379: `import rest_fetch` raises `ModuleNotFoundError: No module named 'rest_fetch'` from inside a `sys.path.insert(0, sa_dir)` block, sa_dir=integrations/seekingalpha -- the module is not importable in this worktree/environment as-is",
+      "python -m pytest lib/opal_data_harvest/test_harvest_grammar.py -q --color=no -p no:cacheprovider, run BEFORE any HVST-r-4 edit and again AFTER: both '1 failed, 6 passed in <1s' -- deterministic, unrelated to this cell's conftest/poison change (AC3 confirms no production module and no file outside conftest.py/test_poison_control.py/test_retrieval_provenance.py changed)",
+      "AC0/AC2's own grading is self-referential (AC2 compares this run's own AC0-shaped output to this run's own AC2-shaped output), so the discrepancy does not block this cell's mechanical PASS -- it only makes the order's PREFLIGHT TEXT stale evidence for anyone who trusts it without re-measuring"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO HVST-r-4 section 4 BOUNDS: 'Measured at this cut: ... test_harvest_grammar 7 [passed] ...'",
+  "world_is": "test_harvest_grammar.py carries a third pre-existing failure (ModuleNotFoundError on rest_fetch) that the order's own measurement did not record -- either the order's preflight was taken on a different vintage/environment (one where integrations/seekingalpha/rest_fetch.py was importable) or the count was mis-typed. Not caused by, and not fixed by, this cell.",
+  "notes": "Not investigated further here (out of this cell's grant -- read-only on test_harvest_grammar.py, no BOUNDS permission to edit it, and the order named this only as background context, not as a criterion of its own). Filed so a later round's analysis does not read '7 passed' as this cell's own claim."
+},
+{
+  "id": "AMGT_HARVST-Z-W14-S2",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_HARVST~14",
+  "surfaced_at": "2026-09-23T02:05Z",
+  "one_line": "A NEW variant of row AMGT_HARVST-Z-W10-S3's class, found while BUILDING the HVST-r-4 poison itself: an ABSOLUTE `from lib.opal_data_harvest.auth import SessionManager` / `from lib.opal_data_harvest.conftest import HarvestPoisonError` in conftest.py or a sibling test file reaches a namespace-package DUPLICATE module (this site's pytest has no lib/__init__.py and loads every file in this directory as the bare `opal_data_harvest` package, measured via `--fixtures-per-test`: the fixture is reported as living in `opal_data_harvest.conftest`) -- so patching SessionManager.refresh under the absolute path is invisible to code that imports it (as every other test file does) via the relative `from .auth import SessionManager`, and a HarvestPoisonError raised by the real fixture is a DIFFERENT CLASS OBJECT than one imported absolutely, so `pytest.raises(HarvestPoisonError)` silently fails to match.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured directly: conftest.py first written with `from lib.opal_data_harvest.auth import SessionManager` -- test_poison_control.py::test_poisoned_session_manager_refresh_raises and ::test_poisoned_subprocess_run_raises both FAILED with the raised HarvestPoisonError shown in the traceback as `opal_data_harvest.conftest.HarvestPoisonError`, not matching `pytest.raises(HarvestPoisonError)` where HarvestPoisonError was imported absolutely in the test file (`lib.opal_data_harvest.conftest.HarvestPoisonError`)",
+      "fixed in this cell's own conftest.py and test_poison_control.py by switching both to relative imports (`from .auth import SessionManager`, `from .conftest import HarvestPoisonError`), matching every other test file's own convention (`from .auth import SessionManager` in test_worker.py) -- re-run after the fix: 3 of 3 test_poison_control.py arms PASS",
+      "same root cause as row AMGT_HARVST-Z-W10-S3 (a dotted-string monkeypatch target silently not taking effect), but a DIFFERENT manifestation: no dotted string here at all, the divergence is absolute-vs-relative IMPORT STYLE on the SAME two-line-apart file, and it does not fail silently in general -- it happened to surface here only because AC1 requires calling the poison and checking the exception TYPE, which a looser `except Exception` catch would not have caught"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO HVST-r-4 section 1 ruling text: 'the module object's attribute, never a dotted-string target' -- names the dotted-string-target hazard but not the absolute-vs-relative-import variant of the same underlying dual-module-object condition.",
+  "world_is": "In this worktree, ANY new code added to lib/opal_data_harvest/*.py that imports a sibling module of this package MUST use the relative form (`from .module import X`) to reach the SAME class/module object every existing test file uses; an absolute `lib.opal_data_harvest....` import is silently a different object unless the caller compares identity or (as here) sees a hard failure downstream.",
+  "notes": "This row's own hazard is now CONTAINED in HVST-r-4's own two files (conftest.py, test_poison_control.py) by using relative imports throughout -- it does not root-cause or fix the general condition for the rest of the estate, which is why it stays ARMED rather than closed. A durable disarm (e.g. a lib/__init__.py, or a lint rule refusing an absolute lib.opal_data_harvest import inside this package) is outside this cell's BOUNDS (code-only poison build, no production module edits) and is left to the disarm owner."
+}
 ]
 ```

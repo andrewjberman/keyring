@@ -129,7 +129,7 @@ fixture is autouse -- for example through `--collect-only` plus a fixture listin
 3. **The row stays ARMED by construction**, and the worker is told to say so, because a containment reads like a fix in a
    later summary.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~14</slot>
 <fabric>site-z</fabric>
