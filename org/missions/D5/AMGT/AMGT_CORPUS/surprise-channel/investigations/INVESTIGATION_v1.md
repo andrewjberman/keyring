@@ -461,6 +461,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The identity/crosswalk substrate this cell reads (read-only, outside <paths>) is LIVE and, for one call, returned a population and classification set roughly a third smaller than every other measurement taken before or after it -- consistent with a concurrent write (plausibly the issuer's own revert of ISSUER AMENDMENT 2's diagnostic fire-1 output, landing on this same terminal minutes earlier) rather than a defect in this cell's own code, which never touches that substrate beyond the listing/resolve calls induction_request.py already makes.",
     "disarm_owner": "2.0.0_SA_COO~X (the issuer) -- only that seat can state whether the identity/crosswalk substrate (registrations.json and/or the S3 crosswalk pool) is now settled; not this cell's to verify further, since fixing or auditing lib/research/identity/ is outside <paths> and BOUNDS explicitly reserves that layer read-only.",
     "notes": "hazard_standing INERT, not ARMED: every measurement used for this cell's own AC2 evidence (the final --dry-run runs, recorded in the proof-of-spec instance) is from the STABLE, reproduced-multiple-times reading (population 60, ambiguous 2, disagreement 1), never from the one transient 40-population read, so nothing in this cell's own deliverable rests on the blip. Filed because a future reader diffing this project's induction_run_2026-09-24_dry-run.json artifacts across commits could otherwise mistake the transient reading (had it been captured) for a regression in this cell's own logic rather than a live substrate event outside its write surface."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S3",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-24T08:14:56Z",
+    "one_line": "CRPS-d-3's READ-ONLY reference `portal/src/pages/SecurityAnalysis/types.ts` is unreadable in this worktree: `.gitmodules` is a tracked, genuinely EMPTY blob at HEAD (no submodule URL for `portal` at all) and `portal/` itself is an empty directory with no cached `.git/modules/portal` objects in the shared git-common-dir -- so DOSSIER_INTERFACE.md's side-by-side was built from the task order's OWN inlined quotation of that file's relevant lines (the `drafted_sections`/`ThesisBundle` slot list the order already reproduces verbatim), not from a fresh read of the file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git ls-tree HEAD -- portal` -> `160000 commit c1ac41ecc17994dea48448b15c90535636711c24 portal` (a real gitlink pin exists), but `git rev-parse HEAD:.gitmodules` -> `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` (git's well-known EMPTY-BLOB hash) and `git cat-file -s` on it returns `0` -- so no submodule URL is tracked for `portal` anywhere in this repo's history at HEAD, not just in this worktree's checkout.",
+        "`ls -la portal` in this worktree: only `.` and `..`, zero entries -- no `.git` file/pointer, no working-tree content at all.",
+        "`git rev-parse --path-format=absolute --git-common-dir` -> the shared `.git` directory this worktree's linked worktree shares with every other slot; `ls .../\\.git/modules` -> 'No such file or directory' -- no OTHER worker/session has ever initialised this submodule's objects into the shared object store either.",
+        "The order's own RULED text for DOSSIER_INTERFACE.md already quotes the load-bearing content verbatim: '`ThesisBundle`'s slot (`portal/src/pages/SecurityAnalysis/types.ts:955` -- `drafted_sections` ids `company_description`, `investment_thesis`, `risks`, `ceo_bio`, `recommendation` with `generated: true|false` per sentence; `management`; `model_cases`; `model_status`/`fiscal_year_figures`; `posture`)' -- this is what DOSSIER_INTERFACE.md's side-by-side is built against."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Section 3 <paths> lists `portal/src/pages/SecurityAnalysis/types.ts` as READ-ONLY reference material this cell reads to build DOSSIER_INTERFACE.md's side-by-side against `ThesisBundle`.",
+    "world_is": "The file is not reachable from this worktree by any git mechanism available to a worker (no `.gitmodules` URL at HEAD, empty working tree, no cached submodule objects in the shared git-common-dir) -- a repo-wide gap, not something specific to this worktree's checkout. DOSSIER_INTERFACE.md's field-by-field comparison against `ThesisBundle` is therefore built from the task order's OWN inlined quotation of the file's relevant slot names (section 1, the DOSSIER_INTERFACE.md bullet), which the issuer had evidently already read at line 955 when writing this order -- not from an independent read by this worker.",
+    "notes": "Not treated as BLOCKING: the order's own text already carries the needed slot names, so refusing the whole cell over one unreadable reference file would be a worse outcome than proceeding on the issuer's own quotation, clearly disclosed. Filed so AC4's judgment reviewer (3.0.0_SA_CVO~X) knows the side-by-side's `ThesisBundle` column is sourced from the order's text, not from an independent live read of portal, and can re-verify against the file directly once the submodule is reachable. Fixing `.gitmodules` (repo-wide, not this project's surface) is outside this cell's bound and is not attempted here."
   }
 ]
 ```
