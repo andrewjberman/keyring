@@ -19,7 +19,9 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (000000000000000000000000000000000) CORRECTION: card 6's "the build already refuses without them" was
+CTO review queue, in order: (0000000000000000000000000000000000) Y rules Q3 from code: zero-admissible-row account REFUSES
+(CUSTODY_ACCOUNT_NOT_IN_SOURCE / CUSTODY_UNSUPPORTED_ROWS), contract unchanged -- accepted; the interpreter card is CLOSED on Q1-Q4; P
+writes card v2; mixed-rows case named open, measured on Anna first (batch 54). (000000000000000000000000000000000) CORRECTION: card 6's "the build already refuses without them" was
 FALSE (CTO miss, owned; record file corrected in place); M adds a named REFUSAL on an unset capture env var; the receipting = the holdings
 migration project, CRO asked for its L1 brief; Y back at 13:00Z, card 1 closed by the world, Y briefed (batch 53).
 (00000000000000000000000000000000) portal candidate 7 LANDED fast-forward f1d02f30a2 (ls-remote read by MSTR

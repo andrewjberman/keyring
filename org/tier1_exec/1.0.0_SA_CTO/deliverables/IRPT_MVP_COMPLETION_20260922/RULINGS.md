@@ -3139,3 +3139,25 @@ MSTR peeked at 2.0.0_SA_COO~Y before keying (unstick.ps1 -Peek, 13:00:07Z): the 
 model, reading the recs-approved record and the interpreter card. Nothing keyed (a retry into a working composer would have been the harm).
 Card 1's outcome holds in the world. The CTO sent Y its return brief (100609): Q3 to rule with a reason and the contract line; the interpreter
 design as Y's cell; Q1 / Q2 / Q4 settled and not re-opened; no composition or deploy until the ledgered FIRM-bucket grant plan.
+
+
+## 2026-09-24 13:0x UTC - Claude CTO batch 54: Y rules Q3 from the producer's code (a zero-admissible-row selected account REFUSES with a named reason; the contract is not widened) -- accepted; the custody interpreter card is CLOSED on all four questions; the mixed-rows case stays named open, measured on Anna's account first
+
+Instruments: Y's 100614 (holdings_snapshot.py:405-409, :438-439 @d96513bc40; intake/custody_portfolio.py:76, :118, :201, :204 on the Y branch
+93ec16f4fe); the CTO's provisional read in batch 48. Messages 100619-100622 (the CTO's acceptance to Y, P, M, the CRO).
+
+### IRPT-CUSTODY-Q3-RULED-BY-Y-ACCEPTED-20260924 (Y 100614)
+RULING (Y's, accepted as written): a selected account with zero admissible custody rows at the receipted revision refuses the accepted-custody
+submission with a named reason before _validated runs, and the selection is re-cut without it; empty_account_evidence stays reserved and null
+in v1 (custody_portfolio.py:201 requires counts[account] > 0, COMPLETE, evidence None). Grounds, from code: the producer already refuses a COT
+build whose account census differs from the independent totals ("missing is not empty", :438-439), so a served publication cannot carry an
+account with a total and no rows -- a zero-row selected account is either absent from the rows object (a selection / publication mismatch) or
+carries only unsupported rows (Market Value <= 0; the producer counts them at :409, the contract admits none at :76 / :204); cash is a custody
+ROW (:405-407; admitted under namespace CASH iff classification CASH, :118), so a cash-only account is not the case; and an account with no
+positive-value row contributes nothing the vendor upload carries. Refusal vocabulary accepted: CUSTODY_ACCOUNT_NOT_IN_SOURCE and
+CUSTODY_UNSUPPORTED_ROWS (the count named, never ids or values), raised as CustodyOwnershipRefused and re-raised unwrapped by the reader; P
+rules the public spelling in build_entry's vocabulary. The ruling matches batch 48's provisional read and supersedes it as the grounded one.
+CARD STATUS: CLOSED on Q1 (M), Q2 (CTO), Q3 (Y), Q4 (M); P writes card v2 in place (M's rows, Y's section, the per-firm table, the two codes).
+NAMED OPEN: an account with positive rows AND Market Value <= 0 rows refuses under v1 as written; frequency measured on Anna's account first
+(keys and counts) before any rule is proposed. Y's next acts: the interpreter design document against _validated, the offline oracle from one
+recorded capture, code on the Y branch; no composition, deploy or grant until P's ledgered FIRM-bucket plan.
