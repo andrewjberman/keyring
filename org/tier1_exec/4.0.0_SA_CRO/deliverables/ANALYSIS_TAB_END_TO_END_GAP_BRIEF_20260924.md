@@ -300,6 +300,57 @@ export chain beyond configuration.
 - `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/{STATUS.md,RUNBOOK_1203_LIVE_JOURNEY_20260923.md,RESIDENT_ASSEMBLY_HANDOFF_20260923.md}`; `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/{CONTRACT.md,COO_Y.md,RULINGS.md (batches 25-27)}`
 - `.runtime/codex-seats/4.0.0_SA_CRO/analysis_trace_20260924/evidence.json`
 
+## Addendum 2026-09-24 ~09:5xZ -- hop 2 is deeper than its Close: line said; hops 5 and 6 are closed
+
+Written after the trace was ruled (CTO batch 28) and after P's port census of the prospect submission factory
+(P 100494), corroborated by this seat's own census in P's worktree at 8c05e5a321 (tests excluded). The original
+hop text above stands as the 05:4xZ measurement; this addendum supersedes hop 2's `Close:` line and closes hops 5-6.
+
+**Hop 2 (upload) -- MISSING, and the missing thing is a COMPOSITION, not a route.** The Close: line above assumed
+`intake/upload_entry.build_upload_entry(UploadService)` could be composed from what exists and wired to a route.
+Measured: `UploadService(` is constructed 0 times outside tests and `build_upload_entry` has 0 production callers;
+of the twelve ports the prospect factory (`ycharts/generate/prospect_submission.py:18-36`) takes, eight have
+production adapters (acceptance, the retained repositories, the three canonical profile readers, send + queue URL,
+the packaged schema directory, the configuration snapshot, the two revisions derived at composition per CTO 100491)
+and FOUR have none in any tree: (1) `uploads` -- `UploadService(index, artifacts, authorize_current, parse_mapping,
+resolve_security, resolve_prices, resolve_template)` needs an upload INDEX store (no such class: `reports/` holds
+`DynamoReportIndex` and `DynamoRetentionIndex` only), a `resolve_prices` producer (consumed at `intake/uploads.py:204`,
+defined nowhere), and `resolve_security`, whose only implementation resolves an unrecognised symbol THROUGH THE
+RESIDENT'S TEMPLATE RESOLVER (`ycharts/session/resident_session.py:115`) -- a YCharts call per unresolved symbol -- with
+`intake/resolution_kimi.py` an external-LLM egress that has never been authorized; (2) `get_catalogue` -- no
+comparison-catalogue loader exists in a production module (the three `catalog` definitions are the export asset
+resolver, the export approval and the firm catalogue); (3) `ordinary_authorizer` -- named "the existing server policy
+adapter" in Y's dual-owner handoff; the six non-test mentions are the factory's own parameter and attribute, no
+adapter exposes one; (4) the upload `index` above. Two of the four are VENDOR-EGRESS DESIGNS (security resolution
+through the host; a price source), which is Andrew's word by the standing rule, not a patch.
+
+Close (superseded line): the upload composition is PRD-grade design on Y's surface -- the upload index store, the
+price source, the security-resolution egress through the resident (bounded like the template GET, or refused by
+name), the catalogue loader, and the authorizer -- each named with its producer and its egress class before
+`build_upload_entry` is composed; until then the deployed submit answers the NAMED refusal `UPLOAD_SERVICE_REQUIRED`
+(P's (i) cut) rather than the 09-19 build's `DEPENDENCY_UNAVAILABLE` / `UNEXPECTED`, and the live thread's hop 2
+cannot be exercised. The client-holdings path (hop 4's custody branch) does not cross this gap and is the nearer
+live thread if a prospect upload is not the first journey.
+
+**Hop 5 (queue -> consumer) -- CLOSED at 09:39:24Z.** `irpt-analysis-resident.service` is installed and running on
+`i-0167fd745ad906a66` (P 100482, CTO 100486): factory `resident_installed:build_resident_runtime`, package
+ab2e088b5b (Y's resident half 93ec16f4fe + the tokenless transport 8576bec142 + the X10 ACTIVE row), enrolled pin
+1276035, five `IRPT_RESIDENT_POLL handled=0` polls at 20 s on the empty queue, no vendor call. The CTO ruled the
+resident the ONE consumer: no event source mapping is added to the Lambda, so "no mapping" in the hop text is the
+intended state, not a gap.
+
+**Hop 6 (vendor session) -- CLOSED at 08:56:48Z.** The sixth credential submission captured and persisted the
+bundle (`ycharts/session/current` AWSCURRENT 02e53a44, fence 11); this seat graded it PASS against the S119
+contract with the resident's own readers (100464) and second-read the tokenless transport line (100478). The pair
+200 (without the WAF token) / 405 (with it) named the presented token as the cause of runs 5-6.
+
+**Hop 4 (submit) -- refined.** The generate entry at HEAD builds with `service=None` and answers
+`DURABLE_SUBMISSION_SERVICE_REQUIRED` until an installed factory composes Y's submission service (P's
+`reports/generate_installed.py`, ruled at CTO 100491: the prospect factory first, one handler routing by body
+shape, the custody branch refusing `CUSTODY_FACTORY_REQUIRED` by name, the two revisions derived, SendMessage
+granted, no event source mapping). With the four ports above absent, that cut lands as named refusals and does not
+move hop 2.
+
 ## Andrew-direct request -- verbatim record
 
 Channel: the 4.0.0_SA_CRO terminal, 2026-09-24 ~05:3xZ.
