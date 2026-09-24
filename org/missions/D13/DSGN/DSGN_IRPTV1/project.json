@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "DECOMP",
+  "dep_stage": "EXECUTING",
   "created": "2026-09-24",
   "registered_under_tree": "2026-09-24",
   "placement": "LAPTOP",
@@ -48,7 +48,7 @@
     "authority": "CLAUDE.md Rule 27 L4-R: the CRO signs the BRIEF half (4.0.0_SA_CRO~F stated it will sign when routed, msg 100235); 3.0.0_SA_CVO signs the RATIFIED-TEXT half"
   },
   "fabric_ruling": "laptop -- D13 Design placed LAPTOP by Andrew-direct 2026-09-11 ('it will be laptop fabric'); placement attaches to the directive (LD-0498, LD-0502).",
-  "blocking": "Round 2 L5: decomposition v2 landed 2026-09-24 ~10:4xZ by 2.0.0_SA_COO~D over the CTO's round-1 ENRICHMENT LIST (ROUND_ANALYSIS.round1.md @c06e435786; slug REMEDIATION_v1.md @13baec35aa): 8 cells IV-e-1..8, M=3 chains + 1 join cell (the FWD-11 sweep). L6 issuance is cut on the CTO's read of the seven ruled touches on P/M-written files (decomp section 2, CALL 1(b) precedent); portal base = DEV HEAD at the cut (895752676a at this write); the drain into dsgn-irptv1-r2; DEV landing MSTR's on Andrew's word after the CTO's review. FWD-1's trace remains Andrew's signed-in walk on DEV.",
+  "blocking": "Round 2 L6 issuance cut 2026-09-24 ~10:5xZ by 2.0.0_SA_COO~D on CTO 100522: 8 task orders IV-e-1..8 over decomp v2 @2a26e433b3; chains A (slot ~4: IV-e-3, IV-e-4, IV-e-8), B (slot ~5: IV-e-1, IV-e-2, IV-e-6), C (slot ~6: IV-e-5); the JOIN cell IV-e-7 (slot ~7) spawned on the round-2 candidate dsgn-irptv1-r2 after A, B, C merge; portal_ref 895752676a (837983cb is-ancestor rc=0). Drain into dsgn-irptv1-r2; DEV landing MSTR's on Andrew's word after the CTO's review. FWD-1's trace remains Andrew's walk.",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md",
