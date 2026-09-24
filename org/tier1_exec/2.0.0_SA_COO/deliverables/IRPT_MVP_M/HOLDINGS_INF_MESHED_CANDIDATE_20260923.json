@@ -1,12 +1,12 @@
 {
- "status": "CANDIDATE_UNPUBLISHED_CURRENCY_UNATTESTED",
+ "status": "CANDIDATE_UNPUBLISHED_AWAITING_ATTESTATION_RECORD",
  "firm_id": "inflection",
  "business_date": "2026-09-22",
  "source_cutoff": "2026-09-23",
- "candidate_revision": "21279569b08d40ce53e163143b2f829f78c7466f6b25c6a024c57e601b4ef441",
- "platinum_bytes": 31138380,
- "gold_sha256": "1c450eaf4fe112abbd8854c8952d26567fdac0f9035be29945622b3d2bc4810f",
- "node_count": 33293,
+ "candidate_revision": "dc5d5e237d3ea304c470d74393b1e7da4fefd9e0e06fde6ddd3c8d3131eb2d31",
+ "platinum_bytes": 31180092,
+ "gold_sha256": "2623f60f84864ba06cec4f8d495648d2f65d19bca66bfe2e09d42ec628529f59",
+ "node_count": 33328,
  "unique_account_count": 876,
  "reconcile": [
   true,
@@ -15,50 +15,50 @@
  ],
  "schema_valid": true,
  "clocks": {
-  "denominator": "33293 of 33293",
+  "denominator": "33328 of 33328",
   "custody_as_of": "2026-09-22",
   "overlay_as_of": "2026-09-23",
   "clocks_differ": true,
   "note": "DISTINCT means two FIELDS, not two values: a firm whose custody and overlay feeds land on the same date is correctly reported as equal. What is refused is a snapshot that cannot say which is which."
  },
  "coverage": {
-  "nodes_resolved": 589,
+  "nodes_resolved": 624,
   "nodes_attempted": 876,
   "remainder": {
-   "amount": 55701137.51,
+   "amount": 49356167.05,
    "units": "USD",
-   "reason": "287 of 876 custody account(s) carried in Client with membership unattributed"
+   "reason": "252 of 876 custody account(s) carried in Client with membership unattributed"
   }
  },
  "holdouts": {
-  "account_count": 287,
+  "account_count": 252,
   "value": {
-   "value": 55701137.51,
+   "value": 49356167.05,
    "currency": "USD"
   },
   "basis": "OBSERVED",
   "observable": "MEASURED",
-  "denominator": "287 of 876 custody account(s) have no overlay assignment",
+  "denominator": "252 of 876 custody account(s) have no overlay assignment",
   "source": "accounts_v2 snapshot_date=2026-09-23 minus eclipse 2026-09-23 portfolios with a model and complete membership"
  },
  "holdouts_held": {
-  "expected_unassigned": 287,
-  "present_as_account_nodes": "287 of 287",
-  "block_count": 287,
+  "expected_unassigned": 252,
+  "present_as_account_nodes": "252 of 252",
+  "block_count": 252,
   "block_matches_expectation": true,
   "custody_total": 209358359.48
  },
  "difference_control": {
   "redistributing_build_holds_holdouts": false,
   "redistributing_build_census": {
-   "expected_unassigned": 287,
-   "present_as_account_nodes": "0 of 287",
+   "expected_unassigned": 252,
+   "present_as_account_nodes": "0 of 252",
    "block_count": 0,
    "block_matches_expectation": false,
    "custody_total": 209358359.48
   },
   "redistributing_build_total_drift_usd": 0.0,
-  "reading": "the wrong build moves 55701137.51 USD out of 287 account(s) and still reconciles to within 0.00 USD -- the total is not the control"
+  "reading": "the wrong build moves 49356167.05 USD out of 252 account(s) and still reconciles to within 0.00 USD -- the total is not the control"
  },
  "manifest": {
   "firm_id": "inflection",
@@ -68,18 +68,19 @@
   "custody_date": "2026-09-22",
   "overlay_date": "2026-09-23",
   "date": "2026-09-22",
-  "join_matched": 589,
+  "join_matched": 624,
   "join_attempted": 876,
   "total_market_value": 209358359.48,
   "census": {
-   "models_whole": 518,
+   "models_whole": 553,
+   "models_whole_from_capture": 35,
    "models_split": 71,
-   "client": 287,
-   "client_no_portfolio": 90,
-   "client_no_model": 137,
+   "client": 252,
+   "client_no_portfolio": 16,
+   "client_no_model": 176,
    "client_incomplete_membership": 0,
    "client_values_do_not_tie": 60,
-   "model_leaves": 589,
+   "model_leaves": 624,
    "positions_shown": 30881,
    "drill_withheld": 71
   },
@@ -460,12 +461,19 @@
    "outside_requested_account_count": 82,
    "outside_requested_position_count": 1709
   },
-  "eclipse_models_named": 26,
+  "eclipse_models_named": 28,
   "overlay_rows": {
    "simple": 844,
    "full": 858,
    "models": 18,
    "model_composition": 9
+  },
+  "eclipse_membership_capture": {
+   "path": "C:/Users/AndrewBerman/Desktop/ajb_workspace/.runtime/codex-seats/4.0.0_SA_CRO/eclipse_membership/membership_map.json",
+   "sha256": "789dd95d3d36b449172d5a5d5c0f6e900f4f04269cfbab0525771b65a0fb641e",
+   "byte_length": 212882,
+   "rows": 860,
+   "record": "4.0.0_SA_CRO IRPT_INF_ECLIPSE_MEMBERSHIP_CAPTURE_20260923 @138fad2935"
   },
   "currency_status": "UNATTESTED",
   "currency_refusal": "unique firm report currency authority required",
@@ -476,44 +484,51 @@
   },
   "publication_refused": "REFUSED: INF report currency unattested (unique firm report currency authority required); candidate only"
  },
+ "measured_write_plan": {
+  "multipart": true,
+  "parts": 31,
+  "immutable_creates": 34,
+  "index_cas": 1,
+  "total_writes": 35
+ },
  "cto_findings_closed": [
   "49F-TAX-CONFLICT-01",
   "TAXONOMY-PATH-01",
   "INF-CLOCK-01"
  ],
  "model_snapshot": {
-  "model_count": 17,
+  "model_count": 18,
   "models": [
    {
     "model_id": "6",
     "model_namespace": "ECLIPSE_MODEL_ID",
     "model_name": "Opal Intermediate Growth",
-    "assigned_value": 57007604.03,
+    "assigned_value": 60342311.75,
     "asset_basis": [
      "OBSERVED"
     ],
-    "account_count": 183,
-    "asset_count": 623,
+    "account_count": 195,
+    "asset_count": 644,
     "top_assets": [
      [
       "IEFA",
-      6130134.08
+      6631972.57
      ],
      [
       "DIVZ",
-      4913772.37
+      5316991.5
      ],
      [
       "SPYM",
-      4143193.07
+      4489072.43
      ],
      [
       "IDVZ",
-      3709924.1
+      4014903.87
      ],
      [
       "BIV",
-      3293952.08
+      3565991.82
      ]
     ]
    },
@@ -587,32 +602,32 @@
     "model_id": "3",
     "model_namespace": "ECLIPSE_MODEL_ID",
     "model_name": "Opal Long Term",
-    "assigned_value": 13781853.79,
+    "assigned_value": 15104250.17,
     "asset_basis": [
      "OBSERVED"
     ],
-    "account_count": 88,
-    "asset_count": 185,
+    "account_count": 94,
+    "asset_count": 203,
     "top_assets": [
      [
       "IEFA",
-      2271996.45
+      2487805.67
      ],
      [
       "DIVZ",
-      1936870.96
+      2120177.74
      ],
      [
       "IDVZ",
-      1675309.06
+      1833959.32
      ],
      [
       "PFDE",
-      1530044.83
+      1674081.3
      ],
      [
       "SPYM",
-      1294155.02
+      1414356.3
      ]
     ]
    },
@@ -646,6 +661,39 @@
      [
       "DFCF",
       297232.03
+     ]
+    ]
+   },
+   {
+    "model_id": "7",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "Opal Short Term",
+    "assigned_value": 4807323.73,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 28,
+    "asset_count": 122,
+    "top_assets": [
+     [
+      "BIV",
+      849331.05
+     ],
+     [
+      "VGSH",
+      520548.72
+     ],
+     [
+      "DFCF",
+      419263.38
+     ],
+     [
+      "UTWO",
+      403469.75
+     ],
+     [
+      "DIVZ",
+      393579.7
      ]
     ]
    },
@@ -718,7 +766,7 @@
    {
     "model_id": "30",
     "model_namespace": "ECLIPSE_MODEL_ID",
-    "model_name": "",
+    "model_name": "90/10 Opal Long Term/Ultra Short Term",
     "assigned_value": 4165325.68,
     "asset_basis": [
      "OBSERVED"
@@ -745,39 +793,6 @@
      [
       "SPYM",
       353745.31
-     ]
-    ]
-   },
-   {
-    "model_id": "7",
-    "model_namespace": "ECLIPSE_MODEL_ID",
-    "model_name": "Opal Short Term",
-    "assigned_value": 3952781.02,
-    "asset_basis": [
-     "OBSERVED"
-    ],
-    "account_count": 23,
-    "asset_count": 121,
-    "top_assets": [
-     [
-      "BIV",
-      688331.41
-     ],
-     [
-      "VGSH",
-      422230.56
-     ],
-     [
-      "DFCF",
-      337565.48
-     ],
-     [
-      "UTWO",
-      324228.4
-     ],
-     [
-      "DIVZ",
-      316360.59
      ]
     ]
    },
@@ -815,6 +830,39 @@
     ]
    },
    {
+    "model_id": "8",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "Opal Ultra Short Term",
+    "assigned_value": 1043978.76,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 19,
+    "asset_count": 71,
+    "top_assets": [
+     [
+      "VGSH",
+      124956.16
+     ],
+     [
+      "VCSH",
+      123808.83
+     ],
+     [
+      "VUSB",
+      85173.08
+     ],
+     [
+      "MINT",
+      82718.41
+     ],
+     [
+      "OBIL",
+      82625.89
+     ]
+    ]
+   },
+   {
     "model_id": "18",
     "model_namespace": "ECLIPSE_MODEL_ID",
     "model_name": "IWM Moderate Tax-Deferred",
@@ -848,39 +896,6 @@
     ]
    },
    {
-    "model_id": "8",
-    "model_namespace": "ECLIPSE_MODEL_ID",
-    "model_name": "Opal Ultra Short Term",
-    "assigned_value": 591373.85,
-    "asset_basis": [
-     "OBSERVED"
-    ],
-    "account_count": 10,
-    "asset_count": 70,
-    "top_assets": [
-     [
-      "VGSH",
-      58865.38
-     ],
-     [
-      "VCSH",
-      58537.56
-     ],
-     [
-      "VUSB",
-      40219.09
-     ],
-     [
-      "MINT",
-      39025.63
-     ],
-     [
-      "OBIL",
-      38969.84
-     ]
-    ]
-   },
-   {
     "model_id": "25",
     "model_namespace": "ECLIPSE_MODEL_ID",
     "model_name": "IWM Moderately Aggressive Index",
@@ -910,6 +925,27 @@
      [
       "FSMDX",
       37915.92
+     ]
+    ]
+   },
+   {
+    "model_id": "26",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "PCOFX",
+    "assigned_value": 380718.74,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 1,
+    "asset_count": 2,
+    "top_assets": [
+     [
+      "PCOFX",
+      379481.66
+     ],
+     [
+      "CUSTODIAL_CASH",
+      1237.08
      ]
     ]
    },
@@ -987,8 +1023,8 @@
     "asset_basis": [
      "OBSERVED"
     ],
-    "account_count": 1,
-    "asset_count": 16,
+    "account_count": 2,
+    "asset_count": 42,
     "top_assets": [
      [
       "VOO",
@@ -1020,8 +1056,8 @@
     "asset_basis": [
      "OBSERVED"
     ],
-    "account_count": 1,
-    "asset_count": 54,
+    "account_count": 2,
+    "asset_count": 95,
     "top_assets": [
      [
       "FXNAX",
@@ -1047,5 +1083,5 @@
    }
   ]
  },
- "local_candidate_path": ".runtime/holdings-journey-20260923/dry/opal-data-inflection/irpt/inflection/platinum/holdings/date=2026-09-22/21279569b08d40ce53e163143b2f829f78c7466f6b25c6a024c57e601b4ef441.json"
+ "local_candidate_path": ".runtime/holdings-journey-20260923/dry/opal-data-inflection/irpt/inflection/platinum/holdings/date=2026-09-22/dc5d5e237d3ea304c470d74393b1e7da4fefd9e0e06fde6ddd3c8d3131eb2d31.json"
 }
