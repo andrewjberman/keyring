@@ -60,7 +60,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 **ISSUER NOTES:** s.7 items 4 and 6. Render grade: the issuer's real run on 5174.
 
-<status>pending</status>
+<status>complete</status>
 <round>40</round>
 <slot>~155</slot>
 <fabric>site-z</fabric>
