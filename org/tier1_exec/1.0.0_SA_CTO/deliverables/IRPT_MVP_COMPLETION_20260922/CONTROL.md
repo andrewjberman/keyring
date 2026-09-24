@@ -8,8 +8,8 @@ DIRECT_REVIEW_2020_20260923/CLAUDE_TAKEOVER_LIVE_READBACK_20260923.json.
 | Product / owner | Measured current evidence | Next executable result |
 |---|---|---|
 | Holdings / COO~M | Deployed reader repaired: irpt-holdings CodeSha l/GQrFcE...DDU= at 23:00:52Z, CTO-downloaded zip == approved 97f190ac (33 members, no parents[4]); ledger closed 5c8d6f8e34. COT expanded publication live: index grwnbLkeu (23:00:30Z) -> revision 93f930c265, 18 objects, 841 accounts / 13,793 positions / USD 548,412,662.59 reconciled, both Anna accounts present; prior index retained. Last real login: FAIL NOT_READY (22:17Z) against the OLD reader and the d486-only publication. | M: deployed reader matrix (0698 / d486 / combined; default + 2026-09-22 READ_OK, 2026-09-23 refused) against the live Lambda, then Andrew's signed-in Anna selection + reload on localhost:5174. Then 49F (Schwab 0833 + SmartX + Tax workbook) and INF (Orion + Eclipse where retained) candidates and the snapshot model overlay (Andrew 22:4xZ). P: defined-code NOT_READY reason contract (still open). |
-| Reporting / COO~P | Native Linux replay PASS (2fb5422b04). Storage bucket live and verified. Callable/atomic one-use 068e9ccd85 and retained pointer f04d1e71bd NOT yet CTO source-reviewed. retained.tf naming gate now PASSES under LD-0609 (CTO-accepted). X10 PENDING_ENFORCEMENT. | P: merge CLOUD into the backend branch (never rebase), commit retained.tf; return 068e/f04d for CTO review with the 8 affected tests (reviewer export must include data/firm_registry.json); callable installation + least-privilege roles + native layer + enforcement matrix. Andrew-directed goal: Performance for 49F/INF/COT, /loop 20m. |
-| Analysis / COO~Y | 2874e37647 cross-firm source accepted; P holds the 31-path integration grant (b02c9ad5af + f89fac6686). Current-authority source ADJUDICATED (RULINGS IRPT-ANALYSIS-CURRENT-AUTHORITY-20260923): P implements profile fields + IAM, Y consumes at job start/release. Host i-0167fd745ad906a66 is STOPPED by ec2-auto-shutdown-enforcer at 21:21Z (no AutoShutdown=disabled tag). | P: profile reader fields + exact IAM plan; AutoShutdown=disabled tag on the host via Terraform (plan to CTO, Andrew may veto); resident factory install + sole-consumer cutover receipt. Y: consume the authority decision; run the real-login 12.03 Overview journey once P's receipt lands. Andrew-directed goal: Analysis E2E, /loop 20m. |
+| Reporting / COO~P | Source review f04d1e71bd + 068e9ccd85 PASS bounded (24 affected tests; finding P-REOPEN-01 ruled, not blocking). Install candidate REVIEWED: package h.hlJhL3 (61 members, JwJEEQGT...), native layer tf.fKYd (121b8407...), saved plan f0a18919 decoded (least-privilege two COT families), cold start PASS through the Lambda runtime emulator at the real layout. INSTALL APPLIED 00:07:10Z and CTO-VERIFIED LIVE at 00:1xZ (get-function-configuration: CodeSha JwJEEQGT... == approved artifact, handler runtime.lambda_handler, 120 s / 1536 MB, layers irpt-common:5 + irpt-performance-native-layer:1, six env keys, State Active; both new inline policies present on irpt-performance-adapter-role; ledger closed; recorder ac8e2cf502). X10 PENDING_ENFORCEMENT with the ACTIVE evidence ruled; the installed function refuses every write/reopen until ACTIVE. Parked: the recorder's source-map-reconcile-audit.jsonl append sits uncommitted in P's worktree (lane CLOUD_OPS_OR_ETL; owner 0.7.0_AE_CloudOps~O; un-parks at P's drain). | P: apply 1de76039 (authority grants + host tag); integrate the Y paths and build the resident cutover; then the enforcement matrix + first live run needs Andrew's per-use word; P-REOPEN-01 key shape before the reopen/export journey; NOT_READY vocabulary addendum 2cdbe2bd60 awaits CTO text review. Cards at Andrew: 49F SmartX capture per-use word (CRO plan), INF Orion Scope per-use word. |
+| Analysis / COO~Y | 2874e37647 accepted; 31-path grant + 9-row extension (c4564aad17 pins, two diverged files three-way merged). Current authority: P 185dfb3e7f (bound 1) ACCEPTED, Y 635af92b76 consumer ACCEPTED bounded; IAM/host-tag plan 1de76039 GO (tag inert until start). Host STOPPED by TWO writers: enforcer (no tag) and Terraform declared state; writer B flips in the same plan as the resident cutover. | P: apply 1de76039; integrate the 9 paths (7 exact, 2 three-way merged with Y's confirmation) + current_authority wiring; build the resident factory/package/cutover receipt; then the state-flip plan + one start. Y: confirm the two merges; run the real-login 12.03 Overview journey once P's receipt lands. |
 
 ## Ownership and immediate dependencies
 
@@ -18,11 +18,16 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (1) M deployed reader matrix receipt, then Andrew's screen; (2) P
-068e9ccd85 + f04d1e71bd source; (3) P authority-port + IAM plan and host-tag plan; (4) M
-c354c33a92 Tax runner/Silver candidate and TAX_ONE_SHOT_RUNTIME_PLAN (after the Holdings thread
-reaches the screen; no Tax runtime GO yet); (5) X10 enforcement matrix acceptance (CTO owner, M
-registry writer).
+CTO review queue, in order: (1) Andrew's signed-in Anna Holdings screen (M's deployed reader
+matrix ACCEPTED as the hop-3 library proof; reader bytes == deployed); (2) P's Performance apply
+receipt and the authority/host-tag apply receipt; (3) P's NOT_READY vocabulary addendum
+2cdbe2bd60 (ratified text); (4) M's 49F 1d0b700b / INF 882375a7 / COT-overlay candidates are
+ACCEPTED as source candidates with three bounded findings (RULINGS batch 3); publication waits on
+those fixes and Andrew's 49F/INF currency attestations; (5) P's resident factory / package / cutover receipt,
+then the host state-flip plan; (6) X10 enforcement matrix acceptance (CTO owner, M registry
+writer); (7) M c354c33a92 Tax runner/Silver candidate (after the Holdings thread reaches the
+screen; no Tax runtime GO yet). Parked: naming RAISE on "smartx/platform/silver/" (registry
+defect; owner = the infra/logic/registry lane holder, CTO identifies next tick).
 
 M Tax dependency unchanged: d3a8c3e7e3 store accepted; c354c33a92 runner/Silver seam candidate
 awaits CTO review; runtime capability/permissions still require concrete review; no research-envelope
@@ -48,7 +53,14 @@ conversion, full Tax restart or fourth COO.
 - MSTR alone pushes shared branches and handles seat recovery and the Codex runtime retirement.
   All three COO lanes are Claude sessions with Andrew-directed /goal + /loop 20m; P's Codex driver
   PID 3520 retirement is MSTR's act.
-- LD-0609 naming-gate lookup context ACCEPTED on CTO arms; no waiver, no bypass.
+- LD-0609 (HCL lookup context) and LD-0610 (packaged-name citation) naming-gate changes ACCEPTED
+  on CTO arms; no waiver, no bypass.
+- Reopen invariant (P-REOPEN-01): a same-firm/account-set/window reopen by any currently
+  authorized viewer finds the accepted report regardless of directory revision, selection
+  reference or principal; authorization re-derived at reopen, never from the pointer.
+- X10 ACTIVE evidence: deployed bytes == reviewed, roles applied, destination verified, P's
+  36-destination enforcement matrix, focused retention arms, and the first live run's
+  reserve/promote/reopen receipts (failure reverts to PENDING and quarantines).
 - Recorder 0b8784 accepted; preserve prior source-map/audit forensic residue.
 
 ## Review and completion rules

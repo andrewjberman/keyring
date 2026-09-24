@@ -1,7 +1,8 @@
 ﻿# IRPT Y - current interfaces
 
-Owner `2.0.0_SA_COO~Y`; source `2874e37647` over `bfe6469b1e`/`4ebe6948d9`.
-CTO bounded source PASS `2dd385ed59` covers exact `2874e37647`. P consumed the
+Owner `2.0.0_SA_COO~Y`; source `635af92b76` (current-authority consumer, CTO
+review pending) over `2874e37647` / `bfe6469b1e` / `4ebe6948d9`.
+CTO bounded source PASS `2dd385ed59` covers exact `2874e37647`. P consumed that
 whole set: `b3fc529601` on `irpt-smoke-p-backend-20260923` integrates 31 Y files
 and every one of the 85 tracked files under
 `infra/aws/lambda/investor-reporting/ycharts/` at 2874 hash-matches P HEAD
@@ -32,7 +33,10 @@ enrolled_user_id=...)` uses canonical session and existing durable operation row
 Install capture with actual canonical wrapper/library SHA256 pins. Only explicit
 ResourceNotFound is missing; failed reads are sanitized unavailable and invalid
 configuration cannot trigger bootstrap. CTO3d9f451 closes this exact boundary.
-No factory signature or queue schema changes in the current delta.
+One factory-shape change in the current delta, ruled: `ResidentAssembly` takes
+`profile_for(principal_id)` (the installer's `CanonicalProfileReaders.get_user`)
+beside `principal_for`; see RESIDENT_ASSEMBLY_HANDOFF for the decision the worker
+replays on it. No queue schema change.
 
 ## Upload and submission
 
