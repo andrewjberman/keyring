@@ -253,6 +253,53 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-74 -- ⛔⛔ **`POD_DE_ANY` ON `portal/**` IS DESIRED-NOT-APPLIED: THE PORTAL REPO RUNS NO HOOKS, SO NOTHING WOULD HAVE REFUSED THIS SEAT. THE RESTRAINT WAS RIGHT AND THE STATED REASON WAS WRONG -- AND IT TOOK THREE READS, TWO OF THEM BROKEN, TO ESTABLISH IT**
+
+**Prompted by `2.0.0_SA_COO~Z` msg 25579: *"the worker that commits portal files this round is the writer in
+practice (every round-37/38 portal file landed that way)."*** Workers are `0.9.0_WK_*` and are **not** in
+`POD_DE_ANY`'s permitted list either -- so if the lane bound portal commits, every round-37/38 portal file
+would have been refused. They were not. **That sentence is a falsifier and it was handed over casually.**
+
+**MEASURED on the portal repo:** `portal/.git` is a **DIRECTORY** (a nested independent repo, not a true
+submodule); it carries **no `.owned-paths.yaml`**, **no `core.hooksPath`**, and **no `pre-commit` hook at
+all** (`wc -c` on it returns "no such file"). Its `hooks/` holds fourteen entries and **every one is a
+`.sample`.**
+
+⛔ **SO THE OWNED-PATHS LANE CHECK DOES NOT RUN ON A COMMIT MADE INSIDE `portal/`.** `POD_DE_ANY` is
+enforced by the OUTER repo's hook against OUTER-repo paths; portal files are committed inside the nested
+repo, where nothing grades them. ⚠ **AND NOT ONLY THAT CHECK -- contamination checks and the never-rules
+gate are equally absent on that plane.**
+
+⭐ **THE CORRECTION THIS FORCES ON THIS SEAT, AND IT IS NARROW BUT REAL: "UNENFORCED" IS NOT
+"PERMITTED."** R-60 and the C13 ratification both stated that `portal/DESIGN.md` resolves to `POD_DE_ANY`
+and this seat is not permitted -- **true as a GRANT and false as a MECHANISM.** Nothing would have refused
+a DESIGN.md edit by this seat. The abstention was still correct: a lane grant is a governance statement,
+and the estate's own pattern is explicit that such a clause "binds agents by reading and nothing by
+enforcement." **But a future seat reading R-60 could believe a gate will catch it, and be wrong** -- which
+is the law-stronger-than-tool shape CLAUDE.md documents about itself in Rules 27 and 14a. Corrected here
+rather than left to be discovered by someone trusting a refusal that never comes.
+
+⛔⛔ **AND THE MEASUREMENT ITSELF IS THE SHARPER LESSON: THREE READS, THE FIRST RIGHT BY LUCK, THE SECOND
+WRONG, AND I "CORRECTED" THE RIGHT ANSWER INTO THE WRONG ONE.**
+
+| read | instrument | answer | what was wrong with it |
+|---|---|---|---|
+| 1 | `ls portal/.git/hooks/ \| head -10` | "no active hooks" | **RIGHT answer, unsound instrument** -- `.sample` sorts early, so `head` cut the tail this seat needed to see |
+| 2 | `ls ... \| grep -v "\.sample$" \| wc -l` | "**14** active hooks -- I was wrong" | **WRONG.** `ls` CLASSIFIES: names end `.sample*`, so a `$`-anchored suffix matched NOTHING and excluded NOTHING |
+| 3 | print the rows; `wc -c .../pre-commit` | zero active; **"no pre-commit hook"** | the answer |
+
+**Both failures are banked lessons of this seat's own** -- *never `head` a census* and *`ls` classifies here,
+so a `$`-anchored suffix pattern never matches*. ⚠ **The second is the dangerous one: it produced a
+CONFIDENT SELF-CORRECTION, and a seat correcting itself is trusted more, not less.** A wrong number gets
+re-run; a wrong *retraction* gets believed.
+
+⭐ **THE DISCRIMINATOR NEEDED NO LISTING AT ALL: `wc -c` ON THE NAMED FILE.** When a census disagrees with
+itself, stop filtering the population and **test the named object directly** -- existence of one path
+settled what two filtered counts could not. COST: one stat. NON-APPLICATION: a question that genuinely is
+about a population rather than a named member.
+
+---
+
 ## R-73 -- ⭐ **"AND THEIR ADDENDUMS" IS ALREADY COVERED BY THE 49 -- MEASURED, NOT ASSUMED. AND THE SAME READ SHOWS THIS SEAT HAS BEEN REPORTING TWO DIFFERENT POPULATIONS AS IF THEY WERE ONE**
 
 **The goal's closing sentence is *"Finish AMGT_RESAPP, AMGT_CORPUS and close them out and their
