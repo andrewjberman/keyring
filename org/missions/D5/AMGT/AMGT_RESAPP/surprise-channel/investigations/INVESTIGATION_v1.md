@@ -14186,6 +14186,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "FWD-29's DONE WHEN carries a limb requiring SIX PNGs READ BY A PERSON; ROUND_ANALYSIS.round38 @d835c5edf1 records it at 2 of 6 and grades FWD-29 NOT_REALIZED. Separately, Z-S265 asserts the Peers P/E columns are 100x too small on the strength of implied-EPS arithmetic from a single render.",
     "world_is": "The limb now stands at 6 of 6 on this seat's own read. Z-S265's claim is no longer carried by arithmetic alone: the same product renders the same quantity at the correct magnitude on its Model tab, so the defect is localised to the peers path rather than to the figure's source data. And a company that the peers surface resolves and prices reads identity-UNRESOLVED on the posture surface of the same page, which makes the posture's comparable empty for a reason that is about key form rather than about missing data.",
     "notes": "Filed after the L10 was cut, so it changes no round-38 verdict and is offered as round-39 input rather than as a correction. ⭐ THE READ IS WHY BOTH FINDINGS EXIST AND NEITHER WAS REACHABLE FROM A JSON: every mechanical column on all six states PASSES, and the round carried no judgment criteria, so nothing in the instrument set grades whether a rendered number is PLAUSIBLE or whether two surfaces of one page agree about one company. ⛔ AND THE 2-OF-6 IS THE GENERALISABLE PART: a DONE WHEN limb that requires a HUMAN READ is satisfied only by the read, and it is the one limb a drain cannot close on the seat's behalf -- it sat unclosed across two rounds while every mechanical limb around it was green."
+  },
+  {
+    "id": "AMGT_RESAPP-W150-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~150",
+    "surfaced_at": "2026-09-24T18:50:00Z",
+    "one_line": "AMGT-rn-5 AC1's issued <expect> pattern ('served carries N of N landed top-level keys; missing: none; _served provenance ... -> OK; exit=0') does not match the shape the named checker (round39/checks/rn-5.AC1.py) actually prints ('landed top-level keys: N; served carries N of them; missing: ...') -- a real invoke against the deployed function, otherwise satisfying AC1's substance (7 of 7 keys carried, provenance complete, rc=0), still fails proof-of-spec-check.py's literal expect-match gate.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Task order org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rn-5.fwd-30-on-the-served-plane.md:49 <expect>served carries N of N landed top-level keys; missing: none; _served provenance ... -> OK; exit=0</expect>",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round39/checks/rn-5.AC1.py's own print format string: 'landed top-level keys: %d; served carries %d of them; missing: %s' followed by a separate '_served provenance: ... -> OK' line -- the words 'landed top-level keys' precede 'served carries', never follow it as the <expect> pattern requires.",
+        "This worker's own served_capture.py run this session produced output 'landed top-level keys: 7; served carries 7 of them; missing: none' + '_served provenance: function=... -> OK' + 'exit=0' -- AC1's own PY script exits 0 and its printed sentence is semantically equivalent to the <expect> clause, but python -c \"import re; re.search(r'served carries \\\\d+ of \\\\d+ landed top-level keys; missing: none.*?-> OK; exit=0', <that text>, re.DOTALL)\" returns None.",
+        "proof-of-spec-check.py's conditional_checks (:128-130): 'status=PASS but output_evidence does NOT match expect ... the match decides a mechanical criterion, not the worker (spine v3 L7); INVALID' -- confirmed by running this worker's own instance with AC1 status=PASS: VIOLATION raised, rc=1."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z (round 39 issuer) -- the <expect> pattern in the task order is the issuer's own text against the issuer's own checker script; only the issuer can correct the mismatch (edit the <expect> to match the script's real output, or edit the script to match the <expect>'s claimed shape). Neither file is in this worker's <paths>.",
+    "spec_asserts": "The task order's AC1 <expect> clause asserts the checker prints 'served carries N of N landed top-level keys; missing: none' followed later by '-> OK; exit=0'.",
+    "world_is": "The checker prints 'landed top-level keys: N; served carries N of them; missing: ...' on its own first line -- 'landed top-level keys' precedes 'served carries' rather than following it, and the phrase 'of N landed top-level keys' never appears verbatim; a semantically-passing run (7 of 7 keys, provenance complete, script rc=0) therefore fails the literal regex match proof-of-spec-check.py enforces.",
+    "notes": "This worker recorded AC1 as FAIL in its proof-of-spec instance because the mechanism (expect-match, not self-report) is what decides a mechanical criterion per CLAUDE.md Rule 27/spine v3 L7 and this worker's own standing orders ('never repaired'/'never rescued'). The invocation output itself is recorded verbatim; nothing was edited to force a match."
   }
 ]
 ```
