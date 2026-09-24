@@ -86,11 +86,9 @@ run `check_inbox` / `get_agent_status("<driver serial>")` for the driver's OWN s
 messages beside the open-TO denominator. **A SLUG IS A MESSAGE AND AN ANALYSIS IS NOT A TASK ORDER**: the open-TO
 census in 0.1 answers "are there open orders", and a round whose orders are all terminal is exactly the moment the
 L10 duty (the CVO's slug, then this seat's analysis) lands on THIS seat -- so the register reads an honest zero while
-the seat owes two artifacts, and Step 3's "verdicts received" assumes they were read by someone. Measured 2026-09-19
-by `1.0.0_SA_CTO` (tick-96 log @`c5efffa266`): ticks 92-95 each printed `0 open of 165` and concluded nothing was
-owed while two L10 slugs and a sign-off nudge sat unread for 1h33m; two lanes' recuts waited on it; `2.0.0_SA_COO~G`
-and `0.0.0_AB_MSTR` named it in the same words, and the seat's own tick-88 log already carried the generalisation
-("a drained zero is not a quiet scope") with no instrument behind it. ⚠ **A roster read does not substitute:** the
+the seat owes two artifacts, and Step 3's "verdicts received" assumes they were read by someone. **Then read the fabric's promised work:** `python .tools/active-commitments.py`
+(every seat's `.active-commitments` ledger, the last 24 hours; awareness only, nothing is refused on it; Andrew-direct
+2026-09-24 ~18:4xZ). ⚠ **A roster read does not substitute:** the
 roster row's liveness stamp and its summary have DIFFERENT vintages and the row prints only one -- the same seat
 read LIVE 13 s ago beside a 29.5 h-old summary. COST: one call per tick. NON-APPLICATION: none -- an empty inbox
 pays one call and prints `0 unread`.
