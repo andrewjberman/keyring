@@ -135,6 +135,30 @@
     "spec_asserts": "BOUNDS: '<paths> ... portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/' grants this worker the surface to add IV3-AC1's test file, and IV3-AC1 requires it be run (and, to be graded at all, be commit-able) against the task order's own three named fixtures, including fe-s-7/holdings.cottonwood-target-blend.json.",
     "world_is": "A brand-new file in that granted directory referencing that already-twice-precedented fixture filename by name is mechanically REFUSED by the naming gate, whose sole escape hatch (a lookup()/key()/address()/name() call) has no JS/TS implementation in this codebase to call -- so the literal instruction ('name the fixture') and the mechanical gate ('never hand-type that name in a new file') cannot both be satisfied by typing it. Worked around, not gamed: the committed test discovers the fe-s-7/holdings.*.json set from disk (readdirSync) instead of naming any of them, so the token is never typed and the same fixtures are still exercised (plus the suite's other named-negative fixtures, which the adapter's fully-structural assertions handle without incident). Any future new test file anywhere under this __tests__ tree that hand-types a registered client/firm token will hit the identical REFUSE with the identical missing escape hatch.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "DSGN_IRPTV1-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-24T09:51:55Z",
+    "one_line": "Round-1 drain hygiene: `bun run typecheck` (tsc -b --noEmit) reads rc=2 on the merged portal candidate dsgn-irptv1-r1 @7736e6cc -- three TS18046 errors in the worker's test file __tests__/dsgn-irptv1/iv-t-3.hero-fed.test.ts (lines 107-109, 'node' is of type 'unknown'); every suite passes (7 of 7 dsgn-irptv1 files, 0 fail; fe-s-7/ 32 pass) and the product files compile, but `bun run build` = `tsc -b && vite build` cannot build this candidate until the test file is typed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D (the drain's own red; remedy = one batched repair cell in round 2's issuance per spine L10, or an issuer-direct one-line fix on the candidate on 1.0.0_SA_CTO's word; never a silent edit at the drain)",
+    "spec_asserts": "Spine L6 verification diet: repo-wide hygiene (typecheck, lint, the suite) runs ONCE per merge at the drain, never as a criterion on an order; a red at the drain is a surprise row under the COO's serial, never a silent re-cut (spine v3.16 / dispatch Step 5). IV-t-3's three mechanical criteria (IV3-AC1 HERO-FED, IV3-AC2 fe-s-7/ 32 pass, IV3-AC3 ONE-FUNCTION) all PASS by output and its instance is VALID, so the order is correctly terminal.",
+    "world_is": "Measured 2026-09-24 by 2.0.0_SA_COO~D in C:/tmp/dsgn-irptv1-r1 at 7736e6cc (portal candidate = DEV 7c542fd2 + the three worker branches): `bun run typecheck` rc=2 with exactly three errors, all in src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-t-3.hero-fed.test.ts at (107,13) (108,25) (109,30), TS18046 'node' is of type 'unknown' -- a JSON-loaded fixture iterated without a type narrow. The same typecheck read rc=0 at 7d0cf4df (after slots 1 and 2) so the red is introduced by slot 3's branch. `bun test` over the seven dsgn-irptv1 files: 0 fail, 55 expects; fe-s-7/: 32 pass, 0 fail. No product source file errors.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/dsgn-irptv1-r1 @7736e6cc: `bun run typecheck` rc=2, three TS18046 lines quoted above",
+        "C:/tmp/dsgn-irptv1-r1 @7d0cf4df (before slot 3): `bun run typecheck` rc=0 (this seat's earlier hygiene run)",
+        "portal branch wk-DSGN_IRPTV1-3-portal commits bbbc2f97 (IV-t-3) and 287acb89 (IV-t-4); the test file is IV-t-3's",
+        "proof instance org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~3/DSGN_IRPTV1.TO-IV-t-3.holdings-hero.proof_of_spec.json VALID rc=0 -- typecheck was never a criterion on the face, by the diet"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed by the issuer at the drain, not fixed at the drain: the worker's grant is withdrawn by the terminal flip and the COO does not edit the candidate silently. Carried in the drain-end message to 1.0.0_SA_CTO with the recommendation above."
   }
 ]
 ```
