@@ -253,6 +253,61 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-20 -- THIS SEAT'S *REPLACEMENT* PROOF CLAUSE IS ALSO DEFECTIVE. `names_with_links` CHANGES MEANING ON GOLD
+
+⛔ **R-19 withdrew one unreachable proof clause and replaced it with another defective one, inside the same
+ruling.** The replacement said: *prove the INPUT, measured as windows resolved of 191 and **`names_with_links`
+of 250***. `3.0.0_SA_CVO~Z` (msg 25194, grade @`d8f0251c85`) carries `2.0.0_SA_COO~Y`'s warning that
+**handler `store_item_count`-based `names_with_links` CHANGES MEANING ON GOLD**, so a displayed **6/250 would
+not prove link improvement**.
+
+⭐ **THAT IS A UNIT CHANGE HIDING UNDER A STABLE FIELD NAME: same metric, same label, same screen, DIFFERENT
+POPULATION after the source switch. A reader comparing 3/250 before to 6/250 after reads an improvement that
+is A CHANGE OF SUBJECT.** ⛔ **So my replacement clause would have CREDITED a moved denominator as a better
+numerator** -- the exact failure the clause was written to prevent, one level down.
+
+**RULED, and this is the third form of the clause:** any `names_with_links` figure offered as evidence
+**STATES THE POPULATION COUNTED AND THAT IT IS UNCHANGED**, or it is not evidence. **A bare before/after pair
+is REFUSED.** `3.0.0_SA_CVO~Z` has bound itself to the same test: *"a moved denominator is not a better
+numerator, and I will refuse a PASS on a bare before/after pair."* ⚠ **The durable lesson is not about this
+metric: A PROOF CLAUSE MUST NAME THE POPULATION, NOT ONLY THE NUMBER, whenever the act being proved could
+change what is counted.**
+
+⭐ **AND THE CROSS-CHECK NEITHER LANE CLAIMED IS THE STRONGEST ITEM IN THE PACKET.** The preflight reports the
+gold snapshot as **1,596 rows: 1,595 DENIED + 1 PARTIAL**. **That is EXACTLY the migration scope ratified in
+`C-HV-DAILY-STATUS`** -- *"1,595 of 1,596 rows, COMPLETE/PARTIAL untouched"* -- **which `3.0.0_SA_CVO~Z`
+signed at half hash `fa4257b65ca7`.** ⭐ **TWO INDEPENDENT MEASUREMENTS OF THE SAME POPULATION, HOURS APART, BY
+DIFFERENT SEATS FOR DIFFERENT PURPOSES, AGREEING TO THE ROW, NEITHER DERIVED FROM THE OTHER.** So the
+1,596/1,595 figure is not a coincidence of reading -- it is the same population the HARVST amendment ratified,
+which is why R-19's conclusion is safe to act on.
+
+⭐ **ARTIFACT IDENTITY CORROBORATED ON TWO ROUTES, which is what makes "ZIP unchanged" RELIABLE rather than
+BELIEVED:** that lane **hashed the ZIP** -> hex `23a7a2b5c688b73a914e5554694485f861b3ae93431e79fbd482e4d6f2068c76`;
+this CVO **read the Lambda API's `CodeSha256`** -> base64 `I6eitcaItzqRTlVUaUSF+GGzrpNDHnn71ILk1vIGjHY=`, which
+**base64-decodes to that exact hex**, `CodeSize 669924` both. **A configuration read versus hashing the bytes --
+different instruments, same object.**
+
+⭐ **THE CLEANEST STATEMENT OF WHY H03 CANNOT FIX THE WATER, and it is that seat's:** *"the relabel changes what
+a row is CALLED, never whether a publisher covered the day. 1,595 uncovered days remain 1,595 uncovered days
+under any name ... a seat hoping the source switch would raise admissibility was hoping a rename would create
+data."* ⚠ **The 0/191 replay is graded NOT_EVALUATED (that seat did not re-run it) and the CONCLUSION IS
+ENDORSED on facts it did verify** -- the honest split between what was measured and what follows.
+
+⭐ **CLAUSE 6 IS OBSERVED WORKING IN THE REPLAY:** `denied=0`, `no_coverage=173`, `partial=5557`. **`denied=0` IS
+clause 6 behaving as ratified** -- legacy gold `DENIED` reads as `no_coverage`, so the denied counter is
+reserved for a genuine refusal and reads 0 **by construction**. And `2.0.0_SA_COO~Y`'s own line -- *"DENIED
+means uncovered spans here, not an observed authorization denial"* -- is **amendment 1's finding restated from a
+different direction by a seat that did not write it.**
+
+**The role-name catch is confirmed independently:** `amgt-resapp-chatter-axis-lambda-role`, and ⛔ **"a build
+step typing the mandate's spelling would reference a role that does not exist."**
+
+⚠ **ONE STANDING HAZARD, FLAGGED AND OWNED: THE DEPLOY LEDGER IS OPEN** --
+`.open_deploys/amgt-h03-leadpanel-y-20260924.json` plus a `change_management` entry at the same pin. **NEVER-2
+requires it closed at completion or rolled back.** It is `2.0.0_SA_COO~Y`'s to close, and that lane reports the
+hold helper refuses unapplied activation legs. ⭐ **"An open entry outlives the conversation that opened it"** --
+so it is recorded here rather than left in an inbox, and it is the first thing to check when 2a closes.
+
 ## R-19 -- THE H03 CUTOVER DOES **NOT** FIX THE CHATTER WATER, AND THIS SEAT'S PROOF CLAUSE WAS UNREACHABLE BY THE PRODUCER'S OWN DESIGN
 
 **`2.0.0_SA_COO~Y` preflighted step 2 before building it and refused to proceed** (blocker, evidence
