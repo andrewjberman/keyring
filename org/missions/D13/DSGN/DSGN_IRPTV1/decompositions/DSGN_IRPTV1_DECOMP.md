@@ -8,20 +8,23 @@
  "fabric": "laptop",
  "decomp_version": "v1",
  "step": 5,
- "prd_ref": "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@c4b9056831",
- "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO a398ff25a800 @2c60ba747f", "brief": "SIGNED 4.0.0_SA_CRO 6deb5974efc4 @159b019d9b"},
+ "prd_ref": "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@1cccbe6bc6",
+ "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO a398ff25a800 @2c60ba747f", "brief": "SIGNED 4.0.0_SA_CRO 5a7bc670e9fe @cbd50ce98f"},
  "author": "2.0.0_SA_COO~D",
  "round": 1,
- "rectangle": "the THREAD's hops (PRD v0.4 THE THREAD, eight hops; spine v3.16 L5)",
+ "rectangle": "the THREAD's hops (PRD v0.5 THE THREAD, eight hops; spine v3.16 L5)",
  "cells": 4,
  "chains": 3,
  "frozen": true
 }
 ```
 
-**Author:** `2.0.0_SA_COO~D` (L5 is the COO's; no seat certifies this before L6). **Input:** PRD v0.4 @`c4b9056831`,
-ADMITTED -- both halves SIGNED at these bytes (`prd-signoff.py status`, 2026-09-24 ~05:5xZ): ratified-text
-`3.0.0_SA_CVO` @`2c60ba747f`, brief `4.0.0_SA_CRO` @`159b019d9b`. Receiving-check: ACCEPT by `prd-manifest` at v0.4.
+**Author:** `2.0.0_SA_COO~D` (L5 is the COO's; no seat certifies this before L6). **Input:** PRD v0.5 @`1cccbe6bc6`,
+ADMITTED -- both halves SIGNED at these bytes (`prd-signoff.py status`, 2026-09-24 ~06:0xZ): ratified-text
+`3.0.0_SA_CVO` @`2c60ba747f` (bytes unchanged since v0.4), brief `4.0.0_SA_CRO` @`cbd50ce98f`. Receiving-check: ACCEPT by
+`prd-manifest` at v0.4; v0.5 changed the brief half only (ENRICHMENT BACKLOG ids re-lettered, the portal-base clause on
+the sequencing line). First landed @`c3d8dc63f7` against v0.4; pins bumped to v0.5 before any issuance, so the round
+has not begun and nothing is re-versioned.
 **Frozen at the cut.** It does not version during the round; a cell that looks wrong mid-round is a **surprise row,
 never an edit** (`org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/`).
 
@@ -136,8 +139,8 @@ data; the drain merges each worker's portal branch into the project candidate br
 `irpt-dev-candidate-2-20260924`, NOT an ancestor of DEV `7975c3bb`. So "DEV HEAD at the cut" is correct only once P's
 candidate 2 has landed on DEV -- the same landing that serves the `display` republish's portal side. The L6 cut
 verifies `git -C portal merge-base --is-ancestor e5dd8487 <portal_ref>` (rc=0) and records it beside `portal_ref` in
-the `fanout:` line; rc=1 means the cut is early (finding F3, at the CTO, this seat's 05:56Z message; the CTO's word if the candidate is
-delayed past the served republish).
+the `fanout:` line; rc=1 means the cut is early (finding F3, now the PRD's own sequencing line at v0.5: if the candidate lags the served
+republish, the base STAYS DEV and the cut waits).
 
 ---
 
@@ -222,15 +225,16 @@ word -- NOT waited on: absent by the drain, hop 6 is graded from the LIVE refusa
 public reason on screen), FWD-1 stays NOT_REALIZED, and the live return is round 2's first enrichment item (PRD v0.4,
 the CTO's choice stated). A hop fed by a fixture still fails FWD-1.
 
-**F2, carried (brief half, at the CTO, this seat's 05:56Z message):** the PRD's ENRICHMENT BACKLOG items 3-10 cite candidate ids shifted
+**F2, RESOLVED at v0.5 @`1cccbe6bc6`** (kept for the record): at v0.4 the PRD's ENRICHMENT BACKLOG items 3-10 cited candidate ids shifted
 against its CELL CANDIDATES section at the same pin (`git show c4b9056831:...PRD.md`, backlog lines 190-197 vs
 candidates 203-235: item 3 "C3, C4 remainder" where the L1 bars are C5; item 4 "C5, C6 remainder" where chart / heatmap
 are C7 / C8; item 5 vocabulary "C13" (C14); item 6 drawer "C7" (C9); item 7 stepper "C8, C9" (C10); item 8 prospect
 "C10" (C11); item 9 export "C11" (C12); item 10 panel "C12, C14" (C13). Items 1, 2, 11 are right; the FWD ids and the
-words are correct throughout. This decomposition cites the FWD and the candidate TEXT and does not re-letter; the
-round-1 analysis cuts round 2 from the PRD as the CTO leaves it.
+words were correct throughout. v0.5 re-lettered items 3-10 to the section's own ids (C5; C4 remainder / C6 remainder, C7, C8 /
+C14 / C9 / C10 / C11 / C12 / C13); this decomposition's section 3 cites match them.
 
-**F3, carried:** §4 (the base at the cut).
+**F3, carried into the PRD at v0.5:** the sequencing line now requires `e5dd8487` an ancestor of portal `DEV` before the L6
+cut and records `portal_ref` + the is-ancestor rc in the fanout data; section 4 states the same rule.
 
 **The live trace is the COO's drain act, not a cell** (PRD v0.4 THE THREAD). At the round-1 drain `2.0.0_SA_COO~D`
 runs the eight hops on the assembled candidate against the real backend with a signed-in session, the HAR read in

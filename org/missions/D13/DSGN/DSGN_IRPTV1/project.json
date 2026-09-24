@@ -47,7 +47,7 @@
     "authority": "CLAUDE.md Rule 27 L4-R: the CRO signs the BRIEF half (4.0.0_SA_CRO~F stated it will sign when routed, msg 100235); 3.0.0_SA_CVO signs the RATIFIED-TEXT half"
   },
   "fabric_ruling": "laptop -- D13 Design placed LAPTOP by Andrew-direct 2026-09-11 ('it will be laptop fabric'); placement attaches to the directive (LD-0498, LD-0502).",
-  "blocking": "L5 decomposition v1 landed 2026-09-24 ~06:0xZ by 2.0.0_SA_COO~D on PRD v0.4 @c4b9056831 ADMITTED (both halves SIGNED). L6 issuance is cut when the COT display republish is SERVED (model names on Anna's page, 2.0.0_SA_COO~M) AND portal DEV carries M's labels pin e5dd8487 (CTO batch 27 sequencing word + finding F3); the round-1 drain trace additionally needs the Performance path (X10 ACTIVE + P's repackage; the one-use plan on Andrew's word, not waited on).",
+  "blocking": "L5 decomposition v1 landed 2026-09-24 ~06:0xZ by 2.0.0_SA_COO~D on PRD v0.4 @c4b9056831, pins bumped to v0.5 @1cccbe6bc6 ADMITTED (both halves SIGNED; F2/F3 folded into the PRD at v0.5). L6 issuance is cut when the COT display republish is SERVED (model names on Anna's page, 2.0.0_SA_COO~M) AND portal DEV carries M's labels pin e5dd8487 (CTO batch 27 sequencing word + finding F3); the round-1 drain trace additionally needs the Performance path (X10 ACTIVE + P's repackage; the one-use plan on Andrew's word, not waited on).",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md",
