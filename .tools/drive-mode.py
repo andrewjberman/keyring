@@ -9,8 +9,7 @@ appends one line to org/mcp/drive-mode.log (committed with the seat's record bat
 
 Presence: a live lease extends to 30 minutes past the newest stamp in org/mcp/presence/*.last (epoch seconds, written
 by a UserPromptSubmit hook when installed). Without the hook the lease runs its stated length.
-Rail (call 6): `read` run BY THE LEASE'S SEAT mirrors a live FAST lease into that session's /freeform marker
-(org/mcp/sessions/<sid>.freeform, expiry = the lease's), so the comp-tool rail stands down for the lease's life.
+The comp-tool search rail stays ON under a lease (call 6 reversed by Andrew 2026-09-24 ~18:2xZ).
 The one refusal: `arm` refuses a surface that overlaps another live FAST lease or another project's open task
 order `<paths>` (a project under HOLD excluded). Resolve by `hold` on the other, or a narrower --surface.
 
@@ -126,8 +125,14 @@ def overlaps(a, b):
     return a == b or a.startswith(b + "/") or b.startswith(a + "/")
 
 
+def base_code(code):
+    """`IRPT_BCKEND~P` -> `IRPT_BCKEND`: a lane-keyed lease is one of several FAST seats on one project, each with a
+    disjoint surface (report 2 section 5.4 guard 3; spine Closer subsection, FAST mode)."""
+    return str(code).split("~", 1)[0]
+
+
 def project_home(code):
-    hits = glob.glob(os.path.join(ROOT, "org", "missions", "D*", "*", code))
+    hits = glob.glob(os.path.join(ROOT, "org", "missions", "D*", "*", base_code(code)))
     return hits[0] if hits else None
 
 
@@ -155,7 +160,7 @@ def open_orders(skip_codes):
 
 def conflicts(code, surfaces, live=None, orders=None):
     live = all_live() if live is None else live
-    held = {x["code"] for x in live if x.get("mode") == "HOLD"}
+    held = {base_code(x["code"]) for x in live if x.get("mode") == "HOLD"}
     hits = []
     for x in live:
         if x["code"] != code and x.get("mode") == "FAST":
@@ -163,7 +168,7 @@ def conflicts(code, surfaces, live=None, orders=None):
                 for o in x.get("surface", []):
                     if overlaps(s, o):
                         hits.append("live FAST lease %s (seat %s) surface %s" % (x["code"], x.get("seat"), o))
-    orders = open_orders(held | {code}) if orders is None else orders
+    orders = open_orders(held | {base_code(code)}) if orders is None else orders
     for ocode, f, paths in orders:
         for s in surfaces:
             for p in paths:
@@ -182,27 +187,6 @@ def caller_serial():
         except Exception:  # noqa: BLE001
             pass
     return s, sid
-
-
-def sync_rail(lease):
-    """Mirror a live FAST lease into THIS session's freeform marker when the caller IS the lease's seat."""
-    serial, sid = caller_serial()
-    if not (lease and lease.get("mode") == "FAST" and sid and serial == lease.get("seat")):
-        return None
-    ff = os.path.join(SESSIONS, sid + ".freeform")
-    exp = int(lease["expires_epoch"])
-    try:
-        with open(ff, encoding="utf-8", errors="replace") as fh:
-            cur = int(re.sub(r"\D", "", fh.read()) or 0)
-    except Exception:  # noqa: BLE001
-        cur = 0
-    if abs(cur - exp) > 60:
-        os.makedirs(SESSIONS, exist_ok=True)
-        with open(ff, "w", encoding="utf-8") as fh:
-            fh.write("%d\n" % exp)
-        with open(os.path.join(ROOT, "org", "mcp", "comp-tool-hud.log"), "a", encoding="utf-8") as fh:
-            fh.write("%s  FREEFORM-ARM  sid=%s  FAST lease %s  expires=%d\n" % (iso(now()), sid, lease["code"], exp))
-    return exp
 
 
 def claims(lease):
@@ -236,7 +220,8 @@ def arm(code, mode, surfaces, hours, seat, by):
     exp = t + int(hours * 3600)
     lease = {"code": code, "mode": mode, "seat": seat, "surface": surfaces, "armed_by": by,
              "armed_at": iso(t), "expires_at": iso(exp), "expires_epoch": exp,
-             "status_path": os.path.relpath(os.path.join(home, "STATUS.md"), ROOT).replace("\\", "/") if home else ""}
+             "status_path": os.path.relpath(os.path.join(home, "STATUS%s.md" % ("~" + code.split("~", 1)[1] if "~" in code else "")),
+                                             ROOT).replace("\\", "/") if home else ""}
     os.makedirs(LEASES, exist_ok=True)
     with open(lease_path(code), "w", encoding="utf-8") as fh:
         json.dump(lease, fh, indent=1)
@@ -309,6 +294,15 @@ def self_test():
         check("HOLD on the other project releases its orders",
               arm("OTHER_P", "HOLD", [], 2, "-", "t") == 0 and not conflicts("C_X", ["portal/src/pages/Other"]))
         check("prefix is component-bounded (mine vs mine-too)", not overlaps("portal/src/mine", "portal/src/mine-too"))
+        check("lane leases on ONE project with disjoint surfaces both arm (OTHER_P~A, OTHER_P~B)",
+              arm("OTHER_P~A", "FAST", ["svc/a"], 2, "S~A", "t") == 0 and arm("OTHER_P~B", "FAST", ["svc/b"], 2, "S~B", "t") == 0)
+        check("a third lane lease overlapping a sibling's surface is REFUSED",
+              arm("OTHER_P~C", "FAST", ["svc/a/deep"], 2, "S~C", "t") == 1)
+        check("a lane lease is not blocked by its OWN project's open orders", not conflicts("OTHER_P~D", ["portal/src/pages/Other"]))
+        check("a lane lease keeps its own STATUS file", load("OTHER_P~A") is None or
+              load("OTHER_P~A").get("status_path", "").endswith("STATUS~A.md") or load("OTHER_P~A").get("status_path") == "")
+        end("OTHER_P~A", "t")
+        end("OTHER_P~B", "t")
         with open(lease_path("A_X")) as fh:
             lz = json.load(fh)
         lz["expires_epoch"] = now() - 5
@@ -334,12 +328,11 @@ def self_test():
         with open(lease_path("C_X"), "w") as fh:
             fh.write("{not json")
         check("unreadable lease reads FULL (fail-closed)", load("C_X") is None)
-        os.environ["OPAL_AGENT_SERIAL"], os.environ["CLAUDE_CODE_SESSION_ID"] = "S~4", "sid-test"
-        exp = sync_rail(load("D_X"))
+        os.makedirs(SESSIONS, exist_ok=True)
         ff = os.path.join(SESSIONS, "sid-test.freeform")
-        check("the lease's own seat gets its freeform marker", exp and open(ff).read().strip() == str(exp))
-        os.environ["OPAL_AGENT_SERIAL"] = "S~9"
-        check("another seat gets NO marker", sync_rail(load("D_X")) is None)
+        with open(ff, "w") as fh:
+            fh.write(str(load("D_X")["expires_epoch"]))  # a marker a pre-reversal lease wrote
+        check("read no longer writes a rail marker", "sync_rail" not in globals())
         end("D_X", "t")
         check("END removes the lease and the marker it wrote", load("D_X") is None and not os.path.exists(ff))
     print("SELF-TEST: %s" % ("ALL HOLD" if ok else "BROKEN"))
@@ -385,9 +378,7 @@ def main(argv):
     if cmd == "read":
         lease = load(code)
         mode = lease["mode"] if lease else "FULL"
-        rail = sync_rail(lease)
-        print("%s %s%s%s" % (mode, code, " until %s" % lease["expires_at"] if lease else "",
-                             " (rail stood down for this session)" if rail else ""))
+        print("%s %s%s" % (mode, code, " until %s" % lease["expires_at"] if lease else ""))
         return 0
     print(__doc__)
     return 2

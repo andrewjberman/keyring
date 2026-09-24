@@ -499,6 +499,50 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The CVO's L8-L10 for round 2 now grades code that is already on DEV; Andrew's word placed the landing ahead of adjudication. IV-e-7's AC2 names fe-s-7/fe-s-30/fe-s-32 expecting ' 0 fail', and those suites read 1 fail at both 895752676a and 04952bd2 -- its premise is false and it is amended before it is spawned."
+  },
+  {
+    "id": "DSGN_IRPTV1-S8",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-24T18:41:20Z",
+    "one_line": "DISARM of DSGN_IRPTV1-S6 by its owner under the FAST lease: portal DEV 92d16efc (pushed; origin DEV read 92d16efc) fixes both defects -- the Securities map tiles take the leaf's own colour, and a security whose displayName is only its own id prints 'not supplied' in the allocation bars, hero cards, drill legend, map and Securities table; the re-run PNG shows both.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "S6's disarm clause: 'disarmed by the row quoting the fix commit and a re-run PNG'. PRD CONTRACTS: ids never print; CTO 100631: a CUSIP is never a display label.",
+    "world_is": "Measured by 2.0.0_SA_COO~D. Causes: (1) recharts 3.7.0 Treemap spreads each data item's fields onto the content cell and sets no `fill` of its own; HoldingsTreemap's cell filled its rect from `fill`, so every rect was SVG-default black (the grader PNG's black area was the root rect, the leaves were still in their entrance animation). (2) contracts/adapt.ts adaptHoldingsSnapshot copies security_id.value into displayName when the producer sends no display.label, and four components fell back to displayName. Fix: slices.ts nodeNameFor (display.label, else displayName unless it is only the node's own securityId value) used by SecurityList, AllocationBars, HoldingsTreemap, DrillTree; uniqueLabel keeps two unnamed hero cards apart; the cell fills from `color`, the root draws nothing, the animation is off. Re-run: pinned IVE2 driver blob 8c665e72 against localhost:5174 served from the main portal checkout at 92d16efc's tree, smoke fixture dsgn-irptv1-cottonwood, matched 5 of 5; the PNG shows two coloured tiles and no 037833100 anywhere.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal origin DEV 92d16efc (ls-remote read after the push), author 2.0.0_SA_COO~D via safe-commit",
+        "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/s6.fast-run.png and s6.fast-run.txt",
+        "bun test src/pages/InvestorReporting at DEV 5e339ffd vs the change, both from C:/tmp sibling worktrees: 114 fail = 114 fail, 0 new, 0 fixed; tsc -b rc=0; eslint 0 errors; the item's own test 5 of 5"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarms S6 only. Still visible in the re-run, off this item and on STATUS.md's next-list: the drill breadcrumb prints the root node id (N-CW-ROOT), and the status band prints 'OK [code not defined by the v1 contract]' (the FWD-11 sweep). A fixture leaf whose only identity is a TICKER-namespace id (SPY) also reads 'not supplied', by the same rule."
+  },
+  {
+    "id": "DSGN_IRPTV1-S9",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-24T19:27:38Z",
+    "one_line": "S7 progress (S7 stays ARMED): 4 of the 8 legacy failures fixed on portal DEV as regressions -- c1d7aefe (the returns heatmap printed '--' for an unsupported return, against render/values.tsx's one rule; its benchmark row lost data-block=\"benchmarks\") and 9902bf25 (consumed.ts regenerated: the client's route table had outgrown it, so the round-2 smoke fixture read UNCLASSIFIED; `ok` moved out of the envelope pin on 2.0.0_SA_COO~P 100861). The other 4 ask for behaviour the PRD retired and are routed to 1.0.0_SA_CTO for a ruling.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D (leading IRPT frontend; disarmed with S7 by the row quoting the CTO ruling on the remaining 4 and the landing or retirement of each)",
+    "spec_asserts": "S7's disarm clause: each of the 8 dispositioned as a regression to fix or a legacy assertion to retire by ruling, never by editing a legacy suite to pass.",
+    "world_is": "Measured by 2.0.0_SA_COO~D in the main portal checkout: bun test src/pages/InvestorReporting 89 fail at a65a8db5 -> 87 at c1d7aefe -> 85 at 9902bf25, 0 new at each step. Remaining 4: fe-s-5/fields.test.ts x3 ('every leaf field under summary/periods/accounts/method reaches the markup' for 49f-bd, cottonwood-bd, inflection-orion: misses are account ids (PRD CONTRACTS: ids never print), raw unformatted account values, period window dates, and the method, now one click down in the headline popover per IV-e-6/FWD-11); fe-s-5/controls.test.ts 'the Export button is its own data-action, labelled Export, and disabled' (PRD backlog 9, FWD-9: the two disabled per-tab buttons gone, one page-level Export on the header).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal origin DEV 9902bf25 (ls-remote read)",
+        "deliverables/2.0.0_SA_COO~D/s7.perf-unsupported.{png,txt,fixture.json}: the heatmap reads 7.32% | UNAVAILABLE | 2.11% on a planted unsupported 1Y return"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "S7 disarms when the CTO rules the remaining 4 and each is landed or retired."
   }
 ]
 ```

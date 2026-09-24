@@ -15,8 +15,9 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 - BLAST MODE (Andrew-direct ~17:4xZ, record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_174xZ_BLAST_MODE_P_M_Y_D_ONLINE_FAST_CLOSER.md`):
   `2.0.0_SA_COO~D` runs `/closer-drive` on DSGN_IRPTV1 under the FAST lease in `org/mcp/drive-mode.log` (surface
-  `portal/src/pages/InvestorReporting`); ~P, ~M and ~Y run their goal loops below in closer mode. `/freeform` is
-  authorized for the four seats. Stop: the lease lapses to FULL, or Andrew's stand-down.
+  `portal/src/pages/InvestorReporting`); ~P, ~M and ~Y run their goal loops below, each reading its per-seat FAST
+  lease `IRPT_BCKEND~<lane>` every tick (C11; same log). The comp-tool rail stays on (call 6 reversed, Andrew ~18:2xZ,
+  `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_182xZ_CALL6_REVERSED_RAIL_STAYS_ON_IN_FAST.md`). Stop: the lease lapses to FULL, or Andrew's stand-down.
 
 - `2.0.0_SA_COO~P` `/loop 20m` DIRECTED over IRPT Performance (49F, INF, COT):
   `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`; stop = `/verify SOUND`.

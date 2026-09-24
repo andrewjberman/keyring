@@ -1,0 +1,101 @@
+I want to provide some feedback regarding the holdings tab on the investor reporting page.
+So we're going to go through these attached images one by one to give you a better understanding
+of what we want to improve.
+The first thing, the identity panel.
+As you can see, there are numerous undescribed not supplied boxes that take up a large, large
+vertical pixel resolution.
+It requires the user to scroll through blocks and blocks and blocks of not supplied boxes.
+I have no idea what this is supposed to be, if this is a data issue, if there was a plan
+on what this was supposed to be, but that's just bad design and probably most of that
+needs to go.
+Moving on to the next image, the drop down menu from where you can browse the clients.
+As you can see, the section here is truncated.
+The words and account numbers and tag options for the firms, it's all very truncated, it's
+not organized.
+I like that it's using all caps, that's okay.
+I wish that we used proper branding and maybe some, the same drop down design that we use
+elsewhere in the platform for this kind of thing.
+Also as you will probably notice, the input box is white on the silver backgrounds, that
+is illegible, you cannot read it.
+That input box needs to have its type fixed properly and we need a better solution for
+this drop down.
+Something that I might recommend, for the way that this probably should work, is that
+the identity panel maybe makes more sense as a paginated list for all of the names,
+all of the client names and that way we show some reasonable amount per page and you can
+paginate through them and then the drop down is actually just a search bar and that should
+keep this whole thing a lot cleaner.
+Moving on to the next one, the pop up modal when you click on the total assets, as you
+can see the image shows it is the models pop up modal that shows the opal long term asset
+components.
+We need to think of a better solution for how this is displayed here because we have
+the space.
+When we are clicking on a model, there is no reason that we need to go with the two
+sided table because there is plenty of space here.
+That should be full wide for the securities list there and we also want to think about
+how to shape the colors here because right now it is a bunch of random colors in a random
+order, it does not really make sense to do that.
+I think if anything it would make more sense to color these by asset class perhaps and
+you can use the canonical opal asset class colors and opal securities that we use in
+the ETF classifier in the positioning page and you can research how the positioning
+page handles these things.
+That means that we will have to come up with a solution for non-opal assets but we will
+cross that bridge when we come to it, it is worth taking a note of that.
+Moving on to the next image file where you see the all holdings 0384S1 models.
+This is good, I am glad that we are using the blue opal, oh see this is the issue right
+here.
+We have canonical colors for the opal primary models.
+Ultra long term is red, we are showing blue which makes me think that this is an ordinal
+color selection, not a canonical representation to wherever the canonical library is stored
+on the front end because I know we have a single canonical opal models or primary opal
+models color library and that should be referring to that for opal primary models.
+Furthermore, the display when we see these columns here for node basis amounts denominator
+percentage of parent, a lot of these things are, nobody is going to know what a node is,
+this is not client friendly, this is not user friendly.
+All the annotations which look like strings of code, that has to be cleaned up, you are
+the front end agent, all of this needs to be cleaned up, it has to be designed to be
+user friendly and minimal and clean.
+It is okay to include supervision and advisory, I think that is a data issue why we are not
+displaying that.
+Provenance I don't think really matters here, percent of parent, percent of total that would
+have, I think we at most need one of those and if anything would be percent of accounts
+and denominator absolutely not and the basis, I don't really know what that means in this
+context, I don't think that is great and generally we have better UI design, we should be able
+to do a little better on how these pie charts are displayed here and we definitely want
+to consider how they are displayed when there are multiple slices which takes me on to the
+next image where we are going into the components of the OPAL ultra long term model and as we
+can see there is 20 some securities here, it completely blows out the design, this is
+a nightmare, this looks horrible, the node column of course is a bunch of string information
+that is awful, the basis is now saying target we don't know what that means, the percent
+of parent, percent of total we already covered that, we need a solution for how these legends
+are displayed and again the canonical colors based on asset class, we should be using the
+OPAL asset class logic for this, that was gold for commodities, orange for alternatives,
+pink for the structured hedge, green for fixed income and cash and blue for equities and
+there should be a canonical library for that as well, if there is not there should be one.
+Moving on to the tree chart, the securities map, this should really be the exact same
+design or as far as it pertains to the security colors, yeah this is the more relevant place
+I think to handle the drill down to security level, I think the drill down to securities
+is simply too much to try to do in the model holdings pie chart, as we were discussing
+on the last page it was just too much information and it causes the pie chart to get distended
+and very minimized, it is not a good look, it makes far more sense to display the drill
+down, I think it is a good idea to do that, I think it is a good idea to do that as well
+in the securities map here and of course again using the canonical colors by asset class
+and I would probably have a similar tool tip pop up as we do for the tree chart in positioning
+page on the portal that should be all copied over, also as you can see in the bottom of
+the securities map panel we have a lot of footnotes that do not fucking matter, the only
+thing that should ever be in the panel footer is the time, the time when that information
+is from, that is a pattern that is across the entire portal and that should be maintained
+here, moving on into the securities panel itself, this for the most part is fine, I
+think it would be nice if we brought in the some element of coloring based on asset class,
+that is why I bring up the positioning holdings breakdown panel from the positioning portal
+page because we have a very nice asset and sub asset class function there, I think maybe
+what we are going to want to do is simply expand the, expand the holdings like the ETF
+classifier that we use for opal, that there is a table that effectively has cleaned nice
+organized asset class, sub asset class in opal style with opal coloring for all of that
+stuff, I think we are just simply going to have to expand that to include all the securities
+that are coming in through the investor reporting and from these clients and that is going to
+need to be an implementation as well, finally my closing notes here are that we really want
+to adhere better to progressive disclosure, this requires a lot of scrolling, there is
+a lot of scrolling here, I think we want to explore options for how to drastically minimize
+the vertical size, this full expanded, all these expanded things, it makes far more sense
+to use toggles, use pop up modals and do whatever we can to kind of condense the information
+and only display it if the user is actually interested.

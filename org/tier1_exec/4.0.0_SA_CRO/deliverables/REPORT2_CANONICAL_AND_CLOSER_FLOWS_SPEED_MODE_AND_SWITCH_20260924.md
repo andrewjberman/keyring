@@ -348,7 +348,7 @@ Product lines changed per order: added plus deleted, test, harness, fixture and 
 | **the seat lands product candidates on portal DEV itself** after pull-merge, with CI (VALGATE) running; no CTO GO, no MSTR push *(call 2)* | you are watching; DEV is not served to clients; PROD stays gated |
 | **CVO grading is after the fact**: pins are graded as they land, a FAIL becomes the next item, nothing waits on it *(call 3)* | you are the live reviewer; the CVO remains the second axis |
 | no CTO ruling inside the project's own surface; a cross-surface breaking change is one exchange with the owner, then the CTO | the lease names the surface (C1), so "inside" is defined |
-| **the comp-tool search rail is stood down for the seat** (`/freeform` semantics) for the lease's life *(call 6)* | it is a search-speed rail, not a safety gate; freeform already exists for this |
+| ~~the comp-tool search rail is stood down for the seat (`/freeform` semantics) for the lease's life (call 6)~~ `[REVERSED 09-24 ~18:2xZ on Andrew's word: the rail stays on in FAST mode. Report 3 item 1.6 already admits a raw search when no comp-tool fits; record ANDREW_DIRECT_20260924_182xZ_CALL6_REVERSED_RAIL_STAYS_ON_IN_FAST.md]` | comp-tools are better where one fits |
 | no second reads, no peer acknowledgements, no status messages | only three message kinds: interface published, blocker, review handoff |
 | repo-wide hygiene at landing only; per item, the item's own test plus one real run | the real run is the check that caught S6 |
 
@@ -551,6 +551,9 @@ cards: the six below, plus a GO for the CTO to build C1-C9. Each REC now binds a
    analysis for that one cut. **REC: yes.**
 6. **Arming a FAST lease also stands down the comp-tool search rail** (`/freeform`) for that seat, for the lease's life.
    **REC: yes.** Freeform needs your word; the lease is your word.
+   `[REVERSED 09-24 ~18:2xZ on Andrew's word.]` The rail stays on in FAST mode, and blast mode's `/freeform` is
+   withdrawn. Report 3 item 1.6 fixes the false denials instead. Record:
+   `ANDREW_DIRECT_20260924_182xZ_CALL6_REVERSED_RAIL_STAYS_ON_IN_FAST.md`.
 
 ## 10. What this report does not claim
 
@@ -674,3 +677,27 @@ Sonnet-medium trial (call 7) and shorter orders (C5) are what buy room for more 
 
 **Owner:** `1.0.0_SA_CTO` (spine L5/L6, `/dispatch`, task-order protocol). **Non-application:** a round whose cells
 share no file.
+
+---
+
+## 14. C11 -- goal loops read the lease `[ADDED 09-24: Andrew-approved ~18:1xZ, "Yes agreed, do it"]`
+
+Record: `ANDREW_DIRECT_20260924_181xZ_C11_GOAL_LOOPS_READ_THE_LEASE_P_M_Y.md` (this folder).
+
+**The gap.** The IRPT return brief (`IRPT_CLOSER_TO_CANONICAL_RETURN_BRIEF_20260924.md`, gap G2) found that `/goal-set`
+loops never read a lease. `2.0.0_SA_COO~P`, `~M` and `~Y` work IRPT_BCKEND in closer mode on 20-minute goal loops. So
+when Andrew leaves, `~D` drops to FULL but they keep blast-mode freedoms.
+
+**The rule:**
+1. **One FAST lease per project may name several seats**, each with its own surface, pairwise disjoint.
+   `.tools/drive-mode.py` gains that form; the arm-time overlap refusal still applies between seats.
+2. **Every `/goal-set` loop that works a project reads that project's lease at the start of each tick:**
+   - **FAST:** the FAST relaxations of section 5.3.
+   - **FULL:** keep working under the project's normal checks. For a closer project, that means the CVO grades each
+     pinned change before it counts and the CTO lands DEV candidates.
+   - **HOLD:** pause.
+3. **IRPT_BCKEND** gets one such lease for `~P`, `~M` and `~Y`, extended by presence like `~D`'s, so all four seats
+   change pace together.
+
+**Owner:** `1.0.0_SA_CTO` (`drive-mode.py`, `/drive-mode`, `/goal-set`, the IRPT_BCKEND lease; surfaces from each
+seat's STATUS write claims). **Non-application:** a goal loop that works no registered project.

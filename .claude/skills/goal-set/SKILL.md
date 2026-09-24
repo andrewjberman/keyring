@@ -30,8 +30,14 @@ Write a self-driving loop -- the goal becomes its standing directive:
 ```
 
 - **Interval** is yours to set -- 5m is a sane default; stretch it for a big goal.
-- **Each wake** the loop drives the goal forward: decompose it, do the next step, or
-  dispatch to workers as the size warrants.
+- **Each wake, first read the project's mode lease** when the goal works a registered project (report 2 C11):
+  `python .tools/drive-mode.py read <CODE>`, or `<CODE>~<lane>` when the project runs several FAST seats.
+  - **FAST:** work under the FAST relaxations (`/closer-drive`: land on DEV, the CVO grades after the fact).
+  - **FULL:** keep the project's normal checks. On a closer project, the CVO grades each pinned change before it
+    counts, and the CTO lands DEV candidates.
+  - **HOLD:** pause this tick.
+- **Then** the loop drives the goal forward: decompose it, do the next step, or dispatch to workers as the size
+  warrants.
 - **At completion** it runs `/verify` -- mechanical / declarative / semantic, grounded
   against the real artifact, never a "done" claim.
 - **If `/verify` is not SOUND**, it ADJUSTS (fix the gap, re-drive) and keeps looping.

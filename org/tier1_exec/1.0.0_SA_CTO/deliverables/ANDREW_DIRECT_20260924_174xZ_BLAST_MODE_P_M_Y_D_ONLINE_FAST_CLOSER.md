@@ -28,3 +28,9 @@
   - It relaxes none of the safety gates in FAST mode's never-relaxed list: safe-commit, own worktree, no rebase, the
     never-widen sign-off, the deploy ledger, safe-apply, vendor egress on his per-use word, PROD promotion,
     destructive-act confirmation, the cross-firm guard, naming builder output, secrets.
+
+## Superseded in part
+
+The `/freeform` authorization above is withdrawn: Andrew reversed report 2's call 6 at ~18:2xZ, and the comp-tool
+rail stays on in FAST mode (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_182xZ_CALL6_REVERSED_RAIL_STAYS_ON_IN_FAST.md`).
+Every other line stands.

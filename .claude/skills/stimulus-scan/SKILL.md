@@ -29,6 +29,10 @@ Run each step in order. Use the MCP broker tools + Bash; emit findings as a mark
 
 ### Step 1 — Read agent state (telemetry primary, broker cross-check)
 
+**Also read the fabric's promised work:** `python .tools/active-commitments.py` prints every seat's `.active-commitments`
+lines from the last 24 hours (awareness only, nothing is refused on it; Andrew-direct 2026-09-24 ~18:4xZ). A promise from
+a STALE or BLOCKED seat is one more fact for that seat's dispatch.
+
 ajb_workspace runs the corporeal-style telemetry architecture: the PostToolUse hook `.tools/hooks/post-tool-telemetry.sh` appends one JSONL line per tool call to `org/mcp/agent_telemetry/<serial>.jsonl` — `{ts, agent, tool, kind, session_id}`, with `kind` tagged `work` vs `loop` (loop = check_inbox / heartbeat / get_live_agents / get_agent_status / inbox-watch / kill-orphans / the loop+stimulus-scan Skills). This is the **primary, finest-grained** activity signal — per-tool-call, work/loop-separated.
 
 Extract the last `kind:work` ts per agent (staleness) and the last-any ts (alive-but-loop-only):
