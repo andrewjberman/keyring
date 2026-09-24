@@ -26,8 +26,8 @@ goes through the module's own injected fake `call`.
 per run over the rows `induction_request` classifies EVIDENCED from report text. Today 40 folders read NO_EVIDENCE / AMBIGUOUS /
 DISAGREEMENT there. On Andrew's word (2026-09-24 ~16:5xZ, *"go look right now and make a call"*), the issuer read every document
 in those 40 folders and called each one: `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/UNRESOLVED40_CALLS_20260924.json`
-(40 rows: `folder`, `root`, `cc`, `bloomberg`, `tier`, `basis`, `action` = `register` (37) or `associate` (3: Copa, Uber,
-Schlumberger -- keys the pool already carries as MEASURED records with no folder). Since CLOUD @e640337205 `add_security`'s own
+(40 rows: `folder`, `root`, `cc`, `bloomberg`, `tier`, `basis`, `action` = `register` (35) or `associate` (5: Copa, Uber, QXO,
+Bunzl -> BZLFY US, UMG -> UNVGY US -- keys the pool already carries as MEASURED records with no folder). Since CLOUD @e640337205 `add_security`'s own
 collision rule ENRICHES such a key (attaches the folder) instead of refusing, so ALL 40 rows are called; `action` travels into the
 read-back as `association_expected` and changes nothing about the call.
 
@@ -80,12 +80,17 @@ the evidence table. Scratch `.scratch/e1/`. Your deliverables dir: `org/missions
 2. `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3 --governing-order <this order>` rc 0.
 3. Flip `<status>` to `complete` only if every criterion passes; commit the files you changed plus the instance and the dry-run
    read-back JSON (written to your deliverables dir by the new argument).
-4. Report ONCE: the AC2 totals line, the three `association_expected` rows, and the AC3 refusal line.
+4. Report ONCE: the AC2 totals line, the five `association_expected` rows, and the AC3 refusal line.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
+**ISSUER AMENDMENT 1 (2026-09-24 ~19:0xZ, before the spawn):** the evidence table was read against the served pool: Bunzl and UMG
+now call the US lines the universe already MEASURES (BZLFY, UNVGY), QXO associates, SLB registers (35 register, 5 associate; totals
+40 unchanged, so AC2's expect is unchanged). Graded by: GATE (viii) (the order declares `<placeholders>`); no other limb grades a
+modification.
+
 **ISSUER NOTES:** the FIRE is the issuer's drain act under a fresh never-widen pair (decomposition v3.0 s.5 duty 2): `OPAL_INDUCTION_FIRE=1
-python -m lib.research.corpus.induction_run --fire --as-of <today> --evidence <table>` once, read-back recorded; the 3 association rows
+python -m lib.research.corpus.induction_run --fire --as-of <today> --evidence <table>` once, read-back recorded; the 5 association rows
 are ENRICHED by add_security's own rule since e640337205 (msg 25707), so one batch covers all 40. The table is Andrew's pick delegated to the issuer's read (record @`090ffea`); the CVO's
 standing ruling on picks is not widened by this cell. Checks dry-run at the base before the cut: AC1 FAIL (no such tests), AC2 FAIL
 (unrecognized `--evidence`), AC3 PASS (the bound) -- recorded in the issuance commit.
