@@ -3,7 +3,7 @@
   "project": "NFRA_OPALAI",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.4",
+  "prd_version": "v0.5",
   "step": 4,
   "brief_ref": "docs/briefs/opal-ai-microproduct-repo-brief-20260923.md@a47993af9c",
   "endpoint_outcomes": [
@@ -63,6 +63,10 @@ catalog row 7 (Bloomberg view-side lookups) is served today by a Bloomberg MCP s
 (`integrations/bloomberg/mcp/server.py`, 456 lines). `Opal_Agent` cannot launch it, and the decomposition places it
 outside round 1. The cutover would otherwise drop a capability colleagues use today with no word to them. The ENDPOINT
 is unchanged.
+
+**v0.5 (2026-09-24 ~22:1xZ)** retires G-GH. The org policy refuses deploy keys, and the operator-side pull (v0.3)
+already makes a narrow credential redundant. The boundary is unchanged: `Opal_Agent` holds no credential. The
+ENDPOINT is unchanged.
 
 The design this PRD binds is `org/tier1_exec/1.0.0_SA_CTO/deliverables/OPAL_AI_RUNTIME_ISOLATION_DESIGN_20260924.md`
 @45ce8406fc. The header stays DRAFT until L4-R. The author signs neither half.
@@ -239,8 +243,8 @@ that would not fast-forward refuses.
   write it, so the agent cannot edit its own prompt, guardrails, hooks or settings. It can write only its state
   directory.
 - **The pull runs as the OPERATOR account, never as `Opal_Agent`** (v0.3 ruling on `2.0.0_SA_COO~O` msg 25756: whoever
-  pulls must write the checkout, and `Opal_Agent` may not). The launcher's pull step uses the G-GH credential, which is
-  read-only, scoped to `Opal-Capital/opal_ai` alone, and held in the operator's profile. The checkout is ACL'd
+  pulls must write the checkout, and `Opal_Agent` may not). The launcher's pull step uses the operator account's EXISTING GitHub
+  access on this box (v0.5: no new credential is minted; G-GH is retired). The pull is fast-forward only on `PROD`. The checkout is ACL'd
   read-and-execute for `Opal_Agent`. **`Opal_Agent` holds no GitHub credential at all**, and no credential for
   `ajb_workspace`. The launch gate and the agent then run as `Opal_Agent`, and the gate checks (a)-(c) as written. The
   operator side starts the agent as `Opal_Agent` and passes it no operator credential, token or environment.
@@ -332,7 +336,7 @@ Bloomberg operator scripts, sign-in and daily pull stay in the workspace.
 | S3 | nested-repo gates | lane file, hook installer, `safe-commit.sh` in a nested repo | S2 | FWD-9 |
 | S4 | CI | the `opal_ai` workflow | S1 | FWD-13 |
 | S5 | agent product files | prompt, refs, request catalog, serve skills, fence, `portal_lookup.py`, the Teams watch | S1 | FWD-1, FWD-6 |
-| S6 | runtime account and checkout | the account, the ACLs, the read-only PROD checkout, the GitHub read credential | S1, G-ACCT, G-GH | FWD-1, FWD-7 |
+| S6 | runtime account and checkout | the account, the ACLs, the read-only PROD checkout pulled by the operator | S1, G-ACCT | FWD-1, FWD-7 |
 | S7 | runtime Claude setup and launcher | login, `CLAUDE.md`, `.claude/`, MCP config, launch gate, state directory | S5, S6, G-AUTH | FWD-1, FWD-7 |
 | S8 | Teams watch and hosted content | token refresh owned by the watch, read-failure fix, `hostedContents` tool | S5, S7 | FWD-2 |
 | S9 | speed | stage timing and the section 11 remedies | S7, S8 | FWD-3 |
@@ -347,7 +351,10 @@ Bloomberg operator scripts, sign-in and daily pull stay in the workspace.
 - **G-ACCT:** create the runtime account, an admin act on this box. Holder: a worker under this project, on R1.
 - **G-AUTH:** the runtime account's first Claude login and its `opal-gateway-bbg` OAuth, whose MFA goes to Andrew's
   phone. Holder: Andrew, at a time he picks.
-- **G-GH:** mint the read-only, repo-scoped GitHub credential. Holder: `0.0.0_AB_MSTR~Z`.
+- **G-GH: RETIRED at v0.5.** A narrow credential was never reachable: GitHub refused a read-only deploy key (HTTP 422,
+  "Deploy keys are disabled for this repository", measured by `0.0.0_AB_MSTR~Z` 2026-09-24 ~22:0xZ). A narrow credential
+  also adds nothing once the pull runs as the operator, who already holds GitHub access on this box, while
+  `Opal_Agent` holds none.
 - **G-MOVE:** the gateway path moves only when no open order names it. That means NFRA_OPLGTW's OG-v-4 and OG-v-5
   (Andrew lifts his stop or supersedes them) and NFRA_MCPINDEX's open round-1 orders (closed and re-cut). Holder:
   Andrew for OPLGTW; the MCPINDEX COO for its round.
@@ -464,7 +471,7 @@ Sum: 2+2+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1 = **28**.
 
 L5 is `2.0.0_SA_COO~O`'s. **FWD-1 is the thread, and round 1 builds it end to end over its hops:**
 1. the agent's product files in `opal_ai/opal/agent/` (S5);
-2. the runtime account and read-only checkout (S6, G-ACCT, G-GH);
+2. the runtime account and read-only checkout (S6, G-ACCT);
 3. the runtime Claude setup and launch gate (S7, G-AUTH);
 4. a Teams watch that sees (S8, the minimum for one exchange);
 5. the asker's entitlement on the path (S10 round-1 half, C10);
