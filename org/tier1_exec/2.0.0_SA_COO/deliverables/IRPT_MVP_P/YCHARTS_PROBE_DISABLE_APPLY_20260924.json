@@ -1,0 +1,51 @@
+{
+  "observed_at": "2026-09-24T03:04:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "APPLIED -- ycharts-session-probe-schedule DISABLED for the resident cutover (receipt boolean legacy_probe_disabled); CTO GO 100030 (ruling IRPT-RESIDENT-LEGACY-PROBE-DISABLE-20260924)",
+  "change": {
+    "root": "infra/aws/terraform/ycharts-pipeline",
+    "commit": "9bb69b1357",
+    "resource": "aws_cloudwatch_event_rule.session_probe",
+    "before": "ENABLED",
+    "after": "DISABLED",
+    "target_lambda": "ycharts-session-probe (stays deployed; on-demand invocation unchanged)",
+    "alarm_effect": "the session-eviction alarm this rule fed goes quiet; the resident owns eviction handling"
+  },
+  "plan": {
+    "file": ".runtime/ycharts-probe-disable/disable.tfplan",
+    "sha256_prefix": "ee5160cf0388cb77",
+    "summary": {
+      "add": 0,
+      "change": 1,
+      "destroy": 0,
+      "resources": 26
+    }
+  },
+  "apply": {
+    "tool": ".tools/safe-apply.sh",
+    "result": "Apply complete 0 added / 1 changed / 0 destroyed rc=0",
+    "completed_at": "2026-09-24T03:01:16Z",
+    "log_sha256_prefix": "9130340b299026e3"
+  },
+  "readback": {
+    "describe_rule_state": "DISABLED",
+    "capture_rule_state": "DISABLED",
+    "re_plan_rc": 0,
+    "read_at": "2026-09-24T03:02:xxZ"
+  },
+  "ledger": {
+    "slug": "ycharts-probe-disable-20260924",
+    "sentinel_commit": "65bf935f13",
+    "status": "CLOSED",
+    "legs": {
+      "A1": "closed",
+      "V1": "closed"
+    }
+  },
+  "cutover_receipt_boolean": {
+    "legacy_probe_disabled": true,
+    "source": "describe-rule readback, never the plan"
+  },
+  "rollback": "the same plan in reverse (state ENABLED), 0/1/0",
+  "push_state": "LOCAL (irpt-smoke-p-backend-20260923; MSTR pushes)"
+}

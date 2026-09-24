@@ -1,0 +1,25 @@
+{
+  "receipt": "portal candidate 4 -- the client flag lifted for the three Analysis operations (CTO batch 28 (iii) / 100542, last act of (iii))",
+  "by": "2.0.0_SA_COO~P",
+  "at_utc": "2026-09-24T11:4xZ",
+  "branch": {"name": "irpt-dev-candidate-4-20260924", "head": "310b83b8", "commits": ["0ba38c34 (the flag + three pinning suites re-pinned)", "310b83b8 (owned-history test arm inverted)"], "base": "origin/DEV f7a4e47f (MSTR~Z's pull-merge carrying 895752676a, the head the CTO named; ancestor check true)", "worktree": "C:/Users/AndrewBerman/Desktop/portal-dev-consolidation-20260924", "push_state": "LOCAL; MSTR pushes"},
+  "change": {
+    "files": 5, "insertions": 46, "deletions": 23,
+    "product": "src/api/endpoints/investor-reporting.ts -- IR_ROUTE_TABLE rows analysis-request-history, analysis-request-read, analysis-input-upload: status NO-HANDLER-AT-HEAD -> DECLARED, with the comment naming the served handlers (irpt-status routes 7yo12g5 / jjidb6b; irpt-ycharts-generate route 0sp6wva answering NOT_READY by name until the upload composition exists). The status value and NotYetExercisable are KEPT; the population is empty again.",
+    "tests_re_pinned_never_deleted": [
+      "mvp-upload/upload.test.ts: the runtime-factory-absence arm inverts -- the live client ISSUES the upload once; an empty answer is refused by the envelope rule, never by NotYetExercisable",
+      "mvp-selection/owned-history.test.ts: the pending-routes arm inverts -- history and read are ISSUED once each at their declared paths",
+      "fe-s-13/routes.test.ts: declared / named / built 12 -> 17 beside the file's own _denominator",
+      "fe-s-14/header.test.ts: header sent == the table's length; 17 rows, 0 NO-HANDLER, 17 DECLARED"
+    ]
+  },
+  "verification": {
+    "where": "the nested portal checkout inside the backend worktree (irpt-smoke-p-backend-20260923/portal), where ../docs/contracts/investor-reporting/v1/routes.json is the FLIPPED contract (89204d4b2e + 64f05e3424); the consolidation worktree resolves that path to the Desktop and is not a valid instrument for the routes suites",
+    "tsc": "bunx tsc -b --noEmit: 0 errors",
+    "eslint": "the five changed files: 0 problems",
+    "suites": "fe-s-13 + fe-s-14 + mvp-upload + mvp-selection (96 tests, 20 files): base f7a4e47f 21 fail / candidate 310b83b8 17 fail; INTRODUCED by the candidate: 0 (the failure sets diffed by test name); FIXED by the candidate: 4 (the fe-s-13 table arms)",
+    "pre_existing_17": "the same set at the base: 12-literal pins in fe-s-13/producer-fixtures.test.ts (expects 12 DECLARED with contracts, gets 17), fe-s-13/request-corpus.test.ts (no corpus record for directory/browse and now the three flipped routes -- the corpus has 12 records for 17 declared routes), fe-s-14 F14-AC8 / AC13 / AC14 / AC15 arms, FIELD_MAP (PerformanceReport.beginningValue / endingValue / retainedReport produced by the adapter, absent from FIELD_MAP), authorized directory browse boundary. These pre-date this candidate (four of them since the directory-browse declaration) and are named here as the debt they are; the corpus records for the four newly declared routes are a generator act (gen-wire.ts) for a later candidate, not a silent addition here."
+  },
+  "what_it_moves": "a signed-in user on DEV (after MSTR lands it) reaches the served history / read routes from the page, and the upload route answers NOT_READY by name; hops 9 / 10 of the Analysis trace become exercisable end to end signed-in.",
+  "landing": "the CTO reviews on its own instruments as candidates 1-3 (ancestry, the hunks, tsc, the named suites); 0.0.0_AB_MSTR merges --no-ff onto origin/DEV and pushes on the CTO's GO; rollback = DEV re-pointed to the pre-merge head."
+}

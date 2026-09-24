@@ -1,0 +1,816 @@
+{
+  "schema_version": "irpt-accepted-custody-package-evidence-v1",
+  "measured_source_pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+  "baseline": "f0075287c426cbe9eea04f0165bc179147918ce1",
+  "source_hash_basis": "Exact Git blob bytes at measured_source_pin; no newline conversion. Later evidence/status commits are not part of measured source.",
+  "source_map": {
+    "path": "infra/aws/lambda/ci/lambda-source-map.json",
+    "git_sha256": "2e4be13e530ee8d4e642f7be711869592097f1ce81d0ae8c0ac2a38e1b0ff333",
+    "builder_materialized_sha256": "2e4be13e530ee8d4e642f7be711869592097f1ce81d0ae8c0ac2a38e1b0ff333",
+    "builder_hash_basis": "Actual source-map bytes read by local builder; may include checkout newline conversion."
+  },
+  "review_pins": {
+    "binding": "d8d88388aba171b2d9f9a7f1798fe1ed974bb0bb",
+    "consumer": "36131adb48"
+  },
+  "integration_pins": {
+    "consumer": "10627906f24aa42db4c08fd66105599f35bf7819",
+    "merge": "411256e41c",
+    "composed_control": "c3add4090e",
+    "manifest_correction": "5ea4441702"
+  },
+  "changed_files": [
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+      "git_blob": "faa08386f698a37443730f0e39c2a0de4f4a9101",
+      "sha256": "a133e3922a0417085f3db5548702bfc58f886edb0fc3714849f65b8f6ec0a938",
+      "byte_length": 96769
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/tests/test_economic_regressions.py",
+      "git_blob": "6f92d57cb3f49d013a35bbffa62f3cdb6f8d9755",
+      "sha256": "69e09e4de45ec24dcc4ea4c95173098c37bbb4caa703f56fefa8fa149dbbdb45",
+      "byte_length": 19213
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py",
+      "git_blob": "90e82177d6948bef7dbd7fbf6dc85e2932519e4a",
+      "sha256": "ae8ff802b844c937acd2dfbd98dc9c17abaa414544a3282d820b08adf25598a8",
+      "byte_length": 19457
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/tests/test_source_inputs.py",
+      "git_blob": "b059f2280b04061b0ff97327689ee1f9faa47683",
+      "sha256": "e191e0eb0eafca5164d5d6b2492ff74352f3f3c83ddbfc437d26b40b593f6d22",
+      "byte_length": 7104
+    },
+    {
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "git_blob": "d6559c3687915aef2b5cd87e3523f2edd611553f",
+      "sha256": "2e4be13e530ee8d4e642f7be711869592097f1ce81d0ae8c0ac2a38e1b0ff333",
+      "byte_length": 256082
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_authz/tests/test_guarded_entries.py",
+      "git_blob": "93f7b5bf0b5c7e59f316c4265d9cf8eba4ec6bd9",
+      "sha256": "aafb5e1973fe090e09e19fc71b65f61f501444d1b70defcf50f2abc0674a1e2d",
+      "byte_length": 22638
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_scope/accepted_custody.py",
+      "git_blob": "f69525e3b60f16c0ca896261dee0387409a8bc25",
+      "sha256": "748d54550cba302f7d418937e3434bb63cdc3bdc7f8bb0a21f64e144c9956837",
+      "byte_length": 8539
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_scope/custody_binding.py",
+      "git_blob": "1f5f3a8bcd883713353fc76ad8ed400cd4f93516",
+      "sha256": "a01c312835062fdb8419e549e28387f1e0fc3ee68cded71fbe3349de97c4be0e",
+      "byte_length": 8858
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_scope/tests/test_custody_binding.py",
+      "git_blob": "1b3269d034fafa9da3c80e2f4bedeefc3f234707",
+      "sha256": "4b803d94e4452c3198e438215fad4d02015827973451d43151721d2a95d6fb37",
+      "byte_length": 17086
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/holdings/publication.py",
+      "git_blob": "9b169a9ee1bbd75583b75cbe60522e7ed9ebb6bb",
+      "sha256": "ca49ec495cb5936a2f881170d08543469cbfc4ec7c28d0a6024cbf48264f9e95",
+      "byte_length": 25649
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/holdings/snapshot.py",
+      "git_blob": "0668247488e46b62f232d4889ae60de966f3cfd1",
+      "sha256": "f91d972366e2a8637bd0fdeafafa231b927d5118b84ce5472801872c7d0f0919",
+      "byte_length": 22541
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/holdings/tests/test_publication.py",
+      "git_blob": "0af28e7c1b1df28a7a3b0c83a4b2b6394d042b51",
+      "sha256": "dd721fb2c38c9fd4ccfa0a8fbd5befd86ea41861d42525e118c9e5427492319a",
+      "byte_length": 17017
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/holdings/tests/test_snapshot.py",
+      "git_blob": "095836a1e6ac0c05b68368bf755443947ce64bd6",
+      "sha256": "daae1801dcb75ef87c98d0f66f231bb978b310d57ae99162a2744e358c479ebc",
+      "byte_length": 18016
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/intake/custody_portfolio.py",
+      "git_blob": "ab6a1cccaf65597fdbf54c509403a5f3f7f1d5f2",
+      "sha256": "a62ee3780db59dc92099472acc902b64023a8c098222846534f0c76c3b4d7ab1",
+      "byte_length": 15409
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/intake/portfolio.py",
+      "git_blob": "6b7f263ea7dcaf29f586775ffb92d7d52de64b69",
+      "sha256": "40bf9ecce6077465ac35884f2d8b8dbef81dc439c08d696aeccef987ce825635",
+      "byte_length": 15344
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/intake/tests/test_custody_portfolio.py",
+      "git_blob": "d66b6e24fff7e256afdf0f28a4586803ca886472",
+      "sha256": "34a05da743f0e152abfbe89c2543c5665405947daac61e0fd34ee6174f583cf1",
+      "byte_length": 10940
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/custody_submission.py",
+      "git_blob": "a8880eb3ca67d483ce475c9922e93a03d0e797a3",
+      "sha256": "b21a44b24408cd514401791a548527e1217be1e7e4a1d410fba2cff6b0225b79",
+      "byte_length": 8717
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_retained.py",
+      "git_blob": "3166ade704a5c5cbb61f15389a464d42964eda28",
+      "sha256": "0d76e8267552fc381631132796d8b8028dca0ed927c02b9031c44e061869af55",
+      "byte_length": 22625
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/ACCEPTED_READER_FIELD_REVIEW_20260923.md",
+      "git_blob": "0d7afd7771394417f7cd6bc12800e7ce894f46da",
+      "sha256": "7283ad51856a3e0079914b8e2d53dceb7a27e2a645f9542b7f9c3cfd8f07534e",
+      "byte_length": 15450
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/ACTUAL_POSITION_REPAIR_PROPOSAL_20260923.json",
+      "git_blob": "167478eb434f2a8eff5e4c7dcd0cb8e8dea8b81a",
+      "sha256": "7dc1ac76f22acfc2a78ca077dc88217cc05baa1d114505e8c4f3c646e957d6c5",
+      "byte_length": 12178
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/ACTUAL_POSITION_REPAIR_PROPOSAL_20260923.md",
+      "git_blob": "144ed1b2a125bdfd16d67516f4ff7366f86e76de",
+      "sha256": "e03e71ae6a92f5bc6cccf963dfcaa5d23e3a38ed69e8e1fb26b7e47af17a56b4",
+      "byte_length": 18198
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CUSTODY_NORMALIZATION_SOURCE_HANDOFF_20260923.json",
+      "git_blob": "868f531b3bc488f5cdb9d3ca0e4e144540554c5e",
+      "sha256": "13654e124b361be1f005f9ef641ac3462eadabf04a43435e1138f9bf41f36b4f",
+      "byte_length": 15897
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CUSTODY_NORMALIZATION_SOURCE_HANDOFF_20260923.md",
+      "git_blob": "1921e77f1c26d24858213d109e4e6fd8a92d1943",
+      "sha256": "8438c80a1a93ce04fe0dc92c1f388710fb1ba074f608166db4c613bf1492fb99",
+      "byte_length": 13832
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/DIRECTORY_DATA_AUDIT_20260923.json",
+      "git_blob": "da3d717161a2a37dc067729f38019b430f113407",
+      "sha256": "74edee811fbdc16de1ebfb5632cb2e1c4fe619ecf755758d28038efbe63fdeda",
+      "byte_length": 16382
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/DIRECTORY_DATA_AUDIT_20260923.md",
+      "git_blob": "d7b7cd3e0edf3769ec06d44ff829c582a57bddbc",
+      "sha256": "2d51d08847576cbb67f528a9bac2939b904689d334df39be230464c5b43b4617",
+      "byte_length": 7167
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/INBOX_RECONCILIATION_20260923.md",
+      "git_blob": "05ca35cc94898837b3811c59f6a6d158d51e63d5",
+      "sha256": "ed055356d2a2bd1227eac4a2cbf725e38092989f304951effd3f51886085ae77",
+      "byte_length": 7271
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/OPAL_ORGANIZATION_STORAGE_20260923.json",
+      "git_blob": "ee07d64d6f74470b3abfd268861f4a4542b6bb59",
+      "sha256": "5d3a088acc78d9986265e6ca1b73c3e3063b46184aef4b4b4c5845330027f824",
+      "byte_length": 1247
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/PRODUCER_ORGANIZATION_INVENTORY_20260923.json",
+      "git_blob": "bc97628882bbafeca7e0715d7f2afdc6ba1821af",
+      "sha256": "fae187c6c190c2b6b883d76195dccfe07ee3712e4afe3b779e6655b2455f76d5",
+      "byte_length": 16831
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/PRODUCER_ORGANIZATION_INVENTORY_20260923.md",
+      "git_blob": "f682620410c5d8a70cf466c4fb28c3465082bbfc",
+      "sha256": "714eb2dd386fcc25e7f86634ff3cd396f606d703eb6ddb009cfcff7c9087ead0",
+      "byte_length": 14403
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/STATUS.md",
+      "git_blob": "a4b4481262a111b39d9309f68128aa3b58561496",
+      "sha256": "37c9675b10a6e08b54d288ad9423871cb5e00007485520d9a95685a9bbe51dd8",
+      "byte_length": 8743
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/directory_data_audit.py",
+      "git_blob": "d6787deabec738cd4a00e2035f31c7901e6af057",
+      "sha256": "c761bfa6661e15ac2bb3dd55e2df6591c902c0bcd14efd1c728db985e17da918",
+      "byte_length": 18651
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/ACCEPTED_CUSTODY_READER_DRAFT_20260923.md",
+      "git_blob": "2fffaf6fbb3c2d1bad1a112072808cf57c9c86b9",
+      "sha256": "232ca08d254efee005d66209069e5fce841b262962b88b78197f2fdfbeb24053",
+      "byte_length": 24162
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/CUSTODY_BINDING_SEAM_EVIDENCE_20260923.json",
+      "git_blob": "19c366bdad5b059f8fe3eb75b5662e34ce7bd34c",
+      "sha256": "e69863364e7404464fa28af4fe4c40f34a6cc1a6c097ca440158a4449345f50b",
+      "byte_length": 9684
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/CUSTODY_FACTORY_BUILD_MANIFEST.json",
+      "git_blob": "7cdb77dcef2853426f4fe1917dbe4ca866a9de0c",
+      "sha256": "c68c9ea80f044e6cbf56a2442f6eb6297200273a2e96551051240840b8e2ff8b",
+      "byte_length": 2780
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md",
+      "git_blob": "4a25f471fd0e5f5f335b62fa41fba4210678d9fc",
+      "sha256": "14c787acf4cc316419da3d9dddd15db31e961f6bb8b0efe92ae4ef6f477f1348",
+      "byte_length": 44135
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/verify_opal_linux_runtime.py",
+      "git_blob": "be834ea63589d8f92693dab418576e5135354ab5",
+      "sha256": "57d7d81c973d31cad62564e9d5409be15b0daccf5b2b39b483507ad06fe79b3a",
+      "byte_length": 4631
+    }
+  ],
+  "package": {
+    "function": "irpt-ycharts-generate",
+    "package": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\irpt-p-opal-irpt-ycharts-generate-uvm6ms_8",
+    "members": [
+      {
+        "member": "job.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/job.py",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "8403a175d54f408184aea1416ea27d26f495b186fb2cbf1e418259a18556c6cf"
+      },
+      {
+        "member": "recipe.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "2a367ee2795914e782ccebe8743d15453df6daa5e5b781339ca1277a1bfc5b5c"
+      },
+      {
+        "member": "transport.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "186949c4fbf66209eb781ffe92c9af2d7f598dc776862c112765b472a0f3ba9e"
+      },
+      {
+        "member": "templates.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/templates.json",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "e6275ba49cbc62a4a676c2f89b6b31e79c998923da44bcd4b7f7e1da6c1df262"
+      },
+      {
+        "member": "enforce.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_authz/enforce.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "18f04af84b9c5e87362f9cf87ee2ef5bc3680ccbaea66b1a2ee4e6579e6b1e7b"
+      },
+      {
+        "member": "errors.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_authz/errors.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "784ee313ed7013e6fdf535a373e7941f4c672f4467e4dfcb4e8ad0634b1646a2"
+      },
+      {
+        "member": "gate.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_gate/gate.py",
+        "pin": "3be9d03962afc3d9cc13e1f035e4dbe41753f3cb",
+        "sha256": "9aad50cf5ac4b15f2284d1c4f3e0e24a47f6145e0565728a40173ffb9ad796b4"
+      },
+      {
+        "member": "keys.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_keys/keys.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "56ee3cc22e802579ebb8d4cba53edec8045603396a48fe952d6b83df0f08ab2a"
+      },
+      {
+        "member": "resolve.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_scope/resolve.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "24b407fa00ff0fc342d57b1ca2bd986d7c802fe8a96b30fe57c06520523ccdeb"
+      },
+      {
+        "member": "ids.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_ids/ids.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6"
+      },
+      {
+        "member": "firm_destination_policy.json",
+        "repo_path": "infra/aws/terraform/investor-reporting/core/firm_destination_policy.json",
+        "pin": "3be9d03962afc3d9cc13e1f035e4dbe41753f3cb",
+        "sha256": "93ca3c9beaeed5ffb9ed1b7cfa341bd34af0dd05309a0c538994fed0467102b0"
+      },
+      {
+        "member": "firm_registry.json",
+        "repo_path": "data/firm_registry.json",
+        "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+        "sha256": "5a4c0c3da26fffe55d8a3ec2a8a7248bd0b1dd936af5425ab35426bc5d277fc0"
+      },
+      {
+        "member": "settings.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/intake/settings.json",
+        "pin": "dc5d119b84b8f8ff6fdacc8b190b5d60a3faea11",
+        "sha256": "c493ea6edd6ee7c38c0044feda1440865532e0fbc86d30b2dfe2c0e34ec1eefd"
+      },
+      {
+        "member": "fixtures/har/FIXTURE_MANIFEST.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/FIXTURE_MANIFEST.json",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "5ff5a1a0e74a2c7e502c8bb543bb3ca27baf6f9d88ff9be51c7987d18c2348f0"
+      },
+      {
+        "member": "fixtures/har/collection.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/collection.json",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "b24d5ac917ca9c87659e3cec78d88f5facc1e8e4f1918bd9fea0594bc2729464"
+      },
+      {
+        "member": "fixtures/har/create_201.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/create_201.json",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "47fd931a007be826ebbb3eb3edd553a4fcb7498a710b7477db8d8957de1aa7cd"
+      },
+      {
+        "member": "fixtures/har/create_422_fee.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/create_422_fee.json",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "b92640f60f7cd0fa2de4eff34a7245e403ccb09e936f94baf77f9e2ee7a48ea3"
+      },
+      {
+        "member": "fixtures/har/dashboard.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/dashboard.json",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "49cc5be0ac749f2e0d51b028e766ef68d42276953364e306d92d345aea9f7d3a"
+      },
+      {
+        "member": "fixtures/har/decision_branches.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/decision_branches.json",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "e55589ccbabd01fb43116663df7d41d9be1cb3caebc591d918e4feef5b78b4bd"
+      },
+      {
+        "member": "fixtures/har/generate_201.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/generate_201.json",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "aeaf2a84d847f32d90f909fa9f1c019d4059959798dc875ba8f51cc19b346eec"
+      },
+      {
+        "member": "fixtures/har/generate_404_minimal.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/generate_404_minimal.json",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "ae67c73bb840b6a9c3a8b1157aa0d6d97ff7e2f7742ba2b9fc95489458c641f7"
+      },
+      {
+        "member": "fixtures/har/report.pdf",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/report.pdf",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "cef3b030a93763cb836367821d6d398a276b6844b783f9e1b8f8bfca4d22e637"
+      },
+      {
+        "member": "fixtures/har/status_drifted.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/status_drifted.json",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "7e3e72e721795cee284cda38dd60baaf59309dfd0bd694bc336f4a3e8f0e717d"
+      },
+      {
+        "member": "fixtures/har/status_ok.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/status_ok.json",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "f186547f3f6621546a4fd25a4a8d18699fd21e4bcf0c1c7bacf5d9ae2509893f"
+      },
+      {
+        "member": "fixtures/har/templates.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/templates.json",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "252ac3f4f4318d70bd66a421c8d3b4f2fc0691864b6a025e78a1c2b2ef2652d1"
+      },
+      {
+        "member": "fixtures/har/upload_ok.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/upload_ok.json",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "5249e5b85571ea9fcf364b8b97fdafbd4da2a55cfe269c7612d5789f99312e1f"
+      },
+      {
+        "member": "fixtures/har/validate_200.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/validate_200.json",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "c4fb1b06cf152551c4e3a40a14b1c966752944fdf99597750d1c30c3766dfa78"
+      },
+      {
+        "member": "entry.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/entry.py",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "477b1fb4d949311121ad483b17eca8bace9913c9d36155467ccebe8cac2f9bc5"
+      },
+      {
+        "member": "served.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_authz/served.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "e518af43b2c3358bb788b32ddd7f57b3f0c7e47afd7138ad9ed967e03531052f"
+      },
+      {
+        "member": "loaders.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "b84bb2918fc13be31358e81221e951ed4f4aa70da9dea2b7a8dbce93b1853da2"
+      },
+      {
+        "member": "data/custodian_key_seam.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json",
+        "pin": "c28c728a309ab0d83b2831c2972179791a2985fb",
+        "sha256": "87f2f92f3c71f7761b387574a3df721474120465b1b0da8028cfc201b619923a"
+      },
+      {
+        "member": "raw_keys.json",
+        "repo_path": "infra/aws/lambda/investor-reporting/_ids/raw_keys.json",
+        "pin": "47f21dab95c28eec2476e9e5a30a9ebcc7efc78d",
+        "sha256": "f81db571b5d92ca66b960047d96b38cc74c173cb7bf8be0c20e9cd3973acaf89"
+      },
+      {
+        "member": "selection.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_scope/selection.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af"
+      },
+      {
+        "member": "selection_store.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_scope/selection_store.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c"
+      },
+      {
+        "member": "prospect.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_scope/prospect.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "b7e5c9335caad7a01eb66c73305f70a6497d0b72110ad7268dad1757358287a8"
+      },
+      {
+        "member": "owner_reads.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_scope/owner_reads.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "f9e1f5d3274ee4396932aa1b1bf80b08be09c6afd183ab14c81b766b5d90ed0f"
+      },
+      {
+        "member": "custody.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_scope/custody.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "23cda6b0e3dd88df3b837545f94efacf600db857a5509ddd458ff40cc7870394"
+      },
+      {
+        "member": "canonical_profile_reads.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "22534db5529e08144ddb3ab1ebe751099ecf4c55580bd8cc53783814b183dbdd"
+      },
+      {
+        "member": "maintained_sources.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "19b7c80970822c8ea5d99eca1a64839b8918850a52bda6ea9897253f09ae1ab5"
+      },
+      {
+        "member": "submission.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "9c9ae002b04eb52040954425f0e215869d4a28349b8ef9bbded176a7fc96e032"
+      },
+      {
+        "member": "routetable.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_authz/routetable.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "1ba3c0c2bd35d32bf3dce3d1e1403acc5c8471add636de73a3807192d8f6276d"
+      },
+      {
+        "member": "portfolio.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/intake/portfolio.py",
+        "pin": "c3add4090ea89c36274b5cbf687b01005f1c3e4e",
+        "sha256": "40bf9ecce6077465ac35884f2d8b8dbef81dc439c08d696aeccef987ce825635"
+      },
+      {
+        "member": "composition.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/reports/composition.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "6d2c3696d0305bee1bc0e95e11c8462d822dae356e1c11ed4253a3d93c699792"
+      },
+      {
+        "member": "repository.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/reports/repository.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "c98091e89d556cf191114c49dd1c1d6e7873711d487740e3ea116311eeb54a2a"
+      },
+      {
+        "member": "request_composition.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/reports/request_composition.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "ff6a2b1c9b05fa7e67257555d935ca4da9bafa8dc6079eb7c13e3b2435629ee8"
+      },
+      {
+        "member": "retention.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/reports/retention.py",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "d360f570dad07a716d754c8fcb377fe39f84fbe7f557adc6f013239be9ba29ae"
+      },
+      {
+        "member": "acceptance.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "eeb01ee15cb04e70293c6cf6877d6dc8e5cd1a7c02beff97226cf3154757e9fd"
+      },
+      {
+        "member": "composition_admission.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "50f5d11cd8ffb8161b9f42af61bdfcdffe698cfc4e66b5cc3338048572563606"
+      },
+      {
+        "member": "custody_submission.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/custody_submission.py",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "b21a44b24408cd514401791a548527e1217be1e7e4a1d410fba2cff6b0225b79"
+      },
+      {
+        "member": "recipe_snapshot.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/recipe_snapshot.py",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "1073b299c6262840e8dac616a0cdf3fbe03d6ec8fbf7457832b35782d1178ea4"
+      },
+      {
+        "member": "submission_service.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py",
+        "pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+        "sha256": "b843bebc07a84d17134b0c39f8e3cc34b12d2c27e57f3f25d8e7bce4f2ee00c9"
+      },
+      {
+        "member": "contracts/AnalysisReport.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/AnalysisReport.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "1bd0dc85847690b277e3a3011bcbe500a02820792cd53a38a1201fc3c55d153f"
+      },
+      {
+        "member": "contracts/AnalysisRequest.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/AnalysisRequest.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "309d0eefab839c99041b38890799b51156caaa1c1c5772b7ee3b427fd460054a"
+      },
+      {
+        "member": "contracts/AnalysisSubmissionRequest.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "ed84ac362c9071319d27e2581ad06ec4d3122c956d5f546266cb3a722cde69bd"
+      },
+      {
+        "member": "contracts/AnalysisUploadRequest.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/AnalysisUploadRequest.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "dbfcbb10b5079570784204ed3ecc02dc81e89e7d1f41b31ba5e118bbd29e7c40"
+      },
+      {
+        "member": "contracts/AnalysisUploadResult.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "0279804481f564ea59d3c06f94cb1e18117c8dbcc969583fd369d0161a34a5b0"
+      },
+      {
+        "member": "contracts/BoundaryRefusal.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/BoundaryRefusal.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "14a756ef46eca7fbd9f5420870908c3f3afb2e7020b4aaa005898ca2be928c0b"
+      },
+      {
+        "member": "contracts/DirectoryContext.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/DirectoryContext.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "8c76a0f0e028f1b1baf7224f633904e2c1b9aa2450b409c679be1bef4bea2404"
+      },
+      {
+        "member": "contracts/DirectoryEntry.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "7ed220ff87a787c6b596bcc66bc90a8a5a69fe2ec7da88e145207297011aab24"
+      },
+      {
+        "member": "contracts/ExportBundle.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/ExportBundle.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "0a2913ac635b5efbdf88c19c83e7a4129bae32f957ee239c4f9e14ecf2819b6e"
+      },
+      {
+        "member": "contracts/ExportReceipt.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/ExportReceipt.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "e3e13eba64eabc717c0878f91f6742e77fef6793937cde6cd00db218ffdde117"
+      },
+      {
+        "member": "contracts/HoldingsSnapshot.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "682f3eb2dd82ff20d6ee15519ec8fb8b8e9d937b921350de9cba38aed968e3c0"
+      },
+      {
+        "member": "contracts/NarrativePacket.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/NarrativePacket.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "60d7e9444c938bca3cba2c248b599e20eee453afa6d380ee359be6bc3ce52d58"
+      },
+      {
+        "member": "contracts/OwnedAnalysisRequest.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "ba0255b82143fd9c04204e37b7a4a74290bc155b265d379c12118bd247235d24"
+      },
+      {
+        "member": "contracts/OwnedAnalysisRequestHistory.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/OwnedAnalysisRequestHistory.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "6f37638baf5ac6b4cd07e68b5180a80b760a6524c5aa46111888c90cdde6b6d7"
+      },
+      {
+        "member": "contracts/PerformanceReport.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/PerformanceReport.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "7231dacb29e60925ae4ffef4d510968e80c5f2f2b7284fa355dd2cc114860aac"
+      },
+      {
+        "member": "contracts/PublicStatusEnvelope.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/PublicStatusEnvelope.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "4a3ecdc6e7de7973a575e5c515369ce1a4112a9e9165408b38299037faf083c3"
+      },
+      {
+        "member": "contracts/RenderPackage.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/RenderPackage.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "0772f243065479031bcd196d2c5def40b426e71c88a02ad6acead30628050418"
+      },
+      {
+        "member": "contracts/RequestComposition.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/RequestComposition.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "6de584ef04e5480725827deda455e5c6846788e87deafc8c18ab9eddb7fda8e3"
+      },
+      {
+        "member": "contracts/ResolvedScope.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/ResolvedScope.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "dd7ab87a7f1e6acaff51b6909d2c5f50b72d9fce84e8d1218b29e01288df7e66"
+      },
+      {
+        "member": "contracts/SelectedAccounts.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/SelectedAccounts.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "a006bfea0509384452a8c1cf83cc144c62d79a55646266599df673a6b3c39d1e"
+      },
+      {
+        "member": "contracts/SelectionRequest.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/SelectionRequest.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "28f8146756fbb579a1be26fc9f4b9a0f34c35efb579971a1ab9959abbb095b5e"
+      },
+      {
+        "member": "contracts/StatusEnvelope.schema.json",
+        "repo_path": "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json",
+        "pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+        "sha256": "f0dae13eecc9aa4f99fdc9538b22c7d426504377bd541f798a3cd48f3fd06f4a"
+      },
+      {
+        "member": "BUILD_MANIFEST.json",
+        "repo_path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/CUSTODY_FACTORY_BUILD_MANIFEST.json",
+        "pin": "c3add4090ea89c36274b5cbf687b01005f1c3e4e",
+        "sha256": "c68c9ea80f044e6cbf56a2442f6eb6297200273a2e96551051240840b8e2ff8b"
+      },
+      {
+        "member": "accepted_custody.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_scope/accepted_custody.py",
+        "pin": "c3add4090ea89c36274b5cbf687b01005f1c3e4e",
+        "sha256": "748d54550cba302f7d418937e3434bb63cdc3bdc7f8bb0a21f64e144c9956837"
+      },
+      {
+        "member": "custody_binding.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/_scope/custody_binding.py",
+        "pin": "c3add4090ea89c36274b5cbf687b01005f1c3e4e",
+        "sha256": "a01c312835062fdb8419e549e28387f1e0fc3ee68cded71fbe3349de97c4be0e"
+      },
+      {
+        "member": "custody_portfolio.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/intake/custody_portfolio.py",
+        "pin": "c3add4090ea89c36274b5cbf687b01005f1c3e4e",
+        "sha256": "a62ee3780db59dc92099472acc902b64023a8c098222846534f0c76c3b4d7ab1"
+      },
+      {
+        "member": "parse.py",
+        "repo_path": "infra/aws/lambda/investor-reporting/intake/parse.py",
+        "pin": "c3add4090ea89c36274b5cbf687b01005f1c3e4e",
+        "sha256": "2841f570b362a3bc6c1d364cc54b8c89bfbaee5c773dc46f45d1d5c13177d923"
+      }
+    ],
+    "local_source_archive": {
+      "path": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\irpt-p-opal-irpt-ycharts-generate-uvm6ms_8.zip",
+      "sha256": "5af54f4769e4b062ab7a286a947262c4e897804297b2ef5b97b3218bef3c96b6",
+      "bytes": 321519,
+      "kind": "offline source-only proof; not a deployable artifact"
+    },
+    "closure": {
+      "rc": 0,
+      "enforced": true,
+      "output": "  OK: import-closure -- 35 packaged .py file(s), every top-level import satisfied by package/stdlib/runtime/layer. (Nested lazy imports exempt by design.)\n",
+      "missing_module_control": {
+        "omitted_member": "custody.py",
+        "rc": 1,
+        "output": "  ERROR: IMPORT-CLOSURE check failed --\n         Module(s) imported AT TOP LEVEL but NOT in the package and NOT a\n         stdlib / runtime / layer dependency. The zip will build fine and the\n         Lambda will fail with Runtime.ImportModuleError on the NEXT INVOCATION\n         -- the whole function, not one feature:\n           ! custody   (imported by: custody_submission.py, accepted_custody.py, custody_binding.py)\n         Action: vendor it -- add the source path to BUILD_MANIFEST.vendored_modules,\n                 run ci/vendor-manifest.sh <source_dir>, and register the basename in\n                 functions[<fn>].files[] in lambda-source-map.json. ALL THREE.\n                 (If it comes from a Lambda LAYER, add it to BUILD_MANIFEST\n                  layer_dependencies instead -- that is a declaration, not a copy.)\n         DENOMINATOR: 1 module(s) unsatisfied across 34 packaged .py file(s).\n"
+      }
+    },
+    "cold_import": {
+      "rc": 0,
+      "output": "COLD_IMPORT_OK\nEXTRACTED_FACTORY_CONSTRUCTION_OK; synthetic refusing ports; no request or SDK call\n"
+    }
+  },
+  "linux_runtime": {
+    "source_pin": "e3ad48ca23b2c95ac4b8d6b0c3eff4daba86fb2c",
+    "source_manifest_sha256": "2e4be13e530ee8d4e642f7be711869592097f1ce81d0ae8c0ac2a38e1b0ff333",
+    "source_archive_sha256": "5af54f4769e4b062ab7a286a947262c4e897804297b2ef5b97b3218bef3c96b6",
+    "dependency_archive_sha256": "d17ae439a182b58b82e607108686bde53fd185aa04cddf0bccf365250cfc64bd",
+    "image": "public.ecr.aws/lambda/python@sha256:5f188ce6104ab76d1a9a44b9b53fd0d72ea5ccec94eb4cbccf5c9b0ef485f9f8",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--platform",
+      "linux/amd64",
+      "--network",
+      "none",
+      "--read-only",
+      "--tmpfs",
+      "/tmp",
+      "--cpus",
+      "2",
+      "--memory",
+      "1g",
+      "--entrypoint",
+      "/var/lang/bin/python",
+      "--mount",
+      "type=bind,source=C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\irpt-p-linux-proof-8lnznube\\function,target=/var/task,readonly",
+      "--mount",
+      "type=bind,source=C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\irpt-p-linux-proof-8lnznube\\layer\\python,target=/opt/python,readonly",
+      "--mount",
+      "type=bind,source=C:\\Users\\AndrewBerman\\Desktop\\irpt-smoke-p-backend-20260923\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\IRPT_MVP_P,target=/proof,readonly",
+      "public.ecr.aws/lambda/python@sha256:5f188ce6104ab76d1a9a44b9b53fd0d72ea5ccec94eb4cbccf5c9b0ef485f9f8",
+      "-I",
+      "-B",
+      "/proof/verify_opal_linux_runtime.py"
+    ],
+    "rc": 0,
+    "stdout": "{\n  \"result\": \"PASS\",\n  \"python\": \"3.12.14 (main, Sep 17 2026, 10:00:30) [GCC 11.5.0 20240719 (Red Hat 11.5.0-5)]\",\n  \"dependencies\": [\n    {\n      \"distribution\": \"jsonschema\",\n      \"version\": \"4.26.0\",\n      \"origin\": \"/opt/python/jsonschema/__init__.py\"\n    },\n    {\n      \"distribution\": \"attrs\",\n      \"version\": \"26.1.0\",\n      \"origin\": \"/opt/python/attrs/__init__.py\"\n    },\n    {\n      \"distribution\": \"jsonschema-specifications\",\n      \"version\": \"2025.9.1\",\n      \"origin\": \"/opt/python/jsonschema_specifications/__init__.py\"\n    },\n    {\n      \"distribution\": \"referencing\",\n      \"version\": \"0.37.0\",\n      \"origin\": \"/opt/python/referencing/__init__.py\"\n    },\n    {\n      \"distribution\": \"rpds-py\",\n      \"version\": \"2026.6.3\",\n      \"origin\": \"/opt/python/rpds/__init__.py\"\n    },\n    {\n      \"distribution\": \"typing_extensions\",\n      \"version\": \"4.16.0\",\n      \"origin\": \"/opt/python/typing_extensions.py\"\n    }\n  ],\n  \"native_rpds\": \"PASS\",\n  \"schema_positive_and_negative\": \"PASS\",\n  \"flat_factory_construction\": \"PASS\",\n  \"accepted_factory_construction\": \"PASS\",\n  \"absent_source_refusal\": \"PASS\",\n  \"limits\": \"Synthetic refusing producer ports; no request, storage, queue, vendor or live acceptance.\"\n}\n",
+    "stderr": "",
+    "checker_sha256": "b27c6f764ba61f9864e3148aa6fddf0f22ec2ea828971b7e4ac288201fb40edd",
+    "limits": "Local extracted artifact dependency and construction proof; no current producer or live acceptance."
+  },
+  "test_evidence": [
+    {
+      "command": "python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests -q",
+      "passed": 210,
+      "skipped": 2,
+      "subtests_passed": 32
+    },
+    {
+      "command": "python -m pytest infra/aws/lambda/investor-reporting/intake/tests -q",
+      "passed": 93,
+      "skipped": 1,
+      "subtests_passed": 18
+    },
+    {
+      "environment": {
+        "IRPT_ACCEPTED_READER_TEST_ROOT": "<repo>/infra/aws/lambda/investor-reporting/_scope/tests"
+      },
+      "command": "python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_retained.py -q -rs",
+      "passed": 32,
+      "skipped": 0
+    },
+    {
+      "environment": {
+        "IRPT_ACCEPTED_READER_TEST_ROOT": "<repo>/infra/aws/lambda/investor-reporting/_scope/tests"
+      },
+      "command": "python -m pytest infra/aws/lambda/investor-reporting/intake/tests/test_custody_portfolio.py -q -rs",
+      "passed": 39,
+      "skipped": 0
+    },
+    {
+      "command": "python -m pytest infra/aws/lambda/investor-reporting/_scope/tests/test_custody_binding.py -q",
+      "passed": 17,
+      "skipped": 0
+    }
+  ],
+  "test_count_note": "Focused reruns enable all three initially skipped P-reader integration cases; they overlap earlier suite results and must not be added as unique test counts. The 17 P tests include actual M/P/Y same-date replay, originals retained, one contribution per economic position and revocation refusal. Prior unchanged M99 tests and CTO isolated115 are separate evidence.",
+  "limits": [
+    "All storage and economic/authority ports in request tests are synthetic; actual M publication implementation is not stubbed in composed control.",
+    "Source package is local only; runtime dependency zip is separately pinned and mounted for proof, not attached.",
+    "No production economic source capability, canonical current-selection adapter, HTTP writer or global entry installed.",
+    "No cloud action, vendor invocation, upload, promotion or live acceptance."
+  ]
+}

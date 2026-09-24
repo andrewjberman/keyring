@@ -1,0 +1,56 @@
+{
+  "observed_at": "2026-09-24T09:00:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "D1 run 7 = the SIXTH credential submission of 2026-09-24, on the sixth-amendment runner (CTO GO 100357, batch 30) with the STANDS re-routed to 4.0.0_SA_CRO (CTO 100425; CRO STANDS 100431). OUTCOME A on the acquire: the session bundle was captured and persisted; the pair discriminated the WAF token as the cause of runs 5/6's 405. One anomaly in the task's closing verification probe, stated below.",
+  "pin": {
+    "runner_commit": "9cf37df341 (irpt-smoke-p-backend-20260923)",
+    "library_lf_blob_sha256": "de00afffd4ce5f91faec2f1ee09a9b39438aa3502880fd80db2c7935c126be84",
+    "library_bytes": 82479,
+    "wrapper_sha256_prefix": "55ddb8f7947cba7c (unchanged)",
+    "secret_ids_env_sha256_prefix": "88ee08c27db56351 (unchanged)"
+  },
+  "deploy": {
+    "s3": "s3://opal-313476888478-lambda-artifacts/ec2/investor-reporting-ycharts/ycharts_session.js version 007OB3WoA7Bku6Jjqc5TGyFQ.5_gVzLb (82479 bytes)",
+    "ssm_deploy": "405ccffd-03b6-4875-ab53-96510d6220d2 Success",
+    "ssm_readback": "5b0f88b0-b08a-47f7-a867-c2198284a0f4 Success -- the LF blob on the host, byte-for-byte"
+  },
+  "run": {
+    "ssm_command": "7e031735-e2ae-485a-986d-0ff7f8687ff0",
+    "document": "irpt-ycharts-run Task=probe MaxReacquisitions=1",
+    "window": "2026-09-24T08:56:40Z -> 08:56:55Z",
+    "orchestrator_rc": 1,
+    "submissions_this_run": 1,
+    "submissions_today": 6,
+    "acquire": {
+      "steps": ["0 CH-SIGNIN_FORM (dom)", "1 CH-AUTHENTICATED (dom) probe_via node-port 200 LIVE"],
+      "warmup": "/dashboard/ ok", "login_path": "/account/login/", "password_visible_wait": true,
+      "login_submission": {"login_submissions": 1, "username_matches_secret": true, "password_matches_secret": true, "login_reply_status": 302, "fields": ["auth-username", "auth-password"]},
+      "identity": {"via": "page-document", "source": "page.content()", "navigated": false, "url_before": "https://ycharts.com/dashboard/#/?dashboardId=1064209", "user_id": 1276035, "checks": "user_present, authenticated, user_id_int_positive, email_present, not_impersonating: all true", "email": "label only (sha256_12 e271f8dc7934, length 21)"},
+      "transport": {"route": "/custom_pdf_reports/generate/14141822", "via": "node-port", "http_status": 200, "state": "LIVE", "content_type": "application/json", "waf_action": null},
+      "pair": {
+        "without_token": {"status": 200, "state": "LIVE", "content_type": "application/json", "waf_action": null, "sent": "10 cookies (no aws-waf-token), no X-AWS-WAF-Token header, UA Chrome/148"},
+        "with_token": {"status": 405, "state": "NOT_LIVE", "content_type": "text/html; charset=UTF-8", "waf_action": "captcha", "sent": "11 cookies incl. aws-waf-token + the X-AWS-WAF-Token header, same UA"},
+        "same_cookies": true,
+        "verdict": "200/405 -- the WAF token presented by a non-browser client is the cause of runs 5 and 6's 405; the tokenless jar is the resident's working class on the template route"
+      },
+      "acquired": true, "persisted": true, "lease": {"owner": "irpt-ycharts-runner/41398", "fence": 11, "previous_fence": null}
+    },
+    "bundle_persisted": {
+      "secret": "ycharts/session/current -- VersionIdsToStages now {02e53a44-...: [AWSCURRENT]} (was null all day), LastChangedDate 08:56:48Z",
+      "shape_read_by_P_names_only": {"keys": ["capture_origin", "captured_at", "captured_by", "cookies", "fence", "generation", "identity", "identity_evidence", "persisted_at", "persisted_by", "probe_evidence", "schema_version", "user_agent"], "schema_version": 1, "capture_origin": "EC2", "fence": 11, "captured_at": "2026-09-24T08:56:47.505Z", "captured_by": "irpt-ycharts-runner/41398", "identity_keys": ["email", "user_id"], "identity_user_id": 1276035, "cookies": 12, "cookie_names": ["__cf_bm x5", "csrftoken", "ycsessionid", "page_view_ctr", "cookieyes-consent", "_ga", "_ga_29JVRYKWPW", "aws-waf-token"], "probe_evidence": {"route": "/custom_pdf_reports/generate/14141822", "http_status": 200, "state": "LIVE"}},
+      "grade": "Y's (closer contract); Y is paused on a safeguards dialog -- the CTO assigns the grader"
+    },
+    "closing_probe_anomaly": {
+      "what": "after acquire + persist, withAuthenticatedPage opens a NEW browser context from the bundle's cookies (openContext) and the probe task's callback runs probeSession({page, context}) on that fresh page: identity via the page document -> the page is not on the dashboard -> ONE navigation to /dashboard/ -> the document carries no window.USER -> IDENTITY_USER_ABSENT, template leg NOT_REACHED; the task's result is therefore authenticated false and the orchestrator exits rc 1",
+      "reading": "the fresh context carries the copied aws-waf-token cookie without the challenge state that earned it; a NAVIGATION with a mismatched token is the class the WAF answers with a challenge page, which has no window.USER. Consistent with the pair's verdict, not measured: documentIdentity records no HTTP status or waf action for its navigation (the record has navigated / source only), so this is inferred from the same class, not read",
+      "effect_on_the_capture": "none -- the bundle was captured and persisted from the SIGNED-IN context before the closing probe; the resident's step_identity (Y 93ec16f4fe) reads the bundle, and its liveness gate is the tokenless template GET, exactly the leg that read 200",
+      "proposed_runner_line_for_the_CTO": "(a) the closing probe on a stored/fresh context takes the stored-bundle path (bundleIdentity + the tokenless template GET through residentClient), never a page navigation -- the same reads the resident makes; (b) documentIdentity records its navigation's HTTP status, waf action and content type on every non-200; (c) withAuthenticatedPage's fresh context is seeded WITHOUT the aws-waf-token cookie. No submission is spent proving (a)-(c): the next probe task starts from the persisted bundle (getSession present)"
+    }
+  },
+  "not_claimed": [
+    "the bundle's grade (Y's / the CTO's assignee)",
+    "the resident install (install-resident.sh at Y's pin 93ec16f4fe) -- the next act on the CTO's sequence word",
+    "any generation: hop 6 (the one-use plan, Andrew's per-use word) still gates the Performance thread"
+  ],
+  "push_state": "LOCAL (backend 3a5cf15266 + this receipt's commit; MSTR pushes)"
+}

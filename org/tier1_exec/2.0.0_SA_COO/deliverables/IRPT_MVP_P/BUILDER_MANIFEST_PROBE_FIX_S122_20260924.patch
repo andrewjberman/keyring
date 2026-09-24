@@ -1,0 +1,27 @@
+diff --git a/infra/aws/lambda/ci/build-and-upload.sh b/infra/aws/lambda/ci/build-and-upload.sh
+index 26eb2c48ed..93fd91a931 100644
+--- a/infra/aws/lambda/ci/build-and-upload.sh
++++ b/infra/aws/lambda/ci/build-and-upload.sh
+@@ -427,7 +427,13 @@ while IFS= read -r fn_json; do
+     # manifest that says nothing.
+     if [ "${BAU_MANIFEST_SKIP:-0}" != "1" ] && [ -f "$ABS_SOURCE/BUILD_MANIFEST.json" ]; then
+         PY_SOURCE=$(cygpath -w "$ABS_SOURCE" 2>/dev/null || echo "$ABS_SOURCE")
+-        python - "$PY_SOURCE" <<'PYEOF'
++        # The probe's exit code IS its answer (0 DECLARED / 1 ABSENT / 2 UNREADABLE), so it
++        # must not be a bare command under `set -e` (:33): a bare `python - <<PYEOF` returning
++        # 1 ended the whole script here with NO message, and the ABSENT branch below was
++        # unreachable (measured twice on irpt-ycharts-generate 2026-09-24; row
++        # IRPT_BCKEND-S122). `|| MANIFEST_DECL=$?` reads the code without triggering errexit.
++        MANIFEST_DECL=0
++        python - "$PY_SOURCE" <<'PYEOF' || MANIFEST_DECL=$?
+ import json, io, os, sys
+ d = sys.argv[1]
+ try:
+@@ -438,7 +444,6 @@ except Exception as exc:
+     sys.exit(2)
+ sys.exit(0 if m.get("declared_blobs") else 1)
+ PYEOF
+-        MANIFEST_DECL=$?
+         if [ "$MANIFEST_DECL" = "2" ]; then
+             echo "         (build REFUSED -- the manifest could not be READ. A gate that cannot"
+             echo "          read its own declaration must not report the package clean.)"

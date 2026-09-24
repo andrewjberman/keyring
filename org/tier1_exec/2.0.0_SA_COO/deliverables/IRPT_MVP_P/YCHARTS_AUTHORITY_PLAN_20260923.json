@@ -1,0 +1,39 @@
+{
+  "observed_at": "2026-09-23T23:48:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "CANDIDATE_FOR_CTO_REVIEW_AND_GO_NOT_APPLIED",
+  "ruling": "1.0.0_SA_CTO d78fdb2f1c items 4(4) and 5 (msg 99796)",
+  "root": "infra/aws/terraform/investor-reporting/ycharts",
+  "root_state": "initialised in irpt-smoke-p-backend-20260923 for the first time with the pinned .tools/terraform.exe 1.9.8 against s3://opal-313476888478-terraform-state/investor-reporting/ycharts/tfstate (terraform_version 1.9.8, serial 14, 21 resources); .terraform.lock.hcl committed",
+  "plan": {
+    "file": ".runtime/ycharts-authority/authority.tfplan",
+    "sha256": "1de760399ca1cd7f42e4b570c705f8e464500a1ba31a3da64a6a329d4c35006d",
+    "json": ".runtime/ycharts-authority/authority.json",
+    "summary": {"create": 0, "update": 3, "destroy": 0, "no-op": 14},
+    "fmt_validate": "terraform fmt applied to the three edited files; validate: Success"
+  },
+  "changes": {
+    "aws_instance.runner": {
+      "action": "update (tags only, replace_paths null)",
+      "tags_before": {"Cell": "IB-s-8", "Name": "irpt-ycharts-runner"},
+      "tags_after": {"AutoShutdown": "disabled", "Cell": "IB-s-8", "Name": "irpt-ycharts-runner"},
+      "instance_state_before": "stopped",
+      "aws_ec2_instance_state.runner": "no-op, still declares stopped -- this plan does NOT start the host (CTO item 5: nobody starts it before the tag is applied and the resident install is ready)"
+    },
+    "aws_iam_role_policy.generate (irpt-ycharts-generate-role)": {
+      "added_statements": [
+        {"Sid": "ReadCanonicalUserProfileByEmailIndexAndKey", "Action": ["dynamodb:Query"], "Resource": "arn:aws:dynamodb:us-east-1:313476888478:table/opal-users-v2/index/email-index"},
+        {"Sid": "ReadCanonicalUserProfileRow", "Action": ["dynamodb:GetItem"], "Resource": "arn:aws:dynamodb:us-east-1:313476888478:table/opal-users-v2"},
+        {"Sid": "DecryptCanonicalUsersTableViaDynamoOnly", "Action": ["kms:Decrypt"], "Resource": "arn:aws:kms:us-east-1:313476888478:key/64f25291-4015-42c5-ad41-40e42325deb7 (read from the table's SSEDescription via data.aws_dynamodb_table, not typed)", "Condition": {"kms:ViaService": "dynamodb.us-east-1.amazonaws.com", "kms:EncryptionContext:aws:dynamodb:tableName": "opal-users-v2"}}
+      ],
+      "unchanged_statements": 7
+    },
+    "aws_iam_role_policy.runner (irpt-ycharts-runner-role)": {
+      "added_statements": "the same three Sids",
+      "unchanged_statements": 6
+    }
+  },
+  "flag_for_cto": "The ruling named dynamodb:Query on the email-index and dynamodb:GetItem on the table. opal-users-v2 is SSE-KMS under its own key 64f25291-... (not the IRPT core key), so a read without kms:Decrypt on that key fails; the Decrypt is added, conditioned to DynamoDB and to this one table. No Scan, no wildcard, no write.",
+  "surfaced_not_adjudicated": "Y's 99802 asks that aws_ec2_instance_state.runner also move to running. Not done here: the CTO's item 5 sequences the tag first and the start after the resident install is ready; the instance.tf header and export/main.tf:78 / export/iam.tf:26 still cite the held-stopped state and would need the CTO's rewrite when the start is authorised.",
+  "not_done": ["terraform apply (CTO GO and a deploy ledger at apply start)", "starting the host", "the resident factory install (build_resident_runtime) and sole-consumer cutover"]
+}

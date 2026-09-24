@@ -1,0 +1,470 @@
+{
+  "files": {
+    ".owned-paths.yaml": {
+      "bytes": 221289,
+      "git_blob": "30bbb2c324c059c2aa71aaa2466ce35255fcfe29",
+      "last_change_commit": "bfa05759101ae36fa4d8d9fb16d548e3001ab06f",
+      "sha256": "10b93a2d9e1d6960952d90bc96a526c86c6cb5914e81fb94ec66bc326403cdc8"
+    },
+    "CLAUDE.md": {
+      "bytes": 57271,
+      "git_blob": "709c81833440186e27ed64ffdcd32a38980e645f",
+      "last_change_commit": "12e1cfe5ee02d7b576d17f5c037cac629c11fcab",
+      "sha256": "3155964995b776be1ef9158053f3b4a0a213b861d1f811b666c76e375e762c84"
+    },
+    "data/assets/scripts/gold/investor_reporting/directory_runner.py": {
+      "bytes": 50255,
+      "definitions": {
+        "Firm49F": 254,
+        "FirmCOT": 381,
+        "FirmINF": 356,
+        "SourceSet": 191,
+        "__init__": 386,
+        "_assert_destination": 836,
+        "_cohort_unknown": 434,
+        "_dates": 293,
+        "_entry": 444,
+        "_gold": 270,
+        "_import_runner": 206,
+        "_list_dates": 239,
+        "_manifest": 306,
+        "_read": 300,
+        "_s": 506,
+        "_term": 498,
+        "acct_row": 531,
+        "build_49f": 510,
+        "build_cot": 722,
+        "build_inf": 619,
+        "client_firms": 183,
+        "completed_dates": 390,
+        "contract_validator_class": 801,
+        "error_path": 815,
+        "facts": 549,
+        "facts_of": 679,
+        "firm_bucket_map": 171,
+        "land": 847,
+        "load": 393,
+        "load_contract": 797,
+        "main": 935,
+        "masked_discriminator": 152,
+        "row_of": 742,
+        "run_firm": 892,
+        "select_business_date": 404,
+        "term_of": 673,
+        "validate_entries": 821
+      },
+      "git_blob": "30ffce2eff13eba7eaf64deddfde675fdb6dc772",
+      "last_change_commit": "de4e176cc382e1f81e92f03df7f31bef954b713c",
+      "sha256": "95bd6043c7bca2ab04a28f55175e0af40d9eccf34b9558c72f6a9a8364045360"
+    },
+    "data/assets/scripts/gold/runners_49f/d08_firm_ownership_map.py": {
+      "bytes": 9234,
+      "definitions": {
+        "_load_inputs": 59,
+        "_ownership": 80,
+        "_pad": 49,
+        "_slug": 53,
+        "_tamper_guard": 126,
+        "build_payload": 95,
+        "main": 144
+      },
+      "git_blob": "2a591e938a8f76c2386f098f284e4e60440ee880",
+      "last_change_commit": "b790aaca3eb479ca20456cc3a66842e37127d239",
+      "sha256": "8280032341045a95ce0b488bccc9f6f869d34a4ee5c446ea06097371be86cd40"
+    },
+    "data/assets/scripts/silver/bd49f_dim_conversion.py": {
+      "bytes": 41479,
+      "definitions": {
+        "DimBuildRefused": 153,
+        "FeedFloorViolation": 161,
+        "FeedShapeError": 177,
+        "GrainConflict": 169,
+        "ImpossiblyEmptyFeed": 157,
+        "PKViolation": 173,
+        "SidecarMismatch": 165,
+        "_clean_role": 182,
+        "_clean_split": 191,
+        "_digits": 199,
+        "_get": 509,
+        "_read_sidecar": 513,
+        "_to_table": 620,
+        "_tuple_frame": 478,
+        "apply_split_overrides": 388,
+        "bridge_report": 679,
+        "build_dim": 316,
+        "collapse_account_grain": 205,
+        "land_outputs": 633,
+        "latest_partition_date": 576,
+        "main": 815,
+        "read_bridge_seed": 586,
+        "read_bronze": 527,
+        "read_universe": 556,
+        "resolve_bridge": 272,
+        "run": 721,
+        "scd2_fold": 451,
+        "write_manifest": 671
+      },
+      "git_blob": "790bfd50e86565059292310933ffae7ec67a300e",
+      "last_change_commit": "d5864f960202f31c219885379dcb46d8a3339020",
+      "sha256": "dbbd41e488eba20b67d91422f01a7d1470bcc9b70c7af79f8c3368238c60e763"
+    },
+    "data/black_diamond/scripts/gold/D_00.portal_aggregates.py": {
+      "bytes": 62859,
+      "definitions": {
+        "_alternative_block": 348,
+        "_aua_provenance_block": 386,
+        "_build_advisor_ownership_map": 550,
+        "_build_advisor_view": 185,
+        "_build_geo_city_view": 163,
+        "_build_geo_view": 141,
+        "_build_tax_section": 632,
+        "_classify_asset": 216,
+        "_compute_rel_geo": 122,
+        "_dim_values": 942,
+        "_firm_nna_for_period": 794,
+        "_held_days": 340,
+        "_invalidate_cloudfront": 1049,
+        "_last_good_certified_aua": 299,
+        "_load_aua_certification": 233,
+        "_load_fee_history": 450,
+        "_load_perf": 412,
+        "_nna_for_period": 858,
+        "_quarter_label": 875,
+        "_quarter_nna": 877,
+        "_resolve_served_aua": 360,
+        "_snapshot_response": 975,
+        "_write_view_parquet": 206,
+        "build_advisor_ownership_artifact": 610,
+        "build_clients_tab": 722,
+        "build_filters": 937,
+        "build_header_metrics": 843,
+        "build_snapshots": 986,
+        "load_all": 406,
+        "main": 1072,
+        "pct": 638
+      },
+      "git_blob": "e1d42e7eec4de50fdf281b01f28b8506b342b357",
+      "last_change_commit": "ae81bc337f169358df4614dd7a70f21b16188753",
+      "sha256": "e3a50d20ef373b3f56250250b6484b09363604f7d7c875c1e7cb7a02ac7c097a"
+    },
+    "data/cot/scripts/gold/C_07.advisor_attribution.py": {
+      "bytes": 16623,
+      "definitions": {
+        "_clean": 101,
+        "_modal": 110,
+        "_read_s3": 96,
+        "_write": 382,
+        "build_impl_pairing": 149,
+        "compute_true_architects": 119,
+        "log": 91,
+        "main": 254,
+        "resolve_architect": 217,
+        "rollup_roles": 185
+      },
+      "git_blob": "ed4c705c0b6390f67ec3e8c2ddfc1afd3fb9dba7",
+      "last_change_commit": "79d70e8d3b8b83c8dd5a8bb0e2761845cfeba878",
+      "sha256": "9fa846d21fc89f491d0d12618d56768659934f8472453641d516085ba61d5c7a"
+    },
+    "data/cot/scripts/gold/D_00.portal_aggregates.py": {
+      "bytes": 49766,
+      "definitions": {
+        "_build_advisor_ownership_map": 402,
+        "_build_advisor_view": 183,
+        "_build_geo_city_view": 161,
+        "_build_geo_view": 139,
+        "_build_tax_section": 484,
+        "_classify_asset": 214,
+        "_compute_rel_geo": 120,
+        "_dim_values": 772,
+        "_invalidate_cloudfront": 859,
+        "_load_aua_certification": 231,
+        "_load_fee_history": 294,
+        "_load_perf": 255,
+        "_nna_for_period": 699,
+        "_quarter_label": 712,
+        "_quarter_nna": 714,
+        "_snapshot_response": 805,
+        "_write_view_parquet": 204,
+        "build_advisor_ownership_artifact": 462,
+        "build_clients_tab": 592,
+        "build_filters": 767,
+        "build_header_metrics": 684,
+        "build_snapshots": 810,
+        "load_all": 249,
+        "main": 882,
+        "pct": 490
+      },
+      "git_blob": "e64ebf0b472aee310e5cc7633b55eeb98538993d",
+      "last_change_commit": "997f58fd25ce05fd5ff547df90be5bbc0625cdf7",
+      "sha256": "0dd4997d1b504970c39ea9b022587f34c41abf10252fa9f303b3f0f7a23327b0"
+    },
+    "data/firm_registry.json": {
+      "bytes": 5326,
+      "git_blob": "99b8eeb54fb08a7ea6e4b89b64f300ee6cab3200",
+      "last_change_commit": "39cbad421487e8bcecd1bc61c48775dd19c55b96",
+      "sha256": "5a4c0c3da26fffe55d8a3ec2a8a7248bd0b1dd936af5425ab35426bc5d277fc0"
+    },
+    "data/inf/scripts/gold/INF_C_07.advisor_attribution.py": {
+      "bytes": 26229,
+      "definitions": {
+        "_enrich_accounts_dim_from_accounts_v2": 161,
+        "_latest_silver_partition": 102,
+        "_read_s3": 84,
+        "_upload": 94,
+        "log": 79,
+        "main": 289
+      },
+      "git_blob": "4decf096bd615ef19a462e0d6c02ec6a6b6b1554",
+      "last_change_commit": "dbd10d7aa8356cc01bd27c7259b6f590eb92e453",
+      "sha256": "741c749abedc9e6d89b5eecedbeed32cf35003920bc9e86ae2b209dac8aeead4"
+    },
+    "infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json": {
+      "bytes": 191120,
+      "git_blob": "7e9388fc35f5240dfd89f8295eeb0c1ab70f28a4",
+      "last_change_commit": "47f21dab95c28eec2476e9e5a30a9ebcc7efc78d",
+      "sha256": "87f2f92f3c71f7761b387574a3df721474120465b1b0da8028cfc201b619923a"
+    },
+    "infra/aws/lambda/investor-reporting/_ids/ids.py": {
+      "bytes": 19296,
+      "definitions": {
+        "IdRefused": 85,
+        "_check_firm": 183,
+        "_check_raw": 197,
+        "_find_registry": 113,
+        "_mint": 214,
+        "_require": 266,
+        "_seam_index_path": 343,
+        "_shape": 93,
+        "firm_ids": 145,
+        "is_issued": 258,
+        "load_seam_index": 347,
+        "opaque": 249,
+        "opaque_account": 221,
+        "opaque_client": 230,
+        "opaque_firm": 234,
+        "opaque_relationship": 226,
+        "project": 385,
+        "projection_for": 306,
+        "projection_for_firm": 396,
+        "projection_with_seam": 365,
+        "raw_key_for": 166,
+        "raw_keys": 159,
+        "require_account_id": 281,
+        "require_client_id": 289,
+        "require_firm_id": 293,
+        "require_relationship_id": 285
+      },
+      "git_blob": "b77721f314362b442b533ea13b5f136f98a3f3c8",
+      "last_change_commit": "47f21dab95c28eec2476e9e5a30a9ebcc7efc78d",
+      "sha256": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6"
+    },
+    "infra/aws/lambda/investor-reporting/_ids/raw_keys.json": {
+      "bytes": 6492,
+      "git_blob": "eed32b39adae313e770dfba451a24d66a9f1fe16",
+      "last_change_commit": "47f21dab95c28eec2476e9e5a30a9ebcc7efc78d",
+      "sha256": "f81db571b5d92ca66b960047d96b38cc74c173cb7bf8be0c20e9cd3973acaf89"
+    },
+    "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py": {
+      "bytes": 5084,
+      "definitions": {
+        "CanonicalProfileReaders": 43,
+        "__init__": 52,
+        "_decode": 34,
+        "_email": 23,
+        "_projection": 29,
+        "get_partner_profile": 86,
+        "get_user": 58
+      },
+      "git_blob": "64e96e3d86046bb9dd94942fb620a1f17b1bda4e",
+      "last_change_commit": "8e2ba7830352b2a34c97ec96984d043654cab340",
+      "sha256": "b807aeb605d8e9f23b0a84eb2722cee2e540c71ab1f8c13dd81ed2e7a5228607"
+    },
+    "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py": {
+      "bytes": 17453,
+      "definitions": {
+        "MaintainedSourceRefused": 26,
+        "ProfileSourceSnapshot": 99,
+        "_descriptor": 171,
+        "_firm_projection": 81,
+        "_partner_projection": 66,
+        "_recipient": 189,
+        "_text": 39,
+        "_updated_at": 45,
+        "_user_projection": 57,
+        "add": 223,
+        "authorize": 141,
+        "canonical_bytes": 30,
+        "organization": 120,
+        "prepared_by": 116,
+        "projection_sha256": 35,
+        "read": 147,
+        "resolve_comparison_fields": 287,
+        "resolve_profile_fields": 196,
+        "snapshot_profile_sources": 124
+      },
+      "git_blob": "5101982505e1b323cca0f4d46bbca6993c02b18e",
+      "last_change_commit": "703e82ea015d840ce773d473a7b4909e275785c0",
+      "sha256": "679022941e0068a33d0ca20248a0ea9639463c2ea9bc8e7616241e0c6f1d49f5"
+    },
+    "infra/aws/lambda/investor-reporting/directory/refresh.py": {
+      "bytes": 67157,
+      "definitions": {
+        "DispatchError": 493,
+        "RefreshError": 75,
+        "SsmBuildDispatcher": 596,
+        "__call__": 710,
+        "__init__": 612,
+        "_absent": 110,
+        "_client": 515,
+        "_env": 510,
+        "_event_business_date": 1079,
+        "_firm_buckets_from_env": 1106,
+        "_firm_ids_from_env": 1116,
+        "_firm_source_roles_from_env": 1127,
+        "_last_dispatched_cid": 260,
+        "_last_recorded_business_date": 301,
+        "_s3": 102,
+        "artifact": 637,
+        "command_status": 652,
+        "compute_delta": 359,
+        "dispatch": 664,
+        "dispatch_configured": 1095,
+        "get_manifest": 174,
+        "key_of": 366,
+        "lambda_handler": 984,
+        "last_manifest": 225,
+        "list_keys": 134,
+        "manifest_key": 80,
+        "missed_business_dates": 394,
+        "new_manifest": 333,
+        "object_exists": 160,
+        "pointer": 624,
+        "previous_entries": 773,
+        "put_manifest": 165,
+        "reason_for_delta": 384,
+        "refresh_firm": 781,
+        "runner_script": 522,
+        "serve_read": 949,
+        "term_of": 370
+      },
+      "git_blob": "c4ec6e4984d30d61b5a6b1cf6dd4615e430e2294",
+      "last_change_commit": "91faa85f41ea9e404dd559d709889f9b0b60dafb",
+      "sha256": "5b445e9f808168f7a9caa2aa81f372b296bcd217db32e9a33110d52648c412b9"
+    },
+    "infra/aws/lambda/lib/partner/index.ts": {
+      "bytes": 1361,
+      "git_blob": "cbf38bb975bc1c2c30abccaa1452ec309f722a78",
+      "last_change_commit": "7e6732443604dee09ee06277fe70a351d5578f64",
+      "sha256": "8bba52db1053c7e52b24cd106859802ab03383c97375c717bce85c8ab2d6a3fc"
+    },
+    "infra/aws/opalinvest_dev/lambda/auth-handler/src/db.ts": {
+      "bytes": 15549,
+      "git_blob": "58a028871ed2f41cfd0219843991d1678b1e76b5",
+      "last_change_commit": "775dc28917af666c69ac227c9b29846110f012ed",
+      "sha256": "2e33f6c7348589954030b90f362434fe25f86b82f6584deb5bf27c482cc60909"
+    },
+    "infra/aws/terraform/investor-reporting/directory/principal_49f.tf": {
+      "bytes": 7427,
+      "git_blob": "fe5f11af07c4cb992e165685e728332532b30f79",
+      "last_change_commit": "8d18193bcc63cc45e3b0f210cd9262c8c38dae13",
+      "sha256": "9fb62d66ea5facd0d332f81c210e9f661b65cb32ecf400314498a8a651b1b7dd"
+    },
+    "infra/aws/terraform/investor-reporting/directory/schedule.tf": {
+      "bytes": 20559,
+      "git_blob": "e60dee82499d8786bb7a1ee28651a2ad27aeef32",
+      "last_change_commit": "8d18193bcc63cc45e3b0f210cd9262c8c38dae13",
+      "sha256": "6768ccc33bd26a91015938d66be55d08b5c5a7b4962119a4b03b1879069aaf98"
+    },
+    "infra/logic/registry/scopes.json": {
+      "bytes": 15565,
+      "git_blob": "168261156a98096741855441392ba4ab63ed152a",
+      "last_change_commit": "14b52ca13a467e4be0e47231fb6840611bbb134a",
+      "sha256": "a4e0637257b6c50adf23de75d3f344b3d39db6bf9a024f4b47dd825131532be9"
+    },
+    "users/README.md": {
+      "bytes": 10828,
+      "git_blob": "028d21b940e1b6b6817430306e55208c7891a27f",
+      "last_change_commit": "0d4123aa134fcdc12ad57e7c95d5874a57fedbfe",
+      "sha256": "a8997744f6c30760fc07c28dbca88397f2d0190ecb858b4aeca90200651cb19b"
+    },
+    "users/configs/opal-capital.json": {
+      "bytes": 2970,
+      "git_blob": "811bcbf740826ecdf869ee93157cf8c8e97fa202",
+      "last_change_commit": "0d4123aa134fcdc12ad57e7c95d5874a57fedbfe",
+      "sha256": "c4d9b87b1e61a84829cea8f41cfc749ef09ac677b3bbfb38d93bdb9c73dcf1ba"
+    },
+    "users/scripts/create_user.py": {
+      "bytes": 9459,
+      "definitions": {
+        "create_user": 100,
+        "generate_user_id": 45,
+        "get_org_defaults": 55,
+        "hash_password": 50,
+        "main": 205,
+        "verify_user_exists": 193
+      },
+      "git_blob": "34b5a7032aad49c4a8c81d7d4bab6f5340efd563",
+      "last_change_commit": "c36cb84e09c51e38d65196b2081faad2ab530033",
+      "sha256": "68bc6322f179494cb922d70b928506c283f2cdc6d4dfb34ce9d5f5f4adb4e961"
+    },
+    "users/scripts/create_user_v2.py": {
+      "bytes": 14259,
+      "definitions": {
+        "_check_existing_user": 133,
+        "_hash_password": 115,
+        "_log": 110,
+        "_ses_verify": 229,
+        "_validate_email_domain": 119,
+        "_write_member": 190,
+        "_write_partner_table": 202,
+        "_write_profile": 146,
+        "main": 234
+      },
+      "git_blob": "d048c0a113f404890ab197d64aa495ae96464b0b",
+      "last_change_commit": "405862e571982ac8c740c6c1ecc5d7ef70c67e5b",
+      "sha256": "9e193cfd655d15e72dccad282fae7fe1943d39c4547eb2c5d93a08b96ec84e56"
+    }
+  },
+  "historical_organization_record_projection": {
+    "PK": "FIRM#opal-capital",
+    "SK": "CONFIG#defaults",
+    "configType": "user-defaults",
+    "configVersion": "v1",
+    "createdAt": "2026-02-17T19:30:00.000Z",
+    "firmId": "opal-capital",
+    "firmName": "Opal Capital",
+    "updatedAt": "2026-02-17T19:30:00.000Z"
+  },
+  "inf_ownership_writer_search": {
+    "corpus": "All committed non-tests data/inf/**/*.py",
+    "file_count": 166,
+    "limit": "Absence in this bounded checked-in corpus is not absence of every remote job.",
+    "matching_files": [],
+    "needle": "ownership_map"
+  },
+  "measured_at_utc": "2026-09-23T14:12:00.785870+00:00",
+  "method": "Committed source only; no production imports, producers, cloud calls or mutations.",
+  "organization_reader_search": {
+    "corpus": "Committed Python/TypeScript in users, auth-handler/src and lambda/lib/partner",
+    "file_count": 23,
+    "matching_files": [
+      "users/scripts/create_user.py"
+    ],
+    "needles": [
+      "CONFIG#defaults",
+      "firmName"
+    ]
+  },
+  "readme_advertised_paths_absent": [
+    "users/tools/view_config.py",
+    "users/tools/update_config.py",
+    "users/docs/ORGANIZATION_CONFIGS.md",
+    "users/configs/README.md"
+  ],
+  "registry_organization_gap": {
+    "firm_row_count": 5,
+    "kind_is_client_required_by_current_reader": true,
+    "opal_capital_matches": 0
+  },
+  "source_pin": "bfa05759101ae36fa4d8d9fb16d548e3001ab06f"
+}

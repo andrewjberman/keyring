@@ -1,0 +1,62 @@
+{
+  "observed_at": "2026-09-24T05:31:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "APPLIED -- irpt-performance-adapter rebuilt CANONICALLY (build-and-upload.sh + lambda-source-map.json) at the LIVE 61-member flat shape with every staged row pinned to the backend head 9f360e8f3b: carries _authz/loaders.py (B1/B3), _authz/served.py (B7 + the capped warm hold), performance/entry.py 786f767796 (no internal_correlation_id in a READY status), CurrencyAuthorities.json at the CLOUD @98b4416105 bytes, retained.py / canonical_profile_reads.py / NAMING_SCHEMA.json at head. CTO GO on P 100266 (ruling IRPT-PERFORMANCE-MAP-RECONCILE-20260924). Supersedes the 00:07Z install.",
+  "superseded_act": {
+    "deployed_at": "2026-09-24T00:07:10Z",
+    "code_sha256": "JwJEEQGTENJJukTvrNQt3dq6VIAI8xqioIYA1atL+hk=",
+    "artifact_version": "h.hlJhL3dKXAFT5NsNzceZX6Jls_f39V (uploaded 23:25:15Z, 358117 bytes)",
+    "ledger": "org/critical_paths/change_management/20260924T0004Z_irpt-performance-install-20260923_deploy_completion.md -- CLOSED 00:13:15Z, on the backend branch (1af100468e), recorder ac8e2cf502; NOT on CLOUD yet (MSTR's drain), which is why the first census of the shared tree read none",
+    "shape_source": "performance/build_candidate.py (flat package); its exact-function recorder had already written the 61-row map entry on the backend branch"
+  },
+  "map": {
+    "publish_merge": "11bcbbf6d5 (backend 9f360e8f3b into irpt-p-publish-20260923; conflict on the map resolved: backend's 61-row performance entry + publish's holdings/directory entries; CHANGELOG entries unioned 6+2 -> 8)",
+    "reconcile_commit": "e980c7cb36 (irpt-p-publish-20260923)",
+    "rows": 61,
+    "pin": "9f360e8f3b",
+    "sha_moved_for": ["loaders.py b84bb2918f -> 4ffd0e37f6", "served.py 5aeb9513ae -> cb134acdf5", "entry.py 3e309908de -> cb9bc421d2", "retained.py 1c31e934ee -> fb175bb858", "canonical_profile_reads.py 22534db552 -> 3e5868cf2f", "CurrencyAuthorities.json 64b7db3a55 -> 33569eb971", "org/standards/NAMING_SCHEMA.json 2c8834a98f -> 0a5d5ba3f9"],
+    "parity_skip": "BAU_PARITY_SKIP=1 on the build: the limb flagged build_candidate.py, build_dependencies.py, cot_probe.py -- local build tools in performance/, never members, imported by no packaged member (Grep 0 hits); files[] governs the zip and the census below is the control"
+  },
+  "artifact": {
+    "s3": "s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-performance-adapter.zip",
+    "version_id": "jfx18fFvnFSDEbjQOV0aEu8DdcpGGJS4",
+    "code_sha256": "NFbaNR0rwynANFH5iCuwMRerUt7E6Px0Ee//UrxRXAo=",
+    "bytes": 363011,
+    "members": 61,
+    "census_vs_live_h.hlJhL3": {"names_equal": "61 of 61", "differ": ["CurrencyAuthorities.json", "canonical_profile_reads.py", "entry.py", "loaders.py", "org/standards/NAMING_SCHEMA.json", "retained.py", "served.py"], "each_differing_member_equals_head_blob": true, "byte_identical": 54}
+  },
+  "plan": {
+    "root": "infra/aws/terraform/investor-reporting/performance (backend worktree, .tools/terraform.exe 1.9.8)",
+    "file": ".runtime/reconcile/rec.tfplan",
+    "sha256_prefix": "0f6d51d7d0af9aff",
+    "summary": {"add": 0, "change": 1, "destroy": 0},
+    "change": "module.irpt_performance_adapter.aws_lambda_function.this: source_code_hash JwJEEQ -> NFbaNR0r, s3_object_version h.hlJhL3 -> jfx18fFv; retained.tf 0; handler/memory/layers/environment unchanged"
+  },
+  "apply": {
+    "tool": ".tools/safe-apply.sh from the backend worktree performance root",
+    "halt_ack": "HALT_ACK=1",
+    "result": "Apply complete 0 added / 1 changed / 0 destroyed rc=0",
+    "completed_at": "2026-09-24T05:28:14Z",
+    "log_sha256_prefix": "007560fff9ce17a1"
+  },
+  "readback": {
+    "CodeSha256": "NFbaNR0rwynANFH5iCuwMRerUt7E6Px0Ee//UrxRXAo=",
+    "LastModified": "2026-09-24T05:28:09.000+0000",
+    "Handler": "runtime.lambda_handler",
+    "MemorySize": 1536,
+    "Layers": ["irpt-common:5", "irpt-performance-native-layer:1"],
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "replan": "terraform plan -detailed-exitcode rc=0 -- No changes (05:28Z)",
+    "smoke": "lambda invoke {irpt_warm: true, slot 0, hold 0} -> StatusCode 200, FunctionError null, body {\"warm\": true, \"function\": \"irpt-performance-adapter\"} -- the rebuilt package imports (runtime -> installed -> retained/served) and answers"
+  },
+  "correction": "P's 100266 said the retained runtime was 'packaged, not wired' from a read of entry.py/handler.py imports; the live Handler is runtime.lambda_handler, and runtime.py imports installed.build_runtime and served.lambda_entry -- so the retained runtime IS the serving path (the CRO's trace 100270 measured the same). Wrong object read; withdrawn. Nothing in this act changed the handler.",
+  "recorder": {"commit": "948dd938b0 (irpt-p-publish-20260923)"},
+  "ledger": {"slug": "irpt-performance-reconcile-20260924", "sentinel_commit": "3cb7b006be", "status": "OPEN -- M1 (30-minute AFTER p50/p90) closes at ~05:58Z", "legs": {"A1": "closed", "V1": "closed", "R1": "closed", "M1": "open"}},
+  "baseline_before": {"irpt-performance-adapter Duration 02:00-05:00Z": {"n": 36, "p50_ms": 1377, "p90_ms": 3892, "max_ms": 5575}, "irpt-holdings Duration 02:00-05:00Z": {"n": 54, "p50_ms": 1627, "p90_ms": 2455, "max_ms": 3091}},
+  "not_claimed": [
+    "any Performance number rendering -- the CRO's trace (100270) shows every single-account request refused at the X10 PENDING_ENFORCEMENT gate (RetentionRefused -> UNEXPECTED), before any code this act carries runs; the vendor plan is not installed",
+    "the AFTER p50/p90 (M1, 05:28-05:58Z)"
+  ],
+  "push_state": "LOCAL (backend + publish worktrees; MSTR pushes)"
+}

@@ -1,0 +1,24 @@
+{
+  "receipt": "portal candidate 6 -- four of the five pre-existing fe-s-2 / fe-s-10 failures repaired; the fifth named as a page-design question (CTO 100558 item 4; D's relay 100568)",
+  "by": "2.0.0_SA_COO~P",
+  "at_utc": "2026-09-24T12:3xZ",
+  "branch": {
+    "name": "irpt-dev-candidate-6-20260924",
+    "head": "b9d244a4",
+    "base": "origin/DEV ed3088b8 (candidate 5 landed; ancestor)",
+    "files": 2,
+    "product_files_changed": 0
+  },
+  "bisect": "the same five fail at 7c542fd2, ccdb8699, 013323f0, 1267a67e, 895752676a (fe-s-2 + fe-s-10: 42 pass / 5 fail at each) -- none of candidates 1-5 introduced them",
+  "repairs": {
+    "fe-s-10/tabs-mounted.test.ts x3": "TabShell gates reporting/holdings on selectedScopeRef; the tests pass the two-firm scope's own ref; a new arm asserts the gate (no ref -> selection-required on reporting, never on analysis)",
+    "fe-s-10/parity.test.ts": "0.0645 renders as 6.45% via render/values.tsx:percent on the headline tile (measured by rendering the fixture); the sanity literal follows"
+  },
+  "not_changed": "fe-s-2/dropdown.test.ts 'no session claim is read anywhere in this page': index.tsx:55 internal={auth.isInternal() || auth.isDev()} seeds the Global default firm and the bootstrap resolve-scope; claim-free is a page-design word (the CTO's)",
+  "verification": {
+    "fe_s_2_and_10": "47 pass / 1 skip / 1 fail at b9d244a4 (was 42 / 1 / 5)",
+    "tsc": "0 errors",
+    "eslint": "0 problems on the two files"
+  },
+  "push_state": "LOCAL; MSTR lands on the CTO's GO"
+}

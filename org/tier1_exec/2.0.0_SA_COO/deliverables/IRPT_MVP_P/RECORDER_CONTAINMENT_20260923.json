@@ -1,0 +1,24 @@
+{
+  "authority": "5cc9fa65e4",
+  "before": {
+    "infra\\aws\\lambda\\ci\\lambda-source-map.json": {
+      "sha256": "202e6e06326b337ab275e9c7b0c9554db305cdf9a55962015650c323f7524aef",
+      "bytes": 255979
+    },
+    "infra\\aws\\lambda\\ci\\source-map-reconcile-audit.jsonl": {
+      "sha256": "7258ae501f05f82d2d5540bacc7c10bc51cb11cb11e90ae136d10062d2d0778c",
+      "bytes": 2307
+    },
+    "infra\\aws\\terraform\\investor-reporting\\CHANGELOG.json": {
+      "sha256": "ca832f3eb10c529066aa78043a7298222630894d004680dda7c49fdaa311efbb",
+      "bytes": 7843
+    }
+  },
+  "changed_function": "irpt-ycharts-generate",
+  "changed_field": "artifact_sha256",
+  "from": "1L60sG1G9IaFfwe+LPNdE84DarlWCHKkdE8M5CyVI8o=",
+  "to": "CJ6aBh7BWJFcT2Vv0/cJFSXHaH5cs1LvqXvJRfkXHm8=",
+  "cloud_action": false,
+  "after_sha256": "2aeaf90f0da1af34b71fc80a1bee0db98d3b2746c199f16b611facb0a82d84fa",
+  "all_other_bytes_unchanged": true
+}

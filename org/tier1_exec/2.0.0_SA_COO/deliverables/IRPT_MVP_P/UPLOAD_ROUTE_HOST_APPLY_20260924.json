@@ -1,0 +1,39 @@
+{
+  "receipt": "the upload POST hosted on irpt-ycharts-generate with its named refusal, and declared on the portal API (CTO batch 28 (iii) / 100535, second act)",
+  "by": "2.0.0_SA_COO~P",
+  "at_utc": "2026-09-24T11:21:10Z",
+  "what_it_moves": "every route the product needs now has a handler: routes.json 17 of 17 DECLARED, 0 NO-HANDLER-AT-HEAD. POST /api/scoped/investor-reporting/analysis/inputs exists on API 7k3ed8px20 under the existing authorizer and integrates irpt-ycharts-generate, whose boundary carries the analysis POST and the upload POST. A well-formed upload from a signed-in owner answers NOT_READY (UploadServiceRequired in the internal sink) until the upload composition exists; a malformed one answers INVALID_INPUT by the validator's own reason. The LiveClient flag for the three operations rides the next portal candidate from DEV 895752676a.",
+  "what_it_does_not_move": "hop 2 -- the upload composition itself (index, parse_mapping, resolve_security through the resident's template resolver, prices; the two egress questions carded to Andrew). No holdings are parsed, nothing is retained, no vendor is reached on this route today.",
+  "host_choice": "irpt-ycharts-generate, not a new irpt-analysis-upload Lambda (the name Y's build_upload_entry carries): the api root already integrates it (key analysis), its role already reads the canonical profile and sends to the generation queue, and the composition when it lands writes the same retained families under the same X10 policy as the analysis submit -- one role to grant, one function to rebuild. Nothing in this act widens the role. A later move to a separate function is the routes.json handler field plus an integration key; the Entry code moves unchanged. The CTO may re-route by one word.",
+  "act": {
+    "ledger": {"slug": "irpt-upload-route-host-20260924", "sentinel_commit": "53135c3e62", "legs": ["tf-lambda irpt-ycharts-generate", "activation upload-route"]},
+    "source": {
+      "backend_commit": "64f05e3424 -- reports/generate_installed.py (UPLOAD_OPERATION / UPLOAD_ROUTE, UploadNotComposed, build_boundary constructing the one Entry with both routes and prospect_modes {OWNED_INPUT, CREATE_INPUT}; Y's entry.submit_analysis and intake/upload_entry.upload_csv called, Y's files unedited), reports/tests/test_generate_installed.py (6 passed), docs/contracts/investor-reporting/v1/routes.json (upload row DECLARED against irpt-ycharts-generate; 17/17), _contracts/test_upload_contract.py (the not-deployable arm became the declared arm; _contracts 11 passed); commit-gate 3 of 3"
+    },
+    "package": {
+      "artifact_sha256_b64": "4fkloyC1HaICo2OboVZgSFSapRJQlM5+ErEKWm0SCnU=",
+      "bytes": 510005,
+      "s3": "s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-ycharts-generate.zip version .bbyrCYyj1SSmKOLQ4O_S3XI_wMu8xTr (write verified)",
+      "map": {"commit": "26192e80ee (publish worktree)", "files": 106, "staged_rows": 71, "new_rows": ["intake/upload_entry.py", "intake/uploads.py"], "re_pinned": ["generate_installed.py"], "x10_row": "reporting_policies.json @7262571e4c ACTIVE -- packaged row read ACTIVE after unzip"},
+      "census_vs_served_uHfng41l": {"same": 103, "changed": ["generate_installed.py"], "added": ["upload_entry.py", "uploads.py"], "removed": [], "zip_equals_files": true, "staged_rows_mismatching_zip": 0},
+      "disclosed": "the first re-pin pass of this act re-pinned every row whose blob differed at HEAD, which wrongly moved reporting_policies.json to HEAD (PENDING_ENFORCEMENT on this branch). That build (Z3qFPF6AXfELbeFF3wxXyHnB5AJQrLCSKqMEx7x4Qxc=, 509955 bytes) was uploaded as an S3 version and never served, planned or applied; the pin was restored the same minute and the served artifact is 4fkloyC1.. with the ACTIVE row. The re-pin rule is now: the X10 row is pinned by name, never by 'differs at HEAD'.",
+      "s123_positive_control": "with the cherry-picked builder fix (b327fccb9c) the manifest probe printed 'SKIP: manifest-index gate -- this BUILD_MANIFEST declares no declared_blobs' and the build continued; no BAU_MANIFEST_SKIP. The ABSENT branch is reachable -- S122 is remedied and exercised."
+    },
+    "terraform": {
+      "ycharts_root": {"plan": "0 to add, 1 to change, 0 to destroy: the function's s3_object_version .YnkMmwAK.. -> .bbyrCYyj.. and source_code_hash uHfng41l.. -> 4fkloyC1..; no handler, env or role change", "apply": "Apply complete 0/1/0 at 11:21:10Z", "replan": "rc=0 No changes"},
+      "api_root": {"plan": "1 to add: aws_apigatewayv2_route.irpt[POST /api/scoped/investor-reporting/analysis/inputs] -> integrations/wtho3v4, authorization CUSTOM naqxlm", "apply": "Apply complete 1/0/0; route id 0sp6wva", "replan": "rc=0 No changes"},
+      "order": "the function first, the route second -- a route never preceded its handler"
+    },
+    "readback": {
+      "function": {"CodeSha256": "4fkloyC1HaICo2OboVZgSFSapRJQlM5+ErEKWm0SCnU=", "Handler": "generate_installed.lambda_handler", "LastModified": "2026-09-24T11:21:10.000+0000", "CodeSize": 510005, "State": "Active", "LastUpdateStatus": "Successful", "IRPT_LIVE_YCHARTS_CALL": "absent", "event_source_mappings": 0},
+      "route": {"route_key": "POST /api/scoped/investor-reporting/analysis/inputs", "target": "integrations/wtho3v4", "integration_uri_function": "irpt-ycharts-generate", "authorizer": "naqxlm", "route_id": "0sp6wva"},
+      "exercised": [
+        "invoke {} -> 200, no FunctionError, Init 111 ms, Duration 2169 ms (the container composed the 8 ports against the packaged ACTIVE X10 row -- a PENDING row would have raised at compose), CONTRACT_VERSION by name (request 76aab1cf-93d5-47a7-870e-a1c3ffd447ec)",
+        "invoke POST .../analysis/inputs with x-contract-version v1, a well-formed upload body and NO verified subject -> 200, operation analysis-input-upload resolved from the function's own route table, NOT_AUTHORIZED by name, 2 ms warm (request f8ce6cc8-500f-4630-acf0-7891464c419c). The prospect guard refused before UploadNotComposed ran, as it must for an unsigned caller; the named NOT_READY refusal is exercised offline (6 arms) and awaits a signed-in caller on the served path."
+      ]
+    },
+    "recorder": "record-terraform-deploy.sh investor-reporting --function irpt-ycharts-generate --deploy-ledger 53135c3e62 --code-sha256 4fkloyC1.. (publish worktree; the api root's CHANGELOG.json gains its entry by hand)",
+    "rollback": "function: S3 version .YnkMmwAKJumsmFjRgQm_9W0TQxdyhZB (uHfng41l..); route: revert the routes.json upload row and apply, or delete-route 0sp6wva"
+  },
+  "push_state": "LOCAL (backend, publish, shared tree; MSTR pushes)"
+}

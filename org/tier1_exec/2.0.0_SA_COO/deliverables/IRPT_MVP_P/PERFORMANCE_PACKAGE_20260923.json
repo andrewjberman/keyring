@@ -1,0 +1,297 @@
+{
+  "pin": "08f9738226c80a9403be8d7108ee71b86fa8b7b4",
+  "purpose": "LOCAL_REVIEW_NOT_DEPLOYED",
+  "sha256": "9cc2d2d9aeaf57b935c914f760515cded4efd3e1c4f523af6f05910725d02bc6",
+  "members": [
+    {
+      "path": "CurrencyAuthorities.json",
+      "source": "docs/contracts/investor-reporting/v1/CurrencyAuthorities.json",
+      "sha256": "64b7db3a55f19ebc07e897e6a5807fa38328e99ac5a8235a20e65fbac798d1c1"
+    },
+    {
+      "path": "PerformanceReport.schema.json",
+      "source": "docs/contracts/investor-reporting/v1/PerformanceReport.schema.json",
+      "sha256": "38c2c0249ab1b6b2fefca5791ba18680d8779018a81aaba2a629f9101c75e1d9"
+    },
+    {
+      "path": "_vendor/bd49f_reporting_pull.py",
+      "source": "infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py",
+      "sha256": "c1278acb257e05b9f18b4ba194c6cae754976dbb55b149b4eaa79985ad483fb6"
+    },
+    {
+      "path": "accepted_custody.py",
+      "source": "infra/aws/lambda/investor-reporting/_scope/accepted_custody.py",
+      "sha256": "748d54550cba302f7d418937e3434bb63cdc3bdc7f8bb0a21f64e144c9956837"
+    },
+    {
+      "path": "authz_dispatch.py",
+      "source": "infra/aws/lambda/investor-reporting/_authz/authz_dispatch.py",
+      "sha256": "fdc0091fa3be87064cabfeab566f8e1f8e04c88eff31ce49b865ad0ff9f3da58"
+    },
+    {
+      "path": "bd_adapter.py",
+      "source": "infra/aws/lambda/investor-reporting/performance/bd_adapter.py",
+      "sha256": "437b5b3827a5989a266684513900dd467c859b0872a25296f3e8c460f97238df"
+    },
+    {
+      "path": "bd_live.py",
+      "source": "infra/aws/lambda/investor-reporting/performance/bd_live.py",
+      "sha256": "c815a8ca2b5dea78ff24939179ebac5dd37fc1b3c37b8d53d563c6403bd33cf9"
+    },
+    {
+      "path": "bd_selected.py",
+      "source": "infra/aws/lambda/investor-reporting/performance/bd_selected.py",
+      "sha256": "4fea3aeb15d2fa12b6c4d52bdb5a1100a3ad3caa03e057e4eeb070f95f07ff4d"
+    },
+    {
+      "path": "canonical_profile_reads.py",
+      "source": "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py",
+      "sha256": "22534db5529e08144ddb3ab1ebe751099ecf4c55580bd8cc53783814b183dbdd"
+    },
+    {
+      "path": "composition.py",
+      "source": "infra/aws/lambda/investor-reporting/reports/composition.py",
+      "sha256": "6d2c3696d0305bee1bc0e95e11c8462d822dae356e1c11ed4253a3d93c699792"
+    },
+    {
+      "path": "currency_authority.py",
+      "source": "infra/aws/lambda/investor-reporting/reports/currency_authority.py",
+      "sha256": "83f7fe0311b5d25bb776f9137450be2e71c44c9ee5b0d97316714e9a6748994b"
+    },
+    {
+      "path": "custody.py",
+      "source": "infra/aws/lambda/investor-reporting/_scope/custody.py",
+      "sha256": "23cda6b0e3dd88df3b837545f94efacf600db857a5509ddd458ff40cc7870394"
+    },
+    {
+      "path": "custody_binding.py",
+      "source": "infra/aws/lambda/investor-reporting/_scope/custody_binding.py",
+      "sha256": "a01c312835062fdb8419e549e28387f1e0fc3ee68cded71fbe3349de97c4be0e"
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/cot_account_mapping.py",
+      "source": "data/assets/scripts/gold/investor_reporting/cot_account_mapping.py",
+      "sha256": "c2012a4bc693be8d2e807daa7b57d03b666756d513130e9f8157222f893302d1"
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/source_inputs.py",
+      "source": "data/assets/scripts/gold/investor_reporting/source_inputs.py",
+      "sha256": "267228c6bb36cac17a37d73ca654ce5489e8779bcf2200f0da4ad2ac1f1530ee"
+    },
+    {
+      "path": "data/assets/scripts/silver/rebalancer_conversion.py",
+      "source": "data/assets/scripts/silver/rebalancer_conversion.py",
+      "sha256": "d8eaaff69fa7494adfc185fb16833086ee80396a9f9baf63a9867ea0a82fdea3"
+    },
+    {
+      "path": "data/assets/scripts/silver/rebalancer_schemas.py",
+      "source": "data/assets/scripts/silver/rebalancer_schemas.py",
+      "sha256": "06c14cdedf0182ec6d11e8f1d7ee8c487bd72dcd2193c4cbca00f9848b96b366"
+    },
+    {
+      "path": "data/assets/scripts/silver/silver_registry.py",
+      "source": "data/assets/scripts/silver/silver_registry.py",
+      "sha256": "6779c01a3d0ed595d13dc834075070c8f625793b119e5f768f80de586f528dfd"
+    },
+    {
+      "path": "data/custodian_key_seam.json",
+      "source": "infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json",
+      "sha256": "87f2f92f3c71f7761b387574a3df721474120465b1b0da8028cfc201b619923a"
+    },
+    {
+      "path": "enforce.py",
+      "source": "infra/aws/lambda/investor-reporting/_authz/enforce.py",
+      "sha256": "18f04af84b9c5e87362f9cf87ee2ef5bc3680ccbaea66b1a2ee4e6579e6b1e7b"
+    },
+    {
+      "path": "entry.py",
+      "source": "infra/aws/lambda/investor-reporting/performance/entry.py",
+      "sha256": "3e309908deae0a3e718ea146f3f573894ba0d5dfba9b68b7540b29b84db909ef"
+    },
+    {
+      "path": "error_path_census.py",
+      "source": "infra/aws/lambda/investor-reporting/_authz/error_path_census.py",
+      "sha256": "258d06efe28950594db6e077eccb4a741d1355a6b7b0302c7c1f43ef2b6c4948"
+    },
+    {
+      "path": "errors.py",
+      "source": "infra/aws/lambda/investor-reporting/_authz/errors.py",
+      "sha256": "784ee313ed7013e6fdf535a373e7941f4c672f4467e4dfcb4e8ad0634b1646a2"
+    },
+    {
+      "path": "firm_registry.json",
+      "source": "data/firm_registry.json",
+      "sha256": "5a4c0c3da26fffe55d8a3ec2a8a7248bd0b1dd936af5425ab35426bc5d277fc0"
+    },
+    {
+      "path": "global.py",
+      "source": "infra/aws/lambda/investor-reporting/_scope/global.py",
+      "sha256": "a097f820caa413e193ac28c2e624698fc7696d97bdd1ec560156377efec8e5a3"
+    },
+    {
+      "path": "handler.py",
+      "source": "infra/aws/lambda/investor-reporting/performance/handler.py",
+      "sha256": "9ac98cb985600d68a4389d40811a01b7d447e2dc33e4d077c3da8f42ecc9a79d"
+    },
+    {
+      "path": "ids.py",
+      "source": "infra/aws/lambda/investor-reporting/_ids/ids.py",
+      "sha256": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6"
+    },
+    {
+      "path": "infra/logic/registry/exemptions.json",
+      "source": "infra/logic/registry/exemptions.json",
+      "sha256": "f51629e32f5d261f28b07dab9714c6f826265cf3e3aed0ff288b724abd1eeb50"
+    },
+    {
+      "path": "infra/logic/registry/remediations.json",
+      "source": "infra/logic/registry/remediations.json",
+      "sha256": "67b49f4332fb676847b2b92af9b4bdc85fd7107e5132421d93f3ea8bb0a09481"
+    },
+    {
+      "path": "infra/logic/registry/reporting_policies.json",
+      "source": "infra/logic/registry/reporting_policies.json",
+      "sha256": "481cc513038b73f5e0444baafea76fc97e3ac9e19624f3f6822fb6f362cacbc3"
+    },
+    {
+      "path": "infra/logic/registry/resources.json",
+      "source": "infra/logic/registry/resources.json",
+      "sha256": "471e106af27bb34d1712180ad67d4441e5154236ed2230b12cdeceb5e1981592"
+    },
+    {
+      "path": "infra/logic/registry/scopes.json",
+      "source": "infra/logic/registry/scopes.json",
+      "sha256": "a4e0637257b6c50adf23de75d3f344b3d39db6bf9a024f4b47dd825131532be9"
+    },
+    {
+      "path": "infra/logic/registry/systems.json",
+      "source": "infra/logic/registry/systems.json",
+      "sha256": "41d5138fd0d4c0644edef51f53644c7c4d5cb230daad5e6bccaa3c65d02b42eb"
+    },
+    {
+      "path": "infra/logic/registry/tiers.json",
+      "source": "infra/logic/registry/tiers.json",
+      "sha256": "d3d51e30150a4baefd9405ddfe9adfa1740e084dfb1857c8fcb0e87a3c1188f3"
+    },
+    {
+      "path": "installed.py",
+      "source": "infra/aws/lambda/investor-reporting/performance/installed.py",
+      "sha256": "984a06086f355dd39cfdb976d36d7c3f51f7c759badb041d950bbe974066787b"
+    },
+    {
+      "path": "interactive_access.py",
+      "source": "infra/aws/lambda/investor-reporting/_scope/interactive_access.py",
+      "sha256": "bba07a3f4eeb947bf33845653bde95d47bbb8037d65db4059f4f8b70ebabdf56"
+    },
+    {
+      "path": "keys.py",
+      "source": "infra/aws/lambda/investor-reporting/_keys/keys.py",
+      "sha256": "56ee3cc22e802579ebb8d4cba53edec8045603396a48fe952d6b83df0f08ab2a"
+    },
+    {
+      "path": "lib/opal_naming.py",
+      "source": "lib/opal_naming.py",
+      "sha256": "f3f9e813fc445b7c9d9ce3fdae4dc38319c26fd64196e9a15bfe51dbe79892a4"
+    },
+    {
+      "path": "loaders.py",
+      "source": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+      "sha256": "b84bb2918fc13be31358e81221e951ed4f4aa70da9dea2b7a8dbce93b1853da2"
+    },
+    {
+      "path": "maintained_sources.py",
+      "source": "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py",
+      "sha256": "19b7c80970822c8ea5d99eca1a64839b8918850a52bda6ea9897253f09ae1ab5"
+    },
+    {
+      "path": "normalize.py",
+      "source": "infra/aws/lambda/investor-reporting/performance/normalize.py",
+      "sha256": "203fddcd33939861e553cd4f03ed43f0f7a3057bf2417c011a102a2dd965ceb8"
+    },
+    {
+      "path": "orion_adapter.py",
+      "source": "infra/aws/lambda/investor-reporting/performance/orion_adapter.py",
+      "sha256": "3ea1d42e73ccdf705f9cfb3239d97ee7fc08424c579bc837b74ffff58c8f15ca"
+    },
+    {
+      "path": "owner_reads.py",
+      "source": "infra/aws/lambda/investor-reporting/_scope/owner_reads.py",
+      "sha256": "f21d26dcce7c46bf401dce38a2198c7b68e8e9c9c4192f99325b6f446d0da0b6"
+    },
+    {
+      "path": "prospect.py",
+      "source": "infra/aws/lambda/investor-reporting/_scope/prospect.py",
+      "sha256": "f556b0997dfa73109532abfb1d038c5ea0d9242f3a8c8ea25478f70bc1e5e06e"
+    },
+    {
+      "path": "raw_keys.json",
+      "source": "infra/aws/lambda/investor-reporting/_ids/raw_keys.json",
+      "sha256": "f81db571b5d92ca66b960047d96b38cc74c173cb7bf8be0c20e9cd3973acaf89"
+    },
+    {
+      "path": "repository.py",
+      "source": "infra/aws/lambda/investor-reporting/reports/repository.py",
+      "sha256": "f255335beb26f2397f1ea7b0d6a368ccdba1d6ad8a23bce1546c86286631cb94"
+    },
+    {
+      "path": "request_composition.py",
+      "source": "infra/aws/lambda/investor-reporting/reports/request_composition.py",
+      "sha256": "b82c1ad7d7c93c8b6cede77b95bb42e1af3e13c817ae921ba70a6d1af507504d"
+    },
+    {
+      "path": "resolve.py",
+      "source": "infra/aws/lambda/investor-reporting/_scope/resolve.py",
+      "sha256": "24b407fa00ff0fc342d57b1ca2bd986d7c802fe8a96b30fe57c06520523ccdeb"
+    },
+    {
+      "path": "retained.py",
+      "source": "infra/aws/lambda/investor-reporting/performance/retained.py",
+      "sha256": "8aef595c86d836486e9a014a7050f125e0bc50e5f02b7478f1cbff1766ac189b"
+    },
+    {
+      "path": "retained_input_authorizer.py",
+      "source": "infra/aws/lambda/investor-reporting/_scope/retained_input_authorizer.py",
+      "sha256": "928f44e5ad9c006fe5673b5c80a4bfc6f1076a0b3a0524d2f7edf5172403bcc6"
+    },
+    {
+      "path": "retention.py",
+      "source": "infra/aws/lambda/investor-reporting/reports/retention.py",
+      "sha256": "bdd74e5f9b909b94e08a35aa87044bb9b2f58f14b0b437f1eca0eb79a8cafa7e"
+    },
+    {
+      "path": "routetable.py",
+      "source": "infra/aws/lambda/investor-reporting/_authz/routetable.py",
+      "sha256": "1ba3c0c2bd35d32bf3dce3d1e1403acc5c8471add636de73a3807192d8f6276d"
+    },
+    {
+      "path": "selection.py",
+      "source": "infra/aws/lambda/investor-reporting/_scope/selection.py",
+      "sha256": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af"
+    },
+    {
+      "path": "selection_store.py",
+      "source": "infra/aws/lambda/investor-reporting/_scope/selection_store.py",
+      "sha256": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c"
+    },
+    {
+      "path": "served.py",
+      "source": "infra/aws/lambda/investor-reporting/_authz/served.py",
+      "sha256": "5aeb9513ae4e948ed8cafa61e7061dfc2a31f2cfc1437ac67f45ba6c36fa65fe"
+    },
+    {
+      "path": "tenants.py",
+      "source": "infra/aws/lambda/investor-reporting/performance/tenants.py",
+      "sha256": "38812b9686ec45d9033f7001e9fc82d35da0e282e4d5b76cb778b21614077241"
+    },
+    {
+      "path": "transport.py",
+      "source": "infra/aws/lambda/investor-reporting/performance/transport.py",
+      "sha256": "4714482707b90cb89fb8c209ef07b69faa21984c840921acc8a0262671083065"
+    },
+    {
+      "path": "units.py",
+      "source": "infra/aws/lambda/investor-reporting/performance/units.py",
+      "sha256": "1a21813a964cb40167c99050fcf052ef963a21d0cbb2cfe75249621a4dce13a8"
+    }
+  ]
+}

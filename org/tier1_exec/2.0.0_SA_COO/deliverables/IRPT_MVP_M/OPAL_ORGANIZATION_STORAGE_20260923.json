@@ -1,0 +1,52 @@
+{
+  "measured_at_utc": "2026-09-23T14:11:46.001402+00:00",
+  "table": "opal-users-v2",
+  "key": {
+    "PK": "FIRM#opal-capital",
+    "SK": "CONFIG#defaults"
+  },
+  "operation": "GetItem",
+  "consistent_read": true,
+  "projection_fields": [
+    "PK",
+    "SK",
+    "firmId",
+    "firmName",
+    "configType",
+    "configVersion",
+    "createdAt",
+    "updatedAt"
+  ],
+  "limit": "Metadata only; no user, permission, credential or security-default fields. Operator access is not deployment-role authority.",
+  "state": "PRESENT",
+  "http_status": 200,
+  "projected_item": {
+    "PK": {
+      "S": "FIRM#opal-capital"
+    },
+    "SK": {
+      "S": "CONFIG#defaults"
+    },
+    "configType": {
+      "S": "user-defaults"
+    },
+    "configVersion": {
+      "S": "v1"
+    },
+    "createdAt": {
+      "S": "2026-02-17T19:30:00.000Z"
+    },
+    "firmId": {
+      "S": "opal-capital"
+    },
+    "firmName": {
+      "S": "Opal Capital"
+    },
+    "updatedAt": {
+      "S": "2026-02-17T19:30:00.000Z"
+    }
+  },
+  "projection_sha256": "7cf0b38b85f49588bef4a8e4d2d783f3625074cc0bd751c7812ef45e966ed767",
+  "immutable_upstream_version": null,
+  "version_limitation": "configVersion and updatedAt are mutable fields, not immutable DynamoDB object versions."
+}

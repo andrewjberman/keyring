@@ -1,0 +1,77 @@
+{
+  "observed_at": "2026-09-23T23:01:30Z",
+  "actor": "2.0.0_SA_COO~P",
+  "function": "irpt-holdings",
+  "ledger": "irpt-holdings-schema-20260923",
+  "go": "1.0.0_SA_CTO d8e9d68378 (inbox 20260923T223207Z)",
+  "source_repair": "2.0.0_SA_COO~M 3e913e9ce9482dbe25ec51bc0721e303a12af926; CTO runtime-image proof c6835d130c",
+  "plan": {
+    "file": "irpt-smoke-p-backend-20260923/.runtime/holdings-reader-cutover/schema-repair.tfplan",
+    "sha256": "30f1d202bf7a50fa063e7d96eee2e6ae5ed7465c23471cf1d670230f780d5f02",
+    "terraform_version": "1.9.8",
+    "resource_changes": {"no-op": 5, "update": 1, "create": 0, "destroy": 0},
+    "only_changed_address": "module.irpt_holdings.aws_lambda_function.this"
+  },
+  "pre_apply_readback": {
+    "code_sha256": "vLP7cZN61JWOOmiCGmCjnOM43296i8qDt1hL1ZE8yUs=",
+    "artifact_version": "e7XAGneq1_KKe2tnBVK45FsEFNItS2NF",
+    "last_modified": "2026-09-23T22:10:08.000+0000",
+    "remote_state_serial": 11,
+    "drift": "none: live CodeSha256 and s3_object_version equal the plan's before values"
+  },
+  "artifact": {
+    "bucket": "opal-313476888478-lambda-artifacts",
+    "key": "investor-reporting/irpt-holdings.zip",
+    "version_id": "nWRHWWilAp0fu9f7swCfvS1zXHEaTfXC",
+    "content_length": 260840,
+    "metadata_content_sha256": "l/GQrFcEvWMVPyRmZAGooQLtNdwaHAe+Cvy/23FUDDU=",
+    "s3_last_modified": "2026-09-23T22:27:02Z",
+    "zip_sha256_per_cto": "97f190ac5704bd63153f24666401a8a102ed35dc1a1c07be0afcbfdb71540c35"
+  },
+  "apply": {
+    "tool": ".tools/safe-apply.sh -chdir=infra/aws/terraform/investor-reporting/holdings apply -input=false -no-color <saved plan>",
+    "run_from": "irpt-smoke-p-backend-20260923 (pinned .tools/terraform.exe 1.9.8)",
+    "halt_gate": "rc=1 first run: 22 routine base-inbox messages surfaced, none STOP-class; re-run with HALT_ACK=1 after reading subjects",
+    "naming_gate": "ENFORCE mode: pre-plan WARN 4 graded, plan-time WARN 6 graded (all existing resources), no REFUSE",
+    "tagauthz_gate": "PASSED (0 candidate resources overwrite an access-granting tag)",
+    "tombstone_gate": "CLEAN (0 creates vs 7 tombstones)",
+    "result": "Apply complete! Resources: 0 added, 1 changed, 0 destroyed",
+    "receipt_log": "irpt-smoke-p-backend-20260923/.runtime/holdings-reader-cutover/schema-apply-2.log",
+    "completed_at": "2026-09-23T23:00:57Z"
+  },
+  "post_apply_readback": {
+    "code_sha256": "l/GQrFcEvWMVPyRmZAGooQLtNdwaHAe+Cvy/23FUDDU=",
+    "artifact_version": "nWRHWWilAp0fu9f7swCfvS1zXHEaTfXC",
+    "last_modified": "2026-09-23T23:00:52.000+0000",
+    "state": "Active",
+    "last_update_status": "Successful",
+    "runtime": "python3.12",
+    "handler": "entry.lambda_handler",
+    "memory_mb": 1024,
+    "timeout_s": 29,
+    "layers": ["arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5"],
+    "role": "arn:aws:iam::313476888478:role/irpt-holdings-role",
+    "environment": {
+      "IRPT_DIRECTORY_BUCKET_MAP": "{\"49financial\":\"opal-data-bd\",\"cottonwood\":\"opal-data-cot\",\"inflection\":\"opal-data-inf\"}",
+      "IRPT_DIRECTORY_KEY": "investor-reporting/directory/latest.json",
+      "IRPT_HOLDINGS_PREFIX": "investor-reporting/holdings",
+      "IRPT_REQUESTS_TABLE": "irpt-requests",
+      "IRPT_CONTRACTS_DIR": "/var/task/contracts",
+      "IRPT_FIRM_REGISTRY": "/var/task/firm_registry.json"
+    },
+    "remote_state_serial": 12,
+    "remote_state_terraform_version": "1.9.8",
+    "iam": "unchanged: all four IAM addresses no-op in the plan; grants as recorded in HOLDINGS_READER_APPLY_20260923.json"
+  },
+  "post_apply_plan": {
+    "command": ".tools/terraform.exe -chdir=infra/aws/terraform/investor-reporting/holdings plan -input=false -detailed-exitcode",
+    "exit_code": 0,
+    "result": "No changes. Your infrastructure matches the configuration.",
+    "log": "irpt-smoke-p-backend-20260923/.runtime/holdings-reader-cutover/post-schema-plan.log"
+  },
+  "not_claimed": [
+    "actual signed-in Holdings screen PASS for Anna Thiessen (M owns the authenticated API/browser proof card)",
+    "expanded COT coverage publication (M, GO d940022b06)",
+    "X10 policy enforcement (PENDING_ENFORCEMENT)"
+  ]
+}

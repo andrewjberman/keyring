@@ -1,0 +1,49 @@
+{
+  "receipt": "portal candidate 5 -- the request corpus for every DECLARED route, the requestId sample maps, five 12-literal re-pins (CTO 100558 item 4)",
+  "by": "2.0.0_SA_COO~P",
+  "at_utc": "2026-09-24T12:1xZ",
+  "branch": {
+    "name": "irpt-dev-candidate-5-20260924",
+    "head": "694287b9",
+    "commits": [
+      "2ad36f43",
+      "694287b9"
+    ],
+    "base": "origin/DEV 310b83b8 (candidate 4 landed)",
+    "files": 10,
+    "product_files_changed": 0
+  },
+  "records_added": [
+    "directory-browse",
+    "analysis-request-history",
+    "analysis-request-read",
+    "analysis-input-upload",
+    "selection-create (no record since its declaration: measured 'REQUEST CORPUS: 16 of 17')"
+  ],
+  "records_changed": [
+    "analysis-requests: +prepared_for (CUSTODY_FIELDS are eight)"
+  ],
+  "literals_re_pinned": {
+    "fe-s-13/request-corpus": "12->17 seen/files; 7->8 keys; 22->27 scanned",
+    "fe-s-13/producer-fixtures": "12->17 withContract / RESPONSE_OPERATIONS",
+    "fe-s-14/header": "12->17 carried; SAMPLE +requestId",
+    "fe-s-13/routes": "SAMPLE +requestId"
+  },
+  "verification": {
+    "instrument": "the nested portal checkout in the backend worktree (../docs = the flipped contract)",
+    "tsc": "0 errors",
+    "eslint": "0 problems",
+    "suites": "fe-s-13 + fe-s-14 + mvp-upload + mvp-selection: base (candidate 4) 17 fail -> 12 fail; 0 introduced, 5 fixed, diffed by test name",
+    "remaining_12_pre_existing": [
+      "F14-AC13 x2, F14-AC14 x3: ENOENT on fixture files absent from the nested layout (instrument artefact; re-read after landing)",
+      "F14-AC15 live-client transport arm",
+      "F14-AC8 x3 (firm dropdown / single permitted firm)",
+      "FIELD_MAP (PerformanceReport.beginningValue / endingValue / retainedReport absent from FIELD_MAP)",
+      "authorized directory browse boundary",
+      "the live client ISSUES the holdings route"
+    ],
+    "fe_s_2_and_10": "measured at DEV 310b83b8 in the nested checkout: 80 pass / 18 fail; D's row DSGN_IRPTV1-W4-S2 naming five is not at HEAD in the shared tree (its channel ends at S4 / W6-S2); repair waits on the five names"
+  },
+  "landing": "CTO review as candidates 1-4; MSTR fast-forward or --no-ff onto origin/DEV; rollback = DEV re-pointed",
+  "push_state": "LOCAL"
+}

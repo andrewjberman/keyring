@@ -1,0 +1,78 @@
+{
+  "observed_at": "2026-09-24T02:49:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "APPLIED -- code-only irpt-holdings repackage carrying holdings/entry.py at 13012979e1 (4.0.0_SA_CRO: a successful read states READY/PARTIAL in the envelope status; HOLDINGS_READY / OBJECT_NOT_COVERED; no internal_correlation_id). CTO GO 100008 (ruling IRPT-HOLDINGS-SUCCESS-STATUS-20260924 as amended); Andrew-direct at the CRO terminal ~02:2xZ: 'fix the ready flag, send the status'",
+  "pin": {
+    "code_commit": "13012979e187986430316e54b41378967af9dedd",
+    "tests_commit": "01bdf54cfd",
+    "merged_onto_backend_as": "3d7f66b83b",
+    "entry_py_sha256": "6660c155d67562dee3e29f660ea3ce6cbd5a8bf00ba7ddd5e834653fe05cac9d",
+    "holdings_tests": "144 passed, no skips (P tree 02:4xZ; CRO worktree 144; CTO own run 144 + negative arm)"
+  },
+  "artifact": {
+    "s3": "s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-holdings.zip",
+    "version_id": "Q1V60Swh6D9Xunup7v_8hOe4IcgOOIYG",
+    "code_sha256": "3nc57No0b8rSnz9xbyenToYWgb91aoDT87RHrIJ5vAQ=",
+    "bytes": 262646,
+    "members": 33,
+    "differs_from_deployed_xd4mk5fx": [
+      "entry.py"
+    ],
+    "source_map_commit": "0dde371182"
+  },
+  "plan": {
+    "file": ".runtime/holdings-status/status.tfplan",
+    "sha256_prefix": "af3b34e31168ac6e",
+    "summary": {
+      "add": 0,
+      "change": 1,
+      "destroy": 0
+    },
+    "change": "module.irpt_holdings.aws_lambda_function.this: source_code_hash xd4mk5fx -> 3nc57No0, s3_object_version tndS2IuX -> Q1V60Swh; layers/handler/environment/role equal"
+  },
+  "apply": {
+    "tool": ".tools/safe-apply.sh from irpt-smoke-p-backend-20260923 holdings root",
+    "halt_ack": "HALT_ACK=1",
+    "result": "Apply complete 0 added / 1 changed / 0 destroyed rc=0",
+    "completed_at": "2026-09-24T02:45:27Z",
+    "log_sha256_prefix": "b7bda53f40ffbbe2"
+  },
+  "readback": {
+    "CodeSha256": "3nc57No0b8rSnz9xbyenToYWgb91aoDT87RHrIJ5vAQ=",
+    "LastModified": "2026-09-24T02:45:22.000+0000",
+    "Handler": "entry.lambda_handler",
+    "Layers": [
+      "arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5"
+    ],
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "unchanged_vs_sink_readback": [
+      "Handler",
+      "Layers",
+      "Role",
+      "Env",
+      "Timeout",
+      "MemorySize"
+    ],
+    "post_apply_plan_rc": 0
+  },
+  "recorder": {
+    "commit": "c29054e73c",
+    "deploy_ledger": "61a03f2c26",
+    "last_deployed_at": "2026-09-24T02:46:41Z"
+  },
+  "ledger": {
+    "slug": "irpt-holdings-status-20260924",
+    "sentinel_commit": "61a03f2c26",
+    "status": "CLOSED",
+    "legs": {
+      "A1": "closed",
+      "V1": "closed",
+      "R1": "closed"
+    }
+  },
+  "not_claimed": [
+    "the rendered Holdings table -- Andrew's retest and the CRO's HAR read expecting status.state READY, public_reason_code HOLDINGS_READY, source_dates.business_date 2026-09-22"
+  ],
+  "push_state": "LOCAL (irpt-p-publish-20260923; MSTR pushes)"
+}

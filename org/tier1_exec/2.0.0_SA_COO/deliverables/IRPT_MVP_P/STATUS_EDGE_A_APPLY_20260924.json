@@ -1,0 +1,41 @@
+{
+  "receipt": "irpt-status rebuilt to serve edge (a)'s mapped reason (CTO 100535 / 100542)",
+  "by": "2.0.0_SA_COO~P",
+  "at_utc": "2026-09-24T11:46:53Z",
+  "change": "ops/entry.py @e0f52fa041 (build_owned_entry reasons += RequestStorageUnavailable -> NOT_AUTHORIZED) now SERVED: a Global viewer with no chosen data firm answers a named code from the closed vocabulary, never UNEXPECTED",
+  "package": {
+    "artifact_sha256_b64": "pfAr3uZEAjWWUNfcukhJYV+bWi1oxPUZzYKUE/NbztY=",
+    "bytes": 299278,
+    "s3_version": "n7OXcDwcK_A3cmWLUd4j243C_ljQd.aM",
+    "map_commit": "16de383bfd",
+    "census_vs_served_5E8T": {
+      "same": 41,
+      "changed": [
+        "entry.py"
+      ],
+      "added": [],
+      "removed": []
+    },
+    "x10_row": "ACTIVE, held by NAME at 7262571e4c (the re-pin script now asserts it; CTO 100542's standing rule)",
+    "mapped_reason_in_zip": true
+  },
+  "ledger": {
+    "slug": "irpt-status-edge-a-20260924",
+    "sentinel": "d407e320da",
+    "plan": "0 to add, 1 to change, 0 to destroy (object version + source hash only)",
+    "apply": "Apply complete 0/1/0 at 11:46:53Z",
+    "replan": "rc=0 No changes"
+  },
+  "readback": {
+    "CodeSha256": "pfAr3uZEAjWWUNfcukhJYV+bWi1oxPUZzYKUE/NbztY=",
+    "Handler": "status_installed.lambda_handler",
+    "LastModified": "2026-09-24T11:46:53.000+0000",
+    "CodeSize": 299278,
+    "State": "Active",
+    "LastUpdateStatus": "Successful"
+  },
+  "exercised": "unsigned history GET invoke -> 200, operation analysis-request-history, NOT_AUTHORIZED by name (the Global-viewer-without-tenant path itself needs a verified subject and is exercised offline by ops/tests/test_owned_entry.py's 28 arms)",
+  "recorder": "bf090cb303 (publish worktree)",
+  "rollback": "S3 version Hm2q90mPbHJRrkzE857zlUaRh5V4bujV (5E8T+/LV..)",
+  "push_state": "LOCAL"
+}

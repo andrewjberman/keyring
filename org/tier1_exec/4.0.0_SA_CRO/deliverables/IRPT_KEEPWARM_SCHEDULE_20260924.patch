@@ -1,0 +1,76 @@
+diff --git a/infra/aws/terraform/investor-reporting/directory/schedule.tf b/infra/aws/terraform/investor-reporting/directory/schedule.tf
+index e60dee8249..57c96eb92e 100644
+--- a/infra/aws/terraform/investor-reporting/directory/schedule.tf
++++ b/infra/aws/terraform/investor-reporting/directory/schedule.tf
+@@ -410,3 +410,71 @@ output "directory_refresh_function_name" {
+   value       = module.irpt_directory_refresh.function_name
+   description = "the function the schedule invokes -- the zip Terraform ships, NOT the shared-home gold script"
+ }
++
++# =============================================================================
++# B7 -- KEEP-WARM PING for irpt-directory-search (4.0.0_SA_CRO, 2026-09-24)
++# =============================================================================
++#
++# Speed brief e4b28c17c4 s.2.3 lever B7, approved by Andrew 2026-09-23 ("I like all your recs, yes go
++# ahead", @6fc3f5f785); CTO assignment IRPT-LISTING-SPEED-ASSIGNMENT-20260924 item A: "B7 keep-warm on
++# the IRPT routes (a scheduled ping is not a monitor; Andrew approved always-on in the same word)".
++# Measured cause (brief s.2.2 row 4): 18% of irpt-directory-search calls were cold starts at 2.3-6.7 s
++# each, multiplied by the page's fan-out of three parallel browses.
++#
++# WHAT A FIRE DOES: invokes irpt-directory-search DIRECTLY with {"irpt_warm": true}. served.py's
++# lambda_entry answers {"warm": true, "function": ...} BEFORE the boundary, the authorizer chain or
++# any S3 read, so the fire keeps one initialised container resident and touches no data. The marker
++# cannot be reached through the HTTP API (API Gateway builds the event's top level itself), so a
++# browser caller cannot produce a warm event.
++#
++# NOT A MONITOR, NOT AN ALARM: nothing reads the answer, nothing is notified, no metric is graded.
++# Cost: rate(5 minutes) = 288 fires/day of a few milliseconds each, well inside the free tier.
++# ENABLED, and the standing bound is satisfied rather than waived: the fire reaches one Lambda whose
++# warm branch reads nothing and whose import closure holds no vendor client.
++
++data "aws_iam_policy_document" "irpt_directory_keepwarm_scheduler" {
++  statement {
++    sid       = "InvokeTheDirectorySearchFunctionOnly"
++    effect    = "Allow"
++    actions   = ["lambda:InvokeFunction"]
++    resources = [module.irpt_directory_search.function_arn]
++  }
++}
++
++resource "aws_iam_role" "irpt_directory_keepwarm_scheduler" {
++  name               = "irpt-directory-keepwarm-scheduler-role"
++  description        = "IRPT B7: EventBridge Scheduler role for the irpt-directory-search keep-warm ping. Grants ONLY lambda:InvokeFunction on that one function."
++  assume_role_policy = data.aws_iam_policy_document.irpt_directory_refresh_scheduler_assume.json
++}
++
++resource "aws_iam_role_policy" "irpt_directory_keepwarm_scheduler" {
++  name   = "irpt-directory-keepwarm-scheduler-policy"
++  role   = aws_iam_role.irpt_directory_keepwarm_scheduler.id
++  policy = data.aws_iam_policy_document.irpt_directory_keepwarm_scheduler.json
++}
++
++resource "aws_scheduler_schedule" "irpt_directory_keepwarm" {
++  name                = "irpt-directory-keepwarm"
++  description         = "IRPT B7: keep-warm ping for irpt-directory-search every 5 minutes. The function answers before the boundary and reads nothing; not a monitor, nothing is notified."
++  group_name          = "default"
++  state               = "ENABLED"
++  schedule_expression = "rate(5 minutes)"
++
++  flexible_time_window {
++    mode = "OFF"
++  }
++
++  target {
++    arn      = module.irpt_directory_search.function_arn
++    role_arn = aws_iam_role.irpt_directory_keepwarm_scheduler.arn
++    input = jsonencode({
++      irpt_warm = true
++    })
++  }
++}
++
++output "directory_keepwarm_schedule_state" {
++  value       = aws_scheduler_schedule.irpt_directory_keepwarm.state
++  description = "Must read ENABLED; the ping keeps one irpt-directory-search container resident."
++}
++

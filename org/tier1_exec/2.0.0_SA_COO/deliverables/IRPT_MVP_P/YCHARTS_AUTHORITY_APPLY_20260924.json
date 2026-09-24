@@ -1,0 +1,30 @@
+{
+  "observed_at": "2026-09-24T00:18:30Z",
+  "actor": "2.0.0_SA_COO~P",
+  "go": "1.0.0_SA_CTO 99821 item 3: exact saved plan 1de76039 (0/3/0), Decrypt accepted as the necessary companion to bound 4, tag only, host not started",
+  "ledger": "irpt-ycharts-authority-20260924 (opened 00:15Z, sentinel committed 07bc8e67ab before the act)",
+  "candidate_receipt": "YCHARTS_AUTHORITY_PLAN_20260923.json (66ae2d58f6), source commit ec8b4dda8d",
+  "prechecks_before": {"host_state": "stopped", "host_tags": ["Project", "Cell", "Name", "ManagedBy", "System"], "generate_policies": ["irpt-ycharts-generate", "irpt-ycharts-generate-directory-read-policy", "irpt-ycharts-generate-ownership-map-read-policy"], "runner_policies": ["irpt-export-render-host-evidence", "irpt-ycharts-runner"], "state_serial": 14},
+  "apply": {
+    "tool": ".tools/safe-apply.sh -chdir=infra/aws/terraform/investor-reporting/ycharts apply -input=false -no-color <saved plan>",
+    "run_from": "irpt-smoke-p-backend-20260923 (pinned .tools/terraform.exe 1.9.8; root initialised there at ec8b4dda8d)",
+    "halt_gate": "22 routine base-inbox messages (same set as the two earlier applies), none STOP-class; HALT_ACK=1",
+    "gates": "naming WARN only (11 pre-plan, 15 plan-time, existing names), comp-tagauthz PASSED, tombstone CLEAN (0 creates)",
+    "result": "Apply complete! Resources: 0 added, 3 changed, 0 destroyed",
+    "changed": ["aws_iam_role_policy.generate (irpt-ycharts-generate-role:irpt-ycharts-generate)", "aws_iam_role_policy.runner (irpt-ycharts-runner-role:irpt-ycharts-runner)", "aws_instance.runner (i-0167fd745ad906a66, tags only, 2s)"],
+    "completed_at": "2026-09-24T00:17:29Z",
+    "receipt_log": ".runtime/ycharts-authority/apply.log"
+  },
+  "post_apply_readback": {
+    "host": {"instance_id": "i-0167fd745ad906a66", "state": "stopped", "tags": {"AutoShutdown": "disabled", "Cell": "IB-s-8", "Name": "irpt-ycharts-runner", "ManagedBy": "Terraform", "Project": "OpalPortal", "System": "InvestorReporting"}, "note": "NOT started; aws_ec2_instance_state.runner still declares stopped (CTO item 3 correction: writer B flips in the same plan as the resident cutover)"},
+    "statements_present_on_both_roles": [
+      {"Sid": "ReadCanonicalUserProfileByEmailIndexAndKey", "Action": ["dynamodb:Query"], "Resource": "arn:aws:dynamodb:us-east-1:313476888478:table/opal-users-v2/index/email-index"},
+      {"Sid": "ReadCanonicalUserProfileRow", "Action": ["dynamodb:GetItem"], "Resource": "arn:aws:dynamodb:us-east-1:313476888478:table/opal-users-v2"},
+      {"Sid": "DecryptCanonicalUsersTableViaDynamoOnly", "Action": ["kms:Decrypt"], "Resource": "arn:aws:kms:us-east-1:313476888478:key/64f25291-4015-42c5-ad41-40e42325deb7", "Condition": {"kms:ViaService": "dynamodb.us-east-1.amazonaws.com", "kms:EncryptionContext:aws:dynamodb:tableName": "opal-users-v2"}}
+    ],
+    "remote_state_serial": 15,
+    "post_apply_plan": {"exit_code": 0, "result": "No changes. Your infrastructure matches the configuration.", "log": ".runtime/ycharts-authority/post-plan.log"}
+  },
+  "not_claimed": ["host start", "resident factory install", "any live current-authority read (the reader runs only when the resident consumer runs)"],
+  "andrew_veto_open": "the AutoShutdown tag opt-out (CTO 99796 item 5 surfaced it); the tag is inert while the host is stopped"
+}
