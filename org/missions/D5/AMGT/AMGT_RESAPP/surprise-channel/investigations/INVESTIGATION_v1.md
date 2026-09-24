@@ -14133,6 +14133,33 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The Peers table's column header reads 'P/E (trailing)' and 'P/E (NTM)'; lib/research/peers/csc.py:88-89 states the relation to the underlying factor codes as 'RECIPROCAL: P/E = 1 / ey' and 'RECIPROCAL: P/E = 1 / ey_ntm'; AMGT-rk-14's display-label work asserts the label NEVER carries a fiscal year over a non-fiscal-year figure, i.e. that the header is an honest name for the figure beneath it.",
     "world_is": "Under that header the page renders a number 100x smaller than the P/E it names, on every member that carries one. The label discipline rk-14 installed governs the column's HORIZON (trailing vs fiscal year) and says nothing about its MAGNITUDE or its UNITS, so a column can satisfy every label rule in the estate and still show the wrong number.",
     "notes": "⛔ ARMED because this is a SERVED-CLASS defect on the product's own comparison table: a reader forms a valuation judgment from a P/E, and a P/E of 0.35 next to a P/E of 0.76 preserves the ORDERING while destroying the MAGNITUDE -- so the table looks internally consistent and ranks members correctly, which is precisely why it survived 38 rounds. Andrew's goal names a visually polished Security Analysis app whose completion test is every security in the research folder; a mislabelled valuation multiple is in the goal's own subject matter. ⭐ THE CLASS IS THIS SEAT'S OWN ROUND-37 ERROR INVERTED AND IS WORTH MORE THAN THE INSTANCE: there I reasoned about a metric from its NAME without opening the predicate; here the ESTATE names a column from a relation string whose implementation nobody opened. A relation string is documentation, and documentation that states an arithmetic contract is the easiest kind to leave unexecuted, because every reader downstream quotes it as though it ran. NOT A ROUND-38 REGRESSION: no round-38 cell touched the peers table, and this row makes no claim about when the defect entered."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S266",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-24T17:15Z",
+    "one_line": "ADJUDICATION CARRIER for two round-37 rows naming 2.0.0_SA_COO~Z that still read UNDER_INVESTIGATION on `_latest_dispositions()` because round 37's adjudication predates the rl-9 drain that resolved them: AMGT_RESAPP-Z-S247 (the MODEL state's identity line at ratio 1.48 on the band, lowContrastChars 37) and AMGT_RESAPP-W137-S1 (tabs.harness.cjs throwing MODULE_NOT_FOUND on LeadPanel's new PanelFooter and Segmented imports). Both fixed by 0.9.0_WK_AMGT_RESAPP~138 on AMGT-rl-9 and re-measured by the issuer today.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_RESAPP-Z-S247's own disarm condition: 'Disarms when the issuer reads ... model.json lowContrastChars 0'. Read on the shared portal at DEV 5e339ffd, 2026-09-24 ~15:5xZ (deliverables/2.0.0_SA_COO~Z/round38/contract-check-after-rm-2/run.log, scope=main row `model`): lowContrastChars PASS, as on all six states; the identity line no longer renders navy ink on the band.",
+        "AMGT_RESAPP-W137-S1's named fix: portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs now carries a '@/ui/components/panels' stub with PanelFooter (:81-:85) and a '@/ui/components/Controls' case with Segmented (:104-:108), committed by 0.9.0_WK_AMGT_RESAPP~138 @c2b51a46 (2026-09-24 07:35Z, the rl-9 drain); the harness ran under rm-1/rm-2's AC checks today without a MODULE_NOT_FOUND.",
+        "Instrument: `_latest_dispositions('.', 'AMGT_RESAPP')` at .tools/surprise-row-gate.py:433 read both ids UNDER_INVESTIGATION at 17:0xZ among 19 open on 596; every other open id is a round-38 row the CVO's L9 on packet @e51fd80d4e dispositions, and this row does not name them."
+      ]
+    },
+    "adjudicates": [
+      "AMGT_RESAPP-Z-S247",
+      "AMGT_RESAPP-W137-S1"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "Z-S247: 'Routed to AMGT-rl-9 ... whose criterion is the six-state PASS'; W137-S1: 'the fix is the same shape already applied to errorEmpty.harness.cjs -- add PanelFooter to the panels stub and a Segmented stub to a new Controls case in tabs.harness.cjs's own load()'.",
+    "world_is": "Both remedies landed in the rl-9 drain on 2026-09-24 and hold at the round-38 baseline; the rows stayed open only because their owner's word was never carried in a field the resolver folds (R-81a's matched pair, two more instances).",
+    "disarm_owner": "2.0.0_SA_COO~Z -- the owner both rows name; nothing on either target row is edited.",
+    "notes": "Filed on the consumer's instrument, not on the retracted census (CTO msg 25640). Not round-38 L8 input."
   }
 ]
 ```
