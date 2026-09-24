@@ -163,6 +163,43 @@ place that bit us is a provenance disclosure.
     "spec_asserts": "rl-9 AC4 (JUDGMENT, the CVO's): the six PNGs under contract-check-final/ read BY A PERSON against portal/DESIGN.md C1-C12, a rejection citing its clause (C-CLAUSE-CITED-REJECTION, C-RENDER-IS-THE-ORACLE).",
     "world_is": "The renders earn their page-level work -- model's DPS refusal renders as ONE status icon and one navy sentence with ABSENT rows folded to footnotes and '165 of 165 fiscal figure(s) rendered' printed; peers shows PRESENT columns only with an 'Absent columns (12)' disclosure and every summary row carrying (n=12); list's Thesis panel renders a designed C12.1 EMPTY state rather than a bare 'No data'. The rejection is on C1 and C11, both of which the invariance sweep corroborates as chrome-owned. The band-container criterion is NOT chrome-bound and is reachable from inside the page, which peers demonstrates.",
     "notes": "NOTHING IS DISARMED BY THIS ADJUDICATION, Z-S248 included, and Z-S247's disarm carrier remains the issuer's to file after this read -- the lowContrastChars 0 measurement is offered TO that seat rather than used to close its row. SCOPE NOT CLAIMED: this grades ONE criterion. It does not grade FWD-21..FWD-29, which are the L10 analysis's, and does not re-derive rl-9's mechanical arms (the AC1 refusal with its own trace, the 31-file census, harnesses drafting 8/8, tabs 20/20, posture 32/32). CONSEQUENCE FOR ROUND 38's CUT, offered as measurement rather than as a cut: C1 and C11 genuinely need a file outside src/pages/SecurityAnalysis/**, the band criterion does not, and binding them into one cell would widen the round further than the evidence asks."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-C-S415",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-24T12:36:00Z",
+    "one_line": "CORRECTION TO THIS SEAT'S OWN ADJUDICATION_v47, filed by its author before round 38 is cut: the band-scoping claim is FALSIFIED. bandContainersTopLevel does NOT count bands -- it counts #0A1733 panel TITLE STRIPS plus the sidebar at document.body scope -- so peers reading 1 is the <aside>, not a page band, and 'peers is the existence proof that 1 is reachable from inside the page's own tabs' proves nothing about the page.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Falsified by 4.0.0_SA_CRO~Z (msg 25506) and VERIFIED AT THE BYTES at this seat rather than relayed on that seat's report.",
+        "portal/scripts/ui-measure.mjs: isBand = c => Math.abs(c.r-10)<3 && Math.abs(c.g-23)<3 && Math.abs(c.b-51)<3, i.e. rgb(10,23,51) = #0A1733; and scopeRoot = scopeSel ? document.querySelector(scopeSel) : document.body, so the DEFAULT SCOPE IS THE WHOLE BODY and the sidebar is inside it.",
+        "portal/src/index.css body block: --layer-strip: 221 67% 12% carries the comment '#0A1733 panel title strip, table column header (= the band)'; --layer-body: 221 45% 18%. The assignments are --bg-band: var(--layer-body) -> rgb(25,38,67), NOT matched by isBand, and --bg-header: var(--layer-strip) -> #0A1733, IS matched.",
+        "THEREFORE the identity header -- Panel variant='mixed' on --bg-band, the element F1 made the ONE band in Security mode -- is INVISIBLE to the predicate on every state, and what the metric actually counts is title strips plus the <aside>.",
+        "WHAT SURVIVES OF THE ORIGINAL READING, stated precisely: the VISUAL half was correct and even identified the right object -- peers has no dark panel header and model adds one, and the title strip is exactly what the predicate counts. The error is the INFERENCE that the residual 1 is page-owned and that reaching 1 would satisfy FWD-21.",
+        "SECOND BOUND THIS SEAT FAILED TO STATE IN THE SAME ADJUDICATION: the invariance sweep read weight 300 = 8 as chrome because it was identical across six tab renders; 4.0.0_SA_CRO~Z measures it as PageHeaderVariants.tsx:46 font-light, a PAGE element rendered once per page. Invariance across tabs cannot distinguish chrome from a page element that renders once per page. The sweep's asymmetry was stated in one direction only."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ADJUDICATION_v47 s.2.3: 'peers is the existence proof that 1 is reachable from inside the page's own tabs', and the derived recommendation that the band criterion stays inside the rectangle -- adopted verbatim as L10 round-37 enrichment item 2.",
+    "world_is": "The metric named bandContainersTopLevel measures #0A1733 title strips plus the sidebar, not bands. A page cell chasing it could move the number ONLY by deleting shared PanelHeader/PanelFooter strips, and could never grade what C3 and FWD-21 are about. So L10 item 2 as written would cut a cell that either no-ops or damages shared chrome to satisfy a counter.",
+    "notes": "THE ERROR CLASS IS NAMEABLE AND IT IS THIS SEAT'S: I VALIDATED THE RENDER AND INFERRED THE METRIC'S MEANING FROM ITS NAME. C-RENDER-IS-THE-ORACLE was honoured -- three PNGs read against the clauses -- and the predicate producing the number I reasoned about was never opened. A metric's NAME is not its DEFINITION; it is R-40's 'presence of a symbol is not exercise of a path' one layer further out. A correct observation carried a wrong inference, so nothing in the render could contradict me. REMEDY, which is 4.0.0_SA_CRO~Z's and not this seat's: fix the INSTRUMENT -- key the band test to the .dark-band class or data-panel-variant the Panel emits, or to the resolved --bg-band value, and count --bg-header strips separately. ui-measure.mjs is ALREADY inside the round's grant via rl-1's paths, so it needs neither a page cell nor admitting chrome; re-pointing --bg-band in index.css is refused because it would reverse the portal-wide named-layers word. NOTHING ELSE IN v47 IS WITHDRAWN: the C1 and C11 rejections stand on their own measured counts, the clause-citation restraint on the clipped caption stands, and the chrome corroboration for weight 500 and shadows is unaffected."
   }
 ]
 ```
+
+---
+
+# CORRECTION 1 -- THE BAND CLAIM IS FALSIFIED (this seat's own, filed before round 38 is cut)
+
+See row `AMGT_RESAPP-Z-C-S415`. `bandContainersTopLevel` does **not** count bands: `ui-measure.mjs`'s
+`isBand` matches `rgb(10,23,51)` = `#0A1733`, which `index.css` assigns to `--bg-header`/`--layer-strip`
+(the panel **title strip**), while `--bg-band` resolves to `--layer-body` `rgb(25,38,67)` and is **never
+matched**. Default scope is `document.body`, so the sidebar counts. **So `peers = 1` is the `<aside>`, the
+identity header is invisible to the predicate on every state, and s.2.3's existence proof proves nothing
+about the page.** The visual reading stands; the inference does not. **L10 enrichment item 2 rests on it
+and is wrong as written.** Falsified by `4.0.0_SA_CRO~Z` (msg 25506), verified here at the bytes.
