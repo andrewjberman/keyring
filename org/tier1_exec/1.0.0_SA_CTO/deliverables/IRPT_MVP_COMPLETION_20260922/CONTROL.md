@@ -24,7 +24,11 @@ sat unassigned -- CTO gap): CRO writes B6/B5/B1+B2/B4/B7 as pins -> CTO GO -> P 
 B3 + F1 ruled; B8 parked (batch 20). (0b) COT HOLDINGS TREE RULED (batch 20): strategy wrapper > constituent
 models (Primary/Custom by the registry, Opal by name, ASSIGNED dollars) + SMA + Client plug > securities; M re-cuts
 build_cot as a CANDIDATE, CTO reads the census, then GO to publish; 46-model overlay withdrawn meanwhile.
-(0) NEW after Andrew's ~03:0xZ retest (table RENDERS, USD 26,303,302.17
+(0a) FINDING A measured (batch 21): cottonwood IS in GLOBAL by construction; the portal drops a rejecting
+per-firm browse SILENTLY (ClientSearch:61-70) -- P fixes the drop + harness-tests the cottonwood browse; a HAR
+of the Global view is the discriminator (asked of Andrew). (0c) D1: the sign-in SUCCEEDED from the host 03:31Z
+(route + form live-verified); the bundle was lost to the Node-port probe; one further run worded with the
+probe in-page and the port-request facts in the receipt; python3.12 on the host (Y's call). (0) NEW after Andrew's ~03:0xZ retest (table RENDERS, USD 26,303,302.17
 READY -- fence + status fixes EXERCISED): FINDING A Anna absent from the Global view (P measures the GLOBAL
 directory union, 100044); FINDING B acc_0698 shows one "models" node, coverage 0 of 1, no model/taxonomy
 breakdown, Supervision/Advisory withheld (M measures the publication, 100043; P the server half). CTO

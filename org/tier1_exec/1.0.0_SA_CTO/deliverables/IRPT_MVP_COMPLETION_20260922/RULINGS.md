@@ -1656,3 +1656,73 @@ untouched); (d)-(h) (route /account/login/, form-scoped fill incl. auth-username
 observer, /dashboard/ warm-up, selector model) are owed in a second commit; Y withholds STANDS until then;
 no run before it. Andrew's ~03:0xZ word (Global view, breakdown) and ~03:1xZ correction are recorded;
 Finding A (Global-view membership) still awaits P's directory measurement.
+
+
+## 2026-09-24 03:3x UTC - Claude CTO batch 21: D1 signed in from the host (bundle lost to the probe); Finding A measured server- and portal-side
+
+### IRPT-RESIDENT-D1-RERUN-20260924 -- second amendment (P 100099; Y 100109; CTO 100105/100111)
+RESULT (SSM d89690f8, 03:31:19-34Z, pins read back first: library 5a1a8695, wrapper 55ddb8f7): step 0
+classified CH-SIGNIN_FORM on /account/login/, fillAndSubmit ran ONCE, Enter submitted, and the vendor
+answered with the signed-in dashboard (url /dashboard/#/?dashboardId=1064209; password 0, app_chrome 1,
+29 text inputs, 2 forms). The CRO's measured route + form (100042) are LIVE-VERIFIED from the EC2 host;
+the sign-in leg's portability is verified. The single submission of 100049 is SPENT. Then seven probes
+read NOT_LIVE: probeSession, given a Playwright context with no requestGet, fell through to the bare
+Node https port (cookie NAMES + UA; not the browser's stack, jar or WAF token), so the success predicate
+never passed, readIdentity never ran, nothing was captured or persisted (ycharts/session/current
+unchanged; lease released). P's omission accepted: the MAX_STEPS failure record dropped
+login_submission / warmup / password_visible_wait.
+WORD (one commit, Y STANDS, ONE run = one further submission under the standing host-workflow
+authorization; YCharts' concurrent-sign-in eviction of the first run's server session is designed and
+stated): (a) probeSession takes {page, context}; with a page the probe is a fetch() evaluated INSIDE
+the page (credentials include, same Accept / X-Requested-With), else ctx.request.get, else the port;
+(b) every step records probe_http_status + probe_state; every failure record carries warmup,
+password_visible_wait, login_submission; NOT_LIVE names its status; (c) the DISCRIMINATING PAIR in
+the receipt, pass or fail: in-page status beside the port status on the same cookies, AND (Y 100109,
+adopted) what the port SENT -- cookies with VALUES count, X-AWS-WAF-Token header present, UA -- and
+the port reply's Location / x-amzn-waf-action. Reading rule fixed in advance: 302 to /account/login/
+with no session cookie value sent = incomplete request (port defect); 202/405 with x-amzn-waf-action
+= the WAF/client class (opens item 3 for the Python transport); 200 from the port = the class is fine.
+Y's precedent: rest_checkpoint_probe_11.json (09-11) replayed the captured jar browserless from Node
+-> template 200, dashboard 200 with the account email, 403 control, waf_action null -- so a non-browser
+client is NOT known to be rejected; laptop egress measured, EC2 egress is what this run measures.
+(d) nothing else moves; (e) outcome A -> bundle grade, enrolled_user_id pin, C1; outcome B -> STOP with
+the pair, a further run needs a further word.
+LANDED (P 100117): 160f99b3ea (probe in-page via fetch() evaluated in the page, then the
+APIRequestContext, then the replay context, then the port; per-step probe_reason / via / http_status /
+state; both AuthError records and the success record carry warmup, login_path, password_visible_wait,
+login_submission, probe_pair) + b1f269c6dd (the once-per-run pair control mirrors transport.py
+headers_for: FULL jar with values, X-AWS-WAF-Token from the cookie, UA, Accept, X-Requested-With,
+Referer; the port returns location / x-amzn-waf-action / content-type; evidence.probe_pair carries both
+statuses and what was sent as counts and names, never values). Library c8155201; wrapper 55ddb8f7. CTO
+own run at b1f269c6dd: node --check ok, bundle_contract failed 0, offline all_pass, arm (a) probe_via
+browser-context / LIVE; the pair fields present in the file. Y STANDS is the gate; then the ONE run.
+PYDEPS: the cp312 closure cannot exist for python 3.9, so python3.12 (3.12.14) + pip were installed
+and the exact irpt-common pins + pdfplumber set + boto3/botocore staged under pydeps, import-checked as
+ec2-user (digest 6a751288f048f127). ABSOLUTE_PYTHON = /usr/bin/python3.12: Y's call (100109), adopted.
+
+### IRPT-HOLDINGS-FINDING-A-20260924 -- Global-view membership, measured (P 100102; CTO's own portal read; CTO 100113)
+SERVER (P, own instruments): directory/entry.py global_context() (:321-351) fans ONE resolve per tenant
+of IRPT_DIRECTORY_BUCKET_MAP; the deployed env on all four functions = {49financial: opal-data-bd,
+cottonwood: opal-data-cot, inflection: opal-data-inf} -- cottonwood is in GLOBAL by construction; a
+failed firm is retained as UNAVAILABLE with a reason. The cot directory (opal-data-cot, 2026-09-17, 260
+entries, revision irpt-dir/cottonwood/2026-09-17/1.0) carries exactly ONE entry with Anna's two
+accounts. Ownership maps: bd 445 KB; cot 107 bytes; inf ABSENT (empty). OPAL_GLOBAL is minted only from
+the explicit roster (_scope/resolve.py:47). browse() and search() are SINGLE-FIRM (entry.py:139, :242);
+the Global LIST is a portal fan-out. CloudWatch (02:58-03:10Z, 68 events, START/END/REPORT only; the
+sink is not yet in irpt-directory-search) cannot show the child states. The 02:12Z HAR holds no
+directory calls (CTO read in place: 15 entries, 0 resolve/browse).
+PORTAL (CTO's own read, shared tree): index.tsx:57-63 resolves 'global' once; :97-98 contexts = the
+scope of every READY firm; an UNAVAILABLE child is shown at :188-191 ("Unavailable firms: <tenant>").
+header/ClientSearch.tsx:55-70 fires ONE browseDirectory per context (limit 25) via Promise.allSettled;
+a REJECTED browse contributes [] and is only counted; `loaded` stays true unless all fail -- a firm
+whose browse rejects VANISHES SILENTLY; :41/:57 also drop a context with no directoryRevision. Row ->
+scope matching (:105) by verifiedRequestFirm.firmId === entry.firmId would make a row unselectable, a
+different symptom. Candidates ranked: (C) cottonwood's browse under the Global-derived scope rejects
+(fingerprint/revision validation, spelling, parse) and is dropped silently -- consistent with no alert
+seen; (A) cottonwood's resolve child UNAVAILABLE -- would print the alert; (B) other.
+ACTS: P fixes the silent drop (a rejected per-firm browse or a missing revision is surfaced on the alert
+line with firm + reason class; never a silent []), commit for CTO review; P drives resolve GLOBAL +
+browse per returned firm scope in the directory harness (no live headers) and reports which firm's
+browse refuses and why; the HAR of the Global view (resolve firms[].state/reason + the browse calls) is
+asked of Andrew and the CRO reads it in place. Withheld columns: none server-side (P; snapshot.project
+never reads the viewer's authority); M's producer authoritative=false stands as the whole answer.
