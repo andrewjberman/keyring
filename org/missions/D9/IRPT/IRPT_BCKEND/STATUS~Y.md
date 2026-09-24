@@ -4,14 +4,14 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
 Drive: the 20m goal loop (cron 87624362) reading `python .tools/drive-mode.py read IRPT_BCKEND~Y` each tick (C11, CTO
 100819). Lease FAST until 2026-09-24T21:13:40Z at 18:18Z. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-24T19:18Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
+As of 2026-09-24T19:24Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working branch / worktree | `irpt-mvp-y-20260922` at `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922` |
-| Workspace candidate pin | `d16b7c8743` (hop-3 input-owner lookup) over `10a16bd89d` (attribution fix) over `bb1eb7f92b` RESOLVE_UPLOAD (CVO handoff 18:29Z) over `b398d27731` |
+| Workspace candidate pin | `58280c8dd4` (Y2 deferred arms: XLSX, weights, correction) over `522afcfd17` (test module-identity fix, P 100860) over `d16b7c8743` (hop-3 input-owner lookup) over `10a16bd89d` (attribution fix) over `bb1eb7f92b` RESOLVE_UPLOAD (CVO handoff 18:29Z) over `b398d27731` |
 | P composition patch | `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/P_UPLOAD_COMPOSITION_20260924.{patch,md}`: hops 2+3, applies clean to P `9efaf2850e` |
 | Portal candidate pin | n/a (portal candidates go to `2.0.0_SA_COO~D`) |
 | Deployed artifact pin | resident `irpt-analysis-resident.service`, package `ab2e088b5b` (P receipt 100483; not re-read by Y) |
@@ -28,7 +28,7 @@ needs is restored at P `19b38e2f22` (Y 100842, M 100846, P 100851). Nothing of h
 | ID | State | Evidence |
 |---|---|---|
 | Y1 custody + owned CSV/XLSX + disposition | OFFLINE + one real-object run | interpreter @47b2adf6df, oracle 15/15 |
-| Y2 immutable normalized input | OFFLINE ONLY | 12.03 Dollars freeze offline; deferred path @bb1eb7f92b (RESOLVING -> resident -> NORMALIZED 12.03, race arm, NEEDS_CORRECTION by name) |
+| Y2 immutable normalized input | OFFLINE ONLY | deferred lane @bb1eb7f92b + @58280c8dd4: Dollars 12.03, XLSX, TARGET_WEIGHT with notional, missing notional refused by name, correction lineage, race arm; SHARES refused by name (no price source) |
 | Y3 acceptance, dispatch, recovery | INSTALLED, not exercised | P 100483 |
 | Y4 vendor PDFs (3 variants) | NOT STARTED live | session graded |
 | Y5 certified typed report | OFFLINE ONLY | publisher |
@@ -46,7 +46,8 @@ never committed, never pushed). Y makes no commit on P's branch.
 Live hops 1a-1d, then 3-10, per `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/RUNBOOK_1203_LIVE_JOURNEY_20260923.md`
 (revised 19:1xZ for the deferred path). P deploys; Andrew posts the 12.03 template as an Opal viewer. Y reads the resident's
 journal and the rows and records the digests. Y never runs `--once` against the live queue: the service is the one consumer.
-P has cherry-picked Y's three commits (`2d6937be5e`, `e8dd4cdfc7`, `9efaf2850e` on its branch).
+P has cherry-picked Y's three commits (`2d6937be5e`, `e8dd4cdfc7`, `9efaf2850e` on its branch); `522afcfd17` fixes the
+full-suite red P found (100860) and must ride the same rebuild.
 
 ## Dependencies
 
@@ -67,6 +68,7 @@ P has cherry-picked Y's three commits (`2d6937be5e`, `e8dd4cdfc7`, `9efaf2850e` 
 |---|---|---|
 | `intake/tests/test_security_resolution.py:31` needs IRPT_LOOKUP_FIXTURE_ROOT | 2.0.0_SA_COO~Y | the next edit to that suite |
 | `reports/tests/test_generate_installed.py:58` expects 22 schemas; the tree holds 23 (fails at P's own tip) | 2.0.0_SA_COO~P | P's next edit to that suite |
+| The Y worktree is a sparse checkout (`firm_destination_policy.json` is S), so two `test_broker_recovery_evidence` arms fail only here | 2.0.0_SA_COO~Y | a suite needs that file on this worktree |
 
 ## Limits
 
