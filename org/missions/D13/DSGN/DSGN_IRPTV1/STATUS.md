@@ -4,15 +4,15 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1
 @1cccbe6bc6. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Mode: FAST under
 `org/mcp/drive-mode.log` line 1 (Andrew-direct ~17:4xZ blast mode), lease to 2026-09-24T20:41:52Z. Build place:
 Andrew-direct ~18:3xZ, `org/tier1_exec/2.0.0_SA_COO~D/deliverables/ANDREW_DIRECT_20260924_183xZ_5174_FROM_MAIN_PORTAL_CHECKOUT_WORK_ON_DEV.md`.
-As of 2026-09-24T18:5xZ.
+As of 2026-09-24T19:1xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV (no side worktree) |
-| Portal pin | `92d16efc` = origin DEV (ls-remote read after the push). Carries P's candidate 8 (`237bdfda`) + S6 fix |
-| CI | DEV run 36042770090 on 92d16efc: in progress at push time |
+| Portal pin | `a65a8db5` = origin DEV (ls-remote read after the push). Carries P's candidate 8 (`237bdfda`), S6 (`92d16efc`), the two Andrew-direct ~18:4xZ fixes (`a65a8db5`) |
+| CI | DEV run on 92d16efc: success; the run on a65a8db5 started at push |
 | Deployed | DEV CI deploys opalinvest.dev from DEV; PROD `a0690a03` untouched (gated) |
 | Screen | `localhost:5174` served from the main checkout (`bun run dev --port 5174`, its `.env.local`), log `C:/tmp/portal-main.vite5174.log` |
 | Workspace push state | CLOUD LOCAL |
@@ -31,6 +31,7 @@ Cottonwood account has not been walked; hop 6's `spread` is not served (backlog 
 | IV-e-7 (FWD-11 sweep) | SUPERSEDED by the FAST lease, never spawned | its task order |
 | S6 (black tiles, CUSIP as a name) | CANDIDATE @92d16efc, awaiting the CVO | row DSGN_IRPTV1-S8; `deliverables/2.0.0_SA_COO~D/s6.fast-run.png` |
 | P candidate 8 (DirectoryPage wire type + fixtures) | LANDED on DEV @237bdfda (fast-forward) | P msg 100816 |
+| Andrew ~18:4xZ: firm tab FIRM_BINDING; Holdings $10K rounding | CANDIDATE @a65a8db5, awaiting the CVO | `deliverables/2.0.0_SA_COO~D/ad184x.fast-run.{png,txt}` |
 
 ## Write claims
 
@@ -69,6 +70,7 @@ main checkout, before and after.
 |---|---|---|
 | DEV CI does not run `bun test` (why S7 was invisible) | `1.0.0_SA_CTO` | a ruling to add the unit suite to ci.yml |
 | `.owned-paths.yaml` has no row for `org/missions/*/*/*/STATUS.md` (commits use the audited override) | `1.0.0_SA_CTO` | the row lands |
+| Model Portfolios' own $10K grain (the 09-15 word vs today's "mistake") | Andrew | his word; `CategoryViewTree exactAmounts` is the switch |
 | Leftover folders `C:/tmp/dsgn-irptv1-fast`, `C:/tmp/dsgn-irptv1-base` (deregistered worktrees, node_modules junctions inside) | Andrew | his OK for a recursive delete |
 
 ## Limits
