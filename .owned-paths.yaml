@@ -1788,6 +1788,10 @@ paths:
     lane: ANY
     note: "Append-only override audit log — hook writes, agents may read"
 
+  "org/law-edit-audit.log":
+    lane: ANY
+    note: "Append-only law-lock audit log (CLAUDE.md / org/XXX.md edits under Andrew's order) -- law-lock-check.sh writes, agents may read"
+
   "org/CROSS_POD_COORDINATION.md":
     lane: ANY_EXEC
 
