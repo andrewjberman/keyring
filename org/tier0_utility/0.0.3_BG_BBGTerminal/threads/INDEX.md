@@ -30,6 +30,9 @@ many resolved for that person. An unread memory becomes visible the same day it 
 | Chat / channel id | Canonical dir | Person / subject |
 |---|---|---|
 | `19:2e21f8e5-55ca-45c1-91b9-a4607bf28d4f_517aa5ee-b4d0-425a-b493-5a22ff77ac4f@unq.gbl.spaces` | `2026-08-07-andrew-capability-roster/` | Andrew Berman -- 1:1 DM |
+| `19:517aa5ee-b4d0-425a-b493-5a22ff77ac4f_7aa72700-91f7-439d-b703-044d0038ab32@unq.gbl.spaces` | `2026-09-11-manav-shah/` | Manav Shah -- 1:1 DM |
+| `19:517aa5ee-b4d0-425a-b493-5a22ff77ac4f_ad037ea5-fee8-412e-9da9-15c6cf2a4fbc@unq.gbl.spaces` | `2026-09-16-alyssa-keith/` | Alyssa Keith -- 1:1 DM |
+| `19:517aa5ee-b4d0-425a-b493-5a22ff77ac4f_c727d432-161b-435a-9dd0-1e7e20c2c991@unq.gbl.spaces` | `2026-09-16-menachem-goldstein/` | Menachem Goldstein -- 1:1 DM |
 | `19:2e189a40973d4d7091f4dbe2689282c7@thread.tacv2` | *(not yet created -- TICKET class, see below)* | Opal Client Tickets channel |
 
 **Retired forks (redirect stubs, never rows above):**
