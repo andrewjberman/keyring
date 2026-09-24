@@ -5,15 +5,15 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1
 `org/mcp/drive-mode.log` line 1 (Andrew-direct ~17:4xZ blast mode), lease to 2026-09-24T21:14:14Z (re-armed 18:16:59Z, drive-mode.log line 5). Build place:
 the main portal checkout on DEV (Andrew-direct ~18:3xZ). Design direction: Andrew-direct ~19:4xZ,
 `org/tier1_exec/2.0.0_SA_COO~D/deliverables/ANDREW_DIRECT_20260924_194xZ_IRPT_DESIGN_NOTES/`.
-As of 2026-09-24T21:5xZ. The lease extends 30 minutes past Andrew's latest prompt (presence rule, `.tools/drive-mode.py`).
+As of 2026-09-24T22:0xZ. The lease extends 30 minutes past Andrew's latest prompt (presence rule, `.tools/drive-mode.py`).
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal pin | `86561aef` = origin DEV (ls-remote read after the push, via gh credentials -- see Parked) |
-| This session on DEV | P candidate 8 `237bdfda`; S6 `92d16efc`; firm tab + exact amounts `a65a8db5`; S7 `c1d7aefe`, `9902bf25`; breadcrumb `d6288d80` (merged over site Z as `c82f0bbb`); header `93b28880`; Analysis upload lane `088386fe`; Analysis declutter `68f46e18`; Holdings footers `c75a0fc9`; Performance footer `af66ed43`; drill table `f338e693` (merged over site Z as `06f079f5`); model colours `08a04fe2`; asset-class colours `86561aef` |
+| Portal pin | `d99516cd` = origin DEV (ls-remote read after the push, via gh credentials -- see Parked) |
+| This session on DEV | P candidate 8 `237bdfda`; S6 `92d16efc`; firm tab + exact amounts `a65a8db5`; S7 `c1d7aefe`, `9902bf25`; breadcrumb `d6288d80` (merged over site Z as `c82f0bbb`); header `93b28880`; Analysis upload lane `088386fe`; Analysis declutter `68f46e18`; Holdings footers `c75a0fc9`; Performance footer `af66ed43`; drill table `f338e693` (merged over site Z as `06f079f5`); model colours `08a04fe2`; asset-class colours `86561aef`; models dialog `721170ca` (merged over site Z as `d99516cd`) |
 | Deployed | DEV CI deploys opalinvest.dev from DEV; PROD `a0690a03` untouched (gated) |
 | Screen | `localhost:5174` from the main checkout (`bun run dev --port 5174`, its `.env.local`), log `C:/tmp/portal-main.vite5174.log` |
 | Workspace push state | CLOUD LOCAL |
@@ -40,17 +40,19 @@ NOT LIVE END TO END. Andrew's HAR at ~18:3xZ exercised the signed-in API journey
 | P 100893: 49F provider OPAL_ENGINE renders (no runtime enum check) | VERIFIED on 5174 @06f079f5 | `opal-engine.fast-run.{png,txt}` |
 | Drill pie: canonical Opal primary-model colours (Ultra Long Term red) | CANDIDATE @08a04fe2 | `model-colors.fast-run.{png,txt}`, `model-colors.fixture.json` |
 | Securities map + table: canonical asset-class colours (Opal ETF classifier; Unclassified grey otherwise) | CANDIDATE @86561aef | `asset-class.fast-run.{png,txt}`, `asset-class.fixture.json` |
+| Models dialog: one column, members coloured by asset class (IRPT only; additive `breakdown` prop) | CANDIDATE @721170ca | `models-dialog.fast-run.{png,txt}`, `models-dialog.fixture.json`, `models-dialog-probe-driver.mjs` |
 
 Nothing here is CVO-graded yet.
 
 ## Write claims
 
-- `portal/src/components/CategoryViewTree.tsx` breakdown dialog (additive, IRPT-only: full-width list, asset-class dots)
+- `portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx` (the drill stops at the model level; the security
+  drill lives on the Securities map)
 
 ## Next proof
 
-The models dialog (Total Assets -> a model) lists its securities full width with asset-class colours, for Investor
-Reporting only. One real run on 5174, screenshot read.
+The drill pie stops at the model level (no security-level slices); the security drill lives on the Securities map.
+One real run on 5174 with a many-security model, screenshot read.
 
 ## Next-list (Andrew's design notes first, most broken first)
 
@@ -62,7 +64,7 @@ Reporting only. One real run on 5174, screenshot read.
    security level. Canonical asset-class colours (gold commodities, orange alternatives, pink structured hedge, green fixed income
    and cash, blue equities) on the treemap, the Securities table and the models dialog, from the positioning page's
    classifier; the security-level drill moves to the Securities map with the positioning treemap's tooltip.
-5. Models dialog: full-width securities list.
+5. Models dialog: DONE @721170ca.
 6. Client picker: the platform's dropdown design, no truncation; a paginated client list with a search bar.
 7. Performance: a sample view before a client is chosen; the "Basis: not supplied" chip.
 8. Analysis design: three variant cards (solo, vs one model, vs several Opal models) in the philosophy-card
