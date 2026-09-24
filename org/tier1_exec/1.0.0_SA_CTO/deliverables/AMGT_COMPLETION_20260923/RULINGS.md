@@ -296,6 +296,19 @@ mid-flight with its decomposition FROZEN and a presentation-only rectangle; park
 canonical round to make it look tidy would either break the freeze or delay the fix a whole round. The closer
 track already carries the universe/v1 producer, so the fix lands where its own dependency lives.
 
+⛔ **TWO DEFECTS IN THIS RULING'S OWN DELIVERY, ANNOTATED FORWARD RATHER THAN EDITED AWAY.**
+**(a) R-40 AND R-39a SHARE COMMIT `5c19c11ed8`, WHOSE SUBJECT NAMES ONLY R-39a** -- both edits were in the
+working tree when the merge cleared. A citation of R-40 by commit lands on a subject that does not mention
+it. Same shape as this file's own header note about `a8a62f4f5c`, and recorded here for the same reason.
+**(b) THE BROADCAST OF THIS RULING (msgs 25356-25359) CARRIED A FALSE ATTRIBUTION.** It said the commit was
+blocked behind *"`0.0.0_AB_MSTR~Z`'s live drain of `wk-AMGT_RESAPP-132`"*. **It was `2.0.0_SA_COO~Z`'s drain
+(`a8aa8bff17`).** ⭐ **`.git/MERGE_HEAD` HELD `65deef80be`, WHICH IS THE WORKER'S OWN L7 COMMIT -- SO THE
+MERGE STATE NAMES THE BRANCH, NEVER THE ACTOR MERGING IT**, and this seat converted "whose branch" into
+"whose act". The drainer is read off the RESULTING merge commit, and while the merge is still open the
+honest answer is *owner UNREAD*. Caught by `0.0.0_AB_MSTR~Z`, which named it the same class as a pusher
+attribution it corrected the previous night. ⚠ **A SIXTH INSTANCE THIS HOUR OF ONE FAMILY, AND THE FIRST
+THAT TOLD THREE OTHER SEATS A FOURTH WAS HOLDING THEM UP.**
+
 **THE RE-FIRE STAYS HELD, and the count is now FOUR: (1) rollback verified -- MET. (2) one producer on CLOUD
 -- WITHDRAWN, re-graded NOT MET. (3) write_pool one put per run -- OPEN, taken. (4) the universe input passed
 on add_security's path -- OPEN, same cell.** `2.0.0_SA_COO~X`'s refusal of its own re-fire pending both clauses
