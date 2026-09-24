@@ -64,6 +64,13 @@ navigation did NOT re-drive the router -- the rendered Peers panel still read "B
 `BA_US_Equity/peers`, so the arm proved 401 -> refresh -> retry on the SAME URL, not on a different-security load. The
 criterion is met (the edge 401 path is exercised); "the different-security case exercises what it appears to" is a
 RE-RUN owed by this seat with the router driven through the app's own link or a full navigation with the marker held.
+**RE-RUN DONE (07:23Z, `PEERS_REACTIVE401_V3_TRACE_20260924T0723Z/`):** "Back to universe" (client-side), the ranked list
+rendered with the fresh bearer (2 rows: `#1 BA US`, `#2 HD US`), the expired bearer swapped back in, then the app's OWN
+row click on `#2 HD US`: `HD_US_Equity/overlay` **401** at 07:23:14.278Z -> `/auth/refresh` **200** at .399 ->
+`HD_US_Equity/thesis` **200** at :15.503; the Peers panel rendered **"HD US ... DERIVED 12 comparable(s)"**. The
+different-security case now exercises what it appears to. (The URL stayed `/security-analysis/BA_US_Equity`: the app's
+selection is state-driven and does not rewrite the route on a row click -- an observation for the round, not a defect
+claimed here.)
 **Observation, explained, no row:** `/auth/refresh` + `/auth/me` fired on every navigation, 7 pairs 5 s apart, against
 the 10-minute proactive threshold -- because `tokenIssuedAt` is an in-memory module variable (`api-client.ts:31-35`)
 that resets to 0 on a FULL reload, and this driver hard-navigates per case. Client-side routing does not reset it.

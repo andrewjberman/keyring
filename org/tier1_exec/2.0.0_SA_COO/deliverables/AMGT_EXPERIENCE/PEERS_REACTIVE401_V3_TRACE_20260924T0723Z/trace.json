@@ -1,0 +1,146 @@
+{
+  "started_at": "2026-09-24T07:22:58.233Z",
+  "base": "https://d2n2nzpeqf34ge.cloudfront.net",
+  "expired_token": {
+    "present": true,
+    "exp": 1790234555,
+    "now": 1790234580,
+    "expired": true
+  },
+  "proactive": [
+    {
+      "at": "2026-09-24T07:23:02.240Z",
+      "phase": "proactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/refresh",
+      "status": 200
+    },
+    {
+      "at": "2026-09-24T07:23:02.341Z",
+      "phase": "proactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/me",
+      "status": 200
+    },
+    {
+      "at": "2026-09-24T07:23:05.359Z",
+      "phase": "proactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/watchlist",
+      "status": 200
+    },
+    {
+      "at": "2026-09-24T07:23:05.858Z",
+      "phase": "proactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/lead-panel/rankings/trending/chatter",
+      "status": 200
+    },
+    {
+      "at": "2026-09-24T07:23:06.130Z",
+      "phase": "proactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/lead-panel/timeseries/trending/chatter",
+      "status": 200
+    },
+    {
+      "at": "2026-09-24T07:23:06.965Z",
+      "phase": "proactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/security/BA_US_Equity/thesis",
+      "status": 200
+    },
+    {
+      "at": "2026-09-24T07:23:07.016Z",
+      "phase": "proactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/security/BA_US_Equity/overlay",
+      "status": 200
+    }
+  ],
+  "universe_rows": [
+    {
+      "attrs": "",
+      "text": "#1 BA US chatter 0/100 (0 mentions) no headline yet"
+    },
+    {
+      "attrs": "",
+      "text": "#2 HD US chatter 0/100 (0 mentions) no headline yet"
+    }
+  ],
+  "reactive": {
+    "sequence": [
+      {
+        "at": "2026-09-24T07:23:14.278Z",
+        "phase": "reactive",
+        "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/security/HD_US_Equity/overlay",
+        "status": 401
+      },
+      {
+        "at": "2026-09-24T07:23:14.312Z",
+        "phase": "reactive",
+        "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/security/HD_US_Equity/thesis",
+        "status": 401
+      },
+      {
+        "at": "2026-09-24T07:23:14.399Z",
+        "phase": "reactive",
+        "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/refresh",
+        "status": 200
+      },
+      {
+        "at": "2026-09-24T07:23:15.503Z",
+        "phase": "reactive",
+        "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/security/HD_US_Equity/thesis",
+        "status": 200
+      },
+      {
+        "at": "2026-09-24T07:23:15.702Z",
+        "phase": "reactive",
+        "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/security/HD_US_Equity/overlay",
+        "status": 200
+      },
+      {
+        "at": "2026-09-24T07:23:16.070Z",
+        "phase": "reactive",
+        "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/security/HD_US_Equity/peers",
+        "status": 200
+      }
+    ],
+    "console": [
+      {
+        "at": "2026-09-24T07:23:14.279Z",
+        "phase": "reactive",
+        "text": "[api-client] 401 received -- attempting token refresh"
+      },
+      {
+        "at": "2026-09-24T07:23:14.312Z",
+        "phase": "reactive",
+        "text": "[api-client] 401 received -- attempting token refresh"
+      }
+    ],
+    "first_401": {
+      "at": "2026-09-24T07:23:14.278Z",
+      "phase": "reactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/security/HD_US_Equity/overlay",
+      "status": 401
+    },
+    "refresh_after_401": {
+      "at": "2026-09-24T07:23:14.399Z",
+      "phase": "reactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/refresh",
+      "status": 200
+    },
+    "retried_200": {
+      "at": "2026-09-24T07:23:15.503Z",
+      "phase": "reactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/security/HD_US_Equity/thesis",
+      "status": 200
+    },
+    "clicked_row_text": "#2 HD US chatter 0/100 (0 mentions) no headline yet",
+    "bearer_after": {
+      "rotated": true,
+      "exp": 1790235494
+    }
+  },
+  "rendered": {
+    "url": "https://d2n2nzpeqf34ge.cloudfront.net/security-analysis/BA_US_Equity",
+    "on_login": false,
+    "peers_head": "HD US\nidentity crosswalk/v1 @ 2026-09-24\nDERIVED\n12 comparable(s)\nuniverse vintage 2026-08-06\nas of 2026-09-24T0310Z\n\ncomparable = the deepest of four lexicogra",
+    "rows": 17
+  },
+  "finished_at": "2026-09-24T07:23:17.457Z"
+}
