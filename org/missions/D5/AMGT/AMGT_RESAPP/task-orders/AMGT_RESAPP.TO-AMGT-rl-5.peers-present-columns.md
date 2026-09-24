@@ -123,7 +123,15 @@ portal commit hash and its parent (must be `c657eb91` or its descendant), the ou
 `c657eb91`) and a cut off DEV `c1ac41ec` would re-diverge them. At the drain this branch's portal merges into the same
 line as the closer branch; MSTR's integration of the closer branch to CLOUD/DEV precedes or accompanies it.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~09:0xZ.** Flipped by the ISSUER; the worker left the record face alone.
+3 of 3 criteria PASS, proof-of-spec rc=0 VALID (re-run by this seat inside the worker's worktree C:/tmp/wk-amgt-37-134).
+peersPattern.harness.cjs CHECKS-OK 13 of 13; ui-class-census FILES 2 TOTAL 0; peersCarry + peersReadFailed harnesses PASS;
+cscTable.ts byte-identical (BOUNDS #2). No rows. Drained @5a24b4612f; portal DEV 897a0bbf (merge of 9c8459ca, parent bc07b6a1),
+gitlink ae1b9f42 -> 897a0bbf. Drain-time ui-contract-check (contract-check-after-rl-5/): peers bandContainersTopLevel now PASS (the
+first state to reach 1); the shared-chrome predicates (weights, sizes, radii, shadows, purpleFills 4) still read on every state and
+belong to rl-8 / rl-9. The PASS is owed by rl-9's re-assert.
+
+<status>complete</status>
 <round>37</round>
 <slot>~134</slot>
 <fabric>site-z</fabric>
