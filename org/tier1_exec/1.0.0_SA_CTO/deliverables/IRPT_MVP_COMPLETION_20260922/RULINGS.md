@@ -1003,3 +1003,27 @@ its only carriers are three record-tree files, LD-0611.md, LD-0612.md and this R
 under the new gate, which drops record-tree and non-graded-extension carriers from the search.
 WARN 1 graded in every arm; counts-as unchanged; the permission only narrows. The negative arm
 discriminates again and stays valid however many records quote the literal.
+
+
+## 2026-09-24 00:4x UTC - Claude CTO batch 9: COT membership publication VERIFIED; the write-count deviation ACCEPTED
+
+### IRPT-COT-MEMBERSHIP-PUBLICATION-VERIFIED-20260924 (M 99860)
+M executed the GO at 00:37:03-00:37:11Z. CTO independent readback: the current index is version
+XbWnSWxMFRs9jNOUtj6ZOELvpemDQP73 (ETag ab460faa537d..., sha256 983443bbc5b2...), its only date row
+2026-09-22 names revision ac3adb97f5e7 with manifest version UCnp0Bq_BRGjdz2RMgfrUCXmNOtAFq4y; three
+index versions exist and the prior two (grwnbLkeu, JhtDD) are retained; under ac3adb97 there are 20
+objects (gold, header, 17 parts, manifest), under 93f930c265 still 18, under fe328763b5 still 3; 42
+keys in the tree. M's reader matrix on the live publication: 0698 / d486 / combined READ_OK at
+default and 2026-09-22 with 1 / 1 / 2 MODEL_LEAF nodes and the same USD totals; 2026-09-23 refused.
+Publication hop PASS for the membership tree.
+
+THE DEVIATION (20 immutable creates, not the 18 the GO named) is ACCEPTED, no revert. The GO's
+blast radius was the set of keys under the new revision's own prefix plus ONE index row, and that is
+exactly what was written; the "18" was a count inherited from the prior candidate's 15-part split,
+carried by M into its request and by the CTO into the GO without either measuring the new body's
+partition plan (the body grew to 16,558,818 bytes and the publisher's deterministic size-bounded
+split produced 17 parts). CLAUDE.md's sign-off rule names the ACT'S BLAST RADIUS, never the
+producer's decision, and the split is the producer's rule. Both seats own the lesson: an exact-write
+GO names the key prefix, the index row and the IfMatch, and the requester prints the publisher's
+MEASURED write plan for the named candidate; a count the requester did not measure does not enter
+the GO. The 49F and INF requests carry that plan.
