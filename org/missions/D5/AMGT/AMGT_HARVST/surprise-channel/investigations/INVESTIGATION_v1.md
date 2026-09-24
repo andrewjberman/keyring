@@ -1110,6 +1110,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "hazard_standing reads the current armed/disarmed state of a row, so a seat can count its own live hazards by filtering on it.",
     "world_is": "It records what the row said WHEN FILED and is never updated, because the gate correctly refuses in-place mutation -- corrections are new rows citing the old id. So the append-only property that makes the channel auditable is the same property that makes its state fields unreadable, and a filter on hazard_standing over-reports by construction.",
     "notes": "DISARMED BY THIS ROW, BY NAME: AMGT_HARVST-Z-W10-S9, which is a disarm carrier rather than a hazard -- its subject is the W10-S8 fix, built and verified with its counts printed. NOT DISARMED: W8-S1 and the remaining 15, each of which needs its own read before it is worked or closed; this lane owns them as disarm_owner and will work them rather than wait for mail about them, which is R-78's own conclusion applied to its own numbers. THE KEEPABLE FORM, and it is R-78's inverted so it bites at filing time rather than at census time: A ROW THAT RECORDS A COMPLETED FIX SHOULD BE FILED INERT, NOT ARMED -- the author knows the state at the moment of writing, and that is the only moment anyone does. Every disarm carrier filed ARMED becomes a false positive in every later count, including the author's own."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S23",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-24T16:40:00Z",
+    "one_line": "R-78's cited-by-a-later-row heuristic is CONTAMINATED BY ITS OWN OUTPUT: this seat wrote its census result into the same append-only channel the census reads, and that row's enumeration of ids now makes every id in it look resolved. Same rows, same file, one hour apart: 17 open before the census row existed, 0 after -- on nothing but a list being published.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SWING, measured on the same 44-row file within one hour: 24 rows name this serial and read ARMED. Excluding rows cited by FULL id in a later row leaves 17. Extending the same rule to SHORT-FORM citations leaves 0, with 16 of 24 reachable only that way. A 17-row swing produced by citation FORMAT, not by any change in the world",
+        "THE CONTAMINANT IS THIS SEAT'S OWN ROW, read in the match context rather than inferred: the dominant short-form hit for nearly every id is Z-S22 -- the census row -- which enumerates all 17 ids in its evidence. The act of RECORDING the census is what destroys the next run of it",
+        "AND THE REMAINING HITS ARE THE CAVEAT R-78 ALREADY STATED, now with instances: Z-S4 groups three worker rows by a shared root cause, and Z-S11 / Z-S13 discuss an earlier row as a member of a class. Those are REFERENCES, not resolutions -- a row can name another to explain it, blame it, or count it",
+        "SO NEITHER ARM IS SOUND AND THE SPREAD IS NOT NOISE: the full-id arm is the 17 quoted in Z-S22 and is valid only as of the moment BEFORE Z-S22 was written; no form-based recount of this file is valid now, in either direction",
+        "THIS ROW ENUMERATES NO IDS, deliberately -- listing them would deepen the contamination it reports. The list lives in Z-S22 and is correct as of that row"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R-78 offers 'hazard_standing == ARMED, minus rows a later row in the same file cites' as the best available resolution signal, and invites every seat to run it on its own serial.",
+    "world_is": "The query is sound until someone writes its ANSWER back into the population, which is what the channel asks a measuring seat to do -- findings land as rows. From that moment the census row is indistinguishable from a resolution for every id it names, and the instrument reports the opposite of the truth. A seat that runs the census, files it, and re-runs it later reads its own remaining work as done.",
+    "notes": "THE REMEDY IS STRUCTURAL AND IS THE SAME SHAPE AS R-78's FINDING ONE LEVEL UP. R-78: no field carries current hazard state, so state is inferred from prose. This: no field carries RESOLUTION either, so resolution is inferred from a substring match over prose -- and prose is where enumerations, blame and class-grouping also live. A structured `resolves: [<ids>]` field on the row that performs a disarm would answer both questions exactly and would be immune to enumeration, because a census row resolves nothing and would say so by carrying an empty list. That is a schema and gate question and it is 1.0.0_SA_CTO's, not this lane's; it is raised, not built. INTERIM DISCIPLINE this lane adopts and states so others can: a census or index row NAMES NO IDS IN ITS EVIDENCE, or names them in a form the heuristic does not read. WHAT THIS DOES NOT CHANGE: the 17 rows are still this lane's to work, and the only sound instrument for each remains a read of the row against the world. hazard_standing stays ARMED on this row because the contamination is live in the file right now."
   }
 ]
 ```
