@@ -885,6 +885,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "proof-of-spec-check.py's alignment-forward-2 limb can NEVER return rc 0 for this instance (or any of the other four round-3 CRPS-e-* instances), independent of anything a worker's own instance content says, because the join is between two issuer-authored artifacts outside this worker's <paths>: the TO's own <criterion cell_refs> (CRPS-e-1, prefixed) and the decomp doc's own cell declarations (e-1, bare). Neither decompositions/AMGT_CORPUS_DECOMP.md nor this order's <owned_cells>/<criterion> tags are in this worker's <paths> (BOUNDS: this order is edited only to flip <status>), so this worker cannot repair the join without exceeding its write grant. AC1/AC2/AC3's own status (FAIL/PASS/PASS, see AMGT_CORPUS-Z-W2-S5 and this instance's acceptance rows) is unaffected -- this is a SEPARATE, structural rc=1 on the instance's overall validity, not a criterion grade.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Filed per BOUNDS ('REFUSE a criterion you cannot satisfy as written, with your measurement') extended to step 2's own validity gate, which is not itself one of AC1/AC2/AC3 but is named as a precondition for the <status> flip; and per CLAUDE.md section 2 (append, keep working). ARMED because it recurs identically and mechanically for the other four round-3 cells' own instances the moment any of those workers runs this same checker -- not merely a risk, a certainty given the shared decomp doc's current bytes. Two remedies exist and are the issuer's to choose, not built here: (a) re-cut the round-3 decomp doc's cell table to the prefixed form 'CRPS-e-N' (matching round 2's own convention and CELL_ID_RE), or (b) widen CELL_ID_RE to recognise a bare lowercase-prefix-N id when the project code is otherwise established by the citing document's own path/coordinate -- the latter is a shared-instrument change outside any one project's task orders. Not a REMEDIATION row (the CVO's); flagged for the next L9/round cut."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S22",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T20:57:36Z",
+    "one_line": "DISARM by their owner of eight ARMED rows, all the issuer's own round-3 cut defects or the sector-template refusal the round cut a cell for: Z-S17 and Z-W3-S3 (sector_template --write GoldImmutableError on a grown corpus) are cleared by CRPS-e-3 drained at 1266b834ec (total out of the body, METHOD_VERSION 2 -> 3, --write rc 0 over 218 reports, 9 objects written once, a second run all existed); Z-W3-S4 and Z-W2-S5 (AC1's expect could not match a -k pytest summary) are cleared by the issuer's amendment at 03baefb8af widening the expect to admit ', N deselected', after which e-3 and e-1 AC1 matched; Z-W4-S3, Z-W3-S5, Z-W1-S6 and Z-W2-S6 (the decomposition named its cells bare e-<n>, so the checker's alignment limb found 0 cell ids) are cleared by the same commit prefixing the rectangle to CRPS-e-1..CRPS-e-5, after which all five round-3 instances read VALID rc 0. The eight are legacy-shaped (no disarm clock) and cannot advance in place; this row is their disarm carrier and cites each.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Sector template: drain 1266b834ec (merge of wk-amgt_corpus-3-3 @4d196099bc), this seat's re-grade at the tip: AC1 2 of 2, sector_template --write rc 0 over 218 reports, types 8, 9 objects written once, a second run all existed; checker VALID.",
+        "AC1 expect: 03baefb8af amends the e-1, e-3 and e-5 orders' AC1 expect to (?m)^\\d+ passed(, \\d+ deselected)? in ; this seat's re-grades at the tips read '9 passed, 20 deselected' (e-1, drained 21e624a003) and '5 passed, 8 deselected' (e-5, drained dae976b3b0); e-3 drained 1266b834ec on the same expect.",
+        "Cell ids: 03baefb8af prefixes the decomposition's rectangle to CRPS-e-1..CRPS-e-5; proof-of-spec-check.py at HEAD on this seat's run: e-1 instance VALID rc=0, e-5 instance VALID rc=0; e-2 (bb6b1f2f25), e-3 (1266b834ec) and e-4 (5637be19e9) each drained with the checker VALID."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Each of the eight rows names a defect whose remedy is the issuer's: a producer that cannot re-mint on a grown corpus (Z-S17, Z-W3-S3), an expect that cannot match its own check's output (Z-W3-S4, Z-W2-S5), and a decomposition whose cell ids the checker cannot read (Z-W4-S3, Z-W3-S5, Z-W1-S6, Z-W2-S6).",
+    "world_is": "All three remedies are on CLOUD and exercised: the producer re-minted once and then read all-existed; both AC1 re-grades matched the widened expect; all five round-3 instances read VALID. Nothing downstream consumed the defective state: no worker's status was flipped on a failed check, and the sector template was not served from the refused run.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's); the next L9 may adjudicate the eight on this row. Every defect here was the issuer's cut, found by the workers the cut bound."
   }
 ]
 ```
