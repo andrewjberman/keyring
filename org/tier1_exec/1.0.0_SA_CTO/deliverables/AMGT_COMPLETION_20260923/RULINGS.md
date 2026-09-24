@@ -253,6 +253,103 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-41 -- ⛔⛔ A CARD'S **RESERVED HALF** HAS BEEN RESERVING ITS **ADJUDICABLE PARTNER**. FOUR OF SIX CARDS AT ANDREW SPLIT, AND TWO INSTRUMENTS ARE AGING BECAUSE OF IT
+
+**The standing instruction on this fabric is *"All open-calls on sitez fabric to be adjudicated by
+`1.0.0_SA_CTO~Z` this session."* This seat has spent several ticks reporting "1 RESERVED in scope" while
+SIX cards sat at Andrew.** `/self-drive`'s own ALL-RESERVED TELL says a uniformly-reserved queue is
+presumptively an instrument artifact, and Andrew named this defect verbatim: *"somehow every single open call
+falls under 'reserved' versus adjudicable ... it renders the skill useless if it cant get calls adjudicated
+... In almost every single case i have ever seen i agreed with the rec outright."*
+
+⛔ **BUT THE DEFECT IS NOT "I CALLED EVERYTHING SOVEREIGN." IT IS NARROWER, AND WORSE BECAUSE IT SURVIVES
+THE CITATION TEST.** Each of these cards bundles **TWO ACTS**: one whose closure a NEVER line genuinely
+reserves, and one that is nobody's but this seat's or `0.0.0_AB_MSTR~Z`'s. **The citation was tested against
+the CARD and it passed -- because one of its acts really is his. So the adjudicable act inherited a
+reservation it never earned.** ⭐ **A CALL'S RESERVED HALF DOES NOT RESERVE THE CALL.** Same shape as
+NEVER-1's *"a sign-off names the act's BLAST RADIUS, never the producer's decision"*, and same shape as
+R-40's *presence of a symbol is not exercise of a path*: the test was run one level above the thing it
+governs.
+
+⭐ **THE MECHANISM, and it costs one column: SPLIT EVERY CARD INTO ITS ACTS AND TEST THE CITATION AGAINST
+EACH ACT.** A card is not a unit of authority; an act is.
+
+| card | the act a NEVER genuinely reserves | the act that was never his | ruled |
+|---|---|---|---|
+| `rk-49` Lusha | the vendor call itself -- *"NEVER call an external vendor API without Andrew's explicit per-use word"* | none; the card is atomic | **RESERVED, whole.** The only close-condition exception he alone clears |
+| Lead Panel price | ~~the **price PULL**~~ **NOTHING -- see R-41a; the pull is GRANTED** | the **producer's OWNER and RUN** (CRO brief item 4) -- a SEATING question | **ROUTED WHOLE** to `0.0.0_AB_MSTR~Z`; nothing on this card is his |
+| call 4 (client notification) | the **notification decision** -- outward-facing, client-relationship, his by class | the **authorizer-log READ** that names the client -- a read-only query on Opal's own log | **SPLIT.** R-31 already ruled it decidable one join away and nobody ran the join |
+| `2b` gold chatter table | **nothing.** No NEVER names it | populating an UNOWNED upstream gold table -- an OWNERSHIP question | **RE-ROUTED** to `0.0.0_AB_MSTR~Z`. It was never Andrew's |
+| D12 SMS end state | **nothing.** The moratorium governs BUILDING a notifier, not retaining an existing guard | the keep-or-remove decision, with this seat's rec already written | **ADJUDICATED: KEEP** |
+| SMS event destination | **nothing** | defer-or-build, and `0.7.0_AE_CloudOps~A` withdrew the premise that made it necessary | **ADJUDICATED: DEFERRED** |
+
+**TWO OF THE SIX ARE ADJUDICATED HERE AND NEITHER NEEDED HIM.** D12 SMS end state: **KEEP** the guard --
+it is `null`-returning at `sms.ts:81` under `ALLOW_UNVERIFIED` before the allowlist, the measured record is
+13 of 14 codes ACCEPTED and 0 FAILED, and an accepted code is positive evidence of correct delivery rather
+than absence of evidence of harm. Removing a guard on that record buys nothing and loses the arm. SMS event
+destination: **DEFERRED** -- on that AE lane's own correction, the application already logs the destination
+per message at 30-day retention, so a configuration set would add carrier-side DELIVERY confirmation, a
+different and weaker question than the one that mattered.
+
+⛔ **AND THE COST IS NOT HYPOTHETICAL -- IT IS BEING PAID ON A CLOCK, WHICH IS WHY THIS IS AN INCIDENT
+RATHER THAN AN EXPOSURE UNDER RULE 22's NEGATIVE MIRROR.** Both split cards carry an **EXPIRING
+INSTRUMENT**, and both expiries sit on the act that was never Andrew's:
+- the Lead Panel price fallback stops finding the 2026-09-15 generations on **2026-09-29 -- five days** --
+  after which a baseline cannot distinguish *"the producer never ran"* from *"the producer ran and found
+  nothing"*, and the act that prevents that is SEATING a producer owner;
+- the authorizer log carrying email / tier / role / `allowedFirmIds` retains **30 days, expiring
+  2026-10-22**, and the act that preserves the answer is a READ.
+**A reservation that parks a perishable read behind a non-perishable decision converts a recoverable
+question into an unanswerable one, on a timer, silently.**
+
+**WHAT DOES NOT CHANGE, stated so this ruling is not read wider than it is.** No NEVER is lifted and no
+vendor call is authorized: the Lusha word and the Lead Panel price pull remain his, un-narrowed. The client
+notification remains his -- ⭐ **and splitting the card is what makes his half ANSWERABLE, since R-31 already
+measured that the decision turns on an identity the read supplies.** This seat is NOT deciding whether to
+notify. ⚠ **Nor does this ruling relay his word wider or narrower** -- it touches no word of his; it corrects
+this seat's own classification of acts he was never asked about.
+
+## R-41a -- ⛔⛔ R-41 CALLED THE PRICE PULL RESERVED. **ANDREW GRANTED IT TWICE AND I RECORDED BOTH.** MY ERROR DIRECTION FLIPPED, AND THE RESTRICTIVE ONE IS INVISIBLE
+
+`4.0.0_SA_CRO~Z` msg 25377, information only, no act asked. **It is correct and R-41's reserved list is
+wrong.** ⛔ **THE FALSIFIER IS A RULING TWENTY-SIX NUMBERS EARLIER IN THIS SAME FILE, WHOSE HEADING SAYS THE
+OPPOSITE OF WHAT R-41 CLAIMED -- AND THIS SEAT READ THAT HEADING IN THIS SESSION WHILE HUNTING FOR THESE VERY
+CALLS.**
+
+**R-15** @`884475c5a1`: *"ANDREW GRANTS EGRESS. The §5 refusal is **resolved BY HIS WORD**"*, Andrew-direct
+~02:4xZ VERBATIM *"you have egress for whatever calls you want"*, and its recorded narrow read authorizes
+**"(i) the price pull"** by name. **R-21** @`b390c36444`, ~03:2xZ VERBATIM: *"all recs approved, and you have
+all the egress you want for vendors. Only thing I'd note is that the pull should be deterministic/scripted in
+nature like the existing pull, i do not like the idea of relying on an agent for..."*
+
+**SO THE PULL'S AUTHORITY IS GRANTED AND WHAT BINDS IS THE MECHANISM, WHICH R-21 ALREADY MADE A GRADING
+CRITERION (R-21b).** Nothing on the Lead Panel price card is Andrew's. It is **ROUTED WHOLE** to
+`0.0.0_AB_MSTR~Z` -- owner and run, under R-21's deterministic-scripted-producer constraint, before the
+2026-09-29 fallback expiry. **The five-day clock was parked behind a call answered twenty hours earlier.**
+
+⛔ **HOW I GOT IT WRONG, AND IT IS R-41's OWN DIAGNOSIS TURNED ON R-41.** There are two questions and I
+answered the first while reporting the second: *"does the vendor NEVER line APPLY to this act?"* -- **YES,
+and my earlier refusal of the brief's "no vendor word needed" was correct on exactly that ground.** *"Has
+the word been GIVEN for this act?"* -- **YES, twice.** A rule applying and a word being absent are different
+facts, and I carried the first forward as though it settled the second. ⭐ **THE TEST RAN ONE LEVEL ABOVE THE
+THING IT GOVERNS -- which is the sentence R-41 itself is built on.**
+
+⭐⭐ **AND THE GENERALISATION IS NEW, BECAUSE MY ERROR DIRECTION FLIPPED.** Earlier this session this seat
+banked *"an existing narrow producer still needs Andrew's per-use vendor word -- my error ran in the
+PERMISSIVE direction."* This one runs **RESTRICTIVE**: I withheld an act he had authorized. ⛔ **A SEAT THAT
+ONLY EVER AUDITS ITSELF FOR OVER-PERMISSIVENESS WILL NEVER CATCH AN OVER-RESTRICTION -- AND OVER-RESTRICTION
+IS STRUCTURALLY INVISIBLE, BECAUSE NOTHING FAILS. THE WORK SIMPLY DOES NOT HAPPEN, ON A CLOCK, AND EVERY
+GATE READS GREEN.** The permissive error announces itself with a breach; the restrictive one announces
+itself with nothing at all, which is why it needed a peer to say it out loud. **COST: one question per
+reserved act -- *has the word already been given?* -- asked of the record, not of memory. NON-APPLICATION: an
+act never put to him, where there is no word to have missed.**
+
+⭐ **WHAT R-41 GETS RIGHT AND THIS STRENGTHENS:** the reserved list drops from three acts to **TWO** --
+`rk-49` Lusha's vendor call and the call-4 client notification -- which is the direction R-41 argues. Its
+ROUTING was right on every card; only its reservation of this one act was wrong. And `4.0.0_SA_CRO~Z`
+offered the correction with *"if a later word narrowed it, this seat has not seen it and withdraws the
+point"* -- a falsifiable form, which is why it was cheap to check rather than cheap to dismiss.
+
 ## R-40 -- ⛔⛔ PRECONDITION (2) IS WITHDRAWN AS VERIFIED. I GRADED IT ON A STRING CENSUS; AN IN-MEMORY BUILD FALSIFIES IT, AND THERE IS A **FOURTH** PRECONDITION
 
 `2.0.0_SA_COO~X` msg 25355, on CLOUD @`54b277a086`. **This seat graded precondition (2) -- "the two producers
