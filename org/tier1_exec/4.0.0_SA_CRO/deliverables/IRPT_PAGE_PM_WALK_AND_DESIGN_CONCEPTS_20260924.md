@@ -341,23 +341,26 @@ These are the calls that change the component set. Recommendation first.
 1. **Client picker: type-ahead PLUS a browse drawer** (recommended), vs a full-width client table on the page above the tabs (Advisor Intelligence L2 style). The drawer keeps the identity card as the header's centre of mass.
 2. **Identity card $ tile source**: the holdings custody total (recommended; it is the one number the CONTRACT calls "unique custody total"), vs the performance ending value. They can differ by basis; pick one and label it.
 3. **Performance heatmap orientation**: periods across, portfolio/benchmark/spread down (recommended, matches Model Portfolios), vs periods down.
-4. **Spread cell**: computed on the FE from two supplied facts (recommended; it is subtraction, and Model Portfolios already does it), vs waiting for the producer to supply it. The FE rules today forbid ANY derivation; this needs a CTO word either way.
+4. **Spread cell** -- RULED by `1.0.0_SA_CTO` (msg 100194, IRPT-DESIGN-RECON-CALLS-20260924, RULINGS.md batch 24): the FE derives NOTHING. The spread is a SERVER-STATED fact: `PerformanceReport` gains an additive, optional `spread` member per comparison row (value, basis, the two facts it differences, their dates), emitted by irpt-performance-adapter (`2.0.0_SA_COO~P`), rendered verbatim. The concept stands; the brief names P as the producer. No call left for Andrew here.
 5. **Holdings L2**: treemap + table (recommended, Positioning's exact pattern), vs table only until asset class / sector arrive.
 6. **Analysis history rail**: left 30% rail (recommended), vs a "History" sub-tab.
-7. **Tab names**: Performance / Holdings / Analysis in that order (recommended), vs today's Reporting / Analysis / Holdings.
+7. **Tab names** -- the rename Reporting -> Performance is RULED by `1.0.0_SA_CTO` (100194): Andrew's own sentence names the tab "Performance", so it is his word, not a call; P applies it on the portal candidate that follows the DEV consolidation now in review. Still open for Andrew: the ORDER (recommended Performance / Holdings / Analysis).
 8. **Export**: one page-level Export button in the header that exports the ACTIVE tab (recommended), vs per-tab buttons.
 
 ## 4. Data the concepts need that the wire does not carry today (asks, not blockers)
 
-| Need | Tab | Who | Today |
-|---|---|---|---|
-| Security name, asset class, sector, quantity, price on `security` nodes | Holdings L2 | `2.0.0_SA_COO~M` (INTERFACES: "canonical security-reference/dated-price enrichment ... PARKED") | absent; L2 renders ticker + $ + % only |
-| Benchmark daily series for the chart overlay | Performance | `2.0.0_SA_COO~P` | absent; `benchmarks[]` carries period returns only |
-| Household beginning/ending value facts | Performance headline | `2.0.0_SA_COO~P` | optional, unsupported on current fixtures |
-| Comparison catalogue (names for the "compare against" picker) | Analysis ③ | `2.0.0_SA_COO~Y` (INTERFACES: catalogue `9daa67433e`, "every currently selected comparison remains unavailable") | free-text opaque keys |
-| Account display names in `DirectoryEntry` for account-kind rows | Header chips | `2.0.0_SA_COO~P` (directory/header writer) | present in contract; chips ignore it |
+| Need | Tab | Who | Today | CTO disposition (100194) |
+|---|---|---|---|---|
+| Security NAME on `security` nodes | Holdings L2 | `2.0.0_SA_COO~M` | absent | NOT a new ask: the `display` member already ruled (100156/100172); M's fill built @`699bf9ed1b`, gated on P's schema edit |
+| Asset class / sector on `security` nodes | Holdings L2 | source = the open card to Andrew | absent | the asset-taxonomy enrichment; CTO's candidate source is the registry's `asset_class` on Positioning rows; concepts may cite Positioning's classification list as the target shape |
+| Quantity / price / as-of on `security` nodes | Holdings L2 | `2.0.0_SA_COO~P` measures what `valuation_facts` admits; `2.0.0_SA_COO~M` fills from fact_holdings in the same republish as `display` | `valuation_facts` optional member exists, unfilled | custody facts; P extends `valuation_facts` additively if the schema does not admit them, portal-first order |
+| Portfolio-vs-benchmark spread | Performance | `2.0.0_SA_COO~P` (irpt-performance-adapter compute) | absent | RULED: additive optional `spread` member per comparison row; FE renders verbatim |
+| Benchmark daily series for the chart overlay | Performance | `2.0.0_SA_COO~P` | absent; `benchmarks[]` carries period returns only | brief item, not this round |
+| Household beginning/ending value facts | Performance headline | `2.0.0_SA_COO~P` | optional, unsupported on current fixtures | brief item, not this round |
+| Comparison catalogue (names for the "compare against" picker) | Analysis ③ | `2.0.0_SA_COO~Y` (catalogue `9daa67433e`) | free-text opaque keys | brief item, not this round |
+| Account display names in `DirectoryEntry` for account-kind rows | Header chips | `2.0.0_SA_COO~P` (directory/header writer) | present in contract; chips ignore it | pure re-render |
 
-Everything else in sections 2.1-2.4 is a pure re-render of data already on the wire.
+Everything else in sections 2.1-2.4 is a pure re-render of data already on the wire. Order per the CTO: nothing here pre-empts the DEV consolidation, the D1 run or the COT `display` republish.
 
 ## 5. What this is not
 
