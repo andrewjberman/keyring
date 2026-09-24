@@ -1,0 +1,51 @@
+{
+  "status": "ROLE_ARM_RESIMULATED",
+  "measured_utc": "2026-09-24T02:09:24.783529+00:00",
+  "executed_by": "2.0.0_SA_COO~M",
+  "instrument": "simulate-principal-policy WITH the live bucket policy, one resource per call, user credentials",
+  "before": "explicitDeny (ResourcePolicy) on both indexes at publication time (HOLDINGS_49F/INF_PUBLICATION_RECEIPT_20260924.json role_arm)",
+  "after": [
+    {
+      "bucket": "opal-data-49financial",
+      "key": "irpt/49financial/platinum/holdings/current/manifest.json",
+      "action": "s3:GetObject",
+      "decision": "allowed",
+      "matched": [
+        "role_irpt-holdings-role_irpt-holdings-firm-read"
+      ],
+      "role_named_in_bucket_policy": 1
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/7c0e7ce3bef21ccf63541d766a94fa9a71668e7457955eedcf850ec2b18f5cc0.part-0001.json",
+      "action": "s3:GetObjectVersion",
+      "decision": "allowed",
+      "matched": [
+        "role_irpt-holdings-role_irpt-holdings-firm-read"
+      ],
+      "role_named_in_bucket_policy": 1
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "key": "irpt/inflection/platinum/holdings/current/manifest.json",
+      "action": "s3:GetObject",
+      "decision": "allowed",
+      "matched": [
+        "role_irpt-holdings-role_irpt-holdings-firm-read"
+      ],
+      "role_named_in_bucket_policy": 1
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/1ebc7696d6e52be01c3fc431b222c80d9baf3f967f0681cf3879115e5ad476fa.part-0001.json",
+      "action": "s3:GetObjectVersion",
+      "decision": "allowed",
+      "matched": [
+        "role_irpt-holdings-role_irpt-holdings-firm-read"
+      ],
+      "role_named_in_bucket_policy": 1
+    }
+  ],
+  "fence_apply": "P 99963 02:04:06Z, ledger irpt-holdings-fence-20260924 CLOSED @7220e4a4f3; CTO 99969 re-simulation 6 of 6 allowed",
+  "proof_class_now": "LIBRARY_UNDER_USER_AND_ROLE_ALLOWED"
+}

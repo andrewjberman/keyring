@@ -2,7 +2,10 @@
 
 Seat `2.0.0_SA_COO~M` (CLAUDE, successor to the Codex seat since 2026-09-23 ~22:47Z). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.4. Reviewer `3.0.0_SA_CVO~M` (not live).
-As of 2026-09-24T01:55Z. GO A and GO B EXECUTED (CTO 99931): 49F and INF holdings are PUBLISHED_VERIFIED (receipts below). CTO dda3b7ab42 (batch 12): Andrew's Anna NOT_READY ROOT CAUSE is the firm-bucket fence
+As of 2026-09-24T02:12Z. FENCE APPLIED 02:04:06Z (P 99963, ledger irpt-holdings-fence-20260924 CLOSED @7220e4a4f3), CTO re-simulation 6 of 6
+allowed (99969); this seat's own re-simulation on the 49F and INF indexes and a part each: allowed 4 of 4, matched the role's identity
+policy, role named once in each bucket policy (HOLDINGS_ROLE_ARM_RESIM_20260924.json). The function can now read all three publications;
+Andrew's Anna retest at localhost:5174 is the EXERCISED arm and MSTR is asking him now. GO A and GO B EXECUTED (CTO 99931). CTO dda3b7ab42 (batch 12): Andrew's Anna NOT_READY ROOT CAUSE is the firm-bucket fence
 (DenyForeignFirmPrincipals on all three opal-data-<firm> buckets denies irpt-holdings-role; this seat's two measurements ran as the
 exempted user and the identity-only simulate, so neither could see it). Remedy: CRO exemption rows, P shared-infra plan (0/3/0),
 CTO sign, P apply, Andrew retest. GO requests A (49F) and B (INF) are under the CTO's independent verification.
@@ -35,8 +38,9 @@ structurally correct Cottonwood pipeline bounded by Black Diamond's data window.
 ## Live thread
 
 State: COT LIVE AT HOP 3 of 4 (source -> accepted publication -> deployed reader library, `COT_DEPLOYED_READER_MATRIX_20260923.json`),
-AND HOP 3 IS A LIBRARY-UNDER-USER PROOF ONLY: the function's role is denied by the firm-bucket fence until the exemption rows apply
-(CTO dda3b7ab42). The 49F/INF publisher now records a role arm (simulate-principal-policy with the live bucket policy) in each receipt.
+and since 02:04Z the function's ROLE is allowed on all three buckets (fence applied; CTO 99969 + this seat's re-simulation), so hop 3 is
+no longer user-only. Hop 4 (Andrew's signed-in screen) is the only unexercised arm; expected render for the combined Anna selection:
+93 nodes, custody USD 46,009,147.02 at 2026-09-22 (CTO 99969).
 Hop 4, the signed-in Anna selection + Holdings screen + reload at localhost:5174, is Andrew's act (asked at the M terminal;
 last real attempt 22:17Z FAILED NOT_READY against the pre-repair loader and the single-account publication, both replaced).
 49F and INF are now at hop 2 (accepted publications live in their firm buckets); hop 3 for all three firms is the
@@ -52,7 +56,7 @@ library-under-user proof only until the fence exemption rows apply to irpt-holdi
 | M4 accepted Gold -> Platinum, atomic index | COT, 49F and INF LIVE (three indexes, each created/advanced by CAS) | the three publication receipts |
 | M5 grants / exact subset / API | COT: reader library PASS on deployed bytes; authorizer hop not exercised | COT_DEPLOYED_READER_MATRIX_20260923.json |
 | M6 visible taxonomy + drill on screen | NOT LIVE (Andrew's re-test pending) | -- |
-| M7 fresh source -> screen, three firms | COT hop 3 (library-under-user); 49F hop 2; INF hop 2; the function's role is fenced at every firm | receipts + role arms |
+| M7 fresh source -> screen, three firms | COT hop 3; 49F hop 2 + role allowed; INF hop 2 + role allowed; hop 4 = Andrew's retest | receipts + HOLDINGS_ROLE_ARM_RESIM_20260924.json |
 | Snapshot model overlay (Andrew 22:4xZ) | 49F: 7 models (assets TARGET at SmartX clock); INF: 17 Eclipse models with OBSERVED Orion assets; COT: 46 Rebalancer models over the ACCEPTED publication (462 of 841 accounts assigned, 379 unnamed), assets OBSERVED, blend composition TARGET | HOLDINGS_49F/INF/COT_MODEL_SNAPSHOT_20260923.json |
 
 Offline-only work grades nothing until the live thread is live.
@@ -77,7 +81,7 @@ and withheld-drill facts in the M UI worktree (the wire contract carries all thr
 |---|---|---|---|
 | 49F + INF firm report currency attestation | Andrew (via P's CurrencyAuthorities.json) | firm-currency-attestation-v1 record | ASKED at the M terminal |
 | CTO read of the two publication receipts | 1.0.0_SA_CTO | receipts + this commit | HANDED OFF |
-| Firm-bucket fence exemption rows for irpt-holdings-role (three buckets) | 4.0.0_SA_CRO rows, 2.0.0_SA_COO~P plan + apply, 1.0.0_SA_CTO sign | shared-infra 0 add / 3 change / 0 destroy | IN FLIGHT (CTO dda3b7ab42) |
+| Firm-bucket fence exemption rows for irpt-holdings-role (three buckets) | 4.0.0_SA_CRO rows, 2.0.0_SA_COO~P plan + apply, 1.0.0_SA_CTO sign | 0/3/0 applied 02:04:06Z, ledger CLOSED @7220e4a4f3 | DONE (CTO 99969) |
 | Acceptance of registry row 58ee5b36dd | 1.0.0_SA_CTO | 99931 | ACCEPTED |
 | NOT_READY reason render with a defined code | 2.0.0_SA_COO~P | contract addendum 2cdbe2bd60 (P 99816) | IN CTO REVIEW |
 | Independent journey review | 3.0.0_SA_CVO~M | pinned candidates | seat not live |
@@ -95,7 +99,7 @@ and withheld-drill facts in the M UI worktree (the wire contract carries all thr
 
 ## Limits
 
-No authenticated browser PASS. The function's role cannot read any of the three publications until the fence exemption
-rows apply (CTO dda3b7ab42), so every reader matrix is a library-under-user proof. 49F multi-model leaf dollars are apportioned and claimed inferred (2,862 of 7,475). INF: 71 split accounts'
+No authenticated browser PASS yet (Andrew's retest is the exercised arm). The two publication receipts carry the PRE-fence role arm
+(explicitDeny) as measured at publication time; the post-fence flip is HOLDINGS_ROLE_ARM_RESIM_20260924.json, not a rewrite of the receipts. 49F multi-model leaf dollars are apportioned and claimed inferred (2,862 of 7,475). INF: 71 split accounts'
 drills withheld, 60 model-named accounts in Client because their excluded part does not tie. No CVO verdict on any ID.
 No shared CLOUD push by this seat.
