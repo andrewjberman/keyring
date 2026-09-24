@@ -292,6 +292,44 @@ reads a surface the poller structurally cannot. **Which blocker is live is UNMEA
 does not guess.** COST: one call, on a token the warm-then-read already produced. NON-APPLICATION: a message
 already confirmed to be a DM or group chat -- there the poller's coverage is not in question.
 
+### R-66a -- ⛔⛔⛔ **R-66's SECOND HALF IS WITHDRAWN WITHIN THE HOUR, AND I BROKE ITS OWN SEQUENCING HAZARD ELEVEN MINUTES AFTER WRITING IT**
+
+**`0.0.3_BG_BBGTerminal` msg 25517 refutes the channel hypothesis on data it ALREADY HELD, needing no call.**
+The message is `chat_type "oneOnOne"`, the poller RETURNED it in the 11:4xZ poll, `timestamp
+2026-09-23T19:40:01.767Z`, `from_name "Andrew Berman"`. **So it sits squarely inside the poller's declared v1
+coverage and the "channel @-mentions are a fast-follow" limit never reached it.** R-66's second half is
+**WITHDRAWN, not downgraded.**
+
+⛔ **AND WARM-THEN-READ IS DEFEATED BY THE SAME EVIDENCE: THE READ ALREADY HAPPENED, TWICE, ON A WORKING
+PLANE.** The MCP gateway answered all day regardless of the file token -- that IS the file-plane/MCP-plane
+split. `list_chats` returned the message as that chat's `lastMessagePreview` with `body.content ""`,
+`isDeleted false`; `read_chat_messages` returned Graph 500 twice. **A fresh token changes none of the three.**
+This seat's further guess -- that "unreadable" was a cursor artifact from a `since_iso` of 20:08Z postdating a
+19:40Z message -- was ALSO wrong, and was never reached because the poll had already surfaced it.
+
+⭐ **THE REAL BLOCKER IS A MISSING CAPABILITY, NOT A STATE, AND IT IS NARROWER THAN EITHER CANDIDATE I
+OFFERED:** the content lives in `hostedContents`, and NO TOOL ON THIS GATEWAY FETCHES THAT COLLECTION.
+`TEAMS_DUTY.md` names the exact class. Neither a warm token nor a channel read reaches it. **Two routes out: a
+`hostedContents` GET added to the gateway, or Andrew re-sending as text** -- the second being a draft-and-ask,
+never a send.
+
+⛔⛔ **AND THE PART THAT CONVICTS THIS SEAT. R-66's own text warns: *"ANY gateway call from ANY seat mints a
+token and DESTROYS it -- warm-then-read included, and this seat's own curiosity included, which is why no
+gateway call was made while writing this."* THIS SEAT THEN CALLED `whoami` ON THAT GATEWAY, ~12:5xZ, ELEVEN
+MINUTES LATER,** reaching for a remedy msg 25517 shows was never going to work. **The damage is not a null
+result: the test's stated logic reads a LIVE token with a moved mtime as "something else refreshes and my
+mechanism is wrong", so the contamination BIASES IT TOWARD A FALSE REFUTED** -- a confident wrong answer
+against a seat that had already self-corrected twice today and would have had every reason to believe a third.
+Disclosed same-turn; the run is VOID, not refuted.
+
+⭐ **THE TRANSFERABLE FINDING IS ABOUT THE HAZARD'S SCOPE, NOT MY CARELESSNESS.** The arm's precondition was
+stated as *"no gateway call from THIS SEAT"* -- a scope its author could enforce. The true precondition is
+**"no gateway call from ANY seat"**, which no single seat can hold and which nothing broadcast until R-66
+broadcast it. **A discriminator whose validity depends on every other seat's inaction is not armed until that
+precondition is published AND the publisher is bound by it** -- and the measured failure is that the broadcast
+worked on all four recipients and failed on its author. COST: one line naming the precondition's true scope
+when arming. NON-APPLICATION: a test whose validity depends only on its own seat's acts.
+
 ---
 
 ## R-65 -- ⛔⛔ **A HARDCODED LITERAL THAT DUPLICATES A TOKEN'S VALUE IS A DEFECT THE MOMENT THE TOKEN CAN MOVE -- AND BOTH THE LITERAL AND THE DOCUMENTATION GO ON ASSERTING THE OLD IDENTITY, SO NO READER OF EITHER FILE CAN SEE THE BREAK**
