@@ -579,6 +579,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "FWD-6 / C-TEMPLATE-IS-MEASURED: the sector template is a MEASUREMENT with printed denominators over that type's reports of the total, re-producible as the corpus grows; decomposition v2.0 s.5 duty 2: the production sequence runs once for the newly inducted names, each producer printing its denominators.",
     "world_is": "The served sector templates are the round-1 vintage measured over 124 reports; the producer refuses to mint today's measurement because its object name does not cover the corpus-wide denominator its body carries. fund_form (rc 0) and typecast (rc 0, a new scope=all-workbooks object) do not share the defect on today's inputs.",
     "notes": "DISARMS WHEN the object name covers every input the body depends on (the total and the report set, or a vintage stamp as backlog.write uses) and `sector_template --write` completes on today's corpus with its `types N reports_typed R unmapped_reports U` line printed -- a cell on the corpus surface (c-7's), routed to the round-2 analysis (1.0.0_SA_CTO~Z) as an enrichment item; not this round's frozen decomposition. Until then the dossier composes with the round-1 templates via substrate's member picker, which is disclosed in the dossier's own citations."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S18",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T13:05:00Z",
+    "one_line": "The decomposition's production sequence (v2.0 s.5 drain duty 2: extract v2, typed, continuation, templates, dossier) OMITS the step that tells the last two producers WHICH names exist: `continuation._resolved_security_keys` and `dossier._resolved_security_keys` enumerate names from `backlog.read_latest()` -- the newest research-backlog SCAN VINTAGE in gold -- and that vintage was round 1's (33 RESOLVED), so the first pass after the re-ingest rebuilt `names 33` (continuation: names 33 rebuilt 1 existed 32; dossier: names 33 written 33) and produced NOTHING for the 20 newly resolved folders whose 94 reports are in bronze, extracted and typed. This seat's sequencing miss, not a producer's: `backlog --write` (a new scan vintage, never overwritten) must precede continuation and dossier; the corrected chain is running.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "continuation.py:871-878 @0cf98a11f5 `_resolved_security_keys`: `backlog_mod.read_latest(client)` then the RESOLVED records' keys -- 'backlog's own RESOLVED records, the ONE reader of which names this cell covers (never re-derived from silver)'; dossier.py:617-618 delegates to it. backlog.py:159-169 `read_latest` reads `gold_list(TABLE)[-1]`; `write` (:145-156) mints `date=<today>/<stamp>.json`.",
+        "First pass (evidence/production_sequence_20260924T120608Z.log and production_sequence_tail_20260924T121658Z.log): extract --run-v2 `bronze_reports 218 v2_stored 218 put_performed 95`; typed `silver_rows 218 of 218 written_rows 95`; continuation `names 33 rebuilt 1 existed 32`; fund_form `funds 2 fund_reports 93 absent_fund_reports 123`; typecast `workbooks_read 120 ... written ... 698d1cf5d9f417cb.json put_performed True`; dossier `names 33 written 33 existed 0` (12:17:56-13:03:01Z; every name rebuilt because the typecast input changed). Zero of the 20 induction keys appear in the continuation or dossier lines.",
+        "The decomposition text (s.5 duty 2) lists 'extraction v2, typed silver, continuation, sector template / fund form / typecast, dossier' and no backlog scan; the d-4 order's own face names `backlog.py` as the census surface and expects the store 'as it is NOW'.",
+        "Correction, running at 13:0xZ (evidence/production_sequence_corrected_*.log): `backlog --write` -> `continuation --write` -> `dossier --write`; expected `folders_read 93 = resolved 53 + unresolved 40 + ambiguous 0` (or the crosswalk's own ambiguous count), continuation names 53, dossier names 53 with 20 written / 33 existed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v2.0 s.5 duty 2: run the scripted production sequence ONCE for the newly resolved names, each producer printing its denominators; FWD-19: inducted, re-ingested, and (via d-4) dossier-served or dispositioned.",
+    "world_is": "The sequence as written re-measured the OLD population and printed honest denominators for it; the new names were invisible to the last two producers because the population artifact they read had not been re-minted. Nothing was overwritten or lost; the dossier objects written for the 33 are the as_of=2026-09-24 vintage over the grown typecast.",
+    "notes": "INERT: the correction is one inserted step, run by this seat now; the decomposition's s.5 text is amended in the record face of the round (the L10 analysis) rather than re-cut mid-round (the decomposition is frozen). The d-4 continuation waits for the corrected chain's numbers. Related: Z-S17 (sector template refusal) stands separately."
   }
 ]
 ```
