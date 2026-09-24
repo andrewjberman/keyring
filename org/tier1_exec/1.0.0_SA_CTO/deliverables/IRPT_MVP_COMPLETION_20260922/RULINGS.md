@@ -3086,3 +3086,28 @@ introduced). GO'd; receipt PENDING. UNMASKED behind the ENOENT: F14-AC13 x2 / AC
 document" -- the directory-browse response slice's entries member is not a $ref into DirectoryEntry as the one-parser rule requires: a
 response-contract / gen-wire debt, pre-existing, cut on its own candidate with the contract change on the backend branch FIRST (the producer
 owns docs/contracts v1; the portal copy follows), never a portal-only patch.
+
+
+## 2026-09-24 13:0x UTC - Claude CTO batch 52: portal candidate 7 LANDED on origin/DEV as a fast-forward (f1d02f30a2, ls-remote read by MSTR 12:5xZ) -- DEV carries candidates 1-7 and the five DSGN_IRPTV1-W4-S2 names are closed there; the "recs approved" broadcast delivered to six live seats; Andrew told DEV is ready for his signed-in Holdings HAR
+
+Instruments: MSTR's receipt 100598 (origin/DEV b9d244a4 unchanged at the act; merge --ff-only f1d02f30; push b9d244a4..f1d02f30 rc=0; VALGATE
+D-1 no-op PASS; ls-remote refs/heads/DEV = f1d02f30a2e6ca64e5e39cefbe593fdbabf168cf); the broadcast receipt for the Andrew-direct record
+@9b36d8a481 (ids 100600-100605: MSTR, P, M, D, the CRO, the CVO; 6 DELIVERED / 0 QUEUED / 0 REFUSED, denominator 6; Y not live, carried by
+MSTR keying the dialog and by the record on the tree).
+
+### IRPT-PORTAL-CANDIDATE-7-LANDED-20260924 (MSTR 100598 on the CTO's GO 100596)
+Fast-forward; two files; VALGATE a no-op; rollback = b9d244a4. DEV now carries candidates 1-7: the request corpus at 17 of 17, prepared_for on
+the analysis record, the fe-s-10 re-pins, the fe-s-2 claim-authority arm and the published SelectedAccounts fixture; fe-s-2 + fe-s-10 read
+48 pass / 1 skip / 0 fail on D's instrument. RULED: accepted; relayed to P (MSTR's receipt was addressed to the CTO alone) with P's order of
+work -- card 2's ONE Performance plan submission first (the word is given), then the browse-slice $ref contract fix on the backend branch
+before its portal copy as candidate 8, then the interpreter card v2. Card 4 fires: the CTO tells Andrew DEV is ready for his signed-in
+Holdings load with a HAR (read in place, never copied or committed), which closes M's holdings verify, FWD-1's live trace and the 500 ms
+question.
+
+### ANDREW-DIRECT-RECS-APPROVED-BROADCAST-RECEIPT-20260924
+The three surfaces of a law-grade word: the record committed @9b36d8a481 (LOCAL), the same-turn broadcast delivered to every live seat the word
+binds (six of six), the push state stated in the broadcast (LOCAL; MSTR pushes). Per-seat acts as broadcast: MSTR keys Y's dialog (retry on
+the same model); P executes the one Performance submission with the CRO's second read and holds both upload-egress answers (resolution
+through the resident, no prices in v1); M receipts the Eclipse map and the taxsma snapshot under its migration; D and the CVO hold the
+DSGN_IRPTV1 DONE WHEN confirmation as the L2 word; the CRO carries cards 2-4 into the trace. Not covered, restated: the first live Analysis
+submission (its own card when a composition lands) and the CLOUD trunk push (MSTR's to put to him).

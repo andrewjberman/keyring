@@ -19,7 +19,10 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (0000000000000000000000000000000) ANDREW-DIRECT 12:5xZ "recs approved" on six cards: Y retries same
+CTO review queue, in order: (00000000000000000000000000000000) portal candidate 7 LANDED fast-forward f1d02f30a2 (ls-remote read by MSTR
+12:5xZ); DEV = candidates 1-7, the five W4-S2 names closed there; Andrew told DEV is ready for the signed-in HAR (card 4); the recs-approved
+broadcast 6 of 6 delivered (100600-100605); P's order: ONE Performance submission -> browse-slice $ref contract fix -> card v2 (batch 52).
+(0000000000000000000000000000000) ANDREW-DIRECT 12:5xZ "recs approved" on six cards: Y retries same
 model (MSTR keys); ONE Performance plan submission for Anna, default window (P executes, CRO second read); upload symbol resolution via
 the resident, NO prices v1; the signed-in HAR when DEV is ready; DSGN_IRPTV1 DONE WHEN confirmed as written; Rule 28 card acknowledged,
 M receipts under its migration (batch 51). (0000000000000000000000000000000a) portal candidate 7 (f1d02f30: the claim-authority re-pin +
