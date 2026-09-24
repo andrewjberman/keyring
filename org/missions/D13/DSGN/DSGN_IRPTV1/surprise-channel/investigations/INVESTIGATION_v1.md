@@ -181,6 +181,29 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Disarms S1 only; W3-S2's disarm is the CTO's (100499, batch 36). The drain's three-error count was an under-read of a tail-limited tsc output -- the CTO's five is the disposition's number."
+  },
+  {
+    "id": "DSGN_IRPTV1-W5-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~5",
+    "surfaced_at": "2026-09-24T00:00:00Z",
+    "one_line": "IV-e-1's children[label].members fill closes W3-S1's field-mapping gap for the DIRECT-CHILD level only; a category whose direct child is itself an intermediate node (not a leaf security) still gets ONE L1 tile for that intermediate node, with no further L3 drill beneath it -- unchanged, and named by IV-e-1's own order text as out of this cell's field mapping.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx (this order): `children[childLabel(child)] = { aum: child.amount as number, members: leafSecurityMembers(child.nodeRef) }` -- every direct child of a category now carries its own leaf-security `members`, one level down from the category's own top-level fill (IV-t-3).",
+        "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-1.l2-members.test.ts: VERDICT: L2-FED over all 9 fixtures on disk, 4 children checked (the ones with leaf securities directly or nestedly beneath a direct child), 9 members, set-equal to an independent walk; mutant control (children[label].members forced to []) fails 2 of 3 tests in the file while the round-1 top-level re-derivation still passes -- the new assertion, not a pre-existing one, is what fires.",
+        "the L1-tile-per-intermediate-node behaviour W3-S1 named (a category whose direct child is an account/sleeve above its own model layer gets one L1 tile named for that intermediate node, not the models beneath it) is UNCHANGED by this fill: `children[label].members` now lists the LEAF securities beneath that one intermediate child (flat, any depth), but `CategoryViewTree` itself has no L3 -- there is still no further tile to drill into for the models/sleeves BETWEEN the intermediate child and its leaves, only the flat member list this cell now feeds.",
+        "row C-S12 (SecurityList.tsx tickerFor) is disarmed by this order's VALID proof instance per the task order's own <round> line; this row does not speak to C-S12, only to W3-S1's residual scope."
+      ]
+    },
+    "spec_asserts": "IV-e-1 worker face (b): 'Fill it: for each direct child of a category, children[label].members = the leaf security nodes beneath THAT child (any depth) ... Reuse that nested helper; sum nothing; keep the top-level members fill.' -- a field-level fill, not a structural L3.",
+    "world_is": "The field this cell owns is fed and independently verified (IVE1-AC2, VERDICT: L2-FED); the STRUCTURAL gap W3-S1 named for an intermediate direct child (one L1 tile, no further drill for the models/sleeves between it and its own leaves) is neither closed nor claimed closed by this order -- it is out of the field mapping this cell's own worker face states, and CategoryViewTree.tsx (read, never edited, per BOUNDS) has no consuming L3 for it regardless.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking. Filed to keep W3-S1's residual scope precise for whichever cell (if any) is later charged with an L3, now that the direct-child level W3-S1 also named is measurably fed."
   }
 ]
 ```
