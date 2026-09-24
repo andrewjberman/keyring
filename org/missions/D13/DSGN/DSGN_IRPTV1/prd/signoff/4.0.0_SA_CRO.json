@@ -1,12 +1,11 @@
 {
   "prd": "DSGN_IRPTV1_PRD.md",
-  "prd_version": "v0.3",
-  "prd_pin": "118613ddb00ab33ea6dd505ddc24bf3da81c553a",
+  "prd_version": "v0.4",
+  "prd_pin": "c4b9056831bbd8d18dc99dce33ac61079097d59e",
   "half": "brief",
-  "half_hash": "a48abf6b6f777254288bf890b609b654af111bc03ead9b2f2cd1fae26f241b5d",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/L4R_REVIEW_DSGN_IRPTV1_v0.3_BRIEF_HALF_20260924.md@fc5378db02",
+  "half_hash": "6deb5974efc4bf2400a6de0af28283713e6d8281917c8385fddbf08d1c06e0c5",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/L4R_REVIEW_DSGN_IRPTV1_v0.4_BRIEF_HALF_20260924.md@7112a0a59b",
   "signed_by": "4.0.0_SA_CRO",
-  "signed_at": "2026-09-24T05:35:48Z",
-  "reason": "brief_ref @fb90ad8fe0 lacks the O6 prospect paragraph FWD-8/C11 are cut from (it is at 5cc838e696); BRIEF COVERAGE says 11 of 11 against ten O-headings; the sequencing line omits the Performance-path precondition the thread's hop 6 needs (trace @d8abd7dc65 hops 4/6/10) -- three pinned lines, review fc5378db02"
+  "signed_at": "2026-09-24T05:54:20Z"
 }
