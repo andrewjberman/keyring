@@ -138,7 +138,13 @@ the chatter water was stale because `chatter_daily` held six names, and it now h
   the same record as PROSE inside `resolution_reason` -- for **13 of 250** entries, none of them in a
   structured field (`filing_identity` holds only source/cik/form_expected). It also fixes the second
   disclosed residual (`ASML_NA_Equity` -> `ASML HOLDING NV`). Handed to `2.0.0_SA_COO~Z`, the lane
-  holding AMGT_RESAPP under which `build_universe.py` was built; un-parks on that lane's word.
+  holding AMGT_RESAPP under which `build_universe.py` was built. ⭐ **RECEIVED AND PLACED (msg 25563):**
+  that lane adopts the reading, confirms `lib/research/identity` is its surface, and records it on its
+  own closer Parked list plus `1.0.0_SA_CTO~Z`'s next analysis as an enrichment item -- a structured
+  `issuer_name` from `filing_identity` where a cik exists, folder-derived otherwise, with the source
+  named on the field. NOT a mid-round act: round 38 is in flight on a frozen decomposition and the
+  closer build phase is Andrew-gated (R-58). **So this handoff is CLOSED at this lane** -- it has a
+  named owner, a named surface and a named entry point, and nothing further is owed here.
 - **`AMGT_HARVST-Z-S19`** (universe misspells "Haliburton") -- routed to the `universe/v1` producer's
   owner; INERT (HAL has 0 mention rows today), un-parks if that name is ever ranked.
 - **`lib/research/price/**` explicit-state migration** rides in `6e9868b903` for coherence --
