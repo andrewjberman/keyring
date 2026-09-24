@@ -1091,3 +1091,69 @@ pin 79c53e1abe (manifest extension 2): both are test files whose semantic writer
 them at that pin so the eight cross-firm resident cases and the consumption test match the 11-field
 reader. Y's reading was right and the CTO's 99868 "no new P row" is superseded by this narrower fact:
 P cannot sync a file it holds no row for, and a branch merge would carry more than the grant.
+
+
+## 2026-09-24 01:3x UTC - Claude CTO batch 12: Anna NOT_READY root cause is the firm-bucket fence, not the reader
+
+### IRPT-HOLDINGS-NOT-READY-ROOT-CAUSE-20260924 (Andrew's 00:5xZ retest via MSTR 99893; M 99900/99904, P 99901/99908)
+FINDING (measured, discriminated): opal-data-cottonwood's bucket policy statement
+DenyForeignFirmPrincipals denies s3:* to every principal whose ARN is not like role/*-cot-* or one of
+the three exempted users (Andrew_Berman, Andrew_Berman_Console, Opal_Terminal). The deployed Holdings
+function runs as arn:aws:iam::313476888478:role/irpt-holdings-role, matches neither, and its first read
+(begin() on platinum/holdings/current/manifest.json) is refused; publication.py wraps that into
+PublicationRefused, snapshot.py into SnapshotUnavailable, entry.py maps it to NOT_READY, served.py
+refuses at :938 with the directory business date. That is the exact screen Andrew saw
+(Unavailable / No source age yet / NOT_READY).
+DISCRIMINATOR: aws iam simulate-principal-policy for irpt-holdings-role WITH --resource-policy = the
+live bucket policy -> s3:GetObject and s3:GetObjectVersion on the current index: explicitDeny,
+MatchedStatements ResourcePolicy. The same simulation WITHOUT the bucket policy -> allowed (positive
+control). Every offline replay (CTO RIE replay: success body, 93 nodes; M's deployed-bytes run
+outside the repo: READ_OK x3) ran under the CTO's or M's user credentials, which ARE the exempted
+users, so they could not see it. M's item 2 (comp-iam / identity-only simulate: ALLOWED) read the
+role's identity policy; the deny lives in the resource policy, which that instrument does not read.
+Rule 22: a check scoped to the members cannot see a defect in what the members share; the bucket
+fence is the shared dependency. Record with every eliminated cause:
+DIRECT_REVIEW_2020_20260923/HOLDINGS_NOT_READY_ROOT_CAUSE_20260924.json.
+CONSEQUENCE: the same Deny (wildcard role/*-<firm>-* plus named exemptions) fences
+opal-data-49financial and opal-data-inflection, so M's 49F and INF publications would be unreadable
+by the function the same way the moment they land. The 49financial fence already names 14 non-firm
+roles by exact ARN (registry precedent, LGIC_ENFORCE EN-w-7-r3): a shared reader is admitted by
+NAME, never by wildcard.
+RULING: within the ratified product (Opal has all functions for any firm; the reader is a registered,
+firm-bound, prefix-scoped consumer, contract S7). Surfaced to Andrew as a cross-firm-guard enumeration
+edit; the CTO proceeds unless he vetoes. NOT the remedy: renaming the role to match *-cot-* (widens
+by pattern), a console edit, moving the publication out of the firm bucket, or any change to the
+reader's identity policy (M/P 99904/99908 were right that no IAM change is indicated BY THEIR
+finding; the change indicated here is to the bucket's resource policy).
+REMEDY, one shape, three buckets, registry-driven (Rule 30: never a hand-typed policy):
+1. 4.0.0_SA_CRO (infra/logic/** lane; precedent 845343f925, the six operator rows) adds ONE row per
+   firm bucket to infra/logic/registry/exemptions.json under opal-data-cottonwood,
+   opal-data-49financial and opal-data-inflection: principal irpt-holdings-role, arn
+   arn:aws:iam::313476888478:role/irpt-holdings-role, reason citing this ruling and the discriminator
+   above, signoff_ref = the ledger entry P opens for the apply. Validator/generator run; commit LOCAL.
+2. 2.0.0_SA_COO~P (IRPT IaC writer; IB-rth-8 precedent on this root) plans
+   infra/aws/terraform/shared-infra from that commit: EXPECTED 0 add / 3 change / 0 destroy, the three
+   aws_s3_bucket_policy resources only (lgic_firm[cottonwood], lgic_firm[inflection], the 49financial
+   policy), each diff adding exactly the one ARN to ArnNotLike and removing nothing. Ledger opened and
+   committed before the act; the plan and its decoded diff to the CTO.
+3. CTO reviews the decoded plan and signs the CTO never-widen half; the second half is
+   4.0.0_SA_CRO's (as IB-rtj-2) or a live COO not holding the act (2.0.0_SA_COO~M) in its stead.
+4. P safe-applies; post-apply get-bucket-policy x3 read back; re-plan 0/0/0; ledger closed.
+5. CTO re-runs the resource-policy simulation for irpt-holdings-role on all three buckets expecting
+   allowed on GetObject (current index) and GetObjectVersion (date=* parts); then Andrew retests Anna
+   at localhost:5174. The sink repackage (below) makes the reason readable if anything else remains.
+ORDER: the registry edit and the sink repackage run now in parallel; the plan waits on the registry
+commit; nothing waits on the sink.
+
+### IRPT-HOLDINGS-SINK-REPACKAGE-GO-20260924 (P 99901/99908)
+GO for the CODE-ONLY irpt-holdings repackage carrying served.py at 3ac9cbdc98 (five error sites print
+the irpt_internal record and the public line; 80 boundary tests, ruff clean; behaviour unchanged).
+Bounds: same layer set (irpt-common:5), same handler, same env, same role; package sha to the CTO
+before and after; ledger opened before the act; readback of CodeSha against the built artifact. Not a
+fix for NOT_READY; it is the instrument that would have shown the fence refusal in the log.
+
+### IRPT-RESIDENT-CUTOVER-PLAN-RECEIVED-20260924 (P 99911)
+Plan 04c77cbe (1 add / 1 change: runner-resident policy + aws_ec2_instance_state stopped -> running)
+is in the CTO review queue behind the fence remedy; the X10 ACTIVE review (P 6d3a9215d7) follows it.
+Sequencing question answered now so P is not idle: ONE apply (grants + start) is accepted in
+principle; the GO itself follows the decoded-plan review.

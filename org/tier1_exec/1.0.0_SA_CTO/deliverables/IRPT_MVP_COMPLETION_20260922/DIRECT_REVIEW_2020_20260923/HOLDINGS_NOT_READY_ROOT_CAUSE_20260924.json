@@ -1,0 +1,35 @@
+{
+  "record": "HOLDINGS_NOT_READY_ROOT_CAUSE_20260924",
+  "seat": "1.0.0_SA_CTO (Claude)",
+  "andrew_direct": "MSTR relay 99893, ~00:5xZ: 'Just tried anna on localhost, did get a new error message this time, so change is happening of some kind; Unavailable / No source age yet / NOT_READY'",
+  "measured_at_utc": "2026-09-24T01:00Z-01:25Z",
+  "function_invocations": "irpt-holdings: six invocations 00:53:23-00:53:41Z, 967-1838 ms, no INIT failure, zero application log lines (served.py discards the internal record: P 99897, sink landed at 3ac9cbdc98, not yet deployed)",
+  "eliminated_with_evidence": {
+    "as_of_date": "the portal's Holdings request carries no as_of (index.tsx:132 selectedScopeRef; investor-reporting.ts:1165 sends as_of only when set); the deployed reader with no as_of reads latest = 2026-09-22",
+    "publication_read_by_the_deployed_bytes": "load_snapshot -> project -> require_reconciled -> clocks_are_distinct on the extracted deployed zip + irpt-common:5 against live S3 under the CTO's credentials: READ_OK for 0698 (33 nodes), d486 (60), combined (93); 2026-09-23 refused as designed",
+    "selection_store": "all 8 SELECTION rows for cottonwood (three are Anna's: d486, 0698, combined) are exact subsets of the accepted publication's 841 accounts; the function's role performed a KMS Decrypt via DynamoDB on every invocation (CloudTrail), so the selection read succeeded",
+    "identity_policy": "comp-iam simulate (identity-only): s3:GetObject on the current index and s3:GetObjectVersion on the date=* keys ALLOWED; directory pointer, directory object and ownership map ALLOWED",
+    "portal_parse_of_a_success_body": "the full deployed function replayed in the Lambda runtime emulator with an Opal internal principal and Anna's combined selection returned a success body (93 nodes, custody USD 46,009,147.02); the portal's real parseIrEnvelope + envelopeFromAvailability (bun, portal-local-live @c1ac41ec) render it as state UNCERTAIN with business date 2026-09-22, not UNAVAILABLE/NOT_READY, so the screen Andrew saw was a server refusal",
+    "encryption": "every publication object and the bucket default are SSE-S3 (AES256); no KMS on the S3 path",
+    "no_source_age_yet_text": "status.ts:342 prints it for every no-answer state (UNAVAILABLE among them); it carries no information about the cause"
+  },
+  "root_cause": {
+    "finding": "opal-data-cottonwood's BUCKET POLICY statement DenyForeignFirmPrincipals denies s3:* to every principal whose ARN is not like role/*-cot-* or one of three named users (Andrew_Berman, Andrew_Berman_Console, Opal_Terminal). The Holdings function runs as arn:aws:iam::313476888478:role/irpt-holdings-role, which matches neither, so its first S3 read (begin() on the current index) is refused; publication.py wraps that into PublicationRefused('publication index unavailable'), snapshot.py into SnapshotUnavailable, entry.py maps SnapshotUnavailable to NOT_READY, and served.py refuses at :938 with the directory's business date.",
+    "discriminator": "aws iam simulate-principal-policy for irpt-holdings-role with --resource-policy = the live bucket policy: s3:GetObject and s3:GetObjectVersion on .../platinum/holdings/current/manifest.json -> explicitDeny, MatchedStatements ResourcePolicy; the same simulation without the bucket policy -> allowed (positive control). Every offline replay passed because the CTO's and M's credentials are the named users on the allow-list.",
+    "why_prior_readbacks_missed_it": "HOLDINGS_READER_CTO_LIVE_READBACK (22:13Z) and comp-iam simulate read the ROLE's identity policy; neither reads the bucket's resource policy. Rule 22: a check scoped to the members cannot see a defect in what the members share; the bucket policy is the shared dependency.",
+    "sibling_buckets": {
+      "opal-data-49financial": "same Deny; its ArnNotLike list already names 14 non-firm roles by exact ARN (the precedent shape)",
+      "opal-data-inflection": "same Deny; wildcard role/*-inf-* plus the three users only",
+      "opal-data-irpt": "DenyInsecureTransport only; no principal Deny"
+    },
+    "consequence": "irpt-holdings is denied on all three firm buckets today; the 49F and INF Holdings publications would be unreadable by the function the same way once published."
+  },
+  "remedy": {
+    "shape": "add the exact ARN arn:aws:iam::313476888478:role/irpt-holdings-role to the DenyForeignFirmPrincipals ArnNotLike list on opal-data-cottonwood, opal-data-49financial and opal-data-inflection, in the Terraform root that owns those bucket policies (never a console edit); the reader's own identity policy stays prefix-scoped and firm-bound in code, so the cross-firm guard's intent holds: a shared reader is admitted by NAME, never by wildcard",
+    "not_the_remedy": "renaming the role to match *-cot-* (a name hack that widens by pattern), a console edit, or moving the publication out of the firm bucket",
+    "sequence": "P (IRPT IaC writer) prepares the saved plan against the owning root under an exact-file grant if that root is outside its lane; CTO reviews the plan (three statements, three ARNs added, nothing removed); safe-apply; CTO re-runs the resource-policy simulation expecting allowed; Andrew retests Anna",
+    "andrew": "surfaced as a cross-firm-guard enumeration edit; the CTO rules it within the ratified product (Opal has all functions for any firm; the reader is a registered, firm-bound, prefix-scoped consumer, contract S7) and proceeds unless Andrew vetoes",
+    "routing": "registry rows: 4.0.0_SA_CRO (infra/logic/** lane, precedent 845343f925); plan + apply on infra/aws/terraform/shared-infra: 2.0.0_SA_COO~P (IB-rth-8 precedent); never-widen halves: CTO + CRO (or 2.0.0_SA_COO~M in stead); ruling RULINGS.md batch 12"
+  },
+  "push_state": "LOCAL at write; origin/CLOUD 69e36619ae (ls-remote read 01:3xZ)"
+}
