@@ -61,7 +61,8 @@ them is verbatim **"no size below 11"**. The surviving residue is `sizes[10]` on
 
 1. **`sizes[10]` is not adjacent to FWD-29 -- it is one of FWD-29's own nine conditions**, failing on 2 of 6
    states. Round 37's list SPLIT ONE OUTCOME'S CONDITIONS ACROSS TWO ITEMS and closed one of them.
-2. **The person-read limb is exercised at 2 of 6.** The same DONE WHEN requires *"THE SIX PNGs READ BY A
+2. **[SUPERSEDED 17:2xZ -- SEE s.9 AMENDMENT 1. CLOSED BY THE CVO 15 MINUTES AFTER THIS ANALYSIS LANDED.]**
+   **The person-read limb is exercised at 2 of 6.** The same DONE WHEN requires *"THE SIX PNGs READ BY A
    PERSON"*. The CVO read `thesis.png` and `peers.png` as images and said so. Round 37's CVO read a
    DIFFERENT three (model, list, peers). No single exercise has yet covered six.
 
@@ -107,6 +108,9 @@ transform closes this instance; a plausibility band on a named-unit column is wh
 
 The ask: does Andrew's *"portal only uses 5174 from now on for dev builds"* bind only the shared dev build,
 or every vite anywhere (round 38's workers each ran a throwaway vite on 5182-5185 in their own worktrees)?
+
+**[VACATED 17:5xZ BY ANDREW -- SEE s.9 AMENDMENT 2. THE WIDER READING IS HIS: "5174 only".
+THE RULING BELOW IS WRONG AND IS KEPT ONLY SO THE OVERRIDE HAS SOMETHING TO POINT AT.]**
 
 **RULED, NARROW, AND CARDED RATHER THAN ASSUMED.** His word binds the build a PERSON OPENS: the shared
 reviewable dev build runs on 5174 and on no other port. A worker's ephemeral in-worktree vite, which exists
@@ -185,3 +189,52 @@ operating ruling and the scope question is his.
 
 **Push state: LOCAL on landing. `origin/CLOUD` read `75e4bc7e5c` at 13:5xZ; this lane does not push and
 `0.0.0_AB_MSTR~Z` pushes on its cadence. The claim is perishable and is stated as measured, not defaulted.**
+
+---
+
+## 9. AMENDMENT -- ONE GRADE HALF CLOSED BY THE CVO, ONE RULING VACATED BY ANDREW, ONE ITEM ADDED
+
+This section corrects s.3 and s.6 of this file. Both corrections arrived WITHIN AN HOUR of it landing, from
+the two parties best placed to falsify it, which is the loop working rather than the analysis failing.
+
+### AMENDMENT 1 -- FWD-29's person-read limb is CLOSED; the grade STANDS on the other arm
+
+`3.0.0_SA_CVO~Z` row `Z-S267` @`a10aec2451` (17:20:44Z, **15 minutes after this analysis landed**): *"FWD-29's
+'SIX PNGs READ BY A PERSON' limb is now 6 of 6 -- and the four I had not read carry two findings, one of them
+a second-surface corroboration of Z-S265."*
+
+So s.3's SECOND shortfall is closed, and it was closed by the seat the analysis named rather than by a cell.
+**`FWD-29` REMAINS `NOT_REALIZED`, now on the `sizes[10]` arm ALONE** -- one of its nine JSON conditions,
+failing on 2 of 6 states. The grade does not move; its BASIS narrows from two arms to one, and s.7 item 2
+(the six-PNG limb as a packet instruction) is DISCHARGED rather than carried.
+
+**And the four newly-read PNGs carry a second-surface corroboration of `Z-S265`.** That raises s.7 item 3
+from one surface to two and removes the last reading on which the P/E defect could have been an artifact of
+the peers capture alone.
+
+### AMENDMENT 2 -- s.6's RULING IS VACATED BY ANDREW; the WIDER reading is his
+
+s.6 ruled the NARROW reading of *"portal only uses 5174 from now on for dev builds"* -- the build a person
+opens -- and carded the scope rather than assuming it. **His answer to that card, VERBATIM: "5174 only."**
+He wrote *"Rec approved"* on a different card in the same message, so this is not a rec approval: it is the
+WIDER reading, and s.6 is WRONG.
+
+**CONSEQUENCE FOR ROUND 39, and it is not cosmetic:** round 38's pattern of a throwaway vite per worktree
+(5182-5185) does not repeat, and because concurrent workers cannot bind one port, render grading is
+post-drain on the shared 5174 or the cells grade without a server. The shape is the issuer's; the constraint
+is his. Relayed before the cut, not after.
+
+**What the vacating does NOT touch:** the carding itself was correct. The rule that a seat may not adjudicate
+his word wider or narrower for another seat is exactly what put this question in front of him, and it is why
+the override arrived before round 39 was cut rather than after a round was graded on a wrong constraint.
+
+### AMENDMENT 3 -- the enrichment list gains item 10, and the universe is 93
+
+- **s.7 item 10: THE SIDEBAR (`App.tsx`).** Andrew, VERBATIM: *"Rec approved"* on folding it into a round-39
+  cell now that C13 is ratified @`b26449defe`. It was a reserved card he had named; it is now a cell input.
+- **s.7 item 2 is DISCHARGED** (amendment 1), so the list is nine items plus the sidebar, minus the PNG limb.
+- **THE UNIVERSE IS THE 93**, his words: *"The 93 group, you are correct, the 93 are the ones."* No count
+  drawn from the 2026-09-10 builder snapshot (89) is goal evidence, and the builder is stale by construction
+  against his definition until it is re-run. Record: @`982eee769f`.
+- **`rk-49` cannot complete**: its key rotation is declined (*"not rotating at this time"*), and it is the
+  last non-terminal order of 208. Withdrawal is the issuer's act, not this seat's.
