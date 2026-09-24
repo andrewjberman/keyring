@@ -50,9 +50,10 @@ P's next integration batch takes these three files over the 31 already at b3fc52
 ## Next proof
 
 Real login -> CSV AAPL 10.01 + VNQ 2.02 Dollars -> frozen 12.03 -> Overview acceptance/queue -> resident worker on the
-running host -> vendor PDF -> certified AnalysisReport -> screen -> reload/history, with deployed package/source
-digests and immutable input/request/report revisions recorded. Runs the moment the host is running and P returns
-the installed factory + cutover receipt; until then each loop tick re-measures the dependencies below from artifacts.
+running host -> vendor PDF -> certified AnalysisReport -> screen -> reload/history -> same-revision export, run
+exactly as `RUNBOOK_1203_LIVE_JOURNEY_20260923.md` (ten hops, per-hop call, readback and refusal signatures, the
+evidence list, the resident acceptance command). Runs the moment preconditions A-F land at P; until then each loop
+tick re-measures the dependencies below from artifacts.
 
 ## Dependencies
 
@@ -61,7 +62,8 @@ the installed factory + cutover receipt; until then each loop tick re-measures t
 | Installed `MODULE:build_resident_runtime` factory with real `principal_for`, repositories, session ports; package/census digests; sole-consumer cutover receipt | 2.0.0_SA_COO~P | RESIDENT_ASSEMBLY_HANDOFF_20260923.md items 1-3, 5 | AWAITED (no implementation in P tree) |
 | Non-HTTP current authority: P projects `createdAt`/`role`/`userType` from `CanonicalProfileReaders.get_user`; Y refuses on user None / status != active / firmId != home_firm_id / createdAt after acceptance, records createdAt_absent, classes OPAL_GLOBAL iff firmId == opal-capital or userType == Dev | 1.0.0_SA_CTO ruled d78fdb2f1c (item 4); P (1)(4), Y (2)(3) | CTO 9baf67bb5f: Y `635af92b76` ACCEPTED bounded (home-firm fallback confirmed, caveat recorded for a firm admin on a descendant firm); P 185dfb3e7f ACCEPTED; IAM + host-tag plan 1de76039 GO | CONSUMED (Y); P apply of 1de76039 pending |
 | Host tag `AutoShutdown = "disabled"` on the runner Terraform resource, plan to CTO, safe-apply; nobody starts the host before the tag and the resident install are ready | 2.0.0_SA_COO~P | CTO 9baf67bb5f item 3: tag plan 1de76039 GO (tag inert until a start; Andrew's veto stands); writer B `aws_ec2_instance_state.runner` flips to running in the SAME plan as the resident install cutover, then one start | SEQUENCED behind the factory/cutover plan (P) |
-| Generation path: deploy HEAD submit entry, `sqs:SendMessage` on submit role, `IRPT_LIVE_YCHARTS_CALL`, `/analysis/*` routes live | 2.0.0_SA_COO~P | CRO 6fc3f5f785 item 5; RESIDENT_ASSEMBLY_HANDOFF items 2, 4 | AWAITED (measured absent 23:2xZ) |
+| Generation path: deploy HEAD submit entry, `sqs:SendMessage` on submit role, `IRPT_LIVE_YCHARTS_CALL` | 2.0.0_SA_COO~P | CRO 6fc3f5f785 item 5; RESIDENT_ASSEMBLY_HANDOFF items 2, 4 | AWAITED (measured absent 23:2xZ) |
+| Route plane for hops 1 and 9: `POST .../analysis/inputs`, `GET .../analysis/requests`, `GET .../analysis/requests/{requestId}` are `NO-HANDLER-AT-HEAD` in routes.json (not in Terraform), LiveClient flags `false` (`responses.ts:423-425`); no Lambda wires `build_upload_entry`; deployed `irpt-status` (built 09-21) predates the history/read handlers (`8e8498c9c0`, 09-22) | 2.0.0_SA_COO~P (routes, factory composition, irpt-status redeploy, flags) | RUNBOOK_1203_LIVE_JOURNEY_20260923.md preconditions D-E | AWAITED (measured 00:1xZ) |
 | 31-path owned-path grant for the copied Y files | 2.0.0_SA_COO~P | b3fc529601 | CONSUMED |
 | Grant extension to the Y template-upload batch: intake/{portfolio,uploads,resolution_broker,resolution_kimi,security_resolution,template_reader}.py, intake/tests/test_{resolution_kimi,security_resolution,template_reader,template_uploads}.py, ops/prospect_dates.py (8 Y commits, 84c6e63806..85af5eb95d) | 1.0.0_SA_CTO grants, 2.0.0_SA_COO~P merges | CTO 9baf67bb5f item 6: seven rows granted at c4564aad17 (resolution_kimi, security_resolution, template_reader + their tests, current_authority.py); portfolio.py / uploads.py / prospect_dates.py DIVERGED -> P three-way merges from 10627906f2, Y confirms semantics in ONE exchange before P commits | GRANTED; P merge AWAITED, Y confirmation owed on arrival (merges pre-computed) |
 
