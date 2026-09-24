@@ -192,7 +192,7 @@ checked, then `OPAL_INDUCTION_FIRE=1 python -m lib.research.corpus.induction_run
 read-back recorded in this lane's deliverables, then the existing `ingest` re-run. A worker face carries the vendor ban;
 Andrew's word authorizes a scripted producer; the seat holding both the word and the terminal runs it.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
