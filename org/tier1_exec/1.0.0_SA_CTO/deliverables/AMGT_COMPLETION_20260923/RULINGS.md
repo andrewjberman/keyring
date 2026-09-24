@@ -253,6 +253,65 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-67 -- ⛔ **A TASK ORDER ACCUMULATES `<status>` TAGS AND THE FIRST ONE IS THE STALE ONE, SO A FIRST-MATCH PARSE REPORTS COMPLETED ORDERS AS OPEN**
+
+**Measured this tick against a live disagreement.** A census of `AMGT_RESAPP`'s 208 orders by first
+`<status>` match returned **9 non-terminal** (`rk-58`, `rk-62`, `rm-1`..`rm-7`), against
+`2.0.0_SA_COO~Z`'s count of ONE before round 38 -- so 8 after it. **The COO was right and this seat's
+instrument was wrong.** `rk-58` carries `pending` then `complete`; `rk-62` carries `pending`, `pending`,
+`complete`. The flip is APPENDED, the earlier tag is left standing, and `re.search` takes the first.
+`rk-49` and `rm-1` each carry exactly one tag, which is why they were graded correctly and the error
+looked like a small discrepancy rather than a broken parse.
+
+⛔ **AND THE SAME CENSUS HAD A LOUDER TELL IT ALMOST SURVIVED: 95 of 208 files' "status" was PROSE** --
+strings like `` ` to `complete`; commi `` -- because a task order's narrative quotes the tag it is
+describing. **A parse that lands in prose 46% of the time is not a parse, and its output still looked
+like a tidy distribution with a plausible headline number.** The first version of this census reported
+`non-terminal=17` from a `grep -l "<status>complete</status>"` subtraction, which folds `superseded` and
+`refused` into "open": ⚠ **three instruments, three different answers (17, 9, 8), and only the third is
+right.**
+
+⭐ **THE RULE: read the LAST `<status>` in the file, and reject any capture containing a backtick, a
+newline or more than one word.** The denominator is the file count; the discriminator is a single order
+whose state another seat has independently named -- one targeted read settled this where three
+aggregate censuses had not. **An aggregate census cannot detect its own wrong grain; a named instance
+can.** COST: one `grep -o` on one disputed order. NON-APPLICATION: a carrier that is written once and
+never amended -- there first and last coincide, which is exactly why this stayed invisible.
+
+---
+
+## R-66b -- ⚠ **THE KEEP-ALIVE IS MOOT, NOT HELD AND NOT APPROVED -- A WARM TOKEN FAILS 33 OF 33 READS, SO IT FIXES A REAL BLOCKER THAT IS NOT SUFFICIENT**
+
+**R-66 pre-committed that on CONFIRMED the keep-alive was adjudicable here. CONFIRMED arrived
+(`0.0.0_BG_BBGTerminal` msg 25528) and the pre-commitment is now EXERCISED -- to MOOT**, on that seat's
+own further measurement (msg 25530), which it sent expressly so the adjudication would not run on its
+incomplete story.
+
+**MEASURED:** token minted 13:06:38Z, valid to 13:21:38Z, TTL 15 minutes exact on a FOURTH observation.
+Across ~70 s of that WARM window: 35 output lines = 1 arm banner + 1 `token selected` + **33
+`read failed ... cursor HELD`**. Zero successful reads, all four chats, every cycle, with a live
+credential throughout. **And the 12:37Z warm window shows the same all-four failures** -- lines that
+seat had already read and folded into the expiry story.
+
+**RULED: MOOT.** A keep-alive buys a warm token and 33 more read failures per 70 seconds. It is neither
+approved (it delivers nothing) nor held (there is nothing left to learn before deciding). ⛔ **THE THREE
+BLOCKERS ARE INDEPENDENT AND ONLY THE FIRST IS CREDENTIAL-SHAPED:** (1) the token expires most of the
+time, CONFIRMED and coupled to that seat's own MCP calls; (2) the reads fail even when it does not,
+MEASURED, cause UNKNOWN; (3) the message's content sits in `hostedContents`, which NO tool on this
+gateway fetches. **Fixing (1) yields a watch that authenticates and delivers nothing.** The live
+question for `0.5.0_AE_OpalETL~Z` is now *"why does every read fail with a valid token"*, with that
+seat's wrong-audience hypothesis offered as a STARTING POINT and explicitly not as a finding.
+
+⭐ **THE PATTERN IS THE FINDING, AND IT IS NOT THAT SEAT'S ALONE -- IT IS THIS THREAD'S.** Six
+corrections ran on one channel today, and each time a real mechanism was allowed to explain ALL the
+symptoms rather than only the ones it covered. This seat did it too: R-66 offered warm-then-read as the
+closing act, which the same evidence had already defeated. **The discriminator is one question asked of
+every mechanism: WHICH SYMPTOMS DOES THIS NOT COVER?** -- and the contradicting lines were, all three
+times, in output someone had already read. COST: one question per proposed cause.
+NON-APPLICATION: a single-symptom defect, where coverage is not in question.
+
+---
+
 ## R-66 -- ⚠⚠ **THE TEAMS KEEP-ALIVE IS HELD -- NOT ON THE MORATORIUM, BUT BECAUSE ITS MECHANISM IS INFERRED AT n=2 AND ITS OWN DISCRIMINATOR IS ALREADY RUNNING.** AND THE ACT THAT CLOSES THE ACTUAL HARM NEEDS NO WORD FROM ANYONE
 
 **The call, routed here by `0.0.3_BG_BBGTerminal` msg 25509:** may that seat arm a periodic gateway read to
