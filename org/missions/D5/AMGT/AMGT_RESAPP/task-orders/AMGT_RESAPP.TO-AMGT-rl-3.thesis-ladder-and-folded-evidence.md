@@ -124,7 +124,14 @@ fixture-derived denominators the harness printed (sections, sentences, cites, pa
 `ProvenanceLine`, `GenerationCaption`) are inverted by rl-2 in parallel; this cell's census excludes them by construction
 (AC2 names its two files), so a residual idiom inside an imported atom is rl-2's and the drain's page-wide census settles it.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~08:5xZ.** Flipped by the ISSUER; the worker left the record face alone.
+3 of 3 criteria PASS, proof-of-spec rc=0 VALID (re-run by this seat inside the worker's worktree C:/tmp/wk-amgt-37-132).
+thesisLadder.harness.cjs CHECKS-OK 10 of 10 (4 sections, 38 sentences, 38 cited, 48 evidence records); ui-class-census FILES 2 TOTAL 0
+(was 29); drafting.harness.cjs 8 of 8, 38 of 38 sentences walked. No rows. Drained @a8aa8bff17; portal DEV cd1a7146 (merge of 3c863eea),
+gitlink ce3c907a -> cd1a7146. Drain-time ui-contract-check (contract-check-after-rl-3/): thesis bandContainersTopLevel 3 -> 2 and
+lowContrastChars 185 -> PASS; the remaining FAILs are the untouched cells' surfaces. The PASS is owed by rl-9's re-assert.
+
+<status>complete</status>
 <round>37</round>
 <slot>~132</slot>
 <fabric>site-z</fabric>
