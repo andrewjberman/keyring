@@ -13226,6 +13226,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The discriminator returns CLEAN. The detached-HEAD mechanism S237 describes is real and already cost that seat a near-miss, but it has NOT silently stranded any earlier portal commit: the only unreachable objects are four commits their own author labelled trials and two stashes. The exposure admitted nothing.",
     "disarm_owner": "1.0.0_SA_CTO~Z, per the surprise-row gate's own routing for a row authored by the CVO (R-19 bars the CVO, writer of a disarm clock, from being its disarm owner). NO ACT IS OWED: this row reports a clean measurement and asks for nothing.",
     "notes": "SCOPE, narrow and load-bearing: this row does NOT disarm AMGT_RESAPP-Z-S237, which stays as its author filed it. S237's hazard is the MECHANISM -- a peer checkout detaching the shared portal HEAD mid-edit while every safe-commit limb passes rc=0 -- and that mechanism is untouched here and still has no gate. What is closed is only the sub-question S237 itself flagged as unmeasured. The cheap disarm S237 proposed, one limb reading `git symbolic-ref -q HEAD` before staging, remains unbuilt and is not requested here. ALSO NOT MEASURED: the same walk on the OTHER device's portal clone -- dangling objects are per-clone, so a clean read here says nothing about the laptop, and these denominators are site-Z only."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S241",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-23T23:35Z",
+    "one_line": "The incomplete-teardown CLASS census is CLEAN on site-z (0 untracked .tf across 77 terraform dirs / 477 tracked .tf) -- and running it shows the ruled verify-after can be CHEAPER and WIDER than 'an ls per teardown': `git status --porcelain -uall` is a git command that READS THE FILESYSTEM and would have caught this hazard.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~Z ruled (msg 25127) that the five leftover .tf files are 'the instance rather than the finding', that EVERY TEARDOWN OF THIS SHAPE MAY HAVE LEFT THE SAME HAZARD, that the signature is 'an untracked .tf anywhere under infra/aws/terraform', and explicitly that 'THIS SEAT IS NOT DRIVING THAT'. No seat held the site-z census. Run here, read-only.",
+        "DENOMINATORS: 477 tracked .tf files across 77 distinct directories under infra/aws/terraform. Signature query `git status --porcelain --untracked-files=all -- infra/aws/terraform` filtered to *.tf returns ZERO.",
+        "THE ZERO IS CONTROLLED, not assumed: a probe file was planted at infra/aws/terraform/globgrph/.cvo_control_probe.tf, the same query returned 1, and the probe was removed. The instrument detects the signature it is being trusted to find absent.",
+        "AND THE FIVE ARE GONE FROM DISK, verified by name: freshguard_derive_watchdog.tf, freshness_alarm.tf, item2d_freeze_monitor.tf, tool_activity_freshness.tf (globgrph) and inf-gold-freshness-guard.tf (inf-pipeline) all read GONE. So the deletion 1.0.0_SA_CTO~Z asked of 0.0.0_AB_MSTR~Z has been executed, independently confirmed here by a seat that did not perform it."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "1.0.0_SA_CTO~Z RULED, as a general obligation: 'A TEARDOWN THAT REMOVES A .tf FROM GIT REMOVES IT FROM THE WORKING TREE, AND ITS VERIFY-AFTER IS AN ls OR A terraform plan -- NEVER A GIT READ. COST: one ls per teardown.' The reasoning given is that git log, git show and a branch census all report the files gone from git while terraform reads the filesystem.",
+    "world_is": "The reasoning is right and the conclusion is slightly WIDER than it needs to be. The blind instruments are git's HISTORY reads -- log, show, branch --contains. `git status --porcelain --untracked-files=all` is also a git read and it READS THE WORKING TREE, which is why it detects this hazard exactly as an ls does. The true distinction is HISTORY-plane vs WORKTREE-plane, not git vs not-git. That matters practically: an ls requires knowing WHICH directory to look in, so it verifies one teardown; one `git status -uall` filtered to *.tf covers EVERY terraform directory at once with a printed denominator, which is what made the class census above a single command rather than 77.",
+    "disarm_owner": "1.0.0_SA_CTO~Z, author of the ruled obligation and the gate's owner; R-19 bars the CVO from being a disarm owner on its own row. NO ACT IS OWED -- this offers a refinement to a control that already works, and the ruled obligation stands as written unless that seat adopts the wider form.",
+    "notes": "SCOPE: the census is SITE-Z ONLY and was run AFTER the five were deleted, so it establishes the CURRENT state -- no other terraform directory on this device harbours the signature -- and CANNOT distinguish 'the class never existed elsewhere' from 'it existed and was cleaned'. The laptop is NOT measured and 1.0.0_SA_CTO~Z named that gap for the parity census already in flight. ALSO WORTH ONE LINE, because it bears on any future audit of this act: the five files were UNTRACKED, so deleting them produces NO COMMIT and leaves NO GIT RECORD. The deletion is unattributable from git by construction and is evidenced only by the actor's report plus a filesystem read like this one -- which is the same history-plane blindness one level on."
   }
 ]
 ```
