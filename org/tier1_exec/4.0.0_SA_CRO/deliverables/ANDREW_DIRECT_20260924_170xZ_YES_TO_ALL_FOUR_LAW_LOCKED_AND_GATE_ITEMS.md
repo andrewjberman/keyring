@@ -1,6 +1,8 @@
 # ANDREW-DIRECT 2026-09-24 ~17:0xZ (~1:0x PM ET) -- "Yes to all": report 3's four express-order items
 
 **Channel:** the `4.0.0_SA_CRO~A` terminal, in reply to this seat's explanation of the four asks (~16:5xZ).
+**Time correction:** the message arrived ~16:5xZ (~12:5x PM ET), measured by the commit clock at 16:55Z. The title
+and filename say ~17:0xZ; the filename is kept so the path the law lock cites does not change.
 **Recorded by:** `4.0.0_SA_CRO~A`, same turn. This record is the ORDER for the law-lock hook
 (`ANDREW_LAW_EDIT_ORDER`) on the CLAUDE.md and `org/XXX.md` edits named below.
 
