@@ -227,6 +227,50 @@
     "world_is": "The fixture alone was necessary but not sufficient: TWO independent parser-level defects in the fixture's OWN shape (not the app's) blocked resolve-scope entirely regardless of the click sequence, and once fixed, no ui-smoke.mjs invocation -- with or without --click -- can reach the account SELECTION step, because that control is role=\"combobox\" and the script's click vocabulary is role=button/tab/text-node only. The order's own required IVE2-AC2 invocation (no clicks) tops out at 2 of 5 matched routes (resolve-scope + the page's own unconditional initial directory-browse) and correctly shows IdentityCard, not the error page; a supplementary standalone driver (this order's own deliverable, not scripts/ui-smoke.mjs) reaches 5 of 5 and mounts SecurityList and PerformanceHeadline in the same run.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not blocking -- both defects isolated and fixed before the graded runs; the instrument gap (role=combobox) is a REPEAT of a class already named at IRPT_FNTEND FE-s-78 and already has a working precedent (a standalone driver), not a new open question. Filed so a future cell reusing scripts/ui-smoke.mjs on this page inherits the fix instead of rediscovering it."
+  },
+  {
+    "id": "DSGN_IRPTV1-W5-S3",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~5",
+    "surfaced_at": "2026-09-24T00:00:00Z",
+    "one_line": "IV-e-6's BOUNDS names components/BenchmarkHeatmap.tsx as prior art to 'extend or wrap, never fork', but its data shape (BenchmarkModelData[], a fixed ALL_PERIODS ladder) and its own internal net-cost-from-gross computation are structurally incompatible with PerformanceReport and this cell's own 'spread never computed' rule (CALL 3) -- wrapping it would silently inherit a computation the order forbids. ReturnsHeatmap.tsx is an ORIGINAL component reusing its VISUAL PATTERN only, following the SAME precedent SecurityList.tsx already set for slices.ts.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "components/BenchmarkHeatmap.tsx:41-49 (props): `data: BenchmarkModelData[]`, `returnType?: 'gross' | 'net'` -- a model-portfolio-indexed shape with a fixed 10-member ALL_PERIODS ladder (1D/WTD/TTW/MTD/1M/QTD/1Q/YTD/1Y/SI), none of which is PerformanceReport's own period vocabulary (summaryReturns[].period / benchmarks[].periodReturns[].period, source-stated strings).",
+        "components/BenchmarkHeatmap.tsx:98-160ish (countTradingDays / getTradingDaysForPeriod / ANNUAL_COST_BPS): the component computes a NET return FROM a gross one via a trading-day-count proration when `returnType='net'` is requested -- this cell's own rule (worker face (c), CALL 3) states the spread row is 'NEVER computed'; feeding our facts through a component whose own render path can derive a value would risk exactly the computation this order forbids, even if this cell never explicitly requests it.",
+        "portal/src/pages/InvestorReporting/tabs/holdings/SecurityList.tsx's own docstring (`slices.ts` note, IV-t-4 round 1): 'a SMALL, DELIBERATE duplicate of that file's pattern -- not an import, because the file this cell must not touch is also the file it must not depend on for a behaviour this cell owns' -- the SAME reasoning applied here for BenchmarkHeatmap.tsx, cited verbatim in ReturnsHeatmap.tsx's own docstring."
+      ]
+    },
+    "spec_asserts": "BOUNDS: 'components/BenchmarkHeatmap.tsx (extend/wrap only)'; worker face (c): 'The components/BenchmarkHeatmap.tsx pattern (read only; extend or wrap, never fork)'.",
+    "world_is": "Neither a literal 'extend' (subclass/compose over an identical prop shape) nor a 'wrap' (adapt our facts into its exact props) is available without EITHER inventing a fake BenchmarkModelData shape from facts that do not carry it, OR routing through a computation path (net-cost proration) the order's own CALL 3 rule forbids for this cell. ReturnsHeatmap.tsx is built as an ORIGINAL component (periods-across, portfolio/benchmark/spread rows, a shaded spread row -- the same VISUAL vocabulary) that never imports BenchmarkHeatmap.tsx and never computes a spread.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking. Filed so a future cell asked to 'extend or wrap' this same file measures the same incompatibility before attempting a literal wrap."
+  },
+  {
+    "id": "DSGN_IRPTV1-W5-S4",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~5",
+    "surfaced_at": "2026-09-24T00:00:00Z",
+    "one_line": "contracts/adapt.ts's adaptPerformanceReport (read-only, OUT of this order's grant) sets accountDetail[].displayName = row.account_id and maskedDiscriminator = null UNCONDITIONALLY -- a naive AccountsTable read of displayName would print a raw account id disguised as a name, the same class of leak IV-e-1 closed on SecurityList's Ticker column.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/contracts/adapt.ts:778-780 (adaptPerformanceReport, accountDetail map): `accountId: row.account_id, displayName: row.account_id, maskedDiscriminator: null,` -- every row, unconditionally; the wire (`wire.returns.account_detail`) carries no display-name field at all for this contract today.",
+        "portal/src/pages/InvestorReporting/contracts/index.ts:506-516 (AccountPerformanceDetail): `displayName: string` and `maskedDiscriminator: string | null` are typed as ALWAYS PRESENT (no optional marker), so the bare TypeScript type gives no signal that displayName is, today, always the id -- only reading the adapter's own body (measured) surfaces it.",
+        "AccountsTable.tsx's own accountName() function: `maskedDiscriminator` present -> trust displayName + tail; absent AND displayName === accountId -> 'not supplied'; absent and displayName differs from accountId (not produced by today's adapter, but the type permits it) -> displayName alone. Verified against BOTH shapes: the LIVE-adapter shape (displayName===accountId, prints 'not supplied', IVE6-AC1's ACCOUNTS: 0 ids printed) and the hand-crafted test fixture performanceReport.success.json (real names, e.g. 'Coastal Ridge Trust', printed verbatim, confirmed in iv-e-6.performance.html)."
+      ]
+    },
+    "spec_asserts": "IV-e-6 worker face (d): 'read the account's name from accountDetail[].displayName / maskedDiscriminator where the contract carries them; if it carries only accountId, the row's name is not supplied and the id NEVER prints -- say so.'",
+    "world_is": "The CONTRACT's TypeScript type does not distinguish these two cases (both fields always present, non-optional) -- only reading the adapter's own implementation (out of this order's grant to edit) reveals that the live path ALWAYS falls into the 'only accountId' branch the order names. AccountsTable.tsx's own displayName-vs-accountId equality check is the working detector; documented here so no later cell trusts displayName without it.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking -- worked around entirely within this cell's own grant (AccountsTable.tsx), no edit to contracts/adapt.ts (out of grant)."
   }
 ]
 ```
