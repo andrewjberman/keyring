@@ -2934,3 +2934,58 @@ DEV now carries the request corpus at 17 of 17 routes and prepared_for on the an
 candidate cuts from ed3088b8 after a fetch (relayed to P, since MSTR's receipt was addressed to the CTO alone); with site Z draining to DEV every
 20-30 minutes tonight the fallback shape is the expected one, and every later GO keeps naming it. The workspace CLOUD gitlink moves to ed3088b8 in
 MSTR's next LOCAL commit; trunk push on Andrew's word.
+
+
+## 2026-09-24 12:2x UTC - Claude CTO batch 48: the custody INTERPRETER design card accepted (Q2 ruled: held positions, never the model-implied allocation; Q4 conditional on M; Q1 + Q4 routed to M; Q3 held for Y with a provisional read); portal candidate 6 GO'd; the fifth fe-s-2 failure ruled a stale arm against the ratified Global default, re-pinned in candidate 7 with the missing SelectedAccounts fixture; the four pinning suites re-read in the workspace layout -- the ENOENTs were a missing generated fixture, not a layout artefact
+
+Instruments: P's card @d8c8e6c716 read whole from the shared object store (git show, 11,209 bytes, rc=0); P's 100572 (one live read of M's
+Cottonwood publication for acc_d486fc9455d6b2aa18e13af1: 75 nodes, join_method census 1 / 1 / 4 / 67 / 1, 0 of 68 SECURITY nodes on a custody row;
+candidate 6 bisected at five DEV vintages) and 100575 (the four pinning suites in the workspace layout: 82 pass / 14 fail vs the nested 84 / 12,
+the difference = the contract vintage 14 vs 17); the CTO's own candidate-6 reads in the consolidation checkout (origin/DEV ed3088b885 fetched;
+b9d244a474; ancestor rc=0 both; 1 commit; 2 test files +25/-4; non-test name-only diff EMPTY; tsc rc=0 0 lines; eslint rc=0); index.tsx :53-60
+read at b9d244a4 (`internal={auth.isInternal() || auth.isDev()}`; `enabled: internal && firmId === 'global'`). Messages 100576 (the GO) and
+100577 (the card rulings).
+
+### IRPT-CUSTODY-INTERPRETER-CARD-ACCEPTED-20260924 (P 100572 (1); the CTO's 100577 to P, M, the CRO)
+The card is PRD-grade: inputs measured from one live read (keys and counts, no values, no vendor, no write), the output contract quoted by
+rule (intake/custody_portfolio.py:135-215 _validated), a mapping per field, four questions named rather than answered by recall. The material
+finding stands as stated: for an assigned account (462 of 841 at Cottonwood) the served SECURITY nodes are MODEL-IMPLIED (account value x
+component weight); the one custody fact at node grain is the ACCOUNT node's `fact_holdings (Market Value, deduped DC1)`; position-grain custody
+rows live in the receipted gold parquet / source objects. RULED Q2: the ACCEPTED CUSTODY is the HELD POSITIONS at the receipted revision; the
+model-implied allocation is the page's correct DISPLAY under Andrew's COT tree ruling and is not evidence -- positions manufactured from weights
+would reconcile a derivation against its own input. RULED Q4 CONDITIONALLY: the CTO's leaning (the custodian's account-level value is the
+independent source, the ACCOUNT node its evidence) holds iff M confirms the DC1 value is a custodian-supplied account row and not a sum over
+position rows in the same build; if a sum, the reconciliation source moves. ROUTED Q1 (which object is the custody-row source of record and its
+columns) and Q4's condition to 2.0.0_SA_COO~M as reads of its own producer, cited file:line @ commit. HELD Q3 for 2.0.0_SA_COO~Y with the CTO's
+provisional read: as _validated is quoted, a selected account with 0 custody rows REFUSES with a named reason and the selection is re-cut;
+admitting it through empty_account_evidence is Y's amendment on return, never the CTO's inference. ASSIGNED: the interpreter is Y's cell on
+return (Y's return is at Andrew); P's hour of composition is cut only after M's answers and after the generate role's FIRM-bucket grants are
+planned under a ledger through Terraform; the offline oracle is one recorded capture (keys and counts) replayed against _validated. No egress
+question; the first live Analysis submission stays Andrew's browser act on whichever composition lands first.
+
+### IRPT-PORTAL-CANDIDATE-6-GO-20260924 (P 100572 (2); the CTO's GO 100576)
+Candidate 6 = b9d244a4 on DEV ed3088b8: two fe-s-10 test files, +25/-4, no product file; P's bisect at 7c542fd2 / ccdb8699 / 013323f0 /
+1267a67e / 895752676a shows the five DSGN_IRPTV1-W4-S2 failures pre-date every candidate -- the row's finding is about the consolidation's
+BASE, not its candidates, and the repairs are re-pins to the ratified page (the selection-ref gate with a positive control; the rendered
+`6.45%`). fe-s-2 + fe-s-10 read 47 pass / 1 skip / 1 fail (was 42 / 1 / 5). GO: MSTR lands it fast-forward or as the covered --no-ff fallback
+(staged set = exactly the two files); VALGATE a no-op; rollback = the pre-merge head. Receipt PENDING.
+
+### IRPT-FE-S2-ISINTERNAL-ARM-RULED-20260924 (the fifth failure; P 100572 (2) put it to the CTO)
+The arm "no session claim is read anywhere in this page" fails because index.tsx passes `internal={auth.isInternal() || auth.isDev()}` to seed
+the Global default firm and enable the bootstrap resolve-scope for an internal viewer. That IS the ratified page (Andrew-direct: "EVERYONE
+should show up under 'Global' view (default view for Opal users)"): the claim picks the DEFAULT VIEW only, and the server's resolve-scope
+remains the one authority over what the catalogue holds and what any request may see. The claim-free form (bootstrap global for everyone) is
+REFUSED: it changes an advisor's first request and first view and makes a firm user's first call a global bootstrap the server must refuse.
+RULED (b): re-pin the arm to assert what the old sentence protected -- no session claim used as AUTHORITY (no header synthesized from a claim,
+no scope granted client-side, the derived default never widening what the server resolves), with an external arm (isInternal false -> home
+firm, no global bootstrap) beside the harness's internal arm. Candidate 7 carries it; candidate 6 lands as cut.
+
+### IRPT-PINNING-SUITES-WORKSPACE-LAYOUT-20260924 (P 100575, correcting its own 100563 reading)
+In the workspace layout (ajb_workspace/portal at DEV ed3088b8, ../docs = CLOUD's routes.json at 14 of 17) the four pinning suites read 82
+pass / 14 fail against the nested 84 / 12; the difference is exactly the contract's vintage (three fe-s-13 operation-table arms: 17 declared vs
+CLOUD's 14 with 3 NO-HANDLER rows), which clears when MSTR drains P's backend branch (89204d4b2e / 64f05e3424) to CLOUD -- noted for MSTR's next
+drain, not P's act. The F14-AC13 x2 / AC14 x1 ENOENTs are NOT a layout artefact: fixtures/wire/SelectedAccounts.valid.json is absent in BOTH
+layouts (11 of the 22 WIRE_CONTRACTS names have a .valid.json; SelectedAccounts does not) -- a missing GENERATED fixture, regenerated through
+gen-wire / gen-maps in candidate 7, never hand-written. The honest debt list after candidates 4-6: that fixture; FIELD_MAP's three Performance
+fields; AC8 x3; AC15; AC14 x2; the browse boundary; the holdings-route arm; the isInternal re-pin above. P's export-root comment fix (main.tf,
+iam.tf: the host declared RUNNING by the ycharts root since 04c77cbe) is comments only, no plan diff, on the backend branch.
