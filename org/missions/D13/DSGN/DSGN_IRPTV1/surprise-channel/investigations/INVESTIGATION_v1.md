@@ -203,6 +203,28 @@
     "world_is": "The four cited components (AdvisorIntelligence partner dispatchers) and the memory citation they share describe a DIFFERENT page, a different data source (opal-partners-data / opal-users-v2), and a different served-artifact chain than InvestorReporting's index.tsx; the four HOLDs read as a basename collision (`component:.../index.tsx`) in the danger map's node identity rather than a real shared-surface risk. Not verified against comp-pulse's own matching code in this pass (out of this cell's <paths>) -- read as a pattern, not confirmed as the mechanism.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not blocking: the commit proceeded (rc=0) and this worker read the citation as required, found it unrelated, and moved on rather than treating the HOLD as a stop. Filed so a seat that owns NFRA_NERVES/comp-pulse can check whether the danger map keys `component:` nodes by basename instead of full path -- if so, every same-named file (index.tsx recurs dozens of times under portal/src/pages/) gets spurious HOLDs on every unrelated edit, which teaches reviewers to skip the reflex."
+  },
+  {
+    "id": "DSGN_IRPTV1-W4-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~4",
+    "surfaced_at": "2026-09-24T11:38:24Z",
+    "one_line": "IVE4-AC2's premise ('the existing firm-dropdown and Global-mode suites still pass') is false at the UNTOUCHED base commit: 5 of 48 tests in __tests__/fe-s-2/ + __tests__/fe-s-10/ already fail before this worker changed anything, unrelated to FirmDropdown/index.tsx's actions block.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bun test src/pages/InvestorReporting/__tests__/fe-s-2/ src/pages/InvestorReporting/__tests__/fe-s-10/ run BEFORE any IV-e-4 edit (portal HEAD bcf25837, IV-e-3's own commit, before FirmDropdown.tsx/index.tsx were touched this round): 42 pass / 1 skip / 5 fail, 221 expect() calls, Ran 48 tests across 9 files -- the same command run AGAIN after this cell's edits (FirmDropdown.tsx +55/-0, index.tsx the actions block only): 42 pass / 1 skip / 5 fail, IDENTICAL five named failures both times",
+        "the five failing tests, by name: 'Global vs firm-scoped render parity > the RAW markup differs...' (fe-s-10/parity.test.ts); 'holdings tab mount > TabShell(initialTab: holdings)...' and 'holdings tab mount > the instrument can fail...' and 'reporting tab is unaffected > the default...' (all three fe-s-10/tabs-mounted.test.ts, concerning TabShell/ReportingTab/HoldingsTab mounting -- no file this cell's <paths> grants); 'firm dropdown options > no session claim is read anywhere in this page' (fe-s-2/dropdown.test.ts, asserting index.tsx contains neither the string 'isInternal' nor 'useAuth')",
+        "git show 895752676a45e83dc252d4253aebc5fa316a229e:src/pages/InvestorReporting/index.tsx (the project's OWN base pin, predating every DSGN_IRPTV1 round) already carries 'import { useAuth } from ...' (:10), 'const auth = useAuth()' (:36) and 'internal={auth.isInternal() || auth.isDev()}' (:55) -- none of them inside the actions-ternary span this cell's ruled touch T2 bounds (base lines 156-166), so the dropdown.test.ts failure predates this project entirely and cannot be resolved by any change T2 authorizes"
+      ]
+    },
+    "spec_asserts": "IVE4-AC2: 'the existing firm-dropdown and Global-mode suites still pass at your tip ... <expect> 0 fail'.",
+    "world_is": "The suite carries 5 of 48 failures at the UNTOUCHED base this worker's worktree branched from, none inside the ruled-touch span, and this cell's edits leave the failure set byte-for-byte unchanged (same 5 names, same count, before and after). 'Still pass' cannot be true of a suite that was never passing; 'unchanged by this cell's work' is what this worker can and did measure and is offered as the criterion's disposition instead.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking this order: IVE3-AC1/AC3/AC4 pass and IVE4-AC2 is reported REFUSED (as-written unsatisfiable) with this before/after measurement standing in its place, per the refusal clause -- never silently marked PASS, never repaired outside <paths> (four of the five failures touch TabShell/ReportingTab/HoldingsTab mounting, none granted to this cell; the fifth needs index.tsx's top-level auth wiring untouched by T2). Filed so a later round or the CTO can decide whether to open a repair cell for the 5, or re-baseline the criterion's own premise."
   }
 ]
 ```
