@@ -253,6 +253,44 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-15 -- ANDREW GRANTS EGRESS. The §5 refusal is resolved BY HIS WORD, the recorded read is NARROW, and egress authorizes NO OTHER GATE
+
+**Andrew-direct 2026-09-24 ~02:4xZ at the `1.0.0_SA_CTO~Z` terminal, VERBATIM: *"you have egress for whatever
+calls you want"*** -- answering `CLOSER_PROPOSE_LEADPANEL_20260924.md` §4(c) and §5.
+
+⭐ **THIS IS THE MECHANISM WORKING, NOT AN EXCEPTION TO IT.** This seat refused `4.0.0_SA_CRO~Z`'s reading
+that the price pull needed no vendor word, on the ground that *"availability is not authorization"* and the
+question was **AUTHORITY, not magnitude**. The remedy named was his word. **He gave it.** The refusal stands as
+correct and is now satisfied -- which is the difference between a gate and an obstacle.
+
+⛔ **THE RECORDED READ IS THE NARROW ONE AND IS STATED AS SUCH.** It authorizes: (i) the **price pull** on the
+terminal box, (ii) the **Refresh proof to `LANDED`**, and (iii) this seat's own read-only vendor checks. ⚠ **His
+sentence admits a WIDER reading -- "whatever calls you want" is not scoped to those runs -- and TAKING THE WIDER
+ONE SILENTLY IS THE EXACT WIDENING CLAUDE.md §2(b) FORBIDS** (*relay, never adjudicate wider OR narrower; if
+wider seems plausible, ASK*). **A vendor call outside those three comes back to him.** ⛔ **AND THIS SEAT HAS
+ALREADY WIDENED A RELAY ONCE TONIGHT** -- MSTR's push sentence, carried one hop to three Tier-2 seats -- so the
+narrow record here is not caution for its own sake, it is the second application of a correction this seat
+earned four hours ago.
+
+⛔ **EGRESS IS NOT A DEPLOY AUTHORIZATION, AND THE OTHER GATES ARE UNTOUCHED. A VENDOR WORD ANSWERS *WHO MAY
+CALL*, NEVER *WHAT MAY BE SCHEDULED OR SERVED*.** Still required and NOT covered by this grant:
+- **The deploy ledger** (`org/critical_paths/change_management/`) for the price producer's **first scheduled
+  fire** -- a production schedule, opened before and closed after.
+- **The never-widen sign-off pair** (CTO + COO halves) on step 2's deploy, because it **moves served output**.
+- **An owner for the terminal box's schedules** -- still unowned; the grant does not name a seat.
+- **`.owned-paths.yaml` / contract ownership** -- unchanged.
+⭐ **A generous answer to ONE question must not read as an answer to THREE.** Of the proposal's three asks, he
+has answered the vendor word; **the browser session endpoint and the terminal-box owner REMAIN OPEN.**
+
+**MEASURED WITH THE GRANT, immediately and read-only:** `bloomberg_health` -> **`ok: true`, endpoint
+`127.0.0.1:8194`, service `//blp/refdata`.** That **closes the brief's `bloomberg_session_state UNKNOWN`** for
+reachability and de-risks the price pull before any seat runs it.
+⚠ **GRAIN, stated: this is a MOMENT, not a PROPERTY.** It proves the refdata service was reachable from this
+process at ~02:4xZ. It does **not** prove the session will be up when a scheduled task fires later, that the
+puller's own entitlements work, or that `//blp/refdata` covers `PX_LAST` across the whole landed universe. **A
+one-time check on a standing condition answers a moment**, and a scheduled producer needs the condition held,
+not observed once.
+
 ## R-14 -- PEERS CLOSER GO: the peers grant, the hop-4 identity ruling, and a `closer_contract` gap that was open all session
 
 **Andrew-direct 2026-09-24 ~02:2xZ, VERBATIM: *"granted, spawn 2.0.0_SA_COO~Z. Then yes, go."*** answering
