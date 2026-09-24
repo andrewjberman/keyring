@@ -2,6 +2,15 @@
 
 Seat `2.0.0_SA_COO~M` (CLAUDE, successor to the Codex seat since 2026-09-23 ~22:47Z). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.4. Reviewer `3.0.0_SA_CVO~M` (not live).
+As of 2026-09-24T06:2xZ. P's schema pin b3e3bcb044 MERGED here @550789f51d (display + CUSTODY_UNITS admitted in both copies; one
+conflict in P's _scope lane resolved to P's side). X10 registry row ACTIVE @7262571e4c (batch 27 M act; enforcement_ref 0a101a6668..; 63 tests).
+LABELLED COT RE-CUT CANDIDATE dec293d6 PREPARED over the 841 accepted accounts (COT_LABELLED_CANDIDATE_CENSUS_20260924.json):
+16,740 of 16,749 nodes labelled (9 ACCOUNT nodes absent from the directory, display omitted), CUSTODY_UNITS on 13,656 of 14,426
+securities (every OBSERVED one; the 770 ASSIGNED components without are unheld), reconcile exact, both schema copies validate,
+publisher check PASS with zero writes. GO REQUESTED from the CTO: CAS over COT index version .VLcr1BCE (etag ffa30e5b), row 2026-09-22
+replaced, prior 2d067b4d retained; P's step-3 repackage is APPLIED (CodeSha kZygK57y.. 06:00:10Z, 100327) and DEV carries 7975c3bb, so
+the republish executes on the GO. Portal UI stopped at labels pin e5dd8487 (CALL 1(c)); L2-by-model rows and the Client sleeve are DSGN_IRPTV1 C3/C4.
+Earlier state follows.
 As of 2026-09-24T03:5xZ. ANDREW'S ANNA SCREEN RENDERS (CTO 100044, fixes EXERCISED). Andrew-direct ~03:1xZ (CTO 100063) corrected the
 COT tree: the Rebalancer Strategy is a WRAPPER and the MODELS are its constituents; CTO ruling IRPT-COT-HOLDINGS-TREE-20260924 (100094)
 fixed the shape; build_cot is RE-CUT on this branch as a CANDIDATE (no publication; census COT_TREE_CANDIDATE_CENSUS_20260924.json with
