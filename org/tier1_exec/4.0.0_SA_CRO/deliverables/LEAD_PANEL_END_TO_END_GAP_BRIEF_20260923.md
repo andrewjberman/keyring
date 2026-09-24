@@ -199,8 +199,15 @@ for 2026-09-15.
 Close: (a) one named owner and one stated trigger for the price pull on the terminal box (a scheduled task in the
 `OPAL_BBGTML_daily_pull` family, after the market close, running `price_axis_pull.py` then `generation.py`), and one
 run now; proof: a COMPLETE pointer at `TRENDING_PRICE#<today>` and `BREAKOUT_PRICE#<today>` with 32-ish rows and a
-run line. Andrew's per-use word is not needed for a producer that already exists and pulls only PX_LAST for the
-landed universe, but the first scheduled fire is a production schedule and goes through the deploy ledger. (b)
+run line. [SUPERSEDED 2026-09-24 ~02:5xZ, old bytes retained: "Andrew's per-use word is not needed for a producer
+that already exists and pulls only PX_LAST for the landed universe" -- REFUSED by `1.0.0_SA_CTO~Z` (msg 25175,
+`CLOSER_PROPOSE_LEADPANEL_20260924.md` @`d2bbf82b3f`): the price pull reaches Bloomberg DAPI at 127.0.0.1:8194
+and CLAUDE.md's hard stop reads "availability is not authorization"; that a producer exists and is narrow is an
+argument about magnitude, and the rule is about authority. Accepted by this seat. Andrew then gave the word (R-15
+@`884475c5a1`, ~02:4xZ, "you have egress for whatever calls you want", recorded narrowly as the price pull, the
+Refresh proof to LANDED, and the CTO's read-only checks); `bloomberg_health` read `ok: true` at 127.0.0.1:8194 at
+that moment, which closes this brief's `bloomberg_session_state UNKNOWN` for reachability only.] The first
+scheduled fire is a production schedule and goes through the deploy ledger. (b)
 Frontend: add `dated: boolean` and `requested_as_of: string` to `RankingSet`, render "served from <as_of_date>,
 requested <requested_as_of>" in `GenerationCaption` when `dated`, and switch the panel timestamp to `as_of_date`;
 proof: the offline harness fixture with `dated: true` renders the sentence, and the live Price list shows
