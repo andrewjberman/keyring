@@ -1,0 +1,11 @@
+{
+  "prd": "AMGT_HARVST_PRD.md",
+  "prd_version": "v0.2",
+  "prd_pin": "9102ccfe81e71eb20e91db780781171756c8bda1",
+  "half": "brief",
+  "half_hash": "12aa73e8bb31cee0cf874bff248e2ab500322c9e2af389a873ff475ef2bde9aa",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/L4R_REVIEW_AMGT_HARVST_v0.2_BRIEF_HALF.md@1e4b086384",
+  "signed_by": "4.0.0_SA_CRO~Z",
+  "signed_at": "2026-09-22T15:02:34Z"
+}

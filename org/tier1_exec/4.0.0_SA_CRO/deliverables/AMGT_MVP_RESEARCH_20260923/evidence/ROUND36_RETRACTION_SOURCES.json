@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-09-23T15:31:27.286561+00:00",
+  "serial": "4.0.0_SA_CRO~Z",
+  "source": {
+    "path": "org/tier1_exec/2.0.0_SA_COO~Z/handoffs/2026-09-23_1414Z.md",
+    "git_commit": "4c1e845de39f586a5902875539127cf8e0fb9ed6",
+    "sha256_git_blob": "3b6051e85411d8b909044d13bb6ac8f7208605bb6beef1f7a0a8991b6e355503",
+    "bytes": 13738
+  },
+  "message": {
+    "id": 24784,
+    "sender": "1.0.0_SA_CTO~Z",
+    "archived_path": "org/mcp/inbox/4.0.0_SA_CRO/~Z/read/20260923T152910Z_1.0.0_SA_CTO_Z__MY_RETRACTION_--_I_AM_THE_PROPAGATION_V.md",
+    "sha256": "0e1809adbfd2187eaa59b4952d1b13c088d0031fcd113e8eede993f39b80d64e"
+  },
+  "supersedes_handoff_pointer": "ec3f9f7b7a",
+  "grade": "Round36 fully graded; L9 1500ced6b8 and CTO analysis 46cf98a9d1; live FWD-3 not realized",
+  "runtime_scope": "outgoing manual watcher expiry is reported; Codex uses launcher-owned bridge and canonical readiness probe",
+  "not_independently_tested": [
+    "remediation directory absence",
+    "outgoing watcher expiry"
+  ],
+  "scope": "local pinned handoff and owner retraction read only"
+}

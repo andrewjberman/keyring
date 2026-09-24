@@ -231,6 +231,21 @@ CTO half against the exact diff.
 ~16:5xZ) -- one US, one English-international, one non-English name, end to end. Its report is the first measurement of the
 instantiation process itself, and it lands in the Thesis and Exec Management briefs.
 
+### 2B.2 Andrew answers the CEO step's four open questions -- ~20:4xZ, relayed by `4.0.0_SA_CRO~Z`
+
+VERBATIM: *"1.) yes to all on ceo search. Posture we will get to later."* The four, as put to him, and what each binds in
+`C-EXEC-MANAGEMENT` (ratified text -- so they land at the NEXT bump with `3.0.0_SA_CVO~Z`'s signature, never mid-round):
+
+| # | question | YES binds |
+|---|---|---|
+| 1 | show the links the step found but could not read | a `found_not_read[]` list, rendered as LINKS and labelled, never as facts. It does not weaken the verbatim-quote rule for anything shown AS a fact |
+| 2 | LinkedIn link-only, never fetched | the step never fetches a LinkedIn page under any option; Lusha already supplies a matched officer's profile URL |
+| 3 | an unlocker for pages answering 403 or 429 -- **for the CEO step ALONE** | ⚠ **this supersedes Andrew's own FIND_DUALBIZ cost ruling** (`docs/architecture/FIND_DUALBIZ_PRD.md:47`, *"never route through `one_shotter`"*) **on this path only.** FIND_DUALBIZ is untouched and no other AMGT path widens. It is a PAID per-page read, so the clause states its bound and it stays under his per-use word like every other vendor call. Measured need: 3 of 21 pages unreadable (two 403s, one 429) |
+| 4 | a residence or home-location line may be shown | a location line is permitted; **contact data (email, phone, mobile) stays forbidden at every level**, unchanged |
+
+**Still open at the CRO's design** (not this seat's, not Andrew's): the query's name form, and whether the running validation
+exercises the step.
+
 ### Net for this panel
 
 **The panel's headline number was a status count.** Seven names have a roster; four have tenure; and the page tells the reader
@@ -325,10 +340,54 @@ universe -- so a name produced end to end still renders nothing until its identi
 | V7 | ⛔ **D24, ARMED for ANY seat**: `peers/universe.py:576-578` rewrites the TRACKED `0.9.0_WK_AMGT_RESAPP~21/candidate_universe.json` even under `--dry-run` (**verified at source here**). This is what dirtied the shared tree at this seat's tick 71 (14:03 ET). The CRO restored it and re-verified `git diff` empty | **EXEC -- a dry run that writes** |
 | V8 | Cross-references: Model D4 (FY2026 excluded, `HIST_END`), D6 (`CIE_DES` not pulled); Lead Panel D23 (the description line serves a segment-sales sentence), D25 (zero-article new names rank on Trending -- Keyence #2, CAT #10); Posture D7 (posture reads model blocks from a REPO folder, not the pool); filings D27 (the dry run announces 243 unresolved objects, the real run writes 23) | filed by panel |
 
+## 2F. Posture -- `BRIEF_POSTURE_CURRENT_TO_DESIRED_20260918.md` @`aed1186d10` (read at HEAD 2026-09-18 ~21:0xZ)
+
+Read AFTER the round-14 cut was unblocked, exactly as Andrew placed it: *"You and I will proceed to Posture regardless, but
+the greater fabric does not need to be held up on that."* **So nothing here is a round-14 cell.** These land in the PRD
+addendum that answers round 14's slug, beside `4.0.0_SA_CRO~Z`'s seven next-bump items and `3.0.0_SA_CVO~Z`'s two residuals.
+Measured over the same 33 (`crosswalk/v1/2026-09-15.json`, MEASURED), with the adapter's own `read_posture`.
+
+| # | finding (brief section) | existing art | disp. | lands as |
+|---|---|---|---|---|
+| PO1 | **33 posture objects SERVED, 9 with a verdict, 24 with `absent`** (s.1) | `C-POSTURE` (PRD CONTRACTS) describes the shape, not the honesty of the count | **ADD** | the same rule the Exec panel earned (E1/E7) and the Lead Panel's L2: a census counts a posture SERVED only when it carries a verdict; the 24 read ABSENT with their own reason |
+| PO2 | ⭐ **The Model pack reads a WORKER'S folder** -- `packs.py:41-42`, `:64-65` load `deliverables/0.9.0_WK_AMGT_RESAPP~1/model_block_<key>.json` (3 names) while the pool holds 33 | `C-PRODUCTION-HOME` (PRD s.10, v0.11) | **EXEC -- the FOURTH instance of the pattern** | no new rule needed: the clause already names this class. The intake's pattern block said three; it is four. The addendum adds `packs.py` to the measured instances the clause retires |
+| PO3 | ⭐ **The Exec, pool and peer packs read the EXACT posture date** (`packs.py:108-114`); posture ran 16 Sep, management objects are dated 15 and 18 Sep, so none was found | `C-EXEC-MANAGEMENT` v0.11 already requires the pool's mean over **the newest object per name across all dates** | **ADD -- and it is ONE cell with the Exec pool fix** | one "newest object per name" reader, used by both. **7 of 9 verdicts were judged without the subject's Exec pack and 6 without its Model pack**, so PO2 and PO3 together explain the thin evidence behind every verdict the panel has produced |
+| PO4 | **167 of 170 ETF holding rows are UNRESOLVED**, so "held" is unknowable and 22 of the 24 absent verdicts have no held candidate | `C-ETF-PLANE-READ` -- the identifier contract, still NOT established (unchanged since v0.10) | **EXEC** | the contract is the blocker, not the posture code. Bloomberg's `/sedol/<stem>` route resolved 258 of 279 peer securities under a name-agreement control, so the route exists; `membership.py` keeps an unresolved row UNPROVEN and must keep doing so -- ⛔ never guess a holding's identity to make a comparable appear |
+| PO5 | **The re-run cannot classify non-US names** (Enel: no `model_block_ENEL_IM_Equity.json`, and exchange `IM` cannot be joined to the scanner's US ticker space by root "without guessing") | -- | **ADD** | the same identity discipline `C-ONE-IDENTITY` states: a non-US key is UNRESOLVED with its reason, never joined by root |
+| PO6 | **The comparable should come from the SA peer set**, first peer on the other side of the books | `C-PEER-SET-SA` (v0.11, ratified) governs FWD-8; `C-SIMILARITY-RANKER` still governs FWD-19's comparable | **ADD -- touches ratified text at the next bump** | this is the Posture half of the split this seat deliberately left alone at v0.11. The addendum moves FWD-19's comparable onto the SA set, with PO7's fallback |
+| PO7 | **When none of SA's five peers is on the other side, what picks the comparable?** | -- | **AT ANDREW** | card below; the CRO recommends keeping today's ranker for that fallback only, restricted to the other side, labelled as the ranker's |
+| PO8 | **Posture runs LAST in instantiation**, after the four packs exist for the name | PRD s.10 stage table lists posture with trigger "none; reads model blocks from a repo folder" | **FIX-ART + ADD** | the stage table's posture row is corrected by PO2, and the ordering constraint joins `C-INSTANTIATION-ENTRY`'s dependency order |
+| PO9 | The judgment itself is sound: 100% of cites validated on all 9 verdicts, 13-20 cites each, every basis claim citing a pack element; `claude-opus-5` at effort low, $0.13 on Boeing | `C-POSTURE`, FWD-9 marking | RESTATE | nothing. **The weakness is everything the judgment is handed, not the judgment** |
+
+### Net for this panel
+
+**Zero round-14 cells** (Andrew's placement). Five ADD items, two EXEC, one FIX-ART, one card. **One touches ratified text**
+(PO6, `C-SIMILARITY-RANKER` -> the SA set for FWD-19) and waits for the next bump and `3.0.0_SA_CVO~Z`'s signature. **Two are
+already-carded classes this seat can land cheaply**: PO2 is a fourth instance of an existing clause, and PO3 merges into a cell
+the COO is already cutting for Exec Management.
+
+⛔ **THE CARD BELOW IS DEFERRED BY ANDREW, NOT OPEN AT HIM.** Andrew-direct ~20:4xZ, relayed verbatim by `4.0.0_SA_CRO~Z`:
+*"1.) yes to all on ceo search. Posture we will get to later."* So the fallback question is neither adjudicable here nor
+queued in his `/open-calls`; it is carried, with the panel, to whenever he takes Posture up. It is printed as put, so the
+answer has something to land on.
+
++-- CARD (Posture) -- DEFERRED by Andrew ~20:4xZ --------------------+
+  **When none of Seeking Alpha's five peers sits on the other side of Opal's books, how does Posture pick the comparable?**
+  (1) today's ranker, for that fallback only, restricted to the other side; (2) SA's peers-of-peers, a second SA call per
+  name; (3) no verdict, with the reason.
+  --------------------------------------------------------------------
+  **REC -- (1).** It keeps SA primary (his Peers ruling), reuses an existing path, and never leaves a name without a
+  comparable because five peers happened to share its side; the fallback comparable is labelled the ranker's, not SA's.
+  Option (2) spends a vendor call per name to answer a question the ranker already answers.
++-------------------------------------------------------------------+
+
+---
+
 ### ⭐ The pattern V2, V7 and M1 share -- one cross-cutting remedy
 
-**Three production code paths read or write a WORKER'S deliverables folder:** the unit map (M1, `~1/field_map.json`), the SEC
-ticker cache (V2, `~19`), and the peer candidate universe (V7 / W32-S4, `~21`). A worker's folder is a proof artifact of one task
+**FOUR production code paths read or write a WORKER'S deliverables folder** (three when this block was written; the Posture
+brief added the fourth, PO2): the unit map (M1, `~1/field_map.json`), the SEC ticker cache (V2, `~19`), the peer candidate
+universe (V7 / W32-S4, `~21`), and Posture's Model pack (PO2, `packs.py:41-42` / `:64-65`, `~1` again). A worker's folder is a proof artifact of one task
 order, not a production home -- so production silently depends on whatever one worker happened to build, for whichever names
 that worker covered. **That is exactly why each defect covers the pilot names and misses everyone else.** The addendum should
 name ONE production-artifact home and move all three there, rather than fixing them one at a time.
@@ -347,6 +406,8 @@ name ONE production-artifact home and move all three there, rather than fixing t
 | Scheduled-task registration (launcher split at the space, universe pinned to a date) | Thesis T5/T6, Exec Mgmt E8 | the same registration defect on two research tasks -- fix it where tasks are registered, once |
 | Key census by splitting a path on `/` | Exec Mgmt E6 (production code); this seat's own analysis twice | two London names silently dropped, success reported |
 | "SERVED" meaning a status rather than content | Exec Mgmt E1/E7; Lead Panel L2 (a list of zeros reading COMPLETE) | a producer can report success over an empty payload -- one honesty rule across panels |
+| Reading an object at an EXACT date instead of its newest | Exec Mgmt (the pool's one `as_of`), Posture PO3 (`packs.py:108-114`) | ONE "newest object per name" reader serves both; today it is why 7 of 9 posture verdicts lacked the Exec pack |
+| A pack or cache read from a WORKER'S folder | Model M1, validation V2, Peers V7, Posture PO2 | `C-PRODUCTION-HOME` (PRD s.10) already rules the class; each new instance is an instance, not a new rule |
 
 ---
 
@@ -362,3 +423,35 @@ name ONE production-artifact home and move all three there, rather than fixing t
   reachable. It does not: **pushing DEV makes the pages durable, never reachable**, because no environment serves DEV. Only
   the PROD promote reaches a user, and Andrew has deferred it. (This seat's terminal reports to Andrew described the push as
   keeping the pages off one machine's disk -- durability -- which stands.) The register row is re-stated at the next tick.
+
+---
+
+## 4. 2026-09-22 -- Claude for Financial Services (RCN-0012, `4.0.0_SA_CRO~F`; first announced as RCN-0011, corrected by its author), read into this intake
+
+**Source:** the two briefs committed @`621cecb40a` on branch `cro-f-records`, drained to SITEZ @`42c05cd8a8`, on Andrew's
+word at `4.0.0_SA_CRO~F` (record @`c23d5f7dc0`):
+- `org/tier1_exec/4.0.0_SA_CRO/briefs/CLAUDE_FSI_PLUGIN_STRUCTURE_AND_DATA_SHAPES_BRIEF_20260922.md`
+- `org/tier1_exec/4.0.0_SA_CRO/briefs/RESAPP_CLAUDE_FSI_THREADING_PROPOSAL_20260922.md`
+
+**What it establishes:**
+- "The plugin" is a public repo of files, not access. Its 12 connectors are vendor OAuth against paid subscriptions.
+- The LLY pack in SharePoint was built from PUBLIC sources (EDGAR, StockAnalysis, press). No connector ran for it.
+
+| class | item | disposition in this PRD's life |
+|---|---|---|
+| ADD | the quarterly EVENT: filings forms 8-K (EX-99.1), 10-Q and DEF 14A -> an earnings-event object -> the Model tab's guidance and non-GAAP bridge rows | a candidate FWD. It is minted only at an L2 addendum Andrew confirms (a scope change), and sequenced AFTER the Lenovo trial is graded |
+| ADD | consensus REVISIONS derived from Bloomberg `bestdata` bronze vintages (bronze is never overwritten, so each pull is a dated snapshot) | measurement first: substrate card S1 (`2.0.0_SA_COO~Z`'s harvest chain), then a candidate FWD |
+| RESTATE | transcripts as a publication type | `AMGT_HARVST`'s scope (`2.0.0_SA_COO~Y`), not this PRD's; S4 (transcript terms) is Andrew's |
+| EXEC | lift the skills' METHODS (earnings-update template, DCF drivers, peer-candidate selection) as specs | a reference only; no cell until the ADD above is minted |
+| -- | vendor REST as a harvest channel (Daloopa first) | nothing until Andrew's subscription word (S6). MCP inside a producer is NOT adopted (token custody, no as-received bronze) |
+
+**Measurement acts (at the next L10, not cells):**
+- S1: does `bestdata` carry the means and counts, and does a second pull differ? Owner `2.0.0_SA_COO~Z`.
+- S3: the Claude API cost of one earnings-event pass. Owner: this seat, with Andrew as account owner. It is a paid model
+  call, and it runs only when the event ADD is minted.
+
+**At Andrew (the brief's s.5 calls, carried as cards):**
+1. subscription;
+2. installing the plugin on the shared box;
+3. the print target for a quarter;
+4. the egress class for skill runs that web-search.

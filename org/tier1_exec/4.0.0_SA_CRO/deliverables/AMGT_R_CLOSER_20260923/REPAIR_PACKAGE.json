@@ -1,0 +1,21 @@
+{
+  "function": "opal-amgt-scoped-api",
+  "artifact_directory": "C:/tmp/amgt-r-no-span-package-20260923",
+  "deployed_revision_id_at_build": "d906e911-aed5-4e21-afcd-0b9a6dcdbdc7",
+  "before_code_sha256_base64": "r93CxQqrk8k8h2Q8KO4Iicn3pk8kyF4SFo47a9Cca5w=",
+  "candidate_code_sha256_base64": "DEQQiCH+UoUMd7EZSQA5RTsILDY5+ubb9Y3gVLE5elU=",
+  "candidate_code_sha256_hex": "0c44108821fe52850c77b119490039453b082c3639fae6dbf58de054b1397a55",
+  "before_api_sha256": "4adeba1d6a567eddc4cf293cb521be64cc7c13cdf579fd85d96decdd617a4bc1",
+  "candidate_api_sha256": "6c98b25ba5cf51558d3c28db1f9e0fecf5acef1aefeb5c3b3cdc896fefb29a38",
+  "zip_members": 197,
+  "changed_members": [
+    "lib/research/api/scoped_amgt.py"
+  ],
+  "changed_functions": [
+    "_drafting_block",
+    "read_drafted_sections"
+  ],
+  "other_ast_nodes_identical": true,
+  "deployment": "NOT EXECUTED; requires independent review and CTO+COO pair",
+  "rollback_limitation": "Original ZIP restores known no-span serving defect; not a routine safe fallback."
+}

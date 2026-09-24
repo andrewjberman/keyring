@@ -1,0 +1,1991 @@
+{
+  "serial": "4.0.0_SA_CRO~Z",
+  "device": "OPAL_BLOOMBERG",
+  "initial_measured_at": "2026-09-23T13:23:49.836406+00:00",
+  "supplement_measured_at": "2026-09-23T13:32:36.225432+00:00",
+  "pins": {
+    "workspace": "58bfd6f8823a8a2b082266647fe2ad931b6db973",
+    "cloud": "365ab567ba1250a6a3569df38cb75d12fe2e8d0e",
+    "portal": "b3d5f59b4534eb653105f9bedc9e178384111c9f"
+  },
+  "operations_actually_executed": [
+    "git read/fetch CLOUD without merge",
+    "paginated S3 ListObjectsV2",
+    "bounded S3 GetObject",
+    "Lambda list/get and signed ZIP download",
+    "IAM role policy reads",
+    "API Gateway API/route reads",
+    "Scheduler list",
+    "local file reads and task configuration census"
+  ],
+  "operations_not_executed": [
+    "vendor/regulator fetch",
+    "Lambda invocation",
+    "DynamoDB generation query",
+    "queue receive/send",
+    "model call",
+    "deployment",
+    "signed-in browser journey",
+    "live print",
+    "cloud mutation"
+  ],
+  "projects": {
+    "AMGT_CORPUS": {
+      "order_count": 11,
+      "status_counts": {
+        "complete": 10,
+        "pending": 1
+      },
+      "open_orders": [
+        {
+          "path": "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-c-11.read-only-proof.md",
+          "status": "pending"
+        }
+      ],
+      "project_sha256": "85af2be8a644b27406375d39f4d70c76752accc810724674087871772f86ffa6",
+      "project_status": "active",
+      "project_dep_stage": "EXECUTING"
+    },
+    "AMGT_HARVST": {
+      "order_count": 18,
+      "status_counts": {
+        "complete": 18
+      },
+      "open_orders": [],
+      "project_sha256": "9e49c22541eea507f34155759ead118e1a580b7d3645542b92d2fc316306d116",
+      "project_status": "active",
+      "project_dep_stage": "ROUND_CLOSE"
+    },
+    "AMGT_RESAPP": {
+      "order_count": 191,
+      "status_counts": {
+        "complete": 181,
+        "superseded": 8,
+        "withdrawn": 1,
+        "pending": 1
+      },
+      "open_orders": [
+        {
+          "path": "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-49.lusha-domain-from-verified-site.md",
+          "status": "pending"
+        }
+      ],
+      "project_sha256": "65b9f89ef0dbbfc373532d865172c0227bad3e6500b613eb5c9d8cfbf204038e",
+      "project_status": "active",
+      "project_dep_stage": "EXECUTING"
+    }
+  },
+  "s3": {
+    "bucket": "opal-data-harvest",
+    "objects": 2277,
+    "groups": {
+      "amgt/harvest/bronze/research-report-extract": {
+        "objects": 123,
+        "bytes": 7880327,
+        "latest": "2026-09-23T03:40:58+00:00",
+        "extensions": {
+          ".json": 123
+        }
+      },
+      "amgt/harvest/bronze/research-report": {
+        "objects": 123,
+        "bytes": 81598573,
+        "latest": "2026-09-23T03:02:34+00:00",
+        "extensions": {
+          ".xlsx": 43,
+          ".docx": 25,
+          ".pdf": 52,
+          ".png": 3
+        }
+      },
+      "amgt/harvest/gold/article_security_mention": {
+        "objects": 2,
+        "bytes": 52756,
+        "latest": "2026-09-23T02:13:09+00:00",
+        "extensions": {
+          ".parquet": 2
+        }
+      },
+      "amgt/harvest/gold/candidate_universe": {
+        "objects": 1,
+        "bytes": 1000578,
+        "latest": "2026-09-19T01:25:08+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "amgt/harvest/gold/chatter_daily": {
+        "objects": 3,
+        "bytes": 38411,
+        "latest": "2026-09-23T02:13:24+00:00",
+        "extensions": {
+          ".parquet": 3
+        }
+      },
+      "amgt/harvest/gold/chatter_event": {
+        "objects": 2,
+        "bytes": 11488,
+        "latest": "2026-09-23T02:13:48+00:00",
+        "extensions": {
+          ".parquet": 2
+        }
+      },
+      "amgt/harvest/gold/research-backlog": {
+        "objects": 2,
+        "bytes": 94350,
+        "latest": "2026-09-23T02:48:31+00:00",
+        "extensions": {
+          ".json": 2
+        }
+      },
+      "amgt/harvest/gold/research-continuation": {
+        "objects": 33,
+        "bytes": 1294956,
+        "latest": "2026-09-23T05:26:31+00:00",
+        "extensions": {
+          ".json": 33
+        }
+      },
+      "amgt/harvest/gold/research-fund-form": {
+        "objects": 2,
+        "bytes": 966975,
+        "latest": "2026-09-23T05:18:52+00:00",
+        "extensions": {
+          ".json": 2
+        }
+      },
+      "amgt/harvest/gold/research-model-typecast": {
+        "objects": 1,
+        "bytes": 99401,
+        "latest": "2026-09-23T04:22:12+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "amgt/harvest/gold/research-sector-template": {
+        "objects": 10,
+        "bytes": 69527,
+        "latest": "2026-09-23T06:00:07+00:00",
+        "extensions": {
+          ".json": 10
+        }
+      },
+      "amgt/harvest/silver/research-report": {
+        "objects": 1,
+        "bytes": 39382,
+        "latest": "2026-09-23T04:45:17+00:00",
+        "extensions": {
+          ".parquet": 1
+        }
+      },
+      "amgt/harvest/state/filing_attempt": {
+        "objects": 180,
+        "bytes": 82736,
+        "latest": "2026-09-22T03:31:58+00:00",
+        "extensions": {
+          ".json": 180
+        }
+      },
+      "amgt/harvest/state/pull_log": {
+        "objects": 10,
+        "bytes": 21133,
+        "latest": "2026-09-22T20:12:16+00:00",
+        "extensions": {
+          ".json": 10
+        }
+      },
+      "barrons/harvest/bronze/article": {
+        "objects": 15,
+        "bytes": 135230,
+        "latest": "2026-09-22T17:28:27+00:00",
+        "extensions": {
+          ".json": 15
+        }
+      },
+      "barrons/harvest/silver/article": {
+        "objects": 15,
+        "bytes": 447995,
+        "latest": "2026-09-22T17:28:28+00:00",
+        "extensions": {
+          ".parquet": 15
+        }
+      },
+      "bloomberg/harvest/bronze/article": {
+        "objects": 19,
+        "bytes": 146120,
+        "latest": "2026-09-22T17:29:09+00:00",
+        "extensions": {
+          ".json": 19
+        }
+      },
+      "bloomberg/harvest/bronze/bestdata": {
+        "objects": 7,
+        "bytes": 12430,
+        "latest": "2026-09-22T20:12:16+00:00",
+        "extensions": {
+          ".json": 7
+        }
+      },
+      "bloomberg/harvest/bronze/exec_officers": {
+        "objects": 4,
+        "bytes": 3442,
+        "latest": "2026-09-22T00:50:35+00:00",
+        "extensions": {
+          ".json": 4
+        }
+      },
+      "bloomberg/harvest/bronze/histdata": {
+        "objects": 49,
+        "bytes": 326131,
+        "latest": "2026-09-22T20:12:16+00:00",
+        "extensions": {
+          ".json": 49
+        }
+      },
+      "bloomberg/harvest/bronze/histdata_daily_px": {
+        "objects": 2,
+        "bytes": 253287,
+        "latest": "2026-09-22T21:27:42+00:00",
+        "extensions": {
+          ".json": 2
+        }
+      },
+      "bloomberg/harvest/bronze/identity": {
+        "objects": 4,
+        "bytes": 1097,
+        "latest": "2026-09-22T17:21:28+00:00",
+        "extensions": {
+          ".json": 4
+        }
+      },
+      "bloomberg/harvest/bronze/refdata": {
+        "objects": 49,
+        "bytes": 26831,
+        "latest": "2026-09-22T20:12:16+00:00",
+        "extensions": {
+          ".json": 49
+        }
+      },
+      "bloomberg/harvest/silver/article": {
+        "objects": 19,
+        "bytes": 548775,
+        "latest": "2026-09-22T17:29:11+00:00",
+        "extensions": {
+          ".parquet": 19
+        }
+      },
+      "crosswalk/v1": {
+        "objects": 3,
+        "bytes": 594212,
+        "latest": "2026-09-22T17:21:29+00:00",
+        "extensions": {
+          ".json": 3
+        }
+      },
+      "derived/model_block": {
+        "objects": 123,
+        "bytes": 13390851,
+        "latest": "2026-09-22T20:12:19+00:00",
+        "extensions": {
+          ".json": 123
+        }
+      },
+      "derived/model_block_fye": {
+        "objects": 3,
+        "bytes": 20175,
+        "latest": "2026-09-11T19:18:57+00:00",
+        "extensions": {
+          ".json": 3
+        }
+      },
+      "drafting/v1": {
+        "objects": 12,
+        "bytes": 1127014,
+        "latest": "2026-09-17T22:29:31+00:00",
+        "extensions": {
+          ".json": 12
+        }
+      },
+      "filings/v1": {
+        "objects": 206,
+        "bytes": 5738177,
+        "latest": "2026-09-21T17:22:08+00:00",
+        "extensions": {
+          ".json": 206
+        }
+      },
+      "ft/harvest/bronze/article": {
+        "objects": 14,
+        "bytes": 183352,
+        "latest": "2026-09-22T17:29:38+00:00",
+        "extensions": {
+          ".json": 14
+        }
+      },
+      "ft/harvest/silver/article": {
+        "objects": 14,
+        "bytes": 445165,
+        "latest": "2026-09-22T17:29:39+00:00",
+        "extensions": {
+          ".parquet": 14
+        }
+      },
+      "identity/v1": {
+        "objects": 1,
+        "bytes": 47229,
+        "latest": "2026-09-17T14:41:50+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "issuer-site/harvest/silver/filing_source": {
+        "objects": 1,
+        "bytes": 283596,
+        "latest": "2026-09-22T03:31:59+00:00",
+        "extensions": {
+          ".parquet": 1
+        }
+      },
+      "lib/local-publications": {
+        "objects": 6,
+        "bytes": 445796,
+        "latest": "2026-09-15T14:49:53+00:00",
+        "extensions": {
+          ".zip": 3,
+          ".json": 3
+        }
+      },
+      "management/v1": {
+        "objects": 18,
+        "bytes": 62499,
+        "latest": "2026-09-21T21:20:39+00:00",
+        "extensions": {
+          ".json": 18
+        }
+      },
+      "packs/2317_TT_Equity": {
+        "objects": 1,
+        "bytes": 346,
+        "latest": "2026-09-16T20:18:10+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/6861_JP_Equity": {
+        "objects": 1,
+        "bytes": 1046,
+        "latest": "2026-09-19T15:21:30+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/9433_JP_Equity": {
+        "objects": 1,
+        "bytes": 346,
+        "latest": "2026-09-16T20:18:13+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/992_HK_Equity": {
+        "objects": 1,
+        "bytes": 762,
+        "latest": "2026-09-22T20:12:18+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/ASML_NA_Equity": {
+        "objects": 1,
+        "bytes": 346,
+        "latest": "2026-09-16T20:18:22+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/BABA_US": {
+        "objects": 1,
+        "bytes": 243,
+        "latest": "2026-09-11T19:18:57+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/BABA_US_Equity": {
+        "objects": 1,
+        "bytes": 346,
+        "latest": "2026-09-16T20:18:25+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/BA_US": {
+        "objects": 1,
+        "bytes": 236,
+        "latest": "2026-09-11T19:18:56+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/BA_US_Equity": {
+        "objects": 1,
+        "bytes": 340,
+        "latest": "2026-09-16T20:18:28+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/BBSE3_BZ_Equity": {
+        "objects": 1,
+        "bytes": 349,
+        "latest": "2026-09-16T20:18:34+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/BP": {
+        "objects": 1,
+        "bytes": 343,
+        "latest": "2026-09-16T20:18:37+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/CAT_US_Equity": {
+        "objects": 1,
+        "bytes": 1037,
+        "latest": "2026-09-19T15:21:23+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/COST_US": {
+        "objects": 1,
+        "bytes": 239,
+        "latest": "2026-09-11T19:18:56+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/COST_US_Equity": {
+        "objects": 1,
+        "bytes": 346,
+        "latest": "2026-09-16T20:18:39+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/CSL_AU_Equity": {
+        "objects": 1,
+        "bytes": 1037,
+        "latest": "2026-09-19T15:21:26+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/ENEL_IM_Equity": {
+        "objects": 1,
+        "bytes": 346,
+        "latest": "2026-09-16T20:18:46+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/HAL_US_Equity": {
+        "objects": 1,
+        "bytes": 343,
+        "latest": "2026-09-16T20:18:49+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/HD_US_Equity": {
+        "objects": 1,
+        "bytes": 340,
+        "latest": "2026-09-16T20:18:52+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/HSBA_LN_Equity": {
+        "objects": 1,
+        "bytes": 346,
+        "latest": "2026-09-16T20:18:58+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/ICICIBC_IN_Equity": {
+        "objects": 1,
+        "bytes": 355,
+        "latest": "2026-09-16T20:19:00+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/IMB_LN_Equity": {
+        "objects": 1,
+        "bytes": 343,
+        "latest": "2026-09-16T20:19:03+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/INTU_US_Equity": {
+        "objects": 1,
+        "bytes": 346,
+        "latest": "2026-09-16T20:19:09+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/KMB_US_Equity": {
+        "objects": 1,
+        "bytes": 343,
+        "latest": "2026-09-16T20:19:12+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/KPN_NA_Equity": {
+        "objects": 1,
+        "bytes": 343,
+        "latest": "2026-09-16T20:19:14+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/NG": {
+        "objects": 1,
+        "bytes": 343,
+        "latest": "2026-09-16T20:19:21+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/NOVN_SW_Equity": {
+        "objects": 1,
+        "bytes": 346,
+        "latest": "2026-09-16T20:19:24+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/NU_US_Equity": {
+        "objects": 1,
+        "bytes": 340,
+        "latest": "2026-09-16T20:19:27+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/NVDA_US_Equity": {
+        "objects": 1,
+        "bytes": 504,
+        "latest": "2026-09-11T19:18:56+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/PBR_US_Equity": {
+        "objects": 1,
+        "bytes": 343,
+        "latest": "2026-09-16T20:19:34+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/RKT_LN_Equity": {
+        "objects": 1,
+        "bytes": 343,
+        "latest": "2026-09-16T20:19:37+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/RMS_FP_Equity": {
+        "objects": 1,
+        "bytes": 343,
+        "latest": "2026-09-16T20:19:40+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/ROG_SW_Equity": {
+        "objects": 1,
+        "bytes": 343,
+        "latest": "2026-09-16T20:19:46+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/RWE_GR_Equity": {
+        "objects": 1,
+        "bytes": 343,
+        "latest": "2026-09-16T20:19:49+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/SAP_GY_Equity": {
+        "objects": 1,
+        "bytes": 630,
+        "latest": "2026-09-16T20:19:52+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/SSE_LN_Equity": {
+        "objects": 1,
+        "bytes": 343,
+        "latest": "2026-09-16T20:19:58+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/ST_SP_Equity": {
+        "objects": 1,
+        "bytes": 340,
+        "latest": "2026-09-16T20:20:01+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/ULVR_LN_Equity": {
+        "objects": 1,
+        "bytes": 346,
+        "latest": "2026-09-16T20:20:04+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/VLO_US_Equity": {
+        "objects": 1,
+        "bytes": 343,
+        "latest": "2026-09-16T20:20:10+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/WALMEX*_MM_Equity": {
+        "objects": 1,
+        "bytes": 355,
+        "latest": "2026-09-16T20:20:13+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "packs/ZURN_SW_Equity": {
+        "objects": 1,
+        "bytes": 346,
+        "latest": "2026-09-16T20:20:16+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "peers/v1": {
+        "objects": 797,
+        "bytes": 19414414,
+        "latest": "2026-09-17T02:42:18+00:00",
+        "extensions": {
+          ".json": 797
+        }
+      },
+      "posture/v1": {
+        "objects": 33,
+        "bytes": 376437,
+        "latest": "2026-09-18T14:12:29+00:00",
+        "extensions": {
+          ".json": 33
+        }
+      },
+      "publication-links/v1": {
+        "objects": 7,
+        "bytes": 1839,
+        "latest": "2026-09-15T05:01:08+00:00",
+        "extensions": {
+          ".json": 7
+        }
+      },
+      "publications/v1": {
+        "objects": 7,
+        "bytes": 66021,
+        "latest": "2026-09-15T05:01:08+00:00",
+        "extensions": {
+          ".json": 7
+        }
+      },
+      "raw/bloomberg": {
+        "objects": 119,
+        "bytes": 541382,
+        "latest": "2026-09-21T16:25:37+00:00",
+        "extensions": {
+          ".json": 119
+        }
+      },
+      "raw/seekingalpha": {
+        "objects": 18,
+        "bytes": 209361,
+        "latest": "2026-09-11T19:18:57+00:00",
+        "extensions": {
+          ".json": 18
+        }
+      },
+      "scores/v1": {
+        "objects": 66,
+        "bytes": 220820,
+        "latest": "2026-09-17T16:10:08+00:00",
+        "extensions": {
+          ".json": 66
+        }
+      },
+      "sec/harvest/bronze/company_tickers": {
+        "objects": 1,
+        "bytes": 800703,
+        "latest": "2026-09-22T20:15:07+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "sec/harvest/silver/filing_source": {
+        "objects": 1,
+        "bytes": 808344,
+        "latest": "2026-09-22T03:31:59+00:00",
+        "extensions": {
+          ".parquet": 1
+        }
+      },
+      "seeking-alpha/harvest/bronze/analysis": {
+        "objects": 3,
+        "bytes": 18762,
+        "latest": "2026-09-22T04:54:54+00:00",
+        "extensions": {
+          ".json": 3
+        }
+      },
+      "seeking-alpha/harvest/bronze/article": {
+        "objects": 29,
+        "bytes": 183178,
+        "latest": "2026-09-23T00:37:35+00:00",
+        "extensions": {
+          ".json": 29
+        }
+      },
+      "seeking-alpha/harvest/bronze/news": {
+        "objects": 3,
+        "bytes": 43649,
+        "latest": "2026-09-22T04:54:54+00:00",
+        "extensions": {
+          ".json": 3
+        }
+      },
+      "seeking-alpha/harvest/bronze/report": {
+        "objects": 3,
+        "bytes": 24116,
+        "latest": "2026-09-22T04:54:54+00:00",
+        "extensions": {
+          ".json": 3
+        }
+      },
+      "seeking-alpha/harvest/bronze/symbol": {
+        "objects": 3,
+        "bytes": 58098,
+        "latest": "2026-09-22T04:54:53+00:00",
+        "extensions": {
+          ".json": 3
+        }
+      },
+      "seeking-alpha/harvest/silver/article": {
+        "objects": 12,
+        "bytes": 420092,
+        "latest": "2026-09-23T00:37:51+00:00",
+        "extensions": {
+          ".parquet": 12
+        }
+      },
+      "social/v1": {
+        "objects": 1,
+        "bytes": 12088,
+        "latest": "2026-09-15T16:56:48+00:00",
+        "extensions": {
+          ".json": 1
+        }
+      },
+      "universe/v1": {
+        "objects": 2,
+        "bytes": 383492,
+        "latest": "2026-09-16T07:32:10+00:00",
+        "extensions": {
+          ".json": 2
+        }
+      },
+      "wsj/harvest/bronze/article": {
+        "objects": 26,
+        "bytes": 6969258,
+        "latest": "2026-09-23T00:37:47+00:00",
+        "extensions": {
+          ".json": 15,
+          ".html": 11
+        }
+      },
+      "wsj/harvest/bronze/news_listing": {
+        "objects": 2,
+        "bytes": 1127619,
+        "latest": "2026-09-23T00:37:32+00:00",
+        "extensions": {
+          ".html": 2
+        }
+      },
+      "wsj/harvest/silver/article": {
+        "objects": 26,
+        "bytes": 2376931,
+        "latest": "2026-09-23T01:05:45+00:00",
+        "extensions": {
+          ".parquet": 26
+        }
+      },
+      "wsj/harvest/silver/listing_hit": {
+        "objects": 1,
+        "bytes": 20071,
+        "latest": "2026-09-23T00:37:31+00:00",
+        "extensions": {
+          ".parquet": 1
+        }
+      }
+    }
+  },
+  "platinum_objects": 0,
+  "functions": [
+    {
+      "FunctionName": "opal-research-pull-enqueue",
+      "Handler": "lambda_function.lambda_handler",
+      "Runtime": "python3.11",
+      "CodeSha256": "THhzBXqTs1XoNok2IyKS5z+y3RE41aqUMIw4Bno53NM=",
+      "LastModified": "2026-09-11T19:40:24.000+0000",
+      "State": "Active",
+      "LastUpdateStatus": "Successful",
+      "Timeout": 30,
+      "MemorySize": 256,
+      "Role": "arn:aws:iam::313476888478:role/opal-research-pull-enqueue-role",
+      "environment_keys": [
+        "HARVEST_BUCKET",
+        "QUEUE_URL",
+        "RESEARCH_BUCKET"
+      ],
+      "safe_configuration": {
+        "RESEARCH_BUCKET": "opal-data-harvest",
+        "HARVEST_BUCKET": "opal-data-harvest"
+      }
+    },
+    {
+      "FunctionName": "amgt-resapp-chatter-axis",
+      "Handler": "lambda_function.handler",
+      "Runtime": "python3.12",
+      "CodeSha256": "I6eitcaItzqRTlVUaUSF+GGzrpNDHnn71ILk1vIGjHY=",
+      "LastModified": "2026-09-19T09:49:46.000+0000",
+      "State": "Active",
+      "LastUpdateStatus": "Successful",
+      "Timeout": 60,
+      "MemorySize": 128,
+      "Role": "arn:aws:iam::313476888478:role/amgt-resapp-chatter-axis-lambda-role",
+      "environment_keys": [],
+      "safe_configuration": {}
+    },
+    {
+      "FunctionName": "opal-amgt-scoped-api",
+      "Handler": "lambda_function.lambda_handler",
+      "Runtime": "python3.11",
+      "CodeSha256": "r93CxQqrk8k8h2Q8KO4Iicn3pk8kyF4SFo47a9Cca5w=",
+      "LastModified": "2026-09-22T10:07:44.000+0000",
+      "State": "Active",
+      "LastUpdateStatus": "Successful",
+      "Timeout": 29,
+      "MemorySize": 1769,
+      "Role": "arn:aws:iam::313476888478:role/opal-amgt-scoped-api-role",
+      "environment_keys": [
+        "HARVEST_ARTICLES_TABLE",
+        "HARVEST_METRICS_TABLE"
+      ],
+      "safe_configuration": {
+        "HARVEST_METRICS_TABLE": "opal-harvest-security-metrics",
+        "HARVEST_ARTICLES_TABLE": "opal-harvest-articles"
+      },
+      "download_digest_matches": true,
+      "archive_members": 197,
+      "source_comparison": [
+        {
+          "path": "lambda_function.py",
+          "sha256": "e511374b691b8799b5bfb04fc7839a4e6f5c55fc759ae6c7327a0e3bd5c39489",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/api/__init__.py",
+          "sha256": "6d488b101b791eaaf197f37a4481bff2001f07199be2f62d2e5f8904cd376cdb",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/api/_harvest_prefixes.py",
+          "sha256": "f48ee75a0cecb86988e3d34765121ae20861aeaa160756d2238c74d2a79e66de",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/api/scoped_amgt.py",
+          "sha256": "4adeba1d6a567eddc4cf293cb521be64cc7c13cdf579fd85d96decdd617a4bc1",
+          "local_exists": true,
+          "equal_normalized_newlines": false
+        },
+        {
+          "path": "lib/research/checkface/__init__.py",
+          "sha256": "dceec3b6c81221325f2d014b1672651b029cd65019b481c68966867a9855734f",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/checkface/fixtures.py",
+          "sha256": "d0471c22c7b407dc4938dd623f550528cf0904071fc09b0c1d4554f85ac5e8af",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/checkface/markers.py",
+          "sha256": "3376b304618468075dd87baa525c0db0d2832d1acdf171cac3492fbec4518774",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/checkface/render_print.py",
+          "sha256": "240219debba87a773f14f8709c5a7b5c87c80003cb2263a404d75e58628ac845",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/checkface/run_checks.py",
+          "sha256": "a7df2edce9811df3462f7a4d2bf7133c133b8abab4eeff7f2cc1c544f7ea696d",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/checkface/salience_fixture.py",
+          "sha256": "517099ba6d7052dd494f64b6d45ca715970961f690afc74c0a468ca1b33bfe58",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/checkface/scopes.py",
+          "sha256": "79b6bf330d854c76798fef3311b34c43293e1bf57a6274b74cfe0be9854c79d7",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/coverage/__init__.py",
+          "sha256": "7835f87754a8ae61c91cb53b0b927fe79d87f3b17a9ca2919ae0ceb61e93f0e0",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/coverage/pool_reader.py",
+          "sha256": "7d838c302ebf9bf866e0e6e681f65a60507ad6a20fd10564c76dbcdf5b02a759",
+          "local_exists": true,
+          "equal_normalized_newlines": false
+        },
+        {
+          "path": "lib/research/drafting/__init__.py",
+          "sha256": "66b490ac6d012146ca56b42f01f8141cd8a49a55ec3f4deef09e6ce4f1cdd066",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/drafting/pipeline.py",
+          "sha256": "319ca201810e47a7c2458fa7a9f5c6c6f25bf704cd3be992b149dd2a2e2f0866",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/drafting/producer.py",
+          "sha256": "6fd5b8c3d113395e66a7815514d833c4f27fd25d79bc206c4cc7331b19c0bfe4",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/drafting/verbatim.py",
+          "sha256": "231466cf8c441f005b71fb8f2fd9b1e4025076f86df70ce7869fae3e0b141848",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/freshness/__init__.py",
+          "sha256": "047d495a588d73026d8875066c34c9f45e77cdca3b02f9e4f237c47907ec956e",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/freshness/build_view.py",
+          "sha256": "a4628e42ee4137b3ae5d1e35a4e81ceda1d27dbee32150df58dc4165fb15112c",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/identity/__init__.py",
+          "sha256": "fe0e538ddceb45be7454e411f8daabed1683b37b83d600e0cca6b7b40d73876f",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/identity/crosswalk.py",
+          "sha256": "c7411ee4542d730d7dfcf3cddef88b1419a9600a1b5bd30efed8e37e5bee4b2b",
+          "local_exists": true,
+          "equal_normalized_newlines": false
+        },
+        {
+          "path": "lib/research/ledger/__init__.py",
+          "sha256": "f3c7d026e2230316c38e530aef9ce7fc496bdd1417097675306172bcb89a14d2",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/ledger/ledger.py",
+          "sha256": "55af18d2ae1b5298fac344c9893fecdf50d3096aee0bb88b1b91ff26d13e4a35",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/lists/__init__.py",
+          "sha256": "e00e140e488cea9f0c16519ba8bfede7399bdc7c505fe29d0ecfbdab6368a7de",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/lists/rot.py",
+          "sha256": "09166c86e609e18116c07fef20803e59c338edf2227bf68b130407f1911e0c95",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/metrics/__init__.py",
+          "sha256": "fe20a4617252581c00f89df5ed01a83b556f22a4640a19fefd311893fbf552e5",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/metrics/chatter_axis.py",
+          "sha256": "d9f52a5beca2b1ea0c92a0f121002c727d64f840d760a5fa29587754b05c8094",
+          "local_exists": true,
+          "equal_normalized_newlines": false
+        },
+        {
+          "path": "lib/research/metrics/chatter_gate.py",
+          "sha256": "78916b72983520fed4982393ce46ad7ef32f2c919cea784d08835a89a2a84adc",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/metrics/generation_writer.py",
+          "sha256": "d23bf99f4f7a11bbe30227741b9e2bf318451d8706ffe6d676d4fb0d6d893f07",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/metrics/movement_gate.py",
+          "sha256": "19259d5081d503cbf380e109fd17d956be5bf1ba42cd605a5dcad416ed1b6011",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/price/__init__.py",
+          "sha256": "038f2b5e522a21167ffb66fb0ce1568915cf750dc53a7c0a8571afa0bb7dfd4c",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/price/axis.py",
+          "sha256": "4bdb108efd446dad5acd9886fb64b61cfcad60102f28c273dfcecf43e7794a06",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/print/__init__.py",
+          "sha256": "b178beeaac33aee8e724f99379890e1b3105453358dd774af094b4f05268ac4d",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/print/render_pack.py",
+          "sha256": "0e257303af73426cc8498fcc5ab954f4c1500b889ed96bf5fb9ab755447dc708",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/provenance/__init__.py",
+          "sha256": "82d368f1142af2d9e8193648ccc9237d83dab24ad226bce14618b49db8a0e397",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/provenance/render_print.py",
+          "sha256": "b1fcdd915b63924ffaa48c0c5cafd3d8fb515ec06ab367cafd58bb5d6fdbbce0",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/provenance/validate.py",
+          "sha256": "ff25e778e7f7c548c75a7cded224cdaf887c77e42bb8f6350333e74789053f2f",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/rules/__init__.py",
+          "sha256": "cd8bb36a9790378b8b9f844eb6f0cccb37b89a4c78f91614dbf8a97cc157b8d5",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/rules/figure.py",
+          "sha256": "ac233345ab80f8381e63fdb771211128c494cc168504b83543cd4a2d7f44670a",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/rules/identity.py",
+          "sha256": "5dd8944cd4681775464f3a29306ebebb1e87a6530331a7eba15cd849549eab7c",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/rules/item.py",
+          "sha256": "3d282ef10353e3d94d83a3659824dedb698a04597ede047b1606871cd20b5439",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/rules/peer.py",
+          "sha256": "524167d82c5b6033a94ab495510e9aeb46d9a6e99010a61b6184b1f24291cc2d",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/rules/sentence.py",
+          "sha256": "e4c9e2fee5f565538880bd8fbbda344ae8be1d0b871ed5d2bed3fcb618c76f0c",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/rules/source.py",
+          "sha256": "4fc7cce4b1d689a21e63b3d6f2caecd6c55abe715d420c4dbbda8c33a639adea",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/scores/__init__.py",
+          "sha256": "54bcf0efdaa56d41bbe7a0d9973497ebc2f0ffcdb1cfb457d035662a62c2c7bd",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/scores/classify.py",
+          "sha256": "48000e583dc0e12a7ba343d3cb2a02c6fb54196f89c861e5e31b9c9cb004260b",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/watchlist/__init__.py",
+          "sha256": "ddb7c96e62b091e3c6ebbb35ccf7d9de8b89d364706351e5d07b986eb14c474e",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        },
+        {
+          "path": "lib/research/watchlist/store.py",
+          "sha256": "741ac74b4f89a7676d82c365e25ac9913f0d7e88f0d6dfe83e39915317606afc",
+          "local_exists": true,
+          "equal_normalized_newlines": true
+        }
+      ]
+    }
+  ],
+  "schedules": {
+    "scanned": 23,
+    "matched": [
+      {
+        "Name": "amgt-resapp-chatter-axis-daily",
+        "GroupName": "default",
+        "State": "ENABLED",
+        "LastModificationDate": "2026-09-11 14:13:44.078000-04:00"
+      }
+    ]
+  },
+  "api_routes": {
+    "apis_scanned": 5,
+    "routes": [
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "GET /api/scoped/amgt/security/{security_key}/compare",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      },
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "GET /api/scoped/amgt/lead-panel/timeseries/{movement}/{subject}",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      },
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "GET /api/scoped/amgt/security/{security_key}/versions",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      },
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "GET /api/scoped/amgt/security/{security_key}/print",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      },
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "GET /api/scoped/amgt/security/{security_key}/peers",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      },
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "GET /api/scoped/amgt/watchlist",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      },
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "GET /api/scoped/amgt/lists",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      },
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "GET /api/scoped/amgt/security/{security_key}/coverage",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      },
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "GET /api/scoped/amgt/security/{security_key}/overlay",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      },
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "POST /api/scoped/amgt/watchlist/unstar",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      },
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "GET /api/scoped/amgt/lead-panel/rankings/{movement}/{subject}",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      },
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "POST /api/scoped/amgt/refresh",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      },
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "POST /api/scoped/amgt/watchlist/star",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      },
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "GET /api/scoped/amgt/freshness",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      },
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "GET /api/scoped/amgt/security/{security_key}/ledger",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      },
+      {
+        "api_name": "opal-portal-data-proxy-api",
+        "api_id": "7k3ed8px20",
+        "RouteKey": "GET /api/scoped/amgt/security/{security_key}/thesis",
+        "AuthorizationType": "CUSTOM",
+        "Target": "integrations/352l7td"
+      }
+    ]
+  },
+  "object_reads": [
+    {
+      "key": "amgt/harvest/gold/chatter_daily/date=2026-09-22/part-20260922T213503Z.parquet",
+      "size": 12690,
+      "modified": "2026-09-22T21:35:07+00:00",
+      "sha256": "3af5e21cc10b7f3e158718e2944044641a70101e9afb33f044faa48ae1c2bdaa",
+      "rows": 1590,
+      "distinct": {
+        "security_key": 6,
+        "day": 265
+      },
+      "columns": [
+        "security_key",
+        "composite_figi",
+        "day",
+        "articles_total",
+        "tier_a",
+        "tier_b",
+        "tier_c",
+        "tier_d",
+        "mention_score",
+        "mention_count_total",
+        "publishers_distinct",
+        "trailing_7d_sum",
+        "trailing_30d_sum",
+        "baseline_30d_sum",
+        "baseline_30d_days",
+        "cumulative_ytd",
+        "first_published_utc",
+        "last_published_utc",
+        "data_status"
+      ],
+      "distributions": {}
+    },
+    {
+      "key": "amgt/harvest/gold/chatter_daily/date=2026-09-22/part-20260922T213712Z.parquet",
+      "size": 12690,
+      "modified": "2026-09-22T21:37:17+00:00",
+      "sha256": "3af5e21cc10b7f3e158718e2944044641a70101e9afb33f044faa48ae1c2bdaa",
+      "rows": 1590,
+      "distinct": {
+        "security_key": 6,
+        "day": 265
+      },
+      "columns": [
+        "security_key",
+        "composite_figi",
+        "day",
+        "articles_total",
+        "tier_a",
+        "tier_b",
+        "tier_c",
+        "tier_d",
+        "mention_score",
+        "mention_count_total",
+        "publishers_distinct",
+        "trailing_7d_sum",
+        "trailing_30d_sum",
+        "baseline_30d_sum",
+        "baseline_30d_days",
+        "cumulative_ytd",
+        "first_published_utc",
+        "last_published_utc",
+        "data_status"
+      ],
+      "distributions": {}
+    },
+    {
+      "key": "amgt/harvest/gold/chatter_daily/date=2026-09-23/part-20260923T021320Z.parquet",
+      "size": 13031,
+      "modified": "2026-09-23T02:13:24+00:00",
+      "sha256": "0840908b5fb26577ec37a731b848fefda51bdfe97e9f9b8d55cfff327c017161",
+      "rows": 1596,
+      "distinct": {
+        "security_key": 6,
+        "day": 266
+      },
+      "columns": [
+        "security_key",
+        "composite_figi",
+        "day",
+        "articles_total",
+        "tier_a",
+        "tier_b",
+        "tier_c",
+        "tier_d",
+        "mention_score",
+        "mention_count_total",
+        "publishers_distinct",
+        "trailing_7d_sum",
+        "trailing_30d_sum",
+        "baseline_30d_sum",
+        "baseline_30d_days",
+        "cumulative_ytd",
+        "first_published_utc",
+        "last_published_utc",
+        "data_status"
+      ],
+      "distributions": {}
+    },
+    {
+      "key": "amgt/harvest/gold/research-backlog/date=2026-09-23/20260923T023909Z.json",
+      "size": 47175,
+      "modified": "2026-09-23T02:39:12+00:00",
+      "sha256": "989d32534e5476ffcf6490de0be2dabba1dc74d9758b56dd99b1cc9cb989efbc",
+      "shape": {
+        "scan_vintage": "2026-09-23T02:39:09.239802+00:00",
+        "root": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Shared - Documents\\Asset Management\\Research",
+        "crosswalk_loaded_from": "s3://opal-data-harvest/crosswalk/v1/2026-09-22.json",
+        "method_version": 1,
+        "folders_read": 93,
+        "resolved": 33,
+        "unresolved": 60,
+        "ambiguous": 0,
+        "records": 93
+      },
+      "distributions": {
+        "records.state": {
+          "RESOLVED": 33,
+          "UNRESOLVED": 60
+        }
+      }
+    },
+    {
+      "key": "amgt/harvest/gold/research-backlog/date=2026-09-23/20260923T024828Z.json",
+      "size": 47175,
+      "modified": "2026-09-23T02:48:31+00:00",
+      "sha256": "68e20fcc879939bde2d526b9a1da945bd72f1b47363b48b7a1ab7c6cd1e10a63",
+      "shape": {
+        "scan_vintage": "2026-09-23T02:48:28.034976+00:00",
+        "root": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Shared - Documents\\Asset Management\\Research",
+        "crosswalk_loaded_from": "s3://opal-data-harvest/crosswalk/v1/2026-09-22.json",
+        "method_version": 1,
+        "folders_read": 93,
+        "resolved": 33,
+        "unresolved": 60,
+        "ambiguous": 0,
+        "records": 93
+      },
+      "distributions": {
+        "records.state": {
+          "RESOLVED": 33,
+          "UNRESOLVED": 60
+        }
+      }
+    },
+    {
+      "key": "amgt/harvest/silver/research-report/date=2026-09-23/part-20260923T044515Z.parquet",
+      "size": 39382,
+      "modified": "2026-09-23T04:45:17+00:00",
+      "sha256": "b8d933936b6ce7e504c6ef5ef95b0d9ffcf9311c9571a160e01d698c71a3bb6c",
+      "rows": 123,
+      "distinct": {
+        "security_key": 33,
+        "report_id": 123
+      },
+      "columns": [
+        "security_key",
+        "report_id",
+        "bronze_key",
+        "extract_key",
+        "fetched_at",
+        "file_ext",
+        "source_relpath",
+        "size_bytes",
+        "words_or_pages",
+        "report_class",
+        "class_evidence",
+        "fund",
+        "fund_evidence",
+        "fund_absent_reason",
+        "sector_as_written",
+        "sector_evidence",
+        "sector_absent_reason",
+        "period",
+        "period_source",
+        "period_evidence",
+        "period_absent_reason",
+        "author",
+        "author_evidence",
+        "author_absent_reason",
+        "record_hash"
+      ],
+      "distributions": {}
+    },
+    {
+      "key": "amgt/harvest/state/pull_log/security_key=6861_JP_Equity/20260919T095606Z.json",
+      "size": 1306,
+      "modified": "2026-09-22T00:50:22+00:00",
+      "sha256": "e3d7f4703a49442592271fc9604ebe5e14b60e7abc2e337def5968e02b763544",
+      "shape": {
+        "securities": 1,
+        "requests": 2
+      },
+      "distributions": {}
+    },
+    {
+      "key": "amgt/harvest/state/pull_log/security_key=6861_JP_Equity/20260919T124855Z.json",
+      "size": 2371,
+      "modified": "2026-09-22T00:50:22+00:00",
+      "sha256": "c65b348e8838d1a26762849b64016e00646c780b9844ed67a7d7bcacf64c0fb1",
+      "shape": {
+        "securities": 1,
+        "requests": 5
+      },
+      "distributions": {}
+    },
+    {
+      "key": "amgt/harvest/state/pull_log/security_key=6861_JP_Equity/20260919T152125Z.json",
+      "size": 2528,
+      "modified": "2026-09-22T00:50:23+00:00",
+      "sha256": "efa6223c844d71e8355f15cbb1a984fbdac9550cab2203b36d0eb3d63fdf1c13",
+      "shape": {
+        "securities": 1,
+        "requests": 5
+      },
+      "distributions": {}
+    },
+    {
+      "key": "amgt/harvest/state/pull_log/security_key=992_HK_Equity/20260922T201211Z.json",
+      "size": 2548,
+      "modified": "2026-09-22T20:12:16+00:00",
+      "sha256": "9ab98d733051bf1f6df1938320ff8595cb49c7713d38d189dd97cfee7d6c9eae",
+      "shape": {
+        "securities": 1,
+        "requests": 5
+      },
+      "distributions": {}
+    },
+    {
+      "key": "amgt/harvest/state/pull_log/security_key=CAT_US_Equity/20260919T095600Z.json",
+      "size": 1303,
+      "modified": "2026-09-22T00:50:29+00:00",
+      "sha256": "7d1e5a4893fe22aaadeca04b14e6a6a0b51a0ed6ff253f17acbb07269fbd9a8d",
+      "shape": {
+        "securities": 1,
+        "requests": 2
+      },
+      "distributions": {}
+    },
+    {
+      "key": "amgt/harvest/state/pull_log/security_key=CAT_US_Equity/20260919T124848Z.json",
+      "size": 2365,
+      "modified": "2026-09-22T00:50:30+00:00",
+      "sha256": "b731cbfe73909498e92def7f8d7d4e2d3cf7da308977b81cefc885906fa221e5",
+      "shape": {
+        "securities": 1,
+        "requests": 5
+      },
+      "distributions": {}
+    },
+    {
+      "key": "amgt/harvest/state/pull_log/security_key=CAT_US_Equity/20260919T152117Z.json",
+      "size": 2522,
+      "modified": "2026-09-22T00:50:31+00:00",
+      "sha256": "dc1f24660de7d009460bb972d2de0b5ca9f11b6d9e677a8ef26719303abefa87",
+      "shape": {
+        "securities": 1,
+        "requests": 5
+      },
+      "distributions": {}
+    },
+    {
+      "key": "amgt/harvest/state/pull_log/security_key=CSL_AU_Equity/20260919T095603Z.json",
+      "size": 1303,
+      "modified": "2026-09-22T00:50:33+00:00",
+      "sha256": "ede25e8abb35de431dd6b9b83c169587d04c70bb9db5f88650c12c377bf15510",
+      "shape": {
+        "securities": 1,
+        "requests": 2
+      },
+      "distributions": {}
+    },
+    {
+      "key": "amgt/harvest/state/pull_log/security_key=CSL_AU_Equity/20260919T124852Z.json",
+      "size": 2365,
+      "modified": "2026-09-22T00:50:33+00:00",
+      "sha256": "70ad69a94419772662d7892ee96b6ddace4bde80536fa8267b337e29a479d883",
+      "shape": {
+        "securities": 1,
+        "requests": 5
+      },
+      "distributions": {}
+    },
+    {
+      "key": "amgt/harvest/state/pull_log/security_key=CSL_AU_Equity/20260919T152121Z.json",
+      "size": 2522,
+      "modified": "2026-09-22T00:50:35+00:00",
+      "sha256": "ec1c746713225df470aabcf09ba5915a140ba669f695bb86adf43ec29f1b7ab2",
+      "shape": {
+        "securities": 1,
+        "requests": 5
+      },
+      "distributions": {}
+    },
+    {
+      "key": "crosswalk/v1/2026-09-15.json",
+      "size": 188380,
+      "modified": "2026-09-15T08:02:41+00:00",
+      "sha256": "c9ea41499ffcf88d07969d6a0ac78ae8631b602368fed5ce270e6a063dfb8a36",
+      "shape": {
+        "schema_version": 1,
+        "as_of": "2026-09-15",
+        "coverage_source": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~4/universe.json",
+        "coverage_vintage": 5,
+        "key_conventions": 6,
+        "denominators": 6,
+        "records": 89
+      },
+      "distributions": {
+        "records.resolution": {
+          "MEASURED": 33,
+          "UNRESOLVED": 56
+        }
+      }
+    },
+    {
+      "key": "crosswalk/v1/2026-09-19.json",
+      "size": 202505,
+      "modified": "2026-09-19T01:23:43+00:00",
+      "sha256": "6668326f3d1b4d09083560c86652635c5e029eeaff56606ef5f95dfadd1c3cc7",
+      "shape": {
+        "schema_version": 1,
+        "as_of": "2026-09-19",
+        "coverage_source": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~4/universe.json",
+        "registrations_source": "lib/research/identity/registrations.json",
+        "coverage_vintage": 5,
+        "key_conventions": 6,
+        "denominators": 7,
+        "records": 96
+      },
+      "distributions": {
+        "records.resolution": {
+          "MEASURED": 36,
+          "UNRESOLVED": 60
+        }
+      }
+    },
+    {
+      "key": "crosswalk/v1/2026-09-22.json",
+      "size": 203327,
+      "modified": "2026-09-22T17:21:29+00:00",
+      "sha256": "da53b89cce05ea0b3bb3c0ac524c18f385186a7a18efd91a36f2aaee06a1cf7a",
+      "shape": {
+        "schema_version": 1,
+        "as_of": "2026-09-22",
+        "coverage_source": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~4/universe.json",
+        "registrations_source": "lib/research/identity/registrations.json",
+        "coverage_vintage": 5,
+        "key_conventions": 6,
+        "denominators": 8,
+        "records": 96
+      },
+      "distributions": {
+        "records.resolution": {
+          "MEASURED": 36,
+          "UNRESOLVED": 60
+        }
+      }
+    },
+    {
+      "key": "universe/v1/2026-09-15.json",
+      "size": 185928,
+      "modified": "2026-09-15T08:02:43+00:00",
+      "sha256": "b281b0312011580623e3be2c4fdc2d6c70222c3dea86aa41c91fb17d2939f0a4",
+      "shape": {
+        "as_of": "2026-09-15",
+        "snapshot_date": "2026-09-14",
+        "schema_version": 1,
+        "coverage_source": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~4/universe.json",
+        "holdings_source": 4,
+        "names": 256,
+        "denominators": 7
+      },
+      "distributions": {
+        "names.resolution": {
+          "MEASURED": 33,
+          "UNRESOLVED": 223
+        }
+      }
+    },
+    {
+      "key": "universe/v1/2026-09-16.json",
+      "size": 197564,
+      "modified": "2026-09-16T07:32:10+00:00",
+      "sha256": "5d3ba4cd412ad8da3d856d2d81902dced61259f8c7b2002f3417e414077b8847",
+      "shape": {
+        "as_of": "2026-09-16",
+        "snapshot_date": "2026-09-15",
+        "schema_version": 1,
+        "coverage_source": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~4/universe.json",
+        "holdings_source": 4,
+        "names": 250,
+        "denominators": 7
+      },
+      "distributions": {
+        "names.resolution": {
+          "MEASURED": 191,
+          "UNRESOLVED": 59
+        }
+      }
+    }
+  ],
+  "role_policy_observations": [
+    {
+      "function": "opal-amgt-scoped-api",
+      "modified": "2026-09-22T10:07:44.000+0000",
+      "code_sha256": "r93CxQqrk8k8h2Q8KO4Iicn3pk8kyF4SFo47a9Cca5w=",
+      "inline_policies": [
+        {
+          "name": "opal-amgt-scoped-api-grants",
+          "document": {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Action": [
+                  "dynamodb:Query",
+                  "dynamodb:GetItem",
+                  "dynamodb:BatchGetItem"
+                ],
+                "Effect": "Allow",
+                "Resource": [
+                  "arn:aws:dynamodb:us-east-1:313476888478:table/opal-harvest-security-metrics",
+                  "arn:aws:dynamodb:us-east-1:313476888478:table/opal-harvest-security-metrics/index/*"
+                ],
+                "Sid": "ReadRankedAxesAndPoints"
+              },
+              {
+                "Action": [
+                  "s3:GetObject"
+                ],
+                "Effect": "Allow",
+                "Resource": [
+                  "arn:aws:s3:::opal-data-harvest/publication-links/v1/*",
+                  "arn:aws:s3:::opal-data-harvest/publications/v1/*",
+                  "arn:aws:s3:::opal-data-harvest/universe/v1/*",
+                  "arn:aws:s3:::opal-data-harvest/crosswalk/v1/*",
+                  "arn:aws:s3:::opal-data-harvest/drafting/v1/*",
+                  "arn:aws:s3:::opal-data-harvest/peers/v1/*",
+                  "arn:aws:s3:::opal-data-harvest/management/v1/*",
+                  "arn:aws:s3:::opal-data-harvest/posture/v1/*",
+                  "arn:aws:s3:::opal-data-harvest/derived/model_block/*",
+                  "arn:aws:s3:::opal-data-harvest/packs/*",
+                  "arn:aws:s3:::opal-data-harvest/scores/v1/*",
+                  "arn:aws:s3:::opal-data-harvest/bloomberg/harvest/bronze/*",
+                  "arn:aws:s3:::opal-data-harvest/bloomberg/harvest/silver/*",
+                  "arn:aws:s3:::opal-data-harvest/seeking-alpha/harvest/bronze/*",
+                  "arn:aws:s3:::opal-data-harvest/seeking-alpha/harvest/silver/*",
+                  "arn:aws:s3:::opal-data-harvest/sec/harvest/silver/*",
+                  "arn:aws:s3:::opal-data-harvest/barrons/harvest/silver/*",
+                  "arn:aws:s3:::opal-data-harvest/wsj/harvest/silver/*",
+                  "arn:aws:s3:::opal-data-harvest/ft/harvest/silver/*",
+                  "arn:aws:s3:::opal-data-harvest/amgt/harvest/state/filing_attempt/*",
+                  "arn:aws:s3:::opal-data-harvest/bright-data/harvest/bronze/*"
+                ],
+                "Sid": "ReadThePoolPrefixesTheAdapterReads"
+              },
+              {
+                "Action": [
+                  "s3:ListBucket"
+                ],
+                "Condition": {
+                  "StringLike": {
+                    "s3:prefix": [
+                      "publication-links/v1/*",
+                      "publications/v1/*",
+                      "universe/v1/*",
+                      "crosswalk/v1/*",
+                      "drafting/v1/*",
+                      "peers/v1/*",
+                      "management/v1/*",
+                      "posture/v1/*",
+                      "derived/model_block/*",
+                      "packs/*",
+                      "scores/v1/*",
+                      "bloomberg/harvest/bronze/*",
+                      "bloomberg/harvest/silver/*",
+                      "seeking-alpha/harvest/bronze/*",
+                      "seeking-alpha/harvest/silver/*",
+                      "sec/harvest/silver/*",
+                      "barrons/harvest/silver/*",
+                      "wsj/harvest/silver/*",
+                      "ft/harvest/silver/*",
+                      "amgt/harvest/state/filing_attempt/*",
+                      "bright-data/harvest/bronze/*"
+                    ]
+                  }
+                },
+                "Effect": "Allow",
+                "Resource": [
+                  "arn:aws:s3:::opal-data-harvest"
+                ],
+                "Sid": "ListOnlyThePoolPrefixesTheAdapterReads"
+              },
+              {
+                "Action": [
+                  "dynamodb:PutItem",
+                  "dynamodb:DeleteItem"
+                ],
+                "Effect": "Allow",
+                "Resource": [
+                  "arn:aws:dynamodb:us-east-1:313476888478:table/opal-harvest-security-metrics"
+                ],
+                "Sid": "WriteOnlyTheFirmsOwnStarMarkers"
+              }
+            ]
+          }
+        }
+      ],
+      "attached_policies": [
+        {
+          "PolicyName": "AWSLambdaBasicExecutionRole",
+          "PolicyArn": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+        }
+      ],
+      "gold_reader_present_in_local_not_deployed": true
+    },
+    {
+      "function": "amgt-resapp-chatter-axis",
+      "modified": "2026-09-19T09:49:46.000+0000",
+      "code_sha256": "I6eitcaItzqRTlVUaUSF+GGzrpNDHnn71ILk1vIGjHY=",
+      "inline_policies": [
+        {
+          "name": "amgt-resapp-chatter-axis-lambda-policy",
+          "document": {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Action": [
+                  "s3:GetObject"
+                ],
+                "Effect": "Allow",
+                "Resource": [
+                  "arn:aws:s3:::opal-data-harvest/publication-links/v1/*",
+                  "arn:aws:s3:::opal-data-harvest/publications/v1/*",
+                  "arn:aws:s3:::opal-data-harvest/crosswalk/v1/*",
+                  "arn:aws:s3:::opal-data-harvest/universe/v1/*",
+                  "arn:aws:s3:::opal-data-harvest/barrons/harvest/silver/*",
+                  "arn:aws:s3:::opal-data-harvest/wsj/harvest/silver/*",
+                  "arn:aws:s3:::opal-data-harvest/ft/harvest/silver/*",
+                  "arn:aws:s3:::opal-data-harvest/seeking-alpha/harvest/silver/*"
+                ],
+                "Sid": "ReadThePoolPrefixesTheProducerReads"
+              },
+              {
+                "Action": [
+                  "s3:ListBucket"
+                ],
+                "Condition": {
+                  "StringLike": {
+                    "s3:prefix": [
+                      "publication-links/v1/*",
+                      "publications/v1/*",
+                      "crosswalk/v1/*",
+                      "universe/v1/*",
+                      "barrons/harvest/silver/*",
+                      "wsj/harvest/silver/*",
+                      "ft/harvest/silver/*",
+                      "seeking-alpha/harvest/silver/*"
+                    ]
+                  }
+                },
+                "Effect": "Allow",
+                "Resource": [
+                  "arn:aws:s3:::opal-data-harvest"
+                ],
+                "Sid": "ListOnlyThePoolPrefixesTheProducerReads"
+              },
+              {
+                "Action": [
+                  "dynamodb:PutItem",
+                  "dynamodb:BatchWriteItem"
+                ],
+                "Effect": "Allow",
+                "Resource": [
+                  "arn:aws:dynamodb:us-east-1:313476888478:table/opal-harvest-security-metrics"
+                ],
+                "Sid": "WriteSecurityMetrics"
+              },
+              {
+                "Action": [
+                  "logs:CreateLogGroup",
+                  "logs:CreateLogStream",
+                  "logs:PutLogEvents"
+                ],
+                "Effect": "Allow",
+                "Resource": [
+                  "arn:aws:logs:us-east-1:313476888478:log-group:/aws/lambda/amgt-resapp-chatter-axis:*"
+                ],
+                "Sid": "OwnLogStreamOnly"
+              }
+            ]
+          }
+        }
+      ],
+      "attached_policies": [],
+      "gold_reader_present_in_local_not_deployed": true
+    }
+  ],
+  "errors": [],
+  "windows_tasks": {
+    "measured_at": "2026-09-23T13:46:41.316350+00:00",
+    "tasks": [
+      {
+        "TaskName": "Bloomberg Updater",
+        "State": "Running"
+      },
+      {
+        "TaskName": "Opal Data Harvest - Local Publications",
+        "State": "Disabled"
+      },
+      {
+        "TaskName": "OpalResearch-ExecManagement",
+        "State": "Disabled"
+      },
+      {
+        "TaskName": "OpalResearch-FilingsAnalyzer",
+        "State": "Disabled"
+      },
+      {
+        "TaskName": "OPAL_BLOOMBERG-FreezeTripwire",
+        "State": "Ready"
+      }
+    ]
+  },
+  "library": {
+    "measured_at": "2026-09-23T13:46:41.367040+00:00",
+    "folders": 93,
+    "files_under_folders": 351,
+    "bytes": 305749472,
+    "extensions": {
+      ".pdf": 184,
+      ".xlsx": 78,
+      ".docx": 71,
+      ".png": 17,
+      ".html": 1
+    },
+    "scope": "all files recursively under immediate name folders; metadata only, no source writes"
+  },
+  "peer_evidence": {
+    "message_id": 24746,
+    "received_at": "2026-09-23T13:39:46Z",
+    "sender": "1.0.0_SA_CTO~Z",
+    "path": "org/mcp/inbox/4.0.0_SA_CRO/~Z/read/20260923T133946Z_1.0.0_SA_CTO_Z__TICK_71_-__CRO_Z__The_AMGT_current_stat.md",
+    "reported_not_independently_read": [
+      "CVO unread round-36 delivery",
+      "CVO unread c-10/c-11 review/grant matter"
+    ],
+    "limitations": "This audit did not inspect another seat inbox. Message is source-attributed evidence, not independent review."
+  },
+  "source_claims": {
+    "refresh": "scoped_amgt.py POST refresh declares PULL_ENQUEUE_ROUTE and sends nothing; frontend requestRefresh promises queued boolean",
+    "print": "_print_pack loads current model block; read_model_block_versions lists numeric model stamps",
+    "new_report_absence": "zero /platinum/ objects in complete bucket census; bounded source search found registry references only and no substrate consumer outside module/tests",
+    "portal": "source at DEV pin only; no production browser bundle parity claim"
+  }
+}

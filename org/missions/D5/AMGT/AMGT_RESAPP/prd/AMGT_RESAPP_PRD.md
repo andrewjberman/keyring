@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.13",
+  "prd_version": "v0.24",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -201,6 +201,135 @@ refused it either. Measured independently at both vintages before the fix: the E
 serial-bearing lines at v0.9 of 231 body lines, and **0** at v0.8 of 211. Both were introduced by this bump.
 
 
+### v0.24 CHANGE NOTE -- 2026-09-23 ~04:3xZ, `1.0.0_SA_CTO~Z`: Lenovo IS an EDGAR entity, and the regulator route was already ratified
+
+**BRIEF HALF ONLY. The ratified text is UNTOUCHED -- no ENDPOINT line and no `C-` contract moves.** New
+section **12a** carries both corrections; section 12's stage-3 row is rewritten to match it.
+
+- **Lenovo IS an EDGAR filer.** Section 12 said `(not an SEC filer)`. Measured at the regulator
+  (`data.sec.gov` submissions for CIK 0000932477, HTTP 200): **LENOVO GROUP LTD, 63 filings all-time**
+  (`filings.files` empty, so nothing older is unread), **0 of 10-K / 20-F / 40-F / 6-K**, and **six `ARS`
+  annual-family documents whose newest is 2007** and which are paper placeholders. The entity RESOLVES at
+  step (2); what fails is acceptance test (b) CURRENT, then (c) KNOWN FAMILY. The battery's recorded
+  REASON is served through `rk-127`'s HELD marker, so the false sentence would reach the page.
+- **The regulator route needed no amendment.** `C-FILINGS-ANALYZER` has carried international step (5),
+  the national regulator, since @`4de34f0d95`. The CTO ruling @`0210Z` directed it into `C-`-space; that
+  act is VOID as unnecessary and the ruling's other three limbs stand. ⛔ **The ruling measured the CODE
+  and concluded about the CONTRACT** -- the true state is RATIFIED AND UNBUILT, which is a cell.
+
+⚠ **Consequence for round 35: it needs NO ratified-text re-signature and NO new authority from Andrew.**
+**Placed as a `###` in the preamble, before `## 0.`, so this note moves neither half by itself.**
+
+### v0.23 CHANGE NOTE -- 2026-09-22 ~15:2xZ, `1.0.0_SA_CTO~Z`: the sibling project AMGT_HARVST
+
+Andrew-direct ~14:4xZ made `AMGT_HARVST` a new project beside this one (record @`e279a48e4e`). Its v0.2 PRD
+replaces the chatter axis's read path. This bump makes three changes:
+- **Ratified text:** `C-ONE-STORE` names that supersession and its trigger. This is `3.0.0_SA_CVO~Z`'s R1 on
+  AMGT_HARVST v0.1, and the "same bump" it asked for.
+- **Brief half:** section 12's stage 9 waits on AMGT_HARVST's bronze and silver.
+- **Brief half:** the Lenovo before-count is corrected from 19 to 18. The unanchored grep had matched a byte size;
+  the key-anchored count is 18.
+
+Both halves move.
+
+### v0.22 CHANGE NOTE -- 2026-09-22 ~14:0xZ, `1.0.0_SA_CTO~Z`: the Lenovo trial
+
+Andrew-direct ~13:5xZ (record @`cd0cca7f46`): run Lenovo through the entire pipeline as the trial. This bump makes these
+changes:
+- It adds section 12, which makes `992_HK_Equity` the validation scope in place of the three names in `C-VALIDATION-NAMES`.
+- It re-pins the channel-formats plan in section 11 to @`1b43fd2933`.
+
+CONTRACTS and ENDPOINT are untouched, so **only the brief half moves.** The working key (composite FIGI, "for the
+purposes of research", @`6f1a72e4be`) is recorded as a trial output, not a contract.
+
+### v0.21 CHANGE NOTE -- 2026-09-22 ~11:1xZ, `1.0.0_SA_CTO~Z`: the CVO's v0.20 residuals and carry items
+
+This bump applies the v0.20 review @`45cc68b8ac` exactly.
+- (a) The round-5/v0.6 history is stripped from C-PAGE-LAYOUT. Its operative sentence stands alone.
+- (b) The dated ticker measurement is stripped from C-UNION-UNIVERSE.
+- (c) C-ETF-PLANE-READ names the role, not the lane.
+- (d) The closed row id is stripped from C-HARVEST-HOME, and C-PAGE-LAYOUT's S13 is named as the open social-feed surface.
+- Carry 1: the preamble now says where owners are recorded.
+- Carry 2: the POSN_ASTTAX PRD pointer carries its path.
+
+Only the ratified-text half moves.
+
+### v0.20 CHANGE NOTE -- 2026-09-22 ~11:0xZ, `1.0.0_SA_CTO~Z`: the CONTRACTS provenance cleanup, per the CVO's ruling
+
+This bump executes the ruling at `org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_RULING_AMGT_RESAPP_CONTRACTS_PROVENANCE_20260922.md`
+@`8420ba2ddc`. Each contract keeps ONE owner and ONE `path@commit` pointer to its immutable record.
+- Time-only Andrew-direct citations are pinned to the record carrying them.
+- Removed: incidental history (measurement narratives, lane suffixes, version tags, settled row ids, intermediate commit trails).
+- No operative sentence changes.
+
+Only the ratified-text half moves.
+
+### v0.19 CHANGE NOTE -- 2026-09-22 ~10:5xZ, `1.0.0_SA_CTO~Z`: where Bloomberg's received form is recorded, and its non-finite rule
+
+`C-BRONZE-AS-RECEIVED` takes the CVO's three wording items.
+- A non-finite number is serialised as null, and the serialiser refuses any other value JSON cannot carry. This is
+  rk-96's rule, now in the contract.
+- The received form is recorded in S3 object METADATA, never in the body. A body field would alter the very
+  serialisation the clause defines.
+- The key is named as stored: `received-form`.
+
+The contract edit moves the ratified-text half; this change note moves the brief half. The broader CONTRACTS
+provenance cleanup is NOT in this bump: the section's own
+preamble requires each contract to name "its owner and the record it comes from", so a pure deletion would contradict
+it. That question is put to the CVO as a governance fork.
+
+### v0.18 CHANGE NOTE -- 2026-09-22 ~08:0xZ, `1.0.0_SA_CTO~Z`: Bloomberg's received form, and what stays on its served path
+
+The two contract clauses record the rulings the round-21/22 cuts ran under.
+- **`C-BRONZE-AS-RECEIVED`** names Bloomberg's received form. The Terminal client hands the producer a parsed object,
+  and the wire bytes are unreachable, so its deterministic JSON serialisation is the received form, marked as such
+  (msg 24106).
+- **`C-FORMAT-SEQUENCE`** states that a served object whose reader cannot read silver's format keeps its one served
+  path until the gold chain builds a served JSON projection: `model_block`, and the publication bodies and links
+  (msgs 24123 and 24125).
+
+Section 11 records the moves as done and the registry items as closed. BOTH halves move. The CONTRACTS
+provenance cleanup (the CVO's v0.17 carry-item) is still owed, as its own bump.
+
+### v0.17 CHANGE NOTE -- 2026-09-21 ~21:3xZ, `1.0.0_SA_CTO~Z`: platinum's home, Lusha's exception, and what "retire" means
+
+The format contracts take five changes.
+- **Platinum.** `C-HARVEST-HOME` puts platinum where the builder prints it, not at R6. The landed GENERAL tenancy homes
+  every tier by scope, which is Andrew's "whole pipeline in harvest", and its only remaining condition is the duplicate
+  `harvest` scope row (row Z-S203).
+- **Lusha.** It takes Andrew's R20 exception (~19:5xZ, *"Yes on Exception"*): silver only, contact fields dropped, no
+  bronze.
+- **Retire.** `C-FORMAT-SEQUENCE` defines "retire" (readers switched, writers stopped and read grant removed in one
+  window; deletion is a separate human word).
+- **Re-serialisation.** It counts a lossless re-serialisation as a copy.
+- **filings/v1.** Its DERIVED records go to silver.
+
+These answer the COO's four calls (msg 24087). Section 11 records that the tenancy and the five vendor rows have landed
+on SITEZ. BOTH halves move.
+
+### v0.16 CHANGE NOTE -- 2026-09-21 ~19:3xZ, `1.0.0_SA_CTO~Z`: who the CEO is, and readable reasons
+
+`C-EXEC-MANAGEMENT` gains two rules. (1) Who the CEO is, ruled on rows Z-S195/S196: a Japanese-listed "President" is
+the chief executive when no officer carries a CEO title. (2) A served reason is always a readable sentence, prompted by
+row Z-S197, where a missing value printed as "None" into Keyence's roster reason. Section 11 re-pins the format plan at
+`1a9f1c4469`; its correction drops a dual-write move order that the same-window contract forbids. BOTH halves move.
+
+### v0.15 CHANGE NOTE -- 2026-09-21 ~17:5xZ, `1.0.0_SA_CTO~Z`: the six format contracts move to CONTRACTS
+
+v0.14 put the six format contracts in section 11, which the sign-off hashes as the brief half, so the ratified-text
+reviewer never saw them; `3.0.0_SA_CVO~Z` caught it (msg 23999). They now sit in the CONTRACTS section. The same
+edit takes the reviews' conditions: bronze takes three forms (the brief reviewer's refusal, msg 24001); one writer
+per fetch key; a moved path retires in the same window; the home is conditional in its own sentence; platinum at R6's
+home, as the drafted tenancy lands it (msg 24000); never-kept bronze filled by a first fetch. BOTH halves move.
+
+### v0.14 CHANGE NOTE -- 2026-09-21 ~17:4xZ, `1.0.0_SA_CTO~Z`: the harvest storage format (section 11)
+
+Andrew-direct ~17:2xZ (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260921_172xZ_AMGT_RESAPP_PROMOTE_IF_FEATURES_NO_WATER_IN_PIPES_BACKFILL_HELD_FOR_BRONZE_SILVER_SHAPE.md`
+@`e70b949ba0`): the coordinated backfill is held until the bronze/silver format of `opal-data-harvest` per ingestion
+channel is settled. `4.0.0_SA_CRO~Z`'s plan (`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md`
+@`bc8c18a28f`) is adopted as the channel-by-channel specification, and section 11 carries the contracts. The ENDPOINT
+and the CONTRACTS section do not move. Only the brief half re-opens.
+
 ### v0.13 CHANGE NOTE -- 2026-09-18 ~20:1xZ, `1.0.0_SA_CTO~Z`: ratified-text hygiene, and Andrew clears SA's terms
 
 (1) **`3.0.0_SA_CVO~Z` REFUSED v0.12's ratified-text half on criterion (d) alone** -- annotation, history and seat names inside
@@ -242,7 +371,13 @@ the bytes were not).
 
 **Brief half:** `C-UNIT-MAP-MEASURED` amended (built for every name); `C-MODEL-FORECASTS` and `C-MODEL-WINDOW-AND-ROWS`
 added; `C-VERBATIM-GATE` replaced (every pass count prints its split; a sentence with no span is served LABELLED, and whether
-it is instead HELD is Andrew's card); `C-SERVER-SIDE-RANKING` amended (no rank without signal; `empty_reason`);
+it is instead HELD is Andrew's card) -- ⛔ **THAT LAST CLAUSE IS SUPERSEDED: Andrew answered the card
+(*"Agreed, yes."*, ~19:4xZ) and **v0.12 makes a no-span sentence HELD, never served** -- read
+`C-VERBATIM-GATE` at `:1107-1114`, not this note. Measured blast radius of the HELD rule: **179 of 389
+sentences (46%) across 12 served documents.** ⚠ **This note is TRUE AT ITS OWN VINTAGE (v0.11) and a
+reader scanning change notes for this contract finds it FIRST; `3.0.0_SA_CVO~Z` came one sentence from
+ruling the figure branch already admissible on it, 2026-09-23.** ⭐ **A change note ages past the clause
+it describes, and nothing in a preamble announces which entry is newest for a given contract** --; `C-SERVER-SIDE-RANKING` amended (no rank without signal; `empty_reason`);
 `C-PRICE-BREAKOUT-FLOOR`, `C-PRICE-DAILY-LEG` (Andrew's Lead Panel cards B and A) and `C-DESCRIPTION-LINE` added; the
 section-9 condition *"measure one Bloomberg-pulled filing"* marked superseded; and a new **section 10, THE INSTANTIATION
 STAGES**, with `C-INSTANTIATION-ENTRY`, `C-PRODUCTION-HOME` and `C-VALIDATION-NAMES`. In this preamble, the five stale `:353`
@@ -513,40 +648,46 @@ build.** **No cell may claim an `EXERCISED` outcome REALIZED on the strength of 
 
 ## CONTRACTS -- v0.7 (ratified text; the reviewer is `3.0.0_SA_CVO`, always)
 
-*Contracts are the shapes every cell must respect. Each one names its owner and the record it comes from.
+*Contracts are the shapes every cell must respect. Each one names the record it comes from. A contract that names an
+owner assigns that part to that seat; every other contract is owned by this PRD's L4 author, and the cell that executes
+it is assigned by the decomposition.
 None of them is an outcome and none of them is graded; they are what a cell may not silently change.*
 
 **C-PAGE-LAYOUT.** The Security Analysis page is ONE HEADER and FIVE TABS. The header is the discovery
 surface: the Lead Panel's ranking cross (movement Trending | Breakout x subject Price | Chatter, List |
-Chart), the company-level feed (publisher items from the harvest and, once S13 has measured a source,
+Chart), the company-level feed (publisher items from the harvest and, once the social-feed surface (S13, `FWD-11`) has measured a source,
 social items), a one-line description, and the Posture line. The tabs, in order: **Thesis** (prose over
 cited evidence + the one "big thing" chart), **Exec Management**, **Peers**, **Model**, **Posture**. Print
 is a header export action, never a tab. The Coverage TAB is retired: its content is the header feed. The
-Model tab is RESTORED (round 5 cut it and rehomed its figures in Thesis; v0.6 returns it as its own tab
-carrying the model block in the shape of Adam's `Model` sheet, the same way for every company).
-Source: Andrew-direct ~05:1xZ and the voice memo ~05:5xZ; measured shape: Adam's Boeing one-pager workbook
-(`SUBSTRATE_CARDS.md` card 3 @5007337353).
+Model tab is RESTORED as its own tab. The Model tab carries the model block in the shape of Adam's `Model` sheet,
+the same way for every company.
+Source: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_051xZ_SECURITY_ANALYSIS_HEADER_PANEL_FOUR_TABS_FILINGS_ANALYZER.md@a5c6a066de`; the voice memo `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_055xZ_TRANSCRIPT_SECURITY_ANALYSIS_PANELS_DRILL_DOWN.md@2285a23678`; measured shape: Adam's Boeing one-pager workbook
+(`SUBSTRATE_CARDS.md` card 3).
 
-**C-ONE-STORE (resolves `Z-S96`).** The pool `s3://opal-data-harvest` is THE article store. The chatter
+**C-ONE-STORE.** The pool `s3://opal-data-harvest` is THE article store. The chatter
 axis producer and the coverage reader READ the pool through ONE shared adapter: the association at
 `publication-links/v1/{security_key}/{publisher}/{digest}.json` (its `security_key`, `publisher`, `article_key`),
 the body at `publications/v1/{publisher}/{digest}.json`, where `article_key = publisher + ':' + article_id` is
 the stable identity and `digest = sha256(article_key)`; the publication time is the body's **`published`** field
 (the canonical schema `lib/opal_data_harvest/article.schema.json` has no `published_at` and forbids additional
-properties -- v0.6 named the wrong field; the consumer maps `published` to its own `published_at` at its
+properties; the consumer maps `published` to its own `published_at` at its
 boundary and never substitutes `fetched_at`, the retrieval vintage, or the link's `first_discovered_at`); one
 article counts ONCE per associated security however many links or retries carry it; a missing body, a
 malformed record, an access denial and a partial read stay DISTINGUISHABLE from a quiet day and from an empty
 feed; the DynamoDB articles table is RETIRED as a source once both readers are repointed, and nothing writes
-it after that. The field-level source contract and the acceptance examples are `4.0.0_SA_CRO~W`'s connection
-brief `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_POOL_READERS_20260915_W.md`
-@`0e7de170e3` (under Andrew's word @`76ab87a06e`), including the package seam: the deployed archives must carry
+it after that. The field-level source contract and the acceptance examples are the connection
+brief `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_POOL_READERS_20260915_W.md@0e7de170e3`, including the package seam: the deployed archives must carry
 the reader, its schema files and `jsonschema`, exercised in an isolated runtime. Inflow to the pool is TRACEABLE: every body carries its publisher, canonical URL,
-stable identity and retrieval receipt. Andrew's ~05:04Z word names the pool as the system of record;
-this contract makes it the only one. Owner of the readers: `2.0.0_SA_COO~W` (the recut); owner of the
-writer: the harvest lane, whose mechanism and cadence stay reserved to Andrew by name.
+stable identity and retrieval receipt. Andrew's word (`org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/ANDREW_DIRECT_20260915_0504Z_EXECUTIVE_MANAGERS_LUSHA_AND_THE_HARVEST_POOL.md@7cf62a165f`) names the pool as the system of record;
+this contract makes it the only one. Owner of the readers: `2.0.0_SA_COO`; owner of the
+writer: the harvest lane, whose mechanism and cadence stay reserved to Andrew by name. **The read path is superseded,
+at a stated point, by `AMGT_HARVST`'s `C-HV-AXIS-PROJECTION`** (`org/missions/D5/AMGT/AMGT_HARVST/prd/AMGT_HARVST_PRD.md`
+v0.2). When that project's gold `article_security_mention` and `chatter_daily` tables land, the chatter-axis producer
+and the coverage reader read THOSE tables through this same single adapter; `publication-links/v1/` and
+`publications/v1/` retire under `C-FORMAT-SEQUENCE` in one window with that move's never-widen pair. Until then this
+contract binds as written.
 
-**C-ONE-IDENTITY (sharpens `C-IDENTITY-RESOLVED`; the rule behind `Z-S95`'s remedy).** ONE canonical security
+**C-ONE-IDENTITY (sharpens `C-IDENTITY-RESOLVED`).** ONE canonical security
 identity per economic security, resolved ONCE at the route boundary and carried unchanged through overlay,
 thesis, peers, model, coverage, ranking and Posture. A VERSIONED, EXPLICIT crosswalk (`crosswalk/v1` in the
 pool) maps that identity to its Bloomberg identifier (`BA US`), display ticker, model/pack key (`BA_US_Equity`)
@@ -558,9 +699,9 @@ system; the full universe reports 89 input names and ONE disposition per name; r
 changing a display label mints no second record. Article bodies need no migration (they are keyed
 `publisher:article_id`); the read adapter learns the legacy association aliases or a separately verified link
 migration runs, and in either case an old and a new link for the same article count ONCE; old links are
-preserved until the transition is verified; no deletes. Measured: three conventions on one name at 06:17Z
-(`4.0.0_SA_CRO~W`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_IDENTITY_20260915_W.md`
-@`b90bfdd20d`). Owner of the crosswalk and the route-boundary resolution: `2.0.0_SA_COO~W` (the round-11 cut
+preserved until the transition is verified; no deletes. Source:
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_IDENTITY_20260915_W.md@b90bfdd20d`.
+Owner of the crosswalk and the route-boundary resolution: `2.0.0_SA_COO` (the round-11 cut
 chooses the home); `Z-S95`'s remedy and disarm stay with their named owner.
 
 **C-RANKING-GENERATION (the write rule for every ranking partition; sharpens s.3b's `C-SERVER-SIDE-RANKING`).**
@@ -572,29 +713,26 @@ successful empty product clears the earlier membership; a producer or read failu
 current and says so; no mixed generation is ever readable. Every generation carries its run id, its source
 coverage vintage and its payload hash, and `Z-S72`'s exact-input exercise carries that identity, because a date
 alone cannot tell two computations on one day apart. A reader Limit is NOT a repair: a stale row can itself
-carry rank 1 and displace a current winner. Measured: `lib/research/metrics/chatter_axis.py` writes through
-`batch_writer(overwrite_by_pkeys=['axis_date','ticker'])` and never removes rows absent from a new ranking --
-a local probe with only `boto3.resource` replaced yielded AAA#1, BBB#1, CCC#2 after a replacement run and all
-three rows after an empty one (`4.0.0_SA_CRO~W`,
-`org/tier1_exec/4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_RANKING_RETRIES_20260915_W.md` @`5ae6dd04b5`;
-no live write). Owner: `2.0.0_SA_COO~W` (the pool-reader / chatter recut).
+carry rank 1 and displace a current winner. Source:
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_RANKING_RETRIES_20260915_W.md@5ae6dd04b5`.
+Owner: `2.0.0_SA_COO`.
 
 **C-ETF-PLANE-READ.** AMGT_RESAPP READS the ETF holdings plane `s3://opal-data-etfs` (`config/etf_universe.json`,
 `gold/book/`, `gold/holding/`, `snapshots/snapshot_<date>.json` written daily at 22:00Z) and NEVER writes it.
 That plane, its producers and its vintages belong to the `~Z` fabric's POSN_ASTTAX / ETFS_* projects. Every
-Posture output and every membership claim carries the snapshot date it read. Source: Andrew-direct
-~05:1xZ (Posture) and ~03:5xZ (the fabric split). ⚠ **The producer's side of this read is NOT yet a
-contract:** the POSN_ASTTAX PRD @`ab2ee8052a` carries no CONTRACTS section and names none of these paths or the
-22:00Z schedule (`3.0.0_SA_CVO~W`, review @`01e640925c`); until `1.0.0_SA_CTO~Z` pins a producer contract this
+Posture output and every membership claim carries the snapshot date it read. Source: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_051xZ_SECURITY_ANALYSIS_HEADER_PANEL_FOUR_TABS_FILINGS_ANALYZER.md@a5c6a066de`
+(Posture) and `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_035xZ_W_FABRIC_IS_AMGT_RESAPP_ONLY_Z_FABRIC_IS_POSN_ASTTAX.md@9dfee40ce0` (the fabric split). ⚠ **The producer's side of this read is NOT yet a
+contract:** the POSN_ASTTAX PRD `org/missions/D4/POSN/POSN_ASTTAX/prd/POSN_ASTTAX_PRD.md@ab2ee8052a` carries no CONTRACTS section and names none of these paths or the
+22:00Z schedule; until the CTO pins a producer contract this
 read is ONE-SIDED, every consumer carries the snapshot date AND the object's own schema version, and a layout
 change on that plane is a cell in this project, never a silent repair. No POSN signature is implied or asked for.
 
 **C-UNION-UNIVERSE.** The harvest universe is the UNION of the coverage list (`universe.json`, 89 name
-folders; 32 tickers MEASURED / 57 UNRESOLVED at 2026-09-10) and the current holdings of the four Opal ETFs
+folders) and the current holdings of the four Opal ETFs
 at the snapshot vintage, so every comparable Posture names carries the same model block, feed, filings
-and peers evidence as the target. Source: Andrew-direct ~05:2xZ (the third Posture word).
+and peers evidence as the target. Source: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_051xZ_SECURITY_ANALYSIS_HEADER_PANEL_FOUR_TABS_FILINGS_ANALYZER.md@a5c6a066de` (the third Posture word).
 
-**C-SIMILARITY-RANKER (the rule for FWD-19's comparable; Rule 24 schema. v0.11: FWD-8's peer set moved to `C-PEER-SET-SA` below).**
+**C-SIMILARITY-RANKER (the rule for FWD-19's comparable; Rule 24 schema. FWD-8's peer set moved to `C-PEER-SET-SA` below).**
 The comparable set of a subject is computed, never copied from a workbook (the F6 defect), by ONE ranker
 over ONE database:
 - the database = the Security Scanner's universe data (`UniverseDataRow`: ticker, name, mktVal, country,
@@ -609,9 +747,9 @@ over ONE database:
   intent -- similarity of business and scale, never valuation; (iv) state coherence -- the set carries
   `basis` = analyst | derived | absent as the engine already does, and a Seeking Alpha comparables list, if
   its API exposes one, is an INPUT candidate measured first, never the rule.
-Source: the voice memo ~05:5xZ (part three); card 3.
+Source: the voice memo `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_055xZ_TRANSCRIPT_SECURITY_ANALYSIS_PANELS_DRILL_DOWN.md@2285a23678` (part three); card 3.
 
-**C-PEER-SET-SA (FWD-8's peer set and comparison table; supersedes C-SIMILARITY-RANKER for FWD-8 only; v0.11).**
+**C-PEER-SET-SA (FWD-8's peer set and comparison table; supersedes C-SIMILARITY-RANKER for FWD-8 only).**
 - SET: a subject's peers are Seeking Alpha's suggested peers, 5 per subject (`/api/v3/symbols/{slug}/suggested`,
   `source_type=peers_similarities`), fetched through the EXISTING `integrations/seekingalpha/rest_fetch.py`
   (`load_config` / `build_session` / `_do_get`), GET only. No new fetcher, and never the crawler. `basis` = sa | absent;
@@ -631,17 +769,16 @@ Source: the voice memo ~05:5xZ (part three); card 3.
 - SESSION: a 403 that `detectors.classify` reads as REHARVEST STOPS the run and says so. The Peers path never signs in,
   never retries around the challenge and never launches the harvester. Raw bytes land before derivation, at an address
   built by `lib/opal_naming.py` (Rule 30).
-- PRODUCTION USE AUTHORIZED, BY NAME (v0.12; Andrew-direct ~19:4xZ, *"Yes use SA thats fine"*, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_194xZ_AMGT_RESAPP_SIX_CARDS_ANSWERED.md`):
+- PRODUCTION USE AUTHORIZED BY ANDREW, BY NAME (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_194xZ_AMGT_RESAPP_SIX_CARDS_ANSWERED.md@4de34f0d95`):
   `C-SA-VENDOR-WORD` is lifted for THIS path -- one Peers read per security at instantiation and in validation, and its
-  refresh. `C-SA-TERMS-BEFORE-SCHEDULE` is SATISFIED for this path (v0.13; Andrew-direct ~20:0xZ, *"I have already clarified
-  SA ToS, we are good"*, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_20xxZ_AMGT_RESAPP_SA_TERMS_CLEARED.md`).
+  refresh. `C-SA-TERMS-BEFORE-SCHEDULE` is SATISFIED BY ANDREW for this path
+  (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_20xxZ_AMGT_RESAPP_SA_TERMS_CLEARED.md@1699960261`).
 - NOT CHANGED BY THIS CLAUSE: FWD-19's comparable (C-SIMILARITY-RANKER, C-POSTURE); C-VENDOR-EGRESS;
   C-IDENTITY-RESOLVED; C-ETF-PLANE-READ.
-Source: Andrew-direct 2026-09-18 ~17:4x-18:1xZ (`ANDREW_DIRECT_20260918_17xxZ_PEERS_SEEKING_ALPHA.md`); brief
-`BRIEF_PEERS_CURRENT_TO_DESIRED_20260918.md` @a2fdbad164.
+Source: `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20260918_17xxZ_PEERS_SEEKING_ALPHA.md@f48864fce6`.
 
-**C-PEERS-V-FLOORS (amends the floors in `lib/research/scores/peers_v.py`; v0.11).** MIN_PEERS_FOR_V 8 -> 5 and
-MIN_PEERS_PER_MEASURE 6 -> 5; MIN_MEASURES_FOR_V (|M| >= 3) unchanged. Source: Andrew-direct ~18:0xZ, *"It's now 5 instead
+**C-PEERS-V-FLOORS (amends the floors in `lib/research/scores/peers_v.py`).** MIN_PEERS_FOR_V 8 -> 5 and
+MIN_PEERS_PER_MEASURE 6 -> 5; MIN_MEASURES_FOR_V (|M| >= 3) unchanged. Source: `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20260918_17xxZ_PEERS_SEEKING_ALPHA.md@f48864fce6`, *"It's now 5 instead
 of 8, we'll fit to the SA shape"*; the per-measure floor follows from his *"Agree with everything"*, which confirmed the
 CRO's stated consequence (at 6, no measure computes over five peers). The asserts carry this citation in place of the
 earlier ruling; they are floors, never loosened below 5 / 5 / 3. Peers V's `absent_reason` is never empty.
@@ -657,17 +794,17 @@ evidence packs (each = Thesis, Exec Management, Peers, Model, all four for both 
 as_of: <snapshot date>, marked: machine}`, stored versioned in the pool under `posture/v1/{security_key}/
 {as_of}.json`. A name's factor profile scored under the Opal ETF presets (DIVZ 13 factors, PFOE 16;
 `SecurityScanner/constants.ts`) is the FIT input to (3). Posture is a recommendation surface: nothing in
-the trade pipeline reads it. "The final execution" is a person's act on the page. Source: Andrew-direct
-~05:1x-05:2xZ and the voice memo (part five); card 3.
+the trade pipeline reads it. "The final execution" is a person's act on the page. Source: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_051xZ_SECURITY_ANALYSIS_HEADER_PANEL_FOUR_TABS_FILINGS_ANALYZER.md@a5c6a066de`
+and the voice memo `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_055xZ_TRANSCRIPT_SECURITY_ANALYSIS_PANELS_DRILL_DOWN.md@2285a23678` (part five); card 3.
 
-**C-FILINGS-ANALYZER (FWD-18's shape; v0.11).** ⛔ **BLOOMBERG SUPPLIES KEYS, NEVER TEXT.** Bloomberg returns no filing text
-(Thesis brief s.3). The analyzer reads the WINNING DOCUMENT of
+**C-FILINGS-ANALYZER (FWD-18's shape).** ⛔ **BLOOMBERG SUPPLIES KEYS, NEVER TEXT.** Bloomberg returns no filing text.
+The analyzer reads the WINNING DOCUMENT of
 the security's FILINGS BATTERY. Bloomberg supplies the keys that battery searches with: the CIK (`CENTRAL_INDEX_KEY_NUMBER`),
 the LEI and the legal name. Its web address is a HINT, never a key.
 **The battery -- ordered; the first document passing the acceptance test wins:**
-- **US (Andrew-direct ~16:3xZ 2026-09-18):** (1) EDGAR; (2) EDGAR by the Bloomberg-resolved CIK; (3) web search, surfaced
+- **US (`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20260918_16xxZ_THESIS_NO_RERUN_AND_FILINGS_BATTERY.md@96c22cdc72`):** (1) EDGAR; (2) EDGAR by the Bloomberg-resolved CIK; (3) web search, surfaced
   through the issuer's IR page.
-- **International (RATIFIED v0.12, Andrew-direct ~19:4xZ, *"Yes."*; proposed at CRO brief s.8.2):** (1) EDGAR
+- **International (RATIFIED by Andrew, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_194xZ_AMGT_RESAPP_SIX_CARDS_ANSWERED.md@4de34f0d95`; proposed at CRO brief s.8.2):** (1) EDGAR
   by ticker; (2) EDGAR by Bloomberg CIK; (3) ESEF / UKSEF by LEI; (4) the company's own site; (5) the national regulator,
   one adapter per jurisdiction, built only for a name that step 4 fails.
 - **Terminal:** UNRESOLVED-SOURCE, persisted with every step's attempt, key and failure reason. Never a silent skip.
@@ -688,19 +825,19 @@ requested, citations arrive INLINE and structured output cannot be combined with
 TAG PARSER, and the cut names which. Every sentence the Thesis tab shows is MARKED machine prose beside its cited passage
 (FWD-9). The analysis carries an ANALYZER VERSION that MOVES whenever its output contract moves; a skip-on-unchanged rule is
 built only after that, never before.
-**Kept from v0.7 (brief @`a65fe406c2`):** every cited claim RESOLVES to an exact passage. The analysis
+**Kept from the connection brief `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_FILING_EVIDENCE_20260915_W.md@a65fe406c2`:** every cited claim RESOLVES to an exact passage. The analysis
 persists the source document and the exact submitted excerpt with content hashes, the canonical identity, the accession or
 document id, the retrieval time, the parser version and an index-to-passage map. A claim whose tag resolves to nothing is
 HELD uncited: never rendered as evidence and never a chart input. The drafting reader validates each evidence id's existence,
 association and source version before `C-VERBATIM-GATE`, and runs that gate against the passage. The THESIS DRIVER series and
 the officer role-start field are EXERCISED on a real filing before either is claimed to exist.
-⛔ **NO FLEET RUN AND NO RE-RUN until the process is validated end to end** (Andrew-direct ~16:3xZ). Stale analyses stay
-stale. A validation run needs his per-use word; the three-name run (~16:5xZ) is the precedent, not a standing grant. Building
+⛔ **NO FLEET RUN AND NO RE-RUN until the process is validated end to end** (`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20260918_16xxZ_THESIS_NO_RERUN_AND_FILINGS_BATTERY.md@96c22cdc72`). Stale analyses stay
+stale. A validation run needs his per-use word; the three-name run is the precedent, not a standing grant. Building
 any battery step that calls outside Opal needs his per-use word. The scheduled batch stays disabled until he activates it.
 **NOT CHANGED:** the typed row set, the pool path, FWD-9 marking, the two-pass-or-parser choice, batch activation as
 Andrew's call, and the roster authority (`C-EXEC-MANAGEMENT`).
 
-**C-FILINGS-TRANSLATION (translation is a stage; Andrew-direct ~16:3xZ, *"a translation functionality will be required"*; v0.11).**
+**C-FILINGS-TRANSLATION (translation is a stage; `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20260918_16xxZ_THESIS_NO_RERUN_AND_FILINGS_BATTERY.md@96c22cdc72`, *"a translation functionality will be required"*).**
 ⛔ **ANALYZE THE ORIGINAL; TRANSLATE THE OUTPUT.** A battery winner in any language is analyzed in its ORIGINAL language. Only
 the analyzer's OUTPUT is translated. Every cited span re-locates VERBATIM in the ORIGINAL filing. ⛔ **Translating the passages
 first is REFUSED:** the check would then verify against the model's own translation, and a mistranslation would be invisible.
@@ -719,7 +856,7 @@ SAME document family and it passes test (c). A thinner document in English is a 
 **NOT CHANGED:** `C-VERBATIM-GATE`'s object stays the original filing; the battery's acceptance test does not test language;
 this clause authorizes no model call, producer or run.
 
-**C-EXEC-MANAGEMENT (FWD-17's shape; v0.11 carries Andrew-direct 2026-09-18 ~17:1xZ cards 1 and 2, and ~17:2xZ).**
+**C-EXEC-MANAGEMENT (FWD-17's shape; `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20260918_17xxZ_EXEC_MANAGEMENT_CARDS.md@b0ff057a68` cards 1 and 2).**
 The FILING's executive-officer section is the roster authority, and each officer's role start comes from it. When the
 filing yields no RESOLVED roster, Bloomberg's `COMPANY_EXEC_OFFICERS` (name and title only, names kept verbatim) fills
 the officer TABLE and is labelled on the page as a Bloomberg fallback. Role start, tenure and the pool comparison stay
@@ -738,7 +875,10 @@ The company domain comes ONLY from the site the filings battery VERIFIED as the 
 Bloomberg's raw web address. A name with no verified domain records Lusha as NOT ATTEMPTED, with that reason. Lusha is
 never the roster. Each Lusha call is billed and runs only under Andrew's per-use word.
 **The CEO profile** comes from a Bright Data SERP on the CEO's NAME, followed by an agent that reads the results and pulls
-and organizes the relevant ones. The CEO is the only officer searched. The rules:
+and organizes the relevant ones. The CEO is the only officer searched. **Who the CEO is:** the officer carrying a
+chief-executive title; for a Japanese-listed issuer with no such officer, a "President" or "Representative Director and
+President" is the chief executive. The rule is not extended to another jurisdiction without evidence for that
+jurisdiction. A served reason is always a readable sentence; a missing value is never printed into it as a literal. The rules:
 - A FAILED search (a request error or an unparseable body) is recorded as FAILED, with its cause -- never as an EMPTY
   search.
 - Each organic result keeps its title and snippet, not the url alone.
@@ -758,25 +898,25 @@ authorizes no run and no vendor call. Open at L4, not decided here: whether a Bl
 
 ---
 
-**C-ROUND12-COMPARABLE-COVERAGE (settles W20-S11, routed by Z-S104).** A Posture verdict STATES what its
+**C-ROUND12-COMPARABLE-COVERAGE.** A Posture verdict STATES what its
 comparable lacks and is STILL ISSUED; the verdict carries the comparable's evidence coverage beside it. A
 comparable with no pack is NAMED as such. ⛔ Ordering is NOT restricted to complete packs and the comparable is
 NOT drafted: restricting the ordering silently changes WHICH comparable is chosen, and drafting one manufactures
 evidence. A stated gap is honest; a narrowed universe is a hidden decision nobody can see afterwards. Ruled
-`1.0.0_SA_CTO~Z`, `ROUND_ANALYSIS.round11.md` s.4 item 1.
+`1.0.0_SA_CTO`, `org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round11.md@4055200e2f` s.4 item 1.
 
-**C-ROUND12-THESIS-ASOF (settles W18-S19).** The thesis bundle CARRIES ITS OWN `as_of_date`, sourced from the
+**C-ROUND12-THESIS-ASOF.** The thesis bundle CARRIES ITS OWN `as_of_date`, sourced from the
 FILING the drafting derives from, and ABSENT-explicit where no filing date resolves. ⛔ NOT `generated_at`, which
 is the serve time, and NOT `identity.crosswalk_vintage`, which is an identity vintage. A reader asking "as of when
-is this thesis true" is asking about the EVIDENCE, not about the request. Ruled `1.0.0_SA_CTO~Z`, s.4 item 2.
+is this thesis true" is asking about the EVIDENCE, not about the request. Ruled `1.0.0_SA_CTO`,
+`org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round11.md@4055200e2f` s.4 item 2.
 
 **C-ROUND12-PRINT-SERVER-SIDE (settles the print route's 500; `FWD-5`'s producer).** The print pack is rendered
 SERVER-SIDE: matplotlib, pypdf and numpy ship in the deployed archive or a layer, the template lives in the pool
 rather than on a OneDrive path, and the renderer reads no worker-local deliverables folder and imports no plotting
 library at module level. ⛔ NOT ruled a browser act: `FWD-5`'s displacement test is that a person forwards the
-output AS PRODUCED, and a browser-rendered print is the analyst's own reformatting under another name. Measured
-absent by `4.0.0_SA_CRO~Z` @`a10eece02e` (direct GET -> 500; the 747,396 B archive carries none of the three).
-Ruled `1.0.0_SA_CTO~Z`, `ROUND_ANALYSIS.round11.md` A1.3 R2.
+output AS PRODUCED, and a browser-rendered print is the analyst's own reformatting under another name.
+Ruled `1.0.0_SA_CTO`, `org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round11.md@4055200e2f` A1.3 R2.
 
 **C-ROUND12-PULL-WIRED (settles the 501 on refresh; `FWD-2`'s carrier).** The on-demand pull is WIRED, not
 retired: the page calls the enqueue route, and the adapter DECLARES its queue carrier so the refresh route stops
@@ -786,18 +926,16 @@ Lambda consumer would drain the queue and fail every message at the health check
 own design. ⛔ **NO LAMBDA CONSUMER IS BUILT**, and the consumer's CADENCE is RESERVED to Andrew by name, on the
 same standing as the harvest cadence -- a card, never a cell. ⛔ No alarm, monitor, freshness checker or
 notification rides along: the standing moratorium binds, and a wired queue is not a monitor. Ruled at L10,
-`ROUND_ANALYSIS.round11.md` A1.3 R3 as CORRECTED by ADDENDUM 2 C1 @`06378dd3bd`, which found the Lambda form
-impossible on measured grounds and recorded that `FWD-2` has already run end to end once under the box-side
-consumer.
+`org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round11.md@4055200e2f` A1.3 R3 as CORRECTED by ADDENDUM 2 C1.
 
 **C-ROUND12-SURFACED-OUTCOMES (settles the three no-surface outcomes).** `FWD-7`, `FWD-12` and `FWD-14` each get a
-SERVED ROUTE and a PAGE SURFACE. Today each is a Python module a person runs by hand: 0 of the 11 mounted routes,
-0 page components and 0 adapter references, against a positive control that fired. ⛔ An outcome whose only
+SERVED ROUTE and a PAGE SURFACE. ⛔ An outcome whose only
 implementation is a hand-run module is NOT REALIZED, whatever its rows say. If a round's fan-out cannot carry
 them, they move to the NEXT round as data stated in the issuance -- never by omission. ⛔ **AND A CONTROL THAT
 CANNOT ACT SAYS WHY.** A re-run control is bound to a stage that exists, or it REFUSES with a named reason; it
 never records a silent skip and it is never a button that does nothing. A decoration does not satisfy this
-contract. Ruled at L10, A1.3 R4 as extended by ADDENDUM 2 C2 @`06378dd3bd`.
+contract. Ruled at L10, `org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round11.md@4055200e2f` A1.3 R4 as
+extended by ADDENDUM 2 C2.
 
 
 **C-ROUND12-DIVERGENCE-DEGENERACY (carries `FWD-20`'s pre-deployment gate; the numeric form the card states in
@@ -806,9 +944,77 @@ Divergence ACROSS THE COVERED UNIVERSE. **A value below 0.25 is the documented s
 from consensus after all, and that the factor is therefore not measuring disagreement.** Below that floor
 Divergence is ABSENT for every name with that reason recorded, and the gate is checked BEFORE deployment. ⛔ **It
 binds the MODEL-BLOCK PRODUCER, not only the page** -- a page-side guard would let a degenerate factor land in
-the store and be read by anything else. Verbatim source: the Divergence record @`287d2c2619` ("sd(D) across
-universe < 0.25 -- drivers likely seeded from consensus; factor is not measuring disagreement"), read narrowly
-at the same record and repeated in the CTO adjudication call 4 @`1685652d6e`.
+the store and be read by anything else. Verbatim source:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_183xZ_MODEL_TAB_SCORE_IS_DIVERGENCE_FROM_CONSENSUS_FCF_AND_PEERS_RESENT.md@287d2c2619`
+("sd(D) across universe < 0.25 -- drivers likely seeded from consensus; factor is not measuring disagreement").
+
+
+**C-HARVEST-HOME (the storage home; CONDITIONAL until the registry resolves `harvest` to ONE scope row).** AMGT_RESAPP's
+bronze, silver, gold, platinum, state and code live exactly where the builder prints them. Under scope `harvest` and
+its GENERAL tenancy, that is `opal-data-harvest` for every tier, which is Andrew's (`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260918_2145Z_AMGT_RESAPP_OPAL_DATA_ASSETS_IS_CLIENT_DATA_ONLY_WHOLE_PIPELINE_IN_HARVEST.md@97341c3df2`) "the whole pipeline lives in
+opal-data-harvest". The vendor is `{source}` for bronze and silver; `amgt` is `{source}` for gold, platinum, state and
+code. Every address is `lib/opal_naming.py address()` output and every resource name is `name()` output; a builder
+refusal is a missing registry row, never a hand-typed key. `opal-data-assets` holds client/partner custodial
+information only. ⛔ **This contract is NOT MET while the registry carries more than one `harvest` scope row:** the
+builder takes the first, a PRODUCT-tenancy row, and prints `opal-data-assets` for bronze and silver. No harvest writer
+is cut against this contract until only the GENERAL row remains.
+
+**C-BRONZE-AS-RECEIVED.** Bronze is the response bytes exactly as received -- no parsing, trimming or
+re-serialising -- one object per fetch, never overwritten, with the channel's FETCH key in the partition, in one of
+three forms: (a) an entity fetched repeatedly: `{vendor}/harvest/bronze/{request}/{entity}={id}/{YYYYMMDDTHHMMSSZ}.{ext}`;
+(b) an immutable document: `{vendor}/harvest/bronze/{request}/{entity}={id}/{document id}/{vendor file name}`;
+(c) a request: `{vendor}/harvest/bronze/{request}/date=YYYY-MM-DD/{request hash or file}.{ext}`. Every bronze
+address a writer uses is one the builder printed; the measured outputs are listed in section 11. Where a vendor's
+client hands the producer a parsed object and the wire bytes are unreachable (the Bloomberg Terminal client), the
+received form is that object's deterministic JSON serialisation (sorted keys, fixed separators, UTF-8), so an
+unchanged fetch yields identical bytes. A non-finite number (NaN, Infinity) is serialised as null, and the serialiser
+refuses any other value JSON cannot carry. Each such object records the form in its S3 OBJECT METADATA, never in the
+body, under the key `received-form` with the value `bbg-client-json`.
+
+**C-SILVER-PARQUET.** Silver is parquet with every vendor field kept and typed, partitioned `date=` by fetch date,
+one part file per run. Every row carries `bronze_key`, `fetched_at` and `record_hash` (sha256 of the row's vendor
+fields).
+
+**C-LUSHA-EXCEPTION (a declared departure, Rule 30 R20; `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260921_195xZ_AMGT_RESAPP_KEYENCE_SEARCH_YES_LUSHA_R20_YES.md@6e09c649aa`, *"Yes on Exception"*).**
+Lusha keeps NO bronze, and its silver DROPS every contact field: emails, phone numbers, postal addresses, and any
+personal messaging or social handle. It keeps the officer match, the title, and ONE public professional-profile URL.
+That URL is the "profile link" `C-EXEC-MANAGEMENT` enriches with and the page shows; it is kept because it is that
+served field, not as a channel for reaching the person. Nothing else a person could be reached through is kept. This departs from
+`C-BRONZE-AS-RECEIVED` and `C-SILVER-PARQUET` for Lusha only. Its silver rows carry `fetched_at` and `record_hash`, and
+`bronze_key` is null by rule. The R20 register entry is the registry lane's to write, citing Andrew's record.
+
+**C-DEDUPE-BY-KEY (one writer per fetch key).** Each channel names a FETCH key and a RECORD key. Before any vendor
+call, the writer checks the bucket for the fetch key. ⛔ **Exactly one writer holds a channel's fetch keys at a
+time**, so no two writers can both read "absent" and both pay; a fan-out assigns a channel to one worker, never
+splits it. A silver writer skips an unchanged `(record key, record_hash)` and writes a changed row as a new row,
+never an update; a reader takes the newest `fetched_at` per record key. The bucket is the authority for what has
+been fetched, never a file on one desktop.
+
+**C-SLASH-SAFE-KEY.** One slash-safe security key is minted in the crosswalk module and used everywhere downstream.
+An entity id sits in a partition, never in the builder's free-form `object` argument.
+
+**C-FORMAT-SEQUENCE.** The backfill's gate is bronze and silver only: the tenancy act, the vendor registry rows, the
+bronze writers, the silver writers with their record keys, and the fetch-key check. Gold (parquet) and platinum (a
+JSON publisher the API reads) are rebuilt from silver after the backfill. Existing objects move by COPY with their
+vintage, never by re-fetch or re-derivation; bronze that was never kept is filled by the backfill's FIRST fetch
+under its fetch key, which is a first fetch, not a re-fetch. ⛔ **Each move of served objects carries its own never-widen pair, and
+the source path's readers switch and the source path retires in the SAME window** -- a copy that leaves the old
+path serving beside the new one is a standing duplicate output path, which the shadow-pipeline veto forbids. The
+move is its own chain, not a rider on another cell.
+- **"Retire" means** that in the move's window the old path's readers are switched, its writers are stopped, and its
+  read grant is removed. It does NOT mean deletion. No move performs an S3 delete; deleting retired prefixes is ONE
+  batched act on a human's word.
+- **A lossless re-serialisation is a copy.** An existing JSON object re-written as parquet silver, with every field
+  kept, counts as a copy under this contract, not a re-derivation. Each object is graded by a round-trip equality check.
+- **Derived records split by what they are.** The `filings/v1` `.source.json` objects (the filing's own sections,
+  cut from a document the pipeline never stored) move to SILVER. The `.analysis.json` objects (the model's reading)
+  are what Opal cares about, so they are GOLD under R10 and follow the gold chain after the backfill. The document's
+  bronze is filled only by the backfill's first fetch of it.
+- **A served object whose reader cannot read silver's format keeps its one served path until the gold chain.** The
+  served adapter reads JSON and carries no parquet reader. So `model_block` and the publication bodies and links stay
+  on their current single served path. They move when the gold chain builds a served JSON projection: silver parquet
+  is the system of record, the projection is what the reader reads, and the reader is switched and the old path
+  retired in one window. No second served path exists meanwhile.
 
 
 ## 2. THE BOUNDARY
@@ -1683,3 +1889,192 @@ for the round-14 cell, not a rule.
 - `C-PEERS-V-FLOORS`: the floors sit at `lib/research/scores/peers_v.py:62-70`, the measure's `FIELDS` at `:74-82`; SA peer
   tickers were measured to resolve as `<TICKER> US Equity` with no mapping step. The L4 reading in that clause is
   `1.0.0_SA_CTO~Z`'s.
+
+## 11. ADDENDUM v0.14 / v0.15 -- THE HARVEST STORAGE FORMAT: evidence and open items (Andrew-direct 2026-09-21 ~17:2xZ)
+
+The coordinated backfill is held until the harvest storage format is settled. The six format contracts --
+`C-HARVEST-HOME`, `C-BRONZE-AS-RECEIVED`, `C-SILVER-PARQUET`, `C-DEDUPE-BY-KEY`, `C-SLASH-SAFE-KEY`, `C-FORMAT-SEQUENCE` --
+sit in the CONTRACTS section, where the ratified-text reviewer reads them. This section holds only their evidence and
+what they leave open.
+
+**Specification.** `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md`
+@`1b43fd2933` (re-pinned at v0.22: the SA article hash is `sha256("sa:"+id)`; the plan as corrected: bronze takes three forms, never-kept bronze is filled by a first fetch, and its move order no longer dual-writes). It
+gives each channel's fetch key, record key, readers and freshness. Where it and the contracts disagree, the contracts
+bind.
+
+**Builder output the contracts cite (measured in the plan, one per bronze form, plus silver):**
+- (a) entity: `s3://opal-data-harvest/bloomberg/harvest/bronze/refdata/security_key=CSL_AU_Equity/20260921T162530Z.json`
+- (b) document: `s3://opal-data-harvest/sec/harvest/bronze/filing/cik=0000012927/000162828026004357/ba-20251231.htm`
+- (c) request: `s3://opal-data-harvest/sec/harvest/bronze/company_tickers/date=2026-09-21/sec_ticker_cik_cache.json`
+- silver: `s3://opal-data-harvest/bloomberg/harvest/silver/model_block/date=2026-09-21/part-20260921T162530Z.parquet`
+When the plan was measured, each printed `opal-data-harvest` only under the simulated tenancy (plan s.3.2; 59 of 60
+addresses, controls unmoved). Since v0.18 the live builder prints the same (below).
+
+**Landed on SITEZ at v0.17 (measured at HEAD `39731fbda7`):** `tiers.json` carries the GENERAL tenancy (every tier
+home:scope), and `systems.json` carries the five vendor rows (`barrons`, `wsj`, `ft`, `filings-xbrl`,
+`issuer-site`). Both arrived through the CLOUD merge. The builder still prints `opal-data-assets` for bronze and silver
+(and `opal-data-portal-v2` for platinum), for one reason: `scopes.json` holds TWO `harvest` rows, and `lookup()` takes
+the PRODUCT one (row Z-S203). With that row alone removed, on a scratch registry, every tier prints
+`opal-data-harvest`, validate returns 0 refusals, and the controls for other pipelines are unmoved (`1.0.0_SA_CTO~Z`,
+and `4.0.0_SA_CRO~Z` msg 24080). S3 census 21:19Z (`2.0.0_SA_COO~Z` msg 24087): 1,461 objects in `opal-data-harvest`
+and 0 AMGT objects in the vetoed buckets, so the migration renames keys inside one bucket.
+
+**Closed at v0.17:** Lusha's bronze and contact fields, now `C-LUSHA-EXCEPTION`, on Andrew's word.
+
+**Closed at v0.18:**
+- The duplicate `harvest` scope row was deleted by the registry lane (`10bace8916`). `validate()` now refuses a
+  repeated scope key (measured with a planted duplicate: 1 refusal; live: 0). The builder prints `opal-data-harvest`
+  for every AMGT tier (row Z-S205). `C-HARVEST-HOME` is MET.
+- The moves M1 (`raw/bloomberg/`), M2 (`filings/v1/*.source.json`) and M3 (`raw/seekingalpha/`) are done. Each retired
+  its old path on S3, IAM and code in one window, with the old objects kept as inert data (round-22 adjudication
+  `d8a57a5b82`).
+- The harvest writers H0-H6 are built and idle. Their new-grammar prefixes reach the served adapter as build-time
+  generated constants from `address()`.
+
+**Open, and not decided by this PRD:**
+- The R20 register entry for `C-LUSHA-EXCEPTION`, by the registry lane.
+- The backfill runs, at validation scope first, on Andrew's per-use vendor words.
+- The gold chain: the `model_block` and publications re-homing, the producer's forecast fiscal-year type, and the
+  Terraform IAM prefix list generated from `address()`.
+- One batched deletion of the retired old prefixes, on a human's word.
+- Retiring the empty `opal-harvest-articles` table is a table deletion and needs a human's word when executed; the
+  contracts record the intent, not the authority.
+
+## 12. ADDENDUM v0.22 -- THE LENOVO TRIAL: one security through every stage (Andrew-direct 2026-09-22 ~13:5xZ)
+
+**The word, verbatim:** *"Let's try one sample first, let's run Lenovo through the entire pipeline. Let's do every single
+thing for Lenovo and use that as the trial."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_135xZ_AMGT_LENOVO_SINGLE_SAMPLE_FULL_PIPELINE_TRIAL.md`
+@`cd0cca7f46`. It rests on:
+- @`78106b9cea`: Andrew delivers the starting list, and the structure is built on it.
+- @`6f1a72e4be`: composite FIGI is the working key for research, and the data quota binds.
+- The field-level channel map @`3a0b3cadaa` (`prd/FIELDMAP_20260922.md`).
+
+**Scope.** The validation scope for the next round is ONE security: **Lenovo Group, `992_HK_Equity`.** It is listed in
+Hong Kong, reports in USD and has a fiscal year ending 31 March. It **replaces the three names of `C-VALIDATION-NAMES`**
+for every cell until the trial is graded. Every other clause of section 10 stands: no fleet run, and no re-run of the
+covered population. **Posture is out of scope** (@`78106b9cea`).
+
+**What "every single thing" is.** Every stage of section 10's table except posture, run for Lenovo in dependency order.
+Each stage ends SERVED or UNRESOLVED with its reason, never a silent skip. Every channel of the field map is exercised at
+each layer it has: identity -> bronze -> silver -> the served object -> the page.
+
+| # | stage | channels | Lenovo today (measured: 18 of 1,780 harvest objects, key-anchored `992_HK`) |
+|---|---|---|---|
+| 1 | identity | Bloomberg add-security, with the FIGI family, ISIN, SEDOL and LEI appended to its identity fields | no identity record, no FIGI |
+| 2 | model block | Bloomberg refdata, histdata and bestdata; bronze then silver `model_block`; served block | refdata and histdata 09-16; 3 served blocks; no forecasts; silver not wired |
+| 3 | filings | ⛔ **the battery IN ITS RATIFIED ORDER, EDGAR STEPS INCLUDED -- see s.12a, Lenovo IS an EDGAR entity.** Steps 1-2 run and are expected to RESOLVE the entity and then FAIL acceptance test (b); step 4 is the issuer's own site; step 5 is HKEX, the first instance of the ratified national-regulator route. ESEF does not apply (HK) | `filing_attempt` UNRESOLVED-SOURCE -- the state is right and **its recorded REASON is wrong** (s.12a) |
+| 4 | translation | only for a document the detector reads as non-English | none |
+| 5 | analysis and drafting | the analyzer and the drafter (model calls) | none |
+| 6 | management | the filing's officer section, Bloomberg `COMPANY_EXEC_OFFICERS`, Lusha, the CEO SERP | no `management/v1` object at all |
+| 7 | peers | the SA peer set via the ADR line, where `C-PEER-SET-SA` can be met; otherwise the ranker, recorded as the fallback | `peers/v1` (5 versions, ranker) |
+| 8 | scores | the three scores | `scores/v1` present |
+| 9 | chatter and news | the publications harvester (one run for Lenovo), EXECUTED by `AMGT_HARVST` once its `C-HV-BRONZE-AS-RECEIVED` and `C-HV-SILVER-FROM-BRONZE` land (`C-HV-BOUNDARY`: one pass, not two; this stage waits on them); SA news on the ADR line | none |
+| 10 | social | one Bright Data dataset job | none |
+| 11 | price | the daily price pull | none |
+| 12 | the page | Lead Panel, Thesis, Exec Mgmt, Peers and Model on DEV, read from the pool | renders from partial objects |
+
+**Preconditions -- each lands before the stage it guards, not after:**
+- **Identity first.** Stage 1 runs before every other stage. The working key (composite FIGI) is RECORDED on the crosswalk
+  record as an attribute. `security_key` stays the partition and page key until the key design is ruled.
+- **Fiscal-year pairing.** The model block for a 31 March year-end is graded only with the fiscal-year join wired
+  (field map s.3 item 2, `fye_join.py`).
+- **Language (Z-S221).** No filing is analysed until the detector distinguishes Latin-alphabet languages. This is the CVO's
+  ordering ruling, `ADJUDICATION_v30` @`921cc430c1`.
+- **Currency.** The model block states Lenovo's reporting currency (USD) against its listing currency (HKD) on every
+  per-share and valuation figure, and never mixes the two silently.
+
+**Vendor words, for Lenovo only, one pass per channel.** The caps are the L4 owner's, stated in the record:
+
+| channel | cap |
+|---|---|
+| Bloomberg | 1 unique security |
+| issuer crawl | at most 40 pages |
+| Seeking Alpha | at most 10 calls |
+| Lusha | at most 10 credits |
+| SERP | at most 3 queries |
+| social | at most 1 dataset job of the smallest size |
+| publications | 1 run |
+
+A channel whose cost cannot be stated in advance prints it before the call.
+
+**Served objects.** The trial writes Lenovo's served keys (`derived/model_block`, `management/v1`, `peers/v1`, and so on).
+**Each such write takes its never-widen pair** (CTO and COO halves, blast radius = Lenovo's keys only, with rollback per key).
+
+**Done when:**
+- (a) every stage 1-11 ends SERVED or UNRESOLVED with its reason for `992_HK_Equity`;
+- (b) the DEV page renders all five in-scope tabs for Lenovo from the pool;
+- (c) ONE trial report lists, per channel, the fields that landed at each layer and which tab shows them. It names every
+  breakpoint Lenovo hit.
+
+That report is the design input for the key, fiscal-year, currency and language structure and the per-component
+contracts, before any second security.
+
+**What this section does NOT authorise:**
+- any security other than Lenovo;
+- any schedule or cadence;
+- any deletion;
+- posture;
+- a contract change -- the ratified text is untouched.
+
+### 12a. ADDENDUM v0.24 -- LENOVO **IS** AN EDGAR ENTITY, AND THE REGULATOR ROUTE WAS ALREADY RATIFIED
+
+⛔ **TWO CORRECTIONS, BOTH OF CLAIMS THIS SEAT ITSELF WROTE. Neither changes a contract; both change what a
+cell is told to do.**
+
+#### (1) `(not an SEC filer)` WAS FALSE -- measured at the regulator, not inferred
+
+`GET https://data.sec.gov/submissions/CIK0000932477.json`, 2026-09-23, HTTP 200, 12,943 bytes:
+
+| field | value |
+|---|---|
+| `name` | **LENOVO GROUP LTD** |
+| `cik` | `0000932477` |
+| business address country | **Hong Kong** |
+| `formerNames` | LEGEND GROUP LTD /FI; LEGEND HOLDINGS LTD /FI |
+| `tickers` / `exchanges` | `[]` / `[]` |
+| **filings, all-time denominator** | **63** (`filings.files` is EMPTY, so `recent` IS the whole history -- no older shard unread) |
+| form histogram | `SUPPL` 44, `ARS` 6, `SC 13D/A` 5, `F-6EF` 2, `4` 2, `SC 13D` 1, `3` 1, `12G32BR` 1, `424B3` 1 |
+| **10-K / 20-F / 40-F / 6-K** | **0 / 0 / 0 / 0** |
+
+**So the entity RESOLVES at battery step (2) EDGAR-by-Bloomberg-CIK.** What is absent is not the filer --
+it is a CURRENT annual report. ⭐ **And the sharpest part is that EDGAR DOES hold six annual-family
+documents for Lenovo (`ARS`), and they fail anyway:** every one is an `AUTO-GENERATED PAPER DOCUMENT`
+under a `9999999997-*` placeholder accession, newest **2007-08-07**. So they fail acceptance test **(b)
+CURRENT** (19 years, against an 18-month bar) and test **(c) KNOWN FAMILY** (a paper placeholder has no
+document for the cutter to parse).
+
+⛔ **WHY A WRONG REASON IS NOT COSMETIC HERE.** `C-FILINGS-ANALYZER` already requires UNRESOLVED-SOURCE to
+persist *"every step's attempt, key and failure reason"*, and `rk-127`'s HELD marker puts that reason on
+the **served page**. A battery that records *"not an SEC filer"* writes a **false sentence onto Andrew's
+screen** and tells the next reader the EDGAR steps are inapplicable to Lenovo, when in fact they resolve
+the entity and are the cheapest available identity evidence. The correct recorded reason names the
+resolved entity, the step that resolved it, and the acceptance test the document failed.
+
+⚠ **One live hazard this measurement surfaces, stated not fixed:** five of Lenovo's EDGAR filings are
+`SC 13D`/`SC 13D/A` in which **Lenovo is the FILER about another issuer.** Acceptance test (a) RIGHT
+ENTITY matches on the issuer's name and would PASS such a document; only test **(c) KNOWN FAMILY** rejects
+it. **The guard holds, but on its third leg, not its first** -- so (c) is load-bearing for every non-US
+name and must not be relaxed into a warning.
+
+#### (2) THE REGULATOR ROUTE NEEDED NO `C-` AMENDMENT -- IT WAS RATIFIED ON 2026-09-18
+
+The CTO ruling `CTO_RULING_AMGT_RESAPP_REGULATOR_ROUTE_20260923T0210Z.md` directed that *"a PRD amendment
+carries the route into `C-`-space."* ⛔ **That act is VOID as unnecessary: `C-FILINGS-ANALYZER` has carried
+*"(5) the national regulator, one adapter per jurisdiction, built only for a name that step 4 fails"*
+since Andrew ratified the international battery** (`ANDREW_DIRECT_20260918_194xZ_AMGT_RESAPP_SIX_CARDS_ANSWERED.md@4de34f0d95`),
+and that clause sits INSIDE the CONTRACTS section (ratified-text half).
+
+⭐ **THE ERROR WAS A GRAIN ERROR AND IT IS WORTH NAMING: the ruling MEASURED THE CODE
+(`battery.py:597`/`:639`, `fetch.py:242` -- no regulator abstraction, true) AND CONCLUDED ABOUT THE
+CONTRACT.** Those are different objects with different owners. The true state is **RATIFIED AND UNBUILT**,
+which is a CELL, not a scope change -- so nothing re-opens the ratified-text half and HKEX needs no new
+authority beyond what Andrew already gave. The ruling's OTHER three limbs stand unchanged: the route is
+additive and ordered LAST, EDGAR and issuer-site precedence is untouched, and `filing_attempt` stays
+write-once and overwrite-refusing.
+
+⚠ **Rule 30 still binds the build and is NOT restated as a contract here** -- it is law, and a PRD that
+repeated it would create a second carrier of one obligation. The cell's own AC0 is the registry row;
+`infra/logic/registry/` carries six files and none mentions `hkex` or `regulator`.
+
+**Which half this moves:** the BRIEF half only. No ENDPOINT line and no `C-` contract changes.

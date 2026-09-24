@@ -1,0 +1,16 @@
+{
+  "plan_sha256": "e087e85607f682576935cefedc1180c96e2dfe255a7c8523ab9363cea6207646",
+  "managed_changes": 1,
+  "address": "module.scoped_amgt_api.aws_lambda_function.this",
+  "actions": [
+    "update"
+  ],
+  "changed_attributes": [
+    "last_modified",
+    "s3_object_version",
+    "source_code_hash"
+  ],
+  "source_code_hash": "DEQQiCH+UoUMd7EZSQA5RTsILDY5+ubb9Y3gVLE5elU=",
+  "s3_object_version": "ZacA2Kn0CWoJqOFLvTPe2kzZ4x_ctTYe",
+  "live_original_hash_and_revision_match": true
+}

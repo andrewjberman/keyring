@@ -1,0 +1,1665 @@
+{
+  "evidence_level": "retained-data read; offline discriminator",
+  "ledger_sha256": "d30cd6d72f6b3108749a251f26436f16fdd9b7e6f557d65db97a510be2494e5b",
+  "historical_objects": 12,
+  "historical_held": 179,
+  "objects": [
+    {
+      "security_key": "ASML_NA_Equity",
+      "key": "drafting/v1/ASML_NA_Equity.json",
+      "historical_sha256": "68995eb736aa83ff239e97ff55781b2c28817882112df47a017fbdc438249087",
+      "historical_held": 8,
+      "sha256": "68995eb736aa83ff239e97ff55781b2c28817882112df47a017fbdc438249087",
+      "exact_historical_bytes": true,
+      "version_id": "xUdeA0xUdUyjs7DEEXriRS4JjWmtqfRs",
+      "metadata_sha256": "68995eb736aa83ff239e97ff55781b2c28817882112df47a017fbdc438249087",
+      "current_no_span": 8,
+      "discriminator": {
+        "PASS": 0,
+        "HOLD": 8,
+        "REFUSE": 0
+      },
+      "cases": [
+        {
+          "index": 0,
+          "section": "company_description",
+          "text_sha256": "b1668588fd9d6dbf975322a74c850533e2c7aabe16eaba61da0ee894428e55d3",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 1,
+          "section": "company_description",
+          "text_sha256": "f31069cf806d7926523b3548178a28c6666bd6071816a52d6c05478c44db6eef",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 2,
+          "section": "company_description",
+          "text_sha256": "2c40c8501e51724c33caf06acc815356e7e1ec78f5dbc37b01e37a20bbbc53d6",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 3,
+          "section": "company_description",
+          "text_sha256": "b4ea198a115212a6952d444583a6dfb362000c5e199111fbeef24f6cac3e4849",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 4,
+          "section": "company_description",
+          "text_sha256": "9f35fe8406749bc32efb77a2ec4eafed73b3babe8137709604c985fb22083b17",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 5,
+          "section": "investment_thesis",
+          "text_sha256": "9f35fe8406749bc32efb77a2ec4eafed73b3babe8137709604c985fb22083b17",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 6,
+          "section": "risks",
+          "text_sha256": "0cc216e41506f121ded5d3b7ea1bf9482a6bff07ec46fb88f0c79c6003885c1a",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 7,
+          "section": "risks",
+          "text_sha256": "5f211c890b51316f9c9b9ffff363efd724571706fc7da82fc85da1c683739f3b",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        }
+      ]
+    },
+    {
+      "security_key": "BABA_US_Equity",
+      "key": "drafting/v1/BABA_US_Equity.json",
+      "historical_sha256": "1da4627a9a6d86a61ec6f63e4dc85163f418a16849e4a5d7839e1160cb047ee0",
+      "historical_held": 2,
+      "sha256": "1da4627a9a6d86a61ec6f63e4dc85163f418a16849e4a5d7839e1160cb047ee0",
+      "exact_historical_bytes": true,
+      "version_id": "D1n7YqFCs5VW4TT1GkJgM.yUKyJtMv0F",
+      "metadata_sha256": "1da4627a9a6d86a61ec6f63e4dc85163f418a16849e4a5d7839e1160cb047ee0",
+      "current_no_span": 2,
+      "discriminator": {
+        "PASS": 0,
+        "HOLD": 2,
+        "REFUSE": 0
+      },
+      "cases": [
+        {
+          "index": 0,
+          "section": "company_description",
+          "text_sha256": "dda5d56f6c8388fa3c103bec0a4a06f17e604487593333bbdb02a18adc86adf5",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 1,
+          "section": "company_description",
+          "text_sha256": "3e629fa46883ab7456464fe6d16df78cb2ca710562519328cd4d3d5f7f2df981",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        }
+      ]
+    },
+    {
+      "security_key": "BA_US_Equity",
+      "key": "drafting/v1/BA_US_Equity.json",
+      "historical_sha256": "50e76d82833b6c76b35c86ce79ad7002524ad4d5e39e249f83f27c3ea7452122",
+      "historical_held": 21,
+      "sha256": "50e76d82833b6c76b35c86ce79ad7002524ad4d5e39e249f83f27c3ea7452122",
+      "exact_historical_bytes": true,
+      "version_id": "sHR495u_3KRfr8P4yMGxr5b0hWoGt_FF",
+      "metadata_sha256": "50e76d82833b6c76b35c86ce79ad7002524ad4d5e39e249f83f27c3ea7452122",
+      "current_no_span": 21,
+      "discriminator": {
+        "PASS": 0,
+        "HOLD": 21,
+        "REFUSE": 0
+      },
+      "cases": [
+        {
+          "index": 0,
+          "section": "company_description",
+          "text_sha256": "b333c1eab1694f0f28aff94e730a3c9538da078b4c37f24ae3e0f719bcfbddbf",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 1,
+          "section": "company_description",
+          "text_sha256": "cfe4e0db44467279eb598867027475fc1e3ef85c5bbbdf418086b5b16f4f6e8c",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 2,
+          "section": "company_description",
+          "text_sha256": "98eb3acf477d36aca840d1be7114fae637de189e7eb92235bff4f1b3e33c43ec",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 3,
+          "section": "company_description",
+          "text_sha256": "41b1b857cd52d071cf5c8f90f8ac2344f8d973032b2b34c5cda5b3b7501ac7c7",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 4,
+          "section": "company_description",
+          "text_sha256": "92bbb66c638251ba104b9d8c66307bd55ebeb49706ded4af4187cfdff01bffd6",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 5,
+          "section": "company_description",
+          "text_sha256": "02012899bf98e79c2275290d6c47b5b1f6b731fd9563f1b8ba943f0dc2e7e227",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 6,
+          "section": "company_description",
+          "text_sha256": "30bf180770e869582a206c51ee5c437443fe9ffe52cff8d6e3cb470fcab30c3a",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 7,
+          "section": "investment_thesis",
+          "text_sha256": "d6ba82fc06c5e2614d6e0efbb5173c4ba6f3d48890131fe5c3047c869b74398a",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 8,
+          "section": "investment_thesis",
+          "text_sha256": "25ad62314c323144da6aa99a4c0bfaf7de18af88649eb3fe887e4e88241640d5",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 9,
+          "section": "investment_thesis",
+          "text_sha256": "e11efefd9963a2c908a376713e86555b642823dc001ce6cde08da4972d63a35d",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 10,
+          "section": "investment_thesis",
+          "text_sha256": "401a8084edb48e7fc1e762204a6ef827b9a31d938e15351af496f93927abe1d9",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 11,
+          "section": "investment_thesis",
+          "text_sha256": "7a77a5af6137429f18e463784ec6fbb5ff07e7dbaba94ee4b099112f902a60bb",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 12,
+          "section": "investment_thesis",
+          "text_sha256": "c9496c545439f8ac66cc429c97798bac25d81e3edd07a1f68b70f494ffe02cc7",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 13,
+          "section": "investment_thesis",
+          "text_sha256": "22cb14eb2cdac6af0d19d71a43c05758f2d8747bf2db6421c27be265f2e3f19a",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 14,
+          "section": "investment_thesis",
+          "text_sha256": "30e83517d65024aa8fabf0cd47a3d1bf6eb292624c585945c433493f1b70bc87",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 15,
+          "section": "risks",
+          "text_sha256": "185b58a3983315df9fbd3b92d67a8dff5a4d5e85f277f48b789602e5c272d0cd",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 16,
+          "section": "risks",
+          "text_sha256": "97303410594951f4f2d21d8435af9f0e0712a7a53342d2e484fe1ac4a41543ba",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 17,
+          "section": "risks",
+          "text_sha256": "c8f9abcd8686be4ab2218dacbfa35091f200e8ed4300263f2a3c7439cf7bf215",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 18,
+          "section": "risks",
+          "text_sha256": "df1bd66d2f3b8f6f9e9a4fd250f28478faafb55c5d6887fa99644601cb765531",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 19,
+          "section": "risks",
+          "text_sha256": "25743741cced970fd89e8fb112c53f7d8e7617d3c58f9c666755d13cdfa0cbcf",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 20,
+          "section": "recommendation",
+          "text_sha256": "d56d71f05cd8ec85f5d0002ccf1220b07f531366add35a30677c185c4060b45b",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        }
+      ]
+    },
+    {
+      "security_key": "COST_US_Equity",
+      "key": "drafting/v1/COST_US_Equity.json",
+      "historical_sha256": "d0c719ac097acd21fd447dcd1397571c32b5dc8fd576abc96273ae30302830e7",
+      "historical_held": 24,
+      "sha256": "d0c719ac097acd21fd447dcd1397571c32b5dc8fd576abc96273ae30302830e7",
+      "exact_historical_bytes": true,
+      "version_id": "Y9c6Sc4KpWKIxYjZHn2g_r4EsTwANnaB",
+      "metadata_sha256": "d0c719ac097acd21fd447dcd1397571c32b5dc8fd576abc96273ae30302830e7",
+      "current_no_span": 24,
+      "discriminator": {
+        "PASS": 0,
+        "HOLD": 24,
+        "REFUSE": 0
+      },
+      "cases": [
+        {
+          "index": 0,
+          "section": "company_description",
+          "text_sha256": "00d5a9426977638c3f669cecaf6d3fa6b232851c85f285ceb7e8645d1e1de44b",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 1,
+          "section": "company_description",
+          "text_sha256": "e3a39b9fc77c4a8e7d164749627b99bcc605ca0c11b4ce2ce24082dda9181acf",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 2,
+          "section": "company_description",
+          "text_sha256": "134537507ad2121d19f88483ae58a015c72d4c266ee6374ff4a2bcf2ae43d4a5",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 3,
+          "section": "company_description",
+          "text_sha256": "678f5971cae4b8976c9799113b88a2a2aef0288cb6be4ecaf8d12302f2b39617",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 4,
+          "section": "company_description",
+          "text_sha256": "4cd9ea7edf1c7395fe15fada4cf6c31d7f22076d7ab344432860a0b0c263c3ba",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 5,
+          "section": "company_description",
+          "text_sha256": "684b0f719ca948c889f42c0bb46cb7b9fbb9b2fbc586bc562d2956b211d573b5",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 6,
+          "section": "investment_thesis",
+          "text_sha256": "83b8ff9683fd625dd5a744cfc106c15c2631ef58d0162dea943b71b4a8de7abb",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 7,
+          "section": "investment_thesis",
+          "text_sha256": "572fbbbf6aeb3e02f070b58f27df0e1ddfbedd0c4fcf0849e71b7ef9a7891662",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 8,
+          "section": "investment_thesis",
+          "text_sha256": "7209122cf1d59eef95c76323c63f388ca67a8eb7be643cfe14de3a65b378cee7",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 9,
+          "section": "investment_thesis",
+          "text_sha256": "b4d41b18b6982e058582ec271a0d1c5321a627a566ecd77ba3fa663add33dffe",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 10,
+          "section": "risks",
+          "text_sha256": "df512617b2d6ee665e56bf82753444828f154440d52452e6189e46fc2aec5743",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 11,
+          "section": "risks",
+          "text_sha256": "16d40c85306a5d1b3ec07c7eab9b339476dd0da12c78762aadb8d6c7e4088b5f",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 12,
+          "section": "risks",
+          "text_sha256": "aeee9c31e445c47179a4f88d6d72eae26e32b1cc44a5bdb505c341b08d8c8739",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 13,
+          "section": "risks",
+          "text_sha256": "2b8ba43c309796ba0a946fca41c534a64c29816687ef5157a738978206664417",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 14,
+          "section": "risks",
+          "text_sha256": "12ba44c6c128cda6cf788e44c57fcf0622d2768f361b07e0b4785715f85fd4ee",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 15,
+          "section": "risks",
+          "text_sha256": "5b3dd82ed270e42cfb65ee039a6ca1d65ae210763370ed8a3c825ff5791da592",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 16,
+          "section": "risks",
+          "text_sha256": "bae140f5ec35854cbfc666ecaa8be03def8fd455a2d1b2c1d33558c2cd2818d5",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 17,
+          "section": "risks",
+          "text_sha256": "7892cceb4d703439faf2e54c60ecd7bcb84788baca9007c8b78d8f66b4be6e30",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 18,
+          "section": "recommendation",
+          "text_sha256": "0648637e1ac081846e5d026edf924975061d8922b5d5fecc4a34a6203b7d4750",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 19,
+          "section": "recommendation",
+          "text_sha256": "e52777bc9add835106d90e6bda8a0376e12a8ba177c4c340530e40cebfb86967",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 20,
+          "section": "recommendation",
+          "text_sha256": "9947c1fea8a9d440d78fb4542f699535cc687ced0d21a3ced3f24ad398f10411",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 21,
+          "section": "recommendation",
+          "text_sha256": "42deb8ceab692eb42e4494e6f34e32ad6af2afd57422b63751ee79021875d98a",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 22,
+          "section": "recommendation",
+          "text_sha256": "cee4f01fa0f16e82408febada5ff2cf6e2a5f0499a79210c7f594bdae9904d3e",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 23,
+          "section": "recommendation",
+          "text_sha256": "42a5b4d458d643b55f733d25acbcffaf2480b6350a78dd94d3537fcdf2eaca09",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        }
+      ]
+    },
+    {
+      "security_key": "HAL_US_Equity",
+      "key": "drafting/v1/HAL_US_Equity.json",
+      "historical_sha256": "7b9cdb09e94900dbc14e3487d87b96d5a7afb41509a8f8e86d0dd82bae776de3",
+      "historical_held": 7,
+      "sha256": "7b9cdb09e94900dbc14e3487d87b96d5a7afb41509a8f8e86d0dd82bae776de3",
+      "exact_historical_bytes": true,
+      "version_id": "Jj.2bdrjD._hV2H3JO9k3wIPq8qhX1zR",
+      "metadata_sha256": "7b9cdb09e94900dbc14e3487d87b96d5a7afb41509a8f8e86d0dd82bae776de3",
+      "current_no_span": 7,
+      "discriminator": {
+        "PASS": 0,
+        "HOLD": 7,
+        "REFUSE": 0
+      },
+      "cases": [
+        {
+          "index": 0,
+          "section": "company_description",
+          "text_sha256": "d16da1cacc21c2c2c27ececfec839f0d4598fe801378e9ab8cb6fb97a8c3c46b",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 1,
+          "section": "company_description",
+          "text_sha256": "8862f2d9a4195d598224f673ff7c14376feb85ab798feca4b042a214e6b896db",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 2,
+          "section": "company_description",
+          "text_sha256": "c569f3e4c9210d3c927ef7d12223cdba59fd4b59adefc9c9ec3a858c54b77c1f",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 3,
+          "section": "company_description",
+          "text_sha256": "60bc51729ec81f9328f9aa76cb6c2c83aaef456e5feac213433b70ca4063d7aa",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 4,
+          "section": "company_description",
+          "text_sha256": "c47c41f23e18c5348d4cb172ca4754372cf399de618e9b901d17ce2589d7e402",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 5,
+          "section": "investment_thesis",
+          "text_sha256": "ac1b279aeb418699c3a604548b144927d3822e55a491be8b8f90791c0ba12a45",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 6,
+          "section": "recommendation",
+          "text_sha256": "5fcb3e0944fd19da25a714bee03a2dbe63db515fbf4f8b96afa3748e97101b58",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        }
+      ]
+    },
+    {
+      "security_key": "HD_US_Equity",
+      "key": "drafting/v1/HD_US_Equity.json",
+      "historical_sha256": "9a55e1ae052e0f7ef2544d7a8b57170c2b61da5d7995e18fd95d54f1fbfe394d",
+      "historical_held": 16,
+      "sha256": "9a55e1ae052e0f7ef2544d7a8b57170c2b61da5d7995e18fd95d54f1fbfe394d",
+      "exact_historical_bytes": true,
+      "version_id": "Hi2qXWUFp.EaVJBAPd1ckIlpU8jXcp4B",
+      "metadata_sha256": "9a55e1ae052e0f7ef2544d7a8b57170c2b61da5d7995e18fd95d54f1fbfe394d",
+      "current_no_span": 16,
+      "discriminator": {
+        "PASS": 0,
+        "HOLD": 16,
+        "REFUSE": 0
+      },
+      "cases": [
+        {
+          "index": 0,
+          "section": "company_description",
+          "text_sha256": "ef5133c6e24b6e03b45f02d5047b6f79ec289fb8a60a5d5967ce3455a69fbb90",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 1,
+          "section": "investment_thesis",
+          "text_sha256": "23c992118e3c7c62c2d9be8ebda51bb14c4fb9ff0b326e1af4a7804ef2e82971",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 2,
+          "section": "investment_thesis",
+          "text_sha256": "9290067095b9cc4a61ae5cd08130430ea1b12775ddfd447fcd8c8739bb623a5d",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 3,
+          "section": "investment_thesis",
+          "text_sha256": "52a416edcd14e69dc4f1c98792facd80337aedae53b2251d60b2a54e7ae36734",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 4,
+          "section": "investment_thesis",
+          "text_sha256": "70d476e70386b98a7c30a694f142aff7cc8a06560d587b0f8af80aea9da9ec04",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 5,
+          "section": "investment_thesis",
+          "text_sha256": "77b4733323229ccc05d4a0f6d744a528b73929d64511c7af8215b5a79b1f8b28",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 6,
+          "section": "investment_thesis",
+          "text_sha256": "ff5637c11c8e8dd73d3672c1b7883f4ed929c922dd48ee27d9e99102be30fed1",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 7,
+          "section": "risks",
+          "text_sha256": "12a3d20ee5608c61d5a2a7e42464daa5e0e2c8d85c3dc39715e5ce5ee61fae04",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 8,
+          "section": "risks",
+          "text_sha256": "daee7e5dccf24689a45adfeb5b53cf55fd3478005b74f77c8756f4ca0a733f89",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 9,
+          "section": "risks",
+          "text_sha256": "65c3b3962b85c07aaabc5baf9bdf18c49608d8302329771d73ee31987885798d",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 10,
+          "section": "risks",
+          "text_sha256": "4c0ba4da9721fbfa0edf91520943122f10bc45485e37094f27c008c7d0f003ae",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 11,
+          "section": "recommendation",
+          "text_sha256": "ed2acb9f417bb09d52264f0732d3051b59eeb7dfd3603d7c1fee50bfc881c438",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 12,
+          "section": "recommendation",
+          "text_sha256": "d4a1bcaae9465aa3cc35ec6ac05584ed1ca8bf80e34c4a57c9fad1a554bfb865",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 13,
+          "section": "recommendation",
+          "text_sha256": "ea11814fc61338dc87d0e930e532273ff41e410be5ecbf51f17a72b88a19d19b",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 14,
+          "section": "recommendation",
+          "text_sha256": "1c5e8c750d727b8e08ebe702ba1cb27cee3e81e7ea889ae206f612f89614a12a",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 15,
+          "section": "recommendation",
+          "text_sha256": "384b50ec24b93eb8087ca8110c00afc2df7295300c0873fc6e468a6772a6763a",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        }
+      ]
+    },
+    {
+      "security_key": "INTU_US_Equity",
+      "key": "drafting/v1/INTU_US_Equity.json",
+      "historical_sha256": "bedcbe982610368f56df3de4bc40512e60345e1deba3bd874c1e0e36c46385f7",
+      "historical_held": 14,
+      "sha256": "bedcbe982610368f56df3de4bc40512e60345e1deba3bd874c1e0e36c46385f7",
+      "exact_historical_bytes": true,
+      "version_id": "fQKJR8tsbFAvSyAS6VavwsAlrfqUnNGs",
+      "metadata_sha256": "bedcbe982610368f56df3de4bc40512e60345e1deba3bd874c1e0e36c46385f7",
+      "current_no_span": 14,
+      "discriminator": {
+        "PASS": 0,
+        "HOLD": 14,
+        "REFUSE": 0
+      },
+      "cases": [
+        {
+          "index": 0,
+          "section": "company_description",
+          "text_sha256": "fdc608ca813cf86474f862109c54d95a220191e2301d0381d9967ae9669d0c66",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 1,
+          "section": "company_description",
+          "text_sha256": "00d39e51f87de014985a81778fd15dec76dca244dba7493350318d48b51d4eff",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 2,
+          "section": "company_description",
+          "text_sha256": "2f0f5251187a797a2f260b42064fc38ca5c938b26fae69ea39a427e22cb2fdbd",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 3,
+          "section": "company_description",
+          "text_sha256": "9e9167ac035824db1846759ce8c15e9e4a3378c30c1f338a4e44092ec661469a",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 4,
+          "section": "company_description",
+          "text_sha256": "eb6c2404c761c08f0036944515a2d92a5b3dd041c97215c31734728992756f08",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 5,
+          "section": "company_description",
+          "text_sha256": "e5551be2569ebdd1d9812fa4776adfadc3282893dc3968fd9c9f21fc6e59ca4a",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 6,
+          "section": "company_description",
+          "text_sha256": "201627c24f3a2ad6ed1f4594f639a7f3378da5685d14aba28a4a23f5478b9611",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 7,
+          "section": "investment_thesis",
+          "text_sha256": "bb34cf247dfbe09f3cb550f77def54754e2ca94e0b6021453e45af31a8917a4d",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 8,
+          "section": "investment_thesis",
+          "text_sha256": "62309bdeb9648fcda561c4db5e19844014b440dfc60b7e2fe434a2330ee576d4",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 9,
+          "section": "investment_thesis",
+          "text_sha256": "ce45ce96126cef7820a47ecbacbb1810c95795754d5cead638504b4199d69bf6",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 10,
+          "section": "investment_thesis",
+          "text_sha256": "167420e008165694f4569baad670e708f85a926c6bce0015bd0ec368ef838d5f",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 11,
+          "section": "investment_thesis",
+          "text_sha256": "975c5d2952f07a241f7148dfd58ee1ff08074303093ea645547696ef7b932975",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 12,
+          "section": "risks",
+          "text_sha256": "e278260ac7da1590af5742012ea551a302ef418f8a2990c2778c7c72d780f920",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 13,
+          "section": "risks",
+          "text_sha256": "4f09cb4a2398b900d11c419d02526c05637294d79dabb831208d84da1b5e0ef5",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        }
+      ]
+    },
+    {
+      "security_key": "KMB_US_Equity",
+      "key": "drafting/v1/KMB_US_Equity.json",
+      "historical_sha256": "35285a89b7fc67e7560775f80bcbcdeded0329c0b6293679dc2beecc2268cc6b",
+      "historical_held": 21,
+      "sha256": "35285a89b7fc67e7560775f80bcbcdeded0329c0b6293679dc2beecc2268cc6b",
+      "exact_historical_bytes": true,
+      "version_id": "mwcQhNTyHBv5NVsPhqJPS8cDbhQTteDo",
+      "metadata_sha256": "35285a89b7fc67e7560775f80bcbcdeded0329c0b6293679dc2beecc2268cc6b",
+      "current_no_span": 21,
+      "discriminator": {
+        "PASS": 0,
+        "HOLD": 21,
+        "REFUSE": 0
+      },
+      "cases": [
+        {
+          "index": 0,
+          "section": "company_description",
+          "text_sha256": "bd7fe61a5a8fd3b149e1a422222acf1ae9a44a19e332987d064ef0059b9e2c06",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 1,
+          "section": "company_description",
+          "text_sha256": "24b9dfff94dc604838645977f05152a52036dc15b0f4496326e7c2f78594678c",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 2,
+          "section": "company_description",
+          "text_sha256": "0cb1f4f0dfaaf209bd2a32d48e7d09e6881d50ac4285ef65f29c4c9e013df43d",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 3,
+          "section": "company_description",
+          "text_sha256": "9d5003264706a048bb045bbe5b886e7a16b4eb6cffa21cd32eea57e217bdb0c7",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 4,
+          "section": "company_description",
+          "text_sha256": "096191d701971ca7c94f9035144529ebed4e9ae93f5b23ada5f71282df7ebe9b",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 5,
+          "section": "company_description",
+          "text_sha256": "678c1967966dd703e188894b07e18ec16166a46c1c0544ffa688d679cc152820",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 6,
+          "section": "company_description",
+          "text_sha256": "536ee5fe8af9e0bf6f9a7e371837fb9855b794cc12880beca5ce512f38f33165",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 7,
+          "section": "investment_thesis",
+          "text_sha256": "bfe37733cc6eb28e7911d99c969759e552e2021263f5387e69ba6c7a2d708873",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 8,
+          "section": "investment_thesis",
+          "text_sha256": "44d0c4b8517b759b4cce206ad902fdb73db256523dfa12fca1486fcb81bcbeb2",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 9,
+          "section": "investment_thesis",
+          "text_sha256": "8be031a08cef6bd474d947b598589a0274e967ffd007b33b61798a75c5ada6aa",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 10,
+          "section": "investment_thesis",
+          "text_sha256": "80002d69318c292f35bf86a88458d58f3e35488523f9ac99c1ae43798534a165",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 11,
+          "section": "investment_thesis",
+          "text_sha256": "31b985d24844bbcb1b559033ace888cb5493fcbb6590bfa9b6091330cb73c59f",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 12,
+          "section": "investment_thesis",
+          "text_sha256": "536ee5fe8af9e0bf6f9a7e371837fb9855b794cc12880beca5ce512f38f33165",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 13,
+          "section": "risks",
+          "text_sha256": "68f3aebf7c8cec7c02c416ee50a503548c01b1b4975ad75df40ed8c1b6c7c352",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 14,
+          "section": "risks",
+          "text_sha256": "e2cd461995810213656cc7664c754194f8efbd7211b786feff431588f42f9dd6",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 15,
+          "section": "risks",
+          "text_sha256": "8adbfeb09a8991ba86540a047db77ed99d708936481b09e623b07266ea4dd942",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 16,
+          "section": "risks",
+          "text_sha256": "8ec189775f26f18d0ed54d27917c57b22a29dc54eb2ee712b6c3269a0fbb392a",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 17,
+          "section": "risks",
+          "text_sha256": "8bde9729fec822f2d9e970ba587997831809cfa399a59cdb8fb3f6056494e1a5",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 18,
+          "section": "recommendation",
+          "text_sha256": "d740191c0ba2874dde49fd3756c97afe99deb373dafb0c39b9c91f66c093ff2a",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 19,
+          "section": "recommendation",
+          "text_sha256": "c4bcb973fc9883b08c751b9966a86c3464d1dadb4ab167ac7c4618c21d1cebda",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 20,
+          "section": "recommendation",
+          "text_sha256": "0a9b1e153a8341df480bae9608e6dc35afe05a2a61bd89a90bef03ddd49af235",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        }
+      ]
+    },
+    {
+      "security_key": "NU_US_Equity",
+      "key": "drafting/v1/NU_US_Equity.json",
+      "historical_sha256": "754119f46084df63c97ed588258e694c0f086ad54a820ee4c31b54cea16d5d6e",
+      "historical_held": 19,
+      "sha256": "754119f46084df63c97ed588258e694c0f086ad54a820ee4c31b54cea16d5d6e",
+      "exact_historical_bytes": true,
+      "version_id": "0rjykyh7tMCDOQo5oOmt_M7tLBB5kI.C",
+      "metadata_sha256": "754119f46084df63c97ed588258e694c0f086ad54a820ee4c31b54cea16d5d6e",
+      "current_no_span": 19,
+      "discriminator": {
+        "PASS": 0,
+        "HOLD": 19,
+        "REFUSE": 0
+      },
+      "cases": [
+        {
+          "index": 0,
+          "section": "company_description",
+          "text_sha256": "6c878c89ed2e518e1607cedc878fa8fee1d719da4b846984143d351b42dadcad",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 1,
+          "section": "company_description",
+          "text_sha256": "a82c49d4896a6ec18fae48535bf42adfb656bfa55c0f1f5716779fa56ff37511",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 2,
+          "section": "company_description",
+          "text_sha256": "35c0d185c5aca582c47ad6a724ab3ed98c5e2a73f3c59f226c14e5a1efeeb132",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 3,
+          "section": "company_description",
+          "text_sha256": "0d1b07b272dc309aaaf57a1d4a71f0659d0dcbd40109701d3797a8c14a162b23",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 4,
+          "section": "company_description",
+          "text_sha256": "a0e852c386e922280516d14d1ec0bc80228d6031db341b6b91736e146253e09d",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 5,
+          "section": "company_description",
+          "text_sha256": "614c94cb610643a4567f80c54677cbb601949d75ace3bae5aef91cace04d2200",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 6,
+          "section": "company_description",
+          "text_sha256": "740b7a7d637bd53c8f0aa36ebb01ed3cd01c35603aac6cedcb367127cec6a36f",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 7,
+          "section": "company_description",
+          "text_sha256": "be61ecf10c218f0a66e4cc2eeff2bcbd3166e12709c80f0de132346735863799",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 8,
+          "section": "company_description",
+          "text_sha256": "ef77f602530e2e960da7d886f8c89281621b26d4bc7ae399d309538eabc6fb68",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 9,
+          "section": "investment_thesis",
+          "text_sha256": "6e6f5657d0635af96281f15cd2398034a3ee49624ce8cfff4dfe7261090f730e",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 10,
+          "section": "investment_thesis",
+          "text_sha256": "aef5361edcc06f25bf9ecbb7152fbc04350ea22ed66ad59ac602e0409f56a5a7",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 11,
+          "section": "investment_thesis",
+          "text_sha256": "c05e55f17d25d94dc1a74ccdd1460950b6277b5914078441f7dd50c414cdbbd6",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 12,
+          "section": "risks",
+          "text_sha256": "e10fe80a46332320faf5645ddcffc8c8523d58f860dfcc08bcee0787eb74a17e",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 13,
+          "section": "risks",
+          "text_sha256": "99557a7550af7517b67c0856a7ef02b481a81ac31268fa1d80a92021e6fb6b10",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 14,
+          "section": "risks",
+          "text_sha256": "068adb2c5e2f75bfe17121b59a15a6ba8882a5c31d843b1adf6a594bc0fed631",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 15,
+          "section": "risks",
+          "text_sha256": "f8b45c5890fab9466bcb8176988a5e4c96f04f25bb2a8b32c25337ffba423d10",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 16,
+          "section": "risks",
+          "text_sha256": "62af83cf7af78b17c0743d63ae67283d30fcbd3232299b48439a21dddd00cca8",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 17,
+          "section": "recommendation",
+          "text_sha256": "1be522c04737746c4e36560751d6db6aa7d6e6ea921208d015927c69bdd8ea3f",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 18,
+          "section": "recommendation",
+          "text_sha256": "4120d6331b34854a7583f53204857361cabbb82315ce26d4d985372c7e2b7cf0",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        }
+      ]
+    },
+    {
+      "security_key": "PBR_US_Equity",
+      "key": "drafting/v1/PBR_US_Equity.json",
+      "historical_sha256": "d94534b006ca05c0abe29acad7f96d17d983178e728567358123a9a736b51113",
+      "historical_held": 13,
+      "sha256": "d94534b006ca05c0abe29acad7f96d17d983178e728567358123a9a736b51113",
+      "exact_historical_bytes": true,
+      "version_id": "c6zjDLbmpGJnmc3aUWygjmjvbzZT0eNr",
+      "metadata_sha256": "d94534b006ca05c0abe29acad7f96d17d983178e728567358123a9a736b51113",
+      "current_no_span": 13,
+      "discriminator": {
+        "PASS": 0,
+        "HOLD": 13,
+        "REFUSE": 0
+      },
+      "cases": [
+        {
+          "index": 0,
+          "section": "company_description",
+          "text_sha256": "a1b3b1f586e0d04eb48610e457e1dd5518621a07bb87635950b20b7f82f77c5f",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 1,
+          "section": "company_description",
+          "text_sha256": "cd103d7bcdbef5f2bdf62ac4e6f19a3783cd4a620bd0c233473d272082ef98e7",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 2,
+          "section": "company_description",
+          "text_sha256": "508c03afd9aa4e974f1dcdc2a17f7f46c539cf3194c334e9fbcc004e1eec0963",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 3,
+          "section": "company_description",
+          "text_sha256": "d9897d85964fdd88e296b1a0c2083e19799bd8637b26182aa3db7fc22f39573a",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 4,
+          "section": "investment_thesis",
+          "text_sha256": "e48962c03bd61f112f1cd22713885967e8aac235f00a87c23930ad3941e7b07c",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 5,
+          "section": "investment_thesis",
+          "text_sha256": "a7926194db23d9183854ad9c1d14e062ca868e409c864e06497690d0e87bb092",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 6,
+          "section": "investment_thesis",
+          "text_sha256": "832ba7334c206fb87e4e80a344ad5af54ac5fe0ba5f3fe05be7652fc615d6dcf",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 7,
+          "section": "investment_thesis",
+          "text_sha256": "0869292db42d2c9dacd7425cd79c75b3503a5a8467fbca324e3574e925032b8b",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 8,
+          "section": "investment_thesis",
+          "text_sha256": "325ae7eaa88858112aa78b2cef36e0e59d1911e5ebd1c7be03d41a93cbed47f2",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 9,
+          "section": "investment_thesis",
+          "text_sha256": "508c03afd9aa4e974f1dcdc2a17f7f46c539cf3194c334e9fbcc004e1eec0963",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 10,
+          "section": "investment_thesis",
+          "text_sha256": "d9897d85964fdd88e296b1a0c2083e19799bd8637b26182aa3db7fc22f39573a",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 11,
+          "section": "investment_thesis",
+          "text_sha256": "0a0d82fa0f7916c1f75260d50a4b2a18caa836ab6fd6849bdc9116f92552ec6f",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 12,
+          "section": "recommendation",
+          "text_sha256": "4e0f49a1e19f1bc7d884e204dd63cd0aa75b36c0e069d8ee8fe737eacc37891e",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        }
+      ]
+    },
+    {
+      "security_key": "SAP_GY_Equity",
+      "key": "drafting/v1/SAP_GY_Equity.json",
+      "historical_sha256": "3800c516b78eb8750cc83c7c83e294923eb254687cc3af1fc09c98ed5e2f6ae4",
+      "historical_held": 8,
+      "sha256": "3800c516b78eb8750cc83c7c83e294923eb254687cc3af1fc09c98ed5e2f6ae4",
+      "exact_historical_bytes": true,
+      "version_id": "tR7NBOs4YBJCmANOyH1H9aauaRUBnAhE",
+      "metadata_sha256": "3800c516b78eb8750cc83c7c83e294923eb254687cc3af1fc09c98ed5e2f6ae4",
+      "current_no_span": 8,
+      "discriminator": {
+        "PASS": 0,
+        "HOLD": 8,
+        "REFUSE": 0
+      },
+      "cases": [
+        {
+          "index": 0,
+          "section": "company_description",
+          "text_sha256": "611cd6084b7669e45ec1366ef15a90f982e4beed3702f54cae45843431bc7c68",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 1,
+          "section": "investment_thesis",
+          "text_sha256": "b7aac98eaf33183341b6de860d5588926819ddd916f0db39766b2af793925979",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 2,
+          "section": "investment_thesis",
+          "text_sha256": "7dfd52c376ff23d88ba2c6340f7aee71d84289d5d235607ed66e20a1a096e590",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 3,
+          "section": "investment_thesis",
+          "text_sha256": "362c48aec1f0187f0bfdded932895be80c5aecdad6dec845e46c03fd425c1601",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 4,
+          "section": "risks",
+          "text_sha256": "4cf61b378586f92ed7096f11fa327db0f9dd9d405b79b0e18330df69b8a98c51",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 5,
+          "section": "recommendation",
+          "text_sha256": "bab4ddf6d216b9c5bf12927ee451534d0a9f123525693544e806581fba15adf4",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 6,
+          "section": "recommendation",
+          "text_sha256": "9ff2f8c7bcf1a01a600faffecf64d934678cb291046dca8c0f3e33d1f4956ab7",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 7,
+          "section": "recommendation",
+          "text_sha256": "6137ea036f2361b8bd71bccef72c673f7b7418b0deffe1e0f894da4c85b521fd",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        }
+      ]
+    },
+    {
+      "security_key": "VLO_US_Equity",
+      "key": "drafting/v1/VLO_US_Equity.json",
+      "historical_sha256": "79d8878ee8f02131cf27b172b130ee1225baa5671956923ffb4fac052348937a",
+      "historical_held": 26,
+      "sha256": "79d8878ee8f02131cf27b172b130ee1225baa5671956923ffb4fac052348937a",
+      "exact_historical_bytes": true,
+      "version_id": "th1bNya7_lxebjyS6kZjpZkNy3yIEeWY",
+      "metadata_sha256": "79d8878ee8f02131cf27b172b130ee1225baa5671956923ffb4fac052348937a",
+      "current_no_span": 26,
+      "discriminator": {
+        "PASS": 0,
+        "HOLD": 26,
+        "REFUSE": 0
+      },
+      "cases": [
+        {
+          "index": 0,
+          "section": "company_description",
+          "text_sha256": "20cf1dfb8f3a9492e731374d07fbc33eba31b9267397cb3cddf64f970d52ae38",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 1,
+          "section": "company_description",
+          "text_sha256": "c722b242bc9c9692ad95d154d3473e9e67f09812dea0e2e020cd8eed514a0534",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 2,
+          "section": "company_description",
+          "text_sha256": "aecd054f0edb7a4f8e6559999c7bf620956c47df360e89289c173226bd21e5a9",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 3,
+          "section": "company_description",
+          "text_sha256": "b7a22e9442168783b4808e442516a9c6a4888628970657eb685aee5bb83311dc",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 4,
+          "section": "company_description",
+          "text_sha256": "bcc29ccf8a4e9a0360bf27924fe47360dde0b803fbfdb8f39bebaae503ee3bff",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 5,
+          "section": "company_description",
+          "text_sha256": "c7f5cd49123c1aaf371e17ece504002086b73e27380c6601f22587a46b37ee4c",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 6,
+          "section": "company_description",
+          "text_sha256": "2288a0b50d8630b8e7f24d539c3419402a5e87cf7f4617ea22a8005cad55cf59",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 7,
+          "section": "company_description",
+          "text_sha256": "85c2b128cb48e1f58ea99a7b23882a6097a1cc84e1afe0b6fec19339f5702402",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 8,
+          "section": "company_description",
+          "text_sha256": "117b76479eb787ff3586baca099fb8659be27b504031fdc433c8a6f892f69e0b",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 9,
+          "section": "company_description",
+          "text_sha256": "8b3d43523d0b399a9c1101a854d52e0c2b4afcf666f59a1b86460931999a949c",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 10,
+          "section": "investment_thesis",
+          "text_sha256": "0a7636efe6cb20bf0e4703afd6954e843ca7690d927d4d793d5f2a98c47180fe",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 11,
+          "section": "investment_thesis",
+          "text_sha256": "8026d205f5454c1db67b260cb05c2d5202c9d4a175512ccb672ed85aee04d09a",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 12,
+          "section": "investment_thesis",
+          "text_sha256": "4aa8934d16f7f2d510ed575c9494d366e305d9c1612f5662ce4bd3b3bc47a489",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 13,
+          "section": "investment_thesis",
+          "text_sha256": "bd24d1cefda79307c9f8dc7f6600f4952256742698fedd6531245d582b8334cd",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 14,
+          "section": "investment_thesis",
+          "text_sha256": "b1ed5fb66b08a27a9f2dceba99b40e27090502470d563c39ab447fbeaff026bd",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 15,
+          "section": "risks",
+          "text_sha256": "63be78aeb2022e7a6fc1db0e811822c2e50365b47ba41753559d9c7daf6ed43b",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 16,
+          "section": "risks",
+          "text_sha256": "910c44b7abbcf13f28db8395fc46c08cacb87ed77a9b25ae4caae50abeb5429c",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 17,
+          "section": "risks",
+          "text_sha256": "baff9be76578fff6def2a9f2486f9dce758b35495754b0f339cc166b25ac64da",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 18,
+          "section": "risks",
+          "text_sha256": "4d329d158476c335ffa3c892d6f2948cbaa340ee22606325cd656069337aed67",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 19,
+          "section": "risks",
+          "text_sha256": "9fbce4804a69c8dce601ba3d50e5e57a57052ed9b6aa0f747b0ac5939aabf281",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 20,
+          "section": "risks",
+          "text_sha256": "761eee08b4945c9bd14fece5c85b4f4e204b10a4dcc2830a6d4735c0a4db6c9a",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 21,
+          "section": "risks",
+          "text_sha256": "76b4c764d9f31e46ed186e671018378426071c49c1e874e27ef5be9ee09250c4",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 22,
+          "section": "recommendation",
+          "text_sha256": "562fb69f49848d421fc7c956d808adbdeb1e3e200ce4b6748cfdc3a3482323cc",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 23,
+          "section": "recommendation",
+          "text_sha256": "425b41ff3b3d95cc81f643f956786d2f38c74f50a37726442eb4e3efa7611437",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 24,
+          "section": "recommendation",
+          "text_sha256": "4e5ac1913ee68204e3dda7ecb351f483e1388c2a6b4f8e95d1a58db2be3518da",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        },
+        {
+          "index": 25,
+          "section": "recommendation",
+          "text_sha256": "4042c932a6fbe26e5be50ca8c20e87edbd8adfd1d60cd5b89f3b9016d055eccb",
+          "has_figure_id": false,
+          "status": "HOLD",
+          "reason": "no verbatim span; existing C-VERBATIM-GATE unchanged"
+        }
+      ]
+    }
+  ],
+  "limitation": "No legacy prose is converted to a checked I2 figure without an actual typed source mapping.",
+  "exact_historical_matches": 12,
+  "observed_no_span": 179,
+  "historical_denominator_recovered": true,
+  "counts": {
+    "PASS": 0,
+    "HOLD": 179,
+    "REFUSE": 0
+  }
+}

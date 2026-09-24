@@ -1,11 +1,11 @@
 {
   "prd": "AMGT_RESAPP_PRD.md",
-  "prd_version": "v0.13",
-  "prd_pin": "16999602615f9643385bc571748aa7a25079baf0",
+  "prd_version": "v0.23",
+  "prd_pin": "9102ccfe81e71eb20e91db780781171756c8bda1",
   "half": "brief",
-  "half_hash": "c0d38674e972ab06a34099389758510b7eb047454f74ce3bcb1860898bd69418",
+  "half_hash": "1a321f3479dc61865ae144690117ae536ae74164bbafdaf9aad5a64f02f4fd0c",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/L4R_REVIEW_AMGT_RESAPP_v0.11_BRIEF_HALF.md@8a788d2eaf",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/L4R_REVIEW_AMGT_RESAPP_v0.23_BRIEF_HALF.md@1e4b086384",
   "signed_by": "4.0.0_SA_CRO~Z",
-  "signed_at": "2026-09-18T20:33:46Z"
+  "signed_at": "2026-09-22T15:03:00Z"
 }

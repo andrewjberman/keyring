@@ -425,6 +425,25 @@ check_as '0.4.0_DT_ClientPlatform~Z' "neg: DT PULLing portal PROD still DENIED" 
 check_as '1.0.0_SA_CTO~Z'            "neg: non-DT (CTO) on portal PROD DENIED"     'git -C portal push origin PROD' DENY
 check_as '0.4.0_DS_ClientPlatform~Z' "neg: DS is not DT, portal PROD DENIED"       'git -C portal push origin PROD' DENY
 check_as ''                          "neg: UNRESOLVED caller fails CLOSED on PROD" 'git -C portal push origin PROD' DENY
+
+# S209 (round 23, AMGT-rk-95): GATE 5's quoted `git -C` / `cd` parser -- a quoted, space-containing
+# worktree path resolves WHOLE to that worktree, a Windows drive path is ABSOLUTE, the relative form
+# is unchanged, and the negative control (a shared-branch push from the workspace repo, incl. via a
+# quoted absolute path) is still DENIED. Every path below is DERIVED, never typed.
+_NRG_ROOT="${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel)}"
+_NRG_M="$(cygpath -m "$_NRG_ROOT")"
+_NRG_W="$(cygpath -w "$_NRG_ROOT")"
+check_as '0.4.0_DT_ClientPlatform~Z' "S209: DT git -C dquoted fwd portal PROD"        "git -C \"$_NRG_M/portal\" push origin PROD" PASS
+check_as '0.4.0_DT_ClientPlatform~Z' "S209: DT git -C squoted fwd portal PROD"        "git -C '$_NRG_M/portal' push origin PROD" PASS
+check_as '0.4.0_DT_ClientPlatform~Z' "S209: DT git -C dquoted backslash portal PROD"  "git -C \"$_NRG_W\\portal\" push origin PROD" PASS
+check_as '0.4.0_DT_ClientPlatform~Z' "S209: DT cd dquoted portal && push PROD"        "cd \"$_NRG_M/portal\" && git push origin PROD" PASS
+check_as '0.4.0_DT_ClientPlatform~Z' "S209: DT cd squoted portal && push PROD"        "cd '$_NRG_M/portal' && git push origin PROD" PASS
+check_as '0.4.0_DT_ClientPlatform~Z' "S209: neg: DT git -C dquoted ws root push CLOUD" "git -C \"$_NRG_M\" push origin CLOUD" DENY
+check_as '0.4.0_DT_ClientPlatform~Z' "S209: neg: DT cd dquoted ws root && push CLOUD"  "cd \"$_NRG_M\" && git push origin CLOUD" DENY
+check_as '1.0.0_SA_CTO~Z'            "S209: neg: non-DT (CTO) dquoted portal PROD"     "git -C \"$_NRG_M/portal\" push origin PROD" DENY
+check_as '0.4.0_DT_ClientPlatform~Z' "S209: neg: DT dquoted missing dir fails closed"  "git -C \"$_NRG_M/no such dir\" push origin PROD" DENY
+check_as '0.0.0_AB_MSTR~Z'           "S209: integrator unaffected dquoted ws CLOUD"    "git -C \"$_NRG_M\" push origin CLOUD" PASS
+
 check_as '0.0.0_AB_MSTR~Z'           "integrator unaffected: MSTR workspace CLOUD" 'git push origin CLOUD'          PASS
 
 # SITEZ IN SHARED_BRANCHES (Andrew-direct 2026-09-02, "all recs approved"). Before this, on the site-Z

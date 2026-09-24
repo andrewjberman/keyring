@@ -1,0 +1,13 @@
+{
+  "prd": "AMGT_RESAPP_PRD.md",
+  "prd_version": "v0.24",
+  "prd_pin": "ddb93dd1705cfa129df837ff322d292637888a9c",
+  "half": "brief",
+  "half_hash": "445b90642d4a8b7a739ffe6f3f24611e5b88eafd32cc6168b15dc5a5ea90c909",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/2.0.0_SA_COO~Y/deliverables/L4R_REVIEW_AMGT_RESAPP_v0.24_BRIEF_HALF.md@fd6b8028f0",
+  "signed_by": "2.0.0_SA_COO~Y",
+  "signed_at": "2026-09-23T05:08:16Z",
+  "substitute_for": "4.0.0_SA_CRO~G",
+  "reason": "Substitute signer under Rule 27 L4-R on 1.0.0_SA_CTO~Z's explicit re-route @3303326c25: the notifier carries no row for this half so the 60-minute condition is unreachable, and the signer of record is not live."
+}

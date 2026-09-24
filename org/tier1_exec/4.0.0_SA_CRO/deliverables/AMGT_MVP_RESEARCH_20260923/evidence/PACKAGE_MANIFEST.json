@@ -1,0 +1,112 @@
+[
+  {
+    "path": "CLOSER_CONTRACT.md",
+    "sha256": "1cd63d2ae274d8c3fea8867890cda066075ff086ca6cf75664720c1759ed908b",
+    "bytes": 14381
+  },
+  {
+    "path": "CLOUD_PRECEDENT.md",
+    "sha256": "b784211ff3609ba90ed3f18e84fb137978841b3334b2e7fb568dca9f0d5ed9d9",
+    "bytes": 4611
+  },
+  {
+    "path": "CORPUS_END_TO_END.md",
+    "sha256": "62b91fd8a466b92f71fc439df94358a690aa69d80a5b1a2e3d28cf9acbd575b5",
+    "bytes": 4615
+  },
+  {
+    "path": "CORPUS_L9_CLOSER_CONTEXT_UPDATE.md",
+    "sha256": "5d35e1a9dcee452729ceaf321b3a263d7c524ed13d574de23cf639b54517f863",
+    "bytes": 5603
+  },
+  {
+    "path": "evidence/collect_readonly.py",
+    "sha256": "75f9e6d707a8637efe7ba86f01923e692689c030c58cc2adb5aad9058e60dc06",
+    "bytes": 9275
+  },
+  {
+    "path": "evidence/collect_supplement.py",
+    "sha256": "4d784cab7b02c028bf1134f8ce8ad6c9fa0c576aaf062e5f1a489b4cce31257f",
+    "bytes": 5630
+  },
+  {
+    "path": "evidence/CORPUS_L9_UPDATE_SOURCES.json",
+    "sha256": "65e2ee6a214fa1d922eb463545822f1b027a97f8ddb05ba60da334c5e21bc68f",
+    "bytes": 2900
+  },
+  {
+    "path": "evidence/MEASUREMENTS.json",
+    "sha256": "dc60528733e1375d5626af2f8c425b62525b60a8e03363ce718405f1c207ad23",
+    "bytes": 61139
+  },
+  {
+    "path": "evidence/OWNERSHIP.json",
+    "sha256": "cb82a428c98bfe4c4a552b654bd2b48deb2aac08d3a1704607d77f405106aff2",
+    "bytes": 1440
+  },
+  {
+    "path": "evidence/README.md",
+    "sha256": "48a1f6cd798cd850934db975787c055c2c85a0859942d48a6d3f55dca6391715",
+    "bytes": 3292
+  },
+  {
+    "path": "evidence/ROUND36_HANDOFF_UPDATE_SOURCES.json",
+    "sha256": "f8808f5f3566bbaee3d66f8b8738788ce4b26fc2b97d318558a5ba86807b1834",
+    "bytes": 3368
+  },
+  {
+    "path": "evidence/ROUND36_RETRACTION_SOURCES.json",
+    "sha256": "2b0c5fb02b0e7ad22e62c91835687b39b57df5db7a319e9962e5c248e8ca86e6",
+    "bytes": 1083
+  },
+  {
+    "path": "evidence/ROUND36_UPDATE_SOURCES.json",
+    "sha256": "5a55a6de62a9b8b88f8ea8317fcc23656f0b8910a4b931b86aa06082427c0949",
+    "bytes": 843
+  },
+  {
+    "path": "evidence/S3_INVENTORY.csv",
+    "sha256": "824a9f29fb5da0fe2f341224f19ab4ab9e51bf87c8ae968539e4d4f64eadf084",
+    "bytes": 222906
+  },
+  {
+    "path": "evidence/SOURCE_MANIFEST.json",
+    "sha256": "29821434073caa5f20959efdf1b67a18fbcfda5f61186ead6e8b6cab442f0cb7",
+    "bytes": 3633
+  },
+  {
+    "path": "GAPS.csv",
+    "sha256": "65f30d90e3b8efa3263bcccdcff80d1bc786cf92385a48b68c97b34538f3b14b",
+    "bytes": 6424
+  },
+  {
+    "path": "IMPLEMENTATION_SCHEDULE.md",
+    "sha256": "666b07a55f6afb649a3970995a87966cc2681c35e5d04e398ee89abe30d07d12",
+    "bytes": 9443
+  },
+  {
+    "path": "PUBLICATIONS_END_TO_END.md",
+    "sha256": "15b2f6fe0267212a1fde02b596775d98b2a187621ab5986e400f81474222ad9a",
+    "bytes": 5727
+  },
+  {
+    "path": "README.md",
+    "sha256": "b6519975e9ff42b83b9ef2fd6081049c60d69af8355f7eab63a799549971d506",
+    "bytes": 7105
+  },
+  {
+    "path": "REPORT_EXPERIENCE_END_TO_END.md",
+    "sha256": "3d01e9dd2b65d8dafb804e1a9caac13f8863600461c5c1e556ba5b287df56927",
+    "bytes": 6309
+  },
+  {
+    "path": "ROUND36_CLOSER_CONTEXT_UPDATE.md",
+    "sha256": "5d0a5b83b909f02379f73be8dc52506b286fd7a54d9e84fb7eab0215a7396016",
+    "bytes": 8964
+  },
+  {
+    "path": "SECURITY_DATA_END_TO_END.md",
+    "sha256": "26cf38dc20e855c6eeac308abef7723718b77f0e277ce598b229cae407ef3980",
+    "bytes": 7650
+  }
+]

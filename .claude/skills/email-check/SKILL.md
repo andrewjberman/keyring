@@ -30,7 +30,7 @@ heuristics that reward a real-looking human name.
 
 ## Step 1 — Pull
 
-`mcp__opal-gateway__list_recent_email(top=<N>, since_iso=<optional>)`. Default **`top=60`**, which covered
+`mcp__opalgateway__list_recent_email(top=<N>, since_iso=<optional>)`. Default **`top=60`**, which covered
 ~3 days on the measured mailbox. `--since <ISO>` sets `since_iso`; `--unread` sets `unread_only=true`.
 
 ⛔ **ONE CALL PER PAGE. DO NOT call `read_email` per message to enrich** — see HAZARDS.
@@ -109,5 +109,5 @@ attribution elsewhere in this workspace. Correspondence with `@opalinvest.com` c
 ## Cross-references
 
 Allowlist `.claude/skills/email-check/contacts.yaml` · ledger LD-0489 · gateway tools
-`mcp__opal-gateway__{list_recent_email,search_email,read_email}` · sibling read-and-rank skills
+`mcp__opalgateway__{list_recent_email,search_email,read_email}` · sibling read-and-rank skills
 `/open-calls`, `/next-steps` (same card discipline: signal first, residual named, no padding).

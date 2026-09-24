@@ -1,0 +1,12 @@
+{
+  "prd": "AMGT_CORPUS_PRD.md",
+  "prd_version": "v0.3",
+  "prd_pin": "c94a6bb2efc12414fc6a6f6ca08d20bc08a67acd",
+  "half": "brief",
+  "half_hash": "4bdca847a3913eb546f4f5b6066cbf800af1a6fca22a919a5fe56c5f8d54e6a1",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_CORPUS_PRD_v0.2_L4R_BRIEF_REVIEW_20260923_Z.md@4e762ca77b",
+  "signed_by": "2.0.0_SA_COO~Z",
+  "signed_at": "2026-09-23T01:27:59Z",
+  "substitute_for": "4.0.0_SA_CRO"
+}

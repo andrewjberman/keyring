@@ -1,0 +1,14 @@
+{
+  "observed_at": "2026-09-23T22:03:28.728630+00:00",
+  "full_postapply_plan_exit": 2,
+  "resource_changes": [],
+  "output_changes": [
+    {
+      "name": "scoped_amgt_route_keys",
+      "actions": [
+        "update"
+      ]
+    }
+  ],
+  "outputs_applied": false
+}

@@ -1,0 +1,371 @@
+{
+  "deployed_package_sha256_base64": "r93CxQqrk8k8h2Q8KO4Iicn3pk8kyF4SFo47a9Cca5w=",
+  "deployed": {
+    "python_files": 126,
+    "matching_files": [
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "sha256": "4adeba1d6a567eddc4cf293cb521be64cc7c13cdf579fd85d96decdd617a4bc1"
+      },
+      {
+        "path": "lib/research/checkface/scopes.py",
+        "sha256": "79b6bf330d854c76798fef3311b34c43293e1bf57a6274b74cfe0be9854c79d7"
+      },
+      {
+        "path": "lib/research/drafting/__init__.py",
+        "sha256": "66b490ac6d012146ca56b42f01f8141cd8a49a55ec3f4deef09e6ce4f1cdd066"
+      }
+    ],
+    "definitions": [
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "name": "_read_drafting_document",
+        "line": 1426,
+        "source": "def _read_drafting_document(security_key: str) -> Tuple[Optional[Dict[str, Any]], str, Optional[str], bool]:\n    \"\"\"Reads ONE drafted document. Returns (document, source, reason, read_completed).\n\n    AMGT_DRAFTING_ROOT, when set, points this read at a DIRECTORY of the same\n    objects and the pool is not touched at all -- that is how an offline render,\n    a test and a negative control read exactly what the pool serves without\n    credentials. It is read at CALL time, never at import, so a test that sets\n    it does not need the module reloaded.\n\n    AN UNREADABLE SURFACE IS NOT AN ABSENT OBJECT, AND THE TWO MUST NOT\n    COLLAPSE. The status domain this cell was cut with has three values and no\n    fourth, so a failed read is reported ABSENT -- but `read_completed` is False\n    and the reason names the failure, exactly the way `read_rank_series` carries\n    `read_completeness` rather than letting an empty series mean two things.\n    Only `read_completed True` with an ABSENT status is evidence that nobody has\n    drafted this name yet.\"\"\"\n    filename = \"{0}.json\".format(security_key)\n    root = os.environ.get(ENV_DRAFTING_ROOT)\n    if root:\n        # AMGT-rk-23, row AMGT_RESAPP-Z-S141: path-safe ONLY for this local\n        # filesystem join -- a raw slash in `security_key` (e.g. the LSE ticker\n        # root `BP/`) is a real directory separator here, unlike in the S3 `key`\n        # below (S3 tolerates `/` in a key fine; this local join does not). The\n        # shared `filename` used for the S3 key stays UNSANITIZED so it keeps\n        # matching the pool object the producer actually wrote under the raw key.\n        local_filename = \"{0}.json\".format(security_key.replace(\"/\", \"-\"))\n        path = os.path.join(root, local_filename)\n        if not os.path.exists(path):\n            return (\n                None,\n                DRAFTING_SOURCE_NONE,\n                \"no drafted document at {0} (AMGT_DRAFTING_ROOT is set, so the pool was not asked)\".format(path),\n                True,\n            )\n        try:\n            with open(path, \"r\", encoding=\"utf-8\") as handle:\n                return json.load(handle), DRAFTING_SOURCE_LOCAL, None, True\n        except Exception as err:\n            return (\n                None,\n                DRAFTING_SOURCE_NONE,\n                \"drafted document at {0} did not parse: {1}: {2}\".format(path, type(err).__name__, err),\n                False,\n            )\n\n    key = \"{0}{1}\".format(DRAFTING_PREFIX, filename)\n    try:\n        body = _s3_client().get_object(Bucket=DRAFTING_BUCKET, Key=key)[\"Body\"].read()\n    except Exception as err:\n        name = type(err).__name__\n        missing = \"NoSuchKey\" in \"{0}{1}\".format(name, err)\n        return (\n            None,\n            DRAFTING_SOURCE_NONE,\n            \"no drafted document at s3://{0}/{1}: {2}: {3}\".format(DRAFTING_BUCKET, key, name, err),\n            bool(missing),\n        )\n    try:\n        return json.loads(body.decode(\"utf-8\")), DRAFTING_SOURCE_POOL, None, True\n    except Exception as err:\n        return (\n            None,\n            DRAFTING_SOURCE_NONE,\n            \"drafted document s3://{0}/{1} did not parse: {2}: {3}\".format(\n                DRAFTING_BUCKET, key, type(err).__name__, err\n            ),\n            False,\n        )"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "name": "_drafting_block",
+        "line": 1592,
+        "source": "def _drafting_block(\n    status: str,\n    source: str,\n    reason: Optional[str],\n    read_completed: bool,\n    sections: Optional[List[Dict[str, Any]]] = None,\n    held_count: int = 0,\n    held_basis: str = HELD_BASIS_NOT_SERVED,\n    thesis_driver: Any = None,\n    document: Optional[Dict[str, Any]] = None,\n) -> Dict[str, Any]:\n    \"\"\"THE ONE shape the drafting half of the bundle carries, in every state.\"\"\"\n    block: Dict[str, Any] = {\n        \"drafted_sections\": sections or [],\n        \"drafting_status\": status,\n        \"drafting_source\": source,\n        \"drafting_read_completed\": read_completed,\n        \"drafting_reason\": reason,\n        \"held_uncited_count\": held_count,\n        \"held_uncited_basis\": held_basis,\n        \"thesis_driver\": thesis_driver,\n    }\n    if document is not None:\n        block[\"drafting_provenance\"] = {\n            \"accession\": document.get(\"accession\"),\n            \"form\": document.get(\"form\"),\n            \"filing_date\": document.get(\"filing_date\"),\n            \"document_sha256\": (document.get(\"source\") or {}).get(\"document_sha256\"),\n            \"model\": document.get(\"model\"),\n            \"analyzer_version\": document.get(\"analyzer_version\"),\n            \"dropped\": document.get(\"dropped\"),\n        }\n    return block"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "name": "read_drafted_sections",
+        "line": 1627,
+        "source": "def read_drafted_sections(security_key: Optional[str]) -> Dict[str, Any]:\n    \"\"\"THE DRAFTING HALF of the Thesis bundle, in one call.\n\n    An UNRESOLVED identity reads NOTHING -- there is no measured key to ask the\n    pool with, and asking with the raw path segment is the guess AMGT-rj-1's\n    contract forbids.\"\"\"\n    if not security_key:\n        return _drafting_block(\n            DRAFTING_ABSENT,\n            DRAFTING_SOURCE_NONE,\n            \"identity UNRESOLVED -- no measured security key to read a drafted document by\",\n            True,\n        )\n\n    document, source, reason, read_completed = _read_drafting_document(security_key)\n    if document is None:\n        return _drafting_block(DRAFTING_ABSENT, DRAFTING_SOURCE_NONE, reason, read_completed)\n\n    ok, why = _validate_drafting_document(document)\n    if not ok:\n        return _drafting_block(\n            DRAFTING_INVALID,\n            source,\n            why,\n            True,\n            document=document,\n        )\n\n    from lib.research.drafting import pipeline as drafting_pipeline\n\n    indexed = drafting_pipeline.records_by_id(document.get(\"evidence_records\"))\n    sections = []\n    for section in document.get(\"sections\") or []:\n        section_id = section.get(\"section\")\n        sentences = []\n        for sentence in section.get(\"sentences\") or []:\n            sentences.append(\n                {\n                    \"text\": sentence.get(\"text\"),\n                    \"generated\": sentence.get(\"generated\"),\n                    \"evidence\": _resolved_evidence(sentence.get(\"evidence\"), indexed),\n                    \"verbatim_check\": sentence.get(\"verbatim_check\"),\n                    \"quoted_spans\": list(sentence.get(\"quoted_spans\") or []),\n                }\n            )\n        entry: Dict[str, Any] = {\n            \"section_id\": section_id,\n            \"label\": _section_label(section_id),\n            \"sentences\": sentences,\n        }\n        if section.get(\"absent\"):\n            entry[\"absent\"] = section[\"absent\"]\n        sections.append(entry)\n\n    held_count, held_basis = _held_uncited(document)\n    return _drafting_block(\n        DRAFTING_SERVED,\n        source,\n        None,\n        True,\n        sections=sections,\n        held_count=held_count,\n        held_basis=held_basis,\n        thesis_driver=document.get(\"thesis_driver\"),\n        document=document,\n    )"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "name": "read_thesis_bundle",
+        "line": 1984,
+        "source": "def read_thesis_bundle(\n    security_key: str, identity: Optional[Dict[str, Any]] = None\n) -> Dict[str, Any]:\n    \"\"\"The Thesis tab bundle: the FULL header + fiscal-year figure set (the other\n    home the cut Model tab's figures moved to) with its check face.\n\n    CARRIES THE SAME IDENTITY BLOCK as the overlay, the peer set and the\n    coverage set (AMGT-rj-1): one identity resolved at the route boundary,\n    carried unchanged into all four, so the Thesis tab and the Lead Panel\n    cannot be showing two different securities under one click.\n\n    AND THE DRAFTED PROSE, TYPED (AMGT-rj-2, FWD-9, row C-S196). This function\n    used to return a hardcoded `\"drafted_sections\": []`; it now merges READ 5's\n    whole block -- the validated sections with every evidence id RESOLVED TO ITS\n    PASSAGE TEXT, `drafting_status`, `drafting_source`, `drafting_reason`,\n    `held_uncited_count` with its basis and the `thesis_driver`. The passage\n    travels in the response because the page has to print it BESIDE the machine\n    sentence; an id alone is what the tooltip was.\"\"\"\n    identity = identity or resolve_identity(security_key)\n    resolved_key = identity.get(\"security_key\")\n    model_block = read_model_block(resolved_key) if resolved_key else None\n    header_figures = _figures(model_block, SCOPE_HEADER)\n    model = read_model(resolved_key, identity=identity, model_block=model_block)\n    fiscal_year_figures = model[\"fiscal_year_figures\"]\n    # AMGT-rk-36, C-MODEL-FORECASTS, item 6: forecast figures join the check face too, so a\n    # forecast cell with an unmeasured unit REFUSES exactly like any other figure -- never a\n    # second, un-checked figure class on this bundle.\n    forecast_figures = model[\"forecast_figures\"]\n    check_face: List[Dict[str, Any]] = []\n    if model_block:\n        from lib.research.checkface.run_checks import check_block\n\n        check_face = check_block(header_figures + fiscal_year_figures + forecast_figures)\n    bundle = {\n        \"security_key\": resolved_key,\n        \"identity\": identity,\n        \"header_figures\": header_figures,\n        \"fiscal_year_figures\": fiscal_year_figures,\n        \"check_face\": check_face,\n        # AMGT-rj-9: the MODEL TAB's slice. The fiscal figures stay on this\n        # payload because it is the one route that reaches them; the page renders\n        # them on the Model tab, never on Thesis.\n        \"model_status\": model[\"model_status\"],\n        \"fiscal_years\": model[\"fiscal_years\"],\n        \"model_cases\": model[\"cases\"],\n        # AMGT-rk-36 item 6: read_model()'s WHOLE return, nested here so the /thesis payload\n        # (its one reaching route, per read_model's own docstring) can carry forecast_figures /\n        # forecast_periods / forecast_source_counts / forecast_reason / fiscal_row_count -- none\n        # of which any flattened key above ever exposed (a pre-existing gap: this bundle only\n        # ever pulled three of read_model()'s keys out by name). ADDITIVE ONLY -- every\n        # flattened key above is UNCHANGED, so no existing consumer of this bundle moves.\n        \"model\": model,\n        \"generated_at\": _now_iso(),\n    }\n    # AMGT-rj-2: the drafting half is READ, VALIDATED and RESOLVED by READ 5\n    # above, and merged here whole. It is one block, so the page can never get\n    # `drafted_sections` without the status, the source and the reason that say\n    # what those sections are -- an empty list from an ABSENT object and an\n    # empty list from an INVALID one are different facts.\n    bundle.update(read_drafted_sections(resolved_key))\n    # AMGT-rk-24 adapter half, row AMGT_RESAPP-Z-S139 (corrected by Z-S146): an\n    # ABSENT drafting status only ever carried the generic S3 NoSuchKey message\n    # -- even for the 178 in-scope names the filings store (AMGT-rk-24 producer\n    # half) already classifies with an explicit, named reason (no CIK, or any\n    # other UNRESOLVED-SOURCE cause). Surface THAT reason instead, so the page\n    # tells the analyst WHY a name has no draft rather than an S3 read code.\n    # Never touches a SERVED or INVALID drafting status -- those already carry\n    # their own true reason (none, or the validator's).\n    if resolved_key and bundle.get(\"drafting_status\") == DRAFTING_ABSENT:\n        filing_source = _read_filing_source_object(resolved_key)\n        if filing_source and filing_source.get(\"status\") == \"UNRESOLVED-SOURCE\":\n            bundle[\"drafting_reason\"] = filing_source.get(\"reason\")\n    # AMGT-rk-25 (FWD-3; W18-S19): the SAME filing_date already read by READ 5\n    # above -- `analyze.py:697` sets it, `drafting_build.py:229` forwards it, and\n    # `_drafting_block()` already carries it through as `drafting_provenance.\n    # filing_date` whenever a document was actually read (SERVED or INVALID).\n    # Re-exposed here as the bundle's own `as_of_date` rather than re-derived, so\n    # there is one writer of this value. A name with no filing (`drafting_\n    # provenance` absent, i.e. DRAFTING_ABSENT) gets None here too -- NEVER\n    # invented.\n    bundle[\"as_of_date\"] = (bundle.get(\"drafting_provenance\") or {}).get(\"filing_date\")\n    # AMGT-rj-9: the ONE chart, the Exec Management tab and the Posture tab.\n    bundle[\"thesis_driver_chart\"] = thesis_driver_chart(bundle.get(\"thesis_driver\"), fiscal_year_figures)\n    bundle[\"management\"] = read_management(resolved_key, identity=identity)\n    bundle[\"posture\"] = read_posture(resolved_key, identity=identity)\n    # AMGT-rk-30 adapter half (ADDENDUM 1: R13-L): the three built scores\n    # (Robustness, Peers V, Divergence) reach the served Model tab route.\n    # Applied LAST of the four rk-24/rk-25/rk-30 edits in this region.\n    bundle[\"scores\"] = read_scores(resolved_key, identity=identity)\n    return bundle"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "name": "read_posture",
+        "line": 2746,
+        "source": "def read_posture(security_key: Optional[str], identity: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:\n    \"\"\"INTERFACE O-1 -- `posture/v1/{key}/{as_of}.json` (AMGT-rj-11). ABSENT until\n    that cell lands an object, and ABSENT is stated, never rendered as a blank or\n    as a verdict. `status` is the first field so a truncated dump still shows it.\"\"\"\n    identity = identity or resolve_identity(security_key)\n    key = identity.get(\"security_key\")\n    if not key:\n        return {\"status\": POOL_ABSENT, \"security_key\": None, \"reason\": \"identity UNRESOLVED -- no posture was read\", \"posture_read\": None}\n    document, record = _foreign(*read_pool_object(POSTURE_PREFIX, key), security_key=key)\n    if document is None:\n        return {\n            \"status\": record[\"status\"],\n            \"security_key\": key,\n            \"reason\": (\n                \"no O-1 posture object under {0}/{1}{2}/ -- AMGT-rj-11 has not landed one\".format(\n                    record[\"store\"], POSTURE_PREFIX, key\n                )\n                if record[\"status\"] == POOL_ABSENT\n                else \"the O-1 read did not complete -- not evidence that no posture exists\"\n            ),\n            \"posture_read\": record,\n        }\n    comparable = document.get(\"comparable\")\n    return {\n        \"status\": POOL_SERVED,\n        \"security_key\": key,\n        \"verdict\": document.get(\"verdict\"),\n        \"comparable\": comparable,\n        \"basis\": document.get(\"basis\"),\n        \"as_of\": document.get(\"as_of\"),\n        \"generation\": document.get(\"generation\"),\n        \"marked\": document.get(\"marked\"),\n        # AMGT-rj-12, row AMGT_RESAPP-Z-W18-S18: the OBJECT's reason. rj-11 writes verdict\n        # \"absent\" WITH a reason and no model call; a hard-coded None hid it from the page.\n        \"reason\": document.get(\"reason\"),\n        \"posture_read\": record,\n        # AMGT-rj-12, row AMGT_RESAPP-Z-W18-S16: what the Posture tab and the header line render,\n        # served verbatim from the object -- each side's pack coverage (counts and every absent\n        # source), the fit scores and both membership records a FIT:/B: cite names, the comparable\n        # selection a C: cite names, and the comparable's name and identity.\n        \"comparable_name\": document.get(\"comparable_name\"),\n        \"comparable_identity\": _comparable_identity(comparable),\n        \"notice\": document.get(\"notice\"),\n        \"membership\": document.get(\"membership\"),\n        \"comparable_membership\": document.get(\"comparable_membership\"),\n        \"comparable_selection\": document.get(\"comparable_selection\"),\n        \"fit\": document.get(\"fit\"),\n        \"packs\": document.get(\"packs\"),\n        \"cites_validated\": document.get(\"cites_validated\"),\n        \"cites_total\": document.get(\"cites_total\"),\n    }"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "name": "read_description",
+        "line": 2919,
+        "source": "def read_description(\n    security_key: Optional[str],\n    identity: Optional[Dict[str, Any]] = None,\n    model_block: Optional[Dict[str, Any]] = None,\n    drafting: Optional[Dict[str, Any]] = None,\n) -> Dict[str, Any]:\n    \"\"\"THE ONE-LINE DESCRIPTION, and the field it came from -- ROUTE ORDER IS THE PRD's\n    (C-DESCRIPTION-LINE), unchanged by AMGT-rk-37:\n\n      1. a model-block HEADER scalar named in DESCRIPTION_HEADER_MNEMONICS, IN ORDER\n         (CIE_DES, else CIE_DES_BULK)\n      2. else the FIRST SENTENCE of D-1's `company_description` section, from a\n         VALIDATED document, marked machine, with its evidence ids -- ONLY if it passes\n         the describes-the-business test (AMGT-rk-37 item 3); a failing sentence is\n         NEVER served and falls through to (3)\n      3. else ABSENT, naming every probe (`probes`, one entry per route above)\n\n    `header_scalars_measured` lists every header mnemonic the block carried, so\n    \"no description scalar\" is a measurement of this block, not an assumption.\"\"\"\n    identity = identity or resolve_identity(security_key)\n    key = identity.get(\"security_key\")\n    if not key:\n        return {\"status\": \"ABSENT\", \"source\": None, \"marked\": None, \"text\": None, \"reason\": \"identity UNRESOLVED -- no description was read\"}\n    if model_block is None:\n        model_block = read_model_block(key)\n    header = _figures(model_block, SCOPE_HEADER)\n    measured = [figure.get(\"mnemonic\") for figure in header]\n    header_probes: List[Dict[str, Any]] = []\n    for mnemonic in DESCRIPTION_HEADER_MNEMONICS:\n        figure = next((f for f in header if f.get(\"mnemonic\") == mnemonic), None)\n        if figure is None:\n            header_probes.append({\"probe\": \"header {0}\".format(mnemonic), \"result\": \"not among the {0} header scalar(s) measured on this block\".format(len(measured))})\n            continue\n        value = figure.get(\"value\")\n        if isinstance(value, str) and value.strip():\n            return {\n                \"status\": \"SERVED\",\n                \"source\": \"bloomberg {0}\".format(mnemonic),\n                \"marked\": None,\n                \"text\": value.strip(),\n                \"field\": mnemonic,\n                \"generated\": False,\n                \"header_scalars_measured\": measured,\n                \"describes_business_test\": None,\n                \"probes\": None,\n                \"reason\": None,\n            }\n        header_probes.append({\"probe\": \"header {0}\".format(mnemonic), \"result\": \"present but not a non-empty string value ({0!r})\".format(value)})\n    drafting = drafting if drafting is not None else read_drafted_sections(key)\n    drafted_sentence_probe: Dict[str, Any] = {\n        \"probe\": \"drafting {0} sentence 1\".format(DESCRIPTION_SECTION),\n        \"result\": \"no served D-1 {0} sentence (drafting_status {1})\".format(DESCRIPTION_SECTION, drafting.get(\"drafting_status\")),\n    }\n    failed_test: Optional[Dict[str, Any]] = None\n    if drafting.get(\"drafting_status\") == DRAFTING_SERVED:\n        for section in drafting.get(\"drafted_sections\") or []:\n            if section.get(\"section_id\") == DESCRIPTION_SECTION and section.get(\"sentences\"):\n                sentence = section[\"sentences\"][0]\n                test = _describes_business_test(sentence.get(\"text\"))\n                if test[\"passed\"]:\n                    return {\n                        \"status\": \"SERVED\",\n                        \"source\": \"D-1 drafting/v1 {0} sentence 1\".format(DESCRIPTION_SECTION),\n                        \"marked\": \"machine\",\n                        \"text\": sentence.get(\"text\"),\n                        \"field\": \"sections[{0}].sentences[0]\".format(DESCRIPTION_SECTION),\n                        \"generated\": sentence.get(\"generated\"),\n                        \"evidence\": [record.get(\"id\") for record in sentence.get(\"evidence\") or []],\n                        \"verbatim_check\": sentence.get(\"verbatim_check\"),\n                        \"header_scalars_measured\": measured,\n                        \"describes_business_test\": test,\n                        \"probes\": None,\n                        \"reason\": \"no header scalar in {0} among the {1} header scalar(s) on the model block\".format(\n                            list(DESCRIPTION_HEADER_MNEMONICS), len(measured)\n                        ),\n                    }\n                failed_test = test\n                drafted_sentence_probe = {\n                    \"probe\": \"drafting {0} sentence 1\".format(DESCRIPTION_SECTION),\n                    \"result\": \"FAILED describes-the-business test\",\n                    \"failed_on\": test[\"failed_on\"],\n                    \"rule\": test[\"rule\"],\n                }\n                break\n    probes = header_probes + [drafted_sentence_probe]\n    return {\n        \"status\": \"ABSENT\",\n        \"source\": None,\n        \"marked\": None,\n        \"text\": None,\n        \"header_scalars_measured\": measured,\n        \"describes_business_test\": failed_test,\n        \"probes\": probes,\n        \"reason\": (\n            \"no description header scalar {0} on the model block ({1} header scalar(s) measured) and no \"\n            \"served D-1 {2} sentence passing the describes-the-business test (drafting_status {3})\".format(\n                list(DESCRIPTION_HEADER_MNEMONICS), len(measured), DESCRIPTION_SECTION, drafting.get(\"drafting_status\")\n            )\n        ),\n    }"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "name": "_print_pack",
+        "line": 3939,
+        "source": "def _print_pack(\n    security_key: str, identity: Optional[Dict[str, Any]] = None\n) -> Dict[str, Any]:\n    \"\"\"Delegates to AMGT-s-5's landed renderer (lib/research/print/render_pack.py)\n    and returns the PDF bytes base64-encoded, which is how API Gateway carries a\n    binary body. No PDF is assembled here.\n\n    THE RENDERER TAKES THE DISPLAY FORM and re-derives the key from it\n    (`render_pack.security_key()`), so this used to hand it an\n    underscore-to-space inverse -- a guessed form that silently renders the\n    WRONG PACK the moment a key does not round-trip. It now hands over the\n    landed block's OWN `security` value and REFUSES unless the resolver agrees\n    that string names the same canonical identity. No string surgery, and the\n    check is the resolver's, not this function's.\"\"\"\n    from lib.research.print.render_pack import build_pack\n\n    identity = identity or resolve_identity(security_key)\n    resolved_key = identity.get(\"security_key\")\n    block = read_model_block(resolved_key) if resolved_key else None\n    display_form = (block or {}).get(\"security\")\n    if not display_form or resolve_identity(display_form).get(\"security_key\") != resolved_key:\n        raise AdapterError(\n            404,\n            \"no printable pack for {0!r}: identity {1}, landed display form {2!r} -- the \"\n            \"renderer is never handed a form this module made up\".format(\n                identity.get(\"requested\"), identity.get(\"identity_status\"), display_form\n            ),\n        )\n    # AMGT-rk-6: the renderer no longer reads an input. It is handed the block THIS\n    # function already read -- which has the corrected fiscal-price overlay applied, once,\n    # by read_model_block -- so there is one reader and one overlay application on the\n    # print path rather than two.\n    pdf_path, _ = build_pack(display_form, block)\n    with open(pdf_path, \"rb\") as handle:\n        payload = base64.b64encode(handle.read()).decode(\"ascii\")\n    return {\n        \"statusCode\": 200,\n        \"headers\": {\"Content-Type\": \"application/pdf\"},\n        \"body\": payload,\n        \"isBase64Encoded\": True,\n    }"
+      }
+    ],
+    "calls": [
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_drafted_sections",
+        "callee": "_read_drafting_document",
+        "line": 1641,
+        "expression": "_read_drafting_document(security_key)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_drafted_sections",
+        "callee": "_drafting_block",
+        "line": 1682,
+        "expression": "_drafting_block(DRAFTING_SERVED, source, None, True, sections=sections, held_count=held_count, held_basis=held_basis, thesis_driver=document.get('thesis_driver'), document=document)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_drafted_sections",
+        "callee": "_drafting_block",
+        "line": 1634,
+        "expression": "_drafting_block(DRAFTING_ABSENT, DRAFTING_SOURCE_NONE, 'identity UNRESOLVED -- no measured security key to read a drafted document by', True)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_drafted_sections",
+        "callee": "_drafting_block",
+        "line": 1643,
+        "expression": "_drafting_block(DRAFTING_ABSENT, DRAFTING_SOURCE_NONE, reason, read_completed)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_drafted_sections",
+        "callee": "_drafting_block",
+        "line": 1647,
+        "expression": "_drafting_block(DRAFTING_INVALID, source, why, True, document=document)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_security_overlay",
+        "callee": "read_description",
+        "line": 1943,
+        "expression": "read_description(resolved_key, identity=identity, model_block=model_block)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_thesis_bundle",
+        "callee": "read_drafted_sections",
+        "line": 2043,
+        "expression": "read_drafted_sections(resolved_key)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_description",
+        "callee": "read_drafted_sections",
+        "line": 2967,
+        "expression": "read_drafted_sections(key)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "handler",
+        "callee": "_print_pack",
+        "line": 3876,
+        "expression": "_print_pack(requested, identity=identity)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "handler",
+        "callee": "read_security_overlay",
+        "line": 3865,
+        "expression": "read_security_overlay(requested, query.get('as_of'), identity=identity)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "handler",
+        "callee": "read_thesis_bundle",
+        "line": 3868,
+        "expression": "read_thesis_bundle(requested, identity=identity)"
+      }
+    ],
+    "literal_output_keys": [
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "function": "_drafting_block",
+        "line": 1604
+      }
+    ],
+    "parse_failures": []
+  },
+  "candidate": {
+    "python_files": 3900,
+    "matching_files": [
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "sha256": "40c3ed25da2fab61ee3e56d47680b3cfe0cf1ef3ba5b4456f4b12939e17bdaeb"
+      },
+      {
+        "path": "lib/research/api/tests/conftest.py",
+        "sha256": "d377d51a7804a9e664a608b868fa66cc9041ec05610f961e3827d817d5719e3a"
+      },
+      {
+        "path": "lib/research/api/tests/test_corrected_overlay_wiring.py",
+        "sha256": "2218c97cc62bc11f38d31a4d3bb63372e12ab7179cf16e6bd5e9c3502e41985f"
+      },
+      {
+        "path": "lib/research/api/tests/test_description_line.py",
+        "sha256": "52922dcc53a25bc20f379f26f1728537c0817d0bbafa918bd7c30f0bc24be91a"
+      },
+      {
+        "path": "lib/research/api/tests/test_drafted_sections.py",
+        "sha256": "b7f617b037c272e7b6da9c54d18b4a2f9a0b37aa81606bbfe33fa92aba91ac2a"
+      },
+      {
+        "path": "lib/research/api/tests/test_filing_attempt_held_marker.py",
+        "sha256": "e150d28e99f7f3ed129996d7a62595aa37dd1fd7ebf8ae66ea248038b8acb4fb"
+      },
+      {
+        "path": "lib/research/api/tests/test_fiscal_scope_contract.py",
+        "sha256": "0767c5c90a5995c833005844659ad264f0c1230876576873766fde2f002fec62"
+      },
+      {
+        "path": "lib/research/api/tests/test_generation_and_pool_routes.py",
+        "sha256": "d7a5dd60fcfe4a9298c68447f6556892d5e79fe0557f997d9cf416d6a487caf1"
+      },
+      {
+        "path": "lib/research/api/tests/test_overlay_check_face.py",
+        "sha256": "80a277692a064a15bc37fe5c1dd695ab0f12daedb1ea56d5c8bb5c7c22dfe542"
+      },
+      {
+        "path": "lib/research/api/tests/test_route_boundary_identity.py",
+        "sha256": "c832f8c497766174a7018b1fd3e8bbbd9efcf01189e3763641ea0fc94e506fff"
+      },
+      {
+        "path": "lib/research/checkface/scopes.py",
+        "sha256": "79b6bf330d854c76798fef3311b34c43293e1bf57a6274b74cfe0be9854c79d7"
+      },
+      {
+        "path": "lib/research/drafting/run_drafting.py",
+        "sha256": "f2e183b3f2338d8d53323332e78d9e3a243f6b396dbcb85c62691bbfed3e6fe7"
+      },
+      {
+        "path": "lib/research/drafting/__init__.py",
+        "sha256": "66b490ac6d012146ca56b42f01f8141cd8a49a55ec3f4deef09e6ce4f1cdd066"
+      },
+      {
+        "path": "lib/research/filings/analyze.py",
+        "sha256": "7d405ef7abc6c6bdf9119eb2b0fcec52ba25798aac09cef93e6a9c42711aa306"
+      },
+      {
+        "path": "lib/research/filings/drafting_build.py",
+        "sha256": "c1b1ec26ce2f2a1ca07fe33c61dba6e6cf6cad46856fb266d2419c9cc1d770d6"
+      },
+      {
+        "path": "lib/research/posture/packs.py",
+        "sha256": "78ec98a3d60b3ba75fe7aec98805ab5d6651c8de9936f7b0462da9a218e112c1"
+      }
+    ],
+    "definitions": [
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "name": "_read_drafting_document",
+        "line": 1436,
+        "source": "def _read_drafting_document(security_key: str) -> Tuple[Optional[Dict[str, Any]], str, Optional[str], bool]:\n    \"\"\"Reads ONE drafted document. Returns (document, source, reason, read_completed).\n\n    AMGT_DRAFTING_ROOT, when set, points this read at a DIRECTORY of the same\n    objects and the pool is not touched at all -- that is how an offline render,\n    a test and a negative control read exactly what the pool serves without\n    credentials. It is read at CALL time, never at import, so a test that sets\n    it does not need the module reloaded.\n\n    AN UNREADABLE SURFACE IS NOT AN ABSENT OBJECT, AND THE TWO MUST NOT\n    COLLAPSE. The status domain this cell was cut with has three values and no\n    fourth, so a failed read is reported ABSENT -- but `read_completed` is False\n    and the reason names the failure, exactly the way `read_rank_series` carries\n    `read_completeness` rather than letting an empty series mean two things.\n    Only `read_completed True` with an ABSENT status is evidence that nobody has\n    drafted this name yet.\"\"\"\n    filename = \"{0}.json\".format(security_key)\n    root = os.environ.get(ENV_DRAFTING_ROOT)\n    if root:\n        # AMGT-rk-23, row AMGT_RESAPP-Z-S141: path-safe ONLY for this local\n        # filesystem join -- a raw slash in `security_key` (e.g. the LSE ticker\n        # root `BP/`) is a real directory separator here, unlike in the S3 `key`\n        # below (S3 tolerates `/` in a key fine; this local join does not). The\n        # shared `filename` used for the S3 key stays UNSANITIZED so it keeps\n        # matching the pool object the producer actually wrote under the raw key.\n        local_filename = \"{0}.json\".format(security_key.replace(\"/\", \"-\"))\n        path = os.path.join(root, local_filename)\n        if not os.path.exists(path):\n            return (\n                None,\n                DRAFTING_SOURCE_NONE,\n                \"no drafted document at {0} (AMGT_DRAFTING_ROOT is set, so the pool was not asked)\".format(path),\n                True,\n            )\n        try:\n            with open(path, \"r\", encoding=\"utf-8\") as handle:\n                return json.load(handle), DRAFTING_SOURCE_LOCAL, None, True\n        except Exception as err:\n            return (\n                None,\n                DRAFTING_SOURCE_NONE,\n                \"drafted document at {0} did not parse: {1}: {2}\".format(path, type(err).__name__, err),\n                False,\n            )\n\n    key = \"{0}{1}\".format(DRAFTING_PREFIX, filename)\n    try:\n        body = _s3_client().get_object(Bucket=DRAFTING_BUCKET, Key=key)[\"Body\"].read()\n    except Exception as err:\n        name = type(err).__name__\n        missing = \"NoSuchKey\" in \"{0}{1}\".format(name, err)\n        return (\n            None,\n            DRAFTING_SOURCE_NONE,\n            \"no drafted document at s3://{0}/{1}: {2}: {3}\".format(DRAFTING_BUCKET, key, name, err),\n            bool(missing),\n        )\n    try:\n        return json.loads(body.decode(\"utf-8\")), DRAFTING_SOURCE_POOL, None, True\n    except Exception as err:\n        return (\n            None,\n            DRAFTING_SOURCE_NONE,\n            \"drafted document s3://{0}/{1} did not parse: {2}: {3}\".format(\n                DRAFTING_BUCKET, key, type(err).__name__, err\n            ),\n            False,\n        )"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "name": "_drafting_block",
+        "line": 1602,
+        "source": "def _drafting_block(\n    status: str,\n    source: str,\n    reason: Optional[str],\n    read_completed: bool,\n    sections: Optional[List[Dict[str, Any]]] = None,\n    held_count: int = 0,\n    held_basis: str = HELD_BASIS_NOT_SERVED,\n    thesis_driver: Any = None,\n    document: Optional[Dict[str, Any]] = None,\n) -> Dict[str, Any]:\n    \"\"\"THE ONE shape the drafting half of the bundle carries, in every state.\"\"\"\n    block: Dict[str, Any] = {\n        \"drafted_sections\": sections or [],\n        \"drafting_status\": status,\n        \"drafting_source\": source,\n        \"drafting_read_completed\": read_completed,\n        \"drafting_reason\": reason,\n        \"held_uncited_count\": held_count,\n        \"held_uncited_basis\": held_basis,\n        \"held_no_span_count\": 0,\n        \"held_no_span_basis\": \"NOT_SERVED\",\n        \"thesis_driver\": thesis_driver,\n    }\n    if document is not None:\n        block[\"drafting_provenance\"] = {\n            \"accession\": document.get(\"accession\"),\n            \"form\": document.get(\"form\"),\n            \"filing_date\": document.get(\"filing_date\"),\n            \"document_sha256\": (document.get(\"source\") or {}).get(\"document_sha256\"),\n            \"model\": document.get(\"model\"),\n            \"analyzer_version\": document.get(\"analyzer_version\"),\n            \"dropped\": document.get(\"dropped\"),\n        }\n    return block"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "name": "read_drafted_sections",
+        "line": 1639,
+        "source": "def read_drafted_sections(security_key: Optional[str]) -> Dict[str, Any]:\n    \"\"\"THE DRAFTING HALF of the Thesis bundle, in one call.\n\n    An UNRESOLVED identity reads NOTHING -- there is no measured key to ask the\n    pool with, and asking with the raw path segment is the guess AMGT-rj-1's\n    contract forbids.\"\"\"\n    if not security_key:\n        return _drafting_block(\n            DRAFTING_ABSENT,\n            DRAFTING_SOURCE_NONE,\n            \"identity UNRESOLVED -- no measured security key to read a drafted document by\",\n            True,\n        )\n\n    document, source, reason, read_completed = _read_drafting_document(security_key)\n    if document is None:\n        return _drafting_block(DRAFTING_ABSENT, DRAFTING_SOURCE_NONE, reason, read_completed)\n\n    ok, why = _validate_drafting_document(document)\n    if not ok:\n        return _drafting_block(\n            DRAFTING_INVALID,\n            source,\n            why,\n            True,\n            document=document,\n        )\n\n    from lib.research.drafting import pipeline as drafting_pipeline\n\n    indexed = drafting_pipeline.records_by_id(document.get(\"evidence_records\"))\n    sections = []\n    held_at_read = 0\n    for section in document.get(\"sections\") or []:\n        section_id = section.get(\"section\")\n        sentences = []\n        section_held = 0\n        for sentence in section.get(\"sentences\") or []:\n            # C-VERBATIM-GATE v0.12 applies at the read boundary too. Legacy\n            # stored documents can predate the producer's HOLD implementation;\n            # rechecking quotation equality alone passes an empty list vacuously.\n            # Keep valid anchored siblings and expose the held denominator rather\n            # than rewriting retained source bytes or silently thinning the page.\n            if not any(span.strip() for span in sentence.get(\"quoted_spans\") or []):\n                section_held += 1\n                continue\n            sentences.append(\n                {\n                    \"text\": sentence.get(\"text\"),\n                    \"generated\": sentence.get(\"generated\"),\n                    \"evidence\": _resolved_evidence(sentence.get(\"evidence\"), indexed),\n                    \"verbatim_check\": sentence.get(\"verbatim_check\"),\n                    \"quoted_spans\": list(sentence.get(\"quoted_spans\") or []),\n                }\n            )\n        entry: Dict[str, Any] = {\n            \"section_id\": section_id,\n            \"label\": _section_label(section_id),\n            \"sentences\": sentences,\n            \"held_no_span_at_read\": section_held,\n        }\n        if section.get(\"absent\"):\n            entry[\"absent\"] = section[\"absent\"]\n        sections.append(entry)\n        held_at_read += section_held\n\n    held_count, held_basis = _held_uncited(document)\n    block = _drafting_block(\n        DRAFTING_SERVED,\n        source,\n        None,\n        True,\n        sections=sections,\n        held_count=held_count,\n        held_basis=held_basis,\n        thesis_driver=document.get(\"thesis_driver\"),\n        document=document,\n    )\n    held_on_object = len(document.get(\"held_no_span\") or [])\n    block[\"held_no_span_count\"] = held_on_object + held_at_read\n    block[\"held_no_span_at_read\"] = held_at_read\n    block[\"held_no_span_on_object\"] = held_on_object\n    block[\"held_no_span_basis\"] = (\n        \"READ_GATE_PLUS_OBJECT\"\n        if \"held_no_span\" in document\n        else \"READ_GATE_ONLY_OBJECT_FIELD_ABSENT\"\n    )\n    return block"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "name": "read_thesis_bundle",
+        "line": 2086,
+        "source": "def read_thesis_bundle(\n    security_key: str, identity: Optional[Dict[str, Any]] = None\n) -> Dict[str, Any]:\n    \"\"\"The Thesis tab bundle: the FULL header + fiscal-year figure set (the other\n    home the cut Model tab's figures moved to) with its check face.\n\n    CARRIES THE SAME IDENTITY BLOCK as the overlay, the peer set and the\n    coverage set (AMGT-rj-1): one identity resolved at the route boundary,\n    carried unchanged into all four, so the Thesis tab and the Lead Panel\n    cannot be showing two different securities under one click.\n\n    AND THE DRAFTED PROSE, TYPED (AMGT-rj-2, FWD-9, row C-S196). This function\n    used to return a hardcoded `\"drafted_sections\": []`; it now merges READ 5's\n    whole block -- the validated sections with every evidence id RESOLVED TO ITS\n    PASSAGE TEXT, `drafting_status`, `drafting_source`, `drafting_reason`,\n    `held_uncited_count` with its basis and the `thesis_driver`. The passage\n    travels in the response because the page has to print it BESIDE the machine\n    sentence; an id alone is what the tooltip was.\"\"\"\n    identity = identity or resolve_identity(security_key)\n    resolved_key = identity.get(\"security_key\")\n    model_block = read_model_block(resolved_key) if resolved_key else None\n    header_figures = _figures(model_block, SCOPE_HEADER)\n    model = read_model(resolved_key, identity=identity, model_block=model_block)\n    fiscal_year_figures = model[\"fiscal_year_figures\"]\n    # AMGT-rk-36, C-MODEL-FORECASTS, item 6: forecast figures join the check face too, so a\n    # forecast cell with an unmeasured unit REFUSES exactly like any other figure -- never a\n    # second, un-checked figure class on this bundle.\n    forecast_figures = model[\"forecast_figures\"]\n    check_face: List[Dict[str, Any]] = []\n    if model_block:\n        from lib.research.checkface.run_checks import check_block\n\n        check_face = check_block(header_figures + fiscal_year_figures + forecast_figures)\n    bundle = {\n        \"security_key\": resolved_key,\n        \"identity\": identity,\n        \"header_figures\": header_figures,\n        \"fiscal_year_figures\": fiscal_year_figures,\n        \"check_face\": check_face,\n        # AMGT-rj-9: the MODEL TAB's slice. The fiscal figures stay on this\n        # payload because it is the one route that reaches them; the page renders\n        # them on the Model tab, never on Thesis.\n        \"model_status\": model[\"model_status\"],\n        \"fiscal_years\": model[\"fiscal_years\"],\n        \"model_cases\": model[\"cases\"],\n        # AMGT-rk-36 item 6: read_model()'s WHOLE return, nested here so the /thesis payload\n        # (its one reaching route, per read_model's own docstring) can carry forecast_figures /\n        # forecast_periods / forecast_source_counts / forecast_reason / fiscal_row_count -- none\n        # of which any flattened key above ever exposed (a pre-existing gap: this bundle only\n        # ever pulled three of read_model()'s keys out by name). ADDITIVE ONLY -- every\n        # flattened key above is UNCHANGED, so no existing consumer of this bundle moves.\n        \"model\": model,\n        \"generated_at\": _now_iso(),\n    }\n    # AMGT-rj-2: the drafting half is READ, VALIDATED and RESOLVED by READ 5\n    # above, and merged here whole. It is one block, so the page can never get\n    # `drafted_sections` without the status, the source and the reason that say\n    # what those sections are -- an empty list from an ABSENT object and an\n    # empty list from an INVALID one are different facts.\n    bundle.update(read_drafted_sections(resolved_key))\n    # AMGT-rk-24 adapter half, row AMGT_RESAPP-Z-S139 (corrected by Z-S146): an\n    # ABSENT drafting status only ever carried the generic S3 NoSuchKey message\n    # -- even for the 178 in-scope names the filings store (AMGT-rk-24 producer\n    # half) already classifies with an explicit, named reason (no CIK, or any\n    # other UNRESOLVED-SOURCE cause). Surface THAT reason instead, so the page\n    # tells the analyst WHY a name has no draft rather than an S3 read code.\n    # Never touches a SERVED or INVALID drafting status -- those already carry\n    # their own true reason (none, or the validator's).\n    if resolved_key and bundle.get(\"drafting_status\") == DRAFTING_ABSENT:\n        filing_source = _read_filing_source_object(resolved_key)\n        if filing_source and filing_source.get(\"status\") == \"UNRESOLVED-SOURCE\":\n            bundle[\"drafting_reason\"] = filing_source.get(\"reason\")\n            # AMGT-rk-127: the served reason just set above can itself be\n            # STALE -- a CHANGED-HELD outcome since served leaves a sibling\n            # marker (`_put_filing_attempt_held_marker`) rather than mutating\n            # the served object. Additive ONLY (`_apply_filing_attempt_held_state`):\n            # `drafting_reason` above is left untouched either way.\n            _apply_filing_attempt_held_state(bundle, resolved_key)\n    # AMGT-rk-25 (FWD-3; W18-S19): the SAME filing_date already read by READ 5\n    # above -- `analyze.py:697` sets it, `drafting_build.py:229` forwards it, and\n    # `_drafting_block()` already carries it through as `drafting_provenance.\n    # filing_date` whenever a document was actually read (SERVED or INVALID).\n    # Re-exposed here as the bundle's own `as_of_date` rather than re-derived, so\n    # there is one writer of this value. A name with no filing (`drafting_\n    # provenance` absent, i.e. DRAFTING_ABSENT) gets None here too -- NEVER\n    # invented.\n    bundle[\"as_of_date\"] = (bundle.get(\"drafting_provenance\") or {}).get(\"filing_date\")\n    # AMGT-rj-9: the ONE chart, the Exec Management tab and the Posture tab.\n    bundle[\"thesis_driver_chart\"] = thesis_driver_chart(bundle.get(\"thesis_driver\"), fiscal_year_figures)\n    bundle[\"management\"] = read_management(resolved_key, identity=identity)\n    bundle[\"posture\"] = read_posture(resolved_key, identity=identity)\n    # AMGT-rk-30 adapter half (ADDENDUM 1: R13-L): the three built scores\n    # (Robustness, Peers V, Divergence) reach the served Model tab route.\n    # Applied LAST of the four rk-24/rk-25/rk-30 edits in this region.\n    bundle[\"scores\"] = read_scores(resolved_key, identity=identity)\n    return bundle"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "name": "read_posture",
+        "line": 2854,
+        "source": "def read_posture(security_key: Optional[str], identity: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:\n    \"\"\"INTERFACE O-1 -- `posture/v1/{key}/{as_of}.json` (AMGT-rj-11). ABSENT until\n    that cell lands an object, and ABSENT is stated, never rendered as a blank or\n    as a verdict. `status` is the first field so a truncated dump still shows it.\"\"\"\n    identity = identity or resolve_identity(security_key)\n    key = identity.get(\"security_key\")\n    if not key:\n        return {\"status\": POOL_ABSENT, \"security_key\": None, \"reason\": \"identity UNRESOLVED -- no posture was read\", \"posture_read\": None}\n    document, record = _foreign(*read_pool_object(POSTURE_PREFIX, key), security_key=key)\n    if document is None:\n        return {\n            \"status\": record[\"status\"],\n            \"security_key\": key,\n            \"reason\": (\n                \"no O-1 posture object under {0}/{1}{2}/ -- AMGT-rj-11 has not landed one\".format(\n                    record[\"store\"], POSTURE_PREFIX, key\n                )\n                if record[\"status\"] == POOL_ABSENT\n                else \"the O-1 read did not complete -- not evidence that no posture exists\"\n            ),\n            \"posture_read\": record,\n        }\n    comparable = document.get(\"comparable\")\n    return {\n        \"status\": POOL_SERVED,\n        \"security_key\": key,\n        \"verdict\": document.get(\"verdict\"),\n        \"comparable\": comparable,\n        \"basis\": document.get(\"basis\"),\n        \"as_of\": document.get(\"as_of\"),\n        \"generation\": document.get(\"generation\"),\n        \"marked\": document.get(\"marked\"),\n        # AMGT-rj-12, row AMGT_RESAPP-Z-W18-S18: the OBJECT's reason. rj-11 writes verdict\n        # \"absent\" WITH a reason and no model call; a hard-coded None hid it from the page.\n        \"reason\": document.get(\"reason\"),\n        \"posture_read\": record,\n        # AMGT-rj-12, row AMGT_RESAPP-Z-W18-S16: what the Posture tab and the header line render,\n        # served verbatim from the object -- each side's pack coverage (counts and every absent\n        # source), the fit scores and both membership records a FIT:/B: cite names, the comparable\n        # selection a C: cite names, and the comparable's name and identity.\n        \"comparable_name\": document.get(\"comparable_name\"),\n        \"comparable_identity\": _comparable_identity(comparable),\n        \"notice\": document.get(\"notice\"),\n        \"membership\": document.get(\"membership\"),\n        \"comparable_membership\": document.get(\"comparable_membership\"),\n        \"comparable_selection\": document.get(\"comparable_selection\"),\n        \"fit\": document.get(\"fit\"),\n        \"packs\": document.get(\"packs\"),\n        \"cites_validated\": document.get(\"cites_validated\"),\n        \"cites_total\": document.get(\"cites_total\"),\n    }"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "name": "read_description",
+        "line": 3027,
+        "source": "def read_description(\n    security_key: Optional[str],\n    identity: Optional[Dict[str, Any]] = None,\n    model_block: Optional[Dict[str, Any]] = None,\n    drafting: Optional[Dict[str, Any]] = None,\n) -> Dict[str, Any]:\n    \"\"\"THE ONE-LINE DESCRIPTION, and the field it came from -- ROUTE ORDER IS THE PRD's\n    (C-DESCRIPTION-LINE), unchanged by AMGT-rk-37:\n\n      1. a model-block HEADER scalar named in DESCRIPTION_HEADER_MNEMONICS, IN ORDER\n         (CIE_DES, else CIE_DES_BULK)\n      2. else the FIRST SENTENCE of D-1's `company_description` section, from a\n         VALIDATED document, marked machine, with its evidence ids -- ONLY if it passes\n         the describes-the-business test (AMGT-rk-37 item 3); a failing sentence is\n         NEVER served and falls through to (3)\n      3. else ABSENT, naming every probe (`probes`, one entry per route above)\n\n    `header_scalars_measured` lists every header mnemonic the block carried, so\n    \"no description scalar\" is a measurement of this block, not an assumption.\"\"\"\n    identity = identity or resolve_identity(security_key)\n    key = identity.get(\"security_key\")\n    if not key:\n        return {\"status\": \"ABSENT\", \"source\": None, \"marked\": None, \"text\": None, \"reason\": \"identity UNRESOLVED -- no description was read\"}\n    if model_block is None:\n        model_block = read_model_block(key)\n    header = _figures(model_block, SCOPE_HEADER)\n    measured = [figure.get(\"mnemonic\") for figure in header]\n    header_probes: List[Dict[str, Any]] = []\n    for mnemonic in DESCRIPTION_HEADER_MNEMONICS:\n        figure = next((f for f in header if f.get(\"mnemonic\") == mnemonic), None)\n        if figure is None:\n            header_probes.append({\"probe\": \"header {0}\".format(mnemonic), \"result\": \"not among the {0} header scalar(s) measured on this block\".format(len(measured))})\n            continue\n        value = figure.get(\"value\")\n        if isinstance(value, str) and value.strip():\n            return {\n                \"status\": \"SERVED\",\n                \"source\": \"bloomberg {0}\".format(mnemonic),\n                \"marked\": None,\n                \"text\": value.strip(),\n                \"field\": mnemonic,\n                \"generated\": False,\n                \"header_scalars_measured\": measured,\n                \"describes_business_test\": None,\n                \"probes\": None,\n                \"reason\": None,\n            }\n        header_probes.append({\"probe\": \"header {0}\".format(mnemonic), \"result\": \"present but not a non-empty string value ({0!r})\".format(value)})\n    drafting = drafting if drafting is not None else read_drafted_sections(key)\n    drafted_sentence_probe: Dict[str, Any] = {\n        \"probe\": \"drafting {0} sentence 1\".format(DESCRIPTION_SECTION),\n        \"result\": \"no served D-1 {0} sentence (drafting_status {1})\".format(DESCRIPTION_SECTION, drafting.get(\"drafting_status\")),\n    }\n    failed_test: Optional[Dict[str, Any]] = None\n    if drafting.get(\"drafting_status\") == DRAFTING_SERVED:\n        for section in drafting.get(\"drafted_sections\") or []:\n            if section.get(\"section_id\") == DESCRIPTION_SECTION and section.get(\"sentences\"):\n                sentence = section[\"sentences\"][0]\n                test = _describes_business_test(sentence.get(\"text\"))\n                if test[\"passed\"]:\n                    return {\n                        \"status\": \"SERVED\",\n                        \"source\": \"D-1 drafting/v1 {0} sentence 1\".format(DESCRIPTION_SECTION),\n                        \"marked\": \"machine\",\n                        \"text\": sentence.get(\"text\"),\n                        \"field\": \"sections[{0}].sentences[0]\".format(DESCRIPTION_SECTION),\n                        \"generated\": sentence.get(\"generated\"),\n                        \"evidence\": [record.get(\"id\") for record in sentence.get(\"evidence\") or []],\n                        \"verbatim_check\": sentence.get(\"verbatim_check\"),\n                        \"header_scalars_measured\": measured,\n                        \"describes_business_test\": test,\n                        \"probes\": None,\n                        \"reason\": \"no header scalar in {0} among the {1} header scalar(s) on the model block\".format(\n                            list(DESCRIPTION_HEADER_MNEMONICS), len(measured)\n                        ),\n                    }\n                failed_test = test\n                drafted_sentence_probe = {\n                    \"probe\": \"drafting {0} sentence 1\".format(DESCRIPTION_SECTION),\n                    \"result\": \"FAILED describes-the-business test\",\n                    \"failed_on\": test[\"failed_on\"],\n                    \"rule\": test[\"rule\"],\n                }\n                break\n    probes = header_probes + [drafted_sentence_probe]\n    return {\n        \"status\": \"ABSENT\",\n        \"source\": None,\n        \"marked\": None,\n        \"text\": None,\n        \"header_scalars_measured\": measured,\n        \"describes_business_test\": failed_test,\n        \"probes\": probes,\n        \"reason\": (\n            \"no description header scalar {0} on the model block ({1} header scalar(s) measured) and no \"\n            \"served D-1 {2} sentence passing the describes-the-business test (drafting_status {3})\".format(\n                list(DESCRIPTION_HEADER_MNEMONICS), len(measured), DESCRIPTION_SECTION, drafting.get(\"drafting_status\")\n            )\n        ),\n    }"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "name": "_print_pack",
+        "line": 4047,
+        "source": "def _print_pack(\n    security_key: str, identity: Optional[Dict[str, Any]] = None\n) -> Dict[str, Any]:\n    \"\"\"Delegates to AMGT-s-5's landed renderer (lib/research/print/render_pack.py)\n    and returns the PDF bytes base64-encoded, which is how API Gateway carries a\n    binary body. No PDF is assembled here.\n\n    THE RENDERER TAKES THE DISPLAY FORM and re-derives the key from it\n    (`render_pack.security_key()`), so this used to hand it an\n    underscore-to-space inverse -- a guessed form that silently renders the\n    WRONG PACK the moment a key does not round-trip. It now hands over the\n    landed block's OWN `security` value and REFUSES unless the resolver agrees\n    that string names the same canonical identity. No string surgery, and the\n    check is the resolver's, not this function's.\"\"\"\n    from lib.research.print.render_pack import build_pack\n\n    identity = identity or resolve_identity(security_key)\n    resolved_key = identity.get(\"security_key\")\n    block = read_model_block(resolved_key) if resolved_key else None\n    display_form = (block or {}).get(\"security\")\n    if not display_form or resolve_identity(display_form).get(\"security_key\") != resolved_key:\n        raise AdapterError(\n            404,\n            \"no printable pack for {0!r}: identity {1}, landed display form {2!r} -- the \"\n            \"renderer is never handed a form this module made up\".format(\n                identity.get(\"requested\"), identity.get(\"identity_status\"), display_form\n            ),\n        )\n    # AMGT-rk-6: the renderer no longer reads an input. It is handed the block THIS\n    # function already read -- which has the corrected fiscal-price overlay applied, once,\n    # by read_model_block -- so there is one reader and one overlay application on the\n    # print path rather than two.\n    pdf_path, _ = build_pack(display_form, block)\n    with open(pdf_path, \"rb\") as handle:\n        payload = base64.b64encode(handle.read()).decode(\"ascii\")\n    return {\n        \"statusCode\": 200,\n        \"headers\": {\"Content-Type\": \"application/pdf\"},\n        \"body\": payload,\n        \"isBase64Encoded\": True,\n    }"
+      }
+    ],
+    "calls": [
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_drafted_sections",
+        "callee": "_read_drafting_document",
+        "line": 1653,
+        "expression": "_read_drafting_document(security_key)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_drafted_sections",
+        "callee": "_drafting_block",
+        "line": 1706,
+        "expression": "_drafting_block(DRAFTING_SERVED, source, None, True, sections=sections, held_count=held_count, held_basis=held_basis, thesis_driver=document.get('thesis_driver'), document=document)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_drafted_sections",
+        "callee": "_drafting_block",
+        "line": 1646,
+        "expression": "_drafting_block(DRAFTING_ABSENT, DRAFTING_SOURCE_NONE, 'identity UNRESOLVED -- no measured security key to read a drafted document by', True)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_drafted_sections",
+        "callee": "_drafting_block",
+        "line": 1655,
+        "expression": "_drafting_block(DRAFTING_ABSENT, DRAFTING_SOURCE_NONE, reason, read_completed)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_drafted_sections",
+        "callee": "_drafting_block",
+        "line": 1659,
+        "expression": "_drafting_block(DRAFTING_INVALID, source, why, True, document=document)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_security_overlay",
+        "callee": "read_description",
+        "line": 1991,
+        "expression": "read_description(resolved_key, identity=identity, model_block=model_block)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_thesis_bundle",
+        "callee": "read_drafted_sections",
+        "line": 2145,
+        "expression": "read_drafted_sections(resolved_key)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "read_description",
+        "callee": "read_drafted_sections",
+        "line": 3075,
+        "expression": "read_drafted_sections(key)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "handler",
+        "callee": "_print_pack",
+        "line": 3984,
+        "expression": "_print_pack(requested, identity=identity)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "handler",
+        "callee": "read_security_overlay",
+        "line": 3973,
+        "expression": "read_security_overlay(requested, query.get('as_of'), identity=identity)"
+      },
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "caller": "handler",
+        "callee": "read_thesis_bundle",
+        "line": 3976,
+        "expression": "read_thesis_bundle(requested, identity=identity)"
+      }
+    ],
+    "literal_output_keys": [
+      {
+        "path": "lib/research/api/scoped_amgt.py",
+        "function": "_drafting_block",
+        "line": 1614
+      },
+      {
+        "path": "lib/research/api/tests/test_description_line.py",
+        "function": "_drafting",
+        "line": 65
+      },
+      {
+        "path": "lib/research/api/tests/test_description_line.py",
+        "function": "_drafting",
+        "line": 64
+      }
+    ],
+    "parse_failures": []
+  },
+  "drafting_location_overrides": {
+    "AMGT_DRAFTING_PREFIX": null,
+    "AMGT_DRAFTING_ROOT": null,
+    "AMGT_DRAFTING_BUCKET": null
+  },
+  "limitations": [
+    "Static syntax census; dynamic string construction is not proven absent by token matches alone.",
+    "Handler branches, print renderer, posture output shape and all matching first-party call sites manually reviewed separately.",
+    "Tests accepting injected drafting blocks are not production callers."
+  ]
+}

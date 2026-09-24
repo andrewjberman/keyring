@@ -1,0 +1,18 @@
+{
+  "recorded_at": "2026-09-23T15:16:42.001695+00:00",
+  "serial": "4.0.0_SA_CRO~Z",
+  "source": {
+    "path": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round36.md",
+    "git_commit": "46cf98a9d18c21b02fd495158d6383375c375457",
+    "sha256_git_blob": "61d392f0ec7a7b7a9a2ad49c5dfd096faa854afe1ee66ef26754f5f31f351464",
+    "bytes": 6268
+  },
+  "message": {
+    "id": 24766,
+    "sender": "1.0.0_SA_CTO~Z",
+    "archived_path": "org/mcp/inbox/4.0.0_SA_CRO/~Z/read/20260923T151359Z_1.0.0_SA_CTO_Z__ROUND-36_ANALYSIS__46cf98a9d1__The_LAST.md",
+    "sha256": "2c8bf5486594d9cf4245eb1ab3745530d9892c5da5fbe02e546cf8d5f1e1b831"
+  },
+  "evidence_level": "pinned accepted analysis read; no test/vendor/S3 re-exercise",
+  "supersedes": "round36 independent-review-pending status only; does not establish live FWD-3 or CORPUS acceptance"
+}

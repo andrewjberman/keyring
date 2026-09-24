@@ -1,0 +1,326 @@
+{
+ "daloopa": {
+  "url": "https://mcp.daloopa.com/server/mcp",
+  "well_known_root": {
+   "status": 200,
+   "headers": {
+    "content-type": "application/json",
+    "server": "uvicorn"
+   },
+   "body": "{\"resource\":\"https://mcp.daloopa.com/server/mcp\",\"authorization_servers\":[\"https://mcp.daloopa.com\"]}",
+   "ms": 181
+  },
+  "well_known_path": {
+   "status": 401,
+   "headers": {
+    "server": "uvicorn",
+    "www-authenticate": "Bearer resource_metadata=\"https://mcp.daloopa.com/.well-known/oauth-protected-resource\""
+   },
+   "body": "Unauthorized",
+   "ms": 154
+  },
+  "initialize_unauth": {
+   "status": 401,
+   "headers": {
+    "server": "uvicorn",
+    "www-authenticate": "Bearer resource_metadata=\"https://mcp.daloopa.com/.well-known/oauth-protected-resource\""
+   },
+   "body": "Unauthorized",
+   "ms": 134
+  }
+ },
+ "morningstar": {
+  "url": "https://mcp.morningstar.com/mcp",
+  "well_known_root": {
+   "status": 200,
+   "headers": {
+    "content-type": "application/json"
+   },
+   "body": "{\"resource\":\"https://mcp.morningstar.com/mcp\",\"authorization_servers\":[\"https://mcp.morningstar.com/mcp\"],\"mcp_protocol_version\":\"2025-06-18\",\"resource_type\":\"mcp-server\",\"bearer_methods_supported\":[\"header\"],\"scopes_supported\":[\"offline_access\",\"openid\",\"email\",\"profile\"]}",
+   "ms": 159
+  },
+  "well_known_path": {
+   "status": 200,
+   "headers": {
+    "content-type": "application/json"
+   },
+   "body": "{\"resource\":\"https://mcp.morningstar.com/mcp\",\"authorization_servers\":[\"https://mcp.morningstar.com/mcp\"],\"mcp_protocol_version\":\"2025-06-18\",\"resource_type\":\"mcp-server\",\"bearer_methods_supported\":[\"header\"],\"scopes_supported\":[\"offline_access\",\"openid\",\"email\",\"profile\"]}",
+   "ms": 111
+  },
+  "initialize_unauth": {
+   "status": 401,
+   "headers": {},
+   "body": "missing authorization \u2014 no claims in any metadata path",
+   "ms": 112
+  }
+ },
+ "sp-global": {
+  "url": "https://kfinance.kensho.com/integrations/mcp",
+  "well_known_root": {
+   "status": 200,
+   "headers": {
+    "content-type": "application/json"
+   },
+   "body": "{\"resource\":\"https://kfinance.kensho.com/integrations/mcp\",\"authorization_servers\":[\"https://kfinance.kensho.com/integrations\"],\"scopes_supported\":[\"kensho:app:kfinance\",\"offline_access\"],\"bearer_methods_supported\":[\"header\"]}",
+   "ms": 196
+  },
+  "well_known_path": {
+   "status": 200,
+   "headers": {
+    "content-type": "application/json"
+   },
+   "body": "{\"resource\":\"https://kfinance.kensho.com/integrations/mcp\",\"authorization_servers\":[\"https://kfinance.kensho.com/integrations\"],\"scopes_supported\":[\"kensho:app:kfinance\",\"offline_access\"],\"bearer_methods_supported\":[\"header\"]}",
+   "ms": 111
+  },
+  "initialize_unauth": {
+   "status": 401,
+   "headers": {
+    "content-type": "application/json",
+    "www-authenticate": "Bearer error=\"invalid_token\", error_description=\"Authentication failed. The provided bearer token is invalid, expired, or no longer recognized by the server. To resolve: clear authentication tokens in your MCP client and reconnect. Your client should automatically re-register and obtain new tokens.\", resource_metadata=\"https://kfinance.kensho.com/.well-known/oauth-protected-resource/integrations/mcp\""
+   },
+   "body": "{\"error\": \"invalid_token\", \"error_description\": \"Authentication failed. The provided bearer token is invalid, expired, or no longer recognized by the server. To resolve: clear authentication tokens in your MCP client and reconnect. Your client should automatically re-register and obtain new tokens.\"}",
+   "ms": 266
+  }
+ },
+ "factset": {
+  "url": "https://mcp.factset.com/mcp",
+  "well_known_root": {
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body": "{\"resource\":\"https://mcp.factset.com\",\"authorization_servers\":[\"https://auth.factset.com\"],\"bearer_methods_supported\":[\"header\",\"body\"],\"scopes_supported\":[\"openid\",\"mcp\",\"email\"],\"resource_documentation\":\"https://auth.factset.com/.well-known/openid-configuration\"}",
+   "ms": 192
+  },
+  "well_known_path": {
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body": "{\"resource\":\"https://mcp.factset.com/mcp\",\"authorization_servers\":[\"https://auth.factset.com\"],\"bearer_methods_supported\":[\"header\",\"body\"],\"scopes_supported\":[\"openid\",\"mcp\",\"email\"],\"resource_documentation\":\"https://auth.factset.com/.well-known/openid-configuration\"}",
+   "ms": 156
+  },
+  "initialize_unauth": {
+   "status": 401,
+   "headers": {
+    "content-type": "text/plain; charset=UTF-8"
+   },
+   "body": "Authentication Failed",
+   "ms": 143
+  }
+ },
+ "moodys": {
+  "url": "https://api.moodys.com/genai-ready-data/m1/mcp",
+  "well_known_root": {
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "server": "cloudflare"
+   },
+   "body": "{\"resource\":\"https://api.moodys.com/genai-ready-data\",\"authorization_servers\":[\"https://api.moodys.com/genai-ready-data\"],\"scopes_supported\":[\"mcp\",\"claudeai\",\"openid\",\"profile\",\"email\",\"mdcapp\"]}",
+   "ms": 236
+  },
+  "well_known_path": {
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "server": "cloudflare"
+   },
+   "body": "{\"resource\":\"https://api.moodys.com/genai-ready-data\",\"authorization_servers\":[\"https://api.moodys.com/genai-ready-data\"],\"scopes_supported\":[\"mcp\",\"claudeai\",\"openid\",\"profile\",\"email\",\"mdcapp\"]}",
+   "ms": 200
+  },
+  "initialize_unauth": {
+   "status": 401,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "server": "cloudflare"
+   },
+   "body": "{\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32001,\"message\":\"Expected Authorization: Bearer <token>\"},\"id\":1}",
+   "ms": 126
+  }
+ },
+ "mtnewswire": {
+  "url": "https://vast-mcp.blueskyapi.com/mtnewswires",
+  "well_known_root": {
+   "status": 200,
+   "headers": {
+    "content-type": "application/json",
+    "server": "Google Frontend"
+   },
+   "body": "{\"resource\":\"https://vast-mcp.blueskyapi.com/\",\"authorization_servers\":[\"https://mcp-auth-server-857389207619.us-central1.run.app/\"],\"scopes_supported\":[\"user\"],\"bearer_methods_supported\":[\"header\"]}",
+   "ms": 162
+  },
+  "well_known_path": {
+   "status": 404,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "server": "Google Frontend"
+   },
+   "body": "Not Found",
+   "ms": 140
+  },
+  "initialize_unauth": {
+   "status": 404,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "server": "Google Frontend"
+   },
+   "body": "Not Found",
+   "ms": 155
+  }
+ },
+ "aiera": {
+  "url": "https://mcp-pub.aiera.com",
+  "well_known_root": {
+   "status": 200,
+   "headers": {
+    "server": "awselb/2.0",
+    "content-type": "application/json"
+   },
+   "body": "{\"resource\":\"https://mcp-pub.aiera.com\",\"authorization_servers\":[\"https://mcp-pub.aiera.com\"],\"scopes_supported\":[\"openid\",\"profile\",\"email\"],\"bearer_methods_supported\":[\"header\"]}",
+   "ms": 174
+  },
+  "initialize_unauth": {
+   "status": 401,
+   "headers": {
+    "server": "awselb/2.0",
+    "content-type": "application/json",
+    "www-authenticate": "Bearer realm=\"Aiera MCP Server\" oauth_discovery_url=\"https://mcp-pub.aiera.com/.well-known/oauth-protected-resource\""
+   },
+   "body": "{\"error\":\"authentication_required\",\"message\":\"This MCP server requires OAuth authentication. Please authenticate to continue.\",\"oauth_discovery_url\":\"https://mcp-pub.aiera.com/.well-known/oauth-protected-resource\",\"authorization_required\":true}",
+   "ms": 174
+  }
+ },
+ "lseg": {
+  "url": "https://api.analytics.lseg.com/lfa/mcp",
+  "well_known_root": {
+   "status": 404,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body": "{\"error\":{\"code\":\"404\",\"id\":\"0416b077eb61b87f4e214b2c8d1a793c\",\"message\":\"API Gateway - no Route matched with those values\"}}",
+   "ms": 302
+  },
+  "well_known_path": {
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body": "{\"resource\":\"https://api.analytics.lseg.com/lfa/mcp\",\"authorization_servers\":[\"https://login.ciam.refinitiv.com\"]}",
+   "ms": 127
+  },
+  "initialize_unauth": {
+   "status": 401,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"MCP Server\", resource_metadata=\"https://api.analytics.lseg.com/.well-known/oauth-protected-resource/lfa/mcp\""
+   },
+   "body": "{\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32000,\"message\":\"Missing Bearer token\"}}",
+   "ms": 126
+  }
+ },
+ "pitchbook": {
+  "url": "https://premium.mcp.pitchbook.com/mcp",
+  "well_known_root": {
+   "status": 200,
+   "headers": {
+    "content-type": "application/json",
+    "server": "cloudflare"
+   },
+   "body": "{\"resource\":\"https://premium.mcp.pitchbook.com/mcp\",\"authorization_servers\":[\"https://mcp.pitchbook.com\"],\"bearer_methods_supported\":[\"header\"],\"scopes_supported\":[\"openid\",\"profile\",\"email\",\"offline_access\"]}",
+   "ms": 238
+  },
+  "well_known_path": {
+   "status": 200,
+   "headers": {
+    "content-type": "application/json",
+    "server": "cloudflare"
+   },
+   "body": "{\"resource\":\"https://premium.mcp.pitchbook.com/mcp\",\"authorization_servers\":[\"https://mcp.pitchbook.com\"],\"bearer_methods_supported\":[\"header\"],\"scopes_supported\":[\"openid\",\"profile\",\"email\",\"offline_access\"]}",
+   "ms": 124
+  },
+  "initialize_unauth": {
+   "status": 401,
+   "headers": {
+    "www-authenticate": "Bearer resource_metadata=\"https://premium.mcp.pitchbook.com/.well-known/oauth-protected-resource/mcp\"",
+    "server": "cloudflare"
+   },
+   "body": "",
+   "ms": 115
+  }
+ },
+ "chronograph": {
+  "url": "https://ai.chronograph.pe/mcp",
+  "well_known_root": {
+   "status": 404,
+   "headers": {
+    "content-type": "text/html; charset=utf-8"
+   },
+   "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /.well-known/oauth-protected-resource</pre>\n</body>\n</html>\n",
+   "ms": 122
+  },
+  "well_known_path": {
+   "status": 404,
+   "headers": {
+    "content-type": "text/html; charset=utf-8"
+   },
+   "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /.well-known/oauth-protected-resource/mcp</pre>\n</body>\n</html>\n",
+   "ms": 113
+  },
+  "initialize_unauth": {
+   "status": 401,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "www-authenticate": "Bearer error=\"missing_auth_header\", error_description=\"Missing `Authorization` header. Please provide a valid bearer token.\""
+   },
+   "body": "{\"error\":\"missing_auth_header\",\"error_description\":\"Missing `Authorization` header. Please provide a valid bearer token.\"}",
+   "ms": 135
+  }
+ },
+ "egnyte": {
+  "url": "https://mcp-server.egnyte.com/mcp",
+  "well_known_root": {
+   "status": 200,
+   "headers": {
+    "content-type": "application/json"
+   },
+   "body": "{\"resource\":\"https://mcp-server.egnyte.com/mcp\",\"bearer_methods_supported\":[\"header\"],\"authorization_servers\":[\"https://mcp-oauth.egnyte.com/egnyte-connect\"],\"tls_client_certificate_bound_access_tokens\":false,\"resource_signing_alg_values_supported\":[\"RS256\"]}",
+   "ms": 115
+  },
+  "well_known_path": {
+   "status": 401,
+   "headers": {
+    "www-authenticate": "Bearer resource_metadata=\"https://mcp-server.egnyte.com/.well-known/oauth-protected-resource\""
+   },
+   "body": "",
+   "ms": 137
+  },
+  "initialize_unauth": {
+   "status": 401,
+   "headers": {
+    "www-authenticate": "Bearer resource_metadata=\"https://mcp-server.egnyte.com/.well-known/oauth-protected-resource\""
+   },
+   "body": "",
+   "ms": 107
+  }
+ },
+ "box": {
+  "url": "https://mcp.box.com",
+  "well_known_root": {
+   "status": 200,
+   "headers": {
+    "content-type": "application/json"
+   },
+   "body": "{\n  \"resource\": \"https://mcp.box.com/\",\n  \"resource_name\": \"Box Model Context Protocol Server\",\n  \"authorization_servers\": [\"https://api.box.com/\"],\n  \"bearer_methods_supported\": [\"header\"],\n  \"resource_documentation\": \"https://developer.box.com/guides/box-mcp/remote/\",\n  \"resource_policy_uri\": \"https://www.box.com/legal/termsofservice\",\n  \"resource_tos_uri\": \"https://www.box.com/legal/termsofservice\"\n}",
+   "ms": 398
+  },
+  "initialize_unauth": {
+   "status": 401,
+   "headers": {
+    "www-authenticate": "Bearer realm=\"Service\", error=\"invalid_request\", error_description=\"The access token was not found.\", resource_metadata=\"https://mcp.box.com/.well-known/oauth-protected-resource\""
+   },
+   "body": "",
+   "ms": 174
+  }
+ }
+}

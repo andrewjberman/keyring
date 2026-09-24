@@ -195,7 +195,12 @@ the ruined tree; a lane following this skill got a working one. It cost `2.0.0_S
 `RP-s-20` (the worker returned BLOCKED without executing a criterion, correctly, having first checked
 `git remote -v` to separate *wrong repo* from *right repo, wrong commit*). Corrected at the definition.
 
-**Make the worktree yourself, from THE BRANCH YOU ARE ON, and hand the worker its path:**
+**Make the worktree yourself, from THE BRANCH YOU ARE ON, with `.tools/wk-provision.sh provision <CODE> <n>
+--path <path>`; for a PORTAL cell add `--portal-ref <ref>`, where `<ref>` is the value the issuance commit's
+`fanout:` data names as `portal_ref:` (the nested repository's `DEV` HEAD at the cut, never the gitlink
+commit, which is measured behind it -- row `AMGT_RESAPP-Z-W31-S1`, cell `AMGT-rk-60`); the drain tears a
+portal worktree down with `.tools/wk-provision.sh remove <path>` so the nested repository never carries a
+`prunable` entry. The script runs the line below and hands the worker its path:**
 
 ```bash
 git worktree add -b wk-<CODE>-<n> <path> HEAD
@@ -246,7 +251,10 @@ the order is not an oversight the worker can route around — it is a wall.** So
 
 ✅ **APPLIED, NOT MERELY RULED, SINCE `e08447ff7d` + `6efb43b9d0`** (MSTR's registry stanza and the CTO's
 resolver limb). This binds MECHANICALLY now; it is not a discipline. The override that v3's first drain
-had to take is no longer the path.
+had to take is no longer the path. A co-signed DIRECT act (an act spawned off a signed never-widen pair
+with an inline worker face) is spawned with an order MINTED by `python .tools/direct-act-order.py mint ...`
+from that pair, or it is not spawned -- the minted order is the grant and the pair bounds it (row
+`AMGT_RESAPP-Z-W34-S2`, cell `AMGT-rk-58`).
 
 **THE GRAMMAR the resolver and the L6 gate actually read** (`owned-paths-validate.py`
 `_paths_block_entries`; `to-pipeline-gate.py` GATE (v)):

@@ -27,6 +27,10 @@ directory an engagement's artifacts live in.
 | **RCN-0006** | 2026-08-07 | **The Opal ontology itself** — a proposed "Script I/O" (S-layer) for line-level field flow, Python + React/JS | 5 (spec REV1-3, axis field test, disposition, Python feasibility, **`LAYER_FIELD_ANATOMY.md`**) | live `comp-kuzu` graph (20,585 nodes / 41,144 edges @2026-08-07T00:32Z, HEAD current) + 8 first-party extractor surfaces read at source + 2 hand-classified code samples + an exercised SDK run (CVO~C) + 4 non-held-out tree censuses | `4.0.0_SA_CRO` | **DELIVERED — CONCLUSION IS A NEGATIVE.** The S-layer is **DISSOLVED**: all 7 specified capabilities already exist on live D1 edges. Real gap = D1 field grain has **no Python producer**. Build LEFT the CRO lane → CTO~D PRD |
 | **RCN-0007** | 2026-09-03 | **`.tools/comp-read` itself** — instrument misattachment: four measured instances in one exchange where the tool was correct and the answer was attached to a different question | 1 (brief) | 9 comp-read calls across 2 modes over 3 files at stated vintages (`.tools/deploy_ledger.py` @`79c0e68071` clean, `.tools/comp-read` 1250 ln, `INVESTIGATION_v1.md`) + 3-seat round trip (`0.0.0_AB_MSTR~Z`, `3.0.0_SA_CVO~Z`) | `4.0.0_SA_CRO~Z` | **DELIVERED — PROPOSALS ONLY, none dispatched.** 5 changes proposed, suggested owner the CVO lane (authorship-measured). P5 marked UNTESTED for feasibility; P3's contrast is n=2 and no threshold is proposed |
 | **RCN-0008** | 2026-09-09 | **Investor Reporting & Data Unification** — Andrew's proposal docx → the L1 BRIEF for the D14 directive (wraps D1/D2/D3; the client workflow leaves Advisor Intelligence) | 3 (brief, citable source text, Andrew-direct record) | Andrew's proposal (80,251 B docx, sha256 `db4168a6…f0e8`, 450 blocks extracted) + directives board (13 live) + registry (355 JSONs / 48 open / 86 open TOs) + 6 PRD §1–§2 reads + 5 comp-find censuses over 152,3xx files + `comp-trigger --list` (142 rules + 19 schedules) + `comp-schedule` (26 gates) + 1 `comp-read` | `4.0.0_SA_CRO` | **DELIVERED at L1** — consumer `1.0.0_SA_CTO` `/endpoint --forward`. Nothing dispatched, no register row written (D14 is MSTR's cell). ADVI_PERFRP read to its header only (standing 08-24 restriction names this seat; surfaced, not adjudicated) |
+| **RCN-0011** | 2026-09-19 | **`_authz` LAYER design fork** (IRPT) -- answered empirically for `1.0.0_SA_CTO`: no layer for fork prevention | 1 (`deliverables/RCN-0011_AUTHZ_LAYER_FORK_RESEARCH_20260919.md` + addendum) | `holdings/lambda.tf` read; 7 routes | `4.0.0_SA_CRO` (base, CLOUD fabric) | **DELIVERED** -- POINTER ROW ONLY, added 2026-09-22 by `4.0.0_SA_CRO~F` after an id collision; the section is the base seat's to write |
+| **RCN-0012** | 2026-09-22 | **Claude for Financial Services** -- Anthropic's open-source FSI plugin marketplace + the LLY pack Yang built with it, and how its channels thread into AMGT_RESAPP | 2 briefs + 1 evidence folder (endpoint discovery card + JSON) | repo @574ed36 (19 entries, 5 `.mcp.json`, 3 SKILL.md); LLY pack 58 files (README/SOURCES in full, 3 xlsx, 2 docx); 12 of 12 MCP servers probed unauthenticated; 9 public doc pages; CTO~W card 1 | `4.0.0_SA_CRO~F` | **DELIVERED as CTO intake -- PROPOSAL ONLY, nothing dispatched.** Plugin = files not access (12 OAuth-gated vendor servers); LLY pack built from PUBLIC sources; core `.mcp.json` malformed at that vintage; 4 open calls at Andrew |
+| **RCN-0014** | 2026-09-23 | **`opal_ai`** -- the Opal Analyst as a microproduct: one agent + one indexed MCP in three slices (Opal -> Template -> Clients), tying Opal Analyst, D6 GraphQL, NFRA_OPLGTW, NFRA_MCPINDEX, the vendor-access paths and The Walk into one repo | 1 L1 brief (`docs/briefs/opal-ai-microproduct-repo-brief-20260923.md`) | repo reads only @`1b1244cecf`: 3 PRDs + 2 briefs + the 09-22 assessment; gateway code layout; the BG seat's prompt/refs/fence; 3 vendor designs-of-record + 2 standards; RCN-0001/0002 tooling; comp-which + its harness; RCN-0012 | `4.0.0_SA_CRO~X` | **DELIVERED as CTO intake -- nothing dispatched.** 12 outcomes, candidate thread = one Teams question answered through the MCP; 8 calls at Andrew (one repo vs the 09-22 `opal_analyst` naming; slice-first layout; the monitor conflict in the Third-Party Standard) |
+| **RCN-0015** | 2026-09-23 | **The GitOps split of `opal_ai` from `ajb_workspace`** -- portal-shaped (contained, separate, tooled), and what the portal's current wiring does and does not give a nested repo | 1 L1 brief (`docs/briefs/opal-ai-gitops-split-brief-20260923.md`) | local git + repo reads @`bd282e03e9`: `.gitmodules`, gitlinks, portal hooks/CI/branches, the owned-paths hook, safe-commit/safe-merge, wk-provision, both EC2 deploy scripts + manifest, the gateway's parent reaches, the launcher and parent `.claude` | `4.0.0_SA_CRO~X` | **DELIVERED as CTO intake -- nothing dispatched.** The portal is a nested clone + gitlink, not a submodule; its commits skip every parent git gate; installing the lane hook there without a lane file would block every commit (fail-closed by default -- CORRECTED from "fails open", msg 25107); both deploy guards read the parent; 24 work items, 8 calls |
 
 ---
 
@@ -821,3 +825,106 @@ platinum keys written in the same second carry four viewer verdicts (VISIBLE / c
 routed field-use-unmeasured / NO-ROUTE). Ruleset W1-W13 in the brief's Part V; eight outcomes O1-O8. Two static
 instruments disagree on one script's writes (union rule). Nothing moved; no applied-plane GET exercised; the
 integration carrier is the CTO's.
+
+
+## RCN-0012 -- Claude for Financial Services: the plugin's structure and data shapes, and the RESAPP threading proposal
+
+**Date:** 2026-09-22 ~14:5xZ-15:5xZ. **Produced under:** `4.0.0_SA_CRO~F` (site Z). **CORRECTION 2026-09-22 ~15:4xZ (`4.0.0_SA_CRO~F`):** this engagement was first stamped RCN-0011 in commit 621cecb40a and in msgs 24296-24298; that id was already used on 2026-09-19 by the base seat's `_authz` layer-fork research (deliverable on disk, unregistered here), so it is RENUMBERED RCN-0012 and a pointer row for RCN-0011 is added to the index above. **Commissioned:** Andrew-direct at this
+terminal ~14:5xZ, verbatim in `deliverables/ANDREW_DIRECT_20260922_145xZ_CLAUDE_FOR_FINANCE_RESAPP_RESEARCH_PROJECT.md`
+@c23d5f7dc0 (three sequenced steps; two briefs). **Artifacts:** `briefs/CLAUDE_FSI_PLUGIN_STRUCTURE_AND_DATA_SHAPES_BRIEF_20260922.md`
+(teardown, CAPABILITY); `briefs/RESAPP_CLAUDE_FSI_THREADING_PROPOSAL_20260922.md` (PROPOSAL, nothing dispatched);
+`deliverables/CLAUDE_FSI_RECON_20260922/` (endpoint discovery card + raw JSON).
+
+**Evidence basis:** `anthropics/financial-services` @574ed36 (2026-09-21) cloned and read (19 marketplace entries, 10 agent
+plugins, 6 verticals, 2 partner, 10 cookbooks; 5 `.mcp.json`, 3 SKILL.md, 2 agent prompts, 1 agent.yaml); the LLY pack in the
+synced SharePoint library (58 files; README + SOURCES in full; 3 xlsx / 13 sheets; 2 Opal-branded docx); 12 of 12 declared MCP
+servers probed unauthenticated (well-known metadata + `initialize`); public docs (platform MCP-connector page, two Anthropic
+announcements, Daloopa x3, Kensho x2, the install tutorial); the CTO~W card 1 @5007337353. `[BODY-NOT-CAPTURED]` for every
+vendor tool body (no token); Yang Liu's session not read.
+
+**Findings:** (1) the plugin is files (prompts, skills, twelve HTTP MCP URLs), not access -- every connector is OAuth 2.1
+against the vendor's own authorization server and presupposes a subscription; (2) the LLY pack was built from PUBLIC sources
+only (EDGAR + StockAnalysis + Fintel + press) because, per its own README, every configured connector needed an OAuth grant a
+non-interactive session could not complete -- the "API access" Andrew described did not run for it; (3) the core plugin's
+`.mcp.json` at the cloned vintage is malformed JSON (zero connectors would load); (4) MT Newswires 404s at its declared path,
+Chronograph publishes no RFC 9728 metadata; (5) Daloopa is the one vendor with a published datapoint shape, and it types onto
+the model block's `(security_key, fiscal_year, mnemonic)` grain with a filing citation ours lacks. Proposal: three threading
+options (skill-as-producer, MCP-in-our-producers, vendor REST as a harvest channel); recommended path with no new subscription
+= extend the filings channel to the quarterly event (8-K/10-Q/DEF 14A), derive consensus revisions from Bloomberg `bestdata`
+bronze vintages, lift the skills' METHODS as specs, transcripts through AMGT_HARVST; vendor REST channel only after Andrew's
+subscription word. Six substrate cards named with owners; four open calls to Andrew. **Egress:** one public `git clone` and
+one credential-free discovery handshake, both under step 1 of the verbatim instruction; no vendor data API called, no Opal
+data sent. Nothing installed on this box.
+
+### Downstream (2026-09-22 ~17:3xZ, `4.0.0_SA_CRO~F`)
+Andrew read both briefs at this terminal and gave the design in four messages (record
+`deliverables/ANDREW_DIRECT_20260922_17xxZ_CLAUDE_ANALYSIS_LAYER_PLATINUM_DESIGN.md`) plus a 6m34s voice memo relayed from the
+laptop fabric on his word (`deliverables/ANDREW_VOICE_MEMO_20260922_HARVEST_INFRA_OVERVIEW_TRANSCRIPT.md`): the Claude API is an
+ANALYSIS LAYER on top of harvest data, platinum per security inside `opal-data-harvest`, the equity-research skill lifted, the
+SharePoint earnings-report corpus as the format authority and backfill source, sector KPI/model templates, and a V2 sprint
+(flags, the Opal Analyst in Teams, the earnings calendar) named but not cut. The proposal brief is SUPERSEDED by the L1 brief
+`docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md` (MIDSTREAM on AMGT_RESAPP, eleven outcomes O1-O11, for
+`1.0.0_SA_CTO~Z`'s `/endpoint --forward`). On Andrew's word at ~17:3xZ no site-Z seat is notified yet; he carries the brief to
+the CTO himself.
+
+## RCN-0013 -- AMGT current state and a direct closer program for MVP
+
+**Date:** 2026-09-23. **Produced under:** `4.0.0_SA_CRO~Z`, device OPAL_BLOOMBERG, SITEZ.
+**Commissioned:** Andrew-direct at this terminal; verbatim record
+`deliverables/ANDREW_DIRECT_20260923_AMGT_CURRENT_STATE_AND_CLOSER_MVP_PLAN.md` @`58bfd6f882`.
+**Package:** [AMGT measured state and MVP program](deliverables/AMGT_MVP_RESEARCH_20260923/README.md).
+Four end-to-end pipeline briefs, CLOUD precedent index, proposed shared-surface closer contract,
+dependency schedule, 21-row gap register, timestamped measurements, complete S3 metadata inventory,
+source hashes and read-only reproduction instruments. **Status: DELIVERED research / PROPOSED execution;
+no closers seated, orders issued, vendor/model calls, deployments, source-library writes or push.**
+
+**Evidence:** source baseline `5deabdefa9`, portal DEV `b3d5f59b45`, fetched CLOUD `365ab567ba`;
+all three canonical AMGT homes and anchored task-status census (RESAPP 191: 181 complete, 8 superseded,
+1 withdrawn, 1 pending; HARVST 18 complete; CORPUS 10 complete / 1 pending); all 2,277 current objects
+in opal-data-harvest; selected retained-object hashes/Parquet counts; actual Lambda ZIP/code comparison
+(44/48 inspected API members match local), role policies, 16 deployed AMGT routes, AWS/local schedule
+configuration and local library metadata (93 folders / 351 files). CTO message 24746 supplies a clearly
+attributed outstanding-review correction; current path-rule definitions were independently read.
+
+**Conclusion:** landed components and closed task orders do not establish the full report. No platinum
+objects exist in the measured bucket; corpus currently retains 123 files across 33 resolved names with
+60 folders unresolved; the deployed Chatter path remains legacy despite landed gold; refresh declares
+its carrier without enqueuing; recent API fixes are not yet deployed. Proposed four direct closers:
+security data/filings, publications/chatter, corpus, report/page/export, with sole shared integration
+owners and independent acceptance. Preserve pre-implementation schema/denominator checks, L4-R,
+never-widen and specific external operating bounds while removing repetitive routine recutting.
+The first representative report and full-population MVP have separate milestones; timing is explicitly
+an initial conditional estimate. Authenticated live browser/export, fresh vendor/model runs and full
+outcome acceptance were not exercised by this research. LOCAL; origin/SITEZ measured `95be3bc7a9`.
+
+## RCN-0014 -- `opal_ai`: the Opal Analyst as a microproduct in three slices
+
+**Date:** 2026-09-23. **Produced under:** `4.0.0_SA_CRO~X`, SITEZ. **Commissioned:** Andrew-direct at this terminal
+~18:5xZ; verbatim record `deliverables/ANDREW_DIRECT_20260923_185xZ_OPAL_AI_MICROPRODUCT_REPO_BRIEF.md` @`6ae5ab5fd3`.
+**Package:** the L1 brief `docs/briefs/opal-ai-microproduct-repo-brief-20260923.md`, for `1.0.0_SA_CTO~Z`'s
+`/endpoint --forward`. **Builds on** `4.0.0_SA_CRO~Z`'s 09-22 templating assessment @`20de682ede` (seven recs approved).
+
+**Finding in one line:** the three things he named are already one stack -- a Claude seat whose only external surface is
+the Opal Gateway MCP, and an index layer being built inside that gateway -- so `opal_ai` gathers existing prior art into one
+repo; nothing in it is a new product. The template's MCP half is extracting configuration into one instance manifest; its
+vendor half is the ratified Third-Party Standard plus the documented access paths (official REST; cookie-riding REST with an
+EC2 re-auth box; standing session box; file delivery; rendered page last); The Walk is RCN-0001/0002's HAR profiler; the
+client slice is Andrew's own 08-19 client data-access design. Two conflicts are named, not resolved: the 09-22
+`opal_analyst` naming versus today's single `opal_ai` repo, and the Third-Party Standard's alarm step versus the monitor
+moratorium. **Status: DELIVERED as CTO intake. Nothing dispatched, no repo created, no project registered. Repo reads only
+-- no AWS, gateway, Teams or GitHub read.**
+
+## RCN-0015 -- the GitOps split of `opal_ai`: portal-shaped, done properly
+
+**Date:** 2026-09-23. **Produced under:** `4.0.0_SA_CRO~X`, SITEZ. **Commissioned:** Andrew-direct at this terminal
+~22:0xZ; verbatim record `deliverables/ANDREW_DIRECT_20260923_220xZ_OPAL_AI_GITOPS_SPLIT_SPEC.md` @`bd282e03e9`.
+**Package:** `docs/briefs/opal-ai-gitops-split-brief-20260923.md`, for `1.0.0_SA_CTO~Z`. Companion to RCN-0014.
+
+**Finding in one line:** "the same structure as the portal" gives a nested repo containment and separation but only part
+of the tooling. The portal is a nested clone plus a gitlink, with `.gitmodules` at 0 bytes. It has 0 active git hooks,
+so no parent git gate grades its commits. The lane hook, if installed there without a lane file, would EXIT 1 on
+every commit, because block mode is its default. (This line first said it "WARNs and skips", read from one line
+short of the mode branch; corrected on `1.0.0_SA_CTO~Z`'s ruling, msg 25107, and re-verified at the bytes.) Both EC2 deploy guards read the
+parent's git, so a nested source would pass the clean-tree check over uncommitted edits and record the wrong commit.
+The brief recommends a real submodule and names 24 items that make it "tooled" as well. **Status: DELIVERED as CTO
+intake. Nothing created, moved or dispatched. Local reads only -- no GitHub read, nothing deployed.**

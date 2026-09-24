@@ -1,0 +1,72 @@
+{
+  "project_code": "AMGT_HARVST",
+  "former_codes": [],
+  "macro_code": "AMGT",
+  "directive": "D5",
+  "fabric": "site-z",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "ROUND_CLOSE",
+  "created": "2026-09-22",
+  "registered_under_tree": "2026-09-22",
+  "last_updated": "2026-09-23T05:17:39Z",
+  "pods": [
+    "1.0.0",
+    "2.0.0",
+    "3.0.0",
+    "4.0.0"
+  ],
+  "seats": {
+    "cro": "4.0.0_SA_CRO~Z (L1 brief author)",
+    "cto": "1.0.0_SA_CTO~Z (L2 endpoint, L3 registration, L4 PRD, L10 routing)",
+    "coo": "2.0.0_SA_COO~Y (L5 decomposition, L6 issuance, drives to completion) -- named by Andrew 2026-09-22 ~14:4xZ; seated at the L4->L5 handoff",
+    "cvo": "3.0.0_SA_CVO~Z (L8 compilation, L9 adjudication, L10 slug)"
+  },
+  "related": [
+    "AMGT_RESAPP"
+  ],
+  "name": "Publication harvest: every mention of a covered company, retrieved with its provenance, kept as received, structured without loss, and graded by strength over time -- the Chatter axis and the company event spine.",
+  "description": "Retrieval, structure and the bronze/silver/gold build for the publication channels (Seeking Alpha, Bloomberg.com, Barron's, WSJ, FT) that feed AMGT_RESAPP's Chatter axis and news. Bronze keeps each publisher's bytes as received; silver is built from bronze with every vendor field typed; gold grades each (article, security) mention and rolls it into a daily chatter series and an event spine a timeline graph can dissect. Runs beside AMGT_RESAPP and does not own that project's page, trial or other channels.",
+  "brief": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md @5b90a0b839 (L1, 4.0.0_SA_CRO~Z; re-landed with Andrew's absolute-only and 2026-backfill words)",
+  "prds": [
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/prd/AMGT_HARVST_PRD.md",
+      "version": "v0.2",
+      "note": "L4, 2026-09-22, 1.0.0_SA_CTO~Z. v0.2 answers the v0.1 refusals (CVO R1-R4, CRO re-pin) and Andrew's absolute-only and 2026-backfill words: FWD-1..FWD-9, 14 contracts, 10-row manifest. Paired with AMGT_RESAPP v0.23 (C-ONE-STORE supersession)."
+    }
+  ],
+  "decompositions": [
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v1.0",
+      "note": "L5, 2026-09-22, 2.0.0_SA_COO~Y. Ten cells HVST-h-1..10 over manifest H1-H10; chain A (nine cells, serial) and chain B (the timeline design spec); cut from PRD v0.2 @9102ccfe81 ADMITTED."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v1.1",
+      "note": "L5 recut, 2026-09-23, 2.0.0_SA_COO~Y. Round 2: five independent cells from the L10 round-1 analysis @f869aa705c; sections 10 and 11."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v1.2",
+      "note": "L5 recut, 2026-09-23, 2.0.0_SA_COO~Y. Round 3: two independent cells from the L10 round-2 analysis @2539343348 as reverted by its withdrawn addendum @683d1946cd; sections 12, 13 and 13a. Drained 2026-09-23: 2 of 2 terminal, two issuer amendments (rows Z-S10, Z-S11)."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v1.3",
+      "note": "L5 recut, 2026-09-23, 2.0.0_SA_COO~Y. Round 4: one READ-ONLY cell from the L10 round-3 analysis @4bcd9e87ca; sections 15 and 15e, with the metadata write separated out and asked rather than cut."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v1.4",
+      "note": "L5 recut + L6 issuance of NOTHING, 2026-09-23, 2.0.0_SA_COO~Y. Round 5: zero orders, earned by the coverage read (row Z-S14); section 16."
+    }
+  ],
+  "leads": [
+    "REGISTERED 2026-09-22 under D5/AMGT. Andrew-direct at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'I think this project needs to be run on the side of AMGT_RESAPP. I would make a new project for this called AMGT_HARVST. Then I would have COO~Y drive it to completion.' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_144xZ_AMGT_HARVST_NEW_PROJECT_COO_Y_DRIVES.md."
+  ],
+  "phase": "Round 5 is an ISSUANCE OF NOTHING by 2.0.0_SA_COO~Y (recut v1.4, decomp section 16): the round-4 analysis asked whether the coverage question was answerable from held objects before any vendor act, it was, and the subtraction leaves ZERO cells. EVERY ITEM THIS PROJECT CAN FINISH ALONE IS FINISHED. Two consecutive rounds at zero egress and zero writes, each closing an item with a measurement.",
+  "blocking": "Held OUTSIDE the project, all of it: the timeline BUILD cell on Andrew approving the AMENDED spec; any further publisher access on Andrew's word, and row Z-S14 now measures that a session-shaped act addresses at most ONE of the three refusals (bbg's challenge) -- ft returned a 403 from its search endpoint and barrons was rejected AFTER a successful re-authentication; the served chatter switch on a never-widen pair, the gold read grant and AMGT_RESAPP's retirement window; the sibling project's S3-delete breach, unadjudicated, with this project measured clear of it. FWD-1 stays NOT REALIZED with its remaining cause now stated per publisher.",
+  "threads": [],
+  "thread_counter": 0
+}

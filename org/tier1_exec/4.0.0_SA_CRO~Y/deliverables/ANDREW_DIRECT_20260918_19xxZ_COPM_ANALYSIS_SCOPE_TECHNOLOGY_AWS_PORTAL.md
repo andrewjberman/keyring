@@ -42,4 +42,20 @@ unless Andrew says so.
 - Step 2 DONE pending Andrew's review: `triage.py` -> `triage.jsonl`, `triage.md`, `triage_summary.json`:
   IMPLEMENTS 111, IN-SCOPE 489, OUT 1,396; 96 rules; 11 open questions each of which decides a rule's
   bucket. Review page: `triage_review.html` (published as a private Artifact).
-- Next: Andrew answers the 11 questions and adjusts buckets; then step 3, the measured platform fact base.
+- Andrew answered all 11 questions ~19:4xZ (verbatim in the terminal; summarized in ANALYSIS_PLAN.md):
+  portal audience = wealth advisors, no clients; distributor hosts ETF disclosures; PM team runs baskets
+  off-platform; no orders originate in the platform; portal is not the restrictions system of record; no
+  valuation/liquidity data on the estate; TicketCenter is advisor-level; "the firm's server" = AWS; the
+  agent fabric is engineering assistants (Andrew-only access), Microsoft 365 is the more relevant AI/mail
+  plane. Two further words ~20:2xZ: "schwab client data is in opal-data-assets/schwab"; "its all
+  encrypted volumes/buckets". Re-triage: IMPLEMENTS 90 / IN-SCOPE 210 / OUT 1,696, 0 open questions.
+- Step 3 DONE: `facts.py` -> `facts/platform_facts.md`, 40 facts (MEASURED from source and read-only
+  live AWS calls at ~20:0x-20:2xZ, HELD from Andrew, UNVERIFIED where the estate cannot show it), plus
+  `facts/s3_posture_sweep.py` over all 38 buckets.
+- Step 4 DONE: `findings.py` -> `findings.jsonl`: 35 items covering all 300 in-scope atoms: 12 RED,
+  17 YELLOW, 6 GREEN; basis 26 MEASURED, 6 HELD, 3 UNVERIFIED.
+- Step 5 DONE: `build_report.py` -> `COPM_platform_report.html` published privately at
+  https://claude.ai/artifact/MAeqm7Sh9DkfJXR1MJMGf8 (triage page: https://claude.ai/artifact/XbGic4kHmALyB93P6o11pY),
+  and `COPM_platform_report.md`.
+- Nothing in the estate was changed; every AWS call was read-only. Step 6 (review of reds and yellows
+  with Andrew) is next and is his.
