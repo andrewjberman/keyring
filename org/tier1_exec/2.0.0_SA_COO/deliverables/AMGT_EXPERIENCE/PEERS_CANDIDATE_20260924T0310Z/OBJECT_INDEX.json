@@ -1,0 +1,1564 @@
+{
+ "stamp": "2026-09-24T0310Z",
+ "inputs_sha256": {
+  "union.json": "5d3ba4cd412ad8da3d856d2d81902dced61259f8c7b2002f3417e414077b8847",
+  "candidate-universe.json": "934ba4783731f43113302d1da595bc4629edc00afbbed0ad3f1f01863255e911",
+  "crosswalk.json": "da53b89cce05ea0b3bb3c0ac524c18f385186a7a18efd91a36f2aaee06a1cf7a",
+  "prior-peer-keys.json": "ea621c74f54c0f6369ca820ccc46dfff33f7f93d6cc1ee8777390691f3cba876"
+ },
+ "crosswalk_sha256": "9bd953b9c06f73823af30e11911638d4f0991e640b9301022bdb59bc16a89deb",
+ "objects": [
+  {
+   "security_key": "2317_TT_Equity",
+   "sha256": "7beb842fd71e0845ce48774f8dc6e9720a8bb8251f505819a9b30c62cb131b99",
+   "size": 47575,
+   "pool_key": "peers/v1/2317_TT_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "2602335D_US_Equity",
+   "sha256": "512beb053b8161855142affac59dabd741ad30e5222f77a47a92b26530dfa2c6",
+   "size": 9313,
+   "pool_key": "peers/v1/2602335D_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "6861_JP_Equity",
+   "sha256": "e2ecd2b0231c79cc47f7c38d2746927472c1b7eaec1c77d650f08fcb9bcda7e8",
+   "size": 26328,
+   "pool_key": "peers/v1/6861_JP_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 4
+  },
+  {
+   "security_key": "9433_JP_Equity",
+   "sha256": "5ca3410ed42599425adfdd050a7630a83c6e6a215fefa1238d84ebfcc9ac044c",
+   "size": 12798,
+   "pool_key": "peers/v1/9433_JP_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "992_HK_Equity",
+   "sha256": "ef134b7d10aa899cf199a2ca24024052913a4673545ada45de02510468f41453",
+   "size": 47057,
+   "pool_key": "peers/v1/992_HK_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "AAPL_US_Equity",
+   "sha256": "ff2deb36bc35daaf2c91365ce98932b674ba2de238172beec3e5af8e17f2f654",
+   "size": 41935,
+   "pool_key": "peers/v1/AAPL_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 10
+  },
+  {
+   "security_key": "ABBV_US_Equity",
+   "sha256": "c066a3b5cfac53cbee58a162551f6f9e4d7e70f33ad2e18a066345a49540cfc5",
+   "size": 47801,
+   "pool_key": "peers/v1/ABBV_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "ABT_US_Equity",
+   "sha256": "e69cd2ec1828dbe8a2b21ba60ff99dbd88d67b9b8135502703ac02fd1ba7964c",
+   "size": 47426,
+   "pool_key": "peers/v1/ABT_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "ADM_US_Equity",
+   "sha256": "895e31a776ef7e0cbe8ab7bc0a083a49d69081b5b83aba578d22afe11bb2fc2f",
+   "size": 48083,
+   "pool_key": "peers/v1/ADM_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "AEP_US_Equity",
+   "sha256": "d9e42d7ab45adfbc807c06538df5bb52f1dde684f09288e2ce24b4fa6c19b734",
+   "size": 47793,
+   "pool_key": "peers/v1/AEP_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "AIG_US_Equity",
+   "sha256": "d9e496c1a86f31b958b8e3642dcea72fe3f60907b953b5fdf8e136f237386f90",
+   "size": 46889,
+   "pool_key": "peers/v1/AIG_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "AIZ_US_Equity",
+   "sha256": "1c108b966903ab672b100c9964ae8ffad5ee0295c7aeb51e36e36a2234c157f2",
+   "size": 46821,
+   "pool_key": "peers/v1/AIZ_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "AMAT_US_Equity",
+   "sha256": "7ac3d91d8eba57a8859640c894ad7f3c380bcf8e347a3d653552abaed07e5186",
+   "size": 48001,
+   "pool_key": "peers/v1/AMAT_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "AMD_US_Equity",
+   "sha256": "8f89f84438c0caf9934ebaf647df32a023185d5913bd4490bbca97d49a6a8124",
+   "size": 48033,
+   "pool_key": "peers/v1/AMD_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "AMP_US_Equity",
+   "sha256": "0e247a8f7cc1534003b7602b95925c12d97d882d472b6297e118650f59343369",
+   "size": 47376,
+   "pool_key": "peers/v1/AMP_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "AMX_US_Equity",
+   "sha256": "2221487b1b5d329cd1cfb123246d4e8a1a53c03b9ab80721b5f721dfdf136cbe",
+   "size": 9283,
+   "pool_key": "peers/v1/AMX_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "AMZN_US_Equity",
+   "sha256": "dddbce828853c53aaf72b542900f3f4b58072657a771d132c74003ca385cce72",
+   "size": 18079,
+   "pool_key": "peers/v1/AMZN_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 1
+  },
+  {
+   "security_key": "ANET_US_Equity",
+   "sha256": "fd1f78f26504028242f2b11940f3ab044450e3a485bc73a9efba31702426a310",
+   "size": 47429,
+   "pool_key": "peers/v1/ANET_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "ASML_NA_Equity",
+   "sha256": "3b4d83abc87331b58a391c80dbe37866333b9fec82f39726a311b6d20854f98e",
+   "size": 47641,
+   "pool_key": "peers/v1/ASML_NA_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "ASML_US_Equity",
+   "sha256": "e2c870fec5878ed9872da1c3ed734a7e0be49fd1ceba192a883abe60b31a9405",
+   "size": 9289,
+   "pool_key": "peers/v1/ASML_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "ATO_US_Equity",
+   "sha256": "93893eca51914c9569b9136b257672ade4e83c286c1aebe7f3e95aeaf10fabff",
+   "size": 47854,
+   "pool_key": "peers/v1/ATO_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "AVGO_US_Equity",
+   "sha256": "b1909b85b082c91e5cac19e7e1c0f4f7c4c1cfa6fbf2a50639512955ab39ef7e",
+   "size": 47852,
+   "pool_key": "peers/v1/AVGO_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "AZN_US_Equity",
+   "sha256": "35d0abb34856497089f4eede17f3c01a60b4cf226eb4b932e85153a359c8c0ea",
+   "size": 9283,
+   "pool_key": "peers/v1/AZN_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "BABA_US_Equity",
+   "sha256": "f653b821a22a76433af46b24c8aaaacbf1882a5a2a6aa661974b9762ddc4cf62",
+   "size": 46309,
+   "pool_key": "peers/v1/BABA_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "BAC_US_Equity",
+   "sha256": "3b15ea8a4e3dd64a232607212aa461d70a5a59510fd2b24f7a8d9b2560a815ab",
+   "size": 47525,
+   "pool_key": "peers/v1/BAC_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "BA_US_Equity",
+   "sha256": "c1ad625deb49dee45de6df80112917257e4726c9d70a2a5408a6821104f12585",
+   "size": 47479,
+   "pool_key": "peers/v1/BA_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "BBSE3_BZ_Equity",
+   "sha256": "9ae6f142ddea89467c8aeb441e66a84d39e5c0e055783b0ccf85e09716672230",
+   "size": 45937,
+   "pool_key": "peers/v1/BBSE3_BZ_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "BBSEY_US_Equity",
+   "sha256": "db351228451cbad2410b276d32a7d1d2c82c888bbef2cc27643e1e5bb5c3b585",
+   "size": 9295,
+   "pool_key": "peers/v1/BBSEY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "BBY_US_Equity",
+   "sha256": "febf7a51f489c5dc6989d2ad4a4d648fb4327f51158309593df0615ea2d7c3f0",
+   "size": 47132,
+   "pool_key": "peers/v1/BBY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "BEN_US_Equity",
+   "sha256": "6789db766ebf6adcd71404d66d08a532d3ebfa73dda3b57ae02e9eead0d55b03",
+   "size": 47617,
+   "pool_key": "peers/v1/BEN_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "BIPC_US_Equity",
+   "sha256": "61c8b8cc0b7d51a984b26644d01cd5d82ae02ce3bcecad2428f95a6ed6ab1dcb",
+   "size": 9289,
+   "pool_key": "peers/v1/BIPC_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "BKNG_US_Equity",
+   "sha256": "f5aa355055781e4b90b73016c71c5e0468143e97c447adf5222a6455f8a17140",
+   "size": 47020,
+   "pool_key": "peers/v1/BKNG_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "BKRKY_US_Equity",
+   "sha256": "2385ccd0c840f5b1c6fa418c4c4c67a4bc2598a9ce78475b418bded3f21a9089",
+   "size": 9295,
+   "pool_key": "peers/v1/BKRKY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "BNPQY_US_Equity",
+   "sha256": "d0e7e03b70ca15ff023c88631672f1148699f8534459a34116d616a6a83e326e",
+   "size": 9295,
+   "pool_key": "peers/v1/BNPQY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "BNY_US_Equity",
+   "sha256": "33a45fdfc76fa50ceb652154b041bf5218e7c92c587a6550c845c9309b205d7b",
+   "size": 47823,
+   "pool_key": "peers/v1/BNY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "BN_US_Equity",
+   "sha256": "2b1b7665870a70a786e098f522e51508f6dbed214dcfc72c80d47efae98268cb",
+   "size": 9277,
+   "pool_key": "peers/v1/BN_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "BP/_LN_Equity",
+   "sha256": "619b6887e34dc1706f3543425d3ad49d3cc3505c5fb8475186d80463808e8f65",
+   "size": 47232,
+   "pool_key": "peers/v1/BP/_LN_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "BP_US_Equity",
+   "sha256": "4968f5b68c1cac4f59eed17f75e768cccfa00d7fdfef2be4020a4e6b0177e8b7",
+   "size": 9277,
+   "pool_key": "peers/v1/BP_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "BTI_US_Equity",
+   "sha256": "319de737a9eeafbef36730d58ff07c482610277952d106de67b8e3b6a2bfb78a",
+   "size": 9283,
+   "pool_key": "peers/v1/BTI_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "BZLFY_US_Equity",
+   "sha256": "edc414e73dcb108177a82f0a94d237e1b3a222b3b356203d851d2cc88a51dcd8",
+   "size": 9295,
+   "pool_key": "peers/v1/BZLFY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "CAT_US_Equity",
+   "sha256": "a302fba3b7957ea8286a31a341f5e4e9ebf59379a70eafb0879b59c1086b6df9",
+   "size": 47358,
+   "pool_key": "peers/v1/CAT_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "CICHY_US_Equity",
+   "sha256": "f546a133ec1b926e1a3984737ad38145fb2ecedc0ca13f2461e277ec194ab057",
+   "size": 9295,
+   "pool_key": "peers/v1/CICHY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "CIEN_US_Equity",
+   "sha256": "922784f6eb910e54c84046e1625443be9af083cd84ab9dfd3f7fbec6dddb7ef3",
+   "size": 47282,
+   "pool_key": "peers/v1/CIEN_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "CINF_US_Equity",
+   "sha256": "b03e987002bf3d5545d75511099f98a278d65c7a0de1dae8b2cddaaf3d887ad0",
+   "size": 46742,
+   "pool_key": "peers/v1/CINF_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "CI_US_Equity",
+   "sha256": "1cce10e4b994beae88c23888678b0e264231f7d0025fe67385c0fb2ebf4b9e12",
+   "size": 47267,
+   "pool_key": "peers/v1/CI_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "CME_US_Equity",
+   "sha256": "26539da8118e6bf646d1332f1eefaa6be92c81660713f1b1b4c4c6d5f7de4f26",
+   "size": 47859,
+   "pool_key": "peers/v1/CME_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "CMI_US_Equity",
+   "sha256": "eef4798c7f387517b5976a5916afaea0e3fc1631b1f60559e569b7c202a03030",
+   "size": 47778,
+   "pool_key": "peers/v1/CMI_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "CNC_US_Equity",
+   "sha256": "53c5244299d22d3e4b2da67e695f6754fb95f18d2ce5c9041be1ab5a3ec5cede",
+   "size": 47198,
+   "pool_key": "peers/v1/CNC_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "CNI_US_Equity",
+   "sha256": "bab48e2dcf93c846acb989cb749ca47d9ba70e47ff4af2b4abbf263cebee131a",
+   "size": 9283,
+   "pool_key": "peers/v1/CNI_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "COST_US_Equity",
+   "sha256": "7f64c924989da2a155c76c2df25d2437be4a89a40c8d0e20e19f2d961c65917d",
+   "size": 47736,
+   "pool_key": "peers/v1/COST_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "CPA_US_Equity",
+   "sha256": "8bb0269c3f27a37f842cfd8e6ae9ceb2006fe540940aba909885b0aa1457deb4",
+   "size": 9283,
+   "pool_key": "peers/v1/CPA_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "CSL_AU_Equity",
+   "sha256": "0cb531127a8747a5a3562a0f05410504f66c95f36b1a81d40069e919a27b9d84",
+   "size": 46864,
+   "pool_key": "peers/v1/CSL_AU_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "CVX_US_Equity",
+   "sha256": "98683f36943d0f9c15b20ebeb593d03fa52b62e0f36f5c2439f0a66ba25d7269",
+   "size": 47271,
+   "pool_key": "peers/v1/CVX_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "C_US_Equity",
+   "sha256": "aea4ea4035654f6f00aed889dfe19cf9dc61fb62f1fc3f01d0150351d29a3abb",
+   "size": 47773,
+   "pool_key": "peers/v1/C_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "DAL_US_Equity",
+   "sha256": "853c07093a939654b31ea643fa95770bc8471bdd41519a13c9c86935eeb1cf56",
+   "size": 47976,
+   "pool_key": "peers/v1/DAL_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "DECK_US_Equity",
+   "sha256": "7450681f1652aabb2cf39c48e49f196ab7ce5254c012dba4646bd182162c6bd0",
+   "size": 47221,
+   "pool_key": "peers/v1/DECK_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "DELL_US_Equity",
+   "sha256": "30dfe73d31aa88dd384b96c469815073aa00e5a64e6fc27de5ad2ef6ea823a29",
+   "size": 47256,
+   "pool_key": "peers/v1/DELL_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "DTE_US_Equity",
+   "sha256": "1f5f12d558002114bfcdadef939252e8e6baa9cc5093260662ca005500091192",
+   "size": 47853,
+   "pool_key": "peers/v1/DTE_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "EBAY_US_Equity",
+   "sha256": "74a18796f36a3a38e8e05632e51d0c51d1099c4dca261ef095fbb62281f8ef59",
+   "size": 47445,
+   "pool_key": "peers/v1/EBAY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "ECHO_US_Equity",
+   "sha256": "d0114fdb5c676029680b3932ca55e1b7ae91e3c433a4b3b556cf8e6e2441605d",
+   "size": 45925,
+   "pool_key": "peers/v1/ECHO_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "EL_US_Equity",
+   "sha256": "f67471661f4b1b76c9fcd4b1ea4a90275bece8766243129ad20dbb7f48e955c8",
+   "size": 47772,
+   "pool_key": "peers/v1/EL_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "ENB_US_Equity",
+   "sha256": "9ff8ebdaf5891d9dfe6918c0326624594e7b7c2e6fa2733b8951c3bbfc8489d1",
+   "size": 9283,
+   "pool_key": "peers/v1/ENB_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "ENEL_IM_Equity",
+   "sha256": "85d58793e598cb3bd477f3f6262bfba0a9de0efa7788435c98cebc58851cfbcc",
+   "size": 47142,
+   "pool_key": "peers/v1/ENEL_IM_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "ENLAY_US_Equity",
+   "sha256": "3d3e5475482886c3e310242ea97646a4b792a979b028889b1f83daf6c668b022",
+   "size": 9295,
+   "pool_key": "peers/v1/ENLAY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "ES_US_Equity",
+   "sha256": "b05e3d8c4f7ddf7ccc17a75c670c52f53c86c6da98af53de4faebead36b9dd8f",
+   "size": 47825,
+   "pool_key": "peers/v1/ES_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "ETR_US_Equity",
+   "sha256": "c1e941494364b37bb35e2b8a98ccdea700c3f7e506ef85154fea8274de3fb4f2",
+   "size": 47782,
+   "pool_key": "peers/v1/ETR_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "EXPD_US_Equity",
+   "sha256": "efc92b729d59bf7bab16f70e6d50e7edd7b963eae6cd60489dd5270f8f308b6a",
+   "size": 46549,
+   "pool_key": "peers/v1/EXPD_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "FCX_US_Equity",
+   "sha256": "96b98c63a42690fc0b1957d3ac102cdbc436444268d8ab1edd86cab1c2664840",
+   "size": 48043,
+   "pool_key": "peers/v1/FCX_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "FDX_US_Equity",
+   "sha256": "eba6c7dd88517bc310672d268fe0076193aaf03de0343a4885336e9a939ca0f3",
+   "size": 47967,
+   "pool_key": "peers/v1/FDX_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "FER_US_Equity",
+   "sha256": "067b01a162dd104c1b07ed84bdbfd2d9f85088686a0b5916010e1d287431af0e",
+   "size": 9283,
+   "pool_key": "peers/v1/FER_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "FIX_US_Equity",
+   "sha256": "824e9e97d52a24bae4c568aa9531077765ed1ae8471c13f08a972e7569ae24bf",
+   "size": 47995,
+   "pool_key": "peers/v1/FIX_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "FLEX_US_Equity",
+   "sha256": "9e5209c68a8f4f3968f3af8666ce5012029834817c3f52f2958decbdcd316ebb",
+   "size": 47416,
+   "pool_key": "peers/v1/FLEX_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "FTNT_US_Equity",
+   "sha256": "77f56e00f5381a765e57b6c440b284083234281fd653a85efe32f119e31de7ef",
+   "size": 47290,
+   "pool_key": "peers/v1/FTNT_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "F_US_Equity",
+   "sha256": "9fedac9baf119f80afe4f2dae05766cbec6ddf42e347c3103fcd3ac199885c4b",
+   "size": 47154,
+   "pool_key": "peers/v1/F_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "GLW_US_Equity",
+   "sha256": "ec239e1bd7420caf04557cc38ad322b42582709985c320e2258943a372b4b922",
+   "size": 48077,
+   "pool_key": "peers/v1/GLW_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "GL_US_Equity",
+   "sha256": "2c3c78f8fa9f11915ce95a22b3234e150a605c8e9cec35faef0e521ed9eb82e0",
+   "size": 46820,
+   "pool_key": "peers/v1/GL_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "GM_US_Equity",
+   "sha256": "47bbb29ce86dbfdcb88698e0cfebfb04b87e7ec76c740d34c2a74ac9a54bc165",
+   "size": 47119,
+   "pool_key": "peers/v1/GM_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "GOOGL_US_Equity",
+   "sha256": "8e82bf383fd171e0ef3a42ddb8372aa699434e76d95c9e8dd9f3c8feb8cc439c",
+   "size": 39309,
+   "pool_key": "peers/v1/GOOGL_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 9
+  },
+  {
+   "security_key": "GOOG_US_Equity",
+   "sha256": "371341bb5a91188d53cb8b3a002f5d04c63565281789636a1dffa611bdfaa19b",
+   "size": 39307,
+   "pool_key": "peers/v1/GOOG_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 9
+  },
+  {
+   "security_key": "GSK_US_Equity",
+   "sha256": "bb3ca48ccfbe2fa315039138c4522251a9ec9205e5fe646c90b40f5fd41eb884",
+   "size": 9283,
+   "pool_key": "peers/v1/GSK_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "GS_US_Equity",
+   "sha256": "be4688c8398fdc71d60c39ea00efc5e0d836564b8e8f77338f1c75a2cc769300",
+   "size": 47772,
+   "pool_key": "peers/v1/GS_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "HAL_US_Equity",
+   "sha256": "ad1f77c6b9cbf1f1df937caad623e0c43f851fa1b74d7179a1de26ba5aee538c",
+   "size": 47500,
+   "pool_key": "peers/v1/HAL_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "HD_US_Equity",
+   "sha256": "b286628e2365af8e482124a3239316479d0d39941056021b3cf0c2fc42bcca2a",
+   "size": 47013,
+   "pool_key": "peers/v1/HD_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "HESAY_US_Equity",
+   "sha256": "c0a50e0e24d5bd8ba9396a1b2008346f2db5ebb1c88ec71290bef882f34e2c63",
+   "size": 9295,
+   "pool_key": "peers/v1/HESAY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "HSBA_LN_Equity",
+   "sha256": "a7eae649fe9ca5cefcd22dd89b7a0229075d50eae4756ffcd599c4b78064b4db",
+   "size": 46552,
+   "pool_key": "peers/v1/HSBA_LN_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "HSBC_US_Equity",
+   "sha256": "03ff67d2982c2d98bc049a345a743bcfaff1601a51e7a9f72a80d0898ac0e0d2",
+   "size": 9289,
+   "pool_key": "peers/v1/HSBC_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "HSY_US_Equity",
+   "sha256": "65e1e1a374b05ff342135180592604131896b081d6bdbe8c430d87db7aa8227f",
+   "size": 48067,
+   "pool_key": "peers/v1/HSY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "HWM_US_Equity",
+   "sha256": "0ae44ad8bee04f5eb56816f010317d2325ec5a669563ef92240712bd9b56fe74",
+   "size": 48075,
+   "pool_key": "peers/v1/HWM_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "IBDRY_US_Equity",
+   "sha256": "df3662a7e7fe161d059f77c0dc442b99c1bbb6e49b25e237e97abc4b686e8a7e",
+   "size": 9295,
+   "pool_key": "peers/v1/IBDRY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "IBN_US_Equity",
+   "sha256": "514660e1937f9549701920c708ae50dbc83a39a6b4e05dd59f8466f4f5635cb0",
+   "size": 9283,
+   "pool_key": "peers/v1/IBN_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "ICICIBC_IN_Equity",
+   "sha256": "3337e908dfd7b30b69d9ae22a06033d49614c11f98d248bfe1dafe8b6f14175e",
+   "size": 12766,
+   "pool_key": "peers/v1/ICICIBC_IN_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "ICT_US_Equity",
+   "sha256": "d8c37083d4d75c2d8d8af28fbc1994be4f9d14d8662b76396d7b8ef74a038e36",
+   "size": 9283,
+   "pool_key": "peers/v1/ICT_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "IDXX_US_Equity",
+   "sha256": "965709174d2a8fe8387713c6d6b13ee6d190c3b02a19a50c27bcee59dfb86af4",
+   "size": 47151,
+   "pool_key": "peers/v1/IDXX_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "IMBBY_US_Equity",
+   "sha256": "f4e0021dafe069bd2a80e758ec504de6801949e970cfe836727011212e408f55",
+   "size": 9295,
+   "pool_key": "peers/v1/IMBBY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "IMB_LN_Equity",
+   "sha256": "f2aede87b5caef28881214786d98d815cb0f5f55dc304798611a5d2656481c22",
+   "size": 46681,
+   "pool_key": "peers/v1/IMB_LN_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "INCY_US_Equity",
+   "sha256": "52b5bd56c8e1aa8929e5e2de909329c45dc9385f851b041f9bf510a7d3c280d6",
+   "size": 46211,
+   "pool_key": "peers/v1/INCY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "INTC_US_Equity",
+   "sha256": "f97a2fe65953a78237145e38940d04943c08a87d22ede335ba1535ec078dbed5",
+   "size": 47983,
+   "pool_key": "peers/v1/INTC_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "INTU_US_Equity",
+   "sha256": "c71eecd629e689b18f5b5d94bc2d7d26d27f2874684cd2a9f399eda8a80fcf0d",
+   "size": 47156,
+   "pool_key": "peers/v1/INTU_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "ISNPY_US_Equity",
+   "sha256": "354a3ce615f68af0e0ebff010dedadf8465967b3211b786bc24ea48b38553449",
+   "size": 9295,
+   "pool_key": "peers/v1/ISNPY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "ISRG_US_Equity",
+   "sha256": "c9d7bbf58e402c6c370da48c20ff8211d1400d75fde6cb5d0d1fc19d26cc6eed",
+   "size": 47499,
+   "pool_key": "peers/v1/ISRG_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "JBHT_US_Equity",
+   "sha256": "ecb3e0e8db7306d1f7af61821473b782127d15dd9c720212cfa9161a2c8806bc",
+   "size": 46617,
+   "pool_key": "peers/v1/JBHT_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "JNJ_US_Equity",
+   "sha256": "0255a0adb4998b333ee6613a2315c32b64ae0d3c50e4512712f0d477ccb8d559",
+   "size": 47713,
+   "pool_key": "peers/v1/JNJ_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "JPM_US_Equity",
+   "sha256": "658f09473edc1c33adeede0c8b95944e26258aabca66afc571e0d4433cd3c780",
+   "size": 46916,
+   "pool_key": "peers/v1/JPM_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "KCDMY_US_Equity",
+   "sha256": "524c6fed75dc54ea7d7e9fb865bb0627aa1f565a99d6f05c557e2ee7a52ca96d",
+   "size": 9295,
+   "pool_key": "peers/v1/KCDMY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "KEYS_US_Equity",
+   "sha256": "af3f210db20b662278b9604d17d67dd70cc0547a1f8265525d6db6d5914ae12e",
+   "size": 47139,
+   "pool_key": "peers/v1/KEYS_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "KKPNY_US_Equity",
+   "sha256": "27572ce2d94d96a275d2724bcfc240e577d084f8c4f4bcd953d2d942a00b2520",
+   "size": 9295,
+   "pool_key": "peers/v1/KKPNY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "KMB_US_Equity",
+   "sha256": "41317e6340215e9c42573186eb3ee6751dea8df93d7269ee7cb1b771fe1cf104",
+   "size": 47642,
+   "pool_key": "peers/v1/KMB_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "KOF_US_Equity",
+   "sha256": "b2a6e046104f64f17cbba1816c3eade7800a2b4a951cff6c394ac7f16bb3b1d8",
+   "size": 9283,
+   "pool_key": "peers/v1/KOF_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "KO_US_Equity",
+   "sha256": "b4d55e79ad3104b612e925fd547e30ca11efd8486841d80a0058ec4000358dd7",
+   "size": 47911,
+   "pool_key": "peers/v1/KO_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "KPN_NA_Equity",
+   "sha256": "ac8e5b1ea68a716bfd48c873e10e8d974a2677570691376f8ba7748d1b32f313",
+   "size": 47279,
+   "pool_key": "peers/v1/KPN_NA_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "LITE_US_Equity",
+   "sha256": "1c483a53d28f8cefea49e94cb4525c02e37264b081fc50ad21aa3e04af3f924a",
+   "size": 47440,
+   "pool_key": "peers/v1/LITE_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "LLY_US_Equity",
+   "sha256": "b4e1aec51a011b0347d54010caf7c8ada29c920135264174686519869fbcae08",
+   "size": 33870,
+   "pool_key": "peers/v1/LLY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 7
+  },
+  {
+   "security_key": "LMT_US_Equity",
+   "sha256": "96b536965cd5ecfea83630d4c9f9b6eb9fe7340c4e0a9fdb74523b4bdf47297d",
+   "size": 47956,
+   "pool_key": "peers/v1/LMT_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "LRCX_US_Equity",
+   "sha256": "adc6e27bfffbc95272881f15ed77ea999c8e02afd9eef7ed9ef5595a13bb8762",
+   "size": 47993,
+   "pool_key": "peers/v1/LRCX_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "LUV_US_Equity",
+   "sha256": "e31bfbb1c46b0a8b78cedaeb8e1c2f5aa2bfe11670ce4dbd5e4e7352500bbc86",
+   "size": 46528,
+   "pool_key": "peers/v1/LUV_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "MAR_US_Equity",
+   "sha256": "25768ccf29a6a254cc4b9ab792a6114b4bf65fec0af104ab2d8b30678f761344",
+   "size": 46966,
+   "pool_key": "peers/v1/MAR_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "MA_US_Equity",
+   "sha256": "47b70d6c808c57b1f57c2ec984f03a4f704e80cd48869afb7084cfa0ceee6288",
+   "size": 47538,
+   "pool_key": "peers/v1/MA_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "MELI_US_Equity",
+   "sha256": "7ff0fcc3a8acc554ebd654be5b87627e9d8ba61c7c585fe9f02c16789d3015a9",
+   "size": 9289,
+   "pool_key": "peers/v1/MELI_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "META_US_Equity",
+   "sha256": "46cc1e16d0c1063a0f4b5396995343f3a6cbb51c7694ad1fd9cec7e824ea3478",
+   "size": 47732,
+   "pool_key": "peers/v1/META_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "MNST_US_Equity",
+   "sha256": "23cdec690f558a962d6206de8fa832e5cea4e4319de686244c4d74c5f2ea7602",
+   "size": 48099,
+   "pool_key": "peers/v1/MNST_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "MO_US_Equity",
+   "sha256": "fcef3560574a21700677e81c398dc045f7e5ffd7f3b6069af965818d89fb541b",
+   "size": 48101,
+   "pool_key": "peers/v1/MO_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "MPLX_US_Equity",
+   "sha256": "5b1c7f1fdd066d9e1313634a3f01d946ba2f3b8f3545b4ac9a1869c98084c24c",
+   "size": 9289,
+   "pool_key": "peers/v1/MPLX_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "MPWR_US_Equity",
+   "sha256": "10fa5f0c8860f52bdf86166924d19bd270b48105f0c725a7990ecd108c2c33ae",
+   "size": 47435,
+   "pool_key": "peers/v1/MPWR_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "MRK_US_Equity",
+   "sha256": "6f40ae99b5a71b0b2fe3a3bca8078001a857b57acf4fd1fe269892a013f512e5",
+   "size": 47813,
+   "pool_key": "peers/v1/MRK_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "MRVL_US_Equity",
+   "sha256": "a3dd1ba7a87f921d4b3d86b2a8d150c950d9915f78cdcbe66154c86f02e39a1a",
+   "size": 47977,
+   "pool_key": "peers/v1/MRVL_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "MSFT_US_Equity",
+   "sha256": "3d04b059d2d25be4e72facaa256233b64d2b4177f4ea07b411e84e87368ed69b",
+   "size": 47170,
+   "pool_key": "peers/v1/MSFT_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "MU_US_Equity",
+   "sha256": "d7060fcea516f09ec34c07a87d3a3c4ad3f4a45104ec0f36152b901dba1f8d84",
+   "size": 47899,
+   "pool_key": "peers/v1/MU_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "NEE_US_Equity",
+   "sha256": "2652956e962d4e02285b7fd59abd991732693336834c5607106747c6d66ec5a7",
+   "size": 47787,
+   "pool_key": "peers/v1/NEE_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "NEM_US_Equity",
+   "sha256": "b566178cb7ef40b8eb5b6e083873d9a7c0159f736c04410e59cb11ffc0c43e7a",
+   "size": 48055,
+   "pool_key": "peers/v1/NEM_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "NFLX_US_Equity",
+   "sha256": "7a33b2622adadff72ac394f9d35f12ae275a6f8e07e05ea9e8813d8aebe6441f",
+   "size": 47394,
+   "pool_key": "peers/v1/NFLX_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "NG/_LN_Equity",
+   "sha256": "dc415b55b64f1fd29b3aa7d3eb36b51c53fa39564fe58bae423439ea30515cee",
+   "size": 47039,
+   "pool_key": "peers/v1/NG/_LN_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "NOK_US_Equity",
+   "sha256": "643fca0f0c912693efcfa4cbbc60f1650e61fd72e6e5e0baa9999e41e78bc9dd",
+   "size": 9283,
+   "pool_key": "peers/v1/NOK_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "NOVN_SW_Equity",
+   "sha256": "c6922fbeedde10478a96b435c1126f5bc02338d6fd7e7503d757e5db0492bf6b",
+   "size": 47097,
+   "pool_key": "peers/v1/NOVN_SW_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "NOW_US_Equity",
+   "sha256": "7bc0b51dd447217167cf8f7387f7785b7bdbda1a9bece2aa8da1eb07b362cc2c",
+   "size": 47265,
+   "pool_key": "peers/v1/NOW_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "NSRGY_US_Equity",
+   "sha256": "53f3aea07d24c5bc5fa9f1a76d9596d5883c26361d5285ef9cb19e62e854f771",
+   "size": 9295,
+   "pool_key": "peers/v1/NSRGY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "NTRS_US_Equity",
+   "sha256": "61dc9499f28cb988bd26a64f3cceb2b27da16d888a35ec0250614b27f2d6266e",
+   "size": 47338,
+   "pool_key": "peers/v1/NTRS_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "NU_US_Equity",
+   "sha256": "2bc080f411371f5959991ee72d3245f3eb4c1bcc9ed34d5cc643208010a812f3",
+   "size": 45157,
+   "pool_key": "peers/v1/NU_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "NVDA_US_Equity",
+   "sha256": "144c89a9a30213e419133c83bae1928b0e501ad645de1f4b966093ae317bd4a9",
+   "size": 34042,
+   "pool_key": "peers/v1/NVDA_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 7
+  },
+  {
+   "security_key": "OMAB_US_Equity",
+   "sha256": "e7f58fe89c3632e5a92d884bd385a21b1ecdd6cfbff8a384eaa9c4d9545c7548",
+   "size": 9289,
+   "pool_key": "peers/v1/OMAB_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "ORANY_US_Equity",
+   "sha256": "4b2a6152ff1e423600f6d497ad6a5ee0d4a393e0075dc395e9e3a2a79f4e30af",
+   "size": 9295,
+   "pool_key": "peers/v1/ORANY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "PBR_US_Equity",
+   "sha256": "5c60f40deba0f5cfa197cffc8acd026db71fa3fbb36860549e6d35388d4f62e8",
+   "size": 46310,
+   "pool_key": "peers/v1/PBR_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "PCG_US_Equity",
+   "sha256": "24174fd3cdb5458840903bdda8c73688bc905aca883788a8c1b65414dd612634",
+   "size": 47775,
+   "pool_key": "peers/v1/PCG_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "PLTR_US_Equity",
+   "sha256": "782dc1d76009b7b43d39d82156b3ea4ac49486be4dac062b48a26a78c44c512a",
+   "size": 28902,
+   "pool_key": "peers/v1/PLTR_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 5
+  },
+  {
+   "security_key": "PM_US_Equity",
+   "sha256": "ca030cf343c92e7e275a97697f3ff97ac9742f8baf752926da895d6c42845ad7",
+   "size": 47950,
+   "pool_key": "peers/v1/PM_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "QCOM_US_Equity",
+   "sha256": "cec05d196cfaeb809042a2b219c3236c9991a77c7b248fb265fca95ea1d5ae33",
+   "size": 47875,
+   "pool_key": "peers/v1/QCOM_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "QXO_US_Equity",
+   "sha256": "b27ef8dbff0b3157b57f3272accaf390e219da91582bef2abb8a1205b0b1749e",
+   "size": 46606,
+   "pool_key": "peers/v1/QXO_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "RBGLD_US_Equity",
+   "sha256": "a1810ee5af40051866ac317c90f3385895611b3148c19775e703aeb8275840e3",
+   "size": 9295,
+   "pool_key": "peers/v1/RBGLD_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "REGN_US_Equity",
+   "sha256": "63a5433fba6c7041fa5c022774e7541dca5ec54b0f3f6d59520bf1e90e4957da",
+   "size": 46611,
+   "pool_key": "peers/v1/REGN_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "RHHBY_US_Equity",
+   "sha256": "82b7d3b47a3dfa91fdd926d49da3e089aebd65adc18b041a4095bb7d313047d2",
+   "size": 9295,
+   "pool_key": "peers/v1/RHHBY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "RIO_US_Equity",
+   "sha256": "c1348f90f16b431d426641039386e6bb9d1224b23babffc2f62f18bab8754639",
+   "size": 9283,
+   "pool_key": "peers/v1/RIO_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "RKT_LN_Equity",
+   "sha256": "2bbf1a28d2432fab571a0414e4204cbcb831bb54eb21dd6f89f3e9ecdcce4a8a",
+   "size": 46615,
+   "pool_key": "peers/v1/RKT_LN_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "RMS_FP_Equity",
+   "sha256": "53c80b270ff2f71dc83155a6bffb72bf85e321085616fe1d98d8e07fa6ab7e19",
+   "size": 46763,
+   "pool_key": "peers/v1/RMS_FP_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "ROG_SW_Equity",
+   "sha256": "e1551f0b19baf258ca3134a7511a72585c9f84cf377e8de5f1cd3f93f628d705",
+   "size": 47459,
+   "pool_key": "peers/v1/ROG_SW_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "ROST_US_Equity",
+   "sha256": "fcb16235e13040774665c436bb204854be21f54543b18061d3c56a12e20bdcbe",
+   "size": 47517,
+   "pool_key": "peers/v1/ROST_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "RTX_US_Equity",
+   "sha256": "34846522db272b1dfd2d3e35b7a1c0f547cc24a96afdab47bce9bb356dd7976d",
+   "size": 47617,
+   "pool_key": "peers/v1/RTX_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "RWE_GR_Equity",
+   "sha256": "c852ed0a5ad3620938065118141aa4aa23f7c3ae67619f124f24d8b6b6a0dc1d",
+   "size": 46982,
+   "pool_key": "peers/v1/RWE_GR_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "SAP_GY_Equity",
+   "sha256": "63c528a25d31820820f7143984a7ac3eef6d34f8b43adb569dd39f8dd738d6a1",
+   "size": 47285,
+   "pool_key": "peers/v1/SAP_GY_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "SCHW_US_Equity",
+   "sha256": "b8a6d40dda5afb33f1b8497af01112c9bcaef481283b8864e19305163e282a77",
+   "size": 47757,
+   "pool_key": "peers/v1/SCHW_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "SNDK_US_Equity",
+   "sha256": "c5dcc6421494702525a960de41a45530cd5eea0b1ad232396fd10772d070bfd6",
+   "size": 47366,
+   "pool_key": "peers/v1/SNDK_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "SNY_US_Equity",
+   "sha256": "bd2839dc95978e652d9cac8dcc482f4e4ff5f41a20d0d52be7bf2dac6f00aa57",
+   "size": 9283,
+   "pool_key": "peers/v1/SNY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "SPOT_US_Equity",
+   "sha256": "5f9a06c932acf754b99b45e7b63ee1ca4afdf72fd20e54d1a8642b8d4ea8f918",
+   "size": 47219,
+   "pool_key": "peers/v1/SPOT_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "SSE_LN_Equity",
+   "sha256": "03c8fd065a2d34a8ab77e36d6c15374fb0a92356612eef4f8aeb83712c17a02f",
+   "size": 45843,
+   "pool_key": "peers/v1/SSE_LN_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "STLD_US_Equity",
+   "sha256": "58914920492f665ddaacaa9a90d21f0a331df55b7fccd98853b95195d09660a7",
+   "size": 47786,
+   "pool_key": "peers/v1/STLD_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "STT_US_Equity",
+   "sha256": "5f7f0c8f16d4ae39351e0700eb096d6f934f28fb11715df4170c8f653bd23249",
+   "size": 47410,
+   "pool_key": "peers/v1/STT_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "STX_US_Equity",
+   "sha256": "ceb0d8dfdf8bc16964d32cb5324a73cbacb7258013da43570e396afe6f7c1e94",
+   "size": 47373,
+   "pool_key": "peers/v1/STX_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "ST_SP_Equity",
+   "sha256": "588b059f31b6a92e57fa04054097894c2f1b16e8397774f3690f3da203ab3e6c",
+   "size": 46494,
+   "pool_key": "peers/v1/ST_SP_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "TJX_US_Equity",
+   "sha256": "76b7e5defba433a211b4ad9b673ded7f60fc6b9ccc769a406f0b450f5e304761",
+   "size": 47817,
+   "pool_key": "peers/v1/TJX_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "TKOMY_US_Equity",
+   "sha256": "36a73237dc88c0b9947bdb80e7c58448bccb4ab37bb9d91d24458c03194f514a",
+   "size": 9295,
+   "pool_key": "peers/v1/TKOMY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "TRV_US_Equity",
+   "sha256": "cfa6e9cc0f378554e794f4a32222eebc3cf9440d954da94ea5b1f7bb202145df",
+   "size": 47307,
+   "pool_key": "peers/v1/TRV_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "TSLA_US_Equity",
+   "sha256": "310aba579763e519e2d2de7e0fe8903a46262de9e6aebe246179d2dc3b897fce",
+   "size": 24468,
+   "pool_key": "peers/v1/TSLA_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 4
+  },
+  {
+   "security_key": "TSM_US_Equity",
+   "sha256": "03d6c1c393ce0bc66b660219138d4df8e3d93ef7311fcb4ef214ea6dc2f6ddaa",
+   "size": 9283,
+   "pool_key": "peers/v1/TSM_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "TTE_US_Equity",
+   "sha256": "29fa81f5c5041a1527ec60074c1759cc5ca75db0d931a1e6970d51a347fc79f5",
+   "size": 9283,
+   "pool_key": "peers/v1/TTE_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "TXN_US_Equity",
+   "sha256": "a0608861a6b6bf358cdd2a028a27bef2781a0b0c7f2a45cb4348e203151cc0de",
+   "size": 47936,
+   "pool_key": "peers/v1/TXN_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "T_US_Equity",
+   "sha256": "b72734d69e3821ca1d6b648022a4f8fa72b0238b707cb815d6a5ecb4a48cf760",
+   "size": 46477,
+   "pool_key": "peers/v1/T_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "UAL_US_Equity",
+   "sha256": "693a0607f45a29b5b679931209febd6b9b54c60260fa93878dbcb9dd5c8dee41",
+   "size": 47807,
+   "pool_key": "peers/v1/UAL_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "UBER_US_Equity",
+   "sha256": "f86e47d75a994bcd426bb44402011e7e451a7f9193210fb125e272e22450ed4b",
+   "size": 47958,
+   "pool_key": "peers/v1/UBER_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "UBS_US_Equity",
+   "sha256": "48a958a7cc830733d61e48bc52eb848b5a296e1afa12f82991074ed21ee75964",
+   "size": 9283,
+   "pool_key": "peers/v1/UBS_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "ULVR_LN_Equity",
+   "sha256": "52154706bbc7d607a0b594a5a0f8b5dfca93894d12feee4241f58014005155ee",
+   "size": 46538,
+   "pool_key": "peers/v1/ULVR_LN_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "UL_US_Equity",
+   "sha256": "d5c55f44cd0a57ce422d36e53b56d6d59d0d751c48ac33d60425bf715575e169",
+   "size": 9277,
+   "pool_key": "peers/v1/UL_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "UNH_US_Equity",
+   "sha256": "08ae87fadf863945e458a5c58000fe0e3bedbb47a03feb9cb0f760c8e1ad769f",
+   "size": 47708,
+   "pool_key": "peers/v1/UNH_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "UNP_US_Equity",
+   "sha256": "6735a8ef5a38f2f9250c0de480b45207cfa376908cfdfd6dd805a2db36fc3b57",
+   "size": 47894,
+   "pool_key": "peers/v1/UNP_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "UNVGY_US_Equity",
+   "sha256": "88d607c459db229c882c36b243e696fffdcd40aeb8f7807e536dd53311ff76b7",
+   "size": 9295,
+   "pool_key": "peers/v1/UNVGY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "UPS_US_Equity",
+   "sha256": "d65c8db52bc9c901aab0df529563aaab4ff1739834f258ac5d1c027808bf74b2",
+   "size": 47896,
+   "pool_key": "peers/v1/UPS_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "VIV_US_Equity",
+   "sha256": "964374454d7d3a42404988b346e4d9540936d19b1dc5e2369e23b2adbb1ec8f1",
+   "size": 9283,
+   "pool_key": "peers/v1/VIV_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "VLO_US_Equity",
+   "sha256": "7eb6d84bcab0b24d3c5c5fa2f22d0f1299098c5bca8c797813f3d38c09da9f1d",
+   "size": 47651,
+   "pool_key": "peers/v1/VLO_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "VZ_US_Equity",
+   "sha256": "0dc0eb6a29021004b767c0385079c546ce69304faace5d142d1c593fb7ab3365",
+   "size": 46463,
+   "pool_key": "peers/v1/VZ_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "V_US_Equity",
+   "sha256": "f243e4cb9caa6ea575507119860fd392b61237eb3f83e45b4082bb43233204e5",
+   "size": 47542,
+   "pool_key": "peers/v1/V_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "WALMEX*_MM_Equity",
+   "sha256": "14af92a570b187c23e0017d2912341a67f6d06852974e933bee6aacd5c09333f",
+   "size": 47743,
+   "pool_key": "peers/v1/WALMEX*_MM_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "WDAY_US_Equity",
+   "sha256": "389960a8975f9d1f89a69b5f30b97851f320889cd177fd5aa558fa9e721c4f4b",
+   "size": 46568,
+   "pool_key": "peers/v1/WDAY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "WDC_US_Equity",
+   "sha256": "0cb26d657622a45b7241543658cb790accb6e328d31a48540e458c5f00a6801a",
+   "size": 47200,
+   "pool_key": "peers/v1/WDC_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "WMMVY_US_Equity",
+   "sha256": "be16e8af13b0794b55a08541a544fdf2afe5df63b0c53c40b7953bb29759b491",
+   "size": 9295,
+   "pool_key": "peers/v1/WMMVY_US_Equity/2026-09-24T0310Z.json",
+   "basis": "absent",
+   "members": 0
+  },
+  {
+   "security_key": "WM_US_Equity",
+   "sha256": "64580304d31d584e9bcbe36297be4afeba20d56f41e9b1bbde0e52bd48f1e518",
+   "size": 47362,
+   "pool_key": "peers/v1/WM_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  },
+  {
+   "security_key": "XOM_US_Equity",
+   "sha256": "3f84da1d4ca2b48488c5fea609d510d55b07ab153039f91294670c49f19fb667",
+   "size": 41340,
+   "pool_key": "peers/v1/XOM_US_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 10
+  },
+  {
+   "security_key": "ZURN_SW_Equity",
+   "sha256": "5cf6e00a8f425fd50cf3ee05597a73004b192e89a28b4d175350935cdb7e5208",
+   "size": 46026,
+   "pool_key": "peers/v1/ZURN_SW_Equity/2026-09-24T0310Z.json",
+   "basis": "derived",
+   "members": 12
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+{
+  "recorded_at": "2026-09-24T02:29:46.838197+00:00",
+  "browser_connector_available": false,
+  "localhost_cdp": {
+    "9222": "unreachable: URLError",
+    "9223": "unreachable: URLError"
+  },
+  "permitted_admin_and_Dev_identity_available_to_seat": false,
+  "authenticated_live_trace": "NOT_EVALUATED",
+  "credentials_requested": false
+}

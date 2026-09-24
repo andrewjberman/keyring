@@ -1,0 +1,112 @@
+{
+  "started_at": "2026-09-24T05:23:04.469Z",
+  "base": "https://d2n2nzpeqf34ge.cloudfront.net",
+  "expired_token": {
+    "present": true,
+    "exp": 1790227163,
+    "now": 1790227386,
+    "expired": true
+  },
+  "proactive": [
+    {
+      "at": "2026-09-24T05:23:08.256Z",
+      "phase": "proactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/refresh",
+      "status": 200
+    },
+    {
+      "at": "2026-09-24T05:23:08.396Z",
+      "phase": "proactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/me",
+      "status": 200
+    },
+    {
+      "at": "2026-09-24T05:23:13.066Z",
+      "phase": "proactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/watchlist",
+      "status": 200
+    },
+    {
+      "at": "2026-09-24T05:23:14.027Z",
+      "phase": "proactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/lead-panel/rankings/trending/chatter",
+      "status": 200
+    },
+    {
+      "at": "2026-09-24T05:23:14.101Z",
+      "phase": "proactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/security/BA_US_Equity/thesis",
+      "status": 200
+    },
+    {
+      "at": "2026-09-24T05:23:14.138Z",
+      "phase": "proactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/security/BA_US_Equity/overlay",
+      "status": 200
+    },
+    {
+      "at": "2026-09-24T05:23:14.299Z",
+      "phase": "proactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/lead-panel/timeseries/trending/chatter",
+      "status": 200
+    }
+  ],
+  "reactive": {
+    "sequence": [
+      {
+        "at": "2026-09-24T05:23:20.225Z",
+        "phase": "reactive",
+        "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/security/BA_US_Equity/peers",
+        "status": 401
+      },
+      {
+        "at": "2026-09-24T05:23:20.378Z",
+        "phase": "reactive",
+        "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/refresh",
+        "status": 200
+      },
+      {
+        "at": "2026-09-24T05:23:20.610Z",
+        "phase": "reactive",
+        "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/security/BA_US_Equity/peers",
+        "status": 200
+      }
+    ],
+    "console": [
+      {
+        "at": "2026-09-24T05:23:20.226Z",
+        "phase": "reactive",
+        "text": "[api-client] 401 received -- attempting token refresh"
+      }
+    ],
+    "first_401": {
+      "at": "2026-09-24T05:23:20.225Z",
+      "phase": "reactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/security/BA_US_Equity/peers",
+      "status": 401
+    },
+    "refresh_after_401": {
+      "at": "2026-09-24T05:23:20.378Z",
+      "phase": "reactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/refresh",
+      "status": 200
+    },
+    "retried_200": {
+      "at": "2026-09-24T05:23:20.610Z",
+      "phase": "reactive",
+      "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/security/BA_US_Equity/peers",
+      "status": 200
+    },
+    "bearer_after": {
+      "rotated": true,
+      "exp": 1790228300
+    }
+  },
+  "rendered": {
+    "url": "https://d2n2nzpeqf34ge.cloudfront.net/security-analysis/CAT_US_Equity",
+    "on_login": false,
+    "peers_text": "BA US\nidentity crosswalk/v1 @ 2026-09-24\nDERIVED\n12 comparable(s)\nuniverse vintage 2026-08-06\nas of 2026-09-24T0310Z\n\ncomparable = the deepest of four lexicographic rungs the candidate reaches: (1) same SECTOR (scanner UniverseDataRow.sector; a model-block subject's GICS_SECTOR_NAME is mapped into that vocabulary by GICS11_TO_SCANNER13_v1), then (2) a SIZE BAND of 0.2x-5.0x of the subject's market cap (UniverseDataRow.mktVal in USD millions; a model-block subject's CUR_MKT_CAP divided by 1e6), then (3) same COUNTRY (UniverseDataRow.country; CNTRY_OF_DOMICILE mapped by ISO3166A2_TO_SCANNER_COUN",
+    "rows": 17
+  },
+  "finished_at": "2026-09-24T05:23:22.083Z"
+}
