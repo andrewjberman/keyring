@@ -1010,6 +1010,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "Z-S16 accepted a share of a 'three seats, one unmeasured number' chain and characterised Z-S15's subject as an inherited universal resting on no count.",
     "world_is": "No such chain existed. The number was measured by the gate's own resolver from the start, and the three seats differed only in which instrument they read: the resolver, the frozen disposition field, and the frozen hazard_standing field. The single real defect in the whole sequence is that the UNIT went unstated, which let a right number be inherited three times and then wrongly convicted twice.",
     "notes": "THE RECURSION ENDS HERE, deliberately. Four rows now cover one question (Z-S15 measured the fields, Z-S16 corrected a universal inside it, Z-S17 withdrew its headline, this row closes the characterisation), every superseded row stands unedited, and the chain is reconstructible. A fifth row would correct prose rather than a fact. THE DURABLE OUTPUT IS ONE SENTENCE: a disagreement about a number is FIRST a question about UNITS -- before contradicting a peer's count, ask which instrument produced it and run THAT one, because two right numbers in different units look exactly like one right and one wrong, and whoever censuses second gets to call the other wrong. The adopted reporting form is 3.0.0_SA_CVO~Z's: '0 non-terminal by _latest_dispositions; N rows still read UNDER_INVESTIGATION in their own frozen fields.' Round 4's grade and round 5's ZERO remainder were never touched by any layer of this."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S19",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-24T11:05:00Z",
+    "one_line": "The pool universe object misspells Halliburton as 'Haliburton' (one l), so any consumer that derives a TEXT alias from the universe's own `name` column gets an alias that can never match an article. Found while building 2b's securities list off universe/v1/2026-09-16.json; the hand-curated six-name file earlier rounds used carries the correct spelling, which is the only reason the two disagreed and the only reason anyone looked.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/universe/v1/2026-09-16.json, 250 names, entry HAL_US_Equity carries name 'Haliburton HAL US' -- read this session by 2.0.0_SA_COO~Y, one GET, no vendor call",
+        "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~4/securities.json (the hand-written six-name file HVST-h-4/h-5 built gold from) carries aliases ['Halliburton'] for the same security_key",
+        "CONTROL, and it is what makes this a source-data fact rather than a derivation defect: of the six hand-curated names, FOUR reproduce exactly from the universe (BA -> 'Boeing', COST -> 'Costco', HD -> 'Home Depot', 992_HK -> 'Lenovo'). The two that do not are HAL (this misspelling) and VLO (universe carries the legal name 'Valero Energy', the curated file the short common name 'Valero')",
+        "BLAST RADIUS, measured rather than asserted: HAL_US_Equity has 0 mention rows in the 2026-09-24 article_security_mention build (263 rows, 55 securities) and 0 article days in the chatter_daily build, so nothing published today rests on it. It is an EXPOSURE, not an incident -- a name that cannot match is indistinguishable from a name nothing was written about, which is exactly the confusion the coverage grade exists to prevent"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The pool universe object is the AMGT universe's identity carrier, and its `name` column is the only company-name text any downstream consumer has -- the object carries no alias, company or display-name column beside it.",
+    "world_is": "At least one of the 250 names is misspelled in that column. A word-bounded matcher built on it fails SILENTLY for that name: it returns zero mentions, which reads identically to a name that genuinely had no coverage. No gate fires, no count looks wrong, and the only detector available today is disagreement with a hand-written file that will not exist for the other 185 names.",
+    "notes": "NOT REMEDIATED HERE and deliberately so: the universe object is written by the identity crosswalk producer, not by this lane, and hand-patching one name in a derived consumer would hide the defect rather than fix it (a field written to a derived artifact survives only until something regenerates it). ROUTED as an observation to whoever owns universe/v1 generation. WHAT THIS LANE DID INSTEAD: stated the two curated-vs-derived misses in lib/research/harvest/tests/test_universe_securities.py as asserted facts in the shape the universe actually carries, so a later correction to either shows up as a test change rather than as silent drift. THE KEEPABLE FORM: a name-matching pipeline's recall is bounded by the spelling of its name column, and nothing downstream of it can tell a misspelled name from a quiet one -- the only cheap detector is a second, independently authored list to disagree with, and that detector disappears the moment the curated list stops being maintained."
   }
 ]
 ```
