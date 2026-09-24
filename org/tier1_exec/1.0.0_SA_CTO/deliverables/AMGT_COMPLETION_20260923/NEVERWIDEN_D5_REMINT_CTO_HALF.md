@@ -110,3 +110,27 @@ after the drain** -- the acceptance above was measured on the branch and transfe
 `0.0.0_AB_MSTR~Z`'s drain.** ⛔ **Until that byte-identity holds, this signature is not in force** -- the remedy
 is on a branch, and R-51's precondition (2) is the precedent: the acceptance transfers because the artifact is
 identical, and that is measured rather than assumed. The COO half remains `2.0.0_SA_COO~X`'s to write.
+
+---
+
+## ⭐⭐ BINDING SATISFIED -- **THIS SIGNATURE IS IN FORCE** (stamped 2026-09-24 ~12:0xZ)
+
+`0.0.0_AB_MSTR~Z` drained `closer/amgt-peers-z-20260924`. **The condition above is MEASURED, with both controls:**
+
+| test | result |
+|---|---|
+| `a2b84a1b2a` ancestor-of HEAD | **YES** |
+| **NEGATIVE CONTROL** -- reverse direction | **NO** -> the predicate discriminates, so the YES is an answer |
+| `crosswalk.py` @ `a2b84a1b2a` | **51,725 B, sha256 `200ec514c15a4a538ac17381`** |
+| `crosswalk.py` @ **HEAD** | **51,725 B, sha256 `200ec514c15a4a538ac17381`** -- **BYTE-IDENTICAL** |
+| **NEGATIVE CONTROL** -- pre-remedy `842071008b` | **49,762 B, `0bb2b7cdfc7edea69f702231`** -- **DIFFERS** |
+
+⭐ **So the acceptance `2.0.0_SA_COO~Z` measured on the branch (records 274 -> 254, UNRESOLVED 60 -> 40, MEASURED
+214 unchanged, multi-claimed 20 -> 0, 97 of 97 tests) transfers to CLOUD because the artifact is identical** --
+and the pre-remedy control proves the comparison can tell them apart. **A merge is measured to have preserved
+content, never assumed to (R-51's method, applied here to this seat's own binding).**
+
+⛔ **EVERYTHING ELSE IN THIS HALF IS UNCHANGED AND STILL BINDS** -- the before-state is still re-measured by the
+actor immediately before the act (R-53), a different `latest_version_id` at act time still re-opens this half, and
+the rollback triggers (`MEASURED` < 214, `records` != 254, any multi-claimed form remaining) stand as written.
+**IN FORCE does not mean unconditional.**

@@ -253,6 +253,72 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-62 -- ⚠⚠ **"ANDREW CALLED A BREAK" IS IN ANOTHER SEAT'S STATUS LINE. SURFACED, AND DELIBERATELY NOT ADJUDICATED IN EITHER DIRECTION.** The chain head is LIVE, and R-60's Teams item is sharpened: the empty body is a READER property
+
+Three items from one roster read and one blocker message. **Two of them constrain this seat rather than inform it.**
+
+### (1) THE CHAIN HEAD IS LIVE AND WORKING -- MEASURED, NOT ASSUMED
+
+`0.0.0_AB_MSTR~Z`: **LIVE, last seen 6s ago, PID 17028**, *"restart gated on a proper `/integrate` across
+ajb_workspace + portal -- measuring both fresh now."* ⭐ **So the drain that puts CTO half #2 in force is behind a
+live seat's in-flight act, not behind a dead one.** No spawn is warranted and none is made. ⚠ **Instrument named,
+per R-22a's roster caveat: this is the BROKER liveness limb at a 6-second vintage, beside a `Working on` summary
+of its own vintage -- the two are different fields and only the first is fresh.** The `a2b84a1b2a`-vs-HEAD read
+this tick returned **FALSE in BOTH directions**, i.e. **DIVERGENT rather than un-drained**, which is the expected
+shape for a branch awaiting a merge and is why half #2's binding correctly does not yet bite.
+
+### ⚠⚠ (2) "ANDREW CALLED A BREAK" -- THE WORD IS SURFACED AND NOT ACTED ON EITHER WAY
+
+That seat's status reads *"Andrew called a break; restart gated on a proper `/integrate`."* ⛔ **This seat does
+NOT read that as a stand-down on this scope, and does NOT read it as irrelevant either.**
+
+**Both moves would be the same violation.** CLAUDE.md: *"NEVER convert Andrew's word to ONE agent into a
+gate/stop on another -- verbatim scope; relay, never adjudicate wider OR narrower; if wider seems plausible,
+ASK."* ⭐ **And `/self-drive`'s Step 4 names "Andrew's stand-down word ON THE SCOPE" as a TERMINAL condition** --
+so whether a break called to the INTEGRATOR about a RESTART is a stand-down on `AMGT_RESAPP` is **exactly the
+question that is his to answer and not this seat's.**
+
+**RULED, narrowly:** the loop continues, **because no stand-down has been given to this seat on this scope** and
+a driver that halted on a second-hand word would be manufacturing the stop `/self-drive` reserves to him. ⛔ **AND
+THE RECORD NOW SHOWS THIS SEAT SAW IT** -- which is the part that matters, because the failure mode here is not
+choosing wrong, it is absorbing a sovereign word silently and letting the loop's continuation look unexamined.
+⚠ **It is written as a CARD-SHAPED observation rather than a ruling on his intent, and it is the fourth item at
+Andrew** beside the Lusha key-rotation fact, the call-4 notification, and publisher access.
+
+### ⭐⭐ (3) R-60's TEAMS ITEM IS SHARPENED, AND THE CORRECTION MATTERS
+
+R-60 recorded *"one Andrew Teams message unserved since 2026-09-23T19:40Z."* `0.0.3_BG_BBGTerminal`'s fuller
+blocker adds the part that changes its meaning:
+
+⛔ **THE BODY READS EMPTY BECAUSE THE READER DOES NOT FETCH IT.** `body.content ""`, `isDeleted false`,
+`messageType "message"`, `eventDetail null` -- *"AN EMPTY BODY ON A NON-DELETED, NON-EVENT MESSAGE IS THE
+INLINE-IMAGE / `hostedContents` CLASS ... a different Graph collection needing its own GET, which these readers
+do not make. SO THE EMPTINESS IS A PROPERTY OF THE READER, NOT OF HIS MESSAGE. It must not be recorded as 'he
+sent nothing'."* ⭐⭐ **That is this estate's own reader-that-cannot-see lesson landing on Andrew's own words, and
+it is the strictest possible case of it.**
+
+⚠ **AND THE ORDINARY RECALL PATH INTO HIS THREAD IS DOWN:** `read_chat_messages` on his chat returns **Graph 500
+twice at 11:4xZ** while `list_chats` and other chats answer fine -- *"the worst chat for that to be true of."*
+
+⭐ **The root cause is measured and no secret is printed:** all three `opalinvest.dev` mcpOAuth records are
+EXPIRED (two at 10:19Z, one 09-22T21:17Z); `read_token()` filters on `expiresAt > now`, returns `None`, and its
+bare `except: return None` swallows every other failure identically. ⛔⛔ **AND THE TWO PLANES DISAGREE, WHICH IS
+THE WHOLE FINDING: the MCP plane is LIVE (`whoami` answers at 11:4xZ) while the FILE plane is STALE, and the
+script reads the FILE -- so process-alive, the arm banner and MCP `whoami` ALL read GREEN while the watch is
+deaf.** ⭐ **Anti-correlated exactly like the orphan-watcher class, one layer out, and found by running a positive
+control on SILENCE rather than accepting it** -- that seat had earlier called the zero-event windows *"the good
+outcome"* and corrected itself.
+
+⭐ **BOUNDED HONESTLY BY ITS AUTHOR, and this seat adopts the bound rather than the headline:** the poll's cursor
+returns 2026-09-23T20:08:35Z, so **there has been NO inbound Teams traffic at all on 09-24** -- *"the blindness
+cost nothing today, but it is why his 09-23 message never woke anyone, and it would cost the next one."* And:
+*"a prior session could have served it and failed to land its memory write, and this seat cannot distinguish
+those two."* ⚠ **So "unserved" is a reading of the RECORD, not a proof, and R-60's phrasing is corrected to that.**
+
+**Nothing was sent to Andrew on Teams by any seat, which is right** -- an outward-facing reply over a blind
+channel would prove nothing, the engine defect owner is `0.5.0_AE_OpalETL~Z` per `TEAMS_DUTY.md`, and the
+credential refresh is an operator act. **No act of this seat's is owed and none is taken.**
+
 ## R-61 -- ⛔⛔⛔ **R-60 UNDER-DIAGNOSED ITS OWN ERROR. I DID NOT MISREAD A COUNT -- I NEVER RAN ONE.** THE "ONE OCCURRENCE" WAS READ OFF THE SIZE OF A PRINTED SLICE, AND THE TRUE COUNT IS 94
 
 `3.0.0_SA_CVO~Z` msg 25465 falsified the finding independently of `0.0.0_AB_MSTR~Z` and ⭐ **explicitly declined
