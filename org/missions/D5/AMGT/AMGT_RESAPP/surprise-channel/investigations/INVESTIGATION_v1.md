@@ -13513,6 +13513,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "`dated` is a boolean flag, not a date. Printing it literally would render 'dated true'. The actual date the list is dated as is `as_of_date`, a field the task order's own prose never names in this sentence despite RankingSet already typing it.",
     "disarm_owner": "N/A -- hazard_standing INERT; the footer text this worker shipped is this cell's own deliverable and any future seat reading the footer's exact wording should read LeadPanel.tsx's sourceFooterContent rather than this cell's prose.",
     "notes": "Not reported as BLOCKING because the task order's own instruction ('expected values READ OFF THE PAYLOAD') gave this worker's harness latitude to define the check against whatever the payload actually carries, which is what leadPanelPattern.harness.cjs's `stale_dated_said`/`source_footer` checks do."
+  },
+  {
+    "id": "AMGT_RESAPP-W138-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~138",
+    "surfaced_at": "2026-09-24T10:35Z",
+    "one_line": "posture.harness.cjs (AC3's own instrument) threw MODULE_NOT_FOUND on '@/ui/components/Controls' before any of its checks ran -- a pre-existing crash from AMGT-rl-8 (LeadPanel.tsx now imports Segmented/PanelFooter), never fixed there because this harness carries no stub for either, unlike tabs.harness.cjs which got the same fix at the rl-8 drain.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "node src/pages/SecurityAnalysis/__harness__/posture.harness.cjs at portal HEAD 1267a67e (the merged rl-8 drain this worker was handed, before any edit) throws 'Error: Cannot find module @/ui/components/Controls' at its own load(), transpiling LeadPanel.tsx:9 -- the same import tabs.harness.cjs's own row AMGT_RESAPP-W137-S1 (above) already named as a break, but posture.harness.cjs's stub table was never extended the way tabs.harness.cjs's was at the rl-8 drain.",
+        "posture.harness.cjs's renderHeader() also rendered the wrong component: LeadPanel's own docstring states its Security-mode branch is dead code once SecurityAnalysis.tsx stops mounting it (AMGT-rl-2) -- the header IdentityHeader/SecurityOverlay.tsx now owns is never reached by rendering LeadPanel, so even after the MODULE_NOT_FOUND was fixed, no_object_arm_absent_explicit and every *:absent_arm_explicit/*:header_line_present check read false (0 of 5 header-dependent checks true) until renderHeader was pointed at IdentityHeader.",
+        "AC3's literal text requires 'posture CHECKS-OK n of n and exit 0' -- this worker's own criterion, not an off-task find -- so fixing it (Controls/PanelFooter/DataTooltip stubs added, renderHeader repointed to IdentityHeader) was in-scope work under Bound 1(2)/Bound 3, not a widening; recorded here for the audit trail since the underlying breakage predates this cell and was silent (AC3 had never been run green against the merged page before this cell)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Fixed within this cell's own <paths> (posture.harness.cjs is inside src/pages/SecurityAnalysis/**): the same three loader stubs tabs.harness.cjs already carries (PanelFooter forwarding content/leftContent, a Segmented stub, DataTooltip for StatTile.tsx) were added, and renderHeader() now renders IdentityHeader (SecurityOverlay.tsx) on the overlay bundle instead of the now-inert LeadPanel Security-mode branch. posture.harness.cjs now reads CHECKS-OK 32 of 32, rc=0 -- verified twice in the same session, byte-identical checks both runs.",
+    "spec_asserts": "AMGT-rl-9 AC3: 'posture CHECKS-OK n of n and exit 0.'",
+    "world_is": "The harness could not even LOAD (MODULE_NOT_FOUND) at the merged page this worker was handed, and its own header-rendering path targeted a component LeadPanel.tsx's own docstring says is dead code post-rl-2. Neither defect is in this worker's own new code; both predate AMGT-rl-9 and were silent because nothing had run this harness green since rl-8 landed.",
+    "disarm_owner": "N/A -- hazard_standing INERT; fixed in this same commit (portal c2b51a468ccca873867e202175cdf6b92ee4ca50).",
+    "notes": "Companion finding to AMGT_RESAPP-W137-S1 (tabs.harness.cjs, same import, fixed at the rl-8 drain per the issuer's notes item 3) -- posture.harness.cjs was the one sibling harness that same fix never reached."
   }
 ]
 ```
