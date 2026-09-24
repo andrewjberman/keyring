@@ -2766,3 +2766,35 @@ function whose factory requires ACTIVE -- three containers (generate, status, th
 of (iii): the client flag (LiveClient's NotYetExercisable lifted for the three operations) on portal candidate 4, cut from DEV
 895752676a after a fetch, F7 / F2 held on the opalinvest.dev HAR; reviewed by the CTO as candidates 1-3; then (iv) the cutover
 plan's inputs.
+
+
+## 2026-09-24 11:4x UTC - Claude CTO batch 43: portal candidate 4 (the client flag for the three Analysis routes) reviewed and LANDED on portal DEV 310b83b8 -- the Analysis backend's (iii) is complete end to end; hops 9 / 10 exercisable signed-in
+
+Instruments: the CTO's own reads in the consolidation worktree at 310b83b8 (ancestry, commits, diff stat, the product hunk,
+tsc, eslint) and of routes.json at P's tree; P's named fail-set diff (100544) taken as the suite instrument; MSTR's receipt
+(100548) and the CTO's own fetch of origin/DEV after the landing.
+
+### IRPT-PORTAL-CANDIDATE-4-LANDED-20260924 (P 100544; the CTO's GO 100546; MSTR 100548)
+irpt-dev-candidate-4-20260924 @310b83b8 from origin/DEV f7a4e47f (MSTR~Z's pull-merge carrying the round-1 DSGN landing
+895752676a): two commits, 5 files +46/-23 -- src/api/endpoints/investor-reporting.ts (+8/-3: the three IR_ROUTE_TABLE rows
+NO-HANDLER-AT-HEAD -> DECLARED under a comment naming the served handlers and route ids; the status value and
+NotYetExercisable KEPT with an empty population) and the four pinning suites re-pinned to the 17-route contract (mvp-upload,
+mvp-selection/owned-history, fe-s-13/routes, fe-s-14/header), none deleted. CTO REVIEW on its own instruments: f7a4e47f and
+895752676a both ancestors; the hunk exactly as described; tsc 0 errors; eslint 0 problems on the five files; routes.json at
+P's backend tree 17 of 17 declared. THE SUITES: the routes suites resolve the contract by a relative path the consolidation
+worktree cannot satisfy and P's nested checkout sat at 7c542fd2 on its own branch, so the CTO did not re-run them; P's
+instrument stands as reported and is recorded as such -- 96 tests / 20 files, base 21 fail, candidate 17 fail, diffed by test
+name: 0 introduced, 4 fixed (the fe-s-13 table arms), the 17 remaining pre-existing and the same set at the base, each named
+(the 12-literal producer-fixtures arm; the request-corpus records for directory/browse and the three flipped routes -- a
+generator act for a later candidate; the F14 AC8 / AC13 / AC14 / AC15 arms; FIELD_MAP's beginningValue / endingValue /
+retainedReport; the authorized directory-browse boundary). GO. MSTR: DEV unchanged since the GO's read, `merge --ff-only
+310b83b8`, the pre-push hook's VALGATE D-1 read the api/endpoints change and printed "no static partner adapters changed --
+PASS (no-op)" (the gate keys on partner adapters; the hunk is the route table), push f7a4e47f..310b83b8, ls-remote
+310b83b835aa5dc3546c51186ca1419e55bf478d; under Andrew's standing consolidation word; rollback = DEV re-pointed to f7a4e47f.
+CTO VERIFICATION on its own fetch: origin/DEV = 310b83b835, the candidate an ancestor. EFFECT: a signed-in user on DEV
+reaches the served request-history and request-read routes from the page, and the upload route answers NOT_READY by name
+until the upload composition exists -- hops 9 and 10 of the Analysis trace are exercisable end to end signed-in; the browser
+act is Andrew's. The Analysis backend's (i) generate, (ii) status and (iii) routes + flag are COMPLETE as worded in batch 28;
+(iv) the cutover plan's inputs is next at P; hop 2 (the upload composition) and hop 6's plan word remain at Andrew's two cards.
+DEV now carries, beyond site Z's AMGT work: candidates 1-4 (display-first rows, the labels pin, hop 11, the Performance
+label, SELECTION_UNSUPPORTED, F1, F5, F3, the three Analysis routes) and the DSGN_IRPTV1 round-1 page.

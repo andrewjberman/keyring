@@ -19,7 +19,9 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (0000000000000000000000) the three Analysis routes SERVED (routes.json 17/17; history GETs on
+CTO review queue, in order: (00000000000000000000000) portal candidate 4 LANDED on DEV 310b83b8 (the client flag; CTO-reviewed,
+ff, VALGATE PASS no-op) -- Analysis (i)/(ii)/(iii) COMPLETE; hops 9/10 exercisable signed-in; (iv) cutover inputs next at P;
+hop 2 + hop 6 at Andrew's cards (batch 43). (0000000000000000000000) the three Analysis routes SERVED (routes.json 17/17; history GETs on
 irpt-status; the upload POST on irpt-ycharts-generate 4fkloyC1 refusing by name; CRO route read corroborates); the X10 pin-by-NAME
 rule made standing after a never-served wrong-pin build; candidate 4 = the client flag, then (iv) (batch 42).
 (000000000000000000000) irpt-status SERVED with the installed assembly (5E8T+/LV, 10:53Z; the two
