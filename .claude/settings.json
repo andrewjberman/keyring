@@ -185,6 +185,17 @@
           }
         ]
       }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/presence-stamp.sh\" || true",
+            "timeout": 5
+          }
+        ]
+      }
     ]
   }
 }
