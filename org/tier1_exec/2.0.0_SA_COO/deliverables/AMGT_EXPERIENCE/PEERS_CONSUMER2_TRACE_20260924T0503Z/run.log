@@ -1,0 +1,8 @@
+2026-09-24T05:03:53.576Z session: {"at":"2026-09-24T05:03:53.575Z","url_after":"https://d2n2nzpeqf34ge.cloudfront.net/security-analysis/BA_US_Equity","token_present":true,"claims":{"role":"admin","userType":"Dev","exp":1790227129,"iss":"opal-portal-auth"},"on_login":false} | failure_case_1: {"auth_calls":[{"at":"2026-09-24T05:03:48.970Z","url":"https://d2n2nzpeqf34ge.cloudfront.net/auth/refresh","status":200},{"at":"2026-09-24T05:03:49.113Z","url":"https://d2n2nzpeqf34ge.cloudfront.net/auth/me","status":200}],"first_401":null,"refresh":{"at":"2026-09-24T05:03:48.970Z","url":"https://d2n2nzpeqf34ge.cloudfront.net/auth/refresh","status":200},"retried_200":null}
+2026-09-24T05:04:03.706Z case BA_US_Equity -> landed; peers rows=17; posture comparable DE_US_Equity
+2026-09-24T05:04:08.901Z case 992_HK_Equity -> landed; peers rows=17; posture comparable none
+2026-09-24T05:04:13.837Z case ASML_US_Equity -> landed; peers ABSENT-basis; posture comparable null
+2026-09-24T05:04:18.861Z case CAT_US_Equity -> landed; peers rows=17; posture comparable null
+2026-09-24T05:04:23.404Z case NOSUCHKEY_ZZ_Equity -> landed; peers ABSENT-basis; posture comparable null
+2026-09-24T05:04:28.333Z case BP/_LN_Equity -> landed; peers rows=null; posture comparable null
+2026-09-24T05:04:28.338Z done

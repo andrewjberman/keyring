@@ -1,114 +1,106 @@
 # AMGT EXPERIENCE + SERVED RUNTIME
 
-Seat `2.0.0_SA_COO~Z` (Claude session from 2026-09-24 02:40Z; the Codex seat's companions were reaped on Andrew's
-word at 02:5xZ, its uncommitted Peers work in this worktree inherited and verified). Thread: Peers B04/P1, mandate
-`AMGT_COMPLETION_20260923/COO_Z_PEERS.md` @`7b26e2ac1c`. Reviewer `3.0.0_SA_CVO~Z`. Andrew 02:5xZ: "You will be
-banging out Peers, get it done."
+Seat `2.0.0_SA_COO~Z` (Claude session from 2026-09-24 04:38Z, successor of the 02:40Z session). Thread: Peers B04/P1,
+mandate `AMGT_COMPLETION_20260923/COO_Z_PEERS.md` @`7b26e2ac1c`. Reviewer `3.0.0_SA_CVO~Z`. Andrew ~04:3xZ (CTO
+record `HANDBACK_TO_CANONICAL_20260924.md` @`ad5c7a75c6`, msg 25253): AMGT_RESAPP returns to canonical rounds with
+this seat named; the closer items in flight finish under their own spec (Rule 27) and are listed below.
 
 ## Pins and write claims
 
-- Worktree `C:/tmp/closer-amgt-peers-z-20260924`, branch `closer/amgt-peers-z-20260924` off CLOUD `7b26e2ac1c`;
-  portal nested worktree on the same branch name off DEV `c1ac41ec`. Shared trunk CLOUD; MSTR owns shared pushes.
-- Source changed on this thread: `lib/research/identity/crosswalk.py` (+schema), `lib/research/peers/engine.py`,
-  `lib/research/peers/universe.py`, two new test files; portal `cscTable.ts`, `PeersTab.tsx`, `types.ts`, harness
-  `__harness__/peersCarry.harness.cjs`. Tests: 109 passed (identity + peers suites); harness PASS on 6 fixture
-  cases and on the real prepared Boeing object, both consumers (Peers, Posture subject + comparable).
+- Worktree `C:/tmp/closer-amgt-peers-z-20260924`, branch `closer/amgt-peers-z-20260924` off CLOUD `7b26e2ac1c`, NOT
+  merged (MSTR's drain); portal nested worktree on the same branch name off DEV `c1ac41ec`. Trunk `CLOUD`; MSTR pushes.
+- Source on this thread: `lib/research/identity/crosswalk.py` (+schema), `lib/research/peers/engine.py`,
+  `lib/research/peers/universe.py`, two test files; portal `cscTable.ts`, `PeersTab.tsx`, `types.ts`, harnesses
+  `__harness__/peersCarry.harness.cjs` and `__harness__/peersReadFailed.harness.cjs`. Identity + peers suites 109
+  passed; both harnesses PASS.
 
-## The four steps
+## The four steps -- DONE, published 03:33Z, route/data layer graded PASS
 
-1. **LIVE THREAD (E0) REACHED on the served stack; P1 today-state MEASURED, pre-publication.** Andrew signed in
-   at 03:12Z (access claims `role=admin`, `userType=Dev`) in a headed Edge driven by `peers_live_trace.cjs`
-   (portal's own playwright-core; the shared Playwright MCP is headless and held by another seat). Evidence:
-   `PEERS_LIVE_TRACE_20260924T0320Z/` (trace.json with every `/api/scoped/amgt` response, run.log, screenshots).
-   `/security-analysis/BA_US_Equity` landed with NO `/market` redirect; Peers tab: identity "BA US",
-   `crosswalk/v1 @ 2026-09-22`, DERIVED, 12 comparable(s), 17 columns; deployed `/peers` 200, basis derived,
-   12 members, `peer_read SERVED`. Rendered column states TODAY: 1 PRESENT_CARRIED (Mkt Cap, n=12),
-   4 PRESENT_NOT_CARRIED, 12 ABSENT (the hop-7 mismatch, live). Posture read subject + comparable; the comparable
-   `DE_US_Equity` came back UNRESOLVED in the 2026-09-22 crosswalk (DE is among the 158 the candidate registers).
-   `992_HK_Equity` derived 12 with the FX caveat; `ASML_US_Equity` UNRESOLVED; `CAT_US_Equity` `peer_read ABSENT`;
-   `NOSUCHKEY_ZZ_Equity` UNRESOLVED (negative control). **FINDING:** `BP/_LN_Equity` requested as
-   `BP%2F_LN_Equity` (the app's own encoding, `PostureTab.tsx:261`) lands on the page but every
-   `/api/scoped/amgt/security/BP%2F_LN_Equity/*` call returns 404 from the gateway: the 10 slash-key objects are
-   unreachable through the served route. Enrichment-list item (route shape; `crosswalk.slash_safe_key` exists),
-   a separate function act. Acceptance credit for P1 waits on the publication and CVO grading.
-2. **ONE KEY SPACE: CANDIDATE READY, NOT PUBLISHED.** Crosswalk takes `universe/v1` (latest, 2026-09-16) as a
-   second registration source; 158 registered, 33 already present, 59 refused with reasons; MEASURED 36 -> 194.
-   Proof on the candidate: `crosswalk.resolve()` over the 191 prior pool keys = **191 MEASURED, 0 refusals**.
-   Ranker fall-through kept; no artifact identity accepted (tests assert both).
-3. **CARRY THE PRESENT COLUMNS: DONE offline.** Producer copies `price`, `ev`, `ey` onto member rows (candidate
-   universe hydrated from the SAME 2026-08-06 scanner vintage, refusing a moved vintage or price); frontend map
-   gains `price`, `ev`, `ey`, `ey_ntm -> factors.ey_ntm` with a nested reader and reciprocal P/E under the R-1
-   `display_label` ("P/E (trailing)", "P/E (NTM)"). Boeing candidate: 5 present codes carried, member
-   denominators 12/12/12/12/12, 12 absent with reasons.
-4. **OWNER + TRIGGER: DONE in code, run ONCE offline.** Batch keys off the current crosswalk's MEASURED set; the
-   candidate batch is 194 keys = crosswalk 194 (EQUAL), derived 145 / absent 49, SHARED-DEFECT ADMIT 0 violations;
-   `6861_JP_Equity` (derived 4), `CAT_US_Equity` (12), `CSL_AU_Equity` (12) gain objects. Trigger, stated: after
-   each `crosswalk/v1` or `universe/v1` re-mint, `python -m lib.research.peers.engine --write-pool --as-of <stamp>`.
-   Owner: this seat.
+1. **Live thread (E0) REACHED** 03:12Z on the served stack under Andrew's admin+Dev identity (no `/market` redirect).
+   Evidence `PEERS_LIVE_TRACE_20260924T0320Z/` (before) and `_0335Z/` (after the act).
+2. **One key space:** `universe/v1` is the second registration source; crosswalk MEASURED 36 -> 194; `resolve()` over
+   the 191 prior pool keys = 191 MEASURED on the live object.
+3. **Present columns carried:** producer copies `price`/`ev`/`ey`; frontend map + NTM-grain P/E. Offline harness PASS;
+   the SERVED bundle still renders "1 column(s) carry" until portal `1ec5446c` deploys (MSTR merge + DEV/PROD).
+4. **Owner + trigger:** batch 194 = crosswalk 194, derived 145 / absent 49; trigger stated; owner this seat.
 
-## The served-output act: PUBLISHED 03:33Z under both halves
+**Act:** both never-widen halves (COO @`4c7d0b2e7c`, CTO @`429efcdf30`), `publish_peers_candidate.py` @`f12263b4e7`,
+`UPLOADED 194 of 194 + 1 crosswalk, read-back 195 of 195`, receipt in `PEERS_CANDIDATE_20260924T0310Z/`.
+**Grade:** CVO @`bb4d36e32c` route/data PASS (R-24); 992_HK member swap CLOSED not-a-defect on arithmetic (R-25).
+**Struck, my error:** "cap vintage carried nowhere on R-1" -- it is `subject.cap_vintage` and it moved. Enrichment (b),
+a member-set digest on R-1, stands. Control rule adopted (R-25b): an untouched case proves non-corruption, a
+regenerated case free to differ proves fidelity; both arms are cited from now on.
 
-COO half `NEVERWIDEN_PEERS_COO_HALF.md` @`4c7d0b2e7c`; CTO half `AMGT_COMPLETION_20260923/NEVERWIDEN_PEERS_CTO_HALF.md`
-@`429efcdf30` (msg 25202) with ONE condition, a head-object on the crosswalk key immediately before the put. Executed
-by `publish_peers_candidate.py` (the exact signed bytes, sha-checked per file; the condition re-run in-process: 404
-with the 2026-09-22 control at 200; peer keys 0 of 194 present). Result `UPLOADED 194 of 194 + 1 crosswalk, read-back
-195 of 195` -- `PEERS_CANDIDATE_20260924T0310Z/PUBLICATION_RECEIPT.json` lists every key (the rollback denominator).
+## Closer items after the hand-back -- what the 04:38Z session measured
 
-**Post-act, measured three ways:**
-- Pool: `crosswalk.load_crosswalk` (no local override) answers from `crosswalk/v1/2026-09-24.json`; `resolve()` over
-  the 191 prior pool keys = **191 MEASURED** (proof obligation 2, on the live object).
-- Deployed function (direct invoke, CodeSha256 unchanged `DEQQiCH...`): `AAPL_US_Equity` derived 10 SERVED with
-  `price/ev/ey` on members; `CAT_US_Equity` derived 12 SERVED; `6861_JP_Equity` derived 4 SERVED; `ASML_US_Equity`
-  SERVED, basis absent, reason "no classification"; `BA_US_Equity` derived 12 with carried fields; negative control
-  UNRESOLVED. No warm-container staleness observed on these reads.
-- Served stack, signed-in re-walk 03:34Z (`PEERS_LIVE_TRACE_20260924T0335Z/`): Boeing, Lenovo, Caterpillar render
-  DERIVED / 12 comparables; ASML renders its absent reason instead of UNRESOLVED; the counts line reads
-  "5 present / 12 absent of 17 declared; **1 column(s) carry**" because the SERVED BUNDLE still carries the old
-  column map -- the 5-column render lands with the portal deploy of `1ec5446c` (MSTR merge + DEV/PROD), not with
-  this act. The API already serves the values.
+### Consumer 2 (Posture) -- EXERCISED on the served stack, every selection, 05:03Z
+`PEERS_CONSUMER2_TRACE_20260924T0503Z/` (driver `peers_consumer2_trace.cjs`, trace.json with every `/api/scoped/amgt`
+response body, run.log, 12 screenshots; token scan clean). Real signed-in session (claims `role=admin`,
+`userType=Dev`), bundle `d2n2nzpeqf34ge`, 109 API responses, statuses {200, 404}; all 10 404s are the slash key.
+Each case: the Peers tab, then the Posture tab, whose `usePeerSet` fires for the subject AND the comparable
+(`PostureTab.tsx:339,347`; both calls observed in the trace):
 
-**CVO grade @`bb4d36e32c` (relayed R-24 @`1f0c18a51a`): route/data layer PASS**; ASML and CAT moved exactly as
-the mandate said, the negative control held. One sentence owed and answered (msg to CTO+CVO ~03:5xZ): 992_HK's
-member swap (BYXXXJ out, B929F4 in) is the ranker's intended output because the SUBJECT cap moved 419,619 ->
-456,118 (the pool's model-block store gained partitions 09-19 and 09-22 after the 09-17 batch; universe unchanged),
-so the 0.2x floor rose above Eoptolink and ASML's log distance fell inside the twelve. CLOSED not-a-defect by the
-CVO on arithmetic (R-25 @`9fd480b74f`): all 11 common members' caps byte-identical and every ratio scaled by one
-factor 419619/456118. **STRUCK, my error:** I wrote the subject cap's vintage "is carried nowhere on R-1"; it IS
-carried at `subject.cap_vintage` and moved 2026-09-16T20:18:16Z -> 2026-09-22T20:12:18Z. I proposed a field
-without querying the payload for it. Standing form adopted: before proposing a field, read the object for it.
-Enrichment (b) stands: a member-set digest on R-1 (an input vintage says an input moved; a digest says the output
-did; either can move without the other). Control rule adopted in the R-25b two-arm form: an untouched case proves
-NON-CORRUPTION, a regenerated case free to differ proves FIDELITY; BA was sound for the first and void for the second. Uncredited by the grade: consumer 2 from local traces, the three failure cases,
-BP%2F 404 formally OPEN as failure case 3.
+| selection | Peers (consumer 1) | Posture (consumer 2) |
+|---|---|---|
+| `BA_US_Equity` | derived / 12 / SERVED; 17 columns, 1 carried (old bundle) | subject peers derived 12; comparable `DE_US_Equity` -> `/peers` 200 basis absent, rendered "identity UNRESOLVED ... it is NOT guessed" (R-23a fork, standing) |
+| `992_HK_Equity` | derived / 12 / SERVED, FX caveat in reason | subject peers derived 12; posture object MACHINEABSENT, comparable none named |
+| `ASML_US_Equity` | basis absent, reason shown, `(read SERVED)` | posture ABSENT (no O-1 object); subject peers read SERVED/absent |
+| `CAT_US_Equity` | derived / 12 / SERVED | posture ABSENT (no O-1 object); subject peers derived 12 |
+| `NOSUCHKEY_ZZ_Equity` | UNRESOLVED, raw string shown, no read | "ABSENT -- identity UNRESOLVED -- no posture was read" (negative control holds on consumer 2) |
+| `BP/_LN_Equity` | "Loading..." -- every route 404 | "Loading..." -- every route 404 (failure case 3) |
 
-**CORRECTION to my 03:22Z handoff:** I wrote that `DE_US_Equity` (Posture's comparable for Boeing) "is among the
-158 the candidate registers". It is NOT: Deere is a scanner MEMBER, never a `universe/v1` subject, so it is in no
-registration source and Posture still reads it UNRESOLVED after the act (browser and direct invoke agree). That
-sentence was inferred, not measured. **OPEN, for the CTO's ruling:** the comparable key space is the scanner
-candidate universe (2,851 rows), wider than the subject key space (194); a Posture comparable outside the 194 is
-unresolvable at the route and the R-1 member identity block says so. Recommendation: register scanner-row tickers
-with an exchange code as a THIRD crosswalk source (same refusal rules), which is the "converge up to the producer"
-direction; alternative: Posture names only comparables inside the crosswalk. Not on the four steps; enrichment list.
+### Failure case 1 -- expired session: EXERCISED, the PROACTIVE arm; the reactive 401 arm NOT reached
+The profile's access token had expired at 03:35:43Z. First navigation at 05:03:48Z: `/auth/refresh` 200 ->
+`/auth/me` 200 -> new token (exp 05:18:49Z) -> `/security-analysis/BA_US_Equity` landed, no `/login` bounce, no 401
+anywhere in 109 responses. `api-client.ts` refreshes BEFORE a request when the token is old (`ensureFreshToken`), so
+the edge never saw the expired bearer and `refreshAndRetry` (the 401 branch) was not exercised. Outcome of the case
+met (an expired session yields the page); the reactive arm is a second run, below.
+**Observation, explained, no row:** `/auth/refresh` + `/auth/me` fired on every navigation, 7 pairs 5 s apart, against
+the 10-minute proactive threshold -- because `tokenIssuedAt` is an in-memory module variable (`api-client.ts:31-35`)
+that resets to 0 on a FULL reload, and this driver hard-navigates per case. Client-side routing does not reset it.
+Driver artefact, not an app defect.
+
+### Failure case 2 -- READ_FAILED must not render as ABSENT: PASS as a TEST RUN
+`portal/src/pages/SecurityAnalysis/__harness__/peersReadFailed.harness.cjs` (actual PeersTab + PostureTab, actual
+react-dom/server): READ_FAILED renders "(read READ_FAILED)" with its incomplete-read reason, ABSENT renders "(read
+ABSENT)", UNRESOLVED renders no read record; the three markups are pairwise different (531 vs 500 bytes); PostureTab
+calls subject then comparable on both. LIMIT: a READ_FAILED cannot be induced on the served stack without breaking a
+permission; whether the deployed route ever emits one is NOT MEASURED.
+
+### Failure case 3 -- `BP/_LN_Equity` 404: LOCALISED to the API Gateway route table, with a discriminating pair
+- The 404 body is `opal-portal-data-proxy`'s "Route not found" (its `/v1/*` list) with `path` already DECODED to
+  `/api/scoped/amgt/security/BP/_LN_Equity/peers` -- the request never reached `opal-amgt-scoped-api`.
+- Direct invoke of the DEPLOYED function (`CodeSha256 DEQQiCH+...`, LastModified 2026-09-23T22:02:35Z): rawPath
+  `.../security/BP/_LN_Equity/peers` -> **200, derived, 12, SERVED**; rawPath `.../BP%2F_LN_Equity/peers` -> **200**;
+  control `BA_US_Equity` -> 200. The handler's AMGT-rk-61 multi-segment branch is deployed and works.
+- Live API `7k3ed8px20` (`opal-portal-data-proxy-api`): 103 routes, 16 scoped-amgt, all eight per-security keys
+  single-segment `{security_key}`, zero greedy under `/api/scoped/amgt`, `$default -> opal-portal-data-proxy`. HTTP API
+  decodes `%2F` before matching, a one-segment parameter cannot match two segments, the request falls to `$default`.
+- **Recommendation to `1.0.0_SA_CTO~Z` (infra, not this seat's file):** add ONE route
+  `GET /api/scoped/amgt/security/{proxy+}` to `scoped_amgt_routes` in `scoped-amgt-api.tf` (precondition 16 -> 17;
+  precedent `ANY /auth/{proxy+}` on the same API; a parameter segment beats greedy, so the eight existing keys keep
+  matching slash-free keys) and the matching 17th entry in `scoped_amgt_route_table()` (this seat's file; the mount
+  test diffs both directions). Zero client change; the `-SLASH-` token alternative is not needed because the handler
+  was built for the literal form. rk-61's AC6 graded the two forms EQUAL-status -- a predicate two 404s satisfy.
 
 ## Dependencies
 
 | Need | Owner | State |
 |---|---|---|
-| Admin + Dev identity signed in on the headed window | Andrew | DONE 03:12Z (profile persists for the post-act re-walk) |
-| CTO never-widen half for the pool publication | `1.0.0_SA_CTO~Z` | SIGNED @`429efcdf30`; act EXECUTED 03:33Z |
-| Live grading of E0 / P1 after the act | `3.0.0_SA_CVO~Z` | DUE: review handoff sent with the two trace folders and the receipt |
+| Live grading of consumer 2 + failure cases 1-2 from the 0503Z trace + harness | `3.0.0_SA_CVO~Z` | DUE: review handoff sent |
+| Greedy route for the slash key (tf) + AE apply; py table entry from this seat in the same drain | `1.0.0_SA_CTO~Z` | OPEN CALL with recommendation |
 | Portal deploy of `1ec5446c` (5 carried columns on the served bundle) | `0.0.0_AB_MSTR~Z` | OPEN: merge to DEV/PROD on Andrew's word |
-| Posture comparable key space (scanner members vs 194 subjects) | `1.0.0_SA_CTO~Z` | OPEN CALL with recommendation (above) |
+| Posture comparable key space (`DE_US_Equity`, scanner members vs 194 subjects) | `4.0.0_SA_CRO~Z` research, CTO decides | OPEN (R-23a) |
+| AMGT_RESAPP L4 addendum for the next round (CRO~Z surface walk -> CTO addendum -> this seat's L5/L6) | `1.0.0_SA_CTO~Z` | IN FLIGHT |
 
 ## Parked
 
-- Induction of the 60 UNRESOLVED backlog names through `add_security` (vendor word given 02:47Z per CRO~Y 25182):
-  a separate act, this seat's, un-parks after the Peers publication lands; not on this thread.
-- Scanner-universe refresh (asOf 2026-08-06, writer unnamed); FX for the band; the 12 absent CSC columns:
-  Andrew's data-source calls. No vendor or Bloomberg call on this thread.
-- B08/Price integration lives on `closer/amgt-experience-z-20260923` (43 commits, not on CLOUD); MSTR's merge.
+- 60-name induction through `add_security`: per the hand-back §3(b) this is the AMGT_CORPUS round's (scripted,
+  deterministic, R-21; V2 authorizes the calls, not a pick). NOT run here; `2.0.0_SA_COO~X`'s round owns it.
+- Scanner-universe refresh (asOf 2026-08-06, writer unnamed); FX for the band; the 12 absent CSC columns: Andrew's
+  data-source calls. B08/Price on `closer/amgt-experience-z-20260923` (MSTR's merge). No vendor call on this thread.
 
 ## Limits
 
-No pool write, deploy, delete, schedule change or shared push performed on this thread yet. Offline PASSes bank no
-acceptance credit until E0 passes on the served stack.
+No deploy, delete, schedule change, vendor call or shared push on this thread. The pool publication is the one write.
+Offline PASSes bank no acceptance credit until graded on the served stack.
