@@ -253,6 +253,60 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-34 -- ⛔ THE GUARD'S FIRST REAL RUN FOUND **37 CONTRACTS** OUTSIDE THE CVO SIGNATURE, AND NONE OF THEM IS MINE
+
+`2.0.0_SA_COO~X` ROUTED the contract-half guard back to this seat as **not its project's cell** -- *"the defect and
+the tool are yours ... one project's loop never writes another surface's fix"* -- with the rec to land it as this
+seat's own mechanism *"with a negative control that re-heads one section and watches it fire."* **Correct, and
+built: `.tools/prd-contract-half-check.py`.**
+
+**IT IMPORTS `half_of_section` RATHER THAN RE-IMPLEMENTING IT** -- a second copy of that rule would be the very
+two-carrier defect the guard exists to catch -- and it separates **DEFINITION** (a line OPENING with a bolded
+`C-` id) from **MENTION**, because a naive grep over `C-` would be useless here: `AMGT_RESAPP` carries **295
+mentions** against **4** defining sections.
+
+⭐ **ITS FAILING ARM IS EXERCISED, NOT ASSUMED.** `--self-test` builds two in-memory fixtures and requires BOTH to
+disagree with each other: a contract under `## B.4` MUST be refused, and the same contract under
+`## CONTRACTS -- B.4` MUST pass while a mention-only section is NOT refused. **A checker whose failing arm was
+never run reads identical to a real pass.** Historical control: the pre-rename vintage `1ffb156ecd` is REFUSED on
+3 RESAPP sections + 1 CORPUS section, and `AMGT_CORPUS` at HEAD now **passes** -- so the instrument discriminates
+across the fix rather than merely agreeing with it.
+
+⛔⛔ **AND ON ITS FIRST RUN AGAINST HEAD IT REFUSED `AMGT_RESAPP` ON TWO SECTIONS THAT PREDATE MY ADDENDUM BY MANY
+VERSIONS:**
+
+| section (first word decides the half) | classifies | DEFINES |
+|---|---|---|
+| `## 3. CONSTRAINTS ON THE CUT` | **brief** | **34 contracts** -- `C-UNIT-MAP-MEASURED`, `C-MODEL-FORECASTS`, `C-VERBATIM-GATE`, **`C-VENDOR-EGRESS`**, `C-SERVER-SIDE-RANKING`, `C-DESIGN-SPEC-FIRST`, ... |
+| `## 10. ADDENDUM v0.11 -- INSTANTIATING A NEW SECURITY` | **brief** | **3** -- `C-INSTANTIATION-ENTRY`, `C-PRODUCTION-HOME`, `C-VALIDATION-NAMES`, each marked *"(new, v0.11)"* |
+
+**These are DEFINITIONS, verified by reading them rather than by counting matches:** the authoritative bolded form,
+several carrying **Andrew-direct authority inline** (`C-MODEL-FORECASTS` quotes his *"I'd use Bloomberg as primary,
+seeking alpha as a fallback"*). The properly-headed `## CONTRACTS -- v0.7 (ratified text; the reviewer is
+`3.0.0_SA_CVO`, always)` classifies ratified and IS bound -- so the PRD has always had both kinds side by side.
+
+⛔ **SO 37 CONTRACTS ON THIS PROJECT, INCLUDING A VENDOR-EGRESS CONTRACT, HAVE NEVER BEEN INSIDE THE BYTES THE CVO
+SIGNATURE BINDS.** My addendum's four were a NEW instance of a defect that was already there at scale.
+
+⭐⭐ **WHY NEITHER REVIEWER FOUND THESE, AND IT IS NOT A CRITICISM -- IT IS A STRUCTURAL LIMIT WORTH NAMING.**
+`3.0.0_SA_CVO~Z` (row `Z-S11`) and `4.0.0_SA_CRO~Z` (first verdict REFUSE) each caught **my four**, independently,
+on the same bytes. Both were reviewing **THE SPAN SINCE THEIR OWN LAST SIGNATURE** -- which is correct review
+practice and is exactly what this estate asks of them. ⛔ **A SPAN-BASED REVIEW IS STRUCTURALLY BLIND TO A DEFECT
+OLDER THAN ITS SPAN.** The 37 were never in anyone's delta, so no amount of care in the delta would surface them.
+**That is what a whole-file guard buys that a diff review cannot, and it is the argument for the guard existing at
+all rather than relying on reviewers.**
+
+⚠ **EXPOSURE OR INCIDENT IS NOT ANSWERED HERE AND IS NOT GUESSED.** The discriminating question is whether any of
+those 37 was ever **AMENDED** while classifying brief -- an amendment that escaped the ratified-half review is a
+different and worse thing than a definition that was merely never bound. **That needs a per-contract history read
+this seat has not done, and it is named as owed rather than assumed either way.**
+
+⛔ **NOT FIXED IN THIS COMMIT, AND THE REASON IS THE SAME AS R-33's: ROUND 37 IS IN FLIGHT AND RULE 27 FREEZES THE
+SPEC MID-ROUND.** Renaming two more headings would move bytes between halves for the third time today and
+invalidate two signatures that have been current for under an hour. **It rides the post-drain edit WITH F2 and F3.**
+⭐ **The guard is committed NOW and unblocked -- it refuses nothing at commit time yet, so landing it costs no seat
+anything, and it is the durable form of the correction rather than a promise to remember.**
+
 ## R-33 -- TWO CORRECTIONS OWED ON `AMGT_RESAPP` v0.26, PARKED NOT APPLIED, BECAUSE ROUND 37 IS IN FLIGHT
 
 `4.0.0_SA_CRO~Z`, stamping the brief half (`e8c94916ef`, review @`0175833900`), raised two items it explicitly
