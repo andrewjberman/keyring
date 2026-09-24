@@ -1,0 +1,127 @@
+{
+ "status": "PREPARED_UNPUBLISHED_MEMBERSHIP_CANDIDATE",
+ "business_date": "2026-09-22",
+ "source_cutoff": "2026-09-23",
+ "source_receipts": [
+  {
+   "bucket": "opal-data-assets",
+   "key": "blackdiamond/cottonwood/silver/fact_allocations/date=2026-09-22/data.parquet",
+   "version_id": "WeqLRnnXcg_R5QpfSy_2fZMVwGn1sOL.",
+   "byte_length": 128660,
+   "sha256": "0fadd50e65c26c202015707e83f7acbf0d57fbb91e76a81932fdd26209486a6f"
+  },
+  {
+   "bucket": "opal-data-assets",
+   "key": "blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+   "version_id": "tGurdOTYhnuidIUgThZYlJxOcaqNTuKl",
+   "byte_length": 457679,
+   "sha256": "737c2ccdacd85b5c44a560830d7a92750945714ebd8c50995b66bf90d0abe174"
+  },
+  {
+   "bucket": "opal-data-assets",
+   "key": "blackdiamond/cottonwood/silver/fact_model_assignment/date=2026-09-23/data.parquet",
+   "version_id": "ppIXtvdE7sscxrSR4VZ8ADJkBKtdxZIp",
+   "byte_length": 50441,
+   "sha256": "a560410f86e384c7c3157c8ec32b20ae9fb1a111e1acd2a1f73f26037049ecfe"
+  },
+  {
+   "bucket": "opal-data-assets",
+   "key": "blackdiamond/cottonwood/silver/fact_model_blend/date=2026-09-23/data.parquet",
+   "version_id": "KVIN1oY6LQQn5BmAAP8sOMko6o2Hg.ut",
+   "byte_length": 10484,
+   "sha256": "945a1e10b6a0713bd994c26d41929416b6df5377dfcc03af7709be2fcb7001d3"
+  },
+  {
+   "bucket": "opal-data-assets",
+   "key": "blackdiamond/cottonwood/silver/fact_model_roster/date=2026-09-23/data.parquet",
+   "version_id": "uFnWreJn3KZ7Dq3jbB4q3eWuS3JE0VBR",
+   "byte_length": 14130,
+   "sha256": "e74b6b556cfb3cd19b4ca932ba0b20a03d07b0e33678d700593b43cee74b7628"
+  },
+  {
+   "bucket": "opal-data-cot",
+   "key": "investor-reporting/directory/2026-09-17/directory.json",
+   "version_id": "seN3sLdnz.jBxbQorQBtzEwqhrTLypC9",
+   "byte_length": 418144,
+   "sha256": "90b742a3764fc433e7187244a280baa5da0e2d18d18a570ad228ddfa2a809076"
+  },
+  {
+   "bucket": "opal-data-cot",
+   "key": "investor-reporting/directory/latest.json",
+   "version_id": "7BlMhJbQUufinpGu.73FkvnFZdA9PPD3",
+   "byte_length": 270,
+   "sha256": "f9d4410aefb1ac0a33b8345c05436971844be4ce0b2832fbe3f454decb307e20"
+  }
+ ],
+ "accepted_prior": {
+  "revision": "93f930c265ed242d7e38cb48a7ed4baf267025e8c4dfd06ff39739c6a8f55217",
+  "index_version": "grwnbLkeu_OeYL6AcOR33ec9mO51dTBJ",
+  "index_etag": "\"9731cecad3b5ff3e7323ff8567260f95\""
+ },
+ "account_census": {
+  "supported_accounts": 841,
+  "refused_accounts": 140
+ },
+ "totals": {
+  "unique_account_count": 841,
+  "unique_position_count": 13793,
+  "total_market_value": {
+   "value": 548412662.59,
+   "currency": "USD"
+  },
+  "deduplicated": true
+ },
+ "node_count": 15937,
+ "schema_valid": true,
+ "reconciliation": [
+  true,
+  548412662.59,
+  548412662.59
+ ],
+ "membership": {
+  "assigned_accounts": 462,
+  "assigned_value": 277888939.8,
+  "models": 46,
+  "join": "fact_model_assignment.strategy_name -> fact_model_roster.model_name, exact, unique"
+ },
+ "coverage": {
+  "nodes_resolved": 462,
+  "nodes_attempted": 841,
+  "remainder": {
+   "amount": 270523722.79,
+   "units": "USD",
+   "reason": "462 of 841 custody account(s) carry a named Rebalancer model; the rest are known actual custody in Client with membership unattributed"
+  }
+ },
+ "model_leaves": 462,
+ "model_leaf_claims": [
+  "measured"
+ ],
+ "models": 46,
+ "preservation": {
+  "account_nodes_checked": 841,
+  "account_changes": [],
+  "security_values_identical": true,
+  "security_count": 13793,
+  "prior_node_count": 15475
+ },
+ "prepared": {
+  "bucket": "opal-data-cottonwood",
+  "revision": "ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a",
+  "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.json",
+  "gold_key": "irpt/cottonwood/gold/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.parquet",
+  "bytes": 16558818,
+  "uploaded": false,
+  "sha256": "ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a",
+  "gold_sha256": "77c0651399a0f9e95d103e8df53e0117163fb9b2c14ad257872015708727ce59",
+  "local_state": "UNPUBLISHED_NO_VERSIONED_ACCEPTANCE"
+ },
+ "cloud_writes_executed": 0,
+ "cas_precondition_for_a_go": {
+  "IfMatch": "\"9731cecad3b5ff3e7323ff8567260f95\"",
+  "index_version": "grwnbLkeu_OeYL6AcOR33ec9mO51dTBJ"
+ },
+ "executed_by": "2.0.0_SA_COO~M",
+ "cto_welcome": "3c8392cf2f: same business date, new revision, custody totals unchanged, MODEL_LEAF ASSIGNED whole-account measured, OBSERVED positions under the leaf, index CAS, prior revision retained, new GO",
+ "local_candidate_path": ".runtime/holdings-journey-20260923/coverage_membership/prepared/opal-data-cottonwood/irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.json"
+}

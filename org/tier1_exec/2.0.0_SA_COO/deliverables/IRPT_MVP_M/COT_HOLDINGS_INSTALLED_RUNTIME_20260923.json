@@ -1,0 +1,98 @@
+{
+  "FunctionName": "irpt-holdings",
+  "Runtime": "python3.12",
+  "Handler": "entry.lambda_handler",
+  "LastModified": "2026-09-21T15:04:24.000+0000",
+  "CodeSha256": "1XkzWP6p8OfobrSCI8ZrRCyMxfWgSK6sPZeYjdON50I=",
+  "Role": "arn:aws:iam::313476888478:role/irpt-holdings-role",
+  "zip_sha256": "d5793358fea9f0e7e86eb48223c66b442c8cc5f5a048aeac3d97988dd38de742",
+  "files": [
+    "BUILD_MANIFEST.json",
+    "contracts/HoldingsSnapshot.schema.json",
+    "data/custodian_key_seam.json",
+    "enforce.py",
+    "entry.py",
+    "errors.py",
+    "handler.py",
+    "ids.py",
+    "loaders.py",
+    "raw_keys.json",
+    "resolve.py",
+    "served.py",
+    "snapshot.py",
+    "stage.py",
+    "STAGE_MANIFEST.json"
+  ],
+  "environment_variable_names": [
+    "IRPT_CONTRACTS_DIR",
+    "IRPT_DIRECTORY_BUCKET_MAP",
+    "IRPT_DIRECTORY_KEY",
+    "IRPT_FIRM_REGISTRY",
+    "IRPT_HOLDINGS_PREFIX"
+  ],
+  "mutation": false,
+  "installed_inline_policies": [
+    {
+      "name": "irpt-holdings-firm-read",
+      "document": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Action": [
+              "s3:GetObject"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:s3:::opal-data-bd/investor-reporting/*",
+              "arn:aws:s3:::opal-data-inf/investor-reporting/*",
+              "arn:aws:s3:::opal-data-cot/investor-reporting/*"
+            ],
+            "Sid": "ReadTheProductOnly"
+          },
+          {
+            "Action": [
+              "s3:ListBucket"
+            ],
+            "Condition": {
+              "StringLike": {
+                "s3:prefix": [
+                  "investor-reporting/holdings/*",
+                  "investor-reporting/directory/*"
+                ]
+              }
+            },
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:s3:::opal-data-bd",
+              "arn:aws:s3:::opal-data-inf",
+              "arn:aws:s3:::opal-data-cot"
+            ],
+            "Sid": "ListUnderTheProductPrefixOnly"
+          }
+        ]
+      }
+    },
+    {
+      "name": "irpt-holdings-logs",
+      "document": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Action": [
+              "logs:CreateLogGroup",
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:logs:us-east-1:313476888478:log-group:/aws/lambda/irpt-holdings",
+              "arn:aws:logs:us-east-1:313476888478:log-group:/aws/lambda/irpt-holdings:*"
+            ],
+            "Sid": "WriteOwnLogStream"
+          }
+        ]
+      }
+    }
+  ],
+  "attached_policies": []
+}

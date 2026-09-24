@@ -1,0 +1,22 @@
+{
+  "firm_id": "cottonwood",
+  "business_date": "2026-09-22",
+  "source_cutoff": "2026-09-23",
+  "reconcile_ok": true,
+  "reconcile_before": 19705844.84,
+  "reconcile_after": 19705844.84,
+  "schema_valid": true,
+  "landed": {
+    "bucket": "opal-data-cottonwood",
+    "revision": "fe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e",
+    "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/fe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e.json",
+    "gold_key": "irpt/cottonwood/gold/holdings/date=2026-09-22/fe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e.parquet",
+    "bytes": 60641,
+    "uploaded": false,
+    "sha256": "fe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e",
+    "gold_sha256": "b104bab6918d11628fba56f12cd6f57d649efb776efa99267f0c14e646e7f0f8",
+    "local_state": "UNPUBLISHED_NO_VERSIONED_ACCEPTANCE"
+  },
+  "node_count": 59,
+  "unique_account_count": 1
+}

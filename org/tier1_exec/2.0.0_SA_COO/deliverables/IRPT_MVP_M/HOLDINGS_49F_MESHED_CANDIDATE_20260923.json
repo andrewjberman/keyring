@@ -1,0 +1,415 @@
+{
+ "status": "CANDIDATE_UNPUBLISHED_CURRENCY_UNATTESTED",
+ "firm_id": "49financial",
+ "business_date": "2026-09-22",
+ "source_cutoff": "2026-09-23",
+ "candidate_revision": "a860115ecaf5336ac5db4491d76cf5b60780f8a9c257c579defaf62351ba6a1f",
+ "platinum_bytes": 160561988,
+ "gold_sha256": "2abf2f8efe08e84867cfb03e211637b578b93344b51d45b71f45988b8dc01e00",
+ "node_count": 151697,
+ "unique_account_count": 7522,
+ "reconcile": [
+  true,
+  1835875624.28,
+  1835875624.28
+ ],
+ "schema_valid": true,
+ "clocks": {
+  "denominator": "151697 of 151697",
+  "custody_as_of": "2026-09-22",
+  "overlay_as_of": "2026-09-23",
+  "clocks_differ": true,
+  "note": "DISTINCT means two FIELDS, not two values: a firm whose custody and overlay feeds land on the same date is correctly reported as equal. What is refused is a snapshot that cannot say which is which."
+ },
+ "coverage": {
+  "nodes_resolved": 5915,
+  "nodes_attempted": 7522,
+  "remainder": {
+   "amount": 173135189.87,
+   "units": "USD",
+   "reason": "1607 of 7522 custody account(s) carried in Client with membership unattributed"
+  }
+ },
+ "holdouts": {
+  "account_count": 1607,
+  "value": {
+   "value": 173135189.87,
+   "currency": "USD"
+  },
+  "basis": "OBSERVED",
+  "observable": "MEASURED",
+  "denominator": "1607 of 7522 custody account(s) have no overlay assignment",
+  "source": "schwab/08335338/silver/dim_balance date=2026-09-22 minus (smartx open allocations date=2026-09-23 union Tax SMA workbook Traded=Yes)"
+ },
+ "holdouts_held": {
+  "expected_unassigned": 1607,
+  "present_as_account_nodes": "1607 of 1607",
+  "block_count": 1607,
+  "block_matches_expectation": true,
+  "custody_total": 1835875624.28
+ },
+ "difference_control": {
+  "redistributing_build_holds_holdouts": false,
+  "redistributing_build_census": {
+   "expected_unassigned": 1607,
+   "present_as_account_nodes": "0 of 1607",
+   "block_count": 0,
+   "block_matches_expectation": false,
+   "custody_total": 1835875624.28
+  },
+  "redistributing_build_total_drift_usd": 0.0,
+  "reading": "the wrong build moves 173135189.87 USD out of 1607 account(s) and still reconciles to within 0.00 USD -- the total is not the control"
+ },
+ "manifest": {
+  "firm_id": "49financial",
+  "source": "schwab/08335338/silver + smartx/platform/silver",
+  "custody_date": "2026-09-22",
+  "overlay_date": "2026-09-23",
+  "date": "2026-09-22",
+  "join_matched": 5908,
+  "join_attempted": 7522,
+  "total_market_value": 1835875624.28,
+  "census": {
+   "models": 5908,
+   "sma_tax": 7,
+   "client": 1607,
+   "client_closed_smartx_only": 4,
+   "client_membership_conflict": 0,
+   "model_leaves": 7475,
+   "model_leaves_inferred": 2862,
+   "model_assets": 114261,
+   "schwab_positions": 5836,
+   "drill_withheld": 8
+  },
+  "refused_accounts": [],
+  "drill_withheld": [
+   {
+    "account_id": "acc_82f44e326ac31b95aeaaede7",
+    "position_rows": 2,
+    "null_market_value_rows": 0,
+    "position_sum": 169352.73,
+    "net_mv_positions": 168216.08,
+    "difference": 1136.65
+   },
+   {
+    "account_id": "acc_63a8f90c3b7d2c1dde8407e8",
+    "position_rows": 2,
+    "null_market_value_rows": 0,
+    "position_sum": 174957.28,
+    "net_mv_positions": 174172.84,
+    "difference": 784.44
+   },
+   {
+    "account_id": "acc_72a16ca5a24b510ad1a65953",
+    "position_rows": 1,
+    "null_market_value_rows": 0,
+    "position_sum": 8132.9,
+    "net_mv_positions": 0.0,
+    "difference": 8132.9
+   },
+   {
+    "account_id": "acc_7e9030c4b54dea1de29d6fbe",
+    "position_rows": 1,
+    "null_market_value_rows": 0,
+    "position_sum": 31501.35,
+    "net_mv_positions": 0.0,
+    "difference": 31501.35
+   },
+   {
+    "account_id": "acc_ee6a735b7ac6445837b2f73b",
+    "position_rows": 1,
+    "null_market_value_rows": 0,
+    "position_sum": 500000.0,
+    "net_mv_positions": 0.0,
+    "difference": 500000.0
+   },
+   {
+    "account_id": "acc_23503fd363ce7f5c19a1b260",
+    "position_rows": 1,
+    "null_market_value_rows": 0,
+    "position_sum": 500000.0,
+    "net_mv_positions": 0.0,
+    "difference": 500000.0
+   },
+   {
+    "account_id": "acc_8a39ba92cb3a19c381719e11",
+    "position_rows": 2,
+    "null_market_value_rows": 0,
+    "position_sum": 170933.11,
+    "net_mv_positions": 170930.76,
+    "difference": 2.35
+   },
+   {
+    "account_id": "acc_f2472b22c40fe1fe5c651ca4",
+    "position_rows": 2,
+    "null_market_value_rows": 0,
+    "position_sum": 81150.69,
+    "net_mv_positions": 81042.98,
+    "difference": 107.71
+   }
+  ],
+  "smartx_accounts_not_in_custody": 17,
+  "tax_traded_not_in_custody": 2,
+  "tax_membership": {
+   "traded_row_count": 9,
+   "rejected_identity_rows": 0,
+   "provenance": {
+    "contract": "org/standards/MDPF_TAXSMA_DATA_CONTRACT.json v0.5.0",
+    "observed_at_utc": "2026-09-23T20:54:47Z",
+    "workbook_etag": "{1FE3ACF5-9EED-4C56-83B3-85C68136AB94},223",
+    "workbook_last_modified": "2026-09-22T19:07:44Z",
+    "snapshot_sha256": "032c68db251c871c75b558464f75fc0ea3a42a8f95505f438bb4727c0e8711eb"
+   }
+  },
+  "currency_status": "UNATTESTED",
+  "currency_refusal": "unique firm report currency authority required",
+  "directory_cross_check": {
+   "matched": 7495,
+   "attempted": 7522,
+   "note": "INFORMATIONAL ONLY, not a join gate"
+  },
+  "publication_refused": "REFUSED: 49F report currency unattested (unique firm report currency authority required); candidate only"
+ },
+ "cto_findings_closed": [
+  "49F-TAX-CONFLICT-01",
+  "TAXONOMY-PATH-01",
+  "INF-CLOCK-01"
+ ],
+ "model_snapshot": {
+  "model_count": 7,
+  "models": [
+   {
+    "model_id": "74c119db-73d6-4cf1-9535-740026df8121",
+    "model_namespace": "SMARTX_MODEL",
+    "model_name": "Opal Long Term",
+    "assigned_value": 883338348.25,
+    "asset_basis": [
+     "TARGET"
+    ],
+    "account_count": 3442,
+    "asset_count": 36,
+    "top_assets": [
+     [
+      "IEFA",
+      132765346.6
+     ],
+     [
+      "DIVZ",
+      113798946.94
+     ],
+     [
+      "IDVZ",
+      98209958.52
+     ],
+     [
+      "PFDE",
+      88858205.46
+     ],
+     [
+      "SPYM",
+      76275669.61
+     ]
+    ]
+   },
+   {
+    "model_id": "729210dd-444c-47c9-997d-8a3bcede7afd",
+    "model_namespace": "SMARTX_MODEL",
+    "model_name": "Opal Intermediate-Term",
+    "assigned_value": 322155482.21,
+    "asset_basis": [
+     "TARGET"
+    ],
+    "account_count": 1636,
+    "asset_count": 33,
+    "top_assets": [
+     [
+      "IEFA",
+      45778783.28
+     ],
+     [
+      "DIVZ",
+      36476780.85
+     ],
+     [
+      "SPYM",
+      29786102.85
+     ],
+     [
+      "IDVZ",
+      27045433.87
+     ],
+     [
+      "BIV",
+      24016670.35
+     ]
+    ]
+   },
+   {
+    "model_id": "69cc5e3b-b14c-4640-bb4b-ead7837c1bc9",
+    "model_namespace": "SMARTX_MODEL",
+    "model_name": "Opal Ultra Long Term",
+    "assigned_value": 240247846.33,
+    "asset_basis": [
+     "TARGET"
+    ],
+    "account_count": 1415,
+    "asset_count": 22,
+    "top_assets": [
+     [
+      "IDVZ",
+      27827405.42
+     ],
+     [
+      "IEFA",
+      26963244.69
+     ],
+     [
+      "DIVZ",
+      25530685.42
+     ],
+     [
+      "PFDE",
+      24803512.02
+     ],
+     [
+      "IJH",
+      23125741.74
+     ]
+    ]
+   },
+   {
+    "model_id": "0f76a5a0-3b8e-4433-846c-ad41765b51d8",
+    "model_namespace": "SMARTX_MODEL",
+    "model_name": "Opal Short-Term",
+    "assigned_value": 117819408.03,
+    "asset_basis": [
+     "TARGET"
+    ],
+    "account_count": 727,
+    "asset_count": 23,
+    "top_assets": [
+     [
+      "BIV",
+      20029865.86
+     ],
+     [
+      "VGSH",
+      12398013.42
+     ],
+     [
+      "DFCF",
+      10103089.02
+     ],
+     [
+      "JAAA",
+      9875654.23
+     ],
+     [
+      "UTWO",
+      9828807.45
+     ]
+    ]
+   },
+   {
+    "model_id": "c000fe6a-4f29-42e6-ae2e-75ea6162d175",
+    "model_namespace": "SMARTX_MODEL",
+    "model_name": "Opal Ultra Short-Term Income",
+    "assigned_value": 49719237.31,
+    "asset_basis": [
+     "TARGET"
+    ],
+    "account_count": 175,
+    "asset_count": 14,
+    "top_assets": [
+     [
+      "VGSH",
+      6619123.61
+     ],
+     [
+      "VCSH",
+      6575074.85
+     ],
+     [
+      "VUSB",
+      4456187.04
+     ],
+     [
+      "MINT",
+      4383902.4
+     ],
+     [
+      "OBIL",
+      4367156.22
+     ]
+    ]
+   },
+   {
+    "model_id": "48af6559-593a-48a9-8ac4-3c78ded93ad8",
+    "model_namespace": "SMARTX_MODEL",
+    "model_name": "Opal Dividend Income",
+    "assigned_value": 21968284.5,
+    "asset_basis": [
+     "TARGET"
+    ],
+    "account_count": 38,
+    "asset_count": 29,
+    "top_assets": [
+     [
+      "PM",
+      1043757.6
+     ],
+     [
+      "VZ",
+      995385.4
+     ],
+     [
+      "MPLX",
+      964503.98
+     ],
+     [
+      "UNH",
+      908691.69
+     ],
+     [
+      "JNJ",
+      854276.59
+     ]
+    ]
+   },
+   {
+    "model_id": "843d875b-62f7-4ef8-b833-5078a3f637d5",
+    "model_namespace": "SMARTX_MODEL",
+    "model_name": "Pathfinder Focused Opportunities",
+    "assigned_value": 16612844.08,
+    "asset_basis": [
+     "TARGET"
+    ],
+    "account_count": 42,
+    "asset_count": 23,
+    "top_assets": [
+     [
+      "TSM",
+      291088.0
+     ],
+     [
+      "ASML",
+      265680.8
+     ],
+     [
+      "SPOT",
+      218566.8
+     ],
+     [
+      "MELI",
+      213709.86
+     ],
+     [
+      "FER",
+      212982.9
+     ]
+    ]
+   }
+  ]
+ },
+ "local_candidate_path": ".runtime/holdings-journey-20260923/dry/opal-data-49financial/irpt/49financial/platinum/holdings/date=2026-09-22/a860115ecaf5336ac5db4491d76cf5b60780f8a9c257c579defaf62351ba6a1f.json"
+}

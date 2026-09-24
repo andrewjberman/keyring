@@ -1,0 +1,47 @@
+{
+  "measured_utc": "2026-09-23T20:02Z",
+  "source_scope": "Read-only original landed Sept23 Orion sources; no vendor calls or cloud writes",
+  "currency_search": [
+    {
+      "key": "bronze/orion-api/2026-09-23/accounts_roster.json",
+      "version": ".OrLjh7YhzqtXofC1ERcCoAe3TA2ncxA",
+      "sha256": "afd661ec5b3fe16b97d604134e3e01c63ae0831cd9c39385cee0bd95b74b04ef",
+      "bytes": 9117761,
+      "currency_fields": {}
+    },
+    {
+      "key": "bronze/orion-api/2026-09-23/new_portfolio_accounts.json",
+      "version": "bWoSLa2lkHSv4wi7x7kMaYNOMgXPTbGG",
+      "sha256": "9bba1ac968895118f9de93a9d9ffc7242a70c5ad83cd7f34719ee5a1e6e0c228",
+      "bytes": 5760856,
+      "currency_fields": {}
+    },
+    {
+      "key": "bronze/orion-api/2026-09-23/unified_account_dim.csv",
+      "version": "aqzJgR4VuTGoyhl0kpjKaqYWdjhPvejS",
+      "sha256": "fa9ee158182aab1b7edb81b6cfe325fbda0ebd398e30d2d4b65ea325dffb9024",
+      "bytes": 868902,
+      "currency_fields": {}
+    }
+  ],
+  "extra_positions_accounts": {
+    "positions_account_count": 958,
+    "accounts_v2_account_count": 876,
+    "positions_accounts_absent_accounts_v2": 82,
+    "extra_accounts_in_raw_roster": 82,
+    "extra_accounts_tied_to_raw_roster_currentValue": 82,
+    "extra_accounts_absent_raw_roster": 0,
+    "extra_accounts_by_isActive": {
+      "false": 82
+    },
+    "raw_roster_receipt": {
+      "key": "bronze/orion-api/2026-09-23/accounts_roster.json",
+      "version": ".OrLjh7YhzqtXofC1ERcCoAe3TA2ncxA",
+      "sha256": "afd661ec5b3fe16b97d604134e3e01c63ae0831cd9c39385cee0bd95b74b04ef",
+      "bytes": 9117761,
+      "currency_fields": {}
+    }
+  },
+  "disposition": "All 82 positions accounts absent from accounts_v2 exist in original roster and are explicitly inactive. All 82 position sums tie to roster currentValue to one cent. They are excluded by the active account dimension, not missing from custody. Preserve this population in source census; no claim they are authorized selectable accounts.",
+  "currency_conclusion": "No currency/denomination field found in these three original account sources. Dollar formatting and a derived USD BY CONSTRUCTION statement do not prove currency. Targeted source authority request outstanding."
+}

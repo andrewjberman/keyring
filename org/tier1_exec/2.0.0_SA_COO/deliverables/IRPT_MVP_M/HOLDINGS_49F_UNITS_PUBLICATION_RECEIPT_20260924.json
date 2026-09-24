@@ -1,0 +1,1519 @@
+{
+  "status": "PUBLISHED_VERIFIED",
+  "go": "CTO 100435 (GO 49F 5a25ae76 then GO INF d32e50c6; CUSTODY_UNITS; CTO half on the builder's address; COO half = 100433)",
+  "executed_by": "2.0.0_SA_COO~M",
+  "started_utc": "2026-09-24T08:58:19.399490+00:00",
+  "finished_utc": "2026-09-24T09:00:41.281180+00:00",
+  "firm_id": "49financial",
+  "business_date": "2026-09-22",
+  "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+  "index_location": [
+    "opal-data-49financial",
+    "irpt/49financial/platinum/holdings/current/manifest.json"
+  ],
+  "index_version": "QC.bs6a5w9.HeojU8ugboRzNbhM.3mfD",
+  "index_sha256": "1997521dba68a8322f34203b51f0a12971c20ae8d0cbd60828b892503f00fef3",
+  "index_precondition": "IfMatch \"ea06a1a0bf21d58e9ee172a77111a236\" (version 9Vtkh61A05eiuWmm4DwyLVRRwynIdq2e)",
+  "prior_index": {
+    "bucket": "opal-data-49financial",
+    "key": "irpt/49financial/platinum/holdings/current/manifest.json",
+    "version_id": "9Vtkh61A05eiuWmm4DwyLVRRwynIdq2e",
+    "sha256": "dfea669bbd4bf56f48aaa81892e3ea5e8cedb301f844d6de3d966a80a4c1a56e",
+    "byte_length": 526
+  },
+  "prior_index_version_retained": true,
+  "prior_revision_manifest_retained": {
+    "revision": "3d59c80b4e9cf59b1f527615a9dbe1600666a57afde65192860e37f0f21185d9",
+    "version_id": "fQBHja1FKbMpStbFHCmPXI6kUyl.fpwu",
+    "etag": "\"9f6c111469908b73a799bfb877add6ef\""
+  },
+  "prepared_bytes_read": {
+    "prepared_platinum_path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_irpt_m\\.runtime\\holdings-journey-20260923\\prepared_49f\\opal-data-49financial\\irpt\\49financial\\platinum\\holdings\\date=2026-09-22\\5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.json",
+    "prepared_platinum_raw_sha256": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+    "prepared_platinum_bytes": 179039131,
+    "prepared_gold_path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_irpt_m\\.runtime\\holdings-journey-20260923\\prepared_49f\\opal-data-49financial\\irpt\\49financial\\gold\\holdings\\date=2026-09-22\\5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.parquet",
+    "prepared_gold_sha256": "53a8852536849a337b54b5f7961f6f11ac8565fc5cbd38c8f90ac8fbcf00a22d"
+  },
+  "immutable_writes": [
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 31992860,
+      "key": "irpt/49financial/gold/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.parquet",
+      "sha256": "53a8852536849a337b54b5f7961f6f11ac8565fc5cbd38c8f90ac8fbcf00a22d",
+      "version_id": "bc9SYGOKYsCdV8vXqJGuDEQti.s2OZkP"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 284874,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.header.json",
+      "sha256": "b6d0b23796ce8629e7df745d7c5489b07a8e48ace497da9aa287c07a08b8458f",
+      "version_id": "_f3Mjfc6nIcAGQ6tfBDhEj3s97AHzD.U"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1039651,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00000.json",
+      "sha256": "1dc89f2d5309696019133a3e379a811144a37a159f1eed38843afbc42c846c0e",
+      "version_id": ".iXhI7qyP7wDflKgDrv.Wks2nfXcvwzB"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1023875,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00001.json",
+      "sha256": "635d725a3614b9205f519ff679064c4397e704c1759c38636ee54130af2ab3a3",
+      "version_id": "oMyikqYK.VhOX_3ZBoTV6owTwS9IWO_H"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1039978,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00002.json",
+      "sha256": "195796765a109ae0623b29fa4cdc59b3726c581701d91b94314d8403d35f64cb",
+      "version_id": "dHXYxPXNYO0Imm0Syih9RBFdOZDvBcp2"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1031957,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00003.json",
+      "sha256": "193b54163db8a99047ec0f18ed4be0a8882f80542ce42511cc49dbee5c1e5786",
+      "version_id": "rZq5STor903C0ZartdYpfhfoKjrUXoVg"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1027265,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00004.json",
+      "sha256": "d70c0c194b154f351b978cbd692bcffddef41bbf2c34535833ea6208d1155019",
+      "version_id": "oIvVRYaVwhBNR6it29JKrKTAI3I0hCmF"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1036608,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00005.json",
+      "sha256": "6cc170ed7cd29c55807e3187377d9f9b24e135ae427932d574e23f150c8c00c1",
+      "version_id": "II.3qi2OOYPKe_QWmhqSEBBcZHLwW_Pj"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1039996,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00006.json",
+      "sha256": "661dc65946a1e714930fcdef1013bbf62edfdf67b389eeaaae310981b66e3744",
+      "version_id": "y8ucyyvNOCvIBwFMbHky3Gu4prFqm_Ao"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1046788,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00007.json",
+      "sha256": "0e453faa173b932870973fc9c4d8fead9d58dcab14041706fe691bbec0d45c10",
+      "version_id": "vNErz7D4ahRoEysSjZLnS_Tq7y6JIhy5"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1040525,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00008.json",
+      "sha256": "82c734984e010f4fe4f08069eed45337e087acd5456c7d6a3783b969581be43d",
+      "version_id": "H1V7QVYCe2Z270sHHlbn.VU0j_5DWUtr"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1034944,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00009.json",
+      "sha256": "c41cf113484e88463bd464c09324677d7031fb485895b799686e483474a2c6b9",
+      "version_id": "8jdIsrUOSKjGLeXGHmeLluHxFOrEN_li"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1023883,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00010.json",
+      "sha256": "6d05004584fd68b47577d0de7cde01074e9b11637ab67985db3e731eb81aaec9",
+      "version_id": "82wNXUa25YpkrYv34HeZhqhwZIxPqNI6"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1037999,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00011.json",
+      "sha256": "56e950aecbd8b56f70f8d1a1f2b534ebe273809ea9a2b640c03e0e7e1dac3441",
+      "version_id": "ZnEfZQZy3ghxafJOONEYmVV6YQQWKwhD"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1030517,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00012.json",
+      "sha256": "cd5c7a7e7754d9c2f6e98300589f4266d11d3021fdd9136305ed5e91e0830bbb",
+      "version_id": "PjTjezfqV57a_5i56_Tl7oq.9eZkTm34"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1015128,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00013.json",
+      "sha256": "f947f8391f0d25ab02063809b9a3e724ce7198f6ecfc6f9da737f4dbec458608",
+      "version_id": "n5McqHGwqH61GUG0G0.rk6CIxYJogvHA"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1043040,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00014.json",
+      "sha256": "620c4b32cec21aee66a81334b821ad68a38004016553b602a6435b7b075d73ba",
+      "version_id": "womczKlt_wcMsrfrvbQdejXmpNGBeGNP"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1045971,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00015.json",
+      "sha256": "3fd6c0132bb756bd39076fb3fbbc00a9b3168de8e579ab0cb4cac84c2a0b543f",
+      "version_id": "s.05LcQJr2txASPK5hwMOWj.1F0VBXDE"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1041575,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00016.json",
+      "sha256": "be33a8925c7dbc5de58578095d968e8c6e9dcabcedd38f4ef32dd33b8dac0fc2",
+      "version_id": "pySCFv9APIrHqo_YOmYDrbqTJcz_ViTw"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1029570,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00017.json",
+      "sha256": "9519e298c6c237da7e399bdb423f757aee5e7dfaad40c601f5ddd046336b3d53",
+      "version_id": "VnmBcd0vnkqkhf59ApGDrot9fWY6_66N"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1042218,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00018.json",
+      "sha256": "05fbe2b51bebe113b35e3941e9e7828b510a7cb045ba0568781015d7e1624c07",
+      "version_id": "QQ5ESkd.MU0UVAAlkesfavBnub5VxUG7"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1029078,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00019.json",
+      "sha256": "fdbdeb6b72f06e641cf10dcb506ab1736ea7e46b6e4f20089a7cb09e5a6dd250",
+      "version_id": "CWQ6cLNgx6U9Sc6_SCBHu1VGOLy.7aDk"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1034331,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00020.json",
+      "sha256": "ce3a781330f22bc353a0af3855921046eec3e8b6e693f8bacbe47f5c46c8a622",
+      "version_id": "CwOoDZnXQRZndtOd1eik80oaCsoPz6fX"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1032408,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00021.json",
+      "sha256": "88beec2fbc9556783f17f58466687c094ae66812f33e1e452e2f6ca06a747820",
+      "version_id": "O0Y7DFj5yb8AJw2EA7jigB_h5sCRQ8B5"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 992475,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00022.json",
+      "sha256": "15e0d2885eced25d3652f77ac39d237da8b305d0533625b317dbb268787b321a",
+      "version_id": "JohVBAWUC2x_Tq8JOfL3d0Hf2k7xsrKw"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1048521,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00023.json",
+      "sha256": "83c47c0ce5bec3405e8e960ec77f04f66c093ca1a9d1ecc3f8083d284199464c",
+      "version_id": "o._E_6UdvQVxb1DHI178dKrwCpL3CBj4"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1026330,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00024.json",
+      "sha256": "bb970be0c533a81aecd5cff02dc8142cd2473df10cdcfbd67b106e83a532e6ec",
+      "version_id": "kpe36ZC05XR6P4AXLrOEralOqBrTvC.o"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1047048,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00025.json",
+      "sha256": "62c54afecb8b1fbc4609c88d4ca6221e06ac5af35281689b8975808cf28287e9",
+      "version_id": "5hjbB1bpJRC2Dob2x9gTD_Tv2QbzhNXF"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1028909,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00026.json",
+      "sha256": "7efafe89a27d969dc0065607451df66829ab22155fcbb7618eca0c9d9b09c102",
+      "version_id": "J6mx37msJvduUCJjwFcKlPwrEC2WWaKI"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1047289,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00027.json",
+      "sha256": "804079c8944720f28ba5e2200dd3709a6ff498ec9ec0331aadcc7e6c0d075225",
+      "version_id": "6o1.8XrTRx3JSihqeqpRvR.rKAs22ULI"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1017383,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00028.json",
+      "sha256": "1fc31a9f49d2e6e9f75b3c84562045e15d6a34dd2486580243c8f2cbf3129e8d",
+      "version_id": "kDHy2T8_EhvrFDnJ2RwM7X.U2Bp.bX02"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1045217,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00029.json",
+      "sha256": "dadd60b61dd54570bce61560f80f5eaff94547bf321cbe6abe768651698bffac",
+      "version_id": "Mem.daLCbpXQ.8YKmfYneZctenFOisvk"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1000830,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00030.json",
+      "sha256": "c1dda141ca8dcb8aa81d3567789da13144cee03559ee79b0d876a34e3fc7a6c5",
+      "version_id": "nk18K.3jJClLS3.WQdshw6pA9BABYpd0"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1034868,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00031.json",
+      "sha256": "a8ab43ef994aebade540a83a3e3d34a8688d8169c4bbfe8bacf90f91aa7dd931",
+      "version_id": "Es17j3yjSyViAGreXomBEvE3TxNTuYvT"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1032524,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00032.json",
+      "sha256": "c63f8a5efe65076f405e13fc801854734cf3e52f18dd16716a3ab8f5290e871a",
+      "version_id": "erJqgxepO8gLmVFkfQhQhVD_3yTvSDh7"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1028595,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00033.json",
+      "sha256": "25b355ad08bd0cd630054dfa135dc9bf2908691adfb786cd5e2fc2c249bcc5d5",
+      "version_id": "LLmprZpW0jFKKDe7A33FmgFiGPyEUw4n"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1041236,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00034.json",
+      "sha256": "028758ad1f66d0e5107a868630b48e5ca2ffa6021ae27ceda1e86ef407fa3b98",
+      "version_id": "cRbKdhl36i84wgd7pCVyk9GvUUndxuRK"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1042417,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00035.json",
+      "sha256": "1b77e473a03f202b8aeed60344b3e59c69608e99d93964d1f455c272c084ff6c",
+      "version_id": "zASB0lutcoUPu2fQOb0RFmaB5_pbuGW9"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1026915,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00036.json",
+      "sha256": "6f2ccd5470b39a3b9c9499cdce4558d22e617e196d3f7f3363f1d6a45aac18a6",
+      "version_id": "ua4xNaDiWrCdHaxdMB5pJSIeCUIz1tTT"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1009427,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00037.json",
+      "sha256": "bab1d41440216155db3ca5ed2c5eea7904653a742674e176596375f04963ef83",
+      "version_id": "B.suFHn.nwMZ_YeYrNGS93KDTtFmK8Q1"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1040341,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00038.json",
+      "sha256": "7a609b2414693dc0f4e4829f06fc3c19d6d774e94a16001c5aa580e5752aa7c2",
+      "version_id": "KyixJ5fPHiRBJoOBgfV90j0dw_D2FZaT"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1036799,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00039.json",
+      "sha256": "047e5fef08cc4fbb6aa8291d9683878dd40bed033b32d1dac7f27b42bb0d643d",
+      "version_id": "SqF6znA2Q6errXrXGD1lmCsraD9oPCKd"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1023878,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00040.json",
+      "sha256": "9bd5647e02e9e9dd8bd0b14d250b01cbdf27f504c8187c156e469dc908f31047",
+      "version_id": "V.W76CwCVRF_dhNK987aUUvET2rQekP2"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1034105,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00041.json",
+      "sha256": "e919b0255351a4c4e0120550749a56eaa6b62adb80f154df80450064265eaa0d",
+      "version_id": "nC1FfdUG_822LDaDmFd3K15e8ba3zYdo"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1021046,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00042.json",
+      "sha256": "f5224115ce1705199ebbd5ac17d2b97377468153c6eebe99f93a0f8dcaf013be",
+      "version_id": "Rvz.Z8zBZh3aPUelyM3005vnXa78CHV9"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1027764,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00043.json",
+      "sha256": "0907812e2cf63a38d29b4b04d8720c4088bf61b43937197d89994d5acf2c9697",
+      "version_id": "nXW3T8BZFErGw6fF4E_axCsr2HqzMK5s"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1032685,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00044.json",
+      "sha256": "03ccc58d8d2a27439815e3065a69e8575ef3ae675bff382f04769a8a7854e5a7",
+      "version_id": "mluATAyYoiabNnrdlrTZpUxqnSIU3MYb"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1039709,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00045.json",
+      "sha256": "11c97c49951771daca7702a7c31d74c19c6b0e4860fed2cb6610b3d41e0a51d5",
+      "version_id": "y7uD.Fe57luyjSdIbLSW1NkBwvahP5IR"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1043933,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00046.json",
+      "sha256": "0774c2842d7ccea2f44f4e27f17f18726316388c9df6a43dca8b9e8e5e25ac07",
+      "version_id": "LlFxIWn19o9F6ULaojKj2PV8F8gIaaIJ"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1045526,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00047.json",
+      "sha256": "5f9293b2b50dd10e6c2a9f8bd25c52410bc9f6071e4c7f401358f0aad3a53921",
+      "version_id": "ncPohr6k3xb.PjiYalbrO0kSkbUjGbe."
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1014721,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00048.json",
+      "sha256": "29b920486e0b106c26e6e16738bf833af5e2b086418f82d54cccf260a41cac37",
+      "version_id": "BVn29CnHvFjmS2DL6adPzEClqNSgSoPC"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1048505,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00049.json",
+      "sha256": "b566eecec155fd7e34d6db56bf76a3e4d3440de1c8ea486008a0dbd0c2b978c4",
+      "version_id": "9PmTH9.G5Nbbcp07NVPtoJnd4OH665g5"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1020658,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00050.json",
+      "sha256": "9ab7de506b2a92453afd60b01c44870279fc9209d6b6be47b08c9704c6b9d63f",
+      "version_id": "N34.JJj6NM7XfLJBvF74tLBuBuhPmYuh"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1044227,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00051.json",
+      "sha256": "2834093c1f363f8aba5e6f4eaff4f744fc7f9973f30a9f0462dfd37e9c81a149",
+      "version_id": "04WQu0k.QI4.UyMRPyzkjSIrLVvuHol_"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1044028,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00052.json",
+      "sha256": "c4026b3b555a549b3b0112fb17b94634cdc56641f6f1bfbfbe6b437723e8b784",
+      "version_id": "_2m5Zv1Xi9YkoIF_dWFS04R6G.ZWtdA."
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1011883,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00053.json",
+      "sha256": "623021d206a8c68ae6374d9d2103bace89606994776a7ea2b4ccbb8349422981",
+      "version_id": "W_SL4khpMjUbriho6WwoAvQREtVNXmLZ"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1010170,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00054.json",
+      "sha256": "82b068b98143fecc60496279b9c0eb720fb7c03fd7c8887b5a2428ef65d03695",
+      "version_id": "qvkrQht71kIPTZOWjxV_nbqJvh8xWsl1"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1033746,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00055.json",
+      "sha256": "42564b4633249545f2bfc961a75657f74c80f99c0e947f282059aa8bf67baf7f",
+      "version_id": "cYcAJEw3VQFe1dnWQ1pNYFnGik5R.pJN"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1031680,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00056.json",
+      "sha256": "24ff1938b80c35cd85c1e364cf9d2aac3dba39014db0c653464b7929bd088a73",
+      "version_id": "bo.y0T2InzayQVNsZrRIHlW8ZbZyYVV2"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1027571,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00057.json",
+      "sha256": "f93f7b2fc641bc2bc0ee3607d1fc5f070f9b6ad4ab5e586db390e7d8ddb7bc53",
+      "version_id": "9GSgRfaWtHwMadWPPpN.FlvZV.1poGTy"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1035009,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00058.json",
+      "sha256": "da69fb10abfa634ea7787ab13482b56ac88979e19641628098eebe8b42136b83",
+      "version_id": "qgvopu6pdR.heogAVCaDoxPQatuwSite"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1041361,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00059.json",
+      "sha256": "fb4abf2764f73d664a0dbbb00c438085ddfa89ad470901bf175d9f77e1109f94",
+      "version_id": "hua0bTwvu.7Tr99gduJphOWGmBfm1XsI"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1033699,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00060.json",
+      "sha256": "5dce14823f8f3933b6fffd9dba6f229db5ebc424d5ccbf337722c7e05ee21849",
+      "version_id": "Fybh4x3CRm1l27hPDyNMPdNDxcMXUqD4"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1027949,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00061.json",
+      "sha256": "17cd17361492a1352510918e06dcbf697fb2df313c18dc75ac52146ca89160f0",
+      "version_id": "40odqISTVJJgHoyBd7jEcGtXdhHRqSfy"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1036098,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00062.json",
+      "sha256": "b7cc12ca4a0ad043372d790a31e0c8adf490f389cf3b7f943cb6621b739579ac",
+      "version_id": "Z39rH8Ksq8XocobX_G6w3UCw6YRCjjag"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1044212,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00063.json",
+      "sha256": "487362c1e2ecb0a3c309328d2ce6ccb46090f7f1dfe4ba4198cf99edcf0bef6a",
+      "version_id": "SGOOKg3ZBF.lrqGMn26FFRti7dniWROc"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1039655,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00064.json",
+      "sha256": "b56b3cfaf87666b778eaa8edf538fed6a3966e8c1aa8b4c42527580b63a163fd",
+      "version_id": "65T51RpOafD8a82A4TH.guiyGaDLmYp_"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1019787,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00065.json",
+      "sha256": "d032b1553a4c121249e505856219d053edb7226891106339c3dedb1a715c16e8",
+      "version_id": "Uumo_0URLBWr5c4X4ZPW5GYd7r6gP1mV"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1034422,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00066.json",
+      "sha256": "47ce9c7d4e34c011f9b764de9c7b62b2193427a9f7ceeecb746c83c0e59502f2",
+      "version_id": "Fozna1o6tpC278Lrl53E6uSpryM9Hrgm"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1023623,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00067.json",
+      "sha256": "7cae7f2873c763f64b7d0409750dc53f8a058a1738c85a64efaf935434846740",
+      "version_id": "DKp59MYPMwChNKoRTgOQtyy63YvGSxKb"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1042409,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00068.json",
+      "sha256": "23e72a47b14b763cc2b6ca2f18344b7a2861ef3c44efe812940faf274810362a",
+      "version_id": "z3IvFocqaOphBxEXb7hodQNFBIROhhD_"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1040623,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00069.json",
+      "sha256": "b3ad1e5c5ac5415a51b03a799afeba3815a5687b439c31f47cd2b18393c3dcf4",
+      "version_id": "HV9zWj0U0dzmYYaANbGaD3c3qMai7gyz"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1037190,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00070.json",
+      "sha256": "78cabf67cb47b87db2eeb2a375170fab9365e6410bcc0d0389e75b51eeff2bed",
+      "version_id": "dvewnq.V9Kgcosg17E5.NDbHNPMm5pa_"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 793803,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00071.json",
+      "sha256": "07608e734ef3873841428a71e56018f171eeda0d3606706eb45913ac5cbed605",
+      "version_id": "xtfXtBEIBskkPa51VgcZeHejHWG5_sQa"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1046268,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00072.json",
+      "sha256": "bb7a0f4e4d9b8f68458d53f78b0715dd6dbbc4c4153943302e571119945b9968",
+      "version_id": "y9nG3ytRe642Xx07eesXyf6Gcsn22k9X"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1047052,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00073.json",
+      "sha256": "03b0581f94fde8799eaa7caf677e45a23023227f4ef82ed27094163ee6c20b5a",
+      "version_id": "pIpIY5MwTqHasuecMt6kLSs7FrS3N7cA"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1033253,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00074.json",
+      "sha256": "d1e18f111ada4cb8161dbf45ee4a8e4599d2cbf2a2323db7870291d1f83486f0",
+      "version_id": "DhXWTjGvEATduK5eNaYNSRzt.Ormizby"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1044764,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00075.json",
+      "sha256": "d3f823221ec2a836d0e83b131a81c9790d15a9b187cfd8cf9a423b363462e2cd",
+      "version_id": "kkz6mVP3uPP1EqU5oX3w.0SGwl833AQ5"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1035715,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00076.json",
+      "sha256": "8cb1f01dc58e0387e9e5a7a69fb53294a23a8a2d40dab1788d8b752415e1171d",
+      "version_id": "uJLu40RmnNx0uLpm9qcyVymUZXOZovvL"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1044357,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00077.json",
+      "sha256": "4ef1e089319f0a7cbc8f61b6e73c1b5585d9d5501f8d4e73da1e12187c85b5c7",
+      "version_id": "yHWcM0qKBoyYrP7Y5oZlHTbOh.bdokpT"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1037671,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00078.json",
+      "sha256": "ed21a69c600fbf3fe93e149ebc7f61a190983d3cae19b3749d560edcfa8f0d6b",
+      "version_id": "pLNxSeQP3t53azuM6X5DhlQd7ANkCJAO"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1035029,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00079.json",
+      "sha256": "34572999b60afc81b858dad94b76854416502e6734cdaf6d888dc496011ae783",
+      "version_id": "iSi4Zq1k3gU1NemwTZHf8NkJYEzlM1b7"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1041211,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00080.json",
+      "sha256": "63c27079d7727fc3780043b9d6400f218468a2400d34fb4de4a083bd8bec742a",
+      "version_id": "i4Kt_ceGy07iiI6o6HkWzFcPIGc8PR4z"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1041820,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00081.json",
+      "sha256": "e688a2a78c03567027a7c8162cf7a53dae395a0c21f6d3eb1c28503e089ed0f6",
+      "version_id": "BjBgUCaL.H9GTnNQtUp_s9y70E3YXVDB"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1042917,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00082.json",
+      "sha256": "12ba16fc69aae0f3556f2ba69b94db8426b23ba3b74259f8efb8f3ca4bd02ec6",
+      "version_id": "jzRSeIMy7DUQGdxCtgOmK_0QLMLGsmtJ"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1026002,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00083.json",
+      "sha256": "e33dd9a2f4282059292552f8737e9f1eabe3f44466f908589973e449e3976904",
+      "version_id": "vE11bytJ4OexxjNfuEn6ITiYb9cnmBQL"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1041234,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00084.json",
+      "sha256": "793813b726ce008b0c9610d9488363a2e08d927cbcffbb00c852b185db78aeb5",
+      "version_id": "ZdHVSJ_lvOkO3xi1Ml8kPNRMJwNyttcW"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1037775,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00085.json",
+      "sha256": "9f91a097cf9af9792e23cbbd7c94393e845ddced406819e11cf441df109b6b20",
+      "version_id": "MF64_LRTEcLl3kQjhALoreJ9AKw8kA4b"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1046819,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00086.json",
+      "sha256": "7cea15b8dc586dd3272fbbff8d2fb847da0d7ef9558b6c8f730d739b90e43758",
+      "version_id": "ecnqVyW8GvVU3XFwOTzs0B8483EIS1eV"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1043113,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00087.json",
+      "sha256": "f38493caab5f7f61493c4cc2ecfb2b04514f564475da8cace80188466b81368a",
+      "version_id": "ZpX2QcZTBu2n4US6QvHosj8N6pLk09NV"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1020220,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00088.json",
+      "sha256": "4ab3afc84ce3ccc8e74674f9690512a30e83494f565b8c61e9fbf5b594e50632",
+      "version_id": "YiSkSDB41.AHf5SzZ7rkdX4gAr65r6k4"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1023157,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00089.json",
+      "sha256": "f2855b19438c4cc797a757eb2922ba6bc38c2aef0a5c24f2542273e6861f9f91",
+      "version_id": "TrVCU4FnBFh_NP_nkwk2Bsq9dLdnk5cy"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1030657,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00090.json",
+      "sha256": "4fdc30f76dd5fe8344084ea1116b7464f74bdf0b79e648202ce96760f3ef5478",
+      "version_id": "TL2XNgc1KxJnMvJlk_mM3OLi6VldRjf5"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1026335,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00091.json",
+      "sha256": "5c29f02a972681680f0581e09863cb703337fe367b93153d601ebb8002c65272",
+      "version_id": "KIleefrXbz1hUfe26d3NHLnxpv4vrJak"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1035697,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00092.json",
+      "sha256": "6f86aafafd77f4928922ab06f337d90d431a512599e4746ea35c1111d039b98b",
+      "version_id": "wiWofn0bZAyfRxo5q2cuzK5zRlHrwPh0"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1042665,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00093.json",
+      "sha256": "844bd84b67845aa4fa1976f7991756758dcef94f58a2d6fcc339e18547c0bd86",
+      "version_id": "znWtBayPWjajBrDSE.cX0vuRbhVmzV4s"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1044940,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00094.json",
+      "sha256": "ff4ddd895f786ecb17aaed9e32ab5c1b7276a1f90fa3a5f06cd111887a95a968",
+      "version_id": "m.FXD.ePVCaEBvrXYbFGqVpuRcRjQAUq"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1036654,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00095.json",
+      "sha256": "202220a64528e02791f4e15bda781f302717da7123a45529f8eb42232786c552",
+      "version_id": "UDWsUpfsOO03HtM_UdBuI6scuG94pA3j"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1032154,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00096.json",
+      "sha256": "29d62be6726606c7ca38d51433909aad30be5c8098ef125ea89e5d07cdb558f6",
+      "version_id": "uKtcLNZrb3YkAZqCqESRoirvsL_eYmf8"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1047943,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00097.json",
+      "sha256": "4b0fc6eeb614445f64429e6ac780831a1d4f16c958bd29818d6c89230756a785",
+      "version_id": "ZWG28Ye4EanWn.2gseAnaCjYN_PgRNsB"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1026707,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00098.json",
+      "sha256": "0c4cfde35b669e3137a1022965b0a26f3daf13d9a2adf0604f3d6765b2ce9599",
+      "version_id": "g9c5zA24s536EeHnjPUDjoxBQ77aXMWW"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1044222,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00099.json",
+      "sha256": "6e3905cc73032cdf616d5c4853b601bb50aa57e1c032bf6e93a735e906bee400",
+      "version_id": "Vf9Ks.a3k05N4MQ9z9x2I.oMVb6bRfDP"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1047446,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00100.json",
+      "sha256": "7bec9b2b090e791229f79d9d497a600fe177297fb59ea06143ffc2ff19dd704a",
+      "version_id": "YS4Ei_qraSg74kNoyNHuNPrFlH52GAaA"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1039938,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00101.json",
+      "sha256": "a93094134cb9611f32d873a2f04711979006e5a7f529a961e204a02a8237d0a2",
+      "version_id": "0R75zifZvY7s8KrpTDuEDnwGP2AF_1_I"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1006212,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00102.json",
+      "sha256": "8574889ca9b0594de847e13101d35a0235559c7e42cc11ec155cb972d07caa68",
+      "version_id": "nM.dZd1VscvYEbsGxQQBYnsd7vglj9TK"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1023083,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00103.json",
+      "sha256": "a41e09c5f32ec400b0bc3f21585abfc1d1b1d5883d5d33a67dddb34ff9dfbe35",
+      "version_id": "Lpxz.om1ZLX_D_r3ZGKg_TpL8IfMOaHP"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1038323,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00104.json",
+      "sha256": "0fae8c39478ed8f2833fab26cf0d1bc3ed51536ae98f7d7e3c68005e561e2952",
+      "version_id": "IfFMOcPtNOzE6hNEpnxBntFwKH6EFliL"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1037438,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00105.json",
+      "sha256": "517d589275ea473dc3dbe7a40f2c4f50be082d2197270bd7a176ee33640a86be",
+      "version_id": "wjVWZLRaJCQ8zVWWPGYFLhjK7FeLTZNj"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1030363,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00106.json",
+      "sha256": "8f4fd4b9e6bfb093149202d740236295a1379c17091abd3a2350f28f063c7309",
+      "version_id": "0N.0D1JPCmIPAMZExAyLyq0dtBUmn5WM"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1034317,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00107.json",
+      "sha256": "d4219f4bc86243babe5a34039719ed8997ac4a57b3c2c6aa6138ac79a769cdc5",
+      "version_id": "iUZSCw4RyTtSKTNWbKNAaQ67bnpFJJpJ"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1027781,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00108.json",
+      "sha256": "d46cc2e74bfdf8c0f53a21f0cf367190117914beaf4cfae6799e4f72d5fcc154",
+      "version_id": "PiCPCchBTPvhF1FoMbEtfKGogi81B_k7"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1039163,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00109.json",
+      "sha256": "3ffd55a2f34703f2a30b4d648a4e113ecf7d998188d62112f981d50b3acec8aa",
+      "version_id": "xmIXu7stExfU_h2jq8RgXgjoxnh3uoDB"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1040641,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00110.json",
+      "sha256": "773b10e4b4a0b81310c4f16e8a6ea4c9c9cb1a588c9ea48f18d12258b7caf735",
+      "version_id": "B2R6auuoVUhxK2B0pzHAROXj2Xt8reMP"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1037318,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00111.json",
+      "sha256": "a5135e6a734498bb4d16635db4e71b7c9552127fdc3382a3a9fdb26fa1f45f04",
+      "version_id": "4n9mnR6SLwXUVOG54DfzY0PYp5REIBrC"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1042187,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00112.json",
+      "sha256": "ad93d5d9abf6cae9f6ac71b44fc0c00b4eed082a2cc6f9668824ecc0bdf93a46",
+      "version_id": "0j0dV6GPID.mhIVwKcQYWM95C3GCw2Zj"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1042238,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00113.json",
+      "sha256": "a3a15c21b4b9f630e2a567ef5c370a7496d7dfaa7b3c12d1a47ee5c6dc977d64",
+      "version_id": "0GibQPaIQweAgE_WjUjHc5GvTev4IFRB"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1026814,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00114.json",
+      "sha256": "453b363182c5c54c9136b2da32662e91759aa26cd4d5cbbedb10c8fc3a3f87d3",
+      "version_id": "MpHFEzHynS3r1gTaO_Y_EW9DtmjNc9ei"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1034056,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00115.json",
+      "sha256": "eb0d6af350c20e5a453a02f11e32082aa42a1c9a687805b8a5e8255655619715",
+      "version_id": "4IdxMJMDbKLpMfSgmh2yOHIxtxgzz_7I"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1037858,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00116.json",
+      "sha256": "c50ce0f8f011680762182987c44e07e7112074f3858ab2205444aff05bc3cca1",
+      "version_id": "vpZ0YbTjUZw2cYkEcsad4yLRR6ovaNAN"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1025512,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00117.json",
+      "sha256": "e4e8b5dc302e10620aa29d8a52d4cba3ea2b288efc5fbd70d244494e516397e3",
+      "version_id": "7uvbSkTve5tH1UaKbDiZ5P28f3MsQSpQ"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1028665,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00118.json",
+      "sha256": "1feaf14834ff9621712b7939b49698f3e98b98ced044d49961445cc37caca76c",
+      "version_id": "XMA8dCgm24qDxDdGKQYFQNeYL0ijEofa"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1044537,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00119.json",
+      "sha256": "a683b9fc1a03d1d65b565a8aebca954da80e017671d3e01dbb9509f9330e5d27",
+      "version_id": "Vzwl9Tg2OLdo_WamXH3nMmvYqbD7NLr1"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1023684,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00120.json",
+      "sha256": "43823b8d1ba3239757350f3de893886ca57e1b444a415db77b501efb379ba80e",
+      "version_id": "Ed7Um00.427wjuCVXoFBwNLdRMuRKVIw"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1002581,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00121.json",
+      "sha256": "7b1e585f5ddc71caa0a5a8d05d1c95675f80aa2ce96a3ee9d6e5d5abd02ab419",
+      "version_id": "l.Dukv76cOZdmDBjhY5ihamkj9iu906Y"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1037401,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00122.json",
+      "sha256": "4baf181dde443740bcddbc2709ed6524378a3ecee40dbf62d34b7dd7fd8691e2",
+      "version_id": "aAexx4pOXtnDRy8JAlYOEyBrK2Rdcx6l"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1039595,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00123.json",
+      "sha256": "e422ffd544dc40fc6cea6e4f3968720a10db08040c2c2468209b56d944498715",
+      "version_id": "6tr.DptmHBw6pOui9M4Pw6iEL8jdZHzh"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1037533,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00124.json",
+      "sha256": "dab594208a3000242139850e813220e3b0d65b06a15eb04ed4824530274c8fc3",
+      "version_id": "OU_mekHrIGuyuVl1uYf50uicV.9iDvjX"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1037085,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00125.json",
+      "sha256": "1238895c78abcb087ac3896c2a2b824541ad05623bbf12dc2b4b42d143b850be",
+      "version_id": "MmsmOmgrHIokGuPw04NhtMbndjBDFZlH"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1041965,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00126.json",
+      "sha256": "1cb5e8ceb132424268432e5904eb440f4e07ad08c04a83a0c917d9dd90fd73a0",
+      "version_id": "6sm9VWuWgbKSassByF9XNCdEaR7z0tfi"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1041796,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00127.json",
+      "sha256": "2aedcdb8c6ecb9f81afa74f73c16541253337d9ae62626459d44216abd1a3a38",
+      "version_id": "cH5h_KuD0f_S6KyRcXtAQzrEIU5v2nVz"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1036027,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00128.json",
+      "sha256": "419063eb4f54799944f1e836d807bc897289ad2d712c4e389b43d37f9e4c7897",
+      "version_id": "id4e3e.1DUSAHsxI_t11YCwRpBmzIF3a"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1046544,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00129.json",
+      "sha256": "bf97f12abc75da2d77574611c4e3be6d4f6b7c6728eb8de988a5db4d76b76e47",
+      "version_id": "Djq14D27nzJqu3mdJViTgqxcLzyMsa21"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1029851,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00130.json",
+      "sha256": "b4ba12bb77fa99fb5134d47baedf3c97b7785ce64a8db063a869a61152e936fa",
+      "version_id": "h38sKDi5DxwFv69zjyY0AcF_6DQ1RXDt"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1042859,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00131.json",
+      "sha256": "74fcd055f6a653ff0d4ef85dc643e6a0d69d55677ca7663800ff081d505c384c",
+      "version_id": "S3LJxejLGtdRbqHYITR4nm5ovE7q1Ik2"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1043654,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00132.json",
+      "sha256": "052ecbc8762c8e5702ade4231934ba3e9b4b160044a3583f88fd093a2a202c83",
+      "version_id": "r46b7ly9o7LTOt7yZV0vI.BCIhJvfn6x"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1048545,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00133.json",
+      "sha256": "7dcde75616d0002e1381817f5830b58113a802ffd8484e1fb2b5accb59e25d57",
+      "version_id": "7oiPNZCWK3G7efoMj82k3rn9pfslF07k"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1048342,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00134.json",
+      "sha256": "2c6791497cc94d2d3bbf8e681f7fdfea867e275f2ab08c1d40ea55120d2ab8b7",
+      "version_id": "Um1ug8qbSGXYUE21cdmfZ0KDUZfy3r_b"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1033576,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00135.json",
+      "sha256": "c8384401831163e571bef1275f7b63c9229376e56226aa5798672c48fc652016",
+      "version_id": "dUKPrknAtZyEEVk4FK5z8YxOIFAoVsU."
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1030360,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00136.json",
+      "sha256": "b19fe7fe99f76074da4dfe3870a5db5d85ec78862e045736748bec17da0fc871",
+      "version_id": "QFvGhG5lj8jzooBj8sHVYFmUnhv0b8c0"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1017578,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00137.json",
+      "sha256": "751acdab7b962d9fe9273344146b498e6511f79204323183122f4d1d86aca752",
+      "version_id": "CyNPf9B4DrHzs_gsaZYv2Bi8M3q07qDT"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1030051,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00138.json",
+      "sha256": "52a285c96a749152743bca48e45f31e75c2ad90031ef0a908a2a29fc9e158cf9",
+      "version_id": "0_oj7hmHcsyIVQl7yu3ZetoU49TGDtVh"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1035896,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00139.json",
+      "sha256": "dcd03e26c8475588bc8f0d769a1ce61e7f64a02460c58166e06a69afa08d7ee9",
+      "version_id": "sbgGHi4zuRT76WmDNUscqqTRI1RHiasS"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1042498,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00140.json",
+      "sha256": "6dd5c23e66c7aa82615d397369b71be0d4ef92e8a8c6b9e1cc61f1f9bc897908",
+      "version_id": "h0fWfqq7TT8o9P.I_pxLCmaBCtBqOjUh"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1032737,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00141.json",
+      "sha256": "05c97eb9cee86c26f378e51be58c0b95051a6dc56a46524e323427b693b804bf",
+      "version_id": "VK0pvUZvH4WY21RWrRecRYwQnU7IVdx6"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1045652,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00142.json",
+      "sha256": "e2dabe0ff4da38752128612d1d087fd7e22df1e42e0d5f0a96be52bd27beb185",
+      "version_id": "c4xFdx0.JUiswkFCLlGrknlp6M.11vfM"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1034911,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00143.json",
+      "sha256": "1cb8a359c9bd91aa066f42a0a879542709609cfc460cef3160e9ebf1c62c09ee",
+      "version_id": "ugQPHBLMECWhWHpPduIBiMLmDszul8rh"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1039517,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00144.json",
+      "sha256": "77007a385516786ce88e98d3718056c9587eaabc14a26c33619cba3547d71838",
+      "version_id": "puOm5ByDy8SYWFm4e3wfkiNqVvhoN4_w"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1040594,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00145.json",
+      "sha256": "eb64a6392513e207371a51a6be97e52fe87fa24632cb20aa6065644d1ed45b4e",
+      "version_id": "rwnzfUar6BTcJizRCi25CDKIgkKDWSHq"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1042549,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00146.json",
+      "sha256": "be197d6350871d5781c44bc15a33a3ed6be31b5670c28ecba8506fb36c627f20",
+      "version_id": "U5IKzYDgqGNOJ7k4TsfAQIt0zJE.0zsc"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1004320,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00147.json",
+      "sha256": "7f720b466736380a18aed3fc149fba77aa04c3cb164b3e3d08c12dfe2886c324",
+      "version_id": "Ls..5Gc_pKatKMZA6S43THmhAZKYfK7N"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1029379,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00148.json",
+      "sha256": "ea5136e0d27316119ba020844d2f799daae8591f97437c748fb290fae26a0a8f",
+      "version_id": "YAS8H1igO9xORMVZ9VrMNWGP_EDjiB0H"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1043520,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00149.json",
+      "sha256": "256e8706ba86566baaac94ede283650381432585e4da5e00abdcf994c48e58ea",
+      "version_id": "C3dbLfWDjluGQOONkgxapsiPacaOO61Y"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1029226,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00150.json",
+      "sha256": "5ab34c03105de34b893691ec102eaf5584d065d6982a9e242d111edcc3adc6f0",
+      "version_id": "UXdy5PJW3DIXn.aEKToiU854p0e2vJuR"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1031296,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00151.json",
+      "sha256": "97577668ddc372f2cc9a9234186877b10c96a7bbdc059b413ad67151d39fa810",
+      "version_id": "S1g.3b0EhwN_T5v9PssezNW6PIBZxmQO"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1022638,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00152.json",
+      "sha256": "1e861b15f786abb3a3a842afdb7e036dde49d29b714f46c1ae0d04d894589ded",
+      "version_id": "BpmXFtWmcT2vbCgH2M2dJCQXvRLbyzq1"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1044238,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00153.json",
+      "sha256": "858c3527452c452f7bb3747fe3ff91c5c099fd15d4162cc861d31da7c56b6556",
+      "version_id": "DDs0TXR_X4cd9mhG_0dIDw35bdvmS2iU"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1018581,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00154.json",
+      "sha256": "6dfded56b64c41fca76c107206e6c6e3a999c4cc07d0fee93453a6cfaab26bcb",
+      "version_id": "nGSdooJcJBzFJ9Yhqf0PwBxR1DQqmF8P"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1033908,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00155.json",
+      "sha256": "6e2edde2d6e02a1c0ca49251e856cf438c6ba0b89084a58ab92f7a805554c8ae",
+      "version_id": "YHr02xpOdaIJQdcifD.B6c6a_Q9rxJ.V"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1045994,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00156.json",
+      "sha256": "359bf7e7d5701a631a2c3b3f7d5c758be2ba16b81aee0ff573ff0ca3e705a9da",
+      "version_id": "6wNleLClU69f0aMRCH0E5WJiH7ZnErOC"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1033110,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00157.json",
+      "sha256": "36bae589ab296c6d9ff28f473b4683275b835545cffc6bf204797bb49e6382d9",
+      "version_id": "xKKuESG3Ray4DNEloAdb79Usxzn4l.jx"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1045477,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00158.json",
+      "sha256": "3de81b0eba5f0b9db20522505a539168658fd9c364281303d0e953fc3ed41f6f",
+      "version_id": "YgZjMta0PmypTzNaM0g0mKFGdgIFvUMS"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1028086,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00159.json",
+      "sha256": "369e1fe9686b5352dc3cf5a61020d1ee57891525c7132745ef65cf0b03d171c5",
+      "version_id": "Aay9xIEKdGccfixur_70rpInFxqsw5Ye"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1037095,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00160.json",
+      "sha256": "e760ebd22d661e5b460c2424f920a0f8d5f7347f5e180d72b84eaed4c4f69ef1",
+      "version_id": ".dt38s5JyWP44_gvrN61XpE_7ARAvysG"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1030423,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00161.json",
+      "sha256": "4e64628036ea8219ee84fed8638775bd2a1feea8ac40bf5298210ba17f825e37",
+      "version_id": "g09JuucnP8pt_P0vnDemEM73sB2nU4D5"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1029248,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00162.json",
+      "sha256": "bc8d4e0453b21d82a49e29dafa92c65e7dd40c075bc565ead8f2693716d16f39",
+      "version_id": "RJV7xBIox_D2ndtBXM3mFcfZul9bJ99k"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1037511,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00163.json",
+      "sha256": "789a53b2b53c730c1309960f5e1a4d2e3454932f51ab03ac1f625f629483e243",
+      "version_id": "vtONcThkUX26mHPjpwW9n3M6K3J1eRHs"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1036579,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00164.json",
+      "sha256": "ef060211946801f067b109d2f2584ab8e289b2b0731833f9235575a737e1a966",
+      "version_id": "ryxzjL4yb6dNvo.o2JknSRW97SiuoLMt"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1032764,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00165.json",
+      "sha256": "8e02496ea4d5c76879fb67e71f2be48dfccf74986e67f43921804837a6fff2c4",
+      "version_id": "0unTNOsBr_v_st5H_qxniQjQ2qLodauQ"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1023334,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00166.json",
+      "sha256": "9de361146bda2bd0a08434abc2a443d972d2f7ac485232ada8f4900da9a4a35d",
+      "version_id": "LnP_oxT8jNfHCXq2O_G6yKrpQeQm_rp5"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1039203,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00167.json",
+      "sha256": "60d665f7d5ed4ee5e7b208751776523a548b5b9aa213f994f756156782f414de",
+      "version_id": "QwfhJyV_BZJE.dA9yROurnZtEaxuzvgU"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1032212,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00168.json",
+      "sha256": "20beb507c25e8af6558e22eb4be86cdaad8ede558ff733b119db585ee6dc5dc1",
+      "version_id": "MNi5eR4ohRtRySmu4F6_G8rMCy.GgwWv"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1042044,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00169.json",
+      "sha256": "9afe4dd6d71c57501733df90fe7cb80e34df4bd347912579948019d448c4148b",
+      "version_id": "EVgWOT1NffH6MMpHCfkaZBIsvzX3OFA_"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1043253,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00170.json",
+      "sha256": "d63bec3017b0584019789f01ad106ec609d0245888f65a7c5698ab2315e627d6",
+      "version_id": "8lNh_42NhL3RK4gpQ8o4a3JhvjTejNyU"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1048145,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00171.json",
+      "sha256": "531e89cd1703c0b72681f69b2844fa2fae572cd21b2b7411b74b7f4a98c2c392",
+      "version_id": "b0iAOa0WP6vW_vGKKjX_DUl3J3HYJVXZ"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 1038428,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00172.json",
+      "sha256": "d3521c2698a7792f2c24155a9e3ee13df061c4b72980b62be63688a6791d05e8",
+      "version_id": "5R6UPZJElnPZTsXgSoIB3MsZM8sPB.zu"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "byte_length": 50171,
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.part00173.json",
+      "sha256": "5e249ba27b55470ddffa06dd731af5268658afaf1c3582e0e5c3b84098dfd308",
+      "version_id": "wnS9yNStG5QGgrlHruAnSPvLk7bVhCpI"
+    },
+    {
+      "bucket": "opal-data-49financial",
+      "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.manifest.json",
+      "version_id": "BlJIpUfo4PUWJsCsrTb.0tpOjpHSwSJC",
+      "sha256": "c48f89ed8597fd061d7b018c502d345764527f5e5de33eb5d2060a918efb46a2",
+      "byte_length": 297051
+    }
+  ],
+  "immutable_write_count": 177,
+  "index_write": {
+    "bucket": "opal-data-49financial",
+    "byte_length": 526,
+    "key": "irpt/49financial/platinum/holdings/current/manifest.json",
+    "sha256": "1997521dba68a8322f34203b51f0a12971c20ae8d0cbd60828b892503f00fef3",
+    "version_id": "QC.bs6a5w9.HeojU8ugboRzNbhM.3mfD"
+  },
+  "total_writes": 178,
+  "measured_plan_before": {
+    "multipart": true,
+    "parts": 174,
+    "immutable_creates": 177,
+    "index_writes": 1,
+    "index_precondition": "IfMatch \"ea06a1a0bf21d58e9ee172a77111a236\""
+  },
+  "acceptance_receipt": {
+    "business_date": "2026-09-22",
+    "date_row": {
+      "manifest": {
+        "bucket": "opal-data-49financial",
+        "byte_length": 297051,
+        "key": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.manifest.json",
+        "sha256": "c48f89ed8597fd061d7b018c502d345764527f5e5de33eb5d2060a918efb46a2",
+        "version_id": "BlJIpUfo4PUWJsCsrTb.0tpOjpHSwSJC"
+      },
+      "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56"
+    },
+    "firm_id": "49financial",
+    "index": {
+      "bucket": "opal-data-49financial",
+      "byte_length": 526,
+      "key": "irpt/49financial/platinum/holdings/current/manifest.json",
+      "sha256": "1997521dba68a8322f34203b51f0a12971c20ae8d0cbd60828b892503f00fef3",
+      "version_id": "QC.bs6a5w9.HeojU8ugboRzNbhM.3mfD"
+    },
+    "schema_version": "irpt-holdings-acceptance-v1"
+  },
+  "manifest_schema_version": "irpt-holdings-manifest-v2",
+  "partition_count": 174,
+  "source_objects": [
+    {
+      "bucket": "opal-data-assets",
+      "key": "schwab/08335338/silver/dim_balance/date=2026-09-22/data.parquet",
+      "version_id": "TPxPSsG_zuCzYtyJWiMnPzfsKhIBuKeo",
+      "byte_length": 574520,
+      "sha256": "3a343f23dd2f4d8eb68008abdb3512f1a14466a7d5a598862b64bd75f1c54b72"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "schwab/08335338/silver/dim_position/date=2026-09-22/data.parquet",
+      "version_id": "Xqy4u6PRXGajUt_279HsCakDDoCQwBMZ",
+      "byte_length": 2618533,
+      "sha256": "f548a29d44ccfb22c6510911ab8444e0534a7c80c99e34041c1042252fe9dd5b"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "smartx/platform/silver/fact_allocation_account_map/date=2026-09-23/data.parquet",
+      "version_id": "vZloqyslAlTjNihKonJvGv1X1dXz3_pb",
+      "byte_length": 792660,
+      "sha256": "82a208cd46100880b1dcb6c11baa7523cb52081f373453808d82b0d3e3bc8dfd"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "smartx/platform/silver/fact_allocation_positions/date=2026-09-23/data.parquet",
+      "version_id": "S9HKEcKJ.F1C5AOdyLtF_QwBfvPH7JnG",
+      "byte_length": 3333786,
+      "sha256": "0118e9e84ae2857a4290ca80c5fa9638c52b2c337aff116ce0812659b5ece199"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "smartx/platform/silver/fact_allocation_valuation/date=2026-09-23/data.parquet",
+      "version_id": "FQCVwkzz3mat2gd8CbPJJ_Dsfd0ZKc03",
+      "byte_length": 1228027,
+      "sha256": "32ec45971c6d1d1cfc6ec1715b37582b9157b83b6f49a3170b10e5aec6787cb7"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "smartx/platform/silver/fact_model_allocation_roster/date=2026-09-23/data.parquet",
+      "version_id": "o8YBVxWccdkvClN.Cgf0C_6H7IvmsIOE",
+      "byte_length": 592243,
+      "sha256": "de00d14bad6add98df3c15e6d65a764278cb4c159fd21b92745d85b26edd3ef0"
+    },
+    {
+      "bucket": "opal-data-bd",
+      "key": "investor-reporting/directory/2026-09-17/directory.json",
+      "version_id": "KM0ObKDodUCHU2khf0j2VFuDCNMS1_V6",
+      "byte_length": 6464753,
+      "sha256": "aa002cb917b1689656a8c758413cc2d43f5d719467759ffade816cb955fac742"
+    },
+    {
+      "bucket": "opal-data-bd",
+      "key": "investor-reporting/directory/latest.json",
+      "version_id": "zS462b.owAFAH14qMgc997hcyTONESWC",
+      "byte_length": 272,
+      "sha256": "7e850bd3c02933ddd5f3b3f765a1cc97fe72f3464e03f887dc9d221742492e19"
+    }
+  ],
+  "reader_matrix": [
+    {
+      "accounts": [
+        "acc_000177fc677e10d397f36d43"
+      ],
+      "as_of": null,
+      "status": "READ_OK",
+      "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+      "nodes": 13,
+      "labelled": 13,
+      "model_leaves": 0,
+      "selected_market_value": 31379.06
+    },
+    {
+      "accounts": [
+        "acc_000177fc677e10d397f36d43"
+      ],
+      "as_of": "2026-09-22",
+      "status": "READ_OK",
+      "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+      "nodes": 13,
+      "labelled": 13,
+      "model_leaves": 0,
+      "selected_market_value": 31379.06
+    },
+    {
+      "accounts": [
+        "acc_000177fc677e10d397f36d43"
+      ],
+      "as_of": "2026-09-23",
+      "status": "EXPECTED_REFUSAL",
+      "reason": "no accepted holdings revision for date"
+    },
+    {
+      "accounts": [
+        "acc_0010de3a921e3e1fbb55bd28"
+      ],
+      "as_of": null,
+      "status": "READ_OK",
+      "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+      "nodes": 19,
+      "labelled": 19,
+      "model_leaves": 1,
+      "selected_market_value": 265119.6
+    },
+    {
+      "accounts": [
+        "acc_0010de3a921e3e1fbb55bd28"
+      ],
+      "as_of": "2026-09-22",
+      "status": "READ_OK",
+      "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+      "nodes": 19,
+      "labelled": 19,
+      "model_leaves": 1,
+      "selected_market_value": 265119.6
+    },
+    {
+      "accounts": [
+        "acc_0010de3a921e3e1fbb55bd28"
+      ],
+      "as_of": "2026-09-23",
+      "status": "EXPECTED_REFUSAL",
+      "reason": "no accepted holdings revision for date"
+    },
+    {
+      "accounts": [
+        "acc_000177fc677e10d397f36d43",
+        "acc_0010de3a921e3e1fbb55bd28"
+      ],
+      "as_of": null,
+      "status": "READ_OK",
+      "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+      "nodes": 32,
+      "labelled": 32,
+      "model_leaves": 1,
+      "selected_market_value": 296498.66
+    },
+    {
+      "accounts": [
+        "acc_000177fc677e10d397f36d43",
+        "acc_0010de3a921e3e1fbb55bd28"
+      ],
+      "as_of": "2026-09-22",
+      "status": "READ_OK",
+      "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+      "nodes": 32,
+      "labelled": 32,
+      "model_leaves": 1,
+      "selected_market_value": 296498.66
+    },
+    {
+      "accounts": [
+        "acc_000177fc677e10d397f36d43",
+        "acc_0010de3a921e3e1fbb55bd28"
+      ],
+      "as_of": "2026-09-23",
+      "status": "EXPECTED_REFUSAL",
+      "reason": "no accepted holdings revision for date"
+    }
+  ],
+  "reader_matrix_proof_class": "LIBRARY_UNDER_USER (the function reads under its role; Andrew's retest is the exercised arm)",
+  "unique_account_count": 7522,
+  "node_count": 151697,
+  "reconcile": [
+    true,
+    1835875624.28,
+    1835875624.28
+  ],
+  "currency_status": "ATTESTED",
+  "retained_inputs_unreceipted": {
+    "IRPT_49F_TAX_MEMBERSHIP_SNAPSHOT": {
+      "path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\.runtime\\cro-m-taxsma-20260923\\taxsma_workbook_projected_snapshot.json",
+      "sort_keys_sha256": "032c68db251c871c75b558464f75fc0ea3a42a8f95505f438bb4727c0e8711eb",
+      "served_provenance_match": true
+    }
+  },
+  "head_readback_after_the_act": {
+    "address": "s3://opal-data-49financial/irpt/49financial/platinum/holdings/current/manifest.json",
+    "etag": "\"732fa6d0ea65d990f94664628b1dd945\"",
+    "version_id": "QC.bs6a5w9.HeojU8ugboRzNbhM.3mfD",
+    "last_modified": "2026-09-24T09:00:43+00:00",
+    "rows": {
+      "2026-09-22": "5a25ae76"
+    },
+    "version_history_latest_first": [
+      "QC.bs6a5w (this act, 09:00:43Z)",
+      "9Vtkh61A (3d59c80b, 06:58:45Z)",
+      "EvNOT_ocng (7c0e7ce3, 01:46:03Z)"
+    ]
+  },
+  "what_is_served_now": {
+    "display": "unchanged from 3d59c80b (151,582 of 151,697 labelled)",
+    "custody_units": {
+      "with": 5836,
+      "security_nodes": 120097,
+      "observed": "5,836 of 5,836",
+      "target_model_assets": "114,261 of 114,261 carry none by design"
+    },
+    "price_facts": 0,
+    "delta_vs_prior_served_3d59c80b": "0 ids added / 0 removed / 0 changed outside valuation_facts and clocks"
+  },
+  "rollback": "re-point the 2026-09-22 row to 3d59c80b under a fresh IfMatch on version QC.bs6a5w; every object retained"
+}
