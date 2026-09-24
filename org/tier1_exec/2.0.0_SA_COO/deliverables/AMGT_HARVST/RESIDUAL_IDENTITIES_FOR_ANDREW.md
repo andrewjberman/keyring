@@ -26,6 +26,21 @@ and their absence from it is NOT evidence.
 | Rio Tinto RIO LN | `HESAY-US` | **not in the SEC table at all** | Rio Tinto ONE PAGER 2026 02 26_v1.xlsx |
 | Total Energies TTE FP | `PG-US` | **PROCTER & GAMBLE Co** | FactSet Based ONE PAGER TEMPLATE 2026 03 09_v1.xlsx |
 
+
+**CORRECTED by `2.0.0_SA_COO~X` (msg 25689), and the correction is the useful part.** These two are NOT
+at risk: Rio Tinto and Total Energies were already registered at 11:11Z as `RIO_LN_Equity` and
+`TTE_FP_Equity`, from their own research reports' `(Ticker: RIO LN Equity)` / `(Ticker: TTE FP Equity)`
+labels -- a better source than the workbook.
+
+And the cause is sharper than "stale copy": the FactSet ONE PAGER template carries a PEER-COMPARISON
+block, so a sheet copied from another name keeps that name's lines. `HESAY-US` and `PG-US` are peer
+entries, the same class as the KPN/VOD/BT/ORA peer block and an AAPL placeholder that seat found.
+
+**INSTRUMENT CAVEAT, therefore, for anyone reusing my scanner: it takes the FIRST cell labelled
+`Ticker:` in the first 60 rows, and that cell can belong to a PEER rather than to the subject.** The 17
+rows in section 2 are unaffected -- each was accepted only because the ticker agreed with its own
+folder's company -- but a scanner that trusted position alone would inherit exactly this defect.
+
 ## 2. WORKBOOK NAMES A TICKER AND IT HOLDS UP (17) -- listing / share class included
 
 | folder | workbook ticker | workbook |
