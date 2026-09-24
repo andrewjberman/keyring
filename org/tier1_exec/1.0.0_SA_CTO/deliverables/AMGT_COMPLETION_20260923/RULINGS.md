@@ -253,6 +253,72 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-49 -- ⭐⭐ **PRECONDITIONS (3) AND (4) GRADE PASS ON THE ADOPTED DISCRIMINATOR.** AND THE COLLISION FORK IS RULED **COUNT-FIRST**: THE RULE GUARDS FOLDER-vs-FOLDER AMBIGUITY, AND A UNIVERSE RECORD'S FOLDER IS NOT A COMPETING VALUE -- IT IS ABSENT
+
+`2.0.0_SA_COO~Z`, 10:18Z, on `closer/amgt-peers-z-20260924` @`a125f8be8b` (one commit over CLOUD
+`85543bf200`, branch fast-forwarded first, portal gitlink unchanged at `1267a67e`). LOCAL.
+
+### (1) BOTH PRECONDITIONS GRADE **PASS**, ON THE ARMS THIS SEAT ADOPTED VERBATIM FROM `2.0.0_SA_COO~X`
+
+| arm | expected | measured | |
+|---|---|---|---|
+| before any registration | `MEASURED=194` | **194** (records 254, universe_registered 158) | PASS |
+| after 3 fake registrations | `194 + N` | **197** | PASS -- **the arithmetic closes** |
+| NEGATIVE, universe withheld | `36` | **36** | PASS -- **this is the arm that makes 194 an answer rather than an oracle** |
+
+⭐ **THE NEGATIVE ARM READ EXACTLY 36, WHICH IS R-40's PREDICTION MEASURED.** R-40 said a corrected fire without
+the universe input *"would rebuild today's pool WITHOUT the universe/v1 source and replace the 194-key object
+with 36 + 20"*. The withheld-universe control returns **36**. **The defect's own signature reproduces on demand,
+which is what distinguishes a fixed mechanism from a mechanism nobody exercised.**
+
+**Unit arms** (`test_add_security_batch.py`, boto3 patched to RAISE -- so no arm can silently reach S3):
+N=1 -> **1 put** (`IfNoneMatch *`); N=20 -> **1 put with all 20 keys in ONE document**; a second identical run
+**mints nothing**; a foldered request on a universe-measured key **REFUSED rc 4 before any call**; unreadable
+universe **rc 5**. Identity tests **89 of 89** (13 new).
+
+⭐ **AND A VOLUNTARY FINDING ON THE WAY, WHICH IS THE PART THIS SEAT WOULD NEVER HAVE ASKED FOR:** two
+PRE-EXISTING test modules calling `main()` *"silently reached S3 for the universe after the patch -- they now
+pin it."* **A test that silently touches a live plane is a control that grades the network, and it was found by
+the patch rather than by the suite.**
+
+⚠ **ONE PROPERTY IS STRUCTURAL ONLY THROUGH `--batch`, and that seat says so itself:** twenty per-name
+`--write-pool` calls would still put twenty times. **So precondition (3) holds for the INDUCTION'S CALL SHAPE,
+not for the module unconditionally** -- which is why (a) below matters.
+
+### (2) THE DESIGN FORK, RULED -- AND THE SEQUENCING IS THE RULING
+
+**The question** (`2.0.0_SA_COO~Z`, for `2.0.0_SA_COO~X`'s pre-flight and this seat): the module's standing
+collision rule REFUSES a key already `MEASURED` on a **DIFFERENT folder**, never merges. It now sees the **158
+universe keys**. **A universe record carries NO folder**, so a corpus request `--folder X --bloomberg "R CC"`
+whose key the universe measures reads **REFUSED rc 4**. Should a corpus folder instead **ENRICH** the universe
+record (folder association + LEI/CIK)?
+
+⛔ **RULED COUNT-FIRST: THE DRY RUN RUNS BEFORE THE DECISION LANDS, NOT AFTER.** That seat already named the
+instrument and it costs nothing -- one dry run of the batch with the universe pinned, counting
+`REFUSED: security_key ... already MEASURED` lines, **ZERO vendor calls because a collision returns before the
+call.** ⭐ **The count decides whether this fork is a live question at all:** 0 of 20 colliding makes it moot and
+deciding it today would be premature scope; 20 of 20 means the corrected induction lands NOTHING and the design
+must change before the re-fire. **A fork whose magnitude is one free query away is not ready to be ruled on the
+merits.**
+
+**AND THE PROVISIONAL REC, STATED SO NOBODY WAITS ON THIS SEAT:** ⭐ **ENRICH, not refuse -- because the
+collision rule guards an ambiguity that is not present here.** Its purpose is folder-vs-folder: two different
+folders claiming one key is a genuine conflict about which report is authoritative. **A universe record's folder
+is not a COMPETING value, it is an ABSENT one**, and a rule that refuses on a null is over-firing against its
+own intent. Enrichment also moves no resolution -- the key is already `MEASURED` via the universe, so adding
+folder association plus LEI/CIK is **additive metadata and not a re-resolution**, which keeps it clear of the
+never-widen surface. ⚠ **This rec is PROVISIONAL and does not authorise a code change**: if the count is zero it
+is never cut, and if it is non-zero the change is a cell on `2.0.0_SA_COO~Z`'s surface with its own acceptance.
+
+### (3) WHAT IS OWED, AND BY WHOM
+
+`0.0.0_AB_MSTR~Z` holds the drain of `a125f8be8b` (no gitlink move). `2.0.0_SA_COO~X` holds the induction's
+single-call shape and the dry-run collision count. **The re-fire's never-widen pair still PRINTS THE WRITER
+COUNT -- two, on one builder once the drain lands** -- and the one-version-per-run discriminator at the re-fire
+is that seat's under its pair. **Preconditions: (1) MET, (2) MET on the drain, (3) PASS, (4) PASS.**
+⛔ **(2) IS NOT MET UNTIL THE DRAIN LANDS** -- the fix lives on a branch, and R-37's own generalisation is that
+a producer existing only on a branch is a writer the shared tree cannot see.
+
 ## R-48 -- ⭐⭐⭐ **THE PRICE PRODUCER ALREADY WORKED; ONLY THE TRIGGER WAS ABSENT. NO CODE WAS WRITTEN.** B1/B2 MET, B3 **APPLIED-NOT-EXERCISED**, AND THE 09-29 CLOCK IS MATERIALLY DEFUSED
 
 `0.0.3_BG_BBGTerminal`, 10:14:51Z, milestone **interface-published**, ~40 minutes after the mandate landed on a
