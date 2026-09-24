@@ -204,6 +204,29 @@
     "world_is": "The field this cell owns is fed and independently verified (IVE1-AC2, VERDICT: L2-FED); the STRUCTURAL gap W3-S1 named for an intermediate direct child (one L1 tile, no further drill for the models/sleeves between it and its own leaves) is neither closed nor claimed closed by this order -- it is out of the field mapping this cell's own worker face states, and CategoryViewTree.tsx (read, never edited, per BOUNDS) has no consuming L3 for it regardless.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not blocking. Filed to keep W3-S1's residual scope precise for whichever cell (if any) is later charged with an L3, now that the direct-child level W3-S1 also named is measurably fed."
+  },
+  {
+    "id": "DSGN_IRPTV1-W5-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~5",
+    "surfaced_at": "2026-09-24T00:00:00Z",
+    "one_line": "IV-e-2's smoke fixture required two fixes scripts/ui-smoke.mjs's own diagnostics could not name (a top-level firm_id/data.verified_request_firm_id mismatch and an unprojected_grant.kinds array where the parser requires a record), and its --fill/--click/--clicktext vocabulary cannot drive the page's role=\"combobox\" Client search control at all -- both measured directly, both worked around without touching scripts/ui-smoke.mjs (out of this order's <paths> grant).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/contracts/envelope.ts:359-380 (parseIrEnvelope): every non-refused envelope, on every operation, is refused with EnvelopeMismatch('unprojected_grant', op) unless body.unprojected_grant.kinds is a RECORD (isRecord, which excludes arrays) -- round 1's seed fixture (fe-s-14-cottonwood.json) and this cell's own first draft both carried `kinds: []`, an array, and both threw. Isolated by a direct bun run of parseIrEnvelope against the fixture body, no browser: 'THREW: EnvelopeMismatch ... unprojected_grant' before the fix, 'PARSED OK' after (kinds: {}).",
+        "portal/src/pages/InvestorReporting/contracts/envelope.ts:410-413 (the resolve-scope-specific check): a non-global resolve-scope response is refused with EnvelopeMismatch('firm_id', op) unless the envelope's TOP-LEVEL firm_id equals data.verified_request_firm_id. Round 1's seed carried firm_id='fir_c07701a9d3b5e2f4860c1a7b' at top level against data.verified_request_firm_id='F-CW' -- mismatched, throwing on every parse despite the request itself matching a declared fixture URL (so scripts/ui-smoke.mjs's own FIXTURES-MATCH line reads 'matched', the exact state round 1's proof instances described as 'resolve-scope unresolved' without naming why).",
+        "measured empirically via scripts/ui-smoke.mjs itself: '--fill \"Client search=Cottonwood\"' -> 'FILL-FAIL: Client search=Cottonwood -- locator.fill: Timeout 30000ms exceeded' (getByRole('textbox', {name:'Client search', exact:true}) finds nothing); a direct DOM read confirms the control's accessible role is \"combobox\", not \"textbox\" -- matching the SAME gap already named at org/missions/D9/IRPT/IRPT_FNTEND's FE-s-78 (task order text, this project: 'the accessible name exists but is not role=textbox') and worked around there and at org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_MVP_P/{mounted_selection_cases,header_cases_dcf5}.mjs with standalone Playwright drivers, not an edit to scripts/ui-smoke.mjs.",
+        "the naming gate's one hit was on a VALUE inside the new fixture ('bd-2026-09-23', a source_revision string this worker invented), not on the fixture's own FILENAME as BOUNDS anticipated ('a firm token in a NEW file's text is refused by the naming gate ... if it does refuse, file a row citing W3-S2 and name the fixture by a neutral filename') -- renamed to 'src-cw-2026-09-23' and the commit landed clean; W3-S2 (the lookup()-less JS/TS gap) is the same underlying gate, cited here rather than re-argued."
+      ]
+    },
+    "spec_asserts": "IV-e-2 worker face (b): 'Build ONE new fixture ... whose stubs let the page reach a RESOLVED scope with the Cottonwood account selected and BOTH tabs' bodies mounted ... If the page needs a --select/--click sequence, put the exact ui-smoke.mjs command in the result file.'",
+    "world_is": "The fixture alone was necessary but not sufficient: TWO independent parser-level defects in the fixture's OWN shape (not the app's) blocked resolve-scope entirely regardless of the click sequence, and once fixed, no ui-smoke.mjs invocation -- with or without --click -- can reach the account SELECTION step, because that control is role=\"combobox\" and the script's click vocabulary is role=button/tab/text-node only. The order's own required IVE2-AC2 invocation (no clicks) tops out at 2 of 5 matched routes (resolve-scope + the page's own unconditional initial directory-browse) and correctly shows IdentityCard, not the error page; a supplementary standalone driver (this order's own deliverable, not scripts/ui-smoke.mjs) reaches 5 of 5 and mounts SecurityList and PerformanceHeadline in the same run.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking -- both defects isolated and fixed before the graded runs; the instrument gap (role=combobox) is a REPEAT of a class already named at IRPT_FNTEND FE-s-78 and already has a working precedent (a standalone driver), not a new open question. Filed so a future cell reusing scripts/ui-smoke.mjs on this page inherits the fix instead of rediscovering it."
   }
 ]
 ```
