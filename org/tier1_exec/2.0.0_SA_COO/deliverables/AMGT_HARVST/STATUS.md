@@ -1,78 +1,109 @@
-# AMGT_HARVST / Lead Panel step 2a -- current state
+# AMGT_HARVST -- current state
 
-Seat `2.0.0_SA_COO~Y` (Claude, site Z, PID 37052; the Codex companions were reaped on Andrew's word 2026-09-24
-~03:0xZ). Mandate `COO_Y_LEADPANEL.md` as corrected by R-19 @815d6c75da and R-20 @9faf3497d4. One project on
-this lane: AMGT (the IRPT ~Y instance is dead, PID 27444). Own worktree `C:/tmp/coo-y-leadpanel-20260924`,
-branch `closer/amgt-leadpanel-y-20260924`. Trunk `CLOUD`; commit only, `0.0.0_AB_MSTR~Z` pushes.
+Seat `2.0.0_SA_COO~Y` (Claude, site Z). Mandate `COO_Y_HARVST.md` as amended by the ADDED SCOPE ITEM
+(`2b`) at `98edbe915d`. Worktree `C:/tmp/coo-y-harvst-2b-20260924`, branch `harvst-2b-y-20260924`.
+Trunk `CLOUD`; this lane commits, `0.0.0_AB_MSTR~Z` pushes.
 
-## Step 2a -- BUILT, NOT DEPLOYED. Nonpublishing by construction.
+## `2b` -- THE GRADED `chatter_daily` GOLD FOR THE AMGT UNIVERSE: BUILT, AND THE SUCCESS BUCKET IS EMPTY
 
-**lib/ half ON CLOUD**: `6e9868b903` (branch above) drained by `0.0.0_AB_MSTR~Z` as merge `b02eac8351`, on origin (its ls-remote 04:0xZ). COO half amendments 1-2 @`523f62b92e`/`3231d8d167`/`61758b03e9` bind the LEGACY apply; CTO half @`c069b2d753` amended @`41616c8789`. It was: the reviewed safeguards of `4dc4b667f3` /
-`ac4316c447` / `621bf1d5d7` / `56621b4949` / `1b6cd9d4e0` / `b6eeef6ebd` carried byte-for-byte onto a
-CLOUD base (12 files, merge-base `4756dde175`, CLOUD untouched since), plus one addition of this lane's own:
-`pool_reader._gold_latest_snapshot_rows` memoises the parsed snapshot by (bucket, key, ETag) within a run.
-Tests: 217 at the carry, 181 (coverage + metrics + handler arms) after.
+**THE ONE SENTENCE THE MANDATE ASKS FOR: 0 of 191 identities -- and 0 of 50,997 rows -- carry a
+non-empty success bucket, because `COMPLETE` requires all five `ENABLED_PUBLISHERS` to cover the day
+and FOUR OF THE FIVE have ZERO retained `listing_hit` rows.** That is a COLLECTION fact, not a reader
+fact: the reader works, and this build is what proves it works over the whole universe rather than
+over six hand-written names.
 
-**infra/ half is a PINNED PATCH, not a commit**: `H03_2A_INFRA.patch` beside this file, 41,198 bytes, sha256
-`4cffba6dade024209564c9ec26bef4c316626ded0c03307174177344fad89ebf`, applies clean on CLOUD @`4845974639`. The
-five paths resolve to lane `CLOUD_OPS_OR_ETL`, where the owned-paths hook REFUSED `2.0.0_SA_COO~Y` at commit
-(three `lambda_src/*.py` violations printed; the `.tf`/`.sh` sit in the same tree). Per the mandate a refusal
-at a granted path is a BLOCKER, not a workaround: no author override was used. The patch carries the handler
-(`CHATTER_AXIS_SOURCE` validated against `SOURCE_COUNT_FNS`, same `count_fn` on both compute paths, `{"dry_run":
-true}` -> `write_fn=None`, `clear_caches()` per invocation, `names_with_links` printed WITH its population),
-`build_zip.py` (closure root `lib.opal_naming`, registry + `NAMING_SCHEMA.json` data members, pyarrow 15.0.2 +
-numpy 1.26.4 copied from THIS ACCOUNT's layer `pyiceberg-nessie-deps:3` under pinned sha256
-`DjKQluriv2wSb8e3H568gylHrD0Ed+f2sBlD9sCFWWw=`), `chatter-axis-schedule.tf` (moved onto `modules/yang-lambda`,
-log group imported with retention kept never-expire, env `CHATTER_AXIS_SOURCE=gold`, 512 MB / 120 s, ONE additive
-pool prefix `amgt/harvest/gold/chatter_daily/` = builder output), `build-and-upload-chatter-axis.sh`, and six
-handler tests.
+**THE TABLE, read back from S3 rather than taken from the producer's summary:**
+`s3://opal-data-harvest/amgt/harvest/gold/chatter_daily/date=2026-09-24/part-20260924T105051Z.parquet`,
+83,030 bytes (`ContentLength` == bytes read), 50,997 rows = **191 securities x 267 days**
+(2026-01-01 backfill floor -> 2026-09-24). The predecessor snapshot covered **6** securities x 266
+days = 1,596 rows; the universe it should have covered is **191 of 250 names** (59 carry no
+`security_key`, are counted, and are dropped -- C-ONE-IDENTITY forbids inventing one).
 
-**Artifact of record (CONTRACT.md s.5a), both read back after upload:**
-`s3://opal-313476888478-lambda-artifacts/harvest/amgt-resapp-chatter-axis.zip` -- rollback VersionId
-`PUSLcUMaAwg.oPLW0ZdH6nO8t7ylo_eY` 669,924 B sha256 `I6eitcaItzqRTlVUaUSF+GGzrpNDHnn71ILk1vIGjHY=` (== deployed
-CodeSha256); candidate VersionId `lPwA35XO3ZOG4KvCebxoJN1t45ljL1z9` 55,418,293 B sha256
-`Xdwp7IrPaNho7y0Nz1L4TsihsueqDG+QDuvRsA+acYM=` (hex `5ddc29ec...7183`). Built 845 entries, 185,488,948 B
-unzipped = 70.8% of the 250 MiB ceiling. Host smoke: packaged registry yields exactly the granted prefix.
+**EVERY ROW NOW CARRIES ITS DENOMINATOR, which is the mandate's own test of a graded row.**
+`data_status` was a CLASS and a class is not a denominator. Two columns were added to
+`GOLD_DAILY_SCHEMA` and are populated on every row: `publishers_covered` / `publishers_enabled`.
+Measured on the served bytes: 0 rows missing either, `publishers_enabled` == 5 on all 50,997, and
+**0 rows where the class disagrees with the fraction**.
 
-**Plan against live state (worktree, backend S3): `1 to import, 0 to add, 3 to change, 0 to destroy`** --
-role policy (+1 prefix), the function in place (`moved`, no replace; code hash `I6eitc...` -> `Xdwp7I...`,
-env added, 128 -> 512 MB, 60 -> 120 s), the log group imported (tags only, `retention_in_days = 0` unchanged).
+| measured on the 2026-09-24 snapshot | value | denominator |
+|---|---|---|
+| `data_status = COMPLETE` | **0** | 50,997 rows / 191 securities |
+| `data_status = PARTIAL` | 1 (`992_HK_Equity`, 1 of 5 publishers) | 50,997 rows |
+| `data_status = DENIED` (0 of 5) | 50,996 | 50,997 rows |
+| securities with >=1 article day | **55** | 191 |
+| rows carrying >=1 article | 201 | 50,997 |
+| retained `listing_hit` rows | **20, ALL `wsj`, ALL one query "Lenovo Group", ONE day (09-23)** | 20 |
+| publishers with ZERO `listing_hit` rows | **4** (`barrons`, `bbg`, `ft`, `sa`) | 5 enabled |
 
-**Measured 03:5xZ, host dry run of the exact gold path @6e9868b903 against live S3 (write_fn=None, zero writes):**
-11.1 s wall for 191 identities (191 listings, ONE parquet GET + parse under the ETag memo), RESOLVED 0 of 191,
-both products FAILED / INCOMPLETE_GOLD_INPUT, pointer ABSENT; states no_coverage 173 / partial 5557 / denied 0
-(== the predecessor's replay to the row); names_with_links 6 of 250 ON THE GOLD POPULATION (day records, not
-links -- R-20). Host timing is not Lambda timing; it bounds the 120 s claim from below by a factor of ~10.
+⛔ **THE SHAPE THAT MATTERS MOST AND IS EASY TO MISREAD: 201 rows carry articles while reading
+`DENIED`.** Mentions come from silver `article`; the coverage grade comes from silver `listing_hit`.
+The two are different tables and the second is nearly empty, so the table can hold real chatter for a
+name and still grade it 0 of 5. That is the grade being HONEST, not wrong -- but a consumer ranking on
+`mention_score` without reading `publishers_covered` would be ranking over ungraded water.
 
-**AMENDED ~04:0xZ on the CTO half @`c069b2d753`: applied source is `legacy`, not `gold`** (a HOLD changes served
-output by ceasing to write; refused on the cost this seat disclosed). Patch regenerated: 41,525 bytes, sha256
-`41c1a2acb7e9115c9ef4441a6280cee3edb6f5c08c7915b00f0a9ed0b70d7441`, applies clean on CLOUD @`c069b2d753`; plan
-re-run: `1 to import, 0 to add, 3 to change, 0 to destroy`, env `legacy`. BOTH HALVES SIGNED; apply authorized
-under the CTO half's five conditions; actor is the AE lane via `0.0.0_AB_MSTR~Z`. The daily control is CORRECTED:
-a fresh same-day pointer pair is EXPECTED while the 09-23 pointers stay byte-identical.
+**THE UNIVERSE -> `securities` STEP IS NOW CODE, NOT A HAND-WRITTEN FILE.**
+`lib/research/harvest/universe_securities.py` (new) reads the pool universe object and emits the list
+the `publication_gold` builders take. It resolves NOTHING: `security_key` is read straight off the
+universe, which is the crosswalk's output. The one derived field is the alias set (the universe
+carries no alias or company column), by two stated rules -- ticker-tail strip and repeated
+corporate-suffix stripping -- with every rule's touch count printed: 250 names read, 191 securities,
+59 without identity, 27 ticker tails stripped, 162 suffix aliases added, 11 aliases dropped as
+unusable, 0 securities with no alias, 0 `composite_figi` (the crosswalk holds none: 0 of 254 records).
+Artifact: `universe_securities_2026-09-16.json` beside this file, named for the universe vintage it
+was built from.
 
-## Gates on the apply, in order
-1. Never-widen pair: COO half FILED at `org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_H03_2A_COO_HALF.md`;
-   CTO half requested from `1.0.0_SA_CTO~Z`. No apply on one half.
-2. The infra patch lands under an AE identity (`0.7.0_AE_CloudOps~A` held H03 steps 1-3) or on the CTO's
-   route; then `HALT_ACK=1 .tools/safe-apply.sh -chdir=infra/aws/terraform/harvest apply` from a tree carrying
-   both halves, after `build-and-upload-chatter-axis.sh upload` has been confirmed to be THIS candidate's
-   bytes (the S3 object is already the candidate; a rebuild is a different artifact).
-3. Ledger `amgt-h03-leadpanel-y-20260924`: `baseline` and `artifact` CLOSED with proof; `pair`, `tf`, `daily`,
-   `served` OPEN. Post-apply: a `{"dry_run": true}` invoke proves the Linux Arrow bytes and the gold read with
-   zero writes; the 10:00Z fire is the `daily` leg (expected: both products FAILED / INCOMPLETE_GOLD_INPUT,
-   RESOLVED 0 of 191, marker beside the retained 09-23 pointers, no pointer moved).
+**TWO CONTROLS RAN BEFORE ANYTHING WAS WRITTEN, and both are cases that were FREE to differ:**
+1. **Alias fidelity.** Of the six hand-curated names earlier rounds built gold from, **4 of 6**
+   reproduce exactly from the universe (`Boeing`, `Costco`, `Home Depot`, `Lenovo`). The two misses
+   are SOURCE-DATA facts, not rule defects: the universe misspells `Haliburton` (row
+   `AMGT_HARVST-Z-S19`), and it carries the legal name `Valero Energy` where the curated file carries
+   the short common name. Both are asserted in the test file in the shape the universe actually
+   carries, so a later fix shows up as a test change rather than as drift.
+2. **No regression on the mention table.** The 2026-09-24 mention build reproduces **every** row of
+   the 09-23 snapshot: 0 pairs present there and absent here. 21 extra pairs appear on those same four
+   securities, and the discriminator says why -- **21 of 21 come from articles ABSENT from the 09-23
+   snapshot (silver grew 94 -> 118 article keys), and 0 come from a matching change.** Mention gold:
+   `date=2026-09-24/part-20260924T105025Z.parquet`, 263 rows, 55 securities, 118 articles read.
 
-## Served consequence, read from the reader's own rule (scoped_amgt.py :555-653)
-Once 2a holds, no new COMPLETE chatter pointer is written until 2b. Trending x Chatter serves the 09-23 two-row
-generation `dated: true` through the 14-day lookback (last day 2026-10-07), then ABSENT. Breakout x Chatter has
-no COMPLETE pointer in any window and reads ABSENT at every hour (today: ABSENT before 10Z, EMPTY after). That
-is the disclosed cost of a nonpublishing cutover and is the CTO half's to accept or refuse.
+**BOUNDS HELD.** No vendor call, no deploy, no delete, no promotion, no new notifier, no publisher
+access, no backfill. Both builds read RETAINED silver only. `write_gold` puts with
+`IfNoneMatch="*"`, so neither write could overwrite an existing part; the prior 09-22/09-23 snapshots
+are untouched. The gold table is NOT served today -- the deployed `amgt-resapp-chatter-axis` reads
+`CHATTER_AXIS_SOURCE=legacy` (read live at 10:4xZ: `CodeSha256 Xdwp7Ir...`, 512 MB, 120 s), so this is
+not a served-output write and needs no never-widen pair.
+
+⚠ **WHAT THIS DOES NOT DO, stated because a populated table invites the opposite reading: it does not
+keep itself populated.** The gold build has NO schedule -- both builds in this table's history were
+manual runs, and this one is a third. Ad-hoc gold runs are permitted for QA; a production table needs
+its own scheduled producer, which is a deploy act and is not this lane's. Owner: `1.0.0_SA_CTO~Z` to
+route. Until then the table's vintage is the date of the last hand-run.
+
+## H03 step 2a -- LANDED AND CLOSED BY THE AE LANE, nothing owed by this lane
+
+Applied `2026-09-24T05:09:00Z` by `0.7.0_AE_CloudOps~A` (msg 25266): 1 imported, 0 added, 3 changed, 0
+destroyed; `CodeSha256 Xdwp7Ir...`, 512 MB, 120 s, `CHATTER_AXIS_SOURCE=legacy`; never-widen held (2
+`chatter_daily` entries, 0 removals); `plan -detailed-exitcode` rc=0. The 10:00Z scheduled fire closed
+leg `daily` (msg 25403): `rows_written=2`, both days' pointers present, **`payload_hash` IDENTICAL
+across 09-23 and 09-24** -- a fresh generation with unchanged content, which is R-19's nonpublishing
+claim measured. Ledger `amgt-h03-leadpanel-y-20260924`: `baseline`, `artifact`, `pair`, `tf`, `daily`
+CLOSED; **`served` is the only open leg and is CVO-owned.**
+⭐ That identical payload hash is the same fact this file's `2b` section measures from the other end:
+the chatter water was stale because `chatter_daily` held six names, and it now holds 191.
 
 ## Parked (one line each, owner, un-park condition)
-- 2b: populate `chatter_daily` gold for the AMGT universe -- Andrew scope item (R-19); un-parks when owned.
-- `lib/research/price/**` explicit-state migration rides in `6e9868b903` for coherence -- `2.0.0_SA_COO~Z` may
-  overwrite; un-parks on that seat's word.
-- Tuple binding for the writer(Arrow 24)/reader(15.0.2) coupling (R-15/R-17 thread, initial tuple NOT_ACCEPTED)
-  -- `4.0.0_SA_CRO~Z` holds the design; the dry-run invoke is the first target-runtime read and un-parks it.
-- Hold helper cannot represent a preflight hold (tool gap, R-20) -- `1.0.0_SA_CTO~Z`.
+
+- **Scheduled producer for the gold chatter tables** -- `1.0.0_SA_CTO~Z` to route; un-parks when a
+  schedule exists or the table is ruled QA-only.
+- **`listing_hit` collection for the four silent publishers** (`barrons`, `bbg`, `ft`, `sa`) -- this is
+  the ONLY thing standing between this table and a non-empty success bucket. New publisher access or
+  backfill needs Andrew's per-use word and `2b` does NOT come with it; un-parks on that word.
+- **`AMGT_HARVST-Z-S19`** (universe misspells "Haliburton") -- routed to the `universe/v1` producer's
+  owner; INERT (HAL has 0 mention rows today), un-parks if that name is ever ranked.
+- **`lib/research/price/**` explicit-state migration** rides in `6e9868b903` for coherence --
+  `2.0.0_SA_COO~Z` may overwrite; un-parks on that seat's word.
+- **Arrow writer/reader tuple binding** (R-15/R-17) -- `4.0.0_SA_CRO~Z` holds the design; the 05:0xZ
+  dry-run invoke (Arrow 15.0.2 read Arrow-24 parquet, no error) is the first target-runtime read.
+- **The `org/XXX.md` 1b-F row for this lane** still scopes a 20-minute loop to IRPT Analysis, while
+  this lane was re-seated onto AMGT by mandate at 02:46Z and the IRPT `~Y` instance is dead. NOTHING
+  WAS ARMED this session. Owner `1.0.0_SA_CTO` (the row's landing seat); un-parks when that row is
+  re-scoped or stood down.
