@@ -44,7 +44,7 @@ recipient string; `report_title` "Retained input analysis". Firm = the signed-in
 
 1. Deployed digests: `irpt-ycharts-generate`, `irpt-status`, `irpt-export-render` CodeSha256 at run time versus the
    source map; host package `SHA256SUMS` sha and the factory module path from P's cutover receipt; wrapper and
-   library pins the session installed (wrapper `55ddb8f7947cba7c...`, library `a0ffa0e8c5c23787...` at P abce466570,
+   library pins the session installed (wrapper `55ddb8f7947cba7c...`, library `e1c8dc30093a48a0...` at P fc932d468b,
    the S119 bundle contract, the measured sign-in route/form and the in-page probe with the pair control; superseded
    blobs `5a1a8695...`, `34df3e94...`, `41ffebbe...`).
 2. Immutable revisions: `input_id`, `identity.request_id`, `revision`, `composition_ref.sha256`, `accepted_at`,
