@@ -13443,6 +13443,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "A harness that runs every named check truthfully cannot print '12 of 12' without either omitting a named check or double-counting two as one; this worker built all 13 and reports the true count. No functionality is missing -- the mismatch is a miscount inside the task order's own prose, not a gap in the built instrument.",
     "disarm_owner": "N/A -- hazard_standing INERT (a prose miscount in a closed task order's text; it does not recur once this cell drains, and the mechanical grade runs against this instance's own `expect`, never the task order's narrative count).",
     "notes": "Not treated as BLOCKING: the count discrepancy did not stop this worker from building a complete, real, 13-check instrument, and proof-of-spec-check.py's invocation-alignment limb does not bind <expect> prose to the governing order (only <invocation> text is compared), so this has no mechanical consequence on the grade. Flagged for the record in case a later reader counts the named checks and expects the literal '12 of 12' line."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S247",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-24T09:25Z",
+    "one_line": "AT THE rl-6 DRAIN the six-state contract check read the MODEL state lowContrastChars PASS -> 37: the identity line (\"BA US\", \"identity\", \"crosswalk/v1\", \"@ 2026-09-24\") renders navy ink rgb(22,51,114) on the band ground rgb(10,23,51), ratio 1.48, because ModelTab.tsx places IdentityLine (rl-2's component, ink unset so it follows its ground) ON THE BAND rather than inside its white panel. Routed to AMGT-rl-9, the one cell admitted to every src/pages/SecurityAnalysis/** file, whose criterion is the six-state PASS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "contract-check-after-rl-5/model.json lowContrastChars 0 (portal 897a0bbf); contract-check-after-rl-6/model.json lowContrastChars 37 with lowContrastSamples fg rgb(22, 51, 114) bg rgb(10,23,51) ratio 1.48 sizes 14/11 (portal ccdb8699); unchanged at contract-check-after-rl-7 and -rl-8 (f67117d4, ae760a39)",
+        "the rl-6 worker's own criteria (modelPattern 12 of 12, census 0, tabs model rows 5 of 5) do not read contrast -- the DOM instrument at the drain is the only reader, which is why it runs per merge"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-29 DONE WHEN: for each of the six states lowContrastChars == 0; C-PRESENTATION-ONLY; AMGT-rl-6 target: the Model sheet on a white nested panel with the identity line above it.",
+    "world_is": "Five of six states read lowContrastChars PASS after the wave-1 drains; MODEL reads 37 on its identity line over the band. Every other predicate on the model state is at the wave-wide values (weights 300/500/600, sizes 10, radii 8px, shadows 1, purpleFills 4), which are the shared chrome rl-8/rl-9 own.",
+    "disarm_owner": "2.0.0_SA_COO~Z (the ISSUER; R-18 -- a worker is terminal at its drain and cannot send the owner's word). The fix is routed to AMGT-rl-9 (0.9.0_WK_AMGT_RESAPP~138) through its spawn prompt: fix the branch in ModelTab.tsx that owns the identity line (inside the white panel, or the band ink) and re-run the six-state check to PASS. Disarms when the issuer reads contract-check-final/model.json lowContrastChars 0 at the wave-2 drain",
+    "notes": "Filed by the issuer at the drain, not by the rl-6 worker, because the worker's face carried no contrast instrument. NOT a decomposition defect: rl-9 was cut precisely to run the DOM check over the merged page after every surface cell landed; this row is the first finding that cell exists to catch. Portal harness note beside it: after the rl-8 merge the shared tabs.harness.cjs needed three stubs (PanelFooter, Segmented, HelperTip) to load at all, added by the issuer at the drain; with them it runs and reads CHECKS-WRONG-WAY on peers_csc_table_absent_marked, short_read_refused and generation_captions_present -- assertions the merged page no longer satisfies by design (present-columns-only Peers; captions and short-read markup moved by rl-2/rl-8). rl-9's AC3 requires the tabs harness green, so reconciling those three assertions with the merged page is rl-9's, under the same grant."
   }
 ]
 ```

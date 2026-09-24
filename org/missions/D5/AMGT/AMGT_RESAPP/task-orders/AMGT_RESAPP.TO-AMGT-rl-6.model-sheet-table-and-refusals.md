@@ -112,7 +112,18 @@ fixture denominators (years, rows, refused, absent), the two commit hashes, and 
 two cells run in parallel and neither may import a file the other is creating; the drain's follow-up (rl-9 or the
 round-37 analysis) may unify them as an enrichment item.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~09:2xZ.** Flipped by the ISSUER; the worker left the record face alone.
+3 of 3 criteria PASS, proof-of-spec rc=0 VALID (re-run by this seat inside the worker's worktree C:/tmp/wk-amgt-37-135).
+modelPattern.harness.cjs CHECKS-OK 12 of 12; ui-class-census FILES 2 TOTAL 0 (ModelTab was 23); tabs.harness.cjs
+model_fiscal_rows_rendered 5 of 5. ONE row, W135-S1 (INERT): the worker built the C12 states locally because the round's shared
+tabs.harness.cjs stubs carried no `@/ui/components/states` entry on its base -- rl-2's merged harness (e7f3ca49) now carries one at
+STUBS['@/ui/components/states'], so a later cell may import the shared components. Drained @75591cc1b9; portal DEV ccdb8699 (merge of
+423dc7bb), gitlink 897a0bbf -> ccdb8699. Drain-time ui-contract-check (contract-check-after-rl-6/): model state REGRESSED on
+lowContrastChars PASS -> 37 -- navy ink rgb(22,51,114) on the band ground rgb(10,23,51), ratio 1.48, on the identity line ("BA US",
+"identity", "crosswalk/v1", "@ 2026-09-24") that the Model tab now renders on the band rather than on its white panel. Recorded as
+row AMGT_RESAPP-Z-S247 and routed to rl-9's re-assert (the re-assert cell owns the six-state PASS); the other predicates unchanged.
+
+<status>complete</status>
 <round>37</round>
 <slot>~135</slot>
 <fabric>site-z</fabric>
