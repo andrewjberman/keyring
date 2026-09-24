@@ -1,0 +1,260 @@
+{
+ "brief": "PEERS_END_TO_END_GAP_BRIEF_20260923",
+ "author": "4.0.0_SA_CRO~Z",
+ "device": "OPAL_BLOOMBERG (site Z)",
+ "measured_window_utc": "2026-09-24T01:33Z..01:56Z",
+ "workspace_pin": "cd0268a4f4 (SITEZ)",
+ "portal_pin": "10141b6d0b (DEV, ancestor of origin/DEV c1ac41ec); origin/PROD a0690a03",
+ "deployed_function": {
+  "name": "opal-amgt-scoped-api",
+  "CodeSha256": "DEQQiCH+UoUMd7EZSQA5RTsILDY5+ubb9Y3gVLE5elU=",
+  "CodeSha256_hex": "0c44108821fe52850c77b119490039453b082c3639fae6dbf58de054b1397a55",
+  "CodeSize": 807904,
+  "LastModified": "2026-09-23T22:02:35Z",
+  "Runtime": "python3.11",
+  "Handler": "lambda_function.lambda_handler",
+  "env": {
+   "HARVEST_METRICS_TABLE": "opal-harvest-security-metrics",
+   "HARVEST_ARTICLES_TABLE": "opal-harvest-articles"
+  },
+  "AMGT_MODEL_BLOCK_ROOT_set": false,
+  "AMGT_POOL_ROOT_set": false,
+  "equals_COO_Z_signed_candidate_zip_sha256": true,
+  "instrument": "aws lambda list-functions / get-function-configuration @01:40Z and @01:52Z"
+ },
+ "gateway": {
+  "api_id": "7k3ed8px20",
+  "route": "GET /api/scoped/amgt/security/{security_key}/peers",
+  "AuthorizationType": "CUSTOM",
+  "AuthorizerId": "naqxlm",
+  "Target": "integrations/352l7td",
+  "instrument": "aws apigatewayv2 get-routes @01:52Z (rail-checked: comp-routes api-routes returned zero amgt rows)"
+ },
+ "cloudfront": {
+  "behavior": "/api/scoped/amgt/*",
+  "origin": "APIGateway-portal",
+  "edge": "viewer-request -> auth-validator-edge",
+  "plane": "DESIRED (comp-routes trace over parsed terraform + router source)",
+  "served_bundle_domain": "d2n2nzpeqf34ge.cloudfront.net",
+  "served_index_chunk": "assets/index-BFAZki1o.js",
+  "served_chunk_with_peers_tab": "assets/index-4rpf7wvH.js (data-csc-table=1, CSC subtitle=1, scoped/amgt=1, 74706 bytes)",
+  "chunks_scanned": "51 of 51 (3,940,231 bytes)",
+  "instrument": "curl + grep over downloaded chunks @01:50-01:55Z",
+  "note": "portal CI on DEV only builds; deploy.yml on PROD is the only S3+CloudFront publisher, so this domain serves the PROD bundle; SecurityAnalysis/ has 53 files on both origin/PROD and origin/DEV"
+ },
+ "direct_invokes_utc_0144_0152": {
+  "BA_US_Equity": {
+   "statusCode": 200,
+   "identity_status": "MEASURED",
+   "basis": "derived",
+   "members": 12,
+   "tickers": [
+    "DE",
+    "ETN",
+    "UNP",
+    "UBER",
+    "PH",
+    "LMT",
+    "HWM",
+    "VRT",
+    "TT",
+    "GD",
+    "PWR",
+    "GEV"
+   ],
+   "as_of": "2026-09-17T0240Z",
+   "universe_vintage": "2026-08-06",
+   "peer_read": "SERVED peers/v1/BA_US_Equity/2026-09-17T0240Z.json"
+  },
+  "992_HK_Equity": {
+   "statusCode": 200,
+   "identity_status": "MEASURED",
+   "basis": "derived",
+   "members": 12,
+   "as_of": "2026-09-17T0240Z",
+   "fx_caveat": "CUR_MKT_CAP quoted in HKD vs USD mktVal; band graded across currencies",
+   "peer_read": "SERVED"
+  },
+  "ASML_US_Equity": {
+   "statusCode": 200,
+   "identity_status": "UNRESOLVED",
+   "basis": "absent",
+   "members": 0,
+   "peer_read": null,
+   "reason": "identity UNRESOLVED -- no peer set was read",
+   "pool_object_exists": "peers/v1/ASML_US_Equity/2026-09-17T0240Z.json (9,404 bytes, basis absent, producer identity MEASURED via widened_identity_set)"
+  },
+  "NOSUCHKEY_ZZ_Equity": {
+   "statusCode": 200,
+   "identity_status": "UNRESOLVED",
+   "basis": "absent",
+   "members": 0,
+   "peer_read": null
+  },
+  "event_shape": "API GW v2 proxy event with header x-firm-id=opal; the edge header injection was NOT exercised by this trace"
+ },
+ "pool_census": {
+  "bucket": "opal-data-harvest",
+  "prefix": "peers/v1/",
+  "objects": 797,
+  "IsTruncated": false,
+  "newest_LastModified": "2026-09-17T02:42:18Z (peers/v1/ZURN_SW_Equity/2026-09-17T0240Z.json)",
+  "partitions": {
+   "2026-09-15": 31,
+   "2026-09-16": 189,
+   "2026-09-16T1930Z": 189,
+   "2026-09-17T0215Z": 189,
+   "2026-09-17T0240Z": 191
+  },
+  "newest_partition_keys": 191,
+  "downloaded": 190,
+  "download_failed": "peers/v1/WALMEX*_MM_Equity/2026-09-17T0240Z.json (asterisk in key; invalid Windows path)",
+  "basis": {
+   "derived": 141,
+   "absent": 49
+  },
+  "member_count_hist": {
+   "0": 49,
+   "1": 1,
+   "4": 1,
+   "5": 1,
+   "7": 2,
+   "9": 2,
+   "10": 2,
+   "12": 132
+  },
+  "absent_reasons": {
+   "no classification (no landed model block and no scanner row)": 47,
+   "no candidate reaches rung 2": 2
+  },
+  "subject_cap_source": {
+   "model_block": 33,
+   "scanner_row_or_blank": 110
+  },
+  "fx_caveat_subjects": 22,
+  "universe_vintage_all": "2026-08-06",
+  "instrument": "aws s3api list-objects-v2 @01:40Z; aws s3 sync of the newest partition @01:46Z"
+ },
+ "identity_reconciliation": {
+  "crosswalk_object": "s3://opal-data-harvest/crosswalk/v1/2026-09-22.json (203,327 bytes, newest of 3)",
+  "crosswalk_denominators": {
+   "input_names": 89,
+   "records": 96,
+   "MEASURED": 36,
+   "UNRESOLVED": 60
+  },
+  "resolver_instrument": "lib.research.identity.crosswalk.resolve(key, path=<downloaded 2026-09-22 object>) at workspace HEAD cd0268a4f4",
+  "pool_keys_resolved_MEASURED": 33,
+  "pool_keys_UNRESOLVED": 158,
+  "resolved_by_basis": {
+   "derived": 30,
+   "absent": 2,
+   "not_downloaded": 1
+  },
+  "stranded_real_sets": 111,
+  "stranded_definition": "pool key UNRESOLVED at the route AND basis=derived in the object",
+  "crosswalk_keys_with_no_peers_object_any_partition": [
+   "6861_JP_Equity",
+   "CAT_US_Equity",
+   "CSL_AU_Equity"
+  ],
+  "producer_identity_mechanism": "lib/research/peers/engine.py:208-244 (AC2, AMGT-rk-13): crosswalk.resolve first, then fall through to AMGT-rk-4's widened identity set (universe/v1) when UNRESOLVED",
+  "route_identity_mechanism": "lib/research/api/scoped_amgt.py:1785-1889 resolve_identity: crosswalk/v1 then a landed model_block_<key>.json under AMGT_MODEL_BLOCK_ROOT (unset on the deployed function) -- no third surface"
+ },
+ "universe": {
+  "scanner_file": "s3://opal-data-portal-v2/json/security_scanner/latest/universes/sp500/universe_data.json",
+  "asOf": "2026-08-06",
+  "LastModified": "2026-08-07T21:59:13Z",
+  "securities": 502,
+  "pool_universe_objects": [
+   "universe/v1/2026-09-15.json",
+   "universe/v1/2026-09-16.json (2026-09-16T07:32:10Z)"
+  ]
+ },
+ "producer_cadence": {
+  "writer": "python -m lib.research.peers.engine --write-pool (hand-run)",
+  "last_batch_LastModified": "2026-09-17T02:41Z..02:42Z",
+  "aws_lambdas_named_amgt": [
+   "amgt-resapp-chatter-axis",
+   "opal-amgt-scoped-api"
+  ],
+  "peers_writer_lambda": null,
+  "local_scheduled_tasks_matching_amgt_peer_resapp_harvest_universe": [
+   {
+    "name": "Opal Data Harvest - Local Publications",
+    "state": "Disabled"
+   }
+  ],
+  "engine_last_commits": [
+   "afb50db7d6 2026-09-16 0.9.0_WK_AMGT_RESAPP~25",
+   "358a4ca0a2 2026-09-16",
+   "dd52f3a513 2026-09-16 re-run over the widened identity set",
+   "ff90cac77d 2026-09-15 ~21"
+  ]
+ },
+ "csc_rendering": {
+  "declared_columns": 17,
+  "present_per_R1_map": [
+   "Price",
+   "Mkt Cap",
+   "EV",
+   "P/E 2025",
+   "P/E 2026"
+  ],
+  "absent_per_R1_map": 12,
+  "frontend_member_field_map": {
+   "mkt_val_sec": "market_cap_musd"
+  },
+  "member_factor_codes_sample": [
+   "accruals_bs",
+   "days_to_cover",
+   "dps_gr_1yr",
+   "dy_ntm",
+   "eps_est_rev_45d",
+   "eps_fwd_gr_1yr",
+   "eps_fwd_gr_3yr",
+   "eps_gr_3yr",
+   "eps_stability",
+   "ey_ntm",
+   "fcf_mgn",
+   "fcfy",
+   "gross_mgn",
+   "int_cov",
+   "leverage",
+   "oper_mgn",
+   "pcta52wl",
+   "peg_ntm",
+   "ret_mom_252d",
+   "roe",
+   "sales_fwd_gr_1yr",
+   "sales_fwd_gr_3yr",
+   "sales_gr_3yr",
+   "shldr_yield",
+   "short_pct_chg_12m",
+   "velocity_63d"
+  ],
+  "present_codes_in_member_factors": {
+   "price": false,
+   "mkt_val_sec": false,
+   "ev": false,
+   "ey": false,
+   "ey_ntm": true
+  },
+  "member_rows_newest_partition": 1646,
+  "rows_carrying_value_in_factors": {
+   "ey_ntm": 1641
+  }
+ },
+ "seat_state": {
+  "live_thread_E0": "NOT_EVALUATED per org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_EXPERIENCE/STATUS.md (COO~Z)",
+  "contract": "org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_COMPLETION_20260923/CONTRACT.md v1.0 (B04 / P1 owned by 2.0.0_SA_COO~Z)",
+  "prior_brief_row": "B04 in TRACE_BRIEF_SET.md @fd51c46d81 (branch closer/amgt-r-20260923, not on SITEZ)"
+ },
+ "not_exercised": [
+  "signed-in browser walkthrough",
+  "the CloudFront edge -> x-firm-id injection",
+  "a producer run",
+  "any vendor/Bloomberg call",
+  "any write to the pool"
+ ]
+}

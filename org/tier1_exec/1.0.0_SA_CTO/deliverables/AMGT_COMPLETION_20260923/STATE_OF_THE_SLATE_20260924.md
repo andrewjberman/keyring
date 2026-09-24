@@ -37,6 +37,55 @@ failure domain from the tabs; treat it as a sixth surface in any trace.
 **TWO HOOKS = TWO STATE OWNERS:** `useSecurityAnalysisState.ts` (the five tabs) and `useLeadPanelApi.ts`
 (LeadPanel). ⚠ **A trace that exercises one hook has not exercised the other.**
 
+## 1a. ⛔ CORRECTION, ~02:1xZ -- SECTION 1/2's FETCH TOPOLOGY WAS CITED WRONG BY THIS SEAT AND CONCLUDED WRONG BY `3.0.0_SA_CVO~Z`. READ THIS BEFORE SECTION 2.
+
+**`3.0.0_SA_CVO~Z` (msg 25154) challenged the load-bearing fact. It was right about my EVIDENCE and wrong
+about its own CONCLUSION, and the file settles it in a docstring neither seat had read.**
+
+**WHAT THIS SEAT GOT WRONG -- THE CITATIONS.** `types.ts:299` describes `resolve_identity()`, which **every**
+`/api/scoped/amgt/security/{key}/*` route calls once at **its own SERVER-SIDE boundary**; it is a statement
+about **identity consistency ACROSS FOUR ROUTES and it PRESUPPOSES FOUR ROUTES.** ⛔ **THE SENTENCE I
+QUOTED AS EVIDENCE FOR "ONE FETCH" ENUMERATES FOUR THINGS IN ITS OWN TEXT** -- overlay, thesis bundle, peer
+set, coverage set. And `useSecurityAnalysisState.ts:47` **does no fetching at all** (exports
+`selectSecurity`, `clearSecuritySelection`). **Both citations are withdrawn.**
+
+**WHAT `3.0.0_SA_CVO~Z` GOT WRONG -- THE CONCLUSION "tabs ARE independent".** Four ADAPTERS is not four
+TABS, and that seat's own disclosed limit is the missing step: *"I did NOT trace which component invokes
+which function."* **Neither seat had. It is now traced.**
+
+**MEASURED AT THE BYTES, and this is the authoritative topology:**
+- **FOUR exported adapters on FOUR distinct routes** (`amgt-lead-panel.ts:124/131/137/144` ->
+  `/overlay`, `/thesis`, `/peers`, `/coverage`). `3.0.0_SA_CVO~Z` is right that these are four real
+  independent HTTP fetches.
+- ⭐ **ALL FOUR ARE ISSUED BY ONE HOOK: `hooks/useLeadPanelApi.ts`**, as four separate react-query
+  `queryFn`s at `:108`, `:118`, `:128`, `:138`. **NO TAB CALLS AN ADAPTER DIRECTLY** (12 hits across 983
+  files is the whole denominator: 4 declarations, 4 imports, 4 call sites, nothing else).
+- ⭐ **AND THE ORIGINAL CLAIM STANDS ON THE ADAPTER'S OWN DOCSTRING, `:128-130`:** *"The per-name bundle the
+  **Thesis, Exec Management, Model and Posture tabs** read ... **No route was added for them.**"*
+  **FOUR OF THE FIVE TABS DO SHARE `getThesisBundle`.** The route count and the tab count are simply
+  different numbers.
+
+**THE REAL MAPPING:** `thesis` -> Thesis + ExecManagement + Model + Posture (**4 tabs, 1 route**) ·
+`peers` -> Peers (1 tab) · `overlay` -> the header / `SecurityOverlay` · `coverage` -> **the Coverage TAB IS
+RETIRED** (`:141-143`), the call persisting as the client half of a still-mounted route.
+
+⛔ **BOTH SEATS ALSO HAD THE HOOKS BACKWARDS, INCLUDING SECTION 1 ABOVE.** `useLeadPanelApi.ts` is **not
+LeadPanel's private hook** -- it is **the data hook for the entire page**, issuing all four queries.
+`useSecurityAnalysisState.ts` is **selection state and fetches nothing.** So "two hooks = two state owners"
+is wrong: there is **ONE fetching owner and one selection owner.**
+
+⭐ **WHAT THIS MEANS FOR THE TRACE, which is why it was worth stopping for:** **FOUR routes must each be
+exercised** (not one, as my premise implied, and not five). **AND ROUTE-PROOF IS NOT RENDER-PROOF** -- a
+good `thesis` payload proves the DATA for four tabs and proves **nothing** about whether each of those four
+renders it correctly. So the honest trace surface is **4 routes x data + 5 tab renders + the overlay header
++ LeadPanel**, and `3.0.0_SA_CVO~Z` is right on the direction even though its conclusion is not: this is
+**more** work than my premise implied, not less.
+
+⚠ **CVO's CloudFront counts are consistent with the shared bundle rather than against it:** thesis **21**,
+overlay **17**, peers **6**. Thesis leads precisely because four tabs drive it and peers trails because one
+does. That seat read three different counts as refuting a shared fetch; they refute a **single shared route
+for all four adapters**, which nobody claimed.
+
 ## 2. THE ADAPTERS AND THE BACKEND
 
 - **Lambda: `opal-amgt-scoped-api`.**
@@ -96,16 +145,37 @@ output both write `task_orders` (underscore), and the wrong spelling returns a c
 
 ## 5. WHAT IS **NOT** PROVEN -- the honest gaps a trace must cover
 
-1. ⛔ **`E0` IS UNGRADED AND IT IS THE WHOLE COMPLETION TEST.** Andrew's standing bar is *"testing frontend
-   (localhost:5174) and actually displaying relevant data for a security end to end on all functions."*
-   **No authenticated tab-by-tab readout exists.** MFA cannot be automated and a Playwright context lands
-   on `/login`. **This needs a human sign-in; it is not an agent-closable gap.** Everything in section 4 is
-   upstream of it.
-2. ⛔ **FOUR OF FIVE TABS HAVE NEVER BEEN INDEPENDENTLY PROVEN** -- they share `getThesisBundle`, so the one
-   confirmed render (Boeing) is evidence for the **boundary call**, not for Thesis + ExecManagement + Model
-   + Peers as four surfaces.
-3. ⛔ **`LeadPanel` IS A SEPARATE HOOK AND ROUTE FAMILY AND IS UNPROVEN** -- nothing in the record exercises
-   it.
+1. **`E0` IS UNGRADED AND IT OPENS THE LIVE TRACE.** ⛔ **THIS ITEM SAID "IT IS THE WHOLE COMPLETION TEST"
+   AND THAT WAS WRONG** -- `4.0.0_SA_CRO~Z` corrected it against `CONTRACT.md` s.1, which assigns Experience
+   **`E0` PLUS `L1`-`L4`, `W1`, `F1`, `T1`, `M1`, `P1`, `N1`, `O1`**, and s.2 proceeds from **`E0` plus one
+   positive product case** to the remaining briefs. **Calling `E0` alone the whole test collapses separate
+   obligations and contradicts that sequence.**
+   ⛔ **AND "not an agent-closable gap" OVERCLAIMED IMPOSSIBILITY.** A human MFA step may be needed to
+   establish an **authorized session**; that does **not** show that the subsequent inspection, trace capture
+   or fixes are impossible for an agent. **The human is needed for the session, not for the work downstream
+   of it.** Stated plainly because the original wording reads as "nothing proceeds without Andrew", which is
+   the coast-failure this estate forbids.
+2. ⛔ **FOUR OF FIVE TABS HAVE NEVER BEEN INDEPENDENTLY PROVEN, AND THIS LINE NAMED THE WRONG FOUR.** The
+   tabs sharing the thesis contract are **Thesis, Exec Management, Model and POSTURE** -- this item
+   substituted **Peers**, which has its own `peers` contract that it shares with **Posture**. ⚠ **The
+   `getThesisBundle` docstring this seat had already quoted says "Posture" in its own text**, so the error
+   was a transcription into this section, not a misreading of the source. Authoritative caller map:
+   `4.0.0_SA_CRO~Z`'s review, which anchors every row (`ThesisTab.tsx:129`, `ExecManagementTab.tsx:209`,
+   `ModelTab.tsx:183`, `PeersTab.tsx:141`, `PostureTab.tsx:338-347`).
+3. **`LeadPanel` IS UNPROVEN** -- nothing in the record exercises it. ⚠ **But it does NOT have "its own
+   hook and route family":** `hooks/useLeadPanelApi.ts` is the shared data module for the whole page, and
+   **LeadPanel's visual separation does not give it an exclusive adapter.** Separate visible outcomes still
+   require separate proof; that is the reason it must be traced, not an ownership claim.
+3a. ⛔ **THE FOUR SECURITY READ ROUTES ARE A SUBSET, NOT THE DENOMINATOR.** The original trace package
+   accounts for **16 declared backend routes, nine unique mounted request functions and the print action**,
+   plus explicit treatment of the **unmounted coverage** request. **Four routes cannot replace that.** Keep
+   the 16 and the unmounted coverage in an interface appendix with explicit acceptance treatment rather than
+   silently dropping them.
+3b. ⚠ **AND THIS SEAT'S CLOUDFRONT "CORROBORATION" IS WITHDRAWN AS SUCH.** thesis 21 / overlay 17 / peers 6
+   does **not** establish that tab multiplicity caused the ratio -- **caching (React Query, security-keyed,
+   five-minute stale time, retries), conditional tab mounting, sessions and chosen keys are all unmeasured.**
+   No browser request count has been measured by any seat. The shared *contract* is established from source;
+   a per-page **fetch count** is not.
 4. **`H1`-`H4` and `C1`-`C3` stay `NOT_EVALUATED`** under LIVE FIRST.
 5. **`AMGT_HARVST` clauses 5 and 6 are ratified IN TEXT ONLY.** `pool_reader.py` at HEAD still carries the
    two-key map -- correct under clause 4's ordering, but the ratified behaviour is not in the code. Owner:
@@ -162,12 +232,41 @@ deleted nothing and committed nothing of another lane's.**
 
 ## 8. RECOMMENDED `/closer` SPLIT FOR CRO~Z TO PRICE
 
-The shared-surface count is the whole question, and it was already measured once this session:
-**four tabs share `getThesisBundle`; 9 distinct mounted request functions, not 11.** Crossing counts by
-split basis: **by-project/3 = 5 crossings** · six-UI+backend/7 = 4 · hybrid/4 = 9 · frame+2 = 18 ·
-fragment/8 = 13. The by-project 3-seat split was ruled on that basis and it still reads correct --
-**but the binding constraint is not the split, it is that `E0` needs a human and four tabs have never been
-independently exercised.** A trace that assumes tab independence will report four passes from one fetch.
+⛔ **THIS SECTION'S NUMBERS WERE TRANSPOSED AND MUST NOT BE USED. THE AUTHORITATIVE TABLE IS
+`4.0.0_SA_CRO~Z`'s, from `SPLIT_EVIDENCE.json` / `measure_split.py` in its own package** (review pinned at
+`001fcc0fc2`, verified here: that commit exists, is authored by `4.0.0_SA_CRO~Z`, 01:53:34Z, subject
+*"correct slate fetch mapping counts and E0 scope"*):
+
+| option | COO seats | crossing incidences |
+|---|---:|---:|
+| **A2: project lanes, RESAPP owns shared runtime helpers** | **3** | **4** |
+| A: project lanes, HARVST owns shared helpers | 3 | 5 |
+| C: all UI plus backend generalist | 2 | 9 |
+| D: Experience + Runtime + CORPUS + HARVST | 4 | 13 |
+| B: six UI surfaces plus backend | 7 | 18 |
+| D2: six UI surfaces + backend/HARVST + separate CORPUS | 8 | 20 |
+
+**What this seat got wrong:** it **dropped A2 as a distinct option**, **assigned A2's 4 crossings to the
+SEVEN-seat option**, misassigned the values after that, and **omitted 20 entirely.** ⚠ These are **declared
+planning dependencies over 40 weighted incidences -- not measured HTTP traffic, conflicts or time saved**,
+and that qualifier travels with the numbers.
+
+⭐ **THE RECOMMENDATION IS UNCHANGED AND WAS NEVER AT RISK: the four-lane / three-active-seat split stands**,
+and `4.0.0_SA_CRO~Z` states it **already accounts for the shared thesis and peer-set contracts** -- so
+**nothing needs re-decomposing because those contracts were rediscovered.** This seat's "finding" was a
+re-derivation of a premise the existing proposal already encoded.
+
+**RECOMMENDED TRACE ORDER, `4.0.0_SA_CRO~Z`'s, adopted here:** capture `B00`/`E0` with a legitimate session ->
+bind **one positive product case** to its actual response / source / revision -> then exercise **each tab,
+LeadPanel's controls, and the print/export action SEPARATELY** -> follow failed connectors under the existing
+lane owners. **Keep the 16 declared backend routes and the unmounted coverage request in the interface
+appendix with explicit acceptance treatment.**
+
+⛔ **AND THE ORIGINAL WARNING HERE POINTED THE WRONG WAY.** It said *"a trace that assumes tab independence
+will report four passes from one fetch"* -- guard against over-crediting. **The live risk is the reverse:
+separate visible outcomes require separate proof, and a shared CONTRACT does not excuse any tab from being
+exercised on its own.** A shared response contract is an efficiency of the implementation, never a
+substitute for evidence.
 
 ---
 
