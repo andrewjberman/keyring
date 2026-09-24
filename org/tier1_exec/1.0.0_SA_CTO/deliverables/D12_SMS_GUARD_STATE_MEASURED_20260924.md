@@ -1,4 +1,57 @@
-# D12 SMS -- THE SANDBOX-EXIT HAZARD'S TRIGGER HAS FIRED. MEASURED, AND IT IS AN EXPOSURE, NOT AN INCIDENT
+# D12 SMS -- THE SANDBOX-EXIT HAZARD'S TRIGGER HAS FIRED. THE GRADE IS ~~EXPOSURE~~ **UNDETERMINED**
+
+> ⛔⛔ **CORRECTION, 2026-09-24 ~06:3xZ, ADOPTED WHOLE FROM `0.7.0_AE_CloudOps~A` (msg 25291). §4's
+> EXPOSURE GRADING IS WITHDRAWN AND REPLACED BY UNDETERMINED.** That seat took the attribution this
+> record left "owed and not claimed" and closed it, then turned the result back on this seat's own
+> reasoning -- correctly.
+>
+> ⛔ **THE DEFECT IN §4: A ZERO THAT THE BYPASS ITSELF PRODUCES CANNOT GRADE THE BYPASS.** §4 read 0
+> send-or-refusal events in the guarded path across 14 days, against a positive control of 24 events,
+> and concluded the guard "has never been exercised." Its words: *"If `assertSendable` returns null at
+> `sms.ts:81` BEFORE the allowlist is consulted, as 25276 states, then the send proceeds while the
+> guarded decision logging never fires. ON THAT READING THE ZERO IS THE SIGNATURE OF THE BYPASS RATHER
+> THAN EVIDENCE THAT NOTHING WAS EXERCISED."* ⭐ **THE LOGGING SITS DOWNSTREAM OF THE BRANCH THAT
+> RETURNS EARLY, SO THE MORE COMPLETELY THE GUARD IS BYPASSED, THE QUIETER THE LOG.** My positive
+> control proved the log group WORKS; it could never prove the code path REACHES it. **§2 of this same
+> record states that line 81 returns before the allowlist is consulted -- so this record contained its
+> own refutation and this seat did not join the two paragraphs.**
+> ⭐ **AND IT IS RULE 22's NEGATIVE MIRROR POINTED THE OTHER WAY, WHICH §4 CITES BY NAME.** §4 invoked
+> ABSENT != EXERCISED-AGAINST to justify not re-opening work, and the same axis says an absence
+> manufactured by the defect is not evidence of quiet. **Citing the rule is not applying it.**
+>
+> **THE SENDS ARE REAL AND ATTRIBUTED. 9 message parts, 100% TollFree, all on `+18664067943`** -- by UTC
+> day 09-18 (4), 09-21 (1), 09-23 (3), 09-24 (1); hourly 13/15/16/18Z, 14Z, 13/14/17Z, 03Z.
+> **IRREGULAR AND BUSINESS-HOURS CLUSTERED, so it does not read as a scheduled producer; it reads as
+> INTERACTIVE.** ⭐ **And exactly ONE principal in the account can send: `sms-voice:SendTextMessage` is
+> held only by `opalinvest-auth-lambda-role`, carried by exactly one function -- `opalinvest-auth-handler`,
+> THE GUARDED FUNCTION.** Denominator 258 roles + 7 users; 4 matched a broad filter and 3 are read-only
+> or service-linked. ⭐ **That census CLOSED ITS OWN COVERAGE GAP rather than leaving it implied:**
+> `get-account-authorization-details` omits AWS-MANAGED policy documents, so a grant conferred by one
+> would have been invisible -- separately measured, 21 AWS-managed policies attached account-wide and
+> **ZERO** principals holding `AdministratorAccess`, `PowerUserAccess`, `AmazonSNSFullAccess`,
+> `AmazonPinpointFullAccess` or `AmazonPinpointSMSVoiceV2FullAccess`. **The elimination stands on a
+> printed denominator with its blind spot measured, not assumed.**
+>
+> ⛔ **AND THE DISCRIMINATOR IS STRUCTURALLY UNAVAILABLE IN THIS ACCOUNT -- MEASURED, NOT ASSUMED.**
+> EXPOSURE vs INCIDENT turns on whether any of the 9 reached an unintended destination, and nothing can
+> answer it: `describe-configuration-sets` returns **EMPTY**, so there are zero event destinations and no
+> per-message log anywhere; and neither CloudTrail trail captures SMS data events, so `lookup-events` for
+> `SendTextMessage` returns an empty array. ⭐ **That empty array is OUT OF SCOPE rather than absence, and
+> a POSITIVE CONTROL proves it** -- the same call over the same window returns `LookupEvents` and
+> `Decrypt` rows normally. **The one thing that would settle it is the one thing not instrumented.**
+>
+> **SO THE GRADE IS UNDETERMINED, and the reason is the ABSENCE OF AN INSTRUMENT rather than anything
+> observed.** ⚠ **And sending is the INTENDED production posture for an auth handler, so sends occurring
+> is not itself harm** -- which is exactly why the destination question is the one that matters and the
+> one nothing can answer. **§6's call and its REC are unchanged; what changes is that this record no
+> longer claims the guard went unexercised.**
+>
+> ⭐ **A NEW CARD FOR ANDREW FOLLOWS, AND THAT SEAT NAMED THE REMEDY WITHOUT TAKING IT** -- *"No
+> configuration set was created and no event destination was wired, even though that is the single change
+> that would make this answerable going forward ... Naming the remedy is not taking it."* **Wiring an SMS
+> event destination is a LOGGING surface and sits under the standing alert/monitor moratorium absent his
+> explicit word.** ⭐ **Declining to build the thing that would have vindicated its own finding is the
+> part of that seat's work most worth copying.**
 
 **Author** `1.0.0_SA_CTO~Z`, 2026-09-24 ~05:5xZ, site Z. **Class** a measurement owed by this seat's own hold entry,
 now performed. **Nothing was changed on any deployed surface by this seat; every line below is a READ.**
