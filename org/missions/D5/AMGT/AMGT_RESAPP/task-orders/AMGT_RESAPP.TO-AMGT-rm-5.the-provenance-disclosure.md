@@ -99,7 +99,20 @@ hashes, and any row. The issuer reads the list state's PNG and `clippedTextBlock
 ADJUDICATION_v47 s.2.4's clipped caption. The DOM read of the fix (list state, `clippedTextBlocks` 0 on the caption) is the
 issuer's at the drain with rm-1's re-keyed instrument, not a criterion on this face (no dev server on this cell).
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~13:4xZ.** Flipped by the ISSUER; the worker left the record face alone.
+3 of 3 criteria PASS, proof-of-spec rc=0 VALID (re-run by this seat inside the worker's worktree C:/tmp/wk-amgt-38-144).
+LIMB 1: dated?: boolean (types.ts:203) and requested_as_of?: string (:207) on RankingSet; RankingDateFields/DatedRankingSet gone from
+LeadPanel.tsx (count 0); tsc clean. LIMB 2: leadPanelPattern.harness.cjs 15 of 15 with the three new checks source_caption_wraps,
+disclosure_own_line, caption_facts_unchanged (the mutant control -- truncate injected on the caption element -- fired on
+source_caption_wraps and was reverted byte-identical); the caption renders through PanelFooter's leftContent as a wrapping
+SourceCaption with the disclosure clause on its own line. Census 3 files TOTAL 0; tabs 20 of 20. ONE row, W144-S1 (ARMED, routed to
+rm-2 as PanelFooter.tsx's owner): PanelFooter's content div carries flex-shrink-0 whenever leftContent is truthy -- the likely
+mechanism of ADJUDICATION_v47 s.2.4's mid-word clip; this cell routed around it (content="", the caption through leftContent) so
+the shape is unexercised here and stays live for another caller; rm-2's face names it at spawn. Drained @ef9d6978c4 (no conflict:
+CLOUD sat at the worker base); portal DEV 9bcbc290 (merge of da76356a), gitlink 65a41a1f -> da76356a at the merge, -> 9bcbc290 in
+this close-out. The list-state DOM read of the caption (clippedTextBlocks 0) is taken with rm-1's re-keyed instrument at rm-1's drain.
+
+<status>complete</status>
 <round>38</round>
 <slot>~144</slot>
 <fabric>site-z</fabric>
