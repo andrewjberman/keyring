@@ -13679,6 +13679,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "Both facts the criterion asks for are true and measured; only the face's invocation could not print the second from the first's exit. The next face that needs a census after a check that may exit 1 separates them with `;` and prints exit codes beside each.",
     "disarm_owner": "2.0.0_SA_COO~Z -- DISARMED by this row at the rm-1 drain; the lesson is on the issuer's cut, carried into rm-2/rm-3's faces (their invocations do not chain a graded check before a required line).",
     "notes": "W140-S1 (the documentElement instruction) stays INERT as the worker dismissed it with reason; no row needed. Filed by the issuer at the drain."
+  },
+  {
+    "id": "AMGT_RESAPP-W141-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~141",
+    "surfaced_at": "2026-09-24T15:10Z",
+    "one_line": "AC3's literal invocation calls ui-measure.mjs with a --route flag, but only ui-smoke.mjs's missing --route flag was named in the task order's WHAT YOU BUILD text (item 3: \"If ui-smoke.mjs takes no --route flag, add the smallest one to it ... and say so\"); ui-measure.mjs took no --route flag either (positional args[0] only) and would have silently mis-parsed '--port' as the route.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/scripts/ui-measure.mjs (pre-edit, HEAD c7b022a1): 'let route = args[0]' -- no --route handling; AC3's invocation is 'node scripts/ui-measure.mjs --port 5183 --route /market --scope main', so args[0] would have been '--port', producing route '/--port'.",
+        "portal/scripts/ui-smoke.mjs already carried the exact same positional-only shape at the same commit, and the cell text named it explicitly (WHAT YOU BUILD item 3).",
+        "fix applied: both scripts now read --route via 'args.includes(\"--route\") ? args[idx+1] : args[0]', additive over the old positional form (args[0] unchanged when --route is absent); verified AC3's literal invocation runs clean post-edit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order names ui-smoke.mjs by name as the one script needing a --route flag added, silent on ui-measure.mjs, while AC3's own invocation line passes --route to both scripts.",
+    "world_is": "ui-measure.mjs needed the identical addition for AC3's literal invocation to parse the route at all; extended it there too (portal/scripts/ui-measure.mjs is in this cell's <paths>), smallest-diff and backward-compatible with the untouched positional form.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- the fix is already applied and AC3 re-ran clean against it (this worker cannot hold owner's-word per R-18, terminal at its own drain); recorded UNDER_INVESTIGATION because the face-vs-invocation naming gap itself (rm-3 and any later cell reusing --route on ui-measure.mjs should not re-discover this) is left for the issuer to fold into the next face or DISARM outright.",
+    "notes": "Not BLOCKING -- the fix was in-lane (<paths> already grants portal/scripts/ui-measure.mjs) and additive; AC3 ran against the patched script and is recorded as such in this worker's proof-of-spec instance."
   }
 ]
 ```
