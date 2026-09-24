@@ -9055,3 +9055,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "That line is on the trunk at bf938bcf39 and on P's branch at b327fccb9c. Not yet exercised against an ABSENT manifest by a build on the fixed bytes (the next irpt-ycharts-generate build is the positive control: it must print the SKIP notice and continue instead of exiting rc=1)."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S124",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-24T18:15:00Z",
+  "one_line": "The investor_reporting bundle mint reads WORKING-TREE bytes while loose deploys read the INDEX, so on an autocrlf checkout a push mints CRLF copies of the LF-committed JSON members and stamps hashes no git blob carries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR (the pusher): before each push that re-mints the bundle, `git ls-files --eol` on the 10 members must read w/lf (msg 100806). The remedy, build_bundle_payload reading `_index_blob` or an eol=lf attribute on the three JSONs, belongs to the owner of .tools/safe_deploy_core.py.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe_deploy_core.py:891-893 -- build_bundle_payload: `src = WORKSPACE / spec[\"repo_path\"]`; `data = src.read_bytes()`. deploy_file uses `_index_blob` (:686), whose docstring says the index is read to remove newline translation.",
+      "Shared tree @d4202fe6a3, `git ls-files --eol`: data/firm_registry.json, docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json, infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json read `i/lf w/crlf attr/`; the other 7 members read `w/lf attr/text eol=lf`. core.autocrlf=true.",
+      "HoldingsSnapshot.schema.json: worktree 37345 bytes with 765 CR, sha256 976e93dedf739678...; blob 36580 bytes with 0 CR, sha256 6fea93226899ec0e...",
+      "Served bundle version Ku6.brgEK.LYO6RIqzXSNdyAM9j_NsCX (head-object): every member stamp equals the origin blob sha256, so earlier mints ran on LF bytes."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "safe_deploy_core.py:369-370 and the N1 push record (1.0.0_SA_CTO @d4202fe6a3): the push changes 2 of the bundle's 10 members, and each sha metadata key stamps the member's repo bytes.",
+  "world_is": "From the shared tree as checked out at ~18:0xZ, the push would have changed 4 members: the 2 intended plus firm_registry.json and DirectoryEntry.schema.json, both read by the live ENABLED directory runner. JSON parses the same, because CR is JSON whitespace; the stamps would match no blob. 2.0.0_SA_COO~M rewrote the 3 files to blob bytes (git diff rc=0; w/lf). They go back to CRLF the next time git checks them out."
+}
+```
