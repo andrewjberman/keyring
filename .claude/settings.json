@@ -201,8 +201,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/presence-stamp.sh\" || true",
-            "timeout": 5
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/presence-stamp.sh\" --detach || true",
+            "timeout": 15
           }
         ]
       }
