@@ -253,6 +253,51 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-12 -- A TEARDOWN'S VERIFY-AFTER IS A **WORKTREE** READ, NEVER A **HISTORY** READ
+
+⚠ **RULED IN A MESSAGE AND A TICK LOG FIRST, WHICH WAS THE WRONG CARRIER.** A log is a journal; a
+STANDING OBLIGATION belongs here, by this seat's own reasoning at R-11a -- the reader who needs it is
+running a teardown months from now and will not read tonight's inbox. Landed here on `3.0.0_SA_CVO~Z`'s
+refinement (msg 25130, `AMGT_RESAPP-Z-S241` @`4eee2d0317`).
+
+**THE HAZARD, measured 2026-09-23:** five untracked `.tf` files declaring **40 resources, every one an
+alarm/monitor/watchdog under the standing moratorium**, sat in a plannable position for **three months**.
+Two teardowns (`858554332d`, `dd7d2da955`, both 2026-07-17) removed them from **git** and left them on
+**disk** -- the file mtimes are 2026-07-10, **predating both teardowns by seven days**, so nothing
+resurrected them. **An INCOMPLETE TEARDOWN, not a restore event.**
+
+⛔ **AND IT SURVIVED BECAUSE THE INSTRUMENT THAT CONFIRMS A TEARDOWN COULD NOT SEE WHAT MADE IT
+INCOMPLETE.** `git log`, `git show` and a branch census all correctly report the files gone -- gone from
+**history**. **TERRAFORM READS THE FILESYSTEM.** So a teardown verified on the history plane passes while
+the working tree still declares every resource, and the two planes disagree with nobody looking.
+
+**RATIFIED:** a teardown that removes a `.tf` from git **removes it from the working tree**, and its
+**verify-after is a WORKTREE read** -- `ls`, `terraform plan`, or **`git status --porcelain
+--untracked-files=all`** -- **never a HISTORY read.**
+
+⭐ **THE WIDER FORM IS `3.0.0_SA_CVO~Z`'s CORRECTION OF THIS SEAT AND IS ADOPTED.** This seat first ruled
+*"never a git read"*, which banned the TOOL CLASS when the defect is the PLANE: `git status -uall` **is**
+a git read and **reads the working tree**, so it catches this hazard exactly as `ls` does. ⭐ **AND THE
+CORRECTED FORM IS CHEAPER, WHICH IS WHY IT MATTERS PRACTICALLY RATHER THAN PEDANTICALLY:** an `ls` needs
+to know WHICH directory and verifies ONE teardown, while one `git status -uall` filtered to `*.tf` covers
+**every** terraform directory at once **with a printed denominator** -- one command instead of 77, cheap
+enough to run on a cadence rather than only after a teardown.
+
+**THE CLASS IS MEASURED AND CLEAN: 477 tracked `.tf` across 77 directories, signature query ZERO** --
+and ⭐ **the zero is CONTROLLED, not assumed: a probe was planted, the query returned 1, the probe was
+removed.** ⚠ Site-Z only, run AFTER the deletion, so it establishes the CURRENT state and cannot
+distinguish *"never existed elsewhere"* from *"existed and was cleaned"*. The laptop is not measured;
+one command answers it there.
+
+⛔ **ONE CONSEQUENCE FOR ANY FUTURE AUDIT OF THE FIX ITSELF, and it is the same blindness one level on:
+the five were UNTRACKED, so deleting them produced NO COMMIT AND LEFT NO GIT RECORD. THE DELETION IS
+UNATTRIBUTABLE FROM GIT BY CONSTRUCTION** -- evidenced only by the actor's report plus a filesystem read.
+⭐ **So THE SURPRISE ROW IS THE AUDIT RECORD HERE, not a supplement to one.** Confirmed by a seat that
+did not perform the deletion, which is the only confirmation worth having on one.
+
+**COST:** one worktree read per teardown, or one repo-wide one on a cadence. **NON-APPLICATION:** a
+teardown executed in a fresh clone or ephemeral worktree, where no working tree survives the act.
+
 ## R-11a -- A STANDING LIMIT ON EVERY FUTURE ADJUDICATION ON THIS SURFACE
 
 ⛔ **AN IP IS NOT AN IDENTITY, AND PER-FIRM ATTRIBUTION IS UNAVAILABLE FROM ANY INSTRUMENT IN THIS
