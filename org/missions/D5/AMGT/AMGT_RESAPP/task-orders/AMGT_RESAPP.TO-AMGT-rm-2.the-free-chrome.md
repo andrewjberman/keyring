@@ -110,7 +110,22 @@ determination in one sentence, the /market strip count before/after, the two com
 CRO's research @`88f08c0c7a` measured the sidebar as Andrew's reserved card (DSGN_REBRND round-2 decisions :11-12) and the
 `--bg-band` repoint as his ~19:5xZ word, so this cell admits only the three FREE files; the CTO was told at the issuance.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~15:5xZ.** Flipped by the ISSUER; the worker left the record face alone.
+3 of 3 criteria PASS, proof-of-spec rc=0 VALID (re-run by this seat inside the worker's worktree C:/tmp/wk-amgt-38-141).
+AC1: the class census on the three files reads weight=0 radius=0 shadow=0 (3 of 3; 8 idiom hits each C5-legal, PanelHeader's pre-existing
+size=1 out of scope). AC2: --scope main on the worker's 5183 -- weights, radii and shadows PASS on 6 of 6 states (baseline FAIL [300,600] /
+FAIL ["8px"]); the shadow limb DETERMINED by live getComputedStyle: both strips "none", the one shadow is the sidebar's shadow-lg
+(App.tsx:271, reserved, body scope only). AC3: market-after.png 127,198 bytes; stripContainers 12 == 12; tsc exit 0. Issuer's
+post-merge read on the SHARED 5175 (contract-check-after-rm-2/, portal DEV 5e339ffd): main scope reads PASS on every graded column for
+every state EXCEPT sizes [10] on thesis and model -- rm-3's attributed residue (DataTimestamp.tsx:38 via PanelHeader.tsx:99), round 39's.
+The weight-600 residue rm-3 named at PanelHeader.tsx:75 is CLOSED by this cell's 600->700. Rows: W141-S1 (INERT observation -- AC3's
+invocation passed --route to ui-measure.mjs too, the worker added the same additive flag there; nothing owed; its `fabric` field reads
+"laptop" and should read site-z, noted not edited). W144-S1 (rm-5's, ARMED): PanelFooter's flex-shrink-0 dropped and min-w-0 on both
+wrappers landed here; clippedTextBlocks 0 in both scopes after -- disarmed by the issuer's row filed with this close. Portal merged
+4aa49151 -> DEV 5e339ffd (over MSTR~Z's 7952976b pull-merge, no file overlap); drained @a2f35ad222, gitlink ffef75aa -> 5e339ffd.
+Round-39 input: size 10 (the two PanelHeader timestamp calls); body-scope radii ["8px"] and weights [500,600] are the sidebar's.
+
+<status>complete</status>
 <round>38</round>
 <slot>~141</slot>
 <fabric>site-z</fabric>

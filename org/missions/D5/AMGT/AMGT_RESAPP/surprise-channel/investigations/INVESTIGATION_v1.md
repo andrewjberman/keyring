@@ -13858,6 +13858,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "TO-AMGT-rm-7 as amended (amendment 2 @a2573d8540) step 3: 'build and upload the artifact, then apply', with <paths> granting the terraform files, the handler package, the ledger and this lane's deliverables -- and amendment 1 having REMOVED lib/research/** on the ground that the order asks only a READ there.",
     "world_is": "The build the order now names has a precondition of its own that touches lib/research/: it regenerates _harvest_prefixes.py from the live registry and ABORTS unless the committed copy matches. The registry moved on 2026-09-23 through an unrelated IRPT change, so the committed copy is stale and the build refuses before packaging anything. Satisfying it requires a WRITE to lib/research/api/_harvest_prefixes.py, which is lane BASE_EXEC and outside this lane's grant. So amendment 1's premise -- that rm-7 only ever READS under lib/research/ -- no longer holds once step 3 includes the build.",
     "notes": "THIRD instance of ONE structural class in this order, and naming the class matters more than the three instances: a cell's <paths> and egress class are written against the ACT THE AUTHOR PICTURED, while the act's real precondition graph reaches further. Z-S253 was the artifact write no cell owned; this is the generated-module write the build performs on the way to that artifact. Each amendment correctly widened by exactly what the last measurement showed, and the next layer down was still not visible until the build was RUN. The cheap general remedy is to RUN a build --build-only at cut time, which is free and surfaces the whole precondition chain at once. Remedy here is small and not this lane's: regenerate the file (its content change is one constant) under a lane that holds lib/**, or widen rm-7 by exactly that path. No override was taken and none exists. The NEVER-2 entry stays OPEN and honest rather than HELD -- deploy_ledger refuses HELD while an activation leg is open, correctly, since it cannot distinguish never-started from half-landed; the world reads untouched on both handles and this lane will close it NOT-EXECUTED if the blocker outlives the 4 h window."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S257",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-24T15:55Z",
+    "one_line": "DISARM CARRIER for AMGT_RESAPP-W144-S1 (rm-5's row: PanelFooter.tsx imposes flex-shrink-0 on its content wrapper when leftContent is truthy, producing the same mid-word clip the face named without any truncate/nowrap class firing): rm-2, the row's named owner, dropped flex-shrink-0 and put min-w-0 on both the leftContent and content flex wrappers (portal 4aa49151, DEV 5e339ffd); clippedTextBlocks reads 0 on all six states in BOTH scopes after (rm-6's 24 of 24 at ffef75aa, the issuer's contract-check-after-rm-2/ at 5e339ffd). The mechanism the row named is gone from the component; the ancestor-aware detector it also exposed is carried as rm-6's C13 bullet 5.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal DEV 5e339ffd (merge of 0.9.0_WK_AMGT_RESAPP~141's 4aa49151): src/ui/components/panels/PanelFooter.tsx 6 lines changed -- flex-shrink-0 removed from the content wrapper, min-w-0 on both wrappers; the worker's report names it as W144-S1's fix",
+        "deliverables/2.0.0_SA_COO~Z/round38/contract-check-after-rm-2/run.log: clippedTextBlocks 0 on list/thesis/exec/peers/model/posture in scope=main and scope=body at 5e339ffd on the shared 5175",
+        "deliverables/0.9.0_WK_AMGT_RESAPP~145/ (rm-6, AC1): 24 of 24 measurement JSONs clippedTextBlocks=0 at ffef75aa, before this merge -- so the 0 is not produced by rm-2 alone; rm-5's caption wrap already covered the one live case and rm-2 removes the mechanism for future callers"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "W144-S1 disarm_owner: 'rm-2 (owner of PanelFooter.tsx) -- either widen content to accept ReactNode, or drop flex-shrink-0 from the content wrapper (e.g. min-w-0 + wrap) so a caller that legitimately needs both a populated content string and a leftContent is not exposed to the same clip'.",
+    "world_is": "The second branch of that disjunction was taken by rm-2 and is on DEV; the clip cannot recur through PanelFooter's own sizing rule. What remains is the detector gap (a leaf-only clippedTextBlocks reads 0 on an unsignalled ancestor-frame clip), which is rm-6's C13 bullet 5 and the ratification record @b26449defe, a round-39 item and not this row's.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- DISARMED by this row at the rm-2 drain, as the issuer of the cell the original row named as owner (a worker cannot hold owner's-word at its own drain, R-18).",
+    "notes": "W141-S1 (rm-2's own observation: ui-measure.mjs needed the same additive --route flag as ui-smoke.mjs) is INERT and needs no carrier; its `fabric` field reads laptop and should read site-z, noted here rather than edited. Filed by the issuer at the drain."
   }
 ]
 ```
