@@ -13513,6 +13513,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "`dated` is a boolean flag, not a date. Printing it literally would render 'dated true'. The actual date the list is dated as is `as_of_date`, a field the task order's own prose never names in this sentence despite RankingSet already typing it.",
     "disarm_owner": "N/A -- hazard_standing INERT; the footer text this worker shipped is this cell's own deliverable and any future seat reading the footer's exact wording should read LeadPanel.tsx's sourceFooterContent rather than this cell's prose.",
     "notes": "Not reported as BLOCKING because the task order's own instruction ('expected values READ OFF THE PAYLOAD') gave this worker's harness latitude to define the check against whatever the payload actually carries, which is what leadPanelPattern.harness.cjs's `stale_dated_said`/`source_footer` checks do."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S248",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.0.3_BG_BBGTerminal",
+    "surfaced_at": "2026-09-24T10:10Z",
+    "one_line": "scheduled_daily_pull.cmd sets %PY_AWS% INSIDE the SEND leg, but the pull-failed/DAPI-up branch does `goto :etf_leg` from ABOVE that assignment -- so on that one path the ETF and CONSTITUENTS legs invoke an EMPTY interpreter (`\"\" -u <script>`). That branch IS the 2026-09-04 leg-isolation fix's own protected path, added so a models fault could not convert one leg's failure into two legs of permanent data loss.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd:145 `if \"%DAPI_OK%\"==\"1\" goto :etf_leg` jumps to the :etf_leg label at :228, past the ONLY assignment of PY_AWS at :166 (`set \"PY_AWS=C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe\"`), which sits inside the SEND leg reached only when the models pull returned 0.",
+        "The two consumers are :234 `\"%PY_AWS%\" -u \"%ETF_PULL%\"` and :285 `\"%PY_AWS%\" -u \"%CONS_PULL%\"`. cmd expands an unset variable to the empty string, so both become `\"\" -u <script>` rather than raising.",
+        "EXPOSURE, NOT INCIDENT, and the discriminator was run rather than assumed: the defect's own signature (a run reaching a landing leg after `RESULT: PULL FAILED`) returns 0 across the 30 retained run logs in %USERPROFILE%\\opal_bbg_logs spanning 2026-08-25..2026-09-23. `RESULT: PULL FAILED` appears exactly ONCE, in bbg_tplus1_20260904_070001.log, and that run shows no `ETF LEG` line at all -- it took the OLD `goto :prune`, i.e. it predates the isolation fix landing. So the branch has never been exercised since the fix created it.",
+        "SCOPE OF THAT DENOMINATOR, stated because it is narrower than the claim it supports: the .cmd prunes to the newest 30 logs, so 'never fired' is bounded to 2026-08-25..2026-09-23 and says nothing about earlier runs."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The file's own :etf_leg header asserts the leg is REACHED FROM 'the publish-success path (goto :etf_leg) and by FALL-THROUGH from :pub_failed', and the 2026-09-04 LEG ISOLATION comment at :136-144 asserts that where DAPI was VERIFIED UP the landing legs STILL RUN -- i.e. that the pull-failed/DAPI-up path is a WORKING path for both landing legs.",
+    "world_is": "On that path %PY_AWS% is unset, so both landing legs run an empty interpreter and cannot land. The comment's promise ('the landing legs still run') is true of the CONTROL FLOW and false of the EXECUTION. The failure is also quiet in the way that matters: the leg writes its own `ETF LEG EXIT CODE: <rc>` line, so the log shows a non-zero leg rather than a missing interpreter, and the constituents source is current-day-only with no backfill.",
+    "disarm_owner": "The owner of integrations/bloomberg/pipeline/scheduled_daily_pull.cmd's models/ETF/constituents legs (1.0.0_SA_CTO~Z authored the 2026-09-04 leg-isolation fix). NOT disarmed by this seat: the fix is a one-line hoist of the PY_AWS assignment above the `if not \"%RC%\"==\"0\"` block, but it is another owner's leg and outside the BG_BBGTERMINAL_PRICE_PRODUCER mandate's write surface, which names only the price producer and its schedule.",
+    "notes": "Surfaced while adding the PRICE leg to the same file under that mandate. The price leg is NOT exposed: it resolves its own PRICE_PY and refuses with a distinct rc=83 if that interpreter is absent, so it cannot inherit this defect on any path. Reported rather than fixed per CLAUDE.md section 2 (append one row and keep working) and the mandate's 'patches for another owner's surface go to that owner'. CLASS NOTE: filed as OBSERVATION because that is the ratified /class enum (OBSERVATION|BLOCKING) and this does not block the cell that found it. The EXPOSURE-vs-INCIDENT distinction of CLAUDE.md Rule 22 is a different axis -- hazard standing, carried in hazard_standing=ARMED and in the grounding evidence above -- and is NOT expressible in /class; recorded here so the downgrade is not read as a softer finding."
   }
 ]
 ```
