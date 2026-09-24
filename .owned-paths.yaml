@@ -1290,6 +1290,15 @@ paths:
   "infra/aws/lambda/investor-reporting/ycharts/generate/tests/run_offline_suite.py":
     lane: IRPT_Y_ACCESS_INTEGRATION_P
     note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260924 (batch 30): exact reviewed test-file integration by P at Y pin 93ec16f4fe (the resident half of the fifth amendment); Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/intake/custody_interpreter.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260924 (batch 59): exact-file integration by P of the custody interpreter at Y pin 47b2adf6df (build_custody_ports; COT only in v1); Y semantic writer retained; no deploy grant -- the composition waits on the ledgered FIRM-bucket plan."
+  "infra/aws/lambda/investor-reporting/intake/tests/test_custody_interpreter.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260924 (batch 59): exact-file integration by P at Y pin 47b2adf6df (the offline oracle, a structural twin of Anna's capture -- synthetic values only); Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/intake/tests/test_custody_interpreter_reader.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260924 (batch 59): exact-file integration by P at Y pin 47b2adf6df (arm (e), the reader round-trip against P's accepted_custody + custody_binding); Y semantic writer retained; no deploy grant."
   "infra/aws/lambda/investor-reporting/intake/**":
     lane: IRPT_COMPLETION_Y
     note: "CTO grantor; exact Y owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
