@@ -225,6 +225,29 @@
     "world_is": "The suite carries 5 of 48 failures at the UNTOUCHED base this worker's worktree branched from, none inside the ruled-touch span, and this cell's edits leave the failure set byte-for-byte unchanged (same 5 names, same count, before and after). 'Still pass' cannot be true of a suite that was never passing; 'unchanged by this cell's work' is what this worker can and did measure and is offered as the criterion's disposition instead.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not blocking this order: IVE3-AC1/AC3/AC4 pass and IVE4-AC2 is reported REFUSED (as-written unsatisfiable) with this before/after measurement standing in its place, per the refusal clause -- never silently marked PASS, never repaired outside <paths> (four of the five failures touch TabShell/ReportingTab/HoldingsTab mounting, none granted to this cell; the fifth needs index.tsx's top-level auth wiring untouched by T2). Filed so a later round or the CTO can decide whether to open a repair cell for the 5, or re-baseline the criterion's own premise."
+  },
+  {
+    "id": "DSGN_IRPTV1-W4-S3",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~4",
+    "surfaced_at": "2026-09-24T12:28:10Z",
+    "one_line": "A working-tree source file carries CRLF line endings while `git show <pin>:<path>` always returns LF-normalized blob content -- a substring/byte-equality check comparing the two directly reads a real, unchanged file as CHANGED unless both sides are EOL-normalized first.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IVE8-AC2's own test (iv-e-8.selection-path.test.ts, first draft) extracted ClientSearch.tsx's unchanged `handleSelect` block from `git show 895752676a...:.../ClientSearch.tsx` (349 bytes, LF) and asserted it as a substring of `readFileSync('.../ClientSearch.tsx', 'utf8')` (the working-tree copy) -- FAILED (false) even though the block is byte-for-byte unmodified",
+        "python -c \"open(p,'rb').read().count(b'\\\\r\\\\n')\" on the working-tree file printed 213 (ClientSearch.tsx) / 207 (index.tsx) / 409 (IdentityCard.tsx) -- all pre-existing round-1/round-2 files carry CRLF on disk -- while `git show <any pin>:<same path>` always returns LF only (confirmed: 0 CRLF bytes in git-show output for the same files)",
+        "two brand-NEW files this worker created this round (BrowseDrawer.tsx, FirmDropdown.tsx's additive block) show 0 CRLF -- consistent with core.autocrlf converting a file to CRLF only on a CHECKOUT-class operation, which a freshly-Write-tooled new file has not yet gone through",
+        "fix applied in the test itself: `const normalize = (s) => s.split('\\r\\n').join('\\n')`, both sides normalized before the substring check -- re-run confirmed true"
+      ]
+    },
+    "spec_asserts": "IVE8-AC2's own text: 'ClientSearch.tsx's own handleSelect ... is BYTE-IDENTICAL between the base pin and this cell's tip (a source-level difference control)' -- read plainly this could be attempted with a direct string/substring comparison between a `git show` extract and a `readFileSync` read.",
+    "world_is": "On this box, a working-tree file and its own git-show blob differ in EOL bytes even when NO content changed, because core.autocrlf converts CRLF on checkout while git normalizes to LF in every stored blob -- so 'byte-identical' as a literal claim is only ever true post-normalization, and a naive substring check silently reads a real \"unchanged\" as \"changed\" (never the reverse -- it cannot false-positive PASS an actually-changed block, only false-negative an unchanged one).",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking: caught and fixed within this worker's own test before the criterion was graded (IVE8-AC2 PASSES post-fix, re-run confirmed). Filed because the SAME shape (git-show extract vs readFileSync, or two readFileSync calls from different vintages/checkouts) recurs across this project's own criteria (e.g. IVE3-AC3/IVE4-AC3/IVE8-AC3's own numstat/diff checkers, which are immune because `git diff`/`git show --numstat` are EOL-aware by construction) and could recur in a FUTURE cell's hand-written comparison that is NOT diff-based."
   }
 ]
 ```
