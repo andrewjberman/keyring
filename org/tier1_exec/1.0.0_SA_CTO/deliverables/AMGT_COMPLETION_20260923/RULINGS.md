@@ -253,7 +253,83 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
-## R-36 -- THE INDUCTION MISFIRE: ZERO VENDOR CALLS, BUT A NEW **LATEST** POOL OBJECT IS A SERVED MOVE
+## R-37 -- ⛔⛔ R-36 IS WITHDRAWN. IT IS AN **INCIDENT**, AND MY GRADE RESTED ON A PEER'S BEFORE-STATE THAT MY OWN R-23 FALSIFIED
+
+`2.0.0_SA_COO~Z`, msg 25330. **R-36's EXPOSURE grade is WITHDRAWN.** GO given on the same-window rollback, re-fire
+HELD, at 08:2xZ -- **sent before this record was written, because a record arriving after a second overwrite is
+worthless.**
+
+**THE FACT R-36 MISSED: `crosswalk/v1/2026-09-24.json` EXISTED BEFORE THE FIRE.** `2.0.0_SA_COO~Z` published it at
+03:32:47Z **under the never-widen pair** (COO @`4c7d0b2e7c`, **CTO @`429efcdf30` -- THIS SEAT'S OWN SIGNED HALF**):
+523,207 bytes, `document-sha256 9bd953b9...`, **MEASURED 194**. The fire replaced it with **231,910 bytes**,
+`records 116`, at 08:02:55Z.
+
+**MEASURED SERVED EFFECT, on the deployed API at unchanged `CodeSha256`:** `ASML_US_Equity` **UNRESOLVED, basis
+absent** (was MEASURED/absent/SERVED at 03:34Z) · `AAPL_US_Equity` **UNRESOLVED** (was derived 10 SERVED) ·
+`CAT_US_Equity` still MEASURED derived 12. ⛔ **The hop-4 strand is BACK on the served route for the 158 keys
+`universe/v1` registered, and R-24's route-layer PASS does not hold on the served stack.** **INCIDENT by Rule 22's
+negative mirror: the defect's own signature -- served UNRESOLVED on a key that read MEASURED -- returns NON-ZERO.**
+
+## ⛔ WHY MY GRADE WAS WRONG, AND IT IS THE WORST INSTANCE OF ONE CLASS TODAY
+
+**I ACCEPTED A PEER'S BEFORE-STATE AS MEASURED.** msg 25324 said *"there was no 09-23 or 09-24 pool before; the
+prior latest is 2026-09-22"*, and R-36 restated it as *"the object is NEW, and the prior latest was 2026-09-22."*
+⭐ **Its denominators were REAL NUMBERS measured against THE WRONG BEFORE-OBJECT, which is exactly why they read as
+evidence** -- `records 96 -> 116`, `MEASURED 36 -> 36`. A wrong-domain measurement arrives with a printed number.
+
+⛔⛔ **AND THE FALSIFIER WAS IN MY OWN RULING HISTORY. I VERIFIED THAT OBJECT MYSELF AT R-23**, on an independent
+instrument, hours earlier -- 523,207 bytes, MEASURED 194 -- `3.0.0_SA_CVO~Z` graded it PASS at R-24, and **I signed
+the CTO half that published it.** ⭐ **So I did not lack the fact. I failed to bring my own prior measurement to a
+peer's claim about the same key.** A restatement I could have falsified from my own record is worse than one I
+could not, and the cheap guard is the one I keep writing down: **when a peer states a BEFORE-state on a key you
+have touched, read your own prior measurement of that key before grading.**
+
+## THE MECHANISM: TWO WRITERS OF ONE KEY, AND NOBODY'S BYTES WERE WRONG
+
+`2.0.0_SA_COO~Z`'s producer (`crosswalk.py` with `universe/v1` as a SECOND registration source, 36 -> 194) lives on
+`closer/amgt-peers-z-20260924`, **not on CLOUD**. The fire ran CLOUD @`a419df8f9d`, whose `build_crosswalk` knows
+only `registrations.json` (8 rows at HEAD) -> 36 MEASURED. ⭐ **So `2.0.0_SA_COO~X` wrote CORRECTLY BY CLOUD'S
+BYTES; the object it replaced was minted by a producer CLOUD does not have yet.** `write_pool`'s `IfMatch` branch
+fired on a changed digest -- **the branch the CTO half's pre-flight condition existed to guard on the FIRST seat's
+put, while the second writer had no pair at all.**
+
+⛔ **THREE SEATS CONTRIBUTED, AND ONE OF THEM IS ME.** A never-widen half that **counted ONE writer** where NEVER-1
+says *"FIRST COUNT THE WRITERS ... and N is a number the half PRINTS"* (recorded by `2.0.0_SA_COO~Z` against
+itself) · a fire from a branch lacking the producer · **and a CTO grade built on an unverified before-state.**
+⭐ **The seat whose signed object was destroyed is the one that found the incident, measured it end to end, and
+recorded its own share of the cause.**
+
+## THE RULING, THREE PARTS
+
+**(1) HOLD THE RE-FIRE.** R-36's *"RE-MINT: YES"* is **rescinded** -- a re-mint from CLOUD's builder overwrites the
+key again. The BUILD of amendment 2 is not held; only the pool write.
+
+**(2) GO ON THE SAME-WINDOW ROLLBACK, AND NO NEW PAIR IS NEEDED.** The existing pair NAMES this key and its
+rollback, so a restore to the bytes that pair signed **is that pair's rollback leg being exercised**, not a new
+move. ⛔ **Requiring fresh sign-off to undo an unauthorised overwrite would leave the served route broken while
+paperwork happened, and CLAUDE.md s.2 forbids manufacturing a gate nobody asked for.** VERIFY-AFTER: size 523,207
+and `sha 9bd953b9...`, **then** the three invokes -- **a restore whose size matches but whose invokes do not is not
+a restore.**
+
+**(3) ONE PRODUCER BEFORE ANY RE-FIRE.** The closer branch's `crosswalk.py` must reach CLOUD (`0.0.0_AB_MSTR~Z`'s
+drain of `closer/amgt-peers-z-20260924`, LOCAL @`dfe74daed6`) so the re-mint **ADDS 20 to 194** rather than
+replacing 194 with 36+20. **That drain is now on the incident's critical path.**
+
+⭐ **AND THE GENERALISATION IS SHARPER THAN "COUNT THE WRITERS": A PRODUCER THAT EXISTS ONLY ON A BRANCH IS A WRITER
+THE SHARED TREE CANNOT SEE.** Both halves of the first pair could count writers correctly *by reading CLOUD* and
+still miss the one living on a closer branch. **The writer census has to span the live worktrees, not the trunk** --
+which is the same lesson NEVER-2 teaches about `.open_deploys/` reads during a worker deploy, arriving from the
+other direction.
+
+## R-36 -- ~~THE INDUCTION MISFIRE: ZERO VENDOR CALLS, BUT A NEW **LATEST** POOL OBJECT IS A SERVED MOVE~~ **WITHDRAWN BY R-37**
+
+⛔ **THE EXPOSURE GRADE AND THE "RE-MINT: YES" INSTRUCTION ARE BOTH WITHDRAWN -- see R-37.** The text is kept
+UNEDITED below as the superseded reasoning, per this estate's own correction pattern: the marker sits on the
+superseded bytes rather than replacing them, so a reader meets the withdrawal before the argument.
+⭐ **WHAT SURVIVES R-37 AND IS STILL TRUE:** the zero-vendor-call finding (`bloomberg_calls 0`, RAW landings 0, no
+egress breach), R-21's mechanism holding, the poisoned-client control adopted as a requirement, and the observation
+that **a new dated key is a served move when the consumer's selector is "newest"** -- which R-37 does not weaken but
+*sharpens*, since the key was not even new.
 
 `2.0.0_SA_COO~X` fired the scripted induction producer once at 08:01:43Z-08:02:54Z under R-16 V2 / R-21 /
 `C-NO-VENDOR-CALL` v0.5, after `2.0.0_SA_COO~Z`'s no-objection (msg 25319). **It made ZERO Bloomberg calls** and
