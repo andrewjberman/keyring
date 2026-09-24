@@ -80,6 +80,12 @@ permission; whether the deployed route ever emits one is NOT MEASURED.
 - Live API `7k3ed8px20` (`opal-portal-data-proxy-api`): 103 routes, 16 scoped-amgt, all eight per-security keys
   single-segment `{security_key}`, zero greedy under `/api/scoped/amgt`, `$default -> opal-portal-data-proxy`. HTTP API
   decodes `%2F` before matching, a one-segment parameter cannot match two segments, the request falls to `$default`.
+- **THIRD CLAUSE, R-30 amended by the CTO (msg 25290, 06:19Z):** a 404 on these routes today renders NO terminal state --
+  three panels reading "Loading..." while the client retries (10 BP calls across ~6 s over three routes, the last 2.07 s
+  after the trace's own `finished_at`). The slash-key repair removes today's TRIGGER and leaves that behaviour untested.
+  So the act gains a clause graded INDEPENDENTLY of the route repair: **a 404 on a security route renders a TERMINAL
+  state** (`PanelError` with its cause, C12), proven with the 404 still reachable (before the route lands) or with a
+  fixture 404. Owner: this seat; un-parks with the route work.
 - **Recommendation to `1.0.0_SA_CTO~Z` (infra, not this seat's file):** add ONE route
   `GET /api/scoped/amgt/security/{proxy+}` to `scoped_amgt_routes` in `scoped-amgt-api.tf` (precondition 16 -> 17;
   precedent `ANY /auth/{proxy+}` on the same API; a parameter segment beats greedy, so the eight existing keys keep
