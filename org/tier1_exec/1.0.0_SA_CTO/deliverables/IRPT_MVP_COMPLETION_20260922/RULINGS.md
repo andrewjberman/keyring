@@ -1027,3 +1027,35 @@ producer's decision, and the split is the producer's rule. Both seats own the le
 GO names the key prefix, the index row and the IfMatch, and the requester prints the publisher's
 MEASURED write plan for the named candidate; a count the requester did not measure does not enter
 the GO. The 49F and INF requests carry that plan.
+
+
+## 2026-09-24 00:4x UTC - Claude CTO batch 10: P-REOPEN-01 landed; vocabulary amendment re-accepted; portal regen target; a lane correction
+
+### P-REOPEN-01 CLOSED in source (P 9074dba320) - ACCEPTED, deploys with the next Performance package
+The pointer key is digest({firm_id, sorted account_ids, start, end}); the pointer schema
+irpt-performance-accepted-v2 carries accepted_key and ref only (no owner, principal or selection);
+reopen checks tenant, key, accepted_key and the accepted report's provenance core and still reads
+through stores.reports.get with the CURRENT principal, so authorization is re-derived by the
+repository and the pointer grants nothing. Three new arms (another authorized viewer after a directory
+republish reopens with zero source or vendor reads; the pointer grants nothing to an unauthorized
+viewer; a different window misses the pointer). Suite 11 passed. No v1 pointer exists (store empty at
+install). It ships in the NEXT package under its own build, plan and GO; the installed function is
+unchanged until then.
+
+### IRPT-REASON-CODE-VOCABULARY-20260924, amendment 2a87fa8edf - RE-ACCEPTED
+Three rows (CONFLICT, SUPERSEDED, UNEXPECTED) reworded into the "refused with public_reason_code
+<CODE>" grammar so the portal's widened reading rule names all 14 data codes; codes and classes
+unchanged. 0.0.0_AB_MSTR cherry-picks it onto CLOUD as it did c80b8ccb41. P's portal regeneration
+c1ac41ec (branch p-reason-codes-20260924 over c70855f3: 16 named codes, generator and test share the
+grammar, 90 code-shaped tokens with 16 admitted and the 74 rejected inspected, bun test and tsc
+clean) is ACCEPTED as the render fix for the NOT_READY screen. TARGET: 0.0.0_AB_MSTR merges
+c1ac41ec into the local-live portal branch codex/local-live-data-20260923 (the 5174 screen and the
+DEV candidate MSTR already named), never a rebase; DEV rides the next portal push on Andrew's word;
+PROD is an enrichment item.
+
+### LANE CORRECTION (CTO 99857 was wrong on one file)
+ycharts/generate/tests/test_canonical_profile_consumption.py sits under ycharts/** in
+IRPT_COMPLETION_Y with no P row; the hook's refusal of P is correct and 99857's "a row you already
+hold" was not. Y commits its b35cb286b1 copy and the 7-field stub literal fix for the cross-firm
+resident cases on Y's branch; P re-copies both at its next sync. No new P row: the lane stays as
+narrow as the integration needs.
