@@ -46,7 +46,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/**
 ## 4. PROOF OF SPEC (literal; timeout 600)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-rn-5"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round39/checks/rn-5.AC1.py org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~150/served/served_fixture.BA_US_Equity.json; echo "exit=$?"</invocation><expect>served carries N of N landed top-level keys; missing: none; _served provenance ... -> OK; exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-rn-5"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round39/checks/rn-5.AC1.py org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~150/served/served_fixture.BA_US_Equity.json; echo "exit=$?"</invocation><expect>landed top-level keys: N; served carries N of them; missing: none -- then _served provenance: ... -> OK -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-rn-5"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round39/checks/rn-5.AC2.sh org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~150/served/served_fixture.BA_US_Equity.json org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~150/served/BA_US_Equity.rich.md; echo "exit=$?"</invocation><expect>the harness's own three set lines (figures n/n, cites m/m, absences k/k, each equal) on the SERVED fixture and the SERVED rich body, and exportCompare --rich on the served plane: rc=0, exit=0; a mismatch is the recorded output and a FAIL row, not a repair</expect></criterion>
 </proof_of_spec>
 
@@ -56,6 +56,11 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 Report names the routes invoked (n of N), the CodeSha256 read, the three set counts, the commit hashes, and any row.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**ISSUER AMENDMENT 1 (2026-09-24 ~19:1xZ, row AMGT_RESAPP-W150-S1):** AC1's expect named words `checks/rn-5.AC1.py` never
+prints; it now quotes the script's own line shape. The criterion's substance (every landed key served, provenance complete, exit 0)
+is unchanged. Graded on this modification by GATE (viii) (the order declares `<placeholders>` at HEAD); no other limb reads a
+modified order.
 
 **ISSUER NOTES:** s.7 item 9. `<risk>SERVED</risk>` declared ABOVE the gate's LOCAL floor because the claim is about served output
 (the CTO's read, msg 25671); no judgment criterion, so the CVO's grade reads the issuer's real-run record.
