@@ -52,10 +52,10 @@ reached ycharts.com once unguarded; the suite now refuses to start unguarded).
 1. The Analysis backend: (i) DONE 10:24Z (row above; the two revisions are DERIVED from the packaged
    registry and schema directory, not env keys). Hop 2 (the upload composition) is a design cell on
    the CTO's shape (100497 (b)); its two vendor-egress questions are carded to Andrew.
-   (ii) DONE 10:53Z. (iii) server side DONE 11:21Z (the two rows above): every route the product
-   needs has a handler; what remains of (iii) is the client flag -- LiveClient's NotYetExercisable
-   lifted for analysis-request-history / -read / -input-upload -- on the next portal candidate cut
-   from DEV 895752676a after a fetch. (iv) the cutover plan's inputs.
+   (ii) DONE 10:53Z. (iii) server side DONE 11:21Z (the two rows above); the client flag is CUT as
+   portal candidate 4 @310b83b8 (irpt-dev-candidate-4-20260924 from origin/DEV f7a4e47f; tsc 0,
+   eslint 0, 0 suite failures introduced vs the base, 4 fixed; receipt PORTAL_CANDIDATE_4) and sits
+   at the CTO for review / MSTR's landing. (iv) the cutover plan's inputs is next.
    S122 (the builder's silent exit) is REMEDIED on the trunk @bf938bcf39 (row S123).
 2. Speed levers F7 / F2: held on a HAR from opalinvest.dev (the 04:32Z HAR was a localhost dev session).
 3. Andrew's browser act (G) last.
