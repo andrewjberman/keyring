@@ -181,6 +181,28 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Disarms S1 only; W3-S2's disarm is the CTO's (100499, batch 36). The drain's three-error count was an under-read of a tail-limited tsc output -- the CTO's five is the disposition's number."
+  },
+  {
+    "id": "DSGN_IRPTV1-W4-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~4",
+    "surfaced_at": "2026-09-24T11:08:24Z",
+    "one_line": "The pre-commit risk-reflex (comp-pulse) HELD this worker's edit to src/pages/InvestorReporting/index.tsx against FOUR unrelated AdvisorIntelligence partner components, apparently matched by the shared basename index.tsx rather than full path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output, portal commit bcf25837 (this worker, IV-e-3): '[risk-reflex] [HOLD] src/pages/InvestorReporting/index.tsx -> component:portal/src/pages/AdvisorIntelligence/_partners/{49financial,cottonwood,demo,inflection}/index.tsx (3 recorded claim(s))' for all four, each citing the SAME memory line: 'memory/reference_cot_advi_books_drill_artifact_chain.md:10 \"Cottonwood ADVI Books tab (portal `src/pages/AdvisorIntelligence/_part\"'",
+        "the cited memory file (reference_cot_advi_books_drill_artifact_chain.md, read at this worker's box) documents the Cottonwood ADVI Books tab's server-artifact drill chain (platinum/firm/dashboard.json, leaderboard.json, opal-users-v2 s3Bucket routing) -- nothing in it names src/pages/InvestorReporting/, the InvestorReporting header, IdentityCard, or any api/endpoints/investor-reporting.ts operation",
+        "the only textual thing the five files share is the basename `index.tsx`; this worker's edit is a single JSX prop-list change on the IdentityCard mount line, unrelated by import graph, route, data source or component tree to the AdvisorIntelligence partner dispatchers named in the HOLD"
+      ]
+    },
+    "spec_asserts": "The risk reflex's own banner: 'you are about to touch a node the estate has WRITTEN WARNINGS ABOUT. GO READ THE CITATION before this commit proceeds' -- implying the four cited components are genuinely at risk from this edit.",
+    "world_is": "The four cited components (AdvisorIntelligence partner dispatchers) and the memory citation they share describe a DIFFERENT page, a different data source (opal-partners-data / opal-users-v2), and a different served-artifact chain than InvestorReporting's index.tsx; the four HOLDs read as a basename collision (`component:.../index.tsx`) in the danger map's node identity rather than a real shared-surface risk. Not verified against comp-pulse's own matching code in this pass (out of this cell's <paths>) -- read as a pattern, not confirmed as the mechanism.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking: the commit proceeded (rc=0) and this worker read the citation as required, found it unrelated, and moved on rather than treating the HOLD as a stop. Filed so a seat that owns NFRA_NERVES/comp-pulse can check whether the danger map keys `component:` nodes by basename instead of full path -- if so, every same-named file (index.tsx recurs dozens of times under portal/src/pages/) gets spurious HOLDs on every unrelated edit, which teaches reviewers to skip the reflex."
   }
 ]
 ```
