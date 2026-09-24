@@ -1,0 +1,34 @@
+{
+  "receipt": "api root: the two owned-history GET routes DECLARED and served on the portal API (CTO batch 28 (iii) / 100535, first act)",
+  "by": "2.0.0_SA_COO~P",
+  "at_utc": "2026-09-24T11:06Z",
+  "what_it_moves": "hops 9 / 10 of the Analysis trace are now REACHABLE from the portal API: GET /api/scoped/investor-reporting/analysis/requests and GET .../analysis/requests/{requestId} exist on API 7k3ed8px20 under the existing authorizer and integrate irpt-status, whose installed handler serves them (10:53Z). The LiveClient flag (NotYetExercisable lifted for the two) rides the next portal candidate from DEV 895752676a.",
+  "what_it_does_not_move": "the upload POST (analysis-input-upload) stays NO-HANDLER-AT-HEAD with handler null until its host function and named refusal land (the next act); hop 2 (the composition) unchanged.",
+  "act": {
+    "ledger": {"slug": "irpt-history-routes-20260924", "sentinel_commit": "ff150318af", "opened_utc": "2026-09-24T11:04Z", "leg_kind": "activation (the ledger admits activation / ec2-baked-asset / git / s3-prefix / tf-lambda / verify; an API route is an activation of a served handler)"},
+    "contract": {
+      "commit": "89204d4b2e (backend worktree)",
+      "routes_json": "analysis-request-history and analysis-request-read: handler null -> irpt-status, status NO-HANDLER-AT-HEAD -> DECLARED, note re-worded; _denominator declared 14 -> 16, no_handler_at_head 3 -> 1, total 17, functions_targeted 7; the file's CRLF and layout preserved (exact substring edits, 9 lines); the upload row untouched",
+      "tests": "_contracts/test_owned_request_contracts.py: the pending-routes arm became the declared-routes arm; _contracts 11 passed (test_upload_contract's upload arm still holds); ops/tests/test_owned_entry.py 28 passed; reports/tests/test_status_installed.py 4 passed"
+    },
+    "edge_a": {
+      "commit": "e0f52fa041 (ops/entry.py, lane IRPT_Y_ACCESS_INTEGRATION_P under the audited override, one lane one file; audit row 2026-09-24T11:05:25Z)",
+      "change": "build_owned_entry reasons += RequestStorageUnavailable -> NOT_AUTHORIZED (a Global viewer with no chosen data firm answers a named code, never UNEXPECTED)",
+      "served": "NOT yet: the deployed irpt-status (5E8T+/LV..) predates this line; it rides the next irpt-status rebuild"
+    },
+    "terraform": {
+      "root": "infra/aws/terraform/investor-reporting/api (backend worktree, terraform 1.9.8, init this act)",
+      "plan": "2 to add, 0 to change, 0 to destroy: aws_apigatewayv2_route.irpt[GET .../analysis/requests] and [GET .../analysis/requests/{requestId}], api 7k3ed8px20, target integrations/8ogp332, authorization CUSTOM naqxlm; outputs route_count 12 -> 16 (the recorded output lagged the resource set: 14 routes were in state before this act, the output value dated from an earlier apply)",
+      "apply": "HALT_ACK=1 safe-apply.sh apply history-routes.tfplan: Apply complete 2 added, 0 changed, 0 destroyed; route ids 7yo12g5, jjidb6b",
+      "replan": "No changes. Your infrastructure matches the configuration. (rc=0)"
+    },
+    "readback": {
+      "get_routes": [["GET /api/scoped/investor-reporting/analysis/requests", "integrations/8ogp332", "naqxlm", "CUSTOM"], ["GET /api/scoped/investor-reporting/analysis/requests/{requestId}", "integrations/8ogp332", "naqxlm", "CUSTOM"]],
+      "route_census": "16 investor-reporting routes on the API (per-page counts 5+3+4+3+1 from a paginated get-routes, summed client-side) == 16 DECLARED rows in routes.json",
+      "verify_on_served": "signed-out HTTPS GET on each new route -> 401; the CONTROL (an unrouted path under the same prefix) -> 401 as well, so the signed-out arm does not discriminate (a catch-all authorizer answers before route matching on this API). Stated, not hidden. The served discriminators are get-routes (APPLIED) and the function-level invoke of the history route through the Lambda API (EXERCISED, 10:5xZ, request 328500fb-0bda-47f6-9330-b5a6f75873d7, NOT_AUTHORIZED by name). The HTTP path end to end is exercisable only signed-in -- the next portal candidate's owned-history UI, or Andrew's browser."
+    },
+    "recorder": "none: the api root has no Lambda artifact; its CHANGELOG.json carries the route addition (see the commit that follows this receipt if the file's shape admits an entry)",
+    "rollback": "revert the routes.json flip @89204d4b2e and apply (the two routes are destroyed; irpt-status keeps serving them on its own table); or delete-route 7yo12g5 / jjidb6b by id"
+  },
+  "push_state": "LOCAL (backend, shared tree; MSTR pushes)"
+}
