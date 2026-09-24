@@ -57,7 +57,7 @@ Sources: CTO `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260
 | Tab (owner) | Served today | First failing hop / what closes it | Still required after that |
 |---|---|---|---|
 | **Holdings** (~M) | All three firms' labelled holdings publications are live: COT `dec293d6`, 49F `3d59c80b` + units `5a25ae76`, INF `d03e91a4` + units `d32e50c6`. `irpt-holdings` fired 6 times clean at 9:36 AM in a signed-in session. | M's STATUS (10:05 AM, its branch): "fired, envelope unread -- Andrew's HAR read in place closes it"; "Nothing further owed by M on the build side". | The snapshot model overlay; the 49F Tax runner (`c354c33a92`, awaiting CTO review); the NOT_READY reason vocabulary; receipting the two retained captures under the holdings migration project (card 6). |
-| **Performance / Reporting** (~P) | `irpt-performance-adapter` `07lSH03z`, `irpt-status`, `irpt-ycharts-generate`, `irpt-directory-search`, `irpt-holdings`, two history routes, the upload route. Portal candidates 1-7 are on DEV. | The one-use plan for Anna (YTD) was ARMED at 9:12 AM and **expires 8:00 PM ET today**. It fires on Andrew's signed-in click of one account. The served log line for SELECTION_UNSUPPORTED is the uncommitted `_authz` fix (crash step A1). | The retained report, reopen (P-REOPEN-01 key shape), export and the branded PDF (render chain not proven), X10 enforcement, and the 49F SmartX and INF Orion paths, both on Andrew's per-use words. |
+| **Performance / Reporting** (~P) | `irpt-performance-adapter` `07lSH03z`, `irpt-status`, `irpt-ycharts-generate`, `irpt-directory-search`, `irpt-holdings`, two history routes, the upload route. Portal candidates 1-7 are on DEV. | The one-use plan for Anna (YTD) was ARMED at 9:12 AM and **expires 8:00 PM ET today**. It fires on Andrew's signed-in click of one account. The served log line for SELECTION_UNSUPPORTED is the uncommitted `_authz` fix (crash step A1). | The retained report, reopen (P-REOPEN-01 key shape), export and the branded PDF (render chain not proven), X10 enforcement, and the 49F SmartX and INF Orion calls. Andrew worded each ONCE on 09-23 ~8:4x PM ET (`RULINGS.md` "all recs approved", items 5-6), bound at execution to the exact request P presents. |
 | **Analysis** (~Y) | The resident has run since 5:39 AM, with the session captured and graded. The three Analysis routes are served. Custody interpreter `47b2adf6df` + `b398d27731` is built and CTO-accepted. | NOT LIVE. Hop 2 (the upload composition, P's design card) and hop 4 (the custody composition, P, behind a ledgered FIRM-bucket grant plan) are missing. The first live submission is Andrew's browser act. | Y1-Y7 per Y's STATUS: most are OFFLINE ONLY or NOT STARTED live. |
 | **Shared** (~P) | P's installation branch is the deploy source. The DirectoryPage v1 contract is on the backend (`914044f869`). | Portal candidate 8 is uncommitted (crash step A2); by Andrew's 11:31 word it goes to ~D. | -- |
 
@@ -209,7 +209,8 @@ The record's execution line: "Resume analysis/progression only on his further in
 - **E3.** Andrew's acts in flight are named EXERCISED arms, never waits:
   - the signed-in Holdings HAR;
   - the one-use Performance plan: armed until 8:00 PM today; spent today, or re-armed later on a fresh word;
-  - the 49F SmartX capture word and the INF Orion Scope word;
+  - the 49F SmartX call and the INF Orion Scope call, each already worded once (09-23 ~8:4x PM ET) and bound at
+    execution to the exact request P presents;
   - the first live Analysis submission from his browser.
 
 ---
