@@ -9,8 +9,13 @@ verdict is always "differs" and tells you nothing about WHICH side is right. The
 unit that has an owner. `placement` names that owner, so it is also the field that decides
 who may write the row -- which makes placement itself the one field neither MSTR may resolve.
 
+ONE TRUNK (2026-09-24, Andrew-direct "recs approved" card 1 (a), LD-0613): the SITEZ branch is retired and both
+devices commit to CLOUD, so `compare` against origin/SITEZ has nothing to compare (pass --b explicitly to read
+the archived tip, tag archive/SITEZ-20260924). The register's PLACEMENT column still names the DEVICE
+(LAPTOP / SITEZ) and is unchanged; `digest` is unchanged.
+
 Usage:
-  integrate-directives compare [--json]     CLOUD vs SITEZ, per row, with an authority verdict
+  integrate-directives compare [--json]     per row, with an authority verdict (--b defaults to the archived SITEZ tip)
   integrate-directives digest [--ref REF]   the status digest THIS fabric owes its peer
   integrate-directives --self-test          5 controls; must print PASS n/n
 """
@@ -210,7 +215,7 @@ def main(argv):
     ap = argparse.ArgumentParser(prog="integrate-directives")
     ap.add_argument("mode", nargs="?", default="compare", choices=["compare", "digest"])
     ap.add_argument("--a", default="origin/CLOUD")
-    ap.add_argument("--b", default="origin/SITEZ")
+    ap.add_argument("--b", default="archive/SITEZ-20260924")  # the retired branch's tip; origin/SITEZ no longer exists
     ap.add_argument("--ref", default=None)
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--self-test", action="store_true")

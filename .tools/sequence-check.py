@@ -27,7 +27,8 @@ WHAT IT FLAGS, per project:
 CAPACITY (Andrew-direct 2026-09-14 ~07:0xZ, "We can only have 3 COOs running their respective projects/subagents at
 any one time"): the live COO lanes on THIS box, read from the broker's org/mcp/liveness.json (a 2.0.0_SA_COO lane seen
 within LIVE_SECONDS, the broker's own LIVE threshold), set beside the file's per-fabric cap. The box's fabric comes
-from the checked-out branch (CLOUD -> laptop, SITEZ -> sitez). A liveness row is the broker's claim, not process
+from the DEVICE (AGENTBUS_DEVICE, else the workspace path -- both devices commit to CLOUD since 2026-09-24, so the
+checked-out branch cannot say which box this is). A liveness row is the broker's claim, not process
 truth, and the line says which instrument it read.
 
 A VIEWER, NOT A CHECKER: findings never change the exit code (the monitor moratorium; Andrew ~01:xxZ card 1 chose
@@ -92,7 +93,7 @@ def state_violations(code, text):
 GATE_FORMS = ("prd_admitted", "dep_stage_at_least", "status", "manual")
 LIVE_SECONDS = 120          # org/mcp/server.py STALE_THRESHOLD: a registration older than this is not LIVE
 COO_BASE = "2.0.0_SA_COO"
-BRANCH_FABRIC = {"CLOUD": "laptop", "SITEZ": "sitez"}
+BRANCH_FABRIC = {"CLOUD": "laptop", "SITEZ": "sitez"}  # fallback only; see box_fabric() -- one trunk since 2026-09-24
 
 
 def _gate_enum_matches():
@@ -179,10 +180,22 @@ class Reader:
         return live, "org/mcp/liveness.json (%d registrations; LIVE = seen within %ds)" % (len(d), LIVE_SECONDS)
 
     def box_fabric(self):
+        """The DEVICE this box is, read the way .tools/agentbus-sqs.sh reads it: AGENTBUS_DEVICE first, then the
+        workspace path. Since 2026-09-24 (Andrew-direct "recs approved", card 1 (a): ONE TRUNK) both devices work on
+        CLOUD, so the checked-out branch can no longer say which fabric this is; BRANCH_FABRIC stays only as the
+        last fallback for a checkout that predates the change."""
+        env = os.environ.get("AGENTBUS_DEVICE", "").strip().lower()
+        if env in ("laptop", "sitez"):
+            return env, "AGENTBUS_DEVICE=%s" % env
+        low = os.path.abspath(self.root).replace("\\", "/").lower()
+        if "opal bloomberg" in low or "opalbl~1" in low:
+            return "sitez", "workspace path %s" % self.root
+        if "andrewberman" in low or "andrew~1" in low:
+            return "laptop", "workspace path %s" % self.root
         r = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=self.root, capture_output=True, text=True,
                            encoding="utf-8", errors="replace")
         branch = r.stdout.strip()
-        return BRANCH_FABRIC.get(branch), "branch %s" % (branch or "?")
+        return BRANCH_FABRIC.get(branch), "branch %s (fallback; path did not resolve a device)" % (branch or "?")
 
     def last_activity(self, row):
         home = (row or {}).get("home")

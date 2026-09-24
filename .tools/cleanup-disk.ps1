@@ -40,15 +40,15 @@
 #                                            view -- this has never happened, but the check is free.
 #
 #   merged-worktrees          AUTO-DELETE   REGISTERED worktrees, excluded from the LIVE set below,
-#                                            whose HEAD is an ancestor of BOTH origin/CLOUD and
-#                                            origin/SITEZ. Zero commits at risk -- the merge already
+#                                            whose HEAD is an ancestor of origin/CLOUD (the one trunk
+#                                            since 2026-09-24). Zero commits at risk -- the merge already
 #                                            carries every byte of it. Removed via `git worktree
 #                                            remove` (never raw rm, so git's own admin/ bookkeeping
 #                                            stays consistent) and the branch is deleted with it.
 #
 #   unmerged-worktrees        REVIEW ONLY   REGISTERED worktrees, excluded from LIVE, carrying at
-#                                            least one commit absent from BOTH origin/CLOUD and
-#                                            origin/SITEZ. THIS IS THE POOL ANDREW NAMED: the local
+#                                            least one commit absent from origin/CLOUD (the one trunk
+#                                            since 2026-09-24). THIS IS THE POOL ANDREW NAMED: the local
 #                                            worktree is the ONLY copy of that commit's content, so
 #                                            THIS SCRIPT NEVER DELETES HERE. It prints the full list
 #                                            (path, branch, commits ahead, size, last-write) and
@@ -276,16 +276,16 @@ function Invoke-PoolWorktreeSplit([bool]$RunMerged, [bool]$RunUnmerged) {
         # prune` is the correct fix, run once below; this loop must not call `git -C` on it.
         if (-not (Test-Path -LiteralPath $row.Path)) { $gone += $row; continue }
         if (Test-WorktreeLive $row.Path) { $live += $row; continue }
+        # ONE TRUNK since 2026-09-24 (Andrew-direct "recs approved", card 1 (a), LD-0613): origin/SITEZ is retired
+        # (tip = tag archive/SITEZ-20260924), so "fully merged" means an ancestor of origin/CLOUD alone. The old
+        # two-ref AND would read every worktree as unmerged once the second ref is gone.
         & git -C $row.Path merge-base --is-ancestor HEAD origin/CLOUD 2>$null | Out-Null
         $mergedCloud = ($LASTEXITCODE -eq 0)
-        & git -C $row.Path merge-base --is-ancestor HEAD origin/SITEZ 2>$null | Out-Null
-        $mergedSitez = ($LASTEXITCODE -eq 0)
         $aheadCloud = [int](& git -C $row.Path rev-list --count "origin/CLOUD..HEAD" 2>$null)
         $row | Add-Member -NotePropertyName AheadOfCloud -NotePropertyValue $aheadCloud
         $row | Add-Member -NotePropertyName MergedCloud -NotePropertyValue $mergedCloud
-        $row | Add-Member -NotePropertyName MergedSitez -NotePropertyValue $mergedSitez
         $row | Add-Member -NotePropertyName SizeBytes -NotePropertyValue (Get-DirSizeBytes $row.Path)
-        if ($mergedCloud -and $mergedSitez) { $merged += $row } else { $unmerged += $row }
+        if ($mergedCloud) { $merged += $row } else { $unmerged += $row }
     }
     if ($gone.Count -gt 0) {
         Write-Output ("[worktree-split] {0} registered worktree(s) whose directory no longer exists -- pruning git's own record, not touched as content" -f $gone.Count)

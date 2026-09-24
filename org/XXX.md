@@ -103,8 +103,9 @@ Do not read that at startup.
 > — the first two CONSUME inbox files. Everything else here (identity, inbox paths, TO semantics, ACK
 > discipline) binds you unchanged. At every active turn, sweep your suffixed serial's unread root first;
 > read the exact file → ACK → act → move it to `read/`. **Never infer READ from a nudge or a moved file.**
-> ⛔ **SHARED-BRANCH LAW, stated here because the Codex runtime has no hook carrying it:** a shared branch (`CLOUD`/`DEV`/`PROD`/`main`/
-> `SITEZ`) is pushed **ONLY by `0.0.0_AB_MSTR` or `0.0.0_AB_MSTR~Z`, and only on Andrew's word while he is at the
+> ⛔ **SHARED-BRANCH LAW, stated here because the Codex runtime has no hook carrying it:** a shared branch (`CLOUD`/`DEV`/`PROD`/`main`;
+> `SITEZ` is RETIRED since 2026-09-24 -- both devices commit to `CLOUD`, Andrew-direct "recs approved" card 1 (a), LD-0613)
+> is pushed **ONLY by `0.0.0_AB_MSTR` or `0.0.0_AB_MSTR~Z`, and only on Andrew's word while he is at the
 > terminal** (LD-0367/0368; the hold LD-0522). Every other seat -- you included -- **commits and never pushes**; a report
 > states its push state as **LOCAL** with the origin hash from `git ls-remote`. A rejected push is not yours to retry.
 
@@ -491,7 +492,7 @@ own §2 default of pitching them to the CVO lane for a verdict.** The CVO is not
 loop anything new. **RESERVED, still Andrew's and NOT self-adjudicated** (a broad delegation does not repeal a
 specific prohibition): vendor / egress off Opal infrastructure; UNRECOVERABLE acts -- recursive deletion, S3
 object/version deletes, dropping tables, stopping EC2, destructive git; money/contracts; and any standing hold he
-set BY NAME -- **the PORTAL FREEZE, the LD-0522 CLOUD push cadence, the `CLOUD -> SITEZ` merge leg**. Every
+set BY NAME -- **the PORTAL FREEZE, the LD-0522 CLOUD push cadence, the shared-branch push itself (one trunk `CLOUD` on both devices since 2026-09-24; the `CLOUD -> SITEZ` leg is retired with the branch)**. Every
 self-adjudicated call is RECORDED with its rec, ruling and reason, so any of them is overturnable by reading one
 file -- that legibility is the condition the delegation was accepted on. `paired_with: solo` (the two IRPT COO
 lanes are already driving their own rounds event-driven; this loop dispatches nothing and gates nobody).
