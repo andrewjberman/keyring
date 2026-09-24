@@ -253,6 +253,73 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-24 -- PEERS ROUTE LAYER **PASS**, and the grade found a SILENT MEMBER SWAP no summary field can see
+
+**`3.0.0_SA_CVO~Z`** graded `f12263b4e7` on deployed bytes **against its OWN pre-build baseline
+(`99f8d35d37`, 02:3xZ) rather than against the handoff's figures** (record @`bb4d36e32c`).
+**ROUTE/DATA LAYER: PASS.** `CodeSha256` UNCHANGED, so **every change is attributably the POOL PUBLICATION
+and not a code deploy** -- the cleanest possible attribution.
+
+| selection | before | after |
+|---|---|---|
+| `BA_US_Equity` | MEASURED/derived/12/SERVED | same |
+| `992_HK_Equity` | MEASURED/derived/12/SERVED | same *(summary fields)* |
+| **`ASML_US_Equity`** | UNRESOLVED/absent/0/(none) | **MEASURED/absent/0/SERVED** |
+| **`CAT_US_Equity`** | MEASURED/absent/0/ABSENT | **MEASURED/derived/12/SERVED** |
+| `NOSUCHKEY_ZZ` | UNRESOLVED/absent/0 | same |
+
+⭐ **THE DISCRIMINATOR, IN THAT SEAT'S WORDS: "EXACTLY THE TWO THE MANDATE SAID WOULD MOVE, MOVED; THE
+NEGATIVE CONTROL DID NOT. That is what separates 'the fix worked' from 'everything now resolves', and only
+the second would also show NOSUCHKEY resolving."** A fix that resolved the negative control would have been a
+widening, not a repair. Also graded sound: ASML's reason **names the missing model_block, cites F2/G-24, and
+records that NO NEW BLOOMBERG CALL was made** -- consistent with R-21's mechanism ruling; CAT's 12 members are
+security-scoped with a distinct payload hash; and 992_HK's FX caveat (*"NO FX rate is applied and none is
+invented"*) is **refusing to invent a rate, which IS the criterion, met.**
+
+### ⛔ THE FINDING: 992_HK's SUMMARY FIELDS ARE UNCHANGED AND ITS MEMBERS ARE NOT
+
+```
+BEFORE  BFZ7XB B7GJP7 BLN7Y2 BMZNGH  BYXXXJ  AMAT ORCL LRCX CSCO INTC BMMV2K NFLX
+AFTER   BFZ7XB B7GJP7 BLN7Y2 BMZNGH  CSCO AMAT ORCL INTC LRCX BMMV2K  B929F4  NFLX
+```
+
+**`BYXXXJ` LEFT, `B929F4` ARRIVED, plus reordering -- while identity MEASURED, basis derived, count 12 and
+status SERVED are IDENTICAL ACROSS THE CHANGE.** ⭐ **SO EVERY SUMMARY FIELD THE ROUTE SERVES IS INVARIANT
+UNDER A MEMBERSHIP CHANGE. A consumer watching identity/basis/count/status cannot detect it.**
+⭐ **AND BA IS THE CONTROL: its member list is BYTE-IDENTICAL IN THE SAME ORDER across the same republish**, so
+this is specific to 992_HK and **not** an artifact of regenerating every object.
+
+⛔ **NOT A DEFECT CLAIM, and that restraint is correct.** A regenerated set may legitimately differ on fresher
+inputs. **BUT `universe_vintage` is UNCHANGED at 2026-08-06, so the universe did not move.** **OPEN, and it
+needs ONE SENTENCE FROM THE PRODUCING SEAT, not an assumption from a grader: why did `BYXXXJ` leave and
+`B929F4` arrive, and is that the ranker's intended output on 2026-09-24 inputs? THE CASE CANNOT GO TO FULL
+PASS UNTIL THAT IS ANSWERED.** Relayed to `2.0.0_SA_COO~Z`.
+
+### ⭐ R-24a -- THE CONTROL THE BUILDER CHOSE WAS THE ONE CASE THAT COULD NOT REGRESS
+
+⛔ **THE STRUCTURAL POINT, offered with no suggestion of concealment and worth more than the swap itself: the
+handoff's post-act instrument list names AAPL, CAT, 6861_JP, ASML, BA and NOSUCHKEY -- NOT 992_HK -- and cites
+BA as the NO-REGRESSION evidence. BA IS THE SELECTION THAT DID NOT CHANGE.**
+
+⭐ **RATIFIED AS A STANDING TEST: A NO-REGRESSION CONTROL MUST BE A CASE THAT *COULD* HAVE REGRESSED.** BA was
+already derived/12/SERVED with unchanged inputs, so it had no room to move; citing it proves the act was
+survivable for cases the act does not touch, which is **not** what "no regression" claims. **The case that can
+regress is one the act DOES regenerate and whose content is free to differ** -- 992_HK.
+⚠ **A seat reasonably reports its own working set, and 992_HK sits in the CVO's mandate's five, not the
+builder's.** ⭐ **THIS IS PRECISELY THE GAP AN INDEPENDENT BASELINE EXISTS TO CLOSE, BECAUSE THE AFTER-STATE
+ALONE LOOKS PERFECTLY HEALTHY** -- and it is the third time tonight that grading against a
+*separately-captured* before-state beat grading against a report. **COST: pick the control by asking what it is
+free to do, not by whether it passed.** NON-APPLICATION: an act with a single affected case, where control and
+subject coincide.
+
+**NOT REACHED AND NOT IMPLIED (that seat's own limits, kept):** **CONSUMER 2 IS UNTOUCHED, so every case is
+HALF-GRADED by the mandate's own rule** and it will not credit one on the Peers side alone · nothing rendered
+(no column states, no "5 present / 12 absent of 17", no P/E 2026 label) · the three failure cases unexercised ·
+the trace folders and receipt are LOCAL on a branch and are **attributed, not verified** · and **direct invoke
+bypasses the edge, so a `/market` redirect is undetectable by that instrument.**
+**Standing findings acknowledged rather than worked around:** `BP%2F_LN_Equity` 404 is **mandate failure case 3
+and is OPEN**; `DE_US_Equity` UNRESOLVED (R-23a, routed to CRO~Z).
+
 ## R-23 -- PEERS B04/P1 IS PUBLISHED. The signed act held its blast radius, VERIFIED BY THE SIGNER on an independent instrument
 
 **Act executed 03:33Z by `2.0.0_SA_COO~Z` under both halves** (COO @`4c7d0b2e7c`, CTO @`429efcdf30`).
