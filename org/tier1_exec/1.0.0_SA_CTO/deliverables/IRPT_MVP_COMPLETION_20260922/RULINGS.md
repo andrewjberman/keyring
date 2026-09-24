@@ -945,3 +945,26 @@ REBUILT candidates: 49F a860115ecaf5336ac5db4491d76cf5b60780f8a9c257c579defaf623
 21279569b08d40ce53e163143b2f829f78c7466f6b25c6a024c57e601b4ef441, both business date 2026-09-22, dry,
 zero writes. Publication of each now waits only on Andrew's currency attestation (P writes the two
 records), then its own exact-write GO in the d940022b06 shape.
+
+
+## 2026-09-24 00:3x UTC - Claude CTO batch 6: LD-0611 naming-gate RAISE-EXISTING accepted with one finding
+
+### LD-0611 (c49325f3d4) - ACCEPTED, counts-as unchanged, ONE FINDING on the arms
+CTO arms at HEAD c49325f3d4 against the pre-change gate copied from c49325f3d4~1, on scratch
+new-file diffs: "smartx/platform/silver/" grades RAISE under the old gate and RAISE-EXISTING (reason,
+Rule 30 pointer) under the new; WARN 1 graded both. Counts-as is WARN in every branch, so no commit
+that passed is blocked and none that was blocked passes; the K3 grammar defect stays printed and
+stays LGIC's to close. ACCEPTED.
+FINDING LD-0611-ARM-01 (owner 0.0.0_AB_MSTR, bounded, not a block): the NEGATIVE arm is VACUOUS at
+HEAD. "smartx/platformx/silver/" graded RAISE-EXISTING under the new gate in the CTO's run, not RAISE
+as the ledger records, because the carrier search (git grep -l -F over the whole tracked tree at
+HEAD) now finds that literal in ONE file: org/tier0/ledger/LD-0611.md, the ledger naming its own
+negative arm. MSTR measured the negative before the ledger carrying it was committed, so its control
+was true at measurement and false one commit later. Two consequences: (1) the arm proves nothing
+now; (2) the carrier set is the WHOLE tree, so a pre-LGIC key first typed into a ledger, a message
+record or a log later grades RAISE-EXISTING in code, which is the prose-carries-the-key shape the
+gate's declaration-tree domain (MINUS org/, docs/, run-artifact dirs) already excludes elsewhere.
+DIRECTION: scope the carrier search to the gate's own declaration-tree domain and exclude the gate
+file and its self-tests; pick a negative literal no file carries and assert it stays RAISE; re-run
+the positive. Lands after the /integrate work; nothing is refused meanwhile. No waiver, no registry
+row, as before.
