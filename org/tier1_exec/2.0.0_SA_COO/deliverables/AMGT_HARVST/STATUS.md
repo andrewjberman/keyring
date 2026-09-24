@@ -93,10 +93,18 @@ the chatter water was stale because `chatter_daily` held six names, and it now h
 ## Parked (one line each, owner, un-park condition)
 
 - **Scheduled producer for the gold chatter tables** -- `1.0.0_SA_CTO~Z` to route; un-parks when a
-  schedule exists or the table is ruled QA-only.
+  schedule exists or the table is ruled QA-only. ⚠ R-55 @`7dda0c24ab` sharpens this from a preference
+  to a NAMED DEFECT: ad-hoc gold runs are QA-only while production pipelines must be scheduled, so an
+  unscheduled production table is off-law, and the owner it needs is **not Andrew**.
 - **`listing_hit` collection for the four silent publishers** (`barrons`, `bbg`, `ft`, `sa`) -- this is
-  the ONLY thing standing between this table and a non-empty success bucket. New publisher access or
-  backfill needs Andrew's per-use word and `2b` does NOT come with it; un-parks on that word.
+  the ONLY thing standing between this table and a non-empty success bucket. ⭐ **R-55 MEASURED WHAT THIS
+  LINE ASSUMED, and the answer came back the other way from what the check expected:** the constraint is
+  not stale but the question was **NEVER PUT TO HIM** -- R-21's whole seven-row card table names no
+  publisher access, and `publisher access` / `listing_hit` / `barrons` / `ENABLED_PUBLISHERS` return
+  ZERO hits across the rulings file. Neither granted nor withheld, just unaddressed. The wider reading
+  of "all the egress you want for vendors" is REFUSED as a silent widening (a word is relayed, never
+  adjudicated wider). So this is now a **third reserved card at Andrew**, carried by `1.0.0_SA_CTO~Z`;
+  un-parks on his answer to the card, not on an inference from R-21.
 - **`AMGT_HARVST-Z-S19`** (universe misspells "Haliburton") -- routed to the `universe/v1` producer's
   owner; INERT (HAL has 0 mention rows today), un-parks if that name is ever ranked.
 - **`lib/research/price/**` explicit-state migration** rides in `6e9868b903` for coherence --
