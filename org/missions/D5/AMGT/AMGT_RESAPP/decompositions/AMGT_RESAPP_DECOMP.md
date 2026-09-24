@@ -5718,3 +5718,147 @@ harness and its fetch; both are named in their faces as the starting state, neve
   change to `1.0.0_SA_CTO~Z` before it is built. Branch (a)'s two-page brand form is measured, not built, this round.
 - **The closer items** (consumer-2 grade, failure cases, `BP/_LN_Equity` route, `DE_US_Equity` fork, the `1ec5446c`
   deploy) -- their own spec (B.5).
+
+
+## 46. ROUND 38 -- THE INSTRUMENT RE-KEYED, THE FREE CHROME, THE RESIDUE MEASURED, THE EXPORT SERVED, THE PROVENANCE DISCLOSED. Seven orders over the round-37 analysis's seven-item enrichment list
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 37 ANALYSIS** (`ledger/ROUND_ANALYSIS.round37.md` @`31ef7a1f50`,
+item 6 amended @`18d29a99c7`; msgs 25497, 25501), whose s.6 lists the enrichment items BY SUBTRACTION (8 of 10 round-37
+outcomes REALIZED; `FWD-29` and `FWD-30` NOT_REALIZED); on `3.0.0_SA_CVO~Z`'s `ADJUDICATION_v47` @`81d76363ff` (rl-9 AC4
+REJECTED on C1 and C11, the invariance sweep, the clipped provenance caption routed as a CONTRACT GAP); and on
+`4.0.0_SA_CRO~Z`'s FWD-29 research @`88f08c0c7a` (msg 25505), which the analysis released and welcomed "for round 38's cut"
+and which MEASURED two things the cut cannot ignore (s.46b). PRD v0.26 unchanged: an enrichment recut carries no addendum.
+`prd-signoff.py status` at the cut: **ADMITTED** -- ratified-text half SIGNED (`3.0.0_SA_CVO~Z`, current), brief half SIGNED
+(`4.0.0_SA_CRO~Z`, current). No pipeline-override rides this issuance.
+
+### 46a. THE SEVEN ITEMS AND WHERE EACH LANDS
+
+| L10 item | lands as |
+|---|---|
+| 1. C1 + C11 chrome cell admitting `App.tsx`, `PageHeaderVariants.tsx`, `panels/PanelHeader.tsx`, `PanelFooter.tsx`, `index.css` | **`AMGT-rm-2`** admits `PageHeaderVariants.tsx`, `PanelHeader.tsx`, `PanelFooter.tsx` -- ⛔ **NOT `App.tsx` and NOT `index.css`'s `--bg-band`** (46b) |
+| 2. the band-count cell inside the rectangle | **FOLDED INTO `AMGT-rm-1`** (the instrument) and **`AMGT-rm-3`** (measure-first): the predicate counts the wrong colour today (46b), so no page cell can move what it measures until it measures bands |
+| 3. size-10 and radii-count variance, measure-first | **`AMGT-rm-3`** |
+| 4. `format=rich` route (R-57, R-58) with the deploy leg the AE lane's | **`AMGT-rm-4`** (adapter + client + tests) and **`AMGT-rm-7`** (the deploy, issued to `0.7.0_AE_CloudOps~A`, after rm-4 merges) |
+| 5. the provenance concern, ONE cell TWO limbs (`dated` dropped at `types.ts:181`; the caption clipped) | **`AMGT-rm-5`** (the type + the caption's wrap on the page side); the strip's own wrap rule is rm-2's file and is named there |
+| 6. `DESIGN.md` overflow/wrap amendment -- a NAMED WRITER, content the CTO's | **`AMGT-rm-6`** measures every clipped text block on the six states and DRAFTS the clause with its cases for the CTO's L4-R ratification; ⛔ **the `DESIGN.md` edit itself is NOT in this round** -- it lands by the named writer once the CTO ratifies the text (46g) |
+| 7. Z-S247's disarm carrier | **DONE before the cut**: row `AMGT_RESAPP-Z-S249` @`0cf98a11f5` (37 -> 0 on two instruments) |
+
+### 46b. ⛔ TWO MEASUREMENTS THAT RE-SHAPE ITEMS 1 AND 2 (the CRO's, cited; the cut's reading stated to the CTO in the issuance message)
+
+1. **The band predicate counts the wrong colour.** `ui-measure.mjs:65` defines a band as a computed background within 3 of
+   `rgb(10,23,51)` (#0A1733). Since the portal-wide named layers (`index.css:371`, portal `1e0aaad7`, Andrew's ~19:5xZ word),
+   `--bg-band` resolves to `--layer-body` = rgb(25,38,67), while #0A1733 is `--layer-strip`: the panel TITLE STRIP
+   (`PanelHeader.tsx:62`, `PanelFooter.tsx:92`) and the sidebar `<aside>` (`App.tsx:271`). So `Panel variant="mixed"` -- the
+   identity header (F1's ONE band in Security mode) and the Lead Panel (Universe mode) -- is NEVER counted, and the only things
+   counted are strips and the sidebar. `peers` reading 1 is the sidebar. **A band-count cell inside the page cannot move what
+   C3 is about; the remedy is the INSTRUMENT** (rl-1's own paths): key the band test to the Panel's own marker (`.dark-band` /
+   `data-panel-variant`, `Panel.tsx:89-90`) or the resolved `--bg-band`, count `--bg-header` strips SEPARATELY, and grade
+   inside `<main>` (`--scope main`) with the whole-body read printed beside it. Re-pointing `--bg-band` in `index.css` would
+   reverse a portal-wide word and is refused.
+2. **The sidebar's wider treatment is OPEN AT ANDREW.** `ANDREW_DIRECT_20260914_183xZ_DSGN_REBRND_ROUND2_DECISIONS...md:11-12`
+   verbatim: *"will see what the current version looks like in the interim and make a call later if we keep it as is or just
+   revert to the DEV branch implementation"*; DSGN_REBRND PRD v0.6 :260 / v0.10 :276; its round-1 analysis :82. Chrome by
+   subtraction (whole minus main): weight 500 (226), shadows (1), 8px radii (17 of 18), list's size-10 (26) and two purple
+   fills are the `<aside>`. ⛔ **So admitting `App.tsx` to restyle the sidebar's weights, radii and shadow would act on a card
+   he reserved. It is not admitted.** What IS free and is admitted: `PageHeaderVariants.tsx:46` (`font-light` = the invariant
+   weight-300 8 chars), `PanelHeader.tsx:62` (`rounded-t-lg`, `font-semibold`), `PanelFooter.tsx:92` (`rounded-b-lg`).
+   The purple predicate also counts C8-LEGAL identity accents (the page-title rule `PageHeaderVariants.tsx:40`, the sidebar's
+   active item and avatar): the instrument counts ACTION fills and excludes the C8 set by selector, as the brief phrased it.
+
+**What this does to FWD-29:** the six-state PASS is re-stated as a PASS **inside `<main>`** with the re-keyed predicates --
+a page cannot be graded on chrome Andrew holds, and an instrument that cannot see the page's own band grades nothing. The
+whole-body table stays printed beside it so nothing is hidden by the scope. `/market`, the reference Andrew accepted
+(~19:0xZ 2026-09-14), reads weight 500/600 and 8px radii inside its own main today: "in pattern with the Dashboard" and
+"C1/C11 as the instrument measures them" are not one bar, and rm-2 meets C1/C11 on the SHARED strip components, which
+moves the Dashboard's strips with it -- named in rm-2's face as a blast radius, checked by a `/market` smoke at the drain.
+
+### 46c. THE RECTANGLE -- seven orders, write surfaces DISJOINT by construction
+
+| id | cell | slot | serves | write surface |
+|---|---|---|---|---|
+| `AMGT-rm-1` | THE INSTRUMENT RE-KEYED | `~140` | `FWD-29` (a check that grades bands, strips, action fills and clipped text inside the page's main) | `portal/scripts/ui-measure.mjs`, `portal/scripts/ui-contract-check.mjs`, `portal/scripts/ui-smoke.mjs`, `portal/src/pages/SecurityAnalysis/__harness__/tests/**` (fixture DOMs) |
+| `AMGT-rm-2` | THE FREE CHROME (C1 + C11 on the strips and the page title) | `~141` | `FWD-29` (weight 300 -> 0; 8px radii on strips -> 4px; the strip's shadow limb determined) | `portal/src/components/PageHeaderVariants.tsx`, `portal/src/ui/components/panels/PanelHeader.tsx`, `portal/src/ui/components/panels/PanelFooter.tsx` |
+| `AMGT-rm-3` | THE RESIDUE, MEASURED FIRST | `~142` | `FWD-29` (weight 600, 8px, size 10, band count and action fills inside main, per state, attributed to files) | `portal/scripts/ui-contract-check.mjs` (`--trace`), its deliverables |
+| `AMGT-rm-4` | THE EXPORT SERVED: `format=rich` | `~143` | `FWD-30` branch (b) servable (R-57) | `lib/research/api/scoped_amgt.py` (`_print_pack` only), `lib/research/api/tests/test_print_format_rich.py` (new), `portal/src/api/endpoints/amgt-lead-panel.ts`, `portal/src/pages/SecurityAnalysis/components/PrintExportAction.tsx`, `portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs` |
+| `AMGT-rm-7` | THE DEPLOY LEG | `0.7.0_AE_CloudOps~A` | `FWD-30` served on `opal-amgt-scoped-api` (R-58: the AE lane's, under its own NEVER-2 entry) | `infra/aws/terraform/harvest/scoped-amgt-api.tf` (via `safe-apply`), `org/critical_paths/change_management/**`, its deliverables |
+| `AMGT-rm-5` | THE PROVENANCE DISCLOSURE, TWO LIMBS | `~144` | R-57's ruled defect (`dated` dropped at `types.ts:181`) + the clipped caption (ADJUDICATION_v47 s.2.4) | `portal/src/pages/SecurityAnalysis/types.ts`, `components/LeadPanel.tsx`, `components/GenerationCaption.tsx`, `__harness__/leadPanelPattern.harness.cjs`, `__harness__/tabs.harness.cjs` |
+| `AMGT-rm-6` | THE CONTRACT GAP, MEASURED AND DRAFTED | `~145` | the `DESIGN.md` overflow/wrap amendment's INPUT (cases + draft clause for the CTO's L4-R) | its deliverables only |
+
+**Status vocabulary** (`org/standards`): every cell `NOT_EVALUATED` at the cut. **Placement:** site-z, every cell.
+**Invariant:** seven orders over the seven enrichment items minus item 7 (done) plus the deploy leg; `FWD-29` named by
+rm-1, rm-2, rm-3; `FWD-30` by rm-4, rm-7; R-57's `dated` defect and the contract gap by rm-5, rm-6.
+
+### 46d. THE FOUR-POSTULATE RECORD (Rule 24)
+
+- **(i) MECE over a declared domain.** Domain = the analysis's s.6 list (SEVEN items, read from the file) MINUS item 7
+  (done @`0cf98a11f5`) = six, each placed above; the deploy leg is item 4's own second half (R-58), not an eighth item.
+  Item 2 is not dropped: it is placed in rm-1 and rm-3 because the CRO's measurement shows the count it would move is not
+  a band count (46b.1); the CTO is told so in the issuance message and may re-cut it as a page cell on the re-keyed number.
+- **(ii) Same grain.** rm-1, rm-3 are instrument cells (scripts + fixtures); rm-2, rm-5 are component cells; rm-4 is one
+  adapter branch + its client; rm-7 is one Terraform apply; rm-6 is a measurement deliverable. Two grains, both cell-sized.
+- **(iii) Intent coherence.** One axis: make `FWD-29`'s oracle TRUE OF THE PAGE and `FWD-30` SERVABLE. rm-4 is the ONE
+  route change this round and it was returned to the CTO and approved (R-57) BEFORE it is built; nothing else moves a
+  route, a DTO, a query key or a served figure.
+- **(iv) State coherence -- what a cell does NOT move.** rm-1 moves no page or component source; rm-2 does not touch
+  `App.tsx`, `index.css`, `Panel.tsx` or any page file; rm-3 edits no source but the trace mode; rm-4 does not change the
+  pdf default (byte-identical, the negative control) and does not deploy; rm-7 changes no code; rm-5 does not move
+  `PanelFooter.tsx` (rm-2's) and the caption's FACTS are unchanged; rm-6 does not edit `DESIGN.md`. Everything B.5 kept
+  in round 37 stays kept.
+
+### 46e. DEPENDENCY EDGES, CHAINS AND FAN-OUT
+
+```
+rm-1 -> rm-2, rm-3           (both grade with the re-keyed instrument inside main)
+rm-1 -> rm-6                 (the clipped-text detector rm-6 reads is rm-1's)
+rm-4 -> rm-7                (nothing deploys before the adapter branch is on CLOUD)
+rm-5 -> (none)               (page-side; graded at the drain by the re-keyed instrument's list state)
+```
+
+```
+fanout:
+  cap: 8
+  orders_total: 7
+  chains_total: 4                  # rm-1 -> {rm-2, rm-3, rm-6}; rm-4 -> rm-7; rm-5 alone
+  wave_0: [rm-1, rm-4, rm-5]       # disjoint: scripts+fixtures | adapter+client+action | types+LeadPanel+caption+harness
+  wave_1: [rm-2, rm-3, rm-6, rm-7] # after rm-1 merges (rm-2, rm-3, rm-6) and after rm-4 merges (rm-7, a seat order)
+  portal_ref: 1f1555d2             # nested DEV HEAD at the cut (MSTR~Z's pull-merge of the laptop's IRPT candidate 4 over 65a41a1f); the gitlink at HEAD reads 65a41a1f -- measured NOT equal, the first drain moves it
+  reason: the instrument must grade bands before any chrome or residue cell is graded by it; the route and the provenance cells touch neither
+  no_vite_per_worker: false        # rm-1, rm-2, rm-3, rm-6 run the DOM instrument on their own port (5182-5185); rm-4, rm-5 do not
+  no_s3_deletes: true              # standing
+  no_bearer_forging: true          # standing
+  no_vendor_call: true             # standing
+  route_change: rm-4 only          # R-57 approved; default pdf byte-identical (the negative control); deploy is rm-7's
+  no_promote: true                 # portal is commit-yes / promote-no
+  sidebar_untouched: true          # App.tsx is Andrew's reserved card (46b.2); no cell names it
+```
+
+### 46f. THE BOUNDS THAT BIND EVERY CELL
+
+1. **The contract is `portal/DESIGN.md` C1-C12**; a rejection cites a clause (`C-CLAUSE-CITED-REJECTION`). C1 weights
+   {400,700}; C3 ONE band per page, the band is `Panel variant="mixed"|"chart"` (the `.dark-band` marker), never a strip;
+   C8 identity accents (the page-title rule, the sidebar active item, the avatar, the rail edge) are LEGAL and are not
+   action fills; C11 radii {2,3,4,pill}, no drop shadow, the focus ring the only `box-shadow`; C12 the four designed states.
+2. **THE VERIFICATION DIET.** At most three mechanical criteria per build order; repo-wide `tsc`, the full harness set and
+   the six-state check run at the drain. **A predicate that FAILS is a finding, never tuned** (bound 2 of round 37 stands);
+   rm-1 may CHANGE what a predicate MEASURES only where 46b names the mis-key, and prints the old and new reads side by side.
+3. **`App.tsx` and `index.css` are touched by NO cell** (46b.2; the `--bg-band` repoint would reverse Andrew's ~19:5xZ word).
+   `Panel.tsx` is read-only (its marker is what rm-1 keys on). No `package.json`, no vite config, no install.
+4. **rm-4 is the ONLY route-touching cell**: `_print_pack` gains the `format` query branch and nothing else in the adapter
+   moves; the route table's line for `/print` is unchanged (a query parameter is not a route); the pdf default is proven
+   byte-identical by sha256 before and after. **No deploy on rm-4**; rm-7 deploys under NEVER-2 with the ledger entry
+   opened BEFORE the apply.
+5. **Standing:** no S3 delete of any kind; no key, secret or session hunting; no vendor or Bloomberg call; no push, merge,
+   rebase, `checkout --` or `clean`; no promote. Scripts and logs live under the worker's `deliverables/<serial>/`.
+6. **What is KEPT (B.5):** the verbatim gate, the three-state reads, the generation caption's FACTS (rm-5 changes how they
+   wrap and where `dated` is typed, never what they say), the crossed-controls model, the Peers/Posture symmetry.
+
+### 46g. CARRIED, NOT CUT -- with the reason
+
+- **The `DESIGN.md` edit for overflow/wrap** -- rm-6 measures and drafts; the clause text is the CTO's to ratify (L4-R) and
+  the edit lands by the named writer (R-60's resolver: `portal/**` -> `POD_DE_ANY`; in practice the round's worker
+  discipline that landed every portal file this round) once ratified. Not cut as an edit because its content does not exist yet.
+- **The sidebar** (weights, radii, shadow, active-item and avatar fills) -- Andrew's reserved card (46b.2), relayed, not gated.
+- **Item 2 as a page cell** -- carried until rm-1's re-keyed band count says whether any Security-mode state renders more
+  than the identity header as a band; rm-3 prints that number per state and names the file if it is 2.
+- **The size-10 / weight-600 / 8px residue INSIDE main** -- rm-3 attributes; the fix is round 39's (or a re-cut mid-round
+  if attribution lands on a single page file and the CTO asks).
