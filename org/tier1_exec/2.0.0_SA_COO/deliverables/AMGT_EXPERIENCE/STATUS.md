@@ -16,12 +16,21 @@ banging out Peers, get it done."
 
 ## The four steps
 
-1. **LIVE THREAD (E0/P1): IN PROGRESS, waiting on the human sign-in.** A headed Edge window driven by
-   `peers_live_trace.cjs` (scratchpad) sits on `https://d2n2nzpeqf34ge.cloudfront.net/login`; once a permitted
-   identity (admin + Dev, MFA) signs in, it walks the six acceptance cases on the served stack, records every
-   `/api/scoped/amgt` response, the rendered Peers panel, the Posture reads and a screenshot per case. The shared
-   Playwright MCP is headless and held by another seat, so it cannot carry an MFA sign-in. No credential is typed
-   by the runner. A `/market` redirect is recorded as FAIL.
+1. **LIVE THREAD (E0) REACHED on the served stack; P1 today-state MEASURED, pre-publication.** Andrew signed in
+   at 03:12Z (access claims `role=admin`, `userType=Dev`) in a headed Edge driven by `peers_live_trace.cjs`
+   (portal's own playwright-core; the shared Playwright MCP is headless and held by another seat). Evidence:
+   `PEERS_LIVE_TRACE_20260924T0320Z/` (trace.json with every `/api/scoped/amgt` response, run.log, screenshots).
+   `/security-analysis/BA_US_Equity` landed with NO `/market` redirect; Peers tab: identity "BA US",
+   `crosswalk/v1 @ 2026-09-22`, DERIVED, 12 comparable(s), 17 columns; deployed `/peers` 200, basis derived,
+   12 members, `peer_read SERVED`. Rendered column states TODAY: 1 PRESENT_CARRIED (Mkt Cap, n=12),
+   4 PRESENT_NOT_CARRIED, 12 ABSENT (the hop-7 mismatch, live). Posture read subject + comparable; the comparable
+   `DE_US_Equity` came back UNRESOLVED in the 2026-09-22 crosswalk (DE is among the 158 the candidate registers).
+   `992_HK_Equity` derived 12 with the FX caveat; `ASML_US_Equity` UNRESOLVED; `CAT_US_Equity` `peer_read ABSENT`;
+   `NOSUCHKEY_ZZ_Equity` UNRESOLVED (negative control). **FINDING:** `BP/_LN_Equity` requested as
+   `BP%2F_LN_Equity` (the app's own encoding, `PostureTab.tsx:261`) lands on the page but every
+   `/api/scoped/amgt/security/BP%2F_LN_Equity/*` call returns 404 from the gateway: the 10 slash-key objects are
+   unreachable through the served route. Enrichment-list item (route shape; `crosswalk.slash_safe_key` exists),
+   a separate function act. Acceptance credit for P1 waits on the publication and CVO grading.
 2. **ONE KEY SPACE: CANDIDATE READY, NOT PUBLISHED.** Crosswalk takes `universe/v1` (latest, 2026-09-16) as a
    second registration source; 158 registered, 33 already present, 59 refused with reasons; MEASURED 36 -> 194.
    Proof on the candidate: `crosswalk.resolve()` over the 191 prior pool keys = **191 MEASURED, 0 refusals**.
@@ -50,8 +59,8 @@ they recycle; the identity block's `source` names which.
 
 | Need | Owner | State |
 |---|---|---|
-| Admin + Dev identity signed in on the headed window | Andrew | OPEN (window up since 03:08Z) |
-| CTO never-widen half for the pool publication | `1.0.0_SA_CTO~Z` | REQUESTED |
+| Admin + Dev identity signed in on the headed window | Andrew | DONE 03:12Z (profile persists for the post-act re-walk) |
+| CTO never-widen half for the pool publication | `1.0.0_SA_CTO~Z` | REQUESTED 03:22Z (review handoff, msg to inbox `1.0.0_SA_CTO/~Z`) |
 | Live grading of E0 / P1 after the act | `3.0.0_SA_CVO~Z` | not yet due |
 
 ## Parked
