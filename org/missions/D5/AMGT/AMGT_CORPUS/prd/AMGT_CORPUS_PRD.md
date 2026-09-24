@@ -658,7 +658,7 @@ brief alone would deliver one of the two things he asked for, and the brief woul
 ⚠ **`FWD-18` AND `FWD-15` ARE MARKED PROPOSAL BY THEIR OWN AUTHOR** (`:86`, `:117-118`). They are cut as outcomes
 so they are gradeable, and the round-N analysis may defer either; neither is a bar on the other eight.
 
-## A.4 -- ⛔ ONE CONTRACT IS AMENDED BY NAME, BECAUSE `FWD-19` IS OTHERWISE UNACHIEVABLE
+## CONTRACTS -- A.4 -- ⛔ ONE CONTRACT IS AMENDED BY NAME, BECAUSE `FWD-19` IS OTHERWISE UNACHIEVABLE
 
 `C-NO-VENDOR-CALL` reads *"Nothing in this project calls an external vendor API or the Claude API."* The 60-name
 induction needs **one Bloomberg `reference_data` call per name**. ⚠ **THIS PRD HAS ALREADY BEEN HERE ONCE AND ITS
@@ -691,7 +691,7 @@ not like the idea of relying on an agent for something a script can do way bette
    mnemonics' FIGURES wait on that word, and the tab reads ABSENT-with-reason until then -- **which is `FWD-13`
    working, not `FWD-12` failing.**
 
-## A.5 -- NEW CONTRACTS (the brief mints no `C-` ids; these are this seat's)
+## CONTRACTS -- A.5 -- NEW CONTRACTS (the brief mints no `C-` ids; these are this seat's)
 
 **`C-DOSSIER-IS-COMPOSED-NEVER-AUTHORED`.** The dossier is a COMPOSITION of artifacts that already exist -- the
 continuation artifact, the sector template, the fund form, the typecast, the bronze extraction -- plus the cited

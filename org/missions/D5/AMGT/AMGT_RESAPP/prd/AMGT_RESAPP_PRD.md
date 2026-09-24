@@ -2262,7 +2262,7 @@ frontend"* are both honoured by the NARROW reading, and **the walk's own conclus
 architecture to change**: one header, five tabs in the ratified order, no tab moved, no route added, no re-split.
 `C-PAGE-LAYOUT` is UNTOUCHED.
 
-## B.4 -- NEW CONTRACTS
+## CONTRACTS -- B.4 -- NEW CONTRACTS
 
 **`C-CLAUSE-CITED-REJECTION`.** A rejection of any `FWD-21`..`FWD-29` candidate **cites a `DESIGN.md` clause
 number**. A rejection on taste is not a rejection. The clauses in scope are C1, C3, C5, C6, C8, C9, C10, C11, C12.
