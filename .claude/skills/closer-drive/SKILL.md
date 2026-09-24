@@ -17,7 +17,8 @@ project's ONE loop. `/canonical-drive` is the FULL body, and the lease picks bet
    - HOLD -> do nothing on this project this tick.
    - FAST, and this tick is the first -> run the FULL -> FAST boundary first.
 1. **Read STATUS.md** (`<project home>/STATUS.md`, shape: `/closer`'s `templates/STATUS.md`) and run
-   `python .tools/drive-mode.py status` for overlapping claims.
+   `python .tools/drive-mode.py status` for overlapping claims. A project with several FAST seats keys one lease per
+   seat, `<CODE>~<lane>`, on disjoint surfaces: each seat reads its own key and writes `<project home>/STATUS~<lane>.md`.
 2. **Pick ONE item.** A defect that breaks the live thread comes first; otherwise take the top of the next-list,
    which is the enrichment backlog in order. Claim it in STATUS.md's Write claims before building.
 3. **Build it** in the seat's own worktree, across frontend and backend as the item needs. Do not spawn a subagent.
