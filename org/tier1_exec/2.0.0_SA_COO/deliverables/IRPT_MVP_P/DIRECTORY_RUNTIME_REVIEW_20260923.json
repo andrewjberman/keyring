@@ -1,0 +1,662 @@
+{
+  "measured_utc": "2026-09-23T17:28:12.224361+00:00",
+  "ruling": "d2fd024d72",
+  "access_correction": "5ad99c7d30",
+  "source_manifest": {
+    "source_pin": "6cd8adb582",
+    "source_map_sha256": "2e4be13e530ee8d4e642f7be711869592097f1ce81d0ae8c0ac2a38e1b0ff333",
+    "function": "irpt-directory-search",
+    "members": [
+      {
+        "member": "handler.py",
+        "path": "infra/aws/lambda/investor-reporting/directory/handler.py",
+        "pin": "6cd8adb582",
+        "sha256": "e46922a003791d901d037d80c82cf538c313dfe907096194f4fcca556712702e",
+        "git_blob": "c80dab8c4ffc87e120ec571d66245b770699b6b4",
+        "bytes": 19406
+      },
+      {
+        "member": "entry.py",
+        "path": "infra/aws/lambda/investor-reporting/directory/entry.py",
+        "pin": "6cd8adb582",
+        "sha256": "82ada70c34d5351462241dcb1124d1c3442a06c5360246c6e7fe16c29f912781",
+        "git_blob": "c90f6602d2d6f6072d28a5dee8f9b69ef8990b8b",
+        "bytes": 20007
+      },
+      {
+        "member": "served.py",
+        "path": "infra/aws/lambda/investor-reporting/_authz/served.py",
+        "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+        "sha256": "e518af43b2c3358bb788b32ddd7f57b3f0c7e47afd7138ad9ed967e03531052f",
+        "git_blob": "76c17617841fd377176c1dbf454d6c840b2ddb98",
+        "bytes": 56909
+      },
+      {
+        "member": "loaders.py",
+        "path": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+        "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+        "sha256": "b84bb2918fc13be31358e81221e951ed4f4aa70da9dea2b7a8dbce93b1853da2",
+        "git_blob": "6c79fad46bb55012708234522bd32a294360aaf9",
+        "bytes": 10084
+      },
+      {
+        "member": "enforce.py",
+        "path": "infra/aws/lambda/investor-reporting/_authz/enforce.py",
+        "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+        "sha256": "18f04af84b9c5e87362f9cf87ee2ef5bc3680ccbaea66b1a2ee4e6579e6b1e7b",
+        "git_blob": "b0fed34092ab27c3e219dcfef588a926ddedf935",
+        "bytes": 52613
+      },
+      {
+        "member": "errors.py",
+        "path": "infra/aws/lambda/investor-reporting/_authz/errors.py",
+        "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+        "sha256": "784ee313ed7013e6fdf535a373e7941f4c672f4467e4dfcb4e8ad0634b1646a2",
+        "git_blob": "910cbbaa5f6f7cf8d48c38285b084ce94dcdda88",
+        "bytes": 10652
+      },
+      {
+        "member": "resolve.py",
+        "path": "infra/aws/lambda/investor-reporting/_scope/resolve.py",
+        "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+        "sha256": "24b407fa00ff0fc342d57b1ca2bd986d7c802fe8a96b30fe57c06520523ccdeb",
+        "git_blob": "e409cb95853afda880ec8cd5a9e920f00b76a2a1",
+        "bytes": 38563
+      },
+      {
+        "member": "keys.py",
+        "path": "infra/aws/lambda/investor-reporting/_keys/keys.py",
+        "pin": "69144433df8c4938cf95cb81e46ac04ae72cc61e",
+        "sha256": "56ee3cc22e802579ebb8d4cba53edec8045603396a48fe952d6b83df0f08ab2a",
+        "git_blob": "547a0e6b609127e2adf31c6b00b6e14127151627",
+        "bytes": 29894
+      },
+      {
+        "member": "ids.py",
+        "path": "infra/aws/lambda/investor-reporting/_ids/ids.py",
+        "pin": "69144433df8c4938cf95cb81e46ac04ae72cc61e",
+        "sha256": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6",
+        "git_blob": "b77721f314362b442b533ea13b5f136f98a3f3c8",
+        "bytes": 19296
+      },
+      {
+        "member": "data/custodian_key_seam.json",
+        "path": "infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json",
+        "pin": "69144433df8c4938cf95cb81e46ac04ae72cc61e",
+        "sha256": "87f2f92f3c71f7761b387574a3df721474120465b1b0da8028cfc201b619923a",
+        "git_blob": "7e9388fc35f5240dfd89f8295eeb0c1ab70f28a4",
+        "bytes": 191120
+      },
+      {
+        "member": "raw_keys.json",
+        "path": "infra/aws/lambda/investor-reporting/_ids/raw_keys.json",
+        "pin": "69144433df8c4938cf95cb81e46ac04ae72cc61e",
+        "sha256": "f81db571b5d92ca66b960047d96b38cc74c173cb7bf8be0c20e9cd3973acaf89",
+        "git_blob": "eed32b39adae313e770dfba451a24d66a9f1fe16",
+        "bytes": 6492
+      },
+      {
+        "member": "firm_registry.json",
+        "path": "data/firm_registry.json",
+        "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+        "sha256": "5a4c0c3da26fffe55d8a3ec2a8a7248bd0b1dd936af5425ab35426bc5d277fc0",
+        "git_blob": "99b8eeb54fb08a7ea6e4b89b64f300ee6cab3200",
+        "bytes": 5326
+      },
+      {
+        "member": "contracts/DirectoryEntry.schema.json",
+        "path": "docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json",
+        "pin": "69144433df8c4938cf95cb81e46ac04ae72cc61e",
+        "sha256": "7ed220ff87a787c6b596bcc66bc90a8a5a69fe2ec7da88e145207297011aab24",
+        "git_blob": "9d5628b036edfd3f183c089c554687d897a99541",
+        "bytes": 12967
+      },
+      {
+        "member": "selection.py",
+        "path": "infra/aws/lambda/investor-reporting/_scope/selection.py",
+        "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+        "sha256": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af",
+        "git_blob": "284fb70dc50929a663abb67d3c0d2ced6acabfa5",
+        "bytes": 6453
+      },
+      {
+        "member": "selection_store.py",
+        "path": "infra/aws/lambda/investor-reporting/_scope/selection_store.py",
+        "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+        "sha256": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c",
+        "git_blob": "3896e0688eefec093d7e606330d521e82bc99bd1",
+        "bytes": 2795
+      },
+      {
+        "member": "prospect.py",
+        "path": "infra/aws/lambda/investor-reporting/_scope/prospect.py",
+        "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+        "sha256": "b7e5c9335caad7a01eb66c73305f70a6497d0b72110ad7268dad1757358287a8",
+        "git_blob": "6b8ecb20bc225365712cde6cea3bee508d4858c4",
+        "bytes": 3832
+      },
+      {
+        "member": "contracts/ResolvedScope.schema.json",
+        "path": "docs/contracts/investor-reporting/v1/ResolvedScope.schema.json",
+        "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+        "sha256": "dd7ab87a7f1e6acaff51b6909d2c5f50b72d9fce84e8d1218b29e01288df7e66",
+        "git_blob": "2d69d890228f7733fad32357901a87966116f978",
+        "bytes": 9790
+      },
+      {
+        "member": "owner_reads.py",
+        "path": "infra/aws/lambda/investor-reporting/_scope/owner_reads.py",
+        "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+        "sha256": "f9e1f5d3274ee4396932aa1b1bf80b08be09c6afd183ab14c81b766b5d90ed0f",
+        "git_blob": "0f07089298c8a3bfa8f350f079439f2a87b1270b",
+        "bytes": 2727
+      },
+      {
+        "member": "custody.py",
+        "path": "infra/aws/lambda/investor-reporting/_scope/custody.py",
+        "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+        "sha256": "23cda6b0e3dd88df3b837545f94efacf600db857a5509ddd458ff40cc7870394",
+        "git_blob": "a3bf975326271adc176df8a34804e057c78f7a77",
+        "bytes": 7216
+      },
+      {
+        "member": "contracts/DirectoryContext.schema.json",
+        "path": "docs/contracts/investor-reporting/v1/DirectoryContext.schema.json",
+        "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+        "sha256": "8c76a0f0e028f1b1baf7224f633904e2c1b9aa2450b409c679be1bef4bea2404",
+        "git_blob": "c5e43cc7fc6e029547648643d85216149fe75009",
+        "bytes": 2145
+      }
+    ],
+    "test_inputs": [
+      {
+        "path": "infra/aws/lambda/investor-reporting/directory/tests/test_selection_entry.py",
+        "pin": "6cd8adb582",
+        "sha256": "1f9db8e5494c6e7014a045b388cf38ea3488de69af05a09972371a618d950387"
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/directory/tests/test_bootstrap_browse.py",
+        "pin": "6cd8adb582",
+        "sha256": "90cd6f0c8fe6951e07484db0d152026855119de35b77cb079b7809c5ae95914b"
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/directory/tests/test_opal_context.py",
+        "pin": "6cd8adb582",
+        "sha256": "4db100415a259140a386e179609d885449067a6513b6e19e958867ac05dee172"
+      },
+      {
+        "path": "infra/aws/lambda/investor-reporting/_contracts/tests/test_selection_contract.py",
+        "pin": "6cd8adb582",
+        "sha256": "c1a7ca72b13cd01a34d773813d5f594127160c88e327e701a17e7490307a0c58"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/AnalysisReport.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "1bd0dc85847690b277e3a3011bcbe500a02820792cd53a38a1201fc3c55d153f"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/AnalysisRequest.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "309d0eefab839c99041b38890799b51156caaa1c1c5772b7ee3b427fd460054a"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "ed84ac362c9071319d27e2581ad06ec4d3122c956d5f546266cb3a722cde69bd"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/AnalysisUploadRequest.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "dbfcbb10b5079570784204ed3ecc02dc81e89e7d1f41b31ba5e118bbd29e7c40"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "0279804481f564ea59d3c06f94cb1e18117c8dbcc969583fd369d0161a34a5b0"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/BoundaryRefusal.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "14a756ef46eca7fbd9f5420870908c3f3afb2e7020b4aaa005898ca2be928c0b"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/DirectoryContext.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "8c76a0f0e028f1b1baf7224f633904e2c1b9aa2450b409c679be1bef4bea2404"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "7ed220ff87a787c6b596bcc66bc90a8a5a69fe2ec7da88e145207297011aab24"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/ExportBundle.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "0a2913ac635b5efbdf88c19c83e7a4129bae32f957ee239c4f9e14ecf2819b6e"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/ExportReceipt.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "e3e13eba64eabc717c0878f91f6742e77fef6793937cde6cd00db218ffdde117"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "682f3eb2dd82ff20d6ee15519ec8fb8b8e9d937b921350de9cba38aed968e3c0"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/NarrativePacket.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "60d7e9444c938bca3cba2c248b599e20eee453afa6d380ee359be6bc3ce52d58"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "ba0255b82143fd9c04204e37b7a4a74290bc155b265d379c12118bd247235d24"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/OwnedAnalysisRequestHistory.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "6f37638baf5ac6b4cd07e68b5180a80b760a6524c5aa46111888c90cdde6b6d7"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/PerformanceReport.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "7231dacb29e60925ae4ffef4d510968e80c5f2f2b7284fa355dd2cc114860aac"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/PublicStatusEnvelope.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "4a3ecdc6e7de7973a575e5c515369ce1a4112a9e9165408b38299037faf083c3"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/RenderPackage.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "0772f243065479031bcd196d2c5def40b426e71c88a02ad6acead30628050418"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/RequestComposition.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "6de584ef04e5480725827deda455e5c6846788e87deafc8c18ab9eddb7fda8e3"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/ResolvedScope.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "dd7ab87a7f1e6acaff51b6909d2c5f50b72d9fce84e8d1218b29e01288df7e66"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/SelectedAccounts.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "a006bfea0509384452a8c1cf83cc144c62d79a55646266599df673a6b3c39d1e"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/SelectionRequest.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "28f8146756fbb579a1be26fc9f4b9a0f34c35efb579971a1ab9959abbb095b5e"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "f0dae13eecc9aa4f99fdc9538b22c7d426504377bd541f798a3cd48f3fd06f4a"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/analysis-input-upload.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "6bd746d9810d66cfb0ab4c7e798311a020dba2134692924fc4b57aaf8e79266b"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "86f33e675d441a66e86fc563927918b270557feefa440196d07f3e3f0c5be961"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/analysis-request-history.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "85a9dcf216d5829feb076fba80a2d247a87e7f0cd20a125e156738a5a3f4b60a"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/analysis-request-read.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "ddebfe55b1d7cecd3963ca0aef77c2c110bb2a0e72f953f799dbe6f414573875"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/analysis-requests.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "8b81d3617725390d14a91be68487c1467578286a774dbbf9224fb6a2b3cd4897"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/directory-browse.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "598b79469dac3f87f59888e5e3f848927e82a4abb3c76cedb2ed20356a1eb5e2"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/directory-search.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "dcaa98bdcfbdb6bdb00f6f91def9148614da44ff50dba7949ed70722dc03ad41"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/export-download.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "1a6d493b99a2cb37de5481ca26a57d1de5faa44e5c621198d68344f6849a6366"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/export-receipt.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "c05d448699817370d7bef11514941273cf79cbfded7d8954249d68a7bdf1565c"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/holdings-snapshot.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "0621fa75c6084c7cef2cb30a9226d0276f38187d0aba97cc458608378a5d088c"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/narrative-packet.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "ce97a9159271061022bc2783e2d28a04883a7225cc7d4e681e9af92a69531dae"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/performance-report.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "3648be9e26ba8cc7946055c9ac51578909875d70df52ec06cdbdbc9961f3db4d"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/resolve-scope.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "7981b71916fcc6b725688abb5978aed162aa604b661e9215e4d541aaed4d404c"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/selection-create.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "b7c424aeb33a306aec7c664f6938318cfe78a154f9eb6e8be9aca34ca13a0ac2"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/status-job.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "b2dd60f2c498aa7ba311f0b21cbc82e6dcf5d123b5df49aa68f11f99c5b674e9"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/status-summary.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "c5c370c72187e5131c5af00701d663d6b713db636e16f5c4c4a59474f33b1751"
+      },
+      {
+        "path": "docs/contracts/investor-reporting/v1/responses/submit-export.response.schema.json",
+        "pin": "6cd8adb582",
+        "sha256": "5a609bdebb86ba70afe71e79e1730dcf55c1810eb8fa1dce4e8248da04f4203b"
+      }
+    ],
+    "limits": "Tests and test dependencies are separate from the runtime ZIP. No upload or apply."
+  },
+  "artifact": {
+    "path": "C:\\Users\\AndrewBerman\\Desktop\\irpt-smoke-p-backend-20260923\\.runtime\\directory-review\\irpt-directory-search.zip",
+    "bytes": 155747,
+    "sha256": "a39f74ba1e688ac0ad1cf2b3a2b18c27f93d5493dc82d2d283848a7dee0a618b",
+    "base64": "o590uh5oisCtHPKzorGMJ/k9VJPcgtLSg4SKfe4KYYs="
+  },
+  "configuration": {
+    "FunctionName": "irpt-directory-search",
+    "FunctionArn": "arn:aws:lambda:us-east-1:313476888478:function:irpt-directory-search",
+    "Runtime": "python3.12",
+    "Handler": "entry.lambda_handler",
+    "Role": "arn:aws:iam::313476888478:role/irpt-directory-role",
+    "Architectures": [
+      "x86_64"
+    ],
+    "MemorySize": 512,
+    "Timeout": 15,
+    "RevisionId": "8851109e-7f1f-4915-ae2b-0dff01d276c5",
+    "LastModified": "2026-09-23T06:26:25.000+0000",
+    "CodeSha256": "iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s=",
+    "CodeSize": 149956,
+    "RuntimeVersionConfig": {
+      "RuntimeVersionArn": "arn:aws:lambda:us-east-1::runtime:36aeb19f3326e129d9f096dea0a3c6a9ca8dce2610e62d2b2060747602d863ae"
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/irpt-directory-search"
+    },
+    "PackageType": "Zip",
+    "environment_keys": [
+      "IRPT_CONTRACTS_DIR",
+      "IRPT_DIRECTORY_BUCKET_MAP",
+      "IRPT_DIRECTORY_PREFIX",
+      "IRPT_REQUESTS_TABLE"
+    ],
+    "environment_sha256": "81bed104f06006419b56e80a975d1eb787111e09817c608589b498868d6b82b8",
+    "safe_runtime_paths": {
+      "IRPT_DIRECTORY_BUCKET_MAP": "{\"49financial\":\"opal-data-bd\",\"cottonwood\":\"opal-data-cot\",\"inflection\":\"opal-data-inf\"}",
+      "IRPT_CONTRACTS_DIR": "/var/task/contracts"
+    },
+    "downloaded_layers": [],
+    "resource_policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "AllowPortalApiInvoke-irpt-directory",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "apigateway.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:us-east-1:313476888478:function:irpt-directory-search",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:execute-api:us-east-1:313476888478:7k3ed8px20/*/*/api/scoped/investor-reporting/*"
+            }
+          }
+        }
+      ]
+    },
+    "resource_policy_revision": "bd9fcfce-5bd2-418b-aa52-3d1c07450e2a"
+  },
+  "role_and_routes": {
+    "role": "irpt-directory-role",
+    "trust": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "lambda.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": {
+      "irpt-directory-ownership-map-read-policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:s3:::opal-data-inf/platinum/inflection/ownership_map.json",
+              "arn:aws:s3:::opal-data-cot/platinum/cottonwood/ownership_map.json",
+              "arn:aws:s3:::opal-data-bd/platinum/49financial/ownership_map.json"
+            ],
+            "Sid": "OwnershipMapReadOnly"
+          }
+        ]
+      },
+      "irpt-directory-policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:s3:::opal-data-inf/investor-reporting/directory/*",
+              "arn:aws:s3:::opal-data-cot/investor-reporting/directory/*",
+              "arn:aws:s3:::opal-data-bd/investor-reporting/directory/*"
+            ],
+            "Sid": "ReadFirmDirectoryPrefixOnly"
+          },
+          {
+            "Action": [
+              "logs:PutLogEvents",
+              "logs:CreateLogStream"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:logs:us-east-1:313476888478:log-group:/aws/lambda/irpt-directory-search:*",
+            "Sid": "OwnLogStreamOnly"
+          }
+        ]
+      },
+      "irpt-directory-selection-policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Action": [
+              "dynamodb:GetItem",
+              "dynamodb:PutItem"
+            ],
+            "Condition": {
+              "ForAllValues:StringEquals": {
+                "dynamodb:LeadingKeys": [
+                  "49financial",
+                  "inflection",
+                  "cottonwood"
+                ]
+              }
+            },
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests"
+            ],
+            "Sid": "RetainSelectionWithinRegisteredTenant"
+          },
+          {
+            "Action": [
+              "kms:Decrypt",
+              "kms:GenerateDataKey"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "kms:EncryptionContext:aws:dynamodb:tableName": "irpt-requests",
+                "kms:ViaService": "dynamodb.us-east-1.amazonaws.com"
+              }
+            },
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111"
+            ],
+            "Sid": "RequestTableEncryptionViaDynamoOnly"
+          }
+        ]
+      }
+    },
+    "managed": {},
+    "routes": [
+      {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": "naqxlm",
+        "RouteId": "4ybqnt2",
+        "RouteKey": "GET /api/scoped/investor-reporting/directory/browse",
+        "Target": "integrations/g9302sp"
+      },
+      {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": "naqxlm",
+        "RouteId": "7sa9hm9",
+        "RouteKey": "POST /api/scoped/investor-reporting/directory/resolve",
+        "Target": "integrations/g9302sp"
+      },
+      {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": "naqxlm",
+        "RouteId": "cnsc63q",
+        "RouteKey": "GET /api/scoped/investor-reporting/directory/search",
+        "Target": "integrations/g9302sp"
+      },
+      {
+        "ApiKeyRequired": false,
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": "naqxlm",
+        "RouteId": "k8em63s",
+        "RouteKey": "POST /api/scoped/investor-reporting/selections",
+        "Target": "integrations/g9302sp"
+      }
+    ],
+    "integrations": [
+      {
+        "ConnectionType": "INTERNET",
+        "Description": "IRPT IB-s-15: irpt-directory-search behind the existing portal authorizer",
+        "IntegrationId": "g9302sp",
+        "IntegrationMethod": "POST",
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:313476888478:function:irpt-directory-search/invocations",
+        "PayloadFormatVersion": "2.0",
+        "TimeoutInMillis": 29000
+      }
+    ]
+  },
+  "baseline_plan": {
+    "sha256": "a5d79356e789a9296443bbce067ca8f51ddc3699dbc3bf3f16434579bbf91527",
+    "terraform_version": "1.9.8",
+    "mutations": [],
+    "target": "module.irpt_directory_search.aws_lambda_function.this",
+    "limits": "Current S3 artifact only, not a plan for unstaged candidate"
+  },
+  "rollback": {
+    "bucket": "opal-313476888478-lambda-artifacts",
+    "key": "investor-reporting/irpt-directory-search.zip",
+    "version": "RXChd66RsDjV1jhG1ZsFlOGnXeIDxApp",
+    "sha256": "8aa2ca6b545693d86571294085eba800c80863847756b4ad3d7d5e1b9430abfb",
+    "base64": "iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s=",
+    "bytes": 149956
+  },
+  "proof": {
+    "image": "public.ecr.aws/lambda/python@sha256:5f188ce6104ab76d1a9a44b9b53fd0d72ea5ccec94eb4cbccf5c9b0ef485f9f8",
+    "network": "none",
+    "runtime": "python3.12 x86_64",
+    "managed_patch_equality": "Matching family/architecture; byte-identical managed runtime patch not asserted",
+    "output": "COLD_HANDLER_PASS: actual entry.lambda_handler, no test dependencies or mocks loaded\r\nRUNTIME_DEPENDENCIES {\"boto3\": \"1.42.97\", \"botocore\": \"1.42.97\"}\r\n.........................................                                [100%]\r\n41 passed in 0.80s\r\nPAIRED_HANDLER_PASS: actual packaged lambda_handler with synthetic external data ports\r\nPACKAGE_ORIGINS_PASS: runtime modules all resolve inside /var/task\r\nTEST_DEPENDENCIES {\"pytest\": \"8.3.5\", \"jsonschema\": \"4.23.0\", \"referencing\": \"0.37.0\", \"rpds-py\": \"2026.6.3\", \"attrs\": \"26.1.0\", \"jsonschema-specifications\": \"2025.9.1\", \"pluggy\": \"1.6.0\", \"iniconfig\": \"2.3.0\", \"packaging\": \"26.3\", \"typing-extensions\": \"4.16.0\"}\r\n",
+    "scripts": [
+      {
+        "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/prepare_directory_runtime.py",
+        "pin": "1cb76a2c9b",
+        "sha256": "368dc98f923ca1564f9cfba4b85ad28ae493d0504643f3e6138d84aed4786e80"
+      },
+      {
+        "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_directory_zip.ps1",
+        "pin": "1cb76a2c9b",
+        "sha256": "baf72a38fcfeb354d25e58aee1ef17af9d825247baeaa448afd4301027c8a1a6"
+      },
+      {
+        "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/probe_directory_runtime.py",
+        "pin": "e9b3af590f",
+        "sha256": "18a93b36992489700a59625ca5c27bacc93b247442951b55e414c3ed5907d614"
+      }
+    ]
+  },
+  "frontend": {
+    "pin": "10141b6d0bbb007d5dd9e758f11f785216e11339",
+    "clean": true,
+    "src_equals": "910ebf360d7e38b2ff86f500b472097048c5fed5",
+    "launcher_equals": "3b15871b442906c51a98aff96826f13a67458579",
+    "typecheck": "PASS",
+    "context_tests": {
+      "passed": 26,
+      "failed": 0,
+      "assertions": 36
+    },
+    "mounted": [
+      "Global/partner/identity/partial PASS",
+      "header-race PASS",
+      "browse-race PASS"
+    ],
+    "served_source_HTTP": 200
+  },
+  "qualification": "41 existing controls mechanically pass; Global non-resolve denial is obsolete under5ad99c7d30. Not full-access compliance. New interface9a3ec2a11f is not included in ZIP. No upload/apply/push."
+}

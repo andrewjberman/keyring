@@ -1,0 +1,101 @@
+{
+  "scope_sha256": "84bb8d7659dc178e298e01212bb9b2ef3a79503696df7e83b9fbbb8f42f452ce",
+  "comparisons": [
+    {
+      "account_hash": "c2a181d8178a9f753b013fc4bb892ceeb5dc5bcb763352610844b93341ea52a4",
+      "scope_date": "2026-06-10",
+      "source_dates": [
+        "2026-06-10"
+      ],
+      "position_count": 29,
+      "null_values": 0,
+      "scope_currency": "USD",
+      "difference": "327.16",
+      "within_cent": false
+    },
+    {
+      "account_hash": "debc96817a3523d6f3cde58b00abaf6480477744625d0b1f4e406e644ae1763b",
+      "scope_date": "2026-06-10",
+      "source_dates": [
+        "2026-06-10"
+      ],
+      "position_count": 29,
+      "null_values": 0,
+      "scope_currency": "USD",
+      "difference": "311.14",
+      "within_cent": false
+    },
+    {
+      "account_hash": "c2a181d8178a9f753b013fc4bb892ceeb5dc5bcb763352610844b93341ea52a4",
+      "scope_date": "2026-06-18",
+      "source_dates": [
+        "2026-06-18"
+      ],
+      "position_count": 29,
+      "null_values": 0,
+      "scope_currency": "USD",
+      "difference": "-341.74",
+      "within_cent": false
+    },
+    {
+      "account_hash": "debc96817a3523d6f3cde58b00abaf6480477744625d0b1f4e406e644ae1763b",
+      "scope_date": "2026-06-18",
+      "source_dates": [
+        "2026-06-18"
+      ],
+      "position_count": 29,
+      "null_values": 0,
+      "scope_currency": "USD",
+      "difference": "-322.36",
+      "within_cent": false
+    },
+    {
+      "account_hash": "c2a181d8178a9f753b013fc4bb892ceeb5dc5bcb763352610844b93341ea52a4",
+      "scope_date": "2026-09-09",
+      "source_dates": [
+        "2026-09-09"
+      ],
+      "position_count": 30,
+      "null_values": 0,
+      "scope_currency": "USD",
+      "difference": "198.98",
+      "within_cent": false
+    },
+    {
+      "account_hash": "debc96817a3523d6f3cde58b00abaf6480477744625d0b1f4e406e644ae1763b",
+      "scope_date": "2026-09-09",
+      "source_dates": [
+        "2026-09-09"
+      ],
+      "position_count": 30,
+      "null_values": 0,
+      "scope_currency": "USD",
+      "difference": "189.47",
+      "within_cent": false
+    }
+  ],
+  "receipts": [
+    {
+      "bucket": "opal-data-inf",
+      "key": "bronze/positions/2026-06-10.parquet",
+      "version_id": "MR0SjXfmELkrhq6hlaHzGZeR8XCYFmCa",
+      "byte_length": 1176491,
+      "sha256": "2c34d25d2ccb3287878147eed978f9984c95dbed4b07a304f923a8ee8ca4a6b1"
+    },
+    {
+      "bucket": "opal-data-inf",
+      "key": "bronze/positions/2026-06-18.parquet",
+      "version_id": "vB9n3Cu8PBGQek9_xhZrRflipJaYyz2B",
+      "byte_length": 1192694,
+      "sha256": "c2f17244b1ffce40e641a6576b010b87b234df97a2c7732cc60071d6bc6fbe4c"
+    },
+    {
+      "bucket": "opal-data-inf",
+      "key": "bronze/positions/2026-09-09.parquet",
+      "version_id": ".BmfgTrZi6yPTCdKCbh5GzC9Rsus893A",
+      "byte_length": 1267308,
+      "sha256": "f552cc5132a0d1dbb3ad4846d663f39c01640094375c752cecab7af9ca65d607"
+    }
+  ],
+  "verdict": "NOT_RECONCILED: no currency propagation to positions from these comparisons"
+}

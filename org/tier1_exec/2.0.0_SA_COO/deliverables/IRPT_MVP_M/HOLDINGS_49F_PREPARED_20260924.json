@@ -1,0 +1,94 @@
+{
+  "status": "PREPARED_UNPUBLISHED",
+  "firm_id": "49financial",
+  "prepared_utc": "2026-09-24T01:05:10.161648+00:00",
+  "business_date": "2026-09-22",
+  "source_cutoff": "2026-09-23",
+  "revision": "7c0e7ce3bef21ccf63541d766a94fa9a71668e7457955eedcf850ec2b18f5cc0",
+  "platinum_key": "irpt/49financial/platinum/holdings/date=2026-09-22/7c0e7ce3bef21ccf63541d766a94fa9a71668e7457955eedcf850ec2b18f5cc0.json",
+  "gold_key": "irpt/49financial/gold/holdings/date=2026-09-22/7c0e7ce3bef21ccf63541d766a94fa9a71668e7457955eedcf850ec2b18f5cc0.parquet",
+  "platinum_bytes": 160561988,
+  "gold_sha256": "2abf2f8efe08e84867cfb03e211637b578b93344b51d45b71f45988b8dc01e00",
+  "node_count": 151697,
+  "unique_account_count": 7522,
+  "reconcile": [
+    true,
+    1835875624.28,
+    1835875624.28
+  ],
+  "schema_valid": true,
+  "currency_status": "ATTESTED",
+  "currency_authority": {
+    "schema_version": "firm-currency-attestation-v1",
+    "firm_id": "49financial",
+    "currency": "USD",
+    "authority": "ANDREW_ATTESTATION",
+    "reference": "69e36619ae3fe826b2664b3475625d7a077a4504:org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/ANDREW_49F_INF_USD_20260924.md",
+    "attested_at": "2026-09-24T00:45:00+00:00",
+    "scope": "Firm report market values and cash flows; not security-native currency or FX conversion."
+  },
+  "publication_refused": null,
+  "census": {
+    "models": 5908,
+    "sma_tax": 7,
+    "client": 1607,
+    "client_closed_smartx_only": 4,
+    "client_membership_conflict": 0,
+    "model_leaves": 7475,
+    "model_leaves_inferred": 2862,
+    "model_assets": 114261,
+    "schwab_positions": 5836,
+    "drill_withheld": 8
+  },
+  "clocks": {
+    "denominator": "151697 of 151697",
+    "custody_as_of": "2026-09-22",
+    "overlay_as_of": "2026-09-23",
+    "clocks_differ": true,
+    "note": "DISTINCT means two FIELDS, not two values: a firm whose custody and overlay feeds land on the same date is correctly reported as equal. What is refused is a snapshot that cannot say which is which."
+  },
+  "holdouts": {
+    "account_count": 1607,
+    "value": {
+      "value": 173135189.87,
+      "currency": "USD"
+    },
+    "basis": "OBSERVED",
+    "observable": "MEASURED",
+    "denominator": "1607 of 7522 custody account(s) have no overlay assignment",
+    "source": "schwab/08335338/silver/dim_balance date=2026-09-22 minus (smartx open allocations date=2026-09-23 union Tax SMA workbook Traded=Yes)"
+  },
+  "holdouts_held": {
+    "expected_unassigned": 1607,
+    "present_as_account_nodes": "1607 of 1607",
+    "block_count": 1607,
+    "block_matches_expectation": true,
+    "custody_total": 1835875624.28
+  },
+  "difference_control": {
+    "redistributing_build_holds_holdouts": false,
+    "redistributing_build_census": {
+      "expected_unassigned": 1607,
+      "present_as_account_nodes": "0 of 1607",
+      "block_count": 0,
+      "block_matches_expectation": false,
+      "custody_total": 1835875624.28
+    },
+    "redistributing_build_total_drift_usd": 0.0,
+    "reading": "the wrong build moves 173135189.87 USD out of 1607 account(s) and still reconciles to within 0.00 USD -- the total is not the control"
+  },
+  "measured_write_plan": {
+    "multipart": true,
+    "parts": 156,
+    "immutable_creates": 159,
+    "index_writes": 1,
+    "total_writes": 160,
+    "key_prefix": "irpt/49financial/platinum/holdings/date=2026-09-22/7c0e7ce3bef21ccf63541d766a94fa9a71668e7457955eedcf850ec2b18f5cc0"
+  },
+  "source_set_revision_entry": {
+    "completion_date": "2026-09-22",
+    "revision": "fbd2c139f6f7fa2cd6ab3eee963e076eab6fc681dbe9184f39a00b81f9e2ed02",
+    "source": "irpt-source-objects"
+  },
+  "source_receipts_count": 8
+}

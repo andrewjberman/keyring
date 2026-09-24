@@ -1,0 +1,44 @@
+{
+  "receipt": "irpt-ycharts-generate: the installed handler served (CTO 100497 (a), batch 34 (i))",
+  "by": "2.0.0_SA_COO~P",
+  "at_utc": "2026-09-24T10:24:09Z",
+  "does_not_move": "hop 2 of the Analysis thread: the upload composition (upload index, parse_mapping, resolve_security via the resident's template resolver, a price source, the catalogue loader, the ordinary authorizer) is still a design cell; both branches of the installed service refuse BY NAME (NOT_READY) until it exists.",
+  "act": {
+    "ledger": {"slug": "irpt-generate-installed-handler-20260924", "sentinel_commit": "0ca5745402", "opened_utc": "2026-09-24T10:20Z"},
+    "source": {
+      "backend_commits": ["12d3fd5ad0 (reports/generate_installed.py + tests)", "440a43ff00 (5 of 5 arms pass; generate.tf handler + SubmitToTheGenerationQueue)"],
+      "publish_commits": ["5b1b2f8608 (source map re-pinned)", "281f54f157 (recorder)"],
+      "tests": "python -m pytest -q tests/test_generate_installed.py: 5 passed; ruff py39 clean; commit-gate 2 of 2 clean"
+    },
+    "package": {
+      "built_by": "infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-ycharts-generate (publish worktree at 0879affa62)",
+      "artifact_sha256_b64": "uHfng41l/agHCG5OHldwqi2r+NUZKfu7DqmWvbqNhTc=",
+      "bytes": 502946,
+      "s3": "s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-ycharts-generate.zip version .YnkMmwAKJumsmFjRgQm_9W0TQxdyhZB (write verified by the builder: size + content-sha256 metadata)",
+      "map": {"files": 104, "staged_rows": 69, "re_pinned_rows": 12, "new_staged_rows": 16, "pins_after": ["0879affa62 (every re-pinned and new row)", "7262571e4c (reporting_policies.json, irpt-x10-v1 ACTIVE)", "unchanged: 819c9e3990 / 3be9d03962 / 47f21dab95 / bc3727b3a3 / c28c728a30 / c3add4090e / dc5d119b84"]},
+      "import_closure": "the builder's own limb: 3 unsatisfied across 47 packaged .py at the first cut (broker, owned_requests, publication <- the ten); clean at 53 after broker/owned_requests/publication/certify/extract/fonts were staged",
+      "census_vs_live": {"live_members": 31, "new_members": 104, "same": 19, "changed": 12, "removed": 0, "added": 73, "zip_equals_files": true, "staged_rows_mismatching_zip": 0},
+      "disclosed_override": "BAU_MANIFEST_SKIP=1 -- the staged BUILD_MANIFEST.json (Y's custody-factory manifest @c3add4090e) declares no declared_blobs; the builder's ABSENT branch is unreachable because the probe is a bare `python - <<PYEOF` under set -e (build-and-upload.sh:33) and its exit 1 ends the script silently (measured twice, rc=1, last line 'OK: import-closure'). The skip does what the ABSENT branch was written to do; the index gate runs only on declared blobs. Row IRPT_BCKEND-S122."
+    },
+    "terraform": {
+      "root": "infra/aws/terraform/investor-reporting/ycharts (backend worktree, .tools/terraform.exe 1.9.8)",
+      "plan": "0 to add, 2 to change, 0 to destroy: aws_iam_role_policy.generate (+SubmitToTheGenerationQueue: sqs:SendMessage on arn:aws:sqs:us-east-1:313476888478:irpt-generation) and module.irpt_ycharts_generate.aws_lambda_function.this (handler entry.lambda_handler -> generate_installed.lambda_handler; s3_object_version D6hl_ey9.. -> .YnkMmwAK..; source_code_hash 1L60sG1G.. -> uHfng41l..)",
+      "apply": "HALT_ACK=1 safe-apply.sh apply generate-installed.tfplan: Apply complete, 0 added, 2 changed, 0 destroyed (naming-apply-gate CONFORMANT on the generate resources; the pre-existing WARN on iam.tf:87 irpt-ycharts-runner is not this act's)",
+      "first_attempt_blocked": "safe-apply refused once with rc=6 because MSYS_NO_PATHCONV=1 in the environment fed the naming gate an untranslated /cygdrive path; nothing was planned or applied; re-run without it",
+      "replan": "No changes. Your infrastructure matches the configuration. (rc=0, -detailed-exitcode)"
+    },
+    "readback": {
+      "get_function_configuration": {"CodeSha256": "uHfng41l/agHCG5OHldwqi2r+NUZKfu7DqmWvbqNhTc=", "Handler": "generate_installed.lambda_handler", "LastModified": "2026-09-24T10:24:09.000+0000", "CodeSize": 502946, "IRPT_LIVE_YCHARTS_CALL": "absent", "IRPT_GENERATION_QUEUE_URL": "https://sqs.us-east-1.amazonaws.com/313476888478/irpt-generation"},
+      "event_source_mappings": 0,
+      "role_policy_statements_on_the_queue": [["ConsumeTheGenerationQueue", ["sqs:ReceiveMessage", "sqs:DeleteMessage", "sqs:GetQueueAttributes"], "DEAD by design -- the resident is the one consumer; left in place and named"], ["SubmitToTheGenerationQueue", ["sqs:SendMessage"]]],
+      "exercised": "aws lambda invoke with payload {} (no authorizer context, no vendor call, no write): StatusCode 200, FunctionError none, Init 102 ms, Duration 2071 ms (the container composed the 8 ports on first call -- boto3 clients, the packaged registry's X10 row, the schema digest), response ok=false public_reason_code CONTRACT_VERSION state UNAVAILABLE -- a named boundary refusal, never Runtime.ImportModuleError and never UNEXPECTED. Request id 4d0c23f9-ac15-4e39-a21d-48f7e6e660d8."
+    },
+    "recorder": "bash infra/aws/lambda/ci/record-terraform-deploy.sh investor-reporting --function irpt-ycharts-generate --deploy-ledger 0ca5745402 --code-sha256 uHfng41l.. -> 281f54f157 (publish worktree)",
+    "rollback": "re-point the function at S3 version D6hl_ey9azxF8RJRQ01YkDlO.axHKuHw (sha 1L60sG1G..), handler entry.lambda_handler, and revert generate.tf's two hunks; the SendMessage statement is inert without a caller"
+  },
+  "what_the_served_handler_does_now": {
+    "composed_for_real": ["acceptance (DynamoAcceptance on irpt-requests / irpt-jobs)", "repositories (retained repositories bound to the request's current authorization)", "get_user / get_partner_profile / get_organization (CanonicalProfileReaders)", "send + queue_url (sqs:SendMessage on irpt-generation)", "configuration (recipe_snapshot.capture_configuration)", "ingestion_revision = schemas-<sha256 over the packaged v1 schema directory>", "destination_revision = the packaged registry's policy_sha256 for irpt-x10-v1 (ACTIVE)"],
+    "refuses_by_name": ["prospect branch (input_id present): UploadServiceRequired -> public NOT_READY", "custody branch: CustodyFactoryRequired -> public NOT_READY", "load_prospect_owner: UploadIndexRequired -> public NOT_READY"]
+  },
+  "push_state": "LOCAL (all four worktrees/branches; MSTR pushes)"
+}

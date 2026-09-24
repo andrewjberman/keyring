@@ -1,0 +1,46 @@
+{
+  "observed_at": "2026-09-24T06:05:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "APPLIED -- irpt-holdings repackage carrying contracts/HoldingsSnapshot.schema.json at b3e3bcb044 (the additive `display` member, ruling IRPT-HOLDINGS-DISPLAY-NAMES-20260924 step 3, and the CUSTODY_UNITS widening, ruling IRPT-HOLDINGS-VALUATION-FACTS-20260924); code unchanged. CTO 100172 step 3, 100241, batch 27 item 1.",
+  "pin": {
+    "schema_commit": "b3e3bcb044 (packaged copy) == 56887e81f1 (docs copy), byte-identical",
+    "schema_sha256_prefix": "6fea932268",
+    "previous_row_sha256_prefix": "682f3eb2dd",
+    "source_map_commit": "aab522ed92 (irpt-p-publish-20260923)",
+    "note": "the holdings package stages the schema copy from the docs path at a pinned commit; the first rebuild after the schema commits came back byte-identical to the deployed package (C69BErK1) until the row was re-pinned"
+  },
+  "artifact": {
+    "s3": "s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-holdings.zip",
+    "version_id": "ZbLWvaO1rvO2E9Q8Xv_ieUkS1XsFwRLn",
+    "code_sha256": "kZygK57yXxZBaC3t5Wr+y04tDKx6tDJdjCwPm87kdYE=",
+    "bytes": 265561,
+    "members": 33,
+    "census_vs_deployed_C69BErK1": "33 of 33 member names equal; exactly contracts/HoldingsSnapshot.schema.json differs; the packaged copy carries fact_kind CUSTODY_UNITS, units enum [USD, UNITS] and the display member"
+  },
+  "plan": {
+    "root": "infra/aws/terraform/investor-reporting/holdings (backend worktree, .tools/terraform.exe 1.9.8)",
+    "summary": {"add": 0, "change": 1, "destroy": 0},
+    "change": "module.irpt_holdings.aws_lambda_function.this: source_code_hash C69BErK1 -> kZygK57y, s3_object_version J2UrwQmt -> ZbLWvaO1"
+  },
+  "apply": {
+    "tool": ".tools/safe-apply.sh from the backend worktree holdings root",
+    "halt_ack": "HALT_ACK=1",
+    "result": "Apply complete 0 added / 1 changed / 0 destroyed rc=0",
+    "completed_at": "2026-09-24T06:00:15Z",
+    "log_sha256_prefix": "ae7c63bdfd1d6dea"
+  },
+  "readback": {
+    "CodeSha256": "kZygK57yXxZBaC3t5Wr+y04tDKx6tDJdjCwPm87kdYE=",
+    "LastModified": "2026-09-24T06:00:10.000+0000",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "replan": "terraform plan -detailed-exitcode rc=0 -- No changes (06:00Z)"
+  },
+  "recorder": {"commit": "59e8231599 (irpt-p-publish-20260923)"},
+  "ledger": {"slug": "irpt-holdings-schema-20260924", "sentinel_commit": "1ff55c16c4", "status": "CLOSED", "legs": {"A1": "closed", "V1": "closed", "R1": "closed"}},
+  "not_claimed": [
+    "any served node carrying display or CUSTODY_UNITS -- that is M's 841 build + the CTO's GO + the COT republish; the deployed producer validates against the widened copy and emits neither member until then",
+    "a rendered Holdings table after this apply"
+  ],
+  "push_state": "LOCAL (backend + publish worktrees; MSTR pushes)"
+}

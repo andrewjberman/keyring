@@ -1,0 +1,30 @@
+{
+  "observed_at": "2026-09-24T06:38:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "APPLIED -- irpt-performance-adapter canonical rebuild carrying (1) the X10 registry row ACTIVE with enforcement_ref 0a101a666816dd5e2302992547129ca42637b923 (M's pin 7262571e4c; ruling IRPT-X10-ACTIVE-ACCEPTED-20260924), (2) hop 4b: the boundary walks the exception MRO and names RetentionRefused -> DEPENDENCY_UNAVAILABLE, RetentionExpired -> OBJECT_NOT_COVERED, (3) hop 3: a selection that is not exactly one account answers SELECTION_UNSUPPORTED (new boundary code; CONTRACT.md row 59d549b04e; portal named it at DEV 7c542fd2), (4) hop 12 already live since 05:28Z (served._internal_sink). CTO batch 27 item 2.",
+  "pin": {
+    "backend_head": "7a8d2a4ca3 (hops: _authz/served.py 41fbd6b5f3.., performance/entry.py 746fe929a4.., performance/retained.py 8d5950ca77..; tests/test_public_reasons.py 8 arms)",
+    "registry_row": "infra/logic/registry/reporting_policies.json @7262571e4c (M; sha256 d7c2dad8b2..) -- state ACTIVE, enforcement_ref 0a101a6668..; DISCLOSED: that pin's file also carries an ORIGINAL_HOLDINGS family row (+1 line beyond the two X10 values, diff 9f360e8f3b..7262571e4c), riding as M's row is the row the CTO named",
+    "source_map_commit": "aa0c453006 (irpt-p-publish-20260923; merge f920428877 of the backend head)"
+  },
+  "artifact": {
+    "s3": "s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-performance-adapter.zip",
+    "version_id": "xG9..VR5JVuFlW.Pq.NLlASObfLmlgbZ",
+    "code_sha256": "07lSH03z53irjBk3AkX2upzUuWzVd4QOuPA4JmisLss=",
+    "bytes": 363969,
+    "members": 61,
+    "census_vs_deployed_NFbaNR0r": "61 of 61 member names equal; exactly entry.py, retained.py, served.py and infra/logic/registry/reporting_policies.json differ; the packaged registry reads ACTIVE with the enforcement_ref",
+    "parity_skip": "BAU_PARITY_SKIP=1 for build_candidate.py / build_dependencies.py / cot_probe.py (local build tools, never members), as at the 05:28Z reconcile"
+  },
+  "tests_at_pin": {"performance": "139 passed (incl. test_public_reasons 8)", "_authz": "165 passed / 7 failed (pre-existing, named by the CRO at 5d17b4694a / 773fcee3e2)", "reports": "69 passed / 1 failed (pre-existing test_currency_authority arm; reports/ untouched)", "ruff_py39": "clean"},
+  "plan": {"root": "infra/aws/terraform/investor-reporting/performance (backend worktree, .tools/terraform.exe 1.9.8)", "summary": {"add": 0, "change": 1, "destroy": 0}, "change": "module.irpt_performance_adapter.aws_lambda_function.this: source_code_hash NFbaNR0r -> 07lSH03z, s3_object_version jfx18fFv -> xG9..VR5J; retained.tf 0; handler/memory/layers/environment unchanged"},
+  "apply": {"tool": ".tools/safe-apply.sh from the backend worktree performance root", "halt_ack": "HALT_ACK=1", "result": "Apply complete 0 added / 1 changed / 0 destroyed rc=0", "completed_at": "2026-09-24T06:36:46Z", "log_sha256_prefix": "84a2b41f5bc447ad"},
+  "readback": {"CodeSha256": "07lSH03z53irjBk3AkX2upzUuWzVd4QOuPA4JmisLss=", "LastModified": "2026-09-24T06:36:41.000+0000", "Handler": "runtime.lambda_handler", "MemorySize": 1536, "Layers": ["irpt-common:5", "irpt-performance-native-layer:1"], "State": "Active", "LastUpdateStatus": "Successful", "replan": "terraform plan -detailed-exitcode rc=0 -- No changes (06:37Z)"},
+  "three_objects": "the backend worktree's performance root reads 0 against the live function (runtime.lambda_handler / 1536 MB / two layers); the CLOUD trunk's root (entry.lambda_handler / 512 MB / one layer) is the stale copy the branch supersedes at the drain -- one owner (P), reconciled by the drain, not by an apply",
+  "ledger": {"slug": "irpt-performance-x10-hops-20260924", "sentinel_commit": "53ab153fec", "legs": {"A1": "closed", "V1": "closed", "R1": "closed", "S1": "HELD -- the served reading (a relationship selection answers SELECTION_UNSUPPORTED; a single account no longer answers UNEXPECTED at the retention gate) is the CRO's next Performance trace or Andrew's next HAR; P cannot exercise a signed-in request on the live surface without synthesizing trusted headers, which is refused"}},
+  "not_claimed": [
+    "a Performance number rendering: hop 6 (the one-use plan) sits at Andrew as his per-use word; without it every single-account request refuses at the plan gate, now with a NAMED code instead of UNEXPECTED",
+    "the served refusal codes -- S1 above"
+  ],
+  "push_state": "LOCAL (backend + publish worktrees; MSTR pushes)"
+}

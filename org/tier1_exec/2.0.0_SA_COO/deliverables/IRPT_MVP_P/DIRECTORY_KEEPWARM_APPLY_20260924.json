@@ -1,0 +1,58 @@
+{
+  "observed_at": "2026-09-24T05:25:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "APPLIED -- option B keep-warm for irpt-directory-search: ONE EventBridge rule (irpt-directory-keepwarm-5min, rate(5 minutes), ENABLED) with THREE concurrent targets, each {irpt_warm: true, irpt_warm_slot: n, irpt_warm_hold_ms: 500}, replacing the single Scheduler schedule; plus the code package carrying _authz/served.py @9cf6a63d6f (capped warm hold, one json line per warm fire). CRO pin e1476853c9 (100261), CTO GO 100264 (ruling IRPT-LISTING-SPEED-ROUND-2-20260924 item 3 as option B).",
+  "pin": {
+    "cro_commits": ["9cf6a63d6f served.py + directory/tests/test_keep_warm.py", "e1476853c9 directory/schedule.tf"],
+    "merged_onto_backend_as": "9f360e8f3b",
+    "served_sha256_prefix": "cb134acdf5",
+    "previous_served_row": "8fc47bf668",
+    "source_map_commit": "4762c64d93 (irpt-p-publish-20260923)"
+  },
+  "artifact": {
+    "s3": "s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-directory-search.zip",
+    "version_id": "7ENQv_0Nk6WEi5tO0CJBrdtgnBY8yDPF",
+    "code_sha256": "o9Qu0Jm7jidtrlBeGWD9d2ZsxROK3NXcQTEOUOMvGus=",
+    "bytes": 160693,
+    "members": 20,
+    "census_vs_deployed_LZzc0blK": "20 of 20 member names equal; exactly served.py differs"
+  },
+  "plan": {
+    "root": "infra/aws/terraform/investor-reporting/directory (backend worktree, .tools/terraform.exe 1.9.8)",
+    "file": ".runtime/keepwarm/kw.tfplan",
+    "sha256_prefix": "ea0921b91eb5999b",
+    "summary": {"add": 5, "change": 1, "destroy": 3},
+    "add": ["aws_cloudwatch_event_rule.irpt_directory_keepwarm", "aws_cloudwatch_event_target.irpt_directory_keepwarm[0..2]", "aws_lambda_permission.irpt_directory_keepwarm_events"],
+    "change": "module.irpt_directory_search.aws_lambda_function.this: source_code_hash 6uxqQO2S -> o9Qu0Jm7, s3_object_version LZzc0blK -> 7ENQv_0N",
+    "destroy": ["aws_scheduler_schedule.irpt_directory_keepwarm", "aws_iam_role.irpt_directory_keepwarm_scheduler", "aws_iam_role_policy.irpt_directory_keepwarm_scheduler"]
+  },
+  "apply": {
+    "tool": ".tools/safe-apply.sh from the backend worktree directory root",
+    "halt_ack": "HALT_ACK=1",
+    "result": "Apply complete 5 added / 1 changed / 3 destroyed rc=0",
+    "completed_at": "2026-09-24T05:16:16Z",
+    "log_sha256_prefix": "787c78abe1bb5f31"
+  },
+  "readback": {
+    "function": {"CodeSha256": "o9Qu0Jm7jidtrlBeGWD9d2ZsxROK3NXcQTEOUOMvGus=", "LastModified": "2026-09-24T05:16:11.000+0000", "MemorySize": 1769, "State": "Active", "LastUpdateStatus": "Successful"},
+    "rule": {"name": "irpt-directory-keepwarm-5min", "State": "ENABLED", "ScheduleExpression": "rate(5 minutes)", "targets": ["irpt-directory-keepwarm-slot-1", "irpt-directory-keepwarm-slot-2", "irpt-directory-keepwarm-slot-3"], "target_input": "{\"irpt_warm\":true,\"irpt_warm_hold_ms\":500,\"irpt_warm_slot\":n}"},
+    "scheduler": "get-schedule irpt-directory-keepwarm-5min returns nothing (destroyed)",
+    "replan": "terraform plan -detailed-exitcode rc=0 -- No changes (05:18Z)"
+  },
+  "receipt_criterion": {
+    "source": "CloudWatch filter-log-events /aws/lambda/irpt-directory-search pattern irpt_warm since 05:16:00Z, read 05:24:11Z",
+    "ticks": [
+      {"at": "05:16:47Z", "slots": [1, 2, 3], "distinct_streams": 3},
+      {"at": "05:21:47Z", "slots": [1, 2, 3], "distinct_streams": 3}
+    ],
+    "streams": ["..89d7cd9a8a6837", "..e4ab28ce9557cd", "..2b646152c70a73"],
+    "verdict": "three warm lines in three distinct log streams on each of two ticks -- three containers seated; hold 500 ms sufficient for this tick's dispatch jitter"
+  },
+  "recorder": {"commit": "d79dac8675 (irpt-p-publish-20260923)"},
+  "ledger": {"slug": "irpt-directory-keepwarm-rule-20260924", "sentinel_commit": "00879900c4", "status": "CLOSED", "legs": {"A1": "closed", "V1": "closed", "R1": "closed", "W1": "closed"}},
+  "not_claimed": [
+    "the next fan-out page load's cold-start count (expected 0 of 3) -- read from the next Global load's REPORT lines, not yet measured",
+    "the M1 first-hour p50/p90 for the 04:21Z listing deploy -- still owed"
+  ],
+  "push_state": "LOCAL (backend + publish worktrees; MSTR pushes)"
+}

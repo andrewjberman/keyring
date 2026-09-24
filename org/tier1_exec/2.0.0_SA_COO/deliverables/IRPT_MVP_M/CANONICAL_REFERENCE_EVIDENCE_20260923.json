@@ -1,0 +1,125 @@
+{
+  "schema_version": "irpt-canonical-source-inspection-v1",
+  "mode": "OFFLINE_SOURCE_ONLY",
+  "sources": [
+    {
+      "path": "data/assets/scripts/gold/runners_49f/a07_dim_asset_classification.py",
+      "last_change_commit": "c85701ebcaed4e4f4e7b88b5420bfa8359bb466d",
+      "sha256": "ab3d205ae9cc54e4f1282e24c2838f48dab56ed62ffe3d45352efe619b81d93a"
+    },
+    {
+      "path": "data/assets/scripts/gold/runners_49f/a03_dim_security.py",
+      "last_change_commit": "0205eef992750f063a88e2267031263856fd82f5",
+      "sha256": "991c54089c3ae8d975a160966303d7cd7292acb964f9b1f15cb2312618915637"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py",
+      "last_change_commit": "b0e1f33471658cbd85070371b3de375a9d35c7c8",
+      "sha256": "c677e8a5f6996555fdb7ac566166cc87659e76ac777bd07418ecd864aee5bca3"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/_shared/etf_classification.py",
+      "last_change_commit": "eeec3e9d6290860cc337a7c23e86611bb002ec05",
+      "sha256": "d71a280611a00ce0d03e950e046c9af086d9681052c1d01db693e1b1806d0013"
+    },
+    {
+      "path": "data/black_diamond/scripts/gold/build_canonical_prices_v2.py",
+      "last_change_commit": "64b6b9d65a258533eca535101ab7688805901b5f",
+      "sha256": "46ba273be94ad6073d63e30c3cda16749c2990625b19fb1402d7e320bbeecc1d"
+    },
+    {
+      "path": "data/inf/scripts/gold/INF_build_canonical_prices.py",
+      "last_change_commit": "c184c853921d2bf531515967ab13abc879808be8",
+      "sha256": "e3f4b1b580733ce3ea19d4a03bd099939527bf873f9c6cfff092c3e34d83f95f"
+    },
+    {
+      "path": "lib/research/identity/crosswalk.py",
+      "last_change_commit": "282d3f769bc203d3345ef7a7fa8a0c228cc091b1",
+      "sha256": "668b8dc2b153a5961dd39c2f5dba289be1ab5aec5eb2a69aabb8563f5c5552cd"
+    }
+  ],
+  "checks": [
+    {
+      "name": "unbacked_alpha_ticker",
+      "result": "PASS",
+      "observed": [
+        "equity",
+        "regex-name"
+      ],
+      "fixture": true
+    },
+    {
+      "name": "unknown_identifier",
+      "result": "PASS",
+      "observed": [
+        "",
+        "unclassified"
+      ],
+      "fixture": true
+    },
+    {
+      "name": "preserved_existing_hedge_mapping",
+      "result": "PASS",
+      "observed": [
+        "alternatives",
+        "dynamodb-ticker"
+      ],
+      "fixture": true
+    },
+    {
+      "name": "name_pattern_is_classification_only",
+      "result": "PASS",
+      "observed": [
+        "fixed_income",
+        "regex-name"
+      ],
+      "fixture": true
+    }
+  ],
+  "static_etf_vocabulary": {
+    "ETF_CLASSIFICATIONS": {
+      "entries": 136,
+      "values": [
+        "alternatives",
+        "commodities",
+        "equity",
+        "fixed_income",
+        "structured"
+      ]
+    },
+    "ETF_SUB_ASSET_CLASS": {
+      "entries": 120,
+      "values": [
+        "Cash",
+        "Commodities",
+        "Developed",
+        "EM",
+        "Global",
+        "Hedge",
+        "High Yield",
+        "Intermediate",
+        "International",
+        "Long Duration",
+        "Metals",
+        "Municipal",
+        "Oil",
+        "Options Income",
+        "Real Estate",
+        "Short Duration",
+        "Structured Credit",
+        "TIPS",
+        "US Large Cap",
+        "US Mid Cap",
+        "US Small Cap",
+        "Ultra Short Duration"
+      ]
+    }
+  },
+  "limitations": [
+    "Only listed source files inspected; no live artifacts or installed runtime queried.",
+    "Classifier tests execute the exact AST-selected pure classify body and regex constants; no boto3 import/client or producer execution.",
+    "Fixture classifier outputs establish existing algorithm semantics, not security identity or provider FOUND.",
+    "Price outputs lack explicit currency and canonical share-class binding in the inspected producer-selected columns.",
+    "No implementation of requested unified IRPT identity/dated_price facade established by inspected sources."
+  ]
+}

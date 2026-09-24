@@ -1,0 +1,49 @@
+{
+  "receipt": "the ONE one-use Performance plan ARMED on irpt-performance-adapter (Andrew-direct 2026-09-24 12:5xZ 'recs approved' card 2 @9b36d8a481)",
+  "by": "2.0.0_SA_COO~P",
+  "at_utc": "2026-09-24T13:12:22Z",
+  "the_word": "card 2: the resident/adapter may submit EXACTLY ONE Performance plan for acc_d486fc9455d6b2aa18e13af1 on the default window; a second submission needs a second word; P executes through the served adapter, records the run, the CRO second-reads",
+  "plan_public_fields": {
+    "schema_version": "irpt-performance-one-use-v1",
+    "approval_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_125xZ_RECS_APPROVED_SIX_OPEN_CALLS_IRPT.md @9b36d8a481 card 2",
+    "firm_id": "cottonwood",
+    "account_id": "acc_d486fc9455d6b2aa18e13af1",
+    "mapping_revision": "a560410f86e384c7c3157c8ec32b20ae9fb1a111e1acd2a1f73f26037049ecfe",
+    "start": "2026-01-01",
+    "end": "2026-09-24",
+    "expires_at": 1790294400,
+    "requests_sha256": "5ec9964768bf541e769570a18705f3b273212bdb85c0b9d530fa785b318e09ba",
+    "plan_sha256": "106eaa0e9ed064d301659ca9ad5d148a4a7f2b1dbbf7b2c95cd8320cc46b1a65",
+    "requests_route_count": 2
+  },
+  "plan_binding": "the adapter's OneUseTransportFactory admits a request only when firm, the one account, (start, end), the mapping's source_revision and vendor ids, and the requests digest all equal the plan -- so the plan is bound to the portal's DEFAULT (YTD) window as the browser computes it on the day of the request: start 2026-01-01, end = today's UTC calendar date. This plan's end is 2026-09-24 and it expires at 2026-09-25T00:00Z; a request on a later day changes `end`, refuses by design, and needs a re-cut plan (the same one use, unspent, re-armed -- not a second submission).",
+  "derivation": {
+    "mapping": "cot_account_mapping.make_cot_mapping_loader(s3, as_of=2026-09-23)(cottonwood, acc_d486..) -- the deployed cutoff (IRPT_PERFORMANCE_MAPPING_AS_OF); canonical_account_id bound; currency USD; source_revision a560410f86e384c7..",
+    "requests_sha256": "digest(bd_selected.requests_for(mapping, account, start, end)) over the two routes [performancePeriod, performanceSeries]; the period helper bd_helpers.py used locally is byte-identical to layer irpt-common:5's (sha c3df593d25994f8d..)",
+    "canonical_string": "repository.canonical(plan) -- asserted locally that sha256(string) == digest(plan) so terraform's sha256(var) is the token the adapter compares",
+    "vendor_identifiers": "in the plan string only (the scratchpad var-file and the function environment); NOT in the repo"
+  },
+  "act": {
+    "ledger": {
+      "slug": "irpt-performance-one-use-plan-20260924",
+      "sentinel": "cedc2f2763"
+    },
+    "plan": "1 to add (aws_iam_role_policy.performance_approved_session[0] -- GetSecretValue on the exact blackdiamond/cot/session ARN, the root's own conditional per-use grant), 1 to change (the function's environment: +IRPT_PERFORMANCE_APPROVED_PLAN, +IRPT_PERF_VENDOR_EGRESS_AUTHORIZED; source_code_hash re-read, unchanged), 0 to destroy",
+    "apply": "safe-apply 13:12:22Z: 1 added, 1 changed, 0 destroyed",
+    "replan": "with the var-file: rc=0 No changes",
+    "readback": {
+      "CodeSha256": "07lSH03z53irjBk3AkX2upzUuWzVd4QOuPA4JmisLss= (unchanged)",
+      "State": "Active / Successful",
+      "IRPT_PERF_VENDOR_EGRESS_AUTHORIZED": "106eaa0e9ed064d301659ca9ad5d148a4a7f2b1dbbf7b2c95cd8320cc46b1a65",
+      "plan_string_bytes": 557,
+      "policy": "ReadExactCOTSessionForApprovedUse: secretsmanager:GetSecretValue"
+    },
+    "use_state": "ARMED, unspent: irpt-requests holds 0 PERFORMANCE_USE / PERFORMANCE_ACCEPTED rows for cottonwood at 13:0xZ"
+  },
+  "risks_named": [
+    "the credential is the Black Diamond session cookie in blackdiamond/cot/session: LastChangedDate 2026-09-16 (8 days), LastAccessedDate 2026-09-24 (metadata only, no value read); a dead cookie consumes the one use with a named provider refusal (DEPENDENCY_UNAVAILABLE) and needs a second word",
+    "a plan left armed past its window does nothing (expires_at) and the next apply without the var-file removes the keys and the grant"
+  ],
+  "trigger": "a signed-in Global viewer on DEV selecting Anna's account with the default YTD preset before 2026-09-25T00:00Z -- Andrew's browser act (card 4 shape); no seat signs a request",
+  "push_state": "LOCAL"
+}

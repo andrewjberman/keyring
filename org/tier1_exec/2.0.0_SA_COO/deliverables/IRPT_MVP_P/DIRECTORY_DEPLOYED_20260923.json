@@ -1,0 +1,43 @@
+{
+  "baseline_code": "o590uh5oisCtHPKzorGMJ/k9VJPcgtLSg4SKfe4KYYs=",
+  "baseline_revision": "8522ea10-8d47-484c-aa00-7b57d255983b",
+  "configuration_role_policy_routes": "equal",
+  "artifact_sha256": "a39f74ba1e688ac0ad1cf2b3a2b18c27f93d5493dc82d2d283848a7dee0a618b",
+  "source_members": 20,
+  "utc": "2026-09-23T17:47:17.918534+00:00",
+  "apply_authority": "e186d7ea22",
+  "saved_plan_sha256": "c5ef7ef7357ad194bdc38dabd827dd170cc5544e923fd573cb9436c0d40348ca",
+  "post_apply_plan_sha256": "97cd3fea965a95b31248fe6ef2237c7e69017646ffd5bd01c7fae1f54a76d751",
+  "target_zero_changes": true,
+  "lambda_state": "Active",
+  "last_update_status": "Successful",
+  "downloaded_live_zip_sha256": "a39f74ba1e688ac0ad1cf2b3a2b18c27f93d5493dc82d2d283848a7dee0a618b",
+  "recorder": {
+    "state": "BLOCKED_SCOPE_WIDENING",
+    "commit_created": false,
+    "process_quiescent": true,
+    "partial_outputs": "C:\\Users\\AndrewBerman\\Desktop\\irpt-smoke-p-backend-20260923\\.runtime\\directory-review",
+    "ctO_handoff": "20260923T174819Z",
+    "recovery_owner": "MSTR via CTO175051",
+    "source_map_rows_modified": [
+      "irpt-directory-search",
+      "irpt-ycharts-generate"
+    ],
+    "audit_preserved": true
+  },
+  "user_acceptance": {
+    "source": "Andrew direct response in current session after reload",
+    "result": "Global/Select Firm and investor list appear",
+    "observed_by_agent_browser": false,
+    "pagination_selection_reload_persistence": "not yet attested"
+  },
+  "sanitized_latest_trace": {
+    "operation": "resolve-scope",
+    "httpStatus": 200,
+    "bearerPresent": true,
+    "bytes": 298616,
+    "json": false,
+    "qualification": "bounded tracer did not parse oversized response; user directly attests UI result"
+  },
+  "cloud_push": "HELD"
+}

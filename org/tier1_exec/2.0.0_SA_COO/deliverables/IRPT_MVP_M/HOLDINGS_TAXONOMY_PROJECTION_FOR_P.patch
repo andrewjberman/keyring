@@ -1,0 +1,24 @@
+--- a/src/pages/InvestorReporting/contracts/index.ts
++++ b/src/pages/InvestorReporting/contracts/index.ts
+@@ -746,6 +746,8 @@
+ }
+ 
+ export interface HoldingsNode {
++  /** Canonical producer taxonomy; independent of fee/advisory assertion. */
++  hierarchyPath?: readonly string[]
+   nodeRef: OpaqueId
+   parentRef: OpaqueId | null
+   kind: 'scope' | 'firm' | 'client' | 'relationship' | 'account' | 'model' | 'sleeve' | 'security'
+--- a/src/pages/InvestorReporting/contracts/adapt.ts
++++ b/src/pages/InvestorReporting/contracts/adapt.ts
+@@ -941,7 +941,9 @@
+     nodeRef: node.node_id,
+     parentRef: node.parent_node_id ?? null,
+     kind: NODE_KIND_FOR_WIRE[node.node_kind] ?? 'security',
+-    displayName: node.security_id?.value ?? node.model_id?.value ?? node.node_id,
++    hierarchyPath: node.classification?.hierarchy_path ?? [],
++    displayName: node.security_id?.value ?? node.model_id?.value ??
++      (node.node_kind === 'SLEEVE' ? node.classification?.hierarchy_path?.at(-1) : undefined) ?? node.node_id,
+     maskedDiscriminator: null,
+     modelId: namespaced(node.model_id),
+     securityId: namespaced(node.security_id),

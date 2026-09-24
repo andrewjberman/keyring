@@ -63,7 +63,7 @@ function Get-AgentLoopDirective {
     # Lane suffixes (~B/~C/...) share the base serial's role.
     $base = $Serial -replace '~[A-Za-z0-9]+$', ''
 
-    $header = "Loop arming: ZERO crons at launch, every serial -- loops are operator-initiated. /watcher arms ONCE at load and is NOT a loop. Any live scoped loop authorization is recorded in org/XXX.md Step 1b-F -- that row is the only source of truth."
+    $header = "Loop arming: ZERO crons at launch, every serial -- loops are operator-initiated. /watcher arms ONCE at load and is NOT a loop. Any live scoped loop authorization is recorded in org/ref/LIVE_ARMS.md -- that file is the only source of truth."
 
     switch -Regex ($base) {
         '^0\.0\.0_AB_MSTR$' {

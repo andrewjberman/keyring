@@ -1,0 +1,550 @@
+{
+  "source_pin": "55145056df55821ebf03c99ad25be1dfd9cae39d",
+  "registry_owner": "2.0.0_SA_COO~M",
+  "policy": {
+    "policy_id": "irpt-private-reporting",
+    "policy_revision": "irpt-x10-v1",
+    "register_id": "X10",
+    "register_path": "infra/logic/06_CONFORMANCE_LEDGER.md",
+    "register_commit": "705dae3202cac873a133825bee9d0381c7dd6b7f",
+    "ruling_commit": "3c55f37800",
+    "retention_policy_id": "irpt-retention-v1",
+    "source": "irpt",
+    "product_scope": "irpt",
+    "firms": [
+      "49financial",
+      "cottonwood",
+      "inflection"
+    ],
+    "state": "PENDING_ENFORCEMENT",
+    "enforcement_ref": null,
+    "physical_disposal": "OPEN",
+    "families": {
+      "ORIGINAL_CSV": {
+        "tier": "state",
+        "table": "prospect_inputs",
+        "extension": "csv",
+        "unreferenced_days": 30,
+        "accepted_ceiling_days": 2555
+      },
+      "NORMALIZED_PORTFOLIO": {
+        "tier": "state",
+        "table": "normalized_portfolios",
+        "extension": "json",
+        "unreferenced_days": 30,
+        "accepted_ceiling_days": 2555
+      },
+      "REQUEST_COMPOSITION": {
+        "tier": "state",
+        "table": "request_compositions",
+        "extension": "json",
+        "unreferenced_days": 30,
+        "accepted_ceiling_days": 2555
+      },
+      "ORIGINAL_VENDOR_PDF": {
+        "tier": "state",
+        "table": "vendor_documents",
+        "extension": "pdf",
+        "unreferenced_days": 30,
+        "accepted_ceiling_days": 2555
+      },
+      "EXTRACTION_EVIDENCE": {
+        "tier": "state",
+        "table": "extraction_evidence",
+        "extension": "json",
+        "unreferenced_days": 30,
+        "accepted_ceiling_days": 2555
+      },
+      "PERFORMANCE": {
+        "tier": "platinum",
+        "table": "performance_reports",
+        "extension": "json",
+        "unreferenced_days": null,
+        "accepted_ceiling_days": 2555
+      },
+      "ANALYSIS": {
+        "tier": "platinum",
+        "table": "analysis_reports",
+        "extension": "json",
+        "unreferenced_days": null,
+        "accepted_ceiling_days": 2555
+      },
+      "EXPORT_BUNDLE": {
+        "tier": "state",
+        "table": "export_bundles",
+        "extension": "json",
+        "unreferenced_days": 7,
+        "accepted_ceiling_days": 2555
+      },
+      "EXPORT_PDF": {
+        "tier": "state",
+        "table": "export_pdfs",
+        "extension": "pdf",
+        "unreferenced_days": 7,
+        "accepted_ceiling_days": 2555
+      },
+      "EXPORT_RECEIPT": {
+        "tier": "state",
+        "table": "export_receipts",
+        "extension": "json",
+        "unreferenced_days": 7,
+        "accepted_ceiling_days": 2555
+      },
+      "SELECTED_ACCOUNTS": {
+        "tier": "state",
+        "table": "selected_accounts",
+        "extension": "json",
+        "unreferenced_days": 30,
+        "accepted_ceiling_days": 30
+      },
+      "PERFORMANCE_SOURCE_EVIDENCE": {
+        "tier": "state",
+        "table": "performance_source_evidence",
+        "extension": "json",
+        "unreferenced_days": 30,
+        "accepted_ceiling_days": 2555
+      }
+    },
+    "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+  },
+  "destination_count": 36,
+  "preview_only": true,
+  "placeholder_artifact_ids": true,
+  "rows": [
+    {
+      "firm": "49financial",
+      "family": "ORIGINAL_CSV",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/49financial/state/prospect_inputs/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.csv",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "49financial",
+      "family": "NORMALIZED_PORTFOLIO",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/49financial/state/normalized_portfolios/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "49financial",
+      "family": "REQUEST_COMPOSITION",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/49financial/state/request_compositions/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "49financial",
+      "family": "ORIGINAL_VENDOR_PDF",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/49financial/state/vendor_documents/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.pdf",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "49financial",
+      "family": "EXTRACTION_EVIDENCE",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/49financial/state/extraction_evidence/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "49financial",
+      "family": "PERFORMANCE",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/49financial/platinum/performance_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "49financial",
+      "family": "ANALYSIS",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/49financial/platinum/analysis_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "49financial",
+      "family": "EXPORT_BUNDLE",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/49financial/state/export_bundles/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "49financial",
+      "family": "EXPORT_PDF",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/49financial/state/export_pdfs/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.pdf",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "49financial",
+      "family": "EXPORT_RECEIPT",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/49financial/state/export_receipts/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "49financial",
+      "family": "SELECTED_ACCOUNTS",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/49financial/state/selected_accounts/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "49financial",
+      "family": "PERFORMANCE_SOURCE_EVIDENCE",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/49financial/state/performance_source_evidence/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "cottonwood",
+      "family": "ORIGINAL_CSV",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/cottonwood/state/prospect_inputs/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.csv",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "cottonwood",
+      "family": "NORMALIZED_PORTFOLIO",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/cottonwood/state/normalized_portfolios/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "cottonwood",
+      "family": "REQUEST_COMPOSITION",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/cottonwood/state/request_compositions/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "cottonwood",
+      "family": "ORIGINAL_VENDOR_PDF",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/cottonwood/state/vendor_documents/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.pdf",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "cottonwood",
+      "family": "EXTRACTION_EVIDENCE",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/cottonwood/state/extraction_evidence/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "cottonwood",
+      "family": "PERFORMANCE",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/cottonwood/platinum/performance_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "cottonwood",
+      "family": "ANALYSIS",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/cottonwood/platinum/analysis_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "cottonwood",
+      "family": "EXPORT_BUNDLE",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/cottonwood/state/export_bundles/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "cottonwood",
+      "family": "EXPORT_PDF",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/cottonwood/state/export_pdfs/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.pdf",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "cottonwood",
+      "family": "EXPORT_RECEIPT",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/cottonwood/state/export_receipts/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "cottonwood",
+      "family": "SELECTED_ACCOUNTS",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/cottonwood/state/selected_accounts/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "cottonwood",
+      "family": "PERFORMANCE_SOURCE_EVIDENCE",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/cottonwood/state/performance_source_evidence/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "inflection",
+      "family": "ORIGINAL_CSV",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/inflection/state/prospect_inputs/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.csv",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "inflection",
+      "family": "NORMALIZED_PORTFOLIO",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/inflection/state/normalized_portfolios/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "inflection",
+      "family": "REQUEST_COMPOSITION",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/inflection/state/request_compositions/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "inflection",
+      "family": "ORIGINAL_VENDOR_PDF",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/inflection/state/vendor_documents/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.pdf",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "inflection",
+      "family": "EXTRACTION_EVIDENCE",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/inflection/state/extraction_evidence/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "inflection",
+      "family": "PERFORMANCE",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/inflection/platinum/performance_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "inflection",
+      "family": "ANALYSIS",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/inflection/platinum/analysis_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "inflection",
+      "family": "EXPORT_BUNDLE",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/inflection/state/export_bundles/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "inflection",
+      "family": "EXPORT_PDF",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/inflection/state/export_pdfs/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.pdf",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "inflection",
+      "family": "EXPORT_RECEIPT",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/inflection/state/export_receipts/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "inflection",
+      "family": "SELECTED_ACCOUNTS",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/inflection/state/selected_accounts/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    },
+    {
+      "firm": "inflection",
+      "family": "PERFORMANCE_SOURCE_EVIDENCE",
+      "preview": {
+        "writable": false,
+        "bucket": "opal-data-irpt",
+        "key": "irpt/inflection/state/performance_source_evidence/ART-0000000000000000000000000000000000000000000000000000000000000000/1111111111111111111111111111111111111111111111111111111111111111.json",
+        "policy_revision": "irpt-x10-v1",
+        "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+      },
+      "pending_writer_refuses": true
+    }
+  ],
+  "installed_iam_proof": "NOT_MEASURED_HERE_P_OWNS_RUNTIME_CENSUS",
+  "activation": "NOT_PERFORMED",
+  "original_builder_integration": "ffbffcac503eb7f74de0b296e52f2088c02dfea8"
+}

@@ -1,0 +1,242 @@
+{
+  "status": "PREPARED_UNPUBLISHED_LABELLED_RECUT_CANDIDATE -- GO REQUESTED (execution waits on P's holdings step-3 repackage readback + DEV rebuild, CTO 100173)",
+  "prepared_by": "2.0.0_SA_COO~M",
+  "prepared_utc": "2026-09-24T06:03:01.168513+00:00",
+  "census_utc": "2026-09-24T06:08:51.717494+00:00",
+  "code_pin": "codex/irpt-m-completion @9cdb81368e (merge of P b3e3bcb044 @550789f51d; X10 row @7262571e4c)",
+  "contract": "HoldingsSnapshot v1 both copies sha256 976e93dedf73... (byte-identical); validated against BOTH (jsonschema Draft 2020-12) plus the producer's validate",
+  "rulings": "IRPT-COT-HOLDINGS-TREE-20260924 + IRPT-HOLDINGS-DISPLAY-NAMES-20260924 + IRPT-HOLDINGS-VALUATION-FACTS-20260924 (labelled recut on the merged contract b3e3bcb044; CTO 100173 step 4)",
+  "firm_id": "cottonwood",
+  "business_date": "2026-09-22",
+  "source_cutoff": "2026-09-23",
+  "revision": "dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30",
+  "prior_revision_replaced_in_row_and_retained": "2d067b4d7097f0762e69ac635f75db77591a9a2774ce8138914e134185caa859",
+  "platinum_key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30.json",
+  "gold_key": "irpt/cottonwood/gold/holdings/date=2026-09-22/dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30.parquet",
+  "platinum_bytes": 24185053,
+  "gold_sha256": "3813130b69fa4540d0d9c2e1f07d6e6774af165de39e712e057cae26bb538653",
+  "node_count": 16749,
+  "unique_account_count": 841,
+  "reconcile": [
+    true,
+    548412662.59,
+    548412662.59
+  ],
+  "schema_valid": true,
+  "membership": {
+    "assigned_accounts": 462,
+    "assigned_value": 277888939.8,
+    "strategies": 46,
+    "constituent_models": 7,
+    "constituent_leaf_rows": 521,
+    "constituent_value": 186111545.54,
+    "client_plug_value": 91777394.27,
+    "leaf_rows_by_qualifier": {
+      "primary": 518,
+      "custom": 2,
+      "sma": 1
+    },
+    "definition_date": "2026-09-23",
+    "definition_rows": 1583,
+    "join": "fact_model_assignment.strategy_name -> fact_model_roster.model_name, exact, unique; fact_model_blend children x fact_model_definition components (CTO ruling IRPT-COT-HOLDINGS-TREE-20260924)"
+  },
+  "display_labels": {
+    "manifest": {
+      "contract_admits_display": true,
+      "account_labels_from_directory": 842,
+      "labelled": 16740,
+      "denominator": 16749,
+      "by_kind": {
+        "ACCOUNT": {
+          "labelled": 832,
+          "of": 841
+        },
+        "MODEL_LEAF": {
+          "labelled": 521,
+          "of": 521
+        },
+        "MODEL_WRAPPER": {
+          "labelled": 462,
+          "of": 462
+        },
+        "SECURITY": {
+          "labelled": 14426,
+          "of": 14426
+        },
+        "SLEEVE": {
+          "labelled": 499,
+          "of": 499
+        }
+      },
+      "filled_from_facts": 0
+    },
+    "census_over_prepared_bytes": {
+      "labelled_by_kind": {
+        "ACCOUNT": [
+          832,
+          841
+        ],
+        "MODEL_LEAF": [
+          521,
+          521
+        ],
+        "MODEL_WRAPPER": [
+          462,
+          462
+        ],
+        "SECURITY": [
+          14426,
+          14426
+        ],
+        "SLEEVE": [
+          499,
+          499
+        ]
+      },
+      "unlabelled": 9,
+      "denominator": 16749,
+      "unlabelled_account_nodes": 9,
+      "absent_from_directory": 9,
+      "directory_entries": 842,
+      "unlabelled_value_share_pct": 12.625,
+      "unlabelled_accounts_assigned_to_a_strategy": "0 of 9",
+      "note": "the 9 unlabelled nodes are ACCOUNT nodes absent from the landed directory (opal-data-cot investor-reporting/directory/2026-09-17); the producer never guesses a label (contract: label minLength 1, so the display member is omitted, not blank); they are unassigned custody-only accounts holding 12.625% of the custody total"
+    }
+  },
+  "custody_units": {
+    "manifest": {
+      "contract_admits_custody_units": true,
+      "custody_receipt_sha_present": true,
+      "with_custody_units": 13656,
+      "security_nodes": 14426
+    },
+    "census_over_prepared_bytes": {
+      "with_units": 13656,
+      "security_nodes": 14426,
+      "observed_basis": {
+        "nodes": 3127,
+        "with_units": 3127
+      },
+      "assigned_component_rows": {
+        "nodes": 11299,
+        "with_units": 10529,
+        "without_units_reason": "the account holds no observed custody position for that definition component (fact carried: 'no observed custody position for this asset in fact_holdings'); the quantity is never computed"
+      },
+      "distinct_source_revision": 1,
+      "source_revision_equals_fact_holdings_receipt_sha256": true,
+      "units": "UNITS",
+      "source_scope": "the account's opaque id",
+      "price_facts": 0
+    }
+  },
+  "anna_subtree": {
+    "nodes": 75,
+    "labelled": 75,
+    "kinds": {
+      "ACCOUNT": 1,
+      "MODEL_WRAPPER": 1,
+      "MODEL_LEAF": 4,
+      "SLEEVE": 1,
+      "SECURITY": 68
+    },
+    "securities_with_units": "62 of 68",
+    "labels_shape": "ACCOUNT = directory masked discriminator; MODEL_WRAPPER = 'Rebalancer strategy: <strategy_name>'; MODEL_LEAF = the model's name (paths Models>Primary x2, Models>Custom x1, SMA x1); SLEEVE = 'Client (residual, not in a model)'; SECURITY = '<SYMBOL> -- <custody description>' with symbol/description members"
+  },
+  "clocks": {
+    "denominator": "16749 of 16749",
+    "custody_as_of": "2026-09-22",
+    "overlay_as_of": "2026-09-23",
+    "clocks_differ": true,
+    "note": "DISTINCT means two FIELDS, not two values: a firm whose custody and overlay feeds land on the same date is correctly reported as equal. What is refused is a snapshot that cannot say which is which."
+  },
+  "holdouts_held": {
+    "expected_unassigned": 0,
+    "present_as_account_nodes": "0 of 0",
+    "block_count": 0,
+    "block_matches_expectation": true,
+    "custody_total": 548412662.59
+  },
+  "index_precondition": {
+    "kind": "IfMatch (CAS over the current index)",
+    "etag": "\"ffa30e5bde3d797332d94c4756ea105b\"",
+    "version_id": ".VLcr1BCEMXLODKeFWA00C31rlgnUBAr",
+    "row_replaced": "2026-09-22",
+    "prior_revision_retained": "2d067b4d7097f0762e69ac635f75db77591a9a2774ce8138914e134185caa859",
+    "other_rows_kept": {}
+  },
+  "measured_write_plan": {
+    "multipart": true,
+    "parts": 24,
+    "immutable_creates": 27,
+    "index_writes": 1,
+    "total_writes": 28,
+    "key_prefix": "irpt/cottonwood/platinum/holdings/date=2026-09-22/dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30"
+  },
+  "publisher_check": {
+    "script": ".runtime/holdings-journey-20260923/publish_cot_live.py <GO> check",
+    "result": "preconditions PASS, validate true, gold_sha256_match, receipts_bound_to_body, receipts_at_pinned_versions, index_etag_match, index_version_match, index_row_is_prior_revision; CHECK ONLY zero writes"
+  },
+  "source_receipts": [
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_allocations/date=2026-09-22/data.parquet",
+      "version_id": "WeqLRnnXcg_R5QpfSy_2fZMVwGn1sOL.",
+      "sha256": "0fadd50e65c26c20...",
+      "byte_length": 128660
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+      "version_id": "tGurdOTYhnuidIUgThZYlJxOcaqNTuKl",
+      "sha256": "737c2ccdacd85b5c...",
+      "byte_length": 457679
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_model_assignment/date=2026-09-23/data.parquet",
+      "version_id": "ppIXtvdE7sscxrSR4VZ8ADJkBKtdxZIp",
+      "sha256": "a560410f86e384c7...",
+      "byte_length": 50441
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_model_blend/date=2026-09-23/data.parquet",
+      "version_id": "KVIN1oY6LQQn5BmAAP8sOMko6o2Hg.ut",
+      "sha256": "945a1e10b6a0713b...",
+      "byte_length": 10484
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_model_definition/date=2026-09-23/data.parquet",
+      "version_id": "lizFF31HeyCKiRfHuKubNi6oeuUh23aO",
+      "sha256": "3cca05212f68c28c...",
+      "byte_length": 33941
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_model_roster/date=2026-09-23/data.parquet",
+      "version_id": "uFnWreJn3KZ7Dq3jbB4q3eWuS3JE0VBR",
+      "sha256": "e74b6b556cfb3cd1...",
+      "byte_length": 14130
+    },
+    {
+      "bucket": "opal-data-cot",
+      "key": "investor-reporting/directory/2026-09-17/directory.json",
+      "version_id": "seN3sLdnz.jBxbQorQBtzEwqhrTLypC9",
+      "sha256": "90b742a3764fc433...",
+      "byte_length": 418144
+    },
+    {
+      "bucket": "opal-data-cot",
+      "key": "investor-reporting/directory/latest.json",
+      "version_id": "7BlMhJbQUufinpGu.73FkvnFZdA9PPD3",
+      "sha256": "f9d4410aefb1ac0a...",
+      "byte_length": 270
+    }
+  ],
+  "source_set_revision_entry": {
+    "completion_date": "2026-09-22",
+    "revision": "e164eb3ec230c6e344765d555b7a074c054d3881f24689297ff16f41fcf88025",
+    "source": "irpt-source-objects"
+  }
+}

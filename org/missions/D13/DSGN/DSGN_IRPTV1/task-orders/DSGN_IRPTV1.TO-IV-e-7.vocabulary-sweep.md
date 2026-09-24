@@ -5,9 +5,11 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~7</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-24</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <round>2</round>
 <placeholders>WS, PORTAL_REF</placeholders>
+
+**TERMINAL: `superseded` -- SET BY THE ISSUER `2.0.0_SA_COO~D` 2026-09-24 ~17:5xZ, WITH ITS POINTER: superseded by FAST lease, org/mcp/drive-mode.log line 1** (Andrew-direct ~17:4xZ blast mode, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_174xZ_BLAST_MODE_P_M_Y_D_ONLINE_FAST_CLOSER.md`). Never spawned. The FWD-11 sweep's work carries onto `org/missions/D13/DSGN/DSGN_IRPTV1/STATUS.md`'s next-list; the AC2 premise defect (row DSGN_IRPTV1-S7 notes) goes with it.
 
 **Directive:** D13 | **Fabric:** laptop | **PRD:** v0.5 @1cccbe6bc6 | **Decomp cell:** `IV-e-7` (decomp v2 @2a26e433b3) | **outcome_ref:** FWD-11, FWD-10 | **depends_on:** IV-e-8, IV-e-6, IV-e-5 (the JOIN: spawned on the round-2 candidate after chains A, B, C merge) | **slot:** ~7, queue position 1 of 1
 

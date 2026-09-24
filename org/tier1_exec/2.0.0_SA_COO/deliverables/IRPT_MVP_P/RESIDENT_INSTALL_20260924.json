@@ -1,0 +1,28 @@
+{
+  "observed_at": "2026-09-24T09:42:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "The resident Analysis consumer INSTALLED and RUNNING on the dedicated host as the single consumer of irpt-generation, on the empty queue (CTO batch 34 item 4; CRO STANDS 100477 on the tokenless transport; CRO bundle grade 100463; enrolled pin 1276035). Runbook precondition B (Y) is met; the ledger irpt-resident-cutover-20260924 is CLOSED (C1).",
+  "package": {
+    "backend_pin": "ab2e088b5b (irpt-smoke-p-backend-20260923): the resident half at Y 93ec16f4fe + the tokenless transport 8576bec142 + P's factory reports/resident_installed.py",
+    "registry_row": "infra/logic/registry/reporting_policies.json from M's 7262571e4c (X10 ACTIVE, enforcement_ref 0a101a6668; sha d7c2dad8b2, the bytes the deployed adapter carries)",
+    "tar": "irpt-resident-ab2e088b5b.tar.gz sha256 3c2143d02c4b9fa9.. (593933 bytes, 142 members from git show at the pin; LF blobs) at s3://opal-313476888478-lambda-artifacts/ec2/investor-reporting-ycharts/resident/ version KMxz0a0c..",
+    "host_root": "/opt/irpt-resident/ab2e088b5b, owner ec2-user; pydeps merged from /opt/investor-reporting-ycharts/pydeps (python3.12: jsonschema 4.26, referencing, boto3 1.40.31, pdfplumber, Pillow, cryptography ...); SHA256SUMS 3569 members, manifest sha256 1d4936cf7f2052725331083152240c690e554797b655f889ddbca5acec106587",
+    "bindings": {"schema": "irpt-resident-bindings-v1", "region": "us-east-1", "queue_url": "https://sqs.us-east-1.amazonaws.com/313476888478/irpt-generation", "jobs_table": "irpt-jobs", "requests_table": "irpt-requests", "enrolled_user_id": 1276035, "capture": {"wrapper": "/opt/investor-reporting-ycharts/run-ycharts-session.sh 55ddb8f7947cba7c..", "library": "/opt/investor-reporting-ycharts/ycharts_session.js dfc87d8312c5938c.. (b9d36bc34e)"}, "census": "census/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json 195040 bytes sha 44853788fa6d39c8.. (the handoff's maintained census)", "schema_directory": "schemas/ (the 22 v1 schemas)"},
+    "local_proof_before_upload": "import closure 14 of 14 (acceptance, canonical_profile_reads, composition, composition_admission, opal_naming, owned_requests, resident_session, resident_worker, publisher, publication, recipe, transport, host_capture, resident_main); opal_naming.reporting_policy('irpt-x10-v1') ACTIVE; ReportValidator kinds [ANALYSIS]; load_bindings OK"
+  },
+  "install": {
+    "first_attempt": "SSM e9a762d1 09:35Z -- the unit started and FAILED 3 times (RestartSec 60) on ResidentInstallRefused PINNED_FILE_ABSENT:census: the bindings carried an MSYS-converted census path ('C:/Program Files/Git/opt/...'), the builder's host-root argument mangled by Git Bash on this box; no vendor call, no queue receive (the factory refuses before any client is built). Disclosed; replaced within 4 minutes.",
+    "reinstall": "SSM 93d37702 09:38-09:39Z: unit disabled/stopped, package root replaced from the rebuilt tar (MSYS_NO_PATHCONV=1; census.path and schema_directory read /opt/irpt-resident/ab2e088b5b/...), pydeps merged, SHA256SUMS regenerated, receipt rewritten with the new manifest sha; a factory DRY RUN as ec2-user BEFORE the unit: build_resident_runtime() -> {assembly, queue_url, sqs}, queue the canonical URL, enrolled 1276035 (pins verified, real clients built, no poll); install-resident.sh rc 0 (IMDSv2 bound to i-0167fd745ad906a66, SHA256SUMS --strict, the receipt's four booleans + manifest sha asserted, --help OK)",
+    "service": {"unit": "irpt-analysis-resident.service", "state": "active", "MainPID": 43390, "ActiveEnterTimestamp": "2026-09-24T09:39:24Z", "NRestarts": 0, "ExecMainStatus": 0, "User": "ec2-user", "ExecStart": "/usr/bin/python3.12 /opt/irpt-resident/ab2e088b5b/ycharts/generate/resident_main.py --factory resident_installed:build_resident_runtime", "PYTHONPATH": "/opt/irpt-resident/ab2e088b5b"},
+    "empty_queue_observation": "journal 09:39:44Z, 09:40:04Z, 09:40:24Z, 09:40:44Z, 09:41:04Z: IRPT_RESIDENT_POLL handled=0 (five 20-second long polls, no retained_for_retry line, no traceback); sqs ApproximateNumberOfMessages 0 / NotVisible 0; NO vendor call (a poll with no message makes none)"
+  },
+  "cutover_receipt": {"path": "/opt/irpt-resident/cutover_receipt.json", "instance_id": "i-0167fd745ad906a66", "legacy_probe_disabled": true, "per_job_power_cycle_disabled": true, "other_queue_consumers_disabled": true, "shared_authority_factory_installed": true, "package_manifest_sha256": "1d4936cf7f2052725331083152240c690e554797b655f889ddbca5acec106587", "evidence_path": "/opt/irpt-resident/RESIDENT_CUTOVER_EVIDENCE_20260924.json (the measured evidence per boolean; copy in this directory)"},
+  "ledger": {"slug": "irpt-resident-cutover-20260924", "status": "CLOSED", "legs": {"A1": "closed 01:53Z", "P1": "closed", "I1": "closed", "V1": "closed", "C1": "closed 09:4xZ"}},
+  "rollback": "systemctl disable --now irpt-analysis-resident.service on the host (Y's install script header); the package root, the queue, the captured session and the always-on host are untouched by a rollback",
+  "not_claimed": [
+    "a generation: none has been queued (the submit path -- precondition F, the generate rebuild with SendMessage -- and the routes D/E are the Analysis backend items (i)-(iii) on the CTO's sequence)",
+    "Y's --once observation (Y paused; the service's own polls above are the empty-queue observation the CTO named)",
+    "the resident's first vendor step: the tokenless template GET fires only when a job arrives"
+  ],
+  "push_state": "LOCAL (backend; MSTR pushes)"
+}

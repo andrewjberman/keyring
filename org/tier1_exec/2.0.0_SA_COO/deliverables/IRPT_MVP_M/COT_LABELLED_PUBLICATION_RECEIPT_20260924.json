@@ -1,0 +1,292 @@
+{
+  "status": "PUBLISHED_VERIFIED -- labelled COT re-cut SERVED",
+  "go": "CTO 100337 (GO dec293d6; CTO half of the never-widen sign-off on the exact served object; COO half = 100330 blast radius + rollback)",
+  "executed_by": "2.0.0_SA_COO~M",
+  "started_utc": "2026-09-24T06:20:00.621126+00:00",
+  "finished_utc": "2026-09-24T06:20:12.101520+00:00",
+  "firm_id": "cottonwood",
+  "business_date": "2026-09-22",
+  "revision": "dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30",
+  "replaces_in_row": "2d067b4d7097f0762e69ac635f75db77591a9a2774ce8138914e134185caa859 (retained: 21 objects under date=2026-09-22 + gold; manifest version PuvSDFTBIf_QdEJi.1rdOZtkje_XqYFL)",
+  "served_index": {
+    "address": "lib/opal_naming address('irpt','cottonwood','platinum','holdings','current','manifest.json') -> s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json",
+    "precondition_executed": "IfMatch \"ffa30e5bde3d797332d94c4756ea105b\" (version .VLcr1BCEMXLODKeFWA00C31rlgnUBAr)",
+    "prior_version_retained": true,
+    "new_version_id": "mSFR0vatS4UCLaQuUla4glG0Atks2BIn",
+    "new_sha256": "ad281db5bbc4e639478ca61ccfc5b721729862f6855f40b1d3932395babac177",
+    "head_readback_after": {
+      "etag": "\"d81c92135abef0babf230fb1ff7e3f75\"",
+      "version_id": "mSFR0vatS4UCLaQuUla4glG0Atks2BIn",
+      "last_modified": "2026-09-24T06:20:13+00:00",
+      "bytes": 522
+    },
+    "rows_after": {
+      "2026-09-22": "dec293d6"
+    },
+    "version_history_latest_first": [
+      "mSFR0vat.. 06:20:13Z (this act)",
+      ".VLcr1BCE.. 03:56:57Z (2d067b4d)",
+      "XbWnSWxM.. 00:37:12Z (ac3adb97)",
+      "grwnbLke.. 23:00:30Z"
+    ]
+  },
+  "writes": {
+    "immutable_creates": 27,
+    "index_writes": 1,
+    "total": 28,
+    "plan_before": {
+      "multipart": true,
+      "parts": 24,
+      "immutable_creates": 27,
+      "index_writes": 1,
+      "index_precondition": "IfMatch \"ffa30e5bde3d797332d94c4756ea105b\""
+    },
+    "objects_now_under_date_2026-09-22_by_revision": {
+      "dec293d6": 26,
+      "2d067b4d": 21,
+      "ac3adb97": 19,
+      "93f930c2": 17,
+      "fe328763": 2
+    }
+  },
+  "prepared_bytes_read": {
+    "prepared_platinum_path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_irpt_m\\.runtime\\holdings-journey-20260923\\prepared_cot\\opal-data-cottonwood\\irpt\\cottonwood\\platinum\\holdings\\date=2026-09-22\\dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30.json",
+    "prepared_platinum_raw_sha256": "dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30",
+    "prepared_platinum_bytes": 24185053,
+    "prepared_gold_path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_irpt_m\\.runtime\\holdings-journey-20260923\\prepared_cot\\opal-data-cottonwood\\irpt\\cottonwood\\gold\\holdings\\date=2026-09-22\\dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30.parquet",
+    "prepared_gold_sha256": "3813130b69fa4540d0d9c2e1f07d6e6774af165de39e712e057cae26bb538653"
+  },
+  "acceptance_receipt": {
+    "business_date": "2026-09-22",
+    "date_row": {
+      "manifest": {
+        "bucket": "opal-data-cottonwood",
+        "byte_length": 37803,
+        "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30.manifest.json",
+        "sha256": "3818f2d2d35f06ca4aadbf6066f105c6f3ebb1d6c2650fd611eeec69a0d2c848",
+        "version_id": "a69WjLuQOa1I7ziA4ZCTgGLfYpTKJstw"
+      },
+      "revision": "dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30"
+    },
+    "firm_id": "cottonwood",
+    "index": {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 522,
+      "key": "irpt/cottonwood/platinum/holdings/current/manifest.json",
+      "sha256": "ad281db5bbc4e639478ca61ccfc5b721729862f6855f40b1d3932395babac177",
+      "version_id": "mSFR0vatS4UCLaQuUla4glG0Atks2BIn"
+    },
+    "schema_version": "irpt-holdings-acceptance-v1"
+  },
+  "manifest_schema_version": "irpt-holdings-manifest-v2",
+  "partition_count": 24,
+  "served_read_arms": {
+    "proof_class": "LIBRARY_UNDER_USER (the function reads under its role since the fence apply 02:04Z; Andrew's retest is the exercised arm)",
+    "matrix": [
+      {
+        "accounts": [
+          "acc_0698a3de842dbe7b3d48c787"
+        ],
+        "as_of": null,
+        "status": "READ_OK",
+        "revision": "dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30",
+        "nodes": 41,
+        "wrappers": 1,
+        "model_leaves": 3,
+        "selected_market_value": 26303302.17
+      },
+      {
+        "accounts": [
+          "acc_0698a3de842dbe7b3d48c787"
+        ],
+        "as_of": "2026-09-22",
+        "status": "READ_OK",
+        "revision": "dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30",
+        "nodes": 41,
+        "wrappers": 1,
+        "model_leaves": 3,
+        "selected_market_value": 26303302.17
+      },
+      {
+        "accounts": [
+          "acc_0698a3de842dbe7b3d48c787"
+        ],
+        "as_of": "2026-09-23",
+        "status": "EXPECTED_REFUSAL",
+        "reason": "no accepted holdings revision for date"
+      },
+      {
+        "accounts": [
+          "acc_d486fc9455d6b2aa18e13af1"
+        ],
+        "as_of": null,
+        "status": "READ_OK",
+        "revision": "dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30",
+        "nodes": 75,
+        "wrappers": 1,
+        "model_leaves": 4,
+        "selected_market_value": 19705844.84
+      },
+      {
+        "accounts": [
+          "acc_d486fc9455d6b2aa18e13af1"
+        ],
+        "as_of": "2026-09-22",
+        "status": "READ_OK",
+        "revision": "dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30",
+        "nodes": 75,
+        "wrappers": 1,
+        "model_leaves": 4,
+        "selected_market_value": 19705844.84
+      },
+      {
+        "accounts": [
+          "acc_d486fc9455d6b2aa18e13af1"
+        ],
+        "as_of": "2026-09-23",
+        "status": "EXPECTED_REFUSAL",
+        "reason": "no accepted holdings revision for date"
+      },
+      {
+        "accounts": [
+          "acc_0698a3de842dbe7b3d48c787",
+          "acc_d486fc9455d6b2aa18e13af1"
+        ],
+        "as_of": null,
+        "status": "READ_OK",
+        "revision": "dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30",
+        "nodes": 116,
+        "wrappers": 2,
+        "model_leaves": 7,
+        "selected_market_value": 46009147.02
+      },
+      {
+        "accounts": [
+          "acc_0698a3de842dbe7b3d48c787",
+          "acc_d486fc9455d6b2aa18e13af1"
+        ],
+        "as_of": "2026-09-22",
+        "status": "READ_OK",
+        "revision": "dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30",
+        "nodes": 116,
+        "wrappers": 2,
+        "model_leaves": 7,
+        "selected_market_value": 46009147.02
+      },
+      {
+        "accounts": [
+          "acc_0698a3de842dbe7b3d48c787",
+          "acc_d486fc9455d6b2aa18e13af1"
+        ],
+        "as_of": "2026-09-23",
+        "status": "EXPECTED_REFUSAL",
+        "reason": "no accepted holdings revision for date"
+      },
+      {
+        "accounts": [
+          "acc_17ae31b196532748058ed784"
+        ],
+        "status": "EXPECTED_REFUSAL",
+        "reason": "selected accounts absent from accepted publication"
+      }
+    ],
+    "anna_selection": {
+      "arms": [
+        {
+          "accounts": [
+            "acc_d486fc9455d6b2aa18e13af1"
+          ],
+          "as_of": null,
+          "status": "READ_OK",
+          "revision": "dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30",
+          "nodes": 75,
+          "wrappers": 1,
+          "model_leaves": 4,
+          "selected_market_value": 19705844.84
+        },
+        {
+          "accounts": [
+            "acc_d486fc9455d6b2aa18e13af1"
+          ],
+          "as_of": "2026-09-22",
+          "status": "READ_OK",
+          "revision": "dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30",
+          "nodes": 75,
+          "wrappers": 1,
+          "model_leaves": 4,
+          "selected_market_value": 19705844.84
+        },
+        {
+          "accounts": [
+            "acc_d486fc9455d6b2aa18e13af1"
+          ],
+          "as_of": "2026-09-23",
+          "status": "EXPECTED_REFUSAL",
+          "reason": "no accepted holdings revision for date"
+        }
+      ],
+      "labelled": "75 of 75 nodes on dec293d6 (census over the prepared bytes; the served bytes are the prepared bytes by sha256)"
+    }
+  },
+  "what_is_served_now": {
+    "display": {
+      "labelled_by_kind": {
+        "ACCOUNT": [
+          832,
+          841
+        ],
+        "MODEL_LEAF": [
+          521,
+          521
+        ],
+        "MODEL_WRAPPER": [
+          462,
+          462
+        ],
+        "SECURITY": [
+          14426,
+          14426
+        ],
+        "SLEEVE": [
+          499,
+          499
+        ]
+      },
+      "unlabelled": 9,
+      "denominator": 16749,
+      "unlabelled_account_nodes": 9,
+      "absent_from_directory": 9,
+      "directory_entries": 842,
+      "unlabelled_value_share_pct": 12.625,
+      "unlabelled_accounts_assigned_to_a_strategy": "0 of 9",
+      "note": "the 9 unlabelled nodes are ACCOUNT nodes absent from the landed directory (opal-data-cot investor-reporting/directory/2026-09-17); the producer never guesses a label (contract: label minLength 1, so the display member is omitted, not blank); they are unassigned custody-only accounts holding 12.625% of the custody total"
+    },
+    "custody_units": {
+      "with_units": 13656,
+      "security_nodes": 14426,
+      "observed_basis": {
+        "nodes": 3127,
+        "with_units": 3127
+      },
+      "assigned_component_rows": {
+        "nodes": 11299,
+        "with_units": 10529,
+        "without_units_reason": "the account holds no observed custody position for that definition component (fact carried: 'no observed custody position for this asset in fact_holdings'); the quantity is never computed"
+      },
+      "distinct_source_revision": 1,
+      "source_revision_equals_fact_holdings_receipt_sha256": true,
+      "units": "UNITS",
+      "source_scope": "the account's opaque id",
+      "price_facts": 0
+    },
+    "price_facts": 0,
+    "deployed_validator": "irpt-holdings CodeSha256 kZygK57yXxZBaC3t5Wr+y04tDKx6tDJdjCwPm87kdYE= (P 100327, 06:00:10Z) carries display + CUSTODY_UNITS; portal DEV 7975c3bb validates display by closed keys and carries valuation_facts through (P 100294)"
+  },
+  "not_claimed": "Andrew's Anna page render on the labelled revision (the exercised arm is his retest); 49F/INF republishes (separate GO)",
+  "rollback": "re-point the 2026-09-22 row to 2d067b4d under a fresh IfMatch on version mSFR0vat..; every object retained",
+  "records": {
+    "candidate_census": "IRPT_MVP_M/COT_LABELLED_CANDIDATE_CENSUS_20260924.json",
+    "publisher_output": ".runtime/holdings-journey-20260923/publish_cot_labelled.out (gitignored)",
+    "code_pin": "codex/irpt-m-completion @92a75a0bc5"
+  }
+}

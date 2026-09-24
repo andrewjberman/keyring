@@ -1,228 +1,123 @@
-# M shared interfaces: candidate v1
+# M current interfaces
 
-## Maintained source resolver candidate (2026-09-23)
+Source implementation: **485b69c061**. Controlling Opal ruling `5ad99c7d30`,
+acting-submitter contract `e07a5ca692`, P implementation request175350 and Y
+caller handoffs175601/180039. CTO is the reviewer. Prior source reviews and
+proposal452b20dc07 are retained in [INTERFACES_HISTORY.md](INTERFACES_HISTORY.md).
 
-Authority: IRPT-MAINTAINED-SOURCE-01/02 at `0429af3604` / `51b5d63a81`.
-`_scope/maintained_sources.py` implements current owner/input checks and canonical
-profile projections. See `MAINTAINED_SOURCE_RESOLVER.md` for the exact signatures,
-P schema `d91b2bdd10`, Y catalogue `9daa67433e`, tests and integration limits.
-This supersedes the inventory's earlier recipient gap: explicit `prepared_for`
-is accepted display text, never legal identity or access. Every currently
-selected comparison remains unavailable; empty selection needs no fake entry.
-Runtime canonical-reader transport and Y acceptance/worker integration are not
-delivered by this local source candidate.
-
-Owner: `2.0.0_SA_COO~M`. Governing authority:
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.2.
-These are tested Python primitives, not deployed API completion. Existing wire
-schemas remain authoritative. The source is on `codex/irpt-m-completion` in
-`C:/Users/AndrewBerman/Desktop/ajb_irpt_m`.
-Primitives/store pin: `33e630885f`. Current shared prospect entry: `a85e7d6329`.
-
-## Prospect ownership (S1)
-
-Module: `infra/aws/lambda/investor-reporting/_scope/prospect.py`.
+## Maintained profile and empty comparison ports
 
 ```python
-owner = resolve_prospect_owner(verified_edge_headers, requested_firm_id=None)
-# server-produced example:
-# {schema_version: "prospect-owner-v1", firm_id: "49financial",
-#  principal_id: "advisor@example.invalid", advisor_id: "advisor-one",
-#  principal_class: "FIRM_ADVISOR", ownership_fingerprint: <64 hex>}
-require_prospect_owner(current_verified_edge_headers, server_loaded_original_owner)
+resolve_profile_fields(headers, input_ref, browser, *, get_user,
+    get_partner_profile, authorize_input=None, registry_path=None,
+    recipe_title_source=None, input_owner=None, current_viewer=None,
+    authorize_viewer_input=None, get_organization=None)
+resolve_comparison_fields(headers, input_ref, comparison_keys, *,
+    get_catalogue, authorize_input=None, input_owner=None,
+    current_viewer=None, authorize_viewer_input=None)
 ```
 
-Caller must already enforce the existing edge/origin trust boundary. This module
-does not verify JWTs or make arbitrary browser headers trustworthy. Never feed
-body-supplied identity or a browser-supplied stored owner into it. It reuses the
-existing `trusted_only` and `classify_principal` from `_scope/resolve.py`.
-UNKNOWN, CLIENT and RENDER_DELEGATE are refused. Firm operations may own their
-own upload; admin is not access to another advisor's prospect. No client/account
-IDs are fabricated. Owner equality binds firm, principal, advisor and class.
+`snapshot_profile_sources` accepts the same profile reader and authorization
+ports. `snapshot_custody_profile_sources` and `resolve_custody_profile_fields`
+retain positional original owner and add the same optional viewer callback pair.
+The legacy two-argument `authorize_input(owner, ref)` mode remains explicit;
+partial new ports or mixing modes refuses. No permissive fallback.
 
-Y retains this full owner beside its immutable input. On retrieval, load the owner
-server-side and call `require_prospect_owner` with current claims. For P's repository
-owner, map firm_id and principal_id, set account_ids=[] and the genuine issued
-prospect_input_id; its authorization callback loads that input's retained owner
-and calls `require_prospect_owner`. Store the full owner in input metadata,
-not merely its fingerprint. No raw credentials are retained.
+The production invoking adapter is Y's
+`ycharts/generate/prospect_submission.py::ProspectSubmissionFactory.submit`.
+P installs it with real repositories, upload and canonical profile readers.
+Y passes the original normalized document.owner base prospect-owner-v1 (not the
+repository-augmented account_ids/prospect_input_id shape), exact read_input
+receipt, and request-local `InteractiveAccess.current`.
 
-## Exact retained selection (S1)
+`authorize_viewer_input(viewer, original_owner, input_ref)` must reload exact
+retained bytes/owner/ref/placement/expiry, compare them, then apply current viewer
+policy. It returns literal True only. The retained reader may enforce its own
+access gate. M verifies detached owner/ref/viewer stability before/after callback
+and before/after source reads; dictionary equality is not storage verification.
+Y180533 reports repairing the early policy call flagged in M180451. This report
+is not yet a combined acceptance/replay verdict.
 
-Module: `infra/aws/lambda/investor-reporting/_scope/selection.py`.
+## Attribution and frozen behavior
 
-```python
-selection = create_selection(current_permitted_scope, current_directory,
-                             [canonical_account_a], directory_revision=directory_revision(current_directory),
-                             save_selection=store.save)
-# save(firm_id, account_set_id, immutable_record) must persist or raise.
-selected = resolve_selection(current_permitted_scope, current_directory,
-                             selection["account_set_id"], store.load,
-                             directory_revision=directory_revision(current_directory))
-# load(firm_id, account_set_id) -> immutable_record or None
-# selected_account_ids == [canonical_account_a], even if permitted is [a,b].
+New preparation reads the actual viewer.principal_id and validates its active
+canonical user/home firm. Opal uses get_organization(home_firm_id); ordinary
+advisors use their actual partner reader and ordinary operations their own user.
+A selected partner firm is never substituted for the Opal home organization.
+
+Every M-generated source descriptor binding remains the original normalized
+input-owner binding. User/organization/partner/browser source_scope identifies
+actual actor/home; browser source_owner is the acting submitter. Input bytes,
+reference, creator and placement remain unchanged. Optional contact absence
+remains input-bound. ProfileSourceSnapshot carries viewer only as an internal
+member; returned profile/profile_provenance/source_descriptors keys are unchanged.
+
+Y recipe/settings descriptors retain actual concrete request-owner binding.
+Optional recipe_title_source in viewer mode must match that actual actor binding
+and its actual source scope (or unscoped configuration), with a valid projection
+digest. It is not rewritten into the original input creator. P owns shared schema
+and validate_bindings changes distinguishing these two descriptor roles.
+
+Frozen accepted composition must be replayed without invoking these resolvers.
+M returns detached projections; Y owns retry/replay/final dispatch. Empty
+comparisons reauthorize the exact input twice and read no catalogue. Nonempty
+comparison capability remains unimplemented; no fabricated verification/entitlement.
+Single-firm selection primitives, custody producer and publication are unchanged.
+
+## Bounded evidence and integration
+
+**61 tests plus45 subtests PASS** offline. Test overlay: git archive9a3ec2a11f of
+infra/aws/lambda/investor-reporting and data/firm_registry.json, then copy M
+maintained_sources.py and the two maintained-source test files. Real P
+InteractiveAccess is used; canonical profile rows and retained storage are
+fixtures. Run with PYTHONPATH containing _scope,_authz,_ids,_keys:
+
+```text
+python -m pytest -q _scope/tests/test_maintained_sources.py
+  _scope/tests/test_maintained_viewer_sources.py _scope/tests/test_interactive_access.py
 ```
 
-The reference is `sel_<64 hex>` binding schema, verified firm, sorted unique members
-and directory revision. It is an identifier, not a bearer grant. Each resolution
-requires all members in current permissions AND current firm directory. Missing
-references, changed directory binding, cross-firm records, altered members and
-revoked members refuse the whole request. No fallback to all permitted accounts.
+Checks cover Global/different-filter Opal using partner-created and Opal-created
+inputs; actor attribution with unchanged input binding; actual InteractiveAccess
+ordinary/forged/service refusal; input backing/ref/expiry changes before and
+during preparation; actor change; inactive/wrong-home source; source projection
+change; detached frozen projection; callback defensive copies; mixed/partial
+ports; empty comparison retention; actual actor recipe binding; custody account
+and snapshot attribution. No live/deployed or complete acceptance/replay claim.
 
-Result carries `selected_account_ids`, `selected_account_set_fingerprint`,
-`permitted_account_set_fingerprint`, `directory_revision`, `entitlement_revision`
-and the retained `account_set_id`. The selected fingerprint uses the existing
-scope fingerprint algebra over selected members and current entitlement/policy.
-The separate directory revision must also be part of downstream request/cache identity.
+The source file was first aligned to P9a3ec2a11f, preserving prior custody/profile
+changes4911c398d9 andbc3727b3a3, then the optional viewer mode was added. Integration
+must compare that exact file or reconcile this baseline when cherry-picking into
+the newer P tree; do not replace unrelated shared files. Test imports require P's
+interactive_access module, intentionally not duplicated in M's source branch.
+Safe-commit compile/ruff/naming gates passed; git diff --check clean. Initial lint
+failure was corrected with explicit E402 annotations for test path bootstrap.
 
-`selection_store.SelectionStore(dynamodb_client, table_name)` persists immutable
-records in the existing request table, keys `tenant` and `request_revision` with
-sort prefix `SELECTION#`. `configured_store()` requires `IRPT_REQUESTS_TABLE`.
-Save is conditional, identical retry is idempotent, reads are consistent. Storage
-uses the registry tenant from `scope._census.tenant`; directory membership uses
-`scope.verified_request_firm_id` (the opaque spelling). Never substitute these.
-The returned `firm_id` is the registry tenant. P owns service environment/IAM/build.
-The creator HTTP route and mounted header state are implemented and bounded-tested:
-`POST /api/scoped/investor-reporting/selections`, operation `selection-create`,
-body `{scope_kind: ACCOUNT|RELATIONSHIP|CLIENT, scope_ids: [...]}` returns the
-tested selection record as `envelope.data`. Partial groups refuse whole.
-Source creator pin `54c2ed11dc`; source schema/route composition `0076cad627`;
-mounted portal `d4fca0e569` with P composition `52786a7a`. Whole groups are sent to
-the server; no custody request is made until a retained `sel_` reference is accepted.
-See `BROWSER_SELECTION_EVIDENCE.md` for bounds and independent review status.
+Next owner: Y pairs the exact source with its new caller and P's closed schema,
+proves stable retry, immutable replay and revoke-before-acceptance/dispatch; P
+integrates source and caller; CTO reviews the pinned combined candidate.
 
-## Prospect through actual shared Entry
+## Preserved publication interface
 
-`Entry(..., prospect_modes={operation: "CREATE_INPUT"|"OWNED_INPUT"},
-load_prospect_owner=callback)` at `a85e7d6329` is opt-in per operation. Y configures
-analysis-requests as OWNED_INPUT and its upload operation as CREATE_INPUT.
-The callback `(verified_registry_tenant, browser_input_id) -> full retained owner`
-must resolve normalized input revision to its original issued upload owner in
-server storage. Y's proposed UP ownership identity is compatible; browser input_id
-still identifies the immutable normalized revision. No body-supplied owner.
+Runtime3539ad2ae5, doc correction200ba442f5, CTO bounded PASSbb43292167 (99 tests).
+HoldingsPublication.capture(as_of=None, account_ids=None) returns document,
+manifest and immutable acceptance receipt; load_pinned(receipt, account_ids=None)
+replays exact index version/date row/manifest/parts. Snapshot wrappers preserve
+receipt.date_row.revision separately from selected/decorated document revision.
+No fallback or alias promotion. A readback failure can follow successful PUT:
+unconfirmed result needs exact-version reconciliation, not rollback/blind retry.
+This work and actual producer/deployment remain parked beyond the current caller.
 
-OWNED_INPUT uses the prospect guard only for a nonnull input_id; missing/null keeps
-the existing custody guard. Mixed account/client/snapshot and prospect basis is
-refused. CREATE_INPUT refuses a supplied existing input_id. Compute receives
-`scope.prospect_owner`, `ctx.tenant` and canonical firm binding; ctx.directory and
-ctx.ownership are None, and the prospect scope has no permitted_account_set.
-Retained owner is checked before and after compute. This grants no custody access.
-Y supplies compute and durable owner lookup; P packages served/prospect/ids plus
-the existing firm registry. Actual deployed boundary remains unproven.
+Push state **LOCAL**. Observed origin/CLOUD
+`365ab567ba1250a6a3569df38cb75d12fe2e8d0e`. No deploy or push performed.
 
-## Accepted custody positions and provider crosswalk (S2)
+## Canonical upload reference dependency (CTO fd32cac392)
 
-NOT READY. Full custody census, accepted Gold revisions, positions and historical
-SmartX/BD membership are not certified by the current overlay snapshot. No consumer
-may sum root/model/security values, treat COT TARGET amounts as actual positions,
-infer historical model ownership from a current assignment or broaden a missing map.
-M will publish a pinned loader returning the exact selected revision, unique position
-rows, quantity/value/currency, source dates and explicit unknown coverage.
-
-The output publication foundation is implemented separately: see
-`PUBLICATION_EVIDENCE.md` and `PARTITIONED_PUBLICATION.md`. The first multipart
-candidate is `554fc37e998554736ad98ccbfd872d400a9153ff`; the following explicit
-limits are enforced by its count-limit follow-up. This remains an overlay
-publication, not Y's accepted normalized security-level custody portfolio.
-
-```python
-document, manifest = HoldingsPublication(s3, canonical_firm).load(
-    as_of="2026-09-22", account_ids=server_resolved_selected_account_ids)
-```
-
-The reader captures the current index once and chooses one accepted revision for
-the exact business date (or latest accepted date when omitted). It does not choose
-an earlier date when the requested date is absent. Same-date correction replaces
-the index reference conditionally; retained object versions preserve prior bytes.
-An in-flight read uses only its captured complete inventory. There is no page or
-continuation token, and no automatic retry onto a different revision.
-
-`irpt-holdings-manifest-v1` has `platinum`; `irpt-holdings-manifest-v2` replaces
-that field with `platinum_header` and an ordered `partitions` list. Each partition
-is `{account_ids: [...], object: reference}`. Both versions have `firm_id`,
-`business_date`, content `revision`, `gold`, `source_set_revision`, and `clocks`.
-Each object reference contains canonical `bucket`, `key`, non-null `version_id`,
-`sha256`, and `byte_length`. Optional `source_objects` are bound into the content
-revision through the `irpt-source-objects` source revision; the actual Gold caller
-that captures those receipts remains separately blocked under LEGACY-READ-01.
-
-The v2 header is the snapshot without `nodes`. Each part is
-`{firm_id, revision, nodes}` and preserves whole account trees. The manifest pins
-the entire inventory, including parts outside the selection. Its account sets
-must be disjoint and match the header census. Each selected part must match its
-declared account census and accepted revision. The reader never fetches a Gold
-object. Missing, corrupted, substituted or incompatible selected data refuses.
-
-| Boundary | Enforced limit |
-|---|---:|
-| Gold Parquet object | 64 MiB |
-| Index JSON | 1 MiB |
-| Each manifest, header or part JSON | 4 MiB |
-| Packing target | 1 MiB, complete account trees |
-| Complete publication account census | 25,000 |
-| Complete publication part inventory | 256 |
-| Selected part GET calls | 64 |
-| Header plus selected part bytes retrieved | 64 MiB |
-| Assembled selected raw document | 4 MiB |
-
-A v2 reader invokes at most 67 S3 GET calls: index, manifest, header, and 64 parts.
-That is an application-call limit; SDK transport retries are separate. The
-64-part count is checked before any part GET. Manifest plus index add at most
-5 MiB to the header/part byte budget. A v1 reader makes three GET calls. Bounds
-are enforced again by readers; oversized publication, account tree or selection
-refuses whole. No successful truncation, pagination or hidden full-firm fallback.
-
-The storage loader is **not an authorization boundary**. It returns an internal
-header carrying the full source census and selected trees (v2), or a bounded full
-document (v1). Consumers must not return that raw structure. The actual holdings
-Entry resolves the retained `accountSetId` using fresh directory, ownership,
-policy and selection-store reads before loading; projects only selected trees
-and recalculates selected totals; then repeats current selection authorization
-and compares the complete result before release. Revocation, directory changes
-and retained-reference changes refuse the whole response. Y must use equivalent
-current authorization around its eventual accepted custody port; this loader
-alone does not supply that port or permission to consume overlay totals.
-
-`snapshot.load_snapshot(canonical_firm, ..., s3_client=..., account_ids=...)`
-adds the accepted revision for the guarded HTTP path. No mutable legacy fallback.
-Canonical Platinum keys and package dependencies stay as in `62139c3a1a`;
-P's separately attributed packaging candidate is `0fb7e56629`. No deployment
-or actual-source acceptance follows from these offline interfaces. Independent
-review `c462d8b4df` covers v1 only; timeout-after-index-persist and suspended
-versioning ambiguity findings remain open. Multipart independent review is owed.
-
-## Reporting destination (S7)
-
-NOT WRITABLE. P agreed `destination(firm, family, artifact_id, sha256) -> (bucket,key)`
-and the eleven closed families in STORAGE_POLICY_PROPOSAL.md. IDs are RPT-32lowerhex
-or ART-64lowerhex (selection references separately sel_64hex); digest64lowerhex.
-CTO conditionally adjudicated placement at `bcd38bba00` and documentary issuance
-exception at `90df7a0476`. M issued CRO register order `180ff84558` with real audit
-append. Canonical register entry/enforcement and concrete P retention/expiry/IAM
-remain prerequisites; no indefinite-storage approval or deployment is inferred.
-
-## Validation
-
-Run each suite in a separate Python process: `_scope/tests` has 68 passes plus
-12 subtests; `_authz/tests` has159 passes, including15 new actual Entry cases.
-The18 new scope/store tests cover persistence across store recreation, immutable
-retry, current access, firm/identity binding and exact subset. Combined discovery
-hits existing duplicate module names `fixtures`; it is not a passing invocation.
-These proofs do not establish deployed E2E or full S1 acceptance.
-# Maintained-source coordination under CTO 0429af3604
-
-M claims sole integration of `infra/aws/lambda/investor-reporting/_scope/maintained_sources.py`
-and its focused tests; this is a claim, not a delivered adapter. Concrete source
-inventory, immutable code/configuration pins, consumer field agreement and paired
-source-to-consumer examples are in `MAINTAINED_SOURCE_INVENTORY.md`. Existing
-REQUEST_COMPOSITION remains `irpt-analysis-composition.v1` with browser/resolved/
-recipe_version/settings; P owns final schema and source-descriptor placement.
-Y owns recipe meaning and freezing/replay. No parallel payload or storage path.
-
-Required prospect recipient display and maintained comparison authority remain
-unresolved. Directory display labels also need provenance distinguishing actual
-names from generated fallbacks. Those capabilities remain unavailable until their
-required source evidence exists. Optional contact/custom absence is explicit in
-storage and blank only at Y's vendor edge after canonical contract agreement.
-Y confirms operations prepared_by may be the actual maintained acting principal
-name, retaining principal class and provenance, without borrowing advisor identity.
+See [CANONICAL_REFERENCE_PORTS_20260923.md](CANONICAL_REFERENCE_PORTS_20260923.md)
+and its exact seven-source evidence. Four offline source characterization checks
+pass. Existing canonical classification and security keys differ; no inspected
+installed IRPT identity/dated-price facade supplies the requested immutable
+identity/USD/share-class evidence. P must pin actual materialized-reader payload
+and installation before M binds a pure consumer. Y must use explicit UNAVAILABLE
+for missing capability, never classifier guesses as identity/provider FOUND.
+No canonical producer, runtime source, provider, cloud or secret operation taken.

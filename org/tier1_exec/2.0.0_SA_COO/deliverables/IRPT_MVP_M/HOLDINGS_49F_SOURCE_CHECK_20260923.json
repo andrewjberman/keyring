@@ -1,0 +1,309 @@
+{
+  "dim_position": {
+    "date": "2026-09-22",
+    "rows": 106499,
+    "accounts": 6325,
+    "columns": [
+      "account_id",
+      "business_date",
+      "cusip",
+      "l_s",
+      "accounting_rule_code",
+      "ticker_symbol",
+      "industry_ticker_symbol",
+      "isin",
+      "sedol",
+      "tax_code",
+      "quantity_settled_unsettled",
+      "quantity_settled",
+      "quantity_unsettled_long",
+      "quantity_unsettled_short",
+      "quantity_cash_settled",
+      "quantity_margin_settled",
+      "quantity_short_settled",
+      "quantity_wheniss_settled",
+      "non_tradable_quantity",
+      "market_value_settled_unsettled",
+      "closing_price",
+      "closing_price_unfactored",
+      "factor",
+      "asset_backed_factor",
+      "secprice_lstupdte",
+      "_source_file",
+      "_source_as_of",
+      "_master_observed",
+      "_section",
+      "_schema_version"
+    ],
+    "currency_columns": [],
+    "missing": {
+      "account_id": 0,
+      "cusip": 0,
+      "l_s": 0,
+      "market_value_settled_unsettled": 0,
+      "quantity_settled_unsettled": 0
+    }
+  },
+  "dim_balance": {
+    "date": "2026-09-22",
+    "rows": 7522,
+    "accounts": 7522,
+    "columns": [
+      "custdian_id",
+      "mstracct_number",
+      "master_account_name",
+      "business_date",
+      "account_id",
+      "account_title_line_1",
+      "account_title_line_2",
+      "account_title_line_3",
+      "acct_regis",
+      "acct_type",
+      "net_credit_debit",
+      "margin_balance",
+      "available_to_pay",
+      "mrgn_buying_pwr",
+      "money_mkt_funds",
+      "mtd_margin_int",
+      "daily_margin_int",
+      "eqty_excl_option",
+      "eqty_percentage",
+      "mkt_value_long",
+      "mkt_value_short",
+      "eqty_incl_option",
+      "option_rqrmnts",
+      "mnth_end_div_pay",
+      "maintenance_call",
+      "mvl_cash_ex_optn",
+      "net_mv_positions",
+      "net_mv_plus_cash",
+      "cash_balance_settled_only",
+      "cash_margin_bal_settled",
+      "versmrkr_3",
+      "bank_sweep_ibf",
+      "versmrkr_6",
+      "bank_cash",
+      "_source_file",
+      "_source_as_of",
+      "_master_observed",
+      "_section",
+      "_schema_version"
+    ],
+    "currency_columns": [],
+    "missing": {
+      "account_id": 0,
+      "net_mv_plus_cash": 0
+    }
+  },
+  "fact_acc": {
+    "date": "2026-09-22",
+    "rows": 7522,
+    "accounts": 7522,
+    "columns": [
+      "custdian_id",
+      "mstracct_number",
+      "master_account_name",
+      "business_date",
+      "account_id",
+      "account_title_line_1",
+      "account_title_line_2",
+      "account_title_line_3",
+      "account_status",
+      "acct_regis",
+      "acct_type",
+      "txpyr_title",
+      "taxpayer_first_name",
+      "taxpayer_middle_name",
+      "taxpayer_last_name",
+      "txpyr_suff",
+      "wh_cd",
+      "primary_contact",
+      "alias_name",
+      "mailing_address_line_1",
+      "mailing_address_line_2",
+      "mailing_address_line_3",
+      "account_mailing_city",
+      "ac_st",
+      "acct_mail_zip",
+      "acct_mailing_ctry_code",
+      "email_address",
+      "phone_nbr",
+      "business_ph",
+      "date_opened",
+      "schwab_br_cd",
+      "s_s",
+      "ac_cs",
+      "ac_ma",
+      "m_a",
+      "a_r",
+      "a_m",
+      "nr_am",
+      "a_o",
+      "b_f",
+      "nr_bn",
+      "p_c",
+      "p_d",
+      "p_b",
+      "u_m",
+      "f_a",
+      "intbr_cd",
+      "intbr_mm_cd",
+      "intbearing_ticker_symbol",
+      "intbearing_feat_is_id",
+      "int_sf",
+      "p_v",
+      "p_m",
+      "statemnt_pref",
+      "a_t",
+      "dflt_ltsel",
+      "c_m",
+      "cbm_mf",
+      "cbm_nmf",
+      "cb_mthd_date",
+      "versmrkr_1",
+      "custtype_code",
+      "organization_primary_name",
+      "versmrkr_2",
+      "rstr_rsn1",
+      "rstr_rsn2",
+      "rstr_rsn3",
+      "rstr_rsn4",
+      "rstr_rsn5",
+      "versmrkr_3",
+      "schwab_bank_ic_account",
+      "versmrkr_4",
+      "ssn_tin_number",
+      "versmrkr_5",
+      "p_e",
+      "mngdacct_pltfrmcd",
+      "managed_account_money_manager",
+      "managed_account_investment_strategy",
+      "versmrkr_6",
+      "bank_sweep_display_name",
+      "versmrkr_7",
+      "o_l",
+      "versmrkr_8",
+      "date_of_birth",
+      "coy_cd",
+      "st_cd",
+      "versmrkr_9",
+      "s_i",
+      "m_t",
+      "mobile_phone_number",
+      "_source_file",
+      "_source_as_of",
+      "_master_observed",
+      "_section",
+      "_schema_version"
+    ],
+    "currency_columns": [],
+    "missing": {
+      "account_id": 0
+    }
+  },
+  "receipts": [
+    {
+      "bucket": "opal-data-assets",
+      "key": "schwab/08335338/silver/dim_balance/date=2026-09-22/data.parquet",
+      "version_id": "TPxPSsG_zuCzYtyJWiMnPzfsKhIBuKeo",
+      "byte_length": 574520,
+      "sha256": "3a343f23dd2f4d8eb68008abdb3512f1a14466a7d5a598862b64bd75f1c54b72"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "schwab/08335338/silver/dim_position/date=2026-09-22/data.parquet",
+      "version_id": "Xqy4u6PRXGajUt_279HsCakDDoCQwBMZ",
+      "byte_length": 2618533,
+      "sha256": "f548a29d44ccfb22c6510911ab8444e0534a7c80c99e34041c1042252fe9dd5b"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "schwab/08335338/silver/fact_acc/date=2026-09-22/data.parquet",
+      "version_id": "EmQQS7g7eq7dllEGEWkDXjN0x0ra5o64",
+      "byte_length": 763536,
+      "sha256": "775b6b8a72050cf8127cac1ff4bb6624acf230914234c6dbe197a53da9d9a121"
+    }
+  ],
+  "reconciliation": {
+    "account_sets": {
+      "roster_not_balance": 0,
+      "balance_not_roster": 0,
+      "position_not_roster": 0
+    },
+    "position_duplicate_keys": 14,
+    "side_counts": {
+      "L": 105197,
+      "S": 1300,
+      "": 2
+    },
+    "position_values_negative": 1300,
+    "dates": {
+      "positions": [
+        "2026-09-22"
+      ],
+      "balances": [
+        "2026-09-22"
+      ]
+    },
+    "positions_vs_balance_net_positions": {
+      "accounts": 6325,
+      "within_cent": 6299
+    },
+    "balance_formulas": {
+      "net_credit_debit": {
+        "nonnull_accounts": 7522,
+        "within_cent": 7498
+      },
+      "cash_balance_settled_only": {
+        "nonnull_accounts": 7522,
+        "within_cent": 7390
+      },
+      "cash_margin_bal_settled": {
+        "nonnull_accounts": 7522,
+        "within_cent": 951
+      },
+      "bank_sweep_ibf+bank_cash": {
+        "nonnull_accounts": 7522,
+        "within_cent": 977
+      },
+      "net_credit_debit+bank_sweep_ibf+bank_cash": {
+        "nonnull_accounts": 7522,
+        "within_cent": 3178
+      },
+      "cash_balance_settled_only+bank_sweep_ibf+bank_cash": {
+        "nonnull_accounts": 7522,
+        "within_cent": 3121
+      },
+      "cash_balance_settled_only+money_mkt_funds+bank_sweep_ibf+bank_cash": {
+        "nonnull_accounts": 7522,
+        "within_cent": 3144
+      }
+    },
+    "no_position_accounts": {
+      "count": 1197,
+      "nonzero_net_positions": 0,
+      "nonzero_total": 321
+    }
+  },
+  "smartx_coverage": {
+    "custody_date": "2026-09-22",
+    "overlay_date": "2026-09-23",
+    "custody_accounts": 7522,
+    "map_rows": 7525,
+    "valid_8digit_rows": 7506,
+    "invalid_account_rows": 19,
+    "mapped_custody_accounts": 5912,
+    "custody_accounts_without_smartx": 1610,
+    "smartx_accounts_outside_custody_master": 3,
+    "receipts": [
+      {
+        "bucket": "opal-data-assets",
+        "key": "smartx/platform/silver/fact_allocation_account_map/date=2026-09-23/data.parquet",
+        "version_id": "vZloqyslAlTjNihKonJvGv1X1dXz3_pb",
+        "byte_length": 792660,
+        "sha256": "82a208cd46100880b1dcb6c11baa7523cb52081f373453808d82b0d3e3bc8dfd"
+      }
+    ]
+  },
+  "limits": "Read-only source inventory, not custody acceptance. Formula matches are diagnostics, not authority. Currency not supplied by these files."
+}

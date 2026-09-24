@@ -1,0 +1,1087 @@
+{
+ "status": "CANDIDATE_UNPUBLISHED_AWAITING_ATTESTATION_RECORD",
+ "firm_id": "inflection",
+ "business_date": "2026-09-22",
+ "source_cutoff": "2026-09-23",
+ "candidate_revision": "dc5d5e237d3ea304c470d74393b1e7da4fefd9e0e06fde6ddd3c8d3131eb2d31",
+ "platinum_bytes": 31180092,
+ "gold_sha256": "2623f60f84864ba06cec4f8d495648d2f65d19bca66bfe2e09d42ec628529f59",
+ "node_count": 33328,
+ "unique_account_count": 876,
+ "reconcile": [
+  true,
+  209358359.48,
+  209358359.48
+ ],
+ "schema_valid": true,
+ "clocks": {
+  "denominator": "33328 of 33328",
+  "custody_as_of": "2026-09-22",
+  "overlay_as_of": "2026-09-23",
+  "clocks_differ": true,
+  "note": "DISTINCT means two FIELDS, not two values: a firm whose custody and overlay feeds land on the same date is correctly reported as equal. What is refused is a snapshot that cannot say which is which."
+ },
+ "coverage": {
+  "nodes_resolved": 624,
+  "nodes_attempted": 876,
+  "remainder": {
+   "amount": 49356167.05,
+   "units": "USD",
+   "reason": "252 of 876 custody account(s) carried in Client with membership unattributed"
+  }
+ },
+ "holdouts": {
+  "account_count": 252,
+  "value": {
+   "value": 49356167.05,
+   "currency": "USD"
+  },
+  "basis": "OBSERVED",
+  "observable": "MEASURED",
+  "denominator": "252 of 876 custody account(s) have no overlay assignment",
+  "source": "accounts_v2 snapshot_date=2026-09-23 minus eclipse 2026-09-23 portfolios with a model and complete membership"
+ },
+ "holdouts_held": {
+  "expected_unassigned": 252,
+  "present_as_account_nodes": "252 of 252",
+  "block_count": 252,
+  "block_matches_expectation": true,
+  "custody_total": 209358359.48
+ },
+ "difference_control": {
+  "redistributing_build_holds_holdouts": false,
+  "redistributing_build_census": {
+   "expected_unassigned": 252,
+   "present_as_account_nodes": "0 of 252",
+   "block_count": 0,
+   "block_matches_expectation": false,
+   "custody_total": 209358359.48
+  },
+  "redistributing_build_total_drift_usd": 0.0,
+  "reading": "the wrong build moves 49356167.05 USD out of 252 account(s) and still reconciles to within 0.00 USD -- the total is not the control"
+ },
+ "manifest": {
+  "firm_id": "inflection",
+  "source": "Orion accounts_v2 + positions_mv (custody) x Eclipse portfolios (membership)",
+  "custody_snapshot_key": "2026-09-23",
+  "custody_valuation_date": "2026-09-22",
+  "custody_date": "2026-09-22",
+  "overlay_date": "2026-09-23",
+  "date": "2026-09-22",
+  "join_matched": 624,
+  "join_attempted": 876,
+  "total_market_value": 209358359.48,
+  "census": {
+   "models_whole": 553,
+   "models_whole_from_capture": 35,
+   "models_split": 71,
+   "client": 252,
+   "client_no_portfolio": 16,
+   "client_no_model": 176,
+   "client_incomplete_membership": 0,
+   "client_values_do_not_tie": 60,
+   "model_leaves": 624,
+   "positions_shown": 30881,
+   "drill_withheld": 71
+  },
+  "drill_withheld": [
+   {
+    "account_id": "acc_22d844da751f67507242280f",
+    "managed_value": 1240.14,
+    "excluded_value": 32520.39
+   },
+   {
+    "account_id": "acc_f62838c1f463e3d23e7d82cb",
+    "managed_value": 205909.29,
+    "excluded_value": 15273.27
+   },
+   {
+    "account_id": "acc_cb166f08b600b35cad8c99ad",
+    "managed_value": 18435.32,
+    "excluded_value": 115000.0
+   },
+   {
+    "account_id": "acc_e650eaf54420bb7fa74c7b84",
+    "managed_value": 926246.72,
+    "excluded_value": 7908.8
+   },
+   {
+    "account_id": "acc_cfc9aa26bff50784554b471b",
+    "managed_value": 126544.61,
+    "excluded_value": 25000.0
+   },
+   {
+    "account_id": "acc_471dec0dcf4b6f185f87c905",
+    "managed_value": 2388709.21,
+    "excluded_value": 100000.0
+   },
+   {
+    "account_id": "acc_723d16e86d5b8918250366ef",
+    "managed_value": 122676.17,
+    "excluded_value": 161232.44
+   },
+   {
+    "account_id": "acc_14ae456e8cfcda28684341d9",
+    "managed_value": 56550.84,
+    "excluded_value": 117598.51
+   },
+   {
+    "account_id": "acc_f436b9a75ad673e96cb13acb",
+    "managed_value": 27314.84,
+    "excluded_value": 2501.5
+   },
+   {
+    "account_id": "acc_1a86e5a43bb2a07c5d164661",
+    "managed_value": 167237.3,
+    "excluded_value": 6000.0
+   },
+   {
+    "account_id": "acc_7db55a50d7a7e5c29ed857b4",
+    "managed_value": 415245.48,
+    "excluded_value": 8141.87
+   },
+   {
+    "account_id": "acc_f0f455b8e5c6c7febd9bf953",
+    "managed_value": 317294.41,
+    "excluded_value": 28787.88
+   },
+   {
+    "account_id": "acc_d84d912e065d5a0306d04cc9",
+    "managed_value": 169766.06,
+    "excluded_value": 7068.0
+   },
+   {
+    "account_id": "acc_629020906e4e2a6e5447d840",
+    "managed_value": 35803.79,
+    "excluded_value": 25259.34
+   },
+   {
+    "account_id": "acc_f222137349258af3b8ab60c2",
+    "managed_value": 285390.36,
+    "excluded_value": 24106.55
+   },
+   {
+    "account_id": "acc_bbacd425a2f30c49778a719d",
+    "managed_value": 322895.5,
+    "excluded_value": 12867.05
+   },
+   {
+    "account_id": "acc_2cf221e05fb88e61bc5d1d0a",
+    "managed_value": 445610.45,
+    "excluded_value": 12000.0
+   },
+   {
+    "account_id": "acc_ba3885f10c84cbe00d96a5c4",
+    "managed_value": 533160.98,
+    "excluded_value": 9413.0
+   },
+   {
+    "account_id": "acc_2cd3527280b2899f2c1385d8",
+    "managed_value": 1975557.67,
+    "excluded_value": 75000.0
+   },
+   {
+    "account_id": "acc_7f74af61b7c2aa34ada60789",
+    "managed_value": 691620.16,
+    "excluded_value": 20000.0
+   },
+   {
+    "account_id": "acc_41e2e972281c3e42ef3f7a55",
+    "managed_value": 47467.46,
+    "excluded_value": 232918.0
+   },
+   {
+    "account_id": "acc_9c7abbe5f89261e47446a1eb",
+    "managed_value": 78321.2,
+    "excluded_value": 13344.0
+   },
+   {
+    "account_id": "acc_b6a838a8faa8f54f2d7ca31c",
+    "managed_value": 302186.23,
+    "excluded_value": 202912.45
+   },
+   {
+    "account_id": "acc_9c2b6877f6131a03c2f13c17",
+    "managed_value": 2656.78,
+    "excluded_value": 20059.61
+   },
+   {
+    "account_id": "acc_ad3db60f18c16e52f1fcf906",
+    "managed_value": 942770.47,
+    "excluded_value": 20000.0
+   },
+   {
+    "account_id": "acc_b63109ce36403352c92d2899",
+    "managed_value": 208972.12,
+    "excluded_value": 99009.62
+   },
+   {
+    "account_id": "acc_735dcabeb3b09c6b0e9d77a3",
+    "managed_value": 170302.71,
+    "excluded_value": 21320.2
+   },
+   {
+    "account_id": "acc_61cdbee844a42d17a9d5d754",
+    "managed_value": 692533.45,
+    "excluded_value": 23979.16
+   },
+   {
+    "account_id": "acc_c2032f9cc8e1edf3e61cf655",
+    "managed_value": 206918.33,
+    "excluded_value": 30000.0
+   },
+   {
+    "account_id": "acc_229d90d96f9c3a4bba2363ab",
+    "managed_value": 207710.85,
+    "excluded_value": 19619.02
+   },
+   {
+    "account_id": "acc_806c177f0341f4c36fb6ae2e",
+    "managed_value": 0.0,
+    "excluded_value": 16701.74
+   },
+   {
+    "account_id": "acc_520c835ebbb17c6bccca7428",
+    "managed_value": 73437.11,
+    "excluded_value": 25498.0
+   },
+   {
+    "account_id": "acc_504f87c075ac5ca41a7acb2d",
+    "managed_value": 779065.33,
+    "excluded_value": 49944.0
+   },
+   {
+    "account_id": "acc_741cbd38616351c572643c84",
+    "managed_value": 34488.47,
+    "excluded_value": 6025.37
+   },
+   {
+    "account_id": "acc_f49feafb634b39b78e20dc54",
+    "managed_value": 133555.89,
+    "excluded_value": 10000.0
+   },
+   {
+    "account_id": "acc_a0ff8adfe82fbe660e1c5ba9",
+    "managed_value": 176057.5,
+    "excluded_value": 302764.85
+   },
+   {
+    "account_id": "acc_6d742ecd5f7d30deca8e7dd8",
+    "managed_value": 163059.16,
+    "excluded_value": 80990.24
+   },
+   {
+    "account_id": "acc_81ea56d497e345aea0eea942",
+    "managed_value": 390922.38,
+    "excluded_value": 83514.97
+   },
+   {
+    "account_id": "acc_12039be0e2211504e263cc5e",
+    "managed_value": 192492.99,
+    "excluded_value": 212090.9
+   },
+   {
+    "account_id": "acc_4857cdd1577967e498a6dee5",
+    "managed_value": 62034.05,
+    "excluded_value": 60060.98
+   },
+   {
+    "account_id": "acc_c9edf24a56dc8e1b7171f216",
+    "managed_value": 338059.62,
+    "excluded_value": 7532.84
+   },
+   {
+    "account_id": "acc_1f4da2768de6d5b12934dbb6",
+    "managed_value": 0.0,
+    "excluded_value": 11959.57
+   },
+   {
+    "account_id": "acc_3b7e9b0b19b166ed6ce3ab6a",
+    "managed_value": 1125902.3,
+    "excluded_value": 20498.36
+   },
+   {
+    "account_id": "acc_569dea89eedd1a2628755ea4",
+    "managed_value": 87156.88,
+    "excluded_value": 40000.0
+   },
+   {
+    "account_id": "acc_b6f1e65de99a2a54147629af",
+    "managed_value": 940252.84,
+    "excluded_value": 10000.0
+   },
+   {
+    "account_id": "acc_f6d3404e314081b6070d262c",
+    "managed_value": 242698.84,
+    "excluded_value": 60000.0
+   },
+   {
+    "account_id": "acc_b6a7c89fc72b4c4ec6783f31",
+    "managed_value": 212944.79,
+    "excluded_value": 1632.0
+   },
+   {
+    "account_id": "acc_b689309b4ca4733664b2a6f5",
+    "managed_value": 382591.91,
+    "excluded_value": 13100.51
+   },
+   {
+    "account_id": "acc_c658e6e30fc2ea6aac7d25bd",
+    "managed_value": 245194.99,
+    "excluded_value": 2039.84
+   },
+   {
+    "account_id": "acc_26195db9792c4f3f885a7bcd",
+    "managed_value": 186454.48,
+    "excluded_value": 94007.6
+   },
+   {
+    "account_id": "acc_74e2eacd54557b0eb3f2358e",
+    "managed_value": 1940139.32,
+    "excluded_value": 34984.95
+   },
+   {
+    "account_id": "acc_c4417d3eb4765853ef579ff3",
+    "managed_value": 71851.54,
+    "excluded_value": 91708.67
+   },
+   {
+    "account_id": "acc_c6a28e55054a40cffcd21d46",
+    "managed_value": 1610681.78,
+    "excluded_value": 100000.0
+   },
+   {
+    "account_id": "acc_65995ed8ca7dc42252602179",
+    "managed_value": 373375.18,
+    "excluded_value": 11201.45
+   },
+   {
+    "account_id": "acc_fca5cf3647b3ef5f6d724dfe",
+    "managed_value": 383597.22,
+    "excluded_value": 40000.0
+   },
+   {
+    "account_id": "acc_a5bbc7365cb01a180ba5296c",
+    "managed_value": 1939684.33,
+    "excluded_value": 178839.93
+   },
+   {
+    "account_id": "acc_42ce5bccfaa047db0fb62f35",
+    "managed_value": 399762.27,
+    "excluded_value": 50000.0
+   },
+   {
+    "account_id": "acc_a362dde52d70cff23cf6ca91",
+    "managed_value": 111858.08,
+    "excluded_value": 69560.0
+   },
+   {
+    "account_id": "acc_015d15b45d7a8ac71f951a67",
+    "managed_value": 756721.69,
+    "excluded_value": 30000.0
+   },
+   {
+    "account_id": "acc_28859f44fc6c431e5bdce469",
+    "managed_value": 754461.05,
+    "excluded_value": 7068.0
+   },
+   {
+    "account_id": "acc_b0c8f66394fb714abd65fd73",
+    "managed_value": 460225.4,
+    "excluded_value": 14412.86
+   },
+   {
+    "account_id": "acc_e7db92bb187daf4277687766",
+    "managed_value": 136484.49,
+    "excluded_value": 3482.48
+   },
+   {
+    "account_id": "acc_3ff9a8c2ead0b96456f3232e",
+    "managed_value": 129033.83,
+    "excluded_value": 29382.0
+   },
+   {
+    "account_id": "acc_2e59f9a48f88dfbb0348d967",
+    "managed_value": 67793.28,
+    "excluded_value": 15184.35
+   },
+   {
+    "account_id": "acc_f34441ae2a8f93fb9c7e773c",
+    "managed_value": 318113.57,
+    "excluded_value": 21112.0
+   },
+   {
+    "account_id": "acc_c5075ed6b30b30ad6f39a3ac",
+    "managed_value": 597112.25,
+    "excluded_value": 21089.57
+   },
+   {
+    "account_id": "acc_e5660f36ba39d410b7789254",
+    "managed_value": 363778.6,
+    "excluded_value": 36000.0
+   },
+   {
+    "account_id": "acc_ab4fe7b487db4dd9f26393ef",
+    "managed_value": 228830.8,
+    "excluded_value": 20000.0
+   },
+   {
+    "account_id": "acc_95b216cf554374e413ebf099",
+    "managed_value": 2014674.82,
+    "excluded_value": 835999.0
+   },
+   {
+    "account_id": "acc_72bac777da6e8955c4d2f9a3",
+    "managed_value": 162387.09,
+    "excluded_value": 6242.3
+   },
+   {
+    "account_id": "acc_4fc90d5814a0eb39a067c1cd",
+    "managed_value": 982563.92,
+    "excluded_value": 34765.16
+   }
+  ],
+  "overlay_accounts_not_in_custody": 0,
+  "positions_outside_custody_census": {
+   "accounts": 82,
+   "positions": 1709
+  },
+  "actual_position_controls": {
+   "status": "LOCAL_SOURCE_CONTROLS_ONLY_NOT_CUSTODY_ACCEPTANCE",
+   "currency_status": "UNATTESTED",
+   "currency_authority": null,
+   "vendor_currency_field_present": {
+    "positions": false,
+    "independent_totals": false
+   },
+   "custody_as_of": "2026-09-23",
+   "valuation_as_of": "2026-09-23",
+   "requested_account_count": 876,
+   "selected_position_count": 34335,
+   "outside_requested_account_count": 82,
+   "outside_requested_position_count": 1709
+  },
+  "eclipse_models_named": 28,
+  "overlay_rows": {
+   "simple": 844,
+   "full": 858,
+   "models": 18,
+   "model_composition": 9
+  },
+  "eclipse_membership_capture": {
+   "path": "C:/Users/AndrewBerman/Desktop/ajb_workspace/.runtime/codex-seats/4.0.0_SA_CRO/eclipse_membership/membership_map.json",
+   "sha256": "789dd95d3d36b449172d5a5d5c0f6e900f4f04269cfbab0525771b65a0fb641e",
+   "byte_length": 212882,
+   "rows": 860,
+   "record": "4.0.0_SA_CRO IRPT_INF_ECLIPSE_MEMBERSHIP_CAPTURE_20260923 @138fad2935"
+  },
+  "currency_status": "UNATTESTED",
+  "currency_refusal": "unique firm report currency authority required",
+  "directory_cross_check": {
+   "matched": 875,
+   "attempted": 876,
+   "note": "INFORMATIONAL ONLY, not a join gate"
+  },
+  "publication_refused": "REFUSED: INF report currency unattested (unique firm report currency authority required); candidate only"
+ },
+ "measured_write_plan": {
+  "multipart": true,
+  "parts": 31,
+  "immutable_creates": 34,
+  "index_cas": 1,
+  "total_writes": 35
+ },
+ "cto_findings_closed": [
+  "49F-TAX-CONFLICT-01",
+  "TAXONOMY-PATH-01",
+  "INF-CLOCK-01"
+ ],
+ "model_snapshot": {
+  "model_count": 18,
+  "models": [
+   {
+    "model_id": "6",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "Opal Intermediate Growth",
+    "assigned_value": 60342311.75,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 195,
+    "asset_count": 644,
+    "top_assets": [
+     [
+      "IEFA",
+      6631972.57
+     ],
+     [
+      "DIVZ",
+      5316991.5
+     ],
+     [
+      "SPYM",
+      4489072.43
+     ],
+     [
+      "IDVZ",
+      4014903.87
+     ],
+     [
+      "BIV",
+      3565991.82
+     ]
+    ]
+   },
+   {
+    "model_id": "28",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "50/50 Opal Intermediate/Opal Long Term",
+    "assigned_value": 34619633.97,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 156,
+    "asset_count": 262,
+    "top_assets": [
+     [
+      "IEFA",
+      5173276.24
+     ],
+     [
+      "DIVZ",
+      4280429.47
+     ],
+     [
+      "IDVZ",
+      3480764.88
+     ],
+     [
+      "SPYM",
+      3233243.03
+     ],
+     [
+      "PFDE",
+      3092930.3
+     ]
+    ]
+   },
+   {
+    "model_id": "14",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "IWM Moderate Taxable",
+    "assigned_value": 15139662.07,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 32,
+    "asset_count": 111,
+    "top_assets": [
+     [
+      "VOO",
+      1839725.1
+     ],
+     [
+      "FCASH",
+      1085508.51
+     ],
+     [
+      "VWIUX",
+      896001.51
+     ],
+     [
+      "TFEBX",
+      771424.24
+     ],
+     [
+      "BSNIX",
+      715211.71
+     ]
+    ]
+   },
+   {
+    "model_id": "3",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "Opal Long Term",
+    "assigned_value": 15104250.17,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 94,
+    "asset_count": 203,
+    "top_assets": [
+     [
+      "IEFA",
+      2487805.67
+     ],
+     [
+      "DIVZ",
+      2120177.74
+     ],
+     [
+      "IDVZ",
+      1833959.32
+     ],
+     [
+      "PFDE",
+      1674081.3
+     ],
+     [
+      "SPYM",
+      1414356.3
+     ]
+    ]
+   },
+   {
+    "model_id": "29",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "50/50 Opal Short Term/Intermediate",
+    "assigned_value": 6907925.99,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 22,
+    "asset_count": 136,
+    "top_assets": [
+     [
+      "BIV",
+      615752.6
+     ],
+     [
+      "DIVZ",
+      451247.76
+     ],
+     [
+      "IEFA",
+      348220.21
+     ],
+     [
+      "JAAA",
+      345351.36
+     ],
+     [
+      "DFCF",
+      297232.03
+     ]
+    ]
+   },
+   {
+    "model_id": "7",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "Opal Short Term",
+    "assigned_value": 4807323.73,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 28,
+    "asset_count": 122,
+    "top_assets": [
+     [
+      "BIV",
+      849331.05
+     ],
+     [
+      "VGSH",
+      520548.72
+     ],
+     [
+      "DFCF",
+      419263.38
+     ],
+     [
+      "UTWO",
+      403469.75
+     ],
+     [
+      "DIVZ",
+      393579.7
+     ]
+    ]
+   },
+   {
+    "model_id": "15",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "IWM Moderately Aggressive Taxable",
+    "assigned_value": 4397975.44,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 10,
+    "asset_count": 81,
+    "top_assets": [
+     [
+      "VOO",
+      509940.63
+     ],
+     [
+      "JIJIX",
+      200853.69
+     ],
+     [
+      "CIVIX",
+      191971.69
+     ],
+     [
+      "VO",
+      185296.35
+     ],
+     [
+      "SWPPX",
+      146153.11
+     ]
+    ]
+   },
+   {
+    "model_id": "19",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "IWM Moderately Aggressive Tax-Deferred",
+    "assigned_value": 4322081.73,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 9,
+    "asset_count": 78,
+    "top_assets": [
+     [
+      "VOO",
+      802590.28
+     ],
+     [
+      "JIJIX",
+      244714.18
+     ],
+     [
+      "CIVIX",
+      232250.34
+     ],
+     [
+      "VO",
+      230655.68
+     ],
+     [
+      "BAGIX",
+      193422.68
+     ]
+    ]
+   },
+   {
+    "model_id": "30",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "90/10 Opal Long Term/Ultra Short Term",
+    "assigned_value": 4165325.68,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 4,
+    "asset_count": 38,
+    "top_assets": [
+     [
+      "IEFA",
+      622184.85
+     ],
+     [
+      "DIVZ",
+      529099.24
+     ],
+     [
+      "IDVZ",
+      458822.62
+     ],
+     [
+      "PFDE",
+      417971.41
+     ],
+     [
+      "SPYM",
+      353745.31
+     ]
+    ]
+   },
+   {
+    "model_id": "5",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "Opal Ultra Long Term",
+    "assigned_value": 2205932.08,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 33,
+    "asset_count": 83,
+    "top_assets": [
+     [
+      "IDVZ",
+      291562.33
+     ],
+     [
+      "IEFA",
+      281002.45
+     ],
+     [
+      "DIVZ",
+      265593.29
+     ],
+     [
+      "PFDE",
+      261393.94
+     ],
+     [
+      "IJH",
+      245904.82
+     ]
+    ]
+   },
+   {
+    "model_id": "8",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "Opal Ultra Short Term",
+    "assigned_value": 1043978.76,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 19,
+    "asset_count": 71,
+    "top_assets": [
+     [
+      "VGSH",
+      124956.16
+     ],
+     [
+      "VCSH",
+      123808.83
+     ],
+     [
+      "VUSB",
+      85173.08
+     ],
+     [
+      "MINT",
+      82718.41
+     ],
+     [
+      "OBIL",
+      82625.89
+     ]
+    ]
+   },
+   {
+    "model_id": "18",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "IWM Moderate Tax-Deferred",
+    "assigned_value": 888935.66,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 2,
+    "asset_count": 60,
+    "top_assets": [
+     [
+      "VOO",
+      201003.96
+     ],
+     [
+      "BAGIX",
+      102631.65
+     ],
+     [
+      "HTRB",
+      99603.72
+     ],
+     [
+      "BSIIX",
+      81801.56
+     ],
+     [
+      "JIJIX",
+      62200.36
+     ]
+    ]
+   },
+   {
+    "model_id": "25",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "IWM Moderately Aggressive Index",
+    "assigned_value": 494524.47,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 9,
+    "asset_count": 52,
+    "top_assets": [
+     [
+      "FXAIX",
+      132186.19
+     ],
+     [
+      "FSPSX",
+      79377.81
+     ],
+     [
+      "FXNAX",
+      62823.77
+     ],
+     [
+      "FPADX",
+      38759.65
+     ],
+     [
+      "FSMDX",
+      37915.92
+     ]
+    ]
+   },
+   {
+    "model_id": "26",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "PCOFX",
+    "assigned_value": 380718.74,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 1,
+    "asset_count": 2,
+    "top_assets": [
+     [
+      "PCOFX",
+      379481.66
+     ],
+     [
+      "CUSTODIAL_CASH",
+      1237.08
+     ]
+    ]
+   },
+   {
+    "model_id": "24",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "IWM Moderate Index",
+    "assigned_value": 366996.43,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 5,
+    "asset_count": 66,
+    "top_assets": [
+     [
+      "FXAIX",
+      83738.38
+     ],
+     [
+      "FXNAX",
+      83357.72
+     ],
+     [
+      "FSPSX",
+      49881.17
+     ],
+     [
+      "HTRB",
+      32121.99
+     ],
+     [
+      "FPADX",
+      24230.65
+     ]
+    ]
+   },
+   {
+    "model_id": "13",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "IWM Moderately Conservative Taxable",
+    "assigned_value": 277199.71,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 1,
+    "asset_count": 20,
+    "top_assets": [
+     [
+      "VWIUX",
+      53664.02
+     ],
+     [
+      "TFEBX",
+      45304.91
+     ],
+     [
+      "BSNIX",
+      41159.41
+     ],
+     [
+      "VOO",
+      37064.56
+     ],
+     [
+      "FEUPX",
+      21384.47
+     ]
+    ]
+   },
+   {
+    "model_id": "11",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "IWM Aggressive Taxable",
+    "assigned_value": 232224.57,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 2,
+    "asset_count": 42,
+    "top_assets": [
+     [
+      "VOO",
+      80544.14
+     ],
+     [
+      "JIJIX",
+      24355.61
+     ],
+     [
+      "VO",
+      22856.32
+     ],
+     [
+      "CIVIX",
+      22835.67
+     ],
+     [
+      "VB",
+      14616.5
+     ]
+    ]
+   },
+   {
+    "model_id": "22",
+    "model_namespace": "ECLIPSE_MODEL_ID",
+    "model_name": "IWM Conservative Index",
+    "assigned_value": 56956.29,
+    "asset_basis": [
+     "OBSERVED"
+    ],
+    "account_count": 2,
+    "asset_count": 95,
+    "top_assets": [
+     [
+      "FXNAX",
+      27623.89
+     ],
+     [
+      "HTRB",
+      10574.48
+     ],
+     [
+      "FXAIX",
+      4459.93
+     ],
+     [
+      "FAGIX",
+      3045.42
+     ],
+     [
+      "FSPSX",
+      2642.84
+     ]
+    ]
+   }
+  ]
+ },
+ "local_candidate_path": ".runtime/holdings-journey-20260923/dry/opal-data-inflection/irpt/inflection/platinum/holdings/date=2026-09-22/dc5d5e237d3ea304c470d74393b1e7da4fefd9e0e06fde6ddd3c8d3131eb2d31.json"
+}

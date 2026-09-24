@@ -1,0 +1,516 @@
+{
+  "policy": {
+    "policy_id": "irpt-private-reporting",
+    "policy_revision": "irpt-x10-v1",
+    "register_id": "X10",
+    "register_path": "infra/logic/06_CONFORMANCE_LEDGER.md",
+    "register_commit": "705dae3202cac873a133825bee9d0381c7dd6b7f",
+    "ruling_commit": "3c55f37800",
+    "retention_policy_id": "irpt-retention-v1",
+    "source": "irpt",
+    "product_scope": "irpt",
+    "firms": [
+      "49financial",
+      "cottonwood",
+      "inflection"
+    ],
+    "state": "PENDING_ENFORCEMENT",
+    "enforcement_ref": null,
+    "physical_disposal": "OPEN",
+    "families": {
+      "ORIGINAL_CSV": {
+        "tier": "state",
+        "table": "prospect_inputs",
+        "extension": "csv",
+        "unreferenced_days": 30,
+        "accepted_ceiling_days": 2555
+      },
+      "NORMALIZED_PORTFOLIO": {
+        "tier": "state",
+        "table": "normalized_portfolios",
+        "extension": "json",
+        "unreferenced_days": 30,
+        "accepted_ceiling_days": 2555
+      },
+      "REQUEST_COMPOSITION": {
+        "tier": "state",
+        "table": "request_compositions",
+        "extension": "json",
+        "unreferenced_days": 30,
+        "accepted_ceiling_days": 2555
+      },
+      "ORIGINAL_VENDOR_PDF": {
+        "tier": "state",
+        "table": "vendor_documents",
+        "extension": "pdf",
+        "unreferenced_days": 30,
+        "accepted_ceiling_days": 2555
+      },
+      "EXTRACTION_EVIDENCE": {
+        "tier": "state",
+        "table": "extraction_evidence",
+        "extension": "json",
+        "unreferenced_days": 30,
+        "accepted_ceiling_days": 2555
+      },
+      "PERFORMANCE": {
+        "tier": "platinum",
+        "table": "performance_reports",
+        "extension": "json",
+        "unreferenced_days": null,
+        "accepted_ceiling_days": 2555
+      },
+      "ANALYSIS": {
+        "tier": "platinum",
+        "table": "analysis_reports",
+        "extension": "json",
+        "unreferenced_days": null,
+        "accepted_ceiling_days": 2555
+      },
+      "EXPORT_BUNDLE": {
+        "tier": "state",
+        "table": "export_bundles",
+        "extension": "json",
+        "unreferenced_days": 7,
+        "accepted_ceiling_days": 2555
+      },
+      "EXPORT_PDF": {
+        "tier": "state",
+        "table": "export_pdfs",
+        "extension": "pdf",
+        "unreferenced_days": 7,
+        "accepted_ceiling_days": 2555
+      },
+      "EXPORT_RECEIPT": {
+        "tier": "state",
+        "table": "export_receipts",
+        "extension": "json",
+        "unreferenced_days": 7,
+        "accepted_ceiling_days": 2555
+      },
+      "SELECTED_ACCOUNTS": {
+        "tier": "state",
+        "table": "selected_accounts",
+        "extension": "json",
+        "unreferenced_days": 30,
+        "accepted_ceiling_days": 30
+      },
+      "PERFORMANCE_SOURCE_EVIDENCE": {
+        "tier": "state",
+        "table": "performance_source_evidence",
+        "extension": "json",
+        "unreferenced_days": 30,
+        "accepted_ceiling_days": 2555
+      }
+    },
+    "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+  },
+  "destinations": [
+    {
+      "firm": "49financial",
+      "family": "ORIGINAL_CSV",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/49financial/state/prospect_inputs/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.csv",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "49financial",
+      "family": "NORMALIZED_PORTFOLIO",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/49financial/state/normalized_portfolios/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "49financial",
+      "family": "REQUEST_COMPOSITION",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/49financial/state/request_compositions/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "49financial",
+      "family": "ORIGINAL_VENDOR_PDF",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/49financial/state/vendor_documents/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.pdf",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "49financial",
+      "family": "EXTRACTION_EVIDENCE",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/49financial/state/extraction_evidence/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "49financial",
+      "family": "PERFORMANCE",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/49financial/platinum/performance_reports/RPT-00000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "49financial",
+      "family": "ANALYSIS",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/49financial/platinum/analysis_reports/RPT-00000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "49financial",
+      "family": "EXPORT_BUNDLE",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/49financial/state/export_bundles/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "49financial",
+      "family": "EXPORT_PDF",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/49financial/state/export_pdfs/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.pdf",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "49financial",
+      "family": "EXPORT_RECEIPT",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/49financial/state/export_receipts/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "49financial",
+      "family": "SELECTED_ACCOUNTS",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/49financial/state/selected_accounts/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "49financial",
+      "family": "PERFORMANCE_SOURCE_EVIDENCE",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/49financial/state/performance_source_evidence/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "cottonwood",
+      "family": "ORIGINAL_CSV",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/cottonwood/state/prospect_inputs/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.csv",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "cottonwood",
+      "family": "NORMALIZED_PORTFOLIO",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/cottonwood/state/normalized_portfolios/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "cottonwood",
+      "family": "REQUEST_COMPOSITION",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/cottonwood/state/request_compositions/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "cottonwood",
+      "family": "ORIGINAL_VENDOR_PDF",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/cottonwood/state/vendor_documents/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.pdf",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "cottonwood",
+      "family": "EXTRACTION_EVIDENCE",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/cottonwood/state/extraction_evidence/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "cottonwood",
+      "family": "PERFORMANCE",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/cottonwood/platinum/performance_reports/RPT-00000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "cottonwood",
+      "family": "ANALYSIS",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/cottonwood/platinum/analysis_reports/RPT-00000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "cottonwood",
+      "family": "EXPORT_BUNDLE",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/cottonwood/state/export_bundles/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "cottonwood",
+      "family": "EXPORT_PDF",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/cottonwood/state/export_pdfs/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.pdf",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "cottonwood",
+      "family": "EXPORT_RECEIPT",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/cottonwood/state/export_receipts/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "cottonwood",
+      "family": "SELECTED_ACCOUNTS",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/cottonwood/state/selected_accounts/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "cottonwood",
+      "family": "PERFORMANCE_SOURCE_EVIDENCE",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/cottonwood/state/performance_source_evidence/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "inflection",
+      "family": "ORIGINAL_CSV",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/inflection/state/prospect_inputs/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.csv",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "inflection",
+      "family": "NORMALIZED_PORTFOLIO",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/inflection/state/normalized_portfolios/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "inflection",
+      "family": "REQUEST_COMPOSITION",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/inflection/state/request_compositions/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "inflection",
+      "family": "ORIGINAL_VENDOR_PDF",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/inflection/state/vendor_documents/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.pdf",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "inflection",
+      "family": "EXTRACTION_EVIDENCE",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/inflection/state/extraction_evidence/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "inflection",
+      "family": "PERFORMANCE",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/inflection/platinum/performance_reports/RPT-00000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "inflection",
+      "family": "ANALYSIS",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/inflection/platinum/analysis_reports/RPT-00000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "inflection",
+      "family": "EXPORT_BUNDLE",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/inflection/state/export_bundles/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "inflection",
+      "family": "EXPORT_PDF",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/inflection/state/export_pdfs/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.pdf",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "inflection",
+      "family": "EXPORT_RECEIPT",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/inflection/state/export_receipts/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "inflection",
+      "family": "SELECTED_ACCOUNTS",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/inflection/state/selected_accounts/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    },
+    {
+      "firm": "inflection",
+      "family": "PERFORMANCE_SOURCE_EVIDENCE",
+      "writable": false,
+      "bucket": "opal-data-irpt",
+      "key": "irpt/inflection/state/performance_source_evidence/ART-0000000000000000000000000000000000000000000000000000000000000000/0000000000000000000000000000000000000000000000000000000000000000.json",
+      "policy_revision": "irpt-x10-v1",
+      "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220"
+    }
+  ],
+  "bucket_controls": {
+    "opal-data-irpt": {
+      "versioning": {
+        "error": "NoSuchBucket"
+      },
+      "encryption": {
+        "error": "NoSuchBucket"
+      },
+      "public_access_block": {
+        "error": "NoSuchBucket"
+      }
+    }
+  },
+  "deployed_function": {
+    "FunctionName": "irpt-performance-adapter",
+    "CodeSha256": "jVktMAiRK+2mYPXEzyst6HjSFFv4xR3Kxm47hAyulyw=",
+    "LastModified": "2026-09-21T15:07:41.000+0000",
+    "Handler": "entry.lambda_handler",
+    "Runtime": "python3.12",
+    "Role": "arn:aws:iam::313476888478:role/irpt-performance-adapter-role",
+    "Layers": [
+      {
+        "Arn": "arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5",
+        "CodeSize": 644526
+      }
+    ]
+  },
+  "role_policies": {
+    "irpt-performance-adapter-directory-read-policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": [
+            "s3:GetObject"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:s3:::opal-data-bd/investor-reporting/directory/*",
+            "arn:aws:s3:::opal-data-inf/investor-reporting/directory/*",
+            "arn:aws:s3:::opal-data-cot/investor-reporting/directory/*"
+          ],
+          "Sid": "ReadFirmDirectoryPrefixOnly"
+        }
+      ]
+    },
+    "irpt-performance-adapter-logs": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": [
+            "logs:CreateLogGroup",
+            "logs:CreateLogStream",
+            "logs:PutLogEvents"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:logs:us-east-1:313476888478:log-group:/aws/lambda/irpt-performance-adapter",
+            "arn:aws:logs:us-east-1:313476888478:log-group:/aws/lambda/irpt-performance-adapter:*"
+          ],
+          "Sid": "WriteOwnLogStream"
+        }
+      ]
+    },
+    "irpt-performance-adapter-ownership-map-read-policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": [
+            "s3:GetObject"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:s3:::opal-data-bd/platinum/49financial/ownership_map.json",
+            "arn:aws:s3:::opal-data-inf/platinum/inflection/ownership_map.json",
+            "arn:aws:s3:::opal-data-cot/platinum/cottonwood/ownership_map.json"
+          ],
+          "Sid": "OwnershipMapReadOnly"
+        }
+      ]
+    }
+  },
+  "attached_policies": []
+}

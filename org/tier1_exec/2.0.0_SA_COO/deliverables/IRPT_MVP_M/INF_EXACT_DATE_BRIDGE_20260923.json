@@ -1,0 +1,101 @@
+{
+  "comparisons": [
+    {
+      "account_hash": "c2a181d8178a9f753b013fc4bb892ceeb5dc5bcb763352610844b93341ea52a4",
+      "valuation_date": "2026-06-10",
+      "source_request_date": "2026-06-11",
+      "source_as_of_dates": [
+        "2026-06-11"
+      ],
+      "position_count": 29,
+      "currency_evidence": "Scope USD exact account/date",
+      "difference": "0.00",
+      "within_cent": true
+    },
+    {
+      "account_hash": "debc96817a3523d6f3cde58b00abaf6480477744625d0b1f4e406e644ae1763b",
+      "valuation_date": "2026-06-10",
+      "source_request_date": "2026-06-11",
+      "source_as_of_dates": [
+        "2026-06-11"
+      ],
+      "position_count": 29,
+      "currency_evidence": "Scope USD exact account/date",
+      "difference": "0.00",
+      "within_cent": true
+    },
+    {
+      "account_hash": "c2a181d8178a9f753b013fc4bb892ceeb5dc5bcb763352610844b93341ea52a4",
+      "valuation_date": "2026-06-18",
+      "source_request_date": "2026-06-19",
+      "source_as_of_dates": [
+        "2026-06-19"
+      ],
+      "position_count": 29,
+      "currency_evidence": "Scope USD exact account/date",
+      "difference": "0.00",
+      "within_cent": true
+    },
+    {
+      "account_hash": "debc96817a3523d6f3cde58b00abaf6480477744625d0b1f4e406e644ae1763b",
+      "valuation_date": "2026-06-18",
+      "source_request_date": "2026-06-19",
+      "source_as_of_dates": [
+        "2026-06-19"
+      ],
+      "position_count": 29,
+      "currency_evidence": "Scope USD exact account/date",
+      "difference": "0.00",
+      "within_cent": true
+    },
+    {
+      "account_hash": "c2a181d8178a9f753b013fc4bb892ceeb5dc5bcb763352610844b93341ea52a4",
+      "valuation_date": "2026-09-09",
+      "source_request_date": "2026-09-10",
+      "source_as_of_dates": [
+        "2026-09-10"
+      ],
+      "position_count": 30,
+      "currency_evidence": "Scope USD exact account/date",
+      "difference": "0.00",
+      "within_cent": true
+    },
+    {
+      "account_hash": "debc96817a3523d6f3cde58b00abaf6480477744625d0b1f4e406e644ae1763b",
+      "valuation_date": "2026-09-09",
+      "source_request_date": "2026-09-10",
+      "source_as_of_dates": [
+        "2026-09-10"
+      ],
+      "position_count": 30,
+      "currency_evidence": "Scope USD exact account/date",
+      "difference": "0.00",
+      "within_cent": true
+    }
+  ],
+  "source_receipts": [
+    {
+      "bucket": "opal-data-inf",
+      "key": "bronze/positions/2026-06-11.parquet",
+      "version_id": "EforuoMTf6AN9EymB40zvhztC20ZAwsI",
+      "byte_length": 1179358,
+      "sha256": "251b5f0a6b0034802fdfe3df1a3cb0767fd1b97f3ca7299b1e8664c00c080c90"
+    },
+    {
+      "bucket": "opal-data-inf",
+      "key": "bronze/positions/2026-06-19.parquet",
+      "version_id": "59fmbYgwUSVZ9ctmAr4v4E4QYctdchRW",
+      "byte_length": 1193819,
+      "sha256": "cd876e03e762ca77c83ee23fbffabd983bad0f233d1466b3f99d4baf7ef2ff73"
+    },
+    {
+      "bucket": "opal-data-inf",
+      "key": "bronze/positions/2026-09-10.parquet",
+      "version_id": "wTUeIRAdt3gdKaoaJ3lQO40yMu63loLv",
+      "byte_length": 1267965,
+      "sha256": "e1f8bc24f6157d60cb1a042fd5dd5e06b0c0c86ddf6c901bf9ba358a78873907"
+    }
+  ],
+  "scope_sha256": "84bb8d7659dc178e298e01212bb9b2ef3a79503696df7e83b9fbbb8f42f452ce",
+  "limit": "Exact three source files/two accounts only; no blanket date shift or firm-wide currency rule."
+}

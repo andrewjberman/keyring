@@ -1,0 +1,488 @@
+{
+  "source_pin": "1067e472a4298085e768bb03df10a5d16e3456e2",
+  "method": "git show exact pin; AST only, no import or producer execution; working bytes checked after newline normalization",
+  "scope": "12 exact source files, no live source existence or completion probe",
+  "files": [
+    {
+      "path": "data/assets/scripts/gold/runners_49f/b00_canonical_valuation.py",
+      "git_blob": "63a1ee99c06211038ea6dc9d33e51a83f9aa9e9c",
+      "sha256": "bff084e65621b5927737dd44963c0420fd6ce3fc36af48175fb53fad1fb4d864",
+      "working_equal_normalized_newlines": true,
+      "definitions": [
+        {
+          "name": "_pad",
+          "line": 36,
+          "end_line": 37
+        },
+        {
+          "name": "build_canonical_valuation",
+          "line": 40,
+          "end_line": 80
+        },
+        {
+          "name": "main",
+          "line": 83,
+          "end_line": 120
+        }
+      ]
+    },
+    {
+      "path": "data/assets/scripts/gold/runners_49f/b01_canonical_positions.py",
+      "git_blob": "0ae61ad199d221c03b9a816126e7df3c1826c295",
+      "sha256": "f21712c2b58af11a55caa3d097cb6fb32c9451f8a4955502dfcf6d8e921d923a",
+      "working_equal_normalized_newlines": true,
+      "definitions": [
+        {
+          "name": "_pad",
+          "line": 33,
+          "end_line": 34
+        },
+        {
+          "name": "build_canonical_positions",
+          "line": 37,
+          "end_line": 85
+        },
+        {
+          "name": "main",
+          "line": 88,
+          "end_line": 154
+        }
+      ]
+    },
+    {
+      "path": "data/assets/scripts/gold/runners_49f/b03_valuation_integrity.py",
+      "git_blob": "d24e8db5c4623cb6823a44c36055b5584d267eae",
+      "sha256": "6f6003fc631255f7be2d31f1c411dfe6161ae506e5614faae9f2797c175e19e2",
+      "working_equal_normalized_newlines": true,
+      "definitions": [
+        {
+          "name": "build_valuation_integrity",
+          "line": 37,
+          "end_line": 78
+        },
+        {
+          "name": "main",
+          "line": 81,
+          "end_line": 114
+        }
+      ]
+    },
+    {
+      "path": "data/assets/scripts/gold/runners_49f/runner_common.py",
+      "git_blob": "a1af2a17aaca65c499ea899177ab1ee059233c1b",
+      "sha256": "6176c7c61a8d0c06a13778ab49bfef9425f7c025e734399dff25fd43d24b2888",
+      "working_equal_normalized_newlines": true,
+      "definitions": [
+        {
+          "name": "_bucket_for",
+          "line": 43,
+          "end_line": 48
+        },
+        {
+          "name": "s3",
+          "line": 53,
+          "end_line": 57
+        },
+        {
+          "name": "list_partition_dates",
+          "line": 60,
+          "end_line": 71
+        },
+        {
+          "name": "read_partition",
+          "line": 74,
+          "end_line": 84
+        },
+        {
+          "name": "stamp_provenance",
+          "line": 87,
+          "end_line": 92
+        },
+        {
+          "name": "emit",
+          "line": 95,
+          "end_line": 137
+        },
+        {
+          "name": "read_upstream_declared_stale",
+          "line": 140,
+          "end_line": 155
+        },
+        {
+          "name": "window_nna_sums",
+          "line": 158,
+          "end_line": 211
+        },
+        {
+          "name": "window_nna_account_sums",
+          "line": 214,
+          "end_line": 278
+        },
+        {
+          "name": "_period_keys",
+          "line": 281,
+          "end_line": 292
+        },
+        {
+          "name": "nna_period_account_sums",
+          "line": 295,
+          "end_line": 342
+        },
+        {
+          "name": "aua_account_maps",
+          "line": 345,
+          "end_line": 362
+        },
+        {
+          "name": "nna_account_cumulative",
+          "line": 365,
+          "end_line": 407
+        },
+        {
+          "name": "_snapshot",
+          "line": 410,
+          "end_line": 415
+        },
+        {
+          "name": "daily_category_series",
+          "line": 418,
+          "end_line": 476
+        },
+        {
+          "name": "aua_period_frames",
+          "line": 479,
+          "end_line": 518
+        },
+        {
+          "name": "nna_weekly_account_sums",
+          "line": 521,
+          "end_line": 560
+        },
+        {
+          "name": "_q",
+          "line": 185,
+          "end_line": 186
+        },
+        {
+          "name": "_win",
+          "line": 188,
+          "end_line": 190
+        }
+      ]
+    },
+    {
+      "path": "data/cot/scripts/gold/runners_cot/b00_canonical_valuation.py",
+      "git_blob": "0e14fc663c9e7a2296d052e2cf81ebb5a8455f60",
+      "sha256": "c1118caf365c7d40f5951265aa1861814610a2d676bff39f330023566fd933a4",
+      "working_equal_normalized_newlines": true,
+      "definitions": [
+        {
+          "name": "run_dup_fixture",
+          "line": 43,
+          "end_line": 70
+        },
+        {
+          "name": "build",
+          "line": 73,
+          "end_line": 169
+        },
+        {
+          "name": "main",
+          "line": 172,
+          "end_line": 185
+        },
+        {
+          "name": "status_for",
+          "line": 108,
+          "end_line": 113
+        }
+      ]
+    },
+    {
+      "path": "data/cot/scripts/gold/runners_cot/b01_canonical_positions.py",
+      "git_blob": "92643fb0a3b63cacffa07e4a17e6b2dc61f06580",
+      "sha256": "b7a00c555e81d8dd99071f285c0743f7b7d19a990a7977b187453e72e3d2a237",
+      "working_equal_normalized_newlines": true,
+      "definitions": [
+        {
+          "name": "build",
+          "line": 60,
+          "end_line": 117
+        },
+        {
+          "name": "main",
+          "line": 120,
+          "end_line": 125
+        }
+      ]
+    },
+    {
+      "path": "data/cot/scripts/gold/runners_cot/b03_valuation_integrity.py",
+      "git_blob": "35c125b72a60140d4dc2527f87aaab1d405bc195",
+      "sha256": "80126cc26aa253749eb8ffba4a4bd500a6c73f5e44307e91163b6add0fbb088e",
+      "working_equal_normalized_newlines": true,
+      "definitions": [
+        {
+          "name": "build",
+          "line": 53,
+          "end_line": 152
+        },
+        {
+          "name": "main",
+          "line": 155,
+          "end_line": 162
+        },
+        {
+          "name": "grade",
+          "line": 106,
+          "end_line": 116
+        }
+      ]
+    },
+    {
+      "path": "data/cot/scripts/gold/runners_cot/runner_common.py",
+      "git_blob": "d0fa59a6c8365063b6b8304c6380588ce59b8e3b",
+      "sha256": "80a7d89efe2623a3f1719a6ae539db739bac5612fca26521a34f7dce349e5f31",
+      "working_equal_normalized_newlines": true,
+      "definitions": [
+        {
+          "name": "s3",
+          "line": 53,
+          "end_line": 57
+        },
+        {
+          "name": "utc_now_iso",
+          "line": 60,
+          "end_line": 61
+        },
+        {
+          "name": "_list_keys",
+          "line": 69,
+          "end_line": 82
+        },
+        {
+          "name": "list_fact_partitions",
+          "line": 88,
+          "end_line": 96
+        },
+        {
+          "name": "resolve_fact_partition",
+          "line": 99,
+          "end_line": 108
+        },
+        {
+          "name": "read_fact",
+          "line": 111,
+          "end_line": 116
+        },
+        {
+          "name": "read_txn_series",
+          "line": 119,
+          "end_line": 145
+        },
+        {
+          "name": "collapse_relationship_grain",
+          "line": 156,
+          "end_line": 184
+        },
+        {
+          "name": "rename_by_content",
+          "line": 193,
+          "end_line": 199
+        },
+        {
+          "name": "add_provenance",
+          "line": 202,
+          "end_line": 206
+        },
+        {
+          "name": "content_hash",
+          "line": 209,
+          "end_line": 214
+        },
+        {
+          "name": "_is_s3_root",
+          "line": 222,
+          "end_line": 223
+        },
+        {
+          "name": "_split_s3",
+          "line": 226,
+          "end_line": 229
+        },
+        {
+          "name": "write_gold_table",
+          "line": 232,
+          "end_line": 285
+        },
+        {
+          "name": "read_gold_table",
+          "line": 288,
+          "end_line": 300
+        },
+        {
+          "name": "print_denominator",
+          "line": 303,
+          "end_line": 305
+        }
+      ]
+    },
+    {
+      "path": "data/inf/scripts/gold/runners_inf/b00_canonical_valuation.py",
+      "git_blob": "cd4fe45eca55ce9688455d12a4312fdb8461c7d4",
+      "sha256": "87b39ff2c849dfd737a1fb0fca995a7f7e17076009b01f5e2a3024845133d600",
+      "working_equal_normalized_newlines": true,
+      "definitions": [
+        {
+          "name": "build",
+          "line": 42,
+          "end_line": 125
+        },
+        {
+          "name": "main",
+          "line": 128,
+          "end_line": 133
+        },
+        {
+          "name": "status_for",
+          "line": 64,
+          "end_line": 71
+        }
+      ]
+    },
+    {
+      "path": "data/inf/scripts/gold/runners_inf/b01_canonical_positions.py",
+      "git_blob": "ba5587586bdb3a54e0be57f195e0fe23522f0f2c",
+      "sha256": "e69a59478e0291b7a9a84cf161e7c7c69e77d91288eff7f02f448383c547d77a",
+      "working_equal_normalized_newlines": true,
+      "definitions": [
+        {
+          "name": "build",
+          "line": 42,
+          "end_line": 88
+        },
+        {
+          "name": "main",
+          "line": 91,
+          "end_line": 96
+        }
+      ]
+    },
+    {
+      "path": "data/inf/scripts/gold/runners_inf/b03_valuation_integrity.py",
+      "git_blob": "3ddc44bb6ea6702d9a9ddb53d4b267d56e7f1c9c",
+      "sha256": "ce242ccbd5e4d68a093b8dadbec0a3be37e869a02e25d81fcbfc73ac44e96dee",
+      "working_equal_normalized_newlines": true,
+      "definitions": [
+        {
+          "name": "build",
+          "line": 41,
+          "end_line": 101
+        },
+        {
+          "name": "main",
+          "line": 104,
+          "end_line": 111
+        },
+        {
+          "name": "grade",
+          "line": 64,
+          "end_line": 72
+        }
+      ]
+    },
+    {
+      "path": "data/inf/scripts/gold/runners_inf/runner_common.py",
+      "git_blob": "75e0381ee0714db3160c2f4a871c8e900ab4e79a",
+      "sha256": "ba0a900aa139ed058fc01fc216da84fd3fac517151eafdb4580c5694a00a3949",
+      "working_equal_normalized_newlines": true,
+      "definitions": [
+        {
+          "name": "s3",
+          "line": 43,
+          "end_line": 47
+        },
+        {
+          "name": "utc_now_iso",
+          "line": 50,
+          "end_line": 51
+        },
+        {
+          "name": "_list_keys",
+          "line": 59,
+          "end_line": 72
+        },
+        {
+          "name": "list_api_dim_partitions",
+          "line": 78,
+          "end_line": 86
+        },
+        {
+          "name": "resolve_partition",
+          "line": 89,
+          "end_line": 98
+        },
+        {
+          "name": "read_api_dim",
+          "line": 101,
+          "end_line": 107
+        },
+        {
+          "name": "list_txn_snapshots",
+          "line": 110,
+          "end_line": 117
+        },
+        {
+          "name": "read_txn_snapshot",
+          "line": 120,
+          "end_line": 130
+        },
+        {
+          "name": "list_canonical_holdings_dates",
+          "line": 133,
+          "end_line": 142
+        },
+        {
+          "name": "add_provenance",
+          "line": 149,
+          "end_line": 153
+        },
+        {
+          "name": "content_hash",
+          "line": 156,
+          "end_line": 161
+        },
+        {
+          "name": "_is_s3_root",
+          "line": 169,
+          "end_line": 170
+        },
+        {
+          "name": "_split_s3",
+          "line": 173,
+          "end_line": 176
+        },
+        {
+          "name": "write_gold_table",
+          "line": 179,
+          "end_line": 232
+        },
+        {
+          "name": "read_gold_table",
+          "line": 235,
+          "end_line": 247
+        },
+        {
+          "name": "print_denominator",
+          "line": 250,
+          "end_line": 252
+        }
+      ]
+    }
+  ],
+  "signed_source_ruling": {
+    "commit": "7a3fd28e112707065a990416ae2e85c519e0de32",
+    "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/LOCAL_LIVE_PARTNER_SCOPE_20260923.md",
+    "reviewer": "1.0.0_SA_CTO"
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "status": "PREPARED_UNPUBLISHED_LABELLED_CANDIDATES (corrected: built WITH the retained captures) -- GO requested per firm",
+  "prepared_by": "2.0.0_SA_COO~M",
+  "census_utc": "2026-09-24T06:52:18.709748+00:00",
+  "supersedes": {
+    "candidates": {
+      "49financial": "aa6efd454151a8cef15787c6ef7c234238722b1aab5149ae78d5288670598954",
+      "inflection": "4a50ac5fe4111f8a4686aa2cc2a0ec7a4c036d7cabfd64a3ac55a73ad31d2227"
+    },
+    "why": "built WITHOUT the two env-var retained captures the served builds consumed (holdings_49f.py:509 IRPT_49F_TAX_MEMBERSHIP_SNAPSHOT; holdings_inf.py:277 IRPT_INF_ECLIPSE_MEMBERSHIP_SNAPSHOT) -- regressions, not code vintage; GO 100370 withdrawn by the CTO (100390) after M's halt (100387)",
+    "unreferenced_objects": "158 objects under s3://opal-data-49financial/irpt/49financial/platinum/holdings/date=2026-09-22/ carrying aa6efd45.. from the halted 49F run: immutable, unreferenced by any manifest, never served; they STAY (no delete). The served 49F manifest was unchanged after the halt (etag f3ea427b, version EvNOT_ocng, row 7c0e7ce3)."
+  },
+  "unreceipted_retained_inputs": {
+    "note": "consumed by env var, NOT in the eight versioned receipts; each file's sha256 verified against the served provenance BEFORE the build; making them receipted objects is a producer change named here, not done",
+    "49financial": {
+      "env": "IRPT_49F_TAX_MEMBERSHIP_SNAPSHOT",
+      "path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\.runtime\\cro-m-taxsma-20260923\\taxsma_workbook_projected_snapshot.json",
+      "sort_keys_sha256": "032c68db251c871c75b558464f75fc0ea3a42a8f95505f438bb4727c0e8711eb",
+      "served_provenance_sha256": "032c68db251c871c75b558464f75fc0ea3a42a8f95505f438bb4727c0e8711eb",
+      "match": true,
+      "rows": 21,
+      "contract": "org/standards/MDPF_TAXSMA_DATA_CONTRACT.json v0.5.0",
+      "observed_at_utc": "2026-09-23T20:54:47Z"
+    },
+    "inflection": {
+      "env": "IRPT_INF_ECLIPSE_MEMBERSHIP_SNAPSHOT",
+      "path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\.runtime\\codex-seats\\4.0.0_SA_CRO\\eclipse_membership\\membership_map.json",
+      "file_sha256": "789dd95d3d36b449172d5a5d5c0f6e900f4f04269cfbab0525771b65a0fb641e",
+      "rows": 860,
+      "source": "4.0.0_SA_CRO 138fad2935 (nine read-only accounts/simple/list calls, 858/858 portfolios)",
+      "served_census_models_whole_from_capture": 35
+    }
+  },
+  "method": "prepare_candidate.py <firm> in-process on live versioned sources with the capture env set, zero cloud writes; census over the PREPARED bytes vs the ARCHIVED served bytes (prepared_49f_7c0e7ce3 / prepared_inf_1ebc7696); publish_firm_cas_live.py <firm> ... check -> preconditions PASS at the live manifest etag, zero writes",
+  "firms": {
+    "49financial": {
+      "revision": "3d59c80b4e9cf59b1f527615a9dbe1600666a57afde65192860e37f0f21185d9",
+      "served_revision_replaced_in_row_and_retained": "7c0e7ce3bef21ccf63541d766a94fa9a71668e7457955eedcf850ec2b18f5cc0",
+      "business_date": "2026-09-22",
+      "nodes": 151697,
+      "accounts": 7522,
+      "reconcile": [
+        true,
+        1835875624.28,
+        1835875624.28
+      ],
+      "currency_status": "ATTESTED",
+      "publication_refused": null,
+      "platinum_bytes": 177642836,
+      "delta_vs_served": {
+        "same_eight_receipts": true,
+        "node_ids_added": 0,
+        "node_ids_removed": 0,
+        "shared_changed_outside_display_units_clocks_and_the_ticker_fact": "0 of 151,697",
+        "nodes_gaining_the_ticker_fact": 5748
+      },
+      "display_labels": {
+        "labelled": 151582,
+        "denominator": 151697,
+        "by_kind": {
+          "ACCOUNT": {
+            "labelled": 7495,
+            "of": 7522
+          },
+          "CASH": {
+            "labelled": 9081,
+            "of": 9081
+          },
+          "MODEL_LEAF": {
+            "labelled": 7475,
+            "of": 7475
+          },
+          "SECURITY": {
+            "labelled": 120009,
+            "of": 120097
+          },
+          "SLEEVE": {
+            "labelled": 7522,
+            "of": 7522
+          }
+        },
+        "unlabelled_reasons": {
+          "ACCOUNT": "27 absent from the landed directory (display omitted)",
+          "SECURITY": "88 custody rows with no ticker_symbol"
+        }
+      },
+      "custody_units": {
+        "with": 0,
+        "note": "COT-only fill at this pin; disclosed, not claimed"
+      },
+      "measured_write_plan": {
+        "multipart": true,
+        "parts": 173,
+        "immutable_creates": 176,
+        "index_writes": 1,
+        "total_writes": 177,
+        "key_prefix": "irpt/49financial/platinum/holdings/date=2026-09-22/3d59c80b4e9cf59b1f527615a9dbe1600666a57afde65192860e37f0f21185d9"
+      },
+      "cas_check": "preconditions PASS at etag \"f3ea427bb6da7e69f86687c45778e5d7\" version EvNOT_ocng2dG0yqDqpXUDFBCPO1ovwK, row 2026-09-22 = 7c0e7ce3; zero writes"
+    },
+    "inflection": {
+      "revision": "d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c",
+      "served_revision_replaced_in_row_and_retained": "1ebc7696d6e52be01c3fc431b222c80d9baf3f967f0681cf3879115e5ad476fa",
+      "business_date": "2026-09-22",
+      "nodes": 33328,
+      "accounts": 876,
+      "reconcile": [
+        true,
+        209358359.48,
+        209358359.48
+      ],
+      "currency_status": "ATTESTED",
+      "publication_refused": null,
+      "platinum_bytes": 32632303,
+      "census": {
+        "models_whole": 553,
+        "models_whole_from_capture": 35,
+        "models_split": 71,
+        "client": 252,
+        "client_no_portfolio": 16,
+        "client_no_model": 176,
+        "client_incomplete_membership": 0,
+        "client_values_do_not_tie": 60,
+        "model_leaves": 624,
+        "positions_shown": 30881,
+        "drill_withheld": 71
+      },
+      "delta_vs_served": {
+        "same_eight_receipts": true,
+        "node_ids_added": 0,
+        "node_ids_removed": 0,
+        "shared_changed_outside_display_units_and_clocks": "0 of 33,328",
+        "models_whole_from_capture": 35
+      },
+      "display_labels": {
+        "labelled": 33327,
+        "denominator": 33328,
+        "by_kind": {
+          "ACCOUNT": {
+            "labelled": 875,
+            "of": 876
+          },
+          "MODEL_LEAF": {
+            "labelled": 624,
+            "of": 624
+          },
+          "SECURITY": {
+            "labelled": 30881,
+            "of": 30881
+          },
+          "SLEEVE": {
+            "labelled": 947,
+            "of": 947
+          }
+        },
+        "unlabelled_reasons": {
+          "ACCOUNT": "1 absent from the landed directory (display omitted)"
+        }
+      },
+      "custody_units": {
+        "with": 0,
+        "note": "COT-only fill at this pin; disclosed, not claimed"
+      },
+      "measured_write_plan": {
+        "multipart": true,
+        "parts": 32,
+        "immutable_creates": 35,
+        "index_writes": 1,
+        "total_writes": 36,
+        "key_prefix": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c"
+      },
+      "cas_check": "preconditions PASS at etag \"4283ce90fc4c115e7c9cfbc842fa4f2d\" version J_FeUeEAd0jRBCN0lgMoixLY_m3o9QHM, row 2026-09-22 = 1ebc7696; zero writes"
+    }
+  }
+}
