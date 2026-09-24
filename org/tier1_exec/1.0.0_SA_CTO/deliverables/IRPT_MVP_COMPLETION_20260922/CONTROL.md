@@ -19,7 +19,9 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (00000000000000000000000000) portal candidate 5 (694287b9) GO'd to MSTR as a fast-forward onto DEV
+CTO review queue, in order: (000000000000000000000000000) portal candidate 5 LANDED on origin/DEV as the covered --no-ff fallback
+ed3088b8 (DEV had moved to 1f1555d2; overlap 0; staged set = the ten files; VALGATE no-op; ls-remote read by MSTR 12:1xZ); P cuts the
+next candidate from ed3088b8 (batch 47). (00000000000000000000000000) portal candidate 5 (694287b9) GO'd to MSTR as a fast-forward onto DEV
 310b83b8 -- CTO's own reads: ancestry rc=0, 2 commits, 10 test/fixture files +95/-10, no product file, tsc 0, eslint clean; P's
 named fail-set diff 17->12, 0 introduced; landing receipt PENDING at MSTR; the fe-s-2/fe-s-10 five relayed via COO~D (batch 46).
 (0000000000000000000000000) (i-b) is a DESIGN, not a composition (interpret_source /

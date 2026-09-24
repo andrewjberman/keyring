@@ -2916,3 +2916,21 @@ same finding as batch 45 (P 100556) reached from the trace side on a different i
 the ports' census); the two agree and neither inherits the other. Nothing new to rule: batch 45's four rulings stand (nothing
 stubbed; P drafts the interpreter's design card; the first live Analysis submission waits on whichever composition lands first;
 candidate 5 proceeds -- and it has, above). The withdrawal is noted so no later reader cites addendum 1's sentence as live.
+
+
+## 2026-09-24 12:1x UTC - Claude CTO batch 47: portal candidate 5 LANDED on origin/DEV as the covered --no-ff fallback (ed3088b885, ls-remote read by MSTR 12:1xZ); DEV had moved under the GO, the fallback covered it, overlap 0
+
+Instruments: MSTR's receipt 100569 (the act, in the workspace portal checkout; ls-remote read of refs/heads/DEV = ed3088b8853c1bc89b3e25219bc54331fe675425);
+the CTO's GO 100566, which named the fallback and its cover before the act.
+
+### IRPT-PORTAL-CANDIDATE-5-LANDED-20260924 (MSTR 100569 on the CTO's GO 100566)
+At the act origin/DEV read 1f1555d2, not 310b83b8: 65a41a1f (2.0.0_SA_COO~Z's AMGT rl-9 drain) and 1f1555d2 (0.0.0_AB_MSTR~Z's pull-merge of
+310b83b8) had landed between P's cut and the landing. Merge-base(candidate, origin/DEV) = 310b83b8; the candidate's files against origin/DEV's
+changes since the merge-base: overlap 0; merge-tree --write-tree rc=0. The --no-ff --no-commit merge staged exactly the ten candidate paths, 0
+outside, 0 conflicts; committed ed3088b8 (parents 1f1555d2, 694287b9); pre-push VALGATE D-1 PASS as a no-op (no api/endpoints change); push
+1f1555d2..ed3088b8 rc=0. The GO's fallback clause covered this shape by name (staged set = exactly the ten files; any overlap outside them a STOP),
+so the act stayed inside the sign-off whichever branch DEV took -- the shape Rule NEVER-1 asks of a sign-off. Rollback = DEV re-pointed to 1f1555d2.
+DEV now carries the request corpus at 17 of 17 routes and prepared_for on the analysis record. RULED: the landing is ACCEPTED as covered; P's next
+candidate cuts from ed3088b8 after a fetch (relayed to P, since MSTR's receipt was addressed to the CTO alone); with site Z draining to DEV every
+20-30 minutes tonight the fallback shape is the expected one, and every later GO keeps naming it. The workspace CLOUD gitlink moves to ed3088b8 in
+MSTR's next LOCAL commit; trunk push on Andrew's word.
