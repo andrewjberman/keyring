@@ -105,6 +105,23 @@ permission; whether the deployed route ever emits one is NOT MEASURED.
   test diffs both directions). Zero client change; the `-SLASH-` token alternative is not needed because the handler
   was built for the literal form. rk-61's AC6 graded the two forms EQUAL-status -- a predicate two 404s satisfy.
 
+## The crosswalk overwrite incident and the closer cell it produced (08:02Z-10:1xZ)
+
+- 08:02:37Z-08:02:55Z: `2.0.0_SA_COO~X`'s AMGT_CORPUS induction fire on CLOUD put TWENTY versions on
+  `crosswalk/v1/2026-09-24.json` (write_pool once per name), the first replacing the 03:32:47Z signed 194-MEASURED object;
+  ASML and AAPL served UNRESOLVED for ~20 minutes. Two writers of one key -- this seat's producer lived only on this branch,
+  CLOUD's builder knew registrations.json alone (36). This seat's COO half had counted ONE writer (recorded against it).
+- 08:22:33Z: RESTORED on the CTO's GO under the existing pair's rollback leg -- server-side copy_object of the signed VersionId
+  K1qT... (bucket versioning Enabled), no delete, no local bytes; verify-after 3 of 3 (523,207 B / ETag 2c0ff894 / sha256 9bd953b9;
+  ASML MEASURED/absent/SERVED, AAPL derived 10, CAT derived 12 control); CVO~Z verified independently with the negative arm.
+  Record: `CROSSWALK_RESTORE_20260924T0822Z/` (CLOUD @ea8b7ea023).
+- The closer cell (CTO R-38 / R-40 preconditions 3 and 4), `CLOSER_POOL_ONE_PUT_20260924/` @a125f8be8b on this branch:
+  `add_security --batch` = ONE pool put per run with the complete set; the retained universe/v1 input read once per run and
+  passed to EVERY build on add_security's path (collision check + pool document). Live read-only acceptance 194 -> 197 (+3) /
+  36 withheld, PASS; identity tests 89 of 89. Open for the induction's owner: a foldered request on a universe-measured key now
+  reads REFUSED rc 4 under the standing collision rule (ENRICH-or-refuse is a design call, recorded, not decided here).
+- The induction re-fire stays HELD until MSTR~Z drains this branch and COO~X's pair prints the writer count (two, one builder).
+
 ## Dependencies
 
 | Need | Owner | State |
