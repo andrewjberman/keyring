@@ -3242,3 +3242,36 @@ covered by nothing on this thread); if it needs a refresh, that is Andrew's sign
 after the use (P): the claim row, the accepted pointer, the retained evidence and report artifacts by reference and sha, the reopen without a
 second claim, the export -- keys, counts, digests; the CRO's second read; the CTO grades FWD-1's Performance hop from both. Andrew is told the
 click order in this turn's report: DEV, Anna, Holdings first (the HAR of card 4), then the Performance tab on the YTD preset, before 00:00Z.
+
+
+## 2026-09-24 13:2x UTC - Claude CTO batch 58: Y measured the mixed-rows case on the receipted COT objects -- the ZERO-LOT rule accepted as interpreter semantics (809 of 843 accounts admit, Anna with 55 positions; negatives, unpriced and no-positive still refuse); the served manifest carries no custody control row, so the independent value is read from the receipted fact_allocations object (batch 50 corrected)
+
+Instruments: Y's 100633 -- the served COT index (VersionId mSFR0vat.., latest 2026-09-22) -> manifest dec293d6 (a69WjLuQ.., 37,803 B) ->
+source_objects[1] fact_holdings/date=2026-09-22 (tGurdOTY..) and source_objects[0] fact_allocations/date=2026-09-22 (WeqLRnnX..), each read by
+version with sha256 compared to the receipt, both MATCH; keys, counts and booleans only; Anna selected by _ids.opaque. Producer citations
+holdings_snapshot.py:433-436, :1904-1921, :1934-1936 @d96513bc40; custody_portfolio.py:76, :204. Messages 100639-100642 (the CTO to Y, P, M, the
+CRO).
+
+### IRPT-CUSTODY-ZERO-LOT-RULE-ACCEPTED-20260924 (Y 100633)
+MEASURED: Anna, 78 physical fact_holdings rows -> 21 all-four-facts-null (the producer's ruled no-position dimension rows, excluded with
+origins recorded, authority 5ee54ac0d4 / f307d58415) -> 57 active = 55 Market Value > 0, 2 zero lots (Market Value 0 AND Units 0; one the
+CASH row); 0 negative, 0 zero-value-with-units, 0 duplicate relationship rows, one _source_as_of; identifiers Symbol 78/78, CUSIP 77/78,
+Ticker 72/78, none with neither; fact_allocations 2 equal duplicate rows for her (admitted by the producer :433-436); the DC1 sum ties the
+independent value within 0.01 USD. Firm-wide: 19,610 rows, 843 active accounts; 12,537 positive, 1,341 zero lots, 29 negative, 9 unpriced
+(MV 0, Units > 0); accounts 139 all-positive, 673 mixed of which 670 carry only zero lots, 29 with a negative, 5 with an unpriced row, 31 with
+no positive row. v1 as written (custody_portfolio.py:76 Market Value > 0 on every original row; :204 unsupported == 0) refuses every mixed
+account -- 704 of 843, Anna included -- so the first live custody submission could not run on her. RULED: a ZERO LOT (Market Value exactly 0
+AND Units exactly 0) holds nothing and is excluded from original_rows and positions as the producer excludes a no-position row, its (object,
+ordinal) origin recorded under a named rule in revision_refs so the exclusion is re-derivable from the receipted object; it moves no value, so
+the reconciliation is unchanged; _validated is NOT changed. 809 of 843 admit; Anna admits with 55 positions. STILL REFUSE by name: a negative
+row (long-only v1; a debit is real economics), a zero value with positive units (unpriced), no positive row (Q3). Bound: COT-measured only;
+49F and INF measured the same way before admission. A CTO ruling under the canonical loop, on the record for Andrew; nothing waits on him.
+
+### CORRECTION-TO-BATCH-50-INDEPENDENT-VALUE-READ-PATH-20260924 (Y's second finding)
+Batch 50 said the independent value is "read from the manifest's control row and re-verifiable against the receipted object". The SERVED
+manifest dec293d6 carries no actual_custody_controls (keys: business_date, clocks, firm_id, gold, partitions, platinum_header, revision,
+schema_version, source_objects, source_set_revision); the :2099 manifest M cited is the build's INTERNAL evidence, which the producer itself
+says is not published (:1934-1936). CORRECTED: the interpreter reads the independent value from the receipted fact_allocations object
+(source_objects[0], by version, sha256 verified), row ordinals as independent_source_rows -- the same object M named, one step more direct;
+no publication change asked. The substance of batch 50 (the DC1 value is a sum; fact_allocations "Account Market Value" is the independent
+source) stands.
