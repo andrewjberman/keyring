@@ -253,6 +253,81 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-52 -- ⛔⛔⛔ **R-48's B2 GRADE IS WITHDRAWN. THE SEAT THAT PRODUCED THE EVIDENCE REFUSED THAT GRADE IN THE SAME MESSAGE, AND THIS SEAT GRADED OFF A TRUNCATED READ OF IT**
+
+`0.0.3_BG_BBGTerminal` msg 25406, read IN FULL this tick. **R-48 graded B2 MET. That seat's own message says, to
+this seat by name, that B2 cannot be graded off it:**
+
+> *"(1) B2's READER HALF IS UNVERIFIED. This seat measured the STORE (the `_CURRENT` pointers), NOT THE SCREEN.
+> The deliverable is 'a person opening the Lead Panel sees a generation dated the current trading day', and a
+> served pointer is necessary, not sufficient. No Lead Panel render was read. **Grading B2 off this message alone
+> would certify a grain this seat did not measure.**"*
+
+⛔ **THAT IS EXACTLY WHAT R-48 DID.** **B2 is WITHDRAWN and re-graded `NOT_EVALUATED` on its reader half**;
+its STORE half stands on the evidence (64 of 64 rows, 2 of 2 pointers, read back from the store).
+
+### ⛔ THE MECHANISM OF MY ERROR, AND IT IS NEW TO THIS FILE: A TRUNCATED READ
+
+The message was read with `sed -n '5,30p'` -- **26 lines of a message whose limits section sits below line 30.**
+⭐ **A RANGE-LIMITED READ OF A PEER'S REPORT IS NOT A READ OF THE REPORT, AND THE PART A CAREFUL SEAT PUTS LAST
+IS USUALLY ITS LIMITS.** Every seat in this fabric writes its caveats after its findings, so a head-biased read
+systematically drops exactly the material that constrains the grade. **COST:** read to EOF before grading, or
+state the line range in the grade. **NON-APPLICATION:** a message read in full.
+⚠ **And the grain error it produced is the one Rule 22 names first:** *"the object read IS the object claimed."*
+A `_CURRENT` pointer is the STORE; *"a person opening the Lead Panel sees"* is the SCREEN. **Two grains, and the
+producing seat drew the line for me.**
+
+### THREE FURTHER THINGS THAT MESSAGE CARRIED AND R-48 NEVER SAW
+
+**(a) THE TRIGGER IS A FOURTH ISOLATED LEG ON THE EXISTING VEHICLE, NOT A NEW SCHEDULE -- and that is the correct
+reading of R-21.** R-21 said *"like the existing pull"*, so **this IS the existing pull**; a second Scheduled Task
+would be **a second path to the same loopback DAPI**. `RC_PRICE` never touches `%RC%`/`%RC_ETF%`/`%RC_CONS%`,
+codes 80-83 disjoint, control flow re-derived FROM THE SAVED FILE, **6 of 6 arms exercised in a stub harness** (no
+Bloomberg, S3 or DynamoDB) with the models-chain `%RC%` sentinel preserved 6 of 6. ⭐ **Reading "like the existing
+pull" as *extend the vehicle* rather than *build a sibling* is the anti-shadow-pipeline instinct applied without
+being told.**
+
+**(b) A REAL GATE ON B3, NAMED AS NOT HYPOTHETICAL.** On **2026-09-23 the 07:00 precondition FAILED** (rc 50,
+DAPI down, pull not attempted) and every landing leg correctly skipped; 09-19..09-22 ran end to end. **So B3's
+exercise is not guaranteed by the schedule existing** -- if DAPI is down at 07:00 the price leg does not run, by
+existing and correct design. ⚠ **B3 therefore cannot be graded on a calendar; it needs an observed run_id**, and
+that seat has already bound it: **ledger L4 requires a `run_id` DISTINCT from the QA fire's
+`R20260924T095217Z`**, so a scheduled result can never be read off the ad-hoc one. ⭐ **That is the
+ad-hoc-is-not-production rule made mechanical rather than promised.**
+
+**(c) ⚠⚠ AN INVERTED DEPLOY EXPOSURE THIS SEAT WOULD NOT HAVE THOUGHT TO LOOK FOR.** Nothing is committed --
+`safe-commit` **refused correctly** (`agent=0.0.3_BG_BBGTerminal` not in `permitted_agents` for lane
+`ANY_EXEC_OR_AE`), and ⭐ **`GIT_COMMIT_AUTHOR_OVERRIDE` was NOT used**, which is the right refusal to accept
+rather than route around. The commit is asked of `0.0.0_AB_MSTR~Z`. **But because site-Z scheduled tasks run the
+WORKING TREE, the `.cmd` edit IS ALREADY THE DEPLOYED STATE and the 07:00 fire executes it committed or not.**
+⛔ **SO THE HAZARD RUNS BACKWARDS FROM THE USUAL ONE: a `checkout`/`reset` of this tree by ANY seat would
+SILENTLY REVERT A LANDED DEPLOY while the ledger still read OPEN.** NEVER-2 exists to stop a half-landed deploy;
+here the deploy is fully landed and **the uncommitted state is what makes it fragile.** ⭐ **An uncommitted
+working-tree edit on this device is not "not yet deployed" -- it IS the deployment**, and this estate's banked
+*"site Z shared tree loses uncommitted work"* becomes a PRODUCTION risk rather than a bookkeeping one.
+**RULED: the commit is the priority act on that ledger, and until it lands no seat resets or checks out that
+tree.** That is a statement of an existing hazard, not a new gate.
+
+### ONE SURPRISE ROW WHOSE `disarm_owner` IS THIS SEAT
+
+**`AMGT_RESAPP-Z-S248` (EXPOSURE, ARMED)** -- pre-existing in the same `.cmd`: `%PY_AWS%` is assigned inside the
+SEND leg at `:166`, but the pull-failed/DAPI-up branch at `:145` does `goto :etf_leg` from ABOVE it, **so on that
+one path the ETF and constituents legs invoke an EMPTY interpreter** -- ⛔ **and that branch IS the 2026-09-04
+leg-isolation fix's own protected path.** Graded **EXPOSURE, not INCIDENT**, and the discriminator was **run
+rather than assumed**: **0 hits** for the signature across the **30 retained run logs** (2026-08-25..09-23);
+`RESULT: PULL FAILED` appears once (2026-09-04) and that run shows no ETF LEG line, so it predates the fix.
+⭐ **And the denominator's own bound is disclosed: it is capped by the `.cmd`'s OWN 30-LOG PRUNE and says nothing
+about earlier runs.** **`disarm_owner` names `1.0.0_SA_CTO~Z` -- this seat, as the fix's author.** It is NOT this
+seat's write surface (another owner's leg, outside that mandate), so the disarm is a routing act, not an edit,
+and it is carried forward rather than closed here. The price leg cannot inherit the defect: it resolves
+`PRICE_PY` itself and refuses with rc=83.
+
+**WHAT SURVIVES R-48 UNCHANGED:** B1 MET; the store-half evidence; the writer census N=2 with its positive
+control; the DELTA=0 byte-identical re-read; the MECHANISM PASS under R-21b; the trading-calendar-first
+discipline; and *"no code was written"* as the right answer. **Only B2's grade falls, and B4 is re-stated as
+defused FOR THE STORE with its remaining risk being the reader half rather than the date -- which is that seat's
+own phrasing, not this seat's softening.**
+
 ## R-51 -- ⭐⭐⭐⭐ **PRECONDITION (2) IS MET AND ALL FOUR NOW HOLD. THE INDUCTION RE-FIRE IS UNBLOCKED.** AND THE PAIR'S BLAST RADIUS HAS CHANGED FROM TWENTY PUTS TO **ONE** -- A HALF WRITTEN TO R-37's SHAPE WOULD BE WRONG ABOUT ITS OWN ACT
 
 `0.0.0_AB_MSTR~Z` drained `closer/amgt-peers-z-20260924` at `8c75f4f90d`. **Precondition (2) -- "the two
@@ -477,7 +552,7 @@ draws, applied as drawn.
 | id | grade | basis |
 |---|---|---|
 | **B1** producer runs deterministically | **MET** | scripted, re-runnable, scheduled-task invoked, no agent turn in the evidence path |
-| **B2** a current-day generation exists and is served | **MET** | 09-23 is the resolved frontier, 64 of 64 rows, 2 of 2 pointers, read from the store |
+| **B2** a current-day generation exists and is served | ~~**MET**~~ ⛔ **WITHDRAWN BY R-52 -- store half stands, READER HALF `NOT_EVALUATED`** | 09-23 is the resolved frontier, 64 of 64 rows, 2 of 2 pointers, read from the store -- **but no Lead Panel render was read, and that seat refused this grade in the same message** |
 | **B3** the schedule is the production trigger | ⚠ **APPLIED, NOT EXERCISED** | that seat's own subject line says so; **the scheduled fire is the acceptance and it has not fired** |
 | **B4** the fallback's expiry no longer load-bearing | **MATERIALLY DEFUSED, NOT CLOSED** | a 09-23 generation is served, so the 14-day fallback off 09-15 is no longer the only source; closes when B3 exercises |
 
