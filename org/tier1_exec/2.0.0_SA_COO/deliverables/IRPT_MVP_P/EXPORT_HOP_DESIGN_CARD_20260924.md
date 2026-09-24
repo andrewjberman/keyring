@@ -37,8 +37,16 @@ A. RENDER IDENTITY LIVE LANDING, outside P's lease surface (the shared portal au
    ledger entry and a negative arm (a human token and a render token on a non-print route are both still refused).
 B. IN P'S LANE (`export/`, `_render_identity/`), buildable now, dark until A lands:
    B1 serve `submit-export` for a RETAINED report: resolve `(report_id, revision)` through the reports repository
-      under the current principal, freeze the bundle with `report_revisions` = that ref, `narrative_packet_ref` =
-      null for a Performance export, and the package facts carried in the request (the Lambda cannot read portal TS);
+      under the current principal, freeze the bundle with `authorized_report_revisions` = that ref, and the package
+      facts carried with the build (the Lambda cannot read portal TS). OPEN: `narrative_packet_ref` is REQUIRED by
+      `ExportBundle.schema.json` (`packet_id`, `revision`, `sha256`, no null), so a Performance export needs a
+      narrative packet or a contract ruling; the served route must resolve it, never take the browser's sha256.
+      Measured: `irpt-narrative` (entry.lambda_handler, 2026-09-21) builds a packet FROM a report the request
+      supplies and retains nothing, so no retained packet exists to reference. P's pick, no contract change: submit
+      runs `narrative/handler.build_packet` (imported unedited) over the RETAINED report with `cutoff_at` = the
+      report's `dates.actual_end`, persists the packet as a retained artifact, and binds its sha256.
+      The route answers an `ExportReceipt` with `job_state` `QUEUED` and `facts.validation_status` `NOT_RUN`
+      (both in the v1 enums), persisted at `handler.receipt_key`; B3 rewrites it `READY` or `FAILED`;
    B2 mint one render token from the frozen bundle (`mint.py`), passed to the host as a parameter; the SSM document
       gains `RenderToken` and `PortalOrigin`, which `dispatch.render_request` does not send today, so a READY
       dispatch would fail on a missing required parameter;
