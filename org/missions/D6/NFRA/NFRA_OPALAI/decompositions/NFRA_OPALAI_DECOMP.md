@@ -8,7 +8,7 @@
  "fabric": "site-z",
  "decomp_version": "v1",
  "step": 5,
- "prd_ref": "org/missions/D6/NFRA/NFRA_OPALAI/prd/NFRA_OPALAI_PRD.md@1645cbb7ab",
+ "prd_ref": "org/missions/D6/NFRA/NFRA_OPALAI/prd/NFRA_OPALAI_PRD.md@f06341327e",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO~O 12e470e5882a @de941578b7 (and 3.0.0_SA_CVO~Z @85354d424c)", "brief": "SIGNED (auto) CRO-authored brief"},
  "author": "2.0.0_SA_COO~O",
  "round": 1,
@@ -20,9 +20,10 @@
 }
 ```
 
-**Author:** `2.0.0_SA_COO~O` (L5 is the COO's). **Input:** PRD v0.3 @`1645cbb7ab` (ADMITTED by `prd-signoff.py status`: the
+**Author:** `2.0.0_SA_COO~O` (L5 is the COO's). **Input:** PRD v0.4 @`f06341327e` (ADMITTED by `prd-signoff.py status`: the
 ratified-text half SIGNED at the current ENDPOINT hash, and the brief half admitted because the CRO wrote the brief). This
-file also reads v0.2's C10 (Andrew-direct, record @`6426ebff2b`) and v0.3's C3/C4 pull ruling (CTO msg 25759).
+file also reads v0.2's C10 (Andrew-direct, record @`6426ebff2b`), v0.3's C3/C4 pull ruling (CTO msg 25759) and v0.4's C11
+(the cutover drops nothing silently; CTO msg 25770: fold into OA-t-1 or the cutover window).
 **Frozen at the cut.** A cell that looks wrong mid-round is a surprise row, never an edit.
 
 **Rulings reaching every cell:**
@@ -42,7 +43,7 @@ file also reads v0.2's C10 (Andrew-direct, record @`6426ebff2b`) and v0.3's C3/C
 
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
-The rectangle is the PRD's Canonical handoff (v0.3, section "Canonical handoff"), verbatim in its order:
+The rectangle is the PRD's Canonical handoff (v0.4, section "Canonical handoff"), verbatim in its order:
 
 ```
   1. the agent's product files in opal_ai/opal/agent/ (S5)
@@ -70,7 +71,7 @@ Step 4 (S8) and step 3 (S7) each split by WRITE SET, not by hop: the fence hook 
 adapted by the cell whose hop needs the adaptation (OA-t-3 the fence, OA-t-4 the watch), so OA-t-1 moves every other
 product file and no file has two writers.
 
-**The unscoped control.** Read from the SURFACE MANIFEST instead of the handoff (14 rows): S1 -> OA-t-1; S2 -> OA-w-1 +
+**The unscoped control.** Read from the SURFACE MANIFEST instead of the handoff (14 rows): S1 -> OA-t-1; C11 -> OA-t-1 (the map) + the cutover record; S15 -> outside round 1 (the first enrichment, v0.4); S2 -> OA-w-1 +
 OA-w-4; S3 -> OA-w-2; S4 -> OA-w-3; S5 -> OA-t-1 + OA-t-3 (fence) + OA-t-4 (watch); S6 -> OA-t-2; S7 -> OA-t-3; S8 ->
 OA-t-4 (minimum only); S10 -> OA-t-5 + OA-t-6 (round-1 half only). **Outside round 1, by the handoff's own words:** S9
 (speed), S10's other half (admit, narrow, remove, explain), S13 (release flow), S11 and S12 (G-MOVE), and S14
@@ -90,7 +91,7 @@ Measured on site Z at CLOUD `1645cbb7ab`, 2026-09-24 ~21:1xZ, unless stated.
 | cell | hop / surface | what is built | current state | existing work carried | risk |
 |---|---|---|---|---|---|
 | `OA-w-1` | ROOT: S2 minimum | `.gitmodules` maps `portal` (`https://github.com/Opal-Capital/portal.git`) and `opal_ai` (`https://github.com/Opal-Capital/opal_ai.git`, branch `DEV`); the gitlink `opal_ai` at `90ca424fc7`; `.tools/wk-provision.sh` gains `--nested <path>=<ref>` for ANY mapped submodule (portal's behaviour unchanged, `node_modules` only for portal) and refuses loudly on an uninitialised submodule in the main tree | `MEASURED`: `.gitmodules` 0 bytes; gitlinks `portal` @`46c0ae112c` and `models/factor_scanner` @`c59b266adf`; `git ls-remote` opal_ai HEAD = DEV = PROD = `90ca424fc7`; `wk-provision.sh` hard-codes `portal` at `:77`, `:81`, `:100`, `:217-218` | `wk-provision.sh cmd_portal` (`:46-160`), its self-test arms (`:259-`) | LOCAL |
-| `OA-t-1` | hop 1: S1 + S5 | in `opal_ai`: the slice-first layout (`README.md`, `opal/README.md`, `template/README.md`, `clients/README.md`, `docs/README.md`) and `opal/agent/` receiving `prompt.md`, `refs/**`, `tools/portal_lookup.py`, `skills/bbg-teams-assist/SKILL.md`; the parent copies removed on the same branch. `prompt.md`'s On-launch section is rewritten for the runtime (no `register_agent`, no `/watcher`, no Secrets Manager read; the whoami identity gate KEPT); `PORTAL_RETRIEVAL.md` and `REQUEST_CATALOG.md` name the gateway tool `opal_asker_query` as the runtime data mechanism. Every hard line and every catalog row is byte-unchanged (C7) | `MEASURED`: seat folder `org/tier0_utility/0.0.3_BG_BBGTerminal/` = 86 tracked files: `prompt.md` 148 lines, `refs/` 11, `tools/` 1 (`portal_lookup.py` 389 lines, boto3 + the box's AWS profile), `threads/` 23, `logs/` 39, `deliverables/` 9; `.claude/skills/bbg-teams-assist/SKILL.md` 150 lines | the files themselves, moved | LOCAL |
+| `OA-t-1` | hop 1: S1 + S5 | in `opal_ai`: the slice-first layout (`README.md`, `opal/README.md`, `template/README.md`, `clients/README.md`, `docs/README.md`) and `opal/agent/` receiving `prompt.md`, `refs/**`, `tools/portal_lookup.py`, `skills/bbg-teams-assist/SKILL.md`; the parent copies removed on the same branch. `prompt.md`'s On-launch section is rewritten for the runtime (no `register_agent`, no `/watcher`, no Secrets Manager read; the whoami identity gate KEPT); `PORTAL_RETRIEVAL.md` names the gateway tool `opal_asker_query` as the runtime data mechanism; `prompt.md` gains a RUNTIME MECHANISM MAP: each APPROVED catalog row (8) mapped to a mechanism `Opal_Agent` can reach (`opal_asker_query` where `DATA_CATALOG.yaml` holds a key for it) or to C11's plain, quotable "not available from the Analyst yet" reason naming who to ask (row 7, Bloomberg view, is the known case). Every hard line and every catalog row is byte-unchanged (C7); `REQUEST_CATALOG.md` is NOT edited | `MEASURED`: seat folder `org/tier0_utility/0.0.3_BG_BBGTerminal/` = 86 tracked files: `prompt.md` 148 lines, `refs/` 11, `tools/` 1 (`portal_lookup.py` 389 lines, boto3 + the box's AWS profile), `threads/` 23, `logs/` 39, `deliverables/` 9; `.claude/skills/bbg-teams-assist/SKILL.md` 150 lines | the files themselves, moved | LOCAL |
 | `OA-t-2` | hop 2: S6 | `opal_ai/opal/runtime/provision/provision-account.ps1` (idempotent: creates `Opal_Agent` as a standard local user, asserts it is in neither `Administrators` nor `CodexSandboxUsers`, creates the checkout and state directories named by a config file, ACLs the checkout read+execute for `Opal_Agent` and the state dir modify, stores the generated password DPAPI-protected in the OPERATOR profile, outside every repo) and `verify-boundary.ps1` (runs a read of one named workspace file AS `Opal_Agent` and requires Access Denied, plus a positive read of the state dir); the script REFUSES without elevation and changes nothing | `MEASURED`: this session is Medium integrity (`whoami /groups`), not elevated; `Opal_Agent` absent (`Get-LocalUser`); workspace ACL per PRD ground truth | the design's ACL facts (`OPAL_AI_RUNTIME_ISOLATION_DESIGN_20260924.md` s.3 @`45ce8406fc`) | LOCAL (the build); the elevated run is gate G-ACCT at close |
 | `OA-t-3` | hop 3: S7 + the fence | `opal_ai/opal/runtime/`: `CLAUDE.md` (imports `../agent/prompt.md`; names the agent `Opal_Agent`), `.claude/settings.json` (registers the fence), `mcp.json.example` (lists `opal-gateway-bbg` only; never `opal-gateway`), `launcher.ps1` (operator side: fetch PROD `--ff-only` with the G-GH credential; then start the gate + agent AS `Opal_Agent` passing no operator credential, token or environment), `launch-gate.ps1` (as `Opal_Agent`: (a) the workspace probe read must be DENIED, (b) the checkout clean at the PROD commit just fetched, (c) the account in neither admin group; any failure refuses); `opal_ai/opal/agent/hooks/concierge-gate.sh` = `.tools/hooks/bg-concierge-gate.sh` MOVED and adapted so it binds unconditionally in the runtime and its write allowlist is the configured state dir; G2-G4 unchanged in content | `MEASURED`: the fence fires only for serial `0.0.3_BG_BBGTerminal` (`bg-concierge-gate.sh:11-14`, `:87-91`) and allowlists workspace paths (`:23-24`) -- inert in a runtime that has neither | `bg-concierge-gate.sh` G1-G4 (219 lines); the design's launch-gate text (C4) | LOCAL |
 | `OA-t-4` | hop 4: S8 minimum | `.claude/skills/teams-assist/teams-watch.py` MOVED to `opal_ai/opal/agent/teams_watch/teams-watch.py` and changed so (1) it holds its OWN gateway OAuth refresh family (registered through the gateway's dynamic client registration; the refresh and cursor files live in a configured state dir) and never reads `~/.claude/.credentials.json`; (2) the read failure is diagnosed and fixed; the operator's `/teams-assist` `SKILL.md` re-pointed to the new path | `MEASURED` by the Analyst's log @`0646a96553` (`logs/2026-09-24/teams_watch_two_blockers_and_a_dark_owner_1145-1315Z.md:18-59`): blocker 1, the watch reads Claude Code's 15-minute token and never refreshes (`teams-watch.py:36-38`); blocker 2, 33 of 33 reads failed with a LIVE token, cause a HYPOTHESIS (an MCP-audience token presented to Graph), untested | `oauth_as.py`: `GRANT_TYPES` incl. `refresh_token` (`:99`), DCR (`:558-579`), refresh families with reuse revocation (`:835-876`); `teams-watch.py` cursor discipline (`:26-34`) | LOCAL |
@@ -98,7 +99,7 @@ Measured on site Z at CLOUD `1645cbb7ab`, 2026-09-24 ~21:1xZ, unless stated.
 | `OA-t-6` | hop 5, live | deploy the merged gateway (OA-t-5 at CLOUD HEAD) to the EC2 host through `safe-ec2-deploy.sh`, with the NEVER-2 entry opened first, the census of EVERY gateway change since the deployed manifest's commit named in it, the rollback named, and three post-act reads: health, `opal_asker_query` listed, and one un-profiled asker refused LIVE | `NOT-EVALUATED`: the deployed manifest's commit; NFRA_MCPINDEX's row states the live gateway "has no valid rollback" | `deploy-to-ec2.sh`, `safe-ec2-deploy.sh`, `EC2_MANIFEST.json` | WORLD |
 | `OA-w-2` | S3 | a commit made inside a nested repo is graded by the PARENT's gates: `.tools/git-hooks/owned-paths-check.sh` resolves the superproject's `.owned-paths.yaml` and validator when run in a nested repo (today `REPO_ROOT/.owned-paths.yaml`, `:25-26`, fails closed at `:133-142`); lane rows for `opal_ai/**` land in `.owned-paths.yaml` BEFORE any hook; `install-owned-paths.sh` can install into a named submodule's hooks dir; `safe-commit.sh` works from inside a nested repo (`REPO_ROOT` from `--show-toplevel`, `:149`). Proven on a SCRATCH superproject fixture only: the real install into `opal_ai`'s hooks dir is the COO's act at the round's last merge, because a hook in the shared nested common dir would grade every other worker's nested commits mid-round | `MEASURED` at the lines cited | `owned-paths-check.sh`, `owned-paths-validate.py`, `safe-commit.sh` | LOCAL |
 | `OA-w-3` | S4 | `opal_ai/.github/workflows/ci.yml` (on every push: `bash opal/checks/run_checks.sh`) and `opal_ai/opal/checks/run_checks.sh` (py_compile over `opal/`, `ruff check --target-version py39`, the ASCII rule on product code, a no-device-path rule, and any `pytest` under `opal/`), runnable from a standalone clone with no workspace | `MEASURED`: opal_ai holds a README only; `ruff` at `...Python311/Scripts/ruff.exe` | Rule 14's three checks, restated as the product's own | LOCAL |
-| `OA-w-4` | S2 census | `.tools/fabric-commits.py` and `.tools/activity-check.py` count commits inside every mapped submodule (portal counted exactly as today) | `NOT-EVALUATED` at the cut: whether either iterates submodules; the cell measures first | the two tools | LOCAL |
+| `OA-w-4` | S2 census | `.tools/fabric-commits.py` (`--json` gains `by_repo`) and `.tools/activity-check.py` (header gains `repos: ...`) count commits in the parent AND inside every mapped submodule; an uninitialised mapped submodule reads `UNINITIALISED`, never 0 | `MEASURED`: neither iterates any submodule today -- both run one `git log` in the parent (`fabric-commits.py:54`, `activity-check.py:107-108`), so portal's commits are not counted either | the two tools | LOCAL |
 
 **Load-bearing `DECLARED` / `NOT-EVALUATED` rows, stated:** (a) that a Graph `chatMessage` read by the gateway carries
 the sender's `oid` and `tenantId` is DECLARED by the Graph schema, not measured here; OA-t-5 measures it. (b) How a
@@ -118,10 +119,10 @@ Paths are parent-relative; a path under `opal_ai/` is a file of the nested repos
 | `OA-w-1` | FWD-10 | `.gitmodules`, `opal_ai` (gitlink), `.tools/wk-provision.sh` | `portal` gitlink, `.tools/wk-provision.sh` self-test |
 | `OA-t-1` | FWD-1, FWD-6 | `opal_ai/README.md`, `opal_ai/opal/README.md`, `opal_ai/template/README.md`, `opal_ai/clients/README.md`, `opal_ai/docs/README.md`, `opal_ai/opal/agent/prompt.md`, `opal_ai/opal/agent/refs/**`, `opal_ai/opal/agent/tools/portal_lookup.py`, `opal_ai/opal/agent/skills/bbg-teams-assist/SKILL.md`; parent removals: `org/tier0_utility/0.0.3_BG_BBGTerminal/prompt.md`, `.../refs/**`, `.../tools/portal_lookup.py`, `.claude/skills/bbg-teams-assist/SKILL.md` | the seat's `README.md`, `threads/`, `logs/`, `deliverables/` (all STAY: state, C5) |
 | `OA-t-2` | FWD-1, FWD-7 | `opal_ai/opal/runtime/provision/provision-account.ps1`, `opal_ai/opal/runtime/provision/verify-boundary.ps1`, `opal_ai/opal/runtime/provision/runtime.config.example.json` | the design doc s.3 |
-| `OA-t-3` | FWD-1, FWD-7 | `opal_ai/opal/runtime/CLAUDE.md`, `opal_ai/opal/runtime/.claude/settings.json`, `opal_ai/opal/runtime/mcp.json.example`, `opal_ai/opal/runtime/launcher.ps1`, `opal_ai/opal/runtime/launch-gate.ps1`, `opal_ai/opal/agent/hooks/concierge-gate.sh`; parent removal: `.tools/hooks/bg-concierge-gate.sh` | `opal_ai/opal/runtime/provision/runtime.config.example.json` (OA-t-2's key names, fixed below) |
+| `OA-t-3` | FWD-1, FWD-7 | `opal_ai/opal/runtime/CLAUDE.md`, `opal_ai/opal/runtime/.claude/settings.json`, `opal_ai/opal/runtime/mcp.json.example`, `opal_ai/opal/runtime/launcher.ps1`, `opal_ai/opal/runtime/launch-gate.ps1`, `opal_ai/opal/agent/hooks/concierge-gate.sh`, `opal_ai/opal/agent/hooks/test_concierge_gate.sh`; parent removals: `.tools/hooks/bg-concierge-gate.sh`, `.tools/hooks/tests/test_bg_concierge_gate.sh` | `opal_ai/opal/runtime/provision/runtime.config.example.json` (OA-t-2's key names, fixed below) |
 | `OA-t-4` | FWD-1, FWD-2 | `opal_ai/opal/agent/teams_watch/teams-watch.py`, `opal_ai/opal/agent/teams_watch/test_teams_watch_lineage.py`, `.claude/skills/teams-assist/SKILL.md` (re-point); parent removal: `.claude/skills/teams-assist/teams-watch.py` | `infra/aws/ec2/opal-gateway/app/oauth_as.py`, the Analyst log @`0646a96553` |
 | `OA-t-5` | FWD-1 (C10) | `infra/aws/ec2/opal-gateway/app/asker_scope.py` (new), `infra/aws/ec2/opal-gateway/tests/test_asker_scope.py` (new), `infra/aws/ec2/opal-gateway/app/tools.py` (the tool's registration), `infra/aws/ec2/opal-gateway/app/data_entitlement.py` (the new tool's classification line only) | `access_state.py`, `identity_scope.py`, `tier.py`, `query_v0.py`, `graph_read.py`, `graph.py`, `token_broker.py`, `refs/DATA_CATALOG.yaml` |
-| `OA-t-6` | FWD-1 (live) | `org/critical_paths/change_management/<entry>.md`, `org/critical_paths/.open_deploys/<slug>.json`, the deployed host (WORLD) | `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`, `.tools/safe-ec2-deploy.sh`, `EC2_MANIFEST.json` |
+| `OA-t-6` | FWD-1 (live) | `org/critical_paths/change_management/<entry>.md`, `org/critical_paths/.open_deploys/<slug>.json`, `infra/aws/ec2/EC2_MANIFEST.json` (written and committed by `safe-ec2-deploy.sh`), the S3 artifact and the deployed host (WORLD) | `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`, `.tools/safe-ec2-deploy.sh`, `EC2_MANIFEST.json` |
 | `OA-w-2` | FWD-9, FWD-10 (A14) | `.tools/git-hooks/owned-paths-check.sh`, `.tools/git-hooks/install-owned-paths.sh`, `.tools/safe-commit.sh`, `.owned-paths.yaml` (the `opal_ai/**` lane rows), `.tools/tests/test_nested_repo_gates.sh` (new) | `.tools/owned-paths-validate.py` |
 | `OA-w-3` | FWD-13 | `opal_ai/.github/workflows/ci.yml`, `opal_ai/opal/checks/run_checks.sh` | Rule 14's `commit-gate.sh` |
 | `OA-w-4` | FWD-10 | `.tools/fabric-commits.py`, `.tools/activity-check.py` | `.gitmodules` |
@@ -213,7 +214,8 @@ tooling, the release flow, the gateway move, the index, hosted content, and the 
 - `OA-t-6` ships the merged gateway. It does NOT change Terraform, the host, its role or its secrets.
 - `OA-w-2` extends the gates to a nested repo. It does NOT change a parent lane's verdict (its bound check).
 - `OA-w-3` adds CI. It does NOT push; the first real CI run is on G-PUSH.
-- `OA-w-4` counts. It does NOT change any portal count (its bound check).
+- `OA-w-4` counts. It does NOT change the parent repo's own count (its bound check); portal's commits become counted,
+  which they are not today (measured, section 2).
 
 ---
 
@@ -237,7 +239,9 @@ tooling, the release flow, the gateway move, the index, hosted content, and the 
 3. merge the parent-side removals, bump the gitlink, and make the hookups (the settings.json fence line and the
    ajb.ps1 BG launch line) in ONE parent commit;
 4. launcher run -> gate -> agent live as `Opal_Agent`;
-5. the workspace seat's Teams duty stops in the same window.
+5. the workspace seat's Teams duty stops in the same window;
+6. the cutover record lists every APPROVED catalog row answered with C11's decline (from OA-t-1's map) and the enrichment
+   that restores each.
 
 **The close run (step 6, A1):** one live exchange traced hop by hop with the named colleague, plus one un-admitted asker
 refused. The artifact goes to `deliverables/2.0.0_SA_COO~O/round1/`. The drain also runs the thread's hygiene once per
@@ -250,8 +254,8 @@ merge: py_compile, ruff py39, and the gateway suite.
 1. No cell has been exercised; every target state is a specification.
 2. The Graph sender fields, the catalog-to-scope mapping, the read failure's cause and the deployed gateway commit are
    measured by their cells, not here (section 2).
-3. The Bloomberg view server's reachability from `Opal_Agent` is untested and outside round 1; FWD-1 is a portal
-   figure.
+3. The Bloomberg view server's reachability from `Opal_Agent` is untested and outside round 1 (S15, the first
+   enrichment); FWD-1 is a portal figure, and row 7 is declined plainly under C11 until S15 lands.
 4. `/integrate`'s nested-repo clause, the sparse-cone recipe, the startup protocol's submodule init (G-LAW) and
    `models/factor_scanner`'s mapping are NOT in this round.
 5. NFRA_MCPINDEX's pending orders that name gateway paths are not re-cut here; OA-t-5 writes a new module plus two
