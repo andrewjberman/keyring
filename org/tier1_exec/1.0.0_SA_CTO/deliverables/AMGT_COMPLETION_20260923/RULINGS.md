@@ -253,6 +253,59 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-50 -- ⭐⭐⭐ **THE GOAL'S LONGEST CHAIN RESOLVES TO ONE ACT AT ITS HEAD: MSTR's DRAIN.** AND THIS SEAT OVERSTATED "EVERY LIMB IS CARRIED BY AN ACTIVE WORKER ORDER" -- `d-4` HAS AN ORDER AND NO WORKER, **BY DESIGN**
+
+`2.0.0_SA_COO~X`, 10:20Z, answering the one question R-47 established only the ISSUING COO can answer. ⭐ **The
+discipline worked: this seat declared its blindness instead of inferring a stall, and the issuer supplied the
+fact in one message.**
+
+### (1) THE CORRECTION TO THIS SEAT'S OWN COVERAGE CLAIM
+
+`GRADE_TABLE_49.md` and the tick-28 report say *"every buildable limb of the goal is carried by an ACTIVE worker
+order."* ⛔ **WRONG ON ONE OF THREE.** `CRPS-d-4` (the 93-of-93 census, Andrew's limb 4) **has not been started
+and no worker holds it.** Slot ~1's worker (`wk-amgt_corpus-2-1`, tip `bdfbd7ff6b`) drained d-1, d-2 and d-3 --
+all merged to CLOUD, last @`34a556c46e` -- and **sits with an EMPTY QUEUE.**
+
+⭐⭐ **AND THE REASON IS BETTER THAN "NOT YET GOT TO IT", WHICH IS WHY THIS IS NOT A FINDING AGAINST THAT SEAT.**
+Decomposition v2.0 s.4/s.5 sequences d-4 **behind** the corrected induction fire, the re-ingest and the
+production sequence, because -- that seat's own words -- **"a census before them would report the run order as a
+fact about the world."** ⛔ **A 93-of-93 coverage census run BEFORE the backfill returns a TRUE NUMBER ABOUT THE
+WRONG WORLD**, and it would be indistinguishable from the post-backfill census except by its date. **Running it
+early would have manufactured exactly the kind of measured-but-misleading denominator this file has spent the
+session convicting.** The sequencing is correct and is ratified.
+
+⭐ **SO "ISSUED" AND "STARTED" ARE DIFFERENT STATES AND THE ORDER CENSUS CANNOT TELL THEM APART** -- a `pending`
+order with no worker reads identically to a `pending` order under active execution. **That is the third layer of
+the same distinction this file keeps finding:** an order NAMING an outcome is not the outcome met (coverage);
+every order being terminal is not the work finished (R-45); and now, **an order being OPEN is not the work being
+UNDERWAY.** **COST:** one liveness note from the issuer. **NON-APPLICATION:** an order whose worker has committed.
+
+### (2) THE CHAIN, RESOLVED END TO END -- AND ITS HEAD IS A SINGLE MERGE
+
+```
+0.0.0_AB_MSTR~Z drains closer/amgt-peers-z-20260924 @a125f8be8b   <-- THE HEAD, one act
+   -> 2.0.0_SA_COO~X pre-flight, incl. R-49's count-first dry run (zero vendor calls)
+   -> the never-widen pair, PRINTING the writer count (two, on one builder post-drain)
+   -> the corrected induction fire (ONE add_security --batch call, one put)
+   -> the re-ingest + production sequence
+   -> CRPS-d-4, the 93-of-93 census            <-- ANDREW'S LIMB 4
+```
+
+⛔ **EVERYTHING BELOW LIMB 4 SITS ON ONE MERGE THAT NO OTHER SEAT CAN PERFORM.** Round 2 stands at **5 of 6
+drained** with the single open cell gated exactly there. This seat holds nothing on this chain: preconditions (3)
+and (4) are graded PASS (R-49), the collision fork is ruled count-first with a provisional rec so nobody waits,
+and the mechanism grade is stated. **There is no CTO act between the drain and limb 4.**
+
+⚠ **AND (2) OF THE FOUR PRECONDITIONS IS STILL NOT MET FOR EXACTLY THIS REASON** -- the one-put and
+universe-input fix lives on a branch, and R-37's own generalisation is that **a producer existing only on a
+branch is a writer the shared tree cannot see.** The drain is not administrative tidying; it is the precondition.
+
+### (3) THE BRANCH-NAMING TRAP, CONFIRMED BY ITS OWNER
+
+That seat states it for the record: **round 2 is `wk-amgt_corpus-2-{1,2,3}`, lowercase and round-infixed;
+`wk-AMGT_CORPUS-{1..5}` are ROUND 1's.** ⭐ **That is R-47's trap confirmed by the seat that owns the branches,
+on a second instrument** -- and it is why this seat read a day-stale round-1 tip and nearly called a stall.
+
 ## R-49 -- ⭐⭐ **PRECONDITIONS (3) AND (4) GRADE PASS ON THE ADOPTED DISCRIMINATOR.** AND THE COLLISION FORK IS RULED **COUNT-FIRST**: THE RULE GUARDS FOLDER-vs-FOLDER AMBIGUITY, AND A UNIVERSE RECORD'S FOLDER IS NOT A COMPETING VALUE -- IT IS ABSENT
 
 `2.0.0_SA_COO~Z`, 10:18Z, on `closer/amgt-peers-z-20260924` @`a125f8be8b` (one commit over CLOUD
@@ -374,6 +427,47 @@ TRIGGER.**
 obligation is one scheduled fire observed, plus the NEVER-2 ledger entry this mandate requires **opened before**
 it. The two insufficient series and the one unresolved identity are carried as named exceptions with their
 denominator, not as defects.
+
+## R-47a -- ⭐⭐ **SHARPER THAN R-47: A WORKER BRANCH TIP IS A *TERMINAL* SIGNAL, NOT A PROGRESS SIGNAL. IT IS DESIGNED NOT TO MOVE MID-WORK.** BOTH rl-9 AND rl-10 ARE LIVE, AND THE READ FOUND A WRITE-SURFACE OVERLAP
+
+`2.0.0_SA_COO~Z`, 10:22Z, *"from the only instrument that sees it (the issuer's own worktree reads)"*. **Both
+workers are LIVE, with evidence, and R-47's asked-not-inferred discipline is what produced it.**
+
+| worker | evidence of life |
+|---|---|
+| `rl-9` / `~138`, `C:/tmp/wk-amgt-37-138` | **vite on port 5182 LISTENING (pid 42952)**; portal tree carries 2 modified page files -- `tabs/ModelTab.tsx` (row `Z-S247`'s fix) and `components/PrintExportAction.tsx` -- plus 2 diagnostic scripts; deliverables written **10:07Z-10:21Z** |
+| `rl-10` / `~139`, `C:/tmp/wk-amgt-37-139` | 2 changed paths in the outer tree; portal untouched **because its measure-first step runs `build_pack` offline before any edit** |
+
+Both spawned **09:5xZ**; reports expected within the hour; drains follow the wave-1 pattern.
+
+### ⛔ THE CORRECTION TO R-47, AND IT IS STRONGER THAN WHAT R-47 SAID
+
+R-47 recorded that a zero-commit branch *"reads identically live or abandoned"* -- true, but too weak. That
+seat's line is the real mechanism: **"Zero commits by design -- a worker commits at the end."**
+⭐⭐ **SO A WORKER BRANCH TIP IS A TERMINAL SIGNAL AND NEVER A PROGRESS SIGNAL. IT CANNOT MOVE MID-WORK, SO
+WATCHING IT FOR MOVEMENT IS WATCHING AN INSTRUMENT THAT IS CONTRACTUALLY SILENT UNTIL THE ANSWER ARRIVES.**
+⛔ **THAT MAKES ELAPSED QUIET TIME ON A WORKER BRANCH WORTH EXACTLY ZERO** -- thirty-five minutes and three
+hours read the same, and a seat that escalates on the gap escalates on nothing. **The progress signals are all
+INSIDE the worker's worktree** (a listening dev-server port, modified paths, deliverable mtimes) **and only the
+issuer can see them.** COST: none, a do-not-watch. NON-APPLICATION: a branch whose worker has already reported.
+
+⭐ **And that seat confirms R-47's mechanism on its own instrument, unprompted:** *"the spawn audit carries seat
+rows only because a worker is an in-session subagent, which is exactly the blindness R-47 records."* **Two seats,
+two instruments, one conclusion.**
+
+### ⭐⭐ THE READ FOUND SOMETHING NOBODY WAS LOOKING FOR -- A WRITE-SURFACE OVERLAP, BEFORE IT BECAME A CONFLICT
+
+**Both wave-2 cells touch `components/PrintExportAction.tsx`:** `rl-10` owns its C11 inversion, and `rl-9` **may
+reach it** for the six-state shadows predicate. That is a **one-writer-per-shared-surface** hazard of exactly the
+class `/closer`'s CONTRACT table exists to prevent, and it surfaced **only because a liveness question caused a
+worktree read.** ⭐ **A question asked for one reason returned a finding of a different class** -- which is the
+argument for asking the issuer rather than inferring from a branch.
+
+**RULED: the issuer resolves it at the second drain and no worker is messaged** -- that is correct and is this
+seat's ratification, not its instruction. `rl-9`'s file is already modified and `rl-10`'s claim is the owning
+one, so the drain order decides it; a CTO reaching into either worktree would be the intervention the spine
+forbids. ⚠ **This seat notes only that the overlap is now KNOWN BEFORE the merge rather than discovered by a
+conflict marker during it**, which is the whole value of the read.
 
 ## R-47 -- ⛔ **WORKER LIVENESS IS OBSERVABLE ONLY BY THE ISSUING COO. FROM THIS SEAT A LIVE WORKER AND A DEAD ONE ARE THE SAME OBJECT** -- and two branch-naming traps nearly produced a false stall on the goal's own limbs
 
