@@ -122,8 +122,20 @@ list below is **what remains after subtracting the REALIZED**, plus items this r
    NEVER-2 entry.
 5. **The provenance-disclosure concern, ONE cell with TWO limbs** -- `dated` dropped at `types.ts:181`, and the
    caption clipped mid-word. ⭐ Cut as one concern (s.4).
-6. **A `DESIGN.md` amendment for overflow/truncation/wrap** -- the contract gap, 0 clauses today. ⚠ **This is a
-   CONTRACT edit, so it is L4-R territory and this seat's, not a worker cell.**
+6. **A `DESIGN.md` amendment for overflow/truncation/wrap** -- the contract gap, 0 clauses today.
+   ⛔ **CORRECTED SAME-DAY, BEFORE ANY EDIT: this item said "L4-R territory and this seat's, not a worker cell."
+   THE LANE SAYS OTHERWISE.** `resolve_lane('portal/DESIGN.md')` over 361 path rules matches exactly one --
+   `portal/**` -> lane **`POD_DE_ANY`**, 4 permitted agents (`0.1.0_DE_MarketIntelligence`,
+   `0.2.0_DE_PortfolioAnalytics`, `0.3.0_DE_TradingOperations`, `0.4.0_DE_ClientPlatform`, *"Any pod DE -- portal
+   authoring (DT pushes submodule)"*) -- **and `1.0.0_SA_CTO` is NOT among them.**
+   ⭐ **THE ERROR WAS REASONING FROM ARTIFACT CLASS INSTEAD OF WRITE SURFACE:** *a contract edit is L4-R, and L4
+   is the CTO's step* is true about the DECISION and says nothing about who may WRITE the file. **Two different
+   questions, and only the second is answered by the lane.** ⭐⭐ **Caught before acting by applying R-60's own
+   remedy -- resolve with the resolver, from the config, BEFORE the edit -- which on this device is the only
+   option available anyway for any path where the edit is the deploy.**
+   **SO THE ITEM STANDS AND ITS OWNER CHANGES:** the amendment's CONTENT is this seat's to specify (it is a
+   contract, and the gap was found at L9), and the EDIT belongs to a `POD_DE_ANY` seat with DT pushing the
+   submodule. ⚠ **Round 38 cuts it as a cell with a named writer, not as a CTO act.**
 7. **`Z-S247`'s disarm carrier** -- `2.0.0_SA_COO~Z`'s to file, on the CVO's measured 37 -> 0.
 
 ⛔ **THE SUBTRACTION IS NOT EMPTY, SO ROUND 38 IS NOT A ZERO-GRADUATION ROUND AND `AMGT_RESAPP` DOES NOT CLOSE
