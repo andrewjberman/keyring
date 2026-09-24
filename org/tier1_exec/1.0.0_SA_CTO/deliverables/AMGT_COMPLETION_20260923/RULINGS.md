@@ -253,6 +253,74 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-42 -- ⛔⛔ **I GREPPED AN ANSWER TABLE, LANDED ON ROW 5, AND NEVER READ ROWS 2 AND 3 -- WHICH ANSWERED THE TWO QUESTIONS R-41 THEN ROUTED.** AND `rk-49`'s CARD HAS BEEN ASKING ANDREW THE WRONG QUESTION
+
+`0.0.0_AB_MSTR~Z` msg (09:33Z) and this seat's own read. **Two findings, and the first explains the last
+three hours of this file.**
+
+### (1) THE ROUTING IN R-41 WAS UNNECESSARY. BOTH ANSWERS WERE ALREADY IN R-21, TWO LINES ABOVE ONE I READ.
+
+R-41 routed *"who owns the price producer"* and *"who populates 2b chatter_daily"* to `0.0.0_AB_MSTR~Z` as
+open seating questions. **Andrew answered both by card ~03:2xZ and this seat recorded both** in R-21's
+card-answer table:
+
+```
+:1493  | 2 | who populates gold chatter_daily  | 2.0.0_SA_COO~Y, as an explicit AMGT_HARVST scope item...
+:1494  | 3 | terminal-box schedule owner       | 0.0.3_BG_BBGTerminal -- it already runs OPAL_BBGTML_daily_pull
+:1495  | 5 | Lusha / rk-49                     | WITHHELD for now -- the word buys nothing until hop 4 lands
+```
+
+⛔ **THIS SEAT READ `:1495` IN THIS SESSION, WHILE HUNTING THESE EXACT CALLS, AND WALKED PAST THE TWO ROWS
+DIRECTLY ABOVE IT.** The mechanism is not carelessness and it is worth naming precisely: the read was a
+**GREP FOR `lusha|rk-49`**, and only row 5 contains those tokens. ⭐ **A GREP BY TERM RETURNS THE ROWS THAT
+MENTION YOUR TERM AND STRUCTURALLY CANNOT SHOW YOU A TABLE'S OTHER ROWS -- AND A TABLE OF ANSWERS IS EXACTLY
+WHERE THE ANSWER TO THE ADJACENT QUESTION LIVES.** Every instrument behaved correctly; the grep had no way to
+know it was standing inside an index of decisions.
+
+⭐ **THE MECHANISM, and it is one line: WHEN A GREP HIT LANDS INSIDE A TABLE, READ THE WHOLE TABLE.**
+**COST:** one adjacent-lines read, no re-search. **NON-APPLICATION:** a hit in ordinary prose, where the
+neighbouring lines are not answers to sibling questions. This single check would have caught **three** of
+this session's errors -- the price pull (R-41a), the chatter owner and the terminal owner (here).
+
+### (2) `rk-49` HAS BEEN CARDED TO ANDREW AS THE WRONG QUESTION, AND THE ORDER SAYS SO ITSELF.
+
+Three accounts of one blocker have been in circulation, all written by this seat:
+
+| source | what it says blocks `rk-49` |
+|---|---|
+| `AMGT_CLOSE_CONDITION_20260924.md` | *"an external vendor API needs his explicit per-use word"* |
+| R-21 `:1495` | *"the word buys nothing until hop 4 lands"* |
+| **the ORDER, `TO-AMGT-rk-49` `:300`** | **"stays HELD, and its status stays open UNTIL ANDREW SAYS THE KEY IS ROTATED"** |
+
+⛔ **THE ORDER WINS, BECAUSE THE ORDER IS THE ARTIFACT THAT MOVES.** Its own `:300` and this file's `:117-118`
+agree: the ask is **a factual statement that the Lusha key has been rotated** -- not a grant of permission.
+⭐ **THOSE ARE DIFFERENT QUESTIONS AND THE SECOND IS FAR EASIER TO ANSWER.** A card asking *"may we call
+Lusha?"* invites a policy decision he has already itemised as withheld; a card asking *"has the key been
+rotated?"* invites a one-word fact. **A card that asks the wrong question gets no answer, and the silence
+reads as HIS delay rather than as this seat's mis-framing.**
+
+**RULED:** the `rk-49` card is **RE-FRAMED** to the key-rotation question, and the close condition's exception
+row for `rk-49` is corrected from *"HELD BY LAW ... needs that word"* to **"HELD pending Andrew's statement
+that the Lusha key is rotated"**. It stays RESERVED -- ⭐ **and on a STRONGER citation than R-41 gave it: not
+the generic vendor NEVER line, but Andrew's own all-vendors grant ITEMISING Lusha as WITHHELD by name
+(R-21 `:1495`).** An exception named inside the grant that would otherwise cover it is the strongest form of
+reservation this fabric recognises.
+
+### WHAT IS OWED AND BY WHOM, AFTER THIS
+
+`0.0.0_AB_MSTR~Z` spawned `0.0.3_BG_BBGTerminal` (LIVE PID 16952, 09:33Z) after measuring it **NOT
+REGISTERED since 2026-09-23 11:30-11:50Z with R-21 unread in its inbox since 03:17Z**, and correctly states
+that **the MANDATE is this seat's and did not exist.** It does now:
+`BG_BBGTERMINAL_PRICE_PRODUCER.md`, beside this file -- the granted authority, R-21b's mechanism constraint as
+the grading criterion, the **2026-09-29** expiry, B1-B4, and the NEVER-2 ledger requirement for the first
+scheduled fire. **2b** needs no seating either; it is a **mandate update** to `COO_Y_HARVST.md`, not a routing.
+
+⚠ **AND THE HONEST ACCOUNTING OF THE COST: six hours.** Andrew answered the terminal-box owner at ~03:2xZ.
+That seat sat dark with the answer unread in its own inbox, this seat re-asked the settled question at
+~09:2xZ, and the artifact that unblocks it -- a mandate R-21 explicitly said *"follows from this seat"* --
+was written at ~09:4xZ against a **five-day** expiry. No gate failed and nothing alarmed, which is R-41a's
+point about over-restriction arriving as silence.
+
 ## R-41 -- ⛔⛔ A CARD'S **RESERVED HALF** HAS BEEN RESERVING ITS **ADJUDICABLE PARTNER**. FOUR OF SIX CARDS AT ANDREW SPLIT, AND TWO INSTRUMENTS ARE AGING BECAUSE OF IT
 
 **The standing instruction on this fabric is *"All open-calls on sitez fabric to be adjudicated by
