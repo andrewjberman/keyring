@@ -2,7 +2,7 @@
  "schema_version": "irpt-holdings-model-snapshot-v1",
  "firm_id": "inflection",
  "clocks": {
-  "custody_as_of": "2026-09-23",
+  "custody_as_of": "2026-09-22",
   "overlay_as_of": "2026-09-23"
  },
  "model_count": 17,
@@ -23751,6 +23751,6 @@
    "account_count": 1
   }
  ],
- "candidate_revision": "882375a7520f1c7e44d507f8d584bdcb9b4c1ffda4f294b0dbedcf43ce9ffac6",
+ "candidate_revision": "21279569b08d40ce53e163143b2f829f78c7466f6b25c6a024c57e601b4ef441",
  "candidate_state": "UNPUBLISHED_NO_VERSIONED_ACCEPTANCE"
 }

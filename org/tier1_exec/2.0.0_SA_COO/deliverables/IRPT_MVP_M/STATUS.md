@@ -2,7 +2,8 @@
 
 Seat `2.0.0_SA_COO~M` (CLAUDE, successor to the Codex seat since 2026-09-23 ~22:47Z). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.4. Reviewer `3.0.0_SA_CVO~M` (not live).
-As of 2026-09-24T00:20Z.
+As of 2026-09-24T00:30Z. CTO 3c8392cf2f: 49F, INF and COT-overlay candidates ACCEPTED as source candidates; its three
+bounded findings (Tax conflict, taxonomy path, INF valuation clock) are closed in the commit that carries this line.
 
 Standing directive (Andrew-direct ~22:4xZ, record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md` @6890584d29; Step 1b-F row landed by the CTO @d78fdb2f1c):
 Holdings end to end for every 49 Financial and Inflection client, meshed across SmartX/Schwab and Eclipse/Orion, with a
@@ -18,8 +19,8 @@ structurally correct Cottonwood pipeline bounded by Black Diamond's data window.
 | Portal candidate pin | own UI `codex/irpt-m-ui` e5604c03cb at `../ajb_irpt_m_portal`; P integration c70855f30d at `../portal-local-live-20260923` |
 | Deployed artifact pin | irpt-holdings Lambda: repaired loader 3e913e9ce9 APPLIED by P 23:00:52Z (CodeSha l/GQrFcE...), CTO-verified d78fdb2f1c |
 | Accepted COT publication | revision 93f930c265ed242d7e38cb48a7ed4baf267025e8c4dfd06ff39739c6a8f55217, index version grwnbLkeu_OeYL6AcOR33ec9mO51dTBJ, CTO-verified |
-| 49F candidate (UNPUBLISHED) | revision 1d0b700b7d1ad9f4511497f3d88b109ddfb822dbd4cc633e5da00cec8646e696, business date 2026-09-22 / overlay 2026-09-23 |
-| INF candidate (UNPUBLISHED) | revision 882375a7520f1c7e44d507f8d584bdcb9b4c1ffda4f294b0dbedcf43ce9ffac6, custody and overlay 2026-09-23 |
+| 49F candidate (UNPUBLISHED) | revision a860115ecaf5336ac5db4491d76cf5b60780f8a9c257c579defaf62351ba6a1f, business date 2026-09-22 / overlay 2026-09-23 (CTO findings 3c8392cf2f closed) |
+| INF candidate (UNPUBLISHED) | revision 21279569b08d40ce53e163143b2f829f78c7466f6b25c6a024c57e601b4ef441, business date 2026-09-22 (Orion key 2026-09-23 holds the prior close) / overlay 2026-09-23 |
 | Push state | LOCAL; origin/CLOUD b475b96309 (ls-remote read 23:27Z by CTO); shared pushes are 0.0.0_AB_MSTR's |
 
 ## Live thread
