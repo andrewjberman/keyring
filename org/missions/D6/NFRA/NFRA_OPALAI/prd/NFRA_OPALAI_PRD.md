@@ -3,7 +3,7 @@
   "project": "NFRA_OPALAI",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.2",
+  "prd_version": "v0.3",
   "step": 4,
   "brief_ref": "docs/briefs/opal-ai-microproduct-repo-brief-20260923.md@a47993af9c",
   "endpoint_outcomes": [
@@ -53,6 +53,10 @@ lot of this work has already been done is just needs to all be synthesized clean
 `2.0.0_SA_COO~O`'s question (msg 25752). The Analyst today calls the gateway as ONE service identity, so every
 colleague would get that identity's reach, and a round-1 thread built that way would bake in the wrong authorization
 model. The ENDPOINT is unchanged. The runtime account and agent are named `Opal_Agent` (C4).
+
+**v0.3 (2026-09-24 ~21:1xZ)** resolves a contradiction `2.0.0_SA_COO~O` found in C4 (msg 25756). An account that
+cannot write its checkout cannot pull into it. The pull moves to the operator account, and `Opal_Agent` holds no
+GitHub credential. C3 and C4 are amended; the ENDPOINT is unchanged.
 
 The design this PRD binds is `org/tier1_exec/1.0.0_SA_CTO/deliverables/OPAL_AI_RUNTIME_ISOLATION_DESIGN_20260924.md`
 @45ce8406fc. The header stays DRAFT until L4-R. The author signs neither half.
@@ -219,7 +223,8 @@ workspace seat's Teams duty stops, and nothing in between serves colleagues from
 
 **C3 -- Branches and release.** `DEV` integrates and `PROD` is what runs. Only `0.0.0_AB_MSTR` (or `~Z`) pushes
 either, on Andrew's word. Never rebase. A release is a merge of DEV into PROD, and the parent's pointer bump names the
-PROD commit now running. The runtime pulls PROD fast-forward only. A pull that would not fast-forward refuses.
+PROD commit now running. The launcher's pull step fetches PROD fast-forward only, as the operator account (C4). A pull
+that would not fast-forward refuses.
 
 **C4 -- The runtime boundary is the operating system (R1).**
 - A standard local Windows account named `Opal_Agent`, in neither `Administrators` nor `CodexSandboxUsers`, runs every
@@ -227,8 +232,12 @@ PROD commit now running. The runtime pulls PROD fast-forward only. A pull that w
 - Its product files come from a checkout of `opal_ai` PROD. The runtime account can READ that checkout and cannot
   write it, so the agent cannot edit its own prompt, guardrails, hooks or settings. It can write only its state
   directory.
-- The runtime pulls with a GitHub credential that is read-only and scoped to `Opal-Capital/opal_ai` alone. It holds no
-  credential for `ajb_workspace`.
+- **The pull runs as the OPERATOR account, never as `Opal_Agent`** (v0.3 ruling on `2.0.0_SA_COO~O` msg 25756: whoever
+  pulls must write the checkout, and `Opal_Agent` may not). The launcher's pull step uses the G-GH credential, which is
+  read-only, scoped to `Opal-Capital/opal_ai` alone, and held in the operator's profile. The checkout is ACL'd
+  read-and-execute for `Opal_Agent`. **`Opal_Agent` holds no GitHub credential at all**, and no credential for
+  `ajb_workspace`. The launch gate and the agent then run as `Opal_Agent`, and the gate checks (a)-(c) as written. The
+  operator side starts the agent as `Opal_Agent` and passes it no operator credential, token or environment.
 - Its Claude setup is its own: its own login and credential store, a `CLAUDE.md` holding only the agent's guardrails,
   a `.claude/` holding the fence hook and the Teams serve skills, and an MCP config listing `opal-gateway-bbg` and
   nothing that reaches the workspace. Andrew's proxy gateway `opal-gateway` is never configured in that account.
