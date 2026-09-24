@@ -798,8 +798,9 @@ def _carried_at_head(value, path):
         if rc == 0:
             for line in text_of(out).splitlines():
                 hit = line.split(":", 1)[1] if line.startswith("HEAD:") else line
-                if hit and hit != path and not _is_record_tree(hit) and hit.endswith(GRADED_EXT):
-                    hits.append(hit)
+                if (hit and hit != path and not _is_record_tree(hit) and hit.endswith(GRADED_EXT)
+                        and hit != ".tools/naming-gate.py" and "/tests/" not in "/" + hit):
+                    hits.append(hit)  # never the gate's own bytes or a fixture under */tests/*
         _CARRIED_CACHE[value] = sorted(hits)
     hits = [h for h in _CARRIED_CACHE[value] if h != path]
     return hits[0] if hits else ""
