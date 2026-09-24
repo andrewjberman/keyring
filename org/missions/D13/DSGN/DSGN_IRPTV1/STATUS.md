@@ -12,8 +12,8 @@ As of 2026-09-24T22:1xZ. CTO 100904 (Andrew via the CRO): L5 from PRD v0.6 @4746
 | What | Value |
 |---|---|
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal pin | `9bb4c5da` = origin DEV (ls-remote read after the push, via gh credentials -- see Parked) |
-| This session on DEV | P candidate 8 `237bdfda`; S6 `92d16efc`; firm tab + exact amounts `a65a8db5`; S7 `c1d7aefe`, `9902bf25`; breadcrumb `d6288d80` (merged over site Z as `c82f0bbb`); header `93b28880`; Analysis upload lane `088386fe`; Analysis declutter `68f46e18`; Holdings footers `c75a0fc9`; Performance footer `af66ed43`; drill table `f338e693` (merged over site Z as `06f079f5`); model colours `08a04fe2`; asset-class colours `86561aef`; models dialog `721170ca` (merged over site Z as `d99516cd`); drill stop `9bb4c5da` |
+| Portal pin | `13b5356f` = origin DEV (ls-remote read after the push, via gh credentials -- see Parked) |
+| This session on DEV | P candidate 8 `237bdfda`; S6 `92d16efc`; firm tab + exact amounts `a65a8db5`; S7 `c1d7aefe`, `9902bf25`; breadcrumb `d6288d80` (merged over site Z as `c82f0bbb`); header `93b28880`; Analysis upload lane `088386fe`; Analysis declutter `68f46e18`; Holdings footers `c75a0fc9`; Performance footer `af66ed43`; drill table `f338e693` (merged over site Z as `06f079f5`); model colours `08a04fe2`; asset-class colours `86561aef`; models dialog `721170ca` (merged over site Z as `d99516cd`); drill stop `9bb4c5da`; classification members accepted `13b5356f` |
 | Deployed | DEV CI deploys opalinvest.dev from DEV; PROD `a0690a03` untouched (gated) |
 | Screen | `localhost:5174` from the main checkout (`bun run dev --port 5174`, its `.env.local`), log `C:/tmp/portal-main.vite5174.log` |
 | Workspace push state | CLOUD LOCAL |
@@ -42,6 +42,7 @@ NOT LIVE END TO END. Andrew's HAR at ~18:3xZ exercised the signed-in API journey
 | Securities map + table: canonical asset-class colours (Opal ETF classifier; Unclassified grey otherwise) | CANDIDATE @86561aef | `asset-class.fast-run.{png,txt}`, `asset-class.fixture.json` |
 | Models dialog: one column, members coloured by asset class (IRPT only; additive `breakdown` prop) | CANDIDATE @721170ca | `models-dialog.fast-run.{png,txt}`, `models-dialog.fixture.json`, `models-dialog-probe-driver.mjs` |
 | Drill pie stops at the model level (no security-level slices) | CANDIDATE @9bb4c5da | `drill-stop.fast-run.{png,txt}`, `drill-stop-probe-driver.mjs` |
+| Spec step 2: asset_class (incl. cash) / sub_asset_class / basis / model_code accepted; colour by the served member only | CANDIDATE @13b5356f (M emits next, under the CTO's GO) | `served-asset-class.fast-run.{png,txt}`, `served-asset-class.fixture.json` |
 
 Nothing here is CVO-graded yet.
 
@@ -94,7 +95,6 @@ then ONE issuance (LIMB 6 waits on the CVO's ratified-text signature); the FAST 
 | Site Z edited an IRPT file's comment on DEV (`ExportModal.tsx`, AMGT-rn-3 `02e04083`) | `0.0.0_AB_MSTR~Z` | if IRPT files must stay single-writer |
 | Git's credential manager (`credential.helper=manager`) now refuses non-interactively on this box; `gh` is logged in as the same account, and pushes run with `-c credential.helper='!gh auth git-credential'` for that command only | Andrew | he re-signs the credential manager, or says to keep the gh route |
 | `lib/modelPortfolioColors.getModelColor` partial match: "Opal Ultra Long Term" hits "long term" first (worked around in DrillTree only) | the shared-library owner via `1.0.0_SA_CTO` | a ruling to prefer the longest key |
-| M 100907: HoldingsSnapshot asset_class / sub_asset_class / asset_class_basis / model_code -- the portal accepts them after P admits them | this seat, as a v0.6 cell | P's schema admit lands |
 | Leftover folders `C:/tmp/dsgn-irptv1-fast`, `-base` | Andrew | his OK for a recursive delete |
 
 ## Limits
