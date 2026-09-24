@@ -1162,6 +1162,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "Z-S22 reported 17 rows ARMED and uncited for this lane, and Z-S23 established that no form-based recount of the file is valid -- so each row needs a read against the world.",
     "world_is": "Five read clean on that method. FOUR of the five were fixed by code that LANDED, and the landed code names the row id in its own comments -- so the disarm evidence was sitting in the repository the whole time, addressed to exactly the question the census asks, and no channel field could see it.",
     "notes": "THE KEEPABLE FORM, and it is the cheapest disarm instrument this project has found: WHEN A FIX NAMES THE ROW ID IN THE CODE COMMENT, THE CODEBASE ITSELF BECOMES THE RESOLUTION INDEX -- one grep of the source for a row id answers 'was this fixed' far better than any citation heuristic over the channel's own prose, because a comment naming a row is written BY the fix, at the moment of the fix, by someone who knew. Four of five landed that way and it is worth making the habit explicit. TWELVE REMAIN for this lane, each owed its own read; this row claims nothing about them. Per Z-S23 this DOES enumerate ids, which is correct here: a disarm row is the one row type whose naming of an id MEANS resolution, and it is the census/index rows that must not."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S25",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-24T17:45:00Z",
+    "one_line": "Second batch of this lane's load: W13-S1 DISARMED on two independent arms, W9-S1 HALVED (its articles path is fixed, its listings path is not -- and the unfixed half has never met its own precondition: 0 of 1 retained listing objects), W11-S1 CONFIRMED STILL LIVE on the shared mechanism it names. Six of seventeen now disarmed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_HARVST-Z-W13-S1 (first_discovered_at as an ISO STRING crashed _lag_hours and hid 992_HK_Equity from the mention snapshot) -- DISARMED ON TWO INDEPENDENT ARMS. MECHANISM: publication_gold.py:188-208 `_coerce_utc_datetime` parses the string form (its docstring names the sibling row Z-S2 and the reason), and :239 routes first_discovered_at through it BEFORE _lag_hours. SYMPTOM: this lane's own 2026-09-24 mention build wrote 992_HK_Equity with 32 rows -- the exact name the row says was hidden entirely. Neither arm depends on the other",
+        "AMGT_HARVST-Z-W9-S1 (silver_append collides on a second-precision run_stamp key) -- HALVED, not closed. The ARTICLES path is DISARMED by the row's own second option: uploads.py:223-228 groups by (source, run_stamp) and calls `_silver_append_retrying_object_name(...)`. The LISTINGS path is NOT: uploads.py:277 still calls `harvest_grammar.store.silver_append(...)` directly, one call per listing page, no grouping and no retry -- the identical shape the row describes",
+        "AND THE UNFIXED HALF HAS NEVER MET ITS PRECONDITION, measured rather than assumed (Rule 22's negative mirror): the entire retained listing_hit corpus is ONE object (wsj/.../date=2026-09-23/part-20260923T002841Z.parquet), 20 rows, ONE distinct fetched_at, ONE search_page. Seconds carrying more than one page -- the collision's own signature -- 0 of 1. EXPOSURE, never an INCIDENT, so nothing is re-opened",
+        "AMGT_HARVST-Z-W11-S1 (missions-tree-check's physical walk breaks a sparse-cone worker) -- CONFIRMED STILL LIVE at HEAD: .tools/missions-tree-index.py traverses with `self.root.iterdir()` :162, `Dp.iterdir()` :165, `Mp.iterdir()` :171 and `self.projects.glob('*.json')` :143. Zero `git ls-tree` occurrences. The row's own suggested remedy (read tree rows instead of walking the filesystem) is unbuilt"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S24 disarmed five of this lane's seventeen rows and stated that the remaining twelve are each owed a read against the world.",
+    "world_is": "Three more read: one fully disarmed, one HALF disarmed with its live half measured as never-fired, and one confirmed live on a mechanism this lane does not own. A row is not binary -- W9-S1's two call sites got different treatment in the same file, and a check that had stopped at the first one would have closed a row whose other half is untouched.",
+    "notes": "THE KEEPABLE FORM FROM THIS BATCH: A ROW NAMING TWO CALL SITES NEEDS BOTH READ -- the fix landed on one of them, in the same file, four lines apart in the enumerate output, and closing the row on the first hit would have been wrong in exactly the direction nobody re-checks. \u2b50 And the second half of the same discipline: once the unfixed site is found, ASK WHETHER ITS PRECONDITION HAS EVER OCCURRED before escalating -- here one query over the retained corpus turned an alarming shape into a measured EXPOSURE with 0 of 1. OWNER NOTE: W11-S1 sits on .tools/missions-tree-index.py, a shared mechanism and not this project's content, so it stays ARMED and belongs to that tool's owner rather than to this lane's remediation. REMAINING for this lane: W3-S1, W8-S1, W8-S2, W10-S5, W10-S10, W14-S1, W14-S2, Z-S11 -- plus the live half of W9-S1 and W11-S1's routing."
   }
 ]
 ```
