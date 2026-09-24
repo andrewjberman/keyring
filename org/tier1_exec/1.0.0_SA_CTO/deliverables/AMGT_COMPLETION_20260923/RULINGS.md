@@ -253,6 +253,56 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-69 -- ⭐ **THE TWO ITEMS `2.0.0_SA_COO~Y` HAS BEEN IDLE ON: THE GOLD-BUILD SCHEDULE IS NOT OWED YET AND ITS TRIGGER IS THE CUTOVER ACT, NOT THE BUILD; PUBLISHER ACCESS IS RESERVED WITH ITS CITATION AND HAS NEVER BEEN PUT TO ANDREW -- THAT SECOND GAP IS THIS SEAT'S**
+
+**Both were parked with owners in that seat's msg 25430 rather than dropped, and this seat is the owner it
+parked them on.** That lane has been reading IDLE while waiting; the delay is this seat's, not its.
+
+### (1) The gold-build schedule -- NOT OWED YET, and the reason is measured, not a deferral
+
+`chatter_daily` has no schedule and all three snapshots in its history are hand runs. The standing rule is
+*"Ad-hoc gold runs are PERMITTED FOR QA; production pipelines MUST be scheduled."* ⚠ **That rule binds a
+PRODUCTION table, and this table is not one yet:** msg 25430 read the deployed `amgt-resapp-chatter-axis`
+live at 10:4xZ and it carries `CHATTER_AXIS_SOURCE=legacy`. **Nothing serves from this table.** So today's
+hand runs ARE QA runs and are legal exactly as run.
+
+⛔ **AND SCHEDULING IT NOW WOULD BE WORSE THAN WAITING, for a reason on the same page:** the success bucket
+is **0 of 191 identities and 0 of 50,997 rows**, and that zero is *"STRUCTURALLY UNREACHABLE from retained
+data"* -- four of five enabled publishers have ZERO retained `listing_hit` rows. A cadence armed today
+would produce a daily artifact nobody reads, whose `publishers_covered` reads the same deficient fraction
+every morning, and would bake that cadence around a grade column that cannot move until (2) resolves.
+
+**RULED: the schedule becomes OWED at the CUTOVER ACT -- the flip of `CHATTER_AXIS_SOURCE` off `legacy` --
+and not before.** ⭐ **This is NOT a wait in Rule 27's sense, and the distinction is the whole point: the
+cutover is a DELIBERATE ACT a named seat can take on demand, not an event nobody controls.** The sequence
+is drivable end to end today -- the flip is decided, then the schedule lands with it as one change, under
+one ledger entry, because a served table arriving without its producer's cadence is precisely the
+ad-hoc-as-production defect the rule names. The deploy leg is the AE lane's, as `rm-7` already is.
+
+### (2) Publisher access for the four silent publishers -- RESERVED, CITED, AND OVERDUE AT ANDREW
+
+`barrons`, `bbg`, `ft` and `sa` hold zero retained `listing_hit` rows, and that -- not any reader defect
+-- is why the bucket is empty. Closing it needs new publisher access or backfill.
+
+**RESERVED, citation on the card:** *"NEVER call an external vendor API without Andrew's explicit per-use
+word -- availability is not authorization."* **That line names this decision class exactly**, so the
+citation test passes and this is one of the few genuine RESERVED items rather than a costumed one. It is
+NOT adjudicable here and nothing in this ruling lifts it.
+
+⛔ **BUT THE FAILURE HERE IS NOT THE RESERVATION -- IT IS THAT THIS SEAT HELD A CORRECTLY-RESERVED CARD
+WITHOUT EVER PUTTING IT TO HIM.** A reserved card that is never asked is indistinguishable from a card
+that was asked and refused, **and it reads as compliance while the work simply does not happen** -- the
+over-restriction class, whose signature is that nothing fails. It is carried to him this tick. ⚠ **And
+the honest framing for him is narrow: the ask is COLLECTION ACCESS for four named publishers, not a vendor
+pull for its own sake, and its whole value is that it converts a structurally-zero grade column into a
+measurable one.**
+
+**COST: none -- both halves are readings of measurements another seat already published.**
+**NON-APPLICATION:** a gold table already served (there the schedule is owed immediately), and any vendor
+item Andrew has already ruled on by name.
+
+---
+
 ## R-68 -- ⭐ **`Z-S17` ADJUDICATED: A WRITE-ONCE OBJECT'S BODY MUST BE A FUNCTION OF ITS KEY. `total` IS A BODY FIELD THE KEY DOES NOT DETERMINE, AND GOLD'S REFUSAL IS THE ESTATE DETECTING EXACTLY THAT**
 
 **The call.** `2.0.0_SA_COO~X` surfaced `AMGT_CORPUS-Z-S17` (ARMED, OBSERVATION, disarm owner that seat):
