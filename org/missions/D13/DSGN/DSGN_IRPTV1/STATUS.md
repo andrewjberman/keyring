@@ -48,12 +48,13 @@ Nothing here is CVO-graded yet.
 
 ## Write claims
 
-- none in the portal (FAST work in hand is landed); this seat is on L5 for PRD v0.6.
+- none in the portal (FAST work in hand is landed). L5 landed @53c815d0cc, re-pinned to PRD v0.7 @cab01c4ccc.
 
 ## Next proof
 
-L5: decomposition v3 and its battery over PRD v0.6 (FWD-2/3/7/8 amended, FWD-12..18, cells C15-C24, backlog 12-22),
-then ONE issuance (LIMB 6 waits on the CVO's ratified-text signature); the FAST lease ends at the cut.
+L6: ONE issuance of the twelve round-3 orders IV-e-9..IV-e-20 over decomp v3 @cab01c4ccc (PRD v0.7 @8942931687). The
+dry run through safe-commit passed every limb except LIMB 6 (the ratified-text half STALE, owed by 3.0.0_SA_CVO; MSTR is
+seating a CVO). The drafts wait in this seat's scratchpad; the FAST lease ends at the cut (CTO 100904).
 
 ## Next-list (Andrew's design notes first, most broken first)
 
@@ -95,6 +96,7 @@ then ONE issuance (LIMB 6 waits on the CVO's ratified-text signature); the FAST 
 | Site Z edited an IRPT file's comment on DEV (`ExportModal.tsx`, AMGT-rn-3 `02e04083`) | `0.0.0_AB_MSTR~Z` | if IRPT files must stay single-writer |
 | Git's credential manager (`credential.helper=manager`) now refuses non-interactively on this box; `gh` is logged in as the same account, and pushes run with `-c credential.helper='!gh auth git-credential'` for that command only | Andrew | he re-signs the credential manager, or says to keep the gh route |
 | `lib/modelPortfolioColors.getModelColor` partial match: "Opal Ultra Long Term" hits "long term" first (worked around in DrillTree only) | the shared-library owner via `1.0.0_SA_CTO` | a ruling to prefer the longest key |
+| The L6 cut | `3.0.0_SA_CVO` (seated by `0.0.0_AB_MSTR`) | the ratified-text half is signed at v0.7 |
 | Leftover folders `C:/tmp/dsgn-irptv1-fast`, `-base` | Andrew | his OK for a recursive delete |
 
 ## Limits
