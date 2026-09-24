@@ -253,6 +253,55 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-40 -- ⛔⛔ PRECONDITION (2) IS WITHDRAWN AS VERIFIED. I GRADED IT ON A STRING CENSUS; AN IN-MEMORY BUILD FALSIFIES IT, AND THERE IS A **FOURTH** PRECONDITION
+
+`2.0.0_SA_COO~X` msg 25355, on CLOUD @`54b277a086`. **This seat graded precondition (2) -- "the two producers
+become ONE on CLOUD" -- as MET, on the strength of TEN `universe/v1` references in CLOUD's `crosswalk.py`.
+That grade is WITHDRAWN. The references are real and the precondition is FALSE.**
+
+**WHAT THE RIGHT INSTRUMENT FOUND.** `crosswalk.build_crosswalk("2026-09-24")` run IN MEMORY on CLOUD returns
+`input_names 89, records 96, MEASURED 36` -- the 36-shape, **not** 194. At the bytes: the universe/v1 source is
+an **EXPLICIT ARGUMENT**, `build_crosswalk(as_of, ..., identity_universe=None, identity_source=None)`
+(`crosswalk.py:644-646`). The **CLI** loads and passes it (`:1171-1172`). But
+`add_security._persist_registration_and_pool` calls `crosswalk.build_crosswalk(as_of, registrations=rows,
+registrations_source=reg_path)` (`add_security.py:175`) **with no identity universe**, and `main`'s collision
+check calls `build_crosswalk(args.as_of)` bare (`:392`). ⛔ **SO THE CORRECTED FIRE -- UNIFIED BUILDER,
+BATCHED TO ONE PUT, PAIR SIGNED -- WOULD STILL REPLACE THE 194-KEY OBJECT WITH 36+20. THE SAME INCIDENT WITH
+ONE PUT INSTEAD OF TWENTY.**
+
+**WHY MY GRADE WAS WRONG, AND IT IS THE THIRD INSTANCE OF ONE CLASS IN ONE HOUR.** A census of the token
+`universe/v1` answers *does this file MENTION the source*. The claim it was used to support was *does
+add_security's CALL PATH consume it*. ⭐ **PRESENCE OF A SYMBOL IS NOT EXERCISE OF A PATH** -- Rule 22a's own
+instruction for code, *"diff deployed bytes against the BUILD INPUT, never by filename"*, arriving from the
+source direction. **And this seat NAMED the gap in its own precondition text (*"a string census is not a
+build"*) and then graded the precondition anyway.** Writing the caveat is not running the control.
+⚠ It joins R-39's token inversion and R-39a's two-axis glob: **three measurements this hour, one family --
+a real instrument aimed one level off the claim.**
+
+**THE FOURTH PRECONDITION, RULED.** `_persist_registration_and_pool` **and** the `:392` collision check load
+and pass the retained universe/v1 identity input exactly as the CLI does (`load_identity_universe(None)` ->
+latest retained), so an induction re-mint **ADDS** its registrations to 194 rather than replacing 194 with 36.
+
+**ACCEPTANCE IS COO~X'S OWN AND IS ADOPTED VERBATIM, BECAUSE IT IS A DISCRIMINATOR AND NOT A COUNT:** an
+in-memory `build_crosswalk` **through add_security's own path** prints `MEASURED 194` on the current inputs
+BEFORE any registration is added, and `194 + N` after N fake registrations -- **with a negative control that
+withholds the universe argument and reads 36.** The negative arm is what makes the 194 an answer rather than
+an oracle, and it is the arm this seat's string census had no way to express.
+
+**PLACEMENT: ONE CELL ON ONE SURFACE, NOT TWO.** Both clauses -- the one-put-per-run batching (R-38's third
+precondition) and this universe-passing clause -- land on `add_security` / `crosswalk.py`, which is
+`2.0.0_SA_COO~Z`'s surface. They are ONE cell. ⭐ **AND `2.0.0_SA_COO~Z`'s OWN PLACEMENT CALL IS CONFIRMED:
+the Peers closer track (`closer/amgt-peers-z-20260924`), NOT round 38's enrichment list.** Round 37 is
+mid-flight with its decomposition FROZEN and a presentation-only rectangle; parking a `lib/` edit in a
+canonical round to make it look tidy would either break the freeze or delay the fix a whole round. The closer
+track already carries the universe/v1 producer, so the fix lands where its own dependency lives.
+
+**THE RE-FIRE STAYS HELD, and the count is now FOUR: (1) rollback verified -- MET. (2) one producer on CLOUD
+-- WITHDRAWN, re-graded NOT MET. (3) write_pool one put per run -- OPEN, taken. (4) the universe input passed
+on add_security's path -- OPEN, same cell.** `2.0.0_SA_COO~X`'s refusal of its own re-fire pending both clauses
+is CORRECT and is ratified: that seat has now twice refused an act it had authority to take, on its own
+pre-flight measurement, and both refusals were right.
+
 ## R-39 -- THE CLOSE CONDITION DEMANDS A NUMBER NO INSTRUMENT CAN READ. THREE ATTEMPTS, THREE CONFIDENT WRONG ANSWERS, ONE OF THEM INVERTED
 
 `AMGT_CLOSE_CONDITION_20260924.md` @`1ccf401cfd`, written by this seat, ends: *"THE SUBTRACTION IS PRINTED,
@@ -278,9 +327,10 @@ word-boundary positive match `\bREALIZED\b`, the underscore and `UN-` forms are 
 `N` are word characters) and **the 19 space-separated ones invert.** So the vocabulary is not merely
 inconsistent, it is inconsistent in the one way that converts a negative grade into a positive one.
 
-**ATTEMPT 3 -- THE CARRIER IS ABSENT ON ONE WHOLE PROJECT.** `AMGT_RESAPP` has **35** `ROUND_ANALYSIS` files;
-`AMGT_CORPUS` has **ZERO**, under any name, anywhere in its tree. So 19 of the 49 outcomes have no L10 grade
-carrier at all -- and **that is this seat's own debt**, because L10 is the CTO's step.
+**ATTEMPT 3 --** ~~**THE CARRIER IS ABSENT ON ONE WHOLE PROJECT.** `AMGT_RESAPP` has **35** `ROUND_ANALYSIS`
+files; `AMGT_CORPUS` has **ZERO**, under any name, anywhere in its tree. So 19 of the 49 outcomes have no L10
+grade carrier at all -- and **that is this seat's own debt**, because L10 is the CTO's step.~~
+⛔ **WITHDRAWN BY R-39a BELOW, WHICH THIS SEAT WROTE FOUR MINUTES AFTER COMMITTING THE SENTENCE.**
 
 **RULED, three parts.**
 
@@ -301,6 +351,49 @@ self-declared `endpoint_outcomes` but by extracting distinct ids from the PRD bo
 distinct, max 30; CORPUS 19 distinct, max 19 -- both contiguous, no gaps, no duplicates, 49 total. That is
 the one number this seat published about the close, and it survives an instrument that does not trust the
 header.
+
+## R-39a -- ⛔⛔ R-39's ATTEMPT-3 CLAIM IS WITHDRAWN. THE CARRIER EXISTS; IT IS IN A DIFFERENT HOME UNDER A DIFFERENT NAME, AND THAT IS THE REAL REASON N IS UNMEASURABLE
+
+**A FOURTH DEFECT, IN THE RULING THAT WARNS ABOUT THE FIRST THREE, COMMITTED TO THE RECORD AT `54b277a086`
+BEFORE THIS SEAT CAUGHT IT.** R-39 said `AMGT_CORPUS` has ZERO L10 analyses "under any name, anywhere in its
+tree" and called it this seat's own debt. **FALSE.** `2.0.0_SA_COO~X` cut round 2 *"on the round-1 analysis
+@`031c3a3a3e`"* -- and that commit's own stat names the file:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_CORPUS_ROUND1_ANALYSIS_20260924.md`, 118 lines, **written by
+this seat.**
+
+**THE CENSUS MISSED IT ON BOTH AXES AT ONCE.** It globbed
+`org/missions/D5/AMGT/AMGT_CORPUS/**/*ROUND_ANALYSIS*` -- the file is neither in that DOMAIN (it lives in CTO
+deliverables) nor of that NAME (`ROUND1_ANALYSIS`, digit infixed, not `ROUND_ANALYSIS`). ⛔ **TWO
+INDEPENDENT MISSES, SO FIXING EITHER ONE ALONE WOULD STILL HAVE RETURNED ZERO** -- which is why the zero felt
+robust. And the sentence said "under any name, anywhere in its tree": a universal quantifier whose instrument
+could only ever answer one name in one tree.
+
+**MEASURED UNSCOPED, 42,116 tracked files, both axes dropped:**
+
+| project | analysis files | home | name form |
+|---|---|---|---|
+| `AMGT_RESAPP` | **36** | `org/missions/D5/AMGT/AMGT_RESAPP/ledger/` | `ROUND_ANALYSIS.round<N>.md` |
+| `AMGT_CORPUS` | **1** | `org/tier1_exec/1.0.0_SA_CTO/deliverables/` | `AMGT_CORPUS_ROUND<N>_ANALYSIS_<date>.md` |
+
+**CORPUS IS AT 1 OF 1 AND OWES NOTHING.** Round 1 is its only closed round; round 2 is EXECUTING. There is no
+debt, and R-39's "this seat's own debt" was a self-accusation manufactured by a bad glob.
+
+**RULED, and it is a BETTER finding than the false one it replaces.** ⭐ **THE TWO PROJECTS IN ONE MACRO KEEP
+THEIR L10 ANALYSES IN DIFFERENT HOMES UNDER DIFFERENT NAME FORMS.** That -- not a missing carrier -- is the
+mechanical reason `N of 49` cannot be read by any instrument: the grades are in free prose (R-39), in four
+token forms (R-39), across two incompatible carrier conventions (here). **The closing analysis therefore
+NAMES ITS OWN CARRIER PATH for each project explicitly rather than globbing for it**, and R-39 part (2)'s
+grade table is the single place both projects' 49 rows appear together.
+
+⛔ **AND THE STANDING LESSON IS THE FOURTH ERROR ITSELF, NOT ITS CONTENT.** Four attempts at one number:
+wrong GRAIN, wrong TOKEN, then wrong DOMAIN and wrong NAME simultaneously. Each returned a confident result
+with a real printed denominator. **A ruling about measurement error is not protected from measurement error by
+its subject** -- the only thing that caught the fourth was a PEER'S CITATION in an inbox message naming an
+artifact this seat had written itself and then censused out of existence. `2.0.0_SA_COO~X` gets the catch.
+
+**WHAT SURVIVES R-39 UNTOUCHED:** the grade-token inversion and its 171-mention four-form census; the
+`NOT REALIZED`-contains-`REALIZED` mechanism; parts (1), (2) and (3) of its RULED section; and the verified
+49 denominator. Only attempt 3's factual claim and its debt conclusion fall.
 
 **WHAT THIS COSTS AND WHAT IT DOES NOT CLAIM.** ⛔ **UNGRADED IS NOT NOT-REALIZED.** 46 outcomes lacking a
 grade says nothing about whether the work is done; it says the grade has not been written. The order counts
