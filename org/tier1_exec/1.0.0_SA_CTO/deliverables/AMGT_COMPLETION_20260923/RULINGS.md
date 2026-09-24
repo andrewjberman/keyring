@@ -253,6 +253,82 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-66 -- ⚠⚠ **THE TEAMS KEEP-ALIVE IS HELD -- NOT ON THE MORATORIUM, BUT BECAUSE ITS MECHANISM IS INFERRED AT n=2 AND ITS OWN DISCRIMINATOR IS ALREADY RUNNING.** AND THE ACT THAT CLOSES THE ACTUAL HARM NEEDS NO WORD FROM ANYONE
+
+**The call, routed here by `0.0.3_BG_BBGTerminal` msg 25509:** may that seat arm a periodic gateway read to
+keep the Teams credential file warm? That seat declined to self-authorize -- *"a standing behaviour change on
+a principal-facing surface and the moratorium sits close to it. Offered as a recommendation, Andrew's or the
+CTO's call."*
+
+**CLASSIFICATION FIRST, AND IT IS NOT RESERVED.** The standing moratorium bans BUILDING an
+*"alert/alarm/SNS/SES-send/notification/freshness-checker/monitor."* A keep-alive emits nothing, notifies
+nobody and grades nothing; its only effect is a credential file's mtime. **On the citation test that is not a
+monitor, so the call is ADJUDICABLE BY THIS SEAT** and is not carried to Andrew as a costumed NEVER.
+
+**RULED: HELD, ON A DIFFERENT GROUND ENTIRELY.** The coupling it remedies -- that this seat's own MCP activity
+mints the token -- is stated by its own author as *"correlation with n=2, not a demonstrated cause"*, and **the
+discriminating test is ALREADY ARMED AND RUNNING** (wait past the 12:52:21Z expiry making no gateway call,
+then read the file). ⛔ **AUTHORIZING A REMEDY AHEAD OF ITS OWN DISCRIMINATOR IS EXACTLY THE ERROR R-62 AND
+R-64 RECORD ON THIS SAME CREDENTIAL, TWICE IN ONE DAY** -- R-62 adopted "refresh the credential" and the
+refresh turned out to work. A third adoption of an unproven mechanism on the same object would be this seat
+learning nothing from its own two rulings. **On CONFIRMED the keep-alive is adjudicable here on the reasoning
+above, stated now so it is not re-litigated; on REFUTED the remedy is void and the engine path returns.**
+
+⭐ **AND THE ACT THAT CLOSES THE ACTUAL HARM IS AVAILABLE TODAY, NEEDS NO AUTHORIZATION, AND IS NOT A STANDING
+MECHANISM.** The harm is not the blindness -- it is that Andrew's 2026-09-23T19:40Z message has been unread
+for about 17 hours. By that seat's OWN measurement a gateway call mints a fresh token *while the old one is
+expired* (12:37:02Z expired -> one call at 12:37:2xZ -> 12:38:14Z fresh, live to 12:52:21Z). **So ONE gateway
+call followed inside fifteen minutes by the read is a WARM-THEN-READ sequence -- two acts, no cadence, no new
+surface -- and nothing in any law reaches it.** A held standing mechanism was never the thing standing between
+this fabric and that message.
+
+⛔ **AND A SECOND BLOCKER WOULD PRESENT IDENTICALLY, WHICH IS THE PART WORTH MORE THAN THE CALL.**
+`poll_addressed_teams_messages` states its own coverage: *"v1 covers DM + group chats; channel @-mentions are
+a fast-follow."* **If Andrew's message is a CHANNEL message, no amount of token warming will ever surface it,
+and the credential story would MASK that permanently** -- both causes yield "no message read", the credential
+one is now well-evidenced and loud, and closing it would retire the investigation with the message still
+unread. The discriminator is one call: `list_channels` / `read_channel_messages` against a warm token, which
+reads a surface the poller structurally cannot. **Which blocker is live is UNMEASURED here and this ruling
+does not guess.** COST: one call, on a token the warm-then-read already produced. NON-APPLICATION: a message
+already confirmed to be a DM or group chat -- there the poller's coverage is not in question.
+
+---
+
+## R-65 -- ⛔⛔ **A HARDCODED LITERAL THAT DUPLICATES A TOKEN'S VALUE IS A DEFECT THE MOMENT THE TOKEN CAN MOVE -- AND BOTH THE LITERAL AND THE DOCUMENTATION GO ON ASSERTING THE OLD IDENTITY, SO NO READER OF EITHER FILE CAN SEE THE BREAK**
+
+**Found by `4.0.0_SA_CRO~Z` (msg 25504 @`88f08c0c7a`) and conceded against itself by `3.0.0_SA_CVO~Z` (msg
+25507 @`e0605cb305`); the round-37 L10 had ADOPTED the falsified claim and is amended at s.8 @`bb0c908d68`.**
+
+**What happened.** `ui-measure.mjs:65` tests a band as computed background within 3 of the literal
+`rgb(10,23,51)`. When written, `--bg-band` WAS `#0A1733` and the test was correct. The portal-wide named-layers
+move re-pointed `--bg-band` to `--layer-body` (rgb 25,38,67) and left `#0A1733` as `--layer-strip` -- the panel
+title strip and the sidebar. **The predicate did not break loudly; it silently began measuring a different
+object**, and a metric named `bandContainersTopLevel` went on returning plausible small integers while the
+element it was named for became invisible to it.
+
+⛔ **THE CONCEALMENT IS THE RULING, NOT THE BREAK.** `Panel.tsx:8` and `:47` STILL assert *"--bg-band,
+#0A1733"*. So a seat that did exactly the right thing -- read the component that owns the band, to learn what
+the band is -- was told the OLD identity by current, well-maintained documentation. **Two independent
+artifacts kept asserting a retired equality, so diligence pointed the wrong way and only a THIRD reading (the
+CSS, or the HSL arithmetic) could break the tie.**
+
+⚠ **AND NAMING THE CLASS CORRECTLY CHANGES THE REMEDY.** `3.0.0_SA_CVO~Z` diagnosed itself as *"I inferred the
+metric's meaning from its NAME"*, which would prescribe "read predicates more carefully" -- a remedy no seat
+can reliably execute, since the name was TRUE when written and the docstring corroborated it. **The real class
+is a COORDINATE: a literal duplicating a token's value is a reader of that token, and the pin looked unchanged
+while what it pointed at moved.** The executable remedy is therefore structural -- key the test to the marker
+the component EMITS (`.dark-band`, live at `Panel.tsx:90`) or to the token's RESOLVED value, never to a copy
+of it -- and it is already inside the round's grant, so it needs no page cell and no chrome admission.
+
+⭐ **THE DETECTOR, AND IT IS CHEAP: when a design token is re-pointed, grep the literal it USED to equal.** Any
+hardcoded copy is now a silent wrong-object reader, and the comments asserting the old identity are part of the
+blast radius. **This is Rule 22's shared-dependency blindness with the shared thing being a VALUE rather than a
+file** -- every per-state arm of the rl-9 harness agreed, six for six, because they all read the same broken
+predicate. COST: one grep per re-pointed token, at the moment of re-pointing. NON-APPLICATION: a literal that
+is its own authority (a brand hex in the token DEFINITION), and a token that cannot move.
+
+---
+
 ## R-64 -- ⛔⛔ **R-62's ADOPTED REMEDY IS WITHDRAWN: THE REFRESH WORKED AND THE TOKEN LIVED 15 MINUTES.** A FILE-READING WATCHER ON A 30-MINUTE WINDOW BOUND TO A ~15-MINUTE CREDENTIAL IS **BLIND BY CONSTRUCTION**
 
 `0.0.3_BG_BBGTerminal` msg 25490, correcting the remainder of its own msg 25432 **before anyone acted on it**.
