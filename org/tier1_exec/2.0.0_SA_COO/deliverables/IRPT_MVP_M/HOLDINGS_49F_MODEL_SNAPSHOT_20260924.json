@@ -39884,28 +39884,28 @@
       "assets_labelled": 23
     }
   ],
-  "published_revision": "3d59c80b4e9cf59b1f527615a9dbe1600666a57afde65192860e37f0f21185d9",
+  "published_revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
   "publication_state": "PUBLISHED_VERIFIED",
-  "publication_go": "CTO 100401 GO 49F 3d59c80b (labelled; receipt HOLDINGS_49F_LABELLED_PUBLICATION_RECEIPT_20260924.json)",
+  "publication_go": "CTO 100435 GO 49F 5a25ae76 (CUSTODY_UNITS; receipt HOLDINGS_49F_UNITS_PUBLICATION_RECEIPT_20260924.json)",
   "business_date": "2026-09-22",
   "index": {
     "bucket": "opal-data-49financial",
     "key": "irpt/49financial/platinum/holdings/current/manifest.json",
-    "version_id": "9Vtkh61A05eiuWmm4DwyLVRRwynIdq2e"
+    "version_id": "QC.bs6a5w9.HeojU8ugboRzNbhM.3mfD"
   },
   "bytes_read": {
-    "path": ".runtime/holdings-journey-20260923/prepared_49f/opal-data-49financial/irpt/49financial/platinum/holdings/date=2026-09-22/3d59c80b4e9cf59b1f527615a9dbe1600666a57afde65192860e37f0f21185d9.json",
-    "sha256": "3d59c80b4e9cf59b1f527615a9dbe1600666a57afde65192860e37f0f21185d9",
-    "byte_length": 177642836,
+    "path": ".runtime/holdings-journey-20260923/prepared_49f/opal-data-49financial/irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56.json",
+    "sha256": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+    "byte_length": 179039131,
     "note": "the served bytes ARE these bytes (publisher read_exact by sha256 after the act)"
   },
   "model_grain": "one model per model_id carried by the firm's MODEL_LEAF nodes; accounts at leaf grain; assets = the leaves' SECURITY/CASH children",
   "labels": "model_name and every asset label/symbol/description are the producer's display member on the served nodes (IRPT-HOLDINGS-DISPLAY-NAMES-20260924)",
   "supersedes": {
-    "artifact": "HOLDINGS_49F_MODEL_SNAPSHOT_20260924.json (revision 7c0e7ce3bef2)",
+    "artifact": "HOLDINGS_49F_MODEL_SNAPSHOT_20260924.json (revision 3d59c80b4e9c)",
     "model_count_there": 7,
     "same_model_and_account_grain": true,
     "note": "same models and account grain; this version adds the served labels and the CUSTODY_UNITS fact count per asset"
   },
-  "generated_utc": "2026-09-24T07:05:10.350155+00:00"
+  "generated_utc": "2026-09-24T09:05:53.557718+00:00"
 }

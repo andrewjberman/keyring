@@ -2,6 +2,14 @@
 
 Seat `2.0.0_SA_COO~M` (CLAUDE, successor to the Codex seat since 2026-09-23 ~22:47Z). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.4. Reviewer `3.0.0_SA_CVO~M` (not live).
+As of 2026-09-24T09:1xZ. CUSTODY_UNITS SERVED at 49F and INF (CTO GO 100435 executed): 49F 5a25ae76 (manifest 9Vtkh61A -> QC.bs6a5w, etag
+732fa6d0, 09:00:43Z; 177 creates + 1 IfMatch; 3d59c80b retained) and INF d32e50c6 (.vBFsThYv -> k9U4ucuT, etag 0457b99e, 09:04:06Z; 43 creates +
+1 IfMatch; d03e91a4 retained). Each is the served labelled tree to the node plus one CUSTODY_UNITS fact per observed custody row (49F 5,836 of
+5,836 Schwab rows; INF 30,881 of 30,881 Orion rows; source_as_of = the node's custody clock; source_revision = the custody object's receipt sha;
+zero price facts). COT dec293d6 already carries units (13,656 of 14,426). Receipts HOLDINGS_49F/INF_UNITS_PUBLICATION_RECEIPT_20260924.json;
+overlays regenerated with the units fact counts. /verify stands at UNVERIFIED@MECHANICAL: /aws/lambda/irpt-holdings has had no invocation
+since 06:20Z (the CTO has the closing read at Andrew). Nothing further is owed by M on the goal's build side.
+Earlier state follows.
 As of 2026-09-24T07:1xZ. ALL THREE FIRMS SERVE LABELLED HOLDINGS (CTO GO 100401 executed): 49F 3d59c80b (manifest EvNOT_ocng -> 9Vtkh61A,
 etag ea06a1a0, 06:58:45Z; 176 creates + 1 IfMatch; 7c0e7ce3 retained), INF d03e91a4 (J_FeUeEA -> .vBFsThYv, etag d866755b, 07:04:38Z; 35 creates +
 1 IfMatch; 1ebc7696 retained), COT dec293d6 (06:20Z). Each built with its retained capture (49F tax snapshot sha 032c68db.., INF Eclipse map
