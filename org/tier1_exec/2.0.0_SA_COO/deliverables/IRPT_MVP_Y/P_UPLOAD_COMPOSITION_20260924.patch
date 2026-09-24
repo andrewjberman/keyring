@@ -137,7 +137,7 @@ index b75167242e..77dd4e835b 100644
      routes = dict(generate_entry.ROUTES)
      routes[UPLOAD_ROUTE] = UPLOAD_OPERATION
 diff --git a/infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py b/infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py
-index 65cea44fa6..80eaa06d30 100644
+index 65cea44fa6..e2eccafbd6 100644
 --- a/infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py
 +++ b/infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py
 @@ -67,9 +67,9 @@ def test_compose_ports_composes_the_eight_and_names_the_absent_four():
@@ -185,7 +185,7 @@ index 65cea44fa6..80eaa06d30 100644
      assert json.dumps(gi.describe(ports), sort_keys=True)  # the dry run's document is serialisable
  
  
-@@ -130,3 +132,92 @@ def test_the_upload_route_refuses_by_name_after_the_real_validator():
+@@ -130,3 +132,91 @@ def test_the_upload_route_refuses_by_name_after_the_real_validator():
      answer = handler({"routeKey": gi.UPLOAD_ROUTE, "headers": {"x-contract-version": "v1"}, "body": json.dumps(good)})
      assert answer["ok"] is False and answer["operation"] == gi.UPLOAD_OPERATION
      assert answer["status"]["public_reason_code"] not in ("UNEXPECTED", None)
@@ -268,9 +268,8 @@ index 65cea44fa6..80eaa06d30 100644
 +        lookup(case.owner["firm_id"], "IN-1")
 +
 +
-+@pytest.mark.xfail(raises=TypeError, strict=True,
-+                   reason="BLOCKER Y 100842 / M 100846: M's viewer seam (485b69c061) is not in _scope/maintained_sources.py")
 +def test_hop3_the_maintained_sources_accept_the_arguments_the_prospect_factory_passes():
++    # Was the strict-xfail discriminator for Y 100842 / M 100846; P's 19b38e2f22 restored the seam.
 +    import inspect
 +    from maintained_sources import resolve_comparison_fields, resolve_profile_fields
 +    viewer = {"input_owner": {}, "current_viewer": lambda: {}, "authorize_viewer_input": lambda *a: True}
