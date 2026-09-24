@@ -115,7 +115,29 @@ with the edge rm-4 -> rm-7; the assignee is told to act only on the binding mess
 the lane; R-57 ruled no pair; NEVER-2 binds the entry. Seating: `0.7.0_AE_CloudOps~A` holds AMGT_RESAPP work (the H03 leg)
 and no open order on another pipeline project at the cut (to-check read).
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~16:2xZ.** Flipped by the ISSUER; the lane left the record face alone.
+3 of 3 criteria PASS, proof-of-spec rc=0 VALID (re-run by this seat at HEAD on the lane's instance @f9d68312f2 under
+org/tier2_senior/0.7.0_AE_CloudOps~A/deliverables/AMGT_RESAPP_RM4B_20260924/). THE DEPLOY: artifact research/opal-amgt-scoped-api.zip
+VersionId ZacA2Kn0CWoJqOFLvTPe2kzZ4x_ctTYe -> 9z.fsHGW7ZN2Qf2yU_rsnv0wiL7uKqRS (807,904 -> 844,437 bytes), built at 19a22f2f51 which
+contains rm-4's 791806b1c9, the prior version preserved by bucket versioning and named as the rollback; plan 0/1/0 in place touching
+only s3_object_version, source_code_hash, last_modified (28 attributes and 4 blocks unchanged); apply 1 changed; replan No changes.
+L1: CodeSha256 -> y5bJBQsP8Q7Lfudb5nwc5wEr72IcH53uS5cz2T8bn/w=, equal to the artifact's metadata and the local sha. L2: content-stream
+digest 5f150ad66d00e76f5364058eda899723f0b1a9623af058ce558f974ac6c5d602 EQUAL before and after; CAT 7c017870... DIFFERENT, so equal was
+free to fail. On the same real bytes the raw sha and the /CreationDate-normalised sha both read NOT EQUAL (77,862 -> 77,828 bytes, the
+entry present -> absent): amendments 1 and 2's comparands would each have graded this correct deploy FAIL and fired the rollback
+branch; amendment 3 stands vindicated on the deploy, not on the lane's simulation. L3: format=rich -> 200 text/markdown 58,549 bytes,
+first line "# BOEING CO/THE [BA US Equity] Research Note"; format=xml -> 400 naming pdf and rich. NEVER-2 entry
+20260924T1523Z_amgt-rm-7-print-format-rich opened @192d45272d BEFORE the build (the artifact write being the irreversible act), closed
+@35038a7459 at 15:58:26Z with all three legs proven; deploy_ledger lists nothing open. Rows: Z-S253 (INERT), Z-S254 (ARMED), Z-S256
+(the build's lib/ precondition, INERT) -- DISARMED on the issuer's word, Z-S258 the carrier (filed by the lane, each remedy on its own
+evidence line; ARMED rows stay in place). Three blockers on one order, each one layer deeper than the last (the artifact write no cell
+owned; the pin's effect on the comparand; the generated-module stamp no AMGT cell moved): the lane's --build-only-at-cut remedy is
+adopted for this issuer's next deploy cut. NOT CLAIMED, carried to the analysis: rm-4's rich CONTENT is graded on the worker's fixture
+(162/162 figures, 43/43 cites), never on the live body; the build pip-downloads pinned wheels from PyPI inside the named script -- an
+egress the face inherited by naming the script rather than declaring; AC3's raw grep needed a rail marker; a recorded invocation typed
+as a shell command fails invocation-alignment against the file's XML-escaped `&&`.
+
+<status>complete</status>
 <round>38</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
