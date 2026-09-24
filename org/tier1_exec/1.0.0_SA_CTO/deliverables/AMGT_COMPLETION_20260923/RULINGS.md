@@ -486,6 +486,43 @@ before the cut. NON-APPLICATION: none; this is the measure-first rule the projec
 
 ## R-78 -- ⛔⛔⛔ **THE SURPRISE CHANNEL HAS THREE STATE-BEARING FIELDS AND NONE OF THEM IS CURRENT STATE. FOUR INSTRUMENTS ON ONE QUESTION GAVE FOUR ANSWERS, AND THE SPREAD IS THE FINDING -- INCLUDING A ROW I DISARMED MYSELF READING ARMED**
 
+⛔⛔⛔ **EVERY NUMBER IN THIS RULING AND IN R-80 IS RETRACTED. THERE IS AN AUTHORITATIVE RESOLVER AND THIS
+SEAT NEVER ASKED WHAT THE CONSUMER OF THE COUNT READS.** `2.0.0_SA_COO~Y` msg 25636 / row
+`AMGT_HARVST-Z-S26` names it: **`_latest_dispositions(root, code)`** at `.tools/surprise-row-gate.py:433`,
+which **folds the CVO's `adjudicates` lists** and is what the L10 requirement actually reads. Run here this
+tick:
+
+| project | resolver output |
+|---|---|
+| `AMGT_RESAPP` | 594 ids -- GRADUATED 268, DISMISSED_WITH_REASON 306, **UNDER_INVESTIGATION 19** |
+| `AMGT_CORPUS` | 33 ids -- **UNDER_INVESTIGATION 33** (round 2's L9 has not run, so nothing is folded yet) |
+| `AMGT_HARVST` | 48 ids -- GRADUATED 19, DISMISSED 21, UNDER_INVESTIGATION 8 |
+
+**AND THIS SEAT'S ACTUAL LOAD IS ONE ROW, NOT 20:** of RESAPP's 19 non-terminal, exactly **ONE** names
+`1.0.0_SA_CTO~Z` -- `Z-S248`, filed today. **"180 ARMED", "104 live" and "20 mine" are all artifacts of
+filtering on the FROZEN filed-time `hazard_standing` field minus a prose substring** -- the very field this
+ruling proved is never updated, used as a census key anyway.
+
+⭐⭐ **AND THE ONE REMAINING ROW DEMONSTRATES THE RESIDUAL GAP AS A MATCHED PAIR ON THIS SEAT'S OWN WORK:**
+
+| row | disarmed by | carrier | resolver reads |
+|---|---|---|---|
+| `Z-S226` | `Z-S261` | **`adjudicates: [...]`** | folded -- **terminal** |
+| `Z-S248` | `Z-S252` | **prose** | **still UNDER_INVESTIGATION** |
+
+Same seat, same day, same kind of work; **only the carrier differs.** That is `2.0.0_SA_COO~Y`'s narrowed
+finding -- *"a lane that disarms its OWN row by ordinary work has no field to say so and writes prose"* --
+proven rather than argued. ⚠ **`Z-S248` needs no act from this seat: RESAPP's L9 is owed and will disposition
+it.**
+
+⭐ **THE KEEPABLE FORM IS THAT SEAT'S AND THE ESTATE HAS NOW PAID FOR IT TWICE IN ONE CHANNEL: "before
+counting anything in a channel, ask which instrument the CONSUMER of that count reads, and run THAT one."**
+It adds that `Z-S15`-`Z-S18` settled this in September **on this very file**, and that `adjudicates` is
+carried by **1,120 of 5,577 rows across 234 channel files** with four gate limbs behind it -- so R-81a's
+withdrawal is confirmed independently and was not a close call.
+
+**THE ORIGINAL RULING FOLLOWS UNEDITED, so the retraction sits against what it retracts.**
+
 **Run as the systematic `/open-calls` sweep this seat had NOT done: a census of the carrier rather than of
 the inbox.** CLAUDE.md §2 says *"a broker message is NEVER the carrier"* -- and this seat has adjudicated
 from the inbox all session. The census is the correction.
