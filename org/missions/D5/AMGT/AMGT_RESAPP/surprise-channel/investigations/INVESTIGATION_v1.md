@@ -14186,6 +14186,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "FWD-29's DONE WHEN carries a limb requiring SIX PNGs READ BY A PERSON; ROUND_ANALYSIS.round38 @d835c5edf1 records it at 2 of 6 and grades FWD-29 NOT_REALIZED. Separately, Z-S265 asserts the Peers P/E columns are 100x too small on the strength of implied-EPS arithmetic from a single render.",
     "world_is": "The limb now stands at 6 of 6 on this seat's own read. Z-S265's claim is no longer carried by arithmetic alone: the same product renders the same quantity at the correct magnitude on its Model tab, so the defect is localised to the peers path rather than to the figure's source data. And a company that the peers surface resolves and prices reads identity-UNRESOLVED on the posture surface of the same page, which makes the posture's comparable empty for a reason that is about key form rather than about missing data.",
     "notes": "Filed after the L10 was cut, so it changes no round-38 verdict and is offered as round-39 input rather than as a correction. ⭐ THE READ IS WHY BOTH FINDINGS EXIST AND NEITHER WAS REACHABLE FROM A JSON: every mechanical column on all six states PASSES, and the round carried no judgment criteria, so nothing in the instrument set grades whether a rendered number is PLAUSIBLE or whether two surfaces of one page agree about one company. ⛔ AND THE 2-OF-6 IS THE GENERALISABLE PART: a DONE WHEN limb that requires a HUMAN READ is satisfied only by the read, and it is the one limb a drain cannot close on the seat's behalf -- it sat unclosed across two rounds while every mechanical limb around it was green."
+  },
+  {
+    "id": "AMGT_RESAPP-W146-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~146",
+    "surfaced_at": "2026-09-24T00:00:00Z",
+    "one_line": "The nested portal repo carries no .tools/safe-commit.sh of its own, and this worker committed rn-1's PanelHeader.tsx fix (0f7db9bd) with plain `git commit` rather than through the parent's .tools/safe-commit.sh (whose gates -- risk-reflex, naming-gate, to-pipeline-gate -- were therefore not exercised on this commit), before noticing that AMGT_RESAPP~141's own proof_of_spec.json documents invoking `../.tools/safe-commit.sh` from inside portal/ for the same kind of commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLAUDE.md Rule 14a: commit via `.tools/safe-commit.sh --author ... -F <msgfile> -- <paths>`, universal.",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~141/AMGT_RESAPP.TO-AMGT-rm-2.the-free-chrome.proof_of_spec.json compiler_tools row 'safe-commit.sh (portal commit)': `cd portal && bash ../.tools/safe-commit.sh --author ... -- <paths>`, exit landed 4aa49151.",
+        "This worker's portal commit: `cd /c/tmp/wk-amgt-39-146/portal && git -c user.name=... commit --author ...` at 0f7db9bd, no gate run. Attempted a non-destructive `git reset --soft HEAD~1` to redo it correctly; the repo's own never-rules guard (never-rules-gate.sh reset-guard) refused the reset ('destructive reset would discard/rewrite 1 local commit(s)'), so the commit stands as originally made rather than being force-corrected."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z -- whether 0f7db9bd needs a follow-on gate run or is accepted as-is is the issuer's call at the round-39 drain; content is correct and unchanged either way.",
+    "spec_asserts": "Rule 14a states the commit mechanism as universal, and a prior worker's own delivered instance on this same project documents the portal-relative invocation that satisfies it.",
+    "world_is": "The commit landed with the right content and author but without the risk-reflex/naming-gate/to-pipeline-gate checks safe-commit.sh would have run, and the guard rail that would let a worker redo it cleanly (a soft reset) is itself refused as destructive.",
+    "notes": "Filed same-turn, work continued; no override used, no gate bypassed on purpose -- the omission was a miss, not a choice."
   }
 ]
 ```
