@@ -14284,6 +14284,33 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "On the deployed function the export omits one absence the page discloses, and on both planes it publishes 17 figures the page does not show, 10 of them a series the page refuses as unresolved. The round-38 grade read the harness's OK, which grades missing items only.",
     "disarm_owner": "1.0.0_SA_CTO~Z -- FWD-30's grade is the CTO's at L10; the fix (render_pack.build_rich_text honouring the page's REFUSED rows and absence lines, and the harness grading extras) is a round-40 cell this issuer cuts on that analysis.",
     "notes": "Filed by the issuer at rn-5's close. rn-5 is complete as a measurement: its AC2 FAIL is the cell's finding, recorded and not repaired, as its face directs."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S269",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-24T20:35:00Z",
+    "one_line": "ITEM 7 IS OBTAINED after three rounds of being carried: the authenticated DEPLOYED render was captured with Andrew signing in interactively, and the deployed Peers table carries NO P/E VALUES AT ALL -- every member reads 'not carried' under P/E 2025 and P/E 2026 and P/E 2027 is an ABSENT column -- where round 39's LOCAL render after rn-2 carries corrected values, so Z-S265's fix is neither confirmed nor contradicted on the served plane but UNOBSERVABLE there.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MECHANISM, copied from 2.0.0_SA_COO~Z's own proven traces rather than invented: headed Edge via the portal's playwright-core, chromium.launchPersistentContext(scratch profile, channel msedge, headless false, 1440x1000). Andrew signed in INTERACTIVELY in that window at 20:25:29Z -- the act no seat can perform, which is why this item stood open for three rounds. A SCRATCH profile was used and his own Edge Work profile was never touched; bearer PRESENCE is recorded and its value never read or stored.",
+        "SESSION AND API HEALTH: signed_in true, bearer_present true. 15 API calls to /api/scoped/amgt and /auth, tally 14x200 and ONE 401 -- that 401 being the pre-sign-in /auth/refresh probe, which is the correct response for a visitor with no session. One console error, the same 401. The deployed API layer answers authenticated.",
+        "THE FINDING, read from the render as an image: on the deployed Peers tab every visible member reads 'not carried' under BOTH P/E 2025 and P/E 2026, and P/E 2027 is a column headed (ABSENT). Members observed: BOEING CO/THE (subject), Deere & Company DE, Eaton Corp. Plc ETN, Union Pacific UNP, Uber Technologies UBER. Mkt Cap DOES carry values on the same rows -- 159,623 / 165,968 / 174,077 / 175,478 / 143,939 -- so the table is populated and the P/E columns specifically are not.",
+        "THE CONTRAST THAT MAKES IT MATTER: ADJUDICATION_v49 records the LOCAL render after rn-2 carrying Deere 34.70, Lockheed 21.40, Uber 15.03, GE Vernova 27.96, each matching an EPS derived from price alone. The served surface carries none of those numbers in any form, correct or 100x wrong.",
+        "THE PANEL'S OWN PROVENANCE, from the same capture: DERIVED, 12 comparable(s), universe vintage 2026-08-06, as of 2026-09-24T0310Z -- a vintage that PREDATES rn-2's fix.",
+        "NOT CLAIMED, deliberately: WHY. A deployed artifact predating rn-2, a different CSC map vintage, and genuinely absent columns for this vintage are all live candidates and none is measured. Round 40's item is a MEASUREMENT, not a fix.",
+        "TWO INSTRUMENT MEASUREMENTS FROM THE SAME RUN. (1) getByRole('tab') returns ZERO on this tab bar: the five tabs are plain BUTTONs carrying no ARIA role=tab, which is an accessibility defect on a client-facing page. (2) The FIRST capture attempt produced a Peers PNG BYTE-IDENTICAL to Exec Management (same sha256 4e965857e3c06a83, same 198781 bytes) because getByText('Peers', exact).first() collides with the lead panel's non-interactive 'PEERS' label, which precedes the tab in DOM order. That was this seat's instrument defect, and it was caught by HASHING the two captures rather than by looking at them -- two screenshots that differ to the eye cannot be told apart from two that do not without a digest.",
+        "CONFIRMED ON THE SERVED SURFACE from the same captures, each previously seen only on the local render: 'BLOOMBERG: UNKNOWN' beside BA US; 'Description: ABSENT' in the lead panel header; and the stale provenance 'pool:universe/v1/2026-09-16.json#as_of=2026-09-16'. ADJUDICATION_v49's findings 4 and 6 therefore hold on the deployed plane, not only locally."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rounds 37, 38 and 39 grade FWD-21..FWD-29 on a LOCAL vite render over captured fixtures and state the PLANE bound each time; ADJUDICATION_v49 s.4 bound 2 records item 7, the authenticated deployed render, as NOT OBTAINED and needing Andrew present because no seat holds an MFA portal sign-in.",
+    "world_is": "Item 7 is OBTAINED. The deployed page renders authenticated with real data, a healthy API layer (14 of 15 2xx) and a genuinely polished Thesis tab carrying a real BCA deliveries chart with cited passages. AND the Peers table on that same surface carries NO P/E values at all, where the local render after rn-2 carries corrected ones -- so the 12-of-12 clean grid measures a data state the served surface does not have. Every grade in rounds 37-39 stands exactly as bounded, LOCAL, and no stronger.",
+    "notes": "No disarm_owner is set because nothing here is ARMED: the plane bound was already stated in both analyses, and this row QUANTIFIES that bound rather than finding a violation of it. What it adds is that the gap is not merely 'not deployed yet' -- the served Peers carries no P/E in any form, which is a different state from an older artifact showing the old wrong values. Round 40 owes a MEASUREMENT of why, and the deployed render is now a repeatable act: the scratch profile at the session scratchpad holds the session, so a re-run needs no further sign-in until it expires."
   }
 ]
 ```
