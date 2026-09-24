@@ -19,7 +19,9 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (00000000000000000000) S122 builder probe LANDED on CLOUD @bf938bcf39 by the CTO under the audited
+CTO review queue, in order: (000000000000000000000) irpt-status SERVED with the installed assembly (5E8T+/LV, 10:53Z; the two
+history routes on its own table; CRO corroborated); (iii) routes server-first then the client flag; edge (a) mapped in the (iii)
+commit (batch 41). (00000000000000000000) S122 builder probe LANDED on CLOUD @bf938bcf39 by the CTO under the audited
 cross-lane override (one file, one lane); the generate function's served read corroborated by the CRO; NOT_READY ruled the
 correct public code for the uncomposed branches (batch 40). (0000000000000000000) DSGN_IRPTV1 ROUND 2 CUT on the CTO's word (decomp v2, 8 cells, the seven
 P/M touches ruled by element + span, the FWD-11 sweep as a join cell spawned last = one issuance) (batch 39).

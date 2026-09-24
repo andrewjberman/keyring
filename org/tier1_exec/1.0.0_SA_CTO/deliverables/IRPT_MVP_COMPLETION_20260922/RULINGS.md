@@ -2696,3 +2696,33 @@ file, audit row `2026-09-24T10:46:10Z OVERRIDE 1.0.0_SA_CTO 1`. The commit-gate'
 pre-existing. P disarms the row citing bf938bcf39; P's branch carries it by cherry-pick (covered by the same word) or at
 MSTR's drain; (ii) needs no skip (ops/ has no BUILD_MANIFEST.json). Recurring work on that file would take a grant row, not
 a second override.
+
+
+## 2026-09-24 11:0x UTC - Claude CTO batch 41: irpt-status SERVED with the installed assembly (the two history routes on the function's own table); the (iii) order and the Global-viewer edge ruled; the CRO's served read corroborates
+
+Instruments: P's receipt (100532) and the CTO's own readback of irpt-status on AWS; the CRO's read at the served bytes (100536).
+
+### IRPT-ANALYSIS-BACKEND-II-SERVED-20260924 (P 100532; CTO readback; CRO 100536)
+irpt-status SERVED 10:53:17Z: Handler status_installed.lambda_handler (P's file reports/status_installed.py, source 896680c2de,
+the resident_installed / generate_installed shape), CodeSha 5E8T+/LV4p22RfqWCyacy13I7+2QPxGIs2nuE1oVQBs= (299,145 bytes, 42
+members), composing once per container the DynamoAcceptance store, the retained repositories bound to the PACKAGED ACTIVE X10
+row, the owned readers under the resident's ONE authorization rule, and ops/entry.py:build_owned_entry with analysis-request-
+history and analysis-request-read on the function's OWN route table (five routes; the 09-21 bytes held three); the read grant
+exactly the four retained families under the policy prefixes for the three firms (12 ARNs; bucket from scopes.json; no write,
+no list, no profile read); the two table env keys explicit; map re-pins + 17 rows, no BAU_* override; census 10 same / 6
+changed / 26 added / 0 removed; ledger before, plan 0/2/0, replan No changes, recorder 9cd8ee37ac, ledger CLOSED @8c0379043d.
+The CTO's readback and the CRO's served read (CodeSha == the zip's sha, 8 of 8 named members, the five routes composed from
+the deployed bytes) agree on every field. EXERCISED: invoke {} -> CONTRACT_VERSION; an unsigned history GET resolved from the
+function's own route table -> NOT_AUTHORIZED by name, 2 ms; a signed-in owner read is not exercisable yet (no retained
+Analysis request exists in any firm). THE NAMED LIMIT, accepted as a disclosed bound: the reader does not re-validate a retained
+report's schema on the way out (no jsonschema on that runtime); the writer validated at persist and the reader's integrity
+check is sha256(blob) == revision; named in the module, the .tf and the map. S122 REMEDIED (cherry-pick b327fccb9c on P's
+branch; row S123 names the positive control). Hops 9 and 10 of the Analysis trace have a served handler; unpublished until
+(iii). RULED: (iii)'s order as P reads it -- "portal-first" is the contract rule for a NEW member or code, and these three
+operations already exist in the portal's contracts, so the SERVER side lands first (routes.json + the api root under its own
+ledger), then the upload POST's host with its named refusal (public NOT_READY until the composition card is answered), then
+the client flag on the next portal candidate from DEV 895752676a -- flipping the flag before the routes serve would send a
+browser at a 4xx. EDGE (a) RULED: a Global viewer with no selected_tenant reaching owned_requests._data_firm's
+CONCRETE_REQUEST_DATA_FIRM_REQUIRED must not read UNEXPECTED whatever the portal sends; P adds the one mapped reason under its
+exact-file grants in the (iii) commit (Y semantics retained, Y reviews on return). Edge (b) is the design (current_authority
+is the resident's grader). Y's runbook hop-3 `corrections` field remains Y's one-line correction on return.
