@@ -2554,3 +2554,41 @@ GO; ordinary_authorizer optional; resolution_kimi (an external LLM) never compos
 at upload through the resident's YCharts session sits inside the standing host-workflow authorization or is a new per-use class,
 and whether any price source is wanted on a prospect upload (the CTO recommends none in v1). P builds the non-egress parts under
 the CTO's word meanwhile and stubs nothing.
+
+
+## 2026-09-24 10:1x UTC - Claude CTO batch 37: the DSGN_IRPTV1 round-1 candidate is on portal DEV (895752676a); S1 fixed issuer-direct and read back at zero errors; MSTR's overlap stop fired on the GO's wording and cleared on measurement; the CRO's Analysis addendum closes hops 5 and 6 and re-cuts hop 2 as a composition
+
+Instruments: the CTO's own tsc run and diff on the candidate at 837983cb; the CTO's own fetch of portal origin/DEV after the
+landing (895752676a; the candidate an ancestor; index.tsx differs from the candidate by P's F1 block only); MSTR's overlap read
+(100508) and receipt (100514); COO~D's S1 receipt (100504); the CRO's addendum @c7126b5142 (100501).
+
+### DSGN_IRPTV1 round-1 candidate LANDED on portal DEV
+S1: COO~D's issuer-direct fix on the candidate, commit 837983cb, ONE file (__tests__/dsgn-irptv1/iv-t-3.hero-fed.test.ts, +4/-1:
+the result union narrowed to its ok arm before `block` is read; the node list typed); CTO re-read: `bunx tsc -b --noEmit` 0
+errors, rc=0; the product surface exactly as reviewed at 7736e6cc. Disarm row DSGN_IRPTV1-S2 @07c4156d08 names the commit and
+the count FIVE (S1's three was the drain's tail-limited read; the CTO's read is the disposition's). GO to the landing (100505).
+MSTR STOPPED on the GO's own wording ("if any path overlaps, STOP and say which") with the measurement: exactly ONE overlapping
+path, src/pages/InvestorReporting/index.tsx, touched on DEV by THIS fabric's P 013323f0 (F1, the workspace key deps at 43-50),
+not by site Z; the candidate's hunks at :19 (the IdentityCard import) and :186 (the mount) -- disjoint rows, merge-tree rc=0,
+the merged file = DEV + D's two lines; site Z touched none of the 14 paths (the GO's "15" double-counted the S1 test file).
+PROCEED (100511). MSTR's act: `merge --no-ff --no-commit dsgn-irptv1-r1` onto origin/DEV 1267a67e, staged set = the 14 paths,
+0 conflicts, commit 89575267 (parents 1267a67e + 837983cb), VALGATE D-1 PASS, push 1267a67e..89575267, ls-remote read
+895752676a. CTO VERIFICATION on its own fetch: origin/DEV = 895752676a; 837983cb is an ancestor; index.tsx vs the candidate =
++6/-1 (P's F1 block, the union as described). Under Andrew's standing consolidation word, as candidates 1-3. Rollback = DEV
+re-pointed to 1267a67e. So DEV now serves, on Anna's account, the identity card, the performance headline, the holdings hero
+fed from the served tree with model names, and the security list -- FWD-1's eight hops on the real backend, pending the
+signed-in walk that is Andrew's. The CVO's L8/L9 and slug proceed independently; the round-1 analysis follows the slug.
+
+### The CRO's Analysis addendum @c7126b5142 (100501), read
+P's four-port census corroborated on the CRO's own instrument at 8c05e5a321 (UploadService constructed 0 times; no upload
+index class; resolve_prices produced nowhere; no comparison-catalogue loader; ordinary_authorizer adapted nowhere; security
+resolution = a YCharts call per unresolved symbol through resident_session.py:115; resolution_kimi = an external LLM) -- 8 of 12
+/ 4 of 12 EXACT on a second instrument. Hop 2 re-cut from "wire the route" to "compose the upload service"; hops 5 (the resident
+running, the one consumer, no ESM by design) and 6 (the bundle captured and graded) CLOSED; hop 4 refined to the installed-
+factory cut. The CRO's READINGS, not rulings, carried for the card: prices out of v1 removes the resolve_prices question (the
+runbook's fixture is market value per row; normalized dollars are the thread's unit); the upload index in irpt-requests reuses
+the one table the resident reads; symbol resolution through the resident's template resolver is the same client class and host
+run 7 proved, bounded per unresolved symbol. The CRO also names the custody branch as the nearer live thread if a prospect
+upload is not the first journey -- a sequencing input; the prospect stays the thread because Andrew said an analysis may be for
+a totally new client (~05:4xZ), and the custody branch (i-b) is the nearer live EXERCISE of the same pipeline. The two egress
+questions remain Andrew's card.
