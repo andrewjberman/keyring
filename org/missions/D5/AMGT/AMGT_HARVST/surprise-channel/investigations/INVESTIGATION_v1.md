@@ -1135,6 +1135,33 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "R-78 offers 'hazard_standing == ARMED, minus rows a later row in the same file cites' as the best available resolution signal, and invites every seat to run it on its own serial.",
     "world_is": "The query is sound until someone writes its ANSWER back into the population, which is what the channel asks a measuring seat to do -- findings land as rows. From that moment the census row is indistinguishable from a resolution for every id it names, and the instrument reports the opposite of the truth. A seat that runs the census, files it, and re-runs it later reads its own remaining work as done.",
     "notes": "THE REMEDY IS STRUCTURAL AND IS THE SAME SHAPE AS R-78's FINDING ONE LEVEL UP. R-78: no field carries current hazard state, so state is inferred from prose. This: no field carries RESOLUTION either, so resolution is inferred from a substring match over prose -- and prose is where enumerations, blame and class-grouping also live. A structured `resolves: [<ids>]` field on the row that performs a disarm would answer both questions exactly and would be immune to enumeration, because a census row resolves nothing and would say so by carrying an empty list. That is a schema and gate question and it is 1.0.0_SA_CTO's, not this lane's; it is raised, not built. INTERIM DISCIPLINE this lane adopts and states so others can: a census or index row NAMES NO IDS IN ITS EVIDENCE, or names them in a form the heuristic does not read. WHAT THIS DOES NOT CHANGE: the 17 rows are still this lane's to work, and the only sound instrument for each remains a read of the row against the world. hazard_standing stays ARMED on this row because the contamination is live in the file right now."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S24",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-24T17:10:00Z",
+    "one_line": "FIVE of this lane's 17 open rows are DISARMED, each against HEAD rather than against recollection: four were already fixed by landed code that NAMES THE ROW IN ITS OWN COMMENTS, and the fifth is disarmed by this lane performing the documentation remedy the row itself named as its second option.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_HARVST-Z-W10-S2 (harvest_client never wired into Worker) -- DISARMED at HEAD: __main__.py:176-181 builds `harvest_client = store._default_client()` under --harvest-grammar and passes `Worker(root, config, harvest_client=harvest_client)`. The comment at :173 names this row id",
+        "AMGT_HARVST-Z-W10-S4 (a probe failure aborts the five-publisher run) -- DISARMED at HEAD: __main__.py:157-171 wraps the probe body in try/except, records UNRESOLVED-CHALLENGED with its reason, closes the client in a finally, and falls through to the normal fetch. The comment at :148 names this row id",
+        "AMGT_HARVST-Z-W15-S1 (a mid-loop raise discards already-captured listing pages) -- DISARMED at HEAD: worker.py:223 the persist now sits in a `finally` WRAPPING the per-article loop, so a raise from anywhere inside client.articles() can no longer discard pages. The comment at :224 names this row id",
+        "AMGT_HARVST-Z-S10 (the moved persist can raise INSIDE a finally and REPLACE the propagating exception) -- DISARMED on its OWN stated condition, which was 'closes when AC5 passes and the drain lands'. BOTH halves measured: worker.py:245-261 reads `already_propagating = sys.exc_info()[0] is not None` BEFORE attempting the persist, catches the persist failure into its own `harvest_listing_persist_failed` event, and re-raises ONLY when nothing was already propagating; and the HVST-t-1 proof_of_spec reads AC5 PASS (AC0-AC5 all PASS). Code at HEAD is the drain",
+        "AMGT_HARVST-Z-W10-S6 (upload-harvest silently builds a REAL S3 client) -- DISARMED BY THIS LANE at b5ce8f4a5f, taking the row's own second option verbatim ('document plainly that upload-harvest is never offline-safe through the CLI') rather than inventing the flag its first option suggested. The mechanism was re-verified at HEAD before writing the note: uploads.py:140-142 sets self.client with NO default, and every store writer reached does `client = client or _default_client()` (bronze_put :226, silver_append :351, silver_latest :304, fetch_key_exists :183), so the None becomes a real client rather than failing loudly",
+        "THE EDIT IS COMMENT-ONLY AND THAT IS MEASURED: ast.dump(HEAD) == ast.dump(working), with a positive control (one token renamed) confirming the comparison can detect a difference; byte delta +1114, all comment",
+        "DISCLOSED, PRE-EXISTING, NOT CAUSED HERE: `pytest lib/opal_data_harvest` reads 3 failed / 160 passed / 4 subtests passed at HEAD -- test_verification's barrons-contract case (FileExistsError WinError 183, a Windows path artifact) and two subtests of test_worker's broken-dow-jones case (AttributeError at publishers.py:672). The AST identity above is what makes that attribution sound rather than plausible"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S22 reported 17 rows ARMED and uncited for this lane, and Z-S23 established that no form-based recount of the file is valid -- so each row needs a read against the world.",
+    "world_is": "Five read clean on that method. FOUR of the five were fixed by code that LANDED, and the landed code names the row id in its own comments -- so the disarm evidence was sitting in the repository the whole time, addressed to exactly the question the census asks, and no channel field could see it.",
+    "notes": "THE KEEPABLE FORM, and it is the cheapest disarm instrument this project has found: WHEN A FIX NAMES THE ROW ID IN THE CODE COMMENT, THE CODEBASE ITSELF BECOMES THE RESOLUTION INDEX -- one grep of the source for a row id answers 'was this fixed' far better than any citation heuristic over the channel's own prose, because a comment naming a row is written BY the fix, at the moment of the fix, by someone who knew. Four of five landed that way and it is worth making the habit explicit. TWELVE REMAIN for this lane, each owed its own read; this row claims nothing about them. Per Z-S23 this DOES enumerate ids, which is correct here: a disarm row is the one row type whose naming of an id MEANS resolution, and it is the census/index rows that must not."
   }
 ]
 ```
