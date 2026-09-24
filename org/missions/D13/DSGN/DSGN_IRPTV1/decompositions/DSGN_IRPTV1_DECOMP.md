@@ -8,7 +8,7 @@
  "fabric": "laptop",
  "decomp_version": "v3",
  "step": 5,
- "prd_ref": "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@4746617b10",
+ "prd_ref": "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@8942931687 (v0.7: PATHS + SURFACE MANIFEST only over v0.6 @4746617b10; ENDPOINT bytes unchanged)",
  "prd_half_hashes": {"ratified-text": "STALE -- OWED BY 3.0.0_SA_CVO (the ENDPOINT changed at v0.6; prd-signoff status 2026-09-24T22:1xZ: WITHHELD)", "brief": "ADMITTED (auto: the CRO wrote the brief, spine v3.19 L4-R)"},
  "round_analysis_ref": "none -- the first cut after the FAST interval (closer-drive FAST -> FULL, call 5); input = PRD v0.6 + org/missions/D13/DSGN/DSGN_IRPTV1/STATUS.md@3730d145b5",
  "order_ref": "1.0.0_SA_CTO 100904 (Andrew-direct via 4.0.0_SA_CRO 100892: finish the IRPT UI; back onto /canonical-drive)",
@@ -117,7 +117,7 @@ outcome once there at the close. PROD stays gated.
 
 **Ruled touches on files this project does not own, named for the CTO before the issuance:** `IR/index.tsx` (IV-e-16, the
 header action), `IR/tabs/reporting/ReportingTab.tsx` (IV-e-16, IV-e-18), `IR/tabs/holdings/HoldingsTab.tsx` (IV-e-10,
-IV-e-18), `IR/global/FirmAttribution.tsx` (IV-e-18), `IR/contracts/wire/**` (IV-e-17, generated output), and the shared
+IV-e-18), `IR/global/FirmAttribution.tsx` (IV-e-18), and the shared
 files `src/lib/modelPortfolioColors.ts`, `src/lib/chartColors.ts`, `src/ui/components/catalyst/combobox.tsx`, `portal/DESIGN.md`.
 
 ---
@@ -192,14 +192,14 @@ move where facts print and how the page looks; every fact is retained one click 
 
 ## 7. FINDINGS FOR THE CTO (at the cut)
 
-- **F1** -- PRD v0.6 PATHS and SURFACE MANIFEST name `portal/src/components/catalyst/combobox.tsx`; the file is
-  `portal/src/ui/components/catalyst/combobox.tsx` (comp-adversary: GONE at read-vintage). IV-e-9 writes the real path.
+- **F1** -- CLOSED by PRD v0.7 @8942931687 (CTO 100919): the PRD now names `portal/src/ui/components/catalyst/combobox.tsx`.
 - **F2** -- the Positioning hover card `HoldingsTreemapTooltip` is defined inside `pages/Positioning/tabs/HoldingsTab.tsx`,
   a reference page this project never edits: IV-e-13 copies the pattern onto `DataTooltip`; it does not import it.
 - **F3** -- the FAST interval touched P's contract surface twice on its owners' asks (`contracts/envelope.ts` on Y's spec
   edit 2 @088386fe; `contracts/wire/consumed.ts` regenerated on P 100861 @9902bf25) and once on the CTO's step-2 routing
   (`contracts/adapt.ts` + `contracts/index.ts` @13b5356f, CTO 100905). PRD SURFACE MANIFEST says NEVER for
-  `contracts/**`; IV-e-17 carries one more such touch (generated output). A ruling that these consumer-side acceptances
-  are this seat's under the frontend-integrator word (Andrew ~15:31Z) closes it.
+  `contracts/**`; IV-e-17 carries one more such touch (generated output). CLOSED by CTO 100919 / PRD v0.7:
+  `portal/src/pages/InvestorReporting/contracts/**` (wire included) is DSGN_IRPTV1's write surface, a change landing only on
+  the owning seat's written spec; the producers keep `docs/contracts/investor-reporting/v1/**`, P keeps `portal/src/api/**`.
 - **F4** -- this seat's interim classifier lookup (86561aef) guessed a class from the Positioning ETF table; 13b5356f
   retired it for the served member, so a fixture or firm without the member reads Unclassified until M emits.
