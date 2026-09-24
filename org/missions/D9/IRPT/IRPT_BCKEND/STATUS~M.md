@@ -39,18 +39,19 @@ carries a model. Then /verify on all three criteria.
 
 ## Next list (enrichment, in order)
 
-1. A refused 49F account shows NOT_READY. It should name "not covered": OBJECT_NOT_COVERED from the named vocabulary,
-   at `holdings/snapshot.py` + `entry.py`. It is a served-code change: ledger entry + never-widen.
-2. The 49F publication header discloses its directory-active refused population (37) with reasons. That needs a
-   republish under a CTO GO.
-3. Characterize the 11 refused accounts that the Black Diamond cross-reference places in the 0833 universe (custody
-   present at 09-22, or not).
+1. Andrew's returning HAR: INF READY with a model leaf, and a 49F account that carries a model. Then /verify.
+2. The 49F publication header could disclose its 37 directory-active refused accounts with a reason. That needs a
+   republish under a CTO GO. It is low value while the directory is 09-17 (parked row 1).
+
+Done this lease: the 37 refused 49F accounts hold no custody. 0 of 37 appear in any 49F source at 09-22; the positive
+control recovers 7,522 of 7,522 published accounts. The refusal is correct (verify addendum @2cb43fd1e4).
 
 ## Parked
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
 | Served directory as_of_business_date reads 2026-09-17 at 49F and INF, 3 trading days behind the 09-22 publication, with the refresh schedule ENABLED | 2.0.0_SA_COO~P (directory surface) | ~P reads the refresh's _refresh manifests |
+| Public reason for a selected account with no custody row: NOT_READY today, which reads as transient. NOT_FOUND ("the state of the thing asked about", `_authz/errors.py:58`) is the closest member of the closed enum. It is a contract choice and a served-code deploy (snapshot.py `load_snapshot` + entry.py `reasons`) | 1.0.0_SA_CTO (contract) | the CTO rules the code; ~M then builds it with the ledger entry + never-widen |
 | The FULL -> FAST line to the CVO ("FAST from 18:1xZ; pins graded after the fact") | 2.0.0_SA_COO~M | 3.0.0_SA_CVO registers live |
 | IRPT_BCKEND-S124: the bundle mint reads working-tree bytes | owner of .tools/safe_deploy_core.py | next bundle re-mint |
 
