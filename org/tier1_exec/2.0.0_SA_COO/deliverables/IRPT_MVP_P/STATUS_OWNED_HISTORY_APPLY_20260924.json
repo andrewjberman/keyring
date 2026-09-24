@@ -1,0 +1,54 @@
+{
+  "receipt": "irpt-status: the installed owned-history handler served (CTO batch 28 (ii) / 100523)",
+  "by": "2.0.0_SA_COO~P",
+  "at_utc": "2026-09-24T10:53:17Z",
+  "what_it_moves": "the Analysis trace's hops 9 / 10 (read the retained request, its sections and its status as the current owner) now have a served handler; the two history routes are on the function's OWN route table and answer by name when reached. They are not yet published in routes.json / API Gateway -- that is (iii).",
+  "what_it_does_not_move": "hop 2 (the upload composition) and (iii) the three no-handler routes' publication.",
+  "act": {
+    "ledger": {"slug": "irpt-status-owned-history-20260924", "sentinel_commit": "e99208fb73", "opened_utc": "2026-09-24T10:48Z"},
+    "source": {
+      "backend_commits": ["896680c2de (reports/status_installed.py + 4 arms; ops/lambda.tf; ops/iam.tf; the S122 patch file)", "b327fccb9c (cherry-pick -x of the CTO's bf938bcf39 builder fix, one file, CTO word 100531)"],
+      "publish_commits": ["593b0e02ab (source map re-pinned)", "9cd8ee37ac (recorder)"],
+      "tests": "python -m pytest -q tests/test_status_installed.py: 4 passed; ruff py39 clean; commit-gate 2 of 2; terraform fmt clean, validate valid; the tree dry run refuses REPORTING_POLICY_NOT_ACTIVE (the tree row is PENDING until M's pin drains; the package carries the ACTIVE row)"
+    },
+    "composition": {
+      "installed": "ops/entry.py:build_owned_entry(requests=OwnedRequestReader, reports=OwnedAnalysisReader) -- M's current-owner boundary over Y's retained readers; P's assembly reports/status_installed.py supplies the ports",
+      "ports": ["DynamoAcceptance(irpt-requests / irpt-jobs)", "build_retained_repositories(table, s3, make_authorize(), no_revalidation, reporting_policy = the PACKAGED registry (X10 ACTIVE), reporting_destination = lib/opal_naming)", "OwnedRequestReader(acceptance, artifacts, authorize_current = resident_installed.make_authorize -- the same rule the resident applies)", "OwnedAnalysisReader(requests, stores.reports)", "inside build_owned_entry: OwnedJobStatusReader with the prospect-v1 date capability"],
+      "operations": ["status-summary (unchanged: the irpt-jobs status loader)", "analysis-report -> owned sections (OWNED_RECORD)", "status-job -> owned job status (OWNED_RECORD, x-irpt-status-dates: prospect-v1)", "analysis-request-history (CURRENT_OWNER_HISTORY)", "analysis-request-read (OWNED_RECORD)"],
+      "routes_on_the_function": 5,
+      "said_plainly": "the reader does NOT re-validate a retained report's schema on the way out: ReportRepository.get consults validate(kind, report) and refuses only on False; the writer (the resident, jsonschema on the host) validated at persist; the reader's integrity check is sha256(blob) == revision. The runtime has no jsonschema and the function no layer, so status_installed.no_revalidation returns True and is named in the module, in lambda.tf and in the map note. Nothing else is stubbed."
+    },
+    "package": {
+      "artifact_sha256_b64": "5E8T+/LV4p22RfqWCyacy13I7+2QPxGIs2nuE1oVQBs=",
+      "bytes": 299145,
+      "s3": "s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-status.zip version Hm2q90mPbHJRrkzE857zlUaRh5V4bujV (write verified size + content-sha256)",
+      "map": {"files": 42, "staged_rows": 34, "re_pinned_rows": 4, "new_staged_rows": 17, "x10_row": "reporting_policies.json @7262571e4c ACTIVE (checked by the re-pin script)"},
+      "import_closure": "clean at the first cut (the builder's own limb)",
+      "census_vs_live": {"live_members": 16, "new_members": 42, "same": 10, "changed": 6, "removed": 0, "added": 26, "changed_names": ["enforce.py", "entry.py", "loaders.py", "resolve.py", "served.py", "status.py"], "zip_equals_files": true, "staged_rows_mismatching_zip": 0},
+      "overrides": "none (ops/ carries no BUILD_MANIFEST.json; the S122 probe never runs on this function)"
+    },
+    "terraform": {
+      "root": "infra/aws/terraform/investor-reporting/ops (backend worktree, .tools/terraform.exe 1.9.8, init this act)",
+      "plan": "0 to add, 2 to change, 0 to destroy: aws_iam_role_policy.irpt_status (+ReadRetainedAnalysisFamiliesUnderThePolicyPrefixesOnly: s3:GetObject on arn:aws:s3:::opal-data-irpt/irpt/<firm>/{platinum/analysis_reports,state/request_compositions,state/normalized_portfolios,state/prospect_inputs}/* for 49financial / cottonwood / inflection = 12 ARNs; bucket read from infra/logic/registry/scopes.json key irpt class PRODUCT, firms from data/firm_registry.json) and module.irpt_status.aws_lambda_function.this (handler entry.lambda_handler -> status_installed.lambda_handler; s3_object_version ofsQf6Q6.. -> Hm2q90mP..; source_code_hash Hos/bFii.. -> 5E8T+/LV..; +IRPT_REQUESTS_TABLE irpt-requests, +IRPT_JOBS_TABLE irpt-jobs). Nothing else.",
+      "apply": "HALT_ACK=1 safe-apply.sh apply status-owned-history.tfplan: Apply complete 0 added, 2 changed, 0 destroyed, 10:53:17Z",
+      "replan": "No changes. Your infrastructure matches the configuration. (rc=0, -detailed-exitcode)",
+      "kms": "opal-data-irpt is SSE-KMS under key 7f4d3042-10d8-49a7-b55e-3c963cea8111 -- the system key the role already decrypts with (UseSystemKeyToDecryptTheTenantTablesAndDirectoryObjects); no KMS change"
+    },
+    "readback": {
+      "get_function_configuration": {"CodeSha256": "5E8T+/LV4p22RfqWCyacy13I7+2QPxGIs2nuE1oVQBs=", "Handler": "status_installed.lambda_handler", "LastModified": "2026-09-24T10:53:17.000+0000", "CodeSize": 299145, "State": "Active", "LastUpdateStatus": "Successful", "IRPT_REQUESTS_TABLE": "irpt-requests", "IRPT_JOBS_TABLE": "irpt-jobs"},
+      "get_role_policy": "ReadRetainedAnalysisFamiliesUnderThePolicyPrefixesOnly: s3:GetObject, 12 resources",
+      "exercised": [
+        "invoke {} -> 200, FunctionError none, Init 104 ms, Duration 4609 ms (the cold container composed the ports: real clients, the packaged X10 row, the retained repositories, the owned readers, build_owned_entry), public_reason_code CONTRACT_VERSION -- named, never Runtime.ImportModuleError, never UNEXPECTED (request 00b5e214-0a28-4a2d-abdd-195b54418361)",
+        "invoke GET /api/scoped/investor-reporting/analysis/requests with x-contract-version v1 and NO verified subject -> 200, ok false, operation analysis-request-history (resolved from the function's OWN route table), public_reason_code NOT_AUTHORIZED, 2 ms warm (request 328500fb-0bda-47f6-9330-b5a6f75873d7). No read of any table or blob was reachable on either event."
+      ],
+      "not_exercised": "a signed-in owner read of a retained request (there is no retained Analysis request in any firm yet: the Analysis journey has not run; the first one is the CRO's live thread after (iii) and the upload composition)"
+    },
+    "recorder": "record-terraform-deploy.sh investor-reporting --function irpt-status --deploy-ledger e99208fb73 --code-sha256 5E8T+/LV.. -> 9cd8ee37ac (publish worktree)",
+    "rollback": "re-point the function at S3 version ofsQf6Q6ApAwAET9ykgqZIl7.jfChFzF (sha Hos/bFii..), handler entry.lambda_handler, revert the two .tf hunks; the read grant is inert without the reader"
+  },
+  "known_edges_for_the_cto": [
+    "A Global viewer with no selected_tenant reaches owned_requests._data_firm's CONCRETE_REQUEST_DATA_FIRM_REQUIRED (RequestStorageUnavailable, a NotImplementedError) which build_owned_entry's reasons do not map -- it would read UNEXPECTED; the served boundary's selected_tenant resolution makes principal.firm_id the concrete tenant for the interactive path, so the edge is reachable only by a request the portal does not send. Y's file; noted, not edited.",
+    "current_authority.decide is the resident's principal grader; the status function authorizes from the verified request headers through the boundary's own InteractiveAccess callback and the readers' make_authorize rule, so it reads no profile row and holds no users-table grant."
+  ],
+  "push_state": "LOCAL (backend, publish and the shared tree; MSTR pushes)"
+}
