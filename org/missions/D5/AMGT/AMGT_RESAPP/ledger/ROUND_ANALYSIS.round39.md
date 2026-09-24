@@ -24,7 +24,7 @@ PNGs. That is the L9 doing the two things only it can do.
 
 **`FWD-17` remains HELD** on `rk-49`, whose key rotation Andrew declined; not a round-39 outcome.
 
-⭐ **The count is the same as round 38 -- 9 and 1 -- and the IDENTITY of the open outcome changed.** Reporting
+**The count is the same as round 38 -- 9 and 1 -- and the IDENTITY of the open outcome changed.** Reporting
 "9 of 10 again" would hide that one outcome closed and a different one opened.
 
 ## 3. `FWD-30` IS RETRACTED, AND THE GRADE RESTED ON A HARNESS THAT COULD NOT FAIL ON THAT AXIS
@@ -37,7 +37,7 @@ page**."* Measured: **the export publishes 17 figures the page does not show, 10
 `IS_DIV_PER_SHR` series the page explicitly REFUSES.** Seventeen extras is a direct violation of the clause,
 not a margin call.
 
-⛔ **WHY THE ROUND-38 GRADE PASSED ANYWAY, and this is the part worth carrying:
+**WHY THE ROUND-38 GRADE PASSED ANYWAY, and this is the part worth carrying:
 `exportCompare.harness.cjs` COMPUTES the extras and NEVER GRADES them.** The round-38 evidence this seat
 accepted -- *"162/162, 43/43, 5/5, missing=0 extra=0"* -- reported `extra=0` from a comparison that had no
 failing branch on that axis. **A HARNESS THAT COMPUTES A QUANTITY AND NEVER GRADES IT READS AS COVERAGE
@@ -63,7 +63,7 @@ GRADE SHAPE, AND NEITHER DEFECT CHANGED A SHAPE.** A P/E of 0.35 has the shape o
 the shape of an export row. Both were caught by a person reading an artifact against outside knowledge of
 what the number means.
 
-⛔ **RULED: A ROUND WHOSE CELLS TOUCH SERVED FIGURES CARRIES AT LEAST ONE JUDGMENT CRITERION.** Round 40
+**RULED: A ROUND WHOSE CELLS TOUCH SERVED FIGURES CARRIES AT LEAST ONE JUDGMENT CRITERION.** Round 40
 carries one, and the L9 grades it. Zero judgment criteria is legitimate for a round of pure shape work and is
 a DEFECT for a round that changes what a number means -- because such a round has **no plausibility oracle**
 and its green grid is then evidence about shapes only.
@@ -74,11 +74,11 @@ and its green grid is then evidence about shapes only.
 
 - **thesis is MISLABELLED, not contradictory, and the header is CORRECT.** The header's *"Description:
   ABSENT"* and the rendered **COMPANY DESCRIPTION** section are BOTH true: the section holds *backlog
-  figures*, which are not a description. ⛔ **Fixing the header is the WRONG remedy** -- it would make the
+  figures*, which are not a description. **Fixing the header is the WRONG remedy** -- it would make the
   page lie to agree with itself. The defect is the section's heading or its content selection.
 - **The "still loading" label bought a round's delay.** *"the comparable bundles are still loading"*
   reproduces across two independent runs, and in round 38 the CVO DECLINED to grade posture's zero evidence
-  counts **because that footer claimed a transient**. ⭐ **A transient's NAME on a PERSISTENT state
+  counts **because that footer claimed a transient**. **A transient's NAME on a PERSISTENT state
   suppresses the grading of everything downstream of it** -- the label is not cosmetic, it is an oracle
   that lied. Those counts are gradeable now.
 - **Two disclosed denominators went stale TODAY by DECISION, not drift, and the decision was this seat's
@@ -122,7 +122,7 @@ NOT_REALIZED.** What remains after subtracting the realized, plus what this roun
 **NOT a round-40 cell, and carded instead:** item 7, the authenticated deployed render. It needs Andrew
 present and no seat holds the sign-in.
 
-⛔ **THE SUBTRACTION IS NOT EMPTY, SO ROUND 39 IS NOT A ZERO-GRADUATION ROUND AND `AMGT_RESAPP` DOES NOT
+**THE SUBTRACTION IS NOT EMPTY, SO ROUND 39 IS NOT A ZERO-GRADUATION ROUND AND `AMGT_RESAPP` DOES NOT
 CLOSE HERE.** Eight items, one of them a retracted outcome.
 
 ## 8. WHAT THIS ANALYSIS DOES NOT DO
