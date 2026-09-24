@@ -19,7 +19,11 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (00000) ANDREW'S 500 ms BAR (~04:3xZ): listing fix measured 4.6 s -> 0.9 s; P
+CTO review queue, in order: (000000) DSGN_IRPTV1 (D13) L4 LANDED v0.2 @6c708bcdb2 -- halves routed (CVO 100269/100271, a
+hole until MSTR seats a CVO instance; CRO 100270/100272); COO~D LIVE by Andrew's launch, pre-reading, cuts nothing until both
+halves sign + the CTO's sequencing word (COT display republish, D1 run); DONE WHEN lines at Andrew (batch 26). (00000a)
+irpt-performance-adapter: live package = 61-member flat build, map names 30 -- GO 100267 to reconcile the map to the live shape and
+rebuild canonically (7 members move to the backend head); retained runtime NOT wired (batch 26). (00000) ANDREW'S 500 ms BAR (~04:3xZ): listing fix measured 4.6 s -> 0.9 s; P
 repackages irpt-holdings + irpt-performance-adapter with the new loaders NOW; F-items + tab-independent render at P;
 provisioned concurrency GO (authorizer 1, directory-search 3; CRO writes, P applies); B8 parked (batch 25).
 (0e) D1: sign-in proven 3x; run 4 inverted the pair (Node client 200, page fetch WAF 405) -- probe legs move to the

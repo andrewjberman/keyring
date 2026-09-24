@@ -1987,3 +1987,48 @@ pair control = {node_port, api_request_context}; nothing else moves; the offline
 the Node path, the negative arm and the unsigned control stay; Y STANDS on the five conditions; then ONE
 run = the FOURTH submission, bounded to one. For the record: the resident never needed the browser's
 WAF token for its own calls.
+
+
+## 2026-09-24 05:1x UTC - Claude CTO batch 26: DSGN_IRPTV1 L2-L4 landed and the L4-R halves routed; performance map reconcile GO; DEV pushed; layout recs approved; listing speed measured
+
+Instruments: the CTO's own commits and tool runs (prd-signoff.py status, prd-header-notify.py post-commit, missions-tree-index.py
+check, prd-manifest-gate.py), P's 100266 (live zip hashed against the backend head), M's 100259 acceptance thread, MSTR's DEV push
+receipt (04:46Z), COO~D's 100276. Push state LOCAL at every commit named here; MSTR pushes on Andrew's word.
+
+99996. DSGN_IRPTV1 (D13/DSGN) is REGISTERED and at L4. Andrew-direct ~05:2xZ at the 4.0.0_SA_CRO~F terminal (its own project, COO~D,
+   canonical flow). L2 endpoint 5daacc16db (FWD-1 the thread: an Opal user reads Anna Thiessen's Cottonwood brokerage account live
+   end to end; FWD-2..11; DONE WHEN lines to Andrew). L3 register c3508c07df (tree row, generated index, DIRECTIVES.yaml D13
+   members; MACROS.yaml unchanged). L4 PRD v0.1 50f2387594 -> header fix add8502cd9 -> v0.2 6c708bcdb2, at
+   org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md: ENDPOINT + CONTRACTS = the ratified-text half; THE THREAD, CELL
+   CANDIDATES C1-C14, PATHS (write surface portal/src/pages/InvestorReporting/** only), FIXTURES AND EVIDENCE, BRIEF COVERAGE 11 of
+   11, L2 FINDINGS CARRIED, PROVENANCE, SURFACE MANIFEST = the brief half. prd-signoff status: WITHHELD, ratified-text MISSING
+   (owed 3.0.0_SA_CVO), brief MISSING (owed 4.0.0_SA_CRO). The notifier routed the halves at v0.2: CVO base 100269/100271 (no live
+   CVO session -- a hole until MSTR seats one), CRO 100270/100272; COO delivery WITHHELD. Seating word 100273 (MSTR), 100274 (CRO),
+   100275 (COO~D). COO~D is LIVE by Andrew's own launch (100276): the fourth-COO-instance call is answered by his act; COO~D
+   pre-reads and drafts the decomp offline, cuts nothing until both halves sign and the CTO's sequencing word (COT display republish,
+   D1 run) lands.
+   TWO CTO MISSES, recorded: (a) the v0.1 header carried a prose qualifier on `status` ("DRAFT -- L4-R halves owed ..."); the
+   header schema is a closed enum, the post-commit notifier refused it SILENTLY (its line reads "not notified ... this notifier does
+   not gate"), and nothing routed until the CTO ran the notifier by hand. The manifest gate had passed -- a gate scoped to the
+   manifest cannot see a header enum. Header-only bump to v0.2 re-opens nothing (Rule 27). (b) running the notifier by hand after the
+   post-commit hook had already fired delivered each half twice (100269+100271, 100270+100272); one act, two ids; sign once.
+
+99997. irpt-performance-adapter: the LIVE package is NOT the source map's package. P measured (100266, live zip by Code.Location,
+   members hashed against the backend head @32477c67bb): live 00:07Z CodeSha JwJEEQ.., 358117 bytes, 61 members in the flat shape
+   performance/build_candidate.py emits; the canonical map names 30, so build-and-upload.sh REFUSES (ADHC_DRIFTD.002, 6 unregistered)
+   and an override build would DROP 31 live members. 53 of 61 byte-identical to head; 7 differ (loaders.py, served.py, entry.py,
+   retained.py, _scope/canonical_profile_reads.py, CurrencyAuthorities.json, NAMING_SCHEMA.json); the live serving path does not
+   import installed.py/retained.py, so the B1/B3/B7 speed fix is genuinely absent from the live performance function. No ledger
+   entry exists for the 00:07Z deploy. GO 100267: reconcile the map to the live flat shape (61 rows, staged_from at the backend
+   head), build canonically, census new-vs-live (61 of 61 names equal; exactly the 7 named differ and each equals its head blob; 54
+   identical), plan 0/1/0 on the performance root, ledger, safe-apply, readback, recorder. NOT wiring the retained runtime -- a
+   separate ruling (the Performance install step). The holdings code-only repackage proceeds on its whole map (33 members).
+
+99998. Carried from the earlier hours of this window, each on its own instrument: DEV consolidation candidate 7975c3bb GO'd by the CTO
+   and PUSHED to portal origin/DEV by MSTR (receipt 04:46Z); next candidate = speed levers F7/F5/F2/F3/F1 + Holdings not waiting on
+   Performance + Reporting->Performance rename + M's labels pin e5dd8487 (ACCEPTED 100259; P merges it) + the valuation enum
+   acceptance. The CRO's option-B keep-warm pin e1476853c9 (one rule, three targets, 500 ms hold; provisioned concurrency withdrawn
+   for want of an alias) GO'd to P. Listing speed BEFORE/AFTER on the CTO's own read: Global resolve 4.6 s -> 0.9 s after the CRO's
+   5886d0b9bd deploy; Andrew's 500 ms bar still open on the holdings/performance repackages. Andrew-direct ~05:2xZ via CRO~F: the seven
+   layout calls "recs approved" -- carried into the PRD's CELL CANDIDATES, not re-ruled here. Valuation shape: quantity = CUSTODY_UNITS
+   additive fact, units enum USD/UNITS, price refused as a computation (batch 25 stands; P's schema edit in both copies pending).
