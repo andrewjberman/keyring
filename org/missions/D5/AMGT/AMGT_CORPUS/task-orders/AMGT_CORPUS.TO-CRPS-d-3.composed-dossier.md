@@ -149,7 +149,7 @@ org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-d-3.composed-do
 synthesised across the corpus. The interface sheet is the artifact `AMGT_RESAPP`'s round cuts its adapter against; the
 issuer delivers it to `2.0.0_SA_COO~Z` at the drain as an interface publication.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
