@@ -7,7 +7,7 @@ branch `closer/amgt-leadpanel-y-20260924`. Trunk `CLOUD`; commit only, `0.0.0_AB
 
 ## Step 2a -- BUILT, NOT DEPLOYED. Nonpublishing by construction.
 
-**lib/ half COMMITTED** at `6e9868b903` (branch above): the reviewed safeguards of `4dc4b667f3` /
+**lib/ half ON CLOUD**: `6e9868b903` (branch above) drained by `0.0.0_AB_MSTR~Z` as merge `b02eac8351`, on origin (its ls-remote 04:0xZ). COO half amendments 1-2 @`523f62b92e`/`3231d8d167`/`61758b03e9` bind the LEGACY apply; CTO half @`c069b2d753` amended @`41616c8789`. It was: the reviewed safeguards of `4dc4b667f3` /
 `ac4316c447` / `621bf1d5d7` / `56621b4949` / `1b6cd9d4e0` / `b6eeef6ebd` carried byte-for-byte onto a
 CLOUD base (12 files, merge-base `4756dde175`, CLOUD untouched since), plus one addition of this lane's own:
 `pool_reader._gold_latest_snapshot_rows` memoises the parsed snapshot by (bucket, key, ETag) within a run.
