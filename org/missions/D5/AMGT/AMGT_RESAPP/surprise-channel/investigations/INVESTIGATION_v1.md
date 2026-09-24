@@ -13656,6 +13656,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The scope-comparison pairs ARE printed by ui-contract-check.mjs regardless of its own exit code (stripContainers[main]=2, [body]=3; identityAccents[main]=1, [body]=3 for 'list', both pairs strictly greater on body as expected). The census line is NOT printed, because the `&&` never fires -- not a defect in this cell's classifiers, but a premise conflict between Bound 2 ('leave other predicates' FAILs standing') and the invocation's own use of `&&` (vs. AC2's own `;`) on a state this cell was never authorized to make all-PASS.",
     "disarm_owner": "2.0.0_SA_COO~Z (round 38 issuer) -- either accept the scope-comparison evidence alone as satisfying AC3's discrimination claim (the census check is a static, off-topic sanity read that this worker also ran unchained and confirms separately, see the worker report), or re-cut AC3's invocation with `;` in place of `&&` for a future round so the chain does not depend on an out-of-cell predicate turning all-PASS.",
     "notes": "Filed per CLAUDE.md section 2/Rule 27 ('an invocation does not produce the named result'). Not BLOCKING: this worker ran the literal invocation verbatim as required, recorded its true output and exit code in the proof instance, and separately ran the un-chained census command for completeness (FILES 31 TOTAL 0, matching the expected reading -- src/pages/SecurityAnalysis carries no idiom/size/weight/radius/shadow violations censused by that instrument, confirming no page source moved) without altering or rescuing the graded invocation itself."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S250",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-24T14:15Z",
+    "one_line": "DISARM CARRIER for AMGT_RESAPP-W140-S2 (rm-1's AC3 invocation chained the body-control check and the page census with `&&`, so the census line could never print while any graded predicate failed -- the issuer's face defect, not the worker's): the issuer read the census in the worker's tree (FILES 31 TOTAL 0; the src diff against the base is the fixture HTML alone) and corroborated the scope pairs on the shared portal after the merge (stripContainers list 2 -> 3, identityAccents 1 -> 3, body over main). The order is terminal with AC1/AC2 PASS and AC3 satisfied on the issuer's read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_AMGT_RESAPP~140/contract-check-body-control/ (the worker's run): scope pairs printed; the chain stopped at exit 1 before the census",
+        "issuer's read in C:/tmp/wk-amgt-38-140/portal: node scripts/ui-class-census.mjs src/pages/SecurityAnalysis -> FILES 31 TOTAL 0; git diff --stat 1f1555d2 HEAD -- src -> 1 file (the fixture HTML, +59)",
+        "deliverables/2.0.0_SA_COO~Z/round38/contract-check-after-rm-1/: the six-state read on the shared portal at c7b022a1 with --scope main, the body table beneath, and the scope-pair table (list 2/3, 1/3; thesis 1/2, 1/3; ...)"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "AMGT-rm-1 AC3: the scope flag discriminates AND no page source moved -- the invocation chained the two reads with && and the check's exit code carries the graded predicates' FAILs.",
+    "world_is": "Both facts the criterion asks for are true and measured; only the face's invocation could not print the second from the first's exit. The next face that needs a census after a check that may exit 1 separates them with `;` and prints exit codes beside each.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- DISARMED by this row at the rm-1 drain; the lesson is on the issuer's cut, carried into rm-2/rm-3's faces (their invocations do not chain a graded check before a required line).",
+    "notes": "W140-S1 (the documentElement instruction) stays INERT as the worker dismissed it with reason; no row needed. Filed by the issuer at the drain."
   }
 ]
 ```

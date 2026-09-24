@@ -115,7 +115,25 @@ blocks with the list caption's sample, the two commit hashes, and any row.
 corroborated by the rl-9 worker's own dump ("ASIDE + one PanelHeader-styled DIV"); the CTO was told at the issuance that
 items 1 and 2 of the round-37 analysis are re-shaped on it (s.46b). rm-2, rm-3 and rm-6 spawn after this cell merges.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~14:1xZ.** Flipped by the ISSUER; the worker left the record face alone.
+Instance VALID (re-run by this seat inside the worker's worktree C:/tmp/wk-amgt-38-140). AC1 PASS: the classifiers proven on the fixture
+DOM, 7 of 7 assertions, positive and negative arms (bands 1/0, strips 1/0, purpleFills 1, identityAccents 2, clippedTextBlocks 1),
+SELF-TEST OK. AC2 PASS: inside main every one of the six states reads bandContainersTopLevel 1 (the Panel marker), strips and
+action-vs-identity fills printed, the body table beneath. AC3 FAIL BY THE INVOCATION'S OWN SHAPE, the issuer's defect, not the
+cell's: the face chained the body-control run and the census with `&&`, and the check exits 1 on list at every scope on the
+weights/radii FAILs bound 2 forbids fixing, so the census line could never print from that invocation (row W140-S2, disarm owner
+this seat -- disarmed by this close-out: the issuer read the census in the worker's tree, FILES 31 TOTAL 0, and the src diff
+against the base is the fixture HTML alone; the scope pairs the worker printed are corroborated on the shared portal after the
+merge: stripContainers list 2 -> 3, identityAccents 1 -> 3 body over main). Row W140-S1 (INERT, dismissed with reason): the
+face's `document.documentElement` instruction for resolving --bg-band would have reproduced the strip/band conflation; the
+worker resolved off document.body and said so. Drained @9c9ff2bbf3; portal DEV c7b022a1 (merge of b51330c5), gitlink 2b410046 ->
+c7b022a1. THE ROUND'S NEW BASELINE, read on the shared portal at c7b022a1 with the re-keyed instrument, scope=main
+(contract-check-after-rm-1/): bands PASS 6 of 6; purpleFills PASS 6 of 6; shadows PASS 6 of 6; clippedTextBlocks 0 on all six (rm-5's
+caption fix landed and reads clean); lowContrast PASS; sizes PASS on four, [10] on thesis and model; weights [300,600] on five and
+[300] on peers; radii [8px] on five, PASS on peers. Body scope beneath carries the sidebar's 500 / shadow / size-10 as expected.
+rm-2 owns the 300 and the strip radii; rm-3 attributes the 600, the 10px and the peers-vs-others radii difference.
+
+<status>complete</status>
 <round>38</round>
 <slot>~140</slot>
 <fabric>site-z</fabric>
