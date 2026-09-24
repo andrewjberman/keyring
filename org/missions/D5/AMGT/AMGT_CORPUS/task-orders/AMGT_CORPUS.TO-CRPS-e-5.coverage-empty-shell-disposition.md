@@ -80,7 +80,7 @@ READ-ONLY: every other `lib/research/corpus/` module, `lib/research/identity/cro
 AC2 FAIL (no fourth token), AC3 FAIL (Costco reads dossier-served today) -- recorded in the issuance commit.
 
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
