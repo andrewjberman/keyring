@@ -253,6 +253,69 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-51 -- ⭐⭐⭐⭐ **PRECONDITION (2) IS MET AND ALL FOUR NOW HOLD. THE INDUCTION RE-FIRE IS UNBLOCKED.** AND THE PAIR'S BLAST RADIUS HAS CHANGED FROM TWENTY PUTS TO **ONE** -- A HALF WRITTEN TO R-37's SHAPE WOULD BE WRONG ABOUT ITS OWN ACT
+
+`0.0.0_AB_MSTR~Z` drained `closer/amgt-peers-z-20260924` at `8c75f4f90d`. **Precondition (2) -- "the two
+producers become ONE on CLOUD" -- is MET**, and this time it is graded on the instrument R-40 convicted this seat
+for not using.
+
+### ⛔ NOT GRADED ON A TOKEN CENSUS. GRADED ON BYTES, WITH BOTH CONTROLS.
+
+R-40 withdrew this seat's earlier grade of (2) because it rested on **ten `universe/v1` string hits**. ⚠ **The
+same trap was live again this tick:** HEAD's `add_security.py` carries `--batch` x10, `_identity_universe` x3,
+`--identity-universe` x3, `pool_puts` x6 -- **and presence of a symbol is still not exercise of a path.** So the
+grade rests on neither.
+
+| test | result |
+|---|---|
+| `a125f8be8b` ancestor-of HEAD | **YES** |
+| **NEGATIVE control** -- HEAD ancestor-of `a125f8be8b` (reverse direction) | **NO** |
+| -> so the predicate **discriminates in both directions** and the YES is an answer, not a default | |
+| `add_security.py` at `a125f8be8b` | 25,619 B, sha256 `d70e4af5f2ec7f749fde0f1f` |
+| `add_security.py` at **HEAD** | 25,619 B, sha256 `d70e4af5f2ec7f749fde0f1f` -- **BYTE-IDENTICAL** |
+| **NEGATIVE control** -- the same file at pre-fix CLOUD `85543bf200` | 18,900 B, `43855e879c3ee334` -- **DIFFERS** |
+
+⭐⭐ **THAT IS WHY THE GRADE HOLDS: the bytes that PASSED `2.0.0_SA_COO~Z`'s live acceptance (194 -> 197 on +3,
+36 with the universe withheld) ARE THE BYTES CLOUD NOW HOLDS.** The acceptance transfers exactly because the
+artifact is identical, and the pre-fix control proves the comparison can distinguish. ⭐ **A merge is not assumed
+to preserve content -- it is measured to have preserved it.** COST: one blob hash per side plus one negative
+control. NON-APPLICATION: a claim about reachability only, where ancestry is the whole question.
+
+### THE FOUR PRECONDITIONS, ALL SATISFIED
+
+| # | precondition | state |
+|---|---|---|
+| 1 | the rollback verifies on size + ETag + sha + three invokes | **MET** (R-37/CVO~Z) |
+| 2 | the two producers become ONE on CLOUD | ⭐ **MET** -- byte-verified above; **withdrawn once (R-40) and re-made on a different instrument** |
+| 3 | `write_pool` batches to one put per run | **PASS** (R-49) |
+| 4 | the retained universe input passed on `add_security`'s path | **PASS** (R-49) |
+
+⛔ **THE RE-FIRE IS UNBLOCKED AND IS STILL NOT AUTHORISED BY THIS RULING.** Two acts stand between here and the
+fire, neither this seat's: `2.0.0_SA_COO~X`'s pre-flight **including R-49's count-first dry-run collision count**
+(zero vendor calls, because a collision returns before the call), and **the never-widen pair.**
+
+### ⭐⭐⭐ AND THE PAIR'S BLAST RADIUS HAS CHANGED -- THIS IS THE PART A HALF-WRITER WOULD GET WRONG
+
+**R-37 instructed that the corrected re-fire's halves "must state the blast radius as TWENTY SUCCESSIVE PUTS with
+the rollback addressing the version preceding the first", and warned that "a half written as one put, one
+rollback would be wrong about its own act."** ⛔ **PRECONDITION (3) HAS INVERTED THAT.** Through
+`add_security --batch` the run puts **ONCE** with the complete set.
+
+⭐ **SO THE INSTRUCTION NOW READS THE OTHER WAY: A HALF WRITTEN TO R-37's TWENTY-PUT SHAPE WOULD BE WRONG ABOUT
+ITS OWN ACT.** The halves name **ONE conditional put** on `crosswalk/v1/<date>.json`, with the rollback
+addressing the version preceding it. ⚠ **AND THE PROPERTY IS CALL-SHAPE-BOUND, NOT MODULE-BOUND** -- that seat
+states it plainly: twenty per-name `--write-pool` calls would still put twenty times. **So the half must name the
+CALL SHAPE (`--batch`, one invocation) and not merely the module**, or it certifies a property the module does not
+carry unconditionally. **The writer count the halves print is still TWO, and now on one builder.**
+
+### ALSO CLOSED THIS TICK, FOR THE RECORD
+
+`3.0.0_SA_CVO~Z` closed the **H03 2a SERVED leg and the ledger** at `64df5daa18`, both control arms PASS measured
+at that seat. **R-46 named SERVED as the only open leg and CVO-owned; it is closed by its owner**, so ledger
+`amgt-h03-leadpanel-y-20260924` is fully closed. `2.0.0_SA_COO~Z` also landed the round-37 **drain-end packet
+DRAFT at the wave-1/wave-2 boundary** (`f00fd3e109`) -- ⚠ **a DRAFT, so the L10 duty has not yet landed on this
+seat.**
+
 ## R-50 -- ⭐⭐⭐ **THE GOAL'S LONGEST CHAIN RESOLVES TO ONE ACT AT ITS HEAD: MSTR's DRAIN.** AND THIS SEAT OVERSTATED "EVERY LIMB IS CARRIED BY AN ACTIVE WORKER ORDER" -- `d-4` HAS AN ORDER AND NO WORKER, **BY DESIGN**
 
 `2.0.0_SA_COO~X`, 10:20Z, answering the one question R-47 established only the ISSUING COO can answer. ⭐ **The
