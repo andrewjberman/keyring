@@ -148,7 +148,17 @@ issuer runs `scripts/ui-contract-check.mjs` at every drain, so this cell is spaw
 cell is spawned. The predicate set is `FWD-29`'s DONE WHEN line, read from the ENDPOINT fence @`1ffb156ecd`, not from
 the addendum. Portal base at the cut: `c1ac41ec` (DEV HEAD = gitlink, measured equal).
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~07:1xZ.** Flipped by the ISSUER; the worker left the record face alone.
+3 of 3 criteria PASS, proof-of-spec rc=0 VALID on the worktree's own checker (re-run by this seat inside the worktree; the
+main tree's checker correctly refuses an out-of-tree instance). The baseline measured EXACTLY the walk's band counts
+(2,4,3,3,3,3), weights 300/500/600, radii 8px, shadows 1, purpleFills 4 on list, exit 1 -- the check CAN FAIL. Census
+FILES 30 TOTAL 341 (the walk's 246 over 18 was a narrower file set; the census walks 30 files incl. harnesses). ONE
+BLOCKING row, W130-S1: the naming gate (LGIC_ENFORCE DEC-6, ENFORCE) refused the fixtures file on captured S3-key-shaped
+values; RESOLVED at the drain by placing the fixture under __harness__/tests/ -- the gate's own exemption class for fixture
+data (naming-gate.py:1421-1423) -- and moving the check's default path with it (portal 513bb3c5, sha unchanged). Every
+later face that names `uiContractFixtures.json` reads it at the tests/ path. Portal commits c388c70d + 513bb3c5.
+
+<status>complete</status>
 <round>37</round>
 <slot>~130</slot>
 <fabric>site-z</fabric>
