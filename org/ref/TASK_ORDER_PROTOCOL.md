@@ -33,6 +33,8 @@ this template and the spine differ, the spine governs.
   `.claude/agents/worker.md`; the face carries only what is specific to its cells.
 - **Every mechanical check is a small test or script file, dry-run at the base before the cut.** A build check
   fails there and a bound or control check passes there; the issuance commit carries one line per check.
+- **Cut by write set (spine v3.20, C10):** a cell's written `<paths>` are disjoint from every other cell's of the
+  round. A one-line hookup in a shared file belongs to no cell; the report names it and the COO adds it at the merge.
 - **The direct-act path:** one cell, about 300 product lines or fewer, `<risk>LOCAL</risk>` -> one order carrying
   `<direct_act>true</direct_act>`, no L2, L4-R or L8-L10; its close is the COO's one real run of the outcome.
 

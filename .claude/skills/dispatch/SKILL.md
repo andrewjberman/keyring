@@ -44,6 +44,14 @@ else records the fan-out.
 the second depends on the first. Two chains may take two workers. **So N is bounded above by M** — asking
 for more workers than there are independent chains buys nothing and serialises anyway.
 
+**CUT BY WRITE SET (report 2 C10, Andrew-approved 2026-09-24).**
+- Each cell owns a disjoint set of files: its `<paths>` names no file another cell of the round writes.
+- A one-line hookup in a shared file (a mount, an import, a route entry, a registry line in `index.tsx`) belongs to
+  NO cell. The cell exports what it builds, and its report names the hookup it needs; you add every hookup at the
+  merge, in one commit (Step 5).
+- An edge is a real data dependency, a cell consuming another's output, never file contention.
+- A batch cell that touches many cells' files runs last in its round, or folds into the merge.
+
 ⛔ **THE ISSUANCE COVERS EVERY CELL OF THIS ROUND'S DECOMPOSITION** (spine v3.16, L6). Round 1's
 decomposition is the THREAD — one cell per hop adapter to build or repair, so the first round ships a rough
 journey that works end to end, not a layer of it. Every later round's decomposition is the ENRICHMENT LIST
@@ -208,17 +216,8 @@ refusal that never happened.
 ON `CLOUD`, AND THE WORKER LANDS IN AN ESTATE THAT DOES NOT EXIST.** Measured 2026-09-04 on the first
 exercised spawn and re-measured at this seat: `origin/HEAD` -> `refs/remotes/origin/main`, tip
 `af88fcdd01` dated **2026-01-19**, which `CLOUD` is **32,776 commits** ahead of, and whose tree carries
-**neither `org/` nor `.tools/`**. (Re-measured at site Z 2026-09-10: `SITEZ` is **34,145 commits** ahead
-of that same tip, `is-ancestor` confirms it IS our history, and `git ls-tree` confirms no `org/`, no
-`.tools/` — the two figures are different quantities, one per fabric, not a drift in one.) The worker finds no task order, no gate, no compiler tool. Three
+**neither `org/` nor `.tools/`**. The worker finds no task order, no gate, no compiler tool. Three
 worktrees sit on that base already, so it is the harness's fixed behaviour here, not a one-off.
-
-⛔ **AND THE AGENT DEFINITION CONTRADICTED THIS UNTIL 2026-09-10.** `.claude/agents/worker.md`'s
-`description` -- **the text the harness surfaces in the agent-type listing, which is what a COO actually
-reads when choosing a spawn** -- said *"Spawn with isolation worktree"*. A lane following the listing got
-the ruined tree; a lane following this skill got a working one. It cost `2.0.0_SA_COO~ZZ` one spawn on
-`RP-s-20` (the worker returned BLOCKED without executing a criterion, correctly, having first checked
-`git remote -v` to separate *wrong repo* from *right repo, wrong commit*). Corrected at the definition.
 
 **Make the worktree yourself, from THE BRANCH YOU ARE ON, with `.tools/wk-provision.sh provision <CODE> <n>
 --path <path>`; for a PORTAL cell add `--portal-ref <ref>`, where `<ref>` is the value the issuance commit's
@@ -438,6 +437,9 @@ under your serial, never a silent re-cut; a broken thread is the first item of t
 
 **A worker with an empty queue ends. A worker that dies mid-task-order leaves a branch:** merge it if its
 instance is valid, otherwise discard it and re-dispatch that task order to a fresh slot.
+
+**HOOKUPS AT THE MERGE** (C10): add every shared-file hookup line the round's reports name in ONE commit, then run the
+one real run below.
 
 **MERGE PER CHAIN END, IN ONE COMMIT** (report 2 C8). When a chain's last order is terminal, merge that chain's
 branches through `safe-merge.sh` and carry the orders' status closes in the same merge. Do not make one commit to

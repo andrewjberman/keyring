@@ -63,9 +63,7 @@ RULE NUMBERS ARE STABLE IDs, NOT READING ORDER. Rules 4-12 and 18 live in `/clou
       the CHANNEL compile (input: new investigation rows; output: the compiled channel + watermark). The COO's drain-end
       task-order packet is a different artifact sharing the label; that ambiguity is placed, not resolved.
     - **L9 adjudicate** -- JUDGMENT criteria are graded here and never self-graded.
-    - **L10** -- ONE SLUG to the CTO, always, only after every TO is terminal and every row dispositioned. The order
-      slug -> the CTO's ROUND-N ANALYSIS -> the COO's recut is load-bearing: a round N+1 issuance cut before round N's
-      slug deadlocks round N's L10, because the refuser counts open orders per project, never per round (LD-0521). The
+    - **L10** -- ONE SLUG to the CTO, always, only after every TO is terminal and every row dispositioned. The
       CTO answers with a PRD addendum (an FWD no cell served) or the ROUND-N ANALYSIS the COO recuts in ONE issuance;
       CLOSED when every FWD grades REALIZED. The three route tokens are retired.
     - **Round 1 builds the thread; every later round enriches** (spine v3.16-3.18). `FWD-1` of a product, pipeline or
@@ -93,31 +91,11 @@ RULE NUMBERS ARE STABLE IDs, NOT READING ORDER. Rules 4-12 and 18 live in `/clou
 **VERIFICATION SCALES WITH THE COST OF BEING WRONG. WHEN THE NEXT CHECK WOULD NOT CHANGE WHAT YOU DO, STOP.** An
 unneeded check burns the context the high-stakes judgment needs later.
 
-22. **EVIDENCE LAW -- four axes; who eats the error decides how many you check.**
-    | If being wrong costs... | Ask |
-    |---|---|
-    | me, this turn | nothing. Act. |
-    | me later, or another seat | **GRAIN + COVERAGE** |
-    | the record (commit, message, TO, report) | **+ STATE** |
-    | the world (deploy, delete, grant, served key, claim to Andrew) | **+ DISCRIMINATION** |
-
-    **GRAIN** -- the object read IS the object claimed, at the level and vintage claimed. **COVERAGE** -- evidence spans
-    the claimed set; print the denominator. **STATE** -- DESIRED != APPLIED != EXERCISED; a description is never a
-    state. **DISCRIMINATION** -- could the evidence differ if the claim were false? The order is the mechanism:
-    DISCRIMINATION passes inside a wrong GRAIN/COVERAGE/STATE.
-    - A second seat's confirmation via the first seat's method is repetition, not corroboration: name your instrument.
-    - CORROBORATION CAP (Andrew-direct 2026-09-24): one fact, one measurement, one instrument. A second-instrument
-      read is owed only for a claim about served output or the world (the last table row); everything else is
-      measured once and cited by the seats that use it.
-    - A check scoped to the members cannot see a defect in what the members share: check the shared dependency on its
-      own, then re-read the population unscoped once. Non-application: members with no shared dependency.
-    - ABSENT != EXERCISED-AGAINST. A missing guard or a real hazard is an EXPOSURE until someone measures whether it
-      fired; then it is an INCIDENT. An exposure is closed by building the guard; an incident also re-opens what the
-      gap admitted. Discriminator: run the defect's own signature over the graded population and print the denominator.
-    - "proof / root cause / definitively / source-confirmed" are RESERVED: legal only past STATE at EXERCISED; cite
-      `file:line @ <commit-ish>`. This law governs SUPPLEMENTARY controls, never the substance of the act; size by the
-      claim your work FEEDS; re-derive with a DIFFERENT instrument or cite the peer's. Catalogue:
-      `docs/doctrine/CONTROLS_OVER_CARE.md`.
+22. **EVIDENCE LAW -- the `<risk>` class decides how much a piece of work is checked; no seat reasons its way to it.**
+    `LOCAL` / `SERVED` / `WORLD` on every task order (spine v3.19 L6; `.tools/to-pipeline-gate.py` GATE xii), plus the
+    COO's one real run of each outcome at close. The four-axis table and its corollaries (corroboration cap, shared-
+    dependency check, ABSENT != EXERCISED-AGAINST, reserved words) are the data behind the class:
+    `docs/doctrine/CLAUDE_ANNEX.md` section 2, rule 22.
 
 **FOUND SOMETHING ODD OFF-TASK? Do NOT halt-and-investigate -- APPEND ONE ROW (`spec_asserts` + `world_is`) to the
 project's surprise channel and KEEP WORKING. A broker message is NEVER the carrier.** Tree project:
@@ -340,6 +318,10 @@ is current-day-only; never mint `data/bloomberg/`).
 - **A portal candidate touching NO product file lands on DEV by its author** as a fast-forward with a one-line
   receipt (Andrew-direct 2026-09-24); the CTO reviews only candidates that touch a product file; VALGATE runs on
   every push; `0.0.0_AB_MSTR` pushes trunks on Andrew's word as before.
+- **Under a live FAST lease, the lease's seat lands product changes on portal DEV itself** (CI running; no CTO go-ahead,
+  no integrator push; DEV only, PROD gated). Mechanism: `.tools/hooks/never-rules-gate.sh` admits a DEV push from a
+  live lease's seat only (`.tools/drive-mode.py`); `/closer-drive` step 5 checks the payload. Order:
+  `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_170xZ_MEMORY_PREFERENCES_ONLY_AND_THREE_HELD_ITEMS_YES.md`.
 
 ## Changing this file
 
