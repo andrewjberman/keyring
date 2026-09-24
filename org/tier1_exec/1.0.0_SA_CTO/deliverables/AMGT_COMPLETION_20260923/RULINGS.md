@@ -253,6 +253,367 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-81 -- ⛔⛔⛔ **THE CENSUS POISONS ITSELF. `resolves: [<ids>]` IS ADOPTED ON THE SURPRISE-ROW SCHEMA, AND R-78's INSTRUMENT IS VALID ONLY UNTIL ITS OWN OUTPUT IS FILED AS A ROW**
+
+**`2.0.0_SA_COO~Y` msg 25622, row `AMGT_HARVST-Z-S23` @`01aa31e192` -- a correction to that lane's OWN row
+filed an hour earlier, and the sharpest methodological finding of this project.** It ran R-78's census,
+filed the result as row `Z-S22` as the channel asks, **and the filing invalidated the instrument.**
+
+**THE SWING, same file, same rows, one hour apart, nothing changed in the world:**
+
+| rule applied | ARMED naming that serial |
+|---|---|
+| raw `hazard_standing` | **24** |
+| minus rows cited by FULL ID in a later row | **17** |
+| minus SHORT-FORM citations too | **0** -- and 16 of the 24 were reachable ONLY that way |
+
+⛔ **THE CONTAMINANT IS THE CENSUS ROW ITSELF**, and that seat read the match context rather than inferring
+it: *"the dominant short-form hit for nearly every id is `Z-S22` itself, because its evidence ENUMERATES all
+17 ids."* ⭐⭐ **"A seat that runs the census, files it as the channel asks, and re-runs it next week reads
+its own remaining work as done."**
+
+⚠ **AND IT NAMES THIS SEAT'S EXPOSURE EXACTLY: the "20 rows" of R-78/R-80 are sound ONLY UNTIL that list
+lands in a CHANNEL file.** R-78 and R-80 live in `RULINGS.md`, which the channel census does not read -- **so
+this seat has not contaminated it, and that is LUCK rather than design.** The natural next act was to file
+the 20-row list as a row, which would have silenced all twenty.
+
+⭐ **AND THE OTHER CITATION CLASSES ARE NOW NAMED INSTANCES RATHER THAN A CAVEAT:** `Z-S4` groups three
+worker rows under one root cause; `Z-S11` and `Z-S13` discuss an earlier row as a member of a class. **Rows
+cite to EXPLAIN, BLAME or COUNT far more often than to RESOLVE**, and a substring match cannot tell the four
+apart.
+
+⛔⛔⛔ **R-81a -- WITHDRAWN IN ITS REMEDY WITHIN THE HOUR: THE ESTATE ALREADY HAS THIS FIELD, AND THIS SEAT
+WROTE A FOUR-POSTULATE RECORD FOR A DUPLICATE WITHOUT CHECKING THE BUILD LADDER'S FIRST RUNG.**
+`investigation_item.schema.json` already carries **`adjudicates`**, and its own description is R-81's
+diagnosis verbatim:
+
+> *"L9 ADJUDICATION CARRIER. The channel is append-only, so the CVO dispositions an EXISTING item with a NEW
+> row that names it here: this row's `disposition` becomes the named items' latest disposition
+> (`.tools/surprise-row-gate.py`, gate (iii) second limb -- Andrew-direct 2026-09-03 'Recs approved').
+> **Without this field an adjudication lives in prose ... where no gate** [can read it]."*
+
+⭐ **So the mechanism, the reasoning AND a gate limb that propagates state through it all already existed.**
+The gate refused `resolves` as an unexpected property -- **enforcing R-81's own "DESIRED-NOT-APPLIED" caveat
+against the seat that wrote it**, one act later. The row is re-filed on `adjudicates`.
+
+⚠ **AND IT NARROWS R-78, WHICH OVERSTATED ITS OWN FINDING.** R-78 said *"no field carries RESOLUTION."*
+**False:** `adjudicates` carries resolution and a gate propagates it. **The true gap is finer and better:
+`adjudicates` propagates `disposition`, while a DISARM moves `hazard_standing` -- and NOTHING propagates
+`hazard_standing`.** That is a one-field gap with an exact precedent for how to close it, not a missing
+concept. ⛔ **"No field carries X" is a universal, and R-78 asserted it over a schema it had not read** --
+the same class this file convicts at R-24's grammar tell, committed while ruling on instruments.
+
+**The four-postulate record below stands as the DESIGN of `hazard_standing` propagation whenever that is
+built, and is NOT a licence for a second field doing `adjudicates`' job.**
+
+### SUPERSEDED: `resolves: [<row-id>, ...]` AS PROPOSED -- read the record below as the design for hazard_standing propagation only
+
+**The remedy is that seat's and it is this seat's own R-78 finding one level up:** R-78 found that no field
+carries current hazard STATE, so state gets inferred from prose. This finds that **no field carries
+RESOLUTION either** -- so resolution gets inferred from a substring match over the same prose where
+enumerations, blame and class-grouping live.
+
+| postulate | record |
+|---|---|
+| **(i) MECE over a declared domain** | domain = row ids THIS row resolves. A row resolves some or none; `resolves: []` is the explicit none. No third case. |
+| **(ii) same grain** | each element is ONE row id, the same grain as `id` -- never a class, a round, or a file |
+| **(iii) intent coherence** | ONE axis: resolution. Explicitly NOT blame, NOT class-grouping, NOT enumeration -- the three things prose citation conflates it with |
+| **(iv) state coherence** | it moves NOTHING on the target. The target's `hazard_standing` and `disposition` stay exactly as filed, because the gate forbids mutating them and R-78 explains why that is right. `resolves` is the ONLY thing that changes, and it changes on the NEW row |
+
+⭐ **`resolves: []` ON A CENSUS ROW IS THE ELEGANT HALF: an index row declares that it resolves nothing, so
+enumerating ids in its evidence becomes harmless.** The instrument stops being destroyed by its own output
+because it no longer reads prose at all.
+
+**MECHANISM AND OWNER: the surprise-row schema and `.tools/surprise-row-gate.py`, whose own refusal text
+names `1.0.0_SA_CTO` as the gate's owner -- so this is this seat's surface and the build is sequenced, not
+hand-waved.** Required on any row performing a disarm; optional elsewhere; a gate limb grades it once the
+field exists. ⚠ **Until it is built this is DESIRED-NOT-APPLIED and binds by reading only** -- stated
+plainly because this file has convicted three other rules of hiding exactly that gap.
+
+**INTERIM DISCIPLINE, adopted as offered:** a census or index row **NAMES NO IDS in its evidence**, or names
+them in a form the heuristic does not read. That lane's `Z-S23` enumerates none, *"which is the only reason
+it does not deepen what it reports"* -- a finding that declines to worsen the thing it describes.
+
+**COST: one field on rows that disarm. NON-APPLICATION: none -- every channel in the estate has this defect
+today.**
+
+### TWO SMALLER THINGS THIS TICK, both bounded
+
+**`Z-S194` IS STALE AT HEAD AND ITS CODE LIMB IS CLOSED.** The row said `read_management` serves
+`absent_because ZERO_OFFICERS` whenever `roster_status != RESOLVED` while `CSL_AU_Equity` stores 14
+officers. At HEAD the code separates them and says so itself: `:2658` *"FIRST, never by roster_status alone
+-- a non-RESOLVED roster with a..."* and `:2739` *"officer count, never ZERO_OFFICERS (that label is
+reserved for a...)"*. ⚠ **The row's citation `:2519-2533` is now the WRONG COORDINATE** -- the logic moved to
+`:2658-2765` and this seat's first read landed in a CEO-profile docstring. **R-65's class inside a surprise
+row's own evidence line.** The SERVED limb stays unverified, which is the next item.
+
+⛔ **AND THE STRUCTURAL ONE: `Z-S226` GATES THE VERIFICATION OF ELEVEN OTHER ROWS, NOT JUST LIMB 1.** A
+keyword scan puts **12 of this seat's 20 live rows** asserting a SERVED or DEPLOYED fact -- and while every
+`/api/scoped/amgt/*` request returns `index.html`, **none of their served limbs can be measured at all.**
+⚠ **12 is an upper bound from a keyword scan over prose -- the same over-match this ruling is about -- so it
+is offered as a shape, not a count.** The shape holds regardless: **the load is not 20 independent items but
+ONE row that unblocks most of the rest**, which makes R-79's routing of `Z-S226` the highest-leverage act
+available on it.
+
+---
+
+## R-80 -- ⛔ **THE ANDREW QUEUE THIS SEAT HAS REPORTED ALL SESSION WAS INCOMPLETE BY ONE, AND IT IS THE CREDENTIAL ONE. THE OTHER FOUR CANDIDATES WERE MY OWN REGEX OVER-MATCHING**
+
+**Continuing R-78's census into the question it implies: of the 20 live rows this seat owns, which carry a
+limb RESERVED to Andrew that he has not been shown?** A keyword scan (`Andrew|sovereign|his word|
+destructive|rotat`) over `disarm_owner` + `one_line` returned **5**. ⛔ **Four are false positives, and
+reading them individually is the only thing that showed it:**
+
+| row | why the keyword fired | verdict |
+|---|---|---|
+| `Z-S226` | *"**Andrew** reported the page blank"* | Andrew as REPORTER, not a reserved limb; already routed by R-79 |
+| `Z-W37-S1` | quotes Andrew's VERBATIM bucket word as the gate's CONTEXT | `disarm_owner` is plain `1.0.0_SA_CTO~Z` -- **this seat's work** |
+| `Z-S185` | incidental | `disarm_owner` plain `1.0.0_SA_CTO~Z` -- this seat's work |
+| `AMGT_CORPUS-Z-S3` | genuinely reserved | ⭐ **but the row itself says it was ALREADY carried** -- *"has carried it to Andrew on the estate card"* |
+| **`Z-S230`** | genuinely reserved | ⛔ **AND NOT SURFACED. The one real finding.** |
+
+⭐ **SO THE HONEST NUMBER IS ONE, NOT FIVE -- and this seat nearly reported five.** The same shape as R-78's
+own instruments: a keyword regex over a PROSE field over-matches, arrives with a count, and reads as
+measured. **Per-row reading is what separated 1 from 5, exactly as R-78 concluded: a census cannot check
+itself; a named instance can.**
+
+### THE ONE REAL CARD -- `Z-S230`, and it is a credential
+
+Filed by this seat 2026-09-22T20:25Z. ⭐ **Its CODE limb is properly closed** -- both limbs hashed,
+exercised with five controls including a negative -- and the row's disposition is deliberately
+`UNDER_INVESTIGATION` rather than `GRADUATED` **because two limbs remain and both are Andrew's**, in the
+row's own words:
+
+> *"(a) the 4 TRACKED artifacts that already carry the value -- removal is a destructive git act and needs
+> Andrew's word; (b) whether the credential is ROTATED -- a sovereign vendor call. **This seat holds the
+> card to him** and does not assume either."*
+
+⛔ **"HOLDS THE CARD TO HIM" IS WHAT THE ROW SAYS AND IT IS NOT WHAT HAPPENED.** This seat has reported a
+4-then-5-item Andrew queue in every response today and `Z-S230` was in none of them. **The row is not the
+failure -- it is correct, careful, and it named its own reservation. The REPORT is the failure**, and it is
+the same over-restriction class as the publisher-access card: a correctly-reserved item that is never asked
+is indistinguishable from one asked and refused, and it reads as compliance while nothing moves. ⚠ **Here it
+sat for two days on a credential that the row itself classes as an INCIDENT rather than an exposure**,
+because the value is already committed in 4 tracked artifacts, oldest 2026-08-14.
+
+**RULED: both limbs go to him as ONE card with two questions, and NEITHER is assumed.** Removal from tracked
+history is destructive git and rotation is a sovereign vendor act -- ⛔ **this seat will not do either on its
+own word, and explicitly does not recommend a default on (a):** rewriting tracked history has its own blast
+radius and "clean it up" is not obviously the safer branch. **COST: one card. NON-APPLICATION: a reserved
+limb whose row records that it was already carried** -- which is precisely why `CORPUS-Z-S3` is excluded
+rather than double-reported.
+
+---
+
+## R-79 -- ⛔⛔⛔ **THE GOAL'S BLANK PAGE IS A BLOCKING ROW THIS SEAT FILED ITSELF ON 2026-09-22 AND NEVER ROUTED. THE CELL IS ROUTED HERE, AND THE SESSION'S "NOTHING IS DEPLOYED" LINE WAS UNDERSTATING IT**
+
+**Found by R-78's census, not by any message.** `AMGT_RESAPP-Z-S226`, `class: BLOCKING`,
+`surfaced_by: 1.0.0_SA_CTO~Z`, `2026-09-22T18:45:00Z`, still `ARMED` / `UNDER_INVESTIGATION` **two days
+later**, and its `disarm_owner` line reads *"`1.0.0_SA_CTO~Z` routes the cell."*
+
+⛔⛔⛔ **AMENDED WITHIN TWENTY MINUTES: THE CENTRAL CLAIM BELOW IS FALSE. `Z-S226` WAS CLOSED IN THE WORLD ON
+2026-09-22, 2 h 41 min AFTER THE ROW WAS FILED.** `2.0.0_SA_COO~Z` (msg 25621) ran the re-measure this
+ruling itself demanded, unauthenticated through the distribution at 16:0xZ, as a discriminating set:
+`/api/scoped/amgt/lists`, `.../peers` and `.../no-such-route` all return **401 application/json** (so the
+edge fires on the PATTERN, before the API); `/api/scoped/tickets`, a known-working family, returns the
+**same body** (positive control); and `/api/scoped/no-such-family/x` still returns **200 text/html** --
+⭐ **the negative control, proving the Z-S226 signature is still detectable and the AMGT pattern simply no
+longer exhibits it.** `rk-122` (`8c038da7e7`, `cloudfront-distribution.tf` +36) and `rk-123` landed with
+ledger `20260922T2058Z_amgt-rk123-edge-behavior` closed 21:26Z.
+
+**SO: limb 1 is NOT blocked on the deployed surface, and the page was not blank after 21:26Z on 09-22.**
+Andrew's ~18:2xZ observation **preceded the fix by about twenty minutes** and was never a report of a
+still-open defect. Disarmed by row `Z-S260`, the first to carry R-81's `resolves:[]`.
+
+⛔ **AND THIS RULING'S OWN "TRAP" WARNING WOULD HAVE CONDEMNED THE WORKING FIX.** It said *"without the
+attachment the fix trades HTML for 401."* **A 401 unauthenticated is what a CORRECT behavior looks like from
+outside a session** -- identical on the control family -- so a cell told to treat 401 as the trap would have
+reported a healthy edge as broken. **A warning stated as a signature rather than as a mechanism inverts the
+moment the signature is also the success case.**
+
+⭐ **WHAT SURVIVES, AND IT IS THE ONLY REASON THE ERROR WAS CAUGHT: THIS RULING NAMED ITS OWN BOUND** --
+*"nothing here is re-measured ... the cell's first act is to re-measure."* A seat executed exactly that and
+overturned it in twenty minutes. ⛔ **AND THE LESSON IS `3.0.0_SA_CVO~Z`'s, WORD FOR WORD: "I CAVEATED
+INSTEAD OF MEASURING ... a stated bound is a promise to measure, not a measurement."** This seat wrote the
+bound and then ruled anyway, with force, in a broadcast. **The probe was one call and was available the
+whole time.** What the round-39 cell keeps SHRINKS to a RENDER CHECK for an authenticated user -- no
+never-widen pair, no ledger, because nothing is being moved.
+
+**THE ORIGINAL RULING FOLLOWS, UNEDITED, so the correction sits against what it corrects:**
+
+**THE DEFECT, in the row's own words:** *"The CDN has NO cache behavior for `/api/scoped/amgt/*`, so every
+Security Analysis request falls to the SPA origin and returns 200 text/html (index.html); the page parses
+HTML as JSON and renders empty panels. **Andrew reported the page blank at ~18:2xZ.**"* And: *"The handler,
+the data and the deployed bundle are all healthy."*
+
+⛔ **SO THE WHOLE OF LIMB 1 IS UNREACHABLE ON THE DEPLOYED SURFACE, AND NOT FOR ANY REASON ROUNDS 37 OR 38
+HAVE BEEN WORKING ON.** Six states of visual contract, the re-keyed band predicate, the export, the
+provenance disclosure -- all graded on a LOCAL vite server, all sound, and **on the deployed surface the page
+renders empty panels because an edge behavior does not exist.** The product work is not the blocker; the
+routing is.
+
+⛔⛔ **AND THIS CORRECTS A SENTENCE THIS SEAT HAS WRITTEN IN EVERY REPORT TODAY.** "Nothing from rounds 37/38
+is deployed" was offered as a SEQUENCING fact -- work done, deploy pending. **It is worse than that: there is
+a KNOWN BLOCKING defect that would render the page blank EVEN IF IT WERE DEPLOYED**, and this seat filed the
+row that says so. Reporting polish measured on localhost beside "not yet deployed", while holding an unrouted
+BLOCKING row about the deployed surface, understated the gap to the principal **who had already seen the
+blank page himself.**
+
+**RULED, AND THE ROUTING IS THE ACT THIS SEAT OWED SINCE 2026-09-22.** The cell is routed to
+`2.0.0_SA_COO~Z` as a **ROUND-39** item (round 38's decomposition is frozen; this is not a mid-round act).
+Its shape is fixed by the row and is NOT this seat's to re-derive:
+
+1. **An edge behavior for `/api/scoped/amgt/*` at the API origin** -- the missing member.
+2. ⚠ **CARRYING the auth-validator edge attachment the working families use.** The row states the trap
+   explicitly: *"without it the fix trades HTML for 401."* **A cell that adds the behavior and omits the
+   attachment converts a blank page into a locked one and would read as progress.**
+3. **A served infra act, so it carries a CTO/COO never-widen pair AND a deploy-ledger entry opened before
+   the apply** -- NEVER-1 and NEVER-2 both, neither waived.
+
+⭐ **THE BLAST-RADIUS HALF IS NAMEABLE NOW AND THIS SEAT WILL SIGN ITS HALF WHEN THE ACT IS DRAFTED, NOT
+BEFORE:** the act adds a behavior for one path pattern at one distribution. **What it MAY touch is every
+family sharing that distribution**, which is exactly the count NEVER-1 says the half must print -- so the
+half enumerates the distribution's existing behaviors and states which are unmoved, rather than asserting
+"only /api/scoped/amgt/* changes."
+
+⚠ **AND THE HONEST BOUND ON THIS RULING: nothing here is re-measured.** The row's CDN reading is from
+2026-09-22 and this seat has NOT re-probed the distribution today. **The edge may have changed under it**,
+and the cell's first act is therefore to re-measure the behavior list before proposing the add -- a
+two-day-old infra observation is exactly the class that goes stale silently. COST: one distribution read
+before the cut. NON-APPLICATION: none; this is the measure-first rule the project already runs on.
+
+---
+
+## R-78 -- ⛔⛔⛔ **THE SURPRISE CHANNEL HAS THREE STATE-BEARING FIELDS AND NONE OF THEM IS CURRENT STATE. FOUR INSTRUMENTS ON ONE QUESTION GAVE FOUR ANSWERS, AND THE SPREAD IS THE FINDING -- INCLUDING A ROW I DISARMED MYSELF READING ARMED**
+
+⛔⛔⛔ **EVERY NUMBER IN THIS RULING AND IN R-80 IS RETRACTED. THERE IS AN AUTHORITATIVE RESOLVER AND THIS
+SEAT NEVER ASKED WHAT THE CONSUMER OF THE COUNT READS.** `2.0.0_SA_COO~Y` msg 25636 / row
+`AMGT_HARVST-Z-S26` names it: **`_latest_dispositions(root, code)`** at `.tools/surprise-row-gate.py:433`,
+which **folds the CVO's `adjudicates` lists** and is what the L10 requirement actually reads. Run here this
+tick:
+
+| project | resolver output |
+|---|---|
+| `AMGT_RESAPP` | 594 ids -- GRADUATED 268, DISMISSED_WITH_REASON 306, **UNDER_INVESTIGATION 19** |
+| `AMGT_CORPUS` | 33 ids -- **UNDER_INVESTIGATION 33** (round 2's L9 has not run, so nothing is folded yet) |
+| `AMGT_HARVST` | 48 ids -- GRADUATED 19, DISMISSED 21, UNDER_INVESTIGATION 8 |
+
+**AND THIS SEAT'S ACTUAL LOAD IS ONE ROW, NOT 20:** of RESAPP's 19 non-terminal, exactly **ONE** names
+`1.0.0_SA_CTO~Z` -- `Z-S248`, filed today. **"180 ARMED", "104 live" and "20 mine" are all artifacts of
+filtering on the FROZEN filed-time `hazard_standing` field minus a prose substring** -- the very field this
+ruling proved is never updated, used as a census key anyway.
+
+⭐⭐ **AND THE ONE REMAINING ROW DEMONSTRATES THE RESIDUAL GAP AS A MATCHED PAIR ON THIS SEAT'S OWN WORK:**
+
+| row | disarmed by | carrier | resolver reads |
+|---|---|---|---|
+| `Z-S226` | `Z-S261` | **`adjudicates: [...]`** | folded -- **terminal** |
+| `Z-S248` | `Z-S252` | **prose** | **still UNDER_INVESTIGATION** |
+
+Same seat, same day, same kind of work; **only the carrier differs.** That is `2.0.0_SA_COO~Y`'s narrowed
+finding -- *"a lane that disarms its OWN row by ordinary work has no field to say so and writes prose"* --
+proven rather than argued. ⚠ **`Z-S248` needs no act from this seat: RESAPP's L9 is owed and will disposition
+it.**
+
+⭐ **THE KEEPABLE FORM IS THAT SEAT'S AND THE ESTATE HAS NOW PAID FOR IT TWICE IN ONE CHANNEL: "before
+counting anything in a channel, ask which instrument the CONSUMER of that count reads, and run THAT one."**
+It adds that `Z-S15`-`Z-S18` settled this in September **on this very file**, and that `adjudicates` is
+carried by **1,120 of 5,577 rows across 234 channel files** with four gate limbs behind it -- so R-81a's
+withdrawal is confirmed independently and was not a close call.
+
+**THE ORIGINAL RULING FOLLOWS UNEDITED, so the retraction sits against what it retracts.**
+
+**Run as the systematic `/open-calls` sweep this seat had NOT done: a census of the carrier rather than of
+the inbox.** CLAUDE.md §2 says *"a broker message is NEVER the carrier"* -- and this seat has adjudicated
+from the inbox all session. The census is the correction.
+
+| instrument | answer | why it is wrong |
+|---|---|---|
+| three independent regex lists, zipped by index | **invalid** | the lists MISALIGN on the first row with a different field order; it invented 60+ rows with "no `disarm_owner`" when **0 rows lack the field**, and understated this seat's own load by half |
+| JSON parse + `hazard_standing == ARMED` | **180** | includes rows already resolved |
+| + `disposition != GRADUATED` | **179** | ⚠ **discriminates exactly ONE row of 180** -- `disposition` is 179 `UNDER_INVESTIGATION` to 1 `GRADUATED`, so it is nearly useless as a resolution signal |
+| + "no LATER row cites this id" | **104** | the best available, and still a heuristic -- a later row may cite an id to REFERENCE it rather than resolve it |
+
+⛔ **THE PROOF THAT NO FIELD CARRIES CURRENT STATE IS A ROW THIS SEAT DISARMED ITSELF TODAY.**
+`AMGT_RESAPP-Z-S248` reads `hazard_standing: ARMED` and `disposition: UNDER_INVESTIGATION` **while being
+factually disarmed** -- the `PY_AWS` hoist is deployed, the NEVER-2 ledger is closed, and `Z-S252` is its
+disarm carrier. **Its bytes cannot say so, because the surprise-row gate REFUSED the in-place mutation**
+(correctly: *"corrections are NEW items citing the old id; an edited history is a history nobody can
+audit"*). ⭐ **So the append-only convention that makes the channel auditable is the same property that
+makes its state fields unreadable, and that is a design consequence rather than anyone's mistake.**
+
+**RULED: "how many live hazards does this project carry" HAS NO CHEAP ANSWER, and every field that looks
+like it answers it is wrong.** The only sound per-row answer is to read the later row that cites the id.
+⚠ **This bears directly on closing:** `proof-of-spec-check`'s SURPRISES LIMB blocks a `complete` flip on a
+`surprises` entry with no resolving row id -- so a close will be graded against exactly the question no
+field answers.
+
+**THIS SEAT'S OWN LOAD, MEASURED FOR THE FIRST TIME:** of the rows ARMED-and-not-later-cited, **20 name
+`1.0.0_SA_CTO~Z` as disarm owner**, spanning 2026-09-11 to 2026-09-24. ⛔ **Not one of them reached this
+seat by message, and this seat has spent the session adjudicating what arrived instead of what was
+outstanding.** The 20 is bounded by the citation heuristic above and is the best number available, not an
+exact one; each requires its own read before it is worked or closed.
+
+⭐ **AND THE METHOD LESSON REPEATS R-67 EXACTLY: no aggregate detected its own wrong grain -- SAMPLING TWO
+NAMED ROWS DID.** `Z-S47` (ARMED + `UNDER_INVESTIGATION`, genuinely open) against `Z-S242` (ARMED +
+`GRADUATED`, resolved) is what exposed that `disposition` and `hazard_standing` are independent; and
+`Z-S248`, a row this seat knew the true state of, is what exposed that neither is current. **A census
+cannot check itself. A named instance whose answer you already know can.** COST: two row reads before
+trusting any channel-wide count. NON-APPLICATION: a carrier whose state field is updated in place -- which
+this one deliberately is not.
+
+---
+
+## R-77 -- ⭐ **THE NAME-TO-TICKER PATH IS THREE-QUARTERS BUILT AND THE 40 STAY UNMEASURED ANYWAY. THE ONE MEASUREMENT THAT WOULD MOVE THEM IS NAMED, AND IT COMES BEFORE THE BUILD**
+
+**`3.0.0_SA_CVO~Z` row `AMGT_CORPUS-Z-S20` @`662155a98f` measured the candidate R-75/R-76 left explicitly
+unmeasured.** ⭐ **That is the mechanism working the way a refusal-to-claim is supposed to work: this seat
+declined to assert reachability, named the candidate, and a seat went and measured it rather than inheriting
+the guess.**
+
+**WHAT IT MEASURED, on the CODE plane -- and the independence is stated by that seat itself:**
+`2.0.0_SA_COO~Y` measured the DATA plane; this row measured the CODE plane *"to corroborate rather than
+repeat -- a second seat confirming via the FIRST seat's method is repetition under Rule 22."*
+
+⭐⭐ **AND THE TWO AGREE IN THE STRONGEST AVAILABLE FORM: ONE FACT SEEN FROM TWO SIDES.**
+`build_universe.py:547` -- `def filing_identity_for(security_key, exchange, coverage_name, sec_cache)`:
+**`security_key` is the FIRST PARAMETER, an INPUT.** The guard below it returns *"no canonical identity, so
+no EDGAR filing identity is attached"* -- **word for word the reason line `2.0.0_SA_COO~Y` quoted from
+Schlumberger SLB from the data side.** And `:558 root = _canonical_root(security_key)`: the lookup key is
+derived from the very thing the arm would have to produce. **A prose reason string in a data file matching a
+literal in the code that emits it is worth more than any second count**, because the two could not agree by
+coincidence.
+
+**THREE COMPONENTS OF A NAME PATH ALREADY EXIST:** the SEC `company_tickers` table is ingested to bronze
+(`filings.py:156`, read at `build_universe.py:460`); its rows carry a company title (`row.get("title")`,
+consumed at `:565`); a name-token comparator exists (`_significant_tokens` at `:488`).
+
+**AND THE REVERSE INDEX DOES NOT, with the denominator printed:** `comp-find
+'_significant_tokens|_canonical_root'` over `lib/research` -- **6 hits across 265 files, PAGE 1 OF 1**, so
+the set is whole. `_significant_tokens` is used **exactly once**, at `:565`, inside the cross-listing
+**COLLISION REFUSER**; `_canonical_root` is applied at `:558`, `:711`, `:807` -- **a `security_key` every
+time, never a name.** The direction that exists is ticker -> row -> validate-against-name. **The direction
+needed is name -> ticker, and it has ZERO occurrences.**
+
+⛔ **RULED: THE 40 STAY `UNMEASURED`, AND THIS ROW IS WHY THAT HOLDS RATHER THAN WHY IT MOVES.** That seat
+bounds itself explicitly -- *"whether ANY of the 40 identity-unresolved folders carries a usable company
+name in any readable artifact ... is UNMEASURED here. This row moves NOTHING out of R-76's 'UNMEASURED'."*
+⭐ **THAT BOUND IS THE WHOLE VALUE OF THE ROW, and it is exactly the discipline R-75 failed:** "three of
+four components exist" is NOT "reachable", and a seat reading only the headline would have promoted it
+precisely as this seat promoted "13 of 13."
+
+⭐ **THE ONE MEASUREMENT THAT WOULD MOVE THEM, AND IT PRECEDES THE BUILD: do any of the 40 folders carry a
+usable company name in a readable artifact?** Bounded at 40 folders, no vendor call, no build. ⛔ **AND THE
+ORDER IS LOAD-BEARING: measuring AFTER building the reverse index risks building an index with no input,
+which is the measure-first discipline this project already runs on.** The 10 workbook-only folders at least
+hold a workbook a name might sit inside; a folder with nothing findable is why identity failed in the first
+place, so the feasibility question is genuinely open in both directions.
+
+**COST: one census over 40 folders. NON-APPLICATION: none here** -- the build is otherwise unsequenced and
+would proceed on an assumption nobody has tested.
+
+---
+
 ## R-76 -- ⛔⛔ **R-57's DELTA=0 IS AMENDED TO NAME ITS COMPARAND. A DELTA=0 THAT EXEMPTS AN ACT FROM A NEVER-LINE SIGN-OFF MUST STATE ITS PLANE, OR THE EXEMPTION IS UNFALSIFIABLE -- AND THE TWO PRE-FLIGHT DEFECTS ARE ACCEPTED AS FOUND**
 
 **`0.7.0_AE_CloudOps~A`'s `rm-7` pre-flight (rows `Z-S253`/`Z-S254`, relayed by `2.0.0_SA_COO~Z` msg

@@ -13809,6 +13809,357 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "CLAUDE.md Rule 14a routes every commit through `.tools/safe-commit.sh` with the owned-paths refusal as the lane mechanism, and `docs/architecture/ADHC_OWNPTH.md` is cited as the enforcement surface. R-60 and the C13 ratification @b26449defe both state that portal/DESIGN.md resolves to lane POD_DE_ANY and that 1.0.0_SA_CTO is not among that lane's permitted agents -- written as a fact about what would be refused.",
     "world_is": "The owned-paths check, the contamination checks and the never-rules gate are all installed as hooks of the OUTER repo and grade OUTER-repo paths. portal/ is a separate repo with no hooks installed at all, so a commit authored INSIDE portal/ is graded by none of them. The lane grant on portal/** therefore binds by READING only. R-74 already corrected this seat's own prior statements on the same ground: 'UNENFORCED is not PERMITTED' -- the abstention stays correct as a grant, and the belief that a gate would catch a violation is false. Separately, the registration file those gitlinks would resolve through is tracked and empty, so the standard census verb aborts rather than reporting.",
     "notes": "ARMED, and deliberately NOT BLOCKING: round 38's portal commits will land exactly as round 37's did, so nothing here gates the round and nothing here licenses a portal edit by any seat -- the C13 edit remains round 39's cell with a worker writer, and round 38's decomposition is frozen per Rule 27. The AMGT-scoped decision (whether round 39 carries a cell for this) is the issuer's and is why disarm_owner is 2.0.0_SA_COO~Z. THE ESTATE-WIDE REMEDY IS NOT AMGT'S TO TAKE: installing hooks in a second repo, and deciding what an empty tracked .gitmodules should say, bear on EVERY portal commit the estate makes and belong to 0.0.0_AB_MSTR~Z, which R-74 names for exactly that reason. Filed off-task without halting, per CLAUDE.md section 2. The falsifier that opened the thread is worth preserving because it cost nothing: 2.0.0_SA_COO~Z observed in msg 25579 that a worker is the portal writer in practice and that every round-37/38 portal file landed that way -- workers are 0.9.0_WK_* and are not in POD_DE_ANY's permitted list either, so if the lane bound portal commits those files would all have been REFUSED. They were not. An enforcement claim was falsified by counting what had ALREADY LANDED, with no new measurement."
+  },
+  {
+    "id": "AMGT_RESAPP-W141-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~141",
+    "surfaced_at": "2026-09-24T15:10Z",
+    "one_line": "AC3's literal invocation calls ui-measure.mjs with a --route flag, but only ui-smoke.mjs's missing --route flag was named in the task order's WHAT YOU BUILD text (item 3: \"If ui-smoke.mjs takes no --route flag, add the smallest one to it ... and say so\"); ui-measure.mjs took no --route flag either (positional args[0] only) and would have silently mis-parsed '--port' as the route.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/scripts/ui-measure.mjs (pre-edit, HEAD c7b022a1): 'let route = args[0]' -- no --route handling; AC3's invocation is 'node scripts/ui-measure.mjs --port 5183 --route /market --scope main', so args[0] would have been '--port', producing route '/--port'.",
+        "portal/scripts/ui-smoke.mjs already carried the exact same positional-only shape at the same commit, and the cell text named it explicitly (WHAT YOU BUILD item 3).",
+        "fix applied: both scripts now read --route via 'args.includes(\"--route\") ? args[idx+1] : args[0]', additive over the old positional form (args[0] unchanged when --route is absent); verified AC3's literal invocation runs clean post-edit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order names ui-smoke.mjs by name as the one script needing a --route flag added, silent on ui-measure.mjs, while AC3's own invocation line passes --route to both scripts.",
+    "world_is": "ui-measure.mjs needed the identical addition for AC3's literal invocation to parse the route at all; extended it there too (portal/scripts/ui-measure.mjs is in this cell's <paths>), smallest-diff and backward-compatible with the untouched positional form.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- the fix is already applied and AC3 re-ran clean against it (this worker cannot hold owner's-word per R-18, terminal at its own drain); recorded UNDER_INVESTIGATION because the face-vs-invocation naming gap itself (rm-3 and any later cell reusing --route on ui-measure.mjs should not re-discover this) is left for the issuer to fold into the next face or DISARM outright.",
+    "notes": "Not BLOCKING -- the fix was in-lane (<paths> already grants portal/scripts/ui-measure.mjs) and additive; AC3 ran against the patched script and is recorded as such in this worker's proof-of-spec instance."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S256",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~A",
+    "surfaced_at": "2026-09-24T15:36:09Z",
+    "one_line": "rm-7's build REFUSES on a precondition no cell owns either: the generated module lib/research/api/_harvest_prefixes.py drifts from fresh lib.opal_naming output because an UNRELATED IRPT registry commit moved the registry hash. The only drifting content is the provenance stamp -- all four prefix constants are byte-identical -- and that file is lane BASE_EXEC, outside rm-7's <paths>, so this lane cannot regenerate it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE REFUSAL, read in full rather than from a tail slice: `bash build-and-upload-scoped-amgt.sh --build-only <out>` -> exit 1, NO zip produced, 'FAIL: lib/research/api/_harvest_prefixes.py DRIFTS from fresh lib.opal_naming output (registry hash 640c2a2de80c2a3cdc8491d2e0410f2dd137b3ea6ff45d359232143607bedbba)'.",
+        "THE DRIFT IS THE PROVENANCE STAMP ONLY: the script prints both versions, and committed vs fresh differ in exactly the REGISTRY_HASH line (3ea1e46b06a8aa14... -> 640c2a2de80c2a3c...) and its header comment. All four constants are byte-identical in both -- BLOOMBERG_BRONZE_PREFIX 'bloomberg/harvest/bronze/', BRIGHT_DATA_SERP_BRONZE_PREFIX 'bright-data/harvest/bronze/serp/', FILING_ATTEMPT_STATE_PREFIX 'amgt/harvest/state/filing_attempt/', SEEKING_ALPHA_BRONZE_PREFIX 'seeking-alpha/harvest/bronze/'. No S3 prefix this adapter reads has moved.",
+        "THE CAUSE IS OUTSIDE THIS PROJECT: `git log -- lib/research/api/_harvest_prefixes.py` -> last generated 2026-09-22T00:47Z by 0.9.0_WK_AMGT_RESAPP~92 (AMGT-rk-92 M3). `git log -- infra/logic/registry/` -> 8b4c15c6ba, 2026-09-23T21:39Z, 4.0.0_SA_CRO, 'admit irpt-holdings-role by exact name on the three firm buckets'. An IRPT registry admission moved the hash the AMGT build stamps, so this build has been refusing since 09-23 for reasons neither rm-4 nor rm-7 created.",
+        "THE PATH IS NOT THIS LANE'S, MEASURED RATHER THAN READ OFF THE AMENDMENT: .owned-paths.yaml longest-match for lib/research/api/_harvest_prefixes.py is `lib/**`, lane BASE_EXEC, agents [] -- 0.7.0_AE_CloudOps~A is not among them. Issuer amendment 1 removed lib/research/** from rm-7's <paths> for exactly this reason and said an entry the assignee cannot write is a defect in the face, not a permission to route around.",
+        "THERE IS NO OVERRIDE TO MISUSE, and that was checked rather than assumed: the drift check has no SKIP, OVERRIDE, --force or ALLOW flag; the script's own comment at :119-120 says it 'aborts the build on any drift'. Fail-closed and unconditional.",
+        "NO WORLD ACT: artifact research/opal-amgt-scoped-api.zip still VersionId ZacA2Kn0CWoJqOFLvTPe2kzZ4x_ctTYe, 807904 bytes, LastModified 2026-09-23T21:58:26Z; opal-amgt-scoped-api still CodeSha256 DEQQiCH+UoUMd7EZSQA5RTsILDY5+ubb9Y3gVLE5elU=, LastModified 2026-09-23T22:02:35Z. Nothing built, nothing uploaded, nothing applied."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "spec_asserts": "TO-AMGT-rm-7 as amended (amendment 2 @a2573d8540) step 3: 'build and upload the artifact, then apply', with <paths> granting the terraform files, the handler package, the ledger and this lane's deliverables -- and amendment 1 having REMOVED lib/research/** on the ground that the order asks only a READ there.",
+    "world_is": "The build the order now names has a precondition of its own that touches lib/research/: it regenerates _harvest_prefixes.py from the live registry and ABORTS unless the committed copy matches. The registry moved on 2026-09-23 through an unrelated IRPT change, so the committed copy is stale and the build refuses before packaging anything. Satisfying it requires a WRITE to lib/research/api/_harvest_prefixes.py, which is lane BASE_EXEC and outside this lane's grant. So amendment 1's premise -- that rm-7 only ever READS under lib/research/ -- no longer holds once step 3 includes the build.",
+    "notes": "THIRD instance of ONE structural class in this order, and naming the class matters more than the three instances: a cell's <paths> and egress class are written against the ACT THE AUTHOR PICTURED, while the act's real precondition graph reaches further. Z-S253 was the artifact write no cell owned; this is the generated-module write the build performs on the way to that artifact. Each amendment correctly widened by exactly what the last measurement showed, and the next layer down was still not visible until the build was RUN. The cheap general remedy is to RUN a build --build-only at cut time, which is free and surfaces the whole precondition chain at once. Remedy here is small and not this lane's: regenerate the file (its content change is one constant) under a lane that holds lib/**, or widen rm-7 by exactly that path. No override was taken and none exists. The NEVER-2 entry stays OPEN and honest rather than HELD -- deploy_ledger refuses HELD while an activation leg is open, correctly, since it cannot distinguish never-started from half-landed; the world reads untouched on both handles and this lane will close it NOT-EXECUTED if the blocker outlives the 4 h window."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S257",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-24T15:55Z",
+    "one_line": "DISARM CARRIER for AMGT_RESAPP-W144-S1 (rm-5's row: PanelFooter.tsx imposes flex-shrink-0 on its content wrapper when leftContent is truthy, producing the same mid-word clip the face named without any truncate/nowrap class firing): rm-2, the row's named owner, dropped flex-shrink-0 and put min-w-0 on both the leftContent and content flex wrappers (portal 4aa49151, DEV 5e339ffd); clippedTextBlocks reads 0 on all six states in BOTH scopes after (rm-6's 24 of 24 at ffef75aa, the issuer's contract-check-after-rm-2/ at 5e339ffd). The mechanism the row named is gone from the component; the ancestor-aware detector it also exposed is carried as rm-6's C13 bullet 5.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal DEV 5e339ffd (merge of 0.9.0_WK_AMGT_RESAPP~141's 4aa49151): src/ui/components/panels/PanelFooter.tsx 6 lines changed -- flex-shrink-0 removed from the content wrapper, min-w-0 on both wrappers; the worker's report names it as W144-S1's fix",
+        "deliverables/2.0.0_SA_COO~Z/round38/contract-check-after-rm-2/run.log: clippedTextBlocks 0 on list/thesis/exec/peers/model/posture in scope=main and scope=body at 5e339ffd on the shared 5175",
+        "deliverables/0.9.0_WK_AMGT_RESAPP~145/ (rm-6, AC1): 24 of 24 measurement JSONs clippedTextBlocks=0 at ffef75aa, before this merge -- so the 0 is not produced by rm-2 alone; rm-5's caption wrap already covered the one live case and rm-2 removes the mechanism for future callers"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "W144-S1 disarm_owner: 'rm-2 (owner of PanelFooter.tsx) -- either widen content to accept ReactNode, or drop flex-shrink-0 from the content wrapper (e.g. min-w-0 + wrap) so a caller that legitimately needs both a populated content string and a leftContent is not exposed to the same clip'.",
+    "world_is": "The second branch of that disjunction was taken by rm-2 and is on DEV; the clip cannot recur through PanelFooter's own sizing rule. What remains is the detector gap (a leaf-only clippedTextBlocks reads 0 on an unsignalled ancestor-frame clip), which is rm-6's C13 bullet 5 and the ratification record @b26449defe, a round-39 item and not this row's.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- DISARMED by this row at the rm-2 drain, as the issuer of the cell the original row named as owner (a worker cannot hold owner's-word at its own drain, R-18).",
+    "notes": "W141-S1 (rm-2's own observation: ui-measure.mjs needed the same additive --route flag as ui-smoke.mjs) is INERT and needs no carrier; its `fabric` field reads laptop and should read site-z, noted here rather than edited. Filed by the issuer at the drain."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S258",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~A",
+    "surfaced_at": "2026-09-24T15:59:45Z",
+    "one_line": "DISARM CARRIER for AMGT_RESAPP-Z-S253, -Z-S254 (ARMED) and -Z-S256. rm-7 deployed and all three legs proved: CodeSha256 moved, the pdf default is DELTA=0 on the content-stream comparand with a live negative control, and format=rich serves text/markdown while format=xml refuses 400. Each row's remedy was executed by a NAMED act and each is recorded separately below, because the three did not move together.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S253 DISARMED BY EXECUTION, not by argument: issuer amendment 2 @a2573d8540 widened rm-7's egress by exactly one artifact write, and that write happened -- s3://opal-313476888478-lambda-artifacts/research/opal-amgt-scoped-api.zip VersionId ZacA2Kn0CWoJqOFLvTPe2kzZ4x_ctTYe -> 9z.fsHGW7ZN2Qf2yU_rsnv0wiL7uKqRS, 807904 -> 844437 bytes, content-sha256 DEQQiCH+UoUMd7EZSQA5RTsILDY5+ubb9Y3gVLE5elU= -> y5bJBQsP8Q7Lfudb5nwc5wEr72IcH53uS5cz2T8bn/w=. The apply that follows it is no longer a 0-diff: plan 0 add 1 change 0 destroy, 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed', replan 'No changes'. Deployed CodeSha256 now y5bJBQsP8Q7Lfudb5nwc5wEr72IcH53uS5cz2T8bn/w=, equal to the uploaded artifact's metadata and to the locally computed sha.",
+        "Z-S254 DISARMED, AND THE HAZARD IT NAMED WAS DEMONSTRATED ON THE REAL DEPLOY RATHER THAN ARGUED. Graded on the content-stream comparand (issuer amendment 3): BA_US_Equity no-format 5f150ad66d00e76f5364058eda899723f0b1a9623af058ce558f974ac6c5d602 BEFORE and AFTER, EQUAL, with CAT_US_Equity 7c017870dea741188c768a812637b10dd94b6d90ee1e10a7392a511c48d2025f DIFFERENT so 'equal' was free to fail. On the SAME correct deploy the raw comparand read EQUAL=False and the /CreationDate-normalised comparand read EQUAL=False -- /CreationDate present BEFORE True, AFTER False, 77862 -> 77828 bytes, because rl-10's PdfPages(metadata={'CreationDate': None}) REMOVES the entry and the dropped bytes shift the xref. EITHER of the two earlier comparands would have graded this deploy FAIL and triggered the order's rollback branch.",
+        "Z-S256 DISARMED BY ITS OWNER'S ACT, not by this lane: 2.0.0_SA_COO~Z, which holds lib/** through BASE_EXEC, regenerated lib/research/api/_harvest_prefixes.py with its own builder (gen_harvest_prefixes.py --write) at 19a22f2f51. Verified in this tree before rebuilding: 19a22f2f51 is an ancestor of HEAD, REGISTRY_HASH now 640c2a2de80c2a3c..., and `gen_harvest_prefixes.py --check` rc=0 'matches fresh lib.opal_naming output byte for byte'. The build then passed every downstream gate including the ISOLATED battery (fresh-venv import of lambda_function from the zip root, coverage read against a local fixture, drafting $ref -- 3 of 3 arms) and the packaging verifiers (45 of 45 required modules packaged, 7 of 7 data members, 7 of 7 vendored packages, nothing missing at module or function scope).",
+        "L3 SERVED, on the deployed function by direct invoke: format=rich -> 200 'text/markdown; charset=utf-8', 58549 bytes, first line '# BOEING CO/THE [BA US Equity] Research Note'; format=xml -> 400 application/json, body {\"refused\": true, \"reason\": \"unknown print format 'xml': use format=pdf or format=rich\"}.",
+        "NEVER-2 entry org/critical_paths/change_management/20260924T1523Z_amgt-rm-7-print-format-rich_deploy_completion.md opened BEFORE the build at 192d45272d and CLOSED in the same session with all three legs carrying proof; sentinel org/critical_paths/.open_deploys/amgt-rm-7-print-format-rich.json removed by the tool on close."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "spec_asserts": "Z-S253 asserted the apply could not move the code and no cell owned the artifact write; Z-S254 asserted AC2/L2 could never pass and would roll back correct work; Z-S256 asserted the build refused on a lib/ write outside this lane. All three were spec-vs-world gaps in rm-7 as written.",
+    "world_is": "All three are closed by named acts and the deploy is live and proven. The order now reads: build the artifact, then one apply, L2 graded on the content-stream digest. The one claim this carrier does NOT make is that the three were one defect -- they had three distinct remedies (an egress widening, a comparand re-cut, and a regeneration by a different lane) and each is evidenced on its own line above.",
+    "notes": "The class the three share is worth more than the three instances, and it is already adopted: a cell's <paths> and egress class get written against the act the author PICTURED, while the act's precondition graph reaches one layer further each time -- the artifact write, then the generated-module write the build performs on the way to it. Running `build-and-upload-scoped-amgt.sh --build-only` AT CUT TIME surfaces the whole chain at once, costs seconds, writes nothing and touches no world state; 2.0.0_SA_COO~Z has adopted it for its next cut and the drain-end packet carries it. Two things deliberately NOT claimed here: this lane did not verify rm-4's rich CONTENT beyond the four graded properties (162/162 figures and 43/43 cites are the worker's fixture measurement, not re-measured on live data, and the live body is 58549 bytes against the worker's 84784 over its fixture -- different input, not a discrepancy); and the ARMED rows Z-S254 and Z-S248 stay ARMED in place per this channel's convention, this row being the carrier rather than an edit of them."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S259",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-24T16:07:50Z",
+    "one_line": "DISARM CARRIER for AMGT_RESAPP-Z-W5-S2 and AMGT_RESAPP-Z-S44, the two ARMED rows naming 3.0.0_SA_CVO~Z as disarm_owner: BOTH were resolved on 2026-09-11 and 2026-09-13 and have read ARMED ever since. And the census that found them understates resolution by an order of magnitude -- R-78's heuristic reads only LATER ROWS IN THE SAME FILE, while disposition is recorded in the sibling adjudications/ and remediations/ artifacts BY DESIGN: joining across them takes 180 ARMED from 103 uncited to 10.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "WHY THIS RAN AT ALL: R-78 @a635056ddf invited every seat to census its own serial (hazard_standing == ARMED, minus rows a later row in the same file cites). This seat had never run it. Four ARMED rows name 3.0.0_SA_CVO~Z; two survived R-78's heuristic; BOTH turn out to be long resolved. NOT ONE had ever reached this seat by message, exactly as R-78 reports for its own 20.",
+        "W5-S2 DISARMED BY THE ISSUER, 2026-09-11, AND THE ORDER SAYS SO IN ITS OWN PROSE. The row asked that AC3's sweep be narrowed to the cell's own files or that rot.py be excluded by name. Both happened: task-orders/AMGT_RESAPP.TO-AMGT-rb-15...md:104 now lists THREE explicit paths (impostor.py, build_lists.py, tests/test_impostor*.py) instead of an rglob over lib/research/lists/, and its <expect> states 'the pre-existing sibling lib/research/lists/rot.py ... is out of this cell's WHAT TO PRODUCE and out of scope'. Line 111 names the row BY ID as the cause: 'caught by worker ~5 running the criterion and filing AMGT_RESAPP-Z-W5-S2'. Amendment commit 57aec5e092, authored 2026-09-11T06:36:34-04:00 = 10:36:34Z, i.e. 29 minutes AFTER the row's surfaced_at of 10:07Z. The order's LAST <status> tag is `complete`.",
+        "S44 DISARMED BY THIS SEAT, 2026-09-13, ON THE ROW'S OWN STATED CONDITION. The row's disarm condition was 'L10.r5.json and L10.r6.json exist under prd/stamps/ signed by 3.0.0_SA_CVO~Z'. Both exist. Both are signed 3.0.0_SA_CVO~Z, utc 2026-09-13T00:03Z, and each note reads 'Late stamp written now for the round-N L10 slug committed 2026-09-11 at bd523222a1 ... utc is backfill time, not the historical slug vintage. S44 recovery.' -- including the late-stamp disclosure the row explicitly asked a backfilled stamp to carry.",
+        "THE CENSUS FINDING, DENOMINATORS PRINTED. Population: 4 investigation files under org/missions/D5/AMGT/*/surprise-channel/investigations/ (R-78 describes THREE channels; the fourth is AMGT_CORPUS's INVESTIGATION_v1_CLOSER_C.md, 5 rows). Sibling corpus: 77 files under adjudications/ and remediations/. ARMED rows, any owner: 180 -- REPRODUCED EXACTLY against R-78's 180 on an independent parse. Uncited by a later row in the SAME FILE: 103 (R-78 reports 104; the total row count also differs by one, and at R-78's own commit a635056ddf the four-file sweep reads 665 against its stated 664 -- an append-only file is a MOVING denominator, which is a TIME-scope difference and immaterial to every conclusion R-78 draws). ALSO uncited anywhere in adjudications/remediations: 10.",
+        "THE BOUND, INHERITED FROM R-78's OWN CAVEAT AND NOT ESCAPED BY THIS JOIN: a citation may REFERENCE a row rather than RESOLVE it. So 10 is NOT the open count. The true figure lies between 10 and 103, and the sibling join is a TIGHTER BRACKET, not an answer.",
+        "THE CONTROL, WHICH IS R-78's OWN RECOMMENDED ONE -- sample a NAMED row whose answer you already know, because a census cannot check itself. Two were available here and both were checked AT THE RESOLVING ARTIFACT rather than at the citation: W5-S2 against the amended task order and its terminal status, S44 against the two stamp files. 2 of 2 citations were genuine resolutions. That is a sample of two and is reported as such."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "R-78 @a635056ddf: 'the query is hazard_standing == ARMED, minus rows a later row in the same file cites', offered as the best available instrument at 104 rows, with the stated caveat that a later row may cite an id to REFERENCE rather than to resolve it.",
+    "world_is": "The heuristic's blind spot is not reference-vs-resolution -- it is LOCATION. The canonical L8/L9 flow records disposition in ADJUDICATION_v*.md and carries remedies in REMEDIATION_v*.md, both SIBLINGS of the investigations file the census reads. So the ordinary, correct, by-the-spine resolution path is invisible to an instrument scoped to one file, and every properly dispositioned row reads as open. Joining the same 180 ARMED rows against those 77 sibling artifacts moves the uncited count from 103 to 10.",
+    "notes": "This row is the DISARM CARRIER for both ids above; neither is mutated in place, per the gate's rule that corrections are NEW items citing the old id. ⛔ A SEPARATE OBSERVATION IS RECORDED HERE AND EXPLICITLY NOT CLAIMED, because it is the recurrence of S44's own shape at a different offset: prd/stamps/ carries L8, L9 and L10 for r1-r8 and r10-r12 and NOTHING after r12 (2026-09-17T06:58Z), while this project is in round 38. All THREE stages stop together, which is the signature of a practice that was retired rather than of L10 drifting -- but whether stamping is still expected is UNMEASURED and is NOT asserted here in either direction. ⭐ The one query that would settle it costs one read and belongs to whoever owns the ladder: does any live gate, tool or ruling still consume prd/stamps/ after r12? S44's hazard was a reader misreading a two-round gap; if nothing reads the ladder now there is no reader to mislead, and if something does, this is the same hazard 26 rounds wide. Naming it without grading it is deliberate -- grading it from the file listing alone would be the wrong-domain error, since the listing cannot see a consumer."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S260",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-24T16:17:13Z",
+    "one_line": "SELF-CORRECTION to this seat's own row filed 40 minutes ago: the sibling-artifact join is very nearly VACUOUS as a resolution signal, not merely caveated. 161 of 181 ARMED rows (89 percent) appear in an ADJUDICATION because the L8 compile enumerates a round's rows BY CONSTRUCTION -- so 'appears in a sibling' is near-universal and carries almost no information about resolution. Separately, the prefix-substring hazard is REAL and its incident count here is measured at ZERO.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "WHAT FALLS, and it is the headline of this seat's own prior row. That row reported the ARMED-and-uncited count dropping from 103 to 10 once adjudications and remediations were joined, and read that drop as the resolution record living in sibling artifacts. MEASURED NOW: of 181 ARMED rows, 161 (89 percent) appear in an ADJUDICATION and 78 (43 percent) in a REMEDIATION. The L8 compile's own contract is 'new investigation rows and no others' -- IT ENUMERATES BY CONSTRUCTION. So appearing in an adjudication is what nearly every row does, and it is near-orthogonal to whether anything was resolved.",
+        "THE BOUND THIS SEAT DID STATE WAS CORRECT AND FAR TOO WEAK. The prior row said a citation may REFERENCE rather than RESOLVE, so 10 was a bracket and not an answer. True -- but a caveat implies the instrument mostly works and occasionally over-matches. The measurement says the dominant behaviour IS the over-match. A caveat is not a substitute for running the instrument's own failure mode over the population.",
+        "AND THE CONTROL WAS THE WEAKEST POSSIBLE SAMPLE, WHICH THIS SEAT CHOSE AND REPORTED AS A STRENGTH. Two named rows were checked at the resolving artifact and both were genuine, 2 of 2. BOTH WERE THIS SEAT'S OWN ROWS, AND BOTH HAD ALREADY BEEN ESTABLISHED AS RESOLVED BEFORE THE JOIN WAS RUN. Sampling cases whose answer you already know is the right control for detecting a WRONG GRAIN (R-78's use of it) and is precisely the WRONG sample for estimating a RATE -- it is drawn from the resolved population by construction. A 2-of-2 pass carried no information about the other 93.",
+        "THE PREFIX-SUBSTRING HAZARD IS REAL, DEMONSTRATED ON THIS SEAT'S OWN ROW. An id is a substring of every LONGER id sharing its prefix, so a row can 'cite' ids it never mentions. Naive substring matching finds THREE such ids inside the prior row's text -- each one a strict prefix of an id that row legitimately names -- and all three FAIL a digit-guarded match (append (?!\\d)). They are named descriptively rather than quoted here, deliberately, per R-81's interim discipline that a census row must not enumerate ids.",
+        "AND ITS INCIDENT COUNT IS ZERO, MEASURED BY RUNNING THE DEFECT'S OWN SIGNATURE OVER THE GRADED POPULATION. Naive substring: 170 of 181 ARMED cited. Digit-guarded: 170 of 181 cited. PHANTOM CITATIONS: 0. Every prefix-shadowed row turns out to be independently and genuinely cited elsewhere, so the mechanism changes NO row's classification in this corpus. EXPOSURE, NOT INCIDENT -- and this seat was one call away from filing the opposite, alarming claim.",
+        "WHAT SURVIVES UNTOUCHED, so this correction is not read wider than it is: the two disarms stand, because each rests on its OWN resolving artifact (an amended task order with a terminal status; two signed stamp files) and never on the join. The ARMED count of 180 reproduced exactly against R-78 at the time and reads 181 now after a peer's row landed. And the LOCATION point stands -- resolution genuinely IS recorded in sibling artifacts -- but 'recorded there' is not 'detectable there by substring', and only the second was ever an instrument."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "This seat's own row (the immediately preceding AMGT_RESAPP-Z-S259) asserted that joining ARMED rows against the 77 sibling adjudication and remediation artifacts takes the uncited count from 103 to 10, and characterised R-78's in-file heuristic as having a LOCATION blind spot that the join repairs.",
+    "world_is": "The join does not repair the instrument; it substitutes a different near-universal predicate for a narrower one. Because the L8 compile enumerates every new row of its round, 89 percent of ARMED rows appear in an adjudication regardless of state, so the 103-to-10 drop measures COMPILATION COVERAGE and not resolution. R-81's ruling reaches the same place from the other side and is the remedy: a structured resolves:[<row-id>] field is immune BOTH to enumeration-as-citation AND to prefix-substring over-match, because it is an exact-id list on one declared axis rather than a search over prose where enumeration, blame and class-grouping also live.",
+    "notes": "Filed by the author of the row it corrects, 40 minutes after it, and before the figure could be cited anywhere. ⭐ THE LESSON THIS SEAT IS TAKING IS NOT 'THE JOIN WAS WRONG' BUT 'I CAVEATED INSTEAD OF MEASURING'. The failure mode was already named in my own row in plain words, and naming it felt like having handled it; the measurement that would have settled it -- what fraction of the population does this predicate match ANYWAY -- is one query and was not run until R-81 made it unavoidable. A stated bound is a promise to measure, not a measurement. ⛔ NOTHING HERE ASKS ANY SEAT FOR AN ACT, and this row enumerates no ids beyond the one it corrects."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S261",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-24T16:25:06Z",
+    "adjudicates": ["AMGT_RESAPP-Z-S226"],
+    "one_line": "DISARM CARRIER for AMGT_RESAPP-Z-S226 (the CDN had no behavior for /api/scoped/amgt/*, so every Security Analysis request fell to the SPA origin and returned 200 text/html). CLOSED IN THE WORLD ON 2026-09-22 by rk-122 (terraform 8c038da7e7, cloudfront-distribution.tf +36) and rk-123 (the apply), ledger 20260922T2058Z_amgt-rk123-edge-behavior closed 21:26Z -- TWO HOURS FORTY-ONE MINUTES AFTER THE ROW WAS FILED AT 18:45Z. It sat ARMED for two days with no carrier, which is R-78's class in its sharpest instance: disarmed in the world, open in its field, and nothing in the row able to say so. Carried on the EXISTING `adjudicates` field, not on the new one R-81 proposed: that field already exists in investigation_item.schema.json with a gate limb propagating disposition, and R-81 proposed a duplicate without checking the build ladder's first rung.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RE-MEASURED LIVE by 2.0.0_SA_COO~Z at 16:0xZ (msg 25621), unauthenticated, through d2n2nzpeqf34ge.cloudfront.net, as a DISCRIMINATING SET rather than a single probe: /api/scoped/amgt/lists -> 401 application/json; /api/scoped/amgt/security/BA_US_Equity/peers -> 401 application/json; /api/scoped/amgt/no-such-route -> 401 application/json (so the edge fires on the PATTERN, before the API).",
+        "POSITIVE CONTROL: /api/scoped/tickets, a known-working family -> 401 application/json, SAME BODY. So the AMGT pattern now behaves identically to a family that was never broken.",
+        "NEGATIVE CONTROL, and it is the arm that makes the set sound: /api/scoped/no-such-family/x -> 200 text/html, index.html -- THE EXACT Z-S226 SIGNATURE, STILL LIVE for any UNCLAIMED path. The instrument can still detect the defect; the AMGT pattern simply no longer exhibits it.",
+        "WHEN, from 0.0.0_AB_MSTR~Z's 16:05Z record: rk-122 (terraform, 8c038da7e7, cloudfront-distribution.tf +36) and rk-123 (the apply) landed 09-22, ledger 20260922T2058Z_amgt-rk123-edge-behavior closed 21:26Z, behavior index 28 of 29 with auth-validator-edge:20.",
+        "SEQUENCE, stated because it matters to the principal: Andrew saw the blank page at ~18:2xZ; the row was filed 18:45Z; the fix landed 21:26Z the same evening. His observation PRECEDED the fix by about twenty minutes and was not a report of a still-open defect at any later time."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "R-79 (this seat, one tick ago) ruled that limb 1 is UNREACHABLE on the deployed surface, that a known BLOCKING defect would render the page blank EVEN IF DEPLOYED, and that the cell needed an edge behavior plus a CTO/COO never-widen pair plus a deploy-ledger entry.",
+    "world_is": "The behavior exists, carries the auth-validator attachment, and was applied two days ago under its own closed ledger. R-79's central claim is FALSE and is amended at the ruling. ⛔ AND R-79'S OWN 'TRAP' WARNING WOULD HAVE MISREAD THE FIX: it said that without the attachment the fix trades HTML for 401 -- but a 401 unauthenticated is what a CORRECT behavior looks like from outside a session, identical on the control family, so reading 401 as the trap would have condemned a working edge.",
+    "disarm_owner": "1.0.0_SA_CTO~Z -- DISARMED by this row, per Z-S226's own disarm_owner line ('1.0.0_SA_CTO~Z routes the cell'); 2.0.0_SA_COO~Z explicitly filed nothing on it.",
+    "notes": "WHAT THE ROUND-39 CELL KEEPS, and it SHRINKS: whether the DEPLOYED page renders for an AUTHENTICATED user today -- a RENDER CHECK, not an infra act. No never-widen pair and no deploy ledger unless that check finds a served defect, since nothing is being moved. ⭐ THE LESSON IS 3.0.0_SA_CVO~Z's FROM THE ROW ABOVE, WORD FOR WORD AND IT CONVICTS R-79: 'I CAVEATED INSTEAD OF MEASURING ... a stated bound is a promise to measure, not a measurement.' R-79 wrote 'nothing here is re-measured' and then ruled anyway; the caveat is the only reason the fabric caught it, and the seat that should have run the probe was this one. ⛔ THIS ROW ENUMERATES NO IDS BEYOND THE ONE IT RESOLVES, per R-81's interim discipline. ⚠ AND ONE CONCURRENCY FINDING FROM FILING IT: this row was first written as Z-S260 and the gate REFUSED it, because another seat had claimed Z-S260 between this seat's read of the file tail and its write. SEQUENTIAL IDS IN A CONCURRENTLY-APPENDED FILE ARE NOT SAFELY ALLOCATABLE BY READING THE TAIL -- two seats reading it compute the same next id, and the second append reads to the gate as an in-place MUTATION of the first seat's row rather than as a collision. The gate caught both faces (id occurs 2 times; existing row mutated) and its refusal text is what named the mechanism. Re-filed as Z-S261 after measuring the true highest id; a seat filing here should expect to re-number rather than trust its first read."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S262",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-24T16:45Z",
+    "one_line": "DISARM CARRIER, batch 1 of the R-78 sweep on this serial: fourteen rows naming 2.0.0_SA_COO~Z as disarm owner whose remedy landed in the world between 2026-09-13 and today and which have read ARMED ever since because nothing cited them (R-78). Each is resolved on its own evidence line below; nothing on any target row is edited (R-81 (iv)). Per R-81's interim discipline this row names ONLY the ids it resolves, listed in `notes` as full ids (R-81's `resolves` field is refused by the schema at HEAD, additionalProperties false, so the ids are carried where the R-78 heuristic reads them), and no other.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_RESAPP-Z-W31-S1 (empty portal gitlink in a worker worktree) and AMGT_RESAPP-Z-W53-S2 (node_modules symlink mangled at provisioning): .tools/wk-provision.sh provision <CODE> <n> --path <abs> --portal-ref <ref> --node-modules link -- rk-60 (AMGT_RESAPP.TO-AMGT-rk-60.portal-worktree-provisioning.md, complete) is the remedy; every round-38 worker (~140..~145, six worktrees today) was provisioned through it with a populated portal at its pinned ref and a working junction, measured by each proof instance's portal-scoped criteria passing.",
+        "AMGT_RESAPP-Z-W60-S2 (native Python cannot exec the .bin/tsc shell shim, WinError 193): rk-60's face repair; round-38 faces run `npx tsc -b --noEmit` through the shell (rm-2 AC3, tsc exit 0 on 2026-09-24).",
+        "AMGT_RESAPP-Z-W53-S1 (the chain-L CTO half absent from the worktree): the order deployed nothing by its own BOUNDS and rk-53 drained complete; the half was never a precondition of any criterion the worker ran.",
+        "AMGT_RESAPP-Z-W34-S2 (the owned-paths gate refuses a worker commit with no non-terminal order naming the path): the round-13 act landed @3c2a6e47ca (named in rk-58's own face) and the class remedy is rk-58's minter, `.tools/direct-act-order.py mint`, closed @f8644c4995 -- a co-signed direct act now spawns with a minted order or not at all (dispatch SKILL.md).",
+        "AMGT_RESAPP-Z-W58-S1 (AC2's fixture filename refused on its basename): issuer repair @7a5c818ff1, the worker's AC2 re-run PASS @ad30266d3c, rk-58 closed @f8644c4995 with the instance VALID at HEAD (5 of 5).",
+        "AMGT_RESAPP-Z-W39-S5 (two pre-existing failures in lib/research/api/tests/test_generation_and_pool_routes.py, test_13 and test_13b): `python -m pytest -q lib/research/api/tests/test_generation_and_pool_routes.py -k test_13` on 2026-09-24 at HEAD f8644c4995 -> 2 passed, 22 deselected.",
+        "AMGT_RESAPP-Z-W119-S1 (rk-119's literal AC0 script crashes on a 2-tuple before its decisive line): a face defect worked around in the worker's scratch copy; rk-119 drained complete with the instance VALID; no served surface depended on the literal script.",
+        "AMGT_RESAPP-Z-S177 (a placeholder beginning 'U' outranks every digit-leading accession under sorted(keys)[-1]): lib/research/management/roster.py:1042 `_is_accession_key` -- 'A real accession is digits-only; UNRESOLVED-SOURCE (or any other placeholder) is not, and must never win over a real one' -- landed by rk-91 @20f175e4e4 (2026-09-21 23:05Z), two days after the row.",
+        "AMGT_RESAPP-Z-W42-S2 (analyze.py's main() indexes four keys unconditionally): the code fixes are the worker's own later rows W42-S3/W42-S4 on the same order, and rk-40 drained complete.",
+        "AMGT_RESAPP-Z-W117-S4 (an AC5 diff range anchored on HEAD~1 fails once anything lands between the code commit and the grade) and AMGT_RESAPP-Z-W117-S5 (a literal live-probe invocation counted inside a hard-capped budget): both are lessons on the issuer's cut, applied -- round-38 faces anchor their diffs on the merge-base with the portal DEV ref (rm-3 AC3) and no round-38 face names a live vendor probe; rk-117 closed complete without a third Bloomberg request.",
+        "AMGT_RESAPP-Z-W88-S1 (the SERP primitive's records carry no per-page tag, so page_bronze_key attributes every row to the last page): a stated design limit of the primitive, recorded as such in rk-88's deliverable and its close; carried as a known limitation of the writer, not an open hazard -- a per-page tag is an enrichment of the primitive's record shape, never of this cell.",
+        "AMGT_RESAPP-Z-S254 (rm-7's L2 on the raw pdf sha can never pass): amendment 3 @72cef87e47 (content-stream digest), vindicated on the real deploy 2026-09-24 ~15:5xZ -- content EQUAL, raw and normalised NOT EQUAL, CAT DIFFERENT -- carried by the lane's Z-S258; the owner's word is this row's.",
+        "DENOMINATOR: 26 rows read on this serial by exact token, of which these 14 are resolved here; the remainder are NOT named in this row (R-81 interim discipline) and stay as filed."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "R-78 @a635056ddf: 'any seat estimating its own live hazards from hazard_standing will be wrong in the direction of over-reporting'; the only resolution signal is a LATER row, and R-81 @ee4a11df04 makes that signal a field.",
+    "world_is": "Fourteen of this serial's ARMED rows were resolved by drains, repairs and later code between 2026-09-13 and 2026-09-24 and carried no resolution row until this one; each remedy is named with its commit or its measurement above. The rows not named here are still being read one by one and are carried in later batches, each on its own evidence.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- the owner of every row resolved here, disarming on its own word at the round-38 drain end; ARMED rows stay in place per the channel's convention.",
+    "notes": "RESOLVES (R-81, field pending the gate owner's schema change; carried here as full ids): AMGT_RESAPP-Z-W31-S1, AMGT_RESAPP-Z-W53-S2, AMGT_RESAPP-Z-W60-S2, AMGT_RESAPP-Z-W53-S1, AMGT_RESAPP-Z-W34-S2, AMGT_RESAPP-Z-W58-S1, AMGT_RESAPP-Z-W39-S5, AMGT_RESAPP-Z-W119-S1, AMGT_RESAPP-Z-S177, AMGT_RESAPP-Z-W42-S2, AMGT_RESAPP-Z-W117-S4, AMGT_RESAPP-Z-W117-S5, AMGT_RESAPP-Z-W88-S1, AMGT_RESAPP-Z-S254. Batch 1 of the sweep the R-78 census on this serial opened (CTO msgs 25614/25617). Filed after the round-38 packet so it is not read as round-38 L8 input."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S263",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-24T16:50Z",
+    "one_line": "ADJUDICATION CARRIER for the fourteen rows AMGT_RESAPP-Z-S262 resolved on evidence: Z-S262 carried the ids in prose because R-81's `resolves` was refused by the schema, and R-81a (@c69c4866ce) withdrew that field for the one the schema already has -- `adjudicates`, which gate (iii)'s second limb propagates as the named items' latest disposition. This row names the same fourteen through that field and adds no new finding; its evidence is Z-S262's, line for line.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_RESAPP-Z-S262 @25152295cf: fourteen evidence lines, one per resolved row, each naming the commit or the measurement that closed it in the world.",
+        "investigation_item.schema.json `adjudicates` (the CTO's R-81a quotes its description: 'this row's disposition becomes the named items' latest disposition'); 9 rows of 594 already carry the field, filed by 1.0.0_SA_CTO~Z, 1.0.0_SA_CTO~W, 2.0.0_SA_COO~W, 4.0.0_SA_CRO~Z and 0.9.0_WK_AMGT_RESAPP~16 -- so it is the channel's disposition field for any seat, not the CVO's alone."
+      ]
+    },
+    "adjudicates": [
+      "AMGT_RESAPP-Z-W31-S1",
+      "AMGT_RESAPP-Z-W53-S2",
+      "AMGT_RESAPP-Z-W60-S2",
+      "AMGT_RESAPP-Z-W53-S1",
+      "AMGT_RESAPP-Z-W34-S2",
+      "AMGT_RESAPP-Z-W58-S1",
+      "AMGT_RESAPP-Z-W39-S5",
+      "AMGT_RESAPP-Z-W119-S1",
+      "AMGT_RESAPP-Z-S177",
+      "AMGT_RESAPP-Z-W42-S2",
+      "AMGT_RESAPP-Z-W117-S4",
+      "AMGT_RESAPP-Z-W117-S5",
+      "AMGT_RESAPP-Z-W88-S1",
+      "AMGT_RESAPP-Z-S254"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "R-81a @c69c4866ce: the estate already has `adjudicates`, with a gate limb; a disarm that lives in prose is one no gate can read.",
+    "world_is": "Z-S262's fourteen resolutions are true and on the record but invisible to gate (iii)'s second limb, which reads `adjudicates` and nothing else; this row makes them visible to it without restating them. Every later batch of this sweep files through the field directly.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- the owner of every row adjudicated here; nothing on any target row is edited.",
+    "notes": "Sibling of Z-S262, filed the same tick on R-81a's correction. Not round-38 L8 input."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S264",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-24T16:58Z",
+    "one_line": "ADJUDICATION CARRIER, batch 2 of the R-78 sweep, INHERITED: nineteen rows from rounds 1-9 (2026-09-11 to 09-13) whose disarm_owner is the predecessor lane 2.0.0_SA_COO~ZZZ -- a serial no longer seated on this project, so the rows have named an owner who could not act since round 13 (the stale-owner class /mstr-spawn 1d names). This project's issuer takes them as inherited, on its own read of each, and adjudicates the ones resolved in the world; each remedy is on its own evidence line. Nothing on any target row is edited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_RESAPP-Z-W4-S1 (re-running AMGT-s-12's f6_remeasure.py overwrites a peer's landed f6_remeasure.json in place): OUTPUT_PATH still writes beside the script (deliverables/0.9.0_WK_AMGT_RESAPP~3/f6_remeasure.py:65), and no order after round 1 names the script -- comp-find 'f6_remeasure' over the 208 task-order files: 2 hits, AMGT-s-12 and AMGT-s-8, both round 1 and complete. A dormant instrument nobody is asked to run; the hazard cannot fire without an order naming it.",
+        "AMGT_RESAPP-Z-W2-S3 (AC5's grep -r transiently counted a byte-coincidence inside a gitignored terraform provider binary): a face-craft lesson; the row's own reading cleared it once the .terraform/ cache was removed, and rd-2 drained complete.",
+        "AMGT_RESAPP-Z-W1-S7 (safe-apply's HALTGT checkpoint needed a session-keyed serial file outside the cell's <paths>): the file is the gate's own gitignored identity mechanism, not a deliverable; rd-1 (AMGT_RESAPP.TO-AMGT-rd-1.article-store-table.md) is complete and every later apply on this project has passed the same checkpoint the same way.",
+        "AMGT_RESAPP-Z-W2-S6 (rd-5's cell text never named which tickers the chatter axis ranks) and AMGT_RESAPP-Z-W2-S7 (the archive provider hit the one-required_providers-block ceiling): rd-5 (AMGT_RESAPP.TO-AMGT-rd-5.chatter-axis-scheduled-producer.md) is complete with the producer scheduled (cron(0 10 * * ? *), the project's one scheduled producer per rf-4's preflight); both were worked around inside the cell and named as such at its drain.",
+        "AMGT_RESAPP-Z-W10-S1 (an AC3 invocation whose last limb was `git checkout -- <file>`, destroying uncommitted work): a face defect on a round-3 order; the lesson is applied -- no face cut by this issuer since names a checkout/clean limb, and the round-38 faces forbid both to the worker verbatim ('Never push, merge, rebase, checkout -- or clean').",
+        "AMGT_RESAPP-Z-W10-S3 (the /api/scoped/amgt adapters were delivered as code but could not be mounted from the cell's grant): mounted since -- 16 API_ROUTEs live on api 7k3ed8px20 and CloudFront EVTSA9VEHNZVH behavior 28 of 29 for /api/scoped/amgt/* with auth-validator-edge:20 (rk-122/rk-123, 2026-09-22, ledger 20260922T2058Z closed 21:26Z; re-measured by the issuer 2026-09-24 16:0xZ: every AMGT path answers the edge's 401 unauthenticated, identical to the tickets family).",
+        "AMGT_RESAPP-Z-S27 (comp-iam cannot verdict a library, so the round-6 re-run could not discharge the IAM gap): rf-2 (AMGT_RESAPP.TO-AMGT-rf-2.the-mount-and-its-iam.md) is complete -- the mount and its IAM were the cell, and the 401-from-the-edge read above is the mount answering.",
+        "AMGT_RESAPP-Z-W11-S2 (rf-2 called itself a <paths> repair and its own <paths> omitted the two files that close it): rf-2 drained complete on the round-7 recut; the omission was repaired at that round's cut, which is the row's own named remedy.",
+        "AMGT_RESAPP-Z-S33 (two superproject branches, one gitlink, the second drain silently reverting the first) and AMGT_RESAPP-Z-S34 (a local fetch satisfied a gitlink's reachability check while the pushed pointer dangled): closed by mechanism -- every drain since resolves the gitlink explicitly (`git update-index --cacheinfo 160000,<sha>,portal` to the merged portal DEV head, six times today), and the one-trunk rule of 2026-09-24 retired SITEZ so there is one superproject head and MSTR pushes the portal with the workspace (memory: a drain that moves the gitlink names the portal commit).",
+        "AMGT_RESAPP-Z-S60 (a re-spawn into a REUSED worktree inherits every artifact of the previous occupant): closed by mechanism -- .tools/wk-provision.sh provisions a fresh worktree per slot and `remove` deletes it at the drain; six provisioned and six removed today (~140..~145), none reused.",
+        "AMGT_RESAPP-Z-S62, AMGT_RESAPP-Z-S63, AMGT_RESAPP-Z-S66, AMGT_RESAPP-Z-S68, AMGT_RESAPP-Z-S69, AMGT_RESAPP-Z-S71 (the predecessor lane's own method lessons: a zero read in the wrong layer; a nudge trigger keyed to an artifact the adjudicator does not produce while working; a fresh clone reported as an estate fact; '63 armed items' matching no instrument; a spawn prompt inventing an id grammar; native Python's empty read entering a set difference): each is a lesson about the seat's own reasoning, banked in that seat's memory at filing and carried into this issuer's practice (the census counts in this sweep print their denominators and their lane grain; worker prompts quote the channel header's grammar; every `git -C /c/...` read runs from bash); none names a world state that could still fire.",
+        "AMGT_RESAPP-Z-S70 (two rounds of portal repairs on no branch, held by refs/drains/* only, invisible to `git branch --contains`): a845a8be75 IS an ancestor of portal DEV today (`git -C portal merge-base --is-ancestor a845a8be75 DEV` -> true, 2026-09-24 16:5xZ); the work reached the trunk.",
+        "DENOMINATOR: 21 rows read by exact token on 2.0.0_SA_COO~ZZZ; 19 adjudicated here. The two not adjudicated are not named in this row and stay as filed pending a deeper read (a partition existence question and an always-pass criterion on a round-7 order)."
+      ]
+    },
+    "adjudicates": [
+      "AMGT_RESAPP-Z-W4-S1",
+      "AMGT_RESAPP-Z-W2-S3",
+      "AMGT_RESAPP-Z-W1-S7",
+      "AMGT_RESAPP-Z-W2-S6",
+      "AMGT_RESAPP-Z-W2-S7",
+      "AMGT_RESAPP-Z-W10-S1",
+      "AMGT_RESAPP-Z-W10-S3",
+      "AMGT_RESAPP-Z-S27",
+      "AMGT_RESAPP-Z-W11-S2",
+      "AMGT_RESAPP-Z-S33",
+      "AMGT_RESAPP-Z-S34",
+      "AMGT_RESAPP-Z-S60",
+      "AMGT_RESAPP-Z-S62",
+      "AMGT_RESAPP-Z-S63",
+      "AMGT_RESAPP-Z-S66",
+      "AMGT_RESAPP-Z-S68",
+      "AMGT_RESAPP-Z-S69",
+      "AMGT_RESAPP-Z-S70",
+      "AMGT_RESAPP-Z-S71"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "Each target row's disarm_owner reads 2.0.0_SA_COO~ZZZ, a lane instance that has not been seated on AMGT_RESAPP since round 13; R-78: a row keyed on a serial goes stale the moment that serial is re-scoped or closed, and no gate fires.",
+    "world_is": "The nineteen were resolved by drains, later rounds' mechanisms (the mount, the provisioning tool, the gitlink drain, the one-trunk rule) or were method lessons with no world state left to fire; their owner field could never be updated (append-only) and no carrier ever cited them. This row is the carrier, filed by the issuer that inherited the project from that lane.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- as the inheriting issuer of AMGT_RESAPP; nothing on any target row is edited.",
+    "notes": "Batch 2 of the sweep opened by R-78's census on this serial (CTO msgs 25617/25632). Not round-38 L8 input."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S265",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-24T16:53:16Z",
+    "one_line": "The Peers tab's 'P/E (trailing)' and 'P/E (NTM)' columns render values that are WRONG BY A FACTOR OF 100 -- 12 of 12 members implausible as a P/E as shown, 0 of 12 implausible at x100 -- and the estate's own producer map states the relation as 'RECIPROCAL: P/E = 1 / ey' while that reciprocal has no locatable implementation in either the portal or the peers library.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "FOUND BY READING THE RENDER, WHICH IS WHY IT WAS FOUND AT ALL. Round 38 carried NO judgment criteria on any of its seven faces (verified: 21 criteria across rm-1..rm-7, zero carrying judgment=\"true\", with the attribute's 258 uses elsewhere in this project's orders as the positive control). Every mechanical column PASSES on this render. No instrument in this round grades whether a number is PLAUSIBLE, so this defect is invisible to every criterion that was run and visible immediately to a person reading the page.",
+        "THE DISCRIMINATOR IS SELF-CONTAINED AND NEEDS NO EXTERNAL DATA. Read off contract-check-after-rm-2/peers.png, 12 of 12 members carrying a P/E: implied EPS = price / (P/E as shown) gives Deere 1756.69, Lockheed 2775.48, GE Vernova 3571.43 -- 12 of 12 OUTSIDE a plausible 0.50-200 EPS band. Implied EPS = price / (P/E x 100) gives Deere 17.57, Lockheed 27.75, GE Vernova 35.71 -- 0 of 12 outside. DENOMINATOR 12, printed; the test uses only price and P/E, both on the same render.",
+        "THE PRODUCER'S OWN MAP NAMES A RECIPROCAL: lib/research/peers/csc.py:88-89 bind the columns to factor codes ey and ey_ntm with the relation strings 'RECIPROCAL: P/E = 1 / ey; trailing grain' and 'RECIPROCAL: P/E = 1 / ey_ntm'. csc.py:38-39 repeat it in prose. P/E = 1/ey is arithmetically correct ONLY where ey is a FRACTION; on a PERCENT-valued ey the same expression yields a P/E 100x too small, which is exactly the observed direction.",
+        "AND THE RECIPROCAL HAS NO LOCATABLE IMPLEMENTATION, denominator printed: comp-find 'MEMBER_FIELD_FOR_CODE|1 / ey|1/ey|reciprocal' -i over portal/src and lib/research/peers returns 16 hits across 1043 files, PAGE 1 OF 1. The DEF band holds exactly TWO entries, both MEMBER_FIELD_FOR_CODE (cscTable.ts:27 and :111) -- no arithmetic. Every other hit is a relation string, a prose comment, or a fixture echoing the relation string. portal/src/pages/SecurityAnalysis/cscTable.ts:114 relabels on the CODE alone -- present.code === 'ey_ntm' ? 'P/E (NTM)' : present.code === 'ey' ? 'P/E (trailing)' -- and carries memberField straight through with no transform in that branch.",
+        "WHAT IS NOT MEASURED AND IS NOT CLAIMED: WHERE the transform that produces the rendered 0.35 actually lives. The value is not raw ey under either convention (a percent ey would render 2.9, a fractional ey 0.029), so SOMETHING transforms it and this seat did not find that code. Therefore this row does NOT assert which of three faults it is -- a reciprocal taken on a percent, a missing x100, or a mislabel of an earnings-yield column. It asserts only that the rendered number and its column header disagree by 100x, which is true under all three.",
+        "SCOPE AND VINTAGE: read at the round's terminal baseline contract-check-after-rm-2/ (portal DEV 5e339ffd), scope=main, the peers state. This is a LOCAL vite render; rounds 37 and 38 are not deployed, so nothing here is a claim about the served page."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z (round 38 issuer) -- placement of the fix is the issuer's at the round-39 cut; the correct semantics are the producer's to state, not this seat's to choose.",
+    "spec_asserts": "The Peers table's column header reads 'P/E (trailing)' and 'P/E (NTM)'; lib/research/peers/csc.py:88-89 states the relation to the underlying factor codes as 'RECIPROCAL: P/E = 1 / ey' and 'RECIPROCAL: P/E = 1 / ey_ntm'; AMGT-rk-14's display-label work asserts the label NEVER carries a fiscal year over a non-fiscal-year figure, i.e. that the header is an honest name for the figure beneath it.",
+    "world_is": "Under that header the page renders a number 100x smaller than the P/E it names, on every member that carries one. The label discipline rk-14 installed governs the column's HORIZON (trailing vs fiscal year) and says nothing about its MAGNITUDE or its UNITS, so a column can satisfy every label rule in the estate and still show the wrong number.",
+    "notes": "⛔ ARMED because this is a SERVED-CLASS defect on the product's own comparison table: a reader forms a valuation judgment from a P/E, and a P/E of 0.35 next to a P/E of 0.76 preserves the ORDERING while destroying the MAGNITUDE -- so the table looks internally consistent and ranks members correctly, which is precisely why it survived 38 rounds. Andrew's goal names a visually polished Security Analysis app whose completion test is every security in the research folder; a mislabelled valuation multiple is in the goal's own subject matter. ⭐ THE CLASS IS THIS SEAT'S OWN ROUND-37 ERROR INVERTED AND IS WORTH MORE THAN THE INSTANCE: there I reasoned about a metric from its NAME without opening the predicate; here the ESTATE names a column from a relation string whose implementation nobody opened. A relation string is documentation, and documentation that states an arithmetic contract is the easiest kind to leave unexecuted, because every reader downstream quotes it as though it ran. NOT A ROUND-38 REGRESSION: no round-38 cell touched the peers table, and this row makes no claim about when the defect entered."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S266",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-24T17:15Z",
+    "one_line": "ADJUDICATION CARRIER for two round-37 rows naming 2.0.0_SA_COO~Z that still read UNDER_INVESTIGATION on `_latest_dispositions()` because round 37's adjudication predates the rl-9 drain that resolved them: AMGT_RESAPP-Z-S247 (the MODEL state's identity line at ratio 1.48 on the band, lowContrastChars 37) and AMGT_RESAPP-W137-S1 (tabs.harness.cjs throwing MODULE_NOT_FOUND on LeadPanel's new PanelFooter and Segmented imports). Both fixed by 0.9.0_WK_AMGT_RESAPP~138 on AMGT-rl-9 and re-measured by the issuer today.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_RESAPP-Z-S247's own disarm condition: 'Disarms when the issuer reads ... model.json lowContrastChars 0'. Read on the shared portal at DEV 5e339ffd, 2026-09-24 ~15:5xZ (deliverables/2.0.0_SA_COO~Z/round38/contract-check-after-rm-2/run.log, scope=main row `model`): lowContrastChars PASS, as on all six states; the identity line no longer renders navy ink on the band.",
+        "AMGT_RESAPP-W137-S1's named fix: portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs now carries a '@/ui/components/panels' stub with PanelFooter (:81-:85) and a '@/ui/components/Controls' case with Segmented (:104-:108), committed by 0.9.0_WK_AMGT_RESAPP~138 @c2b51a46 (2026-09-24 07:35Z, the rl-9 drain); the harness ran under rm-1/rm-2's AC checks today without a MODULE_NOT_FOUND.",
+        "Instrument: `_latest_dispositions('.', 'AMGT_RESAPP')` at .tools/surprise-row-gate.py:433 read both ids UNDER_INVESTIGATION at 17:0xZ among 19 open on 596; every other open id is a round-38 row the CVO's L9 on packet @e51fd80d4e dispositions, and this row does not name them."
+      ]
+    },
+    "adjudicates": [
+      "AMGT_RESAPP-Z-S247",
+      "AMGT_RESAPP-W137-S1"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "Z-S247: 'Routed to AMGT-rl-9 ... whose criterion is the six-state PASS'; W137-S1: 'the fix is the same shape already applied to errorEmpty.harness.cjs -- add PanelFooter to the panels stub and a Segmented stub to a new Controls case in tabs.harness.cjs's own load()'.",
+    "world_is": "Both remedies landed in the rl-9 drain on 2026-09-24 and hold at the round-38 baseline; the rows stayed open only because their owner's word was never carried in a field the resolver folds (R-81a's matched pair, two more instances).",
+    "disarm_owner": "2.0.0_SA_COO~Z -- the owner both rows name; nothing on either target row is edited.",
+    "notes": "Filed on the consumer's instrument, not on the retracted census (CTO msg 25640). Not round-38 L8 input."
   }
 ]
 ```

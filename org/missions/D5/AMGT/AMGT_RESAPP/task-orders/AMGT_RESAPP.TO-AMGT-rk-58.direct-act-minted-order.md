@@ -102,7 +102,16 @@ file) on any infra/aws/terraform/** or other owned-paths-enumerated surface."*
    `<paths>` = the validated `--path` entries plus the five standing entries (the worker's deliverables folder, the
    newest investigation file, the order's own path, `org/critical_paths/change_management/`,
    `org/critical_paths/.open_deploys/`), section 5 = the criteria block, the RECORD FACE marker, then
-   `<status>pending</status>`, `<round><n></round>`, `<slot>~<slot></slot>`, `<fabric><project.json fabric></fabric>`;
+   `**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~16:2xZ (round 14's face, closed late).** Flipped by the ISSUER. The worker's
+final instance (@ca98c0829b, 2026-09-19 00:42Z, after the issuer's AC2 repair @7a5c818ff1 and the worker's unrounded-minter fix
+@ad30266d3c) re-validated at HEAD by this seat in the shared tree: 5 of 5 criteria PASS, proof-of-spec rc=0 VALID, 9 of 9 artifact
+rows resolved at pin, 2 of 2 surprises entries (W58-S1, W58-S2) resolving to channel rows. The face stayed `pending` for five days
+after the work was terminal -- a stale face over finished work (R-78's class), found by the R-78 census on this serial, not by any
+gate. W58-S1 (the fixture filename the gate refuses on its basename) was remedied by the issuer's repair; W58-S2 (GATE (x)'s
+round-issuer limb lives in main(), invisible to check_file()) stands as a true statement about the gate, carried to the sweep's
+carrier row rather than re-opened here. Nothing else moves: the minter and its test are on CLOUD since round 14.
+
+<status>complete</status>`, `<round><n></round>`, `<slot>~<slot></slot>`, `<fabric><project.json fabric></fabric>`;
    the output path is `<tree root>/task-orders/<CODE>.TO-<cell>.<slug>.md` with the slug derived from `--title`
    (2-5 lowercase hyphenated words);
    (f) with `--dry-run` prints the rendered order to stdout and writes NOTHING; without it, writes the file, then

@@ -1084,6 +1084,133 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "R-75 @791aa3e4af cites Z-S20 as independently demonstrating a SECOND identity path already working, and concludes from it that the 40 identity-unresolved AMGT_CORPUS folders are not measured to be unreachable.",
     "world_is": "Z-S20 measured NAME ENRICHMENT for securities that were already identified. It cannot support identity RECOVERY for folders that are not, because the arm it describes is downstream of the very resolution those folders lack. The number was sound in its own domain and was applied to a population it never swept.",
     "notes": "THE CLASS IS THE ONE THIS ESTATE KEEPS PAYING FOR AND IT IS A DOMAIN ERROR, NOT AN ARITHMETIC ONE: a sound, bounded, honestly-printed number carried one population sideways -- and it reads as MEASURED the whole way, because it is. MY SHARE, stated because the inheritance was foreseeable: Z-S20's headline is 'the correct company name is ALREADY IN THE SAME RECORD', and a reader who takes 'the record holds more identity data than we read' one step further lands exactly where R-75 landed. The row says NAME throughout and bounds itself at 13 of 250, but it never said THE ARM CANNOT FIRE WITHOUT A TICKER -- and that is the sentence that would have stopped it. THE KEEPABLE FORM: when you publish a number about a sub-population, state what it CANNOT reach in the same breath as what it does; a bound on the numerator is not a bound on the domain, and the next reader inherits the sentence, not the query."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S22",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-24T16:05:00Z",
+    "one_line": "R-78's census run on THIS serial: 38 rows name this lane as disarm_owner, 24 read ARMED, 17 survive the cited-by-a-later-row filter -- and the first two sampled show the over-reporting R-78 predicts. W10-S9 is a DISARM CARRIER filed ARMED, so it is disarmed here by name; W8-S1 is genuinely live. The other 15 each need their own read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CENSUS, on this serial, query as R-78 states it (hazard_standing == ARMED, minus rows a LATER row in the same file cites): 38 rows name 2.0.0_SA_COO~Y as disarm_owner, 24 ARMED, 17 after the filter -- all AMGT_HARVST: Z-S10, Z-S11, Z-W3-S1, Z-W8-S1, Z-W8-S2, Z-W9-S1, Z-W10-S2, Z-W10-S4, Z-W10-S5, Z-W10-S6, Z-W10-S9, Z-W10-S10, Z-W11-S1, Z-W13-S1, Z-W14-S1, Z-W14-S2, Z-W15-S1",
+        "MY FIRST EXTRACTOR WAS BROKEN AND I RECORD THAT RATHER THAN ITS OUTPUT: v1 sliced each file from its first '[' to its last ']' and failed on 21 of 52 files (JSONDecodeError), reading 1,534 rows. v2 parses EVERY fenced block: 239 files, 5,569 rows, 1 file unparseable (org/surprise_channel/D1_CATVIEWS). A census whose own reader is broken is exactly the defect R-78 names",
+        "AND THE TWO EXTRACTORS AGREE EXACTLY ON THIS SERIAL -- 38 / 24 / 17 on both, across a 3.6x difference in rows read. So the v1 coverage hole did not touch these rows, which is a stronger statement than either run alone could make",
+        "SAMPLE 1 -- W10-S9 IS NOT A HAZARD, IT IS A DISARM: its own one_line states row W10-S8's fix is BUILT and VERIFIED offline, with the numbers on it (remaining_pending 11 -> 0; silver_article_rows 14 EQUAL to bronze_articles 14, was 3 vs 14). A row whose subject is a completed, measured fix is filed ARMED because no field carries current state -- R-78's exact finding, reproduced from the other end",
+        "SAMPLE 2 -- W8-S1 IS GENUINELY LIVE: a proof-of-spec clause counting CRLF through Python's default TEXT-mode open() always prints 0, so it cannot discriminate a contaminated deliverable from a clean one. Its stated disarm (drop the clause as vacuous, or read 'rb') has not been performed, and the clause shape is not unique to this order",
+        "SO THE DIRECTION IS MEASURED, NOT ASSUMED: 1 of the first 2 sampled is not a live hazard. 17 is an UPPER BOUND on this lane's live load and the bias is toward over-reporting, as R-78 states"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "hazard_standing reads the current armed/disarmed state of a row, so a seat can count its own live hazards by filtering on it.",
+    "world_is": "It records what the row said WHEN FILED and is never updated, because the gate correctly refuses in-place mutation -- corrections are new rows citing the old id. So the append-only property that makes the channel auditable is the same property that makes its state fields unreadable, and a filter on hazard_standing over-reports by construction.",
+    "notes": "DISARMED BY THIS ROW, BY NAME: AMGT_HARVST-Z-W10-S9, which is a disarm carrier rather than a hazard -- its subject is the W10-S8 fix, built and verified with its counts printed. NOT DISARMED: W8-S1 and the remaining 15, each of which needs its own read before it is worked or closed; this lane owns them as disarm_owner and will work them rather than wait for mail about them, which is R-78's own conclusion applied to its own numbers. THE KEEPABLE FORM, and it is R-78's inverted so it bites at filing time rather than at census time: A ROW THAT RECORDS A COMPLETED FIX SHOULD BE FILED INERT, NOT ARMED -- the author knows the state at the moment of writing, and that is the only moment anyone does. Every disarm carrier filed ARMED becomes a false positive in every later count, including the author's own."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S23",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-24T16:40:00Z",
+    "one_line": "R-78's cited-by-a-later-row heuristic is CONTAMINATED BY ITS OWN OUTPUT: this seat wrote its census result into the same append-only channel the census reads, and that row's enumeration of ids now makes every id in it look resolved. Same rows, same file, one hour apart: 17 open before the census row existed, 0 after -- on nothing but a list being published.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE SWING, measured on the same 44-row file within one hour: 24 rows name this serial and read ARMED. Excluding rows cited by FULL id in a later row leaves 17. Extending the same rule to SHORT-FORM citations leaves 0, with 16 of 24 reachable only that way. A 17-row swing produced by citation FORMAT, not by any change in the world",
+        "THE CONTAMINANT IS THIS SEAT'S OWN ROW, read in the match context rather than inferred: the dominant short-form hit for nearly every id is Z-S22 -- the census row -- which enumerates all 17 ids in its evidence. The act of RECORDING the census is what destroys the next run of it",
+        "AND THE REMAINING HITS ARE THE CAVEAT R-78 ALREADY STATED, now with instances: Z-S4 groups three worker rows by a shared root cause, and Z-S11 / Z-S13 discuss an earlier row as a member of a class. Those are REFERENCES, not resolutions -- a row can name another to explain it, blame it, or count it",
+        "SO NEITHER ARM IS SOUND AND THE SPREAD IS NOT NOISE: the full-id arm is the 17 quoted in Z-S22 and is valid only as of the moment BEFORE Z-S22 was written; no form-based recount of this file is valid now, in either direction",
+        "THIS ROW ENUMERATES NO IDS, deliberately -- listing them would deepen the contamination it reports. The list lives in Z-S22 and is correct as of that row"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R-78 offers 'hazard_standing == ARMED, minus rows a later row in the same file cites' as the best available resolution signal, and invites every seat to run it on its own serial.",
+    "world_is": "The query is sound until someone writes its ANSWER back into the population, which is what the channel asks a measuring seat to do -- findings land as rows. From that moment the census row is indistinguishable from a resolution for every id it names, and the instrument reports the opposite of the truth. A seat that runs the census, files it, and re-runs it later reads its own remaining work as done.",
+    "notes": "THE REMEDY IS STRUCTURAL AND IS THE SAME SHAPE AS R-78's FINDING ONE LEVEL UP. R-78: no field carries current hazard state, so state is inferred from prose. This: no field carries RESOLUTION either, so resolution is inferred from a substring match over prose -- and prose is where enumerations, blame and class-grouping also live. A structured `resolves: [<ids>]` field on the row that performs a disarm would answer both questions exactly and would be immune to enumeration, because a census row resolves nothing and would say so by carrying an empty list. That is a schema and gate question and it is 1.0.0_SA_CTO's, not this lane's; it is raised, not built. INTERIM DISCIPLINE this lane adopts and states so others can: a census or index row NAMES NO IDS IN ITS EVIDENCE, or names them in a form the heuristic does not read. WHAT THIS DOES NOT CHANGE: the 17 rows are still this lane's to work, and the only sound instrument for each remains a read of the row against the world. hazard_standing stays ARMED on this row because the contamination is live in the file right now."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S24",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-24T17:10:00Z",
+    "one_line": "FIVE of this lane's 17 open rows are DISARMED, each against HEAD rather than against recollection: four were already fixed by landed code that NAMES THE ROW IN ITS OWN COMMENTS, and the fifth is disarmed by this lane performing the documentation remedy the row itself named as its second option.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_HARVST-Z-W10-S2 (harvest_client never wired into Worker) -- DISARMED at HEAD: __main__.py:176-181 builds `harvest_client = store._default_client()` under --harvest-grammar and passes `Worker(root, config, harvest_client=harvest_client)`. The comment at :173 names this row id",
+        "AMGT_HARVST-Z-W10-S4 (a probe failure aborts the five-publisher run) -- DISARMED at HEAD: __main__.py:157-171 wraps the probe body in try/except, records UNRESOLVED-CHALLENGED with its reason, closes the client in a finally, and falls through to the normal fetch. The comment at :148 names this row id",
+        "AMGT_HARVST-Z-W15-S1 (a mid-loop raise discards already-captured listing pages) -- DISARMED at HEAD: worker.py:223 the persist now sits in a `finally` WRAPPING the per-article loop, so a raise from anywhere inside client.articles() can no longer discard pages. The comment at :224 names this row id",
+        "AMGT_HARVST-Z-S10 (the moved persist can raise INSIDE a finally and REPLACE the propagating exception) -- DISARMED on its OWN stated condition, which was 'closes when AC5 passes and the drain lands'. BOTH halves measured: worker.py:245-261 reads `already_propagating = sys.exc_info()[0] is not None` BEFORE attempting the persist, catches the persist failure into its own `harvest_listing_persist_failed` event, and re-raises ONLY when nothing was already propagating; and the HVST-t-1 proof_of_spec reads AC5 PASS (AC0-AC5 all PASS). Code at HEAD is the drain",
+        "AMGT_HARVST-Z-W10-S6 (upload-harvest silently builds a REAL S3 client) -- DISARMED BY THIS LANE at b5ce8f4a5f, taking the row's own second option verbatim ('document plainly that upload-harvest is never offline-safe through the CLI') rather than inventing the flag its first option suggested. The mechanism was re-verified at HEAD before writing the note: uploads.py:140-142 sets self.client with NO default, and every store writer reached does `client = client or _default_client()` (bronze_put :226, silver_append :351, silver_latest :304, fetch_key_exists :183), so the None becomes a real client rather than failing loudly",
+        "THE EDIT IS COMMENT-ONLY AND THAT IS MEASURED: ast.dump(HEAD) == ast.dump(working), with a positive control (one token renamed) confirming the comparison can detect a difference; byte delta +1114, all comment",
+        "DISCLOSED, PRE-EXISTING, NOT CAUSED HERE: `pytest lib/opal_data_harvest` reads 3 failed / 160 passed / 4 subtests passed at HEAD -- test_verification's barrons-contract case (FileExistsError WinError 183, a Windows path artifact) and two subtests of test_worker's broken-dow-jones case (AttributeError at publishers.py:672). The AST identity above is what makes that attribution sound rather than plausible"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S22 reported 17 rows ARMED and uncited for this lane, and Z-S23 established that no form-based recount of the file is valid -- so each row needs a read against the world.",
+    "world_is": "Five read clean on that method. FOUR of the five were fixed by code that LANDED, and the landed code names the row id in its own comments -- so the disarm evidence was sitting in the repository the whole time, addressed to exactly the question the census asks, and no channel field could see it.",
+    "notes": "THE KEEPABLE FORM, and it is the cheapest disarm instrument this project has found: WHEN A FIX NAMES THE ROW ID IN THE CODE COMMENT, THE CODEBASE ITSELF BECOMES THE RESOLUTION INDEX -- one grep of the source for a row id answers 'was this fixed' far better than any citation heuristic over the channel's own prose, because a comment naming a row is written BY the fix, at the moment of the fix, by someone who knew. Four of five landed that way and it is worth making the habit explicit. TWELVE REMAIN for this lane, each owed its own read; this row claims nothing about them. Per Z-S23 this DOES enumerate ids, which is correct here: a disarm row is the one row type whose naming of an id MEANS resolution, and it is the census/index rows that must not."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S25",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-24T17:45:00Z",
+    "one_line": "Second batch of this lane's load: W13-S1 DISARMED on two independent arms, W9-S1 HALVED (its articles path is fixed, its listings path is not -- and the unfixed half has never met its own precondition: 0 of 1 retained listing objects), W11-S1 CONFIRMED STILL LIVE on the shared mechanism it names. Six of seventeen now disarmed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_HARVST-Z-W13-S1 (first_discovered_at as an ISO STRING crashed _lag_hours and hid 992_HK_Equity from the mention snapshot) -- DISARMED ON TWO INDEPENDENT ARMS. MECHANISM: publication_gold.py:188-208 `_coerce_utc_datetime` parses the string form (its docstring names the sibling row Z-S2 and the reason), and :239 routes first_discovered_at through it BEFORE _lag_hours. SYMPTOM: this lane's own 2026-09-24 mention build wrote 992_HK_Equity with 32 rows -- the exact name the row says was hidden entirely. Neither arm depends on the other",
+        "AMGT_HARVST-Z-W9-S1 (silver_append collides on a second-precision run_stamp key) -- HALVED, not closed. The ARTICLES path is DISARMED by the row's own second option: uploads.py:223-228 groups by (source, run_stamp) and calls `_silver_append_retrying_object_name(...)`. The LISTINGS path is NOT: uploads.py:277 still calls `harvest_grammar.store.silver_append(...)` directly, one call per listing page, no grouping and no retry -- the identical shape the row describes",
+        "AND THE UNFIXED HALF HAS NEVER MET ITS PRECONDITION, measured rather than assumed (Rule 22's negative mirror): the entire retained listing_hit corpus is ONE object (wsj/.../date=2026-09-23/part-20260923T002841Z.parquet), 20 rows, ONE distinct fetched_at, ONE search_page. Seconds carrying more than one page -- the collision's own signature -- 0 of 1. EXPOSURE, never an INCIDENT, so nothing is re-opened",
+        "AMGT_HARVST-Z-W11-S1 (missions-tree-check's physical walk breaks a sparse-cone worker) -- CONFIRMED STILL LIVE at HEAD: .tools/missions-tree-index.py traverses with `self.root.iterdir()` :162, `Dp.iterdir()` :165, `Mp.iterdir()` :171 and `self.projects.glob('*.json')` :143. Zero `git ls-tree` occurrences. The row's own suggested remedy (read tree rows instead of walking the filesystem) is unbuilt"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S24 disarmed five of this lane's seventeen rows and stated that the remaining twelve are each owed a read against the world.",
+    "world_is": "Three more read: one fully disarmed, one HALF disarmed with its live half measured as never-fired, and one confirmed live on a mechanism this lane does not own. A row is not binary -- W9-S1's two call sites got different treatment in the same file, and a check that had stopped at the first one would have closed a row whose other half is untouched.",
+    "notes": "THE KEEPABLE FORM FROM THIS BATCH: A ROW NAMING TWO CALL SITES NEEDS BOTH READ -- the fix landed on one of them, in the same file, four lines apart in the enumerate output, and closing the row on the first hit would have been wrong in exactly the direction nobody re-checks. \u2b50 And the second half of the same discipline: once the unfixed site is found, ASK WHETHER ITS PRECONDITION HAS EVER OCCURRED before escalating -- here one query over the retained corpus turned an alarming shape into a measured EXPOSURE with 0 of 1. OWNER NOTE: W11-S1 sits on .tools/missions-tree-index.py, a shared mechanism and not this project's content, so it stays ARMED and belongs to that tool's owner rather than to this lane's remediation. REMAINING for this lane: W3-S1, W8-S1, W8-S2, W10-S5, W10-S10, W14-S1, W14-S2, Z-S11 -- plus the live half of W9-S1 and W11-S1's routing."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S26",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-24T18:20:00Z",
+    "one_line": "MY 17 WAS NEVER A COUNT OF LIVE WORK. The gate's own resolver -- the instrument the L10 requirement reads -- returns 7 non-terminal for this project, and they are EXACTLY the seven rows I filed today. All 17 were already GRADUATED or DISMISSED. I ran the weaker instrument, in the very channel whose Z-S15..S18 chain documents this exact trap, and my census generated the entire live backlog it was trying to measure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE AUTHORITATIVE INSTRUMENT, run this tick: surprise-row-gate.py::_latest_dispositions('.', 'AMGT_HARVST') returns 47 ids, 0 unknown, 14 files, note empty -- GRADUATED 19, DISMISSED_WITH_REASON 21, UNDER_INVESTIGATION 7. The seven are Z-S19 through Z-S25: every row THIS LANE filed today, and nothing else",
+        "SO ALL SEVENTEEN OF Z-S22's 'open' ROWS READ TERMINAL on the resolver. My filter was `hazard_standing == ARMED` (a FROZEN filed-time field, which R-78 itself proves is never updated) minus a substring match over prose. The resolver folds the CVO's `adjudicates` lists, which is how a row actually gets dispositioned",
+        "AND `adjudicates` EXISTS, WHICH RETIRES MY OWN Z-S23 REMEDY: 1,120 of 5,577 rows across 234 channel files carry it, and the gate carries real limbs for it -- the resolver at :390-417, a phantom-adjudication refusal at :860, and limb A-1 at :1739-1746 refusing it on a WORKER's row because it is the CVO's L9 field, with self-tests at :2436-2685. 1.0.0_SA_CTO~Z withdrew R-81 on exactly this ground and is correct",
+        "WHAT SURVIVES OF Z-S23, narrower and still true: `adjudicates` is scoped to the CVO's L9 ACT. A lane that disarms its OWN row by ordinary work -- as this lane did five times today against HEAD -- still has no field to say so and writes prose. That is a real gap and it is much smaller than the one I described",
+        "WHAT SURVIVES OF Z-S24 AND Z-S25 ENTIRELY: every disarm in them was verified against HEAD code or measured data (comments naming the row id, AC5 PASS, a 0-of-1 corpus measurement), never against the census. Their FRAME was wrong -- 'five of seventeen open' -- while their FINDINGS stand on their own evidence"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S22 reported 17 rows as this lane's live load, and Z-S23/S24/S25 worked forward from that number.",
+    "world_is": "The live load by the instrument that governs was ZERO before today. The 17 were rows whose frozen ARMED field had outlived their disposition -- which is R-78's own finding, applied to R-78's own method and to mine. I then filed seven rows about the measurement, and those seven are now the project's entire non-terminal set.",
+    "notes": "THE COST IS MINE AND IT IS STATED PLAINLY: this project had 0 non-terminal rows this morning and has 7 tonight, all of them mine, all of them about instruments rather than about the product. They are the CVO's to disposition at L9, which is work this lane created for another seat. \u26d4 THIS THREAD CLOSES HERE -- no further meta-row from this lane; a row correcting a row correcting a census is the recursion Z-S18 already ruled against. \u2b50 THE KEEPABLE FORM, and this estate has now paid for it twice in the SAME channel: BEFORE COUNTING ANYTHING IN A CHANNEL, ASK WHICH INSTRUMENT THE CONSUMER OF THAT COUNT READS, AND RUN THAT ONE. Z-S15..S18 settled this in September on the same file -- '0 non-terminal by _latest_dispositions; N rows still read UNDER_INVESTIGATION in their own frozen fields' is the reporting form that was already adopted, and I reinvented the wrong half of it. A lesson banked in a channel does not fire when the same seat walks past it."
   }
 ]
 ```
