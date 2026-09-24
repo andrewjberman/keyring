@@ -1,0 +1,107 @@
+diff --git a/infra/aws/lambda/investor-reporting/reports/generate_installed.py b/infra/aws/lambda/investor-reporting/reports/generate_installed.py
+index b75167242e..4e05052f5c 100644
+--- a/infra/aws/lambda/investor-reporting/reports/generate_installed.py
++++ b/infra/aws/lambda/investor-reporting/reports/generate_installed.py
+@@ -230,6 +230,32 @@ class UploadNotComposed:
+         raise UploadServiceRequired("UPLOAD_SERVICE_REQUIRED")
+ 
+ 
++def compose_upload(ports, request, scope):
++    """The upload POST's request-local composition (Y bb1eb7f92b, CTO 100667 shape 2).
++
++    Interactive access on the guarded prospect owner's storage firm, the retained repositories
++    bound to that access, and Y's deferred template lane: retain, publish RESOLVING, send ONE
++    resolve_upload message to irpt-generation, answer RESOLVING. This Lambda never calls the
++    vendor. The principal is access.current(), the exact value authorize_current admits. An
++    ordinary (non-Opal) viewer is admitted only through ports["ordinary_authorizer"], which is
++    still an absent producer, so until it exists only a verified Opal viewer can upload.
++    """
++    from interactive_access import InteractiveAccess
++    from upload_resolution import deferred_upload_service
++    owner = scope.get("prospect_owner")
++    if not isinstance(owner, dict) or not isinstance(owner.get("firm_id"), str):
++        raise PermissionError("PROSPECT_GUARD_REQUIRED")
++    ordinary = ports.get("ordinary_authorizer")
++    access = InteractiveAccess(lambda: request.headers, owner["firm_id"],
++        ordinary_authorizer=(lambda p, o: ordinary(request, p, o)) if callable(ordinary) else None)
++    stores = ports["repositories"](access)
++    index = stores.artifacts.index
++    service = deferred_upload_service(index=index, artifacts=stores.artifacts,
++        authorize_current=access.authorize_current, table=index.table,
++        send=lambda body: ports["send"](ports["queue_url"], body))
++    return service, access
++
++
+ def build_boundary(ports):
+     """One Entry for the function's two routes: the analysis POST (Y's `entry.build_entry`
+     wiring, reproduced line for line with the routed service installed) and the upload POST
+@@ -243,13 +269,14 @@ def build_boundary(ports):
+     import ids
+     from upload_entry import upload_csv
+     service = RoutedSubmissionService(ports)
+-    upload_service = UploadNotComposed()
+ 
+     def compute(request, scope, event, ctx):
+         return generate_entry.submit_analysis(request, scope, event, ctx, service, allow_prospect=True)
+ 
+     def upload(request, scope, event, ctx):
+-        return upload_csv(request, scope, event, ctx, upload_service)
++        upload_service, access = compose_upload(ports, request, scope)
++        return upload_csv(request, scope, event, ctx, upload_service,
++                          resolve_principal=lambda *args: access.current())
+ 
+     routes = dict(generate_entry.ROUTES)
+     routes[UPLOAD_ROUTE] = UPLOAD_OPERATION
+diff --git a/infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py b/infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py
+index 65cea44fa6..b6658a64b2 100644
+--- a/infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py
++++ b/infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py
+@@ -130,3 +130,48 @@ def test_the_upload_route_refuses_by_name_after_the_real_validator():
+     answer = handler({"routeKey": gi.UPLOAD_ROUTE, "headers": {"x-contract-version": "v1"}, "body": json.dumps(good)})
+     assert answer["ok"] is False and answer["operation"] == gi.UPLOAD_OPERATION
+     assert answer["status"]["public_reason_code"] not in ("UNEXPECTED", None)
++
++
++def _upload_world(ordinary):
++    """The served boundary over Y's deferred lane: the REAL InteractiveAccess authorizer bound to
++    retained repositories on an AWS-shaped table; `ordinary` stands in for the absent producer."""
++    import base64
++    sys.path.insert(0, str(ROOT / "infra/aws/lambda/investor-reporting/intake/tests"))
++    import test_deferred_resolution as deferred
++    import test_uploads as legacy
++    repo = legacy.repo
++    table, s3, sent = deferred.StateTable(), legacy.support.S3(), []
++    ports = gi.compose_ports(clients=fake_clients(), environ=ENV, reporting_policy=active_policy)
++
++    def repositories(access):
++        artifacts = repo.ArtifactRepository(repo.DynamoReportIndex(table), repo.S3ReportBlobs(s3,
++            lambda firm, family, identity, revision: ("offline-private", "/".join((firm, family, identity, revision)))),
++            access.authorize_current, {"ORIGINAL_HOLDINGS", "NORMALIZED_PORTFOLIO"})
++        return SimpleNamespace(artifacts=artifacts)
++    ports.update(repositories=repositories, ordinary_authorizer=ordinary,
++                 send=lambda queue, body: sent.append((queue, body)) or {"MessageId": "offline"})
++    body = {"upload_token": "boundary-upload-one", "filename": "holdings.csv", "file_type": "csv",
++            "file_base64": base64.b64encode(b"Ticker,Dollars\nAAPL,10.01\nVNQ,2.02\n").decode()}
++    event = {"routeKey": gi.UPLOAD_ROUTE, "headers": legacy.claims(), "body": json.dumps(body)}
++    return gi.build_boundary(ports), event, table, sent
++
++
++def test_the_upload_route_publishes_resolving_and_sends_one_message(monkeypatch):
++    # The deployed function carries Terraform's firm -> bucket map; offline it is set here.
++    monkeypatch.setenv("IRPT_DIRECTORY_BUCKET_MAP", json.dumps({"49financial": "opal-data-49financial"}))
++    boundary, event, table, sent = _upload_world(lambda request, p, o: True)
++    answer = boundary.handle(event)
++    assert "data" in answer, answer
++    assert answer["data"]["state"] == "RESOLVING" and answer["data"]["input_id"] is None
++    assert len(sent) == 1 and sent[0][0] == ENV[gi.QUEUE_URL_ENV]
++    assert json.loads(sent[0][1])["kind"] == "resolve_upload"
++    keys = sorted(k.split("#")[0] for _, k in table.rows)
++    assert keys.count("UPLOAD") == 1 and keys.count("NORMALIZATION") == 1 and "INPUT" not in keys
++    assert boundary.handle(event)["data"]["state"] == "RESOLVING" and len(sent) == 1
++
++
++def test_without_the_ordinary_authorizer_a_partner_upload_is_refused_and_nothing_is_written(monkeypatch):
++    monkeypatch.setenv("IRPT_DIRECTORY_BUCKET_MAP", json.dumps({"49financial": "opal-data-49financial"}))
++    boundary, event, table, sent = _upload_world(None)
++    answer = boundary.handle(event)
++    assert "data" not in answer and not sent and not table.rows
