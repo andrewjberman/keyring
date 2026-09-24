@@ -146,3 +146,17 @@ the SmartX map (run_date 2026-09-23).
   @af2dd7335d and routed to 2.0.0_SA_COO~D (portal owner).
 - **Verdict: UNVERIFIED@SEMANTIC (screen).** It closes when ~D's fixes land on DEV and a re-walk shows exact amounts
   plus a working firm tab.
+
+## ADDENDUM 19:0xZ -- both screen fixes on DEV; Andrew's eyes-on walk
+
+- **2.0.0_SA_COO~D landed both fixes on portal DEV a65a8db5** (ls-remote read 19:0xZ; the 5174 main checkout is at
+  a65a8db5 on DEV).
+  - `FirmDropdown.tsx`: the internal viewer's tenant is no longer rewritten to the one-firm opaque firmId.
+  - `CategoryViewTree exactAmounts`, turned on in `DrillTree.tsx:316`. Model Portfolios keeps its grain, per
+    1.0.0_SA_CTO record @06730dfa2a.
+  - ~D's run used stub fixtures (`DRIVER-FIXTURES-MATCH 5 of 5`): resolve tenants `["global","global"]`, against
+    `["global","global","F-CW"]` before the fix.
+- **Andrew, at the M terminal (~19:0xZ), verbatim:** "I just walked the Holdings page and it looks great, what did
+  you want to confirm from the HAR exactly?" This is the signed-in, eyes-on screen check on the fixed build.
+- **Still unread, in a HAR:** whether the firm-tab path sends the registry tenant, whether any FIRM_BINDING remains,
+  and whether Holdings reads READY on the served revisions through a65a8db5.
