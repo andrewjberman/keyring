@@ -5,7 +5,7 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.6",
+ "prd_version": "v0.7",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ui-finish-design-brief-20260924.md@20f90739bd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18"],
@@ -390,15 +390,25 @@ v0.6 adds shared writes, each on the same rule (a cell criterion naming every ot
 - `portal/src/lib/chartColors.ts` (C18; the cash-green change reaches Positioning by Andrew's C1 word);
 - `portal/src/components/CategoryViewTree.tsx` (C19, additive prop);
 - the new shared searchable dropdown and paginator under `portal/src/components/ui/` (C15, Andrew's C3 word);
-- `portal/src/components/catalyst/combobox.tsx` (C15, dark-mode classes).
+- `portal/src/ui/components/catalyst/combobox.tsx` (C15, dark-mode classes; path corrected at v0.7, `2.0.0_SA_COO~D`
+  100917 F1).
 - One clause of `portal/DESIGN.md` (C21, Andrew's C2 word), written under DSGN_REBRND, whose COO lane is also
   `2.0.0_SA_COO~D`; the commit names the DSGN_REBRND lane.
 
 The reference pages (`pages/CapitalMarketAssumptions/**`, `pages/ModelPortfolios/**`, `pages/Positioning/**`) are read
 and copied from, never edited.
 
-Relied on, not owned (the closer contract v1.4 and the sibling lanes): `portal/src/pages/InvestorReporting/contracts/**`
-and `api/**` (P, the shared client surface; the additive members' acceptance); the producers (M: custody publication,
+v0.7 ruling (`1.0.0_SA_CTO`, on `2.0.0_SA_COO~D` 100917 F3, under Andrew's ~15:31Z frontend-integrator word,
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_153xZ_IRPT_FRONTEND_CANDIDATES_HAND_TO_COO_D.md`):
+- `portal/src/pages/InvestorReporting/contracts/**`, including the generated `contracts/wire/**`, is this project's write
+  surface. It is the consumer side's ACCEPTANCE of a member: `2.0.0_SA_COO~D` lands each change on the owning seat's
+  written spec (P, M or Y names the member and its schema), never on its own initiative.
+- The wire contract itself stays the producers': `docs/contracts/investor-reporting/v1/**` and the backend
+  `_contracts`.
+- `portal/src/api/**` stays P's.
+
+Relied on, not owned (the closer contract v1.4 and the sibling lanes): `portal/src/api/**` (P, the shared client
+surface) and the member specs the acceptances follow; the producers (M: custody publication,
 `display`, `CUSTODY_UNITS`; P: the Performance adapter and `spread`; Y: upload / job semantics, the catalogue);
 `portal/DESIGN.md` (DSGN_REBRND, the design law). Sequenced by the CTO against the IRPT post-slug HOLD and the P/M/Y
 closer contract: the COT `display` republish, SERVED (model names on Anna's page), precedes the L6 issuance -- hops 7
@@ -499,13 +509,21 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
     the ENDPOINT change re-signs the ratified-text half at `3.0.0_SA_CVO`.
   - NOT READ at this step: the DSGN_IRPTV1 task-order register and decomposition. The brief's own census read them
     (its Part 0 names the leak); this addendum cites Andrew's words and the brief's findings, never a next-list.
+- v0.7, 2026-09-24 ~22:4xZ, `1.0.0_SA_CTO` (Claude): two fixes from `2.0.0_SA_COO~D`'s L5 read 100917 (decomp @`53c815d0cc`):
+  - F1: the combobox path is `portal/src/ui/components/catalyst/combobox.tsx`.
+  - F3 ruled: the portal-side `contracts/**` is this project's write surface, as the consumer side's acceptance on the
+    owning seat's written spec. The producers keep the wire contract, and P keeps `api/**`.
+  PATHS and SURFACE MANIFEST only; ENDPOINT and CONTRACTS bytes are unchanged, so the ratified-text half the CVO signs
+  is the v0.6 text.
 
 ## SURFACE MANIFEST
 
-WRITES: `portal/src/pages/InvestorReporting/**` (render + tests); at v0.6 the new shared searchable dropdown and paginator
-under `portal/src/components/ui/`, and one `portal/DESIGN.md` clause under DSGN_REBRND. EXTENDS (by a cell naming every
-other consumer): `portal/src/components/CategoryViewTree.tsx`, `components/BenchmarkHeatmap.tsx`,
-`components/ui/PageSurfaceControl.tsx`, `components/ui/panels/**`, `components/catalyst/combobox.tsx`,
+WRITES: `portal/src/pages/InvestorReporting/**` (render + tests; at v0.7 `contracts/**` too, as the consumer side's
+acceptance on the owning seat's written spec); at v0.6 the new shared searchable dropdown and paginator under
+`portal/src/components/ui/`, and one `portal/DESIGN.md` clause under DSGN_REBRND. EXTENDS (by a cell naming every other
+consumer): `portal/src/components/CategoryViewTree.tsx`, `components/BenchmarkHeatmap.tsx`,
+`components/ui/PageSurfaceControl.tsx`, `components/ui/panels/**`, `portal/src/ui/components/catalyst/combobox.tsx`,
 `portal/src/lib/modelPortfolioColors.ts`, `portal/src/lib/chartColors.ts`. READS: the ten v1 contracts and the three additive members; `portal/DESIGN.md`; the four
-reference pages (Model Portfolios, Positioning, Advisor Intelligence, the Benchmark tab). NEVER: `portal/src/api/**`,
-`portal/src/pages/InvestorReporting/contracts/**` (P's), any producer, any vendor call, `render/**` (the print package).
+reference pages (Model Portfolios, Positioning, Advisor Intelligence, the Benchmark tab). NEVER: `portal/src/api/**`
+(P's), the producers' wire contract (`docs/contracts/investor-reporting/v1/**`, backend `_contracts`), any producer, any
+vendor call, `render/**` (the print package).
