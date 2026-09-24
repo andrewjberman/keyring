@@ -769,6 +769,53 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Decomp s.6 preflight: 'proof-of-spec-check.py CELL_ID_RE   CRPS-e-<n> matches the [a-z]{1,4}-[a-z]?\\d+ branch' -- asserting the checker will recognise this round's cells.",
     "world_is": "The regex branch genuinely matches strings of the form CRPS-e-3 (verified: re.fullmatch on the literal string 'CRPS-e-3' against the compiled CELL_ID_RE succeeds); what is absent is the literal text in the decomp document itself -- the table cites cells as bare `e-<n>`, never prefixed. The preflight line is true about the REGEX and silent about the DOCUMENT not actually containing the string it describes. Every one of this round's 5 TOs (e-1..e-5), all citing cell_refs=\"CRPS-e-<n>\" per the order template, is structurally unable to reach proof-of-spec-check rc 0 against this decomp vintage, independent of any worker's own correctness.",
     "notes": "Out of this cell's paths (the decomposition doc is not in CRPS-e-3's <paths>, and this worker's write grant does not extend to it). Filed so the issuer can either amend the decomp table to the prefixed form or accept bare `e-<n>` as an additional CELL_ID_RE branch. Not this worker's defect; AC1/AC2's own FAIL status stand on separate grounds (S3, S4) even were this alignment gap resolved."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S5",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-24T19:24:03Z",
+    "one_line": "CRPS-e-4 AC3's own check (e4_AC3.sh) runs `cd \"$(git rev-parse --show-toplevel)\"` then reads `portal/src/pages/SecurityAnalysis/types.ts` relative to that root -- in THIS worker's worktree (/c/tmp/wk-crps3-1) that root is the worktree's own toplevel, whose portal/ is an empty directory (same root cause as AMGT_CORPUS-Z-W1-S3: .gitmodules carries no submodule URL for portal, so no worktree of this project has portal content checked out), so the literal invocation FAILS with FileNotFoundError and cannot ever read PASS in this worktree, regardless of what the cited sheet says.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Literal e4_AC3.sh run in this worktree, this worker, 2026-09-24: Traceback (most recent call last):\n  File \"<stdin>\", line 3, in <module>\nFileNotFoundError: [Errno 2] No such file or directory: 'portal/src/pages/SecurityAnalysis/types.ts'\nrc=1",
+        "`ls portal/` in this worktree returns nothing (empty directory, 0 entries); the order's own text anticipated exactly this ('if your worktree's portal/ is empty the check cannot pass there').",
+        "The same check LOGIC (unmodified), pointed instead at the shared tree's live portal/src/pages/SecurityAnalysis/types.ts (C:/Users/Opal Bloomberg/Desktop/ajb_workspace/portal/src/pages/SecurityAnalysis/types.ts, read-only, this worker, 2026-09-24), against this worker's own updated DOSSIER_INTERFACE.md citation (types.ts:973), prints: citation types.ts:973 live: export interface ThesisBundle {\ncitations 1 -- which DOES match AC3's <expect> pattern.",
+        "So the cited coordinate itself (types.ts:973, `export interface ThesisBundle {`) is CORRECT and current as of this measurement; only the mechanical check's OWN invocation, run from this worktree's toplevel, cannot verify it -- the gap is the worktree's portal/ checkout, not the sheet's citation or this cell's code."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT_CORPUS.TO-CRPS-e-4 AC3, <invocation>: \"cd \\\"$(git rev-parse --show-toplevel)\\\" && bash .../checks/round3/e4_AC3.sh\", asserting the check can be run and matched against <expect> in the worker's own worktree the same as anywhere else in the estate.",
+    "world_is": "AC3's check file is READ-ONLY to this worker and correctly written; the check's own working directory resolves to WHICHEVER worktree runs it, and this project's portal submodule is reachable from NO worktree today (S3's finding, not new) -- so any worker slot on this project, not just this one, would hit the identical FileNotFoundError running e4_AC3.sh from its own worktree. This row records the AC3 pass proven from the shared tree as the substitute oracle (per the task order's own instruction, section 5 parenthetical) so the L9 adjudicator has both runs rather than only the worktree's negative one.",
+    "notes": "Not a defect in production_sequence.py, the test file, or the DOSSIER_INTERFACE.md edit -- the citation this worker wrote (types.ts:973) is the one the shared-tree run confirms live. Filed per CLAUDE.md section 2 without halting; this worker's proof-of-spec instance grades AC3 UNVERIFIABLE-BY-INSTRUMENT, citing this row, with the shared-tree run as the substitute oracle -- never self-graded PASS on an invocation that did not produce PASS output in this worktree."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S6",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-24T19:31:53Z",
+    "one_line": "The prescribed close-out command (`.tools/proof-of-spec-check.py <instance> AC1,AC2,AC3 --governing-order <TO>`) returns INVALID (rc=1) on this cell's own, correctly-built instance -- not from anything in the acceptance rows, but from the ALIGNMENT limb: round 3's live decomposition doc (AMGT_CORPUS_DECOMP.md) names its five cells as bare `e-1`..`e-5` in its rectangle table, while the CRPS-e-4 task order's own <owned_cells>/cell_refs use the full form `CRPS-e-4` -- and the checker's CELL_ID_RE requires an uppercase-prefixed id (`[A-Z][A-Z0-9]*-[a-z]{1,4}-[a-z]?\\d+`), so it finds 0 distinct cell ids in the decomp doc and refuses EVERY cell_ref citing it, for all five round-3 cells alike, not only this one.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This worker, this worktree, 2026-09-24: `python .tools/proof-of-spec-check.py org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-e-4.production-sequence-runner.proof_of_spec.json AC1,AC2,AC3 --governing-order org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-e-4.production-sequence-runner.md` printed `alignment-frame: decomp id space = 0 distinct cell id(s) in org/missions/D5/AMGT/AMGT_CORPUS/decompositions/AMGT_CORPUS_DECOMP.md`, then `VIOLATION: alignment: cell_ref 'CRPS-e-4' ... does NOT exist in org/missions/D5/AMGT/AMGT_CORPUS/decompositions/AMGT_CORPUS_DECOMP.md`, then `INVALID (rc=1)` -- on an instance whose three acceptance rows, artifact-resolution and invocation-alignment all read clean.",
+        "The SAME command run against the already-committed, previously-delivered AMGT_CORPUS.TO-CRPS-d-4 instance (a round-2 cell, unrelated to this worker's current task) against the SAME live decomp doc produces the IDENTICAL shape: 'decomp id space = 0 distinct cell id(s)', 'VIOLATION: ... cell_ref 'CRPS-d-4' ... does NOT exist', 'INVALID (rc=1)' -- so this is not specific to CRPS-e-4's text; it is a property of the current decomp doc's id GRAMMAR versus every TO that cites it in the CRPS-<letter>-<n> full form.",
+        "Direct read of org/missions/D5/AMGT/AMGT_CORPUS/decompositions/AMGT_CORPUS_DECOMP.md (round 3, `2.0.0_SA_COO~X`, section 1's rectangle table): every row id is bare, backtick-quoted `e-1`, `e-2`, `e-3`, `e-4`, `e-5` -- the only occurrences of the literal string 'CRPS' in the whole file are two instances of the TEMPLATE placeholder 'CRPS-e-<n>' (section 1's heading), which does not match CELL_ID_RE either (no digit after the final hyphen).",
+        "CELL_ID_RE (`.tools/proof-of-spec-check.py`, the module-level compiled pattern): anchored `\b[A-Z][A-Z0-9]*-(?:...|[a-z]{1,4}-[a-z]?\\d+)` -- requires an uppercase project-prefix segment before the lowercase cell segment; a bare `e-4` has no such prefix and cannot match under any branch."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order section 6, step 2: \"python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3 --governing-order <this order> rc 0\" is the stated close-out validation, implying a correctly-built instance against a correctly-authored decomp reaches rc=0 on this limb.",
+    "world_is": "The checker's alignment limb is doing exactly what it says (refusing an unresolvable cell citation), and this worker's instance/TO pairing is not malformed by that limb's own logic -- the DECOMP DOC is the object whose cell-id grammar does not carry the prefixed form the TOs cite and the checker expects. Nothing in this worker's <paths> reaches the decomposition doc (read-only, owned by the issuer), so this worker cannot repair the mismatch; it can only report that the prescribed rc=0 gate is unreachable, mechanically, for every round-3 cell today, via this exact invocation.",
+    "notes": "disarm_owner 2.0.0_SA_COO~X (decomposition author and round-3 issuer): either the decomp doc's rectangle table gains the full `CRPS-e-<n>` form alongside its bare `e-<n>` cells, or the round's close-outs are validated without --governing-order's alignment limb, or the checker's CELL_ID_RE / decomp-id extraction is told to accept the bare form for this project. This worker's own instance (AC1 PASS, AC2 PASS, AC3 UNVERIFIABLE-BY-INSTRUMENT per row S5) is NOT flipped to complete regardless of this row -- AC3 alone already withholds that -- but this row is filed so the alignment INVALID is not mistaken for a defect in this cell's own acceptance evidence, and so the next round-3 close-out does not re-discover it from zero."
   }
 ]
 ```
