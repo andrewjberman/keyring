@@ -14015,6 +14015,44 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "Fourteen of this serial's ARMED rows were resolved by drains, repairs and later code between 2026-09-13 and 2026-09-24 and carried no resolution row until this one; each remedy is named with its commit or its measurement above. The rows not named here are still being read one by one and are carried in later batches, each on its own evidence.",
     "disarm_owner": "2.0.0_SA_COO~Z -- the owner of every row resolved here, disarming on its own word at the round-38 drain end; ARMED rows stay in place per the channel's convention.",
     "notes": "RESOLVES (R-81, field pending the gate owner's schema change; carried here as full ids): AMGT_RESAPP-Z-W31-S1, AMGT_RESAPP-Z-W53-S2, AMGT_RESAPP-Z-W60-S2, AMGT_RESAPP-Z-W53-S1, AMGT_RESAPP-Z-W34-S2, AMGT_RESAPP-Z-W58-S1, AMGT_RESAPP-Z-W39-S5, AMGT_RESAPP-Z-W119-S1, AMGT_RESAPP-Z-S177, AMGT_RESAPP-Z-W42-S2, AMGT_RESAPP-Z-W117-S4, AMGT_RESAPP-Z-W117-S5, AMGT_RESAPP-Z-W88-S1, AMGT_RESAPP-Z-S254. Batch 1 of the sweep the R-78 census on this serial opened (CTO msgs 25614/25617). Filed after the round-38 packet so it is not read as round-38 L8 input."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S263",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-24T16:50Z",
+    "one_line": "ADJUDICATION CARRIER for the fourteen rows AMGT_RESAPP-Z-S262 resolved on evidence: Z-S262 carried the ids in prose because R-81's `resolves` was refused by the schema, and R-81a (@c69c4866ce) withdrew that field for the one the schema already has -- `adjudicates`, which gate (iii)'s second limb propagates as the named items' latest disposition. This row names the same fourteen through that field and adds no new finding; its evidence is Z-S262's, line for line.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_RESAPP-Z-S262 @25152295cf: fourteen evidence lines, one per resolved row, each naming the commit or the measurement that closed it in the world.",
+        "investigation_item.schema.json `adjudicates` (the CTO's R-81a quotes its description: 'this row's disposition becomes the named items' latest disposition'); 9 rows of 594 already carry the field, filed by 1.0.0_SA_CTO~Z, 1.0.0_SA_CTO~W, 2.0.0_SA_COO~W, 4.0.0_SA_CRO~Z and 0.9.0_WK_AMGT_RESAPP~16 -- so it is the channel's disposition field for any seat, not the CVO's alone."
+      ]
+    },
+    "adjudicates": [
+      "AMGT_RESAPP-Z-W31-S1",
+      "AMGT_RESAPP-Z-W53-S2",
+      "AMGT_RESAPP-Z-W60-S2",
+      "AMGT_RESAPP-Z-W53-S1",
+      "AMGT_RESAPP-Z-W34-S2",
+      "AMGT_RESAPP-Z-W58-S1",
+      "AMGT_RESAPP-Z-W39-S5",
+      "AMGT_RESAPP-Z-W119-S1",
+      "AMGT_RESAPP-Z-S177",
+      "AMGT_RESAPP-Z-W42-S2",
+      "AMGT_RESAPP-Z-W117-S4",
+      "AMGT_RESAPP-Z-W117-S5",
+      "AMGT_RESAPP-Z-W88-S1",
+      "AMGT_RESAPP-Z-S254"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "R-81a @c69c4866ce: the estate already has `adjudicates`, with a gate limb; a disarm that lives in prose is one no gate can read.",
+    "world_is": "Z-S262's fourteen resolutions are true and on the record but invisible to gate (iii)'s second limb, which reads `adjudicates` and nothing else; this row makes them visible to it without restating them. Every later batch of this sweep files through the field directly.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- the owner of every row adjudicated here; nothing on any target row is edited.",
+    "notes": "Sibling of Z-S262, filed the same tick on R-81a's correction. Not round-38 L8 input."
   }
 ]
 ```
