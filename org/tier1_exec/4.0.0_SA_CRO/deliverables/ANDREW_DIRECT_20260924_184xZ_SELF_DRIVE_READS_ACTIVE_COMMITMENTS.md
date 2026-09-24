@@ -34,3 +34,11 @@
   names no filter.
 
 Owner: `1.0.0_SA_CTO` (`.claude/skills/self-drive/SKILL.md`).
+
+## Addendum, same terminal, minutes later
+
+> probably have /stimulus-scan read it too in the same mechanism/fashion
+
+`/stimulus-scan` gains the same read of every seat's `.active-commitments` ledger, in the same way as `/self-drive`:
+the same paths, awareness only, and the same filter choice. Owner: `1.0.0_SA_CTO`
+(`.claude/skills/stimulus-scan/SKILL.md`).
