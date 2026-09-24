@@ -1,0 +1,39 @@
+{
+  "project_code": "DSGN_IRPTV1",
+  "macro_code": "DSGN",
+  "directive": "D13",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "created": "2026-09-24",
+  "registered_under_tree": "2026-09-24",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": ["IRPT_FNTEND", "IRPT_BCKEND", "DSGN_REBRND"],
+  "name": "Investor Reporting page remediation: the advisor-facing re-render of the header and the three tabs (Performance, Holdings, Analysis) on the portal panel system, with the producer's vocabulary moved into disclosure surfaces",
+  "description": "D13 Design's second member, minted on Andrew-direct 2026-09-24 ~05:2xZ at the 4.0.0_SA_CRO~F terminal, VERBATIM: 'This should be its own project. Tell CTO this will be D13 project, DSGN_IRPTV1. I want a proper canonical-flow issued on this from COO~D. Tell CTO that.' (record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_052xZ_DSGN_IRPTV1_OWN_PROJECT_D13_COO_D.md). Endpoint: org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md (FWD-1 the live thread: an Opal user reads Anna Thiessen's Cottonwood brokerage account end to end; FWD-2..11 the header identity card, the browse drawer, one firm control, Performance in the Model Portfolios Benchmark pattern with the AUA-Trend area chart, Holdings three ways down incl. the security list, the Analysis five-step stepper, a prospect as a first-class subject, one page-level Export, the portal panel system, no system vocabulary on the body). Relies on IRPT_BCKEND (2.0.0_SA_COO~P: spread member, display/valuation_facts schema edits, benchmark series), IRPT_FNTEND's served contracts, 2.0.0_SA_COO~M's custody publication and display fill, 2.0.0_SA_COO~Y's upload/job semantics, the asset-taxonomy source card at Andrew, and DSGN_REBRND's design law; owns the advisor-facing render of portal/src/pages/InvestorReporting/** only. Sequenced by 1.0.0_SA_CTO against the IRPT post-slug HOLD and the P/M/Y closer contract.",
+  "brief_ref": "docs/briefs/irpt-page-remediation-brief-20260924.md",
+  "prds": [],
+  "prd_lineage": [],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "2.0.0_SA_COO~D",
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO~F",
+    "workers": "0.9.0_WK_DSGN_IRPTV1~<n>, per the L6 issuance"
+  },
+  "coo_lane": "2.0.0_SA_COO~D",
+  "l4r_brief_signer": {
+    "serial": "4.0.0_SA_CRO",
+    "authority": "CLAUDE.md Rule 27 L4-R: the CRO signs the BRIEF half (4.0.0_SA_CRO~F stated it will sign when routed, msg 100235); 3.0.0_SA_CVO signs the RATIFIED-TEXT half"
+  },
+  "fabric_ruling": "laptop -- D13 Design placed LAPTOP by Andrew-direct 2026-09-11 ('it will be laptop fabric'); placement attaches to the directive (LD-0498, LD-0502).",
+  "blocking": "L2 endpoint cut 2026-09-24 (5daacc16db); DONE WHEN lines at Andrew for confirmation; L4 PRD next; 2.0.0_SA_COO~D not live on the roster at registration -- seated by 0.0.0_AB_MSTR on the CTO's word at the L5 handoff.",
+  "thread_counter": 0,
+  "threads": [],
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md",
+  "counterpart": null
+}
