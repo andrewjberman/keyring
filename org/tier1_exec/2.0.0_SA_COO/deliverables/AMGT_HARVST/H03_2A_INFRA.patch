@@ -1,0 +1,829 @@
+diff --git a/infra/aws/terraform/harvest/build-and-upload-chatter-axis.sh b/infra/aws/terraform/harvest/build-and-upload-chatter-axis.sh
+new file mode 100644
+index 0000000000..f61273c2e5
+--- /dev/null
++++ b/infra/aws/terraform/harvest/build-and-upload-chatter-axis.sh
+@@ -0,0 +1,71 @@
++#!/usr/bin/env bash
++# =============================================================================
++# build-and-upload-chatter-axis.sh -- the chatter axis producer's ARTIFACT OF RECORD
++# (AMGT Lead Panel closer step 2a, R-19 @815d6c75da; CONTRACT.md s.5a durability).
++#
++#   build   : lambda_src/build_zip.py -> .build/chatter-axis-producer.zip, prints the sha256
++#   upload  : uploads .build/chatter-axis-producer.zip to the VERSIONED artifacts bucket at
++#             harvest/amgt-resapp-chatter-axis.zip WITH content-sha256 metadata (REQUIRED:
++#             modules/yang-lambda reads that metadata as source_code_hash, never the bytes),
++#             then READS THE OBJECT BACK and refuses unless the stored metadata equals the
++#             digest computed here (VERIFY-AFTER-WRITE: a cp rc=0 writes nothing on a
++#             converted path on this box).
++#   seed    : uploads a GIVEN zip (argument 2) to the same key -- used ONCE before the first
++#             candidate to give the PRE-CHANGE deployed bytes a durable, named version of
++#             their own (the rollback object of record), since the live function's only
++#             identity before 2a was its CodeSha256.
++#
++# Build and upload FIRST, then `terraform plan` / `safe-apply`: the module's data source
++# needs the object, and a rebuild after upload is a different artifact.
++# Git Bash 3.6.7-safe (CLAUDE.md Rule 16). ASCII only. No PyPI beyond build_zip.py's own
++# pinned wheels; the Arrow bytes come from this account's own layer, verified by sha256.
++# =============================================================================
++set -euo pipefail
++
++HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
++ROOT="$(git -C "$HERE" rev-parse --show-toplevel)"
++AWS="$ROOT/.tools/aws"
++BUCKET="opal-313476888478-lambda-artifacts"
++KEY="harvest/amgt-resapp-chatter-axis.zip"
++ZIP="$HERE/.build/chatter-axis-producer.zip"
++MODE="${1:-build}"
++
++sha_b64() { python -c "import base64,hashlib,sys; print(base64.b64encode(hashlib.sha256(open(sys.argv[1],'rb').read()).digest()).decode())" "$1"; }
++sha_hex() { python -c "import hashlib,sys; print(hashlib.sha256(open(sys.argv[1],'rb').read()).hexdigest())" "$1"; }
++
++upload_verified() {
++  local zip="$1"
++  [ -f "$zip" ] || { echo "ERROR: no zip at $zip" >&2; exit 2; }
++  local b64 hex size
++  b64="$(sha_b64 "$zip")"; hex="$(sha_hex "$zip")"; size="$(python -c "import os,sys; print(os.path.getsize(sys.argv[1]))" "$zip")"
++  echo "UPLOAD: $zip -> s3://$BUCKET/$KEY size=$size sha256_b64=$b64 sha256_hex=$hex"
++  MSYS_NO_PATHCONV=1 "$AWS" s3 cp "$zip" "s3://$BUCKET/$KEY" --metadata "content-sha256=$b64" --only-show-errors
++  local head stored_b64 stored_len version
++  head="$("$AWS" s3api head-object --bucket "$BUCKET" --key "$KEY" --output json)"
++  stored_b64="$(printf '%s' "$head" | python -c "import json,sys; print(json.load(sys.stdin).get('Metadata',{}).get('content-sha256',''))")"
++  stored_len="$(printf '%s' "$head" | python -c "import json,sys; print(json.load(sys.stdin).get('ContentLength',''))")"
++  version="$(printf '%s' "$head" | python -c "import json,sys; print(json.load(sys.stdin).get('VersionId',''))")"
++  if [ "$stored_b64" != "$b64" ] || [ "$stored_len" != "$size" ]; then
++    echo "ERROR: read-back mismatch: stored content-sha256=$stored_b64 len=$stored_len, expected $b64 len=$size" >&2
++    exit 3
++  fi
++  echo "OK: s3://$BUCKET/$KEY VersionId=$version content-sha256=$stored_b64 ContentLength=$stored_len (read back, matches)"
++}
++
++case "$MODE" in
++  build)
++    python "$HERE/lambda_src/build_zip.py"
++    echo "OK: built $ZIP sha256_b64=$(sha_b64 "$ZIP") sha256_hex=$(sha_hex "$ZIP")"
++    ;;
++  upload)
++    upload_verified "$ZIP"
++    ;;
++  seed)
++    [ -n "${2:-}" ] || { echo "usage: $0 seed <zip-of-the-currently-deployed-bytes>" >&2; exit 2; }
++    upload_verified "$2"
++    ;;
++  *)
++    echo "usage: $0 build | upload | seed <zip>" >&2
++    exit 2
++    ;;
++esac
+diff --git a/infra/aws/terraform/harvest/chatter-axis-schedule.tf b/infra/aws/terraform/harvest/chatter-axis-schedule.tf
+index 70a4de8a0c..ba734f2bda 100644
+--- a/infra/aws/terraform/harvest/chatter-axis-schedule.tf
++++ b/infra/aws/terraform/harvest/chatter-axis-schedule.tf
+@@ -40,20 +40,36 @@
+ # build_zip.py after any change to those source files, then re-apply; the changed
+ # source_code_hash is what tells Terraform the function changed.
+ #
+-# source_code_hash BELOW TOLERATES AN ABSENT ZIP (row AMGT_RESAPP-Z-W34-S1, cell
+-# AMGT-rk-59): fileexists() gates the read, so a missing .build/chatter-axis-producer.zip
+-# evaluates to null with no error, and a targeted plan on any OTHER resource in this
+-# root proceeds. A PRESENT zip still computes exactly the hash it computed before this
+-# change. build_zip.py therefore stays a precondition only of a plan or apply that
+-# TARGETS this function, never of every plan in this root -- the function itself still
+-# cannot be APPLIED without the zip, because filename (below) is read at apply time.
++# THE ARTIFACT OF RECORD IS AN S3 OBJECT, NOT A LOCAL FILE (AMGT Lead Panel closer step 2a,
++# R-19 @815d6c75da; 3.0.0_SA_CVO~Z's H03 pre-build baseline). Until 2026-09-24 this file
++# deployed the zip by `filename` + `filebase64sha256()`, and get-function on the live
++# function returned a LAMBDA-MANAGED SNAPSHOT location: the deployed bytes could not be
++# re-fetched from anywhere this estate controls, and their only stable identity was the
++# CodeSha256. The function now goes through modules/yang-lambda like the other two
++# producers in this root: build_zip.py builds the zip, build-and-upload-chatter-axis.sh
++# uploads it to the VERSIONED artifacts bucket WITH content-sha256 metadata, and the
++# module reads that metadata as source_code_hash. BUILD AND UPLOAD FIRST, THEN PLAN --
++# the module's data source needs the object to exist, and a rebuild after upload is a
++# different artifact (CONTRACT.md s.5a). Every prior version of the key stays in the
++# bucket, so a rollback is "re-upload the prior bytes, apply" and the prior bytes are
++# always present to re-upload.
++#
++# THE SOURCE THE PRODUCER RANKS OVER IS SET HERE (step 2a): CHATTER_AXIS_SOURCE, read by
++# lambda_src/lambda_function.py and validated against chatter_axis.SOURCE_COUNT_FNS.
++# `gold` ranks over the graded chatter_daily gold projection; under the incomplete-input
++# guard (4dc4b667f3 lineage) a run over an unpopulated table is a HOLD -- FAILED /
++# INCOMPLETE_GOLD_INPUT, no rows, no pointer moved, a marker beside the prior pointer --
++# so nothing publishes until 2b populates the table for this universe. `legacy` is the
++# pre-2a behaviour. The value is part of the never-widen pair for this deploy.
+ locals {
+-  chatter_axis_zip = "${path.module}/.build/chatter-axis-producer.zip"
++  chatter_axis_artifact_key = "harvest/amgt-resapp-chatter-axis.zip"
++  chatter_axis_source       = "gold"
+ 
+-  # The FOUR pool prefixes the producer reads (AMGT-rj-10, C-ONE-STORE; the CTO
++  # The pool prefixes the producer reads (AMGT-rj-10, C-ONE-STORE; the CTO
+   # half's least-privilege shape @e1c3cf0cb3): the association and body layouts
+   # through lib/research/coverage/pool_reader.py, the crosswalk (X-1) and the
+-  # union universe (U-1). Nothing else in opal-data-harvest.
++  # union universe (U-1), the four publication silver prefixes, and -- step 2a --
++  # the graded chatter_daily gold table. Nothing else in opal-data-harvest.
+   chatter_axis_pool_prefixes = [
+     "publication-links/v1/",
+     "publications/v1/",
+@@ -68,6 +84,12 @@ locals {
+     "wsj/harvest/silver/",
+     "ft/harvest/silver/",
+     "seeking-alpha/harvest/silver/",
++    # AMGT Lead Panel closer step 2a (R-19 @815d6c75da): the graded chatter_daily gold
++    # projection pool_reader.gold_window_read lists and reads. Builder output, not typed:
++    # lib.research.harvest.store.table_prefix("amgt", "gold", "chatter_daily") ->
++    # lib/opal_naming.py key("amgt", "harvest", "gold", "chatter_daily", ...) printed
++    # 2026-09-24 as exactly this prefix. Additive; no prefix is removed here.
++    "amgt/harvest/gold/chatter_daily/",
+   ]
+ }
+ 
+@@ -120,9 +142,9 @@ resource "aws_iam_role_policy" "chatter_axis_lambda" {
+         Resource = [aws_dynamodb_table.harvest_security_metrics.arn]
+       },
+       {
+-        Sid      = "OwnLogStreamOnly"
+-        Effect   = "Allow"
+-        Action   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
++        Sid    = "OwnLogStreamOnly"
++        Effect = "Allow"
++        Action = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
+         Resource = [
+           "arn:aws:logs:us-east-1:${local.account_id}:log-group:/aws/lambda/amgt-resapp-chatter-axis:*",
+         ]
+@@ -131,27 +153,47 @@ resource "aws_iam_role_policy" "chatter_axis_lambda" {
+   })
+ }
+ 
+-resource "aws_lambda_function" "chatter_axis_producer" {
+-  function_name    = "amgt-resapp-chatter-axis"
+-  role             = aws_iam_role.chatter_axis_lambda.arn
+-  handler          = "lambda_function.handler"
+-  runtime          = "python3.12"
+-  filename         = local.chatter_axis_zip
+-  source_code_hash = fileexists(local.chatter_axis_zip) ? filebase64sha256(local.chatter_axis_zip) : null
+-
+-  # A daily COUNT-only GSI query over ~34 tickers plus <=10 PutItem calls -- small,
+-  # bounded work with no long-poll step (unlike the astn/estate-report reference shapes
+-  # that wait on an EC2 job). 60s is generous headroom, not a load-bearing ceiling.
+-  timeout     = 60
+-  memory_size = 128
+-
+-  # NO environment BLOCK, DELIBERATELY. The producer's table defaults ARE the harvest
+-  # names (chatter_axis.py: HARVEST_ARTICLES_TABLE -> opal-harvest-articles,
+-  # HARVEST_METRICS_TABLE -> opal-harvest-security-metrics), so the packaged code reads
+-  # the right tables with no configuration. The live function carries Environment null
+-  # and stays that way; adding an override here would be a second place for the table
+-  # names to live and to drift.
++# The SAME live function, re-addressed under the module: an in-place update, never a
++# destroy/replace. The acceptance property of the plan is NO destroy and NO replace.
++moved {
++  from = aws_lambda_function.chatter_axis_producer
++  to   = module.chatter_axis_producer.aws_lambda_function.this
++}
++
++# The function's log group already exists (created by the runtime's first write, retention
++# never-expire, 18,066 stored bytes on 2026-09-24). The module declares one; it is adopted,
++# not recreated, and log_retention_days = 0 keeps "never expire" so no log is deleted.
++import {
++  to = module.chatter_axis_producer.aws_cloudwatch_log_group.lambda
++  id = "/aws/lambda/amgt-resapp-chatter-axis"
++}
++
++module "chatter_axis_producer" {
++  source = "../modules/yang-lambda"
++
++  function_name = "amgt-resapp-chatter-axis"
++  artifact_key  = local.chatter_axis_artifact_key
++  role_arn      = aws_iam_role.chatter_axis_lambda.arn
++  handler       = "lambda_function.handler"
++  runtime       = "python3.12"
+ 
++  # The gold read imports pyarrow (~130 MB of shared objects) and parses a parquet
++  # snapshot once per identity (191 today, GET+parse memoised within the run); 128 MB /
++  # 60 s was sized for a count-only GSI query and would not hold Arrow. 512 MB / 120 s is
++  # headroom for the measured shape, not a load-bearing ceiling.
++  timeout     = 120
++  memory_size = 512
++
++  log_retention_days = 0
++
++  # The ONE environment variable, and what it selects is documented at the top of this
++  # file. The producer's table names stay the module defaults (chatter_axis.py) -- no
++  # table override lives here, so those names still have one home.
++  environment_variables = {
++    CHATTER_AXIS_SOURCE = local.chatter_axis_source
++  }
++
++  system_tag = "AmgtResapp"
+   tags = {
+     pipeline = "amgt-resapp"
+     cell     = "AMGT-rd-5"
+@@ -176,7 +218,7 @@ resource "aws_iam_role_policy" "chatter_axis_scheduler" {
+   role = aws_iam_role.chatter_axis_scheduler.id
+   policy = jsonencode({
+     Version   = "2012-10-17"
+-    Statement = [{ Effect = "Allow", Action = ["lambda:InvokeFunction"], Resource = [aws_lambda_function.chatter_axis_producer.arn] }]
++    Statement = [{ Effect = "Allow", Action = ["lambda:InvokeFunction"], Resource = [module.chatter_axis_producer.function_arn] }]
+   })
+ }
+ 
+@@ -194,13 +236,17 @@ resource "aws_scheduler_schedule" "chatter_axis_daily" {
+   flexible_time_window { mode = "OFF" }
+ 
+   target {
+-    arn      = aws_lambda_function.chatter_axis_producer.arn
++    arn      = module.chatter_axis_producer.function_arn
+     role_arn = aws_iam_role.chatter_axis_scheduler.arn
+   }
+ }
+ 
+ output "chatter_axis_lambda_arn" {
+-  value = aws_lambda_function.chatter_axis_producer.arn
++  value = module.chatter_axis_producer.function_arn
++}
++
++output "chatter_axis_code_sha256" {
++  value = module.chatter_axis_producer.code_sha256
+ }
+ 
+ output "chatter_axis_schedule_state" {
+diff --git a/infra/aws/terraform/harvest/lambda_src/build_zip.py b/infra/aws/terraform/harvest/lambda_src/build_zip.py
+index 08248bd3cf..92071b6f1a 100644
+--- a/infra/aws/terraform/harvest/lambda_src/build_zip.py
++++ b/infra/aws/terraform/harvest/lambda_src/build_zip.py
+@@ -37,6 +37,20 @@ fails every body read at 10:00 UTC. So:
+              compiled member, rpds_py for CPython 3.12 manylinux x86_64 (this
+              function's runtime and architecture): jsonschema 4.18+ resolves $refs
+              through `referencing`, which needs it (row AMGT_RESAPP-Z-W19-S14).
++    ARROW    pyarrow 15.0.2 + numpy 1.26.4, cp312 manylinux2014 x86_64, taken from the
++             estate's OWN Lambda layer `pyiceberg-nessie-deps:3` (AMGT Lead Panel closer
++             step 2a, R-19 @815d6c75da). The gold read (pool_reader.gold_window_read ->
++             pyarrow.parquet -> lib.research.harvest.store -> lib.opal_naming) reaches
++             Arrow and the naming registry from FUNCTION scope, so the closure roots now
++             include lib.opal_naming and DATA carries the registry JSONs + NAMING_SCHEMA
++             (opal_naming resolves them REPO-relative from its own __file__, which is
++             /var/task in Lambda). The layer ZIP is fetched by get-layer-version,
++             VERIFIED against a pinned sha256 before a byte of it is used, and only the
++             pyarrow/numpy members are copied in (headers, C++ sources and test trees
++             excluded) -- never PyPI, never the repo's checked-in copy of that layer,
++             which carries WINDOWS .pyd bytes and zero .so (COO_Y_HARVST.md). The build
++             prints the unzipped total against Lambda's 250 MiB ceiling and refuses
++             past it.
+ 
+ Entries are written in sorted order with a fixed ZipInfo date_time, so re-running
+ this script on unchanged inputs yields the same bytes and does not perturb
+@@ -57,6 +71,8 @@ Run: python infra/aws/terraform/harvest/lambda_src/build_zip.py
+ from __future__ import annotations
+ 
+ import ast
++import base64
++import hashlib
+ import os
+ import pathlib
+ import subprocess
+@@ -71,7 +87,7 @@ _OUTPUT = _HERE.parent / ".build" / "chatter-axis-producer.zip"
+ _FIXED_DATE_TIME = (2026, 1, 1, 0, 0, 0)  # deterministic ZipInfo timestamp -- see docstring
+ 
+ _HANDLER = (_HERE / "lambda_function.py", "lambda_function.py")
+-_CLOSURE_ROOTS = ("lib.research", "lib.opal_data_harvest")
++_CLOSURE_ROOTS = ("lib.research", "lib.opal_data_harvest", "lib.opal_naming")
+ _EXCLUDE_DIRS = {"tests", "__pycache__"}
+ 
+ # (source path, arcname, the reader that opens it)
+@@ -93,6 +109,28 @@ _DATA_MEMBERS = [
+         "lambda_function.py _UNIVERSE_SNAPSHOT_PATH, the producer's universe fallback",
+     ),
+ ]
++# The naming registry lib/opal_naming.py reads REPO-relative from its own __file__ (REGISTRY_DIR,
++# SCHEMA_PATH): key()/lookup() run at lib.research.harvest.store import, which the gold read reaches
++# from function scope. DIRECTIVES.yaml is read only by validate() and is not packaged.
++_NAMING_REGISTRY_FILES = (
++    "systems.json", "scopes.json", "tiers.json", "exemptions.json", "remediations.json",
++    "resources.json", "reporting_policies.json",
++)
++_DATA_MEMBERS += [
++    (
++        _REPO_ROOT / ("infra/logic/registry/" + name),
++        "infra/logic/registry/" + name,
++        "lib/opal_naming.py REGISTRY_DIR (REPO-relative), read by lookup()/key() at store import",
++    )
++    for name in _NAMING_REGISTRY_FILES
++]
++_DATA_MEMBERS.append(
++    (
++        _REPO_ROOT / "org/standards/NAMING_SCHEMA.json",
++        "org/standards/NAMING_SCHEMA.json",
++        "lib/opal_naming.py SCHEMA_PATH, read by key()'s tier check",
++    )
++)
+ 
+ _RUNTIME_PYTHON = "3.12"  # chatter-axis-schedule.tf: runtime = "python3.12"
+ _VENDOR_PINS = [
+@@ -114,8 +152,35 @@ _VENDOR_PACKAGES = [
+     "jsonschema_specifications/__init__.py",
+     "rpds/__init__.py",
+     "typing_extensions.py",
++    "pyarrow/__init__.py",
++    "numpy/__init__.py",
+ ]
+ 
++# The OWNED Linux bytes for the gold read's Arrow dependency: one versioned layer of this account,
++# pinned by sha256 so the build refuses any other bytes. Measured 2026-09-24 (LEADPANEL step 2a):
++# 75,131,609 bytes zipped, 250,975,829 unpacked in full; the five members below unpack to ~206 MB.
++_LAYER_VENDOR = {
++    "layer_name": "pyiceberg-nessie-deps",
++    "version": 3,
++    "sha256_b64": "DjKQluriv2wSb8e3H568gylHrD0Ed+f2sBlD9sCFWWw=",
++    "size": 75131609,
++    "members": (
++        "python/pyarrow/",
++        "python/pyarrow-15.0.2.dist-info/",
++        "python/numpy/",
++        "python/numpy.libs/",
++        "python/numpy-1.26.4.dist-info/",
++    ),
++    # Build-time and test-time trees a running function never imports.
++    "exclude": ("python/pyarrow/include/", "python/pyarrow/src/", "/tests/", "/testing/"),
++}
++_LAYER_NATIVE_REQUIRED = (
++    "pyarrow/lib.%s.so" % _NATIVE_EXTENSION_MARK,
++    "pyarrow/_parquet.%s.so" % _NATIVE_EXTENSION_MARK,
++)
++_LAYER_CACHE = _HERE.parent / ".build" / "layer-cache"
++_LAMBDA_UNZIPPED_CEILING = 262144000  # 250 MiB: Lambda's deployment package limit, unzipped
++
+ 
+ def _ours(mod: str) -> bool:
+     return any(mod == r or mod.startswith(r + ".") for r in _CLOSURE_ROOTS)
+@@ -258,6 +323,64 @@ def vendor():
+     return vendored
+ 
+ 
++def _layer_digest_ok(path: pathlib.Path, cfg: dict) -> bool:
++    if not path.is_file() or path.stat().st_size != cfg["size"]:
++        return False
++    digest = base64.b64encode(hashlib.sha256(path.read_bytes()).digest()).decode("ascii")
++    return digest == cfg["sha256_b64"]
++
++
++def vendor_layer():
++    """arcname -> bytes for the pyarrow/numpy members of the pinned OWNED layer version.
++
++    The layer ZIP is fetched once through get-layer-version into .build/layer-cache/ and
++    is used only after its sha256 matches the pin -- both on a cache hit and right after
++    a download. The presigned Content.Location is never printed: it carries a credential."""
++    cfg = _LAYER_VENDOR
++    _LAYER_CACHE.mkdir(parents=True, exist_ok=True)
++    cached = _LAYER_CACHE / ("%s-v%d.zip" % (cfg["layer_name"], cfg["version"]))
++    if not _layer_digest_ok(cached, cfg):
++        import urllib.request
++
++        import boto3
++
++        lv = boto3.client("lambda", region_name="us-east-1").get_layer_version(
++            LayerName=cfg["layer_name"], VersionNumber=cfg["version"]
++        )
++        if lv["Content"]["CodeSha256"] != cfg["sha256_b64"]:
++            raise SystemExit(
++                "FATAL: %s:%d reports CodeSha256 %s, pinned %s -- the layer moved under the pin"
++                % (cfg["layer_name"], cfg["version"], lv["Content"]["CodeSha256"], cfg["sha256_b64"])
++            )
++        urllib.request.urlretrieve(lv["Content"]["Location"], cached)
++        if not _layer_digest_ok(cached, cfg):
++            raise SystemExit("FATAL: downloaded layer bytes do not match the pinned sha256/size")
++    print(
++        "LAYER: %s:%d sha256=%s size=%d -- owned bytes, verified against the pin"
++        % (cfg["layer_name"], cfg["version"], cfg["sha256_b64"], cfg["size"])
++    )
++    vendored = {}
++    per_top = {}
++    with zipfile.ZipFile(cached) as z:
++        for info in z.infolist():
++            n = info.filename
++            if info.is_dir() or not n.startswith(cfg["members"]):
++                continue
++            if any(x in n for x in cfg["exclude"]):
++                continue
++            arc = n[len("python/"):]
++            vendored[arc] = z.read(n)
++            top = arc.split("/")[0]
++            count, size = per_top.get(top, (0, 0))
++            per_top[top] = (count + 1, size + len(vendored[arc]))
++    for top in sorted(per_top):
++        print("LAYER+ %-28s %6d file(s) %12d bytes" % (top, per_top[top][0], per_top[top][1]))
++    missing = [m for m in _LAYER_NATIVE_REQUIRED if m not in vendored]
++    if missing:
++        raise SystemExit("FATAL: the layer members carry no native extension at %s" % missing)
++    return vendored
++
++
+ def build() -> pathlib.Path:
+     code = closure()
+     entries = {arc: path.read_bytes() for arc, path in code.items()}
+@@ -270,6 +393,17 @@ def build() -> pathlib.Path:
+         if arc in entries:
+             raise SystemExit("FATAL: vendored member %s collides with a packaged member" % arc)
+         entries[arc] = payload
++    for arc, payload in vendor_layer().items():
++        if arc in entries:
++            raise SystemExit("FATAL: layer member %s collides with a packaged member" % arc)
++        entries[arc] = payload
++    unzipped = sum(len(v) for v in entries.values())
++    print(
++        "SIZE: %d entries, %d bytes unzipped against the %d-byte Lambda ceiling (%.1f%% used)"
++        % (len(entries), unzipped, _LAMBDA_UNZIPPED_CEILING, 100.0 * unzipped / _LAMBDA_UNZIPPED_CEILING)
++    )
++    if unzipped > _LAMBDA_UNZIPPED_CEILING:
++        raise SystemExit("FATAL: %d unzipped bytes exceed Lambda's %d ceiling" % (unzipped, _LAMBDA_UNZIPPED_CEILING))
+     _OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+     if _OUTPUT.exists():
+         _OUTPUT.unlink()
+@@ -317,15 +451,18 @@ def verify(output: pathlib.Path):
+     data_absent = sorted(arc for _, arc, _ in _DATA_MEMBERS if arc not in packaged)
+     vendor_absent = sorted(p for p in _VENDOR_PACKAGES if p not in packaged)
+     native_ext = sorted(n for n in packaged if n.startswith("rpds/") and _NATIVE_EXTENSION_MARK in n)
++    arrow_native_absent = sorted(m for m in _LAYER_NATIVE_REQUIRED if m not in packaged)
+     print(
+-        "VERIFY: %d lib.research/lib.opal_data_harvest import site(s); %d module(s) required, "
+-        "%d packaged, missing %s; data absent %s; vendored packages absent %s; native extension %s"
+-        % (sites, len(required), len(required) - len(missing), missing, data_absent, vendor_absent, native_ext)
++        "VERIFY: %d in-scope import site(s); %d module(s) required, "
++        "%d packaged, missing %s; data absent %s; vendored packages absent %s; native extension %s; "
++        "arrow native absent %s"
++        % (sites, len(required), len(required) - len(missing), missing, data_absent, vendor_absent,
++           native_ext, arrow_native_absent)
+     )
+-    if missing or data_absent or vendor_absent or not native_ext:
++    if missing or data_absent or vendor_absent or not native_ext or arrow_native_absent:
+         raise SystemExit(
+-            "FATAL: the zip does not carry %s / data %s / vendored %s / native %s"
+-            % (missing, data_absent, vendor_absent, native_ext)
++            "FATAL: the zip does not carry %s / data %s / vendored %s / native %s / arrow native %s"
++            % (missing, data_absent, vendor_absent, native_ext, arrow_native_absent)
+         )
+     return len(packaged), len(required), sites
+ 
+diff --git a/infra/aws/terraform/harvest/lambda_src/lambda_function.py b/infra/aws/terraform/harvest/lambda_src/lambda_function.py
+index e8bcef7f18..f4cb7365d2 100644
+--- a/infra/aws/terraform/harvest/lambda_src/lambda_function.py
++++ b/infra/aws/terraform/harvest/lambda_src/lambda_function.py
+@@ -1,14 +1,50 @@
+ """infra/aws/terraform/harvest/lambda_src/lambda_function.py -- THE CHATTER AXIS
+ WRITER's Lambda entry point (AMGT_RESAPP.TO-AMGT-rd-5, consolidated into the harvest
+-root by AMGT-ri-2).
++root by AMGT-ri-2; source selection and dry-run added by the AMGT Lead Panel closer
++step 2a, R-19 @815d6c75da).
+ 
+ THIN WRAPPER ONLY. All the actual logic (the committed chatter gate's constants,
+ the window/normalize/rank/write pipeline) lives in lib.research.metrics.chatter_axis
+ and lib.research.metrics.chatter_gate -- this directory's build_zip.py packages those
+ modules into this SAME deployment straight from lib/research/metrics/, reading the
+-real modules directly, and chatter-axis-schedule.tf references the built zip via
+-filebase64sha256(). Nothing here duplicates that logic, so this Lambda and the
+-pytest-covered module can never drift apart.
++real modules directly, and chatter-axis-schedule.tf deploys the built zip through
++modules/yang-lambda (S3 object + content-sha256 metadata). Nothing here duplicates
++that logic, so this Lambda and the pytest-covered module can never drift apart.
++
++WHICH SOURCE THE PRODUCER RANKS OVER IS THE ENVIRONMENT'S TO SAY (step 2a). The
++module's `DEFAULT_SOURCE` and `--source` flag are CLI-only: `compute_chatter_axis`
++takes `count_fn` and a Lambda invocation cannot pass a flag, so before this change the
++scheduled writer ALWAYS ranked over the legacy publication-links path whatever the
++module default said (measured 2026-09-24, LEADPANEL_PREFLIGHT.md @de0487e9fe). Now:
++
++    CHATTER_AXIS_SOURCE=legacy   the pool's publication-links/publications layout
++    CHATTER_AXIS_SOURCE=gold     the graded chatter_daily gold projection
++                                 (pool_reader.gold_window_read, HVST-h-7)
++    unset / empty                `legacy` -- an absent variable is exactly the
++                                 deployed behaviour before this change, never a
++                                 silent switch
++
++The value is validated against `chatter_axis.SOURCE_COUNT_FNS` at the top of the
++handler; an unknown value raises before any read, so a typo cannot rank over the
++wrong store. The SAME count function is passed on BOTH compute paths -- the pool
++universe call and the disclosed bundled-universe fallback -- because the earlier
++handler only ever passed the default on either, which is the defect the preflight
++named ("changing DEFAULT_SOURCE alone does not switch Lambda").
++
++UNDER `gold`, AN INCOMPLETE INPUT IS A HOLD, NOT A RANKING (4dc4b667f3 lineage,
++ac4316c447): compute_chatter_axis measures complete 30-day security windows over
++the universe, and if any required window is unresolved BOTH movement products come
++back FAILED / INCOMPLETE_GOLD_INPUT with zero rows, no pointer moves, the prior
++generation stays current, and the writer records a `_FAILED#<run_id>` marker beside
++it carrying `input_coverage` {resolved, required}. That is the nonpublishing cutover
++R-19 ruled: the pipes are wired, and no ranking is published until 2b populates the
++gold table for this universe.
++
++DRY RUN (`{"dry_run": true}` in the event): the producer runs end to end with
++`write_fn=None` -- every read, every state, the same summary -- and writes NOTHING
++(no rows, no pointer, no marker). This is how the packaged bytes are exercised in
++the target runtime without an ad-hoc production write; the scheduled fire carries
++no such key and writes as before.
+ 
+ THE UNIVERSE IS THE POOL'S U-1 OBJECT (AMGT-rj-10 AMENDMENT 5, rows
+ AMGT_RESAPP-Z-W19-S17/S18). The handler calls compute_chatter_axis() WITHOUT
+@@ -25,22 +61,59 @@ in this runtime (it never does in Lambda: /var/task holds no org/ tree). That
+ second call is DISCLOSED: the returned universe block carries the pool failure as
+ fallback_reason, so a keyless generation is never served silently.
+ 
++`names_with_links` NAMES ITS POPULATION (R-20 @9faf3497d4): the figure counts
++identities whose read found a non-empty store, and WHAT THAT STORE IS changes with
++the source -- publication links under `legacy`, gold day records under `gold`. So
++the run line and the return carry `names_with_links_population` beside the number;
++a bare before/after pair across a source switch is a change of subject, not an
++improvement, and this handler never prints one.
++
+ No alert, alarm, SNS, SES, freshness check or monitor anywhere in this file or
+-its two packaged modules -- standing moratorium. This function computes and
+-writes; it does not watch its own output or notify anyone.
++its packaged modules -- standing moratorium. This function computes and writes;
++it does not watch its own output or notify anyone.
+ """
+ from __future__ import annotations
+ 
+ import os
+ 
++from lib.research.coverage import pool_reader
+ from lib.research.metrics import chatter_axis
+-from lib.research.metrics.chatter_axis import compute_chatter_axis
++from lib.research.metrics.chatter_axis import (
++    DEFAULT_SOURCE,
++    SOURCE_COUNT_FNS,
++    compute_chatter_axis,
++    default_write_generation,
++)
++
++SOURCE_ENV = "CHATTER_AXIS_SOURCE"
++
++#: What `names_with_links` COUNTS under each source (R-20: a names_with_links figure
++#: states the population counted, or it is not evidence).
++NAMES_WITH_LINKS_POPULATION = {
++    "legacy": "identities with >=1 publication-links object in the pool store",
++    "gold": "identities with >=1 chatter_daily gold day record in the newest snapshot",
++}
+ 
+ _UNIVERSE_SNAPSHOT_PATH = os.path.join(
+     os.path.dirname(os.path.abspath(__file__)), "universe_snapshot.json"
+ )
+ 
+ 
++def select_source(environ=None):
++    """The source name the environment selects, validated against the module's own
++    map. Absent or empty means `legacy` (the pre-2a deployed behaviour); anything
++    else must be a key of SOURCE_COUNT_FNS or the handler refuses before reading."""
++    env = os.environ if environ is None else environ
++    raw = (env.get(SOURCE_ENV) or "").strip().lower()
++    if not raw:
++        return DEFAULT_SOURCE
++    if raw not in SOURCE_COUNT_FNS:
++        raise ValueError(
++            "%s=%r is not one of %s" % (SOURCE_ENV, raw, sorted(SOURCE_COUNT_FNS))
++        )
++    return raw
++
++
+ def _is_absent_repo_fallback(exc):
+     """True only for the producer's own fallback open failing: the pool read raised
+     inside read_universe_names and the landed repo-path universe.json is absent."""
+@@ -49,9 +122,10 @@ def _is_absent_repo_fallback(exc):
+     ) == os.path.normpath(chatter_axis.DEFAULT_UNIVERSE_PATH)
+ 
+ 
+-def _compute():
++def _compute(source, write_fn):
++    count_fn = SOURCE_COUNT_FNS[source]
+     try:
+-        return compute_chatter_axis()
++        return compute_chatter_axis(count_fn=count_fn, write_fn=write_fn)
+     except FileNotFoundError as exc:
+         if not _is_absent_repo_fallback(exc):
+             raise
+@@ -62,18 +136,27 @@ def _compute():
+             chatter_axis.DEFAULT_UNIVERSE_PATH,
+         )
+         print("WARN: universe fallback to bundled snapshot: %s" % (fallback_reason,))
+-        summary = compute_chatter_axis(universe_path=_UNIVERSE_SNAPSHOT_PATH)
++        summary = compute_chatter_axis(
++            universe_path=_UNIVERSE_SNAPSHOT_PATH, count_fn=count_fn, write_fn=write_fn
++        )
+         summary["universe"]["fallback_reason"] = fallback_reason
+         return summary
+ 
+ 
+ def handler(event, context):  # noqa: ARG001 -- event/context are the Lambda contract
+-    summary = _compute()
++    source = select_source()
++    dry_run = bool(isinstance(event, dict) and event.get("dry_run"))
++    write_fn = None if dry_run else default_write_generation
++    # A warm container must never serve a memo from an earlier invocation as if it
++    # were today's read: every invocation starts from an empty within-run memo.
++    pool_reader.clear_caches()
++    summary = _compute(source, write_fn)
+     universe = summary["universe"]
+     detail = summary.get("read_detail") or {}
+     names_with_links = sum(
+         1 for row in detail.values() if (row or {}).get("store_item_count", 0) > 0
+     )
++    input_coverage = summary.get("input_coverage")
+     products = [
+         {
+             "axis": product["axis"],
+@@ -82,14 +165,22 @@ def handler(event, context):  # noqa: ARG001 -- event/context are the Lambda con
+             "generation_id": product["generation_id"],
+             "state": product["state"],
+             "pointer_written": product["pointer_written"],
++            "reason_code": product.get("reason_code"),
++            "failure_reason": product.get("failure_reason"),
++            "failed_marker_written": (product.get("receipt") or {}).get(
++                "failed_marker_written", False
++            ),
+         }
+         for product in summary["products"]
+     ]
+     print(
+-        "OK: chatter axis as_of=%s tickers_considered=%d rows_ranked=%d rows_written=%d "
+-        "universe=%s fallback_reason=%s names_read=%d names_with_links=%d"
++        "OK: chatter axis as_of=%s source=%s dry_run=%s tickers_considered=%d rows_ranked=%d "
++        "rows_written=%d universe=%s fallback_reason=%s names_read=%d names_with_links=%d "
++        "names_with_links_population=%r"
+         % (
+             summary["as_of_date"],
++            source,
++            dry_run,
+             summary["tickers_considered"],
+             summary["rows_ranked"],
+             summary["rows_written"],
+@@ -97,8 +188,33 @@ def handler(event, context):  # noqa: ARG001 -- event/context are the Lambda con
+             universe.get("fallback_reason"),
+             universe["names_read"],
+             names_with_links,
++            NAMES_WITH_LINKS_POPULATION[source],
+         )
+     )
++    if input_coverage is not None:
++        print(
++            "INPUT_COVERAGE RESOLVED %d of %d %s (%d days each)"
++            % (
++                input_coverage["resolved"],
++                input_coverage["required"],
++                input_coverage["unit"],
++                input_coverage["window_days"],
++            )
++        )
++    for product in products:
++        print(
++            "PRODUCT %s state=%s rows_ranked=%d rows_written=%d pointer_written=%s "
++            "failed_marker_written=%s reason_code=%s"
++            % (
++                product["axis"],
++                product["state"],
++                product["rows_ranked"],
++                product["rows_written"],
++                product["pointer_written"],
++                product["failed_marker_written"],
++                product["reason_code"],
++            )
++        )
+     # universe and products lead the dict so a truncated rendering still shows them.
+     return {
+         "universe": {
+@@ -107,8 +223,12 @@ def handler(event, context):  # noqa: ARG001 -- event/context are the Lambda con
+             "names_read": universe["names_read"],
+             "names_considered": universe["names_considered"],
+             "names_with_links": names_with_links,
++            "names_with_links_population": NAMES_WITH_LINKS_POPULATION[source],
+         },
+         "products": products,
++        "source": source,
++        "dry_run": dry_run,
++        "input_coverage": input_coverage,
+         "as_of_date": summary["as_of_date"],
+         "tickers_considered": summary["tickers_considered"],
+         "rows_ranked": summary["rows_ranked"],
+diff --git a/infra/aws/terraform/harvest/lambda_src/test_lambda_function.py b/infra/aws/terraform/harvest/lambda_src/test_lambda_function.py
+new file mode 100644
+index 0000000000..7aba534ec8
+--- /dev/null
++++ b/infra/aws/terraform/harvest/lambda_src/test_lambda_function.py
+@@ -0,0 +1,119 @@
++"""Offline arms for the chatter axis Lambda handler (AMGT Lead Panel closer step 2a).
++
++Run from the repo root:  python -m pytest infra/aws/terraform/harvest/lambda_src -q
++
++What is exercised: the environment-driven source selection (absent -> legacy, the two
++names -> their count functions, anything else -> refused before a read), and the
++handler's plumbing -- the selected count function reaches compute_chatter_axis on the
++primary path, `dry_run` maps to write_fn=None, the memo is cleared per invocation, and
++the run line names the population `names_with_links` counted. compute_chatter_axis is
++replaced by a recorder here; the producer's own behaviour has its own suites under
++lib/research/metrics/tests. Nothing here touches AWS.
++"""
++from __future__ import annotations
++
++import importlib.util
++import os
++import sys
++import unittest
++from unittest import mock
++
++_HERE = os.path.dirname(os.path.abspath(__file__))
++_REPO = os.path.abspath(os.path.join(_HERE, "..", "..", "..", "..", ".."))
++if _REPO not in sys.path:
++    sys.path.insert(0, _REPO)
++
++_spec = importlib.util.spec_from_file_location(
++    "chatter_axis_lambda_function", os.path.join(_HERE, "lambda_function.py")
++)
++lambda_function = importlib.util.module_from_spec(_spec)
++_spec.loader.exec_module(lambda_function)
++
++from lib.research.metrics import chatter_axis  # noqa: E402
++
++
++def _summary():
++    return {
++        "as_of_date": "2026-09-24",
++        "tickers_considered": 2,
++        "rows_ranked": 0,
++        "rows_written": 0,
++        "run_id": "R1",
++        "coverage_vintage": "v",
++        "universe": {"source": "pool:universe/v1/x.json", "names_read": 2, "names_considered": 2},
++        "read_detail": {"A": {"store_item_count": 3}, "B": {"store_item_count": 0}},
++        "input_coverage": {"resolved": 0, "required": 2, "unit": "security windows", "window_days": 30},
++        "products": [
++            {
++                "axis": "TRENDING_CHATTER", "rows_ranked": 0, "rows_written": 0,
++                "generation_id": "g", "state": "FAILED", "pointer_written": False,
++                "reason_code": "INCOMPLETE_GOLD_INPUT", "failure_reason": "HOLD",
++                "receipt": None,
++            }
++        ],
++    }
++
++
++class SelectSourceTest(unittest.TestCase):
++    def test_absent_and_empty_are_legacy(self):
++        self.assertEqual(lambda_function.select_source({}), "legacy")
++        self.assertEqual(lambda_function.select_source({"CHATTER_AXIS_SOURCE": ""}), "legacy")
++        self.assertEqual(lambda_function.select_source({"CHATTER_AXIS_SOURCE": "  "}), "legacy")
++
++    def test_named_sources_resolve_to_the_module_map(self):
++        for name in chatter_axis.SOURCE_COUNT_FNS:
++            self.assertEqual(lambda_function.select_source({"CHATTER_AXIS_SOURCE": name.upper()}), name)
++
++    def test_unknown_source_is_refused(self):
++        with self.assertRaises(ValueError):
++            lambda_function.select_source({"CHATTER_AXIS_SOURCE": "silver"})
++
++
++class HandlerPlumbingTest(unittest.TestCase):
++    def _run(self, env, event):
++        calls = []
++
++        def recorder(**kwargs):
++            calls.append(kwargs)
++            return _summary()
++
++        with mock.patch.dict(os.environ, env, clear=False), \
++                mock.patch.object(lambda_function, "compute_chatter_axis", recorder), \
++                mock.patch.object(lambda_function.pool_reader, "clear_caches") as cleared:
++            out = lambda_function.handler(event, None)
++        return calls, out, cleared
++
++    def test_gold_dry_run_passes_gold_count_fn_and_no_writer(self):
++        calls, out, cleared = self._run({"CHATTER_AXIS_SOURCE": "gold"}, {"dry_run": True})
++        self.assertEqual(len(calls), 1)
++        self.assertIs(calls[0]["count_fn"], chatter_axis.gold_daily_mention_scores)
++        self.assertIsNone(calls[0]["write_fn"])
++        self.assertTrue(out["dry_run"])
++        self.assertEqual(out["source"], "gold")
++        self.assertEqual(out["input_coverage"]["resolved"], 0)
++        self.assertEqual(out["products"][0]["reason_code"], "INCOMPLETE_GOLD_INPUT")
++        self.assertEqual(out["universe"]["names_with_links"], 1)
++        self.assertIn("gold day record", out["universe"]["names_with_links_population"])
++        self.assertEqual(cleared.call_count, 1)
++
++    def test_legacy_scheduled_event_passes_legacy_count_fn_and_the_writer(self):
++        env = {k: v for k, v in os.environ.items() if k != "CHATTER_AXIS_SOURCE"}
++        with mock.patch.dict(os.environ, env, clear=True):
++            calls, out, _ = self._run({}, {"version": "0", "source": "aws.scheduler"})
++        self.assertIs(calls[0]["count_fn"], chatter_axis.default_daily_article_counts)
++        self.assertIs(calls[0]["write_fn"], chatter_axis.default_write_generation)
++        self.assertFalse(out["dry_run"])
++        self.assertEqual(out["source"], "legacy")
++        self.assertIn("publication-links", out["universe"]["names_with_links_population"])
++
++    def test_unknown_source_refuses_before_any_compute(self):
++        calls = []
++        with mock.patch.dict(os.environ, {"CHATTER_AXIS_SOURCE": "bronze"}, clear=False), \
++                mock.patch.object(lambda_function, "compute_chatter_axis", lambda **kw: calls.append(kw)):
++            with self.assertRaises(ValueError):
++                lambda_function.handler({}, None)
++        self.assertEqual(calls, [])
++
++
++if __name__ == "__main__":
++    unittest.main()

@@ -12,8 +12,8 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| baseline | verify | amgt-resapp-chatter-axis before-state | Independent CVO baseline and builder cloud read capture before build |  | OPEN |
-| artifact | verify | chatter-axis-producer.zip | Immutable exact-byte artifact location SHA256 custody and sole consumer census |  | OPEN |
+| baseline | verify | amgt-resapp-chatter-axis before-state | Independent CVO baseline and builder cloud read capture before build | CVO independent pre-build baseline org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_LEADPANEL_B01/H03_PRE_BUILD_BASELINE_20260924_Z.md@0c802d124d (CodeSha256 I6eitcaItzqRTlVUaUSF+GGzrpNDHnn71ILk1vIGjHY= 669924 bytes rev e37b6030, run lines 2 rows names_with_links 3 of 250, 191 considered) + builder cloud reads 2026-09-24 03:03Z by 2.0.0_SA_COO~Y (get-function-configuration same digest, Env null; TRENDING_CHATTER#2026-09-23 _CURRENT COMPLETE row_count 2 gen 20260923T100026Z-d09ee37a8f3b; BREAKOUT_CHATTER#2026-09-23 _CURRENT EMPTY NO_SIGNAL_IN_WINDOW 189 of 191; 09-24 pointers ABSENT; run lines 09-21..09-23 rows_ranked=2 names_with_links=3 names_read=250) + LEADPANEL_BASELINE.json@20b37017ce | CLOSED 20260924T033830Z |
+| artifact | verify | chatter-axis-producer.zip | Immutable exact-byte artifact location SHA256 custody and sole consumer census | s3://opal-313476888478-lambda-artifacts/harvest/amgt-resapp-chatter-axis.zip (versioned): rollback VersionId PUSLcUMaAwg.oPLW0ZdH6nO8t7ylo_eY 669924 bytes content-sha256 I6eitcaItzqRTlVUaUSF+GGzrpNDHnn71ILk1vIGjHY= (== deployed CodeSha256); candidate VersionId lPwA35XO3ZOG4KvCebxoJN1t45ljL1z9 55418293 bytes content-sha256 Xdwp7IrPaNho7y0Nz1L4TsihsueqDG+QDuvRsA+acYM= hex 5ddc29ec8acf68d868ef2d0dcf52f84ec8a1b2e7aa0c6f900eebd1b00f9a7183; both read back by head-object 2026-09-24 03:35-03:36Z; sole consumer module.chatter_axis_producer (yang-lambda data.aws_s3_object.artifact); custodian 2.0.0_SA_COO~Y | CLOSED 20260924T033830Z |
 | pair | verify | H03 never-widen CTO and COO halves | Both signatures at candidate pin with writer counts and per-key rollback |  | OPEN |
 | tf | activation | aws_lambda_function.chatter_axis_producer and least-privilege IAM | safe-apply receipt with only signed changes and post-apply configuration proof |  | OPEN |
 | daily | verify | existing 10UTC chatter schedule | Scheduled run outcome pointers rows denominator and retained-pointer negative control |  | OPEN |
@@ -22,3 +22,5 @@
 ## Log
 
 - 20260924T025128Z OPENED by 2.0.0_SA_COO~Y with 6 leg(s)
+- 20260924T033830Z LEG baseline closed: CVO independent pre-build baseline org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_LEADPANEL_B01/H03_PRE_BUILD_BASELINE_20
+- 20260924T033830Z LEG artifact closed: s3://opal-313476888478-lambda-artifacts/harvest/amgt-resapp-chatter-axis.zip (versioned): rollback VersionId PUSLcUMaAwg
