@@ -114,7 +114,7 @@ org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-d-4.coverage-ce
 s.5, drain duties 1-2), because a census before them would report the run order as a fact about the world. The grade is
 DISPOSITIONED, never populated; the never-prose list is the part a naive "N of 93" would hide.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
