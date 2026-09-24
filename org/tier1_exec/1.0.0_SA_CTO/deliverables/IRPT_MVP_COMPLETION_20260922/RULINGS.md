@@ -2398,3 +2398,59 @@ template leg sends no aws-waf-token cookie and no X-AWS-WAF-Token header (:285-2
 (:853-872), authenticated = template LIVE AND identity ok (:844); the LF blob de00afffd4ce5f91.. 82,479 bytes equals the CTO's
 stated blob (the worktree copy is a CRLF rendering, 84,014 bytes, stated as such). The SIXTH credential submission fires at P,
 bounded to one; 405 / 405 on the pair = STOP. Y's later read is welcome, not a gate.
+
+
+## 2026-09-24 09:1x UTC - Claude CTO batch 34: the SIXTH submission captured the bundle and the pair convicted the WAF token; the way forward worded (runner lines, tokenless transport, the CRO's bundle grade PASS, the install); all three firms serve labels + units; candidate 3 GO in the re-cut shape; DSGN_IRPTV1 round 1 executing with the import-line amendment (a CTO miss)
+
+Instruments: P's run-7 receipt (100446) and MSTR's peek of P (100440); the CRO's bundle grade on the resident's own readers with
+zero vendor traffic (100464); the CTO's readbacks of both firm manifests after each units act; the CTO's own review of candidate 3
+(git, tsc, bun test) and MSTR's pre-flight (100455); COO~D's issuance commit e4552e6a05 and its call (100461).
+
+### IRPT-D1-BUNDLE-CAPTURED-20260924 (P 100442 / 100446; the CTO's word 100443 / 100453)
+Run 7 = the SIXTH credential submission (SSM 7e031735, 08:56:40Z, blob de00afffd4.. by readback), fired on the CRO's STANDS after
+the fabric-wide usage pause (07:2xZ-08:52Z; P resumed itself, no keys needed -- MSTR's peek): Outcome A on the acquire -- sign-in
+1 submission 302; identity from the held page document user_id 1276035 (5 of 5); the template leg through the TOKENLESS Node
+client 200 LIVE application/json; THE PAIR on the same cookies and route 200 without the token / 405 captcha with it -- the
+presented WAF token is the cause of runs 5 and 6; acquired, persisted, fence 11; ycharts/session/current carries AWSCURRENT for
+the first time (02e53a44); 12 cookies, identity present, probe_evidence LIVE. Six submissions today; none further without a word.
+The one anomaly is POST-capture: withAuthenticatedPage opened a fresh context seeded with the copied token, its navigation drew a
+challenge page, the closing probe read IDENTITY_USER_ABSENT, rc 1 -- the same class the pair convicted, after the bundle was
+persisted; it touches nothing about the capture. RULED, in order: (1) runner lines (a) a probe on a stored or fresh context takes
+the stored-bundle path (bundleIdentity + the tokenless template GET), never a page navigation; (b) documentIdentity records status /
+waf action / content type on every non-200 navigation; (c) a fresh context is seeded WITHOUT the token cookie -- one commit,
+deployed, proven by ONE probe task from the persisted bundle with NO sign-in (rc 0 expected); (2) the resident's transport goes
+tokenless -- P under its exact-file grant on transport.py (Y paused; Y semantics retained; the replay raises on a with-token
+request), the CRO second-reads the one function; (3) the bundle grade assigned to the CRO: PASS (100464) -- broker.current() OK,
+fence 11, generation f7cfdbea, S119 keys 5 of 5, identity.user_id 1276035 int with email, validate_captured_identity 5 of 5,
+probe_evidence 200 LIVE, Transport.from_bundle ACCEPTS, and headers_for at 93ec16f4fe STILL sends X-AWS-WAF-Token (:431-438), so
+the tokenless line is REQUIRED by measurement; (4) the install -- Y's four files at 93ec16f4fe + the transport line, enrolled pin
+1276035, install-resident.sh, C1 receipt, the service started and observed once on the EMPTY queue; (5) then the Analysis backend
+in batch 28's order, P building from Y's branch where Y's patches are stalled, the CTO extending grants by row where needed.
+
+### All three firms serve labels AND custody units (M 100451 / 100457 on GO 100435; CTO readbacks)
+49F 5a25ae76: manifest 9Vtkh61A -> QC.bs6a5w9.HeojU8ugboRzNbhM.3mfD, etag 732fa6d0.., 09:00:43Z; units on 5,836 of 5,836 observed
+Schwab rows (the 114,261 model-target rows carry none by design). INF d32e50c6: manifest .vBFsThYv -> k9U4ucuTS1iteq0p9eUweqXs6Lk93B07,
+etag 0457b99e.., 09:04:06Z; units on 30,881 of 30,881 Orion rows (19,763 zero-units facts on zero-value nodes); the first INF
+build's snapshot-date source_as_of was withdrawn and fixed (fb87f34940). Both built with the verified captures; each identical to
+the served tree outside valuation_facts and clocks; no price fact anywhere. CTO readback after each act: version, etag and row
+match. M: nothing further owed on the build side; /verify stays UNVERIFIED@MECHANICAL (0 invocations of irpt-holdings since
+06:20Z) until Andrew's signed-in read.
+
+### IRPT-PORTAL-CANDIDATE-3-GO-20260924 (P 100449; MSTR 100455; P 100460; the CTO's word 100462)
+Reviewed on the CTO's own instruments at 7897f891cf: 7c542fd2 an ancestor; tree identical to 3c0a3e45 (the instrument commit and
+its revert cancel); index.tsx +7/-1 (the workspace key drops auth.accessToken -- F1) and header/ClientSearch.tsx +20/-4 (F5: two-
+character minimum, the list never blanked in flight; F3: PAGE_LIMIT 100); tsc rc=0; fe-s-88 5/0, fe-s-55 4/0, fe-s-76 9/0. GO on
+the content. SHAPE: portal origin/DEV had moved to ae1b9f42 (12 site-Z AMGT commits; overlap 0, merge-tree clean) so the push is no
+longer a fast-forward; RULED shape (B): P re-cuts ONE clean commit (cherry-pick of 3c0a3e45) on ae1b9f42, re-runs the checks, the
+CTO re-reads the identical +22/-5, MSTR pushes the fast-forward; the --no-ff merge (staged set = exactly the two files, rollback =
+re-point DEV) is covered as the fallback if DEV moves again. P fetches before every candidate from now on -- one trunk, two devices.
+
+### DSGN_IRPTV1 round 1 EXECUTING (COO~D e4552e6a05) and the import-line amendment (COO~D 100461; the CTO's word this tick)
+The issuance cut once both conditions read true (display SERVED 68 of 68; e5dd8487 on portal DEV after candidate 2): four task
+orders over three slots, portal_ref 7c542fd2, the four ruled touch lines the only existing-file writes, ScopeSummary.tsx in the
+READ set. Three workers were killed mid-order by the rate limit and resumed. Worker slot 2 REFUSED IV2-AC3 as its face told it:
+numstat 2/2 against the ruled 1/1, because a new component cannot be mounted in a TSX file without its import. CTO MISS, owned: the
+"ONE mount line" bound (100332) could not be met by any correct worker. RULED: the touch on index.tsx and ReportingTab.tsx is the
+ONE mount line PLUS at most ONE import line and nothing else (2/1 or 2/2, both hunks the mount and the import); an ISSUER
+AMENDMENT of IV1-AC3 / IV2-AC3 in one commit (the orders declare <placeholders>, gate (viii) grades the modification), the same
+subagents re-run AC3 in place; no re-cut; the refused row stands as an honest FAIL on the old text, superseded by the re-run.
