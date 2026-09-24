@@ -19,7 +19,14 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (0000000) X10 ACTIVE ACCEPTED (batch 27; enforcement_ref = the batch-27 commit): M writes the
+CTO review queue, in order: (00000000) ANALYSIS TAB works for nobody (CRO trace @2ee8926519; batch 28): code Y's, deploys
+P's, no deploy grant widened; Y PREPARES each deployable as a reviewed patch (generate at HEAD + SendMessage grant + env +
+mapping; status rebuild; three no-handler routes; cutover inputs), P applies in the stated order AFTER the Performance path;
+the X10 ACTIVE row rides the generate rebuild too. (00000000a) D1 run 5 = fourth submission: sign-in proven, identity leg
+405 on /dashboard/ (WAF per route per client); FIFTH AMENDMENT GO -- runner reads window.USER from the held document, resident
+validates the bundle + template liveness (Y's cut); Y STANDS then ONE run = the fifth submission (batch 28). (00000000b)
+DSGN_IRPTV1 v0.5 @1cccbe6bc6: CVO SIGNED ratified-text @2c60ba747f; brief half at CRO (100311); F2 ids + F3 portal base
+folded (batch 28). (0000000) X10 ACTIVE ACCEPTED (batch 27; enforcement_ref = the batch-27 commit): M writes the
 row, P rebuilds the adapter with it + hops 4b/3/12, then the EXERCISED arm needs hop 6 = ONE one-use plan for acc_d486 on the
 default window -- ANDREW'S PER-USE WORD (and the standing class, his call); CTO installs by Terraform. The Performance tab
 works for nobody until both (CRO trace @d8abd7dc65). (000000a) DSGN_IRPTV1 v0.4 @c4b9056831 after both halves refused at

@@ -2115,3 +2115,61 @@ CTO choosing NOT to hold L6 on the plan word) and CVO 100290 (`unprojected_grant
 body indicator -- S28 ARMED at HEAD with the CTO as disarm owner; "ten consumed contracts and the operations that serve
 them"; the three no-handler routes deferred as Y's). Two CTO misses inside one PRD: a brief pin one commit short of the
 addendum the PRD itself cites, and a denominator (11) that was not a number the brief states about itself (10).
+
+
+## 2026-09-24 06:0x UTC - Claude CTO batch 28: the Analysis tab works for nobody -- the CRO's second trace ruled and sequenced; D1 run 5 and the fifth amendment (runner + resident halves, one design); DSGN_IRPTV1 v0.5, the CVO's stamp, COO~D's F2/F3
+
+Instruments: the CRO's Analysis trace @2ee8926519 (100315) read against .owned-paths.yaml lanes at HEAD (Y owns intake/**,
+ycharts/**, ops/** under IRPT_COMPLETION_Y; P's rows on those files are exact-file integration grants with "no deploy grant");
+P's run-5 receipt (100309) and Y's verification with recipe.py:344-345 (100317); COO~D's pre-read (100308); the CVO's stamp
+@2c60ba747f (100306); the CTO's own v0.5 cut. Push state LOCAL throughout; MSTR pushes.
+
+### IRPT-ANALYSIS-TRACE-20260924 (the CRO's release, Andrew-direct "/closer trace IRPT Analysis Tab ... release to COO~Y")
+Finding accepted as measured: at the deployed bytes nothing a user does on the Analysis tab reaches YCharts or produces a
+report -- irpt-ycharts-generate is the 2026-09-19 build (31 members; eleven of Y's modules absent; no event source mapping;
+the role is receive/delete only, so the deployed submit's one send_message cannot succeed); irpt-status is the 09-21 build
+serving three routes; analysis-input-upload / -read / -history have NO handler and no Terraform; irpt-generation 0 sent / 0
+received / 0 empty receives over 6 h; the resident is uninstalled pending the D1 bundle. The two traces share one root: the
+deployed backend is P's branch, not CLOUD, and two of three tabs are served by functions built before the closer work.
+OWNERSHIP RULED, lanes unchanged: the CODE is Y's (IRPT_COMPLETION_Y); every DEPLOY, grant, route and cutover is P's (the
+integration grants carry no deploy grant, and no deploy grant is added tonight -- widening Y's lane to Terraform is a
+contract change the CTO does not make mid-round). To keep P's per-item cost at apply-only, Y PREPARES every deployable on the
+Y branch as a reviewed patch: (i) the generate package at HEAD with its eleven modules, the source-map rows, and the
+Terraform diff (sqs:SendMessage on irpt-generation, the two revision env keys, the event source mapping, IRPT_LIVE_YCHARTS_CALL
+left UNSET until the cutover); (ii) the status package with ops at HEAD and prospect_dates, and the owned-history handlers ON
+the route table; (iii) the three no-handler routes: function name, build_upload_entry composition, Terraform, routes.json
+handler, the client flag; (iv) the cutover plan's inputs (mapping + resident service) for ONE plan after the D1 bundle.
+P reviews each as a diff and applies it in one canonical act (ledger, plan, safe-apply, readback, recorder). ONE registry
+row, TWO packages: the X10 ACTIVE row (batch 27) rides the generate rebuild as well as the adapter's, or hop 8 refuses.
+SEQUENCE AT P, stated so no seat infers it: (1) holdings step-3 repackage [running]; (2) the D1 fifth amendment commit and the
+one run; (3) M's registry pin -> the adapter rebuild (X10 + hops 4b / 3 / 12); (4) the next portal candidate (hop 11, speed
+levers, rename, labels pin); (5) the Analysis backend in the order (i) -> (ii) -> (iii) -> (iv) above, each on Y's prepared
+patch. Y's runbook precondition H is reworded by Y: the resident WRITES the first secret version (the current object is the
+2026-05-21 legacy bundle, never accessed). The live thread for the Analysis journey is Y's runbook journey verbatim, with
+Andrew's browser act (G) last; it is IRPT's closer thread, not DSGN_IRPTV1's (FWD-7 / FWD-8 stand on it as enrichment).
+Trunk: every deployed pin must be reachable from origin/CLOUD before any L10 closes -- MSTR's push on Andrew's word.
+
+### IRPT-D1-FIFTH-AMENDMENT-20260924 (P 100309, Y 100317; the CTO's word 100312 / 100313)
+Run 5 = the FOURTH credential submission (SSM 0e6d7a0b, 05:55:56Z, 1 submission, both fields verified, 302; blob e1c8dc30 on
+the host by readback): sign-in proven a fourth time; the IDENTITY leg through the Node client read 405 seven times on
+/dashboard/ while run 4 had read 200 on the JSON template route with the same client class. The WAF rule is per ROUTE and per
+CLIENT: the HTML page route challenges a non-browser client, the template route admits it. FIFTH AMENDMENT -- GO, one design in
+two halves: RUNNER (P): identity from the page's OWN loaded document (window.USER via page.evaluate or page.content through
+identityFromHtml -- a read of JS state, zero network, not the in-page FETCH 100216 retired), transport = the template GET
+through the Node client with the full jar, the pair control on the same route, no in-page fetch anywhere, response headers
+recorded on every non-200 network leg, the suite refusing to run without the netguard preload (S121's remedy). RESIDENT (Y,
+its own surface): recipe.step_identity STOPS fetching /dashboard/ (recipe.py:344-345, the same urllib class and route that
+read 405) and validates the BUNDLE's identity against the enrolled pin; step_template (200 + id / report_type / sections)
+becomes the liveness gate. The two halves share one source of truth: the runner reads the identity from the document it holds
+and writes it into the bundle; the resident trusts the bundle and proves liveness on the template route. Y STANDS on the
+runner commit, then ONE run = the FIFTH submission, bounded to one by the CTO's word; no run on either half without it.
+
+### DSGN_IRPTV1 -- v0.5 @1cccbe6bc6; the ratified-text half SIGNED
+3.0.0_SA_CVO signed the ratified-text half of v0.4 @2c60ba747f (100306; R1 and R2 closed; ENDPOINT byte-identical to the
+endpoint record 91 of 91 lines). 2.0.0_SA_COO~D's pre-read (100308): F2 -- the ENRICHMENT BACKLOG cited candidate ids shifted
+against CELL CANDIDATES (items 3-10; the CTO re-lettered them to the section's own ids in v0.5, FWD ids and words unchanged --
+a citation defect of the CTO's own making, one letter off per item); F3 -- M's labels pin e5dd8487 is NOT on portal DEV
+(merge-base --is-ancestor rc=1; it sits on irpt-dev-candidate-2), so the L6 precondition now reads "display republish SERVED
+AND e5dd8487 an ancestor of portal DEV", with portal_ref and the is-ancestor rc recorded in the fanout data; the base stays
+DEV if the candidate lags. v0.5 is brief-half only; the CVO's stamp stands; the brief half is routed to 4.0.0_SA_CRO at v0.5
+(100311) and its v0.4 routing (100296) is superseded by the bump.
