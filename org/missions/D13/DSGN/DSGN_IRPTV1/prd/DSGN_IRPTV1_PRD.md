@@ -5,17 +5,18 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.3",
+ "prd_version": "v0.4",
  "step": 4,
- "brief_ref": "docs/briefs/irpt-page-remediation-brief-20260924.md@fb90ad8fe0",
+ "brief_ref": "docs/briefs/irpt-page-remediation-brief-20260924.md@5cc838e696",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
  "status": "DRAFT"
 }
 ```
 
-Brief: `docs/briefs/irpt-page-remediation-brief-20260924.md` @`fb90ad8fe0`, 22,530 bytes, --midstream, author
-`4.0.0_SA_CRO~F`, with two addenda folded in place (O4: the "AUA Trend Analysis" area-chart style, Andrew ~05:3xZ; O6:
-a prospect as a first-class subject, Andrew ~05:4xZ). Endpoint record:
+Brief: `docs/briefs/irpt-page-remediation-brief-20260924.md` @`5cc838e696`, 23,785 bytes, 302 lines, --midstream, author
+`4.0.0_SA_CRO~F`, with two addenda folded in place (O4: the "AUA Trend Analysis" area-chart style, Andrew ~05:3xZ, landed
+@`fb90ad8fe0`; O6: a prospect as a first-class subject, Andrew ~05:4xZ, landed @`5cc838e696` -- "prospect" occurs 7 times at
+this pin and once at the earlier one, the positive control the CRO's refusal 100289 asked for). Endpoint record:
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md` @`5daacc16db`. Register: tree row
 `org/missions/D13/DSGN/DSGN_IRPTV1/project.json` @`c3508c07df`. Minted on Andrew-direct 2026-09-24 ~05:2xZ at the
 `4.0.0_SA_CRO~F` terminal, VERBATIM: *"This should be its own project. Tell CTO this will be D13 project, DSGN_IRPTV1. I
@@ -129,8 +130,8 @@ until their source is ruled; the comparison catalogue picker until the catalogue
 
 ## CONTRACTS
 
-Consumed as they stand (`portal/src/pages/InvestorReporting/contracts/index.ts`, the ten v1 operations under
-`docs/contracts/investor-reporting/v1/`): resolve-scope / directory-browse / directory-search / selection-create
+Consumed as they stand (`portal/src/pages/InvestorReporting/contracts/index.ts`, the ten consumed contracts under
+`docs/contracts/investor-reporting/v1/` and the operations that serve them): resolve-scope / directory-browse / directory-search / selection-create
 (the header's selection stays server-accepted: `POST selections` -> `sel_<64hex>`; the drawer and chips change the
 PRESENTATION of a selection, never who may see what), holdings-snapshot, performance-report, analysis-input-upload,
 analysis-requests, analysis-request-read / -history, status-summary / status-job, submit-export / export-receipt /
@@ -145,12 +146,22 @@ Additive members this project RENDERS and does not author (ruled before this PRD
 - `PerformanceReport` per-comparison `spread` (IRPT-DESIGN-RECON-CALLS-20260924 (a)): the spread is a SERVER-STATED
   fact; the page derives nothing, ever ("Summary.tsx: IT COMPUTES NOTHING" stands).
 - Deferred, not blocking: asset class / sector on security nodes (the taxonomy SOURCE card at Andrew); the benchmark
-  daily series and household begin/end values (P, brief items); the comparison catalogue (Y).
+  daily series and household begin/end values (P, brief items); the comparison catalogue (Y); the three routes with NO
+  HANDLER at HEAD -- analysis-input-upload, analysis-request-read, analysis-request-history (`routes.json` @`124c0694b7`)
+  -- are Y's, and FWD-7 / FWD-8 stand on them as enrichment-round inputs.
 
 Rules every cell obeys: the FE derives nothing; every figure on the page is a wire fact; a fact the source did not
 supply renders "not supplied", never zero; the disclosure surfaces (footer line, popover, Details) keep every envelope
 fact the evidence rules require, so no L9 grade that reads a state, reason code or revision off the DOM loses its
 object -- it moves, it does not vanish; DESIGN.md governs colour, weight, radius and state; a departure is DSGN's.
+
+`unprojected_grant` is a PARTIAL-DATA fact, not entitlement bookkeeping (IRPT_FNTEND PRD CONTRACTS v0.7-v0.9; origin
+`1.0.0_SA_CTO` ruling @`61627f39f9` condition 2, carried as row `IRPT_BCKEND-W1-S28`, ARMED at HEAD with `1.0.0_SA_CTO`
+as disarm owner). When its count is above zero, a VISIBLE indicator in advisor words stays on the BODY of every scoped
+view, the header included; its kinds, denominator and revision go to the disclosure. Branch on shape first: a refusal
+carrying `public_reason_code` UNPROJECTED_GRANT renders its reason and no count. The irpt-holdings count is structurally
+zero until IB-rtf-8 folds the fork. FWD-2's "entitlements, revisions or cohorts" does not name this indicator, so its
+ACCEPT line does not move; a C1 cell that hides the indicator re-opens S28 and fails FWD-2's brief-half reading.
 
 ## THE THREAD (FWD-1) -- round 1 builds it end to end
 
@@ -184,7 +195,8 @@ hygiene runs at the drain. The round-1 analysis ends in the enrichment list the 
 8. FWD-8 the prospect as subject (prospect card in the header, upload-first step 1, the prospect's own history) -- C10
 9. FWD-9 one page-level Export on the header; the two disabled per-tab buttons gone -- C11
 10. FWD-10 the portal panel system on every panel; tab order Performance, Holdings, Analysis -- C12, C14
-11. The `spread` member consumed when P lands it (round 1 renders "not supplied" and the trace grades that hop with the reason)
+11. The `spread` member consumed when P lands it (round 1 renders "not supplied" and the trace grades that hop with the reason;
+    FWD-1's ACCEPT names the spread, so a passing round-1 trace leaves FWD-1 NOT_REALIZED until `spread` is served)
 
 ## CELL CANDIDATES (the COO's decomposition; not task orders)
 
@@ -237,7 +249,14 @@ and `api/**` (P, the shared client surface; the additive members' acceptance); t
 `display`, `CUSTODY_UNITS`; P: the Performance adapter and `spread`; Y: upload / job semantics, the catalogue);
 `portal/DESIGN.md` (DSGN_REBRND, the design law). Sequenced by the CTO against the IRPT post-slug HOLD and the P/M/Y
 closer contract: the COT `display` republish, SERVED (model names on Anna's page), precedes the L6 issuance -- hops 7
-and 8 read names from it; the D1 resident run is NOT a precondition (the thread does not touch Analysis).
+and 8 read names from it; the D1 resident run is NOT a precondition (the thread does not touch Analysis). The round-1
+DRAIN TRACE additionally needs the Performance path READY for hop 6, and both of its parts sit outside this project's
+write surface: (i) X10 enforced -- the registry row ACTIVE with `enforcement_ref` = the CTO's accepting commit, and the
+adapter repackaged with it (CTO review, P repackage); (ii) ONE installed one-use plan for `acc_d486fc9455d6b2aa18e13af1`
+on the default window -- Andrew's per-use word for the Black Diamond call, the CTO's install. The CTO's choice, stated:
+the L6 issuance does NOT wait on (ii). If the plan word has not come by the drain, the trace grades hop 6 from the LIVE
+refusal ("not supplied" with the producer's public reason on screen), FWD-1 stays NOT_REALIZED, and the live return is
+round 2's first enrichment item; a hop fed by a fixture still fails FWD-1.
 
 ## FIXTURES AND EVIDENCE
 
@@ -255,8 +274,8 @@ and 8 read names from it; the D1 resident run is NOT a precondition (the thread 
 O0 -> FWD-1 (the thread). O1 -> FWD-2. O2 -> FWD-3. O3 -> FWD-4. O4 -> FWD-5. O5 -> FWD-6. O6 -> FWD-7 and FWD-8
 (the prospect paragraph). O7 -> FWD-9. O8 -> FWD-10. O9 -> FWD-11. Part II (boundary) -> PATHS. Part III (the
 qualitative bar) -> the ACCEPT lines. Part IV (substrate) -> CONTRACTS and CELL CANDIDATES. Part V (what must be
-true) -> the rules under CONTRACTS. Part VI is status, not outcome-bearing, and is not carried. 11 of 11 territory
-headings covered; 0 uncovered.
+true) -> the rules under CONTRACTS. Part VI is status, not outcome-bearing, and is not carried. 10 of 10 territory
+headings (O0-O9) covered, O6 carrying two outcomes; 0 uncovered.
 
 ## L2 FINDINGS CARRIED (from the endpoint record)
 
@@ -279,6 +298,11 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
   and ENRICHMENT BACKLOG added as its own ordered section (spine :153 at HEAD, finding F1 of `2.0.0_SA_COO~D` 100278);
   the sequencing line now names the served `display` republish as the L6 precondition and drops the D1 run from it.
   Brief half only; ENDPOINT and CONTRACTS bytes unchanged (a ratified-text stamp at v0.2 still binds).
+- v0.4, 2026-09-24 ~05:4xZ, `1.0.0_SA_CTO` (Claude): both halves REFUSED at v0.3 and re-cut on the two reviews -- brief half
+  (`4.0.0_SA_CRO` 100289 @`fc5378db02`): brief pin -> @`5cc838e696` (both addenda), coverage 10 of 10 (O0-O9), the Performance
+  path's readiness stated on the sequencing line; ratified-text half (`3.0.0_SA_CVO` 100290 @`e0915c97fe`): `unprojected_grant`
+  as a partial-data fact with the visible indicator (CONTRACTS), "ten consumed contracts and the operations that serve them",
+  the three no-handler routes deferred as Y's. Both halves change bytes; both stamps are owed again.
 
 ## SURFACE MANIFEST
 
