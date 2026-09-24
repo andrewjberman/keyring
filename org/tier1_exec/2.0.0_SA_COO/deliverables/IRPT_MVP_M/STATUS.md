@@ -2,6 +2,13 @@
 
 Seat `2.0.0_SA_COO~M` (CLAUDE, successor to the Codex seat since 2026-09-23 ~22:47Z). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.4. Reviewer `3.0.0_SA_CVO~M` (not live).
+As of 2026-09-24T06:5xZ. 49F/INF LABELLED CANDIDATES PREPARED AND GO REQUESTED (CTO 100368; census
+HOLDINGS_49F_INF_LABELLED_CANDIDATE_CENSUS_20260924.json; producer change @eaf4c43b59: ACCOUNT labels from the directory, CASH labels,
+Schwab custody ticker fact): 49F aa6efd45 labelled 151,582 of 151,697 (27 accounts absent from the directory, 88 CUSIP-only rows),
+INF 4a50ac5f labelled 33,288 of 33,293; same eight receipts as the served revisions; CAS checks PASS with zero writes over the live
+manifests (49F etag f3ea427b / version EvNOT_ocng, INF etag 4283ce90 / version J_FeUeEA); one act per GO, 49F then INF. Portal DEV is
+7c542fd2 (MSTR 100365: candidate 2 = 7975c3bb + labels pin e5dd8487 + hop 11 + 'Performance' label), so DSGN_IRPTV1 L6 condition (b) is met.
+Earlier state follows.
 As of 2026-09-24T06:3xZ. LABELLED COT RE-CUT dec293d6 IS SERVED (CTO GO 100337 executed 06:20:00-06:20:12Z; receipt
 COT_LABELLED_PUBLICATION_RECEIPT_20260924.json): 27 immutable creates + ONE IfMatch write on the served manifest
 s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (version .VLcr1BCE -> mSFR0vat, etag d81c9213),
