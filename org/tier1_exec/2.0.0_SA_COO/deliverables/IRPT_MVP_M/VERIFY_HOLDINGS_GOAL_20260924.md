@@ -72,3 +72,49 @@ candidate for 49F/INF, and re-reading the function's log for the closing evidenc
 - Verdict unchanged at the grain that matters: MECHANICAL moves from "not fired" to "fired, envelope unread";
   it closes on the HAR's holdings response read in place (revision / manifest version, display.label on the
   leaves, status READY) by the CTO or the CRO.
+
+## ADDENDUM 18:4xZ -- goal criteria re-measured on the served revisions (closer mode, lease IRPT_BCKEND~M)
+
+Served now (index reads through the library, 18:3xZ): 49F 5a25ae76 (index QC.bs6a5w, 174 parts), INF d32e50c6
+(k9U4ucuT, 40 parts), COT dec293d6.
+
+**(1) Signed-in journey.** Evidence: a signed-in HAR in Andrew's Downloads, `aaaaaa.har` (mtime 10:19 AM ET, 359
+entries, 14:17:06-14:18:55Z), read in place. Only envelopes were printed; no header or token left the file. It matches
+the function's own log: 5 REPORT lines at 14:17:32-14:17:47Z on `/aws/lambda/irpt-holdings`.
+- COT: POST selections, then GET holdings, on two selections. Both READY / HOLDINGS_READY. The operation revision is
+  dec293d6, the served row. Anna's pair returns 116 nodes, 116 labelled (2 wrappers "Rebalancer strategy: Anna *9237 /
+  *9238", 7 leaves incl. "DIVZ SMA"). Her single account returns 41 nodes. unprojected_grant 0. **EXERCISED.**
+- 49F: one selection, READY / HOLDINGS_READY on 5a25ae76. It holds 3 nodes (ACCOUNT, SLEEVE, CASH), all labelled: a
+  Client-only cash account. The journey is **EXERCISED**, but no model node was on the path.
+- INF: **ABSENT** from the HAR. Not exercised signed-in.
+- The screen render (taxonomy + drill) is not provable from a HAR. It is the portal's; 2.0.0_SA_COO~D owns that surface.
+
+**(2) Account census.** `HOLDINGS_ACCOUNT_CENSUS_49F_INF_20260924.json` @acaa51635d, by `holdings_account_census.py`.
+Denominator: the served directory's ACTIVE entries.
+
+| Firm | Active | With model | Client only | Refused | Silently empty |
+|---|---|---|---|---|---|
+| 49F | 7,454 | 5,908 | 1,509 | 37 | 0 |
+| INF | 875 | 624 | 251 | 0 | 0 |
+
+- **Refusal path:** a refused account raises `selected accounts absent from accepted publication` in the library.
+  `snapshot.py:147-152` turns that into SnapshotUnavailable, which the public envelope reads as NOT_READY
+  (`entry.py:146`). Explicit, never an empty 200.
+- **Control:** the library's own `load()` on 3 accounts per class, 18 of 18 as classified.
+- **The 37 refused 49F accounts** are RELATIONSHIP-scope entries with cohort UNKNOWN. Of them, 15 have no Black
+  Diamond cross-reference; 11 are flagged in the 0833 universe and 11 are not. The publication header names none of
+  them (0 of 37), so the user sees NOT_READY with no reason.
+- **Published but not ACTIVE in the directory** (not selectable): 49F 105 (78 of them TERMINATED in the directory);
+  INF 1.
+- **Directory age:** as_of_business_date is 2026-09-17 at both firms, behind the 09-22 publication.
+
+**(3) COT soundness.** Unchanged from the COT receipts: 841 accepted accounts; the refused population and the Black
+Diamond window are disclosed in COT_LABELLED_PUBLICATION_RECEIPT_20260924.json and STATUS.md Parked (140 refused, CRO
+re-check October 2026).
+
+**Verdict: UNVERIFIED.**
+- MECHANICAL closes on one signed-in INF read, and one 49F account that carries a model.
+- DECLARATIVE PASS.
+- SEMANTIC PASS on the served bytes and the census.
+- Two enrichments: a refusal reason that names "not covered" rather than NOT_READY, and a disclosed refused-account
+  population in the 49F header.
