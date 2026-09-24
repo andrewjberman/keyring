@@ -19,7 +19,9 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (0000000000000000000000000000) custody INTERPRETER card @d8c8e6c716 ACCEPTED -- Q2 ruled (held
+CTO review queue, in order: (00000000000000000000000000000) portal candidate 6 LANDED fast-forward b9d244a474 (ls-remote read by MSTR
+12:2xZ); candidate 7 = the Global-default arm re-pin + the generated SelectedAccounts fixture; the CRO's addendum 3 corroborates the
+card's 0-of-68 finding on the 04:32Z vintage (batch 49). (0000000000000000000000000000) custody INTERPRETER card @d8c8e6c716 ACCEPTED -- Q2 ruled (held
 positions, never model-implied nodes), Q4 conditional on M, Q1+Q4 at M, Q3 held for Y (provisional: zero-row account refuses);
 interpreter = Y's cell on return; P composes only after M + a ledgered grant plan (batch 48). (0000000000000000000000000000a)
 portal candidate 6 (b9d244a4, 2 fe-s-10 tests) GO'd; receipt PENDING; the isInternal arm ruled a stale arm against the ratified

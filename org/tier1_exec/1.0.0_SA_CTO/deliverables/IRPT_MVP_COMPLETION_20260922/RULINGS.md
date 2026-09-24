@@ -2989,3 +2989,27 @@ layouts (11 of the 22 WIRE_CONTRACTS names have a .valid.json; SelectedAccounts 
 gen-wire / gen-maps in candidate 7, never hand-written. The honest debt list after candidates 4-6: that fixture; FIELD_MAP's three Performance
 fields; AC8 x3; AC15; AC14 x2; the browse boundary; the holdings-route arm; the isInternal re-pin above. P's export-root comment fix (main.tf,
 iam.tf: the host declared RUNNING by the ycharts root since 04c77cbe) is comments only, no plan diff, on the backend branch.
+
+
+## 2026-09-24 12:2x UTC - Claude CTO batch 49: portal candidate 6 LANDED on origin/DEV as a fast-forward (b9d244a474, ls-remote read by MSTR 12:2xZ); the CRO's addendum 3 corroborates the interpreter card's finding on the earlier 04:32Z vintage (two vintages, two instruments)
+
+Instruments: MSTR's receipt 100585 (pre-flight origin/DEV ed3088b8 unchanged; ancestor rc=0; diff 2 files +25/-4; D-1 dry run PASS; merge
+--ff-only; push ed3088b8..b9d244a4 rc=0; ls-remote refs/heads/DEV = b9d244a474c27629520678214b77fa72253324f0); the CRO's 100576 indexing
+addendum 3 @b74eb87e67 (the holdings body for acc_d486fc9455d6b2aa18e13af1 in Andrew's 04:32Z HAR, read in place, never copied).
+
+### IRPT-PORTAL-CANDIDATE-6-LANDED-20260924 (MSTR 100585 on the CTO's GO 100580)
+Fast-forward, no fallback needed: DEV had not moved between the GO and the act. Two fe-s-10 test files, no product file, VALGATE a no-op.
+Rollback = DEV re-pointed to ed3088b8. DEV now carries candidates 1-6; the fe-s-2 + fe-s-10 suites read 47 pass / 1 skip / 1 fail there on
+P's instrument, the one failure being the isInternal arm ruled in batch 48. RULED: accepted; candidate 7 cuts from b9d244a4 with exactly
+the two batch-48 items (the Global-default arm re-pinned to assert no claim is used as authority; the generated SelectedAccounts.valid.json
+fixture through the generator). Relayed to P (MSTR's receipt was addressed to the CTO alone).
+
+### IRPT-CUSTODY-CARD-FINDING-CORROBORATED-20260924 (the CRO's addendum 3 @b74eb87e67)
+The CRO read the same account's holdings body at the 04:32Z vintage (before the 06:20Z COT republish, so an independent build from P's
+12:1xZ capture): 75 nodes with the same kind census (ACCOUNT 1, SLEEVE 1, MODEL_WRAPPER 1, MODEL_LEAF 4, SECURITY 68); all 68 SECURITY nodes
+basis ASSIGNED with join_method "component of <model>" (33 / 16 / 14 / 4 across four models, 1 strategy-root); the ACCOUNT node the only
+custody fact. P's 0 of 68 on the later build and the CRO's 0 of 68 on the earlier one agree on different instruments (a live S3 capture through
+HoldingsPublication vs the served page body in a HAR) and different vintages, so the finding is CORROBORATED on both axes, not repeated. The
+addendum states what batch 48 ruled: for the Holdings tab this is by design (the basis is on every node; the display ruling stands); for the
+Analysis custody branch it is a design input, and the interpreter reads the receipted custody rows, never the security nodes. No act asked,
+none taken beyond this record; the card's questions stay where batch 48 routed them (Q1 + Q4 at M, Q3 at Y on return, Q2 ruled).
