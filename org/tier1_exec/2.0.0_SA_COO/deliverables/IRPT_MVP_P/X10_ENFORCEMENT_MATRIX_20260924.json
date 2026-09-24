@@ -1,0 +1,542 @@
+{
+ "observed_at": "2026-09-24T01:20:09Z",
+ "actor": "2.0.0_SA_COO~P",
+ "purpose": "X10 enforcement matrix for the CTO's ACTIVE review (99821 item 4): deployed writer coverage over every canonical reporting destination",
+ "policy": {
+  "policy_id": "irpt-private-reporting",
+  "policy_revision": "irpt-x10-v1",
+  "register_id": "X10",
+  "register_commit": "705dae3202cac873a133825bee9d0381c7dd6b7f",
+  "state": "PENDING_ENFORCEMENT",
+  "enforcement_ref": null,
+  "policy_sha256": "cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220",
+  "physical_disposal": "OPEN",
+  "firms": [
+   "49financial",
+   "cottonwood",
+   "inflection"
+  ],
+  "families": 12
+ },
+ "instruments": {
+  "destinations": "lib/opal_naming.preview_reporting_destination(firm, family, ART-<64hex>, <64hex>, policy_revision=irpt-x10-v1) for every (firm, family): the builder's own address in its offline form, because reporting_destination refuses while PENDING",
+  "writers": "live IAM read 2026-09-24T01:1xZ: every role named irpt-* (18 of 18) -> list-role-policies -> get-role-policy; statements whose Resource names opal-data-irpt; s3:PutObject = writer, s3:GetObject = reader",
+  "bucket": "s3api list-objects-v2 opal-data-irpt: 0 objects (the EXERCISED arm has not run)",
+  "code": "reports/retention.py RetentionPolicy._policy refuses every reserve/promote/reopen unless state == ACTIVE, register_commit present, enforcement_ref a 40-hex commit, policy_sha256 == digest(row minus policy_sha256), family registered with finite bounds"
+ },
+ "denominators": {
+  "destinations": 36,
+  "irpt_roles_swept": 18,
+  "statements_naming_bucket": 1,
+  "live": 2,
+  "declared": 34
+ },
+ "live_destinations": [
+  {
+   "firm": "cottonwood",
+   "family": "PERFORMANCE",
+   "prefix": "irpt/cottonwood/platinum/performance_reports/",
+   "writer": [
+    "irpt-performance-adapter-role"
+   ]
+  },
+  {
+   "firm": "cottonwood",
+   "family": "PERFORMANCE_SOURCE_EVIDENCE",
+   "prefix": "irpt/cottonwood/state/performance_source_evidence/",
+   "writer": [
+    "irpt-performance-adapter-role"
+   ]
+  }
+ ],
+ "kms": "irpt-performance-retained-policy also grants kms:Decrypt/GenerateDataKey on the core key via s3.us-east-1 with EncryptionContext aws:s3:arn limited to the same two prefixes; no other irpt role holds a via-s3 grant on the reporting bucket",
+ "readers_outside_writers": "none: the only reader statements are the same two prefixes on the same role",
+ "not_covered_by_this_matrix": [
+  "bucket policy, KMS key policy and permission boundaries (not swept; the bucket policy is the TLS-deny recorded in PERFORMANCE_STORAGE_APPLY_20260923.json)",
+  "the retention arms at the pinned bytes (the CTO runs them)",
+  "the EXERCISED arm: the first live reserve -> promote -> reopen receipts (CALL-3 after ACTIVE)"
+ ],
+ "what_active_requires": {
+  "cto": "one review accepting deployed bytes == reviewed (PERFORMANCE_INSTALL_APPLY_20260924.json), roles applied (this matrix), destination verified (3d9f45175d), this matrix, the retention arms",
+  "registry_write": "2.0.0_SA_COO~M writes infra/logic/registry/reporting_policies.json state ACTIVE + enforcement_ref = the accepting CTO commit; policy_sha256 is recomputed by reporting_policy() so consumers pin the new digest",
+  "then": "the CALL-3 one-use plan (P) and the first live run's reserve -> promote -> reopen receipts before any second use; failure reverts to PENDING and quarantines"
+ },
+ "rows": [
+  {
+   "firm": "49financial",
+   "family": "ANALYSIS",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/49financial/platinum/analysis_reports/",
+   "tier": "platinum",
+   "table": "analysis_reports",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "49financial",
+   "family": "EXPORT_BUNDLE",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/49financial/state/export_bundles/",
+   "tier": "state",
+   "table": "export_bundles",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "49financial",
+   "family": "EXPORT_PDF",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/49financial/state/export_pdfs/",
+   "tier": "state",
+   "table": "export_pdfs",
+   "extension": "pdf",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "49financial",
+   "family": "EXPORT_RECEIPT",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/49financial/state/export_receipts/",
+   "tier": "state",
+   "table": "export_receipts",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "49financial",
+   "family": "EXTRACTION_EVIDENCE",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/49financial/state/extraction_evidence/",
+   "tier": "state",
+   "table": "extraction_evidence",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "49financial",
+   "family": "NORMALIZED_PORTFOLIO",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/49financial/state/normalized_portfolios/",
+   "tier": "state",
+   "table": "normalized_portfolios",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "49financial",
+   "family": "ORIGINAL_CSV",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/49financial/state/prospect_inputs/",
+   "tier": "state",
+   "table": "prospect_inputs",
+   "extension": "csv",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "49financial",
+   "family": "ORIGINAL_VENDOR_PDF",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/49financial/state/vendor_documents/",
+   "tier": "state",
+   "table": "vendor_documents",
+   "extension": "pdf",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "49financial",
+   "family": "PERFORMANCE",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/49financial/platinum/performance_reports/",
+   "tier": "platinum",
+   "table": "performance_reports",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "49financial",
+   "family": "PERFORMANCE_SOURCE_EVIDENCE",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/49financial/state/performance_source_evidence/",
+   "tier": "state",
+   "table": "performance_source_evidence",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "49financial",
+   "family": "REQUEST_COMPOSITION",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/49financial/state/request_compositions/",
+   "tier": "state",
+   "table": "request_compositions",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "49financial",
+   "family": "SELECTED_ACCOUNTS",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/49financial/state/selected_accounts/",
+   "tier": "state",
+   "table": "selected_accounts",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "cottonwood",
+   "family": "ANALYSIS",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/cottonwood/platinum/analysis_reports/",
+   "tier": "platinum",
+   "table": "analysis_reports",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "cottonwood",
+   "family": "EXPORT_BUNDLE",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/cottonwood/state/export_bundles/",
+   "tier": "state",
+   "table": "export_bundles",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "cottonwood",
+   "family": "EXPORT_PDF",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/cottonwood/state/export_pdfs/",
+   "tier": "state",
+   "table": "export_pdfs",
+   "extension": "pdf",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "cottonwood",
+   "family": "EXPORT_RECEIPT",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/cottonwood/state/export_receipts/",
+   "tier": "state",
+   "table": "export_receipts",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "cottonwood",
+   "family": "EXTRACTION_EVIDENCE",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/cottonwood/state/extraction_evidence/",
+   "tier": "state",
+   "table": "extraction_evidence",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "cottonwood",
+   "family": "NORMALIZED_PORTFOLIO",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/cottonwood/state/normalized_portfolios/",
+   "tier": "state",
+   "table": "normalized_portfolios",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "cottonwood",
+   "family": "ORIGINAL_CSV",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/cottonwood/state/prospect_inputs/",
+   "tier": "state",
+   "table": "prospect_inputs",
+   "extension": "csv",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "cottonwood",
+   "family": "ORIGINAL_VENDOR_PDF",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/cottonwood/state/vendor_documents/",
+   "tier": "state",
+   "table": "vendor_documents",
+   "extension": "pdf",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "cottonwood",
+   "family": "PERFORMANCE",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/cottonwood/platinum/performance_reports/",
+   "tier": "platinum",
+   "table": "performance_reports",
+   "extension": "json",
+   "status": "LIVE",
+   "deployed_writer_roles": [
+    "irpt-performance-adapter-role"
+   ],
+   "deployed_reader_roles": [
+    "irpt-performance-adapter-role"
+   ],
+   "deployed_function": "irpt-performance-adapter (CodeSha256 JwJEEQGTENJJukTvrNQt3dq6VIAI8xqioIYA1atL+hk=, 2026-09-24T00:07:10Z)"
+  },
+  {
+   "firm": "cottonwood",
+   "family": "PERFORMANCE_SOURCE_EVIDENCE",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/cottonwood/state/performance_source_evidence/",
+   "tier": "state",
+   "table": "performance_source_evidence",
+   "extension": "json",
+   "status": "LIVE",
+   "deployed_writer_roles": [
+    "irpt-performance-adapter-role"
+   ],
+   "deployed_reader_roles": [
+    "irpt-performance-adapter-role"
+   ],
+   "deployed_function": "irpt-performance-adapter (CodeSha256 JwJEEQGTENJJukTvrNQt3dq6VIAI8xqioIYA1atL+hk=, 2026-09-24T00:07:10Z)"
+  },
+  {
+   "firm": "cottonwood",
+   "family": "REQUEST_COMPOSITION",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/cottonwood/state/request_compositions/",
+   "tier": "state",
+   "table": "request_compositions",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "cottonwood",
+   "family": "SELECTED_ACCOUNTS",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/cottonwood/state/selected_accounts/",
+   "tier": "state",
+   "table": "selected_accounts",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "inflection",
+   "family": "ANALYSIS",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/inflection/platinum/analysis_reports/",
+   "tier": "platinum",
+   "table": "analysis_reports",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "inflection",
+   "family": "EXPORT_BUNDLE",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/inflection/state/export_bundles/",
+   "tier": "state",
+   "table": "export_bundles",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "inflection",
+   "family": "EXPORT_PDF",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/inflection/state/export_pdfs/",
+   "tier": "state",
+   "table": "export_pdfs",
+   "extension": "pdf",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "inflection",
+   "family": "EXPORT_RECEIPT",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/inflection/state/export_receipts/",
+   "tier": "state",
+   "table": "export_receipts",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "inflection",
+   "family": "EXTRACTION_EVIDENCE",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/inflection/state/extraction_evidence/",
+   "tier": "state",
+   "table": "extraction_evidence",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "inflection",
+   "family": "NORMALIZED_PORTFOLIO",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/inflection/state/normalized_portfolios/",
+   "tier": "state",
+   "table": "normalized_portfolios",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "inflection",
+   "family": "ORIGINAL_CSV",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/inflection/state/prospect_inputs/",
+   "tier": "state",
+   "table": "prospect_inputs",
+   "extension": "csv",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "inflection",
+   "family": "ORIGINAL_VENDOR_PDF",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/inflection/state/vendor_documents/",
+   "tier": "state",
+   "table": "vendor_documents",
+   "extension": "pdf",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "inflection",
+   "family": "PERFORMANCE",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/inflection/platinum/performance_reports/",
+   "tier": "platinum",
+   "table": "performance_reports",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "inflection",
+   "family": "PERFORMANCE_SOURCE_EVIDENCE",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/inflection/state/performance_source_evidence/",
+   "tier": "state",
+   "table": "performance_source_evidence",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "inflection",
+   "family": "REQUEST_COMPOSITION",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/inflection/state/request_compositions/",
+   "tier": "state",
+   "table": "request_compositions",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  },
+  {
+   "firm": "inflection",
+   "family": "SELECTED_ACCOUNTS",
+   "bucket": "opal-data-irpt",
+   "prefix": "irpt/inflection/state/selected_accounts/",
+   "tier": "state",
+   "table": "selected_accounts",
+   "extension": "json",
+   "status": "DECLARED",
+   "deployed_writer_roles": [],
+   "deployed_reader_roles": [],
+   "deployed_function": null
+  }
+ ]
+}
