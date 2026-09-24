@@ -353,3 +353,13 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 <!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/jq-ban-override-audit.log|baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\#-#-#T#Z\org_jq-ban-override-audit.log -->
 - log: org/jq-ban-override-audit.log
 - detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\2026-09-11T224403Z\org_jq-ban-override-audit.log
+
+## 2026-09-24T142407Z -- COVERAGE -- UNCOVERED-AUDIT-LOG
+<!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/law-edit-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
+- log: org/law-edit-audit.log
+- detail: audit-log-shaped file not in MANIFEST -- review + add or exclude
+
+## 2026-09-24T175022Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/law-edit-audit.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\#-#-#T#Z\org_law-edit-audit.log -->
+- log: org/law-edit-audit.log
+- detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\2026-09-24T051000Z\org_law-edit-audit.log
