@@ -1,6 +1,6 @@
 # CLAUDE.md -- Opal Capital Workspace
 
-**HOW WE WORK and HOW TO THINK: fast and accurate, in that order.** Read sections 1-3 before acting.
+**HOW WE WORK and HOW TO THINK: fast and accurate, in that order.** Read sections 0-3 before acting.
 This is the LAW INDEX: every rule = imperative + mechanism + pointer. RULES ONLY. Incident reports, measurements,
 dates, quotations and "found by" lines do NOT live here (Andrew-direct 2026-09-24: "Strike all incident reporting
 from claude.md ... rules/directives only"); the long-form text behind every rule is `docs/doctrine/CLAUDE_ANNEX.md`
@@ -11,6 +11,16 @@ RULE NUMBERS ARE STABLE IDs, NOT READING ORDER. Rules 4-12 and 18 live in `/clou
 (data architecture) and 19, 23, 25, 26 (portal/SES/dormancy/apply-locality) live in `docs/doctrine/CLAUDE_ANNEX.md`.
 
 ---
+
+## 0. HOW WE COMMUNICATE
+
+0. **Write standard technical English. A prose response stays under 150 words unless asked for more; a technical
+   spec or structured manifest (a JSON index, a YAML registry, a schema) is never truncated or abridged.**
+   Mechanism: the broker refuses a message over 150 words unless it is a file path plus one line (`org/mcp/server.py`,
+   LD-0615); a response binds by reading. Exceptions: a prose-specific skill's output (`/exec-sum`, `/daily-sprint`,
+   `/outcome-check`) and a deliverable document (a brief, PRD, report or record). Threshold source:
+   `docs/briefs/process-architecture-verification-bureaucracy-brief-20260924.md` section 1.4. Order:
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_160xZ_CLAUDE_MD_FIRST_POINT_STANDARD_TECHNICAL_ENGLISH.md`.
 
 ## 1. HOW WE WORK
 

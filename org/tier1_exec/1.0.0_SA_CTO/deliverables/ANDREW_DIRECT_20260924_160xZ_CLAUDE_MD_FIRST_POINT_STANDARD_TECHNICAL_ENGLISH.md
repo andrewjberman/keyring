@@ -25,4 +25,11 @@
 4. **Never truncated or abridged:** technical specs and structured manifests (a JSON index, a YAML registry and the
    like).
 
-No other line of CLAUDE.md or org/XXX.md is authorized by this record.
+No other line of CLAUDE.md or org/XXX.md is authorized by this record, except the preamble's "Read sections 1-3",
+which becomes "0-3" so that the new first point is read.
+
+## Landed
+
+CLAUDE.md `## 0. HOW WE COMMUNICATE`, rule 0, after the reports 2/3 build merged (@6158fc41c4). The threshold is 150
+words, the one figure reports 2 and 3 give: Rule 31's message cap, which the broker enforces (LD-0615). Report 3
+section 1.4 measured a 391-word median message, with 79-98% of each day's messages over the cap.
