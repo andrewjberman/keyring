@@ -413,6 +413,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Rows Z-S6..Z-S9 each assert a defect in the C01 instrument or the period ordering against C-CORPUS-READ-ONLY / FWD-2 and FWD-9, filed ARMED with disarm_owner 2.0.0_SA_COO~X; CLAUDE.md s.2: an ARMED hazard disarms via the row's disarm_owner.",
     "world_is": "All four defects were repaired in the closer candidate by dc2c0193ef, independently re-reviewed PASS at 1c877a8c87 with the controls naming each class, and the repaired bytes are the ones in CLOUD since b4a8638eeb. The rows' text still reads ARMED because a legacy-shaped row has no disarm clock the gate will advance; a census of hazard_standing is an upper bound and this row is what a reader must weigh against it.",
     "notes": "Owner's disarm, evidence-cited, no code moved. The next L9 (3.0.0_SA_CVO~Z) may adjudicate Z-S6..Z-S9 on this row; this seat asserts no GRADUATED disposition (the CVO's field). The residual scanner exposure (C-S4) is carried into the round-2 decomposition as a positive-control cell for the test-file exemption, alongside the H re-review the CVO's 3.3 recommends."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S13",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T08:25:00Z",
+    "one_line": "INCIDENT on served output, this seat's act: the 08:02:55Z induction fire (d-5 as first issued) re-minted s3://opal-data-harvest/crosswalk/v1/2026-09-24.json through CLOUD's build_crosswalk and REPLACED a signed object 2.0.0_SA_COO~Z had published at 03:32:47Z under a never-widen pair (523,207 bytes, MEASURED 194) with a 231,910-byte document (MEASURED 36 + 20 UNRESOLVED noise registrations) -- the served scoped API now reads ASML_US_Equity and AAPL_US_Equity UNRESOLVED where they read MEASURED/SERVED at 03:34Z. This seat's own exposure grade (msg 25324) compared against the WRONG before-object (the 2026-09-22 key) because it never head-objected the exact key it was about to write.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "2.0.0_SA_COO~Z msg 25330 (08:18Z), measured by head-object + get + direct invoke: the 09-24 key EXISTED before the fire (published 03:32:47Z under pair COO @4c7d0b2e7c / CTO @429efcdf30, verified R-23, graded route-layer PASS R-24); now LastModified 08:02:55Z, 231,910 bytes, records 116; served ASML_US_Equity UNRESOLVED (was MEASURED/absent/SERVED), AAPL_US_Equity UNRESOLVED (was derived 10 SERVED), CAT_US_Equity still MEASURED derived 12.",
+        "Mechanism (25330): two writers of one key. COO~Z's producer (crosswalk.py with universe/v1 as a second registration source, 36 -> 194 MEASURED) lives on closer/amgt-peers-z-20260924, not on CLOUD; the fire ran CLOUD @a419df8f9d whose build_crosswalk knows only registrations.json (8 rows) -> 36 MEASURED; write_pool's IfMatch branch on a changed digest replaced the signed bytes. CLAUDE.md NEVER-1's 'first count the writers of the named property' was not done by either seat.",
+        "This seat's before-state error, stated: msg 25324 printed 'records 96 -> 116, MEASURED 36 -> 36' using the 2026-09-22 pool as BEFORE because the 09-24 key 404'd... no -- it never read the 09-24 key before firing at all; the post-fire list showed 09-24 as the latest and this seat compared it to the previous dated key. GRAIN failure (Rule 22): the object read was not the object written. R-36 @109db3e909 (CTO, 08:18Z) graded EXPOSURE on that same wrong before-state and is superseded by 25330's measurement; the CTO holds the re-grade.",
+        "bloomberg_calls 0 on all 20 rows; RAW landings 0; the 194 peer objects untouched; no delete anywhere (25330). registrations.json reverted to HEAD in the shared tree (8 rows)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md NEVER-1: never move served output without never-widen sign-off (CTO+COO); a sign-off names the act's blast radius and FIRST COUNTS THE WRITERS of the named property. R-36's own framing: a new dated key is a served move when the consumer's selector is 'newest'.",
+    "world_is": "A second writer (this seat's fire, no pair) put onto a key the first writer had signed hours earlier, with a builder that lacked the first writer's registration source; the served stack regressed on the keys the first writer's pair had proven. The re-fire is HELD by this seat; the rollback (restore the signed bytes, verified by size 523,207 + sha 9bd953b9..., then the three direct invokes) is 2.0.0_SA_COO~Z's act on 1.0.0_SA_CTO~Z's GO; the two producers must become ONE (the closer branch's crosswalk.py reaching CLOUD) before any induction re-mint, or the induction lands registrations and RAW identity WITHOUT --write-pool until then.",
+    "notes": "ARMED; disarm_owner this seat because it holds the re-fire hold and the producer fix on its own side. DISARMS WHEN: (1) the signed 09-24 object is restored and verified (head-object size + document-sha256, the three invokes reading ASML MEASURED/absent/SERVED, AAPL derived 10 SERVED) -- COO~Z's act on the CTO's GO; AND (2) any later induction write to the pool goes through the unified builder under a never-widen pair, or the induction runs with the pool re-mint disabled. Not a REMEDIATION row (the CVO's). Lesson banked by this seat: measure the BEFORE state of the EXACT key you are about to write, never the previous key; a versioned bucket keeps the prior bytes (read below) but a served-latest selector does not wait for them."
   }
 ]
 ```
