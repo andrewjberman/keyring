@@ -71,9 +71,14 @@ with the 2026-09-22 control at 200; peer keys 0 of 194 present). Result `UPLOADE
 the mandate said, the negative control held. One sentence owed and answered (msg to CTO+CVO ~03:5xZ): 992_HK's
 member swap (BYXXXJ out, B929F4 in) is the ranker's intended output because the SUBJECT cap moved 419,619 ->
 456,118 (the pool's model-block store gained partitions 09-19 and 09-22 after the 09-17 batch; universe unchanged),
-so the 0.2x floor rose above Eoptolink and ASML's log distance fell inside the twelve. Enrichment items accepted:
-R-1 to carry the subject cap's vintage and a member-set digest; R-24a (a no-regression control must be a case free
-to regress) adopted at this seat. Uncredited by the grade: consumer 2 from local traces, the three failure cases,
+so the 0.2x floor rose above Eoptolink and ASML's log distance fell inside the twelve. CLOSED not-a-defect by the
+CVO on arithmetic (R-25 @`9fd480b74f`): all 11 common members' caps byte-identical and every ratio scaled by one
+factor 419619/456118. **STRUCK, my error:** I wrote the subject cap's vintage "is carried nowhere on R-1"; it IS
+carried at `subject.cap_vintage` and moved 2026-09-16T20:18:16Z -> 2026-09-22T20:12:18Z. I proposed a field
+without querying the payload for it. Standing form adopted: before proposing a field, read the object for it.
+Enrichment (b) stands: a member-set digest on R-1 (an input vintage says an input moved; a digest says the output
+did; either can move without the other). Control rule adopted in the R-25b two-arm form: an untouched case proves
+NON-CORRUPTION, a regenerated case free to differ proves FIDELITY; BA was sound for the first and void for the second. Uncredited by the grade: consumer 2 from local traces, the three failure cases,
 BP%2F 404 formally OPEN as failure case 3.
 
 **CORRECTION to my 03:22Z handoff:** I wrote that `DE_US_Equity` (Posture's comparable for Boeing) "is among the
