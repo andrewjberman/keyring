@@ -138,7 +138,7 @@ Scratch in `.scratch/d1/`. Commit with
 rows point at v1 keys; d-2 resolves v2 by key substitution, so no silver rewrite. The section-name set is authored once
 here and restated verbatim in d-3, which reads it from this module rather than re-listing it.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
