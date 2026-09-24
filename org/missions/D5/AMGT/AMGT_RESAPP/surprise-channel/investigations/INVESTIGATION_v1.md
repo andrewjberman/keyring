@@ -13809,6 +13809,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "CLAUDE.md Rule 14a routes every commit through `.tools/safe-commit.sh` with the owned-paths refusal as the lane mechanism, and `docs/architecture/ADHC_OWNPTH.md` is cited as the enforcement surface. R-60 and the C13 ratification @b26449defe both state that portal/DESIGN.md resolves to lane POD_DE_ANY and that 1.0.0_SA_CTO is not among that lane's permitted agents -- written as a fact about what would be refused.",
     "world_is": "The owned-paths check, the contamination checks and the never-rules gate are all installed as hooks of the OUTER repo and grade OUTER-repo paths. portal/ is a separate repo with no hooks installed at all, so a commit authored INSIDE portal/ is graded by none of them. The lane grant on portal/** therefore binds by READING only. R-74 already corrected this seat's own prior statements on the same ground: 'UNENFORCED is not PERMITTED' -- the abstention stays correct as a grant, and the belief that a gate would catch a violation is false. Separately, the registration file those gitlinks would resolve through is tracked and empty, so the standard census verb aborts rather than reporting.",
     "notes": "ARMED, and deliberately NOT BLOCKING: round 38's portal commits will land exactly as round 37's did, so nothing here gates the round and nothing here licenses a portal edit by any seat -- the C13 edit remains round 39's cell with a worker writer, and round 38's decomposition is frozen per Rule 27. The AMGT-scoped decision (whether round 39 carries a cell for this) is the issuer's and is why disarm_owner is 2.0.0_SA_COO~Z. THE ESTATE-WIDE REMEDY IS NOT AMGT'S TO TAKE: installing hooks in a second repo, and deciding what an empty tracked .gitmodules should say, bear on EVERY portal commit the estate makes and belong to 0.0.0_AB_MSTR~Z, which R-74 names for exactly that reason. Filed off-task without halting, per CLAUDE.md section 2. The falsifier that opened the thread is worth preserving because it cost nothing: 2.0.0_SA_COO~Z observed in msg 25579 that a worker is the portal writer in practice and that every round-37/38 portal file landed that way -- workers are 0.9.0_WK_* and are not in POD_DE_ANY's permitted list either, so if the lane bound portal commits those files would all have been REFUSED. They were not. An enforcement claim was falsified by counting what had ALREADY LANDED, with no new measurement."
+  },
+  {
+    "id": "AMGT_RESAPP-W141-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~141",
+    "surfaced_at": "2026-09-24T15:10Z",
+    "one_line": "AC3's literal invocation calls ui-measure.mjs with a --route flag, but only ui-smoke.mjs's missing --route flag was named in the task order's WHAT YOU BUILD text (item 3: \"If ui-smoke.mjs takes no --route flag, add the smallest one to it ... and say so\"); ui-measure.mjs took no --route flag either (positional args[0] only) and would have silently mis-parsed '--port' as the route.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/scripts/ui-measure.mjs (pre-edit, HEAD c7b022a1): 'let route = args[0]' -- no --route handling; AC3's invocation is 'node scripts/ui-measure.mjs --port 5183 --route /market --scope main', so args[0] would have been '--port', producing route '/--port'.",
+        "portal/scripts/ui-smoke.mjs already carried the exact same positional-only shape at the same commit, and the cell text named it explicitly (WHAT YOU BUILD item 3).",
+        "fix applied: both scripts now read --route via 'args.includes(\"--route\") ? args[idx+1] : args[0]', additive over the old positional form (args[0] unchanged when --route is absent); verified AC3's literal invocation runs clean post-edit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order names ui-smoke.mjs by name as the one script needing a --route flag added, silent on ui-measure.mjs, while AC3's own invocation line passes --route to both scripts.",
+    "world_is": "ui-measure.mjs needed the identical addition for AC3's literal invocation to parse the route at all; extended it there too (portal/scripts/ui-measure.mjs is in this cell's <paths>), smallest-diff and backward-compatible with the untouched positional form.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- the fix is already applied and AC3 re-ran clean against it (this worker cannot hold owner's-word per R-18, terminal at its own drain); recorded UNDER_INVESTIGATION because the face-vs-invocation naming gap itself (rm-3 and any later cell reusing --route on ui-measure.mjs should not re-discover this) is left for the issuer to fold into the next face or DISARM outright.",
+    "notes": "Not BLOCKING -- the fix was in-lane (<paths> already grants portal/scripts/ui-measure.mjs) and additive; AC3 ran against the patched script and is recorded as such in this worker's proof-of-spec instance."
   }
 ]
 ```
