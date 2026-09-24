@@ -78,6 +78,49 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "TO-OA-t-5 cell 1(f): 'writes an audit row with the asker oid, key and verdict, and no values.'",
     "world_is": "asker_scope.handle_asker_query calls audit.log_call with {asker_oid, key, verdict[, bytes]} on every branch (never a value), so the row lands and never raises; but until app/audit.py adds an 'opal_asker_query' row to _ARGS_ALLOWLIST, the emitted record fail-closed-omits those fields too (stricter than the letter of the criterion, never a widening) -- the audit trail under-delivers, it does not over-disclose.",
     "notes": "A one-line _ARGS_ALLOWLIST addition ({'asker_oid','key','verdict','bytes'}) closes this; it needs a lane that can write app/audit.py, which this order does not grant."
+  },
+  {
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-24T22:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_OPALAI-Z-S2",
+    "one_line": "DISARMS NFRA_OPALAI-Z-W2-S1 (owner this seat): per-dataset narrowing of opal_asker_query is refused by construction, not silently widened, and the tool is not deployed; the mapping of a catalog key onto a grant dimension is a design decision routed to the round-1 analysis, not a live exposure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker report 0.9.0_WK_NFRA_OPALAI~2 on TO-OA-t-5, branch wk-NFRA_OPALAI-2 @00976eb082: asker_scope.py honours `operations` ('query' required, else denied before any catalog lookup); `datasets` has no field on a DATA_CATALOG.yaml row (firm, verdict_class, allowlist, firm_resolution) to map onto.",
+        "Proof instance NFRA_OPALAI.TO-OA-t-5.asker-scoped-query-tool.proof_of_spec.json: proof-of-spec-check rc=0 (VALID), AC1-AC3 PASS-by-output, read by this seat at the drain.",
+        "The served host at the drain runs deployed_commit 1764e54a16 (EC2_MANIFEST.json), which carries no asker_scope.py: nothing is live."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-W2-S1 is ARMED with this seat as disarm_owner.",
+    "world_is": "The residual is a precision gap, not a breach: an asker with the 'query' operation reaches every catalog key the catalog gate allows their firm, and cannot be narrowed to a subset of keys by grant until a key-to-dataset mapping exists. Refusal, not invention, is what the cell built.",
+    "notes": "Routed to the L10 read as an enrichment candidate: give catalog rows a dataset field (or map channels to datasets) so C10's intersection can narrow by key. Owner of the decision: 1.0.0_SA_CTO~O (the PRD). No gate is built here."
+  },
+  {
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-24T22:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_OPALAI-Z-S3",
+    "one_line": "The runtime agent's identity cannot yet call opal_asker_query: app/identity_scope.py's concierge allowlist does not name it, and its own docstring requires Andrew's ruling to widen -- so FWD-1's close run needs that ruling (a gate, G-SCOPE), not a cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker report 0.9.0_WK_NFRA_OPALAI~2 on TO-OA-t-5 @00976eb082, declared_exclusions: identity_scope.py outside <paths>; its docstring requires an Andrew ruling to widen the concierge allowlist.",
+        "PRD v0.5 C10: the effective scope is the INTERSECTION of the asker's policy and the agent's own identity allowlist -- so the tool must be in that allowlist for any asker to be served."
+      ]
+    },
+    "spec_asserts": "Round 1's thread ends in one live exchange through opal_asker_query (decomposition s.8).",
+    "world_is": "Until the allowlist names opal_asker_query, every call from the Opal Bloomberg identity is denied at identity_scope before the asker is resolved; the tool is correct and unreachable.",
+    "notes": "Carried to Andrew with the close-run gates (G-ACCT, G-AUTH, G-ASKER, G-PUSH) as G-SCOPE: one line in identity_scope.py's concierge allowlist on his word, then a gateway deploy. Not widened by any worker or by this seat."
   }
 ]
 ```
