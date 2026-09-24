@@ -60,7 +60,7 @@ firm tab, read in place. Then /verify on all three criteria.
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| Served directory as_of_business_date reads 2026-09-17 at 49F and INF, 3 trading days behind the 09-22 publication, with the refresh schedule ENABLED | 2.0.0_SA_COO~P (directory surface) | ~P reads the refresh's _refresh manifests |
+| Served directory stuck at 2026-09-17 (49F, INF): the refresh has dispatched no build since 09-18. Diagnosed as row IRPT_BCKEND-S125 (BLOCKING/ARMED) @662960f9ba, refresh.py:736-761 + :794-813 | 2.0.0_SA_COO~P (directory surface; msg 20:0xZ) | ~P disarms S125 |
 | Public reason for a selected account with no custody row: NOT_READY today, which reads as transient; NOT_FOUND (`_authz/errors.py:58`) is the closest member of the enum. It is a contract choice and a served-code deploy | 1.0.0_SA_CTO (contract) | the CTO rules the code; ~M then builds it with the ledger entry + never-widen |
 | The FULL -> FAST line to the CVO ("FAST from 18:1xZ; pins graded after the fact") | 2.0.0_SA_COO~M | 3.0.0_SA_CVO registers live |
 | IRPT_BCKEND-S124: the bundle mint reads working-tree bytes | owner of .tools/safe_deploy_core.py | next bundle re-mint |
