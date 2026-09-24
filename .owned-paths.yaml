@@ -1287,6 +1287,9 @@ paths:
   "infra/aws/lambda/investor-reporting/ops/tests/test_prospect_dates.py":
     lane: IRPT_Y_ACCESS_INTEGRATION_P
     note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923 (batch 13): exact reviewed test-file integration by P at Y pin 7fec957269; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/tests/run_offline_suite.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260924 (batch 30): exact reviewed test-file integration by P at Y pin 93ec16f4fe (the resident half of the fifth amendment); Y semantic writer retained; no deploy grant."
   "infra/aws/lambda/investor-reporting/intake/**":
     lane: IRPT_COMPLETION_Y
     note: "CTO grantor; exact Y owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
