@@ -403,6 +403,10 @@ the captured fixtures; not the served PROD bundle:
   (recommended: the discovery band is hidden then, so the count stays one), or does the page go band-less in
   Security mode with the band reserved for the Universe-mode Lead Panel? Both keep the architecture; they differ in
   what the eye meets first. The CTO's narrow reading is honoured either way.
+  **RESOLVED 2026-09-24 ~04:5xZ, Andrew-direct at this terminal, verbatim: "Go with your recommendation on the
+  band".** The identity header is the one band in Security mode; the Lead Panel is the one band in Universe mode.
+  Record: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_045xZ_BAND_FORK_RESOLVED_RECS_APPROVED_HAND_OFF_TO_CTO_Z.md`.
+  Part V's "Page-wide" line and the identity-header paragraph already describe this outcome; nothing else moves.
 - No signed-in walk was made; the auth-stubbed harness is the instrument here, and E0 remains Andrew's act.
 - The served PROD bundle was not rendered for this walk (the DEV tree at `10141b6d0b` was); the Peers trace brief
   established that the PROD chunk carries this page.
