@@ -167,6 +167,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "NFRA_OPALAI-Z-W1-S1 is ARMED with this seat as disarm_owner.",
     "world_is": "No out-of-grant path moved. The residual is the resolver's ordering (a worker grant is never consulted for a path with no lane row), a fabric gate defect whose owner is the gate's, carried to the CTO in this round's drain-end read; NFRA_MCPORTAL's MP-w-1 (the mcportal gitlink) meets the same ordering.",
     "notes": "No gate is built here."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S5",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-24T23:12Z",
+    "one_line": "opal_asker_query lets the AGENT choose which message's sender scopes the answer: it resolves the asker from any (chat_id, message_id) the calling identity can read, with no binding to the message being answered or the chat the reply goes to -- so a prompt-injected agent can cite an older message from a profiled, wider person and serve an unprofiled colleague under that person's grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/tools.py (cc22fdfb9d): `def opal_asker_query(chat_id: str, message_id: str, key: str, params: Optional[dict] = None)` -- chat_id and message_id are agent-supplied arguments.",
+        "app/asker_scope.py:91-106 resolve_asker(): GET /chats/{chat_id}/messages/{message_id} with $select=from, principal = from.user.tenantId/id -- no check of the message's age, of its being the message under reply, or of the reply's destination chat.",
+        "app/asker_scope.py:149-163: the profile/grant/'query' checks run against THAT resolved principal, so the unprofiled-asker refusal (C10 bullet 4) is bypassed by citing a profiled person's message.",
+        "PRD v0.5 C10 bullet 2: 'The agent never asserts whose behalf it acts on, and an identity the agent supplies in a call is ignored. A prompt-injected agent therefore cannot borrow a wider person's reach.' -- choosing the message IS asserting the asker."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C10: the asker is established server-side from the message the gateway read itself, and a prompt-injected agent cannot borrow a wider person's reach.",
+    "world_is": "The gateway reads a sender server-side, but the AGENT picks which message. Nothing binds that message to the conversation being answered (no recency window, no match to the chat the reply is sent to, no account of the other members of a group chat), so the asker-scoping holds only for an honest agent. Bounded today by W2-S1 (data reach is the calling identity's catalog reach either way); what the hole defeats is the NO-PROFILE refusal and the 'query'-operation gate.",
+    "notes": "Disarm options for the issuer, cheapest first: (1) OA-t-6 deploys with opal_asker_query NOT in the concierge identity's allowlist until fixed (INERT while undeployed for that identity); (2) bind the cited message: reject one older than a short window, and require the reply tool to send only into the SAME chat_id the query cited; (3) for group chats, scope to the intersection over every human member, not the sender alone. (2) is the minimum that restores C10 for 1:1 chats. Filed by the PRD owner; the contract is unchanged, and this is the round-1 analysis's input either way."
   }
 ]
 ```
