@@ -338,6 +338,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "CRPS-c-10 section 1, RULED: 'The sector template is the name's business type through `sector_template.business_type_of`.'",
     "world_is": "`business_type_of` is c-7's own superseded, evidence-only, report-level function; the function that actually determines which business_type partition a security's sector-template artifact lives under is `business_type_of_security`. This order's inlined text was written before, or without incorporating, c-7's own reopen amendment. Calling the named function literally would make substrate.py's sector_template member read absent for nearly every security (0 of 13 business types reach a report at the report level, per Z-W4-S1) and would not match how CRPS-c-7's gold artifacts are actually partitioned, so I used business_type_of_security -- consistent with c-7's own current docstring and its real writer -- and did not implement the literally-named function.",
     "notes": "Not a criterion failure: none of AC1-AC5 name a specific business-type resolution function, only the printed shapes and pass/fail bars, and all five pass with this resolution. Filed because a future reader of this order's own text, absent this row, would reasonably expect business_type_of and get a substrate that reports 'absent' for nearly every security. hazard_standing INERT: the order's own text is stale relative to a sibling cell's amendment that landed in the SAME round, not a live hazard -- whether CRPS-c-10's inlined text should be corrected for a later round is 2.0.0_SA_COO~X's call as issuer."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S10",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T05:02:00Z",
+    "one_line": "CRPS-c-11 AC3's literal invocation pipes the code census through `tail -30`, but the census now prints 32 lines (files_scanned, write_like_calls, 27 flagged-call lines, library_write_calls, positive_control flagged, positive_control_path), so the two header lines fall outside the window and AC3's own regex, which requires `files_scanned` BEFORE `library_write_calls 0`, cannot match the literal command's output while every value it grades is correct.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured on the closer branch at 55be6c7dfe (worktree C:/tmp/closer-amgt-corpus-x-20260923): `python -m lib.research.corpus.readonly_proof --code-census` prints exactly 32 lines, line 1 `files_scanned 30`, line 2 `write_like_calls 27`, lines 3-29 one flagged call each, line 30 `library_write_calls 0`, line 31 `positive_control flagged 1`, line 32 `positive_control_path ... left_for_operator_cleanup True`.",
+        "`tail -30` of that output starts at line 3 (`induction_request.py:453 os.makedirs ...`); a grep for `files_scanned` over the tail-30 window returns 0 lines.",
+        "The order's AC3 <expect> is `(?s)files_scanned [1-9]\\d*.*library_write_calls 0\b.*positive_control flagged 1\b` -- anchored on files_scanned first, so the literal invocation cannot satisfy it; the same regex over the FULL output (equivalently `tail -40`) matches.",
+        "Why the window moved: the census flags 27 write-like calls at HEAD against the smaller package the order was written for at 40107c6f48 (readonly_proof.py did not exist yet); the scanner's own copytree/copyfile/open/write_text sites and the test modules' tmp_path writes are legitimately flagged (reaches_library False, origins outside-library / unknown), and each flagged call costs one output line.",
+        "AC3's SUBSTANCE is unaffected: files_scanned 30, library_write_calls 0, positive_control flagged 1 -- measured twice, identical."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-c-11 AC3 <invocation>: `python -m lib.research.corpus.readonly_proof --code-census 2>&1 | tail -30` with <expect> `(?s)files_scanned [1-9]\\d*.*library_write_calls 0\b.*positive_control flagged 1\b` -- i.e. the last 30 lines carry the census header.",
+    "world_is": "The census output is 32 lines at HEAD, so `tail -30` drops `files_scanned` and `write_like_calls`; the literal invocation's output can never match the literal regex even though every graded value passes. An instrument-window defect in the criterion's read, not a defect in the census or the code it grades.",
+    "notes": "Issuer disposition (2.0.0_SA_COO~X executes c-11 personally per G00 @8d33ad1cc5, the worker slot never spawned): the order's AC3 invocation is AMENDED from `tail -30` to `tail -40` in the same closing commit, recorded in the order's ISSUER NOTES; the <expect> is unchanged. The widened window is the READ of the instrument, not its substance -- no code changes to fit the criterion. A reader grading the instance sees the amended invocation aligned with the amended order under proof-of-spec-check's alignment limb."
   }
 ]
 ```
