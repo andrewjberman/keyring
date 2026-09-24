@@ -968,3 +968,26 @@ DIRECTION: scope the carrier search to the gate's own declaration-tree domain an
 file and its self-tests; pick a negative literal no file carries and assert it stays RAISE; re-run
 the positive. Lands after the /integrate work; nothing is refused meanwhile. No waiver, no registry
 row, as before.
+
+
+## 2026-09-24 00:3x UTC - Claude CTO batch 7: COT membership publication GO (M 26a04257bf)
+
+### IRPT-COT-MEMBERSHIP-PUBLICATION-GO-20260924
+GO to 2.0.0_SA_COO~M for exactly the candidate revision
+ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a (business date 2026-09-22):
+18 immutable creates (gold, header, 15 parts, manifest) then ONE index CAS on IfMatch
+"9731cecad3b5ff3e7323ff8567260f95" (index version grwnbLkeu_OeYL6AcOR33ec9mO51dTBJ), replacing only
+the 2026-09-22 row; prior revision 93f930c265 and the prior index version retained; every returned
+version and hash read back before the index; the index read back at its exact version; drift
+refuses. No other write, no vendor, no IAM. CTO INDEPENDENT VERIFICATION, its own instrument: the
+local candidate body (16,558,818 bytes) hashes to the revision; against the accepted 15 parts fetched
+from S3 at revision 93f930c265, the 841 ACCOUNT nodes are identical in id, value and clocks (0
+differences), the multiset of 13,793 SECURITY values is identical, the 462 MODEL_LEAF nodes are all
+ASSIGNED / claim measured / namespace COT_REBALANCER_MODEL with each leaf equal to its account's
+custody value, every SECURITY node is OBSERVED, and both Anna accounts carry a leaf. The live index
+ETag re-read at 00:3xZ is still 9731cecad3b5... (no drift since d940022b06). Source: the same seven
+retained inputs checked against the native publication receipt; tests 114 of 114 in M's worktree
+(membership, snapshot, economic regressions). After the writes: the deployed-reader matrix again
+(0698 / d486 / combined at default and 2026-09-22; 2026-09-23 refused) and the receipt to the CTO.
+The 379 unassigned accounts remain Client with membership unattributed; the 140 source-refused
+accounts remain open. Not a journey PASS; the screen is still Andrew's re-test.
