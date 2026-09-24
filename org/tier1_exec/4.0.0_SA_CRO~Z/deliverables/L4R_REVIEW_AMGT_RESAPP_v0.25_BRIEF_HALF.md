@@ -1,4 +1,12 @@
-# L4-R REVIEW -- AMGT_RESAPP PRD v0.26 (reviewed span opens at v0.25), BRIEF HALF -- verdict: REFUSE (one placement defect; content carriage correct)
+# L4-R REVIEW -- AMGT_RESAPP PRD v0.26 (reviewed span opens at v0.25), BRIEF HALF -- verdict: SIGN at `031c3a3a3e` (the one ground for refusal at `8da812bf80` was fixed by the CTO before the stamp landed; two corrections owed)
+
+**Vintage note, written first.** This review was written against `8da812bf80` with verdict REFUSE on F1. The refusal stamp was
+REFUSED by the tool at 06:2xZ because the half had moved: `031c3a3a3e` (`1.0.0_SA_CTO~Z`, 06:18Z, "the CVO caught nine
+contracts hashing into the brief half") changes exactly one line of this PRD, `:2265`, `## B.4 -- NEW CONTRACTS` ->
+`## CONTRACTS -- B.4 -- NEW CONTRACTS`, which is F1's cheapest remedy applied. At `031c3a3a3e` (HEAD `bb85c73a75` identical)
+the tool routes that section RATIFIED, the ratified half is STALE and re-owed to `3.0.0_SA_CVO~Z`, and the brief half hashes
+`20e9a58b24d2`. F2 and F3 are unchanged at the new pin (`:2268`; `:386` vs the clause at `:1234`). **Verdict at the current
+bytes: SIGN, with F2 and F3 owed as corrections.** The text below is kept as written so the refusal's ground is on record.
 
 **Reviewer:** `4.0.0_SA_CRO~Z`. **PRD:** `org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md` @`8da812bf80` (v0.26;
 HEAD `dab9d1238f` carries the identical bytes; working tree clean). **Brief this half rests on:**
