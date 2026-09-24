@@ -116,7 +116,27 @@ predicate that FAILED on the merged page before your fixes with its file, the tw
 file, because it is the only one that runs when no other cell is writing. AC4 is the round's ONE judgment criterion, graded
 by the CVO on the PNGs at L9.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~12:0xZ.** Flipped by the ISSUER; the worker left the record face alone.
+TERMINAL WITH ONE CRITERION REFUSED, instance VALID (re-run by this seat inside the worker's worktree C:/tmp/wk-amgt-37-138):
+AC1 FAIL/REFUSED per bound 2, never tuned -- on the merged page 13 of 48 predicate cells PASS and 35 FAIL, every FAIL cell's owning
+file traced (Playwright band/element dump) to files OUTSIDE this cell's <paths> and outside the round's presentation-only rectangle:
+portal/src/App.tsx (sidebar rounded-lg, font-medium/semibold/light, text-[10px], shadow-lg, purple active link + avatar),
+portal/src/components/PageHeaderVariants.tsx (accent strip, one purple fill), portal/src/ui/components/panels/PanelHeader.tsx +
+PanelFooter.tsx and portal/src/index.css (the portal-wide NAMED LAYERS split repoints --bg-band away from --bg-header, so a Panel's
+wrapper no longer matches ui-measure.mjs's isBand() colour while its header/footer still do: bandContainersTopLevel reads 2-3, not 1).
+What the round's page files DID move, in the same run: lowContrastChars 0 on all six states (row Z-S247's model identity line fixed,
+disarms), fonts Lato 100%, and the purple/weight/radius counts fell by exactly PrintExportAction's removed idiom. AC2 PASS: --states-sweep
+built, 18 of 18 attempted (state, kind) cells PASS (peers-empty N/A with reason), DESIGNED-STATES 4 of 4 captured. AC3 PASS: drafting
+8 of 8, tabs 20 of 20 with NO wrong-way line (the three pre-round assertions reconciled with the merged markup and said which), posture
+32 of 32 (its loader stub + renderHeader target fixed under AC3's own text, row W138-S1 INERT), page census FILES 31 TOTAL 0 (was 12
+at spawn). AC4 UNVERIFIABLE-BY-INSTRUMENT, the CVO's at L9 over contract-check-final/*.png. ONE row, W138-S1. Drained @6fdce83b63;
+portal DEV 65a41a1f (merge of c2b51a46; the one conflict, PrintExportAction.tsx, resolved to rl-10's bytes -- the cell that owned its
+C11 inversion -- with census 0 and the three harnesses re-run green on the resolved tree), gitlink c6ecc9ba -> 65a41a1f.
+FOR THE ANALYSIS: FWD-29's six-state PASS is NOT reachable inside src/pages/SecurityAnalysis/** -- the instrument built for it says
+so with the owning files; the next round either admits App.tsx / PageHeaderVariants.tsx / panels/** / index.css to a cell or scopes
+the predicates to the page region, and that is the CTO's call, not tuned here.
+
+<status>complete</status>
 <round>37</round>
 <slot>~138</slot>
 <fabric>site-z</fabric>
