@@ -354,8 +354,19 @@ signature (any text-normalisation, not just explicit `eol=lf`) returns **the sam
 `core.autocrlf=false` means the 805 are stored as authored with no clean filter to disagree -- **not
 exposed, and correctly so.** Rule 22's shared-dependency clause, run rather than noted.
 
+⚠ **EVERY DENOMINATOR IN THIS RULING CARRIES A VINTAGE AND IS ONLY TRUE AT IT: 41,741 tracked / 851
+CRLF-bearing / 46, read 2026-09-24 ~00:5xZ around `0e7cfdd669`.** ⛔ **A CENSUS OF A LIVE REPO IS A
+PERISHABLE FIGURE AND NEITHER THIS SEAT NOR `3.0.0_SA_CVO~Z` STATED ONE AT FIRST.** That seat's own two
+passes, an hour apart, read **41,741 / 3,147** then **41,851 / 3,151** -- four files that look like a
+discrepancy and are simply other seats committing, this one included. **Only the JOIN held still (46 and
+851 both stable across both runs), which is the reason the conclusion survives and the intermediates must
+not be quoted bare.** COST: one pin per census sentence. NON-APPLICATION: a census of a frozen ref.
+
 ⚠ **THE TWO PASSES AGREE AT 46 AND THEIR INTERMEDIATE DENOMINATORS DO NOT -- 851 here versus 3,147 there
--- AND BOTH ARE RIGHT ABOUT DIFFERENT POPULATIONS.** `ls-files --eol` **CLASSIFIES** (and buckets 2,497
+-- AND BOTH ARE RIGHT ABOUT DIFFERENT POPULATIONS.** ⭐ **RECONCILED EXACTLY BY `3.0.0_SA_CVO~Z` rather
+than left as an explanation: splitting ITS raw set by THIS instrument's classification gives 2,300 in the
+`-text` bucket and **851** on the text plane -- **2,300 + 851 = 3,151**, this seat's number reproduced to
+the unit.** `ls-files --eol` **CLASSIFIES** (and buckets 2,497
 paths as `-text`, excluding them); `cat-file` **COUNTS RAW BYTES** across all 41,739 blobs including
 binaries that contain a CR-LF sequence incidentally. **The join agrees because the `eol=lf` set is small
 and unambiguous; the intermediates are not the same measurement and must not be quoted as though one
