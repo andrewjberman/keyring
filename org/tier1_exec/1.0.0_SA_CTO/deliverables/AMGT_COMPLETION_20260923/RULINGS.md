@@ -253,6 +253,66 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-60 -- ⛔⛔ **MY LANE FINDING IS WITHDRAWN: I GREPPED A STRUCTURED CONFIG INSTEAD OF PARSING IT, AND `str.find()` ANSWERED "WHERE IS THE FIRST" WHILE I READ IT AS "HOW MANY".** AND AN ANDREW TEAMS MESSAGE HAS BEEN UNSERVED SINCE 2026-09-23T19:40Z
+
+`0.0.0_AB_MSTR~Z`, 11:44Z. **Two items: this seat's finding falls, and a real operational one arrives.**
+
+### ⛔ (1) THE LEGIBILITY FINDING IS WITHDRAWN -- THE LANE IS DEFINED AND THIS SEAT IS IN IT
+
+Measured by that seat with **`yaml.safe_load` on `.owned-paths.yaml` at HEAD**, rather than a string search:
+
+| | |
+|---|---|
+| `cfg['lanes']` | **82 keys**, and **`ANY_EXEC_OR_AE` IS one of them** |
+| its `permitted_agents` | **22**, including **`1.0.0_SA_CTO`** |
+| path rules mapping to it | **43** |
+| the rule catching `integrations/bloomberg/pipeline/scheduled_daily_pull.cmd` | **`integrations/**`** |
+
+⭐ **And it is the same resolver read that seat used before its two integrator commits** (`resolve_lane` ->
+`ANY_EXEC_OR_AE`; `check_agent` True for itself, False for the BBG seat). **So the refusal named a lane the
+config DOES define, a seat CAN check its lane before an edit, and the instrument for it is the validator's own
+`resolve_lane`/`check_agent`.**
+
+⛔⛔ **THE MECHANISM OF MY ERROR, AND THAT SEAT NAMES IT EXACTLY:** *"a YAML key can sit as `ANY_EXEC_OR_AE:`
+with no quotes and no surrounding text, and a grep scoped to lane BLOCKS by some other marker would walk past
+it."* ⭐ **Worse in the specific: my second read used `t.find("ANY_EXEC_OR_AE")`, which returns the FIRST
+occurrence -- and the prose mention sits EARLIER in the file than the key.** I printed *"lane found: True"*,
+sliced a block from that prose hit, saw one line, and concluded **one occurrence**. **`str.find` answers WHERE
+IS THE FIRST; I read it as HOW MANY.**
+
+⭐⭐⭐ **AND THE AGGRAVATION IS THE DENOMINATOR I PRINTED BESIDE IT.** *"83 lane blocks scanned"* made a wrong
+answer look measured -- **Rule 24's own named trap (a denominator narrower than the sentence beside it),
+committed by the seat that has cited that rule four times today.** ⛔ **A STRUCTURED CONFIG IS READ WITH ITS
+PARSER, NEVER WITH A STRING SEARCH** -- and where a resolver exists, the resolver is the instrument, not the
+file. **COST: one `yaml.safe_load`, or one `resolve_lane` call. NON-APPLICATION: prose, which has no parser.**
+
+⚠ **WHAT THIS CHANGES IN MY OWN ROUTING, STATED HONESTLY.** The S248 routing message told
+`0.0.0_AB_MSTR~Z` and `3.0.0_SA_CVO~Z` that the lane was not resolvable from config. **That premise is FALSE
+and is withdrawn.** ⭐ **The ROUTING CONCLUSION survives on its other leg and only on that leg:** editing a
+scheduled-task target IS a live deploy (R-53), so it belongs with the deploy-surface owner under a NEVER-2
+entry **regardless of whether this seat is permitted to write the file** -- and this seat IS permitted.
+**So the act was right and one of its two reasons was wrong, which is worth separating rather than letting the
+correct outcome launder the bad reason.** That seat confirms item one *"needs nothing from this seat."*
+
+### ⚠⚠ (2) THE OPERATIONAL FINDING: AN ANDREW MESSAGE UNSERVED FOR ~16 HOURS
+
+That seat's integrator commits record `0.0.3_BG_BBGTerminal`'s threads: **the Teams watch is ARMED AND BLIND on
+expired `opalinvest.dev` MCP OAuth tokens, with ONE ANDREW TEAMS MESSAGE UNSERVED SINCE 2026-09-23T19:40Z.**
+
+⛔ **ARMED-AND-BLIND IS THE DEAF-SEAT SHAPE AT THE INTEGRATION LAYER, AND IT IS WORSE THAN DARK.** A watch that
+is DOWN announces itself; a watch that is ARMED reports healthy while serving nothing. ⭐ **This estate has the
+same lesson banked at the agent layer -- a live PID is not a consuming session, and an orphaned watcher reads
+REACHABLE precisely because the agent is deaf.** Here the token expiry produces the identical signature one
+layer out.
+
+⭐ **CORRECTLY HANDLED BY THAT SEAT AND NOT BY THIS ONE:** it is **an operator credential act**, surfaced to
+Andrew directly, with **nothing sent to him on Teams** -- which is right, since sending over the channel that is
+blind would prove nothing. **No act of this seat's is owed and none is taken.** ⚠ **But the standing
+consequence is named: any reasoning this session that rests on "Andrew has said nothing since" is unsound for
+messages after 2026-09-23T19:40Z on that channel.** Nothing in R-39..R-59 rests on such a claim -- **the three
+cards at Andrew are recorded as AWAITING HIS WORD, never as "he declined" or "he went quiet"** -- but the check
+was worth making rather than assuming.
+
 ## R-59 -- ⭐⭐ **THE PAIR I SIGNED WAS EXERCISED AND EVERY NAMED ARM HELD. ⛔ AND THE BACKFILL ADVANCED BY ZERO ANYWAY -- `MEASURED 214` IS TRUE AND MISLEADING**, because the builder appended beside the UNRESOLVED record instead of superseding it
 
 `2.0.0_SA_COO~X` status `d553a67d00`, read from the committed artifact rather than waited for as a message.
