@@ -698,5 +698,53 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "`--write` reaches only the FIRST alphabetically-sorted business type (consumer-cyclicals+consumer-services) and raises before completing any type, exactly as Z-S17 measured before this cell's fix -- because the collision Z-S17 diagnosed is with a PRE-FIX stored object, and this cell's fix (correctly, per its own bound) cannot retroactively rewrite that object without bumping METHOD_VERSION or deleting it, both forbidden. The fix is real (proven by the mutant control and by the 4 of 9 types that now write cleanly on genuinely new inputs) but AC2 as literally written is permanently unsatisfiable against this corpus's existing gold state without a resolution outside this cell's bound (e.g. a deliberate METHOD_VERSION bump, or an owner-authorized deletion of the 5 stale objects).",
     "notes": "AC1 and AC3 both PASS-by-output (verified twice each, deterministic). AC2 is recorded FAIL in this worker's proof-of-spec instance with this row's evidence; status flip to complete withheld. Not a defect in this cell's own diff -- readonly to lib/research/corpus/gold.py per the order's own READ-ONLY list, and the order explicitly forbids both remedies available to a worker. Disarm is the issuer's: either accept AC2 as unsatisfiable-by-design (document a corpus-migration exception) or authorize one of the two forbidden moves for exactly the 5 stale objects."
   }
+,
+  {
+    "id": "AMGT_CORPUS-Z-W3-S4",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-24T16:10:00Z",
+    "one_line": "CRPS-e-3's AC1 <expect> `(?m)^\\d+ passed in ` can NEVER match the check script's own literal invocation: e3_AC1.sh runs pytest with `-k \"body_without_total or grown_corpus\"` against a 28-test file, and pytest's summary line for a filtered run is always 'N passed, M deselected in Xs' (M=26 here), never the bare 'N passed in Xs' form the regex anchors on -- verified with re.search, twice, both False, while the SAME two tests genuinely pass (confirmed separately via the unfiltered full-file run, 28 of 28).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/e3_AC1.sh run twice: '2 passed, 26 deselected in 0.33s' then '2 passed, 26 deselected in 0.15s' -- both lines checked with python re.search(r'(?m)^\\d+ passed in ', text) -> False both times (the line reads '...passed,...' not '...passed in...' at that position).",
+        "Positive control: python -m pytest lib/research/corpus/tests/test_sector_template.py -q (no -k filter) -> '28 passed in 0.20s', which DOES match the same regex -- proving the regex and the test suite are both fine in isolation; it is the check script's `-k` flag combined with this file's other 26 tests that produces the non-matching summary form every time it is run.",
+        "proof-of-spec-check.py's own run on this cell's instance (governing-order bound): 'acceptance[AC1]: status=PASS but output_evidence does NOT match expect (?m)^\\d+ passed in  -- INVALID' when the honestly-recorded output was used, confirming the mismatch is not a transcription error on this worker's part."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1 (this order, S.5): invocation `bash .../e3_AC1.sh`, expect `(?m)^\\d+ passed in `.",
+    "world_is": "The check script (issuer's, read-only to this cell) and the <expect> regex (issuer's, in the order) are mutually unsatisfiable given this file's test count: any `-k` filter that does not select every test in the file produces a 'deselected' clause pytest's summary always includes, and the anchored regex has no branch for that form. The 2 targeted tests pass; the criterion as literally specified cannot read PASS from any real run of its own invocation.",
+    "notes": "Recorded FAIL in this worker's proof-of-spec instance, not overridden. Disarm is the issuer's: either the check script drops `-k` (run against a smaller purpose-built test module) or the <expect> regex gains a 'passed, N deselected in' branch."
+  }
+,
+  {
+    "id": "AMGT_CORPUS-Z-W3-S5",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-24T16:12:00Z",
+    "one_line": "proof-of-spec-check.py's ALIGNMENT limb reads the decomp doc's own CELL_ID_RE-matched id space as EMPTY (0 distinct cell ids) at org/missions/D5/AMGT/AMGT_CORPUS/decompositions/AMGT_CORPUS_DECOMP.md, so every one of this TO's 3 criteria (cell_refs=\"CRPS-e-3\") is refused with 'cell_ref does NOT exist in the decomp' -- despite the decomp's own s.6 preflight line asserting 'CRPS-e-<n> matches the [a-z]{1,4}-[a-z]?\\d+ branch': the doc's cell table uses the BARE form `e-3` (no CRPS- project prefix), which the regex's required `[A-Z][A-Z0-9]*-` leading group never matches on its own, and the literal string 'CRPS-e-3' (or e-1..e-5) appears NOWHERE in the file. This makes the checker return INVALID (rc 1) for this TO regardless of every acceptance row's own status.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/proof-of-spec-check.py <this instance> AC1,AC2,AC3 --governing-order <this TO>: 'alignment-frame: decomp id space = 0 distinct cell id(s) in .../AMGT_CORPUS_DECOMP.md'; 'alignment-forward-2 (cell_ref -> decomp): 0/1 distinct cell_ref(s) resolve to an id declared in the decomp'; 'VIOLATION: alignment: cell_ref '\"'\"'CRPS-e-3'\"'\"' (cited by ['AC1', 'AC2', 'AC3']) does NOT exist ...'; final line 'INVALID (rc=1)'.",
+        "Independent confirmation, same CELL_ID_RE compiled directly from .tools/proof-of-spec-check.py:544-553 and run via re.findall over the full decomp doc text (this worktree, HEAD f72d8acf68): [] -- zero matches anywhere in the file, corroborating the checker's own printed denominator (0 distinct cell id(s)) on a different instrument (direct regex exercise vs the checker's internal call).",
+        "The doc's own table (s.1, line 24): '| `e-3` | FWD-6 (Z-S17) | LOCAL | worker-light | ... |' -- bare `e-3`, no `CRPS-` prefix; the doc's s.6 preflight line (122): 'proof-of-spec-check.py CELL_ID_RE  CRPS-e-<n> matches the [a-z]{1,4}-[a-z]?\\d+ branch' names the FULL prefixed form as the one that matches, but that exact prefixed string is never written into the file at any concrete n (1 through 5)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomp s.6 preflight: 'proof-of-spec-check.py CELL_ID_RE   CRPS-e-<n> matches the [a-z]{1,4}-[a-z]?\\d+ branch' -- asserting the checker will recognise this round's cells.",
+    "world_is": "The regex branch genuinely matches strings of the form CRPS-e-3 (verified: re.fullmatch on the literal string 'CRPS-e-3' against the compiled CELL_ID_RE succeeds); what is absent is the literal text in the decomp document itself -- the table cites cells as bare `e-<n>`, never prefixed. The preflight line is true about the REGEX and silent about the DOCUMENT not actually containing the string it describes. Every one of this round's 5 TOs (e-1..e-5), all citing cell_refs=\"CRPS-e-<n>\" per the order template, is structurally unable to reach proof-of-spec-check rc 0 against this decomp vintage, independent of any worker's own correctness.",
+    "notes": "Out of this cell's paths (the decomposition doc is not in CRPS-e-3's <paths>, and this worker's write grant does not extend to it). Filed so the issuer can either amend the decomp table to the prefixed form or accept bare `e-<n>` as an additional CELL_ID_RE branch. Not this worker's defect; AC1/AC2's own FAIL status stand on separate grounds (S3, S4) even were this alignment gap resolved."
+  }
 ]
 ```
