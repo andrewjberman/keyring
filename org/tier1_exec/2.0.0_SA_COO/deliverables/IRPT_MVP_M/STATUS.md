@@ -18,10 +18,10 @@ structurally correct Cottonwood pipeline bounded by Black Diamond's data window.
 | Workspace candidate pin | this commit (INF meshed builder; its two pre-LGIC silver prefixes are read through the producers' own key builders because the naming gate refuses them as new hand-kept carriers); 21f696e19a (49F meshed builder + COT reader matrix); 5f3651db41 (COT receipt) |
 | Portal candidate pin | own UI `codex/irpt-m-ui` e5604c03cb at `../ajb_irpt_m_portal`; P integration c70855f30d at `../portal-local-live-20260923` |
 | Deployed artifact pin | irpt-holdings Lambda: repaired loader 3e913e9ce9 APPLIED by P 23:00:52Z (CodeSha l/GQrFcE...), CTO-verified d78fdb2f1c |
-| Accepted COT publication | revision 93f930c265ed242d7e38cb48a7ed4baf267025e8c4dfd06ff39739c6a8f55217, index version grwnbLkeu_OeYL6AcOR33ec9mO51dTBJ, CTO-verified |
+| Accepted COT publication | revision ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a (membership in the tree), index version XbWnSWxMFRs9jNOUtj6ZOELvpemDQP73 at 00:37:11Z under CTO GO 99856; prior 93f930c265 / grwnbLkeu retained. DEVIATION disclosed to the CTO: 20 immutable creates (17 parts) against the GO's 18; acceptance or revert is the CTO's call |
 | 49F candidate (UNPUBLISHED) | revision a860115ecaf5336ac5db4491d76cf5b60780f8a9c257c579defaf62351ba6a1f, business date 2026-09-22 / overlay 2026-09-23 (CTO findings 3c8392cf2f closed) |
 | INF candidate (UNPUBLISHED) | revision 21279569b08d40ce53e163143b2f829f78c7466f6b25c6a024c57e601b4ef441, business date 2026-09-22 (Orion key 2026-09-23 holds the prior close) / overlay 2026-09-23 |
-| COT membership candidate (UNPUBLISHED, GO requested) | revision ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a over the accepted 841-account census: totals and every position value identical to 93f930c265, 462 measured model leaves on 46 Rebalancer models; CAS precondition IfMatch "9731cecad3b5ff3e7323ff8567260f95" / index version grwnbLkeu |
+| COT membership candidate | PUBLISHED as above (receipt COT_MEMBERSHIP_PUBLICATION_RECEIPT_20260923.json); reader matrix on the live publication: 0698 / d486 / combined READ_OK with 1 / 1 / 2 model leaves, 2026-09-23 refused, excluded account refused |
 | Push state | LOCAL; origin/CLOUD b475b96309 (ls-remote read 23:27Z by CTO); shared pushes are 0.0.0_AB_MSTR's |
 
 ## Live thread

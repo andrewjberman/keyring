@@ -1,0 +1,366 @@
+{
+  "status": "PUBLISHED_VERIFIED",
+  "go": "99856 / 67c2844189",
+  "executed_by": "2.0.0_SA_COO~M",
+  "started_utc": "2026-09-24T00:37:03.074768+00:00",
+  "finished_utc": "2026-09-24T00:37:11.424364+00:00",
+  "firm_id": "cottonwood",
+  "business_date": "2026-09-22",
+  "revision": "ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a",
+  "index_version": "XbWnSWxMFRs9jNOUtj6ZOELvpemDQP73",
+  "index_sha256": "983443bbc5b250251f7205be6a30047c43a63611f5c1adb07f29446e42bc55d6",
+  "prior_index": {
+    "bucket": "opal-data-cottonwood",
+    "key": "irpt/cottonwood/platinum/holdings/current/manifest.json",
+    "version_id": "grwnbLkeu_OeYL6AcOR33ec9mO51dTBJ",
+    "sha256": "5d56285bb8f56127157cc212d941dbb212ad01e3df267a4e9731a9f4641a8927",
+    "byte_length": 522
+  },
+  "prior_index_version_retained": true,
+  "prior_revision_manifest_retained": {
+    "revision": "93f930c265ed242d7e38cb48a7ed4baf267025e8c4dfd06ff39739c6a8f55217",
+    "version_id": "jB2onGqMI65srq0FeoZ998gcNXF_4Npm",
+    "etag": "\"64df69e5be962656913c5d5e0e4a61f5\""
+  },
+  "immutable_writes": [
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 4024155,
+      "key": "irpt/cottonwood/gold/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.parquet",
+      "sha256": "77c0651399a0f9e95d103e8df53e0117163fb9b2c14ad257872015708727ce59",
+      "version_id": "NDHeCGTcrPPjzpdOh1Ego8TijTgfMopT"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 27906,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.header.json",
+      "sha256": "b90c0b8970d3a7892b314e714beef4ac2857b5999b970d47f10ed770621f85fd",
+      "version_id": "jKTwDv7RwQywK_h2b.fTaCujY9EL97Ru"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 966113,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00000.json",
+      "sha256": "00ff8834b5ea4e17ba073c72ffccf3a0183f51d80c3ae73662a3cc23a1550607",
+      "version_id": "MM6SRLettishexRijibIg11PLaqH0KGL"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 1031309,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00001.json",
+      "sha256": "e0b45be0ac57e9b87ead4c49cf57546053de3d9d9a9ba9c7a619e9f7466d52d3",
+      "version_id": "fQJt3lB2ks4j8huRchgBbO1k3jtUQMT3"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 1046751,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00002.json",
+      "sha256": "722a17c090626858c775b3ee4c94ab1d6ab4077190767b5d3502697eee083704",
+      "version_id": "qUWX4MmEYcgoN5_UYIieiKdVPYGaH_el"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 1039965,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00003.json",
+      "sha256": "019532dc85a6e88401410100a375c1cd7f4b29fbf7d4811fb0f9910ac0788d3a",
+      "version_id": "PmiXB5aiK941TtZSvhQFWDqCrF4uRYDD"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 1033371,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00004.json",
+      "sha256": "6dac168952ce9b7e911fda876de70b3637005560eadbd7b25e439061996390ed",
+      "version_id": "CtcQeQ6x8nBIUEms5.wacD8fcYJUlcTz"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 1035570,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00005.json",
+      "sha256": "d9066f165ea9e4529cfe798212819fbf84b0cfc09a90eaec652d3af78363999f",
+      "version_id": "zkiO5kT7SF_dsl5eguJskkT1k_m2DCDd"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 1037969,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00006.json",
+      "sha256": "7a70c965c0d3b7086bea23b61b11f33fab8585b8a90d924f23473b5e480914d9",
+      "version_id": "t_rnefbg1lKs__nq3rQACLub6HtjwCY5"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 1033756,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00007.json",
+      "sha256": "e4bc6245e9e8b4b082d6a6d2864e80f7e81a44f64753531b3328603beb2f342b",
+      "version_id": "2A9LgFxGqG4sx0y4SBq2pLrn6NifF1fG"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 1045904,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00008.json",
+      "sha256": "14c24181bae683b37deb055099cdc2dd985016e237e4886c6947ccef2a2aabfe",
+      "version_id": "4Duyy1zCELqgFwPbnq4G8C4oSlFwTndC"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 1033462,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00009.json",
+      "sha256": "a3cb9ab9cf06d52de6ad7dfda0f93f42ead946b995a798b87cdc63a2c180df6a",
+      "version_id": "KgdzH9Z5u.3wtxbHGkEqlQm4Io1fnpFu"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 998897,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00010.json",
+      "sha256": "6ad9eda98430b0fa48bee45765a9344af670c1e5dabc38e747a3decd684d47c3",
+      "version_id": "cU6VWg6wSD3PvGfBhqZeWIW49d74f1YG"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 1010400,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00011.json",
+      "sha256": "15e9bd2effe802bbf437cc6a7c5b7e1cca3775c763c5c0ac9c62bb240fa7a306",
+      "version_id": "Cyd_nuILMXGyyOJAn7s9gyqo6ZRshYZn"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 1045344,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00012.json",
+      "sha256": "8ef96687d464d1ac89deaf666f00acecba2c6af32f172f8d0e61838d6e5f30c6",
+      "version_id": "DkrCSb16vNMUd4NNdNdFAcdAeu_l2w7j"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 1039623,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00013.json",
+      "sha256": "5f3ad8cccc032d6a396588cda2ec0240b800db0bf6f550f950a8c6f16ea30c6a",
+      "version_id": "7d3sUEsL2vJVFUW5cbajiub.udZg0b5g"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 1026623,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00014.json",
+      "sha256": "f204156106495de954a317ca2241a22bc73d78f6f80bf874713e7e61504e2523",
+      "version_id": "cYffMcE5fff3af3mNaWZ5VeZxIepOV_2"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 1047469,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00015.json",
+      "sha256": "d63bf2d4e3cf5b310005295daa3b95e8d8de6b24ea161461b4fdbfdadc4db3ac",
+      "version_id": "4FD8stC6TLliDi2jIh9B38eCc.XFvX6c"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 60280,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.part00016.json",
+      "sha256": "675d0f768db9bc028a70e8431cffae30d3b09d6e2751b693cf2e2c17eeafeb25",
+      "version_id": "j_YDWfpTRXx7UAdAlgf8bYsUgE8OvNXs"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.manifest.json",
+      "version_id": "UCnp0Bq_BRGjdz2RMgfrUCXmNOtAFq4y",
+      "sha256": "d0ee14de5065029f64cad2b0770f463d58c9afe35b20ebbc73ae42051c23de10",
+      "byte_length": 35122
+    }
+  ],
+  "immutable_write_count": 20,
+  "index_write": {
+    "bucket": "opal-data-cottonwood",
+    "byte_length": 522,
+    "key": "irpt/cottonwood/platinum/holdings/current/manifest.json",
+    "sha256": "983443bbc5b250251f7205be6a30047c43a63611f5c1adb07f29446e42bc55d6",
+    "version_id": "XbWnSWxMFRs9jNOUtj6ZOELvpemDQP73"
+  },
+  "total_writes": 21,
+  "acceptance_receipt": {
+    "business_date": "2026-09-22",
+    "date_row": {
+      "manifest": {
+        "bucket": "opal-data-cottonwood",
+        "byte_length": 35122,
+        "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a.manifest.json",
+        "sha256": "d0ee14de5065029f64cad2b0770f463d58c9afe35b20ebbc73ae42051c23de10",
+        "version_id": "UCnp0Bq_BRGjdz2RMgfrUCXmNOtAFq4y"
+      },
+      "revision": "ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a"
+    },
+    "firm_id": "cottonwood",
+    "index": {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 522,
+      "key": "irpt/cottonwood/platinum/holdings/current/manifest.json",
+      "sha256": "983443bbc5b250251f7205be6a30047c43a63611f5c1adb07f29446e42bc55d6",
+      "version_id": "XbWnSWxMFRs9jNOUtj6ZOELvpemDQP73"
+    },
+    "schema_version": "irpt-holdings-acceptance-v1"
+  },
+  "manifest_schema_version": "irpt-holdings-manifest-v2",
+  "partition_count": 17,
+  "source_objects": [
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_allocations/date=2026-09-22/data.parquet",
+      "version_id": "WeqLRnnXcg_R5QpfSy_2fZMVwGn1sOL.",
+      "byte_length": 128660,
+      "sha256": "0fadd50e65c26c202015707e83f7acbf0d57fbb91e76a81932fdd26209486a6f"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet",
+      "version_id": "tGurdOTYhnuidIUgThZYlJxOcaqNTuKl",
+      "byte_length": 457679,
+      "sha256": "737c2ccdacd85b5c44a560830d7a92750945714ebd8c50995b66bf90d0abe174"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_model_assignment/date=2026-09-23/data.parquet",
+      "version_id": "ppIXtvdE7sscxrSR4VZ8ADJkBKtdxZIp",
+      "byte_length": 50441,
+      "sha256": "a560410f86e384c7c3157c8ec32b20ae9fb1a111e1acd2a1f73f26037049ecfe"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_model_blend/date=2026-09-23/data.parquet",
+      "version_id": "KVIN1oY6LQQn5BmAAP8sOMko6o2Hg.ut",
+      "byte_length": 10484,
+      "sha256": "945a1e10b6a0713bd994c26d41929416b6df5377dfcc03af7709be2fcb7001d3"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "blackdiamond/cottonwood/silver/fact_model_roster/date=2026-09-23/data.parquet",
+      "version_id": "uFnWreJn3KZ7Dq3jbB4q3eWuS3JE0VBR",
+      "byte_length": 14130,
+      "sha256": "e74b6b556cfb3cd19b4ca932ba0b20a03d07b0e33678d700593b43cee74b7628"
+    },
+    {
+      "bucket": "opal-data-cot",
+      "key": "investor-reporting/directory/2026-09-17/directory.json",
+      "version_id": "seN3sLdnz.jBxbQorQBtzEwqhrTLypC9",
+      "byte_length": 418144,
+      "sha256": "90b742a3764fc433e7187244a280baa5da0e2d18d18a570ad228ddfa2a809076"
+    },
+    {
+      "bucket": "opal-data-cot",
+      "key": "investor-reporting/directory/latest.json",
+      "version_id": "7BlMhJbQUufinpGu.73FkvnFZdA9PPD3",
+      "byte_length": 270,
+      "sha256": "f9d4410aefb1ac0a33b8345c05436971844be4ce0b2832fbe3f454decb307e20"
+    }
+  ],
+  "reader_matrix": [
+    {
+      "accounts": [
+        "acc_0698a3de842dbe7b3d48c787"
+      ],
+      "as_of": null,
+      "status": "READ_OK",
+      "revision": "ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a",
+      "nodes": 33,
+      "model_leaves": 1,
+      "selected_market_value": 26303302.17
+    },
+    {
+      "accounts": [
+        "acc_0698a3de842dbe7b3d48c787"
+      ],
+      "as_of": "2026-09-22",
+      "status": "READ_OK",
+      "revision": "ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a",
+      "nodes": 33,
+      "model_leaves": 1,
+      "selected_market_value": 26303302.17
+    },
+    {
+      "accounts": [
+        "acc_0698a3de842dbe7b3d48c787"
+      ],
+      "as_of": "2026-09-23",
+      "status": "EXPECTED_REFUSAL",
+      "reason": "no accepted holdings revision for date"
+    },
+    {
+      "accounts": [
+        "acc_d486fc9455d6b2aa18e13af1"
+      ],
+      "as_of": null,
+      "status": "READ_OK",
+      "revision": "ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a",
+      "nodes": 60,
+      "model_leaves": 1,
+      "selected_market_value": 19705844.84
+    },
+    {
+      "accounts": [
+        "acc_d486fc9455d6b2aa18e13af1"
+      ],
+      "as_of": "2026-09-22",
+      "status": "READ_OK",
+      "revision": "ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a",
+      "nodes": 60,
+      "model_leaves": 1,
+      "selected_market_value": 19705844.84
+    },
+    {
+      "accounts": [
+        "acc_d486fc9455d6b2aa18e13af1"
+      ],
+      "as_of": "2026-09-23",
+      "status": "EXPECTED_REFUSAL",
+      "reason": "no accepted holdings revision for date"
+    },
+    {
+      "accounts": [
+        "acc_0698a3de842dbe7b3d48c787",
+        "acc_d486fc9455d6b2aa18e13af1"
+      ],
+      "as_of": null,
+      "status": "READ_OK",
+      "revision": "ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a",
+      "nodes": 93,
+      "model_leaves": 2,
+      "selected_market_value": 46009147.02
+    },
+    {
+      "accounts": [
+        "acc_0698a3de842dbe7b3d48c787",
+        "acc_d486fc9455d6b2aa18e13af1"
+      ],
+      "as_of": "2026-09-22",
+      "status": "READ_OK",
+      "revision": "ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a",
+      "nodes": 93,
+      "model_leaves": 2,
+      "selected_market_value": 46009147.02
+    },
+    {
+      "accounts": [
+        "acc_0698a3de842dbe7b3d48c787",
+        "acc_d486fc9455d6b2aa18e13af1"
+      ],
+      "as_of": "2026-09-23",
+      "status": "EXPECTED_REFUSAL",
+      "reason": "no accepted holdings revision for date"
+    },
+    {
+      "accounts": [
+        "acc_17ae31b196532748058ed784"
+      ],
+      "status": "EXPECTED_REFUSAL",
+      "reason": "selected accounts absent from accepted publication"
+    }
+  ],
+  "membership": {
+    "assigned_accounts": 462,
+    "assigned_value": 277888939.8,
+    "models": 46,
+    "join": "fact_model_assignment.strategy_name -> fact_model_roster.model_name, exact, unique"
+  },
+  "preservation": {
+    "account_nodes_checked": 841,
+    "account_changes": [],
+    "security_values_identical": true,
+    "security_count": 13793,
+    "prior_node_count": 15475
+  }
+}
