@@ -32,6 +32,21 @@ It answers the brief's section 7/8 open item, the capture of what YCharts return
   (`irpt-ycharts-runner` via the SSM document `irpt-ycharts-run`) refreshes it, per Andrew's word above.
 - **Calls made:** the call inventory is appended below once it is made, with each call's HTTP status.
 
+## Second per-use authorization (~19:0xZ): the 2-call failed-pull capture
+
+Andrew, VERBATIM, at this terminal: *"With that said, proceed through the 2-call testing"*. The two calls answer the
+open item in `IRPT_YCHARTS_SESSION_SELF_HEAL_DELTA_BRIEF_20260923.md` section 4 W1: what YCharts sends on a failed pull.
+
+**Bound:**
+- EXACTLY two `GET /securities/securities_info?securities=AAPL` calls:
+  - (a) with NO cookie at all;
+  - (b) with a deliberately INVALID session cookie (`ycsessionid` and `csrftoken` set to junk values; no real credential
+    read or sent).
+- Redirects are NOT followed; the first response is recorded (status, `Location`, `content-type`,
+  `x-amzn-waf-action`, body head).
+- Nothing else is sent.
+- The inventory is appended below.
+
 ## Call inventory (complete; UTC 2026-09-23)
 
 **Session refresh attempt, with NO vendor contact:**
@@ -79,6 +94,23 @@ It answers the brief's section 7/8 open item, the capture of what YCharts return
    inside its 5-symbol bound.
 5. **The session:** the 84-day-old `ycharts/credentials` session is live. The IRPT session path cannot run today: its
    secret has no current version and the runner application is not deployed.
-6. **Exact-lookup absence is a different fact from a namespaced or gated identity.** `BREIT` is absent from the exact
+6. **The 2-call failed-pull capture (second authorization, ~19:0xZ). Exactly two calls, both HTTP 200:**
+
+   | # | Call | HTTP | Result |
+   |---|---|---|---|
+   | 5 | `GET /securities/securities_info?securities=AAPL` with NO cookie | 200 `application/json`, 338 B, 0.11 s | the full AAPL row, identical to the authenticated call |
+   | 6 | the same with a junk `ycsessionid`/`csrftoken` | 200 `application/json`, 338 B, 0.07 s | the same AAPL row; the response set a fresh `csrftoken` cookie (name recorded, not the value) |
+
+   Neither response had a redirect or a WAF action header. Fixtures: `05_no_cookie.json`, `06_invalid_session.json`.
+
+   **Finding: `securities_info` does not require a session.** An exact-symbol lookup works without authentication,
+   so:
+   - (a) the `/securities/check` endpoint needs NO YCharts session: no seat, no lease, no eviction risk, no refresh;
+   - (b) **this endpoint cannot detect staleness**, because it succeeds regardless.
+
+   The failed-pull shape for AUTHENTICATED endpoints (the `/indices/table_data` probe, report generation) is still
+   uncaptured. The May bodies in the self-heal brief (403 "signed out ...") remain the best evidence there. The two calls
+   stayed inside their bound; no further call was made.
+7. **Exact-lookup absence is a different fact from a namespaced or gated identity.** `BREIT` is absent from the exact
    lookup (item 1), while `M:BREIT.*` exists behind a feature gate (item 3). A resolver treats these as two different
    states, not one.

@@ -1,0 +1,61 @@
+{
+  "record": "CLAUDE_TAKEOVER_LIVE_READBACK_20260923",
+  "seat": "1.0.0_SA_CTO",
+  "runtime": "claude (successor to the Codex CTO session closed 22:42Z)",
+  "measured_at_utc": "2026-09-23T23:05Z-23:20Z",
+  "instruments": "aws lambda get-function (presigned Code.Location download hashed locally), aws lambda get-function-configuration, aws s3api get-object at exact VersionId, aws s3api list-objects-v2, aws ec2 describe-instances, aws cloudtrail lookup-events, python .tools/naming-gate.py at HEAD and at ddfc91b11f~1, git ls-remote",
+  "holdings_schema_apply": {
+    "go": "d8e9d68378",
+    "p_report": "msg 99786 (20260923T230726Z)",
+    "lambda": "irpt-holdings",
+    "code_sha256_b64": "l/GQrFcEvWMVPyRmZAGooQLtNdwaHAe+Cvy/23FUDDU=",
+    "last_modified": "2026-09-23T23:00:52.000+0000",
+    "layers": ["arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5"],
+    "runtime": "python3.12",
+    "deployed_zip_sha256_hex_cto_download": "97f190ac5704bd63153f24666401a8a102ed35dc1a1c07be0afcbfdb71540c35",
+    "approved_artifact_sha256": "97f190ac5704bd63153f24666401a8a102ed35dc1a1c07be0afcbfdb71540c35",
+    "deployed_zip_bytes": 260840,
+    "deployed_zip_members": 33,
+    "snapshot_py_parents_4_literal_present": false,
+    "verdict": "MATCH: deployed bytes == approved artifact; CodeSha256 recomputed from the download equals the configuration value",
+    "ledger": "irpt-holdings-schema-20260923 closed on branch irpt-p-publish-20260923 @5c8d6f8e34 (P's worktree; LOCAL)",
+    "not_claimed": "authenticated Holdings screen PASS; the reader's live response to a signed-in selection is unexercised"
+  },
+  "cot_expanded_publication": {
+    "go": "d940022b06",
+    "m_report": "msg 99780 (20260923T230423Z)",
+    "bucket": "opal-data-cottonwood",
+    "index_key": "irpt/cottonwood/platinum/holdings/current/manifest.json",
+    "index_versions": [
+      {"version_id": "grwnbLkeu_OeYL6AcOR33ec9mO51dTBJ", "etag": "9731cecad3b5ff3e7323ff8567260f95", "last_modified": "2026-09-23T23:00:30Z", "is_latest": true, "sha256": "5d56285bb8f56127157cc212d941dbb212ad01e3df267a4e9731a9f4641a8927", "bytes": 522},
+      {"version_id": "JhtDD.AAg1AO0kdvVkxVZN.zWdjwDkkA", "etag": "606126dddec555c41e711b18732d3c7f", "last_modified": "2026-09-23T21:39:14Z", "is_latest": false}
+    ],
+    "index_content": {"firm_id": "cottonwood", "latest_date": "2026-09-22", "schema_version": "irpt-holdings-index-v1", "dates.2026-09-22.revision": "93f930c265ed242d7e38cb48a7ed4baf267025e8c4dfd06ff39739c6a8f55217", "dates.2026-09-22.manifest.version_id": "jB2onGqMI65srq0FeoZ998gcNXF_4Npm", "dates.2026-09-22.manifest.sha256": "d0931232d3d716b942b3622ce2462ba3b074fcc9faccaf966e584f2b78c3e729"},
+    "objects_under_revision_93f930c265": 18,
+    "objects_breakdown": "1 gold parquet (3788026 bytes) + header.json + manifest.json + part00000..part00014 (15 parts), all LastModified 23:00:26-23:00:30Z",
+    "header_json": {"version_id": "iNTKvoIaFDPrW0VtH16vDrkTWuEC1aRQ", "unique_account_count": 841, "unique_position_count": 13793, "total_market_value_usd": 548412662.59, "reconcile": {"reconciled": true, "difference": 0.0, "tolerance": 0.01}, "business_date": "2026-09-22", "custody_as_of": "2026-09-22", "overlay_as_of": "2026-09-23", "coverage.nodes_resolved": 0, "coverage.remainder.reason": "Known actual custody in Client; position model/SMA membership not established", "anna_account_id_fragments_present": {"0698": true, "d486": true}},
+    "verdict": "MATCH: index CAS landed at the expected prior ETag, prior version retained, revision objects complete, header totals equal M's receipt and the CTO GO review",
+    "not_claimed": "deployed reader matrix against the new Lambda; authenticated screen; the 140 source-refused accounts remain open"
+  },
+  "ycharts_runner_host": {
+    "instance_id": "i-0167fd745ad906a66",
+    "state": "stopped",
+    "state_transition_reason": "User initiated (2026-09-23 21:21:18 GMT)",
+    "launch_time": "2026-09-23T18:21:11Z",
+    "cloudtrail": [
+      {"event_time_epoch": 1790187671, "utc": "2026-09-23T18:21:11Z", "event": "StartInstances", "username": "Andrew_Berman"},
+      {"event_time_epoch": 1790198478, "utc": "2026-09-23T21:21:18Z", "event": "StopInstances", "username": "ec2-auto-shutdown-enforcer"}
+    ],
+    "enforcer": {"function": "ec2-auto-shutdown-enforcer", "env": {"IDLE_CEILING_HOURS": "3.0", "IDLE_CPU_THRESHOLD": "1.0", "MAX_RUNTIME_HOURS": "0"}, "exemption": "instance tag AutoShutdown=disabled only (lambda_function.py:18-21, :113-115)", "docstring_note": "lines 18-21 record an earlier Andrew directive that there should be ZERO such tags"},
+    "instance_tags": {"Project": "OpalPortal", "Cell": "IB-s-8", "Name": "irpt-ycharts-runner", "ManagedBy": "Terraform", "System": "InvestorReporting"},
+    "finding": "The host carries no AutoShutdown=disabled tag, so the enforcer reaps it 3h after any start while nothing runs on it. CRO 99773's 'stopped, cause unexamined' is now measured: the enforcer, not a seat."
+  },
+  "naming_gate_ld_0609": {
+    "commit": "ddfc91b11f",
+    "arms_new_gate": {"pos_lookup": "PASS 0 graded (permitted)", "pos_index": "PASS 0 graded (permitted)", "neg_handmap": "REFUSE 3 graded", "neg_nonregistry": "REFUSE 1 graded", "neg_var": "REFUSE 1 graded", "p_retained_tf_as_new_file": "PASS 4 graded (CONFORMANT: native layer, mapping prefix, two policies)"},
+    "arms_old_gate_control_ddfc91b11f_1": {"pos_lookup": "REFUSE rc=1", "pos_index": "REFUSE rc=1", "neg_handmap": "REFUSE rc=1", "neg_nonregistry": "REFUSE rc=1", "neg_var": "REFUSE rc=1", "p_retained_tf_as_new_file": "REFUSE rc=1"},
+    "verdict": "ACCEPTED: the change permits exactly the registry-fed lookup/index shape and nothing else; the pre-change gate fails both positives (control)."
+  },
+  "rulings_md_encoding": {"defect": "RULINGS.md was not valid UTF-8: six cp1252 bytes 0x97 (em dash) at offsets 64874, 67347, 70239, 75429, 78851, 82395, each in a ruling heading", "repair": "each byte replaced with ASCII '--' in the same commit (a first read said one byte because decode stops at the first error); the remaining 60 non-ASCII bytes decode as valid UTF-8"},
+  "push_state": "LOCAL; origin/CLOUD b475b96309 (ls-remote read 23:04Z); shared pushes are 0.0.0_AB_MSTR's"
+}

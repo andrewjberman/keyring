@@ -1,0 +1,15 @@
+{
+  "baseline": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/var/task/snapshot.py\", line 92, in load_contract\n    for cand in _contract_candidates():\n                ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/var/task/snapshot.py\", line 86, in _contract_candidates\n    _HERE.parents[4] / \"docs\" / \"contracts\" / \"investor-reporting\" / \"v1\"\n    ~~~~~~~~~~~~~^^^\n  File \"/var/lang/lib/python3.12/pathlib.py\", line 282, in __getitem__\n    raise IndexError(idx)\nIndexError: 4\n"
+  },
+  "candidate": {
+    "exit": 0,
+    "stdout": "{\"schema_loaded\": true, \"path\": \"/var/task/contracts/HoldingsSnapshot.schema.json\", \"here\": \"/var/task\"}\n",
+    "stderr": ""
+  },
+  "source": "3e913e9ce9482dbe25ec51bc0721e303a12af926",
+  "snapshot_sha256": "2f6e1ba1306c8ed5b282dbcbd18b7f375c1d20b1f0288093c8200fc450bf5c35",
+  "image": "public.ecr.aws/lambda/python@sha256:5f188ce6104ab76d1a9a44b9b53fd0d72ea5ccec94eb4cbccf5c9b0ef485f9f8"
+}

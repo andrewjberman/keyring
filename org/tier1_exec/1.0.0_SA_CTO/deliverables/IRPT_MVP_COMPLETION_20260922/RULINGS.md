@@ -259,7 +259,7 @@ CTO ran the actual owned-path resolver: all thirteen permit P and incumbent Y/AE
 
 MSTR99710 relays Andrew's explicit authorization to bring CloudOps online for the bounded recorder repair and instructs CTO to message it once live. MSTR99711 confirms exact0.7.0_AE_CloudOps~O live at18:05:16Z. The canonical send guard refused CTO's ACT message because LD-0529 requires a COO-issued task order in that Tier-2 seat's own home; no message was delivered. Route the repair through COO~P as issuer: cut the bounded supporting task order for exact CloudOps~O and dispatch with its canonical order reference. This does not restart held B/F rounds or change the product's closer status. Work scope is solely the canonical recorder's explicit scope propagation and offline sibling-isolation regression proof already described in RECORDER-CONTAINMENT and CTO message to MSTR17:50:50Z. Coordinate with P before touching its evidence, preserve all records, no AWS mutation, no rerun until CTO reviews the pinned repair, no remote push. CloudOps prepares the fix; CTO remains direct reviewer. No user reauthorization is required for this already requested repair.
 
-## IRPT-ANALYSIS-UPLOAD-OWNER-20260923 — CRO99712 intake and bounded ownership
+## IRPT-ANALYSIS-UPLOAD-OWNER-20260923 -- CRO99712 intake and bounded ownership
 
 Authority: Andrew's standing delegation to CTO to adjudicate worker forks; CRO99712 reports Andrew's direction for brief fa42eb206f, org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_ANALYSIS_UPLOAD_AND_TICKER_RESOLUTION_BRIEF_20260923.md. This entry records the exact message body; the linked brief and its source measurements have not yet been directly reviewed by CTO. They are reported findings, not CTO-verified results.
 
@@ -271,7 +271,7 @@ Y proposal must preserve deterministic cache -> Opal reference -> one securities
 
 Boundary: live YCharts rejection-shape capture of3-5 symbols remains an explicit per-use Andrew call as reported by CRO; this receipt grants no such capture. No cloud mutation, secret access, live vendor call or CLOUD push is initiated by this intake. CTO remains the direct reviewer under Andrew's latest instruction; return a concrete pinned proposal and exact paths before shared-surface implementation/deployment adjudication.
 
-## IRPT-DUAL-OWNER-SOURCE-20260923 — direct CTO review and integration delta
+## IRPT-DUAL-OWNER-SOURCE-20260923 -- direct CTO review and integration delta
 
 BOUNDED SOURCE PASS: Y1385a126e7d9bbc9b4fe211cc708a52a93ce64e6 paired with exact P37526d36ae schema/storage, P9a3 access/P4ec Entry, M485b69c061 maintained sources, prior dd6 storage controls and8845 reader controls. CTO extracted fresh committed bytes into an isolated temporary archive and ran the unchanged suites separately with every declared environment installed: generation232+32subtests (29.11s), ops179 (20.15s), intake94+18subtests (1.10s). Total505 tests and50 subtests, no skips. Evidence DUAL_OWNER_CTO_REVIEW_20260923.json records full pins, extraction environment, output and hashes.
 
@@ -283,7 +283,7 @@ Next: P returns the committed combined pin, real installer/port mapping and exac
 
 Recorder: P reports canonical supporting order45a93c3ae90b86ac224596a9e76d015a005fc260 delivered to exact CloudOps~O by receipt181819. This is dispatch evidence, not completed repair; fixed recorder/regressions/recovery proposal remain due for CTO review.
 
-## IRPT-UPLOAD-RESOLUTION-IMPLEMENTATION-20260923 — direct proposal adjudication
+## IRPT-UPLOAD-RESOLUTION-IMPLEMENTATION-20260923 -- direct proposal adjudication
 
 Reviewed pinned Y proposal c083bfdd5d (UPLOAD_RESOLUTION_PROPOSAL_20260923.md and reproduction JSON) and CRO brief fa42eb206f, including Andrew's verbatim section0 instructions. Authorize bounded LOCAL implementation under the existing IRPT completion mandate and CTO fork authority. This supersedes4cdac345db's proposal-only boundary for the work below. Existing paired runtime integration remains P's first priority. No new independent reviewer gate.
 
@@ -299,7 +299,7 @@ Shared lease decision: actual current ownership maps ycharts/session/broker.py t
 
 Acceptance remains the proposal's exact paired offline matrix plus actual package/runtime evidence and subsequently authorized live trace; proposal reproduction findings are Y-reported and source-attributed, not a new CTO-run template test. Current served route availability must be measured on P's current runtime instead of assuming the older NO-HANDLER source observation still describes it. CLOUD push remains held. Missing live evidence is not a reason to park authorized local implementation.
 
-## IRPT-LOOKUP-CAPTURE-20260923 — CRO99713 evidence and runtime direction
+## IRPT-LOOKUP-CAPTURE-20260923 -- CRO99713 evidence and runtime direction
 
 Read CRO99713, pinned authorization/updated brief d7d044ba7a, and committed securities_info/ALPPL fixtures. Andrew's recorded per-use word authorized CRO's small lookup test; it was performed. The earlier blanket statement that lookup capture still awaits authorization is superseded for this completed capture only. Do not repeat it or expand it into upload/report/vendor mutations. Holdings-upload rejection capture remains a separate per-use call; no new vendor action here.
 
@@ -313,7 +313,7 @@ CRO-reported runtime state: no AWSCURRENT on ycharts/session/current; SSM comman
 
 Current paired Opal runtime integration and authorized offline upload-resolution implementation continue; live generation readiness is not established by the lookup capture.
 
-## IRPT-SESSION-DELTA-20260923 — CRO99714 and Andrew availability rulings
+## IRPT-SESSION-DELTA-20260923 -- CRO99714 and Andrew availability rulings
 
 Read exact CRO99714 and pinned delta brief d401c1a768. CRO confirms prior evidence corrections applied. Andrew's reported explicit product direction supersedes any flow distinction that would leave a missing or feature-gated security stranded: a symbol absent from a completed valid lookup triggers Kimi check; a security unusable behind entitlement/paywall enters the same check/swap resolution path. Retain internal provenance/reason (exact miss, known gated identity, namespace/class) for cache policy, explanation and disclosure; do not pretend the security does not exist. Service outage, malformed response or route error remains UNAVAILABLE, not a symbol miss.
 
@@ -323,10 +323,771 @@ Recovery contract: classify EACH failed pull by status and verified response sha
 
 D2 durable wait/continuation and shared operation lease must be reviewed together: one refresh in flight per shared account, monotonically fenced completion, idempotent resumes, bounded retry/timeout and concurrency tests. Host stop logic must distinguish a host started by this operation from an already-running/operator-owned host and must not stop work belonging to another owner. This is offline implementation authority only; it does not activate EC2/SSM/host-stop/login permissions. D1 sign-in and the proposed two failed-pull captures remain Andrew's separate pending per-use calls; CRO retains current host disposition. Offline D2/W1 work may proceed while D1's concrete plan is prepared; deployment/live exercise follows actual prerequisites, not a new approval waterfall for local work.
 
-## IRPT-PUSH-HOLD-RELEASE-20260923 — Andrew-direct via MSTR99715
+## IRPT-PUSH-HOLD-RELEASE-20260923 -- Andrew-direct via MSTR99715
 
 Read exact MSTR99715 (20260923T184102Z). Andrew directs laptop-led DEV and CLOUD pushes, with SITEZ pulling/merging laptop CLOUD; no reverse SITEZ integration on this device. Record pointer supplied by MSTR: org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260923_1845Z_PUSH_DEV_AND_CLOUD_LAPTOP_LEADS_SITEZ_MERGES.md @5c70b8a322. The earlier push hold is RELEASED. Prior rulings saying CLOUD push remains held are historical and superseded on this point.
 
 MSTR is the single push coordinator and reports CLOUD push underway; this entry is not proof that either remote push completed. CTO replied with prior directly reviewed localhost frontend10141b6d0bbb007d5dd9e758f11f785216e11339 as the DEV candidate, with no newer reviewed frontend substitute known. P must name any concrete newer candidate to MSTR. Source parity and bounded Global/SelectFirm bootstrap evidence do not establish full IRPT generation readiness. Backend dual-owner/runtime and upload/session implementation continue under their exact review boundaries. No duplicate push from this seat; cloud apply/login/vendor/host-stop authority is unchanged by this repository push direction.
 
 Y184114 acknowledges078349 and claims ycharts/session/controller.py plus ycharts/session/tests/test_controller.py under the investor-reporting root for local D2 implementation; P supplies runtime/SSM/host ownership proof. This is an implementation claim/ACK, not a completed controller or control-plane action.
+
+## IRPT-UPLOAD-RESOLUTION-SOURCE-20260923 â€” direct CTO partial review
+
+Read exact Y190653; reviewed source6cfe01c3e238e9a90e88d3a501b25ac0eaf41540 and handoff8228a253e2. Fresh archived source with pinned paired dependencies passed435 tests+50subtests, no skips. Offline CRO fixture and synthetic harness replays completed. Evidence: UPLOAD_RESOLUTION_REVIEW_20260923/REVIEW.md and retained outputs. This is partial-source evidence, not feature/runtime/global-account-serialization acceptance.
+
+CTO-Y-KIMI-DEADLINE-01 is OPEN: fake-clock check returns success after238s against promised120s total limit because retry resets its budget. Y receives bounded local repair with one absolute deadline, remaining-time transport budget, telemetry/exhaustion/late-result controls for both kinds. Receipt191250. Known W1 status-only legacy broker fallback stays OPEN; controller and legacy-regression passes cannot close it.
+
+P proceeds with concrete shared admission/storage/CAS/outbox/transport/D2 runtime mapping and exact artifact evidence under its existing scope, carrying this defect until repaired. Y completes caller wiring, approval/revision/lineage and UI under its existing mandate. M canonical identity/dated-share-class price facade remains missing; Shares explicitly unavailable. No live QA, secret access, cloud mutation, login, host stop or broad acceptance granted by this review. CTO remains reviewer.
+
+## IRPT-KIMI-DEADLINE-CLOSURE-20260923 â€” CTO-Y-KIMI-DEADLINE-01
+
+Direct review of Y5609c2e46a2d36716743f21a8e6a5eec6876e5d8 (handoffc0867388b4) closes the bounded SOURCE defect opened7c8484466c. Fresh archive focused43 PASS; full intake190 PASS+18subtests, no skips (focused suite is a subset). Original CTO119s503+119s valid-response control now passes only1s remaining to retry and returns null/KIMI_TIMEOUT. One total monotonic deadline covers preparation, telemetry, both attempts and parsing. Evidence KIMI_DEADLINE_CLOSURE_20260923/REVIEW.md and outputs.
+
+This does not prove real I/O interruption: injected blocking callbacks cannot be interrupted by this synchronous source; installed transport must enforce remaining wall time. P may consume this exact repaired source under existing local integration authority. All other partial-source/runtime/W1/canonical-price/UI gaps remain open. No live vendor, secret, deploy, session or host action authorized by this bounded closure.
+
+## IRPT-HOLDINGS-JOURNEY-RESTART-20260923 â€” Andrew-direct record via M
+
+Consumed exact M192923 and HOLDINGS_RESTART_20260923.md@b14966e203, including the recorded verbatim Andrew instruction to decide and implement the Holdings journey. Preserve M's sequence: first real Cottonwood custody account, then49F08335338 custody with SmartX as sole model authority, then INF Orion custody with Eclipse overlay. All three remain required; custody census must include assets outside model-platform coverage. No targets relabeled actual, missing value inferred zero, assumed currency or invented strategy/model mapping. Accepted and blocked accounts remain explicit.
+
+Existing CONTRACT.md ownership applies: M custody/overlay adapters and Holdings presentation; P shared runtime/package/status/selection/accepted-reader integration under current exception. P notified193013 to coordinate exact M candidate and complete source revision -> publication -> authorized API -> real-login rendered screen. No new canonical round. Security-reference/analysis-export enrichment is off the Holdings critical path; preserve it in respective lanes without making it a Holdings prerequisite. Prepare exact candidates and apply existing review/operational gates; tests do not activate schedules. CTO remains direct reviewer.
+
+M reports empty serving prefixes and accepted indexes, disabled schedule and September21 Lambda plus specific COT/INF source defects. These are attributed observations from its private source audit, not independently remeasured CTO live findings. Source and live acceptance remain open.
+
+## IRPT-W1-BROKER-REVIEW-20260923 â€” actual body observation and correlation gap
+
+Direct fresh-archive review of4173322f457aeeb390033b410e85bebadc49a3e3 (handoff92fbf25c76):54 session tests PASS; separate rotation/eviction/controls/network-guard regression all_pass true. Status-only/self-reported refresh fallback removal is substantiated within run_with_recovery. Full W1 remains OPEN.
+
+CTO-Y-W1-CORRELATION-01 OPEN: actual wrapper with a synthetic job receiving known signed-out application401 then unrelated healthy diagnostic200 returns NOT_AN_EVICTION despite the application failure. Existing078349 says healthy probes cannot override failed application endpoints. Y193152 receives bounded causal-request correlation repair, with stale/contract/mutation negative controls. This is an offline boundary finding, not a deployed-path claim. Evidence W1_BROKER_REVIEW_20260923/REVIEW.md, exact outputs and probe. No live action/new operational authority from this review.
+
+
+## IRPT-THREE-TAB-DRIVE-20260923 - Andrew-direct closer orchestration
+
+Andrew's current CTO-session instruction: "COO~Y should be driving /closer on "Analysis" (YCharts product), COO~M should be working on "Holdings" (model overlay and holdings product), and lastly COO~P should be working on "Reporting" (the performance reporting project)." He directs CTO as master control plane to keep agents organized and drive E2E completion, with targeted CRO research. Earlier direct-CTO-review instruction remains; no new independent reviewer.
+
+Reviewed desktop package index and all six briefs against current source/handoffs. CONTRACT.md v1.4, COO_P/M/Y.md and CONTROL.md implement this direction without new seats, canonical rounds or path-grant expansion. Historical v1.3 detail preserved in CONTRACT_V1_3_REFERENCE.md. Existing canonical B/F project.json rows already point to this contract; generated index copies omit the field and are not hand-edited here.
+
+First milestones: P Cottonwood BD actual-account report to screen while CRO targets49F SmartX actual-performance uncertainty; M Cottonwood actual custody publication/drill then49F/INF; Y valid dollar-upload Overview through real worker/vendor/certified report/screen. All prior three-firm, unit/variant/export acceptance stays required. SmartX remains49F primary, BD verification only. P retains shared writer responsibilities with explicit integration queue; M/Y remain owners of complete product assembly and consuming the result. Security-reference enrichment is parked off Holdings critical path; other Analysis units remain required later. No ACK-only messages; publish current STATUS and interface/blocker/review handoffs.
+
+Current source confirms Reporting still deliberately returns source-unproven for all providers and export submit NOT_READY. Analysis has bounded source proofs, not installed live chain; Holdings source gaps/live emptiness are M's attributed audit. No fresh deployed-byte or browser completion certification is claimed. Existing reserved operational authority and push coordinator remain; prepare exact actionable runs, do not ask Andrew to repeat existing permissions.
+
+Latest M193625 evidence changes the first Holdings proof to one unambiguous INF account: M reports876/876 account totals reconcile to positions, while COT currency and null-value coverage block truthful acceptance. CTO accepts this sequencing fork within delegated authority; COT/49F remain mandatory and proceed on source gaps. This supersedes the COT-first sentence immediately above. Contract v1.4, CONTROL and M mandate already reflect INF-first.
+
+Routing receipts194210(P/M),194211(Y),194212(CRO) delivered c7265d2bef instructions. New candidates M35999d31a4, Yfe0ec628c2 and CloudOps0116b83bc0 are queued for direct CTO review, not accepted by this dispatch. CloudOps broader JSON_TOOL fallback surprise is parked with tooling owner pending a concrete platform need; its exact recorder repair/recovery candidate remains on the active review queue.
+
+
+## 2026-09-23 20:20 UTC - reviewed deltas and SmartX method boundary
+
+CTO accepts bounded source deltas Y84c6, M Portal e560 and recorder0b8784 per DIRECT_REVIEW_2020_20260923/REVIEW.md. P integrates exact files through existing grants; no live product PASS. P delivery failure is measured frame-cap saturation, MSTR recovery owner; preserve handoff/edits.
+
+Andrew at CRO, record ebf1a0f6b5, verbatim: "All approved, go now". Capture and named personal-login calls were approved; selected-set SmartX unavailability accepted. Do not fabricate custom-window account returns by summing or averaging sleeves. Provider period-to-date statistics may be implemented with their own verified units/as-of/identity; allocation decimal evidence does not automatically establish account-statistic units. Carry method/fee basis as not stated. Current-roster absence is insufficient to prove historical completeness; explain the two missing allocations from retained opening dates/historical census, and distinguish provider date semantics from UTC timestamp equality. Nine unexplained monthly formula exceptions remain evidence, not a license to relabel method as TWR. CRO clarifies using retained capture; no further call or general personal-credential runtime grant inferred from this bounded capture.
+
+
+## 2026-09-23 20:27 UTC - COT external identity parity
+
+P a70f6e3b71 returns contract_validated=true when accountInfo.externalId is absent or conflicts with the mapping. P repairs both period/series checks and pre-I/O mapping completeness; numeric ID alone does not settle the unproven COT namespace. Evidence DIRECT_REVIEW_2020_20260923/P_PERFORMANCE_REVIEW.md. No broad suite requested; source/retention composition continues.
+
+
+## 2026-09-23 20:29 UTC - concrete source blockers
+
+CRO c12fe7099b clarifies retained SmartX data: account PTD decimal evidence1account/4periods; provider-as-of absent, retrieval time only. Do not fill dated-as-of contract with retrieval time. Window-end open roster matching44/44 and42/42 settles only that denominator; whole-window closed-account completeness remains narrower than a general completeness claim. Large-flow association does not establish the precise return formula: carry provider method unknown and preserve provider value. Eastern calendar-date bounds measured; do not silently treat provider midnight epochs as UTC dates. No additional capture requested.
+
+M actual INF positions reader is blocked by NEW legacy source literals. Existing NAMING_LEGACY_READS intentionally cannot admit new sites. G is the bounded naming-owner route for a truthful existing landed-read locator or smallest exact mechanism proposal; CTO will adjudicate it. Do not insert an ineffective waiver, guess a canonical repoint, hide literals or bypass gates. This is a live-thread blocker, not general naming enrichment.
+
+
+## 2026-09-23 20:35 UTC - INF source locator: reuse the producer's key helper
+
+MSTR99749 confirms G orderly CLOSED. CTO now resolves the fork directly. No new naming seat or gate amendment is needed for the proposed route: data/inf/scripts/silver/_orion_api_silver_lib.py already owns silver_api_dim_s3_key(dim, snapshot_date), and the real write_silver_api_dim_parquet producer calls that same helper (lines350/479). Current source blob6ad80c3b007a3119ac536b94c05b99bffdbba1c9. It formats the actual landed positions_mv key.
+
+M may reuse/import that existing source helper for positions_mv only, as a dependency, rather than adding another literal or a second formatter. Derive the partition-list root from its actual formatted key with an explicit expected partition/file shape check; keep the existing validated cutoff selector and VersionedInputs receipts. The read bucket remains the already-evidenced Inflection source, not an unchecked environment override. Do not invoke producer write functions, copy/extract a new string formatter, repoint data, modify the old01 read context or extend its waiver. This is reuse of an existing producer contract, not a source migration or general read exemption.
+
+Implementation must package/pin the actual helper dependency. Its module constructs an S3 client at import; do not accidentally use that client for the version-bound IRPT read or execute producer side effects. M supplies a focused key-equality/cutoff receipt plus ordinary naming/commit verdict. If that concrete reuse is refused, return the precise gate line; do not silently disguise the literal. Currency remains a separate source fact, with absent data refusing.
+
+
+## IRPT-RESIDENT-INTEGRATION-20260923 and source review 20:48UTC
+
+CTO direct review accepts bounded Y4ed7ed resident assembly, Mb411 native INF adapter/helper reuse, and closes P external-identity defect at214ddd. Exact limits in RESIDENT_ASSEMBLY_REVIEW.md and M_P_SOURCE_REVIEW.md. CONTRACT amended with existing-lane P exact integration rows; semantic Y ownership and reserved runtime proof remain. CRO8246 corrects INF currency evidence: use retained USD Scope only for exact same-account/date positions bridge, not tenant-wide inference. COT currency confirmation is pending Andrew; preserve unavailable denomination and continue independent composition. No extra vendor call, independent review queue, or broad test rerun.
+
+
+## Andrew d70decd6b2 Tax source amendment and20:54 control
+
+Read exact CRO~M99756 and verbatim Andrew B. CONTRACT/COO_M now replace prior Tax-in-Client line: canonical workbook Traded membership -> SMAs/ALT Strategies/Tax, exact dated history and net_mv_plus_cash; unresolved claims preserved. Current M49F work integrates this now; other first flows continue. No workbook AUM as custody total. CRO~M traces two absent traded claims from retained sources. Mce2fd bridge comparisons all six mismatch; targeted CRO valuation semantics assigned. Y8d3 capture-source finding holds new bootstrap only; precise secret-read ambiguity repair sent205113. See HOST_CAPTURE_FINDING.md; no broad test/live replay.
+
+
+## Andrew-direct COT USD 2026-09-23
+
+Exact direct answer retained in ANDREW_COT_USD_20260923.md. COT report amounts are USD; P shared mapping/provenance, M custody consumption. Close denomination blocker and proceed with actual report/custody serving. No vendor-body rewriting, new currency query, or widening to other firms/native security currency. Null/valuation/census proofs remain. First ready Holdings firm/account may proceed; all firms still required.
+
+
+## INF exact valuation bridge and Tax intake 21:02UTC
+
+CRO99763/10f3cf6f9f measures two accounts on three exact file/valuation pairs:06-11/06-10,06-19/06-18,09-10/09-09; all six value/units match, same-key negatives reproduced. CTO routes precise version/hash-backed provenance to M; no blanket next-business-day roll, request-date rewrite, historical-file inference or tenant-wide USD claim. Source-specific currentValue denomination can bind only the measured observations. COT first flow continues6f45.
+
+Tax99761/907d: research snapshot schema differs from canonical capability, canonicalSilver/member history empty, supplied production store stub. M prepares exact intake recipe; MSTR210127 asked to identify available existing Tax source/release owner/later wrapper. No fake envelope/history or duplicate pipeline. CRO~M current missing-account retained-source search complete; two claims remain unresolved. COT empty-response likely-data diagnosis is an inference, not a new identity rule or vendor-call permission.
+
+
+## 2026-09-23 21:10 UTC - selected COT source and bounded Tax dependency
+
+7033e23490 selected-account custody source receives bounded CTO PASS: three affected checks and two asymmetric census probes; no live acceptance. M continues actual account mapping/currency/publication. MSTR99766 confirms T wound down and three-COO cap full. No fourth seat requested: existing M prepares the minimum canonical Tax-module dependency recipe, exact paths and runtime effects for CTO adjudication under Andrew Tax B; full historical Tax round remains outside this transfer.
+
+
+## 2026-09-23 21:16 UTC - Performance source fidelity and policy activation
+
+9e1bc3a751 composition has five focused CTO PASS checks, but P-SOURCE-01 REWORK: parsed JSON retained without original response bytes/digests does not satisfy X10 source family. P supplies exact transport/evidence repair and existing approved reply replay; no new vendor call. Policy activation remains tied to exact enforcement/package/role/destination proof, not a broad state flip from fixtures. Physical disposal stays OPEN under existing X10 and is not a new first-thread prerequisite. P prepares concrete bounded cutover; M retains registry ownership; CTO reviews directly.
+
+
+## 2026-09-23 21:15 UTC - COT no-position rows and available history
+
+Consumed CRO99769 evidence f307d5841512f8de005b2dd5272350029d1f1b11.
+Ruling: for the measured canonical COT Assets_Dim/includeAll export contract,
+rows with all four position facts (Market Value, Units, Unaccrued Market Value,
+Accrual) absent are dimension-only/no-position-at-as-of rows. Exclude them from
+active holdings facts, counts and weights; retain original bytes and excluded row
+ordinals/counts in private evidence. Do not convert to zero holdings. Partially
+missing facts, held-but-unpriced rows, conflicting duplicates and failed independent
+account reconciliation remain failures. Check selected account census against the
+independent account valuation before publication. Do not assert every such row
+represents a historically closed position: the export also lists later/onboarding
+accounts for earlier dates. M implements this narrow producer interpretation.
+
+P: Cottonwood historical availability is account/window-specific. Sparse pre-May2026
+coverage does not make every 2025 account invalid, nor does onboarding establish
+real inception. Show provider coverage and unavailable periods honestly; never
+relabel a partial onboarding window as requested full YTD/since-inception. Current
+positive COT account remains the first thread, without another blind vendor retry.
+
+Andrew-direct relayed by CRO at f307d58415, verbatim:
+"Cottonwood only has data from maybe a couple months ago, they dont have full data in BD yet as far as I am aware"
+"come october we should check again"
+"actually, maybe worth just doing a little egress, check right now and see how much cottonwood data there is in 2025"
+That per-use CRO check is already executed and does not authorize another use.
+October recheck remains parked with CRO, not a blocker to current IRPT completion.
+
+
+## 2026-09-23 21:19 UTC - M/P mapping seam
+
+M-P-MAP-01 reproduced on614ad2f16b paired9e1bc3a751: M source_revision dict rejected by published P string interface. M keeps source_revision as exact source SHA256 string and carries full receipt under source_provenance. P preserves full mapping evidence. One actual callback-to-consumer request-construction control closes it; no new vendor use. Real selected COT build remains M-reported, not CTO-live acceptance.
+
+
+## 2026-09-23 21:23 UTC - actual COT source clears first thread input
+
+CTO independently replayed d8173c1b9c on seven exact real S3 versions:57positions/USD19705844.84 exact reconciliation, schema and all receipts match. Three narrow exclusion controls PASS0.64s. M now drives this same P-positive COT account through accepted publication/API/UI, remaining owner of whole Holdings journey; P only owns shared surfaces. Mandate first-account sequence updated. Portal c70855f3 five receipt/render controls PASS526ms; not live reopen/export. No product marked complete or unapproved publication performed.
+
+
+## 2026-09-23 21:25 UTC - paired source repairs closed
+
+P-SOURCE-01 CLOSED5765ea21a5 with6focused fidelity/composition checks0.74s. M-P-MAP-01 CLOSED9b3fb2a actualS3 callback into latestP5765 request constructor, full receipt retained. Final P package consumes9b3 mapper, not older614 included in5765. Source and adapter readiness clears these defects, not storage policy/live journey. P prepares exact cutover; M retains full Holdings publication/API/UI responsibility under1960 mandate update.
+
+
+## 2026-09-23 21:28 UTC - bounded Tax store writer and Reporting infrastructure
+
+55145056df recipe accepted for source implementation. Exact Tax membership module and its test narrowed from ANY to M-only in .owned-paths with CONTRACT; no fourthCOO/fullTaxround/scheduler/livecall. One-shot runner reuses whole existing canonical modules, no fabricated capability envelope/history. P canonical reporting bucket NoSuchBucket evidence is accepted as next infrastructure task under existing IRPT core Terraform ownership; prepare minimal exact plan, keep policy pending until cutover adjudication.
+
+
+## 2026-09-23 21:36 UTC - first native Holdings publication and empty Reporting storage
+
+CTO direct review accepts a86430e39e bounded initial COT publication under exact selected-account/date/source-result checks, absent-index CAS and version readback; M owns execution/API/screen, P exact reader package plan. Source controls5PASS0.62s; live old Lambda/index absence independently confirmed. P f4a1dd60a3 binary storage plan c7639c4c06ba726a8df246c4c5742da6c70e22890940fdbbd38535c8f8329a90 independently reviewed5create0change0destroy; exact safe-apply permitted with readbacks, no automatic policy activation/data-write/runtime deployment. Review: DIRECT_REVIEW_2020_20260923/COT_PUBLICATION_AND_STORAGE_PLAN_REVIEW.md. All products incomplete.
+
+
+## 2026-09-23 21:42 UTC - Reporting package dependency
+
+P-PACK-01: exact9cc2d2d9 candidate omits org/standards/NAMING_SCHEMA.json; fresh extracted canonical destination probe fails. Adding only pinned schema in scratch makes identical probe pass. P repairs both review/canonical package, returns final manifest/hash and one probe. Source/mapping acceptance and73c40 empty-storage apply remain intact; no vendor call needed. See DIRECT_REVIEW_2020_20260923/P_PACKAGE_NAMING_REVIEW.md.
+
+
+## 2026-09-23 21:42 UTC - native COT publication independently verified
+
+M5e29e43c2c executed bounded initial publication. CTO independently read4exact output versions, verified lengths/hashes/index acceptance/Gold-JSON nodes and selected1account57positionsUSD19705844.84 at2026-09-22. Accepted revisionfe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e. Native storage hop PASS, not authenticated API/browser. P exact reader cutover next; M retains complete Holdings ownership. CONTRACT first-thread row aligned with prior1960/73c40 COT ruling; all firms remain required. Evidence DIRECT_REVIEW_2020_20260923/COT_NATIVE_PUBLICATION_CTO_READBACK.json.
+
+
+## 2026-09-23 21:43 UTC - Analysis runtime recovery
+
+MSTR99771 recovered Y to fresh thread01a0d037 with preserved4ebe source/drive4876 and measured turn/steer injection. CTO rechecked9/9GREEN, new bridge33676/detector34768/heartbeat33548, endpoint58180, stderr0. Agent-side reply/read pending; do not confuse transport recovery with product completion. P continues under Andrew at its current terminal, migration reserved to MSTR on his word.
+
+
+## 2026-09-23 21:50 UTC - live reporting storage and two narrow repair closures
+
+CTO independently verified new opal-data-irpt versioning/KMS/BPA4/TLS after exact reviewed P apply. Bucket absence CLOSED; policy activation/consumer runtime not implied. P-PACK-01 CLOSED5cdb/v4b9333947 on actual extracted59member artifact/Python-I unchanged destination probe. Y capture secret-read finding CLOSEDbfe6469b1e with10focused adapter-worker cases2.55s; exact3files already P-integrable under existing grant. No vendor calls; no live product completion. See direct review storage JSON/report and appended HOST_CAPTURE_FINDING/P_PACKAGE_NAMING_REVIEW closures. Browser connection absent this turn; authenticated screen proof remains pending.
+
+
+## IRPT-CROSS-FIRM-PUBLICATION-20260923
+
+CTO directly reviewed 2874e37647: twelve affected offline cases pass. P receives
+exact integration ownership of infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py
+under IRPT_Y_ACCESS_INTEGRATION_P in the same commit as this contract. The other
+three changed files already have that grant. Y remains semantic implementation
+owner. Preserve actual current actor, accepted data firm and immutable original
+input owner separately. No principal synthesis from queue tenant. P integrates
+with bfe6469b1e and supplies the current-authority host/installer boundary; Y owns
+the real-login Analysis journey. Source PASS is not live completion or deploy GO.
+
+
+## IRPT-TAX-DISPOSITION-SOURCE-20260923
+
+CTO direct review d3a8c3e7e3: bounded source PASS; seven isolated persistence cases pass0.12s. TAX_DISPOSITION_STORE_REVIEW.md records exact scope. M continues the granted one-shot runner and returns exact gateway capability/runtime plan. No vendor/cloud activation or historical backdating. Full snapshot failure cannot become partial success.
+
+
+## IRPT-HOLDINGS-READER-APPLY-20260923
+
+CTO grants P bounded GO for exact saved ca2a907770c081a244cb1eddc854db95cdb80523655989093264c9e20f905301 plan only. HOLDINGS_READER_PLAN_REVIEW.md/JSON carry artifact bcb3fb71, immutable version, exact pre/postapply conditions and independently exercised native read. One create/three updates/no destroy, read permissions only. Deferred artifact lookup requires exact version/hash guard; drift stops closure. M retains real authenticated API/browser proof.
+
+
+## IRPT-TAX-SILVER-SEAM-20260923
+
+CTO inspected gateway app/taxsma_workbook.py@6abf60e5d5 and the current Silver
+consumer: _snapshot emits seven flat business fields alongside row metadata,
+while _typed_row requires nested business and refuses that producer shape. The
+current synthetic Silver fixtures manufacture the nested object. used_rows in
+the canonical producer includes the header, so complete data rows equal used_rows-1.
+This is a concrete adapter mismatch on the authorized Tax Holdings thread.
+
+M is sole writer for exactly data/mdpf/scripts/silver/taxsma_workbook.py and
+data/mdpf/tests/taxsma/test_taxsma_workbook_silver.py under IRPT_TAX_MEMBERSHIP_M,
+recorded in .owned-paths.yaml in this same commit. Consume actual canonical flat
+rows, preserve original Bronze bytes/digest and all seven typed business columns,
+row metadata and full census. Explicitly refuse incomplete/mixed/contradictory
+shapes rather than silently choose one. Any retained nested-fixture compatibility
+must be explicit and unambiguous; do not claim that compatibility proves the
+production seam. Validate the actual producer output through the Silver boundary
+with one focused positive and malformed/partial negative controls. No broad suite.
+
+This adds only the necessary Silver adapter/census and tests to the existing
+bounded one-shot runner preparation. Do not change Gateway, manufacture a new
+Bronze envelope, backdate observation, schedule the full pipeline or perform a
+vendor/cloud write. Return the pinned repair and exact runner/runtime plan.
+
+
+## IRPT-PERFORMANCE-LINUX-20260923
+
+CTO independently reran exact b933 function /121b8407 native layer /common5 in Lambda Python3.12 Linux with networking disabled: mapping and retained response calculator/schema PASS,1period15points. Combined uncompressed239627841bytes. PERFORMANCE_LINUX_CTO_REVIEW records hashes and limits. Native compatibility closes only for these bytes; deployed factory/role/storage/browser remain open. CONTROL refreshed to measured current state.
+
+
+## IRPT-HOLDINGS-LIVE-READER-20260923
+
+CTO actual AWS readback: irpt-holdings Active/Successful at22:10:08Z, exact vLP7cZN61JWOOmiCGmCjnOM43296i8qDt1hL1ZE8yUs=, reviewed environment and both reader IAM policies equal saved plan; current artifact version e7XAGneq1_KKe2tnBVK45FsEFNItS2NF matches. HOLDINGS_READER_CTO_LIVE_READBACK.json records evidence. M proceeds authenticated selection/API/screen/drill/reload. Localhost5174 returns200; current computer-use inventory has no connected browsers. This is deployment configuration proof, not a fabricated-auth or browser PASS.
+
+
+## IRPT-HOLDINGS-ACTUAL-FAIL-20260923
+
+Andrew authenticated Anna Holdings NOT_READY is actual journey FAIL. HOLDINGS_AUTHENTICATED_FAILURE.md records exact evidence and limits. M owns selection/date/coverage trace and supported full COT build; P shared reason contract. No happy-account substitution, identity collapse or fake empty values. Prior code/IAM parity is not withdrawn or inflated to journey PASS.
+
+## IRPT-X10-ACTIVATION-OWNER-20260923
+
+CTO owns enforcement acceptance; M is existing exact registry writer with CRO incumbents preserved. Global irpt-x10-v1 has12families/3firms; enforcement_ref must be full accepted receipt commit, not arbitrary source/bucket-create. P proceeds callable/claim/least-privilege plan and shared enforcement matrix for all36destinations with precise deployed writer coverage. Minimal COT permissions alone do not prove global enforcement. Physical_disposal OPEN remains separate, not a new first-thread gate. No ACTIVE mutation in this ruling.
+
+
+## 2026-09-23 Holdings deployed shallow-layout crash
+CTO independently reproduced bcb3 IndexError at /var/task and passed exact source 3e913e9ce9 in the same Lambda Python 3.12 image. P packages and returns exact one-function plan; M prepares supported COT coverage without replacing the user account. See DIRECT_REVIEW_2020_20260923/HOLDINGS_SHALLOW_RUNTIME_REVIEW.md. Actual user journey remains FAIL.
+
+
+## 2026-09-23 Holdings exact schema package apply
+P GO for saved plan30f1d202bf7a50fa063e7d96eee2e6ae5ed7465c23471cf1d670230f780d5f02 only: one Lambda code update to exact97f190ac artifact, no IAM/config/routes changes. CTO downloaded final33memberS3version and passed actual /var/task runtime import/schema load. See HOLDINGS_SCHEMA_REPLACEMENT_REVIEW.md; independent live readback and actual user journey remain required.
+
+
+## 2026-09-23 COT supported coverage exact GO
+M may publish exact93f930c265ed242d7e38cb48a7ed4baf267025e8c4dfd06ff39739c6a8f55217 per a509946936:19conditionalwrites, oneSept22indexCAS, nootherdatesorversionsremoved. CTO independently reconciled all841accounts/13793positions to retainedsource, everyGoldJSONnode and15partitionhashes; actualreader localbothAnna matrixPASS. Source-refused140accounts andactualauthenticatedproofremainOPEN. See COT_EXPANDED_COVERAGE_REVIEW.md.
+
+
+## 2026-09-23 23:2x UTC - Claude CTO takeover batch (1.0.0_SA_CTO, runtime successor)
+
+Seat continuity: this session is the Claude successor to the Codex CTO session closed at 22:42Z
+(log session_close_IRPT_1859-2242Z.md @e124553a33). Contract v1.4, COO_P/M/Y and every ruling above
+stand unchanged. CTO reviews directly; no CVO queue. Evidence for every measurement in this batch:
+DIRECT_REVIEW_2020_20260923/CLAUDE_TAKEOVER_LIVE_READBACK_20260923.json. Also repaired in this
+commit: this file carried six cp1252 bytes (0x97, em dash) in six ruling headings (IRPT-ANALYSIS-UPLOAD-OWNER,
+IRPT-DUAL-OWNER-SOURCE, ...-RESOLUTION-IMPLEMENTATION, IRPT-LOOKUP-CAPTURE, IRPT-SESSION-DELTA,
+IRPT-PUSH-HOLD-RELEASE) and was not valid UTF-8; each replaced with ASCII "--". A first read reported
+"one byte" because a decode stops at the first error; the count is from the repair loop.
+
+### IRPT-HOLDINGS-SCHEMA-APPLY-VERIFIED-20260923
+P executed GO d8e9d68378 exactly (msg 99786): saved plan 30f1d202 unchanged, 0 add / 1 change / 0
+destroy at 23:00:52Z. CTO independent readback on a different instrument: the deployed zip
+downloaded from the function's own Code.Location hashes to 97f190ac...c35, the approved artifact;
+CodeSha256 recomputed from that download equals the live configuration value l/GQrFcE...DDU=;
+33 members; snapshot.py carries no fixed-depth parents[4] index; layer irpt-common:5; python3.12.
+Ledger closed on P's publish branch @5c8d6f8e34 (LOCAL). Deployment hop PASS. NOT a journey PASS:
+no signed-in Holdings response has been exercised against these bytes.
+
+### IRPT-COT-COVERAGE-PUBLICATION-VERIFIED-20260923
+M executed GO d940022b06 exactly (msg 99780). CTO independent readback: current index version
+grwnbLkeu_OeYL6AcOR33ec9mO51dTBJ (23:00:30Z, ETag 9731cecad3b5..., sha256 5d56285bb8f5...) names
+revision 93f930c265...217 for 2026-09-22; prior index version JhtDD... retained; 18 objects under
+the revision (gold parquet, header, manifest, 15 parts); header.json 841 accounts / 13,793
+positions / USD 548,412,662.59, reconciled to tolerance 0.01, both Anna account ids present.
+Publication hop PASS. Open, unchanged: 140 source-refused accounts; the deployed reader matrix
+against the repaired Lambda; the authenticated screen.
+
+### IRPT-HOLDINGS-NEXT-PROOF-20260923
+Both prerequisites named in IRPT-HOLDINGS-ACTUAL-FAIL are now live. The next proof is Andrew's real
+signed-in Cottonwood/Anna selection (0698, d486, combined) on localhost:5174 rendering Holdings, then
+reload. M owns the deployed reader matrix (0698 / d486 / combined at default and 2026-09-22 READ_OK,
+2026-09-23 refused) against the live Lambda BEFORE asking for the screen, and the journey. P still
+owes the defined-code contract for the NOT_READY reason ("code not defined by the v1 contract" is a
+render of an undefined code, a separate defect from the crash). No seat synthesizes auth to exercise
+the deployed reader: the reader matrix runs through the publisher/reader library against the live
+publication, and the HTTP hop is the user's.
+
+### IRPT-ANALYSIS-CURRENT-AUTHORITY-20260923 (adjudicates CRO 99773 / 223752)
+CTO read the cited source directly, not the summary: auth-handler/src/auth.ts refresh() :483-555
+(getUser by email; new-shape binding or old-shape createdAt-vs-iat guard; status != 'active'
+refused; partner re-read; mint), jwt.ts generateAccessToken :162-193 (tier 'internal' iff
+firmId == 'opal-capital'; userType from PROFILE), refreshBinding :220 (sha256(PK|createdAt)[:32]),
+portal-authorizer/index.mjs computeAllowedFirms :269-297 (userType 'Dev' -> ALL; tier 'internal'
+-> ALL; else own firmId plus descendants when role == 'admin', via Scan :223-251; no per-request row
+read), and investor-reporting/_scope/canonical_profile_reads.py :19 (_USER_FIELDS lacks createdAt,
+role, userType) and :84 (returns fields[2:]). The CRO's account of the source is ACCURATE.
+
+RULING. The CRO recommendation is ACCEPTED with four bounds:
+1. Maintained source is the opal-users-v2 PROFILE row read through CanonicalProfileReaders.get_user
+   (email-index then consistent GetItem, unchanged). _USER_FIELDS additionally projects and returns
+   createdAt, role and userType; read created_at as the fallback name exactly as refresh() does.
+2. The worker replays refresh()'s decision server-side at job start and again at final release and
+   at any durable dispatch: REFUSE when the user is None, status != 'active', or user.firmId !=
+   record.owner.home_firm_id. Locator with no persisted PK: REFUSE when createdAt (or created_at)
+   parses and is later than the record's accepted time. A missing or unparseable createdAt does NOT
+   refuse on that rule (refresh() :527-529 guards on Number.isFinite the same way) but is recorded
+   as createdAt_absent in the decision evidence. ENRICHMENT, not required for the first thread:
+   persist the refreshBinding-equivalent sha256(PK|createdAt)[:32] at acceptance so later checks
+   compare bindings rather than clocks; owner Y (semantic) with P (shared), un-parks after the
+   first live 12.03 journey.
+3. Class: OPAL_GLOBAL iff user.firmId == 'opal-capital' OR user.userType == 'Dev' (the authorizer's
+   ALL). Otherwise the worker's scope is the user's own firmId only. Admin-descendant scope (the
+   Scan) is NOT implemented in the worker now: a non-Opal user's job whose data firm is not the
+   user's firmId REFUSES with a defined code, never silently narrows or widens. This is narrower
+   than the interactive authorizer only for a firm admin with descendant firms, which is no current
+   journey; parked with owner P, un-park condition = a firm-admin cross-firm journey enters scope.
+   Advisor/partner fields are not authority inputs; no opal-partner-* read is added.
+4. IAM: the executing roles (irpt-ycharts-generate-role, and irpt-ycharts-runner-role as the host's
+   instance profile) receive dynamodb:Query on arn:aws:dynamodb:us-east-1:313476888478:table/
+   opal-users-v2/index/email-index and dynamodb:GetItem on .../table/opal-users-v2. No Scan, no
+   partner tables, no wildcard. P writes the Terraform; CTO reviews the plan before safe-apply.
+Never synthesize HTTP claims, trusted headers or OPAL_GLOBAL from retained queue/owner fields:
+owner.principal_id and home_firm_id are locators for the lookup, never grants. Revocation latency
+is the check interval, no worse than the interactive 15 minutes.
+OWNERS: P implements bound 1 (canonical_profile_reads.py is _scope, a shared surface) and bound 4;
+Y consumes bounds 2-3 in the resident worker at job start and release and supplies the exact
+decision evidence shape. Fast affected checks only: the existing canonical-profile cases plus one
+positive (Opal userType Dev), one inactive-status refusal, one firm-mismatch refusal, one
+createdAt-after-acceptance refusal and one createdAt-absent pass-with-evidence. No broad suite.
+The CRO research is CLOSED as delivered; no further generic authority research.
+
+### IRPT-YCHARTS-HOST-AUTOSHUTDOWN-20260923
+Measured, answering CRO 99773's off-scope observation and the contract's "stays running" line:
+CloudTrail StartInstances by Andrew_Berman 18:21:11Z; StopInstances by ec2-auto-shutdown-enforcer
+21:21:18Z; describe-instances now stopped, "User initiated (2026-09-23 21:21:18 GMT)". The enforcer
+(IDLE_CEILING_HOURS 3.0, IDLE_CPU_THRESHOLD 1.0) reaps any running instance idle for 3h; its ONLY
+exemption is the instance tag AutoShutdown=disabled (lambda_function.py :18-21, :113-115), and the
+host carries no such tag. So the host will be stopped 3h after every start until a consumer runs on
+it or the tag exists. No seat stopped it.
+DIRECTION: P (shared IaC writer) adds tag AutoShutdown = "disabled" to the irpt-ycharts-runner
+instance resource in Terraform, with a comment citing Andrew 6fc3f5f785 (dedicated always-on host)
+and this ruling; plan to CTO, then safe-apply. Nobody starts the instance before the tag is applied
+and P's resident install is ready to run; a start now is reaped again at +3h. SURFACED TO ANDREW,
+not adjudicated: the enforcer's own docstring records his earlier directive that there be ZERO such
+tags; his 2026-09-23 ~20:0xZ approval of a dedicated always-on host is read here as the conscious
+opt-out for this ONE instance, and he can veto before the tag is applied.
+
+### LD-0609 naming-gate HCL lookup context - ACCEPTED (review_required_by 1.0.0_SA_CTO)
+CTO re-ran the arms on its own scratch diffs at HEAD and against the pre-change gate copied from
+ddfc91b11f~1: new gate permits lookup(local.X, "cottonwood") and local.X["cottonwood"] where X is
+fed from logic/registry/*.json, refuses the same key over a hand-typed map, a non-registry file and
+a var; old gate refuses both positives (control) and P's real retained.tf (REFUSE line 37) that the
+new gate grades PASS 4. The change mirrors the Python BUILDERS lookup() permission and admits no
+new class. P merges CLOUD into its backend branch (never rebase) before committing retained.tf.
+
+### Runtime transition, recorded
+M and Y stopped their own dead Codex helpers and drivers before registering as Claude seats (99780,
+99790). P's Codex-era driver (PID 3520, 600 s) is MSTR's to retire (99776 item 1). This CTO session
+inherits no Codex helper; MSTR owns the runtime transition and every shared push. All three lanes
+carry Andrew-directed /goal + /loop 20m (P f7aaa01da1, M 6890584d29, Y fc17929b64), all LOCAL.
+
+
+## 2026-09-23 23:5x UTC - Claude CTO batch 2: Performance install GO, source reviews, host two-writer correction, Y grant extension
+
+Evidence: DIRECT_REVIEW_2020_20260923/PERFORMANCE_INSTALL_CTO_REVIEW_20260923.json (this commit).
+
+### IRPT-PERFORMANCE-INSTALL-GO-20260923
+GO to 2.0.0_SA_COO~P (99804) for the exact saved plan .runtime/performance-install/install.tfplan,
+SHA256 f0a189191e4f566f8cd76673ee8fb83f707f78c07e6f75dd7bad1a7d2b247a55, Terraform 1.9.8, 3 create /
+1 update / 1 read / 0 destroy, and nothing else. CTO measured on its own instruments: package
+s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-performance-adapter.zip version
+h.hlJhL3dKXAFT5NsNzceZX6Jls_f39V downloaded and hashed (358117 bytes, 61 members, sha256 b64
+JwJEEQGTENJJukTvrNQt3dq6VIAI8xqioIYA1atL+hk=); native layer version tf.fKYdfNRbn9AGt1AEHqn35f6bwGqPb
+sha256 121b8407415ce803458f52de03d11d81d26791f94d20f4130658a773cd1f39f6 (the 2fb5422b04 layer);
+irpt-common:5 CodeSha ZUcsQUOsc3lT2cKlnur5rCAZc/a0rCkKvU5pjg11U20=. The plan decoded: retained
+policy = ListBucket(prefix)+GetObject/GetObjectVersion on the COT mapping partitions only; Get/
+GetVersion/Put on opal-data-irpt irpt/cottonwood/state/performance_source_evidence/* and
+platinum/performance_reports/* only; irpt-requests Get/Put/Update under LeadingKeys cottonwood; KMS
+7f4d3042 via dynamodb (tableName irpt-requests) and via s3 (those two prefixes) only. Selection-read
+policy = irpt-requests GetItem under LeadingKeys 49financial/inflection/cottonwood + KMS Decrypt via
+dynamodb. Function update: handler runtime.lambda_handler, timeout 120, memory 1536, layers
+irpt-common:5 + the new native layer, env 6 keys, IRPT_PERF_TRANSPORT_MODE removed, no approved-plan
+env and no secretsmanager grant, so no vendor egress is reachable after this apply.
+COLD START PROVEN at the real layout: package + both layers invoked through the Lambda runtime
+emulator in public.ecr.aws/lambda/python:3.12 (image 5f188ce6104a), network disabled: INIT success,
+invoke 200 returning the guarded CONTRACT_VERSION refusal for an empty event (8.3 s first invoke,
+pandas/pyarrow import); control: the deployed v4 package (version 028gVFz77L5vMQGJSIkt0JqSZCk5V4rB,
+CodeSha jVktMAiRK+2mYPXEzyst6HjSFFv4xR3Kxm47hAyulyw=) behaves identically. RETRACTED on the way: a
+first CTO harness (plain python, /var/task only on sys.path) reported ids.projection_for_firm missing;
+that was the harness's path order, not the package, and the emulator run is the instrument of record.
+CONDITIONS: P re-reads the S3 version and hash immediately before and after apply (deferred module
+data read); ledger opens at apply start and closes on readback (CodeSha == JwJEEQGT..., handler,
+two layers, env keys); post-plan -detailed-exitcode 0; exact-function recorder commit; STATUS
+overwritten. X10 stays PENDING_ENFORCEMENT (next ruling); until ACTIVE the deployed function refuses
+every write and reopen with "registered enforced policy required", which is the truthful state. A
+live provider calculation still needs Andrew's per-use word and its own approved-plan change.
+
+### IRPT-PERFORMANCE-SOURCE-REVIEW-20260923 (f04d1e71bd + 068e9ccd85): PASS, bounded
+24 affected tests pass in P's own worktree in 1.08 s (the earlier reviewer-export collection failure
+was environmental). authorization.py: env-installed approved plan and digest env; scope, expiry,
+mapping-revision and request-hash equality before any claim; conditional PutItem claim with no TTL
+and no read-retry; the use is consumed even when transport construction fails; the bound transport
+refuses any request outside the approved set. runtime.py: lazy assembly, SDK retries 1. retained.py:
+reopen-before-compute by immutable pointer; a corrupt pointer or an expired report never falls back
+to a vendor call.
+FINDING P-REOPEN-01 (design, bounded, NOT a block on the install): the reopen pointer key digests
+{owner, request} where owner carries principal_id, account_set_id and directory_revision and request
+carries the selection record. The same firm, account set and window reopened after a directory
+republish (new sel_ reference, new directory_revision) or by another currently authorized viewer
+never hits the pointer, falls through to compute, and the unarmed factory refuses. INVARIANT RULED:
+a same-firm, same-sorted-account-set, same-window reopen by any currently authorized viewer finds
+the accepted report regardless of directory revision, selection reference or principal;
+authorization is re-derived at reopen through the repository (as it already is), never from the
+pointer; the pointer's owner and selection remain provenance. P proposes the key shape (for example
+digest({firm_id, sorted account_ids, start, end})) and lands it before the reopen/export journey is
+graded, not before the install. ADVISORY: only the claim PutItem needs no retry; the S3 client may
+keep standard retries so a transient read error on reopen does not surface as a refusal.
+
+### IRPT-X10-SEQUENCING-20260923
+Installation is not enforcement. RetentionPolicy._policy (reports/retention.py) requires state ==
+ACTIVE, the X10 register commit and a 40-hex enforcement_ref before any reserve, promote or reopen,
+so the installed function is inert and truthful while PENDING. ACTIVE flips when the CTO accepts, in
+one review: (a) deployed bytes == reviewed bytes (this install's readback); (b) the role policies
+applied (this install); (c) the destination verified live (3d9f45175d); (d) P's enforcement matrix
+(36 destinations x deployed writer coverage, precise, with the COT two families marked LIVE and the
+rest DECLARED); (e) the focused retention arms at the pinned bytes. The EXERCISED arm is the first
+live run's reserve -> promote -> reopen receipts, returned before any second use; if they fail, P
+reverts the registry row to PENDING and the report is quarantined, never served. M writes the
+registry row with enforcement_ref = the accepting CTO commit. Physical disposal stays OPEN and is
+not a first-thread gate.
+
+### IRPT-YCHARTS-HOST-TWO-WRITERS-20260923 (CORRECTION of IRPT-YCHARTS-HOST-AUTOSHUTDOWN)
+The earlier ruling named ONE writer of a two-writer property. 2.0.0_SA_COO~Y (99801) measured the
+second: infra/aws/terraform/investor-reporting/ycharts/instance.tf declares
+aws_ec2_instance_state.runner { state = "stopped" } (:131-135, header :9-25), so a tag alone would
+leave a plan that reports a running host as drift and converges it to stopped. Both writers move.
+GO to 2.0.0_SA_COO~P for the exact saved plan .runtime/ycharts-authority/authority.tfplan, SHA256
+1de760399ca1cd7f42e4b570c705f8e464500a1ba31a3da64a6a329d4c35006d, 0 add / 3 change / 0 destroy,
+decoded by the CTO: irpt-ycharts-generate-role and irpt-ycharts-runner-role each gain dynamodb:Query
+on table/opal-users-v2/index/email-index, dynamodb:GetItem on table/opal-users-v2 and kms:Decrypt on
+key 64f25291 conditioned on ViaService dynamodb + EncryptionContext tableName opal-users-v2 (the
+users table's own SSE key, read from the table, never typed: ACCEPTED as the necessary companion to
+bound 4); aws_instance.runner tags gain AutoShutdown = "disabled" only; aws_ec2_instance_state.runner
+stays stopped in this plan. WRITER B flips to "running" in the SAME plan as the resident install
+cutover, not before, and the host is started once after that apply. The tag is inert until a start;
+Andrew's veto on it stands until then.
+
+### LD-0610 naming-gate packaged-name citation - ACCEPTED (review_required_by 1.0.0_SA_CTO)
+CTO arms at HEAD ae754f525f against the pre-change gate copied from ae754f525f~1: positive = P's
+committed lambda-source-map.json change (17e94dbdc6) graded from a detached scratch worktree at its
+own base 560445f857: old gate REFUSE (lines 3004/3008/3009/... bd_live.py, bd_selected.py,
+_vendor/bd49f_reporting_pull.py), new gate PASS 0 graded; negative = a row whose repo_path is
+untracked: both gates REFUSE. A first CTO positive arm run against P's current HEAD was INVALID (the
+diff no longer applied, so the post-image did not parse and the citation set was empty); the
+scratch-worktree arm is the one that counts. P's branch carries ae754f525f (second merge
+560445f857) and 17e94dbdc6 committed under the new gate.
+
+### IRPT-Y-CURRENT-AUTHORITY-CONSUMER-20260923 (Y 635af92b76, P 185dfb3e7f)
+Y's current_authority.py decide() is ACCEPTED, bounded: it mirrors refresh() and the ruled bounds
+2-3 (ACTOR_NOT_FOUND / ACTOR_LOCATOR_MISMATCH / ACTOR_INACTIVE / ACTOR_FIRM_MISMATCH /
+ACTOR_CREATED_AFTER_ACCEPTANCE / ACTOR_SCOPE_REFUSED; createdAt_absent recorded; OPAL_GLOBAL iff
+opal-capital or Dev; admin descendants parked). Y's reading is CONFIRMED: a same-firm accepted owner
+without home_firm_id resolves home == firm_id, the estate's own rule at
+_scope/maintained_sources.py:304 (read by the CTO), with the evidence naming home_firm_source. CAVEAT
+recorded: for a firm admin whose accepted data firm is a descendant, the fallback makes
+ACTOR_FIRM_MISMATCH refuse; that is the parked scope refusing in the safe direction, and if that
+journey is ever admitted the entry must persist home_firm_id explicitly. P's 185dfb3e7f (bound 1)
+is ACCEPTED: createdAt (created_at fallback), role and userType are returned when present. P
+integrates current_authority.py, resident_worker.py and its test at the Y pin below and wires
+profile_for = CanonicalProfileReaders(<factory client>).get_user into build_resident_runtime.
+
+### IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923 (answers Y 99817 and P 99813 item d)
+Y's import census (93 reachable files: 78 same, 11 differ, 4 missing at P HEAD) shows six granted
+files, resident_session.py among them, cannot import in P's tree because the accepted template-upload
+batch lives under intake/ and ops/ outside the 31-path grant. Seven exact rows join
+IRPT_Y_ACCESS_INTEGRATION_P in this commit, pinned to Y c4564aad17 in the manifest:
+intake/resolution_kimi.py, intake/security_resolution.py, intake/template_reader.py,
+intake/tests/test_resolution_kimi.py, intake/tests/test_security_resolution.py,
+intake/tests/test_template_reader.py, ycharts/generate/current_authority.py. intake/portfolio.py and
+ops/prospect_dates.py ALREADY carry P rows from the 20:47Z grant (measured at .owned-paths.yaml
+:1170 and :1191), as do intake/resolution_broker.py, intake/uploads.py and
+intake/tests/test_template_uploads.py, so nine paths are pinned in the manifest and seven rows are
+new. Seven of the nine are Y-ahead or new and are exact copies. TWO ARE DIVERGED (Y and P commits on both
+sides since merge-base 10627906f2): intake/portfolio.py and ops/prospect_dates.py. P produces a
+file-level three-way merge for each (git merge-file from the merge-base blob) and Y confirms the
+semantic result in ONE exchange before P commits; neither side overwrites the other. Y's
+test_canonical_profile_consumption.py now reads _USER_FIELDS (Y's lane). Incumbents retained; no
+deploy grant; the temporary P rows come out after the accepted handoff, as before.
+
+### IRPT-HOLDINGS-DEPLOYED-READER-MATRIX-20260923 (M 99810 item 1) - ACCEPTED as the hop-3 library proof
+M's receipt COT_DEPLOYED_READER_MATRIX_20260923.json: the reader module hash 2f6e1ba1306c8ed5b282dbcbd18b7f375c1d20b1f0288093c8200fc450bf5c35
+equals the snapshot.py bytes inside the deployed irpt-holdings zip (CTO download), loaded against
+LIVE S3: 0698 / d486 / combined READ_OK at default and 2026-09-22 (32 / 59 / 91 nodes, USD
+26,303,302.17 / 19,705,844.84 / 46,009,147.02, clocks distinct), 2026-09-23 refused x3, excluded
+account refused. Limit stands: authorizer, selection and browser hops are not exercised. The next
+proof is Andrew's signed-in Anna selection and reload on localhost:5174; nobody synthesizes it.
+M's 49F meshed candidate 1d0b700b7d1a and the 7-model snapshot overlay are QUEUED for CTO review;
+publication stays refused until Andrew attests 49F currency (M's card at the M terminal), and the
+naming RAISE on "smartx/platform/silver/" is PARKED as a registry defect (owner: the
+infra/logic/registry lane holder, identified by the CTO next tick; no workaround).
+
+### NOT_READY reason-code vocabulary (P 2cdbe2bd60) - REVIEW PENDING
+P's addendum to docs/contracts/investor-reporting/v1/CONTRACT.md (38 added lines, on P's branch) names
+the 14 public reason codes in the portal generator's grammar; the CTO reads the ratified text next and,
+on acceptance, asks 0.0.0_AB_MSTR to merge that commit into CLOUD so P can regenerate the portal
+constant against a clean contract. CONFLICT / SUPERSEDED / UNEXPECTED stay flagged until the portal
+rule widens.
+
+
+## 2026-09-24 00:2x UTC - Claude CTO batch 3: M snapshot-overlay candidates (49F, INF, COT)
+
+### IRPT-HOLDINGS-MESHED-CANDIDATES-20260924 (M 21f696e19a, a700417729, be672a40d8)
+CTO read holdings_49f.py (484 lines), holdings_inf.py (382) and holdings_membership.py (158) in full,
+the three receipts, and ran the focused arms in M's worktree (test_holdings_49f + test_holdings_inf +
+test_holdings_membership: 18 passed in 1.29 s). VERDICT: all three ACCEPTED as SOURCE CANDIDATES,
+bounded, unpublished. What is right: custody dollars come only from the custodian (Schwab
+net_mv_plus_cash; Orion accounts_v2 current_value; the accepted COT publication); model authority
+comes only from the model platform (SmartX open allocations; Eclipse single-account portfolios;
+Rebalancer assignment by exact unique roster name); Client is the residual plug and the holdout block
+is held (49F 1,607 of 1,607, INF 287 of 287) while the redistributing build fails that check with
+zero total drift, which is the right difference control; TARGET model assets sit outside custody
+reconciliation; drills that do not tie are WITHHELD with the difference stated; currency refuses
+publication without an ANDREW_ATTESTATION record; no vendor call anywhere. The COT overlay is a
+projection over the accepted revision with source bytes checked against the receipt hashes, and
+single-account custom strategies have their client-derived names withheld.
+
+THREE BOUNDED FINDINGS to land before any of the three is published (M owns; none needs a new GO
+to fix):
+1. 49F-TAX-CONFLICT-01: holdings_49f.py:280-281 raises for the WHOLE build when one account is both
+   SmartX-modeled and Tax-traded. One workbook row would refuse all 7,522 accounts. Carry that account
+   in Client with the conflict stated as a fact and count it in refused_accounts; never a whole-build
+   refusal for a per-account conflict. (Zero such accounts today, which is why the build ran.)
+2. TAXONOMY-PATH-01: MODELS_PATH and TAX_PATH are literals ("Models"; "SMA" > "ALT Strategies" >
+   "Tax") while client_path is read from the canonical taxonomy. The contract says consume the MDPF
+   taxonomy registry, not a copied enum, and the L0 label the contract and Andrew use is "SMAs". Read
+   all three paths from the same registry helper; the label spelling comes from there.
+3. INF-CLOCK-01: custody_as_of is the Orion snapshot key (2026-09-23) while 4.0.0_SA_CRO 10f3cf6f9f
+   measured 3 of 3 that a daily key holds the PRIOR close. A screen saying "as of 2026-09-23" over
+   2026-09-22 values misstates the valuation date. State the valuation date as the prior trading day
+   of the snapshot key (lib/trading_calendar.py) with the snapshot key recorded beside it; values do
+   not change. The Tax sleeve gets the same treatment: the workbook observed_at (2026-09-23) is the
+   overlay clock for that sleeve and is stated on its fact.
+Publication of 49F and INF then waits only on Andrew's currency attestations (P writes the two
+CurrencyAuthorities.json records on his word) and each gets its own exact-write GO with the same
+index-CAS and prior-version-retained shape as d940022b06. The COT tree change M plans (MODEL_LEAF
+membership over the accepted custody) is welcome as a candidate: same business date, new revision,
+custody totals unchanged, MODEL_LEAF ASSIGNED whole-account at custody value with claim measured,
+OBSERVED positions under the leaf, index CAS, prior revision retained, new GO.
+
+
+## 2026-09-24 00:2x UTC - Claude CTO batch 4: reason-code vocabulary ratified; SmartX prefix RAISE routed
+
+### IRPT-REASON-CODE-VOCABULARY-20260924 (P 2cdbe2bd60) - ACCEPTED as ratified text
+CTO read the 38 added lines of docs/contracts/investor-reporting/v1/CONTRACT.md on P's branch: the
+fourteen data codes of _authz/errors.py PUBLIC_REASONS named one per row in the portal generator's
+grammar ("refused with public_reason_code X" / "returns X"), the two boundary codes unchanged, the
+PublicStatusEnvelope pattern unchanged, and the consumer's single-word limit (CONFLICT, SUPERSEDED,
+UNEXPECTED stay flagged until the portal widens its rule) disclosed as a portal change under the
+same row. NOT_READY is named as a retryable state, which is the truthful render for the Holdings
+screen Andrew saw. 0.0.0_AB_MSTR is asked (99837) to bring exactly that docs commit onto local CLOUD
+so P's generator, which refuses a dirty contract, can regenerate the portal constant; P then runs
+reason-codes.test.ts and owns the single-word widening.
+
+### Performance install VERIFIED LIVE (P 99831) - recorded
+CTO readback at 00:1xZ (get-function-configuration, list-role-policies, list-layer-versions):
+irpt-performance-adapter CodeSha256 JwJEEQGTENJJukTvrNQt3dq6VIAI8xqioIYA1atL+hk= (== the approved
+artifact), LastModified 2026-09-24T00:07:10Z, handler runtime.lambda_handler, 120 s / 1536 MB, layers
+irpt-common:5 + irpt-performance-native-layer:1 (created 00:07:00Z), six env keys, State Active;
+irpt-performance-retained-policy and irpt-performance-adapter-selection-read-policy present on the
+role. Installation hop PASS; X10 PENDING; no journey claimed.
+
+### SmartX prefix naming RAISE - ROUTED, not worked around
+M 99810 reported the naming gate grading "smartx/platform/silver/" (holdings_49f.py SMARTX_PREFIX, a
+pre-LGIC SmartX silver layout the retained build_49f already read) as RAISE: "'platform' is not a
+tier". A RAISE is the gate's own rule/registry defect (its docstring), not a refusal, and the
+LEGACY-READ carrier cannot carry it (it authorizes ONE EXISTING literal under a LIVE remediation and
+this is a grading defect on a key grammar). Under Rule 30 the SmartX pipeline reaches conformance
+through its own migration project, never as a rider. OWNER: the naming-gate mechanism owner
+(0.0.0_AB_MSTR, LD-0606/0609/0610 pattern), asked to grade a pre-LGIC key whose tier segment is not
+a tier as EXISTING/WARN with the reason printed, or to name the legacy layout in the registry; lands
+after the /integrate work unless it starts refusing. Un-park condition: the gate no longer RAISEs on
+that literal. M does not type around it.
+
+
+## 2026-09-24 00:2x UTC - Claude CTO batch 5: the three candidate findings CLOSED (M a0f3f141ed)
+
+### IRPT-HOLDINGS-MESHED-CANDIDATES-20260924, findings CLOSED
+CTO read the closing diff and re-ran the arms in M's worktree: the three named arms pass and the four
+Holdings test files pass 45 of 45 in 1.83 s.
+- 49F-TAX-CONFLICT-01 CLOSED: a SmartX-modeled account that is also a Tax Traded=Yes row is carried
+  in Client at full custody value with "MEMBERSHIP CONFLICT" stated, counted in
+  census.client_membership_conflict and listed in refused_accounts; the whole-build raise is gone.
+- TAXONOMY-PATH-01 CLOSED: holdings_snapshot.taxonomy_path(view_path, member_id) reads the MDPF
+  registry's VIEW_TREE and refuses an undeclared node or a member under the wrong node; both builders
+  read Models, SMA > ALT Strategies > <registry Tax-Managed SMA display name> and Client through it;
+  no literal path remains. LABEL: the registry's own L0 spelling is "SMA", so the candidates carry
+  "SMA"; the "SMAs" in the contract text and in this seat's finding was the human spelling, and the
+  registry governs by the contract's own rule. If Andrew wants "SMAs" on screen it is a
+  NODE_DISPLAY_LABEL row in the registry, never a builder spelling.
+- INF-CLOCK-01 CLOSED: custody_as_of and business_date are prev_trading_day(snapshot key) =
+  2026-09-22 with custody_snapshot_key 2026-09-23 recorded beside them; the validator still binds
+  rows to the key; values unchanged (reconcile 209,358,359.48 both sides). The 49F Tax sleeve states
+  the workbook observed_at as its own overlay clock.
+REBUILT candidates: 49F a860115ecaf5336ac5db4491d76cf5b60780f8a9c257c579defaf62351ba6a1f and INF
+21279569b08d40ce53e163143b2f829f78c7466f6b25c6a024c57e601b4ef441, both business date 2026-09-22, dry,
+zero writes. Publication of each now waits only on Andrew's currency attestation (P writes the two
+records), then its own exact-write GO in the d940022b06 shape.
+
+
+## 2026-09-24 00:3x UTC - Claude CTO batch 6: LD-0611 naming-gate RAISE-EXISTING accepted with one finding
+
+### LD-0611 (c49325f3d4) - ACCEPTED, counts-as unchanged, ONE FINDING on the arms
+CTO arms at HEAD c49325f3d4 against the pre-change gate copied from c49325f3d4~1, on scratch
+new-file diffs: "smartx/platform/silver/" grades RAISE under the old gate and RAISE-EXISTING (reason,
+Rule 30 pointer) under the new; WARN 1 graded both. Counts-as is WARN in every branch, so no commit
+that passed is blocked and none that was blocked passes; the K3 grammar defect stays printed and
+stays LGIC's to close. ACCEPTED.
+FINDING LD-0611-ARM-01 (owner 0.0.0_AB_MSTR, bounded, not a block): the NEGATIVE arm is VACUOUS at
+HEAD. "smartx/platformx/silver/" graded RAISE-EXISTING under the new gate in the CTO's run, not RAISE
+as the ledger records, because the carrier search (git grep -l -F over the whole tracked tree at
+HEAD) now finds that literal in ONE file: org/tier0/ledger/LD-0611.md, the ledger naming its own
+negative arm. MSTR measured the negative before the ledger carrying it was committed, so its control
+was true at measurement and false one commit later. Two consequences: (1) the arm proves nothing
+now; (2) the carrier set is the WHOLE tree, so a pre-LGIC key first typed into a ledger, a message
+record or a log later grades RAISE-EXISTING in code, which is the prose-carries-the-key shape the
+gate's declaration-tree domain (MINUS org/, docs/, run-artifact dirs) already excludes elsewhere.
+DIRECTION: scope the carrier search to the gate's own declaration-tree domain and exclude the gate
+file and its self-tests; pick a negative literal no file carries and assert it stays RAISE; re-run
+the positive. Lands after the /integrate work; nothing is refused meanwhile. No waiver, no registry
+row, as before.
+
+
+## 2026-09-24 00:3x UTC - Claude CTO batch 7: COT membership publication GO (M 26a04257bf)
+
+### IRPT-COT-MEMBERSHIP-PUBLICATION-GO-20260924
+GO to 2.0.0_SA_COO~M for exactly the candidate revision
+ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a (business date 2026-09-22):
+18 immutable creates (gold, header, 15 parts, manifest) then ONE index CAS on IfMatch
+"9731cecad3b5ff3e7323ff8567260f95" (index version grwnbLkeu_OeYL6AcOR33ec9mO51dTBJ), replacing only
+the 2026-09-22 row; prior revision 93f930c265 and the prior index version retained; every returned
+version and hash read back before the index; the index read back at its exact version; drift
+refuses. No other write, no vendor, no IAM. CTO INDEPENDENT VERIFICATION, its own instrument: the
+local candidate body (16,558,818 bytes) hashes to the revision; against the accepted 15 parts fetched
+from S3 at revision 93f930c265, the 841 ACCOUNT nodes are identical in id, value and clocks (0
+differences), the multiset of 13,793 SECURITY values is identical, the 462 MODEL_LEAF nodes are all
+ASSIGNED / claim measured / namespace COT_REBALANCER_MODEL with each leaf equal to its account's
+custody value, every SECURITY node is OBSERVED, and both Anna accounts carry a leaf. The live index
+ETag re-read at 00:3xZ is still 9731cecad3b5... (no drift since d940022b06). Source: the same seven
+retained inputs checked against the native publication receipt; tests 114 of 114 in M's worktree
+(membership, snapshot, economic regressions). After the writes: the deployed-reader matrix again
+(0698 / d486 / combined at default and 2026-09-22; 2026-09-23 refused) and the receipt to the CTO.
+The 379 unassigned accounts remain Client with membership unattributed; the 140 source-refused
+accounts remain open. Not a journey PASS; the screen is still Andrew's re-test.
+
+
+## 2026-09-24 00:3x UTC - Claude CTO batch 8: LD-0612 accepted (LD-0611-ARM-01 closed)
+
+### LD-0612 (1e7121507a) - ACCEPTED; LD-0611-ARM-01 CLOSED
+CTO arms at HEAD 67c2844189 (carrying 1e7121507a) against the copy at 1e7121507a~1, on the same
+scratch new-file diffs: "smartx/platform/silver/" grades RAISE-EXISTING under both (carried in code
+and contracts); "smartx/platformx/silver/" grades RAISE-EXISTING under the pre-change gate (vacuous:
+its only carriers are three record-tree files, LD-0611.md, LD-0612.md and this RULINGS.md) and RAISE
+under the new gate, which drops record-tree and non-graded-extension carriers from the search.
+WARN 1 graded in every arm; counts-as unchanged; the permission only narrows. The negative arm
+discriminates again and stays valid however many records quote the literal.
+
+
+## 2026-09-24 00:4x UTC - Claude CTO batch 9: COT membership publication VERIFIED; the write-count deviation ACCEPTED
+
+### IRPT-COT-MEMBERSHIP-PUBLICATION-VERIFIED-20260924 (M 99860)
+M executed the GO at 00:37:03-00:37:11Z. CTO independent readback: the current index is version
+XbWnSWxMFRs9jNOUtj6ZOELvpemDQP73 (ETag ab460faa537d..., sha256 983443bbc5b2...), its only date row
+2026-09-22 names revision ac3adb97f5e7 with manifest version UCnp0Bq_BRGjdz2RMgfrUCXmNOtAFq4y; three
+index versions exist and the prior two (grwnbLkeu, JhtDD) are retained; under ac3adb97 there are 20
+objects (gold, header, 17 parts, manifest), under 93f930c265 still 18, under fe328763b5 still 3; 42
+keys in the tree. M's reader matrix on the live publication: 0698 / d486 / combined READ_OK at
+default and 2026-09-22 with 1 / 1 / 2 MODEL_LEAF nodes and the same USD totals; 2026-09-23 refused.
+Publication hop PASS for the membership tree.
+
+THE DEVIATION (20 immutable creates, not the 18 the GO named) is ACCEPTED, no revert. The GO's
+blast radius was the set of keys under the new revision's own prefix plus ONE index row, and that is
+exactly what was written; the "18" was a count inherited from the prior candidate's 15-part split,
+carried by M into its request and by the CTO into the GO without either measuring the new body's
+partition plan (the body grew to 16,558,818 bytes and the publisher's deterministic size-bounded
+split produced 17 parts). CLAUDE.md's sign-off rule names the ACT'S BLAST RADIUS, never the
+producer's decision, and the split is the producer's rule. Both seats own the lesson: an exact-write
+GO names the key prefix, the index row and the IfMatch, and the requester prints the publisher's
+MEASURED write plan for the named candidate; a count the requester did not measure does not enter
+the GO. The 49F and INF requests carry that plan.
+
+
+## 2026-09-24 00:4x UTC - Claude CTO batch 10: P-REOPEN-01 landed; vocabulary amendment re-accepted; portal regen target; a lane correction
+
+### P-REOPEN-01 CLOSED in source (P 9074dba320) - ACCEPTED, deploys with the next Performance package
+The pointer key is digest({firm_id, sorted account_ids, start, end}); the pointer schema
+irpt-performance-accepted-v2 carries accepted_key and ref only (no owner, principal or selection);
+reopen checks tenant, key, accepted_key and the accepted report's provenance core and still reads
+through stores.reports.get with the CURRENT principal, so authorization is re-derived by the
+repository and the pointer grants nothing. Three new arms (another authorized viewer after a directory
+republish reopens with zero source or vendor reads; the pointer grants nothing to an unauthorized
+viewer; a different window misses the pointer). Suite 11 passed. No v1 pointer exists (store empty at
+install). It ships in the NEXT package under its own build, plan and GO; the installed function is
+unchanged until then.
+
+### IRPT-REASON-CODE-VOCABULARY-20260924, amendment 2a87fa8edf - RE-ACCEPTED
+Three rows (CONFLICT, SUPERSEDED, UNEXPECTED) reworded into the "refused with public_reason_code
+<CODE>" grammar so the portal's widened reading rule names all 14 data codes; codes and classes
+unchanged. 0.0.0_AB_MSTR cherry-picks it onto CLOUD as it did c80b8ccb41. P's portal regeneration
+c1ac41ec (branch p-reason-codes-20260924 over c70855f3: 16 named codes, generator and test share the
+grammar, 90 code-shaped tokens with 16 admitted and the 74 rejected inspected, bun test and tsc
+clean) is ACCEPTED as the render fix for the NOT_READY screen. TARGET: 0.0.0_AB_MSTR merges
+c1ac41ec into the local-live portal branch codex/local-live-data-20260923 (the 5174 screen and the
+DEV candidate MSTR already named), never a rebase; DEV rides the next portal push on Andrew's word;
+PROD is an enrichment item.
+
+### LANE CORRECTION (CTO 99857 was wrong on one file)
+ycharts/generate/tests/test_canonical_profile_consumption.py sits under ycharts/** in
+IRPT_COMPLETION_Y with no P row; the hook's refusal of P is correct and 99857's "a row you already
+hold" was not. Y commits its b35cb286b1 copy and the 7-field stub literal fix for the cross-firm
+resident cases on Y's branch; P re-copies both at its next sync. No new P row: the lane stays as
+narrow as the integration needs.
+
+
+## 2026-09-24 00:4x UTC - Claude CTO batch 11: Andrew-direct "all recs approved" (seven open calls) + two Y test rows
+
+### ANDREW-DIRECT 2026-09-24 ~00:4xZ at the 1.0.0_SA_CTO terminal, VERBATIM: "all recs approved"
+Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_004xZ_ALL_RECS_APPROVED_SEVEN_OPEN_CALLS.md
+(the seven cards repeated with their RECs and the ruling each approval creates). Currency record:
+IRPT_MVP_COMPLETION_20260922/ANDREW_49F_INF_USD_20260924.md. The rulings, each exactly the card's REC:
+1. 49 Financial report amounts are USD (firm-level attestation; same scope and limits as COT).
+2. Inflection report amounts are USD (same).
+3. ONE live Cottonwood performance calculation, account acc_d486fc9455d6b2aa18e13af1, window
+   2026-09-01..2026-09-22, through the installed adapter under a server-installed one-use plan; X10
+   ACTIVE first; any other account, window or attempt needs a new word.
+4. The AutoShutdown=disabled tag on i-0167fd745ad906a66 stays; the host starts only with the
+   resident cutover plan.
+5. ONE live Orion Reporting/Scope calculation for a real Inflection client, bound at execution to the
+   exact client, window and request P presents.
+6. 49F SmartX: ONE bounded live account-level call under yaliu-bundle, bound at execution to the
+   exact account, window and request P presents; period-to-date labelled, selected-set limit disclosed.
+7. 0.0.0_AB_MSTR pushes workspace CLOUD to origin.
+ROUTING: P writes the two ANDREW_ATTESTATION records (49financial, inflection) into
+CurrencyAuthorities.json citing ANDREW_49F_INF_USD_20260924.md and prepares the CALL-3 one-use plan
+for CTO review; M then requests the 49F and INF exact-write GOs with the measured write plan; MSTR
+pushes; CRO informed on 6. Nothing wider is inferred from the word.
+
+### IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923, two more rows (Y 99870)
+ycharts/generate/tests/test_canonical_profile_consumption.py and
+ycharts/generate/tests/test_custody_retained.py join IRPT_Y_ACCESS_INTEGRATION_P as exact rows at Y
+pin 79c53e1abe (manifest extension 2): both are test files whose semantic writer stays Y; P copies
+them at that pin so the eight cross-firm resident cases and the consumption test match the 11-field
+reader. Y's reading was right and the CTO's 99868 "no new P row" is superseded by this narrower fact:
+P cannot sync a file it holds no row for, and a branch merge would carry more than the grant.

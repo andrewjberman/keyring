@@ -1,115 +1,82 @@
-# IRPT Y -- status
+# IRPT Analysis (COO~Y) -- status
 
-Seat `2.0.0_SA_COO~Y` (CODEX). Contract
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
-version 1.3. Current reviewer `1.0.0_SA_CTO` under Andrew's direct-review instruction;
-matching CVO seat remains `3.0.0_SA_CVO~Y`.
-As of 2026-09-23T18:25Z.
+Seat `2.0.0_SA_COO~Y` (CLAUDE, since 2026-09-23 23:01Z; the Codex seat and its 600 s driver are retired).
+Contract `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.4; COO_Y.md and
+CONTROL.md apply; CTO reviews directly (no CVO queue). Goal + loop authority:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md` @fc17929b64
+(/loop 20m, stop on /verify SOUND or Andrew's stand-down). As of 2026-09-23T23:30Z.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working branch / worktree | `irpt-mvp-y-20260922` at `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922` |
-| Workspace candidate pin | Y dual-owner source `1385a126e7`, includes Entry repairs `104d9472f1` and actual-viewer source `85af5eb95d`; prior custody source `10627906f2` integrated by P at `411256e41c` |
-| Portal candidate pin | No new Portal candidate in this custody-consumer tranche |
-| Deployed artifact pin | Y accepted-custody consumer NOT DEPLOYED |
-| Push state | LOCAL; origin CLOUD measured `365ab567ba1250a6a3569df38cb75d12fe2e8d0e`; no push |
-| Package evidence | P reports measured package `e3ad48ca23`, evidence `b639e430d0` |
-| Bounded consumer review | CTO `36131adb48`: 306 tests / 50 subtests, exact P reader enabled, no skips |
-| Actual-viewer source review | CTO `8b7d43d5eb`: independent 475 tests / 50 subtests on `85af5eb95d`, zero skips; later storage pairing is Y evidence `4ea95d1117` |
-| Combined dual-owner review | CTO `583d2da`: fresh archive of Y1385 with all P/M dependencies, 505 tests / 50 subtests, no skips; bounded source PASS |
-| Upload/ticker proposal | `c083bfdd5d`: exact proposed paths and four directly reproduced real-template cases, sent CTO under `4cdac345db` |
+| Workspace candidate pin | `79c53e1abe` (custody-retained stub follows the reader's projections) over `c4564aad17` (consumption stub) over `635af92b76` (current-authority consumer, CTO ACCEPTED 9baf67bb5f) over `2874e37647` (CTO accepted 2dd385ed59 / 3d9f451) |
+| P integration pin | `b3fc529601` on `irpt-smoke-p-backend-20260923`: 31 Y files; 85 of 85 tracked `ycharts/` files at 2874 hash-match P HEAD |
+| Portal candidate pin | `7a5b24e7` (no new Portal candidate) |
+| Deployed artifact pin | `irpt-ycharts-generate` CodeSha256 `1L60sG1G9IaFfwe+LPNdE84DarlWCHKkdE8M5CyVI8o=`, LastModified 2026-09-19T14:29Z -- predates every Y commit; source map at HEAD says `CJ6aBh7B...` |
+| Push state | LOCAL; origin CLOUD `b475b96309` (ls-remote 23:16Z) |
 
 ## Live thread
 
-State: full linked journey NOT PROVEN. CTO `f50aff2ce1` relays Andrew's confirmation
-of Global/Select Firm and investor-list bootstrap on served `10141` / deployed
-`o590`. That bounded symptom is confirmed; pagination, selection persistence,
-tabs, generation and full-access acceptance remain unproved here. No duplicate
-sign-in prompt is required. Real backend, real data and real login remain required.
+State: NOT LIVE. Last trace: none (18 focused offline cases + 4 controls at 2874, CTO 2dd385ed59; no installed/live proof).
+First failing hop: 0. Always-on host `i-0167fd745ad906a66` is STOPPED (enforcer StopInstances 21:21:18Z; Terraform
+`ycharts/instance.tf:131-135` declares `stopped`; no `AutoShutdown=disabled` tag) -> nothing consumes `irpt-generation`.
+Next hops measured behind it, all P shared surfaces: deployed generate Lambda is stale against the source map; its
+role has no `sqs:SendMessage`; `IRPT_LIVE_YCHARTS_CALL` is unset; `/analysis/inputs`, `/analysis/requests*` liveness
+UNDETERMINED by comp-routes (one `/api/scoped/investor-reporting/*` behavior to API Gateway).
 
 ## Acceptance IDs
 
 | ID | State | Evidence |
 |---|---|---|
-| Y1 Inputs | OFFLINE ONLY | accepted reader consumer `10627906f24aa42db4c08fd66105599f35bf7819`; actual custody evidence capability absent |
-| Y2 Normalization | OFFLINE ONLY | `ACCEPTED_CUSTODY_CONSUMER_EVIDENCE_20260923.json` at `63d5727e89`; bounded CTO review `36131adb48` |
-| Y3 Request/execution | OFFLINE ONLY | guarded factory/retention/retry exercised; no live queue/vendor proof |
-| Y4 Vendor | NOT_EVALUATED live in this tranche | no per-use vendor run performed |
-| Y5 Publication | OFFLINE ONLY | retained certifier/publication work is not live-thread acceptance |
-| Y6 UI/recovery | OFFLINE ONLY | no new authenticated UI proof in this tranche |
-| Y7 Full proof | NOT_EVALUATED | no linked live journey through export |
-| S1 Selection/access | OFFLINE ONLY | actual guarded selection checks with synthetic source ports |
-| S2 Accepted data | OFFLINE ONLY | P/M reader exists; actual economic source facts remain unavailable |
-| S3 Frozen input | OFFLINE ONLY | `10627906f24aa42db4c08fd66105599f35bf7819` preserves originals/provenance and verifies replay |
-| S4 Durable lifecycle | OFFLINE ONLY | factory retained-byte/retry controls, no live service proof |
-| S5 HTTP/UI parity | OFFLINE ONLY | guarded Entry fixture proof, no authenticated live journey |
-| S6 Export | NOT_EVALUATED live in this tranche | P owns shared export proof |
-| S7 Placement | NOT_EVALUATED live in this tranche | no new provisioning or write-location proof |
+| Y1 selected custody + owned CSV/XLSX + disposition + catalogue | OFFLINE ONLY | TEMPLATE_UPLOAD_HANDOFF_20260923.md, UPLOAD_RESOLUTION_IMPLEMENTATION_20260923.md @2874 |
+| Y2 immutable normalized input, corrections, reconciliation | OFFLINE ONLY | normalized_input.py / frozen recipe @2874; 12.03 Dollars freeze offline |
+| Y3 retained acceptance, durable dispatch, idempotency, recovery | OFFLINE ONLY | resident_worker.py, durable_job.py @2874; CTO 2dd385ed59 |
+| Y4 identity/settings/holdings readback, Overview/Comparison/Multi-Comp PDFs | NOT STARTED (live) | session_* @2874 offline only; no vendor PDF ever produced by the resident |
+| Y5 extraction/certification into typed report | OFFLINE ONLY | publisher.py / census 195040 B @2874 |
+| Y6 polling/history/reload/corrections/downloads | NOT STARTED (live) | Portal 7a5b24e7 |
+| Y7 one reconciled full trace per required case | NOT STARTED | none |
 
-Offline-only work grades no acceptance ID until the live thread is live.
-
-## Current access correction
-
-Controlling ruling `5ad99c7d30` grants verified interactive Opal users all IRPT
-functions across firms; Global/firm selection filters inputs/views, not authority.
-P owns shared enforcement. Y source `1385a126e7` adds new actual-submitter
-acceptance from another creator's retained prospect input, preserving original
-bytes/ref/owner and separately recording the acting submitter. Actual P Entry
-`4ec461a2e9` is paired; Y repairs `104d9472f1` accept selected_tenant and preserve
-legacy ordinary upload principal shape. Exact P schema/validator/storage
-`37526d36ae` and M maintained sources `485b69c061` pass 20 new paired controls.
-Combined generation/intake/ops coverage: 505 tests and 50 subtests pass; the one
-initial missing-env intake skip was resolved with its exact pinned-reader run.
-See `DUAL_OWNER_HANDOFF_20260923.md`. Evidence remains bounded offline.
-Ordinary restrictions, forged-identity refusals and immutable attribution remain.
+Offline-only work grades nothing until the live thread is live.
 
 ## Write claims
 
-No active code edits. Dual-owner factory/service/worker/date source is pinned at
-`1385a126e7`. Y retains intake, generation and owned-read consumer ownership.
-P's shared scope/bootstrap, repository, schemas and package paths were not edited.
+None in flight. Landed at `635af92b76`: `generate/current_authority.py` (new), `generate/resident_worker.py`
+(`profile_for` port, decision replayed at start / every guard / release / reopen), `generate/tests/test_resident_worker.py`.
+P's next integration batch takes these three files over the 31 already at b3fc529601. Untracked and preserved:
+`.tools/irpt-y-portfolio-commit-message.txt`, `.tools/irpt-y-submission-commit-message.txt`.
 
 ## Next proof
 
-P consumes the exact combined Y/P/M candidate and installs ProspectSubmissionFactory
-with real retained repositories, upload reader, canonical profile readers and
-ordinary authorizer. CTO accepted the source handoff at `583d2da` and granted P
-the three exact additional Y paths; P must return installer/package proof. Live generation,
-queue delivery, browser continuity and vendor results remain unproved. The
-previous bootstrap symptom is confirmed; deeper custody work stays parked.
+Real login -> CSV AAPL 10.01 + VNQ 2.02 Dollars -> frozen 12.03 -> Overview acceptance/queue -> resident worker on the
+running host -> vendor PDF -> certified AnalysisReport -> screen -> reload/history -> same-revision export, run
+exactly as `RUNBOOK_1203_LIVE_JOURNEY_20260923.md` (ten hops, per-hop call, readback and refusal signatures, the
+evidence list, the resident acceptance command). Runs the moment preconditions A-F land at P; until then each loop
+tick re-measures the dependencies below from artifacts.
 
 ## Dependencies
 
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
-| First live auth/scope/bootstrap hop | COO~P | CTO `f50aff2ce1` | Andrew confirmed bounded Global/firm/list symptom |
-| Full-access viewer/prospect authority | COO~P | `9a3ec2a11f`, Entry `4ec461a2e9` | CONSUMED, actual Entry paired offline |
-| Actual-viewer cross-firm retained storage | COO~P | `37526d36ae`, prior `dd6edfc3aa` | CONSUMED offline |
-| New submission of another creator's input | P contract/schema; M profiles; Y consumer | `e07a5ca692`, `37526d36ae`, `485b69c061`, Y `1385a126e7` | CTO bounded source PASS `583d2da`; P runtime installer/package proof next |
-| Paired private reader | COO~P / COO~M | `e36b007fa1`, accepted-custody-input-v1 | CONSUMED offline |
-| Integrated package review | CTO / COO~P | P evidence `b639e430d0`, package `e3ad48ca23` | PARKED under `5edf991c06` |
-| Actual economic/source evidence | COO~M / COO~P, CTO interpretations | Mandatory reader economic ports | BLOCKED on real capability |
-| Y consumer | COO~Y | `10627906f24aa42db4c08fd66105599f35bf7819` | CONSUMED by P per exact 164914 notice |
+| Installed `MODULE:build_resident_runtime` factory with real `principal_for`, repositories, session ports; package/census digests; sole-consumer cutover receipt | 2.0.0_SA_COO~P | RESIDENT_ASSEMBLY_HANDOFF_20260923.md items 1-3, 5 | AWAITED (no implementation in P tree) |
+| Non-HTTP current authority: P projects `createdAt`/`role`/`userType` from `CanonicalProfileReaders.get_user`; Y refuses on user None / status != active / firmId != home_firm_id / createdAt after acceptance, records createdAt_absent, classes OPAL_GLOBAL iff firmId == opal-capital or userType == Dev | 1.0.0_SA_CTO ruled d78fdb2f1c (item 4); P (1)(4), Y (2)(3) | CTO 9baf67bb5f: Y `635af92b76` ACCEPTED bounded (home-firm fallback confirmed, caveat recorded for a firm admin on a descendant firm); P 185dfb3e7f ACCEPTED; plan 1de76039 APPLIED 00:17:29Z (P 99840): Query/GetItem/kms:Decrypt on both roles, zero-diff, ledger closed | CONSUMED (Y); runtime grant APPLIED |
+| Host tag `AutoShutdown = "disabled"` on the runner Terraform resource, plan to CTO, safe-apply; nobody starts the host before the tag and the resident install are ready | 2.0.0_SA_COO~P | Tag `AutoShutdown=disabled` APPLIED 00:17Z (P 99840), host still `stopped`, tag inert while stopped, Andrew's veto open; writer B `aws_ec2_instance_state.runner` flips to running in the SAME plan as the resident install cutover, then one start | Writer A done; writer B SEQUENCED behind the factory/cutover plan (P) |
+| Generation path: deploy HEAD submit entry, `sqs:SendMessage` on submit role, `IRPT_LIVE_YCHARTS_CALL` | 2.0.0_SA_COO~P | CRO 6fc3f5f785 item 5; RESIDENT_ASSEMBLY_HANDOFF items 2, 4 | AWAITED (measured absent 23:2xZ) |
+| Route plane for hops 1 and 9: `POST .../analysis/inputs`, `GET .../analysis/requests`, `GET .../analysis/requests/{requestId}` are `NO-HANDLER-AT-HEAD` in routes.json (not in Terraform), LiveClient flags `false` (`responses.ts:423-425`); no Lambda wires `build_upload_entry`; deployed `irpt-status` (built 09-21) predates the history/read handlers (`8e8498c9c0`, 09-22) | 2.0.0_SA_COO~P (routes, factory composition, irpt-status redeploy, flags) | RUNBOOK_1203_LIVE_JOURNEY_20260923.md preconditions D-E | AWAITED (measured 00:1xZ) |
+| 31-path owned-path grant for the copied Y files | 2.0.0_SA_COO~P | b3fc529601 | CONSUMED |
+| Grant extension to the Y template-upload batch: intake/{portfolio,uploads,resolution_broker,resolution_kimi,security_resolution,template_reader}.py, intake/tests/test_{resolution_kimi,security_resolution,template_reader,template_uploads}.py, ops/prospect_dates.py (8 Y commits, 84c6e63806..85af5eb95d) | 1.0.0_SA_CTO grants, 2.0.0_SA_COO~P merges | CTO 9baf67bb5f item 6: seven rows granted at c4564aad17 (resolution_kimi, security_resolution, template_reader + their tests, current_authority.py); portfolio.py / uploads.py / prospect_dates.py DIVERGED -> P three-way merges from 10627906f2, Y confirms semantics in ONE exchange before P commits | INTEGRATED at P d3f612d94d + 9e87bb4202 (merges == Y blobs; resolution_broker.py copied; `resident_main.py --help` imports in P's tree). Two Y-lane test files remain to re-copy at 79c53e1abe (consumption test b35cb286b1, custody-retained stub 6ab91ac03a); neither has a P row -- CTO asked for two rows or a merge (tick 4 message) |
 
 ## Parked
 
-| Question / work | Owner | Un-parks when |
+| Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| Deeper custody source/package review, including CTO-named `155213fedf` | CTO / COO~P; M/Y retain owned evidence | First hop is live, or its trace names this as a necessary first-hop dependency (`5edf991c06`) |
-
-Existing pins, findings and completed atomic work are preserved. No side review
-chain or peer ACK is opened. CRO notice 99689 is informational: the approved
-backend-only definition does not alter IRPT's frontend/live-thread requirement.
+| `comp-blast freeze_parsed_portfolio` NOT-FOUND over 28,307 nodes (MSTR 99629/99630) | 2.0.0_SA_COO~Y | a graph question arises for that name; not on the live thread |
 
 ## Limits
 
-CTO's bounded local consumer PASS remains valid as offline evidence; it is not
-live product acceptance. Economic, publication and current-selection callbacks
-in Y's paired tests are synthetic. P reports an actual M/P/Y composed replay test
-with synthetic economics; Y has not independently rerun that package proof.
-No actual custody admission, cloud action, vendor operation, provisioning,
-promotion or runtime activation is claimed. Existing per-use egress and other
-reserved gates remain. Peer messages are interface publication, blocker or
-review handoff only; no peer ACK is required for this law notice.
+Not proven: installed service, live login/session recovery, real vendor PDF contents, browser E2E, all-firm
+publication, holdings readback beyond upload echo, the units/variants/corrections/export matrix. Reserved gates still
+ahead: the shared Terraform apply on the ycharts root (P, never-widen), the first automated sign-in (approved under
+6fc3f5f785 as the standing host workflow; agent ad hoc vendor calls stay prohibited), and any shared-branch push
+(0.0.0_AB_MSTR). No acceptance ID is PASS until the CTO grades a pinned live trace.
