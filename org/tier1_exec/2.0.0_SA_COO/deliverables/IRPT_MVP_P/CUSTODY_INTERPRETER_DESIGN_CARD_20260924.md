@@ -136,6 +136,28 @@ cross-firm gate's enumeration (`.tools/ds-precommit-check.py` `_CROSS_FIRM_FOREI
 names every firm bucket it touches. The offline oracle records keys and counts of BOTH objects for Anna's account, never
 values. No code is cut on this card until the grants are applied under a ledger; Y's cell owns the interpreter.
 
+## 8. v2 -- 2026-09-24 13:0xZ: Q3 RULED by 2.0.0_SA_COO~Y (accepted by the CTO); the card is CLOSED on all four questions
+
+**Q3 (Y, 100612; CTO 100614 accepted; M 100615 one per-firm note):** a selected account with 0 admissible custody rows
+REFUSES the submission with a named reason and the selection is re-cut; the contract is NOT widened --
+`empty_account_evidence` stays reserved and null in v1 (custody_portfolio.py:201). Producer facts: M's COT build already
+refuses "account census differs from independent totals; missing is not empty" (holdings_snapshot.py:438-439 @d96513bc40)
+and an expected account absent from BOTH inputs (:440-443); cash is a custody ROW, not an absence; an empty account
+contributes nothing a vendor upload can carry. Per firm (M): at 49F a custody account with 0 dim_position rows is still
+built (a dim_balance row -> a CASH remainder node), so the interpreter's refusal fires on the ROWS OBJECT, never on the
+served tree.
+
+**The two refusal classes and their PUBLIC spelling (P rules, as the card's owner):** internal classes
+`CustodyAccountNotInSource` (the selected account has no row in the receipted rows object) and `CustodyUnsupportedRows`
+(rows present, none admissible; the COUNT is carried, never ids or values); both are INPUT refusals on the selection and
+answer the closed vocabulary's `INVALID_INPUT` (the same public code the upload validator's refusals use), never
+NOT_AUTHORIZED (authority is not in question) and never UNEXPECTED; the sink records the class and the count. The
+selection is re-cut by the viewer without the account.
+
+**NAMED OPEN (the CTO, 100614):** the mixed-rows case -- positive rows beside Market Value <= 0 lots -- is measured on
+Anna's account first (keys and counts from the receipted rows object) before the admissibility rule is written; it is
+not decided here.
+
 ## 6. What this card does not decide
 
 The first live Analysis submission (100554 (b)) stays Andrew's browser act on whichever composition lands
