@@ -2,8 +2,8 @@
 
 Seat `2.0.0_SA_COO~M` (CLAUDE, successor to the Codex seat since 2026-09-23 ~22:47Z). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.4. Reviewer `3.0.0_SA_CVO~M` (not live).
-As of 2026-09-24T00:30Z. CTO 3c8392cf2f: 49F, INF and COT-overlay candidates ACCEPTED as source candidates; its three
-bounded findings (Tax conflict, taxonomy path, INF valuation clock) are closed in the commit that carries this line.
+As of 2026-09-24T00:40Z. CTO 3c8392cf2f accepted the 49F, INF and COT-overlay candidates as source candidates; CTO batch 5
+confirms its three findings closed at a0f3f141ed and names 49F a860115e / INF 21279569 as the publication candidates.
 
 Standing directive (Andrew-direct ~22:4xZ, record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md` @6890584d29; Step 1b-F row landed by the CTO @d78fdb2f1c):
 Holdings end to end for every 49 Financial and Inflection client, meshed across SmartX/Schwab and Eclipse/Orion, with a
@@ -21,6 +21,7 @@ structurally correct Cottonwood pipeline bounded by Black Diamond's data window.
 | Accepted COT publication | revision 93f930c265ed242d7e38cb48a7ed4baf267025e8c4dfd06ff39739c6a8f55217, index version grwnbLkeu_OeYL6AcOR33ec9mO51dTBJ, CTO-verified |
 | 49F candidate (UNPUBLISHED) | revision a860115ecaf5336ac5db4491d76cf5b60780f8a9c257c579defaf62351ba6a1f, business date 2026-09-22 / overlay 2026-09-23 (CTO findings 3c8392cf2f closed) |
 | INF candidate (UNPUBLISHED) | revision 21279569b08d40ce53e163143b2f829f78c7466f6b25c6a024c57e601b4ef441, business date 2026-09-22 (Orion key 2026-09-23 holds the prior close) / overlay 2026-09-23 |
+| COT membership candidate (UNPUBLISHED, GO requested) | revision ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a over the accepted 841-account census: totals and every position value identical to 93f930c265, 462 measured model leaves on 46 Rebalancer models; CAS precondition IfMatch "9731cecad3b5ff3e7323ff8567260f95" / index version grwnbLkeu |
 | Push state | LOCAL; origin/CLOUD b475b96309 (ls-remote read 23:27Z by CTO); shared pushes are 0.0.0_AB_MSTR's |
 
 ## Live thread
@@ -55,9 +56,10 @@ Offline-only work grades nothing until the live thread is live.
 
 (1) Andrew's signed-in Anna Holdings screen (hop 4). (2) On Andrew's currency attestation for 49F and INF (the binder
 accepts only ANDREW_ATTESTATION; P writes the records), publish both candidates through the existing publisher under
-CTO review, then their reader matrices. (3) Fold the COT membership into the tree as MODEL_LEAF children under CTO
-review (a re-publication, so a new GO), so the screen can show it; the projection artifact carries it today. (4) Own-UI
-read of the Holdings tab against MODEL_LEAF children and withheld-drill facts.
+CTO review, then their reader matrices. (3) COT membership candidate ac3adb97 is built and its GO requested (the
+d940022b06 shape: 18 immutable creates + index CAS on the precondition above, prior revision retained); on the GO,
+publish it and run the deployed reader matrix again. (4) Holdings tab render of MODEL_LEAF children, taxonomy grouping
+and withheld-drill facts in the M UI worktree (the wire contract carries all three; slices.ts renders none yet).
 
 ## Dependencies
 
