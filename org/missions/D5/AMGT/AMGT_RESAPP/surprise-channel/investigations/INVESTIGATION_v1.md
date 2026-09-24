@@ -13324,6 +13324,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "R-35 @35a6fb028f: fifteen contract amendments were graded by the wrong reviewer, and the remedy is 'a CVO read of those fifteen at their current text, NOT a re-opening of the work built on them'.",
     "world_is": "The read is done and recorded at org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_MISROUTED_CONTRACTS_CVO_READ_20260924_Z.md. All fifteen are SOUND, so the gap admitted no defective contract and no downstream work is re-opened. The live incident set is ELEVEN rather than fifteen once the four pre-regime amendments are subtracted -- a narrowing R-35 does not carry, and one that does not dissolve the incident.",
     "notes": "NOTHING IS RE-OPENED and no row is disarmed by this read. Until the two heading renames land on the post-drain edit (R-34 coordinates, held by Rule 27 while round 37 is in flight), THIS RECORD -- not the signature -- is what covers the eleven, and it says so rather than letting a stamp imply it. SCOPE NOT CLAIMED: this seat did NOT re-review the brief half (4.0.0_SA_CRO~Z's reviews covered the bytes routed to them and nothing here criticises that seat), and did NOT run the same history walk over AMGT_CORPUS -- prd-contract-half-check reports CORPUS clean at HEAD, but that is a HEAD read and not a history walk, so whether CORPUS ever carried an amended contract in a brief-classifying section is UNRUN. Owner of the remaining mechanical fix: 1.0.0_SA_CTO~Z."
+  },
+  {
+    "id": "AMGT_RESAPP-W137-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~137",
+    "surfaced_at": "2026-09-24T08:22Z",
+    "one_line": "AMGT-rl-8's LeadPanel.tsx now imports PanelFooter (from '@/ui/components/panels') and Segmented (from '@/ui/components/Controls'); tabs.harness.cjs (another cell's, __harness__/tabs.harness.cjs, read-only under this cell's <paths>) sources the real LeadPanel.tsx through its own narrower stub map and has no case for either specifier, so it now throws MODULE_NOT_FOUND before any of its own checks run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs (unmodified, portal HEAD after this cell's LeadPanel.tsx/RankedList.tsx/RankedChart.tsx/StarredList.tsx edits) throws 'Error: Cannot find module @/ui/components/Controls' at its own load() (tabs.harness.cjs:139) while transpiling LeadPanel.tsx:9, which is the new `import { Segmented } from '@/ui/components/Controls'` line this cell's target (Segmented movement/subject/view controls) requires.",
+        "tabs.harness.cjs sources LeadPanel.tsx, RankedList.tsx and StarredList.tsx directly (its own header names them as its instrument) but was written before this cell landed; its load() table (around its own :90-150) has cases for '@/ui/components/panels' (a Panel/PanelHeader/PanelContent-shaped stub, no PanelFooter) and no case at all for '@/ui/components/Controls', so both this cell's new imports are unresolved there.",
+        "the same failure mode this worker's own errorEmpty.harness.cjs hit first and fixed (adding PanelFooter to the panels stub and a Segmented stub) under this cell's <paths> -- tabs.harness.cjs is NOT in the six files this task order grants write access to (only errorEmpty.harness.cjs and the new leadPanelPattern.harness.cjs are), so the same fix cannot be applied here without exceeding the lane grant.",
+        "this cell's own three acceptance criteria (AC1 leadPanelPattern.harness.cjs, AC2 ui-class-census.mjs, AC3 errorEmpty.harness.cjs) all pass at the tip with this change in place -- the break is confined to the sibling harness, not to this cell's graded surface."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This cell's <paths> lists tabs.harness.cjs only as a read-only input, never a file this worker writes; the cell's own target requires LeadPanel.tsx to import Segmented and PanelFooter.",
+    "world_is": "Landing the target (Segmented controls + a PanelFooter 'Source:' line) breaks a sibling harness this worker has no write grant on. The break is mechanical (an unresolved module specifier in a hand-written stub table, not a behavioural regression) and the fix is the same shape already applied to errorEmpty.harness.cjs in this cell -- add PanelFooter to the '@/ui/components/panels' stub and a Segmented stub (or no-op) to a new '@/ui/components/Controls' case in tabs.harness.cjs's own load().",
+    "disarm_owner": "2.0.0_SA_COO~Z (this round's issuer) to route to whichever seat/worker owns tabs.harness.cjs's <paths> this round, or fold the two-line fix into that file's own next touch.",
+    "notes": "posture.harness.cjs and assembled.harness.cjs were also checked bare (node <file>) and both fail for reasons independent of this cell -- posture.harness.cjs on a missing .scratch/posture_BABA_US_Equity.json fixture, assembled.harness.cjs on missing required --payload/--ranked CLI args -- neither traces to this cell's edits on the evidence run, so neither is reported here; tabs.harness.cjs's failure is the one this worker can attribute to its own change with a direct stack trace."
+  },
+  {
+    "id": "AMGT_RESAPP-W137-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~137",
+    "surfaced_at": "2026-09-24T08:22Z",
+    "one_line": "AMGT-rl-8's face asserts the footer reads 'dated <dated> (requested <requested_as_of>)' as if `dated` carried a date value; the live fixture (__harness__/tests/uiContractFixtures.json's /api/scoped/amgt/lead-panel/rankings/trending/chatter entry) serves `dated` as a BOOLEAN (true) and the actual calendar date sits in the already-typed `as_of_date` field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/__harness__/tests/uiContractFixtures.json:8770 reads `\"dated\": true,` -- a JSON boolean literal, not a string -- beside `\"as_of_date\": \"2026-09-23\"` and `\"requested_as_of\": \"2026-09-24\"` on the same object.",
+        "comp-find over portal/src/pages/SecurityAnalysis for the literal `\"dated\"` returns exactly this one occurrence -- no second fixture exists to show `dated` taking a non-boolean shape.",
+        "types.ts's RankingSet (outside this cell's <paths>, read-only) types neither `dated` nor `requested_as_of`; this worker added both as a local, additive `RankingDateFields` interface in LeadPanel.tsx rather than editing the shared type."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved pragmatically inside this cell's own writable surface (LeadPanel.tsx's sourceFooterContent): the footer's 'dated <value>' slot reads the already-typed `as_of_date` (the calendar day the list is actually dated as, matching this cell's own title -- 'the day the list is dated'), and the boolean `dated` field gates an explicit staleness sentence ('this list is older than the date requested') appended only when `dated === true` and the two dates differ. Both leadPanelPattern.harness.cjs's `source_footer`/`stale_dated_said` checks and a full `tsc -b --noEmit` pass confirm this reading is internally consistent; nothing about it is asserted as the ONE correct reading of an ambiguous field name.",
+    "spec_asserts": "AMGT-rl-8 section 1: 'the footer reads \"Source: <generation> -- dated <dated> (requested <requested_as_of>)\"', treating `<dated>` as a printable date value.",
+    "world_is": "`dated` is a boolean flag, not a date. Printing it literally would render 'dated true'. The actual date the list is dated as is `as_of_date`, a field the task order's own prose never names in this sentence despite RankingSet already typing it.",
+    "disarm_owner": "N/A -- hazard_standing INERT; the footer text this worker shipped is this cell's own deliverable and any future seat reading the footer's exact wording should read LeadPanel.tsx's sourceFooterContent rather than this cell's prose.",
+    "notes": "Not reported as BLOCKING because the task order's own instruction ('expected values READ OFF THE PAYLOAD') gave this worker's harness latitude to define the check against whatever the payload actually carries, which is what leadPanelPattern.harness.cjs's `stale_dated_said`/`source_footer` checks do."
   }
 ]
 ```
