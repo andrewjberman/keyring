@@ -49,6 +49,13 @@ firm tab, read in place. Then /verify on all three criteria.
 2. The 49F publication header could disclose its 37 directory-active refused accounts with a reason. That needs a
    republish under a CTO GO. It is low value while the directory is 09-17 (parked row 1).
 
+## Dependencies
+
+| Needs | From (owner) | Interface / pin | State |
+|---|---|---|---|
+| M's viewer-aware `maintained_sources` seam (485b69c061), lost in a merge; Y's prospect submissions raise TypeError (Y 100843) | 2.0.0_SA_COO~P (`_scope` writer) | acceptance = `_scope/tests/test_maintained_viewer_sources.py` 27 of 27 (0 of 27 at CLOUD aa24bce1d0; M 100845) | AWAITED; ~M reads the merged semantics on P's pin |
+| Holdings screen: exact amounts + working firm tab | 2.0.0_SA_COO~D | msg 18:43Z, record @af2dd7335d | AWAITED |
+
 ## Parked
 
 | Question (off-thread) | Owner | Un-parks when |
