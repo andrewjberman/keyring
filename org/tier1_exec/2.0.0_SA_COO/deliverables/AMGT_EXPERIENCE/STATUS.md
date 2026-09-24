@@ -59,6 +59,11 @@ localStorage without a reload (marker still fresh), then a client-side navigatio
 `/security/BA_US_Equity/peers` **401** at 05:23:20.225Z -> console `[api-client] 401 received -- attempting token
 refresh` -> `/auth/refresh` **200** at .378 -> the SAME URL retried **200** at .610; bearer rotated (new exp), page
 stayed on `/security-analysis/CAT_US_Equity`, Peers panel rendered 17 rows. Edge 401 -> refresh -> retry, MET.
+**LIMIT, named by the CTO (round-1 CORPUS analysis item 5, msg 25313 "routed call 2"):** the `pushState` + `popstate`
+navigation did NOT re-drive the router -- the rendered Peers panel still read "BA US" and the 401 fired on
+`BA_US_Equity/peers`, so the arm proved 401 -> refresh -> retry on the SAME URL, not on a different-security load. The
+criterion is met (the edge 401 path is exercised); "the different-security case exercises what it appears to" is a
+RE-RUN owed by this seat with the router driven through the app's own link or a full navigation with the marker held.
 **Observation, explained, no row:** `/auth/refresh` + `/auth/me` fired on every navigation, 7 pairs 5 s apart, against
 the 10-minute proactive threshold -- because `tokenIssuedAt` is an in-memory module variable (`api-client.ts:31-35`)
 that resets to 0 on a FULL reload, and this driver hard-navigates per case. Client-side routing does not reset it.
