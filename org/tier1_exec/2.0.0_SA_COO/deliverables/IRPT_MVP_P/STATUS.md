@@ -1,64 +1,59 @@
-# IRPT P -- STATUS at 2026-09-24 06:4xZ (2.0.0_SA_COO~P)
+# IRPT P -- STATUS at 2026-09-24 09:4xZ (2.0.0_SA_COO~P)
 
 Goal (Andrew-direct 2026-09-23 ~22:4xZ): Investor Reporting Performance done end to end and linked
 up for every firm client at 49 Financial, Inflection and Cottonwood; Cottonwood structurally sound
-with its ~May-2026 data window disclosed. Loop: 20 minutes. This file is the one place the state of
-P's surfaces is written; every number below is from a receipt in this directory or a message id.
+with its ~May-2026 data window disclosed. Loop: 20 minutes. Every number below is from a receipt in
+this directory or a message id.
 
-## Served tonight (each a ledgered act: sentinel -> plan -> safe-apply -> readback -> re-plan -> recorder)
+## Served (each a ledgered act: sentinel -> plan -> safe-apply -> readback -> re-plan -> recorder)
 
-| function / object | CodeSha256 / revision | at (Z) | carries | receipt |
+| object | pin / revision | at (Z) | carries | receipt |
 |---|---|---|---|---|
-| irpt-holdings | kZygK57yXxZBaC3t5Wr+y04tDKx6tDJdjCwPm87kdYE= | 06:00:10 | B1/B3 loaders + B7 served (05:04), schema copy b3e3bcb044 (`display` + CUSTODY_UNITS) | HOLDINGS_SPEED_APPLY, HOLDINGS_SCHEMA_APPLY |
-| irpt-directory-search | o9Qu0Jm7jidtrlBeGWD9d2ZsxROK3NXcQTEOUOMvGus= | 05:16:11 | listing speed (04:21) + option-B keep-warm: one rule, three targets, 500 ms hold; three containers seated on every tick measured | DIRECTORY_SPEED_APPLY, DIRECTORY_KEEPWARM_APPLY |
-| irpt-performance-adapter | 07lSH03z53irjBk3AkX2upzUuWzVd4QOuPA4JmisLss= | 06:36:41 | canonical 61-member flat shape (05:28 reconcile of the 00:07 install), X10 ACTIVE row (M 7262571e4c), hop 4b MRO walk + named retention codes, hop 3 SELECTION_UNSUPPORTED, hop 12 sink | PERFORMANCE_RECONCILE_APPLY, PERFORMANCE_X10_HOPS_APPLY |
-| Cottonwood holdings (M's act) | dec293d6 | 06:20:13 | display on 16,740 of 16,749 nodes, CUSTODY_UNITS on 13,656 securities; Anna's subtree 75/75 labelled | IRPT_MVP_M/COT_LABELLED_PUBLICATION_RECEIPT |
-| portal DEV | 7c542fd2 | 06:3xZ (MSTR) | consolidation 7975c3bb + M's labels + hop 11 (ReportingTab names the refusal) + "Performance" tab label + SELECTION_UNSUPPORTED named | CTO 100359, MSTR 100367 |
+| irpt-holdings | kZygK57yXxZBaC3t5Wr+y04tDKx6tDJdjCwPm87kdYE= | 06:00 | B1/B3 loaders + B7 served (05:04); schema copy b3e3bcb044 (`display` + CUSTODY_UNITS) | HOLDINGS_SPEED_APPLY, HOLDINGS_SCHEMA_APPLY |
+| irpt-directory-search | o9Qu0Jm7jidtrlBeGWD9d2ZsxROK3NXcQTEOUOMvGus= | 05:16 | listing speed (04:21) + keep-warm rule, three targets, 500 ms hold; three containers seated per tick | DIRECTORY_SPEED_APPLY, DIRECTORY_KEEPWARM_APPLY |
+| irpt-performance-adapter | 07lSH03z53irjBk3AkX2upzUuWzVd4QOuPA4JmisLss= | 06:36 | canonical 61-member shape; X10 ACTIVE row; hop 4b MRO walk + named retention codes; hop 3 SELECTION_UNSUPPORTED; hop 12 sink | PERFORMANCE_RECONCILE_APPLY, PERFORMANCE_X10_HOPS_APPLY |
+| Holdings, all three firms (M's acts) | COT dec293d6 06:20; 49F 3d59c80b 06:58 + units 5a25ae76 09:0x; INF d03e91a4 07:04 + units d32e50c6 09:04 | | labels on every node the directory knows; CUSTODY_UNITS on every observed row | IRPT_MVP_M receipts |
+| portal DEV | 013323f0 | 09:1x (MSTR) | candidates 1-3: consolidation, M's labels, hop 11, "Performance" tab, SELECTION_UNSUPPORTED named, F1 / F5 / F3 | CTO 100359 / 100463; MSTR receipts |
+| the resident (this box's act) | package ab2e088b5b on i-0167fd745ad906a66 | 09:39 | irpt-analysis-resident.service ACTIVE, single consumer of irpt-generation, enrolled 1276035, tokenless transport, X10 ACTIVE row, census 44853788fa..; five empty polls, no vendor call | RESIDENT_INSTALL, RESIDENT_CUTOVER_EVIDENCE |
 
 Directory listing: p50 2308 -> 160 ms, p90 4665 -> 634 ms, p99 6093 -> 972 ms (03:21-04:21 vs 04:21-05:21).
-Performance / holdings AFTER percentiles: no user traffic in the windows; owed on the next real load.
 
 ## The Performance thread (the CRO's trace @d8abd7dc65, hop by hop)
 
-- 4a X10 ACTIVE: CLOSED (batch 27; row served in 07lSH03z). 4b / 3 / 10 / 12: CLOSED at the deployed
-  bytes (CRO 100381: single account -> DEPENDENCY_UNAVAILABLE at the one-use factory, two accounts ->
-  SELECTION_UNSUPPORTED, RetentionRefused no longer UNEXPECTED). 11: on DEV 7c542fd2.
-- 6 THE ONE GATE LEFT before a number renders: the one-use plan for acc_d486fc9455d6b2aa18e13af1 on
-  the default window -- Andrew's per-use word (put to him by the CTO 05:5xZ). No vendor call fires
-  without it. Then: install the plan, ONE calculation, retained report, reopen without a vendor call,
-  export.
+Hops 4a (X10 ACTIVE), 4b, 3, 10, 12 CLOSED at the deployed bytes (CRO 100381); 11 on DEV.
+The ONE gate left before a number renders: hop 6, the one-use plan for acc_d486fc9455d6b2aa18e13af1
+on the default window -- Andrew's per-use word. Then: install the plan, ONE calculation, retained
+report, reopen without a vendor call, export.
 
-## D1 -- the YCharts session (the resident's first hop)
+## D1 -- the YCharts session: CAPTURED
 
-Six credential submissions today (03:31, 03:49, 04:35, 05:55, 06:27 + the sixth pending), each
-bounded to one by the CTO's word. Sign-in is proven every time (measured route /account/login/, the
-two field names, 302). What stopped each run and what changed:
+Six credential submissions on 2026-09-24 (03:31, 03:49, 04:35, 05:55, 06:27, 08:56), each bounded to
+one by the CTO's word. Run 7 (08:56Z) captured and persisted the bundle: identity from the signed-in
+page's own document (user_id 1276035), the template route LIVE from the TOKENLESS Node client, and
+the pair 200 (no WAF token) / 405 captcha (token presented) named the WAF token as the cause of runs
+5 and 6. ycharts/session/current carries AWSCURRENT 02e53a44 (fence 11; CRO grade PASS 100463). The
+stored-bundle probe (09:12Z, no sign-in) reads 200 LIVE with rc 0. Receipts: D1_RUN7_SIXTH_SUBMISSION,
+D1_STORED_BUNDLE_PROBE.
 
-| run | pin | leg that stopped | finding | amendment |
-|---|---|---|---|---|
-| 4 | abce466570 | template via in-page fetch 405 captcha; Node client control 200 | the WAF challenges non-navigation fetches | 4th: Node client first |
-| 5 | fc932d468b | identity via Node client on /dashboard/ 405 x7 | the HTML route challenges any non-browser client | 5th: identity from the page's own document |
-| 6 | 5919c5363a | identity PASSED (page.content()); template via Node client 405 captcha, APIRequestContext 405 | run 4's 200 sent NO WAF token; run 6 sent the token cookie + header | 6th @9cf37df341: jar without the token; pair {without_token, with_token} |
-
-Runner library at 9cf37df341: LF blob de00afffd4ce5f91.. (82479 bytes); wrapper 55ddb8f7 unchanged.
-The sixth run fires on Y's STANDS; 405/405 on the pair = STOP (batch 30), the question moves to the
-WAF rule, not the client. Resident half (Y 93ec16f4fe, integrated at 04cf6ab521): step_identity
-validates the bundle, no /dashboard/ fetch; step_template is the liveness gate; Y's transport drops
-the WAF token after the pair's verdict.
+Runner @b9d36bc34e (library dfc87d8312c5938c.., wrapper 55ddb8f7 unchanged) deployed. Resident
+transport tokenless @8576bec142 (CRO STANDS 100477); the four resident files at Y's 93ec16f4fe.
+Y is paused on a safeguards dialog (Andrew's model call); its reads were re-routed to the CRO by the
+CTO (100425) and are welcome on return, not owed.
 
 Rows: IRPT_BCKEND-S119 (bundle contract), S120 (Playwright under /root), S121 (the offline suite
-reached ycharts.com once unguarded, 05:38Z, anonymous GET; the suite now refuses to start unguarded).
+reached ycharts.com once unguarded; the suite now refuses to start unguarded).
 
-## Next at P (CTO batch 28 order)
+## Next at P (CTO batch 34 item 5 / batch 28 (i)-(iv))
 
-1. Sixth submission on Y's STANDS -> outcome A: bundle grade, enrolled_user_id pin, C1, install-resident.sh
-   with the resident files at 93ec16f4fe, Y --once.
-2. Speed-lever candidate from DEV 7c542fd2: F1 (session key must not rotate on a token refresh --
-   index.tsx:43-45 keys the QueryClient on auth.accessToken), F7 (dev double calls), F5 (2-char
-   minimum, cancel superseded, never blank the list -- ClientSearch.tsx:64-101), F3 (limit 25 -> 100 +
-   cursor prefetch), F2 (first browse with resolve -- cut to be confirmed with the CRO), Holdings not
-   waiting on Performance (to be located: TabShell mounts one tab at a time).
-3. Analysis backend (i)-(iv) on Y's prepared patches, one canonical act each.
+1. The Analysis backend: (i) the generate package at HEAD -- 10 modules absent from the map's files[]
+   (current_authority, durable_job, frozen_worker, normalized_input, prospect_submission,
+   publication_worker, publisher, report_index, resident_main, resident_worker), 12 staged rows stale
+   at 819c9e3990; the X10 row; Terraform: sqs:SendMessage for the submit path, the two revision env
+   keys, NO event source mapping (the resident is the consumer), IRPT_LIVE_YCHARTS_CALL unset;
+   (ii) irpt-status with ops at HEAD + prospect_dates; (iii) the three no-handler routes; (iv) the
+   cutover plan's inputs. Each one canonical act with a ledger.
+2. Speed levers F7 / F2: held on a HAR from opalinvest.dev (the 04:32Z HAR was a localhost dev session).
+3. Andrew's browser act (G) last.
 
 ## Standing constraints
 
