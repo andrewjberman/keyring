@@ -484,6 +484,53 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Section 3 <paths> lists `portal/src/pages/SecurityAnalysis/types.ts` as READ-ONLY reference material this cell reads to build DOSSIER_INTERFACE.md's side-by-side against `ThesisBundle`.",
     "world_is": "The file is not reachable from this worktree by any git mechanism available to a worker (no `.gitmodules` URL at HEAD, empty working tree, no cached submodule objects in the shared git-common-dir) -- a repo-wide gap, not something specific to this worktree's checkout. DOSSIER_INTERFACE.md's field-by-field comparison against `ThesisBundle` is therefore built from the task order's OWN inlined quotation of the file's relevant slot names (section 1, the DOSSIER_INTERFACE.md bullet), which the issuer had evidently already read at line 955 when writing this order -- not from an independent read by this worker.",
     "notes": "Not treated as BLOCKING: the order's own text already carries the needed slot names, so refusing the whole cell over one unreadable reference file would be a worse outcome than proceeding on the issuer's own quotation, clearly disclosed. Filed so AC4's judgment reviewer (3.0.0_SA_CVO~X) knows the side-by-side's `ThesisBundle` column is sourced from the order's text, not from an independent live read of portal, and can re-verify against the file directly once the submodule is reachable. Fixing `.gitmodules` (repo-wide, not this project's surface) is outside this cell's bound and is not attempted here."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S14",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T11:20:00Z",
+    "one_line": "DISARM by its owner of AMGT_CORPUS-Z-S13 (the 08:02Z served-output incident): both disarm conditions the row states are MET -- (1) the signed 09-24 object was restored and verified by 2.0.0_SA_COO~Z at 08:22:33Z (VersionId aTOpDZTTPlIzLLoeTFumB8KHmv6A0txG, 523,207 B, sha 9bd953b9, MEASURED 194; ledger amgt-crosswalk-0924-rollback CLOSED), and (2) the later induction write went through the UNIFIED builder (add_security @a125f8be8b on CLOUD via 8c75f4f90d: --batch one put per run, the universe/v1 input on every build) under a complete never-widen pair (COO half 4bbd43777c, CTO half 9a6472e58f) at 11:11:02Z, ONE conditional put, versions 22 -> 23, MEASURED 194 -> 214 with all 194 prior keys present. Z-S13 is legacy-shaped (hazard_standing/disarm_owner, no disarm clock) so it cannot advance in place under the row gate; this row is the disarm carrier and cites it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Condition 1: 2.0.0_SA_COO~Z msg 25345 (RESTORED, verify-after 3 of 3 legs) and this seat's own probe-1 at 10:44:27Z reading the restored bytes as latest: VersionId aTOpDZTTPlIzLLoeTFumB8KHmv6A0txG, 523207 B, ETag 2c0ff894a1b0a3ac4dd20ca45811b76c, sha256 9bd953b9c06f7382..., document-sha256 metadata equal (evidence/refire_probe1_20260924T104423Z.json @4bbd43777c).",
+        "Condition 2, the unified builder: CTO R-49 (preconditions 3 and 4 PASS: 194 -> 197 on three fake registrations, 36 with the universe withheld) and R-51 (add_security.py byte-identical a125f8be8b == HEAD, 25,619 B, sha d70e4af5f2ec7f749fde0f1f; pre-fix 85543bf200 DIFFERS). The one-put property is call-shape-bound and the fire used the --batch shape: d-5 amendment 3 @e1014a7eb6, drained @71e2409a43.",
+        "Condition 2, the pair: COO half org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/NEVER_WIDEN_ROUND2_D5_REFIRE_HALVES.md @4bbd43777c (N = 2 writers printed on a scoped 12/312 and an unscoped 1,009/72,661 census); CTO half org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_COMPLETION_20260923/NEVERWIDEN_D5_REFIRE_CTO_HALF.md @9a6472e58f (zero production readers of bronze/identity, 5 of 8,142 code files).",
+        "The write, measured by the discriminator both halves named (refire_versions_probe.py; evidence/refire_probe2_before_20260924T110857Z.json and refire_probe3_after_20260924T111143Z.json @911d09d153): versions 22 -> 23, delete markers 0, latest VersionId tlVd1Cqrlhk93VurXE2jThhPNToWm0wA at 11:11:02Z, 583272 B, sha256 223264e2d0fd3caa..., records 254 -> 274, MEASURED 194 -> 214, registered 7 -> 27, universe_registered 158 -> 158; superset check on the two version bodies: 194 of 194 prior keys present, 20 new; fire read-back induction_run_2026-09-24_fire.json: bloomberg_calls 20, batch_calls 1, pool_puts 1, rc 0; registrations.json +20 rows @b7819604e0.",
+        "DISCRIMINATION: the same probe lists the 08:02Z misfire's twenty versions inside the 22, so it can see a multi-put run; it read exactly one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S13 DISARMS WHEN (1) the signed 09-24 object is restored and verified AND (2) any later induction write to the pool goes through the unified builder under a never-widen pair (Z-S13 notes); CLAUDE.md s.2: an ARMED hazard disarms via the row's disarm_owner.",
+    "world_is": "Both conditions hold on the instruments named above; the hazard Z-S13 filed (a second writer without a pair, on a builder lacking the first writer's registration source) no longer exists: the two producers are ONE builder on CLOUD and the only later write was ONE put under the pair. Z-S13's text still reads ARMED because a legacy-shaped row has no disarm clock the gate will advance; a hazard census is an upper bound and this row is what a reader weighs against it.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's). The next L9 (3.0.0_SA_CVO~Z) may adjudicate Z-S13 on this row; this seat asserts no GRADUATED disposition. The lesson stays banked (measure the before-state of the EXACT key)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S15",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T11:21:00Z",
+    "one_line": "The induction_batch_2026-09-24.json the d-5 worker COMMITTED in its deliverables dir (@7e1f39f327, drained @71e2409a43) is a TEST FIXTURE, not the dry run's artifact: it carries 'Registered Co' / 'Already Co' / 'Refused Co', because induction_run.run() writes the batch file into the hard-coded DELIVERABLES_DIR (:341-343 at 71e2409a43) and the tests call run(), so the last test to run overwrote the dry run's 20 real requests before the commit. The 11:09Z fire overwrote it again with the real 20; that as-fired list is kept at deliverables/2.0.0_SA_COO~X/evidence/induction_batch_2026-09-24_as_fired.json and the worker's committed copy is restored to HEAD bytes, so a reader of the drained tree sees a fixture where the record face promises the dry run's request list.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff at 11:14Z on the worker's committed file after the fire: 70 insertions, 10 deletions; the HEAD side reads folder 'Registered Co' bloomberg 'REG US', 'Already Co' 'ALR US', 'Refused Co' ...; the working-tree side reads the 20 real requests (AstraZeneca AZN / AZN LN first).",
+        "Write site: lib/research/corpus/induction_run.py:341-343 @71e2409a43 -- deliverables_dir = DELIVERABLES_DIR with no parameter and no test override; test_induction_run.py:155/194 builds rows named 'Registered Co' and asserts on the batch file's content.",
+        "The fire itself was NOT affected: run() rebuilds the request list fresh from rows_for_run() and writes the file BEFORE the one call, so the batch add_security consumed was the real 20 (read-back batch.requests, 20 entries, @911d09d153).",
+        "The read-back JSON in the same dir has the same exposure by construction (write_readback -> DELIVERABLES_DIR), though the worker's AC2 run was the last writer of induction_run_2026-09-24_dry-run.json at its commit (its content names the real folders)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md s.4: a value must carry its claim -- an artifact committed as the dry run's request list must be the dry run's output; d-5's face: the read-back is written as JSON to the worker's deliverables dir.",
+    "world_is": "A hard-coded output directory shared by tests and the real run makes the committed artifact whichever process wrote last; the committed batch file is a fixture. No served output and no vendor call is affected; the fire's inputs are recorded separately.",
+    "notes": "Remedy (a later cell on d-5's surface, not this round's frozen decomposition): run()/write_readback take a deliverables_dir parameter defaulting to DELIVERABLES_DIR, and the tests pass tmp_path; then re-run the dry run and commit its real batch file. disarm not needed: INERT."
   }
 ]
 ```
