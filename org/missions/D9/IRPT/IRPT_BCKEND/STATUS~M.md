@@ -41,9 +41,10 @@ branch. No code edit is open.
 
 ## Next list (in order)
 
-1. The classifier-widening request for COT's ~$78.0M unclassified (CTO 100925): name the table (`bd-securities`), the
-   rows (the 101 distinct COT securities with basis NONE), and every reader, Positioning included.
-2. Andrew's firm-tab HAR, then /verify on the goal.
+1. Andrew's firm-tab HAR, then /verify on the goal.
+2. On the CTO's routing of the widening request (`CLASSIFIER_WIDENING_REQUEST_20260924.md` @d8a88cef4b; 287 rows, 69
+   readers): if the CTO rules it this seat's, fill 49F's 62 CUSIP-only rows (symbol and name from the Schwab security
+   master) in the Holdings producer.
 3. The 5 stale tests in `investor_reporting/tests` (3 expect UNATTESTED currency; 2 predate the 06be82897f capture
    guard).
 
