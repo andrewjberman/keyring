@@ -1,0 +1,44 @@
+{
+  "receipt": "irpt-performance-adapter: the series-window fix SERVED and ONE new one-use COT plan ARMED (Andrew-direct ~18:3xZ, org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_183xZ_PERFORMANCE_ONE_USE_RE_ARM_APPROVED.md @f0bd1c267e)",
+  "by": "2.0.0_SA_COO~P",
+  "at_utc": "2026-09-24T18:46:48Z",
+  "why": {
+    "spent_use": "PERFORMANCE_USE#106eaa0e.. claimed 2026-09-24T13:47:53Z (request_sha256 44ea9dfe..); the provider answered (1842 ms) and bd_selected refused its own answer: SelectedPerformanceRefused('series window mismatch'), public UNEXPECTED, corr-d6a5ad61b059; nothing retained",
+    "cause": "exact equality of the series' dataStartDate/dataEndDate with the requested (start, end); the series states the provider's data window (account data start; last valuation T-1), so a YTD-through-today request could not pass for any COT account",
+    "fix": "dd1811bbaa: the provider window must lie inside the requested one and is published as dates.actual_* beside dates.requested_*; the series-last == period-return guard unchanged"
+  },
+  "artifact": {
+    "source_map_commit": "8f3f42c751 (irpt-p-publish-20260923; bd_selected.py row 7a8d2a4ca3 -> dd1811bbaa, blob sha256 b6dbaf50..)",
+    "s3": "s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-performance-adapter.zip",
+    "version_id": "stlLoLdtJ7a7FXhl205hUSB2dFbJbXDS",
+    "code_sha256": "NuIaCuqnx5BbfCq9WdXtJMuNLzC4dM3IrA8Ap8b0/Wk=",
+    "bytes": 364216,
+    "census_vs_deployed_07lSH03z": "61 of 61 member names equal; exactly bd_selected.py differs",
+    "parity_skip": "BAU_PARITY_SKIP=1 for build_candidate.py / build_dependencies.py / cot_probe.py (local build tools, never members)"
+  },
+  "plan_public_fields": {
+    "schema_version": "irpt-performance-one-use-v1",
+    "approval_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_183xZ_PERFORMANCE_ONE_USE_RE_ARM_APPROVED.md @f0bd1c267e",
+    "firm_id": "cottonwood",
+    "account_id": "acc_d486fc9455d6b2aa18e13af1",
+    "mapping_revision": "a560410f86e384c7c3157c8ec32b20ae9fb1a111e1acd2a1f73f26037049ecfe",
+    "start": "2026-01-01",
+    "end": "2026-09-24",
+    "expires_at": 1790294400,
+    "requests_sha256": "5ec9964768bf541e769570a18705f3b273212bdb85c0b9d530fa785b318e09ba",
+    "plan_sha256": "99052771fbf4d0822beffd734e4fff955da4b53812a64d257ba0bc941e5e9ef3",
+    "derivation": "the spent plan read from the function environment (digest asserted 106eaa0e..), approval_ref replaced, canonical string from the built artifact's repository.canonical with sha256(string) == digest(plan) asserted; vendor identifiers in the scratchpad var-file and the function environment only"
+  },
+  "act": {
+    "ledger": "irpt-performance-window-rearm-20260924 (sentinel 97fa08b076)",
+    "plan": "0 to add, 1 to change (source_code_hash, s3_object_version, env plan approval_ref, IRPT_PERF_VENDOR_EGRESS_AUTHORIZED), 0 to destroy",
+    "apply": "safe-apply 18:46:48Z: 0 added, 1 changed, 0 destroyed",
+    "readback": "CodeSha256 NuIaCuqn.. LastModified 18:46:42Z Active/Successful; egress sha 99052771..",
+    "replan": "with the var-file: rc=0 No changes",
+    "recorder": "c67c4143e9 on irpt-p-publish-20260923",
+    "use_state": "ARMED, unspent: no PERFORMANCE_USE#99052771.. row at 18:47Z"
+  },
+  "trigger": "Andrew's signed-in DEV session selecting Anna's ONE account (acc_d486fc94..) with the default YTD preset before 2026-09-25T00:00Z; a two-account selection refuses SELECTION_UNSUPPORTED before the claim (log order at 13:47Z)",
+  "open_leg": "S1: the served journey -- a PERFORMANCE_ACCEPTED row and a READY report with actual dates, or the use's named refusal read from the log",
+  "push_state": "LOCAL"
+}
