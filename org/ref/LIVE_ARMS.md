@@ -9,10 +9,6 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 ## Holds
 
 - `2.0.0_SA_COO` (base): D2 off until Andrew lifts it.
-- CLOUD push of the N1 drain (seat branches ~P `c6d8b9b2bd`, ~Y `d8212ee82c`, ~M `14cbdd190b`): HELD on Andrew's word
-  until the never-widen sign-off (1.0.0_SA_CTO + 2.0.0_SA_COO~M/~P) covers the two served objects it moves: the
-  investor_reporting bundle and `gold/taxsma_membership.py` (`org/tier0/ledger/LD-0613.md`, Progress 11). Lifts on
-  that sign-off; 0.0.0_AB_MSTR pushes.
 
 ## Arms
 
@@ -60,3 +56,5 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   lifted for IRPT_BCKEND and IRPT_FNTEND closed SUPERSEDED, Andrew-direct 2026-09-24 ~16:4xZ
   (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_164xZ_IRPT_RETURN_FIVE_CALLS_ANSWERED.md`). The P/M/Y
   seats still read `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/{AUTHORITY,CONTRACT}.md` first.
+- N1 push hold (`org/tier0/ledger/LD-0613.md` Progress 11): lifted by Andrew-direct ~17:5xZ "Push it"
+  (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_175xZ_PUSH_N1_APPROVED.md`).
