@@ -253,6 +253,149 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-19 -- THE H03 CUTOVER DOES **NOT** FIX THE CHATTER WATER, AND THIS SEAT'S PROOF CLAUSE WAS UNREACHABLE BY THE PRODUCER'S OWN DESIGN
+
+**`2.0.0_SA_COO~Y` preflighted step 2 before building it and refused to proceed** (blocker, evidence
+`LEADPANEL_PREFLIGHT.md` @`de0487e9fe`, fresh read 02:53Z). **It is right on every count and this ruling
+corrects the mandate, not the seat.**
+
+⛔ **THE FINDING THAT MATTERS: THE GOLD INPUT IS ALSO EMPTY.** Latest gold carries **1,596 rows for SIX
+securities -- 1,595 DENIED, 1 PARTIAL.** A **real reviewed reader/producer replay with `write_fn=None`
+resolves 0 OF 191 required windows**; both products come back `FAILED` / `INCOMPLETE_GOLD_INPUT`, zero rows,
+no pointer. ⭐ **That seat's sentence is the whole ruling: "six gold day-record-bearing names are not six
+publication links."**
+
+⛔ **SO THE PREMISE OF STEP 2 IS FALSIFIED. Legacy gives `names_with_links=3 of 250`; GOLD gives 0 of 191
+windows. NEITHER SOURCE HAS THE DATA.** The cutover is **NECESSARY AND NOT SUFFICIENT** -- it wires a correct
+reader to an input that is itself unpopulated for this universe. ⚠ **AND THIS FALSIFIES WHAT THIS SEAT TOLD
+ANDREW:** the proposal called step 2 *"the only step that changes what a user actually sees in the list."*
+**It cannot, yet.** The real gap is **upstream of H03: the graded `chatter_daily` gold table is not populated
+for the AMGT universe.**
+
+⛔ **AND THIS SEAT'S OWN PROOF CLAUSE WAS UNREACHABLE BY CONSTRUCTION.** The mandate demanded *"`row_count` on
+the order of the universe, not 2."* **The producer carries `TOP_N=10`, so `row_count` CAN NEVER EXCEED 10 no
+matter how good the input is.** ⭐ **A PROOF CLAUSE THE PRODUCER'S OWN DESIGN CANNOT SATISFY IS A DEFECT IN
+THE MANDATE, NOT A FAILURE OF THE BUILD** -- and a seat that had simply obeyed it would have chased an
+impossible bar or quietly redefined it. **WITHDRAWN.** Replaced: the proof is about the **INPUT**, measured as
+**windows resolved of 191** and **`names_with_links` of 250**, plus `rows_ranked` **against `TOP_N`** -- never
+against the universe.
+
+**RE-SCOPED, and step 2 is now TWO items:**
+- **2a (buildable now, `2.0.0_SA_COO~Y`):** land the cutover as a **CODE and PACKAGING** improvement -- reader
+  wired, the missing **Arrow/naming dependencies** added to the canonical package, the **S3-metadata artifact
+  form** adopted (R-17/CVO's durable-artifact reason), and the reviewed safeguards at **`4dc4b667f3`** carried
+  onto CLOUD coherently. ⛔ **THIS DOES NOT CLOSE STEP 2's ACCEPTANCE AND MUST NOT BE REPORTED AS CLOSING IT.**
+- **2b (NEW, upstream, UNOWNED):** populate the graded `chatter_daily` gold table for the AMGT universe.
+  **Until 2b lands, Trending x Chatter cannot show a real ranking from any source.** ⚠ **Surfaced to Andrew as
+  a scope item, not silently absorbed into 2a.**
+
+⛔ **AND A NONPUBLISHING CUTOVER IS NOT AUTHORIZED AS A CLOSURE.** That seat asked for *"explicitly
+nonpublishing cutover intent"* as one branch. **RULED: 2a is explicitly NONPUBLISHING -- it lands code and
+package, it does NOT write a generation or move a pointer, and it claims no acceptance ID.** ⭐ Its refusal to
+bypass the hold is correct: *"canonical hold REFUSED unapplied activation leg; no sentinel bypass or
+fabricated completion."* **The ledger `amgt-h03-leadpanel-y-20260924` stays OPEN until 2a closes on its own
+terms.**
+
+**FOUR MANDATE CORRECTIONS THIS SEAT OWES, all that seat's measurements:**
+1. **The role is `amgt-resapp-chatter-axis-lambda-role`**, not `amgt-resapp-chatter-axis-role` as the mandate
+   wrote it (corroborated by `3.0.0_SA_CVO~Z`'s baseline ARN).
+2. **`DEFAULT_SOURCE` is CLI-ONLY.** The mandate offered *"an env var the function does not carry today"* as a
+   route -- **that route does not exist**; the source is a CLI argument, so a Lambda invocation cannot set it
+   without a code change.
+3. **The canonical package lacks Arrow/naming dependencies** -- a rebuild from HEAD can fail at import, so the
+   package change is part of 2a rather than an afterthought.
+4. **TF uses local `filename`/`filebase64sha256`**, confirming the no-durable-artifact condition.
+
+⭐ **AND THE SEATING QUESTION THIS SEAT RAISED IS ANSWERED BY THAT SEAT, IN ITS FAVOUR:** *"This Codex instance
+remains AMGT; separate Claude IRPT instance is not adopted."* **The AMGT `~Y` and the IRPT `~Y` are DIFFERENT
+INSTANCES, so there is NO Rule 27 one-project-per-Tier-2-instance collision.** The flag was worth raising and
+is now closed on measurement rather than assumption.
+
+⚠ **A PATTERN AT THIS SEAT, NAMED BECAUSE IT IS NOW THREE FOR THREE TONIGHT: this seat's claims about WHAT
+EXISTS have held up, and its claims about WHAT A FIX WILL ACHIEVE have been falsified every time a seat
+measured them** -- the shared-fetch premise, the LEG-OUTSTANDING gate, and now step 2's sufficiency. **The
+remedy is not more caution in prose; it is preflighting a proof clause against the producer's design before
+issuing it, which is exactly what that seat did and this seat did not.**
+
+## R-16 -- THE VENDOR-WORD REGISTER: THREE GRANTS, TWO TERMINALS, TEN MINUTES, AND ONE EXPLICIT EXCLUSION
+
+⛔ **"VENDOR EGRESS APPROVED" HAS NOW BEEN SAID TWICE IN UNDER TEN MINUTES, AT TWO DIFFERENT TERMINALS, ABOUT
+TWO DIFFERENT POPULATIONS -- WITH A THIRD BLOOMBERG PULL EXPLICITLY DEFERRED.** That is the exact setup in
+which a seat makes an unauthorized call in good faith, believing it is covered. **Enumerated here so no seat
+reads one grant as another.**
+
+| # | word | terminal / time | SCOPE -- what it authorizes |
+|---|---|---|---|
+| **V1** | *"you have egress for whatever calls you want"* | `1.0.0_SA_CTO~Z`, ~02:4xZ (R-15) | the **price pull**, the **Refresh proof to LANDED**, and this seat's **read-only** vendor checks |
+| **V2** | *"Vendor egresss approved."* | `4.0.0_SA_CRO~Y`, 02:47Z (`57485eaae8`) | the **60 UNRESOLVED backlog names** the universe carries -- **ONE `reference_data` call each, ONCE**, through `AMGT_RESAPP`'s `add_security` |
+| **V3** | the Model tab's Bloomberg figure pull | same word, item 3 | ⛔ **NOT AUTHORIZED. A DESIGN STATEMENT ONLY.** `4.0.0_SA_CRO~Y` states it plainly: *"its per-use word is asked AT THE CUT, not read from item 1."* |
+
+⛔ **V2 AUTHORIZES THE CALLS, NOT A PICK.** `3.0.0_SA_CVO~Z`'s standing ruling on ambiguous names (America
+Movil `AXMB`/`AMXB`) is **UNTOUCHED**. ⭐ **A word that permits you to ASK a vendor does not permit you to
+DECIDE which of two candidate identities the answer belongs to** -- the first is egress, the second is
+adjudication, and they are different authorities that happen to arrive in the same sentence.
+
+⛔ **AND V1 DOES NOT COVER V2's POPULATION, NOR V2 V1's.** Neither is a standing fabric-wide grant. **A
+Bloomberg call outside V1 and V2 needs its own word, and V3 is named here precisely because it LOOKS covered
+by V2 and is not.** ⚠ This register is additive: a fourth word extends the table; nothing in it widens by
+reading.
+
+## R-17 -- LEAD PANEL STEP 3 IS CLIENT-SIDE ONLY. The route already serves what the screen needs
+
+**`3.0.0_SA_CVO~Z` (msg 25178) measured the `dated` gap in the perishable pre-10:00Z window, and the mechanism
+is sharper than the proposal's -- which makes the step CHEAPER, not larger.**
+
+**MEASURED ON DEPLOYED BYTES 02:39:48Z:** `trending/chatter` -> HTTP 200 with **`dated: TRUE`**,
+`requested_as_of: '2026-09-24'`; `breakout/chatter` -> 200 with `dated: FALSE`; and
+`gainers/securities` -> **HTTP 400** *"movement must be one of TRENDING, BREAKOU..."* -- **a real refusal, so
+the instrument discriminates rather than answering 200 to everything.**
+
+⭐ **THE ROUTE EMITS BOTH FIELDS AND THE CLIENT TYPE DROPS THEM.** The served payload carries `dated`,
+`requested_as_of`, `as_of_date`, `coverage_vintage`, `empty_reason`, `generation_id`,
+`generation_row_count`, `payload_hash`, `ranking_reason`, `ranking_status`, `read_attempts`, `resolution`,
+`row_count`, `rows_read`, `run_id`, `state`. `types.ts:181` `RankingSet extends Partial<GenerationFields>`;
+neither declares `dated` or `requested_as_of`, and a repo-wide search over **986 files** finds no
+ranking-payload use of either name.
+
+⛔ **SO THE GAP IS AT THE TYPE BOUNDARY, NOT ON THE WIRE. THE INFORMATION A READER NEEDS IN ORDER NOT TO BE
+MISLED BY A FRESH TIMESTAMP IS ALREADY BEING COMPUTED, SERVED AND PAID FOR, AND IS DISCARDED BECAUSE THE
+CLIENT NEVER MODELS IT.**
+
+**RULED, and it corrects this seat's own proposal:** step 3 is **CLIENT-SIDE ONLY** -- extend the type and
+render. The proposal called it *"two portal-and-adapter changes"*; **no adapter or route change is required.**
+⭐ **CONSEQUENCE THAT MATTERS: step 3 therefore does NOT move served output, so it does NOT carry the
+never-widen pair, and the 2026-09-29 expiry can be made VISIBLE without touching anything that serves.**
+Cheaper, lower-risk, and available before the deadline.
+
+⚠ **THAT SEAT SCOPED ITSELF AND THE LIMIT IS KEPT:** it measured (a) the deployed route emits both fields and
+(b) the type declarations at HEAD omit them. It did **NOT** trace the adapter or the panel, so it has **NOT**
+shown the panel would render them if the type carried them, nor that the type is the **only** place they are
+lost. **ROUTE-PROOF IS NOT RENDER-PROOF and this is not render evidence.** The build seat confirms the render
+path; the type fix is necessary and not proven sufficient.
+⭐ **One useful adjacency:** `empty_reason` **IS** in `GenerationFields`, so the `189 of 191`
+`NO_SIGNAL_IN_WINDOW` reason **CAN** reach the client even though `dated` cannot -- worth holding when the
+hour-axis case is graded.
+
+## R-18 -- THE DOSSIER IS AN `AMGT_CORPUS` ADDENDUM, AND THE ADDENDUM IS THIS SEAT'S TO WRITE
+
+**Andrew-direct at the `4.0.0_SA_CRO~Y` terminal 02:47Z, item 2, VERBATIM: *"Rec approved."*** -- the rec being
+**dossier as an `AMGT_CORPUS` ADDENDUM, NOT a new `AMGT_DSSIER` project.** ⭐ **No project is registered**; the
+earlier relay was explicit that *"any project or addendum that follows is `1.0.0_SA_CTO~Z`'s to register on his
+further word"*, and this is that word.
+
+**Item 3, VERBATIM and load-bearing on the fold:** *"I would try to bend the best content pieces into the
+AMGT_RESAPP panel/tab structure from the existing corpus, but i wouldnt change AMGT_RESAPP page layout
+architecturally ... 'Peers' I think largely stays as it is. 'Model' I think we have to use the model ratio
+selections/design from the corpus and try to fill those in via Bloomberg for the figures. 'Posture' is still
+up to us."*
+⛔ **"I WOULDNT CHANGE AMGT_RESAPP PAGE LAYOUT ARCHITECTURALLY" IS A CONSTRAINT ON THE ADDENDUM, NOT A
+PREFERENCE** -- the dossier is **one channel among equals**, not the page's primary shape. ⚠ **And "Peers
+largely stays as it is" means the live Peers closer is NOT re-scoped by this** -- `COO~Z` keeps building the
+four steps already mandated.
+**OWED AT THIS SEAT:** the L4 addendum, once `4.0.0_SA_CRO~Y`'s `--midstream` L1 brief lands (the dossier
+artifact plus the per-tab fold contract). Measured beside it: 93 folders -- 46 docx+pdf, 30 pdf-only prose, 6
+docx-only, 10 workbook-only, **1 empty**.
+
 ## R-15 -- ANDREW GRANTS EGRESS. The §5 refusal is resolved BY HIS WORD, the recorded read is NARROW, and egress authorizes NO OTHER GATE
 
 **Andrew-direct 2026-09-24 ~02:4xZ at the `1.0.0_SA_CTO~Z` terminal, VERBATIM: *"you have egress for whatever

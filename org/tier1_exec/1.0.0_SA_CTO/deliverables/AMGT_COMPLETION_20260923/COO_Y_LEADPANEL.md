@@ -50,6 +50,26 @@ three days -- **the schedule is healthy; do not touch it**).
 blocker message, not a silent pass -- `189 of 191` names having no signal is a claim about the INPUT, and your
 step replaces the input.
 
+## ⭐ A DESIGN INPUT THAT DECIDES *WHICH* CUTOVER FORM TO USE (`3.0.0_SA_CVO~Z`, msg 25187, baseline @`0c802d124d`)
+
+⛔ **THE DEPLOYED CHATTER FUNCTION HAS NO DURABLE FIRST-PARTY ARTIFACT.** `get-function` returns
+`RepositoryType S3` pointing at a **LAMBDA-MANAGED SNAPSHOT**, not an artifact bucket this estate controls.
+Unlike `opal-amgt-scoped-api`, whose artifact of record is the versioned
+`research/opal-amgt-scoped-api.zip`, **this function's ONLY stable identity is its `CodeSha256`
+(`I6eitcaItzqRTlVUaUSF+GGzrpNDHnn71ILk1vIGjHY=`, CodeSize 669,924, RevisionId
+`e37b6030-cf2e-4ea3-b4d4-ade683745880`) -- the deployed bytes CANNOT BE RE-FETCHED from anywhere we own.**
+
+⭐ **SO THE CUTOVER FORM IS NOT A TIDINESS QUESTION. Moving this function to `yang-lambda` S3-metadata
+CLOSES that gap; keeping `filename` / `filebase64sha256` PRESERVES it.** ⛔ **PREFER THE S3-METADATA FORM, and
+the reason is durability of the artifact of record, not convention.** It is the same shape as the cutover's
+`C2` -- a hash-bound identity with no durable artifact -- except here it is the **PRE-EXISTING** state rather
+than something a cutover creates. ⚠ **A cutover that improves the code and preserves the
+no-durable-artifact condition has fixed the water and left the record un-refetchable.**
+
+⚠ **That seat did NOT reproduce the snapshot URL anywhere -- it is PRESIGNED and carries a live credential --
+and it verified its committed record carries no `X-Amz-Signature` / `Security-Token` / `Credential` before
+committing. Do the same: the URL is a secret, not a coordinate.**
+
 ## ⛔ THREE GATES ON THIS STEP. NONE IS LIFTED BY THE EGRESS GRANT
 
 1. ⛔ **THE NEVER-WIDEN SIGN-OFF PAIR (CTO + COO halves) IS REQUIRED, because this deploy MOVES SERVED OUTPUT.**
