@@ -1059,3 +1059,35 @@ IRPT_COMPLETION_Y with no P row; the hook's refusal of P is correct and 99857's 
 hold" was not. Y commits its b35cb286b1 copy and the 7-field stub literal fix for the cross-firm
 resident cases on Y's branch; P re-copies both at its next sync. No new P row: the lane stays as
 narrow as the integration needs.
+
+
+## 2026-09-24 00:4x UTC - Claude CTO batch 11: Andrew-direct "all recs approved" (seven open calls) + two Y test rows
+
+### ANDREW-DIRECT 2026-09-24 ~00:4xZ at the 1.0.0_SA_CTO terminal, VERBATIM: "all recs approved"
+Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_004xZ_ALL_RECS_APPROVED_SEVEN_OPEN_CALLS.md
+(the seven cards repeated with their RECs and the ruling each approval creates). Currency record:
+IRPT_MVP_COMPLETION_20260922/ANDREW_49F_INF_USD_20260924.md. The rulings, each exactly the card's REC:
+1. 49 Financial report amounts are USD (firm-level attestation; same scope and limits as COT).
+2. Inflection report amounts are USD (same).
+3. ONE live Cottonwood performance calculation, account acc_d486fc9455d6b2aa18e13af1, window
+   2026-09-01..2026-09-22, through the installed adapter under a server-installed one-use plan; X10
+   ACTIVE first; any other account, window or attempt needs a new word.
+4. The AutoShutdown=disabled tag on i-0167fd745ad906a66 stays; the host starts only with the
+   resident cutover plan.
+5. ONE live Orion Reporting/Scope calculation for a real Inflection client, bound at execution to the
+   exact client, window and request P presents.
+6. 49F SmartX: ONE bounded live account-level call under yaliu-bundle, bound at execution to the
+   exact account, window and request P presents; period-to-date labelled, selected-set limit disclosed.
+7. 0.0.0_AB_MSTR pushes workspace CLOUD to origin.
+ROUTING: P writes the two ANDREW_ATTESTATION records (49financial, inflection) into
+CurrencyAuthorities.json citing ANDREW_49F_INF_USD_20260924.md and prepares the CALL-3 one-use plan
+for CTO review; M then requests the 49F and INF exact-write GOs with the measured write plan; MSTR
+pushes; CRO informed on 6. Nothing wider is inferred from the word.
+
+### IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923, two more rows (Y 99870)
+ycharts/generate/tests/test_canonical_profile_consumption.py and
+ycharts/generate/tests/test_custody_retained.py join IRPT_Y_ACCESS_INTEGRATION_P as exact rows at Y
+pin 79c53e1abe (manifest extension 2): both are test files whose semantic writer stays Y; P copies
+them at that pin so the eight cross-firm resident cases and the consumption test match the 11-field
+reader. Y's reading was right and the CTO's 99868 "no new P row" is superseded by this narrower fact:
+P cannot sync a file it holds no row for, and a branch merge would carry more than the grant.
