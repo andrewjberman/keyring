@@ -1,0 +1,74 @@
+{
+  "observed_at": "2026-09-24T01:44:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "APPLIED -- code-only irpt-holdings repackage carrying _authz/served.py at 3ac9cbdc98 (internal error-record sink + public line); CTO GO dda3b7ab42 item 1",
+  "artifact": {
+    "s3": "s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-holdings.zip",
+    "version_id": "tndS2IuXND5kq1PsDTwQNNgLOtgIaoMk",
+    "code_sha256": "xd4mk5fxWRa4Uk9OmYcImm1LEC9FoNIGk6jN7A0vlx0=",
+    "bytes": 261323,
+    "members": 33,
+    "differs_from_deployed_nWRHW": [
+      "_authz/served.py"
+    ]
+  },
+  "plan": {
+    "file": ".runtime/holdings-sink/sink.tfplan",
+    "sha256_prefix": "06880e7977d24070",
+    "summary": {
+      "add": 0,
+      "change": 1,
+      "destroy": 0
+    }
+  },
+  "apply": {
+    "tool": ".tools/safe-apply.sh from irpt-smoke-p-backend-20260923 holdings root",
+    "halt_ack": "HALT_ACK=1 over 22 routine base-inbox subjects read before the act",
+    "result": "Apply complete 0 added / 1 changed / 0 destroyed rc=0",
+    "completed_at": "2026-09-24T01:38:06Z",
+    "log": ".runtime/holdings-sink/apply.log"
+  },
+  "readback": {
+    "CodeSha256": "xd4mk5fxWRa4Uk9OmYcImm1LEC9FoNIGk6jN7A0vlx0=",
+    "LastModified": "2026-09-24T01:38:01.000+0000",
+    "Handler": "entry.lambda_handler",
+    "Layers": [
+      "arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5"
+    ],
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "env_keys": [
+      "IRPT_CONTRACTS_DIR",
+      "IRPT_DIRECTORY_BUCKET_MAP",
+      "IRPT_DIRECTORY_KEY",
+      "IRPT_FIRM_REGISTRY",
+      "IRPT_HOLDINGS_PREFIX",
+      "IRPT_REQUESTS_TABLE"
+    ],
+    "Timeout": 29,
+    "MemorySize": 1024,
+    "tfstate_serial": 13,
+    "post_apply_plan_rc": 0
+  },
+  "recorder": {
+    "commit": "d24c89a385",
+    "worktree": "irpt-p-publish-20260923",
+    "deploy_ledger": "53413f6598",
+    "last_deployed_at": "2026-09-24T01:39:06Z"
+  },
+  "ledger": {
+    "slug": "irpt-holdings-sink-20260924",
+    "sentinel_commit": "53413f6598",
+    "status": "CLOSED",
+    "legs": {
+      "A1": "closed",
+      "V1": "closed",
+      "R1": "closed"
+    },
+    "entry": "org/critical_paths/change_management/20260924T0135Z_irpt-holdings-sink-20260924_deploy_completion.md"
+  },
+  "not_claimed": [
+    "Anna Holdings READY -- the fence (DenyForeignFirmPrincipals on opal-data-cottonwood) still denies irpt-holdings-role until the shared-infra bucket-policy apply from CRO 8b4c15c6ba lands; this repackage only makes the next NOT_READY produce an irpt_internal log line naming the AccessDenied"
+  ],
+  "push_state": "LOCAL (irpt-p-publish-20260923 branch; MSTR pushes)"
+}
