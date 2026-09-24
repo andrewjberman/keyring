@@ -46,22 +46,45 @@ banging out Peers, get it done."
    each `crosswalk/v1` or `universe/v1` re-mint, `python -m lib.research.peers.engine --write-pool --as-of <stamp>`.
    Owner: this seat.
 
-## Next proof (the served-output act)
+## The served-output act: PUBLISHED 03:33Z under both halves
 
-Publishing `crosswalk/v1/2026-09-24.json` + 194 `peers/v1/<key>/2026-09-24T0310Z.json` moves what the route serves,
-so it sits under the never-widen pair. COO half SIGNED: `NEVERWIDEN_PEERS_COO_HALF.md`. CTO half requested from
-`1.0.0_SA_CTO~Z` with the review handoff. On the pair: run the two writers, read back `UPLOADED 194 of 194`, then
-deployed `/peers` for `AAPL_US_Equity` (basis derived, `peer_read.status SERVED`) and `ASML_US_Equity` (absent with
-reason) as the post-act obligations for CVO grading. Warm containers may answer from the 2026-09-22 crosswalk until
-they recycle; the identity block's `source` names which.
+COO half `NEVERWIDEN_PEERS_COO_HALF.md` @`4c7d0b2e7c`; CTO half `AMGT_COMPLETION_20260923/NEVERWIDEN_PEERS_CTO_HALF.md`
+@`429efcdf30` (msg 25202) with ONE condition, a head-object on the crosswalk key immediately before the put. Executed
+by `publish_peers_candidate.py` (the exact signed bytes, sha-checked per file; the condition re-run in-process: 404
+with the 2026-09-22 control at 200; peer keys 0 of 194 present). Result `UPLOADED 194 of 194 + 1 crosswalk, read-back
+195 of 195` -- `PEERS_CANDIDATE_20260924T0310Z/PUBLICATION_RECEIPT.json` lists every key (the rollback denominator).
+
+**Post-act, measured three ways:**
+- Pool: `crosswalk.load_crosswalk` (no local override) answers from `crosswalk/v1/2026-09-24.json`; `resolve()` over
+  the 191 prior pool keys = **191 MEASURED** (proof obligation 2, on the live object).
+- Deployed function (direct invoke, CodeSha256 unchanged `DEQQiCH...`): `AAPL_US_Equity` derived 10 SERVED with
+  `price/ev/ey` on members; `CAT_US_Equity` derived 12 SERVED; `6861_JP_Equity` derived 4 SERVED; `ASML_US_Equity`
+  SERVED, basis absent, reason "no classification"; `BA_US_Equity` derived 12 with carried fields; negative control
+  UNRESOLVED. No warm-container staleness observed on these reads.
+- Served stack, signed-in re-walk 03:34Z (`PEERS_LIVE_TRACE_20260924T0335Z/`): Boeing, Lenovo, Caterpillar render
+  DERIVED / 12 comparables; ASML renders its absent reason instead of UNRESOLVED; the counts line reads
+  "5 present / 12 absent of 17 declared; **1 column(s) carry**" because the SERVED BUNDLE still carries the old
+  column map -- the 5-column render lands with the portal deploy of `1ec5446c` (MSTR merge + DEV/PROD), not with
+  this act. The API already serves the values.
+
+**CORRECTION to my 03:22Z handoff:** I wrote that `DE_US_Equity` (Posture's comparable for Boeing) "is among the
+158 the candidate registers". It is NOT: Deere is a scanner MEMBER, never a `universe/v1` subject, so it is in no
+registration source and Posture still reads it UNRESOLVED after the act (browser and direct invoke agree). That
+sentence was inferred, not measured. **OPEN, for the CTO's ruling:** the comparable key space is the scanner
+candidate universe (2,851 rows), wider than the subject key space (194); a Posture comparable outside the 194 is
+unresolvable at the route and the R-1 member identity block says so. Recommendation: register scanner-row tickers
+with an exchange code as a THIRD crosswalk source (same refusal rules), which is the "converge up to the producer"
+direction; alternative: Posture names only comparables inside the crosswalk. Not on the four steps; enrichment list.
 
 ## Dependencies
 
 | Need | Owner | State |
 |---|---|---|
 | Admin + Dev identity signed in on the headed window | Andrew | DONE 03:12Z (profile persists for the post-act re-walk) |
-| CTO never-widen half for the pool publication | `1.0.0_SA_CTO~Z` | REQUESTED 03:22Z (review handoff, msg to inbox `1.0.0_SA_CTO/~Z`) |
-| Live grading of E0 / P1 after the act | `3.0.0_SA_CVO~Z` | not yet due |
+| CTO never-widen half for the pool publication | `1.0.0_SA_CTO~Z` | SIGNED @`429efcdf30`; act EXECUTED 03:33Z |
+| Live grading of E0 / P1 after the act | `3.0.0_SA_CVO~Z` | DUE: review handoff sent with the two trace folders and the receipt |
+| Portal deploy of `1ec5446c` (5 carried columns on the served bundle) | `0.0.0_AB_MSTR~Z` | OPEN: merge to DEV/PROD on Andrew's word |
+| Posture comparable key space (scanner members vs 194 subjects) | `1.0.0_SA_CTO~Z` | OPEN CALL with recommendation (above) |
 
 ## Parked
 
