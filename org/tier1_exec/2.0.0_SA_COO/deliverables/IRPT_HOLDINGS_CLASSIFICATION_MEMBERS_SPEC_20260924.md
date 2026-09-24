@@ -12,9 +12,11 @@ All members are optional in the schema; the producer states when a value is abse
 
 | Member | Type | Values | Rule |
 |---|---|---|---|
-| `asset_class` | string | `equity`, `fixed_income`, `alternatives`, `unclassified` | The canonical classifier's answer (`data/black_diamond/scripts/gold/lib/etf_classifier.py` `ETFClassifier.classify`, `hedge` folded to `alternatives` as the classifier does). `unclassified` where it returns empty. Never guessed by the page. |
+| `asset_class` | string | `equity`, `fixed_income`, `alternatives`, `cash`, `unclassified` | The canonical classifier's answer (`data/black_diamond/scripts/gold/lib/etf_classifier.py` `ETFClassifier.classify`, `hedge` folded to `alternatives` as the classifier does). `unclassified` where it returns empty. Never guessed by the page. |
 | `sub_asset_class` | string or null | the classifier's `sub_asset_class` | Null where the classifier has none. |
 | `asset_class_basis` | string | `TABLE`, `NAME_ALIAS`, `NAME_PATTERN`, `TICKER_SHAPE`, `NONE` | Which classifier layer answered. `NAME_PATTERN` and `TICKER_SHAPE` are the classifier's inferences; `NONE` pairs with `unclassified`. A consumer may treat an inferred class differently. |
+
+**AMENDMENT 22:5xZ: `cash` added.** The classifier's table (`bd-securities`, 9,732 tickers, read 22:5xZ) holds exactly four values: `equity` 5,510, `fixed_income` 2,608, `alternatives` 1,599, `cash` 15. Every ticker carries a `sub_asset_class`. `cash` reaches 6 served securities (COT 1, INF 5). The producer REFUSES any value outside this enum rather than pass it through.
 
 The portal maps `fixed_income` to its `fixedIncome` key (`portal/src/lib/chartColors.ts` `ASSET_CLASS`). Cash-kind nodes
 (`node_kind: CASH`) are not SECURITY nodes and carry no member.
