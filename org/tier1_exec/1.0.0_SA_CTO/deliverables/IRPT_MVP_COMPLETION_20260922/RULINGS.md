@@ -2218,3 +2218,48 @@ run; ONE LINE on condition 3 -- page.content() through identityFromHtml becomes 
 the path the run takes; page.evaluate at most the fallback, the record naming which ran); Y STANDS on that, then the FIFTH
 submission. The CTO's word 100312 already named content() through identityFromHtml; Y's line is the same word made exact, and
 P lands it as one file.
+
+
+## 2026-09-24 06:3x UTC - Claude CTO batch 30: dec293d6 SERVED and read back; the DSGN cut's condition (a) measured by COO~D; D1 run 6 -- the identity leg passed, the template leg refused on the WAF token -- SIXTH AMENDMENT GO; portal candidate 2 GO on the CTO's own review
+
+Instruments: the CTO's head-object on the served manifest after the act; COO~D's own s3api reads (100349); P's run-6 receipt (100352) read against run 4's (100213, Y-verified); the candidate worktree read by the CTO (git, tsc, bun test); M's receipt (100346).
+
+### dec293d6 SERVED (M 100346; GO 100337)
+publish_cot_live.py dec293d6 publish, 06:20:00-06:20:12Z, preconditions re-read at execution (etag ffa30e5b / .VLcr1BCE / row 2d067b4d):
+27 IfNoneMatch creates + ONE IfMatch write on the builder's address; new manifest version mSFR0vatS4UCLaQuUla4glG0Atks2BIn, etag
+d81c92135abef0babf230fb1ff7e3f75, 06:20:13Z, rows {2026-09-22: dec293d6}; prior versions and objects retained. CTO READBACK, own
+instrument: head-object ETag d81c9213.., VersionId mSFR0vat.., LastModified 06:20:13Z; manifest body latest_date 2026-09-22 and the
+2026-09-22 row's manifest key under date=2026-09-22/dec293d65d25... -- matches. COO~D (100349) then measured the DSGN cut's
+condition (a) on ITS own instrument (s3api on the served part00019.json, version LoO3T5uE.., 701 nodes): Anna's subtree 75 nodes,
+68 of 68 security leaves carry display.label, 62 of 68 carry custody units; evidence file anna.holdings-nodes.dec293d6.json for
+the issuance. Condition (b) rc=1 at 06:2xZ (e5dd8487 not on origin/DEV 7975c3bb). The exercised arm of the page is Andrew's
+retest. 49F / INF: prepared but NOT GO-ready (directory label wired only in build_cot: ACCOUNT nodes 0 of 7,522 / 0 of 876
+labelled; CUSTODY_UNITS is COT-only); M fixes both first; one GO per firm with its own etag read; M also disclosed the labelled
+trees differ from the served revisions beyond display (INF drops 35 zero-value MODEL_LEAF rows; 49F re-keys 2,557 SMA position
+ids at identical values) -- producer-code vintage, to be named by commit in the GO request.
+
+### IRPT-D1-SIXTH-AMENDMENT-20260924 (P 100352; the CTO's word 100357 / 100358)
+Run 6 = the FIFTH credential submission (SSM dbd2cc6c, 06:27:53Z, blob feab2c53.. by readback): sign-in proven a fifth time; the
+IDENTITY leg PASSED from the held page document (probe_via node-port) -- the fifth amendment's (a) works; the TEMPLATE leg through
+the Node client with the FULL jar (11 cookies incl. aws-waf-token + the X-AWS-WAF-Token header) read 405 captcha text/html seven
+times, and Playwright's APIRequestContext with the same jar read 405. Run 4's control on the same route and client class carried
+NO token cookie and NO token header and read 200 JSON. One presented variable differs; time is the other candidate. GO: the
+resident client sends the jar WITHOUT the token cookie and header (run 4's measured shape; the browser keeps its own token for
+its own navigations); the pair on the template route becomes {without_token PRIMARY, with_token CONTROL} on the same cookies in
+ONE run, both statuses / waf_action / content types printed side by side; 200/405 = the token is the cause; 405/405 = time or
+the rule and the run STOPS -- no seventh submission on a client-shape hypothesis, the next question goes to the rule (the CRO
+reads the WAF's behaviour over the day; Andrew's word before any further sign-in); a primary-leg pass continues to the bundle
+capture in the SAME run. Y STANDS, then ONE run = the SIXTH submission, bounded to one. Y's resident transport (headers_for
+:404-411 sends both token forms) is cut AFTER the pair's verdict, on the Y branch. Both halves of the fifth amendment are
+committed (runner 5919c5363a with page.content() primary on Y's line 100336; resident 93ec16f4fe: step_identity sends nothing,
+validates the bundle against the enrolled pin, step_template = liveness; replays drop /dashboard/ so a regression raises).
+
+### IRPT-PORTAL-CANDIDATE-2-GO-20260924 (P 100354; GO 100359-class send this tick)
+irpt-dev-candidate-2-20260924 @7c542fd23e = DEV 7975c3bb + e5dd8487 (M's display-first rows) + 5d7145bf (hop 11: ReportingTab
+catch -> envelopeFromRefusal; TabShell label Reporting -> Performance, id unchanged) + 7c542fd2 (Page.tsx GENERATED region,
+SELECTION_UNSUPPORTED named @59d549b04e). CTO's own reads in the candidate worktree: both bases ancestors (rc=0, rc=0); 3 commits,
+6 files, +103/-22; the two hunks read as described; tsc -b --noEmit rc=0; fe-s-55 4/0, fe-s-76 9/0, fe-s-32 2/0 + 5 precondition
+skips. The portal validator enumerates no fact_kind / units values (P; CUSTODY_UNITS needs no portal change). GO; MSTR pushes
+portal DEV as 7975c3bb was pushed, under Andrew's 03:5xZ consolidation word and this GO -- MSTR says so if it reads the word as
+first-push-only, rather than inferring. The speed levers stay after the D1 run and the adapter rebuild. On the push, COO~D's
+condition (b) is measured and the DSGN_IRPTV1 round-1 issuance fires.

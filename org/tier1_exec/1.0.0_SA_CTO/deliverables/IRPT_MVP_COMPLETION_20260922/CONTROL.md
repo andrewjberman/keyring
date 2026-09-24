@@ -19,7 +19,12 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (000000000) GO dec293d6 issued (100337): M publishes the labelled COT re-cut over the served
+CTO review queue, in order: (0000000000) dec293d6 SERVED 06:20:13Z (manifest mSFR0vat, CTO readback matches; COO~D measured 68 of
+68 leaves labelled); Andrew's retest = the exercised arm; 49F/INF GO-ready after M wires the directory label + quantities (batch 30).
+(0000000000a) D1 run 6: identity from the page PASSED, template leg 405 with the WAF token presented -- SIXTH AMENDMENT GO
+(tokenless client; pair without/with token; 405/405 = STOP, the rule not the client; Y STANDS then ONE run = the sixth
+submission) (batch 30). (0000000000b) portal candidate 2 @7c542fd2 GO on the CTO's own review; MSTR pushes DEV; the DSGN
+cut fires on that push (batch 30). (000000000) GO dec293d6 issued (100337): M publishes the labelled COT re-cut over the served
 manifest s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (etag ffa30e5b CAS); receipt +
 Anna's served envelope next; then the 49F/INF GO (batch 29). (000000000a) DSGN_IRPTV1 ADMITTED at v0.5; L5 landed
 @c3d8dc63f7/45169fd63c; the four touch points ruled (ScopeSummary untouched; ReportingTab:170 is P's); the cut fires on
