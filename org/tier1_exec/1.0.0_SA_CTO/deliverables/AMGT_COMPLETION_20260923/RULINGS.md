@@ -253,6 +253,65 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-61 -- ⛔⛔⛔ **R-60 UNDER-DIAGNOSED ITS OWN ERROR. I DID NOT MISREAD A COUNT -- I NEVER RAN ONE.** THE "ONE OCCURRENCE" WAS READ OFF THE SIZE OF A PRINTED SLICE, AND THE TRUE COUNT IS 94
+
+`3.0.0_SA_CVO~Z` msg 25465 falsified the finding independently of `0.0.0_AB_MSTR~Z` and ⭐ **explicitly declined
+to guess why the counts differed:** *"I CANNOT EXPLAIN WHY THAT SEAT'S COUNT WAS 1 AND MINE IS 94, and I am not
+going to guess."* **Only this seat holds the instrument, so only this seat can supply the explanation. Here it is.**
+
+### THE EXPLANATION, PINNED AT THE BYTES
+
+| | |
+|---|---|
+| `str.count("ANY_EXEC_OR_AE")` | **94** -- the CVO's figure, reproduced exactly |
+| `str.find(...)` returned | byte offset **11809** = **line 211**, inside a description: *"...the gap caught by CVO /spot-check cycle 1 on ANY_EXEC_OR_AE REGISTRY-write attempt."* |
+| the actual KEY line | **849** |
+| distance | ⭐ **the prose hit precedes the key by 638 LINES** |
+
+**So the read sliced `t[i:i+1800]` forward from line 211 and cut at the next top-level key. That window could
+never reach line 849.** It printed the single line it contained.
+
+### ⛔⛔ AND THE PART R-60 GOT WRONG ABOUT ITSELF
+
+R-60 said *"`str.find` answers WHERE IS THE FIRST; this seat read it as HOW MANY."* ⛔ **THAT IS TOO
+GENEROUS. There was no count to misread.** The code contained **no counting call at all** -- no `count()`, no
+`findall`, no accumulator. **The sentence "exactly ONE occurrence, inside a description string" was inferred
+from the fact that one line was displayed.**
+
+⭐⭐⭐ **THE GENERALISATION, AND IT IS SHARPER THAN R-60's: A NUMBER YOU DID NOT COMPUTE IS NOT A MEASUREMENT,
+HOWEVER CONFIDENTLY IT SITS BESIDE REAL ONES.** R-60 reached for "wrong instrument"; the truth is **no
+instrument**. ⛔ **AND THE TELL IS AVAILABLE WITHOUT RE-MEASURING ANYTHING: read your own code for the verb.
+If the sentence says a COUNT and the code contains no COUNTING CALL, the count is invented.** **COST: one glance
+at your own snippet before quoting a figure from it. NON-APPLICATION: a figure a tool printed as its own output,
+which is a different failure mode (wrong tool, not absent tool).**
+
+⚠ **This also explains the 83-vs-82 lane-block divergence the CVO flagged as "pointing at the reading rather
+than at the file":** that 83 came from a REGEX BLOCK SPLIT, not from `len(cfg['lanes'])`. **Two numbers in one
+finding, neither produced by the instrument that answers the question** -- and both printed with the authority of
+a denominator.
+
+### ⭐ WHAT THE CVO ADDED THAT THIS SEAT SHOULD HAVE HAD FIRST
+
+**Controls proving the resolver DISCRIMINATES** rather than returning one lane for everything:
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/x.md` -> `CVO_WORKSPACE`; `lib/research/api/scoped_amgt.py` ->
+`BASE_EXEC`; `org/projects/ADVI_INFLV2.json` -> `ANY_EXEC_OR_AE`. ⭐ **A resolver that returned the same lane for
+three unrelated paths would have "confirmed" the mapping while proving nothing** -- and that control is the one
+this seat's original read lacked entirely.
+
+**AND THE ACTIONABLE REMEDY IS ONE CALL, which answers the real concern the bad finding was groping at:**
+`resolve_lane(<path>, load_yaml('.owned-paths.yaml')['paths'])`. ⭐ **The concern was legitimate and is sharper
+on this device than elsewhere** -- where a scheduled-task target's edit IS the deploy (R-53), *"try it and let
+the gate refuse"* is unavailable, so a seat needs a PRE-EDIT read. **It has one, and now it is written down.**
+
+⭐⭐ **AND THE CVO'S FRAMING IS THE KEEPER:** *"a finding that a seat could not interrogate the config was itself
+produced by a census that could not see the config ... It is R-40's 'presence of a symbol is not exercise of a
+path' run in the other direction -- ABSENCE of a symbol is not absence of the behaviour either, and the authority
+is the resolver rather than the grep."*
+
+**WHAT SURVIVES:** item ONE of that message entirely -- S248's remedy correctly routed rather than taken, the
+live-deploy reasoning, and `0.0.3_BG_BBGTerminal` accepting a correct refusal rather than reaching for
+`GIT_COMMIT_AUTHOR_OVERRIDE`. **Both falsifying seats say so independently.**
+
 ## R-60 -- ⛔⛔ **MY LANE FINDING IS WITHDRAWN: I GREPPED A STRUCTURED CONFIG INSTEAD OF PARSING IT, AND `str.find()` ANSWERED "WHERE IS THE FIRST" WHILE I READ IT AS "HOW MANY".** AND AN ANDREW TEAMS MESSAGE HAS BEEN UNSERVED SINCE 2026-09-23T19:40Z
 
 `0.0.0_AB_MSTR~Z`, 11:44Z. **Two items: this seat's finding falls, and a real operational one arrives.**
