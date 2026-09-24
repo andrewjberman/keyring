@@ -76,22 +76,48 @@ apply under a fresh pair when 2b lands. This seat's recommendation was `gold` [S
 its reason on the marker, and the pipes are then live for 2b without another deploy]. REFUSED by the CTO half
 @`c069b2d753` on the disclosed cost: a HOLD changes served output by CEASING to write; `legacy` is applied.
 
-## PROOF CLAUSES FOR THE LEGS THIS HALF FEEDS (each with its population)
+## PROOF CLAUSES FOR THE LEGS THIS HALF FEEDS (each with its population) -- AMENDED 2 (2026-09-24 ~04:0xZ, CTO msg 25231 / CTO half @`41616c8789`)
+
+**These are the clauses that BIND the `legacy` apply.** The gold-form clauses that stood here until amendment 2 are
+retained below them, marked SUPERSEDED, for the 2b pair -- an actor reconciling a plan-proof mismatch reads
+THESE, never those. The plan is correct; the earlier proof was stale.
 
 - `tf`: safe-apply receipt showing exactly the three changes and one import above; post-apply
   `get-function-configuration` reads `CodeSha256 == Xdwp7IrPaNho7y0Nz1L4TsihsueqDG+QDuvRsA+acYM=`, env
-  `CHATTER_AXIS_SOURCE=gold`, 512 MB, 120 s; `get-role-policy` carries the one added prefix and nothing else new.
+  **`CHATTER_AXIS_SOURCE=legacy`**, 512 MB, 120 s; `get-role-policy` carries the one added prefix and nothing
+  else new.
+- target-runtime read (zero writes): one invoke with `{"dry_run": true}` returning **`source=legacy`**,
+  `dry_run=true`, `input_coverage=null`, `tickers_considered=191`, `names_read=250`, **`names_with_links=3` with
+  `names_with_links_population` = the publication-links population**, both products with `rows_written=0`,
+  `pointer_written=false`, `failed_marker_written=false` (TRENDING_CHATTER `rows_ranked` 2 and state COMPLETE built
+  but NOT written; BREAKOUT_CHATTER state EMPTY built, not written). This exercises the packaged bytes, the
+  bundled registry and the legacy read in the target runtime; it does NOT exercise the Arrow-15-reads-Arrow-24
+  parquet read (parked to the 2b pair -- the handler reads the environment, so a gold dry run is a gold apply).
+- `daily`: the 10:00Z fire's run line **`source=legacy`**, `names_with_links=3` of `names_read=250` with the
+  publication-links population, `PRODUCT TRENDING_CHATTER state=COMPLETE rows_ranked=2 rows_written=2
+  pointer_written=True failed_marker_written=False` and `PRODUCT BREAKOUT_CHATTER state=EMPTY rows_written=0
+  pointer_written=True failed_marker_written=False`; then the NEGATIVE CONTROL: `TRENDING_CHATTER#2026-09-23
+  _CURRENT` and `BREAKOUT_CHATTER#2026-09-23 _CURRENT` byte-identical to the baseline (`generation_id
+  20260923T100026Z-d09ee37a8f3b` / `20260923T100028Z-25147d66b259`) **WHILE a fresh `_CURRENT` pair appears at
+  the run date** (`TRENDING_CHATTER#<date>` COMPLETE `row_count 2`; `BREAKOUT_CHATTER#<date>` EMPTY with its
+  reason) -- i.e. served output unchanged by construction, a same-day generation as every day before the act.
+- `names_with_links`, if quoted at all, is quoted WITH `names_with_links_population` (R-20): under `legacy` it
+  counts identities with >=1 publication-links object, the same 3 of 250 population as the baseline, so the
+  before/after pair is on ONE population and reads 3 of 250 both sides.
+
+[SUPERSEDED by amendment 2, old bytes retained for the 2b pair -- these expected `gold` and are FALSE on a correct
+legacy apply:]
+- `tf`: ... env `CHATTER_AXIS_SOURCE=gold` ...
 - target-runtime read (zero writes): one invoke with `{"dry_run": true}` returning `source=gold`, `dry_run=true`,
   `input_coverage.required=191`, both products `FAILED` / `INCOMPLETE_GOLD_INPUT`, `rows_written=0`,
   `pointer_written=false`, `failed_marker_written=false` -- this is the Linux Arrow bytes reading the real
   parquet (writer Arrow 24, reader 15.0.2), the read R-15/R-17 said remained REQUIRED.
 - `daily`: the 10:00Z fire's run line `source=gold` with `INPUT_COVERAGE RESOLVED 0 of 191 security windows`,
   `PRODUCT ... state=FAILED ... pointer_written=False failed_marker_written=True`; then the NEGATIVE CONTROL:
-  `TRENDING_CHATTER#2026-09-23 _CURRENT` and `BREAKOUT_CHATTER#2026-09-23 _CURRENT` byte-identical to the
-  baseline (`generation_id 20260923T100026Z-d09ee37a8f3b` / `20260923T100028Z-25147d66b259`), and NO
-  `_CURRENT` at `#2026-09-24` (or at the first post-apply date).
-- `names_with_links`, if quoted at all, is quoted WITH `names_with_links_population` (R-20): under `gold` it
-  counts identities with a gold day record, a different population from the 3 of 250 publication-link count.
+  the 09-23 pointers byte-identical to the baseline, and NO `_CURRENT` at `#2026-09-24` (or at the first
+  post-apply date).
+- `names_with_links` ... under `gold` it counts identities with a gold day record, a different population from
+  the 3 of 250 publication-link count.
 
 ## WHAT THIS HALF DOES NOT SAY
 It does not claim H1-H4 or any acceptance ID (R-19: 2a claims none). It does not lift the deploy ledger, the
