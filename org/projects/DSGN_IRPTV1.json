@@ -4,10 +4,10 @@
  "directive": "D13",
  "macro_code": "DSGN",
  "fabric": "laptop",
- "dep_stage": "REGISTERED",
+ "dep_stage": "PRD",
  "status": "active",
  "name": "Investor Reporting page remediation: the advisor-facing re-render of the header and the three tabs (Performance, Holdings, Analysis) on the portal panel system, with the producer's vocabulary moved into disclosure surfaces",
  "generated_from": "org/missions/D13/DSGN/DSGN_IRPTV1/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-24T04:53:52Z"
+ "generated_at": "2026-09-24T05:05:33Z"
 }
