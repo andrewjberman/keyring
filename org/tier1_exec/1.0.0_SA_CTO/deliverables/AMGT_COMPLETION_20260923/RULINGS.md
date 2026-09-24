@@ -253,6 +253,47 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-73 -- ⭐ **"AND THEIR ADDENDUMS" IS ALREADY COVERED BY THE 49 -- MEASURED, NOT ASSUMED. AND THE SAME READ SHOWS THIS SEAT HAS BEEN REPORTING TWO DIFFERENT POPULATIONS AS IF THEY WERE ONE**
+
+**The goal's closing sentence is *"Finish AMGT_RESAPP, AMGT_CORPUS and close them out and their
+addendums."* This seat has cited the 49-row close test for days and never once tested the addendum
+clause against it.** Tested now:
+
+| claim | measured |
+|---|---|
+| the 49's composition | **30 (RESAPP) + 19 (CORPUS) = 49**, the table's own denominator, verified on a second instrument at `GRADE_TABLE_49.md:87-89` |
+| `AMGT_CORPUS` ADDENDUM A = `FWD-10..19` | **all TEN present** in the table |
+| `AMGT_RESAPP` ADDENDUM B = `FWD-30` | **present** |
+
+⭐ **So the addendums are not a separate closure surface -- they are INSIDE the outcome sets the 49
+already enumerates**, because each addendum extended its project's `FWD` range rather than opening a new
+register. `AMGT_CORPUS`'s nineteen are 9 base + 10 addendum; `AMGT_RESAPP`'s thirty carry ADDENDUM B's
+`FWD-30` as their last. **No fourth artifact is owed and none was missing** -- but that was a GUESS until
+this read, and the clause had been quoted back to Andrew without it.
+
+⛔ **AND THE SAME READ EXPOSES A UNIT ERROR IN THIS SEAT'S OWN REPORTING.** Every tick has printed
+**"0 of 3 projects complete"**. The 49-row close test is **RESAPP + CORPUS ONLY**; `AMGT_HARVST` is not in
+it, and the goal's closing sentence names **two** projects, not three. **So "0 of 3" and "0 of 49" have
+been reported side by side as if they measured the same thing, and they do not:** one counts the macro's
+projects, the other counts the goal's own close surface. Both numbers were true. **The pairing was the
+defect** -- Rule 24's grain axis, committed by the seat that rules on it.
+
+⚠ **WHAT THIS RULING DOES NOT DO, AND THE RESTRAINT IS THE POINT:** it does NOT narrow the goal to two
+projects. `AMGT_HARVST` is squarely implicated by the goal's OTHER clause -- *"complete backfill for all of
+these securities through the opal-data-harvest channels"* -- and whether it must also read
+`status: complete` before the goal is done is **Andrew's reading, not this seat's to settle.** The
+over-restriction class is invisible precisely because nothing fails, and a CTO quietly dropping a project
+from a completion test is the shape the HELD-AT-STOP branch exists to forbid: **a stop-condition
+satisfiable by shrinking its own denominator is not a stop-condition, and this seat is the party that
+benefits.** It is surfaced to him as an observation with both populations printed.
+
+**FORWARD: every completion line from here prints BOTH, labelled** -- `close test: N of 49 outcomes
+(RESAPP+CORPUS)` and `macro: N of 3 projects status:complete` -- so no reader has to guess which
+population a number belongs to. COST: one extra clause per tick output. NON-APPLICATION: a scope whose
+close test and project set are the same population.
+
+---
+
 ## R-72 -- ⭐⭐⭐ **ANDREW'S DENIAL IS NOW MECHANICALLY CORROBORATED, NOT MERELY ACCEPTED: THE WATCHER READ HIS MAILBOX WITH *HIS OWN TOKEN*, FRESHLY AUTHENTICATED BY HIM, ON HIS OWN BOX. THAT IS TOKEN MIS-SELECTION, NOT AN ENTITLEMENT VIOLATION**
 
 **`4.0.0_SA_CRO~Z` msg 25551 @`2af2c4530c`, measured on the watcher's OWN request path at Andrew's direct
