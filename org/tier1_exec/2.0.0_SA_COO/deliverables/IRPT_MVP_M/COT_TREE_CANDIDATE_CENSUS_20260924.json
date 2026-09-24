@@ -191,5 +191,252 @@
       "custody_as_of": "2026-09-22",
       "overlay_as_of": "2026-09-23"
     }
+  },
+  "population_841": {
+    "note": "dry measurement over the accepted 841-account census (the retained membership candidate scope); no publication; builder at c7f8cfdb38",
+    "nodes": 16749,
+    "kinds": {
+      "ACCOUNT": 841,
+      "SLEEVE": 499,
+      "SECURITY": 14426,
+      "MODEL_WRAPPER": 462,
+      "MODEL_LEAF": 521
+    },
+    "paths": {
+      "(account)": 841,
+      "Client": 5630,
+      "Models": 462,
+      "Models > Primary": 9772,
+      "Models > Custom": 10,
+      "SMA": 34
+    },
+    "reconcile": [
+      true,
+      548412662.59,
+      548412662.59
+    ],
+    "partitions_off": 0,
+    "coverage": {
+      "nodes_resolved": 462,
+      "nodes_attempted": 841,
+      "remainder": {
+        "amount": 362301117.05,
+        "units": "USD",
+        "reason": "462 of 841 custody account(s) carry an assigned Rebalancer strategy; 186111545.54 USD sits in constituent model leaves (ASSIGNED = account value x blend weight), the rest is Client (the plug, 91777394.27 USD across assigned accounts) or unassigned custody"
+      }
+    },
+    "membership": {
+      "assigned_accounts": 462,
+      "assigned_value": 277888939.8,
+      "strategies": 46,
+      "constituent_models": 7,
+      "constituent_leaf_rows": 521,
+      "constituent_value": 186111545.54,
+      "client_plug_value": 91777394.27,
+      "leaf_rows_by_qualifier": {
+        "primary": 518,
+        "custom": 2,
+        "sma": 1
+      },
+      "definition_date": "2026-09-23",
+      "definition_rows": 1583,
+      "join": "fact_model_assignment.strategy_name -> fact_model_roster.model_name, exact, unique; fact_model_blend children x fact_model_definition components (CTO ruling IRPT-COT-HOLDINGS-TREE-20260924)"
+    },
+    "leaf_rows_by_model": {
+      "Opal Ultra Short-Term Income": 13,
+      "Opal Long-Term Aggressive": 11,
+      "Opal Intermediate-Term": 248,
+      "Opal Short-Term": 124,
+      "Opal Conservative Growth": 122,
+      "Opal Fixed Income": 2,
+      "DIVZ SMA": 1
+    },
+    "unresolved_value": 0,
+    "custody_as_of": "2026-09-22",
+    "overlay_as_of": "2026-09-23"
+  },
+  "go_census_prepared_bytes": {
+    "status": "GO_CENSUS_OVER_PREPARED_BYTES",
+    "revision": "2d067b4d7097f0762e69ac635f75db77591a9a2774ce8138914e134185caa859",
+    "platinum_bytes": 19038427,
+    "business_date": "2026-09-22",
+    "clocks": {
+      "as_of_timestamp": "2026-09-24T03:49:35Z",
+      "business_date": "2026-09-22",
+      "custody_as_of": "2026-09-22",
+      "overlay_as_of": "2026-09-23",
+      "source_as_of": [
+        {
+          "as_of": "2026-09-22",
+          "source": "blackdiamond/cottonwood/silver (custody)"
+        },
+        {
+          "as_of": "2026-09-23",
+          "source": "blackdiamond/cottonwood/silver (overlay)"
+        }
+      ]
+    },
+    "accounts": 841,
+    "nodes": 16749,
+    "kinds": {
+      "ACCOUNT": 841,
+      "SLEEVE": 499,
+      "SECURITY": 14426,
+      "MODEL_WRAPPER": 462,
+      "MODEL_LEAF": 521
+    },
+    "per_account_reconcile": {
+      "pies_off": 0,
+      "denominator": 841
+    },
+    "reconcile": [
+      true,
+      548412662.59,
+      548412662.59
+    ],
+    "accounts_by_shape": {
+      "unassigned (Client shape)": 379,
+      "assigned with definition": 462
+    },
+    "strategies": {
+      "with_definition": 46,
+      "without_definition": 0
+    },
+    "shared_securities": 2145,
+    "unresolved": {
+      "count": 0,
+      "total": 0
+    },
+    "uncovered_observed_positions_as_facts": {
+      "rows": 672,
+      "value": 20642062.66
+    },
+    "hierarchy_paths": {
+      "(account)": 841,
+      "Client": 5630,
+      "Models": 462,
+      "Models > Primary": 9772,
+      "Models > Custom": 10,
+      "SMA": 34
+    },
+    "membership": {
+      "assigned_accounts": 462,
+      "assigned_value": 277888939.8,
+      "strategies": 46,
+      "constituent_models": 7,
+      "constituent_leaf_rows": 521,
+      "constituent_value": 186111545.54,
+      "client_plug_value": 91777394.27,
+      "leaf_rows_by_qualifier": {
+        "primary": 518,
+        "custom": 2,
+        "sma": 1
+      },
+      "definition_date": "2026-09-23",
+      "definition_rows": 1583,
+      "join": "fact_model_assignment.strategy_name -> fact_model_roster.model_name, exact, unique; fact_model_blend children x fact_model_definition components (CTO ruling IRPT-COT-HOLDINGS-TREE-20260924)"
+    },
+    "anna_from_built_bytes": {
+      "0698": {
+        "nodes": 41,
+        "value": 26303302.1722,
+        "l2": [
+          [
+            "Opal Conservative Growth",
+            [
+              "Models",
+              "Primary"
+            ],
+            15966104.42
+          ],
+          [
+            "Opal Fixed Income",
+            [
+              "Models",
+              "Custom"
+            ],
+            4208528.35
+          ],
+          [
+            "Opal Ultra Short-Term Income",
+            [
+              "Models",
+              "Primary"
+            ],
+            5260660.43
+          ],
+          [
+            "client",
+            [
+              "Client"
+            ],
+            868008.97
+          ]
+        ]
+      },
+      "d486": {
+        "nodes": 75,
+        "value": 19705844.8433,
+        "l2": [
+          [
+            "DIVZ SMA",
+            [
+              "SMA"
+            ],
+            1379409.14
+          ],
+          [
+            "Opal Conservative Growth",
+            [
+              "Models",
+              "Primary"
+            ],
+            7094104.14
+          ],
+          [
+            "Opal Fixed Income",
+            [
+              "Models",
+              "Custom"
+            ],
+            4138227.42
+          ],
+          [
+            "Opal Ultra Short-Term Income",
+            [
+              "Models",
+              "Primary"
+            ],
+            6502928.8
+          ],
+          [
+            "client",
+            [
+              "Client"
+            ],
+            591175.35
+          ]
+        ]
+      },
+      "combined_nodes": 116
+    },
+    "measured_write_plan": {
+      "multipart": true,
+      "parts": 19,
+      "immutable_creates": 22,
+      "index_writes": 1,
+      "total_writes": 23,
+      "key_prefix": "irpt/cottonwood/platinum/holdings/date=2026-09-22/2d067b4d7097f0762e69ac635f75db77591a9a2774ce8138914e134185caa859"
+    },
+    "index_precondition": {
+      "kind": "IfMatch (CAS over the current index)",
+      "etag": "\"ab460faa537d9fc0aa081cd5cb395782\"",
+      "version_id": "XbWnSWxMFRs9jNOUtj6ZOELvpemDQP73",
+      "row_replaced": "2026-09-22",
+      "prior_revision_retained": "ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a",
+      "other_rows_kept": {}
+    },
+    "source_receipts_count": 8,
+    "regression_suite": "236 passed / 4 failed (the four pre-existing currency-state arms: test_holdings_49f x2, test_holdings_inf, test_inf_positions)"
   }
 }
