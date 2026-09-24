@@ -67,6 +67,15 @@ with the 2026-09-22 control at 200; peer keys 0 of 194 present). Result `UPLOADE
   column map -- the 5-column render lands with the portal deploy of `1ec5446c` (MSTR merge + DEV/PROD), not with
   this act. The API already serves the values.
 
+**CVO grade @`bb4d36e32c` (relayed R-24 @`1f0c18a51a`): route/data layer PASS**; ASML and CAT moved exactly as
+the mandate said, the negative control held. One sentence owed and answered (msg to CTO+CVO ~03:5xZ): 992_HK's
+member swap (BYXXXJ out, B929F4 in) is the ranker's intended output because the SUBJECT cap moved 419,619 ->
+456,118 (the pool's model-block store gained partitions 09-19 and 09-22 after the 09-17 batch; universe unchanged),
+so the 0.2x floor rose above Eoptolink and ASML's log distance fell inside the twelve. Enrichment items accepted:
+R-1 to carry the subject cap's vintage and a member-set digest; R-24a (a no-regression control must be a case free
+to regress) adopted at this seat. Uncredited by the grade: consumer 2 from local traces, the three failure cases,
+BP%2F 404 formally OPEN as failure case 3.
+
 **CORRECTION to my 03:22Z handoff:** I wrote that `DE_US_Equity` (Posture's comparable for Boeing) "is among the
 158 the candidate registers". It is NOT: Deere is a scanner MEMBER, never a `universe/v1` subject, so it is in no
 registration source and Posture still reads it UNRESOLVED after the act (browser and direct invoke agree). That
