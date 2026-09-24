@@ -80,7 +80,7 @@ refused there because it would mint a new object per type on every corpus growth
 tests), AC2 FAIL (GoldImmutableError on the first type), AC3 PASS (the print line) -- recorded in the issuance commit.
 
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
