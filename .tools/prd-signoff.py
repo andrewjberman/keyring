@@ -85,7 +85,8 @@ def _evaluate(lib, code, prd_rel, pj_rel):
         text = fh.read()
     files = lib.read_signoff_files(os.path.join(ROOT, os.path.dirname(prd_rel), lib.SIGNOFF_DIR))
     doc = _project_doc(pj_rel)
-    return lib.evaluate(text, files, coo_lane_of_project=doc.get("coo_lane"), designated=lib.designated_brief_signer(doc)[0]), text, doc
+    return lib.evaluate(text, files, coo_lane_of_project=doc.get("coo_lane"), designated=lib.designated_brief_signer(doc)[0],
+                        brief_by_cro=lib.brief_written_by_cro(ROOT, text)[0]), text, doc
 
 
 def cmd_status(lib, code=None):

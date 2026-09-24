@@ -21,6 +21,21 @@ context; the RECORD FACE (`<status>`, seating, preflight narrative, authority ch
 for the gates and never travels to the worker. `<issued_to>` names the worker serial `0.9.0_WK_<CODE>~<n>`. Where
 this template and the spine differ, the spine governs.
 
+**Spine v3.19 (reports 2 and 3, Andrew-approved 2026-09-24).**
+- **`<risk>`** is required on a new tree order: `LOCAL` (code, tests or records, including a portal change landing
+  on DEV only), `SERVED` (a PROD promotion or a served data path) or `WORLD` (a deploy, delete, grant, key, or a
+  claim to Andrew). `.tools/to-pipeline-gate.py` GATE (xii) refuses it absent, off the enum, or below the floor its
+  `<paths>` and invocations imply (an `infra/` path or a deploy verb is `WORLD`). The class decides which limbs
+  engage.
+- **`<worker_class>`** names the agent type the spawn uses: `worker`, or `worker-light` (a cell of about 100 product
+  lines or fewer, or the batch repair cell).
+- **The face never restates the worker rules.** Identity, commit, the bar, surprise, proof, scratch and never live in
+  `.claude/agents/worker.md`; the face carries only what is specific to its cells.
+- **Every mechanical check is a small test or script file, dry-run at the base before the cut.** A build check
+  fails there and a bound or control check passes there; the issuance commit carries one line per check.
+- **The direct-act path:** one cell, about 300 product lines or fewer, `<risk>LOCAL</risk>` -> one order carrying
+  `<direct_act>true</direct_act>`, no L2, L4-R or L8-L10; its close is the COO's one real run of the outcome.
+
 ---
 
 ## XML Template
@@ -35,6 +50,8 @@ this template and the spine differ, the spine governs.
     <status>staged | pending | complete</status>
     <project_code>{MACRO}_{6CHAR}</project_code>
   </metadata>
+<risk>LOCAL | SERVED | WORLD</risk>
+<worker_class>worker | worker-light</worker_class>
 
   <objective>
     <!-- 1-3 sentences: what needs to be accomplished and why -->

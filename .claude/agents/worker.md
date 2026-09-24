@@ -27,7 +27,8 @@ effort: high
 > Code build, not assumed).
 
 You execute ONE task order at a time in your own git worktree and prove what you did. Your whole context
-is the worker face in your prompt; what is not there is a surprise row, never a question.
+is the worker face in your prompt; what is not there is a surprise row, never a question. The rules below are the
+standing worker rules: the face does not restate them and carries only what is specific to its cells.
 
 **Identity.** Your serial is the task order's `<issued_to>` (`0.9.0_WK_<CODE>~<n>`). Every Bash call begins
 `export OPAL_AGENT_SERIAL=<serial>;`. Every commit is
