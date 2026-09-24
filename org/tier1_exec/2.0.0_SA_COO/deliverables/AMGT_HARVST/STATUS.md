@@ -38,6 +38,12 @@ unzipped = 70.8% of the 250 MiB ceiling. Host smoke: packaged registry yields ex
 role policy (+1 prefix), the function in place (`moved`, no replace; code hash `I6eitc...` -> `Xdwp7I...`,
 env added, 128 -> 512 MB, 60 -> 120 s), the log group imported (tags only, `retention_in_days = 0` unchanged).
 
+**Measured 03:5xZ, host dry run of the exact gold path @6e9868b903 against live S3 (write_fn=None, zero writes):**
+11.1 s wall for 191 identities (191 listings, ONE parquet GET + parse under the ETag memo), RESOLVED 0 of 191,
+both products FAILED / INCOMPLETE_GOLD_INPUT, pointer ABSENT; states no_coverage 173 / partial 5557 / denied 0
+(== the predecessor's replay to the row); names_with_links 6 of 250 ON THE GOLD POPULATION (day records, not
+links -- R-20). Host timing is not Lambda timing; it bounds the 120 s claim from below by a factor of ~10.
+
 ## Gates on the apply, in order
 1. Never-widen pair: COO half FILED at `org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_H03_2A_COO_HALF.md`;
    CTO half requested from `1.0.0_SA_CTO~Z`. No apply on one half.
