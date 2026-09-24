@@ -2,6 +2,12 @@
 
 Seat `2.0.0_SA_COO~M` (CLAUDE, successor to the Codex seat since 2026-09-23 ~22:47Z). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.4. Reviewer `3.0.0_SA_CVO~M` (not live).
+As of 2026-09-24T03:5xZ. ANDREW'S ANNA SCREEN RENDERS (CTO 100044, fixes EXERCISED). Andrew-direct ~03:1xZ (CTO 100063) corrected the
+COT tree: the Rebalancer Strategy is a WRAPPER and the MODELS are its constituents; CTO ruling IRPT-COT-HOLDINGS-TREE-20260924 (100094)
+fixed the shape; build_cot is RE-CUT on this branch as a CANDIDATE (no publication; census COT_TREE_CANDIDATE_CENSUS_20260924.json with
+the CTO). The 46-model overlay artifact is WITHDRAWN as an overlay of models until the re-cut publishes. UI: coverage counter
+b0e2d9ad (CTO-accepted) + drill affordance / deeper first screen / strategy label 67158601 on codex/irpt-m-ui for CTO review.
+Earlier state follows.
 As of 2026-09-24T02:12Z. FENCE APPLIED 02:04:06Z (P 99963, ledger irpt-holdings-fence-20260924 CLOSED @7220e4a4f3), CTO re-simulation 6 of 6
 allowed (99969); this seat's own re-simulation on the 49F and INF indexes and a part each: allowed 4 of 4, matched the role's identity
 policy, role named once in each bucket policy (HOLDINGS_ROLE_ARM_RESIM_20260924.json). The function can now read all three publications;
@@ -32,6 +38,7 @@ structurally correct Cottonwood pipeline bounded by Black Diamond's data window.
 | PREPARED for GO (exact bytes + receipts, ATTESTED) -- now PUBLISHED as above | 49F revision 7c0e7ce3bef21ccf63541d766a94fa9a71668e7457955eedcf850ec2b18f5cc0: 7,522 accounts, 151,697 nodes, reconcile 1,835,875,624.28, 156 parts = 159 immutable creates + index create (IfNoneMatch *, no index exists), 8 source receipts; INF revision 1ebc7696d6e52be01c3fc431b222c80d9baf3f967f0681cf3879115e5ad476fa: 876 accounts, 33,328 nodes, reconcile 209,358,359.48, 31 parts = 34 creates + index create, 8 receipts. Bytes and receipts under .runtime/holdings-journey-20260923/prepared_49f and prepared_inf; a rebuild changes the revision (clocks.as_of_timestamp), so the GO names THESE bytes and the publisher writes them |
 | Currency | Andrew attested 49F and INF USD (CTO 99877, ANDREW_49F_INF_USD_20260924.md); P writes the two records into CurrencyAuthorities.json; both candidates publish under exact-write GOs on those records |
 | COT membership candidate | PUBLISHED as above (receipt COT_MEMBERSHIP_PUBLICATION_RECEIPT_20260923.json); reader matrix on the live publication: 0698 / d486 / combined READ_OK with 1 / 1 / 2 model leaves, 2026-09-23 refused, excluded account refused |
+| COT TREE RE-CUT (CTO 100094) | this commit: ACCOUNT > MODEL_WRAPPER (strategy, ASSIGNED whole account) > MODEL_LEAF per Opal/SMA blend child (ASSIGNED = value x absolute_allocation; Models > Primary / Models > Custom / SMA by the MDPF registry rule; is_opal by name) + SLEEVE Client (the plug, ASSIGNED) > SECURITY (fact_model_definition components at value x weight; observed custody position as a fact). Anna: 0698 41 nodes = OCG 60.7% + OUSTI 20% (Primary) + OFI 16% (Custom) + Client 3.3% (PHYS); d486 75 nodes adds DIVZ SMA 7%; combined 116; reconcile exact, 0 partitions off. CANDIDATE; the CTO GOes the publication (CAS create over ac3adb97) |
 | Registry act (CTO dda3b7ab42 item 3) | ORIGINAL_HOLDINGS family row committed 58ee5b36dd on this branch: tier state, table original_holdings (tables must be distinct; prospect_inputs is ORIGINAL_CSV's), extension csv (the validator admits only csv/json/pdf; xlsx would refuse the whole registry), 30 / 2555; policy_sha256 of irpt-x10-v1 moves cb9c4e6e -> 7a7ed8f6 (before value = P's X10 matrix pin); exact-family census test updated in the same commit, 63 passed; sent to CTO + Y for acceptance |
 | Push state | LOCAL; origin/CLOUD b475b96309 (ls-remote read 23:27Z by CTO); shared pushes are 0.0.0_AB_MSTR's |
 

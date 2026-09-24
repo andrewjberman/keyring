@@ -1,0 +1,195 @@
+{
+  "status": "CANDIDATE_UNPUBLISHED",
+  "ruling": "IRPT-COT-HOLDINGS-TREE-20260924 (CTO 100094)",
+  "measured_utc": "2026-09-24T03:39:20.453744+00:00",
+  "executed_by": "2.0.0_SA_COO~M",
+  "builder": "holdings_snapshot.build_cot (re-cut; uncommitted at measurement, parent e6ab5d4841)",
+  "sources": {
+    "bucket": "opal-data-assets",
+    "fact_holdings": "2026-09-22",
+    "fact_allocations": "2026-09-22",
+    "fact_model_assignment": "2026-09-23",
+    "fact_model_blend": "2026-09-23",
+    "fact_model_roster": "2026-09-23",
+    "fact_model_definition": "2026-09-23"
+  },
+  "shape": "ACCOUNT > MODEL_WRAPPER (Rebalancer strategy, ASSIGNED whole account) > MODEL_LEAF per Opal/SMA blend child (ASSIGNED = account value x absolute_allocation; hierarchy_path Models > Primary | Models > Custom | SMA) + SLEEVE Client (the plug, ASSIGNED) > SECURITY (definition components, ASSIGNED = account value x component weight; observed custody position carried as a fact); UNRESOLVED remainder under Client when the definition weights do not close the plug",
+  "not_nodes": "observed positions outside the strategy definition (counted on the Client sleeve as a fact); no observed position is split or re-attributed",
+  "selections": {
+    "0698": {
+      "nodes": 41,
+      "kinds": {
+        "ACCOUNT": 1,
+        "MODEL_WRAPPER": 1,
+        "MODEL_LEAF": 3,
+        "SECURITY": 35,
+        "SLEEVE": 1
+      },
+      "levels": {
+        "('ACCOUNT', 0)": 1,
+        "('MODEL_WRAPPER', 1)": 1,
+        "('MODEL_LEAF', 2)": 3,
+        "('SECURITY', 3)": 35,
+        "('SLEEVE', 2)": 1
+      },
+      "paths": {
+        "(account)": 1,
+        "Models": 1,
+        "Models > Primary": 32,
+        "Models > Custom": 5,
+        "Client": 2
+      },
+      "reconcile": [
+        true,
+        26303302.17,
+        26303302.17
+      ],
+      "partitions_off": [],
+      "coverage": {
+        "nodes_resolved": 1,
+        "nodes_attempted": 1,
+        "remainder": {
+          "amount": 868008.97,
+          "units": "USD",
+          "reason": "1 of 1 custody account(s) carry an assigned Rebalancer strategy; 25435293.20 USD sits in constituent model leaves (ASSIGNED = account value x blend weight), the rest is Client (the plug, 868008.97 USD across assigned accounts) or unassigned custody"
+        }
+      },
+      "membership": {
+        "assigned_accounts": 1,
+        "assigned_value": 26303302.17,
+        "strategies": 1,
+        "constituent_models": 3,
+        "constituent_leaf_rows": 3,
+        "constituent_value": 25435293.2,
+        "client_plug_value": 868008.97,
+        "leaf_rows_by_qualifier": {
+          "primary": 2,
+          "custom": 1
+        },
+        "definition_date": "2026-09-23",
+        "definition_rows": 1583,
+        "join": "fact_model_assignment.strategy_name -> fact_model_roster.model_name, exact, unique; fact_model_blend children x fact_model_definition components (CTO ruling IRPT-COT-HOLDINGS-TREE-20260924)"
+      },
+      "custody_as_of": "2026-09-22",
+      "overlay_as_of": "2026-09-23"
+    },
+    "d486": {
+      "nodes": 75,
+      "kinds": {
+        "ACCOUNT": 1,
+        "MODEL_WRAPPER": 1,
+        "MODEL_LEAF": 4,
+        "SECURITY": 68,
+        "SLEEVE": 1
+      },
+      "levels": {
+        "('ACCOUNT', 0)": 1,
+        "('MODEL_WRAPPER', 1)": 1,
+        "('MODEL_LEAF', 2)": 4,
+        "('SECURITY', 3)": 68,
+        "('SLEEVE', 2)": 1
+      },
+      "paths": {
+        "(account)": 1,
+        "Models": 1,
+        "SMA": 34,
+        "Models > Primary": 32,
+        "Models > Custom": 5,
+        "Client": 2
+      },
+      "reconcile": [
+        true,
+        19705844.84,
+        19705844.84
+      ],
+      "partitions_off": [],
+      "coverage": {
+        "nodes_resolved": 1,
+        "nodes_attempted": 1,
+        "remainder": {
+          "amount": 591175.34,
+          "units": "USD",
+          "reason": "1 of 1 custody account(s) carry an assigned Rebalancer strategy; 19114669.50 USD sits in constituent model leaves (ASSIGNED = account value x blend weight), the rest is Client (the plug, 591175.35 USD across assigned accounts) or unassigned custody"
+        }
+      },
+      "membership": {
+        "assigned_accounts": 1,
+        "assigned_value": 19705844.84,
+        "strategies": 1,
+        "constituent_models": 4,
+        "constituent_leaf_rows": 4,
+        "constituent_value": 19114669.5,
+        "client_plug_value": 591175.35,
+        "leaf_rows_by_qualifier": {
+          "sma": 1,
+          "primary": 2,
+          "custom": 1
+        },
+        "definition_date": "2026-09-23",
+        "definition_rows": 1583,
+        "join": "fact_model_assignment.strategy_name -> fact_model_roster.model_name, exact, unique; fact_model_blend children x fact_model_definition components (CTO ruling IRPT-COT-HOLDINGS-TREE-20260924)"
+      },
+      "custody_as_of": "2026-09-22",
+      "overlay_as_of": "2026-09-23"
+    },
+    "combined": {
+      "nodes": 116,
+      "kinds": {
+        "ACCOUNT": 2,
+        "MODEL_WRAPPER": 2,
+        "MODEL_LEAF": 7,
+        "SECURITY": 103,
+        "SLEEVE": 2
+      },
+      "levels": {
+        "('ACCOUNT', 0)": 2,
+        "('MODEL_WRAPPER', 1)": 2,
+        "('MODEL_LEAF', 2)": 7,
+        "('SECURITY', 3)": 103,
+        "('SLEEVE', 2)": 2
+      },
+      "paths": {
+        "(account)": 2,
+        "Models": 2,
+        "Models > Primary": 64,
+        "Models > Custom": 10,
+        "Client": 4,
+        "SMA": 34
+      },
+      "reconcile": [
+        true,
+        46009147.02,
+        46009147.02
+      ],
+      "partitions_off": [],
+      "coverage": {
+        "nodes_resolved": 2,
+        "nodes_attempted": 2,
+        "remainder": {
+          "amount": 1459184.32,
+          "units": "USD",
+          "reason": "2 of 2 custody account(s) carry an assigned Rebalancer strategy; 44549962.70 USD sits in constituent model leaves (ASSIGNED = account value x blend weight), the rest is Client (the plug, 1459184.32 USD across assigned accounts) or unassigned custody"
+        }
+      },
+      "membership": {
+        "assigned_accounts": 2,
+        "assigned_value": 46009147.02,
+        "strategies": 2,
+        "constituent_models": 4,
+        "constituent_leaf_rows": 7,
+        "constituent_value": 44549962.7,
+        "client_plug_value": 1459184.32,
+        "leaf_rows_by_qualifier": {
+          "primary": 4,
+          "custom": 2,
+          "sma": 1
+        },
+        "definition_date": "2026-09-23",
+        "definition_rows": 1583,
+        "join": "fact_model_assignment.strategy_name -> fact_model_roster.model_name, exact, unique; fact_model_blend children x fact_model_definition components (CTO ruling IRPT-COT-HOLDINGS-TREE-20260924)"
+      },
+      "custody_as_of": "2026-09-22",
+      "overlay_as_of": "2026-09-23"
+    }
+  }
+}
