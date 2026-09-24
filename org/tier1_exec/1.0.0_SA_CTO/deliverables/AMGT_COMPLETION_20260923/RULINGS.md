@@ -314,6 +314,25 @@ is drivable end to end today -- the flip is decided, then the schedule lands wit
 one ledger entry, because a served table arriving without its producer's cadence is precisely the
 ad-hoc-as-production defect the rule names. The deploy leg is the AE lane's, as `rm-7` already is.
 
+### (1a) ⛔ **AND THE CUTOVER ITSELF IS GATED ON (2) -- RECORDED HERE BECAUSE R-69 TOLD ANDREW THE CHAIN AND RECORDED ONLY HALF OF IT**
+
+**R-69 ruled the schedule owed AT the cutover and stopped there, which leaves the cutover reading as
+available today. It is not.** Cutting `CHATTER_AXIS_SOURCE` off `legacy` now would serve a table whose
+**`data_status` reads DENIED on 50,996 of 50,997 rows**, with `publishers_covered` at the same deficient
+fraction for every security -- and NEVER-1 requires a never-widen pair naming the blast radius, **which
+would have to disclose exactly that.** A half that discloses "this serves DENIED on 99.998% of rows" is a
+half nobody should sign, so the gate is not an added ceremony: **the existing sign-off already refuses
+this act, and this clause only makes the refusal visible before someone drafts the pair.**
+
+⚠ **STATED WITHOUT THE CLAIM IT INVITES:** this seat has NOT measured what `legacy` serves today, so
+nothing here says the new table is worse than the incumbent. The ground is narrower and does not need
+that comparison -- **a served grade column that is structurally unreachable is not servable on its own
+terms.** ⭐ **SO THE ORDER IS access -> collection -> cutover -> schedule, and ONE sovereign word at the
+head of it releases three downstream acts** -- which is the honest way to put the card to Andrew, rather
+than as an isolated vendor ask whose value he would have to reconstruct. COST: none -- it names a refusal
+the existing pair already contains. NON-APPLICATION: a cutover whose grade column is populated, where the
+pair is an ordinary never-widen read.
+
 ### (2) Publisher access for the four silent publishers -- RESERVED, CITED, AND OVERDUE AT ANDREW
 
 `barrons`, `bbg`, `ft` and `sa` hold zero retained `listing_hit` rows, and that -- not any reader defect
