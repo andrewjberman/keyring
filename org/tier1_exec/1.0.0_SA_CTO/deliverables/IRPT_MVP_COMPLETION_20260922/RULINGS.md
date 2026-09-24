@@ -920,3 +920,28 @@ through its own migration project, never as a rider. OWNER: the naming-gate mech
 a tier as EXISTING/WARN with the reason printed, or to name the legacy layout in the registry; lands
 after the /integrate work unless it starts refusing. Un-park condition: the gate no longer RAISEs on
 that literal. M does not type around it.
+
+
+## 2026-09-24 00:2x UTC - Claude CTO batch 5: the three candidate findings CLOSED (M a0f3f141ed)
+
+### IRPT-HOLDINGS-MESHED-CANDIDATES-20260924, findings CLOSED
+CTO read the closing diff and re-ran the arms in M's worktree: the three named arms pass and the four
+Holdings test files pass 45 of 45 in 1.83 s.
+- 49F-TAX-CONFLICT-01 CLOSED: a SmartX-modeled account that is also a Tax Traded=Yes row is carried
+  in Client at full custody value with "MEMBERSHIP CONFLICT" stated, counted in
+  census.client_membership_conflict and listed in refused_accounts; the whole-build raise is gone.
+- TAXONOMY-PATH-01 CLOSED: holdings_snapshot.taxonomy_path(view_path, member_id) reads the MDPF
+  registry's VIEW_TREE and refuses an undeclared node or a member under the wrong node; both builders
+  read Models, SMA > ALT Strategies > <registry Tax-Managed SMA display name> and Client through it;
+  no literal path remains. LABEL: the registry's own L0 spelling is "SMA", so the candidates carry
+  "SMA"; the "SMAs" in the contract text and in this seat's finding was the human spelling, and the
+  registry governs by the contract's own rule. If Andrew wants "SMAs" on screen it is a
+  NODE_DISPLAY_LABEL row in the registry, never a builder spelling.
+- INF-CLOCK-01 CLOSED: custody_as_of and business_date are prev_trading_day(snapshot key) =
+  2026-09-22 with custody_snapshot_key 2026-09-23 recorded beside them; the validator still binds
+  rows to the key; values unchanged (reconcile 209,358,359.48 both sides). The 49F Tax sleeve states
+  the workbook observed_at as its own overlay clock.
+REBUILT candidates: 49F a860115ecaf5336ac5db4491d76cf5b60780f8a9c257c579defaf62351ba6a1f and INF
+21279569b08d40ce53e163143b2f829f78c7466f6b25c6a024c57e601b4ef441, both business date 2026-09-22, dry,
+zero writes. Publication of each now waits only on Andrew's currency attestation (P writes the two
+records), then its own exact-write GO in the d940022b06 shape.
