@@ -13607,6 +13607,55 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "PanelFooter imposes no literal truncate/nowrap/overflow-hidden class on either prop's own element, so the named trigger never fires verbatim -- but it does impose a flex-sizing rule (`flex-shrink-0` on the content wrapper, conditioned on `leftContent` truthy) that produces the same visual clip by a different CSS mechanism, and that rule is untouched by this cell's fix because this cell routed around it (content=\"\") rather than through it.",
     "disarm_owner": "rm-2 (owner of PanelFooter.tsx) -- either widen `content` to accept ReactNode, or drop `flex-shrink-0` from the content wrapper (e.g. min-w-0 + wrap) so a caller that legitimately needs both a populated `content` string and a `leftContent` is not exposed to the same clip this cell's row 138/list.png defect showed under ADJUDICATION_v47 s.2.4.",
     "notes": "Not exercised by any payload THIS cell renders (content is always empty string here), so hazard_standing is ARMED against a FUTURE caller, not an observed incident on this cell's own surface. Filed per CLAUDE.md section 2 (append and keep working) rather than edited into PanelFooter.tsx, which sits outside this cell's <paths>."
+  },
+  {
+    "id": "AMGT_RESAPP-W140-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~140",
+    "surfaced_at": "2026-09-24T13:22Z",
+    "one_line": "AMGT-rm-1's cell text names 'the RESOLVED --bg-band value read off document.documentElement' as the band predicate's second arm; measured live, document.documentElement's own computed --bg-band is the pre-DSGN_REBRND-round-2 :root value (var(--palette-darkField)), which is NUMERICALLY IDENTICAL to --bg-header/--layer-strip (both rgb(10,23,51)) -- so implementing the instruction literally would match STRIPS as bands, reproducing the exact defect this cell exists to fix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/index.css:113 (:root block) `--bg-band: var(--palette-darkField)`, and :365 `--layer-strip: 221 67% 12%; /* #0A1733 panel title strip, table column header (= the band) */` -- the file's own comment labels the two identical.",
+        "portal/src/index.css:371 `body { --bg-band: var(--layer-body); ... }` (DSGN_REBRND round 2, the block that actually paints Panel bands) is a declaration on `body`, not `:root` -- CSS custom-property inheritance flows from an ancestor to a descendant, never from a child rule back up to a parent element, so document.documentElement (html, body's PARENT) never sees this override.",
+        "Live probe against the dev server (0.9.0_WK_AMGT_RESAPP~140, portal 5182, /security-analysis, 2026-09-24): a probe element appended to document.documentElement with style.backgroundColor='hsl(var(--bg-band))' resolves to rgb(10,23,51); the SAME probe appended to document.body resolves to rgb(25,38,67); a live `.dark-band` Panel element's own getComputedStyle().backgroundColor reads rgb(25,38,67) -- matching the document.body probe, not the document.documentElement one.",
+        "rgb(10,23,51) is exactly the OLD hard-coded isBand tolerance target this cell was issued to replace (ui-measure.mjs:65 pre-rekey, Math.abs(c.r-10)<3 && Math.abs(c.g-23)<3 && Math.abs(c.b-51)<3)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved inside this cell's own writable surface (scripts/ui-measure.mjs classify()): the CSS custom properties --bg-band/--bg-header/--semantic-action-primary are resolved off document.body (verified live to equal the rendered colours) rather than document.documentElement. The .dark-band CLASS-marker arm of the OR predicate (Panel.tsx:89-90) is unaffected either way and independently proves the band count on every live state (AC2: bandContainersTopLevel PASS, value 1, all six states); the resolved-colour arm is the supplementary safety net named in s.1, and resolving it correctly is what keeps that net from silently re-admitting the strip colour as a band.",
+    "spec_asserts": "AMGT-rm-1 s.1 item (1): 'bandContainersTopLevel counts top-level elements carrying the .dark-band class ... OR whose computed background equals the RESOLVED --bg-band value read off document.documentElement at measure time -- never a hard-coded rgb.'",
+    "world_is": "document.documentElement's own computed --bg-band is the pre-round-2 :root value, numerically the strip colour (#0A1733), not the rendered band colour (#192643/rgb(25,38,67)) that DSGN_REBRND round 2's body{} override actually paints. Reading off document.documentElement as literally instructed would make the second predicate arm match strips, not bands.",
+    "disarm_owner": "N/A -- hazard_standing INERT; ui-measure.mjs ships resolving off document.body, and the AC1 self-test's negative arm (strip recoloured, band class removed) proves the two colours are told apart, not conflated.",
+    "notes": "Filed per CLAUDE.md section 2/Rule 27 ('could not do what it said' -- an invocation/instruction does not produce the named result). Not BLOCKING: within this cell's own <paths> and grant to fix, and Bound 2 ('you change WHAT a predicate measures only where s.1 names the mis-key') is honoured -- the resolved-var arm still measures --bg-band, just read off the element where the cascade actually applies it."
+  },
+  {
+    "id": "AMGT_RESAPP-W140-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~140",
+    "surfaced_at": "2026-09-24T13:22Z",
+    "one_line": "AC3's literal invocation chains `ui-contract-check.mjs --scope body --states list ... && ui-class-census.mjs ...` -- but 'list' carries pre-existing, out-of-this-cell's-scope predicate FAILs (weights [300,500,600], radii [\"8px\"]) at EVERY scope, per Bound 2's own instruction to leave them standing rather than fix them, so ui-contract-check.mjs always exits 1 on this state and the `&&` never reaches the census command.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~140/ac3.out.txt: `node scripts/ui-contract-check.mjs --port 5182 --scope body --states list --out .../contract-check-body-control` printed the full graded table (list: weights FAIL [300,500,600], radii FAIL [\"8px\"], shadows FAIL 1) and `RESULT: FAIL`, exit 1 -- run standalone, verbatim.",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~140/ac2.out.txt shows the SAME two predicates FAIL on 'list' under --scope main too (weights [300,600], radii [\"8px\"]) -- the failure is not a scope artifact, it is present on the page at either scope.",
+        "The literal AC3 command run exactly as given (contract-check chained with `&&` into ui-class-census.mjs, both redirected into one file): the census output file was never created (`No such file or directory`) because the first command's non-zero exit short-circuited the `&&` -- reproduced once, verbatim, no retry needed to see the mechanism.",
+        "AMGT-rm-1 Bound 2 and s.1 item 6 both instruct that a FAIL on an un-rekeyed predicate (weights/sizes/radii/shadows/fonts/lowContrastChars are not named in s.1's mis-key list) is 'reported with its value and left standing (the fixes are other cells')' -- so the exit code is EXPECTED to be non-zero on 'list', by the same cell text that chains a command requiring it to be zero."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rm-1 AC3 invocation: `... --scope body --states list --out ... && node scripts/ui-class-census.mjs src/pages/SecurityAnalysis | tail -1`, with an <expect> naming BOTH the scope-comparison pairs AND 'the page census reads FILES 31 TOTAL 0' as printed output of this one invocation.",
+    "world_is": "The scope-comparison pairs ARE printed by ui-contract-check.mjs regardless of its own exit code (stripContainers[main]=2, [body]=3; identityAccents[main]=1, [body]=3 for 'list', both pairs strictly greater on body as expected). The census line is NOT printed, because the `&&` never fires -- not a defect in this cell's classifiers, but a premise conflict between Bound 2 ('leave other predicates' FAILs standing') and the invocation's own use of `&&` (vs. AC2's own `;`) on a state this cell was never authorized to make all-PASS.",
+    "disarm_owner": "2.0.0_SA_COO~Z (round 38 issuer) -- either accept the scope-comparison evidence alone as satisfying AC3's discrimination claim (the census check is a static, off-topic sanity read that this worker also ran unchained and confirms separately, see the worker report), or re-cut AC3's invocation with `;` in place of `&&` for a future round so the chain does not depend on an out-of-cell predicate turning all-PASS.",
+    "notes": "Filed per CLAUDE.md section 2/Rule 27 ('an invocation does not produce the named result'). Not BLOCKING: this worker ran the literal invocation verbatim as required, recorded its true output and exit code in the proof instance, and separately ran the un-chained census command for completeness (FILES 31 TOTAL 0, matching the expected reading -- src/pages/SecurityAnalysis carries no idiom/size/weight/radius/shadow violations censused by that instrument, confirming no page source moved) without altering or rescuing the graded invocation itself."
   }
 ]
 ```
