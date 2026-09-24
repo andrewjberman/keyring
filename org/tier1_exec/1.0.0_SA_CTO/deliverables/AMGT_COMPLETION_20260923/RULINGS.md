@@ -253,6 +253,67 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-43 -- ⛔⛔ **THIS SEAT ROUTED THE WRONG LOG GROUP. BOTH EXIST, BOTH RETAIN 30 DAYS, AND A RE-RUNNER WOULD HAVE GOT A CLEAN WRONG ANSWER ON A CLIENT-NOTIFICATION CARD.** THE PERISHABLE HALF IS PRESERVED AND THE CARD IS NARROWED
+
+`0.7.0_AE_CloudOps~A` msg 25388, record `R41_CALL4_AUTHORIZER_READ_20260924.md` @`95858f5cb4`. Read-only
+throughout: no egress, no vendor call, nothing changed on any plane. **R-41's routed act is COMPLETE and the
+perishable half of call 4 is preserved, which was the entire point of splitting the card.**
+
+### THE DEFECT IS THIS SEAT'S AND IT IS THE MOST DANGEROUS SHAPE OF THE NIGHT
+
+R-41's routing message (msg 25372) named **`/aws/lambda/opalinvest-auth-handler`**. R-31's measurement was
+**`/aws/lambda/opal-portal-authorizer`**. ⛔ **BOTH GROUPS EXIST AND BOTH RETAIN 30 DAYS**, so a seat following
+the routing text alone queries a real, live, plausible group and gets a **clean wrong answer** on a card that
+feeds a decision about contacting a client.
+
+⭐ **THE DISCRIMINATOR WAS AN INCIDENTAL MAGNITUDE NOBODY PLANNED AS A CONTROL.** R-31 mentioned *"3.75 MB"*
+as colour. The authorizer reads **3,753,955** bytes; the auth-handler reads **3,160,776**. **So a throwaway
+figure in an old record is what identified the right object.** ⭐ **AN INCIDENTAL SIZE, COUNT OR HASH IN A
+CITATION IS A WRONG-OBJECT DETECTOR -- the one class Rule 21 states comp-read CANNOT catch** (*"WRONG-OBJECT
+errors (comp-read cannot tell you that you handed it the WRONG FILE)"*). **COST:** one magnitude comparison
+when two plausible resources exist. **NON-APPLICATION:** a record carrying no incidental magnitude -- there
+the only remedy is the positive control.
+
+⚠ **AND THE CAUSE IS NAMED BY THAT SEAT, NOT GUESSED: the auth-handler is the group it had been reading all
+session on the UNRELATED SMS thread.** This seat pulled a resource name out of the wrong thread's context
+while writing about a different incident. Two live threads, two similarly-named groups, one shared session.
+
+### WHAT THE READ FOUND, AND ITS COVERAGE CONTROL CAME FIRST
+
+Control before any zero was believed: 09-22T00Z-09-24T00Z, **7,046 events**, 1,574 on 09-22 and 5,472 on
+09-23, **ten distinct identities across four domains** -- opalinvest.com 1716, inflectionwealth.com 204,
+vmwealthpartners.com 54, cottonwoodmail.com 30. **That reproduces R-31's ten-identities-four-firms on an
+INDEPENDENT read**, and it establishes that an empty window is a cache artifact rather than an absence.
+
+**THE NARROWING, which only appeared past plausible authorizer cache TTL.** At +/-8s and +/-120s the three
+09-22 windows are empty or internal-only -- **which is exactly where R-31 stopped.** At 300s, 600s and 1800s a
+single EXTERNAL client domain appears around all three 09-22 exposures: **inflectionwealth.com**.
+⭐ **AND THE NEGATIVE ARM IS WHAT MAKES IT EVIDENCE:** vmwealthpartners.com and cottonwoodmail.com appear at
+**NO width up to +/-30 minutes around ANY of the three**, while both demonstrably transacted in the same
+two-day window (54 and 30 events). **Their absence is informative rather than a coverage hole -- the evidence
+would look different if the claim were false.** The 09-23 20:44:34 event is INTERNAL at every width tested,
+consistent with R-31.
+
+### ⛔ THIS IS NOT AN ATTRIBUTION, AND R-41a's SPLIT STILL HOLDS
+
+That seat's own limit is adopted verbatim and is not softened here: **an API Gateway authorizer result is
+CACHED, so the requester may have been authorized outside even a thirty-minute window and emitted no line at
+all. Presence in a window is not a request; absence from one is not an exoneration.** Naming a firm as the
+client on this evidence would be precisely the guess **R-21a** was written to prevent, and no firm is named as
+the client -- by that seat or by this ruling. **The notification decision stays Andrew's, exactly where R-41
+left it.** What changed is only that his half is now answerable on a narrowed candidate set instead of a fog.
+
+**FOR `3.0.0_SA_CVO~Z`, whose join this is:** R-31's shortcut holds -- the exposure was ONE IP, so mapping
+that single IP through ANY overlapping authorizer event settles the card. The candidate set it maps against is
+narrowed to one external firm for the three 09-22 exposures, and the 09-23 exposure reads internal. **R-21a's
+abstention was right on its facts and is not disturbed; the work is reduced, not substituted.**
+
+**TWO HONEST GAPS, both that seat's own disclosures.** (1) The **+1 overlay response is UNDATED** in R-31, so
+it is NOT covered by the window table and is not claimed to be. (2) PII: individual addresses were read but
+are **not** in the committed record or the message -- firms and counts only, which is what R-31 says the
+decision needs; address-level detail stays extractable from the live log until **2026-10-22** if the decision
+genuinely requires it.
+
 ## R-42 -- ⛔⛔ **I GREPPED AN ANSWER TABLE, LANDED ON ROW 5, AND NEVER READ ROWS 2 AND 3 -- WHICH ANSWERED THE TWO QUESTIONS R-41 THEN ROUTED.** AND `rk-49`'s CARD HAS BEEN ASKING ANDREW THE WRONG QUESTION
 
 `0.0.0_AB_MSTR~Z` msg (09:33Z) and this seat's own read. **Two findings, and the first explains the last

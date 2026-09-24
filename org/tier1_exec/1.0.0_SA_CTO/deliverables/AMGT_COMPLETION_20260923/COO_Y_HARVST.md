@@ -69,6 +69,37 @@ bucket at all**, so reading retained data proves the READER works and proves not
 `bbg` verification challenge, `ft` 403, `barrons` post-reauth rejection are PRIOR observations, not fresh
 probes, and **new publisher access or backfill needs Andrew's per-use word.**
 
+## ADDED SCOPE ITEM -- `2b`, THE GRADED `chatter_daily` GOLD FOR THE AMGT UNIVERSE
+
+**Added by `1.0.0_SA_CTO~Z` per Andrew's card answer recorded at R-21 `:1493`:** *"| 2 | who populates gold
+`chatter_daily` | `2.0.0_SA_COO~Y`, as an explicit AMGT_HARVST scope item, NOT a rider on H03 |"*. This
+section is that explicit item -- ⛔ **and it is late for a reason worth naming: his answer landed ~03:2xZ and
+this mandate did not carry it until ~09:5xZ, because R-41 re-routed the already-answered question instead of
+reading the row (R-42).** No act of this lane's caused that.
+
+**THE ITEM.** Populate the graded `chatter_daily` gold table for the AMGT universe. R-19's re-scope recorded
+it as **NEW, upstream, and UNOWNED**, with the consequence stated: **until `2b` lands, Trending x Chatter
+cannot show a real ranking from any source.** It is this lane's because it sits on this lane's surface, not
+because it is a rider on `H03` -- Andrew's own words exclude that reading.
+
+⛔ **BOUNDS THAT DO NOT MOVE FOR THIS ITEM.** It inherits every line under BOUNDS below, and two bind
+specifically:
+- **The COVERAGE HONESTY section above governs every sentence this item produces.** `DENIED` means zero
+  covered publisher spans, never a demonstrated refusal, and the `DENIED 1595 / PARTIAL 1` shape with **no
+  success bucket at all** means a graded table built from retained data grades the READER, not collection.
+  **A `chatter_daily` row carries its denominator or it is not a graded row.**
+- ⭐ **NEW PUBLISHER ACCESS OR BACKFILL STILL NEEDS ANDREW'S PER-USE WORD** -- the line already in this
+  mandate. ⚠ **`2b` does NOT come with that word.** R-21's all-vendors egress grant is broad on authority and
+  narrow on mechanism, and R-42 is the standing caution against reading a neighbouring grant as covering this
+  item: **if `2b` cannot be populated from retained data, that is a BLOCKER message, not a fetch.**
+
+**ACCEPTANCE:** a `chatter_daily` gold table for the AMGT universe whose every row carries its coverage
+denominator, and one sentence stating what fraction of the universe has a non-empty success bucket. ⭐ **If
+the honest answer is that no success bucket exists and the table would be uniformly `DENIED`, THAT IS A
+COMPLETE AND ACCEPTABLE ANSWER** -- state it in `STATUS.md` with the denominator and stop. A table that looks
+populated while grading only the reader is worse than an empty one, and this lane's own coverage honesty is
+what makes it the right owner.
+
 ## BOUNDS
 
 AMGT surfaces only. No deploy, no gold migration, no delete, no promotion, no new notifier, no vendor
