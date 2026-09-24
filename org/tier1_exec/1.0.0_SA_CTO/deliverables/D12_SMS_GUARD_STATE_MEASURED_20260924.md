@@ -1,4 +1,54 @@
-# D12 SMS -- THE SANDBOX-EXIT HAZARD'S TRIGGER HAS FIRED. THE GRADE IS ~~EXPOSURE~~ **UNDETERMINED**
+# D12 SMS -- THE TRIGGER HAS FIRED. THE GRADE IS **EXPOSURE**, ON POSITIVE EVIDENCE, WITH 1 OF 14 UNDETERMINED
+
+> ⭐⭐ **SECOND CORRECTION, 2026-09-24 ~06:4xZ. `0.7.0_AE_CloudOps~A` WITHDREW ITS OWN SECOND CLAIM (msg 25303),
+> AND THE GRADE IS RE-MADE HERE ON EVIDENCE THAT DID NOT EXIST IN EITHER EARLIER VERSION.** The chain is
+> **EXPOSURE (on a silence, wrong) -> UNDETERMINED (on "no instrument exists", also wrong) -> EXPOSURE (on a
+> POSITIVE measurement)**. ⚠ **Three versions is not churn: each turned on a measurement the previous one did not
+> have, and the record keeps all three rather than presenting the last as the first.**
+>
+> ⛔ **WHAT THAT SEAT WITHDREW: "the discriminator is STRUCTURALLY UNAVAILABLE" IS FALSE.** A per-message trace
+> exists and always did -- in the function's **own** CloudWatch log group, 30-day retention, structured per code:
+> `{"event":"mfa_code_sent","account_hash":"<sha256>","sends":1,"resend":true,"channel":"sms","ts":...}`.
+>
+> **MEASURED 09-17T00Z..09-24T07Z, client-side counted:** `mfa_challenge_issued` **23** · `mfa_code_sent` **14**
+> (**sms 7, email 7**) · `mfa_code_accepted` **13** · `mfa_code_failed` **0** · `mfa_enrolment_accepted` **2**.
+> Nine distinct `account_hash`; one account is six of the fourteen.
+>
+> ⭐ **AND IT RECONCILES THE COUNT §4 COULD NOT: 7 SMS SENDS AGAINST 9 BILLED PARTS IS NOT A DISCREPANCY.** The
+> metric is `NumberOfTextMessagePartsSent` and **a multi-segment message bills as several PARTS**. The **7 EMAIL**
+> codes are exactly the sends that produced no SMS spend -- which is why `mfa_code_sent` timestamps existed on days
+> the spend metric showed nothing. **The number I flagged as unattributable was two facts wearing one label.**
+>
+> ⭐⭐ **THE GRADE, RE-MADE: EXPOSURE, NOT INCIDENT -- AND THIS TIME ON A POSITIVE, NOT ON A SILENCE.**
+> **13 of 14 codes were ACCEPTED and 0 FAILED. AN MFA CODE THAT REACHED AN UNINTENDED DESTINATION CANNOT BE
+> ACCEPTED BY THE LEGITIMATE SESSION**, so acceptance is **positive evidence of correct delivery** rather than an
+> absence of evidence of harm. ⭐ **It is a real discriminator: a misdelivered code shows up as issued-and-never-
+> accepted, so the evidence would LOOK DIFFERENT if the claim were false.** That is what §4's zero never had.
+>
+> ⚠ **ONE SEND OF FOURTEEN IS NOT MATCHED BY AN ACCEPTANCE AND IS CARRIED AS UNDETERMINED, NOT AS CLEAN.** That
+> seat names abandonment as the ordinary explanation and **explicitly declines to claim it**; the pseudonymized
+> `account_hash` can resolve it. **The guard being open stays a real EXPOSURE -- both controls are off (§2) -- and
+> what is now established is that nothing was admitted through it in 13 of 14 measured cases.**
+>
+> ⛔ **THE CARD AT ANDREW SHRINKS AND §6's REC IS DOWNGRADED.** A configuration set with an event destination is
+> **NOT needed** to answer the destination question -- the application already logs it, pseudonymized, at 30-day
+> retention. What a configuration set would add is **carrier-side DELIVERY confirmation, a different and weaker
+> question than the one that mattered.** **REC accordingly: NOT NOW.** ⭐ **A remedy proposed against a gap that
+> turns out not to exist is the kind of build this estate's ladder exists to prevent, and it was one message from
+> being carded to him at full size.**
+>
+> ⭐ **HOW THAT SEAT DIAGNOSED ITS OWN ERROR IS THE MOST VALUABLE PART, AND IT IS THE THIRD INSTANCE OF ONE SHAPE
+> TONIGHT ACROSS THREE SEATS.** Its words: *"My two facts were TRUE ... and both were measured with a positive
+> control. But I swept the SMS SERVICE plane and the CLOUDTRAIL plane, then wrote a sentence about whether ANY
+> instrument exists. I never looked at the APPLICATION plane, which is where the answer was. A denominator narrower
+> than the sentence beside it, arriving with real numbers and a control, so it read as measured."* And the tell it
+> names: ⭐ **"I wrote NOTHING ANSWERS IT, a universal, while my evidence line named two specific planes. A
+> universal whose evidence enumerates instruments is a claim about a domain nobody bounded."**
+> ⛔ **THE SAME SHAPE, THREE SEATS, ONE SESSION:** `3.0.0_SA_CVO~Z`'s *"reconstructable from NOTHING in this
+> estate"* (falsified by the AWS plane, R-31), this seat's EXPOSURE-on-a-zero, and now *"nothing answers it"*
+> (falsified by the application plane). **Three independent seats, each rigorous, each bounded by the planes they
+> happened to sweep. That is a FABRIC pattern rather than three mistakes, and the cheap guard is the grammatical
+> one: a NEVER/NOTHING/ANY sentence whose evidence line enumerates instruments has not bounded its domain.**
 
 > ⛔⛔ **CORRECTION, 2026-09-24 ~06:3xZ, ADOPTED WHOLE FROM `0.7.0_AE_CloudOps~A` (msg 25291). §4's
 > EXPOSURE GRADING IS WITHDRAWN AND REPLACED BY UNDETERMINED.** That seat took the attribution this

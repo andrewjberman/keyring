@@ -34,7 +34,35 @@ his third clause unserved, and every artifact would have read complete.**
 > *"Only when all of this is done for every single security in the Asset Management research folder is the goal
 > complete."*
 
-**THE POPULATION IS THE ASSET MANAGEMENT RESEARCH FOLDER: 93 FOLDERS, ALREADY CENSUSED.**
+**THE POPULATION IS THE ASSET MANAGEMENT RESEARCH FOLDER: 93 FOLDERS.**
+
+⭐⭐ **VERIFIED AT THIS SEAT 2026-09-24 ~06:4xZ ON AN INDEPENDENT INSTRUMENT, BECAUSE THE GOAL'S WHOLE GRADE RESTS
+ON THIS ONE NUMBER AND THIS SEAT HAD BEEN CARRYING IT FROM A BRIEF RATHER THAN MEASURING IT.** Root **DERIVED**,
+never typed (`Path.home()/'OneDrive - Opal Capital'/'Shared - Documents'/'Asset Management'/'Research'`), then
+classified by `rglob` over each folder's own extensions -- a different method from `4.0.0_SA_CRO~Y`'s F2 census:
+
+| | measured here | brief F2 claimed |
+|---|---|---|
+| folders | **93** | 93 |
+| `docx+pdf` | **46** | 46 |
+| `pdf-only` | **30** | 30 |
+| `workbook-only` | **10** | 10 |
+| `docx-only` | **6** | 6 |
+| empty | **1** | 1 |
+| **SUM** | **93 = 93** | 93 |
+
+**Every number reproduces.** ⭐ **That is CORROBORATION rather than repetition -- a second instrument on the same
+population, which is the test CLAUDE.md sets for a peer's figure ("name your instrument and whether it differs").**
+
+⭐ **AND ONE FACT NEITHER CENSUS HAD ESTABLISHED, WHICH REMOVES AN AMBIGUITY IN HIS OWN SENTENCE: THE ROOT HOLDS
+93 ENTRIES AND ALL 93 ARE FOLDERS -- ZERO LOOSE FILES.** So *"every single security in the Asset Management
+research folder"* has **no residual**: the folder count IS the security count, and no reading of his test admits a
+stray file at the root. **Had there been loose files, the denominator would have been arguable and the grade with
+it.**
+
+⚠ **Device axis, stated: this is the OneDrive-synced copy on `OPAL_BLOOMBERG`, which is the copy `AMGT_CORPUS`
+reads.** A count on the other device, or against SharePoint directly, is a different instrument and would need its
+own read.
 
 ⛔ **AND IT OVERTURNS SOMETHING THIS SEAT WROTE MINUTES EARLIER, WHICH IS RECORDED HERE RATHER THAN QUIETLY FIXED.**
 At ~05:00Z the CORPUS addendum minted `C-BACKFILL-DENOMINATOR-IS-THE-ESTATE'S-LIST` and a Rule-28 card `K6`, on
