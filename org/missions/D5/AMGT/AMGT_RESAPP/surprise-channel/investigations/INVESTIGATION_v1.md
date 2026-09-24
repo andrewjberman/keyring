@@ -13584,6 +13584,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "Six of six states read lowContrastChars 0 on the merged page. The five other FWD-29 predicates still FAIL on files outside the round's rectangle (rl-9's AC1 refusal trace) -- a different finding, carried in the drain-end packet for the CTO's analysis, not this row's.",
     "disarm_owner": "2.0.0_SA_COO~Z -- DISARMED by this row; Z-S247's remedy EXECUTED IN-ROUND by rl-9 under its own grant; nothing further owed.",
     "notes": "Filed by the issuer at the wave-2 drain, as Z-S247's disarm_owner text said it would be. Z-S247 stays UNDER_INVESTIGATION at filing (append-only channel); this carrier is the disarm."
+  },
+  {
+    "id": "AMGT_RESAPP-W144-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~144",
+    "surfaced_at": "2026-09-24T13:15Z",
+    "one_line": "PanelFooter.tsx's `content` prop is typed `string` (no ReactNode escape hatch), and its content-side wrapper carries `flex-shrink-0` whenever `leftContent` is truthy -- the likely actual mechanism behind ADJUDICATION_v47 s.2.4's mid-word clip, though not a literal truncate/nowrap/overflow-hidden class name, so it does not match the face's own trigger text verbatim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PanelFooter.tsx:19-20 declares `content: string` with no ReactNode alternative, so a caller cannot pass stacked block elements (an 'own line' disclosure clause) through it -- only through `leftContent` (`React.ReactNode`, :37-38).",
+        "PanelFooter.tsx:~103 (`<div className={cn(leftContent && 'text-right flex-shrink-0')}>`) puts the CONTENT side into a non-shrinking flex item the instant `leftContent` is truthy -- with a flex item's default `min-width: auto`, that item takes its unwrapped intrinsic width rather than shrinking to wrap, which pushes long `content` text past the row's available width. No literal `truncate`/`whitespace-nowrap`/`overflow-hidden` class sits on that div or the `<span>{content}</span>` inside it, so this cell's own bounds text ('if it imposes a truncate/nowrap ... file the row') does not match verbatim even though the visual effect (a word cut at the container edge) is the same shape ADJUDICATION_v47 s.2.4 names.",
+        "This cell's own fix sidesteps the mechanism rather than exercising it: LeadPanel.tsx now passes content=\"\" and renders the ENTIRE caption (generation line + disclosure line, both `whitespace-normal break-words`, no forbidden class) via `leftContent`, verified by leadPanelPattern.harness.cjs's new source_caption_wraps/disclosure_own_line checks (CHECKS-OK 15 of 15). So THIS cell's own footer is proven non-clipping, but the underlying PanelFooter shape (content+leftContent together -> flex-shrink-0 on content) remains live for any OTHER caller of PanelFooter that passes a long `content` string alongside a truthy `leftContent`."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer note 2 / this cell's Bound: 'PanelFooter.tsx is READ-ONLY for you -- it takes content and leftContent; if it imposes a truncate/nowrap on either, file the row the face names and make your own element wrap regardless.'",
+    "world_is": "PanelFooter imposes no literal truncate/nowrap/overflow-hidden class on either prop's own element, so the named trigger never fires verbatim -- but it does impose a flex-sizing rule (`flex-shrink-0` on the content wrapper, conditioned on `leftContent` truthy) that produces the same visual clip by a different CSS mechanism, and that rule is untouched by this cell's fix because this cell routed around it (content=\"\") rather than through it.",
+    "disarm_owner": "rm-2 (owner of PanelFooter.tsx) -- either widen `content` to accept ReactNode, or drop `flex-shrink-0` from the content wrapper (e.g. min-w-0 + wrap) so a caller that legitimately needs both a populated `content` string and a `leftContent` is not exposed to the same clip this cell's row 138/list.png defect showed under ADJUDICATION_v47 s.2.4.",
+    "notes": "Not exercised by any payload THIS cell renders (content is always empty string here), so hazard_standing is ARMED against a FUTURE caller, not an observed incident on this cell's own surface. Filed per CLAUDE.md section 2 (append and keep working) rather than edited into PanelFooter.tsx, which sits outside this cell's <paths>."
   }
 ]
 ```
