@@ -543,6 +543,29 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "S7 disarms when the CTO rules the remaining 4 and each is landed or retired."
+  },
+  {
+    "id": "DSGN_IRPTV1-W7-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~7",
+    "surfaced_at": "2026-09-24T23:37:22Z",
+    "one_line": "TO-IV-e-9's mandated adoption (ClientSearch.tsx renders SearchSelect in place of the Catalyst Combobox) necessarily breaks IVE8-AC2's arm 2 wiring check ('Combobox onChange={handleSelect} still wired') from an earlier cell's already-graded test -- the semantic selection path (handleSelect's own body, byte-identical) is unchanged, only the literal onChange={handleSelect} text is gone because SearchSelect's onChange hands back an Option, not a SearchOptionRow.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- iv-e-8.selection-path.test.ts's arm 2 needs re-pointing at the new wiring text (`onChange={(option) => handleSelect(option ? option.row : null)}`) or retiring by ruling; this worker's grant does not include iv-e-8's test file and IVE9-AC2 does not name it.",
+    "spec_asserts": "TO-IV-e-9 cell (c): 'ClientSearch.tsx renders SearchSelect in place of the Catalyst Combobox (the same onSelectionChange path, the same selectionFor call)'. Separately, iv-e-8.selection-path.test.ts (a different, already-graded TO's test) asserts 'Arm 2: ClientSearch.tsx's own handleSelect code ... is BYTE-IDENTICAL between the base pin and this cell's tip' and literally greps for `onChange={handleSelect}`.",
+    "world_is": "After this cell's edit, `bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-8.selection-path.test.ts` (portal, 2026-09-24): ARM1 (deep-equal selection) true, handleSelect's own code block still byte-identical (349 bytes) true, but `comboboxWired = tipSource.includes('onChange={handleSelect}')` is now false because ClientSearch.tsx wires `onChange={(option) => handleSelect(option ? option.row : null)}` -- SearchSelect's onChange contract hands back the chosen option object, not the raw SearchOptionRow handleSelect expects. VERDICT: SAME-SELECTION-PATH-FAIL. IVE9-AC2 (this order's own criterion) verifies the same semantic path directly against selectionFor/toOptionRow and PASSES (VERDICT: PICKER-ADOPTION-OK).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/header/ClientSearch.tsx@this worker's worktree tip, line: onChange={(option) => handleSelect(option ? option.row : null)}",
+        "bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-8.selection-path.test.ts output: 'ARM2: Combobox onChange={handleSelect} still wired: false' / 'VERDICT: SAME-SELECTION-PATH-FAIL arm 2: Combobox no longer wired to handleSelect'",
+        "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~7/DSGN_IRPTV1.TO-IV-e-9.shared-search-and-paginator.proof_of_spec.json (this order's own IVE9-AC2 PASS)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking IVE9-AC2 (this order names only IVE9-AC1..AC4). Filed because IV-e-8's test lives outside this order's <paths> grant, so this worker cannot repair it without widening scope."
   }
 ]
 ```
