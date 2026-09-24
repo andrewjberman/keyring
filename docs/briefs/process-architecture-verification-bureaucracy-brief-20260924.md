@@ -340,11 +340,18 @@ his express order.
 - **Logs:** `/canonical-drive` and `/self-drive` write ticks to a gitignored runtime file and commit once per closed
   decision or per hour.
 
-**Wave 4: memory (Andrew's call, since a size check is a gate).**
+**Wave 4: memory (Andrew's call, since a size check is a gate).** `[AMENDED 09-24: Andrew-approved ~17:0xZ, replacing
+the 6 KB cap; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_170xZ_MEMORY_PREFERENCES_ONLY_AND_THREE_HELD_ITEMS_YES.md]`
 
-- MEMORY.md is held to 6 KB or less of stable preferences.
-- Lessons move to topic files read on demand.
-- One shared index for every seat stops being the place incidents accumulate.
+His direction: *"the entire point of canonical flow and our ops is that we shouldnt 'need' memory."*
+
+- **MEMORY.md holds Andrew's stable working preferences only,** about 2 KB.
+- **Seats stop writing lessons to memory.** A lesson that matters becomes a gate, field or skill fix by its owner; an
+  incident stays in git history. The stop is mechanical, not a rule to read: the harness's auto-memory instructions
+  would outvote a text rule.
+- **The memory files (1,481 at ~16:5xZ) are ARCHIVED, never deleted,** out of the auto-loaded directory and
+  recoverable.
+- **The memory directory is per device and outside the repo.** This binds the laptop; site Z's is its own.
 
 ---
 
@@ -357,7 +364,10 @@ his express order.
    - Baseline: W38 5.9%, W39 11.4% (workspace). Target: back to the June band (15-20% or better) within four weeks of
      Waves 1 and 2.
 2. **Byte budgets on every auto-loaded carrier, enforced by the law lock.**
-   - CLAUDE.md 30 KB or less; org/XXX.md 20 KB or less; MEMORY.md 6 KB or less; any SKILL.md 25 KB or less.
+   - CLAUDE.md 30 KB or less; org/XXX.md 20 KB or less; any SKILL.md 25 KB or less.
+   - `[AMENDED 09-24, Andrew-approved]` MEMORY.md becomes preferences-only (Wave 4), in place of a 6 KB budget.
+   - A file already over its budget may only shrink. The skill budget covers the flow and process skills, not
+     general-purpose skills. The law lock is a git hook, so it cannot see MEMORY.md, which lives outside the repo.
    - One in, one out. The sawtooth shows that cuts without a budget regrow in two weeks.
 3. **A rule lands only with a carrier.** A new rule names the gate or field that enforces it, its cost and its
    non-application. Otherwise it goes to `docs/doctrine/` and binds nothing.

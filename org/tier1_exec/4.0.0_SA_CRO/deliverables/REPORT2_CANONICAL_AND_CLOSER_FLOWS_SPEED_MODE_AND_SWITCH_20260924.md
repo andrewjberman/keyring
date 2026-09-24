@@ -628,3 +628,49 @@ Wave 2 and Wave 3.
   5.3's "never relaxed" list.
 - **Report 3's direct-act path and this report's FAST mode land as ONE rule:** presence decides pace and reviewer;
   risk and size decide checking. The CTO carries it in the spine's Closer subsection (C3) and in Wave 2's field.
+
+---
+
+## 13. C10 -- cut task orders by write set `[ADDED 09-24: Andrew-approved ~17:0xZ, "Yes, i like that item 1, send it"]`
+
+Record: `ANDREW_DIRECT_20260924_170xZ_C10_CUT_TASK_ORDERS_BY_WRITE_SET.md` (this folder).
+
+**The measurement behind it.** None of the window's four rounds reached the fan-out cap of 8:
+
+| round | orders | most in parallel |
+|---|---|---|
+| DSGN_IRPTV1 r1 | 4 | 3 |
+| DSGN_IRPTV1 r2 | 8 | 3 |
+| AMGT_RESAPP r37 | 10 | 7 |
+| AMGT_RESAPP r38 | 7 | 4 |
+
+Orders were serialized for four reasons, each read from its issuance commit's `fanout:` line:
+- **shared files, the largest cause:** DSGN r2's header chain `IV-e-3` -> `IV-e-4` -> `IV-e-8` queued on `index.tsx`,
+  and `IV-t-3` -> `IV-t-4` on `HoldingsTab.tsx`;
+- **a checker order every later order is graded by:** AMGT `rl-1`, `rm-1`;
+- **a sweep order over the merged page:** `rl-9`, `rl-10`, `IV-e-7`;
+- **a seat order waiting on another lane:** `rm-7`.
+
+Real data dependencies between cells were rare.
+
+**The rule (L5 and L6, `/dispatch` Steps 1-2, the task-order protocol):**
+1. **Each cell owns a disjoint set of files.** Its `<paths>` names only files no other cell of the round writes.
+2. **A one-line hookup in a shared file is not part of any cell.** Examples: a mount, an import, a route entry, a
+   registry line in a page shell such as `index.tsx`.
+   - The cell builds and exports its component, and its report names the hookup line it needs.
+   - The COO adds every hookup line at the merge, in one commit, then runs C6's one real run of the outcome.
+3. **Chains then carry only real dependencies:** a cell that consumes another cell's output. File contention is no
+   longer a reason to chain.
+4. **A batch cell that touches many cells' files runs last in its round, or folds into the merge.** Examples: the
+   style, record and instrument repair cell. Checker and sweep orders follow C8: merge tooling, not a wave.
+5. **The `fanout:` line and the cap of 8 are unchanged.** The "touch" rulings and "one-line mount" checks that guarded
+   shared files are no longer needed.
+
+**Expected effect (INFERRED, from the round's own file lists):** DSGN r2 runs about 6 orders at once instead of 3. The
+style batch `IV-e-2` still waits, because it touches files of `IV-e-1`, `IV-e-3` and `IV-e-6`.
+
+**Limit:** past that, the ceiling is usage. This morning 3 parallel workers were cut off by the usage limit. The
+Sonnet-medium trial (call 7) and shorter orders (C5) are what buy room for more at once.
+
+**Owner:** `1.0.0_SA_CTO` (spine L5/L6, `/dispatch`, task-order protocol). **Non-application:** a round whose cells
+share no file.
