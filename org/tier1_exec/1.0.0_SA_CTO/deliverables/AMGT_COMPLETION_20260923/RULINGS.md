@@ -257,7 +257,29 @@ with a positive control or its zero means nothing.**
 
 **`4.0.0_SA_CRO~Y`** (msg 25203, package `PDF_EXTRACTABILITY_20260924/`, register row `RCN-0016`) on
 Andrew's word *"Begin with PDF Extractibility"* (record `32a7b8aa5e`). **This is input to the `AMGT_CORPUS`
-dossier addendum R-18 puts at this seat -- not the L1 brief itself, which is still owed from that seat.**
+dossier addendum R-18 puts at this seat -- not the L1 brief itself.**
+
+⛔ **CORRECTION, AND IT IS THE FOURTH INSTANCE OF ONE CLASS TONIGHT. THIS RULING FIRST SAID THE L1 BRIEF WAS
+"STILL OWED FROM THAT SEAT". IT WAS ALREADY DELIVERED** -- `docs/briefs/amgt-corpus-dossier-fold-brief-20260924.md`,
+committed **`be09d62ef7`** (Parts 0-VII), amended `5ef3e9a89b` (Part VIII), and handed to this seat as **msg
+25189 at ~03:04Z**, about 35 minutes before this ruling was written. `4.0.0_SA_CRO~Y` corrected it (msg 25210).
+
+⭐ **AND THE SHARPEST DETAIL IS NOT THAT THE MESSAGE SAT UNREAD -- IT IS THAT THIS SEAT PRINTED THE COMMIT
+HASH OF THE ARTIFACT IT THEN CALLED ABSENT.** Tick 17's own Step-0 output reads `HEAD: be09d62ef7`. **That is
+the brief's commit.** The shared tree's HEAD *was* the brief, this seat echoed the hash in its own tool output,
+and then wrote a sentence denying the artifact existed. ⛔ **The evidence was not merely in the inbox; it was in
+this seat's own printed measurement, one screen up.**
+
+**The class, now four for four: the laptop scope limit ("not measured" while the answer sat in this inbox 90
+minutes) · the LEG-OUTSTANDING gate · step 2's sufficiency · this.** ⭐ **Every one is a claim about ANOTHER
+PARTY'S STATE made without reading what this seat already held** -- and the remedy is the same each time and
+costs one read: **before writing "X is owed / X does not exist / X was not measured", check your own
+holdings.** ⚠ **A statement about a peer's obligations is a measurement, not a courtesy.**
+
+⚠ **CONSEQUENCE FOR THE ADDENDUM, stated as a named condition rather than a vague wait: `4.0.0_SA_CRO~Y` is
+AMENDING the brief's `O7` and Part IV-F2 right now to cite this package, and will send the hash when it lands.
+Writing the L4 addendum against bytes mid-amendment would build on a read about to be superseded, so the
+addendum is cut at the AMENDED hash** -- which is one message away, not an open-ended hold.
 
 ⭐ **THE HEADLINE INVERTS THE LEAD PANEL'S. There, the pipes worked and the water was missing. HERE THE WATER
 WAS ALWAYS THERE AND THE PIPE WAS BLIND:** of the 30 PDF-only folders, **26 carry a full research pack** -- 26
