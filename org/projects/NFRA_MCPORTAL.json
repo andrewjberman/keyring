@@ -1,0 +1,13 @@
+{
+ "project_code": "NFRA_MCPORTAL",
+ "home": "org/missions/D6/NFRA/NFRA_MCPORTAL",
+ "directive": "D6",
+ "macro_code": "NFRA",
+ "fabric": "site-z",
+ "dep_stage": "PRD",
+ "status": "active",
+ "name": "mcportal -- the operator console at mcp.opalinvest.dev: the MCP Server pages (tool library beside the data properties, per-person grants that take effect on the next call, the call log, the kill switch), user management and demo logins for opalinvest.dev, user analytics, the Operations Report, health, cost and infosec -- Andrew only, in its own repo Opal-Capital/mcportal",
+ "generated_from": "org/missions/D6/NFRA/NFRA_MCPORTAL/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-09-24T21:19:59Z"
+}

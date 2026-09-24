@@ -1,0 +1,64 @@
+{
+  "project_code": "NFRA_OPALAI",
+  "macro_code": "NFRA",
+  "directive": "D6",
+  "fabric": "site-z",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "DECOMP",
+  "created": "2026-09-24",
+  "registered_under_tree": "2026-09-24",
+  "placement": "SITEZ",
+  "pods": [],
+  "related": [
+    "NFRA_MCPINDEX",
+    "NFRA_OPLGTW",
+    "AUTH_SELFHEAL",
+    "OPAL_ANALYST",
+    "LGIC_NAMING"
+  ],
+  "name": "opal_ai V1 -- the Opal Analyst as a product: one Teams-facing agent over one indexed Opal MCP, developed in the Opal-Capital/opal_ai repo as a workspace submodule with the workspace's tools, and run from a released copy under its own non-admin account with no workspace access",
+  "description": "Commissioned by Andrew-direct at the 1.0.0_SA_CTO~O terminal 2026-09-24. His words, verbatim: 'i want to start getting that developed immediately, so I want to assess what needs to happen to stand that up so that we can begin assigning projects on this box to get it going (finishing MCPINDEX, getting a proper OPAL ANALYST back online on Teams, and other such work that ties to that repo function).' Card 3: 'I want to develop the opal_ai repo using the ajb_workspace tools, it really is an ajb_workspace project just like the portal, I just don't want the actual team-facing agents, and ultimately external agents, being so close for comfort having ajb_workspace repo access.' Intake: RCN-0014 (what opal_ai is) and RCN-0015 (the GitOps split), both by 4.0.0_SA_CRO~X on 2026-09-23. Scope is slice (i), the Opal implementation, plus the repo and runtime separation; the template slice, client slices and off-box hosting are stated outside the endpoint.",
+  "phase": "L4 PRD v0.4 2026-09-24 ~21:3xZ by 1.0.0_SA_CTO~O -- C11: the cutover drops no approved catalog row silently; row 7 (Bloomberg view, served today by a workspace-launched MCP server) is declined plainly until S15 moves the view server into opal_ai. ENDPOINT unchanged. || L5 DECOMP v1 2026-09-24 by 2.0.0_SA_COO~O -- round 1 = the FWD-1 thread: 10 cells (root OA-w-1; thread OA-t-1..t-6; wiring OA-w-2..w-4), 7 chains after the root, against PRD v0.3 @1645cbb7ab ADMITTED. || L4 PRD v0.3 2026-09-24 ~21:1xZ by 1.0.0_SA_CTO~O -- C3/C4 amended on 2.0.0_SA_COO~O msg 25756: the launcher's pull runs as the operator account with the read-only opal_ai credential; Opal_Agent holds no GitHub credential and only reads its checkout. ENDPOINT unchanged. || L4 PRD v0.2 2026-09-24 ~20:5xZ by 1.0.0_SA_CTO~O -- C10 (every answer scoped to the ASKER's Entra-id entitlement, established server-side, intersected with the agent's allowlist) and the S10 round-1 half on the thread, on Andrew-direct at the 2.0.0_SA_COO~O terminal (record @6426ebff2b, 'the real engineering comes in its entitlements per user/entra-id'), ruled on COO~O msg 25752; runtime agent named Opal_Agent. ENDPOINT unchanged, so no half re-opens. || L4-R ADMITTED at v0.1 2026-09-24 ~20:4xZ -- 3.0.0_SA_CVO~O signed the ratified-text half (prd-signoff status: current); the brief half auto-admitted as CRO-authored. L5 is 2.0.0_SA_COO~O's (spawned 20:30:55Z by 0.0.0_AB_MSTR~Z). || L4 PRD v0.1 WRITTEN 2026-09-24 by 1.0.0_SA_CTO~O at prd/NFRA_OPALAI_PRD.md -- nine contracts (one repo slice-first and move-never-copy; a real submodule graded like the parent, lane file before hook; DEV/PROD release on Andrew's word; the OS account as the runtime boundary with a fail-closed launch gate; no broker and state outside every repo; the gateway moves with its history and its release path; the limits travel unchanged; the Teams watch sees without the agent's help; speed measured by the s.11 method), 14 surfaces, 6 gates, 14 acceptance lines, brief coverage 63 of 63 headings. L4-R next. || L3 REGISTERED 2026-09-24 by 1.0.0_SA_CTO~O under D6/NFRA (D6 enum [NFRA] ratified on the same word). || L2 ENDPOINT FWD-1..FWD-13 CONFIRMED by Andrew ~20:2xZ ('yes to both'), endpoint org/tier1_exec/1.0.0_SA_CTO/deliverables/OPAL_AI_ENDPOINT_FORWARD_20260924.md @146ef7366f. || L1 BRIEFS docs/briefs/opal-ai-microproduct-repo-brief-20260923.md @a47993af9c and docs/briefs/opal-ai-gitops-split-brief-20260923.md @40b964f616 (4.0.0_SA_CRO~X).",
+  "blocking": "NOT BLOCKED -- L6 issuance next (2.0.0_SA_COO~O). Close-run gates named in the decomposition s.8: G-ACCT (elevated run, Andrew), G-GH (0.0.0_AB_MSTR~Z), G-PUSH (0.0.0_AB_MSTR~Z on Andrew's word), G-AUTH (Andrew), G-ASKER (Andrew).",
+  "brief_ref": "docs/briefs/opal-ai-microproduct-repo-brief-20260923.md@a47993af9c",
+  "prds": [
+    {
+      "path": "org/missions/D6/NFRA/NFRA_OPALAI/prd/NFRA_OPALAI_PRD.md",
+      "version": "v0.4",
+      "status": "DRAFT"
+    }
+  ],
+  "prd_lineage": [
+    "v0.1 @515d25a229 (L4-R ADMITTED)",
+    "v0.2 @5ebd4063fa (C10, per-asker entitlements)",
+    "v0.3 @1645cbb7ab (C3/C4 operator-side pull)"
+  ],
+  "decompositions": [
+    {
+      "path": "org/missions/D6/NFRA/NFRA_OPALAI/decompositions/NFRA_OPALAI_DECOMP.md",
+      "version": "v1",
+      "round": 1,
+      "prd_ref": "prd/NFRA_OPALAI_PRD.md@1645cbb7ab"
+    }
+  ],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO~O",
+    "coo": "2.0.0_SA_COO~O",
+    "cvo": "3.0.0_SA_CVO~O",
+    "cro": "4.0.0_SA_CRO",
+    "workers": "the worker subagents the COO's L6 issuance names (spine v3 L7: 0.9.0_WK_NFRA_OPALAI~<n>)"
+  },
+  "coo_lane": "2.0.0_SA_COO~O",
+  "fabric_ruling": "site-z -- INHERITED FROM THE DIRECTIVE. D6's placement reads SITEZ in DIRECTIVES.yaml; placement attaches to the directive, never to a member (LD-0498, LD-0502).",
+  "rulings": [
+    "ONE REPO opal_ai -- Andrew-direct 2026-09-24 card 1-2 'Yes to all but ...' (record ANDREW_DIRECT_20260924_193xZ_OPAL_AI_CALLS_1_2_4_YES_ANALYST_SEPARATION.md @489fbcd6e0); Opal-Capital/opal_ai created private by 0.0.0_AB_MSTR~Z, DEV=PROD 90ca424fc7.",
+    "CI IN opal_ai -- the same record, card 4.",
+    "DEVELOP IN THE WORKSPACE, RUN WITHOUT WORKSPACE ACCESS -- card 3 (record ANDREW_DIRECT_20260924_195xZ_OPAL_AI_CARD3_DEV_IN_WORKSPACE_RUNTIME_WITHOUT_REPO_ACCESS.md) and R1+R2 'both recs approved' (record ANDREW_DIRECT_20260924_200xZ_OPAL_AI_R1_R2_APPROVED.md @11881eb192): a separate non-admin Windows account runs the Teams agent; no broker access for it. Design OPAL_AI_RUNTIME_ISOLATION_DESIGN_20260924.md @45ce8406fc.",
+    "PLACEMENT D6/NFRA -- 'yes to both' (record ANDREW_DIRECT_20260924_202xZ_OPAL_AI_ENDPOINT_CONFIRMED_D6_NFRA_RATIFIED.md).",
+    "OPAL_AGENT + PER-ASKER ENTITLEMENTS -- Andrew-direct ~20:4xZ at the 2.0.0_SA_COO~O terminal: 'could just be \"Opal_Agent\" ... the real engineering comes in its entitlements per user/entra-id. A lot of this work has already been done is just needs to all be synthesized cleanly.' Record org/tier1_exec/2.0.0_SA_COO~O/deliverables/ANDREW_DIRECT_20260924_204xZ_OPAL_AI_AGENT_NAME_AND_ENTITLEMENTS_SYNTHESIZE.md @6426ebff2b. PRD v0.2 C10."
+  ],
+  "thread_counter": 0,
+  "threads": []
+}

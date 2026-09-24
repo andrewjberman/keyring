@@ -25,8 +25,14 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`; stop = `/verify SOUND`.
 - `2.0.0_SA_COO~Y` `/loop 20m` DIRECTED over IRPT Analysis:
   `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`; stop = `/verify SOUND`. Y never takes over P's shared installation.
-- `2.0.0_SA_COO~O` `/canonical-drive NFRA_OPLGTW` 30m DIRECTED (relay 97709); on DONE the freed slot goes to
-  `2.0.0_SA_COO~T` (MDPF_TAXSMA) then `2.0.0_SA_COO~M` (NFRA_MCPINDEX).
+- `1.0.0_SA_CTO~O` `/loop 30m` DIRECTED over NFRA_OPALAI (opal_ai V1), ruling the project's open calls on its own
+  rec, with `/next-steps` on an empty tick:
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_210xZ_CTO_O_LOOP_30M_DRIVE_OPAL_AI.md`. Chooser
+  Andrew; landed by 1.0.0_SA_CTO~O. The self-drive reservations apply (egress, unrecoverable, money, his named holds
+  including the OPLGTW stop and the push law). WIDENED the same minute by his goal: all D6 opal_ai work (MCPINDEX,
+  all MCP server work, entitlements, MCP integrations, all Opal Analyst / MCP prior art), with licence to create and
+  register projects: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_210xZ_CTO_O_GOAL_FINISH_ALL_D6_OPAL_AI.md`.
+  Stop: no new opal_ai project is left and no `/next-steps` can be named, or his stand-down.
 - `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH to CLOSED:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.
 - `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE:
@@ -53,6 +59,13 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 
 ## Struck
 
+- `2.0.0_SA_COO~O` `/canonical-drive NFRA_OPLGTW` 30m DIRECTED (relay 97709; on DONE the slot was to go to `~T`
+  MDPF_TAXSMA then `~M` NFRA_MCPINDEX): struck 2026-09-24 by `1.0.0_SA_CTO~O`. The chooser is Andrew: his
+  2026-09-22 ~18:2xZ word to that seat, "Finish your work and research on the OPLGTW project and do not go further
+  with it", is carried in `2.0.0_SA_COO~O`'s session-close commit @5799432c1c. The lane `~O` is re-seated for
+  NFRA_OPALAI on the ~O fabric (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_185xZ_CTO_O_NEW_PROJECT_O_FABRIC.md`),
+  and a successor does not re-arm this row. The `~T` and `~M` hand-on clauses are NOT carried: nothing here
+  decides them.
 - IRPT POST-SLUG HOLD on the old `~B`/`~F` canonical progression (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_1517ET_IRPT_HOLD_AFTER_CVO_SLUGS.md`):
   lifted for IRPT_BCKEND and IRPT_FNTEND closed SUPERSEDED, Andrew-direct 2026-09-24 ~16:4xZ
   (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_164xZ_IRPT_RETURN_FIVE_CALLS_ANSWERED.md`). The P/M/Y

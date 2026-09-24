@@ -20,6 +20,10 @@ Packet sections (each with its denominator):
   6. projects whose org/projects JSON closed that day
   7. ledger entries created that day
   8. yesterday's sprint file (the base to rewrite from), if present
+  9. the other repos' commits for the day: portal (the nested checkout) and opal_ai (OPAL_AI_REPO, or a
+     sibling checkout); a repo with no checkout is read from a temporary clone through `gh`, and one that
+     cannot be read is reported as not read
+ 10. Andrew's notes for the day (daily_reports/notes/<day>.md) -- read FIRST when present
 """
 from __future__ import annotations
 
@@ -29,17 +33,34 @@ import glob
 import json
 import os
 import re
+import shutil
+import stat
 import subprocess
 import sys
+import tempfile
 
 ROOT = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True).stdout.strip() or os.getcwd()
 SPRINTS = os.path.join(ROOT, "org", "sprints")
 TOOLS = os.path.join(ROOT, ".tools")
+OTHER_REPOS = {"portal": os.path.join(ROOT, "portal"),
+               "opal_ai": os.environ.get("OPAL_AI_REPO") or os.path.join(os.path.dirname(ROOT), "opal_ai")}
 
 
-def run(cmd, timeout=300):
+NO_PROMPT = dict(os.environ, GIT_TERMINAL_PROMPT="0", GCM_INTERACTIVE="never")
+
+
+def _force_rmtree(path):
+    """git leaves pack files read-only; clear the bit and retry so a temp clone is really removed."""
+    def _retry(func, p, _exc):
+        os.chmod(p, stat.S_IWRITE)
+        func(p)
+    shutil.rmtree(path, onerror=_retry)
+
+
+def run(cmd, timeout=300, env=None):
     try:
-        r = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT, timeout=timeout, shell=isinstance(cmd, str))
+        r = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT, timeout=timeout, shell=isinstance(cmd, str),
+                           env=env)
         return (r.stdout or "") + (r.stderr or "")
     except Exception as e:
         return f"<run failed: {e}>"
@@ -93,6 +114,36 @@ def packet(day):
     prev = sorted(glob.glob(os.path.join(SPRINTS, "DAILY_SPRINT_*.md")))
     prev = [x for x in prev if os.path.basename(x) < f"DAILY_SPRINT_{day}.md"]
     p["yesterday_file"] = prev[-1] if prev else None
+    # 9. The other repos (Andrew-direct 2026-09-24: "all daily sprint stuff checks both ajb_workspace and portal
+    # commits, and it should also check opal_ai"). A repo is read only from a real checkout: `git -C` on a
+    # directory that is not one walks UP to ajb_workspace and would report its commits under the wrong name.
+    p["other_repos"] = {}
+    for name, d in OTHER_REPOS.items():
+        tmp = None
+        if os.path.exists(os.path.join(d, ".git")):
+            run(["git", "-C", d, "fetch", "--quiet", "origin"], timeout=120)
+        else:
+            # No checkout here: a fresh blobless, checkout-free clone (the Lambda's form), credential from `gh`,
+            # prompts OFF -- the Git Credential Manager otherwise waits on an interactive login and hangs the run.
+            tmp = tempfile.mkdtemp(prefix=f"sprint_{name}_")
+            d = os.path.join(tmp, name)
+            since3 = (datetime.date.fromisoformat(day) - datetime.timedelta(days=3)).isoformat()
+            run(["git", "-c", "credential.helper=", "-c", "credential.helper=!gh auth git-credential", "clone",
+                 "--filter=blob:none", "--no-checkout", "--no-single-branch", "--no-tags", "--quiet",
+                 f"--shallow-since={since3}", f"https://github.com/Opal-Capital/{name}.git", d],
+                timeout=180, env=NO_PROMPT)
+        if os.path.exists(os.path.join(d, ".git")):
+            lg = run(["git", "-C", d, "log", "--all", "--no-merges", f"--since={since}", f"--until={until}",
+                      "--format=%an\t%h\t%s"])
+            rr = [ln.split("\t", 2) for ln in lg.splitlines() if ln.count("\t") >= 2]
+            p["other_repos"][name] = {"status": f"{len(rr)} commits", "subjects": [f"{a}|{s}" for a, _, s in rr]}
+        else:
+            p["other_repos"][name] = {"status": "not read: no checkout, and a clone through gh failed"}
+        if tmp:
+            _force_rmtree(tmp)
+    # 10. Andrew's own notes for the day (daily_reports/notes/<day>.md), read FIRST by the writer when present.
+    note = os.path.join(ROOT, "daily_reports", "notes", f"{day}.md")
+    p["andrew_notes"] = open(note, encoding="utf-8").read().strip() if os.path.exists(note) else None
     return p
 
 
@@ -121,6 +172,16 @@ def print_packet(p):
     print(f"  projects closed today: {p['projects_closed'] or '-'}")
     print(f"  ledger today: {p['ledger_today'] or '-'}")
     print(f"  yesterday's sprint file: {p['yesterday_file'] or '(none -- first day)'}")
+    for name, r in p["other_repos"].items():
+        print(f"  {name}: {r['status']}")
+        for s in r.get("subjects", [])[:40]:
+            print(f"    {s[:160]}")
+    if p["andrew_notes"]:
+        print("  ANDREW'S NOTES FOR THE DAY (read these FIRST: his named wins are sprint items, his headline is the headline):")
+        for ln in p["andrew_notes"].splitlines():
+            print(f"    {ln}")
+    else:
+        print("  Andrew's notes: none for this day (default run)")
     print("DAILY-SPRINT-PACKET-RESULT "
           f"commits={p['commits']} authors={len(p['authors'])} andrew_direct={len(p['andrew_direct_records'])} "
           f"closed={len(p['projects_closed'])} trusted={p['comp_state_trusted']}")

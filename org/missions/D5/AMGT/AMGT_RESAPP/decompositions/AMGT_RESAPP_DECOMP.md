@@ -5862,3 +5862,209 @@ fanout:
   than the identity header as a band; rm-3 prints that number per state and names the file if it is 2.
 - **The size-10 / weight-600 / 8px residue INSIDE main** -- rm-3 attributes; the fix is round 39's (or a re-cut mid-round
   if attribution lands on a single page file and the CTO asks).
+
+
+## 47. ROUND 39 -- THE RESIDUE CLOSED, THE P/E UNITS, THE RETIRED IDENTITY'S PROSE, THE CLIP ARM, THE SERVED PLANE READ, THE SIDEBAR. Six orders over the round-38 analysis's list (nine items + item 10)
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 38 ANALYSIS** (`ledger/ROUND_ANALYSIS.round38.md` @`d835c5edf1`, s.7:
+nine items by subtraction from `FWD-21`..`FWD-30`, 9 of 10 REALIZED, `FWD-29` NOT_REALIZED on two of its own conditions), on
+`3.0.0_SA_CVO~Z`'s `ADJUDICATION_v48` @`24d6af9249` (Z-S265, the P/E finding), and on three Andrew-direct answers relayed by the
+CTO (msg 25682): **"5174 only"** literally (no worker runs a vite; every render-graded criterion is the ISSUER's post-drain real
+run on the shared 5174 build); rk-49 withdrawn (@`85a05bd6ab`); the sidebar "Rec approved" = **item 10** under C13. The pulled
+spine (v3.19/v3.20) binds this cut: cells by disjoint write set, `<risk>` and `<worker_class>` on every face, worker rules in
+`.claude/agents/worker.md` and off the face, every mechanical check a FILE dry-run at the base, hookups at the merge, one real
+run per outcome at close. PRD v0.26 unchanged. `prd-signoff.py status` at the cut: ADMITTED (both halves SIGNED, current).
+
+### 47a. THE TEN ITEMS AND WHERE EACH LANDS
+
+| s.7 item | lands in |
+|---|---|
+| 1 `sizes[10]` (PanelHeader.tsx:99 / DataTimestamp.tsx:38) | `AMGT-rn-1` |
+| 2 the six-PNG person-read | the ISSUER's real run (`checks/drain.real-run.sh` writes the six PNGs; the packet names them for the CVO's read); no cell |
+| 3 Z-S265 P/E x100 + a MAGNITUDE criterion | `AMGT-rn-2` |
+| 4 Z-S251's 13 prose sites + 5 the DESIGN.md C13 edit | `AMGT-rn-3` (one cell, as the analysis consolidates) |
+| 6 the leaf-only clip detector gap (+ the instrument paragraph into ui-measure.mjs's docstring) | `AMGT-rn-4` |
+| 7 Z-S226's authenticated render check on the DEPLOYED surface | the ISSUER's act at close (a headed sign-in; stated as done or as not obtainable); no cell |
+| 8 commit `contract-check-after-rm-2/` | DONE @`6b85f2f4ba` |
+| 9 `FWD-30`'s served-plane confirmation | `AMGT-rn-5` |
+| 10 the sidebar (App.tsx) under C13 (CTO 25682 item 3) | `AMGT-rn-6` |
+
+### 47b. THE P/E FINDING, SIZED AT THE CUT (item 3)
+
+The CVO's Z-S265 says the reciprocal has no locatable implementation. **It has one:** `portal/src/pages/SecurityAnalysis/cscTable.ts:90-93`
+computes `1 / value` for codes `ey` and `ey_ntm`. What is wrong is the UNIT the producer serves: the fixture the page renders
+(`__harness__/tests/uiContractFixtures.json`, route `/api/scoped/amgt/security/BA_US_Equity/peers`) carries `ey` as a PERCENT
+(DE 2.88, ETN 2.20, UNP 4.18; `factors.ey_ntm` 3.42, 3.32, 4.64), the peers package's own tests carry FRACTIONS (`ey` 0.02, -0.05;
+`ey_ntm` 0.04), and the consumer's reciprocal assumes a fraction -- so 1/2.88 = 0.35 renders under "P/E (trailing)" where 34.7 is
+the number (base run of `checks/rn-2.AC2.cjs`: 5 of 24 member values in [0.5, 200]). `csc.py:88-89` states the relation in PROSE
+("RECIPROCAL: P/E = 1 / ey") and nothing machine-readable about units. The cell makes the producer STATE it (`transform`,
+`units` on the map entry), makes the consumer apply it (100/x for percent, 1/x for fraction, null otherwise), patches the captured
+fixtures' map entries to carry the fields, and carries the magnitude criterion the analysis owes (every member P/E in [0.5, 200] or
+null). Which unit the LIVE producer serves is read by the cell from the registry and stated in its report.
+
+### 47c. THE RECTANGLE -- six orders, write surfaces DISJOINT by construction
+
+| id | cell | slot | class | risk | serves | write surface |
+|---|---|---|---|---|---|---|
+| `AMGT-rn-1` | THE SIZE-10 RESIDUE | `~146` | worker-light | LOCAL | `FWD-29` "no size below 11" | `portal/src/ui/components/panels/PanelHeader.tsx`, `portal/src/components/DataTimestamp.tsx` |
+| `AMGT-rn-2` | THE P/E UNITS + THE MAGNITUDE CRITERION | `~147` | worker | LOCAL | Z-S265 (a client-facing multiple) | `lib/research/peers/csc.py`, `lib/research/peers/tests/**`, `portal/src/pages/SecurityAnalysis/cscTable.ts`, `.../types.ts`, `.../__harness__/tests/uiContractFixtures.json`, `.../__harness__/tabsFixture.*.json` |
+| `AMGT-rn-3` | THE RETIRED IDENTITY'S PROSE + C13 | `~148` | worker-light | LOCAL | Z-S251 closed; C13 ratified @`b26449defe` landed | `portal/DESIGN.md`, `portal/scripts/ui-smoke.mjs`, `portal/src/index.css`, `portal/src/lib/designTokens.ts`, `.../InvestorReporting/export/ExportModal.tsx`, `.../TicketCenter/TicketCenter.tsx`, `.../ui/components/Controls.tsx`, `.../graphic/HeroGraphic.tsx`, `.../panels/Panel.tsx`, `.../panels/README.md`, `.../states/PanelStates.tsx`, `.../SecurityAnalysis/components/PrintExportAction.tsx` |
+| `AMGT-rn-4` | THE ANCESTOR-AWARE CLIP ARM | `~149` | worker-light | LOCAL | C13's fifth bullet measurable; `FWD-29`'s detector honest | `portal/scripts/ui-measure.mjs`, `portal/scripts/ui-contract-check.mjs`, `portal/src/pages/SecurityAnalysis/__harness__/tests/uiClipFixture.html` |
+| `AMGT-rn-5` | FWD-30 ON THE SERVED PLANE | `~150` | worker-light | SERVED (declared above its LOCAL floor: the claim is about served output) | `FWD-30`'s last unexercised link | `portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs` (a `--fixture` flag), its deliverables |
+| `AMGT-rn-6` | THE SIDEBAR UNDER THE CONTRACT | `~151` | worker-light | LOCAL | item 10: body-scope weights/radii/shadows/sizes on Andrew's reserved card, now released | `portal/src/App.tsx` |
+
+**Status vocabulary** (`org/standards`): every cell `NOT_EVALUATED` at the cut. **Placement:** site-z, every cell. **Invariant:** six
+orders over the ten items minus item 8 (done) minus items 2 and 7 (the issuer's acts) = seven items in six cells (4+5 consolidated).
+
+### 47d. THE FOUR-POSTULATE RECORD (Rule 24)
+
+- **(i) MECE over a declared domain.** Domain = s.7's nine items + item 10 (CTO 25682) = ten, read from the files; minus item 8
+  (done), minus items 2 and 7 (not code cells, the issuer's at close) = seven; placed in six cells, 4+5 as one on the analysis's
+  own word. Nothing added: Z-S238 and Z-S227 are NOT in s.7 and are carried (47g), not cut.
+- **(ii) Same grain.** rn-1, rn-6 component cells; rn-2 one producer map + one consumer + captured fixtures; rn-3 prose and one
+  contract clause; rn-4 an instrument arm + a fixture; rn-5 a read-only served comparison. All cell-sized; rn-2 takes the full
+  worker class, the rest worker-light (about 100 product lines or fewer each).
+- **(iii) Intent coherence.** One axis: close `FWD-29` on its own DONE WHEN and make the page's figures TRUE (rn-2), with the
+  contract's text and instrument brought to what was ratified. No route, DTO, query key or served figure moves except the P/E
+  columns' magnitude, which is the defect.
+- **(iv) State coherence -- what a cell does NOT move.** rn-1 touches no file but its two; rn-2 changes no other column and no
+  served route (the lib change reaches the Lambda only on a deploy nobody cuts this round); rn-3 moves no counted styling token
+  (AC3) and keeps the token DEFINITIONS untouched; rn-4 moves no page or component source (AC2); rn-5 changes nothing served and
+  writes only a flag on a harness; rn-6 touches nothing outside App.tsx.
+
+### 47e. DEPENDENCY EDGES, CHAINS AND FAN-OUT
+
+No edge: no cell consumes another's output. Six chains of one.
+
+```
+fanout:
+  cap: 8
+  orders_total: 6
+  chains_total: 6
+  wave_0: [rn-1, rn-2, rn-3, rn-4, rn-5, rn-6]   # all six, write sets disjoint
+  portal_ref: 5e339ffd                              # nested DEV HEAD at the cut (rm-2's merge); the gitlink at HEAD reads 5e339ffd
+  reason: every cell is a leaf; the round's grading is the issuer's one real run after the last merge
+  no_vite_per_worker: true                          # Andrew-direct "5174 only" (CTO 25682); no worker binds a port; the issuer runs checks/drain.real-run.sh on 5174
+  no_s3_deletes: true                               # standing
+  no_bearer_forging: true                           # standing
+  no_vendor_call: true                              # standing; rn-5's egress is lambda invoke of Opal's own opal-amgt-scoped-api, reads only
+  route_change: none                                # rn-2 changes a served NUMBER's unit handling, not a route or a DTO
+  no_promote: true                                  # portal is commit-yes / promote-no
+  sidebar_released: true                            # App.tsx enters the contract on Andrew's "Rec approved" (item 10)
+```
+
+### 47f. THE BOUNDS THAT BIND EVERY CELL
+
+No server: no cell starts a vite, a dev build or any listener; a criterion needing a render is on no face. No install. No push,
+merge, rebase, checkout -- or clean. Portal files commit inside the nested repository (`portal/`, branch
+`wk-AMGT_RESAPP-<n>-portal` at DEV `5e339ffd`), then the outer commit carries `portal` and the deliverables. Every check is a
+committed file under `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round39/checks/`, run from the repo root exactly
+as the face writes it; its printed line is the verdict. REFUSE, do not rescue.
+
+### 47g. CARRIED, NOT CUT -- with the reason
+
+- **Z-S238** (28 unattributable 500s; a structured log line per request on the scoped API): a served-package change under the
+  never-widen pair, not in s.7; needs the CTO's word before a cut.
+- **Z-S227** (0 of 5 tabs carry an isError branch): not in s.7; a frontend enrichment for the next list.
+- **Z-S255** (portal has zero active hooks): estate-wide, routed to `0.0.0_AB_MSTR~Z` by the analysis.
+- **Z-S226's authenticated render check**: the issuer's at close (47a item 7).
+- **W85-S1** (no `lib/__init__.py`), **W117-S3** (no sys.path guard), **W58-S2** (gate (x) in main() only): hygiene, next list.
+
+
+## 48. ROUND 40 -- FWD-30 WITH ITS EXTRAS GRADED, THE P/E GUARD, THE THESIS VERDICT, TWO LABELS, THE POSTURE PATH, THE DEERE TRACE, AND THE SERVED ACTS. Seven orders over the round-39 analysis's eight items
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 39 ANALYSIS** (`ledger/ROUND_ANALYSIS.round39.md` @`269378b031`,
+ASCII fix @`c1997ce5be`; s.7 eight items, 9 of 10 REALIZED, `FWD-30` RETRACTED to NOT_REALIZED on row Z-S268) and its ruling:
+**a round whose cells touch served figures carries at least one JUDGMENT criterion** -- this round carries two (ro-1 AC4, ro-3
+AC3). The CTO's msg 25740: the harness is a `POD_DE_ANY` file, so ro-1's worker is the named writer. PRD v0.26 unchanged;
+`prd-signoff.py status`: ADMITTED.
+
+### 48a. THE EIGHT ITEMS AND WHERE EACH LANDS
+
+| s.7 item | lands in |
+|---|---|
+| 1 FWD-30's extras (Z-S268): stop publishing, AND the harness GRADES extras | `AMGT-ro-1` (build) + `AMGT-ro-7` (served) |
+| 2 at least one judgment criterion | ro-1 AC4, ro-3 AC3 |
+| 3 thesis's section, not the header | `AMGT-ro-3` |
+| 4 posture's "still loading" label | `AMGT-ro-4` |
+| 5 the raw Windows path on posture | `AMGT-ro-5` |
+| 6 `BLOOMBERG: UNKNOWN` beside the ticker | `AMGT-ro-4` |
+| 7 the Deere identity split (Z-S267) | `AMGT-ro-6` (measure-first: key-form trace + a proposed rule) |
+| 8 exec's `union of 250` / list's `2026-09-16` provenance | CARRIED (48g): both lines are the served pool and ranking objects stating truthfully what universe they were built on; they read the 94 only when those producers read a rebuilt universe/v1, which is not a RESAPP cell |
+
+**Found at the cut, and cut here (48b):** rn-2 broke `peersCarry.harness.cjs`, and its consumer returns the RAW yield when a
+P/E entry states no unit -- which every served peers/v1 object does today -- so the fixed page would show 2.88 under "P/E".
+`AMGT-ro-2` guards it; `AMGT-ro-7` rewrites the served peers pool with the units.
+
+### 48b. THREE MEASUREMENTS THE CUT RESTS ON
+
+1. **rn-2's fallback.** `cscTable.ts` returns `value` when `column.transform` is absent; `peersCarry.harness.cjs` exits 1 at
+   HEAD (expected [20, 25], got [0.05, 0.04]); stripping `transform`/`units` from the landed fixture's ey entries renders 24
+   numeric raw yields (`checks/ro-2.AC2.cjs` at the base: 0 absent, 24 numeric).
+2. **The served peers objects carry no unit.** They are pool objects the engine wrote before rn-2; the lambda serves them as
+   written. Through today's consumer the served P/E reads the raw yield (DE 2.88187), and **round 39's magnitude band
+   [0.5, 200] PASSES that** -- a raw percent yield sits inside it. The band cannot discriminate; `checks/pe-relation.cjs`
+   (P/E x percent yield == 100 within 1) can: served 0 of 24, landed 24 of 24.
+3. **The build precondition drifted again:** `gen_harvest_prefixes.py --check` rc 1 at the cut. The issuer restamps
+   immediately before ro-7's build, not now, since the registry can move again.
+
+### 48c. THE RECTANGLE -- write surfaces DISJOINT
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ro-1` | FWD-30: THE EXPORT ADDS NOTHING, AND THE HARNESS GRADES EXTRAS | `~152` | worker | SERVED | `lib/research/print/render_pack.py`, `lib/research/print/tests/**`, `portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs` |
+| `AMGT-ro-2` | THE P/E GUARD AND ITS HARNESS | `~153` | worker-light | LOCAL | `portal/src/pages/SecurityAnalysis/cscTable.ts`, `.../__harness__/peersCarry.harness.cjs` |
+| `AMGT-ro-3` | THE THESIS SECTION CARRIES THE HEADER'S VERDICT | `~154` | worker | SERVED | `lib/research/api/scoped_amgt.py` (thesis route only), `lib/research/api/tests/test_thesis_description_verdict.py`, `portal/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx`, `.../types.ts` |
+| `AMGT-ro-4` | TWO LABELS THAT MISSTATE | `~155` | worker-light | LOCAL | `.../tabs/PostureTab.tsx`, `.../components/SecurityOverlay.tsx` |
+| `AMGT-ro-5` | POSTURE'S REASON WITHOUT A PATH | `~156` | worker-light | LOCAL | `lib/research/posture/packs.py`, `lib/research/posture/tests/**` |
+| `AMGT-ro-6` | THE DEERE KEY-FORM TRACE | `~157` | worker-light | LOCAL | its deliverables only |
+| `AMGT-ro-7` | THE SERVED ACTS: the lambda deploy and the peers pool rewrite | `0.7.0_AE_CloudOps~A` | seat order | WORLD | `infra/aws/terraform/harvest/**` (apply only), its deliverables, the ledger |
+
+### 48d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.7's eight items (read from the file) + the one found at the cut (48b.1-2) = nine; minus item 8
+  (carried, 48a) and item 2 (a property of other cells) = seven, in seven cells. Item 7 is measure-first because its remedy
+  is an identity rule (C-ONE-IDENTITY), which the CTO rules on, not a cell.
+- **(ii) Same grain.** Four code cells (ro-1, ro-2, ro-3, ro-5), one label cell (ro-4), one trace (ro-6), one seat act (ro-7).
+- **(iii) Intent.** One axis: what the page and its export SAY is true -- the export adds nothing, the P/E is a P/E, a
+  section's heading matches its content, a label names what it measures.
+- **(iv) What a cell does NOT move.** ro-1 changes no pdf and no route; ro-2 changes no column but the two reciprocal ones;
+  ro-3 changes only the thesis payload's description verdict and the section's rendering; ro-4 moves no data; ro-5 changes
+  only the reason text; ro-6 edits nothing; ro-7 moves exactly what its sign-off pair names.
+
+### 48e. EDGES AND FAN-OUT
+
+```
+ro-1 -> ro-7   (the rich body the deploy serves)
+ro-3 -> ro-7   (the thesis payload the deploy serves)
+ro-2, ro-4, ro-5, ro-6 -> (none)
+```
+
+```
+fanout:
+  cap: 8
+  orders_total: 7
+  chains_total: 6
+  wave_0: [ro-1, ro-2, ro-3, ro-4, ro-5, ro-6]
+  wave_1: [ro-7]                       # a seat order: after ro-1 and ro-3 merge AND both never-widen halves are committed
+  portal_ref: 46c0ae11
+  no_vite_per_worker: true             # Andrew-direct "5174 only"; the issuer's real run grades every render
+  no_s3_deletes: true
+  no_vendor_call: true                 # the peers batch reads the scanner store (Opal's); no Bloomberg
+  egress: ro-7's build pip-downloads its pinned wheels from PyPI (declared on the face and the half)
+  route_change: none (ro-3 adds a field to the thesis payload; ro-1 removes content from the rich body)
+  no_promote: true
+```
+
+### 48f. BOUNDS
+
+No worker starts a server. No install. No push, merge, rebase, checkout -- or clean. Portal files commit inside `portal/`
+(branch `wk-AMGT_RESAPP-<n>-portal` at DEV `46c0ae11`), then the outer commit carries `portal` and the deliverables. Every check
+is a committed file under `deliverables/2.0.0_SA_COO~Z/round40/checks/`; base runs under `round40/base-runs/`.
+
+### 48g. CARRIED
+
+- **Item 8** (48a): to the universe owner (`2.0.0_SA_COO~Y`, AMGT universe) -- the pool and ranking producers read the 94 once
+  universe/v1 is rebuilt; the page then says so on its own.
+- **Item 7 of round 38/39** (the authenticated deployed render): carded to Andrew by the CTO.
+- Z-S238 (request log line, a pair), Z-S227 (isError branches), W85-S1 / W117-S3 / W58-S2 (hygiene), the registry `unit` field.

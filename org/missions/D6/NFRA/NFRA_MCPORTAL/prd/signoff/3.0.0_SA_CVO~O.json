@@ -1,0 +1,12 @@
+{
+  "prd": "NFRA_MCPORTAL_PRD.md",
+  "prd_version": "v0.2",
+  "prd_pin": "87b310f4c20d62ca9f994dd8b1929b1d55530590",
+  "half": "ratified-text",
+  "half_hash": "b82799cb3b83902ba407e1538bbf87968244a885602607f92f05d4ef0789a691",
+  "endpoint_hash": "9c502f2da284170d99ab192fdf803cf73dd7c4f467d2111ccca391bc233ff3f0",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_MCPORTAL_PRD_v0.2_RATIFIED_TEXT_SIGNOFF_REVIEW_20260924.md@b3e20eb3c0",
+  "signed_by": "3.0.0_SA_CVO~O",
+  "signed_at": "2026-09-24T21:43:03Z"
+}

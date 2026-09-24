@@ -1,0 +1,13 @@
+{
+ "project_code": "NFRA_OPALAI",
+ "home": "org/missions/D6/NFRA/NFRA_OPALAI",
+ "directive": "D6",
+ "macro_code": "NFRA",
+ "fabric": "site-z",
+ "dep_stage": "DECOMP",
+ "status": "active",
+ "name": "opal_ai V1 -- the Opal Analyst as a product: one Teams-facing agent over one indexed Opal MCP, developed in the Opal-Capital/opal_ai repo as a workspace submodule with the workspace's tools, and run from a released copy under its own non-admin account with no workspace access",
+ "generated_from": "org/missions/D6/NFRA/NFRA_OPALAI/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-09-24T21:19:59Z"
+}

@@ -3,12 +3,20 @@
   "macro_code": "ADHC",
   "name": "Teams Telemetry MCP Server",
   "description": "MCP server wrapping the Microsoft Graph API to expose Teams channel messages as tools for Claude Code agents. Enables agents to read Teams messages, search conversations, and receive real-time team communications without leaving the terminal. Requires Azure AD app registration for Graph API access.",
-  "prds": [{"path": "docs/architecture/ADHC_TMSTEL_PRD.md", "label": "Teams MCP Server Architecture", "date": "2026-03-31"}],
-  "status": "inactive",
-  "phase": "INACTIVE 2026-04-13. PRD complete. On hold until Azure AD app registration is landed by Andrew/IT.",
-  "blocking": "Azure AD app registration (Andrew/IT). Reactivate when credentials are available.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADHC_TMSTEL_PRD.md",
+      "label": "Teams MCP Server Architecture",
+      "date": "2026-03-31"
+    }
+  ],
+  "status": "closed",
+  "phase": "CLOSED SUPERSEDED 2026-09-24 by 1.0.0_SA_CTO~O under Andrew's goal 'Finish all D6 opal_ai work' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_210xZ_CTO_O_GOAL_FINISH_ALL_D6_OPAL_AI.md). What superseded it: the Opal Gateway serves Teams reads to Claude under its own Entra app registration -- list_chats, read_chat_messages, list_channels, read_channel_messages, poll_addressed_teams_messages (infra/aws/ec2/opal-gateway/app/tools.py:641,719,759,767,825). The Azure AD registration this row waited on was delivered by that path. Capability no longer promised by this row: none; the gateway carries it. || Was: INACTIVE 2026-04-13. PRD complete. On hold until Azure AD app registration is landed by Andrew/IT.",
+  "blocking": "NONE -- closed superseded.",
   "created": "2026-03-31",
-  "pods": ["0.7"],
+  "pods": [
+    "0.7"
+  ],
   "pipeline": "shared-infra",
   "thread_counter": 0,
   "threads": []

@@ -14186,6 +14186,155 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "FWD-29's DONE WHEN carries a limb requiring SIX PNGs READ BY A PERSON; ROUND_ANALYSIS.round38 @d835c5edf1 records it at 2 of 6 and grades FWD-29 NOT_REALIZED. Separately, Z-S265 asserts the Peers P/E columns are 100x too small on the strength of implied-EPS arithmetic from a single render.",
     "world_is": "The limb now stands at 6 of 6 on this seat's own read. Z-S265's claim is no longer carried by arithmetic alone: the same product renders the same quantity at the correct magnitude on its Model tab, so the defect is localised to the peers path rather than to the figure's source data. And a company that the peers surface resolves and prices reads identity-UNRESOLVED on the posture surface of the same page, which makes the posture's comparable empty for a reason that is about key form rather than about missing data.",
     "notes": "Filed after the L10 was cut, so it changes no round-38 verdict and is offered as round-39 input rather than as a correction. ⭐ THE READ IS WHY BOTH FINDINGS EXIST AND NEITHER WAS REACHABLE FROM A JSON: every mechanical column on all six states PASSES, and the round carried no judgment criteria, so nothing in the instrument set grades whether a rendered number is PLAUSIBLE or whether two surfaces of one page agree about one company. ⛔ AND THE 2-OF-6 IS THE GENERALISABLE PART: a DONE WHEN limb that requires a HUMAN READ is satisfied only by the read, and it is the one limb a drain cannot close on the seat's behalf -- it sat unclosed across two rounds while every mechanical limb around it was green."
+  },
+  {
+    "id": "AMGT_RESAPP-W146-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~146",
+    "surfaced_at": "2026-09-24T00:00:00Z",
+    "one_line": "The nested portal repo carries no .tools/safe-commit.sh of its own, and this worker committed rn-1's PanelHeader.tsx fix (0f7db9bd) with plain `git commit` rather than through the parent's .tools/safe-commit.sh (whose gates -- risk-reflex, naming-gate, to-pipeline-gate -- were therefore not exercised on this commit), before noticing that AMGT_RESAPP~141's own proof_of_spec.json documents invoking `../.tools/safe-commit.sh` from inside portal/ for the same kind of commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLAUDE.md Rule 14a: commit via `.tools/safe-commit.sh --author ... -F <msgfile> -- <paths>`, universal.",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~141/AMGT_RESAPP.TO-AMGT-rm-2.the-free-chrome.proof_of_spec.json compiler_tools row 'safe-commit.sh (portal commit)': `cd portal && bash ../.tools/safe-commit.sh --author ... -- <paths>`, exit landed 4aa49151.",
+        "This worker's portal commit: `cd /c/tmp/wk-amgt-39-146/portal && git -c user.name=... commit --author ...` at 0f7db9bd, no gate run. Attempted a non-destructive `git reset --soft HEAD~1` to redo it correctly; the repo's own never-rules guard (never-rules-gate.sh reset-guard) refused the reset ('destructive reset would discard/rewrite 1 local commit(s)'), so the commit stands as originally made rather than being force-corrected."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z -- whether 0f7db9bd needs a follow-on gate run or is accepted as-is is the issuer's call at the round-39 drain; content is correct and unchanged either way.",
+    "spec_asserts": "Rule 14a states the commit mechanism as universal, and a prior worker's own delivered instance on this same project documents the portal-relative invocation that satisfies it.",
+    "world_is": "The commit landed with the right content and author but without the risk-reflex/naming-gate/to-pipeline-gate checks safe-commit.sh would have run, and the guard rail that would let a worker redo it cleanly (a soft reset) is itself refused as destructive.",
+    "notes": "Filed same-turn, work continued; no override used, no gate bypassed on purpose -- the omission was a miss, not a choice."
+  },
+  {
+    "id": "AMGT_RESAPP-W148-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~148",
+    "surfaced_at": "2026-09-24T21:00:00Z",
+    "one_line": "AC1's check is FILE-granular (any occurrence of the retired 0A1733/10,23,51 literal anywhere in a file outside the allow-list fails the whole file), while the task order's WORKER FACE enumerates exactly thirteen line-sites; index.css alone carried the identity at four further lines (153, 366, 421, 593) beyond the two named (88, 94), and ui-smoke.mjs's cited line (:630) was actually :635 -- both corrected to make AC1 pass, beyond the named enumeration.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Task order s.1 names Panel.tsx:8,:47; index.css:88,94; designTokens.ts:13; ExportModal.tsx:37; TicketCenter.tsx:12; Controls.tsx:27,:59,:91; HeroGraphic.tsx:27; PanelStates.tsx:21; panels/README.md:7; ui-smoke.mjs:630; PrintExportAction.tsx:136 -- thirteen sites.",
+        "AC1's own script (rn-3.AC1.sh) is `grep -rlE '0A1733|10, ?23, ?51' src scripts` filtered by an allow-list of FIVE FILES (brand.ts, brand.tokens.json, print.css, uiMeasureFixture.html, ui-measure.mjs); its docstring states the requirement as 'no file under portal/src or portal/scripts asserts the retired band identity ... EXCEPT the allow-list' -- a file-level predicate, not a line-level one.",
+        "After correcting exactly the thirteen named sites, `bash rn-3.AC1.sh` still read 'outside the allow-list (10)' listing index.css among others; `grep -n 0A1733 src/index.css` (post-fix) showed four further live hits at lines 153, 366, 421, 593 -- a ramp-contrast comment, the --layer-strip token-definition comment, a status-family contrast note, and the focus-ring box-shadow comment -- none named in the task order's enumeration.",
+        "`grep -n '0A1733|10, ?23, ?51' scripts/ui-smoke.mjs` located the smoke-instruction sentence at line 635, not the 630 the task order cites; same sentence, off-by-5 line reference.",
+        "All additional sites corrected (contrast ratios recomputed against the current --bg-band rung, rgb(25,38,67), where the comment stated a ratio; the definitional comment for --layer-strip and the focus-ring box-shadow comment de-literalised to the token form) and `bash rn-3.AC1.sh` now reads 'outside the allow-list (0)', exit=0."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "No remedy needed beyond the fix already landed in this cell's own commit (02e04083): the extra sites were corrected same-turn, AC1 passes, and the cell's <paths> already covered every file involved (index.css and ui-smoke.mjs are both named surfaces). Recorded because the task order's line-enumeration undercounted what its own mechanical criterion requires, which is worth knowing for a future cell that trusts an enumerated site list as a denominator.",
+    "spec_asserts": "The task order enumerates thirteen specific <file:line> sites as the complete set needing correction, and cites ui-smoke.mjs:630.",
+    "world_is": "AC1 grades the WHOLE FILE, not the named lines, and index.css carried four further live occurrences of the retired identity outside the named two; ui-smoke.mjs's cited line was off by five.",
+    "disarm_owner": "2.0.0_SA_COO~Z (round 39 issuer) -- the fix already landed in the worker's own commit (02e04083); the issuer's word closes it, a worker is terminal at its drain and cannot self-disarm (R-18).",
+    "notes": "A worker reading only the named thirteen sites and stopping there would have left AC1 FAILing; the mechanical criterion, not the enumerated prose, is the actual denominator for this class of cell."
+  },
+  {
+    "id": "AMGT_RESAPP-W150-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~150",
+    "surfaced_at": "2026-09-24T18:50:00Z",
+    "one_line": "AMGT-rn-5 AC1's issued <expect> pattern ('served carries N of N landed top-level keys; missing: none; _served provenance ... -> OK; exit=0') does not match the shape the named checker (round39/checks/rn-5.AC1.py) actually prints ('landed top-level keys: N; served carries N of them; missing: ...') -- a real invoke against the deployed function, otherwise satisfying AC1's substance (7 of 7 keys carried, provenance complete, rc=0), still fails proof-of-spec-check.py's literal expect-match gate.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Task order org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rn-5.fwd-30-on-the-served-plane.md:49 <expect>served carries N of N landed top-level keys; missing: none; _served provenance ... -> OK; exit=0</expect>",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round39/checks/rn-5.AC1.py's own print format string: 'landed top-level keys: %d; served carries %d of them; missing: %s' followed by a separate '_served provenance: ... -> OK' line -- the words 'landed top-level keys' precede 'served carries', never follow it as the <expect> pattern requires.",
+        "This worker's own served_capture.py run this session produced output 'landed top-level keys: 7; served carries 7 of them; missing: none' + '_served provenance: function=... -> OK' + 'exit=0' -- AC1's own PY script exits 0 and its printed sentence is semantically equivalent to the <expect> clause, but python -c \"import re; re.search(r'served carries \\\\d+ of \\\\d+ landed top-level keys; missing: none.*?-> OK; exit=0', <that text>, re.DOTALL)\" returns None.",
+        "proof-of-spec-check.py's conditional_checks (:128-130): 'status=PASS but output_evidence does NOT match expect ... the match decides a mechanical criterion, not the worker (spine v3 L7); INVALID' -- confirmed by running this worker's own instance with AC1 status=PASS: VIOLATION raised, rc=1."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z (round 39 issuer) -- the <expect> pattern in the task order is the issuer's own text against the issuer's own checker script; only the issuer can correct the mismatch (edit the <expect> to match the script's real output, or edit the script to match the <expect>'s claimed shape). Neither file is in this worker's <paths>.",
+    "spec_asserts": "The task order's AC1 <expect> clause asserts the checker prints 'served carries N of N landed top-level keys; missing: none' followed later by '-> OK; exit=0'.",
+    "world_is": "The checker prints 'landed top-level keys: N; served carries N of them; missing: ...' on its own first line -- 'landed top-level keys' precedes 'served carries' rather than following it, and the phrase 'of N landed top-level keys' never appears verbatim; a semantically-passing run (7 of 7 keys, provenance complete, script rc=0) therefore fails the literal regex match proof-of-spec-check.py enforces.",
+    "notes": "This worker recorded AC1 as FAIL in its proof-of-spec instance because the mechanism (expect-match, not self-report) is what decides a mechanical criterion per CLAUDE.md Rule 27/spine v3 L7 and this worker's own standing orders ('never repaired'/'never rescued'). The invocation output itself is recorded verbatim; nothing was edited to force a match."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S268",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-24T19:15Z",
+    "one_line": "FWD-30 is NOT met on the served plane, and its round-38 REALIZED grade rested on an instrument that cannot see half its DONE WHEN. (1) SERVED: the page, rendered from the deployed function's own responses, discloses 'ABSENT: no description header scalar [CIE_DES, CIE_DES_BULK] ... and no served D-1 company_description sentence ...'; the served format=rich body never mentions a description at all -- 4 of 5 page absences covered verbatim (landed plane: 5 of 5). (2) BOTH PLANES: the rich export carries 17 figures the page does not show, 10 of them the IS_DIV_PER_SHR fiscal series 2016-2025 that the page REFUSES as SIGN-UNRESOLVED, printed in the export as values with an UNRESOLVED label. FWD-30's DONE WHEN reads 'with NOTHING in the export that is not on the page'; exportCompare.harness.cjs computes the extras and never grades them.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "rn-5 (0.9.0_WK_AMGT_RESAPP~150) served capture: deliverables/0.9.0_WK_AMGT_RESAPP~150/served/served_fixture.BA_US_Equity.json + BA_US_Equity.rich.md, 5 of 5 GET routes 200 on opal-amgt-scoped-api, CodeSha256 y5bJBQsP8Q7Lfudb5nwc5wEr72IcH53uS5cz2T8bn/w= (rm-7's deploy)",
+        "served plane, checks/rn-5.AC2.sh: FIGURES page=162 rich=179 same=162 missing=0 extra=17; CITES 15/15; ABSENCES page=5 rich=15 same=3 missing=2 extra=12; EXPORT-COMPARE NOT OK (exit 1). The one uncovered page absence, printed by a throwaway copy of the harness (deleted): the CIE_DES description line",
+        "landed plane, same harness, rm-4's rich (deliverables/0.9.0_WK_AMGT_RESAPP~143/served/BA_US_Equity.md): FIGURES extra=17, CITES 43/43, page absences covered 5 of 5, EXPORT-COMPARE OK -- so the extras predate the deploy and the description miss is served-only",
+        "the 17 rich-only figures: header|NAME, CRNCY, CNTRY_OF_DOMICILE, GICS_SECTOR_NAME, EQY_SH_OUT_REAL, EQY_FREE_FLOAT_PCT, SHORT_INT_RATIO, and fiscal|IS_DIV_PER_SHR|2016..2025; the rich body prints e.g. 'IS_DIV_PER_SHR | 4.69 UNRESOLVED-ON-BA US Equity: sampled magnitude 0.0 does not discriminate ...'; the page carries 'REFUSED: IS_DIV_PER_SHR: unit/sign convention is SIGN-UNRESOLVED, not MEASURED'",
+        "exportCompare.harness.cjs:383-388 -- ok = no missing figures, no missing cites, every page absence covered, size > 20 KB; the extra sets are computed at :322-324 and printed, never in `ok`"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD ADDENDUM B FWD-30 DONE WHEN: 'a field-by-field comparison against the page shows the SAME figures, the SAME cites and the SAME absences, with NOTHING in the export that is not on the page'; round-38 analysis graded FWD-30 REALIZED on branch (b).",
+    "world_is": "On the deployed function the export omits one absence the page discloses, and on both planes it publishes 17 figures the page does not show, 10 of them a series the page refuses as unresolved. The round-38 grade read the harness's OK, which grades missing items only.",
+    "disarm_owner": "1.0.0_SA_CTO~Z -- FWD-30's grade is the CTO's at L10; the fix (render_pack.build_rich_text honouring the page's REFUSED rows and absence lines, and the harness grading extras) is a round-40 cell this issuer cuts on that analysis.",
+    "notes": "Filed by the issuer at rn-5's close. rn-5 is complete as a measurement: its AC2 FAIL is the cell's finding, recorded and not repaired, as its face directs."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S269",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-24T20:35:00Z",
+    "one_line": "ITEM 7 IS OBTAINED after three rounds of being carried: the authenticated DEPLOYED render was captured with Andrew signing in interactively, and the deployed Peers table carries NO P/E VALUES AT ALL -- every member reads 'not carried' under P/E 2025 and P/E 2026 and P/E 2027 is an ABSENT column -- where round 39's LOCAL render after rn-2 carries corrected values, so Z-S265's fix is neither confirmed nor contradicted on the served plane but UNOBSERVABLE there.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MECHANISM, copied from 2.0.0_SA_COO~Z's own proven traces rather than invented: headed Edge via the portal's playwright-core, chromium.launchPersistentContext(scratch profile, channel msedge, headless false, 1440x1000). Andrew signed in INTERACTIVELY in that window at 20:25:29Z -- the act no seat can perform, which is why this item stood open for three rounds. A SCRATCH profile was used and his own Edge Work profile was never touched; bearer PRESENCE is recorded and its value never read or stored.",
+        "SESSION AND API HEALTH: signed_in true, bearer_present true. 15 API calls to /api/scoped/amgt and /auth, tally 14x200 and ONE 401 -- that 401 being the pre-sign-in /auth/refresh probe, which is the correct response for a visitor with no session. One console error, the same 401. The deployed API layer answers authenticated.",
+        "THE FINDING, read from the render as an image: on the deployed Peers tab every visible member reads 'not carried' under BOTH P/E 2025 and P/E 2026, and P/E 2027 is a column headed (ABSENT). Members observed: BOEING CO/THE (subject), Deere & Company DE, Eaton Corp. Plc ETN, Union Pacific UNP, Uber Technologies UBER. Mkt Cap DOES carry values on the same rows -- 159,623 / 165,968 / 174,077 / 175,478 / 143,939 -- so the table is populated and the P/E columns specifically are not.",
+        "THE CONTRAST THAT MAKES IT MATTER: ADJUDICATION_v49 records the LOCAL render after rn-2 carrying Deere 34.70, Lockheed 21.40, Uber 15.03, GE Vernova 27.96, each matching an EPS derived from price alone. The served surface carries none of those numbers in any form, correct or 100x wrong.",
+        "THE PANEL'S OWN PROVENANCE, from the same capture: DERIVED, 12 comparable(s), universe vintage 2026-08-06, as of 2026-09-24T0310Z -- a vintage that PREDATES rn-2's fix.",
+        "NOT CLAIMED, deliberately: WHY. A deployed artifact predating rn-2, a different CSC map vintage, and genuinely absent columns for this vintage are all live candidates and none is measured. Round 40's item is a MEASUREMENT, not a fix.",
+        "TWO INSTRUMENT MEASUREMENTS FROM THE SAME RUN. (1) getByRole('tab') returns ZERO on this tab bar: the five tabs are plain BUTTONs carrying no ARIA role=tab, which is an accessibility defect on a client-facing page. (2) The FIRST capture attempt produced a Peers PNG BYTE-IDENTICAL to Exec Management (same sha256 4e965857e3c06a83, same 198781 bytes) because getByText('Peers', exact).first() collides with the lead panel's non-interactive 'PEERS' label, which precedes the tab in DOM order. That was this seat's instrument defect, and it was caught by HASHING the two captures rather than by looking at them -- two screenshots that differ to the eye cannot be told apart from two that do not without a digest.",
+        "CONFIRMED ON THE SERVED SURFACE from the same captures, each previously seen only on the local render: 'BLOOMBERG: UNKNOWN' beside BA US; 'Description: ABSENT' in the lead panel header; and the stale provenance 'pool:universe/v1/2026-09-16.json#as_of=2026-09-16'. ADJUDICATION_v49's findings 4 and 6 therefore hold on the deployed plane, not only locally."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rounds 37, 38 and 39 grade FWD-21..FWD-29 on a LOCAL vite render over captured fixtures and state the PLANE bound each time; ADJUDICATION_v49 s.4 bound 2 records item 7, the authenticated deployed render, as NOT OBTAINED and needing Andrew present because no seat holds an MFA portal sign-in.",
+    "world_is": "Item 7 is OBTAINED. The deployed page renders authenticated with real data, a healthy API layer (14 of 15 2xx) and a genuinely polished Thesis tab carrying a real BCA deliveries chart with cited passages. AND the Peers table on that same surface carries NO P/E values at all, where the local render after rn-2 carries corrected ones -- so the 12-of-12 clean grid measures a data state the served surface does not have. Every grade in rounds 37-39 stands exactly as bounded, LOCAL, and no stronger.",
+    "notes": "No disarm_owner is set because nothing here is ARMED: the plane bound was already stated in both analyses, and this row QUANTIFIES that bound rather than finding a violation of it. What it adds is that the gap is not merely 'not deployed yet' -- the served Peers carries no P/E in any form, which is a different state from an older artifact showing the old wrong values. Round 40 owes a MEASUREMENT of why, and the deployed render is now a repeatable act: the scratch profile at the session scratchpad holds the session, so a re-run needs no further sign-in until it expires."
+  },
+  {
+    "id": "AMGT_RESAPP-W152-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~152",
+    "surfaced_at": "2026-09-24T21:10:00Z",
+    "one_line": "AMGT-ro-1 item 1's 'the page's description ABSENT line carried verbatim when the page carries it' cannot be fully closed inside this cell's <paths>: the header's OWN description object (overlay.description, HeaderBrief.tsx's 'Description: ...' line, computed by scoped_amgt.py's description resolver) is a SEPARATE structure from thesis_bundle.drafted_sections[company_description] that build_rich_text already reads, and the ONE caller that could pass it (_print_pack in lib/research/api/scoped_amgt.py) is not in this cell's <paths>. build_rich_text now accepts an OPTIONAL, additive `description` param that renders it verbatim when supplied, but nothing wires it in yet -- with only the existing thesis_bundle-derived path in play, the fixture used by AC1/AC2/AC4 never exercises an ABSENT description (BA_US_Equity's overlay.description.status is SERVED, and its text is byte-identical to thesis.drafted_sections[company_description].sentences[0].text), so AC1/AC2/AC4 pass either way and the gap is not mechanically visible on this fixture.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/api/scoped_amgt.py:3086-3122 -- the description resolver returns {status, source, text, reason, ...} independently of drafted_sections' sentence count; its ABSENT reason is 'no description header scalar {0} on the model block ({1} header scalar(s) measured) and no served D-1 {2} sentence passing the describes-the-business test (drafting_status {3})' -- wording build_rich_text's own _drafted_section_markdown('company_description', ...) does not produce (it prints '[MACHINE-EMPTY: no company description drafted yet -- the drafting face has produced 0 sentences for this section for this security]' instead)",
+        "lib/research/api/scoped_amgt.py:4049-4098 _print_pack's fmt=='rich' branch calls build_rich_text(display_form, block, thesis_bundle=..., peer_set=..., posture=...) with no description= argument, and lib/research/api/scoped_amgt.py is not in AMGT-ro-1's <paths> (decompositions/AMGT_RESAPP_DECOMP.md:6015's rectangle names only render_pack.py, its tests, and exportCompare.harness.cjs)",
+        "portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json: overlay.description.status='SERVED', text='Commercial Airplanes revenues were $41,494 million in 2025, versus $22,861 million in 2024 and $33,901 million in 2023.', byte-identical to thesis.drafted_sections[0(company_description)].sentences[0].text on this worker's own python read of the fixture -- so this fixture cannot discriminate the two code paths",
+        "lib/research/print/render_pack.py's build_rich_text now takes an additive description=None parameter (this cell's own commit) that renders description verbatim via a new _description_markdown() when a caller supplies it; AC1.sh/AC2.sh/AC4.sh (run verbatim, this session) all pass unchanged because they build the rich body through org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~143/handler_rich_to_file.py, which calls scoped_amgt.handler unpatched for _print_pack -- so description stays unwired end to end and the ABSENT-description scenario is never exercised by any of this cell's mechanical criteria"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT_RESAPP.TO-AMGT-ro-1 (task order) BUILD limb (1): 'the page's description ABSENT line carried verbatim when the page carries it.'",
+    "world_is": "render_pack.build_rich_text is READY to carry it verbatim (additive description= param, this cell), but the only caller that resolves the header's description object (_print_pack in lib/research/api/scoped_amgt.py) is out of this cell's <paths> and does not pass it, so on the served/landed planes today the export still falls back to the drafted-section derivation, which does not match the page's wording when the description is genuinely ABSENT.",
+    "disarm_owner": "1.0.0_SA_CTO~Z or the round's next AMGT_RESAPP issuer -- wiring _print_pack to read the description object and pass it through to build_rich_text needs a task order naming lib/research/api/scoped_amgt.py in its <paths>, which AMGT-ro-1 does not carry.",
+    "notes": "Not blocking AC1-AC4 (all four pass, this session, verbatim invocations): the landed BA_US_Equity fixture's description is SERVED and its text already matches the drafted-section derivation this cell did not otherwise touch. Recorded because a future fixture (or the served plane, per Z-S268's own served-only description miss) with a genuinely ABSENT description would still show the WRONG reason text until a cell in scoped_amgt.py's <paths> wires the new description= parameter through."
   }
 ]
 ```
