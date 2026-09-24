@@ -8979,3 +8979,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The browser lands for ROOT only; the process that needs it runs as ec2-user. Remedied operationally on the host this tick (not in the document); the receipt records the ec2-user install and the smoke. Not graduated; the document-level fix is the root owner's call."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S121",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-24T05:38:02Z",
+  "one_line": "The YCharts runner's offline suite is offline ONLY when preloaded (node --require ./tests/netguard.js tests/run_offline_suite.js, the suite's own header line 4): run once WITHOUT the preload at 05:38Z on this laptop (P's invocation error while proving the fourth-amendment commit), its arm (e) positive control -- a bare anonymous https.request to https://ycharts.com/indices/table_data, no cookies, no headers, no credential -- CONNECTED to the vendor once (reached_vendor true, guard_fired false) and the arm reported 'undefined external of undefined attempts', i.e. the guard was never installed. The library's own probe path was not involved (adapter hosts 127.0.0.1 only; replay logged 61 requests). Re-run WITH the preload: 0 external of 1, the control refused, all_pass. Exposure, not an incident against a credential: nothing identifying left the machine; one anonymous GET did.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/tests/run_offline_suite.js:4 @fc932d468b -- the documented invocation carries --require ./tests/netguard.js; :377-394 -- the positive control fires https.request to ycharts.com and reads global.__YC_NETGUARD__, which is undefined without the preload, so the control is a REAL request whenever the preload is forgotten.",
+      "Scratchpad run 05:38:02Z (offline_suite4.out): summary e_pass false, positive_control {refused:false, guard_fired:false, reached_vendor:true}, line 'netguard: undefined external of undefined connection attempts'; non_loopback_hosts [] for the adapter (the library never left loopback).",
+      "Scratchpad run 05:4xZ (offline_suite5.out) with the preload: all_pass true; e_offline 'netguard: 0 external of 1 connection attempts', positive control refused with the NETGUARD message, guard_external_after 1.",
+      "tests/netguard.js:97-105 @fc932d468b -- the guard installs on require and exposes global.__YC_NETGUARD__; nothing in the suite refuses to run when it is absent."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "run_offline_suite.js header: 'NO REQUEST LEAVES THE MACHINE. The replay binds 127.0.0.1; netguard.js refuses every ...'; CLAUDE.md Agent Autonomy: never call an external vendor API without Andrew's explicit per-use word.",
+  "world_is": "The 'no request leaves the machine' property holds only under the preload; the suite itself does not check for the guard and runs its vendor-facing control regardless. One anonymous GET reached ycharts.com at 05:38Z. Remedy (the suite's owner's call, one line): the suite refuses to start when global.__YC_NETGUARD__ is absent, so the control can never fire unguarded. Not remedied in fc932d468b (that commit is the probe path only)."
+}
+```
