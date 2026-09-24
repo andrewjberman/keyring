@@ -1,0 +1,68 @@
+universe s3://opal-data-harvest/universe/v1/2026-09-16.json names=250; registrations lib/research/identity/registrations.json rows=8
+ARM before-any-registration  MEASURED=194 records=254 registered=7 universe_registered=158
+ARM after-3-fake-registrations MEASURED=197 records=257 registered=10
+NEGATIVE universe-withheld       MEASURED=36 records=96 registered=7
+VERDICT PASS: before=194 after=197 (+3) negative=36
+{
+ "as_of": "2026-09-24",
+ "universe_source": "s3://opal-data-harvest/universe/v1/2026-09-16.json",
+ "before": {
+  "input_names": 89,
+  "records": 254,
+  "MEASURED": 194,
+  "UNRESOLVED": 60,
+  "with_association_keys": 254,
+  "association_conventions": [
+   "bare-root-pilot-key",
+   "security-hash-key",
+   "pack-key",
+   "model-key",
+   "bloomberg-identifier",
+   "bloomberg-identifier-with-equity-suffix"
+  ],
+  "registered": 7,
+  "enriched": 1,
+  "universe_names": 250,
+  "universe_registered": 158,
+  "universe_existing": 33,
+  "universe_refused": 59
+ },
+ "after": {
+  "input_names": 89,
+  "records": 257,
+  "MEASURED": 197,
+  "UNRESOLVED": 60,
+  "with_association_keys": 257,
+  "association_conventions": [
+   "bare-root-pilot-key",
+   "security-hash-key",
+   "pack-key",
+   "model-key",
+   "bloomberg-identifier",
+   "bloomberg-identifier-with-equity-suffix"
+  ],
+  "registered": 10,
+  "enriched": 1,
+  "universe_names": 250,
+  "universe_registered": 158,
+  "universe_existing": 33,
+  "universe_refused": 59
+ },
+ "negative": {
+  "input_names": 89,
+  "records": 96,
+  "MEASURED": 36,
+  "UNRESOLVED": 60,
+  "with_association_keys": 96,
+  "association_conventions": [
+   "bare-root-pilot-key",
+   "security-hash-key",
+   "pack-key",
+   "model-key",
+   "bloomberg-identifier",
+   "bloomberg-identifier-with-equity-suffix"
+  ],
+  "registered": 7,
+  "enriched": 1
+ }
+}
