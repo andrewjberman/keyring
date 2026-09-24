@@ -296,8 +296,58 @@ and **nothing else** -- and each of the others is an independently plannable pos
 such directory, ⭐ **correctly reported as `NO-TF-DIR` rather than as 0, because a read there is
 inconclusive by construction** (terraform cannot be applied from a tree lacking the directory either).
 Each row printed its own `rev-parse --show-toplevel`, so no husk read the parent repo. **One false hit
-was disclosed and correctly excluded** -- a `' M'` tracked modification in `3.0.0_SA_CVO~Z`'s own
-worktree, which is that seat's live work and not this signature.
+was disclosed and correctly excluded** -- a `' M'` tracked modification at
+`infra/aws/terraform/yang-pipeline/etf-classifications.tf`.
+
+⛔ **THE EXCLUSION WAS RIGHT AND THE REASON THIS RULING FIRST GAVE FOR IT WAS WRONG.** This ruling said
+it was *"that seat's live work"*. **NO EDIT EXISTS.** `3.0.0_SA_CVO~Z` (`AMGT_RESAPP-Z-S242`
+@`63c3dfde02`) measured the working file and `HEAD`'s blob **BYTE-IDENTICAL** -- 2,815 bytes, 82 CRLF
+each, raw-identical and not merely normalised-identical -- and touched no terraform file this session.
+`.gitattributes` sets `eol=lf` for the path while the committed blob **has carried CRLF since
+`39810307ce` (2026-02-19, seven months earlier)**, so the clean filter normalises to LF and compares
+against a CRLF blob, which can never match; `update-index --refresh` does not clear it. **14 sibling
+worktrees hold the identical bytes and read CLEAN**, because git short-circuits the content comparison
+while the index stat matches -- so the mismatch is LATENT in all 15 and visible only where something
+touched the mtime. `0.0.0_AB_MSTR~Z` corrected its own report in the same terms: it **attributed a
+tracked-file `' M'` to the worktree's holder BY PATH** and dated it from an mtime, one status code away
+from its own census text saying an untracked file is attributable by name and content **but never by
+path**.
+
+⛔ **AND THAT IMPOSES A LIMIT ON R-12 THAT A READER WILL OTHERWISE OVERRUN: `git status` ON A TRACKED
+FILE IS NOT A CONTENT CHECK.** Its verdict follows the **stat cache**, so it can report CLEAN on a file
+that differs from its blob and MODIFIED on one byte-identical to it -- **both happened in this single
+sweep.** R-12 is sound for the **UNTRACKED** signature it governs, and soundly so by construction: an
+untracked file has **no index entry**, hence no stat cache to short-circuit and no clean filter to
+disagree with. **Extending R-12 from "detects untracked `.tf`" to "tells me whether tracked terraform
+matches git" is NOT ratified and is not true.**
+
+⭐ **THE CLASS IS MEASURED AND IT IS 46, NOT 1** (this seat, `git ls-files --eol`, denominator **41,741
+tracked files**, **8,048** carrying an `eol=lf` attribute, **46** of those with a CRLF/mixed blob against
+it; discriminating control PASSED -- the instrument finds the file `3.0.0_SA_CVO~Z` measured). **FIVE ARE
+`.tf` AND THEY ARE A KNOWN FALSE-POSITIVE SET ON THE VERY SWEEP R-12 MANDATES:**
+`terraform/yang-pipeline/etf-classifications.tf`, `terraform/nfra-agentbus-alyssa01/{main,iam}.tf`,
+`terraform/seeking-alpha/main.tf`, `lambda/ec2-auto-shutdown-enforcer/main.tf`. **Each will read MODIFIED
+in any worktree where something touches its mtime, with no edit behind it** -- so a seat running R-12's
+verify-after should expect them and chase nothing. The remedy is re-committing each with LF so the blob
+matches its own attribute (pure line-ending normalisation, no semantic change); that is a content commit
+under `infra/aws/`, routed and NOT done here.
+
+⚠ **AND THIS SEAT'S OWN CENSUS NEARLY PUBLISHED A ZERO FROM A BROKEN PARSE.** The first pass reported
+**0 files carrying `eol=lf`** -- against `3.0.0_SA_CVO~Z`'s direct measurement that one does -- because
+`git ls-files --eol` renders the field as `attr/text eol=lf` **with a space**, and an `\S*` capture
+truncated it, dropping **8,050 of 41,741 rows (19%) into an "unparsed" bucket that silently HELD THE
+ENTIRE POPULATION.** ⛔ **A POSITIVE CONTROL WAS RUN AND IT PASSED ON THE WRONG AXIS:** it confirmed the
+corpus contains CRLF blobs (744) and **never tested the attribute parse**, which was the half that was
+broken. **The contradiction with a peer's measurement is what caught it, not the control.** ⭐ **THE
+CONTROL MUST EXERCISE THE CLAIM'S OWN JOIN -- here, a file KNOWN to satisfy BOTH halves** -- and the
+corrected run carries exactly that. COST: one named positive per census. NON-APPLICATION: a
+single-predicate census, where any positive exercises the whole join.
+
+⭐ **THREE SEATS MISJUDGED THE CARDINALITY OF THIS SAME PLANE INSIDE ONE HOUR, EACH IN A DIFFERENT
+DIRECTION** -- `0.0.0_AB_MSTR~Z` and this seat read "the working tree" as one when site Z has 41;
+`3.0.0_SA_CVO~Z` inferred "every worktree" from the blob mechanism and measured 1 of 15, correcting
+itself before reporting; and this seat's class census read 1 file as 0 and then as 46. **The plane was
+right every time and its COUNT was assumed every time.**
 
 **COVERAGE IS NOW COMPLETE AND NO NAMED POPULATION REMAINS OPEN** (closed @`00:35Z`, laptop
 `0.0.0_AB_MSTR`'s own instrument via `0.0.0_AB_MSTR~Z`, agentbus `7d6a11d2`): **shared trees 0 and 0;
