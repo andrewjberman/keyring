@@ -4,11 +4,10 @@
  "directive": "D5",
  "macro_code": "AMGT",
  "fabric": "site-z",
- "dep_stage": "EXECUTING",
+ "dep_stage": "DECOMP",
  "status": "active",
  "name": "Security Analysis: the research pack, automated -- an analyst opens a covered name and the model block, company description and segment breakdown are already there, every figure defensible from the page, and Adam forwards the printed output without reformatting it.",
  "generated_from": "org/missions/D5/AMGT/AMGT_RESAPP/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-18T23:36:44Z",
- "blocking": "AMGT-rk-49 (Lusha, the project's ONLY non-terminal order -- re-measured 2026-09-24 ~01:0xZ @0e7cfdd669: 191 order files, 181 complete / 8 superseded / 1 withdrawn / 1 pending, anchored on the line-initial <status> element): its STATED gate 'AMGT-rk-38 complete' is SATISFIED, but the gate's PURPOSE is not -- filings/v1/992_HK_Equity/ holds only UNRESOLVED-SOURCE.source.json and issuer-site/harvest/bronze/document/ is 0 estate-wide, so there is no verified domain. Fed today it would correctly record Lusha NOT ATTEMPTED with zero vendor spend. Its real dependency is the regulator route. HELD BY LAW, NOT BY A GATE: Lusha is an EXTERNAL VENDOR API and CLAUDE.md requires Andrew's explicit per-use word -- availability is not authorization -- so this order does not move on any measurement, only on his word; a seat that closes the verified-domain gap still may not feed it. | AT ANDREW, not this project's: the portal/** lane grant."
+ "generated_at": "2026-09-24T05:46:38Z"
 }

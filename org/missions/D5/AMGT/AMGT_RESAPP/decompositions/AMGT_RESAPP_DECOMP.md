@@ -5551,3 +5551,168 @@ fanout:
   no_s3_deletes: true               # standing
   no_bearer_forging: true           # standing
 ```
+
+## 45. ROUND 37 -- THE FRONTEND IN PATTERN, AND THE EXPORT. Ten cells over PRD v0.25 ADDENDUM B (`FWD-21`..`FWD-30`), cut from the CRO's surface walk
+
+**Cut by `2.0.0_SA_COO~Z`** on `AMGT_RESAPP` PRD **v0.25 ADDENDUM B @`1ffb156ecd`** (`1.0.0_SA_CTO~Z`, msg 25263), whose
+definitions for `FWD-21`..`FWD-30` sit in the ENDPOINT fence and nowhere else; the L1 basis is `4.0.0_SA_CRO~Z`'s
+`docs/briefs/amgt-resapp-frontend-pattern-brief-20260924.md` @`21dd61e392` (F1 RESOLVED by Andrew ~04:5xZ: the identity
+header is the ONE band in Security mode, the Lead Panel the ONE band in Universe mode) with its evidence at
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_RESAPP_FRONTEND_WALK_20260924/MEASUREMENTS.json`; the governing word is
+Andrew's goal ~05:0xZ (`ANDREW_DIRECT_20260924_050xZ_AMGT_GOAL_AND_COMPLETION_TEST.md`), whose third clause is `FWD-30`.
+`receiving-check` on the PRD: **ACCEPT** (prd-manifest). This is the first canonical round after the closer hand-back
+(R-26 @`ad5c7a75c6`); rounds 1-36 stand as cut and graded.
+
+⚠ **L4-R AT THIS CUT, MEASURED, NOT INHERITED:** `prd-signoff.py status` reads **WITHHELD** -- ratified-text half STALE
+(owed by `3.0.0_SA_CVO`, no live CVO session at the read), brief half STALE (owed by `4.0.0_SA_CRO~Z`). R-10 suspended the
+half-signature as a BAR *"while AMGT runs under closer mandates"*; ADDENDUM B B.6 says the round is not held on a stamp.
+LIMB 6 of `to-pipeline-gate.py` is mechanical and does not read either sentence. The issuance therefore carries the audited
+`# pipeline-override:` on each new order citing R-10 + B.6 **only if** both halves are still not SIGNED at the cut, and the
+CTO was told so (msg 25273) before this section was written. The review is not skipped: both halves are routed.
+
+### 45a. THE RECTANGLE -- ten cells, one write surface each, DISJOINT by construction
+
+Every cell's write surface is a set of files no other cell in this round names. The page directory
+`portal/src/pages/SecurityAnalysis/` (18 source files, 246 light-on-dark idioms per the walk) is partitioned below with
+nothing left over; `portal/src/ui/**` and `portal/src/components/**` are OUTSIDE every cell (a shared component that is
+itself off-contract -- `ui/components/Stat.tsx` is `bg-zinc-900 text-white`, `StatusBadge.tsx` is `bg-white/10` -- is
+NOT edited by this round; a tile or chip the page needs is built LOCAL to the page under C1/C2/C3).
+
+| cell | id | slot | serves | write surface (portal, relative to `portal/`) |
+|---|---|---|---|---|
+| THE INSTRUMENT | `AMGT-rl-1` | `~130` | `FWD-29` (the check that CAN FAIL), every other cell's oracle | `scripts/ui-measure.mjs`, `scripts/ui-contract-check.mjs`, `scripts/ui-class-census.mjs`, `src/pages/SecurityAnalysis/__harness__/uiContractFixtures.json` |
+| SHELL + IDENTITY HEADER | `AMGT-rl-2` | `~131` | `FWD-21` (one band), `FWD-22` (tiles), `FWD-28` (states, its panels) | `SecurityAnalysis.tsx`, `components/SecurityOverlay.tsx`, `components/HeaderBrief.tsx`, `components/IdentityLine.tsx`, `components/ProvenanceLine.tsx`, `components/GenerationCaption.tsx`, `components/CheckFaceBadge.tsx`, `components/StatTile.tsx` (new), `constants.ts`, `figureIdentity.ts`, `refusalPresentation.ts`, `readCompleteness.ts`, `index.ts`, `__rendercheck__/renderCheck.tsx`, `__harness__/tabs.harness.cjs`, `__harness__/shell.harness.cjs` (new) |
+| THESIS | `AMGT-rl-3` | `~132` | `FWD-21` (the ladder), `FWD-23` (folded evidence) | `tabs/ThesisTab.tsx`, `components/ThesisDriverChart.tsx`, `__harness__/drafting.harness.cjs`, `__harness__/thesisLadder.harness.cjs` (new) |
+| EXEC MANAGEMENT | `AMGT-rl-4` | `~133` | the C5 inversion + table pattern; the red `exec_officers_rendered` check | `tabs/ExecManagementTab.tsx`, `__harness__/execText.harness.cjs`, `__harness__/execFallback.harness.cjs`, `__harness__/execPattern.harness.cjs` (new) |
+| PEERS | `AMGT-rl-5` | `~134` | `FWD-25` | `tabs/PeersTab.tsx`, `cscTable.ts`, `__harness__/peersCarry.harness.cjs`, `__harness__/peersReadFailed.harness.cjs`, `__harness__/peersPattern.harness.cjs` (new) -- **portal base `c657eb91`** (the Peers closer branch, which carries the five-column carry `1ec5446c`) |
+| MODEL | `AMGT-rl-6` | `~135` | `FWD-24` | `tabs/ModelTab.tsx`, `modelSheet.ts`, `__harness__/modelPattern.harness.cjs` (new) |
+| POSTURE | `AMGT-rl-7` | `~136` | `FWD-26` | `tabs/PostureTab.tsx`, `postureCites.ts`, `__harness__/posture.harness.cjs`, `__harness__/posturePattern.harness.cjs` (new) |
+| LEAD PANEL | `AMGT-rl-8` | `~137` | `FWD-27`; `dated`/`requested_as_of` into the "Source:" footer (R-17, client-side only) | `components/LeadPanel.tsx`, `components/RankedList.tsx`, `components/RankedChart.tsx`, `components/StarredList.tsx`, `__harness__/errorEmpty.harness.cjs`, `__harness__/leadPanelPattern.harness.cjs` (new) |
+| STATES + THE RE-ASSERT | `AMGT-rl-9` | `~138` | `FWD-28` (all four states captured), `FWD-29` (six states PASS; six PNGs read) | `scripts/ui-contract-check.mjs` (the states sweep), and any `src/pages/SecurityAnalysis/**` file a designed-state defect the sweep finds requires -- **wave 2, after every wave-1 cell has merged** |
+| THE EXPORT | `AMGT-rl-10` | `~139` | `FWD-30` | `components/PrintExportAction.tsx`, `export/**` (new), `__harness__/exportCompare.harness.cjs` (new) -- **wave 2** |
+
+**Status vocabulary** (`org/standards`): every cell `NOT_EVALUATED` at the cut. **Placement:** site-z, every cell.
+**Invariant:** ten cells over ten outcome-bearing slices; `FWD-21`..`FWD-30` each named by at least one cell (`FWD-21` by
+rl-2 and rl-3, `FWD-28` by every surface cell for its own panels and by rl-9 for the census, `FWD-29` by rl-1 and rl-9).
+
+### 45b. THE FOUR-POSTULATE RECORD (Rule 24)
+
+- **(i) MECE over a declared domain.** Domain = the ENDPOINT fence's `FWD-21`..`FWD-30` at `1ffb156ecd` (ten lines, read
+  from the fence, not the addendum) **MINUS** nothing: all ten are cut. Written as a subtraction from the file's own count
+  (the header's `outcomes:` list carries exactly ten new ids, `FWD-21`..`FWD-30`, and the fence carries the same ten).
+  The hand-back's non-data items (§4) are placed: `dated`/`requested_as_of` -> rl-8; `ABSENT beside EMPTY` -> the C12 states
+  every surface cell renders; the `1ec5446c` deploy -> MSTR's act, not a cell; consumer-2, the failure cases and the
+  `BP/_LN_Equity` route -> closer items under their own spec (B.5); **the overlay's point-read fallback is CARRIED, NOT CUT**
+  (45g) -- it has no ratified mechanism text to cut a criterion from.
+- **(ii) Same grain.** Every cell is a set of page-local source files plus the harness that renders them; no cell is a
+  route, a payload or a shared component. The two wave-2 cells are the same grain (a script and a page-local module).
+- **(iii) Intent coherence.** One axis: PRESENTATION (`C-PRESENTATION-ONLY`). No cell changes a route, a DTO, a query key
+  or a served figure; `FWD-30` is the one outcome that may need a field no route serves, and rl-10 STOPS and records that
+  rather than computing it (`C-EXPORT-ADDS-NOTHING`).
+- **(iv) State coherence -- what a cell does NOT move.** rl-2 does not move any tab's body (the tab files are other cells');
+  the tab cells do not move the page shell, the band count outside their panel, or the tab bar; rl-8 does not move the
+  identity header; rl-1 moves no page source; rl-9 moves the check and, at most, a state branch the census names; rl-10
+  moves no figure on the page. The verbatim gate, the PASS/REFUSE face, the three-state reads, the generation caption's
+  facts, the crossed-controls model and the Peers/Posture symmetry are NOT moved by any cell (B.5).
+
+### 45c. DEPENDENCY EDGES, CHAINS AND FAN-OUT
+
+```
+rl-1 -> rl-2, rl-3, rl-4, rl-5, rl-6, rl-7, rl-8      (every surface cell's census and harness read the instrument's files)
+{rl-2..rl-8} -> rl-9                                  (the re-assert runs over the MERGED page)
+rl-2 -> rl-10                                          (the export action sits in the header rl-2 rebuilds)
+```
+
+```
+fanout:
+  cap: 8
+  orders_total: 10
+  chains_total: 7                  # rl-1 -> rl-k -> rl-9 for k in 2..8 (rl-10 rides the rl-2 chain)
+  wave_0: [rl-1]                   # one worker; the instrument every later criterion names must exist at HEAD first
+  wave_1: [rl-2, rl-3, rl-4, rl-5, rl-6, rl-7, rl-8]   # seven workers, disjoint files, after rl-1 merges
+  wave_2: [rl-9, rl-10]            # two workers, after every wave-1 branch merges
+  portal_ref: c1ac41ec             # the nested repository's DEV HEAD at the cut (= the gitlink, measured equal)
+  portal_ref_rl-5: c657eb91        # the Peers cell alone bases on the closer branch's portal (carries 1ec5446c)
+  reason: one instrument first, then every surface at once on disjoint files, then the page-wide re-assert and the export
+  no_vite_per_worker: true         # a worker proves its BUILD through react-dom/server harnesses + the class census;
+                                   # the DOM instrument runs ONCE PER MERGE at the issuer's drain, and in rl-1 and rl-9
+  no_s3_deletes: true              # standing
+  no_bearer_forging: true          # standing
+  no_vendor_call: true             # standing
+  no_route_or_dto_change: true     # C-PRESENTATION-ONLY
+  no_promote: true                 # portal is commit-yes / promote-no
+```
+
+### 45d. THE BOUNDS THAT BIND EVERY CELL
+
+1. **The contract is `portal/DESIGN.md` C1-C12** and a rejection cites a clause number (`C-CLAUSE-CITED-REJECTION`). The type
+   ladder: body 16/400, numeral 14/400 tabular, label 13/700, footnote 11/400; nothing below 11px; weights 400 and 700
+   only (C1); radii 2/3/4px or pill (C11); no `box-shadow` but the focus ring (C11); one band per page (C3); status as an
+   icon beside navy text, never coloured text on a light ground (C6, C9); every empty panel one of the four designed
+   states from `src/ui/components/states` (C12).
+2. **THE VERIFICATION DIET.** Each build order carries at most three mechanical criteria: (a) the built behaviour proven by
+   its own harness arm over the ACTUAL component through `react-dom/server`; (b) the class census over its owned files
+   reading ZERO; (c) the shared harness it owns reading green. Repo-wide `tsc`, lint and the full harness set run at the
+   drain, not on a face. The DOM instrument (`ui-contract-check.mjs`) is run by the issuer at every merge and by rl-1/rl-9.
+3. **THE CLASS CENSUS (rl-1's third deliverable) IS THE MECHANICAL PROXY FOR C1/C5/C11 AT THE SOURCE**, printed per file
+   with its denominator; the walk measured **246 idioms across 18 files** and the census reads that figure BEFORE any
+   cell moves (positive control). Categories: light-on-dark and translucent idioms (`text-white*`, `bg-white/N`,
+   `bg-black/N`, `text-<hue>-(100|200|300|400)`, any `<prefix>-<colour>-<n>/<opacity>`, `opacity-N`); sizes below 11
+   (`text-[9px]`, `text-[10px]`, and any `text-[<n>px]` with n < 11); weights outside {400,700} (`font-light`, `font-medium`,
+   `font-semibold`, `font-extrabold`, `font-black`, `font-thin`, `font-extralight`); radii outside {2,3,4,pill}
+   (`rounded-md`, `rounded-lg`, `rounded-xl`, `rounded-2xl`, `rounded-3xl`, `rounded-[<n>px]` with n not in {2,3,4});
+   shadows (`shadow`, `shadow-sm|md|lg|xl|2xl|inner`) not preceded by `focus-visible:`/`focus:`.
+4. **NO CHANGE to `src/ui/**`, `src/components/**`, `src/api/**`, any route, any DTO, `package.json`, or the vite config.**
+   A field a tile needs that the payload does not carry is RECORDED as a SERVED-RUNTIME ASK and the tile renders ABSENT
+   with its reason (`C-PRESENTATION-ONLY`, the value-must-carry-its-claim law).
+5. **NO INSTALL.** `node_modules` is linked by the provisioner. **No vite dev server on a wave-1 worker** (bound 2).
+6. **Standing:** no S3 delete of any kind; no hunting for a key, secret or session; no vendor or Bloomberg call; no push,
+   merge, rebase, `checkout --` or `clean`; no promote. `.scratch/**` has no lane -- scripts live under the worker's
+   `deliverables/<serial>/` (grant-free), never `.scratch/`.
+7. **What is KEPT (B.5, brief IV.9):** the verbatim gate and the PASS/REFUSE face, the three-state reads (SERVED / ABSENT /
+   READ_FAILED never collapse), the generation caption's facts, the crossed-controls model, the Peers/Posture symmetry
+   (`usePeerSet` for subject AND comparable), the "machine, never an instruction" marking. **The spec changes how these are
+   shown, never whether.**
+
+### 45e. BATTERY DISPOSITION
+
+| lens | disposition |
+|---|---|
+| `comp-schedule` | DECLARED-NOT-APPLICABLE -- no cell arms a cron, alarm, monitor or cadence; `comp-schedule --drift` run at the cut for the record |
+| `comp-iam` | DECLARED-NOT-APPLICABLE -- no role, policy, trust or grant moves; no cell reaches AWS |
+| `comp-adversary` | RUN at the cut over the L1 brief (`comp-adversary compose docs/briefs/amgt-resapp-frontend-pattern-brief-20260924.md`) -- the declaration is filed beside this section in the issuance commit's message; every figure in it is scoped to what the brief cited |
+| `comp-cache` | RUN at the cut (`comp-cache collisions`) -- no cell adds a query key; the read is the negative control that none collides today |
+| `comp-routes` / `comp-blast` | DECLARED-NOT-APPLICABLE -- no route, endpoint or shared file moves (bound 4); the write surfaces are page-local |
+
+### 45f. THE MEASURED STARTING STATE (so no cell re-derives it, and so a zero later MEANS something)
+
+From `MEASUREMENTS.json` (walk 04:31Z-04:50Z, portal `10141b6d0b`): six states -- `01_list` 2 top-level bands, 304 chars at
+10px, 4 purple fills; `02_thesis` 4 bands, 6,548px, 34,480 of 47,393 chars at 12px, 280 chars at 2.3:1, 6,331 at 10px;
+`03_exec` 3 bands; `04_peers` 3 bands; `05_model` 3 bands; `06_posture` 3 bands; every state: radii 8px present,
+shadows 1, weights 300/500/600 present, fonts Lato only. Idioms per file: PostureTab 29, LeadPanel 26, ExecManagementTab
+26, PeersTab 24, SecurityOverlay 22, RankedChart 19, ModelTab 18, RankedList 16, ThesisTab 14, HeaderBrief 12,
+StarredList 10, ThesisDriverChart 9, CheckFaceBadge 8, PrintExportAction 8, IdentityLine 4, ProvenanceLine 3,
+GenerationCaption 1, SecurityAnalysis 0 = **246 over 18**. The `sticky top-0 z-40` wrapper measured INERT (0px covered)
+and is removed by rl-2. `Panel variant="mixed"` x20 and `"chart"` x1 across the page directory.
+
+⚠ **HARNESS BASELINE AT DEV HEAD `c1ac41ec` IN THIS ENVIRONMENT, run 2026-09-24 ~05:4xZ from the main portal:**
+`drafting` 8 of 8 OK; `execText` 5/5; `execFallback` 5/5; `errorEmpty` 12 of 12 OK; **`tabs` rc=1 --
+`CHECKS-WRONG-WAY exec_officers_rendered`** (the exec officers arm reads false); **`posture` rc=1 -- ENOENT on
+`.scratch/posture_BABA_US_Equity.json`** (its python fetch of the two O-1 objects into `.scratch/` did not land; an
+environment dependence, not a render verdict); `peersCarry` rc=1 at DEV HEAD as expected (it asserts the five-column carry,
+which lives on the closer branch `c657eb91`). **`FWD-29` names "the drafting, tabs and posture harnesses green"; two of
+the three are red before this round touches a file.** rl-4 owns the exec arm through the component; rl-7 owns the posture
+harness and its fetch; both are named in their faces as the starting state, never as their fault.
+
+### 45g. CARRIED, NOT CUT -- with the reason, so absence is not read as cancellation
+
+- **The overlay's point-read fallback** (hand-back §4: "so the list and the overlay AGREE about the same name") -- no
+  ratified text names the mechanism; cutting a criterion from a sentence would be the hand-scoped-domain defect. Goes to
+  the round-37 analysis as an enrichment item with a request for its contract line.
+- **The Lead Panel chart view, starred-only view and mobile widths** -- the walk did not capture them (`not_exercised`);
+  rl-8 inverts the chart and starred components' idioms but the six-state instrument does not grade those views.
+- **`FWD-30` branch (a), the two-page brand-form presentation** -- rl-10 MEASURES the existing print pack against the bar
+  (page count, brand form, field parity) and BUILDS branch (b); if branch (a) needs a field no route serves, that returns
+  to `1.0.0_SA_CTO~Z` before it is built (B.4, the one named exception).
+- **The closer items** (consumer-2 grade, failure cases, `BP/_LN_Equity` route, `DE_US_Equity` fork, the `1ec5446c`
+  deploy) -- their own spec (B.5).
