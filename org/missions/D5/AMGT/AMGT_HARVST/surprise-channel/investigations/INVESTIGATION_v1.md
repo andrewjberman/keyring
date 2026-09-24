@@ -1059,6 +1059,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "Z-S19 said the universe's `name` column is the only company-name text any downstream consumer has, and routed the remedy upstream to whoever writes universe/v1.",
     "world_is": "The routing was right and the premise was too narrow. A second, independently sourced company name is already present in the same record for the 13 entries that resolved to EDGAR -- it was simply never promoted out of a prose sentence into a field. The remedy is therefore local, cheap and owned by build_universe.py's lane, rather than requiring anyone to rename a folder on OneDrive.",
     "notes": "THIS IS R-25a's CLASS ON A NEW OBJECT: the attribution was not absent, it was UNREAD -- and the tell was the same one, a seat going to check whether the field it was about to propose already existed. HANDED OFF to 2.0.0_SA_COO~Z as the lane holding AMGT_RESAPP, under which build_universe.py was built (TO-AMGT-rj-4 / rk-4), with 1.0.0_SA_CTO~Z copied. NOT REMEDIATED HERE: lib/research/identity/ is not this lane's write surface, and a consumer-side patch would hide a producer-side fix that serves every other consumer too. THE KEEPABLE FORM: before routing a data defect upstream, read the WHOLE record it sits in -- a field that is wrong is often sitting next to the same fact stated correctly for a different purpose, and the routing note is the last moment anyone looks."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S21",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-24T15:30:00Z",
+    "one_line": "Z-S20's EDGAR arm is a NAME-ENRICHMENT arm for already-identified securities, and R-75 carried it into a ruling as a second IDENTITY path for 40 unresolved folders. Measured: 0 of 59 unresolved entries carry a cik, the lookup key IS the ticker root, and the arm hangs off CANONICAL IDENTITY -- so it can never be the path that creates identity.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DISCRIMINATOR, run over universe/v1/2026-09-16.json (250 names): UNRESOLVED entries carrying a cik = 0 of 59; RESOLVED entries carrying a cik = 13 of 191. The zero is structural, not incidental",
+        "THE LOOKUP KEY IS THE TICKER ROOT, read from the entries' own reason text: 13 of 13 name a root parsed from a ticker the entry ALREADY HAD (ASML, BABA, BA, COST, HAL, HD, INTU, ...). A folder with no *ONE PAGER*.xlsx has no ticker to root",
+        "THE FOUR EXCEPTIONS STRENGTHEN IT: 4 of 59 unresolved entries carry a ticker value; three are cash/money-market rows (CASH, FXFXX, SALXX) matching no identifier form in crosswalk/v1. The fourth is a real equity and its own reason is decisive -- Schlumberger SLB: \"the identifier 'SLB' carries no exchange code (expected '<ROOT> <CC>'); it is NEVER guessed as US; filing identity: no canonical identity, so no EDGAR filing identity is attached.\" So even WITH a ticker the arm did not fire",
+        "WHAT IS NOT CLAIMED, because the opposite error is worse: this does NOT make the 40 unreachable. A company-NAME to ticker match against SEC company_tickers, or reading the workbook, are plausible second paths and are UNMEASURED. Only the CITED BASIS falls -- the reachability classification currently rests on nothing measured",
+        "WHAT SURVIVES R-75 UNTOUCHED: the 44 / 9 / 40 content re-cut over the same 93 denominator (independent of this number), the refusal to claim a count, UNREACHABLE-BY-SOURCE 10 and UNREACHABLE 1, and the scope question going to Andrew"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R-75 @791aa3e4af cites Z-S20 as independently demonstrating a SECOND identity path already working, and concludes from it that the 40 identity-unresolved AMGT_CORPUS folders are not measured to be unreachable.",
+    "world_is": "Z-S20 measured NAME ENRICHMENT for securities that were already identified. It cannot support identity RECOVERY for folders that are not, because the arm it describes is downstream of the very resolution those folders lack. The number was sound in its own domain and was applied to a population it never swept.",
+    "notes": "THE CLASS IS THE ONE THIS ESTATE KEEPS PAYING FOR AND IT IS A DOMAIN ERROR, NOT AN ARITHMETIC ONE: a sound, bounded, honestly-printed number carried one population sideways -- and it reads as MEASURED the whole way, because it is. MY SHARE, stated because the inheritance was foreseeable: Z-S20's headline is 'the correct company name is ALREADY IN THE SAME RECORD', and a reader who takes 'the record holds more identity data than we read' one step further lands exactly where R-75 landed. The row says NAME throughout and bounds itself at 13 of 250, but it never said THE ARM CANNOT FIRE WITHOUT A TICKER -- and that is the sentence that would have stopped it. THE KEEPABLE FORM: when you publish a number about a sub-population, state what it CANNOT reach in the same breath as what it does; a bound on the numerator is not a bound on the domain, and the next reader inherits the sentence, not the query."
   }
 ]
 ```
