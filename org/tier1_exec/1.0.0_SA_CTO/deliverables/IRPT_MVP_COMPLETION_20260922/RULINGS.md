@@ -2173,3 +2173,48 @@ a citation defect of the CTO's own making, one letter off per item); F3 -- M's l
 AND e5dd8487 an ancestor of portal DEV", with portal_ref and the is-ancestor rc recorded in the fanout data; the base stays
 DEV if the candidate lags. v0.5 is brief-half only; the CVO's stamp stands; the brief half is routed to 4.0.0_SA_CRO at v0.5
 (100311) and its v0.4 routing (100296) is superseded by the bump.
+
+
+## 2026-09-24 06:2x UTC - Claude CTO batch 29: DSGN_IRPTV1 ADMITTED and L5 landed; the four P/M touch points ruled; GO dec293d6 on the labelled COT re-cut with the served object corrected; X10 row written; holdings step 3 applied; the fifth-amendment runner landed with Y's one line
+
+Instruments: prd-signoff.py status (ADMITTED, both halves SIGNED current at v0.5 @1cccbe6bc6 -- CRO @cbd50ce98f, CVO @2c60ba747f);
+the four touch points read by the CTO at portal DEV 7975c3bb by git show; the served holdings index resolved by the CTO from
+lib/opal_naming address() and head-object'd; M's 100320 / 100330, P's 100326 / 100328, Y's 100336, COO~D's 100329.
+
+### DSGN_IRPTV1 -- L5 LANDED (2.0.0_SA_COO~D decomp v1 @c3d8dc63f7, pins bumped to v0.5 @45169fd63c; dep_stage DECOMP)
+Round 1 = the PRD's eight hops; four render cells IV-t-1..4 (identity card, performance headline, Holdings L0 hero, security
+list), M=3 chains, thread-round battery, comp-iam DECLARED-NOT-APPLICABLE on a 0-of-11 token sweep. CALL 1(b) READ, the four
+literal touch points on P/M-written files, each ONE line or ONE function, all ACCEPTED: index.tsx:186 (ScopeSummary mount ->
+IdentityCard), ReportingTab.tsx:217 (Summary mount -> PerformanceHeadline; Summary stays on the print plane),
+DrillTree.tsx:140-160 mdpfResultFromSnapshot (the `members: [], children: {}` fill at :151), HoldingsTab.tsx:197 (+ one line
+`<SecurityList/>`). RULED ON TOP: header/ScopeSummary.tsx is UNTOUCHED -- IdentityCard renders the partial-data indicator on
+its own body from scope.availability.unprojectedGrant and ScopeSummary keeps its PartialDisclosureFact inside the disclosure
+(the fact moves down AND the indicator stays up: the CONTRACTS paragraph, S28 stays closed); ReportingTab.tsx:170 is P's hop-11
+line and no cell touches it. THE CUT FIRES on two conditions COO~D measures itself: Anna's served snapshot carries `display`
+on its leaves; e5dd8487 is an ancestor of portal DEV (rc=1 at 7975c3bb this tick). The CTO's word is not a third condition.
+
+### IRPT-COT-LABELLED-REPUBLISH-GO-20260924 (M 100330 -> GO dec293d6, 100337)
+Prepared revision dec293d6 over the 841 accepted accounts: 16,740 of 16,749 nodes labelled (the 9 unlabelled are ACCOUNT nodes
+absent from the landed directory -- display OMITTED, nothing guessed), CUSTODY_UNITS on 13,656 of 14,426 securities (770 are
+components with no observed custody position; quantity never computed), membership unchanged from 2d067b4d, reconcile exact,
+validated against both schema copies = the copy P packaged at kZygK57y (step 3 applied 06:00:10Z, 100328). CTO HALF of the
+never-widen sign-off: THE OBJECT CORRECTED -- M's prose named "investor-reporting/holdings/index.json", a key that exists in
+neither opal-data-cot nor opal-data-cottonwood (404 and empty listings on both, read by the CTO); the served index is the
+naming builder's address s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (publication.py
+location(), :130-145), head-object ETag ffa30e5b.., VersionId .VLcr1BCE.., 03:56:57Z, latest_date 2026-09-22 -- the CAS
+precondition M named, current. The act touches 27 IfNoneMatch creates (new keys) and ONE IfMatch manifest write; ONE writer of
+the manifest at this pin (publication.py:294-296; :202-215 is the creates); both branches covered (lands -> dec293d6 served to
+every signed-in Cottonwood client; refuses -> nothing served moves); rollback = re-point the row to 2d067b4d under a fresh
+IfMatch, objects retained. 49F / INF are a separate GO with their own etag read. LESSON, recorded: a GO's blast-radius half is
+written against the BUILDER'S address, never a message's prose key -- the prose read as a real object and was not one.
+
+### Receipts carried
+X10 row ACTIVE at M's pin 7262571e4c (state + enforcement_ref = 0a101a666816dd5e2302992547129ca42637b923, two values moved, 63
+passed); P carries it in the adapter rebuild, staged by pin. irpt-holdings step 3 APPLIED 06:00:10Z, CodeSha kZygK57y.., the
+packaged schema copy = b3e3bcb044 (display + CUSTODY_UNITS), the only member that moved; ledger CLOSED. The fifth-amendment
+runner commit LANDED at e1e238a048 (LF blob d5788e2b..; identity from the held document, template through the Node client,
+headers on every answered leg, the suite refuses unguarded -- S121's remedy). Y (100336): four of five conditions MET on its own
+run; ONE LINE on condition 3 -- page.content() through identityFromHtml becomes the PRIMARY read (the path exercised offline is
+the path the run takes; page.evaluate at most the fallback, the record naming which ran); Y STANDS on that, then the FIFTH
+submission. The CTO's word 100312 already named content() through identityFromHtml; Y's line is the same word made exact, and
+P lands it as one file.

@@ -19,7 +19,12 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (00000000) ANALYSIS TAB works for nobody (CRO trace @2ee8926519; batch 28): code Y's, deploys
+CTO review queue, in order: (000000000) GO dec293d6 issued (100337): M publishes the labelled COT re-cut over the served
+manifest s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (etag ffa30e5b CAS); receipt +
+Anna's served envelope next; then the 49F/INF GO (batch 29). (000000000a) DSGN_IRPTV1 ADMITTED at v0.5; L5 landed
+@c3d8dc63f7/45169fd63c; the four touch points ruled (ScopeSummary untouched; ReportingTab:170 is P's); the cut fires on
+display SERVED + e5dd8487 on portal DEV, measured by COO~D (batch 29). (000000000b) D1 fifth-amendment runner LANDED
+e1e238a048; Y's one line (content() primary) then STANDS then the FIFTH submission (batch 29). (00000000) ANALYSIS TAB works for nobody (CRO trace @2ee8926519; batch 28): code Y's, deploys
 P's, no deploy grant widened; Y PREPARES each deployable as a reviewed patch (generate at HEAD + SendMessage grant + env +
 mapping; status rebuild; three no-handler routes; cutover inputs), P applies in the stated order AFTER the Performance path;
 the X10 ACTIVE row rides the generate rebuild too. (00000000a) D1 run 5 = fourth submission: sign-in proven, identity leg
