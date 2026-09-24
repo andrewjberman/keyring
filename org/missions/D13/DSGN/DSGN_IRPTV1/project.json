@@ -22,7 +22,8 @@
     "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md"
   ],
   "prd_lineage": [
-    "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.1"
+    "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.1",
+    "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.2"
   ],
   "decompositions": [],
   "decomposition_lineage": [],
