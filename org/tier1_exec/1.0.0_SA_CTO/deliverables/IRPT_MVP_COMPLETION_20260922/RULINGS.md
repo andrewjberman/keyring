@@ -2348,3 +2348,53 @@ selection) -- cut at 3c0a3e45 with the key on [email, claims]. F2 RULED server-s
 page 1 of the Global browse inside the DirectoryContext; ClientSearch consumes it when present; P's own function, one act after
 candidate 3's report and before the Analysis backend, on Andrew's 500 ms bar. Candidate 3 @3c0a3e45 (F1, F5, F3) is reviewed by
 the CTO on its own instruments after the sixth submission's receipt.
+
+
+## 2026-09-24 07:2x UTC - Claude CTO batch 33: the 04:32Z HAR was a localhost dev session (the doubles are StrictMode) -- instrument HELD, F7 cut NONE, F2 deferred; 49F and INF labelled trees SERVED and read back; M's /verify reads UNVERIFIED at the mechanical rung for want of a signed-in read; COO~Y paused on a safeguards dialog (Andrew's), the STANDS gate re-routed to the CRO, which STANDS -- the sixth submission fires
+
+Instruments: the CRO's host read of the HAR (100407: 339 of 358 entries on localhost:5174, Vite module URLs, StrictMode live at
+main.tsx:79-106); P's revert (100413); the CTO's readbacks of the 49F and INF manifests after each act; M's /verify (100428, on
+the aws shim and the function's log group); MSTR's peek of Y's tab without keys (100422); the CRO's own suite run in P's worktree
+(100431).
+
+### IRPT-HAR-WAS-LOCALHOST-20260924 (CRO 100407; P 100413; the CTO's word 100409)
+The premise of batch 32's instrument GO moved: the HAR was recorded against `bun run dev` (a development bundle), where React
+StrictMode mounts, cleans up and remounts every effect, so the raw-useEffect tab fetches (HoldingsTab:147, ReportingTab:157)
+fire twice at 0 ms and drop the first answer, the QueryClient useMemo is double-invoked (P's two-QueryClients inference, with
+StrictMode as the cause), and the ref-guarded ClientSearch browses stay single -- the asymmetry is the tell. RULED: the console
+instrument is HELD (P reverted its four lines; candidate 3 @3c0a3e45 = F1 / F5 / F3 exactly); F7's cut is NONE on this evidence;
+the discriminator is one HAR of the same clicks on https://opalinvest.dev, asked of Andrew; F2 stays server-side but waits on
+that HAR's first-paint cost; every browser-side figure quoted from the localhost HAR overstates production and Andrew's 500 ms
+bar is graded on opalinvest.dev, the server-side durations standing. F1 stands on its own ground (the production build DID
+remount the workspace on each token refresh, keyed on the access token). CTO note: the instrument GO was granted on "DEV is a
+production build" without asking which host the HAR was recorded on -- the host of a capture is a GRAIN question the CTO owes
+before any figure from it is graded.
+
+### 49F and INF labelled trees SERVED (M 100411 / 100416 on GO 100400)
+49F 3d59c80b: manifest EvNOT_ocng -> 9Vtkh61A05eiuWmm4DwyLVRRwynIdq2e, etag ea06a1a0.., 06:58:45Z; 176 creates + 1 IfMatch write;
+7c0e7ce3 retained; built with the taxsma snapshot sha 032c68db.. (named as an unreceipted input); identical to the served tree to
+the node plus display on 151,582 of 151,697 and the ticker fact on 5,748 rows. INF d03e91a4: manifest J_FeUeEA -> .vBFsThYv..,
+etag d866755b.., 07:04:38Z; 35 creates + 1 write; 1ebc7696 retained; built with the Eclipse map 789dd95d.. (860 rows);
+models_whole_from_capture 35; display on 33,327 of 33,328. CTO READBACK after each act, own instrument: both manifests at the
+builder's addresses read the new version, etag and row -- match. All three firms serve labelled Holdings behind CAS manifests
+(COT dec293d6 / mSFR0vat, 49F 3d59c80b / 9Vtkh61A, INF d03e91a4 / .vBFsThYv); the overlays are regenerated on the served
+revisions. Open at M: the CUSTODY_UNITS fill for 49F (Schwab quantity) and INF (Orion shares) @d96513bc40, its own GO.
+M's /verify (100428): DECLARATIVE PASS, SEMANTIC PASS on the served bytes (last partition per firm 100% labelled, children-sum
+within 0.01, 0 price facts), MECHANICAL UNVERIFIED -- /aws/lambda/irpt-holdings has 0 invocations since 06:20Z against 104 in
+the prior 30 h, so no signed-in read of any labelled revision has gone through the deployed function; the reader matrices are
+the same code under a different principal and are evidence of the reader, not the served path. THE CLOSING READ IS ANDREW'S: one
+signed-in Holdings load per firm on opalinvest.dev, the function's log and the rendered labels as the evidence.
+
+### IRPT-D1-STANDS-REROUTED-20260924 (MSTR 100422; P 100420 / 100423; the CTO's word 100425; CRO 100431)
+2.0.0_SA_COO~Y reads LIVE (heartbeat child alive) but is held on a "Session paused" safeguards dialog ("Fable 5.1's safeguards
+flagged this message ... Details: [cyber]"; options 1 Switch to Opus 4.8 / 2 Edit prompt and retry with Fable 5.1); its watcher
+rows read 0 and two files sit undelivered at its inbox top level; MSTR peeked without keys and keyed nothing, because both
+options change the model on a seat Andrew configured -- the choice is his, put to him from the CTO terminal (rec: option 2). The
+STANDS gate on the sixth-amendment runner 9cf37df341 is the CTO's own second-reader gate (100216 / 100218), so the reader is the
+CTO's to assign: RE-ROUTED to 4.0.0_SA_CRO against Y's five conditions verbatim, on the CRO's own run in P's worktree. The CRO
+STANDS (100431): node --check 4 of 4, bundle_contract 25 / 0, guarded suite all_pass with arm (a) 6 of 6 (identity from
+page.content(), navigated false, user_id 2200001; acquire node-port 200 LIVE), unguarded start exit 2, fetch( 0, the primary
+template leg sends no aws-waf-token cookie and no X-AWS-WAF-Token header (:285-287), the pair recorded as counts and names
+(:853-872), authenticated = template LIVE AND identity ok (:844); the LF blob de00afffd4ce5f91.. 82,479 bytes equals the CTO's
+stated blob (the worktree copy is a CRLF rendering, 84,014 bytes, stated as such). The SIXTH credential submission fires at P,
+bounded to one; 405 / 405 on the pair = STOP. Y's later read is welcome, not a gate.

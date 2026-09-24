@@ -19,7 +19,12 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (000000000000) corrected GO 49F 3d59c80b -> INF d03e91a4 ISSUED (100400) on sha-verified captures
+CTO review queue, in order: (0000000000000) ALL THREE FIRMS SERVE LABELLED HOLDINGS (49F 9Vtkh61A 06:58Z, INF .vBFsThYv 07:04Z,
+COT mSFR0vat 06:20Z; CTO readbacks match); M's /verify UNVERIFIED@MECHANICAL -- 0 signed-in reads through irpt-holdings since
+06:20Z; the closing read is Andrew's on opalinvest.dev (batch 33). (0000000000000a) the 04:32Z HAR was LOCALHOST (StrictMode
+doubles): instrument HELD, F7 cut NONE, F2 deferred; ask Andrew for an opalinvest.dev HAR; candidate 3 = F1/F5/F3 (batch 33).
+(0000000000000b) COO~Y paused on a safeguards dialog (Andrew's model call); STANDS re-routed to the CRO, which STANDS; the
+SIXTH submission fires at P (batch 33). (000000000000) corrected GO 49F 3d59c80b -> INF d03e91a4 ISSUED (100400) on sha-verified captures
 and a 0/0/0 census; receipts next; the Eclipse-map + taxsma snapshot substrate card goes to Andrew with the plan word (batch 32).
 (000000000000a) HAR doubles = a remount from a boundary above the page (two QueryClients); the console instrument GO'd in
 candidate 3; "Holdings waits on Performance" RETIRED; F2 ruled server-side at P after candidate 3, before the Analysis backend;
