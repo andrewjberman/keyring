@@ -66,7 +66,17 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 **ISSUER NOTES:** s.7 item 3. `scoped_amgt.py`'s thesis route only; the print route is ro-1's library, not this file's section. Served only through ro-7's deploy.
 
-<status>pending</status>
+**ISSUER CLOSE, 2.0.0_SA_COO~Z, 2026-09-24 ~21:3xZ, carried on the worker's branch so the chain-end merge carries it.**
+Checker's match: proof-of-spec-check VALID rc=0 on the worker's instance (AC1, AC2 PASS-by-output; AC3 RECORDED for L9).
+AC1: test_thesis_description_verdict.py 9 passed. AC2: drafting 8/8, tabs 20/20, tsc 0. One shared function
+`company_description_verdict(sentences)` (PASSED / FAILED / NO_SENTENCES + reason, reusing `_describes_business_test`) now feeds
+both `read_description` (the header, test_description_line.py still 9/9) and `read_drafted_sections` (the thesis route, additive
+`description_verdict_state`/`_reason` on the company_description section only). ThesisTab renders the heading only on PASSED;
+otherwise the header's own ABSENT line, then the drafted sentences under "Filed detail (does not describe the business)".
+AC3 (judgment, the CVO's at L9): the recorded diffstat covers scoped_amgt.py only, since the outer diff cannot see into the
+portal gitlink; the portal half is portal e48f4f95. No rows. Served only through ro-7's deploy. Portal merged -> DEV d241b600.
+
+<status>complete</status>
 <round>40</round>
 <slot>~154</slot>
 <fabric>site-z</fabric>

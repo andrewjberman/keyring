@@ -3,7 +3,7 @@
   "project": "NFRA_MCPORTAL",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.1",
+  "prd_version": "v0.2",
   "step": 4,
   "brief_ref": "docs/briefs/mcportal-tech-ops-dashboard-brief-20260917.md@8d1f5c362b",
   "endpoint_outcomes": [
@@ -31,6 +31,19 @@ answered every page's cards in-session on 2026-09-17, and his words are verbatim
 - it has its own repo ("I would actually build out a new repo called mcportal");
 - grants take effect immediately ("For MCP Ops: Take effect immediately");
 - it is not an alert ("This is not an alert, this is an analytics dashboard. Strictly read when opened.").
+
+**v0.2 (2026-09-24 ~21:4xZ)** answers `3.0.0_SA_CVO~O`'s refusal of the v0.1 ratified-text half (review
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_MCPORTAL_PRD_v0.1_RATIFIED_TEXT_SIGNOFF_REVIEW_20260924.md`
+@3702879c37):
+- **P0.** C4 now names the writer, its trust edge and the independent identity check it runs. Negative arms join the
+  acceptance matrix.
+- **P1.** C6 names the NFRA_OPLGTW contract amendment it needs. That amendment meets Andrew's 2026-09-22 OPLGTW stop,
+  so it is listed for him (G-OPLGTW), and C6 leaves round 1. FWD-1 narrows the colleague's DATA grant, a record
+  type the store already holds.
+- **P2.** C2 binds a dashboard-owner list of its own, and the C4 citation is corrected.
+- **The question the review raised.** Round 1 is built on the gateway's current path. The move carries it (see the
+  handoff).
+The ENDPOINT is unchanged.
 
 The endpoint was emitted and its DONE WHEN lines confirmed by this seat under the goal's licence
 (`org/tier1_exec/1.0.0_SA_CTO/deliverables/MCPORTAL_ENDPOINT_FORWARD_20260924.md`). Andrew may amend any line. The
@@ -160,8 +173,12 @@ branches, and only MSTR pushes. It uses React, Vite, TypeScript and bun, and fol
 (`portal/DESIGN.md`, 2026-09-11). It starts clean on that law.
 
 **C2 -- Only Andrew, checked on the server, on every page and every write.** The load balancer's default Microsoft
-sign-in (`alb.tf:210`, "the future GUI path") admits the tenant. Then a server-side exact match on
-`MASTER_ADMIN_EMAILS` (default Andrew's address) runs on every page request and every write handler. A hidden menu
+sign-in (`alb.tf:210`, "the future GUI path") admits the tenant. Then a server-side exact match runs on every page
+request and every write handler, against a dashboard-owner list whose ONLY purpose is this dashboard. That list holds
+Andrew's address and nothing else. The gateway refuses to boot if the list holds any other entry. It is NOT
+`MASTER_ADMIN_EMAILS`, which `tier.py:74` documents as "andrew@ + systems allowlist", so widening it for a systems
+account can never widen the dashboard. The identity is taken from the ALB-signed `x-amzn-oidc-data` header, verified
+against the regional ELB public key (`app/identity.py:52-58`). A hidden menu
 never counts as access control. The one exception is `/sprint`, which stays open to any signed-in Opal Microsoft
 user. The Claude-client paths (`/mcp`, the OAuth paths) are untouched, and no rule on them changes.
 
@@ -172,17 +189,40 @@ in one process, and a second service would be a second identity boundary to keep
 own sign-in in front of it. The `mcportal` repo holds the pages. The gateway's deploy ships the built bundle pinned by
 the `mcportal` commit, recorded in the deploy manifest beside the `opal_ai` commit.
 
-**C4 -- The gateway still cannot grant itself access.** Grant writes go through a path that holds the
-`opal-gateway-access-admin` role, invoked only for a request that passed C2 with Andrew's verified identity. The
-gateway's own role stays IAM-blocked from the `POLICY#` partition (`access_state.py:16-19`). Every grant write keeps
-the store's optimistic revision check. A revoked record stays a tombstone, never a delete.
+**C4 -- The gateway still cannot grant itself access: a separate writer verifies Andrew itself.**
+- **The writer:** a dedicated grant-writer function (an AWS Lambda, named by `lib/opal_naming.py name()`, Rule 30)
+  whose execution role is the one role that may write the `POLICY#` partition, equivalent to
+  `opal-gateway-access-admin`. It carries the same code path as the operator command line
+  (`ops/schwab_entitlement_admin.py`), which stays working and unchanged.
+- **The trust edge:** the gateway role gains `lambda:InvokeFunction` on that ONE function, and nothing else. It gains
+  no `sts:AssumeRole` on the operator role. The operator role's existing trust condition, `ArnNotEquals
+  aws:PrincipalArn = <gateway role>` (`infra/aws/terraform/opal-gateway/schwab_access_state.tf:132`), STANDS. The
+  runtime write guard in `access_state.py` (`RUNTIME WRITES`, `:14-16` at HEAD) and the IAM `dynamodb:LeadingKeys`
+  condition on the gateway role stand. The invoke grant is an IAM change under C10 (a ledger entry, blast radius
+  named).
+- **The independent identity check:** the gateway forwards, with each write, the ALB-signed `x-amzn-oidc-data` header
+  of the request that asked for it. The writer verifies that header ITSELF, against the regional ELB public key, which
+  the gateway cannot mint. It then exact-matches the identity against its OWN owner configuration (Andrew's Entra
+  object id, set in the writer's own deploy, never read from the gateway), and refuses a header older than a short
+  window. A write without a valid owner header is refused before any store call.
+- **The named residual:** a compromised gateway that captures a live owner header could replay it inside that window.
+  The window bounds it. The writer writes its own audit record for every write and every refusal, in a record the
+  gateway role cannot write, and the dashboard's history reads the writer's record. A replay is therefore visible,
+  though not prevented.
+- Every grant write keeps the store's optimistic revision check. A revoked record stays a tombstone, never a delete.
 
 **C5 -- Every dashboard write is audited and revertible.** Each write records who, when, what, before and after in the
 grant store's `operator_audit` record type, or in an equivalent record for non-grant tables. The Recent Changes view
 reads those records. A revert is itself a write with its own audit row. Hard delete of a user is a confirmed second
 step after a disable.
 
-**C6 -- Tiers and per-person tool lists move into the grant table. The kill switch and blocklist stay files.** The
+**C6 -- Tiers and per-person tool lists move into the grant table (ENRICHMENT, gated G-OPLGTW). The kill switch and
+blocklist stay files.** **This amends NFRA_OPLGTW's contract.** The table's record types are a closed set in
+`org/standards/NFRA_OPLGTW_CONTRACT.json` (`state_store.record_types`), mirrored by the closed `POLICY_RECORD_TYPES`
+tuple in `app/access_state.py`, and neither holds a tier or tool-list type. Adding them is a change to OPLGTW's
+contract and adapter, and it meets Andrew's 2026-09-22 OPLGTW stop, so it waits on his word (G-OPLGTW). Round 1 does
+not need it: FWD-1 narrows the colleague's DATA grant, which the store already holds (`data_entitlement`). Once
+G-OPLGTW is given, the
 gateway's enforcement path reads tiers and tool lists from the grant table with a strong read per call, so a change
 applies on the next call (his "take effect immediately"). The kill switch, blocklist and revoked tokens stay files,
 because they must work when DynamoDB is unreachable. The move is a port: the flat files stop being read in the same
@@ -216,9 +256,9 @@ out-of-Terraform writes before it ships (brief V.8).
 | S1 | repo and shell | `mcportal` repo, submodule wiring, sidebar shell in Andrew's order, design law | G-REPO, NFRA_OPALAI C2 | FWD-3 |
 | S2 | owner gate | server-side exact email match on every page and handler; `/sprint` exception | the ALB default sign-in | FWD-2 |
 | S3 | serving | the gateway serves the built bundle at `/` and the admin handlers | S2 | FWD-1..13 |
-| S4 | grant writer | the access-admin path, verified-identity only | S2, the grant store | FWD-1 |
+| S4 | grant writer | the separate writer function, its one invoke grant, its own ALB-header verification and owner config, its own audit record | S2, the grant store, G-LEDGER | FWD-1 |
 | S5 | MCP Server: Entitlements | per-person data grant and tool permissions, presets, revoke-all, history | S4, S6 | FWD-1 |
-| S6 | tiers and tool lists in the table | enforcement reads the table per call; the flat files retired in the same release | the gateway | FWD-1, FWD-10 |
+| S6 | tiers and tool lists in the table | enforcement reads the table per call; the flat files retired in the same release (ENRICHMENT) | G-OPLGTW | FWD-10 |
 | S7 | audit and revert | Recent Changes, revert-as-a-write | S4 | FWD-4 |
 | S8 | Home | six cards under one verdict, each the header number of its page | every page | FWD-3 |
 | S9 | Operations Report | the published sprint HTML framed, with its archive | `/sprint` | FWD-5 |
@@ -230,6 +270,8 @@ out-of-Terraform writes before it ships (brief V.8).
 | S15 | Infosec | firewall counts, suspicious IPs, block and unblock, scan score | nightly rollup 2, C10 | FWD-13 |
 
 **Gates, each an act a named holder can take on demand:**
+- **G-OPLGTW:** Andrew's word on amending NFRA_OPLGTW's contract and adapter for C6's record types. It is carried in
+  the same call as NFRA_OPALAI's G-MOVE. Holder: Andrew.
 - **G-REPO:** create `Opal-Capital/mcportal`. Holder: `0.0.0_AB_MSTR~Z`, on Andrew's 2026-09-17 word.
 - **G-PUSH:** every DEV and PROD push. Holder: `0.0.0_AB_MSTR~Z`, on Andrew's word.
 - **G-LEDGER:** a change-ledger entry before any act on the ALB, the grant table's IAM or the auth function. Holder:
@@ -279,7 +321,8 @@ Sum: 2+1+12+1+1+1+1+1+1+1 = **22**.
 
 | id | acceptance | outcome |
 |---|---|---|
-| A1 | one colleague's tool permission narrowed from the Entitlements tab; their next MCP call refused within the new limit and no wider; widened back; both writes in Recent Changes with before and after | FWD-1 |
+| A1 | one colleague's data grant narrowed from the Entitlements tab; their next MCP call answered within the new limit and no wider; widened back; both writes in Recent Changes with before and after | FWD-1 |
+| A1n | NEGATIVE ARMS of C4, each refused before any store call: a write reaching the writer with no owner header; with a valid header for a non-owner; with an owner header past the window; and a direct `sts:AssumeRole` from the gateway role on the operator role | FWD-1 |
 | A2 | a second signed-in Opal account refused on every page and every write handler (one request per handler, denominator printed); `/sprint` served to it | FWD-2 |
 | A3 | each Home card's number equal to its page's header number on the same load | FWD-3 |
 | A4 | one write of each kind reverted, the state after revert equal to the state before the write | FWD-4 |
@@ -298,13 +341,17 @@ Sum: 2+1+12+1+1+1+1+1+1+1 = **22**.
 L5 is `2.0.0_SA_COO~O`'s. **FWD-1 is the thread, and round 1 builds it over its hops inside the Home shell:**
 1. the repo and shell (S1, G-REPO);
 2. the owner gate (S2) and serving (S3);
-3. the grant writer (S4);
-4. tiers and tool lists read from the table (S6);
-5. the Entitlements tab (S5) and its audit rows (S7, the minimum for FWD-1's history);
-6. one live change followed to a colleague's next MCP call, graded against A1.
+3. the grant writer (S4), with its negative arms (A1n);
+4. the Entitlements tab (S5) over the DATA grant, and its audit rows (S7, the minimum for FWD-1's history);
+5. one live change followed to a colleague's next MCP call, graded against A1.
+
+**Which side of NFRA_OPALAI's G-MOVE round 1 is built on:** the gateway's CURRENT path. G-MOVE waits on Andrew's OPLGTW
+word and has no date, so waiting on it would make this thread a wait. When the move lands, C6 of NFRA_OPALAI moves the
+whole gateway tree with its history, and this project's modules go with it. They are carried, never rebuilt, and the
+thread is not built twice. Only an order still OPEN at the move is re-cut.
 
 Andrew's page order then governs the enrichment rounds: Operations Report, User Management, the rest of MCP Server,
-Health Check, User Analytics, Infosec, Cost. **Sequencing against NFRA_OPALAI:** S3 and S6 touch the gateway, which
+Health Check, User Analytics, Infosec, Cost. S6 joins once G-OPLGTW is given. **Sequencing against NFRA_OPALAI:** S3 and S6 touch the gateway, which
 moves into `opal_ai` under NFRA_OPALAI's G-MOVE. A cell that edits gateway code is cut against the path where the
 gateway lives at issuance, and is re-cut if the move lands mid-program. The two projects' gateway cells are never
 issued into the same round with overlapping paths (one issuer, `2.0.0_SA_COO~O`, holds both).
