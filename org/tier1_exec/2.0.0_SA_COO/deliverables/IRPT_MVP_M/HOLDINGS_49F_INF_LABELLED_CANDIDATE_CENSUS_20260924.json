@@ -1,0 +1,171 @@
+{
+  "status": "PREPARED_UNPUBLISHED_LABELLED_CANDIDATES -- GO to be requested per firm (CTO 100337: one act per GO, each with its own manifest etag)",
+  "prepared_by": "2.0.0_SA_COO~M",
+  "census_utc": "2026-09-24T06:34:54.370041+00:00",
+  "code_pin": "codex/irpt-m-completion (this commit: account/cash/ticker labels on top of ad80bb01fd)",
+  "rulings": "IRPT-HOLDINGS-DISPLAY-NAMES-20260924 (labels); CUSTODY_UNITS is COT-only at this pin (the SmartX/Orion quantity columns are a separate fill, not in these candidates)",
+  "method": "prepare_candidate.py <firm> in-process on live versioned sources, zero cloud writes; census over the PREPARED bytes vs the ARCHIVED published candidates (prepared_49f_7c0e7ce3 / prepared_inf_1ebc7696); both schema copies validate (jsonschema Draft 2020-12) and the producer validates; publish_firm_cas_live.py <firm> ... check -> preconditions PASS at the live manifest etag, zero writes",
+  "firms": {
+    "49financial": {
+      "revision": "aa6efd454151a8cef15787c6ef7c234238722b1aab5149ae78d5288670598954",
+      "served_revision_replaced_in_row_and_retained": "7c0e7ce3bef21ccf63541d766a94fa9a71668e7457955eedcf850ec2b18f5cc0",
+      "business_date": "2026-09-22",
+      "nodes": 151697,
+      "served_nodes": 151697,
+      "accounts": 7522,
+      "reconcile": [
+        true,
+        1835875624.28,
+        1835875624.28
+      ],
+      "currency_status": "ATTESTED",
+      "publication_refused": null,
+      "platinum_bytes": 177554736,
+      "served_platinum_bytes": 160561988,
+      "display_labels": {
+        "labelled": 151582,
+        "denominator": 151697,
+        "by_kind": {
+          "ACCOUNT": {
+            "labelled": 7495,
+            "of": 7522
+          },
+          "CASH": {
+            "labelled": 9081,
+            "of": 9081
+          },
+          "MODEL_LEAF": {
+            "labelled": 7475,
+            "of": 7475
+          },
+          "SECURITY": {
+            "labelled": 120009,
+            "of": 120097
+          },
+          "SLEEVE": {
+            "labelled": 7522,
+            "of": 7522
+          }
+        },
+        "unlabelled_by_kind": {
+          "ACCOUNT": 27,
+          "SECURITY": 88
+        },
+        "unlabelled_reasons": {
+          "ACCOUNT": "absent from the landed directory (display omitted, never blank)",
+          "SECURITY": "Schwab custody rows with no ticker_symbol (CUSIP/ISIN/UNKNOWN identity only; 88 of 5,836 observed rows)",
+          "MODEL_LEAF": null
+        }
+      },
+      "custody_units": {
+        "with": 0,
+        "security_nodes": 120097,
+        "note": "not in this candidate (COT-only fill)"
+      },
+      "delta_vs_served": {
+        "same_eight_receipts": true,
+        "node_ids_added": 2557,
+        "added_by_kind": {
+          "SLEEVE": 7,
+          "SECURITY": 2543,
+          "CASH": 7
+        },
+        "node_ids_removed": 2557,
+        "removed_by_kind": {
+          "SECURITY": 2543,
+          "SLEEVE": 7,
+          "CASH": 7
+        },
+        "shared_ids": 149140,
+        "shared_changed_outside_display_and_units": 3205,
+        "explanation": "2,557 SMA tax-managed position ids re-keyed at identical values (added value == removed value 21,757,967.40) and 3,205 observed custody rows gain the ticker= fact; producer-code vintage between the 01:05Z build and HEAD, same receipts; deterministic"
+      },
+      "measured_write_plan": {
+        "multipart": true,
+        "parts": 173,
+        "immutable_creates": 176,
+        "index_writes": 1,
+        "total_writes": 177,
+        "key_prefix": "irpt/49financial/platinum/holdings/date=2026-09-22/aa6efd454151a8cef15787c6ef7c234238722b1aab5149ae78d5288670598954"
+      }
+    },
+    "inflection": {
+      "revision": "4a50ac5fe4111f8a4686aa2cc2a0ec7a4c036d7cabfd64a3ac55a73ad31d2227",
+      "served_revision_replaced_in_row_and_retained": "1ebc7696d6e52be01c3fc431b222c80d9baf3f967f0681cf3879115e5ad476fa",
+      "business_date": "2026-09-22",
+      "nodes": 33293,
+      "served_nodes": 33328,
+      "accounts": 876,
+      "reconcile": [
+        true,
+        209358359.48,
+        209358359.48
+      ],
+      "currency_status": "ATTESTED",
+      "publication_refused": null,
+      "platinum_bytes": 32588861,
+      "served_platinum_bytes": 31180092,
+      "display_labels": {
+        "labelled": 33288,
+        "denominator": 33293,
+        "by_kind": {
+          "ACCOUNT": {
+            "labelled": 875,
+            "of": 876
+          },
+          "MODEL_LEAF": {
+            "labelled": 585,
+            "of": 589
+          },
+          "SECURITY": {
+            "labelled": 30881,
+            "of": 30881
+          },
+          "SLEEVE": {
+            "labelled": 947,
+            "of": 947
+          }
+        },
+        "unlabelled_by_kind": {
+          "MODEL_LEAF": 4,
+          "ACCOUNT": 1
+        },
+        "unlabelled_reasons": {
+          "ACCOUNT": "absent from the landed directory (display omitted, never blank)",
+          "SECURITY": null,
+          "MODEL_LEAF": "source model_name empty (4 rows)"
+        }
+      },
+      "custody_units": {
+        "with": 0,
+        "security_nodes": 30881,
+        "note": "not in this candidate (COT-only fill)"
+      },
+      "delta_vs_served": {
+        "same_eight_receipts": true,
+        "node_ids_added": 859,
+        "added_by_kind": {
+          "SECURITY": 824,
+          "SLEEVE": 35
+        },
+        "node_ids_removed": 894,
+        "removed_by_kind": {
+          "SECURITY": 824,
+          "MODEL_LEAF": 35,
+          "SLEEVE": 35
+        },
+        "shared_ids": 32434,
+        "shared_changed_outside_display_and_units": 48,
+        "explanation": "35 zero-value MODEL_LEAF rows ('Eclipse portfolio carries no model') and their sleeves replaced by 35 sleeves reading 'no Eclipse portfolio for this account'; 44 sleeve facts reworded; 824 security ids re-keyed under those sleeves; producer-code vintage between the 01:03Z build and HEAD, same receipts; a second build reproduced the tree to the node (0 added / 0 removed / 0 changed)"
+      },
+      "measured_write_plan": {
+        "multipart": true,
+        "parts": 32,
+        "immutable_creates": 35,
+        "index_writes": 1,
+        "total_writes": 36,
+        "key_prefix": "irpt/inflection/platinum/holdings/date=2026-09-22/4a50ac5fe4111f8a4686aa2cc2a0ec7a4c036d7cabfd64a3ac55a73ad31d2227"
+      }
+    }
+  }
+}
