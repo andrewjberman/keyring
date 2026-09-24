@@ -27,9 +27,18 @@ Both are real implementations over receipted objects. There is no fake validator
 
 ## 2. Firm scope in v1
 
-COT (`cottonwood`) only. 49F and INF refuse `CUSTODY_FIRM_NOT_ADMITTED` until their rows objects are measured
-the same way (keys and counts) and their rules are accepted (CTO 100639 bound). The per-firm table in card v2
-section 7 is the input for those later rules.
+Built for all three firms at Y b398d27731; the PRODUCTION DEFAULT admits COT only, and an installer passes
+`admitted_firms` for 49F and INF once the CTO reads the pin. Per-firm rules (measured Y 100671, ruled CTO 100675 /
+100686 / 100695, producer lines M 100693 / 100699):
+
+| firm | rows / totals | grain | cash | accrual |
+|---|---|---|---|---|
+| COT | fact_holdings / fact_allocations "Account Market Value" | AssetID (relationship duplicates collapse) | Symbol CASH -> CASH; Cash Equivalent -> CASH_EQUIVALENT | reported, INCLUDED |
+| 49F | dim_position / dim_balance.net_mv_positions (positions only; cash is not a position row) | (CUSIP, accounting_rule_code, tax_code); same-security positions consolidate in the freezer | NOT_REPORTED_BY_SOURCE | NOT_REPORTED_BY_SOURCE |
+| INF | positions_mv / accounts_v2.current_value | native position id | is_custodial_cash -> CASH row, else NON_CASH | NOT_REPORTED_BY_SOURCE |
+
+Shorts (49F l_s "S") and every negative or unpriced row refuse `CUSTODY_UNSUPPORTED_ROWS`; zero lots are excluded
+at every firm; INF inactive rows are ordinary rows (all 1,701 are zero-valued and outside accounts_v2).
 
 ## 3. Reading the receipted objects
 

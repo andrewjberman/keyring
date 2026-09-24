@@ -11,7 +11,7 @@ CONTROL.md apply; CTO reviews directly (no CVO queue). Goal + loop authority:
 | What | Value |
 |---|---|
 | Working branch / worktree | `irpt-mvp-y-20260922` at `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922` |
-| Y branch head | `47b2adf6df` (custody interpreter + oracle) over `93ec16f4fe` (resident step 1 reads the bundle; template = liveness) over `7fec957269` |
+| Y branch head | `b398d27731` (49F + INF admission behind admitted_firms; NOT_REPORTED_BY_SOURCE contract amendment) over `47b2adf6df` (custody interpreter + oracle) over `93ec16f4fe` (resident step 1 reads the bundle; template = liveness) over `7fec957269` |
 | CTO acceptance | interpreter ACCEPTED as built (100649); three exact-file integration rows granted to IRPT_Y_ACCESS_INTEGRATION_P at 47b2adf6df |
 | Resident (P's receipt 100483, not re-read by Y on the host) | `irpt-analysis-resident.service` active since 09:39:24Z, package `ab2e088b5b` (Y 93ec16f4fe + tokenless transport 8576bec142 + X10 ACTIVE row), enrolled pin 1276035; ledger irpt-resident-cutover-20260924 CLOSED (C1) |
 | Session | `ycharts/session/current` AWSCURRENT 02e53a44 (08:56:48Z, run 7 = sixth submission; CRO grade PASS 100466); read 13:44Z |
@@ -65,7 +65,7 @@ then `RUNBOOK_1203_LIVE_JOURNEY_20260923.md` for the prospect (12.03) path once 
 | Upload composition design card (index / parse / resolve) with the RESOLVE_UPLOAD message shape | 2.0.0_SA_COO~P (Andrew CALL 3) | direction = Y shape 2 (CTO 100667) | AWAITED; Y builds the resident half on the word |
 | Resident role writes on irpt-requests (UPLOAD/NORMALIZATION/INPUT) + reads on prospect_inputs / original_holdings | 2.0.0_SA_COO~P (ledgered plan) | CTO 100667 (4) | AWAITED |
 | Portal upload screen handling RESOLVING | 2.0.0_SA_COO~P | CTO 100667 (4) | AWAITED |
-| 49F / INF custody admission | 2.0.0_SA_COO~Y (measure) then CTO | CUSTODY_FIRM_NOT_ADMITTED stands | NOT STARTED; COT first |
+| 49F / INF custody admission | 1.0.0_SA_CTO (read the pin) | Y b398d27731; rulings CTO 100675/100686/100695, M 100693/100699; real-object runs 49F 116->115 holdings, INF 16 incl. CASH | BUILT; production default COT only until the CTO says admitted_firms may include both (Y 100708) |
 | First live Analysis submission | Andrew (browser) | batch 44 (b) | after a composition serves |
 
 ## Parked
