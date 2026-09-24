@@ -930,6 +930,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "UNRESOLVED 40 -> 4. The builder's rule was read and holds on the served object; the producer's request-side rule (skip a folder with any registration row, keyed or not) was not read, and it decided these 4. The pair covered this branch (a request that does not MEASURE: printed, named, served state still one record per folder), so the served object is correct and nothing needs rolling back.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Disarms when the 4 are registered: either add_security's idempotency stops matching a KEYLESS row (a change on 2.0.0_SA_COO~Z's identity surface, asked by this seat), then ONE batch of the 4 under a fresh pair; or the 4 keyless rows are superseded by the builder rule that already exists and a keyed row is admitted. The 4 were never called, so a call now is not a repeat under R-16 V2's one-call-per-name bound."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S24",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T21:45:48Z",
+    "one_line": "16 of the 40-name fire's folders are resolved in the served crosswalk but INVISIBLE to the corpus ingest: every folder whose registration ENRICHED an existing no-folder universe record lost its own association form. The ENRICH attach (crosswalk.build_crosswalk, @9ec1226a01 limb (a)) RETIRES the folder's UNRESOLVED coverage record, and that record was the only one carrying the folder's 'security-<hash>' form; the enriched record keeps only the universe side's forms (V_US_Equity: ['V_US', 'V_US_Equity']), while an APPENDED record keeps it (ADBE_US_Equity: ['ADBE_US', 'ADBE_US_Equity', 'security-37dddff4d4357038']). The ingest resolves a folder by that form, so it read resolved_folders 73, not 89.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/reingest_after_fire40_20260924T212840Z.log: 'resolved_folders 73 ... unresolved_files 83 in 21 folders'; e.g. 'unresolved Visa V ... the form security-78f52de9fc58fe1c matches no persisted or measured identifier form in crosswalk/v1 (238 records)'.",
+        "The 21 ingest-unresolved folders = the 16 ENRICH folders of this fire (16 of 16; 0 ENRICH folders resolved at ingest) + the 4 skipped (Z-S23) + AMD (outside the table); this seat's join of registrations.json's 36 added rows against the ingest log.",
+        "Served object ISiEZGfV4H82rpz2yaM9WelZd4C9ldBI: V_US_Equity carries folder 'Visa V' and association_keys ['V_US', 'V_US_Equity']; ADBE_US_Equity carries folder 'Adobe ADBE US' and ['ADBE_US', 'ADBE_US_Equity', 'security-37dddff4d4357038']."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-19: an inducted folder resolves end to end -- identity in the crosswalk AND its reports found by the ingest under that identity (the reason round 2's re-ingest was the acceptance).",
+    "world_is": "Identity lands for all 36; the reports of 16 are not found. Neither the pre-flight (it censused twins and multi-claimed forms, not folder-form coverage) nor the pair's discriminator read the folder form, so both passed. The served crosswalk is not wrong about any identity; it is missing 16 forms a reader needs.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Disarms when (1) the ENRICH attach carries the retired record's association forms onto the enriched record (2.0.0_SA_COO~Z's builder, asked), (2) ONE re-mint under a fresh pair -- the same run that registers Z-S23's four -- and (3) a re-ingest reads resolved_folders 93 of 93 crosswalk folders (89 + the 4). The pre-flight gains a folder-form coverage census: every table folder's form claimed by exactly the record carrying that folder."
   }
 ]
 ```
