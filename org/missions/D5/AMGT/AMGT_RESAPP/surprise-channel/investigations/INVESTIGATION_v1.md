@@ -14209,6 +14209,32 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Rule 14a states the commit mechanism as universal, and a prior worker's own delivered instance on this same project documents the portal-relative invocation that satisfies it.",
     "world_is": "The commit landed with the right content and author but without the risk-reflex/naming-gate/to-pipeline-gate checks safe-commit.sh would have run, and the guard rail that would let a worker redo it cleanly (a soft reset) is itself refused as destructive.",
     "notes": "Filed same-turn, work continued; no override used, no gate bypassed on purpose -- the omission was a miss, not a choice."
+  },
+  {
+    "id": "AMGT_RESAPP-W148-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~148",
+    "surfaced_at": "2026-09-24T21:00:00Z",
+    "one_line": "AC1's check is FILE-granular (any occurrence of the retired 0A1733/10,23,51 literal anywhere in a file outside the allow-list fails the whole file), while the task order's WORKER FACE enumerates exactly thirteen line-sites; index.css alone carried the identity at four further lines (153, 366, 421, 593) beyond the two named (88, 94), and ui-smoke.mjs's cited line (:630) was actually :635 -- both corrected to make AC1 pass, beyond the named enumeration.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Task order s.1 names Panel.tsx:8,:47; index.css:88,94; designTokens.ts:13; ExportModal.tsx:37; TicketCenter.tsx:12; Controls.tsx:27,:59,:91; HeroGraphic.tsx:27; PanelStates.tsx:21; panels/README.md:7; ui-smoke.mjs:630; PrintExportAction.tsx:136 -- thirteen sites.",
+        "AC1's own script (rn-3.AC1.sh) is `grep -rlE '0A1733|10, ?23, ?51' src scripts` filtered by an allow-list of FIVE FILES (brand.ts, brand.tokens.json, print.css, uiMeasureFixture.html, ui-measure.mjs); its docstring states the requirement as 'no file under portal/src or portal/scripts asserts the retired band identity ... EXCEPT the allow-list' -- a file-level predicate, not a line-level one.",
+        "After correcting exactly the thirteen named sites, `bash rn-3.AC1.sh` still read 'outside the allow-list (10)' listing index.css among others; `grep -n 0A1733 src/index.css` (post-fix) showed four further live hits at lines 153, 366, 421, 593 -- a ramp-contrast comment, the --layer-strip token-definition comment, a status-family contrast note, and the focus-ring box-shadow comment -- none named in the task order's enumeration.",
+        "`grep -n '0A1733|10, ?23, ?51' scripts/ui-smoke.mjs` located the smoke-instruction sentence at line 635, not the 630 the task order cites; same sentence, off-by-5 line reference.",
+        "All additional sites corrected (contrast ratios recomputed against the current --bg-band rung, rgb(25,38,67), where the comment stated a ratio; the definitional comment for --layer-strip and the focus-ring box-shadow comment de-literalised to the token form) and `bash rn-3.AC1.sh` now reads 'outside the allow-list (0)', exit=0."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "No remedy needed beyond the fix already landed in this cell's own commit (02e04083): the extra sites were corrected same-turn, AC1 passes, and the cell's <paths> already covered every file involved (index.css and ui-smoke.mjs are both named surfaces). Recorded because the task order's line-enumeration undercounted what its own mechanical criterion requires, which is worth knowing for a future cell that trusts an enumerated site list as a denominator.",
+    "spec_asserts": "The task order enumerates thirteen specific <file:line> sites as the complete set needing correction, and cites ui-smoke.mjs:630.",
+    "world_is": "AC1 grades the WHOLE FILE, not the named lines, and index.css carried four further live occurrences of the retired identity outside the named two; ui-smoke.mjs's cited line was off by five.",
+    "disarm_owner": "2.0.0_SA_COO~Z (round 39 issuer) -- the fix already landed in the worker's own commit (02e04083); the issuer's word closes it, a worker is terminal at its drain and cannot self-disarm (R-18).",
+    "notes": "A worker reading only the named thirteen sites and stopping there would have left AC1 FAILing; the mechanical criterion, not the enumerated prose, is the actual denominator for this class of cell."
   }
 ]
 ```
