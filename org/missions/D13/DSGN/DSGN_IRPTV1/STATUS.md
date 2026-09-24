@@ -5,15 +5,15 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1
 `org/mcp/drive-mode.log` line 1 (Andrew-direct ~17:4xZ blast mode), lease to 2026-09-24T21:14:14Z (re-armed 18:16:59Z, drive-mode.log line 5). Build place:
 the main portal checkout on DEV (Andrew-direct ~18:3xZ). Design direction: Andrew-direct ~19:4xZ,
 `org/tier1_exec/2.0.0_SA_COO~D/deliverables/ANDREW_DIRECT_20260924_194xZ_IRPT_DESIGN_NOTES/`.
-As of 2026-09-24T20:3xZ.
+As of 2026-09-24T21:0xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal pin | `68f46e18` = origin DEV (ls-remote read after the push) |
-| This session on DEV | P candidate 8 `237bdfda`; S6 `92d16efc`; firm tab + exact amounts `a65a8db5`; S7 `c1d7aefe`, `9902bf25`; breadcrumb `d6288d80` (merged over site Z as `c82f0bbb`); header `93b28880`; Analysis upload lane `088386fe`; Analysis declutter `68f46e18` |
+| Portal pin | `c75a0fc9` = origin DEV (ls-remote read after the push, via gh credentials -- see Parked) |
+| This session on DEV | P candidate 8 `237bdfda`; S6 `92d16efc`; firm tab + exact amounts `a65a8db5`; S7 `c1d7aefe`, `9902bf25`; breadcrumb `d6288d80` (merged over site Z as `c82f0bbb`); header `93b28880`; Analysis upload lane `088386fe`; Analysis declutter `68f46e18`; Holdings footers `c75a0fc9` |
 | Deployed | DEV CI deploys opalinvest.dev from DEV; PROD `a0690a03` untouched (gated) |
 | Screen | `localhost:5174` from the main checkout (`bun run dev --port 5174`, its `.env.local`), log `C:/tmp/portal-main.vite5174.log` |
 | Workspace push state | CLOUD LOCAL |
@@ -34,20 +34,22 @@ NOT LIVE END TO END. Andrew's HAR at ~18:3xZ exercised the signed-in API journey
 | Header: chip flood, account bubbles, white input, tab scrollbar | CANDIDATE @93b28880 | `design-notes-1.fast-run.{png,txt}` (OS dark mode) |
 | Analysis upload on the served template lane (Y BLOCKER 100869, edits 1-3) | CANDIDATE @088386fe; edit 4 (wire regen) blocked by gen-wire's missing oneOf rule | `upload-lane.fast-run.{png,txt}`, `upload-lane-driver.mjs` |
 | Analysis: no id checkbox list, no request panels, no backend strings | CANDIDATE @68f46e18 | `analysis-declutter.fast-run.{png,txt}`, `analysis-probe-driver.mjs` |
+| Holdings footers: timestamp + source only; facts in the header help tip | CANDIDATE @c75a0fc9 | `footers.fast-run.{png,txt}`, `footer-probe-driver.mjs` |
 
 Nothing here is CVO-graded yet.
 
 ## Write claims
 
-- `portal/src/pages/InvestorReporting/tabs/holdings/**` and `tabs/reporting/**` panel footers (source + timestamp only)
+- `portal/src/pages/InvestorReporting/tabs/reporting/PerformanceHeadline.tsx` footer (source + timestamp only)
 
 ## Next proof
 
-Every Investor Reporting panel footer reads source and timestamp only. One real run on 5174, screenshot read.
+The Performance headline footer reads source and timestamp only (its "Details" facts move to the header help tip).
+One real run on 5174, screenshot read.
 
 ## Next-list (Andrew's design notes first, most broken first)
 
-1. Panel footers page-wide: source and timestamp only (Allocation, Securities map, Securities, Performance).
+1. Panel footers: Holdings done @c75a0fc9; the Performance headline footer next.
 2. Holdings drill table: Name, Amount, one share column, Supervision, Advisory; no Node/Basis/Denominator/
    Provenance columns and no fact strings.
 3. Canonical Opal primary-model colours in the drill pie (Ultra Long Term is red); find the one library.
@@ -82,6 +84,7 @@ Every Investor Reporting panel footer reads source and timestamp only. One real 
 | DEV CI does not run `bun test` | `1.0.0_SA_CTO` | a ruling on ci.yml |
 | No `.owned-paths.yaml` row for `org/missions/*/*/*/STATUS.md` | `1.0.0_SA_CTO` | the row lands |
 | Site Z edited an IRPT file's comment on DEV (`ExportModal.tsx`, AMGT-rn-3 `02e04083`) | `0.0.0_AB_MSTR~Z` | if IRPT files must stay single-writer |
+| Git's credential manager (`credential.helper=manager`) now refuses non-interactively on this box; `gh` is logged in as the same account, and pushes run with `-c credential.helper='!gh auth git-credential'` for that command only | Andrew | he re-signs the credential manager, or says to keep the gh route |
 | Leftover folders `C:/tmp/dsgn-irptv1-fast`, `-base` | Andrew | his OK for a recursive delete |
 
 ## Limits
