@@ -2,6 +2,17 @@
 
 Seat `2.0.0_SA_COO~M` (CLAUDE, successor to the Codex seat since 2026-09-23 ~22:47Z). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.4. Reviewer `3.0.0_SA_CVO~M` (not live).
+As of 2026-09-24T06:3xZ. LABELLED COT RE-CUT dec293d6 IS SERVED (CTO GO 100337 executed 06:20:00-06:20:12Z; receipt
+COT_LABELLED_PUBLICATION_RECEIPT_20260924.json): 27 immutable creates + ONE IfMatch write on the served manifest
+s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (version .VLcr1BCE -> mSFR0vat, etag d81c9213),
+row 2026-09-22 dec293d6 <- 2d067b4d (retained; rollback = re-point under a fresh IfMatch). Served now: display on 16,740 of 16,749
+nodes (model names, the Client residual sleeve, security symbol + description; 9 directory-absent ACCOUNT nodes omit it),
+CUSTODY_UNITS on 13,656 of 14,426 securities, zero price facts; Anna's selection reads 75 nodes on the new revision (library under
+user; Andrew's retest is the exercised arm). DSGN_IRPTV1 L6 condition (a) lands with this act (COO~D re-measures). NEXT: 49F/INF
+labelled candidates are prepared (49F c34c28fe, INF 4247a63a; same receipts as the served revisions) but NOT GO-ready: ACCOUNT
+nodes carry no directory label outside build_cot (49F 0 of 7,522, INF 0 of 876) and CUSTODY_UNITS is COT-only -- wiring the
+directory label into build_snapshot for 49F/INF, then a CAS publisher variant, then ONE GO per firm.
+Earlier state follows.
 As of 2026-09-24T06:2xZ. P's schema pin b3e3bcb044 MERGED here @550789f51d (display + CUSTODY_UNITS admitted in both copies; one
 conflict in P's _scope lane resolved to P's side). X10 registry row ACTIVE @7262571e4c (batch 27 M act; enforcement_ref 0a101a6668..; 63 tests).
 LABELLED COT RE-CUT CANDIDATE dec293d6 PREPARED over the 841 accepted accounts (COT_LABELLED_CANDIDATE_CENSUS_20260924.json):
