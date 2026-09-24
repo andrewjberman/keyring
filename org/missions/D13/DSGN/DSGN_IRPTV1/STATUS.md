@@ -4,15 +4,15 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1
 @1cccbe6bc6. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Mode: FAST under
 `org/mcp/drive-mode.log` line 1 (Andrew-direct ~17:4xZ blast mode), lease to 2026-09-24T20:41:52Z. Build place:
 Andrew-direct ~18:3xZ, `org/tier1_exec/2.0.0_SA_COO~D/deliverables/ANDREW_DIRECT_20260924_183xZ_5174_FROM_MAIN_PORTAL_CHECKOUT_WORK_ON_DEV.md`.
-As of 2026-09-24T19:1xZ.
+As of 2026-09-24T19:3xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV (no side worktree) |
-| Portal pin | `a65a8db5` = origin DEV (ls-remote read after the push). Carries P's candidate 8 (`237bdfda`), S6 (`92d16efc`), the two Andrew-direct ~18:4xZ fixes (`a65a8db5`) |
-| CI | DEV run on 92d16efc: success; the run on a65a8db5 started at push |
+| Portal pin | `9902bf25` = origin DEV (ls-remote read after the push). Carries P's candidate 8 (`237bdfda`), S6 (`92d16efc`), the two Andrew-direct ~18:4xZ fixes (`a65a8db5`), S7 heatmap (`c1d7aefe`), S7 consumed.ts (`9902bf25`) |
+| CI | DEV runs on 92d16efc: success; later pushes each start a run |
 | Deployed | DEV CI deploys opalinvest.dev from DEV; PROD `a0690a03` untouched (gated) |
 | Screen | `localhost:5174` served from the main checkout (`bun run dev --port 5174`, its `.env.local`), log `C:/tmp/portal-main.vite5174.log` |
 | Workspace push state | CLOUD LOCAL |
@@ -31,23 +31,22 @@ Cottonwood account has not been walked; hop 6's `spread` is not served (backlog 
 | IV-e-7 (FWD-11 sweep) | SUPERSEDED by the FAST lease, never spawned | its task order |
 | S6 (black tiles, CUSIP as a name) | CANDIDATE @92d16efc, awaiting the CVO | row DSGN_IRPTV1-S8; `deliverables/2.0.0_SA_COO~D/s6.fast-run.png` |
 | P candidate 8 (DirectoryPage wire type + fixtures) | LANDED on DEV @237bdfda (fast-forward) | P msg 100816 |
+| S7 (8 legacy failures) | 4 FIXED @c1d7aefe + @9902bf25 (89 -> 85 fail, 0 new); 4 routed to the CTO for a ruling | row DSGN_IRPTV1-S9 |
 | Andrew ~18:4xZ: firm tab FIRM_BINDING; Holdings $10K rounding | CANDIDATE @a65a8db5, awaiting the CVO. Firm filter, directory rows: Global 4 -> 49financial 2 (NARROWS); before the fix Global 4 -> 0 (search disabled, re-POST `fir_c9fc...`) | `deliverables/2.0.0_SA_COO~D/ad184x.fast-run.{png,txt}`, `firm-filter.run.txt`, `firm-filter.{before,after}.png`, `firm-filter-driver.mjs` |
 
 ## Write claims
 
-- S7: the legacy fe-s suites named in row DSGN_IRPTV1-S7 and the product files behind them (read-only until each is
-  dispositioned; a legacy assertion is retired by ruling, never edited to pass).
+- `portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx` Breadcrumbs (the root id `N-CW-ROOT` prints as a name).
 
 ## Next proof
 
-S7: the 8 failures new since a3f4c860, each named as a regression (fixed, with the suite re-run) or a legacy assertion
-that asks for the retired behaviour (routed for a ruling). Measured with `bun test src/pages/InvestorReporting` in the
-main checkout, before and after.
+The drill breadcrumb names no node by its id: on the smoke fixture the root segment reads as a name, never
+`N-CW-ROOT`. One real run on 5174, screenshot read.
 
 ## Next-list (in order)
 
-1. S7 -- the 8 legacy fe-s failures new on DEV since a3f4c860 (row DSGN_IRPTV1-S7).
-2. The drill breadcrumb prints the root node id (`N-CW-ROOT`); same class as S6 (row S8 notes).
+1. The drill breadcrumb prints the root node id (`N-CW-ROOT`); same class as S6 (row S8 notes).
+2. S7's remaining 4 on the CTO's ruling (row S9): fe-s-5 fields x3, fe-s-5 controls Export.
 3. IRPT portal candidates from `2.0.0_SA_COO~P` / `~M` / `~Y` as they arrive; this seat lands each on DEV.
 4. FWD-11 sweep (the superseded IV-e-7's cell): states, reason codes ("OK [code not defined by the v1 contract]")
    and the classification gap off the Performance and Holdings bodies into footer disclosures.
