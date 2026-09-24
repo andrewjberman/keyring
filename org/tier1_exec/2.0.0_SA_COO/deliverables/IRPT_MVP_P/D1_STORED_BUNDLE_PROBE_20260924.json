@@ -1,0 +1,31 @@
+{
+  "observed_at": "2026-09-24T09:15:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "CTO batch 34 lines (a)-(c) proven on the host by ONE stored-bundle probe task -- no credential submission (six today, unchanged): the persisted bundle (fence 11, AWSCURRENT 02e53a44) proves live on the template route from the tokenless resident client, and the closing probe no longer reads the page after the callback.",
+  "pin": {
+    "runner_commit": "b9d36bc34e (irpt-smoke-p-backend-20260923)",
+    "library_lf_blob_sha256": "dfc87d8312c5938ce0f15f3af5dfa5b0be8312cf116390ce3891761f3a329013",
+    "library_bytes": 84158,
+    "wrapper_sha256_prefix": "55ddb8f7947cba7c (unchanged)",
+    "lines": {
+      "a": "withAuthenticatedPage's closing probe = probeSession({bundle, context}): bundleIdentity against the five refusals + the tokenless template GET through residentClient; the page is never read after the callback",
+      "b": "documentIdentity records its one navigation's {http_status, waf_action, content_type, location} and a classification on a non-200",
+      "c": "openContext seeds a fresh context without the aws-waf-token cookie"
+    },
+    "offline_proof": "node --check OK; bundle_contract 25/0; guarded suite all_pass arm (a) 6 of 6 -- withAuthenticatedPage steps: getSession present -> probeSession authenticated 200 -> callback OK"
+  },
+  "deploy": {"s3_upload_sha256_prefix": "dfc87d8312c5938c", "ssm_deploy": "4c63a21f-557d-49c2-a1b7-6b88a9b7c2a2 Success", "ssm_readback": "1d8bccf2-02bb-418e-b2fe-0ab86ecb6980 Success -- the LF blob on the host byte-for-byte, wrapper unchanged"},
+  "probe_run": {
+    "ssm_command": "d047ee26-e38a-4f5d-8c5e-a53faaeca8c6",
+    "document": "irpt-ycharts-run Task=probe MaxReacquisitions=0",
+    "window": "2026-09-24T09:12:42Z -> 09:12:49Z",
+    "orchestrator_rc": 0,
+    "result": {"authenticated": true, "reason": "OK", "http_status": 200},
+    "steps": [{"act": "getSession", "present": true, "reason": "OK"}, {"act": "probeSession", "authenticated": true, "reason": "OK", "http_status": 200}, {"act": "callback", "outcome": "OK"}],
+    "acquired": false, "persisted": false, "lease": {"owner": "irpt-ycharts-runner/42141", "fence": 12},
+    "credential_submissions": 0,
+    "reading": "the persisted bundle's identity (user_id 1276035) passes the five refusals and the template route answers 200 LIVE to the tokenless jar; the closing probe took the stored-bundle path and the orchestrator exited 0 -- run 7's post-capture anomaly is closed by construction"
+  },
+  "not_claimed": ["the resident install (the factory build_resident_runtime does not exist in the tree; its ownership/shape asked of the CTO in 100470 item 4)", "any generation"],
+  "push_state": "LOCAL (backend 8576bec142 + this receipt's commit; MSTR pushes)"
+}
