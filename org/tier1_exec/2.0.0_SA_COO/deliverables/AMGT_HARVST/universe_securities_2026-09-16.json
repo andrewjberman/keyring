@@ -1,0 +1,2063 @@
+[
+ {
+  "aliases": [
+   "Hon Hai"
+  ],
+  "company": "Hon Hai",
+  "composite_figi": null,
+  "key": "2317_TT_Equity",
+  "security_key": "2317_TT_Equity",
+  "ticker": "2317 TT"
+ },
+ {
+  "aliases": [
+   "TPG Inc",
+   "TPG"
+  ],
+  "company": "TPG Inc",
+  "composite_figi": null,
+  "key": "2602335D_US_Equity",
+  "security_key": "2602335D_US_Equity",
+  "ticker": "2602335D US Equity"
+ },
+ {
+  "aliases": [
+   "KDDI"
+  ],
+  "company": "KDDI",
+  "composite_figi": null,
+  "key": "9433_JP_Equity",
+  "security_key": "9433_JP_Equity",
+  "ticker": "9433 JP"
+ },
+ {
+  "aliases": [
+   "Lenovo"
+  ],
+  "company": "Lenovo",
+  "composite_figi": null,
+  "key": "992_HK_Equity",
+  "security_key": "992_HK_Equity",
+  "ticker": "992 HK"
+ },
+ {
+  "aliases": [
+   "Apple Inc",
+   "Apple"
+  ],
+  "company": "Apple Inc",
+  "composite_figi": null,
+  "key": "AAPL_US_Equity",
+  "security_key": "AAPL_US_Equity",
+  "ticker": "AAPL US Equity"
+ },
+ {
+  "aliases": [
+   "AbbVie Inc",
+   "AbbVie"
+  ],
+  "company": "AbbVie Inc",
+  "composite_figi": null,
+  "key": "ABBV_US_Equity",
+  "security_key": "ABBV_US_Equity",
+  "ticker": "ABBV US Equity"
+ },
+ {
+  "aliases": [
+   "Abbott Laboratories"
+  ],
+  "company": "Abbott Laboratories",
+  "composite_figi": null,
+  "key": "ABT_US_Equity",
+  "security_key": "ABT_US_Equity",
+  "ticker": "ABT US Equity"
+ },
+ {
+  "aliases": [
+   "Archer-Daniels-Midland Co",
+   "Archer-Daniels-Midland"
+  ],
+  "company": "Archer-Daniels-Midland Co",
+  "composite_figi": null,
+  "key": "ADM_US_Equity",
+  "security_key": "ADM_US_Equity",
+  "ticker": "ADM US Equity"
+ },
+ {
+  "aliases": [
+   "American Electric Power Co Inc",
+   "American Electric Power Co",
+   "American Electric Power"
+  ],
+  "company": "American Electric Power Co Inc",
+  "composite_figi": null,
+  "key": "AEP_US_Equity",
+  "security_key": "AEP_US_Equity",
+  "ticker": "AEP US Equity"
+ },
+ {
+  "aliases": [
+   "American International Group I"
+  ],
+  "company": "American International Group I",
+  "composite_figi": null,
+  "key": "AIG_US_Equity",
+  "security_key": "AIG_US_Equity",
+  "ticker": "AIG US Equity"
+ },
+ {
+  "aliases": [
+   "Assurant Inc",
+   "Assurant"
+  ],
+  "company": "Assurant Inc",
+  "composite_figi": null,
+  "key": "AIZ_US_Equity",
+  "security_key": "AIZ_US_Equity",
+  "ticker": "AIZ US Equity"
+ },
+ {
+  "aliases": [
+   "Applied Materials Inc",
+   "Applied Materials"
+  ],
+  "company": "Applied Materials Inc",
+  "composite_figi": null,
+  "key": "AMAT_US_Equity",
+  "security_key": "AMAT_US_Equity",
+  "ticker": "AMAT US Equity"
+ },
+ {
+  "aliases": [
+   "Advanced Micro Devices Inc",
+   "Advanced Micro Devices"
+  ],
+  "company": "Advanced Micro Devices Inc",
+  "composite_figi": null,
+  "key": "AMD_US_Equity",
+  "security_key": "AMD_US_Equity",
+  "ticker": "AMD US Equity"
+ },
+ {
+  "aliases": [
+   "Ameriprise Financial Inc",
+   "Ameriprise Financial"
+  ],
+  "company": "Ameriprise Financial Inc",
+  "composite_figi": null,
+  "key": "AMP_US_Equity",
+  "security_key": "AMP_US_Equity",
+  "ticker": "AMP US Equity"
+ },
+ {
+  "aliases": [
+   "America Movil SAB de CV",
+   "America Movil"
+  ],
+  "company": "America Movil SAB de CV",
+  "composite_figi": null,
+  "key": "AMX_US_Equity",
+  "security_key": "AMX_US_Equity",
+  "ticker": "AMX US Equity"
+ },
+ {
+  "aliases": [
+   "Amazon.com Inc",
+   "Amazon.com"
+  ],
+  "company": "Amazon.com Inc",
+  "composite_figi": null,
+  "key": "AMZN_US_Equity",
+  "security_key": "AMZN_US_Equity",
+  "ticker": "AMZN US Equity"
+ },
+ {
+  "aliases": [
+   "Arista Networks Inc",
+   "Arista Networks"
+  ],
+  "company": "Arista Networks Inc",
+  "composite_figi": null,
+  "key": "ANET_US_Equity",
+  "security_key": "ANET_US_Equity",
+  "ticker": "ANET US Equity"
+ },
+ {
+  "aliases": [
+   "ASML NA"
+  ],
+  "company": "ASML NA",
+  "composite_figi": null,
+  "key": "ASML_NA_Equity",
+  "security_key": "ASML_NA_Equity",
+  "ticker": "ASML NA"
+ },
+ {
+  "aliases": [
+   "ASML Holding NV",
+   "ASML Holding"
+  ],
+  "company": "ASML Holding NV",
+  "composite_figi": null,
+  "key": "ASML_US_Equity",
+  "security_key": "ASML_US_Equity",
+  "ticker": "ASML US Equity"
+ },
+ {
+  "aliases": [
+   "Atmos Energy Corp",
+   "Atmos Energy"
+  ],
+  "company": "Atmos Energy Corp",
+  "composite_figi": null,
+  "key": "ATO_US_Equity",
+  "security_key": "ATO_US_Equity",
+  "ticker": "ATO US Equity"
+ },
+ {
+  "aliases": [
+   "Broadcom Inc",
+   "Broadcom"
+  ],
+  "company": "Broadcom Inc",
+  "composite_figi": null,
+  "key": "AVGO_US_Equity",
+  "security_key": "AVGO_US_Equity",
+  "ticker": "AVGO US Equity"
+ },
+ {
+  "aliases": [
+   "AstraZeneca PLC",
+   "AstraZeneca"
+  ],
+  "company": "AstraZeneca PLC",
+  "composite_figi": null,
+  "key": "AZN_US_Equity",
+  "security_key": "AZN_US_Equity",
+  "ticker": "AZN US Equity"
+ },
+ {
+  "aliases": [
+   "Alibaba"
+  ],
+  "company": "Alibaba",
+  "composite_figi": null,
+  "key": "BABA_US_Equity",
+  "security_key": "BABA_US_Equity",
+  "ticker": "BABA US"
+ },
+ {
+  "aliases": [
+   "Bank of America Corp",
+   "Bank of America"
+  ],
+  "company": "Bank of America Corp",
+  "composite_figi": null,
+  "key": "BAC_US_Equity",
+  "security_key": "BAC_US_Equity",
+  "ticker": "BAC US Equity"
+ },
+ {
+  "aliases": [
+   "Boeing"
+  ],
+  "company": "Boeing",
+  "composite_figi": null,
+  "key": "BA_US_Equity",
+  "security_key": "BA_US_Equity",
+  "ticker": "BA US"
+ },
+ {
+  "aliases": [
+   "BB Seguridade"
+  ],
+  "company": "BB Seguridade",
+  "composite_figi": null,
+  "key": "BBSE3_BZ_Equity",
+  "security_key": "BBSE3_BZ_Equity",
+  "ticker": "BBSE3 BZ"
+ },
+ {
+  "aliases": [
+   "BB Seguridade Participacoes SA",
+   "BB Seguridade Participacoes"
+  ],
+  "company": "BB Seguridade Participacoes SA",
+  "composite_figi": null,
+  "key": "BBSEY_US_Equity",
+  "security_key": "BBSEY_US_Equity",
+  "ticker": "BBSEY US Equity"
+ },
+ {
+  "aliases": [
+   "Best Buy Co Inc",
+   "Best Buy Co",
+   "Best Buy"
+  ],
+  "company": "Best Buy Co Inc",
+  "composite_figi": null,
+  "key": "BBY_US_Equity",
+  "security_key": "BBY_US_Equity",
+  "ticker": "BBY US Equity"
+ },
+ {
+  "aliases": [
+   "Franklin Templeton Inc",
+   "Franklin Templeton"
+  ],
+  "company": "Franklin Templeton Inc",
+  "composite_figi": null,
+  "key": "BEN_US_Equity",
+  "security_key": "BEN_US_Equity",
+  "ticker": "BEN US Equity"
+ },
+ {
+  "aliases": [
+   "Brookfield Infrastructure Corp",
+   "Brookfield Infrastructure"
+  ],
+  "company": "Brookfield Infrastructure Corp",
+  "composite_figi": null,
+  "key": "BIPC_US_Equity",
+  "security_key": "BIPC_US_Equity",
+  "ticker": "BIPC US Equity"
+ },
+ {
+  "aliases": [
+   "Booking Holdings Inc",
+   "Booking"
+  ],
+  "company": "Booking Holdings Inc",
+  "composite_figi": null,
+  "key": "BKNG_US_Equity",
+  "security_key": "BKNG_US_Equity",
+  "ticker": "BKNG US Equity"
+ },
+ {
+  "aliases": [
+   "Bank Rakyat Indonesia Persero"
+  ],
+  "company": "Bank Rakyat Indonesia Persero",
+  "composite_figi": null,
+  "key": "BKRKY_US_Equity",
+  "security_key": "BKRKY_US_Equity",
+  "ticker": "BKRKY US Equity"
+ },
+ {
+  "aliases": [
+   "BNP Paribas SA",
+   "BNP Paribas"
+  ],
+  "company": "BNP Paribas SA",
+  "composite_figi": null,
+  "key": "BNPQY_US_Equity",
+  "security_key": "BNPQY_US_Equity",
+  "ticker": "BNPQY US Equity"
+ },
+ {
+  "aliases": [
+   "Bank of New York Mellon Corp/The",
+   "Bank of New York Mellon Corp",
+   "Bank of New York Mellon"
+  ],
+  "company": "Bank of New York Mellon Corp/The",
+  "composite_figi": null,
+  "key": "BNY_US_Equity",
+  "security_key": "BNY_US_Equity",
+  "ticker": "BNY US Equity"
+ },
+ {
+  "aliases": [
+   "Brookfield Corp",
+   "Brookfield"
+  ],
+  "company": "Brookfield Corp",
+  "composite_figi": null,
+  "key": "BN_US_Equity",
+  "security_key": "BN_US_Equity",
+  "ticker": "BN US Equity"
+ },
+ {
+  "aliases": [
+   "BP PLC"
+  ],
+  "company": "BP PLC",
+  "composite_figi": null,
+  "key": "BP/_LN_Equity",
+  "security_key": "BP/_LN_Equity",
+  "ticker": "BP/ LN"
+ },
+ {
+  "aliases": [
+   "BP PLC"
+  ],
+  "company": "BP PLC",
+  "composite_figi": null,
+  "key": "BP_US_Equity",
+  "security_key": "BP_US_Equity",
+  "ticker": "BP US Equity"
+ },
+ {
+  "aliases": [
+   "British American Tobacco PLC",
+   "British American Tobacco"
+  ],
+  "company": "British American Tobacco PLC",
+  "composite_figi": null,
+  "key": "BTI_US_Equity",
+  "security_key": "BTI_US_Equity",
+  "ticker": "BTI US Equity"
+ },
+ {
+  "aliases": [
+   "Bunzl PLC",
+   "Bunzl"
+  ],
+  "company": "Bunzl PLC",
+  "composite_figi": null,
+  "key": "BZLFY_US_Equity",
+  "security_key": "BZLFY_US_Equity",
+  "ticker": "BZLFY US Equity"
+ },
+ {
+  "aliases": [
+   "China Construction Bank Corp",
+   "China Construction Bank"
+  ],
+  "company": "China Construction Bank Corp",
+  "composite_figi": null,
+  "key": "CICHY_US_Equity",
+  "security_key": "CICHY_US_Equity",
+  "ticker": "CICHY US Equity"
+ },
+ {
+  "aliases": [
+   "Ciena Corp",
+   "Ciena"
+  ],
+  "company": "Ciena Corp",
+  "composite_figi": null,
+  "key": "CIEN_US_Equity",
+  "security_key": "CIEN_US_Equity",
+  "ticker": "CIEN US Equity"
+ },
+ {
+  "aliases": [
+   "Cincinnati Financial Corp",
+   "Cincinnati Financial"
+  ],
+  "company": "Cincinnati Financial Corp",
+  "composite_figi": null,
+  "key": "CINF_US_Equity",
+  "security_key": "CINF_US_Equity",
+  "ticker": "CINF US Equity"
+ },
+ {
+  "aliases": [
+   "Cigna Corp",
+   "Cigna"
+  ],
+  "company": "Cigna Corp",
+  "composite_figi": null,
+  "key": "CI_US_Equity",
+  "security_key": "CI_US_Equity",
+  "ticker": "CI US Equity"
+ },
+ {
+  "aliases": [
+   "CME Group Inc"
+  ],
+  "company": "CME Group Inc",
+  "composite_figi": null,
+  "key": "CME_US_Equity",
+  "security_key": "CME_US_Equity",
+  "ticker": "CME US Equity"
+ },
+ {
+  "aliases": [
+   "Cummins Inc",
+   "Cummins"
+  ],
+  "company": "Cummins Inc",
+  "composite_figi": null,
+  "key": "CMI_US_Equity",
+  "security_key": "CMI_US_Equity",
+  "ticker": "CMI US Equity"
+ },
+ {
+  "aliases": [
+   "Centene Corp",
+   "Centene"
+  ],
+  "company": "Centene Corp",
+  "composite_figi": null,
+  "key": "CNC_US_Equity",
+  "security_key": "CNC_US_Equity",
+  "ticker": "CNC US Equity"
+ },
+ {
+  "aliases": [
+   "Canadian National Railway Co",
+   "Canadian National Railway"
+  ],
+  "company": "Canadian National Railway Co",
+  "composite_figi": null,
+  "key": "CNI_US_Equity",
+  "security_key": "CNI_US_Equity",
+  "ticker": "CNI US Equity"
+ },
+ {
+  "aliases": [
+   "Costco"
+  ],
+  "company": "Costco",
+  "composite_figi": null,
+  "key": "COST_US_Equity",
+  "security_key": "COST_US_Equity",
+  "ticker": "COST US"
+ },
+ {
+  "aliases": [
+   "Copa Holdings SA",
+   "Copa Holdings",
+   "Copa"
+  ],
+  "company": "Copa Holdings SA",
+  "composite_figi": null,
+  "key": "CPA_US_Equity",
+  "security_key": "CPA_US_Equity",
+  "ticker": "CPA US Equity"
+ },
+ {
+  "aliases": [
+   "Chevron Corp",
+   "Chevron"
+  ],
+  "company": "Chevron Corp",
+  "composite_figi": null,
+  "key": "CVX_US_Equity",
+  "security_key": "CVX_US_Equity",
+  "ticker": "CVX US Equity"
+ },
+ {
+  "aliases": [
+   "Citigroup Inc",
+   "Citigroup"
+  ],
+  "company": "Citigroup Inc",
+  "composite_figi": null,
+  "key": "C_US_Equity",
+  "security_key": "C_US_Equity",
+  "ticker": "C US Equity"
+ },
+ {
+  "aliases": [
+   "Delta Air Lines Inc",
+   "Delta Air Lines"
+  ],
+  "company": "Delta Air Lines Inc",
+  "composite_figi": null,
+  "key": "DAL_US_Equity",
+  "security_key": "DAL_US_Equity",
+  "ticker": "DAL US Equity"
+ },
+ {
+  "aliases": [
+   "Deckers Outdoor Corp",
+   "Deckers Outdoor"
+  ],
+  "company": "Deckers Outdoor Corp",
+  "composite_figi": null,
+  "key": "DECK_US_Equity",
+  "security_key": "DECK_US_Equity",
+  "ticker": "DECK US Equity"
+ },
+ {
+  "aliases": [
+   "Dell Technologies Inc",
+   "Dell Technologies"
+  ],
+  "company": "Dell Technologies Inc",
+  "composite_figi": null,
+  "key": "DELL_US_Equity",
+  "security_key": "DELL_US_Equity",
+  "ticker": "DELL US Equity"
+ },
+ {
+  "aliases": [
+   "DTE Energy Co",
+   "DTE Energy"
+  ],
+  "company": "DTE Energy Co",
+  "composite_figi": null,
+  "key": "DTE_US_Equity",
+  "security_key": "DTE_US_Equity",
+  "ticker": "DTE US Equity"
+ },
+ {
+  "aliases": [
+   "eBay Inc"
+  ],
+  "company": "eBay Inc",
+  "composite_figi": null,
+  "key": "EBAY_US_Equity",
+  "security_key": "EBAY_US_Equity",
+  "ticker": "EBAY US Equity"
+ },
+ {
+  "aliases": [
+   "EchoStar Corp",
+   "EchoStar"
+  ],
+  "company": "EchoStar Corp",
+  "composite_figi": null,
+  "key": "ECHO_US_Equity",
+  "security_key": "ECHO_US_Equity",
+  "ticker": "ECHO US Equity"
+ },
+ {
+  "aliases": [
+   "Estee Lauder Cos Inc/The",
+   "Estee Lauder Cos Inc",
+   "Estee Lauder Cos"
+  ],
+  "company": "Estee Lauder Cos Inc/The",
+  "composite_figi": null,
+  "key": "EL_US_Equity",
+  "security_key": "EL_US_Equity",
+  "ticker": "EL US Equity"
+ },
+ {
+  "aliases": [
+   "Enbridge Inc",
+   "Enbridge"
+  ],
+  "company": "Enbridge Inc",
+  "composite_figi": null,
+  "key": "ENB_US_Equity",
+  "security_key": "ENB_US_Equity",
+  "ticker": "ENB US Equity"
+ },
+ {
+  "aliases": [
+   "Enel SpA"
+  ],
+  "company": "Enel SpA",
+  "composite_figi": null,
+  "key": "ENEL_IM_Equity",
+  "security_key": "ENEL_IM_Equity",
+  "ticker": "ENEL IM"
+ },
+ {
+  "aliases": [
+   "Enel SpA"
+  ],
+  "company": "Enel SpA",
+  "composite_figi": null,
+  "key": "ENLAY_US_Equity",
+  "security_key": "ENLAY_US_Equity",
+  "ticker": "ENLAY US Equity"
+ },
+ {
+  "aliases": [
+   "Eversource Energy"
+  ],
+  "company": "Eversource Energy",
+  "composite_figi": null,
+  "key": "ES_US_Equity",
+  "security_key": "ES_US_Equity",
+  "ticker": "ES US Equity"
+ },
+ {
+  "aliases": [
+   "Entergy Corp",
+   "Entergy"
+  ],
+  "company": "Entergy Corp",
+  "composite_figi": null,
+  "key": "ETR_US_Equity",
+  "security_key": "ETR_US_Equity",
+  "ticker": "ETR US Equity"
+ },
+ {
+  "aliases": [
+   "Expeditors International of Washington Inc",
+   "Expeditors International of Washington"
+  ],
+  "company": "Expeditors International of Washington Inc",
+  "composite_figi": null,
+  "key": "EXPD_US_Equity",
+  "security_key": "EXPD_US_Equity",
+  "ticker": "EXPD US Equity"
+ },
+ {
+  "aliases": [
+   "Freeport-McMoRan Inc",
+   "Freeport-McMoRan"
+  ],
+  "company": "Freeport-McMoRan Inc",
+  "composite_figi": null,
+  "key": "FCX_US_Equity",
+  "security_key": "FCX_US_Equity",
+  "ticker": "FCX US Equity"
+ },
+ {
+  "aliases": [
+   "FedEx Corp",
+   "FedEx"
+  ],
+  "company": "FedEx Corp",
+  "composite_figi": null,
+  "key": "FDX_US_Equity",
+  "security_key": "FDX_US_Equity",
+  "ticker": "FDX US Equity"
+ },
+ {
+  "aliases": [
+   "Ferrovial NV",
+   "Ferrovial"
+  ],
+  "company": "Ferrovial NV",
+  "composite_figi": null,
+  "key": "FER_US_Equity",
+  "security_key": "FER_US_Equity",
+  "ticker": "FER US Equity"
+ },
+ {
+  "aliases": [
+   "Comfort Systems USA Inc",
+   "Comfort Systems USA"
+  ],
+  "company": "Comfort Systems USA Inc",
+  "composite_figi": null,
+  "key": "FIX_US_Equity",
+  "security_key": "FIX_US_Equity",
+  "ticker": "FIX US Equity"
+ },
+ {
+  "aliases": [
+   "Flex Ltd"
+  ],
+  "company": "Flex Ltd",
+  "composite_figi": null,
+  "key": "FLEX_US_Equity",
+  "security_key": "FLEX_US_Equity",
+  "ticker": "FLEX US Equity"
+ },
+ {
+  "aliases": [
+   "Fortinet Inc",
+   "Fortinet"
+  ],
+  "company": "Fortinet Inc",
+  "composite_figi": null,
+  "key": "FTNT_US_Equity",
+  "security_key": "FTNT_US_Equity",
+  "ticker": "FTNT US Equity"
+ },
+ {
+  "aliases": [
+   "Ford Motor Co",
+   "Ford Motor"
+  ],
+  "company": "Ford Motor Co",
+  "composite_figi": null,
+  "key": "F_US_Equity",
+  "security_key": "F_US_Equity",
+  "ticker": "F US Equity"
+ },
+ {
+  "aliases": [
+   "Corning Inc",
+   "Corning"
+  ],
+  "company": "Corning Inc",
+  "composite_figi": null,
+  "key": "GLW_US_Equity",
+  "security_key": "GLW_US_Equity",
+  "ticker": "GLW US Equity"
+ },
+ {
+  "aliases": [
+   "Globe Life Inc",
+   "Globe Life"
+  ],
+  "company": "Globe Life Inc",
+  "composite_figi": null,
+  "key": "GL_US_Equity",
+  "security_key": "GL_US_Equity",
+  "ticker": "GL US Equity"
+ },
+ {
+  "aliases": [
+   "General Motors Co",
+   "General Motors"
+  ],
+  "company": "General Motors Co",
+  "composite_figi": null,
+  "key": "GM_US_Equity",
+  "security_key": "GM_US_Equity",
+  "ticker": "GM US Equity"
+ },
+ {
+  "aliases": [
+   "Alphabet Inc",
+   "Alphabet"
+  ],
+  "company": "Alphabet Inc",
+  "composite_figi": null,
+  "key": "GOOGL_US_Equity",
+  "security_key": "GOOGL_US_Equity",
+  "ticker": "GOOGL US Equity"
+ },
+ {
+  "aliases": [
+   "Alphabet Inc",
+   "Alphabet"
+  ],
+  "company": "Alphabet Inc",
+  "composite_figi": null,
+  "key": "GOOG_US_Equity",
+  "security_key": "GOOG_US_Equity",
+  "ticker": "GOOG US Equity"
+ },
+ {
+  "aliases": [
+   "GSK PLC"
+  ],
+  "company": "GSK PLC",
+  "composite_figi": null,
+  "key": "GSK_US_Equity",
+  "security_key": "GSK_US_Equity",
+  "ticker": "GSK US Equity"
+ },
+ {
+  "aliases": [
+   "Goldman Sachs Group Inc/The",
+   "Goldman Sachs Group Inc",
+   "Goldman Sachs"
+  ],
+  "company": "Goldman Sachs Group Inc/The",
+  "composite_figi": null,
+  "key": "GS_US_Equity",
+  "security_key": "GS_US_Equity",
+  "ticker": "GS US Equity"
+ },
+ {
+  "aliases": [
+   "Haliburton"
+  ],
+  "company": "Haliburton",
+  "composite_figi": null,
+  "key": "HAL_US_Equity",
+  "security_key": "HAL_US_Equity",
+  "ticker": "HAL US"
+ },
+ {
+  "aliases": [
+   "Home Depot"
+  ],
+  "company": "Home Depot",
+  "composite_figi": null,
+  "key": "HD_US_Equity",
+  "security_key": "HD_US_Equity",
+  "ticker": "HD US"
+ },
+ {
+  "aliases": [
+   "Hermes International SCA"
+  ],
+  "company": "Hermes International SCA",
+  "composite_figi": null,
+  "key": "HESAY_US_Equity",
+  "security_key": "HESAY_US_Equity",
+  "ticker": "HESAY US Equity"
+ },
+ {
+  "aliases": [
+   "HSBC"
+  ],
+  "company": "HSBC",
+  "composite_figi": null,
+  "key": "HSBA_LN_Equity",
+  "security_key": "HSBA_LN_Equity",
+  "ticker": "HSBA LN"
+ },
+ {
+  "aliases": [
+   "HSBC Holdings PLC",
+   "HSBC Holdings"
+  ],
+  "company": "HSBC Holdings PLC",
+  "composite_figi": null,
+  "key": "HSBC_US_Equity",
+  "security_key": "HSBC_US_Equity",
+  "ticker": "HSBC US Equity"
+ },
+ {
+  "aliases": [
+   "Hershey Co/The",
+   "Hershey Co",
+   "Hershey"
+  ],
+  "company": "Hershey Co/The",
+  "composite_figi": null,
+  "key": "HSY_US_Equity",
+  "security_key": "HSY_US_Equity",
+  "ticker": "HSY US Equity"
+ },
+ {
+  "aliases": [
+   "Howmet Aerospace Inc",
+   "Howmet Aerospace"
+  ],
+  "company": "Howmet Aerospace Inc",
+  "composite_figi": null,
+  "key": "HWM_US_Equity",
+  "security_key": "HWM_US_Equity",
+  "ticker": "HWM US Equity"
+ },
+ {
+  "aliases": [
+   "Iberdrola SA",
+   "Iberdrola"
+  ],
+  "company": "Iberdrola SA",
+  "composite_figi": null,
+  "key": "IBDRY_US_Equity",
+  "security_key": "IBDRY_US_Equity",
+  "ticker": "IBDRY US Equity"
+ },
+ {
+  "aliases": [
+   "ICICI Bank Ltd",
+   "ICICI Bank"
+  ],
+  "company": "ICICI Bank Ltd",
+  "composite_figi": null,
+  "key": "IBN_US_Equity",
+  "security_key": "IBN_US_Equity",
+  "ticker": "IBN US Equity"
+ },
+ {
+  "aliases": [
+   "ICICI Bank"
+  ],
+  "company": "ICICI Bank",
+  "composite_figi": null,
+  "key": "ICICIBC_IN_Equity",
+  "security_key": "ICICIBC_IN_Equity",
+  "ticker": "ICICIBC IN"
+ },
+ {
+  "aliases": [
+   "International Container Termin"
+  ],
+  "company": "International Container Termin",
+  "composite_figi": null,
+  "key": "ICT_US_Equity",
+  "security_key": "ICT_US_Equity",
+  "ticker": "ICT US Equity"
+ },
+ {
+  "aliases": [
+   "IDEXX Laboratories Inc",
+   "IDEXX Laboratories"
+  ],
+  "company": "IDEXX Laboratories Inc",
+  "composite_figi": null,
+  "key": "IDXX_US_Equity",
+  "security_key": "IDXX_US_Equity",
+  "ticker": "IDXX US Equity"
+ },
+ {
+  "aliases": [
+   "Imperial Brands PLC",
+   "Imperial Brands"
+  ],
+  "company": "Imperial Brands PLC",
+  "composite_figi": null,
+  "key": "IMBBY_US_Equity",
+  "security_key": "IMBBY_US_Equity",
+  "ticker": "IMBBY US Equity"
+ },
+ {
+  "aliases": [
+   "Imperial Brands"
+  ],
+  "company": "Imperial Brands",
+  "composite_figi": null,
+  "key": "IMB_LN_Equity",
+  "security_key": "IMB_LN_Equity",
+  "ticker": "IMB LN"
+ },
+ {
+  "aliases": [
+   "Incyte Corp",
+   "Incyte"
+  ],
+  "company": "Incyte Corp",
+  "composite_figi": null,
+  "key": "INCY_US_Equity",
+  "security_key": "INCY_US_Equity",
+  "ticker": "INCY US Equity"
+ },
+ {
+  "aliases": [
+   "Intel Corp",
+   "Intel"
+  ],
+  "company": "Intel Corp",
+  "composite_figi": null,
+  "key": "INTC_US_Equity",
+  "security_key": "INTC_US_Equity",
+  "ticker": "INTC US Equity"
+ },
+ {
+  "aliases": [
+   "Intuit"
+  ],
+  "company": "Intuit",
+  "composite_figi": null,
+  "key": "INTU_US_Equity",
+  "security_key": "INTU_US_Equity",
+  "ticker": "INTU US"
+ },
+ {
+  "aliases": [
+   "Intesa Sanpaolo SpA"
+  ],
+  "company": "Intesa Sanpaolo SpA",
+  "composite_figi": null,
+  "key": "ISNPY_US_Equity",
+  "security_key": "ISNPY_US_Equity",
+  "ticker": "ISNPY US Equity"
+ },
+ {
+  "aliases": [
+   "Intuitive Surgical Inc",
+   "Intuitive Surgical"
+  ],
+  "company": "Intuitive Surgical Inc",
+  "composite_figi": null,
+  "key": "ISRG_US_Equity",
+  "security_key": "ISRG_US_Equity",
+  "ticker": "ISRG US Equity"
+ },
+ {
+  "aliases": [
+   "JB Hunt Transport Services Inc",
+   "JB Hunt Transport Services"
+  ],
+  "company": "JB Hunt Transport Services Inc",
+  "composite_figi": null,
+  "key": "JBHT_US_Equity",
+  "security_key": "JBHT_US_Equity",
+  "ticker": "JBHT US Equity"
+ },
+ {
+  "aliases": [
+   "Johnson & Johnson"
+  ],
+  "company": "Johnson & Johnson",
+  "composite_figi": null,
+  "key": "JNJ_US_Equity",
+  "security_key": "JNJ_US_Equity",
+  "ticker": "JNJ US Equity"
+ },
+ {
+  "aliases": [
+   "JPMORGAN CHASE & CO."
+  ],
+  "company": "JPMORGAN CHASE & CO.",
+  "composite_figi": null,
+  "key": "JPM_US_Equity",
+  "security_key": "JPM_US_Equity",
+  "ticker": "JPM US Equity"
+ },
+ {
+  "aliases": [
+   "Kimberly-Clark de Mexico SAB d"
+  ],
+  "company": "Kimberly-Clark de Mexico SAB d",
+  "composite_figi": null,
+  "key": "KCDMY_US_Equity",
+  "security_key": "KCDMY_US_Equity",
+  "ticker": "KCDMY US Equity"
+ },
+ {
+  "aliases": [
+   "Keysight Technologies Inc",
+   "Keysight Technologies"
+  ],
+  "company": "Keysight Technologies Inc",
+  "composite_figi": null,
+  "key": "KEYS_US_Equity",
+  "security_key": "KEYS_US_Equity",
+  "ticker": "KEYS US Equity"
+ },
+ {
+  "aliases": [
+   "Koninklijke KPN NV",
+   "Koninklijke KPN"
+  ],
+  "company": "Koninklijke KPN NV",
+  "composite_figi": null,
+  "key": "KKPNY_US_Equity",
+  "security_key": "KKPNY_US_Equity",
+  "ticker": "KKPNY US Equity"
+ },
+ {
+  "aliases": [
+   "Kimberly Clark"
+  ],
+  "company": "Kimberly Clark",
+  "composite_figi": null,
+  "key": "KMB_US_Equity",
+  "security_key": "KMB_US_Equity",
+  "ticker": "KMB US"
+ },
+ {
+  "aliases": [
+   "Coca-Cola Femsa SAB de CV",
+   "Coca-Cola Femsa"
+  ],
+  "company": "Coca-Cola Femsa SAB de CV",
+  "composite_figi": null,
+  "key": "KOF_US_Equity",
+  "security_key": "KOF_US_Equity",
+  "ticker": "KOF US Equity"
+ },
+ {
+  "aliases": [
+   "Coca-Cola Co/The",
+   "Coca-Cola Co",
+   "Coca-Cola"
+  ],
+  "company": "Coca-Cola Co/The",
+  "composite_figi": null,
+  "key": "KO_US_Equity",
+  "security_key": "KO_US_Equity",
+  "ticker": "KO US Equity"
+ },
+ {
+  "aliases": [
+   "Koninklijke"
+  ],
+  "company": "Koninklijke",
+  "composite_figi": null,
+  "key": "KPN_NA_Equity",
+  "security_key": "KPN_NA_Equity",
+  "ticker": "KPN NA"
+ },
+ {
+  "aliases": [
+   "Lumentum Holdings Inc",
+   "Lumentum"
+  ],
+  "company": "Lumentum Holdings Inc",
+  "composite_figi": null,
+  "key": "LITE_US_Equity",
+  "security_key": "LITE_US_Equity",
+  "ticker": "LITE US Equity"
+ },
+ {
+  "aliases": [
+   "Eli Lilly & Co",
+   "Eli Lilly"
+  ],
+  "company": "Eli Lilly & Co",
+  "composite_figi": null,
+  "key": "LLY_US_Equity",
+  "security_key": "LLY_US_Equity",
+  "ticker": "LLY US Equity"
+ },
+ {
+  "aliases": [
+   "Lockheed Martin Corp",
+   "Lockheed Martin"
+  ],
+  "company": "Lockheed Martin Corp",
+  "composite_figi": null,
+  "key": "LMT_US_Equity",
+  "security_key": "LMT_US_Equity",
+  "ticker": "LMT US Equity"
+ },
+ {
+  "aliases": [
+   "Lam Research Corp",
+   "Lam Research"
+  ],
+  "company": "Lam Research Corp",
+  "composite_figi": null,
+  "key": "LRCX_US_Equity",
+  "security_key": "LRCX_US_Equity",
+  "ticker": "LRCX US Equity"
+ },
+ {
+  "aliases": [
+   "Southwest Airlines Co",
+   "Southwest Airlines"
+  ],
+  "company": "Southwest Airlines Co",
+  "composite_figi": null,
+  "key": "LUV_US_Equity",
+  "security_key": "LUV_US_Equity",
+  "ticker": "LUV US Equity"
+ },
+ {
+  "aliases": [
+   "Marriott International Inc/MD"
+  ],
+  "company": "Marriott International Inc/MD",
+  "composite_figi": null,
+  "key": "MAR_US_Equity",
+  "security_key": "MAR_US_Equity",
+  "ticker": "MAR US Equity"
+ },
+ {
+  "aliases": [
+   "Mastercard Inc",
+   "Mastercard"
+  ],
+  "company": "Mastercard Inc",
+  "composite_figi": null,
+  "key": "MA_US_Equity",
+  "security_key": "MA_US_Equity",
+  "ticker": "MA US Equity"
+ },
+ {
+  "aliases": [
+   "MercadoLibre Inc",
+   "MercadoLibre"
+  ],
+  "company": "MercadoLibre Inc",
+  "composite_figi": null,
+  "key": "MELI_US_Equity",
+  "security_key": "MELI_US_Equity",
+  "ticker": "MELI US Equity"
+ },
+ {
+  "aliases": [
+   "Meta Platforms Inc",
+   "Meta Platforms"
+  ],
+  "company": "Meta Platforms Inc",
+  "composite_figi": null,
+  "key": "META_US_Equity",
+  "security_key": "META_US_Equity",
+  "ticker": "META US Equity"
+ },
+ {
+  "aliases": [
+   "Monster Beverage Corp",
+   "Monster Beverage"
+  ],
+  "company": "Monster Beverage Corp",
+  "composite_figi": null,
+  "key": "MNST_US_Equity",
+  "security_key": "MNST_US_Equity",
+  "ticker": "MNST US Equity"
+ },
+ {
+  "aliases": [
+   "Altria Group Inc",
+   "Altria"
+  ],
+  "company": "Altria Group Inc",
+  "composite_figi": null,
+  "key": "MO_US_Equity",
+  "security_key": "MO_US_Equity",
+  "ticker": "MO US Equity"
+ },
+ {
+  "aliases": [
+   "MPLX LP"
+  ],
+  "company": "MPLX LP",
+  "composite_figi": null,
+  "key": "MPLX_US_Equity",
+  "security_key": "MPLX_US_Equity",
+  "ticker": "MPLX US Equity"
+ },
+ {
+  "aliases": [
+   "Monolithic Power Systems Inc",
+   "Monolithic Power Systems"
+  ],
+  "company": "Monolithic Power Systems Inc",
+  "composite_figi": null,
+  "key": "MPWR_US_Equity",
+  "security_key": "MPWR_US_Equity",
+  "ticker": "MPWR US Equity"
+ },
+ {
+  "aliases": [
+   "Merck & Co Inc",
+   "Merck & Co",
+   "Merck"
+  ],
+  "company": "Merck & Co Inc",
+  "composite_figi": null,
+  "key": "MRK_US_Equity",
+  "security_key": "MRK_US_Equity",
+  "ticker": "MRK US Equity"
+ },
+ {
+  "aliases": [
+   "MARVELL TECHNOLOGY INC",
+   "MARVELL TECHNOLOGY"
+  ],
+  "company": "MARVELL TECHNOLOGY INC",
+  "composite_figi": null,
+  "key": "MRVL_US_Equity",
+  "security_key": "MRVL_US_Equity",
+  "ticker": "MRVL US Equity"
+ },
+ {
+  "aliases": [
+   "Microsoft Corp",
+   "Microsoft"
+  ],
+  "company": "Microsoft Corp",
+  "composite_figi": null,
+  "key": "MSFT_US_Equity",
+  "security_key": "MSFT_US_Equity",
+  "ticker": "MSFT US Equity"
+ },
+ {
+  "aliases": [
+   "Micron Technology Inc",
+   "Micron Technology"
+  ],
+  "company": "Micron Technology Inc",
+  "composite_figi": null,
+  "key": "MU_US_Equity",
+  "security_key": "MU_US_Equity",
+  "ticker": "MU US Equity"
+ },
+ {
+  "aliases": [
+   "NextEra Energy Inc",
+   "NextEra Energy"
+  ],
+  "company": "NextEra Energy Inc",
+  "composite_figi": null,
+  "key": "NEE_US_Equity",
+  "security_key": "NEE_US_Equity",
+  "ticker": "NEE US Equity"
+ },
+ {
+  "aliases": [
+   "Newmont Corp",
+   "Newmont"
+  ],
+  "company": "Newmont Corp",
+  "composite_figi": null,
+  "key": "NEM_US_Equity",
+  "security_key": "NEM_US_Equity",
+  "ticker": "NEM US Equity"
+ },
+ {
+  "aliases": [
+   "Netflix Inc",
+   "Netflix"
+  ],
+  "company": "Netflix Inc",
+  "composite_figi": null,
+  "key": "NFLX_US_Equity",
+  "security_key": "NFLX_US_Equity",
+  "ticker": "NFLX US Equity"
+ },
+ {
+  "aliases": [
+   "National Grid NG"
+  ],
+  "company": "National Grid NG",
+  "composite_figi": null,
+  "key": "NG/_LN_Equity",
+  "security_key": "NG/_LN_Equity",
+  "ticker": "NG/ LN"
+ },
+ {
+  "aliases": [
+   "Nokia Oyj"
+  ],
+  "company": "Nokia Oyj",
+  "composite_figi": null,
+  "key": "NOK_US_Equity",
+  "security_key": "NOK_US_Equity",
+  "ticker": "NOK US Equity"
+ },
+ {
+  "aliases": [
+   "Novartis"
+  ],
+  "company": "Novartis",
+  "composite_figi": null,
+  "key": "NOVN_SW_Equity",
+  "security_key": "NOVN_SW_Equity",
+  "ticker": "NOVN SW"
+ },
+ {
+  "aliases": [
+   "ServiceNow Inc",
+   "ServiceNow"
+  ],
+  "company": "ServiceNow Inc",
+  "composite_figi": null,
+  "key": "NOW_US_Equity",
+  "security_key": "NOW_US_Equity",
+  "ticker": "NOW US Equity"
+ },
+ {
+  "aliases": [
+   "Nestle SA",
+   "Nestle"
+  ],
+  "company": "Nestle SA",
+  "composite_figi": null,
+  "key": "NSRGY_US_Equity",
+  "security_key": "NSRGY_US_Equity",
+  "ticker": "NSRGY US Equity"
+ },
+ {
+  "aliases": [
+   "Northern Trust Corp",
+   "Northern Trust"
+  ],
+  "company": "Northern Trust Corp",
+  "composite_figi": null,
+  "key": "NTRS_US_Equity",
+  "security_key": "NTRS_US_Equity",
+  "ticker": "NTRS US Equity"
+ },
+ {
+  "aliases": [
+   "Nubank"
+  ],
+  "company": "Nubank",
+  "composite_figi": null,
+  "key": "NU_US_Equity",
+  "security_key": "NU_US_Equity",
+  "ticker": "NU US"
+ },
+ {
+  "aliases": [
+   "NVIDIA Corp",
+   "NVIDIA"
+  ],
+  "company": "NVIDIA Corp",
+  "composite_figi": null,
+  "key": "NVDA_US_Equity",
+  "security_key": "NVDA_US_Equity",
+  "ticker": "NVDA US Equity"
+ },
+ {
+  "aliases": [
+   "Grupo Aeroportuario del Centro"
+  ],
+  "company": "Grupo Aeroportuario del Centro",
+  "composite_figi": null,
+  "key": "OMAB_US_Equity",
+  "security_key": "OMAB_US_Equity",
+  "ticker": "OMAB US Equity"
+ },
+ {
+  "aliases": [
+   "Orange SA",
+   "Orange"
+  ],
+  "company": "Orange SA",
+  "composite_figi": null,
+  "key": "ORANY_US_Equity",
+  "security_key": "ORANY_US_Equity",
+  "ticker": "ORANY US Equity"
+ },
+ {
+  "aliases": [
+   "Petrobras PETR3 BZ"
+  ],
+  "company": "Petrobras PETR3 BZ",
+  "composite_figi": null,
+  "key": "PBR_US_Equity",
+  "security_key": "PBR_US_Equity",
+  "ticker": "PBR US"
+ },
+ {
+  "aliases": [
+   "PG&E Corp",
+   "PG&E"
+  ],
+  "company": "PG&E Corp",
+  "composite_figi": null,
+  "key": "PCG_US_Equity",
+  "security_key": "PCG_US_Equity",
+  "ticker": "PCG US Equity"
+ },
+ {
+  "aliases": [
+   "Palantir Technologies Inc",
+   "Palantir Technologies"
+  ],
+  "company": "Palantir Technologies Inc",
+  "composite_figi": null,
+  "key": "PLTR_US_Equity",
+  "security_key": "PLTR_US_Equity",
+  "ticker": "PLTR US Equity"
+ },
+ {
+  "aliases": [
+   "Philip Morris International Inc",
+   "Philip Morris International"
+  ],
+  "company": "Philip Morris International Inc",
+  "composite_figi": null,
+  "key": "PM_US_Equity",
+  "security_key": "PM_US_Equity",
+  "ticker": "PM US Equity"
+ },
+ {
+  "aliases": [
+   "QUALCOMM Inc",
+   "QUALCOMM"
+  ],
+  "company": "QUALCOMM Inc",
+  "composite_figi": null,
+  "key": "QCOM_US_Equity",
+  "security_key": "QCOM_US_Equity",
+  "ticker": "QCOM US Equity"
+ },
+ {
+  "aliases": [
+   "QXO Inc"
+  ],
+  "company": "QXO Inc",
+  "composite_figi": null,
+  "key": "QXO_US_Equity",
+  "security_key": "QXO_US_Equity",
+  "ticker": "QXO US Equity"
+ },
+ {
+  "aliases": [
+   "Reckitt Benckiser Group PLC",
+   "Reckitt Benckiser Group",
+   "Reckitt Benckiser"
+  ],
+  "company": "Reckitt Benckiser Group PLC",
+  "composite_figi": null,
+  "key": "RBGLD_US_Equity",
+  "security_key": "RBGLD_US_Equity",
+  "ticker": "RBGLD US Equity"
+ },
+ {
+  "aliases": [
+   "Regeneron Pharmaceuticals Inc",
+   "Regeneron Pharmaceuticals"
+  ],
+  "company": "Regeneron Pharmaceuticals Inc",
+  "composite_figi": null,
+  "key": "REGN_US_Equity",
+  "security_key": "REGN_US_Equity",
+  "ticker": "REGN US Equity"
+ },
+ {
+  "aliases": [
+   "Roche Holding AG",
+   "Roche Holding",
+   "Roche"
+  ],
+  "company": "Roche Holding AG",
+  "composite_figi": null,
+  "key": "RHHBY_US_Equity",
+  "security_key": "RHHBY_US_Equity",
+  "ticker": "RHHBY US Equity"
+ },
+ {
+  "aliases": [
+   "Rio Tinto PLC",
+   "Rio Tinto"
+  ],
+  "company": "Rio Tinto PLC",
+  "composite_figi": null,
+  "key": "RIO_US_Equity",
+  "security_key": "RIO_US_Equity",
+  "ticker": "RIO US Equity"
+ },
+ {
+  "aliases": [
+   "Reckitt Benckiser"
+  ],
+  "company": "Reckitt Benckiser",
+  "composite_figi": null,
+  "key": "RKT_LN_Equity",
+  "security_key": "RKT_LN_Equity",
+  "ticker": "RKT LN"
+ },
+ {
+  "aliases": [
+   "Hermes"
+  ],
+  "company": "Hermes",
+  "composite_figi": null,
+  "key": "RMS_FP_Equity",
+  "security_key": "RMS_FP_Equity",
+  "ticker": "RMS FP"
+ },
+ {
+  "aliases": [
+   "Roche"
+  ],
+  "company": "Roche",
+  "composite_figi": null,
+  "key": "ROG_SW_Equity",
+  "security_key": "ROG_SW_Equity",
+  "ticker": "ROG SW"
+ },
+ {
+  "aliases": [
+   "Ross Stores Inc",
+   "Ross Stores"
+  ],
+  "company": "Ross Stores Inc",
+  "composite_figi": null,
+  "key": "ROST_US_Equity",
+  "security_key": "ROST_US_Equity",
+  "ticker": "ROST US Equity"
+ },
+ {
+  "aliases": [
+   "Raytheon Technologies Corp",
+   "Raytheon Technologies"
+  ],
+  "company": "Raytheon Technologies Corp",
+  "composite_figi": null,
+  "key": "RTX_US_Equity",
+  "security_key": "RTX_US_Equity",
+  "ticker": "RTX US Equity"
+ },
+ {
+  "aliases": [
+   "RWE AG RWE GY"
+  ],
+  "company": "RWE AG RWE GY",
+  "composite_figi": null,
+  "key": "RWE_GR_Equity",
+  "security_key": "RWE_GR_Equity",
+  "ticker": "RWE GR"
+ },
+ {
+  "aliases": [
+   "SAP GY"
+  ],
+  "company": "SAP GY",
+  "composite_figi": null,
+  "key": "SAP_GY_Equity",
+  "security_key": "SAP_GY_Equity",
+  "ticker": "SAP GY"
+ },
+ {
+  "aliases": [
+   "Charles Schwab Corp/The",
+   "Charles Schwab Corp",
+   "Charles Schwab"
+  ],
+  "company": "Charles Schwab Corp/The",
+  "composite_figi": null,
+  "key": "SCHW_US_Equity",
+  "security_key": "SCHW_US_Equity",
+  "ticker": "SCHW US Equity"
+ },
+ {
+  "aliases": [
+   "Sandisk Corp",
+   "Sandisk"
+  ],
+  "company": "Sandisk Corp",
+  "composite_figi": null,
+  "key": "SNDK_US_Equity",
+  "security_key": "SNDK_US_Equity",
+  "ticker": "SNDK US Equity"
+ },
+ {
+  "aliases": [
+   "Sanofi"
+  ],
+  "company": "Sanofi",
+  "composite_figi": null,
+  "key": "SNY_US_Equity",
+  "security_key": "SNY_US_Equity",
+  "ticker": "SNY US Equity"
+ },
+ {
+  "aliases": [
+   "Spotify Technology SA",
+   "Spotify Technology"
+  ],
+  "company": "Spotify Technology SA",
+  "composite_figi": null,
+  "key": "SPOT_US_Equity",
+  "security_key": "SPOT_US_Equity",
+  "ticker": "SPOT US Equity"
+ },
+ {
+  "aliases": [
+   "SSE plc"
+  ],
+  "company": "SSE plc",
+  "composite_figi": null,
+  "key": "SSE_LN_Equity",
+  "security_key": "SSE_LN_Equity",
+  "ticker": "SSE LN"
+ },
+ {
+  "aliases": [
+   "Steel Dynamics Inc",
+   "Steel Dynamics"
+  ],
+  "company": "Steel Dynamics Inc",
+  "composite_figi": null,
+  "key": "STLD_US_Equity",
+  "security_key": "STLD_US_Equity",
+  "ticker": "STLD US Equity"
+ },
+ {
+  "aliases": [
+   "State Street Corp",
+   "State Street"
+  ],
+  "company": "State Street Corp",
+  "composite_figi": null,
+  "key": "STT_US_Equity",
+  "security_key": "STT_US_Equity",
+  "ticker": "STT US Equity"
+ },
+ {
+  "aliases": [
+   "Seagate Technology Holdings PLC",
+   "Seagate Technology Holdings",
+   "Seagate Technology"
+  ],
+  "company": "Seagate Technology Holdings PLC",
+  "composite_figi": null,
+  "key": "STX_US_Equity",
+  "security_key": "STX_US_Equity",
+  "ticker": "STX US Equity"
+ },
+ {
+  "aliases": [
+   "Singapore Telecom"
+  ],
+  "company": "Singapore Telecom",
+  "composite_figi": null,
+  "key": "ST_SP_Equity",
+  "security_key": "ST_SP_Equity",
+  "ticker": "ST SP"
+ },
+ {
+  "aliases": [
+   "TJX Cos Inc/The",
+   "TJX Cos Inc",
+   "TJX Cos"
+  ],
+  "company": "TJX Cos Inc/The",
+  "composite_figi": null,
+  "key": "TJX_US_Equity",
+  "security_key": "TJX_US_Equity",
+  "ticker": "TJX US Equity"
+ },
+ {
+  "aliases": [
+   "Tokio Marine Holdings Inc",
+   "Tokio Marine"
+  ],
+  "company": "Tokio Marine Holdings Inc",
+  "composite_figi": null,
+  "key": "TKOMY_US_Equity",
+  "security_key": "TKOMY_US_Equity",
+  "ticker": "TKOMY US Equity"
+ },
+ {
+  "aliases": [
+   "Travelers Cos Inc/The",
+   "Travelers Cos Inc",
+   "Travelers Cos"
+  ],
+  "company": "Travelers Cos Inc/The",
+  "composite_figi": null,
+  "key": "TRV_US_Equity",
+  "security_key": "TRV_US_Equity",
+  "ticker": "TRV US Equity"
+ },
+ {
+  "aliases": [
+   "Tesla Inc",
+   "Tesla"
+  ],
+  "company": "Tesla Inc",
+  "composite_figi": null,
+  "key": "TSLA_US_Equity",
+  "security_key": "TSLA_US_Equity",
+  "ticker": "TSLA US Equity"
+ },
+ {
+  "aliases": [
+   "Taiwan Semiconductor Manufacturing Co Ltd ADR"
+  ],
+  "company": "Taiwan Semiconductor Manufacturing Co Ltd ADR",
+  "composite_figi": null,
+  "key": "TSM_US_Equity",
+  "security_key": "TSM_US_Equity",
+  "ticker": "TSM US Equity"
+ },
+ {
+  "aliases": [
+   "TotalEnergies SE"
+  ],
+  "company": "TotalEnergies SE",
+  "composite_figi": null,
+  "key": "TTE_US_Equity",
+  "security_key": "TTE_US_Equity",
+  "ticker": "TTE US Equity"
+ },
+ {
+  "aliases": [
+   "Texas Instruments Inc",
+   "Texas Instruments"
+  ],
+  "company": "Texas Instruments Inc",
+  "composite_figi": null,
+  "key": "TXN_US_Equity",
+  "security_key": "TXN_US_Equity",
+  "ticker": "TXN US Equity"
+ },
+ {
+  "aliases": [
+   "AT&T Inc",
+   "AT&T"
+  ],
+  "company": "AT&T Inc",
+  "composite_figi": null,
+  "key": "T_US_Equity",
+  "security_key": "T_US_Equity",
+  "ticker": "T US Equity"
+ },
+ {
+  "aliases": [
+   "United Airlines Holdings Inc",
+   "United Airlines"
+  ],
+  "company": "United Airlines Holdings Inc",
+  "composite_figi": null,
+  "key": "UAL_US_Equity",
+  "security_key": "UAL_US_Equity",
+  "ticker": "UAL US Equity"
+ },
+ {
+  "aliases": [
+   "Uber Technologies Inc",
+   "Uber Technologies"
+  ],
+  "company": "Uber Technologies Inc",
+  "composite_figi": null,
+  "key": "UBER_US_Equity",
+  "security_key": "UBER_US_Equity",
+  "ticker": "UBER US Equity"
+ },
+ {
+  "aliases": [
+   "UBS Group AG",
+   "UBS Group"
+  ],
+  "company": "UBS Group AG",
+  "composite_figi": null,
+  "key": "UBS_US_Equity",
+  "security_key": "UBS_US_Equity",
+  "ticker": "UBS US Equity"
+ },
+ {
+  "aliases": [
+   "Unilever"
+  ],
+  "company": "Unilever",
+  "composite_figi": null,
+  "key": "ULVR_LN_Equity",
+  "security_key": "ULVR_LN_Equity",
+  "ticker": "ULVR LN"
+ },
+ {
+  "aliases": [
+   "Unilever PLC",
+   "Unilever"
+  ],
+  "company": "Unilever PLC",
+  "composite_figi": null,
+  "key": "UL_US_Equity",
+  "security_key": "UL_US_Equity",
+  "ticker": "UL US Equity"
+ },
+ {
+  "aliases": [
+   "UnitedHealth Group Inc",
+   "UnitedHealth"
+  ],
+  "company": "UnitedHealth Group Inc",
+  "composite_figi": null,
+  "key": "UNH_US_Equity",
+  "security_key": "UNH_US_Equity",
+  "ticker": "UNH US Equity"
+ },
+ {
+  "aliases": [
+   "Union Pacific Corp",
+   "Union Pacific"
+  ],
+  "company": "Union Pacific Corp",
+  "composite_figi": null,
+  "key": "UNP_US_Equity",
+  "security_key": "UNP_US_Equity",
+  "ticker": "UNP US Equity"
+ },
+ {
+  "aliases": [
+   "Universal Music Group NV",
+   "Universal Music Group",
+   "Universal Music"
+  ],
+  "company": "Universal Music Group NV",
+  "composite_figi": null,
+  "key": "UNVGY_US_Equity",
+  "security_key": "UNVGY_US_Equity",
+  "ticker": "UNVGY US Equity"
+ },
+ {
+  "aliases": [
+   "United Parcel Service Inc",
+   "United Parcel Service"
+  ],
+  "company": "United Parcel Service Inc",
+  "composite_figi": null,
+  "key": "UPS_US_Equity",
+  "security_key": "UPS_US_Equity",
+  "ticker": "UPS US Equity"
+ },
+ {
+  "aliases": [
+   "Telefonica Brasil SA",
+   "Telefonica Brasil"
+  ],
+  "company": "Telefonica Brasil SA",
+  "composite_figi": null,
+  "key": "VIV_US_Equity",
+  "security_key": "VIV_US_Equity",
+  "ticker": "VIV US Equity"
+ },
+ {
+  "aliases": [
+   "Valero Energy"
+  ],
+  "company": "Valero Energy",
+  "composite_figi": null,
+  "key": "VLO_US_Equity",
+  "security_key": "VLO_US_Equity",
+  "ticker": "VLO US"
+ },
+ {
+  "aliases": [
+   "VERIZON COMMUNICATIONS INC",
+   "VERIZON COMMUNICATIONS"
+  ],
+  "company": "VERIZON COMMUNICATIONS INC",
+  "composite_figi": null,
+  "key": "VZ_US_Equity",
+  "security_key": "VZ_US_Equity",
+  "ticker": "VZ US Equity"
+ },
+ {
+  "aliases": [
+   "Visa Inc",
+   "Visa"
+  ],
+  "company": "Visa Inc",
+  "composite_figi": null,
+  "key": "V_US_Equity",
+  "security_key": "V_US_Equity",
+  "ticker": "V US Equity"
+ },
+ {
+  "aliases": [
+   "Walmart de Mexico WALMEX"
+  ],
+  "company": "Walmart de Mexico WALMEX",
+  "composite_figi": null,
+  "key": "WALMEX*_MM_Equity",
+  "security_key": "WALMEX*_MM_Equity",
+  "ticker": "WALMEX* MM"
+ },
+ {
+  "aliases": [
+   "Workday Inc",
+   "Workday"
+  ],
+  "company": "Workday Inc",
+  "composite_figi": null,
+  "key": "WDAY_US_Equity",
+  "security_key": "WDAY_US_Equity",
+  "ticker": "WDAY US Equity"
+ },
+ {
+  "aliases": [
+   "Western Digital Corp",
+   "Western Digital"
+  ],
+  "company": "Western Digital Corp",
+  "composite_figi": null,
+  "key": "WDC_US_Equity",
+  "security_key": "WDC_US_Equity",
+  "ticker": "WDC US Equity"
+ },
+ {
+  "aliases": [
+   "Wal-Mart de Mexico SAB de CV",
+   "Wal-Mart de Mexico"
+  ],
+  "company": "Wal-Mart de Mexico SAB de CV",
+  "composite_figi": null,
+  "key": "WMMVY_US_Equity",
+  "security_key": "WMMVY_US_Equity",
+  "ticker": "WMMVY US Equity"
+ },
+ {
+  "aliases": [
+   "Waste Management Inc",
+   "Waste Management"
+  ],
+  "company": "Waste Management Inc",
+  "composite_figi": null,
+  "key": "WM_US_Equity",
+  "security_key": "WM_US_Equity",
+  "ticker": "WM US Equity"
+ },
+ {
+  "aliases": [
+   "ExxonMobil Holdings Corp",
+   "ExxonMobil Holdings",
+   "ExxonMobil"
+  ],
+  "company": "ExxonMobil Holdings Corp",
+  "composite_figi": null,
+  "key": "XOM_US_Equity",
+  "security_key": "XOM_US_Equity",
+  "ticker": "XOM US Equity"
+ },
+ {
+  "aliases": [
+   "Zurich Insurance"
+  ],
+  "company": "Zurich Insurance",
+  "composite_figi": null,
+  "key": "ZURN_SW_Equity",
+  "security_key": "ZURN_SW_Equity",
+  "ticker": "ZURN SW"
+ }
+]
