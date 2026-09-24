@@ -1432,3 +1432,107 @@ INTERNAL schema certifies the internal shape and cannot see the PUBLIC boundary;
 validates against the schema the consumer validates against.
 
 ### Holdings status repackage: CRO pin merged onto the backend branch at 3d7f66b83b; BEFORE/AFTER awaited.
+
+
+## 2026-09-24 02:5x UTC - Claude CTO batch 19: Holdings status deployed and verified; legacy probe disable GO; D1 fired
+
+### IRPT-HOLDINGS-SUCCESS-STATUS-20260924 -- DEPLOYED 02:45:27Z (P 100021), CTO-VERIFIED
+P: saved plan af3b34e3 applied 0/1/0; member census 33/33 with exactly entry.py differing (== pin
+6660c155 / 13012979e1); holdings/tests 144 passed, no skips, at the merge 3d7f66b83b; recorder
+c29054e73c; ledger irpt-holdings-status-20260924 CLOSED @bcadb446ba. CTO readback 02:5xZ
+(get-function-configuration): CodeSha256 3nc57No0b8rSnz9xbyenToYWgb91aoDT87RHrIJ5vAQ= == the built
+artifact; LastModified 02:45:22Z; Active / Successful; handler entry.lambda_handler; layers exactly
+irpt-common:5; timeout 29; memory 1024. Andrew's retest requested via MSTR 100024 (expected: the
+Holdings TABLE; CRO reads the HAR in place expecting READY / HOLDINGS_READY / 2026-09-22). EXERCISED
+reading pending at this write.
+
+### IRPT-RESIDENT-LEGACY-PROBE-DISABLE-20260924 -- GO (P 100027 item 2; CTO 100030)
+Found by P while measuring the cutover receipt booleans: EventBridge ycharts-session-probe-schedule
+ENABLED cron(0 */6 * * ? *) -> Lambda ycharts-session-probe, which replays the resident's cookies
+against the vendor from a different client every six hours -- the race Y's RESIDENT_ASSEMBLY_HANDOFF
+item 5 forbids and the receipt's legacy_probe_disabled boolean asserts. CTO own reads: describe-rule
+ENABLED, one target; P's saved plan ee5160cf decoded by the CTO's own terraform show -json in the
+ycharts-pipeline root: 1 of 26 changes, aws_cloudwatch_event_rule.session_probe update, changed keys
+exactly {state ENABLED -> DISABLED, description}; the Lambda stays deployed and on-demand invokable (C2
+unchanged). A monitor retired in favour of the owner, not one built; the session-eviction alarm it fed
+goes quiet and is stated in the receipt. Sequence: ledger sentinel before the act, safe-apply of the
+SAVED plan, describe-rule readback DISABLED, re-plan 0, ledger close, receipt boolean set FROM THE
+READBACK; before the rule's next fire at 06:00Z. Lane ycharts-pipeline = CLOUD_OPS_OR_ETL, audited
+override on the CTO's word.
+
+### Resident host deps (P 100027 item 3): ACCEPTED
+jsonschema 4.23.0 + referencing 0.35.1 (with attrs, jsonschema-specifications, rpds-py) staged under
+/opt/investor-reporting-ycharts/pydeps by dnf python3-pip + pip --target on the pip-less host, chowned
+ec2-user, import-checked; copied into the package root at install; listed with digests in the receipt
+beside SHA256SUMS. Package-mirror egress of the deploy document's own class (npm install / playwright
+install); no vendor origin. Lockfile vendoring by the builder = enrichment item (Y's call), reversible.
+
+### Cutover progress (P 100027 item 1)
+Host pins read back at 282f7ea427 (library 34df3e94, wrapper 55ddb8f7, package.json 860612d6,
+secret-ids.env 88ee08c2); browsers under ec2-user; no units/cron; pre-D1: credentials AWSCURRENT
+present, ycharts/session/current VersionIdsToStages null, lease row lease_owner null fence 4, 0 event
+source mappings. D1 FIRED ONCE 02:54:32Z (irpt-ycharts-run Task=probe MaxReacquisitions=1, SSM
+71d0961f) under the standing host-workflow authorization (CRO 6fc3f5f785 item 3). The exercised arm
+of IRPT-RESIDENT-SESSION-BUNDLE-CONTRACT-20260924 = the wrapper receipt + broker.current() grading the
+fresh bundle versioned + transport accepting it.
+
+### IRPT-RESIDENT-D1-RERUN-20260924 (P 100033; CTO 100036)
+D1 RESULT: exit 1, AUTH_FAILED, 8 x {CH-AUTHENTICATED, via dom}, `filled` false -- ZERO credential
+submissions, no POST, no bundle written (secret VersionIdsToStages still null, lease unchanged, fence
+4). The GO's ONE sign-in was NOT spent; eight loads of the public /login/ page were. Diagnosis
+(static, 282f7ea427): classifyScreen's app-chrome selectors (nav a[href*='/dashboard'], a[href*=
+'/model_portfolios']) match the SIGNED-OUT page while no password input matched, so the page classed
+CH-AUTHENTICATED via dom; the probe returned NO_IDENTITY_COOKIE without a request; the loop waited.
+The README's own "the sign-in DOM and selector list are a MODEL, unmeasured" line came true; the run
+carried no page evidence. EXPOSURE (no submission), not an incident.
+WORD: (1) commit the fix exactly as bounded -- CH-AUTHENTICATED + NO_IDENTITY_COOKIE + nothing
+submitted -> AuthError retried:false at once; screenEvidence(page) = url, selector hit COUNTS per
+model group, input census by TYPE, form count, 300-char public text sample, never a credential /
+cookie value / field name; attached to that failure and to the MAX_STEPS failure; each step records
+the probe reason; sign-in fill, identity read, bundle contract, persist untouched; (2) Y STANDS on the
+committed diff (the evidence field lands in a receipt Y's runbook reads); (3) ONE run of
+irpt-ycharts-run Task=probe MaxReacquisitions=1 at the fixed pin, AT MOST ONE credential submission:
+outcome A signs in -> D1 done; outcome B fails explicitly naming the page -> STOP, the selector model
+is edited from the measured evidence, Y reviews, a further run needs a further word. CTO's own read of
+P's working-tree diff (47 lines): matches the bounds; node --check ok; bundle_contract failed 0;
+offline suite all_pass. Probe-disable GO (100030) does not wait on D1.
+AMENDED (CRO 100042, Y 100047; CTO 100049/100052) BEFORE the run fired: the runner's login route is
+WRONG -- ycharts_session.js:725 opens /login/ while every measured YCharts login in the estate is
+/account/login/ (the CRO's 09-10 live-verified probe probe_split_session.cjs:133/:51, 302 sign-in,
+dashboard matched the account email @48db22d1bf; the older capture Lambda index.mjs:101). Y confirmed
+from the source three more lines that would WASTE the single submission once the route is right: the
+page-wide username pick (:933) lands in the newsletter decoy's input[type=email]; the submit pick
+(:940-941) clicks a hidden native submit (30 s timeout) or the decoy's button; no /dashboard/ warm-up
+(the aws-waf-token). The committed diff therefore carries (a)-(c) plus (d) default '/account/login/';
+(e) form-scoped fill per login_form.cjs:3-8 (password input[type=password]:visible, its form, the
+username inside that form incl. [name="auth-username"]); (f) submit = Enter in the password field +
+the POST observer so the receipt states "N submissions, fields matched"; (g) /dashboard/ first, then
+the login route, bounded wait for a visible password input; (h) auth-username in the selector model.
+Y STANDS on that pin, then ONE run, at most one submission; outcome B stops. The CRO's limit: EC2-to-
+YCharts portability is unverified until this run.
+
+### Resident host deps, WIDENED (Y 100040; CTO 100044 item 2)
+Y's import census over the 82 packaged non-test .py files: third-party = boto3, botocore, jsonschema,
+referencing, pdfplumber (ycharts/extract/extract.py, lazy), pdfminer (ycharts/extract/fonts.py, lazy)
+-- the certified-report hop 7 imports the PDF libraries through publisher -> publication -> extract,
+so a --once poll on an empty queue passes without them and the FIRST real job would park ATTENTION at
+hop 7. P re-stages from infra/aws/lambda/layers/irpt-common/requirements.txt (jsonschema 4.26.0,
+referencing 0.37.0, attrs 26.1.0, jsonschema-specifications 2025.9.1, rpds-py 2026.6.3,
+typing_extensions 4.16.0 -- the deployed Lambdas' and the offline suite's set) plus pdfplumber 0.11.9,
+pdfminer.six 20251230, pypdfium2 5.7.1, Pillow 12.1.1 and their resolution; import check names the
+lazy modules explicitly; the receipt lists each distribution with version + digest.
+
+### ANDREW-DIRECT 2026-09-24 ~03:0xZ at the CTO terminal -- Anna's table RENDERS; two new findings
+Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_030xZ_ANNA_TABLE_RENDERS_GLOBAL_VIEW_AND_MODEL_BREAKDOWN_MISSING.md
+(verbatim + screenshot transcription). EXERCISED: USD 26,303,302.17, READY, the table renders -- the
+fence exemption and the success status are exercised end to end by Andrew's own request. FINDING A:
+Anna is absent from the "Global" view and present only under the Cottonwood dropdown; standing
+authority: Opal users default to Global and everyone appears there. Routed to P (100044 item 1):
+measure resolve-scope / directory-browse / directory-search for an Opal principal at GLOBAL, which
+firms' directories the GLOBAL union reads and from which artifacts, whether cottonwood's is in it, and
+the request context of Andrew's attempt. FINDING B: acc_0698 renders one "models" node at 100% with
+observed-custody basis, "Model coverage 0 of 1 accounts", no model / Opal model / asset-taxonomy
+breakdown, Supervision / Advisory "withheld". Routed to M (100043): the accepted COT publication's
+content for 0698 / d486 / combined (node kinds, model leaves, holdout status), the coverage field the
+portal reads, and whether "withheld" is data, server (P 100044 item 3), or rendering. The CTO rules
+each fix on the measured fact; nothing wider inferred from the word.

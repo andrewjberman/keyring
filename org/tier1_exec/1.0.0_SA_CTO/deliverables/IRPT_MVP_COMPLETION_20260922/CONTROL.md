@@ -19,7 +19,11 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (1) Anna NOT_READY: ROOT CAUSE (batch 12) = the DenyForeignFirmPrincipals
+CTO review queue, in order: (0) NEW after Andrew's ~03:0xZ retest (table RENDERS, USD 26,303,302.17
+READY -- fence + status fixes EXERCISED): FINDING A Anna absent from the Global view (P measures the GLOBAL
+directory union, 100044); FINDING B acc_0698 shows one "models" node, coverage 0 of 1, no model/taxonomy
+breakdown, Supervision/Advisory withheld (M measures the publication, 100043; P the server half). CTO
+rules each on the measured fact. (1) Anna NOT_READY: ROOT CAUSE (batch 12) = the DenyForeignFirmPrincipals
 bucket policy denied irpt-holdings-role; REMEDY APPLIED 02:04:06Z (registry 8b4c15c6ba, plan 1fef40d3,
 halves CTO 99959 + CRO 99962, ledger CLOSED @7220e4a4f3) and CTO-VERIFIED (batch 14: role allowed 6/6
 with the live policies, was denied 6/6); sink repackage APPLIED (CodeSha xd4mk5fx). EXERCISED 02:12Z:
@@ -29,8 +33,11 @@ the CRO's three schema corrections; Andrew-direct ~02:2xZ "fix the ready flag, s
 pin cro-holdings-status-20260924 @01bdf54cfd is CTO-REVIEWED and GO'd (batch 17: own run 144 passed, own
 negative arm 2 failed on the pre-fix file); P deploys it code-only, then Andrew retests; portal unchanged); (1b) resident
 cutover: plan 04c77cbe APPLIED 01:53Z (host running, runner deployed); S119 (JS bundle lacked the
-versioned contract) FIXED @282f7ea427 (library 34df3e94), CTO read + Y STANDS (batch 18); P uploads,
-redeploys, reads pins back, builds the package, then the ONE D1 sign-in, C1 receipt, Y's 12.03 runbook;
+versioned contract) FIXED @282f7ea427 (library 34df3e94), CTO read + Y STANDS (batch 18); runner deployed at
+282f7ea427; D1 fired 02:54Z and FAILED with ZERO submissions (wrong login route /login/ vs the measured
+/account/login/ + decoy-prone form logic); re-run word AMENDED (batch 19: route, form-scoped fill, Enter
+submit, /dashboard/ warm-up, evidence; Y STANDS then ONE submission); legacy 6h probe disable GO'd (plan
+ee5160cf, before 06:00Z); host deps widened to the irpt-common pins + pdfplumber set; then C1, Y's runbook;
 Performance success-status fix 786f767796 accepted, rides the next Performance package; (2) P's Performance apply
 receipt and the authority/host-tag apply receipt; (3) P's NOT_READY vocabulary addendum
 2cdbe2bd60 (ratified text); (4) M's 49F 7c0e7ce3 (160 writes) and INF 1ebc7696 (35 writes) publications have CTO GOs
