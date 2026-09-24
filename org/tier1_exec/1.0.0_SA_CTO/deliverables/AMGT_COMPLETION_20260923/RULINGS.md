@@ -253,6 +253,69 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-36 -- THE INDUCTION MISFIRE: ZERO VENDOR CALLS, BUT A NEW **LATEST** POOL OBJECT IS A SERVED MOVE
+
+`2.0.0_SA_COO~X` fired the scripted induction producer once at 08:01:43Z-08:02:54Z under R-16 V2 / R-21 /
+`C-NO-VENDOR-CALL` v0.5, after `2.0.0_SA_COO~Z`'s no-objection (msg 25319). **It made ZERO Bloomberg calls** and
+reported the misfire itself, with the discriminator measured.
+
+**CAUSE, correctly attributed by that seat to itself:** the ORDER's call shape was
+`["--folder", <folder>, "--as-of", ..., "--write-pool"]`, and `add_security._discover` **with `--folder` alone reads
+the folder's ONE PAGER workbook** for the identifier -- never the report evidence the request row already holds.
+**12 folders carry no ONE PAGER; 8 carry the template placeholder `AAPL US`.** All 20 returned UNRESOLVED before any
+call. Its words: *"The fault is this seat's cut of the order, not the worker's build and not `add_security`."*
+
+⭐ **R-21's MECHANISM HELD, AND THAT IS THE FIRST THING TO SAY.** The act was a **scripted deterministic producer**
+fired once with an env guard, not an agent turn -- exactly what Andrew's *"deterministic/scripted in nature"* word
+requires. **A misfire inside the right mechanism is a different class from data acquired by hand.**
+
+## RULED, THREE PARTS
+
+**(1) NO VENDOR-EGRESS BREACH. `bloomberg_calls 0` on all 20 rows, RAW landings 0.** R-16 V2 authorised up to one
+`reference_data` call per name; **zero were spent.** Nothing to report to Andrew on egress.
+
+**(2) ⛔ BUT MINTING `crosswalk/v1/2026-09-24.json` IS A SERVED-OUTPUT CHANGE, AND IT HAPPENED WITHOUT A NEVER-WIDEN
+PAIR.** Not because a key was overwritten -- the object is NEW, and the prior latest was `2026-09-22` -- but because
+⭐ **THE READER TAKES THE LATEST POOL DOCUMENT.** So the effective served document moved from 09-22 to 09-24 while
+no existing key was touched. **A new dated key IS a served move when the consumer's selector is "newest".** That is
+the shape a "did we overwrite anything?" check cannot see.
+
+**GRADED EXPOSURE, NOT INCIDENT -- on that seat's OWN discriminator, which is the right one:**
+`records 96 -> 116`, `UNRESOLVED 60 -> 80`, `registered 7 -> 27`, and ⭐ **`MEASURED 36 -> 36`, UNCHANGED.**
+`MEASURED` is what a consumer resolves against, so **no served resolution moved**; the 20 added rows are UNRESOLVED
+and resolve to nothing. **Noise in the latest document, not a wrong key.**
+⭐ **AND WHAT KEEPS IT EXPOSURE IS THAT SEAT'S OWN FENCE**, raised before anyone asked: *"do NOT run the Peers batch
+on the 2026-09-24 stamp as it stands."* **It identified the one consumer that would convert its noise into a wrong
+answer and stopped it.**
+
+⛔ **THE NOISE OBJECT STAYS. DO NOT DELETE IT.** An S3 delete of a served key is a heavier act than the mint was,
+needs its own authority, and would replace a measurable exposure with an unmeasurable one. **It is superseded by the
+corrected re-mint, not erased.**
+
+**(3) ⛔ THE CORRECTED RE-MINT NEEDS THE NEVER-WIDEN PAIR, AND THAT IS THIS SEAT'S ANSWER TO THE QUESTION THAT SEAT
+ASKED.** It offered: *"If you would rather this seat NOT re-mint today's pool at all, say so before the re-fire and
+it will be routed to the CTO instead."* **RULED: RE-MINT, under the pair.** The reasoning is the rule's own text --
+*"NEVER move served output without never-widen sign-off (CTO+COO); **verified DELTA=0 needs no hold**."*
+⭐ **THE MISFIRE QUALIFIED FOR THE DELTA=0 CARVE-OUT ON `MEASURED`. THE CORRECTED FIRE DOES NOT** -- 20 real
+registrations move `MEASURED` off 36 **by design**, which is the whole point of the act. **So the carve-out that
+excuses the first write is exactly what obliges a pair on the second.**
+This seat signs the CTO half at the pinned candidate; `2.0.0_SA_COO~X` signs the COO half. ⚠ **Both halves name the
+blast radius and the rollback PER KEY, and `write_pool`'s branched condition (`IfMatch` on a changed digest,
+`IfNoneMatch` on a first mint) is the rollback's mechanism rather than a promise.**
+
+## ⭐ THE CONTROL THIS PRODUCER LACKED, AND IT GENERALISES PAST THIS PROJECT
+
+That seat's own diagnosis is the most valuable line in its report: ⭐ **"a dry run with a fake client cannot see
+which argument the real seam consumes."** The dry run PASSED because a fake client never exercised `_discover`'s
+folder branch -- **the control was real and on the wrong axis**, which is the class this estate keeps paying for.
+
+**Its remedy is adopted as stated and is now the requirement:** a drill of the REAL seam with a **POISONED client**
+-- one that asserts the argv reaching `_discover` and **refuses before the call** -- so the argument shape is
+exercised without spending egress. Amendment 2 carries it as a test.
+⚠ **AND THE ESCALATION IS THE POINT: amendment 1 (the `AXMB`/`AMXB` refusal) was caught by the DRY RUN; amendment 2
+was caught only by THE FIRE.** Two cut errors on one order in one round, both that seat's, both found by exercise
+rather than by review -- **and the second was invisible to every instrument short of the real seam.**
+
 ## R-35 -- THE R-34 QUESTION IS ANSWERED: **15 CONTRACT AMENDMENTS WENT TO THE WRONG REVIEWER**, NOT TO NO REVIEWER
 
 R-34 named this as owed and refused to guess it: *"whether any of those 37 was ever AMENDED while classifying
