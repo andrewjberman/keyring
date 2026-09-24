@@ -1,0 +1,47 @@
+{
+  "project_code": "NFRA_MCPORTAL",
+  "macro_code": "NFRA",
+  "directive": "D6",
+  "fabric": "site-z",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "created": "2026-09-24",
+  "registered_under_tree": "2026-09-24",
+  "placement": "SITEZ",
+  "pods": [],
+  "related": [
+    "NFRA_OPALAI",
+    "NFRA_MCPINDEX",
+    "NFRA_OPLGTW",
+    "NFRA_REPORT",
+    "NFRA_OPSEC202609"
+  ],
+  "name": "mcportal -- the operator console at mcp.opalinvest.dev: the MCP Server pages (tool library beside the data properties, per-person grants that take effect on the next call, the call log, the kill switch), user management and demo logins for opalinvest.dev, user analytics, the Operations Report, health, cost and infosec -- Andrew only, in its own repo Opal-Capital/mcportal",
+  "description": "Brief docs/briefs/mcportal-tech-ops-dashboard-brief-20260917.md (4.0.0_SA_CRO, every page card answered by Andrew on 2026-09-17; his words verbatim there, including 'I would actually build out a new repo called mcportal' and 'For MCP Ops: Take effect immediately'). Registered 2026-09-24 by 1.0.0_SA_CTO~O under Andrew's goal 'Finish all D6 opal_ai work, including the MCPINDEX, any and all MCP server work, entitlements, integrations with MCP, etc.' with licence to create and register projects (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_210xZ_CTO_O_GOAL_FINISH_ALL_D6_OPAL_AI.md). The whole brief is registered as one product because Andrew interviewed it as one; its MCP Server pages are the entitlements and MCP-server surface his goal names.",
+  "phase": "L3 REGISTERED 2026-09-24 by 1.0.0_SA_CTO~O under D6/NFRA. || L2 ENDPOINT FWD-1..FWD-13 emitted and CONFIRMED by 1.0.0_SA_CTO~O under the goal's licence (org/tier1_exec/1.0.0_SA_CTO/deliverables/MCPORTAL_ENDPOINT_FORWARD_20260924.md); Andrew may amend any line. || L1 BRIEF docs/briefs/mcportal-tech-ops-dashboard-brief-20260917.md (4.0.0_SA_CRO).",
+  "blocking": "NOT BLOCKED -- L4 PRD next, 1.0.0_SA_CTO~O.",
+  "brief_ref": "docs/briefs/mcportal-tech-ops-dashboard-brief-20260917.md",
+  "prds": [],
+  "prd_lineage": [],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO~O",
+    "coo": "2.0.0_SA_COO~O",
+    "cvo": "3.0.0_SA_CVO~O",
+    "cro": "4.0.0_SA_CRO",
+    "workers": "the worker subagents the COO's L6 issuance names (0.9.0_WK_NFRA_MCPORTAL~<n>)"
+  },
+  "coo_lane": "2.0.0_SA_COO~O",
+  "fabric_ruling": "site-z -- INHERITED FROM THE DIRECTIVE. D6's placement reads SITEZ; placement attaches to the directive, never to a member (LD-0498, LD-0502).",
+  "rulings": [
+    "ADDRESS mcp.opalinvest.dev -- Andrew 2026-09-17: 'Sorry this is definitely the .dev domain' (brief).",
+    "OWN REPO mcportal -- Andrew 2026-09-17: 'I would actually build out a new repo called mcportal for this purpose' (brief).",
+    "ANDREW ONLY, EXCEPT /sprint -- Andrew 2026-09-17: 'Yes just me' and 'any Opal MS user should have access to it' (brief).",
+    "GRANTS TAKE EFFECT IMMEDIATELY -- Andrew 2026-09-17: 'For MCP Ops: Take effect immediately' (brief).",
+    "NOT AN ALERT -- Andrew 2026-09-17: 'This is not an alert, this is an analytics dashboard. Strictly read when opened.' (brief)."
+  ],
+  "thread_counter": 0,
+  "threads": []
+}
