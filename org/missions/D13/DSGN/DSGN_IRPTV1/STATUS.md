@@ -5,15 +5,15 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1
 `org/mcp/drive-mode.log` line 1 (Andrew-direct ~17:4xZ blast mode), lease to 2026-09-24T20:41:52Z. Build place:
 the main portal checkout on DEV (Andrew-direct ~18:3xZ). Design direction: Andrew-direct ~19:4xZ,
 `org/tier1_exec/2.0.0_SA_COO~D/deliverables/ANDREW_DIRECT_20260924_194xZ_IRPT_DESIGN_NOTES/`.
-As of 2026-09-24T20:3xZ.
+As of 2026-09-24T20:2xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal pin | `93b28880` = origin DEV (ls-remote read after the push) |
-| This session on DEV | P candidate 8 `237bdfda`; S6 `92d16efc`; firm tab + exact amounts `a65a8db5`; S7 `c1d7aefe`, `9902bf25`; breadcrumb `d6288d80` (merged over site Z as `c82f0bbb`); header `93b28880` |
+| Portal pin | `088386fe` = origin DEV (ls-remote read after the push) |
+| This session on DEV | P candidate 8 `237bdfda`; S6 `92d16efc`; firm tab + exact amounts `a65a8db5`; S7 `c1d7aefe`, `9902bf25`; breadcrumb `d6288d80` (merged over site Z as `c82f0bbb`); header `93b28880`; Analysis upload lane `088386fe` |
 | Deployed | DEV CI deploys opalinvest.dev from DEV; PROD `a0690a03` untouched (gated) |
 | Screen | `localhost:5174` from the main checkout (`bun run dev --port 5174`, its `.env.local`), log `C:/tmp/portal-main.vite5174.log` |
 | Workspace push state | CLOUD LOCAL |
@@ -32,6 +32,7 @@ NOT LIVE END TO END. Andrew's HAR at ~18:3xZ exercised the signed-in API journey
 | S7 (8 legacy failures) | 4 FIXED @c1d7aefe + @9902bf25; 4 re-scope on CTO 100865 (own call) | row S9 |
 | Breadcrumb root id | CANDIDATE @d6288d80 | `breadcrumb.fast-run.png` |
 | Header: chip flood, account bubbles, white input, tab scrollbar | CANDIDATE @93b28880 | `design-notes-1.fast-run.{png,txt}` (OS dark mode) |
+| Analysis upload on the served template lane (Y BLOCKER 100869, edits 1-3) | CANDIDATE @088386fe; edit 4 waits on P's contract patch | `upload-lane.fast-run.{png,txt}`, `upload-lane-driver.mjs` |
 
 Nothing here is CVO-graded yet.
 
@@ -69,7 +70,7 @@ the request-history panels are gone. One real run on 5174, screenshot read.
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
 | IRPT portal candidates | `2.0.0_SA_COO~P`, `~M`, `~Y` | one message: branch, tip, suites run | P 8 CONSUMED |
-| Template upload poll | `2.0.0_SA_COO~Y` | msg 100825 | PUBLISHED, live once P composes it |
+| Template upload lane | `2.0.0_SA_COO~Y` / `2.0.0_SA_COO~P` | Y spec @194ee0dc4b; P's contract patch for the wire regen | CONSUMED @088386fe; regen AWAITED |
 | `spread` served | `2.0.0_SA_COO~P` | performance contract | AWAITED |
 
 ## Parked
