@@ -18,7 +18,7 @@ hop is live; the PRECONDITIONS table is the measured state and each row names wh
 | E | `GET .../analysis/requests` and `GET .../analysis/requests/{requestId}` DECLARED on `irpt-status` and LiveClient flags true | routes.json `NO-HANDLER-AT-HEAD`; portal `responses.ts:424-425` = `false`; the handlers exist in `ops/entry.py:200-201` since `8e8498c9c0` (2026-09-22 20:29 ET) but the deployed `irpt-status` (CodeSha256 `Hos/bFii...`, == source map) was built 2026-09-21T15:03Z, so it predates them | P: flip the two rows to DECLARED / handler `irpt-status`, rebuild + deploy irpt-status at a pin carrying 8e8498c9c0, flip the flags |
 | F | Submit path: `irpt-ycharts-generate` deployed at a pin carrying HEAD's `entry.py`, role has `sqs:SendMessage` on `irpt-generation`, `IRPT_LIVE_YCHARTS_CALL` set | deployed 2026-09-19, CodeSha256 `1L60sG1G...` != source map `CJ6aBh7B...`; no SendMessage; env unset | P (CRO 6fc3f5f785 item 5) |
 | G | Real login at a firm with a real advisor/prospect owner; Global default for an Opal user | localhost:5174 through CloudFront `d2n2nzpeqf34ge.cloudfront.net` (P) | Andrew's browser act; Y prepares |
-| H | Vendor session: `ycharts/session/current` secret populated; first automated sign-in approved (D1, 6fc3f5f785) | not exercised on the host | Host workflow under Andrew's standing approval; never an agent ad hoc call |
+| H | Vendor session: the runner WRITES the first version of `ycharts/session/current` (the object there today is the 2026-05-21 legacy bundle, VersionIdsToStages null, never accessed -- CRO trace 2ee8926519); first automated sign-in approved (D1, 6fc3f5f785) | sign-in proven 4x on the host (runs 2-5); no bundle written yet; the fifth submission follows Y's STANDS on P's runner commit | Host workflow under Andrew's standing approval; never an agent ad hoc call |
 
 ## The journey, hop by hop
 
@@ -44,7 +44,7 @@ recipient string; `report_title` "Retained input analysis". Firm = the signed-in
 
 1. Deployed digests: `irpt-ycharts-generate`, `irpt-status`, `irpt-export-render` CodeSha256 at run time versus the
    source map; host package `SHA256SUMS` sha and the factory module path from P's cutover receipt; wrapper and
-   library pins the session installed (wrapper `55ddb8f7947cba7c...`, library `e1c8dc30093a48a0...` at P fc932d468b,
+   library pins the session installed (wrapper `55ddb8f7947cba7c...`, library `feab2c53331528f0...` at P 5919c5363a,
    the S119 bundle contract, the measured sign-in route/form and the in-page probe with the pair control; superseded
    blobs `5a1a8695...`, `34df3e94...`, `41ffebbe...`).
 2. Immutable revisions: `input_id`, `identity.request_id`, `revision`, `composition_ref.sha256`, `accepted_at`,
