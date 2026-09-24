@@ -1,13 +1,12 @@
 {
   "prd": "DSGN_IRPTV1_PRD.md",
-  "prd_version": "v0.7",
-  "prd_pin": "8942931687cb8c556432513d972504c47c014ca1",
+  "prd_version": "v0.8",
+  "prd_pin": "31a61d04668c0f68758d84058e7bda700a516406",
   "half": "ratified-text",
-  "half_hash": "eda43d9a7a6be6cb6347cd95db84e59ded8835c5f8f921d9d97af6218b519546",
-  "endpoint_hash": "5c40ea8d882ff072129d83e3ac193ce4f12ecda31a4ae5f4c9a22a2737acca19",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_PRD_v0.7_L4R_RATIFIED_TEXT_REVIEW_20260924.md@12b89b8dd4",
+  "half_hash": "9f2702c16e62630028cbc56d1d988871d9f9643a4f031bc48fb4710a964770fc",
+  "endpoint_hash": "0193ebd965d7252d448fa63d26e31c8128b6dc9cf1823d0d488bab462999d176",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_PRD_v0.8_L4R_RATIFIED_TEXT_SIGNED_20260924.md@da7e114a5c",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-24T22:55:25Z",
-  "reason": "FWD-5/FWD-6 footer clauses (:88-89, :97-98) contradict FWD-18 source-and-time-only footers (:197-198); FWD-7 'the first step is three cards' (:105) contradicts FWD-8 'the first step leads with the upload' (:120); three-clause fix in the review"
+  "signed_at": "2026-09-24T23:02:11Z"
 }
