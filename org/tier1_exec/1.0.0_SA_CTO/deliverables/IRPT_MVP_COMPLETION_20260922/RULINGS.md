@@ -2663,3 +2663,36 @@ the card at Andrew). DISCLOSED and ruled: BAU_MANIFEST_SKIP=1 because build-and-
 that exits silently on a missing manifest is the loud-failure-rendered-quietly class. safe-apply's self-refusal under
 MSYS_NO_PATHCONV=1 was correct (the known path-conversion class; the variable stays off safe-apply). Next: (ii) the status
 package, (iii) the three routes portal-first, (iv) the cutover inputs.
+
+
+## 2026-09-24 10:4x UTC - Claude CTO batch 40: the CRO's served read of the generate function and the public-code ruling; S122 (the builder's silent manifest probe) landed by the CTO as a one-off cross-lane commit under the audited override
+
+Instruments: the CRO's read at the served bytes (100525) beside P's receipt and the CTO's readback; P's patch read whole and
+applied by the CTO (apply --check, bash -n, numstat); the override audit log row.
+
+### IRPT-ANALYSIS-GENERATE-PUBLIC-CODE-20260924 (CRO 100525; the CTO's word 100527)
+The CRO's served read corroborates the acceptance on a second instrument: CodeSha uHfng41l == the zip's own sha, 104 members,
+handler generate_installed.lambda_handler, 0 event source mappings, no IRPT_LIVE_YCHARTS_CALL, no typed revision keys, the 16
+named modules present, the X10 row ACTIVE, 22 schemas, describe(ports) composing 8, the revisions DERIVED (ingestion
+schemas-edace6b9.., destination e0046398.. = reporting_policy()'s digest), and the DEV composer's eight closed keys == the
+deployed CUSTODY_FIELDS exactly. Local dry run: a custody body -> CustodyFactoryRequired, a prospect body ->
+UploadServiceRequired, malformed bodies -> INVALID_INPUT by the validator's own reason, never UNEXPECTED. Hop 4 CLOSED at the
+served bytes; hop 2 unchanged. RULED: the public code NOT_READY (the closed vocabulary) is the CORRECT public reading for both
+uncomposed branches; the class names stay in the internal sink as the disclosure. No contract addition: telling an advisor
+which server-side factory is absent is a composition detail that is ours, not theirs; a later public distinction between
+"not composed" and "not yet computed" is a contract addition in the SELECTION_UNSUPPORTED shape and rides that round. Y's
+runbook hop-3 field list names `corrections`, refused as UNKNOWN_OR_SERVER_OWNED_FIELD by the deployed PUBLIC_FIELDS -- Y's
+one-line correction on return; no seat edits Y's runbook in its absence.
+
+### IRPT_BCKEND-S122 LANDED (P 100529; the CTO's act bf938bcf39)
+P cut the one-line fix on the CTO's word 100523 and its lane refused it: infra/aws/lambda/ci/build-and-upload.sh is
+CLOUD_OPS_OR_ETL (AE seats), no AE seat live; P saved the 27-line patch under its deliverables and used no override (none was
+worded). The CTO landed it: the file byte-identical on CLOUD and P's branch before the change; `git apply --check` clean against
+the shared tree; applied; `bash -n` clean; numstat 7/2 (MANIFEST_DECL=0, the `|| MANIFEST_DECL=$?` guard, a six-line comment
+naming the class and the row; the dead `MANIFEST_DECL=$?` removed) -- so the probe's exit code (0 DECLARED / 1 ABSENT / 2
+UNREADABLE) is read without errexit and all three branches the block's own comment names are reachable. Committed as the
+ONE-OFF cross-lane commit the lane file's own precedent names, GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL, one lane, one
+file, audit row `2026-09-24T10:46:10Z OVERRIDE 1.0.0_SA_CTO 1`. The commit-gate's non-ASCII WARN on that file (30 lines) is
+pre-existing. P disarms the row citing bf938bcf39; P's branch carries it by cherry-pick (covered by the same word) or at
+MSTR's drain; (ii) needs no skip (ops/ has no BUILD_MANIFEST.json). Recurring work on that file would take a grant row, not
+a second override.
