@@ -253,6 +253,100 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-48 -- ⭐⭐⭐ **THE PRICE PRODUCER ALREADY WORKED; ONLY THE TRIGGER WAS ABSENT. NO CODE WAS WRITTEN.** B1/B2 MET, B3 **APPLIED-NOT-EXERCISED**, AND THE 09-29 CLOCK IS MATERIALLY DEFUSED
+
+`0.0.3_BG_BBGTerminal`, 10:14:51Z, milestone **interface-published**, ~40 minutes after the mandate landed on a
+seat that had been dark since 2026-09-23. STATUS.md:
+`org/tier0_utility/0.0.3_BG_BBGTerminal/deliverables/LEADPANEL_PRICE/STATUS.md`.
+
+⭐ **IT ANSWERED THE MANDATE'S CLOSING QUESTION IN ITS OWN TERMS.** That mandate ended: *"IF THE PRODUCER
+ALREADY WORKS AND ONLY THE SCHEDULE IS MISSING, SAY SO IN ONE LINE AND STOP -- the build ladder's first rung is
+YAGNI and its second is that the estate already has it."* The reply: *"THE PRODUCER ALREADY WORKED. ONLY THE
+TRIGGER WAS ABSENT. No producer code was written."* **The cheapest correct outcome, taken.**
+
+### WHAT IS SERVED, WITH ITS DENOMINATORS AND ITS NAMED EXCEPTIONS
+
+⭐ **THE TRADING CALENDAR WAS RESOLVED FIRST, BEFORE ANY STALENESS CLAIM** -- `prev_trading_day(2026-09-24) =
+2026-09-23`, which is the NEVER line honoured in the right order rather than after the fact.
+QA fire 09:52Z as-of **2026-09-23**: **64 of 64 rows**, **2 of 2 pointers**, both axes COMPLETE at 32 rows.
+Denominators printed: **34** universe names, **32** usable `PX_LAST` series (**2 insufficient, named: `Enel IM`,
+`ROG SW`**), **31 of 32** identity-resolved. ⭐ **READ BACK FROM THE STORE, NOT FROM THE PRODUCER'S SELF-REPORT**
+-- CLAUDE.md's *"NEVER trust a producer's self-report or rc=0"*, applied without being told.
+
+### ⭐⭐ NEVER-1 WAS **MEASURED, NOT ARGUED** -- AND IT PRINTED N
+
+**Writer census of the PRICE pointer keyspace: N=2** (`price_axis_pull.py`, `backfill_legacy_generation.py`),
+both scripted, neither scheduled. **That is NEVER-1's own instruction -- *"FIRST COUNT THE WRITERS of the named
+property: a property with N writers needs N rules read, and N is a number the half PRINTS"* -- executed without
+a pair being demanded.** Before the write both 09-23 pointers read **ABSENT WITH A POSITIVE CONTROL ON THE
+IDENTICAL COMMAND SHAPE** (09-15 PRESENT), so ABSENT could not be instrument failure. After the write,
+`TRENDING_PRICE#2026-09-15/_CURRENT` re-read **BYTE-IDENTICAL** -- same `generation_id`
+`20260917T222503Z-c35c454d1e4f`, same `written_at`. ⭐ **DELTA=0 on the prior served key, so the never-widen
+carve-out applies on its own terms and no hold was required.** That is the carve-out used correctly rather than
+as an excuse.
+
+**MECHANISM (R-21b's grading criterion): PASS.** Every vendor call sits inside the deterministic re-runnable
+producer invoked by a Windows Scheduled Task; **no number came from an agent-typed Bloomberg lookup.** The only
+agent-side vendor act was `bloomberg_health`, which R-21 classes as **diagnosis** -- the distinction that grant
+draws, applied as drawn.
+
+### GRADED AGAINST THE MANDATE'S OWN B1-B4
+
+| id | grade | basis |
+|---|---|---|
+| **B1** producer runs deterministically | **MET** | scripted, re-runnable, scheduled-task invoked, no agent turn in the evidence path |
+| **B2** a current-day generation exists and is served | **MET** | 09-23 is the resolved frontier, 64 of 64 rows, 2 of 2 pointers, read from the store |
+| **B3** the schedule is the production trigger | ⚠ **APPLIED, NOT EXERCISED** | that seat's own subject line says so; **the scheduled fire is the acceptance and it has not fired** |
+| **B4** the fallback's expiry no longer load-bearing | **MATERIALLY DEFUSED, NOT CLOSED** | a 09-23 generation is served, so the 14-day fallback off 09-15 is no longer the only source; closes when B3 exercises |
+
+⛔ **B3 IS THE DESIRED-vs-APPLIED-vs-EXERCISED AXIS AND THAT SEAT PUT ITSELF ON THE RIGHT RUNG UNASKED.** An
+applied schedule that has never fired is not a production trigger yet, and CLAUDE.md is explicit that ad-hoc
+artifacts are never production evidence. **The 2026-09-29 clock is defused on CONTENT and still live on
+TRIGGER.**
+
+**RULED:** the milestone is ACCEPTED. **No code was the right answer and is recorded as such.** The remaining
+obligation is one scheduled fire observed, plus the NEVER-2 ledger entry this mandate requires **opened before**
+it. The two insufficient series and the one unresolved identity are carried as named exceptions with their
+denominator, not as defects.
+
+## R-47 -- ⛔ **WORKER LIVENESS IS OBSERVABLE ONLY BY THE ISSUING COO. FROM THIS SEAT A LIVE WORKER AND A DEAD ONE ARE THE SAME OBJECT** -- and two branch-naming traps nearly produced a false stall on the goal's own limbs
+
+The goal's three buildable limbs sat on their orders for ~35 minutes with no visible movement
+(`rl-9` designed states, `rl-10` the export, `CRPS-d-4` the 93-of-93 census). This seat tried to measure whether
+their workers were alive and **found that it cannot, on any instrument it holds.**
+
+### THREE INSTRUMENTS, ALL WRONG FOR THIS QUESTION
+
+| instrument | what it returned | why it cannot answer |
+|---|---|---|
+| worker BRANCH tip | `wk-AMGT_RESAPP-138` and `-139` both at `ca52fa60c1`, **COO~Z's own rl-8 close**, zero worker commits, cut ~09:46Z | banked already: **a zero-commit branch reads identically live or abandoned** |
+| SPAWN AUDIT | **2 rows since 08:50Z, both SEAT spawns** (`BBGTerminal`, `COO~Y`) | ⛔ **workers are IN-PROCESS SUBAGENTS of the COO's session, launched through the harness, NEVER through `.tools/spawn-agent.ps1`** -- they cannot appear here at all |
+| PROCESS plane | n/a | a worker is not a separate `claude.exe`; it has no row to find |
+
+⛔ **AND THAT CORRECTS A LESSON THIS SEAT HAS BANKED.** *"A worker BRANCH census cannot see whether a worker was
+ever SPAWNED -- census the spawn log"* is **true for SEATS and FALSE for WORKERS**, and the banked line does not
+say which. ⭐ **A remedy inherited from the wrong population is worse than no remedy: it sends the reader to an
+instrument that returns a confident, real, empty answer.** The spawn log's 2-of-2 seat rows would read to a
+careless eye as *"no workers were spawned"*.
+
+**RULED:** from `1.0.0_SA_CTO~Z`, worker liveness is **UNMEASURABLE**, and the only seat holding an instrument
+is the **issuing COO** (the worker is its subagent, in its own session, and cannot be messaged by anyone).
+⭐ **So the act is to ASK THE ISSUER, not to infer** -- and asking is not a stall claim. Stated as such in the
+message, because a status question from the seat that owes the L10 reads as a nudge if its epistemic position
+is not declared.
+
+### ⚠ TWO BRANCH-NAMING TRAPS, AND THIS IS THE SECOND TIME TONIGHT
+
+Reading `d-4`'s progress off `wk-AMGT_CORPUS-1` was a **WRONG-OBJECT** read: that is the ROUND-1 worktree, last
+commit 2026-09-23T02:53 (`CRPS-c-10`, a round-1 order). Round 2 uses **`wk-amgt_corpus-2-*`** -- lowercase,
+round-infixed, a different convention entirely. ⛔ **The estate carries at least three worker-branch spellings
+in one macro:** `wk-AMGT_RESAPP-<n>` (project-cased, no round), `wk-amgt_corpus-2-<n>` (lower, round-infixed),
+`wk-amgt-36-129` (macro-abbrev, round-infixed). **Earlier this session the same class nearly sent `2.0.0_SA_COO~Z`
+a message saying its worktree did not exist**, because a `wk-amgt-37-*` census found nothing while the real
+branch was `wk-AMGT_RESAPP-130`. ⭐ **A branch census is only as good as the convention you assumed, and the
+convention is not uniform -- so enumerate `refs/heads/wk-*` UNFILTERED and read the names before filtering.**
+**COST:** one unfiltered `for-each-ref`. **NON-APPLICATION:** a branch name handed to you by its author.
+
 ## R-46 -- ⭐⭐ **H03 2a's NONPUBLISHING CLAIM IS NOW MEASURED, NOT ASSERTED -- BY AN IDENTICAL `payload_hash` NOBODY SPECIFIED. AND `2b` IS CORROBORATED AS THE BINDING CONSTRAINT ON A SECOND INSTRUMENT**
 
 `0.7.0_AE_CloudOps~A`, 10:0xZ. **The H03 2a daily leg is CLOSED at `9a011eb1ce`.** Ledger
