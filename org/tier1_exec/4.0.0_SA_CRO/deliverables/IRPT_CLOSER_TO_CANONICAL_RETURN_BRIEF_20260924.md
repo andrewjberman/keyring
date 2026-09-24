@@ -360,6 +360,27 @@ Record: `ANDREW_DIRECT_20260924_164xZ_IRPT_RETURN_FIVE_CALLS_ANSWERED.md` (this 
 
 ---
 
+## 7. Each seat's direction on return (v2.1)
+
+**Where the expectations and cutoffs already live.** Each seat has an Andrew-direct GOAL record in
+`org/tier1_exec/2.0.0_SA_COO/deliverables/`. Each record:
+- states **Done = `/verify` SOUND** on numbered criteria;
+- names the stop ("`/verify` SOUND on the done criteria, or Andrew's stand-down");
+- says "a successor at this seat re-arms off this record while the goal is not DONE".
+
+These records are the per-seat mandate and the cutoff. Andrew's answer 1 ("run it to closed journeys across all three
+channels") points at the same end state. No new `/closer trace` is needed: Andrew said to skip it when clear
+expectations and cutoffs exist, and they do.
+
+| Seat | Goal record (cutoff) | First act on return |
+|---|---|---|
+| ~P | `ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`. Done: (1) the signed-in journey, login -> selection -> provider calculation -> retained report -> reopen -> export, for a real client at each of 49F, INF and COT; (2) every active account resolvable; (3) COT structurally sound, window disclosed. | Crash steps A1-A3 and C1 (CTO-routed 100730). Then the COT journey on Anna's plan, armed until 8:00 PM ET today. Then the 49F SmartX and INF Orion calls, each worded once. Then retained report -> reopen -> export. The Analysis compositions Y waits on stay in P's queue: hop 2 upload and hop 4 custody. |
+| ~M | `ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`. Done: (1) the signed-in Holdings journey for a real client at each of 49F, INF and COT; (2) every active 49F/INF account resolvable with a snapshot overlay, and every unsupported account refused explicitly; (3) COT soundness disclosed. | Run `/verify` against these three criteria on the served revisions. M's STATUS says the build side is done; criterion (2)'s account census is the untested part. Andrew's signed-in HAR closes (1) for COT. |
+| ~Y | `ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`. Done: (1) the real-login 12.03 journey end to end with digests and revisions recorded; (2) the Y1-Y7 matrix, each case with one reconciled trace; (3) no live grade from synthetic or offline evidence. | Nothing is stranded (section 2). Build the resident half of RESOLVE_UPLOAD on P's design card (CTO 100667). The first live submission is Andrew's browser act once one of P's compositions serves. |
+
+**The switch to canonical (section 0 item 2)** is the point where each goal reads `/verify` SOUND. For a journey the
+CTO moves earlier, the point is that move.
+
 ## Instruments and limits
 
 - **git:**
