@@ -1,0 +1,116 @@
+{
+ "schema_version": "irpt-f49-bd-crosscheck-v1",
+ "by": "2.0.0_SA_COO~P",
+ "authority": "Andrew-direct @964fb4ed6b (CTO 100886)",
+ "pull_date": "2026-09-01",
+ "window": [
+  "2026-01-01",
+  "2026-08-28"
+ ],
+ "metric": "TWR cumulative, net (engine r_net) vs BD timeWeightedReturns.return",
+ "bd_files_in_pull": 5309,
+ "sampled": 300,
+ "sample_seed": 20260924,
+ "bd_ytd_points_read": 300,
+ "xref_key": "blackdiamond/49f/silver/dim_account_xref/date=2026-09-23/data.parquet",
+ "engine_partitions_read": 166,
+ "engine_earliest_partition": "2024-07-08",
+ "bands_bp": {
+  "EXACT": 0.5,
+  "TIGHT": 10.0,
+  "LOOSE": 100.0
+ },
+ "census": {
+  "BD-NO-VALUE": 6,
+  "DIVERGENT": 7,
+  "EXACT": 83,
+  "LOOSE": 42,
+  "TIGHT": 161,
+  "UNAVAILABLE-NO-LINKABLE-DAYS": 1
+ },
+ "denominator": 300,
+ "compared": 293,
+ "abs_diff_bp": {
+  "median": 3.303389182299915,
+  "p90": 20.65700041359947,
+  "max": 435617.58048744674
+ },
+ "bd_annualized_values": [
+  "False",
+  "None"
+ ],
+ "identifiers": "account ids are hashed (sha256[:12]); no client identifier is written",
+ "divergent_profile": {
+  "count": 7,
+  "with_engine_neutral_days": 3,
+  "fully_linked": 4,
+  "rows": [
+   {
+    "bd_id_h": "724a7b80ab2b",
+    "bd_twr": 0.959519,
+    "bd_days_held": 165,
+    "engine_days_linked": 165,
+    "engine_days_neutral": 0,
+    "engine_twr": 44.521277,
+    "diff_bp": 435617.580487
+   },
+   {
+    "bd_id_h": "6997cb103091",
+    "bd_twr": 1.798221,
+    "bd_days_held": 165,
+    "engine_days_linked": 106,
+    "engine_days_neutral": 59,
+    "engine_twr": -0.001043,
+    "diff_bp": -17992.633603
+   },
+   {
+    "bd_id_h": "7f1d1aeaa94e",
+    "bd_twr": 0.83045,
+    "bd_days_held": 165,
+    "engine_days_linked": 130,
+    "engine_days_neutral": 35,
+    "engine_twr": -0.062632,
+    "diff_bp": -8930.81699
+   },
+   {
+    "bd_id_h": "9aa09f55e9d4",
+    "bd_twr": -0.085944,
+    "bd_days_held": 165,
+    "engine_days_linked": 67,
+    "engine_days_neutral": 98,
+    "engine_twr": 0.227853,
+    "diff_bp": 3137.976035
+   },
+   {
+    "bd_id_h": "36d6051c3aa6",
+    "bd_twr": -0.428726,
+    "bd_days_held": 165,
+    "engine_days_linked": 165,
+    "engine_days_neutral": 0,
+    "engine_twr": -0.478314,
+    "diff_bp": -495.877632
+   },
+   {
+    "bd_id_h": "47a4e8c71e9c",
+    "bd_twr": 0.226032,
+    "bd_days_held": 165,
+    "engine_days_linked": 165,
+    "engine_days_neutral": 0,
+    "engine_twr": 0.267221,
+    "diff_bp": 411.887907
+   },
+   {
+    "bd_id_h": "64df68f6a6c4",
+    "bd_twr": 0.060689,
+    "bd_days_held": 165,
+    "engine_days_linked": 165,
+    "engine_days_neutral": 0,
+    "engine_twr": 0.071458,
+    "diff_bp": 107.691385
+   }
+  ],
+  "reading": "the neutral-day rows are engine coverage gaps (days the engine could not compute while BD held the account); the extreme fully-linked row (+4452% vs +96%) carries the in-kind-funding signature of the open ADVI_49F.c02-CFINPUT clause; three fully-linked rows differ 108-496bp. Engine-lane findings; the served 49F report discloses neutral days as a PARTIAL absence and does not gate on this census."
+ },
+ "within_10bp": 244,
+ "within_100bp": 286
+}
