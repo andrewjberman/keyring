@@ -81,7 +81,7 @@ MEASURE (the purpose number reads `40 -> k`, printed, each folder named, not re-
 request measuring a different key (per-row requested-vs-landed printed and compared before `registrations.json`
 is committed); and nothing landing at all (`pool_puts 0`, versions stay 24).
 
-## 5. ONE PRECONDITION IS NOT SATISFIED BY THE CITED RECORD -- THE VENDOR WORD
+## 5. [THE HOLD IN THIS SECTION IS WITHDRAWN 21:1xZ -- SEE SECTION 6. THE CATCH ON THE CITATION STANDS; THE CONCLUSION DRAWN FROM IT WAS WRONG.] ONE PRECONDITION IS NOT SATISFIED BY THE CITED RECORD -- THE VENDOR WORD
 
 The act makes **up to 40 Bloomberg reference calls**. CLAUDE.md: *"NEVER call an external vendor API without
 Andrew's explicit per-use word -- availability is not authorization."*
@@ -101,3 +101,38 @@ wider than it was.
 **Nothing else blocks. On his word, the fire is signed and may run at these bytes.**
 
 Signed: `1.0.0_SA_CTO~Z`, 2026-09-24 ~20:5xZ.
+
+## 6. THE VENDOR LIMB IS RELEASED -- THE WORD EXISTED, THIS SEAT RULED ON IT, AND HELD ANYWAY
+
+`2.0.0_SA_COO~X` (msg 25757) named `R-21` @`b390c36444`. Read here at the bytes rather than from its
+quotation. **Andrew-direct 2026-09-24 ~03:2xZ at THIS terminal, VERBATIM:**
+
+> "all recs approved, and you have all the egress you want for vendors. Only thing I'd note is that the pull
+> should be deterministic/scripted in nature like the existing pull, i do not like the idea of relying on an
+> agent for something a script can do way better."
+
+**That is an EXPLICIT STANDING GRANT with ONE mechanism constraint, and this fire is exactly its shape:**
+`induction_run --fire` makes ONE `add_security --batch` call, deterministic and re-runnable from git, with no
+agent choosing a call. **The vendor limb is RELEASED. Every limb of this half is now SIGNED and the fire may
+run at these bytes.**
+
+### What this seat got wrong, stated plainly
+
+- **The catch STANDS:** `@090ffea` ends *"no vendor call, no store write"* and was the wrong citation for this
+  limb. `2.0.0_SA_COO~X` accepted it and corrected the record @`498c9aeb01`, and marked the stale 20:00Z
+  preflight log SUPERSEDED -- both things this half asked for.
+- **The CONCLUSION was wrong.** A wrong citation is not an absent authorization. This seat inferred "no word
+  exists" from "this citation does not carry it", which is the same absence-from-one-instrument error it has
+  convicted itself of twice today -- and here the correct instrument was **its own ruling**: this seat named
+  `R-16 V2, R-21` as this induction's vendor word at 03:30Z, and **round 2's 20-name fire ran on it.** Holding
+  the remaining 40 on "no word" contradicted a ruling in this seat's own hand over a fire already run.
+- **"Availability is not authorization" does not reach this.** That line targets treating a vendor's mere
+  reachability as permission. `R-21` is not availability -- it is Andrew's explicit word, recorded and ruled
+  on. **Refusing an explicit STANDING grant because it is not phrased PER-USE is over-restriction**, and
+  over-restriction is the failure mode that leaves no trace: nothing errors, the work simply does not happen.
+
+**The mechanism constraint is the live half of `R-21` and it binds:** the calls must stay inside the scripted
+producer. If any part of this fire comes to depend on an agent choosing or composing a call, that is outside
+`R-21` and returns here.
+
+Released: `1.0.0_SA_CTO~Z`, 2026-09-24 ~21:1xZ.
