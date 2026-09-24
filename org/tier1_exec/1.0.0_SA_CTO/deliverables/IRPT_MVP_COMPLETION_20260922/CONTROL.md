@@ -19,7 +19,12 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (000000) DSGN_IRPTV1 (D13) L4 LANDED v0.2 @6c708bcdb2 -- halves routed (CVO 100269/100271, a
+CTO review queue, in order: (0000000) X10 ACTIVE ACCEPTED (batch 27; enforcement_ref = the batch-27 commit): M writes the
+row, P rebuilds the adapter with it + hops 4b/3/12, then the EXERCISED arm needs hop 6 = ONE one-use plan for acc_d486 on the
+default window -- ANDREW'S PER-USE WORD (and the standing class, his call); CTO installs by Terraform. The Performance tab
+works for nobody until both (CRO trace @d8abd7dc65). (000000a) DSGN_IRPTV1 v0.4 @c4b9056831 after both halves refused at
+v0.3 (fixes taken whole); halves owed again; COO~D calls 1-3 ruled (batch 27); L6 waits on the served display republish
+only. (000000) DSGN_IRPTV1 (D13) L4 LANDED v0.2 @6c708bcdb2 -- halves routed (CVO 100269/100271, a
 hole until MSTR seats a CVO instance; CRO 100270/100272); COO~D LIVE by Andrew's launch, pre-reading, cuts nothing until both
 halves sign + the CTO's sequencing word (COT display republish, D1 run); DONE WHEN lines at Andrew (batch 26). (00000a)
 irpt-performance-adapter: live package = 61-member flat build, map names 30 -- GO 100267 to reconcile the map to the live shape and

@@ -2032,3 +2032,86 @@ receipt (04:46Z), COO~D's 100276. Push state LOCAL at every commit named here; M
    5886d0b9bd deploy; Andrew's 500 ms bar still open on the holdings/performance repackages. Andrew-direct ~05:2xZ via CRO~F: the seven
    layout calls "recs approved" -- carried into the PRD's CELL CANDIDATES, not re-ruled here. Valuation shape: quantity = CUSTODY_UNITS
    additive fact, units enum USD/UNITS, price refused as a computation (batch 25 stands; P's schema edit in both copies pending).
+
+
+## 2026-09-24 05:4x UTC - Claude CTO batch 27: X10 ACTIVE ACCEPTED (this commit is the enforcement_ref); the Performance tab works for nobody -- the CRO's trace ruled; COO~D's three calls; DSGN_IRPTV1 v0.4 after two refusals
+
+Instruments, each the CTO's own unless named: the live package downloaded by Code.Location and its members hashed against
+the deployed pin 9f360e8f3b in a detached worktree; the live role's five inline policies read on the applied plane
+(rail-checked: comp-iam has no per-role live view); pytest at the pin; P's matrix read from its commit 6d3a9215d7 (not on
+CLOUD); the CRO's trace @d8abd7dc65 (100282); P's receipts (100285); the CVO's and CRO's L4-R reviews (100290, 100289).
+
+### IRPT-X10-ACTIVE-ACCEPTED-20260924
+The five arms of IRPT-X10-SEQUENCING-20260923, each measured by the CTO at the DEPLOYED pin (irpt-performance-adapter
+CodeSha NFbaNR0rwynANFH5iCuwMRerUt7E6Px0Ee//UrxRXAo=, LastModified 05:28:09Z, Handler runtime.lambda_handler, 1536 MB,
+layers irpt-common:5 + irpt-performance-native-layer:1, read from AWS by the CTO):
+  (a) deployed bytes == reviewed bytes: the live zip (363,011 bytes, 61 members) downloaded by the CTO; retention.py,
+      retained.py, runtime.py, entry.py and infra/logic/registry/reporting_policies.json byte-equal to 9f360e8f3b (raw
+      equality, 5 of 5); P's census 61 of 61 names equal, exactly 7 moved, 54 identical (100285) is the second instrument.
+  (b) role policies APPLIED: irpt-performance-adapter-role carries five inline policies, none attached;
+      irpt-performance-retained-policy grants s3 Get/GetVersion/PutObject on EXACTLY the two Cottonwood prefixes
+      (irpt/cottonwood/state/performance_source_evidence/*, irpt/cottonwood/platinum/performance_reports/*), dynamodb
+      Get/Put/Update on irpt-requests, kms Decrypt/GenerateDataKey on key 7f4d3042; the directory, ownership-map and
+      selection reads are prefix- or object-scoped. Matches the matrix's two LIVE rows; no reader outside the writer.
+  (c) destination verified live: the CTO's own 3d9f45175d (2026-09-23), unchanged since.
+  (d) P's enforcement matrix @6d3a9215d7: 36 destinations (3 firms x 12 families), LIVE 2 / DECLARED 34, the COT
+      PERFORMANCE and PERFORMANCE_SOURCE_EVIDENCE rows LIVE on irpt-performance-adapter-role, 18 of 18 irpt-* roles
+      swept, 1 statement naming opal-data-irpt, bucket objects 0. Precise as ruled.
+  (e) the focused retention arms at the pin: reports/tests/test_retention.py 18 passed; performance/tests -k
+      'retain or retention or installed' 12 passed (119 deselected).
+ACCEPTED. Mechanism, in order: (1) 2.0.0_SA_COO~M writes the registry row irpt-x10-v1 state ACTIVE with enforcement_ref =
+THIS COMMIT'S FULL 40-HEX SHA (lib/opal_naming.py:1684 refuses anything else; policy_sha256 is computed by
+reporting_policy(), never typed); (2) 2.0.0_SA_COO~P rebuilds the adapter canonically with the new registry member and
+applies it (ledger, plan 0/1/0, readback), because the packaged row is what RetentionPolicy._policy reads; (3) the EXERCISED
+arm is the first live reserve -> promote -> reopen, returned before any second use -- which needs the hop-6 plan (below);
+if it fails, P reverts the row to PENDING and the report is quarantined, never served. Physical disposal stays OPEN.
+CTO MISS, recorded: this review sat in the CTO queue since IRPT-RESIDENT-CUTOVER-PLAN-RECEIVED-20260924 (~01:xxZ) while the
+fence remedy and the listing speed took the queue; the CRO's trace (100282) is what surfaced it as the thread's first gate.
+
+### IRPT-PERFORMANCE-TRACE-20260924 (the CRO's release @d8abd7dc65, Andrew-direct "/closer trace ... release to COO~P")
+Finding accepted as measured: every performance request in Andrew's 04:32Z HAR refused; the first gate is X10 (above); the
+second is hop 6. Rulings on the thirteen hops, by owner:
+  hop 4a  X10 enforcement -- ACCEPTED above; M row + P repackage.
+  hop 4b  RetentionRefused / RetentionExpired named in build_entry's public reasons (or the MRO walked so a ReportRefused
+          subclass maps to DEPENDENCY_UNAVAILABLE, never UNEXPECTED) -- P, in the SAME canonical rebuild as the X10 row.
+  hop 3   a multi-account selection answers a NAMED public code, not DEPENDENCY_UNAVAILABLE -- P, same rebuild; the code is a
+          contract addition and lands in both schema copies and the portal's closed validator first (portal-first order).
+  hop 12  a log sink at Entry construction (one structured line per refusal: correlation id, operation, class name) -- P,
+          same rebuild; the cause line the CloudWatch window lacked.
+  hop 10  entry.py @786f767796 -- DEPLOYED at 05:28Z (P 100285); closed.
+  hop 11  ReportingTab catch -> envelopeFromRefusal(error), one line, as HoldingsTab already does -- P, in the next portal
+          candidate with the speed levers, the rename and M's labels pin.
+  hop 6   ONE installed one-use plan (schema irpt-performance-one-use-v1: approval_ref, firm, account, vendor ids, mapping
+          revision, start, end, expires_at) for acc_d486fc9455d6b2aa18e13af1 on the default window, plus the egress flag and
+          the secretsmanager grant -- a Black Diamond vendor call, so ANDREW'S PER-USE WORD, then the CTO's install by
+          Terraform (never console). The STANDING authorization class for the product's own firm data is his call too, put
+          to him beside it. Neither is inferred from availability.
+  hop 13  business_date 2026-09-17 on every refusal: the Cottonwood directory artifact is five trading days old -- the
+          shared first hop, P's; measured against lib/trading_calendar.py before it is called stale (the calendar rule).
+  100268's sentence "NOT in this GO: wiring installed.py" was moot and P withdrew "packaged, not wired" (100285 item 6): the
+  live handler is runtime.lambda_handler and the retained runtime IS the serving path; the CLOUD Terraform root's
+  entry.lambda_handler / 512 MB / one layer is the third object and P's next plan on that root must read 0 on the
+  handler, memory and layers or say why. Three objects, one owner: the reconcile ledger closes when the root agrees.
+
+### IRPT-DSGN-COO-D-CALLS-20260924 (2.0.0_SA_COO~D 100278)
+F1 ACCEPTED and done at v0.3 (THE THREAD as the hop list, ENRICHMENT BACKLOG as its own section; spine :153 at HEAD).
+CALL 1 ONE WRITER PER SHARED SURFACE: (a) ACCEPTED -- this project's workers render the advisor surface; M supplies
+projection / schema / republish; P supplies contracts / api / render + package. (b) ACCEPTED -- a cell's touch on a P or M
+file is ONE mount line or ONE adapter function, named literally in <paths>; the CTO reads those lines before the issuance.
+(c) RULED -- M's portal UI work stops at the labels pin e5dd8487 (accepted into the next candidate); the L2 rows by
+model_name and the Client sleeve are C3 / C4 and belong to COO~D's cells; M does not start them.
+CALL 2 PORTAL BRANCH: ACCEPTED -- workers base on portal DEV HEAD at the cut (7975c3bb now, the gitlink); the drain merges
+into the project candidate branch dsgn-irptv1-r1; the DEV landing is MSTR's on Andrew's word after the CTO's review. A
+worker needs a portal worktree inside its workspace worktree (portal is a gitlink; the node_modules junction survives).
+CALL 3 `spread`: ACCEPTED as recommended, with the CVO's line: FWD-1 stays NOT_REALIZED until `spread` is served.
+Sequencing word: L5 may LAND (commit) once both halves sign at v0.4; L6 is cut when the COT `display` republish is SERVED;
+the drain trace needs the Performance path per v0.4's sequencing line. The two IRPT_FNTEND round-15 worker worktrees
+(C:/tmp/wk-irpt_fntend-15-1-fe-s-89, -15-2-fe-s-90) are the ~F lane's to remove; named to MSTR as fabric hygiene.
+
+### DSGN_IRPTV1 v0.4 (118613ddb0 -> this window's PRD commit)
+Both halves REFUSED at v0.3 with fixes the CTO accepts whole: CRO 100289 (brief pin @5cc838e696 carries both addenda --
+positive control "prospect" 7 vs 1; 10 of 10 O-headings; the Performance path's readiness on the sequencing line, the
+CTO choosing NOT to hold L6 on the plan word) and CVO 100290 (`unprojected_grant` is a partial-data fact with a visible
+body indicator -- S28 ARMED at HEAD with the CTO as disarm owner; "ten consumed contracts and the operations that serve
+them"; the three no-handler routes deferred as Y's). Two CTO misses inside one PRD: a brief pin one commit short of the
+addendum the PRD itself cites, and a denominator (11) that was not a number the brief states about itself (10).
