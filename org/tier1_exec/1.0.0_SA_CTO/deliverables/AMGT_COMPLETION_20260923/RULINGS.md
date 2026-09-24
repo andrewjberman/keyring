@@ -285,9 +285,34 @@ enough to run on a cadence rather than only after a teardown.
 
 **THE CLASS IS MEASURED AND CLEAN: 477 tracked `.tf` across 77 directories, signature query ZERO** --
 and ⭐ **the zero is CONTROLLED, not assumed: a probe was planted, the query returned 1, the probe was
-removed.** ⚠ Site-Z only, run AFTER the deletion, so it establishes the CURRENT state and cannot
-distinguish *"never existed elsewhere"* from *"existed and was cleaned"*. The laptop is not measured;
-one command answers it there.
+removed.**
+
+⛔ **AND THE PLANE IS PER-WORKING-TREE, WHICH MAKES R-12 WIDER THAN EITHER THIS SEAT OR
+`3.0.0_SA_CVO~Z` FIRST WROTE IT: "THE WORKING TREE" IS NOT SINGULAR ON THIS ESTATE.** Rule 14b puts every
+worker in its **own linked worktree**, so a verify-after read in the shared tree covers the shared tree
+and **nothing else** -- and each of the others is an independently plannable position. Measured by
+`0.0.0_AB_MSTR~Z` (msg `20260923T230041Z`): **site Z has 41 worktrees**; 26 carry an
+`infra/aws/terraform` directory and every one reads **0** untracked `.tf`; 15 are sparse cones with no
+such directory, ⭐ **correctly reported as `NO-TF-DIR` rather than as 0, because a read there is
+inconclusive by construction** (terraform cannot be applied from a tree lacking the directory either).
+Each row printed its own `rev-parse --show-toplevel`, so no husk read the parent repo. **One false hit
+was disclosed and correctly excluded** -- a `' M'` tracked modification in `3.0.0_SA_CVO~Z`'s own
+worktree, which is that seat's live work and not this signature.
+
+**COVERAGE AS IT ACTUALLY STANDS, and it is WIDER than the limit this ruling first carried:** both
+devices' shared trees read 0, and every site-Z worktree that can hold the file reads 0. ⚠ **THE ONE
+POPULATION STILL OPEN IS NAMED: the laptop's 14 worker worktrees, unswept, which laptop `0.0.0_AB_MSTR`
+states it will sweep after the reverse merge.** Naming the open remainder is worth more to a later reader
+than a device-shaped limit, which is what this ruling had instead.
+
+⛔ **THIS RULING SHIPPED THE SENTENCE "site-Z only, the laptop is not measured" WHEN THE LAPTOP ANSWER HAD
+BEEN IN THIS SEAT'S OWN INBOX FOR ~90 MINUTES.** `3.0.0_SA_CVO~Z` wrote that limit truthfully -- it did
+not hold the laptop message -- and **this seat, the only seat holding BOTH halves, RESTATED the peer's
+limit instead of closing it.** ⭐ **A PEER'S SCOPE LIMIT IS A CLAIM ABOUT *THEIR* COVERAGE, NEVER A CLAIM
+ABOUT THE POPULATION** -- and it arrives already sounding careful, which is exactly why it gets carried
+forward unexamined. **Before restating an inherited limit, check it against your OWN holdings; the seat
+that can falsify it is usually the one relaying it.** COST: one inbox read against one sentence.
+NON-APPLICATION: a limit on an instrument only the peer can run.
 
 ⛔ **ONE CONSEQUENCE FOR ANY FUTURE AUDIT OF THE FIX ITSELF, and it is the same blindness one level on:
 the five were UNTRACKED, so deleting them produced NO COMMIT AND LEFT NO GIT RECORD. THE DELETION IS
