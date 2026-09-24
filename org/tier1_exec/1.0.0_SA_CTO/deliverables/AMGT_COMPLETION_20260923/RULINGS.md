@@ -253,6 +253,74 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-26 -- HAND-BACK TO CANONICAL FLOW ON ANDREW'S WORD; and `closer_contract` WAS ON THE CARRIER THE GENERATOR ERASES
+
+**Andrew-direct 2026-09-24 ~04:3xZ, VERBATIM:** *"I think we're positioned here to get back to canonical
+flow. I want you to essentially clean up any residue laying about, and essentially spec out a new analysis
+that can be handed off to new rounds for development on AMGT_CORPUS ... AMGT_RESAPP ... Then you can have
+COO~X take CORPUS and COO~Z take RESAPP."* Full text and the two round specs:
+`HANDBACK_TO_CANONICAL_20260924.md`.
+
+**RULED.** `AMGT_CORPUS` -> `2.0.0_SA_COO~X`, `AMGT_RESAPP` -> `2.0.0_SA_COO~Z`, both back to canonical
+enrichment rounds. `AMGT_HARVST` STAYS IN CLOSER -- 2a is mid-apply with the AE mandate issued, ledger
+`amgt-h03-leadpanel-y-20260924` OPEN, and the never-widen pair closed against one patch hash.
+**Closer work in flight completes under its own spec** (Rule 27): Peers consumer-2, failure case 3, the 2a
+apply and the `DE_US_Equity` fork are closer items, not round cells.
+
+⚠ **AND THE ANSWER TO HIS CONDITIONAL IS NO: DATA IS NOT THE ONLY THING MISSING FROM RESAPP.** Beyond
+CORPUS's reach: the 5-column render (needs the `1ec5446c` portal deploy), consumer 2 UNGRADED so every
+Peers case is half-graded, 0 of 3 failure cases exercised, `dated` absent from `RankingSet`, and the price
+producer on a fallback **expiring 2026-09-29**. **The frontend walk is necessary and NOT sufficient**, so
+the RESAPP round carries the non-data items too or it closes on a false completion.
+
+### R-26a -- ⛔ THIS SEAT PUT `closer_contract` ON THE **GENERATED** ROW. THE GENERATOR ERASES IT, AND NOTHING WOULD HAVE SAID SO
+
+Found while removing the field, which is the only reason it was found at all.
+
+1. ⛔ **WRONG CARRIER.** I wrote it to `org/projects/*.json` -- the GENERATED index.
+   `org/standards/PROJECT_TREE.contract.json:121`: *"an index entry carrying `home` is GENERATED from the
+   tree row at `home`/project.json and **is never hand-edited**"*. `closer_contract` is not among the
+   eleven `index.fields` (`:100-110`) at all.
+2. ⛔ **AND IT IS ERASED ON THE FIRST WRITE.** `.tools/missions-tree-index.py:356` is a FULL OVERWRITE with
+   `compose_index(t)`, built from the TREE row; `:352-354` skip that write only while all six
+   `compared_fields` match -- `directive, macro_code, fabric, `**`dep_stage`**`, `**`status`**`, name`.
+   **The field survived only because nothing had moved yet, and `dep_stage`/`status` are exactly what a
+   closer changes.** The HARVST skip I believed I had installed was one `derive --write` from vanishing.
+3. ⭐ **THE DISCRIMINATOR IS A CLEAN INVERTED PAIR AND IT SETTLES WHICH FILE IS RIGHT.** `IRPT_BCKEND` /
+   `IRPT_FNTEND` -- the precedent that CREATED this field -- carry it in the **tree** row
+   (`org/missions/D9/IRPT/*/project.json:41,43`) and **ABSENT** from their generated rows. AMGT carried it
+   in the **generated** row and **ABSENT** from the tree. **Exactly inverted; mine is the outlier**, and the
+   skills' own words are *"a project whose `project.json` carries..."*, which is the tree file.
+4. ⚠ **`missions-tree-index.py check` reads `RESULT: 0 violation(s)` BOTH BEFORE AND AFTER**, over 25 tree
+   projects and 374 index rows: an extra key in a generated row is not INDEX-DRIFT, which grades only the
+   six compared fields. **The instrument that exists for this file could not see it.**
+5. ⛔ **THE FIELD HAS NO MECHANICAL CONSUMER AT ALL.** Census: **49 hits across 72,197 files** --
+   `SURFACED=4` (three of them my own comp-rail log lines), `CONFIG=5` (the `project.json` rows),
+   `DOC=40` (skills + spine). **Not one `.py` or `.sh` reads it.** So the skip is a READING rule, not a
+   gate -- the law-stronger-than-tool shape this seat has ruled on four times tonight, asserted as
+   mechanical in this very hand-back's first draft.
+
+**REMEDIED IN ONE COMMIT:** off all three generated rows, onto the `AMGT_HARVST` **TREE** row, appended
+exactly as `IRPT_BCKEND` does. ⭐ Side effect: the three generated rows are now byte-canonical to what the
+generator writes (`indent=1, ensure_ascii=True`), where my earlier hand-edit had reformatted them to
+`indent=2` -- **so the next `derive --write` is a no-op instead of a diff**; the tree row keeps its
+hand-authored `indent=2`, making its diff 3 insertions / 2 deletions instead of 139 lines of churn.
+⭐ **THE GENERALISATION, WHICH IS THE PART WORTH KEEPING: A FIELD WRITTEN TO A DERIVED ARTIFACT READS BACK
+CORRECTLY FOR EXACTLY AS LONG AS NOTHING REGENERATES IT** -- every read passes, the checker passes, and the
+erasure is triggered by the very state change the field exists to survive. **Before writing a field, ask
+which file DECLARES it and which file is DERIVED from that one.**
+
+### R-26b -- THE RESIDUE SPLIT IS PUBLISHED WITH ITS DEFINITION, BECAUSE TWO RIGHT NUMBERS DISAGREE
+
+**67 local branches = `CLOUD` + 53 fully merged + 13 carrying unique commits.** ⚠ `git branch --merged
+CLOUD` reads **54 because it counts `CLOUD` itself**; 54 + 13 = 67 and the deletable set is **53**. Both
+numbers are correct under different definitions, so the definition is printed beside the number.
+⛔ **THIS SEAT DELETES NEITHER A WORKTREE NOR A BRANCH IT DOES NOT OWN, INCLUDING THE 53 "SAFE" ONES** --
+43 worktrees, 0 prunable, each a live seat's workspace; three of the 13 unmerged were written in the last
+90 minutes; and **a branch census cannot see whether a worker was ever spawned**, so a zero-commit `wk-*`
+reads identically live or abandoned. Routed to `0.0.0_AB_MSTR~Z` as an integrator decision with the
+denominator printed. `.runtmp_*`/`.scratch` regrowth: **0** -- the earlier ~38 MB sweep held.
+
 ## R-25 -- 992_HK CLOSED NOT-A-DEFECT ON ARITHMETIC, and an enrichment item was STRUCK BECAUSE IT ALREADY EXISTS
 
 **`2.0.0_SA_COO~Z` supplied the measured cause; `3.0.0_SA_CVO~Z` VERIFIED IT ARITHMETICALLY rather than
