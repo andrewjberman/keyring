@@ -1270,3 +1270,58 @@ fence still denies the role until the apply above lands; the next refusal prints
 ### Resident cutover apply (P 99951 item 3): executed 01:53:01Z from saved plan 04c77cbe, 1/1/0,
 ledger irpt-resident-cutover-20260924 sentinel 18642607a3; readbacks and the cutover receipt are owed
 in their own message before Y's runbook runs from precondition B.
+
+
+## 2026-09-24 02:2x UTC - Claude CTO batch 15: Anna retest -- the fence fix is EXERCISED; two producer defects ruled
+
+### IRPT-HOLDINGS-SUCCESS-STATUS-20260924 (CRO 99981: Andrew's retest at 02:12Z reads "Uncertain / Business date age: 2d")
+EXERCISED: the served function answered Andrew's two signed-in selections with 200 (38,887 and 69,445
+bytes; reconcile 26,303,302.17 / 19,705,844.84, matching M's reader matrix). CTO reads: CloudWatch
+/aws/lambda/irpt-holdings 02:12:41-02:12:58Z, 4 invocations, 0 irpt_internal lines (the sink prints on
+refusals only; its positive arm is not yet exercised); the HAR (Downloads/aaaaaa.har, keys only, read in
+place, not copied): 4 holdings entries of 15, top-level keys exactly {contract_version, data, firm_id,
+operation, unprojected_grant}, NO status member; data = the HoldingsSnapshot document.
+DEFECT: the v1 response schema for holdings-snapshot declares `status` (PublicStatusEnvelope,
+status_required false) and says in its own description "PRESENT ON A SUCCESS TOO"; the producer never
+emits it (served.py:836-846 carries a status only from a compute's `_status`; holdings/entry.py returns
+the bare slice). The portal is correct by FE-s-47 (adapt.ts:169, :246, :300-302): an unstated state is
+EXPLICIT_UNKNOWN = UNCERTAIN, never a default READY. RULING: producer fix, P's lane, code-only repackage
+under the sink discipline: holdings_snapshot returns {"_data": slice, "_status": PublicStatusEnvelope}
+with state READY when every retained account is present and unprojected_grant.count == 0, PARTIAL
+otherwise (rule stated in code, citing this ruling); source_dates in the shape the portal's status
+reader consumes (P's 2cdbe2bd60 vocabulary); actions []; public_reason_code null on READY; schema-
+validated in the boundary tests (READY, PARTIAL, refusal arms). CTO reviews the diff and the rule text
+before the build, then GO. Portal unchanged; contract unchanged. Refused alternative: FE defaulting
+holdings to READY.
+CTO'S OWN MISS: HOLDINGS_NOT_READY_ROOT_CAUSE_20260924.json (01:1xZ) already recorded the portal
+rendering a SUCCESS body as UNCERTAIN; the CTO read that only as "not a refusal" and did not flag the
+second defect. Rule: a control arm that prints an unexpected value is a finding, not a negative.
+ENRICHMENT (parked, not this round): "Business date age: 2d" is calendar age; 2026-09-22 is T-1 for
+2026-09-23 ET on the trading calendar. The age label must read lib/trading_calendar.py's frontier or it
+reads stale every Monday and holiday. Owner: the IRPT_FNTEND surface.
+
+### IRPT-RESIDENT-SESSION-BUNDLE-CONTRACT-20260924 (P 99984 row IRPT_BCKEND-S119; Y 99993 concurs)
+FINDING (static, both sides at b56b99c06f): the JS wrapper's persisted bundle carries none of
+schema_version / capture_origin / generation / user_agent / identity.user_id that the Python resident
+requires (transport.py:384-388 SESSION_CONTRACT; broker.py:159 NOT_VERSIONED; recipe/validate_identity;
+broker.verify enrolled check). EXPOSURE, not incident: the seam never fired (secret versions null; no
+runner on the host before this tick). P stopped before D1; correct.
+CTO'S OWN PART: GO 99936 bound (a) inherited Y's 99907 sentence that the D1 bundle carries
+identity.user_id; no instrument had exercised the wrapper (Rule 24: an inherited universal has no
+denominator; ask which instrument produced it).
+WORD GIVEN (99997): P changes ycharts_session.js at the CH-AUTHENTICATED success branch to read
+window.USER on /dashboard/ in the SAME authenticated context (no second sign-in, no new origin) by the
+identity_from_html rule and write Y's key contract (schema_version 1, capture_origin EC2, generation
+uuid4 per capture, user_agent = the context's exact UA, identity {user_id int > 0, email}), refusing
+explicitly on five checks (USER absent/non-literal, authenticated !== true, userId not int > 0, email
+absent, impersonating). JS test: key-set equality with run_session_suite.py:66-83 + one arm per refusal.
+Y reviews the diff; no Python moves. Pin re-derived by build_resident_package.py; receipt states both
+blobs; wrapper 55ddb8f7 untouched. Then D1 once under the standing host-workflow authorization
+(CRO 6fc3f5f785 item 3); enrolled_user_id MEASURED from that bundle; broker.current() versioned and
+transport accepting it is the exercised arm; C1; install; --once; runbook. S120 (Playwright under
+/root vs ec2-user): host remedy stands for this cutover; the ssm.tf change is P's lane item before the
+next host deploy.
+
+### Push state (MSTR 99987): origin/CLOUD f96a0b9dd4; origin carries exactly one workspace branch
+(CLOUD); SITEZ deleted (tag archive/SITEZ-20260924). Every CTO commit at or before f96a0b9dd4 is on
+origin; batch 14 (c83f5bc036) and this batch ride the next MSTR push.
