@@ -36,9 +36,16 @@ RULE NUMBERS ARE STABLE IDs, NOT READING ORDER. Rules 4-12 and 18 live in `/clou
       that already declares `<placeholders>` at HEAD. On a modification, "do not cut against a stale half" is human
       discipline. One rule for all three: `.tools/prd_signoff_lib.py`. A header-only bump re-opens nothing; an L10
       addendum re-opens only the half it changed. A citation ages separately from the text it quotes: verify a quote by
-      printing the bytes at the cited line, never by grepping for the quote.
+      printing the bytes at the cited line, never by grepping for the quote. PROPORTIONATE SIGN-OFF (Andrew-direct
+      2026-09-24): for a single-round or sub-week project the CVO signs the ratified-text half once, the brief half
+      is accepted when the CRO wrote the brief, and only an ENDPOINT change re-signs -- a wording change under the
+      section hash does not re-open a half and withholds no delivery (until `prd_signoff_lib.py` binds the ENDPOINT
+      hash alone, the re-sign of a wording change is a formality the notifier does not wait on).
     - **L5 decomp + battery; L6 ONE ISSUANCE covering every cell** -- `2.0.0_SA_COO` only; fan-out derived from the
-      decomp's dependency chains and stated as `fanout:` data in the issuance commit, default cap 8.
+      decomp's dependency chains and stated as `fanout:` data in the issuance commit, default cap 8. The issuer
+      amends its own task-order criteria WITHOUT a CTO ruling (Andrew-direct 2026-09-24), stating in the amendment
+      commit which gate limb graded the modification or that none did; the CTO reads amendments at the round-N
+      analysis.
     - **L7 execute** -- WORKER SUBAGENTS of the COO, `0.9.0_WK_<CODE>~<n>`, one worktree each, no send tool. The TO's
       WORKER FACE is the worker's whole context (cell text, absolute paths, one clause per criterion with its invocation
       and expectation); the RECORD FACE never travels; a compound criterion is refused at the cut.
@@ -89,6 +96,9 @@ unneeded check burns the context the high-stakes judgment needs later.
     state. **DISCRIMINATION** -- could the evidence differ if the claim were false? The order is the mechanism:
     DISCRIMINATION passes inside a wrong GRAIN/COVERAGE/STATE.
     - A second seat's confirmation via the first seat's method is repetition, not corroboration: name your instrument.
+    - CORROBORATION CAP (Andrew-direct 2026-09-24): one fact, one measurement, one instrument. A second-instrument
+      read is owed only for a claim about served output or the world (the last table row); everything else is
+      measured once and cited by the seats that use it.
     - A check scoped to the members cannot see a defect in what the members share: check the shared dependency on its
       own, then re-read the population unscoped once. Non-application: members with no shared dependency.
     - ABSENT != EXERCISED-AGAINST. A missing guard or a real hazard is an EXPOSURE until someone measures whether it
@@ -302,6 +312,11 @@ is current-day-only; never mint `data/bloomberg/`).
   sentence.** Does not bind the `safe-commit -F` message file. Verify a substantive send by `wc -c` on the delivered
   file.
 - **Never "you/your" about a specific seat in a multi-recipient message -- name the serial + msg-id.**
+- 31. **MESSAGE DISCIPLINE (Andrew-direct 2026-09-24): one ask per message, under 150 words, cite the file instead
+  of restating it; the CTO is copied on DECISIONS only -- FYIs and corroborations go to the record, not to an inbox.
+  A seat's record batches are hourly or per closed decision, never per message.**
+- **An acked message never rides a later heartbeat/piggyback drain** (Andrew-direct 2026-09-24); unacked mail still
+  replays. Mechanism: `org/mcp/server.py`, `0.0.0_AB_MSTR`'s lane -- DESIRED until landed there.
 - **"Queued if not live" is a WISH, not a delivery. A BASE serial with no base session is a silent hole** -- an inbox
   is a per-recipient slice. Address a LIVE recipient, or PARK the item on its own carrier with an OWNER and the
   CONDITION that un-parks it.
@@ -312,6 +327,9 @@ is current-day-only; never mint `data/bloomberg/`).
 
 - `portal/` -- `bun install && bun run dev --port 5174`; dev builds use port 5174 ONLY (Andrew-direct 2026-09-24);
   resolve bun via profile, don't bake a path.
+- **A portal candidate touching NO product file lands on DEV by its author** as a fast-forward with a one-line
+  receipt (Andrew-direct 2026-09-24); the CTO reviews only candidates that touch a product file; VALGATE runs on
+  every push; `0.0.0_AB_MSTR` pushes trunks on Andrew's word as before.
 
 ## Changing this file
 
