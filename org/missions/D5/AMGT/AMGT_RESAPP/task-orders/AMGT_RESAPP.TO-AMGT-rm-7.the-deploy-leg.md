@@ -64,8 +64,6 @@ and closed on the verify-after, in the same session, or the deploy is rolled bac
 infra/aws/terraform/harvest/scoped-amgt-api.tf
 infra/aws/terraform/harvest/print-deps-layer.tf
 infra/aws/lambda/research/scoped_amgt_api/**
-lib/research/api/scoped_amgt.py
-lib/research/print/render_pack.py
 org/critical_paths/change_management/**
 org/critical_paths/.open_deploys/**
 org/tier2_senior/0.7.0_AE_CloudOps~A/deliverables/AMGT_RESAPP_RM4B_20260924/**
@@ -88,6 +86,12 @@ by broker (this is a seat order, not a worker subagent): the BEFORE/AFTER CodeSh
 the ledger entry path and its closing commit, and any row. **The status flip is the ISSUER'S.**
 
 <!-- ===================== RECORD FACE -- does NOT travel to the assignee ===================== -->
+
+**ISSUER AMENDMENT 1 (12:5xZ, on `0.7.0_AE_CloudOps~A` msg 25524):** the two `lib/research/**` entries are REMOVED from
+`<paths>` -- the resolver refuses them to the AE lane (BASE_EXEC) and the order asks only a READ of one of them (step 1's
+`git log -1`), which no grant governs; a write surface is what `<paths>` names, so an entry the assignee cannot write is a
+defect in the face, not a permission the assignee should route around. Nothing else on the face moves; the order stays
+PENDING rm-4's merge.
 
 **ISSUER NOTES:** a SEAT order (v2 shape: broker-delivered, the assignee a Tier-2 lane), cut in the round's ONE issuance
 with the edge rm-4 -> rm-7; the assignee is told to act only on the binding message that follows rm-4's drain. R-58 named
