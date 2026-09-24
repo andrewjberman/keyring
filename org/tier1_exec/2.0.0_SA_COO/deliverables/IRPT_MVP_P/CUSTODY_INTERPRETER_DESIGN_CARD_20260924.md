@@ -121,6 +121,8 @@ independent_value, difference, independent_source_row_ordinals, independent_sour
 (s3 url of totals_key, ordinal) :1877). So `independent_value` = fact_allocations "Account Market Value" for the account at
 the receipted revision and `independent_source_rows` = that totals row reference, read from the served manifest's control
 row and re-verifiable against the receipted object. The ACCOUNT node is NOT cited as the independent source.
+**(CORRECTED 13:1xZ, section 9: the SERVED manifest carries no control row -- the value is read from the receipted
+fact_allocations object itself, by version; the sentence above named the build's INTERNAL manifest.)**
 
 | firm | rows object (original_rows / positions) | identity columns the rows carry | source_row reference | totals object (independent_value) | totals column |
 |---|---|---|---|---|---|
@@ -154,9 +156,54 @@ answer the closed vocabulary's `INVALID_INPUT` (the same public code the upload 
 NOT_AUTHORIZED (authority is not in question) and never UNEXPECTED; the sink records the class and the count. The
 selection is re-cut by the viewer without the account.
 
-**NAMED OPEN (the CTO, 100614):** the mixed-rows case -- positive rows beside Market Value <= 0 lots -- is measured on
+**NAMED OPEN (the CTO, 100614) -- MEASURED and RULED in section 9 (13:1xZ):** the mixed-rows case -- positive rows beside Market Value <= 0 lots -- is measured on
 Anna's account first (keys and counts from the receipted rows object) before the admissibility rule is written; it is
 not decided here.
+
+## 9. v2 -- 2026-09-24 13:1xZ: the mixed-rows case MEASURED and RULED (zero-lot rule ACCEPTED); the Q4 read path corrected to the receipted object
+
+**Row A -- the ZERO-LOT rule (2.0.0_SA_COO~Y measured, 100634; 1.0.0_SA_CTO ACCEPTED, 100640; 2.0.0_SA_COO~M verified the
+producer side, 100645). PROPOSED -> ACCEPTED as Y's interpreter semantics; `_validated` UNCHANGED.** Instrument: the served
+COT index -> manifest dec293d6.. (version a69WjLuQ.., 37,803 B) -> source_objects[1] fact_holdings/date=2026-09-22 (version
+tGurdOTY..) and source_objects[0] fact_allocations/date=2026-09-22 (version WeqLRnnX..), each read BY VERSION with its
+sha256 compared to the receipt (both MATCH); keys, counts and booleans only. Anna (acc_d486fc9455d6b2aa18e13af1): 78
+physical rows; 21 with all four facts null = the producer's ruled no-position rows (holdings_snapshot.py:1904-1922
+@d96513bc40, origins recorded in absence_control.excluded_source_origins :1919; authority 5ee54ac0d4 / f307d58415); 57
+active = 55 Market Value > 0 + 2 ZERO LOTS (Market Value exactly 0 AND Units exactly 0; one is the CASH row); 0 negative, 0
+unpriced, 0 duplicate (AccountID, AssetID); the DC1 sum ties the independent Account Market Value within 0.01 USD: TRUE.
+Firm-wide: 19,610 rows, 843 active accounts; 12,537 positive, 1,341 zero lots, 29 negative, 9 unpriced (MV 0, Units > 0);
+139 all-positive accounts, 673 mixed, 670 of the 673 mixed carrying ONLY zero lots, 29 with a negative, 5 with an unpriced,
+31 with no positive row. v1 as written (custody_portfolio.py:76 Market Value > 0 on every original row; :204
+unsupported_original_row_count == 0) REFUSES every mixed account -- 704 of 843, Anna included.
+
+THE RULE: a ZERO LOT holds nothing and is EXCLUDED from `original_rows` and `positions`, exactly as the producer excludes
+a no-position row, with its (object, ordinal) origin recorded under a NAMED rule in the evidence's `revision_refs` so the
+exclusion is re-verifiable from the receipted object. It moves no value (each excluded row contributes 0 to the sum), so
+the 0.01 USD reconciliation is unchanged. RESULT: 139 + 670 = 809 of 843 accounts admit; Anna with 55 positions. STILL
+REFUSE, by name: a negative row (29 accounts; v1 is long-only and a debit is real economics -- CUSTODY_UNSUPPORTED_ROWS);
+zero value with positive units (5; unpriced cannot be valued -- CUSTODY_UNSUPPORTED_ROWS); no positive row (31; Q3, section
+8). Producer side (M): a zero lot is NOT the producer's no-position rule -- it stays an active row, counted under
+unsupported_rows (Market Value <= 0, :409) and kept in the DC1 sum at 0; so this is a NEW interpreter rule, accepted by the
+CTO, not a producer rule in force; nothing served moves. BOUND: COT-measured only -- 49F (dim_position) and INF
+(positions_mv) are measured the same way, keys and counts, before the interpreter admits either.
+
+**Row B -- the independent-value read path (Y's second finding, 100634; CTO ACCEPTED and batch 50 corrected, 100640; M
+owned the wrong clause, 100645).** The SERVED manifest dec293d6 carries NO `actual_custody_controls` -- its keys are
+business_date, clocks, firm_id, gold, partitions, platinum_header, revision, schema_version, source_objects,
+source_set_revision; the platinum header's are attribution_holdouts, clocks, coverage, custody_totals, scope,
+source_set_revision. The `:2099` manifest section 7 cites is the build's INTERNAL manifest (`extra["manifest"]`, returned
+as snapshot["_manifest"] :2277, written locally by land() :2351; the producer says so at :1933-1934 -- "INTERNAL evidence
+only"); the served revision manifest is built by publication.py:269-288 from the body, the gold bytes and source_objects
+only. So the interpreter reads `independent_value` = fact_allocations "Account Market Value" for the AccountID FROM THE
+RECEIPTED OBJECT ITSELF (source_objects[0], by version_id, sha256 verified) and `independent_source_rows` = that object's
+row ordinal(s) (Anna's two equal duplicate rows are admitted by :433-436); the ACCOUNT node's amount is the DC1 position
+sum, tied to that object within 0.01 USD or the build refuses (:446-449). Same object section 7's table already names in
+its "totals object" column, one step more direct; no publication change is needed or asked. Section 7's Q4 sentence
+"read from the served manifest's control row" is WITHDRAWN (marked in place above); the object was always the source of record.
+
+NEXT AT Y, unchanged: the design document against `_validated` (the zero-lot rule now ACCEPTED), the offline oracle as a
+structural twin of Anna's capture (these counts, synthetic values that tie), then the interpreter on the Y branch; no
+composition, no deploy, no grant. Y's scratchpad copies of the objects are deleted after the design.
 
 ## 6. What this card does not decide
 
