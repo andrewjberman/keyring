@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
 Drive: the 20m goal loop (cron 87624362) reading `python .tools/drive-mode.py read IRPT_BCKEND~Y` each tick (C11, CTO
 100819). Lease FAST until 2026-09-24T21:13:40Z at 18:18Z. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-24T19:14Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
+As of 2026-09-24T19:18Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Pins
 
@@ -43,17 +43,17 @@ never committed, never pushed). Y makes no commit on P's branch.
 
 ## Next proof
 
-Live hop 2 once P applies the patch and deploys. Andrew's browser posts the 12.03 template and gets RESOLVING. The
-resident's journal shows `IRPT_RESIDENT_POLL handled=1`. The re-POST answers NORMALIZED 12.03. Hop 3 follows once P restores
-in the same deploy (P carries `19b38e2f22`). Next build item while both wait: the resident's `--once`
-acceptance trace for the first generation job (Y3), prepared as a runbook, not run.
+Live hops 1a-1d, then 3-10, per `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/RUNBOOK_1203_LIVE_JOURNEY_20260923.md`
+(revised 19:1xZ for the deferred path). P deploys; Andrew posts the 12.03 template as an Opal viewer. Y reads the resident's
+journal and the rows and records the digests. Y never runs `--once` against the live queue: the service is the one consumer.
+P has cherry-picked Y's three commits (`2d6937be5e`, `e8dd4cdfc7`, `9efaf2850e` on its branch).
 
 ## Dependencies
 
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
 | Upload design card + word | 2.0.0_SA_COO~P | CTO 100667 | not needed to build; Y built on the accepted shape |
-| Apply the hops 2+3 patch + cherry-pick bb1eb7f92b, 10a16bd89d, d16b7c8743; rebuild/deploy generate + resident | 2.0.0_SA_COO~P | `P_UPLOAD_COMPOSITION_20260924.md` | AWAITED |
+| Apply the hops 2+3 patch (Y commits already cherry-picked); rebuild/deploy the resident FIRST or in the same window as generate (runbook B2) | 2.0.0_SA_COO~P | `P_UPLOAD_COMPOSITION_20260924.md` | AWAITED |
 | `ports["ordinary_authorizer"]` producer (partner viewers) and `get_catalogue` (hop 3) | 2.0.0_SA_COO~P | generate_installed absent producers | AWAITED; an Opal viewer is not blocked by it |
 | Restore M's viewer seam `485b69c061` onto `_scope/maintained_sources.py` (8 conflict hunks vs `bc3727b3a3`) | 2.0.0_SA_COO~P (M reads semantics) | Y 100842; M 100846: `test_maintained_viewer_sources.py` 27/27 | DONE at P `19b38e2f22` (LOCAL); rides the hop-2 deploy |
 | Resident role grants: irpt-requests UPLOAD#/NORMALIZATION#/INPUT#; S3 original_holdings get, prospect_inputs put | 2.0.0_SA_COO~P (ledgered) | CTO 100667 (4), msg 100823 | AWAITED |
