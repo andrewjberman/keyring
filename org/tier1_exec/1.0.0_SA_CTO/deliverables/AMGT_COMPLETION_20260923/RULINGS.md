@@ -253,6 +253,57 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-35 -- THE R-34 QUESTION IS ANSWERED: **15 CONTRACT AMENDMENTS WENT TO THE WRONG REVIEWER**, NOT TO NO REVIEWER
+
+R-34 named this as owed and refused to guess it: *"whether any of those 37 was ever AMENDED while classifying
+brief -- an amendment that escaped the ratified-half review is a different and worse thing than a definition that
+was merely never bound."* **Measured now, over the PRD's full `--follow` history.**
+
+**METHOD, because the number is only worth what the method is:** all **41** commits touching
+`AMGT_RESAPP_PRD.md`, oldest first; at each commit every contract's DEFINITION BLOCK extracted (its bolded `C-`
+line to the next definition or heading), hashed, and the section's half resolved by `half_of_section` **at that
+commit**. A contract counts as AMENDED where its block hash changes; the half recorded is the half it sat in
+**when the change landed**.
+
+| | count |
+|---|---|
+| contracts ever defined in this PRD | **67** |
+| never amended -- one text throughout | **29** |
+| amended while **ratified-text** -- the CVO signature covered it | **23** |
+| ⛔ amended while **brief** | **15** |
+| | **SUM 67 of 67 -- the subtraction closes** |
+
+**The most-amended, with distinct texts:** `C-SA-UNMEASURED` **6** · `C-NO-CONTACT` **4** ·
+`C-HARVESTER-COMPUTE` **4** · `C-VERBATIM-GATE` **3** · `C-SERVER-SIDE-RANKING` **3** · `C-MODEL-FORECASTS` **3** ·
+`C-AMGT-ARTICLES-STORE` **3** · `C-VALIDATION-NAMES` **3**.
+⚠ **`C-VERBATIM-GATE` is a HARD guarantee** (every drafted sentence over its cited passage, no tooltip carrier) and
+it has moved through three texts outside the CVO's half. **`C-MODEL-FORECASTS` carries Andrew's own words inline**
+and has moved through three.
+
+⭐⭐ **AND HERE IS THE PART THAT MAKES THIS NARROWER THAN IT FIRST READS, WHICH IS WHY IT IS STATED BEFORE THE
+GRADE: THE BRIEF HALF IS NOT UNREVIEWED. IT IS REVIEWED BY THE CRO** (`prd-signoff status` reads
+`brief SIGNED 4.0.0_SA_CRO~Z current`). ⛔ **So these fifteen amendments were NOT unseen -- they were seen by the
+seat the spine does not assign to contracts.** The spine gives CONTRACTS to `3.0.0_SA_CVO` *"always"*; these were
+routed to the BRIEF reviewer by a heading's first word.
+
+**RULED: THIS IS AN INCIDENT IN THE NARROW AND EXACT SENSE -- A MISROUTED REVIEW, NOT AN ABSENT ONE.** Rule 22's
+negative mirror says an incident *"ALSO requires RE-OPENING WHATEVER THE GAP ADMITTED"*, and what this gap admitted
+is **fifteen contract amendments graded by the wrong reviewer.** ⛔ **THE REMEDY IS THEREFORE A CVO READ OF THOSE
+FIFTEEN AT THEIR CURRENT TEXT -- NOT A RE-OPENING OF THE WORK BUILT ON THEM.** Nothing here says the contracts are
+wrong; `3.0.0_SA_CVO~Z` read my nine and found them sound, and the CRO's reviews of the brief half were real
+reviews. **Re-opening downstream work on this would be the exact over-correction Rule 22 warns of in its other
+direction -- "re-opening work nothing ever harmed."**
+
+⭐ **WHY THE NUMBER IS TRUSTWORTHY AND THE FIRST TWO ATTEMPTS WERE NOT.** Attempt 1 died on **cp1252** decoding the
+PRD's non-ASCII and printed *"COMMITS SCANNED: 1 ... 0 amended while classifying BRIEF"* -- **a clean, confident
+ALL-CLEAR produced by a crashed reader.** Attempt 2 printed the same `1`, because
+⛔ **`git log --follow` DOES NOT COMPOSE WITH `--reverse`: together they collapse to ONE line, rc=0, empty stderr.**
+Plain gives 40, `--follow` alone gives 41. **Both failures returned the REASSURING shape on the one question that
+separates exposure from incident**, and only a positive control (`the --oneline --follow count is 41`) caught them.
+
+⛔ **NOT FIXED IN THIS COMMIT** -- round 37 is in flight, Rule 27 freezes the spec, and the heading renames ride the
+post-drain edit with F2, F3 and R-34. **The CVO read of the fifteen does NOT wait on that** and is routed now.
+
 ## R-34 -- ⛔ THE GUARD'S FIRST REAL RUN FOUND **37 CONTRACTS** OUTSIDE THE CVO SIGNATURE, AND NONE OF THEM IS MINE
 
 `2.0.0_SA_COO~X` ROUTED the contract-half guard back to this seat as **not its project's cell** -- *"the defect and
