@@ -253,6 +253,53 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-72 -- ⭐⭐⭐ **ANDREW'S DENIAL IS NOW MECHANICALLY CORROBORATED, NOT MERELY ACCEPTED: THE WATCHER READ HIS MAILBOX WITH *HIS OWN TOKEN*, FRESHLY AUTHENTICATED BY HIM, ON HIS OWN BOX. THAT IS TOKEN MIS-SELECTION, NOT AN ENTITLEMENT VIOLATION**
+
+**`4.0.0_SA_CRO~Z` msg 25551 @`2af2c4530c`, measured on the watcher's OWN request path at Andrew's direct
+question.** It supplies the mechanism R-71 ruled on his word alone, and the mechanism agrees with him.
+
+**THE CREDENTIALS FILE HOLDS THREE `opalinvest.dev` RECORDS, NOT ONE:** `opal-gateway` and `opalgateway`
+carry **ANDREW's** identity (`oid 2e21f8e5-...`, email `an***@opalinvest.com`); `opal-gateway-bbg` carries
+Opal Bloomberg's (`517aa5ee-...`). **`read_token()` unpinned takes the FRESHEST LIVE RECORD REGARDLESS OF
+IDENTITY.** The runbook's pin `--identity opalbloomberg` matches `self_id()` = the `sub` claim, which
+`OG-a-2` (`d02e73c272`, in the deployed build) turned into `<tid>/<oid>` -- **so the pinned arm exits
+`no-token-for-identity` and every 09-24 arm ran UNPINNED.** At ~13:5xZ **Andrew re-authenticated
+`opalgateway` at this terminal**, making his record the freshest live token on the box.
+
+⛔ **SO THE READ WAS HIS CREDENTIAL, ON HIS MACHINE, MINTED BY HIM, READING HIS OWN MAILBOX.** Andrew is
+entitled to Andrew's DMs. **Nothing was accessed that the credential's holder could not access** -- the
+defect is that a SEAT selected a token belonging to a different principal, and then a `self_name()` of
+"Andrew Berman" made `is_outgoing()` drop his messages as the seat's own. ⭐ **The correct name for this is
+MIS-SELECTION, and it is a different defect with a different remedy than exfiltration** -- one is fixed by
+pinning a token, the other by revoking one. **R-71 called the entitlement claim unestablished on his word;
+this establishes the opposite affirmatively, which is the stronger close.**
+
+⭐⭐ **AND IT IS R-65's COORDINATE CLASS FOR THE THIRD TIME TODAY** -- that seat names it itself: *"the pin
+string reads a value that moved."* `--identity opalbloomberg` is a LITERAL that reads the `sub` claim;
+`OG-a-2` changed the claim's shape; the pin still resolves, still looks correct in a runbook, and now
+matches nothing. **A pin that fails CLOSED (exit `no-token-for-identity`) then silently degrades to the
+UNPINNED path, so the safety mechanism's failure mode is to disable itself.** Remedy is one line -- match
+on the `email` claim, carried on all three records, as well as `sub` -- then re-arm PINNED.
+
+**THE OTHER THREE DEFECTS, EACH WITH ITS OWNER, AND NOT THIS SEAT'S TO BUILD.** (2) **The Graph 500s are
+MEASURED and follow a deployed projection change:** `read_chat_messages` gained `$select
+_TEAMS_MSG_FIELDS` at `684e7eb90a`, adding 9 fields to the old six; 6 of 7 chats return `Graph 500` at
+every depth while the 7th (plain text) is fine, and **channel reads with the IDENTICAL projection succeed.**
+⚠ **NOT PROVEN CAUSAL, and that seat says so** -- falsifier named, bisect the field list, suspects
+`attachments`, `mentions`, `eventDetail`; owner the gateway (`tools.py:719-724`, NFRA_OPLGTW lane).
+(1) and (3) stand as R-66b has them: the 15-minute mint-on-expired-only TTL, and `hostedContents`
+unreachable by any tool. **BG's wrong-audience hypothesis is REFUTED by code** -- `teams-watch.py:145`
+GATEWAY is the MCP endpoint and the token's `aud` is the MCP server, so every read is a `tools/call`.
+
+⛔ **THE LESSON THIS SEAT OWES AGAINST ITSELF, AND IT IS SHARPER THAN R-71's:** the true explanation sat in
+a LOCAL FILE on this box that any seat could read without touching a mailbox, and **four seats reasoned
+about whose mailbox was being read before one of them read the credential store.** The cheapest available
+measurement was never taken, and an accusation about the principal's private data was assembled on top of
+that gap. **Enumerate the credentials before theorising about identity.** COST: one file read.
+NON-APPLICATION: a box with exactly one credential record, established by that same read.
+
+---
+
 ## R-71 -- ⛔⛔ **ANDREW DENIES THE IDENTITY BREACH. THE PREMISE TWO SEATS ARE HOLDING ON IS GONE, AND THE REPORT'S LOAD-BEARING INSTRUMENT IS MEASURABLY THE WRONG ONE**
 
 **ANDREW-DIRECT, 2026-09-24 ~14:0xZ, at this seat's terminal, VERBATIM (typed exactly as received):**
