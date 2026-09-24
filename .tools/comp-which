@@ -26,6 +26,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import _compbudget  # noqa: E402  -- RULE T shared carrier (PRD v0.4 s.4.4, NFRA_COMPEFFICACY CE-t-3)
@@ -2314,6 +2315,20 @@ def _default_router(q, qtok, hits, term, list_intent):
         print("  Not it?  ALL %d tools, ranked + described:  %s" % (len(ranked_all), spill))
     print("           or search directly:  comp-find '%s'   (or comp-find --name)" % (term or q))
     _log_rail("NOFIT-POSTERIOR" if no_fit else "ROUTE-POSTERIOR", "+".join(caps), term, q)
+    if no_fit:
+        # REPORT 3 ITEM 1.6 (Andrew-approved 2026-09-24): a no-fit ADMITS the raw search. This session's marker lets the
+        # comp-tool rail pass a Bash search for 10 minutes (.tools/hooks/comp-tool-hud.sh reads it, fail-closed on
+        # anything unparseable); the rail still logs every such search. No session id -> no marker, rail unchanged.
+        _sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "").strip()
+        if _sid and re.match(r"^[A-Za-z0-9_-]+$", _sid):
+            try:
+                _sd = os.path.join(WS, "org", "mcp", "sessions")
+                os.makedirs(_sd, exist_ok=True)
+                with open(os.path.join(_sd, _sid + ".nofit"), "w", encoding="utf-8") as _fh:
+                    _fh.write("%d\n" % (int(time.time()) + 600))
+                print("  NO FIT: the rail admits a raw Bash search in this session for 10 minutes (report 3 item 1.6).")
+            except Exception:  # noqa: BLE001 -- a failed marker leaves the rail as it was
+                pass
     # --- THE ABSTAIN, PROGRAMMATIC (MSTR directive 2026-07-13) --------------------------------------
     # The BANNER lets an AGENT see doubt. rc lets a PROGRAM see it. A tool that cannot signal "I have
     # nothing" to its callers has no failure channel at all -- and comp-which returned 0 on gibberish
