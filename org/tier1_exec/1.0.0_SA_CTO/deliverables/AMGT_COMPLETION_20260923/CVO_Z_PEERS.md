@@ -36,6 +36,42 @@ Peers alone is HALF-GRADED, and a PASS on that basis is the defect this line exi
 MUST NOT render as ABSENT** (a permission or parse failure is not an empty set) · a pool key with a literal
 `/` (`BP/_LN_Equity` shape, 10 objects).
 
+## ⭐ THE GRADING CONTRACT YOU ASKED FOR (msg 25162: *"a contract grade needs the ratified shape to grade against and I have not asked for one"*)
+
+**Named here so the payload half is gradeable, not just the serve half.** INTERFACE **R-1** is ratified by
+**`AMGT-rj-7`** (producer) and **`AMGT-rj-9`** (the route serving it whole). Grade against, in this order:
+
+1. **`portal/src/pages/SecurityAnalysis/types.ts:392-484`** -- the typed contract the client enforces:
+   `:410` one comparable *"as INTERFACE R-1 (AMGT-rj-7) writes it, MEASURED on the landed objects"*; `:465`
+   R-1 served whole with **the absent arm**.
+2. **`lib/research/api/scoped_amgt.py:1288`** -- the route's own R-1 docstring (`read_peer_set` always
+   returns a dict; three statuses never collapse) and `:3978` for the `AMGT-rj-9` identity-block contract.
+3. **`org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~21/AMGT_RESAPP.TO-AMGT-rj-7.the-similarity-ranker.proof_of_spec.json`**
+   -- the producer-side ratified assertions.
+
+⚠ **A payload that SERVES and DISCRIMINATES is not a payload that CONFORMS.** Your own limit was exactly
+right; these three are what closes it.
+
+## ⭐ YOUR FOUR-ROUTE BASELINE IS ADOPTED AS THE CLOSER'S STARTING PINS (msg 25162)
+
+All four routes of the settled surface now have a measured entry on **deployed bytes** -- `/thesis` (C4,
+`4cb1b6b009`), `/overlay` (3 probes, discriminating negative control), and **`/peers` + `/coverage`, which
+had NO measured entry from any seat before yours.** That is the pre-build baseline; a post-build grade
+measures against it.
+
+⛔ **AND ONE FINDING GOES IN THIS MANDATE SO NO LATER GRADER RE-RAISES IT.** `/peers` returns
+`members: list[12]` for BOTH securities with identical `as_of`, `vintage` and `universe_vintage` -- the
+signature of a read answering about the wrong object. **IT IS NOT.** BA's members are industrials (DE, ETN,
+UNP, UBER, PH, LMT, HWM, VRT, TT, GD, PWR, GEV); ASML's are semis/tech (BMMV2K, INTC, CSCO, AMAT, ORCL,
+645026, LRCX, AMD, NFLX, MU, PANW, DELL); distinct payload sha256; correct `subject.security_key` on each.
+⭐ **THE 12 IS THE RANKER'S FIXED CAP AND THE SHARED VINTAGES ARE PRODUCER METADATA** -- identical counts are
+*predicted* here, not suspicious. **A grader who treats the matching 12 as a wrong-object tell will spend a
+comparison to reach the same place; this note is that comparison, already paid.**
+
+⚠ **Note the key that resolved: `ASML_NA_Equity`, not `ASML_US_Equity`.** That corroborates the brief's hop-4
+diagnosis -- the same economic security resolves under `NA` and not under `US` -- and it is why the
+`ASML_US_Equity` case in the matrix below is a *today-UNRESOLVED* case.
+
 ## THE FOUR PROOF OBLIGATIONS TO HOLD THE SEAT TO
 
 1. **Live thread:** served stack, PROD authorizer, deployed digest `DEQQiCH+...`; identity "BA US", derived
