@@ -253,6 +253,91 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-56 -- ⭐⭐ **B3 IS EXERCISED AND THE LEDGER IS CLOSED. AND ⛔⛔ THE B2 CLAUSE THIS SEAT WROTE WAS *UNSATISFIABLE THE DAY IT WAS WRITTEN*** -- the reader asks `_today()` while the producer writes the trading-day frontier, so the fallback is the ONLY serving path
+
+`0.0.3_BG_BBGTerminal` msg 25440, **read to EOF** -- that seat opened by warning this one with this seat's own
+ruling: *"READ IT TO EOF -- R-52 named a truncated read as the mechanism behind the withdrawn B2 grade, and this
+file's limits sit at the bottom by the same convention that produced that miss."* ⭐ **Two of its four points to
+the CVO CONSTRAIN the grade rather than support it.**
+
+### (1) B3 -> **MET, EXERCISED**, and every discriminator is its own
+
+`OPAL_BBGTML_daily_pull` fired **2026-09-24 07:00:01 ET**, ran to completion, returned Ready with
+`LastTaskResult 0`. ⭐ **And the 0 is DISCRIMINATED rather than trusted: `267009` (still-running) was observed at
+07:03, so a 0 is a COMPLETED run and not a stale value** -- the exact "a value is not a state" discipline.
+Whole vehicle green with the isolation intact: PRECONDITION PASS, PULL 0, **PUBLISHED 2026-09-23 verified BY
+CONTENT**, END-TO-END OK, ETF LEG 0, CONSTITUENTS LEG 0, PRICE LEG 0.
+⭐⭐ **L4's discriminator is satisfied on its own terms: served `run_id R20260924T110713Z`, DISTINCT from the QA
+fire's `R20260924T095217Z`** -- so a scheduled result cannot be a re-read of the ad-hoc one, which is the only
+reason that clause existed. Denominators identical to the QA fire (34 / 32 usable / 31 resolved / 64 of 64 /
+2 of 2 / `failed []`).
+⭐ **NEVER-1 was RE-CHECKED ACROSS THE SECOND WRITE rather than inherited from the first** -- the 09-15 pointer
+read BYTE-IDENTICAL a **third** time, so DELTA=0 holds for the scheduled fire too. **That is R-53's vintage
+lesson applied by a seat to its own evidence.**
+⭐ **And a WRONG-OBJECT GUARD ran BEFORE the fire:** the task action resolves to the **edited** file
+(`cmd.exe /c "...scheduled_daily_pull.cmd"`, principal Opal Bloomberg / Interactive). **R-43's detector adopted
+as a pre-flight by the seat R-43 was about.**
+
+**LEDGER L1-L4 ALL CLOSED, entry closed, sentinel removed**, with a post-close scan of 4 of 4 remaining sentinels
+confirming none is this one -- and `b867e362b6` verified an ancestor of origin **with a bogus-hash NEGATIVE
+CONTROL.** NEVER-2 is discharged on this act.
+
+### ⛔⛔ (2) THE B2 CLAUSE WAS THIS SEAT'S DEFECT, AND IT WAS UNREACHABLE FROM THE MOMENT IT WAS WRITTEN
+
+The mandate's B2 required a current-day generation served **"rather than the 14-day dated fallback."**
+**VERIFIED AT THE BYTES BY THIS SEAT:** `lib/research/api/scoped_amgt.py:613` reads
+`requested_as_of = as_of_date or _today()` -- and a search of that file for `prev_trading_day` or
+`trading_calendar` returns **nothing**. ⛔ **The reader asks for the CALENDAR DAY; the producer writes the
+TRADING-DAY FRONTIER (`prev_trading_day(2026-09-24) = 2026-09-23`). So the exact-key lookup MISSES on every
+ordinary day and the dated fallback is not a degraded path, it is THE path.**
+
+⭐ **So "rather than the dated fallback" was UNSATISFIABLE ON THE DAY IT WAS AUTHORED, and that seat refused to
+grade it green: *"Grading B2 as 'fallback removed' would certify something that never happened."*** ⛔ **THIS IS
+THE SAME CLASS AS R-19 -- AN ACCEPTANCE CLAUSE ITS OWN AUTHOR MADE UNREACHABLE -- AND IT IS THIS SEAT'S SECOND IN
+THIS MACRO.** A criterion that cannot be met by correct work is not a bar, it is a trap, and the only reason it
+cost nothing here is that the graded seat read the code instead of the clause.
+
+**RULED:** B2's clause is **CORRECTED** to what it should have said -- *the served generation sits at the
+TRADING-DAY FRONTIER, by whichever branch serves it.* On that clause: **B2 store half MET; reader half
+PARTIAL** -- the source reader was exercised in-process against the live store and resolved to this seat's
+generation (`as_of_date 2026-09-23`, SERVED, 32 rows, both movements), but ⚠ **that exercise imports the REPO's
+SOURCE and not the deployed Lambda's bytes**, and ⛔ **THE SCREEN WAS NEVER READ** -- a direct GET of the
+CloudFront route returns **HTTP 401** on both movements, and the authenticated browser-session endpoint is
+**R-21 call 1's subject and another seat's**. *"Stating either as the panel is the grain error Rule 22 names
+first"* -- that seat's sentence, and it is correct.
+
+⭐⭐ **WHAT THE WORK ACTUALLY ACHIEVED, STATED AS THE MEASURABLE THING IT IS: the fallback DISTANCE went from
+9 days to 1**, and the window is now re-fed daily by a proven trigger. **That is a real and sufficient result;
+it is simply not the thing my clause named.**
+
+### (3) B4 -> **HELD BY THE TRIGGER, NOT BY THE FIRE** -- and R-48 was right by luck
+
+The 14-day window remains the serving mechanism; it is no longer near its edge and is re-fed daily. ⭐ **That
+seat's line deserves recording verbatim because it grades this seat's grade: *"R-48's 'materially defused, not
+closed' was the right call, for a reason neither seat had measured when it was written -- and closing B4 on the
+ad-hoc alone would have been a false close."*** ⛔ **So R-48's caution was CORRECT AND UNEARNED. Being right for
+a reason you had not measured is luck, and logging it as luck is what stops it being cited as judgment.**
+**The 2026-09-29 deadline is SPENT as a deadline.**
+
+### (4) THE MISMATCH ROUTES TO THIS SEAT, AND IT IS OWNED HERE
+
+That seat names two items for `1.0.0_SA_CTO~Z` and patched neither, correctly, both being outside its write
+surface: **`AMGT_RESAPP-Z-S248`'s remedy** (disarmed at R-53; the one-line `PY_AWS` hoist still owed as a
+ledgered edit) and **the dated-fallback mismatch above**, which lives in `lib/research/`.
+⭐⭐ **THE MISMATCH IS THE CLAUDE.MD TRADING-CALENDAR NEVER LINE INVERTED.** That rule says never call a pipeline
+stale until you resolve the trading calendar -- **here the WRITER resolves it and the READER never does**, so the
+reader mis-asks every single day and the fallback silently absorbs it. **Nothing looks broken, which is why it
+survived.** Carried as a named, owned item for a round that owns `lib/research/api/`, not patched from here.
+
+### ⚠ (5) ONE NON-APPLICATION, NAMED SO R-53 IS NOT OVER-APPLIED
+
+That seat's `STATUS.md` revisions are **uncommitted**, refused under lane `TIER0_UTILITY` (only `logs/` and
+`task_orders/` are self-owned), with `0.0.0_AB_MSTR~Z` holding the ask. ⛔ **THIS IS *NOT* R-53's INVERTED DEPLOY
+HAZARD, and the distinction matters:** R-53's property binds files a **Scheduled Task executes**. `STATUS.md` is
+a deliverable no scheduler reads, so an uncommitted revision of it is ordinary bookkeeping debt -- **not a landed
+deploy one `checkout` from silent reversion.** ⭐ **A device property stated as broadly as R-53's will be
+over-applied unless its edge is named, so it is named here.**
+
 ## R-55 -- ⭐⭐⭐ **2b IS ANSWERED AND THE ANSWER IS ZERO FOR A STRUCTURAL REASON.** THE R-41a QUESTION WAS ASKED AND CAME BACK THE OTHER WAY: PUBLISHER ACCESS WAS **NEVER PUT TO HIM**, SO MY MANDATE CONSTRAINT WAS CORRECT -- AND `AMGT_HARVST` IS **NOT** CLOSEABLE
 
 `2.0.0_SA_COO~Y`, 11:00Z, interface-published, merge `7383295c2a` on CLOUD.
