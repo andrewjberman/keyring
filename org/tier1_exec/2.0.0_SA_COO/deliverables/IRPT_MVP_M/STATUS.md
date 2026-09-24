@@ -2,8 +2,10 @@
 
 Seat `2.0.0_SA_COO~M` (CLAUDE, successor to the Codex seat since 2026-09-23 ~22:47Z). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.4. Reviewer `3.0.0_SA_CVO~M` (not live).
-As of 2026-09-24T00:40Z. CTO 3c8392cf2f accepted the 49F, INF and COT-overlay candidates as source candidates; CTO batch 5
-confirms its three findings closed at a0f3f141ed and names 49F a860115e / INF 21279569 as the publication candidates.
+As of 2026-09-24T01:50Z. CTO dda3b7ab42 (batch 12): Andrew's Anna NOT_READY ROOT CAUSE is the firm-bucket fence
+(DenyForeignFirmPrincipals on all three opal-data-<firm> buckets denies irpt-holdings-role; this seat's two measurements ran as the
+exempted user and the identity-only simulate, so neither could see it). Remedy: CRO exemption rows, P shared-infra plan (0/3/0),
+CTO sign, P apply, Andrew retest. GO requests A (49F) and B (INF) are under the CTO's independent verification.
 
 Standing directive (Andrew-direct ~22:4xZ, record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md` @6890584d29; Step 1b-F row landed by the CTO @d78fdb2f1c):
 Holdings end to end for every 49 Financial and Inflection client, meshed across SmartX/Schwab and Eclipse/Orion, with a
@@ -25,11 +27,14 @@ structurally correct Cottonwood pipeline bounded by Black Diamond's data window.
 | PREPARED for GO (exact bytes + receipts, ATTESTED) | 49F revision 7c0e7ce3bef21ccf63541d766a94fa9a71668e7457955eedcf850ec2b18f5cc0: 7,522 accounts, 151,697 nodes, reconcile 1,835,875,624.28, 156 parts = 159 immutable creates + index create (IfNoneMatch *, no index exists), 8 source receipts; INF revision 1ebc7696d6e52be01c3fc431b222c80d9baf3f967f0681cf3879115e5ad476fa: 876 accounts, 33,328 nodes, reconcile 209,358,359.48, 31 parts = 34 creates + index create, 8 receipts. Bytes and receipts under .runtime/holdings-journey-20260923/prepared_49f and prepared_inf; a rebuild changes the revision (clocks.as_of_timestamp), so the GO names THESE bytes and the publisher writes them |
 | Currency | Andrew attested 49F and INF USD (CTO 99877, ANDREW_49F_INF_USD_20260924.md); P writes the two records into CurrencyAuthorities.json; both candidates publish under exact-write GOs on those records |
 | COT membership candidate | PUBLISHED as above (receipt COT_MEMBERSHIP_PUBLICATION_RECEIPT_20260923.json); reader matrix on the live publication: 0698 / d486 / combined READ_OK with 1 / 1 / 2 model leaves, 2026-09-23 refused, excluded account refused |
+| Registry act (CTO dda3b7ab42 item 3) | ORIGINAL_HOLDINGS family row committed 58ee5b36dd on this branch: tier state, table original_holdings (tables must be distinct; prospect_inputs is ORIGINAL_CSV's), extension csv (the validator admits only csv/json/pdf; xlsx would refuse the whole registry), 30 / 2555; policy_sha256 of irpt-x10-v1 moves cb9c4e6e -> 7a7ed8f6 (before value = P's X10 matrix pin); exact-family census test updated in the same commit, 63 passed; sent to CTO + Y for acceptance |
 | Push state | LOCAL; origin/CLOUD b475b96309 (ls-remote read 23:27Z by CTO); shared pushes are 0.0.0_AB_MSTR's |
 
 ## Live thread
 
-State: COT LIVE AT HOP 3 of 4 (source -> accepted publication -> deployed reader library, `COT_DEPLOYED_READER_MATRIX_20260923.json`).
+State: COT LIVE AT HOP 3 of 4 (source -> accepted publication -> deployed reader library, `COT_DEPLOYED_READER_MATRIX_20260923.json`),
+AND HOP 3 IS A LIBRARY-UNDER-USER PROOF ONLY: the function's role is denied by the firm-bucket fence until the exemption rows apply
+(CTO dda3b7ab42). The 49F/INF publisher now records a role arm (simulate-principal-policy with the live bucket policy) in each receipt.
 Hop 4, the signed-in Anna selection + Holdings screen + reload at localhost:5174, is Andrew's act (asked at the M terminal;
 last real attempt 22:17Z FAILED NOT_READY against the pre-repair loader and the single-account publication, both replaced).
 49F and INF are at hop 1 (candidates built on real data, reconciled, schema-valid, publication refused until the firm
@@ -69,7 +74,9 @@ and withheld-drill facts in the M UI worktree (the wire contract carries all thr
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
 | 49F + INF firm report currency attestation | Andrew (via P's CurrencyAuthorities.json) | firm-currency-attestation-v1 record | ASKED at the M terminal |
-| Review of 49F and INF candidates + reader matrix | 1.0.0_SA_CTO | 21f696e19a + this commit | HANDED OFF |
+| GO A (49F 7c0e7ce3) and GO B (INF 1ebc7696) | 1.0.0_SA_CTO | measured write plans in 99900; CTO verifying independently | AWAITING GO |
+| Firm-bucket fence exemption rows for irpt-holdings-role (three buckets) | 4.0.0_SA_CRO rows, 2.0.0_SA_COO~P plan + apply, 1.0.0_SA_CTO sign | shared-infra 0 add / 3 change / 0 destroy | IN FLIGHT (CTO dda3b7ab42) |
+| Acceptance of registry row 58ee5b36dd | 1.0.0_SA_CTO | 99924 | HANDED OFF |
 | NOT_READY reason render with a defined code | 2.0.0_SA_COO~P | contract addendum 2cdbe2bd60 (P 99816) | IN CTO REVIEW |
 | Independent journey review | 3.0.0_SA_CVO~M | pinned candidates | seat not live |
 | Eclipse account-membership batch read | Andrew per-use word via 4.0.0_SA_CRO | accounts/simple/list | NOT AUTHORIZED; one-to-one portfolio grain used |
