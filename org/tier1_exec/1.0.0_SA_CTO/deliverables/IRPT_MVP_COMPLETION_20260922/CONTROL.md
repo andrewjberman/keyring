@@ -21,8 +21,9 @@ second queue/session consumer.
 CTO review queue, in order: (1) Andrew's signed-in Anna Holdings screen (M's deployed reader
 matrix ACCEPTED as the hop-3 library proof; reader bytes == deployed); (2) P's Performance apply
 receipt and the authority/host-tag apply receipt; (3) P's NOT_READY vocabulary addendum
-2cdbe2bd60 (ratified text); (4) M's 49F meshed candidate 1d0b700b + snapshot overlay (publication
-waits on Andrew's 49F currency attestation); (5) P's resident factory / package / cutover receipt,
+2cdbe2bd60 (ratified text); (4) M's 49F 1d0b700b / INF 882375a7 / COT-overlay candidates are
+ACCEPTED as source candidates with three bounded findings (RULINGS batch 3); publication waits on
+those fixes and Andrew's 49F/INF currency attestations; (5) P's resident factory / package / cutover receipt,
 then the host state-flip plan; (6) X10 enforcement matrix acceptance (CTO owner, M registry
 writer); (7) M c354c33a92 Tax runner/Silver candidate (after the Holdings thread reaches the
 screen; no Tax runtime GO yet). Parked: naming RAISE on "smartx/platform/silver/" (registry

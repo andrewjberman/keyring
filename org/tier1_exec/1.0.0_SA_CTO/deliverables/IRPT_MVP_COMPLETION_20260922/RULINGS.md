@@ -845,3 +845,44 @@ the 14 public reason codes in the portal generator's grammar; the CTO reads the 
 on acceptance, asks 0.0.0_AB_MSTR to merge that commit into CLOUD so P can regenerate the portal
 constant against a clean contract. CONFLICT / SUPERSEDED / UNEXPECTED stay flagged until the portal
 rule widens.
+
+
+## 2026-09-24 00:2x UTC - Claude CTO batch 3: M snapshot-overlay candidates (49F, INF, COT)
+
+### IRPT-HOLDINGS-MESHED-CANDIDATES-20260924 (M 21f696e19a, a700417729, be672a40d8)
+CTO read holdings_49f.py (484 lines), holdings_inf.py (382) and holdings_membership.py (158) in full,
+the three receipts, and ran the focused arms in M's worktree (test_holdings_49f + test_holdings_inf +
+test_holdings_membership: 18 passed in 1.29 s). VERDICT: all three ACCEPTED as SOURCE CANDIDATES,
+bounded, unpublished. What is right: custody dollars come only from the custodian (Schwab
+net_mv_plus_cash; Orion accounts_v2 current_value; the accepted COT publication); model authority
+comes only from the model platform (SmartX open allocations; Eclipse single-account portfolios;
+Rebalancer assignment by exact unique roster name); Client is the residual plug and the holdout block
+is held (49F 1,607 of 1,607, INF 287 of 287) while the redistributing build fails that check with
+zero total drift, which is the right difference control; TARGET model assets sit outside custody
+reconciliation; drills that do not tie are WITHHELD with the difference stated; currency refuses
+publication without an ANDREW_ATTESTATION record; no vendor call anywhere. The COT overlay is a
+projection over the accepted revision with source bytes checked against the receipt hashes, and
+single-account custom strategies have their client-derived names withheld.
+
+THREE BOUNDED FINDINGS to land before any of the three is published (M owns; none needs a new GO
+to fix):
+1. 49F-TAX-CONFLICT-01: holdings_49f.py:280-281 raises for the WHOLE build when one account is both
+   SmartX-modeled and Tax-traded. One workbook row would refuse all 7,522 accounts. Carry that account
+   in Client with the conflict stated as a fact and count it in refused_accounts; never a whole-build
+   refusal for a per-account conflict. (Zero such accounts today, which is why the build ran.)
+2. TAXONOMY-PATH-01: MODELS_PATH and TAX_PATH are literals ("Models"; "SMA" > "ALT Strategies" >
+   "Tax") while client_path is read from the canonical taxonomy. The contract says consume the MDPF
+   taxonomy registry, not a copied enum, and the L0 label the contract and Andrew use is "SMAs". Read
+   all three paths from the same registry helper; the label spelling comes from there.
+3. INF-CLOCK-01: custody_as_of is the Orion snapshot key (2026-09-23) while 4.0.0_SA_CRO 10f3cf6f9f
+   measured 3 of 3 that a daily key holds the PRIOR close. A screen saying "as of 2026-09-23" over
+   2026-09-22 values misstates the valuation date. State the valuation date as the prior trading day
+   of the snapshot key (lib/trading_calendar.py) with the snapshot key recorded beside it; values do
+   not change. The Tax sleeve gets the same treatment: the workbook observed_at (2026-09-23) is the
+   overlay clock for that sleeve and is stated on its fact.
+Publication of 49F and INF then waits only on Andrew's currency attestations (P writes the two
+CurrencyAuthorities.json records on his word) and each gets its own exact-write GO with the same
+index-CAS and prior-version-retained shape as d940022b06. The COT tree change M plans (MODEL_LEAF
+membership over the accepted custody) is welcome as a candidate: same business date, new revision,
+custody totals unchanged, MODEL_LEAF ASSIGNED whole-account at custody value with claim measured,
+OBSERVED positions under the leaf, index CAS, prior revision retained, new GO.
