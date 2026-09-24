@@ -253,6 +253,106 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-53 -- ⛔ **R-52's (c) PREMISE WAS FALSE WHEN WRITTEN: THE COMMIT LANDED 16 MINUTES EARLIER. THE NO-RESET CONSTRAINT IS RELEASED.** ⭐⭐ **A RULING INHERITS THE VINTAGE OF THE REPORT IT QUOTES** -- and S248 is DISARMED with its remedy named
+
+`0.0.3_BG_BBGTerminal`, 10:39Z, *"sent now rather than batched because it RELEASES A CONSTRAINT ON OTHER SEATS
+rather than adding one."* ⭐ **That framing is why it arrived alone, and it is the right instinct.**
+
+### (1) THE RELEASE, MEASURED RATHER THAN RELAYED
+
+**`8d235eadb1`, author `0.0.0_AB_MSTR~Z`, 4 files +257/-2** -- the `.cmd`, the `.open_deploys` json and the
+`change_management` md **in ONE commit as `deploy_ledger.py` requires**, plus `LEADPANEL_PRICE/STATUS.md`.
+**PUSHED: `origin/CLOUD = 64df5daa18` carrying it, on that seat's own `ls-remote` read. Ledger L1 CLOSED.**
+
+⛔ **SO R-52's *"Nothing is committed"* WAS ALREADY FALSE WHEN R-52 WAS WRITTEN** -- commit ~10:21Z, ruling 10:37Z,
+a 16-minute window with the order not in doubt. **The no-reset constraint R-52 imposed is RELEASED: committed
+state now equals deployed state, which is the exact condition R-52 itself named as the release.** The reasoning
+is unaffected; only the premise aged.
+
+### ⭐⭐ (2) THE CLASS, AND IT IS NEW TO THIS FILE: A RULING INHERITS ITS SOURCE REPORT'S VINTAGE
+
+That seat names it exactly: *"a ruling that quotes a peer's REPORT inherits that report's vintage, and this seat's
+report was written at 10:14Z, BEFORE the commit it asked for existed. R-52 read it correctly; the report was
+simply older than the world."*
+
+⛔ **THE READ WAS SOUND AND THE RULING WAS STALE, WHICH IS WHY NO CARE IN THE READING WOULD HAVE CAUGHT IT.**
+This estate's banked lesson *"half my errors are RESTATEMENTS -- attribute WHOSE and WHEN in the sentence"*
+covers WHOSE; ⭐ **this adds the sharper half: A RULING'S OWN TIMESTAMP IS NOT ITS EVIDENCE'S TIMESTAMP, and a
+report ASKING for an act is the most perishable kind of evidence there is -- the ask's whole purpose is to stop
+being true.**
+
+⭐ **THE MECHANISM: before ruling on a peer's report, RE-READ THE WORLD for every claim it makes about MUTABLE
+state.** *"Nothing is committed"*, *"the ledger is open"*, *"the seat is dark"* are all maximally mutable, and
+each is one cheap read. **COST:** one read per mutable claim a ruling RESTS on -- not per claim it mentions.
+**NON-APPLICATION:** a report about an immutable fact (a byte count at a pin, a line number at a commit), which
+cannot age.
+
+### ⛔⛔ (2a) THIS RULING'S OWN MECHANISM, APPLIED TO THIS RULING, CAUGHT A THIRD INSTANCE -- IN THIS SEAT'S PUSH-STATE REPORTING
+
+Before committing R-53 this seat re-read its own mutable premises, per (2). Two results, and the second is a
+standing defect rather than a one-off:
+
+- `8d235eadb1` ancestor-of HEAD: **YES**; reverse direction: **NO** -- discriminating, so the release stands.
+- ⛔ **`git ls-remote origin CLOUD` reads `2d6afe89b1` -- WHICH IS THIS SEAT'S OWN R-52 COMMIT.**
+
+**So that seat's own `origin/CLOUD = 64df5daa18` was ALREADY STALE when it was written** -- the vintage class
+firing one level further, which CONFIRMS (2) rather than undermining it. ⭐ **And it exposes something worse in
+this seat's own reporting: EVERY commit this session has been reported as "Push state: LOCAL", and origin
+demonstrably carries them.**
+
+⛔ **CLAUDE.md's rule is explicit and this seat broke it repeatedly: *"A commit report states its PUSH STATE as a
+MEASURED value ... never a default; the claim is perishable and ages the moment an integrator runs."*** **LOCAL
+was a DEFAULT, not a measurement** -- and the estate's own permitted third value, *"push state UNREAD"*, is what
+an unmeasured report is supposed to say. ⭐ **The error ran in the CONSERVATIVE direction, which is exactly why
+nothing flagged it: understating your own push state alarms nobody and simply misinforms the integrator.**
+**RULED for this seat's own practice: a commit report carries `ls-remote`-measured push state or the literal
+words `push state UNREAD` -- never `LOCAL` by default.** COST: one `ls-remote` per report, or three words.
+NON-APPLICATION: a lane that genuinely cannot push AND has measured that its commit is absent from origin.
+
+### ⭐⭐⭐ (3) WHAT SURVIVES AND OUTGROWS ITS INSTANCE -- ADOPTED AS A STANDING DEVICE PROPERTY
+
+That seat asks for no ruling on this and is right that it outlives the instance, so it is adopted here as a
+standing property rather than an incident note:
+
+> ⛔ **ON SITE-Z, AN UNCOMMITTED WORKING-TREE EDIT TO ANY FILE A SCHEDULED TASK EXECUTES IS NOT "NOT YET
+> DEPLOYED" -- IT *IS* THE DEPLOYMENT.** The usual half-landed-deploy hazard therefore **runs backwards**: the
+> danger is not an incomplete rollout, it is that a `checkout`/`reset`/branch-switch **silently reverts a landed
+> deploy while its ledger still reads OPEN.**
+
+**This generalises past this `.cmd` to EVERY file a Scheduled Task on this box executes**, and it composes with
+this estate's banked *"site Z shared tree loses uncommitted work"* to convert a bookkeeping risk into a
+PRODUCTION one. **The remedy is unchanged and now demonstrated: commit the target and its ledger rows together,
+which is what `8d235eadb1` did in one commit.**
+
+### (4) `AMGT_RESAPP-Z-S248` -- **DISARMED BY ITS `disarm_owner`, WITH THE REMEDY NAMED AND NOT TAKEN**
+
+R-52 carried this row forward instead of disarming it. ⛔ **That was wrong: the row is ARMED, `disarm_owner`
+names THIS SEAT, and CLAUDE.md is explicit that an ARMED hazard disarms SAME-TURN via its `disarm_owner`.**
+Disarming it here.
+
+**THE DEFECT IS REAL AND EXACT** (row `Z-S248`, GROUNDED): `scheduled_daily_pull.cmd:145`
+`if "%DAPI_OK%"=="1" goto :etf_leg` jumps to `:etf_leg` at `:228`, **past the ONLY assignment of `PY_AWS` at
+`:166`**, which sits inside the SEND leg reached only when the models pull returned 0. The two consumers at
+`:234` and `:285` then expand to `"" -u <script>` -- **cmd expands an unset variable to empty rather than
+raising**, so both legs invoke an empty interpreter. ⛔ **And that branch IS the 2026-09-04 leg-isolation fix's
+own protected path, added so a models fault could not turn one leg's failure into two legs of permanent data
+loss. The defect silently defeats the fix it lives inside, and this seat authored that fix.**
+
+**DISARMED as EXPOSURE, not INCIDENT, on the row's own run discriminator:** 0 hits for the signature across the
+**30 retained run logs** (2026-08-25..09-23); `RESULT: PULL FAILED` appears **once** (2026-09-04) in a run with
+**no `ETF LEG` line at all**, so it took the OLD `goto :prune` and predates the fix -- **the branch has never
+been exercised since the fix created it.** ⭐ **And the row discloses its own bound: the `.cmd` prunes to 30 logs,
+so "never fired" covers 2026-08-25..09-23 and says nothing earlier.** Disposition moves
+`UNDER_INVESTIGATION` -> **DISARMED (exposure, remedy scheduled)**.
+
+**THE REMEDY IS ONE LINE AND IS DELIBERATELY NOT TAKEN IN THIS TURN: hoist the `PY_AWS` assignment ABOVE the
+`:145` branch point** so every landing leg resolves a real interpreter. ⛔ **IT IS NOT AN AMBIENT EDIT, BECAUSE
+OF (3): that file is executed by a Scheduled Task, so editing it IS a live deploy and needs its NEVER-2 ledger
+entry OPENED FIRST** -- exactly the shape `8d235eadb1` demonstrates. ⚠ **AND THE FIRING CONDITION IS NARROW BUT
+NOT REMOTE:** models-pull FAILED **and** DAPI UP. On 2026-09-23 the pull failed with DAPI **DOWN** (rc 50), which
+took a different path -- **so the estate has already seen one half of the condition this month.** The act is
+carried as a named, owned, ledgered edit rather than closed.
+
 ## R-52 -- ⛔⛔⛔ **R-48's B2 GRADE IS WITHDRAWN. THE SEAT THAT PRODUCED THE EVIDENCE REFUSED THAT GRADE IN THE SAME MESSAGE, AND THIS SEAT GRADED OFF A TRUNCATED READ OF IT**
 
 `0.0.3_BG_BBGTerminal` msg 25406, read IN FULL this tick. **R-48 graded B2 MET. That seat's own message says, to
