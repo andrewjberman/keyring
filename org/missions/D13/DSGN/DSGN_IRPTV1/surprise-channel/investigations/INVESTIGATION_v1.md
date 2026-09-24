@@ -564,6 +564,48 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Grading record: org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_FAST_PIN_GRADES_20260924.md @ddb0339061 (items N1-N5). The catalog key is covered by IV-e-14 (e). Not named by an issued round-3 order: the client-binding contradiction (N1), the heatmap's UNAVAILABLE cell (N2), the raw ISO 'Observed' time (N3), the raw 'opal-supervised'/'advised' values (N4) and the one-navy Allocation bars (N5). The issuer may amend its own criteria (Rule 27 L6). Filed as a row because the broker refuses a CVO send to the COO (spine v3.1 L8)."
+  },
+  {
+    "id": "DSGN_IRPTV1-S11",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-24T23:58:00Z",
+    "one_line": "S10's five unnamed items are now named by round-3 orders: N1-N4 on IV-e-18 (the join, not yet spawned), N5 on IV-e-13 (slot ~8, queue position 3), by the issuer's amendment 1215c0d07a.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "S10 notes: N1-N5 are not named by an issued round-3 order; the issuer may amend its own criteria (Rule 27 L6).",
+    "world_is": "CLOUD 1215c0d07a amends TO-IV-e-18 (cell text N1-N4, AC1 census arms, four paths added: tabs/analysis/GenerateComposer.tsx, tabs/analysis/AnalysisTab.tsx, tabs/holdings/HoldingsSummary.tsx, tabs/holdings/SliceTable.tsx) and TO-IV-e-13 (cell (a) and AC1: each model bar coloured by served modelCode). to-pipeline-gate GATE (viii) graded both modifications (2 of 2). The catalog-key input stays on IV-e-14 (e), spawned on slot ~9.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 1215c0d07a --stat: the two task orders",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_FAST_PIN_GRADES_20260924.md @ddb0339061 N1-N5"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "S10 closes when IV-e-13 and IV-e-18 drain with those arms passing and the drain's real run on 5174 shows the Generate panel reading the header's client."
+  },
+  {
+    "id": "DSGN_IRPTV1-S12",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-24T23:58:00Z",
+    "one_line": "/dispatch Step 5 says hand a slot's next order by CONTINUING the same worker subagent; in this session a completed worker cannot be continued (SendMessage: 'No transcript found for agent ID'), so each queue handoff is a fresh worker on the same slot, worktree and branches.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": ".claude/skills/dispatch/SKILL.md Step 5 item 5: 'Hand the next task order by CONTINUING the same subagent, context intact. No respawn, no cold start.'",
+    "world_is": "Two measured refusals at 2.0.0_SA_COO~D: slot ~8 after IV-e-11 completed and slot ~10 after IV-e-15 completed; ListAgents lists only running subagents. Both slots were re-spawned fresh with the next order's face plus one identity line naming the prior commits on the branch (IV-e-12 on ~8, IV-e-16 on ~10). Cost: the fresh worker re-reads its context; the branch and worktree carry the prior order's work.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SendMessage results in this session, 2026-09-24 ~23:4xZ and ~23:5xZ",
+        "ListAgents: 3 running subagents, the completed ones absent"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "For the /dispatch skill's owner: Step 5's continue-the-subagent instruction does not hold in this harness once a worker completes; a respawn on the same worktree is the working path."
   }
 ]
 ```
