@@ -119,6 +119,16 @@
   "hooks": {
     "PreToolUse": [
       {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/memory-write-guard.sh\"",
+            "timeout": 15
+          }
+        ]
+      },
+      {
         "matcher": "Bash|Grep|Glob",
         "hooks": [
           {

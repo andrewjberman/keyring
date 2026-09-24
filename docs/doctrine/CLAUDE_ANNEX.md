@@ -752,3 +752,33 @@ doc."* **The editing test: a principle earns its place by being ACTIONABLE WITHO
 state the mechanism without retelling what happened, the mechanism is not yet extracted — write the incident
 record, extract the property, cite the record. **This binds CLAUDE.md, `docs/doctrine/`, `MEMORY.md` and every
 governance surface.**
+
+## Rule 22 as CLAUDE.md carried it until 2026-09-24 (moved here verbatim when the rule became a pointer)
+
+Andrew-direct ~17:0xZ at the `4.0.0_SA_CRO~A` terminal, record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_170xZ_MEMORY_PREFERENCES_ONLY_AND_THREE_HELD_ITEMS_YES.md`: Rule 22 shrinks to a pointer and its table becomes the data behind the `<risk>` field (report 3 Wave 2).
+
+22. **EVIDENCE LAW -- four axes; who eats the error decides how many you check.**
+    | If being wrong costs... | Ask |
+    |---|---|
+    | me, this turn | nothing. Act. |
+    | me later, or another seat | **GRAIN + COVERAGE** |
+    | the record (commit, message, TO, report) | **+ STATE** |
+    | the world (deploy, delete, grant, served key, claim to Andrew) | **+ DISCRIMINATION** |
+
+    **GRAIN** -- the object read IS the object claimed, at the level and vintage claimed. **COVERAGE** -- evidence spans
+    the claimed set; print the denominator. **STATE** -- DESIRED != APPLIED != EXERCISED; a description is never a
+    state. **DISCRIMINATION** -- could the evidence differ if the claim were false? The order is the mechanism:
+    DISCRIMINATION passes inside a wrong GRAIN/COVERAGE/STATE.
+    - A second seat's confirmation via the first seat's method is repetition, not corroboration: name your instrument.
+    - CORROBORATION CAP (Andrew-direct 2026-09-24): one fact, one measurement, one instrument. A second-instrument
+      read is owed only for a claim about served output or the world (the last table row); everything else is
+      measured once and cited by the seats that use it.
+    - A check scoped to the members cannot see a defect in what the members share: check the shared dependency on its
+      own, then re-read the population unscoped once. Non-application: members with no shared dependency.
+    - ABSENT != EXERCISED-AGAINST. A missing guard or a real hazard is an EXPOSURE until someone measures whether it
+      fired; then it is an INCIDENT. An exposure is closed by building the guard; an incident also re-opens what the
+      gap admitted. Discriminator: run the defect's own signature over the graded population and print the denominator.
+    - "proof / root cause / definitively / source-confirmed" are RESERVED: legal only past STATE at EXERCISED; cite
+      `file:line @ <commit-ish>`. This law governs SUPPLEMENTARY controls, never the substance of the act; size by the
+      claim your work FEEDS; re-derive with a DIFFERENT instrument or cite the peer's. Catalogue:
+      `docs/doctrine/CONTROLS_OVER_CARE.md`.
