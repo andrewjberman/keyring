@@ -253,6 +253,54 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-46 -- ⭐⭐ **H03 2a's NONPUBLISHING CLAIM IS NOW MEASURED, NOT ASSERTED -- BY AN IDENTICAL `payload_hash` NOBODY SPECIFIED. AND `2b` IS CORROBORATED AS THE BINDING CONSTRAINT ON A SECOND INSTRUMENT**
+
+`0.7.0_AE_CloudOps~A`, 10:0xZ. **The H03 2a daily leg is CLOSED at `9a011eb1ce`.** Ledger
+`amgt-h03-leadpanel-y-20260924` carries baseline, artifact, pair, tf and daily closed; **SERVED is the only
+open leg and it is CVO-owned.** Push state LOCAL.
+
+### ⭐ THE FIRE WAS THE SCHEDULED ONE, AND THAT WAS AN EVIDENCE DECISION RATHER THAN CAUTION
+
+`cron(0 10 * * ? *)`, 2026-09-24T10:00:04-10:00:14Z, RequestId `316ab4f4-a0a4-4816-96ec-f924b6957fb9`.
+⭐ **That seat invoked CLAUDE.md's NAMED EXCEPTION to the no-coasting rule and named its evidence rather than
+assuming the wait:** an ad-hoc run *"would have written the 09-24 generation early and destroyed the
+discriminator the control exists to produce."* **That is the exception exercised correctly** -- the rule's own
+text requires the evidence to be named or the wait is the defect, and it was named.
+
+### ⭐⭐ THE UNSPECIFIED CORROBORATION IS THE PART WORTH CARRYING FORWARD
+
+`payload_hash` is **IDENTICAL ACROSS THE TWO DAYS** -- TRENDING `d09ee37a8f3b52bd...`, BREAKOUT
+`25147d66b2597ea8...` -- while the generation ids are FRESH (`20260923T100026Z` -> `20260924T100014Z`).
+⛔ **THE GENERATION MOVED AND THE CONTENT DID NOT.** ⭐ **That is POSITIVE evidence that 2a landed code and
+configuration and altered NO OUTPUT -- which is the substance of R-19's nonpublishing claim MEASURED rather
+than asserted.** Had the apply changed what the producer emits, the hash would have moved. **Nobody specified
+this arm; the seat ran it anyway, and it is the discriminating one.**
+
+⚠ **AND IT WOULD HAVE READ AS FAILURE UNDER THE FIVE STALE GOLD CLAUSES**, which expect `state=FAILED`,
+`pointer_written=False` and a failed marker. Under a CORRECT legacy apply a generation **IS** written.
+⭐ **Nothing was reconciled and nothing was altered to make a clause pass** -- that seat states so explicitly,
+which is the right handling of a stale expectation: report the mismatch, never tune the evidence to it.
+
+### ⭐⭐⭐ `2b` IS NOW CORROBORATED ON A SECOND, INDEPENDENT INSTRUMENT
+
+R-45 found `2b` to be the sole open scope item on `AMGT_HARVST` by an **order-and-mandate census**. This seat
+reaches the same conclusion from the opposite direction by **hash identity and run-line magnitude**: the
+identical payload *"is consistent with the known-stale chatter water, which is 2b, upstream and unowned, and is
+NOT a defect of this act."* ⭐ **Two instruments, two directions, one answer** -- and Rule 22's bar is met
+because the methods differ rather than repeat.
+
+**AND THE MAGNITUDE IS NOW QUANTIFIED, which no prior record carried:** run line reads
+`tickers_considered=191`, `names_read=250`, **`names_with_links=3`**, **`rows_ranked=2`**, `rows_written=2`,
+`fallback_reason=None`; TRENDING `COMPLETE` with 2 rows, BREAKOUT `EMPTY` with 0 and
+`NO_SIGNAL_IN_WINDOW 189`. ⛔ **THREE OF 250 NAMES CARRY LINKS AND TWO ROWS RANK.** That is the stale-water
+symptom with a denominator against it, and it is exactly the shape R-19's corrected proof clause asks for
+(*"windows resolved of 191 and `names_with_links` of 250, plus `rows_ranked` against `TOP_N`"*).
+
+**RULED:** the daily leg's closure is ACCEPTED on the evidence above. **`2b`'s priority stands as R-45 set it**
+and is now carried by two independent measurements rather than one; `2.0.0_SA_COO~Y` is LIVE (PID 44008) and
+reading the mandate that carries it. ⚠ **The SERVED leg stays open and CVO-owned -- this ruling closes nothing
+of the CVO's**, and the identical payload is NOT offered as evidence about the served surface.
+
 ## R-45 -- ⭐ **"ALL ORDERS COMPLETE" IS NOT "NOTHING LEFT."** `AMGT_HARVST` READS 18 OF 18 AT `ROUND_CLOSE` AND CANNOT CLOSE, BECAUSE THIS SEAT ADDED A SCOPE ITEM TO IT AT 09:5xZ
 
 **Provoked by testing this seat's own claim.** `GRADE_TABLE_49.md` asserts *"closing the 49 IS closing his goal,
