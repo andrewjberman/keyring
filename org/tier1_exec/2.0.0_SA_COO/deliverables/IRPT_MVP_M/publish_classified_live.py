@@ -19,8 +19,12 @@ import boto3  # noqa: E402
 
 firm, EXPECTED_REV, EXPECTED_ETAG, EXPECTED_INDEX_VERSION, PRIOR_REV, GO = sys.argv[1:7]
 MODE = sys.argv[7] if len(sys.argv) > 7 else 'check'
+BUILDER_COMMIT = __import__('os').environ.get('BUILDER_COMMIT', '')
+if MODE == 'publish' and not BUILDER_COMMIT:
+    raise SystemExit('REFUSED: BUILDER_COMMIT unset -- the receipt must cite the builder commit (CTO GO condition 1)')
 tag = {'49financial': '49f', 'inflection': 'inf', 'cottonwood': 'cot'}[firm]
-root = Path('.runtime/holdings-journey-20260923/prepared_%s_classified' % tag)
+# PREPARED_ROOT lets the publish run from a tree whose contract admits the members (the prepared bytes stay the builder's).
+root = Path(__import__('os').environ.get('PREPARED_ROOT') or '.runtime/holdings-journey-20260923') / ('prepared_%s_classified' % tag)
 s = json.loads((root / 'candidate_summary.json').read_text())
 raw = (root / 'candidate.json').read_bytes()
 gold = (root / 'gold.parquet').read_bytes()
@@ -98,11 +102,11 @@ for accounts in [{probe[0]}, {probe[1]}, set(probe)]:
         except PublicationRefused as e:
             assert date == '2026-09-23', str(e)
             matrix.append({'accounts': sorted(accounts), 'as_of': date, 'status': 'EXPECTED_REFUSAL', 'reason': str(e)})
-receipt = {'status': 'PUBLISHED_VERIFIED', 'go': GO, 'executed_by': '2.0.0_SA_COO~M', 'started_utc': started, 'finished_utc': finished,
+receipt = {'status': 'PUBLISHED_VERIFIED', 'go': GO, 'builder_commit': BUILDER_COMMIT, 'executed_by': '2.0.0_SA_COO~M', 'started_utc': started, 'finished_utc': finished,
            'firm_id': firm, 'business_date': BUSINESS_DATE, 'revision': result['revision'], 'prior_revision': PRIOR_REV,
            'change': s['change'], 'index_location': index_key, 'index_version': result['index_version'], 'index_sha256': result['index_sha256'],
            'index_precondition': 'IfMatch ' + EXPECTED_ETAG + ' (version ' + EXPECTED_INDEX_VERSION + ')',
-           'immutable_write_count': len(writes) - 1, 'index_writes': 1, 'classification_census': s['classification_census'],
+           'immutable_write_count': len(writes), 'index_writes': 1, 'classification_census': s['classification_census'],
            'reader_matrix': matrix, 'reader_matrix_proof_class': 'LIBRARY_UNDER_USER (the function reads under its role)',
            'rollback': 're-point the date row %s to %s under a fresh IfMatch; its objects and index version are retained' % (BUSINESS_DATE, PRIOR_REV)}
 out = Path('org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/HOLDINGS_%s_CLASSIFIED_PUBLICATION_RECEIPT_20260924.json' % tag.upper())
