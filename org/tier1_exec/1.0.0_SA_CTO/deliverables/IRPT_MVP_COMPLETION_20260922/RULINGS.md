@@ -991,3 +991,15 @@ retained inputs checked against the native publication receipt; tests 114 of 114
 (0698 / d486 / combined at default and 2026-09-22; 2026-09-23 refused) and the receipt to the CTO.
 The 379 unassigned accounts remain Client with membership unattributed; the 140 source-refused
 accounts remain open. Not a journey PASS; the screen is still Andrew's re-test.
+
+
+## 2026-09-24 00:3x UTC - Claude CTO batch 8: LD-0612 accepted (LD-0611-ARM-01 closed)
+
+### LD-0612 (1e7121507a) - ACCEPTED; LD-0611-ARM-01 CLOSED
+CTO arms at HEAD 67c2844189 (carrying 1e7121507a) against the copy at 1e7121507a~1, on the same
+scratch new-file diffs: "smartx/platform/silver/" grades RAISE-EXISTING under both (carried in code
+and contracts); "smartx/platformx/silver/" grades RAISE-EXISTING under the pre-change gate (vacuous:
+its only carriers are three record-tree files, LD-0611.md, LD-0612.md and this RULINGS.md) and RAISE
+under the new gate, which drops record-tree and non-graded-extension carriers from the search.
+WARN 1 graded in every arm; counts-as unchanged; the permission only narrows. The negative arm
+discriminates again and stays valid however many records quote the literal.
