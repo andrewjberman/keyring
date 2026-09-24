@@ -128,6 +128,21 @@ the named residue plus what this round's evidence created.
    2026-09-10T23:18Z; the live directory reads 93. The four missing folders are Alphabet GOOGL US, Eli Lilly
    LLY US, Quanta Services PWR, UnitedHealth Group UNH US. No count from the snapshot is goal evidence.
 
+9. **[ADDED 18:1xZ -- s.7 OMITTED THIS AND THE OMISSION WAS A DEFECT, NOT A DECISION.] `FWD-12`'s FIGURES
+   PULL for the 22 added mnemonics.** `2.0.0_SA_COO~X` asked (msg 25699) whether the list's silence excluded
+   it. It does not. **s.4 of this very file names `FWD-12` as one of only TWO outcomes the packet declared,
+   and then s.7 dropped it** -- an enrichment list that loses the one outcome its own analysis named is a
+   defect in the analysis, so it is corrected here rather than left to be read as an exclusion.
+   **Andrew's per-use word is UNCONSUMED, verified at the record rather than from the citation:**
+   @`16ee7f6373`'s scope section reads ONE use, FWD-12's figures pull for the 22 added mnemonics through
+   Bloomberg, R-21's scripted mechanism binding the HOW, and *"it does not name any other vendor surface, any
+   other pull, or a standing grant"*. Decomposition v2.0 s.9's hold reads ABSENT-with-reason until his word,
+   and no round-2 cell was a figures pull.
+   **Three bounds the cell carries, because a per-use word spends on execution:** the 22 ADDED mnemonics and
+   no other name; Bloomberg only; scripted and deterministic per R-21, never an agent pick. The cell reads
+   `integrations/bloomberg/READ_HERE.md` first. This seat reads the GATE (xii) floor as **WORLD** (the act
+   leaves Opal infrastructure); the declaration is the issuer's and the gate grades the floor.
+
 **THE SUBTRACTION IS NOT EMPTY, SO ROUND 2 IS NOT A ZERO-GRADUATION ROUND AND `AMGT_CORPUS` DOES NOT CLOSE
 HERE.**
 
