@@ -1084,6 +1084,32 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "R-75 @791aa3e4af cites Z-S20 as independently demonstrating a SECOND identity path already working, and concludes from it that the 40 identity-unresolved AMGT_CORPUS folders are not measured to be unreachable.",
     "world_is": "Z-S20 measured NAME ENRICHMENT for securities that were already identified. It cannot support identity RECOVERY for folders that are not, because the arm it describes is downstream of the very resolution those folders lack. The number was sound in its own domain and was applied to a population it never swept.",
     "notes": "THE CLASS IS THE ONE THIS ESTATE KEEPS PAYING FOR AND IT IS A DOMAIN ERROR, NOT AN ARITHMETIC ONE: a sound, bounded, honestly-printed number carried one population sideways -- and it reads as MEASURED the whole way, because it is. MY SHARE, stated because the inheritance was foreseeable: Z-S20's headline is 'the correct company name is ALREADY IN THE SAME RECORD', and a reader who takes 'the record holds more identity data than we read' one step further lands exactly where R-75 landed. The row says NAME throughout and bounds itself at 13 of 250, but it never said THE ARM CANNOT FIRE WITHOUT A TICKER -- and that is the sentence that would have stopped it. THE KEEPABLE FORM: when you publish a number about a sub-population, state what it CANNOT reach in the same breath as what it does; a bound on the numerator is not a bound on the domain, and the next reader inherits the sentence, not the query."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S22",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-24T16:05:00Z",
+    "one_line": "R-78's census run on THIS serial: 38 rows name this lane as disarm_owner, 24 read ARMED, 17 survive the cited-by-a-later-row filter -- and the first two sampled show the over-reporting R-78 predicts. W10-S9 is a DISARM CARRIER filed ARMED, so it is disarmed here by name; W8-S1 is genuinely live. The other 15 each need their own read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CENSUS, on this serial, query as R-78 states it (hazard_standing == ARMED, minus rows a LATER row in the same file cites): 38 rows name 2.0.0_SA_COO~Y as disarm_owner, 24 ARMED, 17 after the filter -- all AMGT_HARVST: Z-S10, Z-S11, Z-W3-S1, Z-W8-S1, Z-W8-S2, Z-W9-S1, Z-W10-S2, Z-W10-S4, Z-W10-S5, Z-W10-S6, Z-W10-S9, Z-W10-S10, Z-W11-S1, Z-W13-S1, Z-W14-S1, Z-W14-S2, Z-W15-S1",
+        "MY FIRST EXTRACTOR WAS BROKEN AND I RECORD THAT RATHER THAN ITS OUTPUT: v1 sliced each file from its first '[' to its last ']' and failed on 21 of 52 files (JSONDecodeError), reading 1,534 rows. v2 parses EVERY fenced block: 239 files, 5,569 rows, 1 file unparseable (org/surprise_channel/D1_CATVIEWS). A census whose own reader is broken is exactly the defect R-78 names",
+        "AND THE TWO EXTRACTORS AGREE EXACTLY ON THIS SERIAL -- 38 / 24 / 17 on both, across a 3.6x difference in rows read. So the v1 coverage hole did not touch these rows, which is a stronger statement than either run alone could make",
+        "SAMPLE 1 -- W10-S9 IS NOT A HAZARD, IT IS A DISARM: its own one_line states row W10-S8's fix is BUILT and VERIFIED offline, with the numbers on it (remaining_pending 11 -> 0; silver_article_rows 14 EQUAL to bronze_articles 14, was 3 vs 14). A row whose subject is a completed, measured fix is filed ARMED because no field carries current state -- R-78's exact finding, reproduced from the other end",
+        "SAMPLE 2 -- W8-S1 IS GENUINELY LIVE: a proof-of-spec clause counting CRLF through Python's default TEXT-mode open() always prints 0, so it cannot discriminate a contaminated deliverable from a clean one. Its stated disarm (drop the clause as vacuous, or read 'rb') has not been performed, and the clause shape is not unique to this order",
+        "SO THE DIRECTION IS MEASURED, NOT ASSUMED: 1 of the first 2 sampled is not a live hazard. 17 is an UPPER BOUND on this lane's live load and the bias is toward over-reporting, as R-78 states"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "hazard_standing reads the current armed/disarmed state of a row, so a seat can count its own live hazards by filtering on it.",
+    "world_is": "It records what the row said WHEN FILED and is never updated, because the gate correctly refuses in-place mutation -- corrections are new rows citing the old id. So the append-only property that makes the channel auditable is the same property that makes its state fields unreadable, and a filter on hazard_standing over-reports by construction.",
+    "notes": "DISARMED BY THIS ROW, BY NAME: AMGT_HARVST-Z-W10-S9, which is a disarm carrier rather than a hazard -- its subject is the W10-S8 fix, built and verified with its counts printed. NOT DISARMED: W8-S1 and the remaining 15, each of which needs its own read before it is worked or closed; this lane owns them as disarm_owner and will work them rather than wait for mail about them, which is R-78's own conclusion applied to its own numbers. THE KEEPABLE FORM, and it is R-78's inverted so it bites at filing time rather than at census time: A ROW THAT RECORDS A COMPLETED FIX SHOULD BE FILED INERT, NOT ARMED -- the author knows the state at the moment of writing, and that is the only moment anyone does. Every disarm carrier filed ARMED becomes a false positive in every later count, including the author's own."
   }
 ]
 ```
