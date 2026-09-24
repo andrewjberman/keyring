@@ -152,3 +152,74 @@ carried here rather than smoothed. **No claim in s.2 or s.3 rests on a state rea
 
 **Push state: this file is UNREAD until committed and measured; `origin/CLOUD` read `0cf98a11f5` at the slug's
 vintage. `0.0.0_AB_MSTR~Z` pushes on its cadence.**
+
+## 8. AMENDMENT -- ITEM 2 IS FALSIFIED, ITEMS 1 AND 3 ARE QUALIFIED, AND AN EIGHTH ITEM EXISTS
+
+⛔ **THIS SECTION CORRECTS s.6 OF THIS FILE. `4.0.0_SA_CRO~Z` (msg 25504 @`88f08c0c7a`) MEASURED THE
+INSTRUMENT AND `3.0.0_SA_CVO~Z` (msg 25507 @`e0605cb305`) WITHDREW ITS OWN L9 SCOPING CLAIM. s.3's
+ruling on the band criterion RESTED ON THAT CLAIM AND IS WRONG AS WRITTEN.**
+
+**WHAT WAS WRONG.** s.3 adopted *"peers is the existence proof that 1 is reachable from inside the page's own
+tabs"* and ruled item 2 *"STAYS INSIDE the rectangle."* The metric named `bandContainersTopLevel` does not count
+bands. `ui-measure.mjs:65` matches computed background within 3 of `rgb(10,23,51)` at `document.body` scope, which
+is `--layer-strip`: the panel TITLE STRIP (`PanelHeader.tsx:62`, `PanelFooter.tsx:92`) plus the sidebar `<aside>`
+(`App.tsx:271`). **So peers reading 1 IS THE SIDEBAR, and the identity header -- `Panel variant="mixed"` on
+`--bg-band`, the element F1 made the one band in Security mode -- IS INVISIBLE TO THE PREDICATE ON EVERY STATE.**
+Item 2 as written would have cut a cell able to move that number only by deleting shared chrome strips, which
+could never grade what C3 and FWD-21 are about.
+
+**VERIFIED AT THIS SEAT ON AN INSTRUMENT NEITHER SEAT USED.** The CVO read the CSS comment; the CRO ran the
+browser. This seat derived both values from the HSL triples themselves at portal HEAD `1f1555d2`, the same commit
+the CRO names for its run: `--layer-strip: 221 67% 12%` -> **rgb(10,23,51)**, the predicate's target exactly, and
+`--layer-body: 221 45% 18%` -> **rgb(25,38,67)**, where `|25-10| = 15` is not `< 3`. **So `--bg-band` cannot
+satisfy `isBand` arithmetically, not merely by report.** `.dark-band` IS emitted at `Panel.tsx:90` for the chart
+and mixed variants, so the re-keying has a marker that already exists.
+
+⭐ **AND THE ROOT CAUSE IS NOT THE ONE THE CVO NAMED AGAINST ITSELF.** That seat called it *"I inferred the
+metric's meaning from its NAME."* The stronger account is that **THE NAME WAS CORRECT WHEN WRITTEN.**
+`Panel.tsx:8` and `:47` STILL assert `--bg-band, #0A1733` -- an identity the portal-wide named-layers move
+(`index.css:371`, portal `1e0aaad7`, Andrew's ~19:5xZ word) BROKE, while leaving both the predicate's hardcoded
+literal and the component's own docstring asserting it. **`isBand`'s `rgb(10,23,51)` is a COORDINATE that reads
+`--bg-band`: the pin looked unchanged while what it pointed at moved, and no reader of either file could see the
+break.** That is a third-party-edit class, not a careless-inference class, and the two carry different remedies --
+the careless-inference reading would have a seat read predicates more carefully, where the real remedy is that a
+literal duplicating a token's value is a defect the moment the token can move.
+
+**ITEM 1 IS QUALIFIED, AS A RELAY AND NOT A GATE.** A cell admitting `App.tsx` for C1/C11 lands on a call
+**Andrew reserved** -- the sidebar's wider treatment is open at him in three records, verbatim *"will see what the
+current version looks like in the interim and make a call later if we keep it as is or just revert to the DEV
+branch implementation"*. `PageHeaderVariants.tsx`, `PanelHeader.tsx` and `PanelFooter.tsx` are FREE. This seat
+relays that record and adjudicates it no wider and no narrower.
+
+**ITEM 3 IS QUALIFIED AND PART OF THE INVARIANCE SWEEP IS FALSIFIED WITH IT.** Weight 300 at 8 chars is **NOT
+chrome**: it survives scoping on all three routes and is `PageHeaderVariants.tsx:46` `font-light`, invariant
+because the header renders ONCE PER PAGE. s.3 recorded it as corroborated chrome. ⚠ **The bound the CVO states
+against itself is the real finding: invariance across six TAB renders cannot distinguish "chrome" from "page
+element rendered once per page."** The sweep's asymmetry disclosure covered VARIES-does-not-imply-page-owned; it
+did not cover INVARIANT-does-not-imply-chrome, and that second gap is where this one lived.
+
+**EIGHTH ITEM, NOT IN s.6's LIST.** The purple predicate fails on C8-LEGAL accents: scoped to `main`, list reads
+1 and thesis 2 against the cut's 0 / 1, and the extra on each is `PageHeaderVariants.tsx:40`, the 3px page-title
+rule -- the FIRST member of C8's identity set. **Admitting those files cannot make the predicate pass without
+violating C8.** The predicate must count ACTION fills and exclude the C8 set by selector.
+
+⚠ **ONE CORRECTION TO THE CRO'S OWN EVIDENCE LINE, CONCLUSION INTACT.** That message reports
+`ui-contract-check.mjs` passing no `--scope` as *"0 hits in 389 lines."* Measured here: the denominator is right
+at 389, and the count is **3**, all of them `/api/scoped/...` route strings -- the substring `scope` inside
+`scoped`. **The CONCLUSION HOLDS (no `--scope` flag is passed) and only the number is wrong**, stated because a
+wrong number gets re-run while a ZERO gets believed: a later seat re-checking would find 3 and conclude the
+finding had collapsed.
+
+⛔ **THE CUT IS CORRECT AND THIS RECORD IS WHAT WAS DEFECTIVE -- THE AMENDMENT FOLLOWS THE CUT, IT DOES NOT
+AUTHORIZE IT.** `2.0.0_SA_COO~Z` issued round 38 as `rm-1` THE INSTRUMENT RE-KEYED, `rm-2` THE FREE CHROME,
+`rm-3` THE RESIDUE MEASURED FIRST and `rm-4` THE EXPORT SERVED, citing `88f08c0c7a` directly -- so that seat read
+the corrections and cut the instrument remedy rather than following this file's item 2. **Left unamended, a grader
+comparing round 38's orders against s.6 would find `rm-1` serving no listed item while item 2 sat unserved, and
+would read a correct cut as out-of-spec.** That is the whole exposure this section closes. Nothing here changes
+round 38's spec, which is FROZEN at its issuance; s.6's item 2 is superseded as a RECORD, and `rm-1` is named as
+the correct service of the corrected item.
+
+**FWD-29's GRADE IS UNCHANGED AT NOT_REALIZED, AND THE REASON IS STRONGER.** s.5 graded it on rejected criteria
+with the CAN-FAIL limb demonstrated. It now also holds that **two of the check's predicates are mis-keyed**, so
+the oracle cannot yet grade what the fence names. No other grade in s.5 moves: nothing else rested on the band
+inference.
