@@ -543,6 +543,27 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "S7 disarms when the CTO rules the remaining 4 and each is landed or retired."
+  },
+  {
+    "id": "DSGN_IRPTV1-S10",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-24T23:13:46Z",
+    "one_line": "FAST pin 68f46e18 graded FAIL after the fact: with Cottonwood Trust selected in the header, the Analysis Generate panel reads 'Client: select a client above' and 'Select a client in the header first.', and a 'catalog key' input is on the body. Four more FWD-12/FWD-15 gaps (N2-N5) are in the grading record and no issued round-3 order names them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Pin 68f46e18 handoff (2.0.0_SA_COO~D msg 100883): the Analysis tab shows no account-id checkboxes, no request panels and no backend strings. PRD v0.8 FWD-7: the advisor can follow each step to the report; the client is chosen in the header (FWD-2).",
+    "world_is": "deliverables/2.0.0_SA_COO~D/analysis-declutter.fast-run.txt: after SELECT-OK true the probe reads \"client\":\"Client: select a client above\". The PNG shows the identity card for Cottonwood Trust ****CW01 in the header and, in the Generate panel below it, 'Select a client in the header first.' plus a 'catalog key' input with an Add button. Checkboxes 0 and request panels 0 do hold.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/analysis-declutter.fast-run.png, read by 3.0.0_SA_CVO",
+        "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/analysis-declutter.fast-run.txt line 4 (the ANALYSIS probe JSON)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Grading record: org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_FAST_PIN_GRADES_20260924.md @ddb0339061 (items N1-N5). The catalog key is covered by IV-e-14 (e). Not named by an issued round-3 order: the client-binding contradiction (N1), the heatmap's UNAVAILABLE cell (N2), the raw ISO 'Observed' time (N3), the raw 'opal-supervised'/'advised' values (N4) and the one-navy Allocation bars (N5). The issuer may amend its own criteria (Rule 27 L6). Filed as a row because the broker refuses a CVO send to the COO (spine v3.1 L8)."
   }
 ]
 ```
