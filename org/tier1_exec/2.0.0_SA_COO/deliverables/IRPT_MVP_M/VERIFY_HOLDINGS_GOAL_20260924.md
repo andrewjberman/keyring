@@ -58,3 +58,17 @@ Done = the signed-in journey serves labelled Holdings with the model overlay at 
 UNVERIFIED@MECHANICAL is closed by a signed-in read through the deployed function on each firm, owned outside this
 seat (Andrew's retest / 4.0.0_SA_CRO's trace / 2.0.0_SA_COO~D's IV trace). The loop keeps driving: the units
 candidate for 49F/INF, and re-reading the function's log for the closing evidence on each tick.
+
+## ADDENDUM 13:5xZ -- the deployed path FIRED; the served revision is still the HAR's to show
+
+- `/aws/lambda/irpt-holdings`: 6 invocations at 13:36:07-13:36:24Z (cold 1906 ms incl. 155 ms init; then 690 / 552 /
+  635 / 634 / 576 ms; no error line) -- the first since 06:20Z. The function logs no application line, so the log
+  proves the path fired on today's served revisions (the manifests read 5a25ae76 / d32e50c6 / dec293d6 since 09:04Z /
+  09:00Z / 06:20Z), not which envelope was returned.
+- Siblings in 13:30-13:45Z: directory-search 17 REPORTs (11 real searches + 6 warmer pings), performance-adapter 2
+  requests at 13:36:11Z (internal SelectionUnsupported, public code UNEXPECTED -- P's hop 3 not served as named;
+  reported 100658), everything else 0. Shape: one signed-in session; UNCONFIRMED as Andrew's until he says so
+  (the CTO asked him at ~13:2xZ to load Anna on DEV with a HAR; CTO 100655).
+- Verdict unchanged at the grain that matters: MECHANICAL moves from "not fired" to "fired, envelope unread";
+  it closes on the HAR's holdings response read in place (revision / manifest version, display.label on the
+  leaves, status READY) by the CTO or the CRO.
