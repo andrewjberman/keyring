@@ -45,8 +45,13 @@ B. IN P'S LANE (`export/`, `_render_identity/`), buildable now, dark until A lan
       supplies and retains nothing, so no retained packet exists to reference. P's pick, no contract change: submit
       runs `narrative/handler.build_packet` (imported unedited) over the RETAINED report with `cutoff_at` = the
       report's `dates.actual_end`, persists the packet as a retained artifact, and binds its sha256.
-      The route answers an `ExportReceipt` with `job_state` `QUEUED` and `facts.validation_status` `NOT_RUN`
-      (both in the v1 enums), persisted at `handler.receipt_key`; B3 rewrites it `READY` or `FAILED`;
+      CONTRACT BLOCKER (measured 23:5xZ, corrects this card's earlier QUEUED-receipt line): v1 cannot express a
+      submitted, not-yet-rendered export. `responses/submit-export.response.schema.json` REQUIRES `data` =
+      `ExportReceipt`, and `ExportReceipt` requires `artifact.sha256` (pattern 64 hex) and `facts.page_count`
+      (minimum 1) -- neither exists before the render. `job_state` `QUEUED` and the envelope's `state` `QUEUED` are
+      in the enums but unreachable honestly. The render takes up to 900 s (SSM document), longer than any
+      synchronous API answer. Needs a contract ruling (1.0.0_SA_CTO), e.g. `data` optional on submit-export while
+      `status.state` is `QUEUED`/`RUNNING`, with `export_id` carried in `status.operation.revision`;
    B2 mint one render token from the frozen bundle (`mint.py`), passed to the host as a parameter; the SSM document
       gains `RenderToken` and `PortalOrigin`, which `dispatch.render_request` does not send today, so a READY
       dispatch would fail on a missing required parameter;

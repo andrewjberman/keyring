@@ -35,8 +35,8 @@ unknown until the run: the provider call -> retained report -> reopen -> export.
 
 ## Write claims
 
-Item in hand: none building. Waiting on S1 (Andrew). Next claim: the next-list item 2 surface (`performance/`), on the tick
-after S1 reads.
+Item in hand: none building (B1 blocked on the contract ruling). Claimed surface when it un-parks:
+`infra/aws/lambda/investor-reporting/export/`, `infra/aws/terraform/investor-reporting/export/`, the `irpt-export-render` source-map row.
 
 ## Next-list (in order)
 
@@ -61,8 +61,11 @@ after S1 reads.
 5. EXPORT HOP NOT BUILT -- design card `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/EXPORT_HOP_DESIGN_CARD_20260924.md`.
    Served submit answers NOT_READY; 11/11 host renders Failed (SESSION_ABSENT); 0 PDFs; render signing keys ABSENT;
    V2/V3 render branches coded, not deployed. A (keys + V2 + V3, shared auth plane) is outside P's surface: owner
-   asked of 1.0.0_SA_CTO. P builds B1 next (serve submit-export for a retained report), then B2 (mint + SSM
-   RenderToken/PortalOrigin), then B3 (finalize), dark until A lands.
+   asked of 1.0.0_SA_CTO. B1 (serve submit-export for a retained report) is BLOCKED on a v1 contract ruling: the
+   submit-export response requires a complete ExportReceipt (artifact sha256, page_count >= 1), so a submitted,
+   not-yet-rendered export has no honest answer (asked of 1.0.0_SA_CTO). Measured for B1: evidence keys accept
+   `RPT-<32 hex>` as the generation segment at all three firms; the export zip stages 15 files vs performance's 61
+   (no reports/, narrative/ or registry modules).
 6. Y compositions: hops 2+3 SERVED (ledger `irpt-upload-hop2-20260924`, S1 = Y's live 12.03 acceptance); hop 4 custody
    (admitted_firms under the ledgered plan naming all three firms' objects, CTO 100712) remains.
 7. C-S219 (round 18): a complete offline served-route chain for V1 verification (may be superseded by the live trace).
@@ -87,5 +90,5 @@ after S1 reads.
 
 ## Limits
 
-Only the COT account acc_d486fc94.. has a live calculation path. No vendor call is made by this seat; the one use fires only
+COT has a live path on the one-use plan (expires 2026-09-25T00:00Z); 49F is served on Opal's engine; INF is not composed live. No vendor call is made by this seat; the one use fires only
 on Andrew's signed-in request. Nothing here is pushed.
