@@ -602,6 +602,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Decomposition v2.0 s.5 duty 2: run the scripted production sequence ONCE for the newly resolved names, each producer printing its denominators; FWD-19: inducted, re-ingested, and (via d-4) dossier-served or dispositioned.",
     "world_is": "The sequence as written re-measured the OLD population and printed honest denominators for it; the new names were invisible to the last two producers because the population artifact they read had not been re-minted. Nothing was overwritten or lost; the dossier objects written for the 33 are the as_of=2026-09-24 vintage over the grown typecast.",
     "notes": "INERT: the correction is one inserted step, run by this seat now; the decomposition's s.5 text is amended in the record face of the round (the L10 analysis) rather than re-cut mid-round (the decomposition is frozen). The d-4 continuation waits for the corrected chain's numbers. Related: Z-S17 (sector template refusal) stands separately."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S19",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T14:15:00Z",
+    "one_line": "DISARM by its owner of AMGT_CORPUS-Z-S16 (the post-fire exposure: 20 twin records, 0 of 20 folders ingested): all three disarm conditions the row states are MET -- (1) the builder resolves a registration into its same-folder UNRESOLVED coverage record in place (2.0.0_SA_COO~Z @a2b84a1b2a, drained a5b9859e0a, crosswalk.py byte-identical at HEAD); (2) ONE re-mint of crosswalk/v1/2026-09-24.json through the unified builder under a fresh never-widen pair (COO 5de984f360, CTO #2 839b04a16c, in force 6236af5af4; CTO R-63 closes it): versions 23 -> 24, records 274 -> 254, MEASURED 214 with 214 of 214 keys present, UNRESOLVED 60 -> 40, resolved_folders 20, multi-claimed forms 0 of 521; (3) the re-ingest read resolved_folders 53 (stored 218, put_performed 94, AMBIGUOUS 0) and the production sequence ran for the 20 -- extraction v1+v2, typed, continuation (names 53, rebuilt 20), fund form, typecast, and dossiers (names 53, written 36 incl. all 20 new keys, existed 17) after the backlog scan vintage was re-minted (93 = 53 + 40 + 0). Z-S16 is legacy-shaped (no disarm clock) so it cannot advance in place; this row is the disarm carrier and cites it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Condition 1: 2.0.0_SA_COO~Z msg 25469 (live acceptance records 274 -> 254, UNRESOLVED 60 -> 40, multi-claimed 20 -> 0, identity tests 97 of 97); 0.0.0_AB_MSTR~Z drain a5b9859e0a; this seat's byte-identity read: crosswalk.py at HEAD == a2b84a1b2a (51,725 B, sha256 200ec514c15a4a53), pre-fix 842071008b DIFFERS (49,762 B); this seat's own in-memory pre-flight on the branch bytes reproduced the acceptance (evidence in NEVER_WIDEN_ROUND2_D5_REMINT_HALVES.md @5de984f360).",
+        "Condition 2: remint_20260924T115901Z.log (`OK: uploaded ... ContentLength=560881 document-sha256=572edb49... records=254 MEASURED=214 UNRESOLVED=40`), probes 5 and 6 (evidence/remint_probe5_before_20260924T115801Z.json, remint_probe6_after_20260924T115952Z.json @2c24cc867d): versions 23 -> 24, latest VersionId BN_TiAyAX_EwRm_nP.PMymkiUnFBMA1N, superset 214 of 214, resolved_folders 20 present, multi-claimed 0, folders with two records 0. CTO R-63 (ee3b4549c4): every arm of the pair held.",
+        "Condition 3: evidence/reingest_after_remint_20260924T120035Z.log (`resolved_folders 53 files_in_resolved 218 stored 218 (put_performed 94 existed 124) read_failed 0`, AMBIGUOUS lines 0); evidence/production_sequence_20260924T120608Z.log + production_sequence_tail_20260924T121658Z.log (extract, typed, continuation, fund_form, typecast; sector_template REFUSED -- Z-S17, separate); evidence/production_sequence_corrected_20260924T130440Z.log (`folders_read 93 = resolved 53 + unresolved 40 + ambiguous 0`, continuation `names 53 rebuilt 20 existed 33`, dossier `names 53 written 36 existed 17` with every one of the 20 new keys written at as_of=2026-09-24).",
+        "Served plane (evidence/served_identity_reads_20260924T135051Z.log @32bf98d750): AZN_LN_Equity and UBSG_SW_Equity read statusCode 200 identity_status MEASURED on the deployed scoped API; control ASML_NA_Equity MEASURED."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S16 DISARMS WHEN (1) a registration resolves its same-folder UNRESOLVED record, AND (2) one re-mint under a fresh pair, AND (3) this seat's re-ingest reads resolved_folders 53 and the production sequence runs for the 20 (Z-S16 notes); FWD-19: inducted AND re-ingested.",
+    "world_is": "All three conditions hold on the instruments named; the twins are gone from the served document, the 20 folders' 94 reports are in bronze, extracted, typed, continued and composed into dossiers. FWD-19's induction half is REALIZED on identity AND re-ingest for the 20 evidenced folders; the remaining 40 unresolved folders carry printed reasons (37 no-evidence, 2 collisions, 1 disagreement) and are the census's business (d-4). Z-S16's text still reads ARMED because a legacy-shaped row has no clock; this row is what a reader weighs against it.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's); the next L9 may adjudicate Z-S16 on this row. Outstanding beside it, separately rowed: Z-S17 (sector template naming, ARMED, next-cut cell) and Z-S18 (sequence text, INERT)."
   }
 ]
 ```
