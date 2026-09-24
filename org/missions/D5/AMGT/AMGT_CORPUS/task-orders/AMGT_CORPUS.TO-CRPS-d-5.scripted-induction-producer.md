@@ -65,6 +65,19 @@ collision (rc 4) and prints `bloomberg_calls N` on every path; the client seam i
 - **Determinism:** rows are processed in the request's sorted order; the same rows and the same rcs produce a
   byte-identical read-back apart from the timestamp line.
 
+- **ISSUER AMENDMENT 1 (2026-09-24 ~07:3xZ) -- THE FOLDER-VS-REPORT DISAGREEMENT REFUSAL, a general rule, never a name:** the
+  dry-run read-back showed `America Movil AXMB MM` EVIDENCED and CALLED with security_key `AMXB_MM_Equity`: the classifier
+  sees only the REPORTS' ticker (AMXB) and never compares it to the FOLDER's own token (AXMB). `3.0.0_SA_CVO~Z`'s standing
+  ruling (carried by the CTO's R-16 and the PRD's A.4 limit 2): a two-character transposition between the folder and the
+  report, with no third source, is a REFUSAL with a reason, never a pick. So, BEFORE any call: parse the folder name's own
+  trailing Bloomberg token pair (`<TICKER> <CC>`: the last two whitespace tokens when the last is a 2-3 letter exchange code
+  and the one before it is an all-caps ticker; a folder with no such pair contributes no token and is not refused by this
+  rule). An EVIDENCED row whose report ticker ROOT differs from the folder's ticker token is state `DISAGREEMENT`, NEVER
+  called, printed with `folder_token X report_token Y no third source` as its reason, and carried in the read-back like any
+  refused row. The totals line becomes `population P evidenced E ambiguous A disagreement D other O called C registered R
+  already_registered K refused F errors X bloomberg_calls B sum P` where E + A + D + O = P and C = E. A folder whose tokens
+  AGREE is unchanged. This is the mechanism form of the ruling: it refuses every future transposition, not one name.
+
 **What this cell does NOT do:** no edit under `lib/research/identity/` (another lane's surface; imported, never
 changed); no Bloomberg call; no S3 write; no ingest re-run (the issuer runs the existing `ingest` after the fire).
 
@@ -97,13 +110,13 @@ org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-d-5.scripted-in
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CRPS-d-5"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/research/corpus/tests/test_induction_run.py -q --color=no -p no:cacheprovider 2>&1 | tail -3</invocation><expect>(?m)^\d+ passed in </expect></criterion>
-  <criterion id="AC2" cell_refs="CRPS-d-5"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.research.corpus.induction_run --dry-run --as-of 2026-09-24 2>&1 | tail -3</invocation><expect>population ([1-9]\d*) evidenced \d+ ambiguous [1-9]\d* other \d+ called \d+ registered \d+ already_registered \d+ refused \d+ errors \d+ bloomberg_calls 0 sum \1\b</expect></criterion>
+  <criterion id="AC2" cell_refs="CRPS-d-5"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.research.corpus.induction_run --dry-run --as-of 2026-09-24 2>&1 | tail -3</invocation><expect>population ([1-9]\d*) evidenced \d+ ambiguous [1-9]\d* disagreement [1-9]\d* other \d+ called \d+ registered \d+ already_registered \d+ refused \d+ errors \d+ bloomberg_calls 0 sum \1\b</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-d-5"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.research.corpus.induction_run --fire --as-of 2026-09-24 2>&1 | tail -3</invocation><expect>(?s)REFUSED: --fire requires OPAL_INDUCTION_FIRE=1.*bloomberg_calls 0\b</expect></criterion>
 </proof_of_spec>
 
 - AC1 the built behaviour; AC2 the seam probe against the REAL backlog (the population and the ambiguous count are read
-  from the library and the crosswalk; the calls are faked) -- `ambiguous` must be >= 1 because America Movil is measured
-  ambiguous today; AC3 the difference control on the gate the fire sits behind (reason: the one thing this cell must
+  from the library and the crosswalk; the calls are faked) -- `ambiguous` must be >= 1 (Copa and Uber collide with existing keys today) and `disagreement` must be >= 1
+  (America Movil AXMB vs AMXB); AC3 the difference control on the gate the fire sits behind (reason: the one thing this cell must
   never do is call Bloomberg from a worker turn, and the refusal is the proof it cannot).
 
 ## 6. WHEN YOU ARE DONE
@@ -115,13 +128,18 @@ org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-d-5.scripted-in
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
+**ISSUER REOPEN 2026-09-24 ~07:3xZ (2.0.0_SA_COO~X):** the worker's first close (8afe2f1187) was VALID on the face as issued; the face was
+incomplete -- it carried the CVO's AXMB/AMXB refusal as a NAME in the bounds and no MECHANISM in the rules, and the fresh
+request classifies that folder EVIDENCED. Amendment 1 adds the folder-vs-report disagreement refusal and one token to the totals
+line; AC2's expect gains `disagreement [1-9]\d*`; the order is re-opened to `pending` and the same worker is continued on it.
+
 **ISSUER NOTES:** the FIRE is the issuer's drain act (decomposition s.5 duty 1, s.9 hold): after this cell drains VALID,
 ONE exchange with `2.0.0_SA_COO~Z` on the pinned candidate (`add_security` is its surface), READ_HERE s.2 sign-in state
 checked, then `OPAL_INDUCTION_FIRE=1 python -m lib.research.corpus.induction_run --fire --as-of <today>` once, the
 read-back recorded in this lane's deliverables, then the existing `ingest` re-run. A worker face carries the vendor ban;
 Andrew's word authorizes a scripted producer; the seat holding both the word and the terminal runs it.
 
-<status>complete</status>
+<status>pending</status>
 <round>2</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
