@@ -49,12 +49,16 @@ Each case: the Peers tab, then the Posture tab, whose `usePeerSet` fires for the
 | `NOSUCHKEY_ZZ_Equity` | UNRESOLVED, raw string shown, no read | "ABSENT -- identity UNRESOLVED -- no posture was read" (negative control holds on consumer 2) |
 | `BP/_LN_Equity` | "Loading..." -- every route 404 | "Loading..." -- every route 404 (failure case 3) |
 
-### Failure case 1 -- expired session: EXERCISED, the PROACTIVE arm; the reactive 401 arm NOT reached
-The profile's access token had expired at 03:35:43Z. First navigation at 05:03:48Z: `/auth/refresh` 200 ->
-`/auth/me` 200 -> new token (exp 05:18:49Z) -> `/security-analysis/BA_US_Equity` landed, no `/login` bounce, no 401
-anywhere in 109 responses. `api-client.ts` refreshes BEFORE a request when the token is old (`ensureFreshToken`), so
-the edge never saw the expired bearer and `refreshAndRetry` (the 401 branch) was not exercised. Outcome of the case
-met (an expired session yields the page); the reactive arm is a second run, below.
+### Failure case 1 -- expired session: EXERCISED on the served stack, BOTH arms
+**Proactive arm (05:03Z, `PEERS_CONSUMER2_TRACE_20260924T0503Z/`):** the profile's bearer had expired at 03:35:43Z;
+first navigation -> `/auth/refresh` 200 -> `/auth/me` 200 -> new bearer -> page landed, no `/login` bounce, no 401 in
+109 responses (`ensureFreshToken` refreshes before the request when the in-memory marker reads old).
+**Reactive arm (05:23Z, `PEERS_REACTIVE401_TRACE_20260924T0523Z/`, driver in the folder):** the expired bearer was
+read out with scripts aborted, the app loaded and refreshed proactively, the expired bearer was swapped back into
+localStorage without a reload (marker still fresh), then a client-side navigation fired the next requests with it:
+`/security/BA_US_Equity/peers` **401** at 05:23:20.225Z -> console `[api-client] 401 received -- attempting token
+refresh` -> `/auth/refresh` **200** at .378 -> the SAME URL retried **200** at .610; bearer rotated (new exp), page
+stayed on `/security-analysis/CAT_US_Equity`, Peers panel rendered 17 rows. Edge 401 -> refresh -> retry, MET.
 **Observation, explained, no row:** `/auth/refresh` + `/auth/me` fired on every navigation, 7 pairs 5 s apart, against
 the 10-minute proactive threshold -- because `tokenIssuedAt` is an in-memory module variable (`api-client.ts:31-35`)
 that resets to 0 on a FULL reload, and this driver hard-navigates per case. Client-side routing does not reset it.
