@@ -1,0 +1,5 @@
+2026-09-24T14:08:41Z REFUSED author=Andrew Berman paths= CLAUDE.md order=<none> reason=ANDREW_LAW_EDIT_ORDER is not set.
+2026-09-24T14:08:41Z REFUSED author=Andrew Berman paths= org/XXX.md order=org/nope/ANDREW_DIRECT_x.md reason=the named record does not exist on disk and is not staged: org/nope/ANDREW_DIRECT_x.md
+2026-09-24T14:08:42Z PASS author=Andrew Berman paths= CLAUDE.md order=org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_140xZ_LAW_FILES_RULES_ONLY_AND_LOCKED.md
+2026-09-24T14:11:09Z PASS author=1.0.0_SA_CTO paths= CLAUDE.md org/XXX.md order=org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_140xZ_LAW_FILES_RULES_ONLY_AND_LOCKED.md
+2026-09-24T14:16:15Z PASS author=1.0.0_SA_CTO paths= CLAUDE.md order=org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_141xZ_YES_TO_ALL_SIX_PROCESS_CUTS.md

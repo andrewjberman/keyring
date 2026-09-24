@@ -19,13 +19,176 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (1) Anna NOT_READY: ROOT CAUSE (batch 12) = the DenyForeignFirmPrincipals
+CTO review queue, in order: (0000000000000000000000000000000000000000) 13:36Z signed-in session (likely Andrew's, unconfirmed): holdings
+fired 6x clean; Performance on Anna's RELATIONSHIP -> SelectionUnsupported served as UNEXPECTED (hop 3 NOT SERVED AS NAMED); the one-use
+plan not reached, not spent; P: fix the served public code (ledgered repackage) + state the single-account UI act or name the missing
+control; Andrew told not to click Performance until P answers; HAR still asked (batch 60).
+(000000000000000000000000000000000000000) custody INTERPRETER BUILT by Y @47b2adf6df, accepted (oracle
+15/15, reader round-trip, one real run: Anna 55 positions within a cent); 3 exact-file rows granted to P at the pin; composition gated on
+the ledgered FIRM-bucket plan; decoder = rung 2 (reuse M's holdings runtime layer); M confirms zero-lot is a NEW interpreter rule
+(batch 59). (00000000000000000000000000000000000000) ZERO-LOT rule accepted (MV 0 AND Units 0 excluded like a
+no-position row, origin recorded, _validated unchanged; 809 of 843 COT accounts admit, Anna 55 positions; negatives / unpriced / no-positive
+refuse; COT-measured only); the served manifest has no control row -> independent value read from the receipted fact_allocations object
+(batch 50 corrected) (batch 58). (0000000000000000000000000000000000000) card 2 EXECUTED: the one-use Performance plan ARMED 13:12:22Z
+(sha 106eaa0e.., Anna, YTD 2026-01-01..09-24, expires 00:00Z, 0 claims); the trigger = Andrew's signed-in click on DEV; unspent re-cut =
+the same use, a spent use needs a second word; the 8-day BD cookie = the pre-click risk, CRO states its state from the hop-7 control, no
+vendor call (batch 57). (000000000000000000000000000000000000) IVE2-AC2 amendment LANDED @49dc5d9216 (content-pinned driver on
+stdin, anchored expect, gate (viii) graded); CORRECTION: the driver PNG shows the HOLDINGS tab, not PerformanceHeadline (restated unopened,
+two seats deep -- owned); CVO grades AC4 per the amended face; grader's run at the drain still owed (batch 56).
+(00000000000000000000000000000000000) DSGN round 2: IVE2-AC2 amended to the worker's committed selection
+driver with the expect ANCHORED "matched 5 of 5", D re-executes at the chain-B drain; exposure 1 of 24 rows, not incident; round-3 rule:
+count-bearing expects anchored N of N; chains A+C drained, chain B in flight, IV-e-7 after (batch 55). (0000000000000000000000000000000000) Y rules Q3 from code: zero-admissible-row account REFUSES
+(CUSTODY_ACCOUNT_NOT_IN_SOURCE / CUSTODY_UNSUPPORTED_ROWS), contract unchanged -- accepted; the interpreter card is CLOSED on Q1-Q4; P
+writes card v2; mixed-rows case named open, measured on Anna first (batch 54). (000000000000000000000000000000000) CORRECTION: card 6's "the build already refuses without them" was
+FALSE (CTO miss, owned; record file corrected in place); M adds a named REFUSAL on an unset capture env var; the receipting = the holdings
+migration project, CRO asked for its L1 brief; Y back at 13:00Z, card 1 closed by the world, Y briefed (batch 53).
+(00000000000000000000000000000000) portal candidate 7 LANDED fast-forward f1d02f30a2 (ls-remote read by MSTR
+12:5xZ); DEV = candidates 1-7, the five W4-S2 names closed there; Andrew told DEV is ready for the signed-in HAR (card 4); the recs-approved
+broadcast 6 of 6 delivered (100600-100605); P's order: ONE Performance submission -> browse-slice $ref contract fix -> card v2 (batch 52).
+(0000000000000000000000000000000) ANDREW-DIRECT 12:5xZ "recs approved" on six cards: Y retries same
+model (MSTR keys); ONE Performance plan submission for Anna, default window (P executes, CRO second read); upload symbol resolution via
+the resident, NO prices v1; the signed-in HAR when DEV is ready; DSGN_IRPTV1 DONE WHEN confirmed as written; Rule 28 card acknowledged,
+M receipts under its migration (batch 51). (0000000000000000000000000000000a) portal candidate 7 (f1d02f30: the claim-authority re-pin +
+SelectedAccounts.valid.json) GO'd; receipt PENDING; the five W4-S2 names CLOSED; unmasked debt: browse slice 'entries' not a $ref (contract
+first, backend branch) (batch 51). (000000000000000000000000000000) M's Q1/Q4 ACCEPTED: Q4 condition FAILED (DC1 account value = a SUM),
+CTO leaning WITHDRAWN, independent value = fact_allocations "Account Market Value" via the manifest's control row; Q1 rows from the
+receipted custody object (fact_holdings / dim_position / positions_mv), never manifest.gold; P amends the card to v2; design open on
+Q3 only (Y) (batch 50). (00000000000000000000000000000) portal candidate 6 LANDED fast-forward b9d244a474 (ls-remote read by MSTR
+12:2xZ); candidate 7 = the Global-default arm re-pin + the generated SelectedAccounts fixture; the CRO's addendum 3 corroborates the
+card's 0-of-68 finding on the 04:32Z vintage (batch 49). (0000000000000000000000000000) custody INTERPRETER card @d8c8e6c716 ACCEPTED -- Q2 ruled (held
+positions, never model-implied nodes), Q4 conditional on M, Q1+Q4 at M, Q3 held for Y (provisional: zero-row account refuses);
+interpreter = Y's cell on return; P composes only after M + a ledgered grant plan (batch 48). (0000000000000000000000000000a)
+portal candidate 6 (b9d244a4, 2 fe-s-10 tests) GO'd; receipt PENDING; the isInternal arm ruled a stale arm against the ratified
+Global default -> re-pin in candidate 7 with the missing generated SelectedAccounts.valid.json; 3 fe-s-13 arms wait on MSTR's
+CLOUD drain of the backend branch (batch 48). (000000000000000000000000000) portal candidate 5 LANDED on origin/DEV as the covered --no-ff fallback
+ed3088b8 (DEV had moved to 1f1555d2; overlap 0; staged set = the ten files; VALGATE no-op; ls-remote read by MSTR 12:1xZ); P cuts the
+next candidate from ed3088b8 (batch 47). (00000000000000000000000000) portal candidate 5 (694287b9) GO'd to MSTR as a fast-forward onto DEV
+310b83b8 -- CTO's own reads: ancestry rc=0, 2 commits, 10 test/fixture files +95/-10, no product file, tsc 0, eslint clean; P's
+named fail-set diff 17->12, 0 introduced; landing receipt PENDING at MSTR; the fe-s-2/fe-s-10 five relayed via COO~D (batch 46).
+(0000000000000000000000000) (i-b) is a DESIGN, not a composition (interpret_source /
+validate_evidence exist nowhere; the CTO's premise was inherited -- owned); nothing stubbed; P drafts the interpreter's design
+card now with a live capture on Anna's account; the first live Analysis submission waits on whichever composition lands first
+(batch 45). (000000000000000000000000) (iv) RULED: (i-b) custody branch cut as code; the FIRST live Analysis
+submission bounded to Anna's account from Andrew's browser -- ONE card with the plan word; edge (a) served (pfAr3uZE); the
+fe-s-2/fe-s-10 five = P's repair in candidate 5 (batch 44). (000000000000000000000000a) DSGN round 2: IVE4-AC2 amended to a
+difference control; S3 product-file drain red -> the authoring worker (the rule); 3 of 8 terminal (batch 44).
+(00000000000000000000000) portal candidate 4 LANDED on DEV 310b83b8 (the client flag; CTO-reviewed,
+ff, VALGATE PASS no-op) -- Analysis (i)/(ii)/(iii) COMPLETE; hops 9/10 exercisable signed-in; (iv) cutover inputs next at P;
+hop 2 + hop 6 at Andrew's cards (batch 43). (0000000000000000000000) the three Analysis routes SERVED (routes.json 17/17; history GETs on
+irpt-status; the upload POST on irpt-ycharts-generate 4fkloyC1 refusing by name; CRO route read corroborates); the X10 pin-by-NAME
+rule made standing after a never-served wrong-pin build; candidate 4 = the client flag, then (iv) (batch 42).
+(000000000000000000000) irpt-status SERVED with the installed assembly (5E8T+/LV, 10:53Z; the two
+history routes on its own table; CRO corroborated); (iii) routes server-first then the client flag; edge (a) mapped in the (iii)
+commit (batch 41). (00000000000000000000) S122 builder probe LANDED on CLOUD @bf938bcf39 by the CTO under the audited
+cross-lane override (one file, one lane); the generate function's served read corroborated by the CRO; NOT_READY ruled the
+correct public code for the uncomposed branches (batch 40). (0000000000000000000) DSGN_IRPTV1 ROUND 2 CUT on the CTO's word (decomp v2, 8 cells, the seven
+P/M touches ruled by element + span, the FWD-11 sweep as a join cell spawned last = one issuance) (batch 39).
+(0000000000000000000a) irpt-ycharts-generate SERVED with the installed factory (uHfng41l, 10:24Z; named refusals; no ESM); (ii)
+status + (iii) routes next at P; the upload composition card at Andrew; S122 builder probe fix before (ii) (batch 39).
+(000000000000000000) DSGN_IRPTV1 ROUND 1 CLOSED (analysis c06e435786 on the CVO's slug
+@13baec35aa; no addendum; FWD-11 breached by C-S12, repaired first in round 2; enrichment list of 8 handed to COO~D for decomp v2
++ one issuance; FWD-1's trace = Andrew's signed-in walk on DEV) (batch 38).
+(00000000000000000) DSGN_IRPTV1 round-1 candidate ON PORTAL DEV 895752676a (S1 fixed 837983cb, CTO tsc
+0 errors; MSTR's overlap stop cleared: the one overlap was P's F1 block, disjoint); Anna's signed-in walk on DEV = Andrew's; the
+CVO's L8/L9 + slug, then the CTO's round-1 analysis (batch 37). (00000000000000000a) CRO Analysis addendum: hops 5 + 6 CLOSED,
+hop 2 = the upload COMPOSITION (census corroborated); the egress card stays at Andrew (batch 37).
+(0000000000000000) DSGN_IRPTV1 round 1 DRAINED (4 of 4; candidate dsgn-irptv1-r1 @7736e6cc reviewed:
+touch lines as amended, ScopeSummary untouched, tsc red in ONE worker test file = S1, issuer-direct fix worded); W3-S2 DISARMED by
+the CTO (naming-gate JS/TS limb defect -> LGIC_ENFORCE enrichment; disk-discovery workaround accepted); L8/L9 at the CVO, then the
+slug, then the CTO's round-1 analysis; the live trace is Andrew's signed-in walk (batch 36). (0000000000000000a) Analysis (i):
+P lands the named-refusal cut (8 real ports, derived revisions, no ESM); the upload composition is a DESIGN (CTO shape: index in
+irpt-requests, symbol resolution via the resident, no prices in v1); two egress questions carded to Andrew (batch 36).
+(000000000000000) THE RESIDENT IS INSTALLED AND RUNNING (irpt-analysis-resident.service 09:39:24Z,
+package ab2e088b5b, pin 1276035, empty-queue polls, no vendor call; ledger CLOSED); runbook precondition B MET; next = the
+Analysis backend (i)-(iii) at P -- NO event source mapping (the resident is the one consumer); P names uncovered modules, the CTO
+adds grant rows; the browser act (G) is Andrew's (batch 35). (000000000000000a) candidate 3b on portal DEV 013323f0 (ff; hunks
+identical to the reviewed 3c0a3e45) (batch 35). (00000000000000) D1: the SIXTH submission CAPTURED the bundle (fence 11, AWSCURRENT; the pair 200/405
+convicts the presented WAF token); CRO bundle grade PASS; runner lines (a)-(c) -> one stored-bundle probe (no sign-in) -> the
+tokenless transport line (P, CRO second-reads) -> install at 93ec16f4fe with pin 1276035 -> empty-queue run (batch 34).
+(00000000000000a) all three firms serve labels + UNITS (49F QC.bs6a5w, INF k9U4ucuT, COT mSFR0vat); M done on the build side;
+closing read = Andrew's. (00000000000000b) candidate 3 GO in re-cut shape (B) on origin/DEV ae1b9f42; MSTR pushes the ff.
+(00000000000000c) DSGN_IRPTV1 round 1 EXECUTING; the import-line amendment ruled (the CTO's one-line bound was impossible)
+(batch 34). (0000000000000) ALL THREE FIRMS SERVE LABELLED HOLDINGS (49F 9Vtkh61A 06:58Z, INF .vBFsThYv 07:04Z,
+COT mSFR0vat 06:20Z; CTO readbacks match); M's /verify UNVERIFIED@MECHANICAL -- 0 signed-in reads through irpt-holdings since
+06:20Z; the closing read is Andrew's on opalinvest.dev (batch 33). (0000000000000a) the 04:32Z HAR was LOCALHOST (StrictMode
+doubles): instrument HELD, F7 cut NONE, F2 deferred; ask Andrew for an opalinvest.dev HAR; candidate 3 = F1/F5/F3 (batch 33).
+(0000000000000b) COO~Y paused on a safeguards dialog (Andrew's model call); STANDS re-routed to the CRO, which STANDS; the
+SIXTH submission fires at P (batch 33). (000000000000) corrected GO 49F 3d59c80b -> INF d03e91a4 ISSUED (100400) on sha-verified captures
+and a 0/0/0 census; receipts next; the Eclipse-map + taxsma snapshot substrate card goes to Andrew with the plan word (batch 32).
+(000000000000a) HAR doubles = a remount from a boundary above the page (two QueryClients); the console instrument GO'd in
+candidate 3; "Holdings waits on Performance" RETIRED; F2 ruled server-side at P after candidate 3, before the Analysis backend;
+candidate 3 @3c0a3e45 (F1/F5/F3) reviewed after the sixth submission (batch 32). (00000000000) 49F/INF GO 100370 WITHDRAWN (batch 31): candidates built without the two env-var
+captures (tax-managed snapshot, Eclipse map); halted before the index write, served unchanged (CTO re-read), 158 unreferenced
+objects stay; M rebuilds with both captures sha-verified, census 0 ids moved vs the archived served bytes, then a fresh GO. CTO
+miss owned (framing restated as a ruling). (00000000000a) adapter 07lSH03z live 06:36:41Z (X10 ACTIVE + hops 3/4b), S1 closed on
+the CRO's reading; portal DEV 7c542fd2; the ONE gate left on the Performance thread = the plan word at Andrew (batch 31).
+(0000000000) dec293d6 SERVED 06:20:13Z (manifest mSFR0vat, CTO readback matches; COO~D measured 68 of
+68 leaves labelled); Andrew's retest = the exercised arm; 49F/INF GO-ready after M wires the directory label + quantities (batch 30).
+(0000000000a) D1 run 6: identity from the page PASSED, template leg 405 with the WAF token presented -- SIXTH AMENDMENT GO
+(tokenless client; pair without/with token; 405/405 = STOP, the rule not the client; Y STANDS then ONE run = the sixth
+submission) (batch 30). (0000000000b) portal candidate 2 @7c542fd2 GO on the CTO's own review; MSTR pushes DEV; the DSGN
+cut fires on that push (batch 30). (000000000) GO dec293d6 issued (100337): M publishes the labelled COT re-cut over the served
+manifest s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (etag ffa30e5b CAS); receipt +
+Anna's served envelope next; then the 49F/INF GO (batch 29). (000000000a) DSGN_IRPTV1 ADMITTED at v0.5; L5 landed
+@c3d8dc63f7/45169fd63c; the four touch points ruled (ScopeSummary untouched; ReportingTab:170 is P's); the cut fires on
+display SERVED + e5dd8487 on portal DEV, measured by COO~D (batch 29). (000000000b) D1 fifth-amendment runner LANDED
+e1e238a048; Y's one line (content() primary) then STANDS then the FIFTH submission (batch 29). (00000000) ANALYSIS TAB works for nobody (CRO trace @2ee8926519; batch 28): code Y's, deploys
+P's, no deploy grant widened; Y PREPARES each deployable as a reviewed patch (generate at HEAD + SendMessage grant + env +
+mapping; status rebuild; three no-handler routes; cutover inputs), P applies in the stated order AFTER the Performance path;
+the X10 ACTIVE row rides the generate rebuild too. (00000000a) D1 run 5 = fourth submission: sign-in proven, identity leg
+405 on /dashboard/ (WAF per route per client); FIFTH AMENDMENT GO -- runner reads window.USER from the held document, resident
+validates the bundle + template liveness (Y's cut); Y STANDS then ONE run = the fifth submission (batch 28). (00000000b)
+DSGN_IRPTV1 v0.5 @1cccbe6bc6: CVO SIGNED ratified-text @2c60ba747f; brief half at CRO (100311); F2 ids + F3 portal base
+folded (batch 28). (0000000) X10 ACTIVE ACCEPTED (batch 27; enforcement_ref = the batch-27 commit): M writes the
+row, P rebuilds the adapter with it + hops 4b/3/12, then the EXERCISED arm needs hop 6 = ONE one-use plan for acc_d486 on the
+default window -- ANDREW'S PER-USE WORD (and the standing class, his call); CTO installs by Terraform. The Performance tab
+works for nobody until both (CRO trace @d8abd7dc65). (000000a) DSGN_IRPTV1 v0.4 @c4b9056831 after both halves refused at
+v0.3 (fixes taken whole); halves owed again; COO~D calls 1-3 ruled (batch 27); L6 waits on the served display republish
+only. (000000) DSGN_IRPTV1 (D13) L4 LANDED v0.2 @6c708bcdb2 -- halves routed (CVO 100269/100271, a
+hole until MSTR seats a CVO instance; CRO 100270/100272); COO~D LIVE by Andrew's launch, pre-reading, cuts nothing until both
+halves sign + the CTO's sequencing word (COT display republish, D1 run); DONE WHEN lines at Andrew (batch 26). (00000a)
+irpt-performance-adapter: live package = 61-member flat build, map names 30 -- GO 100267 to reconcile the map to the live shape and
+rebuild canonically (7 members move to the backend head); retained runtime NOT wired (batch 26). (00000) ANDREW'S 500 ms BAR (~04:3xZ): listing fix measured 4.6 s -> 0.9 s; P
+repackages irpt-holdings + irpt-performance-adapter with the new loaders NOW; F-items + tab-independent render at P;
+provisioned concurrency GO (authorizer 1, directory-search 3; CRO writes, P applies); B8 parked (batch 25).
+(0e) D1: sign-in proven 3x; run 4 inverted the pair (Node client 200, page fetch WAF 405) -- probe legs move to the
+resident's client class, Y STANDS, then the FOURTH submission (batch 25). (0000) DESIGN RECON at 4.0.0_SA_CRO~F on Andrew's ~04:2xZ word (PM walk + /draw
+concepts; recon only; two calls ruled batch 24: server-stated `spread`, Reporting -> Performance rename after the
+consolidation). (000) DEV CONSOLIDATION on Andrew's ~03:5xZ word (batch 23): P builds ONE candidate
+off DEV head c1ac41ec merging M's pin 67158601 + P's 8e616985/92e2ad96 + the `display` acceptance and the named
+READY codes (Andrew's ~04:0xZ page-read word); CTO reviews, MSTR pushes DEV. (0d) COT re-cut PUBLISHED 2d067b4d
+03:56Z (index .VLcr1BCE; prior retained) and SERVED (Andrew's page: 75 nodes, coverage 1 of 1); display names =
+contract gap ruled (nodes gain `display`; portal first, then M republishes). (00) LISTING SPEED (Andrew ~03:2xZ "embarassing/unusable"; his ~20:0xZ approval
+sat unassigned -- CTO gap): CRO's pin 5886d0b9bd DEPLOYED 04:21Z (batch 24: CTO readback CodeSha 6uxqQO2S, 1769 MB, keep-warm 5min ENABLED);
+M1 latency read due ~05:21Z; P takes F2/F5/F3/F7/F1;
+B3 + F1 ruled; B8 parked (batch 20). (0b) COT HOLDINGS TREE RULED (batch 20): strategy wrapper > constituent
+models (Primary/Custom by the registry, Opal by name, ASSIGNED dollars) + SMA + Client plug > securities; M's candidate
+c7f8cfdb38 SHAPE ACCEPTED (batch 22: 0698 41 nodes, d486 75, combined 116, reconcile exact); M runs the 841
+build, then the GO request (CAS over XbWnSWxM / ac3adb97); UI 67158601 accepted for the next build.
+(0a) FINDING A measured (batch 21): cottonwood IS in GLOBAL by construction; the portal drops a rejecting
+per-firm browse SILENTLY (ClientSearch:61-70) -- P fixes the drop + harness-tests the cottonwood browse; a HAR
+of the Global view is the discriminator (asked of Andrew). (0c) D1: the sign-in SUCCEEDED from the host 03:31Z
+(route + form live-verified); the bundle was lost to the Node-port probe; one further run worded with the
+probe in-page and the port-request facts in the receipt; python3.12 on the host (Y's call). (0) NEW after Andrew's ~03:0xZ retest (table RENDERS, USD 26,303,302.17
+READY -- fence + status fixes EXERCISED): FINDING A Anna absent from the Global view (P measures the GLOBAL
+directory union, 100044); FINDING B acc_0698 shows one "models" node, coverage 0 of 1, no model/taxonomy
+breakdown, Supervision/Advisory withheld (M measures the publication, 100043; P the server half). CTO
+rules each on the measured fact. (1) Anna NOT_READY: ROOT CAUSE (batch 12) = the DenyForeignFirmPrincipals
 bucket policy denied irpt-holdings-role; REMEDY APPLIED 02:04:06Z (registry 8b4c15c6ba, plan 1fef40d3,
 halves CTO 99959 + CRO 99962, ledger CLOSED @7220e4a4f3) and CTO-VERIFIED (batch 14: role allowed 6/6
-with the live policies, was denied 6/6); sink repackage APPLIED (CodeSha xd4mk5fx). OPEN: Andrew's
-signed-in retest (asked via MSTR 99966) = the EXERCISED reading; (1b) resident cutover: plan 04c77cbe
-GO'd and APPLIED 01:53Z (host running); P's cutover receipt C1 (enrolled_user_id measured, HostCapture
-pins) awaited, then Y's 12.03 runbook; (2) P's Performance apply
+with the live policies, was denied 6/6); sink repackage APPLIED (CodeSha xd4mk5fx). EXERCISED 02:12Z:
+Andrew's signed-in retest served 200 x2 (fence fix held); screen reads UNCERTAIN because the producer
+omits the envelope status the contract says is present on success (batch 15 ruling, AMENDED batch 16 on
+the CRO's three schema corrections; Andrew-direct ~02:2xZ "fix the ready flag, send the status": the CRO's
+pin cro-holdings-status-20260924 @01bdf54cfd is CTO-REVIEWED and GO'd (batch 17: own run 144 passed, own
+negative arm 2 failed on the pre-fix file); P deploys it code-only, then Andrew retests; portal unchanged); (1b) resident
+cutover: plan 04c77cbe APPLIED 01:53Z (host running, runner deployed); S119 (JS bundle lacked the
+versioned contract) FIXED @282f7ea427 (library 34df3e94), CTO read + Y STANDS (batch 18); runner deployed at
+282f7ea427; D1 fired 02:54Z and FAILED with ZERO submissions (wrong login route /login/ vs the measured
+/account/login/ + decoy-prone form logic); re-run word AMENDED (batch 19: route, form-scoped fill, Enter
+submit, /dashboard/ warm-up, evidence; Y STANDS then ONE submission); legacy 6h probe disable GO'd (plan
+ee5160cf, before 06:00Z); host deps widened to the irpt-common pins + pdfplumber set; then C1, Y's runbook;
+Performance success-status fix 786f767796 accepted, rides the next Performance package; (2) P's Performance apply
 receipt and the authority/host-tag apply receipt; (3) P's NOT_READY vocabulary addendum
 2cdbe2bd60 (ratified text); (4) M's 49F 7c0e7ce3 (160 writes) and INF 1ebc7696 (35 writes) publications have CTO GOs
 (batch 13); receipts + library-under-user reader matrices due; the function reads them only after the

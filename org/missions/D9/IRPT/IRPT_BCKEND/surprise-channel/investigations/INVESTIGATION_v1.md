@@ -8927,3 +8927,131 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "python3 is the intended CI interpreter for the two PYTHON heredocs the script also carries (:250 and :448, both `$JSON_TOOL - <<'PYEOF'`), and for those it is correct. The single ONE variable is used for BOTH the Python heredocs AND the JavaScript CHANGELOG file, which are mutually exclusive interpreters -- so the selection can be right for one consumer and wrong for another in the same run, and the script has no branch that reconciles them. On the bun branch both work (bun runs JS, and the PYEOF heredocs are guarded by `if [ \"$JSON_TOOL\" = \"python3\" ] || [ \"$JSON_TOOL\" = \"python\" ]` at :249/:446 with a JS sibling at :348/:463); on the python3 branch the JS-only :782 call has no such guard and no JS sibling. NOT graduated and NOT remediated by this seat: the governing order (IRPT_MVP.TO-RECORDER-SCOPE-O, issued 2026-09-23 by 2.0.0_SA_COO~P) scopes this seat to the scope-propagation repair and explicitly forbids a broader recorder/helper rewrite, so this is filed for 1.0.0_SA_CTO and the issuer to route. Note for whoever takes it: the fix is not simply 'prefer node', because the two PYEOF heredocs need a Python; the honest shape is two separate resolved tools (a PY_TOOL and a JS_TOOL), which is a real change to this script's contract and wants its own order."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S119",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-24T02:16:00Z",
+  "one_line": "The session bundle the canonical JS runner PERSISTS and the session bundle the Python resident CONSUMES are two different contracts, and the seam has never been exercised (Y 99906: the session secret has never held a bundle). ycharts_session.js acquireSession writes {cookies, identity_evidence (cookie NAMES), probe_evidence, captured_at, captured_by, fence} and persistSession adds only {fence, persisted_at, persisted_by}; the Python side refuses exactly that bundle: transport.Transport._initialize_bundle raises TransportRefused('SESSION_CONTRACT') unless schema_version == 1 and capture_origin == 'EC2', broker.SessionBroker.current() grades it NOT_VERSIONED, recipe.step_identity reads bundle['identity'] (user_id int + email, validated against window.USER on /dashboard/ by transport.validate_identity), and transport.resume_allowed needs bundle['generation']. So the D1 sign-in through the canonical wrapper, as the cutover GO (CTO 99936 bound (a)) prescribes, produces a bundle the resident cannot read, and the enrolled_user_id the GO says to pin FROM THAT BUNDLE is not in it -- the JS never scrapes the numeric user id. Found by a static read before any live act; no vendor call was made. Filed for 1.0.0_SA_CTO (the GO pins library bytes 41ffebbe, bound (b)) and 2.0.0_SA_COO~Y (author of the Python contract); the remedy P proposes in the same-tick message is a JS-side addition at acquire-success (read /dashboard/ in the already-authenticated context, parse window.USER by the same raw_decode rule, write schema_version 1 / capture_origin EC2 / generation / user_agent / identity{user_id,email}; fail explicit when USER is absent, unauthenticated or impersonating), which moves the library pin and therefore the bindings, both derived from the new pin by build_resident_package.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js:606-614 @b56b99c06f -- the acquire-success bundle literal: cookies, identity_evidence, probe_evidence, captured_at, captured_by, fence. No schema_version, capture_origin, generation, user_agent or identity.user_id key anywhere in the file (native Grep for user_id|schema_version|capture_origin|generation: returns no match; dashboard matches only the app-shell selector at :721).",
+      "same file :802-806 @b56b99c06f -- persistSession writes Object.assign({}, bundle, {fence, persisted_at, persisted_by}); nothing else is added.",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py:384-388 @b56b99c06f -- schema_version != 1 or capture_origin != EC2 raises TransportRefused(SESSION_CONTRACT); :84-98 identity_from_html parses window.USER = {...}; :101-121 validate_identity requires value[userId] int > 0 == expected[user_id] and email match; :203-214 resume_allowed requires session.get(generation) != prior_generation.",
+      "infra/aws/lambda/investor-reporting/ycharts/session/broker.py:159 @b56b99c06f -- schema_version != 1 or no int fence returns NOT_VERSIONED; :198-200 step_identity + bundle.get(identity).get(user_id) == self.enrolled_user_id.",
+      "infra/aws/lambda/investor-reporting/ycharts/session/tests/run_session_suite.py:71-83 @b56b99c06f -- the fixture the Python suite passes: schema_version 1, capture_origin EC2, generation, fence, user_agent, identity {user_id, email}, captured_at, cookies. The JS offline suite (infra/aws/ec2/investor-reporting-ycharts/tests/) exercises the JS shape; neither suite crosses the seam.",
+      "GRAIN/COVERAGE: a source read of both sides at one pin, not an exercise; the host has never run the wrapper (SSM read 02:0xZ: no runner code on the box before this tick's deploy; session secret VersionIdsToStages null). EXPOSURE, not INCIDENT: nothing has fired; the remedy is the contract fix before the first sign-in, and re-opening nothing."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO GO 99936 bound (a)/(b): the D1 sign-in runs ONLY through the canonical wrapper and its bundle's identity.user_id is pinned as enrolled_user_id with the measured value; the package installed is the LF bytes at the reviewed pin, ycharts_session.js 41ffebbe... and the wrapper 55ddb8f7... RESIDENT_ASSEMBLY_HANDOFF: the worker bootstraps a missing session once through the canonical wrapper; host_capture.py comment: identity/template verification is performed by the caller using a newly acquired bounded transport and the broker's rule.",
+  "world_is": "The canonical wrapper at 41ffebbe cannot produce a bundle carrying identity.user_id, schema_version, capture_origin or generation, so the bound-(a) pin has no source and the bound-(b) bytes cannot satisfy the caller's verification: HostCapture.capture() would return {captured: True} and the very next broker.current() would grade the fresh bundle NOT_VERSIONED / Transport would refuse SESSION_CONTRACT. Not self-graduated: the fix moves the pinned library bytes the GO names, so it is the CTO's word, with Y confirming that window.USER on /dashboard/ is the identity source its validate_identity expects. P's cutover ledger leg C1 stays open on this row."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S120",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-24T02:16:30Z",
+  "one_line": "The irpt-ycharts-deploy SSM document runs as root, so its npx playwright install chromium put the browser under /root/.cache/ms-playwright (measured this tick: Chrome Headless Shell 149.0.7827.55 downloaded to /root/.cache/ms-playwright/chromium_headless_shell-1228), while install-resident.sh runs the resident as the SERVICE_USER (ec2-user per the cutover plan) and HostCapture runs the wrapper as that same user: Playwright resolves browsers per user, so the first capture would fail with a missing-executable error, not a vendor refusal. P's remedy this tick, operational and reversible: chown APP_DIR to ec2-user and run npx playwright install chromium as ec2-user (SSM 83cdf10d-...: chromium-1228, chromium_headless_shell-1228, ffmpeg-1011 now under /home/ec2-user/.cache/ms-playwright) plus a no-network about:blank headless launch smoke as ec2-user. The document itself is unchanged; whoever owns ssm.tf may prefer PLAYWRIGHT_BROWSERS_PATH=0 or a sudo -u ec2-user step so a redeploy does not reintroduce it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ycharts/ssm.tf:36-47 @b56b99c06f -- deployRunner runCommand: aws s3 cp ... --recursive, npm install --omit=dev, npx playwright install chromium; SSM RunShellScript executes as root by default and the document sets no runAsUser.",
+      "SSM command 0db13f7f-2779-480f-857b-9796cfe3dffc on i-0167fd745ad906a66, Status Success, stdout tail: downloaded to /root/.cache/ms-playwright/chromium_headless_shell-1228 and OK: irpt-ycharts runner deployed to /opt/investor-reporting-ycharts; the 01:5xZ SSM read showed /home/ec2-user/.cache/ms-playwright absent.",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/install-resident.sh:62 @b56b99c06f -- User=$service_user in the unit; host_capture.py:23-25 -- Popen([/bin/bash, wrapper]) inherits that user.",
+      "Also measured on the same read: the bootstrap's secret-ids.env never landed on this instance (user_data_replace_on_change=false; the dir was created by the Sep-11 research deploy); written this tick by SSM ec6aba72-... with the instance.tf:97-108 content verbatim (NAMES only), sha256 88ee08c27db56351...; the wrapper refuses to run without it (run-ycharts-session.sh:36-40)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ycharts/ssm.tf deploy document description: Deploy the IRPT YCharts session runner to /opt/investor-reporting-ycharts and install the Playwright browser; instance.tf:33-35: The runner code and the Playwright browser binaries land POST-boot through the SSM artifact deploy.",
+  "world_is": "The browser lands for ROOT only; the process that needs it runs as ec2-user. Remedied operationally on the host this tick (not in the document); the receipt records the ec2-user install and the smoke. Not graduated; the document-level fix is the root owner's call."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S121",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-24T05:38:02Z",
+  "one_line": "The YCharts runner's offline suite is offline ONLY when preloaded (node --require ./tests/netguard.js tests/run_offline_suite.js, the suite's own header line 4): run once WITHOUT the preload at 05:38Z on this laptop (P's invocation error while proving the fourth-amendment commit), its arm (e) positive control -- a bare anonymous https.request to https://ycharts.com/indices/table_data, no cookies, no headers, no credential -- CONNECTED to the vendor once (reached_vendor true, guard_fired false) and the arm reported 'undefined external of undefined attempts', i.e. the guard was never installed. The library's own probe path was not involved (adapter hosts 127.0.0.1 only; replay logged 61 requests). Re-run WITH the preload: 0 external of 1, the control refused, all_pass. Exposure, not an incident against a credential: nothing identifying left the machine; one anonymous GET did.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/tests/run_offline_suite.js:4 @fc932d468b -- the documented invocation carries --require ./tests/netguard.js; :377-394 -- the positive control fires https.request to ycharts.com and reads global.__YC_NETGUARD__, which is undefined without the preload, so the control is a REAL request whenever the preload is forgotten.",
+      "Scratchpad run 05:38:02Z (offline_suite4.out): summary e_pass false, positive_control {refused:false, guard_fired:false, reached_vendor:true}, line 'netguard: undefined external of undefined connection attempts'; non_loopback_hosts [] for the adapter (the library never left loopback).",
+      "Scratchpad run 05:4xZ (offline_suite5.out) with the preload: all_pass true; e_offline 'netguard: 0 external of 1 connection attempts', positive control refused with the NETGUARD message, guard_external_after 1.",
+      "tests/netguard.js:97-105 @fc932d468b -- the guard installs on require and exposes global.__YC_NETGUARD__; nothing in the suite refuses to run when it is absent."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "run_offline_suite.js header: 'NO REQUEST LEAVES THE MACHINE. The replay binds 127.0.0.1; netguard.js refuses every ...'; CLAUDE.md Agent Autonomy: never call an external vendor API without Andrew's explicit per-use word.",
+  "world_is": "The 'no request leaves the machine' property holds only under the preload; the suite itself does not check for the guard and runs its vendor-facing control regardless. One anonymous GET reached ycharts.com at 05:38Z. Remedy (the suite's owner's call, one line): the suite refuses to start when global.__YC_NETGUARD__ is absent, so the control can never fire unguarded. Not remedied in fc932d468b (that commit is the probe path only)."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S122",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-24T10:18:32Z",
+  "one_line": "build-and-upload.sh's BUILD_MANIFEST probe (the three-outcome block: DECLARED -> check, ABSENT -> skip with a printed notice, UNREADABLE -> refuse) has an unreachable ABSENT branch: the probe is a bare `python - \"$PY_SOURCE\" <<'PYEOF'` under `set -e` (:33), so when the manifest carries no declared_blobs the probe's exit 1 terminates the whole script BEFORE `MANIFEST_DECL=$?` runs -- no message, rc=1, the log's last line is the preceding limb's OK. Measured twice on irpt-ycharts-generate 10:1xZ (its staged BUILD_MANIFEST.json is Y's custody-factory manifest @c3add4090e, vendored_modules only). Fails CLOSED and SILENT: the safe direction, the wrong rendering. Worked around with the documented BAU_MANIFEST_SKIP=1 (disclosed in 5b1b2f8608), which does exactly what the ABSENT branch was written to do.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/build-and-upload.sh:33 @0879affa62 -- `set -e`; :428-439 -- the probe `python - \"$PY_SOURCE\" <<'PYEOF' ... sys.exit(0 if m.get(\"declared_blobs\") else 1)` followed by `MANIFEST_DECL=$?`; the comment above it (:418-427) names three outcomes and says ABSENT -> skip with a printed notice.",
+      "Scratchpad build_generate_2.log and build_generate_3.trace (10:1xZ): rc=1; last stdout line 'OK: import-closure -- 53 packaged .py file(s) ...'; the -x trace shows `+ python - 'C:\\...\\generate'` immediately followed by `+ cleanup` -- MANIFEST_DECL is never assigned and no ABSENT/UNREADABLE line prints.",
+      "Scratchpad build_generate_4.log with BAU_MANIFEST_SKIP=1: rc=0, artifact uHfng41l.. uploaded and write-verified; every other limb (staged_from sha256, parity, import-closure) ran and passed unchanged.",
+      "Positive control that the exit is the probe's: the staged BUILD_MANIFEST.json @c3add4090e parses (json.load succeeds; keys function/source_pin/vendored_modules/layer_dependencies/...) and has no declared_blobs key, so the probe returns 1, not 2."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "build-and-upload.sh:418-427 (the block's own comment): 'Three outcomes now, never two: DECLARED -> check; ABSENT -> skip with a printed notice; UNREADABLE -> REFUSE'.",
+  "world_is": "Two outcomes reach the operator: DECLARED (gate runs) and a silent rc=1 that covers both ABSENT and UNREADABLE (the UNREADABLE message prints from python, then set -e ends the script before the bash branch that says 'build REFUSED' runs; ABSENT prints nothing at all). Remedy (the builder's owner's call, one line): `python - ... <<'PYEOF' ... PYEOF; MANIFEST_DECL=$?` -> `MANIFEST_DECL=0; python - ... || MANIFEST_DECL=$?`, or `set +e` around the probe. Not remedied here: the builder is not this lane's file."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S123",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-24T10:50:00Z",
+  "one_line": "DISPOSITION of IRPT_BCKEND-S122 (the builder's BUILD_MANIFEST probe ending the script silently under set -e): REMEDIED on the trunk. 1.0.0_SA_CTO applied P's 27-line patch to infra/aws/lambda/ci/build-and-upload.sh as the one-off cross-lane commit bf938bcf39 (lane CLOUD_OPS_OR_ETL, audited override, audit row 2026-09-24T10:46:10Z; numstat 7/2: MANIFEST_DECL=0, `python - <<'PYEOF' || MANIFEST_DECL=$?`, the six-line comment, the dead `MANIFEST_DECL=$?` removed). Cherry-picked onto irpt-smoke-p-backend-20260923 as b327fccb9c (-x, one file, bash -n clean) under the CTO's word 100531. The three outcomes the block's comment names are now reachable; the row's remedy is APPLIED, not merely named. The (ii) irpt-status build (10:47Z) ran without any BAU_* override, before the cherry-pick, because ops/ carries no BUILD_MANIFEST.json and the probe never runs there; the next generate build exercises the fixed branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P (this row IS the disposition of S122; S122 was INERT -- an exposure with a documented workaround, never an incident -- so no clock closes here, the remedy is recorded as applied at its commit)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ajb_workspace CLOUD @bf938bcf39 -- `git show --name-only`: infra/aws/lambda/ci/build-and-upload.sh only; author 1.0.0_SA_CTO; subject names the one-off cross-lane override.",
+      "org/git-author-override-audit.log row 2026-09-24T10:46:10Z OVERRIDE 1.0.0_SA_CTO 1 (--author-override CLOUD_OPS_OR_ETL applied) -- the CTO's own citation in msg 100531.",
+      "irpt-smoke-p-backend-20260923 @b327fccb9c -- `git cherry-pick -x bf938bcf39`: one file, 7 insertions 2 deletions; `bash -n infra/aws/lambda/ci/build-and-upload.sh` rc 0.",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/BUILDER_MANIFEST_PROBE_FIX_S122_20260924.patch @896680c2de -- the patch as cut by P (27 lines), refused by the lane on P's commit (safe-commit VIOLATION text in msg 100529)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S122 world_is: 'Remedy (the builder's owner's call, one line): ... `MANIFEST_DECL=0; python - ... || MANIFEST_DECL=$?`'.",
+  "world_is": "That line is on the trunk at bf938bcf39 and on P's branch at b327fccb9c. Not yet exercised against an ABSENT manifest by a build on the fixed bytes (the next irpt-ycharts-generate build is the positive control: it must print the SKIP notice and continue instead of exiting rc=1)."
+}
+```

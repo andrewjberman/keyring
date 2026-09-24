@@ -1,0 +1,56 @@
+{
+  "project_code": "DSGN_IRPTV1",
+  "macro_code": "DSGN",
+  "directive": "D13",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "EXECUTING",
+  "created": "2026-09-24",
+  "registered_under_tree": "2026-09-24",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "IRPT_FNTEND",
+    "IRPT_BCKEND",
+    "DSGN_REBRND"
+  ],
+  "name": "Investor Reporting page remediation: the advisor-facing re-render of the header and the three tabs (Performance, Holdings, Analysis) on the portal panel system, with the producer's vocabulary moved into disclosure surfaces",
+  "description": "D13 Design's second member, minted on Andrew-direct 2026-09-24 ~05:2xZ at the 4.0.0_SA_CRO~F terminal, VERBATIM: 'This should be its own project. Tell CTO this will be D13 project, DSGN_IRPTV1. I want a proper canonical-flow issued on this from COO~D. Tell CTO that.' (record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_052xZ_DSGN_IRPTV1_OWN_PROJECT_D13_COO_D.md). Endpoint: org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md (FWD-1 the live thread: an Opal user reads Anna Thiessen's Cottonwood brokerage account end to end; FWD-2..11 the header identity card, the browse drawer, one firm control, Performance in the Model Portfolios Benchmark pattern with the AUA-Trend area chart, Holdings three ways down incl. the security list, the Analysis five-step stepper, a prospect as a first-class subject, one page-level Export, the portal panel system, no system vocabulary on the body). Relies on IRPT_BCKEND (2.0.0_SA_COO~P: spread member, display/valuation_facts schema edits, benchmark series), IRPT_FNTEND's served contracts, 2.0.0_SA_COO~M's custody publication and display fill, 2.0.0_SA_COO~Y's upload/job semantics, the asset-taxonomy source card at Andrew, and DSGN_REBRND's design law; owns the advisor-facing render of portal/src/pages/InvestorReporting/** only. Sequenced by 1.0.0_SA_CTO against the IRPT post-slug HOLD and the P/M/Y closer contract.",
+  "brief_ref": "docs/briefs/irpt-page-remediation-brief-20260924.md",
+  "prds": [
+    "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md"
+  ],
+  "prd_lineage": [
+    "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.1",
+    "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.2",
+    "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.3",
+    "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.4",
+    "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.5"
+  ],
+  "decompositions": [
+    "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md"
+  ],
+  "decomposition_lineage": [
+    "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md@v1",
+    "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md@v2"
+  ],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "2.0.0_SA_COO~D",
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO~F",
+    "workers": "0.9.0_WK_DSGN_IRPTV1~<n>, per the L6 issuance"
+  },
+  "coo_lane": "2.0.0_SA_COO~D",
+  "l4r_brief_signer": {
+    "serial": "4.0.0_SA_CRO",
+    "authority": "CLAUDE.md Rule 27 L4-R: the CRO signs the BRIEF half (4.0.0_SA_CRO~F stated it will sign when routed, msg 100235); 3.0.0_SA_CVO signs the RATIFIED-TEXT half"
+  },
+  "fabric_ruling": "laptop -- D13 Design placed LAPTOP by Andrew-direct 2026-09-11 ('it will be laptop fabric'); placement attaches to the directive (LD-0498, LD-0502).",
+  "blocking": "Round 2 L6 issuance cut 2026-09-24 ~10:5xZ by 2.0.0_SA_COO~D on CTO 100522: 8 task orders IV-e-1..8 over decomp v2 @2a26e433b3; chains A (slot ~4: IV-e-3, IV-e-4, IV-e-8), B (slot ~5: IV-e-1, IV-e-2, IV-e-6), C (slot ~6: IV-e-5); the JOIN cell IV-e-7 (slot ~7) spawned on the round-2 candidate dsgn-irptv1-r2 after A, B, C merge; portal_ref 895752676a (837983cb is-ancestor rc=0). Drain into dsgn-irptv1-r2; DEV landing MSTR's on Andrew's word after the CTO's review. FWD-1's trace remains Andrew's walk.",
+  "thread_counter": 0,
+  "threads": [],
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md",
+  "counterpart": null
+}

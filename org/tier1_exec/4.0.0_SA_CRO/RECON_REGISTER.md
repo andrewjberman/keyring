@@ -32,6 +32,8 @@ directory an engagement's artifacts live in.
 | **RCN-0014** | 2026-09-23 | **`opal_ai`** -- the Opal Analyst as a microproduct: one agent + one indexed MCP in three slices (Opal -> Template -> Clients), tying Opal Analyst, D6 GraphQL, NFRA_OPLGTW, NFRA_MCPINDEX, the vendor-access paths and The Walk into one repo | 1 L1 brief (`docs/briefs/opal-ai-microproduct-repo-brief-20260923.md`) | repo reads only @`1b1244cecf`: 3 PRDs + 2 briefs + the 09-22 assessment; gateway code layout; the BG seat's prompt/refs/fence; 3 vendor designs-of-record + 2 standards; RCN-0001/0002 tooling; comp-which + its harness; RCN-0012 | `4.0.0_SA_CRO~X` | **DELIVERED as CTO intake -- nothing dispatched.** 12 outcomes, candidate thread = one Teams question answered through the MCP; 8 calls at Andrew (one repo vs the 09-22 `opal_analyst` naming; slice-first layout; the monitor conflict in the Third-Party Standard) |
 | **RCN-0016** | 2026-09-24 | **The research corpus as the SEED of Security Analysis** -- the per-company dossier composed from the team's SharePoint packs, its fold into the five existing tabs, and the PDF extractability of the skeleton | 1 L1 brief (`docs/briefs/amgt-corpus-dossier-fold-brief-20260924.md`, Parts I-VIII) + 1 measurement package (`4.0.0_SA_CRO~Y/deliverables/PDF_EXTRACTABILITY_20260924/`) + 3 Andrew-direct records | SharePoint `Shared/Asset Management/Research` (93 folders, Graph); the synced library read-only (157 PDF + 71 docx); AMGT_CORPUS PRD v0.4 + live store (bronze 123/123, gold 33/10/2/1); RESAPP PRD v0.24 + `ThesisBundle`; the block pull's 44 fields vs the corpus's 28+12 mnemonics; 56 docx+pdf control pairs | `4.0.0_SA_CRO~Y` | **DELIVERED as CTO intake -- nothing dispatched.** Andrew ruled: egress approved for the 60-name induction, CORPUS addendum (not AMGT_DSSIER), fold-not-rearchitect. PDF answer: 26 of 30 PDF-only folders hold a full pack, 99 of 99 control pillars recovered; the PFOE skeleton's labels are inline bold leads the K3 heuristic never saw |
 | **RCN-0015** | 2026-09-23 | **The GitOps split of `opal_ai` from `ajb_workspace`** -- portal-shaped (contained, separate, tooled), and what the portal's current wiring does and does not give a nested repo | 1 L1 brief (`docs/briefs/opal-ai-gitops-split-brief-20260923.md`) | local git + repo reads @`bd282e03e9`: `.gitmodules`, gitlinks, portal hooks/CI/branches, the owned-paths hook, safe-commit/safe-merge, wk-provision, both EC2 deploy scripts + manifest, the gateway's parent reaches, the launcher and parent `.claude` | `4.0.0_SA_CRO~X` | **DELIVERED as CTO intake -- nothing dispatched.** The portal is a nested clone + gitlink, not a submodule; its commits skip every parent git gate; installing the lane hook there without a lane file would block every commit (fail-closed by default -- CORRECTED from "fails open", msg 25107); both deploy guards read the parent; 24 work items, 8 calls |
+| **RCN-0016** | 2026-09-24 | **The fabric's own process architecture** -- where verification and process management (bureaucracy) slow progress; whether RAVC still earns its keep; holes, contradictions, keep / refine / cut, implementation and upkeep (Andrew's "report 3") | 1 brief (`docs/briefs/process-architecture-verification-bureaucracy-brief-20260924.md`) + Andrew-direct record + re-runnable census (`scripts/process_census/`) | 33,482 non-merge CLOUD commits Jun 1 - Sep 24 classified by path; 181 portal commits; 1,053 cells; `org/mcp/broker.db` read-only (4,170 msgs since 09-14) + archive (89,885); rail, lane and override audit logs; 237 surprise-channel files, 1,447 dispositions; law-file size history | `4.0.0_SA_CRO~B` | **DELIVERED as a brief -- proposals only, nothing dispatched, no law, gate or skill edited.** Product-touching commits fell from 16-25% (June) to 6-9% (Sep); the spine re-measures one fact 3-4 times; L4-R and the row-disposition precondition carry most of the churn; RAVC's core is sound but its document is stale; fix = a `<risk>` class the gates read, not a rule to read |
+| **RCN-0017** | 2026-09-24 | **The canonical flow and the closer flow** -- where canonical still spends its time, how heavy the task orders are, which model the workers should run, a FAST closer mode, `/closer-drive`, and a mode lease to switch between them (Andrew's "report 2"; RCN-0016 is `4.0.0_SA_CRO~B`'s report 3) | 1 brief (`deliverables/REPORT2_CANONICAL_AND_CLOSER_FLOWS_SPEED_MODE_AND_SWITCH_20260924.md`) + Andrew-direct record | 12 h window 02:40Z-14:40Z: 29 task orders / 4 issuances / 2 projects (DSGN_IRPTV1 r1-2, AMGT_RESAPP r37-38) on all refs; 68 worker commits (trailers); 602 workspace + 90 portal commits by seat; `org/mcp/broker.db` read-only (714 msgs); seat logs and surprise rows at the bytes | `4.0.0_SA_CRO~A` | **DELIVERED as CTO intake -- proposals only, nothing dispatched.** Canonical is slow in execution, not hand-offs; orders median ~220 product lines inside an 11.8 KB wrapper, 31% hit a check defect mid-round; workers already run Sonnet 5 high; nine changes C1-C9 and six calls at Andrew |
 
 ---
 
@@ -929,3 +931,37 @@ short of the mode branch; corrected on `1.0.0_SA_CTO~Z`'s ruling, msg 25107, and
 parent's git, so a nested source would pass the clean-tree check over uncommitted edits and record the wrong commit.
 The brief recommends a real submodule and names 24 items that make it "tooled" as well. **Status: DELIVERED as CTO
 intake. Nothing created, moved or dispatched. Local reads only -- no GitHub read, nothing deployed.**
+
+## RCN-0017 -- Report 2: the canonical flow and the closer flow, a FAST mode, `/closer-drive`, and the switch
+
+**Date:** 2026-09-24. **Produced under:** `4.0.0_SA_CRO~A`, laptop. **Commissioned:** Andrew-direct at this terminal
+~14:3xZ; verbatim record `deliverables/ANDREW_DIRECT_20260924_143xZ_REPORT2_CANONICAL_AND_CLOSER_FLOWS_AND_THE_SWITCH.md`.
+**Package:** `deliverables/REPORT2_CANONICAL_AND_CLOSER_FLOWS_SPEED_MODE_AND_SWITCH_20260924.md`, for `1.0.0_SA_CTO`.
+Companion to report 1 (`deliverables/BRIEF_CANONICAL_FLOW_SPEED_CLOSER_FLOW_SKILLS_PARITY_20260923.md`) and to
+`4.0.0_SA_CRO~B`'s RCN-0016 (report 3, process debt), which it cites instead of re-measuring.
+
+**Finding in one line:** canonical is slow in execution, not in hand-offs (the slug-to-next-cut takes about 30 minutes).
+The rounds' 3-6 hours go to a fabric-wide usage stall, chains queued on shared files, check defects in 9 of 29 orders,
+and merge lag. The orders are light-to-moderate: median about 220 product lines inside an 11.8 KB order that is a
+quarter build instruction. Workers already run Sonnet 5 at high effort (68 of 68 commits), and the spine's "Opus" line
+is stale. One screenshot of the real page caught what every fixture check passed. The canonical and closer seats edited
+the same 5 files of one page in the same 12 hours. Proposal: one driver per project chosen by a timed MODE LEASE,
+FAST (`/closer-drive`, Andrew present) or FULL (`/canonical-drive`, the fail-closed default), plus seven smaller cuts.
+**Status: DELIVERED as CTO intake -- proposals only; nothing dispatched, no skill, spine or hook edited; six calls at
+Andrew. Repo, git and read-only broker reads only; no AWS, no vendor.**
+
+## RCN-0016 -- Report 3: process architecture, verification and process bureaucracy
+
+**Date:** 2026-09-24. **Produced under:** `4.0.0_SA_CRO~B`, laptop. **Commissioned:** Andrew-direct at the `~B` terminal
+~14:46Z; verbatim record `deliverables/ANDREW_DIRECT_20260924_144xZ_PROCESS_ARCHITECTURE_BRIEF.md` @2b16316b41.
+**Package:** `docs/briefs/process-architecture-verification-bureaucracy-brief-20260924.md`; re-runnable census in
+`scripts/process_census/`. Companion to RCN-0017 (report 2, flow mechanics), whose section 4.4 items it cites.
+
+**Finding in one line:** commits that touch product code fell from 16-25% of the workspace's output in June to 6-9% in
+September while volume rose to ~570 a day; the cause is structural (the spine re-measures one fact 3-4 times, a PRD
+wording edit re-opens a two-seat sign-off the gate still enforces, every row blocks the close, the CTO routes every
+ruling), so Rule 22 cannot fix it by being read. Proposal: a `<risk>` class on every order that decides mechanically
+which limbs engage, four waves of gate fixes and deletions, byte budgets on auto-loaded carriers, and one weekly
+efficiency number. RAVC: keep its three evidence rules, delete the rest.
+**Status: DELIVERED -- proposals only; nothing dispatched; no law, gate, skill or memory edited. Repo, git, read-only
+broker and audit-log reads only; no AWS, no vendor.**

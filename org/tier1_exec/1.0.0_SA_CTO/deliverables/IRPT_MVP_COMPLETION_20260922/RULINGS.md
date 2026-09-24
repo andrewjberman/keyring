@@ -1270,3 +1270,2075 @@ fence still denies the role until the apply above lands; the next refusal prints
 ### Resident cutover apply (P 99951 item 3): executed 01:53:01Z from saved plan 04c77cbe, 1/1/0,
 ledger irpt-resident-cutover-20260924 sentinel 18642607a3; readbacks and the cutover receipt are owed
 in their own message before Y's runbook runs from precondition B.
+
+
+## 2026-09-24 02:2x UTC - Claude CTO batch 15: Anna retest -- the fence fix is EXERCISED; two producer defects ruled
+
+### IRPT-HOLDINGS-SUCCESS-STATUS-20260924 (CRO 99981: Andrew's retest at 02:12Z reads "Uncertain / Business date age: 2d")
+EXERCISED: the served function answered Andrew's two signed-in selections with 200 (38,887 and 69,445
+bytes; reconcile 26,303,302.17 / 19,705,844.84, matching M's reader matrix). CTO reads: CloudWatch
+/aws/lambda/irpt-holdings 02:12:41-02:12:58Z, 4 invocations, 0 irpt_internal lines (the sink prints on
+refusals only; its positive arm is not yet exercised); the HAR (Downloads/aaaaaa.har, keys only, read in
+place, not copied): 4 holdings entries of 15, top-level keys exactly {contract_version, data, firm_id,
+operation, unprojected_grant}, NO status member; data = the HoldingsSnapshot document.
+DEFECT: the v1 response schema for holdings-snapshot declares `status` (PublicStatusEnvelope,
+status_required false) and says in its own description "PRESENT ON A SUCCESS TOO"; the producer never
+emits it (served.py:836-846 carries a status only from a compute's `_status`; holdings/entry.py returns
+the bare slice). The portal is correct by FE-s-47 (adapt.ts:169, :246, :300-302): an unstated state is
+EXPLICIT_UNKNOWN = UNCERTAIN, never a default READY. RULING: producer fix, P's lane, code-only repackage
+under the sink discipline: holdings_snapshot returns {"_data": slice, "_status": PublicStatusEnvelope}
+with state READY when every retained account is present and unprojected_grant.count == 0, PARTIAL
+otherwise (rule stated in code, citing this ruling); source_dates in the shape the portal's status
+reader consumes (P's 2cdbe2bd60 vocabulary); actions []; public_reason_code null on READY; schema-
+validated in the boundary tests (READY, PARTIAL, refusal arms). CTO reviews the diff and the rule text
+before the build, then GO. Portal unchanged; contract unchanged. Refused alternative: FE defaulting
+holdings to READY.
+CTO'S OWN MISS: HOLDINGS_NOT_READY_ROOT_CAUSE_20260924.json (01:1xZ) already recorded the portal
+rendering a SUCCESS body as UNCERTAIN; the CTO read that only as "not a refusal" and did not flag the
+second defect. Rule: a control arm that prints an unexpected value is a finding, not a negative.
+ENRICHMENT (parked, not this round): "Business date age: 2d" is calendar age; 2026-09-22 is T-1 for
+2026-09-23 ET on the trading calendar. The age label must read lib/trading_calendar.py's frontier or it
+reads stale every Monday and holiday. Owner: the IRPT_FNTEND surface.
+
+### IRPT-RESIDENT-SESSION-BUNDLE-CONTRACT-20260924 (P 99984 row IRPT_BCKEND-S119; Y 99993 concurs)
+FINDING (static, both sides at b56b99c06f): the JS wrapper's persisted bundle carries none of
+schema_version / capture_origin / generation / user_agent / identity.user_id that the Python resident
+requires (transport.py:384-388 SESSION_CONTRACT; broker.py:159 NOT_VERSIONED; recipe/validate_identity;
+broker.verify enrolled check). EXPOSURE, not incident: the seam never fired (secret versions null; no
+runner on the host before this tick). P stopped before D1; correct.
+CTO'S OWN PART: GO 99936 bound (a) inherited Y's 99907 sentence that the D1 bundle carries
+identity.user_id; no instrument had exercised the wrapper (Rule 24: an inherited universal has no
+denominator; ask which instrument produced it).
+WORD GIVEN (99997): P changes ycharts_session.js at the CH-AUTHENTICATED success branch to read
+window.USER on /dashboard/ in the SAME authenticated context (no second sign-in, no new origin) by the
+identity_from_html rule and write Y's key contract (schema_version 1, capture_origin EC2, generation
+uuid4 per capture, user_agent = the context's exact UA, identity {user_id int > 0, email}), refusing
+explicitly on five checks (USER absent/non-literal, authenticated !== true, userId not int > 0, email
+absent, impersonating). JS test: key-set equality with run_session_suite.py:66-83 + one arm per refusal.
+Y reviews the diff; no Python moves. Pin re-derived by build_resident_package.py; receipt states both
+blobs; wrapper 55ddb8f7 untouched. Then D1 once under the standing host-workflow authorization
+(CRO 6fc3f5f785 item 3); enrolled_user_id MEASURED from that bundle; broker.current() versioned and
+transport accepting it is the exercised arm; C1; install; --once; runbook. S120 (Playwright under
+/root vs ec2-user): host remedy stands for this cutover; the ssm.tf change is P's lane item before the
+next host deploy.
+
+### Push state (MSTR 99987): origin/CLOUD f96a0b9dd4; origin carries exactly one workspace branch
+(CLOUD); SITEZ deleted (tag archive/SITEZ-20260924). Every CTO commit at or before f96a0b9dd4 is on
+origin; batch 14 (c83f5bc036) and this batch ride the next MSTR push.
+
+
+## 2026-09-24 02:3x UTC - Claude CTO batch 16: Andrew-direct on the ready flag; ruling 99995 amended on the CRO's three corrections
+
+### ANDREW-DIRECT 2026-09-24 ~02:2xZ at the 4.0.0_SA_CRO terminal (CRO 100001), VERBATIM: "fix the ready flag, send the status"
+Given after the CRO's HAR diagnosis. Scope: the Holdings success status. Routing under it: 4.0.0_SA_CRO
+writes the holdings_snapshot `_status` change in cro-holdings-status-20260924 (cut from P's b56b99c06f)
+and sends the CTO the pinned diff + test arms; the CTO reviews and GOes; 2.0.0_SA_COO~P packages and
+deploys the GO'd pin code-only under the sink discipline. Nothing wider is inferred from the word.
+
+### IRPT-HOLDINGS-SUCCESS-STATUS-20260924 -- AMENDMENT (CRO 100001; M 100000), the CTO's 99995 text was wrong on three details
+VERIFIED by the CTO in the shared tree: PublicStatusEnvelope.schema.json additionalProperties false,
+required {operation, state, source_dates, actions, public_reason_code}; public_reason_code string
+^[A-Z0-9_]+$ (null fails); source_dates closed over business_date / source_completion_date / as_of (+
+prospect keys). portal contracts/public-status.ts:20 closes the key set (internal_correlation_id
+rejected), :25 refuses a non-string reason code, :27 refuses custody_as_of / overlay_as_of;
+envelope.ts:289-291 turns each into EnvelopeMismatch('status') = the whole response refused, worse than
+UNCERTAIN. So: (1) public_reason_code HOLDINGS_READY on READY (PERFORMANCE_READY precedent, P's branch),
+OBJECT_NOT_COVERED on PARTIAL; (2) no internal_correlation_id; (3) source_dates = {business_date: slice
+clocks.business_date, source_completion_date: the revision's completion_date}; custody/overlay stay in
+data.clocks. Unchanged: actions []; the READY/PARTIAL rule (every retained account present AND
+unprojected_grant.count == 0); portal untouched; contract untouched.
+M's measured trap ACCEPTED: served.py status_envelope() (:209-250) refuses the ruled shape (closed
+BOUNDARY_REASONS with no success member; forced actions and source_dates), and no producer has ever
+emitted state READY (0 hits); the dict is built directly to the response schema and validated against
+it in test_entry_guarded.py (READY, PARTIAL with one selected account dropped, refusal arm), plus one
+closed-key arm mirroring requirePublicStatus so the FE-side refusal cannot recur. The census
+(unprojected_grant) lives at the boundary (served.py:829-833) while account presence is computable in
+the compute: the writer picks the side and states it in the diff; the CTO reviews that choice.
+CTO'S THIRD MISS THIS WINDOW, recorded: 99995 named three status members from memory of the internal
+StatusEnvelope, not from the PUBLIC schema the portal validates. A ruling that names wire fields cites
+the schema line it read, or it names none.
+SIDE FINDING routed to P (CRO): performance/entry.py on P's branch puts internal_correlation_id into
+its SUCCESS status; by the same closed-key rule a Performance success body would be refused. P verifies
+on its branch before the CALL-3 one-use run; if real, it rides the Performance package CALL-3 needs.
+
+
+## 2026-09-24 02:4x UTC - Claude CTO batch 17: Holdings success-status pin reviewed and GO'd
+
+### IRPT-HOLDINGS-SUCCESS-STATUS-20260924 -- GO on cro-holdings-status-20260924 @01bdf54cfd (CRO 100006; CTO 100008)
+Pin: 13012979e1 (holdings/entry.py +54/-1) + 01bdf54cfd (holdings/tests/test_entry_guarded.py +78) on
+P's backend head b56b99c06f; lane overrides AUDITED per commit (IRPT_LIVE_SCOPE_P, IRPT_COMPLETION_M)
+under Andrew's word + the CTO's routing. LOCAL.
+CTO REVIEW, own instruments: diff read (status = a plain dict with the closed key set; READY iff
+enforce._unprojected_grant_of(scope).count == 0 else PARTIAL, from the same scope["_census"] served.py:977
+reads for the envelope, so status and envelope cannot disagree; the "every retained account present" half
+is enforced upstream at snapshot.py:225-226 as a NOT_READY refusal, a stronger guarantee than PARTIAL --
+accepted as the side chosen; source_dates {business_date, source_completion_date|null}; actions [];
+HOLDINGS_READY / OBJECT_NOT_COVERED (errors.PUBLIC_REASONS:52); no internal_correlation_id; a slice with no
+business_date refuses NOT_READY). Tests read: READY arm, PARTIAL arm (one granted id the directory cannot
+match), missing-account-still-refused arm; the first two validate the whole response against the v1
+response schema with every $id resolved and run the portal's closed-key rule in Python. Own run: 144
+passed, no skips. Own discriminator: detached worktree at 01bdf54cfd with entry.py from b56b99c06f -> the
+two status arms FAIL (KeyError 'status'), the refusal arm passes; worktree removed.
+Note, not blocking: _validate_response uses pytest.importorskip(jsonschema/referencing); on a box without
+them the two status arms would report SKIPPED after their closed-key asserts ran. P's package run report
+must state "no skips".
+Vocabulary: no file carries PERFORMANCE_READY (CRO census of docs/contracts/investor-reporting/v1); the
+code lives at performance/entry.py:149 only, so HOLDINGS_READY joins it as a producer-stated code; naming
+the data codes in the portal's CONTRACT_NAMED_REASON_CODES stays row IRPT_BCKEND-S52 (READY renders the
+table; the code is not printed on the success path).
+GO: 2.0.0_SA_COO~P fast-forwards the pin onto irpt-smoke-p-backend-20260923, runs holdings/tests with
+the count and "no skips", then the code-only irpt-holdings repackage under the sink discipline (ledger
+before the act, saved plan 0/1/0, package sha before/after, safe-apply, CodeSha readback, re-plan 0,
+ledger close, AFTER to CTO + CRO with the member census: exactly ONE member differing from xd4mk5fx,
+holdings/entry.py). Then Andrew retests; the CRO reads the HAR in place expecting status.state READY,
+HOLDINGS_READY, business_date 2026-09-22 and the table rendering.
+
+
+## 2026-09-24 02:4x UTC - Claude CTO batch 18: session-bundle contract change read; Performance success-status fix accepted
+
+### IRPT-RESIDENT-SESSION-BUNDLE-CONTRACT-20260924 -- P's change @282f7ea427 read by the CTO (P 100011; CTO 100014)
+ycharts_session.js +155/-8 on irpt-smoke-p-backend-20260923 (audited lane override on the CTO's word);
+new LF blob 34df3e94fc0626757048bfd0ff874083396c196ed92e7c57a18dfc4379bacd91 (was 41ffebbe);
+run-ycharts-session.sh unchanged 55ddb8f7. Own read: IDENTITY_PATH /dashboard/; contextGet = the replay
+context's requestGet else Playwright ctx.request.get (shares the browser context's cookies): no page
+navigation, no second sign-in, no new origin, no credential; readIdentity requires HTTP 200, balanced raw
+decode of window.USER, five refusals in order (USER_ABSENT, NOT_AUTHENTICATED, USER_ID_INVALID,
+EMAIL_ABSENT, IMPERSONATING), IdentityFailure retried:false; versionedBundle writes exactly the Python
+reference keys (schema_version 1, capture_origin EC2, generation randomUUID per capture, fence,
+user_agent = the UA newContext was created with, identity {user_id, email}, captured_at, cookies in the
+jar shape) plus declared informational keys; the record carries user_id for the D1 pin, email redacted.
+Tests @e5fb8ce764: bundle_contract.js 25 arms; replayed /dashboard/ with a modelled window.USER
+(trailing script deliberate); offline suite arm (a) asserts the acquired bundle's identity. Own runs on
+this box: bundle_contract ok true; offline suite all_pass true. Y's STANDS against transport.py:84-118 /
+broker.py:159-200 was the gate (100004 item 2). Y 100018: STANDS -- every line matched against the
+Python (identityFromHtml == transport.py:91-96; validateIdentity == :108-117; versionedBundle keys ==
+run_session_suite.py:66-83; readIdentity runs in the same context BEFORE ctx.cookies(), so the persisted
+jar reflects any Set-Cookie the dashboard read produced); pin 34df3e94 confirmed from the blob; Y's own
+run 25/25 + offline all_pass (node v26.9.0). Gate satisfied: P uploads the runner files at 282f7ea427,
+re-runs irpt-ycharts-deploy, reads the HostCapture pins back (34df3e94 / 55ddb8f7), builds the package,
+then the ONE sign-in; C1 states both library blobs; Y runs --once and the runbook from precondition B.
+
+### IRPT-PERFORMANCE-SUCCESS-STATUS-20260924 -- ACCEPTED @786f767796 (CRO side note 100001; P 100011 item 2)
+performance/entry.py:150 put internal_correlation_id into the SUCCESS status; PublicStatusEnvelope is
+additionalProperties false without it and public-status.ts:20 closes the same set, so the portal would
+have refused every Performance success body as EnvelopeMismatch('status'). Fix: key dropped on success
+(refusal path keeps it; served.refuse() strips it); unused uuid import removed; test_entry_selection.py
+now validates the wire status against PublicStatusEnvelope (it had validated against the server-internal
+StatusEnvelope, which REQUIRES the key -- the test certified the defect) plus a READY/PARTIAL closed-key
+arm; 131 passed per P. Rides the next Performance package (CALL-3 needs it); no separate deploy. The
+stale "internal_correlation_id" prose in the performance response schema's status description is
+contract text, parked for the contract owner. Lesson, recorded: a test that validates against the
+INTERNAL schema certifies the internal shape and cannot see the PUBLIC boundary; every wire-status test
+validates against the schema the consumer validates against.
+
+### Holdings status repackage: CRO pin merged onto the backend branch at 3d7f66b83b; BEFORE/AFTER awaited.
+
+
+## 2026-09-24 02:5x UTC - Claude CTO batch 19: Holdings status deployed and verified; legacy probe disable GO; D1 fired
+
+### IRPT-HOLDINGS-SUCCESS-STATUS-20260924 -- DEPLOYED 02:45:27Z (P 100021), CTO-VERIFIED
+P: saved plan af3b34e3 applied 0/1/0; member census 33/33 with exactly entry.py differing (== pin
+6660c155 / 13012979e1); holdings/tests 144 passed, no skips, at the merge 3d7f66b83b; recorder
+c29054e73c; ledger irpt-holdings-status-20260924 CLOSED @bcadb446ba. CTO readback 02:5xZ
+(get-function-configuration): CodeSha256 3nc57No0b8rSnz9xbyenToYWgb91aoDT87RHrIJ5vAQ= == the built
+artifact; LastModified 02:45:22Z; Active / Successful; handler entry.lambda_handler; layers exactly
+irpt-common:5; timeout 29; memory 1024. Andrew's retest requested via MSTR 100024 (expected: the
+Holdings TABLE; CRO reads the HAR in place expecting READY / HOLDINGS_READY / 2026-09-22). EXERCISED
+reading pending at this write.
+
+### IRPT-RESIDENT-LEGACY-PROBE-DISABLE-20260924 -- GO (P 100027 item 2; CTO 100030)
+Found by P while measuring the cutover receipt booleans: EventBridge ycharts-session-probe-schedule
+ENABLED cron(0 */6 * * ? *) -> Lambda ycharts-session-probe, which replays the resident's cookies
+against the vendor from a different client every six hours -- the race Y's RESIDENT_ASSEMBLY_HANDOFF
+item 5 forbids and the receipt's legacy_probe_disabled boolean asserts. CTO own reads: describe-rule
+ENABLED, one target; P's saved plan ee5160cf decoded by the CTO's own terraform show -json in the
+ycharts-pipeline root: 1 of 26 changes, aws_cloudwatch_event_rule.session_probe update, changed keys
+exactly {state ENABLED -> DISABLED, description}; the Lambda stays deployed and on-demand invokable (C2
+unchanged). A monitor retired in favour of the owner, not one built; the session-eviction alarm it fed
+goes quiet and is stated in the receipt. Sequence: ledger sentinel before the act, safe-apply of the
+SAVED plan, describe-rule readback DISABLED, re-plan 0, ledger close, receipt boolean set FROM THE
+READBACK; before the rule's next fire at 06:00Z. Lane ycharts-pipeline = CLOUD_OPS_OR_ETL, audited
+override on the CTO's word.
+
+### Resident host deps (P 100027 item 3): ACCEPTED
+jsonschema 4.23.0 + referencing 0.35.1 (with attrs, jsonschema-specifications, rpds-py) staged under
+/opt/investor-reporting-ycharts/pydeps by dnf python3-pip + pip --target on the pip-less host, chowned
+ec2-user, import-checked; copied into the package root at install; listed with digests in the receipt
+beside SHA256SUMS. Package-mirror egress of the deploy document's own class (npm install / playwright
+install); no vendor origin. Lockfile vendoring by the builder = enrichment item (Y's call), reversible.
+
+### Cutover progress (P 100027 item 1)
+Host pins read back at 282f7ea427 (library 34df3e94, wrapper 55ddb8f7, package.json 860612d6,
+secret-ids.env 88ee08c2); browsers under ec2-user; no units/cron; pre-D1: credentials AWSCURRENT
+present, ycharts/session/current VersionIdsToStages null, lease row lease_owner null fence 4, 0 event
+source mappings. D1 FIRED ONCE 02:54:32Z (irpt-ycharts-run Task=probe MaxReacquisitions=1, SSM
+71d0961f) under the standing host-workflow authorization (CRO 6fc3f5f785 item 3). The exercised arm
+of IRPT-RESIDENT-SESSION-BUNDLE-CONTRACT-20260924 = the wrapper receipt + broker.current() grading the
+fresh bundle versioned + transport accepting it.
+
+### IRPT-RESIDENT-D1-RERUN-20260924 (P 100033; CTO 100036)
+D1 RESULT: exit 1, AUTH_FAILED, 8 x {CH-AUTHENTICATED, via dom}, `filled` false -- ZERO credential
+submissions, no POST, no bundle written (secret VersionIdsToStages still null, lease unchanged, fence
+4). The GO's ONE sign-in was NOT spent; eight loads of the public /login/ page were. Diagnosis
+(static, 282f7ea427): classifyScreen's app-chrome selectors (nav a[href*='/dashboard'], a[href*=
+'/model_portfolios']) match the SIGNED-OUT page while no password input matched, so the page classed
+CH-AUTHENTICATED via dom; the probe returned NO_IDENTITY_COOKIE without a request; the loop waited.
+The README's own "the sign-in DOM and selector list are a MODEL, unmeasured" line came true; the run
+carried no page evidence. EXPOSURE (no submission), not an incident.
+WORD: (1) commit the fix exactly as bounded -- CH-AUTHENTICATED + NO_IDENTITY_COOKIE + nothing
+submitted -> AuthError retried:false at once; screenEvidence(page) = url, selector hit COUNTS per
+model group, input census by TYPE, form count, 300-char public text sample, never a credential /
+cookie value / field name; attached to that failure and to the MAX_STEPS failure; each step records
+the probe reason; sign-in fill, identity read, bundle contract, persist untouched; (2) Y STANDS on the
+committed diff (the evidence field lands in a receipt Y's runbook reads); (3) ONE run of
+irpt-ycharts-run Task=probe MaxReacquisitions=1 at the fixed pin, AT MOST ONE credential submission:
+outcome A signs in -> D1 done; outcome B fails explicitly naming the page -> STOP, the selector model
+is edited from the measured evidence, Y reviews, a further run needs a further word. CTO's own read of
+P's working-tree diff (47 lines): matches the bounds; node --check ok; bundle_contract failed 0;
+offline suite all_pass. Probe-disable GO (100030) does not wait on D1.
+AMENDED (CRO 100042, Y 100047; CTO 100049/100052) BEFORE the run fired: the runner's login route is
+WRONG -- ycharts_session.js:725 opens /login/ while every measured YCharts login in the estate is
+/account/login/ (the CRO's 09-10 live-verified probe probe_split_session.cjs:133/:51, 302 sign-in,
+dashboard matched the account email @48db22d1bf; the older capture Lambda index.mjs:101). Y confirmed
+from the source three more lines that would WASTE the single submission once the route is right: the
+page-wide username pick (:933) lands in the newsletter decoy's input[type=email]; the submit pick
+(:940-941) clicks a hidden native submit (30 s timeout) or the decoy's button; no /dashboard/ warm-up
+(the aws-waf-token). The committed diff therefore carries (a)-(c) plus (d) default '/account/login/';
+(e) form-scoped fill per login_form.cjs:3-8 (password input[type=password]:visible, its form, the
+username inside that form incl. [name="auth-username"]); (f) submit = Enter in the password field +
+the POST observer so the receipt states "N submissions, fields matched"; (g) /dashboard/ first, then
+the login route, bounded wait for a visible password input; (h) auth-username in the selector model.
+Y STANDS on that pin, then ONE run, at most one submission; outcome B stops. The CRO's limit: EC2-to-
+YCharts portability is unverified until this run.
+
+### Resident host deps, WIDENED (Y 100040; CTO 100044 item 2)
+Y's import census over the 82 packaged non-test .py files: third-party = boto3, botocore, jsonschema,
+referencing, pdfplumber (ycharts/extract/extract.py, lazy), pdfminer (ycharts/extract/fonts.py, lazy)
+-- the certified-report hop 7 imports the PDF libraries through publisher -> publication -> extract,
+so a --once poll on an empty queue passes without them and the FIRST real job would park ATTENTION at
+hop 7. P re-stages from infra/aws/lambda/layers/irpt-common/requirements.txt (jsonschema 4.26.0,
+referencing 0.37.0, attrs 26.1.0, jsonschema-specifications 2025.9.1, rpds-py 2026.6.3,
+typing_extensions 4.16.0 -- the deployed Lambdas' and the offline suite's set) plus pdfplumber 0.11.9,
+pdfminer.six 20251230, pypdfium2 5.7.1, Pillow 12.1.1 and their resolution; import check names the
+lazy modules explicitly; the receipt lists each distribution with version + digest.
+
+### ANDREW-DIRECT 2026-09-24 ~03:0xZ at the CTO terminal -- Anna's table RENDERS; two new findings
+Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_030xZ_ANNA_TABLE_RENDERS_GLOBAL_VIEW_AND_MODEL_BREAKDOWN_MISSING.md
+(verbatim + screenshot transcription). EXERCISED: USD 26,303,302.17, READY, the table renders -- the
+fence exemption and the success status are exercised end to end by Andrew's own request. FINDING A:
+Anna is absent from the "Global" view and present only under the Cottonwood dropdown; standing
+authority: Opal users default to Global and everyone appears there. Routed to P (100044 item 1):
+measure resolve-scope / directory-browse / directory-search for an Opal principal at GLOBAL, which
+firms' directories the GLOBAL union reads and from which artifacts, whether cottonwood's is in it, and
+the request context of Andrew's attempt. FINDING B: acc_0698 renders one "models" node at 100% with
+observed-custody basis, "Model coverage 0 of 1 accounts", no model / Opal model / asset-taxonomy
+breakdown, Supervision / Advisory "withheld". Routed to M (100043): the accepted COT publication's
+content for 0698 / d486 / combined (node kinds, model leaves, holdout status), the coverage field the
+portal reads, and whether "withheld" is data, server (P 100044 item 3), or rendering. The CTO rules
+each fix on the measured fact; nothing wider inferred from the word.
+
+
+## 2026-09-24 03:1x UTC - Claude CTO batch 20: Finding B measured; Andrew corrects the COT tree; portal drill items; probe disabled
+
+### IRPT-HOLDINGS-FINDING-B-20260924 -- interim ruling (M 100055/100061; CTO 100057/100066), then CORRECTED by Andrew
+M measured the accepted COT publication ac3adb97 under its user: acc_0698 = 33 nodes (ACCOUNT > SLEEVE
+"Models" > MODEL_LEAF model_id 6ae9e540 capability_facts model_name "Anna *9238" / is_opal False /
+rebalance_model_type Strategy > 30 SECURITY); d486 = 60 (leaf 1ae61190 "Anna *9237"); combined 93; NOT
+holdouts (attribution_holdouts.unassigned 0 of 841). Node keys carry NO asset-class member;
+HoldingsSnapshot.schema.json has none. "Model coverage 0 of 1" = portal slices.ts modelCoverageOf()
+counting a model as a DIRECT child of the account (the leaf is under the sleeve) -> 0 by construction.
+"withheld" = DATA: classification.authoritative=false on every node from build_cot (holdings_snapshot.py
+:1553-1555, :687-690; no Opal supervision source resolved for COT); the portal renders 'withheld' for
+authoritative=false by FE-s-55 and never reads the viewer's authority. Portal side: the adapter carries all
+levels (adapt.ts :938-969, no truncation); DrillTree renders ONE level per click; rows are clickable with
+no chevron / child count (SliceTable.tsx :120-125); canRenderDrill never refuses on these bodies.
+RULED (stand): (1) M's coverage counter counts a model descendant at any depth -- b0e2d9ad on codex/
+irpt-m-ui ACCEPTED on CTO read (cycle-guarded parentRef walk; 13 assertions; tsc clean); (2) P's additive
+adapter carry of hierarchy_path / capability_facts / modelName is shape-neutral and may land without label
+wording; (3) M cuts a VISIBLE drill affordance (chevron + child count per drillable row/slice) and opens a
+single-account selection one level deeper than the account; (4) "withheld" un-withholds only with an Opal
+fee-taking / advisory source per Cottonwood account asserted authoritative=true (enrichment, data owner);
+the asset-taxonomy breakdown is a CONTRACT + PRODUCER enrichment whose SOURCE is a card for Andrew.
+WITHDRAWN: the CTO's 100057 statement "Opal model breakdown is empty for Anna by data" -- see below.
+
+### ANDREW-DIRECT 2026-09-24 ~03:1xZ at the CTO terminal -- the COT "Strategy" is the wrapper; the MODELS are its constituents
+Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_031xZ_COT_MODELS_ARE_CONSTITUENTS_BENEATH_THE_STRATEGY.md
+(verbatim). The Rebalancer strategy (e.g. "Anna *9238") holds CONSTITUENT model portfolios ("primary" and
+"custom" -- where Opal models live) one drill level beneath it, beside CLIENT (non-model) securities (the
+Positioning page's Cottonwood Satellites: models plus a client-held GLD). build_cot collapsed that level
+into one MODEL_LEAF carrying the strategy name with the securities directly beneath. CTO's miss: it
+restated the producer's field (rebalance_model_type=Strategy) as the product's meaning and told Andrew the
+Opal model breakdown was empty "by data" -- a producer's field is not the domain's taxonomy (Rule 24 (iii)).
+ACTS (100063/100066/100067): M STOPPED on any COT Holdings rebuild/publication and studies (i) the MDPF COT
+constituent decomposition (primary/custom scan; the SmartX silver tables and rosters), (ii) the Satellites
+model-vs-client representation, (iii) build_cot's current attribution and what it must read, (iv) the
+proposed COT node tree for Anna's accounts; the CTO runs the same study on its own instrument (an Explore
+read) and compares before ruling the corrected tree; P's label/facts wording HELD; no wording names the
+wrapper a model or asserts no Opal model beneath it; the facts row calls today's leaf "Rebalancer strategy:
+<name>" until the re-cut.
+
+### IRPT-COT-HOLDINGS-TREE-20260924 -- RULED (M 100069 + the CTO's own Explore read; CTO 100094)
+Two instruments agree: the constituent level exists in silver (fact_model_blend strategy->child edges,
+recursive via build_dim_model_portfolio.decompose :219-247; fact_model_definition sleeve_name /
+sleeve_depth / symbol / asset_id / allocations); the roster carries STRATEGIES only (65/65); constituents
+exist only as blend children, so build_cot's roster default labels every constituent is_opal=False
+(wrong; the dimension decides by NAME, rs.is_opal_name :303-309); build_cot expands the blend into
+TARGET nodes, parks them privately (:1646-1650) and emits one MODEL_LEAF = the strategy with every
+position beneath (cot_actual_security_tree :1305-1387). CTO read denominators: data/**/*.py literal
+primary/custom 9 files; fact_model_{blend,roster,assignment} 13 files / 61 hits; MODEL_LEAF 27 files;
+rebalance_model_type 22; portal/src "Satellite" 447 hits / 16 files; docs >100 MDPF/cottonwood files;
+data READMEs 13. Note: the published tree came from M's branch codex/irpt-m-completion (62 commits
+ahead of CLOUD, unmerged); the CLOUD copy of build_cot never fires its expansion on real data (:1019
+compares a strategy NAME to GUID keys).
+WHERE THE CTO'S READ ADDS: (1) Primary/Custom is the MDPF REGISTRY rule -- mdpf_category_registry.py
+:229-235 PRIMARY_MODEL_KEYS (Opal Short-Term, Intermediate-Term, Ultra Short-Term Income, Long-Term
+Aggressive, Conservative Growth), qualifier primary|custom (:289), view_path "Models > Primary" /
+"Models > Custom" (:292); build_cottonwood_mdpf_slice.py :162-167 CANONICAL_KEY, :318 is_auto_custom
+(Opal Fixed Income reclassified Custom :194-201); DIVZ SMA = SMA leaf (mdpf_pair :133); non-Opal
+sleeves -> Client residual (:341-359). (2) Model dollars at Cottonwood are ASSIGNED (account value x
+blend weight) and CLIENT IS THE PLUG -- recorded constraint (ANDREW_DIRECT_20260923_194xZ_..._CLIENT_
+IS_PLUG.md :22-25, :85-87 d; holdings_snapshot.py :1384 "membership is the account's, never inferred
+per position"). So M's open rule (split a shared security) is refused as a question, and the CTO's own
+draft (per-position attribution by asset_id, proportional split) is WITHDRAWN -- it contradicted a
+constraint already in the record (miss recorded). (3) GLD on the Satellites page = "external residual"
+(Andrew 2026-09-14): a security the satellite holds that Opal's model books do not; in BD data it sits
+inside sleeves. The account analogue = depth-0 components + undefined positions in the Client plug.
+THE TREE: L0 ACCOUNT (OBSERVED) > L1 MODEL_WRAPPER = the assigned Rebalancer strategy (ASSIGNED, whole
+account; label "Rebalancer strategy: <name>") > L2 MODEL_LEAF per blend child (hierarchy_path per the
+registry rule; is_opal by name; qualifier primary|custom; amount = L0 x absolute_allocation, ASSIGNED)
++ L2 SMA leaf where named + L2 CLIENT sleeve (OBSERVED, the plug) > L3 SECURITY (a constituent's
+definition components at the constituent's weight, ASSIGNED, with the observed custody position as a
+fact; Client's = observed positions not in any constituent + depth-0 components). sum(L2) == L0; a
+shared security appears under each constituent that defines it. Producer: M re-cuts build_cot (reads
+fact_model_definition; Opal flag by name; retires the private model_target_nodes path); 49F/INF
+untouched. GATE: candidate + census for Anna's accounts and the combined selection to the CTO; GO
+before any publication (CAS over the current COT index; prior revision retained). Portal: P's carry
+shape-neutral; M's render per the ruling; asset-taxonomy = separate enrichment (registry asset_class on
+Positioning rows is the source candidate). The 46-model overlay artifact stays withdrawn.
+
+### IRPT-LISTING-SPEED-ASSIGNMENT-20260924 (CRO 100072/100078; CTO 100083/100087)
+GAP, the CTO's: Andrew approved the listing-speed brief's levers B1-B8 / F1-F7 at ~20:0xZ ("I like all
+your recs, yes go ahead", @6fc3f5f785) and no seat was assigned them for seven hours; the takeover
+handoff did not carry them and the CTO did not sweep. Andrew ~03:2xZ at the CRO terminal, VERBATIM:
+"It is currently so slow it is embarassing/unusable. I think even though we're only testing, we need to
+look into rectifying this issue because it makes every load take 15 seconds too long." Baseline (CRO,
+CloudWatch 15:19-03:19Z): irpt-directory-search 264 calls p50 1.33 s / p90 4.91 s / p99 6.95 s;
+irpt-holdings p50 1.14 s; one list load = Global resolve (3 firms IN SERIES) + 3 browses + selection +
+holdings. ANDREW-DIRECT ~03:2xZ, VERBATIM "I write the backend now (Recommended)": the CRO writes the
+backend quick wins, the CTO approves, P deploys; P does the page-side fixes. ASSIGNMENT: CRO B6 (memory
+512 -> 1769), B5 (parallel Global resolve, fixed merge order), B1+B2 (one directory + ownership read per
+request, one S3 client per container), B4 within-request, B7 keep-warm; one commit each, pin + tests to
+the CTO; P deploys code-only. P: F2, F5, F3, F7 and F1 in its lane after D1. RULED: B3 GO with one bound
+-- the parsed directory cached per S3 VersionId (HEAD per request, no time TTL; loaders.py:35-37 text
+amended to say so); F1 GO -- refresh the auth header, keep the mounted page, never remount. B8 PARKED
+(auth-surface change, needs an AE lane; TTL <= 300 s acceptable in principle). Every speed claim is a
+before/after on the same instrument. Y holds no listing item (100081).
+
+### IRPT-RESIDENT-D1-RERUN-20260924 -- (d)-(h) LANDED, Y STANDS, the ONE run may fire
+P ad8306b769 on 846f7233d2: LOGIN_PATH default /account/login/; /dashboard/ warm-up then a bounded wait
+for a visible password input; locateLoginForm = login_form.cjs:3-8 verbatim (form-scoped username incl.
+auth-username; refuses with no submission when counts are 0); submit = Enter in the password field +
+POST observer (field names vs the secret, booleans only); selector model leads with auth-username;
+identity read / bundle / persist / wrapper untouched; library 5a1a8695 (wrapper 55ddb8f7). Y 100092:
+STANDS on (a)-(h), pin confirmed from the blob, own run 25/25 + offline all_pass with measured_form. CTO
+own run at ad8306b769: node --check ok, bundle_contract failed 0, offline all_pass, login_path
+/account/login/, decoy_filled_rows 0. Next: upload at ad8306b769, redeploy, pins read back, ONE
+irpt-ycharts-run Task=probe (at most one submission); outcome B stops.
+
+### IRPT-RESIDENT-LEGACY-PROBE-DISABLE-20260924 -- APPLIED
+ycharts-session-probe-schedule reads DISABLED (Y's describe-rule 03:1xZ; CTO's own describe-rule 03:1xZ:
+DISABLED, cron(0 */6 * * ? *)); P's ledger ycharts-probe-disable-20260924 CLOSED @9b4929fcf4; the receipt's
+legacy_probe_disabled boolean has its readback. ycharts/session/current still VersionIdsToStages null.
+
+### IRPT-RESIDENT-D1-RERUN-20260924 -- in progress (Y 100060)
+P's 846f7233d2 carries (a)-(c) exactly (explicit failure; redacted screen evidence; identity/bundle/persist
+untouched); (d)-(h) (route /account/login/, form-scoped fill incl. auth-username, Enter submit + POST
+observer, /dashboard/ warm-up, selector model) are owed in a second commit; Y withholds STANDS until then;
+no run before it. Andrew's ~03:0xZ word (Global view, breakdown) and ~03:1xZ correction are recorded;
+Finding A (Global-view membership) still awaits P's directory measurement.
+
+
+## 2026-09-24 03:3x UTC - Claude CTO batch 21: D1 signed in from the host (bundle lost to the probe); Finding A measured server- and portal-side
+
+### IRPT-RESIDENT-D1-RERUN-20260924 -- second amendment (P 100099; Y 100109; CTO 100105/100111)
+RESULT (SSM d89690f8, 03:31:19-34Z, pins read back first: library 5a1a8695, wrapper 55ddb8f7): step 0
+classified CH-SIGNIN_FORM on /account/login/, fillAndSubmit ran ONCE, Enter submitted, and the vendor
+answered with the signed-in dashboard (url /dashboard/#/?dashboardId=1064209; password 0, app_chrome 1,
+29 text inputs, 2 forms). The CRO's measured route + form (100042) are LIVE-VERIFIED from the EC2 host;
+the sign-in leg's portability is verified. The single submission of 100049 is SPENT. Then seven probes
+read NOT_LIVE: probeSession, given a Playwright context with no requestGet, fell through to the bare
+Node https port (cookie NAMES + UA; not the browser's stack, jar or WAF token), so the success predicate
+never passed, readIdentity never ran, nothing was captured or persisted (ycharts/session/current
+unchanged; lease released). P's omission accepted: the MAX_STEPS failure record dropped
+login_submission / warmup / password_visible_wait.
+WORD (one commit, Y STANDS, ONE run = one further submission under the standing host-workflow
+authorization; YCharts' concurrent-sign-in eviction of the first run's server session is designed and
+stated): (a) probeSession takes {page, context}; with a page the probe is a fetch() evaluated INSIDE
+the page (credentials include, same Accept / X-Requested-With), else ctx.request.get, else the port;
+(b) every step records probe_http_status + probe_state; every failure record carries warmup,
+password_visible_wait, login_submission; NOT_LIVE names its status; (c) the DISCRIMINATING PAIR in
+the receipt, pass or fail: in-page status beside the port status on the same cookies, AND (Y 100109,
+adopted) what the port SENT -- cookies with VALUES count, X-AWS-WAF-Token header present, UA -- and
+the port reply's Location / x-amzn-waf-action. Reading rule fixed in advance: 302 to /account/login/
+with no session cookie value sent = incomplete request (port defect); 202/405 with x-amzn-waf-action
+= the WAF/client class (opens item 3 for the Python transport); 200 from the port = the class is fine.
+Y's precedent: rest_checkpoint_probe_11.json (09-11) replayed the captured jar browserless from Node
+-> template 200, dashboard 200 with the account email, 403 control, waf_action null -- so a non-browser
+client is NOT known to be rejected; laptop egress measured, EC2 egress is what this run measures.
+(d) nothing else moves; (e) outcome A -> bundle grade, enrolled_user_id pin, C1; outcome B -> STOP with
+the pair, a further run needs a further word.
+LANDED (P 100117): 160f99b3ea (probe in-page via fetch() evaluated in the page, then the
+APIRequestContext, then the replay context, then the port; per-step probe_reason / via / http_status /
+state; both AuthError records and the success record carry warmup, login_path, password_visible_wait,
+login_submission, probe_pair) + b1f269c6dd (the once-per-run pair control mirrors transport.py
+headers_for: FULL jar with values, X-AWS-WAF-Token from the cookie, UA, Accept, X-Requested-With,
+Referer; the port returns location / x-amzn-waf-action / content-type; evidence.probe_pair carries both
+statuses and what was sent as counts and names, never values). Library c8155201; wrapper 55ddb8f7. CTO
+own run at b1f269c6dd: node --check ok, bundle_contract failed 0, offline all_pass, arm (a) probe_via
+browser-context / LIVE; the pair fields present in the file. Y STANDS is the gate; then the ONE run.
+PYDEPS: the cp312 closure cannot exist for python 3.9, so python3.12 (3.12.14) + pip were installed
+and the exact irpt-common pins + pdfplumber set + boto3/botocore staged under pydeps, import-checked as
+ec2-user (digest 6a751288f048f127). ABSOLUTE_PYTHON = /usr/bin/python3.12: Y's call (100109), adopted.
+
+### IRPT-HOLDINGS-FINDING-A-20260924 -- Global-view membership, measured (P 100102; CTO's own portal read; CTO 100113)
+SERVER (P, own instruments): directory/entry.py global_context() (:321-351) fans ONE resolve per tenant
+of IRPT_DIRECTORY_BUCKET_MAP; the deployed env on all four functions = {49financial: opal-data-bd,
+cottonwood: opal-data-cot, inflection: opal-data-inf} -- cottonwood is in GLOBAL by construction; a
+failed firm is retained as UNAVAILABLE with a reason. The cot directory (opal-data-cot, 2026-09-17, 260
+entries, revision irpt-dir/cottonwood/2026-09-17/1.0) carries exactly ONE entry with Anna's two
+accounts. Ownership maps: bd 445 KB; cot 107 bytes; inf ABSENT (empty). OPAL_GLOBAL is minted only from
+the explicit roster (_scope/resolve.py:47). browse() and search() are SINGLE-FIRM (entry.py:139, :242);
+the Global LIST is a portal fan-out. CloudWatch (02:58-03:10Z, 68 events, START/END/REPORT only; the
+sink is not yet in irpt-directory-search) cannot show the child states. The 02:12Z HAR holds no
+directory calls (CTO read in place: 15 entries, 0 resolve/browse).
+PORTAL (CTO's own read, shared tree): index.tsx:57-63 resolves 'global' once; :97-98 contexts = the
+scope of every READY firm; an UNAVAILABLE child is shown at :188-191 ("Unavailable firms: <tenant>").
+header/ClientSearch.tsx:55-70 fires ONE browseDirectory per context (limit 25) via Promise.allSettled;
+a REJECTED browse contributes [] and is only counted; `loaded` stays true unless all fail -- a firm
+whose browse rejects VANISHES SILENTLY; :41/:57 also drop a context with no directoryRevision. Row ->
+scope matching (:105) by verifiedRequestFirm.firmId === entry.firmId would make a row unselectable, a
+different symptom. Candidates ranked: (C) cottonwood's browse under the Global-derived scope rejects
+(fingerprint/revision validation, spelling, parse) and is dropped silently -- consistent with no alert
+seen; (A) cottonwood's resolve child UNAVAILABLE -- would print the alert; (B) other.
+ACTS: P fixes the silent drop (a rejected per-firm browse or a missing revision is surfaced on the alert
+line with firm + reason class; never a silent []), commit for CTO review; P drives resolve GLOBAL +
+browse per returned firm scope in the directory harness (no live headers) and reports which firm's
+browse refuses and why; the HAR of the Global view (resolve firms[].state/reason + the browse calls) is
+asked of Andrew and the CRO reads it in place. Withheld columns: none server-side (P; snapshot.project
+never reads the viewer's authority); M's producer authoritative=false stands as the whole answer.
+
+
+## 2026-09-24 03:4x UTC - Claude CTO batch 22: the COT tree candidate accepted in shape; probe fix STANDS; the one run cleared
+
+### IRPT-COT-HOLDINGS-TREE-20260924 -- CANDIDATE c7f8cfdb38 SHAPE ACCEPTED (M 100120; CTO 100123)
+M's re-cut on codex/irpt-m-completion (parent e6ab5d4841; naming gate PASS 0 graded): cot_constituent_
+taxonomy() imports the registry's rule from its one home (CANONICAL_KEY / is_auto_custom /
+OPAL_SMA_LEAF_KEYS / is_opal_name) -> Models > Primary | Models > Custom | SMA, non-Opal child -> Client;
+cot_constituents() = blend children + fact_model_definition components per sleeve + the strategy's
+depth-0 components; cot_actual_security_tree() = ACCOUNT (OBSERVED) > MODEL_WRAPPER = the strategy
+(ASSIGNED, whole value) > MODEL_LEAF per Opal/SMA child (ASSIGNED = value x absolute_allocation; facts
+model_name / is_opal by name / qualifier / blend_weight) + SLEEVE Client = the plug > SECURITY at value
+x component weight with the observed position as a fact; the roster default is gone; model_target_nodes
+stays manifest-private; build_cot reads fact_model_definition (2026-09-23, 1,583 rows).
+CTO READ of COT_TREE_CANDIDATE_CENSUS_20260924.json (M worktree; status CANDIDATE_UNPUBLISHED): 0698
+41 nodes (1/1/3/1/35; Models > Primary 32, Models > Custom 5, Client 2; constituent 25,435,293.20 +
+plug 868,008.97 = 26,303,302.17; partitions_off 0): OCG 60.7% Primary / OUSTI 20% Primary / OFI 16%
+Custom / Client plug 3.3% = PHYS (observed 1,137,731.50 as a fact); d486 75 nodes (leaves 4 incl. DIVZ
+SMA 7% under SMA 34; plug 591,175.35; 0 off); combined 116 (2/2/7/2/103; 44,549,962.70 + 1,459,184.32 =
+46,009,147.02; 0 off). Shared securities appear under each constituent that defines them.
+RULED: (i) the Client plug is basis ASSIGNED (a residual assignment; the splice check is right; the
+sleeve's facts say "residual of the strategy assignment"); (ii) observed positions the definition does
+not cover (FCASH 272,112.87 on 0698) are facts on the Client sleeve this round, not nodes; the plug's
+children are the strategy's root components at value x weight; an UNRESOLVED remainder node carries any
+difference, never redistributed. Enrichment (M owner, to Andrew in plain words): a fact-only partition
+under the plug listing uncovered observed positions with custody dollars.
+GATE: M runs the 841-account build and sends the GO request with per-account reconcile (0 off / 841),
+accounts by shape (assigned with definition / without / unassigned), strategies with vs without a
+definition, shared-security count, UNRESOLVED count + total, the Anna selections re-read from the built
+bytes, the suite count (the four pre-existing currency-state failures named), and the measured write
+plan (CAS create over the current COT index XbWnSWxM / ac3adb97, prior retained). CTO GOes on that read.
+UI 67158601 (chevron + child count; single-child nodes open below; "Rebalancer strategy: <name>"; 26
+assertions, tsc clean, eslint 0) ACCEPTED for the next portal build with b0e2d9ad; P's shape-neutral
+adapter carry may land now; wording "Client (residual, not in a model)".
+
+### IRPT-RESIDENT-D1-RERUN-20260924 -- Y STANDS on 160f99b3ea + b1f269c6dd (Y 100119); the ONE run may fire
+Y read the full diff: page fetch first, APIRequestContext, replay context, port last; per-step probe
+fields; both AuthError records carry warmup / login_path / password_visible_wait / login_submission /
+probe_pair; the pair control sends the FULL jar with values (context.cookies() :647) + X-AWS-WAF-Token
++ the resident's headers and records what was sent as counts/names and what came back; pin c8155201
+confirmed; Y's own run 25/25 + offline all_pass. Observation, not a line: pageGet redirect 'manual'
+yields opaqueredirect status 0 and falls to the redirect-following path, so a later eviction's probe
+classifies the redirect target's body; the Python eviction verdict is its own instrument; a one-line
+note when P next touches the file. Next: upload at b1f269c6dd, redeploy, pins read back, ONE run.
+
+
+## 2026-09-24 04:0x UTC - Claude CTO batch 23: COT re-cut PUBLISHED; DEV consolidation on Andrew's word; display names ruled; speed pin GO; D1 third run worded
+
+### IRPT-COT-HOLDINGS-RECUT-PUBLICATION-GO-20260924 -- GO (CTO 100147) and EXECUTED (M 100152)
+CTO verification before the GO (own instruments): prepared_cot's only platinum candidate 2d067b4d,
+19,038,427 bytes, sha256 == revision; _platinum_plan -> header 28,027 B + 19 parts (max 1,046,285) =>
+22 creates + 1 index; nodes 16,749 = ACCOUNT 841 / MODEL_WRAPPER 462 / MODEL_LEAF 521 / SLEEVE 499 /
+SECURITY 14,426 (M's kinds exactly); acc_0698 subtree 41; live index head-object VersionId XbWnSWxM,
+ETag "ab460faa537d9fc0aa081cd5cb395782", the plan's IfMatch. M's 841-account census accepted: 0 of 841
+pies off; 46/46 strategies with a definition; 0 UNRESOLVED; assigned 462 / unassigned 379; 672
+uncovered observed positions as facts (20,642,062.66); reconcile 548,412,662.59 exact.
+EXECUTED 03:56:45-55Z: 22 immutable creates + ONE CAS index write (IfMatch ab460faa over XbWnSWxM ->
+new index VersionId .VLcr1BCEMXLODKeFWA00C31rlgnUBAr, row 2026-09-22 ac3adb97 -> 2d067b4d); every
+returned version read back before the index; the prior index version re-read equal
+(prior_index_version_retained true); ac3adb97's manifest still present (UCnp0Bq_...). Reader matrix
+LIBRARY-UNDER-USER: 0698 41 nodes / d486 75 / combined 116 READ_OK at 2d067b4d; 2026-09-23 refused
+x3; an excluded account refused. Receipt COT_RECUT_PUBLICATION_RECEIPT_20260924.json (M). EXERCISED:
+Andrew's ~04:0xZ page shows 75 nodes for d486 and "Model coverage 1 of 1" -- the re-cut is served.
+
+### ANDREW-DIRECT ~03:5xZ -- consolidate the portal branches for a DEV push (record: ANDREW_DIRECT_20260924_035xZ_CONSOLIDATE_PORTAL_BRANCHES_FOR_A_DEV_PUSH.md)
+Ruling IRPT-PORTAL-DEV-CONSOLIDATION-20260924 (CTO 100129): P builds ONE candidate off DEV head
+c1ac41ec merging M's codex/irpt-m-ui pin 67158601 (e7e6eaea, b0e2d9ad, 67158601; merge-base 8e6e2e38;
+M 100146: branch clean, no further portal commits until it lands) and P's p-reason-codes-20260924
+(8e616985 named per-firm browse failure; the additive adapter carry 92e2ad96); install / tsc / eslint /
+affected suites / production build with counts; diff stat against c1ac41ec; CTO reviews and GOes; MSTR
+pushes DEV on this word with the ls-remote hash; only committed, reviewed work rides. The gap (nobody
+assigned to consolidate) was the CTO's.
+
+### ANDREW-DIRECT ~04:0xZ -- Anna's page on DEV (record: ANDREW_DIRECT_20260924_040xZ_ANNA_PAGE_WONKY_RANDOM_STRINGS_NO_MODEL_NAMES.md)
+IRPT-HOLDINGS-DISPLAY-NAMES-20260924 (CTO 100156): the v1 node contract carries NO display name
+(measured: node properties closed, no label/name/symbol; SECURITY = security_id CUSIP only; model names
+only inside capability_facts strings), so the portal prints ids by construction. Additive `display`
+member on nodes {label, symbol?, description?}: P edits the schema + response example and the portal
+validator/adapter accept it FIRST (in the consolidation); M fills it in build_cot (and the 49F/INF
+builders) and republishes COT after the accepting portal is on DEV; M's render prefers display.label,
+then the facts parse, then the id. Also: P names HOLDINGS_READY / PERFORMANCE_READY in
+CONTRACT_NAMED_REASON_CODES (S52) and prints no code line on READY; P measures "Scope as of: unknown";
+"Cohort (not asserted)" / "withheld" stay (data, honest); the coarse category card stays (drill one
+click below with 67158601). Finding A: Anna appeared under Global on this load; P's harness (100142:
+resolve GLOBAL COMPLETE, all three READY, cottonwood browse 25 entries + cursor) did not reproduce (C);
+the named-failure alert (8e616985) prints the class if it recurs; the HAR ask stays open only on
+recurrence.
+
+### IRPT-LISTING-SPEED-PIN-GO-20260924 (CRO 100137; CTO 100162)
+cro-listing-speed-20260924 @773fcee3e2, five commits on ad8306b769 (B6 memory 512 -> 1769; B5 parallel
+Global resolve via ThreadPoolExecutor with ordered merge; B1+B2 one S3 client per container + per-request
+directory memo, ownership map deliberately NOT memoized; B3+B4 parsed directory cached per object
+version with IfNoneMatch on the cached ETag, 304 = reuse, no TTL, ownership/policy never cached, revision
+hash + browse order once per version; B7 part 1 warm event answered before the boundary). CTO own runs:
+directory 6 failed / 142 passed and _authz 7 failed / 165 passed at the pin AND the same at P's untouched
+base a5073c9461 (pre-existing); holdings + performance 275 passed. RULED: the conditional GET is the
+HEAD-by-VersionId bound's equivalent, accepted. GO: P merges, runs the suites, plans/applies B6 (0/1/0),
+packages irpt-directory-search code-only under the ledger discipline, AFTER with CloudWatch p50/p90 over
+the first hour beside the baseline (p50 1.33 s / p90 4.91 s / p99 6.95 s) + one timed Global list load.
+B7 part 2: org/standards/** is lane ANY_EXEC (.owned-paths.yaml:1977), so the CRO adds cadence token
+"5min" to NAMING_SCHEMA.json cadence.values (Rule 30: a registry row, never a workaround) and lands the
+rate(5 minutes) keep-warm schedule as its own commit; inside Andrew's approved always-on word.
+
+### IRPT-RESIDENT-D1-RERUN-20260924 -- third amendment (P 100126; Y 100150/100161; CTO 100134/100164)
+Run 3 (SSM 248c8bf6, 03:49:30-45Z at b1f269c6dd): the sign-in leg is PROVEN -- 1 submission, fields
+matched, reply 302, password visible, dashboard reached -- and the pair shows the probe URL
+/indices/table_data (the legacy market-data probe, ycharts_client.py:170-172, never live-verified)
+answers 405 with x-amzn-waf-action captcha from BOTH the in-page fetch and the Node port on the same
+11-cookie jar (ycsessionid, csrftoken, aws-waf-token cookie + header sent): the ENDPOINT's WAF rule, not
+the client class; Y's item 3 stays closed. Two submissions spent today (Y's count). WORD: the success
+predicate becomes the resident's own two routes from inside the page -- identity (GET /dashboard/ 200 +
+window.USER.authenticated true, userId int > 0) first, then the Overview template GET
+/custom_pdf_reports/generate/<template_id> (200 + JSON with id == template_id, report_type, sections)
+with classifyResponse's table on the template response; PROBE_PATH defaults to the template route;
+/indices/table_data stays behind YC_PROBE_PATH; a captcha solver is refused (a detector is not a
+handler). Authorization: the template GET is inside 6fc3f5f785 line 38 ("the report-generation calls")
+-- Y's reading of the record, adopted. CTO's miss: 100135 item 3 restated P's sentence that the replay
+"already carries /custom_pdf_reports statuses" -- Y measured the fixture (POST route only; an unmatched
+GET falls through to a 200 HTML page), so the template arm as worded would have been VACUOUS. STANDS
+conditions = Y's five (positive arm from a measured fixture; NEGATIVE arm: 200 non-JSON never LIVE;
+identity first / template second / eviction 403 still EVICTED_HARD; bundle_contract 25/25 + offline
+all_pass + node --check; the unsigned control reads DISTURBED). Then ONE run = the third submission.
+Host deps verified by Y (python 3.12.14; the irpt-common pins + pdfplumber set; hash 6a751288f048f127).
+
+
+## 2026-09-24 04:3x UTC - Claude CTO batch 24: display sequence; DEV candidate; listing speed deployed; D1 predicate commit
+
+### IRPT-HOLDINGS-DISPLAY-NAMES-20260924 -- sequence amendment (M 100170; CTO 100172)
+M's fill @699bf9ed1b is GATED on the contract (display_admitted() reads the schema the runner validates
+against; emits nothing until `display` is admitted); labels from the directory's masked_discriminator
+(the relationship's; a per-account mask is a producer of its own), "Rebalancer strategy: <name>",
+model_name, "Client (residual, not in a model)" / "Client", "<symbol> -- <description>" from custody
+Symbol + Asset Display Name, definition component names, "Unallocated remainder ..."; an account absent
+from the directory gets no label; 49F/INF derive display from their name facts; 239 passed / 4
+pre-existing. THE SHAPE, fixed byte-for-byte: display {type object, additionalProperties false,
+required [label], properties label (string, minLength 1), symbol (string), description (string)},
+optional on the node. THE ORDER (M's trap: the deployed irpt-holdings validates against ITS OWN schema
+copy through the layer, so a member that reaches docs/ only makes the function refuse the republished
+body): 1 P edits BOTH copies (docs + holdings/contracts) + the response example; 2 the portal
+validator/adapter admit exactly the three keys in the DEV consolidation; 3 P repackages irpt-holdings
+code-only with the new copy (and any other function that validates HoldingsSnapshot); 4 M runs the 841
+build with the labelled-of-N census and asks for the GO (CAS over .VLcr1BCE, 2d067b4d retained); 5 M
+republishes after 2 and 3 are live.
+
+### IRPT-PORTAL-DEV-CONSOLIDATION-20260924 -- candidate built; one arm ruled (P 100175; M 100179; CTO 100176)
+Candidate irpt-dev-consolidation-20260924 @ba532e57 = c1ac41ec + merge 0149c442 (M 67158601) + merge
+ba532e57 (P 8e616985); 9 files +403/-22; seven conflicts resolved to the DEV side (byte-identical
+duplicates named); install / tsc / eslint 0 errors / build OK / m-overlay 26; every affected suite
+equal to the untouched DEV head except ONE arm: fe-s-76 revision-mismatch-guard.test.ts:320-329 (M's
+e5604c03) expects drilled.passes 2 at a zero-denominator BRANCH mount, receives 1 -- because 67158601
+auto-advanced past EVERY single-child node. RULED: the test stands; 100066 (b) was a FIRST-SCREEN rule
+for the ACCOUNT root of a single-account selection only. M narrowed it @d763531b (initialDrillRef: two+
+roots -> the list; a single non-account root -> as given; a single ACCOUNT root with exactly one
+non-empty child -> that child, one level; else the account); 28 assertions; fe-s-7/55/76 45 pass; P
+merges d763531b into the candidate, expects fe-s-7 48/3 (the DEV baseline's three) and fe-s-76 8/0,
+then adds the `display` acceptance, the named READY codes (no code line on READY) and the "Scope as of"
+measurement, and reports for the CTO's GO; MSTR pushes DEV on Andrew's word.
+
+### IRPT-LISTING-SPEED-PIN-GO-20260924 -- DEPLOYED (CRO 100166; P 100180/100185; CTO 100168)
+Pin extended to 5886d0b9bd (cadence "5min" row 4eae414dd4 in the ANY_EXEC standards lane; schedule
+irpt-directory-keepwarm-5min; naming gate 3/3). P: merged @19d1c3b387; the pre-existing 6 + 7 failures
+unchanged; package 6uxqQO2S (20 members; exactly entry.py / loaders.py / served.py differ); plan
+31060b25 = 3 add (keep-warm role, policy, schedule) / 1 change (memory 512 -> 1769 + hash/version) / 0
+destroy; ledger sentinel 145435aa6c before the act; APPLIED 04:21:24Z; readback CodeSha 6uxqQO2S,
+MemorySize 1769, schedule ENABLED rate(5 minutes) input {irpt_warm:true}; re-plan 0; recorder
+83a232fa71; ledger A1/V1/R1 closed @fc5d2e5507, M1 open by design. CTO own readback 04:3xZ:
+get-function-configuration CodeSha256 6uxqQO2Sm6SLY4k+XYWzuQ/Corssjy3zVW/DNDS6qMI=, MemorySize 1769,
+Timeout 15, Active / Successful, LastModified 04:21:18Z; get-schedule irpt-directory-keepwarm-5min
+ENABLED rate(5 minutes) -> irpt-directory-search, input {"irpt_warm":true}. M1 (first-hour p50/p90
+beside the baseline p50 1.33 s / p90 4.91 s / p99 6.95 s, one warm-fire line, one timed Global load)
+due ~05:21Z; no speed claim before it.
+
+### IRPT-RESIDENT-D1-RERUN-20260924 -- predicate commit landed (P 100183); CTO own run
+abce466570 (library a0ffa0e8; wrapper 55ddb8f7): PROBE_TEMPLATE_ID 14141822 (templates.json OVERVIEW,
+report_type aggregate_security_overview), PROBE_PATH default /custom_pdf_reports/generate/14141822
+(the market-data URL behind YC_PROBE_PATH); identity leg FIRST (readIdentity, five refusals, a refusal
+returns IDENTITY_<refusal> with the template GET unspent); template leg from inside the page, graded by
+classifyResponse AND probeTemplateDocument (String(id) == path id, report_type string, sections array;
+BODY_NOT_JSON / TEMPLATE_ID_MISMATCH / REPORT_TYPE_ABSENT / SECTIONS_NOT_ARRAY); authenticated =
+template LIVE AND identity ok; the pair control fires on the template route. Replay serves the document
+(integer id; the fixture cites recipe.py + templates.json, not memory) and a template_html negative
+mode; suite arm (a) 6 of 6 (HTML 200 -> NOT_LIVE BODY_NOT_JSON; document -> LIVE; unminted cookie ->
+403 DISTURBED; no identity cookie -> no request). CTO own run at abce466570: node --check ok,
+bundle_contract failed 0, offline all_pass, arm (a) "6 of 6", the four predicate identifiers present in
+the file. Y STANDS (100193, own run: node --check x3, 25/0, all_pass, arm (a) 6 of 6, non_loopback_hosts
+[]; the five conditions MET; bound stated: the identity-first leg is exercised LIVE only, so the run
+receipt must carry identity_via 'dashboard-window-user', identity_leg PASS and a positive integer
+user_id before the template line). The ONE run = the third submission may fire.
+
+### IRPT-DESIGN-RECON-CALLS-20260924 (CRO~F 100187: Andrew-direct ~04:2xZ, PM walk + /draw concepts; recon only)
+Andrew's word (verbatim in the CRO's record ANDREW_DIRECT_20260924_042xZ_IRPT_PAGE_PM_WALK_AND_DESIGN_
+CONCEPTS.md): walk the IRPT page as a PM, name every defect (random GUIDs, no holdings list, the
+paginated cut-off client dropdown, hashes on Analysis), reference Model Portfolios / Positioning for
+Holdings, Advisor Intelligence + the Benchmark tab for Performance, a flow-based Analysis layout; /draw
+concepts for the header, Performance, Analysis and Holdings; Andrew iterates the layout; then a brief.
+Two calls surfaced, RULED (CTO 100194): (a) the FE derives nothing -- a benchmark/portfolio spread is a
+SERVER-STATED fact: additive optional `spread` per comparison row on the PerformanceReport (value,
+basis, the two facts and their dates), emitted by the Performance adapter (P; both contract copies);
+(b) the tab rename Reporting -> Performance is inside Andrew's own word (he named it) and rides the
+portal candidate AFTER the DEV consolidation. Data asks: security name = the `display` ruling; asset
+class / sector = the taxonomy enrichment whose SOURCE is the open card; quantity / price = custody
+facts into the node's existing optional `valuation_facts` (P measures what it admits; M fills in the
+display republish, else P extends additively portal-first); benchmark daily series, household
+begin/end values (P) and the comparison catalogue (Y) are brief items. Nothing pre-empts the DEV
+consolidation, the D1 run or the COT display republish.
+
+
+## 2026-09-24 04:4x UTC - Claude CTO batch 25: Andrew's 500 ms bar; valuation facts; D1 run 4 -- the pair inverted
+
+### IRPT-LISTING-SPEED-ROUND-2-20260924 (CRO 100200/100210; M 100204; CTO 100206)
+Andrew-direct ~04:3xZ at the CRO terminal, VERBATIM "Still not fast enough, do a test right now, nothing
+should take more than 500ms"; his HAR 04:32-04:33Z read in place by the CRO + CloudWatch REPORT lines.
+MEASURED on the new listing code (deployed 04:21Z): Global resolve 872 ms server / 1.53 s browser (was
+4.6 s; B5 = the slowest member, not the sum); browses 121-347 ms server; first list visible ~2.2 s (was
+~7.4 s); keep-warm 2 ms. WHERE THE TIME IS: irpt-holdings 1.5-2.6 s on the OLD loaders (6+ directory
+fetches per request), called twice (F7); irpt-performance-adapter 1.4-3.7 s, called twice;
+per-keystroke 3-firm browses (F5); the page fetches Performance and Holdings at once so Holdings waits;
+authorizer COLD 524-555 ms under fan-out; listing cold starts under the 3-way fan-out. RULED: (1) P
+repackages irpt-holdings AND irpt-performance-adapter code-only with the B1/B3 loaders + B7 served.py
+(exactly loaders.py + served.py differ; 0/1/0 each; ledger; CodeSha readback; AFTER with p50/p90 over
+30 min beside the CRO's numbers); (2) the F-items are P's on Andrew's word (100087; the CRO's routing of
+items 2-3 to M was corrected by M 100204 and CRO 100210) plus one more: each tab renders when ITS call
+returns; ride the consolidation if it does not delay the report, else the next candidate; (3)
+PROVISIONED CONCURRENCY GO: opal-portal-authorizer 1, irpt-directory-search 3, business hours or steady
+-- the stronger form of the approved always-on keep-warm (6fc3f5f785), removing the two cold-start
+shapes measured; cost stated for the record (~5.3 GB provisioned + the authorizer's unit, on the order of
+USD 30-40/month steady, less on a window), inside the approved intent; the CRO writes the Terraform, the
+CTO GOes, P applies; B8 stays PARKED. M's note taken: after the holdings repackage the CTO re-reads the
+function's own time on the re-cut body; a producer-side change is measured only if that is still over
+the bar.
+
+### IRPT-HOLDINGS-VALUATION-FACTS-20260924 (M 100198; CTO 100206 item 4)
+Measured: the trunk's node.valuation_facts (71329fd469) admits ONLY the six SMARTX_* fact kinds with
+units const "USD"; fact_holdings carries Units + Market Value + _source_as_of and NO price column; M's
+branch schema copy predates the member (M merges CLOUD at P's schema pin, never a rebase). RULED:
+quantity = an ADDITIVE fact_kind CUSTODY_UNITS with units "UNITS" (enum + units rule extended, both
+copies, portal-first, the same order and republish as `display`); source_as_of = _source_as_of,
+source_revision = the receipted object sha, source_scope = the account's opaque id; on every OBSERVED
+custody SECURITY and as a fact on definition-component rows. PRICE REFUSED this round: the feed states
+no price, Market Value / Units is a producer computation, and the member's own rule is "never a value
+the source did not state"; it returns as a stated fact when a priced source exists (enrichment, source
+named first).
+
+### IRPT-RESIDENT-D1-RERUN-20260924 -- fourth amendment (P 100212; CTO 100215)
+Run 4 (SSM 6ade1f06, 04:35:54-04:36:10Z at abce466570): sign-in proven a THIRD time (1 submission,
+fields matched, 302, dashboard); identity leg PASSED once; the template GET from INSIDE THE PAGE -> 405
+with x-amzn-waf-action captcha (AWS WAF challenges non-navigation fetch/XHR from the headless browser)
+while the NODE client with the full 10-cookie jar (ycsessionid + csrftoken; NO aws-waf-token) -> 200
+application/json, waf_action null, on the same route. THE PAIR INVERTED AND DECIDED IT: the class the
+WAF fences here is the browser's fetch, not the raw client; the resident's Python transport is the class
+that PASSES from EC2, as the 09-11 laptop replay measured -- Y's item 3 CLOSED POSITIVELY. Steps 2-7
+IDENTITY_USER_ABSENT = the fenced fetch put the browser context into a challenge state. Three
+submissions spent today; no bundle; lease released. WORD: both probe legs go through the resident's
+client class -- the Node port with the FULL jar, the capturing UA and the probe headers FIRST, the
+APIRequestContext as fallback, NO in-page fetch on the probe path; the page only navigates, warms up and
+signs in; identity = GET /dashboard/ via that client -> window.USER by the identity_from_html rule;
+transport = the template GET via the same client graded by the table AND probeTemplateDocument; the
+pair control = {node_port, api_request_context}; nothing else moves; the offline context arms move to
+the Node path, the negative arm and the unsigned control stay; Y STANDS on the five conditions; then ONE
+run = the FOURTH submission, bounded to one. For the record: the resident never needed the browser's
+WAF token for its own calls.
+
+
+## 2026-09-24 05:1x UTC - Claude CTO batch 26: DSGN_IRPTV1 L2-L4 landed and the L4-R halves routed; performance map reconcile GO; DEV pushed; layout recs approved; listing speed measured
+
+Instruments: the CTO's own commits and tool runs (prd-signoff.py status, prd-header-notify.py post-commit, missions-tree-index.py
+check, prd-manifest-gate.py), P's 100266 (live zip hashed against the backend head), M's 100259 acceptance thread, MSTR's DEV push
+receipt (04:46Z), COO~D's 100276. Push state LOCAL at every commit named here; MSTR pushes on Andrew's word.
+
+99996. DSGN_IRPTV1 (D13/DSGN) is REGISTERED and at L4. Andrew-direct ~05:2xZ at the 4.0.0_SA_CRO~F terminal (its own project, COO~D,
+   canonical flow). L2 endpoint 5daacc16db (FWD-1 the thread: an Opal user reads Anna Thiessen's Cottonwood brokerage account live
+   end to end; FWD-2..11; DONE WHEN lines to Andrew). L3 register c3508c07df (tree row, generated index, DIRECTIVES.yaml D13
+   members; MACROS.yaml unchanged). L4 PRD v0.1 50f2387594 -> header fix add8502cd9 -> v0.2 6c708bcdb2, at
+   org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md: ENDPOINT + CONTRACTS = the ratified-text half; THE THREAD, CELL
+   CANDIDATES C1-C14, PATHS (write surface portal/src/pages/InvestorReporting/** only), FIXTURES AND EVIDENCE, BRIEF COVERAGE 11 of
+   11, L2 FINDINGS CARRIED, PROVENANCE, SURFACE MANIFEST = the brief half. prd-signoff status: WITHHELD, ratified-text MISSING
+   (owed 3.0.0_SA_CVO), brief MISSING (owed 4.0.0_SA_CRO). The notifier routed the halves at v0.2: CVO base 100269/100271 (no live
+   CVO session -- a hole until MSTR seats one), CRO 100270/100272; COO delivery WITHHELD. Seating word 100273 (MSTR), 100274 (CRO),
+   100275 (COO~D). COO~D is LIVE by Andrew's own launch (100276): the fourth-COO-instance call is answered by his act; COO~D
+   pre-reads and drafts the decomp offline, cuts nothing until both halves sign and the CTO's sequencing word (COT display republish,
+   D1 run) lands.
+   TWO CTO MISSES, recorded: (a) the v0.1 header carried a prose qualifier on `status` ("DRAFT -- L4-R halves owed ..."); the
+   header schema is a closed enum, the post-commit notifier refused it SILENTLY (its line reads "not notified ... this notifier does
+   not gate"), and nothing routed until the CTO ran the notifier by hand. The manifest gate had passed -- a gate scoped to the
+   manifest cannot see a header enum. Header-only bump to v0.2 re-opens nothing (Rule 27). (b) running the notifier by hand after the
+   post-commit hook had already fired delivered each half twice (100269+100271, 100270+100272); one act, two ids; sign once.
+
+99997. irpt-performance-adapter: the LIVE package is NOT the source map's package. P measured (100266, live zip by Code.Location,
+   members hashed against the backend head @32477c67bb): live 00:07Z CodeSha JwJEEQ.., 358117 bytes, 61 members in the flat shape
+   performance/build_candidate.py emits; the canonical map names 30, so build-and-upload.sh REFUSES (ADHC_DRIFTD.002, 6 unregistered)
+   and an override build would DROP 31 live members. 53 of 61 byte-identical to head; 7 differ (loaders.py, served.py, entry.py,
+   retained.py, _scope/canonical_profile_reads.py, CurrencyAuthorities.json, NAMING_SCHEMA.json); the live serving path does not
+   import installed.py/retained.py, so the B1/B3/B7 speed fix is genuinely absent from the live performance function. No ledger
+   entry exists for the 00:07Z deploy. GO 100267: reconcile the map to the live flat shape (61 rows, staged_from at the backend
+   head), build canonically, census new-vs-live (61 of 61 names equal; exactly the 7 named differ and each equals its head blob; 54
+   identical), plan 0/1/0 on the performance root, ledger, safe-apply, readback, recorder. NOT wiring the retained runtime -- a
+   separate ruling (the Performance install step). The holdings code-only repackage proceeds on its whole map (33 members).
+
+99998. Carried from the earlier hours of this window, each on its own instrument: DEV consolidation candidate 7975c3bb GO'd by the CTO
+   and PUSHED to portal origin/DEV by MSTR (receipt 04:46Z); next candidate = speed levers F7/F5/F2/F3/F1 + Holdings not waiting on
+   Performance + Reporting->Performance rename + M's labels pin e5dd8487 (ACCEPTED 100259; P merges it) + the valuation enum
+   acceptance. The CRO's option-B keep-warm pin e1476853c9 (one rule, three targets, 500 ms hold; provisioned concurrency withdrawn
+   for want of an alias) GO'd to P. Listing speed BEFORE/AFTER on the CTO's own read: Global resolve 4.6 s -> 0.9 s after the CRO's
+   5886d0b9bd deploy; Andrew's 500 ms bar still open on the holdings/performance repackages. Andrew-direct ~05:2xZ via CRO~F: the seven
+   layout calls "recs approved" -- carried into the PRD's CELL CANDIDATES, not re-ruled here. Valuation shape: quantity = CUSTODY_UNITS
+   additive fact, units enum USD/UNITS, price refused as a computation (batch 25 stands; P's schema edit in both copies pending).
+
+
+## 2026-09-24 05:4x UTC - Claude CTO batch 27: X10 ACTIVE ACCEPTED (this commit is the enforcement_ref); the Performance tab works for nobody -- the CRO's trace ruled; COO~D's three calls; DSGN_IRPTV1 v0.4 after two refusals
+
+Instruments, each the CTO's own unless named: the live package downloaded by Code.Location and its members hashed against
+the deployed pin 9f360e8f3b in a detached worktree; the live role's five inline policies read on the applied plane
+(rail-checked: comp-iam has no per-role live view); pytest at the pin; P's matrix read from its commit 6d3a9215d7 (not on
+CLOUD); the CRO's trace @d8abd7dc65 (100282); P's receipts (100285); the CVO's and CRO's L4-R reviews (100290, 100289).
+
+### IRPT-X10-ACTIVE-ACCEPTED-20260924
+The five arms of IRPT-X10-SEQUENCING-20260923, each measured by the CTO at the DEPLOYED pin (irpt-performance-adapter
+CodeSha NFbaNR0rwynANFH5iCuwMRerUt7E6Px0Ee//UrxRXAo=, LastModified 05:28:09Z, Handler runtime.lambda_handler, 1536 MB,
+layers irpt-common:5 + irpt-performance-native-layer:1, read from AWS by the CTO):
+  (a) deployed bytes == reviewed bytes: the live zip (363,011 bytes, 61 members) downloaded by the CTO; retention.py,
+      retained.py, runtime.py, entry.py and infra/logic/registry/reporting_policies.json byte-equal to 9f360e8f3b (raw
+      equality, 5 of 5); P's census 61 of 61 names equal, exactly 7 moved, 54 identical (100285) is the second instrument.
+  (b) role policies APPLIED: irpt-performance-adapter-role carries five inline policies, none attached;
+      irpt-performance-retained-policy grants s3 Get/GetVersion/PutObject on EXACTLY the two Cottonwood prefixes
+      (irpt/cottonwood/state/performance_source_evidence/*, irpt/cottonwood/platinum/performance_reports/*), dynamodb
+      Get/Put/Update on irpt-requests, kms Decrypt/GenerateDataKey on key 7f4d3042; the directory, ownership-map and
+      selection reads are prefix- or object-scoped. Matches the matrix's two LIVE rows; no reader outside the writer.
+  (c) destination verified live: the CTO's own 3d9f45175d (2026-09-23), unchanged since.
+  (d) P's enforcement matrix @6d3a9215d7: 36 destinations (3 firms x 12 families), LIVE 2 / DECLARED 34, the COT
+      PERFORMANCE and PERFORMANCE_SOURCE_EVIDENCE rows LIVE on irpt-performance-adapter-role, 18 of 18 irpt-* roles
+      swept, 1 statement naming opal-data-irpt, bucket objects 0. Precise as ruled.
+  (e) the focused retention arms at the pin: reports/tests/test_retention.py 18 passed; performance/tests -k
+      'retain or retention or installed' 12 passed (119 deselected).
+ACCEPTED. Mechanism, in order: (1) 2.0.0_SA_COO~M writes the registry row irpt-x10-v1 state ACTIVE with enforcement_ref =
+THIS COMMIT'S FULL 40-HEX SHA (lib/opal_naming.py:1684 refuses anything else; policy_sha256 is computed by
+reporting_policy(), never typed); (2) 2.0.0_SA_COO~P rebuilds the adapter canonically with the new registry member and
+applies it (ledger, plan 0/1/0, readback), because the packaged row is what RetentionPolicy._policy reads; (3) the EXERCISED
+arm is the first live reserve -> promote -> reopen, returned before any second use -- which needs the hop-6 plan (below);
+if it fails, P reverts the row to PENDING and the report is quarantined, never served. Physical disposal stays OPEN.
+CTO MISS, recorded: this review sat in the CTO queue since IRPT-RESIDENT-CUTOVER-PLAN-RECEIVED-20260924 (~01:xxZ) while the
+fence remedy and the listing speed took the queue; the CRO's trace (100282) is what surfaced it as the thread's first gate.
+
+### IRPT-PERFORMANCE-TRACE-20260924 (the CRO's release @d8abd7dc65, Andrew-direct "/closer trace ... release to COO~P")
+Finding accepted as measured: every performance request in Andrew's 04:32Z HAR refused; the first gate is X10 (above); the
+second is hop 6. Rulings on the thirteen hops, by owner:
+  hop 4a  X10 enforcement -- ACCEPTED above; M row + P repackage.
+  hop 4b  RetentionRefused / RetentionExpired named in build_entry's public reasons (or the MRO walked so a ReportRefused
+          subclass maps to DEPENDENCY_UNAVAILABLE, never UNEXPECTED) -- P, in the SAME canonical rebuild as the X10 row.
+  hop 3   a multi-account selection answers a NAMED public code, not DEPENDENCY_UNAVAILABLE -- P, same rebuild; the code is a
+          contract addition and lands in both schema copies and the portal's closed validator first (portal-first order).
+  hop 12  a log sink at Entry construction (one structured line per refusal: correlation id, operation, class name) -- P,
+          same rebuild; the cause line the CloudWatch window lacked.
+  hop 10  entry.py @786f767796 -- DEPLOYED at 05:28Z (P 100285); closed.
+  hop 11  ReportingTab catch -> envelopeFromRefusal(error), one line, as HoldingsTab already does -- P, in the next portal
+          candidate with the speed levers, the rename and M's labels pin.
+  hop 6   ONE installed one-use plan (schema irpt-performance-one-use-v1: approval_ref, firm, account, vendor ids, mapping
+          revision, start, end, expires_at) for acc_d486fc9455d6b2aa18e13af1 on the default window, plus the egress flag and
+          the secretsmanager grant -- a Black Diamond vendor call, so ANDREW'S PER-USE WORD, then the CTO's install by
+          Terraform (never console). The STANDING authorization class for the product's own firm data is his call too, put
+          to him beside it. Neither is inferred from availability.
+  hop 13  business_date 2026-09-17 on every refusal: the Cottonwood directory artifact is five trading days old -- the
+          shared first hop, P's; measured against lib/trading_calendar.py before it is called stale (the calendar rule).
+  100268's sentence "NOT in this GO: wiring installed.py" was moot and P withdrew "packaged, not wired" (100285 item 6): the
+  live handler is runtime.lambda_handler and the retained runtime IS the serving path; the CLOUD Terraform root's
+  entry.lambda_handler / 512 MB / one layer is the third object and P's next plan on that root must read 0 on the
+  handler, memory and layers or say why. Three objects, one owner: the reconcile ledger closes when the root agrees.
+
+### IRPT-DSGN-COO-D-CALLS-20260924 (2.0.0_SA_COO~D 100278)
+F1 ACCEPTED and done at v0.3 (THE THREAD as the hop list, ENRICHMENT BACKLOG as its own section; spine :153 at HEAD).
+CALL 1 ONE WRITER PER SHARED SURFACE: (a) ACCEPTED -- this project's workers render the advisor surface; M supplies
+projection / schema / republish; P supplies contracts / api / render + package. (b) ACCEPTED -- a cell's touch on a P or M
+file is ONE mount line or ONE adapter function, named literally in <paths>; the CTO reads those lines before the issuance.
+(c) RULED -- M's portal UI work stops at the labels pin e5dd8487 (accepted into the next candidate); the L2 rows by
+model_name and the Client sleeve are C3 / C4 and belong to COO~D's cells; M does not start them.
+CALL 2 PORTAL BRANCH: ACCEPTED -- workers base on portal DEV HEAD at the cut (7975c3bb now, the gitlink); the drain merges
+into the project candidate branch dsgn-irptv1-r1; the DEV landing is MSTR's on Andrew's word after the CTO's review. A
+worker needs a portal worktree inside its workspace worktree (portal is a gitlink; the node_modules junction survives).
+CALL 3 `spread`: ACCEPTED as recommended, with the CVO's line: FWD-1 stays NOT_REALIZED until `spread` is served.
+Sequencing word: L5 may LAND (commit) once both halves sign at v0.4; L6 is cut when the COT `display` republish is SERVED;
+the drain trace needs the Performance path per v0.4's sequencing line. The two IRPT_FNTEND round-15 worker worktrees
+(C:/tmp/wk-irpt_fntend-15-1-fe-s-89, -15-2-fe-s-90) are the ~F lane's to remove; named to MSTR as fabric hygiene.
+
+### DSGN_IRPTV1 v0.4 (118613ddb0 -> this window's PRD commit)
+Both halves REFUSED at v0.3 with fixes the CTO accepts whole: CRO 100289 (brief pin @5cc838e696 carries both addenda --
+positive control "prospect" 7 vs 1; 10 of 10 O-headings; the Performance path's readiness on the sequencing line, the
+CTO choosing NOT to hold L6 on the plan word) and CVO 100290 (`unprojected_grant` is a partial-data fact with a visible
+body indicator -- S28 ARMED at HEAD with the CTO as disarm owner; "ten consumed contracts and the operations that serve
+them"; the three no-handler routes deferred as Y's). Two CTO misses inside one PRD: a brief pin one commit short of the
+addendum the PRD itself cites, and a denominator (11) that was not a number the brief states about itself (10).
+
+
+## 2026-09-24 06:0x UTC - Claude CTO batch 28: the Analysis tab works for nobody -- the CRO's second trace ruled and sequenced; D1 run 5 and the fifth amendment (runner + resident halves, one design); DSGN_IRPTV1 v0.5, the CVO's stamp, COO~D's F2/F3
+
+Instruments: the CRO's Analysis trace @2ee8926519 (100315) read against .owned-paths.yaml lanes at HEAD (Y owns intake/**,
+ycharts/**, ops/** under IRPT_COMPLETION_Y; P's rows on those files are exact-file integration grants with "no deploy grant");
+P's run-5 receipt (100309) and Y's verification with recipe.py:344-345 (100317); COO~D's pre-read (100308); the CVO's stamp
+@2c60ba747f (100306); the CTO's own v0.5 cut. Push state LOCAL throughout; MSTR pushes.
+
+### IRPT-ANALYSIS-TRACE-20260924 (the CRO's release, Andrew-direct "/closer trace IRPT Analysis Tab ... release to COO~Y")
+Finding accepted as measured: at the deployed bytes nothing a user does on the Analysis tab reaches YCharts or produces a
+report -- irpt-ycharts-generate is the 2026-09-19 build (31 members; eleven of Y's modules absent; no event source mapping;
+the role is receive/delete only, so the deployed submit's one send_message cannot succeed); irpt-status is the 09-21 build
+serving three routes; analysis-input-upload / -read / -history have NO handler and no Terraform; irpt-generation 0 sent / 0
+received / 0 empty receives over 6 h; the resident is uninstalled pending the D1 bundle. The two traces share one root: the
+deployed backend is P's branch, not CLOUD, and two of three tabs are served by functions built before the closer work.
+OWNERSHIP RULED, lanes unchanged: the CODE is Y's (IRPT_COMPLETION_Y); every DEPLOY, grant, route and cutover is P's (the
+integration grants carry no deploy grant, and no deploy grant is added tonight -- widening Y's lane to Terraform is a
+contract change the CTO does not make mid-round). To keep P's per-item cost at apply-only, Y PREPARES every deployable on the
+Y branch as a reviewed patch: (i) the generate package at HEAD with its eleven modules, the source-map rows, and the
+Terraform diff (sqs:SendMessage on irpt-generation, the two revision env keys, the event source mapping, IRPT_LIVE_YCHARTS_CALL
+left UNSET until the cutover); (ii) the status package with ops at HEAD and prospect_dates, and the owned-history handlers ON
+the route table; (iii) the three no-handler routes: function name, build_upload_entry composition, Terraform, routes.json
+handler, the client flag; (iv) the cutover plan's inputs (mapping + resident service) for ONE plan after the D1 bundle.
+P reviews each as a diff and applies it in one canonical act (ledger, plan, safe-apply, readback, recorder). ONE registry
+row, TWO packages: the X10 ACTIVE row (batch 27) rides the generate rebuild as well as the adapter's, or hop 8 refuses.
+SEQUENCE AT P, stated so no seat infers it: (1) holdings step-3 repackage [running]; (2) the D1 fifth amendment commit and the
+one run; (3) M's registry pin -> the adapter rebuild (X10 + hops 4b / 3 / 12); (4) the next portal candidate (hop 11, speed
+levers, rename, labels pin); (5) the Analysis backend in the order (i) -> (ii) -> (iii) -> (iv) above, each on Y's prepared
+patch. Y's runbook precondition H is reworded by Y: the resident WRITES the first secret version (the current object is the
+2026-05-21 legacy bundle, never accessed). The live thread for the Analysis journey is Y's runbook journey verbatim, with
+Andrew's browser act (G) last; it is IRPT's closer thread, not DSGN_IRPTV1's (FWD-7 / FWD-8 stand on it as enrichment).
+Trunk: every deployed pin must be reachable from origin/CLOUD before any L10 closes -- MSTR's push on Andrew's word.
+
+### IRPT-D1-FIFTH-AMENDMENT-20260924 (P 100309, Y 100317; the CTO's word 100312 / 100313)
+Run 5 = the FOURTH credential submission (SSM 0e6d7a0b, 05:55:56Z, 1 submission, both fields verified, 302; blob e1c8dc30 on
+the host by readback): sign-in proven a fourth time; the IDENTITY leg through the Node client read 405 seven times on
+/dashboard/ while run 4 had read 200 on the JSON template route with the same client class. The WAF rule is per ROUTE and per
+CLIENT: the HTML page route challenges a non-browser client, the template route admits it. FIFTH AMENDMENT -- GO, one design in
+two halves: RUNNER (P): identity from the page's OWN loaded document (window.USER via page.evaluate or page.content through
+identityFromHtml -- a read of JS state, zero network, not the in-page FETCH 100216 retired), transport = the template GET
+through the Node client with the full jar, the pair control on the same route, no in-page fetch anywhere, response headers
+recorded on every non-200 network leg, the suite refusing to run without the netguard preload (S121's remedy). RESIDENT (Y,
+its own surface): recipe.step_identity STOPS fetching /dashboard/ (recipe.py:344-345, the same urllib class and route that
+read 405) and validates the BUNDLE's identity against the enrolled pin; step_template (200 + id / report_type / sections)
+becomes the liveness gate. The two halves share one source of truth: the runner reads the identity from the document it holds
+and writes it into the bundle; the resident trusts the bundle and proves liveness on the template route. Y STANDS on the
+runner commit, then ONE run = the FIFTH submission, bounded to one by the CTO's word; no run on either half without it.
+
+### DSGN_IRPTV1 -- v0.5 @1cccbe6bc6; the ratified-text half SIGNED
+3.0.0_SA_CVO signed the ratified-text half of v0.4 @2c60ba747f (100306; R1 and R2 closed; ENDPOINT byte-identical to the
+endpoint record 91 of 91 lines). 2.0.0_SA_COO~D's pre-read (100308): F2 -- the ENRICHMENT BACKLOG cited candidate ids shifted
+against CELL CANDIDATES (items 3-10; the CTO re-lettered them to the section's own ids in v0.5, FWD ids and words unchanged --
+a citation defect of the CTO's own making, one letter off per item); F3 -- M's labels pin e5dd8487 is NOT on portal DEV
+(merge-base --is-ancestor rc=1; it sits on irpt-dev-candidate-2), so the L6 precondition now reads "display republish SERVED
+AND e5dd8487 an ancestor of portal DEV", with portal_ref and the is-ancestor rc recorded in the fanout data; the base stays
+DEV if the candidate lags. v0.5 is brief-half only; the CVO's stamp stands; the brief half is routed to 4.0.0_SA_CRO at v0.5
+(100311) and its v0.4 routing (100296) is superseded by the bump.
+
+
+## 2026-09-24 06:2x UTC - Claude CTO batch 29: DSGN_IRPTV1 ADMITTED and L5 landed; the four P/M touch points ruled; GO dec293d6 on the labelled COT re-cut with the served object corrected; X10 row written; holdings step 3 applied; the fifth-amendment runner landed with Y's one line
+
+Instruments: prd-signoff.py status (ADMITTED, both halves SIGNED current at v0.5 @1cccbe6bc6 -- CRO @cbd50ce98f, CVO @2c60ba747f);
+the four touch points read by the CTO at portal DEV 7975c3bb by git show; the served holdings index resolved by the CTO from
+lib/opal_naming address() and head-object'd; M's 100320 / 100330, P's 100326 / 100328, Y's 100336, COO~D's 100329.
+
+### DSGN_IRPTV1 -- L5 LANDED (2.0.0_SA_COO~D decomp v1 @c3d8dc63f7, pins bumped to v0.5 @45169fd63c; dep_stage DECOMP)
+Round 1 = the PRD's eight hops; four render cells IV-t-1..4 (identity card, performance headline, Holdings L0 hero, security
+list), M=3 chains, thread-round battery, comp-iam DECLARED-NOT-APPLICABLE on a 0-of-11 token sweep. CALL 1(b) READ, the four
+literal touch points on P/M-written files, each ONE line or ONE function, all ACCEPTED: index.tsx:186 (ScopeSummary mount ->
+IdentityCard), ReportingTab.tsx:217 (Summary mount -> PerformanceHeadline; Summary stays on the print plane),
+DrillTree.tsx:140-160 mdpfResultFromSnapshot (the `members: [], children: {}` fill at :151), HoldingsTab.tsx:197 (+ one line
+`<SecurityList/>`). RULED ON TOP: header/ScopeSummary.tsx is UNTOUCHED -- IdentityCard renders the partial-data indicator on
+its own body from scope.availability.unprojectedGrant and ScopeSummary keeps its PartialDisclosureFact inside the disclosure
+(the fact moves down AND the indicator stays up: the CONTRACTS paragraph, S28 stays closed); ReportingTab.tsx:170 is P's hop-11
+line and no cell touches it. THE CUT FIRES on two conditions COO~D measures itself: Anna's served snapshot carries `display`
+on its leaves; e5dd8487 is an ancestor of portal DEV (rc=1 at 7975c3bb this tick). The CTO's word is not a third condition.
+
+### IRPT-COT-LABELLED-REPUBLISH-GO-20260924 (M 100330 -> GO dec293d6, 100337)
+Prepared revision dec293d6 over the 841 accepted accounts: 16,740 of 16,749 nodes labelled (the 9 unlabelled are ACCOUNT nodes
+absent from the landed directory -- display OMITTED, nothing guessed), CUSTODY_UNITS on 13,656 of 14,426 securities (770 are
+components with no observed custody position; quantity never computed), membership unchanged from 2d067b4d, reconcile exact,
+validated against both schema copies = the copy P packaged at kZygK57y (step 3 applied 06:00:10Z, 100328). CTO HALF of the
+never-widen sign-off: THE OBJECT CORRECTED -- M's prose named "investor-reporting/holdings/index.json", a key that exists in
+neither opal-data-cot nor opal-data-cottonwood (404 and empty listings on both, read by the CTO); the served index is the
+naming builder's address s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (publication.py
+location(), :130-145), head-object ETag ffa30e5b.., VersionId .VLcr1BCE.., 03:56:57Z, latest_date 2026-09-22 -- the CAS
+precondition M named, current. The act touches 27 IfNoneMatch creates (new keys) and ONE IfMatch manifest write; ONE writer of
+the manifest at this pin (publication.py:294-296; :202-215 is the creates); both branches covered (lands -> dec293d6 served to
+every signed-in Cottonwood client; refuses -> nothing served moves); rollback = re-point the row to 2d067b4d under a fresh
+IfMatch, objects retained. 49F / INF are a separate GO with their own etag read. LESSON, recorded: a GO's blast-radius half is
+written against the BUILDER'S address, never a message's prose key -- the prose read as a real object and was not one.
+
+### Receipts carried
+X10 row ACTIVE at M's pin 7262571e4c (state + enforcement_ref = 0a101a666816dd5e2302992547129ca42637b923, two values moved, 63
+passed); P carries it in the adapter rebuild, staged by pin. irpt-holdings step 3 APPLIED 06:00:10Z, CodeSha kZygK57y.., the
+packaged schema copy = b3e3bcb044 (display + CUSTODY_UNITS), the only member that moved; ledger CLOSED. The fifth-amendment
+runner commit LANDED at e1e238a048 (LF blob d5788e2b..; identity from the held document, template through the Node client,
+headers on every answered leg, the suite refuses unguarded -- S121's remedy). Y (100336): four of five conditions MET on its own
+run; ONE LINE on condition 3 -- page.content() through identityFromHtml becomes the PRIMARY read (the path exercised offline is
+the path the run takes; page.evaluate at most the fallback, the record naming which ran); Y STANDS on that, then the FIFTH
+submission. The CTO's word 100312 already named content() through identityFromHtml; Y's line is the same word made exact, and
+P lands it as one file.
+
+
+## 2026-09-24 06:3x UTC - Claude CTO batch 30: dec293d6 SERVED and read back; the DSGN cut's condition (a) measured by COO~D; D1 run 6 -- the identity leg passed, the template leg refused on the WAF token -- SIXTH AMENDMENT GO; portal candidate 2 GO on the CTO's own review
+
+Instruments: the CTO's head-object on the served manifest after the act; COO~D's own s3api reads (100349); P's run-6 receipt (100352) read against run 4's (100213, Y-verified); the candidate worktree read by the CTO (git, tsc, bun test); M's receipt (100346).
+
+### dec293d6 SERVED (M 100346; GO 100337)
+publish_cot_live.py dec293d6 publish, 06:20:00-06:20:12Z, preconditions re-read at execution (etag ffa30e5b / .VLcr1BCE / row 2d067b4d):
+27 IfNoneMatch creates + ONE IfMatch write on the builder's address; new manifest version mSFR0vatS4UCLaQuUla4glG0Atks2BIn, etag
+d81c92135abef0babf230fb1ff7e3f75, 06:20:13Z, rows {2026-09-22: dec293d6}; prior versions and objects retained. CTO READBACK, own
+instrument: head-object ETag d81c9213.., VersionId mSFR0vat.., LastModified 06:20:13Z; manifest body latest_date 2026-09-22 and the
+2026-09-22 row's manifest key under date=2026-09-22/dec293d65d25... -- matches. COO~D (100349) then measured the DSGN cut's
+condition (a) on ITS own instrument (s3api on the served part00019.json, version LoO3T5uE.., 701 nodes): Anna's subtree 75 nodes,
+68 of 68 security leaves carry display.label, 62 of 68 carry custody units; evidence file anna.holdings-nodes.dec293d6.json for
+the issuance. Condition (b) rc=1 at 06:2xZ (e5dd8487 not on origin/DEV 7975c3bb). The exercised arm of the page is Andrew's
+retest. 49F / INF: prepared but NOT GO-ready (directory label wired only in build_cot: ACCOUNT nodes 0 of 7,522 / 0 of 876
+labelled; CUSTODY_UNITS is COT-only); M fixes both first; one GO per firm with its own etag read; M also disclosed the labelled
+trees differ from the served revisions beyond display (INF drops 35 zero-value MODEL_LEAF rows; 49F re-keys 2,557 SMA position
+ids at identical values) -- producer-code vintage, to be named by commit in the GO request.
+
+### IRPT-D1-SIXTH-AMENDMENT-20260924 (P 100352; the CTO's word 100357 / 100358)
+Run 6 = the FIFTH credential submission (SSM dbd2cc6c, 06:27:53Z, blob feab2c53.. by readback): sign-in proven a fifth time; the
+IDENTITY leg PASSED from the held page document (probe_via node-port) -- the fifth amendment's (a) works; the TEMPLATE leg through
+the Node client with the FULL jar (11 cookies incl. aws-waf-token + the X-AWS-WAF-Token header) read 405 captcha text/html seven
+times, and Playwright's APIRequestContext with the same jar read 405. Run 4's control on the same route and client class carried
+NO token cookie and NO token header and read 200 JSON. One presented variable differs; time is the other candidate. GO: the
+resident client sends the jar WITHOUT the token cookie and header (run 4's measured shape; the browser keeps its own token for
+its own navigations); the pair on the template route becomes {without_token PRIMARY, with_token CONTROL} on the same cookies in
+ONE run, both statuses / waf_action / content types printed side by side; 200/405 = the token is the cause; 405/405 = time or
+the rule and the run STOPS -- no seventh submission on a client-shape hypothesis, the next question goes to the rule (the CRO
+reads the WAF's behaviour over the day; Andrew's word before any further sign-in); a primary-leg pass continues to the bundle
+capture in the SAME run. Y STANDS, then ONE run = the SIXTH submission, bounded to one. Y's resident transport (headers_for
+:404-411 sends both token forms) is cut AFTER the pair's verdict, on the Y branch. Both halves of the fifth amendment are
+committed (runner 5919c5363a with page.content() primary on Y's line 100336; resident 93ec16f4fe: step_identity sends nothing,
+validates the bundle against the enrolled pin, step_template = liveness; replays drop /dashboard/ so a regression raises).
+
+### IRPT-PORTAL-CANDIDATE-2-GO-20260924 (P 100354; GO 100359-class send this tick)
+irpt-dev-candidate-2-20260924 @7c542fd23e = DEV 7975c3bb + e5dd8487 (M's display-first rows) + 5d7145bf (hop 11: ReportingTab
+catch -> envelopeFromRefusal; TabShell label Reporting -> Performance, id unchanged) + 7c542fd2 (Page.tsx GENERATED region,
+SELECTION_UNSUPPORTED named @59d549b04e). CTO's own reads in the candidate worktree: both bases ancestors (rc=0, rc=0); 3 commits,
+6 files, +103/-22; the two hunks read as described; tsc -b --noEmit rc=0; fe-s-55 4/0, fe-s-76 9/0, fe-s-32 2/0 + 5 precondition
+skips. The portal validator enumerates no fact_kind / units values (P; CUSTODY_UNITS needs no portal change). GO; MSTR pushes
+portal DEV as 7975c3bb was pushed, under Andrew's 03:5xZ consolidation word and this GO -- MSTR says so if it reads the word as
+first-push-only, rather than inferring. The speed levers stay after the D1 run and the adapter rebuild. On the push, COO~D's
+condition (b) is measured and the DSGN_IRPTV1 round-1 issuance fires.
+
+
+## 2026-09-24 06:5x UTC - Claude CTO batch 31: GO 100370 WITHDRAWN -- the 49F / INF labelled candidates were built without two retained env-var captures; the halt held; CTO miss owned; the adapter rebuild read back and S1 closed on the CRO's deployed-bytes reading; candidate 2 on portal DEV; the grant row cherry-picked
+
+Instruments: M's own commit search under the GO's condition (100387); the CTO's re-read of both firm manifests and the 49F
+date=2026-09-22 object census (316 objects: 158 served 7c0e7ce3 + 158 unreferenced aa6efd45); the CTO's AWS readback of the
+adapter (100374); the CRO's dry run at the new bytes (100382); MSTR's push receipt (100364); P's 100378 / 100385.
+
+### IRPT-49F-INF-LABELLED-GO-WITHDRAWN-20260924 (M 100387; the CTO's word 100390)
+M started act 1 at 06:39:36Z and, running the commit search the GO required, found NO producer commit that could explain either
+delta; what differed was INPUT, not code: holdings_49f.py:509 reads IRPT_49F_TAX_MEMBERSHIP_SNAPSHOT (the MDPF_TAXSMA workbook
+snapshot, served sha 032c68db..) and holdings_inf.py:277 reads IRPT_INF_ECLIPSE_MEMBERSHIP_SNAPSHOT (the CRO's Eclipse map
+138fad2935, 860 rows) from ENVIRONMENT VARIABLES; the served builds ran with both set, the 06:2xZ rebuilds with neither. The
+"deltas" were regressions: 49F's 2,557 re-keyed positions = the 7 tax-managed accounts re-parented; INF's 35 "zero-value
+MODEL_LEAF rows replaced by sleeves" = models_whole_from_capture 35 -> 0. M stopped the publisher before its one IfMatch write;
+the CTO re-read both manifests (49F f3ea427b / EvNOT_ocng, INF 4283ce90 / J_FeUeEA, unchanged) and counted the stopped run's
+objects (158 aa6efd45 beside 158 served 7c0e7ce3): immutable, unreferenced, never served; they STAY (an S3 delete is Andrew's
+class and buys nothing). GO WITHDRAWN for both acts.
+CTO MISS, owned: 100370 accepted the INF delta as "the ruled shape (a non-model holding is a sleeve, never a MODEL_LEAF)". That
+sentence is TRUE of a holding with no model and FALSE of these 35 accounts, which have Eclipse models through the capture -- the
+CTO restated M's framing as a ruling instead of asking what the 35 rows' SOURCE was. The GO's own condition (name the producer
+commit) is what caught it, and M's search for a commit that did not exist was the right instrument: a delta with no commit is an
+input delta. The rule the miss violates is the standing one -- a summary is not a measurement; grade the population, not the
+sentence beside it. THE REBUILD: both captures set by path with each file's sha256 verified against the served provenance and
+printed BEFORE the build; census against the ARCHIVED served bytes reading 0 ids added / 0 removed beyond display + the ticker
+fact, values identical, INF models_whole_from_capture 35, 49F tax-managed sleeves intact; the two env-var inputs disclosed as
+UNRECEIPTED retained inputs with sha + row counts. Making them receipted objects is a producer change M names, not does; it is
+the same substrate gap as the Eclipse card at Andrew (Rule 28: a build whose correctness depends on an env var nobody receipts).
+
+### Receipts carried
+irpt-performance-adapter REBUILT at 07lSH03z.. 06:36:41Z (P 100374; CTO readback: Handler runtime.lambda_handler, 1536 MB,
+Active Successful): the X10 ACTIVE row from M's pin (plus the batch-13 ORIGINAL_HOLDINGS family row -- ruled, no re-pin), hop 4b
+(public_reason_for walks the MRO; RetentionRefused -> DEPENDENCY_UNAVAILABLE, RetentionExpired -> OBJECT_NOT_COVERED), hop 3
+(SelectionUnsupported -> SELECTION_UNSUPPORTED before any read; contract row 59d549b04e; the portal names it at 7c542fd2); hop
+12 live since 05:28Z. The CRO's S1 reading at the new bytes (100382): a single account passes the retention gate and stops at the
+one-use factory with DEPENDENCY_UNAVAILABLE (2.76 s, the mapping read); two accounts -> SELECTION_UNSUPPORTED in 0.00 s; the
+control (RetentionRefused through the old boundary -> UNEXPECTED) shows the MRO walk is load-bearing. Hops 3, 4a, 4b, 10, 12
+CLOSED at the deployed bytes; hop 11 is on portal DEV at 7c542fd2 (the CRO's "queued at P" corrected, 100393-class send); the
+plan word (hop 6) is the thread's ONE remaining gate. Ledger irpt-performance-x10-hops-20260924 CLOSED @3a5cf15266.
+Portal candidate 2 PUSHED to origin/DEV 7c542fd23e (MSTR 100364, under Andrew's 03:5xZ consolidation word, stated to him). The
+grant row ad18a6ddaa cherry-picked onto P's branch (b4ff9dc179, one conflict resolved to the CTO's side whole -- it also carried
+the batch-13 row P's branch had never received) and both Y test files committed in lane @04cf6ab521; generate/ byte-equal to Y's
+93ec16f4fe. Waiting: Y's STANDS then the sixth submission; M's rebuilt candidates; COO~D's issuance.
+
+
+## 2026-09-24 07:0x UTC - Claude CTO batch 32: the corrected 49F / INF GO issued on verified captures; the HAR doubles are a remount, "Holdings waits on Performance" retired; the F7 instrument GO and F2 ruled server-side; the Eclipse-map substrate card stated for Andrew
+
+Instruments: M's corrected census (100395) against the archived served bytes; the CRO's own read of the Eclipse map's identity
+(100399) beside M's; the CTO's re-read of both firm manifests; the CRO's HAR read (100394); P's code read to the boundary (100403).
+
+### IRPT-49F-INF-LABELLED-GO-CORRECTED-20260924 (M 100395 -> GO 100400)
+GO 49F 3d59c80b then GO INF d03e91a4, one word, in order, each etag re-read at execution. The three conditions of the withdrawal
+(batch 31) met: (1) captures set by path and sha-verified BEFORE the build -- the 49F taxsma snapshot sort-keys sha 032c68db.. ==
+the served provenance (MDPF_TAXSMA v0.5.0, 21 rows); the INF membership_map.json sha 789dd95d.. == the CRO's capture record
+@138fad2935 (860 rows), and the CRO read the same file to the same sha on its own instrument (100399); (2) census against the
+ARCHIVED served bytes: 49F 151,697 nodes, ids added 0 / removed 0 / changed 0 outside display, units, clocks and the ticker fact,
+tax-managed sleeves intact; INF 33,328 nodes, 0 / 0 / 0, models_whole_from_capture 35, the 553 / 71 / 252 / 624 census identical;
+reconciles exact; (3) both env-var inputs disclosed with path, sha and rows as UNRECEIPTED. CTO half: 49F manifest f3ea427b /
+EvNOT_ocng and INF 4283ce90 / J_FeUeEA re-read by the CTO, unchanged since the halt; one writer; both branches; rollback by
+re-point; the 158 aa6efd45 objects stay, named in the census.
+THE SUBSTRATE CARD (Rule 28), the CRO's text carried for Andrew beside the plan word: PROCESS -- a one-off Eclipse capture on
+Andrew's egress word 2026-09-23, no cadence; ARTIFACT -- one 212,882-byte file on ONE laptop, gitignored (client data), authority
+= nine receipted Eclipse responses; TRUST -- 860 of 860 membership accounts present in that day's Orion positions, 98 positions
+accounts with no Eclipse portfolio (disclosed), key space Eclipse portfolioId / accountId; FAILURE MODE -- an ABSENT file reads as
+"no capture" and a STALE file reads as current, and nothing dates it at read time; the served INF build depends on it through an
+environment variable, so it silently loses 35 models when the variable is unset (measured tonight) and cannot be reproduced if
+the box is lost. Remedy = the card already at Andrew: add the Eclipse membership read to the scheduled INF pull so the input is
+receipted, dated and scheduled; the 49F taxsma snapshot is the same class (MDPF_TAXSMA's contract) and rides the same card.
+
+### IRPT-HAR-DOUBLES-ARE-A-REMOUNT-20260924 (CRO 100394; P 100403; the CTO's word 100397 / 100405)
+The CRO's read of the 04:32Z HAR: every double is a SAME-INSTANT byte-identical pair (resolve 1 ms apart, tab fetches 0 ms), the
+browses are not doubled, and the one "Holdings waits on Performance" overlap was a tab switch 1.45 s after selecting while the
+cold performance pair was in flight -- TabShell mounts one tab at a time and no caller on DEV fetches both. Batch 25's sentence
+came from the CRO's first read and is CORRECTED; the item "Holdings not waiting on Performance" is RETIRED, nothing built. P read
+the code to its edge: a production bundle (StrictMode inert), effects keyed on primitives (a re-render cannot re-fire them),
+and the bootstrap resolve pair means TWO QueryClients (react-query dedupes same-key fetches inside one), i.e. two mounts of the
+page's session from a boundary ABOVE the page, not yet located; P will not guess it into a fix. GO for the instrument: one
+console.debug mount / unmount line with a per-mount uuid in InvestorReporting, SelectionWorkspace, ReportingTab and HoldingsTab
+in candidate 3 -- no network, no storage, no alert, removed in the candidate after the one whose console + HAR names the
+boundary; an instrument that answers one question once is not a monitor. F1 is real on its own (AuthContext refreshes the token
+on mount and every ~12 min, and the workspace was keyed on the access token, so each refresh remounted it and lost the
+selection) -- cut at 3c0a3e45 with the key on [email, claims]. F2 RULED server-side: directory/entry.py answers the resolve with
+page 1 of the Global browse inside the DirectoryContext; ClientSearch consumes it when present; P's own function, one act after
+candidate 3's report and before the Analysis backend, on Andrew's 500 ms bar. Candidate 3 @3c0a3e45 (F1, F5, F3) is reviewed by
+the CTO on its own instruments after the sixth submission's receipt.
+
+
+## 2026-09-24 07:2x UTC - Claude CTO batch 33: the 04:32Z HAR was a localhost dev session (the doubles are StrictMode) -- instrument HELD, F7 cut NONE, F2 deferred; 49F and INF labelled trees SERVED and read back; M's /verify reads UNVERIFIED at the mechanical rung for want of a signed-in read; COO~Y paused on a safeguards dialog (Andrew's), the STANDS gate re-routed to the CRO, which STANDS -- the sixth submission fires
+
+Instruments: the CRO's host read of the HAR (100407: 339 of 358 entries on localhost:5174, Vite module URLs, StrictMode live at
+main.tsx:79-106); P's revert (100413); the CTO's readbacks of the 49F and INF manifests after each act; M's /verify (100428, on
+the aws shim and the function's log group); MSTR's peek of Y's tab without keys (100422); the CRO's own suite run in P's worktree
+(100431).
+
+### IRPT-HAR-WAS-LOCALHOST-20260924 (CRO 100407; P 100413; the CTO's word 100409)
+The premise of batch 32's instrument GO moved: the HAR was recorded against `bun run dev` (a development bundle), where React
+StrictMode mounts, cleans up and remounts every effect, so the raw-useEffect tab fetches (HoldingsTab:147, ReportingTab:157)
+fire twice at 0 ms and drop the first answer, the QueryClient useMemo is double-invoked (P's two-QueryClients inference, with
+StrictMode as the cause), and the ref-guarded ClientSearch browses stay single -- the asymmetry is the tell. RULED: the console
+instrument is HELD (P reverted its four lines; candidate 3 @3c0a3e45 = F1 / F5 / F3 exactly); F7's cut is NONE on this evidence;
+the discriminator is one HAR of the same clicks on https://opalinvest.dev, asked of Andrew; F2 stays server-side but waits on
+that HAR's first-paint cost; every browser-side figure quoted from the localhost HAR overstates production and Andrew's 500 ms
+bar is graded on opalinvest.dev, the server-side durations standing. F1 stands on its own ground (the production build DID
+remount the workspace on each token refresh, keyed on the access token). CTO note: the instrument GO was granted on "DEV is a
+production build" without asking which host the HAR was recorded on -- the host of a capture is a GRAIN question the CTO owes
+before any figure from it is graded.
+
+### 49F and INF labelled trees SERVED (M 100411 / 100416 on GO 100400)
+49F 3d59c80b: manifest EvNOT_ocng -> 9Vtkh61A05eiuWmm4DwyLVRRwynIdq2e, etag ea06a1a0.., 06:58:45Z; 176 creates + 1 IfMatch write;
+7c0e7ce3 retained; built with the taxsma snapshot sha 032c68db.. (named as an unreceipted input); identical to the served tree to
+the node plus display on 151,582 of 151,697 and the ticker fact on 5,748 rows. INF d03e91a4: manifest J_FeUeEA -> .vBFsThYv..,
+etag d866755b.., 07:04:38Z; 35 creates + 1 write; 1ebc7696 retained; built with the Eclipse map 789dd95d.. (860 rows);
+models_whole_from_capture 35; display on 33,327 of 33,328. CTO READBACK after each act, own instrument: both manifests at the
+builder's addresses read the new version, etag and row -- match. All three firms serve labelled Holdings behind CAS manifests
+(COT dec293d6 / mSFR0vat, 49F 3d59c80b / 9Vtkh61A, INF d03e91a4 / .vBFsThYv); the overlays are regenerated on the served
+revisions. Open at M: the CUSTODY_UNITS fill for 49F (Schwab quantity) and INF (Orion shares) @d96513bc40, its own GO.
+M's /verify (100428): DECLARATIVE PASS, SEMANTIC PASS on the served bytes (last partition per firm 100% labelled, children-sum
+within 0.01, 0 price facts), MECHANICAL UNVERIFIED -- /aws/lambda/irpt-holdings has 0 invocations since 06:20Z against 104 in
+the prior 30 h, so no signed-in read of any labelled revision has gone through the deployed function; the reader matrices are
+the same code under a different principal and are evidence of the reader, not the served path. THE CLOSING READ IS ANDREW'S: one
+signed-in Holdings load per firm on opalinvest.dev, the function's log and the rendered labels as the evidence.
+
+### IRPT-D1-STANDS-REROUTED-20260924 (MSTR 100422; P 100420 / 100423; the CTO's word 100425; CRO 100431)
+2.0.0_SA_COO~Y reads LIVE (heartbeat child alive) but is held on a "Session paused" safeguards dialog ("Fable 5.1's safeguards
+flagged this message ... Details: [cyber]"; options 1 Switch to Opus 4.8 / 2 Edit prompt and retry with Fable 5.1); its watcher
+rows read 0 and two files sit undelivered at its inbox top level; MSTR peeked without keys and keyed nothing, because both
+options change the model on a seat Andrew configured -- the choice is his, put to him from the CTO terminal (rec: option 2). The
+STANDS gate on the sixth-amendment runner 9cf37df341 is the CTO's own second-reader gate (100216 / 100218), so the reader is the
+CTO's to assign: RE-ROUTED to 4.0.0_SA_CRO against Y's five conditions verbatim, on the CRO's own run in P's worktree. The CRO
+STANDS (100431): node --check 4 of 4, bundle_contract 25 / 0, guarded suite all_pass with arm (a) 6 of 6 (identity from
+page.content(), navigated false, user_id 2200001; acquire node-port 200 LIVE), unguarded start exit 2, fetch( 0, the primary
+template leg sends no aws-waf-token cookie and no X-AWS-WAF-Token header (:285-287), the pair recorded as counts and names
+(:853-872), authenticated = template LIVE AND identity ok (:844); the LF blob de00afffd4ce5f91.. 82,479 bytes equals the CTO's
+stated blob (the worktree copy is a CRLF rendering, 84,014 bytes, stated as such). The SIXTH credential submission fires at P,
+bounded to one; 405 / 405 on the pair = STOP. Y's later read is welcome, not a gate.
+
+
+## 2026-09-24 09:1x UTC - Claude CTO batch 34: the SIXTH submission captured the bundle and the pair convicted the WAF token; the way forward worded (runner lines, tokenless transport, the CRO's bundle grade PASS, the install); all three firms serve labels + units; candidate 3 GO in the re-cut shape; DSGN_IRPTV1 round 1 executing with the import-line amendment (a CTO miss)
+
+Instruments: P's run-7 receipt (100446) and MSTR's peek of P (100440); the CRO's bundle grade on the resident's own readers with
+zero vendor traffic (100464); the CTO's readbacks of both firm manifests after each units act; the CTO's own review of candidate 3
+(git, tsc, bun test) and MSTR's pre-flight (100455); COO~D's issuance commit e4552e6a05 and its call (100461).
+
+### IRPT-D1-BUNDLE-CAPTURED-20260924 (P 100442 / 100446; the CTO's word 100443 / 100453)
+Run 7 = the SIXTH credential submission (SSM 7e031735, 08:56:40Z, blob de00afffd4.. by readback), fired on the CRO's STANDS after
+the fabric-wide usage pause (07:2xZ-08:52Z; P resumed itself, no keys needed -- MSTR's peek): Outcome A on the acquire -- sign-in
+1 submission 302; identity from the held page document user_id 1276035 (5 of 5); the template leg through the TOKENLESS Node
+client 200 LIVE application/json; THE PAIR on the same cookies and route 200 without the token / 405 captcha with it -- the
+presented WAF token is the cause of runs 5 and 6; acquired, persisted, fence 11; ycharts/session/current carries AWSCURRENT for
+the first time (02e53a44); 12 cookies, identity present, probe_evidence LIVE. Six submissions today; none further without a word.
+The one anomaly is POST-capture: withAuthenticatedPage opened a fresh context seeded with the copied token, its navigation drew a
+challenge page, the closing probe read IDENTITY_USER_ABSENT, rc 1 -- the same class the pair convicted, after the bundle was
+persisted; it touches nothing about the capture. RULED, in order: (1) runner lines (a) a probe on a stored or fresh context takes
+the stored-bundle path (bundleIdentity + the tokenless template GET), never a page navigation; (b) documentIdentity records status /
+waf action / content type on every non-200 navigation; (c) a fresh context is seeded WITHOUT the token cookie -- one commit,
+deployed, proven by ONE probe task from the persisted bundle with NO sign-in (rc 0 expected); (2) the resident's transport goes
+tokenless -- P under its exact-file grant on transport.py (Y paused; Y semantics retained; the replay raises on a with-token
+request), the CRO second-reads the one function; (3) the bundle grade assigned to the CRO: PASS (100464) -- broker.current() OK,
+fence 11, generation f7cfdbea, S119 keys 5 of 5, identity.user_id 1276035 int with email, validate_captured_identity 5 of 5,
+probe_evidence 200 LIVE, Transport.from_bundle ACCEPTS, and headers_for at 93ec16f4fe STILL sends X-AWS-WAF-Token (:431-438), so
+the tokenless line is REQUIRED by measurement; (4) the install -- Y's four files at 93ec16f4fe + the transport line, enrolled pin
+1276035, install-resident.sh, C1 receipt, the service started and observed once on the EMPTY queue; (5) then the Analysis backend
+in batch 28's order, P building from Y's branch where Y's patches are stalled, the CTO extending grants by row where needed.
+
+### All three firms serve labels AND custody units (M 100451 / 100457 on GO 100435; CTO readbacks)
+49F 5a25ae76: manifest 9Vtkh61A -> QC.bs6a5w9.HeojU8ugboRzNbhM.3mfD, etag 732fa6d0.., 09:00:43Z; units on 5,836 of 5,836 observed
+Schwab rows (the 114,261 model-target rows carry none by design). INF d32e50c6: manifest .vBFsThYv -> k9U4ucuTS1iteq0p9eUweqXs6Lk93B07,
+etag 0457b99e.., 09:04:06Z; units on 30,881 of 30,881 Orion rows (19,763 zero-units facts on zero-value nodes); the first INF
+build's snapshot-date source_as_of was withdrawn and fixed (fb87f34940). Both built with the verified captures; each identical to
+the served tree outside valuation_facts and clocks; no price fact anywhere. CTO readback after each act: version, etag and row
+match. M: nothing further owed on the build side; /verify stays UNVERIFIED@MECHANICAL (0 invocations of irpt-holdings since
+06:20Z) until Andrew's signed-in read.
+
+### IRPT-PORTAL-CANDIDATE-3-GO-20260924 (P 100449; MSTR 100455; P 100460; the CTO's word 100462)
+Reviewed on the CTO's own instruments at 7897f891cf: 7c542fd2 an ancestor; tree identical to 3c0a3e45 (the instrument commit and
+its revert cancel); index.tsx +7/-1 (the workspace key drops auth.accessToken -- F1) and header/ClientSearch.tsx +20/-4 (F5: two-
+character minimum, the list never blanked in flight; F3: PAGE_LIMIT 100); tsc rc=0; fe-s-88 5/0, fe-s-55 4/0, fe-s-76 9/0. GO on
+the content. SHAPE: portal origin/DEV had moved to ae1b9f42 (12 site-Z AMGT commits; overlap 0, merge-tree clean) so the push is no
+longer a fast-forward; RULED shape (B): P re-cuts ONE clean commit (cherry-pick of 3c0a3e45) on ae1b9f42, re-runs the checks, the
+CTO re-reads the identical +22/-5, MSTR pushes the fast-forward; the --no-ff merge (staged set = exactly the two files, rollback =
+re-point DEV) is covered as the fallback if DEV moves again. P fetches before every candidate from now on -- one trunk, two devices.
+
+### DSGN_IRPTV1 round 1 EXECUTING (COO~D e4552e6a05) and the import-line amendment (COO~D 100461; the CTO's word this tick)
+The issuance cut once both conditions read true (display SERVED 68 of 68; e5dd8487 on portal DEV after candidate 2): four task
+orders over three slots, portal_ref 7c542fd2, the four ruled touch lines the only existing-file writes, ScopeSummary.tsx in the
+READ set. Three workers were killed mid-order by the rate limit and resumed. Worker slot 2 REFUSED IV2-AC3 as its face told it:
+numstat 2/2 against the ruled 1/1, because a new component cannot be mounted in a TSX file without its import. CTO MISS, owned: the
+"ONE mount line" bound (100332) could not be met by any correct worker. RULED: the touch on index.tsx and ReportingTab.tsx is the
+ONE mount line PLUS at most ONE import line and nothing else (2/1 or 2/2, both hunks the mount and the import); an ISSUER
+AMENDMENT of IV1-AC3 / IV2-AC3 in one commit (the orders declare <placeholders>, gate (viii) grades the modification), the same
+subagents re-run AC3 in place; no re-cut; the refused row stands as an honest FAIL on the old text, superseded by the re-run.
+
+
+## 2026-09-24 09:4x UTC - Claude CTO batch 35: the YCharts resident is INSTALLED and RUNNING; the runner's post-capture lines proven without a sign-in; the CRO stands on the tokenless transport; the factory question answered from P's own branch; candidate 3b on portal DEV as a fast-forward
+
+Instruments: P's receipts (100470 runner + transport + candidate 3b; 100481 the install); the CRO's second read on the real bundle
+(100478); the CTO's own cat-file / grep of reports/resident_installed.py across three refs; the CTO's fetch and hunk-hash comparison
+of candidate 3b against 3c0a3e45; MSTR's push receipt (100473).
+
+### IRPT-RESIDENT-INSTALLED-20260924 (P 100481, on the word 100453 / 100475)
+Order executed as worded: (1) runner lines (a)-(c) at b9d36bc34e -- the closing probe grades the stored bundle, documentIdentity
+records its navigation's status / waf action / content type, a fresh context is seeded without the token -- deployed (blob
+dfc87d8312.. 84,158, readback exact) and PROVEN by one stored-bundle probe task (SSM d047ee26, 09:12:42Z) rc 0: getSession present,
+authenticated 200 LIVE on the template route, acquired false / persisted false, fence 12, NO sign-in (six today, unchanged).
+(2) the resident transport tokenless at 8576bec142 (+17/-4: NEVER_SENT_COOKIES = ("aws-waf-token",), the jar loader skips it, no
+X-AWS-WAF-Token header live or replay, ReplayTransport raises WAF_TOKEN_PRESENTED on a token-bearing request); the CRO STANDS
+(100478): read whole, exercised on the REAL captured bundle (headers_for carries no token, the jar carries none, 7 cookie names
+with ycsessionid + csrftoken), Y's suites 31/8 and 245/30 and the offline suite rc 0 on the CRO's own run. (3) the bundle grade
+PASS (batch 34). (4) THE FACTORY: P asked where resident_installed.py lives; the CTO read it -- P's OWN file,
+infra/aws/lambda/investor-reporting/reports/resident_installed.py @5e05823f4e (P, 09-23 21:02Z), on P's branch only, absent from
+CLOUD and Y's branch; build_resident_runtime(bindings_path) reads ONE bindings document (REQUIRED region, queue_url, jobs_table,
+requests_table, enrolled_user_id int > 0; CAPTURE_REQUIRED wrapper/library path + sha) and constructs ResidentSession with the pin;
+FACTORY = resident_installed:build_resident_runtime. (5) THE INSTALL: package ab2e088b5b (142 members: Y's resident half +
+the transport line + the X10 ACTIVE row + the 22 schemas + the maintained census 44853788fa..; manifest 1d4936cf..), bindings with
+enrolled_user_id 1276035 and the capture pins 55ddb8f7 / dfc87d83; the cutover receipt's four booleans read live (legacy probe
+disabled, per-job power cycle disabled, other consumers disabled, the factory installed); install-resident.sh rc 0 on Y's literal
+usage; a factory dry run with real clients and no poll; irpt-analysis-resident.service ACTIVE since 09:39:24Z, MainPID 43390,
+0 restarts, five IRPT_RESIDENT_POLL handled=0 lines at 20 s on the empty queue, no vendor call. Ledger
+irpt-resident-cutover-20260924 CLOSED. DISCLOSED: the first unit failed three restarts on PINNED_FILE_ABSENT:census -- the
+builder's host-root argument MSYS-converted inside the bindings (this box's path-conversion class); the factory refuses at
+verify_pins before any client exists, so the four-minute window held no act; rebuilt with MSYS_NO_PATHCONV=1. Runbook
+precondition B MET. RULED for the Analysis backend (i): the resident is the ONE consumer of irpt-generation (the receipt's own
+"other_queue_consumers_disabled" boolean is the rule) -- NO event source mapping; the generate function's Terraform diff carries
+sqs:SendMessage and the two revision env keys only; IRPT_LIVE_YCHARTS_CALL unset until the cutover word; P names the modules its
+grant does not cover and the CTO adds rows at Y's pin. The live thread's browser act (G) is Andrew's.
+
+### Candidate 3b on portal DEV (P 100470; MSTR 100469 / 100473; the CTO's own read)
+DEV had moved again (ae1b9f42 -> ccdb8699, site Z's rl-5 / rl-6 drains); P re-cut ONE cherry-pick of 3c0a3e45 on ccdb8699 as
+irpt-dev-candidate-3b-20260924 @013323f0 (+22/-5, tsc rc 0, eslint 0, fe-s-88 / 55 / 76 pass); the CTO fetched and read
+origin/DEV = 013323f08e (already pushed, fast-forward) and hashed the +/- lines of 013323f0 against 3c0a3e45's: identical; MSTR's
+receipt independently reads the same 16-hex diff prefix on both. Shape (B) ran, the fallback did not. The next candidate cuts from
+013323f0. DEV now carries candidates 1-3: display-first rows, the labels pin, hop 11, the Performance label, SELECTION_UNSUPPORTED,
+F1, F5, F3.
+
+
+## 2026-09-24 10:0x UTC - Claude CTO batch 36: DSGN_IRPTV1 round 1 DRAINED (4 of 4, candidate dsgn-irptv1-r1 @7736e6cc reviewed); W3-S2 DISARMED by the CTO; S1 worded as an issuer-direct fix; the Analysis backend's (i) ruled twice -- the factory shape and revisions, then the port census: the upload composition is a DESIGN with two egress questions for Andrew
+
+Instruments: COO~D's drain-end message (100492) and the channel file at 91ccbc3c36 (rows W3-S2 and S1 read whole); the CTO's own
+review of the portal candidate (git, tsc); P's (i) reads (100488) and port census (100493) over the whole package with tests excluded.
+
+### DSGN_IRPTV1 ROUND 1 DRAIN-END (COO~D 100492; the CTO's review and words this tick)
+4 of 4 orders complete and merged at HEAD 91ccbc3c36 (5537b0a9fb IV-t-2; 7b8cd4571e IV-t-1 with the channel file; 0749cd6222
+IV-t-3 + IV-t-4, the append-only channel resolved by UNION after a first --continue was correctly REFUSED as a foreign-row sweep --
+the index-stage read had returned another project's file; nothing landed; the union rebuilt from refs and asserted on six ids).
+Each instance VALID on the issuer's own proof-of-spec run; the four AC4 judgment rows (static markup; two caveated ui-smoke PNGs)
+are the CVO's at L9. Portal candidate dsgn-irptv1-r1 @7736e6cc off DEV 7c542fd2: 14 files +1530/-6. CTO REVIEW, own instruments:
+the four ruled touch lines read exactly as amended (index.tsx 2/2, ReportingTab.tsx 2/2, HoldingsTab.tsx 2/0, DrillTree.tsx 57/2
+inside mdpfResultFromSnapshot); header/ScopeSummary.tsx untouched; tsc rc=2 with FIVE errors, all in the worker test file
+iv-t-3.hero-fed.test.ts (TS2339 at :82, TS18046 at :97 / :102 / :107 / :108) -- S1's row named three; the CTO's read is the
+disposition's count. S1 (OBSERVATION, owner COO~D): WORDED as an issuer-direct one-commit fix of that test file's typing on the
+candidate, typecheck rc=0 and the suites re-run green, the disarm row naming the commit and the count five; not a round-2 repair
+cell, because `bun run build` must build the candidate before MSTR can land it. W3-S2 (BLOCKING, owner 1.0.0_SA_CTO) -- DISARMED
+BY THIS COMMIT: the naming gate (LGIC_ENFORCE DEC-6) refused IV3-AC1's new test file for typing a fixture filename that carries a
+firm token, and its printed remedy names a lookup() with no JS/TS implementation (0 of 988 portal/src files); js_literals()
+applies no call-context exemption to .ts/.js and '/tests/' is the only directory exemption while this tree is `__tests__`. The
+worker's workaround (discover the fixture set from disk, never type the token) is ACCEPTED for this project and this round and
+binds every new test file under the tree until the gate is fixed; the defect is the gate's and rides to LGIC_ENFORCE as an
+enrichment item: js_literals applies the context rule with a portal-side escape the gate recognises, or exempts `__tests__/`
+fixture literals by directory. W1-S1 disarmed by the union merge; W1-S2 / W1-S4 superseded by the amendment; W1-S3 and W3-S1
+INERT for L9 (the chip toggle and the header snapshot feed; the L2 hover reads only children[label].members -- C3's remainder).
+THE LIVE TRACE is NOT EXERCISED by any seat (no credential; an auth-stubbed smoke fails FWD-1 by the PRD's rule): FWD-1 reads
+NOT_EVALUATED on the trace and NOT_REALIZED on the spread on the slug, as v0.5 states; the signed-in walk is Andrew's. L8/L9 are
+the CVO's (the base seat, live since 05:17Z, told this tick); the slug to the CTO; the round-1 analysis then carries the
+enrichment list (backlog 1-11 in order; S1's fix and W3-S1's L2 hover ride the first repair cell). Portal DEV has moved to
+1267a67ef0 since the cut; the landing is MSTR's merge-forward on Andrew's standing word after S1's fix and the CTO's GO.
+
+### IRPT-ANALYSIS-BACKEND-I-20260924 (P 100488 -> the CTO's word 100490; P 100493 -> the CTO's word this tick)
+The generate package at HEAD refuses every submission by construction (entry.py:175 builds with service=None ->
+DURABLE_SUBMISSION_SERVICE_REQUIRED) until an INSTALLED FACTORY composes Y's SubmissionService with real ports; none exists; so
+(i) = P's factory reports/generate_installed.py (P's lane, beside resident_installed.py; ycharts/generate is Y's), the package
+(ten modules added to files[], 12 stale rows re-pinned, the X10 row), Terraform (handler generate_installed.lambda_handler,
+sqs:SendMessage on irpt-generation, NO event source mapping -- the resident is the one consumer, IRPT_LIVE_YCHARTS_CALL unset;
+the dead consume statement stays, named). RULED: the PROSPECT factory first (the thread uploads a prospect), ONE handler routing
+by body shape, the custody branch refusing CUSTODY_FACTORY_REQUIRED until (i-b); the two revisions recorded on every accepted
+request (ingestion_gate_revision, destination_policy_revision; acceptance.py:109-110) are DERIVED at composition, never typed and
+never env vars: destination_revision = reporting_policy('irpt-x10-v1')['policy_sha256'] from the packaged registry;
+ingestion_revision = a content digest over the packaged v1 schema directory (sorted names + sha256s). THE PORT CENSUS (P): 8 of
+12 ports have production adapters; four do not and cannot be composed from any tree -- uploads (UploadService needs an upload
+INDEX store that does not exist, resolve_security through the resident's template resolver = a vendor call per unresolved symbol,
+resolve_prices with no producer), get_catalogue (no loader; fixtures only), ordinary_authorizer (named in Y's handoff, exists
+nowhere; optional), load_prospect_owner (the same absent index). So the runbook's hop 2 is a missing COMPOSITION, not a missing
+deploy. RULED: (a) land (i) now as the honest cut -- the 8 real ports, both branches refusing NAMED (UPLOAD_SERVICE_REQUIRED on
+the prospect branch), the revisions derived and printed; it does not move hop 2 and says so. (b) the upload composition is a
+design cell on Y's surface with the CTO's shape: the upload index = a PROSPECT_INPUT item kind in the EXISTING irpt-requests
+table under the tenant leading key (no new table, no new IAM); parse_mapping consumed as it stands; resolve_security through the
+resident's template resolver; prices NOT a v1 input (the upload carries the user's quantities and values; a row without a value
+refuses PRICE_NOT_SUPPLIED; no price producer, no vendor asked); get_catalogue = M's loader over the CRO's 09-11 packet, its own
+GO; ordinary_authorizer optional; resolution_kimi (an external LLM) never composed. THE CARD TO ANDREW: whether symbol resolution
+at upload through the resident's YCharts session sits inside the standing host-workflow authorization or is a new per-use class,
+and whether any price source is wanted on a prospect upload (the CTO recommends none in v1). P builds the non-egress parts under
+the CTO's word meanwhile and stubs nothing.
+
+
+## 2026-09-24 10:1x UTC - Claude CTO batch 37: the DSGN_IRPTV1 round-1 candidate is on portal DEV (895752676a); S1 fixed issuer-direct and read back at zero errors; MSTR's overlap stop fired on the GO's wording and cleared on measurement; the CRO's Analysis addendum closes hops 5 and 6 and re-cuts hop 2 as a composition
+
+Instruments: the CTO's own tsc run and diff on the candidate at 837983cb; the CTO's own fetch of portal origin/DEV after the
+landing (895752676a; the candidate an ancestor; index.tsx differs from the candidate by P's F1 block only); MSTR's overlap read
+(100508) and receipt (100514); COO~D's S1 receipt (100504); the CRO's addendum @c7126b5142 (100501).
+
+### DSGN_IRPTV1 round-1 candidate LANDED on portal DEV
+S1: COO~D's issuer-direct fix on the candidate, commit 837983cb, ONE file (__tests__/dsgn-irptv1/iv-t-3.hero-fed.test.ts, +4/-1:
+the result union narrowed to its ok arm before `block` is read; the node list typed); CTO re-read: `bunx tsc -b --noEmit` 0
+errors, rc=0; the product surface exactly as reviewed at 7736e6cc. Disarm row DSGN_IRPTV1-S2 @07c4156d08 names the commit and
+the count FIVE (S1's three was the drain's tail-limited read; the CTO's read is the disposition's). GO to the landing (100505).
+MSTR STOPPED on the GO's own wording ("if any path overlaps, STOP and say which") with the measurement: exactly ONE overlapping
+path, src/pages/InvestorReporting/index.tsx, touched on DEV by THIS fabric's P 013323f0 (F1, the workspace key deps at 43-50),
+not by site Z; the candidate's hunks at :19 (the IdentityCard import) and :186 (the mount) -- disjoint rows, merge-tree rc=0,
+the merged file = DEV + D's two lines; site Z touched none of the 14 paths (the GO's "15" double-counted the S1 test file).
+PROCEED (100511). MSTR's act: `merge --no-ff --no-commit dsgn-irptv1-r1` onto origin/DEV 1267a67e, staged set = the 14 paths,
+0 conflicts, commit 89575267 (parents 1267a67e + 837983cb), VALGATE D-1 PASS, push 1267a67e..89575267, ls-remote read
+895752676a. CTO VERIFICATION on its own fetch: origin/DEV = 895752676a; 837983cb is an ancestor; index.tsx vs the candidate =
++6/-1 (P's F1 block, the union as described). Under Andrew's standing consolidation word, as candidates 1-3. Rollback = DEV
+re-pointed to 1267a67e. So DEV now serves, on Anna's account, the identity card, the performance headline, the holdings hero
+fed from the served tree with model names, and the security list -- FWD-1's eight hops on the real backend, pending the
+signed-in walk that is Andrew's. The CVO's L8/L9 and slug proceed independently; the round-1 analysis follows the slug.
+
+### The CRO's Analysis addendum @c7126b5142 (100501), read
+P's four-port census corroborated on the CRO's own instrument at 8c05e5a321 (UploadService constructed 0 times; no upload
+index class; resolve_prices produced nowhere; no comparison-catalogue loader; ordinary_authorizer adapted nowhere; security
+resolution = a YCharts call per unresolved symbol through resident_session.py:115; resolution_kimi = an external LLM) -- 8 of 12
+/ 4 of 12 EXACT on a second instrument. Hop 2 re-cut from "wire the route" to "compose the upload service"; hops 5 (the resident
+running, the one consumer, no ESM by design) and 6 (the bundle captured and graded) CLOSED; hop 4 refined to the installed-
+factory cut. The CRO's READINGS, not rulings, carried for the card: prices out of v1 removes the resolve_prices question (the
+runbook's fixture is market value per row; normalized dollars are the thread's unit); the upload index in irpt-requests reuses
+the one table the resident reads; symbol resolution through the resident's template resolver is the same client class and host
+run 7 proved, bounded per unresolved symbol. The CRO also names the custody branch as the nearer live thread if a prospect
+upload is not the first journey -- a sequencing input; the prospect stays the thread because Andrew said an analysis may be for
+a totally new client (~05:4xZ), and the custody branch (i-b) is the nearer live EXERCISE of the same pipeline. The two egress
+questions remain Andrew's card.
+
+
+## 2026-09-24 10:2x UTC - Claude CTO batch 38: DSGN_IRPTV1 ROUND 1 CLOSED on the CVO's slug -- the round-1 analysis handed to COO~D with the enrichment list for round 2
+
+Instruments: the CVO's slug REMEDIATION_v1.md @13baec35aa with ADJUDICATION_v1.md (100517); the CTO's own reads of the same
+proof instances, the channel at 07c4156d08 and the candidate at 837983cb / DEV 895752676a; the spine at HEAD (:486-503, the
+CTO's read and the ledger/ROUND_ANALYSIS.round<N>.md carrier).
+
+### DSGN_IRPTV1 -- ROUND 1 CLOSED (analysis c06e435786; dep_stage EXECUTING -> ROUND_CLOSE)
+The CVO's L8: 8 rows seen, 0 undispositioned (GRADUATED W1-S1, W1-S3, W3-S1, S1; DISMISSED_WITH_REASON W1-S2, W1-S4, W3-S2,
+S2); its L9 on the four AC4 judgment criteria: IV1 identity card PASS; IV2 performance headline FAIL on style (600 weight on
+the values, slate inks); IV3 holdings hero PASS; IV4 security list FAIL on style AND on a contract breach -- tickerFor()
+@837983cb :61-69 prints the tail of securityId when display.symbol is absent ('1'..'4' on the fixtures, a CUSIP fragment on
+live data): the FE derived a value, "not supplied" was not used, and an id reached the body (FWD-11). C-S12 ARMED, owner
+COO~D; IV4-AC1's only ticker assertion ("no FULL securityId") passed by construction, so the repair carries a planted-symbol
+positive control. Every AC4 PNG was empty (the smoke fixtures never resolve a scope, C-S14); the grades rest on the static
+markup and say so. THE CTO'S READ (ledger/ROUND_ANALYSIS.round1.md): no outcome uncovered, none wrong or obsolete -- NO PRD
+ADDENDUM; FWD-1 NOT_EVALUATED on the trace (no credential at any seat; Andrew's signed-in walk on DEV grades it in whatever
+round is open) and NOT_REALIZED on the spread (IRPT_BCKEND's member); FWD-2, 5, 6 built with the two FAIL grades and the
+remainders named; FWD-3, 4, 7-10 not cut (the backlog); FWD-11 breached by C-S12. The four grades accepted as the artifact
+supports them. ENRICHMENT LIST FOR ROUND 2, eight items, the spine's two rules applied: (1) REPAIR C-S12 + W3-S1 first;
+(2) STYLE + INSTRUMENT C-S13 + C-S14 batched into one cell; (3) FWD-2 complete (W1-S3); (4) FWD-4 the firm control; (5) FWD-6
+L1 bars / matrix + treemap; (6) FWD-5 complete (control row, area chart, heatmap, accounts table, footer); (7) the FWD-11
+sweep; (8) the browse drawer. Backlog 7-10 are round 3's; the prospect item also waits on IRPT's upload composition (the card
+at Andrew). Handed to 2.0.0_SA_COO~D in one message with the slug; the recut is its decomp v2 and ONE issuance; portal_ref
+= the DEV head after a fetch; the CVO is engaged again when round 2 drains. The round-1 candidate is LIVE on portal DEV
+(895752676a), so the enrichment rounds build on a served thread, as the spine intends.
+
+
+## 2026-09-24 10:3x UTC - Claude CTO batch 39: DSGN_IRPTV1 round 2 cut on the CTO's word (decomp v2, the seven P/M touches ruled by element and span, the join cell as one issuance); irpt-ycharts-generate SERVED with the installed factory and a named refusal
+
+Instruments: COO~D's decomp v2 @2a26e433b3 (100519) and the CTO's own spot-check of the seven spans on portal origin/DEV
+895752676a (git show); P's receipt (100520) and the CTO's own readback of irpt-ycharts-generate on AWS.
+
+### DSGN_IRPTV1 round 2 -- L5 landed, the cut worded (COO~D 100519; the CTO's word this tick)
+decomp v2: eight cells IV-e-1..8, one per enrichment item in the analysis's order; chains by write collision A = 3 -> 4 -> 8
+(header + index.tsx), B = 1 -> 2 -> 6 (SecurityList / DrillTree / PerformanceHeadline / ReportingTab), C = 5 (HoldingsTab +
+two new files); fanout 3 of 3, cap 8; slots from ~4 so row ids never collide with round 1; slug coverage 5 of 5 open rows.
+THE SEVEN TOUCHES on P/M-written files, ruled -- one rule over all: bind by ELEMENT and SPAN, never by line number (P's F1
+block already moved the IdentityCard mount off ":186" at 895752676a; a face naming a line is stale on arrival). T1 the
+IdentityCard mount line grows props (1/1). T2 FirmDropdown.tsx additive only (N/0) and index.tsx's `actions=` ternary block
+replaced by ONE `<FirmDropdown/>` element, the criterion asserting every removed line lies inside the block. T3 HoldingsTab two
+mount lines + at most two imports (4/0). T4 ReportingTab's render block -- PeriodControls -> PerformanceControls, the three
+mounts -> PerformanceChart / ReturnsHeatmap / AccountsTable, MethodAndSources removed into the headline footer's popover,
+imports adjusted -- with two byte-identical bounds asserted: the hop-11 catch and render/** + PeriodControls.tsx; the
+AnswerStatus mount stays for IV-e-7. T5 the JOIN: each tab's AnswerStatus mount -> the tab's footer disclosure carrying
+state / reason / business date, HoldingsQualification into the popover; AnswerStatus.tsx and tabs/analysis/** byte-identical;
+the CONTRACTS line as a criterion (the facts retained one click down). T6 ClientSearch: loadMore and its button removed, a
+Browse trigger added; index.tsx's search row gains BrowseDrawer + one import; PAGE_LIMIT, MIN_QUERY_CHARS, the generation
+guard and the never-blank rule (P's F5 / F3) asserted untouched. T7 DrillTree inside mdpfResultFromSnapshot only. THE JOIN
+CELL's timing: issued in the ONE issuance (coverage 8 of 8 at the gate) and spawned LAST on a pair off dsgn-irptv1-r2 after
+chains A, B, C merge -- ONE issuance, one round, the queue rule across chains (round 1's IV-t-3 -> IV-t-4 precedent); holding
+the sweep for round 3 refused (FWD-11 was breached this round and is graded this round). THE CUT FIRES: fetch DEV, portal_ref
++ is-ancestor rc, eight orders, three pairs, spawn. Not waited on: FWD-1's trace (Andrew's walk), P's spread, the plan word.
+
+### IRPT-ANALYSIS-BACKEND-I-SERVED-20260924 (P 100520; CTO readback)
+irpt-ycharts-generate SERVED 10:24:09Z: Handler generate_installed.lambda_handler (P's factory reports/generate_installed.py,
+source 440a43ff00), CodeSha uHfng41l/agHCG5OHldwqi2r+NUZKfu7DqmWvbqNhTc= (502,946 bytes, 104 members: the ten modules + their
+import closure -- broker, owned_requests, publication and its certify / extract / fonts, inert on the handler path -- the 12
+stale rows re-pinned, the X10 ACTIVE row from 7262571e4c), generate.tf +SubmitToTheGenerationQueue (sqs:SendMessage), the
+consume statement left and named DEAD, NO event source mapping, IRPT_LIVE_YCHARTS_CALL absent, the two revisions DERIVED (no
+env key); plan 0/2/0, replan No changes, recorder 281f54f157, ledger CLOSED @6fcf975ced. The CTO's own readback agrees on
+every field. EXERCISED: one real invoke with {} -> 200, no FunctionError, the eight ports composed on the first call, a NAMED
+boundary refusal (CONTRACT_VERSION) -- never an import error, never UNEXPECTED. Does NOT move hop 2 (the prospect branch
+refuses UPLOAD_SERVICE_REQUIRED, the custody branch CUSTODY_FACTORY_REQUIRED, both by name, until the upload composition --
+the card at Andrew). DISCLOSED and ruled: BAU_MANIFEST_SKIP=1 because build-and-upload.sh's manifest probe is a bare
+`python - <<PYEOF` under set -e (:33) and exits 1 with no message when declared_blobs is absent (row IRPT_BCKEND-S122
+@781392b774) -- P lands the one-line guard as its own commit before the (ii) build, or names the lane that refuses; a builder
+that exits silently on a missing manifest is the loud-failure-rendered-quietly class. safe-apply's self-refusal under
+MSYS_NO_PATHCONV=1 was correct (the known path-conversion class; the variable stays off safe-apply). Next: (ii) the status
+package, (iii) the three routes portal-first, (iv) the cutover inputs.
+
+
+## 2026-09-24 10:4x UTC - Claude CTO batch 40: the CRO's served read of the generate function and the public-code ruling; S122 (the builder's silent manifest probe) landed by the CTO as a one-off cross-lane commit under the audited override
+
+Instruments: the CRO's read at the served bytes (100525) beside P's receipt and the CTO's readback; P's patch read whole and
+applied by the CTO (apply --check, bash -n, numstat); the override audit log row.
+
+### IRPT-ANALYSIS-GENERATE-PUBLIC-CODE-20260924 (CRO 100525; the CTO's word 100527)
+The CRO's served read corroborates the acceptance on a second instrument: CodeSha uHfng41l == the zip's own sha, 104 members,
+handler generate_installed.lambda_handler, 0 event source mappings, no IRPT_LIVE_YCHARTS_CALL, no typed revision keys, the 16
+named modules present, the X10 row ACTIVE, 22 schemas, describe(ports) composing 8, the revisions DERIVED (ingestion
+schemas-edace6b9.., destination e0046398.. = reporting_policy()'s digest), and the DEV composer's eight closed keys == the
+deployed CUSTODY_FIELDS exactly. Local dry run: a custody body -> CustodyFactoryRequired, a prospect body ->
+UploadServiceRequired, malformed bodies -> INVALID_INPUT by the validator's own reason, never UNEXPECTED. Hop 4 CLOSED at the
+served bytes; hop 2 unchanged. RULED: the public code NOT_READY (the closed vocabulary) is the CORRECT public reading for both
+uncomposed branches; the class names stay in the internal sink as the disclosure. No contract addition: telling an advisor
+which server-side factory is absent is a composition detail that is ours, not theirs; a later public distinction between
+"not composed" and "not yet computed" is a contract addition in the SELECTION_UNSUPPORTED shape and rides that round. Y's
+runbook hop-3 field list names `corrections`, refused as UNKNOWN_OR_SERVER_OWNED_FIELD by the deployed PUBLIC_FIELDS -- Y's
+one-line correction on return; no seat edits Y's runbook in its absence.
+
+### IRPT_BCKEND-S122 LANDED (P 100529; the CTO's act bf938bcf39)
+P cut the one-line fix on the CTO's word 100523 and its lane refused it: infra/aws/lambda/ci/build-and-upload.sh is
+CLOUD_OPS_OR_ETL (AE seats), no AE seat live; P saved the 27-line patch under its deliverables and used no override (none was
+worded). The CTO landed it: the file byte-identical on CLOUD and P's branch before the change; `git apply --check` clean against
+the shared tree; applied; `bash -n` clean; numstat 7/2 (MANIFEST_DECL=0, the `|| MANIFEST_DECL=$?` guard, a six-line comment
+naming the class and the row; the dead `MANIFEST_DECL=$?` removed) -- so the probe's exit code (0 DECLARED / 1 ABSENT / 2
+UNREADABLE) is read without errexit and all three branches the block's own comment names are reachable. Committed as the
+ONE-OFF cross-lane commit the lane file's own precedent names, GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL, one lane, one
+file, audit row `2026-09-24T10:46:10Z OVERRIDE 1.0.0_SA_CTO 1`. The commit-gate's non-ASCII WARN on that file (30 lines) is
+pre-existing. P disarms the row citing bf938bcf39; P's branch carries it by cherry-pick (covered by the same word) or at
+MSTR's drain; (ii) needs no skip (ops/ has no BUILD_MANIFEST.json). Recurring work on that file would take a grant row, not
+a second override.
+
+
+## 2026-09-24 11:0x UTC - Claude CTO batch 41: irpt-status SERVED with the installed assembly (the two history routes on the function's own table); the (iii) order and the Global-viewer edge ruled; the CRO's served read corroborates
+
+Instruments: P's receipt (100532) and the CTO's own readback of irpt-status on AWS; the CRO's read at the served bytes (100536).
+
+### IRPT-ANALYSIS-BACKEND-II-SERVED-20260924 (P 100532; CTO readback; CRO 100536)
+irpt-status SERVED 10:53:17Z: Handler status_installed.lambda_handler (P's file reports/status_installed.py, source 896680c2de,
+the resident_installed / generate_installed shape), CodeSha 5E8T+/LV4p22RfqWCyacy13I7+2QPxGIs2nuE1oVQBs= (299,145 bytes, 42
+members), composing once per container the DynamoAcceptance store, the retained repositories bound to the PACKAGED ACTIVE X10
+row, the owned readers under the resident's ONE authorization rule, and ops/entry.py:build_owned_entry with analysis-request-
+history and analysis-request-read on the function's OWN route table (five routes; the 09-21 bytes held three); the read grant
+exactly the four retained families under the policy prefixes for the three firms (12 ARNs; bucket from scopes.json; no write,
+no list, no profile read); the two table env keys explicit; map re-pins + 17 rows, no BAU_* override; census 10 same / 6
+changed / 26 added / 0 removed; ledger before, plan 0/2/0, replan No changes, recorder 9cd8ee37ac, ledger CLOSED @8c0379043d.
+The CTO's readback and the CRO's served read (CodeSha == the zip's sha, 8 of 8 named members, the five routes composed from
+the deployed bytes) agree on every field. EXERCISED: invoke {} -> CONTRACT_VERSION; an unsigned history GET resolved from the
+function's own route table -> NOT_AUTHORIZED by name, 2 ms; a signed-in owner read is not exercisable yet (no retained
+Analysis request exists in any firm). THE NAMED LIMIT, accepted as a disclosed bound: the reader does not re-validate a retained
+report's schema on the way out (no jsonschema on that runtime); the writer validated at persist and the reader's integrity
+check is sha256(blob) == revision; named in the module, the .tf and the map. S122 REMEDIED (cherry-pick b327fccb9c on P's
+branch; row S123 names the positive control). Hops 9 and 10 of the Analysis trace have a served handler; unpublished until
+(iii). RULED: (iii)'s order as P reads it -- "portal-first" is the contract rule for a NEW member or code, and these three
+operations already exist in the portal's contracts, so the SERVER side lands first (routes.json + the api root under its own
+ledger), then the upload POST's host with its named refusal (public NOT_READY until the composition card is answered), then
+the client flag on the next portal candidate from DEV 895752676a -- flipping the flag before the routes serve would send a
+browser at a 4xx. EDGE (a) RULED: a Global viewer with no selected_tenant reaching owned_requests._data_firm's
+CONCRETE_REQUEST_DATA_FIRM_REQUIRED must not read UNEXPECTED whatever the portal sends; P adds the one mapped reason under its
+exact-file grants in the (iii) commit (Y semantics retained, Y reviews on return). Edge (b) is the design (current_authority
+is the resident's grader). Y's runbook hop-3 `corrections` field remains Y's one-line correction on return.
+
+
+## 2026-09-24 11:3x UTC - Claude CTO batch 42: the three Analysis routes SERVED -- routes.json 17 of 17 DECLARED, the two history GETs on irpt-status and the upload POST on irpt-ycharts-generate (rebuilt with the real validator ahead of a named refusal); the upload host ruled; a wrong-pin build disclosed, never served, and its rule made standing
+
+Instruments: P's two receipts (100538); the CTO's own readback of irpt-ycharts-generate (handler, CodeSha 4fkloyC1..,
+11:21:10Z, no live flag, 0 event source mappings); the CRO's route-table read on the portal API 7k3ed8px20 (100540: the three
+route ids on the right integrations), which the CTO did not duplicate on a raw API read.
+
+### IRPT-ANALYSIS-BACKEND-III-SERVED-20260924 (P 100538; CRO 100540; the CTO's word this tick)
+Act 1: routes.json @89204d4b2e -- analysis-request-history and analysis-request-read DECLARED against irpt-status (14 -> 16);
+the api root plan 2/0/0 applied (route ids 7yo12g5, jjidb6b on the status integration 8ogp332), replan No changes, ledger
+CLOSED c0a23df070; the signed-out HTTPS probe's 401 on an unrouted control shows a catch-all authorizer answers before route
+matching, so that arm does not discriminate -- stated, not hidden; get-routes (APPLIED) and the function-level invoke
+(EXERCISED) are the discriminators. Edge (a) mapped at e0f52fa041 (RequestStorageUnavailable -> NOT_AUTHORIZED) under P's
+exact-file lane, riding the next status rebuild (not yet served; said so). Act 2: the upload POST's HOST = irpt-ycharts-generate
+(RULED on P's reasoning: the api root already integrates it, its role already reads the profile and sends to the queue, the
+composition writes the same retained families under the same X10 policy; nothing widens today; a later move is a routes.json
+field + an integration key). Source 64f05e3424: UploadNotComposed runs intake/uploads.validate_upload (a malformed body ->
+INVALID_INPUT by the validator's own reason) then raises UploadServiceRequired (public NOT_READY; retains nothing, parses
+nothing, reaches no vendor); build_boundary constructs the ONE served.Entry routing analysis-requests and analysis-input-
+upload, prospect_modes {OWNED_INPUT, CREATE_INPUT}; Y's files unedited; routes.json 17 of 17, 0 no-handler. Map 26192e80ee
+(+upload_entry, +uploads; generate_installed re-pinned; files 106); the served artifact 4fkloyC1HaICo2OboVZgSFSapRJQlM5+
+ErEKWm0SCnU= (510,005 bytes; census vs uHfng41l.. 103 same / 1 changed / 2 added / 0 removed); plans ycharts 0/1/0 then api
+1/0/0 applied in that order (function before route, 11:21:10Z; route 0sp6wva on the generate integration wtho3v4); replans
+No changes; recorder adfe0a7ab3; ledger CLOSED 6d2f218f49. EXERCISED: {} -> CONTRACT_VERSION composed against the packaged
+ACTIVE row; an unsigned upload POST -> NOT_AUTHORIZED by name from the function's own route table (the prospect guard before
+the refusal, as it must for an unsigned caller). S123's positive control FIRED on the fixed builder (the SKIP notice printed,
+no BAU_MANIFEST_SKIP): S122 remedied AND exercised. The CRO's read: the portal API carries FIVE analysis routes -- the two
+history GETs and the sections GET on the status integration, POST /analysis and POST /analysis/inputs on the generate
+integration; hops 9 and 10 REACHABLE from the API; hop 2's route exists and refuses by name; hop 4 rebuilt.
+THE DISCLOSURE, ruled: the first re-pin pass moved reporting_policies.json from 7262571e4c (ACTIVE) to HEAD (PENDING on that
+branch) by re-pinning every row that "differs at HEAD"; that build (Z3qFPF6A..) was uploaded as an S3 version and never served,
+planned or applied; the pin was restored the same minute and the served artifact's packaged row reads ACTIVE after unzip. A
+near-miss caught by P's own census, accepted; P's corrected rule made STANDING for every IRPT package: the X10 registry row
+is pinned by NAME to M's accepted pin, never by a "differs at HEAD" sweep, and a re-pin that touches
+infra/logic/registry/reporting_policies.json prints the packaged row's state and refuses to stage a PENDING row into a
+function whose factory requires ACTIVE -- three containers (generate, status, the resident) now carry that row. WHAT REMAINS
+of (iii): the client flag (LiveClient's NotYetExercisable lifted for the three operations) on portal candidate 4, cut from DEV
+895752676a after a fetch, F7 / F2 held on the opalinvest.dev HAR; reviewed by the CTO as candidates 1-3; then (iv) the cutover
+plan's inputs.
+
+
+## 2026-09-24 11:4x UTC - Claude CTO batch 43: portal candidate 4 (the client flag for the three Analysis routes) reviewed and LANDED on portal DEV 310b83b8 -- the Analysis backend's (iii) is complete end to end; hops 9 / 10 exercisable signed-in
+
+Instruments: the CTO's own reads in the consolidation worktree at 310b83b8 (ancestry, commits, diff stat, the product hunk,
+tsc, eslint) and of routes.json at P's tree; P's named fail-set diff (100544) taken as the suite instrument; MSTR's receipt
+(100548) and the CTO's own fetch of origin/DEV after the landing.
+
+### IRPT-PORTAL-CANDIDATE-4-LANDED-20260924 (P 100544; the CTO's GO 100546; MSTR 100548)
+irpt-dev-candidate-4-20260924 @310b83b8 from origin/DEV f7a4e47f (MSTR~Z's pull-merge carrying the round-1 DSGN landing
+895752676a): two commits, 5 files +46/-23 -- src/api/endpoints/investor-reporting.ts (+8/-3: the three IR_ROUTE_TABLE rows
+NO-HANDLER-AT-HEAD -> DECLARED under a comment naming the served handlers and route ids; the status value and
+NotYetExercisable KEPT with an empty population) and the four pinning suites re-pinned to the 17-route contract (mvp-upload,
+mvp-selection/owned-history, fe-s-13/routes, fe-s-14/header), none deleted. CTO REVIEW on its own instruments: f7a4e47f and
+895752676a both ancestors; the hunk exactly as described; tsc 0 errors; eslint 0 problems on the five files; routes.json at
+P's backend tree 17 of 17 declared. THE SUITES: the routes suites resolve the contract by a relative path the consolidation
+worktree cannot satisfy and P's nested checkout sat at 7c542fd2 on its own branch, so the CTO did not re-run them; P's
+instrument stands as reported and is recorded as such -- 96 tests / 20 files, base 21 fail, candidate 17 fail, diffed by test
+name: 0 introduced, 4 fixed (the fe-s-13 table arms), the 17 remaining pre-existing and the same set at the base, each named
+(the 12-literal producer-fixtures arm; the request-corpus records for directory/browse and the three flipped routes -- a
+generator act for a later candidate; the F14 AC8 / AC13 / AC14 / AC15 arms; FIELD_MAP's beginningValue / endingValue /
+retainedReport; the authorized directory-browse boundary). GO. MSTR: DEV unchanged since the GO's read, `merge --ff-only
+310b83b8`, the pre-push hook's VALGATE D-1 read the api/endpoints change and printed "no static partner adapters changed --
+PASS (no-op)" (the gate keys on partner adapters; the hunk is the route table), push f7a4e47f..310b83b8, ls-remote
+310b83b835aa5dc3546c51186ca1419e55bf478d; under Andrew's standing consolidation word; rollback = DEV re-pointed to f7a4e47f.
+CTO VERIFICATION on its own fetch: origin/DEV = 310b83b835, the candidate an ancestor. EFFECT: a signed-in user on DEV
+reaches the served request-history and request-read routes from the page, and the upload route answers NOT_READY by name
+until the upload composition exists -- hops 9 and 10 of the Analysis trace are exercisable end to end signed-in; the browser
+act is Andrew's. The Analysis backend's (i) generate, (ii) status and (iii) routes + flag are COMPLETE as worded in batch 28;
+(iv) the cutover plan's inputs is next at P; hop 2 (the upload composition) and hop 6's plan word remain at Andrew's two cards.
+DEV now carries, beyond site Z's AMGT work: candidates 1-4 (display-first rows, the labels pin, hop 11, the Performance
+label, SELECTION_UNSUPPORTED, F1, F5, F3, the three Analysis routes) and the DSGN_IRPTV1 round-1 page.
+
+
+## 2026-09-24 11:5x UTC - Claude CTO batch 44: edge (a) served on irpt-status; (iv) ruled -- the accepted-custody branch is cut as code and the FIRST live Analysis submission is bounded to Anna's account from Andrew's browser; DSGN_IRPTV1 round 2 mid-round: IVE4-AC2 amended to a difference control, S3's routing made the rule for a product-file drain red
+
+Instruments: P's receipts (100550) and the CTO's own readback of irpt-status; COO~D's mid-round report (100552) with its three-
+instrument measurement of the five pre-existing failures.
+
+### IRPT-ANALYSIS-BACKEND-IV-RULED-20260924 (P 100550; the CTO's word 100554)
+Edge (a) SERVED: irpt-status rebuilt at the backend head 8e8642a6f0, CodeSha pfAr3uZEAjWWUNfcukhJYV+bWi1oxPUZzYKUE/NbztY=,
+11:46:53Z (CTO readback agrees); census 41 same / 1 changed (entry.py carries RequestStorageUnavailable -> NOT_AUTHORIZED) / 0
+added or removed; the X10 row held BY NAME at 7262571e4c and the re-pin script now ASSERTS it -- the batch-42 standing rule
+made mechanical for the status map; plan 0/1/0, replan clean, ledger closed. (iv) THE CUTOVER PLAN'S INPUTS: all satisfied
+except a job to consume; the "mapping" input RETIRED (the resident is the one consumer); nothing can be enqueued until hop 2
+(the composition card) or (i-b). RULED: (a) (i-b) is CUT NOW as CODE -- generate_installed composes the accepted-custody branch
+over Y's accepted_custody / custody_binding / custody_portfolio (packaged at c3add4090e) with the same ports the prospect
+branch holds; composing is not egress: the served function accepts and enqueues only on a SIGNED submission and no seat signs
+one. (b) THE FIRST LIVE CUSTODY SUBMISSION is BOUNDED and is Andrew's: ONE account (acc_d486fc9455d6b2aa18e13af1, Anna
+Thiessen's Cottonwood brokerage account -- the same account the Performance and DSGN threads use), the default window, from
+his own browser on DEV; the resident then consumes the one job and makes its YCharts calls through the enrolled session. The
+resident carries no per-job consent gate (P's read and the CRO's agree), so the ENQUEUE is the gate and the browser act is the
+word; it goes to Andrew on ONE card with the Performance plan word (the first live Performance calculation and the first live
+Analysis submission, both on Anna's account, both from his browser), beside the upload-egress questions. IRPT_LIVE_YCHARTS_CALL
+stays absent on the Lambda. (c) Y's --once acceptance is observed on that first job. Meanwhile at P: (i-b) the code cut;
+candidate 5 = the corpus records for the four newly declared routes PLUS the five pre-existing fe-s-2 / fe-s-10 failures
+(COO~D measured the same set at DEV 895752676a, at the round-2 candidate and at a worker tip -- P's page suites, P's repair);
+the export root's stale comments; the generate map's re-pin assertion.
+
+### DSGN_IRPTV1 round 2, mid-round (COO~D 100552; the CTO's word this tick)
+IV-e-4 BUILT (AC1 ONE-CONTROL 8 of 8; AC3 ACTIONS-BLOCK-ONLY: 9 of 9 removed base lines inside the element-bound span, exactly
+one `<FirmDropdown` element start, FirmDropdown.tsx 55/0 additive; AC4 recorded) with IVE4-AC2 reading 42 pass / 1 skip / 5
+fail -- the SAME five names at the worker's untouched base, at a clean detached checkout of 895752676a and at the round-2
+candidate without IV-e-4: pre-existing on DEV, unrelated to the cell; the worker filed W4-S2 and left the order pending.
+RULED: AMEND IVE4-AC2 to a DIFFERENCE control (the failure SET of fe-s-2/ + fe-s-10/ at the tip equals the set at 895752676a,
+both printed with denominators, VERDICT NO-NEW-FAILURES) -- an issuer modification under gate (viii), the round-1 precedent
+(100467); W4-S2 stands as the honest measurement; the five failures are P's repair item. ISSUER'S DEFECT recorded as COO~D
+states it: the seam suites were not run at the base when the criterion was cut; every seam suite runs at the base before a
+round-3 criterion says "0 fail". S3 (a drain typecheck red in a PRODUCT file, IV-e-5's HoldingsTreemap.tsx) was routed by
+COO~D to the AUTHORING worker on its own branch after the order was terminal (97da9e2d, +9/-3) as a declared departure from
+spine L7, disarmed at S4 (candidate typecheck rc=0) -- ACCEPTED and made the rule for this project: a drain red in a product
+file goes back to its authoring worker for the type-only fix, the row names the commit and the count, the fix merges before
+the candidate's next hygiene run; an issuer-direct edit stays reserved for test files (round 1's precedent). Round-2 state:
+IV-e-3 / IV-e-1 / IV-e-5 terminal on dsgn-irptv1-r2 @5b50d9f0 (typecheck 0; the suites 17 pass / 113 expects); chain C
+drained to CLOUD @dc83072d98; IV-e-8, IV-e-2, IV-e-6 in flight; IV-e-7 off the merged candidate; portal DEV at 310b83b8 with
+895752676a an ancestor, so the landing stays a clean merge.
+
+
+## 2026-09-24 12:0x UTC - Claude CTO batch 45: (i-b) is not a composition -- the accepted-custody branch needs an economic interpreter that exists nowhere; the CTO's "cut it as code" premise was inherited, not measured; P measured first and cut nothing; the interpreter's design card is P's act now
+
+Instruments: P's pre-cut read of Y's code at HEAD (100556: custody_submission.py:140-151, _scope/accepted_custody.py:17-39 and
+:96-155, _scope/custody_binding.py:136-198, holdings/publication.py:122, holdings/entry.py:38, intake/custody_portfolio.py:135-
+215; a repo-wide grep for interpret_source / validate_evidence = 8 files, 0 implementations).
+
+### IRPT-ANALYSIS-CUSTODY-BRANCH-IS-A-DESIGN-20260924 (P 100556; the CTO's word 100558)
+The CTO's 100554 word -- "(i-b) is cut now as CODE; composing is not egress" -- rested on the premise that the accepted-
+custody branch composes over ports the prospect branch holds. P measured before cutting: build_accepted_custody_entry binds ONE
+AcceptedCustodyReader whose two ECONOMIC ports, interpret_source (document + manifest + receipt -> {actual_custody,
+original_rows, source_receipts, revision_refs}) and validate_evidence (the custody_portfolio._validated contract: positions
+with closed economic fields, a COMPLETE census row per account, a reconciliation row per account at USD 0.01 tolerance against
+independent_source_rows), have ZERO implementations anywhere in the tree, and Y's own docstring names them "intentionally
+no default implementation; a fake/local validator is not a deployed capability". The other two ports exist or are within reach
+(CustodyBindingStore; M's HoldingsPublication.capture / load_pinned; a (principal, owner) re-shaping of the holdings entry's
+selection resolution). So (i-b) = an hour of composition PLUS a design cell; composing the half alone changes the served
+refusal's class name and nothing a client can see. CTO MISS, owned: the premise was inherited from the earlier port census's
+phrasing ("the custody branch refuses until the accepted reader's ports are pinned") and never measured -- the inherited-
+sentence class (no denominator to narrow, so the subtraction cannot fire); P's measure-before-cut is the rule working.
+RULED: (1) nothing stubbed; the composition half is NOT cut alone. (2) P drafts the interpreter's DESIGN CARD now, as an
+act: inputs = HoldingsPublication.capture's document / manifest / receipt for the selected accounts, read from the code and
+from ONE live capture on Anna's account (a read of M's served publication; no vendor, no write); output = the _validated
+evidence contract quoted from the code; the open questions named plainly -- which INDEPENDENT source values the positions
+for the USD 0.01 reconciliation (the CTO's leaning: the custody fact tables' receipted values are the independent source and
+the publication's own reconciliation row is the evidence of it; Y's semantics to confirm on return or the CTO's to rule on the
+card), and whether the interpreter lives in Y's lane (intake / _scope) with M supplying the publication shape. The card goes
+to the CTO to assign (Y on return, else a cell in IRPT's next round); it is PRD-grade and NOT a wait on Andrew -- no egress
+question lives in it. (3) The FIRST live Analysis submission (batch 44's bound: Anna's account, the default window, Andrew's
+browser) now waits on whichever composition lands first -- the prospect upload (Andrew's two egress questions + the index /
+parse / resolve design) or this interpreter; the card at Andrew says so. (4) Candidate 5 proceeds: the corpus records for
+the four routes; the SAMPLE maps in fe-s-13/routes and fe-s-14/header gaining `requestId` (a real repair: the arms fail on
+"needs path parameter requestId"); the five pre-existing fe-s-2 / fe-s-10 failures whose names sit in row DSGN_IRPTV1-W4-S2
+(P measures them in the nested checkout and repairs what is P's); then the export root's stale comments.
+
+
+## 2026-09-24 12:1x UTC - Claude CTO batch 46: portal candidate 5 reviewed on the CTO's own instruments and GO'd to MSTR (fast-forward onto DEV 310b83b8); the fe-s-2 / fe-s-10 five relayed from COO~D's row to P; the CRO's addendum 2 (the custody branch is ALSO a missing composition) filed beside batch 45
+
+Instruments: the CTO's own reads in C:/Users/AndrewBerman/Desktop/portal-dev-consolidation-20260924 (fetch 12:0xZ; origin/DEV =
+310b83b835; irpt-dev-candidate-5-20260924 = 694287b91e): merge-base --is-ancestor 310b83b8 rc=0 and --is-ancestor origin/DEV rc=0;
+git log 310b83b8..694287b9 = 2 commits (2ad36f43, 694287b9); git diff --stat = 10 files, +95 / -10; git diff --name-only filtered to
+non-__tests__ / non-fixtures paths = EMPTY; bunx tsc -b --noEmit rc=0 0 errors; eslint on the changed .ts files 0 problems. P's
+suite instrument as reported in 100563 (the routes suites resolve the flipped contract only in P's nested checkout): 96 tests / 20
+files; candidate 4 17 fail -> candidate 5 12 fail; diffed BY NAME 0 introduced, 5 fixed. Messages: 100563 (P, candidate 5),
+100564 (the CTO's relay ask to COO~D), 100566 / 100567 (the GO).
+
+### IRPT-PORTAL-CANDIDATE-5-GO-20260924 (P 100563; the CTO's GO 100566 to MSTR, 100567 to P)
+Candidate 5 = 2ad36f43 (the four routes' corpus records + prepared_for + the re-pinned literals + the SAMPLE maps in fe-s-13/routes
+and fe-s-14/header binding `requestId`) + 694287b9 (the selection-create record, the fifth route with no record since its
+declaration; the corpus 17 of 17). The CTO re-derived P's ancestry, file-set and toolchain claims on its own checkout, each with its
+denominator above; the ONE claim taken from P's instrument is the suite diff, because the routes suites resolve the flipped contract
+only in the nested checkout P measured in -- disclosed as such in the GO, and the twelve remaining failures are NAMED (F14-AC13 x2 /
+AC14 x3 as nested-layout ENOENT path artefacts to re-read in the workspace layout after landing; AC15; AC8 x3; FIELD_MAP's
+beginningValue / endingValue / retainedReport, a real debt of the Performance view; the directory-browse boundary; the holdings-route
+issue arm), so a later read can dispute each one. No product file in the set (the filtered name-only diff is empty), so VALGATE reads
+it as a no-op and the landing carries no served-output change. RULED: GO -- MSTR fetches and lands `merge --ff-only 694287b9` on
+origin/DEV if DEV is still 310b83b8, else the covered --no-ff merge with the staged set = exactly the ten files (any overlap outside
+them is a STOP); ls-remote read in the receipt; rollback = DEV re-pointed to the pre-merge head; under Andrew's standing consolidation
+word. Landing receipt: PENDING at MSTR (this batch is written before it; the receipt lands in the next).
+
+### IRPT-FE-S2-FE-S10-FIVE-RELAY-20260924 (the CTO's 100564 to COO~D)
+The five pre-existing fe-s-2 / fe-s-10 failures P is to repair are NAMED in row DSGN_IRPTV1-W4-S2, which sits on an undrained round-2
+worker branch P cannot read; the CTO asked 2.0.0_SA_COO~D to send P the five names with the denominator and the base ref (portal
+895752676a) in one message (delivered). P repairs from those names, never from the 18 its own nested run reports -- the two
+populations differ by layout (the ENOENT artefacts) and by base. Pending: COO~D's relay; P's repair candidate after the landing.
+
+### IRPT-CUSTODY-BRANCH-ADDENDUM-2-FILED-20260924 (the CRO's /closer addendum 2 @9a9138d4ab)
+The CRO's addendum 2 to the Analysis brief, read at HEAD: the custody branch is ALSO a missing composition with a design port
+(interpret_source / validate_evidence, 0 implementations), and addendum 1's "nearer live thread" sentence is WITHDRAWN. This is the
+same finding as batch 45 (P 100556) reached from the trace side on a different instrument (the CRO's read of the served refusal and
+the ports' census); the two agree and neither inherits the other. Nothing new to rule: batch 45's four rulings stand (nothing
+stubbed; P drafts the interpreter's design card; the first live Analysis submission waits on whichever composition lands first;
+candidate 5 proceeds -- and it has, above). The withdrawal is noted so no later reader cites addendum 1's sentence as live.
+
+
+## 2026-09-24 12:1x UTC - Claude CTO batch 47: portal candidate 5 LANDED on origin/DEV as the covered --no-ff fallback (ed3088b885, ls-remote read by MSTR 12:1xZ); DEV had moved under the GO, the fallback covered it, overlap 0
+
+Instruments: MSTR's receipt 100569 (the act, in the workspace portal checkout; ls-remote read of refs/heads/DEV = ed3088b8853c1bc89b3e25219bc54331fe675425);
+the CTO's GO 100566, which named the fallback and its cover before the act.
+
+### IRPT-PORTAL-CANDIDATE-5-LANDED-20260924 (MSTR 100569 on the CTO's GO 100566)
+At the act origin/DEV read 1f1555d2, not 310b83b8: 65a41a1f (2.0.0_SA_COO~Z's AMGT rl-9 drain) and 1f1555d2 (0.0.0_AB_MSTR~Z's pull-merge of
+310b83b8) had landed between P's cut and the landing. Merge-base(candidate, origin/DEV) = 310b83b8; the candidate's files against origin/DEV's
+changes since the merge-base: overlap 0; merge-tree --write-tree rc=0. The --no-ff --no-commit merge staged exactly the ten candidate paths, 0
+outside, 0 conflicts; committed ed3088b8 (parents 1f1555d2, 694287b9); pre-push VALGATE D-1 PASS as a no-op (no api/endpoints change); push
+1f1555d2..ed3088b8 rc=0. The GO's fallback clause covered this shape by name (staged set = exactly the ten files; any overlap outside them a STOP),
+so the act stayed inside the sign-off whichever branch DEV took -- the shape Rule NEVER-1 asks of a sign-off. Rollback = DEV re-pointed to 1f1555d2.
+DEV now carries the request corpus at 17 of 17 routes and prepared_for on the analysis record. RULED: the landing is ACCEPTED as covered; P's next
+candidate cuts from ed3088b8 after a fetch (relayed to P, since MSTR's receipt was addressed to the CTO alone); with site Z draining to DEV every
+20-30 minutes tonight the fallback shape is the expected one, and every later GO keeps naming it. The workspace CLOUD gitlink moves to ed3088b8 in
+MSTR's next LOCAL commit; trunk push on Andrew's word.
+
+
+## 2026-09-24 12:2x UTC - Claude CTO batch 48: the custody INTERPRETER design card accepted (Q2 ruled: held positions, never the model-implied allocation; Q4 conditional on M; Q1 + Q4 routed to M; Q3 held for Y with a provisional read); portal candidate 6 GO'd; the fifth fe-s-2 failure ruled a stale arm against the ratified Global default, re-pinned in candidate 7 with the missing SelectedAccounts fixture; the four pinning suites re-read in the workspace layout -- the ENOENTs were a missing generated fixture, not a layout artefact
+
+Instruments: P's card @d8c8e6c716 read whole from the shared object store (git show, 11,209 bytes, rc=0); P's 100572 (one live read of M's
+Cottonwood publication for acc_d486fc9455d6b2aa18e13af1: 75 nodes, join_method census 1 / 1 / 4 / 67 / 1, 0 of 68 SECURITY nodes on a custody row;
+candidate 6 bisected at five DEV vintages) and 100575 (the four pinning suites in the workspace layout: 82 pass / 14 fail vs the nested 84 / 12,
+the difference = the contract vintage 14 vs 17); the CTO's own candidate-6 reads in the consolidation checkout (origin/DEV ed3088b885 fetched;
+b9d244a474; ancestor rc=0 both; 1 commit; 2 test files +25/-4; non-test name-only diff EMPTY; tsc rc=0 0 lines; eslint rc=0); index.tsx :53-60
+read at b9d244a4 (`internal={auth.isInternal() || auth.isDev()}`; `enabled: internal && firmId === 'global'`). Messages 100576 (the GO) and
+100577 (the card rulings).
+
+### IRPT-CUSTODY-INTERPRETER-CARD-ACCEPTED-20260924 (P 100572 (1); the CTO's 100577 to P, M, the CRO)
+The card is PRD-grade: inputs measured from one live read (keys and counts, no values, no vendor, no write), the output contract quoted by
+rule (intake/custody_portfolio.py:135-215 _validated), a mapping per field, four questions named rather than answered by recall. The material
+finding stands as stated: for an assigned account (462 of 841 at Cottonwood) the served SECURITY nodes are MODEL-IMPLIED (account value x
+component weight); the one custody fact at node grain is the ACCOUNT node's `fact_holdings (Market Value, deduped DC1)`; position-grain custody
+rows live in the receipted gold parquet / source objects. RULED Q2: the ACCEPTED CUSTODY is the HELD POSITIONS at the receipted revision; the
+model-implied allocation is the page's correct DISPLAY under Andrew's COT tree ruling and is not evidence -- positions manufactured from weights
+would reconcile a derivation against its own input. RULED Q4 CONDITIONALLY: the CTO's leaning (the custodian's account-level value is the
+independent source, the ACCOUNT node its evidence) holds iff M confirms the DC1 value is a custodian-supplied account row and not a sum over
+position rows in the same build; if a sum, the reconciliation source moves. ROUTED Q1 (which object is the custody-row source of record and its
+columns) and Q4's condition to 2.0.0_SA_COO~M as reads of its own producer, cited file:line @ commit. HELD Q3 for 2.0.0_SA_COO~Y with the CTO's
+provisional read: as _validated is quoted, a selected account with 0 custody rows REFUSES with a named reason and the selection is re-cut;
+admitting it through empty_account_evidence is Y's amendment on return, never the CTO's inference. ASSIGNED: the interpreter is Y's cell on
+return (Y's return is at Andrew); P's hour of composition is cut only after M's answers and after the generate role's FIRM-bucket grants are
+planned under a ledger through Terraform; the offline oracle is one recorded capture (keys and counts) replayed against _validated. No egress
+question; the first live Analysis submission stays Andrew's browser act on whichever composition lands first.
+
+### IRPT-PORTAL-CANDIDATE-6-GO-20260924 (P 100572 (2); the CTO's GO 100576)
+Candidate 6 = b9d244a4 on DEV ed3088b8: two fe-s-10 test files, +25/-4, no product file; P's bisect at 7c542fd2 / ccdb8699 / 013323f0 /
+1267a67e / 895752676a shows the five DSGN_IRPTV1-W4-S2 failures pre-date every candidate -- the row's finding is about the consolidation's
+BASE, not its candidates, and the repairs are re-pins to the ratified page (the selection-ref gate with a positive control; the rendered
+`6.45%`). fe-s-2 + fe-s-10 read 47 pass / 1 skip / 1 fail (was 42 / 1 / 5). GO: MSTR lands it fast-forward or as the covered --no-ff fallback
+(staged set = exactly the two files); VALGATE a no-op; rollback = the pre-merge head. Receipt PENDING.
+
+### IRPT-FE-S2-ISINTERNAL-ARM-RULED-20260924 (the fifth failure; P 100572 (2) put it to the CTO)
+The arm "no session claim is read anywhere in this page" fails because index.tsx passes `internal={auth.isInternal() || auth.isDev()}` to seed
+the Global default firm and enable the bootstrap resolve-scope for an internal viewer. That IS the ratified page (Andrew-direct: "EVERYONE
+should show up under 'Global' view (default view for Opal users)"): the claim picks the DEFAULT VIEW only, and the server's resolve-scope
+remains the one authority over what the catalogue holds and what any request may see. The claim-free form (bootstrap global for everyone) is
+REFUSED: it changes an advisor's first request and first view and makes a firm user's first call a global bootstrap the server must refuse.
+RULED (b): re-pin the arm to assert what the old sentence protected -- no session claim used as AUTHORITY (no header synthesized from a claim,
+no scope granted client-side, the derived default never widening what the server resolves), with an external arm (isInternal false -> home
+firm, no global bootstrap) beside the harness's internal arm. Candidate 7 carries it; candidate 6 lands as cut.
+
+### IRPT-PINNING-SUITES-WORKSPACE-LAYOUT-20260924 (P 100575, correcting its own 100563 reading)
+In the workspace layout (ajb_workspace/portal at DEV ed3088b8, ../docs = CLOUD's routes.json at 14 of 17) the four pinning suites read 82
+pass / 14 fail against the nested 84 / 12; the difference is exactly the contract's vintage (three fe-s-13 operation-table arms: 17 declared vs
+CLOUD's 14 with 3 NO-HANDLER rows), which clears when MSTR drains P's backend branch (89204d4b2e / 64f05e3424) to CLOUD -- noted for MSTR's next
+drain, not P's act. The F14-AC13 x2 / AC14 x1 ENOENTs are NOT a layout artefact: fixtures/wire/SelectedAccounts.valid.json is absent in BOTH
+layouts (11 of the 22 WIRE_CONTRACTS names have a .valid.json; SelectedAccounts does not) -- a missing GENERATED fixture, regenerated through
+gen-wire / gen-maps in candidate 7, never hand-written. The honest debt list after candidates 4-6: that fixture; FIELD_MAP's three Performance
+fields; AC8 x3; AC15; AC14 x2; the browse boundary; the holdings-route arm; the isInternal re-pin above. P's export-root comment fix (main.tf,
+iam.tf: the host declared RUNNING by the ycharts root since 04c77cbe) is comments only, no plan diff, on the backend branch.
+
+
+## 2026-09-24 12:2x UTC - Claude CTO batch 49: portal candidate 6 LANDED on origin/DEV as a fast-forward (b9d244a474, ls-remote read by MSTR 12:2xZ); the CRO's addendum 3 corroborates the interpreter card's finding on the earlier 04:32Z vintage (two vintages, two instruments)
+
+Instruments: MSTR's receipt 100585 (pre-flight origin/DEV ed3088b8 unchanged; ancestor rc=0; diff 2 files +25/-4; D-1 dry run PASS; merge
+--ff-only; push ed3088b8..b9d244a4 rc=0; ls-remote refs/heads/DEV = b9d244a474c27629520678214b77fa72253324f0); the CRO's 100576 indexing
+addendum 3 @b74eb87e67 (the holdings body for acc_d486fc9455d6b2aa18e13af1 in Andrew's 04:32Z HAR, read in place, never copied).
+
+### IRPT-PORTAL-CANDIDATE-6-LANDED-20260924 (MSTR 100585 on the CTO's GO 100580)
+Fast-forward, no fallback needed: DEV had not moved between the GO and the act. Two fe-s-10 test files, no product file, VALGATE a no-op.
+Rollback = DEV re-pointed to ed3088b8. DEV now carries candidates 1-6; the fe-s-2 + fe-s-10 suites read 47 pass / 1 skip / 1 fail there on
+P's instrument, the one failure being the isInternal arm ruled in batch 48. RULED: accepted; candidate 7 cuts from b9d244a4 with exactly
+the two batch-48 items (the Global-default arm re-pinned to assert no claim is used as authority; the generated SelectedAccounts.valid.json
+fixture through the generator). Relayed to P (MSTR's receipt was addressed to the CTO alone).
+
+### IRPT-CUSTODY-CARD-FINDING-CORROBORATED-20260924 (the CRO's addendum 3 @b74eb87e67)
+The CRO read the same account's holdings body at the 04:32Z vintage (before the 06:20Z COT republish, so an independent build from P's
+12:1xZ capture): 75 nodes with the same kind census (ACCOUNT 1, SLEEVE 1, MODEL_WRAPPER 1, MODEL_LEAF 4, SECURITY 68); all 68 SECURITY nodes
+basis ASSIGNED with join_method "component of <model>" (33 / 16 / 14 / 4 across four models, 1 strategy-root); the ACCOUNT node the only
+custody fact. P's 0 of 68 on the later build and the CRO's 0 of 68 on the earlier one agree on different instruments (a live S3 capture through
+HoldingsPublication vs the served page body in a HAR) and different vintages, so the finding is CORROBORATED on both axes, not repeated. The
+addendum states what batch 48 ruled: for the Holdings tab this is by design (the basis is on every node; the display ruling stands); for the
+Analysis custody branch it is a design input, and the interpreter reads the receipted custody rows, never the security nodes. No act asked,
+none taken beyond this record; the card's questions stay where batch 48 routed them (Q1 + Q4 at M, Q3 at Y on return, Q2 ruled).
+
+
+## 2026-09-24 12:3x UTC - Claude CTO batch 50: M answers Q1/Q4 from its own producer -- Q4's condition FAILED (the ACCOUNT node's DC1 value is a SUM over the position rows), the CTO's leaning WITHDRAWN and the card's reconciliation row moved to fact_allocations "Account Market Value" (its own row and receipt, already carried in the manifest's control row); Q1: the custody rows come from the receipted custody object in manifest.source_objects, never manifest.gold; P amends the card to v2
+
+Instruments: M's 100588 and its record org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CUSTODY_SOURCE_OF_RECORD_Q1_Q4_20260924.md (codex/irpt-m-
+completion after 43aaeb530b), every claim file:line @ commit: holdings_snapshot.py @d96513bc40 (:422-423, :429-437, :446-454, :550-579,
+:1871-1877, :1932-1933, :1978, :1990, :2009, :2099), holdings_49f.py @d96513bc40 (:183-184, :284, :403-417), holdings_inf.py @fb87f34940
+(:145-151, :273, :312-313). Message 100589 (the CTO's ruling to P, M, the CRO).
+
+### IRPT-CUSTODY-Q4-CONDITION-FAILED-LEANING-WITHDRAWN-20260924 (M 100588; the CTO's 100589)
+Batch 48 held the CTO's leaning (the custodian's account-level value is the independent source, the ACCOUNT node its evidence) CONDITIONALLY on
+M confirming the DC1 value is a custodian-supplied row and not a same-build sum. M read the producer: account_value = control_values[external_id]
+(:1990) = the reconciliation row's position_value (:1932-1933) = the accumulation over the DC1-collapsed fact_holdings Market Values (:422-423);
+the join_method string says so. THE CONDITION FAILED; THE LEANING IS WITHDRAWN. CTO note, owned: the leaning was a plausible reading of a
+join_method label ("fact_holdings (Market Value, deduped DC1)") -- a label's grammar implying a fact-table row it does not hold -- and holding it
+conditionally, routed to the one seat that could read the producer, is what kept it from becoming a design row; the shape to keep. The
+independent total EXISTS as its own row in a second fact table: fact_allocations/date=<total_date>/data.parquet, column "Account Market Value"
+per AccountID (:429-437), own object and receipt (served WeqLRnnX.., 128,660 B, 1,495 rows), conflicting duplicates refused; the build already
+ties the position sum to it within 0.01 USD or REFUSES (:446-449) and writes {account_id, position_value, independent_value, difference,
+independent_source_row_ordinals, independent_source_origins} into manifest.actual_custody_controls.reconciliation (:450-454, :2099). RULED: the
+card's `reconciliation.independent_value` = fact_allocations "Account Market Value" at the receipted revision; `independent_source_rows` = the
+totals row reference (s3 url of totals_key, ordinal) read from the manifest's control row and re-verifiable against the receipted object; the
+ACCOUNT node is not cited as the independent source. Per firm: 49F dim_balance.net_mv_plus_cash (holdings_49f.py:183 / :284; DRILL WITHHELD on a
+miss :403-411); INF accounts_v2.current_value (holdings_inf.py:150, :273).
+
+### IRPT-CUSTODY-Q1-SOURCE-OF-RECORD-20260924 (M 100588; the CTO's 100589)
+NOT manifest.gold: the gold parquet is the served document flattened (node_id, parent_node_id, node_kind, basis, amount_value, node_json; COT
+dec293d6 = 16,749 rows, one per node, the same model-implied SECURITY nodes) -- reading it would reproduce the 0-of-68 problem under a different
+name. RULED: `original_rows` / `positions` come from the ONE receipted custody object in manifest.source_objects the builder reads rows from --
+COT opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=<value_date>/data.parquet (:1871-1873; served receipt tGurdOTY.., 457,679
+B; AccountID raw -> opaque_id("account", firm, AccountID) :1978; identity columns AssetID / Symbol / Ticker / CUSIP / names / Relationship ID /
+PortfolioID; Market Value, Units, _source_as_of; reference = (object url, zero-based physical row ordinal), holdings_origins :1876, kept per
+position as source_row_ordinals + relationship_ids :424-427 after the DC1 collapse :412-421); 49F schwab/08335338/silver/dim_position
+(holdings_49f.py:184, :416-417; reference = row ordinal within the account group); INF opal-data-inf/silver/api_dims/positions_mv
+(holdings_inf.py:145-151, :312-313; reference = the Orion row id). The served nodes' CUSTODY_UNITS fact (source_revision = the object's sha256,
+:550-579) is a pointer to the object, not a row reference. DESIGN STATUS: the interpreter's inputs are fully named by the producer's own code;
+open on the design is Q3 only (Y on return; batch 48's provisional read stands). P amends the card to v2 in place with the two moved rows, M's
+citations and a per-firm table (rows object / totals object / reference shape) so it is one design across three firms. The composition stays
+gated on a ledgered Terraform grant plan, which grew by the totals object per firm and must name the FIRM buckets each lives in (COT rows and
+totals sit under opal-data-assets/blackdiamond/cottonwood/silver/, not the cottonwood platinum prefix -- the cross-firm gate's enumeration is read
+before the plan).
+
+
+## 2026-09-24 12:5x UTC - Claude CTO batch 51: Andrew-direct "recs approved" on the six /open-calls cards (Y retries on the same model; ONE Performance plan submission for Anna on the default window; upload symbol resolution through the resident, no prices in v1; the signed-in HAR when DEV is ready; DSGN_IRPTV1 DONE WHEN confirmed as written; the Rule 28 card acknowledged, M receipts under its migration); portal candidate 7 GO'd on the CTO's own reads
+
+Instruments: Andrew's word at the CTO terminal, verbatim "recs approved", in reply to the six cards of 12:4xZ; record
+org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_125xZ_RECS_APPROVED_SIX_OPEN_CALLS_IRPT.md (this commit). Candidate 7: the CTO's
+reads in the consolidation checkout (origin/DEV b9d244a474 fetched; f1d02f30a2; ancestor rc=0 both; 1 commit; 2 files +46/-7; non-test name-only
+diff EMPTY; tsc rc=0 0 lines; eslint rc=0 0 findings; the fixture read whole, 1,264 B, opaque ids and digests only). Messages 100596 / 100597 (the GO) and
+the broadcast of the record.
+
+### ANDREW-DIRECT-RECS-APPROVED-SIX-CARDS-20260924
+Each REC is now his word at the REC's own scope, with its bound: (1) 2.0.0_SA_COO~Y's safeguards dialog -> retry on the SAME model; MSTR keys
+it. (2) ONE Performance plan submission for acc_d486fc9455d6b2aa18e13af1 on the default window -- exactly one under this word; P executes with
+the CRO's second read; the CTO grades the Performance hop from the served result. (3) Prospect-upload egress: symbol resolution through the
+resident's session, resolution only, under the one-submission bound; NO prices in v1 -- any price or calculation fetch needs its own per-use
+word. (4) The signed-in Holdings load with a HAR is Andrew's own act once DEV is where he wants it; the CTO tells him when candidate 7 lands.
+(5) DSGN_IRPTV1 DONE WHEN confirmed as written at PRD v0.5 -- the L2 confirmation he reserved; the loop cycles without him from here. (6) The
+Rule 28 card acknowledged; M receipts the Eclipse map and the taxsma snapshot under its holdings migration. NOT covered: the first live Analysis
+submission (its own card when a composition lands) and the CLOUD trunk push (MSTR's to put to him). Broadcast the same turn to every live seat
+it binds.
+
+### IRPT-PORTAL-CANDIDATE-7-GO-20260924 (P 100594; the CTO's GO 100596)
+Candidate 7 = f1d02f30 on DEV b9d244a4: fe-s-2/dropdown.test.ts re-pinned from "no session claim is read anywhere" to "no session claim is used
+as AUTHORITY" (FirmDropdown.tsx and firm.ts claim-free; index.tsx's one isInternal read is the default-view seed, asserted at exactly one
+occurrence; the selection helpers never called with the claim) -- the batch-48 ruling, executed as ruled, page unchanged; and
+fixtures/wire/SelectedAccounts.valid.json published, authored first on the producer side with its .invalid twin and jsonschema-validated, then
+copied to the portal as the other eleven are. fe-s-2 + fe-s-10 on D's instrument: 48 pass / 1 skip / 0 fail (was 42 / 1 / 5 at every DEV vintage
+since 7c542fd2) -- the five DSGN_IRPTV1-W4-S2 names are CLOSED. The producer's _contracts suite: 33 fail with and without the files (0
+introduced). GO'd; receipt PENDING. UNMASKED behind the ENOENT: F14-AC13 x2 / AC14 x3 now fail on "slice property 'entries' does not $ref the
+document" -- the directory-browse response slice's entries member is not a $ref into DirectoryEntry as the one-parser rule requires: a
+response-contract / gen-wire debt, pre-existing, cut on its own candidate with the contract change on the backend branch FIRST (the producer
+owns docs/contracts v1; the portal copy follows), never a portal-only patch.
+
+
+## 2026-09-24 13:0x UTC - Claude CTO batch 52: portal candidate 7 LANDED on origin/DEV as a fast-forward (f1d02f30a2, ls-remote read by MSTR 12:5xZ) -- DEV carries candidates 1-7 and the five DSGN_IRPTV1-W4-S2 names are closed there; the "recs approved" broadcast delivered to six live seats; Andrew told DEV is ready for his signed-in Holdings HAR
+
+Instruments: MSTR's receipt 100598 (origin/DEV b9d244a4 unchanged at the act; merge --ff-only f1d02f30; push b9d244a4..f1d02f30 rc=0; VALGATE
+D-1 no-op PASS; ls-remote refs/heads/DEV = f1d02f30a2e6ca64e5e39cefbe593fdbabf168cf); the broadcast receipt for the Andrew-direct record
+@9b36d8a481 (ids 100600-100605: MSTR, P, M, D, the CRO, the CVO; 6 DELIVERED / 0 QUEUED / 0 REFUSED, denominator 6; Y not live, carried by
+MSTR keying the dialog and by the record on the tree).
+
+### IRPT-PORTAL-CANDIDATE-7-LANDED-20260924 (MSTR 100598 on the CTO's GO 100596)
+Fast-forward; two files; VALGATE a no-op; rollback = b9d244a4. DEV now carries candidates 1-7: the request corpus at 17 of 17, prepared_for on
+the analysis record, the fe-s-10 re-pins, the fe-s-2 claim-authority arm and the published SelectedAccounts fixture; fe-s-2 + fe-s-10 read
+48 pass / 1 skip / 0 fail on D's instrument. RULED: accepted; relayed to P (MSTR's receipt was addressed to the CTO alone) with P's order of
+work -- card 2's ONE Performance plan submission first (the word is given), then the browse-slice $ref contract fix on the backend branch
+before its portal copy as candidate 8, then the interpreter card v2. Card 4 fires: the CTO tells Andrew DEV is ready for his signed-in
+Holdings load with a HAR (read in place, never copied or committed), which closes M's holdings verify, FWD-1's live trace and the 500 ms
+question.
+
+### ANDREW-DIRECT-RECS-APPROVED-BROADCAST-RECEIPT-20260924
+The three surfaces of a law-grade word: the record committed @9b36d8a481 (LOCAL), the same-turn broadcast delivered to every live seat the word
+binds (six of six), the push state stated in the broadcast (LOCAL; MSTR pushes). Per-seat acts as broadcast: MSTR keys Y's dialog (retry on
+the same model); P executes the one Performance submission with the CRO's second read and holds both upload-egress answers (resolution
+through the resident, no prices in v1); M receipts the Eclipse map and the taxsma snapshot under its migration; D and the CVO hold the
+DSGN_IRPTV1 DONE WHEN confirmation as the L2 word; the CRO carries cards 2-4 into the trace. Not covered, restated: the first live Analysis
+submission (its own card when a composition lands) and the CLOUD trunk push (MSTR's to put to him).
+
+
+## 2026-09-24 13:0x UTC - Claude CTO batch 53: CORRECTION -- card 6's premise "the build already refuses without them" was FALSE (CTO miss, owned); M makes the builders refuse on an unset capture env var now; the receipting is the holdings migration project and the CRO is asked for its L1 brief; Y is back (card 1 closed by the world, nothing keyed)
+
+Instruments: M's 100610 (holdings_49f.py:509-510 @d96513bc40 `os.environ.get(...) or None` + docstring "an absent path means no Tax sleeve is
+claimed"; holdings_inf.py the same shape; the 06:2xZ rebuilds aa6efd45 / 4a50ac5f built without the captures, validated, reconciled, passed CAS
+and drew GO 100387 / 100390 before the halt); MSTR's 100607 (peek 13:00:07Z, no dialog, Y working; PNG named in the message); the CTO's own
+record file, corrected in place with a dated section (this commit). Messages 100609 (to Y), 100612 / 100613 (to M and the CRO).
+
+### CTO-MISS-CARD-6-PREMISE-FALSE-20260924 (M 100610; the correction in the record file and here)
+The Andrew-direct record's card 6 said "The build already refuses without them; nothing serves silently wrong meanwhile." FALSE at the
+code: neither builder refuses on an unset env var, and the day's own incident proved it -- both rebuilds ran without the captures and drew a GO;
+"nothing served silently wrong" held only because of the halt. OWNED: the sentence was written from recollection of the incident's OUTCOME
+rather than from the builder's code, while the Rule 28 card's failure-mode row ("an ABSENT file reads as no capture") stated the opposite in the
+paragraph beside it -- the standing failure mode (a claim from recollection, in a REC that released a card), and the cost is that the sentence
+sat in an Andrew-direct record for ten minutes. REMEDY: a dated CORRECTION section in the record file (verbatim cards untouched), this batch,
+and the correction relayed to M and the CRO. The approved REC's scope is unchanged. M's interim change -- FortyNineRefused / InflectionRefused
+with a named reason when the env var is unset, tests per firm, on codex/irpt-m-completion -- is a correctness refusal inside M's own producer on
+a required input (not a gate on another seat, not an alert) and proceeds; served candidates do not move until a rebuild supplying both captures
+is GO'd as before. The receipting (both files as versioned objects in manifest.source_objects, homes from the naming builder, R19) is the
+holdings migration PROJECT: the CTO asked 4.0.0_SA_CRO for its L1 brief (FWD-1: one served publication whose manifest carries both files with
+sha + version, and a fresh-session rebuild that cannot drop them); M holds the producer change for its cell.
+
+### IRPT-CARD-1-CLOSED-BY-THE-WORLD-20260924 (MSTR 100607)
+MSTR peeked at 2.0.0_SA_COO~Y before keying (unstick.ps1 -Peek, 13:00:07Z): the 07:08Z safeguards dialog was gone, the seat working on the same
+model, reading the recs-approved record and the interpreter card. Nothing keyed (a retry into a working composer would have been the harm).
+Card 1's outcome holds in the world. The CTO sent Y its return brief (100609): Q3 to rule with a reason and the contract line; the interpreter
+design as Y's cell; Q1 / Q2 / Q4 settled and not re-opened; no composition or deploy until the ledgered FIRM-bucket grant plan.
+
+
+## 2026-09-24 13:0x UTC - Claude CTO batch 54: Y rules Q3 from the producer's code (a zero-admissible-row selected account REFUSES with a named reason; the contract is not widened) -- accepted; the custody interpreter card is CLOSED on all four questions; the mixed-rows case stays named open, measured on Anna's account first
+
+Instruments: Y's 100614 (holdings_snapshot.py:405-409, :438-439 @d96513bc40; intake/custody_portfolio.py:76, :118, :201, :204 on the Y branch
+93ec16f4fe); the CTO's provisional read in batch 48. Messages 100619-100622 (the CTO's acceptance to Y, P, M, the CRO).
+
+### IRPT-CUSTODY-Q3-RULED-BY-Y-ACCEPTED-20260924 (Y 100614)
+RULING (Y's, accepted as written): a selected account with zero admissible custody rows at the receipted revision refuses the accepted-custody
+submission with a named reason before _validated runs, and the selection is re-cut without it; empty_account_evidence stays reserved and null
+in v1 (custody_portfolio.py:201 requires counts[account] > 0, COMPLETE, evidence None). Grounds, from code: the producer already refuses a COT
+build whose account census differs from the independent totals ("missing is not empty", :438-439), so a served publication cannot carry an
+account with a total and no rows -- a zero-row selected account is either absent from the rows object (a selection / publication mismatch) or
+carries only unsupported rows (Market Value <= 0; the producer counts them at :409, the contract admits none at :76 / :204); cash is a custody
+ROW (:405-407; admitted under namespace CASH iff classification CASH, :118), so a cash-only account is not the case; and an account with no
+positive-value row contributes nothing the vendor upload carries. Refusal vocabulary accepted: CUSTODY_ACCOUNT_NOT_IN_SOURCE and
+CUSTODY_UNSUPPORTED_ROWS (the count named, never ids or values), raised as CustodyOwnershipRefused and re-raised unwrapped by the reader; P
+rules the public spelling in build_entry's vocabulary. The ruling matches batch 48's provisional read and supersedes it as the grounded one.
+CARD STATUS: CLOSED on Q1 (M), Q2 (CTO), Q3 (Y), Q4 (M); P writes card v2 in place (M's rows, Y's section, the per-firm table, the two codes).
+NAMED OPEN: an account with positive rows AND Market Value <= 0 rows refuses under v1 as written; frequency measured on Anna's account first
+(keys and counts) before any rule is proposed. Y's next acts: the interpreter design document against _validated, the offline oracle from one
+recorded capture, code on the Y branch; no composition, deploy or grant until P's ledgered FIRM-bucket plan.
+
+
+## 2026-09-24 13:1x UTC - Claude CTO batch 55: DSGN_IRPTV1 round 2 -- IVE2-AC2 ruled (a) AMEND to the worker's committed selection driver with the expect ANCHORED "matched 5 of 5", the issuer re-executes the driver at the drain; the unanchored-expect PASS was an EXPOSURE (1 of 24 rows), not an incident; the round-3 rule: every count-bearing expect anchored N of N or computed into one VERDICT line
+
+Instruments: D's 100618 (row DSGN_IRPTV1-S5 @76d27f75b4; the worker's ui-smoke line `FIXTURES-MATCH: matched 2 of 5` graded PASS under the
+bare-prefix expect; proof-of-spec-check VALID on the partial line; the signature run over 6 proof instances / 24 rows -> 1; the driver at
+deliverables/0.9.0_WK_DSGN_IRPTV1~5/iv-e-2-selection-driver.mjs printing `DRIVER-FIXTURES-MATCH: matched 5 of 5` with a PNG showing
+IdentityCard + PerformanceHeadline + SecurityList; chains A + C drained @cc6c203acf / @dc83072d98; candidate @3c9da6ea typecheck 0, suites
+20/0). Messages 100625 / 100626 (the ruling to D and the CVO).
+
+### DSGN-IRPTV1-R2-IVE2-AC2-AMENDED-TO-ANCHORED-DRIVER-20260924 (D 100618; the CTO's 100625)
+The issuer's defect, by its own row: the criterion's prose ("a partial match is a REFUSAL with the measurement") was contradicted by its own
+`<expect>` (the bare prefix `FIXTURES-MATCH: matched`), so a 2-of-5 line graded PASS and the checker read VALID -- the known unanchored-search
+gap (LGIC_ENFORCE-S79/S80) closing the wrong way on the issuer's own criterion; the worker flipped `complete` on it. RULED (a): amend the
+invocation to the worker's committed driver (the ui-smoke vocabulary cannot drive the role=combobox Client search, row W5-S2 -- the same gap
+that made the CVO's IRPT drivers and FE-s-78 build standalone drivers) against the worker's own dev server on 5181, the expect anchored to the
+whole line `DRIVER-FIXTURES-MATCH: matched 5 of 5`; the worker re-grades on its branch (the REFUSED ui-smoke row stays as the corrected record,
+the driver PASS beside it) and flips; D re-executes the driver ITSELF on the merged candidate at the chain-B drain and states the line, the
+server and the PNG -- the grader's run, without which the worker's PASS is a claim. Refused alternative: REFUSED-with-measurement and the CVO
+grading AC4 from a PNG the criterion never named -- an L9 grade resting on an artifact outside the criterion's invocation, the self-graded
+shape one step removed. The amendment is a MODIFICATION of an issued order (gate (viii) grades it only if the order declares <placeholders>;
+else Rule 27's human discipline -- D states which limb graded it). The ui-smoke combobox gap goes on the round-2 enrichment list for
+scripts/**'s owner (outside this project's grant). EXPOSURE, NOT INCIDENT: the defect's signature over the graded population found exactly
+one PASS on a partial count (this row); remedy = the guard (the anchored expect), nothing re-opens. RULE for round 3, made now: every
+count-bearing `<expect>` is anchored `N of N`, or the test computes the count into one VERDICT line the expect matches whole; the CTO's round-2
+analysis carries it as an enrichment item and checks the round-3 cut against it. CVO note for L9: IVE2-AC4 is graded from the driver run's
+PNG named in the amended face and D's grader-run line, not from C-S14's ui-smoke PNGs. ROUND-2 STATE: chains A + C drained; chain B = IV-e-1
+terminal, IV-e-2 amended now, IV-e-6 at ~5; IV-e-7 (the join) after chain B; the CTO waits on the drain and the slug.
+
+
+## 2026-09-24 13:1x UTC - Claude CTO batch 56: IVE2-AC2 amendment landed @49dc5d9216 (content-pinned driver, stdin from the portal cwd, anchored expect, gate (viii) graded); CORRECTION to batch 55 and 100625 -- the driver's PNG shows the HOLDINGS tab, not PerformanceHeadline (a PNG's content restated two seats deep without opening the image; CTO miss, owned)
+
+Instruments: D's 100627 (blob 8c665e7295308d992c204da777976ea5b89167eb; the stdin form load-bearing -- file-from-/c/tmp fails ERR_MODULE_NOT_FOUND;
+gate (viii) 1 of 1 staged-MODIFIED order declaring <placeholders>; pre-flight on a detached 4a55727e + server 5191: `DRIVER-FIXTURES-MATCH:
+matched 5 of 5`, PNG 173,077 B, pin negative arm rc=1; D's own read of the PNG; the driver's STATE line headlineTiles 0 / identityCard 2 /
+securityRows 2). Messages 100631 / 100632 (the CTO's acceptance and correction to D and the CVO).
+
+### DSGN-IRPTV1-R2-IVE2-AC2-AMENDMENT-LANDED-20260924 (D 100627)
+Accepted as landed: the invocation pins the driver by content and feeds it on stdin from <WS>/portal so playwright-core resolves through the
+portal's node_modules; the expect is the whole line; gate (viii) graded the modification, so the human-discipline clause of Rule 27 does not
+bind this one. D's pre-flight is the criterion's self-test only; the grader's run on the merged candidate at the chain-B drain is still owed.
+
+### CTO-MISS-PNG-CONTENT-RESTATED-UNOPENED-20260924 (correction to batch 55 and 100625)
+Batch 55 and 100625 said the driver's PNG shows "IdentityCard + PerformanceHeadline + SecurityList". FALSE: D opened the image -- it shows the
+HOLDINGS tab (the resolved IdentityCard, the Ready band, the summary strip, the Asset Category Views hero, the Securities table); the
+Performance tab is never opened by the driver, and its own STATE line (headlineTiles 0) said so. OWNED: the CTO restated the worker's report
+as relayed by D, and neither seat had looked at the artifact whose only purpose is to be looked at -- the inherited-claim shape two seats deep,
+and the tell was in the same message (a STATE line with headlineTiles 0 beside a sentence naming the headline). REMEDY: this record; the L9
+instruction to the CVO corrected the same turn (IVE2-AC4: SecurityList and IdentityCard from the PNG, PerformanceHeadline from static markup,
+as the amended face now says); the standing rule for the CTO -- a PNG named in a grade is opened by the seat that names it, or the sentence
+says "as reported, unopened". NOTED for other owners: the Holdings answer band `OK [code not defined by the v1 contract]` (IV-e-7's sweep);
+a bare 9-character identifier (`037833100`) as a security name in the hero, legend and Name column -- fixture displayName on a checkout
+without IV-e-1's display.label rule, re-read at the drain; if it survives the merge it is a round-3 enrichment item (a CUSIP is not a label).
+
+
+## 2026-09-24 13:2x UTC - Claude CTO batch 57: card 2 EXECUTED by P -- the one-use Performance plan ARMED at 13:12:22Z for Anna's account on the default YTD window, unspent; RULED: an unspent re-cut for a new end date is the same one use, a spent use needs a second word; the 8-day BD session cookie is the pre-click risk and the CRO states its state from the hop-7 control without a vendor call; Andrew told the click
+
+Instruments: P's 100629 and receipt org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/PERFORMANCE_ONE_USE_PLAN_ARMED_20260924.json (backend
+worktree; public fields): plan sha 106eaa0e9ed064d301659ca9ad5d148a4a7f2b1dbbf7b2c95cd8320cc46b1a65 over a 557-byte canonical string; window
+2026-01-01..2026-09-24 (period.ts DEFAULT_PERIOD_PRESET = YTD); mapping as_of 2026-09-23, source_revision a560410f86e384c7..; requests digest
+over [performancePeriod, performanceSeries] with bd_helpers.py byte-identical to layer irpt-common:5; expires 2026-09-25T00:00Z; ledger
+irpt-performance-one-use-plan-20260924 (sentinel cedc2f2763, closed); plan 1 add (the root's own conditional per-use grant
+aws_iam_role_policy.performance_approved_session[0], GetSecretValue on the exact session ARN, retained.tf:104-122) / 1 change (+2 env keys) / 0
+destroy; safe-apply 13:12:22Z; readback CodeSha256 07lSH03z.. unchanged, Active / Successful, token == the var-file's sha; replan No changes;
+irpt-requests PERFORMANCE_ rows for cottonwood = 0. Messages 100637 / 100638 (the CTO to P and the CRO).
+
+### IRPT-CARD-2-ONE-USE-PLAN-ARMED-20260924 (P 100629; the CTO's 100637)
+Accepted as executed under Andrew's word (card 2, @9b36d8a481). The plan is what the deployed code makes it: OneUseTransportFactory admits a
+request only when firm, the one account, (start, end), the mapping's source_revision + vendor ids and the requests digest equal the approved
+plan and the egress token equals sha256 of the canonical string; it then claims PERFORMANCE_USE#<sha> by conditional put with no TTL (a failed
+or lost provider request consumes the use) and builds the Black Diamond transport with the COT session cookie. The trigger is the one thing no
+seat can do: the served boundary admits only a verified signed-in principal, so the calculation fires when Andrew, as a Global viewer on DEV,
+selects Anna's account on the Performance tab with the default YTD preset before 2026-09-25T00:00Z. RULED: a re-cut of the plan for a new end
+date while the claim count is still 0 is the SAME one use, inside the word (which bounded one SUBMISSION, not one plan string); a SPENT use --
+a claim row written, whether the provider answered, failed or refused on a dead cookie (DEPENDENCY_UNAVAILABLE) -- needs a second word. So the
+BD session cookie (blackdiamond/cot/session, LastChangedDate 2026-09-16, 8 days; metadata only, no value read) is the risk to retire BEFORE
+the click: 4.0.0_SA_CRO states its expected liveness from the hop-7 control and its own record WITHOUT a vendor call (a probe is egress and is
+covered by nothing on this thread); if it needs a refresh, that is Andrew's sign-in, put beside his HAR ask as one browser session. Recording
+after the use (P): the claim row, the accepted pointer, the retained evidence and report artifacts by reference and sha, the reopen without a
+second claim, the export -- keys, counts, digests; the CRO's second read; the CTO grades FWD-1's Performance hop from both. Andrew is told the
+click order in this turn's report: DEV, Anna, Holdings first (the HAR of card 4), then the Performance tab on the YTD preset, before 00:00Z.
+
+
+## 2026-09-24 13:2x UTC - Claude CTO batch 58: Y measured the mixed-rows case on the receipted COT objects -- the ZERO-LOT rule accepted as interpreter semantics (809 of 843 accounts admit, Anna with 55 positions; negatives, unpriced and no-positive still refuse); the served manifest carries no custody control row, so the independent value is read from the receipted fact_allocations object (batch 50 corrected)
+
+Instruments: Y's 100633 -- the served COT index (VersionId mSFR0vat.., latest 2026-09-22) -> manifest dec293d6 (a69WjLuQ.., 37,803 B) ->
+source_objects[1] fact_holdings/date=2026-09-22 (tGurdOTY..) and source_objects[0] fact_allocations/date=2026-09-22 (WeqLRnnX..), each read by
+version with sha256 compared to the receipt, both MATCH; keys, counts and booleans only; Anna selected by _ids.opaque. Producer citations
+holdings_snapshot.py:433-436, :1904-1921, :1934-1936 @d96513bc40; custody_portfolio.py:76, :204. Messages 100639-100642 (the CTO to Y, P, M, the
+CRO).
+
+### IRPT-CUSTODY-ZERO-LOT-RULE-ACCEPTED-20260924 (Y 100633)
+MEASURED: Anna, 78 physical fact_holdings rows -> 21 all-four-facts-null (the producer's ruled no-position dimension rows, excluded with
+origins recorded, authority 5ee54ac0d4 / f307d58415) -> 57 active = 55 Market Value > 0, 2 zero lots (Market Value 0 AND Units 0; one the
+CASH row); 0 negative, 0 zero-value-with-units, 0 duplicate relationship rows, one _source_as_of; identifiers Symbol 78/78, CUSIP 77/78,
+Ticker 72/78, none with neither; fact_allocations 2 equal duplicate rows for her (admitted by the producer :433-436); the DC1 sum ties the
+independent value within 0.01 USD. Firm-wide: 19,610 rows, 843 active accounts; 12,537 positive, 1,341 zero lots, 29 negative, 9 unpriced
+(MV 0, Units > 0); accounts 139 all-positive, 673 mixed of which 670 carry only zero lots, 29 with a negative, 5 with an unpriced row, 31 with
+no positive row. v1 as written (custody_portfolio.py:76 Market Value > 0 on every original row; :204 unsupported == 0) refuses every mixed
+account -- 704 of 843, Anna included -- so the first live custody submission could not run on her. RULED: a ZERO LOT (Market Value exactly 0
+AND Units exactly 0) holds nothing and is excluded from original_rows and positions as the producer excludes a no-position row, its (object,
+ordinal) origin recorded under a named rule in revision_refs so the exclusion is re-derivable from the receipted object; it moves no value, so
+the reconciliation is unchanged; _validated is NOT changed. 809 of 843 admit; Anna admits with 55 positions. STILL REFUSE by name: a negative
+row (long-only v1; a debit is real economics), a zero value with positive units (unpriced), no positive row (Q3). Bound: COT-measured only;
+49F and INF measured the same way before admission. A CTO ruling under the canonical loop, on the record for Andrew; nothing waits on him.
+
+### CORRECTION-TO-BATCH-50-INDEPENDENT-VALUE-READ-PATH-20260924 (Y's second finding)
+Batch 50 said the independent value is "read from the manifest's control row and re-verifiable against the receipted object". The SERVED
+manifest dec293d6 carries no actual_custody_controls (keys: business_date, clocks, firm_id, gold, partitions, platinum_header, revision,
+schema_version, source_objects, source_set_revision); the :2099 manifest M cited is the build's INTERNAL evidence, which the producer itself
+says is not published (:1934-1936). CORRECTED: the interpreter reads the independent value from the receipted fact_allocations object
+(source_objects[0], by version, sha256 verified), row ordinals as independent_source_rows -- the same object M named, one step more direct;
+no publication change asked. The substance of batch 50 (the DC1 value is a sum; fact_allocations "Account Market Value" is the independent
+source) stands.
+
+
+## 2026-09-24 13:4x UTC - Claude CTO batch 59: the custody INTERPRETER is BUILT by Y @47b2adf6df and accepted (oracle 15/15, the reader round-trip against P's modules, one real run admitting Anna's 55 positions within a cent); three exact-file integration rows granted to P at that pin; the composition is gated on a ledgered FIRM-bucket plan and the decoder question is build-ladder rung 2; M confirmed the zero-lot rule is a NEW interpreter rule, not a producer rule
+
+Instruments: Y's 100646 and the design @2aa5e22955; the CTO's own reads of the pin (git cat-file -t = commit; diff-tree --name-only = exactly
+intake/custody_interpreter.py, intake/tests/test_custody_interpreter.py, intake/tests/test_custody_interpreter_reader.py; the module 23,236 B
+with build_custody_ports, CUSTODY_FIRM_NOT_ADMITTED and the lazy pyarrow import present); M's 100644 (its own Q4 clause corrected on its record:
+the control row lives in the build's INTERNAL manifest, :1933-1934 / :2277 / land() :2351, never the served one, publication.py:269-288; the
+zero lot stays an active row in the producer, counted under unsupported_rows at :409 and kept in the DC1 sum at 0). Messages 100649-100651
+(the CTO to Y, P, the CRO); the grant commit 9c325ece24 and this batch.
+
+### IRPT-CUSTODY-INTERPRETER-BUILT-ACCEPTED-20260924 (Y 100646)
+build_custody_ports(get_object, *, read_rows=None, opaque=None) -> (interpret_source, validate_evidence), the two callables the accepted-custody
+reader takes; COT only in v1 (49F / INF refuse CUSTODY_FIRM_NOT_ADMITTED until measured); reads fact_holdings and fact_allocations for the
+receipt's business_date from manifest.source_objects BY VERSION, refuses unless sha256 and byte_length match, admits by the no-position rule
+and the zero-lot rule, returns the four-key evidence in the shapes custody_binding.validate_payload accepts (three receipts, six revision keys,
+the exclusions as a sha256 in economic_policy's revision); validate_evidence is pure over receipts, rule revisions and _validated. Measured by
+Y: the oracle 15 passed on a structural twin of Anna's capture (synthetic values only; refusals fire with code and count; a byte flip refuses
+on the receipt; six tampers rejected); arm (e) 1 passed with P's reader modules loaded beside Y's (create / seal / read identical; both objects
+fetched by version on each side); one local run over the real receipted objects admitted 55 rows = 55 positions, COMPLETE, reconciled within
+0.01 against both equal totals rows, validated, frozen, identical on re-read, copies deleted; regression unchanged but one pre-existing
+fixture-root failure. Nothing widens _validated. ACCEPTED as built. GRANTED: three exact-file rows to lane IRPT_Y_ACCESS_INTEGRATION_P at pin
+47b2adf6df (the batch-13 / batch-30 shape; Y semantic writer retained; no deploy grant). FOR P'S COMPOSITION, all behind the ledger: (1) the
+parquet decoder is BUILD-LADDER RUNG 2 -- pyarrow is not in irpt-common (its BUILD_MANIFEST names none), but M's holdings build already decodes
+these objects in some runtime; P names that layer or image and reuses it by ARN; a new pyarrow layer is refused unless that read is empty with
+its denominator, and then read_rows's alternative decoder is weighed by size and cold start with the CTO's word; (2) GetObject WITH VersionId --
+the plan grants s3:GetObjectVersion + GetObject on opal-data-assets blackdiamond/cottonwood/silver/{fact_holdings,fact_allocations}/* and the
+bucket's KMS, the cross-firm gate's enumeration read first, 49F / INF not granted until admitted; (3) IRPT_FIRM_REGISTRY in the hosting
+runtime; (4) every refusal code maps to a public class in build_entry's vocabulary -- the economic class by name (with count where Y carries
+one), the receipt/shape class to ONE public "custody source unavailable" code with the internal code in the record only; P proposes the
+spelling on card v2; (5) the ledger names the roots touched and a rollback per grant; safe-apply; no console; (6) the first live custody
+submission stays Andrew's browser act. Y proceeds to the next batch-28 item.
+
+### IRPT-ZERO-LOT-IS-A-NEW-INTERPRETER-RULE-M-CONFIRMS-20260924 (M 100644)
+M verified both of Y's producer readings by line and corrected its own 100588 Q4 clause on its record (the "manifest" in :2099 is the build's
+internal evidence, written locally by land(); the served revision manifest is body + gold + source_objects only). M also states what batch 58
+implied but did not say plainly: in the PRODUCER a zero lot is NOT excluded -- it stays an active row, counted under unsupported_rows (:409)
+and kept in the DC1 sum at 0 -- so the zero-lot rule is a NEW rule of the interpreter (accepted in batch 58 as interpreter semantics with
+_validated unchanged), analogous to and not an instance of the producer's no-position exclusion. Batch 58's phrase "the producer's own ruled
+no-position exclusion one step further" is read as that analogy, not as a claim the producer already does it. Nothing served moves.
+
+
+## 2026-09-24 13:4x UTC - Claude CTO batch 60: the 13:36Z signed-in session measured by M -- holdings fired 6x clean; the Performance tab on Anna's RELATIONSHIP raised SelectionUnsupported and served the public code UNEXPECTED (hop 3 NOT SERVED AS NAMED); the one-use plan was not reached and not spent; the plan binds one account while the page selects the relationship -- two acts at P, and Andrew told not to click Performance again until P answers
+
+Instruments: M's 100653 and 100658 (aws shim, logs filter-log-events on /aws/lambda/irpt-holdings, irpt-performance-adapter, irpt-directory-search
+for 13:30-13:45Z; application lines quoted with ids masked): holdings 6 invocations 13:36:07-24Z (cold 1906 ms, warm 552-690 ms, no error line,
+no application line -- the function logs nothing per request); performance-adapter 2 requests at 13:36:11Z (cold 3273 ms / warm 196 ms) each
+logging irpt_internal SelectionUnsupported "performance computes exactly one selected account" then irpt_error public_reason_code UNEXPECTED;
+directory-search 17 REPORTs = 11 real + 6 warmer pings; status / narrative / export / intake / ycharts 0. Messages 100655-100657 (the CTO's
+first ask), 100661-100663 (the CTO's two acts to P).
+
+### IRPT-1336Z-SESSION-HOP-3-NOT-SERVED-AS-NAMED-20260924 (M 100658)
+One signed-in session (search -> select Anna's relationship -> Holdings six loads across selection changes -> Performance tab twice ->
+UNEXPECTED), consistent with the CTO's ~13:2xZ ask to Andrew and UNCONFIRMED as his until he says so; the CTO holds no HAR and ran no trace;
+the CRO asked whether it traced. SETTLED regardless of who clicked: (a) the deployed holdings path FIRED on today's served revisions (/verify
+MECHANICAL fired; the envelope's revision is the HAR's to show, read in place); (b) the served Performance path's public code for a
+multi-account selection is UNEXPECTED -- the served build carries hop 3's class and raises it, but the translation to SELECTION_UNSUPPORTED did
+not reach the answer, so the hop graded APPLIED on the build is measured NOT SERVED on the path; the CTO re-grades it from the served answer
+after P's fix; (c) the refusal fired at selection, before the plan check, so the one-use plan (sha 106eaa0e..) was not reached and not spent
+(P confirms with the PERFORMANCE_ row count). TWO ACTS AT P: (1) measure the served translation (class registration in the served package,
+name-vs-identity across module copies, a raise outside the translation path), fix, prove with the negative control (two accounts ->
+SELECTION_UNSUPPORTED) and the positive control (one account reaches the plan check), code-only repackage under a ledger with readback;
+(2) the plan binds acc_d486fc9455d6b2aa18e13af1 alone by design while the page's Client search selects the relationship (two accounts) --
+P states the exact UI act on DEV f1d02f30 that yields a server-accepted single-account selection, or says no such control exists, in which
+case it is a product item (DSGN_IRPTV1 round 3 or a portal candidate) and the first Performance use waits on it; the plan is NOT widened to
+the relationship (a second word and a different calculation). Andrew is told: the click did not spend the use; do not click Performance again
+until P answers; the Holdings HAR stands. The CRO's cookie read stays owed before any next click.

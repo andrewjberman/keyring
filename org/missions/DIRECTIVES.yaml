@@ -508,12 +508,19 @@ directives:
       Placement attaches to the DIRECTIVE, never to a member (LD-0498, LD-0502), so a future move is one row and not N."
     members:
       subgroups: []
-      projects: [DSGN_REBRND]
+      projects: [DSGN_REBRND, DSGN_IRPTV1]
       members_note: "First member registered 2026-09-11 by 1.0.0_SA_CTO at L3 (Rule 27 L3 clause: the CTO writes every
         carrier itself): DSGN_REBRND (Portal Visual Elevation; minted DSGN_PORTALVIS at L3, renamed the same hour on Andrew's word 'DSGN_REBRND (what i would call this project)'), macro DSGN ratified on Andrew's word (LD-0552), lead
         2.0.0_SA_COO~D (promoted from 0.1.1_RD_MarketPerformance on his word ~07:5xZ). Brief
         docs/briefs/portal-visual-elevation-brief-20260911.md; endpoint
-        org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D13_PORTAL_VISUAL_ELEVATION_20260911.md."
+        org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D13_PORTAL_VISUAL_ELEVATION_20260911.md.
+        Second member registered 2026-09-24 by 1.0.0_SA_CTO at L3: DSGN_IRPTV1 (Investor Reporting page remediation),
+        minted on Andrew-direct 2026-09-24 ~05:2xZ at the 4.0.0_SA_CRO~F terminal, VERBATIM 'This should be its own
+        project. Tell CTO this will be D13 project, DSGN_IRPTV1. I want a proper canonical-flow issued on this from
+        COO~D. Tell CTO that.' (record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_052xZ_DSGN_IRPTV1_OWN_PROJECT_D13_COO_D.md);
+        lead 2.0.0_SA_COO~D. Brief docs/briefs/irpt-page-remediation-brief-20260924.md; endpoint
+        org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md. MACROS.yaml unchanged: DSGN is
+        already D13's ratified macro (LD-0552)."
     stance: "MINTED BY ANDREW 2026-09-11 ~07:0xZ at the 0.0.0_AB_MSTR terminal, VERBATIM and entire:
       'I need a new directive, D13 which will be Design. Get that into directives.yaml'. That is the whole
       of his word; everything else in this row is the register owner supplying REQUIRED FIELDS and is

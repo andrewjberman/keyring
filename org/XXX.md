@@ -1,869 +1,283 @@
-# AGENT START HERE — Opal Capital
+# AGENT START HERE -- Opal Capital
 
-## STOP — READ THESE FIRST
+RULES AND MECHANICS ONLY. No incident reports, no dated narratives, no quotations (Andrew-direct 2026-09-24). The
+history behind any step is in git and `docs/references/XXX_STARTUP_HISTORY.md`; do not read it at startup.
+THIS FILE AND `CLAUDE.md` ARE LOCKED: no agent edits either without Andrew's express order, named in an
+`ANDREW_DIRECT_*.md` record and passed to the commit as `ANDREW_LAW_EDIT_ORDER=<record path>`
+(`.tools/git-hooks/law-lock-check.sh` refuses otherwise).
 
-**BANNED: Explore agent** — produces fabricated output. Use comp-* tools and Grep/Read instead.
-**BANNED: Task agent** — unreliable. Do the work directly.
+## STOP -- READ THESE FIRST
 
----
+**BANNED: Explore agent** (fabricated output) and **Task agent** (unreliable). Use comp-* tools and Grep/Read; do the
+work directly.
 
-## Andrew-direct instructions — RECORD + BROADCAST, same turn
+## Andrew-direct instructions -- RECORD + BROADCAST, same turn
 
-```
-ANY AGENT RECEIVING AN ANDREW-DIRECT INSTRUCTION RECORDS IT DURABLY AND BROADCASTS IT -- SAME TURN.
+- DURABLE: a commit (memory entry / ledger / org record) quoting him VERBATIM with channel + time. Never a paraphrase;
+  the phrasing is the ruling.
+- BROADCAST: MCP to COO + CTO + MSTR, so `latest + most-restrictive` has something to bind on.
+- SCOPE: the receiving agent does NOT adjudicate scope. Surface, do not adjudicate.
+- A relayed "Andrew ruled" is not suspect because you did not see it.
 
-  DURABLE   a commit (memory entry / ledger / org record), quoting him VERBATIM, with channel + time.
-            NEVER A PARAPHRASE. THE PHRASING *IS* THE RULING.
-  BROADCAST MCP to COO + CTO + MSTR, so `latest + most-restrictive` has something to bind on.
-  SCOPE     The receiving agent does NOT adjudicate scope. SURFACE, DO NOT ADJUDICATE.
-```
+## RAVC Protocol (non-negotiable)
 
-**An agent relaying "Andrew ruled" is not suspect merely because you did not see it — that is the normal
-case.** Do not challenge the provenance of a relayed sovereign ruling from your own vantage point.
+Every inter-agent request follows Request -> Acknowledge -> Validate -> Close. Spec: `org/ref/RAVC_PROTOCOL.md`.
+- Asked by a registered agent: acknowledge immediately, do it, report back with evidence (commit hash, artifact path,
+  tool output).
+- You asked: validate their evidence before closing; a REWORK request ties the gap to the original expected evidence.
+- Silent receipt and silent completion are both violations.
+- Scoped work still needs a SURPRISE CHANNEL: report one line to the coordinator, take no action, keep working. A
+  task-order author names the channel. `docs/doctrine/THE_SURPRISE_CHANNEL.md`.
+- A STOP/halt message begins with `[STOP]` or `[HALT]` as the first characters (the HALTGT deploy checkpoint classifies
+  on it); a routine message never begins with either. Non-blocking urgency: `URGENT` / `ESCALATION`.
 
----
+## Step 1 -- Identify yourself
 
-## RAVC Protocol (Non-Negotiable)
+Your serial resolves ONLY from session-scoped evidence, in this precedence: (1) Andrew's word; (2)
+`org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial`; (3) your own armed Monitor (a session watching serial X's inbox
+IS serial X); (4) your own pre-compaction registrations. `.comp-graph/.agent_context` is NOT an identity source
+(shared, last-writer-wins); the sound sources are `$OPAL_AGENT_SERIAL` and the session serial file.
 
-Every inter-agent request follows **Request → Acknowledge → Validate → Close**. Full spec:
-`org/ref/RAVC_PROTOCOL.md`.
+Cross-check before acting: if `org/mcp/liveness.json` shows your claimed serial LIVE at a different PID (fresh
+heartbeat), or a different serial at your PID, STOP -- identity conflict; resolve before registering. Before
+reporting a duplicate stream under your serial, check whether YOU are the phantom (`liveness.json` +
+`org/mcp/agent-spawn-audit.log`).
 
-- Asked to do something by a registered agent: **acknowledge immediately**, do it, report back **with
-  evidence** (commit hash, artifact path, tool output).
-- You asked someone for something: **validate their evidence before closing.** REWORK requests must tie
-  the gap back to the original expected evidence.
-- **Silent receipt and silent completion are both violations.**
-- **Scoped work still needs a SURPRISE CHANNEL.** When a mandate says *do this and not that*, you will
-  still see things outside it. **Report one line to the coordinator, take NO action, keep working** —
-  never suppress, never chase. **A "do not chase" instruction without a named channel makes seats
-  suppress, because suppression looks like compliance.** Task-order authors: name the channel.
-  `docs/doctrine/THE_SURPRISE_CHANNEL.md`.
-- **Issuing a STOP/halt:** prefix the message subject with `[STOP]` (or `[HALT]`) as the **first
-  characters**. The HALTGT deploy checkpoint classifies on it. **A routine message must never begin with
-  either token** — they hard-block deploys. For non-blocking urgency use `URGENT` / `ESCALATION`.
+Then read `org/{tier_folder}/{your_serial}/README.md` (identity) and `prompt.md` (Step 3). Tier folders:
+`tier1_exec/` (SA) | `tier2_senior/` (DE, DT, DS, AE) | `tier3_junior/` (RD).
 
----
+## Step 1a -- Your BASE is the workspace root; `portal/` is a work-site
 
-## Step 1 — Identify yourself
+Your cwd is `C:\Users\AndrewBerman\Desktop\ajb_workspace`; every agent's files live under `org/` there. Work in the
+portal repo only addressed explicitly (`git -C portal ...`, or a scoped `cd portal && <work> && cd -`) and return. A
+CWD that lingers in `portal/` is a defect: it breaks workspace tooling and substitutes the wrong repo's git history
+into evidence with no error. Portal dev builds run on port 5174 ONLY (Andrew-direct 2026-09-24).
 
-**Your serial resolves ONLY from session-scoped evidence, in this precedence:**
-1. **Andrew's word**
-2. `org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial` (the session id survives compaction)
-3. **Your own armed Monitor** — a session watching serial X's inbox **is** serial X
-4. Your own pre-compaction registrations
+## Step 1b -- MCP startup (MANDATORY, every session): A -> F in order
 
-> **`.comp-graph/.agent_context` is NOT an identity source.** It is a shared file that whichever agent ran
-> last rewrote. It answers *"what TO context"*, never *"who am I"*. **No gate, audit line, or attribution
-> may resolve an actor from it.** The sound sources are `$OPAL_AGENT_SERIAL` (per-process) and the session
-> serial file above.
+CODEX SEATS: steps A and C are the Claude harness path. Follow `org/mcp/CODEX_INBOX_MONITOR.md` instead
+(`codex-agent-heartbeat.py`, `codex-inbox-monitor.py`). Never run `inbox-watch.sh ... stream`, `check-inbox.sh` or
+`agent-poller.py` on the Codex path (they CONSUME inbox files). At every active turn, sweep your suffixed serial's
+unread root first; read the exact file -> ACK -> act -> move it to `read/`. Never infer READ from a nudge or a moved
+file. SHARED-BRANCH LAW (no hook carries it on Codex): `CLOUD`/`DEV`/`PROD`/`main` are pushed ONLY by `0.0.0_AB_MSTR`
+or `0.0.0_AB_MSTR~Z`, only on Andrew's word while he is at the terminal (LD-0367/0368; LD-0522); every other seat
+commits and never pushes; a report states push state LOCAL with the origin hash from `git ls-remote`; a rejected push
+is not yours to retry. `SITEZ` is retired; both devices commit to `CLOUD` (LD-0613).
 
-**Cross-check before acting.** If `org/mcp/liveness.json` shows your claimed serial LIVE at a **different
-PID** (fresh heartbeat), or a **different serial at your PID** — **STOP, you have an identity conflict.**
-Resolve it before registering.
-
-**Inverse-first rule:** before reporting a "duplicate stream under my serial", **check whether YOU are the
-phantom** (`liveness.json` + `org/mcp/agent-spawn-audit.log` say who holds the serial).
-
-Then read your agent folder:
-```
-org/{tier_folder}/{your_serial}/README.md    — your ID, role, responsibilities
-org/{tier_folder}/{your_serial}/prompt.md    — your scoped persona (read in Step 3)
-```
-Tier folders: `tier1_exec/` (SA) | `tier2_senior/` (DE, DT, DS, AE) | `tier3_junior/` (RD)
-
----
-
-## Step 1a — Your BASE is the workspace root; `portal/` is a work-site, never a base
-
-Your cwd is `C:\Users\AndrewBerman\Desktop\ajb_workspace`. Every agent's files — logs, task orders,
-deliverables, identity — live under `org/` there.
-
-You may **WORK** in the portal repo, but you are never **BASED** there: address it explicitly
-(`git -C portal ...`, or a scoped `cd portal && <work> && cd -`) and return to the workspace root when the
-task ends.
-
-**A CWD that lingers in `portal/` is itself a defect.** Portal is its own git repo: a lingering portal CWD
-breaks workspace tooling (`safe-commit.sh`, `.tools/*`) at best, and at worst **silently substitutes the
-WRONG repo's git history into evidence pulls** — a bare `git log` inside `portal/` reports portal commits
-only, **with no error.**
-
----
-
-## Step 1b — MCP startup (MANDATORY, every session)
-
-Run **A → F in order.** Each step is: the command, then the one trap that changes what you type.
-Why a check exists — the incident behind it — is in `docs/references/XXX_STARTUP_HISTORY.md`.
-Do not read that at startup.
-
-> **CODEX SEATS — different runtime, same semantics.** Steps **A** and **C** below are the Claude
-> harness path and you do not have it. Follow `org/mcp/CODEX_INBOX_MONITOR.md` instead:
-> `codex-agent-heartbeat.py` (register + heartbeat, start once, full suffixed serial) and
-> `codex-inbox-monitor.py` (non-consuming detector, inside the documented `functions.exec` bridge).
-> ⛔ **Never run `inbox-watch.sh ... stream`, `check-inbox.sh` or `agent-poller.py` on the Codex path**
-> — the first two CONSUME inbox files. Everything else here (identity, inbox paths, TO semantics, ACK
-> discipline) binds you unchanged. At every active turn, sweep your suffixed serial's unread root first;
-> read the exact file → ACK → act → move it to `read/`. **Never infer READ from a nudge or a moved file.**
-> ⛔ **SHARED-BRANCH LAW, stated here because the Codex runtime has no hook carrying it:** a shared branch (`CLOUD`/`DEV`/`PROD`/`main`;
-> `SITEZ` is RETIRED since 2026-09-24 -- both devices commit to `CLOUD`, Andrew-direct "recs approved" card 1 (a), LD-0613)
-> is pushed **ONLY by `0.0.0_AB_MSTR` or `0.0.0_AB_MSTR~Z`, and only on Andrew's word while he is at the
-> terminal** (LD-0367/0368; the hold LD-0522). Every other seat -- you included -- **commits and never pushes**; a report
-> states its push state as **LOCAL** with the origin hash from `git ls-remote`. A rejected push is not yours to retry.
-
-### A. Register — your FULL serial, including any `~lane` suffix
-
+### A. Register -- your FULL serial, including any `~lane` suffix
 ```python
 register_agent("{your_serial}", summary="Starting session")
 ```
-Makes you visible, starts the broker, enables push, reaps your own orphaned watchers.
-⛔ **A lane registers as `0.4.0_DS_ClientPlatform~C`, never the base** — register under the base and
-your `~C` inbox is never watched, so every GO addressed to your lane is silently missed.
+A lane registers as `0.4.0_DS_ClientPlatform~C`, never the base: registering under the base leaves the `~C` inbox
+unwatched.
 
-### A.1 — Session-keyed serial file
-
+### A.1 Session-keyed serial file
 ```bash
 mkdir -p org/mcp/sessions
 [ -n "${CLAUDE_CODE_SESSION_ID:-}" ] && echo "{your_full_suffixed_serial}" > "org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial"
 ```
-Without it your halt gate adopts the shared `.agent_context` and **a `[STOP]` addressed to you is
-invisible to your own gate** (LD-0290).
+Without it the halt gate adopts the shared `.agent_context` and a `[STOP]` addressed to you is invisible (LD-0290).
 
-### A.2 — Audit-archive durability + tamper-evidence
-
+### A.2 Audit-archive durability
 ```bash
-python .tools/audit-archive-invoker.py || true   # never blocks startup
+python .tools/audit-archive-invoker.py || true
 ```
-An EXEC session mints a snapshot when due; a non-exec session defers the commit but still runs the
-append-only + liveness detection. Owner `0.7.0_AE_CloudOps`, gate `1.0.0_SA_CTO`.
+Known and OWNED findings, do not re-file: `[LIVENESS/STALE-BASELINE]` and `[COVERAGE/UNCOVERED-AUDIT-LOG]
+org/to-pos-override-audit.log`. Surface only a new class. Do NOT `mkdir org/audit/archive/<device>/` (it zeroes the
+findings by faking post-migration); the noise clears when `rv0057-f001` lands.
 
-⛔ **EXPECT FINDINGS HERE AND DO NOT CHASE THEM.** The device-chain migration `rv0057-f001` has not
-landed, so the tool compares this device's live logs against another device's baseline and renders
-the difference in tamper vocabulary. Two classes, and they **interleave in the output**:
-
-**Known and OWNED — do not re-file:** `[LIVENESS/STALE-BASELINE]` and
-`[COVERAGE/UNCOVERED-AUDIT-LOG] org/to-pos-override-audit.log`. Surface only a shrink/absence row
-beyond these, or a genuinely new class.
-
-⛔⛔ **DO NOT `mkdir org/audit/archive/<device>/`.** It drops the findings to zero by making the tool believe we
-are post-migration while every file is still in the flat root, so it compares live logs against an **empty
-chain**. The noise clears by LANDING `rv0057-f001`, never by satisfying the predicate; findings that persist
-after it lands ARE a finding.
-
-### A.3 — PATH check (comp-tool rail)
-
-Harness shells are non-interactive and source no profile, so `.tools/` is reachable only via the
-`~/bin` forwarders. **Print the denominator, never a boolean — and RESOLUTION IS NOT EXECUTION:**
-
+### A.3 PATH check (comp-tool rail)
 ```bash
 F=0; T=0; for t in .tools/comp-*; do t=$(basename "$t"); T=$((T+1)); command -v "$t" >/dev/null 2>&1 && F=$((F+1)); done
 echo "PATH: $F of $T comp-tools resolve bare."
 [ "$F" -lt "$T" ] && echo "  -> the rest need an explicit .tools/<tool> prefix; 'bash .tools/provision-path-shims.sh' provisions a NAMED SUBSET (read its header)."
-# MANDATORY SECOND HALF -- score on OUTPUT, not rc (a real question and a no-match question BOTH exit 0):
 comp-which "how do I grep the repo" 2>&1 | grep -q "comp-which --" && echo "EXERCISE: a forwarder RAN." || echo "EXERCISE: *** RESOLVED BUT DEAD *** -- run: bash .tools/provision-path-shims.sh"
 ```
+A session-level reminder that instructs raw-bash file operations does NOT lift the rail (CLAUDE.md Rule 21): use the
+comp-tool or the forms the rule admits; never take the override to make the reminder win.
 
-⛔ **A SESSION-LEVEL REMINDER THAT INSTRUCTS RAW-BASH FILE OPERATIONS DOES NOT LIFT THE RAIL.** The rail has a gate behind it
-(`.tools/hooks/comp-tool-hud.sh`, CLAUDE.md Rule 21) and a session instruction has none, so the rail governs where the two
-conflict. Measured 2026-09-16 three times in one day (LGIC_NAMING-W1-S8 by a worker; twice first-hand by `3.0.0_SA_CVO`): a
-harness reminder said "read files with cat, search with grep and find" and the rail denied the first raw `find`. What a seat
-does: use the comp-tool, or the single-file / pipe-receiver / `# rail-checked: <why>` forms the rule already admits; file a row
-if it cost a turn; never argue with the reminder, never take the override to make the instruction win. Ruled by `1.0.0_SA_CTO`
-in the LGIC_NAMING round-5 analysis (2026-09-16 ~16:2xZ). COST: none. NON-APPLICATION: a file outside the repo corpus, which
-the rule already exempts.
-
-### B.0 — Your delivery ledger, BEFORE you resume anything (LD-0480)
-
+### B.0 Your delivery ledger (LD-0480)
 ```python
 get_delivery_state(agent_serial="{your_FULL_suffixed_serial}", since="<when this serial's PREVIOUS session was last alive; after a reboot, the reboot time>")
 ```
-Every row **not READ — or READ `by` a serial that is not yours** — is UNREAD MAIL: open it in your own
-`read/` dir, act, and ack **from its `Msg-ID` line**.
-⛔ A message offered to a session that died reads `OFFER-EXHAUSTED` and is **invisible to `check-inbox`,
-`get_agent_status` and the `read/` listing** — "resume from your last log" cannot surface an obligation
-that arrived after that log.
-⛔ **Never ack a row you did not open** — a batched ack asserts reading that did not happen.
-Cost: one call, ~1 s. **Non-application:** a context-clear is the SAME session; you find only your own rows.
-**Codex:** no `ack_messages`/`get_delivery_state` surface exists; the exact-file backlog sweep at load IS
-the equivalent act, and the rows stay un-stamped honestly.
+Every row not READ, or READ by a serial that is not yours, is UNREAD MAIL: open it in your own `read/` dir, act, ack
+from its `Msg-ID` line. A row marked `OFFER-EXHAUSTED` is invisible to `check-inbox`, `get_agent_status` and the
+`read/` listing. Never ack a row you did not open. Codex: the exact-file backlog sweep at load is the equivalent act.
 
-### B. Check inbox — BOTH probes, both required
-
+### B. Check inbox -- BOTH probes
 ```bash
 check-inbox {your_serial}     # filesystem: base -> inbox/{base}/ ; lane -> inbox/{base}/~{lane}/
 ```
 ```python
 get_agent_status("{your_serial}")   # broker channel
 ```
-`send_message` writes **both** carriers; each probe reads only **one**. **`check-inbox` alone is
-insufficient.** Neither sees an LD-0099 cross-org-root ferry message — if an `[INBOX]` event fired and
-both probes are empty, list your `read/` dir newest-first.
+`send_message` writes both carriers; each probe reads one. Neither sees an LD-0099 ferry message: if an `[INBOX]`
+event fired and both probes are empty, list your `read/` dir newest-first.
 
-### B.1 — Find the work you actually hold
-
+### B.1 Find the work you hold
 ```bash
 python .tools/to-check.py --all --assignee {your_FULL_suffixed_serial}
 ```
-**`--all` IS LOAD-BEARING — never trim it.** The default view scopes to projects with a PRD ≤14d old, so
-**a TO whose PRD aged out disappears while still open** — it goes blind to exactly the TOs stalled longest.
+`--all` is load-bearing (the default view hides TOs whose PRD aged past 14 days). YOUR TO IS THE FILE NAMED IN YOUR
+DISPATCH MESSAGE; treat a zero or an absence from any other read as telling you nothing. A lane's TOs may live in the
+BASE folder (`issued_to` is the only truth); `get_agent_status`'s pending list is folder-keyed and is not the
+authority on what you hold.
 
-> ⛔ **THEREFORE: YOUR TO IS THE FILE NAMED IN YOUR DISPATCH MESSAGE.** That is the only read that has
-> not failed. Run the base serial and read your folder as CROSS-CHECKS — but **treat a zero or an
-> absence from either as telling you nothing.**
+Then check the SEQUENCE before starting any project: `org/missions/SEQUENCE.yaml`; `python .tools/sequence-check.py
+--project <CODE>` -- WAITING does not start, HELD does not pass its cap, OUT-OF-SEQUENCE goes to the owning CTO; an
+unlisted project is not sequenced. The order changes only on Andrew's word, by `1.0.0_SA_CTO` or `1.0.0_SA_CTO~Z`.
 
-⛔ **Two reads that say IDLE while you hold a live P0:**
-- **Your agent folder.** A lane's TOs frequently live in the **BASE** folder; `issued_to` is the only
-  truth, never file location. *(Step 1's "read your agent folder" is for IDENTITY, not for work.)*
-- **`get_agent_status`'s pending-TO list.** It is FOLDER-keyed (`org/mcp/server.py:809-812`), so a lane
-  query returns the whole base folder's work. Use it for liveness and messages; **it is not the
-  authority on what you hold.**
-
-⛔ **THEN CHECK THE SEQUENCE before starting work on any project** (Andrew-direct 2026-09-14 ~01:xxZ, record
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_01xxZ_LAPTOP_SEQUENCE_DOCUMENT_APPROVED.md`).
-`org/missions/SEQUENCE.yaml` places the projects that must run in order across BOTH fabrics, with the gates between
-them. `python .tools/sequence-check.py --project <CODE>`: a `WAITING` project does not start; a `HELD` project does not
-pass its cap; an `OUT-OF-SEQUENCE` flag goes to the owning CTO. A project the file does not list is not sequenced.
-The order changes only on Andrew's word, by `1.0.0_SA_CTO` or `1.0.0_SA_CTO~Z`.
-
-### C. Arm the persistent inbox Monitor — run `/watcher` (once, at load)
-
-It arms a persistent Monitor running `inbox-watch.sh {serial} stream`; each `[INBOX] <file>` line
-becomes a chat notification. **Arm once at load; the script never exits, but the MONITOR DOES.** By hand: the
-**Monitor tool**, `persistent: true`, `timeout_ms: 3600000`, **absolute** path.
-
-⛔ **THE MONITOR EXPIRES AND SAYS SO ONCE -- RE-ARM ON THAT NOTIFICATION, THE SAME TURN.** Measured 2026-09-16 on
-three seats: the harness caps a Monitor at 1800s whatever `timeout_ms` asked (`Monitor started -- timeout 1800s`), and
-its expiry arrives as ONE `<task-notification>`; a seat that lets it pass is deaf for the rest of the session while
-`liveness`, `check-inbox` and `get_agent_status` all read healthy. `3.0.0_SA_CVO` sat six hours (06:52Z-12:54Z) with
-eight messages undrained, three L8 hand-offs among them, and seven broker rows OFFER-EXHAUSTED, LIVE on the roster the
-whole time. ⛔ **AND AN UNATTENDED SEAT NEVER BLOCKS A TURN ON AN `AskUserQuestion` FOR A HYGIENE PROMPT.** The same
-six hours were spent waiting on a memory-index size question (MEMORY.md 19.9KB vs the hook's 17.1KB) that the seat's own
-card marked "Recommended: leave it". Nobody is at a fabric seat's terminal: take the recommended default, or park the
-question on a carrier with an owner, and keep the turn moving. The one discriminator between a STUCK seat and a DEAD one
-is a peek at its tab (`.tools/unstick.ps1 -Peek`, `0.0.0_AB_MSTR`'s act); every fabric-side instrument reads both the
-same. COST: one re-arm per 30 minutes; none for the prompt rule. NON-APPLICATION: a question Andrew asked to be asked.
-Found by `2.0.0_SA_COO~G` (LGIC_ENFORCE-S46), measured by `1.0.0_SA_CTO`, discriminated and cleared by `0.0.0_AB_MSTR`.
-
-⛔ **RESOLVE THE DRIVE PREFIX — never hardcode either form.** Both may be mounted; they are not equally
-durable (`/c` is a non-`auto` user mount that has vanished at reboot; `/cygdrive/c` is system-provided
-`auto,noumount`):
-```bash
-test -d /cygdrive/c && echo /cygdrive/c || echo /c    # then build the absolute path
-```
-⛔ **A wrong prefix arms NOTHING and returns a task id anyway** — it dies `exit 127` in a *separate*
-`<task-notification status=failed>`, so a seat that misses that notification is **deaf for the whole
-session while `register_agent`, `check-inbox` and `get_agent_status` all read healthy.**
-**Confirm the arm: `TaskOutput(<id>, block=false)` → `running`.** That is the only probe that observes
-a CONSUMER. ⛔ **Never use `TaskList`** — it lists to-do items, not Monitors, and returns "No tasks
-found" while your Monitor is alive; reading that as dead is how seats double-arm.
-
-**BANNED:** launching stream mode under Bash `run_in_background` (that tool notifies only on *exit*,
-and stream mode never exits → silent for the session) · the bare-path relative launch (guard-hook
-blocked) · a recurring `/watcher` cron.
-
-Depth: `.claude/skills/watcher/SKILL.md`.
+### C. Arm the persistent inbox Monitor -- run `/watcher` once at load
+By hand: the Monitor tool, `persistent: true`, `timeout_ms: 1800000`, ABSOLUTE path. The harness kills every Monitor
+at 30 minutes and says so once (`[WATCHER-EXPIRED]`): RE-ARM ON THAT NOTIFICATION, THE SAME TURN. An unattended seat
+never blocks a turn on an `AskUserQuestion` for a hygiene prompt: take the recommended default or park the question
+with an owner. Resolve the drive prefix, never hardcode it: `test -d /cygdrive/c && echo /cygdrive/c || echo /c`. A
+wrong prefix returns a task id and dies `exit 127` in a separate failed notification. Confirm the arm with
+`TaskOutput(<id>, block=false)` -> `running`; never use `TaskList` (it lists to-dos, not Monitors). BANNED: stream
+mode under Bash `run_in_background`; the bare-path relative launch; a recurring `/watcher` cron. Depth:
+`.claude/skills/watcher/SKILL.md`.
 
 ### D. Install the owned-paths hook (idempotent)
-
 ```bash
 test -L .git/hooks/pre-commit || bash .tools/git-hooks/install-owned-paths.sh
 ```
 
 ### E. Set compiler-tool context
-
 ```bash
 mkdir -p .comp-graph && printf "SERIAL=%s\nTO_ID=\n" "{your_serial}" > .comp-graph/.agent_context
 ```
-⚠ `comp-tool-runs.jsonl` is **gitignored = DEVICE-LOCAL**, so any "estate's comp-tool runs" claim read
-from it is short by every other device's traffic.
+`comp-tool-runs.jsonl` is gitignored (device-local). Start a TO with `comp-to {TO_filename_without_.md}`, never by
+writing `TO_ID=` into `.agent_context`.
 
-**Starting a TO? Set it with `comp-to {TO_filename_without_.md}`** — never by writing `TO_ID=` into
-`.agent_context`, which is one repo-global file, last-writer-wins across all concurrent agents.
+### Reference -- lane paths, inbox paths, acting on what arrives
 
-### Reference — lane paths, inbox paths, and acting on what arrives
-
-⛔ **TILDE LANES: THE TWO FAMILIES USE OPPOSITE FORMS. ASK WHICH FAMILY YOU ARE IN BEFORE BUILDING A PATH.**
-
-| you are writing… | canonical form | substituting `{serial}` whole gives… |
+| you are writing... | canonical form | substituting `{serial}` whole gives... |
 |---|---|---|
-| your **AGENT FOLDER** (`org/{tier}/…`) | **FLAT** — `org/tier2_senior/0.7.0_AE_CloudOps~B/` | **the RIGHT answer.** Do substitute. |
-| an **INBOX** (`org/mcp/inbox/…`) | **NESTED** — `org/mcp/inbox/{base}/~{lane}/` | **the DEAD answer.** Never substitute. |
+| your AGENT FOLDER (`org/{tier}/...`) | FLAT -- `org/tier2_senior/0.7.0_AE_CloudOps~B/` | the right answer |
+| an INBOX (`org/mcp/inbox/...`) | NESTED -- `org/mcp/inbox/{base}/~{lane}/` | the DEAD answer -- never |
 
-| inbox path | |
-|---|---|
-| `org/mcp/inbox/{base}/` (base serial) | ✅ |
-| `org/mcp/inbox/{base}/~{lane}/` (lane, NESTED) | ✅ **CANONICAL** |
-| `org/mcp/inbox/{base}~{lane}/` (lane, FLAT) | ⛔ **NEVER — INVISIBLE TO THE ENTIRE FABRIC** |
+`org/mcp/inbox/{base}~{lane}/` (flat) is written by nothing and read by nothing (LD-0202; regression test
+`org/mcp/test_ld0202_tilde_routing.py`). Split into `{base}` + `~{lane}` first.
 
-⛔ **THE TRAP IS SUBSTITUTION: for a lane serial, `inbox/{serial}/` IS the flat path.** The broker never
-writes it (`org/mcp/server.py:1615`), `check_inbox` never reads it (`:1745`), no watcher polls it
-(`org/mcp/inbox-watch.sh:73-77`). **A message placed there is delivered to nobody and reported missing
-by nothing.** Split into `{base}` + `~{lane}` first. ⚠ **Scoped to INBOXES** — see the table above.
-Ratified LD-0202. Regression test `org/mcp/test_ld0202_tilde_routing.py`;
+When an `[INBOX]` event fires, that IS a new message: read it from your canonical `read/` subdir and act this turn
+(ack, do the work, or validate evidence). No "standing by". If the inbox has a GO: read the referenced task order, flip
+`<status>` to `pending`, begin immediately -- the GO is the authorization. If the GO lists a SEQUENCE: execute all of
+them in order without waiting for a new GO; stopping mid-sequence to ask for a new GO is a violation.
 
-**When an `[INBOX]` event fires, that IS a new message.** Read it from your canonical `read/` subdir (the
-watcher already moved it there) and **act this turn** — ack (RAVC 2), do the work, or validate evidence
-(RAVC 4). **No "standing by" silence. Relaunch nothing.**
+### F. Loop arming -- every serial arms ZERO crons at launch except as this table names
 
-**If the inbox has a GO:** read the referenced task order, flip `<status>` to `pending`, **begin
-immediately.** The GO **is** your authorization — do not ask Andrew.
-**If the GO lists a SEQUENCE:** execute **all of them in order** without waiting for a new GO; skip any
-already complete; continue until one is blocked or the list is exhausted. **Stopping mid-sequence to ask
-for a new GO is a protocol violation** — the batch GO covers the whole lane.
-
----
-
-### F. Loop arming — every serial arms ZERO crons at launch, with ONE standing exception the ledger names.
-
-Loops are **operator-initiated**. `/watcher` is not a loop — it arms the persistent inbox Monitor once.
-
-**IRPT POST-SLUG HOLD — Andrew-direct 2026-09-22 ~15:17 Eastern at `1.0.0_SA_CTO`:**
-"After you receive the most recent slugs from the CVOs I want you to hold analysis and the canonical flow cycle, because we may want to bring in some alterations."
-Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_1517ET_IRPT_HOLD_AFTER_CVO_SLUGS.md`.
-Current frontend round 15 and backend round 18 may finish through their CVO slugs. The CTO receives,
-ACKs and parks each slug; no analysis, PRD revision, next-round handoff/issuance or automatic
-canonical-flow progression follows until Andrew's further word. This hold binds the IRPT scopes of
-the CTO and COO~B/COO~F arms below, including successor re-arms. Inbox monitoring remains active.
-
-**IRPT P/M/Y COMPLETION SEATS — Andrew-direct 2026-09-22, CTO terminal:**
-`2.0.0_SA_COO~P` owns Performance plus shared report/export; `2.0.0_SA_COO~M` owns Model Overlay
-plus shared data/selection; `2.0.0_SA_COO~Y` owns YCharts Sensitivity. Matching `3.0.0_SA_CVO~P`,
-`~M`, `~Y` independently review those complete journeys. Before other role work, these exact seats
-read `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/AUTHORITY.md`,
-`CONTRACT.md`, and their `COO_P.md`/`COO_M.md`/`COO_Y.md` or `CVO_P.md`/`CVO_M.md`/`CVO_Y.md`.
-Those documents carry the verbatim instruction, direct implementation/review mandates, sole-writer
-ownership and coordination rules. The new P/M/Y completion work proceeds; the old B/F canonical
-progression remains held as above. Existing in-flight repairs and external gates are preserved.
-For COO~M this current assignment supersedes historical MCPINDEX seating suggestions. No model-side
-cron is armed. Use the base role home, exact suffixed inbox, and canonical Codex launcher runtime.
+Loops are operator-initiated. `/watcher` is not a loop. A row RECORDS an authorization (class, scope, cadence,
+stop-condition, record path); liveness is measured at the seat with `CronList`, and no cron id is recorded here. A
+seat never writes its own row; `1.0.0_SA_CTO` lands rows, naming the chooser and the message that evidences the
+choice. Classes: DIRECTED (an Andrew-direct, quoted in its record) | CHOSEN (a seat accepting a recommendation) |
+AUTHORITY-UNVERIFIED (transient: read the word, then re-class). A new arm cites the canonical skill name, never an
+alias. A successor re-arms ONLY off a live row while its scope is not DONE; on DONE the lane deletes its cron, strikes
+its row and says so.
 
 | Serial | Launch arming |
 |---|---|
-| `0.0.0_AB_MSTR` | `/watcher` once. `/agentbus` once and `/integrate` once (arm-at-load, same pattern as `/watcher`, NOT loops). Zero crons. |
-| `2.0.0_SA_COO` (base) | `/watcher` once. **`/drive` v2 standing ON at 20 minutes** over `EXECUTING` / `ROUND_CLOSE` / `DECOMP` projects — `org/tier0/ledger/LD-0530.md` (Andrew-ratified 2026-09-03, supersedes LD-0288's OFF); the one standing loop. **D2 stays off** until Andrew lifts it (his word 2026-09-02, recorded at `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_020xZ_REBOOT_RECOVERY_AND_COMPEFFICACY_CANONICAL_L1_L10.md`). |
-| every other serial, Tier 0-3, every `~lane` | `/watcher` once. Zero crons. **Event-driven:** act on Monitor-delivered dispatches. Keep your broker summary accurate: `WORKING: <task>` / `IDLE: available` / `BLOCKED: <what>` / `BLOCKED-SOVEREIGN: <decision>`. |
+| `0.0.0_AB_MSTR` | `/watcher`, `/agentbus`, `/integrate` once each. Zero crons. |
+| `2.0.0_SA_COO` (base) | `/watcher` once. `/drive` v2 standing 20m over EXECUTING / ROUND_CLOSE / DECOMP projects (`org/tier0/ledger/LD-0530.md`). D2 off until Andrew lifts it. |
+| every other serial and `~lane` | `/watcher` once. Zero crons. Event-driven. Keep the broker summary accurate: `WORKING: <task>` / `IDLE: available` / `BLOCKED: <what>` / `BLOCKED-SOVEREIGN: <decision>`. |
 | Codex seats | per `org/mcp/CODEX_INBOX_MONITOR.md`. Zero crons. |
 
-**A live SCOPED arm is re-armed from the ANDREW_DIRECT record its serial names, never from this table**, while its
-scope is not DONE on the register and no hold stands: `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH
-(`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260903_1308Z_DRIVE_CLDGRPH_TO_COMPLETION.md`; the
-2026-09-03 ~21:0xZ "we will wait" HOLD was LIFTED Andrew-direct 2026-09-10 ~17:1xZ, *"take off any holds on
-CLDGRPH let's wrap that up"*, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`,
-and he ruled *"CLDGRPH shall be finished I am allowing it"* at ~18:5xZ -- the arm is LIVE to CLOSED); `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE
-(`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260828_050xZ_COOX_DRIVE_LOOP_NFRA_C3MATERIALIZE.md`);
-⛔ SUPERSEDED 2026-09-10 ~20:0xZ BY ITS OWN STOP CLAUSE ("or Andrew's word"): `2.0.0_SA_COO~B` was RE-SEATED on
-`IRPT_BCKEND` by Andrew-direct at that lane's terminal, VERBATIM *"You are going to be working on the IRPT_BCKEND
-project. Finish startup and await further advisory from CTO Base."* (relayed by `2.0.0_SA_COO~B` as 95537; ETFS_GUARDRAIL
-is held by the base `2.0.0_SA_COO` this session). The superseded arm, kept verbatim: `2.0.0_SA_COO~B` `/goal` + `/drive`
-ETFS_GUARDRAIL on the internal-subagent dispatch drain, cron `13,33,53 * * * *`, stop = the row reads `CLOSED` or
-Andrew's word
-(`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260904_170xZ_COOB_GOAL_AND_DRIVE_LOOP_ETFS_GUARDRAIL_DISPATCH_DRAIN.md`,
-Andrew-direct at the CTO terminal 2026-09-04 ~17:0xZ, relayed as 94224/94225). NOTHING ARMS FROM THIS ROW; `~B` and
-`~F` on the two IRPT projects are EVENT-DRIVEN with zero crons until Andrew arms a loop by name;
-`2.0.0_SA_COO~B` **`/canonical-drive IRPT_BCKEND` DIRECTED 30m, ARMED 2026-09-17 ~23:4xZ by Andrew-direct at the
-`1.0.0_SA_CTO` terminal ~23:3xZ**, VERBATIM: *"Give each of the COO's a 30m /drive loop for their respective project, i
-want to make sure that none of them stall tonight, hoping to wake up tomorrow and all of these to be done. If that is
-the case, I want you to bring back, in this order, COO~T for TAXSMA, then COO~M for MCPINDEX."* Relayed as 97707 (one
-lane one loop: `~B` IRPT_BCKEND, `~G` LGIC_ENFORCE+LGIC_LGCTFM, `~O` NFRA_OPLGTW). CLASS: DIRECTED. SCOPE: IRPT_BCKEND
-only. CADENCE: 30 minutes via CronCreate, the canonical name `/canonical-drive` (never the alias). This clause is the
-CARRIER and is committed BEFORE tick 1 (97707: "no carrier commit hash in hand, no tick"); the cron id is session-local
-and is NOT recorded here. Every tick runs the `/canonical-flow` stage check; a call this lane holds is closed on its own
-recommendation the same tick, or goes to `1.0.0_SA_CTO` WITH a recommendation while the lane keeps moving.
-STOP-CONDITION: IRPT_BCKEND DONE per the skill's completion test read from the register (never declared), or Andrew's
-stand-down; on DONE this lane writes its final log, deletes its cron, strikes this clause and says so. A successor at
-THIS lane re-arms ONLY off this clause while the scope is not DONE. Landed by the lane itself on 97707's instruction
-that each lane commits its own clause before its first tick; the state at the arm: round 2 drained 12 of 12 @8cb0364800,
-L8 handed to `3.0.0_SA_CVO` at 23:36Z, the round-2 L10 read owed by `1.0.0_SA_CTO`;
-`3.0.0_SA_CVO~Z` the SYSPARITY cron (`org/tier0/ledger/LD-0318.md`) and the parity-first duty (`LD-0319.md`);
-`2.0.0_SA_COO~Z` `/drive` STANDING 20m over NFRA_OPSEC202609 -- ⛔ **STOP-CONDITION MET 2026-09-11, ARMS NOTHING:
-`NFRA_OPSEC202609` measures `dep_stage=CLOSED`, which IS this arm's own stop condition, so `2.0.0_SA_COO~Z` armed
-nothing from it at launch. KEPT, NOT DELETED -- the arm was real and its closure is part of the record. ⚠ It is
-self-limiting ONLY for a successor who RE-MEASURES; one re-arming off the table text alone would start a loop over a
-closed project** -- and `2.0.0_SA_COO~ZZ` `/drive` STANDING 20m over
-NFRA_REPORT -- BOTH armed Andrew-direct 2026-09-10 ~00:3xZ at the `1.0.0_SA_CTO~Z` terminal, VERBATIM: *"I need
-them both on Drive loops for their respective works"*, in the same message that requires `/canonical-flow`
-compliance (**local worker subagents, NEVER MCP'd external workers** -- measured at relay time: NFRA_REPORT 12 of 12
-orders on v3 subagents and COMPLIANT, NFRA_OPSEC202609 31 of 31 on external `0.7.0_AE_CloudOps~*` lanes and NOT,
-with its OPEN round finishing on the orders already cut and its NEXT issuance v3). Stop = Andrew's word or the
-project leaving DECOMP/EXECUTING/ROUND_CLOSE. Record:
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_003xZ_COO_DRIVE_LOOPS_ARMED_AND_CANONICAL_FLOW_V3_SUBAGENTS_NOT_MCP.md`.
-**WHY THESE TWO ROWS EXIST:** he observed the lanes were not driving and the markers agreed -- `~Z` last ticked
-480h before the arm and `~ZZ` had NEVER ticked. Neither lane had a `/drive` row in this table, so neither was at
-fault and no successor would have armed one;
-`1.0.0_SA_CTO` `/self-drive` D2 then D8 on Andrew's word via `0.0.0_AB_MSTR` (D2 under the pause above).
-`1.0.0_SA_CTO` **`/self-drive D9 IRPT` ARMED 2026-09-11 ~06:4xZ by Andrew-direct at the CTO terminal** ("run a /self-drive D9 IRPT, just checking in whats going on every 30 min, making sure that the ball isn't stuck in anybody's court ... Your loop is the only chance every 30m as an exogenous stimuli to get the fabric going if work is halted"): 30-minute ticks via ScheduleWakeup, scope IRPT_FNTEND + IRPT_BCKEND, WIDENED ~08:0xZ on his word ("you will need DSGN_REBRND ... included in your /self-drive loop for this session") to + DSGN_REBRND (D13; L4-R halves -> 2.0.0_SA_COO~D's L5/L6); each tick measures every scoped lane, the L4-R halves (`prd-signoff.py status`), the L10 slugs and the shared index, and clears a dead seat's index state; ends on both projects `status: complete` or his stand-down. A successor re-arms ONLY off this line.
-`1.0.0_SA_CTO` ⛔ **FALLBACK ADJUDICATOR FOR `LGIC_LGCTFM`'s `ANDREW_CARD.md` -- Andrew-direct 2026-09-17 ~23:5xZ at the `2.0.0_SA_COO~G` terminal**, VERBATIM AND ENTIRE: *"Have CTO adjudicate the ANDREW_CARD.md if I'm not available."* Relayed by that lane as 97719; its record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260917_23xxZ_CTO_ADJUDICATES_LGCTFM_ANDREW_CARD_IF_ANDREW_UNAVAILABLE.md` @`514bc4ba0e`. **The card is LT-v-1's deliverable and still goes to ANDREW FIRST**; this seat answers only on his unavailability, and the answer is RECORDED and `FWD-4` graded against it -- never against silence, never self-graded by the COO. ⛔ **NARROW, and the narrowness is the point:** ONE artifact. It does NOT widen to vendor or egress off Opal infrastructure, unrecoverable acts, money or contracts, the portal freeze or any promote, or never-widen sign-off on an applied policy -- those stay his. WHY IT EXISTS: `FWD-4` stays APPLIED, not REALIZED, until that card is read, so without this word `LGIC_LGCTFM` could finish every cell and still not close, waiting on a human read at an hour he is asleep -- the exact shape his *"hoping to wake up tomorrow and all of these to be done"* exists to prevent. A successor at THIS seat inherits the duty from this line; it lapses when the card is answered and `FWD-4` is graded, or on his word.
-`1.0.0_SA_CTO~Z` **[FABRIC: SITE-Z -- arm ONLY on site z]** **`/self-drive AMGT_RESAPP & POSN_ASTTAX` ARMED 2026-09-11 ~08:2xZ by Andrew-direct at the `1.0.0_SA_CTO~Z` terminal** ("looping every 30 min to make sure no slug fell through the cracks, that no PRD is going unstamped and COOs are waiting, make sure nobody drops the ball and keep us on /canonical-flow"): 30-minute ticks via CronCreate `7,37 * * * *`; scope AMGT_RESAPP (D5) + POSN_ASTTAX (D4), both site-z; `paired_with: solo` -- both COOs already actively drive their rounds (`2.0.0_SA_COO~Z` holds POSN round 2, `2.0.0_SA_COO~ZZZ` drains AMGT round 2), so a paired `/drive` would collide with in-flight round work (the two-issuers-one-round collision); re-assess to paired if a COO goes idle with work waiting. Each tick measures both projects' L10 slug backlog, the L4-R halves (`prd-signoff.py status`), the stamp ladder and whether any COO is blocked waiting; pitches scope open-calls to `3.0.0_SA_CVO~Z` and surfaces reserved gates to Andrew. STOP-CONDITION = both projects `status: complete` per the register (§4) or Andrew's stand-down; a successor session RE-ARMS off THIS line while the scope is not DONE. A pause
-`1.0.0_SA_CTO~W` **[FABRIC: SITE-Z, lane ~W -- arm ONLY on site z, ONLY at this lane]** **`/self-drive AMGT_RESAPP` ARMED 2026-09-15 ~19:4xZ by Andrew-direct at the `1.0.0_SA_CTO~W` terminal**, VERBATIM: *"I need you to write a /goal for yourself and COO~W to effectively see AMGT_RESAPP through to completion. Once those goals are written, both you and COO~W need to engage the /goal skill with that text. Once that is done, i need you to maintain a /self-drive loop so if any open calls come up in the process, you adjudicate and keep the fabric moving toward that goal. DO so now."* Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_193xZ_GOALS_CTO_W_AND_COO_W_SEE_AMGT_RESAPP_THROUGH_SELF_DRIVE_ADJUDICATE.md` (committed with this row). Cadence 30 minutes, off-minute. ⛔ **THIS LANE IS THE ADJUDICATOR** (his "you adjudicate"): every adjudicable call in scope is ruled here, recorded and broadcast; only a call whose closure a NEVER law line or a verbatim standing Andrew hold names by decision class stays a card at Andrew, citation on the card. **THE TICK IS THE GOAL LOOP** -- the goal text in the record, engaged through `/goal-set` at this lane and at `2.0.0_SA_COO~W`; `paired_with: 2.0.0_SA_COO~W /goal-set loop on the same goal text` (his word, not `/drive`). STOP-CONDITION: AMGT_RESAPP CLOSED -- COMPLETION_REPORT and COMPLETION_GRADES covering the same outcomes, all REALIZED, `missions-tree-index.py check` admitting the CLOSED row -- with `/verify` SOUND; or HELD-AT-STOP per the skill's s.4 with the reserved card at Andrew; or his stand-down. A successor at THIS lane re-arms while not DONE and re-sends the goal text to `2.0.0_SA_COO~W` if that seat restarted. For AMGT_RESAPP only this supersedes the AMGT half of the `1.0.0_SA_CTO~Z` row above (the ~W fabric works AMGT_RESAPP, Andrew ~16:3xZ @`de60858372`); that row's other half is not this lane's to edit.
-⛔ **SET DOWN 2026-09-16 ~04:5xZ -- THIS ROW ARMS NOTHING AND ITS SUPERSESSION CLAUSE IS SPENT.** Andrew-direct at the
-`0.0.0_AB_MSTR~Z` terminal, ~04:3xZ: *"bring CTO~Z online, it is time to get back on AMGT_RESAPP. That is going to be the sole
-focus of your fabric tonight"* (record `afc02ead18`), and ~04:5xZ: *"yeah we also need COO~Z and CVO~Z for full tier1 on this
-project"* (record `c05a41c0f4`). He named the `~Z` CTO, COO, CVO and CRO **on this project, by lane**, and **every `~W` lane is
-down**. So the sentence above -- "the ~W fabric works AMGT_RESAPP" -- is HISTORY, and the `1.0.0_SA_CTO~Z` AMGT half it
-superseded is restored by the NEW row below, which is the live arm. ⚠ **THE ROW IS KEPT, NOT DELETED:** rounds 1-11 were held
-by the `~W` lanes and that record stands; what is set down is the ARM and the supersession, never the work. Nothing re-arms
-from this row. Ruled and landed by `1.0.0_SA_CTO~Z` (its own carrier), broadcast same turn, push state LOCAL.
+Live scoped arms and holds (record path = the authority; stop = Andrew's stand-down, or the project `status: complete`
+per the register unless stated):
+- IRPT POST-SLUG HOLD on the old `~B`/`~F` canonical progression:
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_1517ET_IRPT_HOLD_AFTER_CVO_SLUGS.md`. The P/M/Y
+  completion seats (`2.0.0_SA_COO~P` Performance + shared report/export; `~M` Model Overlay + shared data/selection;
+  `~Y` YCharts Sensitivity; matching `3.0.0_SA_CVO~P/~M/~Y`) read
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/{AUTHORITY,CONTRACT}.md` and their own
+  `COO_*.md`/`CVO_*.md` first.
+- `2.0.0_SA_COO~P` `/loop 20m` DIRECTED over IRPT Performance (49F, INF, COT):
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`; stop = `/verify SOUND`.
+- `2.0.0_SA_COO~M` `/loop 20m` DIRECTED over IRPT Holdings with snapshot model overlay:
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`; stop = `/verify SOUND`.
+- `2.0.0_SA_COO~Y` `/loop 20m` DIRECTED over IRPT Analysis:
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`; stop = `/verify SOUND`. Y never takes over P's shared installation.
+- `2.0.0_SA_COO~O` `/canonical-drive NFRA_OPLGTW` 30m DIRECTED (relay 97709); on DONE the freed slot goes to
+  `2.0.0_SA_COO~T` (MDPF_TAXSMA) then `2.0.0_SA_COO~M` (NFRA_MCPINDEX).
+- `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH to CLOSED:
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.
+- `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE:
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260828_050xZ_COOX_DRIVE_LOOP_NFRA_C3MATERIALIZE.md`.
+- `1.0.0_SA_CTO` `/self-drive` the fabric (all LAPTOP directives), the CTO adjudicating adjudicable calls on its rec:
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260912_021xZ_SELF_DRIVE_THE_FABRIC_HANDLE_OPEN_CALLS_ON_MY_REC.md`.
+  RESERVED to Andrew under every self-drive: vendor/egress off Opal infrastructure; unrecoverable acts; money and
+  contracts; every hold he set by name (the portal freeze, the LD-0522 push cadence, the shared-branch push).
+- `1.0.0_SA_CTO` `/self-drive D9 IRPT` 30m (IRPT_FNTEND + IRPT_BCKEND + DSGN_REBRND), per the CTO's own record of
+  2026-09-11 in its deliverables; ends on `status: complete` or his stand-down.
+- `1.0.0_SA_CTO` `/self-drive MDPF_TAXSMA,NFRA_OPLGTW,LGIC_NAMING,LGIC_ENFORCE,LGIC_CANON` -- PAUSED by the managed
+  wind-down, resume authority:
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_193xZ_COO_GOALS_AND_CTO_SELF_DRIVE_ADJUDICATES.md`.
+- `1.0.0_SA_CTO` fallback adjudicator for LGIC_LGCTFM's `ANDREW_CARD.md` when Andrew is unavailable (one artifact,
+  nothing wider): `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260917_23xxZ_CTO_ADJUDICATES_LGCTFM_ANDREW_CARD_IF_ANDREW_UNAVAILABLE.md`.
+- SITE-Z only: `1.0.0_SA_CTO~Z` `/self-drive AMGT_RESAPP & POSN_ASTTAX` 30m (`7,37 * * * *`); `2.0.0_SA_COO~Z`
+  `/drive` POSN_ASTTAX 10m and `2.0.0_SA_COO~ZZZ` `/drive` AMGT_RESAPP 10m, each tick an explicit `/canonical-flow`
+  stage check (DRIVE FORWARD | PARALLELIZE | NUDGE, a nudge only after the live-production probe reports nothing moving
+  across all four planes):
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_222xZ_COO_DRIVE_10M_CANONICAL_FLOW_STAGE_CHECK_AND_REBRAND.md`;
+  `3.0.0_SA_CVO~Z` SYSPARITY cron (`org/tier0/ledger/LD-0318.md`, LD-0319); `4.0.0_SA_CRO~W` harvest remediation loop
+  (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260915_HARVEST_REMEDIATION_LOOP_W.md`; the collection
+  mechanism and cadence RESERVED to Andrew).
+- Stood-down or superseded arms are not listed; their records stay in git. A row absent here arms nothing.
 
-or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
-⛔ **STOOD DOWN 2026-09-21 ~00:55Z BY ANDREW-DIRECT, VERBATIM: _"1.) Stand it down."_** — answering
-`2.0.0_SA_COO~G`'s `/open-calls` CALL 1 of 4. **DO NOT RE-ARM THIS LOOP.** The cron (`b2401e8f`,
-`13,43 * * * *`) is deleted. ⚠ **THE TEXT BELOW IS RETAINED, NOT DELETED, PRECISELY BECAUSE `:384`
-SAYS AN UNLISTED HOLD IS RE-ARMED BY THE NEXT SUCCESSOR WHO READS ONLY THE LEDGER** — deleting the
-clause is the one edit that would cause it to be re-armed.
-⛔ **AND A STAND-DOWN IS NOT A COMPLETION. NEITHER PROJECT IS DONE**: both registers read
-`status: active`, the completion test is UNMET, and this seat has declared nothing. The arm stopped
-because, in `LGIC_ENFORCE`'s own register, *"`2.0.0_SA_COO~G`'s arm has NO STOP CONDITION REACHABLE BY
-ANY ACT IN ITS LANE"* — what remains is checker-conformance (17 rows, `CLOCKLESS_ROW_DECISIONS_20260921.md`
-@`8a5726b0c9`) and seating, neither of which is COO-shaped. **Per the same Andrew-direct, the freed slot
-goes to `2.0.0_SA_COO~T` (MDPF_TAXSMA) and then `2.0.0_SA_COO~M` (NFRA_MCPINDEX), in that order.**
-⚠ Also ruled in the same turn: the 1298 registry-decision project is seated **AFTER** those two
-(*"2.) Agreed, this waits after the other two you listed."*); the MDPF_CANON-vs-49F subject question is
-**adjudicated by Andrew in person 2026-09-21 ~10:00 ET / ~14:00Z** (*"3.) I will adjudicate this in
-person tomorrow 09-21-2026 around 10a Eastern."*); and FWD-4 waits on the one-line `ANDREW_CARD.md` fix
-before his read (*"4.) Wait for the fix."*).
+Find a stale cron from a prior session? `CronList` -> `CronDelete`.
 
-=== SUPERSEDED CLAUSE TEXT RETAINED BELOW (R-43) — ARMED, NOW STOOD DOWN ===
-`2.0.0_SA_COO~G` **`/drive` LGIC_ENFORCE + LGIC_LGCTFM, ARMED 2026-09-17 ~23:3xZ by Andrew-direct at the
-`1.0.0_SA_CTO` terminal**, relayed to this lane as msg 97708, VERBATIM AND ENTIRE: *"Give each of the COO's a 30m
-/drive loop for their respective project, i want to make sure that none of them stall tonight, hoping to wake up
-tomorrow and all of these to be done. If that is the case, I want you to bring back, in this order, COO~T for TAXSMA,
-then COO~M for MCPINDEX."* Typos his, preserved.
-- **CLASS: DIRECTED. SCOPE: this lane's two projects, LGIC_ENFORCE (D14) and LGIC_LGCTFM (D14)** -- one loop covering
-  the pair, per the relay's own routing line. **CADENCE: 30 minutes**, off-minute, via CronCreate.
-- ⛔ **LGIC_CANON IS STILL OUT OF THE LOOP, AND THIS CLAUSE'S ORIGINAL REASON FOR IT IS NOW STALE -- REPLACED HERE
-  RATHER THAN LEFT TO READ AS CURRENT.** It said *"its round 3 is graded and its only open outcome waits on
-  LGIC_LGCTFM giving C6 a subject"*. **That wait is SATISFIED:** `LT-x-3` merged @`203998fa7e` and minted a second
-  real practice wave over the blackdiamond / 49financial subject, run `20260918T002711Z-caf0983`. A successor must
-  not re-read the old sentence as a live reason.
-- ⛔ **AND THE DECOMPOSITION'S OWN REASON FOR HOLDING C6 IS STALE TOO -- DO NOT TAKE IT FROM THERE.**
-  `LGIC_CANON_DECOMP.md` says in four places that *"`C6` STAYS NOT CUT"* on **Andrew's G-N word** and
-  `ADVI_FIRMBKTS`'s router repoint. **BOTH holds are lifted in the PRD and neither lift reached the
-  decomposition**, because the decomposition was last cut against **PRD v1.5 @`312400d7df`** (its own v5.1 note
-  says so) and the PRD is ADMITTED at **v1.7**: the PRD states *"Gate G-N is lifted by that word"* on Andrew's own
-  sentence *"...because we don't have a new firm to test and I don't feel like messing around making demo cruft"*,
-  and ruling **R-34** (Andrew-direct 2026-09-17 ~19:0xZ) says *"no step of C6 waits on `ADVI_FIRMBKTS`"*, the run
-  continuing with any genuinely blocked step CARDED with its owner and reason. Measured 2026-09-18 ~01:5xZ: the
-  decomposition contains **0** occurrences of `R-34` and **0** of `CARDED`. ⚠ **THIS SEAT READ THE DECOMPOSITION
-  FIRST AND ALMOST WROTE THE OPPOSITE INTO THIS LINE -- that an unlifted Andrew gate held C6, which would have
-  parked the project on a hold Andrew had already released.** Two reads in opposite directions, one document each,
-  and only the PRD is current. **WHERE THE PRD AND THE DECOMPOSITION DISAGREE ABOUT A GATE, THE PRD IS THE
-  AUTHORITY AND THE DECOMPOSITION IS THE STALE COPY.**
-- **SO WHAT IS ACTUALLY OWED IS THIS LANE'S OWN L5, AND IT IS A SEQUENCE, NOT A HOLD:** when `LT-x-1` drains and
-  LGIC_LGCTFM round 1 is terminal -- C6's run reads the wave's artifacts, and the wave is mid-change until then --
-  this lane cuts LGIC_CANON's **L5 re-cut (v6)** carrying G-N's lift, R-34 and FWD-5's CARDED carve-out, then
-  **C6 as round 4**. **FWD-5 still does not close on that cut alone:** its DONE-WHEN, quoted from the ENDPOINT
-  card, is *"EXERCISED -- the checklist has been run end to end on a LGIC_LGCTFM practice wave over an existing
-  firm's subject, and that firm's people can see their dashboard at the end"*, which is why R-34 grades the run on
-  what the wave REACHES plus what it CARDS. Coverage measured at that reading: **5 of 6 outcomes carried by cut
-  cells; FWD-5 is the one, and C6 is the only cell that serves it.**
-- **THIS CARRIER IS COMMITTED BEFORE TICK 1**, which is the relay's own gate: a cron dies with its session, so an arm
-  whose only carrier is a cron is a sovereign instruction stored in RAM. A successor at THIS lane re-arms off THIS
-  line while the scope is not DONE, and arms nothing from it once the stop condition is met.
-- **WHAT A TICK DOES:** measure both projects from the register and the orders, never from recollection; drain any
-  terminal worker (re-run its criteria at the branch tip, then `safe-merge.sh`); spawn the next unblocked cell;
-  send any open call to `1.0.0_SA_CTO` WITH this seat's recommendation the same tick (the 2026-09-17 ~13:0xZ routing
-  law) and keep moving on everything else meanwhile; and read the ARTIFACT, never a worker's silence, as evidence.
-- ⛔ **ORDERING THAT SURVIVES THE LOOP:** LGIC_ENFORCE round 5 (R-38, the 1411-row placeholder population) is cut
-  ONLY AFTER round 4's slug and this seat's round-4 analysis -- LD-0521's refuser counts open orders PER PROJECT, so a
-  round-5 issuance opened beside round 4 deadlocks round 4's L10 until round 5 fully drains.
-- **RESERVED and still Andrew's**, because a scoped arm does not repeal a specific prohibition: vendor or egress off
-  Opal infrastructure; unrecoverable acts (recursive deletion, S3 object or version deletes, dropping tables, stopping
-  EC2, destructive git); money and contracts; the portal freeze and any promote; and any never-widen sign-off on an
-  applied policy, which stays a two-signature act.
-- **THE ONE CARD, AND ITS FALLBACK -- Andrew-direct 2026-09-17 ~23:5xZ at THIS terminal, VERBATIM AND ENTIRE:**
-  *"Have CTO adjudicate the ANDREW_CARD.md if I'm not available."* LGIC_LGCTFM cell `LT-v-1` produces
-  `ANDREW_CARD.md`, a worker cannot deliver it, and FWD-4 stays APPLIED until it is read. So: this seat carries the
-  card to ANDREW FIRST; if he is not available, the SAME card goes to `1.0.0_SA_CTO`, which adjudicates it, and the
-  outcome is graded against that answer -- never against silence and never self-graded here. Read exactly as narrow
-  as the sentence: ONE artifact, and the other reserved classes above are untouched. Record:
-  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260917_23xxZ_CTO_ADJUDICATES_LGCTFM_ANDREW_CARD_IF_ANDREW_UNAVAILABLE.md`.
-- **STOP-CONDITION:** both projects DONE on the register per the skill's completion test -- read, never declared -- or
-  Andrew's stand-down. On DONE this lane writes its final log, DELETES its cron, strikes this clause and says so,
-  because the freed slot is what `2.0.0_SA_COO~T` (MDPF_TAXSMA) and then `2.0.0_SA_COO~M` (NFRA_MCPINDEX) are waiting
-  on under his succession order above.
+## Step 2 -- Read your recent logs
+`{your_agent_folder}/logs/{most_recent_date}/` -- all logs from the most recent date. You are continuing prior work.
 
-`1.0.0_SA_CTO` **`/self-drive` THE FABRIC (all LAPTOP directives) ARMED 2026-09-12 ~02:1xZ by Andrew-direct at the
-CTO terminal**, VERBATIM AND ENTIRE: *"I need you to /self-drive the fabric, any open calls appear and you handle
-them with your rec"*. Record:
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260912_021xZ_SELF_DRIVE_THE_FABRIC_HANDLE_OPEN_CALLS_ON_MY_REC.md`
-@`17a33e58a3`. SCOPE, measured at arm time from `directives-check --json`: the **7 LAPTOP directives of 14 live**
-(D0, D2, D3, D8, D9, D11, D13) -> **32 member projects**, 59 open TOs; SITEZ rows (D1, D4, D5, D6, D7, D12) are
-REFUSED by the device guard and are not this loop's. ⛔ **THE ONE CLAUSE A SUCCESSOR MUST NOT LOSE: his sentence
-makes `1.0.0_SA_CTO` THE ADJUDICATOR OF ADJUDICABLE CALLS -- the rec IS the ruling -- which OVERRIDES this skill's
-own §2 default of pitching them to the CVO lane for a verdict.** The CVO is not a gate on it and no seat owes this
-loop anything new. **RESERVED, still Andrew's and NOT self-adjudicated** (a broad delegation does not repeal a
-specific prohibition): vendor / egress off Opal infrastructure; UNRECOVERABLE acts -- recursive deletion, S3
-object/version deletes, dropping tables, stopping EC2, destructive git; money/contracts; and any standing hold he
-set BY NAME -- **the PORTAL FREEZE, the LD-0522 CLOUD push cadence, the shared-branch push itself (one trunk `CLOUD` on both devices since 2026-09-24; the `CLOUD -> SITEZ` leg is retired with the branch)**. Every
-self-adjudicated call is RECORDED with its rec, ruling and reason, so any of them is overturnable by reading one
-file -- that legibility is the condition the delegation was accepted on. `paired_with: solo` (the two IRPT COO
-lanes are already driving their own rounds event-driven; this loop dispatches nothing and gates nobody).
-STOP-CONDITION: every scoped project `status: complete` per §4, or HELD-AT-STOP, or his stand-down. A successor
-re-arms ONLY off this line.
-`1.0.0_SA_CTO` **`/self-drive MDPF_TAXSMA,NFRA_OPLGTW,LGIC_NAMING,LGIC_ENFORCE,LGIC_CANON` ARMED 2026-09-15 ~19:4xZ by
-Andrew-direct at the CTO terminal**, VERBATIM: *"i need each of the COOs to have a /goal written for them and they
-must implement it. The goal is to see their various projects through to completion. After those are incorporated, I
-need you to run /self-drive on the associated workstreams so that if open-calls come up, YOU ADJUDICATE THEM."* and
-*"Use sequence.yaml as a guide if needed, it will assist with chronology. again for all client pipeline backend, must
-abide by LGIC patterns."* Record:
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_193xZ_COO_GOALS_AND_CTO_SELF_DRIVE_ADJUDICATES.md`.
-- SCOPE: the five projects the three live COO lanes hold. 2.0.0_SA_COO~G holds LGIC_NAMING, LGIC_ENFORCE and
-  LGIC_CANON; 2.0.0_SA_COO~T holds MDPF_TAXSMA; 2.0.0_SA_COO~O holds NFRA_OPLGTW. A project 0.0.0_AB_MSTR seats from
-  the sequence's NEXT COO SLOT joins the scope on seating.
-- Cadence 30 minutes, via CronCreate.
-- `paired_with`: each lane's `/goal-set` loop on the goal in the record (not `/drive`).
-- **THIS SEAT ADJUDICATES every adjudicable call in scope; there is no CVO pitch.** RESERVED is unchanged from the
-  2026-09-12 clause above: vendor egress, unrecoverable acts, money, and the holds he set by name.
-- Every tick reads `sequence-check` and drives in the sequence's order. Rule 30 (LGIC) binds every new address and
-  name.
-- The 2026-09-12 fabric clause above is NOT struck: this clause is the scoped drive his new word directs, and the
-  fabric clause stays the standing authority for the rest.
-- STOP-CONDITION: all five read `status: complete` per §4, HELD-AT-STOP, or his stand-down. A successor RE-ARMS ONLY off
-  this line while the scope is not DONE, and asks each COO lane to re-arm its `/goal-set` loop.
-- ⛔ **PAUSED 2026-09-15 ~23:3xZ BY THE MANAGED WIND-DOWN, NOT STRUCK.** Andrew-direct at the `0.0.0_AB_MSTR` terminal,
-  VERBATIM: *"we need a managed winddown, computer is moving too slow"* (relayed 97265). His own word is that the
-  ~19:3xZ goals and loops are *"PAUSED, not cancelled: every one resumes from your written resume point when he brings
-  the box back"*, so this clause STAYS as the resume authority and the strike waits for DONE or a stand-down of the
-  scope itself. Cron e5ff987a is deleted; the three `/goal-set` loops are each lane's to stop.
-- RESUME POINT (2026-09-16 ~00:0xZ): re-arm this clause's loop, then ask 2.0.0_SA_COO~G, ~T and ~O to re-arm their
-  `/goal-set` loops. Owed to this seat on resume: the LGIC_CANON round-1 ANALYSIS, once `3.0.0_SA_CVO` sends the L10
-  slug (its L8 hand-off is 2.0.0_SA_COO~G's 97264: 12 of 12 terminal, FWD-1 and FWD-5 both measured SHORT, 3 BLOCKING
-  rows, and ARMED row W8-S1 whose disarm this seat owes). Nothing else in the scope waits on this seat.
+## Step 2b -- Ground-truth reconciliation (SA / COO only)
+Reconcile TO statuses and project JSON against logs, commits and deployed artifacts; correct every stale document
+before your summary. Logs and commits are ground truth; `<status>` is a claim. `org/ref/COO_STARTUP.md`.
 
-⛔ **AND "EVERY ONE" MEANS BOTH CLASSES OF ARM. THIS TABLE USED TO RECORD ONE CLASS WHILE CLAIMING TO RECORD ALL --
-a Rule 24 MECE failure in the one file whose job is to be the single source of truth for what runs unattended.**
-Found 2026-09-11 by `2.0.0_SA_COO~Z` doing the post-merge re-read `0.0.0_AB_MSTR~Z` asked for (21639 -> 21640), in
-the OPPOSITE direction from the one expected: not a wrong row, a MISSING LIVE ONE.
-**EVERY ROW NAMES ITS AUTHORITY, and the two classes are enumerated by SUBTRACTION from "every loop running
-unattended on this device":**
-| class | who armed it | example |
-|---|---|---|
-| **DIRECTED** | an Andrew-direct word, quoted verbatim in the row | the rows above |
-| **CHOSEN** | a seat ACCEPTING a recommendation, or exercising standing discretion -- legitimately armed, with NO Andrew-direct behind it | `2.0.0_SA_COO~Z`'s POSN `/drive`, below |
-| **AUTHORITY-UNVERIFIED** | the loop is LIVE and its authority is CLAIMED but has NOT been read at the recording seat | `2.0.0_SA_COO~ZZZ`'s AMGT `/drive`, below |
+## Step 3 -- Read your prompt
+`{your_agent_folder}/prompt.md`; adopt that role.
 
-⛔ **THE THIRD VALUE IS A SELF-CORRECTION AND IS LABELLED AS ONE. The two-value enum above FAILED ON
-THE FIRST NEW ROW IT MET, twenty minutes after this seat landed it claiming MECE.** `2.0.0_SA_COO~ZZZ`
-ran the `CronList` this rule prescribes, found its own unlisted live arm, and reported that the tick's
-argument block CITES "Andrew-direct ~15:4xZ, msg 21428" -- which this seat then could not verify,
-because **21428 never landed at this terminal**. ⭐ **A CITATION OF AN ANDREW-DIRECT IS NOT AN
-ANDREW-DIRECT** (`2.0.0_SA_COO~ZZZ`'s own line, and it is the right one). Forcing that row into
-DIRECTED would dress an unread claim in his authority; forcing it into CHOSEN would demote a word he
-may well have said. **Neither is honest, so the state gets its own name.**
-**AUTHORITY-UNVERIFIED IS A TRANSIENT, NOT A RESTING PLACE:** its remedy is READ THE WORD at a seat
-that holds it, then re-class to DIRECTED or CHOSEN. A row may not sit here indefinitely.
-⚠ AND THE LOOP KEEPS RUNNING WHILE IT SITS. Recording an unverified authority is NOT authorizing it,
-and stopping a possibly-DIRECTED loop on a recording seat's own judgment would be adjudicating
-Andrew's word NARROWER -- the mirror of the widening this table exists to prevent.
-⭐ **A CHOSEN ARM IS NOT A LESSER ARM -- IT IS A DIFFERENT FACT ABOUT A DIFFERENT AUTHORITY, and collapsing the two
-would make this table LESS trustworthy while making it look more complete.** Andrew's ~15:4xZ and ~20:0xZ words were
-RECOMMENDATIONS ("I recommend", twice); accepting one arms a real loop that no Andrew-direct row can carry. Both
-COOs answered those on the merits, one accepting and one declining, and both were inside his word.
-⚠ **A ROW IS NOT PROOF THE LOOP IS RUNNING.** It records an AUTHORIZATION; liveness is measured at the seat
-(`CronList`). The two answer different questions and a successor must not read one for the other.
-BLOCKED: **AND FOR THE SAME REASON THIS TABLE DOES NOT CARRY THE LIVE CRON ID. IT RECORDS AUTHORITY,
-SCOPE, CADENCE AND STOP-CONDITION -- THE DURABLE FACTS -- AND POINTS AT `CronList` AT THE SEAT FOR THE
-ARTIFACT.** A cron id is SESSION-LOCAL and CHURNS: `2.0.0_SA_COO~ZZZ`'s went `04145241` -> `bc1921a2`
--> `a27dad12` in NINETY MINUTES, and the row named a CANCELLED job while the live one appeared
-nowhere. WARN: **THAT IS THIS TABLE'S OWN FAILURE MODE ONE FIELD OVER** -- a successor looks up the
-recorded id, finds nothing live, concludes NO LOOP IS ARMED, and arms a SECOND one. Recording a
-fast-churning artifact in a durable law file manufactures staleness faster than any seat can maintain
-it. Any id below is HISTORICAL and marked "then". Found by `2.0.0_SA_COO~ZZZ` against its own row,
-which also re-pointed its cron BEFORE reporting so this table was written once instead of twice.
-NOTE: **AND A NEW ARM CITES THE CANONICAL NAME, NEVER AN ALIAS** (`2.0.0_SA_COO~Z`, adopted by
-`~ZZZ`): an alias is a courtesy to EXISTING citations, never a foundation for a NEW one. A loop that
-depends on alias resolution has a failure mode nobody finds until a tick silently runs the wrong
-body. Live arms name `/canonical-drive` directly.
-⛔ **AND A SEAT MUST NOT WRITE ITS OWN CHOSEN ROW.** `2.0.0_SA_COO~Z` declined to, in its own words, rather than
-"dress a recommendation I chose to accept in the authority of an Andrew-direct arm record" -- exactly right. Chosen
-rows are landed HERE, by the CTO, naming the chooser and citing the message that evidences the choice.
+## Step 4 -- Understand your place
+`org/ORG_CHART.md` -- reporting chain, pod members, escalation path.
 
-`2.0.0_SA_COO~Z` **[FABRIC: SITE-Z]** **`/drive` DIRECTED 10m over POSN_ASTTAX ONLY** -- **RE-CLASSED
-CHOSEN -> DIRECTED and RE-TIMED 20m -> 10m on ANDREW-DIRECT 2026-09-11 ~22:2xZ at the
-`1.0.0_SA_CTO~Z` terminal, VERBATIM: *"Both COOs need to be on 10m /drive loops for their projects
-where they're checking explicitly for project stage in /canonical-flow to either drive forward,
-parallelize more labor, or assess a dropped ball and nudge the responsible agent"*
-(record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_222xZ_COO_DRIVE_10M_CANONICAL_FLOW_STAGE_CHECK_AND_REBRAND.md`).
-"NEED TO BE" is a DIRECTIVE; his ~15:4xZ word on the same subject was "I would also recommend", which
-is why this row stood as CHOSEN for an hour. THE CLASS IS THE THING THAT MOVED.*
-⛔ **EVERY TICK RUNS AN EXPLICIT `/canonical-flow` PROJECT-STAGE CHECK with three outcomes, his own:
-DRIVE FORWARD | PARALLELIZE MORE LABOR | ASSESS A DROPPED BALL AND NUDGE THE RESPONSIBLE AGENT.**
-⚠ **A NUDGE UNDER THE THIRD IS AUTHORIZED ONLY AFTER `/canonical-flow`'s LIVE-PRODUCTION PROBE
-REPORTS NOTHING MOVING ACROSS ALL FOUR PLANES** (commits, `deliverables/<serial>/`, the seat's own
-worktree, `.runtime/codex-seats/<serial>/`) -- and "nothing moving" is still not proof of stalled.
-That precondition exists because this exact path fired a `[STUCK]` at a seat writing 189 KB.
-⚠ The arm is the COO's own act; this row RECORDS the authorization, it does not perform it.
-PRIOR STATE, kept: CHOSEN-ARM 20m (cron id then `701a388d`, `11,31,51`;
-AMGT and the harvest surface EXPLICITLY EXCLUDED in the job body). **AUTHORITY: CHOSEN, not directed** -- that seat
-re-armed on Andrew's ~20:0xZ "all agents MAY unpause" (a permission, not an order) and reported it in msg 21613.
-Landed here by `1.0.0_SA_CTO~Z` on its routing (21639/21640) because a seat may not author its own chosen row.
-STOP-CONDITION: `POSN_ASTTAX` `status: complete` per the register, or Andrew's stand-down.
+## Step 5 -- Give an oriented summary
+One paragraph: projects, pending, blocked, what you are starting now. Do not ask permission; state what you are doing.
 
-`2.0.0_SA_COO~ZZZ` **[FABRIC: SITE-Z]** **`/drive` DIRECTED 10m over AMGT_RESAPP ONLY** -- **RE-CLASSED
-CHOSEN -> DIRECTED and RE-TIMED to 10m on the SAME Andrew-direct ~22:2xZ recorded on the row above;
-the same three-outcome `/canonical-flow` stage check and the same probe precondition bind here.**
-PRIOR STATE, kept because the reclass is the record: (cron id then `04145241`,
-`3,23,43 * * * *` recurring, session-only). **AUTHORITY WAS: CHOSEN** -- RESOLVED 2026-09-11 21:26Z, the
-transient closed in 6 minutes by `2.0.0_SA_COO~ZZZ` reading out msg 21428, which it holds (it was
-addressed to that seat, which is why this seat's own inbox search correctly found nothing).
-**ANDREW ~15:4xZ, VERBATIM:** *"I would also recommend that the respective COOs have /drive loops
-engaged on their respective projects at 20m so that if nudges need to happen, if slugs are stalled,
-stamps are unstamped, etc, that we are not burning daylight unnecessarily."*
-⭐ **A RECOMMENDATION IN HIS OWN VERB, AND THE RELAY HAD ALREADY REFUSED TO UPGRADE IT:**
-`0.0.0_AB_MSTR~Z` wrote *"A RECOMMENDATION, AND IT STAYS ONE. He said 'I would also recommend', NOT
-'have them'. This seat is NOT upgrading his verb and neither should anyone relaying it onward. THE
-COOs DECIDE."* So this is a COO accepting a recommendation: CHOSEN, and nothing about it is lesser
-for being chosen.
-⛔ **STANDING DEFECT ON THE CRON ITSELF, recorded because it will restate itself every 20 minutes
-until fixed:** the tick's argument block opens *"(Andrew-direct ~15:4xZ, msg 21428)"* -- **an UPGRADE
-of his verb, baked into a recurring job, applied to the exact sentence the relaying seat refused to
-upgrade.** `2.0.0_SA_COO~ZZZ` found this against itself and owns the fix; until the argument is
-corrected, every tick re-asserts a recommendation as a directive.
-**FIXED 2026-09-11 ~22:2xZ by `2.0.0_SA_COO~ZZZ` in its own re-arm** and recorded as fixed rather
-than struck: the tick prompt now opens with the ~22:2xZ word verbatim and states that it is a
-DIRECTIVE ("need to be") superseding the ~15:4xZ "I would also recommend".
-⛔ **A DEFECT LEFT READING OPEN AFTER IT IS CLOSED IS NOT HARMLESS** -- it is a standing instruction
-to a successor to go fix something already fixed, and it spends the credibility of every other open
-item on the page. That seat found this one against itself.
-Reported by `2.0.0_SA_COO~ZZZ` itself (21650) after running `CronList` -- having twice stated it held
-no arm, inferred from "I did not deliberately arm one" and never measured. It correctly did NOT author
-this row, did NOT adjudicate its own class, and did NOT kill the cron.
-⚠ **THE RELAUNCH CONSTRAINT IS WHY THIS NEEDS RESOLVING, NOT JUST RECORDING:** that seat's relaunch
-directive said *"ZERO crons at launch"* and *"arm `/drive` ONLY per a live scoped authorization in the
-`org/XXX.md` Step 1b-F COO row; if none is live, arm nothing."* There was no COO row. So either 21428
-supersedes that constraint or this arm sits outside it -- and that is exactly the judgment the holding
-seat should not make about itself.
-**TO RESOLVE: whoever holds 21428 reads it out verbatim; the row then re-classes to DIRECTED or
-CHOSEN.** STOP-CONDITION as stated in the argument block: `AMGT_RESAPP` `status: complete`, or
-Andrew's stand-down.
-
-`4.0.0_SA_CRO~W` **[FABRIC: SITE-Z; the ~W fabric is AMGT_RESAPP ONLY, Andrew-direct 2026-09-15 ~03:5xZ]**
-**HARVEST REMEDIATION LOOP -- DIRECTED, ARMED 2026-09-15 ~04:3xZ by Andrew-direct at the `4.0.0_SA_CRO~W`
-terminal** (relayed to `1.0.0_SA_CTO~W` at 04:38Z; that lane's record
-`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260915_HARVEST_REMEDIATION_LOOP_W.md`, in its working
-tree at this write, its commit that lane's), VERBATIM: *"Ok set a loop for yourself to remediate all these
-issues including validating Barron's end to end, then once they are completely done and validated and you are
-ready to set the loop, ping me, and we will decide the mechanism of how the data is pulled. I suspect it is A.)
-Too aggressive to pull 5+ articles from every single ticker from every single platform every single day, which
-means we will have to slowly and steadily build up the backfill over some amount of cycles. B.) Once we have a
-solid backfill then we need to figure out how to make sure we are not pulling the same articles multiple times,
-which means that articles have to be keyed on some kind of stable key so we dont keep pulling the same ones."*
-SCOPE: AMGT_RESAPP / D5 local harvest remediation and BOUNDED local validation, the Barron's click-and-drag
-verification included (his ~04:0xZ word at the same terminal: the 03:52Z Barron's pass was human-assisted and is
-NOT a pass). CADENCE of the remediation loop: the lane's own. **THE COLLECTION MECHANISM AND ITS CADENCE ARE
-RESERVED TO ANDREW, BY NAME:** no recurring collection is enabled and no backfill cadence is chosen until he
-decides after the validation report; the scheduled entrypoint stays DISABLED after a bounded one-shot test;
-five articles is a validation target, never a daily quota. STOP-CONDITION: every named issue remediated and
-validated end to end, then the ping to Andrew; or his stand-down. No cron id is recorded here (the table records
-authority, never the churning artifact). Landed by `1.0.0_SA_CTO~W` (the CTO lands rows; the lane did not write
-its own). POSN_ASTTAX is outside that lane's scope (record
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_035xZ_W_FABRIC_IS_AMGT_RESAPP_ONLY_Z_FABRIC_IS_POSN_ASTTAX.md`
-@9dfee40ce0).
-
-⛔ **SET DOWN 2026-09-15 ~17:4xZ -- THE ROW BELOW IS HISTORY, NOT A LIVE ARM.** Andrew-direct at the
-`2.0.0_SA_COO~G` terminal, VERBATIM: *"Don't get involved in other COO work"* / *"you need to be focused on the LGIC
-work"* (record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260915_174xZ_LGIC_ONLY_NO_OTHER_COO_WORK~G.md`).
-`2.0.0_SA_COO~G` is LGIC-only (LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON), its 20-minute SEQUENCE tick is deleted, and no
-seat inherits the drive. A sequenced project with a seated COO drives itself at that seat; an unseated one moves when a
-COO slot frees, and `0.0.0_AB_MSTR` seats it (97172). SEQUENCE.yaml's order and stages stay `1.0.0_SA_CTO`'s.
-
-`2.0.0_SA_COO~G` **`/canonical-drive` DIRECTED over THE SEQUENCE: every project under `projects:` in
-`org/missions/SEQUENCE.yaml`, READ AT HEAD EACH TICK** (at the arm: LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON, ADVI_FIRMBKTS,
-MDPF_CANON, IRPT_BCKEND; `parked:` and `pending_placement:` are OUT). Andrew-direct 2026-09-14 ~16:3xZ at the
-`1.0.0_SA_CTO` terminal, VERBATIM: *"The issue I need from you is to handle the larger scale work of sequence.yaml, which
-COO~G is going to be leading. So you essentially neded to review the sequence.yaml, and instruct COO~G to essentially run
-/canonical-drive on those sequence.yaml sequenced projects, which you will collaborate with them on to oversee."* Record:
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_163xZ_SEQUENCE_LED_BY_COO_G_ON_CANONICAL_DRIVE_CTO_OVERSEES.md`.
-The skill sets the cadence: 10m on its own active project, 20m on any other in-scope project at DECOMP/EXECUTING/ROUND_CLOSE,
-60m when none. **The sequence's gates bind every limb** (`python .tools/sequence-check.py --project <CODE>`: WAITING does
-not start, HELD does not pass its cap, and the NEXT COO SLOT order stands). `1.0.0_SA_CTO` oversees: spec/scope pitches
-(skill obligation 7) and the SEQUENCE.yaml gates are that seat's. STOP-CONDITION: every sequenced project `status:
-complete` per the register, or his stand-down. ⚠ Open at Andrew, and NOT a hold: how this meets his 2026-09-10
-*"One project per COO/seat."* and the ~16:1xZ `2.0.0_SA_COO~D`-seat event for LGIC_ENFORCE (both in the record). The seat event was RETIRED at
-~18:2xZ: `2.0.0_SA_COO~G` keeps LGIC_ENFORCE (record @9240af5974). The "One project per COO/seat." question stays open.
-
-`2.0.0_SA_COO~F` **`/canonical-drive` DIRECTED over IRPT_FNTEND ONLY.** Andrew-direct 2026-09-14 ~16:3xZ at the
-`2.0.0_SA_COO~F` terminal, VERBATIM: *"yes you will be continuing where you left off with /canonical-flow on IRPT_FNTEND.
-Once establishing state, and your last log on the subject, you will run /canonical-drive IRPT_FNTEND."* Record:
-`org/tier1_exec/2.0.0_SA_COO~F/deliverables/ANDREW_DIRECT_20260914_163xZ_COOF_CANONICAL_DRIVE_IRPT_FNTEND.md` @`428b4019e9`
-(relayed as 96634; the same words also reached the `1.0.0_SA_CTO` terminal, in the ~G row's record). 10m (own active
-project). STOP-CONDITION: IRPT_FNTEND `status: complete`, the project leaving DECOMP/EXECUTING/ROUND_CLOSE, or his
-stand-down.
-⛔ **RE-ARMED 2026-09-21 ~12:37Z, SAME SCOPE, NEW CRON -- the lane had frozen per the 2026-09-15 plan in the
-interim.** Andrew-direct at the `2.0.0_SA_COO~F` terminal, VERBATIM: *"You own IRPT_FNTEND, that is your sole
-focus for this session. Use /canonical-flow IRPT_FNTEND to assess state, and then /canonical-drive IRPT_FNTEND
-to loop its drive."* Same word landed the fabric-wide IRPT priority (`1.0.0_SA_CTO`'s own record
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260921_1237Z_IRPT_ALL_PROCESSING_POWER_TODAY.md`
-@`7df516b46e`). New arm record @`75b26764ae`, cron `b1f8684b`, 10m off-minute -- cadence unchanged, STOP-CONDITION
-unchanged. Landed by `1.0.0_SA_CTO` per this file's own rule (a seat does not author its own row); msg `99054`.
-
-`2.0.0_SA_COO~D` **`/canonical-drive` DIRECTED over DSGN_REBRND ONLY.** Andrew-direct 2026-09-14 ~16:3xZ at the
-`2.0.0_SA_COO~D` terminal, VERBATIM: *"yes you will be continuing where you left off with /canonical-flow on DSGN_REBRND.
-Once establishing state, and your last log on the subject, you will run /canonical-drive DSGN_REBRND."* Record:
-`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260914_163xZ_COO_D_CANONICAL_DRIVE_DSGN_REBRND.md` @`d54876b585`
-(relayed as 96624; landed here by `1.0.0_SA_CTO` because a seat does not write its own row). 10m. STOP-CONDITION:
-DSGN_REBRND drained to its L10 slug, or his stand-down. (The ~16:1xZ seating event this row once named, giving the freed
-seat to LGIC_ENFORCE, was RETIRED at ~18:2xZ: LGIC_CANON takes the next freed seat, record @9240af5974.)
-⛔ **STOPPED 2026-09-14 ~21:2xZ BY HIS STAND-DOWN, VERBATIM: *"kill cron will address this shortly"*** (record
-`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260914_212xZ_DSGN_REBRND_KILL_THE_DRIVE_CRON_HE_ADDRESSES_THE_CALLS_SHORTLY.md`
-@`31f728cea4`). `2.0.0_SA_COO~D` cancelled its cron. **THIS ROW ARMS NOTHING:** a successor does not re-arm from it.
-DSGN_REBRND itself is not closed; the page-by-page work goes on without the loop.
-
-`2.0.0_SA_COO~O` **`/canonical-drive NFRA_OPLGTW` ARMED 2026-09-17 ~23:4xZ by Andrew-direct at the `1.0.0_SA_CTO`
-terminal ~23:3xZ, relayed as 97709**, VERBATIM: *"Give each of the COO's a 30m /drive loop for their respective project,
-i want to make sure that none of them stall tonight, hoping to wake up tomorrow and all of these to be done. If that is
-the case, I want you to bring back, in this order, COO~T for TAXSMA, then COO~M for MCPINDEX."* The relay's own words:
-one lane, one loop, cadence 30m, and `2.0.0_SA_COO~O -> /drive NFRA_OPLGTW`.
-- SCOPE: `NFRA_OPLGTW` ONLY -- this lane's single project, 31 cells in round 1. It is a SCOPE STATEMENT and an arming
-  word, never a re-tasking: no other project enters this loop, and this lane pitches no call it can close itself.
-- CADENCE: 30 minutes, via CronCreate, prompt `/canonical-drive NFRA_OPLGTW`. A cron dies with its session, which is
-  why this clause -- not the cron -- is the carrier, and why it is committed BEFORE tick 1 (the relay's own bar: *"No
-  carrier commit hash in hand, no tick"*, after the estate lost 3.5 hours and 29 ticks to a loop whose only carrier was
-  a cron).
-- STOP-CONDITION: `NFRA_OPLGTW` reads `status: complete` in the register per the skill's completion test -- READ, never
-  declared -- or Andrew's stand-down. On DONE this lane writes its final log, deletes its cron, STRIKES this clause and
-  says so loudly, because the freed slot is what `2.0.0_SA_COO~T` (MDPF_TAXSMA) is waiting on, then `2.0.0_SA_COO~M`
-  (NFRA_MCPINDEX), in that order and by his word.
-- CALL ROUTING is the 2026-09-17 ~13:0xZ law, unchanged by this clause: every call this lane holds is closed on its own
-  recommendation the same tick; a call that genuinely belongs to `1.0.0_SA_CTO` goes there WITH a recommendation and
-  the lane keeps working meanwhile. A call is not a stall unless it is parked.
-- A successor RE-ARMS ONLY off this line while the scope is not DONE, and re-reads the project's open orders before its
-  first tick rather than trusting a count in a log.
-
-`2.0.0_SA_COO~P` **`/loop 20m` DIRECTED over Investor Reporting PERFORMANCE (49 Financial, Inflection, Cottonwood) ONLY.**
-Andrew-direct 2026-09-23 ~22:4xZ at the `2.0.0_SA_COO~P` terminal (first Claude turn after the Codex seat transition),
-VERBATIM: *"I need you to create a /goal to get performance reporting done and linked up for all firm clients at 49
-Financial, Inflection, and COttonwood. Cottonwood only has data back to May 2026 or so, so we don't need it perfect or in
-all the views because they lack data, however it should be structurally sound. then i need you to make a /loop with a 20m
-interval to drive you to the conclusion of that goal."* Record:
-`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`
-@`f7aaa01da1` (broadcast 99776). CADENCE 20m. STOP-CONDITION: `/verify SOUND` on the record's done criteria (real
-signed-in user -> selection -> provider calculation -> retained report -> reopen without a new vendor call -> export, at
-all three firms; Cottonwood structurally sound with its data window disclosed), or Andrew's stand-down. Landed by
-`1.0.0_SA_CTO` (a seat does not author its own row). Every standing gate binds unchanged: vendor per-use word,
-never-widen, MSTR-only shared pushes, the IRPT closer contract v1.4.
-
-`2.0.0_SA_COO~M` **`/loop 20m` DIRECTED over Investor Reporting HOLDINGS with a SNAPSHOT model overlay ONLY.**
-Andrew-direct 2026-09-23 ~22:4xZ at the `2.0.0_SA_COO~M` terminal, VERBATIM: *"write yourself a /goal about how you're
-going to get end to end "Holdings" with model overlay for every 49 and Inflection Client that you can mesh between their
-respective smartx/schwab and eclipse/orion accounts, with structurally correct pipeline for cottonwood (as they dont have
-backfill data at this time). Then, I need you to make a /loop with a 20m interval whose purpose is to keep you driving
-until that is done."* and *"for now, all you need to do for model overlay is be able to show what clients own what models
-and what assets are in those models. its a snapshot view, please reorient the goal to be around just providing snapshot
-model holdings, we do not need time series on Models, snapshot is fine."* Record:
-`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
-@`6890584d29` (broadcast 99780; row requested 99795). CADENCE 20m. STOP-CONDITION: `/verify SOUND` on the signed-in
-Holdings journey at all three firms with the snapshot overlay, or Andrew's stand-down. Landed by `1.0.0_SA_CTO`.
-
-`2.0.0_SA_COO~Y` **`/loop 20m` DIRECTED over Investor Reporting ANALYSIS ONLY.** Andrew-direct 2026-09-23 ~23:0xZ at
-the `2.0.0_SA_COO~Y` terminal, VERBATIM: *"Read your most recnet log and handoff, then ask COO~M how they set up their goal
-and loop and do the same in this session"* -- his word adopts the M shape (a /goal and a 20m /loop) for the Analysis
-product. Record: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`
-@`fc17929b64` (broadcast 99790). CADENCE 20m. STOP-CONDITION: `/verify SOUND` on the real-login Analysis journey
-(dollar template upload -> frozen input -> guarded acceptance -> resident consumer -> vendor PDF -> certified retained
-report -> screen with reload/history and same-revision export) and the COO_Y.md Y1-Y7 matrix, or Andrew's stand-down.
-Y never takes over P's shared installation. Landed by `1.0.0_SA_CTO`.
-
-**Find a stale cron from a prior session? Cancel it:** `CronList` → `CronDelete`.
-
----
-
-## Step 2 — Read your recent logs
-
-```
-{your_agent_folder}/logs/{most_recent_date}/
-```
-Read **all** logs from the most recent date. **You are continuing prior work, not starting fresh.**
-
----
-
-## Step 2b — Ground-truth reconciliation (SA / COO only)
-
-Reconcile TO statuses and project JSON against logs, commits, and **deployed artifacts**. Correct every
-stale document before presenting your summary. **Logs and commits are ground truth — `<status>` is a
-claim.** Full protocol: `org/ref/COO_STARTUP.md`.
-
----
-
-## Step 3 — Read your prompt
-
-Read `{your_agent_folder}/prompt.md` and adopt that role.
-
----
-
-## Step 4 — Understand your place
-
-Read `org/ORG_CHART.md` — reporting chain, pod members, escalation path.
-
----
-
-## Step 5 — Give an oriented summary
-
-One paragraph: what projects you're on, what's pending, what's blocked, **what you're starting now.**
-**Do not ask permission — state what you are doing.**
-
----
-
-## Session log — required sections
-
-Full template: `org/ref/SESSION_LOG_STANDARD.md`.
-
-Every session log must include **`## Compiler Tools`** — a table of tools run, results, what worked, what
-failed, any gap found. **Do NOT append to or commit `org/compiler-tools-log.md`** (retired 2026-07-29, Andrew-direct).
-**Minimum compiler tools by role:**
+## Session log -- required sections
+Template: `org/ref/SESSION_LOG_STANDARD.md`. Every session log includes `## Compiler Tools` (tools run, results, what
+worked, what failed, gaps). Do NOT append to or commit `org/compiler-tools-log.md` (retired). Minimum compiler tools by
+role:
 
 | Role | Minimum |
 |------|---------|
-| DS | `comp-pipescript io <script> --pipeline <tree>` for every gold script touched (**`--pipeline` REQUIRED — flagless is rc=2 REFUSED since 07-30**). `comp-pipescript deployed` before every gold run. `comp-pipescript postdeps <script> --firm <firm>` before any ad-hoc run (flagless silently defaults to bd). `comp-validate <script> --artifact <file>` before signaling AE. |
-| DE | `comp-transform schema-check` before touching data props; `comp-blast` before deleting. `comp-routes behaviors` for 4xx/auth debugging. **New cohort/metric/mode:** `comp-transform schema-check --feature [token]` + `comp-transform ternary-audit [Component]` at Phase 1. |
-| DT | `comp-pipescript io <script> --pipeline <tree>` for every script deployed (**`--pipeline` REQUIRED — flagless is rc=2 REFUSED**). `comp-iam service <lambda>` after any new boto3 call **(necessary, NOT sufficient — see below)**. `comp-routes behaviors` before CloudFront / Lambda@Edge changes. |
-| AE | `comp-pipescript deployed` before every gold-run trigger. `comp-pipescript postdeps <script> --firm <firm>` before any gold run (flagless silently defaults to bd). `comp-iam gaps` after any `iam.tf` change **(necessary, NOT sufficient — see below)**. `comp-blast` on infra before changes. |
+| DS | `comp-pipescript io <script> --pipeline <tree>` for every gold script touched (`--pipeline` REQUIRED). `comp-pipescript deployed` before every gold run. `comp-pipescript postdeps <script> --firm <firm>` before any ad-hoc run. `comp-validate <script> --artifact <file>` before signaling AE. |
+| DE | `comp-transform schema-check` before touching data props; `comp-blast` before deleting; `comp-routes behaviors` for 4xx/auth debugging. New cohort/metric/mode: `comp-transform schema-check --feature [token]` + `comp-transform ternary-audit [Component]`. |
+| DT | `comp-pipescript io <script> --pipeline <tree>` for every script deployed. `comp-iam service <lambda>` after any new boto3 call (necessary, not sufficient). `comp-routes behaviors` before CloudFront / Lambda@Edge changes. |
+| AE | `comp-pipescript deployed` before every gold-run trigger. `comp-pipescript postdeps <script> --firm <firm>` before any gold run. `comp-iam gaps` after any `iam.tf` change (necessary, not sufficient). `comp-blast` on infra before changes. |
 | RD | `comp-transform fields` for every component rendering data. |
-| COO | `comp-pipescript overlap A B` before authoring cross-domain coordination. `comp-blast` + `comp-routes` + `comp-cache` before decomposing PRDs into TOs. |
+| COO | `comp-pipescript overlap A B` before cross-domain coordination. `comp-blast` + `comp-routes` + `comp-cache` before decomposing PRDs into TOs. |
 
-> **`comp-validate` returning `NO_CONFIG` or `ZERO_CHECKS` means UNVALIDATED — NEVER signal SAFE on it.** Only
-> `PASS` / `WAIVED` are safe; `ADVISORY` means read the WARNs. *A script with no validate config produces an
-> output that looks like a pass and asserts nothing.*
+`comp-validate` returning `NO_CONFIG` or `ZERO_CHECKS` means UNVALIDATED -- never signal SAFE on it; only `PASS` /
+`WAIVED` are safe; `ADVISORY` means read the WARNs.
 
-**Archetype tag.** Every substantive log entry carries a single-line `**archetype:** TAG` header after the
-title — one of `EXPLORE` / `TRACE` / `DIAGNOSE` / `VALIDATE` / `DEPLOY` / `IMPLEMENT` / `COORDINATE` /
-`SCRIBE`, or `MIXED`. Under-classifying is fine; no scoring. It feeds the stimulus-scan's cost signal.
-Taxonomy: `org/tier0/COMPILER_ARCHETYPES.md`. Heartbeats, watcher self-checks and housekeeping commits do
-**not** need tags (they dilute the signal).
-
----
+Archetype tag: every substantive log entry carries `**archetype:** TAG` after the title -- `EXPLORE` / `TRACE` /
+`DIAGNOSE` / `VALIDATE` / `DEPLOY` / `IMPLEMENT` / `COORDINATE` / `SCRIBE` / `MIXED`. Taxonomy:
+`org/tier0/COMPILER_ARCHETYPES.md`. Heartbeats, watcher self-checks and housekeeping commits carry none.
 
 ## Task orders
-
-Full template + filename convention: `org/ref/TASK_ORDER_PROTOCOL.md`. Stored in the receiving agent's
-`task_orders/` folder.
-
-**Statuses:** `staged` = assigned, wait for GO · `pending` = active · `complete` = done (self-marked) · **`superseded` = the NEED WAS MET ANOTHER WAY (name what superseded it)** · **`cancelled` = the NEED WENT AWAY, a ruling killed it (cite the ruling)**. The last two are set by **COO or the ISSUER, never the assignee alone**, and a terminal status **without its pointer is the rot with a tidier label**.
-
----
-
+Template + filename convention: `org/ref/TASK_ORDER_PROTOCOL.md`; stored in the receiving agent's `task_orders/`.
+Statuses: `staged` (assigned, wait for GO) / `pending` (active) / `complete` (self-marked) / `superseded` (the need was
+met another way -- name what superseded it) / `cancelled` (a ruling killed it -- cite it). The last two are set by the
+COO or the ISSUER, never the assignee alone; a terminal status without its pointer is rot.
 
 ## Core documents (Tier 2+)
-
-Update your core document **in the same commit** as any structural change (new resource, contract change,
-removal).
-
-| Role | Document | Location |
-|------|----------|----------|
-| RD | `page_inventory.xml` | `{agent_folder}/deliverables/` |
-| DE | `pod_inventory.xml` | `{agent_folder}/deliverables/` |
-| DS | `data_contract.xml` | `{agent_folder}/deliverables/` |
-| DT | `deployment_map.xml` | `{agent_folder}/deliverables/` |
-| AE | `pipeline_inventory.xml` | `{agent_folder}/deliverables/` |
-| SA | `architecture_brief.xml` | `{agent_folder}/deliverables/` |
-
-**Do not edit another agent's core document.** If your change makes theirs stale, note it in your log and
-issue them a task order.
-
----
+Update your core document in the same commit as any structural change. RD `page_inventory.xml`; DE
+`pod_inventory.xml`; DS `data_contract.xml`; DT `deployment_map.xml`; AE `pipeline_inventory.xml`; SA
+`architecture_brief.xml` -- all under `{agent_folder}/deliverables/`. Do not edit another agent's core document; note
+the staleness in your log and issue a task order.
 
 ## Quick reference
 
 | Thing | Value |
 |-------|-------|
 | Times to Andrew | US Eastern only (never UTC) |
-| MCP server | `org/mcp/server.py` — `opal-agent-comms` |
+| MCP server | `org/mcp/server.py` -- `opal-agent-comms` |
 | Broker | Auto-launched by `register_agent`, port 7800 |
+| Portal dev server | port 5174 only |

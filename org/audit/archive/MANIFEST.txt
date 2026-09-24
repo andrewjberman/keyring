@@ -51,3 +51,7 @@ org/rcg-sweep-audit.log
 # exercise; a gate's bypass record is precisely the tamper-evidence class. LOW CHURN (1 line/8d).
 # PRECEDENT: pipescript-suite-gate-audit (08-06) + tombstone-gate-audit (08-03), same class same answer.
 org/jq-ban-override-audit.log
+# ADDED 2026-09-24 (1.0.0_SA_CTO, the gate, on its own law lock's trail): org/law-edit-audit.log. Written by
+# .tools/git-hooks/law-lock-check.sh, one PASS/REFUSED line per commit staging CLAUDE.md or org/XXX.md, naming
+# the ANDREW_DIRECT order record. A gate's pass/refusal trail; LOW CHURN. Same class as jq-ban / pipescript.
+org/law-edit-audit.log

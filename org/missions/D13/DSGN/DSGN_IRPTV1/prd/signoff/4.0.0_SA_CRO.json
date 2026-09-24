@@ -1,0 +1,11 @@
+{
+  "prd": "DSGN_IRPTV1_PRD.md",
+  "prd_version": "v0.5",
+  "prd_pin": "1cccbe6bc67ae47c9793aa02807279ba39e9c1ed",
+  "half": "brief",
+  "half_hash": "5a7bc670e9fe20551e25d909fc9b206dca13473506ca92f8aafa854886f21a68",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/L4R_REVIEW_DSGN_IRPTV1_v0.5_BRIEF_HALF_20260924.md@6d9077a944",
+  "signed_by": "4.0.0_SA_CRO",
+  "signed_at": "2026-09-24T06:02:30Z"
+}

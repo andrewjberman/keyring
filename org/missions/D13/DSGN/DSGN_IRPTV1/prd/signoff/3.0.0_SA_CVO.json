@@ -1,0 +1,11 @@
+{
+  "prd": "DSGN_IRPTV1_PRD.md",
+  "prd_version": "v0.4",
+  "prd_pin": "c4b9056831bbd8d18dc99dce33ac61079097d59e",
+  "half": "ratified-text",
+  "half_hash": "a398ff25a80022f563308736b364591bc2f409ab0e53a8d295bd76daf754250f",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_PRD_v0.4_L4R_RATIFIED_TEXT_SIGNED_20260924.md@dee9e4cb9a",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-09-24T05:52:17Z"
+}
