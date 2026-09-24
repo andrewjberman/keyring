@@ -5,7 +5,7 @@
   "fabric": "site-z",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "REGISTERED",
+  "dep_stage": "PRD",
   "created": "2026-09-24",
   "registered_under_tree": "2026-09-24",
   "placement": "SITEZ",
@@ -19,10 +19,16 @@
   ],
   "name": "opal_ai V1 -- the Opal Analyst as a product: one Teams-facing agent over one indexed Opal MCP, developed in the Opal-Capital/opal_ai repo as a workspace submodule with the workspace's tools, and run from a released copy under its own non-admin account with no workspace access",
   "description": "Commissioned by Andrew-direct at the 1.0.0_SA_CTO~O terminal 2026-09-24. His words, verbatim: 'i want to start getting that developed immediately, so I want to assess what needs to happen to stand that up so that we can begin assigning projects on this box to get it going (finishing MCPINDEX, getting a proper OPAL ANALYST back online on Teams, and other such work that ties to that repo function).' Card 3: 'I want to develop the opal_ai repo using the ajb_workspace tools, it really is an ajb_workspace project just like the portal, I just don't want the actual team-facing agents, and ultimately external agents, being so close for comfort having ajb_workspace repo access.' Intake: RCN-0014 (what opal_ai is) and RCN-0015 (the GitOps split), both by 4.0.0_SA_CRO~X on 2026-09-23. Scope is slice (i), the Opal implementation, plus the repo and runtime separation; the template slice, client slices and off-box hosting are stated outside the endpoint.",
-  "phase": "L3 REGISTERED 2026-09-24 by 1.0.0_SA_CTO~O under D6/NFRA (D6 enum [NFRA] ratified on the same word). || L2 ENDPOINT FWD-1..FWD-13 CONFIRMED by Andrew ~20:2xZ ('yes to both'), endpoint org/tier1_exec/1.0.0_SA_CTO/deliverables/OPAL_AI_ENDPOINT_FORWARD_20260924.md @146ef7366f. || L1 BRIEFS docs/briefs/opal-ai-microproduct-repo-brief-20260923.md @a47993af9c and docs/briefs/opal-ai-gitops-split-brief-20260923.md @40b964f616 (4.0.0_SA_CRO~X).",
-  "blocking": "NOT BLOCKED -- L4 PRD next, 1.0.0_SA_CTO~O.",
+  "phase": "L4 PRD v0.1 WRITTEN 2026-09-24 by 1.0.0_SA_CTO~O at prd/NFRA_OPALAI_PRD.md -- nine contracts (one repo slice-first and move-never-copy; a real submodule graded like the parent, lane file before hook; DEV/PROD release on Andrew's word; the OS account as the runtime boundary with a fail-closed launch gate; no broker and state outside every repo; the gateway moves with its history and its release path; the limits travel unchanged; the Teams watch sees without the agent's help; speed measured by the s.11 method), 14 surfaces, 6 gates, 14 acceptance lines, brief coverage 63 of 63 headings. L4-R next. || L3 REGISTERED 2026-09-24 by 1.0.0_SA_CTO~O under D6/NFRA (D6 enum [NFRA] ratified on the same word). || L2 ENDPOINT FWD-1..FWD-13 CONFIRMED by Andrew ~20:2xZ ('yes to both'), endpoint org/tier1_exec/1.0.0_SA_CTO/deliverables/OPAL_AI_ENDPOINT_FORWARD_20260924.md @146ef7366f. || L1 BRIEFS docs/briefs/opal-ai-microproduct-repo-brief-20260923.md @a47993af9c and docs/briefs/opal-ai-gitops-split-brief-20260923.md @40b964f616 (4.0.0_SA_CRO~X).",
+  "blocking": "NOT BLOCKED -- L4-R: 3.0.0_SA_CVO signs the ratified-text half (ENDPOINT + CONTRACTS); the brief half is accepted as CRO-authored under proportionate sign-off.",
   "brief_ref": "docs/briefs/opal-ai-microproduct-repo-brief-20260923.md@a47993af9c",
-  "prds": [],
+  "prds": [
+    {
+      "path": "org/missions/D6/NFRA/NFRA_OPALAI/prd/NFRA_OPALAI_PRD.md",
+      "version": "v0.1",
+      "status": "DRAFT"
+    }
+  ],
   "prd_lineage": [],
   "decompositions": [],
   "decomposition_lineage": [],
