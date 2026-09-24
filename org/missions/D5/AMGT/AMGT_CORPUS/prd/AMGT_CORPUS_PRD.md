@@ -5,10 +5,9 @@
   "project": "AMGT_CORPUS",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.5",
+  "prd_version": "v0.6",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md@6c52138c2f",
-  "addendum_a_brief_ref": "docs/briefs/amgt-corpus-dossier-fold-brief-20260924.md@328e17d5e5",
   "endpoint_outcomes": [
     "FWD-1",
     "FWD-2",

@@ -5,10 +5,9 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.25",
+  "prd_version": "v0.26",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
-  "addendum_b_brief_ref": "docs/briefs/amgt-resapp-frontend-pattern-brief-20260924.md@21dd61e392",
   "endpoint_outcomes": [
     "FWD-1",
     "FWD-2",
@@ -2282,6 +2281,52 @@ any served DTO. ⛔ **A field a tile or tooltip needs that the payload does not 
 a page-side computation** -- `C-SERVER-SIDE-RANKING` and the value-must-carry-its-claim law both bind. ⚠ **`FWD-30`
 IS THE ONE OUTCOME THIS CONTRACT MAY NOT COVER**: if the two-page form needs a field no route serves, that is a
 route change and it comes back to this seat before it is built, not after.
+
+## B.4a -- ⛔ AMENDMENT 1 TO `FWD-30`: THE EXPORT IS NOT MISSING. IT IS BUILT, WIRED, AND THREE PROPERTIES SHORT
+
+**Cut 2026-09-24 ~06:0xZ by `1.0.0_SA_CTO~Z`, BEFORE `2.0.0_SA_COO~Z` decomposes, because a round cut on the
+unamended `FWD-30` would build a second producer of figures this estate already renders.** CLAUDE.md's BUILD
+LADDER puts *"the estate already has it"* at rung 2 and new code LAST; this is rung 2.
+
+**WHAT EXISTS, MEASURED:**
+- `portal/src/pages/SecurityAnalysis/components/PrintExportAction.tsx` -- **already in the page header's `actions`
+  slot**, rendered by `SecurityAnalysis.tsx` (AMGT-rd-8 deliverable (c), *"Print is a header export action, not a
+  tab"*). Carries the preview modal, `idle/generating/ready/failed` states, a PDF `iframe` and blob-URL cleanup.
+  Its `C-DESIGN-SPEC-FIRST` hold was LIFTED and the modal is built.
+- `requestPrintPack()` in `portal/src/api/endpoints/amgt-lead-panel.ts` -> **`lib/research/print/render_pack.py`**
+  (AMGT-s-5, 361 lines), the landed print renderer.
+- ⭐ **THE RENDERER IS DEPLOY-SAFE AND ALREADY HAS THE DISCIPLINE `C-EXPORT-ADDS-NOTHING` ASKS FOR:** it writes
+  only to the Lambda's tmp and *"never writes into the repo"*; an absent value renders
+  `[MACHINE-EMPTY: <what belongs here>]`, *"never a blank page that looks finished, never invented"*; and
+  `build_pack()` **reads no store** -- the CALLER supplies the model block and has already applied the
+  fiscal-price overlay, which the renderer *"must NOT re-apply and does not."* **One writer, by construction.**
+
+⛔ **THE THREE GAPS AGAINST ANDREW'S OWN WORDS, and they are the whole of `FWD-30`'s remaining work:**
+
+| his word | landed behaviour | gap |
+|---|---|---|
+| *"2pg max"* | reproduces the template's **FOUR BLOCKS** and *"each block starts its own page"* (`page_break`, `:205-206`) | ⛔ **4+ pages against a 2-page cap** |
+| *"mimicking Asset Mgmt team's earnings reports"* | renders **ONE security's MODEL BLOCK** only -- no thesis pillars, no "Why we own", no cases, no recommendation | ⛔ mimics a **model-block template**, not an earnings update |
+| *"Opal Brand Guidelines form"* | matplotlib Agg figures reproducing *"the blank template's"* layout; no `DESIGN_BIBLE` tokens evidenced | ⛔ brand form **unmet** |
+
+⛔ **AND ONE PRIOR RULING THIS ADDENDUM MUST NOT WALK INTO, WHICH THIS SEAT ALMOST DID.** `render_pack.py:26`
+states, in caps: *"STOP -- NOT A BROWSER PRINT, DELIBERATELY. FWD-5's wording is 'Adam forwards a printed pack
+without ...'"* ⭐ **A print stylesheet on the live page is the obvious cheap answer -- it would satisfy
+`C-EXPORT-ADDS-NOTHING` by construction, since the export would BE the page -- AND IT IS ALREADY-REFUSED GROUND.**
+This seat formed that recommendation before reading the file and is recording that it was wrong, because the next
+seat will form it too. **Re-opening it takes an argument against `:26`, not a fresh proposal.**
+
+**`FWD-30` IS THEREFORE RE-CUT FROM "BUILD AN EXPORT" TO "CLOSE THREE PROPERTIES ON A LANDED PRODUCER."** Its
+`DONE WHEN` in the ENDPOINT fence stands unchanged -- the outcome was always stated as properties of the artifact,
+not as a build -- and nothing is renumbered. ⭐ **The `OR` branch matters more now than it read at cut time:**
+Andrew's *"or machine readable rich text output"* may be far cheaper than reshaping a 4-page matplotlib pack into a
+2-page branded document, and the renderer **already emits a `txt_path` beside its `pdf_path`** (`build_pack`
+returns `(pdf_path, txt_path)`). **That second return value is plausibly branch (b) already half-built**, and it is
+the first thing to measure rather than the last.
+
+⚠ **ONE C11 DEFECT IN THE COMPONENT, NAMED HERE BECAUSE IT IS IN SCOPE FOR `FWD-29` NOT `FWD-30`:**
+`PrintExportAction.tsx:63` uses `rounded-lg` and `:75` a `shadow-2xl`, both outside the contract's `{2,3,4,pill}`
+radii and no-shadow rule. `4.0.0_SA_CRO~Z`'s walk found the same box-shadow independently.
 
 ## B.5 -- WHAT ADDENDUM B DOES NOT DO
 
