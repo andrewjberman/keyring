@@ -253,6 +253,48 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-14 -- PEERS CLOSER GO: the peers grant, the hop-4 identity ruling, and a `closer_contract` gap that was open all session
+
+**Andrew-direct 2026-09-24 ~02:2xZ, VERBATIM: *"granted, spawn 2.0.0_SA_COO~Z. Then yes, go."*** answering
+`CLOSER_PROPOSE_PEERS_20260924.md`. Three things land, and one instruction is HELD.
+
+**(a) `lib/research/peers/**` -> `2.0.0_SA_COO~Z`, as a CONTRACT ownership row and NOTHING ELSE.**
+⭐ **EXERCISED, not inferred:** `resolve_lane("lib/research/peers/engine.py")` -> **`BASE_EXEC`**;
+`check_agent("2.0.0_SA_COO~Z", ...)` -> **True**; **negative control** `org/tier0/ledger/x.md` -> lane
+`TIER0_MSTR`, **False**, so the instrument can refuse; **sibling control** `scoped_amgt.py` (a row already
+relied on) -> identical `BASE_EXEC` / True. ⛔ **AND A NARROW LANE ROW WOULD HAVE BEEN WORSE THAN REDUNDANT:
+paths resolve LONGEST-MATCH-FIRST, so a `~Z`-only `lib/research/peers/**` row DISPLACES `lib/**` ->
+`BASE_EXEC` and REVOKES base CTO/COO/CVO access to the module.** The grant file itself warns of this at
+`:194-196` (*notes that "trained a new lane to ask for a grant it already held"*) and `:200` (*a tilde lane
+cannot be given LESS than its base*). **The word "granted" is satisfied by the table row.**
+
+**(b) ⛔ THE SPAWN IS HELD, AND THE HOLD IS THE MEASUREMENT: `2.0.0_SA_COO~Z` IS ALREADY LIVE** -- last seen
+14 s before the read, **PID 22020**, *"READY: codex seat bound"*. **Spawning over a live serial is an identity
+conflict**, so the instruction's premise is falsified and the act is not performed. ⚠ **AND THE TRAP THAT
+NEARLY HID IT: `get_agent_status` returned IRPT logs under that serial, which read as "wrong project".** Per
+Rule 22a the **`Latest logs` limb is BASE-scoped** -- those were `~M`'s and `~Y}`'s -- while liveness / PID /
+`Working on` are **per-LANE**. **The lane-scoped limb is the one that answers "is this serial live", and it
+said yes.** A reader who graded the base-scoped limb would have spawned a duplicate onto a live PID.
+
+**(c) HOP-4 CONTRACT QUESTION, RULED HERE rather than carded** (the brief routed it to this seat because it
+changes which names get a set at all): **the ranker KEEPS its identity fall-through; the CROSSWALK widens to
+meet it. Converge the route UP to the producer, never trim the producer down.** The fall-through is why 191
+keys and **111 real derived sets** exist; deleting it would destroy landed work to make two resolvers agree.
+⛔ **REFUSED on the brief's own ground: the route must NOT accept a landed peers object's own identity block
+as a third surface** -- it makes ANY pool key resolvable and is the guess the crosswalk's ratified text
+forbids. ⭐ **A resolver that trusts the artifact it is resolving has no authority left.**
+
+**(d) ⚠ A GAP THIS SEAT LEFT OPEN SINCE v1.0, found while executing (c): NONE of the three D5 project rows
+carried `closer_contract`.** `/closer` requires it *"in the same commit as the contract"*, and
+`/canonical-drive` **skips** a row that carries it. **So for this entire session, canonical-drive could have
+recut or issued against three projects under a live closer, and nothing would have refused it.** Landed now on
+all three (`AMGT_RESAPP`, `AMGT_HARVST`, `AMGT_CORPUS`). **EXPOSURE, NOT INCIDENT** -- no recut is known to
+have occurred, and per Rule 22's negative mirror that distinction is not a technicality: the remedy for an
+exposure is the guard, and re-opening work nothing touched would be the opposite error.
+
+**NO new contract, no task orders, no rounds:** Peers was already **B04 / P1** inside `CONTRACT.md` v1.0. The
+delta is one ownership row, two MANDATEs (`COO_Z_PEERS.md`, `CVO_Z_PEERS.md`), and the three row fields.
+
 ## R-13 -- THIS SEAT REPORTED `LEG-OUTSTANDING` AS A FAILED GATE ALL NIGHT, AND THE PROTOCOL FORBIDS EXACTLY THAT
 
 ⛔ **EVERY TICK LOG TONIGHT CARRIED THE SENTENCE "THAT GATE IS NOT MET: `origin/CLOUD` unchanged at

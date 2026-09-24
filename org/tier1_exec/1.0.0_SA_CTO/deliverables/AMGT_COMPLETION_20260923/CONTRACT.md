@@ -61,11 +61,24 @@ open call at the driver by default and the over-reservation defect is the failur
 | `portal/scripts/dev-live.mjs` · `portal/vite.config.ts` -- **AMGT entries only** | `2.0.0_SA_COO~Z` |
 | `lib/research/api/scoped_amgt.py` and the `opal-amgt-scoped-api` package | `2.0.0_SA_COO~Z` |
 | `lib/research/identity/**` (crosswalk, coverage_pass) | `2.0.0_SA_COO~Z` (Served Runtime) |
+| **`lib/research/peers/**`** (`engine.py` ranker, `csc.py`, `universe.py`) -- **ADDED 2026-09-24 ~02:2xZ on Andrew's word "granted"** for the Peers B04/P1 closer; see `CLOSER_PROPOSE_PEERS_20260924.md` | `2.0.0_SA_COO~Z` |
 | `lib/research/corpus/**` | `2.0.0_SA_COO~X` |
 | `lib/research/coverage/pool_reader.py` | `2.0.0_SA_COO~Y` |
 | `lib/research/metrics/{chatter_axis,generation_writer}.py` | `2.0.0_SA_COO~Y` |
 | `lib/opal_data_harvest/**` · `lib/research/harvest/**` | `2.0.0_SA_COO~Y` |
 | `docs/` + `org/missions/D5/AMGT/*/prd/**` | `1.0.0_SA_CTO~Z` |
+
+⭐ **THE PEERS ROW NEEDS NO GRANT-FILE EDIT, AND THAT IS EXERCISED RATHER THAN INFERRED (2026-09-24 ~02:2xZ).**
+Driving `.tools/owned-paths-validate.py` at HEAD: `resolve_lane("lib/research/peers/engine.py")` -> **`BASE_EXEC`**,
+`check_agent("2.0.0_SA_COO~Z", ...)` -> **True**. **NEGATIVE CONTROL PASSES** -- `org/tier0/ledger/x.md`
+resolves `TIER0_MSTR` and returns **False** for the same seat, so the instrument can refuse. **SIBLING
+CONTROL** -- `lib/research/api/scoped_amgt.py`, a row this contract already relies on, resolves to the same
+`BASE_EXEC` / True. ⛔ **AND LANDING A NARROW `lib/research/peers/**` LANE ROW WOULD BE WORSE THAN
+REDUNDANT: paths resolve LONGEST-MATCH-FIRST (`.owned-paths.yaml:28`), so a `~Z`-only row would DISPLACE
+`lib/**` -> `BASE_EXEC` for that subtree and REVOKE base CTO/COO/CVO access to the peers module.** That file
+warns about exactly this at `:194-196` -- past notes *"trained a new lane to ask for a grant it already
+held"* -- and at `:200`, *"a tilde lane CANNOT be given LESS than its base."* **Andrew's "granted" is
+satisfied by the table row; the grant file stays untouched.**
 
 ⚠ **DEPARTURE FROM `/closer` STEP 2, STATED RATHER THAN HIDDEN.** That step says the CTO lands each row
 as an `.owned-paths.yaml` lane granting only the named seat, in this same commit. **It is NOT done here,

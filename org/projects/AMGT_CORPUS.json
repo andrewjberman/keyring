@@ -1,13 +1,14 @@
 {
- "project_code": "AMGT_CORPUS",
- "home": "org/missions/D5/AMGT/AMGT_CORPUS",
- "directive": "D5",
- "macro_code": "AMGT",
- "fabric": "site-z",
- "dep_stage": "EXECUTING",
- "status": "active",
- "name": "The research corpus as a measured substrate: the team's own earnings reports and research packs held as received and keyed to securities, the backlog universe resolved from the library's own folder list, and the sector templates, fund forms and per-name continuation artifacts derived from them by measurement.",
- "generated_from": "org/missions/D5/AMGT/AMGT_CORPUS/project.json",
- "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-23T02:19:07Z"
+  "project_code": "AMGT_CORPUS",
+  "home": "org/missions/D5/AMGT/AMGT_CORPUS",
+  "directive": "D5",
+  "macro_code": "AMGT",
+  "fabric": "site-z",
+  "dep_stage": "EXECUTING",
+  "status": "active",
+  "name": "The research corpus as a measured substrate: the team's own earnings reports and research packs held as received and keyed to securities, the backlog universe resolved from the library's own folder list, and the sector templates, fund forms and per-name continuation artifacts derived from them by measurement.",
+  "generated_from": "org/missions/D5/AMGT/AMGT_CORPUS/project.json",
+  "generated_by": ".tools/missions-tree-index.py",
+  "generated_at": "2026-09-23T02:19:07Z",
+  "closer_contract": "org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_COMPLETION_20260923/CONTRACT.md"
 }
