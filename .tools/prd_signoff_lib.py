@@ -113,6 +113,34 @@ def half_hashes(text):
     return {h: hashlib.sha256("".join(parts[h]).encode("utf-8")).hexdigest() for h in HALVES}
 
 
+def endpoint_hash(text):
+    """sha256 over the ENDPOINT section's normalised body -- THE binding of both halves (spine v3.19, report 3 item 1.1:
+    "bind to the ENDPOINT hash only"). A wording change in any other section re-opens nothing."""
+    parts = ["## ENDPOINT\n" + _norm(body) for title, body in top_sections(text) if _first_word(title) == "ENDPOINT"]
+    return hashlib.sha256("".join(parts).encode("utf-8")).hexdigest()
+
+
+def brief_written_by_cro(root, prd_text):
+    """(bool, reason). True when the brief the header's `brief_ref` pins was ADDED by a 4.0.0_SA_CRO serial -- the brief
+    half is then admitted without a signature (spine v3.19 L4-R; CLAUDE.md proportionate sign-off). Read by git from
+    `root`; any failure answers False, so an unreadable brief never admits anything."""
+    import subprocess
+    ref = str(prd_header(prd_text).get("brief_ref") or "")
+    if "@" not in ref:
+        return False, "no pinned brief_ref"
+    path, pin = ref.rsplit("@", 1)
+    try:
+        r = subprocess.run(["git", "log", "--diff-filter=A", "--format=%an", pin, "--", path], cwd=root,
+                           capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
+    except Exception as e:  # noqa: BLE001
+        return False, "git could not read the brief's author: %r" % (e,)
+    authors = [a.strip() for a in r.stdout.splitlines() if a.strip()]
+    if r.returncode != 0 or not authors:
+        return False, "the brief's adding commit is not readable at %s" % pin
+    added_by = authors[-1]
+    return base_serial(added_by) == PRIMARY["brief"], "brief %s added by %s" % (path, added_by)
+
+
 def prd_header(text):
     m = HEADER_FENCE_RE.search(text)
     try:
@@ -171,7 +199,7 @@ def permitted_signer(half, serial, coo_lane_of_project=None, designated=None):
     return True, "ok"
 
 
-def evaluate(prd_text, files, coo_lane_of_project=None, designated=None):
+def evaluate(prd_text, files, coo_lane_of_project=None, designated=None, brief_by_cro=False):
     """PURE. `files` = {basename: parsed-json-or-None}. Returns
         {"halves": {half: {"state": SIGNED|REFUSED|STALE|MISSING|UNREADABLE|NOT-PERMITTED,
                            "by": serial|None, "file": name|None, "detail": str}},
@@ -182,6 +210,7 @@ def evaluate(prd_text, files, coo_lane_of_project=None, designated=None):
     hdr = prd_header(prd_text)
     version = str(hdr.get("prd_version") or "")
     hashes = half_hashes(prd_text)
+    ep_hash = endpoint_hash(prd_text)
     per = {h: {"state": "MISSING", "by": None, "file": None, "detail": "no sign-off file for this half"} for h in HALVES}
     unreadable = [n for n, d in files.items() if not isinstance(d, dict)]
     for n in unreadable:
@@ -195,7 +224,12 @@ def evaluate(prd_text, files, coo_lane_of_project=None, designated=None):
         if half is None:
             continue
         ok, why = permitted_signer(half, doc.get("signed_by"), coo_lane_of_project, designated)
-        current = (str(doc.get("half_hash") or "") == hashes[half]) if doc.get("half_hash") else (str(doc.get("prd_version")) == version)
+        if doc.get("endpoint_hash"):          # v3.19: both halves bind to the ENDPOINT section alone
+            current = str(doc.get("endpoint_hash")) == ep_hash
+        elif doc.get("half_hash"):
+            current = str(doc.get("half_hash")) == hashes[half]
+        else:
+            current = str(doc.get("prd_version")) == version
         candidates[half].append((str(doc.get("signed_at") or ""), name, doc, ok, why, current))
     for half in HALVES:
         cands = sorted(candidates[half], key=lambda c: c[0])
@@ -215,7 +249,10 @@ def evaluate(prd_text, files, coo_lane_of_project=None, designated=None):
             # hypothesis chased was the header carve-out (which is implemented correctly, :94-95).
             # Routed to this gate's owner by 4.0.0_SA_CRO after hitting it live. A fail-closed gate's
             # error text is its AUTHOR'S CLAIM, never a measurement -- so it states which claim it is.
-            if doc.get("half_hash"):
+            if doc.get("endpoint_hash"):
+                detail = ("signed against ENDPOINT hash %s; the ENDPOINT section has changed since (now %s) -- only an"
+                          " ENDPOINT change re-opens a half" % (str(doc.get("endpoint_hash"))[:12], ep_hash[:12]))
+            elif doc.get("half_hash"):
                 detail = ("signed against half_hash %s; the %s half's BYTES have changed since (now %s)"
                           " -- re-review is owed on this half only"
                           % (str(doc.get("half_hash"))[:12], half, hashes[half][:12]))
@@ -234,6 +271,9 @@ def evaluate(prd_text, files, coo_lane_of_project=None, designated=None):
                          "detail": "review: %s" % (doc.get("review_ref") or "no review_ref")}
         else:
             per[half] = {"state": "REFUSED", "by": doc.get("signed_by"), "file": name, "detail": "verdict %r is not SIGNED" % verdict}
+    if brief_by_cro and per["brief"]["state"] in ("MISSING", "STALE"):
+        per["brief"] = {"state": "SIGNED", "by": "(auto) brief written by 4.0.0_SA_CRO", "file": None,
+                        "detail": "admitted without a signature: the CRO wrote the brief (spine v3.19 L4-R)"}
     admitted = all(per[h]["state"] == "SIGNED" for h in HALVES) and not unreadable
     return {"halves": {h: per[h] for h in HALVES}, "unreadable": unreadable, "admitted": admitted,
             "hashes": hashes, "prd_version": version}
@@ -271,6 +311,7 @@ def build_doc(prd_basename, prd_text, prd_pin, half, verdict, review_ref, signed
         "prd_pin": prd_pin,
         "half": half,
         "half_hash": half_hashes(prd_text)[half],
+        "endpoint_hash": endpoint_hash(prd_text),
         "verdict": verdict,
         "review_ref": review_ref,
         "signed_by": signed_by,
@@ -338,6 +379,18 @@ def read_signoff_files(signoff_dir, ref="HEAD"):
             files[n] = json.loads(r.stdout) if r.returncode == 0 else None
         except Exception:  # noqa: BLE001
             files[n] = None
+        # v3.19 BACKFILL: a file written before the ENDPOINT binding carries no endpoint_hash. Its PRD at its own
+        # prd_pin gives the ENDPOINT it was signed against, so an unchanged ENDPOINT keeps it SIGNED. No pin, or a
+        # pin git cannot show -> no backfill, and the file keeps its own half_hash / prd_version binding.
+        d = files[n]
+        if isinstance(d, dict) and not d.get("endpoint_hash") and d.get("prd_pin") and d.get("prd"):
+            try:
+                src = _git(["show", "%s:%s" % (str(d["prd_pin"]).split("@")[-1],
+                                               pre.stdout.strip() + str(d["prd"]))], root)
+                if src.returncode == 0 and src.stdout:
+                    d["endpoint_hash"], d["endpoint_hash_derived"] = endpoint_hash(src.stdout), True
+            except Exception:  # noqa: BLE001
+                pass
     return files
 
 
@@ -493,8 +546,17 @@ def self_test():
     r = evaluate(prd_v5, {"4.0.0_SA_CRO.json": cro, "3.0.0_SA_CVO.json": cvo})
     arm("a version-only bump keeps BOTH signatures (half-bound, not version-bound)", r["admitted"])
     r = evaluate(prd_ep, {"4.0.0_SA_CRO.json": cro, "3.0.0_SA_CVO.json": cvo})
-    arm("an ENDPOINT edit re-opens the CVO half only", r["halves"]["ratified-text"]["state"] == "STALE" and r["halves"]["brief"]["state"] == "SIGNED" and not r["admitted"])
-    arm("...and violations() names that half only", len(violations("t", "X", "p", r)) == 1 and "ratified-text half reads STALE" in violations("t", "X", "p", r)[0])
+    arm("v3.19: an ENDPOINT edit re-opens BOTH halves (both bind to the ENDPOINT hash)", r["halves"]["ratified-text"]["state"] == "STALE" and r["halves"]["brief"]["state"] == "STALE" and not r["admitted"])
+    arm("...and violations() names both halves, each as an ENDPOINT change", len(violations("t", "X", "p", r)) == 2 and all("ENDPOINT section has changed" in x for x in violations("t", "X", "p", r)))
+    r = evaluate(prd_cell, {"4.0.0_SA_CRO.json": cro, "3.0.0_SA_CVO.json": cvo})
+    arm("v3.19: a CELL CANDIDATES (non-ENDPOINT) wording edit re-opens NOTHING", r["admitted"])
+    r = evaluate(prd_ep, {"3.0.0_SA_CVO.json": build_doc("T_PRD.md", prd_ep, "abc", "ratified-text", "SIGNED", "r@1", "3.0.0_SA_CVO")}, brief_by_cro=True)
+    arm("v3.19: brief half admitted without a signature when the CRO wrote the brief", r["admitted"] and r["halves"]["brief"]["by"].startswith("(auto)"))
+    r = evaluate(prd_ep, {"3.0.0_SA_CVO.json": build_doc("T_PRD.md", prd_ep, "abc", "ratified-text", "SIGNED", "r@1", "3.0.0_SA_CVO")})
+    arm("v3.19: ...and NOT admitted when the brief was not the CRO's", not r["admitted"] and r["halves"]["brief"]["state"] == "MISSING")
+    refused = build_doc("T_PRD.md", prd_ep, "abc", "brief", "REFUSED", "r@1", "4.0.0_SA_CRO")
+    r = evaluate(prd_ep, {"4.0.0_SA_CRO.json": refused, "3.0.0_SA_CVO.json": build_doc("T_PRD.md", prd_ep, "abc", "ratified-text", "SIGNED", "r@1", "3.0.0_SA_CVO")}, brief_by_cro=True)
+    arm("v3.19: an explicit REFUSED brief half is never auto-admitted", not r["admitted"] and r["halves"]["brief"]["state"] == "REFUSED")
     legacy_cro = {"prd": "T_PRD.md", "prd_version": "v0.4", "prd_pin": "abc", "verdict": "SIGNED", "review_ref": "r", "signed_by": "4.0.0_SA_CRO", "signed_at": "2026-09-10T21:35:52Z"}
     legacy_cvo = dict(legacy_cro, signed_by="3.0.0_SA_CVO")
     r = evaluate(prd, {"4.0.0_SA_CRO.json": legacy_cro, "3.0.0_SA_CVO.json": legacy_cvo})

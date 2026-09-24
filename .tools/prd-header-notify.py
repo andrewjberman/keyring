@@ -129,7 +129,8 @@ def _evaluate_prd(root, prd_rel, prd_text=None):
         with open(os.path.join(root, prd_rel), "r", encoding="utf-8", errors="replace") as fh:
             prd_text = fh.read()
     files = lib.read_signoff_files(os.path.join(root, os.path.dirname(prd_rel), lib.SIGNOFF_DIR))
-    return lib.evaluate(prd_text, files, coo_lane_of_project=_coo_lane_of(root, prd_rel), designated=_designated_of(root, prd_rel))
+    return lib.evaluate(prd_text, files, coo_lane_of_project=_coo_lane_of(root, prd_rel), designated=_designated_of(root, prd_rel),
+                        brief_by_cro=lib.brief_written_by_cro(root, prd_text)[0])
 
 
 def _signoff_files(root, prd_rel):

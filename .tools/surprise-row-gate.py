@@ -464,6 +464,29 @@ def _latest_dispositions(root, code):
     return latest, unknown, len(files) + len(rem_paths), ""
 
 
+def _gating_item_ids(root, code):
+    """The ids of the investigation rows that GATE the slug (spine v3.19 L10, report 3 item 1.2): `class: BLOCKING` or
+    `hazard_standing: ARMED`. An unarmed OBSERVATION row is NOTED at the round's close and counts against nothing.
+    Read from the INDEX like _latest_dispositions. None when the read fails -- the caller then gates on EVERY item,
+    the stricter pre-v3.19 rule, never on none."""
+    inv_paths, _note = _index_paths(root, [p % code for p in INVESTIGATION_PATTERNS])
+    if inv_paths is None:
+        return None
+    ids = set()
+    for p in inv_paths:
+        st, text = _blob(root, "", p)
+        if st != "OK":
+            return None
+        rows, bad = _rows(text, p.lower().endswith(".json"))
+        if bad:
+            return None
+        for r in rows:
+            if r.get("id") and (str(r.get("class") or "").upper() == "BLOCKING"
+                                or str(r.get("hazard_standing") or "").upper() == "ARMED"):
+                ids.add(r["id"])
+    return ids
+
+
 def _remediation_ids_for_project(root, code):
     """(ids, note) -- the SET of item ids carried by a REMEDIATION row under `code`'s channel, read
     from the INDEX (never the worktree). ids is None when the census could not run -- the caller
@@ -833,7 +856,7 @@ def _row_was_carried(row, parent_ids):
 
 
 def _investigations_precondition_violations(rel, row, code, route_word, dispositions, merging=False,
-                                            parent_ids=None):
+                                            parent_ids=None, gating=None):
     """GATE (iii) second limb for ONE new route-carrying row. `dispositions` is the 4-tuple from
     _latest_dispositions (injectable for the self-test).
 
@@ -860,8 +883,11 @@ def _investigations_precondition_violations(rel, row, code, route_word, disposit
         out.append("%s: `adjudicates` names %s -- an adjudication that lands on no single item under %s (a phantom "
                    "id, or an id two investigation documents carry) is refused" % (rid, ", ".join(unknown), code))
     open_items = sorted(k for k, v in latest.items() if v in UNDISPOSITIONED)
+    if gating is not None:
+        # spine v3.19 (report 3 item 1.2): only BLOCKING or ARMED rows hold the slug; `gating` None = every item gates.
+        open_items = [k for k in open_items if k in gating]
     if open_items:
-        out.append("%s: NEW row (%s) while %d of %d investigation item(s) under %s are NOT "
+        out.append("%s: NEW row (%s) while %d of %d BLOCKING/ARMED-or-ungraded investigation item(s) under %s are NOT "
                    "dispositioned (latest carrier reads UNDER_INVESTIGATION): %s. The slug waits until every "
                    "investigation is CVO-checked; an existing item is dispositioned by a NEW row that names it in "
                    "`adjudicates` (spine L10 precondition; Andrew-direct 2026-09-03 'Recs approved')."
@@ -1112,17 +1138,20 @@ def _proof_terminal(root, rel, order_text, merging=False, _run=None):
 _OPEN_TOS_CACHE = {}
 
 
-def _open_tos_for_project(root, code, merging=False):
-    """The census below, read ONCE per (root, code, merging) per gate run. The caller asks per NEW remediation row
-    plus once for its notes, so a 20-row slug would otherwise re-run the same proof-of-spec checks up to 40 times.
+def _open_tos_for_project(root, code, merging=False, round_n=None):
+    """The census below, read ONCE per (root, code, merging, round_n) per gate run. The caller asks per NEW remediation
+    row plus once for its notes, so a 20-row slug would otherwise re-run the same proof-of-spec checks up to 40 times.
     HEAD and the index do not move inside one gate process, so the first answer is the answer."""
-    key = (root, code, bool(merging))
+    key = (root, code, bool(merging), round_n)
     if key not in _OPEN_TOS_CACHE:
-        _OPEN_TOS_CACHE[key] = _open_tos_census(root, code, merging=merging)
+        _OPEN_TOS_CACHE[key] = _open_tos_census(root, code, merging=merging, round_n=round_n)
     return _OPEN_TOS_CACHE[key]
 
 
-def _open_tos_census(root, code, merging=False):
+TO_ROUND_RE = re.compile(r"^\s*<round>\s*v?([0-9]+)", re.I | re.M)
+
+
+def _open_tos_census(root, code, merging=False, round_n=None):
     """(open_ids, total, note): the project's task orders on BOTH roots (tracked at HEAD) that are not terminal.
 
     An order is terminal when its <status> word is terminal, OR when its proof-of-spec instance reads VALID bound to
@@ -1150,6 +1179,12 @@ def _open_tos_census(root, code, merging=False):
         if st != "OK":
             return None, len(paths), "%s unreadable at %s (%s)" % (
                 p, "the merged index" if merging else "HEAD", st)
+        if round_n is not None:
+            # spine v3.19 (report 3 item 1.3, LD-0521's deadlock): the slug's round counts ITS orders only. An order
+            # carrying no <round> tag still counts -- an unreadable round fails toward refusing, never toward admission.
+            rm = TO_ROUND_RE.search(text)
+            if rm and int(rm.group(1)) != round_n:
+                continue
         m = TO_STATUS_RE.search(text)
         word = m.group(1).lower() if m else "<no status tag>"
         if word not in TERMINAL_TO_WORDS:
@@ -1517,7 +1552,7 @@ def _route_precondition_violations(root, rel, row, code, open_tos=None, route_wo
     rid = row.get("id", "<no id>")
     route_word = route_word or row.get("route")
     if open_tos is None:
-        open_ids, total, note = _open_tos_for_project(root, code, merging=merging)
+        open_ids, total, note = _open_tos_for_project(root, code, merging=merging, round_n=_round_num(row.get("round")))
     else:
         open_ids, total, note = open_tos
     if open_ids is None:
@@ -2139,7 +2174,8 @@ def check_file(root, rel):
                                                  merging=_mrg, parent_ids=_pids)
             pre.extend(_investigations_precondition_violations(rel, row, folder_project, _route_word,
                                                                _latest_dispositions(root, folder_project),
-                                                               merging=_mrg, parent_ids=_pids))
+                                                               merging=_mrg, parent_ids=_pids,
+                                                               gating=_gating_item_ids(root, folder_project)))
             # EN-g-37 / S74: rowlessness only -- a GRADUATED item under this project with no
             # remediation row bearing its id. Staleness (a row that EXISTS but has not moved) is a
             # DIFFERENT question this limb cannot see and does not attempt (EN-k-38).
@@ -2250,6 +2286,21 @@ def _self_test(root):
         ("one item UNDER_INVESTIGATION -> refused, names it",
          lambda: any("X_PRJ-S1" in x and "NOT dispositioned" in x for x in _investigations_precondition_violations(
              "r", row, "X_PRJ", "route=SPEC_ERROR", ({"X_PRJ-S1": "UNDER_INVESTIGATION", "X_PRJ-S2": "GRADUATED"}, [], 1, "")))),
+        # spine v3.19 (report 3 item 1.2): only BLOCKING or ARMED rows hold the slug.
+        ("v3.19: an unarmed OBSERVATION item UNDER_INVESTIGATION does NOT hold the slug",
+         lambda: _investigations_precondition_violations(
+             "r", row, "X_PRJ", "route=SPEC_ERROR", ({"X_PRJ-S1": "UNDER_INVESTIGATION"}, [], 1, ""), gating=set()) == []),
+        ("v3.19: a BLOCKING or ARMED item UNDER_INVESTIGATION still holds it",
+         lambda: any("X_PRJ-S1" in x for x in _investigations_precondition_violations(
+             "r", row, "X_PRJ", "route=SPEC_ERROR", ({"X_PRJ-S1": "UNDER_INVESTIGATION"}, [], 1, ""), gating={"X_PRJ-S1"}))),
+        ("v3.19: gating None (the read failed) gates on EVERY item, the stricter rule",
+         lambda: _investigations_precondition_violations(
+             "r", row, "X_PRJ", "route=SPEC_ERROR", ({"X_PRJ-S1": "UNDER_INVESTIGATION"}, [], 1, ""), gating=None) != []),
+        # spine v3.19 (report 3 item 1.3): the round tag the per-round census reads.
+        ("v3.19: <round> tag parses at line start, `2` and `v2` alike; a prose mention does not",
+         lambda: (int(TO_ROUND_RE.search("x\n<round>2</round>\n").group(1)) == 2
+                  and int(TO_ROUND_RE.search("<round>v2</round>").group(1)) == 2
+                  and TO_ROUND_RE.search("the <round>3</round> tag is prose") is None)),
         # L10 MERGE EXEMPTION (0.0.0_AB_MSTR 94293) + the NARROWNESS arm that earns it. Written as a
         # PARAMETER defaulting False on 94295's constraint: an exemption read INTERNALLY from
         # MERGE_HEAD would put all SEVEN direct-call arms below on the exempt path whenever a merge
@@ -2335,7 +2386,7 @@ def _self_test(root):
         ("(c) read: _open_tos_for_project takes the ref from `merging`, not always HEAD",
          lambda: '_blob(root, "" if merging else "HEAD", p)' in inspect.getsource(_open_tos_census)),
         ("(c) read: the production caller passes merging through",
-         lambda: "_open_tos_for_project(root, code, merging=merging)"
+         lambda: "_open_tos_for_project(root, code, merging=merging, round_n=_round_num(row.get(\"round\")))"
          in inspect.getsource(_route_precondition_violations)),
         # THE C- ARM UNDER merging (0.0.0_AB_MSTR 94311, rule stated by 3.0.0_SA_CVO 94313). The MUTANT is
         # the arm that earns it: an integrator MINTING a C- row by hand on a merge must still refuse.

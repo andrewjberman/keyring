@@ -193,10 +193,10 @@ driver's own author line **ONLY when one of these holds:**
   a scope/member change, an UNREACHABLE classification, or new ledger rows (the ledger commits
   WITH this log; a joint-decision half may still commit immediately at the driver's judgment —
   session-death on an uncommitted verdict is the loss the ledger exists to close);
-- **the FLOOR: 6 ticks (~3h) since the last log** even if quiet, so a long-armed loop never goes
-  unrecorded past one working block.
-**A quiet tick writes NOTHING and commits NOTHING** — the tick output in the terminal is its whole
-record, exactly the /log skill's own skip-silently-on-no-delta pattern. The tick counter still
+- **the FLOOR: one hour since the last log** even if quiet (report 3 wave 3, Andrew-approved 2026-09-24:
+  one log per closed decision or per hour).
+**A quiet tick commits NOTHING.** It appends its line to `org/mcp/drive_ticks/<RUNNING_SERIAL>.md`, the
+gitignored runtime file, and the next committed log carries those lines. The tick counter still
 advances in scratchpad state; the next written log names the ticks it covers. Contents, always: ticks covered; calls pitched (ids, RECs); verdicts received (ids, operative sentences, grounding); acts taken (hashes, receipts); scope state — projects × `status` × `dep_stage` × open TOs (denominators printed); the completion test result; RESERVED cards still at Andrew; `state: ARMED | DONE | STOPPED-BY-OPERATOR`. A `## Compiler Tools` section per the session-log standard.
 
 ⛔ **THE MOVEMENT CURSOR IS DERIVED FROM THE COMMIT, NEVER FROM THE LOG'S FILENAME** (found by

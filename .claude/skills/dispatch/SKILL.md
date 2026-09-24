@@ -72,9 +72,34 @@ The worker face carries, and a face missing any of these is not cut:
 | `<paths>` | every file it reads or writes, **absolute from the root** |
 | `<proof_of_spec>` | **one clause per criterion** — see the refusal below |
 | `<issued_to>` | `0.9.0_WK_<CODE>~<n>`, `~<n>` = the slot, reused across that slot's queue |
+| `<risk>` | `LOCAL` / `SERVED` / `WORLD` (report 3 wave 2; spine L6). `LOCAL`: code, tests or records, a portal change landing on DEV only; `SERVED`: a PROD promotion or a served data path; `WORLD`: a deploy, delete, grant, key, or a claim to Andrew. The L6 gate refuses a new order without it and never admits a class below the floor its `<paths>` imply |
+| `<worker_class>` | `worker` (default) or `worker-light` (Sonnet at medium effort: a cell of 100 product lines or fewer, or the batch repair cell; one-round trial, report 2 C7). The spawn uses it as the agent type |
 
 **The record face never travels.** Status, seating, the preflight's disposition narrative, the authority
 chain, the provenance: they stay in the file for the gates and are not given to the worker.
+
+**WORKER RULES LIVE IN `.claude/agents/worker.md`, NEVER ON THE FACE** (report 2 C5). Identity, commit, the bar,
+surprise, proof, scratch and never are loaded into every worker as its definition. The face carries only what is
+specific to its cells, such as a portal worktree's base or a toolchain quirk of that package. Restating the
+definition costs up to a quarter of an order.
+
+**EVERY MECHANICAL CHECK IS A FILE, DRY-RUN AT THE BASE BEFORE THE CUT** (report 2 C4). Write each invocation as a
+small test or script file, not an inline one-liner inside XML. Run it once against the base before the cut:
+- a build check must FAIL at the base;
+- a bound or control check must PASS there.
+
+A check that does neither is recut before any spawn. Put one line per check in the issuance commit: `<id> base:
+FAIL as expected` or `<id> base: PASS as expected`. It costs seconds per check. It catches the pathspec, pipe,
+anchor and bound defects that report 2 measured in 9 of 29 orders mid-round.
+
+**THE DIRECT-ACT PATH** (report 3 wave 3, one rule with FAST mode). A cell that is ONE cell, of a declared small size
+(about 300 product lines or fewer) and `<risk>LOCAL</risk>`:
+- is cut as ONE order carrying `<direct_act>true</direct_act>`;
+- a worker executes it, and it drains;
+- it runs no L2, no L4-R and no L8-L10;
+- its close is your one real run of the outcome (Step 5).
+
+A larger cell or a `SERVED` / `WORLD` cell takes the full limbs.
 
 ⛔ **THE VERIFICATION DIET — A TASK ORDER IS MOSTLY THE BUILD** (spine v3.16, L6). Cut each build order with
 **at most THREE mechanical criteria**:
@@ -212,7 +237,8 @@ device-blind: on site Z the working branch is `SITEZ`, measured **242 commits AH
 announces the problem -- it silently misses the most recent work, which on a mid-round drain is exactly
 the work the order depends on. `HEAD` is correct on both fabrics and needs no per-device clause.
 
-Then the subagent call with **`subagent_type: "worker"`** and **no `isolation`**, its prompt **the worker
+Then the subagent call with **`subagent_type:` the face's `<worker_class>`** (`"worker"`, or `"worker-light"` on the
+report 2 C7 trial) and **no `isolation`**, its prompt **the worker
 face of that slot's FIRST task order, verbatim**, plus the L7 identity line naming its serial **and the
 worktree path it must work in**.
 
@@ -412,6 +438,24 @@ under your serial, never a silent re-cut; a broken thread is the first item of t
 
 **A worker with an empty queue ends. A worker that dies mid-task-order leaves a branch:** merge it if its
 instance is valid, otherwise discard it and re-dispatch that task order to a fresh slot.
+
+**MERGE PER CHAIN END, IN ONE COMMIT** (report 2 C8). When a chain's last order is terminal, merge that chain's
+branches through `safe-merge.sh` and carry the orders' status closes in the same merge. Do not make one commit to
+merge and a second to close, and do not wait to notice. There is no blocking "instrument first" wave: a checker the
+round needs is your merge tooling, or it rides the one repair cell. It is never a wave the product waits on.
+
+**THE ONE REAL RUN OF EACH OUTCOME AT CLOSE** (report 2 C6, report 3 Cut 1, Andrew-approved 2026-09-24). At the round's
+last merge, run each outcome the round served ONCE, for real:
+- the running page with real or served data, looked at (`/frontend-dev`, and read the screenshot); or
+- the real entry point, for a backend or pipeline outcome.
+
+Commit the artifact, a screenshot or the trace, under `deliverables/2.0.0_SA_COO/`. It is the close record of every
+`LOCAL` cell. It replaces every seat-to-seat re-read of the same check and every fixture-only judgment of a UI
+outcome.
+- `SERVED` cells add the CVO's grade of their judgment criteria, graded on this artifact.
+- `WORLD` cells add the CTO's exercised read and the change-management entry.
+
+The checker's match is the verdict on a mechanical criterion; nobody re-runs it.
 
 ⛔ **A MIS-FLIPPED ORDER IS *REOPENED* BY THE ISSUER — NEVER RE-CUT.** This falls straight out of RULING 1
 and is not obvious until it bites: **the grant is read from an order that is NON-TERMINAL at HEAD, so a
