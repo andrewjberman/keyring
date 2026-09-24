@@ -60,7 +60,7 @@ firm tab, read in place. Then /verify on all three criteria.
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| Served directory stuck at 2026-09-17 (49F, INF): the refresh has dispatched no build since 09-18. Diagnosed as row IRPT_BCKEND-S125 (BLOCKING/ARMED) @662960f9ba, refresh.py:736-761 + :794-813 | 2.0.0_SA_COO~P (directory surface; msg 20:0xZ) | ~P disarms S125 |
+| Served directory stuck at 2026-09-17 (row IRPT_BCKEND-S125). FIX DEPLOYED 20:59:50Z by ~M on Andrew's ~20:0xZ word: irpt-directory-refresh DXuzx9jp = a7e5c59042 on P's 82679477a6 (branch irpt-m-s125-publish @b2fe2f2c3a, LOCAL). Ledger irpt-directory-refresh-s125-m-20260924: A1 closed; S1 (one fire) open | 2.0.0_SA_COO~M | Andrew picks: one fire now, or the 09-25 09:00 ET schedule; then read S1 and disarm S125 |
 | Public reason for a selected account with no custody row: NOT_READY today, which reads as transient; NOT_FOUND (`_authz/errors.py:58`) is the closest member of the enum. It is a contract choice and a served-code deploy | 1.0.0_SA_CTO (contract) | the CTO rules the code; ~M then builds it with the ledger entry + never-widen |
 | The FULL -> FAST line to the CVO ("FAST from 18:1xZ; pins graded after the fact") | 2.0.0_SA_COO~M | 3.0.0_SA_CVO registers live |
 | IRPT_BCKEND-S124: the bundle mint reads working-tree bytes | owner of .tools/safe_deploy_core.py | next bundle re-mint |
