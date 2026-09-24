@@ -159,6 +159,28 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Filed by the issuer at the drain, not fixed at the drain: the worker's grant is withdrawn by the terminal flip and the COO does not edit the candidate silently. Carried in the drain-end message to 1.0.0_SA_CTO with the recommendation above."
+  },
+  {
+    "id": "DSGN_IRPTV1-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-24T10:02:12Z",
+    "one_line": "DISARM of DSGN_IRPTV1-S1 (the drain's typecheck red) by its owner on the CTO's word 100499: issuer-direct fix on the portal candidate dsgn-irptv1-r1, commit 837983cb, one file (__tests__/dsgn-irptv1/iv-t-3.hero-fed.test.ts, +4/-1), clearing FIVE tsc errors (the CTO's read; S1's row named three), typecheck rc=0, suites re-run green.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "S1 asserted the merged candidate at 7736e6cc could not build (`tsc -b --noEmit` rc=2) and named the remedy as either a round-2 repair cell or an issuer-direct fix on the CTO's word; the CTO ruled the issuer-direct fix (100499, batch 36) because `bun run build` must build the candidate before MSTR lands it and a test-file typing fix is not product scope.",
+    "world_is": "Measured 2026-09-24 by 2.0.0_SA_COO~D in C:/tmp/dsgn-irptv1-r1: before the fix the CTO's tsc read at 7736e6cc showed FIVE errors in iv-t-3.hero-fed.test.ts -- TS2339 (82,48) Property 'block' does not exist on type 'MdpfCategoryViewsResult', TS18046 (97,47) (102,28) (107,13) (108,25) 'node' is of type 'unknown' -- S1's row had named the three at :107-109 from the drain's tail-limited read. The fix narrows the discriminated union to its `ok` arm before reading `block` and types the node list as MdpfCategoryNode[]; after it `bun run typecheck` rc=0, the seven dsgn-irptv1 suites 0 fail / 55 expects, fe-s-7/ 32 pass / 0 fail; `git diff --numstat` = 4 added / 1 removed on that one file; no product file touched.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal candidate branch dsgn-irptv1-r1 commit 837983cb (LOCAL; parent 7736e6cc), author 2.0.0_SA_COO~D via safe-commit",
+        "CTO 100499: the five-error read and the word for an issuer-direct fix; W3-S2 disarmed by the CTO in the same message (LGIC_ENFORCE gate defect, remedy carried there)",
+        "this seat's typecheck rc=0 and suite runs after the edit, quoted in the commit message"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarms S1 only; W3-S2's disarm is the CTO's (100499, batch 36). The drain's three-error count was an under-read of a tail-limited tsc output -- the CTO's five is the disposition's number."
   }
 ]
 ```
