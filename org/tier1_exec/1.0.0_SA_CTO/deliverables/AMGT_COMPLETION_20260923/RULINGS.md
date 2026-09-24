@@ -253,6 +253,101 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-28 -- H03 2a IS LANDED AND VERIFIED, AND THE OUTPUT DELTA OUTSIDE THE SIGNED RADIUS IS RULED INSIDE IT
+
+**`0.7.0_AE_CloudOps~A`, RAVC2, commit `6fdfe5b25e` (LOCAL, measured by `ls-remote` with `f47642479c` as a
+positive ancestry control).** Apply complete: **1 imported, 0 added, 3 changed, 0 destroyed** -- identical to the
+plan and to the letter's prediction. `CodeSha256 Xdwp7Ir...` at 55,418,293 b, **512 MB / 120 s**,
+`CHATTER_AXIS_SOURCE=legacy`, revision `e37b6030 -> 2c917823`. `terraform plan -detailed-exitcode` rc=0.
+**NEVER-WIDEN HELD, COUNTED RATHER THAN ASSERTED:** exactly TWO `chatter_daily` entries across 4 statements and 21
+resource/prefix entries, **gold-but-not-`chatter_daily` entries 0, removals 0**; log group tags-only,
+`retention_in_days 0` unchanged. **Ledger leg `tf` CLOSED**; `daily` (the 10:00Z fire) and `served` (CVO-owned)
+remain. ⭐ **The ledger was read across ALL 43 live worktrees and found in 3** -- NEVER-2 applied, where a
+single-tree read would have returned a confident wrong answer.
+
+⭐ **THE MEASUREMENT THAT DID NOT EXIST BEFORE THE ACT: `Max Memory Used 112 MB` AGAINST THE PRIOR 128 MB
+CEILING.** The function was running at **87.5% of its limit**, so the 128->512 resize was **load-bearing, not
+cosmetic** -- and nothing before this apply could have known that, because the figure is a product of the run.
+**A resize that looked like packaging hygiene was 16 MB from an OOM.**
+
+⭐ **AND THE R-15/R-17 REQUIRED ITEM IS DISCHARGED:** the one `dry_run` invoke (RequestId `10fbaa9c...`,
+StatusCode 200, FunctionError null) is the **first target-runtime evidence of Arrow 15.0.2 reading
+Arrow-24-written parquet**, clean. Zero-writes held on both products (`rows_written=0`,
+`pointer_written=False`, `failed_marker_written=False`). ⚠ **And that seat guarded the exact misreading this
+letter feared:** the dry-run `pointer_written=False` is the dry run writing nothing and is **NOT** evidence about
+the 10:00Z fire, where a generation IS expected.
+
+⭐ **THE FIVE STALE PROOF CLAUSES WERE REPORTED AND NOT RECONCILED, AND NOTHING WAS ALTERED TO MAKE ONE PASS.**
+That was the single most important line in the letter and it came back in that seat's own words. **The half of the
+pair an actor is best placed to "fix" is the half that stayed untouched.**
+
+### R-28a -- THE `scoped_amgt_route_keys` OUTPUT DELTA: RULED INSIDE THE RADIUS, ON A WRITER COUNT
+
+**BOTH `0.7.0_AE_CloudOps~A` AND `0.0.0_AB_MSTR~Z` CARRIED IT TO THIS SEAT RATHER THAN ABSORBING IT**, because the
+letter's radius named three resources and no output while the plan added five keys (`freshness`, `lists`, `ledger`,
+`versions`, `compare`). ⭐ **RAISING IT WAS CORRECT: a delta outside what a never-widen half NAMES is precisely what
+that half exists to catch, and neither seat owns that surface.**
+
+**RULED: THE SIGN-OFF HOLDS AND COVERS IT.** Measured on the never-widen rule's own instruction -- *"FIRST COUNT THE
+WRITERS OF THE NAMED PROPERTY ... and N is a number the half PRINTS"*:
+
+| | |
+|---|---|
+| **N = 1 WRITER** | `infra/aws/terraform/harvest/scoped-amgt-api.tf:387`, `output "scoped_amgt_route_keys" {` |
+| **N = 0 CONSUMERS** | 15 hits across **72,224 files** scanned -- `SURFACED=1` (that declaration), `CONFIG=3`, `DOC=11`. Every non-declaration hit RECORDS a past plan or run; none is a reference |
+
+⭐ **THE CENSUS IS DECISIVE RATHER THAN SUGGESTIVE BECAUSE OF HOW A CONSUMER MUST SPELL ITSELF:** reading an output
+requires NAMING it -- `module.<x>.scoped_amgt_route_keys`, a `terraform_remote_state` lookup, or
+`terraform output -json` in a script -- and **every one of those forms contains the string**, so the census that
+found the declaration would have found the consumer. An output with one writer and no reader creates no AWS
+surface, writes no served artifact and moves no key.
+
+⭐ **AND TWO INDEPENDENT NEGATIVE CONTROLS FOR THIS EXACT DELTA WERE ALREADY IN THE CORPUS, NEITHER AUTHORED FOR
+THIS ACT** -- which is better evidence than this seat's own reading: `AMGT-rk-59`'s `proof_of_spec` (`:74`),
+*"only 'Changes to Outputs:' for scoped_amgt_route_keys, pre-existing/unrelated"*; and
+`AMGT_EXPERIENCE/C1_EXECUTION.md` (`:11`), *"Exit 2 is only an update to the Terraform output
+scoped_amgt_route_keys; no further apply was performed."* **Three seats have now met this delta on this stack and
+dispositioned it identically.**
+
+⚠ **THE LIMIT, STATED BECAUSE THE RULING READS WIDER THAN IT IS:** this covers **the five named keys on
+`scoped_amgt_route_keys` and nothing else.** A delta on a DIFFERENT output, or a resource line where the plan read
+`1 import / 0 add / 3 change / 0 destroy`, is **NOT** covered and returns here. **A ruling that a class of delta is
+benign is not a ruling that deltas are benign.**
+
+## R-27 -- BOTH ADDENDA CUT; THE EXPORT WAS IN NEITHER BRIEF, AND A GATE CAUGHT THE THIRD COORDINATE MISS
+
+**Andrew-direct ~05:0xZ sets the goal and its completion test** (verbatim at
+`ANDREW_DIRECT_20260924_050xZ_AMGT_GOAL_AND_COMPLETION_TEST.md`). `AMGT_CORPUS` v0.5 ADDENDUM A (`FWD-10`..`FWD-19`)
+and `AMGT_RESAPP` v0.25 ADDENDUM B (`FWD-21`..`FWD-30`), both @`1ffb156ecd`.
+
+⛔ **HIS FOUR CLAUSES MINUS WHAT WAS COVERED LEAVES AN EXPORT NEITHER BRIEF CARRIES.** The frontend brief's nine
+outcomes are ALL render outcomes and its own Part VII lists *"the print action"* among what it did not capture; the
+CORPUS brief never mentions an export. ⛔ **SO BOTH ROUNDS COULD HAVE BEEN CUT, DRIVEN AND GRADED COMPLETE WITH HIS
+THIRD CLAUSE UNSERVED, AND EVERY ARTIFACT WOULD HAVE READ DONE.** It lands as `FWD-30`. ⭐ **Rule 24's subtraction
+found it; reading his sentence for the parts that matched work already in flight would not have.**
+
+⚠ **AND HIS COMPLETION TEST OVERTURNED A CONTRACT THIS SEAT HAD WRITTEN MINUTES EARLIER.**
+`C-BACKFILL-DENOMINATOR-IS-THE-ESTATE'S-LIST` held that the 93 folders were *"the pool, not the population"*; he
+said the folder IS the population. Replaced, and `K6` closed unworked. ⭐ **THE REASON IT COST NOTHING IS THAT THE
+UNCERTAINTY WAS FILED AS A CARD RATHER THAN RESOLVED BY INFERENCE** -- one sentence from him closed it and nothing
+had been built on the wrong domain. **Had this seat resolved it on its own reasoning, the round would now be
+building an estate-wide backfill he never asked for, and the artifact would have looked measured, because its 93 was
+real.**
+
+### R-27a -- ⛔ THE THIRD COORDINATE MISS TONIGHT, AND THE ONLY ONE A GATE CAUGHT
+
+The first cut of both addenda defined the twenty new outcomes in the HEADER and in the ADDENDUM section, and left
+the **ENDPOINT section -- the surface step 5 reads -- without them.** The **step-4 PRD surface-manifest gate REFUSED
+the commit** and named all twenty: *"the R3 monitor reads the header and step 5 reads the section, so this drift is
+invisible to a reader and total to a consumer."*
+
+⭐ **THREE INSTANCES OF ONE CLASS IN ONE STRETCH, ALL THIS SEAT'S:** R-26a (the field on the GENERATED row, not the
+declared one) · A.2's stale O7 instruction in the brief this seat was cutting from · and this. ⛔ **AND THE
+DIFFERENCE THAT MATTERS: the first two were found by READING, this one by a MECHANISM.** The gate could not be
+talked past, cost one refused commit, and named every missing id. **A rule that depends on a reader noticing has a
+failure rate; a gate does not** -- and the remedy here was to make the ENDPOINT fence the ONE carrier and turn both
+addendum sections into pointers, rather than to keep two carriers in sync by discipline.
+
 ## R-26 -- HAND-BACK TO CANONICAL FLOW ON ANDREW'S WORD; and `closer_contract` WAS ON THE CARRIER THE GENERATOR ERASES
 
 **Andrew-direct 2026-09-24 ~04:3xZ, VERBATIM:** *"I think we're positioned here to get back to canonical
