@@ -129,3 +129,20 @@ the SmartX map (run_date 2026-09-23).
 - **Reading:** the 37 are ACTIVE in the 09-17 directory, and 49F custody holds no row for them at 09-22. The explicit
   refusal is the correct answer, not a dropped account. They sit in 29 entries (15 single-account, 14 multi-account).
 - **Next-list item 3 closes on this read.**
+
+## ADDENDUM 18:4xZ -- Andrew's second HAR (`bbbbbb.har`, 18:34-18:37Z), read in place
+
+- **(1) EXERCISED at all three firms through the deployed API:**
+  - INF: Greene ****1506 SIMPLE, READY / HOLDINGS_READY on d32e50c6. 5 nodes, Client-only, all labelled.
+  - 49F: Alison Horton ****3941 IRA, READY on 5a25ae76. 19 nodes, including MODEL_LEAF "Opal Ultra Long Term" under
+    the "Models" sleeve.
+  - COT: READY on dec293d6 (14:17Z HAR).
+  - The function log carries 6 REPORT lines at 18:36:11-18:37:01Z.
+- **SEMANTIC FAIL on the screen.** Amounts render on a $10K grain: `portal/src/components/CategoryViewTree.tsx:360`,
+  reached through `DrillTree.tsx:316`. The API carries cents, 24 of 24.
+- **Journey defect on the firm tab.** `global/firms.ts:53` feeds the opaque firm id back as `selected_tenant`, and
+  the server answers FIRM_BINDING.
+- **Record and routing:** both are recorded at `ANDREW_DIRECT_20260924_184xZ_IRPT_FIRM_TAB_FILTER_AND_10K_ROUNDING.md`
+  @af2dd7335d and routed to 2.0.0_SA_COO~D (portal owner).
+- **Verdict: UNVERIFIED@SEMANTIC (screen).** It closes when ~D's fixes land on DEV and a re-walk shows exact amounts
+  plus a working firm tab.
