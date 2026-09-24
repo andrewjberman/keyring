@@ -1,0 +1,32 @@
+{
+ "label": "probe",
+ "path": "/indices/table_data?indices=%5ESPX&columns=ytd_total_return",
+ "utc": "2026-09-23T18:24:49Z",
+ "http_status": 200,
+ "final_url_path": "/indices/table_data",
+ "elapsed_s": 0.53,
+ "bytes": 1024,
+ "json": {
+  "chartUrl": "https://ycharts.com/charts/fundamental_chart/#/?aiSummaries=&axisExtremes=&calcs=id:level,include:true,,&chartAnnotations=&chartType=interactive&correlations=&customGrowthAmount=&dataInLegend=value&dateSelection=range&displayDateRange=false&endDate=&format=indexed&language=en-us&legendOnChart=false&lineAnnotations=&maxPoints=&nameInLegend=name_and_ticker&note=&partner=&performanceDisclosure=false&quoteLegend=false&quotes=&recessions=false&redesign=true&scaleType=linear&securities=id:^SPX,include:true,,&securityGroup=&securitylistName=&securitylistSecurityId=&sortColumn=&sortDirection=&source=false&splitType=single&startDate=&title=&units=false&useCustomColors=false&useEstimates=false&valueFlags=value&zoom=",
+  "columnInfo": [
+   {
+    "metricDisplayName": "Year to Date Total Returns (Daily)",
+    "metricInternalName": "ytd_total_return"
+   }
+  ],
+  "indicesData": [
+   {
+    "label": "^SPX",
+    "value": "S&P 500",
+    "url": "/indices/^SPX",
+    "data": [
+     {
+      "calc_name": "ytd_total_return",
+      "calc_value": "14.40%",
+      "calc_raw_value": 14.4
+     }
+    ]
+   }
+  ]
+ }
+}

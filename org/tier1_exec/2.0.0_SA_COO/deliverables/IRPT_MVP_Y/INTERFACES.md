@@ -1,90 +1,107 @@
-# IRPT Y -- current interfaces
+﻿# IRPT Y - current interfaces
 
-Owner `2.0.0_SA_COO~Y`. Contract v1.3. Y production source `85af5eb95d72051c363727229981c4dc1a35cad9`, paired evidence `4ea95d1117`.
-P reports prior custody source `10627906f2` integrated at `411256e41c` and packaged at `e3ad48ca23`.
-This is the current schema/consumer record; historical proposals and prior
-examples are retained unchanged in `INTERFACES_HISTORY.md`.
+Owner `2.0.0_SA_COO~Y`; source `635af92b76` (current-authority consumer, CTO
+review pending) over `2874e37647` / `bfe6469b1e` / `4ebe6948d9`.
+CTO bounded source PASS `2dd385ed59` covers exact `2874e37647`. P consumed that
+whole set: `b3fc529601` on `irpt-smoke-p-backend-20260923` integrates 31 Y files
+and every one of the 85 tracked files under
+`infra/aws/lambda/investor-reporting/ycharts/` at 2874 hash-matches P HEAD
+(85 MATCH / 0 DIFF / 0 ABSENT, measured 2026-09-23 23:2xZ). Current executable
+delta is CROSS_FIRM_PUBLICATION_HANDOFF_20260923.md; full literal installer and
+pinned host capture/census contract is RESIDENT_ASSEMBLY_HANDOFF_20260923.md.
 
-## Controlling access requirement
+## Resident factory and storage
 
-Ruling `5ad99c7d30` supersedes Opal custody-only, owner-only and mandatory-single-firm
-permission ceilings. Verified Opal actors retain all IRPT functions across firms.
-Y consumed P's verified viewer/prospect interface `9a3ec2a11f`; exact new read,
-upload, placement and Entry ports are in `OPAL_ACCESS_HANDOFF_20260923.md`.
-Current source supports the real viewer separately from retained owner and
-explicit `data_firm` lookups. P's actual cross-firm storage `dd6edfc3aa` passes
-paired replay; shared Entry wiring remains pending. Preserve real actor and each input/report firm/account/source
-attribution. No browser field grants access; offline tests do not prove live access.
+`resident_main.py --factory MODULE:build_resident_runtime` expects exactly
+`{assembly: ResidentAssembly(...), sqs: boto_client, queue_url: canonical_url}`.
+Assembly ports: requests, reports, admission, session, dynamo_client, jobs_table,
+requests_table, principal_for(record), census_bytes, census_sha256; optional clock.
+P constructs real current-actor/shared repository ports. Y constructs frozen
+worker, certified publisher, retained-PDF recovery and fenced publication.
 
-## Versioned contracts and owners
+`principal_for(record)` resolves the accepted submitter's CURRENT actual shared
+authority. It must not impersonate the immutable input owner or queue tenant.
+Concrete placement comes from the accepted job tenant. Cross-firm artifact/report
+get and retention require_live/promote receive `data_firm=tenant`, using existing
+P37526d36ae-compatible interfaces; same-firm calls retain old signatures.
+Example: actual Opal actor in Global, original49financial input creator, request
+owned by actual submitter in49financial storage. Composition preserves original
+input_owner. Both retained identities and all current grants are checked.
 
-| Interface | Current definition | Owner |
-|---|---|---|
-| Frozen normalized input | `irpt-normalized-portfolio.v1`, `intake/portfolio.py` at the Y source pin above | Y |
-| Accepted custody input | `accepted-custody-input-v1`, P `75bbe9cc2d` output preserved by concrete reader `e36b007fa1` | P reader; M publication/economic source; Y consumer |
-| Custody owner | `custody-owner-v1`, exact actor/home/report firm, account set, revisions and snapshot | P/M current scope authority |
-| Public submission/composition/status/report wires | Canonical `docs/contracts/investor-reporting/v1/` schemas in P's integrated candidate; Y adds no public fields | P shared schemas, Y generation semantics |
-| Retained report/artifact and export interfaces | P's current repository/package; no alternative Y store | P |
+`ResidentSession(secrets_client=..., dynamo_client=..., jobs_table=...,
+enrolled_user_id=...)` uses canonical session and existing durable operation row.
+Install capture with actual canonical wrapper/library SHA256 pins. Only explicit
+ResourceNotFound is missing; failed reads are sanitized unavailable and invalid
+configuration cannot trigger bootstrap. CTO3d9f451 closes this exact boundary.
+One factory-shape change in the current delta, ruled: `ResidentAssembly` takes
+`profile_for(principal_id)` (the installer's `CanonicalProfileReaders.get_user`)
+beside `principal_for`; see RESIDENT_ASSEMBLY_HANDOFF for the decision the worker
+replays on it. No queue schema change.
 
-## S3 normalized schema and private custody projection
+## Upload and submission
 
-`freeze_parsed_portfolio(parsed, owner, source, resolve_security, *,
-declared_currency=None, prices=None, price_date=None, reference_notional=None)`
-returns `{input_id, content_sha256, document}`. The identity is `portfolio_` plus
-SHA256 of sorted compact UTF-8 canonical document bytes. The document preserves
-owner/source, parser and currency evidence, original contribution rows, findings,
-explicit skips, reconciliation, valuation basis and consolidated dollar holdings.
-Canonical-security holdings carry `security_key`, `canonical_identifier`,
-`canonical_identifier_namespace`, `resolution_revision` and decimal-text dollars.
-Shares require dated compatible prices; weight inputs need the declared notional
-basis. No fabricated vendor identity or client AUM.
+TEMPLATE_UPLOAD_HANDOFF_20260923.md is the paired upload schema/family batch;
+BROKER_TEMPLATE_CALLER_20260923.md supplies actual session-bound resolver caller.
+CSV/XLSX file_base64/file_type is exclusive with legacy csv_base64. AAPL10.01 +
+VNQ2.02 Dollars freezes12.03 without Shares prices or optional Kimi replacement.
+DUAL_OWNER_HANDOFF_20260923.md pins real P storage/admission/access and M profile
+ports. Actual submitter and original immutable input owner remain separate.
 
-The private custody branch uses `freeze_accepted_custody(accepted, owner)`.
-The accepted result has exactly `schema_version`, `owner`, `snapshot_id`,
-`snapshot_revision`, `binding_revision`, `selected_account_set_fingerprint`,
-`actual_custody`, `original_rows`. The complete nested contract is the paired
-P reader specification at `e36b007fa1` and executable closed-field consumer
-`intake/custody_portfolio.py` at the Y pin; this record does not fork that schema.
+## Runtime and next proof
 
-`document.source` maps CUSTODY lane; original snapshot digest to source_revision;
-verified selected fingerprint to selected_set_fingerprint; custody date to as_of;
-exact sorted owner accounts and snapshot; and a full deep copy of accepted input
-to accepted_custody. Every original must pass eligibility/correspondence before
-one money contribution per economic position. Security consolidation happens
-only afterward. The existing positive-only recipe bounds remain in force.
-`verify_frozen_portfolio` reconstructs this branch from retained evidence and
-compares the complete document; current authorization is separately mandatory.
+Copied-source grant CONSUMED: P `b3fc529601` commits all 31 paths unchanged.
+No `build_resident_runtime` implementation exists in P's tree (only the
+docstring in resident_main.py and the test doubles), so the installed factory,
+package/census digests and sole-consumer cutover receipt remain P's next
+delivery. The always-on host `i-0167fd745ad906a66` is STOPPED: the enforcer
+stopped it at 21:21:18Z (no `AutoShutdown=disabled` tag, the enforcer's only
+exemption) and `ycharts/instance.tf:131-135` still declares `stopped`; both
+writers must move to `running` under Andrew `6fc3f5f785` before any consumer
+can run. Deployed `irpt-ycharts-generate` (LastModified 2026-09-19) predates
+every Y commit and its role carries no `sqs:SendMessage`; `IRPT_LIVE_YCHARTS_CALL`
+is unset. These are P shared surfaces; Y's exact requirements are unchanged in
+RESIDENT_ASSEMBLY_HANDOFF items 2-5. Current authority for the queued actor
+is ADJUDICATED by CTO d78fdb2f1c item 4: P projects createdAt/role/userType
+from CanonicalProfileReaders.get_user (created_at fallback) and writes the
+dynamodb:Query/GetItem grants on opal-users-v2; Y consumes at job start, final
+release and every durable dispatch -- REFUSE when user is None, status != active,
+user.firmId != record.owner.home_firm_id, or createdAt parses later than the
+record's accepted time; a missing/unparseable createdAt does not refuse but is
+recorded as createdAt_absent in the decision evidence. Class: OPAL_GLOBAL iff
+firmId == opal-capital or userType == Dev, otherwise own firmId only; a non-Opal
+job whose data firm != firmId refuses with a defined code. Retained owner fields
+are lookup locators only, never synthesized claims. The sha256(PK|createdAt)
+binding and the admin-descendant Scan are parked enrichment.
 
-## Factory and replay call signatures
+Accepted dual-owner prospect record fields, source2874/1385:
+- `record.owner.principal_id`: actual submitting normalized email.
+- `record.owner.home_firm_id`: actor home organization, retained by P9a3
+  InteractiveAccess.prospect_owner and UploadService.repository_owner.
+- `record.owner.firm_id` / `record.identity.tenant_firm_id`: concrete storage firm.
+- `resolved.owner`: same accepted request owner in the immutable composition.
+- `resolved.input_owner` / `resolved.document.owner`: original input creator.
 
-`AcceptedCustodyReader.read(principal, owner)` and
-`authorize_snapshot(principal, owner)` are P-owned installed server ports.
-`AcceptedCustodyNormalizer(reader).load_normalized(browser, principal, owner)`
-provides Y's existing normalized loader. `build_accepted_custody_entry(reader,
-**existing_ports)` binds those ports to the guarded factory; competing callbacks
-refuse. It neither creates a reader nor installs a module-global entry.
+No top-level actor field or stable auth PK/SK/Cognito subject is persisted. Retained
+principal_class/advisor_id/fingerprint are attribution, never refreshed grants.
+The existing concrete `_scope/canonical_profile_reads.py:CanonicalProfileReaders`
+`get_user(record.owner.principal_id)` queries opal-users-v2 email-index (eventually
+consistent) then strongly reads PROFILE. It returns email/firmId/status/name/
+updatedAt, dropping PK/SK and not projecting role/entitlement authority. This is
+maintained profile evidence, not a queue-safe current-authority adapter. Y has
+not supplied such an adapter. P's InteractiveAccess requires current verified
+HTTP headers; do not synthesize them from the accepted record. CTO has this
+exact shared-authority fork. A legacy record with no proven actor locator must
+not fall back to input owner. No replacement callback/schema is proposed here.
 
-S4 acceptance precedes dispatch; retries use retained input/configuration and
-current authority. `FrozenCompositionWorker` consumes retained composition and
-normalized artifacts under the existing request/retention guards. `prepare_normalized_upload`
-uses canonical identifiers and exact dollar text without source refresh. Report
-sections and job status remain separate responses under P's canonical schemas.
-The new package member is flat `custody_portfolio.py`; packaging remains P-owned.
+Factory shape and literal installer are unchanged. Y runs the live journey once
+the real shared authority, repository and sole-consumer boundary is installed.
 
-## One paired example (synthetic, executable)
+Dedicated always-on i-0167fd745ad906a66, one session owner/generation consumer,
+no inbound. Standing host workflow/D1 approved under Andrew6fc3f5f785; generation
+first. P integrates exact shared schema/family/factory/routes/IAM/package and
+supplies measured single-consumer cutover receipt; Y supplies installer/rollback
+and exercises the complete browser-to-certified-report/reload journey.
 
-The fixture `intake/tests/test_custody_portfolio.py::accepted` at `10627906f24aa42db4c08fd66105599f35bf7819`
-contains two equal relationship originals, each market value `"100.00"`, with
-distinct physical row coordinates, one economic position, complete census and
-an independent `"100.00"` account total. With synthetic admitted security/economic
-evidence, the actual P reader feeds Y's consumer: both originals remain inside
-source.accepted_custody, one contribution is emitted, and holdings.total_dollars
-is `"100.00"`, never `"200.00"`. Its exact snapshot revision, binding revision and
-verified selected fingerprint survive retention. Changing an original to zero,
-negative value, SHORT or negative native quantity refuses before aggregation.
-
-Executable paired factory example:
-`ycharts/generate/tests/test_custody_retained.py::test_p_reader_consumer_factory_retention_retry_and_revocation`
-at the same pin. `IRPT_ACCEPTED_READER_TEST_ROOT` enables the exact pinned P reader
-extraction described in `ACCEPTED_CUSTODY_CONSUMER_EVIDENCE_20260923.json`.
-This is offline consumer evidence, not a real economic-source or live-thread claim.
+Current source checks use offline AWS/vendor fixtures. Installed host, live
+session recovery, all-firm browser journeys and branded export remain unproved.
+Historical interfaces are in INTERFACES_HISTORY.md and the cited pinned handoffs.

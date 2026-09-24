@@ -417,9 +417,17 @@ def js_literals(src, added):
 def tf_literals(src, added):
     """Terraform string literals on added lines, each with its block context: a label is marked, a string in a
     module block whose source is the opal_name module is permitted, and a resource's own-name attribute gives
-    the node type as the hint."""
+    the node type as the hint.
+
+    THE HCL LOOKUP CONTEXT (2026-09-23, 0.0.0_AB_MSTR, on 1.0.0_SA_CTO's 22:29Z routing of P's retained.tf):
+    the Python side permits a literal inside a lookup() call (BUILDERS); this is its Terraform twin. A literal
+    is permitted when it is the key of `lookup(local.X, "<key>")` or of `local.X["<key>"]` AND local.X is fed,
+    in the same file, from jsondecode(file(".../logic/registry/<name>.json")) -- the canonical registry the
+    Python lookup() reads. A local fed from a hand-typed map, or a lookup over anything else, stays graded:
+    the same rule as the Python branch, no new permission class."""
     toks = scan(src, "tf")
     blocks, stmt, attr, bracket, out = [], [], None, 0, []
+    registry_locals, ctxs = set(), []
     for kind, v, raw, ln in toks:
         if kind == "nl":
             if bracket == 0:
@@ -459,17 +467,33 @@ def tf_literals(src, added):
             continue
         lit = Lit(v, raw, ln)
         lit.block = list(blocks)
+        ctxs.append((lit, [(k, x if k != "lit" else None) for k, x in stmt[-5:]]))
         stmt.append(("lit", lit))
         inner = blocks[-1] if blocks else None
         if inner and inner.get("block") and inner.get("kind") == "module" and attr == "source" and "opal_name" in v:
             inner["opal"] = True
+        if _TF_REGISTRY_FILE.search(v) and any(b.get("block") and b.get("kind") == "locals" for b in blocks):
+            local_name = inner.get("map_attr") if inner and not inner.get("block") else attr
+            if local_name:
+                registry_locals.add(local_name)
         lit.hint = _tf_hint(blocks, attr)
         if ln in added:
             out.append(lit)
     for lit in out:
         if any(b.get("block") and b.get("kind") == "module" and b.get("opal") for b in lit.block):
             lit.permitted = True
+    for lit, ctx in ctxs:
+        if lit.permitted or lit not in out:
+            continue
+        if (len(ctx) >= 5 and ctx[-5:-1] == [("word", "lookup"), ("sym", "("), ("word", "local"), ("word", ctx[-2][1])]
+                and ctx[-1] == ("sym", ",") and ctx[-2][1] in registry_locals):
+            lit.permitted = True  # lookup(local.X, "<key>") over a registry-fed local
+        elif len(ctx) >= 3 and ctx[-3] == ("word", "local") and ctx[-1] == ("sym", "[") and ctx[-2][1] in registry_locals:
+            lit.permitted = True  # local.X["<key>"] over a registry-fed local
     return [lit for lit in out if not lit.label]
+
+
+_TF_REGISTRY_FILE = re.compile(r"(^|/)logic/registry/[A-Za-z0-9_.-]+\.json$")
 
 
 def _tf_hint(blocks, attr):
@@ -753,6 +777,58 @@ def _resolves_to_tracked(value):
         ok = rc == 0
     _RESOLVE_CACHE[value] = ok
     return ok
+
+
+_CARRIED_CACHE = {}
+
+
+def _carried_at_head(value, path):
+    """The first DECLARATION-TREE file at HEAD, other than `path`, that carries `value` byte for byte (fixed
+    string); '' when none. One git grep per distinct value, cached for the run.
+
+    Declaration tree only (LD-0611-ARM-01, 1.0.0_SA_CTO 99852): a hit under a record tree (org/**, docs/**, a
+    minted run directory) or in a file the gate does not grade is NOT a carrier. A key first typed into a
+    ledger, a message record or a log must not make its later copy in code read EXISTING -- and the ledger
+    naming this rule's own negative arm made that arm vacuous one commit after it was measured."""
+    if not value or len(value) < 4:
+        return ""
+    if value not in _CARRIED_CACHE:
+        rc, out, _err = git("grep", "-l", "-F", "--", value, "HEAD")
+        hits = []
+        if rc == 0:
+            for line in text_of(out).splitlines():
+                hit = line.split(":", 1)[1] if line.startswith("HEAD:") else line
+                if (hit and hit != path and not _is_record_tree(hit) and hit.endswith(GRADED_EXT)
+                        and hit != ".tools/naming-gate.py" and "/tests/" not in "/" + hit):
+                    hits.append(hit)  # never the gate's own bytes or a fixture under */tests/*
+        _CARRIED_CACHE[value] = sorted(hits)
+    hits = [h for h in _CARRIED_CACHE[value] if h != path]
+    return hits[0] if hits else ""
+
+
+def _packaged_citations(post_text):
+    """The `packaged_as` names of a packaging manifest whose `repo_path` resolves to a tracked file at HEAD
+    (2026-09-23, 0.0.0_AB_MSTR, on 2.0.0_SA_COO~P 99805: lambda-source-map.json rows such as
+    {"repo_path": ".../performance/bd_live.py", "packaged_as": "bd_live.py"} and the member lists that
+    repeat those names). The packaged name is the in-zip spelling of a file already committed under its
+    repo_path, so it is the same citation R-11 already recognises for the repo_path itself -- renaming it
+    would break the module's imports and mints nothing. A row whose repo_path does NOT resolve cites nothing,
+    and its packaged_as stays graded. Any other JSON string is unaffected."""
+    try:
+        doc = json.loads(post_text)
+    except ValueError:
+        return set()
+    out, stack = set(), [doc]
+    while stack:
+        node = stack.pop()
+        if isinstance(node, dict):
+            rp, pk = node.get("repo_path"), node.get("packaged_as")
+            if isinstance(rp, str) and isinstance(pk, str) and _resolves_to_tracked(rp):
+                out.add(pk)
+            stack.extend(node.values())
+        elif isinstance(node, list):
+            stack.extend(node)
+    return out
 
 
 _GITATTR_BINARY_TOKENS = ("binary", "-diff")
@@ -1226,6 +1302,19 @@ def judge(nm, path, lit, pre_text, waivers=None):
     verdict, canon, defect = nm.grade(typ, graded_as)
     if verdict == "RAISE":
         why = "RAISE as %s: rule or registry defect, not a refusal: %s" % (typ, defect)
+        if new:
+            # A literal the grammar cannot place is NEW to this file but may already be carried, byte for
+            # byte, elsewhere at HEAD (2026-09-23, 1.0.0_SA_CTO 99842 on 2.0.0_SA_COO~M's "smartx/platform/silver/",
+            # K3 "'platform' is not a tier": a pre-LGIC layout the retained build already reads). Copying an
+            # existing pre-LGIC key into a new file mints nothing; under CLAUDE.md Rule 30 that layout reaches
+            # conformance through its own migration project, never through this diff. So: EXISTING, WARN, with
+            # the RAISE reason and the carrying path printed. A raising literal carried NOWHERE at HEAD keeps
+            # the branches below unchanged.
+            where = _carried_at_head(lit.value, path)
+            if where:
+                return ("RAISE-EXISTING", "(pre-LGIC key; conformance via its migration project, Rule 30)",
+                        why + "; the same literal is already carried at HEAD in %s, so this copy mints nothing: WARN%s"
+                        % (where, carr_txt), "WARN")
         if new and carr:
             return "REFUSE", "lookup(%r)" % carr[1], why + carr_txt, "REFUSE"
         return "RAISE", "(rule or registry defect)", why + carr_txt, "WARN"
@@ -1356,6 +1445,10 @@ def grade_file(nm, f, post_from_index):
                      "top level carries format_version, terraform_version and resource_changes or"
                      " planned_values (a terraform show -json artifact): not graded", "PASS")]
         lits = json_literals(added)
+        cited = _packaged_citations(post_text)
+        for lit in lits:
+            if lit.value in cited:
+                lit.permitted = True  # the packaged name of a tracked source: a citation (R-11), not a mint
     else:
         lits = yaml_literals(added)
     waivers = waivers_for(path, post_text) if path.endswith(".py") else {}

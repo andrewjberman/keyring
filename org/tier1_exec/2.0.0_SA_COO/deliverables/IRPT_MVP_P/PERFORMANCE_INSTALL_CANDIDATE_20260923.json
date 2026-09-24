@@ -1,0 +1,84 @@
+{
+  "observed_at": "2026-09-23T23:30:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "CANDIDATE_FOR_CTO_REVIEW_AND_GO_NOT_APPLIED",
+  "goal_record": "org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md",
+  "branch": {
+    "worktree": "C:/Users/AndrewBerman/Desktop/irpt-smoke-p-backend-20260923",
+    "name": "irpt-smoke-p-backend-20260923",
+    "head_at_package_pin": "b3fc529601b61f34c676f380870009a23d441a83",
+    "commits_this_session": {
+      "642c3704cb": "Performance root provider lock",
+      "9f01ffea18": "merge CLOUD de699512cb (naming-gate HCL lookup fix ddfc91b11f, CTO grants b02c9ad5af+f89fac6686)",
+      "561b1b47d5": "retained.tf + lambda.tf draft (naming-gate PASS 4 graded)",
+      "b3fc529601": "31 unchanged Y files under the CTO grant (31/31 hash-verified to Y 2874e37647)"
+    },
+    "push_state": "LOCAL (branch never pushed; 0.0.0_AB_MSTR owns shared pushes)"
+  },
+  "source_delta_from_cto_reviewed_v4": {
+    "v4_package": "pin 5cdb889b5e, 59 members, sha256 b93339478ee953592cbdd21c259c30953df37b3e6d4d72b0e16e60c6a086ebf7, CTO Linux replay 2fb5422b04",
+    "changed": ["infra/aws/lambda/investor-reporting/performance/retained.py @ f04d1e71bd (reopen accepted windows without repeating provider requests)"],
+    "added": ["infra/aws/lambda/investor-reporting/performance/authorization.py @ 068e9ccd85", "infra/aws/lambda/investor-reporting/performance/runtime.py @ 068e9ccd85"],
+    "unchanged": 58,
+    "note": "These are the exact two commits the CTO log (session_close_IRPT_1859-2242Z) lists for review under item 6; no other member moved."
+  },
+  "package": {
+    "builder": "infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-performance-adapter (staged_from, blob-hash verified per member)",
+    "members": 61,
+    "pin": "b3fc529601b61f34c676f380870009a23d441a83",
+    "bucket": "opal-313476888478-lambda-artifacts",
+    "key": "investor-reporting/irpt-performance-adapter.zip",
+    "version_id": "h.hlJhL3dKXAFT5NsNzceZX6Jls_f39V",
+    "content_length": 358117,
+    "content_sha256_b64": "JwJEEQGTENJJukTvrNQt3dq6VIAI8xqioIYA1atL+hk=",
+    "s3_last_modified": "2026-09-23T23:25:15Z",
+    "independent_readback": "downloaded by version to .runtime/performance-install/uploaded.zip: 61 members, 61 hashes match staged_from, 0 extra, 0 missing, 0 .py members with CR, zip sha256 equals metadata",
+    "parity_skip": "BAU_PARITY_SKIP=1: build_candidate.py, build_dependencies.py, cot_probe.py in the source dir are build tooling and are NOT packaged",
+    "import_closure": "advisory only (no BUILD_MANIFEST.json): pandas/pyarrow from the native layer; opal_naming, rebalancer_*, silver_registry, source_inputs are packaged at nested paths and resolved by the runtime (same layout the v4 cold import and CTO 2fb5422b04 replay passed)"
+  },
+  "native_layer": {
+    "bucket": "opal-313476888478-lambda-layers",
+    "key": "irpt-performance-native-layer.zip",
+    "version_id": "tf.fKYdfNRbn9AGt1AEHqn35f6bwGqPb",
+    "content_length": 69899991,
+    "sha256_hex": "121b8407415ce803458f52de03d11d81d26791f94d20f4130658a773cd1f39f6",
+    "content_sha256_b64": "EhuEB0Fc6ANFj1LeA9EdgdJnkflNIPQTBlinc80fOfY=",
+    "s3_last_modified": "2026-09-23T23:23:31Z",
+    "proof": "PERFORMANCE_NATIVE_LAYER_20260923.json / .runtime/performance-native-layer/linux-complete-proof.json (image 5f188ce6104a, network disabled, real mapping PASS, 15 points / 1 period)",
+    "layer_versions_before": 0
+  },
+  "plan": {
+    "root": "infra/aws/terraform/investor-reporting/performance",
+    "file": ".runtime/performance-install/install.tfplan",
+    "sha256": "f0a189191e4f566f8cd76673ee8fb83f707f78c07e6f75dd7bad1a7d2b247a55",
+    "json": ".runtime/performance-install/install.json",
+    "terraform_version": "1.9.8",
+    "summary": {"create": 3, "update": 1, "read": 1, "no-op": 6, "destroy": 0},
+    "creates": [
+      "aws_lambda_layer_version.performance_native (irpt-performance-native-layer, python3.12, x86_64, s3 version tf.fKYdfNRbn9AGt1AEHqn35f6bwGqPb, hash EhuEB0Fc6ANFj1LeA9EdgdJnkflNIPQTBlinc80fOfY=)",
+      "aws_iam_role_policy.performance_retained (irpt-performance-retained-policy: COT mapping partition list/read, PutObject/GetObject/GetObjectVersion on opal-data-irpt/irpt/cottonwood/state/performance_source_evidence/* and /platinum/performance_reports/*, irpt-requests GetItem/PutItem/UpdateItem under LeadingKeys cottonwood, KMS via dynamodb and via s3 for those two prefixes only)",
+      "aws_iam_role_policy.performance_adapter_selection_read (irpt-performance-adapter-selection-read-policy: irpt-requests GetItem under LeadingKeys 49financial/inflection/cottonwood, KMS Decrypt via dynamodb) -- declared in iam.tf earlier, never applied"
+    ],
+    "update": {
+      "address": "module.irpt_performance_adapter.aws_lambda_function.this",
+      "before": {"handler": "entry.lambda_handler", "timeout": 60, "memory": 512, "layers": ["irpt-common:5"], "s3_object_version": "028gVFz77L5vMQGJSIkt0JqSZCk5V4rB", "code_sha256": "jVktMAiRK+2mYPXEzyst6HjSFFv4xR3Kxm47hAyulyw=", "env_keys": ["IRPT_BD_HELPERS_PATH", "IRPT_CONTRACTS_DIR", "IRPT_DIRECTORY_BUCKET_MAP", "IRPT_PERF_TRANSPORT_MODE"]},
+      "after": {"handler": "runtime.lambda_handler", "timeout": 120, "memory": 1536, "layers": "irpt-common:5 + irpt-performance-native-layer (known after apply)", "s3_object_version": "known after apply (module data read deferred; measured now h.hlJhL3dKXAFT5NsNzceZX6Jls_f39V)", "code_sha256": "known after apply (measured now JwJEEQGTENJJukTvrNQt3dq6VIAI8xqioIYA1atL+hk=)", "env": {"IRPT_BD_HELPERS_PATH": "/opt/python/bd_helpers.py", "IRPT_CONTRACTS_DIR": "/var/task", "IRPT_DIRECTORY_BUCKET_MAP": "{49financial: opal-data-bd, cottonwood: opal-data-cot, inflection: opal-data-inf}", "IRPT_FIRM_REGISTRY": "/var/task/firm_registry.json", "IRPT_PERFORMANCE_MAPPING_AS_OF": "2026-09-23", "IRPT_REQUESTS_TABLE": "irpt-requests"}},
+      "removed_env": ["IRPT_PERF_TRANSPORT_MODE (recorded-replay mode retired with entry.lambda_handler)"],
+      "vendor_egress": "approved_performance_plan = null, so no IRPT_PERFORMANCE_APPROVED_PLAN / IRPT_PERF_VENDOR_EGRESS_AUTHORIZED env and no secretsmanager grant are planned"
+    },
+    "deferred_read_disclosure": "module.irpt_performance_adapter.data.aws_s3_object.artifact is READ at apply (module depends_on), exactly as the Holdings plans; the CTO's GO should name the S3 version/hash measured above, and P re-checks them immediately before and after apply."
+  },
+  "live_before": {"function": "irpt-performance-adapter", "code_sha256": "jVktMAiRK+2mYPXEzyst6HjSFFv4xR3Kxm47hAyulyw=", "last_modified": "2026-09-21T15:07:41Z", "handler": "entry.lambda_handler", "timeout": 60, "memory": 512, "layers": ["irpt-common:5"], "role": "arn:aws:iam::313476888478:role/irpt-performance-adapter-role"},
+  "gates": {
+    "naming_gate_on_retained_tf": "PASS 4 graded at commit 561b1b47d5 (after MSTR ddfc91b11f)",
+    "naming_gate_on_source_map_commit": "REFUSED 7 graded: packaged file names bd_live.py, bd_selected.py, _vendor/bd49f_reporting_pull.py read as alias names for 49financial (lookup('49financial')). These are import-bound module names of existing committed source; not renamed, not bypassed. Routed to 0.0.0_AB_MSTR as the mechanism owner. The source-map row (61 staged_from + artifact fields + the prior seat's directory deploy record) stays UNCOMMITTED in the worktree until ruled; its content is what build-and-upload consumed.",
+    "x10_policy": "PENDING_ENFORCEMENT, enforcement_ref null: this plan grants the retained role only COT's two families; it does not claim or change the policy state. CTO adjudicates whether installation may precede enforcement.",
+    "cto_source_review": "OPEN for f04d1e71bd and 068e9ccd85 (CTO item 6); the reviewer export dependency data/firm_registry.json is a packaged member here."
+  },
+  "not_done": [
+    "terraform apply (needs CTO GO on plan f0a18919 and a deploy ledger opened at apply start)",
+    "post-apply readback, zero-diff, exact-function recorder (recorder commit will meet the same naming-gate refusal on lambda-source-map.json until ruled)",
+    "Anna signed-in journey: selection -> retained report reopen -> export through the deployed runtime",
+    "49F and INF client linkage (no performance grant for those firms in this plan)"
+  ]
+}

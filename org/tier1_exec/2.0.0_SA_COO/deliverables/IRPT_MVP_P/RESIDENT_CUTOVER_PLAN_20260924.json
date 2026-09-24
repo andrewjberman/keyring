@@ -1,0 +1,41 @@
+{
+  "observed_at": "2026-09-24T01:45:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "CANDIDATE_FOR_CTO_REVIEW_AND_GO_NOT_APPLIED -- the resident cutover's infrastructure half (RESIDENT_ASSEMBLY_HANDOFF item 2; CTO 9baf67bb5f item 3: writer B flips in the same plan as the resident cutover)",
+  "root": "infra/aws/terraform/investor-reporting/ycharts",
+  "plan": {
+    "file": ".runtime/ycharts-resident/resident.tfplan",
+    "sha256": "04c77cbe7e1fc4ca7bff3861b07556d8cdd1bd5e5d49fab0a7daa1f66e6c2e58",
+    "json": ".runtime/ycharts-resident/resident.json",
+    "terraform_version": "1.9.8",
+    "summary": {"create": 1, "update": 1, "destroy": 0, "no-op": 16},
+    "fmt_validate": "fmt applied; validate Success"
+  },
+  "changes": {
+    "aws_iam_role_policy.runner_resident (irpt-ycharts-runner-role / irpt-ycharts-runner-resident-policy)": {
+      "action": "create",
+      "derived_from": "SDK call census of the packaged resident modules (resident_worker, durable_job, acceptance, report_index, repository, retention, owned_requests, resident_session, broker): receive/delete/change-visibility on the queue; get/query/put/update/transact on irpt-jobs and irpt-requests; put/get/head on the reporting bucket",
+      "statements": [
+        {"Sid": "ConsumeTheGenerationQueue", "Action": ["sqs:ReceiveMessage", "sqs:DeleteMessage", "sqs:ChangeMessageVisibility", "sqs:GetQueueAttributes"], "Resource": "core output queues.generation.arn (irpt-generation); no SendMessage"},
+        {"Sid": "JobStateAcceptanceAndRetainedIndexes", "Action": ["dynamodb:GetItem", "dynamodb:Query", "dynamodb:PutItem", "dynamodb:UpdateItem", "dynamodb:ConditionCheckItem"], "Resource": ["table/irpt-jobs", "table/irpt-requests"], "note": "no Scan, no DeleteItem, no LeadingKeys narrowing: the consumer serves every firm's tenant and the provider-operation lease row lives under tenant _opal"},
+        {"Sid": "TransactionalPublication", "Action": ["dynamodb:TransactWriteItems"], "Resource": ["table/irpt-jobs", "table/irpt-requests"]},
+        {"Sid": "RetainVendorPdfEvidenceAndCertifiedAnalysis", "Action": ["s3:PutObject", "s3:GetObject", "s3:GetObjectVersion"], "Resource": "9 prefixes = 3 firms x {state/vendor_documents, state/extraction_evidence, platinum/analysis_reports} under opal-data-irpt/irpt/<firm>/, read from the registry (scopes.json + reporting_policies.json), never typed"},
+        {"Sid": "ReadFrozenCompositionAndNormalizedInput", "Action": ["s3:GetObject", "s3:GetObjectVersion"], "Resource": "6 prefixes = 3 firms x {state/request_compositions, state/normalized_portfolios}"},
+        {"Sid": "ReportEncryptionViaS3ForResidentFamiliesOnly", "Action": ["kms:Decrypt", "kms:GenerateDataKey"], "Resource": "core kms_key_arn", "Condition": "kms:ViaService s3.us-east-1 and EncryptionContext aws:s3:arn limited to the same 15 prefixes"}
+      ],
+      "unchanged_in_iam_tf": ["ReadYChartsAndSharedVisionSecrets", "WriteFreshSessionOnly", "YChartsSessionLease", "UseSystemKeyForTheLeaseTable", "PullRunnerArtifact", "ListRunnerArtifactPrefixOnly", "the three current-authority reader statements applied at 00:17:29Z"],
+      "x10_effect": "once applied, the X10 matrix reads LIVE on 15 more destinations (writers on 9, readers on 6); RetentionPolicy still refuses every write until the policy is ACTIVE, so the grants are inert and truthful while PENDING"
+    },
+    "aws_ec2_instance_state.runner": {"action": "update", "before": "stopped", "after": "running", "note": "the apply STARTS i-0167fd745ad906a66 once (writer B; the AutoShutdown=disabled tag already applied is writer A); instance.tf header and output text updated to the running state citing 6fc3f5f785 and CTO 9baf67bb5f item 3; export/main.tf:78 and export/iam.tf:26 still cite the old held-stopped state in comments (P's lane, to follow)"}
+  },
+  "cutover_sequence_after_this_apply": [
+    "1. host running: SSM read of /opt/investor-reporting-ycharts (what is installed; the S3 runner prefix carries no runner code today)",
+    "2. upload the package (build_resident_package.py at the reviewed pin, LF bytes) to the runner S3 prefix and deploy with the existing SSM document (runner code + Playwright)",
+    "3. D1 first sign-in under the standing host workflow (6fc3f5f785): the host role writes the session bundle; read identity.user_id from it; pin enrolled_user_id into resident_bindings.json; record the secret VersionId",
+    "4. cutover receipt with MEASURED booleans (legacy probe disabled, per-job power cycle disabled, other queue consumers disabled = list-event-source-mappings empty, factory installed) and package_manifest_sha256 = sha256(SHA256SUMS)",
+    "5. install-resident.sh PACKAGE PYTHON resident_installed:build_resident_runtime ec2-user RECEIPT; Y runs the --once acceptance",
+    "6. route-plane rows (analysis routes DECLARED, upload entry composed in the generate function, irpt-status rebuild at a pin carrying 8e8498c9c0, LiveClient flags)"
+  ],
+  "not_claimed": ["apply", "host start", "any live sign-in or vendor call", "resident installed"],
+  "open_for_cto": "sequencing: this plan is the cutover's infrastructure half and starting the host is a precondition of the install (the D1 bundle and the enrolled id are measured ON the host), so the apply necessarily precedes steps 1-5; if the CTO prefers the grants and the start in separate applies, say so and P splits the plan"
+}

@@ -1,0 +1,54 @@
+{
+  "record": "PERFORMANCE_INSTALL_CTO_REVIEW_20260923",
+  "seat": "1.0.0_SA_CTO (Claude)",
+  "candidate": "2.0.0_SA_COO~P msg 99804, receipt PERFORMANCE_INSTALL_CANDIDATE_20260923.json @22c3afda53 on branch irpt-smoke-p-backend-20260923",
+  "verdict": "GO for the exact saved plan below; X10 stays PENDING_ENFORCEMENT; no approved-plan env change is part of this GO",
+  "plan": {
+    "file": "irpt-smoke-p-backend-20260923/.runtime/performance-install/install.tfplan",
+    "sha256_cto": "f0a189191e4f566f8cd76673ee8fb83f707f78c07e6f75dd7bad1a7d2b247a55",
+    "terraform_version": "1.9.8",
+    "decoded_with": "P's pinned .tools/terraform.exe show -json from the performance root",
+    "summary": {"create": 3, "update": 1, "read": 1, "destroy": 0},
+    "creates": {
+      "aws_lambda_layer_version.performance_native": {"layer_name": "irpt-performance-native-layer", "s3_object_version": "tf.fKYdfNRbn9AGt1AEHqn35f6bwGqPb", "source_code_hash": "EhuEB0Fc6ANFj1LeA9EdgdJnkflNIPQTBlinc80fOfY=", "compatible_runtimes": ["python3.12"], "compatible_architectures": ["x86_64"]},
+      "aws_iam_role_policy.performance_retained": {"role": "irpt-performance-adapter-role", "statements": ["ListBucket opal-data-assets prefix blackdiamond/cottonwood/silver/fact_model_assignment/", "GetObject+GetObjectVersion on that prefix's date=*/data.parquet", "GetObject+GetObjectVersion+PutObject on opal-data-irpt/irpt/cottonwood/state/performance_source_evidence/* and /platinum/performance_reports/*", "dynamodb Get/Put/Update on irpt-requests under ForAllValues LeadingKeys [cottonwood]", "kms Decrypt+GenerateDataKey on 7f4d3042 via dynamodb (tableName irpt-requests)", "kms Decrypt+GenerateDataKey on 7f4d3042 via s3 for the two prefixes only"]},
+      "aws_iam_role_policy.performance_adapter_selection_read": {"role": "irpt-performance-adapter-role", "statements": ["dynamodb GetItem on irpt-requests under ForAllValues LeadingKeys [49financial, inflection, cottonwood]", "kms Decrypt on 7f4d3042 via dynamodb (tableName irpt-requests)"]}
+    },
+    "update": {
+      "address": "module.irpt_performance_adapter.aws_lambda_function.this",
+      "handler": "entry.lambda_handler -> runtime.lambda_handler",
+      "timeout": "60 -> 120",
+      "memory_size": "512 -> 1536",
+      "layers": "irpt-common:5 -> irpt-common:5 + irpt-performance-native-layer (known after apply; module var.layers references both)",
+      "env_after": ["IRPT_BD_HELPERS_PATH", "IRPT_CONTRACTS_DIR=/var/task", "IRPT_DIRECTORY_BUCKET_MAP", "IRPT_FIRM_REGISTRY=/var/task/firm_registry.json", "IRPT_PERFORMANCE_MAPPING_AS_OF=2026-09-23", "IRPT_REQUESTS_TABLE=irpt-requests"],
+      "env_removed": ["IRPT_PERF_TRANSPORT_MODE"],
+      "vendor_egress_after_apply": "unreachable: no IRPT_PERFORMANCE_APPROVED_PLAN, no IRPT_PERF_VENDOR_EGRESS_AUTHORIZED, no secretsmanager grant",
+      "deferred_read": "module data.aws_s3_object.artifact read at apply; s3_object_version and source_code_hash known after apply; P re-reads both immediately before and after"
+    }
+  },
+  "artifacts_cto_hashed": {
+    "package": {"bucket": "opal-313476888478-lambda-artifacts", "key": "investor-reporting/irpt-performance-adapter.zip", "version_id": "h.hlJhL3dKXAFT5NsNzceZX6Jls_f39V", "bytes": 358117, "sha256_hex": "27024411019310d249ba44efacd42ddddaba548008f31aa2a08600d5ab4bfa19", "sha256_b64": "JwJEEQGTENJJukTvrNQt3dq6VIAI8xqioIYA1atL+hk=", "members": 61, "metadata_content_sha256_match": true},
+    "native_layer": {"bucket": "opal-313476888478-lambda-layers", "key": "irpt-performance-native-layer.zip", "version_id": "tf.fKYdfNRbn9AGt1AEHqn35f6bwGqPb", "bytes": 69899991, "sha256_hex": "121b8407415ce803458f52de03d11d81d26791f94d20f4130658a773cd1f39f6", "sha256_b64": "EhuEB0Fc6ANFj1LeA9EdgdJnkflNIPQTBlinc80fOfY=", "equals_2fb5422b04_layer": true, "members": 4319, "contents": "python/{pandas 2.2.3, pyarrow 14.0.2, numpy 1.26.4, dateutil, pytz, tzdata, six}"},
+    "common_layer": {"layer": "irpt-common:5", "bytes": 644526, "code_sha256": "ZUcsQUOsc3lT2cKlnur5rCAZc/a0rCkKvU5pjg11U20=", "lambda_says_match": true}
+  },
+  "cold_start": {
+    "instrument": "Lambda runtime interface emulator inside public.ecr.aws/lambda/python:3.12 @sha256:5f188ce6104ab76d1a9a44b9b53fd0d72ea5ccec94eb4cbccf5c9b0ef485f9f8, --network none, /var/task = package h.hlJhL3 extracted, /opt = irpt-common:5 + native layer merged, env = the plan's six keys",
+    "candidate": {"handler": "runtime.lambda_handler", "init": "INIT RTDONE status success (699 ms)", "invoke_empty_event": "HTTP 200, ok=false, public_reason_code CONTRACT_VERSION, state UNAVAILABLE (the guard's own refusal of a non-v1 event)", "first_invoke_ms": 8291},
+    "control_deployed_v4": {"version_id": "028gVFz77L5vMQGJSIkt0JqSZCk5V4rB", "code_sha256": "jVktMAiRK+2mYPXEzyst6HjSFFv4xR3Kxm47hAyulyw=", "handler": "entry.lambda_handler", "init": "success (170 ms)", "invoke_empty_event": "HTTP 200, same CONTRACT_VERSION refusal"},
+    "retracted_harness_finding": "a plain-python harness with only /var/task on sys.path reported AttributeError ids.projection_for_firm at entry.py:187 (the layer's /opt/python/ids.py shadowed the packaged _ids/ids.py under that path order); the emulator run with the real bootstrap succeeds, so the finding was the harness's and is withdrawn"
+  },
+  "source_review": {
+    "changed_since_v4": ["performance/retained.py @f04d1e71bd", "performance/authorization.py @068e9ccd85 (new)", "performance/runtime.py @068e9ccd85 (new)"],
+    "affected_tests_in_p_worktree": "test_retained_performance.py + test_authorization.py + test_runtime.py: 24 passed in 1.08 s",
+    "verdict": "PASS bounded",
+    "findings": [
+      {"id": "P-REOPEN-01", "class": "design, not blocking install", "text": "reopen pointer key digests {owner, request}; owner carries principal_id, account_set_id, directory_revision; request carries the selection record. A same-firm/account-set/window reopen after a directory republish or by another authorized viewer misses the pointer and falls to compute (refused unarmed). Ruled invariant: reopen finds the accepted report regardless of directory revision, selection reference or principal; authorization re-derived at reopen through the repository."},
+      {"id": "advisory-s3-retries", "text": "runtime.py sets total_max_attempts 1 on both the DynamoDB resource and the S3 client; only the claim PutItem needs no retry"}
+    ]
+  },
+  "x10": "PENDING_ENFORCEMENT stays; RetentionPolicy._policy refuses every reserve/promote/reopen until state ACTIVE + register_commit + 40-hex enforcement_ref; ACTIVE evidence ruled in IRPT-X10-SEQUENCING-20260923",
+  "companion_plan_reviewed": {"file": "irpt-smoke-p-backend-20260923/.runtime/ycharts-authority/authority.tfplan", "sha256_cto": "1de760399ca1cd7f42e4b570c705f8e464500a1ba31a3da64a6a329d4c35006d", "summary": {"add": 0, "change": 3, "destroy": 0}, "changes": ["aws_iam_role_policy.generate: + dynamodb:Query opal-users-v2/index/email-index, + dynamodb:GetItem opal-users-v2, + kms:Decrypt key 64f25291 via dynamodb tableName opal-users-v2", "aws_iam_role_policy.runner: the same three statements", "aws_instance.runner: tags + AutoShutdown=disabled only; aws_ec2_instance_state.runner stays stopped (no-op)"], "verdict": "GO exactly; kms:Decrypt accepted as the necessary companion to bound 4"},
+  "ld_0610_arms": {"positive": "P commit 17e94dbdc6 diff graded from a detached scratch worktree at its base 560445f857: old gate REFUSE (3004/3008/3009/...), new gate PASS 0 graded", "negative_untracked_repo_path": "old REFUSE 2 graded, new REFUSE 2 graded", "invalid_first_arm": "the same diff against P's current HEAD refused under both gates because the post-image no longer parsed; discarded"},
+  "m_reader_matrix": {"receipt": "ajb_irpt_m COT_DEPLOYED_READER_MATRIX_20260923.json @21f696e19a", "reader_sha256": "2f6e1ba1306c8ed5b282dbcbd18b7f375c1d20b1f0288093c8200fc450bf5c35", "equals_deployed_snapshot_py": true, "verdict": "accepted as the hop-3 library proof; authorizer/selection/browser hops unexercised"},
+  "push_state": "LOCAL; origin/CLOUD b475b96309 (ls-remote read 23:27Z); shared pushes are 0.0.0_AB_MSTR's"
+}

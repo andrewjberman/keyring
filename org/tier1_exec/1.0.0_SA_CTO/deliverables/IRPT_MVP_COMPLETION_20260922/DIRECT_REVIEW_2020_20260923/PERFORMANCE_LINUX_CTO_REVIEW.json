@@ -1,0 +1,54 @@
+{
+  "inputs": {
+    "archives": [
+      {
+        "name": "function",
+        "sha256": "b93339478ee953592cbdd21c259c30953df37b3e6d4d72b0e16e60c6a086ebf7",
+        "uncompressed_bytes": 1250746
+      },
+      {
+        "name": "native",
+        "sha256": "121b8407415ce803458f52de03d11d81d26791f94d20f4130658a773cd1f39f6",
+        "uncompressed_bytes": 236210596
+      },
+      {
+        "name": "common",
+        "sha256": "65472c4143ac737953d9c2a59eeaf9ac201973f6b4ac290abd4e698e0d75536d",
+        "uncompressed_bytes": 2166499
+      }
+    ],
+    "captured_responses": [
+      {
+        "route": "performancePeriod",
+        "sha256": "162a35b030608c4422e15b72c43799c2de40f87d5d50ea896e1a6d010e1ed894",
+        "bytes": 1226916
+      },
+      {
+        "route": "performanceSeries",
+        "sha256": "754d46c0409c4ca2ac61f9b4ccdd3a4cd6d1886b0fa10f7ec803d4bfb8d5f9c0",
+        "bytes": 8388
+      }
+    ],
+    "mapping_sha256": "a560410f86e384c7c3157c8ec32b20ae9fb1a111e1acd2a1f73f26037049ecfe",
+    "combined_bytes": 239627841
+  },
+  "result": {
+    "python": "3.12.14 (main, Sep 17 2026, 10:00:30) [GCC 11.5.0 20240719 (Red Hat 11.5.0-5)]",
+    "pandas": "2.2.3",
+    "pyarrow": "14.0.2",
+    "numpy": "1.26.4",
+    "real_mapping_pass": true,
+    "mapping_revision": "a560410f86e384c7c3157c8ec32b20ae9fb1a111e1acd2a1f73f26037049ecfe",
+    "network": "disabled",
+    "installed_import": true,
+    "original_responses_replayed": true,
+    "schema_validated": true,
+    "daily_points": 15,
+    "periods": 1,
+    "source_revision": "8da7736ac8c399551fec6068c1f9282bb44113e56f212e2f234b76ba12c478f2"
+  },
+  "image": "public.ecr.aws/lambda/python@sha256:5f188ce6104ab76d1a9a44b9b53fd0d72ea5ccec94eb4cbccf5c9b0ef485f9f8",
+  "environment": "linux/amd64, --network none, --read-only, 2 CPUs, 1GiB, Python -I -B",
+  "proof": "CTO ran inspected complete-probe.py against separate extracted exact archives; live GET confirmed retained mapping version bytes and Lambda layer5 digest. No vendor call, cloud write or fabricated live-authorizer invocation.",
+  "limits": "Local Linux runtime/replay only; retained-report storage, real deployment role, installed factory and authenticated journey not proven."
+}
