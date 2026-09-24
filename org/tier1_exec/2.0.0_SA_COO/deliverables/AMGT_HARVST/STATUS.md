@@ -44,6 +44,13 @@ both products FAILED / INCOMPLETE_GOLD_INPUT, pointer ABSENT; states no_coverage
 (== the predecessor's replay to the row); names_with_links 6 of 250 ON THE GOLD POPULATION (day records, not
 links -- R-20). Host timing is not Lambda timing; it bounds the 120 s claim from below by a factor of ~10.
 
+**AMENDED ~04:0xZ on the CTO half @`c069b2d753`: applied source is `legacy`, not `gold`** (a HOLD changes served
+output by ceasing to write; refused on the cost this seat disclosed). Patch regenerated: 41,525 bytes, sha256
+`41c1a2acb7e9115c9ef4441a6280cee3edb6f5c08c7915b00f0a9ed0b70d7441`, applies clean on CLOUD @`c069b2d753`; plan
+re-run: `1 to import, 0 to add, 3 to change, 0 to destroy`, env `legacy`. BOTH HALVES SIGNED; apply authorized
+under the CTO half's five conditions; actor is the AE lane via `0.0.0_AB_MSTR~Z`. The daily control is CORRECTED:
+a fresh same-day pointer pair is EXPECTED while the 09-23 pointers stay byte-identical.
+
 ## Gates on the apply, in order
 1. Never-widen pair: COO half FILED at `org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_H03_2A_COO_HALF.md`;
    CTO half requested from `1.0.0_SA_CTO~Z`. No apply on one half.

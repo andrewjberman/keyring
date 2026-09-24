@@ -76,10 +76,10 @@ index 0000000000..f61273c2e5
 +    ;;
 +esac
 diff --git a/infra/aws/terraform/harvest/chatter-axis-schedule.tf b/infra/aws/terraform/harvest/chatter-axis-schedule.tf
-index 70a4de8a0c..ba734f2bda 100644
+index 70a4de8a0c..12aacd22e9 100644
 --- a/infra/aws/terraform/harvest/chatter-axis-schedule.tf
 +++ b/infra/aws/terraform/harvest/chatter-axis-schedule.tf
-@@ -40,20 +40,36 @@
+@@ -40,20 +40,40 @@
  # build_zip.py after any change to those source files, then re-apply; the changed
  # source_code_hash is what tells Terraform the function changed.
  #
@@ -110,11 +110,15 @@ index 70a4de8a0c..ba734f2bda 100644
 +# guard (4dc4b667f3 lineage) a run over an unpopulated table is a HOLD -- FAILED /
 +# INCOMPLETE_GOLD_INPUT, no rows, no pointer moved, a marker beside the prior pointer --
 +# so nothing publishes until 2b populates the table for this universe. `legacy` is the
-+# pre-2a behaviour. The value is part of the never-widen pair for this deploy.
++# pre-2a behaviour. The value is part of the never-widen pair for this deploy: the CTO half
++# @c069b2d753 signed LEGACY, because a HOLD changes served output by CEASING to write (the
++# daily EMPTY commits stop and Breakout x Chatter reads ABSENT at every hour), which is
++# publishing in effect; gold is selected by one env flip + apply under a fresh pair when 2b
++# lands, a pair that 2b owes anyway.
  locals {
 -  chatter_axis_zip = "${path.module}/.build/chatter-axis-producer.zip"
 +  chatter_axis_artifact_key = "harvest/amgt-resapp-chatter-axis.zip"
-+  chatter_axis_source       = "gold"
++  chatter_axis_source       = "legacy"
  
 -  # The FOUR pool prefixes the producer reads (AMGT-rj-10, C-ONE-STORE; the CTO
 +  # The pool prefixes the producer reads (AMGT-rj-10, C-ONE-STORE; the CTO
@@ -126,7 +130,7 @@ index 70a4de8a0c..ba734f2bda 100644
    chatter_axis_pool_prefixes = [
      "publication-links/v1/",
      "publications/v1/",
-@@ -68,6 +84,12 @@ locals {
+@@ -68,6 +88,12 @@ locals {
      "wsj/harvest/silver/",
      "ft/harvest/silver/",
      "seeking-alpha/harvest/silver/",
@@ -139,7 +143,7 @@ index 70a4de8a0c..ba734f2bda 100644
    ]
  }
  
-@@ -120,9 +142,9 @@ resource "aws_iam_role_policy" "chatter_axis_lambda" {
+@@ -120,9 +146,9 @@ resource "aws_iam_role_policy" "chatter_axis_lambda" {
          Resource = [aws_dynamodb_table.harvest_security_metrics.arn]
        },
        {
@@ -152,7 +156,7 @@ index 70a4de8a0c..ba734f2bda 100644
          Resource = [
            "arn:aws:logs:us-east-1:${local.account_id}:log-group:/aws/lambda/amgt-resapp-chatter-axis:*",
          ]
-@@ -131,27 +153,47 @@ resource "aws_iam_role_policy" "chatter_axis_lambda" {
+@@ -131,27 +157,47 @@ resource "aws_iam_role_policy" "chatter_axis_lambda" {
    })
  }
  
@@ -220,7 +224,7 @@ index 70a4de8a0c..ba734f2bda 100644
    tags = {
      pipeline = "amgt-resapp"
      cell     = "AMGT-rd-5"
-@@ -176,7 +218,7 @@ resource "aws_iam_role_policy" "chatter_axis_scheduler" {
+@@ -176,7 +222,7 @@ resource "aws_iam_role_policy" "chatter_axis_scheduler" {
    role = aws_iam_role.chatter_axis_scheduler.id
    policy = jsonencode({
      Version   = "2012-10-17"
@@ -229,7 +233,7 @@ index 70a4de8a0c..ba734f2bda 100644
    })
  }
  
-@@ -194,13 +236,17 @@ resource "aws_scheduler_schedule" "chatter_axis_daily" {
+@@ -194,13 +240,17 @@ resource "aws_scheduler_schedule" "chatter_axis_daily" {
    flexible_time_window { mode = "OFF" }
  
    target {

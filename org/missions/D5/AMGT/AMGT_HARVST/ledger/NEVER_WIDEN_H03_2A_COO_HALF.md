@@ -1,14 +1,16 @@
 # AMGT Lead Panel step 2a -- never-widen pair, the H03 chatter gold cutover apply -- the COO half
 
-**Author:** `2.0.0_SA_COO~Y`. **Status: SIGNED at the candidate below, 2026-09-24 ~03:5xZ.** The paired CTO half
+**Author:** `2.0.0_SA_COO~Y`. **Status: SIGNED at the candidate below, 2026-09-24 ~03:5xZ; AMENDED ~04:0xZ to the CTO half's condition (source `legacy`), see AMENDMENT 1 at the end.** The paired CTO half
 is `1.0.0_SA_CTO~Z`'s, at `ledger/NEVER_WIDEN_H03_2A_CTO_HALF.md`, signed against live pre-act reads. **No apply
 on one half.** Authority: `COO_Y_LEADPANEL.md` gate 1; R-19 @`815d6c75da` (2a is NONPUBLISHING, claims no
 acceptance ID); R-20 @`9faf3497d4`; CONTRACT.md s.5a (custody).
 
 **THE CANDIDATE, pinned by content, not by name:**
 - lib/ half: branch `closer/amgt-leadpanel-y-20260924` @ `6e9868b903` (12 files).
-- infra/ half: `org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/H03_2A_INFRA.patch`, 41,198 bytes, sha256
-  `4cffba6dade024209564c9ec26bef4c316626ded0c03307174177344fad89ebf`, applies clean on CLOUD @`4845974639`.
+- infra/ half: `org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/H03_2A_INFRA.patch`. [SUPERSEDED by AMENDMENT 1, old bytes
+  retained: 41,198 bytes, sha256 `4cffba6dade024209564c9ec26bef4c316626ded0c03307174177344fad89ebf`, applies clean on
+  CLOUD @`4845974639`.] NOW: 41,525 bytes, sha256 `41c1a2acb7e9115c9ef4441a6280cee3edb6f5c08c7915b00f0a9ed0b70d7441`,
+  applies clean on CLOUD @`c069b2d753`; the only delta is `chatter_axis_source = "legacy"` and its comment.
 - artifact: `s3://opal-313476888478-lambda-artifacts/harvest/amgt-resapp-chatter-axis.zip` VersionId
   `lPwA35XO3ZOG4KvCebxoJN1t45ljL1z9`, 55,418,293 bytes, `content-sha256` metadata
   `Xdwp7IrPaNho7y0Nz1L4TsihsueqDG+QDuvRsA+acYM=` (hex `5ddc29ec8acf68d868ef2d0dcf52f84ec8a1b2e7aa0c6f900eebd1b00f9a7183`),
@@ -34,7 +36,7 @@ was or will be used by this seat.
 | # | property | writers (N, printed) | what moves | rollback for this key |
 |---|---|---|---|---|
 | B1 | Lambda `amgt-resapp-chatter-axis` code, `CodeSha256` `I6eitc...` -> `Xdwp7I...`; `s3_bucket/key/version` set; `filename` cleared; state address `aws_lambda_function.chatter_axis_producer` -> `module.chatter_axis_producer.aws_lambda_function.this` (`moved`, in place) | **N=1**: the harvest Terraform root (`chatter-axis-schedule.tf`). `update-function-code` by hand is forbidden by CLAUDE.md and nobody holds it. | new bytes; same function name, ARN, role, handler, runtime, schedule target | `build-and-upload-chatter-axis.sh seed <rollback zip>` (bytes of VersionId `PUSLcUMaAwg.oPLW0ZdH6nO8t7ylo_eY`, == today's `CodeSha256`) then apply -> `CodeSha256` returns to `I6eitc...`. Behaviour-only rollback without repackaging: `chatter_axis_source = "legacy"` + apply (the legacy path's `window_read` is unchanged by 2a). |
-| B2 | function config: env `CHATTER_AXIS_SOURCE=gold` (from none), `memory_size` 128 -> 512, `timeout` 60 -> 120, tags `ManagedBy/Module/System` added | **N=1**: the same Terraform root | Arrow's shared objects do not load in 128 MB; 191 identities' reads need more than 60 s | edit the three values back + apply |
+| B2 | function config: env `CHATTER_AXIS_SOURCE=legacy` [SUPERSEDED by AMENDMENT 1, old bytes retained: `=gold`] (from none), `memory_size` 128 -> 512, `timeout` 60 -> 120, tags `ManagedBy/Module/System` added | **N=1**: the same Terraform root | Arrow's shared objects do not load in 128 MB; 191 identities' reads need more than 60 s | edit the three values back + apply |
 | B3 | IAM inline policy `amgt-resapp-chatter-axis-lambda-policy` on role `amgt-resapp-chatter-axis-lambda-role`: `+ s3:GetObject arn:aws:s3:::opal-data-harvest/amgt/harvest/gold/chatter_daily/*`, `+ s3:prefix amgt/harvest/gold/chatter_daily/*` on ListBucket | **N=1**: the same Terraform root. No other root or hand edit writes this policy (state list read 03:2xZ). | ONE additive read prefix; nothing removed; builder output `store.table_prefix("amgt","gold","chatter_daily")` | remove the one line + apply |
 | B4 | CloudWatch log group `/aws/lambda/amgt-resapp-chatter-axis`: imported into state; tags added; `retention_in_days` stays `0` (never expire) | **N=1** after the act (the module); before it, created by the runtime | no log deleted, no retention set (plan shows `retention_in_days = 0` unchanged) | `terraform state rm module.chatter_axis_producer.aws_cloudwatch_log_group.lambda` (an import reversal; touches no data) |
 | B5 | artifact key `harvest/amgt-resapp-chatter-axis.zip` (versioned) | **N=1**: `build-and-upload-chatter-axis.sh` (this seat); sole consumer `module.chatter_axis_producer` (`data.aws_s3_object.artifact`); no other task family pulls it (new key, 2 versions, one reader) | already written; the apply READS it | nothing to roll back; versions are retained |
@@ -70,8 +72,9 @@ the nearest COMPLETE pointer and serves it `dated: true`; EMPTY is never promote
 **That is the served cost of a nonpublishing cutover, disclosed here for the CTO half to accept or refuse.** The
 alternative inside this same candidate is `chatter_axis_source = "legacy"`: served output byte-for-byte as today
 (2 meaningless rows, score 0, refreshed daily), the cutover present in the bytes but not selected, one env flip +
-apply under a fresh pair when 2b lands. This seat's recommendation is `gold` -- the honest state is a HOLD with
-its reason on the marker, and the pipes are then live for 2b without another deploy.
+apply under a fresh pair when 2b lands. This seat's recommendation was `gold` [SUPERSEDED by AMENDMENT 1, old bytes retained: -- the honest state is a HOLD with
+its reason on the marker, and the pipes are then live for 2b without another deploy]. REFUSED by the CTO half
+@`c069b2d753` on the disclosed cost: a HOLD changes served output by CEASING to write; `legacy` is applied.
 
 ## PROOF CLAUSES FOR THE LEGS THIS HALF FEEDS (each with its population)
 
@@ -93,3 +96,34 @@ its reason on the marker, and the pipes are then live for 2b without another dep
 ## WHAT THIS HALF DOES NOT SAY
 It does not claim H1-H4 or any acceptance ID (R-19: 2a claims none). It does not lift the deploy ledger, the
 CVO's grade, or the CTO half. It authorizes no vendor call (the step makes none). It does not decide 2b.
+
+## AMENDMENT 1 -- 2026-09-24 ~04:0xZ, on the CTO half @`c069b2d753` (msg 25226). ADDITIVE; nothing above deleted.
+
+**The applied configuration is `CHATTER_AXIS_SOURCE = "legacy"`.** The CTO half refused `gold` on the cost this
+half disclosed: a HOLD stops the daily EMPTY commits, so Breakout x Chatter would read ABSENT at every hour and
+its `189 of 191` reason would never reach a reader, and Trending x Chatter would age to ABSENT on 2026-10-07 --
+served output changed by omission, "publishing in effect". Accepted. Under `legacy` the served output is
+UNCHANGED BY CONSTRUCTION (the legacy `window_read` path is byte-identical in 2a), and `gold` is one env flip
+plus one apply under a fresh pair when 2b lands, a pair 2b owes anyway.
+
+**Candidate as amended:** lib/ @`6e9868b903` unchanged; artifact VersionId `lPwA35XO3ZOG4KvCebxoJN1t45ljL1z9`
+unchanged (the env is not in the zip); infra patch now sha256
+`41c1a2acb7e9115c9ef4441a6280cee3edb6f5c08c7915b00f0a9ed0b70d7441` (41,525 bytes). Plan re-run against live
+state after the flip: **`1 to import, 0 to add, 3 to change, 0 to destroy`**, env `CHATTER_AXIS_SOURCE = "legacy"`,
+`s3_object_version = lPwA35XO3ZOG4KvCebxoJN1t45ljL1z9`, code hash `I6eitc...` -> `Xdwp7I...`.
+
+**B6 under `legacy`:** the next 10:00Z run writes exactly what today's does -- a same-day COMPLETE
+`TRENDING_CHATTER#<date>` generation (row_count 2, `names_with_links 3` of 250 on the publication-links
+population) and a same-day EMPTY `BREAKOUT_CHATTER#<date>` with its reason. No `_FAILED` marker is expected.
+
+**The `daily` negative control, CORRECTED (the CTO half's condition 3):** the 09-23 pointers
+`TRENDING_CHATTER#2026-09-23` (`generation_id 20260923T100026Z-d09ee37a8f3b`) and `BREAKOUT_CHATTER#2026-09-23`
+(`20260923T100028Z-25147d66b259`) stay BYTE-IDENTICAL to the baseline **while a fresh same-day pair appears** at
+the run date -- NOT "no `_CURRENT` appears". The earlier wording would have failed on correct behaviour.
+
+**The `{"dry_run": true}` invoke stays REQUIRED before the next 10:00Z fire** (CTO condition 2): under `legacy`
+it exercises the packaged bytes and the legacy read with zero writes; the Arrow-15-reads-Arrow-24 target-runtime
+read then needs ONE further dry-run invoke with the source overridden -- the handler reads the environment, so
+that is a `gold` apply, which this pair does not cover. Parked: owner `1.0.0_SA_CTO~Z`, un-parks with the 2b pair.
+
+**The `gold` run line proof clause above is retained for the 2b pair; it does not bind this apply.**
