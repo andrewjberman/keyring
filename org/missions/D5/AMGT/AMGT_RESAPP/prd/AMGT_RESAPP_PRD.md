@@ -5,9 +5,10 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.24",
+  "prd_version": "v0.25",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
+  "addendum_b_brief_ref": "docs/briefs/amgt-resapp-frontend-pattern-brief-20260924.md@21dd61e392",
   "endpoint_outcomes": [
     "FWD-1",
     "FWD-2",
@@ -28,7 +29,17 @@
     "FWD-17",
     "FWD-18",
     "FWD-19",
-    "FWD-20"
+    "FWD-20",
+    "FWD-21",
+    "FWD-22",
+    "FWD-23",
+    "FWD-24",
+    "FWD-25",
+    "FWD-26",
+    "FWD-27",
+    "FWD-28",
+    "FWD-29",
+    "FWD-30"
   ],
   "status": "RATIFIED"
 }
@@ -636,6 +647,117 @@ disputable, by rule, and carry no technical language.*
                     consensus, with every assumption stored with its source
                     and time); ROUND_ANALYSIS.round11.md s.4 item 3
                     @c708914c50
+
+  ===== ADDENDUM B, v0.25, 2026-09-24 -- FWD-21..FWD-30 ========================
+  Cut from docs/briefs/amgt-resapp-frontend-pattern-brief-20260924.md@21dd61e392
+  (4.0.0_SA_CRO~Z, F1 resolved by Andrew) plus Andrew-direct ~05:0xZ. Rationale
+  and the contracts are in ADDENDUM B below; THIS FENCE IS THE ONLY CARRIER of
+  the definitions. Acceptance for FWD-21..FWD-29 is ONE instrument:
+  portal/scripts/ui-smoke.mjs -- a PNG at 1440 plus the DOM measurement JSON for
+  each of the six states -- and A JSON PASS WITHOUT THE PNG READ BY A PERSON IS
+  CARE, NOT A CONTROL (C-RENDER-IS-THE-ORACLE).
+
+  FWD-21 A PM opens BA_US_Equity and reads the Thesis ON ONE SCREEN under ONE
+         dark band
+         DONE WHEN  EXERCISED -- the rendered state reads
+                    bandContainersTopLevel == 1, the identity header is that
+                    band, the tab panels are white hairline panels, and the
+                    Thesis renders as a recommendation line, a summary paragraph
+                    and headed sections with evidence FOLDED
+         ACCEPT     A PM reads the thesis without scrolling past three more dark
+                    bands. TODAY: four stacked bands, 6,548 px of 12-px text.
+         SOURCE     brief O1; F1 resolved by Andrew ~04:5xZ
+  FWD-22 The name's headline figures read as LABELLED TILES, not a mnemonic list
+         DONE WHEN  EXERCISED -- price, market cap, net debt, enterprise value,
+                    beta and short interest render as Stat tiles with units and
+                    tabular numerals, and each tile's tooltip carries the
+                    mnemonic and full-precision value verbatim
+         ACCEPT     A PM never has to parse a float, and can still dispute any
+                    tile. TODAY: 14 rows of 161867780096.00003 ABSOLUTE
+                    CUR_MKT_CAP.
+         SOURCE     brief O2
+  FWD-23 Every drafted sentence keeps its evidence, folded until asked for
+         DONE WHEN  EXERCISED -- a sentence shows its PASS face and a "cites N
+                    passages" affordance; opening it reveals the passage and
+                    accession line FROM THE DOM; and a census prints ZERO
+                    passages carried in a native title= tooltip
+         ACCEPT     The verbatim gate (AMGT-rj-2) is preserved BY CONSTRUCTION,
+                    and a reader no longer scrolls 48 blockquotes to reach Risks.
+         SOURCE     brief O3
+  FWD-24 The Model sheet reads as a table and a refusal as ONE line per row
+         DONE WHEN  EXERCISED -- the fiscal table renders as a white heatmap
+                    panel with tabular numerals; a REFUSED row renders one status
+                    icon and one navy sentence spanning the row; ABSENT rows fold
+                    into a single footnote naming them
+         ACCEPT     A refusal is readable once, not ten times. TODAY: the DPS row
+                    repeats a 60-char refusal in ten red chips.
+         SOURCE     brief O4
+  FWD-25 The comparable set shows the columns that EXIST, and the absent ones
+         are openable
+         DONE WHEN  EXERCISED -- the table renders the PRESENT columns only; an
+                    "Absent columns (N)" disclosure lists each with its registry
+                    reason; the basis is a status chip with the test statement
+                    one hover away
+         ACCEPT     A PM reads five real columns instead of scanning twelve that
+                    say ABSENT. TODAY: 17 columns, 12 ABSENT in all 18 rows,
+                    under a 696-char paragraph.
+         SOURCE     brief O5
+  FWD-26 The Posture verdict reads as a headline and its reasons as cards
+         DONE WHEN  EXERCISED -- the verdict renders as a Stat with the
+                    comparable beside it; each reason is a numbered card with
+                    cites folded; an UNRESOLVED cite renders a status.warning
+                    ICON beside navy text and NOT amber text
+         ACCEPT     Status colour never carries meaning as text on a light
+                    ground (C6).
+         SOURCE     brief O6
+  FWD-27 The Lead Panel's controls read as the Dashboard's controls do
+         DONE WHEN  EXERCISED -- Movement and Subject render as segmented
+                    controls whose active state is WEIGHT AND RULE, the
+                    generation and resolution lines sit in a "Source:" footer,
+                    and the rendered state reads purpleFills == 0 in Universe
+                    mode and == 1 (Refresh) in Security mode
+         ACCEPT     One purple action per view (C8). TODAY: a filled purple view
+                    chip plus two 10-px caption lines above the rows.
+         SOURCE     brief O7
+  FWD-28 Every panel renders one of the four DESIGNED states when empty
+         DONE WHEN  EXERCISED -- PanelEmpty, PanelLoading, PanelError and
+                    PanelNoPermission from src/ui/components/states each captured
+                    at least once across the six states
+         ACCEPT     An empty panel looks designed, as /market's already does.
+                    TODAY: the empty Thesis is a centered sentence in a dark band.
+         SOURCE     brief O8; C12
+  FWD-29 The contract's render check PASSES, and CAN FAIL
+         DONE WHEN  EXERCISED -- for each of the six states the JSON reads
+                    bandContainersTopLevel == 1, fonts == {Lato}, weights within
+                    {400,700}, no size below 11, radii within {2,3,4,pill},
+                    shadows == 0 outside the focus ring, lowContrastChars == 0,
+                    purpleFills per FWD-27, the four states present; the
+                    drafting, tabs and posture harnesses green; AND THE SIX PNGs
+                    READ BY A PERSON, a rejection citing its clause
+         ACCEPT     ⭐ THE SAME INSTRUMENT READS TODAY'S PAGE AS FAILING EACH OF
+                    THESE, WHICH IS WHAT MAKES IT A CONTROL AND NOT A CHECKLIST.
+         SOURCE     brief O9; C-CLAUSE-CITED-REJECTION, C-RENDER-IS-THE-ORACLE
+  FWD-30 A PM exports the name they are reading and gets a usable artifact
+         DONE WHEN  EXERCISED -- the export produces EITHER (a) a presentation in
+                    Opal Brand Guidelines form (deck_generation/DESIGN_BIBLE.md),
+                    shaped like the Asset Management team's own earnings updates,
+                    AT MOST TWO PAGES, OR (b) a machine-readable rich-text
+                    output; AND a field-by-field comparison against the page
+                    shows the SAME figures, the SAME cites and the SAME absences,
+                    with NOTHING in the export that is not on the page
+         ACCEPT     Adam forwards the output without reformatting it, and nothing
+                    in it is unsourceable back to the page.
+         SOURCE     Andrew-direct ~05:0xZ, VERBATIM "export option functional
+                    with presentation in Opal Brand Guidelines form mimicking
+                    Asset Mgmt team's earnings reports 2pg max or machine
+                    readable rich text output".
+                    ⛔ IN NEITHER L1 BRIEF -- found by subtraction (B.1).
+                    THE "OR" IS HIS AND IS NOT COLLAPSED: either branch
+                    satisfies; the 2-page cap binds branch (a) only; "functional"
+                    means an artifact a person opens, not a button that resolves.
+                    ⚠ If branch (a) needs a field no route serves, that is a
+                    ROUTE change and returns to 1.0.0_SA_CTO~Z before it is
+                    built (C-PRESENTATION-ONLY names this exception).
 ```
 
 **BAR DISTRIBUTION: 19 of 20 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
@@ -2078,3 +2200,106 @@ repeated it would create a second carrier of one obligation. The cell's own AC0 
 `infra/logic/registry/` carries six files and none mentions `hkex` or `regulator`.
 
 **Which half this moves:** the BRIEF half only. No ENDPOINT line and no `C-` contract changes.
+
+---
+---
+
+# ADDENDUM B -- THE FRONTEND IN PATTERN, AND THE EXPORT (v0.25, L4, 2026-09-24)
+
+**Author** `1.0.0_SA_CTO~Z`. **Driver** `2.0.0_SA_COO~Z`, named by Andrew. **Cut for a fresh CANONICAL ROUND** --
+`AMGT_RESAPP` handed back out of closer mode at `ad5c7a75c6` (R-26).
+
+**L1 basis** -- `4.0.0_SA_CRO~Z`, `docs/briefs/amgt-resapp-frontend-pattern-brief-20260924.md`, cut at
+**@`21dd61e392`**, the bytes that carry F1 RESOLVED (walk delivered @`eeaec8707b`; F1 note added additively).
+
+**THE GOVERNING WORD IS THE GOAL, NOT THE BRIEF.** Andrew-direct ~05:0xZ, recorded verbatim at
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_050xZ_AMGT_GOAL_AND_COMPLETION_TEST.md`:
+
+> *"Visually polished "Security Analysis" application with all Asset Management research companies folded in,
+> export option functional with presentation in Opal Brand Guidelines form mimicking Asset Mgmt team's earnings
+> reports 2pg max or machine readable rich text output ... Only when all of this is done for every single security
+> in the Asset Management research folder is the goal complete. Finish AMGT_RESAPP, AMGT_CORPUS and close them out
+> and their addendums."*
+
+## B.1 -- ⛔ THE EXPORT IS IN NEITHER BRIEF, AND ONLY A SUBTRACTION FINDS THAT
+
+The frontend brief's nine outcomes (`O1`-`O9`) are **all render outcomes**, and its own Part VII lists *"the print
+action"* among what it did **not** capture. The CORPUS brief never mentions an export. ⛔ **SO BOTH ADDENDA COULD
+HAVE BEEN CUT, SIGNED, DRIVEN AND GRADED COMPLETE WITH ANDREW'S THIRD CLAUSE UNSERVED, AND EVERY ARTIFACT WOULD
+HAVE READ DONE.** It is found here because his goal was decomposed as *his clauses MINUS what is covered* rather
+than read for the parts that matched work already in flight. **`FWD-30` exists because of the subtraction.**
+
+## B.2 -- THE NEW OUTCOMES: `FWD-21`..`FWD-30`
+
+Highest existing id is `FWD-20`, so these take the next unused numbers; nothing is renumbered or reused.
+`FWD-21`..`FWD-29` are the brief's `O1`..`O9` in its own order; `FWD-30` is B.1's.
+
+⛔ **THE DEFINITIONS LIVE IN THE ENDPOINT SECTION ABOVE, NOT HERE -- ONE CARRIER.** ⚠ **That is a correction: the
+first cut defined them here and in the header and left the ENDPOINT section empty of them, and the step-4 PRD
+surface-manifest gate REFUSED the commit, naming all ten** -- *"the R3 monitor reads the header and step 5 reads the
+section, so this drift is invisible to a reader and total to a consumer."* ⭐ **Third instance tonight of this seat
+amending a decision and leaving a coordinate, and the only one a gate caught rather than a reading.**
+
+
+⚠ **`FWD-30`'s "OR" IS ANDREW'S AND IS NOT THIS SEAT'S TO COLLAPSE.** He wrote *"2pg max **or** machine readable
+rich text output"*, so **either branch satisfies the outcome** and a cell may serve one. ⛔ **A cell that serves
+NEITHER, or that serves a two-page layout which is not in Opal Brand Guidelines form, does not realize it** -- and
+the brand form is `deck_generation/DESIGN_BIBLE.md`, a ratified carrier, not a judgment. **The 2-page cap binds
+branch (a) only**; branch (b) has no page count because rich text has no pages.
+
+## B.3 -- F1 IS RESOLVED BY ANDREW, SO THIS ADDENDUM CARRIES NO FORK
+
+`4.0.0_SA_CRO~Z` raised ONE fork and routed it to Andrew rather than taking it silently. He answered ~04:5xZ,
+VERBATIM: *"Go with your recommendation on the band, and your recommendations on whatever else, if you need to do
+more research first go ahead but otherwise hand off to CTO!Z"* (record @`21dd61e392`).
+
+**RESOLVED: in Security mode the identity header is the page's ONE band; in Universe mode the Lead Panel is the ONE
+band; every other container is a white hairline panel.** ⚠ That seat read his sentence NARROWLY -- the recs it had
+in front of him and nothing wider -- and this seat adopts that reading without widening it.
+
+⭐ **AND THE ARCHITECTURE TENSION IS CLOSED BY MEASUREMENT RATHER THAN BY PICKING A SIDE.** His 02:47Z word
+*"i wouldnt change AMGT_RESAPP page layout architecturally"* and his ~04:3xZ word *"completely upgrade the
+frontend"* are both honoured by the NARROW reading, and **the walk's own conclusion is that nothing requires the
+architecture to change**: one header, five tabs in the ratified order, no tab moved, no route added, no re-split.
+`C-PAGE-LAYOUT` is UNTOUCHED.
+
+## B.4 -- NEW CONTRACTS
+
+**`C-CLAUSE-CITED-REJECTION`.** A rejection of any `FWD-21`..`FWD-29` candidate **cites a `DESIGN.md` clause
+number**. A rejection on taste is not a rejection. The clauses in scope are C1, C3, C5, C6, C8, C9, C10, C11, C12.
+
+**`C-RENDER-IS-THE-ORACLE`.** ⛔ **A SOURCE READ NEVER GRADES A RENDER OUTCOME.** *"Walls of text and overlapping
+chaos"* is a RENDERED property; acceptance is a PNG at 1440 plus the DOM measurement JSON from
+`portal/scripts/ui-smoke.mjs`, for each of the six states. ⭐ **AND A PASS ON THE JSON WITHOUT THE PNG READ BY A
+PERSON IS CARE, NOT A CONTROL** -- the brief's own words, adopted verbatim as contract.
+
+**`C-EXPORT-ADDS-NOTHING`.** The export serves only what the page serves: same figures, same cites, same absences.
+An ABSENT field is ABSENT in the export with its reason. **No figure is computed for the export**, and the
+"value must carry its claim" law binds the export exactly as it binds the page.
+
+**`C-PRESENTATION-ONLY`.** ADDENDUM B changes **presentation** and not the four routes, their payload shapes, or
+any served DTO. ⛔ **A field a tile or tooltip needs that the payload does not carry is a SERVED-RUNTIME ASK, never
+a page-side computation** -- `C-SERVER-SIDE-RANKING` and the value-must-carry-its-claim law both bind. ⚠ **`FWD-30`
+IS THE ONE OUTCOME THIS CONTRACT MAY NOT COVER**: if the two-page form needs a field no route serves, that is a
+route change and it comes back to this seat before it is built, not after.
+
+## B.5 -- WHAT ADDENDUM B DOES NOT DO
+
+No page-architecture change (B.3). No route or DTO change (`C-PRESENTATION-ONLY`). No PROD promote -- portal is
+commit-yes/promote-no and that is unchanged. No vendor call. No notifier. No change to the verbatim gate, the
+PASS/REFUSE face, the three-state reads, the generation caption's facts, the crossed-controls model, the
+Peers/Posture symmetry or the "machine, never an instruction" marking -- **the spec changes how these are shown,
+never whether** (the brief's IV.9, adopted).
+
+⚠ **AND THE CLOSER ITEMS ARE NOT SWEPT INTO THIS ROUND.** Under Rule 27 work in flight at hand-back completes under
+its own spec: the Peers consumer-2 grading, the three Peers failure cases, `BP/_LN_Equity`, the `DE_US_Equity`
+third-source fork and the `1ec5446c` portal deploy finish as closer items and their OUTCOMES feed the round-N
+enrichment list. **They are named here so the round does not double-own them and so nobody reads their absence from
+`FWD-21`..`FWD-30` as their cancellation.**
+
+## B.6 -- L4-R
+
+ADDENDUM B adds ENDPOINT lines and CONTRACTS, so the RATIFIED half re-opens to `3.0.0_SA_CVO~Z`; it rests on a new
+L1 brief, so the BRIEF half re-opens to `4.0.0_SA_CRO~Z`, its author. ⚠ **Per R-10 Andrew suspended the L4-R
+signature as a BAR for AMGT -- the review is kept, the ritual is not** -- so both halves are routed and the round is
+not held on a stamp. `FWD-1`..`FWD-20` and every existing contract are unchanged.
