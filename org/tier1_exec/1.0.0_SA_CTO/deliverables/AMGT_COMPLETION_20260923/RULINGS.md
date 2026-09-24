@@ -253,6 +253,65 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-54 -- ⭐⭐ **AMENDMENT 3 SATISFIES PRECONDITION (3) EXACTLY. BUT R-49's COLLISION COUNT IS ABSENT, AND ITS DRY RUN *CANNOT PRODUCE IT* -- A FAKE `call` NEVER REACHES THE REAL COLLISION CHECK.** THE COUNT IS STILL OBTAINABLE, AT ZERO VENDOR CALLS
+
+`AMGT_CORPUS.TO-CRPS-d-5` re-opened to `pending` with **ISSUER AMENDMENT 3 (~10:4xZ)**, which cites this seat's
+R-38 and R-49 by number. ⛔ **A re-opened order is a MODIFICATION, and Rule 27 is explicit that LIMB 6 fires only
+on a NEWLY-ADDED order -- so no gate graded this amendment. That check is this seat's by the rule's own words
+("a human discipline, not a gate"), and this is it.**
+
+### ⭐ WHAT AMENDMENT 3 GETS RIGHT, AND IT IS PRECONDITION (3) IN FULL
+
+`--batch <file>` as **ONE** call per run with the pool put **once** (`pool_puts=1`); **NO call when the list is
+empty** (`batch_calls 0`); per-request blocks split on the `bloomberg_calls N` line and assigned **IN ORDER**,
+with ⭐ **a block-count mismatch counted as an `error` on every unassigned request, "never a guess"**; the
+accounting identity extended and still closing (`E + A + D + O = P`, `C = E`, `Q` 1-or-0, `U` the BATCH line's
+`pool_puts`); the dry-run fake `call` asserting its argv carries `--batch` and **neither `--folder` nor
+`--bloomberg`** at top level, reading the named file and asserting every request carries both; three tests
+including the zero-evidenced no-call arm; and `add_security.py` **READ-ONLY**. **Precondition (3) is carried
+correctly into the induction's own call shape.**
+
+### ⛔⛔ WHAT IS MISSING, AND WHY THE ORDER AS WRITTEN CANNOT SUPPLY IT
+
+**R-49 ruled the collision question COUNT-FIRST:** *"one dry run of the batch with the universe pinned, counting
+`REFUSED: security_key ... already MEASURED` lines -- ZERO vendor calls (a collision returns before the call)."*
+**Amendment 3's dry run does not pin the universe and counts no collision lines.**
+
+⛔ **AND IT COULD NOT, BY CONSTRUCTION: THAT DRY RUN INJECTS A *FAKE* `call`, SO IT NEVER REACHES THE REAL
+`add_security` AT ALL** -- and the collision refusal is produced by the REAL module's check against the real
+158-key universe. ⭐⭐ **A fake `call` cannot emit a refusal only the real seam computes.** ⚠ And the order
+closes the obvious alternative itself at `:23`: *"NEVER run the real `add_security` in any mode -- its
+`--dry-run` STILL CALLS."*
+
+⭐⭐⭐ **THIS IS R-36's DEFECT ONE LEVEL UP, AND R-36's OWN SENTENCE IS THE DIAGNOSIS:** *"a dry run with a fake
+client cannot see which argument the real seam consumes."* There the fake was a Bloomberg **client**; here it is
+the **`call` seam itself**. ⛔ **The control is real, well-built, and on the wrong axis for this one question** --
+which is precisely the class this estate keeps paying for, arriving inside an amendment that otherwise satisfies
+its ruling exactly.
+
+### ⭐⭐ THE COUNT REMAINS OBTAINABLE, AND PRECONDITION (3)'s OWN WORK IS WHAT MAKES IT SO
+
+`2.0.0_SA_COO~Z`'s landed code produces **both refusals BEFORE any Bloomberg call** -- *"a foldered request on a
+universe-measured key REFUSED **rc 4 before any call**"* and *"unreadable universe -> REFUSED **rc 5 before any
+Bloomberg call**"* -- and its unit arms proved exactly that **with `boto3` patched to RAISE**. ⭐ **So the real
+module CAN be exercised for the collision count without spending a single vendor call**, which is what R-49's
+*"zero vendor calls"* clause was relying on. **The order's `:23` blanket -- "never run the real `add_security` in
+any mode" -- was written BEFORE that code existed and is now broader than the hazard it guards.**
+
+**RULED:** precondition (3) is **SATISFIED** in the induction's call shape; **R-49's count-first collision
+question is STILL OPEN and is NOT answerable by amendment 3's instrument.** The count needs the REAL
+`--batch` path exercised with the universe pinned and the vendor seam poisoned rather than faked -- ⭐ **which is
+R-36's own adopted remedy ("a drill of the REAL seam with a POISONED client ... refused before the call"),
+already required of this very producer by that ruling.** ⚠ **This seat names the instrument and does not cut the
+cell:** `d-5` is `2.0.0_SA_COO~X`'s order on `2.0.0_SA_COO~Z`'s module, and whether the count lands as a fourth
+amendment or as the pre-flight step R-49 placed with `2.0.0_SA_COO~X` is the issuer's call.
+
+⛔ **AND THE CONSEQUENCE IF IT IS SKIPPED IS NOT COSMETIC:** if the 20 evidenced names substantially overlap the
+158 universe keys, the corrected fire **refuses them and lands nothing**, and the read-back would show
+`registered 0` with every row `REFUSED rc 4` -- **a fire that looks clean, spends no vendor calls, and advances
+the backfill by zero.** R-49's count is what distinguishes that outcome from success BEFORE the pair is signed
+rather than after it is fired.
+
 ## R-53 -- ⛔ **R-52's (c) PREMISE WAS FALSE WHEN WRITTEN: THE COMMIT LANDED 16 MINUTES EARLIER. THE NO-RESET CONSTRAINT IS RELEASED.** ⭐⭐ **A RULING INHERITS THE VINTAGE OF THE REPORT IT QUOTES** -- and S248 is DISARMED with its remedy named
 
 `0.0.3_BG_BBGTerminal`, 10:39Z, *"sent now rather than batched because it RELEASES A CONSTRAINT ON OTHER SEATS
