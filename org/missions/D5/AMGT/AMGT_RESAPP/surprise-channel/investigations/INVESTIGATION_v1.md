@@ -13561,6 +13561,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The harness could not even LOAD (MODULE_NOT_FOUND) at the merged page this worker was handed, and its own header-rendering path targeted a component LeadPanel.tsx's own docstring says is dead code post-rl-2. Neither defect is in this worker's own new code; both predate AMGT-rl-9 and were silent because nothing had run this harness green since rl-8 landed.",
     "disarm_owner": "N/A -- hazard_standing INERT; fixed in this same commit (portal c2b51a468ccca873867e202175cdf6b92ee4ca50).",
     "notes": "Companion finding to AMGT_RESAPP-W137-S1 (tabs.harness.cjs, same import, fixed at the rl-8 drain per the issuer's notes item 3) -- posture.harness.cjs was the one sibling harness that same fix never reached."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S249",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-24T12:10Z",
+    "one_line": "DISARM CARRIER for AMGT_RESAPP-Z-S247 (model state lowContrastChars 37 on the identity line over the band): rl-9 (0.9.0_WK_AMGT_RESAPP~138) moved ModelTab.tsx's IdentityLine off the band (portal c2b51a46, merged into DEV at 65a41a1f, drained @6fdce83b63) and the issuer read BOTH the worker's contract-check-final/model.json and its own drain-time contract-check-after-rl-9/model.json at lowContrastChars 0 -- the disarm condition Z-S247 named, met on two instruments.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_AMGT_RESAPP~138/contract-check-final/model.json lowContrastChars 0, lowContrastSamples [] (worker's run, port 5182, portal c2b51a46)",
+        "deliverables/2.0.0_SA_COO~Z/round37/contract-check-after-rl-9/model.json lowContrastChars 0 (issuer's run on the shared portal at 65a41a1f, port 5175)",
+        "negative control: contract-check-after-rl-6/model.json read 37 on the same instrument before the fix; the other five states read 0 before and after"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "FWD-29 DONE WHEN: for each of the six states lowContrastChars == 0.",
+    "world_is": "Six of six states read lowContrastChars 0 on the merged page. The five other FWD-29 predicates still FAIL on files outside the round's rectangle (rl-9's AC1 refusal trace) -- a different finding, carried in the drain-end packet for the CTO's analysis, not this row's.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- DISARMED by this row; Z-S247's remedy EXECUTED IN-ROUND by rl-9 under its own grant; nothing further owed.",
+    "notes": "Filed by the issuer at the wave-2 drain, as Z-S247's disarm_owner text said it would be. Z-S247 stays UNDER_INVESTIGATION at filing (append-only channel); this carrier is the disarm."
   }
 ]
 ```
