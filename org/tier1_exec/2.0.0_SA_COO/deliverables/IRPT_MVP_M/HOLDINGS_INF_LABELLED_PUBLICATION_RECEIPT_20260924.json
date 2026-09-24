@@ -1,0 +1,542 @@
+{
+  "status": "PUBLISHED_VERIFIED",
+  "go": "CTO 100401 (GO INF d03e91a4, act 2 after the 49F receipt; CTO half on the builder's address; COO half = 100395)",
+  "executed_by": "2.0.0_SA_COO~M",
+  "started_utc": "2026-09-24T07:03:45.016992+00:00",
+  "finished_utc": "2026-09-24T07:04:36.709821+00:00",
+  "firm_id": "inflection",
+  "business_date": "2026-09-22",
+  "revision": "d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c",
+  "index_location": [
+    "opal-data-inflection",
+    "irpt/inflection/platinum/holdings/current/manifest.json"
+  ],
+  "index_version": ".vBFsThYvc4Gzhc5VZMJsyig7bhq9UNW",
+  "index_sha256": "7e098af7897a70aa915edb803b6b23408a8e3cdc036dc049073da07dcbb5c88a",
+  "index_precondition": "IfMatch \"4283ce90fc4c115e7c9cfbc842fa4f2d\" (version J_FeUeEAd0jRBCN0lgMoixLY_m3o9QHM)",
+  "prior_index": {
+    "bucket": "opal-data-inflection",
+    "key": "irpt/inflection/platinum/holdings/current/manifest.json",
+    "version_id": "J_FeUeEAd0jRBCN0lgMoixLY_m3o9QHM",
+    "sha256": "f35dd6222e993bc6afa7edfa61cef2d00521188883f4a1b8902f9532d13d7a4d",
+    "byte_length": 522
+  },
+  "prior_index_version_retained": true,
+  "prior_revision_manifest_retained": {
+    "revision": "1ebc7696d6e52be01c3fc431b222c80d9baf3f967f0681cf3879115e5ad476fa",
+    "version_id": "0szAUgM6WaOr_BPcGEcI.GR9mxU2LF.X",
+    "etag": "\"c1c1fed1b440e51fe3c488a1a2668622\""
+  },
+  "prepared_bytes_read": {
+    "prepared_platinum_path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_irpt_m\\.runtime\\holdings-journey-20260923\\prepared_inf\\opal-data-inflection\\irpt\\inflection\\platinum\\holdings\\date=2026-09-22\\d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.json",
+    "prepared_platinum_raw_sha256": "d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c",
+    "prepared_platinum_bytes": 32632303,
+    "prepared_gold_path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_irpt_m\\.runtime\\holdings-journey-20260923\\prepared_inf\\opal-data-inflection\\irpt\\inflection\\gold\\holdings\\date=2026-09-22\\d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.parquet",
+    "prepared_gold_sha256": "54c8627c573bd222b466133c9b1c4e9d9a3c6793520d5c25995a5e60e7d7ea6b"
+  },
+  "immutable_writes": [
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 5752764,
+      "key": "irpt/inflection/gold/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.parquet",
+      "sha256": "54c8627c573bd222b466133c9b1c4e9d9a3c6793520d5c25995a5e60e7d7ea6b",
+      "version_id": "Huk_ONr1Wl2uXFaCV7v47NOaWCbjBCSj"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 36857,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.header.json",
+      "sha256": "0f662ec5cd064ec8f447841e6444485e09551f4051350cb583fd5d4fa93ff540",
+      "version_id": "2YV7MQ_Sbjm76QtNhX0g4dXkR5k2jD._"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1033614,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00000.json",
+      "sha256": "208cac44b86cdafe843e24b9211cc55081d0afcff21d0aa7cdd727e4562183cb",
+      "version_id": "z8OL.gMu4x_MDRi4o9x7WXvIpf3KpOl_"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 979018,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00001.json",
+      "sha256": "705884665c2b440817a34aa2fd59a44de2a17e09e86d6360c1d81c397ad6a171",
+      "version_id": "pB3EQWwc8cv3vqDa.PtXBAKrncgr6oSg"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 989245,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00002.json",
+      "sha256": "7b6b0c983bc37b21404cf66427cd4432410dac56a3c5fd1d4763ffdf50917504",
+      "version_id": "D8HjocQVd8kmJmIRM3Fhpka0dDbKVaEN"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1006407,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00003.json",
+      "sha256": "a5a4b35001daf392d4316c3db7fd0ca6716c640668a246caeb1586cfcf83f27c",
+      "version_id": "9OYOIxoArh7Tg28FoYnhS06xe_W1gjra"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1045317,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00004.json",
+      "sha256": "3f2bcf49762abb8f345b05b07f65b69d762ca71d6670ac448db422dc58715401",
+      "version_id": "eb5_wB8Qmm9xefe6_KIXPgxsF5dUEa9V"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 969735,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00005.json",
+      "sha256": "962d3bfdb8c0f3d2783dde81a603c42dbd892da21d923cdf27ae6240f16a813b",
+      "version_id": "ih5MpHxWJybRTotl9JKF4qT8SnoeMmzq"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 980406,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00006.json",
+      "sha256": "31e7150cd2994f3bd8d4f8f9f106e2d9f3fb0e21db0746a337a360b99519abe9",
+      "version_id": "ULfD0PowPilBuC3aNzZhXuEyCwW4nTyW"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 976793,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00007.json",
+      "sha256": "7bf4e0eddde3720c13b08115906e77b8636f4316a0b07c2d84219a916916694d",
+      "version_id": "3gSxVHwNW2jr_62daGPREn_Ydjb2ThDY"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1042798,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00008.json",
+      "sha256": "143f4660d23341491e23c5d06557ff5162dbbc542215ada6c43fee630de134d9",
+      "version_id": "oJh.7GX51WxIVG5N86Dv7YhMEBOvwSgr"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1012280,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00009.json",
+      "sha256": "082ee568e3554bed612a2ac62bb1dfcd6e27fe298845dd1674d65063fe47c63b",
+      "version_id": "wPs52zqQ5Myuko_JMhJuW0kQcAvL1qzx"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1047412,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00010.json",
+      "sha256": "2b6aff0cd3add5ae8138d329c35ccd9c9d498b981c7afa20e9521c254f04b6a1",
+      "version_id": "jzuX_YcE5O_TO7VrYf4jIwPatrWY2taZ"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1022651,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00011.json",
+      "sha256": "835b6a8f4be7460c4e1876288bd8d7e2171e59b5f1d0482711f857ffc9df510c",
+      "version_id": "haGe6.MYtnK8s4c.Rh7os3v3aN78JRFY"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1027647,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00012.json",
+      "sha256": "5b3156523ba06336113005891db85bba46b615637dfbe334c47aebc983a9ae9f",
+      "version_id": "V5p0D8XrEiyPyrTcqR5gvlULnjs1Q32h"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1012123,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00013.json",
+      "sha256": "70714ccdd65a0903ea072eeaa55960713b4b330403fefbb5bd518a7358473437",
+      "version_id": "_VeItBDb3OSFfPHn71aUmPbc8HlwEQsa"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1045933,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00014.json",
+      "sha256": "a2cf15eacd93d9784cc4126b7e3dc9b2bb71bfcdc429d1e16f119204639b0b08",
+      "version_id": "ludd8lNQ4ncVdIiFpvVMHm1NTaUcLbQN"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1046186,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00015.json",
+      "sha256": "1403c0eae3b2ce2955973e143ac132024965eb9c41c793ed0e52c7968ecbda4a",
+      "version_id": "S.SNEKOUOjgh9po0BL7oQVxzJWrdJPJM"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1046423,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00016.json",
+      "sha256": "ad20cd258da351ac980e4bfb48883af4e54c3dd1766c8ed775aa370ed80c4c1b",
+      "version_id": "91CgIYepeOiZwDFH7GeXBg7Jsw7v9AZO"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1026622,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00017.json",
+      "sha256": "2b10184b40ae15bd76e99bb40f155429c5b9d93ee4fa54cd87b6317e08f9c20f",
+      "version_id": "j2nG1MB3s6ku2etSi3iygKud5Swr8dzy"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 991487,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00018.json",
+      "sha256": "e5411b7ac47e0896bf4e58406fae8c430aa84cc7b88d54768adc8cf69a17092e",
+      "version_id": "YK0ONpBVU5I2jnUvtjSMzAQH2Ie9f1eq"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1046270,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00019.json",
+      "sha256": "90a4d6a759c7792872a4dadc6ef36491841bb125ae7b9885c05eab6610e72554",
+      "version_id": "f07I7ubANacatzQ3t.uujzFX1tdJ1kGA"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1017014,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00020.json",
+      "sha256": "6ffd71459ec421c87aedcc86386de80daa7c1b4103df0ff3c7f6ccbb2b3de7d6",
+      "version_id": "iVnO.NEn3he6aG3rs5U4NGlnm4ryNXWa"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 988724,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00021.json",
+      "sha256": "72b67513ae53af85c75aaec655d60398f630b72efddca960188fb577a3e2b684",
+      "version_id": "69zl676plNas6bEWoiCMybnHa5AXqN0N"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1047483,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00022.json",
+      "sha256": "e986b81484e157a6e3338a435d13840796f5a0c6cee8979435449362586a30b7",
+      "version_id": "dMaPuYZKqdjVUWAwxmPqqZmFBwKX_MUH"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1008084,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00023.json",
+      "sha256": "eba2b5e97878cc2fc375e114053445d2426205627a929691165137ef5173d9d9",
+      "version_id": "wE7PzK22NfPtFvvhQTYG9Z8YgQM.uo.Q"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1031962,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00024.json",
+      "sha256": "1a9d132ab9d55b83cab24a32eabda8c369a9792b8ee98d237590d00b666e06da",
+      "version_id": "KwDAnIHhuYbRSzBjYzYlsSAxE9X8t__M"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1004152,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00025.json",
+      "sha256": "3a37722e5770be77253208e270fdcef5dd6381b15fdef3f95bd64e4f5fd2bafc",
+      "version_id": "zLQKUg.q9xnJGXywu4YFYD92WQGU7kU."
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1046825,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00026.json",
+      "sha256": "e2d994c8382c268ba0c61afe1dc068d04b273c37fb0ac080d8ab3cd3e85d9e46",
+      "version_id": "JqVzQZHi85CFLG1KBbNjFbv8k43NSoNH"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1045394,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00027.json",
+      "sha256": "3fa91a060b2f07e552dc1ab374789e4099afb2c6e3143887ffd00ee46bdb31c5",
+      "version_id": "1B8Lt1dkz0s22OROvClxAfgi0vdHA3ea"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1022210,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00028.json",
+      "sha256": "68e24ec66fa030dbdd1a9b2048c43ebd2904156007ac341564c4edc3217b2f0f",
+      "version_id": "BK8_uZbSbDFFRIkBfGug5UO0fDe7RtNd"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1047347,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00029.json",
+      "sha256": "06f96a70c3946bfec0bacddce7c10791a7fe8c53dc8c5d5a2f3617609ef4174b",
+      "version_id": "Ueu3wtTp4RoR7J8tsj.D2sYAU7KaLoI0"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 974500,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00030.json",
+      "sha256": "2dfd176b4d08d82be1941589f8098385446e8ce37b47bc02f476f9da159a9ada",
+      "version_id": "sti.jUNum4e9uK08gkCkNRimXfsNLVuv"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "byte_length": 1016958,
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.part00031.json",
+      "sha256": "b0f41394aee9d78318b2f052476ed4665822f7cd2751fcd28a156e7e27dcf0c6",
+      "version_id": "ofQS9CnoffQSLG9cEy2SlTrGFv89OWQp"
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.manifest.json",
+      "version_id": "Vt6lxFtec9BmXUCIXAPSISoy5isPHzjr",
+      "sha256": "a8a177c2054ff263c79a366290e46f2b4522ede0b501b00ab0fff25d4ba935e3",
+      "byte_length": 41621
+    }
+  ],
+  "immutable_write_count": 35,
+  "index_write": {
+    "bucket": "opal-data-inflection",
+    "byte_length": 522,
+    "key": "irpt/inflection/platinum/holdings/current/manifest.json",
+    "sha256": "7e098af7897a70aa915edb803b6b23408a8e3cdc036dc049073da07dcbb5c88a",
+    "version_id": ".vBFsThYvc4Gzhc5VZMJsyig7bhq9UNW"
+  },
+  "total_writes": 36,
+  "measured_plan_before": {
+    "multipart": true,
+    "parts": 32,
+    "immutable_creates": 35,
+    "index_writes": 1,
+    "index_precondition": "IfMatch \"4283ce90fc4c115e7c9cfbc842fa4f2d\""
+  },
+  "acceptance_receipt": {
+    "business_date": "2026-09-22",
+    "date_row": {
+      "manifest": {
+        "bucket": "opal-data-inflection",
+        "byte_length": 41621,
+        "key": "irpt/inflection/platinum/holdings/date=2026-09-22/d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c.manifest.json",
+        "sha256": "a8a177c2054ff263c79a366290e46f2b4522ede0b501b00ab0fff25d4ba935e3",
+        "version_id": "Vt6lxFtec9BmXUCIXAPSISoy5isPHzjr"
+      },
+      "revision": "d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c"
+    },
+    "firm_id": "inflection",
+    "index": {
+      "bucket": "opal-data-inflection",
+      "byte_length": 522,
+      "key": "irpt/inflection/platinum/holdings/current/manifest.json",
+      "sha256": "7e098af7897a70aa915edb803b6b23408a8e3cdc036dc049073da07dcbb5c88a",
+      "version_id": ".vBFsThYvc4Gzhc5VZMJsyig7bhq9UNW"
+    },
+    "schema_version": "irpt-holdings-acceptance-v1"
+  },
+  "manifest_schema_version": "irpt-holdings-manifest-v2",
+  "partition_count": 32,
+  "source_objects": [
+    {
+      "bucket": "opal-data-inf",
+      "key": "investor-reporting/directory/2026-09-17/directory.json",
+      "version_id": "QQ4Ce4ROS2MrkjEF1cj8H0VOhacR8JYo",
+      "byte_length": 447976,
+      "sha256": "09e349d2886bdc5bfeb79069cf747e616c6bfbf9fe7bb03506b83b4aae9e57c7"
+    },
+    {
+      "bucket": "opal-data-inf",
+      "key": "investor-reporting/directory/latest.json",
+      "version_id": "WAkBxEYNTbtbw.gN9COdLynB60vXZeBE",
+      "byte_length": 270,
+      "sha256": "f793dc2d80c02bd7ea0c82af395db9a939237ddb207a0626fbf789eb596b3ba4"
+    },
+    {
+      "bucket": "opal-data-inf",
+      "key": "silver/api_dims/accounts_v2/snapshot_date=2026-09-23/data.parquet",
+      "version_id": "wiutprR1fQp94DQNDOL52DuCPfE1FdbU",
+      "byte_length": 80807,
+      "sha256": "3ab7f2bd1ed4b463d7ce5f177ed0788d8a9f7a48d5ecd7a66c9f2cf118e58a6d"
+    },
+    {
+      "bucket": "opal-data-inf",
+      "key": "silver/api_dims/positions_mv/snapshot_date=2026-09-23/data.parquet",
+      "version_id": "7x8RpSajwME5lYbYWjJBrXmP4Fp3Olo4",
+      "byte_length": 1247973,
+      "sha256": "baacd051d0e5c27fe48381a58e47a9910853eb63978ae20382b47daf4b11c434"
+    },
+    {
+      "bucket": "opal-data-inf",
+      "key": "silver/eclipse/2026-09-23/model_composition.parquet",
+      "version_id": "6Olnd9JpN4VTUWmPsaTBZhnxN9m.5J4x",
+      "byte_length": 37591,
+      "sha256": "0e899daae26eb5854a0ab450362be5cccd44ccef9b79bbeb16a1131772ce9a8d"
+    },
+    {
+      "bucket": "opal-data-inf",
+      "key": "silver/eclipse/2026-09-23/models.parquet",
+      "version_id": "JkaS9sPLkRdfDjc_xznsy3z2XIJ6OEfd",
+      "byte_length": 25005,
+      "sha256": "c5049ded95254484c1237c640cdb33e0039eba4d96781ce0ea4e87f8729d2fe8"
+    },
+    {
+      "bucket": "opal-data-inf",
+      "key": "silver/eclipse/2026-09-23/portfolios_full.parquet",
+      "version_id": "5V.k.tFbT9WP_KSo5BxCZ0_GD4oXtNQP",
+      "byte_length": 109689,
+      "sha256": "83328da009c86f7cd28f0783bb2c159a3ecec07083a6f5cd06f475ec3b868d16"
+    },
+    {
+      "bucket": "opal-data-inf",
+      "key": "silver/eclipse/2026-09-23/portfolios_simple.parquet",
+      "version_id": "YsVyL5UhTh_9MiDk3gDXhiIskJNONU7y",
+      "byte_length": 64407,
+      "sha256": "ddc570eb3e709e2300944e7986547cd9db3bce218576b4d594437ead7673e50f"
+    }
+  ],
+  "reader_matrix": [
+    {
+      "accounts": [
+        "acc_002c686393f239134019d60f"
+      ],
+      "as_of": null,
+      "status": "READ_OK",
+      "revision": "d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c",
+      "nodes": 76,
+      "labelled": 76,
+      "model_leaves": 1,
+      "selected_market_value": 263813.13
+    },
+    {
+      "accounts": [
+        "acc_002c686393f239134019d60f"
+      ],
+      "as_of": "2026-09-22",
+      "status": "READ_OK",
+      "revision": "d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c",
+      "nodes": 76,
+      "labelled": 76,
+      "model_leaves": 1,
+      "selected_market_value": 263813.13
+    },
+    {
+      "accounts": [
+        "acc_002c686393f239134019d60f"
+      ],
+      "as_of": "2026-09-23",
+      "status": "EXPECTED_REFUSAL",
+      "reason": "no accepted holdings revision for date"
+    },
+    {
+      "accounts": [
+        "acc_0051606d2db6c099080bcf60"
+      ],
+      "as_of": null,
+      "status": "READ_OK",
+      "revision": "d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c",
+      "nodes": 29,
+      "labelled": 29,
+      "model_leaves": 1,
+      "selected_market_value": 11701.89
+    },
+    {
+      "accounts": [
+        "acc_0051606d2db6c099080bcf60"
+      ],
+      "as_of": "2026-09-22",
+      "status": "READ_OK",
+      "revision": "d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c",
+      "nodes": 29,
+      "labelled": 29,
+      "model_leaves": 1,
+      "selected_market_value": 11701.89
+    },
+    {
+      "accounts": [
+        "acc_0051606d2db6c099080bcf60"
+      ],
+      "as_of": "2026-09-23",
+      "status": "EXPECTED_REFUSAL",
+      "reason": "no accepted holdings revision for date"
+    },
+    {
+      "accounts": [
+        "acc_002c686393f239134019d60f",
+        "acc_0051606d2db6c099080bcf60"
+      ],
+      "as_of": null,
+      "status": "READ_OK",
+      "revision": "d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c",
+      "nodes": 105,
+      "labelled": 105,
+      "model_leaves": 2,
+      "selected_market_value": 275515.02
+    },
+    {
+      "accounts": [
+        "acc_002c686393f239134019d60f",
+        "acc_0051606d2db6c099080bcf60"
+      ],
+      "as_of": "2026-09-22",
+      "status": "READ_OK",
+      "revision": "d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c",
+      "nodes": 105,
+      "labelled": 105,
+      "model_leaves": 2,
+      "selected_market_value": 275515.02
+    },
+    {
+      "accounts": [
+        "acc_002c686393f239134019d60f",
+        "acc_0051606d2db6c099080bcf60"
+      ],
+      "as_of": "2026-09-23",
+      "status": "EXPECTED_REFUSAL",
+      "reason": "no accepted holdings revision for date"
+    }
+  ],
+  "reader_matrix_proof_class": "LIBRARY_UNDER_USER (the function reads under its role; Andrew's retest is the exercised arm)",
+  "unique_account_count": 876,
+  "node_count": 33328,
+  "reconcile": [
+    true,
+    209358359.48,
+    209358359.48
+  ],
+  "currency_status": "ATTESTED",
+  "retained_inputs_unreceipted": {
+    "IRPT_INF_ECLIPSE_MEMBERSHIP_SNAPSHOT": {
+      "path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\.runtime\\codex-seats\\4.0.0_SA_CRO\\eclipse_membership\\membership_map.json",
+      "file_sha256": "789dd95d3d36b449172d5a5d5c0f6e900f4f04269cfbab0525771b65a0fb641e",
+      "rows": 860,
+      "source": "4.0.0_SA_CRO 138fad2935",
+      "served_census_models_whole_from_capture": 35
+    }
+  },
+  "head_readback_after_the_act": {
+    "address": "s3://opal-data-inflection/irpt/inflection/platinum/holdings/current/manifest.json",
+    "etag": "\"d866755b8e0cd59f59e154b95eeb314c\"",
+    "version_id": ".vBFsThYvc4Gzhc5VZMJsyig7bhq9UNW",
+    "last_modified": "2026-09-24T07:04:38+00:00",
+    "rows": {
+      "2026-09-22": "d03e91a466fd"
+    },
+    "version_history_latest_first": [
+      ".vBFsThYvc (07:04:38Z)",
+      "J_FeUeEAd0 (01:48:30Z)"
+    ]
+  },
+  "what_is_served_now": {
+    "display": {
+      "labelled": 33327,
+      "denominator": 33328,
+      "by_kind": {
+        "ACCOUNT": [
+          875,
+          876
+        ],
+        "MODEL_LEAF": [
+          624,
+          624
+        ],
+        "SECURITY": [
+          30881,
+          30881
+        ],
+        "SLEEVE": [
+          947,
+          947
+        ]
+      }
+    },
+    "custody_units": 0,
+    "price_facts": 0,
+    "delta_vs_prior_served_1ebc7696": "0 node ids added / 0 removed / 0 changed beyond display; models_whole_from_capture 35; same eight receipts"
+  },
+  "rollback": "re-point the 2026-09-22 row to 1ebc7696 under a fresh IfMatch on version .vBFsThYvc4Gzhc5VZMJsyig7bhq9UNW; every object retained"
+}

@@ -11,6 +11,9 @@
       "model_id": "74c119db-73d6-4cf1-9535-740026df8121",
       "model_namespace": "SMARTX_MODEL",
       "model_name": "Opal Long Term",
+      "hierarchy_path": [
+        "Models"
+      ],
       "accounts": [
         {
           "account_id": "acc_97b137a914a90d686ecd606d",
@@ -17224,377 +17227,494 @@
         }
       ],
       "assigned_value": 883338348.25,
+      "claims": {
+        "measured": 2375,
+        "inferred": 1067
+      },
+      "account_count": 3442,
       "assets": [
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IEFA"
           },
-          "label": "IEFA",
+          "label": "IEFA -- iShares Core MSCI EAFE ETF",
+          "symbol": "IEFA",
+          "description": "iShares Core MSCI EAFE ETF",
           "kind": "SECURITY",
           "value": 132765346.6,
-          "accounts": 3428
+          "accounts": 3428,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "DIVZ"
           },
-          "label": "DIVZ",
+          "label": "DIVZ -- Polen Dividend Income ETF",
+          "symbol": "DIVZ",
+          "description": "Polen Dividend Income ETF",
           "kind": "SECURITY",
           "value": 113798946.94,
-          "accounts": 3437
+          "accounts": 3437,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IDVZ"
           },
-          "label": "IDVZ",
+          "label": "IDVZ -- The Opal International Dividend Income ETF",
+          "symbol": "IDVZ",
+          "description": "The Opal International Dividend Income ETF",
           "kind": "SECURITY",
           "value": 98209958.52,
-          "accounts": 3435
+          "accounts": 3435,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "PFDE"
           },
-          "label": "PFDE",
+          "label": "PFDE -- Pathfinder Disciplined US Equity ETF",
+          "symbol": "PFDE",
+          "description": "Pathfinder Disciplined US Equity ETF",
           "kind": "SECURITY",
           "value": 88858205.46,
-          "accounts": 3429
+          "accounts": 3429,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPYM"
           },
-          "label": "SPYM",
+          "label": "SPYM -- State Street SPDR Portfolio S&P 500 ETF",
+          "symbol": "SPYM",
+          "description": "State Street SPDR Portfolio S&P 500 ETF",
           "kind": "SECURITY",
           "value": 76275669.61,
-          "accounts": 3427
+          "accounts": 3427,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IJH"
           },
-          "label": "IJH",
+          "label": "IJH -- iShares Core S&P Mid-Cap ETF",
+          "symbol": "IJH",
+          "description": "iShares Core S&P Mid-Cap ETF",
           "kind": "SECURITY",
           "value": 46931683.02,
-          "accounts": 3415
+          "accounts": 3415,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "PFOE"
           },
-          "label": "PFOE",
+          "label": "PFOE -- Pathfinder Focused Opportunities ETF",
+          "symbol": "PFOE",
+          "description": "Pathfinder Focused Opportunities ETF",
           "kind": "SECURITY",
           "value": 45524955.46,
-          "accounts": 3431
+          "accounts": 3431,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPHY"
           },
-          "label": "SPHY",
+          "label": "SPHY -- State Street SPDR Portfolio High Yield Bond ETF",
+          "symbol": "SPHY",
+          "description": "State Street SPDR Portfolio High Yield Bond ETF",
           "kind": "SECURITY",
           "value": 42843978.62,
-          "accounts": 3434
+          "accounts": 3434,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IEMG"
           },
-          "label": "IEMG",
+          "label": "IEMG -- iShares Core MSCI Emerging Markets ETF",
+          "symbol": "IEMG",
+          "description": "iShares Core MSCI Emerging Markets ETF",
           "kind": "SECURITY",
           "value": 33379329.08,
-          "accounts": 3414
+          "accounts": 3414,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "CLIP"
           },
-          "label": "CLIP",
+          "label": "CLIP -- Global X 1-3 Month T-Bill ETF",
+          "symbol": "CLIP",
+          "description": "Global X 1-3 Month T-Bill ETF",
           "kind": "SECURITY",
           "value": 29386444.04,
-          "accounts": 3387
+          "accounts": 3387,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VEA"
           },
-          "label": "VEA",
+          "label": "VEA -- Vanguard FTSE Developed Markets ETF",
+          "symbol": "VEA",
+          "description": "Vanguard FTSE Developed Markets ETF",
           "kind": "SECURITY",
           "value": 24380803.5,
-          "accounts": 3410
+          "accounts": 3410,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VUG"
           },
-          "label": "VUG",
+          "label": "VUG -- Vanguard Morningstar Growth ETF",
+          "symbol": "VUG",
+          "description": "Vanguard Morningstar Growth ETF",
           "kind": "SECURITY",
           "value": 24375836.13,
-          "accounts": 3376
+          "accounts": 3376,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "BIV"
           },
-          "label": "BIV",
+          "label": "BIV -- Vanguard Intermediate-Term Bond ETF",
+          "symbol": "BIV",
+          "description": "Vanguard Intermediate-Term Bond ETF",
           "kind": "SECURITY",
           "value": 14593886.93,
-          "accounts": 3357
+          "accounts": 3357,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VXX"
           },
-          "label": "VXX",
+          "label": "VXX -- iPath Series B S&P 500 VIX Short-Term Futures ETN",
+          "symbol": "VXX",
+          "description": "iPath Series B S&P 500 VIX Short-Term Futures ETN",
           "kind": "SECURITY",
           "value": 13527559.85,
-          "accounts": 3411
+          "accounts": 3411,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "QQQ"
           },
-          "label": "QQQ",
+          "label": "QQQ -- Invesco QQQ Trust, Series 1",
+          "symbol": "QQQ",
+          "description": "Invesco QQQ Trust, Series 1",
           "kind": "SECURITY",
           "value": 9552369.48,
-          "accounts": 2411
+          "accounts": 2411,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "CASH",
             "value": "SMARTX_CASH"
           },
-          "label": "SMARTX_CASH",
+          "label": "Cash",
+          "symbol": null,
+          "description": "cash held in the model at SmartX overlay clock 2026-09-23",
           "kind": "CASH",
           "value": 6696329.39,
-          "accounts": 3442
+          "accounts": 3442,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VTV"
           },
-          "label": "VTV",
+          "label": "VTV -- Vanguard Morningstar Value ETF",
+          "symbol": "VTV",
+          "description": "Vanguard Morningstar Value ETF",
           "kind": "SECURITY",
           "value": 393208.79,
-          "accounts": 4
+          "accounts": 4,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IVV"
           },
-          "label": "IVV",
+          "label": "IVV -- iShares Core S&P 500 ETF",
+          "symbol": "IVV",
+          "description": "iShares Core S&P 500 ETF",
           "kind": "SECURITY",
           "value": 319236.59,
-          "accounts": 3
+          "accounts": 3,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "DFAI"
           },
-          "label": "DFAI",
+          "label": "DFAI -- Dimensional International Core Equity Market ETF",
+          "symbol": "DFAI",
+          "description": "Dimensional International Core Equity Market ETF",
           "kind": "SECURITY",
           "value": 103275.0,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "AVDE"
           },
-          "label": "AVDE",
+          "label": "AVDE -- Avantis International Equity ETF",
+          "symbol": "AVDE",
+          "description": "Avantis International Equity ETF",
           "kind": "SECURITY",
           "value": 80161.92,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "DFAC"
           },
-          "label": "DFAC",
+          "label": "DFAC -- Dimensional U.S. Core Equity 2 ETF",
+          "symbol": "DFAC",
+          "description": "Dimensional U.S. Core Equity 2 ETF",
           "kind": "SECURITY",
           "value": 69171.3,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VWO"
           },
-          "label": "VWO",
+          "label": "VWO -- Vanguard FTSE Emerging Markets ETF",
+          "symbol": "VWO",
+          "description": "Vanguard FTSE Emerging Markets ETF",
           "kind": "SECURITY",
           "value": 47252.17,
-          "accounts": 4
+          "accounts": 4,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "DFEM"
           },
-          "label": "DFEM",
+          "label": "DFEM -- Dimensional Emerging Markets Core Equity 2 ETF",
+          "symbol": "DFEM",
+          "description": "Dimensional Emerging Markets Core Equity 2 ETF",
           "kind": "SECURITY",
           "value": 33178.53,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VIG"
           },
-          "label": "VIG",
+          "label": "VIG -- Vanguard Div Appreciation ETF",
+          "symbol": "VIG",
+          "description": "Vanguard Div Appreciation ETF",
           "kind": "SECURITY",
           "value": 32608.74,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IQLT"
           },
-          "label": "IQLT",
+          "label": "IQLT -- iShares MSCI Intl Quality Factor ETF",
+          "symbol": "IQLT",
+          "description": "iShares MSCI Intl Quality Factor ETF",
           "kind": "SECURITY",
           "value": 23576.5,
-          "accounts": 2
+          "accounts": 2,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "MDY"
           },
-          "label": "MDY",
+          "label": "MDY -- State Street SPDR S&P MIDCAP 400 ETF Trust",
+          "symbol": "MDY",
+          "description": "State Street SPDR S&P MIDCAP 400 ETF Trust",
           "kind": "SECURITY",
           "value": 14750.78,
-          "accounts": 3
+          "accounts": 3,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IWF"
           },
-          "label": "IWF",
+          "label": "IWF -- iShares Russell 1000 Growth Fund",
+          "symbol": "IWF",
+          "description": "iShares Russell 1000 Growth Fund",
           "kind": "SECURITY",
           "value": 13810.3,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "QQQM"
           },
-          "label": "QQQM",
+          "label": "QQQM -- Invesco NASDAQ 100 ETF",
+          "symbol": "QQQM",
+          "description": "Invesco NASDAQ 100 ETF",
           "kind": "SECURITY",
           "value": 10156.74,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPEM"
           },
-          "label": "SPEM",
+          "label": "SPEM -- State Street SPDR Portfolio Emerging Markets ETF",
+          "symbol": "SPEM",
+          "description": "State Street SPDR Portfolio Emerging Markets ETF",
           "kind": "SECURITY",
           "value": 10140.3,
-          "accounts": 3
+          "accounts": 3,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPDW"
           },
-          "label": "SPDW",
+          "label": "SPDW -- State Street SPDR Portfolio Developed World ex-US ETF",
+          "symbol": "SPDW",
+          "description": "State Street SPDR Portfolio Developed World ex-US ETF",
           "kind": "SECURITY",
           "value": 9594.58,
-          "accounts": 4
+          "accounts": 4,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "XLK"
           },
-          "label": "XLK",
+          "label": "XLK -- State Street Technology Select Sector SPDR ETF",
+          "symbol": "XLK",
+          "description": "State Street Technology Select Sector SPDR ETF",
           "kind": "SECURITY",
           "value": 2944.05,
-          "accounts": 3
+          "accounts": 3,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VO"
           },
-          "label": "VO",
+          "label": "VO -- Vanguard Morningstar Mid-Cap ETF",
+          "symbol": "VO",
+          "description": "Vanguard Morningstar Mid-Cap ETF",
           "kind": "SECURITY",
           "value": 1609.6,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "QUAL"
           },
-          "label": "QUAL",
+          "label": "QUAL -- iShares MSCI USA Quality Factor ETF",
+          "symbol": "QUAL",
+          "description": "iShares MSCI USA Quality Factor ETF",
           "kind": "SECURITY",
           "value": 906.31,
-          "accounts": 3
+          "accounts": 3,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VGSH"
           },
-          "label": "VGSH",
+          "label": "VGSH -- Vanguard Short-Term Treasury ETF",
+          "symbol": "VGSH",
+          "description": "Vanguard Short-Term Treasury ETF",
           "kind": "SECURITY",
           "value": 775.83,
-          "accounts": 3
+          "accounts": 3,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPSM"
           },
-          "label": "SPSM",
+          "label": "SPSM -- State Street SPDR Portfolio S&P 600 Small Cap ETF",
+          "symbol": "SPSM",
+          "description": "State Street SPDR Portfolio S&P 600 Small Cap ETF",
           "kind": "SECURITY",
           "value": 333.61,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "BIL"
           },
-          "label": "BIL",
+          "label": "BIL -- State Street SPDR Bloomberg 1-3 Month T-Bill ETF",
+          "symbol": "BIL",
+          "description": "State Street SPDR Bloomberg 1-3 Month T-Bill ETF",
           "kind": "SECURITY",
           "value": 97.35,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         }
       ],
+      "asset_count": 36,
       "asset_basis": [
         "TARGET"
       ],
-      "account_count": 3442
+      "assets_labelled": 36
     },
     {
       "model_id": "729210dd-444c-47c9-997d-8a3bcede7afd",
       "model_namespace": "SMARTX_MODEL",
       "model_name": "Opal Intermediate-Term",
+      "hierarchy_path": [
+        "Models"
+      ],
       "accounts": [
         {
           "account_id": "acc_1c312e69da7efca76d0f17d3",
@@ -25778,347 +25898,455 @@
         }
       ],
       "assigned_value": 322155482.21,
+      "claims": {
+        "inferred": 967,
+        "measured": 669
+      },
+      "account_count": 1636,
       "assets": [
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IEFA"
           },
-          "label": "IEFA",
+          "label": "IEFA -- iShares Core MSCI EAFE ETF",
+          "symbol": "IEFA",
+          "description": "iShares Core MSCI EAFE ETF",
           "kind": "SECURITY",
           "value": 45778783.28,
-          "accounts": 1632
+          "accounts": 1632,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "DIVZ"
           },
-          "label": "DIVZ",
+          "label": "DIVZ -- Polen Dividend Income ETF",
+          "symbol": "DIVZ",
+          "description": "Polen Dividend Income ETF",
           "kind": "SECURITY",
           "value": 36476780.85,
-          "accounts": 1633
+          "accounts": 1633,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPYM"
           },
-          "label": "SPYM",
+          "label": "SPYM -- State Street SPDR Portfolio S&P 500 ETF",
+          "symbol": "SPYM",
+          "description": "State Street SPDR Portfolio S&P 500 ETF",
           "kind": "SECURITY",
           "value": 29786102.85,
-          "accounts": 1627
+          "accounts": 1627,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IDVZ"
           },
-          "label": "IDVZ",
+          "label": "IDVZ -- The Opal International Dividend Income ETF",
+          "symbol": "IDVZ",
+          "description": "The Opal International Dividend Income ETF",
           "kind": "SECURITY",
           "value": 27045433.87,
-          "accounts": 1631
+          "accounts": 1631,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "BIV"
           },
-          "label": "BIV",
+          "label": "BIV -- Vanguard Intermediate-Term Bond ETF",
+          "symbol": "BIV",
+          "description": "Vanguard Intermediate-Term Bond ETF",
           "kind": "SECURITY",
           "value": 24016670.35,
-          "accounts": 1630
+          "accounts": 1630,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "PFDE"
           },
-          "label": "PFDE",
+          "label": "PFDE -- Pathfinder Disciplined US Equity ETF",
+          "symbol": "PFDE",
+          "description": "Pathfinder Disciplined US Equity ETF",
           "kind": "SECURITY",
           "value": 23173399.05,
-          "accounts": 1628
+          "accounts": 1628,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "JAAA"
           },
-          "label": "JAAA",
+          "label": "JAAA -- Janus Henderson AAA CLO ETF",
+          "symbol": "JAAA",
+          "description": "Janus Henderson AAA CLO ETF",
           "kind": "SECURITY",
           "value": 17131789.82,
-          "accounts": 1633
+          "accounts": 1633,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "CLIP"
           },
-          "label": "CLIP",
+          "label": "CLIP -- Global X 1-3 Month T-Bill ETF",
+          "symbol": "CLIP",
+          "description": "Global X 1-3 Month T-Bill ETF",
           "kind": "SECURITY",
           "value": 16186105.66,
-          "accounts": 1631
+          "accounts": 1631,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "PFOE"
           },
-          "label": "PFOE",
+          "label": "PFOE -- Pathfinder Focused Opportunities ETF",
+          "symbol": "PFOE",
+          "description": "Pathfinder Focused Opportunities ETF",
           "kind": "SECURITY",
           "value": 12056542.89,
-          "accounts": 1629
+          "accounts": 1629,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "DFCF"
           },
-          "label": "DFCF",
+          "label": "DFCF -- Dimensional Core Fixed Income ETF",
+          "symbol": "DFCF",
+          "description": "Dimensional Core Fixed Income ETF",
           "kind": "SECURITY",
           "value": 10715370.75,
-          "accounts": 1631
+          "accounts": 1631,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPHY"
           },
-          "label": "SPHY",
+          "label": "SPHY -- State Street SPDR Portfolio High Yield Bond ETF",
+          "symbol": "SPHY",
+          "description": "State Street SPDR Portfolio High Yield Bond ETF",
           "kind": "SECURITY",
           "value": 8224356.5,
-          "accounts": 1629
+          "accounts": 1629,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VCSH"
           },
-          "label": "VCSH",
+          "label": "VCSH -- Vanguard Short-Term Corporate Bond ETF",
+          "symbol": "VCSH",
+          "description": "Vanguard Short-Term Corporate Bond ETF",
           "kind": "SECURITY",
           "value": 8195189.56,
-          "accounts": 1624
+          "accounts": 1624,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "PCHI"
           },
-          "label": "PCHI",
+          "label": "PCHI -- Polen High Income ETF",
+          "symbol": "PCHI",
+          "description": "Polen High Income ETF",
           "kind": "SECURITY",
           "value": 8012586.11,
-          "accounts": 1632
+          "accounts": 1632,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VEA"
           },
-          "label": "VEA",
+          "label": "VEA -- Vanguard FTSE Developed Markets ETF",
+          "symbol": "VEA",
+          "description": "Vanguard FTSE Developed Markets ETF",
           "kind": "SECURITY",
           "value": 7767346.88,
-          "accounts": 1629
+          "accounts": 1629,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IEMG"
           },
-          "label": "IEMG",
+          "label": "IEMG -- iShares Core MSCI Emerging Markets ETF",
+          "symbol": "IEMG",
+          "description": "iShares Core MSCI Emerging Markets ETF",
           "kind": "SECURITY",
           "value": 6021441.1,
-          "accounts": 1624
+          "accounts": 1624,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VUG"
           },
-          "label": "VUG",
+          "label": "VUG -- Vanguard Morningstar Growth ETF",
+          "symbol": "VUG",
+          "description": "Vanguard Morningstar Growth ETF",
           "kind": "SECURITY",
           "value": 5940209.34,
-          "accounts": 1608
+          "accounts": 1608,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VXX"
           },
-          "label": "VXX",
+          "label": "VXX -- iPath Series B S&P 500 VIX Short-Term Futures ETN",
+          "symbol": "VXX",
+          "description": "iPath Series B S&P 500 VIX Short-Term Futures ETN",
           "kind": "SECURITY",
           "value": 3816972.6,
-          "accounts": 1627
+          "accounts": 1627,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "QQQ"
           },
-          "label": "QQQ",
+          "label": "QQQ -- Invesco QQQ Trust, Series 1",
+          "symbol": "QQQ",
+          "description": "Invesco QQQ Trust, Series 1",
           "kind": "SECURITY",
           "value": 3790414.06,
-          "accounts": 1271
+          "accounts": 1271,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "CASH",
             "value": "SMARTX_CASH"
           },
-          "label": "SMARTX_CASH",
+          "label": "Cash",
+          "symbol": null,
+          "description": "cash held in the model at SmartX overlay clock 2026-09-23",
           "kind": "CASH",
           "value": 2993980.74,
-          "accounts": 1636
+          "accounts": 1636,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IVV"
           },
-          "label": "IVV",
+          "label": "IVV -- iShares Core S&P 500 ETF",
+          "symbol": "IVV",
+          "description": "iShares Core S&P 500 ETF",
           "kind": "SECURITY",
           "value": 501401.18,
-          "accounts": 2
+          "accounts": 2,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SWVXX"
           },
-          "label": "SWVXX",
+          "label": "SWVXX -- Schwab Prime Advantage Money Fund- Investor Shares",
+          "symbol": "SWVXX",
+          "description": "Schwab Prime Advantage Money Fund- Investor Shares",
           "kind": "SECURITY",
           "value": 125122.22,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IQLT"
           },
-          "label": "IQLT",
+          "label": "IQLT -- iShares MSCI Intl Quality Factor ETF",
+          "symbol": "IQLT",
+          "description": "iShares MSCI Intl Quality Factor ETF",
           "kind": "SECURITY",
           "value": 91649.48,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "DFAI"
           },
-          "label": "DFAI",
+          "label": "DFAI -- Dimensional International Core Equity Market ETF",
+          "symbol": "DFAI",
+          "description": "Dimensional International Core Equity Market ETF",
           "kind": "SECURITY",
           "value": 63367.5,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "AVDE"
           },
-          "label": "AVDE",
+          "label": "AVDE -- Avantis International Equity ETF",
+          "symbol": "AVDE",
+          "description": "Avantis International Equity ETF",
           "kind": "SECURITY",
           "value": 40173.74,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "DFAC"
           },
-          "label": "DFAC",
+          "label": "DFAC -- Dimensional U.S. Core Equity 2 ETF",
+          "symbol": "DFAC",
+          "description": "Dimensional U.S. Core Equity 2 ETF",
           "kind": "SECURITY",
           "value": 32234.73,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SJNK"
           },
-          "label": "SJNK",
+          "label": "SJNK -- State Street SPDR Bloomberg Short Term High Yield Bond ETF",
+          "symbol": "SJNK",
+          "description": "State Street SPDR Bloomberg Short Term High Yield Bond ETF",
           "kind": "SECURITY",
           "value": 26874.77,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VOO"
           },
-          "label": "VOO",
+          "label": "VOO -- Vanguard S&P 500 ETF",
+          "symbol": "VOO",
+          "description": "Vanguard S&P 500 ETF",
           "kind": "SECURITY",
           "value": 13640.9,
-          "accounts": 2
+          "accounts": 2,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "DFEM"
           },
-          "label": "DFEM",
+          "label": "DFEM -- Dimensional Emerging Markets Core Equity 2 ETF",
+          "symbol": "DFEM",
+          "description": "Dimensional Emerging Markets Core Equity 2 ETF",
           "kind": "SECURITY",
           "value": 10937.08,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPY"
           },
-          "label": "SPY",
+          "label": "SPY -- State Street SPDR S&P 500 ETF Trust",
+          "symbol": "SPY",
+          "description": "State Street SPDR S&P 500 ETF Trust",
           "kind": "SECURITY",
           "value": 7892.5,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "QUAL"
           },
-          "label": "QUAL",
+          "label": "QUAL -- iShares MSCI USA Quality Factor ETF",
+          "symbol": "QUAL",
+          "description": "iShares MSCI USA Quality Factor ETF",
           "kind": "SECURITY",
           "value": 6692.1,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "HYG"
           },
-          "label": "HYG",
+          "label": "HYG -- iShares iBoxx $ High Yield Corporate Bond ETF",
+          "symbol": "HYG",
+          "description": "iShares iBoxx $ High Yield Corporate Bond ETF",
           "kind": "SECURITY",
           "value": 1583.45,
-          "accounts": 2
+          "accounts": 2,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VGLT"
           },
-          "label": "VGLT",
+          "label": "VGLT -- Vanguard Long-Term Treasury ETF",
+          "symbol": "VGLT",
+          "description": "Vanguard Long-Term Treasury ETF",
           "kind": "SECURITY",
           "value": 1581.46,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VTV"
           },
-          "label": "VTV",
+          "label": "VTV -- Vanguard Morningstar Value ETF",
+          "symbol": "VTV",
+          "description": "Vanguard Morningstar Value ETF",
           "kind": "SECURITY",
           "value": 1144.45,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         }
       ],
+      "asset_count": 33,
       "asset_basis": [
         "TARGET"
       ],
-      "account_count": 1636
+      "assets_labelled": 33
     },
     {
       "model_id": "69cc5e3b-b14c-4640-bb4b-ead7837c1bc9",
       "model_namespace": "SMARTX_MODEL",
       "model_name": "Opal Ultra Long Term",
+      "hierarchy_path": [
+        "Models"
+      ],
       "accounts": [
         {
           "account_id": "acc_0b58364700cbafaceb475beb",
@@ -33197,237 +33425,312 @@
         }
       ],
       "assigned_value": 240247846.33,
+      "claims": {
+        "measured": 1213,
+        "inferred": 202
+      },
+      "account_count": 1415,
       "assets": [
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IDVZ"
           },
-          "label": "IDVZ",
+          "label": "IDVZ -- The Opal International Dividend Income ETF",
+          "symbol": "IDVZ",
+          "description": "The Opal International Dividend Income ETF",
           "kind": "SECURITY",
           "value": 27827405.42,
-          "accounts": 1413
+          "accounts": 1413,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IEFA"
           },
-          "label": "IEFA",
+          "label": "IEFA -- iShares Core MSCI EAFE ETF",
+          "symbol": "IEFA",
+          "description": "iShares Core MSCI EAFE ETF",
           "kind": "SECURITY",
           "value": 26963244.69,
-          "accounts": 1414
+          "accounts": 1414,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "DIVZ"
           },
-          "label": "DIVZ",
+          "label": "DIVZ -- Polen Dividend Income ETF",
+          "symbol": "DIVZ",
+          "description": "Polen Dividend Income ETF",
           "kind": "SECURITY",
           "value": 25530685.42,
-          "accounts": 1413
+          "accounts": 1413,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "PFDE"
           },
-          "label": "PFDE",
+          "label": "PFDE -- Pathfinder Disciplined US Equity ETF",
+          "symbol": "PFDE",
+          "description": "Pathfinder Disciplined US Equity ETF",
           "kind": "SECURITY",
           "value": 24803512.02,
-          "accounts": 1409
+          "accounts": 1409,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IJH"
           },
-          "label": "IJH",
+          "label": "IJH -- iShares Core S&P Mid-Cap ETF",
+          "symbol": "IJH",
+          "description": "iShares Core S&P Mid-Cap ETF",
           "kind": "SECURITY",
           "value": 23125741.74,
-          "accounts": 1412
+          "accounts": 1412,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPYM"
           },
-          "label": "SPYM",
+          "label": "SPYM -- State Street SPDR Portfolio S&P 500 ETF",
+          "symbol": "SPYM",
+          "description": "State Street SPDR Portfolio S&P 500 ETF",
           "kind": "SECURITY",
           "value": 14946025.68,
-          "accounts": 1414
+          "accounts": 1414,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "PFOE"
           },
-          "label": "PFOE",
+          "label": "PFOE -- Pathfinder Focused Opportunities ETF",
+          "symbol": "PFOE",
+          "description": "Pathfinder Focused Opportunities ETF",
           "kind": "SECURITY",
           "value": 12997688.64,
-          "accounts": 1409
+          "accounts": 1409,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IEMG"
           },
-          "label": "IEMG",
+          "label": "IEMG -- iShares Core MSCI Emerging Markets ETF",
+          "symbol": "IEMG",
+          "description": "iShares Core MSCI Emerging Markets ETF",
           "kind": "SECURITY",
           "value": 10481612.67,
-          "accounts": 1414
+          "accounts": 1414,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VUG"
           },
-          "label": "VUG",
+          "label": "VUG -- Vanguard Morningstar Growth ETF",
+          "symbol": "VUG",
+          "description": "Vanguard Morningstar Growth ETF",
           "kind": "SECURITY",
           "value": 8352713.37,
-          "accounts": 1406
+          "accounts": 1406,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VEA"
           },
-          "label": "VEA",
+          "label": "VEA -- Vanguard FTSE Developed Markets ETF",
+          "symbol": "VEA",
+          "description": "Vanguard FTSE Developed Markets ETF",
           "kind": "SECURITY",
           "value": 6190018.69,
-          "accounts": 1412
+          "accounts": 1412,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "PCHI"
           },
-          "label": "PCHI",
+          "label": "PCHI -- Polen High Income ETF",
+          "symbol": "PCHI",
+          "description": "Polen High Income ETF",
           "kind": "SECURITY",
           "value": 6176139.12,
-          "accounts": 1411
+          "accounts": 1411,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "CLIP"
           },
-          "label": "CLIP",
+          "label": "CLIP -- Global X 1-3 Month T-Bill ETF",
+          "symbol": "CLIP",
+          "description": "Global X 1-3 Month T-Bill ETF",
           "kind": "SECURITY",
           "value": 5989230.41,
-          "accounts": 1382
+          "accounts": 1382,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VXX"
           },
-          "label": "VXX",
+          "label": "VXX -- iPath Series B S&P 500 VIX Short-Term Futures ETN",
+          "symbol": "VXX",
+          "description": "iPath Series B S&P 500 VIX Short-Term Futures ETN",
           "kind": "SECURITY",
           "value": 3639778.8,
-          "accounts": 1406
+          "accounts": 1406,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "QQQ"
           },
-          "label": "QQQ",
+          "label": "QQQ -- Invesco QQQ Trust, Series 1",
+          "symbol": "QQQ",
+          "description": "Invesco QQQ Trust, Series 1",
           "kind": "SECURITY",
           "value": 2453589.81,
-          "accounts": 933
+          "accounts": 933,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "CASH",
             "value": "SMARTX_CASH"
           },
-          "label": "SMARTX_CASH",
+          "label": "Cash",
+          "symbol": null,
+          "description": "cash held in the model at SmartX overlay clock 2026-09-23",
           "kind": "CASH",
           "value": 2061854.63,
-          "accounts": 1415
+          "accounts": 1415,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPHY"
           },
-          "label": "SPHY",
+          "label": "SPHY -- State Street SPDR Portfolio High Yield Bond ETF",
+          "symbol": "SPHY",
+          "description": "State Street SPDR Portfolio High Yield Bond ETF",
           "kind": "SECURITY",
           "value": 1935707.58,
-          "accounts": 1400
+          "accounts": 1400,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "QUAL"
           },
-          "label": "QUAL",
+          "label": "QUAL -- iShares MSCI USA Quality Factor ETF",
+          "symbol": "QUAL",
+          "description": "iShares MSCI USA Quality Factor ETF",
           "kind": "SECURITY",
           "value": 22674.65,
-          "accounts": 4
+          "accounts": 4,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPCX"
           },
-          "label": "SPCX",
+          "label": "SPCX -- Space Exploration Technologies Corp.",
+          "symbol": "SPCX",
+          "description": "Space Exploration Technologies Corp.",
           "kind": "SECURITY",
           "value": 12068.16,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VTV"
           },
-          "label": "VTV",
+          "label": "VTV -- Vanguard Morningstar Value ETF",
+          "symbol": "VTV",
+          "description": "Vanguard Morningstar Value ETF",
           "kind": "SECURITY",
           "value": 9385.62,
-          "accounts": 3
+          "accounts": 3,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VGSH"
           },
-          "label": "VGSH",
+          "label": "VGSH -- Vanguard Short-Term Treasury ETF",
+          "symbol": "VGSH",
+          "description": "Vanguard Short-Term Treasury ETF",
           "kind": "SECURITY",
           "value": 6356.83,
-          "accounts": 4
+          "accounts": 4,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPSM"
           },
-          "label": "SPSM",
+          "label": "SPSM -- State Street SPDR Portfolio S&P 600 Small Cap ETF",
+          "symbol": "SPSM",
+          "description": "State Street SPDR Portfolio S&P 600 Small Cap ETF",
           "kind": "SECURITY",
           "value": 4559.35,
-          "accounts": 2
+          "accounts": 2,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IQLT"
           },
-          "label": "IQLT",
+          "label": "IQLT -- iShares MSCI Intl Quality Factor ETF",
+          "symbol": "IQLT",
+          "description": "iShares MSCI Intl Quality Factor ETF",
           "kind": "SECURITY",
           "value": 158.3,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         }
       ],
+      "asset_count": 22,
       "asset_basis": [
         "TARGET"
       ],
-      "account_count": 1415
+      "assets_labelled": 22
     },
     {
       "model_id": "0f76a5a0-3b8e-4433-846c-ad41765b51d8",
       "model_namespace": "SMARTX_MODEL",
       "model_name": "Opal Short-Term",
+      "hierarchy_path": [
+        "Models"
+      ],
       "accounts": [
         {
           "account_id": "acc_194a81866f5ff568fae7c0b3",
@@ -37066,247 +37369,325 @@
         }
       ],
       "assigned_value": 117819408.03,
+      "claims": {
+        "inferred": 474,
+        "measured": 253
+      },
+      "account_count": 727,
       "assets": [
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "BIV"
           },
-          "label": "BIV",
+          "label": "BIV -- Vanguard Intermediate-Term Bond ETF",
+          "symbol": "BIV",
+          "description": "Vanguard Intermediate-Term Bond ETF",
           "kind": "SECURITY",
           "value": 20029865.86,
-          "accounts": 726
+          "accounts": 726,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VGSH"
           },
-          "label": "VGSH",
+          "label": "VGSH -- Vanguard Short-Term Treasury ETF",
+          "symbol": "VGSH",
+          "description": "Vanguard Short-Term Treasury ETF",
           "kind": "SECURITY",
           "value": 12398013.42,
-          "accounts": 726
+          "accounts": 726,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "DFCF"
           },
-          "label": "DFCF",
+          "label": "DFCF -- Dimensional Core Fixed Income ETF",
+          "symbol": "DFCF",
+          "description": "Dimensional Core Fixed Income ETF",
           "kind": "SECURITY",
           "value": 10103089.02,
-          "accounts": 726
+          "accounts": 726,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "JAAA"
           },
-          "label": "JAAA",
+          "label": "JAAA -- Janus Henderson AAA CLO ETF",
+          "symbol": "JAAA",
+          "description": "Janus Henderson AAA CLO ETF",
           "kind": "SECURITY",
           "value": 9875654.23,
-          "accounts": 725
+          "accounts": 725,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "UTWO"
           },
-          "label": "UTWO",
+          "label": "UTWO -- US Treasury 2 Year Note ETF",
+          "symbol": "UTWO",
+          "description": "US Treasury 2 Year Note ETF",
           "kind": "SECURITY",
           "value": 9828807.45,
-          "accounts": 724
+          "accounts": 724,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "DIVZ"
           },
-          "label": "DIVZ",
+          "label": "DIVZ -- Polen Dividend Income ETF",
+          "symbol": "DIVZ",
+          "description": "Polen Dividend Income ETF",
           "kind": "SECURITY",
           "value": 9553446.43,
-          "accounts": 726
+          "accounts": 726,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "OBIL"
           },
-          "label": "OBIL",
+          "label": "OBIL -- US Treasury 12 Month Bill ETF",
+          "symbol": "OBIL",
+          "description": "US Treasury 12 Month Bill ETF",
           "kind": "SECURITY",
           "value": 7307866.02,
-          "accounts": 724
+          "accounts": 724,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPHY"
           },
-          "label": "SPHY",
+          "label": "SPHY -- State Street SPDR Portfolio High Yield Bond ETF",
+          "symbol": "SPHY",
+          "description": "State Street SPDR Portfolio High Yield Bond ETF",
           "kind": "SECURITY",
           "value": 5935175.02,
-          "accounts": 726
+          "accounts": 726,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VCSH"
           },
-          "label": "VCSH",
+          "label": "VCSH -- Vanguard Short-Term Corporate Bond ETF",
+          "symbol": "VCSH",
+          "description": "Vanguard Short-Term Corporate Bond ETF",
           "kind": "SECURITY",
           "value": 5273824.68,
-          "accounts": 724
+          "accounts": 724,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IDVZ"
           },
-          "label": "IDVZ",
+          "label": "IDVZ -- The Opal International Dividend Income ETF",
+          "symbol": "IDVZ",
+          "description": "The Opal International Dividend Income ETF",
           "kind": "SECURITY",
           "value": 3457166.87,
-          "accounts": 724
+          "accounts": 724,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VNLA"
           },
-          "label": "VNLA",
+          "label": "VNLA -- Janus Henderson Short Duration Income ETF",
+          "symbol": "VNLA",
+          "description": "Janus Henderson Short Duration Income ETF",
           "kind": "SECURITY",
           "value": 3066117.74,
-          "accounts": 724
+          "accounts": 724,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "PFDE"
           },
-          "label": "PFDE",
+          "label": "PFDE -- Pathfinder Disciplined US Equity ETF",
+          "symbol": "PFDE",
+          "description": "Pathfinder Disciplined US Equity ETF",
           "kind": "SECURITY",
           "value": 2579872.0,
-          "accounts": 723
+          "accounts": 723,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VEA"
           },
-          "label": "VEA",
+          "label": "VEA -- Vanguard FTSE Developed Markets ETF",
+          "symbol": "VEA",
+          "description": "Vanguard FTSE Developed Markets ETF",
           "kind": "SECURITY",
           "value": 2511618.51,
-          "accounts": 721
+          "accounts": 721,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "CLIP"
           },
-          "label": "CLIP",
+          "label": "CLIP -- Global X 1-3 Month T-Bill ETF",
+          "symbol": "CLIP",
+          "description": "Global X 1-3 Month T-Bill ETF",
           "kind": "SECURITY",
           "value": 1942147.12,
-          "accounts": 714
+          "accounts": 714,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "CASH",
             "value": "SMARTX_CASH"
           },
-          "label": "SMARTX_CASH",
+          "label": "Cash",
+          "symbol": null,
+          "description": "cash held in the model at SmartX overlay clock 2026-09-23",
           "kind": "CASH",
           "value": 1832065.38,
-          "accounts": 727
+          "accounts": 727,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPYM"
           },
-          "label": "SPYM",
+          "label": "SPYM -- State Street SPDR Portfolio S&P 500 ETF",
+          "symbol": "SPYM",
+          "description": "State Street SPDR Portfolio S&P 500 ETF",
           "kind": "SECURITY",
           "value": 38410.44,
-          "accounts": 2
+          "accounts": 2,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SHM"
           },
-          "label": "SHM",
+          "label": "SHM -- State Street SPDR Nuveen ICE Short Term Municipal Bond ETF",
+          "symbol": "SHM",
+          "description": "State Street SPDR Nuveen ICE Short Term Municipal Bond ETF",
           "kind": "SECURITY",
           "value": 27577.16,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "AVDE"
           },
-          "label": "AVDE",
+          "label": "AVDE -- Avantis International Equity ETF",
+          "symbol": "AVDE",
+          "description": "Avantis International Equity ETF",
           "kind": "SECURITY",
           "value": 23844.46,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "JMST"
           },
-          "label": "JMST",
+          "label": "JMST -- JPMorgan Ultra-Short Municipal Income ETF",
+          "symbol": "JMST",
+          "description": "JPMorgan Ultra-Short Municipal Income ETF",
           "kind": "SECURITY",
           "value": 21771.75,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "JPST"
           },
-          "label": "JPST",
+          "label": "JPST -- JPMorgan Ultra-Short Income ETF",
+          "symbol": "JPST",
+          "description": "JPMorgan Ultra-Short Income ETF",
           "kind": "SECURITY",
           "value": 20903.55,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "DFAC"
           },
-          "label": "DFAC",
+          "label": "DFAC -- Dimensional U.S. Core Equity 2 ETF",
+          "symbol": "DFAC",
+          "description": "Dimensional U.S. Core Equity 2 ETF",
           "kind": "SECURITY",
           "value": 16998.96,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "ITM"
           },
-          "label": "ITM",
+          "label": "ITM -- VanEck Intermediate Muni ETF",
+          "symbol": "ITM",
+          "description": "VanEck Intermediate Muni ETF",
           "kind": "SECURITY",
           "value": 16938.18,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "HYD"
           },
-          "label": "HYD",
+          "label": "HYD -- VanEck High Yield Muni ETF",
+          "symbol": "HYD",
+          "description": "VanEck High Yield Muni ETF",
           "kind": "SECURITY",
           "value": 5122.95,
-          "accounts": 1
+          "accounts": 1,
+          "custody_units_facts": 0
         }
       ],
+      "asset_count": 23,
       "asset_basis": [
         "TARGET"
       ],
-      "account_count": 727
+      "assets_labelled": 23
     },
     {
       "model_id": "c000fe6a-4f29-42e6-ae2e-75ea6162d175",
       "model_namespace": "SMARTX_MODEL",
       "model_name": "Opal Ultra Short-Term Income",
+      "hierarchy_path": [
+        "Models"
+      ],
       "accounts": [
         {
           "account_id": "acc_d38bd11641305b99ea8e9b20",
@@ -38185,157 +38566,208 @@
         }
       ],
       "assigned_value": 49719237.31,
+      "claims": {
+        "inferred": 89,
+        "measured": 86
+      },
+      "account_count": 175,
       "assets": [
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VGSH"
           },
-          "label": "VGSH",
+          "label": "VGSH -- Vanguard Short-Term Treasury ETF",
+          "symbol": "VGSH",
+          "description": "Vanguard Short-Term Treasury ETF",
           "kind": "SECURITY",
           "value": 6619123.61,
-          "accounts": 175
+          "accounts": 175,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VCSH"
           },
-          "label": "VCSH",
+          "label": "VCSH -- Vanguard Short-Term Corporate Bond ETF",
+          "symbol": "VCSH",
+          "description": "Vanguard Short-Term Corporate Bond ETF",
           "kind": "SECURITY",
           "value": 6575074.85,
-          "accounts": 175
+          "accounts": 175,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VUSB"
           },
-          "label": "VUSB",
+          "label": "VUSB -- Vanguard Ultra-Short Bond ETF",
+          "symbol": "VUSB",
+          "description": "Vanguard Ultra-Short Bond ETF",
           "kind": "SECURITY",
           "value": 4456187.04,
-          "accounts": 175
+          "accounts": 175,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "MINT"
           },
-          "label": "MINT",
+          "label": "MINT -- PIMCO Enhanced Short Maturity Active Exchange-Traded Fund",
+          "symbol": "MINT",
+          "description": "PIMCO Enhanced Short Maturity Active Exchange-Traded Fund",
           "kind": "SECURITY",
           "value": 4383902.4,
-          "accounts": 175
+          "accounts": 175,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "OBIL"
           },
-          "label": "OBIL",
+          "label": "OBIL -- US Treasury 12 Month Bill ETF",
+          "symbol": "OBIL",
+          "description": "US Treasury 12 Month Bill ETF",
           "kind": "SECURITY",
           "value": 4367156.22,
-          "accounts": 175
+          "accounts": 175,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VNLA"
           },
-          "label": "VNLA",
+          "label": "VNLA -- Janus Henderson Short Duration Income ETF",
+          "symbol": "VNLA",
+          "description": "Janus Henderson Short Duration Income ETF",
           "kind": "SECURITY",
           "value": 4080881.23,
-          "accounts": 175
+          "accounts": 175,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "DFSD"
           },
-          "label": "DFSD",
+          "label": "DFSD -- Dimensional Short-Duration Fixed Income ETF",
+          "symbol": "DFSD",
+          "description": "Dimensional Short-Duration Fixed Income ETF",
           "kind": "SECURITY",
           "value": 3175151.82,
-          "accounts": 175
+          "accounts": 175,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPHY"
           },
-          "label": "SPHY",
+          "label": "SPHY -- State Street SPDR Portfolio High Yield Bond ETF",
+          "symbol": "SPHY",
+          "description": "State Street SPDR Portfolio High Yield Bond ETF",
           "kind": "SECURITY",
           "value": 2516916.15,
-          "accounts": 175
+          "accounts": 175,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "JAAA"
           },
-          "label": "JAAA",
+          "label": "JAAA -- Janus Henderson AAA CLO ETF",
+          "symbol": "JAAA",
+          "description": "Janus Henderson AAA CLO ETF",
           "kind": "SECURITY",
           "value": 2171930.38,
-          "accounts": 175
+          "accounts": 175,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "JPST"
           },
-          "label": "JPST",
+          "label": "JPST -- JPMorgan Ultra-Short Income ETF",
+          "symbol": "JPST",
+          "description": "JPMorgan Ultra-Short Income ETF",
           "kind": "SECURITY",
           "value": 2157554.7,
-          "accounts": 175
+          "accounts": 175,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "XBIL"
           },
-          "label": "XBIL",
+          "label": "XBIL -- US Treasury 6 Month Bill ETF",
+          "symbol": "XBIL",
+          "description": "US Treasury 6 Month Bill ETF",
           "kind": "SECURITY",
           "value": 2075816.71,
-          "accounts": 175
+          "accounts": 175,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "TBIL"
           },
-          "label": "TBIL",
+          "label": "TBIL -- F/m US Treasury 3 Month Bill Fund",
+          "symbol": "TBIL",
+          "description": "F/m US Treasury 3 Month Bill Fund",
           "kind": "SECURITY",
           "value": 1715366.85,
-          "accounts": 175
+          "accounts": 175,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "CASH",
             "value": "SMARTX_CASH"
           },
-          "label": "SMARTX_CASH",
+          "label": "Cash",
+          "symbol": null,
+          "description": "cash held in the model at SmartX overlay clock 2026-09-23",
           "kind": "CASH",
           "value": 748319.17,
-          "accounts": 175
+          "accounts": 175,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "CLIP"
           },
-          "label": "CLIP",
+          "label": "CLIP -- Global X 1-3 Month T-Bill ETF",
+          "symbol": "CLIP",
+          "description": "Global X 1-3 Month T-Bill ETF",
           "kind": "SECURITY",
           "value": 631466.87,
-          "accounts": 167
+          "accounts": 167,
+          "custody_units_facts": 0
         }
       ],
+      "asset_count": 14,
       "asset_basis": [
         "TARGET"
       ],
-      "account_count": 175
+      "assets_labelled": 14
     },
     {
       "model_id": "48af6559-593a-48a9-8ac4-3c78ded93ad8",
       "model_namespace": "SMARTX_MODEL",
       "model_name": "Opal Dividend Income",
+      "hierarchy_path": [
+        "Models"
+      ],
       "accounts": [
         {
           "account_id": "acc_0d4b7c9f3f9103d3d3bb24d5",
@@ -38529,307 +38961,403 @@
         }
       ],
       "assigned_value": 21968284.5,
+      "claims": {
+        "inferred": 29,
+        "measured": 9
+      },
+      "account_count": 38,
       "assets": [
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "PM"
           },
-          "label": "PM",
+          "label": "PM -- Philip Morris International Inc",
+          "symbol": "PM",
+          "description": "Philip Morris International Inc",
           "kind": "SECURITY",
           "value": 1043757.6,
-          "accounts": 37
+          "accounts": 37,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "VZ"
           },
-          "label": "VZ",
+          "label": "VZ -- Verizon Communications Inc.",
+          "symbol": "VZ",
+          "description": "Verizon Communications Inc.",
           "kind": "SECURITY",
           "value": 995385.4,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "MPLX"
           },
-          "label": "MPLX",
+          "label": "MPLX -- MPLX LP Common Units Representing Limited Partner Interests",
+          "symbol": "MPLX",
+          "description": "MPLX LP Common Units Representing Limited Partner Interests",
           "kind": "SECURITY",
           "value": 964503.98,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "UNH"
           },
-          "label": "UNH",
+          "label": "UNH -- UnitedHealth Group Incorporated (DE)",
+          "symbol": "UNH",
+          "description": "UnitedHealth Group Incorporated (DE)",
           "kind": "SECURITY",
           "value": 908691.69,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "JNJ"
           },
-          "label": "JNJ",
+          "label": "JNJ -- Johnson & Johnson",
+          "symbol": "JNJ",
+          "description": "Johnson & Johnson",
           "kind": "SECURITY",
           "value": 854276.59,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "CVX"
           },
-          "label": "CVX",
+          "label": "CVX -- Chevron Corporation",
+          "symbol": "CVX",
+          "description": "Chevron Corporation",
           "kind": "SECURITY",
           "value": 780989.9,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "MSFT"
           },
-          "label": "MSFT",
+          "label": "MSFT -- Microsoft Corporation",
+          "symbol": "MSFT",
+          "description": "Microsoft Corporation",
           "kind": "SECURITY",
           "value": 740028.0,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "NEE"
           },
-          "label": "NEE",
+          "label": "NEE -- NextEra Energy, Inc.",
+          "symbol": "NEE",
+          "description": "NextEra Energy, Inc.",
           "kind": "SECURITY",
           "value": 714501.46,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "UPS"
           },
-          "label": "UPS",
+          "label": "UPS -- United Parcel Service, Inc.",
+          "symbol": "UPS",
+          "description": "United Parcel Service, Inc.",
           "kind": "SECURITY",
           "value": 711095.46,
-          "accounts": 37
+          "accounts": 37,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "ABBV"
           },
-          "label": "ABBV",
+          "label": "ABBV -- AbbVie Inc.",
+          "symbol": "ABBV",
+          "description": "AbbVie Inc.",
           "kind": "SECURITY",
           "value": 641538.71,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "MO"
           },
-          "label": "MO",
+          "label": "MO -- Altria Group, Inc.",
+          "symbol": "MO",
+          "description": "Altria Group, Inc.",
           "kind": "SECURITY",
           "value": 640490.39,
-          "accounts": 37
+          "accounts": 37,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "GOOGL"
           },
-          "label": "GOOGL",
+          "label": "GOOGL -- Alphabet Inc. - Class A",
+          "symbol": "GOOGL",
+          "description": "Alphabet Inc. - Class A",
           "kind": "SECURITY",
           "value": 618743.92,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "QCOM"
           },
-          "label": "QCOM",
+          "label": "QCOM -- QUALCOMM Incorporated",
+          "symbol": "QCOM",
+          "description": "QUALCOMM Incorporated",
           "kind": "SECURITY",
           "value": 610869.87,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "XOM"
           },
-          "label": "XOM",
+          "label": "XOM -- ExxonMobil Holdings Corporation",
+          "symbol": "XOM",
+          "description": "ExxonMobil Holdings Corporation",
           "kind": "SECURITY",
           "value": 578656.66,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "CME"
           },
-          "label": "CME",
+          "label": "CME -- CME Group Inc. - Class A",
+          "symbol": "CME",
+          "description": "CME Group Inc. - Class A",
           "kind": "SECURITY",
           "value": 561680.17,
-          "accounts": 36
+          "accounts": 36,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "RTX"
           },
-          "label": "RTX",
+          "label": "RTX -- RTX Corporation",
+          "symbol": "RTX",
+          "description": "RTX Corporation",
           "kind": "SECURITY",
           "value": 560937.63,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "AIG"
           },
-          "label": "AIG",
+          "label": "AIG -- American International Group, Inc. New",
+          "symbol": "AIG",
+          "description": "American International Group, Inc. New",
           "kind": "SECURITY",
           "value": 486015.43,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "CSCO"
           },
-          "label": "CSCO",
+          "label": "CSCO -- Cisco Systems, Inc.",
+          "symbol": "CSCO",
+          "description": "Cisco Systems, Inc.",
           "kind": "SECURITY",
           "value": 481428.12,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "BIPC"
           },
-          "label": "BIPC",
+          "label": "BIPC -- Brookfield Infrastructure Corporation",
+          "symbol": "BIPC",
+          "description": "Brookfield Infrastructure Corporation",
           "kind": "SECURITY",
           "value": 472703.27,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "DELL"
           },
-          "label": "DELL",
+          "label": "DELL -- Dell Technologies Inc. Class C",
+          "symbol": "DELL",
+          "description": "Dell Technologies Inc. Class C",
           "kind": "SECURITY",
           "value": 451212.24,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "ENB"
           },
-          "label": "ENB",
+          "label": "ENB -- Enbridge Inc",
+          "symbol": "ENB",
+          "description": "Enbridge Inc",
           "kind": "SECURITY",
           "value": 445470.0,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "UNP"
           },
-          "label": "UNP",
+          "label": "UNP -- Union Pacific Corporation",
+          "symbol": "UNP",
+          "description": "Union Pacific Corporation",
           "kind": "SECURITY",
           "value": 440976.87,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "ABT"
           },
-          "label": "ABT",
+          "label": "ABT -- Abbott Laboratories",
+          "symbol": "ABT",
+          "description": "Abbott Laboratories",
           "kind": "SECURITY",
           "value": 404494.69,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "BX"
           },
-          "label": "BX",
+          "label": "BX -- Blackstone Inc.",
+          "symbol": "BX",
+          "description": "Blackstone Inc.",
           "kind": "SECURITY",
           "value": 399808.24,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "ATO"
           },
-          "label": "ATO",
+          "label": "ATO -- Atmos Energy Corporation",
+          "symbol": "ATO",
+          "description": "Atmos Energy Corporation",
           "kind": "SECURITY",
           "value": 392021.36,
-          "accounts": 36
+          "accounts": 36,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "AEP"
           },
-          "label": "AEP",
+          "label": "AEP -- American Electric Power Company, Inc.",
+          "symbol": "AEP",
+          "description": "American Electric Power Company, Inc.",
           "kind": "SECURITY",
           "value": 386780.19,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "TXN"
           },
-          "label": "TXN",
+          "label": "TXN -- Texas Instruments Incorporated",
+          "symbol": "TXN",
+          "description": "Texas Instruments Incorporated",
           "kind": "SECURITY",
           "value": 360975.3,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "GS"
           },
-          "label": "GS",
+          "label": "GS -- Goldman Sachs Group, Inc. (The)",
+          "symbol": "GS",
+          "description": "Goldman Sachs Group, Inc. (The)",
           "kind": "SECURITY",
           "value": 339381.72,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "CASH",
             "value": "SMARTX_CASH"
           },
-          "label": "SMARTX_CASH",
+          "label": "Cash",
+          "symbol": null,
+          "description": "cash held in the model at SmartX overlay clock 2026-09-23",
           "kind": "CASH",
           "value": 208865.47,
-          "accounts": 38
+          "accounts": 38,
+          "custody_units_facts": 0
         }
       ],
+      "asset_count": 29,
       "asset_basis": [
         "TARGET"
       ],
-      "account_count": 38
+      "assets_labelled": 29
     },
     {
       "model_id": "843d875b-62f7-4ef8-b833-5078a3f637d5",
       "model_namespace": "SMARTX_MODEL",
       "model_name": "Pathfinder Focused Opportunities",
+      "hierarchy_path": [
+        "Models"
+      ],
       "accounts": [
         {
           "account_id": "acc_5e6b35fb8f4ed5b738d02388",
@@ -39043,260 +39571,341 @@
         }
       ],
       "assigned_value": 16612844.08,
+      "claims": {
+        "measured": 8,
+        "inferred": 34
+      },
+      "account_count": 42,
       "assets": [
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "TSM"
           },
-          "label": "TSM",
+          "label": "TSM -- Taiwan Semiconductor Manufacturing Company Ltd.",
+          "symbol": "TSM",
+          "description": "Taiwan Semiconductor Manufacturing Company Ltd.",
           "kind": "SECURITY",
           "value": 291088.0,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "ASML"
           },
-          "label": "ASML",
+          "label": "ASML -- ASML Holding N.V. - New York Registry Shares",
+          "symbol": "ASML",
+          "description": "ASML Holding N.V. - New York Registry Shares",
           "kind": "SECURITY",
           "value": 265680.8,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "SPOT"
           },
-          "label": "SPOT",
+          "label": "SPOT -- Spotify Technology S.A. Ordinary Shares",
+          "symbol": "SPOT",
+          "description": "Spotify Technology S.A. Ordinary Shares",
           "kind": "SECURITY",
           "value": 218566.8,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "MELI"
           },
-          "label": "MELI",
+          "label": "MELI -- MercadoLibre, Inc.",
+          "symbol": "MELI",
+          "description": "MercadoLibre, Inc.",
           "kind": "SECURITY",
           "value": 213709.86,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "FER"
           },
-          "label": "FER",
+          "label": "FER -- Ferrovial N.V.",
+          "symbol": "FER",
+          "description": "Ferrovial N.V.",
           "kind": "SECURITY",
           "value": 212982.9,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "GOOG"
           },
-          "label": "GOOG",
+          "label": "GOOG -- Alphabet Inc. - Class C Capital Stock",
+          "symbol": "GOOG",
+          "description": "Alphabet Inc. - Class C Capital Stock",
           "kind": "SECURITY",
           "value": 202781.84,
-          "accounts": 41
+          "accounts": 41,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "IDXX"
           },
-          "label": "IDXX",
+          "label": "IDXX -- IDEXX Laboratories, Inc.",
+          "symbol": "IDXX",
+          "description": "IDEXX Laboratories, Inc.",
           "kind": "SECURITY",
           "value": 199213.0,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "UBER"
           },
-          "label": "UBER",
+          "label": "UBER -- Uber Technologies, Inc.",
+          "symbol": "UBER",
+          "description": "Uber Technologies, Inc.",
           "kind": "SECURITY",
           "value": 188493.33,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "UNH"
           },
-          "label": "UNH",
+          "label": "UNH -- UnitedHealth Group Incorporated (DE)",
+          "symbol": "UNH",
+          "description": "UnitedHealth Group Incorporated (DE)",
           "kind": "SECURITY",
           "value": 184735.91,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "NFLX"
           },
-          "label": "NFLX",
+          "label": "NFLX -- Netflix, Inc.",
+          "symbol": "NFLX",
+          "description": "Netflix, Inc.",
           "kind": "SECURITY",
           "value": 184513.12,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "HESAY"
           },
-          "label": "HESAY",
+          "label": "HESAY -- HERMES INTL SA UNSP/ADR",
+          "symbol": "HESAY",
+          "description": "HERMES INTL SA UNSP/ADR",
           "kind": "SECURITY",
           "value": 182785.68,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "ISRG"
           },
-          "label": "ISRG",
+          "label": "ISRG -- Intuitive Surgical, Inc.",
+          "symbol": "ISRG",
+          "description": "Intuitive Surgical, Inc.",
           "kind": "SECURITY",
           "value": 182548.86,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "UNVGY"
           },
-          "label": "UNVGY",
+          "label": "UNVGY -- UNIVERSAL MUSIC GRP U/ADR",
+          "symbol": "UNVGY",
+          "description": "UNIVERSAL MUSIC GRP U/ADR",
           "kind": "SECURITY",
           "value": 182041.6,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "LLY"
           },
-          "label": "LLY",
+          "label": "LLY -- Eli Lilly and Company",
+          "symbol": "LLY",
+          "description": "Eli Lilly and Company",
           "kind": "SECURITY",
           "value": 172876.26,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "NU"
           },
-          "label": "NU",
+          "label": "NU -- Nu Holdings Ltd. Class A Ordinary Shares",
+          "symbol": "NU",
+          "description": "Nu Holdings Ltd. Class A Ordinary Shares",
           "kind": "SECURITY",
           "value": 161891.28,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "BN"
           },
-          "label": "BN",
+          "label": "BN -- Brookfield Corporation Class A Limited Voting Shares",
+          "symbol": "BN",
+          "description": "Brookfield Corporation Class A Limited Voting Shares",
           "kind": "SECURITY",
           "value": 155714.9,
-          "accounts": 41
+          "accounts": 41,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "V"
           },
-          "label": "V",
+          "label": "V -- Visa Inc.",
+          "symbol": "V",
+          "description": "Visa Inc.",
           "kind": "SECURITY",
           "value": 151739.4,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "INTU"
           },
-          "label": "INTU",
+          "label": "INTU -- Intuit Inc.",
+          "symbol": "INTU",
+          "description": "Intuit Inc.",
           "kind": "SECURITY",
           "value": 143096.76,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "MA"
           },
-          "label": "MA",
+          "label": "MA -- Mastercard Incorporated",
+          "symbol": "MA",
+          "description": "Mastercard Incorporated",
           "kind": "SECURITY",
           "value": 140867.49,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "QXO"
           },
-          "label": "QXO",
+          "label": "QXO -- QXO, Inc.",
+          "symbol": "QXO",
+          "description": "QXO, Inc.",
           "kind": "SECURITY",
           "value": 136835.46,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "NOW"
           },
-          "label": "NOW",
+          "label": "NOW -- ServiceNow, Inc.",
+          "symbol": "NOW",
+          "description": "ServiceNow, Inc.",
           "kind": "SECURITY",
           "value": 134397.0,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "TICKER",
             "value": "WDAY"
           },
-          "label": "WDAY",
+          "label": "WDAY -- Workday, Inc. - Class A",
+          "symbol": "WDAY",
+          "description": "Workday, Inc. - Class A",
           "kind": "SECURITY",
           "value": 132890.38,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         },
         {
           "security_id": {
             "namespace": "CASH",
             "value": "SMARTX_CASH"
           },
-          "label": "SMARTX_CASH",
+          "label": "Cash",
+          "symbol": null,
+          "description": "cash held in the model at SmartX overlay clock 2026-09-23",
           "kind": "CASH",
           "value": 38328.5,
-          "accounts": 42
+          "accounts": 42,
+          "custody_units_facts": 0
         }
       ],
+      "asset_count": 23,
       "asset_basis": [
         "TARGET"
       ],
-      "account_count": 42
+      "assets_labelled": 23
     }
   ],
-  "published_revision": "7c0e7ce3bef21ccf63541d766a94fa9a71668e7457955eedcf850ec2b18f5cc0",
+  "published_revision": "3d59c80b4e9cf59b1f527615a9dbe1600666a57afde65192860e37f0f21185d9",
   "publication_state": "PUBLISHED_VERIFIED",
-  "publication_go": "IRPT-49F-HOLDINGS-PUBLICATION-GO-20260924",
+  "publication_go": "CTO 100401 GO 49F 3d59c80b (labelled; receipt HOLDINGS_49F_LABELLED_PUBLICATION_RECEIPT_20260924.json)",
   "business_date": "2026-09-22",
   "index": {
     "bucket": "opal-data-49financial",
     "key": "irpt/49financial/platinum/holdings/current/manifest.json",
-    "version_id": "EvNOT_ocng2dG0yqDqpXUDFBCPO1ovwK"
+    "version_id": "9Vtkh61A05eiuWmm4DwyLVRRwynIdq2e"
   },
   "bytes_read": {
-    "path": ".runtime\\holdings-journey-20260923\\prepared_49f\\opal-data-49financial\\irpt\\49financial\\platinum\\holdings\\date=2026-09-22\\7c0e7ce3bef21ccf63541d766a94fa9a71668e7457955eedcf850ec2b18f5cc0.json",
-    "sha256": "7c0e7ce3bef21ccf63541d766a94fa9a71668e7457955eedcf850ec2b18f5cc0",
-    "byte_length": 160561988
+    "path": ".runtime/holdings-journey-20260923/prepared_49f/opal-data-49financial/irpt/49financial/platinum/holdings/date=2026-09-22/3d59c80b4e9cf59b1f527615a9dbe1600666a57afde65192860e37f0f21185d9.json",
+    "sha256": "3d59c80b4e9cf59b1f527615a9dbe1600666a57afde65192860e37f0f21185d9",
+    "byte_length": 177642836,
+    "note": "the served bytes ARE these bytes (publisher read_exact by sha256 after the act)"
   },
+  "model_grain": "one model per model_id carried by the firm's MODEL_LEAF nodes; accounts at leaf grain; assets = the leaves' SECURITY/CASH children",
+  "labels": "model_name and every asset label/symbol/description are the producer's display member on the served nodes (IRPT-HOLDINGS-DISPLAY-NAMES-20260924)",
   "supersedes": {
-    "artifact": "HOLDINGS_49F_MODEL_SNAPSHOT_20260923.json",
-    "candidate_revision": "a860115ecaf5336ac5db4491d76cf5b60780f8a9c257c579defaf62351ba6a1f"
-  }
+    "artifact": "HOLDINGS_49F_MODEL_SNAPSHOT_20260924.json (revision 7c0e7ce3bef2)",
+    "model_count_there": 7,
+    "same_model_and_account_grain": true,
+    "note": "same models and account grain; this version adds the served labels and the CUSTODY_UNITS fact count per asset"
+  },
+  "generated_utc": "2026-09-24T07:05:10.350155+00:00"
 }

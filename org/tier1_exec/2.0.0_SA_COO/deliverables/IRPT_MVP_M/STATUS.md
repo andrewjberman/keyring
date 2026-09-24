@@ -2,6 +2,15 @@
 
 Seat `2.0.0_SA_COO~M` (CLAUDE, successor to the Codex seat since 2026-09-23 ~22:47Z). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.4. Reviewer `3.0.0_SA_CVO~M` (not live).
+As of 2026-09-24T07:1xZ. ALL THREE FIRMS SERVE LABELLED HOLDINGS (CTO GO 100401 executed): 49F 3d59c80b (manifest EvNOT_ocng -> 9Vtkh61A,
+etag ea06a1a0, 06:58:45Z; 176 creates + 1 IfMatch; 7c0e7ce3 retained), INF d03e91a4 (J_FeUeEA -> .vBFsThYv, etag d866755b, 07:04:38Z; 35 creates +
+1 IfMatch; 1ebc7696 retained), COT dec293d6 (06:20Z). Each built with its retained capture (49F tax snapshot sha 032c68db.., INF Eclipse map
+789dd95d.., 860 rows) and identical to the prior served tree to the node plus display. Served labels: 49F 151,582 of 151,697; INF 33,327 of
+33,328; COT 16,740 of 16,749. Receipts HOLDINGS_49F/INF_LABELLED_PUBLICATION_RECEIPT_20260924.json; overlays HOLDINGS_49F/INF/COT_MODEL_SNAPSHOT
+regenerated on the served revisions (49F 7 models / 7,475 accounts / 180 assets all labelled; INF 18 / 624 / 2,166 all labelled; COT 7 / 521 / 119).
+NEXT: the CUSTODY_UNITS fill for 49F/INF is built @d96513bc40 (tests per firm) -- its republish is its own GO; Andrew's page retest is the
+exercised arm; /verify of the goal runs now.
+Earlier state follows.
 As of 2026-09-24T07:0xZ. CORRECTION: the 06:2xZ 49F/INF candidates (aa6efd45 / 4a50ac5f) were built WITHOUT the two env-var retained
 captures the served builds consumed (IRPT_49F_TAX_MEMBERSHIP_SNAPSHOT, IRPT_INF_ECLIPSE_MEMBERSHIP_SNAPSHOT) -- regressions, not code
 vintage. I halted the 49F publish before its index write (served manifests unchanged; 158 unreferenced aa6efd45 objects stay); the CTO
