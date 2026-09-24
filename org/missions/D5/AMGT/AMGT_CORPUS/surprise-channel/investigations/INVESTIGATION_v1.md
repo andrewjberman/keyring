@@ -555,6 +555,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "FWD-19 (the induction half): the 60 today-unresolved folders are inducted by a scripted producer AND re-ingested. C-ONE-IDENTITY (crosswalk.schema.json title): ONE canonical security identity per economic security; a form is claimed by one identity.",
     "world_is": "Twenty economic securities now carry two records each in the served crosswalk (one UNRESOLVED coverage record, one MEASURED registration), their association forms are multi-claimed, form-keyed readers read AMBIGUOUS for them, and the corpus ingest cannot resolve their folders. Key-keyed readers are unaffected; no screen was measured.",
     "notes": "DISARMS WHEN: (1) a registration whose folder matches an UNRESOLVED coverage record RESOLVES that record instead of being appended beside it (crosswalk.build_crosswalk / add_security mode selection -- 2.0.0_SA_COO~Z's surface, its own acceptance: UNRESOLVED 60 -> 40, records 274 -> 254, MEASURED 214 unchanged, multi-claimed forms 20 -> 0); AND (2) ONE re-mint of crosswalk/v1/2026-09-24.json through the unified builder under a fresh never-widen pair (no Bloomberg call: the 20 identities are in registrations.json @b7819604e0 and raw-landed); AND (3) this seat's re-ingest reads resolved_folders 53 and the production sequence runs for the 20. d-4 stays behind (3) by design. Not a REMEDIATION row (the CVO's). Reported to 2.0.0_SA_COO~Z and 1.0.0_SA_CTO~Z 11:2xZ."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S17",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T12:20:00Z",
+    "one_line": "The sector template producer (CRPS-c-7, `sector_template --write`) cannot re-run on a grown corpus: at 12:14:41Z it raised gold.GoldImmutableError on the FIRST business type it reached (business_type=consumer-cyclicals+consumer-services/fbb482677a438d92.json 'already holds a different sha256') because `_object_name(inputs)` (:431-435) hashes METHOD_VERSION plus that type's own inputs while the artifact body embeds the corpus-wide denominator `total` (218 reports today, 124 when the object was minted) -- so a type whose reports did not change gets the SAME name for a DIFFERENT body, and gold's never-overwrite rule refuses it, correctly. The loop stops at the first type, so no sector template was re-measured for any type today, including the types the 20 newly inducted names joined.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat's production-sequence log deliverables/2.0.0_SA_COO~X/evidence/production_sequence_20260924T120608Z.log: extract --write rc 0; extract --run-v2 rc 0 (bronze_reports 218 v2_stored 218 put_performed 95 existed 123); typed --write rc 0 (silver_rows 218 of 218, written_rows 95 skipped_unchanged 123); continuation --write rc 0; sector_template --write rc 1 with the traceback ending `lib.research.corpus.gold.GoldImmutableError: gold_put: s3://opal-data-harvest/amgt/harvest/gold/research-sector-template/business_type=consumer-cyclicals+consumer-services/fbb482677a438d92.json already holds a different sha256`.",
+        "Mechanism at HEAD 6fdce83b63: sector_template.py:568-576 -- `fields, inputs = build(bt, records, total, ...)`; `object_name = _object_name(inputs)`; `gold.gold_put(TABLE, 'business_type=%s' % bt, object_name, body)`; `_object_name` :431-435 hashes `{method_version, inputs}` only; the printed line's own grammar `business_type %s reports %d of %d` shows `total` is part of the artifact. gold.py:70-102 refuses a different sha under an existing name (IfNoneMatch * then a metadata compare).",
+        "The refusal is the gold store working as designed (C-TEMPLATE-IS-MEASURED artifacts are write-once); the defect is the producer's idempotency key omitting an input the body depends on. No object was overwritten; no S3 delete is involved.",
+        "Bound: only the first type in sorted order was attempted (the raise aborts the loop), so whether the types that DID gain reports would have minted new names is not measured here."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-6 / C-TEMPLATE-IS-MEASURED: the sector template is a MEASUREMENT with printed denominators over that type's reports of the total, re-producible as the corpus grows; decomposition v2.0 s.5 duty 2: the production sequence runs once for the newly inducted names, each producer printing its denominators.",
+    "world_is": "The served sector templates are the round-1 vintage measured over 124 reports; the producer refuses to mint today's measurement because its object name does not cover the corpus-wide denominator its body carries. fund_form (rc 0) and typecast (rc 0, a new scope=all-workbooks object) do not share the defect on today's inputs.",
+    "notes": "DISARMS WHEN the object name covers every input the body depends on (the total and the report set, or a vintage stamp as backlog.write uses) and `sector_template --write` completes on today's corpus with its `types N reports_typed R unmapped_reports U` line printed -- a cell on the corpus surface (c-7's), routed to the round-2 analysis (1.0.0_SA_CTO~Z) as an enrichment item; not this round's frozen decomposition. Until then the dossier composes with the round-1 templates via substrate's member picker, which is disclosed in the dossier's own citations."
   }
 ]
 ```
