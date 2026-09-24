@@ -253,6 +253,61 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-75 -- ⛔⛔ **"53 OF 93 DOSSIER-SERVED" IS A PIPELINE STATE, NOT A BACKFILL. NINE OF THE 53 ARE ALL-FIELDS-ABSENT SHELLS, SO THE GOAL'S LAST CLAUSE READS 44 OF 93 ON THE AXIS ANDREW ASKED ABOUT**
+
+**`CRPS-d-4` closed and the 93-of-93 census ran** (drain `809a89d8ff`, packet FINAL `918ca7abe0`) --
+the goal's final clause measured for the first time. Its printed tri-state is MECE and sums:
+`folders_read 93 | dossier_served 53 | resolved_no_prose 0 | unresolved_with_reason 40 | sum 93`.
+
+⛔ **BUT `dossier-served` IS A PIPELINE STATE -- "an object exists at the dossier URI" -- AND THE GOAL
+ASKS A CONTENT QUESTION.** Row `AMGT_CORPUS-Z-W1-S4`, grounded by the worker's own direct measurement:
+*"of the 53 RESOLVED folders, **9 are workbook-only** (Costco, Haliburton, Home Depot, Hon Hai, National
+Grid, RWE, SSE, Valero, Zurich) and **ALL 9 already read disposition dossier-served** (`dossier.read_dossier`
+succeeds)"* -- because `dossier.build()` **carries no report-count floor**, so the production sequence
+stored *"a real, stored, all-fields-absent dossier"* for each.
+
+**RULED: the completion test reports the CONTENT axis, re-cut MECE over the same printed denominator:**
+
+| bucket | n | what it means |
+|---|---|---|
+| substantive dossier | **44** | 53 served MINUS the 9 all-fields-absent shells |
+| served-as-EMPTY-SHELL | **9** | identity resolved, folder is workbook-only, so no prose exists to extract |
+| unresolved at IDENTITY | **40** | the resolver needs a `*ONE PAGER*.xlsx` and none is findable (1 of these is the empty folder, 1 more is workbook-only) |
+| | **93** | sums to the denominator |
+
+⭐ **THIS CONVICTS THE HEADLINE, NOT THE WORKER.** `0.9.0_WK_AMGT_CORPUS~1` disclosed every input of
+this, in a row it filed against its own result, and resolved its criterion by computing
+`never_prose_named` as a structural cross-cut *"without narrowing dossier-served or hiding any folder
+from the tri-state sum."* **The tri-state is correct for what it measures.** The defect is only that
+"53 of 93" quoted as BACKFILL coverage inherits a pipeline predicate to answer a content question --
+and this seat would have quoted it, having already written "53 of 93 served" into a report before
+reading `W1-S4`.
+
+⚠ **AND THE 40 ARE BLOCKED AT IDENTITY, WHICH IS A DIFFERENT AND MORE HOPEFUL PLACE THAN CONTENT.** Air
+Liquide's own reason line reads `bloomberg_ticker status 'UNRESOLVED', evidence 'no *ONE PAGER*.xlsx
+workbook found in this folder'`. **So the resolver has ONE identity path and it is a filename pattern.**
+`2.0.0_SA_COO~Y`'s `Z-S20` independently demonstrates a SECOND path already working -- the EDGAR
+ticker-to-CIK arm recovered a correct issuer name for **13 of 13** where the prose carried one. ⛔ **So
+"40 unresolved" is NOT measured to be 40 unreachable, and this seat will not report it as such.** How
+many of the 40 a second identity path reaches is **UNMEASURED**, and it is a round-3 cell's measurement,
+not an inference to make here.
+
+**THE REACHABILITY CLASSIFICATION THE COMPLETION TEST OWES, with its unmeasured part named:**
+- **REACHABLE, 40 candidates, count unknown** -- blocked on a single-path identity resolver with a
+  demonstrated second path; the measurement is a cell, not a guess.
+- **UNREACHABLE BY SOURCE, 10** -- workbook-only folders (9 shell-served + Quanta) hold a spreadsheet and
+  no prose document. **No pipeline produces prose from a source that has none.** ⭐ Reaching these is a
+  CAPABILITY (read the workbook) rather than a fix, and that is a product decision, not a defect.
+- **UNREACHABLE, 1** -- Air Liquide's folder is empty.
+
+⚠ **SO THE GOAL'S OWN WORDS -- *"every single security in the Asset Management research folder"* -- ARE
+NOT SATISFIABLE BY PIPELINE WORK ALONE ON AT LEAST 11 OF 93**, and that is a scope question for Andrew,
+surfaced once, not narrowed here. **A CTO that reported 53 of 93 and moved on would have hidden both the
+9 shells and the 11 source-blocked folders behind one true number.** COST: one row read after any
+coverage headline. NON-APPLICATION: a census whose predicate already IS the content question.
+
+---
+
 ## R-74 -- ⛔⛔ **`POD_DE_ANY` ON `portal/**` IS DESIRED-NOT-APPLIED: THE PORTAL REPO RUNS NO HOOKS, SO NOTHING WOULD HAVE REFUSED THIS SEAT. THE RESTRAINT WAS RIGHT AND THE STATED REASON WAS WRONG -- AND IT TOOK THREE READS, TWO OF THEM BROKEN, TO ESTABLISH IT**
 
 **Prompted by `2.0.0_SA_COO~Z` msg 25579: *"the worker that commits portal files this round is the writer in
