@@ -35,7 +35,7 @@ the one-function gold refactor is not yet committed and rides the next M commit.
 |---|---|---|---|
 | Served revision (base) | dec293d6 | d32e50c6 | 5a25ae76 |
 | How the base was proven | reassembled from the served parts | local prepared body; its plan reproduces the header + 40 of 40 parts | local prepared body; header + 174 of 174 parts |
-| Candidate revision | fc199c8ed6fb50751f187e85a876e9144f465a6bfbb3ffe7b68cbfc36a08d62e | ba9001d5... | 9ab377ce... |
+| Candidate revision | fc199c8ed6fb50751f187e85a876e9144f465a6bfbb3ffe7b68cbfc36a08d62e | ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773 | 9ab377cef98f0cc16afac867a5d487ccb16666d03432e939c25a2381ed1826ed |
 | Nodes | 16,749 | 33,328 | 151,697 |
 | SECURITY nodes | 14,426 | 30,881 | 120,097 |
 | basis TABLE / NAME_ALIAS / NAME_PATTERN / TICKER_SHAPE / NONE | 12,507 / 782 / 452 / 452 / 233 | 25,976 / 80 / 741 / 3,953 / 131 | 119,152 / 0 / 0 / 709 / 236 |
