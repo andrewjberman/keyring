@@ -25,9 +25,9 @@ halves CTO 99959 + CRO 99962, ledger CLOSED @7220e4a4f3) and CTO-VERIFIED (batch
 with the live policies, was denied 6/6); sink repackage APPLIED (CodeSha xd4mk5fx). EXERCISED 02:12Z:
 Andrew's signed-in retest served 200 x2 (fence fix held); screen reads UNCERTAIN because the producer
 omits the envelope status the contract says is present on success (batch 15 ruling, AMENDED batch 16 on
-the CRO's three schema corrections; Andrew-direct ~02:2xZ "fix the ready flag, send the status": the CRO
-writes the _status change, CTO reviews the pinned diff + test arms then GO, P packages/deploys code-only;
-portal unchanged); (1b) resident
+the CRO's three schema corrections; Andrew-direct ~02:2xZ "fix the ready flag, send the status": the CRO's
+pin cro-holdings-status-20260924 @01bdf54cfd is CTO-REVIEWED and GO'd (batch 17: own run 144 passed, own
+negative arm 2 failed on the pre-fix file); P deploys it code-only, then Andrew retests; portal unchanged); (1b) resident
 cutover: plan 04c77cbe APPLIED 01:53Z (host running, runner deployed); D1 STOPPED on S119 (JS bundle
 lacks the versioned contract) -- CTO word given for the ycharts_session.js change with Y's concurrence;
 then D1, C1 receipt, Y's 12.03 runbook; (2) P's Performance apply

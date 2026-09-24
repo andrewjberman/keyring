@@ -1360,3 +1360,35 @@ the schema line it read, or it names none.
 SIDE FINDING routed to P (CRO): performance/entry.py on P's branch puts internal_correlation_id into
 its SUCCESS status; by the same closed-key rule a Performance success body would be refused. P verifies
 on its branch before the CALL-3 one-use run; if real, it rides the Performance package CALL-3 needs.
+
+
+## 2026-09-24 02:4x UTC - Claude CTO batch 17: Holdings success-status pin reviewed and GO'd
+
+### IRPT-HOLDINGS-SUCCESS-STATUS-20260924 -- GO on cro-holdings-status-20260924 @01bdf54cfd (CRO 100006; CTO 100008)
+Pin: 13012979e1 (holdings/entry.py +54/-1) + 01bdf54cfd (holdings/tests/test_entry_guarded.py +78) on
+P's backend head b56b99c06f; lane overrides AUDITED per commit (IRPT_LIVE_SCOPE_P, IRPT_COMPLETION_M)
+under Andrew's word + the CTO's routing. LOCAL.
+CTO REVIEW, own instruments: diff read (status = a plain dict with the closed key set; READY iff
+enforce._unprojected_grant_of(scope).count == 0 else PARTIAL, from the same scope["_census"] served.py:977
+reads for the envelope, so status and envelope cannot disagree; the "every retained account present" half
+is enforced upstream at snapshot.py:225-226 as a NOT_READY refusal, a stronger guarantee than PARTIAL --
+accepted as the side chosen; source_dates {business_date, source_completion_date|null}; actions [];
+HOLDINGS_READY / OBJECT_NOT_COVERED (errors.PUBLIC_REASONS:52); no internal_correlation_id; a slice with no
+business_date refuses NOT_READY). Tests read: READY arm, PARTIAL arm (one granted id the directory cannot
+match), missing-account-still-refused arm; the first two validate the whole response against the v1
+response schema with every $id resolved and run the portal's closed-key rule in Python. Own run: 144
+passed, no skips. Own discriminator: detached worktree at 01bdf54cfd with entry.py from b56b99c06f -> the
+two status arms FAIL (KeyError 'status'), the refusal arm passes; worktree removed.
+Note, not blocking: _validate_response uses pytest.importorskip(jsonschema/referencing); on a box without
+them the two status arms would report SKIPPED after their closed-key asserts ran. P's package run report
+must state "no skips".
+Vocabulary: no file carries PERFORMANCE_READY (CRO census of docs/contracts/investor-reporting/v1); the
+code lives at performance/entry.py:149 only, so HOLDINGS_READY joins it as a producer-stated code; naming
+the data codes in the portal's CONTRACT_NAMED_REASON_CODES stays row IRPT_BCKEND-S52 (READY renders the
+table; the code is not printed on the success path).
+GO: 2.0.0_SA_COO~P fast-forwards the pin onto irpt-smoke-p-backend-20260923, runs holdings/tests with
+the count and "no skips", then the code-only irpt-holdings repackage under the sink discipline (ledger
+before the act, saved plan 0/1/0, package sha before/after, safe-apply, CodeSha readback, re-plan 0,
+ledger close, AFTER to CTO + CRO with the member census: exactly ONE member differing from xd4mk5fx,
+holdings/entry.py). Then Andrew retests; the CRO reads the HAR in place expecting status.state READY,
+HOLDINGS_READY, business_date 2026-09-22 and the table rendering.
