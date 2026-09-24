@@ -124,7 +124,15 @@ and any row.
 **ISSUER NOTES:** wave 1, spawned after rl-1 merges. The posture harness's ENOENT is recorded in s.45f as the starting
 state; the S3 GET it makes is the harness's own pre-existing design, declared in the preflight.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~09:3xZ.** Flipped by the ISSUER; the worker left the record face alone.
+3 of 3 criteria PASS, proof-of-spec rc=0 VALID (re-run by this seat inside the worker's worktree C:/tmp/wk-amgt-37-136).
+posturePattern.harness.cjs CHECKS-OK 13 of 13 (AC1's own text named 13 checks and a 12-of-12 deciding line; the worker built the
+13 and wrote the instance's expect against the true line -- row W136-S1, INERT, the criterion text's count was the defect); ui-class-census
+FILES 2 TOTAL 0; posture.harness.cjs 32 of 32, now fetching its two O-1 objects itself (sha256-identical to the prior hand fetch).
+Drained @6d2c73459b; portal DEV f67117d4 (merge of b5ed3a05), gitlink ccdb8699 -> f67117d4. Drain-time ui-contract-check
+(contract-check-after-rl-7/): posture lowContrastChars 7 -> PASS; the shared-chrome predicates unchanged. The PASS is owed by rl-9.
+
+<status>complete</status>
 <round>37</round>
 <slot>~136</slot>
 <fabric>site-z</fabric>
