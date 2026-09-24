@@ -2798,3 +2798,47 @@ act is Andrew's. The Analysis backend's (i) generate, (ii) status and (iii) rout
 (iv) the cutover plan's inputs is next at P; hop 2 (the upload composition) and hop 6's plan word remain at Andrew's two cards.
 DEV now carries, beyond site Z's AMGT work: candidates 1-4 (display-first rows, the labels pin, hop 11, the Performance
 label, SELECTION_UNSUPPORTED, F1, F5, F3, the three Analysis routes) and the DSGN_IRPTV1 round-1 page.
+
+
+## 2026-09-24 11:5x UTC - Claude CTO batch 44: edge (a) served on irpt-status; (iv) ruled -- the accepted-custody branch is cut as code and the FIRST live Analysis submission is bounded to Anna's account from Andrew's browser; DSGN_IRPTV1 round 2 mid-round: IVE4-AC2 amended to a difference control, S3's routing made the rule for a product-file drain red
+
+Instruments: P's receipts (100550) and the CTO's own readback of irpt-status; COO~D's mid-round report (100552) with its three-
+instrument measurement of the five pre-existing failures.
+
+### IRPT-ANALYSIS-BACKEND-IV-RULED-20260924 (P 100550; the CTO's word 100554)
+Edge (a) SERVED: irpt-status rebuilt at the backend head 8e8642a6f0, CodeSha pfAr3uZEAjWWUNfcukhJYV+bWi1oxPUZzYKUE/NbztY=,
+11:46:53Z (CTO readback agrees); census 41 same / 1 changed (entry.py carries RequestStorageUnavailable -> NOT_AUTHORIZED) / 0
+added or removed; the X10 row held BY NAME at 7262571e4c and the re-pin script now ASSERTS it -- the batch-42 standing rule
+made mechanical for the status map; plan 0/1/0, replan clean, ledger closed. (iv) THE CUTOVER PLAN'S INPUTS: all satisfied
+except a job to consume; the "mapping" input RETIRED (the resident is the one consumer); nothing can be enqueued until hop 2
+(the composition card) or (i-b). RULED: (a) (i-b) is CUT NOW as CODE -- generate_installed composes the accepted-custody branch
+over Y's accepted_custody / custody_binding / custody_portfolio (packaged at c3add4090e) with the same ports the prospect
+branch holds; composing is not egress: the served function accepts and enqueues only on a SIGNED submission and no seat signs
+one. (b) THE FIRST LIVE CUSTODY SUBMISSION is BOUNDED and is Andrew's: ONE account (acc_d486fc9455d6b2aa18e13af1, Anna
+Thiessen's Cottonwood brokerage account -- the same account the Performance and DSGN threads use), the default window, from
+his own browser on DEV; the resident then consumes the one job and makes its YCharts calls through the enrolled session. The
+resident carries no per-job consent gate (P's read and the CRO's agree), so the ENQUEUE is the gate and the browser act is the
+word; it goes to Andrew on ONE card with the Performance plan word (the first live Performance calculation and the first live
+Analysis submission, both on Anna's account, both from his browser), beside the upload-egress questions. IRPT_LIVE_YCHARTS_CALL
+stays absent on the Lambda. (c) Y's --once acceptance is observed on that first job. Meanwhile at P: (i-b) the code cut;
+candidate 5 = the corpus records for the four newly declared routes PLUS the five pre-existing fe-s-2 / fe-s-10 failures
+(COO~D measured the same set at DEV 895752676a, at the round-2 candidate and at a worker tip -- P's page suites, P's repair);
+the export root's stale comments; the generate map's re-pin assertion.
+
+### DSGN_IRPTV1 round 2, mid-round (COO~D 100552; the CTO's word this tick)
+IV-e-4 BUILT (AC1 ONE-CONTROL 8 of 8; AC3 ACTIONS-BLOCK-ONLY: 9 of 9 removed base lines inside the element-bound span, exactly
+one `<FirmDropdown` element start, FirmDropdown.tsx 55/0 additive; AC4 recorded) with IVE4-AC2 reading 42 pass / 1 skip / 5
+fail -- the SAME five names at the worker's untouched base, at a clean detached checkout of 895752676a and at the round-2
+candidate without IV-e-4: pre-existing on DEV, unrelated to the cell; the worker filed W4-S2 and left the order pending.
+RULED: AMEND IVE4-AC2 to a DIFFERENCE control (the failure SET of fe-s-2/ + fe-s-10/ at the tip equals the set at 895752676a,
+both printed with denominators, VERDICT NO-NEW-FAILURES) -- an issuer modification under gate (viii), the round-1 precedent
+(100467); W4-S2 stands as the honest measurement; the five failures are P's repair item. ISSUER'S DEFECT recorded as COO~D
+states it: the seam suites were not run at the base when the criterion was cut; every seam suite runs at the base before a
+round-3 criterion says "0 fail". S3 (a drain typecheck red in a PRODUCT file, IV-e-5's HoldingsTreemap.tsx) was routed by
+COO~D to the AUTHORING worker on its own branch after the order was terminal (97da9e2d, +9/-3) as a declared departure from
+spine L7, disarmed at S4 (candidate typecheck rc=0) -- ACCEPTED and made the rule for this project: a drain red in a product
+file goes back to its authoring worker for the type-only fix, the row names the commit and the count, the fix merges before
+the candidate's next hygiene run; an issuer-direct edit stays reserved for test files (round 1's precedent). Round-2 state:
+IV-e-3 / IV-e-1 / IV-e-5 terminal on dsgn-irptv1-r2 @5b50d9f0 (typecheck 0; the suites 17 pass / 113 expects); chain C
+drained to CLOUD @dc83072d98; IV-e-8, IV-e-2, IV-e-6 in flight; IV-e-7 off the merged candidate; portal DEV at 310b83b8 with
+895752676a an ancestor, so the landing stays a clean merge.
