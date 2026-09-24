@@ -299,11 +299,17 @@ Each row printed its own `rev-parse --show-toplevel`, so no husk read the parent
 was disclosed and correctly excluded** -- a `' M'` tracked modification in `3.0.0_SA_CVO~Z`'s own
 worktree, which is that seat's live work and not this signature.
 
-**COVERAGE AS IT ACTUALLY STANDS, and it is WIDER than the limit this ruling first carried:** both
-devices' shared trees read 0, and every site-Z worktree that can hold the file reads 0. ⚠ **THE ONE
-POPULATION STILL OPEN IS NAMED: the laptop's 14 worker worktrees, unswept, which laptop `0.0.0_AB_MSTR`
-states it will sweep after the reverse merge.** Naming the open remainder is worth more to a later reader
-than a device-shaped limit, which is what this ruling had instead.
+**COVERAGE IS NOW COMPLETE AND NO NAMED POPULATION REMAINS OPEN** (closed @`00:35Z`, laptop
+`0.0.0_AB_MSTR`'s own instrument via `0.0.0_AB_MSTR~Z`, agentbus `7d6a11d2`): **shared trees 0 and 0;
+site Z 26 of 26 worktrees carrying the directory read 0** (15 without it, `NO-TF-DIR`); **laptop 12 of 12
+carrying it read 0** (2 without it, same treatment). Per-worktree denominators printed throughout.
+
+⭐ **AND THE REMAINDER CLOSED *BECAUSE* THIS RULING NAMED IT.** The prior line said the laptop's 14 worker
+worktrees were unswept and would be swept **after the reverse merge**; naming them as the open population
+got them swept within minutes instead. **A NAMED REMAINDER IS ACTIONABLE; A SCOPE ADJECTIVE IS NOT** --
+*"site-Z only"* gives no reader anything to close, while *"the laptop's 14 worker worktrees"* names an act
+and an owner. That is the practical case for preferring the named remainder, and it was demonstrated here
+rather than argued.
 
 ⛔ **THIS RULING SHIPPED THE SENTENCE "site-Z only, the laptop is not measured" WHEN THE LAPTOP ANSWER HAD
 BEEN IN THIS SEAT'S OWN INBOX FOR ~90 MINUTES.** `3.0.0_SA_CVO~Z` wrote that limit truthfully -- it did
