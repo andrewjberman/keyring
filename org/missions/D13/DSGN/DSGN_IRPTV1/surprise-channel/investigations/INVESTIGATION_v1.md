@@ -340,6 +340,30 @@
     "world_is": "On this box, a working-tree file and its own git-show blob differ in EOL bytes even when NO content changed, because core.autocrlf converts CRLF on checkout while git normalizes to LF in every stored blob -- so 'byte-identical' as a literal claim is only ever true post-normalization, and a naive substring check silently reads a real \"unchanged\" as \"changed\" (never the reverse -- it cannot false-positive PASS an actually-changed block, only false-negative an unchanged one).",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not blocking: caught and fixed within this worker's own test before the criterion was graded (IVE8-AC2 PASSES post-fix, re-run confirmed). Filed because the SAME shape (git-show extract vs readFileSync, or two readFileSync calls from different vintages/checkouts) recurs across this project's own criteria (e.g. IVE3-AC3/IVE4-AC3/IVE8-AC3's own numstat/diff checkers, which are immune because `git diff`/`git show --numstat` are EOL-aware by construction) and could recur in a FUTURE cell's hand-written comparison that is NOT diff-based."
+  },
+  {
+    "id": "DSGN_IRPTV1-S5",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-24T13:03:09Z",
+    "one_line": "Issuer's defect in IV-e-2's IVE2-AC2: the `<expect>` `FIXTURES-MATCH: matched` is UNANCHORED, so it matches the partial line `FIXTURES-MATCH: matched 2 of 5` that the criterion's own prose calls a REFUSAL -- worker 0.9.0_WK_DSGN_IRPTV1~5 graded PASS on 2 of 5 and flipped `complete`, and proof-of-spec-check read the instance VALID. The one-query census over every round-2 proof row (6 instances, 24 rows, CLOUD + the undrained wk-DSGN_IRPTV1-5) finds this ONE row; no other PASS carries a partial count.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D (the cut's own defect; remedy: the worker re-grades IVE2-AC2 REFUSED and reverts the order to pending on its branch -- instructed ~13:1xZ; 1.0.0_SA_CTO rules the criterion (amend or let the refusal stand); disarmed by the row quoting the corrected instance or the amendment commit and the order's terminal state, graded before the chain-B drain)",
+    "spec_asserts": "IV-e-2 face, IVE2-AC2 prose: 'the smoke run's own FIXTURES-MATCH line reads every route matched (print it; the expectation anchors on the line, your result file states matched N of N with N = the fixture's route count) ... A partial match is a REFUSAL with the measurement, not a pass.' The issued `<expect>` was `FIXTURES-MATCH: matched` -- the prose promised an anchor the expect never carried.",
+    "world_is": "Measured 2026-09-24 by 2.0.0_SA_COO~D on wk-DSGN_IRPTV1-5 @1e12a79b05: the IVE2-AC2 proof row carries `status: PASS`, `expect: 'FIXTURES-MATCH: matched'`, output `FIXTURES: 5 declared; 2 matched >=1 URL / FIXTURES-MATCH: matched 2 of 5 / FIXTURE-DEAD: .../performance/sel_... | .../holdings/sel_... | .../selections`; the order file reads `<status>complete</status>`. The click-free invocation cannot reach the three selection-gated routes: scripts/ui-smoke.mjs's --fill/--click/--clicktext vocabulary cannot drive the page's role=combobox Client search (row W5-S2; the same gap made 3.0.0_SA_CVO's IRPT drivers and IRPT_FNTEND FE-s-78 build standalone drivers). The worker's committed standalone driver deliverables/0.9.0_WK_DSGN_IRPTV1~5/iv-e-2-selection-driver.mjs prints `DRIVER-FIXTURES-MATCH: matched 5 of 5` and its PNG shows IdentityCard + PerformanceHeadline + SecurityList. So the C-S14 defect (every AC4 PNG was the unresolved page) IS repaired for scope resolution; the criterion as cut asked an instrument for a state it cannot reach. EXPOSURE, not incident, for every other row: the census found no second PASS resting on a partial count.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-dsgn_irptv1-2-5 @1e12a79b05: DSGN_IRPTV1.TO-IV-e-2.style-and-instrument.proof_of_spec.json IVE2-AC2 row (status PASS, expect and output quoted above)",
+        "census over 6 round-2 proof instances / 24 rows: 1 PASS row with a partial matched-N-of-M (IVE2-AC2); IVE2-AC3's raw ` 0 fail` expect reads 13 pass / 0 fail and is sound",
+        "org/missions/D13/DSGN/DSGN_IRPTV1/task-orders/DSGN_IRPTV1.TO-IV-e-2.style-and-instrument.md at ba8d5987c3: the `<expect>` and the prose quoted in spec_asserts",
+        "deliverables/0.9.0_WK_DSGN_IRPTV1~5/iv-e-2-selection-driver.mjs committed at 1e12a79b05; its header names the combobox gap and the two precedent drivers"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Carried to 1.0.0_SA_CTO with a recommendation. For the round-3 cut: every count-bearing expect is anchored to `N of N` (or computed into a VERDICT line by the test), never a bare prefix."
   }
 ]
 ```
