@@ -13,7 +13,7 @@ no project yet: mcportal (2026-09-17) and the D6 GraphQL client plane.
 | # | project | directive | state | next act | holder |
 |---|---|---|---|---|---|
 | 1 | NFRA_OPALAI -- opal_ai V1 (Analyst product, repo, runtime isolation, per-asker entitlements) | D6 | PRD v0.4 ADMITTED; round 1 cut: 10 task orders (OA-t-1..t-6, OA-w-1..w-4) | round 1 execution and drain | 2.0.0_SA_COO~O |
-| 2 | NFRA_MCPINDEX -- the tool index | D9 -> D6 | 9 of 38; wound down 09-21 on the laptop; held branch laptop-only; laptop relay sent (bus MessageId 1ea278ae), ACK owed | on the laptop ACK: re-home to D6 on site Z; close round 1 and re-cut onto opal_ai paths | 1.0.0_SA_CTO~O (re-home), 0.0.0_AB_MSTR~Z (branch), COO~O (round) |
+| 2 | NFRA_MCPINDEX -- the tool index | D9 (tree stays; re-seated) | 9 of 38; RE-SEATED to the ~O fabric @23bbeff325 after the laptop released it (ACK d36628dc); held branch pushed @119a49eef0 | close round 1 and re-cut onto opal_ai paths; drain MX-c-4 | 2.0.0_SA_COO~O |
 | 3 | NFRA_MCPORTAL -- the operator console at mcp.opalinvest.dev: MCP Server pages (tool library, per-user grants, audit, kill switch), user management, reports, health, cost, infosec | D6 | PRD v0.2 ADMITTED (@04da65ddb9, after one refusal on C4's mechanism); repo Opal-Capital/mcportal DEV=PROD fa1ff9693b | L5 decomposition | 2.0.0_SA_COO~O |
 | 4 | NFRA_OPLGTW -- the gateway's Schwab access and grant model | D9 | 30 of 33; stopped by Andrew 09-22 | **Andrew's call** (the stop is his by name) | Andrew |
 | 5 | opal_ai TEMPLATE slice (RCN-0014 O6-O9) | D6 | not started, on his order "after a proper V1, even V2" | register when NFRA_OPALAI closes | 1.0.0_SA_CTO~O |
@@ -60,3 +60,4 @@ NFRA_COMPTEAM, NFRA_WRKFLW, HEATMAP_PROCESS (closed) -> no remaining act. OPAL_T
   (the Bloomberg view server into opal_ai, first enrichment). mcportal repo created by 0.0.0_AB_MSTR~Z. Waiting:
   CVO~O on MCPORTAL L4-R; the laptop ACK on MCPINDEX; COO~O's round-1 issuance; Andrew on the OPLGTW stop.
 - 2026-09-24 ~21:4xZ, tick 3: NFRA_MCPORTAL refused at v0.1 (C4 had no mechanism; C6 amended OPLGTW unnamed) and SIGNED at v0.2 @04da65ddb9 -- separate grant-writer Lambda; C6 behind G-OPLGTW. NFRA_OPALAI round 1 cut (10 orders). Waiting: the laptop ACK on MCPINDEX; Andrew on G-MOVE / G-OPLGTW.
+- 2026-09-24 ~22:5xZ, tick 4: G-GH blocked by org policy (deploy keys disabled) -> PRD v0.5 retires it @20b2b561f5; COO~O adopted the route in OA-t-3 @3bd33ffea9. MCPORTAL L5 landed @d59ee72eba (7 cells). NFRA_MCPINDEX: the laptop released it; a D9->D6 folder move was refused by to-pipeline-gate (moved orders read as new issuance) and reverted clean; re-seated in place @23bbeff325 and handed to COO~O. D9's own site-Z placement (Andrew 09-22) flagged to 0.0.0_AB_MSTR~Z.
