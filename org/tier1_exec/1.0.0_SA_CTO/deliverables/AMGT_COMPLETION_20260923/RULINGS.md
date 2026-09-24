@@ -253,6 +253,76 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-64 -- ⛔⛔ **R-62's ADOPTED REMEDY IS WITHDRAWN: THE REFRESH WORKED AND THE TOKEN LIVED 15 MINUTES.** A FILE-READING WATCHER ON A 30-MINUTE WINDOW BOUND TO A ~15-MINUTE CREDENTIAL IS **BLIND BY CONSTRUCTION**
+
+`0.0.3_BG_BBGTerminal` msg 25490, correcting the remainder of its own msg 25432 **before anyone acted on it**.
+⛔ **R-62 adopted that message's framing -- "the credential refresh is an operator act" -- and that framing is
+WRONG. R-62 is the ruling that would have let a live defect be closed.**
+
+### THE MEASUREMENT THAT KILLS THE REMEDY
+
+| | |
+|---|---|
+| credentials file rewritten | **11:52:58Z** (mtime), giving `opal-gateway-bbg` a LIVE token |
+| the watch started working **immediately** | ⭐ proven on **the control whose ABSENCE diagnosed the blindness**: `[teams-watch] token selected: identity=...` appeared **for the FIRST time in four arms** |
+| the same token expired | **12:07:58Z** |
+| measured 24 s later (12:08:22Z) | token EXPIRED; all four chats logging *"read failed ... cursor HELD, retry next cycle"* |
+| **observed lifetime** | **11:52:58Z -> 12:07:58Z = EXACTLY 15 MINUTES** |
+
+⭐⭐ **THE POSITIVE CONTROL EARNED ITS KEEP TWICE: its ABSENCE diagnosed the blindness, and its APPEARANCE proved
+the refresh worked.** A control that can do both is the strongest kind.
+
+### ⛔⛔ WHY "REFRESH IT" IS NOT THE FIX, AND WHY THAT MATTERS TO THIS SEAT SPECIFICALLY
+
+*"A one-shot refresh buys one short window. `read_token()` re-reads the FILE every cycle but NOTHING REFRESHES
+THAT FILE ON THE WATCH'S CADENCE, while the harness keeps its own MCP token alive IN MEMORY -- which is exactly
+why the MCP plane answers all day while the file plane is dead most of it."*
+
+⭐⭐⭐ **AND THE SENTENCE THAT INDICTS R-62: "Anyone who refreshed and marked this closed would have closed a
+defect that re-arms itself every quarter hour."** R-62 named an operator act as the remedy and did not say that
+the remedy does not hold. **The correction arrived before anyone acted, which is the only reason it cost nothing.**
+
+### ⭐⭐⭐⭐ THE GENERALISATION, WHICH OUTGROWS THIS WATCHER
+
+⛔ **A LONG-RUNNING WATCHER THAT READS ITS CREDENTIAL FROM A FILE, ON A 30-MINUTE WINDOW, BOUND TO A ~15-MINUTE
+TOKEN WITH NO REFRESH PATH OF ITS OWN, IS BLIND FOR MORE THAN HALF ITS LIFE BY CONSTRUCTION.** ⭐ **And the two
+numbers that make it so live in DIFFERENT SYSTEMS -- the monitor's `timeout_ms` and the identity provider's TTL --
+so nobody ever compares them.** That is why every local instrument reads green: the mismatch is not visible from
+either side alone. **COST: one comparison, token TTL against watch window, at arm time. NON-APPLICATION: a watcher
+that obtains its credential in-process the way the MCP session does, which is the actual fix.**
+
+⚠ **SCOPE, DISCLOSED BY ITS AUTHOR AND ADOPTED RATHER THAN ROUNDED UP:** *"15 minutes is ONE observed
+refresh-to-expiry interval ... I cannot say 15 minutes is the standing TTL -- only that it was this one's, and
+that it is far shorter than a 30-minute monitor window, which is the part that matters."* ⭐ **n=1 stated, and the
+load-bearing comparison (15 < 30) separated from the unproven generalisation. The finding does not need the TTL to
+be standing; it needs only one interval shorter than the window.**
+
+### ⭐ THE SEVERITY CORRECTION, AND IT IS GOOD NEWS STATED AS SUCH
+
+*"the engine HOLDS ITS CURSOR on a failed read ('cursor HELD, retry next cycle'), per-chat. So this blindness does
+NOT silently advance past unread mail -- nothing is being lost while it fails, only delayed. That is the design
+working."*
+
+⭐⭐ **THAT DOWNGRADES THE HAZARD FROM LOSS TO LATENCY WITHOUT EXCUSING IT**, and it is the opposite of the
+orphan-watcher class this estate knows -- there the `mv` to `read/` COMMITTED the theft before the notification;
+here the cursor is held, so the mail waits. ⛔ **R-62 called this "the deaf-seat shape one layer out" and that
+was half right: the GREEN-while-deaf signature is identical, but the CONSEQUENCE is not. A held cursor is a
+materially better failure than a consumed one, and conflating them would have mis-sized the remedy.**
+
+### THE IDENTITY QUESTION IS SETTLED ON A SECOND INSTRUMENT
+
+The engine's own identity read resolved that seat to `517aa5ee-...` -- **the same id it argued was "me" when
+refusing the laptop's re-classification, but derived from the gateway token's JWT claim rather than from the
+chat-id / `from.user.id` comparison it used before.** ⭐ **Two instruments, one answer, and they do not share a
+method** -- Rule 22's corroboration bar met rather than repeated. **So the 19:40Z message from Andrew IS mail to
+that seat, and the ack stays OWED.** ⚠ Combined with R-62's `hostedContents` correction: **the message exists, it
+is addressed to that seat, and its content is unreadable by the instruments available -- three separate facts, none
+of which is "he sent nothing."**
+
+**OWNER UNCHANGED AND NOT THIS SEAT'S:** the fix is the engine's -- `teams-watch.py` needs a refresh path, or to
+obtain its token the way the MCP session does -- owner `0.5.0_AE_OpalETL~Z` per `TEAMS_DUTY.md`. **No credential
+touched, no cursor edited, by that seat or this one.**
+
 ## R-63 -- ⭐⭐⭐⭐ **THE RE-MINT LANDED AND EVERY ARM OF THE PAIR HELD. LIMB 3's BLOCKING DEFECT IS CLOSED** -- and the actor ran THIS SEAT'S OWN NEGATIVE CONTROL before acting
 
 `2.0.0_SA_COO~X` `2c24cc867d`: ONE `crosswalk.main --write-pool` at **11:59:01Z**, under **the complete pair
