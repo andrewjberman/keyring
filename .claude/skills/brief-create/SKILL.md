@@ -1,6 +1,6 @@
 ---
 name: brief-create
-description: Write the L1 BRIEF that starts the canonical loop, from a plain-English prompt: `/brief-create {what to look into}`; `--midstream` for a project already in flight (authored blind to the open task-order set). Its consumer is `/endpoint --forward` at L2, which cuts outcomes from it, so the brief must be citable and outcome-shaped. Self-contained. 4.0.0_SA_CRO.
+description: "Write the L1 BRIEF that starts the canonical loop, from a plain-English prompt: `/brief-create {what to look into}`; `--midstream` for a project already in flight (authored blind to the open task-order set). Its consumer is `/endpoint --forward` at L2, which cuts outcomes from it, so the brief must be citable and outcome-shaped. Self-contained. 4.0.0_SA_CRO."
 ---
 
 # /brief-create — step 1 of the canonical fabric loop
@@ -57,6 +57,9 @@ from; everything else exists to support or bound it.
 - Give each its own heading so it can be cited.
 - **If two outcomes always complete together, they are ONE outcome.** Expect roughly 5–12. Beyond
   that you are decomposing, which is COO's job at step 5, not yours.
+- ⛔ **FOR A PRODUCT OR PIPELINE, NAME THE CANDIDATE THREAD FIRST** (spine v3.16, L1): which person,
+  which journey, at coarse grain — one firm, one account, the default window. It becomes `FWD-1` at L2 and
+  round 1 builds it end to end; the other outcomes are served by the enrichment rounds after it.
 
 ### PART II — WHERE THE BOUNDARY SITS
 What this owns versus what it merely relies on, with sibling projects **named**. ⛔ **A boundary left
@@ -94,6 +97,9 @@ reads as more complete than it is**, and the reader cannot tell the difference.
 ## MODE: MIDSTREAM
 
 For a project already in flight — the merge-forward case, where work exists but has lost its frame.
+
+➡ **A product whose pieces exist but no journey works, and Andrew wants it closed, is not a midstream
+brief: it is `/closer`** (spine v3.16, "Closer"), whose trace brief walks the deployed hops and grades each.
 
 ⛔ **AUTHOR IT BLIND TO THE CURRENT TASK-ORDER SET.**
 >> **A brief written while looking at what is open will describe an endpoint that RATIFIES what is

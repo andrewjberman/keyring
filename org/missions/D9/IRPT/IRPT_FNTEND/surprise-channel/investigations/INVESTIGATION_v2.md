@@ -959,7 +959,7 @@
       ]
     },
     "spec_asserts": "F18-AC6 asserts 'investor-reporting/print?bundle=fe-s-18-frozen' is a URL the print route can serve.",
-    "world_is": "The URL has not been servable since FE-s-14, and worse, the fix I DID apply went to the travelling copy rather than the durable one. TWO LESSONS, and the second is the one with teeth. (1) Rule 24's subtraction applies to one's own edits: the population was 'every print URL in this face', the denominator was 3, and I patched the 2 I had copied into the prompt rather than subtracting from the 3 the file contained. (2) \u26d4 THE WORKER FACE THAT TRAVELS AND THE RECORD FACE THAT STAYS CAN DIVERGE SILENTLY, because the spine has the issuer substitute `<WS>` and `<PORT>` into the prompt at spawn -- and once you are editing that prompt, nothing stops a SUBSTANTIVE correction going only there. The proof instance then records an invocation that the task order does not contain, and proof-of-spec-check does not compare the two, so the instance reads VALID over the divergence. The record is what a successor and the CVO read; the prompt is gone the moment the worker ends. RECOMMENDATION for L10: placeholder substitution is the ONLY edit permitted between the file's worker face and the spawned prompt, any other change lands in the file FIRST, and proof-of-spec-check gains a limb comparing each recorded invocation against its criterion's invocation modulo the declared placeholders. Disarmed when F18-AC6 passes and the record carries all three URLs.",
+    "world_is": "The URL has not been servable since FE-s-14, and worse, the fix I DID apply went to the travelling copy rather than the durable one. TWO LESSONS, and the second is the one with teeth. (1) Rule 24's subtraction applies to one's own edits: the population was 'every print URL in this face', the denominator was 3, and I patched the 2 I had copied into the prompt rather than subtracting from the 3 the file contained. (2) ⛔ THE WORKER FACE THAT TRAVELS AND THE RECORD FACE THAT STAYS CAN DIVERGE SILENTLY, because the spine has the issuer substitute `<WS>` and `<PORT>` into the prompt at spawn -- and once you are editing that prompt, nothing stops a SUBSTANTIVE correction going only there. The proof instance then records an invocation that the task order does not contain, and proof-of-spec-check does not compare the two, so the instance reads VALID over the divergence. The record is what a successor and the CVO read; the prompt is gone the moment the worker ends. RECOMMENDATION for L10: placeholder substitution is the ONLY edit permitted between the file's worker face and the spawned prompt, any other change lands in the file FIRST, and proof-of-spec-check gains a limb comparing each recorded invocation against its criterion's invocation modulo the declared placeholders. Disarmed when F18-AC6 passes and the record carries all three URLs.",
     "disposition": "UNDER_INVESTIGATION"
   },
   {
@@ -983,7 +983,7 @@
       ]
     },
     "spec_asserts": "Spine L6: the worker face 'is what the worker is given and is the whole of its context; a task order whose worker face is not sufficient on its own is defective at L6, NEVER PATCHED BY A MESSAGE'. F18-AC3 asserts 'no two entries share a file or a hash'.",
-    "world_is": "The prohibition is written for the case where an issuer knowingly sends a spec change. THIS instance is the one it does not obviously cover and the one that will recur: I sent a FINDING, framed as something I would carry upward later, and the worker could not tell a recommendation-in-flight from an instruction. \u26d4 TO A WORKER WHOSE ENTIRE CONTEXT IS WHAT THE ISSUER SENDS IT, EVERY SENTENCE FROM THE ISSUER IS SPEC. There is no channel in the prompt for 'this is context, do not act on it', and the worker has no way to check a rule's status because it cannot read the record or ask. The general shape, and the cheapest fix: an issuer's continue message carries ACTS and MEASURED FACTS only; a recommendation, a finding not yet ruled, or anything an L10 might later make law is either left out or marked explicitly as NOT BINDING ON THIS ORDER. Better still, it goes in the FILE first or not at all. Same family as S31 (a correction that reached the prompt and not the record): both are the issuer's two channels drifting apart, in opposite directions. Disarmed when F18-AC3's literal arm is restored and re-run.",
+    "world_is": "The prohibition is written for the case where an issuer knowingly sends a spec change. THIS instance is the one it does not obviously cover and the one that will recur: I sent a FINDING, framed as something I would carry upward later, and the worker could not tell a recommendation-in-flight from an instruction. ⛔ TO A WORKER WHOSE ENTIRE CONTEXT IS WHAT THE ISSUER SENDS IT, EVERY SENTENCE FROM THE ISSUER IS SPEC. There is no channel in the prompt for 'this is context, do not act on it', and the worker has no way to check a rule's status because it cannot read the record or ask. The general shape, and the cheapest fix: an issuer's continue message carries ACTS and MEASURED FACTS only; a recommendation, a finding not yet ruled, or anything an L10 might later make law is either left out or marked explicitly as NOT BINDING ON THIS ORDER. Better still, it goes in the FILE first or not at all. Same family as S31 (a correction that reached the prompt and not the record): both are the issuer's two channels drifting apart, in opposite directions. Disarmed when F18-AC3's literal arm is restored and re-run.",
     "disposition": "UNDER_INVESTIGATION"
   },
   {
@@ -1267,7 +1267,7 @@
       ]
     },
     "spec_asserts": "Row IRPT_FNTEND-S28's recommendation: 'RE-MEASURE THE TARGET TREE AT SEATING TIME, never at issuance time -- a dependency list is a claim about siblings, not about the world.' Round-2 BOUNDS: the producer's artifact is the authority and the consumer conforms.",
-    "world_is": "S28's recommendation is NECESSARY AND NOT SUFFICIENT, and this row is the counter-example to my own advice given one round after I gave it. The vulnerable window is not the instant of the cut; IT IS THE WHOLE DURATION OF THE WORKER'S PASS, and a worker in an isolated worktree cannot see a producer move and MUST NOT -- the frozen tree is what makes its result reproducible. So no amount of measuring before the cut closes this, and no amount of worker diligence closes it either. \u26d4 THE CONCLUSION THE ROUND HAS NOW EARNED FOUR TIMES (S20, S21, S28, this): PINNING A CONSUMER TO PRODUCER BYTES IS STRUCTURALLY UNWORKABLE WHILE THE PRODUCER IS ACTIVELY MOVING. Every additive, non-breaking producer change reds the consumer, the consumer's own tests cannot distinguish that from a real break, and the cost is one re-pin per move forever. The remedy is the one carried since S21 and it is now the round's central recommendation rather than a design note: PIN BY CONTENT OF WHAT THE CLIENT ACTUALLY CONSUMES -- route keys, required field sets, the operations it calls -- and record the producer vintage as DATA rather than as a BAR. A consumer that asserts 'the twelve operations I call are all DECLARED with handlers' does not care that a thirteenth was added or that a comment changed. NOT REPAIRED HERE: the remaining red is a round-3 input alongside W1-S33, and re-pinning a fifth time inside round 2 would buy hours, not correctness.",
+    "world_is": "S28's recommendation is NECESSARY AND NOT SUFFICIENT, and this row is the counter-example to my own advice given one round after I gave it. The vulnerable window is not the instant of the cut; IT IS THE WHOLE DURATION OF THE WORKER'S PASS, and a worker in an isolated worktree cannot see a producer move and MUST NOT -- the frozen tree is what makes its result reproducible. So no amount of measuring before the cut closes this, and no amount of worker diligence closes it either. ⛔ THE CONCLUSION THE ROUND HAS NOW EARNED FOUR TIMES (S20, S21, S28, this): PINNING A CONSUMER TO PRODUCER BYTES IS STRUCTURALLY UNWORKABLE WHILE THE PRODUCER IS ACTIVELY MOVING. Every additive, non-breaking producer change reds the consumer, the consumer's own tests cannot distinguish that from a real break, and the cost is one re-pin per move forever. The remedy is the one carried since S21 and it is now the round's central recommendation rather than a design note: PIN BY CONTENT OF WHAT THE CLIENT ACTUALLY CONSUMES -- route keys, required field sets, the operations it calls -- and record the producer vintage as DATA rather than as a BAR. A consumer that asserts 'the twelve operations I call are all DECLARED with handlers' does not care that a thirteenth was added or that a comment changed. NOT REPAIRED HERE: the remaining red is a round-3 input alongside W1-S33, and re-pinning a fifth time inside round 2 would buy hours, not correctness.",
     "disposition": "UNDER_INVESTIGATION"
   },
   {
@@ -1469,13 +1469,13 @@
       "evidence": [
         "Row W4-S4 (0.9.0_WK_IRPT_FNTEND~4): the ordered id was minted, staged and BLOCKED by .tools/surprise-row-gate.py -- 'that id already exists in ... INVESTIGATION_v1.md (the same plane of IRPT_FNTEND's channel, at the graded index)'. The worker backed the un-landed block out, verified the file byte-identical to HEAD, and re-minted at W4-S3/W4-S4.",
         "ISSUER'S OWN PLANE CENSUS, run after the report across BOTH documents: W1 plane-max 36 (v1 14, v2 36); W2 plane-max 14 (v1 6, v2 14); W3 plane-max 12 (v1 2, v2 12); W4 plane-max 2 -- AND BOTH W4 IDS LIVE IN v1, WITH NONE IN v2.",
-        "\u2b50 SO MY INSTRUCTION WAS RIGHT FOR W1, W2 AND W3 BY COINCIDENCE: for those three the v2 maximum happens to exceed the v1 maximum, so a read scoped to v2 gives the plane's answer. W4 is the only coordinate where it does not, and it is the only one I got wrong. Three of four correct is not a rule working; it is a wrong method surviving on the shape of the data.",
+        "⭐ SO MY INSTRUCTION WAS RIGHT FOR W1, W2 AND W3 BY COINCIDENCE: for those three the v2 maximum happens to exceed the v1 maximum, so a read scoped to v2 gives the plane's answer. W4 is the only coordinate where it does not, and it is the only one I got wrong. Three of four correct is not a rule working; it is a wrong method surviving on the shape of the data.",
         "The rc claim, re-measured by the issuer WITHOUT a pipeline: `python .tools/proof-of-spec-check.py --help >/dev/null 2>&1; echo $?` -> 2. Through the original `| head -20` form the same command reports 0, which is head's exit status. Row W3-S15 (0.9.0_WK_IRPT_FNTEND~3) called it and was right.",
         "The rc trap is in this estate's own memory index verbatim -- 'a pipeline's exit status is its last command's, so cmd | tail always reads rc=0' -- and I walked into it while writing a preflight whose purpose was to record a measured instrument fact."
       ]
     },
     "spec_asserts": "FE-s-24's BOUNDS: 'id IRPT_FNTEND-W4-S<k> starting at IRPT_FNTEND-W4-S1 (the W4 coordinate has no round-3 rows yet; if the file carries no W4 sequence, yours opens it)'. FE-s-23's preflight: '--help ... prints READ-ERROR (rc=2) AND RETURNS rc=0'.",
-    "world_is": "Both halves of the W4 sentence are TRUE of INVESTIGATION_v2.md and the conclusion is still wrong, because the id space is the PLANE and not the document. The worker's own line is the lesson and is better than mine: A FACE THAT NAMES A STARTING NUMBER TEACHES A WORKER TO SCOPE ITS PRE-MINT READ TO ONE DOCUMENT. The fix is to stop naming the number: a face says 'continue the coordinate's sequence, read the PLANE for its last id', and the gate stays the authority. On the rc: an instrument fact asserted in a preflight is exactly where a pipeline-exit misread does the most damage, because every later reader takes it as measured and nobody re-runs it. \u26d4 AND NOTE WHAT I AM NOT DOING: FE-s-23's face is NOT being corrected in place. Its order is terminal and its instance records criterion_verbatim; editing the face now would create precisely the recorded-vs-criterion divergence that FE-s-23's own new limb exists to detect. A terminal order's face is effectively frozen by the limb it just shipped, and this row is the correction.",
+    "world_is": "Both halves of the W4 sentence are TRUE of INVESTIGATION_v2.md and the conclusion is still wrong, because the id space is the PLANE and not the document. The worker's own line is the lesson and is better than mine: A FACE THAT NAMES A STARTING NUMBER TEACHES A WORKER TO SCOPE ITS PRE-MINT READ TO ONE DOCUMENT. The fix is to stop naming the number: a face says 'continue the coordinate's sequence, read the PLANE for its last id', and the gate stays the authority. On the rc: an instrument fact asserted in a preflight is exactly where a pipeline-exit misread does the most damage, because every later reader takes it as measured and nobody re-runs it. ⛔ AND NOTE WHAT I AM NOT DOING: FE-s-23's face is NOT being corrected in place. Its order is terminal and its instance records criterion_verbatim; editing the face now would create precisely the recorded-vs-criterion divergence that FE-s-23's own new limb exists to detect. A terminal order's face is effectively frozen by the limb it just shipped, and this row is the correction.",
     "disposition": "UNDER_INVESTIGATION"
   },
   {
@@ -1493,7 +1493,7 @@
       "evidence": [
         "ISSUER'S INDEPENDENT CONFIRMATION, parsing the committed instance JSON and the committed order side by side rather than taking the worker's report: F18-AC17 order `cd <WS>/portal && timeout 120 .../bun test src/pages/InvestorReporting` vs recorded `cd /c/tmp/wk-irpt_fntend-2-7-fe-s-18/portal && timeout 180 .../bun test src/pages/InvestorReporting`. Modulo <WS> expansion the two differ, and the difference is the timeout.",
         "F12-AC5: the order's invocation has a BALANCED quote count and the recorded one does not (odd). Measured by counting '\"' in each string -- order True, recorded False. An unbalanced command is not re-runnable by anyone.",
-        "\u26d4 F18-AC17 IS IN THE VERY INSTANCE ROW S31 WAS RAISED ABOUT, AND IT SURVIVED MY RECORD FIX. At 74cefaf7a2 I corrected that order's three print URLs and believed the face and the record were aligned; I never checked the other seventeen rows. A fix scoped to the instance I noticed left the same class untouched one row away.",
+        "⛔ F18-AC17 IS IN THE VERY INSTANCE ROW S31 WAS RAISED ABOUT, AND IT SURVIVED MY RECORD FIX. At 74cefaf7a2 I corrected that order's three print URLs and believed the face and the record were aligned; I never checked the other seventeen rows. A fix scoped to the instance I noticed left the same class untouched one row away.",
         "Worker's unscoped corpus read before designing: 294 committed instances, 275 with a tree-root governing TO, 1481 rows, 874 comparable, 318 divergent -- mostly HONESTLY (a worker adding the `timeout 120` an order's BOUNDS demanded while its <invocation> omitted it).",
         "The worker printed both divergent rows BY NAME with both strings directly beneath its own `ROUND-2 CORPUS STILL VALID: 7 of 7` line, and stated that the 7 of 7 is a claim about the VERDICT and never about alignment. That distinction is the reason this row can exist at all."
       ]
@@ -1523,7 +1523,7 @@
       ]
     },
     "spec_asserts": "FE-s-23's face: 'A mismatch is a VIOLATION that names BOTH strings and the criterion id' AND 'THIS LIMB MUST NOT BREAK THE EXISTING CORPUS ... you prove both directions.' Spine L7: a worker refuses a criterion it cannot satisfy as written rather than repairing it.",
-    "world_is": "The two constraints could not both hold and the worker said so with a number instead of choosing silently. \u26d4 BUT THE ACCEPTANCE CARRIES A NAMED WEAKNESS AND IT GOES TO THE CTO RATHER THAN BEING DISARMED HERE: AN OPT-IN ENFORCEMENT IS WRITTEN BY THE ISSUER -- THE EXACT PARTY WHOSE PROMPT-ONLY CORRECTION THE LIMB EXISTS TO CATCH. A control the controlled party may decline to arm is a weaker control than it reads as, and S31 was my divergence, not a worker's. The real fix is to make the <placeholders> declaration MANDATORY at the L6 gate so an issuance cannot be cut without it, which is outside FE-s-23's <paths> and outside my lane to legislate. disarm_owner 1.0.0_SA_CTO: it is a rule about how task orders are cut, and this seat proposing it is not the same as the CTO ruling it -- the lesson of S32, applied to myself one round later.",
+    "world_is": "The two constraints could not both hold and the worker said so with a number instead of choosing silently. ⛔ BUT THE ACCEPTANCE CARRIES A NAMED WEAKNESS AND IT GOES TO THE CTO RATHER THAN BEING DISARMED HERE: AN OPT-IN ENFORCEMENT IS WRITTEN BY THE ISSUER -- THE EXACT PARTY WHOSE PROMPT-ONLY CORRECTION THE LIMB EXISTS TO CATCH. A control the controlled party may decline to arm is a weaker control than it reads as, and S31 was my divergence, not a worker's. The real fix is to make the <placeholders> declaration MANDATORY at the L6 gate so an issuance cannot be cut without it, which is outside FE-s-23's <paths> and outside my lane to legislate. disarm_owner 1.0.0_SA_CTO: it is a rule about how task orders are cut, and this seat proposing it is not the same as the CTO ruling it -- the lesson of S32, applied to myself one round later.",
     "disposition": "UNDER_INVESTIGATION"
   },
   {
@@ -1640,7 +1640,7 @@
       ]
     },
     "spec_asserts": "F19-AC8 as cut: `<expect>0 fail</expect>`, with prose asserting 'The collision is expected to CLEAR when this cell lands -- three Holdings fixtures produced one byte-identical image precisely because no body mounted.'",
-    "world_is": "The stated CAUSE was right and the INFERENCE from it was wrong. The three images were identical because no body mounted AND because the fixtures carry nothing to distinguish; fixing the first left the second standing, and I asserted the conjunction as if it were the first alone. \u2b50 THE SHAPE, and it is the one I keep producing: A PREDICTION ABOUT ANOTHER CELL'S ARTIFACT, WRITTEN INTO A BAR, IS AN UNMEASURED CLAIM WEARING A CRITERION'S CLOTHES -- and unlike a prose error it is load-bearing, because a worker cannot pass it. Three of round 3's bars had to name another cell's failure count; on two I measured and on one I guessed, and the guess is the one that failed. Disarmed when FE-s-19 passes AC8 at the corrected bar.",
+    "world_is": "The stated CAUSE was right and the INFERENCE from it was wrong. The three images were identical because no body mounted AND because the fixtures carry nothing to distinguish; fixing the first left the second standing, and I asserted the conjunction as if it were the first alone. ⭐ THE SHAPE, and it is the one I keep producing: A PREDICTION ABOUT ANOTHER CELL'S ARTIFACT, WRITTEN INTO A BAR, IS AN UNMEASURED CLAIM WEARING A CRITERION'S CLOTHES -- and unlike a prose error it is load-bearing, because a worker cannot pass it. Three of round 3's bars had to name another cell's failure count; on two I measured and on one I guessed, and the guess is the one that failed. Disarmed when FE-s-19 passes AC8 at the corrected bar.",
     "disposition": "UNDER_INVESTIGATION"
   },
   {
@@ -1664,7 +1664,7 @@
       ]
     },
     "spec_asserts": "Round 2's suite ran 420 passing tests over a seam that could not mount from any network response. F18-AC3 asserts no two manifest entries share a hash; FE-s-18's cell orders three Holdings captures 'from three fixtures built from FE-s-13's wire holdings fixture: the observed custody basis, a target-blend basis, a node with attribution unavailable'.",
-    "world_is": "The blindness was not carelessness by any seat -- THE AVAILABLE INSTRUMENT COULD NOT SEE THE DIFFERENCE. A suite with no DOM environment cannot distinguish mounting from seeding, so every honest test written in it is silent on the one property that mattered, and the round-2 workers had no way to know. That is a substrate fact about this portal and it belongs to whoever owns the test environment, not to a cell. And the fixture half is a standing block: F18-AC3 cannot pass, ever, until the three Holdings maps carry DISTINCT `status` members -- a FIXTURE cell nobody holds, which is why this row's disarm_owner is 1.0.0_SA_CTO and not me. \u26a0 It also re-opens a question for the CTO's ruling 4: a capture set can only assert distinct hashes on a field its FIXTURES actually vary, so the scoped rule needs a third limb -- a fixture that does not carry the claimed field is a DEFECTIVE FIXTURE, not an admitted collision.",
+    "world_is": "The blindness was not carelessness by any seat -- THE AVAILABLE INSTRUMENT COULD NOT SEE THE DIFFERENCE. A suite with no DOM environment cannot distinguish mounting from seeding, so every honest test written in it is silent on the one property that mattered, and the round-2 workers had no way to know. That is a substrate fact about this portal and it belongs to whoever owns the test environment, not to a cell. And the fixture half is a standing block: F18-AC3 cannot pass, ever, until the three Holdings maps carry DISTINCT `status` members -- a FIXTURE cell nobody holds, which is why this row's disarm_owner is 1.0.0_SA_CTO and not me. ⚠ It also re-opens a question for the CTO's ruling 4: a capture set can only assert distinct hashes on a field its FIXTURES actually vary, so the scoped rule needs a third limb -- a fixture that does not carry the claimed field is a DEFECTIVE FIXTURE, not an admitted collision.",
     "disposition": "UNDER_INVESTIGATION"
   },
   {
@@ -1782,7 +1782,7 @@
         "Its extraction and its control: `git show b0dbbb7a45:<order>` returned 14297 bytes, and the SAME command against a non-existent path at the same ref returned `fatal: path ... does not exist` rather than empty -- so the read is content, not an MSYS mangle producing a clean-empty (CLAUDE.md's git-show rule, applied without being told).",
         "Bounded write: 123 lines each side, EXACTLY TWO differing (62, 63), both inside the F19-AC8 block, <status> `pending` on both sides. Only those two lines were written, CRLF preserved, result verified byte-identical to the blob modulo line endings. No merge, rebase, checkout or clean.",
         "Issuer's confirmation at HEAD after the drain: F19-AC8 `<expect>1 fail</expect>`, F19-AC7 `<expect>0 fail</expect>`, `<status>complete</status>`. The corrected bar is what landed.",
-        "\u26a0 AND MY OWN FIRST READ OF THAT WAS WRONG: I grepped `<expect>[0-9] fail</expect> | head -1` and got AC7's `0 fail`, briefly reading the correction as not landed. A pattern that matches two criteria returns the first, not the one asked about -- a wrong-object error, caught by re-reading per criterion id."
+        "⚠ AND MY OWN FIRST READ OF THAT WAS WRONG: I grepped `<expect>[0-9] fail</expect> | head -1` and got AC7's `0 fail`, briefly reading the correction as not landed. A pattern that matches two criteria returns the first, not the one asked about -- a wrong-object error, caught by re-reading per criterion id."
       ]
     },
     "spec_asserts": "1.0.0_SA_CTO ruling 5(a): 'Placeholder substitution is the ONLY edit permitted between the file's worker face and the spawned prompt; anything else lands in the FILE first.' Round 3's spawn prompts: 'Its WORKER FACE section ... is AUTHORITY over anything in this message.'",
@@ -1810,7 +1810,7 @@
       ]
     },
     "spec_asserts": "1.0.0_SA_CTO ruling 1: 'FE-s-18 NON-TERMINAL, CARRIED, BOTH CRITERIA UNTOUCHED. No amendment, no re-grade, no pass-with-a-note.' Decomposition v0.3 R3.1: 'FE-s-18 ... is re-run, never re-issued, once FE-s-19 and FE-s-20 are terminal and drained.'",
-    "world_is": "FE-s-19 and FE-s-20 ARE terminal and drained, so the stated precondition for FE-s-18's re-run is met -- and the re-run still cannot pass, because the precondition I wrote was about the SEAM and the blocker is the FIXTURES. I got the dependency right and the sufficiency wrong, which is the same error as S41 one layer up: a re-run condition is a prediction unless it was measured. WHAT ROUND 4 NEEDS, stated so the CTO can rule it without re-deriving: ONE FIXTURE CELL giving the three Holdings smoke maps distinct `status` members, after which FE-s-18's existing criteria are re-run UNCHANGED and close on their own terms. \u26a0 AND IT COUPLES TO RULING 4: a capture set can only assert distinct hashes on a field its FIXTURES vary, so the scoped rule needs a third limb -- A FIXTURE THAT DOES NOT CARRY THE CLAIMED FIELD IS A DEFECTIVE FIXTURE, NOT AN ADMITTED COLLISION. Without that limb the scoped rule would have ADMITTED this collision as legitimate.",
+    "world_is": "FE-s-19 and FE-s-20 ARE terminal and drained, so the stated precondition for FE-s-18's re-run is met -- and the re-run still cannot pass, because the precondition I wrote was about the SEAM and the blocker is the FIXTURES. I got the dependency right and the sufficiency wrong, which is the same error as S41 one layer up: a re-run condition is a prediction unless it was measured. WHAT ROUND 4 NEEDS, stated so the CTO can rule it without re-deriving: ONE FIXTURE CELL giving the three Holdings smoke maps distinct `status` members, after which FE-s-18's existing criteria are re-run UNCHANGED and close on their own terms. ⚠ AND IT COUPLES TO RULING 4: a capture set can only assert distinct hashes on a field its FIXTURES vary, so the scoped rule needs a third limb -- A FIXTURE THAT DOES NOT CARRY THE CLAIMED FIELD IS A DEFECTIVE FIXTURE, NOT AN ADMITTED COLLISION. Without that limb the scoped rule would have ADMITTED this collision as legitimate.",
     "disposition": "UNDER_INVESTIGATION"
   },
   {
@@ -1830,7 +1830,7 @@
         "FE-s-22's report: `F22-AC8 FAIL ... 446 pass / 1 skip / 1 fail`, the one failure being F18-AC3's collision, and `this cell's own 13 tests read 0 fail`. It refused rather than chasing, exactly as instructed, which is the only reason the cost was one refusal and not a wasted pass.",
         "FE-s-21 was spawned at 08:4xZ and was still running when this was found, carrying F21-AC7 at the uncorrected bar. Corrected mid-flight and the worker told, rather than left to discover it.",
         "THE PRIOR TWO INSTANCES OF THE SAME CLASS, both mine, both this session: S31 (corrected three print URLs in a face and left F18-AC17's timeout divergence eighteen rows away, found later by FE-s-23) and S36 (told one worker a row-id start that was right for three coordinates and wrong for the fourth). This is the third.",
-        "\u2b50 AND THE AGGRAVATION IS THE PART WORTH KEEPING: S31's own `world_is` already says a fix scoped to the instance you noticed leaves the class untouched. I wrote that sentence at 05:0xZ and reproduced the behaviour it describes at 08:0xZ. Knowing the rule and enumerating the population are different acts."
+        "⭐ AND THE AGGRAVATION IS THE PART WORTH KEEPING: S31's own `world_is` already says a fix scoped to the instance you noticed leaves the class untouched. I wrote that sentence at 05:0xZ and reproduced the behaviour it describes at 08:0xZ. Knowing the rule and enumerating the population are different acts."
       ]
     },
     "spec_asserts": "Row S41 states F19-AC8's bar was corrected because it was cut on a prediction. CLAUDE.md Rule 24: hunt the uncovered member BY SUBTRACTION from a printed denominator, never by a forward list of what you thought of.",
@@ -2163,7 +2163,7 @@
       ]
     },
     "spec_asserts": "Decomposition v0.3 R3.1: six cells, and FE-s-18 'is re-run, never re-issued, once FE-s-19 and FE-s-20 are terminal and drained'. 1.0.0_SA_CTO ruling 1: FE-s-18 non-terminal, carried, both criteria untouched.",
-    "world_is": "Every cell round 3 cut is done and the round still cannot close, for a reason that is now measured rather than predicted: FE-s-18's re-run condition was written about the SEAM and its blocker is the FIXTURES. \u26d4 AND THE PORT-CONDITIONALITY IS THE FINDING THE CTO MOST NEEDS, because it makes the round's own deliverable read differently to different readers: a numeric fail bar on this suite is only meaningful beside a named dev server and port, a worker assigned any other slot's port cannot pass F19-AC4/AC5 at all, and a down server produces a FAILURE that looks exactly like a regression -- I made that mistake myself once this round and nearly reported it. Round 4 owes: one fixture cell for F18-AC3; a precondition declaration on the two browser criteria so an absent server reads as SKIPPED or BLOCKED rather than FAILED; and the checker limb's opt-in made mandatory at the L6 gate (S38).",
+    "world_is": "Every cell round 3 cut is done and the round still cannot close, for a reason that is now measured rather than predicted: FE-s-18's re-run condition was written about the SEAM and its blocker is the FIXTURES. ⛔ AND THE PORT-CONDITIONALITY IS THE FINDING THE CTO MOST NEEDS, because it makes the round's own deliverable read differently to different readers: a numeric fail bar on this suite is only meaningful beside a named dev server and port, a worker assigned any other slot's port cannot pass F19-AC4/AC5 at all, and a down server produces a FAILURE that looks exactly like a regression -- I made that mistake myself once this round and nearly reported it. Round 4 owes: one fixture cell for F18-AC3; a precondition declaration on the two browser criteria so an absent server reads as SKIPPED or BLOCKED rather than FAILED; and the checker limb's opt-in made mandatory at the L6 gate (S38).",
     "disposition": "UNDER_INVESTIGATION"
   },
   {
@@ -2187,7 +2187,7 @@
       ]
     },
     "spec_asserts": "CLAUDE.md: a relay NEVER adjudicates an Andrew word wider OR narrower, and a seat may not convert his word to one agent into a gate on another. 4.0.0_SA_CRO~D's framing, endorsed by 0.0.0_AB_MSTR: each seat applies his word to itself, and a seat unsure of scope HOLDS AND ASKS rather than reasoning its way to an exemption.",
-    "world_is": "IRPT_FNTEND is the FRONTEND project -- its counterpart IRPT_BCKEND is the backend and is another lane's -- so a narrow reading puts this seat outside his words. THIS SEAT DID NOT TAKE THE NARROW READING, for three reasons recorded rather than held: (1) 'backend' is Andrew's term and bounding it is exactly the adjudication CLAUDE.md forbids; (2) round-4 cell FE-s-28 writes the WORKSPACE `.tools/to-pipeline-gate.py`, and fabric infrastructure is not obviously outside 'backend' whatever it means; (3) THE ASYMMETRY IS ONE-SIDED -- a wrong hold costs a turn, a wrong self-exemption spends whatever the pause existed to prevent, and spends it on someone else's behalf. The scope question is routed to 1.0.0_SA_CTO and this seat acts on its answer either way; disarm_owner is the CTO because only a ruling on scope, or Andrew's own word, lifts this. \u2b50 AND ONE DISCRIMINATOR FROM 0.0.0_AB_MSTR'S RELAY IS WORTH KEEPING BEYOND THIS PAUSE: a BLOCKED broker summary is NOT evidence a stop arrived -- a seat blocked on its own dependency is indistinguishable, by that read, from a seat that never heard the halt. The natural confirmation sweep cannot tell the two apart, which is the same class this project has produced all round: a green that does not measure the thing it is taken for.",
+    "world_is": "IRPT_FNTEND is the FRONTEND project -- its counterpart IRPT_BCKEND is the backend and is another lane's -- so a narrow reading puts this seat outside his words. THIS SEAT DID NOT TAKE THE NARROW READING, for three reasons recorded rather than held: (1) 'backend' is Andrew's term and bounding it is exactly the adjudication CLAUDE.md forbids; (2) round-4 cell FE-s-28 writes the WORKSPACE `.tools/to-pipeline-gate.py`, and fabric infrastructure is not obviously outside 'backend' whatever it means; (3) THE ASYMMETRY IS ONE-SIDED -- a wrong hold costs a turn, a wrong self-exemption spends whatever the pause existed to prevent, and spends it on someone else's behalf. The scope question is routed to 1.0.0_SA_CTO and this seat acts on its answer either way; disarm_owner is the CTO because only a ruling on scope, or Andrew's own word, lifts this. ⭐ AND ONE DISCRIMINATOR FROM 0.0.0_AB_MSTR'S RELAY IS WORTH KEEPING BEYOND THIS PAUSE: a BLOCKED broker summary is NOT evidence a stop arrived -- a seat blocked on its own dependency is indistinguishable, by that read, from a seat that never heard the halt. The natural confirmation sweep cannot tell the two apart, which is the same class this project has produced all round: a green that does not measure the thing it is taken for.",
     "disposition": "UNDER_INVESTIGATION"
   },
   {
@@ -2235,7 +2235,7 @@
       ]
     },
     "spec_asserts": "Rule 24: the subtraction's DOMAIN must be the CLAIM'S POPULATION, and choosing the domain is itself a claim -- a subtraction over the wrong domain arrives with a printed denominator and so READS AS MEASURED. Rule 22: name your instrument and whether it DIFFERS. 96200 direction-in-force: option 3 is the contradiction check that produces each paused project's lift condition, and IRPT_FNTEND is one of the paused projects.",
-    "world_is": "TWO INSTRUMENTS OVER ONE DENOMINATOR DISAGREE, AND THE LOUDER ONE IS WRONG. The PLANE read says the ratified canon does not reach round 4; the TERM read says IRPT_FNTEND violates the newest ruling on three of four enum members. The estate now uses `scope` in at least TWO unrelated technical senses -- STORAGE-PATH SEGMENT (Card 1's, derived from a path census) and ENTITLEMENT RESOLUTION (IRPT's) -- and the entitlement sense is DENSE (67 hits) in a project that is PAUSED and therefore up for exactly this check. The cheapest available cross-project join for a contradiction check is the TERM, and it is the one that fails here. NOTE THE DIRECTION: this wrong domain returns NON-EMPTY AND LOUD, which at least gets argued with -- but it would be argued with by the seat least able to see the entitlement plane, and it would land as a CONFIRMED CONTRADICTION on a paused project in enum-versus-enum shape. DISARM PROPOSED, NOT IMPLEMENTED: if option 1's rule set names the PLANE a term belongs to, this disarms itself and no per-project exception is needed; that is 4.0.0_SA_CRO's to take or drop and this seat asks for no carve-out. ROUTED to 4.0.0_SA_CRO~D (96200's sender, owner of the census and option 3) with a short copy to 1.0.0_SA_CTO, which holds this project's scope question with Andrew. \u26d4 THIS ROW DOES NOT SAY IRPT_FNTEND IS OUTSIDE THE PAUSE -- that is Andrew's word and it is still with him. Row S50's binding STANDS unsoftened: contracts/wire/ is in FE-s-25's write grant and those 14 files mirror the investor-reporting backend's data structures. NO BUILDING, ONE BINDING. Seat HELD throughout; this was a read-only measurement.",
+    "world_is": "TWO INSTRUMENTS OVER ONE DENOMINATOR DISAGREE, AND THE LOUDER ONE IS WRONG. The PLANE read says the ratified canon does not reach round 4; the TERM read says IRPT_FNTEND violates the newest ruling on three of four enum members. The estate now uses `scope` in at least TWO unrelated technical senses -- STORAGE-PATH SEGMENT (Card 1's, derived from a path census) and ENTITLEMENT RESOLUTION (IRPT's) -- and the entitlement sense is DENSE (67 hits) in a project that is PAUSED and therefore up for exactly this check. The cheapest available cross-project join for a contradiction check is the TERM, and it is the one that fails here. NOTE THE DIRECTION: this wrong domain returns NON-EMPTY AND LOUD, which at least gets argued with -- but it would be argued with by the seat least able to see the entitlement plane, and it would land as a CONFIRMED CONTRADICTION on a paused project in enum-versus-enum shape. DISARM PROPOSED, NOT IMPLEMENTED: if option 1's rule set names the PLANE a term belongs to, this disarms itself and no per-project exception is needed; that is 4.0.0_SA_CRO's to take or drop and this seat asks for no carve-out. ROUTED to 4.0.0_SA_CRO~D (96200's sender, owner of the census and option 3) with a short copy to 1.0.0_SA_CTO, which holds this project's scope question with Andrew. ⛔ THIS ROW DOES NOT SAY IRPT_FNTEND IS OUTSIDE THE PAUSE -- that is Andrew's word and it is still with him. Row S50's binding STANDS unsoftened: contracts/wire/ is in FE-s-25's write grant and those 14 files mirror the investor-reporting backend's data structures. NO BUILDING, ONE BINDING. Seat HELD throughout; this was a read-only measurement.",
     "disposition": "UNDER_INVESTIGATION"
   },
   {
@@ -2260,7 +2260,7 @@
       ]
     },
     "spec_asserts": "Memory/CLAUDE.md: a positive control bounds UNDER-firing only; a detector that cannot go non-zero on the positive case is a constant wearing a measurement's clothes; a fixture that cannot represent the failure cannot score it. Rule 22 DISCRIMINATION: could the evidence differ if the claim were false? Rule 22 ORDER: discrimination passes INSIDE a wrong GRAIN -- here the grain was the token pattern, and every downstream instrument then agreed about the same wrong thing.",
-    "world_is": "THE WIRE CONTRACT DECLARES A BUCKET AND A KEY, AND THIS SEAT REPORTED THAT IT DECLARED NONE. The retraction is whole: the sentence 'no surface on the governed plane' is withdrawn. \u26d4 WHAT IS *NOT* ASSERTED IS THAT THESE CONTRADICT A RULE -- a `storage_bucket: string` TYPE DECLARATION names no bucket, and conformance depends on the runtime VALUE the producer writes, which is IRPT_BCKEND's surface, not this project's. Regrading is 4.0.0_SA_CRO's and this seat does not regrade its own project. ONE LEAD OFFERED WITHOUT LEANING ON IT: ExportReceipt.ts:22 declares `server_only: true` and :38 declares `vendor_signed_url_exposed: false`, both LITERAL types, reading as a design in which the bucket and key never reach a browser -- but A LITERAL TYPE IS A DECLARATION, NOT A STATE, and the runtime is unverified. PRECISION ON THIS ROUND: round 4's WORK touches StatusEnvelope, adapt.ts, the state planes and the generator, NONE of these three files; FE-s-25's GRANT is the whole `contracts/wire/` directory, so all three sit inside the write surface. Grant and work differ and both numbers are recorded rather than the flattering one. \u2b50 THE SHAPE IS THE ONE THIS SEAT SPENT THE EVENING FINDING IN OTHERS: it told 0.0.0_AB_MSTR its D14 discriminator was self-defeating and told 4.0.0_SA_CRO~D a term check would false-positive, while its own instrument was blind to the dominant naming convention of the fourteen files it was aimed at, certified by a control it had built so that it could not fail. 0.0.0_AB_MSTR's own sentence from 96227 lands here four hours later: CORRECTING AN ERROR IS NOT THE SAME AS BEING RIGHT, AND THE CORRECTING SEAT GETS THE LEAST SCRUTINY PRECISELY WHEN IT HAS JUST EARNED SOME.",
+    "world_is": "THE WIRE CONTRACT DECLARES A BUCKET AND A KEY, AND THIS SEAT REPORTED THAT IT DECLARED NONE. The retraction is whole: the sentence 'no surface on the governed plane' is withdrawn. ⛔ WHAT IS *NOT* ASSERTED IS THAT THESE CONTRADICT A RULE -- a `storage_bucket: string` TYPE DECLARATION names no bucket, and conformance depends on the runtime VALUE the producer writes, which is IRPT_BCKEND's surface, not this project's. Regrading is 4.0.0_SA_CRO's and this seat does not regrade its own project. ONE LEAD OFFERED WITHOUT LEANING ON IT: ExportReceipt.ts:22 declares `server_only: true` and :38 declares `vendor_signed_url_exposed: false`, both LITERAL types, reading as a design in which the bucket and key never reach a browser -- but A LITERAL TYPE IS A DECLARATION, NOT A STATE, and the runtime is unverified. PRECISION ON THIS ROUND: round 4's WORK touches StatusEnvelope, adapt.ts, the state planes and the generator, NONE of these three files; FE-s-25's GRANT is the whole `contracts/wire/` directory, so all three sit inside the write surface. Grant and work differ and both numbers are recorded rather than the flattering one. ⭐ THE SHAPE IS THE ONE THIS SEAT SPENT THE EVENING FINDING IN OTHERS: it told 0.0.0_AB_MSTR its D14 discriminator was self-defeating and told 4.0.0_SA_CRO~D a term check would false-positive, while its own instrument was blind to the dominant naming convention of the fourteen files it was aimed at, certified by a control it had built so that it could not fail. 0.0.0_AB_MSTR's own sentence from 96227 lands here four hours later: CORRECTING AN ERROR IS NOT THE SAME AS BEING RIGHT, AND THE CORRECTING SEAT GETS THE LEAST SCRUTINY PRECISELY WHEN IT HAS JUST EARNED SOME.",
     "disposition": "UNDER_INVESTIGATION"
   },
   {
@@ -2329,7 +2329,7 @@
       ]
     },
     "spec_asserts": "1.0.0_SA_CTO ruling D: the <placeholders> declaration is MANDATORY at L6, so that the invocation-alignment limb ENFORCES on every issuance and the S31 divergence (a criterion corrected in the spawn prompt and never in the file) cannot read VALID. The gate's refusal text claims three refusals: no element, an empty element, and a declaration that omits a token its own invocations carry.",
-    "world_is": "TWO OF THE THREE CLAIMED REFUSALS DO NOT HOLD ON A REAL FACE. The mandatory check is satisfiable by pasting its own help text into the face's prose, and its token-omission refusal is structurally dead for the layout every face in this project uses. The checker reads the same way, so under ENFORCE it expands the whole prose span as placeholders and a genuine divergence can read VALID -- the S31 class ruling D exists to prevent. \u26d4 NOT A REGRESSION: before FE-s-28 no declaration was required at all, and the plain omission (B) IS now refused, so draining FE-s-28 widens no hazard; it ships a check weaker than its own text. The disarm is ONE next-round cell: line-anchor the reader in BOTH files in one change, with the five cases above as its battery and a fixture that puts the element BELOW the criteria. disarm_owner is 1.0.0_SA_CTO because it is fabric infrastructure reached through the L10 slug, not through this round.",
+    "world_is": "TWO OF THE THREE CLAIMED REFUSALS DO NOT HOLD ON A REAL FACE. The mandatory check is satisfiable by pasting its own help text into the face's prose, and its token-omission refusal is structurally dead for the layout every face in this project uses. The checker reads the same way, so under ENFORCE it expands the whole prose span as placeholders and a genuine divergence can read VALID -- the S31 class ruling D exists to prevent. ⛔ NOT A REGRESSION: before FE-s-28 no declaration was required at all, and the plain omission (B) IS now refused, so draining FE-s-28 widens no hazard; it ships a check weaker than its own text. The disarm is ONE next-round cell: line-anchor the reader in BOTH files in one change, with the five cases above as its battery and a fixture that puts the element BELOW the criteria. disarm_owner is 1.0.0_SA_CTO because it is fabric infrastructure reached through the L10 slug, not through this round.",
     "disposition": "UNDER_INVESTIGATION"
   },
   {
@@ -2564,7 +2564,7 @@
     "fabric": "laptop",
     "surfaced_by": "2.0.0_SA_COO~F",
     "surfaced_at": "2026-09-13T05:52:00Z",
-    "one_line": "EVERY `0 fail` BAR IS GRADED BY AN UNANCHORED MULTILINE SEARCH -- confirmed LATENT by 1.0.0_SA_CTO on a different instrument, 0 false PASS across 648 proof instances estate-wide. Shapes: (a) `0 fail` matches inside ` 10 fail`; (b) any `0 fail` anywhere in a multi-run evidence blob satisfies the bar -- F18-AC17 is on record FAIL while its own evidence MATCHES its bar; (c, the CTO's) an unanchored bound matches a PREFIX of a longer number. \u26d4 AND THIS SEAT'S INTERIM FIX WAS WRONG: `\\b0 fail` FALSE-FAILS coloured output, because an ANSI code puts `m` -- a word character -- directly before the count. The left anchor on a count is `(?<![0-9])`, the right `(?![0-9])`; no anchor closes (b).",
+    "one_line": "EVERY `0 fail` BAR IS GRADED BY AN UNANCHORED MULTILINE SEARCH -- confirmed LATENT by 1.0.0_SA_CTO on a different instrument, 0 false PASS across 648 proof instances estate-wide. Shapes: (a) `0 fail` matches inside ` 10 fail`; (b) any `0 fail` anywhere in a multi-run evidence blob satisfies the bar -- F18-AC17 is on record FAIL while its own evidence MATCHES its bar; (c, the CTO's) an unanchored bound matches a PREFIX of a longer number. ⛔ AND THIS SEAT'S INTERIM FIX WAS WRONG: `\\b0 fail` FALSE-FAILS coloured output, because an ANSI code puts `m` -- a word character -- directly before the count. The left anchor on a count is `(?<![0-9])`, the right `(?![0-9])`; no anchor closes (b).",
     "class": "OBSERVATION",
     "hazard_standing": "ARMED",
     "disarm_owner": "1.0.0_SA_CTO",
@@ -2574,15 +2574,14 @@
         "THE GRADER, read at the source: proof-of-spec-check.py:104-116 -- `matched = _re_x.search(exp, row.get(\"output_evidence\", \"\") or \"\", _re_x.S | _re_x.M) is not None`; a violation is raised only when `matched is False and status == \"PASS\"`. An unanchored search over free text decides every mechanical criterion. Confirmed independently by 1.0.0_SA_CTO (96370).",
         "SHAPE (a), tested by this seat: re.search('0 fail', s) is True for ' 10 fail', ' 20 fail', ' 110 fail' and a suite tail ending ' 10 fail'. SHAPE (b), on record: F18-AC17 status=FAIL, output_evidence carries ' 1 fail' AND a second '0 fail'; its expect MATCHES -- it is FAIL only because its worker wrote FAIL. SHAPE (c), 1.0.0_SA_CTO: `items (?:[1-5])` passes `items 15` against an upper bound of 5; AMGT_RESAPP TO-AMGT-r-4 AC1 matched the `1` of `15`, correct only because it was a lower bound.",
         "LATENT, TWO INSTRUMENTS OVER TWO POPULATIONS. This seat: 76 `0 fail` bars across 25 IRPT_FNTEND orders, 72 recorded rows across 25 proof instances, positive control F27-AC6 found, 0 rows with a deciding count ending in 0. 1.0.0_SA_CTO, UNSCOPED: 15,877 JSON files walked -> 648 proof instances -> 875 PASS rows carrying `expect`; positive control F18-AC17 flagged; 2 numeric suspects (F2-AC9, F17-AC8) and 7 word-internal suspects, every one read by hand, all genuine. ZERO false PASS estate-wide on any shape measured.",
-        "\u26d4 THE CORRECTION, tested by 1.0.0_SA_CTO with the gate's exact call (re.search, flags S|M): `\\b4 passed\\b` vs '\\x1b[1m4 passed' -> FALSE, a FALSE FAIL on a genuine pass; `(?<![0-9])4 passed` vs the same -> TRUE; `(?<![0-9])0 fail` vs ' 10 fail' -> FALSE (closes (a)); `(?<![0-9])0 fail` vs ' 1 fail\\n 0 fail' -> TRUE (no anchor closes (b)). pytest colours by default; three AMGT_RESAPP rows carry that exact shape. This seat proposed `\\b0 fail\\b` in 96361 having REASONED it, not tested it against coloured output.",
+        "⛔ THE CORRECTION, tested by 1.0.0_SA_CTO with the gate's exact call (re.search, flags S|M): `\\b4 passed\\b` vs '\\x1b[1m4 passed' -> FALSE, a FALSE FAIL on a genuine pass; `(?<![0-9])4 passed` vs the same -> TRUE; `(?<![0-9])0 fail` vs ' 10 fail' -> FALSE (closes (a)); `(?<![0-9])0 fail` vs ' 1 fail\\n 0 fail' -> TRUE (no anchor closes (b)). pytest colours by default; three AMGT_RESAPP rows carry that exact shape. This seat proposed `\\b0 fail\\b` in 96361 having REASONED it, not tested it against coloured output.",
         "WHAT CLOSES (b), per 1.0.0_SA_CTO: EVIDENCE HYGIENE now -- output_evidence carries the deciding invocation's output and nothing else; prior runs and BEFORE notes go in status_reason (F17-AC8 is the live near-miss). And a CHECKER LIMB later, the CTO's to specify -- refuse a PASS whose evidence carries a nonzero count for the noun a zero-count bar asserts, REFUSE new / ANNOUNCE legacy -- which will NOT land while IRPT_FNTEND round 4 is at L7, because changing how criteria grade under an in-flight round moves the ground under rows already graded."
       ]
     },
     "spec_asserts": "proof-of-spec-check.py:113, its own text: 'the match decides a mechanical criterion, not the worker (spine v3 L7)'. A PASS decided by the match must be impossible when the deciding run failed -- and a FAIL must be impossible when it passed.",
-    "world_is": "The match decides, and the match is a substring search over free text. No false PASS has happened anywhere in the estate; what has kept it clean is workers writing FAIL honestly and bar authors being careful, which is a description of luck and diligence, not of a control. \u26d4 THE CORRECTING SEAT'S FIX WAS ITSELF WRONG: `\\b` would have traded a LATENT false PASS for a LIVE false FAIL on every coloured runner -- caught because 1.0.0_SA_CTO tested with the gate's exact call instead of accepting the reasoning. The same class this seat recorded in S52, one more time: a check built from a string chosen rather than from the real shape. THIS SEAT'S RULE FROM NOW: every count bar it cuts is left-anchored `(?<![0-9])` and every bound right-anchored `(?![0-9])`; every face it cuts carries the evidence-hygiene rule; carried `0 fail` rows whose evidence holds more than one summary are graded by reading the DECIDING line by hand -- F18-AC16 and F18-AC17 at the FE-s-18 re-run first. disarm_owner 1.0.0_SA_CTO for the checker limb.",
+    "world_is": "The match decides, and the match is a substring search over free text. No false PASS has happened anywhere in the estate; what has kept it clean is workers writing FAIL honestly and bar authors being careful, which is a description of luck and diligence, not of a control. ⛔ THE CORRECTING SEAT'S FIX WAS ITSELF WRONG: `\\b` would have traded a LATENT false PASS for a LIVE false FAIL on every coloured runner -- caught because 1.0.0_SA_CTO tested with the gate's exact call instead of accepting the reasoning. The same class this seat recorded in S52, one more time: a check built from a string chosen rather than from the real shape. THIS SEAT'S RULE FROM NOW: every count bar it cuts is left-anchored `(?<![0-9])` and every bound right-anchored `(?![0-9])`; every face it cuts carries the evidence-hygiene rule; carried `0 fail` rows whose evidence holds more than one summary are graded by reading the DECIDING line by hand -- F18-AC16 and F18-AC17 at the FE-s-18 re-run first. disarm_owner 1.0.0_SA_CTO for the checker limb.",
     "disposition": "UNDER_INVESTIGATION"
-  }
-,
+  },
   {
     "project": "IRPT_FNTEND",
     "fabric": "laptop",
@@ -5059,6 +5058,1278 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
-  }
+  },
+  {
+    "id": "IRPT_FNTEND-W12-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~12",
+    "surfaced_at": "2026-09-21T15:00:00Z",
+    "one_line": "The FE-s-62 order's own fixtures (fe-s-6-ready.json, fe-s-7-smartx.json) are keyed by OPERATION NAME ('/api/scoped/investor-reporting/resolve-scope', 'investor-reporting/holdings-snapshot' ...) but the wire URLs are IR_ROUTE_BASE + '/directory/resolve', '/holdings/{id}' etc, so ui-smoke prints 'FIXTURES: 4 declared; 0 matched' and FIXTURE-DEAD for all four: the criteria's four captures render the unfixtured failure state ('Scope could not be resolved', Holdings 'Failed'), not a READY page. F62-AC2..AC7 still print their CLICKED/CANVAS lines.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order F62-AC2..AC7 name fe-s-6-ready.json / fe-s-7-smartx.json as producing the Analysis and Holdings states the closing pass reads.",
+    "world_is": "Measured: ui-smoke run with fe-s-7-smartx.json + --click Holdings prints 'FIXTURE-DEAD ... /api/scoped/investor-reporting/resolve-scope | performance-report | analysis-requests | holdings-snapshot'; endpoints/investor-reporting.ts:180-190 route templates are /directory/resolve, /holdings/{accountSetId}. Supplementary captures with wire-keyed fe-s-18-holdings-observed.json / fe-s-18-frozen.json (3 of 9 keys matched) do show the READY Holdings and populated Analysis; they are in the deliverables folder as supp_*. Fixture files are outside this order's paths so not edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/api/endpoints/investor-reporting.ts:180-190 @ddb172bf",
+        "deliverables/0.9.0_WK_IRPT_FNTEND~12/ac2_3.txt and ac5_6.txt (CLICKED and CANVAS lines) plus the FIXTURE-DEAD output in this worker's run",
+        "src/pages/InvestorReporting/fixtures/smoke/fe-s-7-smartx.json keys read directly"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W12-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~12",
+    "surfaced_at": "2026-09-21T15:00:00Z",
+    "one_line": "Holdings tab, real render (supp_holdings_observed_1440.png): the 'Asset category views' block is a dark #0A1733-style navy card with light ink nested inside a white panel, from the shared CategoryViewTree (imported at tabs/holdings/DrillTree.tsx:60); the pie legend and 'A-0001' link text render in indigo purple. Cites C3 (dark card on a light panel; a second dark band beside the page's band) and C8 (indigo beyond the six identity accents). The fix lives in shared @/components/CategoryViewTree, outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DESIGN.md C3: navy is text and hairline only, never a container fill; C8: purple only for one action plus the named identity accents.",
+    "world_is": "Read from the PNG at 1440 and 390: the navy gradient card holds Total Assets, Models, SMAs, Client tiles; legend 'Client / Models / SMA' and the 'A-0001' label are purple. Not edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_IRPT_FNTEND~12/supp_holdings_observed_1440.png and _390.png",
+        "portal src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:60 (import of CategoryViewTree)",
+        "portal DESIGN.md C3, C8 @ddb172bf"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W12-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~12",
+    "surfaced_at": "2026-09-21T15:00:00Z",
+    "one_line": "Holdings slice table at 1440 (supp_holdings_observed_1440.png): the rightmost column header reads 'Provenan' and its cells 'investor' -- clipped, and the Advisory column wraps to six lines; at 390 the table scrolls sideways off the Denominator column. Cites C10 (dense table cells, no clipped content). Also red-800 error text on canvas-level lines in analysis/GenerateComposer.tsx (:237,:280,:346) and holdings/DrillTree.tsx:234 is a text-only red, where C12 asks for a danger icon beside navy text. Not fixed: SliceTable's layout is coupled to the FE-s-55 withheld rendering the order says not to change, and the red lines are one error-state design, not a one-clause repair.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DESIGN.md C10 and C12 (ERROR state: status.danger icon beside navy text).",
+    "world_is": "Read from the PNGs; source lines named. Not edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_IRPT_FNTEND~12/supp_holdings_observed_1440.png",
+        "portal src/pages/InvestorReporting/tabs/analysis/GenerateComposer.tsx:237,280,346 @ddb172bf",
+        "portal src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:234 @ddb172bf"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W11-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~11",
+    "surfaced_at": "2026-09-21T17:35:00Z",
+    "one_line": "TO-FE-s-61's named fixture fe-s-10-global.json answers NONE of the routes the page requests (FIXTURES: 4 declared, 0 matched), so F61-AC2/AC3 capture the scope-failed state, not a scoped Reporting tab.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-61 THE CELL: 'reached through the default state of the route with fe-s-10-global.json answering the scoped routes'.",
+    "world_is": "portal ddb172bf, dev server on 5471: ui-smoke prints 'FIXTURES: 4 declared; 0 matched >=1 URL' and FIXTURE-DEAD for all four keys (resolve-scope, performance-report, analysis-requests, holdings-snapshot). A --netlog run shows the page actually requests POST /api/scoped/investor-reporting/directory/resolve and GET .../performance/bootstrap?start&end and .../holdings/bootstrap (all 401 unfixtured). The page then paints 'Scope could not be resolved. Nothing below is scoped' and a StatusPanel 'Failed IR-REQUEST-FAILED'. The same stale keys are in fe-s-2/3/5/6/7/9/10 smoke files (dead-key census by name only, not run). Only fe-s-14-global.json matched (3 of 4 keys) and was used for supplementary captures fe-s-61_reporting_{1440,390}_live-fixture*.png; it answers with an UNCERTAIN report, so Summary, CumulativeReturnChart, PeriodResults and AccountDetail did NOT render in any capture of this pass. fe-s-13-wire, fe-s-15-clean, fe-s-15-needs-correction and fe-s-16-ready each matched 3 keys but still painted scope-failed. Files are outside this order's paths (fixtures/), so not edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_IRPT_FNTEND~11/smoke_1440.txt and smoke_390.txt: 'FIXTURES: 4 declared; 0 matched'",
+        "netlog probe of the same route (scratch, 17:0xZ): request URLs listed above"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W11-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~11",
+    "surfaced_at": "2026-09-21T17:35:00Z",
+    "one_line": "The Reporting tab's summary cards, chart and period results are not exercised by any capture: no current smoke fixture reaches an answer-bearing report on the real route.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-61 F61-AC5: 'the Reporting tab (summary cards, chart, period results, status panel) ... read against DESIGN.md'.",
+    "world_is": "Six smoke fixture files tried on the real route at 1440 (fe-s-10-global, fe-s-14-global, fe-s-13-wire, fe-s-15-clean, fe-s-15-needs-correction, fe-s-16-ready): the body sections render only when the report availability is answer-bearing; the best reachable state was fe-s-14-global's UNCERTAIN which rendered StatusPanel ('Uncertain / Business date age: 13d / Reload'). Those sections are therefore UNREAD by eye in this pass; the printed .ir-page render components sit under render/performance/ (not on this order's write surface).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "fe-s-61_reporting_1440_live-fixture.png",
+        "fe-s-61_reporting_390_live-fixture.png"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W11-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~11",
+    "surfaced_at": "2026-09-21T17:35:00Z",
+    "one_line": "Defects seen on the header/Reporting route whose fix needs files outside this order's paths: index.tsx scope-error text is red on canvas (C12), StatusPanel Retry/Reload are filled purple second actions (C8).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-61 HOW 6: a defect needing any other file is ONE surprise row.",
+    "world_is": "1440 capture fe-s-61_reporting_1440.png: 'Scope could not be resolved...' (src/pages/InvestorReporting/index.tsx:105) paints dark-red text with no status.danger icon, C12 ERROR state says a status.danger icon beside NAVY text, never a red block of text. Same capture: StatusPanel's Retry button and, in the live-fixture capture, Reload, are filled #5F3BE3 buttons beside the Export primary; C8 grants ONE filled purple action per view. StatusPanel.tsx and index.tsx are READ-ONLY to this cell. Also the first-arm evidence for the retired canvas: FE-s-11 printed CANVAS: rgb(195, 202, 218); this pass prints CANVAS: rgb(244, 246, 250) at 1440 and 390.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "fe-s-61_reporting_1440.png",
+        "fe-s-61_reporting_1440_live-fixture.png"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W11-S4",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~11",
+    "surfaced_at": "2026-09-21T17:35:00Z",
+    "one_line": "Unfixed findings ON this cell's own files that tests outside its grant pin, plus the firm dropdown's verbatim Model Portfolios styling: cohort chip rounded-md (C11), FirmDropdown rounded-lg/shadow-sm/font-semibold (C11, C1), slate-* ink in ScopeSummary/PeriodControls.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-61 HOW 6: if a fix breaks a test outside the grant, keep the finding and file a row.",
+    "world_is": "ScopeSummary.tsx cohort buttons carry rounded-md; fe-s-42/every-site.test.ts:132 and fe-s-48/withheld.test.ts:219 assert the exact class string, so a fix is not possible inside this grant (not attempted). FirmDropdown.tsx PRIMARY_ON_SILVER_CLASS is a byte copy of ModelPortfolios.tsx:1268-1275 (both import PageSurfaceControl from @/components/ui/PageSurfaceControl, ModelPortfolios.tsx:49; FirmDropdown.tsx imports the same) and carries rounded-lg (8px), shadow-sm (C11 only box-shadow is focus) and font-semibold 600 (C1); fe-s-3/dropdown-class.test.ts:73 pins the primary-text class. Changing only this copy would make the two dropdowns differ, which FWD-12 is about; the defect belongs to both. ScopeSummary/PeriodControls text uses slate-600/900 rather than navy #163372 on panel (C3 allows secondary #6B7280 on panel only; slate-600 is #475569, not a contract colour).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "src/pages/InvestorReporting/header/FirmDropdown.tsx PRIMARY_ON_SILVER_CLASS",
+        "src/pages/ModelPortfolios.tsx:1268-1275"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~13",
+    "surfaced_at": "2026-09-21T16:00:00Z",
+    "id": "IRPT_FNTEND-W13-S1",
+    "one_line": "TO-FE-s-63's F63-AC5/AC6 print invocation cannot print 'REFS RESOLVED: 1 of 1' at portal HEAD: the fixtures it names (fe-s-11-print.json, fe-s-9-modal.json) key on retired route names and every key prints FIXTURE-DEAD, and the print route also needs ?tenant=&scope=&revision= that the invocation does not carry.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "Order FE-s-63 F63-AC5/F63-AC6 (and the fixture of AC2-AC4) assert that fe-s-11-print.json / fe-s-9-modal.json, run against investor-reporting/print?bundle=perf-narrative-fixture-1 and investor-reporting --click Export, construct the READY state and print 'REFS RESOLVED: 1 of 1'.",
+    "world_is": "At portal DEV ddb172bf (dev server 5483): AC5 and AC6 as written print NO 'REFS RESOLVED' line; the page renders 'This bundle was not rendered ... perf-narrative-fixture-1 is absent'; the run prints 'FIXTURES: 3 declared; 0 matched >=1 URL' and FIXTURE-DEAD for all three keys. AC2/AC3/AC4 print CLICKED: Export and CANVAS: rgb(244, 246, 250) but 'FIXTURES: 5 declared; 0 matched' (the modal shows 'carries no performanceReport'), so the state read is a fixture-less one. The v1 LiveClient (FE-s-14) requests /api/scoped/investor-reporting/performance/{scope}, /directory/resolve, /holdings/, /narrative/ (netlog: performance/bootstrap, directory/resolve, holdings/bootstrap all 401), and PrintEntry sends tenant/scope/revision as empty strings unless the URL carries them. Even the working-shape invocation of F18-AC12 (fe-s-16-print-narrative.json with tenant=F-49F&scope=fp-49f-0824&revision=rev-49f-000091) now prints 'rev-49f-000091 is absent' and no REFS RESOLVED (diag_print_1440.out): FIXTURES 2 declared, 1 matched (performance/ answered 200 twice with start=&end=), narrative/ dead. I did not find which step rejects the answered fixture (resolveOne swallows the cause). F63-AC5 and F63-AC6 are REFUSED, not graded PASS.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~13/ac5.out and ac6.out (no REFS RESOLVED line; FIXTURE-DEAD x3)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~13/ac2_3.out (FIXTURES: 5 declared; 0 matched)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~13/diag_print_1440.out (working-shape fixture, same refusal)",
+        "portal src/api/endpoints/investor-reporting.ts:1333-1353 (LiveClient unless VITE_IR_USE_FIXTURES) and render/PrintEntry.tsx:105-124 (tenant/scope/revision default to empty)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~13",
+    "surfaced_at": "2026-09-21T16:00:00Z",
+    "id": "IRPT_FNTEND-W13-S2",
+    "one_line": "render/print.css carried the retired silver ground #c4cbdb as the screen page field of the print route (DESIGN.md C3 canvas is #F4F6FA) while ui-smoke's CANVAS line printed rgb(244, 246, 250) for the same capture: the CANVAS line does not measure the print route's own ground.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "Order FE-s-63 F63-AC3..AC6 read the printed 'CANVAS: rgb(244, 246, 250)' as the page's ground.",
+    "world_is": "BEFORE capture fe-s-63_fix1_before_print_ground_1440.png shows the print route ground as silver (about rgb(196, 203, 219) = #c4cbdb, print.css:139 .ir-print-root, comment 'the silver canvas') while the same run printed 'CANVAS: rgb(244, 246, 250)': the smoke instrument measures the app body, not .ir-print-root. Fixed in print.css (screen ground only; @media print already paints white): AFTER capture fe-s-63_fix1_after_print_ground_1440.png reads as the light canvas. The fix is visible only on the refusal panel because no document renders (see S1). The stylesheet header still states 'COLOUR LAW: the canvas is the silver cool grey' and brand.tokens.json cool_grey is untouched.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~13/fe-s-63_fix1_before_print_ground_1440.png",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~13/fe-s-63_fix1_after_print_ground_1440.png",
+        "portal src/pages/InvestorReporting/render/print.css:16-18 and :138-140 @ DEV ddb172bf"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~13",
+    "surfaced_at": "2026-09-21T16:00:00Z",
+    "id": "IRPT_FNTEND-W13-S3",
+    "one_line": "F60-AC6 (period-in-context partial-disclosure note colour) could NOT be rendered and read: no print document renders at portal HEAD from any fixture I could construct, so the note's on-screen appearance is unread; source-level findings only.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "Order FE-s-63 F63-AC8(2) asserts the note (classes ir-note ir-muted, #595959) is RENDERED and READ.",
+    "world_is": "Not rendered (S1). From source only: print.css :272-276 .ir-note and :285-287 .ir-muted are #595959 on the white .ir-page sheet (#FFFFFF), not on the ground; DESIGN.md has no clause naming a print sheet: C3 names page, panel, band, sunken, and C9's secondary ink #6B7280 is 'on a panel only', so #595959 appears in no C3/C9 table. Also in print.css and not read in a capture: box-shadow at :520 (C11) and 'Consolas' monospace at :290 .ir-mono (C1/C2).",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/render/print.css:272-290,518-522 @ DEV ddb172bf",
+        "portal DESIGN.md C1,C2,C3,C9,C11"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S69",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-21T22:59:19Z",
+    "one_line": "The export modal's receipt card reads 'Loading / No source age yet' before anyone presses Create export, beside a fully rendered Ready preview: export/ReceiptPanel.tsx:42-44 hard-codes the LOADING state whenever there is no receipt, so an idle panel reads as a request in flight.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "export/ReceiptPanel.tsx's own header (FE-s-9, FE-s-16): the receipt and the status envelope drive the job state through StatusPanel. PRD FWD-12 DONE WHEN: an advisor has used the export without being shown anything new to learn.",
+    "world_is": "Read at portal DEV 8894e765: export/ReceiptPanel.tsx:42-44 builds { state: 'LOADING', sourceAsOf: null, safeActions: [], publicReasonCode: null } when `receipt` is null and hands it to the shared StatusPanel. In deliverables/0.9.0_WK_IRPT_FNTEND~13/fe-s-63_export_1440.png, read by 2.0.0_SA_COO~F, the card's status row shows 'Loading' and 'No source age yet' beside the 'Create export' button while the preview beneath it renders a Ready performance report. The run printed 'FIXTURES: 3 declared; 3 matched', so this is not a dead-fixture artifact, and this seat's own re-run on merged DEV 243089eb printed the same 3 of 3. NOT measured: whether the state ever leaves LOADING once Create export is pressed (no capture presses it), and whether an existing StatusPanel state fits an idle receipt (the state/ enum is unread). Any fix is a new idle state in shared state/ or tabs/StatusPanel.tsx, both read-only to every round-10 cell, so this is a row and not a fix. Worker 0.9.0_WK_IRPT_FNTEND~13 recorded the same reading in its result file as an observation and filed no row.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/export/ReceiptPanel.tsx:42-44 @8894e765",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~13/fe-s-63_export_1440.png",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~13/ac2_3.out (FIXTURES: 3 declared; 3 matched)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S70",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-21T23:46:00Z",
+    "one_line": "PageSurfaceControl's surfaceBase carries font-medium (weight 500) although DESIGN.md C1 allows weights 400 and 700 only; the primitive has six production importers, four of them AdvisorIntelligence partner dashboards outside the IRPT product, so restyling it is not an IRPT change. 1.0.0_SA_CTO (msg 99324) ruled it out of round 11 and parked it for a portal-wide design pass.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "portal/DESIGN.md C1: Lato is the only typeface, at weights 400 and 700 only.",
+    "world_is": "Read at portal DEV 243089eb: src/components/ui/PageSurfaceControl.tsx:13 surfaceBase is 'inline-flex items-center justify-center rounded-[3px] text-xs font-medium ...' (Tailwind font-medium is weight 500). Production importers, counted by import STATEMENT read line by line and not by name match: pages/ModelPortfolios.tsx:49, pages/InvestorReporting/header/FirmDropdown.tsx:30, pages/AdvisorIntelligence/_partners/inflection/index.tsx:19, .../_partners/demo/index.tsx:15, .../_partners/cottonwood/index.tsx:28, .../_partners/49financial/index.tsx:16 (six files); components/ui/__tests__/PageSurfaceControl.demo.tsx:2 is a demo. Files that match the NAME but do not import it: pages/Positioning/Positioning.tsx:59 (commented-out import), App.tsx:27 and :490 (lazy-loads the demo page), pages/AdvisorIntelligence/_shared/components/PartnerAnalytics.tsx:1032 (JSX comment). NOT measured: whether each of the six call sites passes a className that overrides the weight, and what weight each renders. Round-11 cell FE-s-69 exports a class token for exactly two of the six call sites (FirmDropdown and ModelPortfolios) and does not touch surfaceBase. Owner per the CTO ruling: 1.0.0_SA_CTO, un-parks when Andrew's IRPT-only priority lifts or a portal design project opens.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/components/ui/PageSurfaceControl.tsx:13 @243089eb",
+        "portal src/pages/ModelPortfolios.tsx:49 and src/pages/InvestorReporting/header/FirmDropdown.tsx:30 @243089eb",
+        "portal src/pages/AdvisorIntelligence/_partners/{inflection/index.tsx:19,demo/index.tsx:15,cottonwood/index.tsx:28,49financial/index.tsx:16} @243089eb",
+        "1.0.0_SA_CTO msg 99324 (ruling: out of IRPT scope, parked)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W15-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~15",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "TO-FE-s-65's F65-AC16 invocation (--click Export --delay 'api/scoped/investor-reporting/export=4000') cannot reach the export endpoint: clicking the toolbar 'Export' control only OPENS ExportModal, it does not submit -- the POST fires only from the modal's OWN 'Create export' button, a SECOND, differently-named control. As literally written the criterion measures 'DELAYED: ...' absent; the --delay/--click instrument itself is sound (verified separately, both against a URL that genuinely fires and against this same URL with an added second click).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F65-AC16's invocation: `... --click Export --delay 'api/scoped/investor-reporting/export=4000' --console DELAYED`, expecting `DELAYED: .*\\(4000ms\\)`.",
+    "world_is": "Run verbatim at portal DEV 243089eb, dev port 5900, fixtures export-ready.json: rc=0, stdout carries `CLICKED: Export` and no `DELAYED` line at all (full output filed at org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~15/f65_ac16.png beside it, console log reproduced in this worker's result.md). ExportButton.tsx:171-180 (`data-slot=\"export-button-control\"`, text `Export`) only calls `setOpen(true)` on click -- the actual submit is ExportModal.tsx's own button at :258-266 (`data-slot=\"submit-export\"`, text `Create export`/`Creating export...`), wired through `onSubmit={gate.open ? handleSubmit : undefined}` in ExportButton.tsx:193, which POSTs `/api/scoped/investor-reporting/export` per submit.ts:71's own comment. Diagnostic-only (not the graded run): the identical invocation plus `--click 'Create export'` DOES print `DELAYED: api/scoped/investor-reporting/export (4000ms)`, and a --delay target that genuinely fires on page load alone (`directory/resolve`) also prints DELAYED correctly with zero clicks -- so the instrument's --delay/--click grammar is not at fault; the criterion's own invocation is missing the modal's second click. FE-s-71 (named by F65-AC16's cell text as the cell that depends on this arm) will need `--click Export --click 'Create export' --delay ...` to construct the in-flight state this cell's grammar promises.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-65.the-instrument-content-style-ground-assertions.md, F65-AC16 invocation and expect, read at HEAD of this worktree",
+        "portal src/pages/InvestorReporting/export/ExportButton.tsx:171-180,193 @243089eb8f49514e99c97360259ce70c0772c859",
+        "portal src/pages/InvestorReporting/export/ExportModal.tsx:257-266 @243089eb8f49514e99c97360259ce70c0772c859",
+        "portal src/pages/InvestorReporting/export/submit.ts:71 @243089eb8f49514e99c97360259ce70c0772c859 (comment: `POST /api/scoped/investor-reporting/export`)",
+        "measured run (this worker, 2026-09-21): official F65-AC16 invocation, rc=0, no `DELAYED` line; diagnostic run with an added `--click 'Create export'` prints `DELAYED: api/scoped/investor-reporting/export (4000ms)`; diagnostic run with `--delay 'investor-reporting/directory/resolve=4000'` alone (no click) prints `DELAYED: investor-reporting/directory/resolve (4000ms)`"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W15-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~15",
+    "surfaced_at": "2026-09-22T02:00:00Z",
+    "one_line": "A coordinator message (2.0.0_SA_COO~F, mid-task-order) asserted the governing TO's face 'now carries a COO AMENDMENT note and the corrected [F65-AC16] invocation' with a second click, at workspace CLOUD c71fad69a4 -- measured at that exact commit, the TO file is BYTE-IDENTICAL to this worker's own prior version (git diff empty) and F65-AC16 still reads the single-click invocation. No later commit exists on CLOUD past c71fad69a4 either. The drain commit's OWN subject at c71fad69a4 says 'order left pending' -- the amendment described in the message was never made.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Coordinator message text (2.0.0_SA_COO~F, this drive): \"I amended F65-AC16's invocation to add that second click; the order in your worktree ... now carries a 'COO AMENDMENT' note and the corrected invocation (--click Export --click 'Create export' --delay ... --console DELAYED).\"",
+    "world_is": "git diff HEAD c71fad69a4 -- org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-65.the-instrument-content-style-ground-assertions.md returned EMPTY (0 lines) both before and after this worker fast-forwarded to c71fad69a4; `git show c71fad69a4:<path> | grep -i 'amendment\\|Create export'` returned no output; CLOUD itself resolves to c71fad69a4 (git rev-parse CLOUD == git rev-parse HEAD after the ff), so no later commit exists to carry a since-superseded amendment either. The drain commit c71fad69a4's own subject line reads '... F65-AC16 FAIL (invocation bug, root cause found by the worker), order left pending' -- consistent with no amendment having landed. This worker did NOT invent the described invocation, edit the TO (out of grant -- task-orders/ is not in this cell's <paths>), or re-run F65-AC16 under an unrecorded invocation, since doing so would misalign the proof instance's recorded invocation against the governing order's own <invocation> text (the checker's invocation-alignment limb reads the FILE, never a chat message). Reported instead of executed. hazard_standing INERT: no criterion was mis-graded on this basis, no artifact was produced under a false premise, and the worker's own report states the discrepancy plainly rather than silently completing on it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff HEAD c71fad69a4 -- org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-65.the-instrument-content-style-ground-assertions.md (this worker's own worktree, before and after `git merge --ff-only c71fad69a4`): 0 lines",
+        "git show c71fad69a4:org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-65.the-instrument-content-style-ground-assertions.md, F65-AC16's <criterion> block, read directly: invocation still `--click Export --delay 'api/scoped/investor-reporting/export=4000' --console DELAYED`, single click, no 'Create export'",
+        "git rev-parse CLOUD == c71fad69a4384dcd8a4a49fde91fc20bda4c90da; git log --oneline c71fad69a4..CLOUD: empty -- CLOUD has not moved past the drain commit",
+        "git show --stat c71fad69a4: Merge a90969da5c b54d015b53, subject 'drain(IRPT_FNTEND round 11, FE-s-65, 2.0.0_SA_COO~F): the instrument, worker 15; 17 of 18 criteria PASS, F65-AC16 FAIL (invocation bug, root cause found by the worker), order left pending' -- 17 files changed, all under this worker's own deliverables/investigation path, none touching task-orders/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W16-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~16",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "TO-FE-s-66's F66-AC6/F66-AC7 expect a 'FIXTURES-MATCH: matched N of N' line from scripts/ui-smoke.mjs, but this worktree's copy of that script carries neither the FIXTURES-MATCH line nor the --expect family of flags at all -- FE-s-65 (the cell that builds them, per the order's own 'THE INSTRUMENT' note) is still <status>pending</status>, so the instrument this order's base claims to already carry has not landed. The dispatching message to this worker additionally asserted 'your criteria only use existing FIXTURES-MATCH/FIXTURES output' -- that existing output is 'FIXTURES: N declared; M matched >=1 URL' (a different line, a different count semantics), not 'FIXTURES-MATCH: matched N of N'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-66 'THE INSTRUMENT' clause: 'your worktree already carries it -- if `ui-smoke.mjs` refuses `--expect` as an unknown flag, STOP: your base is wrong, report it.' F66-AC6/F66-AC7 <expect>: regex `FIXTURES-MATCH: matched (\\d+) of \\1(?![0-9])`.",
+    "world_is": "Read at this worktree's HEAD (portal/scripts/ui-smoke.mjs, 375 lines): zero occurrences of the strings 'FIXTURES-MATCH', '--expect', '--expect-text', '--expect-style', '--expect-ground', '--inject-css', '--delay' (grep denominator: 0 of 375 lines). The script does not validate flags (unknown args are simply never read), so passing --expect does not 'refuse' loudly -- it is a silent no-op, which is the STOP condition in substance even though it does not match the order's literal description of how the wrongness would announce itself. MEASURED, not inferred: ran `node scripts/ui-smoke.mjs investor-reporting <tmp>.png --port 5910 --width 1440 --fixtures .../fixtures/smoke/fe-s-13-wire.json --expect '[data-slot=\"reporting-body\"]'` against this worktree's own dev server (port 5910, verified up via curl 200 on /investor-reporting) -- output carried no EXPECT line and printed `FIXTURES: 9 declared; 3 matched >=1 URL`, never a `FIXTURES-MATCH:` line in any form. `IRPT_FNTEND.TO-FE-s-65.the-instrument-content-style-ground-assertions.md:8` reads `<status>pending</status>`. Consequence for this order: F66-AC6 and F66-AC7 are run exactly as invoked (after authoring the two named fixtures) and reported FAIL-by-measured-output against their literal <expect>, per BOUNDS' REFUSE clause -- the criterion's expectation is not edited or weakened.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/scripts/ui-smoke.mjs (375 lines, this worktree HEAD) -- 0 of 375 lines match FIXTURES-MATCH|--expect|--expect-text|--expect-style|--expect-ground|--inject-css|--delay",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-65.the-instrument-content-style-ground-assertions.md:8 <status>pending</status>",
+        "measured run: node scripts/ui-smoke.mjs investor-reporting <tmp>/probe.png --port 5910 --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json --expect '[data-slot=\"reporting-body\"]' -- stdout tail: 'FIXTURES: 9 declared; 3 matched >=1 URL', no EXPECT/FIXTURES-MATCH line"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W22-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~22",
+    "surfaced_at": "2026-09-21T23:30:00Z",
+    "one_line": "FE-s-72's own BOUNDS flagged this: multiple Analysis/Holdings text slots resolve their computed text colour to an oklch(...) value (Tailwind's default slate-500/600/700/800 palette) and DESIGN.md names no clause covering it -- the same class of gap as row IRPT_FNTEND-W13-S2 (an instrument/contract mismatch, not a rendering defect).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "This TO's own BOUNDS clause: \"If you find a state's text colour resolves to an oklch(...) value with no DESIGN.md clause naming it ... file it as ONE row citing the computed value and the absence of a clause -- the same class of gap as row W13-S2.\" DESIGN.md (portal/DESIGN.md, this worktree HEAD) is described as \"the one visual authority for portal/\" whose C9 sets minimum-contrast bars for text \"against its actual backdrop\", measured against a closed list of named tokens (colors: block, all hex).",
+    "world_is": "Measured this worker's own run (ui-smoke.mjs --expect-style, dev server this worktree, port 5970): EXPECT-STYLE[[data-slot=\"requests-unavailable\"]::color]: FAIL oklch(0.446 0.043 257.281) (Analysis tab, fixtures/smoke/fe-s-18-frozen.json, --click Analysis); EXPECT-STYLE[[data-slot=\"holdings-classification-gap\"]::color]: FAIL oklch(0.279 0.041 260.031) and EXPECT-STYLE[[data-slot=\"slice-row\"]:nth-of-type(2) [data-slot=\"slice-supervision\"]::color]: FAIL oklch(0.372 0.044 257.287) (Holdings tab, this cell's own fixtures/withheld.json, --click Holdings). All three source elements carry Tailwind utility classes (RequestList.tsx:38 `text-slate-600`; HoldingsTab.tsx:99 `text-slate-800`; SliceTable.tsx:143 `text-slate-700`), never a DESIGN.md token class (`text-[hsl(var(--primary))]` etc). portal/DESIGN.md's `colors:` frontmatter block (read in full, lines 11-88) names 43 hex tokens across palette/roles/status/data/dark-mode and zero oklch values; its clause C9 states contrast bars are measured against these named tokens and states no exemption for a Tailwind default utility colour. No DESIGN.md clause names slate-500/600/700/800 or gives a hex/oklch equivalence for them, so a reviewer citing a clause number per the file's own review contract (\"a reviewer rejects a page by citing a clause number\") has no clause to cite for these three (and, by the same mechanism, every other `text-slate-*` utility class this round's cells use).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/DESIGN.md:11-88 (colors: frontmatter block) @ this worktree HEAD -- 43 named hex tokens, 0 oklch values, read in full",
+        "portal/src/pages/InvestorReporting/tabs/analysis/RequestList.tsx:38 `data-slot=\"requests-unavailable\" ... className=\"text-sm text-slate-600\"` @ this worktree HEAD",
+        "portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx:99 `data-slot=\"holdings-qualification\" className=\"... text-slate-800\"` @ this worktree HEAD",
+        "portal/src/pages/InvestorReporting/tabs/holdings/SliceTable.tsx:143 `data-slot=\"slice-supervision\" className=\"py-1 pr-3 text-slate-700\"` @ this worktree HEAD",
+        "measured run (this worker, 2026-09-21): node scripts/ui-smoke.mjs investor-reporting <tmp> --port 5970 --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json --click Analysis --expect-style '[data-slot=\"requests-unavailable\"]::color' -> EXPECT-STYLE[...]: FAIL oklch(0.446 0.043 257.281)",
+        "measured run (this worker, 2026-09-21): node scripts/ui-smoke.mjs investor-reporting <tmp> --port 5970 --width 1440 --fixtures src/pages/InvestorReporting/__tests__/fe-s-72/fixtures/withheld.json --click Holdings --expect-style '[data-slot=\"holdings-classification-gap\"]::color' --expect-style '[data-slot=\"slice-row\"]:nth-of-type(2) [data-slot=\"slice-supervision\"]::color' -> FAIL oklch(0.279 0.041 260.031); FAIL oklch(0.372 0.044 257.287)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W18-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~18",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "ScopeSummary.tsx:125's cohort-chip button carries `rounded-md`, a C11 violation (radii are 2/3/4px or a pill, never 6px) -- filed per TO-FE-s-68's own cell text rather than fixed, because rendering the chip needs an authoritative cohort selected via a directory/search row, a state this cell's grant cannot construct (no search-selection interaction is in scope, and no fixture alone populates `row`/`selection`).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-68 cell text: \"The cohort chip (ScopeSummary.tsx:125, rounded-md) needs a directory/search row with an authoritative cohort selected: if you cannot construct that state within your grant, do not claim a visual finding on it -- file it as a row citing the source line (C11: radii are 2/3/4px or a pill; rounded-md is 6px) and move on.\"",
+    "world_is": "src/pages/InvestorReporting/header/ScopeSummary.tsx:125 (this worktree, portal HEAD 12cdfd434104b18835c8aa72a81d9d773807db10) reads `className=\"rounded-md px-2 py-0.5 text-[11px] text-slate-900 ring-1 ring-slate-500/40 hover:ring-slate-700\"` on the cohort-chip <button>, unchanged by this worker. This build carries no Tailwind config/`@theme` override for `--radius-md` (checked: no `tailwind.config.*` file exists; src/index.css defines only `--radius-hairline`/`--radius-control`/`--radius`/`--radius-pill`/`--radius-circle`, none named `--radius-md`), so `rounded-md` resolves to Tailwind v4's un-overridden default. Measured directly on the SAME utility class on a sibling element in this cell's own grant (tabs/reporting/AnswerStatus.tsx's `[data-slot=\"answer-status\"]`, before this worker's fix): `ui-smoke.mjs --expect-style '[data-slot=\"answer-status\"]::border-radius'` printed `6px` (rendered at portal DEV 243089eb-based worktree, dev server port 5930, fixture reporting-answer-bearing.json). Since `rounded-md` is one Tailwind utility resolving from one shared (absent) theme token, the cohort chip's `rounded-md` reads the identical 6px on this build; not independently re-measured on the chip itself because no fixture in this cell's fixtures/smoke/ populates `row`/`selection` (both fixtures used by F68-AC2/AC5/etc. render with `row: null`, so no cohort chip is ever mounted in any of this cell's captures -- confirmed by reading every f68_*.png: none show a 'Cohort' block). Left unfixed per the cell text's own instruction; no criterion in this TO tests this element.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-68.reporting-answer-bearing-and-scope-strip.md (cell text, THE CELL paragraph), read at this worktree's HEAD",
+        "portal/src/pages/InvestorReporting/header/ScopeSummary.tsx:125 @12cdfd434104b18835c8aa72a81d9d773807db10 (this worker's own commit, line unchanged from base)",
+        "portal/src/index.css:234-238 @12cdfd434104b18835c8aa72a81d9d773807db10 -- --radius-hairline/--radius-control/--radius/--radius-pill/--radius-circle declared, no --radius-md",
+        "measured run (this worker, 2026-09-21): node scripts/ui-smoke.mjs investor-reporting <scratch>.png --port 5930 --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/reporting-answer-bearing.json --expect-style '[data-slot=\"answer-status\"]::border-radius' -- printed `EXPECT-STYLE[[data-slot=\"answer-status\"]::border-radius]: FAIL 6px` (target omitted on purpose, actual value read)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~18/f68_answer_1440.png, f68_answer_390.png, f68_partial.png, f68_ground_1440.png, f68_ground_390.png, f68_control.png, f68_partial_control.png, f68_style_before.png -- read by this worker, none render a cohort-chip button (row is null in every fixture this cell uses)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W17-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~17",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "TO-FE-s-67's own BOUNDS names the DrillTree :234 revision-mismatch text as 'not confirmed reachable from any existing fixture' and directs wrapping it from source regardless (done). Measured beyond that: it is not merely un-fixtured, it is STRUCTURALLY UNREACHABLE from ANY wire fixture through the current adapter, because both sides of the comparison it depends on are derived from the SAME expression in ONE function.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-67 BOUNDS: \"The DrillTree revision-mismatch text (:234) is not confirmed reachable from any existing fixture; if you cannot reach it, wrap it anyway from source and file a row naming which fixture you tried.\"",
+    "world_is": "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx's `handleDrill` sets `refusedRef` (which the :234 block renders from) only when `canRenderDrill(target, snapshot)` is false; `canRenderDrill` (contracts sibling `tabs/holdings/slices.ts:205-210`) is `!revisionMismatch(node, snapshot)`, and `revisionMismatch` (slices.ts:198-203) is `node.provenance.sourceRevision !== snapshot.sourceSetRevision`. In `contracts/adapt.ts`'s `adaptHoldingsSnapshot` (the ONE function that builds a HoldingsSnapshot from any wire payload), `sourceSetRevision` is computed ONCE at :938 (`wire.source_set_revision.map(...).join(',')`) and then assigned to BOTH sides of the later comparison: the snapshot's own `sourceSetRevision` (via `wireEnvelope`'s `sourceRevision: sourceSetRevision` and the returned `sourceSetRevision` field) AND every node's `provenance.sourceRevision` (:965 inside the `nodes` map, and again at :977 in `wireEnvelope`'s own parts) -- literally the same local variable, read twice. So for EVERY node of EVERY snapshot this adapter ever produces, `node.provenance.sourceRevision === snapshot.sourceSetRevision` BY CONSTRUCTION, and `revisionMismatch` can never return true from any wire fixture, however its `source_set_revision` array is shaped (checked: even a fixture naming several distinct sources still joins them into ONE string applied identically on both sides). Tried: `fe-s-18-holdings-observed.json` (this cell's own AC7/AC9/AC10 fixture) and `fe-s-14-global.json` (AC4's) -- neither carries per-node revision data at all, consistent with the adapter never reading one. Fixing this needs `adapt.ts` or `slices.ts`, both outside this cell's `<paths>` (portal/src/pages/InvestorReporting/index.tsx, tabs/StatusPanel.tsx, tabs/analysis/GenerateComposer.tsx, tabs/holdings/DrillTree.tsx, __tests__/fe-s-67/), so the :234 block is wrapped in PanelError from source per BOUNDS and left unreachable, exactly as F67-AC12 anticipates naming as open.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:205-214 (handleDrill), this worktree, uncommitted edit only wraps the :234-adjacent JSX -- the gating logic is untouched",
+        "portal/src/pages/InvestorReporting/tabs/holdings/slices.ts:198-210 @0054b81d3c277539dd4f370e02cb8066cd2543a1 (revisionMismatch, canRenderDrill)",
+        "portal/src/pages/InvestorReporting/contracts/adapt.ts:938,965,977 @0054b81d3c277539dd4f370e02cb8066cd2543a1 (adaptHoldingsSnapshot: one `sourceSetRevision` local, assigned onto both the snapshot's own field and every node's provenance)",
+        "read: src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json and fe-s-14-global.json -- neither holdings entry carries a per-node revision field distinct from the snapshot's own"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W20-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~20",
+    "surfaced_at": "2026-09-21T21:00:00Z",
+    "one_line": "F70-AC2/AC3's --expect-ground selector (`section[aria-labelledby=\"asset-category-views\"] > div`) matches the Eyebrow wrapper div FIRST in document order, not CategoryOverview's own card, so the assertion prints the identical white PASS whether CategoryViewTree's new `ground` prop is 'light' (this cell's fix) or 'dark' (the pre-fix default) -- verified by re-running the exact AC2 invocation against a temporary ground=\"dark\" revert of DrillTree.tsx. F70-AC4's control (which paints that SAME first-match div directly via --inject-css) correctly discriminates.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "This TO's criterion rule: \"(d) GROUND MEASURED ON THE ACTUAL CONTAINER -- --expect-ground on the element that carries the surface, not the page field\"; and HOW item 4: \"A control is a claim. Before you trust a passing assertion, run its wrong-state arm and confirm it FAILS. If a control passes, the assertion cannot tell the states apart: say so and fix the assertion, do not report it as met.\" ui-smoke.mjs's own groundColor() (scripts/ui-smoke.mjs:406-419) is `document.querySelector(sel)` (FIRST match in document order) then walks `parentElement` for the first non-transparent background-color.",
+    "world_is": "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:222-223 (this worktree HEAD) wraps `<CategoryViewTree ... />` in `<div data-slot=\"holdings-drill-tree\" className=\"... bg-white p-6 space-y-4\">`; inside CategoryViewTree.tsx's `<section aria-labelledby=\"asset-category-views\">` (this cell's own file, this worktree HEAD) the FIRST rendered child is `<div className=\"space-y-2\">` (the Eyebrow wrapper, itself carrying no background class -- transparent), and CategoryOverview's own `<div className=\"overflow-hidden rounded-[4px] border border-black\">` (the actual card, GraphicPanel-or-light-container) is the SECOND child. So `document.querySelector('[data-slot=\"holdings-drill-tree\"] section[aria-labelledby=\"asset-category-views\"] > div')` resolves to the Eyebrow div, and groundColor()'s parentElement walk from a transparent div passes straight through `<section>` (also no background) to the outer bg-white wrapper, returning white regardless of what CategoryOverview itself renders. MEASURED both ways on this worker's own dev server (port 5951, fixture fe-s-18-holdings-observed.json, --click Holdings): with the committed fix (`ground=\"light\"`) the exact AC2 invocation printed `EXPECT-GROUND[...]: PASS rgb(255, 255, 255)` / `ASSERT-GROUND: 1 of 1 met`; with DrillTree.tsx temporarily edited to `ground=\"dark\"` (CategoryOverview rendering its ORIGINAL dark GraphicPanel, no fix applied) the IDENTICAL invocation printed the IDENTICAL `EXPECT-GROUND[...]: PASS rgb(255, 255, 255)` / `ASSERT-GROUND: 1 of 1 met`. F70-AC4, which targets the SAME selector but paints it directly via --inject-css (so the first-match div itself gets a non-transparent background rather than relying on an ancestor), correctly printed `ASSERT-GROUND: 0 of 1 met` in both states. This cell's actual, final, committed implementation is genuinely correct (confirmed independently by reading f70_irpt_1440.png and f70_irpt_390.png: navy-on-white card, dark GraphicPanel gone) -- this row is about the ASSERTION's discriminating power on AC2/AC3 specifically, not about whether the fix was made. Per BOUNDS (\"do not edit a criterion's expectation\"), AC2 and AC3 are reported PASS-by-output (the literal invocation was run unmodified and its output matches <expect> verbatim) with this row filed alongside, per the criterion rule's own control discipline.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/scripts/ui-smoke.mjs:406-419 (groundColor(), this worktree HEAD) -- `document.querySelector(sel)` then `el.parentElement` walk for the first non-transparent background-color",
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:222-223 @ this worktree HEAD (this worker's commit) -- `bg-white` ambient wrapper around `<CategoryViewTree ... ground=\"light\" />`",
+        "portal/src/components/CategoryViewTree.tsx (this worker's commit) -- `<section aria-labelledby=\"asset-category-views\">`'s first rendered child is the Eyebrow `<div className=\"space-y-2\">`, CategoryOverview's own card div is the second child",
+        "measured run (this worker, 2026-09-21, committed state, ground=\"light\"): cd portal && node scripts/ui-smoke.mjs investor-reporting <tmp>.png --port 5951 --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --click Holdings --expect-ground '[data-slot=\"holdings-drill-tree\"] section[aria-labelledby=\"asset-category-views\"] > div=rgb(255, 255, 255)' -> `EXPECT-GROUND[...]: PASS rgb(255, 255, 255)`, `ASSERT-GROUND: 1 of 1 met`",
+        "measured run (this worker, 2026-09-21, temporary uncommitted revert to ground=\"dark\" in DrillTree.tsx, reverted immediately after): identical invocation -> identical `EXPECT-GROUND[...]: PASS rgb(255, 255, 255)`, `ASSERT-GROUND: 1 of 1 met`",
+        "measured run (this worker, 2026-09-21, committed state): F70-AC4's own invocation (--inject-css painting the same selector silver) -> `EXPECT-GROUND[...]: FAIL rgb(196, 203, 219)`, `ASSERT-GROUND: 0 of 1 met` -- confirms the inject-css control (direct paint) discriminates where the plain ground read (ancestor walk) does not",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~20/f70_irpt_1440.png, f70_irpt_390.png -- read directly, confirm the actual committed fix (navy-on-white card, no dark GraphicPanel) independent of this row's finding about the assertion"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W21-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~21",
+    "surfaced_at": "2026-09-21T23:30:00Z",
+    "one_line": "F71-AC2/AC3's `--expect-ground '[data-slot=\"export-modal\"] [role=\"dialog\"]=rgb(244, 246, 250)'` can never match in the live browser: Headless UI (@headlessui/react 2.2.9) portals the whole Dialog subtree to a `#headlessui-portal-root` div appended at the END of `document.body`, so the `[role=\"dialog\"]` element's DOM ancestor chain never passes back through the in-place `[data-slot=\"export-modal\"]` wrapper -- measured, both criteria print `EXPECT-GROUND[...]: FAIL null` (querySelector on the compound selector returns null, not a wrong colour). AC4 still PASSES (its <expect> checks only ASSERT-CONTENT, which the criterion's ground line is not part of); AC5's <expect> (`ASSERT-GROUND: 0 of 1 met`) also textually matches, but the control is VACUOUS -- the same 'selector matches nothing' FAIL occurs identically before and after --inject-css paints anything, so AC5 cannot actually discriminate the wrong-ground state it claims to test.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F71-AC2 <expect>: `ASSERT-CONTENT: 3 of 3 met[\\s\\S]*ASSERT-STYLE: 2 of 2 met[\\s\\S]*ASSERT-GROUND: 1 of 1 met`; F71-AC3 <expect>: `ASSERT-CONTENT: 1 of 1 met[\\s\\S]*ASSERT-GROUND: 1 of 1 met`; both invocations name `--expect-ground '[data-slot=\"export-modal\"] [role=\"dialog\"]=rgb(244, 246, 250)'`, i.e. the order's own premise is that this compound selector resolves to the dialog's ground colour in the live DOM.",
+    "world_is": "Measured this worktree, portal DEV base + this cell's own commit not yet landed (pre-commit, working tree): running F71-AC2's exact invocation prints `EXPECT-GROUND[[data-slot=\"export-modal\"] [role=\"dialog\"]]: FAIL null` and `ASSERT-GROUND: 0 of 1 met` (not the required 1 of 1); F71-AC3 the same. A standalone probe (`portal/.scratch/probe-dialog.mjs`, this worker's own, not committed) walked the live DOM after `--click Export`: `document.querySelector('[data-slot=\"export-modal\"] [role=\"dialog\"]')` -> null; `document.querySelectorAll('[role=\"dialog\"]').length` -> 1, and that one element's ancestor chain is `DIV[role=dialog] < DIV < DIV < DIV#headlessui-portal-root < BODY < HTML` -- entirely outside `[data-slot=\"export-modal\"]`, which itself renders as `<div data-slot=\"export-modal\"></div>`, empty, once the Dialog is open (client-side; the file's own header comment already documents the SSR half of this: 'Headless UI's Dialog does not emit its body content under renderToStaticMarkup'). Re-running with the ancestor prefix dropped, `--expect-ground '[role=\"dialog\"]=rgb(244, 246, 250)'` alone, PASSES: `EXPECT-GROUND[[role=\"dialog\"]]: PASS rgb(244, 246, 250)`. `node_modules/@headlessui/react/package.json` version: `2.2.9`. `portal/src/ui/components/catalyst/dialog.tsx` (not in this order's `<paths>`, read-only) is the sole producer of `<Headless.Dialog>`/`role=\"dialog\"` in this tree; no flag or prop in this file's own `Dialog()` disables Headless UI's portal. Consequence, per BOUNDS' REFUSE clause: F71-AC2 and F71-AC3 are reported FAIL-by-measured-output against their literal <expect> (the criterion's expectation is not edited or weakened); F71-AC4 is reported PASS (its <expect> never reads the ASSERT-GROUND line); F71-AC5 is reported PASS-by-literal-match with this row cited, because the control cannot fail differently under the wrong-state arm than under the right one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run, F71-AC2's exact invocation (this worker, this worktree, pre-commit working tree): stdout carries `EXPECT-GROUND[[data-slot=\"export-modal\"] [role=\"dialog\"]]: FAIL null` and `ASSERT-GROUND: 0 of 1 met`",
+        "measured run, F71-AC3's exact invocation: same, `ASSERT-GROUND: 0 of 1 met`",
+        "measured run, F71-AC5's exact invocation: `INJECT-CSS: [data-slot=\"export-modal\"] [role=\"dialog\"]{background-color:#c4cbdb !important}` followed by `EXPECT-GROUND[[data-slot=\"export-modal\"] [role=\"dialog\"]]: FAIL null` -- the inject-css line itself never logs a target count, and the ground read is identical to AC2/AC3's unpainted case",
+        "portal/.scratch/probe-dialog.mjs (this worker's own scratch probe, not committed): `document.querySelector('[data-slot=\"export-modal\"] [role=\"dialog\"]')` -> null; `document.querySelectorAll('[role=\"dialog\"]').length` -> 1; ancestor path printed `DIV#headlessui-dialog-_r_8_ < DIV < DIV < DIV#headlessui-portal-root < BODY < HTML`; `document.body` direct children printed `['DIV id=root','SCRIPT id=','SPAN id=recharts_measurement_span','DIV id=headlessui-portal-root']`",
+        "probe re-run with `--expect-ground '[role=\"dialog\"]=rgb(244, 246, 250)'` (ancestor prefix dropped): `EXPECT-GROUND[[role=\"dialog\"]]: PASS rgb(244, 246, 250)`, `ASSERT-GROUND: 1 of 1 met`",
+        "portal/node_modules/@headlessui/react/package.json: \"version\": \"2.2.9\"",
+        "portal/src/ui/components/catalyst/dialog.tsx:19-52 (read-only to this order's <paths>): `Dialog()`'s only content is `<Headless.Dialog {...props}>`, no portal-disabling prop passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W17-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~17",
+    "surfaced_at": "2026-09-21T00:10:00Z",
+    "one_line": "F67-AC10's literal invocation of __tests__/fe-s-32/holdings-driver.mjs (a --port/--width/--fixtures/--out flag shape) crashes (rc=1, ENOENT) because the driver's real CLI is POSITIONAL (<port> <scenario-map.json> <captureDir>) and its scenario-map input shape differs from a flat ui-smoke.mjs fixture file. The order authorizes adapting the call, and the adapted run succeeds (rc=0, DRIVER OK) and substantively answers the cell's own question (the slice table's overflowed columns ARE reachable by scroll) -- but the driver's own stdout vocabulary (CAPTURE/RESULT/PAGE CRASHES/DRIVER OK json lines) never contains the literal strings 'SAVED' or 'scrollLeft' under EITHER invocation, so F67-AC10's <expect>SAVED|scrollLeft</expect> cannot be satisfied by this reused driver as written, regardless of adaptation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F67-AC10 <invocation>cd <WS>/portal && timeout 120 node src/pages/InvestorReporting/__tests__/fe-s-32/holdings-driver.mjs --port <PORT> --width 390 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --out <WS>/.../f67_overflow_scrolled.png</invocation><expect>SAVED|scrollLeft</expect>; cell text: \"If this driver's CLI shape differs from this invocation, adapt the call and say so in your result -- do not invent a second mechanism.\"",
+    "world_is": "LITERAL run (this worktree, portal DEV 0054b81d + this worker's edits, dev server on port 5920): `node src/pages/InvestorReporting/__tests__/fe-s-32/holdings-driver.mjs --port 5920 --width 390 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --out <path>` -> rc=1, stack trace `Error: ENOENT: no such file or directory, open '...\\portal\\5920'` -- the script reads argv[2] as PORT ('--port', unused as a flag), argv[3] as the JSON map PATH (the literal string '5920'), per holdings-driver.mjs:37-39,66. Neither 'SAVED' nor 'scrollLeft' appears (the process never gets past the readFileSync). ADAPTED run (diagnostic, not the graded invocation): wrapped fe-s-18-holdings-observed.json's flat url->envelope map as one scenario `{\"fe-s-18-holdings-observed\": <the same map>}` (matching the driver's documented input shape at holdings-driver.mjs:27-29) and ran `node .../holdings-driver.mjs 5920 <scenario-map>.json <captureDir>` -> rc=0, 'DRIVER OK', four CAPTURE lines (390 and 1440, each a full-page PNG plus a table-scrolled PNG since scrollWidth 826 > clientWidth 260 at 390), and RESULT json showing `visibility` BEFORE scroll `{\"basis\":true,\"supervision\":false,\"advisory\":false}` and AFTER scroll (`SCROLL_TO_CLASSIFICATION`) `{\"basis\":false,\"supervision\":true,\"advisory\":true}` at 390 -- i.e. the columns clipped at 390 (supervision, advisory) ARE brought into view by scrolling, never permanently clipped. `grep -c 'SAVED\\|scrollLeft'` over the full adapted-run log: 0. holdings-driver.mjs's own console.log calls (read directly, :198-228) print only 'CAPTURE', 'RESULT', '  served(...)', 'PAGE CRASHES:' and 'DRIVER OK' -- the literal source, at any invocation shape, cannot emit either token this criterion's <expect> requires.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, literal invocation as written): rc=1, stderr 'Error: ENOENT: no such file or directory, open ...\\\\portal\\\\5920'",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-32/holdings-driver.mjs:37-39,66,166-228 @0054b81d3c277539dd4f370e02cb8066cd2543a1 (argv shape; the ONLY console.log call sites in the file)",
+        "measured run (this worker, adapted invocation per BOUNDS' own permission): rc=0, 'DRIVER OK', RESULT lines with visibility={basis:true,supervision:false,advisory:false} before scroll and {basis:false,supervision:true,advisory:true} after, at 390 width",
+        "grep -c 'SAVED\\|scrollLeft' over the adapted run's full captured stdout: 0 of however many lines",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-67.c12-error-presentation-shared-surfaces.md F67-AC10 <expect> and cell text, read at HEAD of this worktree"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W17-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~17",
+    "surfaced_at": "2026-09-21T00:20:00Z",
+    "one_line": "F67-AC3's content control ('scope resolves normally') genuinely fails: `fixtures/smoke/default.json` omits the `unprojected_grant` field on ALL 12 of its declared route entries, which `contracts/envelope.ts:278-280`'s parser treats as a hard EnvelopeMismatch on EVERY operation (not just a state-specific one) -- so the resolve-scope call under this fixture throws regardless of --fail, and `isError` in index.tsx is true for a reason unrelated to this cell's fix (a fixture defect, not a wiring defect), making AC3 measure the wrong thing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F67-AC3 <invocation> (same as F67-AC2, no --fail): fixtures/smoke/default.json, <expect>ASSERT-CONTENT: 0 of 2 met</expect> -- intended as the wrong-state (successful-resolve) negative control for F67-AC2's scope-error assertion.",
+    "world_is": "Run verbatim (portal DEV 0054b81d + this worker's edits, dev port 5920, fixtures default.json, no --fail): `ASSERT-CONTENT: 2 of 2 met` -- the SAME positive match as F67-AC2's forced-failure run, i.e. the control does not discriminate. Root cause, read directly: `contracts/envelope.ts:278-280` -- `if (!('unprojected_grant' in body) || !isUnprojectedGrantShaped(body.unprojected_grant)) throw new EnvelopeMismatch('unprojected_grant', operation)` -- fires for EVERY operation, unconditionally. `node -e \"JSON.parse(fs.readFileSync('default.json'))\"` over all 12 of default.json's declared entries: `'unprojected_grant' in <entry>` is false for all 12 of 12 (denominator printed). POSITIVE CONTROL, to confirm root cause: patched a scratch copy of default.json adding `unprojected_grant: {count:0, denominator:1, kinds:[]}` to ONLY the directory/resolve entry and re-ran the identical invocation (fixtures pointed at the patched copy) -> `ASSERT-CONTENT: 0 of 2 met`, matching F67-AC3's <expect> exactly -- confirming the missing field, not this cell's markup, is what makes the literal fixture fail. `fixtures/smoke/default.json` is outside this cell's grant (<paths>: index.tsx, tabs/StatusPanel.tsx, tabs/analysis/GenerateComposer.tsx, tabs/holdings/DrillTree.tsx, __tests__/fe-s-67/), so it is reported rather than patched, per BOUNDS.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker), F67-AC3's literal invocation: 'ASSERT-CONTENT: 2 of 2 met' (expected '0 of 2 met')",
+        "portal/src/pages/InvestorReporting/contracts/envelope.ts:278-280 @0054b81d3c277539dd4f370e02cb8066cd2543a1",
+        "node -e enumeration over fixtures/smoke/default.json @0054b81d3c277539dd4f370e02cb8066cd2543a1: 0 of 12 declared entries carry 'unprojected_grant'",
+        "measured run (this worker), same invocation against a scratch-patched copy of default.json with unprojected_grant added to directory/resolve only: 'ASSERT-CONTENT: 0 of 2 met' (positive control confirming root cause)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W17-S4",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~17",
+    "surfaced_at": "2026-09-21T00:30:00Z",
+    "one_line": "TO-FE-s-67's HOW step reads literally 'asserting PanelError is imported by all of them [the four touched files]', but StatusPanel.tsx (one of the four) never carried a bare text-red-800 block -- its own defect was the second filled-primary button, fixed with buttonClass, not PanelError -- so a literal reading would add an unused PanelError import serving no fix. This worker's own __tests__/fe-s-67/panel-error-reuse.test.ts asserts PanelError-import only on the three files that actually wrapped a text-red-800 block, and buttonClass-import on StatusPanel.tsx instead; text-red-800 absence (outside a comment) is still asserted across all four.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-67 cell text: \"Add a bun test guard (__tests__/fe-s-67/panel-error-reuse.test.ts, reading the four touched files as text like the existing colour-law scanner does) asserting PanelError is imported by all of them and text-red-800 no longer appears in any, outside a comment; print the count.\"",
+    "world_is": "portal/src/pages/InvestorReporting/tabs/StatusPanel.tsx (this worker's edit and the pre-edit file alike) never contained the string 'text-red-800' -- grep of the pre-edit file at portal DEV 0054b81d: 0 occurrences; its own fix per the SAME cell text is 'replace it with buttonClass(...)'. This worker's test (panel-error-reuse.test.ts) therefore asserts, per file: PanelError-import for index.tsx / GenerateComposer.tsx / DrillTree.tsx (all true, printed), buttonClass-import for StatusPanel.tsx (true, printed), and text-red-800 outside a comment = 0 for all four (printed) -- run and PASSING as part of the AC11 whole-suite bar. Not self-graded past this: recorded here so the CVO (F67-AC12) sees the literal-vs-substantive reading was a judgment call, not a silent narrowing.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-67.c12-error-presentation-shared-surfaces.md, cell text paragraph beginning 'Reuse, don't invent.', read at HEAD of this worktree",
+        "portal/src/pages/InvestorReporting/tabs/StatusPanel.tsx @0054b81d3c277539dd4f370e02cb8066cd2543a1 (pre-edit): 0 occurrences of 'text-red-800'",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-67/panel-error-reuse.test.ts (this worker, this worktree): bun test output -- 'PANEL-ERROR IMPORTS: 3 of 3', 'BUTTONCLASS IMPORTS: 1 of 1', 'TEXT-RED-800 OUTSIDE COMMENTS: 0 of 4 files scanned'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W17-S5",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~17",
+    "surfaced_at": "2026-09-22T00:10:00Z",
+    "one_line": "The COO amendment at commit 5cad85da0b (verified: object exists, touches ONLY the TO file, both AMENDMENT blocks confirmed) correctly fixed F67-AC3 (fixture swap, re-verified PASS: ASSERT-CONTENT 0 of 2 met) and F67-AC10's substantive <expect> (DRIVER OK, re-verified PASS). But F67-AC10's corrected <invocation> text itself contains a non-executable bracketed span that is not a declared placeholder, so proof-of-spec-check.py's ENFORCE-mode invocation-alignment limb refuses ANY real, re-runnable command recorded against it -- the instance stays INVALID (rc=1) on this one mechanical ground even though every criterion's substantive bar is now met.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-67 (post-amendment 5cad85da0b) F67-AC10 <invocation>: \"cd <WS>/portal && timeout 120 node src/pages/InvestorReporting/__tests__/fe-s-32/holdings-driver.mjs <PORT> <scenario-map.json, one entry wrapping fixtures/smoke/fe-s-18-holdings-observed.json> <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~17/f67_overflow/\"; TO <placeholders>WS, PORT</placeholders> (declares only these two).",
+    "world_is": "proof-of-spec-check.py's PLACEHOLDER_TOKEN_RE (:1324) is `<([A-Z][A-Z0-9_]*)>` -- all-caps only. The bracketed span `<scenario-map.json, one entry wrapping fixtures/smoke/fe-s-18-holdings-observed.json>` starts with a lowercase letter and contains commas, slashes and spaces, so it matches NEITHER a declared placeholder NOR the token grammar at all; `_invocation_pattern` (:1357-1374) therefore regex-escapes it as LITERAL text a recorded invocation must match verbatim. MEASURED: recorded this worker's own real, actually-run, re-runnable invocation (`node .../holdings-driver.mjs 5920 <this worker's real scenario-map path> <capture dir>/`, the exact command that printed `DRIVER OK` and produced both PNGs) as the row's `invocation` field and ran `python .tools/proof-of-spec-check.py <this instance> F67-AC1..AC12 --governing-order <TO>` from inside this worktree: `VIOLATION: invocation-alignment[F67-AC10]: the RECORDED invocation is NOT the criterion's invocation modulo the placeholder(s) ['PORT', 'WS']` (TO-CRITERION line quotes the bracketed span verbatim; INSTANCE-RECORD line quotes this worker's real command) -- `violations=1`, `INVALID (rc=1)`. This is the ONLY violation (rerun with F67-AC10's own row status flipped PASS<->FAIL made no difference to the violation count -- the invocation-alignment limb does not read a row's status). The substantive fix is genuinely correct and independently re-verified by this worker (fixture-swap and DRIVER OK both re-ran clean), so this is a residual defect in the AMENDMENT's invocation text, not in the underlying assertion. Not self-graded past this: reported rather than forced by writing the unexecutable bracket text as this worker's own 'invocation' (which would misrepresent what was actually run) or by editing the criterion further (out of this worker's authority per BOUNDS: 'an order defect is reported, and the issuer amends it' -- the task-order file is this worker's grant for the <status> flip only).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git cat-file -t 5cad85da0b -> commit; git show --name-only 5cad85da0b -> exactly one path (the TO file); diff against 5cad85da0b~1 read directly, confirming both COO AMENDMENT blocks verbatim",
+        ".tools/proof-of-spec-check.py:1323-1324 (PLACEHOLDERS_TAG_RE, PLACEHOLDER_TOKEN_RE) and :1357-1374 (_invocation_pattern), read directly, this worktree",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-67.c12-error-presentation-shared-surfaces.md F67-AC10 <invocation>, this worker's worktree copy synced to 5cad85da0b (diff --strip-trailing-cr: 0 lines against `git show 5cad85da0b:<path>`)",
+        "measured run (this worker): python .tools/proof-of-spec-check.py org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~17/IRPT_FNTEND.TO-FE-s-67.c12-error-presentation-shared-surfaces.proof_of_spec.json F67-AC1,F67-AC2,F67-AC3,F67-AC4,F67-AC5,F67-AC6,F67-AC7,F67-AC8,F67-AC9,F67-AC10,F67-AC11,F67-AC12 --governing-order <TO path>, run from inside this worktree -- violations=1, INVALID (rc=1), the sole VIOLATION line naming F67-AC10's invocation-alignment mismatch, quoted verbatim in world_is",
+        "the SAME re-run of F67-AC10's corrected positional invocation this tick: rc=0, last stdout line 'DRIVER OK', both PNGs (fe-s-32_holdings_fe_s_18_holdings_observed_390.png and its _table_scrolled sibling) re-read confirming scroll-reachability -- the substantive bar independently re-confirmed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W20-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~20",
+    "surfaced_at": "2026-09-22T04:20:00Z",
+    "one_line": "The COO amendment to F70-AC2/AC3/AC4 (commit ea18c43025, closing row W20-S1) corrected WHICH div the selector reaches (`:nth-of-type(2)`) but the corrected bare --expect-ground read STILL does not discriminate ground=\"light\" from ground=\"dark\" -- because ui-smoke.mjs's groundColor() reads ONLY computed backgroundColor and GraphicPanel's own root div (the dark branch) never sets one, only backgroundImage, so it is transparent to the walk exactly like the Eyebrow div was. Verified by the same mutant-revert discipline the amendment itself credited; the amendment's own claim (\"it now genuinely discriminates ground=\\\"light\\\" from ground=\\\"dark\\\"\") is NOT confirmed by this measurement.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "COO AMENDMENT text (this TO, inserted after F70-AC4 at commit ea18c43025): \"Verified independently ... the corrected selector `section[aria-labelledby=\\\"asset-category-views\\\"] > div:nth-of-type(2) > div` reads PASS rgb(255, 255, 255) against the real fixed build, and a wrong-ground --inject-css paint on that SAME selector reads FAIL rgb(196, 203, 219) -- it now genuinely discriminates.\" Coordinator relay message (this turn): \"it now genuinely discriminates ground=\\\"light\\\" from ground=\\\"dark\\\", which the original selector could not\", with an explicit instruction to report any discrepancy from this description rather than trust it.",
+    "world_is": "portal/scripts/ui-smoke.mjs:404-419 (groundColor(), this worktree HEAD) reads ONLY `getComputedStyle(el).backgroundColor` at each step of its parentElement walk -- it never inspects `backgroundImage`. portal/src/ui/components/graphic/HeroGraphic.tsx's `GRAPHIC_PANEL_STYLE` (read in full, :35-43) sets ONLY `backgroundImage` and `backgroundSize`; it declares no `backgroundColor`, and `GraphicPanel`'s className (`relative overflow-hidden` plus the caller's classes, none a Tailwind bg-color utility) sets none either -- so GraphicPanel's own root div computes to a fully TRANSPARENT backgroundColor even though it visibly renders a dark gradient via backgroundImage. Consequence: the corrected selector `section[aria-labelledby=\"asset-category-views\"] > div:nth-of-type(2) > div` resolves (both grounds) to the exact same structural position -- CategoryOverview's inner content div -- and in the 'light' branch that div is literally `bg-white` (a real backgroundColor, matched directly), while in the 'dark' branch that SAME position is GraphicPanel's div (backgroundColor transparent, image-only), so groundColor() walks PAST it to the next non-transparent ancestor, which is DrillTree.tsx's own ambient `bg-white` wrapper (:222) -- returning white for BOTH grounds, coincidentally, because the ambient wrapper and the light-variant's own surface happen to be the same colour. MEASURED on this worker's own dev server (port 5951, fixture fe-s-18-holdings-observed.json, --click Holdings, corrected selector both times): committed state (ground=\"light\") -> `EXPECT-GROUND[...]: PASS rgb(255, 255, 255)`; DrillTree.tsx temporarily reverted to ground=\"dark\" (confirmed live via a direct --expect-style probe on the SAME selector: `background-image` PASSed the dark radial/linear gradient string, i.e. HMR genuinely applied the dark branch, while `background-color` on that identical element FAILed as `rgba(0, 0, 0, 0)`) -> the bare ground assertion STILL printed the IDENTICAL `EXPECT-GROUND[...]: PASS rgb(255, 255, 255)` / `ASSERT-GROUND: 1 of 1 met`. Only F70-AC4's OWN control (--inject-css, which sets a real `background` directly on the matched node via `!important`, bypassing the transparent-walk entirely) correctly discriminates -- and did so even under the ORIGINAL pre-amendment selector (see row W20-S1's own evidence), so AC4 was never actually broken by either selector version; the residual defect is specific to the BARE (non-inject-css) ground read AC2/AC3 use. This cell's actual, committed implementation is still independently confirmed correct by direct PNG reads (f70_irpt_1440.png, f70_irpt_390.png: navy-on-white card, no dark GraphicPanel) -- this row, like W20-S1, is about the ASSERTION's discriminating power, not about whether the fix was made. Per BOUNDS (\"do not edit a criterion's expectation\"), F70-AC2/AC3/AC4 are reported PASS-by-output against the amended <expect> (every invocation was run exactly as the amendment states, unmodified, and each output matches its <expect> verbatim).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/scripts/ui-smoke.mjs:404-419 (groundColor(), this worktree HEAD) -- reads only `getComputedStyle(el).backgroundColor` at every step; `backgroundImage` is never read by this function",
+        "portal/src/ui/components/graphic/HeroGraphic.tsx:35-43 (GRAPHIC_PANEL_STYLE, this worktree HEAD) -- `backgroundImage` and `backgroundSize` only, no `backgroundColor` key; GraphicPanel's own className (:46-53) carries no bg-color utility",
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:222 @ this worktree HEAD (this worker's commit) -- ambient `bg-white` wrapper around `<CategoryViewTree ... ground=\"light\" />`",
+        "measured run (this worker, 2026-09-22, committed state, ground=\"light\", corrected selector): node scripts/ui-smoke.mjs investor-reporting <tmp>.png --port 5951 --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --click Holdings --expect-ground '[data-slot=\"holdings-drill-tree\"] section[aria-labelledby=\"asset-category-views\"] > div:nth-of-type(2) > div=rgb(255, 255, 255)' -> `EXPECT-GROUND[...]: PASS rgb(255, 255, 255)`, `ASSERT-GROUND: 1 of 1 met`",
+        "measured run (this worker, 2026-09-22, temporary uncommitted revert to ground=\"dark\", corrected selector, IDENTICAL invocation): `EXPECT-GROUND[...]: PASS rgb(255, 255, 255)`, `ASSERT-GROUND: 1 of 1 met` -- unchanged from the fixed state",
+        "measured run (this worker, 2026-09-22, ground=\"dark\", confirming HMR applied): --expect-style '...> div:nth-of-type(2) > div::background-image!=none' -> PASS (dark radial/linear gradient string printed); --expect-style '...::background-color' (bare, no operator) -> FAIL rgba(0, 0, 0, 0) -- confirms the dark branch was genuinely live and its backgroundColor is transparent",
+        "measured run (this worker, 2026-09-22, committed state, corrected selector): F70-AC4's own invocation (--inject-css painting the corrected selector silver) -> `EXPECT-GROUND[...]: FAIL rgb(196, 203, 219)`, `ASSERT-GROUND: 0 of 1 met` -- confirms the inject-css control still discriminates",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-70.categoryviewtree-light-variant-for-drilltree.md (this worktree, post-amendment) -- COO AMENDMENT block, verified byte-identical to commit ea18c43025 (diff --strip-trailing-cr, only <status> differs)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W24-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~24",
+    "surfaced_at": "2026-09-22T05:58:27Z",
+    "one_line": "F74-AC7's literal invocation (--expect-style '[data-slot=\"holdings-breadcrumb\"]::color!=rgb(95, 59, 227)' after --click Holdings) expects PASS, but the breadcrumb's live computed colour genuinely IS rgb(95, 59, 227) at this worktree's HEAD, so the literal run correctly, truthfully reads FAIL -- adapted the comparator to rgb(22, 51, 114) (navy) to exercise the identical code path and get a genuine PASS, and reported both.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-74's criterion F74-AC7 (REGRESSION CONTROL): invocation `cd <WS>/portal && ... node scripts/ui-smoke.mjs investor-reporting <out>.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --click Holdings --expect-style '[data-slot=\"holdings-breadcrumb\"]::color!=rgb(95, 59, 227)'`, `<expect>PASS</expect>` -- i.e. the task order asserts that a real, resolved element's inequality check against rgb(95, 59, 227) reads PASS.",
+    "world_is": "Run verbatim on this worker's dev server (port 5904, this worktree HEAD): `EXPECT-STYLE[[data-slot=\"holdings-breadcrumb\"]::color]: FAIL rgb(95, 59, 227)` -- the breadcrumb's actual computed `color` IS exactly rgb(95, 59, 227), so the inequality against that same value correctly FAILs; this is the instrument discriminating correctly, not a defect in it. portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:179-192 shows every `data-slot=\"holdings-breadcrumb\"` button (at any drill depth, any breadcrumb index) shares the identical className `text-[hsl(var(--primary))] underline` -- so no click sequence changes this element's colour away from primary purple. The same file's own comment (:182-187) records that the navy-vs-purple choice for this element 'is left as a judgment call this order does not make -- recorded for the CVO', i.e. genuinely undecided at HEAD, not yet landed as navy by any sibling round-12 cell. Adapting the comparator to rgb(22, 51, 114) (navy, a value known to differ from the live colour) while keeping the selector, operator, click step and fixtures identical reads `EXPECT-STYLE[[data-slot=\"holdings-breadcrumb\"]::color]: PASS rgb(95, 59, 227)` -- a genuine PASS on a real resolved element via the same non-null branch the control is meant to exercise. Reported both the literal (FAIL, true) and the adapted (PASS, true) runs; did not alter DrillTree.tsx (outside this worker's <paths> grant) and did not weaken F74-AC7's own <expect> text.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:179-192 (this worktree HEAD) -- every holdings-breadcrumb button shares className `text-[hsl(var(--primary))] underline` regardless of index/depth",
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:182-187 (this worktree HEAD) -- comment records the navy-vs-purple choice as undecided, 'recorded for the CVO'",
+        "measured run (this worker, literal F74-AC7 invocation, port 5904, 2026-09-22): EXPECT-STYLE[[data-slot=\"holdings-breadcrumb\"]::color]: FAIL rgb(95, 59, 227)",
+        "measured run (this worker, adapted comparator rgb(22, 51, 114), identical selector/operator/click steps, port 5904, 2026-09-22): EXPECT-STYLE[[data-slot=\"holdings-breadcrumb\"]::color]: PASS rgb(95, 59, 227)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-74.instrument-fail-closed-ground-and-key-validity.md criterion F74-AC7 (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W27-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~27",
+    "surfaced_at": "2026-09-22T07:17:28Z",
+    "one_line": "FE-s-77's own mandate (\"replace EVERY slate-* ink/border class this round's own fix introduced\") correctly changes ReceiptPanel.tsx's public-reason-code class from text-slate-700 to the ratified text-[#6B7280], which breaks __tests__/fe-s-42/every-site.test.ts:322's byte-pinned reasonLineBefore() helper -- a file outside this cell's <paths> grant -- so F77-AC6's whole-suite bar reads 1 fail instead of 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-77 cell text: \"Replace every slate-* ink/border class this round's own fix introduced inside the modal region with its navy equivalent per DESIGN.md's inversion rule (C5).\" F77-AC6: `bun test src/pages/InvestorReporting` must print `(?<![0-9])0 fail`. BOUNDS: \"A defect needing another cell's file is ONE surprise row, never a wider grant.\"",
+    "world_is": "portal/src/pages/InvestorReporting/export/ReceiptPanel.tsx (this worker's commit 78241722, portal repo) changes the public-reason-code paragraph's className from `mt-1 text-xs text-slate-700` to `mt-1 text-xs text-[#6B7280]`, the ratified DESIGN.md C3 secondary ink (legal on this component's own panel ground) -- exactly what the cell text orders for every slate-* class in the modal region. __tests__/fe-s-42/every-site.test.ts:320-322 (outside this cell's <paths>, which grant only export/ and __tests__/fe-s-77/) carries `reasonLineBefore()`, a hand-written byte-for-byte reference string for this same element, hard-coded to `class=\"mt-1 text-xs text-slate-700\"` and compared with `===` (`namedBare = namedLine === reasonLineBefore(named)` at :344). After this cell's fix that comparison is false, and F42-AC5's test fails. Measured: `bun test src/pages/InvestorReporting` (dev server stopped, port confirmed closed, IRPT_FE_DEV_PORT unset) -> `626 pass, 22 skip, 1 fail`, the one failure named `F42-AC5 -- the receipt reason line flags a code the contract does not name, through FE-s-40 rule`. This is the single cause: no other file this cell touched (ExportModal.tsx's chip/close-button classes, AppliedBranding.tsx) is referenced by any other test's hard-coded string (checked by search across __tests__/ for every changed literal). The fix is correct and was not reverted or weakened to dodge this; hazard_standing ARMED because the whole-suite bar stays red for any future criterion that greps '0 fail' until a task order reaching __tests__/fe-s-42/every-site.test.ts:322 updates reasonLineBefore()'s hard-coded string to text-[#6B7280] (or the issuer otherwise re-resolves the pinned byte-comparison).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/export/ReceiptPanel.tsx@78241722 (portal repo, this worker's commit) -- public-reason-code className is now `mt-1 text-xs text-[#6B7280]`",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-42/every-site.test.ts:320-322,344 (this worktree HEAD, unedited, outside this cell's grant) -- `reasonLineBefore()` hard-codes `class=\"mt-1 text-xs text-slate-700\"` and `namedBare` compares it with `===`",
+        "measured run (this worker, 2026-09-22, portal repo, dev server stopped and port confirmed closed): `timeout 600 bun test src/pages/InvestorReporting` -> `626 pass`, `22 skip`, `1 fail`, `Ran 649 tests across 119 files`; the one `✗` line names `F42-AC5 -- the receipt reason line flags a code the contract does not name, through FE-s-40 rule`",
+        "IRPT_FNTEND.TO-FE-s-77.export-modal-c5-inversion-and-one-primary-action.md <paths> block: `portal/src/pages/InvestorReporting/export/`, `portal/src/pages/InvestorReporting/__tests__/fe-s-77/`, and this investigation file only -- __tests__/fe-s-42/ is not named"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W27-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~27",
+    "surfaced_at": "2026-09-22T07:17:28Z",
+    "one_line": "F77-AC3's literal invocation (--expect-style '[data-slot=\"receipt-panel\"]::color=rgb(22, 51, 114)' / '!=rgb(100, 116, 139)') PASSED, unchanged, when run against the code BEFORE this cell's C5 fix -- the receipt-panel container carries no ink class of its own in either state and inherits navy from body's ambient --foreground regardless of what its slate-classed descendants render, so the assertion is confounded and cannot discriminate the described defect.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-77, THE CRITERION RULE part (c): \"A WRONG-STATE NEGATIVE CONTROL -- the same content assertions run against the failed or unresolved state; they must print... 0 of N met.\" Also HOW step 4: \"A control is a claim. Before you trust a passing assertion, run its wrong-state arm... If a control passes when it should fail, the assertion cannot tell the states apart: say so and fix it, never report it as met.\"",
+    "world_is": "Run verbatim BEFORE any of this cell's edits (this worktree HEAD at spawn, portal DEV base): `EXPECT-STYLE[[data-slot=\"receipt-panel\"]::color]: PASS rgb(22, 51, 114)` (x2), `ASSERT-STYLE: 2 of 2 met` -- identical to the AFTER-fix run. portal/src/index.css:290 sets `body { color: hsl(var(--foreground)) }`; portal/design/themes/opal-capital.css:84 sets `--semantic-text-body: 221.09 67.65% 26.67%` (= #163372, navy) at :root. portal/src/pages/InvestorReporting/export/ReceiptPanel.tsx's `data-slot=\"receipt-panel\"` div (both before and after this cell's fix) carries no `text-*`/`color` class of its own -- only its DESCENDANTS (`flow-placeholder`, `public-reason-code`) carried `text-slate-700` before this cell and `text-[#6B7280]` after. `getComputedStyle` on the container itself therefore always reports the inherited body value (navy) regardless of the descendants' own ink, so this selector cannot see whichever state they are in. Discriminating verification was run instead directly against the descendants' own classes (see this cell's result file): `[data-slot=\"flow-placeholder\"]::color` and `[data-slot=\"applied-branding\"]::color` read `rgb(100, 116, 139)` (slate-700) before this cell's fix and `rgb(107, 114, 128)` (#6B7280) after; `[data-slot=\"narrative-toggle\"]::color` read slate-900's rgb before and `rgb(22, 51, 114)` (navy) after. F77-AC3 is still reported PASS-by-output (its own literal `<expect>` was met, verbatim, on the AFTER run) -- this row documents that the PASS does not, by itself, establish the fix; the descendant-level checks do.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, 2026-09-22, code state BEFORE any FE-s-77 edit, port 5937, fixture export-ready.json, --click Export): EXPECT-STYLE[[data-slot=\"receipt-panel\"]::color]: PASS rgb(22, 51, 114) (x2); ASSERT-STYLE: 2 of 2 met",
+        "measured run (this worker, 2026-09-22, code state AFTER this cell's fix, identical invocation): EXPECT-STYLE[[data-slot=\"receipt-panel\"]::color]: PASS rgb(22, 51, 114) (x2); ASSERT-STYLE: 2 of 2 met -- unchanged",
+        "portal/src/index.css:290 (this worktree HEAD) -- `body { color: hsl(var(--foreground)) }`",
+        "portal/design/themes/opal-capital.css:84 (this worktree HEAD) -- `--semantic-text-body: 221.09 67.65% 26.67%` (navy #163372) at :root",
+        "measured run (this worker, 2026-09-22, AFTER this cell's fix, descendant-level selectors): EXPECT-STYLE[[data-slot=\"flow-placeholder\"]::color]: PASS rgb(107, 114, 128); EXPECT-STYLE[[data-slot=\"applied-branding\"]::color]: PASS rgb(107, 114, 128); EXPECT-STYLE[[data-slot=\"narrative-toggle\"]::color]: PASS rgb(22, 51, 114); ASSERT-STYLE: 3 of 3 met"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W27-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~27",
+    "surfaced_at": "2026-09-22T07:17:28Z",
+    "one_line": "F77-AC4's literal invocation (scripts/ui-smoke.mjs, --click Export --expect '[data-slot=\"preview-scroll\"]') mechanically PASSes but scripts/ui-smoke.mjs has no scroll-exercise flag and scripts/ is outside this cell's grant, so the literal run can only prove the preview-scroll container is visible, never that anything was actually scrolled -- a future re-run of the literal invocation alone reads as though scroll were exercised when it was not; a real scroll-exercise driver was built in __tests__/fe-s-77/ instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-77 cell text: \"This cell performs a real scroll (e.g. via a Playwright-driven helper or the existing holdings-driver.mjs-style mechanism, adapted) and captures the far-edge content itself, not merely its potential.\" F77-AC4 <invocation>: `node scripts/ui-smoke.mjs investor-reporting <out> --port <PORT> --width 390 ... --click Export --expect '[data-slot=\"preview-scroll\"]'`, `<expect>ASSERT-CONTENT: 1 of 1 met</expect>`.",
+    "world_is": "portal/scripts/ui-smoke.mjs (read in full, this worktree HEAD) parses `--click <name>` as a button/tab-role click only (:319-375) and has no `--scroll`/scrollLeft mechanism anywhere in the file; `scripts/` is not named in this cell's `<paths>` (`export/`, `__tests__/fe-s-77/`, and the investigation file only), so this cell cannot add one there. Measured: running the literal invocation verbatim (port 5937, fixture export-ready.json, width 390, --click Export, --expect '[data-slot=\"preview-scroll\"]') prints `EXPECT[[data-slot=\"preview-scroll\"]]: PASS (1 visible)` / `ASSERT-CONTENT: 1 of 1 met` and saves a PNG -- but that PNG shows the SAME unscrolled left-edge content as a pre-scroll baseline capture (Opal logo, \"Report state: Ready\", the table's left-edge date column), because no scroll ever occurred; visibility of a container is not evidence that it was scrolled. Built __tests__/fe-s-77/scroll-driver.mjs (this cell's own commit, portal 78241722) instead, adapting holdings-driver.mjs's scrollLeft displacement pattern and ui-smoke.mjs's own browser/route/auth-stub mechanism: it reads capacity (scrollWidth 1056/clientWidth 264, matching round 11's own capacity proof), captures a before-scroll PNG, sets `wrap.scrollLeft = wrap.scrollWidth - wrap.clientWidth` (a real DOM displacement measured 0 -> 792), and captures an after-scroll PNG showing genuinely different, previously off-screen content (\"Prepared for the selected scope\", the generation timestamp, \"2 account(s) in scope\", the chart's right-edge date labels). This adapted driver's output was used to satisfy F77-AC4 in this cell's own proof of spec; the literal invocation's PASS is recorded but flagged here as not itself establishing the exercised-scroll claim, for any future reader of this project who re-runs only the literal command.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/scripts/ui-smoke.mjs:296-375 (this worktree HEAD) -- `--click` resolves only `getByRole('button'|'tab', ...)`; no scroll/scrollLeft mechanism exists anywhere in this file (confirmed by reading it in full, 640 lines)",
+        "IRPT_FNTEND.TO-FE-s-77.export-modal-c5-inversion-and-one-primary-action.md <paths> block -- `scripts/` is not named",
+        "measured run (this worker, 2026-09-22, literal F77-AC4 invocation, port 5937, width 390, fixture export-ready.json, --click Export): EXPECT[[data-slot=\"preview-scroll\"]]: PASS (1 visible); ASSERT-CONTENT: 1 of 1 met; SAVED (this run's own PNG shows the same left-edge content as the pre-scroll baseline)",
+        "measured run (this worker, 2026-09-22, adapted driver portal/src/pages/InvestorReporting/__tests__/fe-s-77/scroll-driver.mjs@78241722): CAPACITY {\"scrollWidth\":1056,\"clientWidth\":264,\"overflowX\":\"auto\",\"scrollLeftBeforeExercise\":0}; SCROLL-EXERCISED {\"before\":0,\"after\":792,\"target\":792}; two PNGs read directly (org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~27/f77_preview_before_scroll.png and f77_preview_far_edge.png) showing disjoint visible content before vs after",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-32/holdings-driver.mjs:152-157,203-214 (this worktree HEAD) -- the scrollLeft/screenshot pattern this cell's driver adapts, named explicitly in the cell text"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W27-S4",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~27",
+    "surfaced_at": "2026-09-22T07:17:28Z",
+    "one_line": "F77-AC5's literal selectors (class*=\"5F3BE3\", .bg-primary) never match this build's actual primary-fill idiom (bg-[hsl(var(--primary))]), so the literal invocation measures ASSERT-CONTENT: 0 of 2 met against a required 1 of 2 met -- a genuine, measured FAIL on the criterion as written -- even though an adapted selector pair (class*=\"hsl(var(--primary))\") confirms the underlying C-S151 fix (exactly one filled-primary on the received view) is correct.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F77-AC5 cell text: \"adjust the selectors to your actual implementation's class names if these literal ones do not match your build; the requirement is the COUNT (1 of 2, never 0 or 2), not these exact strings.\" F77-AC5 <invocation> literal selectors: `[data-slot=\"download-link\"][class*=\"5F3BE3\"], [data-slot=\"download-link\"].bg-primary` and the analogous submit-export selector. <expect>ASSERT-CONTENT: 1 of 2 met</expect>.",
+    "world_is": "portal/src/pages/InvestorReporting/export/ReceiptPanel.tsx's download-link and ExportModal.tsx's submit-export (this worker's commit 78241722, portal repo) both use `bg-[hsl(var(--primary))]` for their filled-primary state -- a CSS custom-property arbitrary value, containing neither the literal substring `5F3BE3` nor a `.bg-primary` Tailwind utility class. Measured: the literal invocation (port 5937, fixture export-flow.json, --click Export --click 'Create export' --clickwait 3000) prints `EXPECT[[data-slot=\"download-link\"][class*=\"5F3BE3\"], [data-slot=\"download-link\"].bg-primary]: FAIL (0 visible)` and the analogous submit-export line also FAIL (0 visible) -- `ASSERT-CONTENT: 0 of 2 met`, which does not match the required `ASSERT-CONTENT: 1 of 2 met`. An adapted pair, `[data-slot=\"download-link\"][class*=\"hsl(var(--primary))\"]` and the submit-export analogue (same discriminating substance: does the class string carry the primary-fill token), reads `PASS (1 visible)` / `FAIL (0 visible)` respectively -- `ASSERT-CONTENT: 1 of 2 met`, exactly the required count, and a wrong-state control (the same adapted selectors run at the IDLE state, before 'Create export' is clicked) reads the OPPOSITE pattern (download-link FAIL, submit-export PASS), confirming the adapted selector genuinely discriminates. Per proof-of-spec-check.py's invocation-alignment limb (measured directly: `VIOLATION: invocation-alignment[F77-AC5]: the RECORDED invocation is NOT the criterion's invocation modulo the placeholder(s)` when the adapted text was recorded as this row's own invocation), an adapted invocation cannot be recorded as the graded row's own invocation without an issuer amendment to the task-order FILE itself -- the round-11 precedent for exactly this situation is commit 61a3203648, where 2.0.0_SA_COO~F amended IRPT_FNTEND.TO-FE-s-71 before the worker's re-run against the corrected selector was recorded as PASS (row IRPT_FNTEND-W21-S1). No such amendment exists for FE-s-77's AC5, so this worker's proof instance records the LITERAL invocation and its true (FAIL) output on this row, and discloses the adapted run here and in the row's own status_reason as evidence the underlying fix is correct.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/export/ReceiptPanel.tsx@78241722 (download-link) and portal/src/pages/InvestorReporting/export/ExportModal.tsx@78241722 (submit-export, primary branch) -- both use `bg-[hsl(var(--primary))]`, no `5F3BE3` substring, no `.bg-primary` class",
+        "measured run (this worker, 2026-09-22, literal F77-AC5 invocation, port 5937, fixture export-flow.json): EXPECT[[data-slot=\"download-link\"][class*=\"5F3BE3\"], [data-slot=\"download-link\"].bg-primary]: FAIL (0 visible); EXPECT[[data-slot=\"submit-export\"][class*=\"5F3BE3\"], [data-slot=\"submit-export\"].bg-primary]: FAIL (0 visible); ASSERT-CONTENT: 0 of 2 met",
+        "measured run (this worker, 2026-09-22, adapted selectors, identical fixture/clicks/port): EXPECT[[data-slot=\"download-link\"][class*=\"hsl(var(--primary))\"]]: PASS (1 visible); EXPECT[[data-slot=\"submit-export\"][class*=\"hsl(var(--primary))\"]]: FAIL (0 visible); ASSERT-CONTENT: 1 of 2 met",
+        "measured run (this worker, 2026-09-22, adapted selectors, IDLE state control, before 'Create export' clicked): EXPECT[[data-slot=\"download-link\"]...]: FAIL (0 visible); EXPECT[[data-slot=\"submit-export\"]...]: PASS (1 visible) -- opposite pattern, confirming discrimination",
+        "measured run (this worker, 2026-09-22, python .tools/proof-of-spec-check.py against a draft instance recording the adapted invocation on this row): VIOLATION: invocation-alignment[F77-AC5]: the RECORDED invocation is NOT the criterion's invocation modulo the placeholder(s) ['PORT', 'WS']",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~21/IRPT_FNTEND.TO-FE-s-71.export-modal-chrome-and-receipt-idle-submitting-received.proof_of_spec.json, criterion F71-AC2's status_reason -- the round-11 precedent: a COO amendment (@61a3203648) to the TO FILE, then a worker re-run against the corrected selector recorded as PASS"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W25-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~25",
+    "surfaced_at": "2026-09-22T06:30:00Z",
+    "one_line": "fixtures/smoke/default.json is repaired in this order's grant (all 12 entries now carry unprojected_grant), but the file is GENERATED (__tests__/fe-s-13/gen-corpus.ts's generatePublishedMap(), whose output is committed per that file's own header) and its envelope() helper still never writes unprojected_grant -- so a future re-run of the generator silently strips this repair back out. gen-corpus.ts is outside this order's <paths> grant, so this is filed as ONE row rather than a wider edit; two sibling files the same helper produces (fixtures/smoke/fe-s-13-wire.json, fixtures/smoke/fe-s-14-print-v1.json) carry the identical defect today (9 of 9 and 2 of 2 entries missing the field, measured), so the defect is in the SHARED generator, not the one file this order owns.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "This order's own 'Fix' text: 'if it has live consumers, add unprojected_grant ... to all 12 entries' -- framed as a one-time edit to the fixture file, with no mention that the fixture is machine-generated by a script this order does not grant.",
+    "world_is": "portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts:139-148 (this worktree HEAD) defines envelope(operation, data, withStatus) -> {contract_version, operation, firm_id, data, status?} with no unprojected_grant key; generatePublishedMap() (:272-289) calls only this helper to build every entry it writes to fixtures/smoke/default.json (:42 PUBLISHED_FILE), and generateSmokeMap()/generatePrintMap() use the identical helper for fixtures/smoke/fe-s-13-wire.json and fixtures/smoke/fe-s-14-print-v1.json. Measured (this worker, node -e over the committed files, this worktree HEAD): fe-s-13-wire.json 9 of 9 entries missing unprojected_grant; fe-s-14-print-v1.json 2 of 2 missing. default.json itself is now repaired by a direct hand-edit inside this order's grant (12 of 12 carry the field, verified via __tests__/fe-s-75/parse-control.test.ts), but that edit lives only in the fixture file, not in the generator that authors it -- so `bun run src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts` (the file's own documented invocation, header :4) would regenerate default.json without the field and silently re-open EnvelopeMismatch('unprojected_grant') on every route. Not fixed here: gen-corpus.ts is not under this order's <paths> (portal/src/pages/InvestorReporting/fixtures/smoke/default.json, __tests__/fe-s-75/, and the channel file only).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts:139-148 (envelope()), this worktree HEAD -- no unprojected_grant key in the returned body",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts:272-289 (generatePublishedMap(), writes PUBLISHED_FILE = fixtures/smoke/default.json), this worktree HEAD",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts:1-5 (header) -- 'RUN IT: bun run src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts ... The OUTPUT IS COMMITTED'",
+        "measured (this worker, node -e, this worktree HEAD): fixtures/smoke/fe-s-13-wire.json 9 of 9 entries missing unprojected_grant; fixtures/smoke/fe-s-14-print-v1.json 2 of 2 missing",
+        "portal/src/pages/InvestorReporting/fixtures/smoke/default.json (this worker's own commit) -- 12 of 12 entries now carry unprojected_grant, verified by __tests__/fe-s-75/parse-control.test.ts (PARSED CLEAN: 12 of 12)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-75.default-fixture-repair-and-parse-control.md <paths> block (this worktree HEAD) -- names only fixtures/smoke/default.json and __tests__/fe-s-75/, not __tests__/fe-s-13/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W29-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~29",
+    "surfaced_at": "2026-09-22T07:15:31Z",
+    "one_line": "F79-AC3's literal invocation (--fixtures fe-s-18-holdings-observed.json --click Holdings --expect-ground '[data-slot=\"holdings-qualification\"]=rgb(255, 255, 255)') reads UNMEASURABLE (selector matched nothing): that fixture's nodes are all authoritative:true on basis OBSERVED, so HoldingsQualification's own gate (classificationGapOf===0 && !showsTargetWeights) legitimately renders null -- the fix itself is independently confirmed correct by a direct --expect-style color read against a fixture that DOES trigger the panel.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-79's criterion F79-AC3: invocation `cd <WS>/portal && ... node scripts/ui-smoke.mjs investor-reporting <out>.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --click Holdings --expect-ground '[data-slot=\"holdings-qualification\"]=rgb(255, 255, 255)'`, `<expect>ASSERT-GROUND: 1 of 1 met</expect>` -- i.e. the task order asserts that, against this exact fixture, the `holdings-qualification` element exists and its ground resolves to white.",
+    "world_is": "Run verbatim on this worker's dev server (port 5951, this worktree HEAD, fix applied to HoldingsTab.tsx:99): `CLICKED: Holdings` / `EXPECT-GROUND[[data-slot=\"holdings-qualification\"]]: UNMEASURABLE (selector matched nothing)` / `ASSERT-GROUND: 0 of 1 met`. portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx:92-115 (HoldingsQualification, this worktree HEAD): `if (gap.unknownNodes === 0 && !target) return null` -- the element is only mounted when the snapshot carries a classification gap or shows target weights. The named fixture's `nodes` (fe-s-18-holdings-observed.json, data.holdings.nodes) are four entries, every one `\"authoritative\": true` and `\"basis\": \"OBSERVED\"`, so `classificationGapOf` returns `unknownNodes: 0` and `showsTargetWeights` returns false -- the panel legitimately never mounts for this data, independent of any styling change. Confirmed the PNG capture directly (f79_holdings.png): a plain READY holdings view with no qualification banner. Diagnostic (not part of this cell's grant, read-only reference to an existing sibling fixture already in the repo): the IDENTICAL invocation against `fe-s-18-holdings-missing-attribution.json` instead prints `EXPECT-GROUND[[data-slot=\"holdings-qualification\"]]: PASS rgb(255, 255, 255)` / `ASSERT-GROUND: 1 of 1 met`, confirming the selector and the fixed markup work correctly once the data actually triggers the gate -- this is a fixture-choice mismatch in the criterion, not an instrument or code defect. The fix itself is independently confirmed by a direct, non-ACCEPTANCE `--expect-style '[data-slot=\"holdings-qualification\"]::color=rgb(22, 51, 114)'` against the missing-attribution fixture: `PASS rgb(22, 51, 114)` (DESIGN.md C3 navy, 12.00:1 on the panel). Reported F79-AC3 as a REFUSED/FAIL row rather than substituting the working fixture myself, per BOUNDS (report an order defect, do not weaken or reroute a criterion).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx:92-115 (this worktree HEAD) -- HoldingsQualification returns null when `gap.unknownNodes === 0 && !target`",
+        "portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json, data['/api/scoped/investor-reporting/holdings/'].data.nodes (this worktree HEAD, read directly) -- four nodes, every `classification.authoritative` true, every `basis` \"OBSERVED\"",
+        "measured run (this worker, literal F79-AC3 invocation, port 5951, 2026-09-22): EXPECT-GROUND[[data-slot=\"holdings-qualification\"]]: UNMEASURABLE (selector matched nothing); ASSERT-GROUND: 0 of 1 met",
+        "measured run (this worker, diagnostic, IDENTICAL invocation except --fixtures fe-s-18-holdings-missing-attribution.json, port 5951, 2026-09-22): EXPECT-GROUND[[data-slot=\"holdings-qualification\"]]: PASS rgb(255, 255, 255); ASSERT-GROUND: 1 of 1 met",
+        "measured run (this worker, diagnostic --expect-style color check, same missing-attribution fixture, port 5951, 2026-09-22): EXPECT-STYLE[[data-slot=\"holdings-qualification\"]::color]: PASS rgb(22, 51, 114); ASSERT-STYLE: 1 of 1 met",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~29/f79_holdings.png (this deliverable) -- captured render, plain READY holdings view, no qualification banner",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-79.oklch-text-roles-measured-against-actual-grounds.md criterion F79-AC3 (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W28-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~28",
+    "surfaced_at": "2026-09-22T07:34:19Z",
+    "one_line": "F78-AC2's literal invocation carries NO interaction step (no --fill/--click/--clicktext), but ScopeSummary's cohort chip only mounts from `row.entry.cohorts`, and `row` is set ONLY by ClientSearch's onSelectionChange after a real typed search + picked result -- a fixture alone, however truthful, cannot populate it. Ran verbatim: FAIL, measured, not a fixture defect.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F78-AC2's invocation: `node scripts/ui-smoke.mjs investor-reporting <out>.png --port <PORT> --width 1440 --fixtures .../fe-s-78/fixtures/cohort-selected.json --expect '[data-slot=\"cohort-chip\"]' --expect-style '[data-slot=\"cohort-chip\"]::border-radius!=6px'`, `<expect>ASSERT-CONTENT: 1 of 1 met[\\s\\S]*ASSERT-STYLE: 1 of 1 met</expect>` -- i.e. the fixture alone, with no click/fill step, is asserted sufficient to mount the chip.",
+    "world_is": "portal/src/pages/InvestorReporting/index.tsx:50-52 -- `row` starts `useState<SearchOptionRow | null>(null)` and is set only inside `ClientSearch`'s `onSelectionChange` callback (header/ClientSearch.tsx:92-100, `handleSelect`), which fires only after a user types >= `MIN_QUERY_LENGTH` (2) characters (header/search.ts:246), the 250ms debounce elapses, `searchDirectory` resolves, and a returned row is picked. `header/ScopeSummary.tsx:91` reads `row?.entry.cohorts ?? []` -- with `row` null, `cohorts` is always `[]` and the chip block (`assertable.length > 0`) never renders, regardless of what any `--fixtures` file contains. `ResolvedScope` (the resolve-scope response) carries no `cohorts` field at all (contracts/index.ts:421-437) -- there is no OTHER data path that could populate it. Ran F78-AC2 verbatim against a truthful, correctly-authored fixture (an authoritative `cohort.authoritative: true` DirectoryEntryWire at `/api/scoped/investor-reporting/directory/search`): `EXPECT[[data-slot=\"cohort-chip\"]]: FAIL (0 visible)`, `EXPECT-STYLE[...]: UNMEASURABLE (selector matched nothing)`, `ASSERT-CONTENT: 0 of 1 met`, `ASSERT-STYLE: 0 of 1 met`, and `FIXTURE-DEAD: /api/scoped/investor-reporting/directory/search` (the search endpoint the fixture correctly populates is never even requested, because nothing ever types into the search box). Additionally probed whether an amended invocation adding `--fill 'Client search=...'` + `--clicktext '<displayName>'` could satisfy the intent: `--fill` uses `page.getByRole('textbox', {name, exact:true})` (scripts/ui-smoke.mjs:364), and `ClientSearch`'s Combobox (header/ClientSearch.tsx, `@/ui/components/catalyst/combobox`, a Headless-UI-style combobox) exposes an ARIA role other than `textbox` for its input -- the fill call times out (`locator.fill: Timeout 30000ms exceeded`) even though \"Client search\" IS a real, present accessible name on the page (printed in the FILL-FAIL diagnostic's control-names list). So even a hand-amended invocation adding the missing interaction cannot currently reach this control through the shared instrument's existing flags -- a second, related gap in `scripts/ui-smoke.mjs` itself, which is outside this cell's `<paths>` grant to fix. Did not weaken F78-AC2's `<expect>` and did not add undeclared flags to the recorded, graded invocation.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/index.tsx:50-52 (this worktree HEAD) -- `const [row, setRow] = useState<SearchOptionRow | null>(null)`, set only via `ClientSearch`'s `onSelectionChange`",
+        "portal/src/pages/InvestorReporting/header/ClientSearch.tsx:92-100 (this worktree HEAD) -- `handleSelect` is the only writer of the selected row, called from the Combobox's own `onChange`",
+        "portal/src/pages/InvestorReporting/header/search.ts:246 (this worktree HEAD) -- `MIN_QUERY_LENGTH = 2`; `DirectorySearchRunner.input` returns null (issues nothing) below it",
+        "portal/src/pages/InvestorReporting/header/ScopeSummary.tsx:91 (this worker's fix, same behaviour as HEAD on this point) -- `const cohorts: readonly CohortFact[] = row?.entry.cohorts ?? []`",
+        "portal/src/pages/InvestorReporting/contracts/index.ts:421-437 (this worktree HEAD) -- `ResolvedScope` carries no `cohorts` field",
+        "measured run (this worker, F78-AC2 literal invocation, port 5940, 2026-09-22): `EXPECT[[data-slot=\"cohort-chip\"]]: FAIL (0 visible)`, `EXPECT-STYLE[[data-slot=\"cohort-chip\"]::border-radius]: UNMEASURABLE (selector matched nothing)`, `ASSERT-CONTENT: 0 of 1 met`, `ASSERT-STYLE: 0 of 1 met`, `FIXTURE-DEAD (declared, NEVER matched): /api/scoped/investor-reporting/directory/search`",
+        "measured run (this worker, amended invocation adding --fill 'Client search=Coastal' --clicktext 'Coastal Ridge Trust', port 5940, 2026-09-22): `FILL-FAIL: Client search=Coastal -- locator.fill: Timeout 30000ms exceeded` (control names on page include 'Client search' itself, confirming the accessible name exists but is not role=textbox)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-78.cohort-chip-radius-and-report-styling-residuals.md criterion F78-AC2 (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W28-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~28",
+    "surfaced_at": "2026-09-22T07:34:19Z",
+    "one_line": "This cell's ordered fix (ScopeSummary.tsx:125 rounded-md -> an admitted radius, required by F78-AC2) breaks 4 pre-existing tests in 3 OTHER cells' out-of-grant files that hardcode the OLD byte-exact markup (class=\"rounded-md ...\", no data-slot=\"cohort-chip\"): fe-s-42/every-site.test.ts F42-AC3, fe-s-48/withheld.test.ts F48-AC2 and F48-AC3, fe-s-59/scope-summary-badge.test.ts F59-AC4. No radius choice avoids this: ANY value other than 6px both satisfies F78-AC2's own inequality and breaks these exact-string comparisons. F78-AC6 (whole suite green) measures FAIL as a direct, structural consequence.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "This order's own fix instruction: \"correct ScopeSummary.tsx:125's rounded-md (6px) to an admitted radius (2/3/4px or a pill, per C11)\". F78-AC6's invocation: `bun test src/pages/InvestorReporting`, `<expect>(?<![0-9])0 fail</expect>`. Bounds: \"REFUSE any criterion you cannot satisfy as written... do not weaken a criterion... A defect needing another cell's file is ONE surprise row, never a wider grant.\"",
+    "world_is": "This cell's `<paths>` grant is `header/ScopeSummary.tsx`, `tabs/reporting/`, `render/print.css`, `__tests__/fe-s-78/` -- it does NOT include `__tests__/fe-s-42/`, `__tests__/fe-s-48/`, or `__tests__/fe-s-59/`. Those three files each assert the button's rendered markup byte-for-byte against a string written out by hand at an earlier DEV vintage (e.g. fe-s-48/withheld.test.ts:219 `'<button type=\"button\" class=\"rounded-md px-2 py-0.5 ...\">'`), and fe-s-59/scope-summary-badge.test.ts:163 additionally substring-searches rendered markup for the literal token `rounded-md` to LOCATE the cohort block. Confirmed via `git show HEAD:.../ScopeSummary.tsx` that HEAD (pre-fix) carries `rounded-md` and no `data-slot=\"cohort-chip\"` -- so these 4 failures are caused entirely by this cell's own (required) edit, not pre-existing. Measured, before this fix: 11 pass / 0 fail across these 3 files' 11 tests (implied by their pinned-byte design, not independently re-verified against a reverted copy in this shared worktree per the never-git-stash rule); after this fix: `7 pass, 4 fail` (F42-AC3, F48-AC2, F48-AC3, F59-AC4), `Ran 11 tests across 3 files`. Whole-suite F78-AC6 run: `623 pass, 22 skip, 4 fail, Ran 649 tests across 119 files` -- the SAME 4 tests, no other new failures. No implementation choice of admitted radius (2px/3px/4px/pill, any class name) resolves this: the byte-exact strings pin the OLD 6px value specifically, and F78-AC2 requires ANY value NOT equal to 6px, so the two orders are in direct, unavoidable conflict given the current grant boundaries.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-42/every-site.test.ts:132 (this worktree HEAD, outside this cell's <paths>) -- `PRODUCER_...` byte-exact string carries `class=\"rounded-md px-2 py-0.5 text-[11px] text-slate-900 ring-1 ring-slate-500/40 hover:ring-slate-700\"`",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-48/withheld.test.ts:219 (this worktree HEAD, outside this cell's <paths>) -- same byte-exact class string, labelled 'as DEV 1f3ce9f0 built it'",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-59/scope-summary-badge.test.ts:163 (this worktree HEAD, outside this cell's <paths>) -- `markup.slice(r.start, r.end).includes('rounded-md')` used to LOCATE the assertable cohort block",
+        "`git show HEAD:src/pages/InvestorReporting/header/ScopeSummary.tsx` (this worktree) -- line 125 is `className=\"rounded-md px-2 py-0.5 text-[11px] text-slate-900 ring-1 ring-slate-500/40 hover:ring-slate-700\"`, confirming the pinned strings match the PRE-FIX state exactly",
+        "measured run (this worker, 2026-09-22, port unset, `bun test src/pages/InvestorReporting/__tests__/fe-s-42 .../fe-s-48 .../fe-s-59`, AFTER this cell's fix): `7 pass`, `4 fail` (F42-AC3, F48-AC2, F48-AC3, F59-AC4), `Ran 11 tests across 3 files`",
+        "measured run (this worker, 2026-09-22, F78-AC6's literal invocation `bun test src/pages/InvestorReporting`): `623 pass`, `22 skip`, `4 fail`, `Ran 649 tests across 119 files` -- the identical 4 test names, no additional unrelated failures",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-78.cohort-chip-radius-and-report-styling-residuals.md, fix instruction and criteria F78-AC2/F78-AC6, and BOUNDS section (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W28-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~28",
+    "surfaced_at": "2026-09-22T07:34:19Z",
+    "one_line": "F78-AC3 (the content-control: an unrelated fixture with no authoritative cohort mounts no chip) reads `ASSERT-CONTENT: 0 of 1 met` and mechanically PASSES this round, but it is CONFOUNDED, not a genuine discriminator: F78-AC2 ALSO currently reads 0 of 1 (row S1, above) for an unrelated reason (no interaction ever occurs to populate `row`) -- so AC3's 0 says nothing about whether ITS fixture specifically lacks a cohort; the same 0 would print even if AC3's fixture carried a fully authoritative cohort.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F78-AC3's own stated purpose: \"confirms AC2's fixture genuinely constructed the state\" -- i.e. AC3 is offered as the arm that proves AC2's positive result was not vacuous.",
+    "world_is": "Per HOW step 4 (\"A control is a claim... If a control passes when it should fail, [or, as here, passes for a reason unrelated to what it claims to test] the assertion cannot tell the states apart: say so\"): AC3's own invocation never types into or clicks the search control either, so `row` is null on BOTH AC2's and AC3's runs, and the `[data-slot=\"cohort-chip\"]` selector reads 0-visible on both for the SAME structural reason (row S1), not because AC3's fixture specifically withholds an authoritative cohort. Once row S1 is disarmed (the issuer amends F78-AC2/AC3 to include the interaction needed to populate `row`), AC3 would become a genuine, non-confounded control. Recorded, not fixed: this is a property of the ORDER's invocations, not of this cell's own write surface.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, F78-AC2 literal invocation, 2026-09-22): `ASSERT-CONTENT: 0 of 1 met`",
+        "measured run (this worker, F78-AC3 literal invocation, 2026-09-22): `ASSERT-CONTENT: 0 of 1 met`",
+        "Both invocations perform zero --click/--fill/--clicktext steps (org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-78.cohort-chip-radius-and-report-styling-residuals.md, criteria F78-AC2 and F78-AC3, this worktree HEAD)",
+        "row IRPT_FNTEND-W28-S1 (this file), same coordinate, grounding the structural cause"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W31-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~31",
+    "surfaced_at": "2026-09-22T21:40:00Z",
+    "one_line": "F81-AC2's <expect> regex `(?i)wrote|generated|done|complete` can never match this generator's actual completion message -- ran verbatim (rc=0), stdout is `REQUEST RECORDS: 12 of 12; SMOKE KEYS: 9; PUBLISHED MAP KEYS: 12 of 12 DECLARED; PRINT MAP KEYS: 2`, none of those four words appear anywhere, case-insensitive. Pre-existing wording, not a regression from this cell's fix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F81-AC2's <invocation>: `cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun run src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts`, `<expect>(?i)wrote|generated|done|complete</expect>` -- asserting the generator's own console output states its completion using one of those four words.",
+    "world_is": "Ran F81-AC2's invocation verbatim in this worktree: rc=0, stdout `REQUEST RECORDS: 12 of 12; SMOKE KEYS: 9; PUBLISHED MAP KEYS: 12 of 12 DECLARED; PRINT MAP KEYS: 2` -- `grep -iE 'wrote|generated|done|complete'` against that line returns no match. The generator's own console.log (gen-corpus.ts:313-316 at HEAD, this worker's fix untouched on those lines) has used this RECORDS/KEYS/DECLARED vocabulary since the file's introduction (`git -C portal log --oneline -- src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts`: d7b3d615 FE-s-13, 7151f2c4 FE-s-14 R1, e5833214 FE-s-15 -- none of these three commits' diffs touch the closing console.log block), so the mismatch predates round 13 and is not caused by this cell's edit. The underlying regeneration this criterion exists to prove is otherwise fully correct and independently confirmed: F81-AC3's own invocation reads `default.json: 12 of 12 carry unprojected_grant`, `fe-s-13-wire.json: 9 of 9 carry unprojected_grant`, `fe-s-14-print-v1.json: 2 of 2 carry unprojected_grant` (PASS), F81-AC4 reads `0 fail` (PASS), and `git diff -- src/pages/InvestorReporting/fixtures/smoke/default.json` is EMPTY after regeneration -- byte-identical to round 12's hand repair, the exact data-equivalence this cell's required control asks for. REFUSED per BOUNDS (\"do not weaken a criterion\"): did not edit the generator's console.log merely to make an unrelated word match, recorded F81-AC2 as FAIL in the proof-of-spec instance with this measurement, and did not flip <status> to complete.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, F81-AC2 literal invocation, 2026-09-22): rc=0, stdout `REQUEST RECORDS: 12 of 12; SMOKE KEYS: 9; PUBLISHED MAP KEYS: 12 of 12 DECLARED; PRINT MAP KEYS: 2`",
+        "measured (this worker, 2026-09-22): `grep -iE 'wrote|generated|done|complete'` against that stdout -- no match",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts:308-316 (this worktree HEAD, this worker's own fix) -- the closing console.log block, unchanged by this cell's edit (which only touches the `envelope()` function above it)",
+        "git -C portal log --oneline -- src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts (this worktree): d7b3d615, 7151f2c4, e5833214 -- the console.log wording predates this round",
+        "measured run (this worker, F81-AC3 literal invocation, 2026-09-22): `default.json: 12 of 12 carry unprojected_grant`, `fe-s-13-wire.json: 9 of 9 carry unprojected_grant`, `fe-s-14-print-v1.json: 2 of 2 carry unprojected_grant` -- matches <expect>",
+        "measured run (this worker, F81-AC4 literal invocation, 2026-09-22): `0 fail`, rc=0 -- matches <expect>",
+        "git diff --stat -- portal/src/pages/InvestorReporting/fixtures/smoke/default.json (this worktree, after AC2's regeneration): empty -- byte-identical to the committed round-12 hand repair",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-81.fixture-generator-repair-survives-regeneration.md criterion F81-AC2 (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W33-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~33",
+    "surfaced_at": "2026-09-22T12:03:23Z",
+    "one_line": "F83-AC2/AC3/AC4's literal invocation route 'model-portfolios' is not a real app route at all (redirects to /market, 0 of 9 fixtures ever matched) -- and even the real route ('/portfolios') would not reach this cell's fix, since ModelPortfolios.tsx mounts CategoryViewTree at its DEFAULT ground='dark' and only DrillTree.tsx (route /investor-reporting) passes ground=\"light\". The order's own prose calls the route/fixture \"illustrative ... verify and adjust\", but proof-of-spec-check.py's invocation-alignment limb mechanically refuses ANY deviation from the TO's literal text modulo only the declared <PORT>/<WS> placeholders -- so the prose permission and the mechanical gate directly conflict, and a worker cannot resolve it (no grant to edit the TO or the gate).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F83-AC2/AC3/AC4's invocations all open `node scripts/ui-smoke.mjs model-portfolios <out>.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-{frozen,holdings-observed}.json ...`. The same order's BOUNDS section states: \"Route/fixture in AC2-AC4 are illustrative -- CategoryViewTree may mount under a different route than model-portfolios in this worktree; verify and adjust, the requirement is the colour/underline discrimination, not these exact route/fixture names.\" `<placeholders>WS, PORT</placeholders>` (the TO's own RECORD FACE declaration) is what proof-of-spec-check.py's invocation_alignment_check reads to decide which tokens may vary -- confirmed by reading `.tools/proof-of-spec-check.py:1394-1395,1412` (`declared = _declared_placeholders(to_text)`; `enforce = declared is not None`; `names = declared if enforce else ...`): with WS/PORT declared, `enforce=True` and ANY other divergence is a hard VIOLATION, full stop -- the checker has no mechanism to read the BOUNDS section's \"illustrative\" carve-out at all.",
+    "world_is": "Ran F83-AC2's literal invocation verbatim (route 'model-portfolios', fixture fe-s-18-frozen.json, PORT/WS substituted, nothing else changed): `LOC : /market <-- DID NOT LAND (auth redirect? bad route?)`, `FIXTURES-MATCH: matched 0 of 9`, `EXPECT-STYLE[[data-slot=\"view-breakdown-link\"]::color]: UNMEASURABLE (selector matched nothing)` (both the positive and negative assertion), `ASSERT-STYLE: 0 of 2 met` against the criterion's own `<expect>ASSERT-STYLE: 2 of 2 met</expect>` -- literal FAIL. Confirmed independently why: `portal/src/App.tsx:413-423` declares routes `/`, `/market`, `/portfolios` (Model Portfolios' real path), `/investor-reporting`, `/philosophy`, ... -- there is no `/model-portfolios` route at all, so react-router falls through and the app lands wherever its own default/unmatched handling sends it (`/market`, confirmed by the printed LOC line). Ran F83-AC3's literal invocation the same way: `ASSERT-STYLE: 0 of 1 met` (UNMEASURABLE) against `<expect>ASSERT-STYLE: 1 of 1 met</expect>` -- literal FAIL. Ran F83-AC4's literal invocation the same way: output also reads `UNMEASURABLE`, which textually satisfies `<expect>UNMEASURABLE</expect>`, but this is a VACUOUS match, not a genuine absent-selector control (HOW step 4: \"If a control passes when it should fail, the assertion cannot tell the states apart\") -- the label reads absent because the run never reaches ANY page that could mount it, not because the specific fixture genuinely withholds it; the identical UNMEASURABLE would print for literally any selector on the wrong page. Separately confirmed that even the CORRECT route name does not reach this cell's fix: `portal/src/pages/ModelPortfolios.tsx:1286` mounts `<CategoryViewTree result={categoryViews} source={modelSourceAttribution} />` with NO `ground` prop, so it renders at the type's own default `ground: Ground = 'dark'` (`components/CategoryViewTree.tsx:1059`) -- the branch this cell's grant explicitly excludes (BOUNDS: \"do not touch the dark-ground branch\"). The ONLY caller passing `ground=\"light\"` in the whole tree is `portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:244`, reached at route `/investor-reporting` after clicking the Holdings tab -- confirmed working genuinely (own driver, real page.hover(), mutant-controlled) and recorded as SUPPLEMENTARY evidence in this cell's own result file and proof instance, but NOT the graded row, since the mechanical gate does not accept it as this criterion's invocation. Did not weaken any `<expect>`, did not silently substitute the adapted invocation into the graded row, and did not touch `scripts/ui-smoke.mjs`, `ModelPortfolios.tsx` or the task order file (none are in this cell's `<paths>` grant).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, F83-AC2 literal invocation verbatim, port 5975, 2026-09-22): `LOC : /market`, `FIXTURES-MATCH: matched 0 of 9`, `EXPECT-STYLE[[data-slot=\"view-breakdown-link\"]::color]: UNMEASURABLE (selector matched nothing)` x2, `ASSERT-STYLE: 0 of 2 met`",
+        "measured run (this worker, F83-AC3 literal invocation verbatim, port 5975, 2026-09-22): `LOC : /market`, `EXPECT-STYLE[[data-slot=\"view-breakdown-link\"]::text-decoration-line]: UNMEASURABLE (selector matched nothing)`, `ASSERT-STYLE: 0 of 1 met`",
+        "measured run (this worker, F83-AC4 literal invocation verbatim, port 5975, 2026-09-22): `LOC : /market`, `EXPECT-STYLE[[data-slot=\"view-breakdown-link\"]::color]: UNMEASURABLE (selector matched nothing)`, `ASSERT-STYLE: 0 of 1 met` (textually matches `<expect>UNMEASURABLE</expect>` but vacuously, per world_is above)",
+        "portal/src/App.tsx:413-423 (this worktree HEAD) -- the full <Routes> table: no path named 'model-portfolios'; the real Model Portfolios path is '/portfolios'",
+        "portal/src/pages/ModelPortfolios.tsx:1286 (this worktree HEAD) -- `<CategoryViewTree result={categoryViews} source={modelSourceAttribution} />`, no `ground` prop",
+        "portal/src/components/CategoryViewTree.tsx:1059 (this worktree HEAD) -- `ground = 'dark'` is the parameter's own default",
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:244 (this worktree HEAD) -- the sole `ground=\"light\"` caller in the tree",
+        ".tools/proof-of-spec-check.py:1394-1395,1412 (this worktree HEAD) -- `enforce = declared is not None`; with `<placeholders>WS, PORT</placeholders>` declared, any other divergence is refused",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-83.view-breakdown-link-navy-hover-focus-underline.md (this worktree HEAD) -- criteria F83-AC2/AC3/AC4's literal invocations, the `<placeholders>WS, PORT</placeholders>` declaration, and the BOUNDS 'illustrative' sentence, side by side",
+        "full proof-of-spec-check.py run against this cell's own instance, invocation-alignment limb: 3 VIOLATION lines (F83-AC2/AC3/AC4) when the recorded invocation used the adapted route, 0 when recorded literally -- reproduced both ways this session"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W32-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~32",
+    "surfaced_at": "2026-09-22T13:40:00Z",
+    "one_line": "F82-AC2's literal invocation (--click Holdings only, then :last-of-type/:first-of-type on [data-slot=\"holdings-breadcrumb\"]) cannot discriminate current-vs-link at all, and BOUNDS' own \"selectors are illustrative\" permission is not enough to fix it (a STATE change is also needed, not just a different selector string) -- while proof-of-spec-check.py's invocation-alignment limb REFUSES any recorded invocation that diverges from the TO file's literal <invocation> text (modulo declared placeholders only), and this worker's <paths> grant does not include the task-order file. F82-AC2 is therefore genuinely FAIL as ordered; the order needs the ISSUER's amendment (either the invocation or the selector text in the TO FILE itself), and this TO cannot flip to complete on this worker's grant alone.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F82-AC2's <invocation>: `--click Holdings --expect-style '[data-slot=\"holdings-breadcrumb\"]:last-of-type::font-weight=700' --expect-style '[data-slot=\"holdings-breadcrumb\"]:first-of-type::font-weight!=700'`, <expect> `ASSERT-STYLE: 2 of 2 met`. BOUNDS: \"AC2/AC3's selectors are illustrative -- adjust to your actual DOM structure if :last-of-type/:first-of-type do not resolve to the current/link segments; the requirement is the WEIGHT discrimination (current=700, link!=700), not these exact selector strings.\"",
+    "world_is": "Measured directly: `--click Holdings` alone leaves the breadcrumb at the root view, `[data-slot=\"holdings-breadcrumb\"]` matches exactly 1 element (EXPECT[...]: PASS (1 visible)), so both :last-of-type and :first-of-type resolve to the SAME span (current, 700), and the run genuinely prints `ASSERT-STYLE: 1 of 2 met` -- NOT `2 of 2`, so the criterion FAILS by its own <expect> as literally ordered. A drill step (--clicktext 'Models#3', landing on the SliceTable row -- occurrences #0/#1/#2 of the exact text \"Models\" belong to the CategoryViewTree card, the recharts Legend entry and (again) the CategoryViewTree, confirmed by a throwaway Playwright probe enumerating all matches) plus TAG-qualified selectors (`span[data-slot=\"holdings-breadcrumb\"]` for current, `button[data-slot=\"holdings-breadcrumb\"]` for link -- :last-of-type/:first-of-type are PER-PARENT, since each breadcrumb segment sits in its own wrapper <span>, so neither pseudo-class ever selects the global first/last segment) DOES genuinely produce `ASSERT-STYLE: 2 of 2 met`, proving Fix 1's weight change is correct once the instrument reaches a discriminating state -- but this worker ran `python .tools/proof-of-spec-check.py` against a proof instance recording that adapted invocation and it returned `INVALID (rc=1)`: \"VIOLATION: invocation-alignment[F82-AC2]: the RECORDED invocation is NOT the criterion's invocation modulo the placeholder(s) ['PORT', 'WS']\", citing its own prior lesson IRPT_FNTEND-S31 (\"a correction that reaches the spawn prompt and never the task-order FILE leaves the record ungoverned\"). This worker's <paths> grant does not include the task-order file, so it cannot make the TO FILE match the adapted invocation itself. Per this order's own instruction (\"REFUSE any criterion you cannot satisfy as written ... do not self-grade past a failure ... an order defect is reported, and the issuer amends it\"), the proof instance records the LITERAL invocation and its TRUE (FAIL) output, not the adapted one; the adapted invocation's PASSING evidence is kept as supplementary (f82_breadcrumb_weights_adapted_supplementary.png) for the CVO's F82-AC6 judgment and for the issuer's amendment, never as the graded row.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run, this worker, literal order invocation exactly as written (--click Holdings only), final deliverable f82_breadcrumb_weights.png: `EXPECT-STYLE[[data-slot=\"holdings-breadcrumb\"]:last-of-type::font-weight]: PASS 700`; `EXPECT-STYLE[[data-slot=\"holdings-breadcrumb\"]:first-of-type::font-weight]: FAIL 700`; `ASSERT-STYLE: 1 of 2 met` -- does not match <expect> `ASSERT-STYLE: 2 of 2 met`",
+        "measured run, this worker, throwaway Playwright probe (.scratch/probe.mjs, deleted before commit, not part of this cell's deliverable): exact text=\"Models\" matches 4 elements on the Holdings root view -- [0]/[1] CategoryViewTree card <p> (dataSlot null), [2] recharts <span class=\"recharts-legend-item-text\">, [3] the SliceTable <td> whose parent <tr data-slot=\"slice-row\">",
+        "measured run, this worker, --clicktext 'Models#3' + tag-qualified selectors, supplementary f82_breadcrumb_weights_adapted_supplementary.png: `EXPECT-STYLE[span[data-slot=\"holdings-breadcrumb\"]::font-weight]: PASS 700`; `EXPECT-STYLE[button[data-slot=\"holdings-breadcrumb\"]::font-weight]: PASS 400`; `ASSERT-STYLE: 2 of 2 met`",
+        "python .tools/proof-of-spec-check.py run by this worker against a draft instance recording the adapted invocation: `VIOLATION: invocation-alignment[F82-AC2]: the RECORDED invocation is NOT the criterion's invocation modulo the placeholder(s) ['PORT', 'WS']` -- `INVALID (rc=1)`; checker-vintage b918930306 2026-09-17T13:31:51Z",
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx (this worktree HEAD, Breadcrumbs function, ~:167-211): current segment is `<span data-slot=\"holdings-breadcrumb\" className=\"... font-bold\">` (this cell's own fix), link segment is `<button data-slot=\"holdings-breadcrumb\" ...>`, each wrapped individually in `<span key={node.nodeRef} className=\"flex items-center gap-1\">`",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-82.breadcrumb-weight-700-and-mounted-revision-guard-test.md, criterion F82-AC2, <expect>, and BOUNDS' selector-illustrative clause (this worktree HEAD); <paths> block naming this worker's write grant (does not include the task-orders/ directory)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W32-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~32",
+    "surfaced_at": "2026-09-22T13:45:00Z",
+    "one_line": "F82-AC4/W17-S1's instruction (\"mount the actual DrillTree component ... assert PanelError's named content appears in DrillTree's OWN rendered output\") names no mechanism, and this worktree has NO DOM test environment (no happy-dom/jsdom/testing-library, confirmed absent from node_modules) and no react-test-renderer -- so a real click event on DrillTree's SliceTable row cannot be dispatched by any standard means. Satisfied it anyway with a technique not asked for or precedented in this project: DrillTree's exported function is called DIRECTLY (not `<DrillTree/>` JSX) inside a harness React is actively rendering (so its hooks attach to the harness's own fiber, exactly like a custom hook), the harness reads DrillTree's own returned element tree STRUCTURALLY to find the real onRowClick (handleDrill) closure DrillTree wires onto its own SliceTable, calls it with one of DrillTree's own SliceRow objects, and relies on React's real render-phase-update mechanism (a state setter called synchronously inside a component's own render restarts that render with the new state) to obtain DrillTree's genuine post-click output.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F82-AC4/W17-S1 cell text: \"mount the actual DrillTree component (not PanelError directly) with a HoldingsSnapshot/HoldingsNode pair whose provenance revision disagrees ... and assert that PanelError's named content appears in DrillTree's OWN rendered output -- proving the conditional branch inside DrillTree itself gets taken, not just that PanelError renders when constructed by hand ... this is a component-level, no-DOM test, same instrument class as the existing file.\"",
+    "world_is": "Empirically verified before landing (a throwaway harness against the real fixture, deleted before commit): calling DrillTree's function directly from inside a react-dom/server-rendered harness, extracting its own onRowClick prop from the returned element tree by a structural (prop-shaped, not selector-based) walk, and invoking it, causes React to execute the harness's render function TWICE (`TOTAL Harness invocations: 2`) and the SECOND pass's markup genuinely carries `data-slot=\"holdings-drill-refused\": true` and the PanelError message fragment -- i.e. DrillTree's own conditional branch, not a hand-built duplicate. This is documented in the landed test file's own header comment (portal @346c7307). No DOM package was added (bun install stayed unrun, per this order's BOUNDS); only 'react' and 'react-dom/server', already dependencies, were used. Recorded because the mechanism is non-obvious, was not named by the order, and a less careful satisfaction of this criterion (e.g. re-testing the pure predicate again, or constructing PanelError by hand a second time under a different label) would have LOOKED like it met the ask while not actually mounting DrillTree at all -- exactly the gap the round-11 ruling and this round's cell text both call out.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal package.json (this worktree HEAD): no happy-dom/jsdom/@testing-library/react-test-renderer among dependencies; `node -e \"require.resolve('react-test-renderer')\"` throws MODULE_NOT_FOUND (measured this worker)",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-16/mounted-states.test.ts header comment (pre-existing, this worktree HEAD): \"This portal installs no DOM test environment (no happy-dom, no jsdom, no testing-library) ... there is no instrument here that can render a portal at all\" -- independent corroboration this is a portal-wide constraint, not specific to this cell",
+        "measured run, this worker, throwaway harness (.scratch/mount-experiment.test.ts, deleted before commit): `PASS 1: found 1 element(s) carrying onRowClick`; `TOTAL Harness invocations: 2`; `FINAL MARKUP includes data-slot=\"holdings-drill-refused\": true`; `FINAL MARKUP includes PanelError message fragment: true`",
+        "committed result: portal/src/pages/InvestorReporting/__tests__/fe-s-76/revision-mismatch-guard.test.ts @346c7307a0d3bd387ecc51ddda133b70d19be68c, header comment + `mountDrillTree`/`findElementsCarrying` helpers + the three new 'MOUNTED'/'WRONG-STATE CONTROL (mounted)'/'ABSENT-SELECTOR CONTROL (mounted)' tests; `bun test .../fe-s-76` this worker: 7 pass, 0 fail, 37 expect() calls",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-82.breadcrumb-weight-700-and-mounted-revision-guard-test.md, Fix 2 cell text (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W34-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~34",
+    "surfaced_at": "2026-09-22T11:54:40Z",
+    "one_line": "TO-FE-s-84's F84-AC5 literal invocation names `src/pages/InvestorReporting/fixtures/smoke/fe-s-32/qualified.json` -- the order's own text flags this as illustrative -- but that path does not exist anywhere in this worktree (no `fixtures/smoke/fe-s-32/` directory at all), and no OTHER committed fixture under `fixtures/smoke/` gives the Reporting route's performance operation a qualified (PARTIAL/NEEDS_CORRECTION/UNCERTAIN) producer state either (every performance-operation state across fixtures/smoke/*.json was checked: READY or QUEUED only). Run VERBATIM, the literal invocation crashes (`ENOENT`, rc=1, no `ASSERT-STYLE` line at all) -- so F84-AC5 as CUT is genuinely unsatisfiable and is recorded FAIL in this worker's proof instance, per `IRPT_FNTEND-S31`'s own ruling that a corrected invocation must land in the task-order FILE, never only in a worker's self-substituted proof record. Authored a new static fixture inside this cell's own grant, `__tests__/fe-s-84/fixtures/reporting-qualified.json` (a one-field mutation of the committed `reporting-answer-bearing.json`, performance status.state READY->PARTIAL, byte-identical otherwise -- the same technique `__tests__/fe-s-40/band-at-390.test.ts`'s own `qualifiedReportingMap()` already uses, made static since ui-smoke.mjs's `--fixtures` flag reads a file path, not a JS callable), and confirmed AS SUPPLEMENTARY EVIDENCE ONLY that the identical assertion PASSES against it -- the styling fix itself is correct; only the order's literal fixture path needs a text amendment before F84-AC5 can be graded PASS and this TO flipped `complete`.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F84-AC5's literal `<invocation>`: `... --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-32/qualified.json ...`, `<expect>ASSERT-STYLE: 1 of 1 met</expect>`. BOUNDS: \"Fixture names in AC2/AC4/AC5 are illustrative -- verify they exist and carry the right shape in your worktree; if fe-s-32/qualified.json is not the right fixture for the qualified state, use the correct one and say so in your result.\" `.tools/proof-of-spec-check.py`'s invocation-alignment limb (row `IRPT_FNTEND-S31`'s own recommendation, built after that finding): \"a correction that reaches the spawn prompt and never the task-order FILE leaves the record ungoverned\" -- the RECORDED invocation must match the criterion's `<invocation>` modulo ONLY the declared `<placeholders>` (`WS`, `PORT`); a fixture-path substitution is not a declared placeholder.",
+    "world_is": "Measured (this worker, 2026-09-22): `ls src/pages/InvestorReporting/fixtures/smoke/fe-s-32/` -> `No such file or directory`. Python scan of every `fixtures/smoke/*.json` performance operation's `status.state`: `fe-s-18-frozen.json`/`fe-s-18-holdings-*.json` READY, `fe-s-21-queued.json` QUEUED, `reporting-answer-bearing*.json` READY -- no PARTIAL/NEEDS_CORRECTION/UNCERTAIN performance state committed anywhere under that directory. `__tests__/fe-s-40/band-at-390.test.ts:81-87` (`qualifiedReportingMap()`) independently confirms this: it builds its own Reporting-qualified scenario in-memory by cloning the frozen map and overriding `performance.status.state`, rather than reading a static qualified fixture, because none exists. Ran F84-AC5's LITERAL invocation verbatim (WS/PORT substituted only): `node:fs:620 ... Error: ENOENT: no such file or directory, open '...\\\\fixtures\\\\smoke\\\\fe-s-32\\\\qualified.json'`, rc=1, no `EXPECT-STYLE`/`ASSERT-STYLE` line printed at all -- genuinely FAILs the criterion's own `<expect>` pattern. Ran the identical assertion against the substituted fixture (`__tests__/fe-s-84/fixtures/reporting-qualified.json`) SEPARATELY, as supplementary evidence only, never as the graded row: `EXPECT-STYLE[[data-slot=\"answer-status\"]::background-color]: PASS rgb(255, 255, 255)`, `ASSERT-STYLE: 1 of 1 met`, `FIXTURES-MATCH: matched 3 of 3`, `KEY-VALIDITY: 3 of 3 valid consumed.ts operation keys` -- the substitute fixture carries the identical wire shape (WIRE MATCH, criterion-rule part a) as the baseline it was cloned from, and the styling fix (Fix 2) is confirmed correct. `python .tools/proof-of-spec-check.py` on an instance recording the SUBSTITUTED invocation as F84-AC5's graded row returned INVALID (rc=1), VIOLATION invocation-alignment[F84-AC5] -- confirming the mechanical gate refuses exactly this self-substitution, per `IRPT_FNTEND-S31`'s own built recommendation. Disarmed when the issuing COO amends F84-AC5's `<invocation>` fixture path in the task-order file (the correct path is `__tests__/fe-s-84/fixtures/reporting-qualified.json`, already committed in this cell's own grant) and this worker (or a successor) re-runs and flips the TO complete.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, 2026-09-22): `ls -la src/pages/InvestorReporting/fixtures/smoke/fe-s-32/` -> exit 2, No such file or directory",
+        "portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json, fe-s-18-holdings-missing-attribution.json, fe-s-18-holdings-observed.json, fe-s-18-holdings-target.json, fe-s-21-queued.json, reporting-answer-bearing.json, reporting-answer-bearing-partial.json (this worktree HEAD) -- every performance-operation `status.state` read programmatically: READY or QUEUED only",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-40/band-at-390.test.ts:81-87 (this worktree HEAD) -- `qualifiedReportingMap()` constructs a Reporting-qualified scenario in-memory rather than reading a static fixture",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-84/fixtures/reporting-qualified.json (this worker's new file, this cell's own grant) -- the substitute fixture used for F84-AC5",
+        "measured run (this worker, F84-AC5's LITERAL invocation verbatim, port 5983, 2026-09-22): `node:fs:620 ... Error: ENOENT: no such file or directory, open 'C:\\\\tmp\\\\wk-irpt_fntend-13-84-fe-s-84\\\\portal\\\\src\\\\pages\\\\InvestorReporting\\\\fixtures\\\\smoke\\\\fe-s-32\\\\qualified.json'`, rc=1, no EXPECT-STYLE/ASSERT-STYLE line -- genuinely fails the criterion's own `<expect>ASSERT-STYLE: 1 of 1 met</expect>` pattern",
+        "measured run (this worker, F84-AC5's assertion against the substituted fixture, SUPPLEMENTARY ONLY, port 5983, 2026-09-22): `EXPECT-STYLE[[data-slot=\"answer-status\"]::background-color]: PASS rgb(255, 255, 255)`, `ASSERT-STYLE: 1 of 1 met`, `FIXTURES-MATCH: matched 3 of 3`, `KEY-VALIDITY: 3 of 3 valid consumed.ts operation keys`",
+        "measured run (this worker, 2026-09-22): `python .tools/proof-of-spec-check.py <instance recording the substituted invocation as F84-AC5> F84-AC1,...,F84-AC7 --governing-order org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-84.report-scroll-reevaluation-and-styling-residuals.md` -> `INVALID (rc=1)`, `VIOLATION: invocation-alignment[F84-AC5]: the RECORDED invocation is NOT the criterion's invocation modulo the placeholder(s) ['PORT', 'WS']`",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-84.report-scroll-reevaluation-and-styling-residuals.md, criterion F84-AC5 and BOUNDS section (this worktree HEAD)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md, row IRPT_FNTEND-S31 (this file, :946-963) -- the ruling this row follows: a corrected invocation must land in the task-order FILE, never only in a worker's self-substituted proof record"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W35-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~35",
+    "surfaced_at": "2026-09-22T15:17:32Z",
+    "one_line": "F85-AC3's literal <invocation> (`cd <WS>/portal && bun __tests__/fe-s-85/verify-git-object.mjs <your-commit-hash>`) cannot succeed as written: the checker it names must live under this cell's <paths> grant (`portal/src/pages/InvestorReporting/__tests__/fe-s-85/`), matching every one of 220+ sibling __tests__ dirs already in this repo, but the invocation's bare `__tests__/fe-s-85/...` path (cwd <WS>/portal) resolves nowhere -- and separately, `<your-commit-hash>` is not a declared member of this order's own `<placeholders>WS, PORT</placeholders>` tag, so it is neither ENFORCE-expanded by proof-of-spec-check.py's alignment limb nor even valid literal bash (unquoted, `<name>` is stdin redirection, confirmed live as a shell syntax error). Same class as IRPT_FNTEND-W34-S1 one row above: a criterion text that cannot be run as printed.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F85-AC3 <invocation>: `cd <WS>/portal && /c/Users/AndrewBerman/.bun/bin/bun __tests__/fe-s-85/verify-git-object.mjs <your-commit-hash>`, <expect>`fe-s-13-wire\\.json: 9 of 9.*fe-s-14-print-v1\\.json: 2 of 2.*default\\.json: 12 of 12`</expect>. <paths>: `portal/src/pages/InvestorReporting/__tests__/fe-s-85/`. <placeholders>WS, PORT</placeholders> (no third member declared).",
+    "world_is": "Measured (this worker, 2026-09-22, worktree HEAD b8c0a3fd on the portal repo): the checker script was written at the grant path `src/pages/InvestorReporting/__tests__/fe-s-85/verify-git-object.mjs` (no other location is in-grant). Ran F85-AC3's invocation with ONLY <WS> expanded (`cd C:/tmp/wk-irpt_fntend-14-85-fe-s-85/portal && /c/Users/AndrewBerman/.bun/bin/bun __tests__/fe-s-85/verify-git-object.mjs <hash>`, hash substituted two ways -- quoted literal `'<your-commit-hash>'` and the real hash `34174c39`): both produce the IDENTICAL failure, `error: Module not found \"__tests__/fe-s-85/verify-git-object.mjs\"`, rc=1 -- the path, not the hash notation, is the failure's cause. Running the bracket text completely unexpanded and unquoted in bash (`... verify-git-object.mjs <your-commit-hash>`) is not even a bun error -- bash's own redirection parser raises `syntax error near unexpected token` before bun is invoked at all, confirming `<your-commit-hash>` cannot be literal shell text either. Running the SAME script at its grant-consistent path with the real commit hash produces exactly the expected string: `GIT-OBJECT src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json: 9 of 9 carry unprojected_grant`, `... fe-s-14-print-v1.json: 2 of 2 ...`, `... default.json: 12 of 12 ...`, rc=0 -- and a negative control against the pre-fix commit (467354c9, round 13's close) correctly reports `0 of 9` / `0 of 2` / `12 of 12`, confirming the checker genuinely discriminates rather than passing through. Graded F85-AC3 FAIL in this worker's proof instance on the literal invocation (per IRPT_FNTEND-S31's ruling that a corrected invocation belongs in the TO file, never only a worker's self-substituted record); the substance -- unprojected_grant surviving to the committed git object at both sibling fixtures -- is independently proven by the same script at the correct path, committed at portal@34174c39 (fixtures) and portal@b8c0a3fd (checker). Disarmed when the issuing COO amends F85-AC3's <invocation> to the grant-consistent path and either declares a COMMIT placeholder or otherwise resolves the hash-substitution notation, and this worker (or a successor) re-runs and flips the TO complete.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, 2026-09-22, cwd <WS>/portal): `bun __tests__/fe-s-85/verify-git-object.mjs '<your-commit-hash>'` -> `error: Module not found \"__tests__/fe-s-85/verify-git-object.mjs\"`, rc=1",
+        "measured run (this worker, 2026-09-22, cwd <WS>/portal): `bun __tests__/fe-s-85/verify-git-object.mjs 34174c39` -> identical `error: Module not found \"__tests__/fe-s-85/verify-git-object.mjs\"`, rc=1",
+        "measured run (this worker, 2026-09-22, cwd <WS>/portal, unquoted literal bracket text): bash raises `eval: line 1: syntax error near unexpected token` before bun runs",
+        "measured run (this worker, 2026-09-22, cwd <WS>/portal): `bun src/pages/InvestorReporting/__tests__/fe-s-85/verify-git-object.mjs 34174c39` -> `GIT-OBJECT src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json: 9 of 9 carry unprojected_grant`, `... fe-s-14-print-v1.json: 2 of 2 ...`, `... default.json: 12 of 12 ...`, rc=0",
+        "measured run (this worker, 2026-09-22, negative control): same script against 467354c9 (round-13 close, pre-fix) -> `0 of 9`, `0 of 2`, `12 of 12` -- confirms the checker discriminates rather than always reading PASS",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-85.commit-generated-fixtures-with-unprojected-grant.md, criterion F85-AC3 and <paths> block (this worktree HEAD)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md, row IRPT_FNTEND-W34-S1 (this file, immediately above) -- the same defect class one round earlier, same ruling applied",
+        "portal commits 34174c39 (fixture commit) and b8c0a3fd (checker commit), this worktree HEAD, both on branch wk-irpt_fntend-14-85-fe-s-85-portal"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W36-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~36",
+    "surfaced_at": "2026-09-22T15:01:22Z",
+    "one_line": "F86-AC4's literal invocation ('the whole IRPT_FNTEND suite is green'), run verbatim in this isolated worktree, reads 654 pass / 27 skip / 2 FAIL (rc=1), not 0 fail -- both failures are the PRE-EXISTING, already-named round-14 W25-S1 defect (fe-s-13-wire.json and fe-s-14-print-v1.json lacking unprojected_grant, per CTO_ROUND_ANALYSIS_IRPT_FNTEND_ROUND_13_20260922.md item 'W25-S1: commit the generated outputs'), on files entirely outside this cell's grant (fe-s-81's test + the two fixture JSON files, not scripts/ui-smoke.mjs / key-classifier.test.ts / __tests__/fe-s-86/). W25-S1 is a SIBLING cell of the same round-14 issuance, built in its own separate worktree; its fix cannot be visible in this worktree until the drain merges it. REFUSED per BOUNDS ('a defect needing another cell's file is ONE surprise row, never a wider grant'); F86-AC4 is recorded FAIL in this worker's proof instance with the measured output, and the TO is NOT flipped complete on it.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F86-AC4 `<invocation>`: `cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting`; `<expect>(?<![0-9])0 fail</expect>`. HOW step 5: run the suite where `IRPT_FE_DEV_PORT` is unset.",
+    "world_is": "Measured (this worker, 2026-09-22, `IRPT_FE_DEV_PORT` confirmed unset before the run): `bun test src/pages/InvestorReporting` -> `654 pass`, `27 skip`, `2 fail`, `2710 expect() calls`, `Ran 683 tests across 127 files`, rc=1. Both failures are in `src/pages/InvestorReporting/__tests__/fe-s-81/generator-output-carries-unprojected-grant.test.ts`: `fe-s-13-wire.json: unprojected_grant present 0 of 9` and `fe-s-14-print-v1.json: unprojected_grant present 0 of 2` -- byte-identical denominators to CTO_ROUND_ANALYSIS_IRPT_FNTEND_ROUND_13_20260922.md's own read ('the sibling fixtures fe-s-13-wire.json (0 of 9) and fe-s-14-print-v1.json (0 of 2) lack unprojected_grant. The generator source landed; its outputs did not.'), confirming this worker's worktree (branched from the round-14 issuance / portal DEV 467354c9, round 13's close) still carries the unregenerated outputs. This worker's own surface (`scripts/ui-smoke.mjs`'s two named functions, `key-classifier.test.ts`, `__tests__/fe-s-86/`) touches neither `fe-s-81/generator-output-carries-unprojected-grant.test.ts` nor the two fixture JSON files -- `git status` this worktree shows no pending change to them. F86-AC1 (typecheck rc=0), F86-AC2 (12 pass / 0 fail, 4 of 4 controls), and F86-AC3 (KEY-VALIDITY 12 of 12) all pass cleanly and are unaffected. Disarmed when W25-S1's fix lands (in its own worktree, then the drain merges it into the shared tree) and a re-run of `bun test src/pages/InvestorReporting` in a worktree carrying that merge reads 0 fail.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, 2026-09-22, `/tmp/f86_ac4.log`): `bun test src/pages/InvestorReporting` -> `654 pass`, `27 skip`, `2 fail`, `Ran 683 tests across 127 files`, rc=1",
+        "measured run (same log, lines carrying the per-file denominators): `fe-s-13-wire.json: unprojected_grant present 0 of 9`; `fe-s-14-print-v1.json: unprojected_grant present 0 of 2`",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_FNTEND_ROUND_13_20260922.md (this worktree HEAD), section 'Round 14: ONE issuance', item 'W25-S1: commit the generated outputs' -- names the identical two fixtures and denominators as the round-14 fix this worker's worktree does not yet carry",
+        "portal git log (this worktree, `git log --oneline -1 -- src/pages/InvestorReporting/__tests__/fe-s-81/generator-output-carries-unprojected-grant.test.ts`) -> `9d3d9ea8 fix(IRPT_FNTEND FE-s-81, 0.9.0_WK_IRPT_FNTEND~31): gen-corpus.ts's envelope() emits unprojected_grant on every entry it builds` -- the GENERATOR source, not the committed OUTPUT files",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-86.full-template-classifier-no-prefix-widening.md, criterion F86-AC4 and <paths> block (this worktree HEAD) -- this cell's grant names only scripts/ui-smoke.mjs, __tests__/fe-s-80/key-classifier.test.ts and __tests__/fe-s-86/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W36-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~36",
+    "surfaced_at": "2026-09-22T16:20:00Z",
+    "one_line": "F86-AC4's COO-amended invocation ('UNEXPECTED=$(grep \"^✗\" <log> | grep -vc \"generator-output-carries-unprojected-grant\")') produces the expected 'UNEXPECTED-FAIL-COUNT=0' in this worktree, but by a route that cannot discriminate: bun's fail-line marker carries a leading ANSI escape ('\\x1b[0m\\x1b[31m') before the ✗ glyph even under NO_COLOR=1 in this bun/terminal combination, so 'grep \"^✗\"' matches ZERO lines of the raw log -- not the 2 known fe-s-81 lines minus themselves, but 0 of 0 attempted matches against 2 real fail markers that are present. The criterion reads PASS-by-output exactly as written and its literal output matches <expect> verbatim, so F86-AC4 is graded PASS on this order; the finding is that the exclusion filter this criterion's prose describes ('isolates UNEXPECTED failures... via a grep filter') is currently a no-op that would read the identical 'UNEXPECTED-FAIL-COUNT=0' whether a genuine NEW unexpected failure existed in the suite or not, because grep never reaches the point of testing the filename. This is the same amended pattern named in F87-AC7/F88-AC6 per the round-14 amendment commit (ef031e6f44), so the exposure is not unique to this cell's invocation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F86-AC4 amended `<invocation>`: `... > <WS>/.suite_check_86.log 2>&1; UNEXPECTED=$(grep \"^✗\" <WS>/.suite_check_86.log | grep -vc \"generator-output-carries-unprojected-grant\"); echo \"UNEXPECTED-FAIL-COUNT=$UNEXPECTED\"`; `<expect>UNEXPECTED-FAIL-COUNT=0</expect>`. The COO amendment's own prose: 'the invocation now isolates failures NOT attributable to the known, disclosed, cross-cell gap, so a REAL regression on this cell's own surface still fails the criterion.'",
+    "world_is": "Measured (this worker, 2026-09-22, literal amended invocation run verbatim in this worktree): output `UNEXPECTED-FAIL-COUNT=0`, matching <expect>; suite summary `654 pass`, `27 skip`, `2 fail`, rc=1 for the bun test step. Measured directly on the raw log bytes (python, this worker): the 2 fail-marker lines are `b'\\x1b[0m\\x1b[31m\\xe2\\x9c\\x97\\x1b[0m \\x1b[0mF81-AC3/AC4 -- generator output carries unprojected_grant...'` (both occurrences) -- i.e. the line does NOT start with the raw ✗ byte sequence, it starts with an ANSI SGR reset+color escape, so POSIX `grep \"^✗\"` (anchored) cannot match either real fail line. Positive control (this worker): `grep \"^✗\" <log>` alone (no -v filter) returns rc=1, 0 matches, against a python-confirmed 2 occurrences of the glyph in the file -- confirming the anchor fails to match ANY fail line, not that it correctly excluded the 2 known ones. Net effect: the criterion cannot currently be forced to read a non-zero UNEXPECTED-FAIL-COUNT by any suite content, known-gap or otherwise, in this bun/terminal environment. Does not change this order's grade: the literal invocation's output matches <expect> exactly as specified, and this worker independently confirmed (as the COO's amendment states was already done) that only the 2 disclosed fe-s-81 lines are present in the raw fail count -- so no masked regression is evidenced in THIS run.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, 2026-09-22, literal amended F86-AC4 invocation, this worktree): `UNEXPECTED-FAIL-COUNT=0`, bun summary `654 pass / 27 skip / 2 fail`, rc=1 for the test step, rc=0 for the echo",
+        "measured (this worker, python3 byte-level scan of C:/tmp/wk-irpt_fntend-14-86-fe-s-86/.suite_check_86.log, 2026-09-22): 2 occurrences of U+2717, both immediately preceded by bytes `\\x1b[0m\\x1b[31m` (ANSI SGR reset + red), both on lines naming `F81-AC3/AC4 -- generator output carries unprojected_grant`",
+        "measured (this worker, positive control, 2026-09-22): `grep \"^✗\" C:/tmp/wk-irpt_fntend-14-86-fe-s-86/.suite_check_86.log` -> rc=1, 0 lines, against the python-confirmed 2 real occurrences -- the anchored pattern matches nothing in this log regardless of content",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-86.full-template-classifier-no-prefix-widening.md:87-100 (this worktree HEAD) -- F86-AC4's amended invocation and the COO amendment prose describing it as an isolating filter",
+        "ef031e6f44 (CLOUD, cited in git log as the round-14 amendment commit) -- names F86-AC4/F87-AC7/F88-AC6 as carrying the identical structural amendment"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W37-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~37",
+    "surfaced_at": "2026-09-22T15:11:00Z",
+    "one_line": "F87-AC5's literal invocation pairs --inject-css with --expect-ground in ONE call, but scripts/ui-smoke.mjs applies every --inject-css unconditionally BEFORE the --expect-ground measurement loop, so the single EXPECT-GROUND line this invocation can ever print reflects the POST-inject state -- it can never print the PASS rgb(255, 255, 255) the criterion's own <expect> regex requires. Ran verbatim: one line, FAIL rgb(196, 203, 219), rc=0. The underlying claim (ground genuinely measures white pre-inject) IS true, confirmed by a separate diagnostic run without --inject-css, but that diagnostic is not this criterion's graded invocation.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F87-AC5's literal <invocation>: `... --expect-ground '[data-slot=\"answer-status\"]=rgb(255, 255, 255)' --inject-css '[data-slot=\"answer-status\"]{background-color:#c4cbdb !important}'`, <expect>EXPECT-GROUND.*PASS rgb\\(255, 255, 255\\)</expect>. Cell text: \"read this capture's SECOND EXPECT-GROUND line (post-inject) separately in your result: the wrong-ground control must print FAIL rgb(196, 203, 219), never a silent PASS\" -- assuming TWO EXPECT-GROUND lines (a first pre-inject PASS, a second post-inject FAIL) appear in one capture.",
+    "world_is": "Ran F87-AC5's invocation verbatim (WS/PORT substituted only): stdout carries exactly ONE `EXPECT-GROUND[...]` line -- `EXPECT-GROUND[[data-slot=\"answer-status\"]]: FAIL rgb(196, 203, 219)`, `ASSERT-GROUND: 0 of 1 met`, rc=0. No `PASS rgb(255, 255, 255)` substring anywhere in the output, so the criterion's own <expect> regex does not match. Read directly: portal/scripts/ui-smoke.mjs:437-442 (`if (injectCssArgs.length) { for (const css of injectCssArgs) { await page.addStyleTag(...) } }`) runs unconditionally BEFORE the `--expect-ground` loop at :557-574, and there is no code path in the script that measures ground once before an inject and again after within one invocation -- the flag ordering on the command line does not matter (both arg lists are extracted by a `reduce` over the whole `args` array, :145-146). So pairing --inject-css with --expect-ground in one invocation can ONLY ever produce the post-inject reading, never the pre-inject one, regardless of how the flags are ordered. Ran a separate diagnostic (same fixture/selector/expect-ground value, --inject-css omitted, not part of the graded criterion) to confirm the underlying claim: `EXPECT-GROUND[[data-slot=\"answer-status\"]]: PASS rgb(255, 255, 255)` -- ground genuinely measures white absent injection, so (d) GROUND ON THE ACTUAL CONTAINER is true of the component; only the single literal invocation named by F87-AC5 cannot demonstrate both halves in one capture. Recorded F87-AC5 FAIL in this worker's proof instance with the literal invocation's true output; did not substitute the diagnostic run as the graded row (per row IRPT_FNTEND-W34-S1's own precedent: a corrected/substituted invocation must land in the task-order FILE, never only in a worker's proof record).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, F87-AC5 literal invocation verbatim, port 6003, 2026-09-22): `EXPECT-GROUND[[data-slot=\"answer-status\"]]: FAIL rgb(196, 203, 219)`, `ASSERT-GROUND: 0 of 1 met`, rc=0 -- no PASS rgb(255, 255, 255) line, does not match <expect>",
+        "portal/scripts/ui-smoke.mjs:437-442 (this worktree HEAD) -- the --inject-css loop, runs unconditionally, before any --expect-ground measurement",
+        "portal/scripts/ui-smoke.mjs:557-574 (this worktree HEAD) -- the --expect-ground measurement loop, the only place EXPECT-GROUND lines are printed, one per --expect-ground arg, always reading POST-inject state",
+        "portal/scripts/ui-smoke.mjs:145-146 (this worktree HEAD) -- injectCssArgs/expectGroundArgs both extracted by an order-independent reduce() over the full args array, so command-line flag ordering cannot change execution order",
+        "measured diagnostic run (this worker, same fixture/selector, --inject-css omitted, port 6003, 2026-09-22, SUPPLEMENTARY not graded): `EXPECT-GROUND[[data-slot=\"answer-status\"]]: PASS rgb(255, 255, 255)`, rc=0",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-87.answer-status-weights-700-400-under-c1.md criterion F87-AC5 and its cell-text sentence naming a 'SECOND EXPECT-GROUND line' (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W38-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~38",
+    "surfaced_at": "2026-09-22T15:03:00Z",
+    "one_line": "TO-FE-s-88's F88-AC6 (`bun test src/pages/InvestorReporting`, expect 0 fail) genuinely fails, reproducibly, on a PRE-EXISTING defect entirely outside this cell's write surface: two committed smoke fixtures (`fixtures/smoke/fe-s-13-wire.json`, `fixtures/smoke/fe-s-14-print-v1.json`) do not carry the `unprojected_grant` field the PRD's (v0.7) envelope-level clause requires on every scoped-route entry, so `fe-s-81/generator-output-carries-unprojected-grant.test.ts`'s F81-AC3/AC4 fails on both files (0 of 9 and 0 of 2 entries carry the key). This is unrelated to the render-claim branch: neither failing test file, nor the fixtures it reads, imports `App.tsx`, `ProtectedRoute.tsx` or anything else in this cell's `<paths>` grant (checked: `grep -rl \"ProtectedRoute|App.tsx\" __tests__/fe-s-81` -> no matches), and the failure reproduces identically whether this cell's changes are present in the working tree or not (fe-s-81 run standalone, no App.tsx/ProtectedRoute.tsx in its import graph). F88-AC6 is recorded FAIL in this worker's proof instance as literally measured; this worker did not and could not fix it within its grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F88-AC6's literal `<invocation>`: `cd <WS>/portal && timeout 600 .../bun test src/pages/InvestorReporting`, `<expect>(?<![0-9])0 fail</expect>` -- \"the whole IRPT_FNTEND suite is green.\"",
+    "world_is": "Measured (this worker, 2026-09-22, IRPT_FE_DEV_PORT unset per HOW step 5): full-suite run #1 -- rc=1, `652 pass, 27 skip, 3 fail` (2733 expect() calls, 682 tests / 128 files, 97.93s); the 3 failures were `F45-AC9` (fe-s-45/config-loader-writes.test.ts, unrelated to this cell) plus the two fe-s-81 failures below. Full-suite run #2, immediately after (same tree, same command) -- rc=1, `653 pass, 27 skip, 2 fail` (74.12s): F45-AC9 PASSED this time (a flaky/environmental failure under full-suite concurrent load, filed separately as IRPT_FNTEND-W38-S2, not blocking) while the two fe-s-81 failures reproduced IDENTICALLY both runs: `fe-s-13-wire.json: unprojected_grant present 0 of 9` (MISSING ON all 9 scoped-route keys: directory/resolve, directory/search, performance/, analysis/, narrative/, status/, status, export/, holdings/) and `fe-s-14-print-v1.json: unprojected_grant present 0 of 2` (MISSING ON performance/, narrative/), each asserting `expect(missing).toEqual([])` and failing with the full missing-key list. Ran `fe-s-81` standalone (isolated from the rest of the suite): IDENTICAL two failures, rc=1, confirming this is not suite-order or concurrency-induced -- it is a real, reproducible defect in the two named fixture files (or their generator) against the PRD's own (v0.7) `unprojected_grant` clause (`IRPT_FNTEND_PRD.md` :123, \"reaches every scoped route, not a subset\"). Fixture files located at `portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json` and `.../fe-s-14-print-v1.json` -- neither is in this cell's `<paths>` grant (`portal/src/App.tsx`, `portal/src/components/ProtectedRoute.tsx`, `portal/src/contexts/AuthContext.{tsx,context.ts}`, `portal/src/pages/InvestorReporting/__tests__/fe-s-88/` only). Confirmed no import-graph relationship to this cell's surface: `grep -rl \"ProtectedRoute\\|App.tsx\" src/pages/InvestorReporting/__tests__/fe-s-81` returned zero matches. Disarmed when the owning cell's fixtures (or generator) are corrected to carry `unprojected_grant` on every entry and `fe-s-81`'s suite re-run confirms 0 fail, or the issuer amends F88-AC6's scope to exclude a named pre-existing defect outside this order's grant.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, 2026-09-22, run #1): `cd portal && bun test src/pages/InvestorReporting` -> rc=1, `652 pass, 27 skip, 3 fail`, 682 tests across 128 files, 97.93s -- saved at `.scratch/f88-ac6.log` on this worker's device (not a repo path)",
+        "measured run (this worker, 2026-09-22, run #2, immediately following, no source changes between runs): same command -> rc=1, `653 pass, 27 skip, 2 fail`, 74.12s -- F45-AC9 passed on this run (flaky), the two fe-s-81 failures reproduced identically",
+        "measured run (this worker, 2026-09-22, isolated): `bun test src/pages/InvestorReporting/__tests__/fe-s-81` -> rc=1, `2 pass, 2 fail`, 9 expect() calls, 112ms; failure text verbatim: `fe-s-13-wire.json: unprojected_grant present 0 of 9`, `fe-s-13-wire.json MISSING ON: /api/scoped/investor-reporting/directory/resolve, .../directory/search, .../performance/, .../analysis/, .../narrative/, .../status/, .../status, .../export/, .../holdings/`; `fe-s-14-print-v1.json: unprojected_grant present 0 of 2`, `fe-s-14-print-v1.json MISSING ON: .../performance/, .../narrative/`",
+        "portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json, fe-s-14-print-v1.json (this worktree HEAD) -- the two files the failing assertions read",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-81/generator-output-carries-unprojected-grant.test.ts:49-54 (this worktree HEAD) -- the failing assertion, `expect(missing).toEqual([])`",
+        "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md :123 (this worktree HEAD), the (v0.7) `unprojected_grant` clause: \"It therefore reaches every scoped route, not a subset\"",
+        "measured (this worker, 2026-09-22): `grep -rl \"ProtectedRoute\\|App.tsx\" src/pages/InvestorReporting/__tests__/fe-s-81` -> no output (zero matches), confirming fe-s-81's failure has no dependency on this cell's write surface",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-88.print-route-render-delegate-branch.md, criterion F88-AC6 and BOUNDS (\"Two workers never share a write path. Every file not in your <paths> is read-only to you\") (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W38-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~38",
+    "surfaced_at": "2026-09-22T15:03:00Z",
+    "one_line": "While running F88-AC6's full-suite invocation twice in immediate succession (same tree, no changes between runs), `fe-s-45/config-loader-writes-nothing-through-junction.test.ts`'s `F45-AC9` failed on run #1 (`652 pass, 27 skip, 3 fail`) and PASSED on run #2 (`653 pass, 27 skip, 2 fail`) and again standalone (`6 pass, 0 fail`) -- a flaky failure under full-suite concurrent load, unrelated to this cell's write surface (fe-s-45 does not reference App.tsx or ProtectedRoute.tsx). Recorded as an OBSERVATION only: it did not block this worker's own criteria (which never depend on fe-s-45) and resolved on immediate re-run, so no disarm action is owed by this row; flagged in case the flake recurs for a later cell running the same full-suite invocation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F88-AC6's literal invocation (`bun test src/pages/InvestorReporting`) and expectation (`0 fail`) -- not a claim this worker's own order makes about fe-s-45 specifically; recorded because it was encountered while satisfying F88-AC6.",
+    "world_is": "Measured (this worker, 2026-09-22): full-suite run #1 -- `F45-AC9` FAILED (assertion text: \"every config loader in the reach writes nothing through the junction (RULING (B))\"). Full-suite run #2, immediately after, identical command and tree -- `F45-AC9` PASSED, `EVERY CONFIG LOADER IN THE REACH WRITES NOTHING THROUGH THE JUNCTION: 4 of 4`. Isolated run, `bun test src/pages/InvestorReporting/__tests__/fe-s-45` alone -- `6 pass, 0 fail`, 41.67s, all six DISPOSITION/CONTROL lines PASS. hazard_standing INERT: this worker's own criteria never touch fe-s-45, the flake self-resolved without intervention within this same session, and no downstream artifact of this order depends on it. Left UNDER_INVESTIGATION rather than DISMISSED because the underlying cause (port/resource contention under 128-file concurrent test load, plausibly sharpened by sibling workers' dev servers on the shared box) was not root-caused here -- that is above this worker's grant and this criterion's needs.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, 2026-09-22, run #1): `.scratch/f88-ac6.log` (this worker's device, not a repo path) line: `[31m✗[0m F45-AC9 -- every config loader in the reach writes nothing through the junction (RULING (B)) > the reach by subtraction, each disposition, each kept loader run under a watch; the old dev script writes [547.00ms]`",
+        "measured run (this worker, 2026-09-22, run #2): `.scratch/f88-ac6-rerun.log` -- no F45 failure line; summary `653 pass, 27 skip, 2 fail`, both remaining failures are fe-s-81 (see IRPT_FNTEND-W38-S1)",
+        "measured run (this worker, 2026-09-22, isolated): `.scratch/f45-isolated.log` -- `6 pass, 0 fail`, 28 expect() calls, 41.67s, `EVERY CONFIG LOADER IN THE REACH WRITES NOTHING THROUGH THE JUNCTION: 4 of 4`",
+        "measured (this worker, 2026-09-22): `grep -rl \"ProtectedRoute\\|App.tsx\" src/pages/InvestorReporting/__tests__/fe-s-45` -> no output (zero matches)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W38-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~38",
+    "surfaced_at": "2026-09-22T15:49:47Z",
+    "one_line": "On the COO's re-cut of F88-AC6 (row IRPT_FNTEND-W38-S1's amendment), re-running the whole-suite invocation against the EXACT SAME committed bytes this worker's own prior instance already recorded (portal 5f480f82, unchanged, git diff --stat clean) now reproduces a THIRD, previously-undisclosed genuine failure that is NOT the fe-s-81 gap and NOT the fe-s-45 flake: `__tests__/fe-s-49/admin-gate.test.ts` statically parses App.tsx's JSX and throws `unknown ProtectedRoute prop allowRenderClaim` against a closed allowlist (`GATE_PROP_NAMES = ['requireAdmin', 'requireInternal', 'requireDev']`, admin-gate.test.ts:67) that predates this cell and does not know its new prop. This is a real, deterministic regression directly caused by this cell's own required change (App.tsx:576 / ProtectedRoute.tsx:77, both in this cell's own <paths> grant) landing on a file NOT in this cell's grant (`__tests__/fe-s-49/`) -- the exact 'defect needing another cell's file' case the order's own HOW step 7 names as one surprise row, never a wider grant. Reproduced twice: once inside the full-suite run, once isolated (`bun test src/pages/InvestorReporting/__tests__/fe-s-49` -> rc=1, 0 pass 1 fail). This worker's OWN prior committed proof_of_spec instance (5f3c975b13) recorded F88-AC6's full-suite evidence as `653 pass, 27 skip, 2 fail` with no fe-s-49 failure at all, against these same committed bytes -- that recorded evidence does not reproduce now; this row does not resolve why, only that the current, live, reproducible state includes this failure and the recorded evidence did not disclose it.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F88-AC6 (as amended by IRPT_FNTEND-W38-S1's disarm): 'the bar is unchanged -- 0 unexpected failures -- but the invocation now isolates failures NOT attributable to the known, disclosed, cross-cell gap, so a REAL regression on this cell's own surface still fails the criterion.' The amendment's own re-verification claimed `UNEXPECTED-FAIL-COUNT=0, 2 known fe-s-81 fails present and excluded, matching the worker's own report exactly.'",
+    "world_is": "Measured (this worker, 2026-09-22, portal HEAD 5f480f82, git diff --stat clean, no source changes since the prior instance's commit): full-suite run -> rc=1, `642 pass, 27 skip, 4 fail`, 673 tests across 128 files, 51.51s (saved `.suite_check_88.log`, this worker's WS root, not a repo path). ANSI-stripped scan for lines starting with the literal fail glyph found exactly 4: `F45-AC9` (fe-s-45, already filed IRPT_FNTEND-W38-S2, flaky), `(unnamed)` (fe-s-49/admin-gate.test.ts), and the two fe-s-81 F81-AC3/AC4 lines already covered by IRPT_FNTEND-W38-S1. Isolated run: `cd portal && bun test src/pages/InvestorReporting/__tests__/fe-s-49` -> rc=1, `0 pass, 1 fail`, error text verbatim: `error: unknown ProtectedRoute prop allowRenderClaim` at `admin-gate.test.ts:213:79`. Read `admin-gate.test.ts:67`: `const GATE_PROP_NAMES = ['requireAdmin', 'requireInternal', 'requireDev'] as const` -- a closed list that does not include `allowRenderClaim`, and `:213`: `if (!(GATE_PROP_NAMES as readonly string[]).includes(name)) throw new Error(...)`. Read `App.tsx:576` (committed 5f480f82): `<Route path=\"/investor-reporting/print\" element={<ProtectedRoute requireAdmin requireInternal allowRenderClaim>...}/>` -- carries the new prop this cell's own order requires. `fe-s-49/admin-gate.test.ts` is not in this cell's `<paths>` grant (`portal/src/App.tsx`, `portal/src/components/ProtectedRoute.tsx`, `portal/src/contexts/AuthContext.{tsx,context.ts}`, `portal/src/pages/InvestorReporting/__tests__/fe-s-88/`, and this investigation file only) -- this worker cannot edit `GATE_PROP_NAMES` to admit the new prop without exceeding its grant. Disarmed when the issuing COO either (a) widens this cell's grant (or issues a companion fix) to add `allowRenderClaim` to `fe-s-49/admin-gate.test.ts`'s `GATE_PROP_NAMES`, confirms the suite re-runs clean of this failure, and re-amends F88-AC6's disclosed-exclusion text to name it explicitly (the same shape as the fe-s-81 exclusion), or (b) determines the discrepancy against this worker's own prior (5f3c975b13) recorded evidence some other way. Until then F88-AC6 is recorded FAIL in this worker's proof instance.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, 2026-09-22): `cd portal && NO_COLOR=1 timeout 600 bun test src/pages/InvestorReporting` -> rc=1, `642 pass, 27 skip, 4 fail`, 673 tests across 128 files, 51.51s -- saved at `.suite_check_88.log` on this worker's device (WS root, not a repo path)",
+        "measured run (this worker, 2026-09-22, isolated): `cd portal && bun test src/pages/InvestorReporting/__tests__/fe-s-49` -> rc=1, `0 pass, 1 fail`, `error: unknown ProtectedRoute prop allowRenderClaim` at admin-gate.test.ts:213:79",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts:67 (this worktree HEAD): `const GATE_PROP_NAMES = ['requireAdmin', 'requireInternal', 'requireDev'] as const`",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts:213 (this worktree HEAD): the throw on any prop name not in GATE_PROP_NAMES",
+        "portal/src/App.tsx:576 (this worktree HEAD, committed 5f480f82): the print route carries `allowRenderClaim` on `<ProtectedRoute>`",
+        "portal/src/components/ProtectedRoute.tsx:77 (this worktree HEAD, committed 5f480f82): `allowRenderClaim = false` as a new ProtectedRouteProps member",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~38/IRPT_FNTEND.TO-FE-s-88.print-route-render-delegate-branch.proof_of_spec.json@5f3c975b13, acceptance row F88-AC6: recorded full-suite evidence `653 pass, 27 skip, 2 fail` against these same committed bytes, no fe-s-49 failure disclosed -- does not reproduce on this worker's current re-run",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-88.print-route-render-delegate-branch.md, F88-AC6 and its COO AMENDMENT text (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W38-S4",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~38",
+    "surfaced_at": "2026-09-22T15:49:47Z",
+    "one_line": "F88-AC6's COO-amended `<invocation>` (row IRPT_FNTEND-W38-S1's disarm) computes UNEXPECTED-FAIL-COUNT by `grep \"^\\u2717\" <log> | grep -vc \"generator-output-carries-unprojected-grant\"`, but in this worker's shell `FORCE_COLOR=3` is set and overrides the invocation's own `NO_COLOR=1` (bun itself prints the warning `The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.` inside the captured log), so every bun-emitted fail line is prefixed with ANSI escape codes (`\\x1b[0m\\x1b[31m\\u2717\\x1b[0m ...`) and `grep \"^\\u2717\"` matches ZERO lines regardless of how many tests actually failed. Literally running the invocation verbatim in this environment returns `UNEXPECTED-FAIL-COUNT=0` on a log that (ANSI-stripped) actually contains 4 fail lines -- the control cannot discriminate a clean suite from a broken one in this environment; it always reads 0. A second, independent defect compounds this and would matter even with color fixed: the exclusion string `generator-output-carries-unprojected-grant` is the TEST FILE's name, but bun's `^\\u2717` fail lines print the test's DESCRIPTION text (e.g. `F81-AC3/AC4 -- generator output carries unprojected_grant on every entry, every file > ...`), which does not contain that filename substring at all -- so even with ANSI stripped, the literal exclusion pattern would not match and exclude the disclosed fe-s-81 lines it is meant to exclude. The COO amendment's claim of an independent live re-verification returning the identical `UNEXPECTED-FAIL-COUNT=0` is consistent with the SAME false-zero (FORCE_COLOR is a common agent-runtime environment default, not confirmed in the COO's own shell by this worker) rather than a genuine confirmation.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F88-AC6's COO-amended `<invocation>`: `... > <WS>/.suite_check_88.log 2>&1; UNEXPECTED=$(grep \"^\\u2717\" <WS>/.suite_check_88.log | grep -vc \"generator-output-carries-unprojected-grant\"); echo \"UNEXPECTED-FAIL-COUNT=$UNEXPECTED\"`, `<expect>UNEXPECTED-FAIL-COUNT=0</expect>` -- stated as independently re-verified live by the issuing COO before amending.",
+    "world_is": "Measured (this worker, 2026-09-22): `echo \"FORCE_COLOR=[$FORCE_COLOR]\"` -> `FORCE_COLOR=[3]` in this worker's own shell. Ran the literal amended invocation verbatim -> `UNEXPECTED-FAIL-COUNT=0`, rc=0 (matches `<expect>`). Independently inspected the raw log bytes at the four fail-line offsets: each begins `\\x1b[0m\\x1b[31m\\u2717\\x1b[0m` (confirmed via a Python read with `repr()`, not a shell tool that could itself mangle the bytes) -- `grep \"^\\u2717\"` against the SAME raw log directly (`grep \"^\\u2717\" .suite_check_88.log`) returns zero lines/rc=1, confirmed independently of the compound invocation. ANSI-stripped (`re.sub(r'\\x1b\\[[0-9;]*m', '', data)`) re-scan: `grep \"^\\u2717\"` on the stripped log returns exactly 4 lines; piping through the SAME `grep -vc \"generator-output-carries-unprojected-grant\"` exclusion still returns 4 (not 2), because the fe-s-81 fail lines' text is `F81-AC3/AC4 -- generator output carries unprojected_grant on every entry, every file > ...`, which does not contain the hyphenated filename string the exclusion greps for. Manual attribution of all 4 lines by the file-header text preceding each (see IRPT_FNTEND-W38-S1 and W38-S3) confirms 2 are the disclosed fe-s-81 gap and 2 are not (F45-AC9 flaky, fe-s-49 admin-gate genuine -- W38-S3). No claim is made here about what environment variables the issuing COO's own shell carried; only that FORCE_COLOR is a plausible, common agent-runtime default and the identical `UNEXPECTED-FAIL-COUNT=0` result this worker independently reproduces is explained entirely by this defect, without needing the suite to have been genuinely clean.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured (this worker, 2026-09-22): `echo \"FORCE_COLOR=[$FORCE_COLOR]\"` -> `FORCE_COLOR=[3]`",
+        "measured run (this worker, 2026-09-22): the literal COO-amended F88-AC6 invocation, verbatim -> `UNEXPECTED-FAIL-COUNT=0`, rc=0",
+        "measured (this worker, 2026-09-22): `.suite_check_88.log` line (node warning, this worker's device, not a repo path): `(node:34552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.`",
+        "measured (this worker, 2026-09-22): Python `repr()` read of the four raw fail-line offsets in `.suite_check_88.log` -- each begins `\\x1b[0m\\x1b[31m\\u2717\\x1b[0m`",
+        "measured (this worker, 2026-09-22): `grep \"^\\u2717\" .suite_check_88.log` (raw, uncompounded) -> zero lines, rc=1",
+        "measured (this worker, 2026-09-22): ANSI-stripped log, `grep \"^\\u2717\" .suite_check_88.clean.log | grep -vc \"generator-output-carries-unprojected-grant\"` -> 4 (not 2) -- the exclusion pattern does not match either fe-s-81 fail line's actual text",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-88.print-route-render-delegate-branch.md, F88-AC6's COO AMENDMENT text (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W38-S5",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~38",
+    "surfaced_at": "2026-09-22T17:05:20Z",
+    "one_line": "CORRECTS row IRPT_FNTEND-W38-S2 (committed at f357ad26c5, class OBSERVATION, hazard_standing INERT, \"an unrelated fe-s-45 flake ... self-resolved on re-run\"): that characterization is wrong on every count. The real failure is __tests__/fe-s-49/admin-gate.test.ts (not fe-s-45), it reproduces identically on every run (not a flake), and it is a DIRECT, causal consequence of this cell's own PRD-sanctioned App.tsx:576 change (not unrelated) -- already correctly diagnosed by this same worker's own later, uncommitted row IRPT_FNTEND-W38-S3 in the same session (fe-s-49's static GATE_PROP_NAMES allowlist throws on the new, unrecognised allowRenderClaim prop). The issuing COO (2.0.0_SA_COO~F, COO AMENDMENT 3) independently found and diagnosed the identical defect, applied a precise three-edit fix directly in this worker's worktree (fe-s-49/admin-gate.test.ts: GATE_PROP_NAMES gains 'allowRenderClaim', GateFlags gains the matching type field, F49-AC8 gains one named byte-identity carve-out for the print-route hunk specifically, requiring every pre-existing token plus the new one), and widened this cell's grant by exactly that one file. This worker independently re-verified the fix before trusting it (typecheck rc=0; fe-s-49 alone 10 pass/0 fail with F49-AC8 itself reading 'THE THREE GATE HUNKS ARE BYTE-IDENTICAL: 3 of 3'; this worker's OWN negative control -- a temporary commit removing requireInternal from the print route, b7cac27b, confirmed fe-s-49 then genuinely FAILS ('every pre-existing token present: NO', 2 of 3 gate hunks byte-identical), cleanly reverted via git revert (28694dff), net-zero diff against the pre-negative-control commit; the whole IRPT_FNTEND suite via the current, Amendment-2-corrected invocation reads UNEXPECTED-FAIL-COUNT=0, 653 pass/27 skip/2 fail, the 2 fails being exactly the disclosed fe-s-81 cross-cell gap and nothing else) -- then committed it as its own work at portal 04f4bc5c. This DISARMS row IRPT_FNTEND-W38-S3 (the fe-s-49 regression: fixed within this cell's widened grant, independently reverified, committed). It also independently reconfirms row IRPT_FNTEND-W38-S4's diagnosis (this worker's own shell also carries FORCE_COLOR=3; the raw, un-stripped grep against the same full-suite log returns 0 matches; only the ANSI-stripped-plus-corrected-exclusion invocation genuinely discriminates) and confirms the CURRENT task-order criterion text (post Amendment 2, sed ANSI-strip + F81-AC3/AC4 token exclusion) is the corrected form and reads truthfully in this environment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Row IRPT_FNTEND-W38-S2's own text (committed f357ad26c5): \"fe-s-45/config-loader-writes.test.ts's F45-AC9 failed once under full-suite concurrent load and passed on an immediate re-run and standalone -- a flake, unrelated to this cell\", class OBSERVATION, hazard_standing INERT.",
+    "world_is": "Measured (this worker, 2026-09-22, portal HEAD 04f4bc5c, this worker's own commit): the failure this session actually reproduces under the full-suite invocation is __tests__/fe-s-49/admin-gate.test.ts, not fe-s-45 -- `bun test src/pages/InvestorReporting/__tests__/fe-s-49` alone, BEFORE the fix (portal 5f480f82): rc=1, 0 pass, 1 fail, `error: unknown ProtectedRoute prop allowRenderClaim` at admin-gate.test.ts:213:79, reproduced on 2 independent standalone runs plus inside the full-suite run -- never a pass. AFTER the fix (this worker's own commit 04f4bc5c, on top of the COO's uncommitted-then-this-worker-committed three edits): `bun test src/pages/InvestorReporting/__tests__/fe-s-49` -> rc=0, 10 pass, 0 fail, 20 expect() calls; `bun run typecheck` -> rc=0; this worker's own negative control (temporary commit b7cac27b removing requireInternal from the print route's element line) -> `bun test .../fe-s-49` rc=1, 8 pass, 2 fail, `THE THREE GATE HUNKS ARE BYTE-IDENTICAL TO c29a8b86: 2 of 3`, `every pre-existing token present: NO` -- reverted via `git revert --no-edit b7cac27b` (28694dff), `git diff 5f480f82 28694dff -- src/App.tsx` empty (net-zero), fe-s-49 re-run rc=0 10 pass/0 fail again. Full-suite F88-AC6 invocation (current task-order text, post Amendment 2) at portal HEAD 04f4bc5c: `NO_COLOR=1 timeout 600 bun test src/pages/InvestorReporting > .suite_check_88.log 2>&1; rc=1; sed -r 's/\\x1b\\[[0-9;]*m//g' ... ; grep \"^\\u2717\" ... | grep -vc \"F81-AC3/AC4\"` -> `UNEXPECTED-FAIL-COUNT=0`; raw fail-line scan of the ANSI-stripped log: exactly 2 lines, both `F81-AC3/AC4 -- generator output carries unprojected_grant ...` (fe-s-13-wire.json, fe-s-14-print-v1.json), zero fe-s-49 lines, zero fe-s-45 lines; suite summary `653 pass, 27 skip, 2 fail, 2733 expect() calls, Ran 682 tests across 128 files`. This worker's own shell: `echo \"FORCE_COLOR=[$FORCE_COLOR]\"` -> `FORCE_COLOR=[3]`; `grep \"^\\u2717\" .suite_check_88.log` (raw, unstripped) -> 0 matches, rc=1 -- confirming row W38-S4's diagnosis (ANSI codes precede the fail glyph in this environment) independently, on a fresh run, in this worker's own shell.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal commit 5f480f82176f82f917a61bb72c0199b3ed049a75 (this worktree HEAD before the fix) -- App.tsx:576 carries allowRenderClaim, fe-s-49/admin-gate.test.ts:67 GATE_PROP_NAMES does not yet include it",
+        "measured run (this worker, 2026-09-22, portal HEAD 5f480f82, before the fix): `cd portal && bun test src/pages/InvestorReporting/__tests__/fe-s-49` -> rc=1, `0 pass, 1 fail`, `error: unknown ProtectedRoute prop allowRenderClaim` at admin-gate.test.ts:213:79",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts (this worktree HEAD, at 04f4bc5c) -- the three-edit fix: GATE_PROP_NAMES gains 'allowRenderClaim' (:67), GateFlags gains allowRenderClaim?: boolean (:92), F49-AC8's sanctioned-rewrite carve-out (:569-601)",
+        "measured run (this worker, 2026-09-22, portal HEAD 04f4bc5c, after the fix): `bun run typecheck` -> rc=0; `bun test src/pages/InvestorReporting/__tests__/fe-s-49` -> rc=0, `10 pass, 0 fail`, 20 expect() calls, console line `THE THREE GATE HUNKS ARE BYTE-IDENTICAL TO 2.0.0_SA_COO~D'S c29a8b86: 3 of 3`",
+        "measured (this worker, 2026-09-22): own negative control -- portal commit b7cac27b535a14ba9ac995c0faa2868599e4ae55 (App.tsx print-route line loses requireInternal), `bun test .../fe-s-49` -> rc=1, `8 pass, 2 fail`, console lines `every pre-existing token present: NO`, `THE THREE GATE HUNKS ARE BYTE-IDENTICAL: 2 of 3`; reverted at portal commit 28694dff (git revert --no-edit b7cac27b); `git diff 5f480f82 28694dff -- src/App.tsx` -> empty output (net-zero); fe-s-49 re-run after revert -> rc=0, 10 pass, 0 fail",
+        "portal commit 04f4bc5c (this worker, 0.9.0_WK_IRPT_FNTEND~38) -- the fe-s-49 fix committed as this worker's own work, authored 0.9.0_WK_IRPT_FNTEND~38 <0.9.0_WK_IRPT_FNTEND~38@opal.agent>",
+        "measured run (this worker, 2026-09-22, portal HEAD 04f4bc5c): the current task-order F88-AC6 invocation verbatim (Amendment 2's sed-stripped, F81-AC3/AC4-token-excluded form) -> `UNEXPECTED-FAIL-COUNT=0`, raw log (ANSI-stripped) contains exactly 2 fail lines, both F81-AC3/AC4, `653 pass, 27 skip, 2 fail` of 682 tests across 128 files",
+        "measured (this worker, 2026-09-22): `echo \"FORCE_COLOR=[$FORCE_COLOR]\"` -> `FORCE_COLOR=[3]`; `grep \"^\\u2717\" .suite_check_88.log` (raw, unstripped, this worker's own fresh run) -> 0 matches -- reconfirms row IRPT_FNTEND-W38-S4's diagnosis independently",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md, rows IRPT_FNTEND-W38-S2 (:6019-6039, the row being corrected), IRPT_FNTEND-W38-S3 (:6041-6066, this worker's own prior correct diagnosis, DISARMED by this row's evidence), IRPT_FNTEND-W38-S4 (:6068-6092, reconfirmed)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-88.print-route-render-delegate-branch.md, 'COO AMENDMENT 3, GRANT WIDENED' section (this worktree HEAD) -- the COO's own diagnosis and the exactly-three-edit grant this row's fix matches"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W41-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~41",
+    "surfaced_at": "2026-09-22T20:07:51Z",
+    "one_line": "FE-s-91's own BOUNDS grant (portal/src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts, __tests__/fe-s-91/, this deliverables folder, the task-order file) does NOT enumerate portal/src/App.tsx, but the same order's ACCEPTANCE CRITERIA section explicitly directs 'Run the three new negative controls as temporarily-committed mutations ... on the print-route line' -- which is App.tsx:576 -- 'then git revert each cleanly back to net-zero'. The two sections of the same order disagree on the write surface for one explicitly-required act.",
+    "spec_asserts": "BOUNDS: 'Grant: portal/src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts, portal/src/pages/InvestorReporting/__tests__/fe-s-91/, org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md, plus ... deliverables/0.9.0_WK_IRPT_FNTEND~41/ and this order's own file ... to flip its <status> to complete.' -- no other path is named as this order's write surface.",
+    "world_is": "The same order's ACCEPTANCE CRITERIA F91-AC2 block, verbatim: 'Run the three new negative controls as temporarily-committed mutations (mirroring this round's own established pattern for exercising this exact test file) ... requireAdmin={false}, requireInternal={false}, and an unrelated extra prop -- each must show the comparator REFUSING (the carve-out no longer matches), then git revert each cleanly back to net-zero before moving to the next.' Measured: `git grep -n \"requireAdmin requireInternal\" -- src/App.tsx` -> one hit, src/App.tsx:576 -- the only line in the portal repo carrying both props together, so satisfying F91-AC2 as written requires editing exactly that line, which BOUNDS does not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-91.gate-hunk-comparator-exact-match-and-honest-labels.md@this worktree HEAD, BOUNDS block vs ACCEPTANCE CRITERIA F91-AC2 block (quoted in spec_asserts/world_is above).",
+        "measured (this worker): `git grep -n \"requireAdmin requireInternal\" -- src/App.tsx` -> one hit, src/App.tsx:576.",
+        "resolved by this worker as a narrow, self-reverting, net-zero exception: three portal commits 9e2de47f (requireAdmin={false}), 9f70264c (requireInternal={false}), d87b3000 (data-extra=\"x\"), each immediately followed by `git revert --no-edit` (899d2d88, bf35e335, ed258014 respectively); `git diff 3e2ab8e6 -- src/App.tsx` after all three reverts -> empty output (net-zero against the pre-mutation baseline commit)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not escalated as BLOCKING because the ACCEPTANCE CRITERIA text is unambiguous about WHICH act it requires -- only BOUNDS's enumerated grant list is silent on the file that act touches -- and the exception taken is bounded, self-reverting and verified net-zero before this row's own commit."
+    },
+    {
+    "id": "IRPT_FNTEND-W39-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~39",
+    "surfaced_at": "2026-09-22T20:33:22Z",
+    "one_line": "This order's own F89-AC2 invocation names a path outside this order's own BOUNDS Grant, so the exact literal invocation cannot resolve without a write outside this cell's write surface.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-89.fixture-key-grammar-reconciliation.md, F89-AC2: \"invocation: `cd WS/portal && /c/Users/AndrewBerman/.bun/bin/bun __tests__/fe-s-89/verify-key-validity.mjs`\" -- a path relative to the portal ROOT (`cd WS/portal`), i.e. `portal/__tests__/fe-s-89/verify-key-validity.mjs`. The SAME order's BOUNDS section grants only `portal/src/pages/InvestorReporting/__tests__/fe-s-89/` -- the fully qualified, nested path -- and lists no `portal/__tests__/` entry anywhere.",
+    "world_is": "Measured (this worker, 2026-09-22, portal HEAD 7dd3d067a17ee00b878ecfceff23c557649a2331 plus this cell's own commits): `git ls-tree -r HEAD --name-only` over the whole portal tree shows 220 tracked files under `src/pages/InvestorReporting/__tests__/` and 0 under a root-level `__tests__/` -- no top-level `__tests__/` directory has ever existed in this repo's history (`git log --all --oneline -- '__tests__/*'` returns nothing). Built the real checker at the GRANTED path (`portal/src/pages/InvestorReporting/__tests__/fe-s-89/verify-key-validity.mjs`); run there (`cd portal && bun src/pages/InvestorReporting/__tests__/fe-s-89/verify-key-validity.mjs`) it correctly prints all five target denominators (`default.json: 12 of 12`, `reporting-answer-bearing.json: 3 of 3`, `reporting-qualified.json: 3 of 3`, `fe-s-13-wire.json: 9 of 9`, `fe-s-14-print-v1.json: 2 of 2`), rc=0. Run with the EXACT literal invocation the order names (`cd WS/portal && bun __tests__/fe-s-89/verify-key-validity.mjs`): `error: Module not found \"__tests__/fe-s-89/verify-key-validity.mjs\"`, rc=1 -- does not match the criterion's `<expect>` regex. Writing a second copy of the checker at `portal/__tests__/fe-s-89/` to satisfy the literal invocation would be a write outside this order's own Grant, which the order elsewhere forbids (\"Never edit outside the task order's <paths>\"). hazard_standing is INERT, not ARMED: the conflict is confined to this one order's own two sections and creates no standing risk to future normal operation once the issuer corrects either the Grant or the invocation text.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IRPT_FNTEND.TO-FE-s-89.fixture-key-grammar-reconciliation.md, F89-AC2 invocation line and BOUNDS 'Grant:' line (this worktree, task-order file as issued)",
+        "measured (this worker, 2026-09-22): `git ls-tree -r HEAD --name-only` in portal -- 220 files under `src/pages/InvestorReporting/__tests__/`, 0 under a root-level `__tests__/`",
+        "measured (this worker, 2026-09-22): `git log --all --oneline -- '__tests__/*'` in portal -- zero commits, no top-level `__tests__/` directory has ever existed",
+        "measured (this worker, 2026-09-22): `cd portal && bun src/pages/InvestorReporting/__tests__/fe-s-89/verify-key-validity.mjs` -> rc=0, five target denominators printed exactly",
+        "measured (this worker, 2026-09-22): `cd portal && bun __tests__/fe-s-89/verify-key-validity.mjs` (the order's exact literal invocation) -> `error: Module not found \"__tests__/fe-s-89/verify-key-validity.mjs\"`, rc=1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W39-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~39",
+    "surfaced_at": "2026-09-22T20:33:22Z",
+    "one_line": "C-S147's bare-prefix fixture-key defect this order names on 4 files also exists, unrepaired, on 23 OTHER committed InvestorReporting fixture files outside this order's grant -- the round-14 CVO review's denominators covered only this cell's four, not the class.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "This order's own framing: \"round 14's classifier fix (FE-s-86) correctly requires a concrete key to match a declared template SEGMENT FOR SEGMENT ... But four fixture files were never updated to match\" -- naming exactly `fixtures/smoke/reporting-answer-bearing.json`, `__tests__/fe-s-84/fixtures/reporting-qualified.json`, `fixtures/smoke/fe-s-13-wire.json`, `fixtures/smoke/fe-s-14-print-v1.json` as the affected set.",
+    "world_is": "Measured (this worker, 2026-09-22): a census of every `*.json` file under `src/pages/InvestorReporting/` whose directory name contains `smoke` or `fixtures`, checking each top-level key for the shape `/api/scoped/investor-reporting/<segment>/` (bare, trailing-slash, <=5 path segments -- the same truncated-prefix shape round 14's classifier now rejects) finds 23 files carrying it, NONE of them among this order's four named files and none inside this cell's BOUNDS grant: `__tests__/fe-s-63/fixtures/export-ready.json`, `__tests__/fe-s-63/fixtures/print-ready.json`, `__tests__/fe-s-69/fixtures/firm.json`, `__tests__/fe-s-69/fixtures/firm.one-firm.json`, `__tests__/fe-s-71/fixtures/export-flow.json`, `__tests__/fe-s-72/fixtures/withheld.json`, `__tests__/fe-s-74/fixtures/one-bad-key.json`, `__tests__/fe-s-78/fixtures/cohort-selected.json`, `fixtures/smoke/fe-s-14-49financial.json`, `fixtures/smoke/fe-s-14-cottonwood.json`, `fixtures/smoke/fe-s-14-global.json`, `fixtures/smoke/fe-s-14-inflection.json`, `fixtures/smoke/fe-s-15-clean.json`, `fixtures/smoke/fe-s-15-needs-correction.json`, `fixtures/smoke/fe-s-16-print-narrative.json`, `fixtures/smoke/fe-s-16-print-prehistory.json`, `fixtures/smoke/fe-s-16-ready.json`, `fixtures/smoke/fe-s-18-frozen.json`, `fixtures/smoke/fe-s-18-holdings-missing-attribution.json`, `fixtures/smoke/fe-s-18-holdings-observed.json`, `fixtures/smoke/fe-s-18-holdings-target.json`, `fixtures/smoke/fe-s-21-queued.json`, `fixtures/smoke/reporting-answer-bearing-partial.json`. Not fixed here -- none is in this order's BOUNDS Grant, and this order's own risk warning (fixture-serving is a SUBSTRING match, so a wrong concrete value silently stops serving) applies to each of these too, meaning a future classifier-strictness change (or a future worker running this order's own remedy pattern blind to the wider class) could repeat the same partial-coverage gap this order itself was cut to close. C-S147's own text (REMEDIATION_v11.md) and the round-14 CVO review's denominator table both speak only to this order's four files; neither states or measures the wider 23-file population, so the CVO's 'KEY-VALIDITY' framing for C-S147 reads as if it covers the defect CLASS when it covers one order's SUBSET.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured (this worker, 2026-09-22): python census over `src/pages/InvestorReporting/**/*.json` in `smoke`/`fixtures` directories, testing every top-level key against `/api/scoped/investor-reporting/<segment>/` (bare prefix, <=5 segments) -- 23 files hit, 0 overlap with this order's 4 named files",
+        "portal (this worktree HEAD before this worker's edits) -- e.g. `src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json` keys: `/api/scoped/investor-reporting/performance/`, `/api/scoped/investor-reporting/analysis/`, `/api/scoped/investor-reporting/narrative/`, `/api/scoped/investor-reporting/status/`, `/api/scoped/investor-reporting/export/`, `/api/scoped/investor-reporting/holdings/` -- all bare prefixes, same shape as this order's four named files before this worker's fix",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-89.fixture-key-grammar-reconciliation.md, opening paragraph and 'Measured denominators' table -- names exactly four files, no wider census stated",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v11.md and org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND14_L8_L9_20260922.md -- C-S147's text and the round-14 KEY-VALIDITY denominators cover only this order's four files"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+{
+  "id": "IRPT_FNTEND-W40-S1",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_FNTEND~40",
+  "surfaced_at": "2026-09-22T20:30:35Z",
+  "one_line": "Building FE-s-90's checker, `bun test <path>` treats a bare (no leading \"./\") relative path argument that does not match bun's own test-name discovery convention (\".test.\"/\".spec.\") as a case-insensitive substring FILTER against files it already discovered, never as an instruction to run that exact file -- so a `.fixture.ts` file addressed by its full, correct, bare relative path is silently treated as zero matches ('did not match any test files') rather than run, and a caller that does not check the summary line for this exact message could misread that as a genuine pass or an intended skip.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The task order's suggested invocation shape, `node scripts/suite-complete-check.mjs <bun-test-command...>`, and its four required controls, imply that naming a specific fixture file's path on the `bun test` command line runs that file.",
+  "world_is": "Measured (this worker, 2026-09-22, bun 1.3.9, this worktree's portal): `bash -lc 'C:/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/passing.fixture.ts'` -> stderr/stdout: \"The following filters did not match any test files ... 2016 files were searched\", \"note: Tests need \\\".test\\\", \\\"_test_\\\", \\\".spec\\\" or \\\"_spec_\\\" in the filename\", \"note: To treat the ... filter as a path, run \\\"bun test ./<path>\\\"\"; rc=1. The identical command with a leading \"./\" prefix on the same path -> \"1 pass, 0 fail, Ran 1 test across 1 file\", rc=0. This project's own fixture files in this cell are named `.fixture.ts` specifically so a directory-scan invocation (F90-AC2, F90-AC4) never discovers and runs them; the checker and this cell's test file both always prefix an explicit fixture path with \"./\" to force bun to treat it as a literal target regardless of naming convention.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured (this worker, 2026-09-22): `bash -lc 'C:/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/passing.fixture.ts'` (bare path, no ./) -> rc=1, \"did not match any test files\", \"To treat the ... filter as a path, run bun test ./<path>\"",
+      "measured (this worker, 2026-09-22): the same command with `./` prefixed -> rc=0, \"1 pass, 0 fail, Ran 1 test across 1 file\"",
+      "C:/tmp/wk-irpt_fntend-15-2-fe-s-90/portal/src/pages/InvestorReporting/__tests__/fe-s-90/suite-complete-check.test.ts (this worktree HEAD) -- FIXTURE_* constants, each prefixed \"./\", with a comment citing this exact finding",
+      "C:/tmp/wk-irpt_fntend-15-2-fe-s-90/portal/src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/passing.fixture.ts (this worktree HEAD) -- header comment recording the same live-verified discovery-glob behaviour"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_FNTEND-W40-S2",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_FNTEND~40",
+  "surfaced_at": "2026-09-22T20:30:35Z",
+  "one_line": "Node/Bun's `child_process.spawnSync(cmd, args, opts)`, called from CODE running inside an already-started bun/node process (as opposed to typed at a bash prompt or spawned by bash itself), calls Windows CreateProcess directly with no MSYS path translation -- an MSYS-style absolute path (`/c/Users/...`, the form this project's own task orders write in every acceptance invocation this round) fails ENOENT from that call site even though the identical string works perfectly when bash itself is the one resolving and exec'ing it; the Windows-native forward-slash form (`C:/Users/...`) resolves correctly from both call sites and is also roughly 8-10x faster per spawn (no shell startup) when a shell is not otherwise needed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The task order names the bun binary as `/c/Users/AndrewBerman/.bun/bin/bun` in every acceptance invocation (F90-AC1..AC4) with no caveat that this exact string is unusable as a `spawnSync` argument from inside a running node/bun process.",
+  "world_is": "Measured (this worker, 2026-09-22): `spawnSync('/c/Users/AndrewBerman/.bun/bin/bun', ['-e','console.log(1)'], {encoding:'utf8'})` called from a running bun process -> `error: ENOENT: no such file or directory, uv_spawn '/c/Users/AndrewBerman/.bun/bin/bun'`, `errno: -4058`, `code: 'ENOENT'`. The same call with `command` rewritten to `'C:/Users/AndrewBerman/.bun/bin/bun'` -> succeeds, ~113ms. Routing the MSYS-style path through `spawnSync('bash', ['-lc', '<cmd string>'], ...)` also succeeds (bash performs its own translation), at a measured ~800-1000ms bash-login-shell-startup cost per call versus ~113ms for the direct native-path call. This cell's own `scripts/suite-complete-check.mjs` still routes its OWN child spawn through `bash -lc` (needed there, since its command can carry a `timeout N ...` shell prefix), but this cell's test harness spawns the checker itself directly with the Windows-native path form, once this was found, to avoid an unnecessary extra shell hop.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured (this worker, 2026-09-22): `spawnSync('/c/Users/AndrewBerman/.bun/bin/bun', ...)` from a running bun process -> ENOENT, errno -4058, code ENOENT",
+      "measured (this worker, 2026-09-22): the identical call with `'C:/Users/AndrewBerman/.bun/bin/bun'` -> succeeds, ~113ms",
+      "measured (this worker, 2026-09-22): `spawnSync('bash', ['-lc', 'echo hi'])` -> succeeds, ~860-1000ms wall time (login-shell startup cost)",
+      "C:/tmp/wk-irpt_fntend-15-2-fe-s-90/portal/src/pages/InvestorReporting/__tests__/fe-s-90/suite-complete-check.test.ts (this worktree HEAD) -- BUN_BIN constant's own comment citing this exact finding and the direct-native-spawn design it drove",
+      "C:/tmp/wk-irpt_fntend-15-2-fe-s-90/portal/scripts/suite-complete-check.mjs (this worktree HEAD) -- the checker's own child spawn still uses `spawnSync('bash', ['-lc', joined], ...)`, documented and unaffected by this finding since it needs shell interpretation for a `timeout N ...` prefix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
 ]
 ```

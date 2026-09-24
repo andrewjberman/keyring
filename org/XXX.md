@@ -103,8 +103,9 @@ Do not read that at startup.
 > — the first two CONSUME inbox files. Everything else here (identity, inbox paths, TO semantics, ACK
 > discipline) binds you unchanged. At every active turn, sweep your suffixed serial's unread root first;
 > read the exact file → ACK → act → move it to `read/`. **Never infer READ from a nudge or a moved file.**
-> ⛔ **SHARED-BRANCH LAW, stated here because the Codex runtime has no hook carrying it:** a shared branch (`CLOUD`/`DEV`/`PROD`/`main`/
-> `SITEZ`) is pushed **ONLY by `0.0.0_AB_MSTR` or `0.0.0_AB_MSTR~Z`, and only on Andrew's word while he is at the
+> ⛔ **SHARED-BRANCH LAW, stated here because the Codex runtime has no hook carrying it:** a shared branch (`CLOUD`/`DEV`/`PROD`/`main`;
+> `SITEZ` is RETIRED since 2026-09-24 -- both devices commit to `CLOUD`, Andrew-direct "recs approved" card 1 (a), LD-0613)
+> is pushed **ONLY by `0.0.0_AB_MSTR` or `0.0.0_AB_MSTR~Z`, and only on Andrew's word while he is at the
 > terminal** (LD-0367/0368; the hold LD-0522). Every other seat -- you included -- **commits and never pushes**; a report
 > states its push state as **LOCAL** with the origin hash from `git ls-remote`. A rejected push is not yours to retry.
 
@@ -314,6 +315,26 @@ for a new GO is a protocol violation** — the batch GO covers the whole lane.
 
 Loops are **operator-initiated**. `/watcher` is not a loop — it arms the persistent inbox Monitor once.
 
+**IRPT POST-SLUG HOLD — Andrew-direct 2026-09-22 ~15:17 Eastern at `1.0.0_SA_CTO`:**
+"After you receive the most recent slugs from the CVOs I want you to hold analysis and the canonical flow cycle, because we may want to bring in some alterations."
+Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_1517ET_IRPT_HOLD_AFTER_CVO_SLUGS.md`.
+Current frontend round 15 and backend round 18 may finish through their CVO slugs. The CTO receives,
+ACKs and parks each slug; no analysis, PRD revision, next-round handoff/issuance or automatic
+canonical-flow progression follows until Andrew's further word. This hold binds the IRPT scopes of
+the CTO and COO~B/COO~F arms below, including successor re-arms. Inbox monitoring remains active.
+
+**IRPT P/M/Y COMPLETION SEATS — Andrew-direct 2026-09-22, CTO terminal:**
+`2.0.0_SA_COO~P` owns Performance plus shared report/export; `2.0.0_SA_COO~M` owns Model Overlay
+plus shared data/selection; `2.0.0_SA_COO~Y` owns YCharts Sensitivity. Matching `3.0.0_SA_CVO~P`,
+`~M`, `~Y` independently review those complete journeys. Before other role work, these exact seats
+read `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/AUTHORITY.md`,
+`CONTRACT.md`, and their `COO_P.md`/`COO_M.md`/`COO_Y.md` or `CVO_P.md`/`CVO_M.md`/`CVO_Y.md`.
+Those documents carry the verbatim instruction, direct implementation/review mandates, sole-writer
+ownership and coordination rules. The new P/M/Y completion work proceeds; the old B/F canonical
+progression remains held as above. Existing in-flight repairs and external gates are preserved.
+For COO~M this current assignment supersedes historical MCPINDEX seating suggestions. No model-side
+cron is armed. Use the base role home, exact suffixed inbox, and canonical Codex launcher runtime.
+
 | Serial | Launch arming |
 |---|---|
 | `0.0.0_AB_MSTR` | `/watcher` once. `/agentbus` once and `/integrate` once (arm-at-load, same pattern as `/watcher`, NOT loops). Zero crons. |
@@ -471,7 +492,7 @@ own §2 default of pitching them to the CVO lane for a verdict.** The CVO is not
 loop anything new. **RESERVED, still Andrew's and NOT self-adjudicated** (a broad delegation does not repeal a
 specific prohibition): vendor / egress off Opal infrastructure; UNRECOVERABLE acts -- recursive deletion, S3
 object/version deletes, dropping tables, stopping EC2, destructive git; money/contracts; and any standing hold he
-set BY NAME -- **the PORTAL FREEZE, the LD-0522 CLOUD push cadence, the `CLOUD -> SITEZ` merge leg**. Every
+set BY NAME -- **the PORTAL FREEZE, the LD-0522 CLOUD push cadence, the shared-branch push itself (one trunk `CLOUD` on both devices since 2026-09-24; the `CLOUD -> SITEZ` leg is retired with the branch)**. Every
 self-adjudicated call is RECORDED with its rec, ruling and reason, so any of them is overturnable by reading one
 file -- that legibility is the condition the delegation was accepted on. `paired_with: solo` (the two IRPT COO
 lanes are already driving their own rounds event-driven; this loop dispatches nothing and gates nobody).
@@ -706,6 +727,40 @@ one lane, one loop, cadence 30m, and `2.0.0_SA_COO~O -> /drive NFRA_OPLGTW`.
   the lane keeps working meanwhile. A call is not a stall unless it is parked.
 - A successor RE-ARMS ONLY off this line while the scope is not DONE, and re-reads the project's open orders before its
   first tick rather than trusting a count in a log.
+
+`2.0.0_SA_COO~P` **`/loop 20m` DIRECTED over Investor Reporting PERFORMANCE (49 Financial, Inflection, Cottonwood) ONLY.**
+Andrew-direct 2026-09-23 ~22:4xZ at the `2.0.0_SA_COO~P` terminal (first Claude turn after the Codex seat transition),
+VERBATIM: *"I need you to create a /goal to get performance reporting done and linked up for all firm clients at 49
+Financial, Inflection, and COttonwood. Cottonwood only has data back to May 2026 or so, so we don't need it perfect or in
+all the views because they lack data, however it should be structurally sound. then i need you to make a /loop with a 20m
+interval to drive you to the conclusion of that goal."* Record:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`
+@`f7aaa01da1` (broadcast 99776). CADENCE 20m. STOP-CONDITION: `/verify SOUND` on the record's done criteria (real
+signed-in user -> selection -> provider calculation -> retained report -> reopen without a new vendor call -> export, at
+all three firms; Cottonwood structurally sound with its data window disclosed), or Andrew's stand-down. Landed by
+`1.0.0_SA_CTO` (a seat does not author its own row). Every standing gate binds unchanged: vendor per-use word,
+never-widen, MSTR-only shared pushes, the IRPT closer contract v1.4.
+
+`2.0.0_SA_COO~M` **`/loop 20m` DIRECTED over Investor Reporting HOLDINGS with a SNAPSHOT model overlay ONLY.**
+Andrew-direct 2026-09-23 ~22:4xZ at the `2.0.0_SA_COO~M` terminal, VERBATIM: *"write yourself a /goal about how you're
+going to get end to end "Holdings" with model overlay for every 49 and Inflection Client that you can mesh between their
+respective smartx/schwab and eclipse/orion accounts, with structurally correct pipeline for cottonwood (as they dont have
+backfill data at this time). Then, I need you to make a /loop with a 20m interval whose purpose is to keep you driving
+until that is done."* and *"for now, all you need to do for model overlay is be able to show what clients own what models
+and what assets are in those models. its a snapshot view, please reorient the goal to be around just providing snapshot
+model holdings, we do not need time series on Models, snapshot is fine."* Record:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
+@`6890584d29` (broadcast 99780; row requested 99795). CADENCE 20m. STOP-CONDITION: `/verify SOUND` on the signed-in
+Holdings journey at all three firms with the snapshot overlay, or Andrew's stand-down. Landed by `1.0.0_SA_CTO`.
+
+`2.0.0_SA_COO~Y` **`/loop 20m` DIRECTED over Investor Reporting ANALYSIS ONLY.** Andrew-direct 2026-09-23 ~23:0xZ at
+the `2.0.0_SA_COO~Y` terminal, VERBATIM: *"Read your most recnet log and handoff, then ask COO~M how they set up their goal
+and loop and do the same in this session"* -- his word adopts the M shape (a /goal and a 20m /loop) for the Analysis
+product. Record: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`
+@`fc17929b64` (broadcast 99790). CADENCE 20m. STOP-CONDITION: `/verify SOUND` on the real-login Analysis journey
+(dollar template upload -> frozen input -> guarded acceptance -> resident consumer -> vendor PDF -> certified retained
+report -> screen with reload/history and same-revision export) and the COO_Y.md Y1-Y7 matrix, or Andrew's stand-down.
+Y never takes over P's shared installation. Landed by `1.0.0_SA_CTO`.
 
 **Find a stale cron from a prior session? Cancel it:** `CronList` → `CronDelete`.
 

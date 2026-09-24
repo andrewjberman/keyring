@@ -63,6 +63,22 @@ Never replace this with an unscoped `kill-orphans --force` call.
 
 ## Startup
 
+### Exact-seat role reading manifests
+
+`codex-seat-load.py` emits the authoritative ordered `role_files`. When the checked-in
+`org/mcp/codex-seat-role-files.json` declares an exact full serial, that list replaces
+the historical base-home root-file census for that seat only. The list includes its
+base README/prompt, current assignment and relevant common doctrine. The loader
+validates version, nonempty paths, workspace containment, existence, mandatory base
+files and uniqueness; invalid declarations fail closed. Undeclared seats retain
+their existing census. `role_files_source` identifies the selected mechanism.
+
+The P/M/Y manifests repair the measured 1,585-file COO startup archive problem for
+Andrew's 2026-09-22 assignments. Existing seats rerun the same load helper and finish
+the returned reading list without restarting or replacing their runtime helpers.
+This changes reading scope only: full serial, base role home, nested inbox and all
+readiness checks are unchanged.
+
 For migration from an older embedded Codex session:
 
 1. Record `CODEX_THREAD_ID` and finish the current turn/session log.

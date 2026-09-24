@@ -1,0 +1,21 @@
+{
+  "observed_at": "2026-09-23T22:02:49.543434+00:00",
+  "mode": "verify-deployed",
+  "account": "313476888478",
+  "function": "opal-amgt-scoped-api",
+  "live_code_sha256": "DEQQiCH+UoUMd7EZSQA5RTsILDY5+ubb9Y3gVLE5elU=",
+  "live_revision_id": "3fe27dc6-15a0-428f-b084-dd54d98e3c76",
+  "candidate_sha256": "0c44108821fe52850c77b119490039453b082c3639fae6dbf58de054b1397a55",
+  "candidate_code_sha256": "DEQQiCH+UoUMd7EZSQA5RTsILDY5+ubb9Y3gVLE5elU=",
+  "candidate_size": 807904,
+  "candidate_md5": "cb90ed8636c79c9dbc29120923349bc5",
+  "bucket": "opal-313476888478-lambda-artifacts",
+  "key": "research/opal-amgt-scoped-api.zip",
+  "upload_performed": false,
+  "s3_before": {
+    "sha256": "0c44108821fe52850c77b119490039453b082c3639fae6dbf58de054b1397a55",
+    "size": 807904,
+    "version_id": "ZacA2Kn0CWoJqOFLvTPe2kzZ4x_ctTYe",
+    "metadata_code_sha256": "DEQQiCH+UoUMd7EZSQA5RTsILDY5+ubb9Y3gVLE5elU="
+  }
+}

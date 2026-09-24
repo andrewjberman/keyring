@@ -1,0 +1,2010 @@
+{
+  "candidate_pin": "3a1256a0742b06c0cbc3fe44388c40b86cb7a3da",
+  "file_sha256": {
+    "docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json": "9a457073ac2e6bec0572b0f64941ab0b5054706bbf93fe8a3ae6e7936be61273",
+    "docs/contracts/investor-reporting/v1/AnalysisReport.schema.json": "bfe0960bb1d3d3d31d9920fbf51af7a9c31e1d7acc519e9b402df6744c7b5f23",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/.gitattributes": "752cd517fa8f33cea5172c220f3951a1c3f6e190f3d821de8d20d181da15cd10",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/certify.py": "f1516e241a5a4dde492e2a21995b0a4b2c4c61c855dfe6e157cafaa02656de44",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py": "c9beb1f65ca0ed4b76797186d31541a2e4bb5536b25f32b302aadc5ad664e959",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/fixtures/synthetic_pdf/MANIFEST.json": "5e0a6ea575dacfbb7e51f24baf86d5a04800334824a05eca8c90ba72576c8050",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/fixtures/synthetic_pdf/comparison.pdf": "a7105291db03d67653316a952eb54183fbbb945e371f1ba8a20f87543ee9f495",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/fixtures/synthetic_pdf/generate.py": "97608e4ae08e3d9ad72bd71c22dba9c806b1ba2206af89d3dd93e370b7324e62",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/fixtures/synthetic_pdf/multicomp.pdf": "52247f1058198a460f1f327421631fd979bfb9ce7505b7cb6eccfe7f9d547a64",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/fixtures/synthetic_pdf/overview.pdf": "e6672f71c0341db180b3c9a67d2a45864475b395b52dd37474aacd6df9864668",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/fixtures/unmapped_glyph/MANIFEST.json": "b75090206a7bfb494cc810a44e19e837aef87aa09f80e9afb9809b080ce82cb1",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/fixtures/unmapped_glyph/generate.py": "f00aee832ecd8a41344c33cc5c717cc6a5e5c5a58657ddba23cdc8a0a00e110c",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/fixtures/unmapped_glyph/unmapped_glyph.pdf": "f15b39103fc9f5a73be6d2a4c41bef82c21719c9e3bdd034cedaa6aff91ab46c",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/fonts.py": "80a4cf5b91541537e25104c88304b62f2f0b33525db60a62b18c6c3a9126c89d",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/publication.py": "508c939cd6028282b864b50f4ba09dfab8b1b912e7a62c2b975be4ba79901f85",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/tests/run_offline_suite.py": "738a1927fd1b801263b0391d791f6b4259bdac47c7f2f263d72332313bce1f62",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/tests/test_publication.py": "88ea32c3b60fc2becf0fb7bd38f01010a3f936180a376de7a398bd1f2bbb27ed"
+  },
+  "supplied_suite": {
+    "exit_code": 0,
+    "stdout": "...............                                                          [100%]\n15 passed in 7.06s\n",
+    "stderr": ""
+  },
+  "original_numeric_failure_control": {
+    "section_id": "S01.advisory_fee.c0",
+    "original_value": 0.3,
+    "mutant_value": 123.3,
+    "unchanged_token": "0.30%",
+    "unchanged_page_bbox": [
+      3,
+      [
+        300.0,
+        114.86,
+        325.51,
+        123.86
+      ]
+    ],
+    "baseline_pin": "2d2c774452facb8e11d97979a72efb6c5baf7aaf",
+    "baseline_dependency_equal": {
+      "extract.py": true,
+      "fonts.py": true
+    },
+    "baseline_certifier_sha256": "634ccf6c7a7834a83a52e3133a92da1019f159701a7afb2d03f82df81b44bfa1",
+    "baseline_mutant": {
+      "rows": [
+        {
+          "section_id": "S01.advisory_fee.c0",
+          "label": "Advisory Fee",
+          "page": 3,
+          "bbox": [
+            300.0,
+            114.86,
+            325.51,
+            123.86
+          ],
+          "value": 123.3,
+          "units": "pct",
+          "date_claim": "SECTION",
+          "as_of_date": "2026-09-08",
+          "verdict": "CERTIFIED",
+          "detail": "value renders at bbox, its label is in the neighbourhood, and date_claim SECTION: 2026-09-08 read back from the 'Data as of' line this value's own block prints at [40.0, 78.86, 137.06, 87.86], with no other date line between them",
+          "label_tie": "ROW",
+          "date_tie": "SECTION"
+        }
+      ],
+      "certified": 1,
+      "checked": 1,
+      "failed": 0,
+      "by_verdict": {
+        "CERTIFIED": 1
+      },
+      "denominator": "1 of 1 rows CERTIFIED",
+      "all_certified": true
+    },
+    "candidate_original": {
+      "rows": [
+        {
+          "section_id": "S01.advisory_fee.c0",
+          "label": "Advisory Fee",
+          "page": 3,
+          "bbox": [
+            300.0,
+            114.86,
+            325.51,
+            123.86
+          ],
+          "value": 0.3,
+          "units": "pct",
+          "date_claim": "SECTION",
+          "as_of_date": "2026-09-08",
+          "verdict": "CERTIFIED",
+          "detail": "value renders at bbox, its label is in the neighbourhood, and date_claim SECTION: 2026-09-08 read back from the 'Data as of' line this value's own block prints at [40.0, 78.86, 137.06, 87.86], with no other date line between them",
+          "label_tie": "ROW",
+          "date_tie": "SECTION"
+        }
+      ],
+      "certified": 1,
+      "checked": 1,
+      "failed": 0,
+      "by_verdict": {
+        "CERTIFIED": 1
+      },
+      "denominator": "1 of 1 rows CERTIFIED",
+      "all_certified": true
+    },
+    "candidate_mutant": {
+      "rows": [
+        {
+          "section_id": "S01.advisory_fee.c0",
+          "label": "Advisory Fee",
+          "page": 3,
+          "bbox": [
+            300.0,
+            114.86,
+            325.51,
+            123.86
+          ],
+          "value": 123.3,
+          "units": "pct",
+          "date_claim": "SECTION",
+          "as_of_date": "2026-09-08",
+          "verdict": "VALUE_NOT_AT_COORDINATES",
+          "detail": "page 3 at bbox [300.0, 114.86, 325.51, 123.86] renders '0.30%' (parsed 0.3); the row claims 123.3"
+        }
+      ],
+      "certified": 0,
+      "checked": 1,
+      "failed": 1,
+      "by_verdict": {
+        "VALUE_NOT_AT_COORDINATES": 1
+      },
+      "denominator": "0 of 1 rows CERTIFIED",
+      "all_certified": false
+    }
+  },
+  "variant_coverage": {
+    "overview": {
+      "policy_version": "source-verified-partial-v1",
+      "scope": "PINNED_CENSUS",
+      "status": "PARTIAL",
+      "census_sha256": "655c43d725f9afcf917a285f68d0faf01dbcfcf7be32894ca15a0e7a4eee8828",
+      "counts": {
+        "census_fields": 58,
+        "located_scalar_rows": 24,
+        "emitted_scalar_rows": 23,
+        "dated_scalar_rows": 7,
+        "undated_scalar_rows": 16,
+        "unlocated_records": 34,
+        "unit_conflict_rows": 1,
+        "chart_candidates": 10,
+        "chart_emitted": 0,
+        "disclosure_candidates": 60,
+        "disclosure_emitted": 0
+      },
+      "gaps": [
+        {
+          "kind": "SCALAR",
+          "id": "S06.market_classification.c0",
+          "reason": "UNIT_CONFLICT"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S27.portfolio_type_enum",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S27.start_setting_enum",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S27.as_of_setting_enum",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S27.performance_disclosure_headline",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S28.fee_metric_category_enum",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S28.performance_calculation_settings",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S28.fee_assumptions",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S29.calculation_method",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S29.rebalance_frequency_enum",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S29.hindsight_disclosure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S29.security_type_glossary",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S30.risk_paragraph_headings",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.annualized_total_nav_return",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.annualized_total_returns",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.asset_allocation",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.average_coupon",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.average_credit_quality_score",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.average_market_cap",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.average_price",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.bond_maturity_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.bond_sector_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.credit_quality_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.current_yield",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.distribution_yield",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.dividend_yield",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.effective_duration",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.historical_sharpe_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.historical_sortino_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.load_adjusted_returns",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.market_cap_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.market_classification",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.max_drawdown",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.maximum_deferred_load",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.maximum_front_load",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.maximum_redemption_fee",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.net_expense_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.number_of_bond_holdings",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.number_of_holdings",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.number_of_stock_holdings",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.price",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.prospectus_gross_expense_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.prospectus_net_expense_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.region_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.regional_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.sec_yield",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.standard_deviation",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.stock_sector_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.stock_style_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.total_return",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.total_return_level",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.value_at_risk_var",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_average_debt_to_capital",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_average_pe_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_average_price_to_book_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_average_price_to_sales_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_median_return_on_assets",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_median_return_on_equity",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.yield_to_maturity",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S32.opal_disclosure_summary",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S32.opal_compliance_contact",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S07.chart.expanded_region_exposure",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S17.chart.risk_reward_scatter_plot_5_years",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S19.chart.top_10_holdings",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S20.chart.top_10_underlying_holdings",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S21.chart.all_holdings_security_a_security_b",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S22.chart.top_25_underlying_holdings_security_a_security_b",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S23.chart.standardized_returns_load_adjusted_annualized_returns",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S24.chart.annualized_returns_market_price",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S25.chart.annualized_returns_nav",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S26.chart.expense_ratios_sales_charges_standardized_yields",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_8ba4ad33b927f0600536b8dc1183c6514339bc94bec867715fab766bee1c5170",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_2fa3853c8072d88e99429bcad7ec23eb977f8dbf1dbf88ee36d28e4d311041d8",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_6176bfa054f3dd0ce53e398d4c9f1026a37e5e5ac4a0159e32ac49777d0a3241",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a81790ae3f371515ffc0a33ba1ea66012a9c764c20fba16a08c0f9243530bc60",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e8a4ce8e593eda80589bff8a74a0c26bf8d7edb7449fa998177c46db975f393b",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_16f90e9c750db34d045ea381fcb690e7e6eb3e18de045a3c86e424a03d109472",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_8f0e3c49b504564388fa165917b51cbb10398f8ca0a146be60349f8ecb0cb7f1",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e165a6d2dd519e8630442ec9a777863f7701549a938ae22e29c53f09a8ec60a3",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_82825dd74752f90cc9f0f24ef78c5c7bb5bc5b3d6c35b11954a5af8ba114ecec",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_391932d3ed08f96e90b477f0b8dfaa7db21bc71bb9ed7005023d0995e8b85950",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_658fbed4b3254fdbb5728712e4776a6ebe120249c8caa710232c1a4d72f40b00",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_9a312106853db702842f8f6db3f49346efa87f8e595c918272eb22bec5c67a8a",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a8ca07e6ea731bd05ccc71dfd48b9b2f01c19aa950744e3d958f599b85750e88",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_ecb0a7b4e117e821b40466757c499e487bd7192d13ead65f1620192ad510f3a0",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a826ba5d83fb51178df29fc3da01af2dc806bb57079f8b73a93adf61126692f7",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_2d0d66a499e7e1f8a963060fe25b6de5141adf26fb5d4cd96316defca20c51a7",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_d68cf82810425c4ffd46e4ff6b89f9114fbdd833130b76aefed53adc406c01cc",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_0d5ab0c809f3f46ddaa3ef4968108ba46c6d48127db43cd5c7743caf04965040",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_8e213fba26cbff567a7374b168f4fb183d6fed58d3b979cf652b4a6b7a8bdd3d",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a50740cd4a14cc740345021783f3617042b9b5207dc00f9d7e4cb99a3accae3d",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_dba9ca8fe0b7b10849e57f355417832fa9d2540b4feca315ee7474f6f291d059",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_67222e19200f1e3c916e8eb94bef92051dee0798712cc77e0950841244ac446f",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_6f25b0449bf80b798d0eac35b29939a419445dbe2cbe1a241dc72db7f5c6b8e8",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_2a532d5458d538b00bf849ab23847c1d59ee2fa24de9d13bf690ac29375c4173",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_105c6a0c25d51c409add82ce46ad5893eed4d19977fbe5fbb7782a2e24a0cdc1",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_f9da922c99436bbf3eda116349d1531959324324f662bfe5c54295dac29cc57d",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_b359d73ccc64d1f12736b0503164ebe3fea93f1ce7bb4022b21702a2154dce9e",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_37dcf11c85476063ef998531de00b28e2a82a0c4b41d62a0b3339e1c8d219439",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e1b5182e54da1335db70f5194be7945ec59e0658c14ae1eb01d974c9f8ac80ea",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_92ccc5e49eb22b42bf57923c3eb13846cce82c7337dcdb1e7a4ee1dba5b0a7aa",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_1efd1dce31f41008146cfb98e990c54ade939ce6bfe2724659304c320931651e",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_56cec11059c9fc28d31898154287d621aad7d235c440dda72ef245aded6b200e",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e6e4f01fc04b241d581b8e7faa2959d136fc6d6386ea17b3497e1254ea7edc6b",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_43d5ed0e555747e1a1f0d56bb26a2adea4a8ad22e4acf51ffeec9da9a3159036",
+          "reason": "MISSING_ON_PAGE"
+        }
+      ]
+    },
+    "comparison": {
+      "policy_version": "source-verified-partial-v1",
+      "scope": "PINNED_CENSUS",
+      "status": "PARTIAL",
+      "census_sha256": "655c43d725f9afcf917a285f68d0faf01dbcfcf7be32894ca15a0e7a4eee8828",
+      "counts": {
+        "census_fields": 58,
+        "located_scalar_rows": 47,
+        "emitted_scalar_rows": 46,
+        "dated_scalar_rows": 14,
+        "undated_scalar_rows": 32,
+        "unlocated_records": 47,
+        "unit_conflict_rows": 1,
+        "chart_candidates": 10,
+        "chart_emitted": 0,
+        "disclosure_candidates": 60,
+        "disclosure_emitted": 0
+      },
+      "gaps": [
+        {
+          "kind": "SCALAR",
+          "id": "S06.market_classification.c0",
+          "reason": "UNIT_CONFLICT"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S27.portfolio_type_enum",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S27.start_setting_enum",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S27.as_of_setting_enum",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S27.performance_disclosure_headline",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S28.fee_metric_category_enum",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S28.performance_calculation_settings",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S28.fee_assumptions",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S29.calculation_method",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S29.rebalance_frequency_enum",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S29.hindsight_disclosure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S29.security_type_glossary",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S30.risk_paragraph_headings",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.annualized_total_nav_return",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.annualized_total_returns",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.asset_allocation",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.average_coupon",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.average_credit_quality_score",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.average_market_cap",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.average_price",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.bond_maturity_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.bond_sector_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.credit_quality_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.current_yield",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.distribution_yield",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.dividend_yield",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.effective_duration",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.historical_sharpe_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.historical_sortino_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.load_adjusted_returns",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.market_cap_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.market_classification",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.max_drawdown",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.maximum_deferred_load",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.maximum_front_load",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.maximum_redemption_fee",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.net_expense_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.number_of_bond_holdings",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.number_of_holdings",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.number_of_stock_holdings",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.price",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.prospectus_gross_expense_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.prospectus_net_expense_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.region_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.regional_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.sec_yield",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.standard_deviation",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.stock_sector_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.stock_style_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.total_return",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.total_return_level",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.value_at_risk_var",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_average_debt_to_capital",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_average_pe_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_average_price_to_book_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_average_price_to_sales_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_median_return_on_assets",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_median_return_on_equity",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.yield_to_maturity",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S32.opal_disclosure_summary",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S32.opal_compliance_contact",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S07.chart.expanded_region_exposure",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S17.chart.risk_reward_scatter_plot_5_years",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S19.chart.top_10_holdings",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S20.chart.top_10_underlying_holdings",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S21.chart.all_holdings_security_a_security_b",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S22.chart.top_25_underlying_holdings_security_a_security_b",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S23.chart.standardized_returns_load_adjusted_annualized_returns",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S24.chart.annualized_returns_market_price",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S25.chart.annualized_returns_nav",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S26.chart.expense_ratios_sales_charges_standardized_yields",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_8ba4ad33b927f0600536b8dc1183c6514339bc94bec867715fab766bee1c5170",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_be745c1d397a42453ef097fce3ec85507014bb7e3de482fa6c2bef2e25ef41cd",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_2fa3853c8072d88e99429bcad7ec23eb977f8dbf1dbf88ee36d28e4d311041d8",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_9b5636429d986b49e4526be736eb3905d696084c5113aaa29630f8a5ff6289dc",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_6176bfa054f3dd0ce53e398d4c9f1026a37e5e5ac4a0159e32ac49777d0a3241",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_71108eb60d25286f86500bd8d5fa1543cd4d129e19172abbfe495c221e0222da",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a81790ae3f371515ffc0a33ba1ea66012a9c764c20fba16a08c0f9243530bc60",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_1c5fa5c3e0dc9339dec6f89a0ff88d892bd03738f6c20d15c8adac76f3b21073",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e8a4ce8e593eda80589bff8a74a0c26bf8d7edb7449fa998177c46db975f393b",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e4b4439a7a6e7d4be012c6eeb1daf41576c84defeea57b330360a0bd7936e8e6",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_16f90e9c750db34d045ea381fcb690e7e6eb3e18de045a3c86e424a03d109472",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_7941a5ecfe087e327e0521931aca7fa4affe3fa8cc28dbfc77af7a1a5ccf4c46",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_8f0e3c49b504564388fa165917b51cbb10398f8ca0a146be60349f8ecb0cb7f1",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a59250650ae704d60cd4bae305c7b7901c9b7cf84bb68c8200062a0be41c3100",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e165a6d2dd519e8630442ec9a777863f7701549a938ae22e29c53f09a8ec60a3",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_1e546cd0512e75af9424fa35566e48235ffe26a4ba4736207e9879da14686646",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_82825dd74752f90cc9f0f24ef78c5c7bb5bc5b3d6c35b11954a5af8ba114ecec",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_391932d3ed08f96e90b477f0b8dfaa7db21bc71bb9ed7005023d0995e8b85950",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_8e8ac9da95a522c4f0a69c7ab7d9003583a5321d7be0f20ff8a71eac5e273a3a",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_658fbed4b3254fdbb5728712e4776a6ebe120249c8caa710232c1a4d72f40b00",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a9b967f5e856490c6fabe297e50ee6464f493f40cd5d0de8b64476be730d513c",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_9a312106853db702842f8f6db3f49346efa87f8e595c918272eb22bec5c67a8a",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a8ca07e6ea731bd05ccc71dfd48b9b2f01c19aa950744e3d958f599b85750e88",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_ecb0a7b4e117e821b40466757c499e487bd7192d13ead65f1620192ad510f3a0",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a826ba5d83fb51178df29fc3da01af2dc806bb57079f8b73a93adf61126692f7",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_2d0d66a499e7e1f8a963060fe25b6de5141adf26fb5d4cd96316defca20c51a7",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_d68cf82810425c4ffd46e4ff6b89f9114fbdd833130b76aefed53adc406c01cc",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_0d5ab0c809f3f46ddaa3ef4968108ba46c6d48127db43cd5c7743caf04965040",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_8e213fba26cbff567a7374b168f4fb183d6fed58d3b979cf652b4a6b7a8bdd3d",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a50740cd4a14cc740345021783f3617042b9b5207dc00f9d7e4cb99a3accae3d",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_dba9ca8fe0b7b10849e57f355417832fa9d2540b4feca315ee7474f6f291d059",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_67222e19200f1e3c916e8eb94bef92051dee0798712cc77e0950841244ac446f",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_6f25b0449bf80b798d0eac35b29939a419445dbe2cbe1a241dc72db7f5c6b8e8",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_2a532d5458d538b00bf849ab23847c1d59ee2fa24de9d13bf690ac29375c4173",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_105c6a0c25d51c409add82ce46ad5893eed4d19977fbe5fbb7782a2e24a0cdc1",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_4c9c2e575cc1f60dd6e1f6490cee627f8d5c1f0913b2a4a9917b9c7aecd81523",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_f9da922c99436bbf3eda116349d1531959324324f662bfe5c54295dac29cc57d",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_c0c77c47f9331288b8ff65581a9ab3bb0d5b33d497259fcfaf9554caf958ea35",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_b359d73ccc64d1f12736b0503164ebe3fea93f1ce7bb4022b21702a2154dce9e",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_37dcf11c85476063ef998531de00b28e2a82a0c4b41d62a0b3339e1c8d219439",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e1b5182e54da1335db70f5194be7945ec59e0658c14ae1eb01d974c9f8ac80ea",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_92ccc5e49eb22b42bf57923c3eb13846cce82c7337dcdb1e7a4ee1dba5b0a7aa",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_1efd1dce31f41008146cfb98e990c54ade939ce6bfe2724659304c320931651e",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_56cec11059c9fc28d31898154287d621aad7d235c440dda72ef245aded6b200e",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e6e4f01fc04b241d581b8e7faa2959d136fc6d6386ea17b3497e1254ea7edc6b",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_43d5ed0e555747e1a1f0d56bb26a2adea4a8ad22e4acf51ffeec9da9a3159036",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_c2ae6a6d49b3fe1fe6f64886fa27904d26dcf4421b3319dd96f5d7ab3fe79352",
+          "reason": "MISSING_ON_PAGE"
+        }
+      ]
+    },
+    "multicomp": {
+      "policy_version": "source-verified-partial-v1",
+      "scope": "PINNED_CENSUS",
+      "status": "PARTIAL",
+      "census_sha256": "655c43d725f9afcf917a285f68d0faf01dbcfcf7be32894ca15a0e7a4eee8828",
+      "counts": {
+        "census_fields": 58,
+        "located_scalar_rows": 70,
+        "emitted_scalar_rows": 69,
+        "dated_scalar_rows": 21,
+        "undated_scalar_rows": 48,
+        "unlocated_records": 60,
+        "unit_conflict_rows": 1,
+        "chart_candidates": 10,
+        "chart_emitted": 0,
+        "disclosure_candidates": 60,
+        "disclosure_emitted": 0
+      },
+      "gaps": [
+        {
+          "kind": "SCALAR",
+          "id": "S06.market_classification.c0",
+          "reason": "UNIT_CONFLICT"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S27.portfolio_type_enum",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S27.start_setting_enum",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S27.as_of_setting_enum",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S27.performance_disclosure_headline",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S28.fee_metric_category_enum",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S28.performance_calculation_settings",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S28.fee_assumptions",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S29.calculation_method",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S29.rebalance_frequency_enum",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S29.hindsight_disclosure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S29.security_type_glossary",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S30.risk_paragraph_headings",
+          "reason": "NON_PROSE_DISCLOSURE_REQUIRES_SOURCE_REPRESENTATION"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.annualized_total_nav_return",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.annualized_total_returns",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.asset_allocation",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.average_coupon",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.average_credit_quality_score",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.average_market_cap",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.average_price",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.bond_maturity_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.bond_sector_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.credit_quality_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.current_yield",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.distribution_yield",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.dividend_yield",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.effective_duration",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.historical_sharpe_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.historical_sortino_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.load_adjusted_returns",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.market_cap_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.market_classification",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.max_drawdown",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.maximum_deferred_load",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.maximum_front_load",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.maximum_redemption_fee",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.net_expense_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.number_of_bond_holdings",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.number_of_holdings",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.number_of_stock_holdings",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.price",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.prospectus_gross_expense_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.prospectus_net_expense_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.region_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.regional_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.sec_yield",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.standard_deviation",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.stock_sector_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.stock_style_exposure",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.total_return",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.total_return_level",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.value_at_risk_var",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_average_debt_to_capital",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_average_pe_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_average_price_to_book_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_average_price_to_sales_ratio",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_median_return_on_assets",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.weighted_median_return_on_equity",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S31.yield_to_maturity",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S32.opal_disclosure_summary",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "DISCLOSURE",
+          "id": "S32.opal_compliance_contact",
+          "reason": "TEXT_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S07.chart.expanded_region_exposure",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S17.chart.risk_reward_scatter_plot_5_years",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S19.chart.top_10_holdings",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S20.chart.top_10_underlying_holdings",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S21.chart.all_holdings_security_a_security_b",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S22.chart.top_25_underlying_holdings_security_a_security_b",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S23.chart.standardized_returns_load_adjusted_annualized_returns",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S24.chart.annualized_returns_market_price",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S25.chart.annualized_returns_nav",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "CHART",
+          "id": "S26.chart.expense_ratios_sales_charges_standardized_yields",
+          "reason": "TITLE_NOT_UNIQUELY_LOCATED"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_8ba4ad33b927f0600536b8dc1183c6514339bc94bec867715fab766bee1c5170",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_be745c1d397a42453ef097fce3ec85507014bb7e3de482fa6c2bef2e25ef41cd",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e4bbd15c4ba387851e9eda21c1dfd23ac0e21fe621f2bb229b99b9f7e4db64bb",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_2fa3853c8072d88e99429bcad7ec23eb977f8dbf1dbf88ee36d28e4d311041d8",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_9b5636429d986b49e4526be736eb3905d696084c5113aaa29630f8a5ff6289dc",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a4006e49e5f036cc5a9329da95db99b68d738ab88a7101d8f83567344f17865f",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_6176bfa054f3dd0ce53e398d4c9f1026a37e5e5ac4a0159e32ac49777d0a3241",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_71108eb60d25286f86500bd8d5fa1543cd4d129e19172abbfe495c221e0222da",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e026cd0f9dd7cb7799f0223192352695f28333ed84de701b08b6e36861ba9c21",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a81790ae3f371515ffc0a33ba1ea66012a9c764c20fba16a08c0f9243530bc60",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_1c5fa5c3e0dc9339dec6f89a0ff88d892bd03738f6c20d15c8adac76f3b21073",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_cf7eccb2ec71d4b25f6ed18739909ff3b6ecf1dc738ac9da33d10d6739489fb6",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e8a4ce8e593eda80589bff8a74a0c26bf8d7edb7449fa998177c46db975f393b",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e4b4439a7a6e7d4be012c6eeb1daf41576c84defeea57b330360a0bd7936e8e6",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_698c833afeb5bbc3cb5ee9afc520cc44d4b1bb710ad4ed40d77081c13c9281ca",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_16f90e9c750db34d045ea381fcb690e7e6eb3e18de045a3c86e424a03d109472",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_7941a5ecfe087e327e0521931aca7fa4affe3fa8cc28dbfc77af7a1a5ccf4c46",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_732d852346d66a8b3168f29b954b8e121648d8bc3d9f305433b6b612f6b83597",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_8f0e3c49b504564388fa165917b51cbb10398f8ca0a146be60349f8ecb0cb7f1",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a59250650ae704d60cd4bae305c7b7901c9b7cf84bb68c8200062a0be41c3100",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_6bb0de11d69b9c35332465f25420b3413e4f833c5bc689a0c79981accdbca3e0",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e165a6d2dd519e8630442ec9a777863f7701549a938ae22e29c53f09a8ec60a3",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_1e546cd0512e75af9424fa35566e48235ffe26a4ba4736207e9879da14686646",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_1214893072d8c70e0f13ccf251b00ba5eb7016fa9451e31e1ad4b4065c5567bc",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_82825dd74752f90cc9f0f24ef78c5c7bb5bc5b3d6c35b11954a5af8ba114ecec",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_391932d3ed08f96e90b477f0b8dfaa7db21bc71bb9ed7005023d0995e8b85950",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_8e8ac9da95a522c4f0a69c7ab7d9003583a5321d7be0f20ff8a71eac5e273a3a",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_0a12eddf76127bb1e6c03e12f303708ab67dcbb01d9ed016f3c7d1f09e9db431",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_658fbed4b3254fdbb5728712e4776a6ebe120249c8caa710232c1a4d72f40b00",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a9b967f5e856490c6fabe297e50ee6464f493f40cd5d0de8b64476be730d513c",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_821f911b31580ace33d4ca8595ea1208ceefc1f2a6e0aa2b62e638a594a4cb9a",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_9a312106853db702842f8f6db3f49346efa87f8e595c918272eb22bec5c67a8a",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a8ca07e6ea731bd05ccc71dfd48b9b2f01c19aa950744e3d958f599b85750e88",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_ecb0a7b4e117e821b40466757c499e487bd7192d13ead65f1620192ad510f3a0",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a826ba5d83fb51178df29fc3da01af2dc806bb57079f8b73a93adf61126692f7",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_2d0d66a499e7e1f8a963060fe25b6de5141adf26fb5d4cd96316defca20c51a7",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_d68cf82810425c4ffd46e4ff6b89f9114fbdd833130b76aefed53adc406c01cc",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_0d5ab0c809f3f46ddaa3ef4968108ba46c6d48127db43cd5c7743caf04965040",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_8e213fba26cbff567a7374b168f4fb183d6fed58d3b979cf652b4a6b7a8bdd3d",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_a50740cd4a14cc740345021783f3617042b9b5207dc00f9d7e4cb99a3accae3d",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_dba9ca8fe0b7b10849e57f355417832fa9d2540b4feca315ee7474f6f291d059",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_67222e19200f1e3c916e8eb94bef92051dee0798712cc77e0950841244ac446f",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_6f25b0449bf80b798d0eac35b29939a419445dbe2cbe1a241dc72db7f5c6b8e8",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_2a532d5458d538b00bf849ab23847c1d59ee2fa24de9d13bf690ac29375c4173",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_105c6a0c25d51c409add82ce46ad5893eed4d19977fbe5fbb7782a2e24a0cdc1",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_4c9c2e575cc1f60dd6e1f6490cee627f8d5c1f0913b2a4a9917b9c7aecd81523",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_aa887cf576cde3325dfdde026aaf4b8d1a6d3a0f7df2170dcc4474e92d1f3d40",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_f9da922c99436bbf3eda116349d1531959324324f662bfe5c54295dac29cc57d",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_c0c77c47f9331288b8ff65581a9ab3bb0d5b33d497259fcfaf9554caf958ea35",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_0ac52c3093edb5760f4f513e45576ce5d2bab9a9d0f94f9b9149d16be4704660",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_b359d73ccc64d1f12736b0503164ebe3fea93f1ce7bb4022b21702a2154dce9e",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_37dcf11c85476063ef998531de00b28e2a82a0c4b41d62a0b3339e1c8d219439",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e1b5182e54da1335db70f5194be7945ec59e0658c14ae1eb01d974c9f8ac80ea",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_92ccc5e49eb22b42bf57923c3eb13846cce82c7337dcdb1e7a4ee1dba5b0a7aa",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_1efd1dce31f41008146cfb98e990c54ade939ce6bfe2724659304c320931651e",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_56cec11059c9fc28d31898154287d621aad7d235c440dda72ef245aded6b200e",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_e6e4f01fc04b241d581b8e7faa2959d136fc6d6386ea17b3497e1254ea7edc6b",
+          "reason": "UNLOCATED_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_43d5ed0e555747e1a1f0d56bb26a2adea4a8ad22e4acf51ffeec9da9a3159036",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_c2ae6a6d49b3fe1fe6f64886fa27904d26dcf4421b3319dd96f5d7ab3fe79352",
+          "reason": "MISSING_ON_PAGE"
+        },
+        {
+          "kind": "SCALAR",
+          "id": "unlocated_8765a23d346364dd261b41810c41a423284af120b76bd7700b03293a006584d9",
+          "reason": "MISSING_ON_PAGE"
+        }
+      ]
+    }
+  },
+  "independent_source_coverage_controls": {
+    "positive_coverage": {
+      "policy_version": "source-verified-partial-v1",
+      "scope": "PINNED_CENSUS",
+      "status": "COMPLETE_FOR_CENSUS",
+      "census_sha256": "94b9158785efe2577819ddc63dd389a415fb5f15fe4e1e3675a277c8b89c4e28",
+      "counts": {
+        "census_fields": 1,
+        "located_scalar_rows": 1,
+        "emitted_scalar_rows": 1,
+        "dated_scalar_rows": 0,
+        "undated_scalar_rows": 1,
+        "unlocated_records": 0,
+        "unit_conflict_rows": 0,
+        "chart_candidates": 1,
+        "chart_emitted": 1,
+        "disclosure_candidates": 1,
+        "disclosure_emitted": 1
+      },
+      "gaps": []
+    },
+    "omitted_chart_and_disclosure": {
+      "refused": "EXTRACTION_INVENTORY_BINDING",
+      "complete_despite_omission": false,
+      "expected": "Refuse retained census mismatch or expose missing chart/disclosure gaps"
+    },
+    "absent_disclosure_text": {
+      "refused": "EXTRACTION_INVENTORY_BINDING"
+    },
+    "changed_source_pdf": "SCALAR_CERTIFICATION_FAILED_OR_EMPTY"
+  },
+  "limits": [
+    "Actual PDF bytes, extractor, certifier and fragment boundary",
+    "Synthetic PDFs only; no vendor or cloud calls",
+    "No repository publication, report READY or full Y5/E2E proof"
+  ]
+}

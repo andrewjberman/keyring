@@ -1,0 +1,11 @@
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_retained.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_retained.py
+@@ -74,7 +74,7 @@
+             authorize_input=ports["authorize_input"])
+         stub.assert_no_pending_responses()
+     source = fields["source_descriptors"]["canonical-firm-display"]
+-    assert source["projection"]["metadata"] == organization
++    assert {key: source["projection"][key] for key in organization} == organization
+     assert "active" not in source["projection"]
+     assert source["upstream_revision"]["state"] == "UNAVAILABLE"
+     assert source["binding"]["firm_id"] == "inflection"

@@ -1,0 +1,29 @@
+{
+  "source_commit": "4173322f457aeeb390033b410e85bebadc49a3e3",
+  "scenario": "known signed-out application read followed by healthy unrelated diagnostic probe",
+  "network_calls": 0,
+  "outcome": "NOT_AN_EVICTION",
+  "refreshes": [],
+  "record": {
+    "attempts": [
+      {
+        "attempt": 1,
+        "ok": false,
+        "why": "APPLICATION_READ_FAILED",
+        "generation": "old"
+      }
+    ],
+    "refreshes_used": 0,
+    "refresh_rule": "transport.resume_allowed",
+    "outcome": "NOT_AN_EVICTION",
+    "recovery_pull": {
+      "action": "VALIDATE_PAYLOAD",
+      "reason": "JSON_RESPONSE",
+      "status": 200,
+      "body_sha256": "6bc0da1f42f96fc37b8bd7ed20ba57606d2a0da5cda2b135c7854fbdc985b8a3",
+      "operation": "status_poll"
+    },
+    "evicted": null
+  },
+  "finding_reproduced": true
+}

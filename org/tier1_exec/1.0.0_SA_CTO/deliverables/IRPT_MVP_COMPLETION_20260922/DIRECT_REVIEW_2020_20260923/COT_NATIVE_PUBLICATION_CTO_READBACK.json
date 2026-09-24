@@ -1,0 +1,45 @@
+{
+  "reviewer": "1.0.0_SA_CTO",
+  "measured_at": "2026-09-23T21:41:42.645858+00:00",
+  "owner_evidence_pin": "5e29e43c2c",
+  "verdict": "PASS_NATIVE_PUBLICATION_EXACT_READBACK",
+  "revision": "fe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e",
+  "output_receipts": [
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 521,
+      "key": "irpt/cottonwood/platinum/holdings/current/manifest.json",
+      "sha256": "018f92801f2c7c962cd1c699461084af011926776e10e6628880dee4aec0c228",
+      "version_id": "JhtDD.AAg1AO0kdvVkxVZN.zWdjwDkkA"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/fe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e.manifest.json",
+      "version_id": "3phSSp8cBAKq4_oIHSMh9F_oYCSByv.J",
+      "sha256": "3534c8be78ecf9bd7202a0594c03b89749e158f32f88aedb2a64e727b5cc8ae3",
+      "byte_length": 3159
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 60641,
+      "key": "irpt/cottonwood/platinum/holdings/date=2026-09-22/fe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e.json",
+      "sha256": "fe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e",
+      "version_id": "aPocnyxeRElkJc_n3ox.TR_z_OPS0Gm3"
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "byte_length": 21845,
+      "key": "irpt/cottonwood/gold/holdings/date=2026-09-22/fe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e.parquet",
+      "sha256": "b104bab6918d11628fba56f12cd6f57d649efb776efa99267f0c14e646e7f0f8",
+      "version_id": "3GD9D2RjDgSqKH6pgXFMz_7gy_KV_PrD"
+    }
+  ],
+  "exact_output_versions_verified": 4,
+  "gold_platinum_nodes_equal": true,
+  "selected_accounts": 1,
+  "positions": 57,
+  "market_value_usd": 19705844.84,
+  "business_date": "2026-09-22",
+  "authenticated_api_browser": "NOT_EVALUATED",
+  "mutations": 0
+}

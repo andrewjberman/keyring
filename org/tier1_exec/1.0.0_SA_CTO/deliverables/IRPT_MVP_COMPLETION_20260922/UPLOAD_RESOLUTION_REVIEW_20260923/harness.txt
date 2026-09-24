@@ -1,0 +1,261 @@
+{
+  "mode": "SYNTHETIC_OFFLINE_MATRIX",
+  "source_pin": "SYNTHETIC_NOT_LIVE",
+  "requested_count": 50,
+  "distinct_count": 50,
+  "cache_count": 0,
+  "outcomes": [
+    {
+      "symbol": "FIXTURE00",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE01",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE02",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE03",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE04",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE05",
+      "state": "UNAVAILABLE",
+      "reason": "PROVIDER_ENTITLEMENT_UNVERIFIED"
+    },
+    {
+      "symbol": "FIXTURE06",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE07",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE08",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE09",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE10",
+      "state": "UNAVAILABLE",
+      "reason": "PROVIDER_ENTITLEMENT_UNVERIFIED"
+    },
+    {
+      "symbol": "FIXTURE11",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE12",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE13",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE14",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE15",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE16",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE17",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE18",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE19",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE20",
+      "state": "UNAVAILABLE",
+      "reason": "PROVIDER_ENTITLEMENT_UNVERIFIED"
+    },
+    {
+      "symbol": "FIXTURE21",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE22",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE23",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE24",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE25",
+      "state": "UNAVAILABLE",
+      "reason": "PROVIDER_ENTITLEMENT_UNVERIFIED"
+    },
+    {
+      "symbol": "FIXTURE26",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE27",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE28",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE29",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE30",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE31",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE32",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE33",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE34",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE35",
+      "state": "UNAVAILABLE",
+      "reason": "PROVIDER_ENTITLEMENT_UNVERIFIED"
+    },
+    {
+      "symbol": "FIXTURE36",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE37",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE38",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE39",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE40",
+      "state": "UNAVAILABLE",
+      "reason": "PROVIDER_ENTITLEMENT_UNVERIFIED"
+    },
+    {
+      "symbol": "FIXTURE41",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE42",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE43",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE44",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE45",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE46",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE47",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "FIXTURE48",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "FIXTURE49",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    }
+  ],
+  "unresolved_count": 23,
+  "latency_seconds": 0.015
+}

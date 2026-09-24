@@ -1,0 +1,271 @@
+{
+  "before_ref": "cf11337d2e",
+  "changed_consumers": [
+    "irpt-performance-adapter"
+  ],
+  "deployment_metadata_unchanged": true,
+  "member_diff": {
+    "irpt-performance-adapter": {
+      "_build_note": {
+        "after": "Pinned primary policy and SMARTX contract admission at cf11337d2e651a63623336ca29fdb67472983b37; retained selection/Entry dependencies and deployment metadata unchanged. Offline flat package exercises actual refusal, controlled selection/revocation, schema and import closure; installed local libraries do not qualify Lambda layers.",
+        "before": "Candidate composition includes retained selection and current shared Entry dependencies. Existing artifact hashes record prior deployment and are deliberately unchanged."
+      },
+      "files": {
+        "after": [
+          "bd_adapter.py",
+          "handler.py",
+          "normalize.py",
+          "orion_adapter.py",
+          "tenants.py",
+          "transport.py",
+          "units.py",
+          "fixtures/FIXTURE_MANIFEST.json",
+          "fixtures/bd_period.json",
+          "fixtures/bd_series.json",
+          "fixtures/orion_captured_scope.json",
+          "fixtures/orion_daily.json",
+          "fixtures/orion_value_check.json",
+          "entry.py",
+          "served.py",
+          "loaders.py",
+          "enforce.py",
+          "errors.py",
+          "resolve.py",
+          "ids.py",
+          "data/custodian_key_seam.json",
+          "raw_keys.json",
+          "firm_registry.json",
+          "selection.py",
+          "selection_store.py",
+          "prospect.py",
+          "keys.py",
+          "PerformanceReport.schema.json"
+        ],
+        "before": [
+          "bd_adapter.py",
+          "handler.py",
+          "normalize.py",
+          "orion_adapter.py",
+          "tenants.py",
+          "transport.py",
+          "units.py",
+          "fixtures/FIXTURE_MANIFEST.json",
+          "fixtures/bd_period.json",
+          "fixtures/bd_series.json",
+          "fixtures/orion_captured_scope.json",
+          "fixtures/orion_daily.json",
+          "fixtures/orion_value_check.json",
+          "entry.py",
+          "served.py",
+          "loaders.py",
+          "enforce.py",
+          "errors.py",
+          "resolve.py",
+          "ids.py",
+          "data/custodian_key_seam.json",
+          "raw_keys.json",
+          "firm_registry.json",
+          "selection.py",
+          "selection_store.py",
+          "prospect.py",
+          "keys.py"
+        ]
+      },
+      "note": {
+        "after": "IRPT completion candidate:49F SMARTX primary with separate BLACK_DIAMOND verification; Cottonwood BLACK_DIAMOND and Inflection ORION. Current served provider calculations explicitly unavailable until authenticated selected-set/window proof exists. Historical September captures are offline replay only, never served as current performance. No live request, credential, endpoint, deployment or actual account capability is asserted.",
+        "before": "IRPT_BCKEND cell IB-s-11 (PRD row B11, FWD-3 contrib): Black Diamond performance adapters for 49F and Cottonwood on SEPARATE tenant routing (same host bd3.bdreporting.com, different session secret and different data plane), Orion adapter for Inflection, and the normalizer to the shared PerformanceReport contract. Default transport is `recorded` and replays the scrubbed September 10 capture packaged under fixtures/ -- the five committed fixture JSONs are in files[] so the deployed function can run its own evidence. NO LIVE VENDOR CALL: transport.LiveTransport refuses to construct without Andrew's per-use word in two independent halves. The BD request body is NOT restated here -- bd_adapter loads body_performance_period/requested_range_index from opal-assets-bd49f-reporting-pull by path; that module is not in this zip, so the deployed function degrades to date-labelled (UNCERTIFIED) period cells and records the absence rather than fabricating a second definition of the vendor request. jsonschema is not in the python3.12 runtime and this cell attaches no layer (layers are outside its write grant), so the deployed function returns contract_validated=false with an absence rather than claiming a validation it did not perform; in the worktree, where the battery and tests run, validation is mandatory and passes."
+      },
+      "staged_from": {
+        "after": [
+          {
+            "packaged_as": "enforce.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_authz/enforce.py",
+            "sha256": "18f04af84b9c5e87362f9cf87ee2ef5bc3680ccbaea66b1a2ee4e6579e6b1e7b"
+          },
+          {
+            "packaged_as": "errors.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_authz/errors.py",
+            "sha256": "784ee313ed7013e6fdf535a373e7941f4c672f4467e4dfcb4e8ad0634b1646a2"
+          },
+          {
+            "packaged_as": "resolve.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_scope/resolve.py",
+            "sha256": "e7a2389d5af9f3e05a0a17a76f6f3ecdc814f3a808e41d28c8d9accb50849fc0"
+          },
+          {
+            "packaged_as": "data/custodian_key_seam.json",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json",
+            "sha256": "87f2f92f3c71f7761b387574a3df721474120465b1b0da8028cfc201b619923a"
+          },
+          {
+            "packaged_as": "ids.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_ids/ids.py",
+            "sha256": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6"
+          },
+          {
+            "packaged_as": "raw_keys.json",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_ids/raw_keys.json",
+            "sha256": "f81db571b5d92ca66b960047d96b38cc74c173cb7bf8be0c20e9cd3973acaf89"
+          },
+          {
+            "packaged_as": "firm_registry.json",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "data/firm_registry.json",
+            "sha256": "5a4c0c3da26fffe55d8a3ec2a8a7248bd0b1dd936af5425ab35426bc5d277fc0"
+          },
+          {
+            "packaged_as": "loaders.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+            "sha256": "0c086052e6e65d2cb411f15362862b1656bad0b2320f9756be6a32444b665765"
+          },
+          {
+            "packaged_as": "served.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_authz/served.py",
+            "sha256": "f6a66c318a08872256b6be0e6588b33d4272e44531a62ada16ce84de26cdb409"
+          },
+          {
+            "packaged_as": "selection.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_scope/selection.py",
+            "sha256": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af"
+          },
+          {
+            "packaged_as": "selection_store.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_scope/selection_store.py",
+            "sha256": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c"
+          },
+          {
+            "packaged_as": "prospect.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_scope/prospect.py",
+            "sha256": "b7e5c9335caad7a01eb66c73305f70a6497d0b72110ad7268dad1757358287a8"
+          },
+          {
+            "packaged_as": "keys.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_keys/keys.py",
+            "sha256": "56ee3cc22e802579ebb8d4cba53edec8045603396a48fe952d6b83df0f08ab2a"
+          },
+          {
+            "packaged_as": "handler.py",
+            "pin": "cf11337d2e651a63623336ca29fdb67472983b37",
+            "repo_path": "infra/aws/lambda/investor-reporting/performance/handler.py",
+            "sha256": "9ac98cb985600d68a4389d40811a01b7d447e2dc33e4d077c3da8f42ecc9a79d"
+          },
+          {
+            "packaged_as": "tenants.py",
+            "pin": "cf11337d2e651a63623336ca29fdb67472983b37",
+            "repo_path": "infra/aws/lambda/investor-reporting/performance/tenants.py",
+            "sha256": "38812b9686ec45d9033f7001e9fc82d35da0e282e4d5b76cb778b21614077241"
+          },
+          {
+            "packaged_as": "PerformanceReport.schema.json",
+            "pin": "cf11337d2e651a63623336ca29fdb67472983b37",
+            "repo_path": "infra/aws/lambda/investor-reporting/_contracts/PerformanceReport.schema.json",
+            "sha256": "5493d31259dde3f9b7932cd81e27be3e7f58ec6ca91b9e61a94b3f546cb41bd1"
+          }
+        ],
+        "before": [
+          {
+            "packaged_as": "enforce.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_authz/enforce.py",
+            "sha256": "18f04af84b9c5e87362f9cf87ee2ef5bc3680ccbaea66b1a2ee4e6579e6b1e7b"
+          },
+          {
+            "packaged_as": "errors.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_authz/errors.py",
+            "sha256": "784ee313ed7013e6fdf535a373e7941f4c672f4467e4dfcb4e8ad0634b1646a2"
+          },
+          {
+            "packaged_as": "resolve.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_scope/resolve.py",
+            "sha256": "e7a2389d5af9f3e05a0a17a76f6f3ecdc814f3a808e41d28c8d9accb50849fc0"
+          },
+          {
+            "packaged_as": "data/custodian_key_seam.json",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json",
+            "sha256": "87f2f92f3c71f7761b387574a3df721474120465b1b0da8028cfc201b619923a"
+          },
+          {
+            "packaged_as": "ids.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_ids/ids.py",
+            "sha256": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6"
+          },
+          {
+            "packaged_as": "raw_keys.json",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_ids/raw_keys.json",
+            "sha256": "f81db571b5d92ca66b960047d96b38cc74c173cb7bf8be0c20e9cd3973acaf89"
+          },
+          {
+            "packaged_as": "firm_registry.json",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "data/firm_registry.json",
+            "sha256": "5a4c0c3da26fffe55d8a3ec2a8a7248bd0b1dd936af5425ab35426bc5d277fc0"
+          },
+          {
+            "packaged_as": "loaders.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+            "sha256": "0c086052e6e65d2cb411f15362862b1656bad0b2320f9756be6a32444b665765"
+          },
+          {
+            "packaged_as": "served.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_authz/served.py",
+            "sha256": "f6a66c318a08872256b6be0e6588b33d4272e44531a62ada16ce84de26cdb409"
+          },
+          {
+            "packaged_as": "selection.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_scope/selection.py",
+            "sha256": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af"
+          },
+          {
+            "packaged_as": "selection_store.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_scope/selection_store.py",
+            "sha256": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c"
+          },
+          {
+            "packaged_as": "prospect.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_scope/prospect.py",
+            "sha256": "b7e5c9335caad7a01eb66c73305f70a6497d0b72110ad7268dad1757358287a8"
+          },
+          {
+            "packaged_as": "keys.py",
+            "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+            "repo_path": "infra/aws/lambda/investor-reporting/_keys/keys.py",
+            "sha256": "56ee3cc22e802579ebb8d4cba53edec8045603396a48fe952d6b83df0f08ab2a"
+          }
+        ]
+      }
+    }
+  },
+  "non_irpt_equality": true,
+  "probes": [
+    {
+      "actual_guarded_entry": true,
+      "canonical_import_closure": "  OK: import-closure -- 18 packaged .py file(s), every top-level import satisfied by package/stdlib/runtime/layer. (Nested lazy imports exempt by design.)\n",
+      "function": "irpt-performance-adapter",
+      "imports_from_flat_package": true,
+      "network": false
+    }
+  ],
+  "unchanged_other_functions": 215
+}

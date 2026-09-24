@@ -1,0 +1,47 @@
+{
+  "evidence_level": "offline exercise",
+  "candidate_base": "db3267d079718ad47cc1ce338292d7e5f5640d55",
+  "grade": "PASS",
+  "test_denominator": 15,
+  "independent_acceptance": "NOT_EVALUATED",
+  "sources": [
+    {
+      "path": "lib/research/reports/__init__.py",
+      "sha256": "d3c0766bc652bf7a6c7e54d4f2b43aa649357ed99b9d3f16d5e99cdf32544bc2"
+    },
+    {
+      "path": "lib/research/reports/inputs.py",
+      "sha256": "1e787ba8f92f84e5e2e751370667ae713c6e6cf8d3faa10d3f62467e862e2ba3"
+    },
+    {
+      "path": "lib/research/reports/tests/test_inputs.py",
+      "sha256": "7b7a855bd7f6e2e2734eb7cdf5f8a69cd8d8ecacd58f80b78f380cd435fce77d"
+    }
+  ],
+  "checks": [
+    {
+      "command": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "lib/research/reports/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_absence_and_failed_read_are_not_interchangeable (test_inputs.InputFreshnessTests.test_absence_and_failed_read_are_not_interchangeable) ... ok\ntest_added_and_removed_inputs_are_named (test_inputs.InputFreshnessTests.test_added_and_removed_inputs_are_named) ... ok\ntest_caller_cannot_mutate_part_inputs_after_capture (test_inputs.InputFreshnessTests.test_caller_cannot_mutate_part_inputs_after_capture) ... ok\ntest_duplicate_inputs_and_mismatched_part_ids_refuse (test_inputs.InputFreshnessTests.test_duplicate_inputs_and_mismatched_part_ids_refuse) ... ok\ntest_hashes_are_of_exact_bytes (test_inputs.InputFreshnessTests.test_hashes_are_of_exact_bytes) ... ok\ntest_input_order_is_irrelevant (test_inputs.InputFreshnessTests.test_input_order_is_irrelevant) ... ok\ntest_malformed_or_fabricated_states_refuse (test_inputs.InputFreshnessTests.test_malformed_or_fabricated_states_refuse) ... ok\ntest_method_edit_without_version_bump_is_detected (test_inputs.InputFreshnessTests.test_method_edit_without_version_bump_is_detected) ... ok\ntest_method_version_change_is_detected (test_inputs.InputFreshnessTests.test_method_version_change_is_detected) ... ok\ntest_new_part_and_upstream_dependency_changes_are_detected (test_inputs.InputFreshnessTests.test_new_part_and_upstream_dependency_changes_are_detected) ... ok\ntest_newly_available_input_invalidates_absence (test_inputs.InputFreshnessTests.test_newly_available_input_invalidates_absence) ... ok\ntest_one_changed_input_invalidates_only_consumers_and_synthesis (test_inputs.InputFreshnessTests.test_one_changed_input_invalidates_only_consumers_and_synthesis) ... ok\ntest_same_bytes_at_a_different_key_change_lineage (test_inputs.InputFreshnessTests.test_same_bytes_at_a_different_key_change_lineage) ... ok\ntest_unchanged_inputs_keep_every_part_fresh (test_inputs.InputFreshnessTests.test_unchanged_inputs_keep_every_part_fresh) ... ok\ntest_unknown_dependencies_and_cycles_refuse (test_inputs.InputFreshnessTests.test_unknown_dependencies_and_cycles_refuse) ... ok\n\n----------------------------------------------------------------------\nRan 15 tests in 0.001s\n\nOK\n"
+    },
+    {
+      "command": [
+        "-m",
+        "ruff",
+        "check",
+        "lib/research/reports"
+      ],
+      "exit_code": 0,
+      "stdout": "All checks passed!\n",
+      "stderr": ""
+    }
+  ]
+}

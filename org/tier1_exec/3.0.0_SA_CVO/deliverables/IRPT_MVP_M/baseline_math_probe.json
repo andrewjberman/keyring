@@ -1,0 +1,41 @@
+{
+  "network_calls": 0,
+  "synthetic_only": true,
+  "inflection": {
+    "input_unique_portfolio_managed": 100,
+    "input_unique_portfolio_excluded": 20,
+    "input_custody_total": 120,
+    "output_account_total": 200.0,
+    "output_child_totals": [
+      120.0,
+      120.0
+    ],
+    "output_account_values": [
+      100.0,
+      100.0
+    ]
+  },
+  "49financial": {
+    "input_unassigned_account_value": 100,
+    "output_account_total": 200.0,
+    "account_nodes": 2,
+    "unique_account_ids": 1,
+    "model_children_for_unassigned_account": 1
+  },
+  "cottonwood": {
+    "input_custody_total": 400,
+    "model_dollars": [
+      100.0,
+      300.0
+    ],
+    "output_pct_of_total": [
+      1.0,
+      0.75
+    ],
+    "expected_pct_of_total": [
+      0.25,
+      0.75
+    ],
+    "security_nodes": 0
+  }
+}

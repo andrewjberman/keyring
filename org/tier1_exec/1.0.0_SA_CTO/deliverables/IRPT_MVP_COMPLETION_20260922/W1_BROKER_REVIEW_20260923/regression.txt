@@ -1,0 +1,162 @@
+RESULT-BEGIN
+{
+  "arms": {
+    "c_rotation": {
+      "awscurrent_after_rotation": "ycharts-session-current-v0002",
+      "difference_control_same_read_unpinned": {
+        "state": "OK"
+      },
+      "next_invocation_used": {
+        "after_rotation": "capture-generation-0002",
+        "before_rotation": "capture-generation-0001",
+        "identity_ok_after": true,
+        "identity_ok_before": true
+      },
+      "old_version_refused": {
+        "fence_seen": 7,
+        "min_fence": 8,
+        "state": "STALE_FENCE"
+      },
+      "pass": true,
+      "published_versions": [
+        "ycharts-session-current-v0001",
+        "ycharts-session-current-v0002"
+      ],
+      "read_1": {
+        "cookie_names": [
+          "aws-waf-token",
+          "csrftoken",
+          "ycsessionid"
+        ],
+        "fence": 7,
+        "generation": "capture-generation-0001",
+        "state": "OK"
+      },
+      "read_2": {
+        "cookie_names": [
+          "aws-waf-token",
+          "csrftoken",
+          "ycsessionid"
+        ],
+        "fence": 8,
+        "generation": "capture-generation-0002",
+        "state": "OK"
+      },
+      "read_state_vocabulary": [
+        "OK",
+        "NOT_CONFIGURED",
+        "UNPARSEABLE",
+        "NOT_VERSIONED",
+        "STALE_FENCE"
+      ],
+      "resume_onto_the_old_generation_allowed": false,
+      "token_value_rotation": {
+        "cookie_NAME_set_unchanged": true,
+        "cookie_fingerprint_after": "0efc96f0fce5",
+        "cookie_fingerprint_before": "828c02de839d",
+        "note": "fingerprints only -- no cookie value is printed anywhere",
+        "values_rotated": true
+      }
+    },
+    "controls": {
+      "contract_failure_is_NOT_an_eviction": {
+        "outcome": "NOT_AN_EVICTION",
+        "refreshes_used": 0
+      },
+      "pass": true,
+      "read_state_coverage": {
+        "legacy_flat_cookie_bundle": "NOT_VERSIONED",
+        "secret_with_no_awscurrent_version": "NOT_CONFIGURED",
+        "unparseable_value": "UNPARSEABLE"
+      }
+    },
+    "d_eviction": {
+      "broker_outcome_vocabulary": [
+        "COMPLETED",
+        "RECOVERED",
+        "RETRYABLE_ATTENTION",
+        "NOT_AN_EVICTION"
+      ],
+      "no_resubmit_difference_control": {
+        "creates_with_a_restart_instead": 2,
+        "creates_with_broker_recovery": 1,
+        "denominator": "POST /model_portfolios/fixed/ counted on the transports' own evidence records across every attempt of ONE request",
+        "discriminates": true
+      },
+      "one_eviction": {
+        "checkpoint_state_at_recovery": "ATTENTION",
+        "evicted_at": {
+          "action": "REFRESH_ONCE",
+          "body_sha256": "3965c565ec9702e849b62ee61e010c45929f896b14f72d284e22ccf3ef836f98",
+          "decision": "REFRESH",
+          "operation": "status_poll",
+          "reason": "SIGNED_OUT",
+          "status": 401
+        },
+        "job_ok_after_recovery": true,
+        "job_own_why_for_that_step": "SETTINGS_DRIFTED",
+        "new_generation": "capture-generation-0002",
+        "outcome": "RECOVERED",
+        "refresh_allowed": true,
+        "refresh_rule_called": "transport.resume_allowed",
+        "refreshes_used": 1,
+        "resumed_at_checkpoint": true,
+        "verified_three_ways": {
+          "identity_verified": true,
+          "schema_verified": true,
+          "transport_verified": true
+        }
+      },
+      "pass": true,
+      "repeat_eviction": {
+        "outcome": "RETRYABLE_ATTENTION",
+        "parked_state": "ATTENTION",
+        "request_preserved": {
+          "job_id": "irpt-generate-0001",
+          "request_id": "REQ-abababababababababababab",
+          "revision": 0
+        },
+        "retryable": true,
+        "second_eviction": {
+          "action": "REFRESH_ONCE",
+          "body_sha256": "3965c565ec9702e849b62ee61e010c45929f896b14f72d284e22ccf3ef836f98",
+          "decision": "REFRESH",
+          "operation": "status_poll",
+          "reason": "SIGNED_OUT",
+          "status": 401
+        },
+        "second_refresh_refused": {
+          "allowed": false,
+          "why": "refreshes_used==2 (the rule allows exactly 1); generation UNCHANGED -- this is the evicted session, not a new one"
+        }
+      }
+    }
+  },
+  "netguard": {
+    "attempts_observed": 1,
+    "denominator_note": "attempts_observed is the denominator. It is 0 when the suite opens no socket at all -- which is the STRONGER statement, and is also why a 0-of-0 refusal count is vacuous on its own and the positive control below carries the arm.",
+    "external_destinations": [
+      "ycharts.com:443"
+    ],
+    "external_refused": 1,
+    "guard": "ycharts/generate/tests/netguard.py",
+    "installed": true,
+    "loopback_allowed": 0
+  },
+  "netguard_positive_control": {
+    "attempted": "ycharts.com:443",
+    "external_after": 1,
+    "external_before": 0,
+    "pass": true,
+    "refused": true
+  },
+  "suite": "IB-rt-9 offline proof of the session broker: rotation and eviction",
+  "summary": {
+    "all_pass": true,
+    "c_rotation": true,
+    "controls": true,
+    "d_eviction": true,
+    "netguard_positive_control": true
+  }
+}
+RESULT-END

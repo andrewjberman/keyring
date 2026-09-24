@@ -1,0 +1,30 @@
+[
+  {
+    "case": "pass",
+    "wrapperRC": 0,
+    "output": "PRODUCER_RC=0\nUNEXPECTED-FAIL-COUNT=0\n",
+    "stderr": "",
+    "raw": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n\u001b[0m\n.runtime\\codex-seats\\3.0.0_SA_CVO~F\\r14-filter\\pass.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m CVO positive\u001b[0m\n\n\u001b[0m\u001b[32m 1 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 1 expect() calls\nRan 1 test across 1 file. \u001b[0m\u001b[2m[\u001b[1m43.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+  },
+  {
+    "case": "unexpected",
+    "wrapperRC": 0,
+    "output": "PRODUCER_RC=1\nUNEXPECTED-FAIL-COUNT=1\n",
+    "stderr": "",
+    "raw": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n\u001b[0m\n.runtime\\codex-seats\\3.0.0_SA_CVO~F\\r14-filter\\unexpected.test.ts:\n\u001b[0m\u001b[31merror\u001b[0m\u001b[2m:\u001b[0m \u001b[1m\u001b[2mexpect(\u001b[0m\u001b[31mreceived\u001b[0m\u001b[2m).\u001b[0mtoBe\u001b[2m(\u001b[0m\u001b[32mexpected\u001b[0m\u001b[2m)\u001b[0m\n\nExpected: \u001b[32m2\u001b[0m\nReceived: \u001b[31m1\u001b[0m\n\u001b[0m\n\u001b[0m\u001b[31m\u2717\u001b[0m\u001b[0m\u001b[1m CVO unexpected\u001b[0m\n\n 0 pass\u001b[0m\n\u001b[0m\u001b[31m 1 fail\u001b[0m\n 1 expect() calls\nRan 1 test across 1 file. \u001b[0m\u001b[2m[\u001b[1m57.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+  },
+  {
+    "case": "known",
+    "wrapperRC": 0,
+    "output": "PRODUCER_RC=1\nUNEXPECTED-FAIL-COUNT=0\n",
+    "stderr": "",
+    "raw": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n\u001b[0m\n.runtime\\codex-seats\\3.0.0_SA_CVO~F\\r14-filter\\known.test.ts:\n\u001b[0m\u001b[31merror\u001b[0m\u001b[2m:\u001b[0m \u001b[1m\u001b[2mexpect(\u001b[0m\u001b[31mreceived\u001b[0m\u001b[2m).\u001b[0mtoBe\u001b[2m(\u001b[0m\u001b[32mexpected\u001b[0m\u001b[2m)\u001b[0m\n\nExpected: \u001b[32m2\u001b[0m\nReceived: \u001b[31m1\u001b[0m\n\u001b[0m\n\u001b[0m\u001b[31m\u2717\u001b[0m\u001b[0m\u001b[1m F81-AC3/AC4 synthetic known\u001b[0m\n\n 0 pass\u001b[0m\n\u001b[0m\u001b[31m 1 fail\u001b[0m\n 1 expect() calls\nRan 1 test across 1 file. \u001b[0m\u001b[2m[\u001b[1m62.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+  },
+  {
+    "case": "timeout",
+    "wrapperRC": 0,
+    "output": "PRODUCER_RC=124\nUNEXPECTED-FAIL-COUNT=0\n",
+    "stderr": "",
+    "raw": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n\u001b[0m\n.runtime\\codex-seats\\3.0.0_SA_CVO~F\\r14-filter\\timeout.test.ts:\n"
+  }
+]

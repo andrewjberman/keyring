@@ -1,3 +1,8 @@
+---
+name: prd-check
+description: "PRD coverage view: open projects with PRDs issued in the last 14 days, grouped by whether they have active (non-complete) task-order files or none. `/prd-check`; `/prd-check --all` (any PRD age); `/prd-check --project CODE`. Read-only, never dispatches. Engine `.tools/prd-check.py`. Companion to /to-check and /registry-check."
+---
+
 # /prd-check -- PRD coverage view (which hot projects have TOs filed)
 
 Shows all open projects with PRDs issued within the last 14 days, grouped by

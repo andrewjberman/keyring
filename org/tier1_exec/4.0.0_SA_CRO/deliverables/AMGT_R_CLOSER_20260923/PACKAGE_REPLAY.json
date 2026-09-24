@@ -1,0 +1,130 @@
+{
+  "plane": "exact candidate ZIP first-party modules on Windows Python3.11 with host jsonschema; not Linux runtime test",
+  "cases": [
+    {
+      "security_key": "ASML_NA_Equity",
+      "source_sha256": "68995eb736aa83ff239e97ff55781b2c28817882112df47a017fbdc438249087",
+      "source_unchanged": true,
+      "served": 2,
+      "served_no_span": 0,
+      "held_at_read": 8,
+      "held_on_object": 0,
+      "anchored_siblings_exact": true
+    },
+    {
+      "security_key": "BABA_US_Equity",
+      "source_sha256": "1da4627a9a6d86a61ec6f63e4dc85163f418a16849e4a5d7839e1160cb047ee0",
+      "source_unchanged": true,
+      "served": 34,
+      "served_no_span": 0,
+      "held_at_read": 2,
+      "held_on_object": 0,
+      "anchored_siblings_exact": true
+    },
+    {
+      "security_key": "BA_US_Equity",
+      "source_sha256": "50e76d82833b6c76b35c86ce79ad7002524ad4d5e39e249f83f27c3ea7452122",
+      "source_unchanged": true,
+      "served": 17,
+      "served_no_span": 0,
+      "held_at_read": 21,
+      "held_on_object": 0,
+      "anchored_siblings_exact": true
+    },
+    {
+      "security_key": "COST_US_Equity",
+      "source_sha256": "d0c719ac097acd21fd447dcd1397571c32b5dc8fd576abc96273ae30302830e7",
+      "source_unchanged": true,
+      "served": 15,
+      "served_no_span": 0,
+      "held_at_read": 24,
+      "held_on_object": 0,
+      "anchored_siblings_exact": true
+    },
+    {
+      "security_key": "HAL_US_Equity",
+      "source_sha256": "7b9cdb09e94900dbc14e3487d87b96d5a7afb41509a8f8e86d0dd82bae776de3",
+      "source_unchanged": true,
+      "served": 11,
+      "served_no_span": 0,
+      "held_at_read": 7,
+      "held_on_object": 0,
+      "anchored_siblings_exact": true
+    },
+    {
+      "security_key": "HD_US_Equity",
+      "source_sha256": "9a55e1ae052e0f7ef2544d7a8b57170c2b61da5d7995e18fd95d54f1fbfe394d",
+      "source_unchanged": true,
+      "served": 20,
+      "served_no_span": 0,
+      "held_at_read": 16,
+      "held_on_object": 0,
+      "anchored_siblings_exact": true
+    },
+    {
+      "security_key": "INTU_US_Equity",
+      "source_sha256": "bedcbe982610368f56df3de4bc40512e60345e1deba3bd874c1e0e36c46385f7",
+      "source_unchanged": true,
+      "served": 26,
+      "served_no_span": 0,
+      "held_at_read": 14,
+      "held_on_object": 0,
+      "anchored_siblings_exact": true
+    },
+    {
+      "security_key": "KMB_US_Equity",
+      "source_sha256": "35285a89b7fc67e7560775f80bcbcdeded0329c0b6293679dc2beecc2268cc6b",
+      "source_unchanged": true,
+      "served": 18,
+      "served_no_span": 0,
+      "held_at_read": 21,
+      "held_on_object": 0,
+      "anchored_siblings_exact": true
+    },
+    {
+      "security_key": "NU_US_Equity",
+      "source_sha256": "754119f46084df63c97ed588258e694c0f086ad54a820ee4c31b54cea16d5d6e",
+      "source_unchanged": true,
+      "served": 8,
+      "served_no_span": 0,
+      "held_at_read": 19,
+      "held_on_object": 0,
+      "anchored_siblings_exact": true
+    },
+    {
+      "security_key": "PBR_US_Equity",
+      "source_sha256": "d94534b006ca05c0abe29acad7f96d17d983178e728567358123a9a736b51113",
+      "source_unchanged": true,
+      "served": 16,
+      "served_no_span": 0,
+      "held_at_read": 13,
+      "held_on_object": 0,
+      "anchored_siblings_exact": true
+    },
+    {
+      "security_key": "SAP_GY_Equity",
+      "source_sha256": "3800c516b78eb8750cc83c7c83e294923eb254687cc3af1fc09c98ed5e2f6ae4",
+      "source_unchanged": true,
+      "served": 30,
+      "served_no_span": 0,
+      "held_at_read": 8,
+      "held_on_object": 0,
+      "anchored_siblings_exact": true
+    },
+    {
+      "security_key": "VLO_US_Equity",
+      "source_sha256": "79d8878ee8f02131cf27b172b130ee1225baa5671956923ffb4fac052348937a",
+      "source_unchanged": true,
+      "served": 13,
+      "served_no_span": 0,
+      "held_at_read": 26,
+      "held_on_object": 0,
+      "anchored_siblings_exact": true
+    }
+  ],
+  "documents": 12,
+  "served": 210,
+  "held_at_read": 179,
+  "served_no_span": 0,
+  "module_path": "C:\\tmp/amgt-r-no-span-package-20260923/extracted\\lib\\research\\api\\scoped_amgt.py"
+}

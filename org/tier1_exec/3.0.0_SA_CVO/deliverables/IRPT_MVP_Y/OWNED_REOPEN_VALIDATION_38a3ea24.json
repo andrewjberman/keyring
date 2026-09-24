@@ -1,0 +1,23 @@
+﻿{
+    "pin":  "38a3ea24412310165f0dfb09912e1997de445631",
+    "supplied_exit":  0,
+    "supplied_output":  [
+                            "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m",
+                            "\u001b[0m",
+                            "src\\pages\\InvestorReporting\\tabs\\analysis\\tests\\owned-reopen.test.tsx:",
+                            "\u001b[0m\u001b[32m✓\u001b[0m\u001b[0m\u001b[1m reopening performs a fresh request read every time, without submitting or accepting history as access\u001b[0m",
+                            "\u001b[0m\u001b[32m✓\u001b[0m\u001b[0m\u001b[1m revoked request refuses and a separately refused report never synthesizes sections\u001b[0m",
+                            "\u001b[0m\u001b[32m✓\u001b[0m\u001b[0m\u001b[1m request and report readers bind the selected issued ID\u001b[0m",
+                            "\u001b[0m\u001b[32m✓\u001b[0m\u001b[0m\u001b[1m initial mounted history has explicit refresh and never claims empty history before reading\u001b[0m \u001b[0m\u001b[2m[\u001b[1m32.00ms\u001b[0m\u001b[2m]\u001b[0m",
+                            "\u001b[0m\u001b[32m✓\u001b[0m\u001b[0m\u001b[1m capability requires all three typed read methods\u001b[0m",
+                            "System.Management.Automation.RemoteException",
+                            "\u001b[0m\u001b[32m 5 pass\u001b[0m",
+                            "\u001b[0m\u001b[2m 0 fail\u001b[0m",
+                            " 18 expect() calls",
+                            "Ran 5 tests across 1 file. \u001b[0m\u001b[2m[\u001b[1m571.00ms\u001b[0m\u001b[2m]\u001b[0m"
+                        ],
+    "typecheck_exit":  0,
+    "typecheck_output":  [
+
+                         ]
+}

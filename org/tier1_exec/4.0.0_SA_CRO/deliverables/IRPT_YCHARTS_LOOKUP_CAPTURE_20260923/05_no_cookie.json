@@ -1,0 +1,35 @@
+{
+ "label": "05_no_cookie",
+ "utc": "2026-09-23T19:04:46Z",
+ "request": {
+  "path": "/securities/securities_info?securities=AAPL",
+  "cookie_sent": "none"
+ },
+ "http_status": 200,
+ "reason": "OK",
+ "elapsed_s": 0.11,
+ "headers": {
+  "content-type": "application/json",
+  "server": "nginx"
+ },
+ "set_cookie_names": [],
+ "bytes": 338,
+ "body_head": "[{\"securitylist_security_id\": \"C12\", \"instance_id\": 12, \"id\": \"AAPL\", \"detailed_security_type\": \"stock\", \"display_security_id\": \"AAPL\", \"features_needed\": [], \"security_id\": \"AAPL\", \"security_name\": \"Apple, Inc.\", \"inception_date\": \"1990-01-02\", \"end_date\": null, \"start_date\": null, \"benchmark\": \"S&P 500 Total Return\", \"sharing\": null}]",
+ "json": [
+  {
+   "securitylist_security_id": "C12",
+   "instance_id": 12,
+   "id": "AAPL",
+   "detailed_security_type": "stock",
+   "display_security_id": "AAPL",
+   "features_needed": [],
+   "security_id": "AAPL",
+   "security_name": "Apple, Inc.",
+   "inception_date": "1990-01-02",
+   "end_date": null,
+   "start_date": null,
+   "benchmark": "S&P 500 Total Return",
+   "sharing": null
+  }
+ ]
+}

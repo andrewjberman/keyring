@@ -1,0 +1,79 @@
+{
+  "backend": "960f5f2a4501eff2670bcd0b5951926836093447",
+  "portal": "c09fea54e9f4613d44b874724e93b79c443f8cc8",
+  "snapshot": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-dates-7915-tkx2ysc3",
+  "runs": [
+    {
+      "label": "supplied_backend_actual_entry_dates_outer",
+      "exit_code": 0,
+      "stdout": "..................................................................       [100%]\n66 passed in 8.98s\n",
+      "stderr": ""
+    },
+    {
+      "label": "independent_backend_pairing",
+      "exit_code": 0,
+      "stdout": "...........................                                              [100%]\n27 passed in 5.91s\n",
+      "stderr": ""
+    },
+    {
+      "label": "supplied_portal_pairing",
+      "exit_code": 0,
+      "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+      "stderr": "\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\owned-outer.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m >\u001b[0m\u001b[1m history positive and refusal wires parse without synthesizing a grant or data\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m >\u001b[0m\u001b[1m read positive and refusal wires parse without synthesizing a grant or data\u001b[0m \u001b[0m\u001b[2m[\u001b[1m16.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m >\u001b[0m\u001b[1m sections positive and refusal wires parse without synthesizing a grant or data\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m >\u001b[0m\u001b[1m status positive and refusal wires parse without synthesizing a grant or data\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mactual owned Entry response families\u001b[2m >\u001b[0m\u001b[1m grant map carries labels and total counts; missing or invalid counters refuse\u001b[0m \u001b[0m\u001b[2m[\u001b[1m15.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\prospect-dates.test.tsx:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m actual retained Entry outputs survive closed parser and renderer without date loss\u001b[0m \u001b[0m\u001b[2m[\u001b[1m16.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m preserves mixed stable dates through parser and shared screen/print component\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m undated input uses explicit label without reading a clock\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m only status-job advertises capability; old clients never gain it implicitly\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m rejects input/request substitution and arbitrary operation opt-in\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m refuses invalid/duplicate/missing dates and false single-date per-section label\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mnegotiated prospect source dates\u001b[2m >\u001b[0m\u001b[1m dated statuses keep existing business-date reading\u001b[0m\n\n\u001b[0m\u001b[32m 12 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 69 expect() calls\nRan 12 tests across 2 files. \u001b[0m\u001b[2m[\u001b[1m501.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+    },
+    {
+      "label": "independent_fresh_wire_parser_static",
+      "exit_code": 0,
+      "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+      "stderr": "\u001b[0m\nreviewer-dates.test.tsx:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m fresh actual producer output survives parser and static shared date rendering\u001b[0m \u001b[0m\u001b[2m[\u001b[1m79.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual wire rejects outer_unknown\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual wire rejects outer_operation\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual wire rejects grant_missing\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual wire rejects inner_operation\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual wire rejects null_business\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual wire rejects null_basis\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual wire rejects wrong_input\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual wire rejects wrong_request\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual wire rejects mutable\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual wire rejects numeric_revision\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual wire rejects wrong_lane\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual wire rejects date_unknown\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual wire rejects invalid_date\u001b[0m \u001b[0m\u001b[2m[\u001b[1m15.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual wire rejects missing_section\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual wire rejects duplicate_section\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual history success/refusal discrimination remains closed\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual read success/refusal discrimination remains closed\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual sections success/refusal discrimination remains closed\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m actual status success/refusal discrimination remains closed\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m public parser refuses injected server correlation for history\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m public parser refuses injected server correlation for read\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m public parser refuses injected server correlation for sections\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m public parser refuses injected server correlation for status\u001b[0m\n\n\u001b[0m\u001b[32m 24 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 72 expect() calls\nRan 24 tests across 1 file. \u001b[0m\u001b[2m[\u001b[1m501.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+    },
+    {
+      "label": "generator_reproduction",
+      "exit_code": 0,
+      "stdout": "{\"documents\":19,\"responses\":16,\"routes\":16}\n",
+      "stderr": ""
+    }
+  ],
+  "assertions": {
+    "status_date_pair_cases.py": "cb151804b34e06e5948781affaabd17fb71f97d5615f360c5e7ae9e4b24e2a9b",
+    "status_date_pair_cases.test.tsx": "7843f9df99a62e1e7302f7e9f5c5b271ef79ec345a52e42777f50691f8cf24a3"
+  },
+  "captures": {
+    "outer": {
+      "sha256": "f3be03019c1169806824df50fcd57f6bb3afbcbf98a2a931e8cce079b561d371",
+      "equal_committed_portal_json": true,
+      "equal_except_rotating_refusal_correlation": true
+    },
+    "dates": {
+      "sha256": "e01467d21c7e78276e1f642a69f33ad09ab80a86b6d46a9c7f21b7607d494101",
+      "equal_committed_portal_json": true
+    }
+  },
+  "generated_wire_differences": [],
+  "source_sha256": {
+    "docs/contracts/investor-reporting/v1/BoundaryRefusal.schema.json": "76393516c9c2eb52d7eed0f034513e1744358b3f9f6d9912f5f54bf3242b333d",
+    "docs/contracts/investor-reporting/v1/PublicStatusEnvelope.schema.json": "5ef38a4b396d184bb5031a603dec6b34ba23282e9dd78738ed51c2a610e1c130",
+    "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json": "fc1b7814022ed6bc6e593052a4aec295015cd891c09c5b111a4fc24c72f796ab",
+    "docs/contracts/investor-reporting/v1/responses/status-job.response.schema.json": "cf46ec54e13e43f40253dad12a26a6eaca7fe46428547a33b8eb879ed7dfa945",
+    "infra/aws/lambda/investor-reporting/_contracts/PublicStatusEnvelope.schema.json": "5ef38a4b396d184bb5031a603dec6b34ba23282e9dd78738ed51c2a610e1c130",
+    "infra/aws/lambda/investor-reporting/_contracts/StatusEnvelope.schema.json": "fc1b7814022ed6bc6e593052a4aec295015cd891c09c5b111a4fc24c72f796ab",
+    "infra/aws/lambda/investor-reporting/ops/owned_status.py": "79127f14adccf04b67e716ccc288e3c7e944b26493dd04ec1a75074e136a94d9",
+    "infra/aws/lambda/investor-reporting/ops/prospect_dates.py": "837d22c6aa91f18dc821f8fc164b582ec436a40419af9bf8f77634eddcfb4177",
+    "infra/aws/lambda/investor-reporting/ops/tests/test_owned_status.py": "79aa8a5e88a2ce3eddb0b07fe721ce4d65a5863d7afe3f04e1ff1b8c77b230a2",
+    "infra/aws/lambda/investor-reporting/ops/tests/test_prospect_dates.py": "a0e38bc8fcc4f6a965b83e35a6059ee2976907c2363a88b6f463b8e0099eb8bb",
+    "src/pages/InvestorReporting/contracts/envelope.ts": "8d5621eb09a7d75857bdaae63c08a8de97ea64ef08c09146c6df098845d0a8aa",
+    "src/pages/InvestorReporting/contracts/prospect-dates.ts": "90639355a2a247a43fa2c94a248e76757bbc8b1831e32e7e3c2a9ebda1700b29"
+  },
+  "limits": "Actual Entry/retained services with supplied synthetic storage and reports; independent mutations and fresh wires. Static markup only. No cloud/runtime route, actual browser/export, vendor certification, full integration or atomicity proof. Legacy schema projection removes server-only CID; not an old-browser execution.",
+  "original_review": "a050df00e5",
+  "original_assertions_unchanged": {
+    "status_date_pair_cases.py": "cb151804b34e06e5948781affaabd17fb71f97d5615f360c5e7ae9e4b24e2a9b",
+    "status_date_pair_cases.test.tsx": "7843f9df99a62e1e7302f7e9f5c5b271ef79ec345a52e42777f50691f8cf24a3"
+  },
+  "additional_assertions_sha256": {
+    "status_wire_extra_cases.py": "187ed778172034cf79fe4a87a513bd79881760aaaeed2c22ba01355dc0063316",
+    "status_wire_extra_cases.test.ts": "bb2556ced2b89babdf385989f7a2a43cef3722a59e4734a381f51fea3eb21b98"
+  },
+  "served_source_equals_owner_483a2fee0a": true,
+  "served_source_sha256": "588a9856f50cdd6440800d0a934886d3a2bdb045be91f89782166f7cab0b4334"
+}

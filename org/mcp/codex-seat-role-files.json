@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "seats": {
+    "2.0.0_SA_COO~P": [
+      "org/tier1_exec/2.0.0_SA_COO/README.md",
+      "org/tier1_exec/2.0.0_SA_COO/prompt.md",
+      "org/ref/RAVC_PROTOCOL.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/AUTHORITY.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/COO_P.md"
+    ],
+    "2.0.0_SA_COO~M": [
+      "org/tier1_exec/2.0.0_SA_COO/README.md",
+      "org/tier1_exec/2.0.0_SA_COO/prompt.md",
+      "org/ref/RAVC_PROTOCOL.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/AUTHORITY.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/COO_M.md"
+    ],
+    "2.0.0_SA_COO~Y": [
+      "org/tier1_exec/2.0.0_SA_COO/README.md",
+      "org/tier1_exec/2.0.0_SA_COO/prompt.md",
+      "org/ref/RAVC_PROTOCOL.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/AUTHORITY.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/COO_Y.md"
+    ],
+    "3.0.0_SA_CVO~P": [
+      "org/tier1_exec/3.0.0_SA_CVO/README.md",
+      "org/tier1_exec/3.0.0_SA_CVO/prompt.md",
+      "org/ref/RAVC_PROTOCOL.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/AUTHORITY.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CVO_P.md"
+    ],
+    "3.0.0_SA_CVO~M": [
+      "org/tier1_exec/3.0.0_SA_CVO/README.md",
+      "org/tier1_exec/3.0.0_SA_CVO/prompt.md",
+      "org/ref/RAVC_PROTOCOL.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/AUTHORITY.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CVO_M.md"
+    ],
+    "3.0.0_SA_CVO~Y": [
+      "org/tier1_exec/3.0.0_SA_CVO/README.md",
+      "org/tier1_exec/3.0.0_SA_CVO/prompt.md",
+      "org/ref/RAVC_PROTOCOL.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/AUTHORITY.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CVO_Y.md"
+    ]
+  }
+}

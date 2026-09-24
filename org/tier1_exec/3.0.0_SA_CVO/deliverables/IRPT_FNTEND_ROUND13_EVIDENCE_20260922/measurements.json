@@ -1,0 +1,392 @@
+{
+  "linkRest": {
+    "text": "View breakdown",
+    "colour": "rgb(22, 51, 114)",
+    "weight": "700",
+    "decoration": "none",
+    "background": "rgba(0, 0, 0, 0)",
+    "border": "rgb(196, 203, 219)",
+    "shadow": "none",
+    "focusVisible": false,
+    "effectiveOpacity": 0,
+    "ancestors": [
+      {
+        "tag": "BUTTON",
+        "slot": null,
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": null,
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": "holdings-drill-tree",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      },
+      {
+        "tag": "BODY",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      }
+    ]
+  },
+  "linkHover": {
+    "text": "View breakdown",
+    "colour": "rgb(22, 51, 114)",
+    "weight": "700",
+    "decoration": "underline",
+    "background": "rgba(0, 0, 0, 0)",
+    "border": "rgb(196, 203, 219)",
+    "shadow": "none",
+    "focusVisible": false,
+    "effectiveOpacity": 1,
+    "ancestors": [
+      {
+        "tag": "BUTTON",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      },
+      {
+        "tag": "DIV",
+        "slot": null,
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": "holdings-drill-tree",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      },
+      {
+        "tag": "BODY",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      }
+    ]
+  },
+  "linkKeyboard": {
+    "text": "View breakdown",
+    "colour": "rgb(22, 51, 114)",
+    "weight": "700",
+    "decoration": "underline",
+    "background": "rgba(0, 0, 0, 0)",
+    "border": "rgb(196, 203, 219)",
+    "shadow": "none",
+    "focusVisible": false,
+    "effectiveOpacity": 1,
+    "ancestors": [
+      {
+        "tag": "BUTTON",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      },
+      {
+        "tag": "DIV",
+        "slot": null,
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": "holdings-drill-tree",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      },
+      {
+        "tag": "BODY",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      }
+    ]
+  },
+  "tileKeyboard": {
+    "focusVisible": true,
+    "shadow": "rgb(255, 255, 255) 0px 0px 0px 2px, rgb(95, 59, 227) 0px 0px 0px 4px",
+    "outline": "rgba(0, 0, 0, 0) solid 2px"
+  },
+  "linkBlur": {
+    "text": "View breakdown",
+    "colour": "rgb(22, 51, 114)",
+    "weight": "700",
+    "decoration": "none",
+    "background": "rgba(0, 0, 0, 0)",
+    "border": "rgb(196, 203, 219)",
+    "shadow": "none",
+    "focusVisible": false,
+    "effectiveOpacity": 0,
+    "ancestors": [
+      {
+        "tag": "BUTTON",
+        "slot": null,
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": null,
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": "holdings-drill-tree",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      },
+      {
+        "tag": "BODY",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      }
+    ]
+  },
+  "breadcrumbCurrent": {
+    "text": "Models",
+    "colour": "rgb(22, 51, 114)",
+    "weight": "700",
+    "decoration": "none",
+    "background": "rgba(0, 0, 0, 0)",
+    "border": "rgb(196, 203, 219)",
+    "shadow": "none",
+    "focusVisible": false,
+    "effectiveOpacity": 1,
+    "ancestors": [
+      {
+        "tag": "DIV",
+        "slot": "holdings-drill-tree",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      },
+      {
+        "tag": "BODY",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      }
+    ]
+  },
+  "breadcrumbAncestor": {
+    "text": "A-0001",
+    "colour": "rgb(22, 51, 114)",
+    "weight": "400",
+    "decoration": "none",
+    "background": "rgba(0, 0, 0, 0)",
+    "border": "rgb(196, 203, 219)",
+    "shadow": "none",
+    "focusVisible": false,
+    "effectiveOpacity": 1,
+    "ancestors": [
+      {
+        "tag": "DIV",
+        "slot": "holdings-drill-tree",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      },
+      {
+        "tag": "BODY",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      }
+    ]
+  },
+  "holdingsWire": {
+    "matched": 3,
+    "declared": 9
+  },
+  "complete": {
+    "text": "ReadyBusiness date 2026-09-09REQUESTED_WINDOW_ANSWERED [code not defined by the v1 contract]",
+    "colour": "rgb(22, 51, 114)",
+    "weight": "400",
+    "decoration": "none",
+    "background": "rgb(255, 255, 255)",
+    "border": "rgb(196, 203, 219)",
+    "shadow": "none",
+    "focusVisible": false,
+    "effectiveOpacity": 1,
+    "ancestors": [
+      {
+        "tag": "DIV",
+        "slot": "answer-status",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": "reporting-body",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      },
+      {
+        "tag": "BODY",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      }
+    ]
+  },
+  "completeState": {
+    "text": "Ready",
+    "colour": "rgb(22, 51, 114)",
+    "weight": "600",
+    "decoration": "none",
+    "background": "rgba(0, 0, 0, 0)",
+    "border": "rgb(196, 203, 219)",
+    "shadow": "none",
+    "focusVisible": false,
+    "effectiveOpacity": 1,
+    "ancestors": [
+      {
+        "tag": "DIV",
+        "slot": "answer-status",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": "reporting-body",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      },
+      {
+        "tag": "BODY",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      }
+    ]
+  },
+  "completeWire": {
+    "matched": 3,
+    "declared": 3
+  },
+  "qualified": {
+    "text": "PartialQualified answer -- not a complete reportBusiness date 2026-09-09REQUESTED_WINDOW_ANSWERED [code not defined by the v1 contract]",
+    "colour": "rgb(22, 51, 114)",
+    "weight": "400",
+    "decoration": "none",
+    "background": "rgb(255, 255, 255)",
+    "border": "rgb(211, 124, 23)",
+    "shadow": "none",
+    "focusVisible": false,
+    "effectiveOpacity": 1,
+    "ancestors": [
+      {
+        "tag": "DIV",
+        "slot": "answer-status",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": "reporting-body",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      },
+      {
+        "tag": "BODY",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      }
+    ]
+  },
+  "qualifiedState": {
+    "text": "Partial",
+    "colour": "rgb(22, 51, 114)",
+    "weight": "600",
+    "decoration": "none",
+    "background": "rgba(0, 0, 0, 0)",
+    "border": "rgb(196, 203, 219)",
+    "shadow": "none",
+    "focusVisible": false,
+    "effectiveOpacity": 1,
+    "ancestors": [
+      {
+        "tag": "DIV",
+        "slot": "answer-status",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": "reporting-body",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      },
+      {
+        "tag": "BODY",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      }
+    ]
+  },
+  "qualifier": {
+    "text": "Qualified answer -- not a complete report",
+    "colour": "rgb(22, 51, 114)",
+    "weight": "500",
+    "decoration": "none",
+    "background": "rgba(0, 0, 0, 0)",
+    "border": "rgb(196, 203, 219)",
+    "shadow": "none",
+    "focusVisible": false,
+    "effectiveOpacity": 1,
+    "ancestors": [
+      {
+        "tag": "DIV",
+        "slot": "answer-status",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": "reporting-body",
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "tag": "DIV",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      },
+      {
+        "tag": "BODY",
+        "slot": null,
+        "background": "rgb(244, 246, 250)"
+      }
+    ]
+  },
+  "qualifiedWire": {
+    "matched": 3,
+    "declared": 3
+  }
+}

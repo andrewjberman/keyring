@@ -1,0 +1,159 @@
+{
+  "candidate_pin": "b258b1696c75296e203e89fbd85434b3b91d9066",
+  "source_evidence": "org\\tier1_exec\\3.0.0_SA_CVO\\deliverables\\IRPT_MVP_Y\\UPLOAD_CONSUMER_b258b1696c.json",
+  "source_evidence_sha256": "5820e6a2f2089d9d9656892d6fb95030d7a076b81bbe555cf415d9f9590c08aa",
+  "verified_snapshot_files": 290,
+  "supplied_suite": {
+    "exit_code": 0,
+    "stdout": "................................................ [ 88%]\n......                                                                   [100%]\n54 passed, 24 subtests passed in 0.74s\n",
+    "stderr": ""
+  },
+  "controls": [
+    {
+      "name": "request_composition_inherits_exact_input_dependency_and_deadline",
+      "passed": true,
+      "observed": {
+        "invocation": {
+          "returned": {
+            "identity": {
+              "request_id": "REQ-offline"
+            },
+            "stage": "RECEIVED",
+            "dispatch_pending": false
+          },
+          "error_type": null,
+          "reason": null,
+          "dispatch_calls": 1
+        },
+        "composition_ref": {
+          "artifact_id": "ART-37fc278f2d9c6fdda5680767e5a92eaa7fd30e35dda68617d230f7cafa3b6187",
+          "byte_length": 4899,
+          "content_type": "application/json",
+          "family": "REQUEST_COMPOSITION",
+          "immutable": true,
+          "retention_ref": {
+            "policy_revision": "irpt-x10-v1",
+            "retention_id": "RET-37fc278f2d9c6fdda5680767e5a92eaa7fd30e35dda68617d230f7cafa3b6187"
+          },
+          "sha256": "5308f668a997d9149dce31444628c615f812e1b82773792eeedf63f5c278eba8",
+          "version_id": "version-3"
+        },
+        "deadline": 1802592000,
+        "dependencies": [
+          {
+            "policy_revision": "irpt-x10-v1",
+            "retention_id": "RET-b2cd04b10d37c4df364f7e64631e2faf2345630726beae3db9556f3db0dfa49f"
+          }
+        ]
+      }
+    },
+    {
+      "name": "live_replay_preserves_result_without_provider_reread",
+      "passed": true,
+      "observed": {
+        "invocation": {
+          "returned": {
+            "identity": {
+              "request_id": "REQ-offline"
+            },
+            "stage": "RECEIVED",
+            "dispatch_pending": false
+          },
+          "error_type": null,
+          "reason": null,
+          "dispatch_calls": 1
+        },
+        "extra_blob_puts": 0
+      }
+    },
+    {
+      "name": "configured_retention_refuses_expired_replay",
+      "passed": true,
+      "observed": {
+        "invocation": {
+          "returned": null,
+          "error_type": "RetentionExpired",
+          "reason": "retention expired",
+          "dispatch_calls": 0
+        }
+      }
+    },
+    {
+      "name": "expired_retained_replay_requires_retention_service",
+      "passed": true,
+      "observed": {
+        "invocation": {
+          "returned": null,
+          "error_type": "AcceptanceRefused",
+          "reason": "RETENTION_SERVICE_REQUIRED",
+          "dispatch_calls": 0
+        },
+        "retained_composition_ref_present": true,
+        "current_time": 1802592000,
+        "accepted_deadline": 1802592000,
+        "expected": "Refuse missing retention service before dispatch for a known retained record"
+      }
+    },
+    {
+      "name": "retained_input_requires_retention_service_on_first_submission",
+      "passed": true,
+      "observed": {
+        "invocation": {
+          "returned": null,
+          "error_type": "AcceptanceRefused",
+          "reason": "RETENTION_SERVICE_REQUIRED",
+          "dispatch_calls": 0
+        },
+        "input_has_retention": true,
+        "accepted_ref": null,
+        "expected": "Refuse retained-input downgrade before bare composition storage/acceptance/dispatch"
+      }
+    },
+    {
+      "name": "changed_retained_input_receipt_refuses_before_storage",
+      "passed": true,
+      "observed": {
+        "invocation": {
+          "returned": null,
+          "error_type": "AcceptanceRefused",
+          "reason": "RETAINED_INPUT_BINDING",
+          "dispatch_calls": 0
+        },
+        "extra_blob_puts": 0
+      }
+    },
+    {
+      "name": "expiry_after_acceptance_refuses_dispatch",
+      "passed": true,
+      "observed": {
+        "invocation": {
+          "returned": null,
+          "error_type": "RetentionExpired",
+          "reason": "retention expired",
+          "dispatch_calls": 0
+        }
+      }
+    },
+    {
+      "name": "policy_pending_after_acceptance_refuses_dispatch",
+      "passed": true,
+      "observed": {
+        "invocation": {
+          "returned": null,
+          "error_type": "RetentionRefused",
+          "reason": "registered enforced policy required",
+          "dispatch_calls": 0
+        }
+      }
+    }
+  ],
+  "passed": 8,
+  "total": 8,
+  "limits": [
+    "Actual Y SubmissionService and P retained artifacts/policy",
+    "Acceptance lookup/accept/dispatch are Mock; dispatch-call evidence, not real queue/vendor",
+    "Storage and clock doubles; no server concurrency/recovery/runtime assembly",
+    "Missing-service control models miscomposed/restarted service with existing retained records",
+    "No READY, live policy activation, full S4/S7 or integrated product proof"
+  ]
+}

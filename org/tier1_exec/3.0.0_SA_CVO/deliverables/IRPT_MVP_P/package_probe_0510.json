@@ -1,0 +1,437 @@
+{
+  "seat": "3.0.0_SA_CVO~P",
+  "candidate": "051054cd3e52539ba6461b5359ec24d9431665d2",
+  "before": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+  "changed_functions": [
+    "irpt-directory-search",
+    "irpt-performance-adapter"
+  ],
+  "total_functions": 216,
+  "unchanged_non_irpt_count": 207,
+  "all_other_function_objects_equal": true,
+  "root_metadata_equal": true,
+  "changed_function_noncomposition_metadata_equal": true,
+  "map_before_sha256": "0097db8de5243fe7b72da90a0cae91661c86c11dbee5a2d09827ae216ed1fcf9",
+  "map_after_sha256": "1d744359c4416e4819a7e68af40512fc52aaeefb54e5a40f78bb9e62eb9f3564",
+  "canonical_closure_sha256": "b027470f05d60fdf9eac0f93fe982a927321fb04af2c54e761db572900a712b4",
+  "supplied_probe_sha256": "5349aa6d4895c02862d406283ff1a5e4625da99389a54f8798ad0e27585dcf48",
+  "members": {
+    "irpt-directory-search": [
+      {
+        "member": "handler.py",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/directory/handler.py",
+        "sha256": "e46922a003791d901d037d80c82cf538c313dfe907096194f4fcca556712702e"
+      },
+      {
+        "member": "entry.py",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/directory/entry.py",
+        "sha256": "94f06d356ff821781e0d6c46e1b5a7662301dd89ed576c7fb83164f49a2f107e"
+      },
+      {
+        "member": "served.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_authz/served.py",
+        "sha256": "f6a66c318a08872256b6be0e6588b33d4272e44531a62ada16ce84de26cdb409"
+      },
+      {
+        "member": "loaders.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+        "sha256": "0c086052e6e65d2cb411f15362862b1656bad0b2320f9756be6a32444b665765"
+      },
+      {
+        "member": "enforce.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_authz/enforce.py",
+        "sha256": "18f04af84b9c5e87362f9cf87ee2ef5bc3680ccbaea66b1a2ee4e6579e6b1e7b"
+      },
+      {
+        "member": "errors.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_authz/errors.py",
+        "sha256": "784ee313ed7013e6fdf535a373e7941f4c672f4467e4dfcb4e8ad0634b1646a2"
+      },
+      {
+        "member": "resolve.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_scope/resolve.py",
+        "sha256": "e7a2389d5af9f3e05a0a17a76f6f3ecdc814f3a808e41d28c8d9accb50849fc0"
+      },
+      {
+        "member": "keys.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_keys/keys.py",
+        "sha256": "56ee3cc22e802579ebb8d4cba53edec8045603396a48fe952d6b83df0f08ab2a"
+      },
+      {
+        "member": "ids.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_ids/ids.py",
+        "sha256": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6"
+      },
+      {
+        "member": "data/custodian_key_seam.json",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json",
+        "sha256": "87f2f92f3c71f7761b387574a3df721474120465b1b0da8028cfc201b619923a"
+      },
+      {
+        "member": "raw_keys.json",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_ids/raw_keys.json",
+        "sha256": "f81db571b5d92ca66b960047d96b38cc74c173cb7bf8be0c20e9cd3973acaf89"
+      },
+      {
+        "member": "firm_registry.json",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "data/firm_registry.json",
+        "sha256": "5a4c0c3da26fffe55d8a3ec2a8a7248bd0b1dd936af5425ab35426bc5d277fc0"
+      },
+      {
+        "member": "contracts/DirectoryEntry.schema.json",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json",
+        "sha256": "7ed220ff87a787c6b596bcc66bc90a8a5a69fe2ec7da88e145207297011aab24"
+      },
+      {
+        "member": "selection.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_scope/selection.py",
+        "sha256": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af"
+      },
+      {
+        "member": "selection_store.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_scope/selection_store.py",
+        "sha256": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c"
+      },
+      {
+        "member": "prospect.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_scope/prospect.py",
+        "sha256": "b7e5c9335caad7a01eb66c73305f70a6497d0b72110ad7268dad1757358287a8"
+      }
+    ],
+    "irpt-performance-adapter": [
+      {
+        "member": "bd_adapter.py",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/performance/bd_adapter.py",
+        "sha256": "437b5b3827a5989a266684513900dd467c859b0872a25296f3e8c460f97238df"
+      },
+      {
+        "member": "handler.py",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/performance/handler.py",
+        "sha256": "9d6098dcc13471954b2e695e7ee7e6c745450f3e48c1c5b807fb85d49cc01f38"
+      },
+      {
+        "member": "normalize.py",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/performance/normalize.py",
+        "sha256": "203fddcd33939861e553cd4f03ed43f0f7a3057bf2417c011a102a2dd965ceb8"
+      },
+      {
+        "member": "orion_adapter.py",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/performance/orion_adapter.py",
+        "sha256": "3ea1d42e73ccdf705f9cfb3239d97ee7fc08424c579bc837b74ffff58c8f15ca"
+      },
+      {
+        "member": "tenants.py",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/performance/tenants.py",
+        "sha256": "dbefe40e3c0d1f835f45783e5175f9816d8dc6654ab3e4b4e31c25fb7066a647"
+      },
+      {
+        "member": "transport.py",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/performance/transport.py",
+        "sha256": "52abf66933e29747000611c41b02a3a1fb9ecfaa78c483c7a1c89620fae048ec"
+      },
+      {
+        "member": "units.py",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/performance/units.py",
+        "sha256": "1a21813a964cb40167c99050fcf052ef963a21d0cbb2cfe75249621a4dce13a8"
+      },
+      {
+        "member": "fixtures/FIXTURE_MANIFEST.json",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/performance/fixtures/FIXTURE_MANIFEST.json",
+        "sha256": "d319f80a859594c5f9d0c9723a8afaede814855ce6ce70776bf7c0f22261a697"
+      },
+      {
+        "member": "fixtures/bd_period.json",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/performance/fixtures/bd_period.json",
+        "sha256": "33390d6d7029917b4f5dc88a21ddda49f3030fbc37a5ccab00f3d3bb333a9d72"
+      },
+      {
+        "member": "fixtures/bd_series.json",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/performance/fixtures/bd_series.json",
+        "sha256": "39685b27d38488197610770d650d7fdb537a7ff70b72bdf54f359fd6ec730ff8"
+      },
+      {
+        "member": "fixtures/orion_captured_scope.json",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/performance/fixtures/orion_captured_scope.json",
+        "sha256": "74ffda60ea1894786c9b93306c77c4dac0dbadef4880b04590176970f276d96b"
+      },
+      {
+        "member": "fixtures/orion_daily.json",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/performance/fixtures/orion_daily.json",
+        "sha256": "f99f92ec79ebe73f6d54002d344aa1d4a8a1580da3f50ecc3e982025af9d982c"
+      },
+      {
+        "member": "fixtures/orion_value_check.json",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/performance/fixtures/orion_value_check.json",
+        "sha256": "2c5dd0742dad72f3d6e30fa8133deabf8f8af49f4eab7a8458f4aa02a5f17837"
+      },
+      {
+        "member": "entry.py",
+        "pin": "051054cd3e52539ba6461b5359ec24d9431665d2",
+        "source": "infra/aws/lambda/investor-reporting/performance/entry.py",
+        "sha256": "2f49ea88c2a5e30ae174b1d19000f806c9c4cf48192f0fd1583f9ad5357f12f0"
+      },
+      {
+        "member": "served.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_authz/served.py",
+        "sha256": "f6a66c318a08872256b6be0e6588b33d4272e44531a62ada16ce84de26cdb409"
+      },
+      {
+        "member": "loaders.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+        "sha256": "0c086052e6e65d2cb411f15362862b1656bad0b2320f9756be6a32444b665765"
+      },
+      {
+        "member": "enforce.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_authz/enforce.py",
+        "sha256": "18f04af84b9c5e87362f9cf87ee2ef5bc3680ccbaea66b1a2ee4e6579e6b1e7b"
+      },
+      {
+        "member": "errors.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_authz/errors.py",
+        "sha256": "784ee313ed7013e6fdf535a373e7941f4c672f4467e4dfcb4e8ad0634b1646a2"
+      },
+      {
+        "member": "resolve.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_scope/resolve.py",
+        "sha256": "e7a2389d5af9f3e05a0a17a76f6f3ecdc814f3a808e41d28c8d9accb50849fc0"
+      },
+      {
+        "member": "ids.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_ids/ids.py",
+        "sha256": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6"
+      },
+      {
+        "member": "data/custodian_key_seam.json",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json",
+        "sha256": "87f2f92f3c71f7761b387574a3df721474120465b1b0da8028cfc201b619923a"
+      },
+      {
+        "member": "raw_keys.json",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_ids/raw_keys.json",
+        "sha256": "f81db571b5d92ca66b960047d96b38cc74c173cb7bf8be0c20e9cd3973acaf89"
+      },
+      {
+        "member": "firm_registry.json",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "data/firm_registry.json",
+        "sha256": "5a4c0c3da26fffe55d8a3ec2a8a7248bd0b1dd936af5425ab35426bc5d277fc0"
+      },
+      {
+        "member": "selection.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_scope/selection.py",
+        "sha256": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af"
+      },
+      {
+        "member": "selection_store.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_scope/selection_store.py",
+        "sha256": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c"
+      },
+      {
+        "member": "prospect.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_scope/prospect.py",
+        "sha256": "b7e5c9335caad7a01eb66c73305f70a6497d0b72110ad7268dad1757358287a8"
+      },
+      {
+        "member": "keys.py",
+        "pin": "63c6b39af6574fda5e4ad6573258e188ddd21569",
+        "source": "infra/aws/lambda/investor-reporting/_keys/keys.py",
+        "sha256": "56ee3cc22e802579ebb8d4cba53edec8045603396a48fe952d6b83df0f08ab2a"
+      }
+    ]
+  },
+  "runs": [
+    {
+      "label": "irpt-directory-search:canonical-closure",
+      "argv": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\import-closure-check.py",
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\irpt-directory-search",
+        "handler.py",
+        "entry.py",
+        "served.py",
+        "loaders.py",
+        "enforce.py",
+        "errors.py",
+        "resolve.py",
+        "keys.py",
+        "ids.py",
+        "data/custodian_key_seam.json",
+        "raw_keys.json",
+        "firm_registry.json",
+        "contracts/DirectoryEntry.schema.json",
+        "selection.py",
+        "selection_store.py",
+        "prospect.py"
+      ],
+      "exit_code": 0,
+      "stdout": "  OK: import-closure -- 12 packaged .py file(s), every top-level import satisfied by package/stdlib/runtime/layer. (Nested lazy imports exempt by design.)\n",
+      "stderr": ""
+    },
+    {
+      "label": "irpt-directory-search:supplied-flat-probe",
+      "argv": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-I",
+        "-c",
+        "\nimport json, pathlib, sys, socket\ndef forbidden_network(*args, **kwargs):\n    raise AssertionError('Network is forbidden in offline package proof')\nsocket.create_connection = forbidden_network\nsocket.socket.connect = forbidden_network\nsys.path.insert(0, sys.argv[1])\nimport entry, served, enforce, resolve, loaders, ids, keys, selection, selection_store, prospect\nfor module in [entry, served, enforce, resolve, loaders, ids, keys, selection, selection_store, prospect]:\n    assert pathlib.Path(module.__file__).resolve().is_relative_to(pathlib.Path(sys.argv[1]).resolve())\nfrom types import SimpleNamespace\nfirm = '49financial'\nopaque = ids.opaque_firm(firm)\na, b = [ids.opaque_account(firm, raw) for raw in ['1000000001', '1000000002']]\ndirectory = {'firm_id_opaque': opaque, 'as_of_business_date': '2026-09-22',\n             'entries': [{'ids': {'firm_id': opaque, 'account_ids': [a, b]}}]}\nownership = {'schema_version': 1, 'advisors': {'advisor': {'accounts': [a, b], 'relationships': []}}}\nentry.ENTRY.deps = lambda tenant: loaders.fixture_deps(directory, ownership)\nentry.ENTRY.opaque_firm_for = lambda tenant: opaque\nheaders = {'x-contract-version': 'v1', 'x-origin-verify': 'cloudfront', 'x-firm-id': firm,\n           'x-user-email': 'test@example.invalid', 'x-user-role': 'advisor', 'x-advisor-id': 'advisor'}\nrows = {}\ndef save(firm, reference, record):\n    rows[(firm, reference)] = record\nselection_store.configured_store = lambda: SimpleNamespace(save=save, load=lambda firm, ref: rows.get((firm, ref)))\nif sys.argv[2] == 'irpt-directory-search':\n    event = {'headers': headers, 'routeKey': 'POST /api/scoped/investor-reporting/selections',\n             'body': json.dumps({'scope_kind': 'ACCOUNT', 'scope_ids': [a]})}\n    answer = entry.lambda_handler(event)\n    assert answer['data']['selected_account_ids'] == [a], answer\n    assert rows[(firm, answer['data']['account_set_id'])]['account_ids'] == [a]\nelse:\n    guard, ctx = entry.ENTRY.enforcer_for(firm)\n    scope, refusal = guard.resolve_now(enforce.Request(headers, 'performance_report'))\n    assert refusal is None\n    selected = selection.create_selection(scope, directory, [a],\n        directory_revision=selection.directory_revision(directory), save_selection=save)\n    event = {'headers': headers, 'routeKey': next(iter(entry.ROUTES)),\n             'pathParameters': {'accountSetId': selected['account_set_id']},\n             'queryStringParameters': {'start': '2026-01-01', 'end': '2026-09-22'}}\n    calls = []\n    def provider(scope, **kwargs):\n        assert scope['resolved_scope']['scope_ids'] == [a]\n        calls.append(kwargs)\n        return {'report': {'lineage': {'source_revision': 'fixture-1'},\n                           'dates': {'actual_end': '2026-09-22'}}, 'contract_validated': True}\n    entry._handler.run = provider\n    answer = entry.lambda_handler(event)\n    assert answer['status']['state'] == 'READY', answer\n    def revoked(scope, **kwargs):\n        result = provider(scope, **kwargs)\n        ownership['advisors']['advisor']['accounts'] = [b]\n        return result\n    entry._handler.run = revoked\n    answer = entry.lambda_handler(event)\n    assert answer.get('ok') is False and 'data' not in answer, answer\n    assert len(calls) == 2\nprint(json.dumps({'function': sys.argv[2], 'imports_from_flat_package': True,\n                  'actual_guarded_entry': True, 'network': False}))\n",
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\irpt-directory-search",
+        "irpt-directory-search"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"function\": \"irpt-directory-search\", \"imports_from_flat_package\": true, \"actual_guarded_entry\": true, \"network\": false}\n",
+      "stderr": ""
+    },
+    {
+      "label": "irpt-directory-search:independent-entry",
+      "argv": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-I",
+        "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\3.0.0_SA_CVO\\deliverables\\IRPT_MVP_P\\package_entry_cases.py",
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\irpt-directory-search",
+        "irpt-directory-search",
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\synthetic-retained-selection.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"function\": \"irpt-directory-search\", \"checks\": [\"producer persisted exact subset for separate consumer process\", \"empty, unentitled, partially permitted whole group and extra field refused without save\", \"persistence failure cannot issue selection success\"], \"network_forbidden\": true, \"isolated_python\": true, \"IRPT_environment_keys\": []}\n",
+      "stderr": ""
+    },
+    {
+      "label": "irpt-directory-search:missing-member-negative",
+      "argv": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-I",
+        "-c",
+        "\nimport json, pathlib, sys, socket\ndef forbidden_network(*args, **kwargs):\n    raise AssertionError('Network is forbidden in offline package proof')\nsocket.create_connection = forbidden_network\nsocket.socket.connect = forbidden_network\nsys.path.insert(0, sys.argv[1])\nimport entry, served, enforce, resolve, loaders, ids, keys, selection, selection_store, prospect\nfor module in [entry, served, enforce, resolve, loaders, ids, keys, selection, selection_store, prospect]:\n    assert pathlib.Path(module.__file__).resolve().is_relative_to(pathlib.Path(sys.argv[1]).resolve())\nfrom types import SimpleNamespace\nfirm = '49financial'\nopaque = ids.opaque_firm(firm)\na, b = [ids.opaque_account(firm, raw) for raw in ['1000000001', '1000000002']]\ndirectory = {'firm_id_opaque': opaque, 'as_of_business_date': '2026-09-22',\n             'entries': [{'ids': {'firm_id': opaque, 'account_ids': [a, b]}}]}\nownership = {'schema_version': 1, 'advisors': {'advisor': {'accounts': [a, b], 'relationships': []}}}\nentry.ENTRY.deps = lambda tenant: loaders.fixture_deps(directory, ownership)\nentry.ENTRY.opaque_firm_for = lambda tenant: opaque\nheaders = {'x-contract-version': 'v1', 'x-origin-verify': 'cloudfront', 'x-firm-id': firm,\n           'x-user-email': 'test@example.invalid', 'x-user-role': 'advisor', 'x-advisor-id': 'advisor'}\nrows = {}\ndef save(firm, reference, record):\n    rows[(firm, reference)] = record\nselection_store.configured_store = lambda: SimpleNamespace(save=save, load=lambda firm, ref: rows.get((firm, ref)))\nif sys.argv[2] == 'irpt-directory-search':\n    event = {'headers': headers, 'routeKey': 'POST /api/scoped/investor-reporting/selections',\n             'body': json.dumps({'scope_kind': 'ACCOUNT', 'scope_ids': [a]})}\n    answer = entry.lambda_handler(event)\n    assert answer['data']['selected_account_ids'] == [a], answer\n    assert rows[(firm, answer['data']['account_set_id'])]['account_ids'] == [a]\nelse:\n    guard, ctx = entry.ENTRY.enforcer_for(firm)\n    scope, refusal = guard.resolve_now(enforce.Request(headers, 'performance_report'))\n    assert refusal is None\n    selected = selection.create_selection(scope, directory, [a],\n        directory_revision=selection.directory_revision(directory), save_selection=save)\n    event = {'headers': headers, 'routeKey': next(iter(entry.ROUTES)),\n             'pathParameters': {'accountSetId': selected['account_set_id']},\n             'queryStringParameters': {'start': '2026-01-01', 'end': '2026-09-22'}}\n    calls = []\n    def provider(scope, **kwargs):\n        assert scope['resolved_scope']['scope_ids'] == [a]\n        calls.append(kwargs)\n        return {'report': {'lineage': {'source_revision': 'fixture-1'},\n                           'dates': {'actual_end': '2026-09-22'}}, 'contract_validated': True}\n    entry._handler.run = provider\n    answer = entry.lambda_handler(event)\n    assert answer['status']['state'] == 'READY', answer\n    def revoked(scope, **kwargs):\n        result = provider(scope, **kwargs)\n        ownership['advisors']['advisor']['accounts'] = [b]\n        return result\n    entry._handler.run = revoked\n    answer = entry.lambda_handler(event)\n    assert answer.get('ok') is False and 'data' not in answer, answer\n    assert len(calls) == 2\nprint(json.dumps({'function': sys.argv[2], 'imports_from_flat_package': True,\n                  'actual_guarded_entry': True, 'network': False}))\n",
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\irpt-directory-search-missing-keys",
+        "irpt-directory-search"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 8, in <module>\n  File \"C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\irpt-directory-search-missing-keys\\entry.py\", line 44, in <module>\n    import served as _entry          # noqa: E402  the shared boundary\n    ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\irpt-directory-search-missing-keys\\served.py\", line 68, in <module>\n    import enforce as _enforce          # noqa: E402  the REAL wrapper, FirmBinding and Refusal\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\irpt-directory-search-missing-keys\\enforce.py\", line 73, in <module>\n    import keys as _keys        # noqa: E402  IB-s-17, the key grammar\n    ^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'keys'\n"
+    },
+    {
+      "label": "irpt-performance-adapter:canonical-closure",
+      "argv": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\import-closure-check.py",
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\irpt-performance-adapter",
+        "bd_adapter.py",
+        "handler.py",
+        "normalize.py",
+        "orion_adapter.py",
+        "tenants.py",
+        "transport.py",
+        "units.py",
+        "fixtures/FIXTURE_MANIFEST.json",
+        "fixtures/bd_period.json",
+        "fixtures/bd_series.json",
+        "fixtures/orion_captured_scope.json",
+        "fixtures/orion_daily.json",
+        "fixtures/orion_value_check.json",
+        "entry.py",
+        "served.py",
+        "loaders.py",
+        "enforce.py",
+        "errors.py",
+        "resolve.py",
+        "ids.py",
+        "data/custodian_key_seam.json",
+        "raw_keys.json",
+        "firm_registry.json",
+        "selection.py",
+        "selection_store.py",
+        "prospect.py",
+        "keys.py"
+      ],
+      "exit_code": 0,
+      "stdout": "  OK: import-closure -- 18 packaged .py file(s), every top-level import satisfied by package/stdlib/runtime/layer. (Nested lazy imports exempt by design.)\n",
+      "stderr": ""
+    },
+    {
+      "label": "irpt-performance-adapter:supplied-flat-probe",
+      "argv": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-I",
+        "-c",
+        "\nimport json, pathlib, sys, socket\ndef forbidden_network(*args, **kwargs):\n    raise AssertionError('Network is forbidden in offline package proof')\nsocket.create_connection = forbidden_network\nsocket.socket.connect = forbidden_network\nsys.path.insert(0, sys.argv[1])\nimport entry, served, enforce, resolve, loaders, ids, keys, selection, selection_store, prospect\nfor module in [entry, served, enforce, resolve, loaders, ids, keys, selection, selection_store, prospect]:\n    assert pathlib.Path(module.__file__).resolve().is_relative_to(pathlib.Path(sys.argv[1]).resolve())\nfrom types import SimpleNamespace\nfirm = '49financial'\nopaque = ids.opaque_firm(firm)\na, b = [ids.opaque_account(firm, raw) for raw in ['1000000001', '1000000002']]\ndirectory = {'firm_id_opaque': opaque, 'as_of_business_date': '2026-09-22',\n             'entries': [{'ids': {'firm_id': opaque, 'account_ids': [a, b]}}]}\nownership = {'schema_version': 1, 'advisors': {'advisor': {'accounts': [a, b], 'relationships': []}}}\nentry.ENTRY.deps = lambda tenant: loaders.fixture_deps(directory, ownership)\nentry.ENTRY.opaque_firm_for = lambda tenant: opaque\nheaders = {'x-contract-version': 'v1', 'x-origin-verify': 'cloudfront', 'x-firm-id': firm,\n           'x-user-email': 'test@example.invalid', 'x-user-role': 'advisor', 'x-advisor-id': 'advisor'}\nrows = {}\ndef save(firm, reference, record):\n    rows[(firm, reference)] = record\nselection_store.configured_store = lambda: SimpleNamespace(save=save, load=lambda firm, ref: rows.get((firm, ref)))\nif sys.argv[2] == 'irpt-directory-search':\n    event = {'headers': headers, 'routeKey': 'POST /api/scoped/investor-reporting/selections',\n             'body': json.dumps({'scope_kind': 'ACCOUNT', 'scope_ids': [a]})}\n    answer = entry.lambda_handler(event)\n    assert answer['data']['selected_account_ids'] == [a], answer\n    assert rows[(firm, answer['data']['account_set_id'])]['account_ids'] == [a]\nelse:\n    guard, ctx = entry.ENTRY.enforcer_for(firm)\n    scope, refusal = guard.resolve_now(enforce.Request(headers, 'performance_report'))\n    assert refusal is None\n    selected = selection.create_selection(scope, directory, [a],\n        directory_revision=selection.directory_revision(directory), save_selection=save)\n    event = {'headers': headers, 'routeKey': next(iter(entry.ROUTES)),\n             'pathParameters': {'accountSetId': selected['account_set_id']},\n             'queryStringParameters': {'start': '2026-01-01', 'end': '2026-09-22'}}\n    calls = []\n    def provider(scope, **kwargs):\n        assert scope['resolved_scope']['scope_ids'] == [a]\n        calls.append(kwargs)\n        return {'report': {'lineage': {'source_revision': 'fixture-1'},\n                           'dates': {'actual_end': '2026-09-22'}}, 'contract_validated': True}\n    entry._handler.run = provider\n    answer = entry.lambda_handler(event)\n    assert answer['status']['state'] == 'READY', answer\n    def revoked(scope, **kwargs):\n        result = provider(scope, **kwargs)\n        ownership['advisors']['advisor']['accounts'] = [b]\n        return result\n    entry._handler.run = revoked\n    answer = entry.lambda_handler(event)\n    assert answer.get('ok') is False and 'data' not in answer, answer\n    assert len(calls) == 2\nprint(json.dumps({'function': sys.argv[2], 'imports_from_flat_package': True,\n                  'actual_guarded_entry': True, 'network': False}))\n",
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\irpt-performance-adapter",
+        "irpt-performance-adapter"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"function\": \"irpt-performance-adapter\", \"imports_from_flat_package\": true, \"actual_guarded_entry\": true, \"network\": false}\n",
+      "stderr": ""
+    },
+    {
+      "label": "irpt-performance-adapter:independent-entry",
+      "argv": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-I",
+        "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\3.0.0_SA_CVO\\deliverables\\IRPT_MVP_P\\package_entry_cases.py",
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\irpt-performance-adapter",
+        "irpt-performance-adapter",
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\synthetic-retained-selection.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"function\": \"irpt-performance-adapter\", \"checks\": [\"consumer resolves producer-issued subset and exact dates in separate process\", \"literal/unknown reference and incomplete dates refused before provider\", \"in-flight revocation and subsequent request refuse without protected payload\"], \"network_forbidden\": true, \"isolated_python\": true, \"IRPT_environment_keys\": []}\n",
+      "stderr": ""
+    },
+    {
+      "label": "irpt-performance-adapter:missing-member-negative",
+      "argv": [
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-I",
+        "-c",
+        "\nimport json, pathlib, sys, socket\ndef forbidden_network(*args, **kwargs):\n    raise AssertionError('Network is forbidden in offline package proof')\nsocket.create_connection = forbidden_network\nsocket.socket.connect = forbidden_network\nsys.path.insert(0, sys.argv[1])\nimport entry, served, enforce, resolve, loaders, ids, keys, selection, selection_store, prospect\nfor module in [entry, served, enforce, resolve, loaders, ids, keys, selection, selection_store, prospect]:\n    assert pathlib.Path(module.__file__).resolve().is_relative_to(pathlib.Path(sys.argv[1]).resolve())\nfrom types import SimpleNamespace\nfirm = '49financial'\nopaque = ids.opaque_firm(firm)\na, b = [ids.opaque_account(firm, raw) for raw in ['1000000001', '1000000002']]\ndirectory = {'firm_id_opaque': opaque, 'as_of_business_date': '2026-09-22',\n             'entries': [{'ids': {'firm_id': opaque, 'account_ids': [a, b]}}]}\nownership = {'schema_version': 1, 'advisors': {'advisor': {'accounts': [a, b], 'relationships': []}}}\nentry.ENTRY.deps = lambda tenant: loaders.fixture_deps(directory, ownership)\nentry.ENTRY.opaque_firm_for = lambda tenant: opaque\nheaders = {'x-contract-version': 'v1', 'x-origin-verify': 'cloudfront', 'x-firm-id': firm,\n           'x-user-email': 'test@example.invalid', 'x-user-role': 'advisor', 'x-advisor-id': 'advisor'}\nrows = {}\ndef save(firm, reference, record):\n    rows[(firm, reference)] = record\nselection_store.configured_store = lambda: SimpleNamespace(save=save, load=lambda firm, ref: rows.get((firm, ref)))\nif sys.argv[2] == 'irpt-directory-search':\n    event = {'headers': headers, 'routeKey': 'POST /api/scoped/investor-reporting/selections',\n             'body': json.dumps({'scope_kind': 'ACCOUNT', 'scope_ids': [a]})}\n    answer = entry.lambda_handler(event)\n    assert answer['data']['selected_account_ids'] == [a], answer\n    assert rows[(firm, answer['data']['account_set_id'])]['account_ids'] == [a]\nelse:\n    guard, ctx = entry.ENTRY.enforcer_for(firm)\n    scope, refusal = guard.resolve_now(enforce.Request(headers, 'performance_report'))\n    assert refusal is None\n    selected = selection.create_selection(scope, directory, [a],\n        directory_revision=selection.directory_revision(directory), save_selection=save)\n    event = {'headers': headers, 'routeKey': next(iter(entry.ROUTES)),\n             'pathParameters': {'accountSetId': selected['account_set_id']},\n             'queryStringParameters': {'start': '2026-01-01', 'end': '2026-09-22'}}\n    calls = []\n    def provider(scope, **kwargs):\n        assert scope['resolved_scope']['scope_ids'] == [a]\n        calls.append(kwargs)\n        return {'report': {'lineage': {'source_revision': 'fixture-1'},\n                           'dates': {'actual_end': '2026-09-22'}}, 'contract_validated': True}\n    entry._handler.run = provider\n    answer = entry.lambda_handler(event)\n    assert answer['status']['state'] == 'READY', answer\n    def revoked(scope, **kwargs):\n        result = provider(scope, **kwargs)\n        ownership['advisors']['advisor']['accounts'] = [b]\n        return result\n    entry._handler.run = revoked\n    answer = entry.lambda_handler(event)\n    assert answer.get('ok') is False and 'data' not in answer, answer\n    assert len(calls) == 2\nprint(json.dumps({'function': sys.argv[2], 'imports_from_flat_package': True,\n                  'actual_guarded_entry': True, 'network': False}))\n",
+        "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\irpt-performance-adapter-missing-keys",
+        "irpt-performance-adapter"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 8, in <module>\n  File \"C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\irpt-performance-adapter-missing-keys\\entry.py\", line 33, in <module>\n    import served as _entry          # noqa: E402\n    ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\irpt-performance-adapter-missing-keys\\served.py\", line 68, in <module>\n    import enforce as _enforce          # noqa: E402  the REAL wrapper, FirmBinding and Refusal\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq\\irpt-performance-adapter-missing-keys\\enforce.py\", line 73, in <module>\n    import keys as _keys        # noqa: E402  IB-s-17, the key grammar\n    ^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'keys'\n"
+    }
+  ],
+  "all_expected_outcomes": true,
+  "timestamp_utc": "2026-09-22T22:05:19.804545+00:00",
+  "scratch": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-package-0510-b7b1b8mq",
+  "limits": "Offline materialized declared members; local interpreter site packages are not deployed Lambda-layer proof. Synthetic selection/provider/storage, no AWS/IAM/deploy/browser/export/vendor tests. Missing-member negatives expect process failure."
+}

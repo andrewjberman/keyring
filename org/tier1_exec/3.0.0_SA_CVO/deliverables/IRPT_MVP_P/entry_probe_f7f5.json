@@ -1,0 +1,45 @@
+{
+  "supplied_suite": {
+    "command": [
+      "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-entry-f7f5-is1rabjm\\infra\\aws\\lambda\\investor-reporting\\performance\\tests\\test_entry_selection.py"
+    ],
+    "exit_code": 0,
+    "stdout": "..............                                                           [100%]\n14 passed in 0.28s\n",
+    "stderr": ""
+  },
+  "independent_suite": {
+    "command": [
+      "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-entry-f7f5-is1rabjm\\infra\\aws\\lambda\\investor-reporting\\performance\\tests\\test_independent_review.py"
+    ],
+    "exit_code": 1,
+    "stdout": "....F.                                                                   [100%]\n================================== FAILURES ===================================\n______________ test_revocation_during_provider_prevents_release _______________\n\nboundary = namespace(event={'version': '2.0', 'routeKey': 'GET /api/scoped/investor-reporting/performance/{accountSetId}', 'heade...nchmark': None, 'value_facts': None, 'supported': False}}, 'contract_validated': True, 'absences': [], 'refusals': []})\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025AF1354770>\n\n    def test_revocation_during_provider_prevents_release(boundary, monkeypatch):\n        provider = entry._handler.run\n    \n        def revoke_then_return(scope, **kwargs):\n            result = provider(scope, **kwargs)\n            boundary.deps.ownership[\"advisors\"][fx.ADVISOR_A][\"accounts\"] = [fx.A2, fx.A3]\n            boundary.deps.entitlement_revision = \"ent-review-revoked\"\n            return result\n    \n        monkeypatch.setattr(entry._handler, \"run\", revoke_then_return)\n        answer = entry.lambda_handler(boundary.event)\n        assert len(boundary.calls) == 1\n        enforcer, _ = entry.ENTRY.enforcer_for(fx.TENANT)\n        current, refusal = enforcer.resolve_now(entry._entry._enforce.Request(\n            boundary.event[\"headers\"], \"performance_report\"))\n        assert refusal is None and fx.A1 not in current[\"permitted_account_set\"]\n        next_answer = entry.lambda_handler(boundary.event)\n        assert next_answer[\"ok\"] is False and \"data\" not in next_answer\n        assert len(boundary.calls) == 1\n        print(json.dumps({\"returned_data\": \"data\" in answer,\n                          \"returned_state\": answer[\"status\"][\"state\"],\n                          \"current_selected_account_permitted\": False,\n                          \"current_entitlement_revision\": current[\"entitlement_revision\"],\n                          \"next_request_refused\": True, \"provider_calls\": len(boundary.calls)}))\n>       assert answer.get(\"ok\") is False and \"data\" not in answer\nE       AssertionError: assert (None is False)\nE        +  where None = <built-in method get of dict object at 0x0000025AF142B400>('ok')\nE        +    where <built-in method get of dict object at 0x0000025AF142B400> = {'contract_version': 'v1', 'data': {'dates': {'actual_end': '2026-09-09', 'actual_start': '2026-01-02', 'requested_end...: False, 'value_facts': None}, ...}, 'firm_id': 'fir_c9fc04650e2134d6ea033da2', 'operation': 'performance-report', ...}.get\n\ninfra\\aws\\lambda\\investor-reporting\\performance\\tests\\test_independent_review.py:70: AssertionError\n---------------------------- Captured stdout call -----------------------------\n{\"returned_data\": true, \"returned_state\": \"READY\", \"current_selected_account_permitted\": false, \"current_entitlement_revision\": \"ent-review-revoked\", \"next_request_refused\": true, \"provider_calls\": 1}\n=========================== short test summary info ===========================\nFAILED infra/aws/lambda/investor-reporting/performance/tests/test_independent_review.py::test_revocation_during_provider_prevents_release\n1 failed, 5 passed in 0.42s\n",
+    "stderr": ""
+  },
+  "seat": "3.0.0_SA_CVO~P",
+  "candidate": "f7f5d22a76e7e760c3e74f03ff85b85b2372bb47",
+  "timestamp_utc": "2026-09-22T21:48:54.236752+00:00",
+  "snapshot": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-entry-f7f5-is1rabjm",
+  "git_archive_sha256": "f78de69bd158b303f5e3dd8c6cb33b2784e1e6ff1fbbbe0bce0ac2c06c9d6ca8",
+  "source_sha256": {
+    "performance/entry.py": "b3735daa41984cdd3e0dd904b54b3bf3e6d4f8d370e1630467419f7ecc81d28c",
+    "performance/tests/test_entry_selection.py": "ae033d0461f69c1627d6fec1323cc635154caa9dff1f338dad43279f3bd40501",
+    "_authz/served.py": "ba0cea6d42461caf7df14c2e3dfe0317d3be4a3a5b0b90cb6ee1214f6a96d73d",
+    "_authz/enforce.py": "18f04af84b9c5e87362f9cf87ee2ef5bc3680ccbaea66b1a2ee4e6579e6b1e7b",
+    "_scope/selection.py": "e13d372b5c1b3cb77b56ed4447a51aa57c9fee10375aa0873775f93ae6766f58",
+    "_scope/selection_store.py": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c"
+  },
+  "reviewer_cases_sha256": "35087f9c70a989527f8c96ba89d50c05149d84ed0288dfac4f77d8e2648778e5",
+  "limits": "Actual entry/Enforcer/M resolver. Synthetic storage, provider argument recorder. No deployed zip, browser, real provider, IAM evaluation, report persistence/export, vendor or cloud calls."
+}

@@ -1,9 +1,15 @@
 ---
 name: canonical-flow
-description: Pick up a project already in flight or in limbo at the limb the invoking seat owns: `/canonical-flow <PROJECT_CODE>` locates it on both roots, measures its limb from artifacts (never status prose), names its limbo class, and either proceeds through the normal gates or hands off to the limb's owner. Covers the dirty-tree and unfinished-edits read after a crash. `--report-only` measures without acting. Never for a new project (those enter via /brief-create). Tier-1 seats; MSTR reports and routes; a worker subagent never runs it.
+description: "Pick up a project already in flight or in limbo at the limb the invoking seat owns: `/canonical-flow {PROJECT_CODE}` locates it on both roots, measures its limb from artifacts (never status prose), names its limbo class, and either proceeds through the normal gates or hands off to the limb's owner. Covers the dirty-tree and unfinished-edits read after a crash. `--report-only` measures without acting. Never for a new project (those enter via /brief-create). Tier-1 seats; MSTR reports and routes; a worker subagent never runs it."
 ---
 
 # /canonical-flow -- pick up an in-flight or limbo project at your limb
+
+## Runtime
+
+- **Claude:** limb handoffs are MCP `send_message`; v3 workers are Claude subagents the COO spawns under `/dispatch`.
+- **Codex:** implement directly -- no subagents (the worker grammar below is what you MEASURE, not what you run);
+  mail arrives through the launcher's inbox bridge (`org/mcp/CODEX_INBOX_MONITOR.md`); sends go through `org/mcp/codex-send.ps1`.
 
 **Purpose (Andrew-direct, 2026-09-03 ~05:0xZ, MSTR terminal, verbatim):** *"I think we should make
 /canonical-flow skill which is basically just a reference to the doc with the instruction that the agent to
@@ -99,9 +105,11 @@ org/missions/D<n>/<MACRO>/<CODE>/                 three levels, each an enum:
   |                                                 CODE   ^[A-Z]{4}_[A-Z0-9]{4,12}$
   +-- project.json                                  the register row IN its folder: dep_stage, fabric, directive, leads    (L3; lane TREE_PROJECT_ROW, CTO)
   +-- brief/                                        L1 output                                                                (lane TREE_CRO)
-  +-- prd/<CODE>_PRD.md                             L4 output: PRD_HEADER block + ENDPOINT section + surface manifest;
+  +-- prd/<CODE>_PRD.md                             L4 output: PRD_HEADER block + ENDPOINT section + surface manifest
+                                                    (+ THREAD + ENRICHMENT BACKLOG from v3.16);
   |                                                   a PRD addendum from L10 is a prd_version bump here                      (lane ANY_CTO)
-  +-- decompositions/<CODE>_DECOMP.md               L5 output: the rectangle + four-postulate record + dependency edges;
+  +-- decompositions/<CODE>_DECOMP.md               L5 output: the round's rectangle (round 1 over the THREAD's hops,
+                                                    later over the ENRICHMENT LIST) + four-postulate record + dependency edges;
   |                                                   FROZEN at the cut -- history lives in proof instances + the round-N analysis (lane TREE_COO)
   +-- task-orders/<CODE>.TO-<cell>.<slug>.md         L6 output (hyphen, tree spelling); v3: ONE issuance commit for every cell,
   |                                                   its message carrying `fanout: N of M chains, cap K, reason: ...`;
@@ -145,7 +153,9 @@ Measure each of these; ABSENT is a value, not a guess. Print the table.
 | tree home | `org/missions/D*/<MACRO>/<CODE>/` -- `project.json` (`dep_stage`, `fabric`, `directive`), `brief/`, `prd/`, `decompositions/`, `task-orders/`, `deliverables/`, `surprise-channel/`, `ledger/` |
 | flat register | `org/projects/<CODE>.json` (`dep_stage`, `fabric`, `phase`, `blocking`), the `REGISTRY.md` row, `org/missions/DIRECTIVES.yaml` membership + the directive's `placement` |
 | brief | tree `brief/`, or the `brief_ref` the PRD header names, or `docs/briefs/` |
-| PRD | tree `prd/<CODE>_PRD.md` (PRD_HEADER block, ENDPOINT section, surface manifest; `prd_version` -- an addendum bumped it) or `docs/architecture/<CODE>_PRD.md` |
+| PRD | tree `prd/<CODE>_PRD.md` (PRD_HEADER block, ENDPOINT section, surface manifest, and from v3.16 the THREAD and ENRICHMENT BACKLOG sections; `prd_version` -- an addendum bumped it) or `docs/architecture/<CODE>_PRD.md` |
+| row flag | `project.json` `closer_contract` -- present means the project is `IN-CLOSER`: read it FIRST and route to `/closer`, never measure limbs past it |
+| thread | the `FWD-1` trace artifact exercised this round (spine v3.16-3.18): `LIVE` / `NOT LIVE` / `NONE` (a pure governance project) |
 | decomposition | tree `decompositions/`, or `workflows/atom_decomposition/runs/<code-ish>/`; its dependency edges (the chains L6 derives fan-out from); its version against the issuance commit (a decomposition that moved after the cut is a finding: it is frozen for the round) |
 | task orders | `python .tools/to-check.py --all --project <CODE>` (both roots); the issuance commit and its `fanout:` line (`git log --format=%B -- task-orders/` on the newest issuance); for v2 assignees `python .tools/to-liveness-join.py` |
 | proof instances | `deliverables/<serial>/<TO>.proof_of_spec.json` at HEAD, each run through `.tools/proof-of-spec-check.py`; VALID at HEAD is the only terminal read -- a `<status>` field is the stalest carrier in its own document; a criterion the task order flags as judgment is graded only in the CVO's adjudication, never by the instance's own verdict |
@@ -166,6 +176,11 @@ Measure each of these; ABSENT is a value, not a guess. Print the table.
 
 ## Step 2 -- MEASURE the limb from artifacts, then name the limbo class
 
+⛔ **READ `project.json` `closer_contract` FIRST.** Present -> the class is `IN-CLOSER`: the canonical limbs are
+suspended for the named journeys, so do NOT run the ladder below -- read the contract folder and each lane's
+STATUS.md, report them, and route to `/closer` (Step 3, Decide 0). A limb measured on a closer's project is a dead
+limb and misclassifies its limbo. Absent -> measure as below, and record the `thread` line (Step 0b).
+
 **The limb is the highest limb whose OUTPUT artifact exists and conforms** (the spine's section 1 names each
 limb's output). Read `dep_stage` too, but as a CLAIM: when the measured limb and `dep_stage` disagree, that
 disagreement is a finding of its own (the row is stale; owner `1.0.0_SA_CTO` under the tree, the register
@@ -177,8 +192,12 @@ grantor for a flat row) and it goes into the report; it never overrides the meas
   endpoint section / ratified FWD-n set                          -> L2
   project.json under the tree, macro in the ratified enum,
     fabric + directive set, index derived                        -> L3   (flat-only = NOT past L3 under the tree grammar)
-  PRD at the tree home with PRD_HEADER + ENDPOINT + manifest     -> L4
-  decomposition with its cells, record and dependency edges      -> L5
+  PRD at the tree home with PRD_HEADER + ENDPOINT + manifest
+    (+ THREAD + ENRICHMENT BACKLOG on a PRD cut at v3.16 or later,
+    unless a pure governance project)                            -> L4
+  decomposition with its cells, record and dependency edges;
+    round 1 over the THREAD's hops, later rounds over the
+    analysis's ENRICHMENT LIST (v3.16)                           -> L5
   task orders with decomp_ref + proof block; v3: one issuance
     covering every cell with its fanout line; v2: GO paired      -> L6   (in L7 while any is open)
   every TO terminal with a VALID proof instance at HEAD,
@@ -187,7 +206,8 @@ grantor for a flat row) and it goes into the report; it never overrides the meas
   investigation rows filed; the CVO's watermark not behind       -> L8
   every item dispositioned by its latest citing row              -> L9
   the slug (REMEDIATION_v<N>) cut and sent to the CTO            -> L10 slug     (next = the CTO's read)
-  ROUND_ANALYSIS.round<N> or a bumped prd_version                -> L10 answered (next = the COO's recut, or L4 forward)
+  ROUND_ANALYSIS.round<N> (ending in its ENRICHMENT LIST, v3.16)
+    or a bumped prd_version                                      -> L10 answered (next = the COO's recut, or L4 forward)
   the next issuance cut from the analysis                        -> L6 again
   COMPLETION_REPORT + COMPLETION_GRADES, every grade REALIZED    -> CLOSED
 ```
@@ -198,7 +218,7 @@ grantor for a flat row) and it goes into the report; it never overrides the meas
 |---|---|---|
 | `IN-PROGRESS` | the next limb's input exists and conforms AND **the probe above found the owner's output moving** -- the limb is being worked RIGHT NOW | the next limb's owner; **nobody nudges, escalates, kills or respawns** |
 | `STALLED-AT-OWNER` | the next limb's input exists and conforms; its owner has not acted **AND the probe found nothing moving**. ⛔ **THE PROBE IS PART OF THE TEST, NOT A COURTESY: without it this value is unfalsifiable** and every actively-working limb reads STALLED | the next limb's owner |
-| `ARTIFACT-GAP` | the next limb's input is missing or non-conforming (a PRD without an endpoint section or manifest; a decomp without its record or edges; a TO without a proof block or with a compound criterion; an issuance that does not cover every cell) | the limb that should have produced it |
+| `ARTIFACT-GAP` | the next limb's input is missing or non-conforming (a PRD without an endpoint section or manifest; a decomp without its record or edges; a TO without a proof block or with a compound criterion; an issuance that does not cover every cell; and, for work cut at v3.16 or later: a non-governance PRD without its THREAD and ENRICHMENT BACKLOG sections, a round-1 decomposition not over the thread's hops, a round-N analysis without its ENRICHMENT LIST). ⚠ **Transition: a round cut before v3.16 is never re-graded for lacking a thread** -- the spine's rule that an open round finishes under its cut orders | the limb that should have produced it |
 | `PRE-TREE` | exists only in the flat register; no tree home | `1.0.0_SA_CTO` (L3 under the tree, then L4 at the tree home) |
 | `DEAD-SEAT` | v2 only: open task orders whose broker-registered assignee is not live | `2.0.0_SA_COO` (re-address, or seat a fresh lane; or recut under v3 at the next issuance) |
 | `UNFINISHED-EDITS` | uncommitted, staged or untracked edits under the project's paths, left by a seat that died mid-work; v2 residue -- v3 L7 work lives in worktrees and cannot produce this class | `2.0.0_SA_COO`: finish or discard each touch, one commit per task order it belongs to, with `3.0.0_SA_CVO` validating each finished fix against the task order's own criteria; a touch no open task order explains is a surprise row, not a commit |
@@ -207,6 +227,8 @@ grantor for a flat row) and it goes into the report; it never overrides the meas
 | `SLUG-UNREAD` | the slug is cut and the CTO has written neither a round-N analysis nor an addendum | `1.0.0_SA_CTO` (the L10 read) |
 | `ROUND-UNCUT` | the CTO's answer exists and no issuance has been cut from it | `2.0.0_SA_COO` (the recut, one issuance) or, after an addendum, `2.0.0_SA_COO` at L5 on the bumped PRD |
 | `SEQUENCED-BEHIND` | a named hold blocks the next limb (a register phase, a directive placement, an Andrew-direct record) | nobody: report the hold's carrier; only Andrew lifts a hold |
+| `IN-CLOSER` | the row carries `closer_contract` (spine v3.17, Closer): the canonical limbs are suspended for the named journeys and the contract governs until hand-back; rounds already cut are not re-opened | the contract's seats: `1.0.0_SA_CTO` rules and integrates, each implementing `2.0.0_SA_COO~x` runs `/closer run`, each `3.0.0_SA_CVO~x` runs `/closer review`; state is read from the contract folder and each lane's STATUS.md (`/closer status`), never recut |
+| `CLOSER-CANDIDATE` | 2 or more rounds and no live journey: no `FWD-1` thread trace exercised (spine v3.16-3.18) | `1.0.0_SA_CTO`, who may `/closer propose` it to Andrew; `4.0.0_SA_CRO` or any Tier-1 seat may `/closer trace` it with no word needed. It is a finding beside the blocking class, not a hold: the round keeps moving |
 
 ⛔ **WHY `IN-PROGRESS` EXISTS, AND WHY IT ARRIVES WITH A TEST RATHER THAN AS A LABEL** (row
 `AMGT_RESAPP-Z-S22` @`651ffd4f16`, filed by `2.0.0_SA_COO~ZZZ` under this skill's own Rules clause that
@@ -324,14 +346,16 @@ and the next act of any seat must not overwrite it.
 
 | your seat | limbs you may pick up | what the pickup is |
 |---|---|---|
-| `4.0.0_SA_CRO` | L1 | the brief (`/brief-create`, `--midstream` when the project is already in flight) |
-| `1.0.0_SA_CTO` | L2, L3, L4; the L10 read; the close | `/endpoint --forward` on the brief; registration under the tree; the PRD at the tree home with header, endpoint and manifest -- **which is NOT decomposable until L4-R: both HALVES SIGNED at the PRD's current bytes (`python .tools/prd-signoff.py status <CODE>` reads ADMITTED)**; a REFUSED half is answered with a bump touching only what the review named; reading a cut slug into `ROUND_ANALYSIS.round<N>.md` (to the COO with the remediations file) or a PRD addendum (a `prd_version` bump that re-opens only the half it changed; the notifier fires to that half's reviewer, then to the COO once both halves are signed); the grades and the `CLOSED` flip |
+| `4.0.0_SA_CRO` | L1; a closer trace | the brief (`/brief-create`, `--midstream` when the project is already in flight; a product brief names its candidate thread); on `CLOSER-CANDIDATE`, `/closer trace` per surface, no word needed |
+| `1.0.0_SA_CTO` | L2, L3, L4; the L10 read; the close; a closer's proposal, contract and rulings | `FWD-1` is the thread (v3.16-3.18); the round-N analysis ends in its ENRICHMENT LIST; on `CLOSER-CANDIDATE`, `/closer propose`, and on Andrew's word `/closer contract` + `mandate` (the rows gain `closer_contract`); `/endpoint --forward` on the brief; registration under the tree; the PRD at the tree home with header, endpoint and manifest -- **which is NOT decomposable until L4-R: both HALVES SIGNED at the PRD's current bytes (`python .tools/prd-signoff.py status <CODE>` reads ADMITTED)**; a REFUSED half is answered with a bump touching only what the review named; reading a cut slug into `ROUND_ANALYSIS.round<N>.md` (to the COO with the remediations file) or a PRD addendum (a `prd_version` bump that re-opens only the half it changed; the notifier fires to that half's reviewer, then to the COO once both halves are signed); the grades and the `CLOSED` flip |
 | `3.0.0_SA_CVO` (ratified-text half, always) + `4.0.0_SA_CRO` (brief half; a live `2.0.0_SA_COO` not holding the round in its stead) at L4-R | the PRD sign-off gate (spine v3.15) | the notifier delivers each half still owed: the CVO reads the ENDPOINT section against the ratified pins (no annotation, history or seat name inside the section) and CONTRACTS against the counterpart; the CRO (or substitute) reads the BRIEF COVERAGE map for CONTENT carriage by pinned line. Each stamps with `python .tools/prd-signoff.py sign\|refuse <CODE> --half ratified-text\|brief --review <path>@<pin> [--reason ...] [--for <primary>]`, which writes `prd/signoff/<serial>.json` bound to the half's `half_hash` (lane `TREE_PRD_SIGNOFF`) and commits it. Window 60 min, then an OVERDUE nudge with the CTO copied, then re-routing of the brief half; READ is not SIGNED. The notifier withholds the COO delivery until both halves are SIGNED; `to-pipeline-gate.py` LIMB 6 refuses a TO against a PRD with a half not SIGNED. The CTO and the round-holding COO lane cannot sign. One rule: `.tools/prd_signoff_lib.py`. Andrew-direct 2026-09-10 ~21:2xZ; 2026-09-11 ~05:3xZ. |
-| `2.0.0_SA_COO` | L5, L6, Track A, the recut, the cleaning run | `/atom-decomp` over the manifest and the battery; the one issuance for every cell with its `fanout:` line; the midstream three reads, then re-dispatch of every non-terminal task order to fresh worker slots; merging valid worker branches and discarding orphans; the one-off cleaning run over `UNFINISHED-EDITS` with the CVO validating each fix; the recut from a round-N analysis as one issuance |
-| `3.0.0_SA_CVO` | L8, L9, the slug; validation of the cleaning run | rows, dispositions (judgment criteria graded here), the one slug of the round to `1.0.0_SA_CTO` and to no one else; re-arming its watcher from its watermark; validating each fix the COO finishes from `UNFINISHED-EDITS` against the task order's criteria, as a row |
+| `2.0.0_SA_COO` | L5, L6, Track A, the recut, the cleaning run; `/closer run` in a closer | `/atom-decomp` over the round's rectangle (round 1: the thread's hops; later: the enrichment list) and the battery, cut under the verification diet; the one issuance for every cell with its `fanout:` line; the midstream three reads, then re-dispatch of every non-terminal task order to fresh worker slots; merging valid worker branches and discarding orphans; the one-off cleaning run over `UNFINISHED-EDITS` with the CVO validating each fix; the recut from a round-N analysis as one issuance |
+| `3.0.0_SA_CVO` | L8, L9, the slug; validation of the cleaning run; `/closer review` in a closer | rows, dispositions (judgment criteria graded here), the one slug of the round to `1.0.0_SA_CTO` and to no one else; re-arming its watcher from its watermark; validating each fix the COO finishes from `UNFINISHED-EDITS` against the task order's criteria, as a row |
 | `0.0.0_AB_MSTR`, any v2 Tier-2 seat | none | report and route |
 
 **Decide, in this order:**
+0. If `IN-CLOSER` -> the contract governs. A seat named in it runs its `/closer` form; any other seat reports
+   the contract path and each lane's STATUS.md and stops. Never recut or re-dispatch a closer's project.
 1. If a `SEQUENCED-BEHIND` hold is named -> report it and stop. Do not lift it, do not work around it.
 2. If `UNFINISHED-EDITS` or `ORPHAN-WORKTREE` is present and you are not the COO -> report it to the COO first,
    with the file list, and do not touch those files; then continue with your own limb if it does not read or
@@ -410,7 +434,8 @@ LOCATE   home: {tree path | flat only}   placement: {laptop | site-z} ({carrier}
          live-production probe {newest output on the next limb's owner: <path> <age> | NOTHING MOVING}
          rows {n items, k undispositioned; watermark {ahead | BEHIND by d | ABSENT}}
          slug {REMEDIATION_v<N>@vintage | ABSENT}   answer {ROUND_ANALYSIS.round<N> | addendum v{..} | ABSENT}
-         dep_stage (claimed): {..}
+         dep_stage (claimed): {..}   closer_contract: {path -> IN-CLOSER, route to /closer | none}
+         thread: {LIVE <trace@vintage> | NOT LIVE (rounds so far: R) | NONE (governance)}
 MEASURED limb: {Ln} -- highest conforming output: {artifact@vintage}
          claimed vs measured: {AGREE | DISAGREE: dep_stage says X, artifacts say Y -> finding, owner ..}
 CLASS    {class} [, {class}]: {one line each, with the missing or stale artifact named; UNFINISHED-EDITS lists every file}

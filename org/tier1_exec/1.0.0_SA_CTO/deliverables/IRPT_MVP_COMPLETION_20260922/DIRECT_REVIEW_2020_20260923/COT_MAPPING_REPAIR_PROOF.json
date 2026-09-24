@@ -1,0 +1,24 @@
+{
+  "m_pin": "9b3fb2a8a27701d141fff97e47cf7658cb44bdfb",
+  "p_pin": "5765ea21a564cbbfd4eefaf8e84a44c13dbf94a2",
+  "source_revision_type": "str",
+  "source_provenance": {
+    "bucket": "opal-data-assets",
+    "key": "blackdiamond/cottonwood/silver/fact_model_assignment/date=2026-09-23/data.parquet",
+    "version_id": "ppIXtvdE7sscxrSR4VZ8ADJkBKtdxZIp",
+    "byte_length": 50441,
+    "sha256": "a560410f86e384c7c3157c8ec32b20ae9fb1a111e1acd2a1f73f26037049ecfe",
+    "source_date": "2026-09-23"
+  },
+  "requested_window": [
+    "2026-09-01",
+    "2026-09-22"
+  ],
+  "request_shapes": [
+    "performancePeriod",
+    "performanceSeries"
+  ],
+  "vendor_calls": 0,
+  "cloud_writes": 0,
+  "verdict": "PASS_ACTUAL_MAPPING_TO_REQUEST_CONSTRUCTION_ONLY"
+}

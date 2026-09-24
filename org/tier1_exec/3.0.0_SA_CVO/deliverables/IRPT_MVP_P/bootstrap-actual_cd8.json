@@ -1,0 +1,268 @@
+{
+  "request": {
+    "url": "/api/scoped/investor-reporting/directory/resolve",
+    "method": "POST",
+    "headers": {
+      "X-Contract-Version": "v1"
+    },
+    "body": "{\"firm_id\":null,\"client_id\":null,\"relationship_id\":null,\"account_ids\":[],\"entitlement_revision\":null}"
+  },
+  "cases": {
+    "advisor": {
+      "contract_version": "v1",
+      "operation": "resolve-scope",
+      "firm_id": "fir_c9fc04650e2134d6ea033da2",
+      "data": {
+        "ok": false,
+        "resolved_scope": {
+          "scope_kind": "UNSUPPORTED",
+          "scope_ids": []
+        },
+        "account_ids": [],
+        "account_count": 0,
+        "fingerprint": null,
+        "partial_reason": "selection matches nothing in the viewer's projection",
+        "provider_calls": 0
+      },
+      "unprojected_grant": {
+        "count": 0,
+        "denominator": 2,
+        "kinds": {}
+      }
+    },
+    "operations": {
+      "contract_version": "v1",
+      "operation": "resolve-scope",
+      "firm_id": "fir_c9fc04650e2134d6ea033da2",
+      "data": {
+        "ok": false,
+        "resolved_scope": {
+          "scope_kind": "UNSUPPORTED",
+          "scope_ids": []
+        },
+        "account_ids": [],
+        "account_count": 0,
+        "fingerprint": null,
+        "partial_reason": "selection matches nothing in the viewer's projection",
+        "provider_calls": 0
+      },
+      "unprojected_grant": {
+        "count": 0,
+        "denominator": 2,
+        "kinds": {}
+      }
+    },
+    "flat_account": {
+      "contract_version": "v1",
+      "operation": "resolve-scope",
+      "firm_id": "fir_c9fc04650e2134d6ea033da2",
+      "data": {
+        "ok": false,
+        "resolved_scope": {
+          "scope_kind": "UNSUPPORTED",
+          "scope_ids": []
+        },
+        "account_ids": [],
+        "account_count": 0,
+        "fingerprint": null,
+        "partial_reason": "selection matches nothing in the viewer's projection",
+        "provider_calls": 0
+      },
+      "unprojected_grant": {
+        "count": 0,
+        "denominator": 2,
+        "kinds": {}
+      }
+    },
+    "nested_diagnostic": {
+      "contract_version": "v1",
+      "operation": "resolve-scope",
+      "firm_id": "fir_c9fc04650e2134d6ea033da2",
+      "data": {
+        "ok": true,
+        "resolved_scope": {
+          "scope_kind": null,
+          "scope_ids": []
+        },
+        "account_ids": [
+          "acc_3b159acd1084e64e3e789fc5",
+          "acc_50da51dbd8cd9944d3544143"
+        ],
+        "account_count": 2,
+        "fingerprint": "fp_c91cfa79169bee65510325c16d82e4d0",
+        "entries": [
+          {
+            "entry_id": "ent_f5f3c1846e5cdb735a89",
+            "display_name": null,
+            "masked_discriminator": null,
+            "termination": null
+          }
+        ],
+        "requested_account_count": 2,
+        "permitted_account_count": 2,
+        "partial_reason": null,
+        "provider_calls": 0
+      },
+      "unprojected_grant": {
+        "count": 0,
+        "denominator": 2,
+        "kinds": {}
+      }
+    }
+  },
+  "negatives": {
+    "unverified_origin": {
+      "ok": false,
+      "contract_version": "v1",
+      "operation": "resolve-scope",
+      "status": {
+        "operation": {
+          "operation_id": "resolve-scope",
+          "operation_kind": "read",
+          "revision": "v1"
+        },
+        "state": "UNAVAILABLE",
+        "source_dates": {
+          "source_completion_date": null,
+          "business_date": "2026-09-22"
+        },
+        "actions": [
+          {
+            "action": "NONE",
+            "safe": true,
+            "description": "no retry or recovery action is offered for this outcome"
+          }
+        ],
+        "public_reason_code": "NOT_AUTHORIZED"
+      },
+      "firm_id": "fir_c9fc04650e2134d6ea033da2"
+    },
+    "missing_firm": {
+      "ok": false,
+      "contract_version": "v1",
+      "operation": "resolve-scope",
+      "status": {
+        "operation": {
+          "operation_id": "resolve-scope",
+          "operation_kind": "read",
+          "revision": "v1"
+        },
+        "state": "UNAVAILABLE",
+        "source_dates": {
+          "source_completion_date": null
+        },
+        "actions": [
+          {
+            "action": "NONE",
+            "safe": true,
+            "description": "no retry or recovery action is offered for this outcome"
+          }
+        ],
+        "public_reason_code": "NOT_AUTHORIZED"
+      }
+    },
+    "foreign_firm": {
+      "ok": false,
+      "contract_version": "v1",
+      "operation": "resolve-scope",
+      "status": {
+        "operation": {
+          "operation_id": "resolve-scope",
+          "operation_kind": "read",
+          "revision": "v1"
+        },
+        "state": "UNAVAILABLE",
+        "source_dates": {
+          "source_completion_date": null
+        },
+        "actions": [
+          {
+            "action": "NONE",
+            "safe": true,
+            "description": "no retry or recovery action is offered for this outcome"
+          }
+        ],
+        "public_reason_code": "FIRM_BINDING"
+      }
+    },
+    "unknown_advisor": {
+      "ok": false,
+      "contract_version": "v1",
+      "operation": "resolve-scope",
+      "status": {
+        "operation": {
+          "operation_id": "resolve-scope",
+          "operation_kind": "read",
+          "revision": "v1"
+        },
+        "state": "UNAVAILABLE",
+        "source_dates": {
+          "source_completion_date": null,
+          "business_date": "2026-09-22"
+        },
+        "actions": [
+          {
+            "action": "NONE",
+            "safe": true,
+            "description": "no retry or recovery action is offered for this outcome"
+          }
+        ],
+        "public_reason_code": "NOT_AUTHORIZED"
+      },
+      "firm_id": "fir_c9fc04650e2134d6ea033da2"
+    },
+    "wrong_version": {
+      "ok": false,
+      "contract_version": "v1",
+      "operation": "resolve-scope",
+      "status": {
+        "operation": {
+          "operation_id": "resolve-scope",
+          "operation_kind": "read",
+          "revision": "v1"
+        },
+        "state": "UNAVAILABLE",
+        "source_dates": {
+          "source_completion_date": null
+        },
+        "actions": [
+          {
+            "action": "NONE",
+            "safe": true,
+            "description": "no retry or recovery action is offered for this outcome"
+          }
+        ],
+        "public_reason_code": "CONTRACT_VERSION"
+      }
+    }
+  },
+  "selection_positive": {
+    "contract_version": "v1",
+    "operation": "selection-create",
+    "firm_id": "fir_c9fc04650e2134d6ea033da2",
+    "data": {
+      "schema_version": "selected-accounts-v1",
+      "firm_id": "49financial",
+      "account_ids": [
+        "acc_3b159acd1084e64e3e789fc5"
+      ],
+      "directory_revision": "187729b8d94fd4e95fab33d079e4515468ae5ccc306c33e381fba1ddedfcf8a2",
+      "account_set_id": "sel_ecd5b096e79795777120d59ced7147356d52959f5760c7a4828dce274bfbc5d0",
+      "selected_account_ids": [
+        "acc_3b159acd1084e64e3e789fc5"
+      ],
+      "selected_account_set_fingerprint": "86a731ba7285282d0a7c2303b5f06b99c3486e01d1987a84d8d5f4ccd2ee6414",
+      "permitted_account_set_fingerprint": "3159302f8e90b717ad4314120cba3bce014471589d92ae794cfa61ffda8b9fe0",
+      "entitlement_revision": "irpt-ent-fixture-1"
+    },
+    "unprojected_grant": {
+      "count": 0,
+      "denominator": 2,
+      "kinds": {}
+    }
+  },
+  "expected_accounts": [
+    "acc_3b159acd1084e64e3e789fc5",
+    "acc_50da51dbd8cd9944d3544143"
+  ]
+}

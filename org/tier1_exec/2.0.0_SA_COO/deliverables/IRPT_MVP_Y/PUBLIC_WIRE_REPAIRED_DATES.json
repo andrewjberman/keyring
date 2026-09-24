@@ -1,0 +1,162 @@
+{
+  "provenance": "Actual Entry and retained date derivation; synthetic input/report and offline storage; no live certification",
+  "cases": {
+    "undated": {
+      "contract_version": "v1",
+      "operation": "status-job",
+      "firm_id": "fir_c9fc04650e2134d6ea033da2",
+      "data": {
+        "operation": {
+          "operation_id": "REQ-edb604b066eeb6ba507947ef",
+          "operation_kind": "prospect_analysis",
+          "revision": "1"
+        },
+        "state": "READY",
+        "source_dates": {
+          "date_basis": "UNDATED_INPUT",
+          "prospect_analysis": {
+            "source_lane": "PROSPECT_ANALYSIS",
+            "input_id": "portfolio_2ec1ad0a9eea0141396d4350380e9c71ba892427dff991e93dc421307cee3fd3",
+            "content_sha256": "2ec1ad0a9eea0141396d4350380e9c71ba892427dff991e93dc421307cee3fd3",
+            "request_id": "REQ-edb604b066eeb6ba507947ef",
+            "request_revision": 1,
+            "report_id": "RPT-1c859bfec790a56a21a11b8a6514f1d9",
+            "report_revision": "78707eb02cbf30949e72ddadafd8cfdecbd4b3e7b253f4400d1306e04bc4a5c8",
+            "immutable": true
+          },
+          "section_dates": [
+            {
+              "section_id": "undated-one",
+              "as_of_date": null
+            }
+          ]
+        },
+        "actions": [],
+        "public_reason_code": "ANALYSIS_READY"
+      },
+      "unprojected_grant": {
+        "count": 0,
+        "denominator": 0,
+        "kinds": {}
+      }
+    },
+    "per_section": {
+      "contract_version": "v1",
+      "operation": "status-job",
+      "firm_id": "fir_c9fc04650e2134d6ea033da2",
+      "data": {
+        "operation": {
+          "operation_id": "REQ-edb604b066eeb6ba507947ef",
+          "operation_kind": "prospect_analysis",
+          "revision": "1"
+        },
+        "state": "READY",
+        "source_dates": {
+          "date_basis": "PER_SECTION",
+          "prospect_analysis": {
+            "source_lane": "PROSPECT_ANALYSIS",
+            "input_id": "portfolio_2ec1ad0a9eea0141396d4350380e9c71ba892427dff991e93dc421307cee3fd3",
+            "content_sha256": "2ec1ad0a9eea0141396d4350380e9c71ba892427dff991e93dc421307cee3fd3",
+            "request_id": "REQ-edb604b066eeb6ba507947ef",
+            "request_revision": 1,
+            "report_id": "RPT-1c859bfec790a56a21a11b8a6514f1d9",
+            "report_revision": "23bafea36dcd8dea49ee203ffe6b24cd83efe2f47c960f17836b811ab9e1c73c",
+            "immutable": true
+          },
+          "section_dates": [
+            {
+              "section_id": "dated-one",
+              "as_of_date": "2026-09-01"
+            },
+            {
+              "section_id": "dated-two",
+              "as_of_date": "2026-09-02"
+            },
+            {
+              "section_id": "undated-one",
+              "as_of_date": null
+            }
+          ]
+        },
+        "actions": [],
+        "public_reason_code": "ANALYSIS_READY"
+      },
+      "unprojected_grant": {
+        "count": 0,
+        "denominator": 0,
+        "kinds": {}
+      }
+    },
+    "single_date": {
+      "contract_version": "v1",
+      "operation": "status-job",
+      "firm_id": "fir_c9fc04650e2134d6ea033da2",
+      "data": {
+        "operation": {
+          "operation_id": "REQ-edb604b066eeb6ba507947ef",
+          "operation_kind": "analysis_generate",
+          "revision": "1"
+        },
+        "state": "READY",
+        "source_dates": {
+          "business_date": "2026-09-01"
+        },
+        "actions": [],
+        "public_reason_code": "ANALYSIS_READY"
+      },
+      "unprojected_grant": {
+        "count": 0,
+        "denominator": 0,
+        "kinds": {}
+      }
+    },
+    "old_consumer": {
+      "contract_version": "v1",
+      "operation": "status-job",
+      "firm_id": "fir_c9fc04650e2134d6ea033da2",
+      "data": {
+        "operation": {
+          "operation_id": "REQ-edb604b066eeb6ba507947ef",
+          "operation_kind": "analysis_generate",
+          "revision": "1"
+        },
+        "state": "UNAVAILABLE",
+        "source_dates": {},
+        "actions": [],
+        "public_reason_code": "ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE"
+      },
+      "unprojected_grant": {
+        "count": 0,
+        "denominator": 0,
+        "kinds": {}
+      }
+    },
+    "not_ready": {
+      "contract_version": "v1",
+      "operation": "status-job",
+      "firm_id": "fir_c9fc04650e2134d6ea033da2",
+      "data": {
+        "operation": {
+          "operation_id": "REQ-edb604b066eeb6ba507947ef",
+          "operation_kind": "analysis_generate",
+          "revision": "1"
+        },
+        "state": "RUNNING",
+        "source_dates": {},
+        "actions": [
+          {
+            "action": "WAIT",
+            "safe": true,
+            "description": "Check this request again later."
+          }
+        ],
+        "public_reason_code": "ANALYSIS_CERTIFYING"
+      },
+      "unprojected_grant": {
+        "count": 0,
+        "denominator": 0,
+        "kinds": {}
+      }
+    }
+  }
+}

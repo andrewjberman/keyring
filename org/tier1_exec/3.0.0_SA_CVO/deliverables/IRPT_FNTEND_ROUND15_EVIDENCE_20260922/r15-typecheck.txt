@@ -1,0 +1,7 @@
+bun.exe : $ tsc -b --noEmit
+At line:2 char:1
++ & C:/Users/AndrewBerman/.bun/bin/bun run typecheck *> ../.runtime/cod ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($...-b --noEmit:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

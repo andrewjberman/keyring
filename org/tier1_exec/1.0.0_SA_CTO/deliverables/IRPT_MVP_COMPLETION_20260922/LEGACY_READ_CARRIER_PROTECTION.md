@@ -1,0 +1,9 @@
+# Legacy-read carrier protection
+
+CTO implementation of LEGACY-READ-03 (`ec80b01ca4929ff9a23fd093d221dccb2fb1f826`). This is a protective narrowing of an existing standards-file permission, not a new self-grant. The only new path rule is the exact `org/standards/NAMING_LEGACY_READS.json`, resolved to `NAMING_LEGACY_READ_AUTHORITY`, enumerating `1.0.0_SA_CTO`. No active authority entry or naming-gate implementation is installed by this change.
+
+The canonical validator passes YAML validation and 98 agent controls; MSTR, COO/CVO/CRO base and enumerated suffixed seats are denied. Five real `--check-agent` CLI controls confirm CTO allow and representative MSTR/COO/CVO/CRO denials. Another 392 agent/path checks preserve neighboring-file behavior. Removing the one new lane and exact path yields a configuration object identical to the saved pre-change HEAD configuration. Full results: [evidence](LEGACY_READ_CARRIER_PROTECTION_EVIDENCE.json).
+
+The existing validator intentionally lets CTO suffixes inherit the base CTO role; this remains and was measured. This is CTO-role protection on an exact file, not exact-seat isolation. The existing task-order grant fallback and registry-owner ability to change `.owned-paths.yaml` are unchanged. No worker task-order grant is introduced, and no claim of tamper-proof authorization is made. These limits must remain visible during final mechanism review; do not describe this as denying every possible author other than the base serial.
+
+V3 naming candidate `a895780e068c4478fc6ea4136695a7e8d314787a` still awaits independent G review. MSTR's canonical approved specimen passed the naming limb but exited 1 at the separate ledger gate; that is not full safe-commit success. A final source repair still needs its ordinary successful canonical commit after a reviewed authority entry is installed. No activation, historical-cutoff unblock, live action or deployment follows from this protection alone.

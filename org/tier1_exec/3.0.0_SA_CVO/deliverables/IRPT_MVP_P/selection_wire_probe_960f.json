@@ -1,0 +1,37 @@
+{
+  "backend": "960f5f2a4501eff2670bcd0b5951926836093447",
+  "portal": "c09fea54e9f4613d44b874724e93b79c443f8cc8",
+  "snapshot": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-selection-960f-wubxl1xh",
+  "assertions": {
+    "selection_wire_cases_960f.py": "f93fc4a6c9f5024f751974c80bc540ad3ca494e0a3dc3ef18e54080f0efa71f7",
+    "selection_wire_cases_960f.test.ts": "2817019bbf8ece59a5c600effc3ba603b492f2c6312ac02a10824c9b9e4011b9"
+  },
+  "runs": [
+    {
+      "label": "independent_backend_selection",
+      "exit_code": 0,
+      "stdout": "....                                                                     [100%]\n4 passed in 0.53s\n",
+      "stderr": ""
+    },
+    {
+      "label": "supplied_backend_selection",
+      "exit_code": 0,
+      "stdout": "........                                                                 [100%]\n8 passed in 0.99s\n",
+      "stderr": ""
+    },
+    {
+      "label": "independent_fresh_selection_parser",
+      "exit_code": 0,
+      "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+      "stderr": "\u001b[0m\nreviewer-selection.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m fresh actual selection refusal remains a refusal\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m selection parser rejects reintroduced internal correlation\u001b[0m\n\n\u001b[0m\u001b[32m 2 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 4 expect() calls\nRan 2 tests across 1 file. \u001b[0m\u001b[2m[\u001b[1m531.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+    },
+    {
+      "label": "supplied_portal_selection",
+      "exit_code": 0,
+      "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+      "stderr": "\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\selection.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m POST preserves the requested group/subset and returns distinct server identity\u001b[0m \u001b[0m\u001b[2m[\u001b[1m15.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m actual partial-group refusal stays a public refusal with no data\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m rejects malformed selected identity instead of deriving it from the fingerprint\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m custody requests use the retained ID and never substitute the fingerprint\u001b[0m \u001b[0m\u001b[2m[\u001b[1m79.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m fixture mode refuses to invent durable selection records\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m canonical producer route table and all browser routes match\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m generator resolves local defs and refuses broken or cyclic references\u001b[0m\n\n\u001b[0m\u001b[32m 7 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 20 expect() calls\nRan 7 tests across 1 file. \u001b[0m\u001b[2m[\u001b[1m569.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+    }
+  ],
+  "capture_sha256": "5d70e64776c72e640959cc37b81e16f13a2e5386593cf7136494d5638f2c3bc1",
+  "limits": "Actual guarded directory Entry with supplied synthetic loaders/store and independent controls. No network, deployed package, real browser, vendor, export or full-product proof."
+}

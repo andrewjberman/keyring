@@ -1,0 +1,131 @@
+{
+  "ready": {
+    "state": [
+      {
+        "text": "Ready",
+        "weight": "700",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    ],
+    "qualifier": [],
+    "ground": [
+      {
+        "text": "ReadyBusiness date 2026-09-09REQUESTED_WINDOW_ANSWERED [code not defined by the v1 contract]",
+        "weight": "400",
+        "background": "rgb(255, 255, 255)"
+      }
+    ],
+    "wire": {
+      "matched": 3,
+      "total": 3,
+      "keys": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/holdings/",
+        "/api/scoped/investor-reporting/directory/resolve"
+      ]
+    }
+  },
+  "wrongGround": [
+    {
+      "text": "ReadyBusiness date 2026-09-09REQUESTED_WINDOW_ANSWERED [code not defined by the v1 contract]",
+      "weight": "400",
+      "background": "rgb(196, 203, 219)"
+    }
+  ],
+  "partial": {
+    "state": [
+      {
+        "text": "Partial",
+        "weight": "700",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    ],
+    "qualifier": [
+      {
+        "text": "Qualified answer -- not a complete report",
+        "weight": "400",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    ],
+    "ground": [
+      {
+        "text": "PartialQualified answer -- not a complete reportBusiness date 2026-09-09REQUESTED_WINDOW_ANSWERED [code not defined by the v1 contract]",
+        "weight": "400",
+        "background": "rgb(255, 255, 255)"
+      }
+    ],
+    "wire": {
+      "matched": 3,
+      "total": 3,
+      "keys": [
+        "/api/scoped/investor-reporting/performance/",
+        "/api/scoped/investor-reporting/directory/resolve",
+        "/api/scoped/investor-reporting/holdings/"
+      ]
+    }
+  },
+  "renderPrint": {
+    "url": "http://localhost:6020/investor-reporting/print?bundle=report-1&tenant=49financial&scope=scope-1&revision=revision-1&renderToken=e30.eyJhdWQiOiJpcnB0LXJlbmRlciIsInJvbGUiOiJyZW5kZXJlciIsImZpcm1JZCI6IjQ5ZmluYW5jaWFsIn0.synthetic",
+    "printStates": [
+      {
+        "state": "refused",
+        "text": "No document was produced: this report carries no answerThis report is Uncertain: it carries no answer, so no document is produced. Reason: The response carried no status stating its state, so its state is unknown.. Business date 2026-09-09.Report state: UncertainReason: The response carried no status stating its state, so its state is unknown.Business date 2026-09-09investor-reporting-render/1.0.0 | requested bundle report-1"
+      }
+    ],
+    "body": "No document was produced: this report carries no answer\n\nThis report is Uncertain: it carries no answer, so no document is produced. Reason: The response carried no status stating its state, so its state is unknown.. Business date 2026-09-09.\n\nReport state: Uncertain\n\nReason: The response carried no status stating its state, so its state is unknown.\n\nBusiness date 2026-09-09\n\ninvestor-reporting-render/1.0.0 | requested bundle report-1",
+    "wire": {
+      "matched": 1,
+      "total": 2,
+      "keys": [
+        "/api/scoped/investor-reporting/performance/"
+      ]
+    }
+  },
+  "noToken": {
+    "url": "http://localhost:6020/login",
+    "printStates": [],
+    "body": "Welcome back\n\nSign in to your account to continue\n\nEmail address\nPassword\nForgot password?\nSign in\n\n© 2026 Opal Capital. All rights reserved.",
+    "wire": {
+      "matched": 0,
+      "total": 2,
+      "keys": []
+    }
+  },
+  "renderNonPrint": {
+    "url": "http://localhost:6020/login",
+    "printStates": [],
+    "body": "Welcome back\n\nSign in to your account to continue\n\nEmail address\nPassword\nForgot password?\nSign in\n\n© 2026 Opal Capital. All rights reserved.",
+    "wire": {
+      "matched": 0,
+      "total": 2,
+      "keys": []
+    }
+  },
+  "humanAdmin": {
+    "url": "http://localhost:6020/investor-reporting/print?bundle=report-1&tenant=49financial&scope=scope-1&revision=revision-1",
+    "printStates": [
+      {
+        "state": "refused",
+        "text": "No document was produced: this report carries no answerThis report is Uncertain: it carries no answer, so no document is produced. Reason: The response carried no status stating its state, so its state is unknown.. Business date 2026-09-09.Report state: UncertainReason: The response carried no status stating its state, so its state is unknown.Business date 2026-09-09investor-reporting-render/1.0.0 | requested bundle report-1"
+      }
+    ],
+    "body": "No document was produced: this report carries no answer\n\nThis report is Uncertain: it carries no answer, so no document is produced. Reason: The response carried no status stating its state, so its state is unknown.. Business date 2026-09-09.\n\nReport state: Uncertain\n\nReason: The response carried no status stating its state, so its state is unknown.\n\nBusiness date 2026-09-09\n\ninvestor-reporting-render/1.0.0 | requested bundle report-1",
+    "wire": {
+      "matched": 1,
+      "total": 2,
+      "keys": [
+        "/api/scoped/investor-reporting/performance/"
+      ]
+    }
+  },
+  "humanAdvisor": {
+    "url": "http://localhost:6020/market",
+    "printStates": [],
+    "body": "INSIGHTS\nMarket Overview\nModel Portfolios\nAdvisor Intelligence\nANALYSIS\nPhilosophy\nPositioning\nValuations\nMacroeconomics\nTOOLS\nTrade Submission\nC\ncvo@test.invalid\nUser\nMARKET OVERVIEW\n\nDaily news and market performance across equity, fixed income, and commodities markets.\n\nTRENDING TOPICS\nBULLISH DRIVERS\n▶ Expand\nLoading trending topics\nBEARISH PRESSURES\n▶ Expand\nLoading trending topics\nSource: Financial news.\nTOP / BOTTOM PERFORMERS\nPeriod:\n1D\nWTD\nTTW\nMTD\n1M\nQTD\n1Q\nYTD\n1Y\nTOP PERFORMERS\n▶ Expand\nLoading index returns\nBOTTOM PERFORMERS\n▶ Expand\nLoading index returns\nSource: Bloomberg.\nDAILY CLOUD\n\nNo keywords are trending in the news feed yet.\n\nSource: Global news.\nGLOBAL RSI\nPeriod:\n90D\n1Y\n3Y\n90D\n90D\n90D\n0\n30\n50\n70\n100\nEquities\nFixed Income\nCommodities\nSource: Bloomberg.\nU.S. REGIME\nPeriod:\n90D\n1Y\n3Y\nLoading market regime\nSource: Bloomberg.\nFEAR & GREED\nFear\nGreed\n50\nNeutral\n• Click panel for detailed component breakdown\n•\n•\nSeptember 22nd, 2026, 2:32p ET|Source: CNN.\nMULTI-ASSET\nEQUITIES\nFIXED INCOME\nCOMMODITIES\nLoading market returns\nEquities",
+    "wire": {
+      "matched": 0,
+      "total": 2,
+      "keys": []
+    }
+  }
+}

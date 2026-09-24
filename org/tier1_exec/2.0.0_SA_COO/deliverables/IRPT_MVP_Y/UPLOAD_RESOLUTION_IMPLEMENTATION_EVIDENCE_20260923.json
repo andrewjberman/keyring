@@ -1,0 +1,567 @@
+{
+  "scope": "OFFLINE_SYNTHETIC_INTERFACE_EXAMPLES_NOT_RUNTIME_OR_LIVE_PROOF",
+  "source_pin": "6cfe01c3e238e9a90e88d3a501b25ac0eaf41540",
+  "base_pin": "1385a126e7d9bbc9b4fe211cc708a52a93ce64e6",
+  "paths": [
+    ".tools/irpt-ticker-check.py",
+    "infra/aws/lambda/investor-reporting/intake/portfolio.py",
+    "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py",
+    "infra/aws/lambda/investor-reporting/intake/security_resolution.py",
+    "infra/aws/lambda/investor-reporting/intake/template_reader.py",
+    "infra/aws/lambda/investor-reporting/intake/tests/test_resolution_kimi.py",
+    "infra/aws/lambda/investor-reporting/intake/tests/test_security_resolution.py",
+    "infra/aws/lambda/investor-reporting/intake/tests/test_template_reader.py",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resolution_retry.py",
+    "infra/aws/lambda/investor-reporting/ycharts/session/broker.py",
+    "infra/aws/lambda/investor-reporting/ycharts/session/controller.py",
+    "infra/aws/lambda/investor-reporting/ycharts/session/operation_lease.py",
+    "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_controller.py",
+    "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_operation_lease.py"
+  ],
+  "examples": {
+    "Dollars": {
+      "input_id": "portfolio_93472bab900c921eaa60cb297ad9f4ef102b995ba960612cfa219c67662d2db2",
+      "content_sha256": "93472bab900c921eaa60cb297ad9f4ef102b995ba960612cfa219c67662d2db2",
+      "document": {
+        "schema_version": "irpt-normalized-portfolio.v2",
+        "owner": {
+          "schema_version": "prospect-owner-v1",
+          "firm_id": "49financial",
+          "principal_id": "original-actor",
+          "advisor_id": "advisor",
+          "principal_class": "ADVISOR",
+          "ownership_fingerprint": "fixture"
+        },
+        "source": {
+          "lane": "TEMPLATE_UPLOAD",
+          "file_type": "csv",
+          "upload_id": "upload-1",
+          "content_sha256": "558df0809161c14b68233b684ea9ef7b5feca9d3ff8ae4bc062772d338cb3db6"
+        },
+        "template": {
+          "schema_version": "irpt-template.v2",
+          "file_type": "csv",
+          "content_sha256": "558df0809161c14b68233b684ea9ef7b5feca9d3ff8ae4bc062772d338cb3db6",
+          "sheet": null,
+          "headers": {
+            "A": {
+              "row": 1,
+              "column": "A",
+              "text": "Ticker",
+              "raw": "Ticker",
+              "formula": false,
+              "invalid": false
+            },
+            "B": {
+              "row": 1,
+              "column": "B",
+              "text": "Dollars",
+              "raw": "Dollars",
+              "formula": false,
+              "invalid": false
+            }
+          },
+          "basis": "USD",
+          "rows": [
+            {
+              "row": 2,
+              "symbol": "AAPL",
+              "amount": "10.01",
+              "basis": "USD",
+              "cells": {
+                "A": {
+                  "row": 2,
+                  "column": "A",
+                  "text": "AAPL",
+                  "raw": "AAPL",
+                  "formula": false,
+                  "invalid": false
+                },
+                "B": {
+                  "row": 2,
+                  "column": "B",
+                  "text": "10.01",
+                  "raw": "10.01",
+                  "formula": false,
+                  "invalid": false
+                }
+              }
+            }
+          ],
+          "findings": [],
+          "weight_reconciliation": null
+        },
+        "security_checks": {
+          "AAPL": {
+            "symbol": "AAPL",
+            "state": "FOUND",
+            "reason": "EXACT_PROVIDER_MATCH",
+            "candidates": [
+              {
+                "id": "AAPL",
+                "security_id": "AAPL",
+                "securitylist_security_id": "C12",
+                "security_name": "Offline fixture",
+                "detailed_security_type": "stock",
+                "features_needed": []
+              }
+            ],
+            "provider_receipt": {
+              "sha256": "5ee76de9979aafdf6121b568567c6476f320468d79867c9a5d91582467d5d7a9",
+              "account_id": "offline",
+              "source_revision": "fixture-v1",
+              "observed_at": "2026-09-23T18:24:51Z",
+              "requested": [
+                "AAPL"
+              ],
+              "returned": 1,
+              "complete": true
+            },
+            "resolution_action": "NONE"
+          }
+        },
+        "prices": {},
+        "options": {
+          "price_date": null,
+          "reference_notional": null
+        },
+        "basis": "USD",
+        "currency_evidence": {
+          "currency": "USD",
+          "basis": "DECLARED_TEMPLATE_CONTRACT"
+        },
+        "rows": [
+          {
+            "original": {
+              "row": 2,
+              "symbol": "AAPL",
+              "amount": "10.01",
+              "basis": "USD",
+              "cells": {
+                "A": {
+                  "row": 2,
+                  "column": "A",
+                  "text": "AAPL",
+                  "raw": "AAPL",
+                  "formula": false,
+                  "invalid": false
+                },
+                "B": {
+                  "row": 2,
+                  "column": "B",
+                  "text": "10.01",
+                  "raw": "10.01",
+                  "formula": false,
+                  "invalid": false
+                }
+              }
+            },
+            "security_id": "AAPL",
+            "analysis_dollars": "10.01",
+            "price": null,
+            "provider_receipt_sha256": "5ee76de9979aafdf6121b568567c6476f320468d79867c9a5d91582467d5d7a9"
+          }
+        ],
+        "findings": [],
+        "valuation_basis": "INPUT_VALUES",
+        "reference_notional": null,
+        "disclosures": {
+          "basis": "USD",
+          "reference_notional": null,
+          "weight_reconciliation": null,
+          "rounding_residual_dollars": null,
+          "corrections": [],
+          "publication_required": true
+        },
+        "holdings": {
+          "identity_kind": "YCHARTS_SECURITY",
+          "unit": "dollars",
+          "total_dollars": "10.01",
+          "rows": [
+            {
+              "security_id": "AAPL",
+              "dollars": "10.01"
+            }
+          ]
+        }
+      }
+    },
+    "Target Weight": {
+      "input_id": "portfolio_479a8be3dd38878e872412255ec0e605162e4f5e5835e0bf1706a19cd08a3f5b",
+      "content_sha256": "479a8be3dd38878e872412255ec0e605162e4f5e5835e0bf1706a19cd08a3f5b",
+      "document": {
+        "schema_version": "irpt-normalized-portfolio.v2",
+        "owner": {
+          "schema_version": "prospect-owner-v1",
+          "firm_id": "49financial",
+          "principal_id": "original-actor",
+          "advisor_id": "advisor",
+          "principal_class": "ADVISOR",
+          "ownership_fingerprint": "fixture"
+        },
+        "source": {
+          "lane": "TEMPLATE_UPLOAD",
+          "file_type": "csv",
+          "upload_id": "upload-1",
+          "content_sha256": "508e7e5bc8c35de8cf48d8cfb5ba14d5f099e13cd5bc46ff0c2ca6442edbead7"
+        },
+        "template": {
+          "schema_version": "irpt-template.v2",
+          "file_type": "csv",
+          "content_sha256": "508e7e5bc8c35de8cf48d8cfb5ba14d5f099e13cd5bc46ff0c2ca6442edbead7",
+          "sheet": null,
+          "headers": {
+            "A": {
+              "row": 1,
+              "column": "A",
+              "text": "Ticker",
+              "raw": "Ticker",
+              "formula": false,
+              "invalid": false
+            },
+            "B": {
+              "row": 1,
+              "column": "B",
+              "text": "Target Weight",
+              "raw": "Target Weight",
+              "formula": false,
+              "invalid": false
+            }
+          },
+          "basis": "TARGET_WEIGHT",
+          "rows": [
+            {
+              "row": 2,
+              "symbol": "AAPL",
+              "amount": "1",
+              "basis": "TARGET_WEIGHT",
+              "cells": {
+                "A": {
+                  "row": 2,
+                  "column": "A",
+                  "text": "AAPL",
+                  "raw": "AAPL",
+                  "formula": false,
+                  "invalid": false
+                },
+                "B": {
+                  "row": 2,
+                  "column": "B",
+                  "text": "1",
+                  "raw": "1",
+                  "formula": false,
+                  "invalid": false
+                }
+              }
+            }
+          ],
+          "findings": [],
+          "weight_reconciliation": {
+            "sum": "1",
+            "residual": "0",
+            "factor": "1",
+            "tolerance": "0.001",
+            "complete": true
+          }
+        },
+        "security_checks": {
+          "AAPL": {
+            "symbol": "AAPL",
+            "state": "FOUND",
+            "reason": "EXACT_PROVIDER_MATCH",
+            "candidates": [
+              {
+                "id": "AAPL",
+                "security_id": "AAPL",
+                "securitylist_security_id": "C12",
+                "security_name": "Offline fixture",
+                "detailed_security_type": "stock",
+                "features_needed": []
+              }
+            ],
+            "provider_receipt": {
+              "sha256": "5ee76de9979aafdf6121b568567c6476f320468d79867c9a5d91582467d5d7a9",
+              "account_id": "offline",
+              "source_revision": "fixture-v1",
+              "observed_at": "2026-09-23T18:24:51Z",
+              "requested": [
+                "AAPL"
+              ],
+              "returned": 1,
+              "complete": true
+            },
+            "resolution_action": "NONE"
+          }
+        },
+        "prices": {},
+        "options": {
+          "price_date": null,
+          "reference_notional": "100000"
+        },
+        "basis": "TARGET_WEIGHT",
+        "currency_evidence": {
+          "currency": "USD",
+          "basis": "DECLARED_TEMPLATE_CONTRACT"
+        },
+        "rows": [
+          {
+            "original": {
+              "row": 2,
+              "symbol": "AAPL",
+              "amount": "1",
+              "basis": "TARGET_WEIGHT",
+              "cells": {
+                "A": {
+                  "row": 2,
+                  "column": "A",
+                  "text": "AAPL",
+                  "raw": "AAPL",
+                  "formula": false,
+                  "invalid": false
+                },
+                "B": {
+                  "row": 2,
+                  "column": "B",
+                  "text": "1",
+                  "raw": "1",
+                  "formula": false,
+                  "invalid": false
+                }
+              }
+            },
+            "security_id": "AAPL",
+            "analysis_dollars": "100000",
+            "price": null,
+            "provider_receipt_sha256": "5ee76de9979aafdf6121b568567c6476f320468d79867c9a5d91582467d5d7a9"
+          }
+        ],
+        "findings": [],
+        "valuation_basis": "REFERENCE_NOTIONAL",
+        "reference_notional": "100000",
+        "disclosures": {
+          "basis": "TARGET_WEIGHT",
+          "reference_notional": "100000",
+          "weight_reconciliation": {
+            "sum": "1",
+            "residual": "0",
+            "factor": "1",
+            "tolerance": "0.001",
+            "complete": true
+          },
+          "rounding_residual_dollars": "0",
+          "corrections": [],
+          "publication_required": true
+        },
+        "holdings": {
+          "identity_kind": "YCHARTS_SECURITY",
+          "unit": "dollars",
+          "total_dollars": "100000",
+          "rows": [
+            {
+              "security_id": "AAPL",
+              "dollars": "100000"
+            }
+          ]
+        }
+      }
+    },
+    "Current Weight": {
+      "input_id": "portfolio_3c09b678a2efa124d4deb745b81a20207641b33a705192b654ac135d79d7ba72",
+      "content_sha256": "3c09b678a2efa124d4deb745b81a20207641b33a705192b654ac135d79d7ba72",
+      "document": {
+        "schema_version": "irpt-normalized-portfolio.v2",
+        "owner": {
+          "schema_version": "prospect-owner-v1",
+          "firm_id": "49financial",
+          "principal_id": "original-actor",
+          "advisor_id": "advisor",
+          "principal_class": "ADVISOR",
+          "ownership_fingerprint": "fixture"
+        },
+        "source": {
+          "lane": "TEMPLATE_UPLOAD",
+          "file_type": "csv",
+          "upload_id": "upload-1",
+          "content_sha256": "0baea0b4658d9db9d7ff591f5e4a88e259b1b6800285a85e02a4a2c70fdbfe62"
+        },
+        "template": {
+          "schema_version": "irpt-template.v2",
+          "file_type": "csv",
+          "content_sha256": "0baea0b4658d9db9d7ff591f5e4a88e259b1b6800285a85e02a4a2c70fdbfe62",
+          "sheet": null,
+          "headers": {
+            "A": {
+              "row": 1,
+              "column": "A",
+              "text": "Ticker",
+              "raw": "Ticker",
+              "formula": false,
+              "invalid": false
+            },
+            "B": {
+              "row": 1,
+              "column": "B",
+              "text": "Current Weight",
+              "raw": "Current Weight",
+              "formula": false,
+              "invalid": false
+            }
+          },
+          "basis": "CURRENT_WEIGHT",
+          "rows": [
+            {
+              "row": 2,
+              "symbol": "AAPL",
+              "amount": "1",
+              "basis": "CURRENT_WEIGHT",
+              "cells": {
+                "A": {
+                  "row": 2,
+                  "column": "A",
+                  "text": "AAPL",
+                  "raw": "AAPL",
+                  "formula": false,
+                  "invalid": false
+                },
+                "B": {
+                  "row": 2,
+                  "column": "B",
+                  "text": "1",
+                  "raw": "1",
+                  "formula": false,
+                  "invalid": false
+                }
+              }
+            }
+          ],
+          "findings": [],
+          "weight_reconciliation": {
+            "sum": "1",
+            "residual": "0",
+            "factor": "1",
+            "tolerance": "0.001",
+            "complete": true
+          }
+        },
+        "security_checks": {
+          "AAPL": {
+            "symbol": "AAPL",
+            "state": "FOUND",
+            "reason": "EXACT_PROVIDER_MATCH",
+            "candidates": [
+              {
+                "id": "AAPL",
+                "security_id": "AAPL",
+                "securitylist_security_id": "C12",
+                "security_name": "Offline fixture",
+                "detailed_security_type": "stock",
+                "features_needed": []
+              }
+            ],
+            "provider_receipt": {
+              "sha256": "5ee76de9979aafdf6121b568567c6476f320468d79867c9a5d91582467d5d7a9",
+              "account_id": "offline",
+              "source_revision": "fixture-v1",
+              "observed_at": "2026-09-23T18:24:51Z",
+              "requested": [
+                "AAPL"
+              ],
+              "returned": 1,
+              "complete": true
+            },
+            "resolution_action": "NONE"
+          }
+        },
+        "prices": {},
+        "options": {
+          "price_date": null,
+          "reference_notional": "100000"
+        },
+        "basis": "CURRENT_WEIGHT",
+        "currency_evidence": {
+          "currency": "USD",
+          "basis": "DECLARED_TEMPLATE_CONTRACT"
+        },
+        "rows": [
+          {
+            "original": {
+              "row": 2,
+              "symbol": "AAPL",
+              "amount": "1",
+              "basis": "CURRENT_WEIGHT",
+              "cells": {
+                "A": {
+                  "row": 2,
+                  "column": "A",
+                  "text": "AAPL",
+                  "raw": "AAPL",
+                  "formula": false,
+                  "invalid": false
+                },
+                "B": {
+                  "row": 2,
+                  "column": "B",
+                  "text": "1",
+                  "raw": "1",
+                  "formula": false,
+                  "invalid": false
+                }
+              }
+            },
+            "security_id": "AAPL",
+            "analysis_dollars": "100000",
+            "price": null,
+            "provider_receipt_sha256": "5ee76de9979aafdf6121b568567c6476f320468d79867c9a5d91582467d5d7a9"
+          }
+        ],
+        "findings": [],
+        "valuation_basis": "REFERENCE_NOTIONAL",
+        "reference_notional": "100000",
+        "disclosures": {
+          "basis": "CURRENT_WEIGHT",
+          "reference_notional": "100000",
+          "weight_reconciliation": {
+            "sum": "1",
+            "residual": "0",
+            "factor": "1",
+            "tolerance": "0.001",
+            "complete": true
+          },
+          "rounding_residual_dollars": "0",
+          "corrections": [],
+          "publication_required": true
+        },
+        "holdings": {
+          "identity_kind": "YCHARTS_SECURITY",
+          "unit": "dollars",
+          "total_dollars": "100000",
+          "rows": [
+            {
+              "security_id": "AAPL",
+              "dollars": "100000"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "checks": {
+    "intake": {
+      "passed": 164,
+      "subtests_passed": 18
+    },
+    "generation": {
+      "passed": 236,
+      "subtests_passed": 32
+    },
+    "new_session": {
+      "passed": 35
+    },
+    "existing_session_suite": "rotation/eviction/controls/netguard_positive_control all true"
+  },
+  "capture_fixture": {
+    "pin": "d7d044ba7a",
+    "sha256": "dc04aac45bf064a3f3909d7db29121cb976c3c7943ccf4d663eab98654d06c7f"
+  }
+}

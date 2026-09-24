@@ -1,0 +1,56 @@
+﻿[
+    {
+        "surface":  "lib/research/price",
+        "since":  "4756dde175",
+        "through":  "30102a6905",
+        "authors":  [
+                        "2.0.0_SA_COO_Y"
+                    ],
+        "distinct_authors":  1
+    },
+    {
+        "surface":  "lib/research/api",
+        "since":  "4756dde175",
+        "through":  "30102a6905",
+        "authors":  [
+                        "2.0.0_SA_COO~Z"
+                    ],
+        "distinct_authors":  1
+    },
+    {
+        "surface":  "lib/research/corpus",
+        "since":  "4756dde175",
+        "through":  "30102a6905",
+        "authors":  [
+                        "2.0.0_SA_COO_X"
+                    ],
+        "distinct_authors":  1
+    },
+    {
+        "surface":  "lib/research/metrics",
+        "since":  "4756dde175",
+        "through":  "30102a6905",
+        "authors":  [
+                        "2.0.0_SA_COO_Y"
+                    ],
+        "distinct_authors":  1
+    },
+    {
+        "surface":  "lib/research/coverage",
+        "since":  "4756dde175",
+        "through":  "30102a6905",
+        "authors":  [
+                        "2.0.0_SA_COO_Y"
+                    ],
+        "distinct_authors":  1
+    },
+    {
+        "surface":  "lib/opal_data_harvest",
+        "since":  "4756dde175",
+        "through":  "30102a6905",
+        "authors":  [
+                        "2.0.0_SA_COO_Y"
+                    ],
+        "distinct_authors":  1
+    }
+]

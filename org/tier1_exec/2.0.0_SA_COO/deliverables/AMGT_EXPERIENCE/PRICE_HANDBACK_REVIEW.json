@@ -1,0 +1,15 @@
+{
+  "candidate_pin": "1b6cd9d4e026570ad3fccb7f7fa89719a0f8164e",
+  "price_patch_sha256": "c823c390ba2896fe4c472b3d4a03b0a32fb439f475fa9c4f498f97d03dab65ce",
+  "matches_frozen_blob": true,
+  "external_clients_forbidden": true,
+  "controls_passed": [
+    "retained scored members publish explicit COMPLETE",
+    "absent retained members preserve all prior bytes and add only failure markers",
+    "crossed dry-run reports failure with nonzero exit",
+    "crossed pointer failure clears draft pointers and preserves prior bytes",
+    "legacy CLI handles nullable failed pointers without replacing prior data"
+  ],
+  "live_acceptance": "NOT_EVALUATED",
+  "deployment": "NOT_PERFORMED"
+}

@@ -58,6 +58,7 @@ from __future__ import annotations
 import argparse
 import ast
 import datetime
+import hashlib
 import importlib.machinery
 import importlib.util
 import json
@@ -95,6 +96,14 @@ RECORD_TREE_PREFIXES = ("org/", "docs/")
 # a run directory that already exists (`:48`), so the name is minted once by the engine and never reused.
 RUN_ARTIFACT_RE = re.compile(r"^workflows/[^/]+/[^/]+/[0-9]{8}T[0-9]{6}Z-[0-9a-f]{7,40}/")
 BUILDERS = {"key", "address", "name", "lookup"}
+# IRPT-M-LEGACY-READ-02 (1.0.0_SA_CTO @79f316834d, under Andrew's ecf350639a delegation; implementer
+# 0.0.0_AB_MSTR per LD-0602/LD-0605). The carrier for the per-case LEGACY-READ waiver. It is consumed
+# in EXACTLY ONE place -- judge()'s EXISTING-under-live-remediation branch -- and nowhere else.
+LEGACY_READS_REL = "org/standards/NAMING_LEGACY_READS.json"
+LEGACY_READS_FILE = os.path.join(REPO, *LEGACY_READS_REL.split("/"))
+LEGACY_READ_FIELDS = ("id", "file", "literal", "remediation", "purpose", "authority",
+                      "as_of_cutoff", "owner", "read_context")
+SITE_FIELDS = ("helper", "helper_body_sha256", "arg_index", "enclosing_function", "bucket_arg", "occurrences")
 NAMING_MODULE_NAMES = {"opal_naming"}
 # A call whose string argument is a numeric spelling, never a name: float("inf") is not the firm inf.
 EXEMPT_CALLS = {"float"}
@@ -408,9 +417,17 @@ def js_literals(src, added):
 def tf_literals(src, added):
     """Terraform string literals on added lines, each with its block context: a label is marked, a string in a
     module block whose source is the opal_name module is permitted, and a resource's own-name attribute gives
-    the node type as the hint."""
+    the node type as the hint.
+
+    THE HCL LOOKUP CONTEXT (2026-09-23, 0.0.0_AB_MSTR, on 1.0.0_SA_CTO's 22:29Z routing of P's retained.tf):
+    the Python side permits a literal inside a lookup() call (BUILDERS); this is its Terraform twin. A literal
+    is permitted when it is the key of `lookup(local.X, "<key>")` or of `local.X["<key>"]` AND local.X is fed,
+    in the same file, from jsondecode(file(".../logic/registry/<name>.json")) -- the canonical registry the
+    Python lookup() reads. A local fed from a hand-typed map, or a lookup over anything else, stays graded:
+    the same rule as the Python branch, no new permission class."""
     toks = scan(src, "tf")
     blocks, stmt, attr, bracket, out = [], [], None, 0, []
+    registry_locals, ctxs = set(), []
     for kind, v, raw, ln in toks:
         if kind == "nl":
             if bracket == 0:
@@ -450,17 +467,33 @@ def tf_literals(src, added):
             continue
         lit = Lit(v, raw, ln)
         lit.block = list(blocks)
+        ctxs.append((lit, [(k, x if k != "lit" else None) for k, x in stmt[-5:]]))
         stmt.append(("lit", lit))
         inner = blocks[-1] if blocks else None
         if inner and inner.get("block") and inner.get("kind") == "module" and attr == "source" and "opal_name" in v:
             inner["opal"] = True
+        if _TF_REGISTRY_FILE.search(v) and any(b.get("block") and b.get("kind") == "locals" for b in blocks):
+            local_name = inner.get("map_attr") if inner and not inner.get("block") else attr
+            if local_name:
+                registry_locals.add(local_name)
         lit.hint = _tf_hint(blocks, attr)
         if ln in added:
             out.append(lit)
     for lit in out:
         if any(b.get("block") and b.get("kind") == "module" and b.get("opal") for b in lit.block):
             lit.permitted = True
+    for lit, ctx in ctxs:
+        if lit.permitted or lit not in out:
+            continue
+        if (len(ctx) >= 5 and ctx[-5:-1] == [("word", "lookup"), ("sym", "("), ("word", "local"), ("word", ctx[-2][1])]
+                and ctx[-1] == ("sym", ",") and ctx[-2][1] in registry_locals):
+            lit.permitted = True  # lookup(local.X, "<key>") over a registry-fed local
+        elif len(ctx) >= 3 and ctx[-3] == ("word", "local") and ctx[-1] == ("sym", "[") and ctx[-2][1] in registry_locals:
+            lit.permitted = True  # local.X["<key>"] over a registry-fed local
     return [lit for lit in out if not lit.label]
+
+
+_TF_REGISTRY_FILE = re.compile(r"(^|/)logic/registry/[A-Za-z0-9_.-]+\.json$")
 
 
 def _tf_hint(blocks, attr):
@@ -746,6 +779,58 @@ def _resolves_to_tracked(value):
     return ok
 
 
+_CARRIED_CACHE = {}
+
+
+def _carried_at_head(value, path):
+    """The first DECLARATION-TREE file at HEAD, other than `path`, that carries `value` byte for byte (fixed
+    string); '' when none. One git grep per distinct value, cached for the run.
+
+    Declaration tree only (LD-0611-ARM-01, 1.0.0_SA_CTO 99852): a hit under a record tree (org/**, docs/**, a
+    minted run directory) or in a file the gate does not grade is NOT a carrier. A key first typed into a
+    ledger, a message record or a log must not make its later copy in code read EXISTING -- and the ledger
+    naming this rule's own negative arm made that arm vacuous one commit after it was measured."""
+    if not value or len(value) < 4:
+        return ""
+    if value not in _CARRIED_CACHE:
+        rc, out, _err = git("grep", "-l", "-F", "--", value, "HEAD")
+        hits = []
+        if rc == 0:
+            for line in text_of(out).splitlines():
+                hit = line.split(":", 1)[1] if line.startswith("HEAD:") else line
+                if (hit and hit != path and not _is_record_tree(hit) and hit.endswith(GRADED_EXT)
+                        and hit != ".tools/naming-gate.py" and "/tests/" not in "/" + hit):
+                    hits.append(hit)  # never the gate's own bytes or a fixture under */tests/*
+        _CARRIED_CACHE[value] = sorted(hits)
+    hits = [h for h in _CARRIED_CACHE[value] if h != path]
+    return hits[0] if hits else ""
+
+
+def _packaged_citations(post_text):
+    """The `packaged_as` names of a packaging manifest whose `repo_path` resolves to a tracked file at HEAD
+    (2026-09-23, 0.0.0_AB_MSTR, on 2.0.0_SA_COO~P 99805: lambda-source-map.json rows such as
+    {"repo_path": ".../performance/bd_live.py", "packaged_as": "bd_live.py"} and the member lists that
+    repeat those names). The packaged name is the in-zip spelling of a file already committed under its
+    repo_path, so it is the same citation R-11 already recognises for the repo_path itself -- renaming it
+    would break the module's imports and mints nothing. A row whose repo_path does NOT resolve cites nothing,
+    and its packaged_as stays graded. Any other JSON string is unaffected."""
+    try:
+        doc = json.loads(post_text)
+    except ValueError:
+        return set()
+    out, stack = set(), [doc]
+    while stack:
+        node = stack.pop()
+        if isinstance(node, dict):
+            rp, pk = node.get("repo_path"), node.get("packaged_as")
+            if isinstance(rp, str) and isinstance(pk, str) and _resolves_to_tracked(rp):
+                out.add(pk)
+            stack.extend(node.values())
+        elif isinstance(node, list):
+            stack.extend(node)
+    return out
+
+
 _GITATTR_BINARY_TOKENS = ("binary", "-diff")
 
 
@@ -821,8 +906,383 @@ def domain_meta(files):
     ]
 
 
+# --------------------------------------------------------------------------- the LEGACY-READ waiver
+# IRPT-M-LEGACY-READ-02's N2 refinement, verbatim: "a write-verb denylist is insufficient. Positively
+# recognize the exact authorized read use and its relevant call/helper context; unknown, indirect or
+# ambiguous use remains REFUSE."
+#
+# SO THIS RECOGNIZER IS AN ALLOWLIST OF SYNTAX, NOT A DENYLIST OF VERBS. It authorizes a literal only
+# when EVERY occurrence of that exact string in the post-image is a DIRECT argument of a call to a
+# NAMED helper the carrier declares, AND each declared helper's body still hashes to the bytes the
+# carrier was approved against. Anything else -- an assignment to a variable, an f-string, a method
+# call, a helper reached through an alias, one extra occurrence anywhere in the file -- leaves the
+# REFUSE standing.
+#
+# WHAT IT DOES NOT CLAIM, stated because the ruling explicitly declines to require it: this is not
+# Python dataflow analysis and proves nothing about what a helper does at runtime. It proves that the
+# literal reaches only the helpers named at approval time and that those helpers' SOURCE HAS NOT
+# CHANGED. A helper edited to write fails the hash and the waiver disappears -- which is the property
+# the ruling asks for ("a changed read helper that now writes"), obtained without dataflow.
+def _norm_body(src):
+    return "\n".join(ln.rstrip() for ln in src.replace("\r\n", "\n").split("\n")).strip()
+
+
+FULL_PIN_RE = re.compile(r"^[0-9a-f]{40}$")
+
+
+def _binds_of(node, name):
+    """EVERY binding of `name` under `node`, by ANY construct -- [(kind, ast node)].
+
+    NOTE: COUNTING ast.Assign IS NOT COUNTING BINDINGS, and 1.0.0_SA_CTO's review of candidate ec40acbf
+    broke the first version of this recognizer on exactly that gap: a `for bucket in ...` rebinds the
+    name without ever producing an Assign, so a simple-assignment census reads "bound once" on a
+    name the loop reassigns on every iteration. The same hole admits a walrus, a with-as, an
+    except-as, a comprehension target, an import alias, a parameter and a del.
+    NOTE: So this enumerates the binding FORMS Python has, and anything it does not recognise is not
+    silently permitted -- the callers require an exact count and refuse otherwise.
+    """
+    out = []
+    for n in ast.walk(node):
+        if isinstance(n, ast.Assign):
+            for t in n.targets:
+                out += [("assign", n) for x in ast.walk(t)
+                        if isinstance(x, ast.Name) and x.id == name and isinstance(x.ctx, ast.Store)]
+        elif isinstance(n, (ast.AnnAssign, ast.AugAssign)):
+            t = n.target
+            if isinstance(t, ast.Name) and t.id == name:
+                out.append(("annassign" if isinstance(n, ast.AnnAssign) else "augassign", n))
+        elif isinstance(n, ast.NamedExpr):
+            if isinstance(n.target, ast.Name) and n.target.id == name:
+                out.append(("walrus", n))
+        elif isinstance(n, (ast.For, ast.AsyncFor)):
+            out += [("for-target", n) for x in ast.walk(n.target)
+                    if isinstance(x, ast.Name) and x.id == name]
+        elif isinstance(n, (ast.With, ast.AsyncWith)):
+            for item in n.items:
+                if item.optional_vars is not None:
+                    out += [("with-as", n) for x in ast.walk(item.optional_vars)
+                            if isinstance(x, ast.Name) and x.id == name]
+        elif isinstance(n, ast.ExceptHandler):
+            if n.name == name:
+                out.append(("except-as", n))
+        elif isinstance(n, (ast.comprehension,)):
+            out += [("comprehension", n) for x in ast.walk(n.target)
+                    if isinstance(x, ast.Name) and x.id == name]
+        elif isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            if n.name == name:
+                out.append(("def", n))
+        elif isinstance(n, (ast.Import, ast.ImportFrom)):
+            for a in n.names:
+                if (a.asname or a.name.split(".")[0]) == name:
+                    out.append(("import", n))
+        elif isinstance(n, (ast.Global, ast.Nonlocal)):
+            if name in n.names:
+                out.append(("global/nonlocal", n))
+        elif isinstance(n, ast.Delete):
+            out += [("del", n) for t in n.targets for x in ast.walk(t)
+                    if isinstance(x, ast.Name) and x.id == name]
+        # NOTE: A match/case PATTERN BINDS THROUGH A PLAIN STRING FIELD, NOT AN ast.Name. MatchAs and
+        # MatchStar carry `name`, and MatchMapping carries `rest`; none of them is a Name node, so a
+        # census built on Name/Store walks straight past them. 1.0.0_SA_CTO defeated the previous
+        # version three ways on exactly this (`case bucket:`, `case _latest_date_partition:`,
+        # `case {**bucket}:`). This is ordinary syntactic binding, not the accepted dataflow limit.
+        # Guarded by getattr because these node types do not exist before Python 3.10 and this file
+        # is linted at py39.
+        for attr, field in (("MatchAs", "name"), ("MatchStar", "name"), ("MatchMapping", "rest")):
+            node_type = getattr(ast, attr, None)
+            if node_type is not None and isinstance(n, node_type) and getattr(n, field, None) == name:
+                out.append(("match-pattern", n))
+        # NOTE: EVERY ast.arguments UNDER THE SCOPE IS A BINDING SITE -- a nested def, an async def and a
+        # lambda all bind their parameter names, and 2.0.0_SA_COO~G's G-1 defeated the previous
+        # version on exactly that: `def _probe(bucket): return <approved call>` then
+        # `_probe("any-other-bucket")` read as "bucket bound once" while the call could reach ANY
+        # bucket through the one approved literal. Counting only Lambda params, and only the
+        # enclosing function's own params, left nested defs invisible.
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+            kind = "lambda-param" if isinstance(n, ast.Lambda) else "nested-param"
+            if name in _params_of(n):
+                out.append((kind, n))
+    return out
+
+
+def _params_of(fn):
+    a = fn.args
+    named = list(a.posonlyargs) + list(a.args) + list(a.kwonlyargs)
+    named += [x for x in (a.vararg, a.kwarg) if x is not None]
+    return {x.arg for x in named}
+
+
+def _decorated(node):
+    return bool(getattr(node, "decorator_list", []))
+
+
+def authority_ok(auth, entry_id):
+    """(True, note) only when the pin RESOLVES and the pinned record CONTAINS this entry's ruling id.
+
+    NOTE: "authority prose alone is not a grant" (IRPT-M-LEGACY-READ-02/03), made mechanical. A record
+    path and a ruling id are just strings until something reads the object they name -- so the gate
+    reads it: a FULL 40-hex pin (an abbreviation can become ambiguous as the repo grows), the blob at
+    that pin, and the ruling id present in those bytes. Anything else refuses the ENTRY, not the file.
+    """
+    if not isinstance(auth, dict):
+        return False, "authority is not an object"
+    record, pin = auth.get("record"), auth.get("pin")
+    if not isinstance(record, str) or not isinstance(pin, str):
+        return False, "authority needs a record path and a full pin"
+    if not FULL_PIN_RE.match(pin):
+        return False, "authority pin %r is not a full 40-hex commit id" % pin
+    rc, _out, _err = git("cat-file", "-e", "%s^{commit}" % pin)
+    if rc != 0:
+        return False, "authority pin %s does not resolve to a commit in this repository" % pin[:12]
+    rc, out, _err = git("show", "%s:%s" % (pin, record))
+    if rc != 0:
+        return False, "%s is not present at pin %s" % (record, pin[:12])
+    if not isinstance(entry_id, str) or not entry_id:
+        return False, "entry has no id to look for"
+    # NOTE: WORD-BOUNDED, NEVER A SUBSTRING. 2.0.0_SA_COO~G's G-4: an unanchored match let the ids
+    # "LEGACY" and "IRPT-M-LEGACY-READ-0" both resolve against the real record, so a truncated or
+    # deliberately shortened id would have been accepted as the authority for the full one.
+    if not re.search(r"(?<![0-9A-Za-z_-])%s(?![0-9A-Za-z_-])" % re.escape(entry_id), text_of(out)):
+        return False, ("the record at pin %s does not contain the ruling id %r as a whole token"
+                       % (pin[:12], entry_id))
+    return True, "pin %s resolves and its %s carries %s" % (pin[:12], record.rsplit("/", 1)[-1], entry_id)
+
+
+def load_legacy_reads():
+    """[(entry, None)] for usable entries, [(raw, reason)] for refused ones. Never raises.
+
+    NOTE: THE CARRIER IS READ FROM COMMITTED HEAD, NEVER FROM DISK OR THE INDEX (2.0.0_SA_COO~G's
+    pre-review, adopted as IRPT-M-LEGACY-READ-03). Reading it from the worktree would let the very
+    commit being graded carry the entry that authorizes it -- a SELF-GRANT, and the gate would have
+    no way to see it. Reading HEAD forces an entry to land in an earlier, separately reviewed commit.
+    """
+    rc, out, _err = git("show", "HEAD:%s" % LEGACY_READS_REL)
+    if rc != 0:
+        return [], []  # absent at HEAD: no waiver anywhere, which is the safe default
+    try:
+        doc = json.loads(text_of(out))
+    except ValueError as exc:
+        return [], [(None, "carrier at HEAD unreadable (%s): no waiver" % type(exc).__name__)]
+    if not isinstance(doc, dict) or not isinstance(doc.get("entries"), list):
+        return [], [(None, "carrier malformed (no entries list): no waiver")]
+    good, bad, keys = [], [], {}
+    # NOTE: AMBIGUITY IS COUNTED ON THE RAW ENTRIES, BEFORE ANY VALIDITY FILTER. The first version
+    # counted duplicates only among entries that had already passed validation, so a VALID entry
+    # beside a MALFORMED twin for the same file+literal left exactly one usable entry -- the
+    # malformed one was discarded and its ambiguity with it. 1.0.0_SA_CTO's LR-02 broke ec40acbf on
+    # precisely that. Two records claiming the same key is ambiguous whatever either one says.
+    raw_keys = {}
+    for raw in doc["entries"]:
+        if isinstance(raw, dict) and isinstance(raw.get("file"), str) and isinstance(raw.get("literal"), str):
+            raw_keys.setdefault((raw["file"], raw["literal"]), 0)
+            raw_keys[(raw["file"], raw["literal"])] += 1
+    raw_dup = {k for k, n in raw_keys.items() if n > 1}
+    for raw in doc["entries"]:
+        if not isinstance(raw, dict):
+            bad.append((raw, "entry is not an object"))
+            continue
+        missing = [f for f in LEGACY_READ_FIELDS if f not in raw]
+        extra = [k for k in raw if k not in LEGACY_READ_FIELDS]
+        if missing or extra:
+            bad.append((raw, "entry %r malformed (missing %s, unknown %s)"
+                        % (raw.get("id"), missing or "-", extra or "-")))
+            continue
+        rc = raw.get("read_context")
+        if not isinstance(rc, dict) or sorted(rc) != sorted(SITE_FIELDS):
+            bad.append((raw, "entry %r read_context is not exactly %s" % (raw.get("id"), list(SITE_FIELDS))))
+            continue
+        ba = rc.get("bucket_arg")
+        if (not isinstance(rc.get("helper"), str) or not isinstance(rc.get("helper_body_sha256"), str)
+                or not isinstance(rc.get("arg_index"), int) or isinstance(rc.get("arg_index"), bool)
+                or not isinstance(rc.get("enclosing_function"), str)
+                or not isinstance(rc.get("occurrences"), int) or isinstance(rc.get("occurrences"), bool)
+                or not isinstance(ba, dict) or sorted(ba) != ["name", "value"]
+                or not isinstance(ba.get("name"), str) or not isinstance(ba.get("value"), str)):
+            bad.append((raw, "entry %r read_context is malformed" % raw.get("id")))
+            continue
+        ok_auth, why_auth = authority_ok(raw.get("authority"), raw.get("id"))
+        if not ok_auth:
+            bad.append((raw, "entry %r authority refused: %s" % (raw.get("id"), why_auth)))
+            continue
+        keys.setdefault((raw["file"], raw["literal"]), []).append(raw)
+        good.append(raw)
+    # A DUPLICATE AUTHORITY IS AMBIGUOUS, AND AMBIGUOUS IS REFUSE: both copies are dropped, never
+    # resolved by order, because "the first one wins" is a rule nobody wrote down.
+    dup = {k for k, v in keys.items() if len(v) > 1} | raw_dup
+    if dup:
+        good = [e for e in good if (e["file"], e["literal"]) not in dup]
+        # keep the file+literal on the refusal so the denial reason can reach the verdict line
+        bad += [({"file": dup_file, "literal": dup_lit},
+                 "duplicate authority for this file and literal: both entries dropped, ambiguity is never"
+                 " resolved by order") for (dup_file, dup_lit) in sorted(dup)]
+    return good, bad
+
+
+def _expired(entry, now):
+    """True when the waiver is not in force. The cutoff date is INCLUSIVE; it dies at 00:00:00Z the next day."""
+    try:
+        day = datetime.datetime.strptime(str(entry["as_of_cutoff"]), "%Y-%m-%d").replace(
+            tzinfo=datetime.timezone.utc)
+    except (ValueError, TypeError):
+        return True  # an unparseable cutoff is an expired cutoff, never an open one
+    return now >= day + datetime.timedelta(days=1)
+
+
+def legacy_read_ok(entry, post_text):
+    """(True, note) only for the ONE approved call site, with the approved bucket and an unchanged helper.
+
+    NOTE: THIS IS AN ALLOWLIST OF ONE SITE, not a read/write classifier. Six conditions, every one of
+    which must hold; each is also one of the ruling's named refusals:
+      1. the whole literal occurs EXACTLY the approved number of times in the post-image
+         -> a new duplicate occurrence anywhere refuses
+      2. that occurrence is a POSITIONAL argument at the approved index of a direct Call to the
+         approved helper NAME -> an alias, a method call, a keyword form or a variable refuses
+      3. the call sits lexically inside the approved enclosing function -> the same call moved
+         elsewhere refuses
+      4. the bucket argument is the approved NAME, assigned EXACTLY ONCE inside that function, to the
+         approved constant -> a second assignment, a parameter or a computed bucket refuses
+      5. the helper is defined in this file and its normalized source hashes to the REVIEWED bytes
+         -> a helper edited to write refuses, and the approved edit in the candidate is what was hashed
+      6. anything unparseable or unfound refuses
+    NOTE: An ALTERNATE read helper is NOT authorized: _read_parquet reading the same key refuses, because
+    the grant is this site, not this string.
+    """
+    try:
+        tree = ast.parse(post_text)
+    except SyntaxError as exc:
+        return False, "post-image does not parse (%s)" % exc.__class__.__name__
+    want = entry["literal"]
+    rc = entry["read_context"]
+    helper, want_sha = rc["helper"], rc["helper_body_sha256"]
+    idx, encl = rc["arg_index"], rc["enclosing_function"]
+    bname, bvalue = rc["bucket_arg"]["name"], rc["bucket_arg"]["value"]
+
+    total = sum(1 for n in ast.walk(tree)
+                if isinstance(n, ast.Constant) and isinstance(n.value, str) and n.value == want)
+    if total != rc["occurrences"]:
+        return False, ("the whole literal occurs %d time(s), approved %d: a moved or duplicated"
+                       " occurrence is not authorized" % (total, rc["occurrences"]))
+
+    encl_binds = _binds_of(tree, encl)
+    if len(encl_binds) != 1 or encl_binds[0][0] != "def":
+        return False, ("the enclosing name %r is bound %d time(s) in this module (%s), approved exactly one"
+                       " function definition" % (encl, len(encl_binds), ", ".join(k for k, _ in encl_binds) or "none"))
+    fn = encl_binds[0][1]
+    if not isinstance(fn, ast.FunctionDef):
+        return False, "the enclosing name %r is not a plain function definition" % encl
+
+    # NOTE: THE HELPER NAME MUST BE BOUND EXACTLY ONCE IN THE WHOLE MODULE, AND THAT BINDING MUST BE THE
+    # DEF WE HASH. A second def wins at runtime (Python binds the LAST one) while a naive first-match
+    # hashes the FIRST -- so the reviewed bytes and the called bytes can differ with nothing to see.
+    # A local rebinding inside the enclosing function defeats the hash the same way.
+    hbinds = _binds_of(tree, helper)
+    if len(hbinds) != 1 or hbinds[0][0] != "def":
+        return False, ("the read helper name %r is bound %d time(s) in this module (%s), approved exactly one"
+                       " function definition" % (helper, len(hbinds), ", ".join(k for k, _ in hbinds) or "none"))
+    hdef = hbinds[0][1]
+    if not isinstance(hdef, ast.FunctionDef):
+        return False, "the read helper name %r is not a plain function definition" % helper
+    if helper in _params_of(fn) or any(k != "def" for k, _ in _binds_of(fn, helper)):
+        return False, "the read helper name %r is rebound inside %s" % (helper, encl)
+    # NOTE: A DECORATOR IS OUTSIDE THE HASHED BYTES. ast.get_source_segment(FunctionDef) starts at `def`,
+    # so decorator_list never reaches the hash -- and a decorator can replace the helper outright or
+    # make it write, with the reviewed hash unchanged (G-2/G-3). Both the helper and the enclosing
+    # function must therefore be undecorated; this is a refusal, not an attempt to hash decorators,
+    # because "which decorators are safe" is a judgment no gate should be making.
+    if _decorated(hdef):
+        return False, "the read helper %r carries a decorator, which is outside the reviewed bytes" % helper
+    if _decorated(fn):
+        return False, "%s carries a decorator, which is outside the reviewed bytes" % encl
+    seg = ast.get_source_segment(post_text, hdef)
+    if seg is None:
+        return False, "cannot read the source of helper %r" % helper
+    got = hashlib.sha256(_norm_body(seg).encode("utf-8")).hexdigest()
+    if got != want_sha:
+        return False, ("read helper %r is not the REVIEWED text (sha256 %s, approved %s)"
+                       % (helper, got[:12], str(want_sha)[:12]))
+
+    # the bucket name must be bound EXACTLY ONCE inside the enclosing function, by a plain assignment,
+    # to the approved constant -- and never as a parameter, a loop target, a walrus, a with-as, an
+    # import alias or anything else _binds_of recognises.
+    bbinds = _binds_of(fn, bname)
+    if bname in _params_of(fn):
+        return False, "%r is a parameter of %s: its value is not fixed by this file" % (bname, encl)
+    if len(bbinds) != 1:
+        return False, ("%r is bound %d time(s) in %s (%s), approved exactly 1: an ambiguous bucket is not"
+                       " authorized" % (bname, len(bbinds), encl, ", ".join(k for k, _ in bbinds) or "none"))
+    kind, node = bbinds[0]
+    if kind != "assign":
+        return False, "%r in %s is bound by %s, not a plain assignment" % (bname, encl, kind)
+    if not (isinstance(node.value, ast.Constant) and node.value.value == bvalue):
+        return False, "%r in %s is not assigned the approved constant %r" % (bname, encl, bvalue)
+
+    # NOTE: AND THE APPROVED FUNCTION CARRIES NO match STATEMENT AT ALL. Enumerating the three known
+    # pattern binders above fixes the cases measured; refusing the statement outright is what makes
+    # the recognizer safe against pattern node types this code has never seen. The approved case
+    # contains no match, so this costs the authorized read nothing.
+    match_type = getattr(ast, "Match", None)
+    if match_type is not None and any(isinstance(n, match_type) for n in ast.walk(fn)):
+        return False, ("%s contains a match statement; pattern-matching syntax is not supported for this"
+                       " narrow approved case" % encl)
+
+    # NOTE: THE APPROVED CALL MUST SIT DIRECTLY IN THE ENCLOSING FUNCTION'S OWN BODY, never inside a
+    # nested def, lambda or class. ast.walk descends into them, so without this the site could be
+    # parameterised out of the approved bucket (G-1's D2/D3) while every count still read 1.
+    nested = [n for n in ast.walk(fn)
+              if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda, ast.ClassDef)) and n is not fn]
+    for scope in nested:
+        for n in ast.walk(scope):
+            if isinstance(n, ast.Constant) and isinstance(n.value, str) and n.value == want:
+                return False, ("the approved literal appears inside a nested %s within %s; only the"
+                               " function's own body is authorized" % (type(scope).__name__, encl))
+
+    # the single occurrence must be the approved positional argument of the approved call, inside fn
+    hits = 0
+    for n in ast.walk(fn):
+        if not isinstance(n, ast.Call) or not isinstance(n.func, ast.Name) or n.func.id != helper:
+            continue
+        if any(isinstance(kw.value, ast.Constant) and kw.value.value == want for kw in n.keywords):
+            return False, "the literal is passed as a KEYWORD argument; only the approved positional form is authorized"
+        if len(n.args) <= idx:
+            continue
+        a = n.args[idx]
+        if isinstance(a, ast.Constant) and a.value == want:
+            if not (len(n.args) > 1 and isinstance(n.args[1], ast.Name) and n.args[1].id == bname):
+                return False, "the call's bucket argument is not the approved name %r" % bname
+            hits += 1
+    if hits != 1:
+        return False, ("%d call(s) match the approved site (helper %s, arg %d, inside %s), approved exactly 1"
+                       % (hits, helper, idx, encl))
+    return True, ("the single occurrence is positional arg %d of %s(%s=...) inside %s, helper text as reviewed"
+                  % (idx, helper, bname, encl))
+
+
+def waivers_for(path, post_text, now=None):
+    """{literal: (entry, note)} for this file: the waivers that are IN FORCE and RECOGNIZED here."""
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    good, bad = load_legacy_reads()
+    out, denied = {}, {}
+    for raw, reason in bad:
+        if isinstance(raw, dict) and raw.get("file") == path and isinstance(raw.get("literal"), str):
+            denied[raw["literal"]] = reason
+    for entry in good:
+        if entry["file"] != path:
+            continue
+        if _expired(entry, now):
+            denied[entry["literal"]] = "expired: cutoff %s inclusive UTC" % entry.get("as_of_cutoff")
+            continue
+        ok, note = legacy_read_ok(entry, post_text)
+        if ok:
+            out[entry["literal"]] = (entry, note)
+        else:
+            denied[entry["literal"]] = note
+    if denied:
+        out["__denied__"] = denied
+    return out
+
+
 # --------------------------------------------------------------------------- the matrix
-def judge(nm, path, lit, pre_text):
+def judge(nm, path, lit, pre_text, waivers=None):
     """(line verdict, canonical, why, counts-as) for one literal, or None when it is not graded."""
     if _resolves_to_tracked(lit.value):
         return None  # a value resolving to a tracked path at HEAD is a CITATION (R-11), not a mint
@@ -842,6 +1302,19 @@ def judge(nm, path, lit, pre_text):
     verdict, canon, defect = nm.grade(typ, graded_as)
     if verdict == "RAISE":
         why = "RAISE as %s: rule or registry defect, not a refusal: %s" % (typ, defect)
+        if new:
+            # A literal the grammar cannot place is NEW to this file but may already be carried, byte for
+            # byte, elsewhere at HEAD (2026-09-23, 1.0.0_SA_CTO 99842 on 2.0.0_SA_COO~M's "smartx/platform/silver/",
+            # K3 "'platform' is not a tier": a pre-LGIC layout the retained build already reads). Copying an
+            # existing pre-LGIC key into a new file mints nothing; under CLAUDE.md Rule 30 that layout reaches
+            # conformance through its own migration project, never through this diff. So: EXISTING, WARN, with
+            # the RAISE reason and the carrying path printed. A raising literal carried NOWHERE at HEAD keeps
+            # the branches below unchanged.
+            where = _carried_at_head(lit.value, path)
+            if where:
+                return ("RAISE-EXISTING", "(pre-LGIC key; conformance via its migration project, Rule 30)",
+                        why + "; the same literal is already carried at HEAD in %s, so this copy mints nothing: WARN%s"
+                        % (where, carr_txt), "WARN")
         if new and carr:
             return "REFUSE", "lookup(%r)" % carr[1], why + carr_txt, "REFUSE"
         return "RAISE", "(rule or registry defect)", why + carr_txt, "WARN"
@@ -851,8 +1324,29 @@ def judge(nm, path, lit, pre_text):
     if new and verdict in ("OUT-OF-PATTERN", "ALIAS"):
         return "REFUSE", canon, "NEW and %s as %s: REFUSE%s" % (verdict, typ, carr_txt), "REFUSE"
     if rem:
+        # THE ONE CONSUMPTION POINT OF THE LEGACY-READ WAIVER (IRPT-M-LEGACY-READ-02). It sits BELOW
+        # the NEW branch above, which is why a NEW or CHANGED literal can never reach it -- that
+        # property is structural, not a check anyone has to remember.
+        hit = (waivers or {}).get(lit.value)
+        if hit and hit[0].get("remediation") == rem:
+            return ("WAIVED-READ", canon,
+                    "EXISTING and OUT-OF-PATTERN as %s under the live remediation %s, WAIVED as an authorized"
+                    " LEGACY READ by %s (owner %s, cutoff %s inclusive UTC): %s. The remediation stays LIVE and"
+                    " this waiver does not advance it%s"
+                    % (typ, rem, hit[0]["id"], hit[0]["owner"], hit[0]["as_of_cutoff"], hit[1], carr_txt), "WARN")
+        # NOTE: A DENIED WAIVER MUST SAY WHY IT WAS DENIED. Without this the refusal is byte-identical
+        # whether no entry exists, the entry expired, the helper changed, or the call site moved --
+        # and the author is left guessing which. Measured while building the controls: three arms
+        # refused for the RIGHT reason and printed the WRONG one, so the control could not tell a
+        # working recognizer from a waiver that never loaded.
+        denial = (waivers or {}).get("__denied__", {}).get(lit.value)
+        if hit and not denial:
+            denial = ("the entry is written against remediation %r, but this literal resolves to %r"
+                      % (hit[0].get("remediation"), rem))
+        deny_txt = "; LEGACY-READ waiver NOT applied: %s" % denial if denial else ""
         return "REFUSE", canon, ("EXISTING and OUT-OF-PATTERN as %s in a surface remediations.json assigns to the live"
-                                 " remediation %s: REFUSE unless the diff removes it%s" % (typ, rem, carr_txt)), "REFUSE"
+                                 " remediation %s: REFUSE unless the diff removes it%s%s"
+                                 % (typ, rem, carr_txt, deny_txt)), "REFUSE"
     if verdict in ("OUT-OF-PATTERN", "ALIAS"):
         return verdict, canon, "EXISTING, touched, and %s as %s: WARN%s" % (verdict, typ, carr_txt), "WARN"
     if new and carr:
@@ -951,8 +1445,13 @@ def grade_file(nm, f, post_from_index):
                      "top level carries format_version, terraform_version and resource_changes or"
                      " planned_values (a terraform show -json artifact): not graded", "PASS")]
         lits = json_literals(added)
+        cited = _packaged_citations(post_text)
+        for lit in lits:
+            if lit.value in cited:
+                lit.permitted = True  # the packaged name of a tracked source: a citation (R-11), not a mint
     else:
         lits = yaml_literals(added)
+    waivers = waivers_for(path, post_text) if path.endswith(".py") else {}
     seen = set()
     for lit in lits:
         if lit.permitted or any(lo <= lit.line <= hi for lo, hi in gen_ranges):
@@ -960,7 +1459,7 @@ def grade_file(nm, f, post_from_index):
         if (lit.line, lit.value) in seen:
             continue
         seen.add((lit.line, lit.value))
-        j = judge(nm, path, lit, pre_text)
+        j = judge(nm, path, lit, pre_text, waivers)
         if j:
             rows.append((j[0], path, lit.line, lit.value, j[1], j[2], j[3]))
     return rows

@@ -1,0 +1,97 @@
+{
+  "baseline_pin": "78a48596640f32d908955941a2c52dbb713235c6",
+  "candidate_pin": "587e782bc6",
+  "paths": [
+    {
+      "path": ".tools/ds-precommit-check.py",
+      "inherited_drift": true,
+      "inherited_semantic_or_format_drift": false,
+      "irpt_delta": true,
+      "irpt_stamp_only": true,
+      "baseline_generated_sha256": "cb174b47c0e7caa83b594442fddd2a61c694a732345d3e4bc6fdc6a18337e7a6",
+      "candidate_generated_sha256": "ed34aca468f2e7b13929f4c053c715f6880b19be16b6cc0773a22781187de2e4"
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/directory_runner.py",
+      "inherited_drift": true,
+      "inherited_semantic_or_format_drift": false,
+      "irpt_delta": true,
+      "irpt_stamp_only": true,
+      "baseline_generated_sha256": "a48e3c8fe03bf773f12cdb614b3fb364572e725802c4bc94a1ae1a2966f8738c",
+      "candidate_generated_sha256": "a6bc1750dc8faed856ec74c632d28a2f3e665e96d608e8b9b4a02f864e73e7bf"
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+      "inherited_drift": false,
+      "inherited_semantic_or_format_drift": false,
+      "irpt_delta": true,
+      "irpt_stamp_only": true,
+      "baseline_generated_sha256": "83a24247fc2068cc88afccea829f6b58193bb8245c4d342d0dec5079a2ebe3a7",
+      "candidate_generated_sha256": "d2ddb9a806c13b75dbeebd2f470feafdd66a31a95281f26d1ad75590dbd21557"
+    },
+    {
+      "path": "data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py",
+      "inherited_drift": true,
+      "inherited_semantic_or_format_drift": false,
+      "irpt_delta": true,
+      "irpt_stamp_only": true,
+      "baseline_generated_sha256": "a0ee3ef311e4d0b4502c03c215d9629ad982fad1f684dfb7a6dbe518b75264ca",
+      "candidate_generated_sha256": "d1fc543c365634d378293b58eb57da832a576312af521c0fecdd7fc10d1813e0"
+    },
+    {
+      "path": "data/firm_registry.json",
+      "inherited_drift": true,
+      "inherited_semantic_or_format_drift": false,
+      "irpt_delta": true,
+      "irpt_stamp_only": true,
+      "baseline_generated_sha256": "6f96873721d7fb0c28b389f644fa39a8bb07238b9228d462ebf14a81165126dd",
+      "candidate_generated_sha256": "fccce2dc8ce15424d61f99d4a92e4d2ac756184ca73855f0de5a64a5ebe4ce74"
+    },
+    {
+      "path": "infra/aws/lambda-edge/_shared/firm-config.mjs",
+      "inherited_drift": true,
+      "inherited_semantic_or_format_drift": false,
+      "irpt_delta": true,
+      "irpt_stamp_only": true,
+      "baseline_generated_sha256": "bad171778dfe4c5e7d73fb85582c828f32e609d0c0b3f1d2dcb9760186dce9c7",
+      "candidate_generated_sha256": "84981d38785829e8e35510acd8b5a3a537d8a1722f1fb85b17908a6c94e8e751"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+      "inherited_drift": false,
+      "inherited_semantic_or_format_drift": false,
+      "irpt_delta": true,
+      "irpt_stamp_only": true,
+      "baseline_generated_sha256": "c0451638b048694267981691a9f6db38df8e0c64e1a6bf681d84b0e1ce55c3d4",
+      "candidate_generated_sha256": "b84bb2918fc13be31358e81221e951ed4f4aa70da9dea2b7a8dbce93b1853da2"
+    },
+    {
+      "path": "infra/aws/terraform/modules/opal_name/generated_locals.tf",
+      "inherited_drift": true,
+      "inherited_semantic_or_format_drift": true,
+      "irpt_delta": true,
+      "irpt_stamp_only": false,
+      "baseline_generated_sha256": "b48c7a1b7592e95f561550f784b9dfc2115e3fe3ed21ef558a8012e4f48d1c62",
+      "candidate_generated_sha256": "13b7dab1bcc5964347d0a491670868af23209e51b32545e9cf833e8c2ef9775c"
+    },
+    {
+      "path": "infra/aws/terraform/modules/opal_name/tests/opal_name.tftest.hcl",
+      "inherited_drift": true,
+      "inherited_semantic_or_format_drift": false,
+      "irpt_delta": true,
+      "irpt_stamp_only": true,
+      "baseline_generated_sha256": "77d5266c3d16d35ea7e6d9d3d58c80cf9171d58cd92b0fe3d407135ae07fae0c",
+      "candidate_generated_sha256": "56363b617844008622d6ef9771bf5ae6c33184372bee7baacefeef6cf4a56d97"
+    },
+    {
+      "path": "infra/aws/terraform/modules/opal_name/tests/vectors.json",
+      "inherited_drift": true,
+      "inherited_semantic_or_format_drift": false,
+      "irpt_delta": true,
+      "irpt_stamp_only": true,
+      "baseline_generated_sha256": "5c8e201eecdd44d9bf285cfbab1ddd6ba534d65c7cce3a955ec5a86ee872618b",
+      "candidate_generated_sha256": "26de52922c358ed0e74774da65cf496f6a6b39ba02ad1a0951a4328c16b26f33"
+    }
+  ],
+  "source_carriers_modified": false
+}

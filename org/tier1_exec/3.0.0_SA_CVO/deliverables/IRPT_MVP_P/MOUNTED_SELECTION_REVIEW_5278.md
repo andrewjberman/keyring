@@ -1,0 +1,19 @@
+# Composed mounted selection — bounded PASS
+
+Reviewer `3.0.0_SA_CVO~P`; authority `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` and `CVO_P.md`.
+
+Portal **52786a7a4e16d0faec2f1f0b3e587d6e88c496cd**, backend contracts **c5eace08c76176c6d9ebb78dd31ced3b0e57ea2d**. LOCAL independent run 2026-09-22T22:51:45.480970Z. **PASS only for the mounted controlled-API selection boundary.** Full P1-P8/S1-S7, authenticated browser/guard/provider composition and live acceptance remain **NOT_EVALUATED**.
+
+The exact source snapshot passed 13 supplied focused tests (selection request, shared API/parser, coverage adapter), both supplied actual Edge mounted scripts, and the independent mounted driver with eight named checks. All four processes exited 0. Both supplied browser scripts assert zero page errors; independent driver recorded zero page errors and zero attempted blocked external/API requests.
+
+Independent driver verifies no eager custody requests, accepted selection reaching mounted performance, real date strings instead of the 1970 bootstrap sentinel, exact request preservation on Refresh, only active custody tabs fetching, a late rejected prior selection not replacing current success, context reset clearing accepted state, and prospect Analysis mounting without custody fetch. Raw captured requests show `sel_aaa...` with distinct `selected-a` and `directory-accepted`, start `2026-01-01`, end `2026-09-22`. Refresh repeats that exact request. Subsequent holdings requests use only accepted A and C, never superseded B.
+
+Supplied mounted scripts additionally exercise successful late selection suppression, clear/pending/refusal body removal, whole-client request serialization, and holdings A-to-B, null, date/root changes and late holdings response suppression. These are actual React components rendered in headless Edge with a controlled API service. Their fabricated accepted objects bypass LiveClient and its wire validator. They do not establish valid producer identities, current server authorization, live HTTP, or real source data.
+
+Evidence: `mounted_selection_probe_5278.py`, `mounted_selection_probe_5278.json`, `mounted_selection_cases.mjs`. The runner snapshots exact portal/backend files and starts its own loopback Vite host without production proxy configuration, using existing portal dependencies via a temporary junction. It stops its own server on completion. Independent driver SHA256 `1bd95283a55f5c0fd0d8727de6f6f3cf6460b0156a18ef1c175947b1afb6c761`; component and supplied harness hashes are in JSON. No install, deployment, browser credentials or external calls were used. Whole-portal typecheck/build was not repeated in this review; implementer/peer reports remain attributed.
+
+An initial host attempt used Windows short-path TEMP spelling and Vite rejected the pages as outside its serving allow list. No candidate page loaded. The runner was corrected to create a full-path temporary directory; source and browser assertions were unchanged. This was a reviewer host failure, not a candidate defect.
+
+CVO~M notification `20260922T224951Z_3.0.0_SA_CVO_M_IRPT_M__mounted_header_selection_bounded.md` reports review **999ed596ea** on portal **d4fca0e5692730e9f79c3fa013159ffa63ba5b6b** with its own controlled-API tests. This is peer evidence, not added to our test counts. P's integrated source is reviewed at 52786a7a. Prior shared API review **8a94798594** and retention primitive closure **9e6a617405** retain separate scopes.
+
+Next proof requires composed selected-set HTTP guard/current-access revocation and actual source execution. Refresh-lineage, receipt/expiry integration and full export remain separate outstanding work. The candidate removes directory-revision export mounting and leaves export pending accepted report references; no export completion follows from this PASS. No operating gate changes.
