@@ -31,7 +31,7 @@ Cottonwood account has not been walked; hop 6's `spread` is not served (backlog 
 | IV-e-7 (FWD-11 sweep) | SUPERSEDED by the FAST lease, never spawned | its task order |
 | S6 (black tiles, CUSIP as a name) | CANDIDATE @92d16efc, awaiting the CVO | row DSGN_IRPTV1-S8; `deliverables/2.0.0_SA_COO~D/s6.fast-run.png` |
 | P candidate 8 (DirectoryPage wire type + fixtures) | LANDED on DEV @237bdfda (fast-forward) | P msg 100816 |
-| Andrew ~18:4xZ: firm tab FIRM_BINDING; Holdings $10K rounding | CANDIDATE @a65a8db5, awaiting the CVO | `deliverables/2.0.0_SA_COO~D/ad184x.fast-run.{png,txt}` |
+| Andrew ~18:4xZ: firm tab FIRM_BINDING; Holdings $10K rounding | CANDIDATE @a65a8db5, awaiting the CVO. Firm filter, directory rows: Global 4 -> 49financial 2 (NARROWS); before the fix Global 4 -> 0 (search disabled, re-POST `fir_c9fc...`) | `deliverables/2.0.0_SA_COO~D/ad184x.fast-run.{png,txt}`, `firm-filter.run.txt`, `firm-filter.{before,after}.png`, `firm-filter-driver.mjs` |
 
 ## Write claims
 
