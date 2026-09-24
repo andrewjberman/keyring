@@ -26,9 +26,16 @@ usage() {
   cat >&2 <<'EOF'
 usage:
   wk-provision.sh provision <CODE> <n> --path <abs-path> [--portal-ref <commit-ish>] [--node-modules link|install|none]
+                                        [--nested <path>=<ref> ...]
   wk-provision.sh portal <worktree-path> [--portal-ref <commit-ish>] [--node-modules link|install|none]
   wk-provision.sh remove <worktree-path> [--portal-only]
   wk-provision.sh --self-test
+
+--nested <path>=<ref> (repeatable): provision a nested worktree for ANY path .gitmodules
+maps, the same way portal's own nested worktree is provisioned (branch
+<super-branch>-<path with / as ->, off <ref> resolved in the MAIN tree's copy of the
+nested repo). node_modules handling stays portal-only. Refuses rc 2, before anything is
+created, when the main tree's copy of the named submodule is uninitialised.
 EOF
 }
 
@@ -161,6 +168,62 @@ cmd_portal() {
   fi
 }
 
+# require_nested_initialised <path> -- refuse rc 2, BEFORE anything is created, when the
+# MAIN tree's own copy of the named submodule has no .git (never initialised there). The
+# exact reason line an issuer's --nested caller relies on (OA-w-1 AC3).
+require_nested_initialised() {
+  local npath="$1" main
+  main="$(main_worktree)"
+  if [ ! -e "$main/$npath/.git" ]; then
+    refuse 2 "$npath is uninitialised in the main tree (git submodule update --init $npath)"
+  fi
+}
+
+# provision_nested <worktree> <path> <ref> -- generalises cmd_portal's own nested-worktree
+# provisioning (branch naming, ref resolution, non-empty-dir refusal, `worktree add` off the
+# MAIN tree's copy) to ANY path .gitmodules maps. No node_modules handling -- that stays
+# portal-only (cmd_portal, unchanged).
+provision_nested() {
+  local worktree="$1" npath="$2" nref="$3"
+  local main nested
+  main="$(main_worktree)"
+  nested="$main/$npath"
+  require_nested_initialised "$npath"
+
+  local gitlink_line gitlink_sha
+  gitlink_line="$(git -C "$worktree" ls-tree HEAD -- "$npath")"
+  gitlink_sha="$(printf '%s' "$gitlink_line" | awk '{print $3}')"
+  [ -n "$gitlink_sha" ] || refuse 2 "gitlink sha unresolved for $npath in $worktree"
+
+  local resolved_sha
+  if ! resolved_sha="$(git -C "$nested" rev-parse --verify -q "${nref}^{commit}" 2>/dev/null)"; then
+    refuse 2 "--nested $npath=$nref does not resolve in $nested"
+  fi
+  echo "NESTED_REF: $npath $nref -> $resolved_sha"
+
+  local behind_ref
+  behind_ref="$(git -C "$nested" rev-list --count "$gitlink_sha".."$resolved_sha" 2>/dev/null)"
+  [ -n "$behind_ref" ] || behind_ref="?"
+  echo "NESTED_GITLINK: $npath $gitlink_sha behind_ref=$behind_ref"
+
+  local target_dir="$worktree/$npath"
+  if [ -d "$target_dir" ]; then
+    local entry_count
+    entry_count="$(ls -A "$target_dir" 2>/dev/null | wc -l)"
+    if [ "$entry_count" -ne 0 ]; then
+      refuse 2 "$target_dir is not empty; refusing to overwrite"
+    fi
+  fi
+
+  local super_branch nested_branch
+  super_branch="$(git -C "$worktree" rev-parse --abbrev-ref HEAD)"
+  nested_branch="${super_branch}-${npath//\//-}"
+
+  git -C "$nested" worktree add -b "$nested_branch" "$target_dir" "$resolved_sha" \
+    || die 1 "git worktree add failed for $target_dir"
+  echo "NESTED: $npath -> $target_dir branch=$nested_branch"
+}
+
 cmd_provision() {
   if [ $# -lt 2 ]; then
     die 2 "provision: <CODE> <n> required"
@@ -168,6 +231,7 @@ cmd_provision() {
   local code="$1"; shift
   local n="$1"; shift
   local path="" portal_ref="" node_modules_mode=""
+  local nested_specs=()
 
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -177,6 +241,9 @@ cmd_provision() {
         shift; [ $# -gt 0 ] || die 2 "provision: --portal-ref requires a value"; portal_ref="$1" ;;
       --node-modules)
         shift; [ $# -gt 0 ] || die 2 "provision: --node-modules requires a value"; node_modules_mode="$1" ;;
+      --nested)
+        shift; [ $# -gt 0 ] || die 2 "provision: --nested requires a value (path=ref)"
+        nested_specs+=("$1") ;;
       *)
         die 2 "provision: unknown argument: $1" ;;
     esac
@@ -184,6 +251,18 @@ cmd_provision() {
   done
 
   [ -n "$path" ] || die 2 "provision: --path <abs-path> is required"
+
+  # Validate EVERY --nested spec against the MAIN tree BEFORE anything is created (super
+  # worktree included) -- OA-w-1 AC3: the refusal names the path and creates nothing.
+  local spec npath nref
+  if [ "${#nested_specs[@]}" -gt 0 ]; then
+    for spec in "${nested_specs[@]}"; do
+      npath="${spec%%=*}"
+      nref="${spec#*=}"
+      [ -n "$npath" ] && [ "$npath" != "$spec" ] || die 2 "provision: --nested requires path=ref (got: $spec)"
+      require_nested_initialised "$npath"
+    done
+  fi
 
   local branch="wk-${code}-${n}"
   local base_sha
@@ -195,6 +274,14 @@ cmd_provision() {
   [ -n "$portal_ref" ] && portal_args+=(--portal-ref "$portal_ref")
   [ -n "$node_modules_mode" ] && portal_args+=(--node-modules "$node_modules_mode")
   cmd_portal "${portal_args[@]}"
+
+  if [ "${#nested_specs[@]}" -gt 0 ]; then
+    for spec in "${nested_specs[@]}"; do
+      npath="${spec%%=*}"
+      nref="${spec#*=}"
+      provision_nested "$path" "$npath" "$nref"
+    done
+  fi
 }
 
 cmd_remove() {
@@ -234,6 +321,27 @@ cmd_remove() {
   # AC5 forbids; `git worktree remove` above already drops this call's own entry on its own.
   mkdir -p "$portal_dir"
   echo "REMOVED: $portal_dir"
+
+  # GENERALISED (OA-w-1): tear down every OTHER provisioned nested worktree the SAME way
+  # (placeholder recreated empty, no `worktree prune` -- the W60-S3 repair above, generalised).
+  # portal is excluded here (handled by name above, unchanged); node_modules unlink stays
+  # portal-only because only cmd_portal ever links one.
+  local gm="$worktree/.gitmodules"
+  if [ -s "$gm" ]; then
+    local npath ndir ntarget
+    while IFS= read -r npath; do
+      [ -z "$npath" ] && continue
+      [ "$npath" = "portal" ] && continue
+      ndir="$main/$npath"
+      ntarget="$worktree/$npath"
+      if [ -d "$ntarget" ] && [ -e "$ntarget/.git" ]; then
+        git -C "$ndir" worktree remove --force "$ntarget" \
+          || echo "WARN: git worktree remove reported an issue for $ntarget" >&2
+        mkdir -p "$ntarget"
+        echo "REMOVED: $ntarget"
+      fi
+    done < <(git config -f "$gm" --get-regexp '\.path$' 2>/dev/null | awk '{print $2}')
+  fi
 
   if [ "$portal_only" = "false" ]; then
     git worktree remove --force "$worktree" || die 1 "git worktree remove failed for $worktree"
