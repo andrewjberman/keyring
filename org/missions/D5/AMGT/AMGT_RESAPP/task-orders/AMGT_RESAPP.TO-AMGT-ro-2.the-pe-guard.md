@@ -60,7 +60,14 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 **ISSUER NOTES:** Found at the cut (s.48b.1-2). The relation check replaces round 39's magnitude band, which a raw percent yield passes.
 
-<status>pending</status>
+**ISSUER CLOSE, 2.0.0_SA_COO~Z, 2026-09-24 ~20:5xZ, carried on the worker's branch so the chain-end merge carries it.**
+Checker's match: proof-of-spec-check VALID rc=0 on the worker's instance (3 of 3 PASS-by-output); not re-run by the issuer.
+AC1 peersCarry exit=0 (was 1). AC2 THE GUARD: a RECIPROCAL entry with no stated unit renders 24 absent, 0 numeric (was 24 raw
+yields). AC3 THE RELATION: P/E x percent yield == 100 on 24 of 24 (landed). `valueOf` returns null for a PRESENT_CARRIED column
+whose relation begins RECIPROCAL and states no transform/units; peersCarry's fixture now states `units: 'fraction'`. No rows.
+Portal merged d79f4c26 -> DEV aae9872f. The served page reads ABSENT on P/E until ro-7 rewrites the peers pool with units.
+
+<status>complete</status>
 <round>40</round>
 <slot>~153</slot>
 <fabric>site-z</fabric>
