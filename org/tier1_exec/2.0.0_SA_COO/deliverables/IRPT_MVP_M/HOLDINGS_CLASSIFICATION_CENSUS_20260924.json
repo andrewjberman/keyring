@@ -1,0 +1,146 @@
+{
+ "classifier": {
+  "aliases": 7943,
+  "table": "bd-securities",
+  "tickers": 9732
+ },
+ "firms": {
+  "49financial": {
+   "distinct_by_asset_class": {
+    "alternatives": 37,
+    "equity": 1564,
+    "fixed_income": 164,
+    "unclassified": 78
+   },
+   "distinct_by_basis": {
+    "NONE": 78,
+    "TABLE": 1411,
+    "TICKER_SHAPE": 354
+   },
+   "distinct_model_names": 7,
+   "distinct_securities": 1843,
+   "model_leaf_nodes": 7475,
+   "model_leaf_nodes_with_registry_key": 2538,
+   "model_name_to_registry_key": {
+    "Opal Dividend Income": null,
+    "Opal Intermediate-Term": "opal_intermediate",
+    "Opal Long Term": null,
+    "Opal Short-Term": "opal_short_term",
+    "Opal Ultra Long Term": null,
+    "Opal Ultra Short-Term Income": "opal_ultra_short_term",
+    "Pathfinder Focused Opportunities": null
+   },
+   "model_names_with_registry_key": 3,
+   "security_nodes": 120097,
+   "served": {
+    "business_date": "2026-09-22",
+    "index_version": "QC.bs6a5w9.HeojU8ugboRzNbhM.3mfD",
+    "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56"
+   },
+   "usd_by_basis": {
+    "NONE": 35874668.38,
+    "TABLE": 1581653714.92,
+    "TICKER_SHAPE": 8214356.11
+   }
+  },
+  "cottonwood": {
+   "distinct_by_asset_class": {
+    "alternatives": 25,
+    "cash": 1,
+    "equity": 762,
+    "fixed_income": 318,
+    "unclassified": 101
+   },
+   "distinct_by_basis": {
+    "NAME_ALIAS": 86,
+    "NAME_PATTERN": 191,
+    "NONE": 101,
+    "TABLE": 720,
+    "TICKER_SHAPE": 109
+   },
+   "distinct_model_names": 7,
+   "distinct_securities": 1207,
+   "model_leaf_nodes": 521,
+   "model_leaf_nodes_with_registry_key": 519,
+   "model_name_to_registry_key": {
+    "DIVZ SMA": "opal_div_sma",
+    "Opal Conservative Growth": "opal_long_term_conservative",
+    "Opal Fixed Income": null,
+    "Opal Intermediate-Term": "opal_intermediate",
+    "Opal Long-Term Aggressive": "opal_long_term_aggressive",
+    "Opal Short-Term": "opal_short_term",
+    "Opal Ultra Short-Term Income": "opal_ultra_short_term"
+   },
+   "model_names_with_registry_key": 6,
+   "security_nodes": 14426,
+   "served": {
+    "business_date": "2026-09-22",
+    "index_version": "mSFR0vatS4UCLaQuUla4glG0Atks2BIn",
+    "revision": "dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30"
+   },
+   "usd_by_basis": {
+    "NAME_ALIAS": 49339310.45,
+    "NAME_PATTERN": 24554159.62,
+    "NONE": 78003958.56,
+    "TABLE": 372323874.74,
+    "TICKER_SHAPE": 24191359.21
+   }
+  },
+  "inflection": {
+   "distinct_by_asset_class": {
+    "alternatives": 23,
+    "cash": 5,
+    "equity": 1261,
+    "fixed_income": 125,
+    "unclassified": 108
+   },
+   "distinct_by_basis": {
+    "NAME_ALIAS": 1,
+    "NAME_PATTERN": 1,
+    "NONE": 108,
+    "TABLE": 983,
+    "TICKER_SHAPE": 429
+   },
+   "distinct_model_names": 18,
+   "distinct_securities": 1522,
+   "model_leaf_nodes": 624,
+   "model_leaf_nodes_with_registry_key": 0,
+   "model_name_to_registry_key": {
+    "50/50 Opal Intermediate/Opal Long Term": null,
+    "50/50 Opal Short Term/Intermediate": null,
+    "90/10 Opal Long Term/Ultra Short Term": null,
+    "IWM Aggressive Taxable": null,
+    "IWM Conservative Index": null,
+    "IWM Moderate Index": null,
+    "IWM Moderate Tax-Deferred": null,
+    "IWM Moderate Taxable": null,
+    "IWM Moderately Aggressive Index": null,
+    "IWM Moderately Aggressive Tax-Deferred": null,
+    "IWM Moderately Aggressive Taxable": null,
+    "IWM Moderately Conservative Taxable": null,
+    "Opal Intermediate Growth": null,
+    "Opal Long Term": null,
+    "Opal Short Term": null,
+    "Opal Ultra Long Term": null,
+    "Opal Ultra Short Term": null,
+    "PCOFX": null
+   },
+   "model_names_with_registry_key": 0,
+   "security_nodes": 30881,
+   "served": {
+    "business_date": "2026-09-22",
+    "index_version": "k9U4ucuTS1iteq0p9eUweqXs6Lk93B07",
+    "revision": "d32e50c692d42bc8f23f5d57f19ed81ecb21aaabfa2b95dd84214028f668a47e"
+   },
+   "usd_by_basis": {
+    "NAME_ALIAS": 74586.06,
+    "NAME_PATTERN": -441.43,
+    "NONE": 688599.96,
+    "TABLE": 172525464.96,
+    "TICKER_SHAPE": 159365.8
+   }
+  }
+ },
+ "measured_at_utc": "2026-09-24T22:14:14.673001+00:00",
+ "source_pin": "025cc1b799a95188def0834922820b9b6ebfe86b"
+}
