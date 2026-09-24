@@ -15,6 +15,7 @@ this directory or a message id.
 | Holdings, all three firms (M's acts) | COT dec293d6 06:20; 49F 3d59c80b 06:58 + units 5a25ae76 09:0x; INF d03e91a4 07:04 + units d32e50c6 09:04 | | labels on every node the directory knows; CUSTODY_UNITS on every observed row | IRPT_MVP_M receipts |
 | portal DEV | 013323f0 | 09:1x (MSTR) | candidates 1-3: consolidation, M's labels, hop 11, "Performance" tab, SELECTION_UNSUPPORTED named, F1 / F5 / F3 | CTO 100359 / 100463; MSTR receipts |
 | the resident (this box's act) | package ab2e088b5b on i-0167fd745ad906a66 | 09:39 | irpt-analysis-resident.service ACTIVE, single consumer of irpt-generation, enrolled 1276035, tokenless transport, X10 ACTIVE row, census 44853788fa..; five empty polls, no vendor call | RESIDENT_INSTALL, RESIDENT_CUTOVER_EVIDENCE |
+| irpt-ycharts-generate | uHfng41l/agHCG5OHldwqi2r+NUZKfu7DqmWvbqNhTc= | 10:24 | handler generate_installed.lambda_handler (the 8 production ports composed once per container, both branches refuse BY NAME as NOT_READY); sqs:SendMessage on irpt-generation; 0 event source mappings; IRPT_LIVE_YCHARTS_CALL absent; invoke {} -> 200 named refusal; does NOT move hop 2 | GENERATE_INSTALLED_APPLY |
 
 Directory listing: p50 2308 -> 160 ms, p90 4665 -> 634 ms, p99 6093 -> 972 ms (03:21-04:21 vs 04:21-05:21).
 
@@ -45,11 +46,9 @@ reached ycharts.com once unguarded; the suite now refuses to start unguarded).
 
 ## Next at P (CTO batch 34 item 5 / batch 28 (i)-(iv))
 
-1. The Analysis backend: (i) the generate package at HEAD -- 10 modules absent from the map's files[]
-   (current_authority, durable_job, frozen_worker, normalized_input, prospect_submission,
-   publication_worker, publisher, report_index, resident_main, resident_worker), 12 staged rows stale
-   at 819c9e3990; the X10 row; Terraform: sqs:SendMessage for the submit path, the two revision env
-   keys, NO event source mapping (the resident is the consumer), IRPT_LIVE_YCHARTS_CALL unset;
+1. The Analysis backend: (i) DONE 10:24Z (row above; the two revisions are DERIVED from the packaged
+   registry and schema directory, not env keys). Hop 2 (the upload composition) is a design cell on
+   the CTO's shape (100497 (b)); its two vendor-egress questions are carded to Andrew.
    (ii) irpt-status with ops at HEAD + prospect_dates; (iii) the three no-handler routes; (iv) the
    cutover plan's inputs. Each one canonical act with a ledger.
 2. Speed levers F7 / F2: held on a HAR from opalinvest.dev (the 04:32Z HAR was a localhost dev session).
