@@ -1536,3 +1536,123 @@ breakdown, Supervision / Advisory "withheld". Routed to M (100043): the accepted
 content for 0698 / d486 / combined (node kinds, model leaves, holdout status), the coverage field the
 portal reads, and whether "withheld" is data, server (P 100044 item 3), or rendering. The CTO rules
 each fix on the measured fact; nothing wider inferred from the word.
+
+
+## 2026-09-24 03:1x UTC - Claude CTO batch 20: Finding B measured; Andrew corrects the COT tree; portal drill items; probe disabled
+
+### IRPT-HOLDINGS-FINDING-B-20260924 -- interim ruling (M 100055/100061; CTO 100057/100066), then CORRECTED by Andrew
+M measured the accepted COT publication ac3adb97 under its user: acc_0698 = 33 nodes (ACCOUNT > SLEEVE
+"Models" > MODEL_LEAF model_id 6ae9e540 capability_facts model_name "Anna *9238" / is_opal False /
+rebalance_model_type Strategy > 30 SECURITY); d486 = 60 (leaf 1ae61190 "Anna *9237"); combined 93; NOT
+holdouts (attribution_holdouts.unassigned 0 of 841). Node keys carry NO asset-class member;
+HoldingsSnapshot.schema.json has none. "Model coverage 0 of 1" = portal slices.ts modelCoverageOf()
+counting a model as a DIRECT child of the account (the leaf is under the sleeve) -> 0 by construction.
+"withheld" = DATA: classification.authoritative=false on every node from build_cot (holdings_snapshot.py
+:1553-1555, :687-690; no Opal supervision source resolved for COT); the portal renders 'withheld' for
+authoritative=false by FE-s-55 and never reads the viewer's authority. Portal side: the adapter carries all
+levels (adapt.ts :938-969, no truncation); DrillTree renders ONE level per click; rows are clickable with
+no chevron / child count (SliceTable.tsx :120-125); canRenderDrill never refuses on these bodies.
+RULED (stand): (1) M's coverage counter counts a model descendant at any depth -- b0e2d9ad on codex/
+irpt-m-ui ACCEPTED on CTO read (cycle-guarded parentRef walk; 13 assertions; tsc clean); (2) P's additive
+adapter carry of hierarchy_path / capability_facts / modelName is shape-neutral and may land without label
+wording; (3) M cuts a VISIBLE drill affordance (chevron + child count per drillable row/slice) and opens a
+single-account selection one level deeper than the account; (4) "withheld" un-withholds only with an Opal
+fee-taking / advisory source per Cottonwood account asserted authoritative=true (enrichment, data owner);
+the asset-taxonomy breakdown is a CONTRACT + PRODUCER enrichment whose SOURCE is a card for Andrew.
+WITHDRAWN: the CTO's 100057 statement "Opal model breakdown is empty for Anna by data" -- see below.
+
+### ANDREW-DIRECT 2026-09-24 ~03:1xZ at the CTO terminal -- the COT "Strategy" is the wrapper; the MODELS are its constituents
+Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_031xZ_COT_MODELS_ARE_CONSTITUENTS_BENEATH_THE_STRATEGY.md
+(verbatim). The Rebalancer strategy (e.g. "Anna *9238") holds CONSTITUENT model portfolios ("primary" and
+"custom" -- where Opal models live) one drill level beneath it, beside CLIENT (non-model) securities (the
+Positioning page's Cottonwood Satellites: models plus a client-held GLD). build_cot collapsed that level
+into one MODEL_LEAF carrying the strategy name with the securities directly beneath. CTO's miss: it
+restated the producer's field (rebalance_model_type=Strategy) as the product's meaning and told Andrew the
+Opal model breakdown was empty "by data" -- a producer's field is not the domain's taxonomy (Rule 24 (iii)).
+ACTS (100063/100066/100067): M STOPPED on any COT Holdings rebuild/publication and studies (i) the MDPF COT
+constituent decomposition (primary/custom scan; the SmartX silver tables and rosters), (ii) the Satellites
+model-vs-client representation, (iii) build_cot's current attribution and what it must read, (iv) the
+proposed COT node tree for Anna's accounts; the CTO runs the same study on its own instrument (an Explore
+read) and compares before ruling the corrected tree; P's label/facts wording HELD; no wording names the
+wrapper a model or asserts no Opal model beneath it; the facts row calls today's leaf "Rebalancer strategy:
+<name>" until the re-cut.
+
+### IRPT-COT-HOLDINGS-TREE-20260924 -- RULED (M 100069 + the CTO's own Explore read; CTO 100094)
+Two instruments agree: the constituent level exists in silver (fact_model_blend strategy->child edges,
+recursive via build_dim_model_portfolio.decompose :219-247; fact_model_definition sleeve_name /
+sleeve_depth / symbol / asset_id / allocations); the roster carries STRATEGIES only (65/65); constituents
+exist only as blend children, so build_cot's roster default labels every constituent is_opal=False
+(wrong; the dimension decides by NAME, rs.is_opal_name :303-309); build_cot expands the blend into
+TARGET nodes, parks them privately (:1646-1650) and emits one MODEL_LEAF = the strategy with every
+position beneath (cot_actual_security_tree :1305-1387). CTO read denominators: data/**/*.py literal
+primary/custom 9 files; fact_model_{blend,roster,assignment} 13 files / 61 hits; MODEL_LEAF 27 files;
+rebalance_model_type 22; portal/src "Satellite" 447 hits / 16 files; docs >100 MDPF/cottonwood files;
+data READMEs 13. Note: the published tree came from M's branch codex/irpt-m-completion (62 commits
+ahead of CLOUD, unmerged); the CLOUD copy of build_cot never fires its expansion on real data (:1019
+compares a strategy NAME to GUID keys).
+WHERE THE CTO'S READ ADDS: (1) Primary/Custom is the MDPF REGISTRY rule -- mdpf_category_registry.py
+:229-235 PRIMARY_MODEL_KEYS (Opal Short-Term, Intermediate-Term, Ultra Short-Term Income, Long-Term
+Aggressive, Conservative Growth), qualifier primary|custom (:289), view_path "Models > Primary" /
+"Models > Custom" (:292); build_cottonwood_mdpf_slice.py :162-167 CANONICAL_KEY, :318 is_auto_custom
+(Opal Fixed Income reclassified Custom :194-201); DIVZ SMA = SMA leaf (mdpf_pair :133); non-Opal
+sleeves -> Client residual (:341-359). (2) Model dollars at Cottonwood are ASSIGNED (account value x
+blend weight) and CLIENT IS THE PLUG -- recorded constraint (ANDREW_DIRECT_20260923_194xZ_..._CLIENT_
+IS_PLUG.md :22-25, :85-87 d; holdings_snapshot.py :1384 "membership is the account's, never inferred
+per position"). So M's open rule (split a shared security) is refused as a question, and the CTO's own
+draft (per-position attribution by asset_id, proportional split) is WITHDRAWN -- it contradicted a
+constraint already in the record (miss recorded). (3) GLD on the Satellites page = "external residual"
+(Andrew 2026-09-14): a security the satellite holds that Opal's model books do not; in BD data it sits
+inside sleeves. The account analogue = depth-0 components + undefined positions in the Client plug.
+THE TREE: L0 ACCOUNT (OBSERVED) > L1 MODEL_WRAPPER = the assigned Rebalancer strategy (ASSIGNED, whole
+account; label "Rebalancer strategy: <name>") > L2 MODEL_LEAF per blend child (hierarchy_path per the
+registry rule; is_opal by name; qualifier primary|custom; amount = L0 x absolute_allocation, ASSIGNED)
++ L2 SMA leaf where named + L2 CLIENT sleeve (OBSERVED, the plug) > L3 SECURITY (a constituent's
+definition components at the constituent's weight, ASSIGNED, with the observed custody position as a
+fact; Client's = observed positions not in any constituent + depth-0 components). sum(L2) == L0; a
+shared security appears under each constituent that defines it. Producer: M re-cuts build_cot (reads
+fact_model_definition; Opal flag by name; retires the private model_target_nodes path); 49F/INF
+untouched. GATE: candidate + census for Anna's accounts and the combined selection to the CTO; GO
+before any publication (CAS over the current COT index; prior revision retained). Portal: P's carry
+shape-neutral; M's render per the ruling; asset-taxonomy = separate enrichment (registry asset_class on
+Positioning rows is the source candidate). The 46-model overlay artifact stays withdrawn.
+
+### IRPT-LISTING-SPEED-ASSIGNMENT-20260924 (CRO 100072/100078; CTO 100083/100087)
+GAP, the CTO's: Andrew approved the listing-speed brief's levers B1-B8 / F1-F7 at ~20:0xZ ("I like all
+your recs, yes go ahead", @6fc3f5f785) and no seat was assigned them for seven hours; the takeover
+handoff did not carry them and the CTO did not sweep. Andrew ~03:2xZ at the CRO terminal, VERBATIM:
+"It is currently so slow it is embarassing/unusable. I think even though we're only testing, we need to
+look into rectifying this issue because it makes every load take 15 seconds too long." Baseline (CRO,
+CloudWatch 15:19-03:19Z): irpt-directory-search 264 calls p50 1.33 s / p90 4.91 s / p99 6.95 s;
+irpt-holdings p50 1.14 s; one list load = Global resolve (3 firms IN SERIES) + 3 browses + selection +
+holdings. ANDREW-DIRECT ~03:2xZ, VERBATIM "I write the backend now (Recommended)": the CRO writes the
+backend quick wins, the CTO approves, P deploys; P does the page-side fixes. ASSIGNMENT: CRO B6 (memory
+512 -> 1769), B5 (parallel Global resolve, fixed merge order), B1+B2 (one directory + ownership read per
+request, one S3 client per container), B4 within-request, B7 keep-warm; one commit each, pin + tests to
+the CTO; P deploys code-only. P: F2, F5, F3, F7 and F1 in its lane after D1. RULED: B3 GO with one bound
+-- the parsed directory cached per S3 VersionId (HEAD per request, no time TTL; loaders.py:35-37 text
+amended to say so); F1 GO -- refresh the auth header, keep the mounted page, never remount. B8 PARKED
+(auth-surface change, needs an AE lane; TTL <= 300 s acceptable in principle). Every speed claim is a
+before/after on the same instrument. Y holds no listing item (100081).
+
+### IRPT-RESIDENT-D1-RERUN-20260924 -- (d)-(h) LANDED, Y STANDS, the ONE run may fire
+P ad8306b769 on 846f7233d2: LOGIN_PATH default /account/login/; /dashboard/ warm-up then a bounded wait
+for a visible password input; locateLoginForm = login_form.cjs:3-8 verbatim (form-scoped username incl.
+auth-username; refuses with no submission when counts are 0); submit = Enter in the password field +
+POST observer (field names vs the secret, booleans only); selector model leads with auth-username;
+identity read / bundle / persist / wrapper untouched; library 5a1a8695 (wrapper 55ddb8f7). Y 100092:
+STANDS on (a)-(h), pin confirmed from the blob, own run 25/25 + offline all_pass with measured_form. CTO
+own run at ad8306b769: node --check ok, bundle_contract failed 0, offline all_pass, login_path
+/account/login/, decoy_filled_rows 0. Next: upload at ad8306b769, redeploy, pins read back, ONE
+irpt-ycharts-run Task=probe (at most one submission); outcome B stops.
+
+### IRPT-RESIDENT-LEGACY-PROBE-DISABLE-20260924 -- APPLIED
+ycharts-session-probe-schedule reads DISABLED (Y's describe-rule 03:1xZ; CTO's own describe-rule 03:1xZ:
+DISABLED, cron(0 */6 * * ? *)); P's ledger ycharts-probe-disable-20260924 CLOSED @9b4929fcf4; the receipt's
+legacy_probe_disabled boolean has its readback. ycharts/session/current still VersionIdsToStages null.
+
+### IRPT-RESIDENT-D1-RERUN-20260924 -- in progress (Y 100060)
+P's 846f7233d2 carries (a)-(c) exactly (explicit failure; redacted screen evidence; identity/bundle/persist
+untouched); (d)-(h) (route /account/login/, form-scoped fill incl. auth-username, Enter submit + POST
+observer, /dashboard/ warm-up, selector model) are owed in a second commit; Y withholds STANDS until then;
+no run before it. Andrew's ~03:0xZ word (Global view, breakdown) and ~03:1xZ correction are recorded;
+Finding A (Global-view membership) still awaits P's directory measurement.

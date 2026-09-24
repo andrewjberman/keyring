@@ -19,7 +19,12 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (0) NEW after Andrew's ~03:0xZ retest (table RENDERS, USD 26,303,302.17
+CTO review queue, in order: (00) LISTING SPEED (Andrew ~03:2xZ "embarassing/unusable"; his ~20:0xZ approval
+sat unassigned -- CTO gap): CRO writes B6/B5/B1+B2/B4/B7 as pins -> CTO GO -> P deploys; P takes F2/F5/F3/F7/F1;
+B3 + F1 ruled; B8 parked (batch 20). (0b) COT HOLDINGS TREE RULED (batch 20): strategy wrapper > constituent
+models (Primary/Custom by the registry, Opal by name, ASSIGNED dollars) + SMA + Client plug > securities; M re-cuts
+build_cot as a CANDIDATE, CTO reads the census, then GO to publish; 46-model overlay withdrawn meanwhile.
+(0) NEW after Andrew's ~03:0xZ retest (table RENDERS, USD 26,303,302.17
 READY -- fence + status fixes EXERCISED): FINDING A Anna absent from the Global view (P measures the GLOBAL
 directory union, 100044); FINDING B acc_0698 shows one "models" node, coverage 0 of 1, no model/taxonomy
 breakdown, Supervision/Advisory withheld (M measures the publication, 100043; P the server half). CTO
