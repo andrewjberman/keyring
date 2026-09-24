@@ -13832,6 +13832,32 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "ui-measure.mjs needed the identical addition for AC3's literal invocation to parse the route at all; extended it there too (portal/scripts/ui-measure.mjs is in this cell's <paths>), smallest-diff and backward-compatible with the untouched positional form.",
     "disarm_owner": "2.0.0_SA_COO~Z -- the fix is already applied and AC3 re-ran clean against it (this worker cannot hold owner's-word per R-18, terminal at its own drain); recorded UNDER_INVESTIGATION because the face-vs-invocation naming gap itself (rm-3 and any later cell reusing --route on ui-measure.mjs should not re-discover this) is left for the issuer to fold into the next face or DISARM outright.",
     "notes": "Not BLOCKING -- the fix was in-lane (<paths> already grants portal/scripts/ui-measure.mjs) and additive; AC3 ran against the patched script and is recorded as such in this worker's proof-of-spec instance."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S256",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~A",
+    "surfaced_at": "2026-09-24T15:36:09Z",
+    "one_line": "rm-7's build REFUSES on a precondition no cell owns either: the generated module lib/research/api/_harvest_prefixes.py drifts from fresh lib.opal_naming output because an UNRELATED IRPT registry commit moved the registry hash. The only drifting content is the provenance stamp -- all four prefix constants are byte-identical -- and that file is lane BASE_EXEC, outside rm-7's <paths>, so this lane cannot regenerate it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE REFUSAL, read in full rather than from a tail slice: `bash build-and-upload-scoped-amgt.sh --build-only <out>` -> exit 1, NO zip produced, 'FAIL: lib/research/api/_harvest_prefixes.py DRIFTS from fresh lib.opal_naming output (registry hash 640c2a2de80c2a3cdc8491d2e0410f2dd137b3ea6ff45d359232143607bedbba)'.",
+        "THE DRIFT IS THE PROVENANCE STAMP ONLY: the script prints both versions, and committed vs fresh differ in exactly the REGISTRY_HASH line (3ea1e46b06a8aa14... -> 640c2a2de80c2a3c...) and its header comment. All four constants are byte-identical in both -- BLOOMBERG_BRONZE_PREFIX 'bloomberg/harvest/bronze/', BRIGHT_DATA_SERP_BRONZE_PREFIX 'bright-data/harvest/bronze/serp/', FILING_ATTEMPT_STATE_PREFIX 'amgt/harvest/state/filing_attempt/', SEEKING_ALPHA_BRONZE_PREFIX 'seeking-alpha/harvest/bronze/'. No S3 prefix this adapter reads has moved.",
+        "THE CAUSE IS OUTSIDE THIS PROJECT: `git log -- lib/research/api/_harvest_prefixes.py` -> last generated 2026-09-22T00:47Z by 0.9.0_WK_AMGT_RESAPP~92 (AMGT-rk-92 M3). `git log -- infra/logic/registry/` -> 8b4c15c6ba, 2026-09-23T21:39Z, 4.0.0_SA_CRO, 'admit irpt-holdings-role by exact name on the three firm buckets'. An IRPT registry admission moved the hash the AMGT build stamps, so this build has been refusing since 09-23 for reasons neither rm-4 nor rm-7 created.",
+        "THE PATH IS NOT THIS LANE'S, MEASURED RATHER THAN READ OFF THE AMENDMENT: .owned-paths.yaml longest-match for lib/research/api/_harvest_prefixes.py is `lib/**`, lane BASE_EXEC, agents [] -- 0.7.0_AE_CloudOps~A is not among them. Issuer amendment 1 removed lib/research/** from rm-7's <paths> for exactly this reason and said an entry the assignee cannot write is a defect in the face, not a permission to route around.",
+        "THERE IS NO OVERRIDE TO MISUSE, and that was checked rather than assumed: the drift check has no SKIP, OVERRIDE, --force or ALLOW flag; the script's own comment at :119-120 says it 'aborts the build on any drift'. Fail-closed and unconditional.",
+        "NO WORLD ACT: artifact research/opal-amgt-scoped-api.zip still VersionId ZacA2Kn0CWoJqOFLvTPe2kzZ4x_ctTYe, 807904 bytes, LastModified 2026-09-23T21:58:26Z; opal-amgt-scoped-api still CodeSha256 DEQQiCH+UoUMd7EZSQA5RTsILDY5+ubb9Y3gVLE5elU=, LastModified 2026-09-23T22:02:35Z. Nothing built, nothing uploaded, nothing applied."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "spec_asserts": "TO-AMGT-rm-7 as amended (amendment 2 @a2573d8540) step 3: 'build and upload the artifact, then apply', with <paths> granting the terraform files, the handler package, the ledger and this lane's deliverables -- and amendment 1 having REMOVED lib/research/** on the ground that the order asks only a READ there.",
+    "world_is": "The build the order now names has a precondition of its own that touches lib/research/: it regenerates _harvest_prefixes.py from the live registry and ABORTS unless the committed copy matches. The registry moved on 2026-09-23 through an unrelated IRPT change, so the committed copy is stale and the build refuses before packaging anything. Satisfying it requires a WRITE to lib/research/api/_harvest_prefixes.py, which is lane BASE_EXEC and outside this lane's grant. So amendment 1's premise -- that rm-7 only ever READS under lib/research/ -- no longer holds once step 3 includes the build.",
+    "notes": "THIRD instance of ONE structural class in this order, and naming the class matters more than the three instances: a cell's <paths> and egress class are written against the ACT THE AUTHOR PICTURED, while the act's real precondition graph reaches further. Z-S253 was the artifact write no cell owned; this is the generated-module write the build performs on the way to that artifact. Each amendment correctly widened by exactly what the last measurement showed, and the next layer down was still not visible until the build was RUN. The cheap general remedy is to RUN a build --build-only at cut time, which is free and surfaces the whole precondition chain at once. Remedy here is small and not this lane's: regenerate the file (its content change is one constant) under a lane that holds lib/**, or widen rm-7 by exactly that path. No override was taken and none exists. The NEVER-2 entry stays OPEN and honest rather than HELD -- deploy_ledger refuses HELD while an activation leg is open, correctly, since it cannot distinguish never-started from half-landed; the world reads untouched on both handles and this lane will close it NOT-EXECUTED if the blocker outlives the 4 h window."
   }
 ]
 ```
