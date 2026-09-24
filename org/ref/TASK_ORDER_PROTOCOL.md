@@ -158,6 +158,26 @@ this template and the spine differ, the spine governs.
           CORRECTNESS ("the value == 294 exactly") -> the first one that can FAIL
     A criterion that cannot fail is not a criterion. Pin the expected VALUE, not the shape.
 
+    ================================================================================
+    THE VERIFICATION DIET -- canonical tree orders (spine v3.16, L6). A TO IS MOSTLY THE BUILD.
+    ================================================================================
+      AT MOST THREE mechanical criteria on a build order:
+        (a) the built behaviour;
+        (b) the hop's seam probe against its REAL neighbour where reachable (a fixture only
+            where it is not);
+        (c) at most one further criterion the cell genuinely needs.
+      A fourth carries a one-line reason on the face. A difference-control arm is part of
+      the criterion it controls, never counted as a separate check (spine v3.17).
+      REPO-WIDE HYGIENE IS NOT A CRITERION: typecheck, lint, the full suite, py_compile, and
+      the "bun run build" / "bunx tsc -b" line below run ONCE PER MERGE at the COO's drain,
+      and the live thread trace once per round there. On a canonical tree order, the portal
+      and gold STANDARD CRITERIA below are drain checks, not lines on the face.
+      JUDGMENT criteria only where the outcome needs judgment (a user-facing reading, a
+      design-conformance grade) -- never a default slot.
+      KEPT UNCHANGED: the refusal clause, the difference control on a criterion that
+      asserts a control, and the proof-of-spec instance.
+      No gate counts criteria; this is how the issuer cuts.
+
     STANDARD CRITERIA (include for every gold-touching DS TO):
     N.   comp-validate {script} --artifact /tmp/{artifact}.json exits 0
          (all ERROR checks pass; WARN count documented in session log)

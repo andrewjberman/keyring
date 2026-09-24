@@ -1,0 +1,226 @@
+{
+  "scope": {
+    "resolved_scope_fingerprint": "0000000000000000000000000000000000000000000000000000000000000000",
+    "firm_id": "fir_c9fc04650e2134d6ea033da2",
+    "account_ids": [
+      "acc_6157ed43329bea7a01ab2744",
+      "acc_89d7488c1edd1aa3eb4f0e61",
+      "acc_cb09ad013dbd23405f07b66a"
+    ]
+  },
+  "source_set_revision": [
+    {
+      "source": "t",
+      "revision": "r",
+      "completion_date": "2026-09-10"
+    }
+  ],
+  "clocks": {
+    "business_date": "2026-09-10",
+    "as_of_timestamp": "2026-09-11T00:00:00Z",
+    "custody_as_of": "2026-09-10",
+    "overlay_as_of": "2026-09-11",
+    "source_as_of": [
+      {
+        "source": "t (custody)",
+        "as_of": "2026-09-10"
+      },
+      {
+        "source": "t (overlay)",
+        "as_of": "2026-09-11"
+      }
+    ]
+  },
+  "custody_totals": {
+    "unique_account_count": 3,
+    "unique_position_count": 0,
+    "total_market_value": {
+      "value": 147.0,
+      "currency": "USD"
+    },
+    "deduplicated": true
+  },
+  "nodes": [
+    {
+      "node_id": "acc_89d7488c1edd1aa3eb4f0e61",
+      "parent_node_id": null,
+      "level": 0,
+      "node_kind": "ACCOUNT",
+      "basis": "OBSERVED",
+      "amount": {
+        "value": 100.0,
+        "units": "USD",
+        "denominator": {
+          "kind": "UNIQUE_CUSTODY_TOTAL",
+          "value": 100.0
+        }
+      },
+      "percentages": {
+        "of_parent": null,
+        "of_total": null
+      },
+      "provenance": {
+        "producer": "test",
+        "join_method": "fixture",
+        "join_matched": 1,
+        "join_attempted": 1,
+        "claim": "measured"
+      },
+      "clocks": {
+        "custody_as_of": "2026-09-10",
+        "overlay_as_of": "2026-09-11"
+      }
+    },
+    {
+      "node_id": "acc_89d7488c1edd1aa3eb4f0e61:model:m1",
+      "parent_node_id": "acc_89d7488c1edd1aa3eb4f0e61",
+      "level": 1,
+      "node_kind": "MODEL_LEAF",
+      "basis": "ASSIGNED",
+      "amount": {
+        "value": 100.0,
+        "units": "USD",
+        "denominator": {
+          "kind": "UNIQUE_CUSTODY_TOTAL",
+          "value": 100.0
+        }
+      },
+      "percentages": {
+        "of_parent": null,
+        "of_total": null
+      },
+      "provenance": {
+        "producer": "test",
+        "join_method": "fixture",
+        "join_matched": 1,
+        "join_attempted": 1,
+        "claim": "measured"
+      },
+      "clocks": {
+        "custody_as_of": "2026-09-10",
+        "overlay_as_of": "2026-09-11"
+      }
+    },
+    {
+      "node_id": "acc_6157ed43329bea7a01ab2744",
+      "parent_node_id": null,
+      "level": 0,
+      "node_kind": "ACCOUNT",
+      "basis": "OBSERVED",
+      "amount": {
+        "value": 40.0,
+        "units": "USD",
+        "denominator": {
+          "kind": "UNIQUE_CUSTODY_TOTAL",
+          "value": 40.0
+        }
+      },
+      "percentages": {
+        "of_parent": null,
+        "of_total": null
+      },
+      "provenance": {
+        "producer": "test",
+        "join_method": "fixture",
+        "join_matched": 1,
+        "join_attempted": 1,
+        "claim": "measured"
+      },
+      "clocks": {
+        "custody_as_of": "2026-09-10",
+        "overlay_as_of": "2026-09-11"
+      }
+    },
+    {
+      "node_id": "acc_6157ed43329bea7a01ab2744:model:m2",
+      "parent_node_id": "acc_6157ed43329bea7a01ab2744",
+      "level": 1,
+      "node_kind": "MODEL_LEAF",
+      "basis": "ASSIGNED",
+      "amount": {
+        "value": 40.0,
+        "units": "USD",
+        "denominator": {
+          "kind": "UNIQUE_CUSTODY_TOTAL",
+          "value": 40.0
+        }
+      },
+      "percentages": {
+        "of_parent": null,
+        "of_total": null
+      },
+      "provenance": {
+        "producer": "test",
+        "join_method": "fixture",
+        "join_matched": 1,
+        "join_attempted": 1,
+        "claim": "measured"
+      },
+      "clocks": {
+        "custody_as_of": "2026-09-10",
+        "overlay_as_of": "2026-09-11"
+      }
+    },
+    {
+      "node_id": "acc_cb09ad013dbd23405f07b66a",
+      "parent_node_id": null,
+      "level": 0,
+      "node_kind": "ACCOUNT",
+      "basis": "OBSERVED",
+      "amount": {
+        "value": 7.0,
+        "units": "USD",
+        "denominator": {
+          "kind": "UNIQUE_CUSTODY_TOTAL",
+          "value": 7.0
+        }
+      },
+      "percentages": {
+        "of_parent": null,
+        "of_total": null
+      },
+      "provenance": {
+        "producer": "test",
+        "join_method": "fixture",
+        "join_matched": 1,
+        "join_attempted": 1,
+        "claim": "measured"
+      },
+      "clocks": {
+        "custody_as_of": "2026-09-10",
+        "overlay_as_of": "2026-09-11"
+      }
+    }
+  ],
+  "coverage": {
+    "nodes_resolved": 5,
+    "nodes_attempted": 5,
+    "remainder": {
+      "amount": 0.0,
+      "units": "USD",
+      "reason": "fixture"
+    }
+  },
+  "attribution_holdouts": {
+    "unassigned": {
+      "account_count": 1,
+      "account_ids": [
+        "acc_cb09ad013dbd23405f07b66a"
+      ],
+      "value": {
+        "value": 7.0,
+        "currency": "USD"
+      },
+      "basis": "OBSERVED",
+      "observable": "MEASURED",
+      "denominator": "1 of 3"
+    },
+    "reconcile": {
+      "total_before": 147.0,
+      "total_after": 147.0,
+      "difference": 0.0,
+      "tolerance": 0.01,
+      "reconciled": true
+    }
+  }
+}

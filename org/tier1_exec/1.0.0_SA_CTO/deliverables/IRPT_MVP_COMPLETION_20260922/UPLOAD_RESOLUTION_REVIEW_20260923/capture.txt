@@ -1,0 +1,36 @@
+{
+  "mode": "CRO_PINNED_OFFLINE_CAPTURE",
+  "source_pin": "d7d044ba7a",
+  "requested_count": 5,
+  "distinct_count": 5,
+  "cache_count": 0,
+  "outcomes": [
+    {
+      "symbol": "AAPL",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "ALPPL",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "VNQ",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    },
+    {
+      "symbol": "BREIT",
+      "state": "NOT_FOUND",
+      "reason": "EXACT_IDENTIFIER_ABSENT_IN_PROVIDER_READ"
+    },
+    {
+      "symbol": "$:CASH",
+      "state": "FOUND",
+      "reason": "EXACT_PROVIDER_MATCH"
+    }
+  ],
+  "unresolved_count": 2,
+  "latency_seconds": 0.0
+}

@@ -1,0 +1,195 @@
+{
+  "schema_version": "irpt-local-binding-seam-evidence-v1",
+  "baseline": "f0075287c426cbe9eea04f0165bc179147918ce1",
+  "integrated_parent": "515fba746a3eaaf016ba0a6b0f5340928cce3dc0",
+  "implementation_pin": "00b54afab1",
+  "publication_source_pin": "200ba442f56d6dd70aaa07b1f9173898893dc8cf",
+  "cto_publication_review": "bb43292167",
+  "ruling": "999998e448",
+  "tests": {
+    "command": "python -m pytest infra/aws/lambda/investor-reporting/_scope/tests/test_custody_binding.py infra/aws/lambda/investor-reporting/holdings/tests/test_publication.py infra/aws/lambda/investor-reporting/holdings/tests/test_snapshot.py infra/aws/lambda/investor-reporting/holdings/tests/test_publication_entry.py -q",
+    "passed": 115,
+    "failed": 0,
+    "scope": "Offline versioned synthetic S3/Dynamo; actual M publication capture/replay and P store/reader; synthetic economic ports"
+  },
+  "boundaries": [
+    "No real economic admission capability or source receipts proved",
+    "Y paired consumer pending",
+    "No cloud reads/writes, producer invocation, IAM, runtime attachment or promotion",
+    "Final integrated Lambda package pending consumer integration",
+    "Manifest excludes itself; changed_files describes exact committed content at measured_source_pin, not the later correction commit or an archive."
+  ],
+  "changed_files": [
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+      "sha256": "a133e3922a0417085f3db5548702bfc58f886edb0fc3714849f65b8f6ec0a938",
+      "git_blob": "faa08386f698a37443730f0e39c2a0de4f4a9101",
+      "byte_length": 96769
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/tests/test_economic_regressions.py",
+      "sha256": "69e09e4de45ec24dcc4ea4c95173098c37bbb4caa703f56fefa8fa149dbbdb45",
+      "git_blob": "6f92d57cb3f49d013a35bbffa62f3cdb6f8d9755",
+      "byte_length": 19213
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py",
+      "sha256": "ae8ff802b844c937acd2dfbd98dc9c17abaa414544a3282d820b08adf25598a8",
+      "git_blob": "90e82177d6948bef7dbd7fbf6dc85e2932519e4a",
+      "byte_length": 19457
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/tests/test_source_inputs.py",
+      "sha256": "e191e0eb0eafca5164d5d6b2492ff74352f3f3c83ddbfc437d26b40b593f6d22",
+      "git_blob": "b059f2280b04061b0ff97327689ee1f9faa47683",
+      "byte_length": 7104
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_authz/tests/test_guarded_entries.py",
+      "sha256": "aafb5e1973fe090e09e19fc71b65f61f501444d1b70defcf50f2abc0674a1e2d",
+      "git_blob": "93f7b5bf0b5c7e59f316c4265d9cf8eba4ec6bd9",
+      "byte_length": 22638
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_scope/accepted_custody.py",
+      "sha256": "748d54550cba302f7d418937e3434bb63cdc3bdc7f8bb0a21f64e144c9956837",
+      "git_blob": "f69525e3b60f16c0ca896261dee0387409a8bc25",
+      "byte_length": 8539
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_scope/custody_binding.py",
+      "sha256": "a01c312835062fdb8419e549e28387f1e0fc3ee68cded71fbe3349de97c4be0e",
+      "git_blob": "1f5f3a8bcd883713353fc76ad8ed400cd4f93516",
+      "byte_length": 8858
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_scope/tests/test_custody_binding.py",
+      "sha256": "ef7f6a7d49712177302b5bdb0dd61ef547d569c2401ee2c55786e7d7adf3ca21",
+      "git_blob": "80aad6ccf7a8c67b99fe89d1dd9790b7d89f798c",
+      "byte_length": 13430
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/holdings/publication.py",
+      "sha256": "ca49ec495cb5936a2f881170d08543469cbfc4ec7c28d0a6024cbf48264f9e95",
+      "git_blob": "9b169a9ee1bbd75583b75cbe60522e7ed9ebb6bb",
+      "byte_length": 25649
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/holdings/snapshot.py",
+      "sha256": "f91d972366e2a8637bd0fdeafafa231b927d5118b84ce5472801872c7d0f0919",
+      "git_blob": "0668247488e46b62f232d4889ae60de966f3cfd1",
+      "byte_length": 22541
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/holdings/tests/test_publication.py",
+      "sha256": "dd721fb2c38c9fd4ccfa0a8fbd5befd86ea41861d42525e118c9e5427492319a",
+      "git_blob": "0af28e7c1b1df28a7a3b0c83a4b2b6394d042b51",
+      "byte_length": 17017
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/holdings/tests/test_snapshot.py",
+      "sha256": "daae1801dcb75ef87c98d0f66f231bb978b310d57ae99162a2744e358c479ebc",
+      "git_blob": "095836a1e6ac0c05b68368bf755443947ce64bd6",
+      "byte_length": 18016
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/ACCEPTED_READER_FIELD_REVIEW_20260923.md",
+      "sha256": "7283ad51856a3e0079914b8e2d53dceb7a27e2a645f9542b7f9c3cfd8f07534e",
+      "git_blob": "0d7afd7771394417f7cd6bc12800e7ce894f46da",
+      "byte_length": 15450
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/ACTUAL_POSITION_REPAIR_PROPOSAL_20260923.json",
+      "sha256": "7dc1ac76f22acfc2a78ca077dc88217cc05baa1d114505e8c4f3c646e957d6c5",
+      "git_blob": "167478eb434f2a8eff5e4c7dcd0cb8e8dea8b81a",
+      "byte_length": 12178
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/ACTUAL_POSITION_REPAIR_PROPOSAL_20260923.md",
+      "sha256": "e03e71ae6a92f5bc6cccf963dfcaa5d23e3a38ed69e8e1fb26b7e47af17a56b4",
+      "git_blob": "144ed1b2a125bdfd16d67516f4ff7366f86e76de",
+      "byte_length": 18198
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CUSTODY_NORMALIZATION_SOURCE_HANDOFF_20260923.json",
+      "sha256": "13654e124b361be1f005f9ef641ac3462eadabf04a43435e1138f9bf41f36b4f",
+      "git_blob": "868f531b3bc488f5cdb9d3ca0e4e144540554c5e",
+      "byte_length": 15897
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CUSTODY_NORMALIZATION_SOURCE_HANDOFF_20260923.md",
+      "sha256": "8438c80a1a93ce04fe0dc92c1f388710fb1ba074f608166db4c613bf1492fb99",
+      "git_blob": "1921e77f1c26d24858213d109e4e6fd8a92d1943",
+      "byte_length": 13832
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/directory_data_audit.py",
+      "sha256": "c761bfa6661e15ac2bb3dd55e2df6591c902c0bcd14efd1c728db985e17da918",
+      "git_blob": "d6787deabec738cd4a00e2035f31c7901e6af057",
+      "byte_length": 18651
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/DIRECTORY_DATA_AUDIT_20260923.json",
+      "sha256": "74edee811fbdc16de1ebfb5632cb2e1c4fe619ecf755758d28038efbe63fdeda",
+      "git_blob": "da3d717161a2a37dc067729f38019b430f113407",
+      "byte_length": 16382
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/DIRECTORY_DATA_AUDIT_20260923.md",
+      "sha256": "2d51d08847576cbb67f528a9bac2939b904689d334df39be230464c5b43b4617",
+      "git_blob": "d7b7cd3e0edf3769ec06d44ff829c582a57bddbc",
+      "byte_length": 7167
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/INBOX_RECONCILIATION_20260923.md",
+      "sha256": "ed055356d2a2bd1227eac4a2cbf725e38092989f304951effd3f51886085ae77",
+      "git_blob": "05ca35cc94898837b3811c59f6a6d158d51e63d5",
+      "byte_length": 7271
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/OPAL_ORGANIZATION_STORAGE_20260923.json",
+      "sha256": "5d3a088acc78d9986265e6ca1b73c3e3063b46184aef4b4b4c5845330027f824",
+      "git_blob": "ee07d64d6f74470b3abfd268861f4a4542b6bb59",
+      "byte_length": 1247
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/PRODUCER_ORGANIZATION_INVENTORY_20260923.json",
+      "sha256": "fae187c6c190c2b6b883d76195dccfe07ee3712e4afe3b779e6655b2455f76d5",
+      "git_blob": "bc97628882bbafeca7e0715d7f2afdc6ba1821af",
+      "byte_length": 16831
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/PRODUCER_ORGANIZATION_INVENTORY_20260923.md",
+      "sha256": "714eb2dd386fcc25e7f86634ff3cd396f606d703eb6ddb009cfcff7c9087ead0",
+      "git_blob": "f682620410c5d8a70cf466c4fb28c3465082bbfc",
+      "byte_length": 14403
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/STATUS.md",
+      "sha256": "37c9675b10a6e08b54d288ad9423871cb5e00007485520d9a95685a9bbe51dd8",
+      "git_blob": "a4b4481262a111b39d9309f68128aa3b58561496",
+      "byte_length": 8743
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/ACCEPTED_CUSTODY_READER_DRAFT_20260923.md",
+      "sha256": "232ca08d254efee005d66209069e5fce841b262962b88b78197f2fdfbeb24053",
+      "git_blob": "2fffaf6fbb3c2d1bad1a112072808cf57c9c86b9",
+      "byte_length": 24162
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md",
+      "sha256": "14c787acf4cc316419da3d9dddd15db31e961f6bb8b0efe92ae4ef6f477f1348",
+      "git_blob": "4a25f471fd0e5f5f335b62fa41fba4210678d9fc",
+      "byte_length": 44135
+    }
+  ],
+  "documentation_delta": "200ba442f5 changes publish docstring only; 115-test runtime result from c607ee7461 retained without redundant rerun.",
+  "measured_source_pin": "e36b007fa1a85414e8453608dc2803b8c947c290",
+  "hash_basis": "sha256 is computed over exact committed Git blob bytes at measured_source_pin, with no checkout newline conversion; git_blob is the corresponding Git object ID.",
+  "cto_binding_review": "d8d88388aba171b2d9f9a7f1798fe1ed974bb0bb",
+  "archive_evidence": {
+    "status": "pending paired consumer and final package assembly",
+    "artifacts": [],
+    "hash_basis": "Future archive SHA-256 values must hash actual archive bytes and be recorded separately from committed source blob hashes."
+  }
+}

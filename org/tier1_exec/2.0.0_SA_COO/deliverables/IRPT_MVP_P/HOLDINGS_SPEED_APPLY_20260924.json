@@ -1,0 +1,60 @@
+{
+  "observed_at": "2026-09-24T05:06:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "APPLIED -- code-only irpt-holdings repackage carrying _authz/loaders.py (B1/B3) and _authz/served.py (B7) at the CRO's listing-speed pin 5886d0b9bd; CTO 100218 item 1 (ruling IRPT-LISTING-SPEED-ROUND-2-20260924). Nothing else in the package moves.",
+  "pin": {
+    "loaders_served_commit": "5886d0b9bd",
+    "loaders_sha256_prefix": "4ffd0e37f6",
+    "served_sha256_prefix": "8fc47bf668",
+    "previous_rows": {"loaders": "b84bb2918f", "served": "eba6253537"},
+    "source_map_commit": "4762c64d93 (irpt-p-publish-20260923)"
+  },
+  "artifact": {
+    "s3": "s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-holdings.zip",
+    "version_id": "J2UrwQmtpVYXHB97LAlt4mLnLVkBGmUH",
+    "code_sha256": "C69BErK1TcEuyx5K4VjN4xwOTeeE/unrKhNxsmORB/I=",
+    "bytes": 265344,
+    "members": 33,
+    "differs_from_deployed_3nc57No0": ["loaders.py", "served.py"],
+    "builder": "infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-holdings (write VERIFIED, sha256 metadata match)"
+  },
+  "plan": {
+    "root": "infra/aws/terraform/investor-reporting/holdings (backend worktree irpt-smoke-p-backend-20260923, .tools/terraform.exe 1.9.8)",
+    "file": ".runtime/holdings-speed/speed.tfplan",
+    "sha256_prefix": "9acfed87fe3c52fb",
+    "summary": {"add": 0, "change": 1, "destroy": 0},
+    "change": "module.irpt_holdings.aws_lambda_function.this: source_code_hash 3nc57No0 -> C69BErK1, s3_object_version Q1V60Swh -> J2UrwQmt; layers/handler/environment/memory unchanged",
+    "note": "a first plan from the publish worktree's root (PATH terraform 1.14.5, plan 2d9041f4, same 0/1/0) could not be applied: safe-apply resolves .tools/terraform.exe 1.9.8 and that binary reads the 1.14.5-initialised root as uninitialised; re-planned with 1.9.8 in the backend worktree's root, identical change set"
+  },
+  "apply": {
+    "tool": ".tools/safe-apply.sh from the backend worktree holdings root",
+    "halt_ack": "HALT_ACK=1 (22 pending broker messages acknowledged for the gate)",
+    "result": "Apply complete 0 added / 1 changed / 0 destroyed rc=0",
+    "completed_at": "2026-09-24T05:04:34Z",
+    "log_sha256_prefix": "a9cf95dea63ae5f6"
+  },
+  "readback": {
+    "CodeSha256": "C69BErK1TcEuyx5K4VjN4xwOTeeE/unrKhNxsmORB/I=",
+    "LastModified": "2026-09-24T05:04:29.000+0000",
+    "Handler": "entry.lambda_handler",
+    "MemorySize": 1024,
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "replan": "terraform plan -detailed-exitcode rc=0 -- No changes (05:05Z)"
+  },
+  "recorder": {
+    "commit": "a128a887df (irpt-p-publish-20260923)",
+    "changelog_entry": "untagged-4762c64d"
+  },
+  "ledger": {
+    "slug": "irpt-holdings-speed-20260924",
+    "sentinel_commit": "32477c67bb",
+    "status": "CLOSED",
+    "legs": {"A1": "closed", "V1": "closed", "R1": "closed"}
+  },
+  "not_claimed": [
+    "the holdings function's p50/p90 AFTER (owed with the performance reconcile's 30-minute window, beside the CRO's baseline)",
+    "the schema-copy repackage (display + CUSTODY_UNITS) -- a separate step-3 act after the schema commit"
+  ],
+  "push_state": "LOCAL (backend + publish worktrees; MSTR pushes)"
+}

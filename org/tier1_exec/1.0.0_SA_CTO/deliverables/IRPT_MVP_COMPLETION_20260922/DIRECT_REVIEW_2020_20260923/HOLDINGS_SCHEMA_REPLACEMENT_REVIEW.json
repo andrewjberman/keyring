@@ -1,0 +1,14 @@
+{
+  "sha256": "97f190ac5704bd63153f24666401a8a102ed35dc1a1c07be0afcbfdb71540c35",
+  "version": "nWRHWWilAp0fu9f7swCfvS1zXHEaTfXC",
+  "members": 33,
+  "changed_members": [
+    "BUILD_MANIFEST.json",
+    "snapshot.py"
+  ],
+  "snapshot_exact": true,
+  "image": "public.ecr.aws/lambda/python@sha256:5f188ce6104ab76d1a9a44b9b53fd0d72ea5ccec94eb4cbccf5c9b0ef485f9f8",
+  "exit": 0,
+  "stdout": "{\"entry_import\": true, \"schema_path\": \"/var/task/contracts/HoldingsSnapshot.schema.json\"}\n",
+  "stderr": ""
+}

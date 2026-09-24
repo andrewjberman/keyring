@@ -1,0 +1,233 @@
+{
+ "source": "2874e376472ff3066fa013406150424e54ad438d",
+ "paths": [
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py",
+   "source_blob_sha256": "2e405b54c9fc0a9569e9f4681c493c2f08797b8ab2fbd9101bdc1d8dc90a00ee"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/frozen_worker.py",
+   "source_blob_sha256": "9bd0befddf6449d458b755f2be76cd80eecae572c2a4891771b07b4cb9a00e14"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/install-resident.sh",
+   "source_blob_sha256": "0b72f58ff90624319e57443b8d99a87797f1c608559f6d02060d95768b349517"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/job.py",
+   "source_blob_sha256": "a8fe9146464c69ecc99145142391c5c6d633f49a6e6007929ae922640b13412f"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py",
+   "source_blob_sha256": "6fdd29d5107d5e35a5d849bbc48d91b98548bd016079784a92434cdbdd62524c"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py",
+   "source_blob_sha256": "cd7c729e26f8b3e86380f08f30ab925fb96dc1c6f0917a2a5a6d67bdc918bc11"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/publication_worker.py",
+   "source_blob_sha256": "a711bbd658a981bb0131f235d89aac6c9fdbbf98ec788711243e629a8512a431"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py",
+   "source_blob_sha256": "9bae2233fd41a484c25d20907eb1ae28abd6d77e641cbfd9dc66d06689e18ab5"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py",
+   "source_blob_sha256": "f3d262ba05a2fb46b43cc5e5818bd6a419b0c0db9c8cbde48c76d5f0b1c409e3"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py",
+   "source_blob_sha256": "dfdcf18ea93687782464d01d21f626603222329c0603eeb0d59d3ab406765200"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py",
+   "source_blob_sha256": "1c1a54b053747409e56c09da84a8d61942eeafd74c1f049a4166db54ccfce95d"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py",
+   "source_blob_sha256": "5460fcdccd2088931a662bcb861dc8c21217bf71731a50f74123dd6bbc2e2aae"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py",
+   "source_blob_sha256": "d07a8281bba05e3d6bf695a65d5a9e082d5cf8848194445841621be2cbffa9b6"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_prospect_submission.py",
+   "source_blob_sha256": "7694704f50f3589ff09b2a448bdbfef51050274bf23d697776ff421ca96c84ce"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py",
+   "source_blob_sha256": "3f0b7ae9e19ccabfb2dd96f74837bf554673d23be47c6128d8c3ae30e22c1c43"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resolution_retry.py",
+   "source_blob_sha256": "f6c57011083b57eb6e89d830271bf71abbf599c9e9247ccd5d6ce0d6f3a1e628"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py",
+   "source_blob_sha256": "a63e00c9d649ecd3550273a7168083ded6cb0609cb224aa72124bb9a06e44435"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/session/broker.py",
+   "source_blob_sha256": "a4b60a138a7c8f3ce05259ba53338e93e6a470af2d4929da14ad81c0e681039a"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/session/controller.py",
+   "source_blob_sha256": "d203f3677c2166d4d5c9ba0d8c20a7460263ff922636e5fe7555d03edd2ad29d"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/session/deadline_transport.py",
+   "source_blob_sha256": "ea6aca1baede18510311ce6d930d3fee61562fcd52c93440605f7560101b3ae5"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py",
+   "source_blob_sha256": "3836468f8db7818cc60a43b9242e26c0f83901053aea5f70c10ba4881a0dfd75"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/session/operation_lease.py",
+   "source_blob_sha256": "69d86350fb23954902275c533c4895c8ee470174b74e3a83cd9c29a034ef4114"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py",
+   "source_blob_sha256": "88791ce6aa8be8849a3e38849e1ef5f6de76fd12b99135b4b5f58c2c9b9cbb0f"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/session/tests/run_session_suite.py",
+   "source_blob_sha256": "36dd9501b0b96a590062ab69ed60494050c8ffd0aca0331733a2e316a975e6d0"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_broker_recovery_evidence.py",
+   "source_blob_sha256": "fc3887842e6adc68832d6ea58b6b033ae0c68ebf29fd5521c84487f4b9f8aa2f"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_controller.py",
+   "source_blob_sha256": "0a59fda27625608018a58969048187b90a7a60c204b93eddd15c5ffb5626d96b"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_deadline_transport.py",
+   "source_blob_sha256": "3dc69861b4a3376cceff9f8143d4a5aee14d0fc76908e19cb126952b46a15fd4"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_host_capture.py",
+   "source_blob_sha256": "d806176ad35c5119330971660c47d9d1d9e60226d34aeff80943377853d64ce2"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_operation_lease.py",
+   "source_blob_sha256": "ed428b5a86b6c832c85556d9d102c6352f22d60e6bd74b322944572f0db8d1fb"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_resident_session.py",
+   "source_blob_sha256": "5558690254b11e4a28b26bf6ec230c67c8634ac2f9b0817c9c6600927917c7a2"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_resolution_broker.py",
+   "source_blob_sha256": "59779195a59c3176b6a8f99cf9f38c7d126d13d4be61dae71a565b9a01c3c0c4"
+  }
+ ],
+ "new_exact_grants": [
+  "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py",
+  "infra/aws/lambda/investor-reporting/ycharts/generate/install-resident.sh",
+  "infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py",
+  "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resolution_retry.py",
+  "infra/aws/lambda/investor-reporting/ycharts/session/controller.py",
+  "infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py",
+  "infra/aws/lambda/investor-reporting/ycharts/session/operation_lease.py",
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/run_session_suite.py",
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_controller.py",
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_host_capture.py",
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_operation_lease.py"
+ ],
+ "extensions": [
+  {
+   "source": "c4564aad17eac5f498f4f418347b823c8b106c20",
+   "ruling": "IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923",
+   "merge_base_with_p": "10627906f2",
+   "new_grant_rows": [
+    "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py",
+    "infra/aws/lambda/investor-reporting/intake/security_resolution.py",
+    "infra/aws/lambda/investor-reporting/intake/template_reader.py",
+    "infra/aws/lambda/investor-reporting/intake/tests/test_resolution_kimi.py",
+    "infra/aws/lambda/investor-reporting/intake/tests/test_security_resolution.py",
+    "infra/aws/lambda/investor-reporting/intake/tests/test_template_reader.py",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/current_authority.py"
+   ],
+   "rows_already_granted": [
+    "infra/aws/lambda/investor-reporting/intake/portfolio.py",
+    "infra/aws/lambda/investor-reporting/ops/prospect_dates.py"
+   ],
+   "paths": [
+    {
+     "path": "infra/aws/lambda/investor-reporting/intake/portfolio.py",
+     "source_blob_sha256": "65904dc925e8a17dcfe2e6a29b412fc205258c55213145a8080195fc4e9fee38",
+     "integration": "three_way_merge"
+    },
+    {
+     "path": "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py",
+     "source_blob_sha256": "e1c15764ebe01dfe88ec6e8ebdd98b4383db2e73ed644680f4da420b0f24985a",
+     "integration": "exact_copy"
+    },
+    {
+     "path": "infra/aws/lambda/investor-reporting/intake/security_resolution.py",
+     "source_blob_sha256": "8594dcacb8d1c4ba42c5b9b7adb3d1663a5a49d6f16a6a4a3d61b859246d71f1",
+     "integration": "exact_copy"
+    },
+    {
+     "path": "infra/aws/lambda/investor-reporting/intake/template_reader.py",
+     "source_blob_sha256": "76795b75313b076488d6c2f0ed7a8480be92b999efb6886a3ede92b11e916409",
+     "integration": "exact_copy"
+    },
+    {
+     "path": "infra/aws/lambda/investor-reporting/intake/tests/test_resolution_kimi.py",
+     "source_blob_sha256": "6a98c5d962715ca37f553937632f82f9b0f165fdd30bd97131817bcff70fd94e",
+     "integration": "exact_copy"
+    },
+    {
+     "path": "infra/aws/lambda/investor-reporting/intake/tests/test_security_resolution.py",
+     "source_blob_sha256": "0992f029cdb6946e6205519923020412895bae9416a5c03366998fe1835c097a",
+     "integration": "exact_copy"
+    },
+    {
+     "path": "infra/aws/lambda/investor-reporting/intake/tests/test_template_reader.py",
+     "source_blob_sha256": "e5794d98953fbcb8892793655a15ae638ecaa5057c1fa04956e740498a51870a",
+     "integration": "exact_copy"
+    },
+    {
+     "path": "infra/aws/lambda/investor-reporting/ops/prospect_dates.py",
+     "source_blob_sha256": "d44e121fe5f592a27e7df259bf424da2325d913970ed149ea4b5d37f045ce0e5",
+     "integration": "three_way_merge"
+    },
+    {
+     "path": "infra/aws/lambda/investor-reporting/ycharts/generate/current_authority.py",
+     "source_blob_sha256": "a0af2f51759cbe4bc0c6f0ee258cef1cc43252edf8fc678cc4d619f2418e27aa",
+     "integration": "exact_copy"
+    }
+   ],
+   "diverged_three_way_merge": [
+    "infra/aws/lambda/investor-reporting/intake/portfolio.py",
+    "infra/aws/lambda/investor-reporting/ops/prospect_dates.py"
+   ]
+  },
+  {
+   "source": "79c53e1abe5672e17c3476c09919f31548f015f6",
+   "ruling": "IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923-batch11",
+   "new_grant_rows": [
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_canonical_profile_consumption.py",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_retained.py"
+   ],
+   "paths": [
+    {
+     "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_canonical_profile_consumption.py",
+     "source_blob_sha256": "ecf2a38c31858b75edc2ef17191cfd9af4ffff95e7a3478ad9555c430ff7a3af",
+     "integration": "exact_copy"
+    },
+    {
+     "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_retained.py",
+     "source_blob_sha256": "a1883f71f6be9a387abca7ad4978b9b2b2a99997d5b4218e88b5eddab279b73d",
+     "integration": "exact_copy"
+    }
+   ]
+  }
+ ]
+}

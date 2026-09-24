@@ -1,0 +1,67 @@
+{
+  "schema_version": "irpt-custody-consumer-evidence-v1",
+  "source_pin": "10627906f24aa42db4c08fd66105599f35bf7819",
+  "base": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+  "reader_test_pin": "8845b7ef23cabfe9c73a3f8109f0c1c2c829e3af",
+  "current_p_pair": "e36b007fa1a85414e8453608dc2803b8c947c290",
+  "reader_runtime_blobs_unchanged_between_pins": true,
+  "ruling": "999998e448",
+  "changed_files": [
+    {
+      "path": "infra/aws/lambda/investor-reporting/intake/custody_portfolio.py",
+      "git_blob": "ab6a1cccaf65597fdbf54c509403a5f3f7f1d5f2",
+      "sha256": "a62ee3780db59dc92099472acc902b64023a8c098222846534f0c76c3b4d7ab1"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/intake/portfolio.py",
+      "git_blob": "6b7f263ea7dcaf29f586775ffb92d7d52de64b69",
+      "sha256": "40bf9ecce6077465ac35884f2d8b8dbef81dc439c08d696aeccef987ce825635"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/intake/tests/test_custody_portfolio.py",
+      "git_blob": "d66b6e24fff7e256afdf0f28a4586803ca886472",
+      "sha256": "34a05da743f0e152abfbe89c2543c5665405947daac61e0fd34ee6174f583cf1"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/custody_submission.py",
+      "git_blob": "a8880eb3ca67d483ce475c9922e93a03d0e797a3",
+      "sha256": "b21a44b24408cd514401791a548527e1217be1e7e4a1d410fba2cff6b0225b79"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_retained.py",
+      "git_blob": "3166ade704a5c5cbb61f15389a464d42964eda28",
+      "sha256": "0d76e8267552fc381631132796d8b8028dca0ed927c02b9031c44e061869af55"
+    }
+  ],
+  "validation": {
+    "generation": {
+      "passed": 212,
+      "subtests": 32,
+      "command": "python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests -q"
+    },
+    "intake": {
+      "passed": 94,
+      "subtests": 18,
+      "command": "python -m pytest infra/aws/lambda/investor-reporting/intake/tests -q"
+    },
+    "last_added_retained_byte_assertion": {
+      "passed": 2,
+      "command": "python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_retained.py -k p_reader -q"
+    },
+    "paired_environment": "IRPT_ACCEPTED_READER_TEST_ROOT points to exact flattened accepted_custody.py, custody_binding.py, tests/test_custody_binding.py from reader_test_pin",
+    "combined_collection_attempt": {
+      "passed": 292,
+      "errors": 13,
+      "reason": "world fixture missing in test_composition_admission.py when both directories collected together; separately collected suites pass"
+    },
+    "formatting": "Post-test E701/E702 fixes verified AST-identical; canonical five-file commit gates pass"
+  },
+  "limits": [
+    "All economic facts, publication transports, storage and profile responses are synthetic offline fixtures.",
+    "Y directly exercised actual P reader/store and own factory/freezer/retention replay. Actual M versioned replay is separately reported by P, not rerun as Y evidence.",
+    "No source capability, admitted upstream economic rules, production installation, cloud action, vendor operation or product completion claimed.",
+    "New consumer explicitly caps original and position rows at 10000; source transport 1100 chars/1000 coefficient digits/exponent 1000; original recipe 28 digits/exponent 18 remains unchanged.",
+    "Unknown economics refuse. Current adapter requires same custody/valuation day, explicit accrual equation and native/resolved quantity equality when SHARES is present. No unit conversion or inferred zero is implemented.",
+    "Reader economic validation and opaque receipt authority remain mandatory upstream ports. Shape validation cannot establish source authority."
+  ]
+}

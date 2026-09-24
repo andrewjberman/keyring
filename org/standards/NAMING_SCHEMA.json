@@ -108,7 +108,7 @@
   "EVENT_SOURCE": "NOT GRADED: an event-source expression or service name, a different grammar (not_covered)"
  },
  "cadence": {
-  "values": ["daily", "weekly", "monthly", "hourly"],
+  "values": ["daily", "weekly", "monthly", "hourly", "5min"],
   "event_form": "on-{event}",
   "event_token_regex": "^[a-z0-9]+(-[a-z0-9]+)*$"
  },

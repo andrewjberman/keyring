@@ -1,9 +1,15 @@
 ---
 name: open-calls
-description: Enumerate the SOVEREIGN CALLS pending at Andrew from this seat's vantage, one card each: the minimal decision on top, the recommendation beneath. Calls only, no status dump; zero calls = one line. Any agent.
+description: "Enumerate the SOVEREIGN CALLS pending at Andrew from this seat's vantage, one card each: the minimal decision on top, the recommendation beneath. Calls only, no status dump; zero calls = one line. Any agent."
 ---
 
 # /open-calls — the sovereign-decision queue, from this agent's vantage
+
+## Runtime
+
+- **Claude:** "search your inbox" is the MCP inbox (`check_inbox`); routing a call is an MCP `send_message`.
+- **Codex:** read the seat's inbox directory that `$load` names (`org/mcp/inbox/<base>/~<lane>`) without
+  consuming it -- never `check-inbox.sh`, which consumes; mail arrives through the launcher's inbox bridge (`org/mcp/CODEX_INBOX_MONITOR.md`); sends go through `org/mcp/codex-send.ps1`.
 
 **Purpose (Andrew-direct, 2026-07-15 ~20:4xZ, CTO terminal):** *"I actually want a skill for that
 called /open-calls which I can trigger to query that without having to type it every time to any

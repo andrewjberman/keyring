@@ -1,0 +1,13 @@
+# Exact directory staging handoff
+
+CTO18e2835c5f admitted the exact bootstrap artifact and staging only. Canonical ledger opened at4917bed568, slug irpt-directory-bootstrap-20260923. Fresh preconditions at17:36:36Z verify unchanged code, RevisionId, configuration/environment, role policies/trust, Lambda policy and all four API routes/integration.
+
+Canonical single-function build-and-upload reproduced the reviewed20-member ZIP,155747bytes, SHA256 a39f74ba1e688ac0ad1cf2b3a2b18c27f93d5493dc82d2d283848a7dee0a618b. Existing bucket/key immutable version1ogxCxUa61vTvMPtXB.BehRWB7aJTCnj independently downloaded and byte-hash matched. Source-map delta is solely irpt-directory-search.artifact_sha256. Staging ledger legS1 closed; no apply occurred.
+
+Saved Terraform1.9.8 plan .runtime/directory-review/candidate.tfplan SHA256 c5ef7ef7357ad194bdc38dabd827dd170cc5544e923fd573cb9436c0d40348ca. Full show JSON .runtime/directory-review/candidate-plan.json SHA2564589a8d29ddc9b39e1d86f5e53a2f8f481c466884a4742d934b766f546d88acb. Both files are in C:/Users/AndrewBerman/Desktop/irpt-smoke-p-backend-20260923. Machine grade and exact resource before/after are committed in DIRECTORY_STAGE_20260923.json.
+
+Plan is0add/1in-place-update/0destroy, solely module.irpt_directory_search.aws_lambda_function.this. Only s3_object_version and source_code_hash change; last_modified is computed. No IAM/routes/environment/layers/schedules/other Lambda change. Rollback remains RXChd66RsDjV1jhG1ZsFlOGnXeIDxApp, old live code iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s= and RevisionId8851109e-7f1f-4915-ae2b-0dff01d276c5. Recheck before authorized apply; any drift returns for review.
+
+Request CTO exact saved-plan apply adjudication. No apply, direct Lambda update, recorder exception, Portal promotion or CLOUD push authorized here. Real signed-in scope/list/selection/reload remains unproved. Stage is a bounded bootstrap improvement, not full Opal compliance.
+
+CTO policy correction: a concrete selected_tenant on per-firm API requests is valid routing when Global UI enumerates all firms; the legacy Global non-resolve negative alone is not a permission defect. Actual other-owner/prospect/function restrictions remain shared-source work. M79d137170f identified maintained-profile actor/creator coupling and single-firm selection primitives; preserve attributed identity and frozen profiles. Y173443 identified P report/artifact/retention pre-callback firm checks and lookup placement. Agreed pending seam: explicit keyword data_firm for storage reads, default viewer firm for compatibility; Global requires concrete placement. Entry prospect current_owner is the actual viewer, prospect_owner the retained/create owner. Not implemented yet.

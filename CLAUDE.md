@@ -101,6 +101,12 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     correctly gated and having NAMED `rd-8` as its blocker, silently acquired a different one. ⚠ The
     cost lands on ANOTHER SEAT and is invisible to the one that caused it; the CTO answers with a PRD addendum (an FWD no cell served) or the ROUND-N ANALYSIS the
     COO recuts in ONE issuance; CLOSED when every FWD grades REALIZED.** The three route tokens are RETIRED.
+    ⛔ **ROUND 1 BUILDS THE THREAD; EVERY LATER ROUND ENRICHES (spine v3.16-3.18, Andrew-direct 2026-09-23).**
+    `FWD-1` of a product, pipeline or backend/infra product is ONE live journey end to end; round 1 decomposes over its
+    hops; each round-N analysis ends in the ENRICHMENT LIST the next round cuts; a build TO carries at most THREE
+    mechanical criteria, repo-wide hygiene running at the drain. A product in flight with no working journey goes to
+    `/closer` on Andrew's word (a read-only trace needs none), and `/canonical-drive` skips a row carrying
+    `closer_contract`. COST: none -- a pointer; the spine governs. NON-APPLICATION: a pure governance project.
     Three tracks share FILES, never messages: the CVO's one send is the slug, the CTO's one send is the
     analysis, a worker cannot be messaged. `0.0.0_AB_MSTR` integrates and never works a project. Mid-round
     the spec AND the decomposition are FROZEN; the only off-spec act is a surprise ROW (§2 below).

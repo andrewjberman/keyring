@@ -1,0 +1,52 @@
+{
+  "pin": "0b8784cea8e61c3f06b5aa8f5f77a0c1c47fa1e4",
+  "results": [
+    {
+      "rc": 0,
+      "stamped": [
+        "irpt-directory-search"
+      ],
+      "changelog_functions": [
+        "irpt-directory-search"
+      ],
+      "changelog_artifacts": [
+        "irpt-directory-search"
+      ],
+      "reconcile_functions": [
+        "irpt-directory-search"
+      ],
+      "changelog_source_changes": [],
+      "aws_called": "",
+      "case": "unchanged_single"
+    },
+    {
+      "rc": 0,
+      "stamped": [
+        "irpt-directory-search",
+        "irpt-performance-calc",
+        "irpt-ycharts-generate"
+      ],
+      "changelog_functions": [
+        "irpt-directory-search",
+        "irpt-performance-calc",
+        "irpt-ycharts-generate"
+      ],
+      "changelog_artifacts": [
+        "irpt-directory-search",
+        "irpt-performance-calc",
+        "irpt-ycharts-generate"
+      ],
+      "reconcile_functions": [
+        "irpt-directory-search",
+        "irpt-performance-calc",
+        "irpt-ycharts-generate"
+      ],
+      "changelog_source_changes": [
+        "irpt-directory-search"
+      ],
+      "aws_called": "",
+      "case": "mixed_all"
+    }
+  ],
+  "limits": "offline bun branch; no plan E2E or live acceptance"
+}

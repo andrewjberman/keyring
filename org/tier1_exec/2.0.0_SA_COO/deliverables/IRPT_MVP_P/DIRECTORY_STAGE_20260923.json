@@ -1,0 +1,251 @@
+{
+  "preconditions": {
+    "baseline_code": "iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s=",
+    "baseline_revision": "8851109e-7f1f-4915-ae2b-0dff01d276c5",
+    "configuration_role_policy_routes": "equal",
+    "artifact_sha256": "a39f74ba1e688ac0ad1cf2b3a2b18c27f93d5493dc82d2d283848a7dee0a618b",
+    "source_members": 20,
+    "utc": "2026-09-23T17:36:36.053407+00:00"
+  },
+  "staging": {
+    "bucket": "opal-313476888478-lambda-artifacts",
+    "key": "investor-reporting/irpt-directory-search.zip",
+    "version": "1ogxCxUa61vTvMPtXB.BehRWB7aJTCnj",
+    "bytes": 155747,
+    "sha256": "a39f74ba1e688ac0ad1cf2b3a2b18c27f93d5493dc82d2d283848a7dee0a618b",
+    "base64": "o590uh5oisCtHPKzorGMJ/k9VJPcgtLSg4SKfe4KYYs=",
+    "source_map_changed_functions": [
+      "irpt-directory-search"
+    ],
+    "source_map_changed_fields": [
+      "artifact_sha256"
+    ]
+  },
+  "candidate_plan": {
+    "plan_sha256": "c5ef7ef7357ad194bdc38dabd827dd170cc5544e923fd573cb9436c0d40348ca",
+    "json_sha256": "4589a8d29ddc9b39e1d86f5e53a2f8f481c466884a4742d934b766f546d88acb",
+    "terraform_version": "1.9.8",
+    "address": "module.irpt_directory_search.aws_lambda_function.this",
+    "actions": [
+      "update"
+    ],
+    "changed": [
+      "source_code_hash",
+      "s3_object_version",
+      "last_modified"
+    ],
+    "computed_only": [
+      "last_modified"
+    ],
+    "before_version": "RXChd66RsDjV1jhG1ZsFlOGnXeIDxApp",
+    "after_version": "1ogxCxUa61vTvMPtXB.BehRWB7aJTCnj",
+    "before_hash": "iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s=",
+    "after_hash": "o590uh5oisCtHPKzorGMJ/k9VJPcgtLSg4SKfe4KYYs=",
+    "before": {
+      "architectures": [
+        "x86_64"
+      ],
+      "arn": "arn:aws:lambda:us-east-1:313476888478:function:irpt-directory-search",
+      "code_sha256": "iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s=",
+      "code_signing_config_arn": "",
+      "dead_letter_config": [],
+      "description": "",
+      "environment": [
+        {
+          "variables": {
+            "IRPT_CONTRACTS_DIR": "/var/task/contracts",
+            "IRPT_DIRECTORY_BUCKET_MAP": "{\"49financial\":\"opal-data-bd\",\"cottonwood\":\"opal-data-cot\",\"inflection\":\"opal-data-inf\"}",
+            "IRPT_DIRECTORY_PREFIX": "investor-reporting/directory",
+            "IRPT_REQUESTS_TABLE": "irpt-requests"
+          }
+        }
+      ],
+      "ephemeral_storage": [
+        {
+          "size": 512
+        }
+      ],
+      "file_system_config": [],
+      "filename": null,
+      "function_name": "irpt-directory-search",
+      "handler": "entry.lambda_handler",
+      "id": "irpt-directory-search",
+      "image_config": [],
+      "image_uri": "",
+      "invoke_arn": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:313476888478:function:irpt-directory-search/invocations",
+      "kms_key_arn": "",
+      "last_modified": "2026-09-23T06:26:25.000+0000",
+      "layers": [],
+      "logging_config": [
+        {
+          "application_log_level": "",
+          "log_format": "Text",
+          "log_group": "/aws/lambda/irpt-directory-search",
+          "system_log_level": ""
+        }
+      ],
+      "memory_size": 512,
+      "package_type": "Zip",
+      "publish": false,
+      "qualified_arn": "arn:aws:lambda:us-east-1:313476888478:function:irpt-directory-search:$LATEST",
+      "qualified_invoke_arn": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:313476888478:function:irpt-directory-search:$LATEST/invocations",
+      "replace_security_groups_on_destroy": null,
+      "replacement_security_group_ids": null,
+      "reserved_concurrent_executions": -1,
+      "role": "arn:aws:iam::313476888478:role/irpt-directory-role",
+      "runtime": "python3.12",
+      "s3_bucket": "opal-313476888478-lambda-artifacts",
+      "s3_key": "investor-reporting/irpt-directory-search.zip",
+      "s3_object_version": "RXChd66RsDjV1jhG1ZsFlOGnXeIDxApp",
+      "signing_job_arn": "",
+      "signing_profile_version_arn": "",
+      "skip_destroy": false,
+      "snap_start": [],
+      "source_code_hash": "iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s=",
+      "source_code_size": 149956,
+      "tags": {
+        "Cell": "IB-s-1",
+        "ManagedBy": "Terraform",
+        "Module": "yang-lambda",
+        "Project": "IRPT_BCKEND",
+        "System": "InvestorReporting"
+      },
+      "tags_all": {
+        "Cell": "IB-s-1",
+        "ManagedBy": "Terraform",
+        "Module": "yang-lambda",
+        "Project": "IRPT_BCKEND",
+        "System": "InvestorReporting"
+      },
+      "timeout": 15,
+      "timeouts": null,
+      "tracing_config": [
+        {
+          "mode": "PassThrough"
+        }
+      ],
+      "version": "$LATEST",
+      "vpc_config": []
+    },
+    "after": {
+      "architectures": [
+        "x86_64"
+      ],
+      "arn": "arn:aws:lambda:us-east-1:313476888478:function:irpt-directory-search",
+      "code_sha256": "iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s=",
+      "code_signing_config_arn": "",
+      "dead_letter_config": [],
+      "description": "",
+      "environment": [
+        {
+          "variables": {
+            "IRPT_CONTRACTS_DIR": "/var/task/contracts",
+            "IRPT_DIRECTORY_BUCKET_MAP": "{\"49financial\":\"opal-data-bd\",\"cottonwood\":\"opal-data-cot\",\"inflection\":\"opal-data-inf\"}",
+            "IRPT_DIRECTORY_PREFIX": "investor-reporting/directory",
+            "IRPT_REQUESTS_TABLE": "irpt-requests"
+          }
+        }
+      ],
+      "ephemeral_storage": [
+        {
+          "size": 512
+        }
+      ],
+      "file_system_config": [],
+      "filename": null,
+      "function_name": "irpt-directory-search",
+      "handler": "entry.lambda_handler",
+      "id": "irpt-directory-search",
+      "image_config": [],
+      "image_uri": "",
+      "invoke_arn": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:313476888478:function:irpt-directory-search/invocations",
+      "kms_key_arn": "",
+      "layers": [],
+      "logging_config": [
+        {
+          "application_log_level": "",
+          "log_format": "Text",
+          "log_group": "/aws/lambda/irpt-directory-search",
+          "system_log_level": ""
+        }
+      ],
+      "memory_size": 512,
+      "package_type": "Zip",
+      "publish": false,
+      "qualified_arn": "arn:aws:lambda:us-east-1:313476888478:function:irpt-directory-search:$LATEST",
+      "qualified_invoke_arn": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:313476888478:function:irpt-directory-search:$LATEST/invocations",
+      "replace_security_groups_on_destroy": null,
+      "replacement_security_group_ids": null,
+      "reserved_concurrent_executions": -1,
+      "role": "arn:aws:iam::313476888478:role/irpt-directory-role",
+      "runtime": "python3.12",
+      "s3_bucket": "opal-313476888478-lambda-artifacts",
+      "s3_key": "investor-reporting/irpt-directory-search.zip",
+      "s3_object_version": "1ogxCxUa61vTvMPtXB.BehRWB7aJTCnj",
+      "signing_job_arn": "",
+      "signing_profile_version_arn": "",
+      "skip_destroy": false,
+      "snap_start": [],
+      "source_code_hash": "o590uh5oisCtHPKzorGMJ/k9VJPcgtLSg4SKfe4KYYs=",
+      "source_code_size": 149956,
+      "tags": {
+        "Cell": "IB-s-1",
+        "ManagedBy": "Terraform",
+        "Module": "yang-lambda",
+        "Project": "IRPT_BCKEND",
+        "System": "InvestorReporting"
+      },
+      "tags_all": {
+        "Cell": "IB-s-1",
+        "ManagedBy": "Terraform",
+        "Module": "yang-lambda",
+        "Project": "IRPT_BCKEND",
+        "System": "InvestorReporting"
+      },
+      "timeout": 15,
+      "timeouts": null,
+      "tracing_config": [
+        {
+          "mode": "PassThrough"
+        }
+      ],
+      "version": "$LATEST",
+      "vpc_config": []
+    },
+    "unknown": {
+      "architectures": [
+        false
+      ],
+      "dead_letter_config": [],
+      "environment": [
+        {
+          "variables": {}
+        }
+      ],
+      "ephemeral_storage": [
+        {}
+      ],
+      "file_system_config": [],
+      "image_config": [],
+      "last_modified": true,
+      "layers": [],
+      "logging_config": [
+        {}
+      ],
+      "snap_start": [],
+      "tags": {},
+      "tags_all": {},
+      "tracing_config": [
+        {}
+      ],
+      "vpc_config": []
+    }
+  },
+  "authority": "18e2835c5f",
+  "ledger_open_commit": "4917bed568",
+  "apply_authorized": false,
+  "applied": false,
+  "cloud_push": "HELD",
+  "plan_file": "C:\\Users\\AndrewBerman\\Desktop\\irpt-smoke-p-backend-20260923\\.runtime\\directory-review\\candidate.tfplan",
+  "plan_json_file": "C:\\Users\\AndrewBerman\\Desktop\\irpt-smoke-p-backend-20260923\\.runtime\\directory-review\\candidate-plan.json"
+}

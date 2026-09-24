@@ -1,0 +1,56 @@
+{
+  "runtime": "python3.12",
+  "architecture": "x86_64",
+  "sha256": "121b8407415ce803458f52de03d11d81d26791f94d20f4130658a773cd1f39f6",
+  "compressed_bytes": 69899991,
+  "uncompressed_bytes": 236210596,
+  "wheels": [
+    {
+      "file": "numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "675d61ffbfa78604709862923189bad94014bef562cc35cf61d3a07bba02a7ed",
+      "uncompressed_bytes": 63766121
+    },
+    {
+      "file": "pandas-2.2.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "fffb8ae78d8af97f849404f21411c95062db1496aeb3e56f146f0355c9989319",
+      "uncompressed_bytes": 43448257
+    },
+    {
+      "file": "pyarrow-14.0.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "2cc61593c8e66194c7cdfae594503e91b926a228fba40b5cf25cc593563bcd07",
+      "uncompressed_bytes": 126929788
+    },
+    {
+      "file": "python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+      "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
+      "uncompressed_bytes": 441579
+    },
+    {
+      "file": "pytz-2026.3.post1-py2.py3-none-any.whl",
+      "sha256": "dd95840dd199baea12d9cc096a1d452caa6596a1c1e4b5f3dbd1541855d5e815",
+      "uncompressed_bytes": 1006241
+    },
+    {
+      "file": "six-1.17.0-py2.py3-none-any.whl",
+      "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+      "uncompressed_bytes": 37975
+    },
+    {
+      "file": "tzdata-2026.4-py2.py3-none-any.whl",
+      "sha256": "c2169a8b0a7a5e9674da5a135ccdfb2b3e671b333ed9fed17b41f73c34476e81",
+      "uncompressed_bytes": 580635
+    }
+  ],
+  "runtime_proof": {
+    "python": "3.12.14 (main, Sep 17 2026, 10:00:30) [GCC 11.5.0 20240719 (Red Hat 11.5.0-5)]",
+    "pandas": "2.2.3",
+    "pyarrow": "14.0.2",
+    "numpy": "1.26.4",
+    "real_mapping_pass": true,
+    "mapping_revision": "a560410f86e384c7c3157c8ec32b20ae9fb1a111e1acd2a1f73f26037049ecfe",
+    "network": "disabled",
+    "installed_import": true
+  },
+  "image": "public.ecr.aws/lambda/python@sha256:5f188ce6104ab76d1a9a44b9b53fd0d72ea5ccec94eb4cbccf5c9b0ef485f9f8",
+  "uploaded": false
+}

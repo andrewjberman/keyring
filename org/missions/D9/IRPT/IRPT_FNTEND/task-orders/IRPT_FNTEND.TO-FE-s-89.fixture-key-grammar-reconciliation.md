@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~39</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-22</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.10 @4bc62712f2 | **Decomp cell:** `FE-s-89` (round 15, v0.15) | **outcome_ref:** FWD-12 | **depends_on:** none -- READY ROOT | **slot:** ~1 | **rows:** C-S147 | **base:** workspace = the round-15 issuance commit on CLOUD (your worktree branches from it), portal DEV `7dd3d067` (round 14's close)
 
@@ -98,8 +98,10 @@ choose remedy (a) for the generator-owned files), and your own `__tests__/fe-s-8
 <criterion id="F89-AC1" cell_refs="FE-s-89" drives="none"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun run typecheck; echo rc=$?</invocation><expect>rc=0(?![0-9])</expect></criterion>
 `F89-AC1` -- the whole portal typechecks.
 
-<criterion id="F89-AC2" cell_refs="FE-s-89" drives="none"><invocation>cd <WS>/portal && /c/Users/AndrewBerman/.bun/bin/bun __tests__/fe-s-89/verify-key-validity.mjs</invocation><expect>default\.json: 12 of 12.*reporting-answer-bearing\.json: 3 of 3.*reporting-qualified\.json: 3 of 3.*fe-s-13-wire\.json: 9 of 9.*fe-s-14-print-v1\.json: 2 of 2</expect></criterion>
+<criterion id="F89-AC2" cell_refs="FE-s-89" drives="none"><invocation>cd <WS>/portal && /c/Users/AndrewBerman/.bun/bin/bun src/pages/InvestorReporting/__tests__/fe-s-89/verify-key-validity.mjs</invocation><expect>default\.json: 12 of 12.*reporting-answer-bearing\.json: 3 of 3.*reporting-qualified\.json: 3 of 3.*fe-s-13-wire\.json: 9 of 9.*fe-s-14-print-v1\.json: 2 of 2</expect></criterion>
 `F89-AC2` -- write a small checker (plain node, no framework) that imports/re-evaluates the real checkKeyValidity function against each of the five fixture files' own keys and prints one line per file, `<file>: <n> of <total>` -- all five must read the target denominators above, default.json UNCHANGED at 12/12.
+
+**COO CORRECTION (2.0.0_SA_COO~F, wind-down close-out):** the invocation above originally named a portal-root path (`__tests__/fe-s-89/...`) that never existed and fell outside this order's own BOUNDS Grant, which only ever named the nested `portal/src/pages/InvestorReporting/__tests__/fe-s-89/` path. The worker correctly refused rather than self-grading past the mismatch (row `IRPT_FNTEND-W39-S1`). Corrected to the path the Grant always specified; re-run independently by the COO, output matches `<expect>` exactly, rc=0.
 
 <criterion id="F89-AC3" cell_refs="FE-s-89" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>(?<![0-9])0 fail</expect></criterion>
 `F89-AC3` -- REGRESSION: the whole IRPT_FNTEND suite is green -- no currently-passing test that consumes any of these five fixture files stops passing because of your key changes.

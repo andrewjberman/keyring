@@ -1,0 +1,22 @@
+{
+  "original_pin": "02501a68ec",
+  "repair_pin": "48946e7972",
+  "original_driver_sha256": "021c2d959b1de5d632e47e73b6d347532df4af0923a1409a40ad5f3ede2f91e7",
+  "adapted_driver_sha256": "bf98f789caa1be5952119b65603a80a867c1d223393f2e969429b538530ef9bf",
+  "adaptation": "One projection-shape assertion only; exact eight metadata keys/values preserved",
+  "factory_candidate": "819c9e3990",
+  "factory_commit_note": "Factory and test-helper refactor committed before CTO151141 notice was read; no history rewrite. Separate assertion-only patch supplied for independent equivalence review.",
+  "assertion_only_retest": {
+    "tests_pass": 20,
+    "exit_code": 0,
+    "source_pair": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+    "command": "python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_assertion_retest.py -q",
+    "driver": "02501a68ec driver with ORGANIZATION_SCALAR_ASSERTION_ONLY.patch only; temporary driver removed after test"
+  },
+  "literal_original_retest": {
+    "tests_pass": 10,
+    "setup_errors": 10,
+    "cause": "old nested metadata assertion",
+    "source_pair": "c04607fdfd"
+  }
+}

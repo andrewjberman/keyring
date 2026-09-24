@@ -51,6 +51,12 @@ worker_grant:
 # =========================================================================
 lanes:
 
+  IRPT_TAX_MEMBERSHIP_M:
+    permitted_agents:
+      - 2.0.0_SA_COO~M
+    description: "CTO bounded IRPT Tax dependency grant 2026-09-23 under Andrew Tax B and worker-fork delegation. Only exact membership and Silver module/test rows below; M is sole writer. Narrows former data/** ANY. Production store and actual gateway-to-Silver flat-row repair only; no full MDPF_TAXSMA round, schedule, gateway deployment or live activation."
+
+
   NAMING_LEGACY_READ_AUTHORITY:
     permitted_agents:
       - 1.0.0_SA_CTO
@@ -101,6 +107,23 @@ lanes:
       - 4.0.0_SA_CRO~SWEEP
       - 2.0.0_SA_COO~P
     description: "IRPT P direct implementation only. Grantor 1.0.0_SA_CTO; authority IRPT_MVP_COMPLETION_20260922/AUTHORITY.md and CONTRACT.md v1.2. Incumbent CLOUD_OPS_OR_ETL members retained; no base COO, other lane, reviewer, or deploy grant. Shared file/function claims and accepted B/F preservation remain mandatory."
+  IRPT_LIVE_SCOPE_P:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP
+      - 2.0.0_SA_COO~M
+      - 2.0.0_SA_COO~P
+    description: "CTO grantor under 09b9573688 LIVE_SCOPE_OWNERSHIP_TRANSFER_20260923.md and LOCAL_LIVE_PARTNER_SCOPE_20260923.md. Exact P source grant for directory/bootstrap/browse, scope, identity and common non-render authorization repair, plus holdings/entry.py request-local roster continuity for M-OPAL-01 only. Existing M and AE permissions preserved; shared source ownership remains with P until explicit CTO handback. No other holdings, naming, vendor, renderer or deployment expansion. Temporary; gate is path-level, semantic scope enforced by review."
+
   IRPT_COMPLETION_M:
     permitted_agents:
       - 0.5.0_AE_OpalETL
@@ -116,6 +139,23 @@ lanes:
       - 4.0.0_SA_CRO~SWEEP
       - 2.0.0_SA_COO~M
     description: "IRPT M direct implementation only. Grantor 1.0.0_SA_CTO; authority IRPT_MVP_COMPLETION_20260922/AUTHORITY.md and CONTRACT.md v1.2. Incumbent CLOUD_OPS_OR_ETL members retained; no base COO, other lane, reviewer, or deploy grant. Shared file/function claims and accepted B/F preservation remain mandatory."
+  IRPT_Y_ACCESS_INTEGRATION_P:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP
+      - 2.0.0_SA_COO~Y
+      - 2.0.0_SA_COO~P
+    description: "Temporary CTO grant IRPT-Y-ACCESS-INTEGRATION-20260923: preserve Y and AE incumbents, add exact COO~P on explicitly enumerated file rows for combined full-access and reviewed resident integration and compatibility only. No other Y paths or deployment grant. CTO removes P integration grant after accepted handoff."
+
   IRPT_COMPLETION_Y:
     permitted_agents:
       - 0.5.0_AE_OpalETL
@@ -1016,6 +1056,61 @@ lanes:
     description: 'Project tree, deliverables/<SERIAL>/** -- NOBODY by enumeration. The owner is in the PATH (s.6 option ii, RULED): owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it). A file directly under deliverables/ with no serial folder is refused -- the convention is the gate.'
 
 paths:
+  "data/mdpf/scripts/silver/taxsma_workbook.py":
+    lane: IRPT_TAX_MEMBERSHIP_M
+    note: "CTO IRPT-TAX-SILVER-SEAM-20260923: consume exact canonical flat rows with original Bronze intact and full census; no live activation."
+  "data/mdpf/tests/taxsma/test_taxsma_workbook_silver.py":
+    lane: IRPT_TAX_MEMBERSHIP_M
+    note: "CTO IRPT-TAX-SILVER-SEAM-20260923: focused real producer-to-consumer contract checks; no vendor call."
+  "data/mdpf/scripts/gold/taxsma_membership.py":
+    lane: IRPT_TAX_MEMBERSHIP_M
+    note: "S3DispositionStore implementation and directly necessary serialization helpers only; current IRPT dependency; no mutation of ratified business/date semantics."
+  "data/mdpf/tests/taxsma/test_taxsma_membership.py":
+    lane: IRPT_TAX_MEMBERSHIP_M
+    note: "Focused production-store idempotency/conflict/version controls; no live S3 writes in tests."
+
+  "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO exact unchanged Y2874 resident assembly consumption by P; Y semantic owner retained; no runtime activation."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/install-resident.sh":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO exact unchanged Y2874 resident assembly consumption by P; Y semantic owner retained; no runtime activation."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO exact unchanged Y2874 resident assembly consumption by P; Y semantic owner retained; no runtime activation."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resolution_retry.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO exact unchanged Y2874 resident assembly consumption by P; Y semantic owner retained; no runtime activation."
+  "infra/aws/lambda/investor-reporting/ycharts/session/controller.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO exact unchanged Y2874 resident assembly consumption by P; Y semantic owner retained; no runtime activation."
+  "infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO exact unchanged Y2874 resident assembly consumption by P; Y semantic owner retained; no runtime activation."
+  "infra/aws/lambda/investor-reporting/ycharts/session/operation_lease.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO exact unchanged Y2874 resident assembly consumption by P; Y semantic owner retained; no runtime activation."
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/run_session_suite.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO exact unchanged Y2874 resident assembly consumption by P; Y semantic owner retained; no runtime activation."
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_controller.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO exact unchanged Y2874 resident assembly consumption by P; Y semantic owner retained; no runtime activation."
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_host_capture.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO exact unchanged Y2874 resident assembly consumption by P; Y semantic owner retained; no runtime activation."
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_operation_lease.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO exact unchanged Y2874 resident assembly consumption by P; Y semantic owner retained; no runtime activation."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/frozen_worker.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO direct dual-owner review: exact Y1385a126e7 integration by P; incumbent owners retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO direct dual-owner review: exact Y1385a126e7 integration by P; incumbent owners retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_prospect_submission.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO direct dual-owner review: exact Y1385a126e7 integration by P; incumbent owners retained; no deploy grant."
   "org/standards/NAMING_LEGACY_READS.json":
     lane: NAMING_LEGACY_READ_AUTHORITY
     note: "LEGACY-READ-03 at ec80b01ca4929ff9a23fd093d221dccb2fb1f826: exact authority carrier only, narrowed from the existing standards lane. Read committed HEAD authority; no self-grant by the mechanism implementer."
@@ -1055,20 +1150,140 @@ paths:
     lane: IRPT_COMPLETION_P
     note: "CTO grantor; exact P owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
   "infra/aws/lambda/investor-reporting/_scope/**":
-    lane: IRPT_COMPLETION_M
-    note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO temporary P grant 09b9573688; incumbent permissions retained. Live-scope repair only; no deploy grant. Explicit CTO handback required."
   "infra/aws/lambda/investor-reporting/_ids/**":
-    lane: IRPT_COMPLETION_M
-    note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO temporary P grant 09b9573688; incumbent permissions retained. Live-scope repair only; no deploy grant. Explicit CTO handback required."
   "infra/aws/lambda/investor-reporting/_authz/**":
-    lane: IRPT_COMPLETION_M
-    note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO temporary P grant 09b9573688; incumbent permissions retained. Live-scope repair only; no deploy grant. Explicit CTO handback required."
   "infra/aws/lambda/investor-reporting/directory/**":
-    lane: IRPT_COMPLETION_M
-    note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO temporary P grant 09b9573688; incumbent permissions retained. Live-scope repair only; no deploy grant. Explicit CTO handback required."
+  "infra/aws/lambda/investor-reporting/holdings/entry.py":
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO exact P grant 20260923T135842Z under LOCAL_LIVE_PARTNER_SCOPE_20260923.md: M-OPAL-01 request-local roster continuity before/after reads only. Incumbents preserved; no other holdings or deployment grant. Independent CVO M retest required."
   "infra/aws/lambda/investor-reporting/holdings/**":
     lane: IRPT_COMPLETION_M
     note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/intake/portfolio.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/intake/upload_entry.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/intake/uploads.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ops/entry.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ops/owned_report.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ops/owned_requests.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ops/owned_status.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ops/prospect_dates.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ops/tests/test_opal_consumers.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ops/tests/test_owned_report.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_composition.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "Exact-file temporary integration grant; RULINGS.md IRPT-Y-ACCESS-INTEGRATION-20260923. Y semantic ownership retained."
+  "infra/aws/lambda/investor-reporting/intake/resolution_broker.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/intake/tests/test_template_uploads.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/job.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-CROSS-FIRM-PUBLICATION-20260923: exact reviewed publisher integration by P; Y semantic ownership retained; no deployment grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/publication_worker.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/session/broker.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/session/deadline_transport.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_broker_recovery_evidence.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_deadline_transport.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_resident_session.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/session/tests/test_resolution_broker.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/intake/resolution_kimi.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923: exact reviewed file integration by P at Y pin c4564aad17; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/intake/security_resolution.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923: exact reviewed file integration by P at Y pin c4564aad17; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/intake/template_reader.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923: exact reviewed file integration by P at Y pin c4564aad17; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/intake/tests/test_resolution_kimi.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923: exact reviewed file integration by P at Y pin c4564aad17; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/intake/tests/test_security_resolution.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923: exact reviewed file integration by P at Y pin c4564aad17; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/intake/tests/test_template_reader.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923: exact reviewed file integration by P at Y pin c4564aad17; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/current_authority.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923: exact reviewed file integration by P at Y pin c4564aad17; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_canonical_profile_consumption.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923 (batch 11): exact reviewed test-file integration by P at Y pin 79c53e1abe; Y semantic writer retained; no deploy grant."
+  "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_retained.py":
+    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923 (batch 11): exact reviewed test-file integration by P at Y pin 79c53e1abe; Y semantic writer retained; no deploy grant."
   "infra/aws/lambda/investor-reporting/intake/**":
     lane: IRPT_COMPLETION_Y
     note: "CTO grantor; exact Y owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."

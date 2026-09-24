@@ -1,6 +1,6 @@
 ---
 name: next-calls
-description: /open-calls and /next-steps in one pass: the decisions waiting on Andrew, the steps this seat could take, which calls gate which steps, and the recommended interleaved sequence. Every item carries a recommendation. Bare `/next-calls`; `/next-calls <CODE or topic>`. Zero writes. Any agent.
+description: "/open-calls and /next-steps in one pass: the decisions waiting on Andrew, the steps this seat could take, which calls gate which steps, and the recommended interleaved sequence. Every item carries a recommendation. Bare `/next-calls`; `/next-calls {CODE or topic}`. Zero writes. Any agent."
 ---
 
 # /next-calls -- calls and steps together, with the sequence between them

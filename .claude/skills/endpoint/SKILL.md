@@ -1,9 +1,15 @@
 ---
 name: endpoint
-description: Project a directive's TERMINAL STATE -- if every open task order completes as written, what do we have -- as numbered capability outcomes tagged DESIRED/APPLIED/EXERCISED with an UNCOVERED partition, then compute the delta to the endpoint Andrew wants as a CUT/AMEND/RETIRE package handed to 2.0.0_SA_COO (never dispatched here). `--forward <brief>` runs at L2 on a CRO brief and emits the qualitative endpoint the PRD carries. `/endpoint D2`, `/endpoint D2 D8`, `/endpoint <CODE>`, `/endpoint --forward <brief>`. Not /exec-sum (stage), not /directives-check (register), not /to-check (open TOs).
+description: "Project a directive's TERMINAL STATE -- if every open task order completes as written, what do we have -- as numbered capability outcomes tagged DESIRED/APPLIED/EXERCISED with an UNCOVERED partition, then compute the delta to the endpoint Andrew wants as a CUT/AMEND/RETIRE package handed to 2.0.0_SA_COO (never dispatched here). `--forward {brief}` runs at L2 on a CRO brief and emits the qualitative endpoint the PRD carries. `/endpoint D2`, `/endpoint D2 D8`, `/endpoint {CODE}`, `/endpoint --forward {brief}`. Not /exec-sum (stage), not /directives-check (register), not /to-check (open TOs)."
 ---
 
 # /endpoint -- the terminal-state projector
+
+## Runtime
+
+- **Claude:** `query_project` in Step 1 is an MCP broker call; messaging a seat is an MCP `send_message`.
+- **Codex:** no broker MCP. Count a project's open task orders by reading `<status>` in its task-order files
+  directly (not `to-check --project`, the defect named in Step 1); mail arrives through the launcher's inbox bridge (`org/mcp/CODEX_INBOX_MONITOR.md`); sends go through `org/mcp/codex-send.ps1`.
 
 **The question:** *if every active task order completes exactly as written, what do we have --
 and is that the thing we want?*
@@ -144,6 +150,29 @@ Once an outcome lands in a PRD its id is fixed for the life of the project.
 Agreed with `3.0.0_SA_CVO` 2026-09-01 as the precondition for `outcome_ref` on the remediation schema; the
 route tokens that field once rode with were retired at spine v3.0, and the permanence contract stands on its
 own.
+
+⛔ **FOR A PRODUCT OR A PIPELINE, `FWD-1` IS THE THREAD** (spine v3.16-3.17, L2). One named person's one
+journey, at coarse resolution, run LIVE through every real hop, ending in the rendered result. **Live** for a
+product with a frontend = the real backend, real data and real login; the frontend may be local or on DEV; a
+PROD release is an enrichment outcome, not the thread. For a pipeline the person is the consumer of the served
+output. The brief names the candidate thread; cut it first, then cut the other outcomes as below — the
+enrichment rounds serve those.
+
+```
+  FWD-1  <person> can <do the journey> end to end on the live product
+         DONE WHEN  EXERCISED -- one live trace ending in the rendered result
+         ACCEPT     every hop in the trace is a real call; a hop fed by a fixture fails the outcome
+         SOURCE     brief <line naming the thread>
+```
+
+Why: IRPT ran 15 frontend and 18 backend rounds with zero journeys working end to end, because no outcome
+owned the seam between the two halves; the thread puts every seam inside `FWD-1`. For a pipeline with no
+product surface the thread is source to served artifact. **For a backend or infrastructure product** (spine
+v3.18) `FWD-1` names one real consumer and its one real use of the mechanism -- the real tool at HEAD from an
+ordinary seat shell, or the deployed component, over real inputs, through the consumer's real entry -- ending
+in the consumer's observed result as one trace; the result may land on one machine's working branch or a QA
+location, and shared-branch availability and production scheduling are enrichment outcomes. NON-APPLICATION:
+a pure governance project, which has no mechanism anyone invokes.
 
 ```
   FWD-3  Advisors can see per-client performance without opening Black Diamond

@@ -1,0 +1,13 @@
+# CTO review: retained template upload first hop
+
+Candidateebf8d339859466b48e0f5f2c4ce9a834ddfff290; handoffeda1adaca1. Reviewer1.0.0_SA_CTO. Bounded SOURCE PASS; installed/public-wire journey NOT_EVALUATED.
+
+Directly inspected uploads.py diff and new integration tests, template_reader bounds/refusal behavior, guarded upload_entry and v2 freezer. Exact candidate archived to isolated scratch with reporting runtime/schema/firm-registry dependencies at the same pin. Previous explicit paired P repository/retention roots from CTO resolution review reused. Fresh full intake result206 PASS plus18 subtests, no skips. No vendor/AWS mutation or live session.
+
+Validated proof scope: deterministic CSV and XLSX parser -> retained original -> frozen v2 -> guarded Entry/read/retry using synthetic classified provider receipt; actual P artifact/index/retention implementations with test stores and explicit offline ORIGINAL_HOLDINGS admission. Original digest and full parser projection rebound at read. Same token cannot reinterpret legacy/new, change type or bytes; corrections retain original without normalized input; revoked access prevents publication; replacement and expiry DAG preserved. One MiB input / eight MiB expanded XLSX limits inherited; no formula execution. Dollars test12.03 retained exactly; Shares still require dated source prices. No new live ticker entitlement claim.
+
+The tests intentionally admit ORIGINAL_HOLDINGS in memory; they do not prove the actual registry/package. Public upload request/result schema remains an explicit P integration dependency, not a hidden passing assumption. P must consume the exact legacy/new exclusive wire, v2 normalized or findings/template correction response, actual family retention policy and original byte handling described in TEMPLATE_UPLOAD_HANDOFF_20260923.md@eda1adaca1. Y supplies real resolver/worker composition; P remains shared schema/registry/routes/package writer.
+
+Acceptance for the next integrated candidate: real public request/result validators cover both arms including NEEDS_CORRECTION, registry lookup actually recognizes ORIGINAL_HOLDINGS with correct private owner and dependency expiry, Linux package imports and callable Entry/resolver/index use the exact files, then the authorized real-login12.03 Overview reaches durable queue/host/certified report/screen/reload. Do not substitute upload-only or raw-PDF READY for the full product.
+
+No source repair requested for ebf8 in this review. Implementing the listed shared dependencies and resident flow is authorized by current contract and Andrew6fc3f5f785; no independent CVO wait or repeated topology approval. This source grade does not close Y1-Y7/S1-S7.

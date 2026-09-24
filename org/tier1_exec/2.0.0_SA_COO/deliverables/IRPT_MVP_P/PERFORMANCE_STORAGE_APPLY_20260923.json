@@ -1,0 +1,63 @@
+{
+  "time": "2026-09-23T21:47:20.888448+00:00",
+  "bucket": "opal-data-irpt",
+  "plan_sha256": "c7639c4c06ba726a8df246c4c5742da6c70e22890940fdbbd38535c8f8329a90",
+  "resources_added": 5,
+  "resources_changed": 0,
+  "resources_destroyed": 0,
+  "readback": {
+    "versioning": {
+      "Status": "Enabled"
+    },
+    "encryption": {
+      "ServerSideEncryptionConfiguration": {
+        "Rules": [
+          {
+            "ApplyServerSideEncryptionByDefault": {
+              "SSEAlgorithm": "aws:kms",
+              "KMSMasterKeyID": "arn:aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111"
+            },
+            "BucketKeyEnabled": false,
+            "BlockedEncryptionTypes": {
+              "EncryptionType": [
+                "SSE-C"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "public_access": {
+      "PublicAccessBlockConfiguration": {
+        "BlockPublicAcls": true,
+        "IgnorePublicAcls": true,
+        "BlockPublicPolicy": true,
+        "RestrictPublicBuckets": true
+      }
+    },
+    "policy": {
+      "Policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "DenyInsecureTransport",
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": "s3:*",
+            "Resource": [
+              "arn:aws:s3:::opal-data-irpt",
+              "arn:aws:s3:::opal-data-irpt/*"
+            ],
+            "Condition": {
+              "Bool": {
+                "aws:SecureTransport": "false"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "runtime_activation": false,
+  "policy_state": "PENDING_ENFORCEMENT"
+}

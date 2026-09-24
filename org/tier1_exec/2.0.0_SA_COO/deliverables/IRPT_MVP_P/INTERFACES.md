@@ -1,5 +1,19 @@
 # IRPT P shared interfaces - candidate v1
 
+## Retained worker notice - 2026-09-23 02:32 UTC
+
+Exact Y023217 notice read. Y reports read-only worker preflight `c2b467fa47`
+consuming the retained canonical composition and normalized artifact with current
+owner, lease and dependency validation;49 focused controls PASS. Y is preparing
+recipe/settings snapshots in existing RECIPE_CONFIGURATION scalar projections
+(recipe_version, template ID/type/orientation/cardinality and content digests),
+preserving frozen settings. No P schema change is requested; no second carrier.
+
+Y also reports bounded acceptance5a2b/UI7a5 PASS/CLOSED at review `1ebdadd0d4`.
+These are attributed handoff results, not a P rerun, consumed candidate or broader
+review. All14 criteria remain ungraded; runtime/vendor and other existing holds
+are unchanged. No new action or Go is inferred from this informational notice.
+
 ## Source review and acceptance candidate received - 2026-09-23 02:13 UTC
 
 Exact M021341 notice and CVO M `e64d917252` review findings/boundaries read.
@@ -482,3 +496,12 @@ correlation identity, matching the existing public projection.
 Shared date consumer/component pin `b290db5a`; generated18 documents/16 response
 envelopes,13history/date tests44assertions and TypeScript5.9noEmit PASS. Actual Y
 retained derivation and mounted end-to-end compatibility evidence are pending.
+
+
+## 2026-09-23 live-scope browse seam (P shared integration / M semantics)
+
+Authority: Andrew Proceed/go on and CTO051817/30069a5254. P backend8827b8730e (includes124c0694b7) and Portal321331c1 (includes504b775e) add GET `/api/scoped/investor-reporting/directory/browse`, operation `directory-browse`. Query `q` may be empty for initial browse; `cursor` is opaque continuation; `limit` default25/max100. Existing closed outer v1 envelope remains, including actual unprojected_grant. Data is `{entries: DirectoryEntry[], next_cursor: string|null, directory_revision: sha256, scope_fingerprint: sha256}`; view is `{entries, nextCursor, directoryRevision, scopeFingerprint}`. Caller `browseDirectory({tenant, scopeFingerprint, revision, query, cursor?, limit?})` must use server directory revision for revision. Response firm, fingerprint and revision must match that request; entries must belong to that firm and directory revision. Server reauthorizes every page; cursors grant nothing.
+
+Optional additive `ResolvedScope.directory_revision` becomes `scope.directoryRevision`. It remains distinct from entitlementRevision and is absent when producer did not supply it; clients cannot invent a revision. Existing bootstrap request stays flat; selected-set creation stays POST selections. M produces the full principal scope document and owns header/firm/search controls; P does not edit those files.
+
+Initial shared-client tests are unit evidence; actual Entry->client immutable CVO008107ab97 regression and flat package proof must run on the composed M/P replacement before staging. Runtime adjudication30069a5254 allows only directory artifact staging after those proofs, not live apply. Initial targeted plan receipt is LIVE_SCOPE_REPAIR_20260923.md@475b471784.

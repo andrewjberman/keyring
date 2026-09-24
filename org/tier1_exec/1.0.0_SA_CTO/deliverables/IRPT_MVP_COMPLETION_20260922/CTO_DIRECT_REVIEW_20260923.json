@@ -1,0 +1,322 @@
+{
+  "reviewer": "1.0.0_SA_CTO",
+  "authority": "Andrew: No independent review, you are the reviewer here",
+  "backend_pin": "e47aed7f710f5d65f317e806c609c8aeb554def3",
+  "factory_pin": "819c9e399086cffb2876a21fbc2cee01724b0bd7",
+  "portal_pin": "e0531491b33db98e2d88f22e7c09a34ee0b9fa04",
+  "snapshot": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\irpt-cto-review-ph82w4dt\\source",
+  "factory_modules_match": 29,
+  "runs": [
+    {
+      "command": "python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_retained.py -q",
+      "exit_code": 0,
+      "passed": 30
+    },
+    {
+      "command": "python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_assertion_retest.py -q",
+      "exit_code": 0,
+      "passed": 20,
+      "original_driver_pin": "02501a68ec",
+      "original_sha256": "021c2d959b1de5d632e47e73b6d347532df4af0923a1409a40ad5f3ede2f91e7",
+      "adapted_sha256": "bf98f789caa1be5952119b65603a80a867c1d223393f2e969429b538530ef9bf",
+      "adaptation": "Exactly one assertion: compare same eight organization fields from scalar projection instead of nested metadata."
+    },
+    {
+      "command": "python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/directory/tests/test_reviewer_capture.py",
+      "exit_code": 0,
+      "passed": 1,
+      "driver_sha256": "bdfa3038f17f3fb147ae67d4b566b006a900481466ce1af65042737f205aa87c"
+    },
+    {
+      "command": "bun test reviewer-parser.test.ts src/pages/InvestorReporting/tests/opal-scope/context.test.ts",
+      "exit_code": 0,
+      "passed": 49,
+      "failed": 0,
+      "expect_calls": 67,
+      "existing_reviewer_driver_sha256": "ae64861a69fd8c08f42111ebd3d3bb0971e9d72b7be38009dde646be66d9581c"
+    }
+  ],
+  "package_static": {
+    "manifest_pin": "83ca4a50e53c293d95224fcae87b8b6aba198ef3",
+    "manifest_git_blob_sha256": "54209409e0db6719f8d0212028532b90da6ee0105f0558e5a0c501a5c1ba5439",
+    "manifest_receipt_sha256": "fbbaaaa58efb1b04f0b11094b54573ed9a486155e76fc8f620b0f71c069d2274",
+    "verified": [
+      {
+        "function": "irpt-performance-adapter",
+        "members_verified": 30,
+        "source_only_zip_sha256": "4cd6007dd77729d0cca6d30ce7580a3827fd2bab0d0229abcd95a4d979f6ec59"
+      },
+      {
+        "function": "irpt-directory-search",
+        "members_verified": 20,
+        "source_only_zip_sha256": "1c751e38600c30b963625000b4b33051532c57be8be0f569592a57ee739252cb"
+      },
+      {
+        "function": "irpt-narrative",
+        "members_verified": 25,
+        "source_only_zip_sha256": "cda4aa9e5a824f58b3951b4b92999983b10e8db1c742b7649a8bb9d9df3048c3"
+      },
+      {
+        "function": "irpt-ycharts-generate",
+        "members_verified": 73,
+        "source_only_zip_sha256": "09fc1deab2ab9e8e9aea2c66397bbc466965d8e44b1bf7c24bdcd6da9696162f"
+      },
+      {
+        "function": "irpt-export-render",
+        "members_verified": 26,
+        "source_only_zip_sha256": "c7c77723c3d761869429cbd5f8fdf7023c5c1d4c2b0a45b456da8c5bf7892f43"
+      },
+      {
+        "function": "irpt-holdings",
+        "members_verified": 33,
+        "source_only_zip_sha256": "c2356fe2fbde47f531c163a52dc9e187aa179161d3cbcb02d14aa5257212a61b"
+      },
+      {
+        "function": "irpt-status",
+        "members_verified": 21,
+        "source_only_zip_sha256": "ca695c85a4af979875c6b1f209fe286fff32e9160750901a79a53a84d44a73bc"
+      }
+    ]
+  },
+  "manifest_encoding_note": "Receipt hashes CRLF checkout bytes; committed blob LF hash differs. Exact CRLF transformation reproduces receipt hash; no unexplained difference.",
+  "source_files": [
+    {
+      "path": "infra/aws/lambda/investor-reporting/_authz/enforce.py",
+      "flat_alias": "enforce.py",
+      "sha256": "18f04af84b9c5e87362f9cf87ee2ef5bc3680ccbaea66b1a2ee4e6579e6b1e7b",
+      "byte_length": 52613,
+      "git_blob": "b0fed34092ab27c3e219dcfef588a926ddedf935",
+      "tested_sha256": "18f04af84b9c5e87362f9cf87ee2ef5bc3680ccbaea66b1a2ee4e6579e6b1e7b"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_authz/errors.py",
+      "flat_alias": "errors.py",
+      "sha256": "784ee313ed7013e6fdf535a373e7941f4c672f4467e4dfcb4e8ad0634b1646a2",
+      "byte_length": 10652,
+      "git_blob": "910cbbaa5f6f7cf8d48c38285b084ce94dcdda88",
+      "tested_sha256": "784ee313ed7013e6fdf535a373e7941f4c672f4467e4dfcb4e8ad0634b1646a2"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+      "flat_alias": "loaders.py",
+      "sha256": "b84bb2918fc13be31358e81221e951ed4f4aa70da9dea2b7a8dbce93b1853da2",
+      "byte_length": 10084,
+      "git_blob": "6c79fad46bb55012708234522bd32a294360aaf9",
+      "tested_sha256": "b84bb2918fc13be31358e81221e951ed4f4aa70da9dea2b7a8dbce93b1853da2"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_authz/routetable.py",
+      "flat_alias": "routetable.py",
+      "sha256": "1ba3c0c2bd35d32bf3dce3d1e1403acc5c8471add636de73a3807192d8f6276d",
+      "byte_length": 10960,
+      "git_blob": "4a8f50f857529b4099e6cb5eb074a815370bfb60",
+      "tested_sha256": "1ba3c0c2bd35d32bf3dce3d1e1403acc5c8471add636de73a3807192d8f6276d"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_authz/served.py",
+      "flat_alias": "served.py",
+      "sha256": "e518af43b2c3358bb788b32ddd7f57b3f0c7e47afd7138ad9ed967e03531052f",
+      "byte_length": 56909,
+      "git_blob": "76c17617841fd377176c1dbf454d6c840b2ddb98",
+      "tested_sha256": "e518af43b2c3358bb788b32ddd7f57b3f0c7e47afd7138ad9ed967e03531052f"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_ids/ids.py",
+      "flat_alias": "ids.py",
+      "sha256": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6",
+      "byte_length": 19296,
+      "git_blob": "b77721f314362b442b533ea13b5f136f98a3f3c8",
+      "tested_sha256": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_keys/keys.py",
+      "flat_alias": "keys.py",
+      "sha256": "56ee3cc22e802579ebb8d4cba53edec8045603396a48fe952d6b83df0f08ab2a",
+      "byte_length": 29894,
+      "git_blob": "547a0e6b609127e2adf31c6b00b6e14127151627",
+      "tested_sha256": "56ee3cc22e802579ebb8d4cba53edec8045603396a48fe952d6b83df0f08ab2a"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py",
+      "flat_alias": "canonical_profile_reads.py",
+      "sha256": "22534db5529e08144ddb3ab1ebe751099ecf4c55580bd8cc53783814b183dbdd",
+      "byte_length": 8258,
+      "git_blob": "c76d50852716a14f179f88dda79b927913a72568",
+      "tested_sha256": "22534db5529e08144ddb3ab1ebe751099ecf4c55580bd8cc53783814b183dbdd"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_scope/custody.py",
+      "flat_alias": "custody.py",
+      "sha256": "23cda6b0e3dd88df3b837545f94efacf600db857a5509ddd458ff40cc7870394",
+      "byte_length": 7216,
+      "git_blob": "a3bf975326271adc176df8a34804e057c78f7a77",
+      "tested_sha256": "23cda6b0e3dd88df3b837545f94efacf600db857a5509ddd458ff40cc7870394"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py",
+      "flat_alias": "maintained_sources.py",
+      "sha256": "19b7c80970822c8ea5d99eca1a64839b8918850a52bda6ea9897253f09ae1ab5",
+      "byte_length": 22805,
+      "git_blob": "eaf6c17e35c8c381c8850b9818e26eaae0f061e6",
+      "tested_sha256": "19b7c80970822c8ea5d99eca1a64839b8918850a52bda6ea9897253f09ae1ab5"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_scope/owner_reads.py",
+      "flat_alias": "owner_reads.py",
+      "sha256": "f9e1f5d3274ee4396932aa1b1bf80b08be09c6afd183ab14c81b766b5d90ed0f",
+      "byte_length": 2727,
+      "git_blob": "0f07089298c8a3bfa8f350f079439f2a87b1270b",
+      "tested_sha256": "f9e1f5d3274ee4396932aa1b1bf80b08be09c6afd183ab14c81b766b5d90ed0f"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_scope/prospect.py",
+      "flat_alias": "prospect.py",
+      "sha256": "b7e5c9335caad7a01eb66c73305f70a6497d0b72110ad7268dad1757358287a8",
+      "byte_length": 3832,
+      "git_blob": "6b8ecb20bc225365712cde6cea3bee508d4858c4",
+      "tested_sha256": "b7e5c9335caad7a01eb66c73305f70a6497d0b72110ad7268dad1757358287a8"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_scope/resolve.py",
+      "flat_alias": "resolve.py",
+      "sha256": "24b407fa00ff0fc342d57b1ca2bd986d7c802fe8a96b30fe57c06520523ccdeb",
+      "byte_length": 38563,
+      "git_blob": "e409cb95853afda880ec8cd5a9e920f00b76a2a1",
+      "tested_sha256": "24b407fa00ff0fc342d57b1ca2bd986d7c802fe8a96b30fe57c06520523ccdeb"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_scope/selection.py",
+      "flat_alias": "selection.py",
+      "sha256": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af",
+      "byte_length": 6453,
+      "git_blob": "284fb70dc50929a663abb67d3c0d2ced6acabfa5",
+      "tested_sha256": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_scope/selection_store.py",
+      "flat_alias": "selection_store.py",
+      "sha256": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c",
+      "byte_length": 2795,
+      "git_blob": "3896e0688eefec093d7e606330d521e82bc99bd1",
+      "tested_sha256": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/intake/portfolio.py",
+      "flat_alias": "portfolio.py",
+      "sha256": "a925da08456eff5845089f8bc6fbcf11b3047d74d25b59e6ce64502781667a5c",
+      "byte_length": 14325,
+      "git_blob": "55c443956b8fc9928e6d5b7e681c1673b1850009",
+      "tested_sha256": "a925da08456eff5845089f8bc6fbcf11b3047d74d25b59e6ce64502781667a5c"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/reports/composition.py",
+      "flat_alias": "composition.py",
+      "sha256": "6d2c3696d0305bee1bc0e95e11c8462d822dae356e1c11ed4253a3d93c699792",
+      "byte_length": 2079,
+      "git_blob": "e07421146bd95dd6170072e004808bf96f404b47",
+      "tested_sha256": "6d2c3696d0305bee1bc0e95e11c8462d822dae356e1c11ed4253a3d93c699792"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/reports/repository.py",
+      "flat_alias": "repository.py",
+      "sha256": "c98091e89d556cf191114c49dd1c1d6e7873711d487740e3ea116311eeb54a2a",
+      "byte_length": 22561,
+      "git_blob": "5ffaca861040d8c0f7d0004bc931cee61711f9f7",
+      "tested_sha256": "c98091e89d556cf191114c49dd1c1d6e7873711d487740e3ea116311eeb54a2a"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/reports/request_composition.py",
+      "flat_alias": "request_composition.py",
+      "sha256": "ff6a2b1c9b05fa7e67257555d935ca4da9bafa8dc6079eb7c13e3b2435629ee8",
+      "byte_length": 10282,
+      "git_blob": "3134303b7f5294d87a2d80d60c5e7c4dc298f566",
+      "tested_sha256": "ff6a2b1c9b05fa7e67257555d935ca4da9bafa8dc6079eb7c13e3b2435629ee8"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/reports/retention.py",
+      "flat_alias": "retention.py",
+      "sha256": "d360f570dad07a716d754c8fcb377fe39f84fbe7f557adc6f013239be9ba29ae",
+      "byte_length": 15558,
+      "git_blob": "a3f8a3ff7e6e4f9cd2f12f80a558b1ad68185ec3",
+      "tested_sha256": "d360f570dad07a716d754c8fcb377fe39f84fbe7f557adc6f013239be9ba29ae"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py",
+      "flat_alias": "acceptance.py",
+      "sha256": "eeb01ee15cb04e70293c6cf6877d6dc8e5cd1a7c02beff97226cf3154757e9fd",
+      "byte_length": 9303,
+      "git_blob": "6bf3ec1a85bc10ac60608d4997663820b7845498",
+      "tested_sha256": "eeb01ee15cb04e70293c6cf6877d6dc8e5cd1a7c02beff97226cf3154757e9fd"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py",
+      "flat_alias": "composition_admission.py",
+      "sha256": "50f5d11cd8ffb8161b9f42af61bdfcdffe698cfc4e66b5cc3338048572563606",
+      "byte_length": 2791,
+      "git_blob": "e186c20f4fdedaa582d1f7f4a3fa4b11e5eeec32",
+      "tested_sha256": "50f5d11cd8ffb8161b9f42af61bdfcdffe698cfc4e66b5cc3338048572563606"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/custody_submission.py",
+      "flat_alias": "custody_submission.py",
+      "sha256": "8c8d1e5c3809d277f192a729221bdc7ec95a0b1a79a35b7630d657ffe9840ab4",
+      "byte_length": 8015,
+      "git_blob": "637779a5c3632f51141542300af13291cbf3840d",
+      "tested_sha256": "8c8d1e5c3809d277f192a729221bdc7ec95a0b1a79a35b7630d657ffe9840ab4"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/entry.py",
+      "flat_alias": "entry.py",
+      "sha256": "477b1fb4d949311121ad483b17eca8bace9913c9d36155467ccebe8cac2f9bc5",
+      "byte_length": 8390,
+      "git_blob": "8ac17ab2f6d5468260968e444cf3ebfbf57ffea8",
+      "tested_sha256": "477b1fb4d949311121ad483b17eca8bace9913c9d36155467ccebe8cac2f9bc5"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py",
+      "flat_alias": "recipe.py",
+      "sha256": "2a367ee2795914e782ccebe8743d15453df6daa5e5b781339ca1277a1bfc5b5c",
+      "byte_length": 39087,
+      "git_blob": "5e414c206f93ee9d6c4bc6bf44709f02bf4641e2",
+      "tested_sha256": "2a367ee2795914e782ccebe8743d15453df6daa5e5b781339ca1277a1bfc5b5c"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/recipe_snapshot.py",
+      "flat_alias": "recipe_snapshot.py",
+      "sha256": "1073b299c6262840e8dac616a0cdf3fbe03d6ec8fbf7457832b35782d1178ea4",
+      "byte_length": 7602,
+      "git_blob": "fdc714648cbc9f2cf0817354a003421341b21ea7",
+      "tested_sha256": "1073b299c6262840e8dac616a0cdf3fbe03d6ec8fbf7457832b35782d1178ea4"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py",
+      "flat_alias": "submission.py",
+      "sha256": "9c9ae002b04eb52040954425f0e215869d4a28349b8ef9bbded176a7fc96e032",
+      "byte_length": 7632,
+      "git_blob": "4daa217039d259c800eb43435791fa2ed9eaf6c2",
+      "tested_sha256": "9c9ae002b04eb52040954425f0e215869d4a28349b8ef9bbded176a7fc96e032"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py",
+      "flat_alias": "submission_service.py",
+      "sha256": "b843bebc07a84d17134b0c39f8e3cc34b12d2c27e57f3f25d8e7bce4f2ee00c9",
+      "byte_length": 8441,
+      "git_blob": "52d554ffcc215c64e1f352e2304f4618e36e1f96",
+      "tested_sha256": "b843bebc07a84d17134b0c39f8e3cc34b12d2c27e57f3f25d8e7bce4f2ee00c9"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py",
+      "flat_alias": "transport.py",
+      "sha256": "186949c4fbf66209eb781ffe92c9af2d7f598dc776862c112765b472a0f3ba9e",
+      "byte_length": 27131,
+      "git_blob": "163eacd7e65c14296586e0f9188b16c7138349c1",
+      "tested_sha256": "186949c4fbf66209eb781ffe92c9af2d7f598dc776862c112765b472a0f3ba9e"
+    }
+  ],
+  "limits": [
+    "Synthetic source/storage/SDK responses, no live AWS calls.",
+    "Source-only package member proof; runtime wheels/layer and enforced BUILD_MANIFEST remain ungraded.",
+    "Current custody producer, snapshot binding, comparison resolver and deployed preparer/config/IAM are open.",
+    "No signed-in browser smoke, live report, queue/vendor or deploy grade."
+  ]
+}

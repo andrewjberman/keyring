@@ -1,0 +1,80 @@
+{
+  "observed_at": "2026-09-24T04:27:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "APPLIED -- listing-speed pin cro-listing-speed-20260924 @5886d0b9bd (4.0.0_SA_CRO; CTO GO 100162 + 100169; Andrew-direct ~03:2xZ 'so slow it is embarrassing'): memory 512 -> 1769, keep-warm schedule irpt-directory-keepwarm-5min, code package with B5 parallel Global resolve, B1+B2 one read per request / one client per container, B3+B4 version-keyed parsed-directory cache with a conditional GET, B7 part 1 warm branch",
+  "pin": {
+    "commit": "5886d0b9bd",
+    "merged_onto_backend_as": "19d1c3b387",
+    "tests": "directory/tests 142 passed / 6 failed (pre-existing: test_custody_owner x4, test_entry x2); _authz/tests 165 / 7 (pre-existing: test_unguarded_census x7); identical at base"
+  },
+  "artifact": {
+    "s3": "s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-directory-search.zip",
+    "version_id": "LZzc0blKU0jHqCrsmqlE10slzChIbs3u",
+    "code_sha256": "6uxqQO2Sm6SLY4k+XYWzuQ/Corssjy3zVW/DNDS6qMI=",
+    "bytes": 160136,
+    "members": 20,
+    "differs_from_deployed_o590uh5o": [
+      "entry.py",
+      "loaders.py",
+      "served.py"
+    ],
+    "source_map_commit": "997b8c85be",
+    "entry_py_copied_at_pin_sha256": "426768538aa6ceec"
+  },
+  "plan": {
+    "file": ".runtime/directory-speed/speed.tfplan",
+    "sha256_prefix": "31060b2529019729",
+    "summary": {
+      "add": 3,
+      "change": 1,
+      "destroy": 0
+    },
+    "changes": [
+      "aws_iam_role.irpt_directory_keepwarm_scheduler create",
+      "aws_iam_role_policy.irpt_directory_keepwarm_scheduler create",
+      "aws_scheduler_schedule.irpt_directory_keepwarm create",
+      "module.irpt_directory_search.aws_lambda_function.this update: memory_size 512->1769, source_code_hash o590uh5o->6uxqQO2S, s3_object_version 1ogxCxUa->LZzc0blK; layers/environment equal"
+    ]
+  },
+  "apply": {
+    "tool": ".tools/safe-apply.sh",
+    "result": "Apply complete 3 added / 1 changed / 0 destroyed rc=0",
+    "completed_at": "2026-09-24T04:21:24Z",
+    "log_sha256_prefix": "e01958d3461176fb"
+  },
+  "readback": {
+    "CodeSha256": "6uxqQO2Sm6SLY4k+XYWzuQ/Corssjy3zVW/DNDS6qMI=",
+    "LastModified": "2026-09-24T04:21:18.000+0000",
+    "MemorySize": 1769,
+    "Timeout": 15,
+    "Handler": "entry.lambda_handler",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "schedule": {
+      "name": "irpt-directory-keepwarm-5min",
+      "State": "ENABLED",
+      "expression": "rate(5 minutes)",
+      "input": "{\"irpt_warm\":true}"
+    },
+    "re_plan_rc": 0
+  },
+  "recorder": {
+    "commit": "83a232fa71",
+    "deploy_ledger": "145435aa6c",
+    "last_deployed_at": "2026-09-24T04:24:02Z"
+  },
+  "ledger": {
+    "slug": "irpt-directory-speed-20260924",
+    "sentinel_commit": "145435aa6c",
+    "legs": {
+      "A1": "closed",
+      "V1": "closed",
+      "R1": "closed",
+      "M1": "OPEN -- first-hour CloudWatch p50/p90 beside the 15:19-03:19Z baseline (p50 1.33 s / p90 4.91 s / p99 6.95 s), one warm-fire {warm:true} log line, one timed Global list load"
+    }
+  },
+  "not_claimed": [
+    "any speed number -- M1 measures it on the same instrument"
+  ],
+  "push_state": "LOCAL (MSTR pushes)"
+}

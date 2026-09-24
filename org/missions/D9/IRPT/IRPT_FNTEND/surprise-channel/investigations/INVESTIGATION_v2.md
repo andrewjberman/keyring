@@ -6239,6 +6239,97 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not escalated as BLOCKING because the ACCEPTANCE CRITERIA text is unambiguous about WHICH act it requires -- only BOUNDS's enumerated grant list is silent on the file that act touches -- and the exception taken is bounded, self-reverting and verified net-zero before this row's own commit."
-  }
+    },
+    {
+    "id": "IRPT_FNTEND-W39-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~39",
+    "surfaced_at": "2026-09-22T20:33:22Z",
+    "one_line": "This order's own F89-AC2 invocation names a path outside this order's own BOUNDS Grant, so the exact literal invocation cannot resolve without a write outside this cell's write surface.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-89.fixture-key-grammar-reconciliation.md, F89-AC2: \"invocation: `cd WS/portal && /c/Users/AndrewBerman/.bun/bin/bun __tests__/fe-s-89/verify-key-validity.mjs`\" -- a path relative to the portal ROOT (`cd WS/portal`), i.e. `portal/__tests__/fe-s-89/verify-key-validity.mjs`. The SAME order's BOUNDS section grants only `portal/src/pages/InvestorReporting/__tests__/fe-s-89/` -- the fully qualified, nested path -- and lists no `portal/__tests__/` entry anywhere.",
+    "world_is": "Measured (this worker, 2026-09-22, portal HEAD 7dd3d067a17ee00b878ecfceff23c557649a2331 plus this cell's own commits): `git ls-tree -r HEAD --name-only` over the whole portal tree shows 220 tracked files under `src/pages/InvestorReporting/__tests__/` and 0 under a root-level `__tests__/` -- no top-level `__tests__/` directory has ever existed in this repo's history (`git log --all --oneline -- '__tests__/*'` returns nothing). Built the real checker at the GRANTED path (`portal/src/pages/InvestorReporting/__tests__/fe-s-89/verify-key-validity.mjs`); run there (`cd portal && bun src/pages/InvestorReporting/__tests__/fe-s-89/verify-key-validity.mjs`) it correctly prints all five target denominators (`default.json: 12 of 12`, `reporting-answer-bearing.json: 3 of 3`, `reporting-qualified.json: 3 of 3`, `fe-s-13-wire.json: 9 of 9`, `fe-s-14-print-v1.json: 2 of 2`), rc=0. Run with the EXACT literal invocation the order names (`cd WS/portal && bun __tests__/fe-s-89/verify-key-validity.mjs`): `error: Module not found \"__tests__/fe-s-89/verify-key-validity.mjs\"`, rc=1 -- does not match the criterion's `<expect>` regex. Writing a second copy of the checker at `portal/__tests__/fe-s-89/` to satisfy the literal invocation would be a write outside this order's own Grant, which the order elsewhere forbids (\"Never edit outside the task order's <paths>\"). hazard_standing is INERT, not ARMED: the conflict is confined to this one order's own two sections and creates no standing risk to future normal operation once the issuer corrects either the Grant or the invocation text.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IRPT_FNTEND.TO-FE-s-89.fixture-key-grammar-reconciliation.md, F89-AC2 invocation line and BOUNDS 'Grant:' line (this worktree, task-order file as issued)",
+        "measured (this worker, 2026-09-22): `git ls-tree -r HEAD --name-only` in portal -- 220 files under `src/pages/InvestorReporting/__tests__/`, 0 under a root-level `__tests__/`",
+        "measured (this worker, 2026-09-22): `git log --all --oneline -- '__tests__/*'` in portal -- zero commits, no top-level `__tests__/` directory has ever existed",
+        "measured (this worker, 2026-09-22): `cd portal && bun src/pages/InvestorReporting/__tests__/fe-s-89/verify-key-validity.mjs` -> rc=0, five target denominators printed exactly",
+        "measured (this worker, 2026-09-22): `cd portal && bun __tests__/fe-s-89/verify-key-validity.mjs` (the order's exact literal invocation) -> `error: Module not found \"__tests__/fe-s-89/verify-key-validity.mjs\"`, rc=1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W39-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~39",
+    "surfaced_at": "2026-09-22T20:33:22Z",
+    "one_line": "C-S147's bare-prefix fixture-key defect this order names on 4 files also exists, unrepaired, on 23 OTHER committed InvestorReporting fixture files outside this order's grant -- the round-14 CVO review's denominators covered only this cell's four, not the class.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "This order's own framing: \"round 14's classifier fix (FE-s-86) correctly requires a concrete key to match a declared template SEGMENT FOR SEGMENT ... But four fixture files were never updated to match\" -- naming exactly `fixtures/smoke/reporting-answer-bearing.json`, `__tests__/fe-s-84/fixtures/reporting-qualified.json`, `fixtures/smoke/fe-s-13-wire.json`, `fixtures/smoke/fe-s-14-print-v1.json` as the affected set.",
+    "world_is": "Measured (this worker, 2026-09-22): a census of every `*.json` file under `src/pages/InvestorReporting/` whose directory name contains `smoke` or `fixtures`, checking each top-level key for the shape `/api/scoped/investor-reporting/<segment>/` (bare, trailing-slash, <=5 path segments -- the same truncated-prefix shape round 14's classifier now rejects) finds 23 files carrying it, NONE of them among this order's four named files and none inside this cell's BOUNDS grant: `__tests__/fe-s-63/fixtures/export-ready.json`, `__tests__/fe-s-63/fixtures/print-ready.json`, `__tests__/fe-s-69/fixtures/firm.json`, `__tests__/fe-s-69/fixtures/firm.one-firm.json`, `__tests__/fe-s-71/fixtures/export-flow.json`, `__tests__/fe-s-72/fixtures/withheld.json`, `__tests__/fe-s-74/fixtures/one-bad-key.json`, `__tests__/fe-s-78/fixtures/cohort-selected.json`, `fixtures/smoke/fe-s-14-49financial.json`, `fixtures/smoke/fe-s-14-cottonwood.json`, `fixtures/smoke/fe-s-14-global.json`, `fixtures/smoke/fe-s-14-inflection.json`, `fixtures/smoke/fe-s-15-clean.json`, `fixtures/smoke/fe-s-15-needs-correction.json`, `fixtures/smoke/fe-s-16-print-narrative.json`, `fixtures/smoke/fe-s-16-print-prehistory.json`, `fixtures/smoke/fe-s-16-ready.json`, `fixtures/smoke/fe-s-18-frozen.json`, `fixtures/smoke/fe-s-18-holdings-missing-attribution.json`, `fixtures/smoke/fe-s-18-holdings-observed.json`, `fixtures/smoke/fe-s-18-holdings-target.json`, `fixtures/smoke/fe-s-21-queued.json`, `fixtures/smoke/reporting-answer-bearing-partial.json`. Not fixed here -- none is in this order's BOUNDS Grant, and this order's own risk warning (fixture-serving is a SUBSTRING match, so a wrong concrete value silently stops serving) applies to each of these too, meaning a future classifier-strictness change (or a future worker running this order's own remedy pattern blind to the wider class) could repeat the same partial-coverage gap this order itself was cut to close. C-S147's own text (REMEDIATION_v11.md) and the round-14 CVO review's denominator table both speak only to this order's four files; neither states or measures the wider 23-file population, so the CVO's 'KEY-VALIDITY' framing for C-S147 reads as if it covers the defect CLASS when it covers one order's SUBSET.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured (this worker, 2026-09-22): python census over `src/pages/InvestorReporting/**/*.json` in `smoke`/`fixtures` directories, testing every top-level key against `/api/scoped/investor-reporting/<segment>/` (bare prefix, <=5 segments) -- 23 files hit, 0 overlap with this order's 4 named files",
+        "portal (this worktree HEAD before this worker's edits) -- e.g. `src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json` keys: `/api/scoped/investor-reporting/performance/`, `/api/scoped/investor-reporting/analysis/`, `/api/scoped/investor-reporting/narrative/`, `/api/scoped/investor-reporting/status/`, `/api/scoped/investor-reporting/export/`, `/api/scoped/investor-reporting/holdings/` -- all bare prefixes, same shape as this order's four named files before this worker's fix",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-89.fixture-key-grammar-reconciliation.md, opening paragraph and 'Measured denominators' table -- names exactly four files, no wider census stated",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v11.md and org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND14_L8_L9_20260922.md -- C-S147's text and the round-14 KEY-VALIDITY denominators cover only this order's four files"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+{
+  "id": "IRPT_FNTEND-W40-S1",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_FNTEND~40",
+  "surfaced_at": "2026-09-22T20:30:35Z",
+  "one_line": "Building FE-s-90's checker, `bun test <path>` treats a bare (no leading \"./\") relative path argument that does not match bun's own test-name discovery convention (\".test.\"/\".spec.\") as a case-insensitive substring FILTER against files it already discovered, never as an instruction to run that exact file -- so a `.fixture.ts` file addressed by its full, correct, bare relative path is silently treated as zero matches ('did not match any test files') rather than run, and a caller that does not check the summary line for this exact message could misread that as a genuine pass or an intended skip.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The task order's suggested invocation shape, `node scripts/suite-complete-check.mjs <bun-test-command...>`, and its four required controls, imply that naming a specific fixture file's path on the `bun test` command line runs that file.",
+  "world_is": "Measured (this worker, 2026-09-22, bun 1.3.9, this worktree's portal): `bash -lc 'C:/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/passing.fixture.ts'` -> stderr/stdout: \"The following filters did not match any test files ... 2016 files were searched\", \"note: Tests need \\\".test\\\", \\\"_test_\\\", \\\".spec\\\" or \\\"_spec_\\\" in the filename\", \"note: To treat the ... filter as a path, run \\\"bun test ./<path>\\\"\"; rc=1. The identical command with a leading \"./\" prefix on the same path -> \"1 pass, 0 fail, Ran 1 test across 1 file\", rc=0. This project's own fixture files in this cell are named `.fixture.ts` specifically so a directory-scan invocation (F90-AC2, F90-AC4) never discovers and runs them; the checker and this cell's test file both always prefix an explicit fixture path with \"./\" to force bun to treat it as a literal target regardless of naming convention.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured (this worker, 2026-09-22): `bash -lc 'C:/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/passing.fixture.ts'` (bare path, no ./) -> rc=1, \"did not match any test files\", \"To treat the ... filter as a path, run bun test ./<path>\"",
+      "measured (this worker, 2026-09-22): the same command with `./` prefixed -> rc=0, \"1 pass, 0 fail, Ran 1 test across 1 file\"",
+      "C:/tmp/wk-irpt_fntend-15-2-fe-s-90/portal/src/pages/InvestorReporting/__tests__/fe-s-90/suite-complete-check.test.ts (this worktree HEAD) -- FIXTURE_* constants, each prefixed \"./\", with a comment citing this exact finding",
+      "C:/tmp/wk-irpt_fntend-15-2-fe-s-90/portal/src/pages/InvestorReporting/__tests__/fe-s-90/fixtures/passing.fixture.ts (this worktree HEAD) -- header comment recording the same live-verified discovery-glob behaviour"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_FNTEND-W40-S2",
+  "project": "IRPT_FNTEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_FNTEND~40",
+  "surfaced_at": "2026-09-22T20:30:35Z",
+  "one_line": "Node/Bun's `child_process.spawnSync(cmd, args, opts)`, called from CODE running inside an already-started bun/node process (as opposed to typed at a bash prompt or spawned by bash itself), calls Windows CreateProcess directly with no MSYS path translation -- an MSYS-style absolute path (`/c/Users/...`, the form this project's own task orders write in every acceptance invocation this round) fails ENOENT from that call site even though the identical string works perfectly when bash itself is the one resolving and exec'ing it; the Windows-native forward-slash form (`C:/Users/...`) resolves correctly from both call sites and is also roughly 8-10x faster per spawn (no shell startup) when a shell is not otherwise needed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The task order names the bun binary as `/c/Users/AndrewBerman/.bun/bin/bun` in every acceptance invocation (F90-AC1..AC4) with no caveat that this exact string is unusable as a `spawnSync` argument from inside a running node/bun process.",
+  "world_is": "Measured (this worker, 2026-09-22): `spawnSync('/c/Users/AndrewBerman/.bun/bin/bun', ['-e','console.log(1)'], {encoding:'utf8'})` called from a running bun process -> `error: ENOENT: no such file or directory, uv_spawn '/c/Users/AndrewBerman/.bun/bin/bun'`, `errno: -4058`, `code: 'ENOENT'`. The same call with `command` rewritten to `'C:/Users/AndrewBerman/.bun/bin/bun'` -> succeeds, ~113ms. Routing the MSYS-style path through `spawnSync('bash', ['-lc', '<cmd string>'], ...)` also succeeds (bash performs its own translation), at a measured ~800-1000ms bash-login-shell-startup cost per call versus ~113ms for the direct native-path call. This cell's own `scripts/suite-complete-check.mjs` still routes its OWN child spawn through `bash -lc` (needed there, since its command can carry a `timeout N ...` shell prefix), but this cell's test harness spawns the checker itself directly with the Windows-native path form, once this was found, to avoid an unnecessary extra shell hop.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured (this worker, 2026-09-22): `spawnSync('/c/Users/AndrewBerman/.bun/bin/bun', ...)` from a running bun process -> ENOENT, errno -4058, code ENOENT",
+      "measured (this worker, 2026-09-22): the identical call with `'C:/Users/AndrewBerman/.bun/bin/bun'` -> succeeds, ~113ms",
+      "measured (this worker, 2026-09-22): `spawnSync('bash', ['-lc', 'echo hi'])` -> succeeds, ~860-1000ms wall time (login-shell startup cost)",
+      "C:/tmp/wk-irpt_fntend-15-2-fe-s-90/portal/src/pages/InvestorReporting/__tests__/fe-s-90/suite-complete-check.test.ts (this worktree HEAD) -- BUN_BIN constant's own comment citing this exact finding and the direct-native-spawn design it drove",
+      "C:/tmp/wk-irpt_fntend-15-2-fe-s-90/portal/scripts/suite-complete-check.mjs (this worktree HEAD) -- the checker's own child spawn still uses `spawnSync('bash', ['-lc', joined], ...)`, documented and unaffected by this finding since it needs shell interpretation for a `timeout N ...` prefix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
 ]
 ```

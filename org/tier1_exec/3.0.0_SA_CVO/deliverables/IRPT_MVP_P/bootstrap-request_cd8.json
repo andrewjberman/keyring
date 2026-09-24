@@ -1,0 +1,8 @@
+{
+  "url": "/api/scoped/investor-reporting/directory/resolve",
+  "method": "POST",
+  "headers": {
+    "X-Contract-Version": "v1"
+  },
+  "body": "{\"firm_id\":null,\"client_id\":null,\"relationship_id\":null,\"account_ids\":[],\"entitlement_revision\":null}"
+}

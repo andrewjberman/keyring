@@ -1,0 +1,51 @@
+{
+  "function": "irpt-ycharts-generate",
+  "source_pin": "411256e41c419894d9c3a3f343def80d49bec67a",
+  "vendored_modules": [
+    "infra/aws/lambda/investor-reporting/_authz/enforce.py",
+    "infra/aws/lambda/investor-reporting/_authz/errors.py",
+    "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+    "infra/aws/lambda/investor-reporting/_authz/routetable.py",
+    "infra/aws/lambda/investor-reporting/_authz/served.py",
+    "infra/aws/lambda/investor-reporting/_ids/ids.py",
+    "infra/aws/lambda/investor-reporting/_keys/keys.py",
+    "infra/aws/lambda/investor-reporting/_scope/accepted_custody.py",
+    "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py",
+    "infra/aws/lambda/investor-reporting/_scope/custody.py",
+    "infra/aws/lambda/investor-reporting/_scope/custody_binding.py",
+    "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py",
+    "infra/aws/lambda/investor-reporting/_scope/owner_reads.py",
+    "infra/aws/lambda/investor-reporting/_scope/prospect.py",
+    "infra/aws/lambda/investor-reporting/_scope/resolve.py",
+    "infra/aws/lambda/investor-reporting/_scope/selection.py",
+    "infra/aws/lambda/investor-reporting/_scope/selection_store.py",
+    "infra/aws/lambda/investor-reporting/intake/custody_portfolio.py",
+    "infra/aws/lambda/investor-reporting/intake/parse.py",
+    "infra/aws/lambda/investor-reporting/intake/portfolio.py",
+    "infra/aws/lambda/investor-reporting/reports/composition.py",
+    "infra/aws/lambda/investor-reporting/reports/repository.py",
+    "infra/aws/lambda/investor-reporting/reports/request_composition.py",
+    "infra/aws/lambda/investor-reporting/reports/retention.py"
+  ],
+  "layer_dependencies": [
+    "jsonschema",
+    "attrs",
+    "attr",
+    "jsonschema_specifications",
+    "referencing",
+    "rpds",
+    "typing_extensions"
+  ],
+  "runtime_dependency_candidate": {
+    "requirements_file": "infra/aws/lambda/layers/irpt-common/requirements.txt",
+    "requirements_sha256": "803d05c71e60542e58ac1b83e094860378b25f5b87a562f25952009cd41597f3",
+    "dependency_zip_sha256": "d17ae439a182b58b82e607108686bde53fd185aa04cddf0bccf365250cfc64bd",
+    "mount": "/opt/python",
+    "python": "3.12",
+    "platform": "linux/amd64",
+    "status": "LOCAL proof only; requires explicit publication/attachment or bundling before runtime activation"
+  },
+  "factory_module_manifest": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/CUSTODY_FACTORY_MODULES_20260923.json",
+  "limits": "Enforces top-level closure including accepted reader/store and consumer/parse dependency. Lazy factory construction exercised separately in Linux. No production source/authorization adapters or global runtime installation.",
+  "accepted_consumer_pin": "10627906f24aa42db4c08fd66105599f35bf7819"
+}
