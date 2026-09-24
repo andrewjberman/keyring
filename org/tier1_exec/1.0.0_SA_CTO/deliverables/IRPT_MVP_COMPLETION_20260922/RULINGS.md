@@ -886,3 +886,37 @@ index-CAS and prior-version-retained shape as d940022b06. The COT tree change M 
 membership over the accepted custody) is welcome as a candidate: same business date, new revision,
 custody totals unchanged, MODEL_LEAF ASSIGNED whole-account at custody value with claim measured,
 OBSERVED positions under the leaf, index CAS, prior revision retained, new GO.
+
+
+## 2026-09-24 00:2x UTC - Claude CTO batch 4: reason-code vocabulary ratified; SmartX prefix RAISE routed
+
+### IRPT-REASON-CODE-VOCABULARY-20260924 (P 2cdbe2bd60) - ACCEPTED as ratified text
+CTO read the 38 added lines of docs/contracts/investor-reporting/v1/CONTRACT.md on P's branch: the
+fourteen data codes of _authz/errors.py PUBLIC_REASONS named one per row in the portal generator's
+grammar ("refused with public_reason_code X" / "returns X"), the two boundary codes unchanged, the
+PublicStatusEnvelope pattern unchanged, and the consumer's single-word limit (CONFLICT, SUPERSEDED,
+UNEXPECTED stay flagged until the portal widens its rule) disclosed as a portal change under the
+same row. NOT_READY is named as a retryable state, which is the truthful render for the Holdings
+screen Andrew saw. 0.0.0_AB_MSTR is asked (99837) to bring exactly that docs commit onto local CLOUD
+so P's generator, which refuses a dirty contract, can regenerate the portal constant; P then runs
+reason-codes.test.ts and owns the single-word widening.
+
+### Performance install VERIFIED LIVE (P 99831) - recorded
+CTO readback at 00:1xZ (get-function-configuration, list-role-policies, list-layer-versions):
+irpt-performance-adapter CodeSha256 JwJEEQGTENJJukTvrNQt3dq6VIAI8xqioIYA1atL+hk= (== the approved
+artifact), LastModified 2026-09-24T00:07:10Z, handler runtime.lambda_handler, 120 s / 1536 MB, layers
+irpt-common:5 + irpt-performance-native-layer:1 (created 00:07:00Z), six env keys, State Active;
+irpt-performance-retained-policy and irpt-performance-adapter-selection-read-policy present on the
+role. Installation hop PASS; X10 PENDING; no journey claimed.
+
+### SmartX prefix naming RAISE - ROUTED, not worked around
+M 99810 reported the naming gate grading "smartx/platform/silver/" (holdings_49f.py SMARTX_PREFIX, a
+pre-LGIC SmartX silver layout the retained build_49f already read) as RAISE: "'platform' is not a
+tier". A RAISE is the gate's own rule/registry defect (its docstring), not a refusal, and the
+LEGACY-READ carrier cannot carry it (it authorizes ONE EXISTING literal under a LIVE remediation and
+this is a grading defect on a key grammar). Under Rule 30 the SmartX pipeline reaches conformance
+through its own migration project, never as a rider. OWNER: the naming-gate mechanism owner
+(0.0.0_AB_MSTR, LD-0606/0609/0610 pattern), asked to grade a pre-LGIC key whose tier segment is not
+a tier as EXISTING/WARN with the reason printed, or to name the legacy layout in the registry; lands
+after the /integrate work unless it starts refusing. Un-park condition: the gate no longer RAISEs on
+that literal. M does not type around it.
