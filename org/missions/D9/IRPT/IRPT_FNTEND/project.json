@@ -4,7 +4,7 @@
   "directive": "D9",
   "fabric": "laptop",
   "pipeline": null,
-  "status": "active",
+  "status": "closed",
   "dep_stage": "EXECUTING",
   "created": "2026-09-10",
   "registered_under_tree": "2026-09-10",
@@ -33,10 +33,14 @@
   },
   "coo_lane": "2.0.0_SA_COO~F",
   "fabric_ruling": "laptop -- inherited from D9, placed LAPTOP 2026-09-10 ~18:5xZ (Andrew-direct, D9 as a whole).",
-  "blocking": "Round 15 issued (3 cells: FE-s-89 C-S147, FE-s-90 C-S188, FE-s-91 C-S190), routing round 14's three open remedies per ledger/ROUND_ANALYSIS.round14.md. No outcome closure is claimed. Current orders and proofs, not this row, determine the live round census. Standing constraint: portal promotion remains frozen by Andrew; local portal commits only, no push or workspace gitlink bump without his word.",
+  "blocking": "None -- closed.",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_FNTEND_20260910.md",
   "counterpart": "IRPT_BCKEND",
-  "closer_contract": "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md"
+  "closer_contract": "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md",
+  "closed_by": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_164xZ_IRPT_RETURN_FIVE_CALLS_ANSWERED.md",
+  "superseded_by": "DSGN_IRPTV1",
+  "phase": "CLOSED SUPERSEDED 2026-09-24 by 1.0.0_SA_CTO on Andrew-direct ~16:4xZ, call 3 'Yes' (record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_164xZ_IRPT_RETURN_FIVE_CALLS_ANSWERED.md). Its frontend outcomes FWD-1, 3, 4, 5, 6, 8, 11 and 12 re-home to DSGN_IRPTV1 under 2.0.0_SA_COO~D, the one IRPT portal frontend integrator (Andrew-direct ~15:31Z). 0 open orders; round 15's slug, parked under the 09-22 hold, is not routed. dep_stage kept as measured.",
+  "last_updated": "2026-09-24T17:25:00Z"
 }
