@@ -19,7 +19,12 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (000000000000000000000000000000) M's Q1/Q4 ACCEPTED: Q4 condition FAILED (DC1 account value = a SUM),
+CTO review queue, in order: (0000000000000000000000000000000) ANDREW-DIRECT 12:5xZ "recs approved" on six cards: Y retries same
+model (MSTR keys); ONE Performance plan submission for Anna, default window (P executes, CRO second read); upload symbol resolution via
+the resident, NO prices v1; the signed-in HAR when DEV is ready; DSGN_IRPTV1 DONE WHEN confirmed as written; Rule 28 card acknowledged,
+M receipts under its migration (batch 51). (0000000000000000000000000000000a) portal candidate 7 (f1d02f30: the claim-authority re-pin +
+SelectedAccounts.valid.json) GO'd; receipt PENDING; the five W4-S2 names CLOSED; unmasked debt: browse slice 'entries' not a $ref (contract
+first, backend branch) (batch 51). (000000000000000000000000000000) M's Q1/Q4 ACCEPTED: Q4 condition FAILED (DC1 account value = a SUM),
 CTO leaning WITHDRAWN, independent value = fact_allocations "Account Market Value" via the manifest's control row; Q1 rows from the
 receipted custody object (fact_holdings / dim_position / positions_mv), never manifest.gold; P amends the card to v2; design open on
 Q3 only (Y) (batch 50). (00000000000000000000000000000) portal candidate 6 LANDED fast-forward b9d244a474 (ls-remote read by MSTR

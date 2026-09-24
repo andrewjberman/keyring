@@ -3054,3 +3054,35 @@ citations and a per-firm table (rows object / totals object / reference shape) s
 gated on a ledgered Terraform grant plan, which grew by the totals object per firm and must name the FIRM buckets each lives in (COT rows and
 totals sit under opal-data-assets/blackdiamond/cottonwood/silver/, not the cottonwood platinum prefix -- the cross-firm gate's enumeration is read
 before the plan).
+
+
+## 2026-09-24 12:5x UTC - Claude CTO batch 51: Andrew-direct "recs approved" on the six /open-calls cards (Y retries on the same model; ONE Performance plan submission for Anna on the default window; upload symbol resolution through the resident, no prices in v1; the signed-in HAR when DEV is ready; DSGN_IRPTV1 DONE WHEN confirmed as written; the Rule 28 card acknowledged, M receipts under its migration); portal candidate 7 GO'd on the CTO's own reads
+
+Instruments: Andrew's word at the CTO terminal, verbatim "recs approved", in reply to the six cards of 12:4xZ; record
+org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_125xZ_RECS_APPROVED_SIX_OPEN_CALLS_IRPT.md (this commit). Candidate 7: the CTO's
+reads in the consolidation checkout (origin/DEV b9d244a474 fetched; f1d02f30a2; ancestor rc=0 both; 1 commit; 2 files +46/-7; non-test name-only
+diff EMPTY; tsc rc=0 0 lines; eslint rc=0 0 findings; the fixture read whole, 1,264 B, opaque ids and digests only). Messages 100596 / 100597 (the GO) and
+the broadcast of the record.
+
+### ANDREW-DIRECT-RECS-APPROVED-SIX-CARDS-20260924
+Each REC is now his word at the REC's own scope, with its bound: (1) 2.0.0_SA_COO~Y's safeguards dialog -> retry on the SAME model; MSTR keys
+it. (2) ONE Performance plan submission for acc_d486fc9455d6b2aa18e13af1 on the default window -- exactly one under this word; P executes with
+the CRO's second read; the CTO grades the Performance hop from the served result. (3) Prospect-upload egress: symbol resolution through the
+resident's session, resolution only, under the one-submission bound; NO prices in v1 -- any price or calculation fetch needs its own per-use
+word. (4) The signed-in Holdings load with a HAR is Andrew's own act once DEV is where he wants it; the CTO tells him when candidate 7 lands.
+(5) DSGN_IRPTV1 DONE WHEN confirmed as written at PRD v0.5 -- the L2 confirmation he reserved; the loop cycles without him from here. (6) The
+Rule 28 card acknowledged; M receipts the Eclipse map and the taxsma snapshot under its holdings migration. NOT covered: the first live Analysis
+submission (its own card when a composition lands) and the CLOUD trunk push (MSTR's to put to him). Broadcast the same turn to every live seat
+it binds.
+
+### IRPT-PORTAL-CANDIDATE-7-GO-20260924 (P 100594; the CTO's GO 100596)
+Candidate 7 = f1d02f30 on DEV b9d244a4: fe-s-2/dropdown.test.ts re-pinned from "no session claim is read anywhere" to "no session claim is used
+as AUTHORITY" (FirmDropdown.tsx and firm.ts claim-free; index.tsx's one isInternal read is the default-view seed, asserted at exactly one
+occurrence; the selection helpers never called with the claim) -- the batch-48 ruling, executed as ruled, page unchanged; and
+fixtures/wire/SelectedAccounts.valid.json published, authored first on the producer side with its .invalid twin and jsonschema-validated, then
+copied to the portal as the other eleven are. fe-s-2 + fe-s-10 on D's instrument: 48 pass / 1 skip / 0 fail (was 42 / 1 / 5 at every DEV vintage
+since 7c542fd2) -- the five DSGN_IRPTV1-W4-S2 names are CLOSED. The producer's _contracts suite: 33 fail with and without the files (0
+introduced). GO'd; receipt PENDING. UNMASKED behind the ENOENT: F14-AC13 x2 / AC14 x3 now fail on "slice property 'entries' does not $ref the
+document" -- the directory-browse response slice's entries member is not a $ref into DirectoryEntry as the one-parser rule requires: a
+response-contract / gen-wire debt, pre-existing, cut on its own candidate with the contract change on the backend branch FIRST (the producer
+owns docs/contracts v1; the portal copy follows), never a portal-only patch.
