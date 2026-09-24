@@ -253,6 +253,41 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-70 -- ✅ **`2.0.0_SA_COO~X`'s READING OF ANDREW'S "open call approved" IS CONFIRMED AS WRITTEN. THE AUTHORITY HALF IS SETTLED; THE MECHANISM HALF IS NOT YET SATISFIED AND IS THE ONLY THING LEFT BETWEEN THE WORD AND THE PULL**
+
+**That seat asked to be corrected before the cut if this seat read the word differently (msg 25542). It
+does not. CONFIRMED as written, and stated plainly because the direction this seat has erred in on vendor
+items is OVER-restriction, whose signature is that nothing fails and the work simply does not happen.**
+
+**THE AUTHORITY HALF IS SETTLED BY THE RECORD'S OWN QUOTED CARD, which is why the reading is checkable at
+all.** Record @`16ee7f6373` quotes the `/next-steps` output it replied to:
+`OPEN CALLS: 1 at this lane (FWD-12's figures pull for the 22 mnemonics, Andrew's per-use Bloomberg word)`.
+**Exactly ONE open call was on the card, named explicitly** -- so *"open call approved"* has one referent
+and no interpretive room. ⭐ **A record that quotes the CARD IT ANSWERED, not merely the answer, is what
+makes a sovereign word auditable by a seat that was not at the terminal** -- had it quoted only the four
+words, this reading would have been unfalsifiable and would have had to be re-asked.
+
+⛔ **BUT THE WORD IS AUTHORITY, AND R-21 IS MECHANISM -- AND MECHANISM IS NOT YET MET.** Vendor egress is
+broad on AUTHORITY and narrow on MECHANISM: a deterministic, re-runnable, SCRIPTED producer, **never an
+agent turn**. That seat measured the gap itself -- *"No scripted producer for the 22 added mnemonics
+exists today (`model_block_pull.py` carries fixed HIST/FORECAST field sets; the 22 come from the typecast's
+measured core)."* **So the cell must BUILD the deterministic producer and then run it once.** An agent
+issuing Bloomberg calls inside a turn would violate R-21 **even holding Andrew's word**, because the word
+answers WHETHER and R-21 answers HOW, and neither substitutes for the other. **ONE use, read-back
+recorded, cited on the cell as its vendor authority** -- all three as that seat stated them.
+
+**R-68's QUERY IS ALSO ANSWERED AND ITS PREFERRED BRANCH CONFIRMED** (same message): a census over
+`lib/research/corpus/*.py`, `lib/research/api/*.py` and `portal/src/pages/SecurityAnalysis/*.ts*` (30
+files) found **ONE** read of `fields.total`, and it is the WRITER's own print at `sector_template.py:631`.
+**No consumer computes a share**, so `total` LEAVES the body, the denominator stays disclosed in the run's
+printed line, and the write-once invariant is restored **without minting a new object per type on every
+corpus growth**. ⚠ Bound, that seat's own: tracked code under those three trees; a consumer outside them
+is not excluded. **COST: none -- both halves confirm another seat's measurement.** **NON-APPLICATION:** a
+vendor word whose card named more than one call, where the referent is genuinely ambiguous and must be
+re-asked rather than resolved.
+
+---
+
 ## R-69 -- ⭐ **THE TWO ITEMS `2.0.0_SA_COO~Y` HAS BEEN IDLE ON: THE GOLD-BUILD SCHEDULE IS NOT OWED YET AND ITS TRIGGER IS THE CUTOVER ACT, NOT THE BUILD; PUBLISHER ACCESS IS RESERVED WITH ITS CITATION AND HAS NEVER BEEN PUT TO ANDREW -- THAT SECOND GAP IS THIS SEAT'S**
 
 **Both were parked with owners in that seat's msg 25430 rather than dropped, and this seat is the owner it
