@@ -253,6 +253,69 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-76 -- ⛔⛔ **R-57's DELTA=0 IS AMENDED TO NAME ITS COMPARAND. A DELTA=0 THAT EXEMPTS AN ACT FROM A NEVER-LINE SIGN-OFF MUST STATE ITS PLANE, OR THE EXEMPTION IS UNFALSIFIABLE -- AND THE TWO PRE-FLIGHT DEFECTS ARE ACCEPTED AS FOUND**
+
+**`0.7.0_AE_CloudOps~A`'s `rm-7` pre-flight (rows `Z-S253`/`Z-S254`, relayed by `2.0.0_SA_COO~Z` msg
+25585) found TWO defects in the issuer's own cut BEFORE any world act.** ⭐ **That is the control working
+exactly as designed: a deploy lane that reads its order against the live plane and refuses to execute a
+criterion it can see is broken.** Both are accepted; both are the issuer's to amend and it has, on the
+modification path, the same tick.
+
+### (1) THE APPLY WOULD HAVE BEEN A 0-DIFF, AND IT IS A RULE-24 UNION GAP
+
+`modules/yang-lambda` takes `source_code_hash` **from the S3 artifact object** and terraform never packages
+code. The deployed function returns `application/pdf` for `?format=rich` AND `?format=xml`, **so it cannot
+be running `rm-4`'s bytes.** The missing act is `build-and-upload-scoped-amgt.sh` -- an S3 write **NO CELL
+OWNED**.
+
+⛔ **AND THE WAY IT HID IS THE LESSON: BOTH CELLS' TEXT WAS TRUE.** `s.46d(iv)` had `rm-4` *"does not
+deploy"* and `rm-7` *"changes no code"* -- each correct in isolation, and **their UNION was short one
+member.** A reader checking either cell finds nothing wrong; only the union, subtracted against the acts a
+deploy actually requires, shows the hole. **This is Rule 24's MECE postulate at the SCOPE grain rather than
+the enum grain** -- two write-surface declarations partitioning a domain they do not cover -- and it would
+have produced a terraform apply that succeeded, changed nothing, and read as a completed deploy.
+`2.0.0_SA_COO~Z` names it as its own gap; the remedy (widen `rm-7`'s egress by EXACTLY that one artifact
+write, preserve the prior artifact by VersionId or a sha-named backup key, name it as the rollback in the
+NEVER-2 entry) is proportionate and is adopted without amendment.
+
+### (2) A VERIFICATION CRITERION THAT CAN NEVER PASS, WHOSE FAILURE MODE IS TO ROLL BACK CORRECT WORK
+
+The same request twice, four seconds apart, **no deploy between them**: 77,862 bytes both times, **two
+different shas, differing in exactly one span -- `/CreationDate`.** So `AC2`/L2's *"raw sha EQUAL to
+BEFORE"* is **ALWAYS FALSE.** ⛔ **A criterion that cannot pass does not merely fail -- it would have
+ROLLED BACK A CORRECT DEPLOY while reading as faithful execution**, which is the worst available shape: the
+rollback is the *diligent* branch. Remedy adopted: the comparand is the `/CreationDate`-, `/ModDate`-,
+`/ID`-normalised sha256 (identical across both reads at `fab9a93f...`), ⭐ **and it keeps its
+discriminating power -- CAT still differs, so "equal" remains free to fail.** A normalisation that made
+everything equal would be worse than the broken criterion.
+
+### THE PART THAT IS THIS SEAT'S -- R-57 IS AMENDED
+
+**R-57 stated *"the default path is a verified DELTA=0 on every existing response"* and concluded NO
+never-widen pair was required.** That conclusion rests on NEVER-1's own exemption: *"verified DELTA=0 needs
+no hold."*
+
+⚠ **THE CLAIM IS FALSE ON RAW BYTES AND TRUE ON THE NORMALISED COMPARAND**, and R-57 named neither.
+`rl-10` measured its DELTA=0 **in-process on the PINNED producer** (`CreationDate=None`), while the served
+pre-deploy responses carry the **UNPINNED** stamp -- so the two numbers were never on one plane.
+**AMENDED: the DELTA=0 is on the normalised comparand, and the no-pair conclusion survives THERE and only
+there.** The raw-sha equality R-57's sentence implies is unobtainable by construction.
+
+⛔⛔ **THE GENERALISATION, AND IT IS THE SHARPEST THING IN THIS RULING: A `DELTA=0` THAT EXEMPTS AN ACT
+FROM A NEVER-LINE SIGN-OFF MUST NAME ITS COMPARAND.** NEVER-1's exemption turns entirely on that number,
+so an unnamed plane makes the exemption **UNFALSIFIABLE** -- a later seat cannot check it, and a
+sign-off that should have happened is skipped on a sentence nobody can test. **The plane is part of the
+claim, not context for it.** COST: one clause naming the comparand, in any sentence that cites a DELTA to
+skip a hold. NON-APPLICATION: a DELTA=0 on an artifact with no nondeterministic span, where raw and
+normalised coincide -- and even there, say so.
+
+⭐ **CREDIT WHERE THE MECHANISM WORKED: neither defect was found by this seat or by the issuer.** They were
+found by the lane that was about to execute the order, reading its own criteria against the live plane
+before touching anything -- and it filed rows rather than proceeding. **`Z-S254` being ARMED is correct**,
+and the ruling says so rather than closing it on the strength of the remedy being known.
+
+---
+
 ## R-75 -- ⛔⛔ **"53 OF 93 DOSSIER-SERVED" IS A PIPELINE STATE, NOT A BACKFILL. NINE OF THE 53 ARE ALL-FIELDS-ABSENT SHELLS, SO THE GOAL'S LAST CLAUSE READS 44 OF 93 ON THE AXIS ANDREW ASKED ABOUT**
 
 **`CRPS-d-4` closed and the 93-of-93 census ran** (drain `809a89d8ff`, packet FINAL `918ca7abe0`) --
@@ -292,9 +355,42 @@ ticker-to-CIK arm recovered a correct issuer name for **13 of 13** where the pro
 many of the 40 a second identity path reaches is **UNMEASURED**, and it is a round-3 cell's measurement,
 not an inference to make here.
 
+⛔⛔ **AMENDED WITHIN THE HOUR BY THE SEAT WHOSE NUMBER THIS RULING CITED: THE REACHABLE BASIS FALLS.**
+`2.0.0_SA_COO~Y` msg 25593 measured the population this ruling reasoned about, over
+`universe/v1/2026-09-16.json`, 250 names:
+
+| query | result |
+|---|---|
+| UNRESOLVED entries (no `security_key`) carrying a `cik` | **0 of 59** |
+| RESOLVED entries carrying a `cik` | 13 of 191 |
+| entries whose reason names a lookup ROOT | 13 -- **every one parsed from a ticker the entry ALREADY HAD** |
+| UNRESOLVED entries carrying any ticker value at all | **4 of 59** |
+
+⭐ **THE EDGAR ARM IS STRICTLY DOWNSTREAM OF IDENTITY, AND THE ZERO IS STRUCTURAL RATHER THAN
+INCIDENTAL: the lookup key IS the ticker root, and a folder with no `*ONE PAGER*.xlsx` has no ticker to
+root.** The four exceptions strengthen it -- three are cash/money-market rows, and the fourth is a real
+equity (Schlumberger SLB) whose own reason reads *"no canonical identity, so no EDGAR filing identity is
+attached."* **So even WITH a ticker string the arm does not fire, because it hangs off CANONICAL IDENTITY
+and not off a ticker. It can never be the path that CREATES identity.**
+
+⛔ **SO THIS RULING DID THE THING IT CONVICTS OTHERS OF: it carried a peer's true number into a
+POPULATION THAT NUMBER NEVER MEASURED.** "13 of 13" measures name ENRICHMENT for securities ALREADY
+identified; the claim it was cited for is identity RECOVERY for securities that are not. ⚠ **The
+citation grain is where this hides -- there was a real measurement, a real denominator and a real seat
+behind it, and none of that makes it evidence for a different population.**
+
+⚠ **AND THE CORRECTION DOES NOT FLIP THE ANSWER, which is the discipline that seat itself insisted on:
+the 40 are NOT thereby unreachable.** A different second path is plausible -- a company-NAME to ticker
+match against the SEC `company_tickers` table, or reading the workbook -- **and unmeasured is exactly
+where those stay.** What falls is the CITED BASIS: **the reachable classification now rests on nothing
+measured, and says so.**
+
 **THE REACHABILITY CLASSIFICATION THE COMPLETION TEST OWES, with its unmeasured part named:**
-- **REACHABLE, 40 candidates, count unknown** -- blocked on a single-path identity resolver with a
-  demonstrated second path; the measurement is a cell, not a guess.
+- **UNMEASURED, 40** -- blocked on a single-path identity resolver whose key is a ticker root the folder
+  does not carry. ⛔ **Do NOT read this as "reachable": the second path this ruling first cited is measured
+  to be structurally incapable of creating identity, and no other path has been measured at all.** A
+  NAME-to-ticker match against the SEC `company_tickers` table, or reading the workbook, are candidates and
+  nothing more. **The count is unknown and so is the direction.**
 - **UNREACHABLE BY SOURCE, 10** -- workbook-only folders (9 shell-served + Quanta) hold a spreadsheet and
   no prose document. **No pipeline produces prose from a source that has none.** ⭐ Reaching these is a
   CAPABILITY (read the workbook) rather than a fix, and that is a product decision, not a defect.
