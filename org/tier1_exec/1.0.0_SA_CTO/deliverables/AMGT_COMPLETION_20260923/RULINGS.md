@@ -4806,6 +4806,17 @@ inferred from corpus membership TODAY and the per-response count is an **UPPER B
 
 ## PARKED -- OFF THE AMGT THREAD, NAMED SO NOTHING DRIFTS (`/closer` NO SIDE-QUESTS)
 
+⛔ **CLOSED 2026-09-24 ~19:4xZ -- THE UN-PARK CONDITION FIRED, AND THE OUTCOME WAS TRANSFER RATHER THAN
+UN-PARK.** The condition below reads *"AMGT stands down, or Andrew re-scopes"*, and **he re-scoped**:
+Andrew-direct ~19:3xZ gives the whole `opal_ai` program to `1.0.0_SA_CTO~O`, covering BOTH items
+(`RCN-0014` and `RCN-0015`). Record
+`ANDREW_DIRECT_20260924_193xZ_OPAL_AI_CALLS_1_2_4_YES_ANALYST_SEPARATION.md` @`489fbcd6e0`; relayed by
+that seat, which states it *"places no gate on your AMGT work."* **Neither item is this seat's any more,
+and AMGT did not stand down** -- so the park is discharged by reassignment, not by becoming workable here.
+⭐ **The park did its job:** its whole purpose was that an un-parked item is the one that gets lost, and the
+condition it carried is what made the transfer legible instead of leaving two items with no owner. Marked
+here, on the superseded text, rather than only in a later section.
+
 **Two `opal_ai` items now sit at this seat and NEITHER is being worked while AMGT is armed.** Recorded
 with owner and un-park condition, because an un-parked item is the one that gets lost.
 
