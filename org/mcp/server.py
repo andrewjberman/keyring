@@ -772,6 +772,39 @@ _poll_task: asyncio.Task | None = None
 # ---------------------------------------------------------------------------
 _piggyback_queue: list[dict] = []
 
+# REPLAY BOUNDS (report 3 wave 3, Andrew-approved 2026-09-24; CLAUDE.md "an acked message never rides a later
+# heartbeat/piggyback drain"). The queue is this process's memory, so a message polled into it and then READ through
+# the filesystem inbox (watcher + ack_messages) used to ride the next drain anyway -- measured 2026-09-24 ~16:0xZ at
+# 0.0.0_AB_MSTR: one heartbeat replayed 9 messages, all 9 already acked. Two bounds:
+#   (1) an ACK in this session removes those ids from the queue (_purge_acked_from_queue, both ack paths);
+#   (2) a drain renders only mail under PIGGYBACK_MAX_AGE_DAYS old; older mail becomes ONE summary line naming its ids
+#       (still EMITTED, so the broker stops re-offering it; the ids stay ackable and readable in the inbox).
+PIGGYBACK_MAX_AGE_DAYS = 7
+
+
+def _purge_acked_from_queue(ids) -> int:
+    """Drop acked ids from the in-memory piggyback queue; returns how many were dropped."""
+    global _piggyback_queue
+    acked = {int(i) for i in (ids or [])}
+    if not acked:
+        return 0
+    before = len(_piggyback_queue)
+    _piggyback_queue = [m for m in _piggyback_queue if m.get("id") not in acked]
+    return before - len(_piggyback_queue)
+
+
+def _is_stale(msg: dict, now: datetime | None = None) -> bool:
+    """PURE. True iff the message's sent_at is older than PIGGYBACK_MAX_AGE_DAYS. An unparseable or missing sent_at
+    reads FRESH: hiding mail on a parse failure would be the silent loss this bound must never cause."""
+    try:
+        sent = datetime.fromisoformat(str(msg.get("sent_at") or "").replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    if sent.tzinfo is None:
+        sent = sent.replace(tzinfo=timezone.utc)
+    now = now or datetime.now(timezone.utc)
+    return (now - sent).total_seconds() > PIGGYBACK_MAX_AGE_DAYS * 86400
+
 
 def _drain_piggyback() -> str:
     """Drain the piggyback queue and return formatted urgent header.
@@ -807,15 +840,24 @@ def _drain_piggyback() -> str:
                      "only clock an orphan cannot forge -- call "
                      f"ack_messages(\"{','.join(str(i) for i in _emit_ids)}\").)\n")
     _mine = _my_serial or "this session (serial unset)"
+    _now = datetime.now(timezone.utc)
+    stale = [m for m in msgs if _is_stale(m, _now)]
+    fresh = [m for m in msgs if not _is_stale(m, _now)]
     lines = [f"URGENT: {len(msgs)} message(s) received while idle -- queued for **{_mine}** "
              "(this session's OWN broker mail, NOT the queried agent's):\n"]
-    for msg in msgs:
+    for msg in fresh:
         lines.append(f"--- Message from {msg.get('from_serial', '?')} "
                      f"to {msg.get('to_serial') or _mine} ---")
         subj = msg.get("subject", "(no subject)")
         lines.append(f"Subject: {subj}")
         lines.append(msg.get("body", ""))
         lines.append("---\n")
+    if stale:
+        _oldest = min(str(m.get("sent_at") or "") for m in stale)
+        lines.append(f"OLDER THAN {PIGGYBACK_MAX_AGE_DAYS} DAYS, NOT REPLAYED: {len(stale)} message(s), ids "
+                     f"{','.join(str(m.get('id')) for m in stale)} (oldest sent {_oldest}). The body is in your "
+                     "inbox file carrying that Msg-ID; get_delivery_state(message_id=<id>) shows its subject; "
+                     "ack_messages closes them.\n")
     lines.append(_ack_hint)
     lines.append("Act on these messages NOW before proceeding with your response.\n\n")
     return "\n".join(lines)
@@ -1726,6 +1768,38 @@ async def query_project(project_code: str, ctx: Context = None) -> str:
     return "\n".join(parts)
 
 
+# SEND WORD CAP (CLAUDE.md Rule 31 "one ask per message, under 150 words, cite the file instead of restating it";
+# report 3 wave 3, Andrew-approved 2026-09-24 ~15:4xZ, record
+# org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_154xZ_REPORT3_REFINEMENTS_APPROVED_BOTH_REPORTS_TO_CTO.md).
+# A body over the cap is refused unless it is a file path plus one line; send_override (a human operator's request)
+# forces it, audited and stamped like the other send gates.
+SEND_WORD_CAP = 150
+_PATH_LINE_RE = re.compile(r"^`?([A-Za-z0-9_.~-][A-Za-z0-9_.~/-]*)`?(?:\s*@\s*[0-9a-f]{7,40})?$")
+
+
+def _cited_repo_file(line: str, repo_root: Path) -> bool:
+    """PURE over the filesystem: True iff the whole line is one repo-relative path (optionally `@<commit>`) naming an
+    existing file under repo_root. A '..' segment never resolves."""
+    m = _PATH_LINE_RE.match((line or "").strip())
+    if not m or ".." in m.group(1).split("/"):
+        return False
+    return (repo_root / m.group(1)).is_file()
+
+
+def _word_cap_refusal(body: str, repo_root: Path) -> str | None:
+    """The refusal text for a body over SEND_WORD_CAP words that is not 'a file path plus one line', else None."""
+    words = len((body or "").split())
+    if words <= SEND_WORD_CAP:
+        return None
+    lines = [ln for ln in (body or "").splitlines() if ln.strip()]
+    if len(lines) <= 2 and any(_cited_repo_file(ln, repo_root) for ln in lines):
+        return None
+    return (f"SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is {words} words; the cap is "
+            f"{SEND_WORD_CAP}. Put the content in a file and send its path plus one line, or cut it to one ask. "
+            "Nothing was written for any recipient. A human operator's request can force it: "
+            "send_override=\"<their request>\".")
+
+
 @mcp.tool()
 async def send_message(
     from_agent: str,
@@ -1749,9 +1823,12 @@ async def send_message(
     to auto-fill it. identity_override="<reason>" permits a relay send; the true
     author is then stamped into the delivered message.
 
+    WORD CAP (CLAUDE.md Rule 31): a body over 150 words is refused unless it is a file
+    path plus one line -- put long content in a file and send its path.
+
     SEND-GATE --force (Andrew-direct 2026-09-10): send_override="<reason>" forces the
     two ROUTING gates -- the L8 correspondence guard (the CVO's one send goes to the
-    CTO) and LD-0529 (a Tier-2 seat hears an act only as a task order). Use it ONLY
+    CTO) and LD-0529 (a Tier-2 seat hears an act only as a task order) -- and the word cap. Use it ONLY
     when a HUMAN OPERATOR has asked for it, and put THEIR request in the reason.
     It is audited (SEND_GATE_OVERRIDE) and STAMPED into the delivered message, so the
     recipient sees the send was forced and why. A blank or whitespace reason is NOT an
@@ -1852,7 +1929,7 @@ async def send_message(
     if _forced:
         _audit_identity("SEND_GATE_OVERRIDE", from_agent, os.getpid(),
                         _forced, "to=" + ",".join(_recipients))
-        _sender_stamp += (f"**Send-gate override:** the L8 / LD-0529 send gates were FORCED by a human "
+        _sender_stamp += (f"**Send-gate override:** the L8 / LD-0529 / word-cap send gates were FORCED by a human "
                           f"operator's request; reason: {_forced}\n")
     _l8_refusal = cvo_send_guard.cvo_worker_send_refusal(
         from_agent, _recipients, cvo_send_guard.executing_tree_projects(_REPO_ROOT), subject=subject, body=body,
@@ -1870,6 +1947,12 @@ async def send_message(
         _audit_identity("SEND_TIER2_ACT_REFUSED", from_agent, os.getpid(),
                         "to=" + ",".join(_recipients), _t2_refusal[:200])
         return _t2_refusal
+    # --- SEND WORD CAP (Rule 31; report 3 wave 3). Whole-send refusal, before any write; send_override forces it.
+    _cap_refusal = None if _forced else _word_cap_refusal(body, _REPO_ROOT)
+    if _cap_refusal:
+        _audit_identity("SEND_WORD_CAP_REFUSED", from_agent, os.getpid(),
+                        "to=" + ",".join(_recipients), _cap_refusal[:200])
+        return _cap_refusal
 
     _results = []
     for _rcpt in _recipients:
@@ -2141,6 +2224,8 @@ async def check_inbox(agent_serial: str, mark_read: bool = False,
                     and _identity_key(agent_serial, folder.name) != _my_serial):
                 _ack_body["override"] = True
             _ack_res = _broker_fetch("/ack-messages", _ack_body)
+            if isinstance(_ack_res, dict):
+                _purge_acked_from_queue([i for i in _read_ids if i not in (_ack_res.get("refused_ids") or [])])
         parts.append(f"\n--- Archived {len(pairs)} messages to read/")
         if _read_ids and isinstance(_ack_res, dict) and _ack_res.get("refused"):
             parts.append(
@@ -2208,6 +2293,7 @@ async def ack_messages(message_ids: str, ctx: Context = None) -> str:
     refused_ids = res.get("refused_ids", []) or []
     skipped = len(ids) - n - refused
     acked_ids = [i for i in ids if i not in refused_ids]
+    _purge_acked_from_queue(acked_ids)  # an acked message never rides a later drain (REPLAY BOUNDS (1))
     out = f"READ ack recorded by {_my_serial} for {n} message(s): {acked_ids if refused else ids}"
     if refused > 0:
         out += (f"\n  REFUSED {refused} id(s) NOT ADDRESSED TO {_my_serial}: {refused_ids} -- an ACK "
