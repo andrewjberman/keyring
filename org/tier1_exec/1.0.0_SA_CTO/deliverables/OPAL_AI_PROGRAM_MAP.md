@@ -14,7 +14,7 @@ no project yet: mcportal (2026-09-17) and the D6 GraphQL client plane.
 |---|---|---|---|---|---|
 | 1 | NFRA_OPALAI -- opal_ai V1 (Analyst product, repo, runtime isolation, per-asker entitlements) | D6 | PRD v0.3 ADMITTED; L5 in progress | round-1 issuance | 2.0.0_SA_COO~O |
 | 2 | NFRA_MCPINDEX -- the tool index | D9 -> D6 | 9 of 38; wound down 09-21 on the laptop; held branch laptop-only | re-home to D6 on site Z; recover the held branch; close round 1 and re-cut onto opal_ai paths | 1.0.0_SA_CTO~O (re-home), 0.0.0_AB_MSTR~Z (branch), COO~O (round) |
-| 3 | NFRA_MCPORTAL -- the operator console at mcp.opalinvest.dev: MCP Server pages (tool library, per-user grants, audit, kill switch), user management, reports, health, cost, infosec | D6 | brief only (2026-09-17, every page card answered by Andrew) | L2 endpoint, L3 register, L4 PRD | 1.0.0_SA_CTO~O |
+| 3 | NFRA_MCPORTAL -- the operator console at mcp.opalinvest.dev: MCP Server pages (tool library, per-user grants, audit, kill switch), user management, reports, health, cost, infosec | D6 | registered @8105cd4f0e; PRD v0.1 @842f67a802 | L4-R ratified half (3.0.0_SA_CVO~O); repo creation (0.0.0_AB_MSTR~Z, G-REPO) | 3.0.0_SA_CVO~O, 0.0.0_AB_MSTR~Z |
 | 4 | NFRA_OPLGTW -- the gateway's Schwab access and grant model | D9 | 30 of 33; stopped by Andrew 09-22 | **Andrew's call** (the stop is his by name) | Andrew |
 | 5 | opal_ai TEMPLATE slice (RCN-0014 O6-O9) | D6 | not started, on his order "after a proper V1, even V2" | register when NFRA_OPALAI closes | 1.0.0_SA_CTO~O |
 
@@ -49,3 +49,8 @@ NFRA_COMPTEAM, NFRA_WRKFLW, HEATMAP_PROCESS (closed) -> no remaining act. OPAL_T
 
 - 2026-09-24 ~21:1xZ, tick 1: map written. PRD v0.2 (C10) and v0.3 (C4 pull) ruled on COO~O's questions. Next:
   NFRA_MCPINDEX re-home and NFRA_MCPORTAL L2.
+- 2026-09-24 ~21:2xZ, tick 1 (continued): ADHC_TMSTEL closed superseded @d2e6cd8303. NFRA_MCPORTAL registered with
+  its endpoint @8105cd4f0e (DONE WHEN confirmed by this seat under the goal licence), PRD v0.1 @842f67a802 (serving
+  ruled: from the gateway process behind the ALB sign-in). Asked 0.0.0_AB_MSTR~Z for the laptop relay on NFRA_MCPINDEX
+  (held-branch push, no laptop seat on it) and for the mcportal repo. Routed MSTR~Z's law-lock merge gap away, out of
+  scope. NFRA_OPALAI is at DECOMP with 2.0.0_SA_COO~O.
