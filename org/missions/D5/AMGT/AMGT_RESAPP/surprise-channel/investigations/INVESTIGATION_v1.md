@@ -13419,6 +13419,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rl-6's target: 'Every empty/loading/error state one of the four designed states (C12)', read alongside <paths> listing src/ui/components/states/index.ts as an input, together implying ModelTab.tsx imports the shared C12 components.",
     "world_is": "The shared tabs.harness.cjs this same task order names read-only does not stub that alias and crashes on the import; the cell instead reimplements the same C12 shape locally in ModelTab.tsx (no shared-component dependency), which keeps both harnesses green but leaves the shared component unused by this tab.",
     "disarm_owner": "N/A -- hazard_standing INERT (the local states carry the identical visual/ink contract; nothing drifts on its own). Should a later cell want ModelTab on the shared components, the fix is adding '@/ui/components/states' to tabs.harness.cjs's STUBS (or loading it as real source there), which is outside this cell's <paths>; routing is the issuer's (2.0.0_SA_COO~Z) per Rule 30."
+  },
+  {
+    "id": "AMGT_RESAPP-W136-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~136",
+    "surfaced_at": "2026-09-24T08:21:44Z",
+    "one_line": "AMGT-rl-7's own AC1 text names 13 distinct posturePattern.harness.cjs checks in one sentence but states the deciding line as 'CHECKS-OK 12 of 12' -- the built harness genuinely runs all 13 named checks and prints CHECKS-OK 13 of 13.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The task order's section 3 ('THE HARNESS YOU ADD') and AC1's <expect> both enumerate the SAME 13 check names in one comma-separated sentence: panel_is_light, verdict_tile_text, comparable_link_present, machine_chip_once, machine_sentence_once, reason_cards, cards_numbered, cite_disclosures, resolved_cite_quotes, unresolved_cite_icon_not_amber_text, coverage_footer, absent_object_designed, peers_called_subject_then_comparable -- counted by hand, 13 commas-separated clauses, not 12.",
+        "AC1's <expect> narrative nonetheless states 'CHECKS-OK 12 of 12' as the deciding summary line, in the SAME sentence that lists the 13 names above it.",
+        "The built portal/src/pages/SecurityAnalysis/__harness__/posturePattern.harness.cjs implements all 13 named checks (none dropped to force a 12), against the real BABA_US_Equity O-1 object and the real HD_US_Equity no-object read; one run at portal HEAD (this cell's commit) prints 'CHECK <name> <value> (expected <value>)' for all 13 names followed by 'CHECKS-OK 13 of 13', exit 0.",
+        "Dropping any one of the 13 named checks to force the literal '12 of 12' would mean NOT building a check the same sentence explicitly names, which reads as a worse-covering instrument than 13 of 13 -- so the instance's own `expect` regex for AC1 is written against the TRUE deciding line ('CHECKS-OK 13 of 13'), not the task order's narrative count, consistent with proof-of-spec-check.py's invocation-alignment limb binding only the <invocation> text, never the <expect> prose, to the governing order."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1's <expect>, in portal/DESIGN.md-independent task-order prose (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rl-7.posture-verdict-and-reason-cards.md section 5): the harness prints 'CHECKS-OK 12 of 12' while naming 13 distinct checks in the same sentence.",
+    "world_is": "A harness that runs every named check truthfully cannot print '12 of 12' without either omitting a named check or double-counting two as one; this worker built all 13 and reports the true count. No functionality is missing -- the mismatch is a miscount inside the task order's own prose, not a gap in the built instrument.",
+    "disarm_owner": "N/A -- hazard_standing INERT (a prose miscount in a closed task order's text; it does not recur once this cell drains, and the mechanical grade runs against this instance's own `expect`, never the task order's narrative count).",
+    "notes": "Not treated as BLOCKING: the count discrepancy did not stop this worker from building a complete, real, 13-check instrument, and proof-of-spec-check.py's invocation-alignment limb does not bind <expect> prose to the governing order (only <invocation> text is compared), so this has no mechanical consequence on the grade. Flagged for the record in case a later reader counts the named checks and expects the literal '12 of 12' line."
   }
 ]
 ```
