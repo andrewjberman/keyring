@@ -454,6 +454,51 @@
     "world_is": "The CONTRACT's TypeScript type does not distinguish these two cases (both fields always present, non-optional) -- only reading the adapter's own implementation (out of this order's grant to edit) reveals that the live path ALWAYS falls into the 'only accountId' branch the order names. AccountsTable.tsx's own displayName-vs-accountId equality check is the working detector; documented here so no later cell trusts displayName without it.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not blocking -- worked around entirely within this cell's own grant (AccountsTable.tsx), no edit to contracts/adapt.ts (out of grant)."
+  },
+  {
+    "id": "DSGN_IRPTV1-S6",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-24T14:16:14Z",
+    "one_line": "Grader's run of IVE2-AC2 on the merged round-2 candidate 04952bd2 (1.0.0_SA_CTO 100625): the pinned driver read `DRIVER-FIXTURES-MATCH: matched 5 of 5` against a plain dev server on 5192; its PNG (deliverables/2.0.0_SA_COO~D/iv-e-2.grader-run.04952bd2.png) shows two defects no static-markup criterion could see: the Securities map (IV-e-5 HoldingsTreemap) draws SOLID BLACK tiles labelled only 'not supplied', and the bare 9-character identifier `037833100` renders as a security NAME in the allocation bars, hero tiles, legend and Securities table.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D (leading IRPT frontend on Andrew's word 2026-09-24 ~14:0xZ; both defects go to the next pass's work list; disarmed by the row quoting the fix commit and a re-run PNG)",
+    "spec_asserts": "IV-e-5 face (b): treemap colour = the nearest model/sleeve ancestor's label, hover = ticker/name/value/weight; PRD CONTRACTS: ids never print, 'not supplied' never replaces a name the wire carries. 1.0.0_SA_CTO 100631: if the bare identifier survives the merge it is an enrichment item -- a CUSIP is never a display label.",
+    "world_is": "Measured 2026-09-24 13:49:55Z by 2.0.0_SA_COO~D: candidate 04952bd2, cwd /c/tmp/dsgn-irptv1-r2, server localhost:5192 (`bun run dev`), driver blob 8c665e72 fed on stdin, fixture src/pages/InvestorReporting/fixtures/smoke/dsgn-irptv1-cottonwood.json, driver rc=0, `DRIVER-FIXTURES-MATCH: matched 5 of 5`, PNG 206594 bytes. In the PNG: IdentityCard fed ($200,000.00, as of 2026-09-23), one firm control 'Global (All)', the Browse button, Allocation bars, Asset Category Views hero, Securities map, Securities table. The fixture has no model/sleeve ancestor above its two security leaves, so the treemap's colour group is empty and the tiles render black with the ticker fallback as their only text. The fixture's second leaf carries displayName `037833100` and no display.label; every component prints it as the name. SSR static markup (IVE5-AC4's instrument) renders the treemap body empty, so no graded artifact before this run could show either defect.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/iv-e-2.grader-run.04952bd2.png (206594 bytes) and .txt (the driver's output lines)",
+        "portal candidate dsgn-irptv1-r2 @04952bd2fe28c1c179ebde7d2d68f4b13718ebef"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The grader's run the CTO ruled for IVE2-AC2 is this row's first sentence; IV-e-2's AC2 PASS is confirmed by a second executor. The two defects are observations for 3.0.0_SA_CVO's IVE5-AC4 read and the next pass."
+  },
+  {
+    "id": "DSGN_IRPTV1-S7",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-24T14:16:14Z",
+    "one_line": "Round 2 LANDED ON PORTAL DEV at a3f4c860 on Andrew's word ('merge this in to the main DEV branch, you dont need to be working on a feature tree for this work'), ahead of the round's L8/L9: 7 of 8 cells (IV-e-7 not cut), DEV's CI steps pass on the landing (lint 0 errors after a 2-line prefer-const fix 49eadc0c in IV-e-5's test file, provenance guard OK, typecheck 0, build OK), but the InvestorReporting unit suite carries 8 NEW failures versus origin/DEV (95 -> 103 of 656 -> 671 tests), all in legacy fe-s suites the round-2 cells changed the ground under.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D (leading IRPT frontend; each of the 8 is dispositioned in the next pass as a regression to fix or a legacy assertion to retire by ruling -- never by editing a legacy suite to pass)",
+    "spec_asserts": "Spine L6 verification diet: repo-wide hygiene runs at the drain. The round-2 seam criteria named only fe-s-2/fe-s-10 (IVE4-AC2) and fe-s-7/fe-s-30/fe-s-32 (IVE7-AC2, not yet issued); no criterion or drain step ran the whole InvestorReporting suite against the base before this landing.",
+    "world_is": "Measured 2026-09-24 ~14:0xZ by 2.0.0_SA_COO~D: `bun test src/pages/InvestorReporting/` at origin/DEV a6b1f787 (detached /c/tmp/dev-base): 525 pass / 25 skip / 106 fail over 656 tests; at the landing merge ab442d10: 532 / 25 / 114 over 671; failure names diffed: 8 new, 0 fixed. New: export is a separate, disabled control > the Export button is its own data-action, labelled Export, and disabled | fixtures/smoke classification > THE CONTROL: a seeded unclassified fixture, in a temp copy of the directory, is correctly flagged (F66-AC4) | fixtures/smoke classification > every file in fixtures/smoke/ classifies WIRE-KEYED or the 4-file ADAPTER-PLANE allowlist; UNCLASSIFIED is 0 | source fields with explicit display units, three firm fixtures > 49f-bd: every leaf field under summary/periods/accounts/method reaches the markup | source fields with explicit display units, three firm fixtures > cottonwood-bd: every leaf field under summary/periods/accounts/method reaches the markup | source fields with explicit display units, three firm fixtures > inflection-orion: every leaf field under summary/periods/accounts/method reaches the markup | unavailable-metric > an unsupported metric inside a READY report renders UNAVAILABLE, never 0 (fe-s-5/performance.unsupported-benchmark.json) | unsupported-benchmark renders no benchmark element > the instrument can fail -- a firm fixture that DOES carry a benchmark shows the block. Probable grounds (not diagnosed): IV-e-6 removed the Performance Export button by design (FWD-9 is round 3's) and moved MethodAndSources' rows into the headline popover (so a static render no longer carries every source field); IV-e-2 added fixtures/smoke/dsgn-irptv1-cottonwood.json outside the smoke-classification allowlist; the unavailable-metric and unsupported-benchmark arms are a correctness question for the new ReturnsHeatmap. DEV's ci.yml runs lint, test:provenance-guard, typecheck and build -- NOT bun test -- so CI does not see these. Push: DEV c7b022a1 -> a3f4c860 under the audited never-override citing Andrew's word, after a rejected push and a pull-merge (never rebase); the push carried the 16 DSGN_IRPTV1 commits plus the pull-merge, no other seat's local commits.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal origin DEV = a3f4c860c6 (ls-remote read after the push)",
+        "C:/tmp/dev-base.irtests.log and C:/tmp/dev-land.irtests.log (the two suite runs); the 8 names above are their set difference",
+        "portal commit 49eadc0c (lint fix, author 2.0.0_SA_COO~D via safe-commit)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The CVO's L8-L10 for round 2 now grades code that is already on DEV; Andrew's word placed the landing ahead of adjudication. IV-e-7's AC2 names fe-s-7/fe-s-30/fe-s-32 expecting ' 0 fail', and those suites read 1 fail at both 895752676a and 04952bd2 -- its premise is false and it is amended before it is spawned."
   }
 ]
 ```
