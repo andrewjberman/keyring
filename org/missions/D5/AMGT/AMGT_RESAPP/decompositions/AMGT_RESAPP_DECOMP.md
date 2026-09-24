@@ -5589,7 +5589,7 @@ NOT edited by this round; a tile or chip the page needs is built LOCAL to the pa
 | `AMGT-rl-7` | POSTURE | `~136` | `FWD-26` | `tabs/PostureTab.tsx`, `postureCites.ts`, `__harness__/posture.harness.cjs`, `__harness__/posturePattern.harness.cjs` (new) |
 | `AMGT-rl-8` | LEAD PANEL | `~137` | `FWD-27`; `dated`/`requested_as_of` into the "Source:" footer (R-17, client-side only) | `components/LeadPanel.tsx`, `components/RankedList.tsx`, `components/RankedChart.tsx`, `components/StarredList.tsx`, `__harness__/errorEmpty.harness.cjs`, `__harness__/leadPanelPattern.harness.cjs` (new) |
 | `AMGT-rl-9` | STATES + THE RE-ASSERT | `~138` | `FWD-28` (all four states captured), `FWD-29` (six states PASS; six PNGs read) | `scripts/ui-contract-check.mjs` (the states sweep), and any `src/pages/SecurityAnalysis/**` file a designed-state defect the sweep finds requires -- **wave 2, after every wave-1 cell has merged** |
-| `AMGT-rl-10` | THE EXPORT | `~139` | `FWD-30` | `components/PrintExportAction.tsx`, `export/**` (new), `__harness__/exportCompare.harness.cjs` (new) -- **wave 2** |
+| `AMGT-rl-10` | THE EXPORT (re-cut on ADDENDUM B B.4a @`8da812bf80`: the producer is LANDED, `lib/research/print/render_pack.py`; measure it first, close branch (b) ON it, name the route ask) | `~139` | `FWD-30` | `components/PrintExportAction.tsx`, `__harness__/exportCompare.harness.cjs` (new), `lib/research/print/render_pack.py`, `lib/research/print/tests/**` -- **wave 2** |
 
 **Status vocabulary** (`org/standards`): every cell `NOT_EVALUATED` at the cut. **Placement:** site-z, every cell.
 **Invariant:** ten cells over ten outcome-bearing slices; `FWD-21`..`FWD-30` each named by at least one cell (`FWD-21` by
@@ -5711,8 +5711,10 @@ harness and its fetch; both are named in their faces as the starting state, neve
   the round-37 analysis as an enrichment item with a request for its contract line.
 - **The Lead Panel chart view, starred-only view and mobile widths** -- the walk did not capture them (`not_exercised`);
   rl-8 inverts the chart and starred components' idioms but the six-state instrument does not grade those views.
-- **`FWD-30` branch (a), the two-page brand-form presentation** -- rl-10 MEASURES the existing print pack against the bar
-  (page count, brand form, field parity) and BUILDS branch (b); if branch (a) needs a field no route serves, that returns
-  to `1.0.0_SA_CTO~Z` before it is built (B.4, the one named exception).
+- **`FWD-30`, both branches, per ADDENDUM B B.4a (@`8da812bf80`)** -- the producer is landed (`render_pack.py`, four blocks,
+  4+ pages, model block only, no brand tokens): rl-10 MEASURES it against the bar first, closes branch (b) ON it
+  (`build_rich_text`, the caller-supplies discipline kept, `build_pack` byte-identical as the negative control), and
+  WRITES the route ask for serving it rather than changing `/print` -- `C-PRESENTATION-ONLY` returns `FWD-30`'s route
+  change to `1.0.0_SA_CTO~Z` before it is built. Branch (a)'s two-page brand form is measured, not built, this round.
 - **The closer items** (consumer-2 grade, failure cases, `BP/_LN_Equity` route, `DE_US_Equity` fork, the `1ec5446c`
   deploy) -- their own spec (B.5).
