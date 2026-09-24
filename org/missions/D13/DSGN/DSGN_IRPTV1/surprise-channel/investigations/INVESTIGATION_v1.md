@@ -364,6 +364,96 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Carried to 1.0.0_SA_CTO with a recommendation. For the round-3 cut: every count-bearing expect is anchored to `N of N` (or computed into a VERDICT line by the test), never a bare prefix."
+  },
+  {
+    "id": "DSGN_IRPTV1-W5-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~5",
+    "surfaced_at": "2026-09-24T00:00:00Z",
+    "one_line": "IV-e-1's children[label].members fill closes W3-S1's field-mapping gap for the DIRECT-CHILD level only; a category whose direct child is itself an intermediate node (not a leaf security) still gets ONE L1 tile for that intermediate node, with no further L3 drill beneath it -- unchanged, and named by IV-e-1's own order text as out of this cell's field mapping.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx (this order): `children[childLabel(child)] = { aum: child.amount as number, members: leafSecurityMembers(child.nodeRef) }` -- every direct child of a category now carries its own leaf-security `members`, one level down from the category's own top-level fill (IV-t-3).",
+        "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-1.l2-members.test.ts: VERDICT: L2-FED over all 9 fixtures on disk, 4 children checked (the ones with leaf securities directly or nestedly beneath a direct child), 9 members, set-equal to an independent walk; mutant control (children[label].members forced to []) fails 2 of 3 tests in the file while the round-1 top-level re-derivation still passes -- the new assertion, not a pre-existing one, is what fires.",
+        "the L1-tile-per-intermediate-node behaviour W3-S1 named (a category whose direct child is an account/sleeve above its own model layer gets one L1 tile named for that intermediate node, not the models beneath it) is UNCHANGED by this fill: `children[label].members` now lists the LEAF securities beneath that one intermediate child (flat, any depth), but `CategoryViewTree` itself has no L3 -- there is still no further tile to drill into for the models/sleeves BETWEEN the intermediate child and its leaves, only the flat member list this cell now feeds.",
+        "row C-S12 (SecurityList.tsx tickerFor) is disarmed by this order's VALID proof instance per the task order's own <round> line; this row does not speak to C-S12, only to W3-S1's residual scope."
+      ]
+    },
+    "spec_asserts": "IV-e-1 worker face (b): 'Fill it: for each direct child of a category, children[label].members = the leaf security nodes beneath THAT child (any depth) ... Reuse that nested helper; sum nothing; keep the top-level members fill.' -- a field-level fill, not a structural L3.",
+    "world_is": "The field this cell owns is fed and independently verified (IVE1-AC2, VERDICT: L2-FED); the STRUCTURAL gap W3-S1 named for an intermediate direct child (one L1 tile, no further drill for the models/sleeves between it and its own leaves) is neither closed nor claimed closed by this order -- it is out of the field mapping this cell's own worker face states, and CategoryViewTree.tsx (read, never edited, per BOUNDS) has no consuming L3 for it regardless.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking. Filed to keep W3-S1's residual scope precise for whichever cell (if any) is later charged with an L3, now that the direct-child level W3-S1 also named is measurably fed."
+  },
+  {
+    "id": "DSGN_IRPTV1-W5-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~5",
+    "surfaced_at": "2026-09-24T00:00:00Z",
+    "one_line": "IV-e-2's smoke fixture required two fixes scripts/ui-smoke.mjs's own diagnostics could not name (a top-level firm_id/data.verified_request_firm_id mismatch and an unprojected_grant.kinds array where the parser requires a record), and its --fill/--click/--clicktext vocabulary cannot drive the page's role=\"combobox\" Client search control at all -- both measured directly, both worked around without touching scripts/ui-smoke.mjs (out of this order's <paths> grant).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/contracts/envelope.ts:359-380 (parseIrEnvelope): every non-refused envelope, on every operation, is refused with EnvelopeMismatch('unprojected_grant', op) unless body.unprojected_grant.kinds is a RECORD (isRecord, which excludes arrays) -- round 1's seed fixture (fe-s-14-cottonwood.json) and this cell's own first draft both carried `kinds: []`, an array, and both threw. Isolated by a direct bun run of parseIrEnvelope against the fixture body, no browser: 'THREW: EnvelopeMismatch ... unprojected_grant' before the fix, 'PARSED OK' after (kinds: {}).",
+        "portal/src/pages/InvestorReporting/contracts/envelope.ts:410-413 (the resolve-scope-specific check): a non-global resolve-scope response is refused with EnvelopeMismatch('firm_id', op) unless the envelope's TOP-LEVEL firm_id equals data.verified_request_firm_id. Round 1's seed carried firm_id='fir_c07701a9d3b5e2f4860c1a7b' at top level against data.verified_request_firm_id='F-CW' -- mismatched, throwing on every parse despite the request itself matching a declared fixture URL (so scripts/ui-smoke.mjs's own FIXTURES-MATCH line reads 'matched', the exact state round 1's proof instances described as 'resolve-scope unresolved' without naming why).",
+        "measured empirically via scripts/ui-smoke.mjs itself: '--fill \"Client search=Cottonwood\"' -> 'FILL-FAIL: Client search=Cottonwood -- locator.fill: Timeout 30000ms exceeded' (getByRole('textbox', {name:'Client search', exact:true}) finds nothing); a direct DOM read confirms the control's accessible role is \"combobox\", not \"textbox\" -- matching the SAME gap already named at org/missions/D9/IRPT/IRPT_FNTEND's FE-s-78 (task order text, this project: 'the accessible name exists but is not role=textbox') and worked around there and at org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_MVP_P/{mounted_selection_cases,header_cases_dcf5}.mjs with standalone Playwright drivers, not an edit to scripts/ui-smoke.mjs.",
+        "the naming gate's one hit was on a VALUE inside the new fixture ('bd-2026-09-23', a source_revision string this worker invented), not on the fixture's own FILENAME as BOUNDS anticipated ('a firm token in a NEW file's text is refused by the naming gate ... if it does refuse, file a row citing W3-S2 and name the fixture by a neutral filename') -- renamed to 'src-cw-2026-09-23' and the commit landed clean; W3-S2 (the lookup()-less JS/TS gap) is the same underlying gate, cited here rather than re-argued."
+      ]
+    },
+    "spec_asserts": "IV-e-2 worker face (b): 'Build ONE new fixture ... whose stubs let the page reach a RESOLVED scope with the Cottonwood account selected and BOTH tabs' bodies mounted ... If the page needs a --select/--click sequence, put the exact ui-smoke.mjs command in the result file.'",
+    "world_is": "The fixture alone was necessary but not sufficient: TWO independent parser-level defects in the fixture's OWN shape (not the app's) blocked resolve-scope entirely regardless of the click sequence, and once fixed, no ui-smoke.mjs invocation -- with or without --click -- can reach the account SELECTION step, because that control is role=\"combobox\" and the script's click vocabulary is role=button/tab/text-node only. The order's own required IVE2-AC2 invocation (no clicks) tops out at 2 of 5 matched routes (resolve-scope + the page's own unconditional initial directory-browse) and correctly shows IdentityCard, not the error page; a supplementary standalone driver (this order's own deliverable, not scripts/ui-smoke.mjs) reaches 5 of 5 and mounts SecurityList and PerformanceHeadline in the same run.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking -- both defects isolated and fixed before the graded runs; the instrument gap (role=combobox) is a REPEAT of a class already named at IRPT_FNTEND FE-s-78 and already has a working precedent (a standalone driver), not a new open question. Filed so a future cell reusing scripts/ui-smoke.mjs on this page inherits the fix instead of rediscovering it."
+  },
+  {
+    "id": "DSGN_IRPTV1-W5-S3",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~5",
+    "surfaced_at": "2026-09-24T00:00:00Z",
+    "one_line": "IV-e-6's BOUNDS names components/BenchmarkHeatmap.tsx as prior art to 'extend or wrap, never fork', but its data shape (BenchmarkModelData[], a fixed ALL_PERIODS ladder) and its own internal net-cost-from-gross computation are structurally incompatible with PerformanceReport and this cell's own 'spread never computed' rule (CALL 3) -- wrapping it would silently inherit a computation the order forbids. ReturnsHeatmap.tsx is an ORIGINAL component reusing its VISUAL PATTERN only, following the SAME precedent SecurityList.tsx already set for slices.ts.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "components/BenchmarkHeatmap.tsx:41-49 (props): `data: BenchmarkModelData[]`, `returnType?: 'gross' | 'net'` -- a model-portfolio-indexed shape with a fixed 10-member ALL_PERIODS ladder (1D/WTD/TTW/MTD/1M/QTD/1Q/YTD/1Y/SI), none of which is PerformanceReport's own period vocabulary (summaryReturns[].period / benchmarks[].periodReturns[].period, source-stated strings).",
+        "components/BenchmarkHeatmap.tsx:98-160ish (countTradingDays / getTradingDaysForPeriod / ANNUAL_COST_BPS): the component computes a NET return FROM a gross one via a trading-day-count proration when `returnType='net'` is requested -- this cell's own rule (worker face (c), CALL 3) states the spread row is 'NEVER computed'; feeding our facts through a component whose own render path can derive a value would risk exactly the computation this order forbids, even if this cell never explicitly requests it.",
+        "portal/src/pages/InvestorReporting/tabs/holdings/SecurityList.tsx's own docstring (`slices.ts` note, IV-t-4 round 1): 'a SMALL, DELIBERATE duplicate of that file's pattern -- not an import, because the file this cell must not touch is also the file it must not depend on for a behaviour this cell owns' -- the SAME reasoning applied here for BenchmarkHeatmap.tsx, cited verbatim in ReturnsHeatmap.tsx's own docstring."
+      ]
+    },
+    "spec_asserts": "BOUNDS: 'components/BenchmarkHeatmap.tsx (extend/wrap only)'; worker face (c): 'The components/BenchmarkHeatmap.tsx pattern (read only; extend or wrap, never fork)'.",
+    "world_is": "Neither a literal 'extend' (subclass/compose over an identical prop shape) nor a 'wrap' (adapt our facts into its exact props) is available without EITHER inventing a fake BenchmarkModelData shape from facts that do not carry it, OR routing through a computation path (net-cost proration) the order's own CALL 3 rule forbids for this cell. ReturnsHeatmap.tsx is built as an ORIGINAL component (periods-across, portfolio/benchmark/spread rows, a shaded spread row -- the same VISUAL vocabulary) that never imports BenchmarkHeatmap.tsx and never computes a spread.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking. Filed so a future cell asked to 'extend or wrap' this same file measures the same incompatibility before attempting a literal wrap."
+  },
+  {
+    "id": "DSGN_IRPTV1-W5-S4",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~5",
+    "surfaced_at": "2026-09-24T00:00:00Z",
+    "one_line": "contracts/adapt.ts's adaptPerformanceReport (read-only, OUT of this order's grant) sets accountDetail[].displayName = row.account_id and maskedDiscriminator = null UNCONDITIONALLY -- a naive AccountsTable read of displayName would print a raw account id disguised as a name, the same class of leak IV-e-1 closed on SecurityList's Ticker column.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/contracts/adapt.ts:778-780 (adaptPerformanceReport, accountDetail map): `accountId: row.account_id, displayName: row.account_id, maskedDiscriminator: null,` -- every row, unconditionally; the wire (`wire.returns.account_detail`) carries no display-name field at all for this contract today.",
+        "portal/src/pages/InvestorReporting/contracts/index.ts:506-516 (AccountPerformanceDetail): `displayName: string` and `maskedDiscriminator: string | null` are typed as ALWAYS PRESENT (no optional marker), so the bare TypeScript type gives no signal that displayName is, today, always the id -- only reading the adapter's own body (measured) surfaces it.",
+        "AccountsTable.tsx's own accountName() function: `maskedDiscriminator` present -> trust displayName + tail; absent AND displayName === accountId -> 'not supplied'; absent and displayName differs from accountId (not produced by today's adapter, but the type permits it) -> displayName alone. Verified against BOTH shapes: the LIVE-adapter shape (displayName===accountId, prints 'not supplied', IVE6-AC1's ACCOUNTS: 0 ids printed) and the hand-crafted test fixture performanceReport.success.json (real names, e.g. 'Coastal Ridge Trust', printed verbatim, confirmed in iv-e-6.performance.html)."
+      ]
+    },
+    "spec_asserts": "IV-e-6 worker face (d): 'read the account's name from accountDetail[].displayName / maskedDiscriminator where the contract carries them; if it carries only accountId, the row's name is not supplied and the id NEVER prints -- say so.'",
+    "world_is": "The CONTRACT's TypeScript type does not distinguish these two cases (both fields always present, non-optional) -- only reading the adapter's own implementation (out of this order's grant to edit) reveals that the live path ALWAYS falls into the 'only accountId' branch the order names. AccountsTable.tsx's own displayName-vs-accountId equality check is the working detector; documented here so no later cell trusts displayName without it.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking -- worked around entirely within this cell's own grant (AccountsTable.tsx), no edit to contracts/adapt.ts (out of grant)."
   }
 ]
 ```
