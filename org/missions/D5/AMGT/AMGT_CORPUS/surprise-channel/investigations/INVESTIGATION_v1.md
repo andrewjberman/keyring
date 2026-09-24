@@ -816,6 +816,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Task order section 6, step 2: \"python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3 --governing-order <this order> rc 0\" is the stated close-out validation, implying a correctly-built instance against a correctly-authored decomp reaches rc=0 on this limb.",
     "world_is": "The checker's alignment limb is doing exactly what it says (refusing an unresolvable cell citation), and this worker's instance/TO pairing is not malformed by that limb's own logic -- the DECOMP DOC is the object whose cell-id grammar does not carry the prefixed form the TOs cite and the checker expects. Nothing in this worker's <paths> reaches the decomposition doc (read-only, owned by the issuer), so this worker cannot repair the mismatch; it can only report that the prescribed rc=0 gate is unreachable, mechanically, for every round-3 cell today, via this exact invocation.",
     "notes": "disarm_owner 2.0.0_SA_COO~X (decomposition author and round-3 issuer): either the decomp doc's rectangle table gains the full `CRPS-e-<n>` form alongside its bare `e-<n>` cells, or the round's close-outs are validated without --governing-order's alignment limb, or the checker's CELL_ID_RE / decomp-id extraction is told to accept the bare form for this project. This worker's own instance (AC1 PASS, AC2 PASS, AC3 UNVERIFIABLE-BY-INSTRUMENT per row S5) is NOT flipped to complete regardless of this row -- AC3 alone already withholds that -- but this row is filed so the alignment INVALID is not mistaken for a defect in this cell's own acceptance evidence, and so the next round-3 close-out does not re-discover it from zero."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S21",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T20:05:00Z",
+    "one_line": "PRE-FLIGHT, before any write: the round-3 40-name induction fire, built in memory through add_security's own builder with its own _collision_mode per request, would leave 20 of the 40 folders with TWO records each -- 19 requests ENRICH a MEASURED universe record that has no folder (the folder is attached) while the folder's own UNRESOLVED coverage record stays beside it, and one folder's earlier UNRESOLVED registration row stays beside its new MEASURED row. UNRESOLVED would read 40 -> 20, not 0. The fire is HELD by its issuer; no put, no vendor call happened.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~X/preflight_40_fire.py and evidence/preflight_40_fire_*.log on CLOUD @5637be19e9: table 40, modes APPEND 21 / ENRICH 19; BEFORE records 254 MEASURED 214 UNRESOLVED 40, twins 0; AFTER records 255 MEASURED 235 UNRESOLVED 20, twins 20, multi-claimed 1; prior MEASURED keys 214 of 214 present; VERDICT FAIL.",
+        "Mechanism: crosswalk.build_crosswalk's ENRICH branch (landed e640337205) attaches the folder to a no-folder record but does not retire that folder's UNRESOLVED coverage record, which the APPEND path already does since a2b84a1b2a; an UNRESOLVED registration row from the 08:02Z misfire era is not superseded by a later MEASURED row for the same folder."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-19: the unresolved folders are inducted by a scripted producer and re-ingested; C-ONE-IDENTITY: one canonical identity per economic security (and one record per folder).",
+    "world_is": "The producer is ready (e-1) and the table is sound; the builder would record half the 40 folders twice. Asked of 2.0.0_SA_COO~Z (its surface) 20:03Z with the pre-flight script as the acceptance.",
+    "notes": "INERT: nothing was written; the hold is the issuer's own and lifts when preflight_40_fire.py reads VERDICT PASS on CLOUD. The class is the one this project met at 11:19Z; the pre-flight exists so it is met before the put this time."
   }
 ]
 ```
