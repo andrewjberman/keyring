@@ -19,7 +19,12 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (0000000000) dec293d6 SERVED 06:20:13Z (manifest mSFR0vat, CTO readback matches; COO~D measured 68 of
+CTO review queue, in order: (00000000000) 49F/INF GO 100370 WITHDRAWN (batch 31): candidates built without the two env-var
+captures (tax-managed snapshot, Eclipse map); halted before the index write, served unchanged (CTO re-read), 158 unreferenced
+objects stay; M rebuilds with both captures sha-verified, census 0 ids moved vs the archived served bytes, then a fresh GO. CTO
+miss owned (framing restated as a ruling). (00000000000a) adapter 07lSH03z live 06:36:41Z (X10 ACTIVE + hops 3/4b), S1 closed on
+the CRO's reading; portal DEV 7c542fd2; the ONE gate left on the Performance thread = the plan word at Andrew (batch 31).
+(0000000000) dec293d6 SERVED 06:20:13Z (manifest mSFR0vat, CTO readback matches; COO~D measured 68 of
 68 leaves labelled); Andrew's retest = the exercised arm; 49F/INF GO-ready after M wires the directory label + quantities (batch 30).
 (0000000000a) D1 run 6: identity from the page PASSED, template leg 405 with the WAF token presented -- SIXTH AMENDMENT GO
 (tokenless client; pair without/with token; 405/405 = STOP, the rule not the client; Y STANDS then ONE run = the sixth

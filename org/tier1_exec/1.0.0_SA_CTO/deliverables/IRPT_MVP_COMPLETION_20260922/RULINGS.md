@@ -2263,3 +2263,46 @@ skips. The portal validator enumerates no fact_kind / units values (P; CUSTODY_U
 portal DEV as 7975c3bb was pushed, under Andrew's 03:5xZ consolidation word and this GO -- MSTR says so if it reads the word as
 first-push-only, rather than inferring. The speed levers stay after the D1 run and the adapter rebuild. On the push, COO~D's
 condition (b) is measured and the DSGN_IRPTV1 round-1 issuance fires.
+
+
+## 2026-09-24 06:5x UTC - Claude CTO batch 31: GO 100370 WITHDRAWN -- the 49F / INF labelled candidates were built without two retained env-var captures; the halt held; CTO miss owned; the adapter rebuild read back and S1 closed on the CRO's deployed-bytes reading; candidate 2 on portal DEV; the grant row cherry-picked
+
+Instruments: M's own commit search under the GO's condition (100387); the CTO's re-read of both firm manifests and the 49F
+date=2026-09-22 object census (316 objects: 158 served 7c0e7ce3 + 158 unreferenced aa6efd45); the CTO's AWS readback of the
+adapter (100374); the CRO's dry run at the new bytes (100382); MSTR's push receipt (100364); P's 100378 / 100385.
+
+### IRPT-49F-INF-LABELLED-GO-WITHDRAWN-20260924 (M 100387; the CTO's word 100390)
+M started act 1 at 06:39:36Z and, running the commit search the GO required, found NO producer commit that could explain either
+delta; what differed was INPUT, not code: holdings_49f.py:509 reads IRPT_49F_TAX_MEMBERSHIP_SNAPSHOT (the MDPF_TAXSMA workbook
+snapshot, served sha 032c68db..) and holdings_inf.py:277 reads IRPT_INF_ECLIPSE_MEMBERSHIP_SNAPSHOT (the CRO's Eclipse map
+138fad2935, 860 rows) from ENVIRONMENT VARIABLES; the served builds ran with both set, the 06:2xZ rebuilds with neither. The
+"deltas" were regressions: 49F's 2,557 re-keyed positions = the 7 tax-managed accounts re-parented; INF's 35 "zero-value
+MODEL_LEAF rows replaced by sleeves" = models_whole_from_capture 35 -> 0. M stopped the publisher before its one IfMatch write;
+the CTO re-read both manifests (49F f3ea427b / EvNOT_ocng, INF 4283ce90 / J_FeUeEA, unchanged) and counted the stopped run's
+objects (158 aa6efd45 beside 158 served 7c0e7ce3): immutable, unreferenced, never served; they STAY (an S3 delete is Andrew's
+class and buys nothing). GO WITHDRAWN for both acts.
+CTO MISS, owned: 100370 accepted the INF delta as "the ruled shape (a non-model holding is a sleeve, never a MODEL_LEAF)". That
+sentence is TRUE of a holding with no model and FALSE of these 35 accounts, which have Eclipse models through the capture -- the
+CTO restated M's framing as a ruling instead of asking what the 35 rows' SOURCE was. The GO's own condition (name the producer
+commit) is what caught it, and M's search for a commit that did not exist was the right instrument: a delta with no commit is an
+input delta. The rule the miss violates is the standing one -- a summary is not a measurement; grade the population, not the
+sentence beside it. THE REBUILD: both captures set by path with each file's sha256 verified against the served provenance and
+printed BEFORE the build; census against the ARCHIVED served bytes reading 0 ids added / 0 removed beyond display + the ticker
+fact, values identical, INF models_whole_from_capture 35, 49F tax-managed sleeves intact; the two env-var inputs disclosed as
+UNRECEIPTED retained inputs with sha + row counts. Making them receipted objects is a producer change M names, not does; it is
+the same substrate gap as the Eclipse card at Andrew (Rule 28: a build whose correctness depends on an env var nobody receipts).
+
+### Receipts carried
+irpt-performance-adapter REBUILT at 07lSH03z.. 06:36:41Z (P 100374; CTO readback: Handler runtime.lambda_handler, 1536 MB,
+Active Successful): the X10 ACTIVE row from M's pin (plus the batch-13 ORIGINAL_HOLDINGS family row -- ruled, no re-pin), hop 4b
+(public_reason_for walks the MRO; RetentionRefused -> DEPENDENCY_UNAVAILABLE, RetentionExpired -> OBJECT_NOT_COVERED), hop 3
+(SelectionUnsupported -> SELECTION_UNSUPPORTED before any read; contract row 59d549b04e; the portal names it at 7c542fd2); hop
+12 live since 05:28Z. The CRO's S1 reading at the new bytes (100382): a single account passes the retention gate and stops at the
+one-use factory with DEPENDENCY_UNAVAILABLE (2.76 s, the mapping read); two accounts -> SELECTION_UNSUPPORTED in 0.00 s; the
+control (RetentionRefused through the old boundary -> UNEXPECTED) shows the MRO walk is load-bearing. Hops 3, 4a, 4b, 10, 12
+CLOSED at the deployed bytes; hop 11 is on portal DEV at 7c542fd2 (the CRO's "queued at P" corrected, 100393-class send); the
+plan word (hop 6) is the thread's ONE remaining gate. Ledger irpt-performance-x10-hops-20260924 CLOSED @3a5cf15266.
+Portal candidate 2 PUSHED to origin/DEV 7c542fd23e (MSTR 100364, under Andrew's 03:5xZ consolidation word, stated to him). The
+grant row ad18a6ddaa cherry-picked onto P's branch (b4ff9dc179, one conflict resolved to the CTO's side whole -- it also carried
+the batch-13 row P's branch had never received) and both Y test files committed in lane @04cf6ab521; generate/ byte-equal to Y's
+93ec16f4fe. Waiting: Y's STANDS then the sixth submission; M's rebuilt candidates; COO~D's issuance.
