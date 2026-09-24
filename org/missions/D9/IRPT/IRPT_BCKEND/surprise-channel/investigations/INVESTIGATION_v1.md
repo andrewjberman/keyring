@@ -9081,3 +9081,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "From the shared tree as checked out at ~18:0xZ, the push would have changed 4 members: the 2 intended plus firm_registry.json and DirectoryEntry.schema.json, both read by the live ENABLED directory runner. JSON parses the same, because CR is JSON whitespace; the stamps would match no blob. 2.0.0_SA_COO~M rewrote the 3 files to blob bytes (git diff rc=0; w/lf). They go back to CRLF the next time git checks them out."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S125",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-24T20:05:00Z",
+  "one_line": "The directory refresh has dispatched no build since 2026-09-18: its same-frontier no-op is decided from the LAST successful command, so the frontier can never move, and the no-op manifest is keyed by the artifact date, so every other fire reads REFRESH_TRIGGER_MISSED and also skips the dispatch; the served 49F/INF directory is 09-17, 4 trading days behind T-1.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (directory surface): re-dispatch when the last successful command predates the current fire's trading day (or drop the no-op inference), and key the no-op manifest by the fire date; one ad-hoc dispatch un-sticks today under the normal served-output rules.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-bd/investor-reporting/directory/_refresh/ (49F), read 19:5xZ: 2026-09-22 REFRESH_TRIGGER_MISSED (UNCERTAIN, no dispatch); key 2026-09-17 written 2026-09-23T13:00:34Z REFRESH_NOOP_SAME_FRONTIER citing ssm_command_id df2054c5; 2026-09-24 REFRESH_TRIGGER_MISSED ('expected trading days without a manifest: 2026-09-23, 2026-09-24'). INF (opal-data-inf) shows the same three manifests.",
+      "SSM df2054c5 on i-02448edb624a7a7cf (get-command-invocation): Success rc 0, run=49financial-2026-09-18. TRAIL: 2026-09-18 source set INCOMPLETE -> SELECTED 2026-09-17. It is the 09-18 run, re-cited on 09-23, and no later command exists.",
+      "infra/aws/lambda/investor-reporting/directory/refresh.py:736-761: same_frontier = (pointer key == prev_delta directory_key) and cid (the last REFRESH_DISPATCHED command), then return without dispatch. :763-769 dispatches only when landed is None and not same_frontier. :794-813: len(missed) > 1 returns REFRESH_TRIGGER_MISSED before any build.",
+      "irpt-directory-refresh schedule reads ENABLED, cron(0 9 ? * MON-FRI *) America/New_York (get-schedule)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "refresh.py:733-735: 'the runner is free to re-select the SAME business date every fire when its own source set has not advanced -- that is the runner's frontier not moving, not a failure to progress'.",
+  "world_is": "The runner is never asked again. The no-op is inferred from a command that ran on 09-18, when 09-18's sources were incomplete, so no fire since has let the runner re-select. The served directory is still the 09-18 build of 09-17 (49F 4,576 entries). It lists 37 accounts ACTIVE that have no custody at 09-22 and omits any account opened since."
+}
+```
