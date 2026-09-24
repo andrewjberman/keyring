@@ -1,0 +1,30 @@
+{
+  "observed_at": "2026-09-24T09:30:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "The measured shared-cutover evidence install-resident.sh's CUTOVER_RECEIPT names (evidence_path): each boolean in the receipt is read from the live plane, never assumed.",
+  "instance_id": "i-0167fd745ad906a66",
+  "legacy_probe_disabled": {
+    "value": true,
+    "measured": "events list-rules --name-prefix irpt at 09:2xZ returns ONLY irpt-directory-keepwarm-5min (ENABLED); the ycharts session_probe rule was set DISABLED at 03:01:16Z (ledger ycharts-probe-disable-20260924, receipt YCHARTS_PROBE_DISABLE_APPLY_20260924.json) and is no longer listed; no SSM irpt-ycharts-run has been sent by a schedule since"
+  },
+  "per_job_power_cycle_disabled": {
+    "value": true,
+    "measured": "iam get-role-policy over every inline policy of irpt-export-render-role (6: directory-read, dispatch, evidence, logs, ownership-map-read, receipt) and irpt-ycharts-runner-role (3: export-render-host-evidence, runner, runner-resident-policy): 0 of 9 carry ec2:StartInstances or ec2:StopInstances (export/iam.tf:25 declares the same); aws_ec2_instance_state.runner = running (cutover plan 04c77cbe applied 01:53:01Z, ledger irpt-resident-cutover-20260924 leg I1); AutoShutdown=disabled tag present"
+  },
+  "other_queue_consumers_disabled": {
+    "value": true,
+    "measured": "lambda list-event-source-mappings --event-source-arn arn:aws:sqs:us-east-1:313476888478:irpt-generation = [] (0 mappings); sqs get-queue-attributes Policy = none; scheduler list-schedules irpt*: irpt-intake-poll DISABLED, irpt-holdings-snapshot DISABLED, irpt-directory-refresh ENABLED (not a queue consumer); ApproximateNumberOfMessages 0 at 09:2xZ"
+  },
+  "shared_authority_factory_installed": {
+    "value": true,
+    "measured": "the package root carries reports/resident_installed.py (build_resident_runtime, P 5e05823f4e lineage at ab2e088b5b) beside reports/resident_bindings.json (schema irpt-resident-bindings-v1; enrolled_user_id 1276035; queue https://sqs.us-east-1.amazonaws.com/313476888478/irpt-generation; irpt-jobs / irpt-requests; capture wrapper 55ddb8f7947cba7c.. + library dfc87d8312c5938c.. beside it under /opt/investor-reporting-ycharts; census docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json LF blob 195040 bytes sha 44853788fa6d39c8..; schema_directory = the 22 v1 schemas); verified on this box before upload: import closure 14 of 14, opal_naming reporting_policy('irpt-x10-v1') = ACTIVE with enforcement_ref 0a101a6668 (registry row at M's 7262571e4c, sha d7c2dad8b2, the same bytes the deployed adapter 07lSH03z carries), ReportValidator kinds [ANALYSIS]"
+  },
+  "package": {
+    "backend_pin": "ab2e088b5b (irpt-smoke-p-backend-20260923)",
+    "members": 142,
+    "tar": "irpt-resident-ab2e088b5b.tar.gz sha256 a531d9d26963efb9.. (593968 bytes), uploaded to s3://opal-313476888478-lambda-artifacts/ec2/investor-reporting-ycharts/resident/",
+    "host_root": "/opt/irpt-resident/ab2e088b5b (pydeps merged from /opt/investor-reporting-ycharts/pydeps on the host; SHA256SUMS generated there after the merge)",
+    "resident_transport": "tokenless at 8576bec142 (CRO STANDS 100477); resident half at Y 93ec16f4fe"
+  },
+  "authorities": ["CTO 100443 / 100454 / 100455 (batch 34) item 4: install-resident at Y's 93ec16f4fe + the transport line, start on the EMPTY queue", "CRO 100477 STANDS on the transport", "CRO 100463 bundle grade PASS; enrolled pin 1276035", "Andrew-direct 2026-09-23 ~20:0xZ (6fc3f5f785): the host stays running as the always-on single consumer"]
+}

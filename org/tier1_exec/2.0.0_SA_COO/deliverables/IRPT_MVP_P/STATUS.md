@@ -1,24 +1,62 @@
-# IRPT P current state
+# IRPT P -- STATUS at 2026-09-24 09:4xZ (2.0.0_SA_COO~P)
 
-Updated 2026-09-24 03:5xZ. Owner 2.0.0_SA_COO~P (Claude). Goal record f7aaa01da1, /loop 20m cron c45ea4b2. Andrew-directs today: 69e36619ae (49F+INF USD attested; one-use live calculations bound to exact requests); "recs approved" ~01:4xZ (one trunk; CurrencyAuthorities.json on CLOUD @98b4416105; NO VETO on the fence; portal DEV c1ac41ec); "fix the ready flag, send the status" ~02:2xZ; Anna's table RENDERS ~03:0xZ (fence + ready flag EXERCISED) but Anna absent from Global + tree/withheld findings; "so slow it is embarrassing" ~03:2xZ (listing speed: CRO backend, P page-side); COT tree correction ~03:1xZ (Strategy vs constituent models; M studies, P holds the label wording).
+Goal (Andrew-direct 2026-09-23 ~22:4xZ): Investor Reporting Performance done end to end and linked
+up for every firm client at 49 Financial, Inflection and Cottonwood; Cottonwood structurally sound
+with its ~May-2026 data window disclosed. Loop: 20 minutes. Every number below is from a receipt in
+this directory or a message id.
 
-## Holdings -- SERVES and RENDERS for Anna (EXERCISED)
+## Served (each a ledgered act: sentinel -> plan -> safe-apply -> readback -> re-plan -> recorder)
 
-Three code-only/config acts today, each ledgered, applied, read back, closed: (1) sink repackage xd4mk5fx (ledger irpt-holdings-sink-20260924 CLOSED @10a11bbef3); (2) the firm-bucket fence: exemptions.json rows CRO 8b4c15c6ba -> shared-infra plan 1fef40d3 0/3/0 from linked worktree irpt-p-fence-20260924 @CLOUD 1b4b2e61e1, both never-widen halves (CTO 99956, CRO 99962), applied 02:04:06Z, readback role in ArnNotLike 5/5/18, re-plan 0, ledger CLOSED @7220e4a4f3, CTO re-simulation allowed 6/6; (3) success-status: CRO pin 13012979e1 merged @3d7f66b83b, package 3nc57No0 (33 members, exactly entry.py differs), plan af3b34e3 0/1/0, applied 02:45:27Z, readback exact, ledger irpt-holdings-status-20260924 CLOSED @bcadb446ba (publish worktree). Andrew: table renders USD 26,303,302.17 READY. Receipts: HOLDINGS_SINK_APPLY / HOLDINGS_FENCE_APPLY / HOLDINGS_STATUS_APPLY_20260924.json.
-OPEN (Finding A, Global view): measured server side (message 100102): GLOBAL union includes cottonwood by construction (bucket map on 4 functions), cot directory 260 entries carries Anna (1 entry), ownership maps bd 445 KB / cot 107 B / inf 404; browse/search single-firm; the Global LIST is the portal's per-firm browse fan-out. CTO acts: P surfaces a rejected per-firm browse by name (portal commit pending), P drives resolve GLOBAL + browse per firm in a harness, Andrew's HAR of the Global view is the discriminator. Additive adapter carry (hierarchyPath/capabilityFacts/modelName) landed in the portal worktree @92e2ad96 (no wording; label text HELD until the COT tree ruling). Performance success status: internal_correlation_id dropped @786f767796 (rides the next Performance package).
+| object | pin / revision | at (Z) | carries | receipt |
+|---|---|---|---|---|
+| irpt-holdings | kZygK57yXxZBaC3t5Wr+y04tDKx6tDJdjCwPm87kdYE= | 06:00 | B1/B3 loaders + B7 served (05:04); schema copy b3e3bcb044 (`display` + CUSTODY_UNITS) | HOLDINGS_SPEED_APPLY, HOLDINGS_SCHEMA_APPLY |
+| irpt-directory-search | o9Qu0Jm7jidtrlBeGWD9d2ZsxROK3NXcQTEOUOMvGus= | 05:16 | listing speed (04:21) + keep-warm rule, three targets, 500 ms hold; three containers seated per tick | DIRECTORY_SPEED_APPLY, DIRECTORY_KEEPWARM_APPLY |
+| irpt-performance-adapter | 07lSH03z53irjBk3AkX2upzUuWzVd4QOuPA4JmisLss= | 06:36 | canonical 61-member shape; X10 ACTIVE row; hop 4b MRO walk + named retention codes; hop 3 SELECTION_UNSUPPORTED; hop 12 sink | PERFORMANCE_RECONCILE_APPLY, PERFORMANCE_X10_HOPS_APPLY |
+| Holdings, all three firms (M's acts) | COT dec293d6 06:20; 49F 3d59c80b 06:58 + units 5a25ae76 09:0x; INF d03e91a4 07:04 + units d32e50c6 09:04 | | labels on every node the directory knows; CUSTODY_UNITS on every observed row | IRPT_MVP_M receipts |
+| portal DEV | 013323f0 | 09:1x (MSTR) | candidates 1-3: consolidation, M's labels, hop 11, "Performance" tab, SELECTION_UNSUPPORTED named, F1 / F5 / F3 | CTO 100359 / 100463; MSTR receipts |
+| the resident (this box's act) | package ab2e088b5b on i-0167fd745ad906a66 | 09:39 | irpt-analysis-resident.service ACTIVE, single consumer of irpt-generation, enrolled 1276035, tokenless transport, X10 ACTIVE row, census 44853788fa..; five empty polls, no vendor call | RESIDENT_INSTALL, RESIDENT_CUTOVER_EVIDENCE |
 
-## Analysis resident cutover -- infra applied; D1 sign-in VERIFIED from the host; capture leg in flight
+Directory listing: p50 2308 -> 160 ms, p90 4665 -> 634 ms, p99 6093 -> 972 ms (03:21-04:21 vs 04:21-05:21).
 
-Cutover plan 04c77cbe applied 01:53:01Z (resident policy EQUAL to plan, instance running, AutoShutdown=disabled, SSM Online); ledger irpt-resident-cutover-20260924 A1/P1/I1/V1 closed, C1 OPEN. Host: runner deployed (irpt-ycharts-deploy), secret-ids.env written (bootstrap never landed it), Playwright for ec2-user (row S120), python3.12 + the exact irpt-common closure + pdfplumber set + boto3 under /opt/investor-reporting-ycharts/pydeps (import-checked as ec2-user; digest 6a751288f048f127; ABSOLUTE_PYTHON /usr/bin/python3.12 = Y's call). Legacy probe rule ycharts-session-probe-schedule DISABLED (plan ee5160cf, applied 03:01:16Z, ledger ycharts-probe-disable-20260924 CLOSED @9b4929fcf4) -> receipt boolean legacy_probe_disabled true from the readback. Row S119 (JS bundle vs Python contract) fixed: library 282f7ea427 (versioned bundle from window.USER), 846f7233d2 (explicit signed-out failure + evidence), ad8306b769 (measured route /account/login/ + form-scoped fill + Enter submit + observer; CRO's login_form.cjs), 160f99b3ea + b1f269c6dd (probe from inside the page; per-step probe status; discriminating pair with the resident's client class). Runs: 71d0961f (0 submissions; wrong route), d89690f8 (sign-in SUCCEEDED, one submission, dashboard reached, Node-port probe NOT_LIVE), run 3 at b1f269c6dd under Y STANDS 100119 / CTO 100105+100111 (result in the next message). On outcome A: bundle grade, enrolled_user_id from identity.user_id, C1 receipt, install-resident.sh (package_root + pydeps copied in), Y --once, runbook precondition B.
+## The Performance thread (the CRO's trace @d8abd7dc65, hop by hop)
 
-## Performance -- INSTALLED; X10 ACTIVE review pending; CALL-3 one-use after
+Hops 4a (X10 ACTIVE), 4b, 3, 10, 12 CLOSED at the deployed bytes (CRO 100381); 11 on DEV.
+The ONE gate left before a number renders: hop 6, the one-use plan for acc_d486fc9455d6b2aa18e13af1
+on the default window -- Andrew's per-use word. Then: install the plan, ONE calculation, retained
+report, reopen without a vendor call, export.
 
-irpt-performance-adapter runs JwJEEQGT (ledger CLOSED 1af100468e). X10 matrix 6d3a9215d7 must re-pin to policy 7a7ed8f6 (ORIGINAL_HOLDINGS accepted 58ee5b36dd; 39 destinations) before the CTO's ACTIVE review; then M registry write; then P's CALL-3 saved plan (inputs in scratch call3_inputs.json) and the Anna live calculation / reopen / export. Route-plane batch after the cutover: upload entry composed in the generate function, original_holdings grant, irpt-status rebuild at a pin carrying 8e8498c9c0 + prospect_dates 7fec957269, LiveClient flags.
+## D1 -- the YCharts session: CAPTURED
 
-## Listing speed (Andrew ~03:2xZ) -- CRO backend, P page-side
+Six credential submissions on 2026-09-24 (03:31, 03:49, 04:35, 05:55, 06:27, 08:56), each bounded to
+one by the CTO's word. Run 7 (08:56Z) captured and persisted the bundle: identity from the signed-in
+page's own document (user_id 1276035), the template route LIVE from the TOKENLESS Node client, and
+the pair 200 (no WAF token) / 405 captcha (token presented) named the WAF token as the cause of runs
+5 and 6. ycharts/session/current carries AWSCURRENT 02e53a44 (fence 11; CRO grade PASS 100463). The
+stored-bundle probe (09:12Z, no sign-in) reads 200 LIVE with rc 0. Receipts: D1_RUN7_SIXTH_SUBMISSION,
+D1_STORED_BUNDLE_PROBE.
 
-CRO writes B6/B5/B1+B2/B4(+B7) as pins; P plans/applies B6 (memory) and deploys the GO'd pins code-only. P owns page-side F2/F5/F3/F7 + F1 on the portal worktree, queued behind the cutover. No P work under directory/* or _authz/loaders.py (told the CRO, 100097).
+Runner @b9d36bc34e (library dfc87d8312c5938c.., wrapper 55ddb8f7 unchanged) deployed. Resident
+transport tokenless @8576bec142 (CRO STANDS 100477); the four resident files at Y's 93ec16f4fe.
+Y is paused on a safeguards dialog (Andrew's model call); its reads were re-routed to the CRO by the
+CTO (100425) and are welcome on return, not owed.
 
-## Runtime / preservation
+Rows: IRPT_BCKEND-S119 (bundle contract), S120 (Playwright under /root), S121 (the offline suite
+reached ycharts.com once unguarded; the suite now refuses to start unguarded).
 
-Backend C:/Users/AndrewBerman/Desktop/irpt-smoke-p-backend-20260923 (this file; HEAD after the runner commits); publish worktree irpt-p-publish-20260923 @bcadb446ba (+ recorder commits); fence worktree irpt-p-fence-20260924 @7220e4a4f3; live frontend portal-local-live-20260923 @c1ac41ec (5174 up; origin/DEV c1ac41ec); portal worktree <backend>/portal on p-reason-codes-20260924 @92e2ad96 (+ ClientSearch fix pending). Uncommitted by design: ops/tests/test_prospect_dates.py (Y pin; grant not yet in this tree), source-map-reconcile-audit.jsonl (CLOUD_OPS lane). Watcher re-armed every 30 min. All commits LOCAL; origin/CLOUD f96a0b9dd4 (MSTR 99989).
+## Next at P (CTO batch 34 item 5 / batch 28 (i)-(iv))
+
+1. The Analysis backend: (i) the generate package at HEAD -- 10 modules absent from the map's files[]
+   (current_authority, durable_job, frozen_worker, normalized_input, prospect_submission,
+   publication_worker, publisher, report_index, resident_main, resident_worker), 12 staged rows stale
+   at 819c9e3990; the X10 row; Terraform: sqs:SendMessage for the submit path, the two revision env
+   keys, NO event source mapping (the resident is the consumer), IRPT_LIVE_YCHARTS_CALL unset;
+   (ii) irpt-status with ops at HEAD + prospect_dates; (iii) the three no-handler routes; (iv) the
+   cutover plan's inputs. Each one canonical act with a ledger.
+2. Speed levers F7 / F2: held on a HAR from opalinvest.dev (the 04:32Z HAR was a localhost dev session).
+3. Andrew's browser act (G) last.
+
+## Standing constraints
+
+Commits LOCAL (MSTR pushes); no vendor call without Andrew's per-use word; no synthesized trusted
+header on a live surface; cookie values and credentials never printed; audited lane overrides only on
+the CTO's word; the P/M/Y closer contract and the post-slug HOLD stand.
