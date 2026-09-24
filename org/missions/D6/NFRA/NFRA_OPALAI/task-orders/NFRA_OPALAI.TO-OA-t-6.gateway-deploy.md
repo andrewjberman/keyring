@@ -22,7 +22,13 @@ EGRESS CLASS, declared: AWS WRITE on Opal's own plane -- one S3 artifact upload 
 at the HEAD your new worktree carries. Deploy that HEAD's gateway to the live host with the existing path:
 `infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`. It builds a tarball of
 `infra/aws/ec2/opal-gateway`, uploads it to S3, SSM-pulls it onto `i-07dccb1615503ac99`, and then updates and commits
-`infra/aws/ec2/EC2_MANIFEST.json`. **In this order, every step before the act is a read:**
+`infra/aws/ec2/EC2_MANIFEST.json`. **In this order, every step before the act is a read, except one hookup line:**
+
+0. **The audit hookup (commit it first, alone).** `infra/aws/ec2/opal-gateway/app/audit.py`'s `_ARGS_ALLOWLIST` does not
+   declare the new tool, so its audit rows omit every field (row `NFRA_OPALAI-Z-W2-S2`). Add ONE entry directly after
+   the `"query_v0":` line: `"opal_asker_query":             {"asker_oid", "key", "verdict"},` with a one-line comment
+   naming NFRA_OPALAI C10. That is metadata only, `query_v0`'s precedent, and no value field. Change nothing else in
+   that file. This commit is the one non-OA-t-5 gateway change the census below admits, because it is this order's own.
 
 1. **Census what ships.** The manifest's `opal-gateway.deployed_commit` at the cut is
    `1764e54a16b7bb12d34b36eec7866589b6ea785e` (2026-09-18, by `0.9.0_WK_NFRA_OPLGTW~2`). List every commit that
@@ -53,6 +59,7 @@ at the HEAD your new worktree carries. Deploy that HEAD's gateway to the live ho
 ## 3. SURFACES
 
 <paths>
+infra/aws/ec2/opal-gateway/app/audit.py
 infra/aws/ec2/EC2_MANIFEST.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-opalai-r1-gateway-asker-query.json
