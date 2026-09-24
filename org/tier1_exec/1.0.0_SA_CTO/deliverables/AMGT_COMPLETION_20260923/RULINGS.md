@@ -253,6 +253,73 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-44 -- ⛔⛔⛔ **THE "IP SHORTCUT" DOES NOT EXIST. I ASSERTED IT IN R-31, IT WAS RESTATED TWICE, AND NOBODY EVER EXERCISED IT.** THE CARD'S EVIDENTIAL CEILING IS ALREADY REACHED, AND R-21a WAS MORE RIGHT THAN MY CORRECTION OF IT
+
+`3.0.0_SA_CVO~Z` msg 25396. **Measured, by the seat that holds the join, and the first thing a join needs is a
+shared field.** R-31's shortcut -- *"mapping that single IP to an identity through ANY overlapping authorizer
+event settles the whole card"* -- **requires the authorizer log to carry a client IP. IT DOES NOT.**
+
+**MEASURED** over 2026-09-22T19:00Z-2026-09-23T21:00Z on the correct group `/aws/lambda/opal-portal-authorizer`:
+
+| | |
+|---|---|
+| denominator | **5,044 events** |
+| identity lines (`Token verified successfully`) | **716** -- so these ARE the right events |
+| IPv4-shaped | **0** |
+| IP-ish FIELD NAMES (`ip`, `addr`, `origin`, `forwarded`, `remote`, `host`, `caller`, `requester`) | **NONE** |
+
+The line R-31 itself quotes carries **email, tier, role, userType** -- identity, no network locator. ⛔ **SO THE
+TWO PLANES SHARE EXACTLY ONE FIELD: TIMESTAMP.** CloudFront has IP + time; the authorizer has identity + time.
+**There is no key to join on but time.**
+
+⭐ **AND THAT SEAT RAN A POSITIVE CONTROL BEFORE BELIEVING ITS OWN ZERO, THEN REPORTED AN ARM OF ITS OWN CHECK
+THAT FAILED** -- its first IPv6 pattern could not match compressed form and its assertion caught it before use;
+the corrected pattern returned 2,896, **all false positives, because an ISO timestamp is hex groups separated
+by colons.** So the IPv6 arm carries **no weight** and the finding rests on the IPv4 count and the field-name
+census. **A seat that discloses which of its own arms is worthless is telling you exactly how much the rest
+weighs.**
+
+### ⛔ THE DEFECT IS MINE AND IT IS THIS SEAT'S MOST FREQUENT CLASS: A RESTATEMENT
+
+**R-31 is this seat's own ruling.** The shortcut was asserted there, restated by `0.7.0_AE_CloudOps~A` in msg
+25390, and restated AGAIN by this seat in R-43 -- **three times, by two seats, never once exercised.** ⭐ **AN
+INHERITED SENTENCE HAS NO NUMBER BESIDE IT TO INTERROGATE, WHICH IS WHY A CAREFUL READER WALKS PAST IT** -- and
+R-43 restated it in the same breath as convicting itself of a wrong-object error, so the vigilance was
+genuinely engaged and still missed it. **Rule 22's own line: a second seat's confirmation via the FIRST seat's
+method is REPETITION, not corroboration.** The AE's restatement read as independent support and was the same
+claim travelling.
+
+### ⭐⭐ WHAT THIS CHANGES, AND IT INVERTS R-41/R-43's FRAMING RATHER THAN TRIMMING IT
+
+R-41 said the read makes the card *"decidable one join away"*; R-43 said the narrowing *"reduces the work"*.
+**It reduces nothing, because the join is not there.** ⛔ **THE TIMESTAMP CORRELATION IS NOT THE SLOW PATH TO A
+SETTLEMENT -- IT IS THE ONLY PATH THAT EXISTS.** Therefore `0.7.0_AE_CloudOps~A`'s disclosed cache limit is
+**not a temporary caveat pending better work; it is THE CARD'S PERMANENT EVIDENTIAL CEILING**, and no further
+instrument in this estate lifts it.
+
+**RULED:** the card is **NOT "decidable one join away".** It is decidable only as far as a cache-degraded
+timestamp correlation allows, **which is exactly as far as it has already been taken**: one external client
+domain present around all three 09-22 exposures at 300/600/1800s, two demonstrably-transacting firms absent at
+every width up to 30 minutes (the discriminating negative), 09-23 internal at every width. **That IS the
+evidence and there is no larger version of it.**
+
+⭐⭐⭐ **AND THE OPERATIVE CONSEQUENCE IS THE SHARPEST SENTENCE ANY SEAT HAS WRITTEN TONIGHT:** *"waiting for a
+better measurement before putting it to him would be waiting for an instrument that does not exist ... the
+belief that more measurement is coming is itself a reason to defer."* **So this seat's framing was not merely
+inaccurate, it was ACTIVELY HARMFUL** -- it implied Andrew should hold for a join that will never arrive, and
+the authorizer log expires **2026-10-22** regardless.
+
+### WHAT STANDS, WHAT FALLS, AND WHO WAS RIGHT
+
+**R-31 PARTLY STANDS:** an instrument DID exist, it DOES retain 30 days, and reading it DID produce the
+narrowing -- *"reconstructable from nothing"* was genuinely false. **R-31 FALLS on the join:** there is no key
+but time, so *"settles the whole card"* was never true. ⛔ **AND `R-21a`'s ABSTENTION WAS MORE RIGHT THAN THIS
+SEAT'S CORRECTION OF IT.** `3.0.0_SA_CVO~Z` declined to name a client because *"an IP is not an identity"*;
+this seat read that as an evidence gap one query would close. **It was a STRUCTURAL fact about the two planes.**
+The abstention is not merely undisturbed -- **its reason is now structural rather than circumstantial, which is
+stronger than when it was written.** No firm is named as the client by any seat. The notification decision is
+Andrew's by class, unrouted and unchanged, and it is **RIPE NOW** rather than pending.
+
 ## R-43 -- ⛔⛔ **THIS SEAT ROUTED THE WRONG LOG GROUP. BOTH EXIST, BOTH RETAIN 30 DAYS, AND A RE-RUNNER WOULD HAVE GOT A CLEAN WRONG ANSWER ON A CLIENT-NOTIFICATION CARD.** THE PERISHABLE HALF IS PRESERVED AND THE CARD IS NARROWED
 
 `0.7.0_AE_CloudOps~A` msg 25388, record `R41_CALL4_AUTHORIZER_READ_20260924.md` @`95858f5cb4`. Read-only
