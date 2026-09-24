@@ -9,6 +9,7 @@
  "models": [
   {
    "model_id": "74c119db-73d6-4cf1-9535-740026df8121",
+   "model_namespace": "SMARTX_MODEL",
    "model_name": "Opal Long Term",
    "accounts": [
     {
@@ -17229,8 +17230,9 @@
       "namespace": "TICKER",
       "value": "IEFA"
      },
+     "label": "IEFA",
      "kind": "SECURITY",
-     "overlay_value": 132765346.6,
+     "value": 132765346.6,
      "accounts": 3428
     },
     {
@@ -17238,8 +17240,9 @@
       "namespace": "TICKER",
       "value": "DIVZ"
      },
+     "label": "DIVZ",
      "kind": "SECURITY",
-     "overlay_value": 113798946.94,
+     "value": 113798946.94,
      "accounts": 3437
     },
     {
@@ -17247,8 +17250,9 @@
       "namespace": "TICKER",
       "value": "IDVZ"
      },
+     "label": "IDVZ",
      "kind": "SECURITY",
-     "overlay_value": 98209958.52,
+     "value": 98209958.52,
      "accounts": 3435
     },
     {
@@ -17256,8 +17260,9 @@
       "namespace": "TICKER",
       "value": "PFDE"
      },
+     "label": "PFDE",
      "kind": "SECURITY",
-     "overlay_value": 88858205.46,
+     "value": 88858205.46,
      "accounts": 3429
     },
     {
@@ -17265,8 +17270,9 @@
       "namespace": "TICKER",
       "value": "SPYM"
      },
+     "label": "SPYM",
      "kind": "SECURITY",
-     "overlay_value": 76275669.61,
+     "value": 76275669.61,
      "accounts": 3427
     },
     {
@@ -17274,8 +17280,9 @@
       "namespace": "TICKER",
       "value": "IJH"
      },
+     "label": "IJH",
      "kind": "SECURITY",
-     "overlay_value": 46931683.02,
+     "value": 46931683.02,
      "accounts": 3415
     },
     {
@@ -17283,8 +17290,9 @@
       "namespace": "TICKER",
       "value": "PFOE"
      },
+     "label": "PFOE",
      "kind": "SECURITY",
-     "overlay_value": 45524955.46,
+     "value": 45524955.46,
      "accounts": 3431
     },
     {
@@ -17292,8 +17300,9 @@
       "namespace": "TICKER",
       "value": "SPHY"
      },
+     "label": "SPHY",
      "kind": "SECURITY",
-     "overlay_value": 42843978.62,
+     "value": 42843978.62,
      "accounts": 3434
     },
     {
@@ -17301,8 +17310,9 @@
       "namespace": "TICKER",
       "value": "IEMG"
      },
+     "label": "IEMG",
      "kind": "SECURITY",
-     "overlay_value": 33379329.08,
+     "value": 33379329.08,
      "accounts": 3414
     },
     {
@@ -17310,8 +17320,9 @@
       "namespace": "TICKER",
       "value": "CLIP"
      },
+     "label": "CLIP",
      "kind": "SECURITY",
-     "overlay_value": 29386444.04,
+     "value": 29386444.04,
      "accounts": 3387
     },
     {
@@ -17319,8 +17330,9 @@
       "namespace": "TICKER",
       "value": "VEA"
      },
+     "label": "VEA",
      "kind": "SECURITY",
-     "overlay_value": 24380803.5,
+     "value": 24380803.5,
      "accounts": 3410
     },
     {
@@ -17328,8 +17340,9 @@
       "namespace": "TICKER",
       "value": "VUG"
      },
+     "label": "VUG",
      "kind": "SECURITY",
-     "overlay_value": 24375836.13,
+     "value": 24375836.13,
      "accounts": 3376
     },
     {
@@ -17337,8 +17350,9 @@
       "namespace": "TICKER",
       "value": "BIV"
      },
+     "label": "BIV",
      "kind": "SECURITY",
-     "overlay_value": 14593886.93,
+     "value": 14593886.93,
      "accounts": 3357
     },
     {
@@ -17346,8 +17360,9 @@
       "namespace": "TICKER",
       "value": "VXX"
      },
+     "label": "VXX",
      "kind": "SECURITY",
-     "overlay_value": 13527559.85,
+     "value": 13527559.85,
      "accounts": 3411
     },
     {
@@ -17355,8 +17370,9 @@
       "namespace": "TICKER",
       "value": "QQQ"
      },
+     "label": "QQQ",
      "kind": "SECURITY",
-     "overlay_value": 9552369.48,
+     "value": 9552369.48,
      "accounts": 2411
     },
     {
@@ -17364,8 +17380,9 @@
       "namespace": "CASH",
       "value": "SMARTX_CASH"
      },
+     "label": "SMARTX_CASH",
      "kind": "CASH",
-     "overlay_value": 6696329.39,
+     "value": 6696329.39,
      "accounts": 3442
     },
     {
@@ -17373,8 +17390,9 @@
       "namespace": "TICKER",
       "value": "VTV"
      },
+     "label": "VTV",
      "kind": "SECURITY",
-     "overlay_value": 393208.79,
+     "value": 393208.79,
      "accounts": 4
     },
     {
@@ -17382,8 +17400,9 @@
       "namespace": "TICKER",
       "value": "IVV"
      },
+     "label": "IVV",
      "kind": "SECURITY",
-     "overlay_value": 319236.59,
+     "value": 319236.59,
      "accounts": 3
     },
     {
@@ -17391,8 +17410,9 @@
       "namespace": "TICKER",
       "value": "DFAI"
      },
+     "label": "DFAI",
      "kind": "SECURITY",
-     "overlay_value": 103275.0,
+     "value": 103275.0,
      "accounts": 1
     },
     {
@@ -17400,8 +17420,9 @@
       "namespace": "TICKER",
       "value": "AVDE"
      },
+     "label": "AVDE",
      "kind": "SECURITY",
-     "overlay_value": 80161.92,
+     "value": 80161.92,
      "accounts": 1
     },
     {
@@ -17409,8 +17430,9 @@
       "namespace": "TICKER",
       "value": "DFAC"
      },
+     "label": "DFAC",
      "kind": "SECURITY",
-     "overlay_value": 69171.3,
+     "value": 69171.3,
      "accounts": 1
     },
     {
@@ -17418,8 +17440,9 @@
       "namespace": "TICKER",
       "value": "VWO"
      },
+     "label": "VWO",
      "kind": "SECURITY",
-     "overlay_value": 47252.17,
+     "value": 47252.17,
      "accounts": 4
     },
     {
@@ -17427,8 +17450,9 @@
       "namespace": "TICKER",
       "value": "DFEM"
      },
+     "label": "DFEM",
      "kind": "SECURITY",
-     "overlay_value": 33178.53,
+     "value": 33178.53,
      "accounts": 1
     },
     {
@@ -17436,8 +17460,9 @@
       "namespace": "TICKER",
       "value": "VIG"
      },
+     "label": "VIG",
      "kind": "SECURITY",
-     "overlay_value": 32608.74,
+     "value": 32608.74,
      "accounts": 1
     },
     {
@@ -17445,8 +17470,9 @@
       "namespace": "TICKER",
       "value": "IQLT"
      },
+     "label": "IQLT",
      "kind": "SECURITY",
-     "overlay_value": 23576.5,
+     "value": 23576.5,
      "accounts": 2
     },
     {
@@ -17454,8 +17480,9 @@
       "namespace": "TICKER",
       "value": "MDY"
      },
+     "label": "MDY",
      "kind": "SECURITY",
-     "overlay_value": 14750.78,
+     "value": 14750.78,
      "accounts": 3
     },
     {
@@ -17463,8 +17490,9 @@
       "namespace": "TICKER",
       "value": "IWF"
      },
+     "label": "IWF",
      "kind": "SECURITY",
-     "overlay_value": 13810.3,
+     "value": 13810.3,
      "accounts": 1
     },
     {
@@ -17472,8 +17500,9 @@
       "namespace": "TICKER",
       "value": "QQQM"
      },
+     "label": "QQQM",
      "kind": "SECURITY",
-     "overlay_value": 10156.74,
+     "value": 10156.74,
      "accounts": 1
     },
     {
@@ -17481,8 +17510,9 @@
       "namespace": "TICKER",
       "value": "SPEM"
      },
+     "label": "SPEM",
      "kind": "SECURITY",
-     "overlay_value": 10140.3,
+     "value": 10140.3,
      "accounts": 3
     },
     {
@@ -17490,8 +17520,9 @@
       "namespace": "TICKER",
       "value": "SPDW"
      },
+     "label": "SPDW",
      "kind": "SECURITY",
-     "overlay_value": 9594.58,
+     "value": 9594.58,
      "accounts": 4
     },
     {
@@ -17499,8 +17530,9 @@
       "namespace": "TICKER",
       "value": "XLK"
      },
+     "label": "XLK",
      "kind": "SECURITY",
-     "overlay_value": 2944.05,
+     "value": 2944.05,
      "accounts": 3
     },
     {
@@ -17508,8 +17540,9 @@
       "namespace": "TICKER",
       "value": "VO"
      },
+     "label": "VO",
      "kind": "SECURITY",
-     "overlay_value": 1609.6,
+     "value": 1609.6,
      "accounts": 1
     },
     {
@@ -17517,8 +17550,9 @@
       "namespace": "TICKER",
       "value": "QUAL"
      },
+     "label": "QUAL",
      "kind": "SECURITY",
-     "overlay_value": 906.31,
+     "value": 906.31,
      "accounts": 3
     },
     {
@@ -17526,8 +17560,9 @@
       "namespace": "TICKER",
       "value": "VGSH"
      },
+     "label": "VGSH",
      "kind": "SECURITY",
-     "overlay_value": 775.83,
+     "value": 775.83,
      "accounts": 3
     },
     {
@@ -17535,8 +17570,9 @@
       "namespace": "TICKER",
       "value": "SPSM"
      },
+     "label": "SPSM",
      "kind": "SECURITY",
-     "overlay_value": 333.61,
+     "value": 333.61,
      "accounts": 1
     },
     {
@@ -17544,15 +17580,20 @@
       "namespace": "TICKER",
       "value": "BIL"
      },
+     "label": "BIL",
      "kind": "SECURITY",
-     "overlay_value": 97.35,
+     "value": 97.35,
      "accounts": 1
     }
+   ],
+   "asset_basis": [
+    "TARGET"
    ],
    "account_count": 3442
   },
   {
    "model_id": "729210dd-444c-47c9-997d-8a3bcede7afd",
+   "model_namespace": "SMARTX_MODEL",
    "model_name": "Opal Intermediate-Term",
    "accounts": [
     {
@@ -25743,8 +25784,9 @@
       "namespace": "TICKER",
       "value": "IEFA"
      },
+     "label": "IEFA",
      "kind": "SECURITY",
-     "overlay_value": 45778783.28,
+     "value": 45778783.28,
      "accounts": 1632
     },
     {
@@ -25752,8 +25794,9 @@
       "namespace": "TICKER",
       "value": "DIVZ"
      },
+     "label": "DIVZ",
      "kind": "SECURITY",
-     "overlay_value": 36476780.85,
+     "value": 36476780.85,
      "accounts": 1633
     },
     {
@@ -25761,8 +25804,9 @@
       "namespace": "TICKER",
       "value": "SPYM"
      },
+     "label": "SPYM",
      "kind": "SECURITY",
-     "overlay_value": 29786102.85,
+     "value": 29786102.85,
      "accounts": 1627
     },
     {
@@ -25770,8 +25814,9 @@
       "namespace": "TICKER",
       "value": "IDVZ"
      },
+     "label": "IDVZ",
      "kind": "SECURITY",
-     "overlay_value": 27045433.87,
+     "value": 27045433.87,
      "accounts": 1631
     },
     {
@@ -25779,8 +25824,9 @@
       "namespace": "TICKER",
       "value": "BIV"
      },
+     "label": "BIV",
      "kind": "SECURITY",
-     "overlay_value": 24016670.35,
+     "value": 24016670.35,
      "accounts": 1630
     },
     {
@@ -25788,8 +25834,9 @@
       "namespace": "TICKER",
       "value": "PFDE"
      },
+     "label": "PFDE",
      "kind": "SECURITY",
-     "overlay_value": 23173399.05,
+     "value": 23173399.05,
      "accounts": 1628
     },
     {
@@ -25797,8 +25844,9 @@
       "namespace": "TICKER",
       "value": "JAAA"
      },
+     "label": "JAAA",
      "kind": "SECURITY",
-     "overlay_value": 17131789.82,
+     "value": 17131789.82,
      "accounts": 1633
     },
     {
@@ -25806,8 +25854,9 @@
       "namespace": "TICKER",
       "value": "CLIP"
      },
+     "label": "CLIP",
      "kind": "SECURITY",
-     "overlay_value": 16186105.66,
+     "value": 16186105.66,
      "accounts": 1631
     },
     {
@@ -25815,8 +25864,9 @@
       "namespace": "TICKER",
       "value": "PFOE"
      },
+     "label": "PFOE",
      "kind": "SECURITY",
-     "overlay_value": 12056542.89,
+     "value": 12056542.89,
      "accounts": 1629
     },
     {
@@ -25824,8 +25874,9 @@
       "namespace": "TICKER",
       "value": "DFCF"
      },
+     "label": "DFCF",
      "kind": "SECURITY",
-     "overlay_value": 10715370.75,
+     "value": 10715370.75,
      "accounts": 1631
     },
     {
@@ -25833,8 +25884,9 @@
       "namespace": "TICKER",
       "value": "SPHY"
      },
+     "label": "SPHY",
      "kind": "SECURITY",
-     "overlay_value": 8224356.5,
+     "value": 8224356.5,
      "accounts": 1629
     },
     {
@@ -25842,8 +25894,9 @@
       "namespace": "TICKER",
       "value": "VCSH"
      },
+     "label": "VCSH",
      "kind": "SECURITY",
-     "overlay_value": 8195189.56,
+     "value": 8195189.56,
      "accounts": 1624
     },
     {
@@ -25851,8 +25904,9 @@
       "namespace": "TICKER",
       "value": "PCHI"
      },
+     "label": "PCHI",
      "kind": "SECURITY",
-     "overlay_value": 8012586.11,
+     "value": 8012586.11,
      "accounts": 1632
     },
     {
@@ -25860,8 +25914,9 @@
       "namespace": "TICKER",
       "value": "VEA"
      },
+     "label": "VEA",
      "kind": "SECURITY",
-     "overlay_value": 7767346.88,
+     "value": 7767346.88,
      "accounts": 1629
     },
     {
@@ -25869,8 +25924,9 @@
       "namespace": "TICKER",
       "value": "IEMG"
      },
+     "label": "IEMG",
      "kind": "SECURITY",
-     "overlay_value": 6021441.1,
+     "value": 6021441.1,
      "accounts": 1624
     },
     {
@@ -25878,8 +25934,9 @@
       "namespace": "TICKER",
       "value": "VUG"
      },
+     "label": "VUG",
      "kind": "SECURITY",
-     "overlay_value": 5940209.34,
+     "value": 5940209.34,
      "accounts": 1608
     },
     {
@@ -25887,8 +25944,9 @@
       "namespace": "TICKER",
       "value": "VXX"
      },
+     "label": "VXX",
      "kind": "SECURITY",
-     "overlay_value": 3816972.6,
+     "value": 3816972.6,
      "accounts": 1627
     },
     {
@@ -25896,8 +25954,9 @@
       "namespace": "TICKER",
       "value": "QQQ"
      },
+     "label": "QQQ",
      "kind": "SECURITY",
-     "overlay_value": 3790414.06,
+     "value": 3790414.06,
      "accounts": 1271
     },
     {
@@ -25905,8 +25964,9 @@
       "namespace": "CASH",
       "value": "SMARTX_CASH"
      },
+     "label": "SMARTX_CASH",
      "kind": "CASH",
-     "overlay_value": 2993980.74,
+     "value": 2993980.74,
      "accounts": 1636
     },
     {
@@ -25914,8 +25974,9 @@
       "namespace": "TICKER",
       "value": "IVV"
      },
+     "label": "IVV",
      "kind": "SECURITY",
-     "overlay_value": 501401.18,
+     "value": 501401.18,
      "accounts": 2
     },
     {
@@ -25923,8 +25984,9 @@
       "namespace": "TICKER",
       "value": "SWVXX"
      },
+     "label": "SWVXX",
      "kind": "SECURITY",
-     "overlay_value": 125122.22,
+     "value": 125122.22,
      "accounts": 1
     },
     {
@@ -25932,8 +25994,9 @@
       "namespace": "TICKER",
       "value": "IQLT"
      },
+     "label": "IQLT",
      "kind": "SECURITY",
-     "overlay_value": 91649.48,
+     "value": 91649.48,
      "accounts": 1
     },
     {
@@ -25941,8 +26004,9 @@
       "namespace": "TICKER",
       "value": "DFAI"
      },
+     "label": "DFAI",
      "kind": "SECURITY",
-     "overlay_value": 63367.5,
+     "value": 63367.5,
      "accounts": 1
     },
     {
@@ -25950,8 +26014,9 @@
       "namespace": "TICKER",
       "value": "AVDE"
      },
+     "label": "AVDE",
      "kind": "SECURITY",
-     "overlay_value": 40173.74,
+     "value": 40173.74,
      "accounts": 1
     },
     {
@@ -25959,8 +26024,9 @@
       "namespace": "TICKER",
       "value": "DFAC"
      },
+     "label": "DFAC",
      "kind": "SECURITY",
-     "overlay_value": 32234.73,
+     "value": 32234.73,
      "accounts": 1
     },
     {
@@ -25968,8 +26034,9 @@
       "namespace": "TICKER",
       "value": "SJNK"
      },
+     "label": "SJNK",
      "kind": "SECURITY",
-     "overlay_value": 26874.77,
+     "value": 26874.77,
      "accounts": 1
     },
     {
@@ -25977,8 +26044,9 @@
       "namespace": "TICKER",
       "value": "VOO"
      },
+     "label": "VOO",
      "kind": "SECURITY",
-     "overlay_value": 13640.9,
+     "value": 13640.9,
      "accounts": 2
     },
     {
@@ -25986,8 +26054,9 @@
       "namespace": "TICKER",
       "value": "DFEM"
      },
+     "label": "DFEM",
      "kind": "SECURITY",
-     "overlay_value": 10937.08,
+     "value": 10937.08,
      "accounts": 1
     },
     {
@@ -25995,8 +26064,9 @@
       "namespace": "TICKER",
       "value": "SPY"
      },
+     "label": "SPY",
      "kind": "SECURITY",
-     "overlay_value": 7892.5,
+     "value": 7892.5,
      "accounts": 1
     },
     {
@@ -26004,8 +26074,9 @@
       "namespace": "TICKER",
       "value": "QUAL"
      },
+     "label": "QUAL",
      "kind": "SECURITY",
-     "overlay_value": 6692.1,
+     "value": 6692.1,
      "accounts": 1
     },
     {
@@ -26013,8 +26084,9 @@
       "namespace": "TICKER",
       "value": "HYG"
      },
+     "label": "HYG",
      "kind": "SECURITY",
-     "overlay_value": 1583.45,
+     "value": 1583.45,
      "accounts": 2
     },
     {
@@ -26022,8 +26094,9 @@
       "namespace": "TICKER",
       "value": "VGLT"
      },
+     "label": "VGLT",
      "kind": "SECURITY",
-     "overlay_value": 1581.46,
+     "value": 1581.46,
      "accounts": 1
     },
     {
@@ -26031,15 +26104,20 @@
       "namespace": "TICKER",
       "value": "VTV"
      },
+     "label": "VTV",
      "kind": "SECURITY",
-     "overlay_value": 1144.45,
+     "value": 1144.45,
      "accounts": 1
     }
+   ],
+   "asset_basis": [
+    "TARGET"
    ],
    "account_count": 1636
   },
   {
    "model_id": "69cc5e3b-b14c-4640-bb4b-ead7837c1bc9",
+   "model_namespace": "SMARTX_MODEL",
    "model_name": "Opal Ultra Long Term",
    "accounts": [
     {
@@ -33125,8 +33203,9 @@
       "namespace": "TICKER",
       "value": "IDVZ"
      },
+     "label": "IDVZ",
      "kind": "SECURITY",
-     "overlay_value": 27827405.42,
+     "value": 27827405.42,
      "accounts": 1413
     },
     {
@@ -33134,8 +33213,9 @@
       "namespace": "TICKER",
       "value": "IEFA"
      },
+     "label": "IEFA",
      "kind": "SECURITY",
-     "overlay_value": 26963244.69,
+     "value": 26963244.69,
      "accounts": 1414
     },
     {
@@ -33143,8 +33223,9 @@
       "namespace": "TICKER",
       "value": "DIVZ"
      },
+     "label": "DIVZ",
      "kind": "SECURITY",
-     "overlay_value": 25530685.42,
+     "value": 25530685.42,
      "accounts": 1413
     },
     {
@@ -33152,8 +33233,9 @@
       "namespace": "TICKER",
       "value": "PFDE"
      },
+     "label": "PFDE",
      "kind": "SECURITY",
-     "overlay_value": 24803512.02,
+     "value": 24803512.02,
      "accounts": 1409
     },
     {
@@ -33161,8 +33243,9 @@
       "namespace": "TICKER",
       "value": "IJH"
      },
+     "label": "IJH",
      "kind": "SECURITY",
-     "overlay_value": 23125741.74,
+     "value": 23125741.74,
      "accounts": 1412
     },
     {
@@ -33170,8 +33253,9 @@
       "namespace": "TICKER",
       "value": "SPYM"
      },
+     "label": "SPYM",
      "kind": "SECURITY",
-     "overlay_value": 14946025.68,
+     "value": 14946025.68,
      "accounts": 1414
     },
     {
@@ -33179,8 +33263,9 @@
       "namespace": "TICKER",
       "value": "PFOE"
      },
+     "label": "PFOE",
      "kind": "SECURITY",
-     "overlay_value": 12997688.64,
+     "value": 12997688.64,
      "accounts": 1409
     },
     {
@@ -33188,8 +33273,9 @@
       "namespace": "TICKER",
       "value": "IEMG"
      },
+     "label": "IEMG",
      "kind": "SECURITY",
-     "overlay_value": 10481612.67,
+     "value": 10481612.67,
      "accounts": 1414
     },
     {
@@ -33197,8 +33283,9 @@
       "namespace": "TICKER",
       "value": "VUG"
      },
+     "label": "VUG",
      "kind": "SECURITY",
-     "overlay_value": 8352713.37,
+     "value": 8352713.37,
      "accounts": 1406
     },
     {
@@ -33206,8 +33293,9 @@
       "namespace": "TICKER",
       "value": "VEA"
      },
+     "label": "VEA",
      "kind": "SECURITY",
-     "overlay_value": 6190018.69,
+     "value": 6190018.69,
      "accounts": 1412
     },
     {
@@ -33215,8 +33303,9 @@
       "namespace": "TICKER",
       "value": "PCHI"
      },
+     "label": "PCHI",
      "kind": "SECURITY",
-     "overlay_value": 6176139.12,
+     "value": 6176139.12,
      "accounts": 1411
     },
     {
@@ -33224,8 +33313,9 @@
       "namespace": "TICKER",
       "value": "CLIP"
      },
+     "label": "CLIP",
      "kind": "SECURITY",
-     "overlay_value": 5989230.41,
+     "value": 5989230.41,
      "accounts": 1382
     },
     {
@@ -33233,8 +33323,9 @@
       "namespace": "TICKER",
       "value": "VXX"
      },
+     "label": "VXX",
      "kind": "SECURITY",
-     "overlay_value": 3639778.8,
+     "value": 3639778.8,
      "accounts": 1406
     },
     {
@@ -33242,8 +33333,9 @@
       "namespace": "TICKER",
       "value": "QQQ"
      },
+     "label": "QQQ",
      "kind": "SECURITY",
-     "overlay_value": 2453589.81,
+     "value": 2453589.81,
      "accounts": 933
     },
     {
@@ -33251,8 +33343,9 @@
       "namespace": "CASH",
       "value": "SMARTX_CASH"
      },
+     "label": "SMARTX_CASH",
      "kind": "CASH",
-     "overlay_value": 2061854.63,
+     "value": 2061854.63,
      "accounts": 1415
     },
     {
@@ -33260,8 +33353,9 @@
       "namespace": "TICKER",
       "value": "SPHY"
      },
+     "label": "SPHY",
      "kind": "SECURITY",
-     "overlay_value": 1935707.58,
+     "value": 1935707.58,
      "accounts": 1400
     },
     {
@@ -33269,8 +33363,9 @@
       "namespace": "TICKER",
       "value": "QUAL"
      },
+     "label": "QUAL",
      "kind": "SECURITY",
-     "overlay_value": 22674.65,
+     "value": 22674.65,
      "accounts": 4
     },
     {
@@ -33278,8 +33373,9 @@
       "namespace": "TICKER",
       "value": "SPCX"
      },
+     "label": "SPCX",
      "kind": "SECURITY",
-     "overlay_value": 12068.16,
+     "value": 12068.16,
      "accounts": 1
     },
     {
@@ -33287,8 +33383,9 @@
       "namespace": "TICKER",
       "value": "VTV"
      },
+     "label": "VTV",
      "kind": "SECURITY",
-     "overlay_value": 9385.62,
+     "value": 9385.62,
      "accounts": 3
     },
     {
@@ -33296,8 +33393,9 @@
       "namespace": "TICKER",
       "value": "VGSH"
      },
+     "label": "VGSH",
      "kind": "SECURITY",
-     "overlay_value": 6356.83,
+     "value": 6356.83,
      "accounts": 4
     },
     {
@@ -33305,8 +33403,9 @@
       "namespace": "TICKER",
       "value": "SPSM"
      },
+     "label": "SPSM",
      "kind": "SECURITY",
-     "overlay_value": 4559.35,
+     "value": 4559.35,
      "accounts": 2
     },
     {
@@ -33314,15 +33413,20 @@
       "namespace": "TICKER",
       "value": "IQLT"
      },
+     "label": "IQLT",
      "kind": "SECURITY",
-     "overlay_value": 158.3,
+     "value": 158.3,
      "accounts": 1
     }
+   ],
+   "asset_basis": [
+    "TARGET"
    ],
    "account_count": 1415
   },
   {
    "model_id": "0f76a5a0-3b8e-4433-846c-ad41765b51d8",
+   "model_namespace": "SMARTX_MODEL",
    "model_name": "Opal Short-Term",
    "accounts": [
     {
@@ -36968,8 +37072,9 @@
       "namespace": "TICKER",
       "value": "BIV"
      },
+     "label": "BIV",
      "kind": "SECURITY",
-     "overlay_value": 20029865.86,
+     "value": 20029865.86,
      "accounts": 726
     },
     {
@@ -36977,8 +37082,9 @@
       "namespace": "TICKER",
       "value": "VGSH"
      },
+     "label": "VGSH",
      "kind": "SECURITY",
-     "overlay_value": 12398013.42,
+     "value": 12398013.42,
      "accounts": 726
     },
     {
@@ -36986,8 +37092,9 @@
       "namespace": "TICKER",
       "value": "DFCF"
      },
+     "label": "DFCF",
      "kind": "SECURITY",
-     "overlay_value": 10103089.02,
+     "value": 10103089.02,
      "accounts": 726
     },
     {
@@ -36995,8 +37102,9 @@
       "namespace": "TICKER",
       "value": "JAAA"
      },
+     "label": "JAAA",
      "kind": "SECURITY",
-     "overlay_value": 9875654.23,
+     "value": 9875654.23,
      "accounts": 725
     },
     {
@@ -37004,8 +37112,9 @@
       "namespace": "TICKER",
       "value": "UTWO"
      },
+     "label": "UTWO",
      "kind": "SECURITY",
-     "overlay_value": 9828807.45,
+     "value": 9828807.45,
      "accounts": 724
     },
     {
@@ -37013,8 +37122,9 @@
       "namespace": "TICKER",
       "value": "DIVZ"
      },
+     "label": "DIVZ",
      "kind": "SECURITY",
-     "overlay_value": 9553446.43,
+     "value": 9553446.43,
      "accounts": 726
     },
     {
@@ -37022,8 +37132,9 @@
       "namespace": "TICKER",
       "value": "OBIL"
      },
+     "label": "OBIL",
      "kind": "SECURITY",
-     "overlay_value": 7307866.02,
+     "value": 7307866.02,
      "accounts": 724
     },
     {
@@ -37031,8 +37142,9 @@
       "namespace": "TICKER",
       "value": "SPHY"
      },
+     "label": "SPHY",
      "kind": "SECURITY",
-     "overlay_value": 5935175.02,
+     "value": 5935175.02,
      "accounts": 726
     },
     {
@@ -37040,8 +37152,9 @@
       "namespace": "TICKER",
       "value": "VCSH"
      },
+     "label": "VCSH",
      "kind": "SECURITY",
-     "overlay_value": 5273824.68,
+     "value": 5273824.68,
      "accounts": 724
     },
     {
@@ -37049,8 +37162,9 @@
       "namespace": "TICKER",
       "value": "IDVZ"
      },
+     "label": "IDVZ",
      "kind": "SECURITY",
-     "overlay_value": 3457166.87,
+     "value": 3457166.87,
      "accounts": 724
     },
     {
@@ -37058,8 +37172,9 @@
       "namespace": "TICKER",
       "value": "VNLA"
      },
+     "label": "VNLA",
      "kind": "SECURITY",
-     "overlay_value": 3066117.74,
+     "value": 3066117.74,
      "accounts": 724
     },
     {
@@ -37067,8 +37182,9 @@
       "namespace": "TICKER",
       "value": "PFDE"
      },
+     "label": "PFDE",
      "kind": "SECURITY",
-     "overlay_value": 2579872.0,
+     "value": 2579872.0,
      "accounts": 723
     },
     {
@@ -37076,8 +37192,9 @@
       "namespace": "TICKER",
       "value": "VEA"
      },
+     "label": "VEA",
      "kind": "SECURITY",
-     "overlay_value": 2511618.51,
+     "value": 2511618.51,
      "accounts": 721
     },
     {
@@ -37085,8 +37202,9 @@
       "namespace": "TICKER",
       "value": "CLIP"
      },
+     "label": "CLIP",
      "kind": "SECURITY",
-     "overlay_value": 1942147.12,
+     "value": 1942147.12,
      "accounts": 714
     },
     {
@@ -37094,8 +37212,9 @@
       "namespace": "CASH",
       "value": "SMARTX_CASH"
      },
+     "label": "SMARTX_CASH",
      "kind": "CASH",
-     "overlay_value": 1832065.38,
+     "value": 1832065.38,
      "accounts": 727
     },
     {
@@ -37103,8 +37222,9 @@
       "namespace": "TICKER",
       "value": "SPYM"
      },
+     "label": "SPYM",
      "kind": "SECURITY",
-     "overlay_value": 38410.44,
+     "value": 38410.44,
      "accounts": 2
     },
     {
@@ -37112,8 +37232,9 @@
       "namespace": "TICKER",
       "value": "SHM"
      },
+     "label": "SHM",
      "kind": "SECURITY",
-     "overlay_value": 27577.16,
+     "value": 27577.16,
      "accounts": 1
     },
     {
@@ -37121,8 +37242,9 @@
       "namespace": "TICKER",
       "value": "AVDE"
      },
+     "label": "AVDE",
      "kind": "SECURITY",
-     "overlay_value": 23844.46,
+     "value": 23844.46,
      "accounts": 1
     },
     {
@@ -37130,8 +37252,9 @@
       "namespace": "TICKER",
       "value": "JMST"
      },
+     "label": "JMST",
      "kind": "SECURITY",
-     "overlay_value": 21771.75,
+     "value": 21771.75,
      "accounts": 1
     },
     {
@@ -37139,8 +37262,9 @@
       "namespace": "TICKER",
       "value": "JPST"
      },
+     "label": "JPST",
      "kind": "SECURITY",
-     "overlay_value": 20903.55,
+     "value": 20903.55,
      "accounts": 1
     },
     {
@@ -37148,8 +37272,9 @@
       "namespace": "TICKER",
       "value": "DFAC"
      },
+     "label": "DFAC",
      "kind": "SECURITY",
-     "overlay_value": 16998.96,
+     "value": 16998.96,
      "accounts": 1
     },
     {
@@ -37157,8 +37282,9 @@
       "namespace": "TICKER",
       "value": "ITM"
      },
+     "label": "ITM",
      "kind": "SECURITY",
-     "overlay_value": 16938.18,
+     "value": 16938.18,
      "accounts": 1
     },
     {
@@ -37166,15 +37292,20 @@
       "namespace": "TICKER",
       "value": "HYD"
      },
+     "label": "HYD",
      "kind": "SECURITY",
-     "overlay_value": 5122.95,
+     "value": 5122.95,
      "accounts": 1
     }
+   ],
+   "asset_basis": [
+    "TARGET"
    ],
    "account_count": 727
   },
   {
    "model_id": "c000fe6a-4f29-42e6-ae2e-75ea6162d175",
+   "model_namespace": "SMARTX_MODEL",
    "model_name": "Opal Ultra Short-Term Income",
    "accounts": [
     {
@@ -38060,8 +38191,9 @@
       "namespace": "TICKER",
       "value": "VGSH"
      },
+     "label": "VGSH",
      "kind": "SECURITY",
-     "overlay_value": 6619123.61,
+     "value": 6619123.61,
      "accounts": 175
     },
     {
@@ -38069,8 +38201,9 @@
       "namespace": "TICKER",
       "value": "VCSH"
      },
+     "label": "VCSH",
      "kind": "SECURITY",
-     "overlay_value": 6575074.85,
+     "value": 6575074.85,
      "accounts": 175
     },
     {
@@ -38078,8 +38211,9 @@
       "namespace": "TICKER",
       "value": "VUSB"
      },
+     "label": "VUSB",
      "kind": "SECURITY",
-     "overlay_value": 4456187.04,
+     "value": 4456187.04,
      "accounts": 175
     },
     {
@@ -38087,8 +38221,9 @@
       "namespace": "TICKER",
       "value": "MINT"
      },
+     "label": "MINT",
      "kind": "SECURITY",
-     "overlay_value": 4383902.4,
+     "value": 4383902.4,
      "accounts": 175
     },
     {
@@ -38096,8 +38231,9 @@
       "namespace": "TICKER",
       "value": "OBIL"
      },
+     "label": "OBIL",
      "kind": "SECURITY",
-     "overlay_value": 4367156.22,
+     "value": 4367156.22,
      "accounts": 175
     },
     {
@@ -38105,8 +38241,9 @@
       "namespace": "TICKER",
       "value": "VNLA"
      },
+     "label": "VNLA",
      "kind": "SECURITY",
-     "overlay_value": 4080881.23,
+     "value": 4080881.23,
      "accounts": 175
     },
     {
@@ -38114,8 +38251,9 @@
       "namespace": "TICKER",
       "value": "DFSD"
      },
+     "label": "DFSD",
      "kind": "SECURITY",
-     "overlay_value": 3175151.82,
+     "value": 3175151.82,
      "accounts": 175
     },
     {
@@ -38123,8 +38261,9 @@
       "namespace": "TICKER",
       "value": "SPHY"
      },
+     "label": "SPHY",
      "kind": "SECURITY",
-     "overlay_value": 2516916.15,
+     "value": 2516916.15,
      "accounts": 175
     },
     {
@@ -38132,8 +38271,9 @@
       "namespace": "TICKER",
       "value": "JAAA"
      },
+     "label": "JAAA",
      "kind": "SECURITY",
-     "overlay_value": 2171930.38,
+     "value": 2171930.38,
      "accounts": 175
     },
     {
@@ -38141,8 +38281,9 @@
       "namespace": "TICKER",
       "value": "JPST"
      },
+     "label": "JPST",
      "kind": "SECURITY",
-     "overlay_value": 2157554.7,
+     "value": 2157554.7,
      "accounts": 175
     },
     {
@@ -38150,8 +38291,9 @@
       "namespace": "TICKER",
       "value": "XBIL"
      },
+     "label": "XBIL",
      "kind": "SECURITY",
-     "overlay_value": 2075816.71,
+     "value": 2075816.71,
      "accounts": 175
     },
     {
@@ -38159,8 +38301,9 @@
       "namespace": "TICKER",
       "value": "TBIL"
      },
+     "label": "TBIL",
      "kind": "SECURITY",
-     "overlay_value": 1715366.85,
+     "value": 1715366.85,
      "accounts": 175
     },
     {
@@ -38168,8 +38311,9 @@
       "namespace": "CASH",
       "value": "SMARTX_CASH"
      },
+     "label": "SMARTX_CASH",
      "kind": "CASH",
-     "overlay_value": 748319.17,
+     "value": 748319.17,
      "accounts": 175
     },
     {
@@ -38177,15 +38321,20 @@
       "namespace": "TICKER",
       "value": "CLIP"
      },
+     "label": "CLIP",
      "kind": "SECURITY",
-     "overlay_value": 631466.87,
+     "value": 631466.87,
      "accounts": 167
     }
+   ],
+   "asset_basis": [
+    "TARGET"
    ],
    "account_count": 175
   },
   {
    "model_id": "48af6559-593a-48a9-8ac4-3c78ded93ad8",
+   "model_namespace": "SMARTX_MODEL",
    "model_name": "Opal Dividend Income",
    "accounts": [
     {
@@ -38386,8 +38535,9 @@
       "namespace": "TICKER",
       "value": "PM"
      },
+     "label": "PM",
      "kind": "SECURITY",
-     "overlay_value": 1043757.6,
+     "value": 1043757.6,
      "accounts": 37
     },
     {
@@ -38395,8 +38545,9 @@
       "namespace": "TICKER",
       "value": "VZ"
      },
+     "label": "VZ",
      "kind": "SECURITY",
-     "overlay_value": 995385.4,
+     "value": 995385.4,
      "accounts": 38
     },
     {
@@ -38404,8 +38555,9 @@
       "namespace": "TICKER",
       "value": "MPLX"
      },
+     "label": "MPLX",
      "kind": "SECURITY",
-     "overlay_value": 964503.98,
+     "value": 964503.98,
      "accounts": 38
     },
     {
@@ -38413,8 +38565,9 @@
       "namespace": "TICKER",
       "value": "UNH"
      },
+     "label": "UNH",
      "kind": "SECURITY",
-     "overlay_value": 908691.69,
+     "value": 908691.69,
      "accounts": 38
     },
     {
@@ -38422,8 +38575,9 @@
       "namespace": "TICKER",
       "value": "JNJ"
      },
+     "label": "JNJ",
      "kind": "SECURITY",
-     "overlay_value": 854276.59,
+     "value": 854276.59,
      "accounts": 38
     },
     {
@@ -38431,8 +38585,9 @@
       "namespace": "TICKER",
       "value": "CVX"
      },
+     "label": "CVX",
      "kind": "SECURITY",
-     "overlay_value": 780989.9,
+     "value": 780989.9,
      "accounts": 38
     },
     {
@@ -38440,8 +38595,9 @@
       "namespace": "TICKER",
       "value": "MSFT"
      },
+     "label": "MSFT",
      "kind": "SECURITY",
-     "overlay_value": 740028.0,
+     "value": 740028.0,
      "accounts": 38
     },
     {
@@ -38449,8 +38605,9 @@
       "namespace": "TICKER",
       "value": "NEE"
      },
+     "label": "NEE",
      "kind": "SECURITY",
-     "overlay_value": 714501.46,
+     "value": 714501.46,
      "accounts": 38
     },
     {
@@ -38458,8 +38615,9 @@
       "namespace": "TICKER",
       "value": "UPS"
      },
+     "label": "UPS",
      "kind": "SECURITY",
-     "overlay_value": 711095.46,
+     "value": 711095.46,
      "accounts": 37
     },
     {
@@ -38467,8 +38625,9 @@
       "namespace": "TICKER",
       "value": "ABBV"
      },
+     "label": "ABBV",
      "kind": "SECURITY",
-     "overlay_value": 641538.71,
+     "value": 641538.71,
      "accounts": 38
     },
     {
@@ -38476,8 +38635,9 @@
       "namespace": "TICKER",
       "value": "MO"
      },
+     "label": "MO",
      "kind": "SECURITY",
-     "overlay_value": 640490.39,
+     "value": 640490.39,
      "accounts": 37
     },
     {
@@ -38485,8 +38645,9 @@
       "namespace": "TICKER",
       "value": "GOOGL"
      },
+     "label": "GOOGL",
      "kind": "SECURITY",
-     "overlay_value": 618743.92,
+     "value": 618743.92,
      "accounts": 38
     },
     {
@@ -38494,8 +38655,9 @@
       "namespace": "TICKER",
       "value": "QCOM"
      },
+     "label": "QCOM",
      "kind": "SECURITY",
-     "overlay_value": 610869.87,
+     "value": 610869.87,
      "accounts": 38
     },
     {
@@ -38503,8 +38665,9 @@
       "namespace": "TICKER",
       "value": "XOM"
      },
+     "label": "XOM",
      "kind": "SECURITY",
-     "overlay_value": 578656.66,
+     "value": 578656.66,
      "accounts": 38
     },
     {
@@ -38512,8 +38675,9 @@
       "namespace": "TICKER",
       "value": "CME"
      },
+     "label": "CME",
      "kind": "SECURITY",
-     "overlay_value": 561680.17,
+     "value": 561680.17,
      "accounts": 36
     },
     {
@@ -38521,8 +38685,9 @@
       "namespace": "TICKER",
       "value": "RTX"
      },
+     "label": "RTX",
      "kind": "SECURITY",
-     "overlay_value": 560937.63,
+     "value": 560937.63,
      "accounts": 38
     },
     {
@@ -38530,8 +38695,9 @@
       "namespace": "TICKER",
       "value": "AIG"
      },
+     "label": "AIG",
      "kind": "SECURITY",
-     "overlay_value": 486015.43,
+     "value": 486015.43,
      "accounts": 38
     },
     {
@@ -38539,8 +38705,9 @@
       "namespace": "TICKER",
       "value": "CSCO"
      },
+     "label": "CSCO",
      "kind": "SECURITY",
-     "overlay_value": 481428.12,
+     "value": 481428.12,
      "accounts": 38
     },
     {
@@ -38548,8 +38715,9 @@
       "namespace": "TICKER",
       "value": "BIPC"
      },
+     "label": "BIPC",
      "kind": "SECURITY",
-     "overlay_value": 472703.27,
+     "value": 472703.27,
      "accounts": 38
     },
     {
@@ -38557,8 +38725,9 @@
       "namespace": "TICKER",
       "value": "DELL"
      },
+     "label": "DELL",
      "kind": "SECURITY",
-     "overlay_value": 451212.24,
+     "value": 451212.24,
      "accounts": 38
     },
     {
@@ -38566,8 +38735,9 @@
       "namespace": "TICKER",
       "value": "ENB"
      },
+     "label": "ENB",
      "kind": "SECURITY",
-     "overlay_value": 445470.0,
+     "value": 445470.0,
      "accounts": 38
     },
     {
@@ -38575,8 +38745,9 @@
       "namespace": "TICKER",
       "value": "UNP"
      },
+     "label": "UNP",
      "kind": "SECURITY",
-     "overlay_value": 440976.87,
+     "value": 440976.87,
      "accounts": 38
     },
     {
@@ -38584,8 +38755,9 @@
       "namespace": "TICKER",
       "value": "ABT"
      },
+     "label": "ABT",
      "kind": "SECURITY",
-     "overlay_value": 404494.69,
+     "value": 404494.69,
      "accounts": 38
     },
     {
@@ -38593,8 +38765,9 @@
       "namespace": "TICKER",
       "value": "BX"
      },
+     "label": "BX",
      "kind": "SECURITY",
-     "overlay_value": 399808.24,
+     "value": 399808.24,
      "accounts": 38
     },
     {
@@ -38602,8 +38775,9 @@
       "namespace": "TICKER",
       "value": "ATO"
      },
+     "label": "ATO",
      "kind": "SECURITY",
-     "overlay_value": 392021.36,
+     "value": 392021.36,
      "accounts": 36
     },
     {
@@ -38611,8 +38785,9 @@
       "namespace": "TICKER",
       "value": "AEP"
      },
+     "label": "AEP",
      "kind": "SECURITY",
-     "overlay_value": 386780.19,
+     "value": 386780.19,
      "accounts": 38
     },
     {
@@ -38620,8 +38795,9 @@
       "namespace": "TICKER",
       "value": "TXN"
      },
+     "label": "TXN",
      "kind": "SECURITY",
-     "overlay_value": 360975.3,
+     "value": 360975.3,
      "accounts": 38
     },
     {
@@ -38629,8 +38805,9 @@
       "namespace": "TICKER",
       "value": "GS"
      },
+     "label": "GS",
      "kind": "SECURITY",
-     "overlay_value": 339381.72,
+     "value": 339381.72,
      "accounts": 38
     },
     {
@@ -38638,15 +38815,20 @@
       "namespace": "CASH",
       "value": "SMARTX_CASH"
      },
+     "label": "SMARTX_CASH",
      "kind": "CASH",
-     "overlay_value": 208865.47,
+     "value": 208865.47,
      "accounts": 38
     }
+   ],
+   "asset_basis": [
+    "TARGET"
    ],
    "account_count": 38
   },
   {
    "model_id": "843d875b-62f7-4ef8-b833-5078a3f637d5",
+   "model_namespace": "SMARTX_MODEL",
    "model_name": "Pathfinder Focused Opportunities",
    "accounts": [
     {
@@ -38867,8 +39049,9 @@
       "namespace": "TICKER",
       "value": "TSM"
      },
+     "label": "TSM",
      "kind": "SECURITY",
-     "overlay_value": 291088.0,
+     "value": 291088.0,
      "accounts": 42
     },
     {
@@ -38876,8 +39059,9 @@
       "namespace": "TICKER",
       "value": "ASML"
      },
+     "label": "ASML",
      "kind": "SECURITY",
-     "overlay_value": 265680.8,
+     "value": 265680.8,
      "accounts": 42
     },
     {
@@ -38885,8 +39069,9 @@
       "namespace": "TICKER",
       "value": "SPOT"
      },
+     "label": "SPOT",
      "kind": "SECURITY",
-     "overlay_value": 218566.8,
+     "value": 218566.8,
      "accounts": 42
     },
     {
@@ -38894,8 +39079,9 @@
       "namespace": "TICKER",
       "value": "MELI"
      },
+     "label": "MELI",
      "kind": "SECURITY",
-     "overlay_value": 213709.86,
+     "value": 213709.86,
      "accounts": 42
     },
     {
@@ -38903,8 +39089,9 @@
       "namespace": "TICKER",
       "value": "FER"
      },
+     "label": "FER",
      "kind": "SECURITY",
-     "overlay_value": 212982.9,
+     "value": 212982.9,
      "accounts": 42
     },
     {
@@ -38912,8 +39099,9 @@
       "namespace": "TICKER",
       "value": "GOOG"
      },
+     "label": "GOOG",
      "kind": "SECURITY",
-     "overlay_value": 202781.84,
+     "value": 202781.84,
      "accounts": 41
     },
     {
@@ -38921,8 +39109,9 @@
       "namespace": "TICKER",
       "value": "IDXX"
      },
+     "label": "IDXX",
      "kind": "SECURITY",
-     "overlay_value": 199213.0,
+     "value": 199213.0,
      "accounts": 42
     },
     {
@@ -38930,8 +39119,9 @@
       "namespace": "TICKER",
       "value": "UBER"
      },
+     "label": "UBER",
      "kind": "SECURITY",
-     "overlay_value": 188493.33,
+     "value": 188493.33,
      "accounts": 42
     },
     {
@@ -38939,8 +39129,9 @@
       "namespace": "TICKER",
       "value": "UNH"
      },
+     "label": "UNH",
      "kind": "SECURITY",
-     "overlay_value": 184735.91,
+     "value": 184735.91,
      "accounts": 42
     },
     {
@@ -38948,8 +39139,9 @@
       "namespace": "TICKER",
       "value": "NFLX"
      },
+     "label": "NFLX",
      "kind": "SECURITY",
-     "overlay_value": 184513.12,
+     "value": 184513.12,
      "accounts": 42
     },
     {
@@ -38957,8 +39149,9 @@
       "namespace": "TICKER",
       "value": "HESAY"
      },
+     "label": "HESAY",
      "kind": "SECURITY",
-     "overlay_value": 182785.68,
+     "value": 182785.68,
      "accounts": 42
     },
     {
@@ -38966,8 +39159,9 @@
       "namespace": "TICKER",
       "value": "ISRG"
      },
+     "label": "ISRG",
      "kind": "SECURITY",
-     "overlay_value": 182548.86,
+     "value": 182548.86,
      "accounts": 42
     },
     {
@@ -38975,8 +39169,9 @@
       "namespace": "TICKER",
       "value": "UNVGY"
      },
+     "label": "UNVGY",
      "kind": "SECURITY",
-     "overlay_value": 182041.6,
+     "value": 182041.6,
      "accounts": 42
     },
     {
@@ -38984,8 +39179,9 @@
       "namespace": "TICKER",
       "value": "LLY"
      },
+     "label": "LLY",
      "kind": "SECURITY",
-     "overlay_value": 172876.26,
+     "value": 172876.26,
      "accounts": 42
     },
     {
@@ -38993,8 +39189,9 @@
       "namespace": "TICKER",
       "value": "NU"
      },
+     "label": "NU",
      "kind": "SECURITY",
-     "overlay_value": 161891.28,
+     "value": 161891.28,
      "accounts": 42
     },
     {
@@ -39002,8 +39199,9 @@
       "namespace": "TICKER",
       "value": "BN"
      },
+     "label": "BN",
      "kind": "SECURITY",
-     "overlay_value": 155714.9,
+     "value": 155714.9,
      "accounts": 41
     },
     {
@@ -39011,8 +39209,9 @@
       "namespace": "TICKER",
       "value": "V"
      },
+     "label": "V",
      "kind": "SECURITY",
-     "overlay_value": 151739.4,
+     "value": 151739.4,
      "accounts": 42
     },
     {
@@ -39020,8 +39219,9 @@
       "namespace": "TICKER",
       "value": "INTU"
      },
+     "label": "INTU",
      "kind": "SECURITY",
-     "overlay_value": 143096.76,
+     "value": 143096.76,
      "accounts": 42
     },
     {
@@ -39029,8 +39229,9 @@
       "namespace": "TICKER",
       "value": "MA"
      },
+     "label": "MA",
      "kind": "SECURITY",
-     "overlay_value": 140867.49,
+     "value": 140867.49,
      "accounts": 42
     },
     {
@@ -39038,8 +39239,9 @@
       "namespace": "TICKER",
       "value": "QXO"
      },
+     "label": "QXO",
      "kind": "SECURITY",
-     "overlay_value": 136835.46,
+     "value": 136835.46,
      "accounts": 42
     },
     {
@@ -39047,8 +39249,9 @@
       "namespace": "TICKER",
       "value": "NOW"
      },
+     "label": "NOW",
      "kind": "SECURITY",
-     "overlay_value": 134397.0,
+     "value": 134397.0,
      "accounts": 42
     },
     {
@@ -39056,8 +39259,9 @@
       "namespace": "TICKER",
       "value": "WDAY"
      },
+     "label": "WDAY",
      "kind": "SECURITY",
-     "overlay_value": 132890.38,
+     "value": 132890.38,
      "accounts": 42
     },
     {
@@ -39065,10 +39269,14 @@
       "namespace": "CASH",
       "value": "SMARTX_CASH"
      },
+     "label": "SMARTX_CASH",
      "kind": "CASH",
-     "overlay_value": 38328.5,
+     "value": 38328.5,
      "accounts": 42
     }
+   ],
+   "asset_basis": [
+    "TARGET"
    ],
    "account_count": 42
   }
