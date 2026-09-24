@@ -43,11 +43,12 @@ and closed on the verify-after, in the same session, or the deploy is rolled bac
    `print-deps-layer.tf` only if rm-4's report says a dependency moved; expected: none). Never `aws lambda
    update-function-code`; never a bare `terraform apply`.
 4. **Verify-after on the deployed function:** CodeSha256 moved (AFTER != BEFORE); direct invoke with no format returns
-   200 `application/pdf` whose body, NORMALISED by stripping the render-time `/CreationDate`, `/ModDate` and `/ID` spans, has a sha256
-   EQUAL to the BEFORE read's normalised sha (L2, the DELTA=0 that R-57's no-pair rests on, stated on the NORMALISED plane --
-   AMENDMENT 2, row Z-S254: the raw pdf carries a render-time /CreationDate and is never byte-equal across two requests, and
-   rl-10 pinned CreationDate=None in build_pack so the raw sha moves by that pin alone after the deploy; a different NORMALISED
-   sha is the ROLLBACK trigger); direct invoke with `format=rich` returns 200 `text/markdown` with a body larger
+   200 `application/pdf` whose CONTENT-STREAM DIGEST -- the page count plus each page's DECODED content stream, sha256 over that
+   sequence, no file-level metadata and no xref offsets -- is EQUAL to the BEFORE read's (L2, the DELTA=0 that R-57's no-pair
+   rests on, stated on the CONTENT-STREAM plane -- AMENDMENT 3, on the lane's measurement: the raw pdf carries a render-time
+   /CreationDate; rl-10's pin REMOVES that entry and shifts every xref offset after it, so a metadata-stripping normaliser
+   also reads FAIL on a correct deploy; the content-stream digest survives the stamp, the pin, and stays sensitive -- CAT differs;
+   a different content-stream digest is the ROLLBACK trigger; raw and metadata-normalised shas printed beside it for the record); direct invoke with `format=rich` returns 200 `text/markdown` with a body larger
    than 20 KB whose first line is a Markdown heading naming the security (L3); direct invoke with `format=xml` returns 400.
    **The negative control on the pdf leg:** the same invoke on a second key (`CAT_US_Equity`) reads a DIFFERENT sha from
    BA's (so "equal" is a comparison that can fail).
@@ -77,7 +78,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/**
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-rm-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; ls org/critical_paths/change_management/ | grep amgt-rm-7-print-format-rich &amp;&amp; .tools/aws lambda get-function-configuration --function-name opal-amgt-scoped-api --query CodeSha256 --output text</invocation><expect>THE LEDGER ENTRY EXISTS (opened before the apply, its BEFORE shas inside) AND THE CODE MOVED: the entry file listed; the deployed CodeSha256 printed and DIFFERENT from the BEFORE value the entry records (print both)</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-rm-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/tier2_senior/0.7.0_AE_CloudOps~A/deliverables/AMGT_RESAPP_RM4B_20260924/verify_after.py</invocation><expect>THE DEFAULT IS BYTE-IDENTICAL AND RICH IS SERVED, on the DEPLOYED function by direct invoke: BA_US_Equity no-format -> 200 application/pdf, body sha256 NORMALISED (the /CreationDate, /ModDate and /ID spans stripped) EQUAL to the BEFORE read's normalised sha recorded in the ledger (both printed side by side, raw shas beside them for the record); BA_US_Equity format=rich -> 200 text/markdown, body larger than 20 KB, first line a Markdown heading naming the security; format=xml -> 400; the negative control CAT_US_Equity no-format -> a pdf sha DIFFERENT from BA's (printed)</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-rm-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/tier2_senior/0.7.0_AE_CloudOps~A/deliverables/AMGT_RESAPP_RM4B_20260924/verify_after.py</invocation><expect>THE DEFAULT IS BYTE-IDENTICAL AND RICH IS SERVED, on the DEPLOYED function by direct invoke: BA_US_Equity no-format -> 200 application/pdf, CONTENT-STREAM DIGEST (page count + each page's decoded content stream) EQUAL to the BEFORE read's recorded in the ledger (both printed side by side; the raw and the metadata-normalised shas printed beside them for the record); BA_US_Equity format=rich -> 200 text/markdown, body larger than 20 KB, first line a Markdown heading naming the security; format=xml -> 400; the negative control CAT_US_Equity no-format -> a pdf sha DIFFERENT from BA's (printed)</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-rm-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; grep -c "CLOSED" org/critical_paths/change_management/$(ls org/critical_paths/change_management/ | grep amgt-rm-7-print-format-rich | head -1) &amp;&amp; git log -1 --format=%h -- org/critical_paths/change_management/</invocation><expect>THE ENTRY CLOSED IN THE SAME SESSION with all three legs proven and the invoke reads pasted, and the closing commit landed (its hash printed) -- a RED or OPEN entry at the end of the session is a rollback-and-escalate, never a hand-off</expect></criterion>
 </proof_of_spec>
 
@@ -89,6 +90,11 @@ by broker (this is a seat order, not a worker subagent): the BEFORE/AFTER CodeSh
 the ledger entry path and its closing commit, and any row. **The status flip is the ISSUER'S.**
 
 <!-- ===================== RECORD FACE -- does NOT travel to the assignee ===================== -->
+
+**ISSUER AMENDMENT 3 (15:2xZ, on `0.7.0_AE_CloudOps~A` msg 25587):** amendment 2(b)'s metadata-normalised comparand ALSO fails
+under rl-10's pin (measured by the lane: the pin removes the /CreationDate entry and shifts the xref, 77,862 -> 77,388 bytes,
+normalised digest moves); L2's comparand is now the CONTENT-STREAM DIGEST (page count + decoded content streams), which reads
+equal across the stamp and the pin and differs on CAT. Nothing else moves.
 
 **ISSUER AMENDMENT 2 (15:1xZ, on `0.7.0_AE_CloudOps~A` msg 25584, rows Z-S253 / Z-S254):** (a) the egress class gains EXACTLY
 ONE S3 artifact write -- the function's code package via the estate's own build-and-upload script, the apply's stated
