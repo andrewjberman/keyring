@@ -8927,3 +8927,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "python3 is the intended CI interpreter for the two PYTHON heredocs the script also carries (:250 and :448, both `$JSON_TOOL - <<'PYEOF'`), and for those it is correct. The single ONE variable is used for BOTH the Python heredocs AND the JavaScript CHANGELOG file, which are mutually exclusive interpreters -- so the selection can be right for one consumer and wrong for another in the same run, and the script has no branch that reconciles them. On the bun branch both work (bun runs JS, and the PYEOF heredocs are guarded by `if [ \"$JSON_TOOL\" = \"python3\" ] || [ \"$JSON_TOOL\" = \"python\" ]` at :249/:446 with a JS sibling at :348/:463); on the python3 branch the JS-only :782 call has no such guard and no JS sibling. NOT graduated and NOT remediated by this seat: the governing order (IRPT_MVP.TO-RECORDER-SCOPE-O, issued 2026-09-23 by 2.0.0_SA_COO~P) scopes this seat to the scope-propagation repair and explicitly forbids a broader recorder/helper rewrite, so this is filed for 1.0.0_SA_CTO and the issuer to route. Note for whoever takes it: the fix is not simply 'prefer node', because the two PYEOF heredocs need a Python; the honest shape is two separate resolved tools (a PY_TOOL and a JS_TOOL), which is a real change to this script's contract and wants its own order."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S119",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-24T02:16:00Z",
+  "one_line": "The session bundle the canonical JS runner PERSISTS and the session bundle the Python resident CONSUMES are two different contracts, and the seam has never been exercised (Y 99906: the session secret has never held a bundle). ycharts_session.js acquireSession writes {cookies, identity_evidence (cookie NAMES), probe_evidence, captured_at, captured_by, fence} and persistSession adds only {fence, persisted_at, persisted_by}; the Python side refuses exactly that bundle: transport.Transport._initialize_bundle raises TransportRefused('SESSION_CONTRACT') unless schema_version == 1 and capture_origin == 'EC2', broker.SessionBroker.current() grades it NOT_VERSIONED, recipe.step_identity reads bundle['identity'] (user_id int + email, validated against window.USER on /dashboard/ by transport.validate_identity), and transport.resume_allowed needs bundle['generation']. So the D1 sign-in through the canonical wrapper, as the cutover GO (CTO 99936 bound (a)) prescribes, produces a bundle the resident cannot read, and the enrolled_user_id the GO says to pin FROM THAT BUNDLE is not in it -- the JS never scrapes the numeric user id. Found by a static read before any live act; no vendor call was made. Filed for 1.0.0_SA_CTO (the GO pins library bytes 41ffebbe, bound (b)) and 2.0.0_SA_COO~Y (author of the Python contract); the remedy P proposes in the same-tick message is a JS-side addition at acquire-success (read /dashboard/ in the already-authenticated context, parse window.USER by the same raw_decode rule, write schema_version 1 / capture_origin EC2 / generation / user_agent / identity{user_id,email}; fail explicit when USER is absent, unauthenticated or impersonating), which moves the library pin and therefore the bindings, both derived from the new pin by build_resident_package.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js:606-614 @b56b99c06f -- the acquire-success bundle literal: cookies, identity_evidence, probe_evidence, captured_at, captured_by, fence. No schema_version, capture_origin, generation, user_agent or identity.user_id key anywhere in the file (native Grep for user_id|schema_version|capture_origin|generation: returns no match; dashboard matches only the app-shell selector at :721).",
+      "same file :802-806 @b56b99c06f -- persistSession writes Object.assign({}, bundle, {fence, persisted_at, persisted_by}); nothing else is added.",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py:384-388 @b56b99c06f -- schema_version != 1 or capture_origin != EC2 raises TransportRefused(SESSION_CONTRACT); :84-98 identity_from_html parses window.USER = {...}; :101-121 validate_identity requires value[userId] int > 0 == expected[user_id] and email match; :203-214 resume_allowed requires session.get(generation) != prior_generation.",
+      "infra/aws/lambda/investor-reporting/ycharts/session/broker.py:159 @b56b99c06f -- schema_version != 1 or no int fence returns NOT_VERSIONED; :198-200 step_identity + bundle.get(identity).get(user_id) == self.enrolled_user_id.",
+      "infra/aws/lambda/investor-reporting/ycharts/session/tests/run_session_suite.py:71-83 @b56b99c06f -- the fixture the Python suite passes: schema_version 1, capture_origin EC2, generation, fence, user_agent, identity {user_id, email}, captured_at, cookies. The JS offline suite (infra/aws/ec2/investor-reporting-ycharts/tests/) exercises the JS shape; neither suite crosses the seam.",
+      "GRAIN/COVERAGE: a source read of both sides at one pin, not an exercise; the host has never run the wrapper (SSM read 02:0xZ: no runner code on the box before this tick's deploy; session secret VersionIdsToStages null). EXPOSURE, not INCIDENT: nothing has fired; the remedy is the contract fix before the first sign-in, and re-opening nothing."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO GO 99936 bound (a)/(b): the D1 sign-in runs ONLY through the canonical wrapper and its bundle's identity.user_id is pinned as enrolled_user_id with the measured value; the package installed is the LF bytes at the reviewed pin, ycharts_session.js 41ffebbe... and the wrapper 55ddb8f7... RESIDENT_ASSEMBLY_HANDOFF: the worker bootstraps a missing session once through the canonical wrapper; host_capture.py comment: identity/template verification is performed by the caller using a newly acquired bounded transport and the broker's rule.",
+  "world_is": "The canonical wrapper at 41ffebbe cannot produce a bundle carrying identity.user_id, schema_version, capture_origin or generation, so the bound-(a) pin has no source and the bound-(b) bytes cannot satisfy the caller's verification: HostCapture.capture() would return {captured: True} and the very next broker.current() would grade the fresh bundle NOT_VERSIONED / Transport would refuse SESSION_CONTRACT. Not self-graduated: the fix moves the pinned library bytes the GO names, so it is the CTO's word, with Y confirming that window.USER on /dashboard/ is the identity source its validate_identity expects. P's cutover ledger leg C1 stays open on this row."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S120",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-24T02:16:30Z",
+  "one_line": "The irpt-ycharts-deploy SSM document runs as root, so its npx playwright install chromium put the browser under /root/.cache/ms-playwright (measured this tick: Chrome Headless Shell 149.0.7827.55 downloaded to /root/.cache/ms-playwright/chromium_headless_shell-1228), while install-resident.sh runs the resident as the SERVICE_USER (ec2-user per the cutover plan) and HostCapture runs the wrapper as that same user: Playwright resolves browsers per user, so the first capture would fail with a missing-executable error, not a vendor refusal. P's remedy this tick, operational and reversible: chown APP_DIR to ec2-user and run npx playwright install chromium as ec2-user (SSM 83cdf10d-...: chromium-1228, chromium_headless_shell-1228, ffmpeg-1011 now under /home/ec2-user/.cache/ms-playwright) plus a no-network about:blank headless launch smoke as ec2-user. The document itself is unchanged; whoever owns ssm.tf may prefer PLAYWRIGHT_BROWSERS_PATH=0 or a sudo -u ec2-user step so a redeploy does not reintroduce it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ycharts/ssm.tf:36-47 @b56b99c06f -- deployRunner runCommand: aws s3 cp ... --recursive, npm install --omit=dev, npx playwright install chromium; SSM RunShellScript executes as root by default and the document sets no runAsUser.",
+      "SSM command 0db13f7f-2779-480f-857b-9796cfe3dffc on i-0167fd745ad906a66, Status Success, stdout tail: downloaded to /root/.cache/ms-playwright/chromium_headless_shell-1228 and OK: irpt-ycharts runner deployed to /opt/investor-reporting-ycharts; the 01:5xZ SSM read showed /home/ec2-user/.cache/ms-playwright absent.",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/install-resident.sh:62 @b56b99c06f -- User=$service_user in the unit; host_capture.py:23-25 -- Popen([/bin/bash, wrapper]) inherits that user.",
+      "Also measured on the same read: the bootstrap's secret-ids.env never landed on this instance (user_data_replace_on_change=false; the dir was created by the Sep-11 research deploy); written this tick by SSM ec6aba72-... with the instance.tf:97-108 content verbatim (NAMES only), sha256 88ee08c27db56351...; the wrapper refuses to run without it (run-ycharts-session.sh:36-40)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ycharts/ssm.tf deploy document description: Deploy the IRPT YCharts session runner to /opt/investor-reporting-ycharts and install the Playwright browser; instance.tf:33-35: The runner code and the Playwright browser binaries land POST-boot through the SSM artifact deploy.",
+  "world_is": "The browser lands for ROOT only; the process that needs it runs as ec2-user. Remedied operationally on the host this tick (not in the document); the receipt records the ec2-user install and the smoke. Not graduated; the document-level fix is the root owner's call."
+}
+```
