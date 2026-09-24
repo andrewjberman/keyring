@@ -413,6 +413,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Rows Z-S6..Z-S9 each assert a defect in the C01 instrument or the period ordering against C-CORPUS-READ-ONLY / FWD-2 and FWD-9, filed ARMED with disarm_owner 2.0.0_SA_COO~X; CLAUDE.md s.2: an ARMED hazard disarms via the row's disarm_owner.",
     "world_is": "All four defects were repaired in the closer candidate by dc2c0193ef, independently re-reviewed PASS at 1c877a8c87 with the controls naming each class, and the repaired bytes are the ones in CLOUD since b4a8638eeb. The rows' text still reads ARMED because a legacy-shaped row has no disarm clock the gate will advance; a census of hazard_standing is an upper bound and this row is what a reader must weigh against it.",
     "notes": "Owner's disarm, evidence-cited, no code moved. The next L9 (3.0.0_SA_CVO~Z) may adjudicate Z-S6..Z-S9 on this row; this seat asserts no GRADUATED disposition (the CVO's field). The residual scanner exposure (C-S4) is carried into the round-2 decomposition as a positive-control cell for the test-file exemption, alongside the H re-review the CVO's 3.3 recommends."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S4",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-24T08:45Z",
+    "one_line": "Immediately after ISSUER AMENDMENT 2 landed, one --dry-run over the REAL 93-folder library read a population of 40 UNRESOLVED folders with Copa CPA and Uber Technologies UBER US EVIDENCED (ambiguous 0) -- a live, transient departure from the stable 60/ambiguous-2 shape every prior and every later measurement (three re-reads immediately after, plus the pre-amendment-1 and post-amendment-1 runs) reproduces; induction_request.measure_population/build_request (read-only to this cell, untouched by either amendment) resolve through the live crosswalk/registrations.json substrate, and the blip's timing lines up with the issuer's own revert of its mis-shaped fire-1 writes rather than with anything this cell edited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This worker's own measurement, one call, right after committing amendment 2 (python -m lib.research.corpus.induction_run --dry-run --as-of 2026-09-24): 'population 40 evidenced 2 ambiguous 0 disagreement 1 other 37 called 2 registered 1 already_registered 1 refused 0 errors 0 bloomberg_calls 0 sum 40', with Copa CPA reading 'call Copa CPA | rc 0 | outcome registered | CPA_US_Equity' and Uber Technologies UBER US reading 'call ... | outcome already-registered | UBER_US_Equity' -- both previously AMBIGUOUS (existing security_key collision) under amendment 1's own measurement two commits earlier.",
+        "Three consecutive re-reads of induction_request.measure_population(root) alone (no induction_run code in the call path) in the same worktree, seconds apart: unresolved_folders 60, 60, 60 -- the FIRST of these three was preceded by a single isolated read that ALSO showed 60 for backlog.build()'s own totals (folders_read 93 = resolved 33 + unresolved 60 + ambiguous 0), i.e. the population count stabilised back to the pre-blip shape without any change made by this worker.",
+        "A subsequent --dry-run (and a second, back-to-back repeat) both returned the stable 'population 60 evidenced 20 ambiguous 2 disagreement 1 other 37 called 20 registered 18 already_registered 1 refused 1 errors 0 bloomberg_calls 0 sum 60' -- identical to the measurement this cell recorded under amendment 1, before amendment 2 existed.",
+        "rows_for_run/measure_population/build_request/classify_folder are unmodified by ISSUER AMENDMENT 2 (which only changes the CALL argv shape in run()/make_fake_call, never population measurement); git diff over lib/research/corpus/induction_request.py, backlog.py, library.py and lib/research/identity/crosswalk.py for this worker's own commits is empty (all four are READ-ONLY to this cell)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "rows_for_run(root) rebuilds the induction request FRESH every invocation through the layer's own loaders; a fresh read is implicitly assumed stable across seconds-apart calls in normal operation.",
+    "world_is": "The identity/crosswalk substrate this cell reads (read-only, outside <paths>) is LIVE and, for one call, returned a population and classification set roughly a third smaller than every other measurement taken before or after it -- consistent with a concurrent write (plausibly the issuer's own revert of ISSUER AMENDMENT 2's diagnostic fire-1 output, landing on this same terminal minutes earlier) rather than a defect in this cell's own code, which never touches that substrate beyond the listing/resolve calls induction_request.py already makes.",
+    "disarm_owner": "2.0.0_SA_COO~X (the issuer) -- only that seat can state whether the identity/crosswalk substrate (registrations.json and/or the S3 crosswalk pool) is now settled; not this cell's to verify further, since fixing or auditing lib/research/identity/ is outside <paths> and BOUNDS explicitly reserves that layer read-only.",
+    "notes": "hazard_standing INERT, not ARMED: every measurement used for this cell's own AC2 evidence (the final --dry-run runs, recorded in the proof-of-spec instance) is from the STABLE, reproduced-multiple-times reading (population 60, ambiguous 2, disagreement 1), never from the one transient 40-population read, so nothing in this cell's own deliverable rests on the blip. Filed because a future reader diffing this project's induction_run_2026-09-24_dry-run.json artifacts across commits could otherwise mistake the transient reading (had it been captured) for a regression in this cell's own logic rather than a live substrate event outside its write surface."
   }
 ]
 ```
