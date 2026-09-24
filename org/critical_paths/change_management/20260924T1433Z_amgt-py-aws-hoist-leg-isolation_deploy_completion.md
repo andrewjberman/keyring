@@ -66,6 +66,52 @@ re-push, no task to re-point, no cache to bust.
 question, and this seat's reading of `:145`/`:166`/`:234` is the same instrument that would miss a second
 `set` on another path. The control has to be `cmd` itself, with a PRE arm that fails.
 
+## LEG PROOFS -- ALL THREE CLOSED
+
+**L2 RAN FIRST, BEFORE THE EDIT, so the negative arm is evidence rather than memory.** Two temp `.cmd`
+files mirroring the real control flow (`RC=1`, `DAPI_OK=1`), executed by `cmd.exe` itself:
+
+```
+PRE-FIX  PY_AWS=[]                      -> RESULT: EMPTY  (the legs would invoke "" -u script)
+POST-FIX PY_AWS=[C:\...\Python311\python.exe] -> RESULT: SET
+```
+
+⭐ **The PRE arm FAILED as required.** That is what makes the POST arm mean anything: the control was free
+to disagree and did, on `cmd`'s own expansion rather than on this seat's reading of three line numbers.
+
+**L3:** the hoisted line's interpreter path EXISTS and runs -- `Python 3.11.9`.
+
+**L1:** the single `set "PY_AWS=..."` now sits at `:143`, **above** the `if "%DAPI_OK%"=="1" goto :etf_leg`
+branch at `:156`. Verified after the edit:
+
+| check | result |
+|---|---|
+| `set "PY_AWS=` occurrences | **1** (was 1, moved not duplicated) |
+| assignment line vs branch line | **143 < 156** -- precedes every path into `:etf_leg` |
+| consumers | `:189` publish, `:247` ETF, `:298` CONS -- all downstream of `:143` |
+| non-ASCII characters | **0**, byte delta 0 |
+
+## TWO THINGS THIS ACT ALMOST GOT WRONG, RECORDED BECAUSE BOTH WERE CAUGHT BY A CHECK AND NOT BY CARE
+
+⛔ **1. A STALE COMMENT WOULD HAVE SURVIVED THE FIX.** `:336-341` asserted *"%PY_AWS% is set inside the SEND
+leg, which the pull-failed/DAPI-up path JUMPS PAST -- so on that one path %PY_AWS% is EMPTY"*. True when
+written, **false the moment the hoist landed.** Leaving it would have been a fresh instance of the exact
+class this seat ruled on in R-65 and filed as `Z-S251` within the hour -- fix the mechanism, leave the
+prose asserting the old one, and the next reader believes the prose. Corrected in the same commit, with the
+surviving reason for the price leg's own interpreter stated (defensive independence, which is the stronger
+reason and does not depend on the defect).
+
+⛔ **2. THIS SEAT PUT A NON-ASCII GLYPH INTO A PRODUCTION `.cmd` THAT A SCHEDULED TASK EXECUTES** -- one
+minute after verifying the file at non-ASCII 0. CLAUDE.md's rule is explicit and this seat has cited it all
+session. Replaced with `WARN:` and re-verified at 0. **The rule was known, quoted, and violated anyway;
+only the re-run of the detector caught it.**
+
 ## STATUS LOG
 
 - 2026-09-24T14:33Z -- OPENED before any edit. No leg executed yet.
+- 2026-09-24T14:4xZ -- L2 PRE arm run (EMPTY, as required), L3 run (3.11.9), L1 edited and verified,
+  the stale `:336` comment corrected, one non-ASCII glyph introduced and removed. **CLOSED.**
+
+**Status: CLOSED.** `AMGT_RESAPP-Z-S248` disarmed by the row filed in the same commit. Nothing is
+half-landed: the file IS the deployment, the working tree carries the fix, and the next scheduled fire
+(2026-09-25 07:00 local) runs it.
