@@ -26,8 +26,6 @@ Spine: the Closer subsection, FAST mode. Engine: `.tools/drive-mode.py` (`--self
 - **It fails closed to FULL.** Absent, expired or unreadable reads FULL, so a forgotten FAST lapses by itself.
 - **Presence (call 1):** while `org/mcp/presence/*.last` is under 30 minutes old, a live lease extends. The stamp is
   written by a UserPromptSubmit hook (0.0.0_AB_MSTR's lane). Without the hook, the lease runs its stated length.
-- **Rail (call 6):** `read`, run by the lease's own seat, mirrors a live FAST lease into that session's `/freeform`
-  marker, so the comp-tool search rail stands down for the lease's life. Every safety gate stays armed.
 - **Seats per project.** A lease names one seat and its surface: a directory or package, e.g.
   `portal/src/pages/InvestorReporting`.
   - Several FAST seats on one project each take a key `<CODE>~<lane>` (report 2 C11), for example `IRPT_BCKEND~P`.

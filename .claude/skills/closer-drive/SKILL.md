@@ -11,8 +11,7 @@ project's ONE loop. `/canonical-drive` is the FULL body, and the lease picks bet
 
 ## Each tick
 
-0. **Read the lease:** `python .tools/drive-mode.py read <CODE>`. It prints the mode, and for this seat it stands
-   the search rail down for the lease's life.
+0. **Read the lease:** `python .tools/drive-mode.py read <CODE>`. It prints the mode.
    - FULL -> run the FAST -> FULL boundary below, then the `/canonical-drive` body.
    - HOLD -> do nothing on this project this tick.
    - FAST, and this tick is the first -> run the FULL -> FAST boundary first.
@@ -59,7 +58,6 @@ project's ONE loop. `/canonical-drive` is the FULL body, and the lease picks bet
   - Commit what builds. Commit an unfinished edit on your branch as a work-in-progress pin; never leave it
     uncommitted in the shared tree.
   - Overwrite STATUS.md.
-  - Run `bash .tools/freeform.sh off "$CLAUDE_CODE_SESSION_ID"`.
   - At the next tick, cut round N+1 straight from STATUS.md's next-list under the verification diet, with no CTO
     round-N analysis for that one cut (call 5). The CTO's analysis resumes at that round's L10.
   - The CVO's next slug carries one section on the FAST interval.

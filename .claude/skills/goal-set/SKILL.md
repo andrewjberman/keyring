@@ -32,8 +32,7 @@ Write a self-driving loop -- the goal becomes its standing directive:
 - **Interval** is yours to set -- 5m is a sane default; stretch it for a big goal.
 - **Each wake, first read the project's mode lease** when the goal works a registered project (report 2 C11):
   `python .tools/drive-mode.py read <CODE>`, or `<CODE>~<lane>` when the project runs several FAST seats.
-  - **FAST:** work under the FAST relaxations (`/closer-drive`: land on DEV, the CVO grades after the fact, the search
-    rail stood down).
+  - **FAST:** work under the FAST relaxations (`/closer-drive`: land on DEV, the CVO grades after the fact).
   - **FULL:** keep the project's normal checks. On a closer project, the CVO grades each pinned change before it
     counts, and the CTO lands DEV candidates.
   - **HOLD:** pause this tick.

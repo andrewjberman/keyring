@@ -9,8 +9,7 @@ appends one line to org/mcp/drive-mode.log (committed with the seat's record bat
 
 Presence: a live lease extends to 30 minutes past the newest stamp in org/mcp/presence/*.last (epoch seconds, written
 by a UserPromptSubmit hook when installed). Without the hook the lease runs its stated length.
-Rail (call 6): `read` run BY THE LEASE'S SEAT mirrors a live FAST lease into that session's /freeform marker
-(org/mcp/sessions/<sid>.freeform, expiry = the lease's), so the comp-tool rail stands down for the lease's life.
+The comp-tool search rail stays ON under a lease (call 6 reversed by Andrew 2026-09-24 ~18:2xZ).
 The one refusal: `arm` refuses a surface that overlaps another live FAST lease or another project's open task
 order `<paths>` (a project under HOLD excluded). Resolve by `hold` on the other, or a narrower --surface.
 
@@ -190,27 +189,6 @@ def caller_serial():
     return s, sid
 
 
-def sync_rail(lease):
-    """Mirror a live FAST lease into THIS session's freeform marker when the caller IS the lease's seat."""
-    serial, sid = caller_serial()
-    if not (lease and lease.get("mode") == "FAST" and sid and serial == lease.get("seat")):
-        return None
-    ff = os.path.join(SESSIONS, sid + ".freeform")
-    exp = int(lease["expires_epoch"])
-    try:
-        with open(ff, encoding="utf-8", errors="replace") as fh:
-            cur = int(re.sub(r"\D", "", fh.read()) or 0)
-    except Exception:  # noqa: BLE001
-        cur = 0
-    if abs(cur - exp) > 60:
-        os.makedirs(SESSIONS, exist_ok=True)
-        with open(ff, "w", encoding="utf-8") as fh:
-            fh.write("%d\n" % exp)
-        with open(os.path.join(ROOT, "org", "mcp", "comp-tool-hud.log"), "a", encoding="utf-8") as fh:
-            fh.write("%s  FREEFORM-ARM  sid=%s  FAST lease %s  expires=%d\n" % (iso(now()), sid, lease["code"], exp))
-    return exp
-
-
 def claims(lease):
     p = os.path.join(ROOT, lease.get("status_path", ""))
     try:
@@ -350,12 +328,11 @@ def self_test():
         with open(lease_path("C_X"), "w") as fh:
             fh.write("{not json")
         check("unreadable lease reads FULL (fail-closed)", load("C_X") is None)
-        os.environ["OPAL_AGENT_SERIAL"], os.environ["CLAUDE_CODE_SESSION_ID"] = "S~4", "sid-test"
-        exp = sync_rail(load("D_X"))
+        os.makedirs(SESSIONS, exist_ok=True)
         ff = os.path.join(SESSIONS, "sid-test.freeform")
-        check("the lease's own seat gets its freeform marker", exp and open(ff).read().strip() == str(exp))
-        os.environ["OPAL_AGENT_SERIAL"] = "S~9"
-        check("another seat gets NO marker", sync_rail(load("D_X")) is None)
+        with open(ff, "w") as fh:
+            fh.write(str(load("D_X")["expires_epoch"]))  # a marker a pre-reversal lease wrote
+        check("read no longer writes a rail marker", "sync_rail" not in globals())
         end("D_X", "t")
         check("END removes the lease and the marker it wrote", load("D_X") is None and not os.path.exists(ff))
     print("SELF-TEST: %s" % ("ALL HOLD" if ok else "BROKEN"))
@@ -401,9 +378,7 @@ def main(argv):
     if cmd == "read":
         lease = load(code)
         mode = lease["mode"] if lease else "FULL"
-        rail = sync_rail(lease)
-        print("%s %s%s%s" % (mode, code, " until %s" % lease["expires_at"] if lease else "",
-                             " (rail stood down for this session)" if rail else ""))
+        print("%s %s%s" % (mode, code, " until %s" % lease["expires_at"] if lease else ""))
         return 0
     print(__doc__)
     return 2
