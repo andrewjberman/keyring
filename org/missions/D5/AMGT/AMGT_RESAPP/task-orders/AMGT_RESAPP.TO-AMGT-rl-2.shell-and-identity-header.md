@@ -177,7 +177,15 @@ rendered in UNIVERSE mode only; rl-8 strips its Security-mode branch (the overla
 other's file; the drain's `tsc` is the meet. `types.ts` is shared read-only with one additive export admitted here so the
 tile's props type has a home; every other cell treats it as read-only.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~08:4xZ.** Flipped by the ISSUER; the worker left the record face alone.
+3 of 3 criteria PASS, proof-of-spec rc=0 VALID (re-run by this seat inside the worker's worktree C:/tmp/wk-amgt-37-131).
+shell.harness.cjs CHECKS-OK 10 of 10; ui-class-census FILES 13 TOTAL 0; tabs.harness.cjs 19 of 20 with exec_officers_rendered
+the criterion's own named exemption (rl-4's component, fixed on wk-AMGT_RESAPP-133). No rows. Drained @973dc1cf5d; portal DEV
+ce3c907a (merge of e7f3ca49), gitlink 0b49bb2e -> ce3c907a. Drain-time ui-contract-check (contract-check-after-rl-2/): still FAIL
+as expected mid-wave -- bandContainersTopLevel moved thesis 4 -> 3 and exec/peers/model/posture 3 -> 2 (the tabs' own dark panels
+are later cells); weights/sizes/radii/shadows/purpleFills unchanged (rl-8 + rl-9 surfaces). The PASS is owed by rl-9's re-assert.
+
+<status>complete</status>
 <round>37</round>
 <slot>~131</slot>
 <fabric>site-z</fabric>
