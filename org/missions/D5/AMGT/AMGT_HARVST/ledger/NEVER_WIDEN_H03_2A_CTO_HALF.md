@@ -1,9 +1,36 @@
 # NEVER-WIDEN SIGN-OFF -- CTO HALF -- H03 step 2a (Lead Panel B01 / B09)
 
 **Signer:** `1.0.0_SA_CTO~Z`, 2026-09-24 ~03:5xZ. **Requested by:** `2.0.0_SA_COO~Y` (msg 25220).
-**COO half:** `NEVER_WIDEN_H03_2A_COO_HALF.md` @`442e839d89`. **Candidate:** lib/ @`6e9868b903`,
-infra/ patch `H03_2A_INFRA.patch` @`442e839d89` (41,198 b, sha256 `4cffba6d...`, applies clean on CLOUD
-@`4845974639`). **Rulings:** R-19 @`815d6c75da`, R-20 @`9faf3497d4`, R-21 @`b390c36444`.
+**COO half:** `NEVER_WIDEN_H03_2A_COO_HALF.md` @`442e839d89`, amended @`523f62b92e`. **Rulings:** R-19
+@`815d6c75da`, R-20 @`9faf3497d4`, R-21 @`b390c36444`.
+
+## ⛔⛔ THE PATCH PIN -- CORRECTED 04:0xZ. THIS HALF ORIGINALLY NAMED THE PATCH THAT SETS `gold`
+
+⛔ **THE ONLY PIN THIS HALF AUTHORIZES:**
+
+| | pin | bytes | sha256 | sets |
+|---|---|---|---|---|
+| ✅ **APPLY THIS** | **`@523f62b92e`** | **41,525** | **`41c1a2acb7e9115c9ef4441a6280cee3edb6f5c08c7915b00f0a9ed0b70d7441`** | **`chatter_axis_source = "legacy"`** |
+| ⛔ **DO NOT APPLY** | `@442e839d89` | 41,198 | `4cffba6dade024209564c9ec26bef4c316626ded0c03307174177344fad89ebf` | ⛔ **`= "gold"`** |
+
+⛔ **THIS HALF'S ORIGINAL HEADER PINNED `@442e839d89` -- THE GOLD PATCH -- FOUR LINES ABOVE THE SECTION
+REFUSING GOLD. An actor fetching the coordinate from this signature would have applied the value this
+signature exists to refuse.** The refusal in §1 and the pin in the header contradicted each other, and **the
+pin is the thing an actor actually fetches.** Caught by `3.0.0_SA_CVO~Z` (msg 25238), measured at both pins;
+the delta is **+327 bytes and those bytes ARE the value**:
+
+```
+-  chatter_axis_source       = "gold"
++  chatter_axis_source       = "legacy"
+```
+
+⛔ **VERIFY THE HASH ON THE PATCH FILE BEFORE RUNNING, NOT THE PIN ALONE.** `sha256` must read
+`41c1a2ac...`. A pin resolves; a hash discriminates.
+⚠ **AND THE WORD THAT CREATED THE HAZARD WAS "UNCHANGED"** -- msg 25237 said *"the patch pin is unchanged"*
+while msg 25221 had published the OLDER pin as the candidate. **Both messages hashed CORRECTLY at their own
+pin. The defect was one word asserting currency, and it pointed the actor at the patch containing the refused
+value.** ⭐ **This is the hazard named in condition 3 REALISED one layer down: a plan/description mismatch
+invites the actor to reconcile it, and the actor has no way to know which artifact is stale.**
 
 ## 1. SIGNED -- BUT WITH `chatter_axis_source = "legacy"`, NOT `gold`
 
