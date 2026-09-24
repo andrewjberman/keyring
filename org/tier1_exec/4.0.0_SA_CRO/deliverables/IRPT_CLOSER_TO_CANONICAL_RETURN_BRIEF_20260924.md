@@ -1,8 +1,18 @@
 # IRPT: moving the P/M/Y closer work into IRPT_BCKEND under canonical flow, and a restart check on DSGN_IRPTV1
 
-**Author:** 4.0.0_SA_CRO. **Status:** DRAFT for Andrew's review; it goes to 1.0.0_SA_CTO on his word.
-**Measured:** 2026-09-24, 11:50 AM-12:15 PM ET, on this laptop. All times are US Eastern (UTC-4).
+**Author:** 4.0.0_SA_CRO.
+**Status:** v2. Andrew answered its five calls at ~12:4x PM ET; the answers are applied throughout. Sent to
+1.0.0_SA_CTO on his word ("Yes once you've adjusted as needed based on these statements"). Record:
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_164xZ_IRPT_RETURN_FIVE_CALLS_ANSWERED.md`.
+**Measured:** 2026-09-24, 11:50 AM-12:45 PM ET, on this laptop. All times are US Eastern (UTC-4).
 **Kind:** a brief. It changes nothing by itself; every act below names its owner.
+
+**Andrew's answers to the five calls, verbatim (~12:4x PM ET):**
+> 1.) Yes IRPT_BCKEND is fine to open up. We do not need to move it if the seats in question are positioned with the
+> right context to close out all the journeys. If it is more cogent to just run it to closed journeys across all three
+> channels, that is totally fine, there is not a rush to migrate, the crux is dependent on whichever has a higher
+> efficacy. 2.) I would run all 3 COOs on IRPT_BCKEND, limit doesnt matter, COO~D runs in parallel on DSGN_IRPTV1.
+> 3.) Yes. 4.) Yes once you've adjusted as needed based on these statements. 5.) Yes.
 
 **Andrew-direct at the 4.0.0_SA_CRO terminal, ~11:5x AM ET, verbatim:**
 > CRO~A is issuing two briefs to CTO now which will cover implementation upgrades to process architecture and agent
@@ -21,31 +31,53 @@ Both are at HEAD `0ee6f5849b`. Section 5 assesses them.
 
 ---
 
-## 0. The answer
+## 0. The answer (v2, on Andrew's five answers)
 
-1. **Returning now is an EARLY hand-back, and the record should say so.**
-   - The closer's contract says "Hand-back only after every required journey is proven". CTO `CONTROL.md` reads "All
-     three products INCOMPLETE".
-   - No tab journey has passed live end to end. Holdings is one signed-in read from it (Andrew's HAR).
-   - Andrew's word can hand back early: it is the closer's own authority. Nothing is lost at the hand-back: the three
-     unfinished journeys become IRPT_BCKEND's outcomes.
-2. **The frontend has already left the closer.** Andrew's 11:31 AM ET answer at the CTO terminal (record
-   `ANDREW_DIRECT_20260924_153xZ_IRPT_FRONTEND_CANDIDATES_HAND_TO_COO_D.md`) makes 2.0.0_SA_COO~D the one integrator of
-   IRPT portal frontend onto DEV. ~P, ~M and ~Y keep the backend. So:
-   - **IRPT_BCKEND** = the backend, in canonical;
-   - **DSGN_IRPTV1** = the frontend, in canonical under ~D;
-   - **IRPT_FNTEND** closes SUPERSEDED (call 2).
-3. **Five phases, in order:** A freeze the three closer seats; B put their code on the trunk; C re-point IRPT_BCKEND's
-   records; D re-seat under the three-COO cap; E cut round 19 from the seats' next-lists.
-   - **Phase B is the hard part:** three seat branches carry 250, 236 and 45 commits that CLOUD does not have,
-     including the source of every IRPT function served today. Canonical workers branch from CLOUD, so until this lands
-     they build on code that is not deployed.
-4. **DSGN_IRPTV1 is clean to restart as is.** All code is merged and inside origin/DEV, and nothing is stranded. Five
-   open items remain (section 4); none blocks the restart.
-5. **Three calls for Andrew** (section 6):
-   - does today's word lift his 09-22 IRPT hold for IRPT_BCKEND;
-   - close IRPT_FNTEND into DSGN_IRPTV1;
-   - which seats run under the three-COO cap.
+1. **Settled by Andrew:**
+   - the 09-22 hold is lifted for IRPT_BCKEND;
+   - all three COOs (~P, ~M, ~Y) stay on IRPT_BCKEND, with ~D in parallel on DSGN_IRPTV1 ("limit doesnt matter");
+   - IRPT_FNTEND closes SUPERSEDED into DSGN_IRPTV1.
+
+   Migration is NOT required: "the crux is dependent on whichever has a higher efficacy".
+2. **REC on efficacy: finish the three journeys under the closer, then hand back to IRPT_BCKEND canonical rounds for
+   enrichment.** That is the spine's own hand-back point ("once the thread and the named journeys pass live"). Why,
+   measured:
+   - **What is left to close each journey is mostly Andrew's acts and ~P-owned compositions, not cell-sized builds.**
+     - Holdings: one signed-in read. ~M: "Nothing further owed by M on the build side".
+     - Performance: one signed-in click on the plan armed until 8:00 PM ET today, then the retained report, reopen and
+       export.
+     - Analysis: two ~P compositions, ~Y's resident half, and one browser submission.
+   - **The seats hold the context:** per-seat STATUS and INTERFACES, and 386 KB of CTO rulings. A canonical worker
+     gets one task-order face.
+   - **Migrating first costs setup before any product work:**
+     - three drain windows (~25 minutes each, measured today);
+     - a PRD addendum and its sign-off;
+     - 8 order dispositions;
+     - a round-19 decomposition and issuance.
+
+     Report 2 measured 2 h of setup for a new project and 3-6 h per round. [INFERRED: hours of delay on work that is
+     one read, one click and two compositions from done.]
+   - **The closer's measured cost is CTO turnaround and message volume** (report 2 section 5.2), which today's Rule 31
+     already cuts.
+
+   **Switch criterion (a judgment, not a gate):** if a journey stops moving, the CTO moves that journey's remaining
+   work to canonical at that point by section 3.
+3. **Three acts now, on either path:**
+   - **N1. Back up the seat branches.** **NEW, measured: origin carries exactly ONE branch, `CLOUD`.** ~P's 250
+     commits, which hold the source of every IRPT function served today, plus ~M's 236 and ~Y's 45, exist only on this
+     laptop's disk, hours after a crash.
+     - Drain each branch's current tip to CLOUD now (section 3 Phase B order and conflict rule).
+     - After that, drain each CTO-accepted pin within the hour. MSTR pushes on Andrew's word as usual.
+   - **N2. Record hygiene on IRPT_BCKEND.**
+     - Dispose of the 8 stale PENDING orders, keeping `IB-rtf-3`, the test principal.
+     - Close round 18's parked L10 on its slug.
+     - Correct the row (`coo_lane`, `phase`, `blocking`).
+     - `closer_contract` stays until hand-back.
+   - **N3. Close IRPT_FNTEND** (Andrew call 3). Its frontend outcomes re-home to DSGN_IRPTV1.
+4. **The frontend has already left the closer.** Andrew's 11:31 AM ET word makes ~D the one integrator of IRPT portal
+   frontend onto DEV; ~P, ~M and ~Y keep the backend.
+5. **DSGN_IRPTV1 is clean to restart as is** (section 4). All code is merged and inside origin/DEV, and nothing is
+   stranded. Five open items remain; none blocks the restart.
 
 ---
 
@@ -69,6 +101,11 @@ live FWD-1. That fits spine v3.16: "round 1 builds the thread; every later round
 ## 2. Where the code and records are (measured)
 
 **Trunk:** local CLOUD `0ee6f5849b`; origin/CLOUD `19a22f2f51` (ls-remote 11:52 AM; site Z keeps pushing).
+
+**Origin holds none of the seat branches.**
+- `git ls-remote --heads origin` at 12:40 PM lists **1 head, `CLOUD`**. The glob form read `refs/heads/CLO*` prints
+  `CLOUD` as a positive control.
+- Every branch below exists only on this laptop.
 
 | Seat branch (worktree) | Tip | Ahead / behind CLOUD | Product paths changed | Dry-run merge into CLOUD |
 |---|---|---|---|---|
@@ -114,9 +151,15 @@ The record's execution line: "Resume analysis/progression only on his further in
 
 ---
 
-## 3. What must be done -- in order, one owner per step
+## 3. The hand-back procedure -- in order, one owner per step
 
-### Phase A -- freeze the closer seats (each seat, at its restart)
+**When it runs (v2).**
+- On the recommended path it runs at journey close.
+- For a journey the CTO moves early (the section 0 switch criterion), it runs at that point.
+- Three pieces run NOW on either path: N1 is Phase B, N2 is C3 and C4, N3 is C7.
+- Phase D is settled by Andrew.
+
+### Phase A -- freeze the closer seats (each seat, at hand-back; A1 at its restart)
 
 - **A1 (~P). Finish the crash steps first:**
   - A1: commit the `_authz` fix.
@@ -135,12 +178,17 @@ The record's execution line: "Resume analysis/progression only on his further in
   - the Andrew acts in flight.
 
   Round 19 is cut from these files, so they must be current.
-- **A3 (Andrew, then the CTO). Stop the three closer loops.** XXX.md Step 1b-F carries three DIRECTED `/loop 20m` goal
-  rows for ~P, ~M and ~Y. Their stop is `/verify SOUND` or Andrew's stand-down. Under canonical they would keep running
-  closer-style ticks, and no lease or `closer_contract` read stops a `/goal-set` loop. Andrew's stand-down ends them,
-  and the CTO strikes the rows (call 3).
+- **A3 (each seat, then the CTO). The three closer loops end at their own stop.** XXX.md Step 1b-F carries three
+  DIRECTED `/loop 20m` goal rows for ~P, ~M and ~Y. On the recommended path the loops ARE the mechanism that runs the
+  journeys to close, and their stop is `/verify SOUND` on each goal. At that stop the lane deletes its cron and the CTO
+  strikes the row.
+  - A journey moved early needs Andrew's stand-down of that one loop. No lease or `closer_contract` read stops a
+    `/goal-set` loop.
 
-### Phase B -- the trunk (0.0.0_AB_MSTR, one safe-merge window per branch)
+### Phase B -- the trunk (0.0.0_AB_MSTR, one safe-merge window per branch) -- NOW (N1), then per accepted pin
+
+**Why now:** the three branches are local-only (section 2), and the laptop crashed this morning. Draining them is
+integration, not migration: the closer keeps running on its branches after each drain.
 
 - **B1. Drain order:** ~P's installation branch first (the deploy source; it contains `irpt-p-publish`), then ~Y's,
   then ~M's. Each gets its own `.tools/safe-merge.sh` window; today's B2 window ran about 25 minutes (open 11:14,
@@ -162,47 +210,52 @@ The record's execution line: "Resume analysis/progression only on his further in
 
 ### Phase C -- the records (1.0.0_SA_CTO unless named)
 
-- **C1. The hold.** The CTO places whether today's word is the "further instruction" for IRPT_BCKEND (call 1).
+- **C1. The hold: DONE.** Andrew lifted it for IRPT_BCKEND at ~12:4x PM ET ("Yes IRPT_BCKEND is fine to open up").
 - **C2. The row.**
-  - Remove `closer_contract` (spine: "The field is removed at hand-back").
-  - Set `coo_lane` to the seat chosen at call 3.
-  - Rewrite `phase` and `blocking` to the measured state above.
-- **C3. Close round 18's L10** on the parked slug `f82fee6aad`, folded into C5's addendum: one act, not a second
-  analysis.
-- **C4 (the issuer COO). Dispose the 8 PENDING orders before any issuance.** Each is flipped `superseded` or
-  `cancelled` with its pointer; that is the issuer's right. The refuser counts open orders per project (LD-0521), so a
-  round-19 issuance over them deadlocks.
-  **Exception: `IB-rtf-3`, the bounded test principal Andrew approved on 09-18.** Carry it into round 19; section 5 G3
-  says why.
-- **C5. A PRD addendum is the L10 answer.**
+  - NOW: rewrite `phase` and `blocking` to the measured state above, and set `coo_lane` to name the three workstream
+    lanes ~P, ~M and ~Y.
+  - AT HAND-BACK: remove `closer_contract` (spine: "The field is removed at hand-back").
+- **C3. NOW (N2): close round 18's L10** on the parked slug `f82fee6aad`. The hold that parked it is lifted, and closing
+  it now keeps the hand-back to one act.
+- **C4. NOW (N2), the issuer COO: dispose the 8 PENDING orders.** Each is flipped `superseded` or `cancelled` with its
+  pointer; that is the issuer's right.
+  - They are 3-13 days old, and the refuser counts open orders per project (LD-0521). Left open, they deadlock any
+    later issuance and would register false overlaps under report 2's C1 check.
+  - **Exception: `IB-rtf-3`, the bounded test principal Andrew approved on 09-18.** Keep it live. Section 5 G3 says
+    why: it lets a seat make the real signed-in run without Andrew, on either path.
+- **C5. AT HAND-BACK, a PRD addendum is the L10 answer.**
   - IRPT_BCKEND's ENDPOINT is re-cut to the closer's three journeys, backend half:
     - **FWD-1** = the Holdings journey for Anna's account, live;
-    - Performance and Analysis are the next outcomes;
+    - Performance and Analysis are the next outcomes. On the recommended path they are already closed, and they
+      grade REALIZED from the closer's pinned live traces.
     - S1-S7 and the P/M/Y acceptance matrices become the enrichment backlog.
   - Under proportionate sign-off only an ENDPOINT change re-signs, so the CVO signs that half once.
 - **C6. Grants.** Retire the closer lanes (`IRPT_COMPLETION_P/M/Y`, `IRPT_LIVE_SCOPE_P`, `IRPT_Y_ACCESS_INTEGRATION_P`,
   `IRPT_TAX_MEMBERSHIP_M`) in the commit that re-points the row. Canonical write surfaces are each order's `<paths>`.
-- **C7. IRPT_FNTEND** (call 2). Close it SUPERSEDED; it has 0 open orders and its round-15 slug is parked under the
-  hold. Its frontend outcomes (FWD-1, 3, 4, 5, 6, 8, 11, 12) re-home to DSGN_IRPTV1. The L3 carriers are the CTO's
+- **C7. NOW (N3): IRPT_FNTEND closes SUPERSEDED** (Andrew call 3, "Yes"). It has 0 open orders, and its round-15
+  slug is parked under the hold. Its frontend outcomes (FWD-1, 3, 4, 5, 6, 8, 11, 12) re-home to DSGN_IRPTV1. The L3 carriers are the CTO's
   (tree row, generated index, DIRECTIVES.yaml members line).
 - **C8. Keep as history:** `CONTROL.md`, `RULINGS.md`, the seat STATUS and INTERFACES files. The addendum cites them.
   IRPT_BCKEND's surprise channel is already in use, so nothing moves. SEQUENCE.yaml already lists IRPT_BCKEND (stage 0).
 
-### Phase D -- seats under the three-COO cap (call 3)
+### Phase D -- seats: SETTLED by Andrew
 
-- **The cap:** at most three COO sessions on the laptop, Codex seats included (Andrew 09-14 and 09-23).
-- **At the crash four ran:** ~P, ~M, ~Y and ~D. Canonical also adds each COO's worker subagents.
-- **Option (b), recommended:** two IRPT_BCKEND workstreams plus ~D, which puts the laptop at the cap. The spine
-  allows several workstreams per project with disjoint write surfaces under different lanes.
-  - ~P: shared installation, Performance, Analysis composition.
-  - ~M: Holdings data and publication -- 49F, INF, Tax, the overlay.
-- **~Y folds into ~P's workstream either way.** Y's remaining items are the resident half of RESOLVE_UPLOAD and live
-  exercise; both blocking compositions are P's.
-- **Option (a):** ~P alone as the IRPT_BCKEND issuer, with M's items as cells. Use it if a COO slot must stay free.
+- **All three COOs, ~P, ~M and ~Y, run on IRPT_BCKEND, and ~D runs in parallel on DSGN_IRPTV1:** four COO sessions on
+  the laptop. "limit doesnt matter" is recorded as spoken, for this seating.
+- **Under canonical (at hand-back)** the three are three WORKSTREAMS of IRPT_BCKEND. The contract's writer table is
+  already their disjoint write-surface split:
+  - ~P: shared auth, routes, IaC and packaging, plus Performance/Reporting;
+  - ~M: Holdings custody, publication and the gold holdings snapshot;
+  - ~Y: upload, resolution, the resident and the Analysis job semantics.
 
-### Phase E -- the first canonical round (the IRPT_BCKEND issuer)
+  Each workstream issues its own rounds for its own scope. The spine's rule is "ONE ISSUER PER ROUND; a WORKSTREAM is
+  a SCOPE, not a round".
 
-- **E1.** Cut round 19 directly from the frozen next-lists, with no CTO round-18 analysis beyond C3. Report 2's call 5
+### Phase E -- the first canonical round (each workstream issuer, at hand-back)
+
+- **E1.** Cut round 19 of each workstream directly from its seat's frozen next-list, with no CTO round-18 analysis
+  beyond C3. On the recommended path the journeys are closed by then: they become FWD-1..3 REALIZED at the first
+  canonical L10, and the leftover S1-S7 and P/M/Y matrix items are the enrichment backlog. Report 2's call 5
   approved this shape for FAST->FULL; the CTO places whether it covers a closer hand-back (recommended: yes).
 - **E2.** Cells follow the verification diet: at most three mechanical checks, dry-run at the base before the cut
   (report 2 C4) once it lands. Each cell names its risk; nearly every backend cell is `WORLD`.
@@ -274,7 +327,7 @@ Five items for the restart; none blocks it:
 |---|---|---|---|
 | G1 | **A closer hand-back has no boundary act.** Report 2 defines FAST->FULL (7.4) and says `closer_contract` "stays what it is" (7.5). Today's IRPT return is exactly the missing case. | Phases A and E above had to borrow 7.4. | Write the hand-back act once in the spine's Closer subsection when C3 lands: WIP pins, STATUS next-list, drain to trunk, round cut from STATUS. |
 | G2 | **Goal loops sit outside the lease.** Fail-closed-to-FULL works only for a seat whose tick reads the lease. | ~P, ~M and ~Y run `/goal-set` `/loop 20m` under DIRECTED rows; nothing in C1/C2 reads them. | At hand-back or a switch, the loop's row is struck (A3), or `/goal-set` reads the lease too. |
-| G3 | **"One real run at close" needs a real principal.** For IRPT the real run is a real login, and today only Andrew has one, so C6 becomes a wait on him. | Every signed-in IRPT read so far was Andrew's session (latest 9:36 AM), and the HAR is his act. | IRPT_BCKEND's approved bounded test principal, `IB-rtf-3` (PENDING 5 days), is the missing instrument. Carry it into round 19 so the COO can do the run. |
+| G3 | **"One real run at close" needs a real principal.** For IRPT the real run is a real login, and today only Andrew has one, so C6 becomes a wait on him. | Every signed-in IRPT read so far was Andrew's session (latest 9:36 AM), and the HAR is his act. | IRPT_BCKEND's approved bounded test principal, `IB-rtf-3` (PENDING 5 days), is the missing instrument. Keep it live (C4) so a seat can make the signed-in run without Andrew, on either path. |
 | G4 | **Stale ARMED labels will break report 3's Wave 1.2 as written.** "Only BLOCKING/ARMED rows gate the close" keys on a label that lags. | DSGN_IRPTV1: 7 ARMED labels, 2 open by content. `1.0.0_SA_CTO~Z` R-78 today: "three state-bearing fields and none is current state". | Key the gate on the disarm carriers (a later row that quotes the id, or the commit), never on `hazard_standing`. |
 | G5 | **Branch residency is an unmeasured sink.** Both reports measure CLOUD. | Section 2: the closer's code sat 236-250 commits off-trunk for 1-2 days. Report 3 notes 17,110 backend lines its ratio cannot see. Today's cost: a drain window of about 25 minutes per branch, a crash surface spread over 38 worktrees, and STATUS stale on the trunk. | Extend report 2's C8 (drain per chain) to closer and FAST seats: an accepted pin lands on CLOUD within the hour. |
 | G6 | **WORLD-heavy backend gets little relief.** Nearly every IRPT backend cell deploys or grants, so it keeps the CTO's exercised read and a ledger entry. | P's STATUS lists 8 of its own ledgered serving acts between 1 and 8 AM today. | Batch WORLD acts: one ledgered apply per round, not one per cell. |
@@ -285,20 +338,25 @@ Five items for the restart; none blocks it:
 
 ---
 
-## 6. Calls for Andrew
+## 6. Andrew's answers (the five calls are closed)
 
-1. **The 09-22 hold.** Does today's word ("so we can return to canonical-flow for that work") lift the hold for
-   IRPT_BCKEND? **REC: yes, for IRPT_BCKEND only.** IRPT_FNTEND closes instead of resuming (call 2). The CTO places
-   it.
-2. **IRPT_FNTEND.** Close it SUPERSEDED, with its frontend outcomes re-homed to DSGN_IRPTV1 under ~D? **REC: yes.** It
-   matches his 11:31 AM word and replaces the spine's "one product" hand-back with backend = IRPT_BCKEND and
-   frontend = DSGN_IRPTV1.
-3. **Seats and loops.**
-   - (b) ~P and ~M as IRPT_BCKEND workstreams plus ~D on DSGN_IRPTV1, at the cap, with ~Y folded into ~P; or
-   - (a) ~P alone.
+Record: `ANDREW_DIRECT_20260924_164xZ_IRPT_RETURN_FIVE_CALLS_ANSWERED.md` (this folder).
 
-   The same word stands down the three `/loop 20m` goal loops. **REC: (b)** if no other laptop project needs a COO
-   slot now.
+1. **The hold is lifted for IRPT_BCKEND.** Migration is optional and goes by efficacy. This brief recommends finishing
+   the journeys under the closer and handing back at close (section 0 item 2). The CTO places the path.
+2. **All three COOs stay on IRPT_BCKEND, and ~D runs in parallel on DSGN_IRPTV1** ("limit doesnt matter", for this
+   seating).
+3. **IRPT_FNTEND closes SUPERSEDED into DSGN_IRPTV1.**
+4. **This v2 goes to the CTO.**
+5. **Removed:** `cro-listing-speed-20260924` and `cro-holdings-status-20260924`. Both `worktree remove` calls exited
+   rc=0 and both directories are gone. The branches are kept.
+
+**The ask of 1.0.0_SA_CTO:**
+- place the path (REC: closer to closed journeys, then hand back);
+- route N1-N3 now:
+  - N1 to 0.0.0_AB_MSTR;
+  - N2 to the IRPT_BCKEND issuer lanes and the CTO's own row edit;
+  - N3 is the CTO's own act.
 
 ---
 
