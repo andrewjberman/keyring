@@ -1,0 +1,52 @@
+{
+ "schema_version": "irpt-performance-resolvability-census-v1",
+ "by": "2.0.0_SA_COO~P",
+ "criterion": "goal (2): every active client account at each firm resolvable in Performance",
+ "as_of": "2026-09-23",
+ "ytd_end": "2026-09-24",
+ "firms": {
+  "cottonwood": {
+   "directory_as_of": "2026-09-17",
+   "directory_entries": 260,
+   "entry_indicators": {
+    "UNKNOWN": 260
+   },
+   "accounts_not_terminated": 842,
+   "source_date": "2026-09-23",
+   "RESOLVED": 842,
+   "UNMAPPED": 0,
+   "DUPLICATE": 0,
+   "IDENTITY_INVALID": 0
+  },
+  "49financial": {
+   "directory_as_of": "2026-09-17",
+   "directory_entries": 4576,
+   "entry_indicators": {
+    "ACTIVE": 4505,
+    "TERMINATED": 71
+   },
+   "accounts_not_terminated": 7454,
+   "engine_latest_partition": "2026-09-23",
+   "UNMAPPED": 38,
+   "COMPUTED": 6692,
+   "UNAVAILABLE-NO-LINKABLE-DAYS": 724
+  },
+  "inflection": {
+   "directory_as_of": "2026-09-17",
+   "directory_entries": 291,
+   "entry_indicators": {
+    "ACTIVE": 291
+   },
+   "accounts_not_terminated": 875,
+   "source_date": "2026-09-23",
+   "RESOLVED": 875,
+   "UNMAPPED": 0
+  }
+ },
+ "summary": {
+  "cottonwood": "842 of 842 not-terminated accounts resolve to one BD identity (the live number also needs a worded one-use plan)",
+  "49financial": "6692 of 7454 compute a YTD engine return; 724 have engine rows but no linkable day (OBJECT_NOT_COVERED by name); 38 are absent from the engine's latest partition",
+  "inflection": "875 of 875 resolve to one Orion id (the live number needs the INF deploy and a worded use)",
+  "denominator_note": "the SERVED directories (as-of 2026-09-17, the S125-stale build); COT states UNKNOWN termination on all entries, so not-terminated = ACTIVE + UNKNOWN everywhere"
+ }
+}
