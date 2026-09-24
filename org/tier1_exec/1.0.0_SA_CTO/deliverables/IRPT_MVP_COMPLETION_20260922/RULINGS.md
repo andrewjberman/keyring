@@ -920,3 +920,174 @@ through its own migration project, never as a rider. OWNER: the naming-gate mech
 a tier as EXISTING/WARN with the reason printed, or to name the legacy layout in the registry; lands
 after the /integrate work unless it starts refusing. Un-park condition: the gate no longer RAISEs on
 that literal. M does not type around it.
+
+
+## 2026-09-24 00:2x UTC - Claude CTO batch 5: the three candidate findings CLOSED (M a0f3f141ed)
+
+### IRPT-HOLDINGS-MESHED-CANDIDATES-20260924, findings CLOSED
+CTO read the closing diff and re-ran the arms in M's worktree: the three named arms pass and the four
+Holdings test files pass 45 of 45 in 1.83 s.
+- 49F-TAX-CONFLICT-01 CLOSED: a SmartX-modeled account that is also a Tax Traded=Yes row is carried
+  in Client at full custody value with "MEMBERSHIP CONFLICT" stated, counted in
+  census.client_membership_conflict and listed in refused_accounts; the whole-build raise is gone.
+- TAXONOMY-PATH-01 CLOSED: holdings_snapshot.taxonomy_path(view_path, member_id) reads the MDPF
+  registry's VIEW_TREE and refuses an undeclared node or a member under the wrong node; both builders
+  read Models, SMA > ALT Strategies > <registry Tax-Managed SMA display name> and Client through it;
+  no literal path remains. LABEL: the registry's own L0 spelling is "SMA", so the candidates carry
+  "SMA"; the "SMAs" in the contract text and in this seat's finding was the human spelling, and the
+  registry governs by the contract's own rule. If Andrew wants "SMAs" on screen it is a
+  NODE_DISPLAY_LABEL row in the registry, never a builder spelling.
+- INF-CLOCK-01 CLOSED: custody_as_of and business_date are prev_trading_day(snapshot key) =
+  2026-09-22 with custody_snapshot_key 2026-09-23 recorded beside them; the validator still binds
+  rows to the key; values unchanged (reconcile 209,358,359.48 both sides). The 49F Tax sleeve states
+  the workbook observed_at as its own overlay clock.
+REBUILT candidates: 49F a860115ecaf5336ac5db4491d76cf5b60780f8a9c257c579defaf62351ba6a1f and INF
+21279569b08d40ce53e163143b2f829f78c7466f6b25c6a024c57e601b4ef441, both business date 2026-09-22, dry,
+zero writes. Publication of each now waits only on Andrew's currency attestation (P writes the two
+records), then its own exact-write GO in the d940022b06 shape.
+
+
+## 2026-09-24 00:3x UTC - Claude CTO batch 6: LD-0611 naming-gate RAISE-EXISTING accepted with one finding
+
+### LD-0611 (c49325f3d4) - ACCEPTED, counts-as unchanged, ONE FINDING on the arms
+CTO arms at HEAD c49325f3d4 against the pre-change gate copied from c49325f3d4~1, on scratch
+new-file diffs: "smartx/platform/silver/" grades RAISE under the old gate and RAISE-EXISTING (reason,
+Rule 30 pointer) under the new; WARN 1 graded both. Counts-as is WARN in every branch, so no commit
+that passed is blocked and none that was blocked passes; the K3 grammar defect stays printed and
+stays LGIC's to close. ACCEPTED.
+FINDING LD-0611-ARM-01 (owner 0.0.0_AB_MSTR, bounded, not a block): the NEGATIVE arm is VACUOUS at
+HEAD. "smartx/platformx/silver/" graded RAISE-EXISTING under the new gate in the CTO's run, not RAISE
+as the ledger records, because the carrier search (git grep -l -F over the whole tracked tree at
+HEAD) now finds that literal in ONE file: org/tier0/ledger/LD-0611.md, the ledger naming its own
+negative arm. MSTR measured the negative before the ledger carrying it was committed, so its control
+was true at measurement and false one commit later. Two consequences: (1) the arm proves nothing
+now; (2) the carrier set is the WHOLE tree, so a pre-LGIC key first typed into a ledger, a message
+record or a log later grades RAISE-EXISTING in code, which is the prose-carries-the-key shape the
+gate's declaration-tree domain (MINUS org/, docs/, run-artifact dirs) already excludes elsewhere.
+DIRECTION: scope the carrier search to the gate's own declaration-tree domain and exclude the gate
+file and its self-tests; pick a negative literal no file carries and assert it stays RAISE; re-run
+the positive. Lands after the /integrate work; nothing is refused meanwhile. No waiver, no registry
+row, as before.
+
+
+## 2026-09-24 00:3x UTC - Claude CTO batch 7: COT membership publication GO (M 26a04257bf)
+
+### IRPT-COT-MEMBERSHIP-PUBLICATION-GO-20260924
+GO to 2.0.0_SA_COO~M for exactly the candidate revision
+ac3adb97f5e76a5f044d4b0d12ffda3bebccd235915aed661315e98432729d5a (business date 2026-09-22):
+18 immutable creates (gold, header, 15 parts, manifest) then ONE index CAS on IfMatch
+"9731cecad3b5ff3e7323ff8567260f95" (index version grwnbLkeu_OeYL6AcOR33ec9mO51dTBJ), replacing only
+the 2026-09-22 row; prior revision 93f930c265 and the prior index version retained; every returned
+version and hash read back before the index; the index read back at its exact version; drift
+refuses. No other write, no vendor, no IAM. CTO INDEPENDENT VERIFICATION, its own instrument: the
+local candidate body (16,558,818 bytes) hashes to the revision; against the accepted 15 parts fetched
+from S3 at revision 93f930c265, the 841 ACCOUNT nodes are identical in id, value and clocks (0
+differences), the multiset of 13,793 SECURITY values is identical, the 462 MODEL_LEAF nodes are all
+ASSIGNED / claim measured / namespace COT_REBALANCER_MODEL with each leaf equal to its account's
+custody value, every SECURITY node is OBSERVED, and both Anna accounts carry a leaf. The live index
+ETag re-read at 00:3xZ is still 9731cecad3b5... (no drift since d940022b06). Source: the same seven
+retained inputs checked against the native publication receipt; tests 114 of 114 in M's worktree
+(membership, snapshot, economic regressions). After the writes: the deployed-reader matrix again
+(0698 / d486 / combined at default and 2026-09-22; 2026-09-23 refused) and the receipt to the CTO.
+The 379 unassigned accounts remain Client with membership unattributed; the 140 source-refused
+accounts remain open. Not a journey PASS; the screen is still Andrew's re-test.
+
+
+## 2026-09-24 00:3x UTC - Claude CTO batch 8: LD-0612 accepted (LD-0611-ARM-01 closed)
+
+### LD-0612 (1e7121507a) - ACCEPTED; LD-0611-ARM-01 CLOSED
+CTO arms at HEAD 67c2844189 (carrying 1e7121507a) against the copy at 1e7121507a~1, on the same
+scratch new-file diffs: "smartx/platform/silver/" grades RAISE-EXISTING under both (carried in code
+and contracts); "smartx/platformx/silver/" grades RAISE-EXISTING under the pre-change gate (vacuous:
+its only carriers are three record-tree files, LD-0611.md, LD-0612.md and this RULINGS.md) and RAISE
+under the new gate, which drops record-tree and non-graded-extension carriers from the search.
+WARN 1 graded in every arm; counts-as unchanged; the permission only narrows. The negative arm
+discriminates again and stays valid however many records quote the literal.
+
+
+## 2026-09-24 00:4x UTC - Claude CTO batch 9: COT membership publication VERIFIED; the write-count deviation ACCEPTED
+
+### IRPT-COT-MEMBERSHIP-PUBLICATION-VERIFIED-20260924 (M 99860)
+M executed the GO at 00:37:03-00:37:11Z. CTO independent readback: the current index is version
+XbWnSWxMFRs9jNOUtj6ZOELvpemDQP73 (ETag ab460faa537d..., sha256 983443bbc5b2...), its only date row
+2026-09-22 names revision ac3adb97f5e7 with manifest version UCnp0Bq_BRGjdz2RMgfrUCXmNOtAFq4y; three
+index versions exist and the prior two (grwnbLkeu, JhtDD) are retained; under ac3adb97 there are 20
+objects (gold, header, 17 parts, manifest), under 93f930c265 still 18, under fe328763b5 still 3; 42
+keys in the tree. M's reader matrix on the live publication: 0698 / d486 / combined READ_OK at
+default and 2026-09-22 with 1 / 1 / 2 MODEL_LEAF nodes and the same USD totals; 2026-09-23 refused.
+Publication hop PASS for the membership tree.
+
+THE DEVIATION (20 immutable creates, not the 18 the GO named) is ACCEPTED, no revert. The GO's
+blast radius was the set of keys under the new revision's own prefix plus ONE index row, and that is
+exactly what was written; the "18" was a count inherited from the prior candidate's 15-part split,
+carried by M into its request and by the CTO into the GO without either measuring the new body's
+partition plan (the body grew to 16,558,818 bytes and the publisher's deterministic size-bounded
+split produced 17 parts). CLAUDE.md's sign-off rule names the ACT'S BLAST RADIUS, never the
+producer's decision, and the split is the producer's rule. Both seats own the lesson: an exact-write
+GO names the key prefix, the index row and the IfMatch, and the requester prints the publisher's
+MEASURED write plan for the named candidate; a count the requester did not measure does not enter
+the GO. The 49F and INF requests carry that plan.
+
+
+## 2026-09-24 00:4x UTC - Claude CTO batch 10: P-REOPEN-01 landed; vocabulary amendment re-accepted; portal regen target; a lane correction
+
+### P-REOPEN-01 CLOSED in source (P 9074dba320) - ACCEPTED, deploys with the next Performance package
+The pointer key is digest({firm_id, sorted account_ids, start, end}); the pointer schema
+irpt-performance-accepted-v2 carries accepted_key and ref only (no owner, principal or selection);
+reopen checks tenant, key, accepted_key and the accepted report's provenance core and still reads
+through stores.reports.get with the CURRENT principal, so authorization is re-derived by the
+repository and the pointer grants nothing. Three new arms (another authorized viewer after a directory
+republish reopens with zero source or vendor reads; the pointer grants nothing to an unauthorized
+viewer; a different window misses the pointer). Suite 11 passed. No v1 pointer exists (store empty at
+install). It ships in the NEXT package under its own build, plan and GO; the installed function is
+unchanged until then.
+
+### IRPT-REASON-CODE-VOCABULARY-20260924, amendment 2a87fa8edf - RE-ACCEPTED
+Three rows (CONFLICT, SUPERSEDED, UNEXPECTED) reworded into the "refused with public_reason_code
+<CODE>" grammar so the portal's widened reading rule names all 14 data codes; codes and classes
+unchanged. 0.0.0_AB_MSTR cherry-picks it onto CLOUD as it did c80b8ccb41. P's portal regeneration
+c1ac41ec (branch p-reason-codes-20260924 over c70855f3: 16 named codes, generator and test share the
+grammar, 90 code-shaped tokens with 16 admitted and the 74 rejected inspected, bun test and tsc
+clean) is ACCEPTED as the render fix for the NOT_READY screen. TARGET: 0.0.0_AB_MSTR merges
+c1ac41ec into the local-live portal branch codex/local-live-data-20260923 (the 5174 screen and the
+DEV candidate MSTR already named), never a rebase; DEV rides the next portal push on Andrew's word;
+PROD is an enrichment item.
+
+### LANE CORRECTION (CTO 99857 was wrong on one file)
+ycharts/generate/tests/test_canonical_profile_consumption.py sits under ycharts/** in
+IRPT_COMPLETION_Y with no P row; the hook's refusal of P is correct and 99857's "a row you already
+hold" was not. Y commits its b35cb286b1 copy and the 7-field stub literal fix for the cross-firm
+resident cases on Y's branch; P re-copies both at its next sync. No new P row: the lane stays as
+narrow as the integration needs.
+
+
+## 2026-09-24 00:4x UTC - Claude CTO batch 11: Andrew-direct "all recs approved" (seven open calls) + two Y test rows
+
+### ANDREW-DIRECT 2026-09-24 ~00:4xZ at the 1.0.0_SA_CTO terminal, VERBATIM: "all recs approved"
+Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_004xZ_ALL_RECS_APPROVED_SEVEN_OPEN_CALLS.md
+(the seven cards repeated with their RECs and the ruling each approval creates). Currency record:
+IRPT_MVP_COMPLETION_20260922/ANDREW_49F_INF_USD_20260924.md. The rulings, each exactly the card's REC:
+1. 49 Financial report amounts are USD (firm-level attestation; same scope and limits as COT).
+2. Inflection report amounts are USD (same).
+3. ONE live Cottonwood performance calculation, account acc_d486fc9455d6b2aa18e13af1, window
+   2026-09-01..2026-09-22, through the installed adapter under a server-installed one-use plan; X10
+   ACTIVE first; any other account, window or attempt needs a new word.
+4. The AutoShutdown=disabled tag on i-0167fd745ad906a66 stays; the host starts only with the
+   resident cutover plan.
+5. ONE live Orion Reporting/Scope calculation for a real Inflection client, bound at execution to the
+   exact client, window and request P presents.
+6. 49F SmartX: ONE bounded live account-level call under yaliu-bundle, bound at execution to the
+   exact account, window and request P presents; period-to-date labelled, selected-set limit disclosed.
+7. 0.0.0_AB_MSTR pushes workspace CLOUD to origin.
+ROUTING: P writes the two ANDREW_ATTESTATION records (49financial, inflection) into
+CurrencyAuthorities.json citing ANDREW_49F_INF_USD_20260924.md and prepares the CALL-3 one-use plan
+for CTO review; M then requests the 49F and INF exact-write GOs with the measured write plan; MSTR
+pushes; CRO informed on 6. Nothing wider is inferred from the word.
+
+### IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923, two more rows (Y 99870)
+ycharts/generate/tests/test_canonical_profile_consumption.py and
+ycharts/generate/tests/test_custody_retained.py join IRPT_Y_ACCESS_INTEGRATION_P as exact rows at Y
+pin 79c53e1abe (manifest extension 2): both are test files whose semantic writer stays Y; P copies
+them at that pin so the eight cross-firm resident cases and the consumption test match the 11-field
+reader. Y's reading was right and the CTO's 99868 "no new P row" is superseded by this narrower fact:
+P cannot sync a file it holds no row for, and a branch merge would carry more than the grant.

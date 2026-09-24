@@ -779,6 +779,33 @@ def _resolves_to_tracked(value):
     return ok
 
 
+_CARRIED_CACHE = {}
+
+
+def _carried_at_head(value, path):
+    """The first DECLARATION-TREE file at HEAD, other than `path`, that carries `value` byte for byte (fixed
+    string); '' when none. One git grep per distinct value, cached for the run.
+
+    Declaration tree only (LD-0611-ARM-01, 1.0.0_SA_CTO 99852): a hit under a record tree (org/**, docs/**, a
+    minted run directory) or in a file the gate does not grade is NOT a carrier. A key first typed into a
+    ledger, a message record or a log must not make its later copy in code read EXISTING -- and the ledger
+    naming this rule's own negative arm made that arm vacuous one commit after it was measured."""
+    if not value or len(value) < 4:
+        return ""
+    if value not in _CARRIED_CACHE:
+        rc, out, _err = git("grep", "-l", "-F", "--", value, "HEAD")
+        hits = []
+        if rc == 0:
+            for line in text_of(out).splitlines():
+                hit = line.split(":", 1)[1] if line.startswith("HEAD:") else line
+                if (hit and hit != path and not _is_record_tree(hit) and hit.endswith(GRADED_EXT)
+                        and hit != ".tools/naming-gate.py" and "/tests/" not in "/" + hit):
+                    hits.append(hit)  # never the gate's own bytes or a fixture under */tests/*
+        _CARRIED_CACHE[value] = sorted(hits)
+    hits = [h for h in _CARRIED_CACHE[value] if h != path]
+    return hits[0] if hits else ""
+
+
 def _packaged_citations(post_text):
     """The `packaged_as` names of a packaging manifest whose `repo_path` resolves to a tracked file at HEAD
     (2026-09-23, 0.0.0_AB_MSTR, on 2.0.0_SA_COO~P 99805: lambda-source-map.json rows such as
@@ -1275,6 +1302,19 @@ def judge(nm, path, lit, pre_text, waivers=None):
     verdict, canon, defect = nm.grade(typ, graded_as)
     if verdict == "RAISE":
         why = "RAISE as %s: rule or registry defect, not a refusal: %s" % (typ, defect)
+        if new:
+            # A literal the grammar cannot place is NEW to this file but may already be carried, byte for
+            # byte, elsewhere at HEAD (2026-09-23, 1.0.0_SA_CTO 99842 on 2.0.0_SA_COO~M's "smartx/platform/silver/",
+            # K3 "'platform' is not a tier": a pre-LGIC layout the retained build already reads). Copying an
+            # existing pre-LGIC key into a new file mints nothing; under CLAUDE.md Rule 30 that layout reaches
+            # conformance through its own migration project, never through this diff. So: EXISTING, WARN, with
+            # the RAISE reason and the carrying path printed. A raising literal carried NOWHERE at HEAD keeps
+            # the branches below unchanged.
+            where = _carried_at_head(lit.value, path)
+            if where:
+                return ("RAISE-EXISTING", "(pre-LGIC key; conformance via its migration project, Rule 30)",
+                        why + "; the same literal is already carried at HEAD in %s, so this copy mints nothing: WARN%s"
+                        % (where, carr_txt), "WARN")
         if new and carr:
             return "REFUSE", "lookup(%r)" % carr[1], why + carr_txt, "REFUSE"
         return "RAISE", "(rule or registry defect)", why + carr_txt, "WARN"

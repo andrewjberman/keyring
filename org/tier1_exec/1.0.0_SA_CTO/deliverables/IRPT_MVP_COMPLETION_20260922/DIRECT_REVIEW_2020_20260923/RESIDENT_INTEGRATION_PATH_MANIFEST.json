@@ -208,6 +208,26 @@
     "infra/aws/lambda/investor-reporting/intake/portfolio.py",
     "infra/aws/lambda/investor-reporting/ops/prospect_dates.py"
    ]
+  },
+  {
+   "source": "79c53e1abe5672e17c3476c09919f31548f015f6",
+   "ruling": "IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923-batch11",
+   "new_grant_rows": [
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_canonical_profile_consumption.py",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_retained.py"
+   ],
+   "paths": [
+    {
+     "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_canonical_profile_consumption.py",
+     "source_blob_sha256": "ecf2a38c31858b75edc2ef17191cfd9af4ffff95e7a3478ad9555c430ff7a3af",
+     "integration": "exact_copy"
+    },
+    {
+     "path": "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_retained.py",
+     "source_blob_sha256": "a1883f71f6be9a387abca7ad4978b9b2b2a99997d5b4218e88b5eddab279b73d",
+     "integration": "exact_copy"
+    }
+   ]
   }
  ]
 }
