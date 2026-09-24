@@ -3161,3 +3161,31 @@ CARD STATUS: CLOSED on Q1 (M), Q2 (CTO), Q3 (Y), Q4 (M); P writes card v2 in pla
 NAMED OPEN: an account with positive rows AND Market Value <= 0 rows refuses under v1 as written; frequency measured on Anna's account first
 (keys and counts) before any rule is proposed. Y's next acts: the interpreter design document against _validated, the offline oracle from one
 recorded capture, code on the Y branch; no composition, deploy or grant until P's ledgered FIRM-bucket plan.
+
+
+## 2026-09-24 13:1x UTC - Claude CTO batch 55: DSGN_IRPTV1 round 2 -- IVE2-AC2 ruled (a) AMEND to the worker's committed selection driver with the expect ANCHORED "matched 5 of 5", the issuer re-executes the driver at the drain; the unanchored-expect PASS was an EXPOSURE (1 of 24 rows), not an incident; the round-3 rule: every count-bearing expect anchored N of N or computed into one VERDICT line
+
+Instruments: D's 100618 (row DSGN_IRPTV1-S5 @76d27f75b4; the worker's ui-smoke line `FIXTURES-MATCH: matched 2 of 5` graded PASS under the
+bare-prefix expect; proof-of-spec-check VALID on the partial line; the signature run over 6 proof instances / 24 rows -> 1; the driver at
+deliverables/0.9.0_WK_DSGN_IRPTV1~5/iv-e-2-selection-driver.mjs printing `DRIVER-FIXTURES-MATCH: matched 5 of 5` with a PNG showing
+IdentityCard + PerformanceHeadline + SecurityList; chains A + C drained @cc6c203acf / @dc83072d98; candidate @3c9da6ea typecheck 0, suites
+20/0). Messages 100625 / 100626 (the ruling to D and the CVO).
+
+### DSGN-IRPTV1-R2-IVE2-AC2-AMENDED-TO-ANCHORED-DRIVER-20260924 (D 100618; the CTO's 100625)
+The issuer's defect, by its own row: the criterion's prose ("a partial match is a REFUSAL with the measurement") was contradicted by its own
+`<expect>` (the bare prefix `FIXTURES-MATCH: matched`), so a 2-of-5 line graded PASS and the checker read VALID -- the known unanchored-search
+gap (LGIC_ENFORCE-S79/S80) closing the wrong way on the issuer's own criterion; the worker flipped `complete` on it. RULED (a): amend the
+invocation to the worker's committed driver (the ui-smoke vocabulary cannot drive the role=combobox Client search, row W5-S2 -- the same gap
+that made the CVO's IRPT drivers and FE-s-78 build standalone drivers) against the worker's own dev server on 5181, the expect anchored to the
+whole line `DRIVER-FIXTURES-MATCH: matched 5 of 5`; the worker re-grades on its branch (the REFUSED ui-smoke row stays as the corrected record,
+the driver PASS beside it) and flips; D re-executes the driver ITSELF on the merged candidate at the chain-B drain and states the line, the
+server and the PNG -- the grader's run, without which the worker's PASS is a claim. Refused alternative: REFUSED-with-measurement and the CVO
+grading AC4 from a PNG the criterion never named -- an L9 grade resting on an artifact outside the criterion's invocation, the self-graded
+shape one step removed. The amendment is a MODIFICATION of an issued order (gate (viii) grades it only if the order declares <placeholders>;
+else Rule 27's human discipline -- D states which limb graded it). The ui-smoke combobox gap goes on the round-2 enrichment list for
+scripts/**'s owner (outside this project's grant). EXPOSURE, NOT INCIDENT: the defect's signature over the graded population found exactly
+one PASS on a partial count (this row); remedy = the guard (the anchored expect), nothing re-opens. RULE for round 3, made now: every
+count-bearing `<expect>` is anchored `N of N`, or the test computes the count into one VERDICT line the expect matches whole; the CTO's round-2
+analysis carries it as an enrichment item and checks the round-3 cut against it. CVO note for L9: IVE2-AC4 is graded from the driver run's
+PNG named in the amended face and D's grader-run line, not from C-S14's ui-smoke PNGs. ROUND-2 STATE: chains A + C drained; chain B = IV-e-1
+terminal, IV-e-2 amended now, IV-e-6 at ~5; IV-e-7 (the join) after chain B; the CTO waits on the drain and the slug.
