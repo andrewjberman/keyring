@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-24T23:3xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-24T23:4xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -58,7 +58,13 @@ after S1 reads.
 3b. DONE 22:2xZ: HoldingsSnapshot admits M's four classification members (767ac83009; v1 on CLOUD 7251000daa) -- M 100906
    step 1; ~D accepts next, then M emits.
 4. Criterion 2 census DONE (ee51ffafac); the 49F gaps (724 + 38) are engine coverage, parked with the BD divergences.
-5. Retained report -> reopen -> export verified on the served route after the COT run.
+5. EXPORT HOP NOT BUILT (measured 23:4xZ): the served irpt-export-render (entry.lambda_handler, 2gSDyxxB.., 09-21)
+   answers submit-export NOT_READY for EVERY submission -- export/entry.py:188-199 authorizes the route and never calls
+   the controller (export/handler.py submit_export: generation-keyed freeze, persist-before-render, render-host
+   dispatch, receipt). Criterion 1's last hop, all three firms. Design cell before build: map a RETAINED Performance
+   report (report_id/revision from the reports repository) onto the controller's report_revisions; a performance
+   export carries no narrative packet; the render host's state (dispatch preflight) and the download signer. The COT
+   journey reaches reopen, then export answers NOT_READY by name until this lands.
 6. Y compositions: hops 2+3 SERVED (ledger `irpt-upload-hop2-20260924`, S1 = Y's live 12.03 acceptance); hop 4 custody
    (admitted_firms under the ledgered plan naming all three firms' objects, CTO 100712) remains.
 7. C-S219 (round 18): a complete offline served-route chain for V1 verification (may be superseded by the live trace).
