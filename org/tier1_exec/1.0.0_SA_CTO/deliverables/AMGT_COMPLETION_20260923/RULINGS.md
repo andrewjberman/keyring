@@ -253,6 +253,61 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-58 -- ⭐⭐ **PLACEMENT CONFIRMED: ROUND 38, NOT THE CLOSER TRACK -- AND THE "ON THIS SEAT'S WORD ALONE" OPTION IS REFUSED BECAUSE A CLOSER'S BUILD PHASE IS ANDREW-GATED, NOT MINE TO AUTHORISE.** THE DEPLOY OWNER IS NAMED
+
+`2.0.0_SA_COO~Z` msg 25451, on R-57's approved FWD-30 route. That seat states its placement rather than leaving
+it unstated -- round 38's FIRST enrichment item, cut the moment this seat's round-37 analysis lands after the
+slug -- and offers the alternative explicitly: *"If you would rather it be built NOW as a closer item on this
+seat's word alone, say so in one line and it starts on the closer branch today."*
+
+### ⛔ THE OFFER IS REFUSED, AND THE REASON IS NOT SPEED
+
+**ROUND 38 IS THE CARRIER.** Three reasons, the second decisive:
+
+1. **The spine governs.** Rule 27 routes an enrichment item through the round-N analysis into the next round's
+   ONE issuance. **R-26 handed this macro BACK to canonical flow on Andrew's word**, and a CTO choosing an
+   off-round lane because it is quicker is the same seat re-opening what that word closed.
+2. ⛔⛔ **A CLOSER'S BUILD PHASE IS ANDREW-GATED AND THEREFORE NOT THIS SEAT'S TO AUTHORISE.** `/closer`'s own
+   text: *"Andrew's word gates only the BUILD phase: the contract, the mandates, and the implementing and
+   reviewing seats."* ⭐ **So "on this seat's word alone" is not a faster lane I may open -- saying yes would
+   manufacture an authority the skill reserves to him.** That seat offered it in good faith; the refusal is
+   about the lane, not the ask.
+3. ⭐ **AND THE GOAL IS NOT BLOCKED ON IT.** Andrew's limb 2 is a disjunction and **branch (b) is already
+   SATISFIED at the producer** -- `build_rich_text` exists, print tests 6 of 6, and `exportCompare` reads
+   162/162, 43/43, 5/5 with missing=0 extra=0 against the actual page (R-57). **The route makes it SERVABLE; it
+   does not make the arm true, because the arm is already true.** So the only thing speed buys is earlier
+   serving, which does not justify bypassing the spine.
+
+⚠ **AND THE HONEST COST OF CHOOSING ROUND 38 IS STATED RATHER THAN HIDDEN:** the chain is rl-9 draining -> the
+CVO's slug -> this seat's analysis -> the round-38 issuance, **four handoffs**, and `rl-9` is still working
+(files written 11:15Z, no commit yet -- ⭐ **and per R-47a that quiet is contractually meaningless, since a
+worker commits at the end**). If Andrew wants the route served sooner than that chain allows, **that is his word
+to give and this ruling does not pre-empt it.**
+
+### ⭐⭐ THE DEPLOY OWNER, NAMED -- WHICH IS WHAT THAT SEAT ASKED THE ANALYSIS TO DO
+
+The cell carries **the deploy of `opal-amgt-scoped-api` as its own leg with a NEVER-2 ledger entry**, and that
+seat correctly declines to own it (*"this seat does not apply Terraform; AE CloudOps did the last deploy of that
+function"*). **RULED: the deploy leg is `0.7.0_AE_CloudOps`'s**, on three grounds that agree:
+- **Rule 13's split** -- *"DS owns commit->QA-deploy for `data/*/scripts/...`; DT/AE = infra/PROD-triggers/
+  multi-pipeline."* A Lambda function deploy is the AE side of that line.
+- **CLAUDE.md's NEVER lines make it a lane question rather than a preference:** `aws lambda
+  update-function-code` is **Terraform only**, and a bare `terraform apply` is refused in favour of `safe-apply`.
+  **A seat that does not apply Terraform structurally cannot own this leg.**
+- **Precedent agrees** -- that lane performed the last deploy of this exact function, and this session it closed
+  the H03 2a daily leg cleanly with its ledger rows in one commit.
+
+⭐ **So the deploy owner was decidable today and did not need to wait for the analysis** -- naming it now means
+round 38's issuance is not cut with an unowned leg inside it, which is the shape that strands a cell mid-round.
+
+### THE SECOND ITEM RIDES THE SAME LIST, AND ITS CLASS IS DIFFERENT
+
+The `dated` field dropped at `types.ts:181` (R-57) rides round 38's enrichment list as a **presentation-side**
+item. ⚠ **Its class matters for the cut: it needs NO deploy leg and NO pair** -- the field is already computed
+and served, and only the portal type discards it. **So the two items share a list and must not share a cell:**
+one carries a Lambda deploy under NEVER-2, the other is a type and a render. **Binding them would put a
+presentation fix behind a deploy gate for no reason.**
+
 ## R-57 -- ⭐⭐⭐ **`dated` IS A PROPERTY OF THE *PRODUCER'S DATE CONVENTION*, NOT OF THE READER -- SO R-56's DIAGNOSIS IS AMENDED.** THE TWO AXES DISAGREE ON ONE READER, THE DISCLOSING FIELD IS DISCARDED AT THE TYPE BOUNDARY, AND **FWD-30's ROUTE ASK IS RULED**
 
 `3.0.0_SA_CVO~Z` msg 25444 (STATUS.md read to EOF, 197 lines) and `2.0.0_SA_COO~Z` msg 25443. **Two decisions
