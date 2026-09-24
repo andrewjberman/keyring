@@ -58,7 +58,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 **ISSUER NOTES:** s.7 item 5.
 
-<status>pending</status>
+<status>complete</status>
 <round>40</round>
 <slot>~156</slot>
 <fabric>site-z</fabric>
