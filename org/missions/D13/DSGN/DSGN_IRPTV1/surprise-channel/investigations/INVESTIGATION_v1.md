@@ -225,6 +225,31 @@
     "world_is": "Every fixture this cell's grant names or can discover on disk carries no `display` field on any node, so the positive control cannot be read off a checked-in fixture the way the negative arm is (all 9 named/discovered fixtures). No new fixture file was added (fixtures/** is not named in this order's <paths>, and BOUNDS lists <paths> as the write grant) -- the control instead lives as a literal object inside the test file itself.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not blocking: IVE5-AC2 passes with the synthetic control firing correctly under mutation. Filed so a later round that adds a real display-bearing fixture (e.g. for IV-e-2 or a shared fe-s-7 addition) can retire this synthetic object in favour of one, if that is preferred."
+  },
+  {
+    "id": "DSGN_IRPTV1-S3",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-24T11:31:29Z",
+    "one_line": "Round-2 drain hygiene: `bun run typecheck` (tsc -b --noEmit) reads rc=2 on the merged portal candidate dsgn-irptv1-r2 @1c7400cc -- ONE error, TS2339 in the PRODUCT file tabs/holdings/HoldingsTreemap.tsx (195,40) `Property 'payload' does not exist on type 'TooltipProps<number, string>'`, IV-e-5's own file; the same read is red on the worker's branch tip fb4fc3b2 and was green at a3616feb (after IV-e-3 + IV-e-1). Every suite passes (17 of 17 across 13 dsgn-irptv1 files, 0 fail) because bun test does not typecheck.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D (the drain's own red; remedy routed 2026-09-24 ~07:3xZ to the AUTHORING worker 0.9.0_WK_DSGN_IRPTV1~6 as a type-only fix on its own portal branch, re-running IVE5-AC1..3, then re-merged into the candidate by the issuer; disarmed by the row that quotes the fix commit and a typecheck rc=0 read on the candidate)",
+    "spec_asserts": "Spine L6 verification diet: repo-wide hygiene runs ONCE per merge at the drain, never as a criterion; a red at the drain is a surprise row under the COO's serial, never a silent edit (round-1 precedent S1/S2, CTO 100499 ruled an issuer-direct fix for a TEST-file typing error because it was not product scope). Spine L7: a worker's write surface is the <paths> of its NON-TERMINAL order -- IV-e-5 is terminal (VALID instance, `complete` flipped, drained to CLOUD @dc83072d98), so the worker's grant on HoldingsTreemap.tsx is withdrawn by the letter of that line.",
+    "world_is": "Measured 2026-09-24 by 2.0.0_SA_COO~D in C:/tmp/dsgn-irptv1-r2 at 1c7400cc: `bun run typecheck` rc=2, exactly one `error TS` line (quoted above); in C:/tmp/wk-dsgn_irptv1-2-6/portal at fb4fc3b2: rc=2, the same one line; at a3616feb (candidate before IV-e-5): rc=0. `bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/` at 1c7400cc: 17 pass, 0 fail, 113 expects. The error is in a PRODUCT file (a recharts custom-tooltip prop type), not a test file, so the round-1 reason for an issuer-direct fix does not carry; the issuer routed the fix to the worker that wrote the file (context intact, the same pair) rather than editing a worker's product file itself or holding the candidate for a round-3 repair cell. That route has the worker committing under a TERMINAL order -- placed here as a DECLARED departure for 1.0.0_SA_CTO to accept or re-route at the round-2 analysis; the alternative (a round-3 repair cell) keeps the candidate unbuildable until then.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/dsgn-irptv1-r2 @1c7400cc: typecheck rc=2, 1 error TS line (C:/tmp/r2_typecheck.log)",
+        "C:/tmp/wk-dsgn_irptv1-2-6/portal @fb4fc3b2: typecheck rc=2, the same line (C:/tmp/wk6_typecheck.log)",
+        "C:/tmp/dsgn-irptv1-r2 @a3616feb: typecheck rc=0 (this seat's hygiene run after the IV-e-3 + IV-e-1 merges)",
+        "proof instance org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~6/DSGN_IRPTV1.TO-IV-e-5.holdings-l1-and-treemap.proof_of_spec.json VALID rc=0 -- typecheck was never a criterion, by the diet",
+        "CLOUD drain commit dc83072d98 (safe-merge of wk-DSGN_IRPTV1-6; first-parent diff = 6 org/ paths)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed by the issuer at the drain. The candidate stays LOCAL and is not offered to MSTR while red. Carried in the drain-end message to 1.0.0_SA_CTO with the departure named."
   }
 ]
 ```
