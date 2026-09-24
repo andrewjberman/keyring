@@ -3111,3 +3111,31 @@ the same model); P executes the one Performance submission with the CRO's second
 through the resident, no prices in v1); M receipts the Eclipse map and the taxsma snapshot under its migration; D and the CVO hold the
 DSGN_IRPTV1 DONE WHEN confirmation as the L2 word; the CRO carries cards 2-4 into the trace. Not covered, restated: the first live Analysis
 submission (its own card when a composition lands) and the CLOUD trunk push (MSTR's to put to him).
+
+
+## 2026-09-24 13:0x UTC - Claude CTO batch 53: CORRECTION -- card 6's premise "the build already refuses without them" was FALSE (CTO miss, owned); M makes the builders refuse on an unset capture env var now; the receipting is the holdings migration project and the CRO is asked for its L1 brief; Y is back (card 1 closed by the world, nothing keyed)
+
+Instruments: M's 100610 (holdings_49f.py:509-510 @d96513bc40 `os.environ.get(...) or None` + docstring "an absent path means no Tax sleeve is
+claimed"; holdings_inf.py the same shape; the 06:2xZ rebuilds aa6efd45 / 4a50ac5f built without the captures, validated, reconciled, passed CAS
+and drew GO 100387 / 100390 before the halt); MSTR's 100607 (peek 13:00:07Z, no dialog, Y working; PNG named in the message); the CTO's own
+record file, corrected in place with a dated section (this commit). Messages 100609 (to Y), 100612 / 100613 (to M and the CRO).
+
+### CTO-MISS-CARD-6-PREMISE-FALSE-20260924 (M 100610; the correction in the record file and here)
+The Andrew-direct record's card 6 said "The build already refuses without them; nothing serves silently wrong meanwhile." FALSE at the
+code: neither builder refuses on an unset env var, and the day's own incident proved it -- both rebuilds ran without the captures and drew a GO;
+"nothing served silently wrong" held only because of the halt. OWNED: the sentence was written from recollection of the incident's OUTCOME
+rather than from the builder's code, while the Rule 28 card's failure-mode row ("an ABSENT file reads as no capture") stated the opposite in the
+paragraph beside it -- the standing failure mode (a claim from recollection, in a REC that released a card), and the cost is that the sentence
+sat in an Andrew-direct record for ten minutes. REMEDY: a dated CORRECTION section in the record file (verbatim cards untouched), this batch,
+and the correction relayed to M and the CRO. The approved REC's scope is unchanged. M's interim change -- FortyNineRefused / InflectionRefused
+with a named reason when the env var is unset, tests per firm, on codex/irpt-m-completion -- is a correctness refusal inside M's own producer on
+a required input (not a gate on another seat, not an alert) and proceeds; served candidates do not move until a rebuild supplying both captures
+is GO'd as before. The receipting (both files as versioned objects in manifest.source_objects, homes from the naming builder, R19) is the
+holdings migration PROJECT: the CTO asked 4.0.0_SA_CRO for its L1 brief (FWD-1: one served publication whose manifest carries both files with
+sha + version, and a fresh-session rebuild that cannot drop them); M holds the producer change for its cell.
+
+### IRPT-CARD-1-CLOSED-BY-THE-WORLD-20260924 (MSTR 100607)
+MSTR peeked at 2.0.0_SA_COO~Y before keying (unstick.ps1 -Peek, 13:00:07Z): the 07:08Z safeguards dialog was gone, the seat working on the same
+model, reading the recs-approved record and the interpreter card. Nothing keyed (a retry into a working composer would have been the harm).
+Card 1's outcome holds in the world. The CTO sent Y its return brief (100609): Q3 to rule with a reason and the contract line; the interpreter
+design as Y's cell; Q1 / Q2 / Q4 settled and not re-opened; no composition or deploy until the ledgered FIRM-bucket grant plan.

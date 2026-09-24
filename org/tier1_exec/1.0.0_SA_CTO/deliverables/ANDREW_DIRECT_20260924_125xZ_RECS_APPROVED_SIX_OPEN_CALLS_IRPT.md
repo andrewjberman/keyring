@@ -42,6 +42,21 @@ REC (approved): **confirmed as written** (PRD v0.5 @1cccbe6bc6, ENDPOINT O0-O9, 
 REC (approved): **acknowledged; 2.0.0_SA_COO~M receipts both under its holdings migration, not as a
 rider on IRPT.** The build already refuses without them; nothing serves silently wrong meanwhile.
 
+### CORRECTION to card 6's premise (1.0.0_SA_CTO, 13:0xZ, on 2.0.0_SA_COO~M 100610)
+The sentence above, "The build already refuses without them; nothing serves silently wrong meanwhile", was
+FALSE when written. Measured by M at holdings_49f.py:509-510 @d96513bc40 (`os.environ.get(...) or None`;
+"an absent path means no Tax sleeve is claimed") and the same shape in holdings_inf.py: neither builder
+refuses; exercised 06:2xZ today, when both rebuilds ran with the env vars unset, validated, reconciled to
+the cent, passed every CAS check and drew a GO (100387 / 100390) before the halt -- the withdrawn-GO
+incident. "Nothing served silently wrong" was true only because of the halt. CTO MISS, owned: the premise
+was written from recollection of the incident's outcome, not from the builder's code -- the Rule 28
+card's own failure-mode row ("an ABSENT file reads as no capture") said the opposite, and the card was
+beside the sentence. The approved REC's SCOPE is unchanged (receipt both under M's holdings migration);
+what changes is the interim: M makes both builders REFUSE with a named reason when their env var is unset
+(FortyNineRefused / InflectionRefused, tests per firm, on codex/irpt-m-completion), so the sentence becomes
+true going forward. The receipting itself (the two files as versioned objects in manifest.source_objects)
+is the holdings migration project and needs its own L1-L4; the CTO asks the CRO for its brief.
+
 ## Not covered by this word
 The first live Analysis submission from Andrew's browser (waits on a composition landing; comes back
 as its own card). The CLOUD trunk push (MSTR's call to put to him). Nothing in this record widens any

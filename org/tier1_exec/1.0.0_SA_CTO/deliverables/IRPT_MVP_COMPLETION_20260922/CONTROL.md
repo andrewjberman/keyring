@@ -19,7 +19,10 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (00000000000000000000000000000000) portal candidate 7 LANDED fast-forward f1d02f30a2 (ls-remote read by MSTR
+CTO review queue, in order: (000000000000000000000000000000000) CORRECTION: card 6's "the build already refuses without them" was
+FALSE (CTO miss, owned; record file corrected in place); M adds a named REFUSAL on an unset capture env var; the receipting = the holdings
+migration project, CRO asked for its L1 brief; Y back at 13:00Z, card 1 closed by the world, Y briefed (batch 53).
+(00000000000000000000000000000000) portal candidate 7 LANDED fast-forward f1d02f30a2 (ls-remote read by MSTR
 12:5xZ); DEV = candidates 1-7, the five W4-S2 names closed there; Andrew told DEV is ready for the signed-in HAR (card 4); the recs-approved
 broadcast 6 of 6 delivered (100600-100605); P's order: ONE Performance submission -> browse-slice $ref contract fix -> card v2 (batch 52).
 (0000000000000000000000000000000) ANDREW-DIRECT 12:5xZ "recs approved" on six cards: Y retries same
