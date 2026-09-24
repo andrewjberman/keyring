@@ -253,6 +253,59 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-63 -- ⭐⭐⭐⭐ **THE RE-MINT LANDED AND EVERY ARM OF THE PAIR HELD. LIMB 3's BLOCKING DEFECT IS CLOSED** -- and the actor ran THIS SEAT'S OWN NEGATIVE CONTROL before acting
+
+`2.0.0_SA_COO~X` `2c24cc867d`: ONE `crosswalk.main --write-pool` at **11:59:01Z**, under **the complete pair
+(COO `5de984f360`, CTO #2 `839b04a16c`)**, both halves cited by hash.
+
+### EVERY CLAUSE THIS SEAT WROTE, MEASURED
+
+| half #2's clause | measured |
+|---|---|
+| **binding:** `crosswalk.py` @`a2b84a1b2a` == HEAD | **51,725 B, sha `200ec514`** -- and ⭐ **"pre-fix `842071008b` differs"**, i.e. **THE NEGATIVE CONTROL THIS SEAT WROTE INTO THE HALF WAS RUN BY THE ACTOR** |
+| exactly ONE new version, 23 -> 24 | **23 -> 24**, VersionId `BN_TiAyAX_EwRm_nP.PMymkiUnFBMA1N` |
+| `records` 274 -> 254 | **274 -> 254** |
+| `MEASURED` 214 UNCHANGED | **214** |
+| **superset: every one of the 214 keys present after** | ⭐ **"214 of 214 keys present"** -- measured, not inferred |
+| multi-claimed forms 0 | **0 of 521** |
+| folders double-claimed 0 | **0** |
+| `resolved_folders` > 0 (the discriminating arm) | ⭐⭐ **20** |
+| payload integrity | **560,881 B, sha `572edb49`** -- *"the pre-built payload exactly"* |
+
+⭐⭐⭐ **`resolved_folders 20` IS THE ARM THIS SEAT INSISTED A COUNT ALONE COULD NOT SUPPLY**, and it fired. A
+re-mint that merely happened to produce 254 records would show `resolved_folders` absent -- the denominator
+appears **only when > 0** by `2.0.0_SA_COO~Z`'s design. **So "the remedy ran" is distinguished from "the number
+came out right", which is the whole reason that arm was named.**
+
+⭐⭐ **AND "214 of 214 KEYS PRESENT" SETTLES THE SHRINK QUESTION THE HALF EXISTED TO ANSWER.** Half #2's central
+obligation was to establish that a served document losing 20 records loses no DATA. **A record count falling to
+254 while every one of the 214 MEASURED keys survives IS de-duplication** -- the 20 that left were the duplicate
+UNRESOLVED halves of pairs describing one folder. **The half's rollback trigger (`MEASURED` < 214) never armed.**
+
+### ⭐ THE SEQUENCING WAS CORRECT, AND THE HALF'S OWN WORDING IS WHY
+
+⚠ **The re-mint ran at 11:59:01Z on CLOUD `681e69d96a`, and this seat's IN-FORCE stamp landed later at
+`6236af5af4`.** That is not a violation and the distinction matters: **half #2 said "in force WHEN the
+byte-identity holds" -- a CONDITION, not "in force when this seat confirms it."** The condition became true at
+`0.0.0_AB_MSTR~Z`'s drain (`a5b9859e0a`), which **precedes** the re-mint. ⭐⭐ **So the stamp was a RECORD of a
+condition already met, never the act that met it -- and writing the binding as a condition rather than as an
+acknowledgement is what let the actor proceed without waiting on this seat's tick.** ⛔ **A half worded "in force
+when the CTO confirms" would have stalled a correct act on a driver's polling interval.** Worth keeping as the
+default shape for any conditional signature.
+
+### WHERE LIMB 3 NOW STANDS
+
+**R-59's diagnosis is discharged: `MEASURED 214` is no longer a true-but-misleading number,** because the
+UNRESOLVED duplicates beside those 20 folders are gone (60 -> 40) and no folder carries two records. **The chain's
+remaining links are the re-ingest (`resolved_folders 53` expected) and then `d-4`, Andrew's limb 4.**
+⚠ **NOTE THE TWO DENOMINATORS DIFFER AND ARE NOT IN CONFLICT:** `resolved_folders 20` is what THIS re-mint
+resolved; **53** is what the re-ingest is expected to find, because the re-ingest reads everything resolvable and
+not only the 20 induction folders. **Neither number is the other's check.**
+
+⭐ **NOTHING IN THIS CHAIN IS THIS SEAT'S ANY MORE.** The re-ingest and `d-4` are `2.0.0_SA_COO~X`'s, and
+`rl-9` -- whose worker committed a proof-of-spec instance at `38fd4b3c07` -- is `2.0.0_SA_COO~Z`'s. **This seat's
+next owed act is the L10 round-37 analysis, which waits on `rl-9`'s drain and the CVO's slug.**
+
 ## R-62 -- ⚠⚠ **"ANDREW CALLED A BREAK" IS IN ANOTHER SEAT'S STATUS LINE. SURFACED, AND DELIBERATELY NOT ADJUDICATED IN EITHER DIRECTION.** The chain head is LIVE, and R-60's Teams item is sharpened: the empty body is a READER property
 
 Three items from one roster read and one blocker message. **Two of them constrain this seat rather than inform it.**
