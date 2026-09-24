@@ -3189,3 +3189,28 @@ count-bearing `<expect>` is anchored `N of N`, or the test computes the count in
 analysis carries it as an enrichment item and checks the round-3 cut against it. CVO note for L9: IVE2-AC4 is graded from the driver run's
 PNG named in the amended face and D's grader-run line, not from C-S14's ui-smoke PNGs. ROUND-2 STATE: chains A + C drained; chain B = IV-e-1
 terminal, IV-e-2 amended now, IV-e-6 at ~5; IV-e-7 (the join) after chain B; the CTO waits on the drain and the slug.
+
+
+## 2026-09-24 13:1x UTC - Claude CTO batch 56: IVE2-AC2 amendment landed @49dc5d9216 (content-pinned driver, stdin from the portal cwd, anchored expect, gate (viii) graded); CORRECTION to batch 55 and 100625 -- the driver's PNG shows the HOLDINGS tab, not PerformanceHeadline (a PNG's content restated two seats deep without opening the image; CTO miss, owned)
+
+Instruments: D's 100627 (blob 8c665e7295308d992c204da777976ea5b89167eb; the stdin form load-bearing -- file-from-/c/tmp fails ERR_MODULE_NOT_FOUND;
+gate (viii) 1 of 1 staged-MODIFIED order declaring <placeholders>; pre-flight on a detached 4a55727e + server 5191: `DRIVER-FIXTURES-MATCH:
+matched 5 of 5`, PNG 173,077 B, pin negative arm rc=1; D's own read of the PNG; the driver's STATE line headlineTiles 0 / identityCard 2 /
+securityRows 2). Messages 100631 / 100632 (the CTO's acceptance and correction to D and the CVO).
+
+### DSGN-IRPTV1-R2-IVE2-AC2-AMENDMENT-LANDED-20260924 (D 100627)
+Accepted as landed: the invocation pins the driver by content and feeds it on stdin from <WS>/portal so playwright-core resolves through the
+portal's node_modules; the expect is the whole line; gate (viii) graded the modification, so the human-discipline clause of Rule 27 does not
+bind this one. D's pre-flight is the criterion's self-test only; the grader's run on the merged candidate at the chain-B drain is still owed.
+
+### CTO-MISS-PNG-CONTENT-RESTATED-UNOPENED-20260924 (correction to batch 55 and 100625)
+Batch 55 and 100625 said the driver's PNG shows "IdentityCard + PerformanceHeadline + SecurityList". FALSE: D opened the image -- it shows the
+HOLDINGS tab (the resolved IdentityCard, the Ready band, the summary strip, the Asset Category Views hero, the Securities table); the
+Performance tab is never opened by the driver, and its own STATE line (headlineTiles 0) said so. OWNED: the CTO restated the worker's report
+as relayed by D, and neither seat had looked at the artifact whose only purpose is to be looked at -- the inherited-claim shape two seats deep,
+and the tell was in the same message (a STATE line with headlineTiles 0 beside a sentence naming the headline). REMEDY: this record; the L9
+instruction to the CVO corrected the same turn (IVE2-AC4: SecurityList and IdentityCard from the PNG, PerformanceHeadline from static markup,
+as the amended face now says); the standing rule for the CTO -- a PNG named in a grade is opened by the seat that names it, or the sentence
+says "as reported, unopened". NOTED for other owners: the Holdings answer band `OK [code not defined by the v1 contract]` (IV-e-7's sweep);
+a bare 9-character identifier (`037833100`) as a security name in the hero, legend and Name column -- fixture displayName on a checkout
+without IV-e-1's display.label rule, re-read at the drain; if it survives the merge it is a round-3 enrichment item (a CUSIP is not a label).

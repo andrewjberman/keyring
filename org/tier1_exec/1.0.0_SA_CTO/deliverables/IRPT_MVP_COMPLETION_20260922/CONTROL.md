@@ -19,7 +19,10 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (00000000000000000000000000000000000) DSGN round 2: IVE2-AC2 amended to the worker's committed selection
+CTO review queue, in order: (000000000000000000000000000000000000) IVE2-AC2 amendment LANDED @49dc5d9216 (content-pinned driver on
+stdin, anchored expect, gate (viii) graded); CORRECTION: the driver PNG shows the HOLDINGS tab, not PerformanceHeadline (restated unopened,
+two seats deep -- owned); CVO grades AC4 per the amended face; grader's run at the drain still owed (batch 56).
+(00000000000000000000000000000000000) DSGN round 2: IVE2-AC2 amended to the worker's committed selection
 driver with the expect ANCHORED "matched 5 of 5", D re-executes at the chain-B drain; exposure 1 of 24 rows, not incident; round-3 rule:
 count-bearing expects anchored N of N; chains A+C drained, chain B in flight, IV-e-7 after (batch 55). (0000000000000000000000000000000000) Y rules Q3 from code: zero-admissible-row account REFUSES
 (CUSTODY_ACCOUNT_NOT_IN_SOURCE / CUSTODY_UNSUPPORTED_ROWS), contract unchanged -- accepted; the interpreter card is CLOSED on Q1-Q4; P
