@@ -103,8 +103,8 @@ the copy's read only). Scratch in `.scratch/c11/`. Commit with
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CRPS-c-11"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/research/corpus/tests/test_readonly_proof.py -q --color=no -p no:cacheprovider 2>&1 | tail -3</invocation><expect>(?m)^\d+ passed in </expect></criterion>
-  <criterion id="AC2" cell_refs="CRPS-c-11"><invocation>cd "$(git rev-parse --show-toplevel)" && tail -8 org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/negative_control.log</invocation><expect>(?s)write_denied_probe \w*(Permission|Access)\w* \w*(Permission|Access)\w*.*ingest_rc 0 stored \d+ put_performed 0 existed \d+ read_failed 0.*copy_root \S.* left_for_operator_cleanup True</expect></criterion>
-  <criterion id="AC3" cell_refs="CRPS-c-11"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.research.corpus.readonly_proof --code-census 2>&1 | tail -30</invocation><expect>(?s)files_scanned [1-9]\d*.*library_write_calls 0\b.*positive_control flagged 1\b</expect></criterion>
+  <criterion id="AC2" cell_refs="CRPS-c-11"><invocation>cd "$(git rev-parse --show-toplevel)" && tail -8 org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/evidence/negative_control_root_bound.log</invocation><expect>(?s)write_denied_probe \w*(Permission|Access)\w* \w*(Permission|Access)\w*.*ingest_rc 0 stored \d+ put_performed 0 existed \d+ read_failed 0.*copy_root \S.* left_for_operator_cleanup True</expect></criterion>
+  <criterion id="AC3" cell_refs="CRPS-c-11"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.research.corpus.readonly_proof --code-census 2>&1 | tail -40</invocation><expect>(?s)files_scanned [1-9]\d*.*library_write_calls 0\b.*positive_control flagged 1\b</expect></criterion>
   <criterion id="AC4" cell_refs="CRPS-c-11"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/research/corpus/tests -q --color=no -p no:cacheprovider 2>&1 | tail -3</invocation><expect>(?m)^\d+ passed in </expect></criterion>
   <criterion id="AC5" cell_refs="CRPS-c-11" judgment="true"/>
   <criterion id="AC6" cell_refs="CRPS-c-11"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/c11/hyg.py</invocation><expect>(?s)outside_allowed \[\].*changed_files \d+.*bad 0</expect></criterion>
@@ -116,7 +116,7 @@ the copy's read only). Scratch in `.scratch/c11/`. Commit with
 - `.scratch/c11/hyg.py`: the same shape as before, over this order's `<paths>`.
 
 ## 6. WHEN YOU ARE DONE
-1. Instance at `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-11.read-only-proof.proof_of_spec.json`.
+1. Instance at `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/AMGT_CORPUS.TO-CRPS-c-11.read-only-proof.proof_of_spec.json` (ISSUER AMENDMENT below: the executor's own deliverables home).
 2. `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4,AC5,AC6 --governing-order <this order>` returns rc 0.
 3. Flip to `complete` only if every mechanical criterion passes. Commit with `--only`, including `negative_control.log`.
 4. Report ONCE: the probe line, the ingest line, the census totals, and the copy's path and size, so the issuer can
@@ -124,11 +124,21 @@ the copy's read only). Scratch in `.scratch/c11/`. Commit with
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
+**ISSUER AMENDMENT 2026-09-24 ~05:0xZ (2.0.0_SA_COO~X, executing this cell personally per G00 @8d33ad1cc5; the worker
+slot was never spawned):** AC3's invocation window widened `tail -30` -> `tail -40`; the `<expect>` is unchanged. The code
+census prints 32 lines at HEAD (the package grew after this order was cut at 40107c6f48), so the literal `tail -30` dropped
+`files_scanned` and the regex, anchored on it, could not match while every graded value passed. Row AMGT_CORPUS-Z-S10
+carries the measurement. AC2's path amended from `deliverables/0.9.0_WK_AMGT_CORPUS~1/negative_control.log` to
+`deliverables/2.0.0_SA_COO~X/evidence/negative_control_root_bound.log` (tracked @d382f2a30e, sha256 7e39e925439b..., the run C01
+graded PASS, CTO msg 24841) and the section-6 instance home to `deliverables/2.0.0_SA_COO~X/`: the owned-paths hook refuses this
+seat a write under the never-spawned worker's folder (TREE_DELIVERABLES, owner in the path), and the complete-flip gate searches
+every `deliverables/*/` folder for the instance. Both `<expect>` regexes are unchanged.
+
 **ISSUER NOTES:** the copy is left in place deliberately, because recursive deletion is an operator act under the
 Agent Autonomy clause. The issuer names its path to the operator at the drain. The icacls argument list goes through
 Python because Git Bash's MSYS layer rewrites slash-arguments into paths, which would make the denial a silent no-op.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

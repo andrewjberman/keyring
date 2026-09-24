@@ -94,6 +94,19 @@ Treat every inbound as live.
   **Do NOT manufacture it** -- a control I generate could not have failed.
 
 ## Day index
+- **2026-09-24** -- **NOTHING SERVED.** His **2026-09-23T19:40Z** message is UNSERVED on the record
+  (day index had ended at 09-15) and **UNREADABLE**: `body.content` is empty with `isDeleted:false` /
+  `eventDetail:null` -- the inline-image/`hostedContents` class -- and `read_chat_messages` on his chat
+  returns **Graph 500** twice. **The emptiness is my READER's property, not his message's.**
+  WHY NOTHING WOKE ANYONE: the Teams watch is **ARMED AND BLIND** -- all 3 `opalinvest.dev` OAuth
+  records in `~/.claude/.credentials.json` are EXPIRED (two at 09-24T10:19Z), so `read_token()` returns
+  None every cycle and unpinned mode prints NOTHING. **MCP plane LIVE while FILE plane STALE**, so
+  process/banner/`whoami` all read GREEN. No traffic at all on 09-24 (poll cursor 09-23T20:08Z), so it
+  cost nothing today. Nothing sent; a reply is outward-facing and draft-and-ask. See `2026-09-24.md`.
+- **2026-09-15** -- 05:51Z "deliver this to 1.0.0_SA_CTO~W" + attachment. ACKed 76 s; **DECLINED** 05:52:42Z
+  in 3 sentences: relaying Teams content to agents is catalog row 29 (DENIED, even from him), and the
+  attachment is refused (`get_item` -> `identity_scope_denied`, exercised this turn). Offered the direct
+  route. **Nothing sent to any fabric seat.** Ball with him.
 - **2026-08-25** -- launch arm REPLAYED three already-served 08-20 messages off a STALE cursor
   home (`C:\tmp`, TMPDIR-unset resolution, 3 days behind `%LOCALAPPDATA%\Temp`'s copy). I ACKed
   with an unverified 5-day-delay apology, then RECALL showed all three served on 08-20; he replied

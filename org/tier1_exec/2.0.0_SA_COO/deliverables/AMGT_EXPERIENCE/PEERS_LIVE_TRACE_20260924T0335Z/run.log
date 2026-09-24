@@ -1,0 +1,9 @@
+2026-09-24T03:34:44.591Z login page opened; waiting up to 40 minutes for a human sign-in (MFA)
+2026-09-24T03:34:47.289Z signed in: {"at":"2026-09-24T03:34:47.289Z","url_after":"https://d2n2nzpeqf34ge.cloudfront.net/market","access_claims":{"role":"admin","userType":"Dev","exp":1790220943,"iss":"opal-portal-auth"},"id_claims":null,"user_record":null}
+2026-09-24T03:34:56.926Z case BA_US_Equity -> landed https://d2n2nzpeqf34ge.cloudfront.net/security-analysis/BA_US_Equity
+2026-09-24T03:35:02.702Z case 992_HK_Equity -> landed https://d2n2nzpeqf34ge.cloudfront.net/security-analysis/992_HK_Equity
+2026-09-24T03:35:07.719Z case ASML_US_Equity -> landed https://d2n2nzpeqf34ge.cloudfront.net/security-analysis/ASML_US_Equity
+2026-09-24T03:35:12.966Z case CAT_US_Equity -> landed https://d2n2nzpeqf34ge.cloudfront.net/security-analysis/CAT_US_Equity
+2026-09-24T03:35:17.865Z case NOSUCHKEY_ZZ_Equity -> landed https://d2n2nzpeqf34ge.cloudfront.net/security-analysis/NOSUCHKEY_ZZ_Equity
+2026-09-24T03:35:23.008Z case BP/_LN_Equity -> landed https://d2n2nzpeqf34ge.cloudfront.net/security-analysis/BP%2F_LN_Equity
+2026-09-24T03:35:23.013Z done; browser stays open 3 minutes for a human look

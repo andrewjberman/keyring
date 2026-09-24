@@ -1,0 +1,11 @@
+2026-09-24T03:20:13.002Z login page opened; waiting up to 40 minutes for a human sign-in (MFA)
+2026-09-24T03:20:15.584Z signed in: {"at":"2026-09-24T03:20:15.584Z","url_after":"https://d2n2nzpeqf34ge.cloudfront.net/market","access_claims":{"role":"admin","userType":"Dev","exp":1790220689,"iss":"opal-portal-auth"},"id_claims":null,"user_record":null}
+2026-09-24T03:20:22.541Z case BA_US_Equity -> landed https://d2n2nzpeqf34ge.cloudfront.net/security-analysis/BA_US_Equity
+2026-09-24T03:20:27.714Z case 992_HK_Equity -> landed https://d2n2nzpeqf34ge.cloudfront.net/security-analysis/992_HK_Equity
+2026-09-24T03:20:33.144Z case ASML_US_Equity -> landed https://d2n2nzpeqf34ge.cloudfront.net/security-analysis/ASML_US_Equity
+2026-09-24T03:20:38.285Z case CAT_US_Equity -> landed https://d2n2nzpeqf34ge.cloudfront.net/security-analysis/CAT_US_Equity
+2026-09-24T03:20:42.987Z case NOSUCHKEY_ZZ_Equity -> landed https://d2n2nzpeqf34ge.cloudfront.net/security-analysis/NOSUCHKEY_ZZ_Equity
+2026-09-24T03:20:48.709Z case BP/_LN_Equity -> landed https://d2n2nzpeqf34ge.cloudfront.net/security-analysis/BP%2F_LN_Equity
+2026-09-24T03:20:48.713Z done; browser stays open 3 minutes for a human look
+2026-09-24T03:22:10.988Z FATAL page.waitForTimeout: Target page, context or browser has been closed
+    at C:\Users\Opal Bloomberg\AppData\Local\Temp\claude\C--Users-Opal-Bloomberg-Desktop-ajb-workspace\02932f04-c422-41e8-bb3b-f02a7be7b1ef\scratchpad\peers_live_trace.cjs:88:14

@@ -1,0 +1,648 @@
+{
+ "brief": "LEAD_PANEL_END_TO_END_GAP_BRIEF_20260923",
+ "author": "4.0.0_SA_CRO~Z",
+ "device": "OPAL_BLOOMBERG (site Z)",
+ "measured_window_utc": "2026-09-24T02:08Z..02:24Z",
+ "workspace_pin": "d350781052 (SITEZ, after the Peers brief commit; source read at cd0268a4f4 + that commit)",
+ "portal_pin": "10141b6d0b (DEV, ancestor of origin/DEV c1ac41ec); origin/PROD a0690a03",
+ "deployed_api": {
+  "name": "opal-amgt-scoped-api",
+  "CodeSha256": "DEQQiCH+UoUMd7EZSQA5RTsILDY5+ubb9Y3gVLE5elU=",
+  "LastModified": "2026-09-23T22:02:35Z",
+  "equals_signed_candidate": true,
+  "env": {
+   "HARVEST_METRICS_TABLE": "opal-harvest-security-metrics",
+   "HARVEST_ARTICLES_TABLE": "opal-harvest-articles"
+  }
+ },
+ "deployed_chatter_producer": {
+  "name": "amgt-resapp-chatter-axis",
+  "CodeSha256": "I6eitcaItzqRTlVUaUSF+GGzrpNDHnn71ILk1vIGjHY=",
+  "CodeSize": 669924,
+  "LastModified": "2026-09-19T09:49:46Z",
+  "runtime": "python3.12",
+  "timeout": 60,
+  "memory": 128,
+  "env": null,
+  "local_build_zip": "infra/aws/terraform/harvest/.build/chatter-axis-producer.zip 669924 bytes mtime 2026-09-19T05:19 local, sha256 b64 EQUAL to deployed",
+  "zip_vs_HEAD": {
+   "chatter_axis.py": {
+    "zip": "37443 bytes d9f52a5beca2b1ea",
+    "HEAD": "40666 bytes 074b3886bc114d8b"
+   },
+   "pool_reader.py": {
+    "zip": "24238 bytes 7d838c302ebf9bf8",
+    "HEAD": "30850 bytes f56aa10f21991ab3"
+   }
+  },
+  "source_moved_after_build": "fd9449f246 2026-09-22 0.9.0_WK_AMGT_HARVST~7 (HVST-h-7: chatter axis ranks from the graded chatter_daily table)",
+  "DEFAULT_SOURCE_at_HEAD": "legacy (chatter_axis.py:427); the gold reader exists at HEAD, not in the deployed zip",
+  "schedule": {
+   "name": "amgt-resapp-chatter-axis-daily",
+   "state": "ENABLED",
+   "cron": "cron(0 10 * * ? *) UTC"
+  },
+  "invocations_last_3_days": {
+   "2026-09-21": 1,
+   "2026-09-22": 1,
+   "2026-09-23": 1
+  },
+  "errors_last_3_days": 0,
+  "run_lines": {
+   "2026-09-16..18": "tickers_considered=191 rows_ranked=10 names_read=250 names_with_links=3",
+   "2026-09-19": "rows_ranked=3",
+   "2026-09-20..23": "rows_ranked=2 names_with_links=3 fallback_reason=None universe=pool:universe/v1/2026-09-16.json"
+  },
+  "instrument": "aws lambda get-function-configuration, scheduler list-schedules, cloudwatch get-metric-statistics, logs filter-log-events @02:09-02:21Z"
+ },
+ "price_producer": {
+  "module": "integrations/bloomberg/research/price_axis_pull.py (box-side, argparse main, hand-run on the terminal box)",
+  "generation_writer": "lib/research/price/generation.py (AMGT-rk-3)",
+  "lambda": null,
+  "local_scheduled_task": null,
+  "last_COMPLETE_pointers": [
+   "TRENDING_PRICE#2026-09-15 (32 rows, gen 20260917T222503Z, run R20260917T222502Z, computed_at 2026-09-16T20:20Z rows)",
+   "BREAKOUT_PRICE#2026-09-15 (32 rows, gen 20260917T222505Z)",
+   "TRENDING_PRICE#2026-09-10 (32 rows, legacy_bare_partition republish)"
+  ],
+  "coverage_vintage_text": "crossed_bare_partition: already-crossed-movement rows written by the box-side pull, re-published through the C-RANKING-GENERATION contract by AMGT-rk-20; NO NEW VENDOR CALL",
+  "dated_fallback_lookback_days": 14,
+  "fallback_expires_for_price": "2026-09-29 (14 days after 2026-09-15)"
+ },
+ "metrics_table": {
+  "name": "opal-harvest-security-metrics",
+  "items": 305,
+  "bytes": 127362,
+  "gsi": "axis-rank-index (axis_date, rank_sort)",
+  "pointer_rows": 22,
+  "pointers": [
+   {
+    "axis_date": "BREAKOUT_CHATTER#2026-09-15",
+    "run_id": "R20260915T200833Z",
+    "generation_id": "20260915T200842Z-4f53cda18c2b",
+    "row_count": "0",
+    "state": "EMPTY"
+   },
+   {
+    "axis_date": "BREAKOUT_CHATTER#2026-09-16",
+    "run_id": "R20260916T100010Z",
+    "generation_id": "20260916T100028Z-4f53cda18c2b",
+    "row_count": "0",
+    "state": "EMPTY"
+   },
+   {
+    "run_id": "R20260917T100010Z",
+    "axis_date": "BREAKOUT_CHATTER#2026-09-17",
+    "generation_id": "20260917T100027Z-4f53cda18c2b",
+    "row_count": "0",
+    "state": "EMPTY"
+   },
+   {
+    "run_id": "R20260918T100010Z",
+    "axis_date": "BREAKOUT_CHATTER#2026-09-18",
+    "generation_id": "20260918T100028Z-4f53cda18c2b",
+    "row_count": "0",
+    "state": "EMPTY"
+   },
+   {
+    "run_id": "R20260919T100010Z",
+    "generation_id": "20260919T100028Z-a7ef71a4ae12",
+    "row_count": "0",
+    "state": "EMPTY",
+    "axis_date": "BREAKOUT_CHATTER#2026-09-19"
+   },
+   {
+    "run_id": "R20260920T100010Z",
+    "generation_id": "20260920T100027Z-25147d66b259",
+    "row_count": "0",
+    "state": "EMPTY",
+    "axis_date": "BREAKOUT_CHATTER#2026-09-20"
+   },
+   {
+    "run_id": "R20260921T100010Z",
+    "generation_id": "20260921T100028Z-25147d66b259",
+    "row_count": "0",
+    "state": "EMPTY",
+    "axis_date": "BREAKOUT_CHATTER#2026-09-21"
+   },
+   {
+    "run_id": "R20260922T100010Z",
+    "generation_id": "20260922T100028Z-25147d66b259",
+    "row_count": "0",
+    "state": "EMPTY",
+    "axis_date": "BREAKOUT_CHATTER#2026-09-22"
+   },
+   {
+    "run_id": "R20260923T100010Z",
+    "generation_id": "20260923T100028Z-25147d66b259",
+    "row_count": "0",
+    "state": "EMPTY",
+    "axis_date": "BREAKOUT_CHATTER#2026-09-23"
+   },
+   {
+    "axis_date": "BREAKOUT_PRICE#2026-09-10",
+    "run_id": "R20260916T065448Z",
+    "generation_id": "20260916T065449Z-4f53cda18c2b",
+    "row_count": "0",
+    "state": "EMPTY"
+   },
+   {
+    "run_id": "R20260917T222502Z",
+    "axis_date": "BREAKOUT_PRICE#2026-09-15",
+    "generation_id": "20260917T222505Z-45dc4b07af48",
+    "row_count": "32",
+    "state": "COMPLETE"
+   },
+   {
+    "run_id": "R20260915T200833Z",
+    "axis_date": "TRENDING_CHATTER#2026-09-15",
+    "generation_id": "20260915T200841Z-adf383740a9e",
+    "row_count": "10",
+    "state": "COMPLETE"
+   },
+   {
+    "axis_date": "TRENDING_CHATTER#2026-09-16",
+    "run_id": "R20260916T100010Z",
+    "generation_id": "20260916T100027Z-efd7e544dd59",
+    "row_count": "10",
+    "state": "COMPLETE"
+   },
+   {
+    "axis_date": "TRENDING_CHATTER#2026-09-17",
+    "run_id": "R20260917T100010Z",
+    "generation_id": "20260917T100026Z-efd7e544dd59",
+    "row_count": "10",
+    "state": "COMPLETE"
+   },
+   {
+    "run_id": "R20260918T100010Z",
+    "axis_date": "TRENDING_CHATTER#2026-09-18",
+    "generation_id": "20260918T100026Z-efd7e544dd59",
+    "row_count": "10",
+    "state": "COMPLETE"
+   },
+   {
+    "axis_date": "TRENDING_CHATTER#2026-09-19",
+    "run_id": "R20260919T100010Z",
+    "generation_id": "20260919T100027Z-fe3d3b0735c8",
+    "row_count": "3",
+    "state": "COMPLETE"
+   },
+   {
+    "run_id": "R20260920T100010Z",
+    "axis_date": "TRENDING_CHATTER#2026-09-20",
+    "generation_id": "20260920T100026Z-d09ee37a8f3b",
+    "row_count": "2",
+    "state": "COMPLETE"
+   },
+   {
+    "axis_date": "TRENDING_CHATTER#2026-09-21",
+    "run_id": "R20260921T100010Z",
+    "generation_id": "20260921T100026Z-d09ee37a8f3b",
+    "row_count": "2",
+    "state": "COMPLETE"
+   },
+   {
+    "run_id": "R20260922T100010Z",
+    "axis_date": "TRENDING_CHATTER#2026-09-22",
+    "generation_id": "20260922T100027Z-d09ee37a8f3b",
+    "row_count": "2",
+    "state": "COMPLETE"
+   },
+   {
+    "run_id": "R20260923T100010Z",
+    "axis_date": "TRENDING_CHATTER#2026-09-23",
+    "generation_id": "20260923T100026Z-d09ee37a8f3b",
+    "row_count": "2",
+    "state": "COMPLETE"
+   },
+   {
+    "axis_date": "TRENDING_PRICE#2026-09-10",
+    "run_id": "R20260916T065448Z",
+    "generation_id": "20260916T065448Z-9b7ffda3dcdc",
+    "row_count": "32",
+    "state": "COMPLETE"
+   },
+   {
+    "axis_date": "TRENDING_PRICE#2026-09-15",
+    "run_id": "R20260917T222502Z",
+    "generation_id": "20260917T222503Z-c35c454d1e4f",
+    "row_count": "32",
+    "state": "COMPLETE"
+   }
+  ],
+  "instrument": "aws dynamodb describe-table + scan(ticker=_CURRENT) @02:09Z, complete (305 scanned)"
+ },
+ "direct_invokes_rankings_0211Z": {
+  "rank_trending_chatter": {
+   "statusCode": 200,
+   "served_axis": "TRENDING_CHATTER",
+   "resolution": "CROSSED",
+   "movement_basis": "MEASURED",
+   "producer": "lib.research.metrics.chatter_axis",
+   "requested_as_of": "2026-09-24",
+   "as_of_date": "2026-09-23",
+   "dated": true,
+   "ranking_status": "SERVED",
+   "state": "COMPLETE",
+   "generation_id": "20260923T100026Z-d09ee37a8f3b",
+   "generation_row_count": 2,
+   "rows_served": 2,
+   "coverage_vintage": "pool:universe/v1/2026-09-16.json#as_of=2026-09-16",
+   "ranking_reason": "",
+   "rows_head": [
+    [
+     1,
+     "BA US",
+     "BA_US_Equity",
+     "MEASURED",
+     0
+    ],
+    [
+     2,
+     "HD US",
+     "HD_US_Equity",
+     "MEASURED",
+     0
+    ]
+   ],
+   "rows_unresolved_identity": []
+  },
+  "rank_trending_price": {
+   "statusCode": 200,
+   "served_axis": "TRENDING_PRICE",
+   "resolution": "CROSSED",
+   "movement_basis": "MEASURED",
+   "producer": "integrations.bloomberg.research.price_axis_pull",
+   "requested_as_of": "2026-09-24",
+   "as_of_date": "2026-09-15",
+   "dated": true,
+   "ranking_status": "SERVED",
+   "state": "COMPLETE",
+   "generation_id": "20260917T222503Z-c35c454d1e4f",
+   "generation_row_count": 32,
+   "rows_served": 32,
+   "coverage_vintage": "crossed_bare_partition:TRENDING_PRICE#2026-09-15,BREAKOUT_PRICE#2026-09-15 (alre",
+   "ranking_reason": "",
+   "rows_head": [
+    [
+     1,
+     "PBR US",
+     "PBR_US_Equity",
+     "MEASURED",
+     19.2877
+    ],
+    [
+     2,
+     "VLO US",
+     "VLO_US_Equity",
+     "MEASURED",
+     14.3581
+    ],
+    [
+     3,
+     "BP/ LN",
+     "BP/_LN_Equity",
+     "MEASURED",
+     11.6821
+    ],
+    [
+     4,
+     "BBSE3 BZ",
+     "BBSE3_BZ_Equity",
+     "MEASURED",
+     7.6676
+    ],
+    [
+     5,
+     "9433 JP",
+     "9433_JP_Equity",
+     "MEASURED",
+     7.429
+    ]
+   ],
+   "rows_unresolved_identity": [
+    "SLB"
+   ]
+  },
+  "rank_breakout_chatter": {
+   "statusCode": 200,
+   "served_axis": "BREAKOUT_CHATTER",
+   "resolution": "CROSSED",
+   "movement_basis": "MEASURED",
+   "producer": "lib.research.metrics.chatter_axis",
+   "requested_as_of": "2026-09-24",
+   "as_of_date": "2026-09-24",
+   "dated": false,
+   "ranking_status": "ABSENT",
+   "state": null,
+   "generation_id": null,
+   "generation_row_count": null,
+   "rows_served": 0,
+   "coverage_vintage": "",
+   "ranking_reason": "no generation pointer at BREAKOUT_CHATTER#2026-09-24 / _CURRENT: no committed ranking exists for this date -- this is not an empty membership",
+   "rows_head": [],
+   "rows_unresolved_identity": []
+  },
+  "rank_breakout_price": {
+   "statusCode": 200,
+   "served_axis": "BREAKOUT_PRICE",
+   "resolution": "CROSSED",
+   "movement_basis": "MEASURED",
+   "producer": "integrations.bloomberg.research.price_axis_pull",
+   "requested_as_of": "2026-09-24",
+   "as_of_date": "2026-09-15",
+   "dated": true,
+   "ranking_status": "SERVED",
+   "state": "COMPLETE",
+   "generation_id": "20260917T222505Z-45dc4b07af48",
+   "generation_row_count": 32,
+   "rows_served": 32,
+   "coverage_vintage": "crossed_bare_partition:TRENDING_PRICE#2026-09-15,BREAKOUT_PRICE#2026-09-15 (alre",
+   "ranking_reason": "",
+   "rows_head": [
+    [
+     1,
+     "PBR US",
+     "PBR_US_Equity",
+     "MEASURED",
+     0.1086
+    ],
+    [
+     2,
+     "VLO US",
+     "VLO_US_Equity",
+     "MEASURED",
+     0.0986
+    ],
+    [
+     3,
+     "BP/ LN",
+     "BP/_LN_Equity",
+     "MEASURED",
+     0.0718
+    ],
+    [
+     4,
+     "9433 JP",
+     "9433_JP_Equity",
+     "MEASURED",
+     0.0353
+    ],
+    [
+     5,
+     "KPN NA",
+     "KPN_NA_Equity",
+     "MEASURED",
+     0.0156
+    ]
+   ],
+   "rows_unresolved_identity": [
+    "SLB"
+   ]
+  }
+ },
+ "direct_invokes_timeseries_0220Z": {
+  "ts2_tc": {
+   "statusCode": 200,
+   "served_axis": "TRENDING_CHATTER",
+   "as_of_date": "2026-09-24",
+   "window_days": 30,
+   "read_completeness": {
+    "complete": true,
+    "requested_key_count": 18,
+    "resolved_key_count": 18,
+    "unresolved_key_count": 0,
+    "unread_pointer_count": 0,
+    "attempts_used": 1,
+    "max_attempts": 4,
+    "basis": "measured",
+    "reason": null
+   },
+   "series": [
+    [
+     "BA US",
+     6,
+     0
+    ],
+    [
+     "HD US",
+     5,
+     0
+    ]
+   ],
+   "generation_entries": 30,
+   "pointer_status_counts": {
+    "SERVED": 9,
+    "EMPTY": 0,
+    "ABSENT": 21,
+    "NOT_SERVABLE": 0,
+    "POINTER_UNREAD": 0
+   },
+   "served_dates": [
+    "2026-09-15",
+    "2026-09-16",
+    "2026-09-17",
+    "2026-09-18",
+    "2026-09-19",
+    "2026-09-20",
+    "2026-09-21",
+    "2026-09-22",
+    "2026-09-23"
+   ]
+  },
+  "ts2_tp": {
+   "statusCode": 200,
+   "served_axis": "TRENDING_PRICE",
+   "as_of_date": "2026-09-24",
+   "window_days": 30,
+   "read_completeness": {
+    "complete": true,
+    "requested_key_count": 10,
+    "resolved_key_count": 10,
+    "unresolved_key_count": 0,
+    "unread_pointer_count": 0,
+    "attempts_used": 1,
+    "max_attempts": 4,
+    "basis": "measured",
+    "reason": null
+   },
+   "series": [
+    [
+     "PBR US",
+     2,
+     0
+    ],
+    [
+     "VLO US",
+     2,
+     0
+    ],
+    [
+     "BP/ LN",
+     2,
+     0
+    ],
+    [
+     "BBSE3 BZ",
+     2,
+     0
+    ],
+    [
+     "9433 JP",
+     2,
+     0
+    ]
+   ],
+   "generation_entries": 30,
+   "pointer_status_counts": {
+    "SERVED": 2,
+    "EMPTY": 0,
+    "ABSENT": 28,
+    "NOT_SERVABLE": 0,
+    "POINTER_UNREAD": 0
+   },
+   "served_dates": [
+    "2026-09-10",
+    "2026-09-15"
+   ]
+  },
+  "ts2_bc": {
+   "statusCode": 200,
+   "served_axis": "BREAKOUT_CHATTER",
+   "as_of_date": "2026-09-24",
+   "window_days": 30,
+   "read_completeness": {
+    "complete": true,
+    "requested_key_count": 0,
+    "resolved_key_count": 0,
+    "unresolved_key_count": 0,
+    "unread_pointer_count": 0,
+    "attempts_used": 0,
+    "max_attempts": 4,
+    "basis": "measured",
+    "reason": null
+   },
+   "series": [
+    [
+     "BA US",
+     0,
+     0
+    ]
+   ],
+   "generation_entries": 30,
+   "pointer_status_counts": {
+    "SERVED": 0,
+    "EMPTY": 9,
+    "ABSENT": 21,
+    "NOT_SERVABLE": 0,
+    "POINTER_UNREAD": 0
+   },
+   "served_dates": []
+  }
+ },
+ "timeseries_event_shape_note": "a first invoke @02:16Z with only rawQueryString returned empty series because the handler reads event.queryStringParameters (scoped_amgt.py:3878); re-invoked with the gateway's parsed shape. A synthetic-event artifact, not a route defect.",
+ "watchlist_GET_firm_opal": {
+  "statusCode": 200,
+  "body": []
+ },
+ "refresh_POST": {
+  "statusCode": 200,
+  "body": {
+   "refresh": "declared",
+   "security_key": "BA_US_Equity",
+   "carrier": {
+    "route": "POST /api/private/research/pull",
+    "queue": "opal-research-pull-requests"
+   },
+   "note": "this adapter declares the pull carrier and enqueues nothing itself -- call POST /api/private/research/pull to request a pull; the consumer stays on-box (Bloomberg DAPI 127.0.0.1:8194) and is not wired here"
+  },
+  "client_type": "{ queued: boolean } (amgt-lead-panel.ts:113)",
+  "rendered": "LeadPanel.tsx renders refreshMutation.isPending only; 0 reads of .data/.isSuccess/.isError",
+  "carrier_live": {
+   "route": "POST /api/private/research/pull CUSTOM -> integrations/mefv2t5 (gateway 7k3ed8px20)",
+   "function": "opal-research-pull-enqueue CodeSha256 THhzBXqTs1XoNok2IyKS5z+y3RE41aqUMIw4Bno53NM= @2026-09-11T19:40Z",
+   "queue": "opal-research-pull-requests ApproximateNumberOfMessages=0 NotVisible=0",
+   "consumer": "integrations/bloomberg/research/pull_consumer.py -- a person-started poller (--once / drain-and-exit); no process on this box at 02:17Z; no scheduled task"
+  }
+ },
+ "no_firm_control": {
+  "statusCode": 401,
+  "body": {
+   "refused": true,
+   "reason": "missing edge-injected X-Firm-Id: request did not pass auth-validator-edge"
+  }
+ },
+ "freshness_GET": {
+  "statusCode": 200,
+  "keys": [
+   "denominators",
+   "generated_at",
+   "reads",
+   "rot",
+   "rows"
+  ],
+  "rows": 250
+ },
+ "overlay_BA_0211Z": {
+  "statusCode": 200,
+  "identity": "MEASURED",
+  "axis_reads": [
+   [
+    "TRENDING",
+    "CHATTER",
+    "ABSENT",
+    null
+   ],
+   [
+    "TRENDING",
+    "PRICE",
+    "ABSENT",
+    null
+   ],
+   [
+    "BREAKOUT",
+    "CHATTER",
+    "ABSENT",
+    null
+   ],
+   [
+    "BREAKOUT",
+    "PRICE",
+    "ABSENT",
+    null
+   ]
+  ],
+  "header_figures": 14,
+  "description_status": "ABSENT",
+  "feed": {
+   "coverage_status": "SERVED",
+   "item_count": 1,
+   "social": "no source measured (S13)"
+  },
+  "posture": {
+   "status": "SERVED",
+   "verdict": "hold",
+   "comparable": "DE_US_Equity",
+   "as_of": "2026-09-15"
+  },
+  "chatter": null,
+  "price": null,
+  "bloomberg_session_state": "UNKNOWN"
+ },
+ "frontend": {
+  "page_chunk_served": "assets/index-4rpf7wvH.js carries 'Universe discovery' (1) and 'lead-panel/rankings' (1)",
+  "dated_field_typed_or_rendered": "0 hits for dated/requested_as_of in types.ts, GenerationCaption.tsx, RankedList.tsx (3 hits repo-wide under SecurityAnalysis/, all in a captured fixture JSON)",
+  "panel_timestamp": "PanelHeader timestamp = rankingQuery.data.generated_at (the adapter's clock at read time), not as_of_date",
+  "firm_claim": "AuthContext.tsx:99,136 claims.firmId parsed from the token; useStarredList enabled only with it",
+  "row_click": "RankedList.tsx:226 navigates on row.security_key; :251 renders UNRESOLVED and does not navigate when absent"
+ },
+ "not_exercised": [
+  "signed-in browser walkthrough",
+  "CloudFront edge header injection",
+  "watchlist star/unstar (a write)",
+  "POST /api/private/research/pull (a write + enqueue)",
+  "any producer run",
+  "any vendor/Bloomberg call"
+ ]
+}

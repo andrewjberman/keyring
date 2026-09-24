@@ -1,290 +1,258 @@
-# AMGT_CORPUS -- L5 decomposition (COO) -- v1.0 (round 1)
+# AMGT_CORPUS -- L5 decomposition (COO) -- v2.0 (round 2: ADDENDUM A, the enrichment list)
 
-**Seat:** `2.0.0_SA_COO~X`, seated on the operator's word at this terminal 2026-09-23 ~01:4xZ, on `1.0.0_SA_CTO~Z`'s L4->L5
-handoff (msg 24518; acknowledged 24530/24531). **Directive:** D5. **Fabric:** site-z, branch `SITEZ`.
-**Consumes:** PRD s. SURFACE MANIFEST R1-R11 at `org/missions/D5/AMGT/AMGT_CORPUS/prd/AMGT_CORPUS_PRD.md` **v0.4
-@8fbb066b62** (landed by `1.0.0_SA_CTO~Z`, msg 24539). v0.3 @c94a6bb2ef was read first, when both halves were SIGNED.
-v0.4 changes FWD-4 only, and the manifest rows are byte-identical to v0.3. `prd-signoff.py status` read WITHHELD at
-v0.4's landing, then ADMITTED once `3.0.0_SA_CVO~Z` re-signed the ratified half @ca6b233108 (brief half current,
-`2.0.0_SA_COO~Z`). v0.4's terms, as ruled in 24532:
-- **FWD-4 ends at the EXECUTABLE REQUEST.** For one backlog name, one command produces the exact induction request
-  (what it will add, an ambiguous identity refused), executable by the seat holding the universe. The induction act
-  itself is `AMGT_RESAPP`'s: it writes that project's surfaces and spends its vendor budget.
-- **`C-NO-VENDOR-CALL` stands untouched.**
-- **FWD-4's population is re-pointed** at "a backlog folder the universe carries UNRESOLVED", conditional on `CRPS-c-5`
-  measuring the resolved-and-absent set. If that set is non-empty, the original population stands.
+**Seat:** `2.0.0_SA_COO~X`. **Cut:** 2026-09-24 ~06:5xZ at CLOUD HEAD (see the L5 commit). **Spec:** PRD v0.6 @`031c3a3a3e`
+(ADDENDUM A cut at v0.5 @`1ffb156ecd`; v0.6 is a header-only bump plus the three contract headings re-named CONTRACTS),
+both L4-R halves SIGNED current (`prd-signoff.py status` at the cut: ratified-text `3.0.0_SA_CVO~Z`, brief `4.0.0_SA_CRO~Z`
+@`9b17fd5d49`; per R-10 the signature is not a bar for AMGT and this round is not held on it). **Analysis:** the CTO's
+round-1 analysis @`031c3a3a3e` (`org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_CORPUS_ROUND1_ANALYSIS_20260924.md`), on
+`3.0.0_SA_CVO~Z`'s slug (`ADJUDICATION_v4` @`96cbb2908d`). **Round 1** is terminal at `b4a8638eeb` (11 of 11, decomposition
+v1.0 @`3c09ae6ce8` spent) and nothing in it re-opens. Round 1's file is kept beside this one, unchanged.
 
-**The issuance is cut only when `prd-signoff.py status AMGT_CORPUS` reads ADMITTED at v0.4.** Section 9 says why that
-is a gate and not a wait.
+**Andrew's word this round rests on (verbatim, R-26 / ADDENDUM A):** *"spec out a new analysis that can be handed off
+to new rounds for development on AMGT_CORPUS (Not only do we need the incorporated layers from the corpus however we
+decided to do that i.e. using your dossier addendum we also need backfill for all the asset management securities)"*,
+and the completion test: *"Only when all of this is done for every single security in the Asset Management research
+folder is the goal complete."*
 
-**The rectangle is RECEIVED, not derived here.** L4 wrote the manifest. This file mirrors it, re-grounds what it can at
-its own vintage, and adds the dependency edges, the placement axis and the battery. It does not re-open the manifest's
-MECE. It makes the rulings section 8 states and defends.
+## 0. What this round IS, by subtraction from the analysis's enrichment list
 
----
+The CTO's list (analysis s.6), item by item, and where each lands:
 
-## 1. The rectangle -- eleven cells over eleven manifest rows, `CRPS-c-<n>` mirroring `R<n>`
+| # | item | disposition here |
+|---|---|---|
+| A | ADDENDUM A itself: FWD-10..FWD-18 (the fold) and FWD-19 (the backfill) | **THE RECTANGLE** -- cells d-1..d-5 |
+| 1 | a control for the exempting branch at `readonly_proof.py:301` | **CELL d-6** (one instrument-repair cell for the round, per the diet) |
+| 2 | the H re-review of the scanner (Z-S9's "NOT_EVALUATED") | **CLOSED BY EVIDENCE, no cell** -- row `AMGT_CORPUS-Z-S12` @`7f4a9d8c4e`: `2.0.0_SA_COO~Y` DID re-review at `1c877a8c87` (2026-09-23 18:07Z, after Z-S9 was filed) and PASSED all ten scanner controls; the bytes are in CLOUD since `b4a8638eeb`. A review is a reviewer's act, never a worker cell; the next L9 may adjudicate Z-S7..S9 on Z-S12. If the CTO overturns, it is one cell added, not a recut. |
+| 3 | Z-S6's period ordering | **CLOSED BY EVIDENCE, no cell** -- same row: the typed.py fix landed at `d382f2a30e`, H's all-pairs validator PASSED 5,040 permutations at `1c877a8c87`, and the bytes are in CLOUD. |
+| 4 | a contract-half guard on `prd_signoff_lib.py` | **NOT THIS PROJECT'S** -- the defect and the tool are `1.0.0_SA_CTO~Z`'s (analysis s.3), and the spine forbids one project's loop writing into another surface's fix. Routed back to the CTO with this seat's recommendation (`.tools` is lane ANY, so a cell COULD write it; the reason it is not cut here is ownership of the mechanism, not permission). |
+| 5 | the router-driving fix for the reactive arm | **NOT THIS PROJECT'S** -- an `AMGT_RESAPP` Peers artifact (analysis s.4, the PNG filed under CAT while the panel shows BA). Routed to `2.0.0_SA_COO~Z`'s round via the CTO. |
 
-**THE INVARIANT:** every cell mirrors exactly one manifest row, and every row has exactly one cell. Measured at this cut:
-11 cells over 11 rows, a bijection.
-
-**CELL-ID CONFORMANCE, MEASURED** (`org/standards/DECOMP_CELL_ID_CONVENTION.md` SHAPE 1): the ids were loaded into the
-enforcer object itself (`.tools/proof-of-spec-check.py` `CELL_ID_RE`, `fullmatch`):
-- 11 of 11 ids match.
-- Malformed controls: a lowercase prefix is refused and underscores are refused. A two-letter axis (`CRPS-cc-1`) is
-  admitted, because the regex admits 1-4 letters. No cell here uses one.
-
-No cell id from another project's decomposition is written in this file. Siblings are cited by path only.
-
-**CELL STATUS VOCABULARY, ADOPTED** from `AMGT_RESAPP`'s decomposition s.2a (by path):
-`NOT-EVALUATED | OPEN | IN-FLIGHT | HELD | COMPLETE | CLOSED`. Every cell at this cut is `OPEN`. That is measured
-(11 of 11 evaluated), not a missing value.
-
-**CODE HOME:** a new package `lib/research/corpus/`. It does not exist at this cut (measured). Every cell owns its own
-module and its own test file, so no two cells edit one file. `CRPS-c-4` creates the package, the shared library-root
-module and the test poison, and every later cell reads them and does not change them.
-
-| cell | row | outcome | act (the engine, and what binds it) | state | chain | touches |
-|---|---|---|---|---|---|---|
-| `CRPS-c-4` | R4 | FWD-3 | **THE BACKLOG: folder census and resolution. FIRST CELL.** `library.py` derives the library root (never hardcoded; `C-LOCAL-AND-DEVICE-DERIVED`) and refuses loudly, naming the path, when it is absent. It enumerates folders and files by LISTING ONLY (no open) and records each file's OneDrive placeholder state. `backlog.py` reads the folder list FRESH and resolves each folder through the identity layer's own functions (`crosswalk.harvester_key` then `crosswalk.resolve`), never a local string match (`C-IDENTITY-VIA-THE-LAYER`). It prints three counts summing to the folder count (resolved, unresolved-with-reason, ambiguous-with-candidates) and writes ONE gold object per scan vintage (R4). It also answers K1. Plus the package's `__init__.py` and the test `conftest.py` poison. | OPEN | A1 | code + S3 (gold) |
-| `CRPS-c-1` | R1 | FWD-1 | **REPORT BYTES AS FILED.** For every file in a RESOLVED folder: read the bytes (`rb`, never any other mode), sha256 them, and land them through the ONE bronze writer, `lib/research/harvest/store.py` `bronze_put`, at the builder's `research-report` address, partitioned by security key. Metadata carries the source path relative to the library root, the file mtime and the scan vintage. The key includes the content hash, so a changed file lands as a NEW object and the prior one stays (`C-CORPUS-AS-RECEIVED`). Then every stored object is RE-OPENED and matched byte for byte against the file on the drive. Printed: objects == files, both counted. A file in an unresolved folder is NOT stored and is printed with its folder and reason. | OPEN | A2 | this box -> S3 (bronze) |
-| `CRPS-c-2` | R2 | FWD-1, FWD-5, FWD-6, FWD-7 | **EXTRACTION, a separate object naming its bronze parent.** Reads each bronze object FROM THE STORE, never the library again, and writes an extraction at `research-report-extract` in the same partition. Per type: DOCX text and headings by paragraph style (zipfile + lxml; python-docx is NOT installed and nothing is installed); PDF text per page and heading candidates (PyMuPDF); XLSX sheet names, row labels and mnemonic cells (openpyxl `read_only`, `data_only`, and the vendor cache sheets are NOT opened); PNG and HTML recorded as not-extracted, with the reason. Answers K3 (PDF extractability) and K4 (workbooks without Excel; FactSet codes). | OPEN | A3 | S3 -> S3 (bronze) |
-| `CRPS-c-3` | R3 | FWD-2 | **THE TYPED PER-REPORT RECORD** in silver through the ONE silver writer (`store.silver_append`): security key, report id, bronze key, class (A research pack / B earnings update / C short form / D stock move / OTHER, measured from the scan's four skeletons), fund as written, sector as written, period, author, size. A field the report does not state is null with an `absent` reason. Answers K5: how the PERIOD is determined (filename date, header, or content) and how many of the files carry one. Plus `reports_for(security_key)`, which returns that name's reports in period order. | OPEN | A4 | S3 -> S3 (silver) |
-| `CRPS-c-6` | R6 | FWD-5 | **THE PER-NAME CONTINUATION ARTIFACT (gold).** Per resolved name: thesis pillars, the name's own KPI set, fund of record, last stated position. EVERY field cites the report and the passage or sheet it came from; a field the reports do not state is null with an `absent` reason, never inferred or defaulted (`C-CITED-OR-ABSENT`). Graded on one covered name, built for every resolved name, denominator printed. | OPEN | A5 | S3 -> S3 (gold) |
-| `CRPS-c-10` | R10 | FWD-8 | **THE ONE-CALL SUBSTRATE READ.** One call by security key returns the prior reports, the continuation artifact, the sector template, the fund form and the typecast, each with its content hash and `{key, sha256}` for every input (`C-INPUT-HASHED`). A second call after a new report lands returns a changed hash for exactly the artifact that changed and unchanged hashes for the rest. No new store. | OPEN | A6 | code (reads S3) |
-| `CRPS-c-11` | R11 | FWD-9 | **THE READ-ONLY PROOF.** Two arms. The NEGATIVE CONTROL runs `CRPS-c-1`'s ingestion against a COPY of the library made write-denied, and the run completes. The CODE CENSUS is an AST census of every `.py` under `lib/research/corpus/` for write, move, rename, delete or open-for-write calls reaching a library-root path. It prints zero and its denominator, and a planted-write POSITIVE CONTROL proves the census can find one. A ledger record, no store. LAST CELL: the census must see the whole package. | OPEN | A7 | this box (scratch copy) |
-| `CRPS-c-5` | R5 | FWD-4 (v0.4) | **THE INDUCTION REQUEST, NO VENDOR CALL.** Measures and prints BOTH populations: resolved-and-absent from the universe, and backlog folders the universe carries UNRESOLVED. Picks ONE name by a stated deterministic rule. A single command prints the exact request that `lib/research/identity/add_security.py` would execute, and what it would add, BEFORE anything else; an ambiguous identity is REFUSED. It EXECUTES NOTHING: no Bloomberg call, no `registrations.json` write, no pool write. The poison is positive-controlled. | OPEN | B1 | code |
-| `CRPS-c-9` | R9 | FWD-7 | **THE GENERIC MODEL TYPECAST (gold, one object).** From R2's workbook extractions: the shared mnemonic core, the extended ratio set and the Opal Case Assumptions block, each with the count of workbooks carrying it out of the workbooks read. The FactSet-coded variants are typed onto the same lines where a mapping is MEASURED, and printed as unmapped where it is not. | OPEN | C1 | S3 -> S3 (gold) |
-| `CRPS-c-7` | R7 | FWD-6 | **THE SECTOR TEMPLATE, one per business type (gold).** Section names, KPI set and chart pages per business type, each measured with its denominator (that type's reports of the total) and the per-term counts behind each KPI. Both sector vocabularies are bridged through the engine's own map (`lib/research/peers/taxonomy.py` `GICS11_TO_SCANNER13_v1`), never a new mapping. Graded on one business type; built for every type with a denominator. | OPEN | D1 | S3 -> S3 (gold) |
-| `CRPS-c-8` | R8 | FWD-6 | **THE FUND FORM, one per fund of record (gold).** The report skeleton each fund's reports keep (IDVZ, PFOE, DIVZ as the corpus writes them), each section with its count of that fund's reports. Where two funds' skeletons differ, BOTH are kept and labelled (`C-TEMPLATE-IS-MEASURED`). | OPEN | E1 | S3 -> S3 (gold) |
+**FOUR rows the analysis says stay ARMED (Z-S6..S9) are disarmed by their owner in Z-S12 on the evidence above.** The
+analysis was written at 06:19Z and the disarm row landed at 06:22Z; neither seat had the other's text. This file does
+not convert the disarm into a grade -- that is the CVO's L9 -- and cuts no cell for a hazard whose fix is in HEAD.
 
 ---
 
-### 1a. Re-groundings performed at L5 (SITEZ HEAD @3ab14b967a, 2026-09-23 ~01:4xZ-01:5xZ)
+## 1. The rectangle -- six cells over the round's items, `CRPS-d-<n>`
 
-Every figure is this seat's own read. None of them spends a cell's work.
+**THE INVARIANT:** every cell mirrors exactly one item of s.0's rectangle and names the manifest row it enriches or
+mints; every new manifest row (R12, R13, R14) has exactly one cell. Measured at this cut: 6 cells over 6 items; R12, R13,
+R14 each mirrored once; R2, R6, R11 each enriched once. No cell touches R1, R3, R4, R5, R7, R8, R9, R10.
 
-**K1, the library on THIS device.**
-```
-root  C:\Users\Opal Bloomberg\OneDrive - Opal Capital\Shared - Documents\Asset Management\Research
-folders 93     files 351 = .pdf 184 + .xlsx 78 + .docx 71 + .png 17 + .html 1     305.7 MB
-stat attributes: local 248, RECALL_ON_DATA_ACCESS (OneDrive cloud placeholder) 103
-```
-Equal to the brief's scan on every count. **103 of 351 files are cloud placeholders, so READING THEM HYDRATES them**
-through OneDrive (the firm's own Microsoft 365 tenant; not a vendor API, and no write to the library's content). The
-ingestion cell records each file's placeholder state BEFORE its read. What this does NOT settle is how a PARTIAL sync
-would read. That is `CRPS-c-4`'s question.
+**CELL-ID CONFORMANCE, MEASURED** (`org/standards/DECOMP_CELL_ID_CONVENTION.md` SHAPE 1, `CELL_ID_RE` `fullmatch`): 6 of 6
+ids match; the axis letter `d` is the round-2 axis (round 1 was `c`), so no round-2 id collides with a round-1 id.
 
-**K2, the identity layer.** The crosswalk the layer loads is `s3://opal-data-harvest/crosswalk/v1/2026-09-22.json`
-(96 records, 237 index forms, 0 ambiguous; 93 records carry a `source_row.folder`, and 0 of those folders are outside
-the library).
-```
-crosswalk.resolve(<raw folder name>)                          resolved 2 of 93
-crosswalk.resolve(crosswalk.harvester_key(<folder>, pilots))  MEASURED 33 of 93 | record with security_key None 60 | ambiguous 0
-```
-**So the layer ALREADY holds every library folder, and resolves 33 of them.** The other 60 are records the universe
-carries UNRESOLVED (the ticker was not measurable from the folder's one-pager). **K2 RULING (carried to L5 by the PRD,
-`:386-387`, and made here):** FWD-3 stays a PRINTED DENOMINATOR this round, with NO human pass. Its three counts are
-satisfiable on these numbers. The 60 are a question of INDUCTION (FWD-4's path, v0.4), not of resolution. Reported to
-`1.0.0_SA_CTO~Z` in msg 24530 and adopted in 24532.
+**CELL STATUS VOCABULARY** (from v1.0 s.1): `NOT-EVALUATED | OPEN | IN-FLIGHT | HELD | COMPLETE | CLOSED`. Every cell at
+this cut is `OPEN` (6 of 6 evaluated).
 
-**FWD-4's induction path.** `lib/research/identity/add_security.py` (an `AMGT_RESAPP` cell's build) is the estate's only add-a-security
-act. It makes ONE Bloomberg `reference_data` call per name, including under `--dry-run`, and writes the layer's
-`registrations.json` and the crosswalk pool. It already accepts `--folder "<library folder>"`. That fact produced the
-v0.4 ruling above.
+**CODE HOME:** `lib/research/corpus/` (exists; 15 modules + 15 tests at HEAD). Every cell owns its own module(s) and
+test file(s); the two cells that EDIT an existing module (d-1 extract.py, d-2 continuation.py, d-6 readonly_proof.py)
+are on different chains or different files, so no two cells edit one file at once.
 
-**Rule 30, the builder.** `lib/opal_naming.py address()` with source `amgt`, scope `harvest` (`naming.lookup`):
-```
-R1 bronze/research-report                s3://opal-data-harvest/amgt/harvest/bronze/research-report/<partition>
-R2 bronze/research-report-extract        s3://opal-data-harvest/amgt/harvest/bronze/research-report-extract/<partition>
-R3 silver/research-report                s3://opal-data-harvest/amgt/harvest/silver/research-report/<partition>
-R4 gold/research-backlog                 s3://opal-data-harvest/amgt/harvest/gold/research-backlog/<partition>
-R6 gold/research-continuation            s3://opal-data-harvest/amgt/harvest/gold/research-continuation/<partition>
-R7 gold/research-sector-template         s3://opal-data-harvest/amgt/harvest/gold/research-sector-template/<partition>
-R8 gold/research-fund-form               s3://opal-data-harvest/amgt/harvest/gold/research-fund-form/<partition>
-R9 gold/research-model-typecast          s3://opal-data-harvest/amgt/harvest/gold/research-model-typecast/<partition>
-8 of 8 print, 0 refuse
-```
-The partition values above are the builder's probe arguments. Each cell prints the address it actually wrote.
+| cell | row | outcome | act (the engine, and what binds it) | state | chain |
+|---|---|---|---|---|---|
+| `CRPS-d-1` | R2 (enriched: method 2) | FWD-16; upstream of FWD-10..13 | **EXTRACTION METHOD 2 -- THE INLINE-LEAD SECTION RULE.** `extract.py` gains, for PDF, per-line spans (`lead_prefix` = the concatenated leading BOLD spans, `bold_all`, `bold_first`, `n_spans`) and a `section_leads` list beside `headings`: a section opens on a standalone heading OR on a line whose leading bold spans, colon-trimmed and upper-cased, are a name in the SKELETON name set (the 2026-09-22 scan's names plus the PFOE set measured 2026-09-24: COMPANY DESCRIPTION, LONG-TERM GROWTH ALGORITHM [AND EXPECTED RETURN], OWNERSHIP, SPECIAL ITEMS, WHY WE OWN, POSITIVES, NEGATIVES, CHANGES IN ANALYST SENTIMENT, INVESTMENT CONSIDERATIONS, OPPOSING VIEW, HEADWINDS AND RISKS, MANAGEMENT AND CAPITAL ALLOCATION; a trailing colon never matters; `RISKS AND CONSDIERATIONS` -- the team's typo -- is in the set; VALUATION is NOT a section name). `METHOD_VERSION_2 = "amgt-corpus-extract/2"`. **V2 objects land BESIDE v1, never over it:** object name `<report_id>/extract.v2.json` under the same `research-report-extract` partition, through the ONE bronze writer (`store.bronze_put`, conditional put; existed/put_performed printed). Run over EVERY retained bronze report (denominator printed: N of 123 at the cut; N of whatever the store holds at run time). DOCX extraction is unchanged in substance: v2's docx `paragraphs`/`headings`/`tables` equal v1's for every docx (the CONTROL), v2 adds `section_leads` for docx too (a heading paragraph whose colon-trimmed upper text is a section name). Grounded on `4.0.0_SA_CRO~Y`'s instrument `measure_pdf_extractability.py` @`6ae4cb0c93` (`pdf_lines`, `section_name_of`, `is_section_heading`, `block_after`), which the cell REUSES by porting its rules, not by importing a deliverables script. | OPEN | A1 |
+| `CRPS-d-2` | R6 (enriched: the PDF branch) | FWD-16, FWD-10 (corpus half) | **THE PDF PILLAR BRANCH, DOCX KEPT AS THE CONTROL.** `continuation.py`'s RULED "docx only" pillar rule gains a PDF branch over a v2 extraction: the block is the lines after the INVESTMENT THESIS section lead up to the next section lead; a pillar starts at a line whose leading bold spans end at a colon (`<Lead>: <body>`) OR an all-bold line ending in ':' OR a line ending in ':' whose text equals its bold prefix (the PFOE shape, CDNS's second pillar); a known section name is never a pillar; the body is the non-bold remainder plus following non-lead lines. The docx branch is byte-unchanged and remains the positive control (17 FULL of 19 same-stem pairs, 99 of 99 pillars, measured by the CRO). The continuation also gains `thesis_summary` (the inline `INVESTMENT THESIS: <sentence>` remainder, PFOE shape; '' for the Word shape) as a CITED field. **Extraction resolution:** `_read_reports_with_bytes` prefers `<report_id>/extract.v2.json` when it exists beside the typed row's `extract_key`, else v1 -- the typed silver rows are NOT rewritten (R3 is append-only and untouched); the v2 key enters `inputs`, so every name's continuation rebuilds into a NEW object beside the old (`C-INPUT-HASHED`; never overwrite). `--verify-citations` re-resolves every citation of every stored object (denominator printed, was 2,280 of 2,280). | OPEN | A2 (after d-1) |
+| `CRPS-d-3` | **R12 (new)** | FWD-10, FWD-11, FWD-12 (labels/order + cases), FWD-13, FWD-15, FWD-17 (the store half) | **THE COMPOSED DOSSIER (gold `research-dossier`).** New module `dossier.py`: per resolved security, ONE document composed -- never authored -- from the continuation artifact (pillars, thesis_summary, kpi_set, fund_of_record, last_stated_position), the sector template for its business type, the fund form, the typecast, and the v2 extraction of its most recent class A pack and most recent class B update for the SECTIONS: `recommendation` (line, <=160 chars), `company_description`, `growth_algorithm`, `investment_thesis_summary`, `risks` (with `pre_mortem` first where present), `ownership`, `management` (MANAGEMENT / BOARD or MANAGEMENT AND CAPITAL ALLOCATION), `special_items`, `cases` (UPSIDE / BASE / DOWNSIDE, each block), `why_we_own`, `positives`, `negatives`, `comparison_set` (COMMON STOCK COMPARISON, as a cited field, never a second ranker). EVERY field is `{value, citation: {report_id, bronze_key, locator, passage}}` or `{value: null, absent: <reason a person can read>}` (`C-CITED-OR-ABSENT`; `C-DOSSIER-IS-COMPOSED-NEVER-AUTHORED`: no synthesis across reports, no paraphrase). `inputs` = every input object's `{key, sha256}` (`C-INPUT-HASHED`). **Address and name are builder output, never typed:** `lib/opal_naming.address(...)` for `harvest / gold / research-dossier / security_key=<KEY>`; object name `as_of=<YYYY-MM-DD>.<inputs_sha16>.json` (`C-DOSSIER-DATE-IN-THE-OBJECT-NAME`; the builder refuses a two-level partition); spelling `research-dossier` (`C-DOSSIER-TABLE-SPELLING`). Through `gold.gold_put` (never overwrite). **A rebuild with unchanged inputs writes NOTHING and prints `unchanged inputs_sha16 <x> wrote 0`** (`C-DOSSIER-REBUILD-IS-A-NO-OP-ON-UNCHANGED-INPUTS`). `read_dossier(security_key, client=...)` returns the newest `as_of` for the key with its hashes; `--census` prints, over every stored dossier, `fields_scanned N cited C absent_with_reason A neither 0` -- FWD-13's own denominator -- and a NEGATIVE CONTROL: a deliberately uncitable field (a planted section name no report carries) renders ABSENT with its reason, never blank. `DOSSIER_INTERFACE.md` in this lane's deliverables prints the dossier's field list SIDE BY SIDE with `ThesisBundle`'s slots (`portal/src/pages/SecurityAnalysis/types.ts:955`: `drafted_sections` ids `company_description / investment_thesis / risks / ceo_bio / recommendation`, `management`, `model_cases`, `posture`) and names the intersection -- the render half is `AMGT_RESAPP`'s (s.9). | OPEN | A3 (after d-1, d-2) |
+| `CRPS-d-4` | **R14 (new)** | FWD-14, FWD-19 (the census) | **THE COVERAGE CENSUS, 93 OF 93 DISPOSITIONED.** `backlog.py --coverage` (a new scan vintage at `research-backlog`, beside the folder census, through `gold.gold_put`): the folder list read FRESH from the library (never a transcribed list), and for EVERY folder exactly one disposition: `dossier-served` (a `research-dossier` object exists for its security key and `read_dossier` returns it), `resolved-but-no-prose` (resolved, with the reason: workbook-only / empty / PDF unreadable to the skeleton), `unresolved-with-reason` (the crosswalk's own reason: ambiguous AXMB/AMXB, no evidence, refused). **The three counts SUM TO THE FOLDER COUNT, printed every run** (`C-BACKFILL-DENOMINATOR-IS-THE-RESEARCH-FOLDER`; `C-FOLDER-LIST-IS-THE-DENOMINATOR`), and the 11 that can never carry prose (10 workbook-only, 1 empty at the cut -- re-measured, not copied) are NAMED with their reason. `--folder "<name>"` returns that folder's dossier or the printed reason there is none (FWD-14). No library write (lists only; `C-CORPUS-READ-ONLY`). | OPEN | A4 (after d-3 AND d-5) |
+| `CRPS-d-5` | **R13 (new)** | FWD-19 (the induction) | **THE SCRIPTED INDUCTION PRODUCER -- BUILT AND DRY-EXERCISED HERE, FIRED AT THE DRAIN.** New module `induction_run.py`: rebuilds the induction request FRESH (`induction_request.build_request` over the current backlog: 60 unresolved at the cut), and for every row in state EVIDENCED calls `lib.research.identity.add_security.main(["--folder", <folder>, "--as-of", <today UTC>, "--write-pool"])` EXACTLY ONCE (add_security is itself idempotent: an already-registered folder makes no call and prints so); every row NOT evidenced (AMBIGUOUS -- America Movil AXMB/AMXB stays REFUSED with its reason; no-evidence; refused) is PRINTED with its reason and NEVER called (the word authorizes the CALLS, not a PICK). Per-row read-back `{folder, state, security_key | reason, bloomberg_calls}` and totals `evidenced E called C registered R refused F unresolved U -- sums to 60` (denominator printed). `--dry-run` runs the whole loop against an INJECTED fake blp client (the test poison: the real `_load_blp_client`, boto3, subprocess and sockets all RAISE, positive-controlled) and prints the identical read-back shape with `bloomberg_calls 0`. **`--fire` is refused inside a test and inside a worker turn** (it requires `OPAL_INDUCTION_FIRE=1` AND an operator-named as-of); the FIRE is the ISSUER's drain act on this terminal under R-16 V2 / `C-NO-VENDOR-CALL` v0.5 / R-21 (s.9). `add_security` is `2.0.0_SA_COO~Z`'s surface: this cell IMPORTS it and edits nothing under `lib/research/identity/`. | OPEN | B1 |
+| `CRPS-d-6` | R11 (enriched: the exempting branch) | FWD-9 | **A CONTROL FOR THE BRANCH THAT EXEMPTS.** `readonly_proof.py:301` reads `reaches = LIBRARY in origins or (not is_test and UNKNOWN in origins)`: fail-closed for library code, fail-OPEN for test files, and 17 of 27 flagged sites at HEAD land on the exempting branch with origins `['unknown']` while the positive control plants into a NON-test file and so never exercises it (CTO analysis s.2; CVO row `Z-C-S4`). The cell does both things the analysis names: (a) a SECOND positive control that plants `open(library_root() / "x", "w")` inside a file named `test_plant_control.py` under a temp `tests/` dir and REQUIRES it flagged (`positive_control_test_file flagged 1`); (b) the exemption JUSTIFIED BY MEASUREMENT, not by default: a new origin class `tmp-fixture` for targets rooted in pytest's `tmp_path`/`tmpdir` (directly or through a local binding), so the 17 sites resolve to `['tmp-fixture']` and are exempt BECAUSE they are measured fixture writes; a test-site write whose origin is genuinely `unknown` COUNTS (`test_unknown_sites 0` at HEAD is a measurement, and a planted `open(compute(), "w")` in a test file flips it to 1 -- the difference control). `library_write_calls 0` and `positive_control flagged 1` unchanged. Fits in `tail -40` (the c-11 lesson: the census prints its totals FIRST and LAST). | OPEN | C1 |
 
-**The ONE writer.** `lib/research/harvest/store.py` (an `AMGT_RESAPP` cell's build) is the shared bronze and silver writer:
-- `bronze_put(source, request, partition, object_name, body, ...)` is a conditional, never-overwrite put. The same
-  sha256 is a no-op; different bytes raise `BronzeImmutableError`.
-- `silver_append(source, table, rows, record_key_fields, run_stamp)` writes parquet partitioned `date=` BY FETCH DATE.
-- `entity_partition("security_key", key)` mints the slash-safe partition through the crosswalk.
+---
 
-Gold has no shared writer. Each gold cell writes with a conditional put (`IfNoneMatch='*'`) at `address()` output and
-never overwrites.
+## 1a. Re-groundings performed at L5 (CLOUD HEAD at the cut)
 
-**Parsers on this box** (a worker installs NOTHING): openpyxl 3.1.5, PyMuPDF (fitz) 1.28.2, pypdf 6.16.2, pyarrow 24.0.0,
-boto3 1.43.46, lxml 6.1.1. **NOT installed:** python-docx, pdfplumber, xlrd. So DOCX is read with zipfile + lxml.
-
-**The two-vocabulary bridge exists:** `lib/research/peers/taxonomy.py:38` `SECTOR_MAP_ID = "GICS11_TO_SCANNER13_v1"`.
+- **The store, live (`research-continuation/security_key=IMB_LN_Equity/`):** one object `ba32af5b2d065474.json` (read 03:3xZ). The
+  gold tier under `amgt/harvest/gold/` carries 5 of 5 `research-*` tables hyphenated (CTO A.5) -- the spelling ruling is
+  exercised on the live plane, not re-derived here.
+- **The builder:** `lib.opal_naming.address()` takes a `source` argument this seat's first probe omitted (a `TypeError`, not
+  a refusal); the CTO exercised the two-level-partition REFUSAL at A.5. Cell d-3 prints the builder's own output and the
+  refusal message in its proof; a worker never types the address.
+- **Extraction v1 objects** are immutable at `<report_id>/extract.json` (`extract.py:493`, conditional put). A v2 that
+  changed those bytes would be refused by the writer -- which is why d-1 lands v2 BESIDE v1 and why d-2 resolves v2 by
+  key substitution rather than by rewriting silver.
+- **`add_security`** (`lib/research/identity/add_security.py`): ONE `reference_data` call per name; idempotent on
+  `registrations.json`; `--write-pool` refuses any `--as-of` that is not today (UTC); `--dry-run` still CALLS Bloomberg
+  (the record is shown "from the in-memory response") -- so a worker's dry exercise must inject a fake client, never pass
+  `--dry-run` to the real module. `_load_blp_client` is the seam the poison replaces.
+- **The library on this device:** 93 folders / 351 files at the CRO's 2026-09-24 ~02:5xZ census (46 docx+pdf, 30 pdf-only,
+  6 docx-only, 10 workbook-only, 1 empty); 157 top-level PDFs read with 0 read failures. Every cell that lists it lists
+  only; nothing under it is opened for writing (`C-CORPUS-READ-ONLY`, proven by R11 and re-proven by d-6's census).
+- **PDF-only resolved names for the seam probes** are chosen by the worker at run time by a stated deterministic rule
+  (first resolved security key, sorted, whose most recent class A report is a PDF), never hard-coded here.
+- **Open orders held by this lane:** 0 (`to-check.py --all --assignee`; the single `[OPEN]` hit is a DS lane's order
+  naming `~X` in prose). LD-0521's refuser sees 0 non-terminal on this project (round 1 is 11 of 11 complete).
 
 ---
 
 ## 2. Rule 24 four-postulate record, for what this file ADDS
 
-**(i) MECE over a declared domain, by subtraction.** The domain is the manifest's printed rows R1-R11: 11 rows.
-Cells = 11 rows minus 0 excluded = 11. No row is split and none is merged. The one value set this file authors is the
-report-class enum `A | B | C | D | OTHER`. Its domain is every file ingested. A-D are the scan's four measured skeletons
-(`RESEARCH_CORPUS_SCAN_20260922.md` s.1). `OTHER` is the subtraction's remainder: company source PDFs, PNG charts, the
-HTML file and the blank templates. **Token census:** `research-report` and its siblings appear only in the PRD manifest.
-The class letters are the scan's own.
-
-**(ii) Same grain.** Every cell is one ENGINE, one row of the manifest.
-
-**(iii) Intent coherence.** The chain axis orders by DATA dependency (what a cell reads that another writes), and by
-nothing else.
-
-**(iv) State coherence -- what each remedy does NOT move.**
-- `CRPS-c-1` moves bronze for RESOLVED folders only. The 60 unresolved folders' files stay unstored and are printed.
-  FWD-1's "every file the folder list resolves to" is graded on that resolved set.
-- `CRPS-c-5` moves NOTHING in the world: no pool, no registration, no universe row. Its output is a request.
-- `CRPS-c-11`'s negative control writes nothing to the library, by construction (a write-denied copy).
-- No cell moves anything SERVED. The platinum report object, the page and the adapter are the `AMGT_RESAPP` addendum's
-  (`C-NO-RAW-BRONZE-AT-SERVE`).
+**(i) MECE over a declared domain -- by subtraction.** Domain = the analysis's enrichment list (5 items) + ADDENDUM A's ten
+outcomes. Enrichment: 1 cell (d-6) + 2 closed-by-evidence + 2 routed = 5 of 5. Outcomes: FWD-10 (d-2 store half + d-3),
+FWD-11 (d-3 `management`), FWD-12 (d-3 typecast/template rows + `cases`; the 22 added mnemonics' FIGURES wait on V3 and
+read ABSENT-with-reason, which is FWD-13 working), FWD-13 (d-3 `--census` + negative control), FWD-14 (d-4 `--folder`),
+FWD-15 (d-3 `fund_of_record` + `last_stated_position` as cited inputs; the machine posture untouched), FWD-16 (d-1 + d-2),
+FWD-17 (d-3 no-op-on-unchanged + new object beside old; the "new report lands" half is R1's existing ingest, re-run at
+the drain), FWD-18 (**DEFERRED** by this round on the analysis's own permission -- marked PROPOSAL and LATER by its author;
+cut LAST means not this round; it re-enters via the round-2 analysis), FWD-19 (d-5 + d-4 + the drain sequence). 10 of 10
+outcomes dispositioned: 9 served, 1 deferred with its authority named. **The RENDER halves of FWD-10/11/12/15 -- the tab
+showing the field -- are `AMGT_RESAPP`'s** (A.7: no page-architecture change here; the bundle adapter and the tabs are
+`2.0.0_SA_COO~Z`'s surfaces); this round delivers the store, the reader and the interface sheet, and s.9 names the hold.
+**(ii) SAME GRAIN:** every cell is one producer or one instrument over one manifest row.
+**(iii) INTENT COHERENCE:** one axis, DATA dependency (what a cell reads that another writes); the chain letters order by
+it and by nothing else.
+**(iv) STATE COHERENCE:** a cell's terminal proof-of-spec moves that cell to COMPLETE and nothing else; the FWD grades
+move only at L9/L10; the four ARMED rows moved at Z-S12 and this file does not move them again.
 
 ---
 
-## 2b. BATTERY DISPOSITION PER LENS
+## 2b. Battery disposition per lens
 
 ### `comp-schedule --drift` -- RUN
 ```
-REACHED-DENOMINATORS: C1=23; C2=7; C3=12; C4=21; C5=334
-GATES ARMED: 2 [--drift]   G-3 (owner CTO)   G-7 (owner POD4, data/black_diamond/scripts/gold/gold_dispatch.sh:59)
+REACHED-DENOMINATORS: C1=23; C2=5; C3=12; C4=21; C5=334
+GATES ARMED: 2 [--drift]   G-3 (owner CTO, INF silver)   G-7 (owner POD4, black_diamond gold_dispatch)
 ```
-Neither armed gate names a harvest, research or corpus surface. The open-deploy census reads 7 entries in the shared
-tree's `org/critical_paths/.open_deploys/`, 0 naming harvest, corpus or research. **BLINDNESS, STATED:** 31 other live
-worktrees (`git worktree list`: 32 rows) were NOT read (CLAUDE.md NEVER-2 worktree clause). **No cell here is a deploy**:
-the S3 writes are data objects at new prefixes, so no act depends on that read.
+Neither names a harvest, research or corpus surface. Open deploy-ledger entries: 5 in the shared tree (C2), the AMGT one
+being `amgt-h03-leadpanel-y-20260924` (H03 2a, `AMGT_HARVST`'s, an AE apply) -- not a surface any cell here writes.
+**BLINDNESS, STATED:** live worktrees other than the shared tree were NOT read for `.open_deploys/` (43 rows at the last
+census); no cell here is a deploy, so no act depends on that read.
 
-### `comp-iam` -- RUN (`roles`: 214 found)
-Three harvest-sourced roles are listed: the chatter-axis pair and `opal-research-pull-enqueue-role`. **None of them is
-the credential these cells write with.** **BLINDNESS:** this is the DESIRED plane (Terraform) only, and `comp-iam roles`
-prints no vintage. **This box's own credential is NOT read by this lens.** Each writing cell measures it with its first
-real conditional PUT to its own new prefix and records the outcome. A refusal is a BLOCKING row, never a workaround.
+### `comp-iam` -- RUN
+`comp-iam roles` was run at the round-1 cut (214 found, DESIRED plane, no vintage); this seat did NOT re-run it this cut
+and says so. **BLINDNESS:** this box's own credential is not read by that lens either way; every writing cell (d-1, d-2,
+d-3, d-4) measures it with its first real conditional PUT to its own new prefix and prints the outcome; a refusal is a
+BLOCKING row. d-5's `--write-pool` path is `add_security`'s and is exercised only at the fire.
 
 ### `comp-adversary` -- RUN on this file; declaration at section 7.
 
 ### `comp-blast` -- DECLARED-NOT-APPLICABLE
-No cell moves a served object or an existing prefix. Every write is a new prefix under `amgt/harvest/`.
+No cell moves a served object. Every write is a NEW object: v2 extraction beside v1, new continuation/dossier objects
+by inputs hash, a new backlog scan vintage. The served `opal-amgt-scoped-api` reads none of these until `AMGT_RESAPP`
+integrates the interface (s.9).
 
 ---
 
-## 2c. BOUNDS THE BATTERY ADDED TO CELLS -- carried into the L6 cut
-- **Every cell:** no vendor API, no Claude API (`C-NO-VENDOR-CALL`); no install; no notifier (`C-NO-NOTIFIER`).
-- **Every writing cell:** S3 writes ONLY under `opal-data-harvest`, ONLY at `address()` output, NEVER overwriting. A
-  refused PUT is a BLOCKING row, never a hand-typed key.
-- **Every reader of the library** (`c-4` lists, `c-1` reads, `c-11` copies): opens `rb` or lists only. No write, move,
-  rename or delete under the library root (`C-CORPUS-READ-ONLY`). The root is derived, never typed.
-- **Every test file:** offline, under `CRPS-c-4`'s `conftest.py` poison (boto3 client construction, `subprocess.run`,
-  `socket.create_connection` all RAISE), with a positive control proving it bites. **A no-network PASS with no poison
-  proven is an ABSENCE** (the CVO's standard, adopted estate-wide at AMGT_HARVST round 2).
-- **`CRPS-c-5`:** the add-security module is imported, never executed. Its Bloomberg transport, `boto3` and
-  `subprocess.run` are poisoned, and the poison is positive-controlled.
+## 2c. Bounds the battery added to cells -- carried into the L6 cut
+- **Every cell:** no vendor API and no Claude API from a worker turn (`C-NO-VENDOR-CALL` v0.5's exception is the SCRIPTED
+  producer at the fire, never a turn); no install; no notifier, no schedule (`C-NO-NOTIFIER`; A.7).
+- **Every writing cell:** S3 writes ONLY under `opal-data-harvest`, ONLY at `address()` output, NEVER overwriting; a
+  refused PUT is a BLOCKING row, never a hand-typed key. `research-dossier` is spelled with a hyphen.
+- **Every reader of the library** (d-4 lists): lists only; no write, move, rename or delete under the root; the root is
+  derived (`library.library_root()`), never typed.
+- **Every test file:** offline, under `tests/conftest.py`'s poison (boto3 client construction, `subprocess.run`,
+  `socket.create_connection` RAISE) with a positive control proving it bites; d-5 additionally poisons
+  `add_security._load_blp_client` and proves the poison bites.
+- **THE VERIFICATION DIET (spine v3.16-3.18):** a build order carries at most THREE mechanical criteria -- the built
+  behaviour, the seam probe against its real neighbour (the STORE, read-only), and at most one more with a one-line
+  reason -- plus a judgment criterion only where the outcome needs one. Repo-wide hygiene (the full corpus suite,
+  `py_compile`, ruff, the hyg script) is NOT a criterion: the issuer runs it once per merge at the drain.
+- **`tail -N` windows on every census invocation are sized to the output at the cut PLUS headroom, and every census
+  prints its totals BOTH first and last** (the c-11 lesson, row Z-S10).
 
 ---
 
 ## 3. Placement axis
 
-Every cell executes on **site Z** (this desktop, branch `SITEZ`). The library is synced to THIS device's OneDrive, and
-the identity layer and the harvest writer live in this fabric's tree. No cell executes on the laptop fabric.
+Every cell executes on **site-z** (this box): the store is reachable from here, the library copy is here, and the
+Bloomberg terminal the fire needs is this device. No cell is placed on the laptop fabric.
 
 ---
 
 ## 4. Dependency edges, keyed to OBSERVED completion (a drained, VALID proof-of-spec instance), never a status word
 
 ```
-  chain A:  CRPS-c-4 -> CRPS-c-1 -> CRPS-c-2 -> CRPS-c-3 -> CRPS-c-6 -> CRPS-c-10 -> CRPS-c-11
-  chain B:  CRPS-c-2 -> CRPS-c-5
-  chain C:  CRPS-c-2 -> CRPS-c-9 -> CRPS-c-10
-  chain D:  CRPS-c-3 -> CRPS-c-7 -> CRPS-c-10
-  chain E:  CRPS-c-3 -> CRPS-c-8 -> CRPS-c-10
+  chain A:  CRPS-d-1 -> CRPS-d-2 -> CRPS-d-3 -> CRPS-d-4
+  chain B:  CRPS-d-5 -> CRPS-d-4
+  chain C:  CRPS-d-6
 ```
-- **c-1 after c-4:** bronze is partitioned by security key, which only the backlog's resolution supplies. c-1 also
-  reads c-4's `library.py`.
-- **c-5 after c-2 (amended at the cut, v1.0 before issuance; it read "after c-4" at @3c09ae6ce8):** its population is
-  c-4's unresolved set. But `add_security --folder` alone cannot induct an UNRESOLVED folder, because `_discover` reads
-  the same one-pager whose ticker already failed and returns UNRESOLVED ("the identifier is NOT guessed from the folder
-  name"). So the request must carry an EVIDENCED `--bloomberg` candidate, read from the `Ticker:` header of the team's
-  own report for that name. Those folders' files are not ingested (ruling 4), so c-5 reads them `"rb"` and parses them
-  with c-2's extractor, which puts it after c-2.
-- **c-2 after c-1:** an extraction names its bronze parent.
-- **c-3 after c-2:** the typed record's class, fund, sector and period are read from the extraction.
-- **c-9 after c-2:** the typecast reads the workbook extractions only. It needs no typed record.
-- **c-6, c-7, c-8 after c-3:** each groups reports by name, business type or fund, which the typed record carries.
-- **c-10 after c-6, c-7, c-8 and c-9:** the one call returns every gold artifact.
-- **c-11 LAST:** its census must see the whole package, and its negative control runs c-1's ingestion.
-
-**M = 5**, the widest antichain of the edge set (`c-5, c-6, c-7, c-8, c-9` can all be in flight at once after c-3).
+- d-2 reads d-1's v2 extraction objects; d-3 reads d-2's rebuilt continuation and d-1's sections; d-4 reads d-3's
+  dossiers AND the post-induction crosswalk state d-5's fire produces (a census before the fire would count 60 unresolved
+  as a fact about the world when it is a fact about the run order).
+- d-6 touches only `readonly_proof.py` and its test; nothing reads it.
+- **M = 3**, the widest antichain (d-1, d-5, d-6 can all be in flight at once from the start).
 
 ---
 
 ## 5. The round -- one issuance, fan-out as data
 
-- **Round 1 covers all 11 cells in ONE issuance.** Five worker slots:
-  - `~1` drains chain A in order (c-4, c-1, c-2, c-3, c-6, c-10, c-11). It is continued, not respawned, so the
-    ingestion context carries into the derivations and the proof.
-  - `~2` c-5 and `~3` c-9, both spawned on c-2's valid drain.
-  - `~4` c-7 and `~5` c-8, spawned on c-3's valid drain.
+- **Round 2 covers all 6 cells in ONE issuance.** Three worker slots:
+  - `~1` drains chain A in order (d-1, d-2, d-3, d-4). Continued, not respawned, so the extraction context carries into
+    the composition and the census.
+  - `~2` d-5, spawned at once.
+  - `~3` d-6, spawned at once.
 - Fan-out line for the issuance commit:
-  `fanout: 5 of 5 chains, cap 8, reason: M is the widest antichain after c-3; chain A is one continued worker; c-5 and c-9 spawn on c-2's valid drain, c-7 and c-8 on c-3's.`
-- **Drain duty owed by this seat, not by a worker:** before continuing `~1` onto `CRPS-c-10`, merge the drained c-7, c-8
-  and c-9 branches into `~1`'s worktree branch, since c-10 reads their modules. When `CRPS-c-5` drains VALID, hand its
-  `induction_request.json` to `AMGT_RESAPP`'s COO by file and message. When `CRPS-c-11` drains, name the write-denied
-  copy's path to the operator for cleanup (recursive deletion is an operator act).
-- The surprise channel is `org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md`. It is
-  already open, with seat rows `Z-S1..Z-S3`. Workers mint `AMGT_CORPUS-Z-W<n>-S<k>`.
+  `fanout: 3 of 3 chains, cap 8, reason: M is the widest antichain at the start; chain A is one continued worker; d-5 and d-6 are independent of it and of each other.`
+- **Drain duties owed by this seat, not by a worker (in order):**
+  1. When `d-5` drains VALID: send the pinned candidate to `2.0.0_SA_COO~Z` for ONE exchange (`add_security` is that
+     lane's surface; the runner imports it). Then, under R-16 V2 / R-21 / `C-NO-VENDOR-CALL` v0.5 and
+     `integrations/bloomberg/READ_HERE.md`, FIRE the producer ONCE on this terminal (`OPAL_INDUCTION_FIRE=1`, today's
+     as-of), record the read-back (E called, R registered, F refused, U unresolved -- summing to 60) in this lane's
+     deliverables, and re-run the existing ingest (`ingest.ingest`, idempotent, prints stored/existed/put_performed) so the
+     newly resolved folders' files land in bronze. This is an issuer act because the spine names the FIRE a scripted
+     producer under Andrew's word and a worker face carries NEVER CALL A VENDOR API.
+  2. Before continuing `~1` onto `d-4`: merge `~2`'s drained branch into `~1`'s worktree branch, then run the scripted
+     production sequence ONCE for the newly resolved names -- extraction v2 (d-1's `--run`), typed silver (c-3's
+     `typed --run`), continuation (`continuation --write`), sector template / fund form / typecast (`--write` each),
+     dossier (d-3's `--write`) -- each printing its denominators; every run is a producer this project already owns.
+  3. At every merge: the full corpus suite, `py_compile`, ruff and the hyg census once, beside `safe-merge.sh`'s row gate.
+  4. When `d-3` drains VALID: deliver `DOSSIER_INTERFACE.md` and the pinned `read_dossier` surface to `2.0.0_SA_COO~Z`
+     as an interface publication (one message), so the render half can be cut in `AMGT_RESAPP`'s round.
+- The surprise channel is `org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md`
+  (seat rows to `Z-S12`). Workers mint `AMGT_CORPUS-Z-W<n>-S<k>`, `disarm_owner` `2.0.0_SA_COO~X`.
 
 ---
 
 ## 6. `<preflight>` -- what this decomposition actually ran
 ```
-prd-signoff.py status AMGT_CORPUS        v0.3 @c94a6bb2ef ADMITTED, 2 of 2 halves SIGNED current (v0.4 pending, s.9)
-receiving-check.py <PRD>                 ACCEPT (prd-manifest: manifest, ENDPOINT, header, outcome cards, agreement)
+prd-signoff.py status AMGT_CORPUS        v0.6 @031c3a3a3e; ratified-text SIGNED current (3.0.0_SA_CVO~Z); brief SIGNED current @9b17fd5d49 (4.0.0_SA_CRO~Z); ADMITTED
 sequence-check.py --project AMGT_CORPUS  not in SEQUENCE.yaml (not sequenced); 3 live COO lanes on this box (~X ~Y ~Z)
-to-check.py --all --assignee 2.0.0_SA_COO~X   0 held (2 hits are DS~V orders naming ~X in prose), 3146 scanned
-comp-schedule --drift                    2 armed, 0 on these surfaces (C1=23 C2=7 C3=12 C4=21 C5=334)
-comp-iam roles                           214 found; 3 harvest-sourced, none the writing credential (DESIRED plane)
-address() x 8 store rows                 8 of 8 print, 0 refuse
-library stat census                      93 folders, 351 files, 103 placeholders
-crosswalk.resolve via harvester_key      33 MEASURED / 60 record-unresolved / 0 ambiguous, of 93
-proof-of-spec-check.py CELL_ID_RE        11 of 11 ids match; 2 of 3 malformed controls refused
+to-check.py --all --assignee 2.0.0_SA_COO~X   0 held (1 hit is a DS lane's order naming ~X in prose)
+comp-schedule --drift                    2 armed, 0 on these surfaces (C1=23 C2=5 C3=12 C4=21 C5=334)
+comp-iam roles                           NOT re-run this cut (round-1 read: 214 found, DESIRED plane); credential measured by each cell's first PUT
+research-continuation IMB object         1 object live (ba32af5b2d065474.json), read 03:3xZ
+task-order status census (anchored)      11 of 11 complete on this project -> LD-0521's refuser sees 0 open
+proof-of-spec-check.py CELL_ID_RE        6 of 6 ids match
 ```
 
 ---
 
 ## 7. comp-adversary declaration
 
-Recorded at the issuance commit (the tool reads committed citations). The declared blindness this file accepts in
-advance: the tool's neighbourhood is filesystem adjacency, not the cells' real neighbours. Those neighbours are the
-identity layer (`lib/research/identity/`), the harvest writer (`lib/research/harvest/store.py`), the taxonomy bridge,
-and the library outside the repo, and they were read directly in s.1a.
+Recorded at the issuance commit (the tool reads committed citations). Declared blindness this file accepts in advance:
+the tool's neighbourhood is filesystem adjacency; the cells' real neighbours are the store (`lib/research/harvest/store.py`,
+`gold.py`), the identity layer (`add_security`, `crosswalk`), the CRO's PDF instrument in a deliverables folder, and the
+portal's `ThesisBundle` type -- read directly in s.1a and cited by path in the cells.
 
 ---
 
 ## 8. Rulings this decomposition makes, and what it REFUSES to assume
 
 **Rulings (L5's own, each stated so a reader can dispute it):**
-1. **K2:** FWD-3 is a printed denominator this round, with no human pass (s.1a).
-2. **R3's "by security key" is a COLUMN, and the partition is the ONE silver writer's fetch-date partition.**
-   `store.silver_append` partitions `date=` by fetch date under `AMGT_RESAPP`'s `C-SILVER-PARQUET`. This project adds
-   no second silver writer, and FWD-2's query by security key is a filter over the column. Reported to the CTO in the
-   drain-end read as a manifest-argument reconciliation, not a defect.
-3. **K5 is carried by `CRPS-c-3`, not `CRPS-c-1`.** The PRD's K-card table names "the ingestion cell" for K5.
-   The period is a field of the TYPED RECORD (R3), and the ingestion chain's typed-record cell is where it is read.
-4. **FWD-1's population is the files of RESOLVED folders.** That is the DONE WHEN's own phrase, "every file the
-   library's own folder list resolves to". Unresolved folders' files are printed, never stored under a guessed key.
+1. **Extraction v2 lands BESIDE v1 and silver is not rewritten.** The bronze writer refuses a changed byte at an existing
+   key; R3's typed rows are append-only. So v2 is a new object per report and readers resolve it by key substitution.
+   Reported to the CTO in the drain-end read as a manifest-argument reconciliation (R2's "same partition" now holds two
+   method versions), not a defect.
+2. **The dossier's SECTIONS are read from the v2 extraction of the two most recent reports (class A pack, class B update),
+   not synthesised across the corpus.** `C-DOSSIER-IS-COMPOSED-NEVER-AUTHORED` admits composition of existing artifacts
+   and cited passages; a section from a third report is a later enrichment, not this round's.
+3. **FWD-18 is deferred** on the analysis's and the addendum's own words ("cut LAST, deferrable by the round-N analysis
+   without re-opening anything").
+4. **The FIRE is the issuer's drain act, not a worker's criterion.** A worker face carries the vendor ban; Andrew's word
+   authorises a scripted producer; the seat that holds both the word and the terminal runs it once and records it.
+5. **Items 4 and 5 of the enrichment list are routed, not cut** (s.0). One project's loop never writes another's fix.
+6. **The render half of FWD-10/11/12/15 is a hold, not a cell** (s.9). This project cannot grade "renders on the Thesis
+   tab" from its own surfaces; it delivers the store, the reader and the side-by-side interface, and `AMGT_RESAPP`'s
+   round grades the screen.
 
 **What this decomposition REFUSES to assume:**
-- **That every file hydrates.** A placeholder that fails to hydrate is printed with its error and counted, never
-  skipped silently.
-- **That a report's period, fund, class or sector is inferable.** Each is `absent` with a reason when the report does not
-  state it.
-- **That the PDF-only reports carry the Word skeleton.** K3 is measured, not assumed.
-- **That this box can write the new prefixes.** Each writing cell measures it with a real conditional PUT.
-- **That resolved-and-absent is empty.** `CRPS-c-5` measures it and prints both denominators.
+- That the 30 PDF-only folders all yield pillars: the CRO measured 26 of 30 with a full pack and 29 of 30 with pillars
+  or "Why we own"; d-2 prints its own count against the resolved PDF-only names and names each miss with its reason.
+- That the 60 unresolved folders all induct: E evidenced of 60 is measured at the fire; the refused and the ambiguous are
+  printed, and 93 of 93 DISPOSITIONED -- never "populated" -- is the grade.
+- That this box can write the new prefixes: each writing cell measures it with a real conditional PUT.
+- That a test-site write is safe because it is in a test: d-6 measures its origin or counts it.
+- That the render half will follow automatically: it is a named hold with an owner (s.9).
 
 ---
 
@@ -292,8 +260,10 @@ and the library outside the repo, and they were read directly in s.1a.
 
 | hold | on | owner | what lifts it |
 |---|---|---|---|
-| the ISSUANCE | PRD v0.4 (the FWD-4 amendment, ruled 24532) re-opens the RATIFIED-TEXT half; `to-pipeline-gate.py` LIMB 6 refuses a new order against a stale half | `3.0.0_SA_CVO~Z` (re-sign), after `1.0.0_SA_CTO~Z` lands v0.4 | `prd-signoff.py status AMGT_CORPUS` reads ADMITTED at v0.4. **This is a GATE, not a wait:** both acts are on-demand acts by live seats, and the orders are cut in the meantime |
-| the live induction (a Bloomberg `reference_data` call plus a layer write) | `AMGT_RESAPP`'s surfaces and vendor budget | `AMGT_RESAPP`'s COO, on Andrew's per-use word, carried by `1.0.0_SA_CTO~Z` when it arises (24532) | NOT this project's. `CRPS-c-5` ends at the executable request |
-| any served move of these artifacts | the `AMGT_RESAPP` addendum | `1.0.0_SA_CTO~Z` | the addendum's own L2 |
+| the FIRE of d-5's producer (60 names, one `reference_data` call each) | this lane's drain, on this terminal | `2.0.0_SA_COO~X`, after ONE exchange with `2.0.0_SA_COO~Z` on the pinned candidate (add_security is its surface) | d-5 drained VALID; the exchange returned; READ_HERE s.2 sign-in state OK; then the fire is taken and recorded -- NOT a wait on any seat's silence |
+| the RENDER half of FWD-10, 11, 12, 15 (the tabs showing the dossier fields) | `AMGT_RESAPP`'s surfaces (`scoped_amgt.py` bundle adapter, `portal/src/pages/SecurityAnalysis/**`) | `2.0.0_SA_COO~Z` via `1.0.0_SA_CTO~Z` (the RESAPP round) | d-3's `DOSSIER_INTERFACE.md` + pinned `read_dossier` delivered as an interface publication; the RESAPP round cuts the adapter/tab cells; graded there |
+| FWD-12's FIGURES for the 22 added mnemonics | Bloomberg (R-16 V3) | Andrew, per-use word | his word; until then the rows read ABSENT-with-reason (FWD-13 working) |
+| FWD-18 | this project, a later round | `1.0.0_SA_CTO~Z` (the round-2 analysis) | the analysis re-lists it |
+| enrichment items 4 (contract-half guard) and 5 (router-driving fix) | `.tools/prd_signoff_lib.py` / `AMGT_RESAPP` Peers | `1.0.0_SA_CTO~Z` / `2.0.0_SA_COO~Z` | routed with this seat's recommendation in the L5 message; not this project's cells |
 
 -- `2.0.0_SA_COO~X`

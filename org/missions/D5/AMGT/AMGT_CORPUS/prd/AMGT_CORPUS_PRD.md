@@ -5,7 +5,7 @@
   "project": "AMGT_CORPUS",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.4",
+  "prd_version": "v0.6",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md@6c52138c2f",
   "endpoint_outcomes": [
@@ -17,7 +17,17 @@
     "FWD-6",
     "FWD-7",
     "FWD-8",
-    "FWD-9"
+    "FWD-9",
+    "FWD-10",
+    "FWD-11",
+    "FWD-12",
+    "FWD-13",
+    "FWD-14",
+    "FWD-15",
+    "FWD-16",
+    "FWD-17",
+    "FWD-18",
+    "FWD-19"
   ],
   "status": "RATIFIED"
 }
@@ -299,6 +309,115 @@ the corpus is a static local library and every artifact below is derived by a ru
                     us"); CLAUDE.md hard stops (no unrecoverable act without a
                     human word)
 
+  ===== ADDENDUM A, v0.5, 2026-09-24 -- FWD-10..FWD-19 ==========================
+  Cut from docs/briefs/amgt-corpus-dossier-fold-brief-20260924.md@328e17d5e5
+  (4.0.0_SA_CRO~Y) plus Andrew-direct ~04:3xZ and ~05:0xZ. Rationale, the
+  numbering refusal, the O7 contradiction and the contracts are in ADDENDUM A
+  below; THESE ARE THE DEFINITIONS AND THIS FENCE IS THEIR ONLY CARRIER.
+
+  FWD-10 An analyst opens a covered name and reads the TEAM'S OWN
+         investment-thesis pillars on the Thesis tab
+         DONE WHEN  EXERCISED -- IMB_LN_Equity renders the pack's pillars as bold
+                    lead plus paragraph, each openable to the report and the
+                    passage it came from, and each marked as the team's rather
+                    than generated
+         ACCEPT     An analyst can tell the team's own thesis from a machine's
+                    and can reach the sentence it came from.
+         SOURCE     brief O1 :48
+  FWD-11 The pack's MANAGEMENT / BOARD passage appears on Exec Management as the
+         team's own cited text
+         DONE WHEN  EXERCISED -- the passage renders labelled as the team's,
+                    BESIDE the filing roster, with the roster unchanged; and a
+                    name whose pack carries none reads ABSENT with its reason
+         ACCEPT     The team's view of management is readable without displacing
+                    the filing record.
+         SOURCE     brief O2 :57; C-EXEC-MANAGEMENT is authority and is untouched
+  FWD-12 The Model tab's rows are the typecast's mnemonic core plus the sector
+         template's KPI set, and the team's own cases are readable
+         DONE WHEN  EXERCISED -- rows come from the typecast and the template for
+                    that business type; every row carries a figure or reads
+                    ABSENT with a reason; the team's Upside/Base/Downside cases
+                    render as the team's, cited, in the slot that is ABSENT today
+         ACCEPT     The sheet's shape is the team's own, and no row is blank
+                    without saying why.
+         SOURCE     brief O3 :63. The 22 added mnemonics' FIGURES wait on R-16's
+                    unauthorized V3 word; labels and row order do not
+  FWD-13 Every folded field is CITED or ABSENT with a readable reason
+         DONE WHEN  EXERCISED -- a census over the dossier's fields prints zero
+                    fields that are neither cited nor reason-bearing, with the
+                    denominator of fields scanned; and a negative control shows a
+                    deliberately uncitable field rendering ABSENT rather than
+                    blank or inferred
+         ACCEPT     Nothing on the page is inferred, defaulted or paraphrased
+                    from the team's words.
+         SOURCE     brief O4 :71; C-CITED-OR-ABSENT, C-INPUT-HASHED. Scope is the
+                    brief's own: FWD-10..FWD-12 and FWD-15
+  FWD-14 Any folder in the Research list returns its dossier or the printed
+         reason there is none
+         DONE WHEN  EXERCISED -- for a named folder the read returns a dossier or
+                    a reason; and the three counts (resolved / ambiguous /
+                    empty-or-workbook-only) SUM TO THE FOLDER COUNT every time
+         ACCEPT     Andrew can name any folder and get an answer, never a silence.
+         SOURCE     brief O5 :77; C-FOLDER-LIST-IS-THE-DENOMINATOR
+  FWD-15 The fund of record and last stated position read as the TEAM'S stated
+         posture, cited, beside the unchanged machine judgment
+         DONE WHEN  EXERCISED -- both render cited on the header posture line and
+                    the Posture tab, and the machine verdict is byte-unchanged by
+                    their presence
+         ACCEPT     The team's posture informs the reader without becoming the
+                    judgment.
+         SOURCE     brief O6 :84 (marked PROPOSAL by its author); Andrew: "Posture
+                    is still up to us", so this is an INPUT and never the verdict
+  FWD-16 A PDF-only pack gets the same fold, or the tab states which shape the
+         PDF could not be read to and why
+         DONE WHEN  EXERCISED -- a PDF-only name renders pillars, management and
+                    cases from the PDF pack; and the docx path is KEPT AS THE
+                    CONTROL and still recovers what it recovered before
+         ACCEPT     A name is not poorer for having been filed as a PDF.
+         SOURCE     brief O7 :91 AT ITS AMENDED BYTES. Extractability is MEASURED
+                    (99 of 99 on the control) -- this is a READER change and NO
+                    CELL RE-MEASURES IT (A.2)
+  FWD-17 A newly filed report becomes a new immutable bronze object and the
+         dossier rebuilds, with the prior dossier still readable
+         DONE WHEN  EXERCISED -- a new report lands, a new report_id16 appears
+                    BESIDE the old, the dossier's inputs_sha16 changes, the page
+                    serves the newer pillars, and the prior as_of object still
+                    reads; and a rebuild with UNCHANGED inputs writes NOTHING and
+                    says so
+         ACCEPT     The store grows and never overwrites, and a re-run is
+                    distinguishable from a change.
+         SOURCE     brief O8 :108; C-DOSSIER-REBUILD-IS-A-NO-OP-ON-UNCHANGED-INPUTS.
+                    Person-started; no notifier and no schedule
+  FWD-18 Each pillar and KPI row names its terms, and the header feed and Chatter
+         axis are filterable to those terms
+         DONE WHEN  EXERCISED -- a pillar's terms are readable on the page and the
+                    feed filters to them for at least one name
+         ACCEPT     A theme the team named is followable into the news.
+         SOURCE     brief O9 :115. Marked PROPOSAL and LATER enrichment by its
+                    author: cut LAST, deferrable by the round-N analysis without
+                    re-opening anything
+  FWD-19 EVERY SECURITY IN THE ASSET MANAGEMENT RESEARCH FOLDER -- all 93 -- is
+         dispositioned through the opal-data-harvest channels
+         DONE WHEN  EXERCISED -- a census prints, for all 93, dossier-served /
+                    resolved-but-no-prose / unresolved-with-reason, and THE THREE
+                    SUM TO 93; the 60 today-unresolved folders are inducted by a
+                    SCRIPTED producer and re-ingested; and the 11 that can never
+                    carry prose (10 workbook-only, 1 empty) are NAMED with their
+                    reason rather than dropped from the denominator
+         ACCEPT     Andrew names any of the 93 and gets its corpus layers or the
+                    reason it has none. 93 of 93 DISPOSITIONED -- never 93 of 93
+                    populated, which 11 folders make impossible by construction.
+         SOURCE     Andrew-direct ~04:3xZ "we also need backfill for all the asset
+                    management securities", population fixed by his ~05:0xZ test
+                    "every single security in the Asset Management research
+                    folder"; C-BACKFILL-DENOMINATOR-IS-THE-RESEARCH-FOLDER.
+                    NOT IN THE L1 BRIEF -- see A.3's subtraction.
+                    STARTING STATE (ingest_run.json, scan 2026-09-23T03:09Z, from
+                    the worker's run record, NOT head-object verified): 33
+                    resolved / 123 stored; 60 folders / 228 files NOT ingested
+                    BECAUSE IDENTITY RESOLUTION FAILED. The blocker is IDENTITY,
+                    not acquisition: 60 of 93.
+
 ```
 
 **Rule 24 record for this endpoint.** Axis: what an analyst or a consumer can DO that they cannot do today. Grain: one
@@ -430,7 +549,7 @@ addendum)"* -- and it was the **ONLY** row whose `serves` column named no FWD. S
 |---|---|---|---|
 | K1 | the library on THIS device | its derived root; the folder and file counts at cell time versus the scan's 93 / 351; whether the sync is complete or partial, and how a partial sync is distinguishable from a small library | the ingestion cell |
 | K2 | the identity layer | what fraction of the 93 folder names resolve through the existing crosswalk, and what the ambiguous ones look like -- the denominator decides whether FWD-3 needs a human pass | the backlog cell |
-| K3 | the PDF-only reports | 184 PDFs against 71 Word files: whether the PDF text is extractable to the same skeleton, since the scan's term census read the Word files only | the extraction cell |
+| ~~K3~~ | ~~the PDF-only reports~~ | ⛔ **CLOSED 2026-09-24 BY ADDENDUM A.2 -- ANSWER YES.** The positive control recovers **99 of 99** docx pillars from the PDF (56 same-stem pairs, 17 FULL); 26 of 30 PDF-only folders carry a full pack; cause is `extract.py`'s standalone-heading heuristic being blind to the PFOE packs' INLINE BOLD LEADS. Package `PDF_EXTRACTABILITY_20260924/SUMMARY.md` @`d64d83a5d2`, ruling R-22 @`61fdf4c12f`. ⭐ **A CARD LEFT OPEN AFTER ITS ANSWER LANDS IS A STANDING ORDER TO RE-MEASURE** -- no cell is cut for this | ~~the extraction cell~~ -- nothing owed |
 | K4 | the workbooks | whether the model sheets read without Excel on this box, and whether the 23 FactSet-coded variants type onto the same mnemonics | the typecast cell |
 | K5 | period resolution | how a report's PERIOD is determined (filename, header, or content) and how many of the 351 carry one -- FWD-2's ordering depends on it | the ingestion cell |
 
@@ -460,3 +579,199 @@ Stamp: `python .tools/prd-signoff.py sign|refuse AMGT_CORPUS --half ... --review
 `python .tools/prd-signoff.py status AMGT_CORPUS`.
 
 **No task order may be cut against this PRD until both halves read SIGNED at the current bytes.**
+
+---
+---
+
+# ADDENDUM A -- THE DOSSIER FOLD AND THE FULL BACKFILL (v0.5, L4, 2026-09-24)
+
+**Author** `1.0.0_SA_CTO~Z`. **Driver** `2.0.0_SA_COO~X`, named by Andrew. **Cut for a fresh CANONICAL ROUND** --
+`AMGT_CORPUS` handed back out of closer mode at `ad5c7a75c6` (`HANDBACK_TO_CANONICAL_20260924.md`, R-26).
+
+**Andrew-direct 2026-09-24 ~04:3xZ at this terminal, VERBATIM, the sentence this addendum answers:** *"spec out a
+new analysis that can be handed off to new rounds for development on AMGT_CORPUS (Not only do we need the
+incorporated layers from the corpus however we decided to do that i.e. using your dossier addendum we also need
+backfill for all the asset management securities) ... Then you can have COO~X take CORPUS."*
+
+**L1 basis** -- `4.0.0_SA_CRO~Y`, `docs/briefs/amgt-corpus-dossier-fold-brief-20260924.md`, cut at its AMENDED
+bytes **@`328e17d5e5`** (base @`be09d62ef7`, Part VIII @`5ef3e9a89b`, the O7/F2 amendment @`328e17d5e5`).
+⛔ **PINNED AT THE AMENDMENT DELIBERATELY: the base commit carries the SUPERSEDED extractability claim**, and this
+PRD's own v0.2 change note records what pinning a brief's earlier bytes costs.
+
+**Nothing in ADDENDUM A retires or amends `FWD-1`..`FWD-9`, R1..R11, or any `C-` contract except the ONE named in
+A.4.** `FWD-1`..`FWD-9` stand exactly as ratified.
+
+## A.1 -- ⛔ THE BRIEF'S OWN OUTCOME NUMBERING IS REFUSED, AND THE REASON IS A COLLISION
+
+The brief states at `:46` that its `O1` *"becomes `FWD-1` of the addendum"*. ⛔ **`FWD-1` IS TAKEN** -- it is this
+PRD's *"Every report the team has written can be re-opened from our store"* (`:176`), and the same brief declares at
+`:35` that `FWD-1..FWD-9` **do not move**. **Minting a second `FWD-1` would give this project two outcomes with one
+id, which is the one thing endpoint numbering forbids** (`/open-calls`: new ids *"at the next unused number, never
+renumbered, never reused"*). **RULED: the brief's `O1`..`O9` become `FWD-10`..`FWD-18`**, in the brief's own order,
+and the brief's sentence is the defect rather than this PRD's.
+
+## A.2 -- ⛔ THE BRIEF CONTRADICTS ITSELF ABOUT O7, AND THE STALE HALF IS PHRASED AS AN INSTRUCTION
+
+The O7 amendment (`:97-106`) and the F2 supersession (`:187-190`) measure PDF extractability and settle it:
+**26 of 30 PDF-only folders carry a full research pack; 29 of 30 yield pillars or a "Why we own"; the positive
+control recovers 99 of 99 docx pillars from the PDF** (package `PDF_EXTRACTABILITY_20260924/SUMMARY.md`
+@`d64d83a5d2`, ruling R-22 @`61fdf4c12f`). **THREE LATER PASSAGES STILL SAY IT IS UNMEASURED:**
+
+| stale passage | what it says |
+|---|---|
+| `:280-282` | *"O7's feasibility is UNMEASURED and is **the first thing the cut should measure**"* |
+| `:285-286` | *"It did not measure how many of the 30 PDF-only folders are Class A packs ... versus Class B updates"* |
+| `:404-405` | *"the PDF path (O7; 30 folders) is unmeasured for extractability and is **the first cell to measure**"* |
+
+⛔ **TWO OF THE THREE ARE WRITTEN AS A DIRECTIVE TO THE NEXT SEAT, NOT AS A CAVEAT** -- *"the first thing the cut
+should measure"* is a cell a COO would cut, spending a round re-measuring a question whose answer ships in the same
+brief. ⭐ **THIS IS EXACTLY R-26a's SHAPE ONE LEVEL OUT: THE DECISION WAS AMENDED AND THE COORDINATES WERE LEFT** --
+and here the surviving coordinate is an imperative, which is the worst kind, because a later seat EXECUTES it.
+**RULED: the `:97-106` / `:187-190` text is authoritative (later vintage, package hash, CTO ruling);
+`:280-282`, `:285-286` and `:404-405` are STALE AND DO NOT BIND.** ⛔ **NO CELL IS CUT TO MEASURE PDF
+EXTRACTABILITY.** `FWD-16` (brief `O7`) is a READER change, and its three reader rules are already written down.
+
+**AND THE Rule-28 CARD `K3` IS CLOSED BY THE SAME MEASUREMENT.** `K3` asks *"whether the PDF text is extractable to
+the same skeleton"* and would have sent the extraction cell to answer it. ⭐ **A CARD THAT HAS BEEN ANSWERED IS A
+CARD THAT MUST BE CLOSED, OR IT FUNCTIONS AS A STANDING ORDER TO RE-MEASURE.** `K3` is CLOSED: answer YES, at
+99 of 99 on the control, with the reader's inline-bold-lead blindness as the cause.
+
+## A.3 -- THE NEW OUTCOMES: `FWD-10`..`FWD-19`
+
+⛔ **THE DEFINITIONS LIVE IN THE ENDPOINT SECTION ABOVE AND ARE NOT REPEATED HERE. ONE CARRIER.** This section holds
+only the REASONING. ⚠ **AND THAT SPLIT IS A CORRECTION, NOT A STYLE CHOICE:** the first cut of this addendum defined
+the ten outcomes HERE and in the header, leaving the ENDPOINT section -- **the surface step 5 actually reads** --
+without them. **The step-4 PRD surface-manifest gate REFUSED the commit and named all ten**, with the reason:
+*"the R3 monitor reads the header and step 5 reads the section, so this drift is invisible to a reader and total to
+a consumer."* ⭐ **THAT IS THE THIRD INSTANCE TONIGHT OF THIS SEAT AMENDING A DECISION AND LEAVING A COORDINATE**
+(R-26a's generated-vs-declared row; A.2's stale O7 instruction; this). **The first two were found by reading; this
+one was found by a gate, which is the only one of the three that could not have been missed.**
+
+⛔ **`FWD-19` IS NOT IN THE BRIEF AND IS THE HALF ANDREW ADDED TONIGHT.** Measured by subtraction from his sentence
+rather than recalled from the brief: he named **two** things, *"the incorporated layers"* AND *"backfill for all the
+asset management securities"*. The brief covers the first and, on its own words, **the second is absent from it** --
+*"backfill"* appears in the brief exactly ONCE, in a filename in its REFS block (`:423`), and `add_security` appears
+NOWHERE. Its population rule is strictly the 93-folder Research list (`:79`, `:267`). **So a round cut from the
+brief alone would deliver one of the two things he asked for, and the brief would look complete.**
+
+
+⚠ **`FWD-18` AND `FWD-15` ARE MARKED PROPOSAL BY THEIR OWN AUTHOR** (`:86`, `:117-118`). They are cut as outcomes
+so they are gradeable, and the round-N analysis may defer either; neither is a bar on the other eight.
+
+## CONTRACTS -- A.4 -- ⛔ ONE CONTRACT IS AMENDED BY NAME, BECAUSE `FWD-19` IS OTHERWISE UNACHIEVABLE
+
+`C-NO-VENDOR-CALL` reads *"Nothing in this project calls an external vendor API or the Claude API."* The 60-name
+induction needs **one Bloomberg `reference_data` call per name**. ⚠ **THIS PRD HAS ALREADY BEEN HERE ONCE AND ITS
+FIRST ANSWER NO LONGER HOLDS.** At v0.3 (`:104-106`) the same collision was found against `FWD-4`, and it was
+resolved by having `FWD-4` produce an **EXECUTABLE REQUEST** that something else runs -- leaving `C-NO-VENDOR-CALL`
+untouched (`:231`). ⛔ **THAT RESOLUTION IS NOW THE "NO FWD IS A WAIT" DEFECT RULE 27 FORBIDS:** the request was
+built (`induction_request.json`, `unresolved_in_universe 60`) and **nobody has executed it**, so the outcome's only
+proof is an act no seat in this project may take. Measured: 60 folders still unresolved a day later.
+
+**RULED -- `C-NO-VENDOR-CALL` IS AMENDED, NARROWLY, AND NOTHING ELSE IS:**
+
+> **`C-NO-VENDOR-CALL` (v0.5).** This project calls no external vendor API and no Claude API, **WITH ONE
+> EXCEPTION: the identity induction of a backlog name may make ONE Bloomberg `reference_data` call per name,
+> ONCE, through `add_security`, from a SCRIPTED DETERMINISTIC PRODUCER.** Every other vendor surface stays barred,
+> the Claude API stays barred, and the Model-block figure pull is NOT covered by this exception.
+
+Authority, and it is Andrew's own word twice over: **R-16** registers the grant (V1 price pull, **V2 the 60 backlog
+names via `add_security`**, ⛔ **V3 the Model tab's Bloomberg figure pull NOT AUTHORIZED**), and **R-21** carries his
+mechanism constraint VERBATIM -- *"the pull should be deterministic/scripted in nature like the existing pull, i do
+not like the idea of relying on an agent for something a script can do way better."*
+
+⛔ **THREE LIMITS ON THE EXCEPTION, EACH ONE A REFUSAL A GRADER CAN APPLY:**
+1. **AN AGENT TURN IS NOT A PRODUCER.** A vendor call made from a seat's turn FAILS this contract even if the
+   value it returns is correct. R-21b already stands this up as a grading criterion.
+2. **THE WORD AUTHORIZES THE CALLS, NOT A PICK.** `3.0.0_SA_CVO~Z`'s standing ruling on ambiguous names holds:
+   `induction_request.json` already REFUSES America Movil (folder `AXMB`, report `AMXB`) and that refusal is
+   CORRECT. An ambiguous name is a refusal with a reason, never a guess, and never a coin-flip resolved by a build.
+3. **THE MODEL PULL IS A SEPARATE PER-USE WORD.** The brief says so twice (`:253-254`, `:400`) and R-16 excludes it
+   as V3. `FWD-12` therefore lands the typecast's measured mnemonic set and the row ORDER and LABELS; the 22 added
+   mnemonics' FIGURES wait on that word, and the tab reads ABSENT-with-reason until then -- **which is `FWD-13`
+   working, not `FWD-12` failing.**
+
+## CONTRACTS -- A.5 -- NEW CONTRACTS (the brief mints no `C-` ids; these are this seat's)
+
+**`C-DOSSIER-IS-COMPOSED-NEVER-AUTHORED`.** The dossier is a COMPOSITION of artifacts that already exist -- the
+continuation artifact, the sector template, the fund form, the typecast, the bronze extraction -- plus the cited
+passages. No cell authors a new judgment into it and no field is synthesised across reports.
+
+**`C-DOSSIER-DATE-IN-THE-OBJECT-NAME`.** ⭐ **EXERCISED AGAINST THE BUILDER, NOT RESTATED FROM THE BRIEF.**
+`lib/opal_naming.py address()` output is
+`s3://opal-data-harvest/amgt/harvest/gold/research-dossier/security_key=<KEY>`, and the builder **REFUSES** a
+two-level partition with its own message: *"partition must be a non-empty ASCII string with no '/' and no outer
+space"*. **So `as_of` lives in the OBJECT NAME**, `<YYYY-MM-DD>.<inputs_sha16>.json`, one object per rebuild whose
+inputs changed, never overwritten, reader takes the newest `as_of`. A true second partition key is a registry row
+under `infra/logic/registry/` (Rule 30) and is NOT cut here.
+
+**`C-DOSSIER-TABLE-SPELLING`.** ⛔ **THE BUILDER ACCEPTS BOTH `research_dossier` AND `research-dossier` AND REFUSES
+NEITHER, SO TWO SPELLINGS WOULD SILENTLY PRODUCE TWO STORES.** Settled on the LIVE PLANE rather than by preference:
+`amgt/harvest/gold/` carries **5 of 5 `research-*` tables HYPHENATED** (`research-backlog`, `research-continuation`,
+`research-fund-form`, `research-model-typecast`, `research-sector-template`) beside 4 underscored non-research
+tables. **THE SPELLING IS `research-dossier`.** ⚠ The cross-family inconsistency is real, is not this round's to
+fix, and is a surprise row rather than a cell.
+
+**`C-DOSSIER-REBUILD-IS-A-NO-OP-ON-UNCHANGED-INPUTS`.** A rebuild whose `inputs_sha16` is unchanged writes nothing
+and says so. This is the discriminator that makes `FWD-17` gradeable: a rebuild that always writes cannot
+distinguish "the report changed" from "the job ran".
+
+**`C-BACKFILL-DENOMINATOR-IS-THE-RESEARCH-FOLDER`.** ⛔ **EVERY `FWD-19` POPULATION CLAIM IS A SUBTRACTION FROM A
+FRESH READ OF THE ASSET MANAGEMENT RESEARCH FOLDER, WITH THE DENOMINATOR PRINTED.** The population is **93 folders**
+and the target is **every one of them**: resolved-with-a-dossier, or carrying a printed reason it has none, and the
+three counts summing to 93 every time.
+
+⚠ **THIS CONTRACT REPLACES WHAT THIS SEAT WROTE MINUTES EARLIER, AND ANDREW'S WORD IS WHY.** The first version read
+`C-BACKFILL-DENOMINATOR-IS-THE-ESTATE'S-LIST` and said the folder list was *"the initial POOL, not the population"*,
+with `K6` raised as a Rule-28 card because this seat could not state the population. **Andrew-direct 2026-09-24
+~05:0xZ, VERBATIM, settles it:** *"Only when all of this is done for every single security in the Asset Management
+research folder is the goal complete."* ⭐ **SO THE POPULATION IS THE FOLDER, IT IS 93, AND IT IS ALREADY MEASURED**
+-- which makes `FWD-19` gradeable from day one instead of gated behind a card. `K6` is CLOSED by his word (A.6).
+⛔ **THE CAUTION THE FIRST VERSION CARRIED IS STILL RIGHT ABOUT ONE THING AND IT SURVIVES:** 11 of the 93 (10
+workbook-only, 1 empty) **can never carry prose-derived fields**, so a claim of "93 of 93 dossiers" would be false
+by construction. **The grade is 93 of 93 DISPOSITIONED, never 93 of 93 populated** -- and the 11 are named in the
+census with their reason, not silently dropped from the denominator.
+
+## A.6 -- NEW MANIFEST ROWS AND THE ONE NEW Rule-28 CARD
+
+| # | artifact | home | serves |
+|---|---|---|---|
+| R12 | the composed per-security dossier | `harvest / gold / research-dossier`, by security key, `as_of` in the object name | `FWD-10`..`FWD-13`, `FWD-15`..`FWD-17` |
+| R13 | the induction act's read-back per name (resolved / refused-ambiguous / refused-absent) | consumes `AMGT_RESAPP`'s universe; writes no new surface | `FWD-19` |
+| R14 | the estate-wide coverage census: covered securities, those carrying a dossier, those carrying none with a reason | `harvest / gold / research-backlog`, a new scan vintage beside the folder census | `FWD-14`, `FWD-19` |
+
+| # | substrate | question | owner |
+|---|---|---|---|
+| ~~K6~~ | ~~the estate's covered-security list~~ | ⛔ **CLOSED BY ANDREW'S WORD ~05:0xZ BEFORE IT WAS EVER WORKED.** This seat raised it because it could not state `FWD-19`'s population; he stated it: *"every single security in the Asset Management research folder"*. **The population is the 93 folders**, already measured, so no cell is owed | ~~the backfill cell~~ -- nothing owed |
+
+⭐ **K6 WAS A CORRECTLY-RAISED CARD AND IT WAS ANSWERED BY THE CHEAPEST POSSIBLE INSTRUMENT -- ASKING NOBODY.**
+It was raised at ~05:00Z and closed at ~05:0xZ by a sentence Andrew was already writing. ⚠ **The useful lesson is
+not that the card was wasted -- it is that the card's QUESTION was the right one and this seat's proposed ANSWER
+(a wider estate-wide list) was wrong.** Had it been resolved by this seat's own reasoning instead of named as an
+open question, `FWD-19` would now carry a population Andrew did not ask for, and the round would have built against
+it. **Naming the uncertainty is what made his one sentence sufficient to close it.**
+
+## A.7 -- WHAT THIS ADDENDUM DOES NOT DO
+
+No page-architecture change (`C-PAGE-LAYOUT` untouched; Andrew: *"i wouldnt change AMGT_RESAPP page layout
+architecturally"*). No Peers-tab source change (*"largely stays as it is"* -- the pack's own comparison set is a
+cited dossier FIELD, not a second ranker). No `AMGT_HARVST` change. No second identity mechanism
+(`C-IDENTITY-VIA-THE-LAYER` stands; this project adds none). No notifier and no schedule -- the rebuild is a run a
+person starts. No bronze at serve (`C-NO-RAW-BRONZE-AT-SERVE` stands; only the gold dossier of cited passages is
+servable). No fourth project. **And no Model-block figure pull** (A.4 limit 3).
+
+⚠ **ONE CROSS-PROJECT OWNERSHIP FACT, STATED RATHER THAN RESOLVED HERE:** the brief puts the induction ACT in
+`AMGT_RESAPP` (`:197`, *"the act is `AMGT_RESAPP`'s"*), while `FWD-19` is an `AMGT_CORPUS` outcome. **That is the
+same shape v0.3 corrected on `FWD-4`, where this project's outcome required writing another project's surface.**
+R13 above is written so it CONSUMES the universe and writes no new surface, which keeps the boundary; **whether the
+induction RUN is executed by `2.0.0_SA_COO~X` or by the Served Runtime lane is an L5 question for the two seats,
+and it is named here so it is not discovered mid-round.**
+
+## A.8 -- L4-R
+
+Both halves re-open: ADDENDUM A changes the ENDPOINT (new outcomes) and the CONTRACTS (A.4, A.5), so the RATIFIED
+half is re-owed to `3.0.0_SA_CVO~Z`; and it rests on a new L1 brief, so the BRIEF half is re-owed to
+`4.0.0_SA_CRO~Z`, with `4.0.0_SA_CRO~Y` named as the brief's author for consultation. ⚠ **PER R-10, ANDREW
+SUSPENDED THE L4-R SIGNATURE AS A BAR FOR AMGT -- THE REVIEW IS KEPT, THE RITUAL IS NOT** -- so the halves are
+routed and a round is not held hostage to a stamp. `FWD-1`..`FWD-9`, R1..R11 and every contract but
+`C-NO-VENDOR-CALL` are unchanged, so nothing already signed is re-opened by this addendum.

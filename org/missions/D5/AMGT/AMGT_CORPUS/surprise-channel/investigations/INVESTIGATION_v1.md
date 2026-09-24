@@ -338,6 +338,316 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "CRPS-c-10 section 1, RULED: 'The sector template is the name's business type through `sector_template.business_type_of`.'",
     "world_is": "`business_type_of` is c-7's own superseded, evidence-only, report-level function; the function that actually determines which business_type partition a security's sector-template artifact lives under is `business_type_of_security`. This order's inlined text was written before, or without incorporating, c-7's own reopen amendment. Calling the named function literally would make substrate.py's sector_template member read absent for nearly every security (0 of 13 business types reach a report at the report level, per Z-W4-S1) and would not match how CRPS-c-7's gold artifacts are actually partitioned, so I used business_type_of_security -- consistent with c-7's own current docstring and its real writer -- and did not implement the literally-named function.",
     "notes": "Not a criterion failure: none of AC1-AC5 name a specific business-type resolution function, only the printed shapes and pass/fail bars, and all five pass with this resolution. Filed because a future reader of this order's own text, absent this row, would reasonably expect business_type_of and get a substrate that reports 'absent' for nearly every security. hazard_standing INERT: the order's own text is stale relative to a sibling cell's amendment that landed in the SAME round, not a live hazard -- whether CRPS-c-10's inlined text should be corrected for a later round is 2.0.0_SA_COO~X's call as issuer."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S10",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T05:02:00Z",
+    "one_line": "CRPS-c-11 AC3's literal invocation pipes the code census through `tail -30`, but the census now prints 32 lines (files_scanned, write_like_calls, 27 flagged-call lines, library_write_calls, positive_control flagged, positive_control_path), so the two header lines fall outside the window and AC3's own regex, which requires `files_scanned` BEFORE `library_write_calls 0`, cannot match the literal command's output while every value it grades is correct.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured on the closer branch at 55be6c7dfe (worktree C:/tmp/closer-amgt-corpus-x-20260923): `python -m lib.research.corpus.readonly_proof --code-census` prints exactly 32 lines, line 1 `files_scanned 30`, line 2 `write_like_calls 27`, lines 3-29 one flagged call each, line 30 `library_write_calls 0`, line 31 `positive_control flagged 1`, line 32 `positive_control_path ... left_for_operator_cleanup True`.",
+        "`tail -30` of that output starts at line 3 (`induction_request.py:453 os.makedirs ...`); a grep for `files_scanned` over the tail-30 window returns 0 lines.",
+        "The order's AC3 <expect> is `(?s)files_scanned [1-9]\\d*.*library_write_calls 0\b.*positive_control flagged 1\b` -- anchored on files_scanned first, so the literal invocation cannot satisfy it; the same regex over the FULL output (equivalently `tail -40`) matches.",
+        "Why the window moved: the census flags 27 write-like calls at HEAD against the smaller package the order was written for at 40107c6f48 (readonly_proof.py did not exist yet); the scanner's own copytree/copyfile/open/write_text sites and the test modules' tmp_path writes are legitimately flagged (reaches_library False, origins outside-library / unknown), and each flagged call costs one output line.",
+        "AC3's SUBSTANCE is unaffected: files_scanned 30, library_write_calls 0, positive_control flagged 1 -- measured twice, identical."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-c-11 AC3 <invocation>: `python -m lib.research.corpus.readonly_proof --code-census 2>&1 | tail -30` with <expect> `(?s)files_scanned [1-9]\\d*.*library_write_calls 0\b.*positive_control flagged 1\b` -- i.e. the last 30 lines carry the census header.",
+    "world_is": "The census output is 32 lines at HEAD, so `tail -30` drops `files_scanned` and `write_like_calls`; the literal invocation's output can never match the literal regex even though every graded value passes. An instrument-window defect in the criterion's read, not a defect in the census or the code it grades.",
+    "notes": "Issuer disposition (2.0.0_SA_COO~X executes c-11 personally per G00 @8d33ad1cc5, the worker slot never spawned): the order's AC3 invocation is AMENDED from `tail -30` to `tail -40` in the same closing commit, recorded in the order's ISSUER NOTES; the <expect> is unchanged. The widened window is the READ of the instrument, not its substance -- no code changes to fit the criterion. A reader grading the instance sees the amended invocation aligned with the amended order under proof-of-spec-check's alignment limb."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S11",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-24T05:48:00Z",
+    "one_line": "Every NEW and AMENDED contract in AMGT_CORPUS ADDENDUM A and AMGT_RESAPP ADDENDUM B hashes into the BRIEF half, not the ratified-text half, because prd_signoff_lib.half_of_section() classifies on the heading's FIRST WORD and those sections are headed 'A.4' / 'A.5' / 'B.4' -- so the signer the spine assigns to CONTRACTS 'always' (3.0.0_SA_CVO) is not reviewing the new contracts, and the CVO stamp does not bind to their bytes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/prd_signoff_lib.py:34 RATIFIED_SECTIONS = (\"ENDPOINT\", \"CONTRACTS\") with the comment 'matched on the heading's FIRST WORD, backtick-insensitive'; :93-98 half_of_section() returns 'ratified-text' only if _first_word(title) is in that tuple, else 'brief'.",
+        "Measured by running half_of_section() over EVERY '## ' heading in both PRDs at 1ffb156ecd -- denominator 14 sections in AMGT_CORPUS, 20 in AMGT_RESAPP. Result: 'A.4 -- ONE CONTRACT IS AMENDED BY NAME, BECAUSE FWD-19 IS OTHERWISE UNACHIEVABLE' -> brief; 'A.5 -- NEW CONTRACTS' -> brief; 'B.4 -- NEW CONTRACTS' -> brief. Only the two sections literally headed ENDPOINT and CONTRACTS return ratified-text.",
+        "Hunk map of 1ffb156ecd confirms the consequence rather than inferring it: AMGT_CORPUS moved the ratified half through ONE hunk, @@ -299,6 +310,115 @@, which is inside ## ENDPOINT (179-453); ## CONTRACTS (454-520) is BYTE-UNCHANGED. AMGT_RESAPP likewise @@ -636,6 +647,117 @@ inside ## ENDPOINT (416-770), with ## CONTRACTS -- v0.7 (771) byte-unchanged.",
+        "The content so routed is contract text by its own declaration: A.4 re-states C-NO-VENDOR-CALL as '(v0.5)' in a block quote and amends a HARD vendor-egress bar; A.5 mints C-DOSSIER-IS-COMPOSED-NEVER-AUTHORED, C-DOSSIER-DATE-IN-THE-OBJECT-NAME, C-DOSSIER-TABLE-SPELLING, C-DOSSIER-REBUILD-IS-A-NO-OP-ON-UNCHANGED-INPUTS and C-BACKFILL-DENOMINATOR-IS-THE-RESEARCH-FOLDER; B.4 mints C-CLAUSE-CITED-REJECTION, C-RENDER-IS-THE-ORACLE, C-EXPORT-ADDS-NOTHING and C-PRESENTATION-ONLY.",
+        "The routing is confirmed against the spine's own assignment rather than this seat's reading of it: prd_signoff_lib.py:12 'ratified-text  ENDPOINT + CONTRACTS               reviewer 3.0.0_SA_CVO, always', and AMGT_RESAPP's own section title reads '## CONTRACTS -- v0.7 (ratified text; the reviewer is 3.0.0_SA_CVO, always)'.",
+        "NEGATIVE CONTROL, and it is what makes this a carrier defect rather than an authoring oversight: the SAME author solved the identical carrier question for OUTCOMES in the SAME commit, placing FWD-10..FWD-19 and FWD-21..FWD-30 INSIDE the ## ENDPOINT fence and saying so in terms -- 'THESE ARE THE DEFINITIONS AND THIS FENCE IS THEIR ONLY CARRIER' (CORPUS :313-316) and 'THIS FENCE IS THE ONLY CARRIER of the definitions' (RESAPP :651-653). Outcomes were carried correctly; contracts were not.",
+        "EXPOSURE-vs-INCIDENT discriminator RUN, per CLAUDE.md Rule 22's negative mirror: the defect's own signature is 'contract text admitted without CVO review'. This seat READ all nine new/amended contracts in A.4, A.5 and B.4 and found them sound (A.4 narrowly authorised by R-16 V2 + R-21 with three grader-applicable refusals, one of which preserves this seat's own standing AXMB/AMXB ruling by name). So 0 of 9 were admitted defective through the gap."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CANONICAL_FABRIC_WORKFLOW L4-R, as carried by .tools/prd_signoff_lib.py:12: the PRD's two halves are split so that '3.0.0_SA_CVO signs the RATIFIED-TEXT half (ENDPOINT + CONTRACTS), always'. CLAUDE.md Rule 27 states the same split and binds the stamp to the HASH of its sections.",
+    "world_is": "The half a section lands in is decided by the heading's FIRST WORD, so contract text placed under an addendum-numbered heading ('A.4', 'A.5', 'B.4') hashes into the BRIEF half and is reviewed by 4.0.0_SA_CRO. At 1ffb156ecd this routed one amendment to a HARD vendor-egress contract and eight newly minted C- contracts away from the reviewer the spine assigns to CONTRACTS 'always'. The CVO ratified-text signature stamped at 215e060a3b is therefore CORRECT on its own bytes and does NOT cover those contracts.",
+    "notes": "Class OBSERVATION, not BLOCKING: it blocks nothing today -- R-10 suspends the L4-R signature as a bar for AMGT and both ratified halves are SIGNED current at 215e060a3b. Filed as EXPOSURE, not INCIDENT: the remedy is to BUILD THE GUARD -- re-head or relocate contract sections so their text hashes into the half that owns them (or widen RATIFIED_SECTIONS to recognise a contract section however numbered) -- and NOT to re-open either addendum, since nothing defective was admitted. hazard_standing INERT: no round is held on this and R-10 suspends the L4-R signature as a bar for AMGT, so it blocks nothing today. \u26a0 SCOPE IS WIDER THAN THIS PROJECT AND THAT IS THE POINT: the defect lives in .tools/prd_signoff_lib.py, which BOTH projects share, so a check scoped to either project's own PRD cannot see it (CLAUDE.md Rule 22, shared-dependency blindness) -- filed here because AMGT_CORPUS is this lane's L8 coordinate, and named for AMGT_RESAPP in the same row rather than duplicated. This seat did NOT measure how many OTHER projects' PRDs carry contract text under a non-CONTRACTS heading; that census is unrun and the claim here is scoped to these two. Owner: 1.0.0_SA_CTO~Z as PRD author and owner of the carrier; the tool limb is that seat's to route."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S12",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T06:22:00Z",
+    "one_line": "DISARM by their owner of the four ARMED closer rows AMGT_CORPUS-Z-S6, Z-S7, Z-S8 and Z-S9 (period ordering; scanner false negatives in lambda/class/parameter scopes, comprehension/loop/unpacking bindings, and definition-time defaults / class outer-name reads): each hazard is CLOSED at candidate dc2c0193ef by an independent re-review that PASSED all ten scanner controls and 5,040 period permutations, and that candidate is in CLOUD at b4a8638eeb. The four rows are legacy-shaped (hazard_standing/disarm_owner, no disarm clock) so they cannot advance in place under the row gate; this row is the disarm carrier and cites them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S9's own note ('H re-review NOT_EVALUATED, prior scanner FAIL remains') is STALE: 2.0.0_SA_COO~Y's re-review landed at commit 1c877a8c87 (2026-09-23 18:07Z, after S9 was filed at 17:56Z), REVIEW_C_dc2c0193ef.md read from the object store: 'PASS at source/offline level for the reviewed repairs and bounded named-operation census. This supersedes ce57bef1c2's routine FAIL for the candidate at this exact pin.' The review file is on that lane's branch, not in CLOUD; the lane's evidence copy H_C_ROUTINE_PASS_dc2c0193ef.json (sha256 of both review files recorded) is in CLOUD at b4a8638eeb.",
+        "The review names each row's class explicitly: 'All ten independent scanner controls PASS: direct write/read controls, lambda/class/parameter scope (Z-S7), comprehension/loop/destructuring bindings (Z-S8), enclosing-scope function defaults, and class read-before-local-binding (Z-S9)'; 'Both definition-time fixtures additionally execute with a recording fake open, resolve the library-probe target, and cause no filesystem writes'; 'The two previously failing independent controls now flag the library target.'",
+        "Z-S6: 'Independent period precedence: 5,040 permutations PASS; hidden inversion refused. No period-order code change was needed for this repair' -- the typed.py declared-year/comparable-unit ordering landed at d382f2a30e with five regression controls including the planted 2026-before-FY2025 reversal; H's all-pairs validator is a DIFFERENT instrument from the candidate's own checker.",
+        "DISCRIMINATION: the same reviewer on the same instrument FAILED the candidate at 5812bd0dea (ce57bef1c2), so the PASS at dc2c0193ef is a verdict that could have read otherwise, not agreement by construction.",
+        "STATE at HEAD: the drain b4a8638eeb carries readonly_proof.py and test_readonly_proof.py at their dc2c0193ef bytes (91 tests PASS, the S7/S8/S9 controls among them), and typed.py + test_typed.py with the period fix; corpus suite 212 PASS on the merged tree; 3.0.0_SA_CVO~Z re-ran the census at 373c431072 and reproduced files_scanned 30 / write_like_calls 27 / library_write_calls 0 / positive_control flagged 1 (ADJUDICATION_v4).",
+        "NOT CLOSED BY THIS ROW, stated so nothing is read into it: the CVO's C-S4 residual (readonly_proof.py:301 exempts test files by a fail-open default with no positive control) and the H re-review's own limit ('not an arbitrary-Python no-mutation proof'). Those are round-2 enrichment items per ADJUDICATION_v4 s.3.3, not hazards these four rows named."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rows Z-S6..Z-S9 each assert a defect in the C01 instrument or the period ordering against C-CORPUS-READ-ONLY / FWD-2 and FWD-9, filed ARMED with disarm_owner 2.0.0_SA_COO~X; CLAUDE.md s.2: an ARMED hazard disarms via the row's disarm_owner.",
+    "world_is": "All four defects were repaired in the closer candidate by dc2c0193ef, independently re-reviewed PASS at 1c877a8c87 with the controls naming each class, and the repaired bytes are the ones in CLOUD since b4a8638eeb. The rows' text still reads ARMED because a legacy-shaped row has no disarm clock the gate will advance; a census of hazard_standing is an upper bound and this row is what a reader must weigh against it.",
+    "notes": "Owner's disarm, evidence-cited, no code moved. The next L9 (3.0.0_SA_CVO~Z) may adjudicate Z-S6..Z-S9 on this row; this seat asserts no GRADUATED disposition (the CVO's field). The residual scanner exposure (C-S4) is carried into the round-2 decomposition as a positive-control cell for the test-file exemption, alongside the H re-review the CVO's 3.3 recommends."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S13",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T08:25:00Z",
+    "one_line": "INCIDENT on served output, this seat's act: the 08:02:55Z induction fire (d-5 as first issued) re-minted s3://opal-data-harvest/crosswalk/v1/2026-09-24.json through CLOUD's build_crosswalk and REPLACED a signed object 2.0.0_SA_COO~Z had published at 03:32:47Z under a never-widen pair (523,207 bytes, MEASURED 194) with a 231,910-byte document (MEASURED 36 + 20 UNRESOLVED noise registrations) -- the served scoped API now reads ASML_US_Equity and AAPL_US_Equity UNRESOLVED where they read MEASURED/SERVED at 03:34Z. This seat's own exposure grade (msg 25324) compared against the WRONG before-object (the 2026-09-22 key) because it never head-objected the exact key it was about to write.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "2.0.0_SA_COO~Z msg 25330 (08:18Z), measured by head-object + get + direct invoke: the 09-24 key EXISTED before the fire (published 03:32:47Z under pair COO @4c7d0b2e7c / CTO @429efcdf30, verified R-23, graded route-layer PASS R-24); now LastModified 08:02:55Z, 231,910 bytes, records 116; served ASML_US_Equity UNRESOLVED (was MEASURED/absent/SERVED), AAPL_US_Equity UNRESOLVED (was derived 10 SERVED), CAT_US_Equity still MEASURED derived 12.",
+        "Mechanism (25330): two writers of one key. COO~Z's producer (crosswalk.py with universe/v1 as a second registration source, 36 -> 194 MEASURED) lives on closer/amgt-peers-z-20260924, not on CLOUD; the fire ran CLOUD @a419df8f9d whose build_crosswalk knows only registrations.json (8 rows) -> 36 MEASURED; write_pool's IfMatch branch on a changed digest replaced the signed bytes. CLAUDE.md NEVER-1's 'first count the writers of the named property' was not done by either seat.",
+        "This seat's before-state error, stated: msg 25324 printed 'records 96 -> 116, MEASURED 36 -> 36' using the 2026-09-22 pool as BEFORE because the 09-24 key 404'd... no -- it never read the 09-24 key before firing at all; the post-fire list showed 09-24 as the latest and this seat compared it to the previous dated key. GRAIN failure (Rule 22): the object read was not the object written. R-36 @109db3e909 (CTO, 08:18Z) graded EXPOSURE on that same wrong before-state and is superseded by 25330's measurement; the CTO holds the re-grade.",
+        "bloomberg_calls 0 on all 20 rows; RAW landings 0; the 194 peer objects untouched; no delete anywhere (25330). registrations.json reverted to HEAD in the shared tree (8 rows)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md NEVER-1: never move served output without never-widen sign-off (CTO+COO); a sign-off names the act's blast radius and FIRST COUNTS THE WRITERS of the named property. R-36's own framing: a new dated key is a served move when the consumer's selector is 'newest'.",
+    "world_is": "A second writer (this seat's fire, no pair) put onto a key the first writer had signed hours earlier, with a builder that lacked the first writer's registration source; the served stack regressed on the keys the first writer's pair had proven. The re-fire is HELD by this seat; the rollback (restore the signed bytes, verified by size 523,207 + sha 9bd953b9..., then the three direct invokes) is 2.0.0_SA_COO~Z's act on 1.0.0_SA_CTO~Z's GO; the two producers must become ONE (the closer branch's crosswalk.py reaching CLOUD) before any induction re-mint, or the induction lands registrations and RAW identity WITHOUT --write-pool until then.",
+    "notes": "ARMED; disarm_owner this seat because it holds the re-fire hold and the producer fix on its own side. DISARMS WHEN: (1) the signed 09-24 object is restored and verified (head-object size + document-sha256, the three invokes reading ASML MEASURED/absent/SERVED, AAPL derived 10 SERVED) -- COO~Z's act on the CTO's GO; AND (2) any later induction write to the pool goes through the unified builder under a never-widen pair, or the induction runs with the pool re-mint disabled. Not a REMEDIATION row (the CVO's). Lesson banked by this seat: measure the BEFORE state of the EXACT key you are about to write, never the previous key; a versioned bucket keeps the prior bytes (read below) but a served-latest selector does not wait for them."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S4",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-24T08:45Z",
+    "one_line": "Immediately after ISSUER AMENDMENT 2 landed, one --dry-run over the REAL 93-folder library read a population of 40 UNRESOLVED folders with Copa CPA and Uber Technologies UBER US EVIDENCED (ambiguous 0) -- a live, transient departure from the stable 60/ambiguous-2 shape every prior and every later measurement (three re-reads immediately after, plus the pre-amendment-1 and post-amendment-1 runs) reproduces; induction_request.measure_population/build_request (read-only to this cell, untouched by either amendment) resolve through the live crosswalk/registrations.json substrate, and the blip's timing lines up with the issuer's own revert of its mis-shaped fire-1 writes rather than with anything this cell edited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This worker's own measurement, one call, right after committing amendment 2 (python -m lib.research.corpus.induction_run --dry-run --as-of 2026-09-24): 'population 40 evidenced 2 ambiguous 0 disagreement 1 other 37 called 2 registered 1 already_registered 1 refused 0 errors 0 bloomberg_calls 0 sum 40', with Copa CPA reading 'call Copa CPA | rc 0 | outcome registered | CPA_US_Equity' and Uber Technologies UBER US reading 'call ... | outcome already-registered | UBER_US_Equity' -- both previously AMBIGUOUS (existing security_key collision) under amendment 1's own measurement two commits earlier.",
+        "Three consecutive re-reads of induction_request.measure_population(root) alone (no induction_run code in the call path) in the same worktree, seconds apart: unresolved_folders 60, 60, 60 -- the FIRST of these three was preceded by a single isolated read that ALSO showed 60 for backlog.build()'s own totals (folders_read 93 = resolved 33 + unresolved 60 + ambiguous 0), i.e. the population count stabilised back to the pre-blip shape without any change made by this worker.",
+        "A subsequent --dry-run (and a second, back-to-back repeat) both returned the stable 'population 60 evidenced 20 ambiguous 2 disagreement 1 other 37 called 20 registered 18 already_registered 1 refused 1 errors 0 bloomberg_calls 0 sum 60' -- identical to the measurement this cell recorded under amendment 1, before amendment 2 existed.",
+        "rows_for_run/measure_population/build_request/classify_folder are unmodified by ISSUER AMENDMENT 2 (which only changes the CALL argv shape in run()/make_fake_call, never population measurement); git diff over lib/research/corpus/induction_request.py, backlog.py, library.py and lib/research/identity/crosswalk.py for this worker's own commits is empty (all four are READ-ONLY to this cell)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "rows_for_run(root) rebuilds the induction request FRESH every invocation through the layer's own loaders; a fresh read is implicitly assumed stable across seconds-apart calls in normal operation.",
+    "world_is": "The identity/crosswalk substrate this cell reads (read-only, outside <paths>) is LIVE and, for one call, returned a population and classification set roughly a third smaller than every other measurement taken before or after it -- consistent with a concurrent write (plausibly the issuer's own revert of ISSUER AMENDMENT 2's diagnostic fire-1 output, landing on this same terminal minutes earlier) rather than a defect in this cell's own code, which never touches that substrate beyond the listing/resolve calls induction_request.py already makes.",
+    "disarm_owner": "2.0.0_SA_COO~X (the issuer) -- only that seat can state whether the identity/crosswalk substrate (registrations.json and/or the S3 crosswalk pool) is now settled; not this cell's to verify further, since fixing or auditing lib/research/identity/ is outside <paths> and BOUNDS explicitly reserves that layer read-only.",
+    "notes": "hazard_standing INERT, not ARMED: every measurement used for this cell's own AC2 evidence (the final --dry-run runs, recorded in the proof-of-spec instance) is from the STABLE, reproduced-multiple-times reading (population 60, ambiguous 2, disagreement 1), never from the one transient 40-population read, so nothing in this cell's own deliverable rests on the blip. Filed because a future reader diffing this project's induction_run_2026-09-24_dry-run.json artifacts across commits could otherwise mistake the transient reading (had it been captured) for a regression in this cell's own logic rather than a live substrate event outside its write surface."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S3",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-24T08:14:56Z",
+    "one_line": "CRPS-d-3's READ-ONLY reference `portal/src/pages/SecurityAnalysis/types.ts` is unreadable in this worktree: `.gitmodules` is a tracked, genuinely EMPTY blob at HEAD (no submodule URL for `portal` at all) and `portal/` itself is an empty directory with no cached `.git/modules/portal` objects in the shared git-common-dir -- so DOSSIER_INTERFACE.md's side-by-side was built from the task order's OWN inlined quotation of that file's relevant lines (the `drafted_sections`/`ThesisBundle` slot list the order already reproduces verbatim), not from a fresh read of the file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git ls-tree HEAD -- portal` -> `160000 commit c1ac41ecc17994dea48448b15c90535636711c24 portal` (a real gitlink pin exists), but `git rev-parse HEAD:.gitmodules` -> `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` (git's well-known EMPTY-BLOB hash) and `git cat-file -s` on it returns `0` -- so no submodule URL is tracked for `portal` anywhere in this repo's history at HEAD, not just in this worktree's checkout.",
+        "`ls -la portal` in this worktree: only `.` and `..`, zero entries -- no `.git` file/pointer, no working-tree content at all.",
+        "`git rev-parse --path-format=absolute --git-common-dir` -> the shared `.git` directory this worktree's linked worktree shares with every other slot; `ls .../\\.git/modules` -> 'No such file or directory' -- no OTHER worker/session has ever initialised this submodule's objects into the shared object store either.",
+        "The order's own RULED text for DOSSIER_INTERFACE.md already quotes the load-bearing content verbatim: '`ThesisBundle`'s slot (`portal/src/pages/SecurityAnalysis/types.ts:955` -- `drafted_sections` ids `company_description`, `investment_thesis`, `risks`, `ceo_bio`, `recommendation` with `generated: true|false` per sentence; `management`; `model_cases`; `model_status`/`fiscal_year_figures`; `posture`)' -- this is what DOSSIER_INTERFACE.md's side-by-side is built against."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Section 3 <paths> lists `portal/src/pages/SecurityAnalysis/types.ts` as READ-ONLY reference material this cell reads to build DOSSIER_INTERFACE.md's side-by-side against `ThesisBundle`.",
+    "world_is": "The file is not reachable from this worktree by any git mechanism available to a worker (no `.gitmodules` URL at HEAD, empty working tree, no cached submodule objects in the shared git-common-dir) -- a repo-wide gap, not something specific to this worktree's checkout. DOSSIER_INTERFACE.md's field-by-field comparison against `ThesisBundle` is therefore built from the task order's OWN inlined quotation of the file's relevant slot names (section 1, the DOSSIER_INTERFACE.md bullet), which the issuer had evidently already read at line 955 when writing this order -- not from an independent read by this worker.",
+    "notes": "Not treated as BLOCKING: the order's own text already carries the needed slot names, so refusing the whole cell over one unreadable reference file would be a worse outcome than proceeding on the issuer's own quotation, clearly disclosed. Filed so AC4's judgment reviewer (3.0.0_SA_CVO~X) knows the side-by-side's `ThesisBundle` column is sourced from the order's text, not from an independent live read of portal, and can re-verify against the file directly once the submodule is reachable. Fixing `.gitmodules` (repo-wide, not this project's surface) is outside this cell's bound and is not attempted here."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S14",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T11:20:00Z",
+    "one_line": "DISARM by its owner of AMGT_CORPUS-Z-S13 (the 08:02Z served-output incident): both disarm conditions the row states are MET -- (1) the signed 09-24 object was restored and verified by 2.0.0_SA_COO~Z at 08:22:33Z (VersionId aTOpDZTTPlIzLLoeTFumB8KHmv6A0txG, 523,207 B, sha 9bd953b9, MEASURED 194; ledger amgt-crosswalk-0924-rollback CLOSED), and (2) the later induction write went through the UNIFIED builder (add_security @a125f8be8b on CLOUD via 8c75f4f90d: --batch one put per run, the universe/v1 input on every build) under a complete never-widen pair (COO half 4bbd43777c, CTO half 9a6472e58f) at 11:11:02Z, ONE conditional put, versions 22 -> 23, MEASURED 194 -> 214 with all 194 prior keys present. Z-S13 is legacy-shaped (hazard_standing/disarm_owner, no disarm clock) so it cannot advance in place under the row gate; this row is the disarm carrier and cites it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Condition 1: 2.0.0_SA_COO~Z msg 25345 (RESTORED, verify-after 3 of 3 legs) and this seat's own probe-1 at 10:44:27Z reading the restored bytes as latest: VersionId aTOpDZTTPlIzLLoeTFumB8KHmv6A0txG, 523207 B, ETag 2c0ff894a1b0a3ac4dd20ca45811b76c, sha256 9bd953b9c06f7382..., document-sha256 metadata equal (evidence/refire_probe1_20260924T104423Z.json @4bbd43777c).",
+        "Condition 2, the unified builder: CTO R-49 (preconditions 3 and 4 PASS: 194 -> 197 on three fake registrations, 36 with the universe withheld) and R-51 (add_security.py byte-identical a125f8be8b == HEAD, 25,619 B, sha d70e4af5f2ec7f749fde0f1f; pre-fix 85543bf200 DIFFERS). The one-put property is call-shape-bound and the fire used the --batch shape: d-5 amendment 3 @e1014a7eb6, drained @71e2409a43.",
+        "Condition 2, the pair: COO half org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/NEVER_WIDEN_ROUND2_D5_REFIRE_HALVES.md @4bbd43777c (N = 2 writers printed on a scoped 12/312 and an unscoped 1,009/72,661 census); CTO half org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_COMPLETION_20260923/NEVERWIDEN_D5_REFIRE_CTO_HALF.md @9a6472e58f (zero production readers of bronze/identity, 5 of 8,142 code files).",
+        "The write, measured by the discriminator both halves named (refire_versions_probe.py; evidence/refire_probe2_before_20260924T110857Z.json and refire_probe3_after_20260924T111143Z.json @911d09d153): versions 22 -> 23, delete markers 0, latest VersionId tlVd1Cqrlhk93VurXE2jThhPNToWm0wA at 11:11:02Z, 583272 B, sha256 223264e2d0fd3caa..., records 254 -> 274, MEASURED 194 -> 214, registered 7 -> 27, universe_registered 158 -> 158; superset check on the two version bodies: 194 of 194 prior keys present, 20 new; fire read-back induction_run_2026-09-24_fire.json: bloomberg_calls 20, batch_calls 1, pool_puts 1, rc 0; registrations.json +20 rows @b7819604e0.",
+        "DISCRIMINATION: the same probe lists the 08:02Z misfire's twenty versions inside the 22, so it can see a multi-put run; it read exactly one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S13 DISARMS WHEN (1) the signed 09-24 object is restored and verified AND (2) any later induction write to the pool goes through the unified builder under a never-widen pair (Z-S13 notes); CLAUDE.md s.2: an ARMED hazard disarms via the row's disarm_owner.",
+    "world_is": "Both conditions hold on the instruments named above; the hazard Z-S13 filed (a second writer without a pair, on a builder lacking the first writer's registration source) no longer exists: the two producers are ONE builder on CLOUD and the only later write was ONE put under the pair. Z-S13's text still reads ARMED because a legacy-shaped row has no disarm clock the gate will advance; a hazard census is an upper bound and this row is what a reader weighs against it.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's). The next L9 (3.0.0_SA_CVO~Z) may adjudicate Z-S13 on this row; this seat asserts no GRADUATED disposition. The lesson stays banked (measure the before-state of the EXACT key)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S15",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T11:21:00Z",
+    "one_line": "The induction_batch_2026-09-24.json the d-5 worker COMMITTED in its deliverables dir (@7e1f39f327, drained @71e2409a43) is a TEST FIXTURE, not the dry run's artifact: it carries 'Registered Co' / 'Already Co' / 'Refused Co', because induction_run.run() writes the batch file into the hard-coded DELIVERABLES_DIR (:341-343 at 71e2409a43) and the tests call run(), so the last test to run overwrote the dry run's 20 real requests before the commit. The 11:09Z fire overwrote it again with the real 20; that as-fired list is kept at deliverables/2.0.0_SA_COO~X/evidence/induction_batch_2026-09-24_as_fired.json and the worker's committed copy is restored to HEAD bytes, so a reader of the drained tree sees a fixture where the record face promises the dry run's request list.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff at 11:14Z on the worker's committed file after the fire: 70 insertions, 10 deletions; the HEAD side reads folder 'Registered Co' bloomberg 'REG US', 'Already Co' 'ALR US', 'Refused Co' ...; the working-tree side reads the 20 real requests (AstraZeneca AZN / AZN LN first).",
+        "Write site: lib/research/corpus/induction_run.py:341-343 @71e2409a43 -- deliverables_dir = DELIVERABLES_DIR with no parameter and no test override; test_induction_run.py:155/194 builds rows named 'Registered Co' and asserts on the batch file's content.",
+        "The fire itself was NOT affected: run() rebuilds the request list fresh from rows_for_run() and writes the file BEFORE the one call, so the batch add_security consumed was the real 20 (read-back batch.requests, 20 entries, @911d09d153).",
+        "The read-back JSON in the same dir has the same exposure by construction (write_readback -> DELIVERABLES_DIR), though the worker's AC2 run was the last writer of induction_run_2026-09-24_dry-run.json at its commit (its content names the real folders)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md s.4: a value must carry its claim -- an artifact committed as the dry run's request list must be the dry run's output; d-5's face: the read-back is written as JSON to the worker's deliverables dir.",
+    "world_is": "A hard-coded output directory shared by tests and the real run makes the committed artifact whichever process wrote last; the committed batch file is a fixture. No served output and no vendor call is affected; the fire's inputs are recorded separately.",
+    "notes": "Remedy (a later cell on d-5's surface, not this round's frozen decomposition): run()/write_readback take a deliverables_dir parameter defaulting to DELIVERABLES_DIR, and the tests pass tmp_path; then re-run the dry run and commit its real batch file. disarm not needed: INERT."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S16",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T11:30:00Z",
+    "one_line": "EXPOSURE after the 11:11Z fire: the induction landed 20 MEASURED identities but the served crosswalk now carries, for each of the 20 folders, BOTH the folder's original UNRESOLVED coverage record AND the appended registration record, and both claim the folder's `security-<hash>` association form -- so crosswalk.resolve() reads those 20 forms AMBIGUOUS (a collision, refused) where it read an UNRESOLVED miss before, and the re-ingest at 11:19Z resolved the SAME 33 folders as before the fire (stored 124, put_performed 1, existed 123): 0 of the 20 inducted folders ingested. FWD-19 is REALIZED on identity and NOT on re-ingest.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Re-ingest log deliverables/2.0.0_SA_COO~X/evidence/reingest_after_fire_20260924T111909Z.log: `resolved_folders 33 files_in_resolved 124 stored 124 (put_performed 1 existed 123) read_failed 0`; per fired folder 20 of 20 carry only `AMBIGUOUS: the form 'security-...' is claimed by 2 canonical identities (<folder>, <KEY>_Equity)` lines (AstraZeneca 12, Nestle 9, Total 9, Nokia 8, Orange 6, Sanofi 6, Telefonica Brazil 6, Rio Tinto 5, JD.com 4, BAT 3, Coca Cola Femsa 3, GSK 3, OMAB 3, Iberdrola 3, ICT 3, UBS 3, BNP 2, CCB 2, Intesa 2, Manila 2).",
+        "Served document at VersionId tlVd1Cqrlhk93VurXE2jThhPNToWm0wA read 11:2xZ: association forms claimed by more than one canonical identity = 20, exactly the 20 new keys, each paired with the UNRESOLVED record of the same folder (e.g. security-e42479b2b86da0c7 -> UNRESOLVED, source_row folder 'UBS', provenance universe.json names[] entry; and MEASURED UBSG_SW_Equity, registrations.json folder 'UBS'). Denominators: UNRESOLVED 60 -> 60 across the fire (the tell this seat wrote down at 11:11Z without interrogating), records 254 -> 274, MEASURED 194 -> 214.",
+        "Mechanism at HEAD b00b740d0c: crosswalk.build_crosswalk :717 appends every non-ENRICH registration as a NEW record (_record_for_registration); ENRICH attaches by security_key (:690-705) and an UNRESOLVED coverage record has security_key None, so no registration can attach to it; add_security._register_one :461-468 sets mode ENRICH only for a same-folder record found in existing_by_key, which an UNRESOLVED record never is -- all 20 printed `mode APPEND`. crosswalk.resolve :992 refuses a form claimed by more than one identity.",
+        "NOT a rollback trigger under the pair (COO half 4bbd43777c, CTO half 9a6472e58f): one new version, 194 of 194 prior keys present, MEASURED not below 194. The pair's expected outcome named MEASURED and the key superset and did not name the UNRESOLVED count or the form-claim uniqueness; that omission is this seat's."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-19 (the induction half): the 60 today-unresolved folders are inducted by a scripted producer AND re-ingested. C-ONE-IDENTITY (crosswalk.schema.json title): ONE canonical security identity per economic security; a form is claimed by one identity.",
+    "world_is": "Twenty economic securities now carry two records each in the served crosswalk (one UNRESOLVED coverage record, one MEASURED registration), their association forms are multi-claimed, form-keyed readers read AMBIGUOUS for them, and the corpus ingest cannot resolve their folders. Key-keyed readers are unaffected; no screen was measured.",
+    "notes": "DISARMS WHEN: (1) a registration whose folder matches an UNRESOLVED coverage record RESOLVES that record instead of being appended beside it (crosswalk.build_crosswalk / add_security mode selection -- 2.0.0_SA_COO~Z's surface, its own acceptance: UNRESOLVED 60 -> 40, records 274 -> 254, MEASURED 214 unchanged, multi-claimed forms 20 -> 0); AND (2) ONE re-mint of crosswalk/v1/2026-09-24.json through the unified builder under a fresh never-widen pair (no Bloomberg call: the 20 identities are in registrations.json @b7819604e0 and raw-landed); AND (3) this seat's re-ingest reads resolved_folders 53 and the production sequence runs for the 20. d-4 stays behind (3) by design. Not a REMEDIATION row (the CVO's). Reported to 2.0.0_SA_COO~Z and 1.0.0_SA_CTO~Z 11:2xZ."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S17",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T12:20:00Z",
+    "one_line": "The sector template producer (CRPS-c-7, `sector_template --write`) cannot re-run on a grown corpus: at 12:14:41Z it raised gold.GoldImmutableError on the FIRST business type it reached (business_type=consumer-cyclicals+consumer-services/fbb482677a438d92.json 'already holds a different sha256') because `_object_name(inputs)` (:431-435) hashes METHOD_VERSION plus that type's own inputs while the artifact body embeds the corpus-wide denominator `total` (218 reports today, 124 when the object was minted) -- so a type whose reports did not change gets the SAME name for a DIFFERENT body, and gold's never-overwrite rule refuses it, correctly. The loop stops at the first type, so no sector template was re-measured for any type today, including the types the 20 newly inducted names joined.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat's production-sequence log deliverables/2.0.0_SA_COO~X/evidence/production_sequence_20260924T120608Z.log: extract --write rc 0; extract --run-v2 rc 0 (bronze_reports 218 v2_stored 218 put_performed 95 existed 123); typed --write rc 0 (silver_rows 218 of 218, written_rows 95 skipped_unchanged 123); continuation --write rc 0; sector_template --write rc 1 with the traceback ending `lib.research.corpus.gold.GoldImmutableError: gold_put: s3://opal-data-harvest/amgt/harvest/gold/research-sector-template/business_type=consumer-cyclicals+consumer-services/fbb482677a438d92.json already holds a different sha256`.",
+        "Mechanism at HEAD 6fdce83b63: sector_template.py:568-576 -- `fields, inputs = build(bt, records, total, ...)`; `object_name = _object_name(inputs)`; `gold.gold_put(TABLE, 'business_type=%s' % bt, object_name, body)`; `_object_name` :431-435 hashes `{method_version, inputs}` only; the printed line's own grammar `business_type %s reports %d of %d` shows `total` is part of the artifact. gold.py:70-102 refuses a different sha under an existing name (IfNoneMatch * then a metadata compare).",
+        "The refusal is the gold store working as designed (C-TEMPLATE-IS-MEASURED artifacts are write-once); the defect is the producer's idempotency key omitting an input the body depends on. No object was overwritten; no S3 delete is involved.",
+        "Bound: only the first type in sorted order was attempted (the raise aborts the loop), so whether the types that DID gain reports would have minted new names is not measured here."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-6 / C-TEMPLATE-IS-MEASURED: the sector template is a MEASUREMENT with printed denominators over that type's reports of the total, re-producible as the corpus grows; decomposition v2.0 s.5 duty 2: the production sequence runs once for the newly inducted names, each producer printing its denominators.",
+    "world_is": "The served sector templates are the round-1 vintage measured over 124 reports; the producer refuses to mint today's measurement because its object name does not cover the corpus-wide denominator its body carries. fund_form (rc 0) and typecast (rc 0, a new scope=all-workbooks object) do not share the defect on today's inputs.",
+    "notes": "DISARMS WHEN the object name covers every input the body depends on (the total and the report set, or a vintage stamp as backlog.write uses) and `sector_template --write` completes on today's corpus with its `types N reports_typed R unmapped_reports U` line printed -- a cell on the corpus surface (c-7's), routed to the round-2 analysis (1.0.0_SA_CTO~Z) as an enrichment item; not this round's frozen decomposition. Until then the dossier composes with the round-1 templates via substrate's member picker, which is disclosed in the dossier's own citations."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S18",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T13:05:00Z",
+    "one_line": "The decomposition's production sequence (v2.0 s.5 drain duty 2: extract v2, typed, continuation, templates, dossier) OMITS the step that tells the last two producers WHICH names exist: `continuation._resolved_security_keys` and `dossier._resolved_security_keys` enumerate names from `backlog.read_latest()` -- the newest research-backlog SCAN VINTAGE in gold -- and that vintage was round 1's (33 RESOLVED), so the first pass after the re-ingest rebuilt `names 33` (continuation: names 33 rebuilt 1 existed 32; dossier: names 33 written 33) and produced NOTHING for the 20 newly resolved folders whose 94 reports are in bronze, extracted and typed. This seat's sequencing miss, not a producer's: `backlog --write` (a new scan vintage, never overwritten) must precede continuation and dossier; the corrected chain is running.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "continuation.py:871-878 @0cf98a11f5 `_resolved_security_keys`: `backlog_mod.read_latest(client)` then the RESOLVED records' keys -- 'backlog's own RESOLVED records, the ONE reader of which names this cell covers (never re-derived from silver)'; dossier.py:617-618 delegates to it. backlog.py:159-169 `read_latest` reads `gold_list(TABLE)[-1]`; `write` (:145-156) mints `date=<today>/<stamp>.json`.",
+        "First pass (evidence/production_sequence_20260924T120608Z.log and production_sequence_tail_20260924T121658Z.log): extract --run-v2 `bronze_reports 218 v2_stored 218 put_performed 95`; typed `silver_rows 218 of 218 written_rows 95`; continuation `names 33 rebuilt 1 existed 32`; fund_form `funds 2 fund_reports 93 absent_fund_reports 123`; typecast `workbooks_read 120 ... written ... 698d1cf5d9f417cb.json put_performed True`; dossier `names 33 written 33 existed 0` (12:17:56-13:03:01Z; every name rebuilt because the typecast input changed). Zero of the 20 induction keys appear in the continuation or dossier lines.",
+        "The decomposition text (s.5 duty 2) lists 'extraction v2, typed silver, continuation, sector template / fund form / typecast, dossier' and no backlog scan; the d-4 order's own face names `backlog.py` as the census surface and expects the store 'as it is NOW'.",
+        "Correction, running at 13:0xZ (evidence/production_sequence_corrected_*.log): `backlog --write` -> `continuation --write` -> `dossier --write`; expected `folders_read 93 = resolved 53 + unresolved 40 + ambiguous 0` (or the crosswalk's own ambiguous count), continuation names 53, dossier names 53 with 20 written / 33 existed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v2.0 s.5 duty 2: run the scripted production sequence ONCE for the newly resolved names, each producer printing its denominators; FWD-19: inducted, re-ingested, and (via d-4) dossier-served or dispositioned.",
+    "world_is": "The sequence as written re-measured the OLD population and printed honest denominators for it; the new names were invisible to the last two producers because the population artifact they read had not been re-minted. Nothing was overwritten or lost; the dossier objects written for the 33 are the as_of=2026-09-24 vintage over the grown typecast.",
+    "notes": "INERT: the correction is one inserted step, run by this seat now; the decomposition's s.5 text is amended in the record face of the round (the L10 analysis) rather than re-cut mid-round (the decomposition is frozen). The d-4 continuation waits for the corrected chain's numbers. Related: Z-S17 (sector template refusal) stands separately."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S19",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T14:15:00Z",
+    "one_line": "DISARM by its owner of AMGT_CORPUS-Z-S16 (the post-fire exposure: 20 twin records, 0 of 20 folders ingested): all three disarm conditions the row states are MET -- (1) the builder resolves a registration into its same-folder UNRESOLVED coverage record in place (2.0.0_SA_COO~Z @a2b84a1b2a, drained a5b9859e0a, crosswalk.py byte-identical at HEAD); (2) ONE re-mint of crosswalk/v1/2026-09-24.json through the unified builder under a fresh never-widen pair (COO 5de984f360, CTO #2 839b04a16c, in force 6236af5af4; CTO R-63 closes it): versions 23 -> 24, records 274 -> 254, MEASURED 214 with 214 of 214 keys present, UNRESOLVED 60 -> 40, resolved_folders 20, multi-claimed forms 0 of 521; (3) the re-ingest read resolved_folders 53 (stored 218, put_performed 94, AMBIGUOUS 0) and the production sequence ran for the 20 -- extraction v1+v2, typed, continuation (names 53, rebuilt 20), fund form, typecast, and dossiers (names 53, written 36 incl. all 20 new keys, existed 17) after the backlog scan vintage was re-minted (93 = 53 + 40 + 0). Z-S16 is legacy-shaped (no disarm clock) so it cannot advance in place; this row is the disarm carrier and cites it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Condition 1: 2.0.0_SA_COO~Z msg 25469 (live acceptance records 274 -> 254, UNRESOLVED 60 -> 40, multi-claimed 20 -> 0, identity tests 97 of 97); 0.0.0_AB_MSTR~Z drain a5b9859e0a; this seat's byte-identity read: crosswalk.py at HEAD == a2b84a1b2a (51,725 B, sha256 200ec514c15a4a53), pre-fix 842071008b DIFFERS (49,762 B); this seat's own in-memory pre-flight on the branch bytes reproduced the acceptance (evidence in NEVER_WIDEN_ROUND2_D5_REMINT_HALVES.md @5de984f360).",
+        "Condition 2: remint_20260924T115901Z.log (`OK: uploaded ... ContentLength=560881 document-sha256=572edb49... records=254 MEASURED=214 UNRESOLVED=40`), probes 5 and 6 (evidence/remint_probe5_before_20260924T115801Z.json, remint_probe6_after_20260924T115952Z.json @2c24cc867d): versions 23 -> 24, latest VersionId BN_TiAyAX_EwRm_nP.PMymkiUnFBMA1N, superset 214 of 214, resolved_folders 20 present, multi-claimed 0, folders with two records 0. CTO R-63 (ee3b4549c4): every arm of the pair held.",
+        "Condition 3: evidence/reingest_after_remint_20260924T120035Z.log (`resolved_folders 53 files_in_resolved 218 stored 218 (put_performed 94 existed 124) read_failed 0`, AMBIGUOUS lines 0); evidence/production_sequence_20260924T120608Z.log + production_sequence_tail_20260924T121658Z.log (extract, typed, continuation, fund_form, typecast; sector_template REFUSED -- Z-S17, separate); evidence/production_sequence_corrected_20260924T130440Z.log (`folders_read 93 = resolved 53 + unresolved 40 + ambiguous 0`, continuation `names 53 rebuilt 20 existed 33`, dossier `names 53 written 36 existed 17` with every one of the 20 new keys written at as_of=2026-09-24).",
+        "Served plane (evidence/served_identity_reads_20260924T135051Z.log @32bf98d750): AZN_LN_Equity and UBSG_SW_Equity read statusCode 200 identity_status MEASURED on the deployed scoped API; control ASML_NA_Equity MEASURED."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S16 DISARMS WHEN (1) a registration resolves its same-folder UNRESOLVED record, AND (2) one re-mint under a fresh pair, AND (3) this seat's re-ingest reads resolved_folders 53 and the production sequence runs for the 20 (Z-S16 notes); FWD-19: inducted AND re-ingested.",
+    "world_is": "All three conditions hold on the instruments named; the twins are gone from the served document, the 20 folders' 94 reports are in bronze, extracted, typed, continued and composed into dossiers. FWD-19's induction half is REALIZED on identity AND re-ingest for the 20 evidenced folders; the remaining 40 unresolved folders carry printed reasons (37 no-evidence, 2 collisions, 1 disagreement) and are the census's business (d-4). Z-S16's text still reads ARMED because a legacy-shaped row has no clock; this row is what a reader weighs against it.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's); the next L9 may adjudicate Z-S16 on this row. Outstanding beside it, separately rowed: Z-S17 (sector template naming, ARMED, next-cut cell) and Z-S18 (sequence text, INERT)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S4",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-24T14:46:21Z",
+    "one_line": "d-4's own model treats workbook-only/empty as sub-reasons WITHIN resolved-but-no-prose ('resolved, but no dossier CAN exist'), but dossier.build()/write_one has no report-count floor and the drain's production sequence already ran dossier build unconditionally over all 53 resolved names before continuing this worker -- so on the real corpus 9 of the 10 workbook-only folders (plus the 1 empty folder is UNRESOLVED, not resolved) already carry a real, stored, all-fields-absent dossier and read dossier-served under the literal per-folder rule, leaving a disposition-scoped never_prose_named at 0 where AC2's own regex requires non-zero. I resolved it by computing never_prose_named as a STRUCTURAL cross-cut over every folder's own files, independent of disposition, which reproduces the corpus's re-measured 11 (10 workbook-only, 1 empty) exactly and satisfies AC2 without narrowing dossier-served or hiding any folder from the tri-state sum.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First run, disposition-scoped never_prose (subset of resolved-but-no-prose): `python -m lib.research.corpus.backlog --coverage` printed `folders_read 93 dossier_served 53 resolved_no_prose 0 unresolved_with_reason 40 sum 93` then `never_prose_named 0` -- fails AC2's `never_prose_named [1-9]\\d*`.",
+        "Direct measurement over the live library + the just-written coverage document (this worker, this worktree): of the 53 RESOLVED folders, 9 are workbook-only (Costco COST, Haliburton HAL, Home Depot HD, Hon Hai 2317 TT, National Grid NG LN, RWE AG RWE GY, SSE plc SSE LN, Valero Energy VLO, Zurich Insurance ZURN SW) and ALL 9 already read disposition dossier-served (dossier.read_dossier succeeds); Quanta Services PWR (workbook-only) and Air Liquide AI FP (empty) are the remaining 2 of the decomp doc's '10 workbook-only, 1 empty' and are UNRESOLVED, not resolved.",
+        "dossier.py build() (`:483-542`) computes items_raw/pick_a/pick_b from typed.reports_for(); when both are None every SECTION_FIELD_NAMES field resolves to {'value': None, 'absent': ...} via _resolve_section_field/_resolve_recommendation_field/_resolve_risks_field -- the function returns a complete, hashable document unconditionally, never raising for zero reports; write_one (`:578-...`) then gold_put's it as a real, never-overwritten object, exactly as it did for these 9 in the drain's pre-continuation dossier build ('names 53 written 36 existed 17').",
+        "Second run, structural never_prose (independent of disposition): same `--coverage` invocation after the revision printed `folders_read 93 dossier_served 53 resolved_no_prose 0 unresolved_with_reason 40 sum 93` then `never_prose_named 11` naming exactly Air Liquide AI FP (empty) plus the 9 dossier-served workbook-only folders plus Quanta Services PWR (workbook-only, unresolved) -- checked against AC2's exact regex with re.search: MATCH."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-d-4 RULED (decomposition + this order s.1): 'resolved-but-no-prose (resolved, but NO DOSSIER CAN EXIST, with the reason MEASURED from the folder's own files: workbook-only / empty / ...)' and 'the 11 that can never carry prose (10 workbook-only, 1 empty at the cut -- re-measured, not copied) are NAMED with their reason'.",
+    "world_is": "'No dossier can exist' for a workbook-only/empty RESOLVED folder is false against the actual dossier.py: build()/write_one succeed on zero picked reports and store a real, all-fields-absent object, so once the issuer's pre-continuation production sequence ran dossier build unconditionally over all 53 resolved names, every workbook-only/empty folder that also happened to be RESOLVED already reads dossier-served -- a disposition-scoped never_prose_named (subset of resolved-but-no-prose) therefore reads 0, not 11, under a correct, non-forced implementation of the literal per-folder rule. I did not narrow the dossier-served definition (a folder with an all-absent dossier is still dossier-served, exactly as read_dossier defines it) and did not edit dossier.py (out of this cell's bound); instead never_prose_named is computed as its own structural fact per folder (workbook-only/empty, from library.census alone), printed regardless of what disposition that same folder separately carries -- which both matches FWD-19's own words ('NAMED with their reason rather than dropped from the denominator') and reproduces the decomp doc's re-measured 10+1=11 exactly.",
+    "notes": "Not a criterion failure: AC1/AC2/AC3 all PASS-by-output on the revised implementation (verified against the live corpus and re-checked with re.search against each <expect>). Filed because the order's own prose ('no dossier can exist') states a premise the actual dossier.py code does not enforce, and a worker implementing the disposition-scoped reading literally (the more natural first reading of 'resolved-but-no-prose ... workbook-only / empty') would have produced a correct, honest 0 and a permanently-unsatisfiable AC2 on this corpus vintage. Whether a content-free (all-ABSENT) dossier object should count as 'dossier-served' for FWD-19's purposes, or whether dossier.build() should refuse to store on zero reports, is a design call outside this cell's bound -- flagged for 2.0.0_SA_COO~X, not decided here. No S3 delete, no edit to dossier.py/library.py/crosswalk.py, no widening of any criterion's regex."
   }
 ]
 ```
