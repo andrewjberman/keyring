@@ -118,3 +118,14 @@ re-check October 2026).
 - SEMANTIC PASS on the served bytes and the census.
 - Two enrichments: a refusal reason that names "not covered" rather than NOT_READY, and a disclosed refused-account
   population in the 49F header.
+
+**The 37 refused 49F accounts carry no custody (18:5xZ).** Every raw account key in the build's four 49F source copies
+(`.runtime/holdings-journey-20260923/`) was mapped through `ids.opaque` in 3 forms each (as-is, zero-padded to 10,
+zero-stripped). The sources: Schwab dim_balance (business_date 2026-09-22, 7,522 rows), dim_position, fact_acc, and
+the SmartX map (run_date 2026-09-23).
+- **Matched to the 37:** 0 in every source.
+- **Positive control:** the same mapping recovers 7,522 of 7,522 publication accounts, and 7,417 of 7,454
+  directory-ACTIVE accounts.
+- **Reading:** the 37 are ACTIVE in the 09-17 directory, and 49F custody holds no row for them at 09-22. The explicit
+  refusal is the correct answer, not a dropped account. They sit in 29 entries (15 single-account, 14 multi-account).
+- **Next-list item 3 closes on this read.**
