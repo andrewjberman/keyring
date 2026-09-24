@@ -49,6 +49,14 @@ git merge --no-ff origin/CLOUD        # never --rebase, never pull --rebase (NEV
 - The merge commit's hooks grade the whole merged index; on a large merge that is 15-45 minutes and it is the gate
   working, not a hang. **Never `| tail` the commit**: the pipeline's rc is tail's (site Z 2026-09-23, attempt 1
   reported exit 0 on a commit that had died). Capture to a file and read the file.
+- **Parents and tree can disagree -- check the TREE before any push.** After every merge commit M:
+  `git diff --name-only --diff-filter=D M^2 M` minus what our side deleted on purpose
+  (`git diff --name-only --diff-filter=D $(git merge-base M^1 M^2) M^1`) must be EMPTY. Every parent-based check
+  (ancestry, ahead/behind) reads green on a merge whose index was reset under it. Measured at site Z, 2026-09-24:
+  merge 12177482b9 dropped 406 of 407 incoming files, and pushing it would have deleted 302 files from origin as a
+  fast-forward. It was caught unpushed.
+- **Resolve a CONFLICTED merge in your own linked worktree, never in the shared index**, where a peer's act can reset
+  the index under the open merge (the same incident).
 
 ## Step 2 -- the push, and the deploy it is
 
