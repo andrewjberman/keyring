@@ -280,6 +280,116 @@ Measured 2026-09-24 02:25Z-02:55Z on site Z at `0890e9221d` (records landed afte
 
 ---
 
+## PART VIII -- THE PROCESS, answered (Andrew-direct 2026-09-24 ~03:0xZ at this terminal)
+
+**His question, verbatim:** *"Ok so just to be clear, you see this as an addendum to AMGT_CORPUS, or what? I want to know
+how we're going to process this for COO~X. Furthermore, I want you to opine further on what this process even is.
+I.e., how are we actually going to go about getting all these files into a relevant, dated Dossier sub folder in the
+opal-data-harvest bucket (where is that even going?) and what is the actual plan to synthesize the items I listed above
+into the materials in a stable manner? I think we need to really think about how we're doing that, particularly for the
+"Thesis" and "Model" panels, the rest seems comparatively negligible."*
+
+### VIII-1. Yes, an addendum to `AMGT_CORPUS`, and this is how it reaches `2.0.0_SA_COO~X`
+
+Under the 2026-09-23 closer CONTRACT there are no task orders for AMGT work; the carrier is a MANDATE. So the path is:
+(1) `1.0.0_SA_CTO~Z` cuts the addendum's outcomes from Part I at L2 and lands them in the `AMGT_CORPUS` PRD as an
+addendum (new FWD ids, new manifest rows, the contracts in VIII-2 to VIII-4), plus the one-line amendment on
+`AMGT_RESAPP` that lets the bundle read the dossier; (2) both L4-R halves are signed (`3.0.0_SA_CVO~Z` the ratified
+text, the CRO lane the brief half); (3) the CTO updates `COO_X_CORPUS.md` so the dossier is the named target of the
+consumer join it already owes, and updates `COO_Z_EXPERIENCE.md` / the served-runtime mandate for the bundle read, the
+induction act and the Model pull; (4) `2.0.0_SA_COO~X` builds directly in `lib/research/corpus/**`, one pinned candidate
+at a time, `3.0.0_SA_CVO~Z` grades each on the store and the live page. Nothing here needs a fourth project or a round.
+
+### VIII-2. Where the files go, measured on the live bucket 2026-09-24 ~03:0xZ
+
+The files are ALREADY going in, per report, immutable, keyed by security -- not by date, and not as a folder of files:
+
+```
+s3://opal-data-harvest/amgt/harvest/bronze/research-report/security_key=<KEY>/<report_id16>/<filename as filed>
+s3://opal-data-harvest/amgt/harvest/bronze/research-report-extract/security_key=<KEY>/<report_id16>/...
+s3://opal-data-harvest/amgt/harvest/silver/research-report/...            (the typed per-report table)
+s3://opal-data-harvest/amgt/harvest/gold/research-continuation/security_key=<KEY>/<inputs_sha16>.json
+s3://opal-data-harvest/amgt/harvest/gold/research-sector-template/...  research-fund-form/...  research-model-typecast/...
+```
+Live counts: bronze `research-report` 123 objects and `research-report-extract` 123 (the 33 resolved names); gold
+`research-continuation` 33, `research-sector-template` 10, `research-fund-form` 2, `research-model-typecast` 1,
+`research-backlog` 2. Every address is `lib/opal_naming.py address()` output; the module refuses any bucket but
+`opal-data-harvest`.
+
+**"A relevant, dated Dossier sub folder" therefore lands as a GOLD TABLE, not a bronze folder.** The builder prints
+`s3://opal-data-harvest/amgt/harvest/gold/research-dossier/security_key=<KEY>/<object>` and REFUSES a two-level
+partition (`security_key=.../as_of=...` raises: a partition may not contain `/`). So the date lives in the OBJECT NAME
+(`as_of=<YYYY-MM-DD>.<inputs_sha16>.json`), one object per rebuild whose inputs changed, never overwritten, the reader
+taking the newest `as_of` for a key. That keeps gold's never-overwrite rule and gives the dated history Andrew asked
+for without a builder change. If a true second partition key is wanted, that is a registry row under
+`infra/logic/registry/`, not a typed path.
+
+**Getting ALL the files in, in order of dependency (not sequenced here beyond what depends on what):** the 60 unresolved
+folders are inducted under the 02:47Z word, so the crosswalk carries their keys; the existing ingest is re-run (it is
+idempotent and prints `stored / existed / put_performed`), which lands the remaining 228 files in bronze the same way;
+the extraction gains a PDF path to the Class A / B skeleton; silver and the four gold artifacts rebuild; the dossier is
+composed. The raw files never move again after bronze; a re-filed report is a NEW `report_id16` beside the old one.
+
+### VIII-3. The Thesis plan, stated as a mechanism
+
+**The page already has the exact slots.** The Thesis tab renders `drafted_sections`, and the drafting pipeline's section
+set IS the team's skeleton: `company_description`, `investment_thesis`, `risks`, `ceo_bio`, `recommendation`
+(`lib/research/drafting/pipeline.py:66`; `DraftingSectionId` in `types.ts`). Each section is sentences, each sentence
+carries `generated: true|false` and resolved `evidence` (passage text + source). So the fold is FIELD-LEVEL and needs no
+new page type:
+
+| dossier field (from the pack) | section id it fills | sentence flag |
+|---|---|---|
+| INVESTMENT THESIS pillars (lead + paragraph) | `investment_thesis` | `generated: false`, evidence = report key + locator + passage |
+| RISKS AND CONSIDERATIONS (+ OTHER POSITIVES / NEGATIVES) | `risks` | same |
+| RECOMMENDATION line (fund, size, text) | `recommendation` | same |
+| MANAGEMENT / BOARD passage | `ceo_bio` (and the Exec Management tab) | same |
+| Company Overview (Class C, where present) | `company_description` | same |
+
+**Stability comes from four rules, all already in force for the continuation artifact:** the parser is per DOCUMENT
+CLASS (A pack, B update, C short form, D stock-move) against the measured skeleton, never a free read; a locator is
+stable because bronze is immutable per report (`report_id16` is the bytes' hash); every field is cited or ABSENT with
+a reason; and nothing is paraphrased. A rebuild with unchanged inputs is a no-op (same `inputs_sha16`).
+
+**"Synthesize the channels around the shape" is then a SECOND LAYER on the same sections, and it is where the analysis
+producer belongs:** for each pillar the producer writes the DELTA sentence (intact / strengthened / weakened, the
+scan's own continuation rule) with `generated: true`, cited to filings and harvest items -- the team's pillar is the
+axis, the generated sentence is the reassessment. The Thesis driver chart already takes ONE driver series matched to a
+model mnemonic; the dossier supplies the CANDIDATE drivers mechanically: pillar lead -> the name's own KPI terms (the
+continuation `kpi_set`, counted) -> a mnemonic in the typecast -> the chart. That is the concrete mechanism behind
+"themes and drivers"; no new extraction is needed for it.
+
+### VIII-4. The Model plan, stated as a mechanism, with the overlap measured
+
+Andrew's rule: the corpus supplies the RATIO DESIGN, Bloomberg supplies the FIGURES. Measured 2026-09-24 ~03:0xZ against
+`integrations/bloomberg/research/model_block_pull.py` (header 18 + history 23 + forecast 5 = 44 fields):
+
+| corpus set (scan s.2) | terms | already in the block pull | NOT in the pull |
+|---|---:|---:|---|
+| shared mnemonic core (58 of 60 workbooks) | 28 | 12 | `EQY_SH_OUT_TOT_MULT_SH EQY_RAW_BETA BEST_DIV_YLD BS_CASH_NEAR_CASH_ITEM BS_TOTAL_LIABILITIES IS_ADJUSTED_GROSS_PROFIT IS_ADJUSTED_OPERATING_INCOME BEST_EBIT BEST_NET_INCOME BEST_CAPEX BEST_ESTIMATE_FCF IS_COMP_EPS_ADJUSTED BEST_BPS NET_INCOME EQY_DPS IS_DIL_EPS_CONT_OPS` (16) |
+| extended ratio set (35 workbooks) | 12 | 6 | `PX_TO_FREE_CASH_FLOW GROSS_MARGIN EBITDA_TO_REVENUE RETURN_ON_CAP RETURN_ON_INV_CAPITAL RETURN_ON_TANGIBLE_ASSETS` (6) |
+
+So the Model fold is three bounded acts: (i) the block pull's field list becomes the typecast's measured set (22 mnemonics
+added, each a Bloomberg field the team's own sheets already call, so the entitlement question is answered by the
+workbooks); (ii) the Model tab's ROW ORDER and LABELS come from the typecast's row-label census (`ROE, FCF, DPS, P/E,
+P/B, EBIT, EBITDA, Rev, y/y Growth, EPS, BVPS, ROA, Div Yield, Net Debt, Enterprise Value ...`, 58-60 of 60), one shape
+for every sector as Andrew's own `C-PAGE-LAYOUT` already says; (iii) the **Opal Case Assumptions** block (REVENUE GROWTH
+and EARNINGS MARGIN, each MIN / MAX / AVERAGE / MEDIAN over history, driving Upside / Base / Downside as EPS x multiple ->
+price -> return, present in 58 workbooks) is COMPUTED from the history the pull already returns plus the BEST_ estimates,
+and lands in the `model_cases` slot the page reserves and marks ABSENT today. **The team's own case cells in the 58
+workbooks are the parity oracle for (iii)** -- verify-not-settle: our computed cases are checked against theirs per
+workbook, and a disagreement is printed, never silently adopted from either side. Sector KPIs (CET1, NIM, ARPU, kboe/d)
+stay in the PROSE and CHART pages, where the team puts them, and reach the tab through the sector template's KPI set as
+LABELS with counts, not as figures, until a Bloomberg field is measured for each.
+
+The Bloomberg pull that (i) implies is a vendor call and takes its own per-use word at the cut.
+
+### VIII-5. What is genuinely still open after this
+
+Only two things: the PDF path (O7; 30 folders) is unmeasured for extractability and is the first cell to measure; and
+the Posture fold (O6) is a proposal by Andrew's own word. Everything else above is a composition of artifacts that exist
+and a read the page already types.
+
 ## REFS TO CARRY
 
 ```
