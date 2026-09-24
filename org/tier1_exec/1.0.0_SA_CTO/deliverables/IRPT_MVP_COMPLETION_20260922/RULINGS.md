@@ -2619,3 +2619,47 @@ sweep; (8) the browse drawer. Backlog 7-10 are round 3's; the prospect item also
 at Andrew). Handed to 2.0.0_SA_COO~D in one message with the slug; the recut is its decomp v2 and ONE issuance; portal_ref
 = the DEV head after a fetch; the CVO is engaged again when round 2 drains. The round-1 candidate is LIVE on portal DEV
 (895752676a), so the enrichment rounds build on a served thread, as the spine intends.
+
+
+## 2026-09-24 10:3x UTC - Claude CTO batch 39: DSGN_IRPTV1 round 2 cut on the CTO's word (decomp v2, the seven P/M touches ruled by element and span, the join cell as one issuance); irpt-ycharts-generate SERVED with the installed factory and a named refusal
+
+Instruments: COO~D's decomp v2 @2a26e433b3 (100519) and the CTO's own spot-check of the seven spans on portal origin/DEV
+895752676a (git show); P's receipt (100520) and the CTO's own readback of irpt-ycharts-generate on AWS.
+
+### DSGN_IRPTV1 round 2 -- L5 landed, the cut worded (COO~D 100519; the CTO's word this tick)
+decomp v2: eight cells IV-e-1..8, one per enrichment item in the analysis's order; chains by write collision A = 3 -> 4 -> 8
+(header + index.tsx), B = 1 -> 2 -> 6 (SecurityList / DrillTree / PerformanceHeadline / ReportingTab), C = 5 (HoldingsTab +
+two new files); fanout 3 of 3, cap 8; slots from ~4 so row ids never collide with round 1; slug coverage 5 of 5 open rows.
+THE SEVEN TOUCHES on P/M-written files, ruled -- one rule over all: bind by ELEMENT and SPAN, never by line number (P's F1
+block already moved the IdentityCard mount off ":186" at 895752676a; a face naming a line is stale on arrival). T1 the
+IdentityCard mount line grows props (1/1). T2 FirmDropdown.tsx additive only (N/0) and index.tsx's `actions=` ternary block
+replaced by ONE `<FirmDropdown/>` element, the criterion asserting every removed line lies inside the block. T3 HoldingsTab two
+mount lines + at most two imports (4/0). T4 ReportingTab's render block -- PeriodControls -> PerformanceControls, the three
+mounts -> PerformanceChart / ReturnsHeatmap / AccountsTable, MethodAndSources removed into the headline footer's popover,
+imports adjusted -- with two byte-identical bounds asserted: the hop-11 catch and render/** + PeriodControls.tsx; the
+AnswerStatus mount stays for IV-e-7. T5 the JOIN: each tab's AnswerStatus mount -> the tab's footer disclosure carrying
+state / reason / business date, HoldingsQualification into the popover; AnswerStatus.tsx and tabs/analysis/** byte-identical;
+the CONTRACTS line as a criterion (the facts retained one click down). T6 ClientSearch: loadMore and its button removed, a
+Browse trigger added; index.tsx's search row gains BrowseDrawer + one import; PAGE_LIMIT, MIN_QUERY_CHARS, the generation
+guard and the never-blank rule (P's F5 / F3) asserted untouched. T7 DrillTree inside mdpfResultFromSnapshot only. THE JOIN
+CELL's timing: issued in the ONE issuance (coverage 8 of 8 at the gate) and spawned LAST on a pair off dsgn-irptv1-r2 after
+chains A, B, C merge -- ONE issuance, one round, the queue rule across chains (round 1's IV-t-3 -> IV-t-4 precedent); holding
+the sweep for round 3 refused (FWD-11 was breached this round and is graded this round). THE CUT FIRES: fetch DEV, portal_ref
++ is-ancestor rc, eight orders, three pairs, spawn. Not waited on: FWD-1's trace (Andrew's walk), P's spread, the plan word.
+
+### IRPT-ANALYSIS-BACKEND-I-SERVED-20260924 (P 100520; CTO readback)
+irpt-ycharts-generate SERVED 10:24:09Z: Handler generate_installed.lambda_handler (P's factory reports/generate_installed.py,
+source 440a43ff00), CodeSha uHfng41l/agHCG5OHldwqi2r+NUZKfu7DqmWvbqNhTc= (502,946 bytes, 104 members: the ten modules + their
+import closure -- broker, owned_requests, publication and its certify / extract / fonts, inert on the handler path -- the 12
+stale rows re-pinned, the X10 ACTIVE row from 7262571e4c), generate.tf +SubmitToTheGenerationQueue (sqs:SendMessage), the
+consume statement left and named DEAD, NO event source mapping, IRPT_LIVE_YCHARTS_CALL absent, the two revisions DERIVED (no
+env key); plan 0/2/0, replan No changes, recorder 281f54f157, ledger CLOSED @6fcf975ced. The CTO's own readback agrees on
+every field. EXERCISED: one real invoke with {} -> 200, no FunctionError, the eight ports composed on the first call, a NAMED
+boundary refusal (CONTRACT_VERSION) -- never an import error, never UNEXPECTED. Does NOT move hop 2 (the prospect branch
+refuses UPLOAD_SERVICE_REQUIRED, the custody branch CUSTODY_FACTORY_REQUIRED, both by name, until the upload composition --
+the card at Andrew). DISCLOSED and ruled: BAU_MANIFEST_SKIP=1 because build-and-upload.sh's manifest probe is a bare
+`python - <<PYEOF` under set -e (:33) and exits 1 with no message when declared_blobs is absent (row IRPT_BCKEND-S122
+@781392b774) -- P lands the one-line guard as its own commit before the (ii) build, or names the lane that refuses; a builder
+that exits silently on a missing manifest is the loud-failure-rendered-quietly class. safe-apply's self-refusal under
+MSYS_NO_PATHCONV=1 was correct (the known path-conversion class; the variable stays off safe-apply). Next: (ii) the status
+package, (iii) the three routes portal-first, (iv) the cutover inputs.
