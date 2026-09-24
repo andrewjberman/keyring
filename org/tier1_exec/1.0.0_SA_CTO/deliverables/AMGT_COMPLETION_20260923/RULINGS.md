@@ -253,6 +253,103 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-57 -- ⭐⭐⭐ **`dated` IS A PROPERTY OF THE *PRODUCER'S DATE CONVENTION*, NOT OF THE READER -- SO R-56's DIAGNOSIS IS AMENDED.** THE TWO AXES DISAGREE ON ONE READER, THE DISCLOSING FIELD IS DISCARDED AT THE TYPE BOUNDARY, AND **FWD-30's ROUTE ASK IS RULED**
+
+`3.0.0_SA_CVO~Z` msg 25444 (STATUS.md read to EOF, 197 lines) and `2.0.0_SA_COO~Z` msg 25443. **Two decisions
+and one amendment to a ruling this seat committed five minutes earlier.**
+
+### ⛔ (1) R-56's DIAGNOSIS IS AMENDED -- IT BLAMED THE READER FOR A PRODUCER DISAGREEMENT
+
+R-56 said the reader *"asks for the CALENDAR DAY ... so the exact-key lookup MISSES on every ordinary day and
+the dated fallback is not a degraded path, it is THE path."* ⭐ **TRUE FOR PRICE. FALSE AS A STATEMENT ABOUT THE
+READER.** Measured by `3.0.0_SA_CVO~Z` on the **deployed** function, one `requested_as_of 2026-09-24`:
+
+| route | `dated` | `as_of_date` |
+|---|---|---|
+| `trending/price` · `breakout/price` | **TRUE** | 2026-09-23 |
+| `trending/chatter` · `breakout/chatter` | **FALSE** | 2026-09-24 |
+
+⛔⛔ **SAME READER, SAME REQUEST, OPPOSITE OUTCOMES. So `dated` is a function of the PRODUCER'S DATE CONVENTION:
+price writes `prev_trading_day` and misses the exact key every ordinary day; chatter writes today's date and hits
+it.** ⭐ **A temporal discriminator backs it: that seat holds the chatter half from this morning's H03 close,
+where chatter's `dated` flipped TRUE->FALSE across the 10:00Z fire, while price NEVER flips.**
+
+⭐⭐ **AND THE HANDOFF'S SECOND PROPOSED FIX IS ALREADY IMPLEMENTED IN THIS ESTATE, BY THE CHATTER PRODUCER, IN
+THE SAME READER, TODAY.** The fix is not hypothetical; a working precedent exists.
+
+### ⭐⭐⭐⭐ (2) AND THE CVO REFUSED THE OBVIOUS REC, WHICH IS THE MOST VALUABLE THING IN THE MESSAGE
+
+*"I AM NOT RECOMMENDING 'MAKE PRICE LIKE CHATTER', AND THE REASON IS THE POINT. Which convention is CORRECT is an
+open question neither seat has asked. Price writing `prev_trading_day` is arguably the more honest label for T-1
+data; chatter writing today's date buys the exact-key hit and **may be claiming a date its window does not
+cover.** The disagreement is evidence that one of them is wrong -- it is not evidence that PRICE is the wrong
+one."*
+
+⛔ **THIS SEAT WAS ABOUT TO ROUTE EXACTLY THE WRONG FIX.** R-56 called the reader-side miss "the CLAUDE.md
+trading-calendar NEVER line inverted" and implied the reader should resolve the frontier -- **which presumes price
+is the defective side.** ⭐ **A disagreement between two conventions is symmetric evidence, and picking the side
+that makes the symptom disappear is not the same as picking the correct one.** **ADOPTED: routed as a QUESTION,
+not a rec.** The surface is `lib/research/` and it is `2.0.0_SA_COO~Z`'s; **the question a round must answer is
+which date a generation should CLAIM, not which one makes the key hit.**
+
+### ⭐⭐ (3) THE USER-VISIBLE DEFECT, WHICH IS THE PART A PERSON ACTUALLY MEETS
+
+`dated` is **emitted by the route and OMITTED from `RankingSet` (`types.ts:181`)**. ⛔ **So a person sees price
+and chatter side by side on one panel with NO indication that one is an exact-key read and the other is a
+PERMANENT fallback walk.** That seat's sentence is the one to keep: *"The field that would disclose it is
+computed, served, paid for, and discarded at the type boundary."*
+**RULED: a real, user-facing disclosure defect on `AMGT_RESAPP`'s own surface** (portal types, not `lib/`), and
+it is carried to the next round's enrichment list rather than patched mid-round. ⚠ **It is NOT a served-output
+change and needs no pair** -- the field is already computed and served; only the type drops it.
+
+### (4) GRADES, AS THE CVO SET THEM, AND THIS SEAT ACCEPTS THEM
+
+**B1 MET.** **B2 MET at the store AND at the DEPLOYED reader** -- stronger than the handoff claimed, because that
+seat **invoked the deployed function** (`opal-amgt-scoped-api`, CodeSha256 `DEQQiCH+UoUMd7EZSQA5RTsILDY5+ubb9Y3gVLE5elU=`)
+and the deployed bytes reproduce the source exercise exactly; **limit 1 discharged for the price axis.** The
+*"rather than the dated fallback"* clause stays **NOT MET and structurally unreachable** -- R-56's correction
+stands. **B3 EXERCISED and CORROBORATED ON A DIFFERENT INSTRUMENT**: the deployed reader returns generation
+`20260924T110713Z`, the **scheduled** fire's run_id, not the QA fire's -- ⭐ **B3 evidenced on the READ PATH
+rather than on `LastTaskResult 0`, which is Rule 22's "name your instrument and whether it differs" satisfied.**
+**B4 MET as DEFUSED-BY-TRIGGER, not closed.**
+
+⛔ **THE SCREEN REMAINS UNGRADED BY BOTH SEATS AND IS NOT SOFTENED:** the CVO's direct invoke bypasses CloudFront
+and `auth-validator-edge` exactly as the handoff's 401 did. **Store proven · source reader proven · deployed
+reader proven · SCREEN NOT PROVEN**, and it is R-21 call 1's blocked endpoint.
+
+### ⭐⭐⭐ (5) FWD-30's ROUTE ASK -- **RULED: APPROVED AS RECOMMENDED**
+
+`rl-10` (the export) is **terminal**: drained `fa3b0152d2`, close-out `096a06ca6b`, 3 of 3 PASS, instance VALID
+re-run in the worker's worktree, no rows. Its AC3 route ask is the return `C-PRESENTATION-ONLY` names for FWD-30:
+`deliverables/0.9.0_WK_AMGT_RESAPP~139/ROUTE_ASK_export_rich_text.md`. **Nothing serves the rich document until
+this seat rules, and it rules now.**
+
+**RULED: reuse the EXISTING `/print` leaf with `?format=rich` (default `pdf`, byte-identical today), returning
+`text/markdown`.** Four reasons, the last of which the ask does not state:
+1. **Build ladder rung 2** -- the estate already has the leaf; no new route, no new surface.
+2. **The default path is byte-identical today** (sha256 printed, and the one non-determinism -- a `PdfPages`
+   wall-clock `CreationDate` -- was FOUND AND PINNED). ⭐ **So this is a verified DELTA=0 on every existing
+   response and needs NO never-widen pair**, by NEVER-1's own carve-out.
+3. **The adapter already holds the thesis bundle, peer set and posture**, and `scoped_amgt.py` /
+   `amgt-lead-panel.ts` are untouched (empty diff over `src/api` and `lib/research/api`).
+4. ⭐ **AND THE REASON THE ASK DOES NOT GIVE: A QUERY PARAMETER CANNOT HIT THE GATEWAY ROUTE-MISS CLASS THIS
+   ESTATE HAS ALREADY BEEN BITTEN BY.** A new path leaf can -- an HTTP API decodes `%2F` before matching and
+   `{param}` never spans two segments, which is how a 404 once arrived carrying another function's route list.
+   **`?format=rich` does no path matching at all, so it is strictly safer than the alternative nobody proposed.**
+
+### ⛔ (6) AND THE GOAL LIMB'S HONEST STATE, MEASURED
+
+`rl-10`'s AC1: the landed print pack is **8 PAGES against Andrew's 2-page cap**, model-block only (the four
+template blocks render `[MACHINE-EMPTY]` even where the landed thesis bundle carries drafted content), and
+**11 of 11 `DESIGN_BIBLE` A-C items NOT MET**. FIGURES page=162 / pack=179 / same=162 / extra=17; **CITES page=43
+/ pack=0**; ABSENCES 5/5 same=0.
+⭐ **BUT ANDREW'S LIMB 2 IS A DISJUNCTION -- "2pg max OR machine readable rich text output" -- AND BRANCH (b) IS
+CLOSED AND VERIFIED AGAINST THE ACTUAL PAGE:** the `exportCompare` harness renders the real page and reads
+FIGURES 162/162, CITES 43/43, ABSENCES 5/5, **missing=0 extra=0**, EXPORT-COMPARE OK; `build_rich_text` sits
+beside `build_pack`; print tests 6 of 6; `PrintExportAction.tsx` inverted under C5/C11 with its census FILES 1
+TOTAL 0 (was 12). **So limb 2 has a SATISFIED ARM, and the 2-page arm is measured NOT MET with its denominators
+rather than left vague.** Which arm Andrew wants is his sentence's own disjunction and neither arm is dropped.
+
 ## R-56 -- ⭐⭐ **B3 IS EXERCISED AND THE LEDGER IS CLOSED. AND ⛔⛔ THE B2 CLAUSE THIS SEAT WROTE WAS *UNSATISFIABLE THE DAY IT WAS WRITTEN*** -- the reader asks `_today()` while the producer writes the trading-day frontier, so the fallback is the ONLY serving path
 
 `0.0.3_BG_BBGTerminal` msg 25440, **read to EOF** -- that seat opened by warning this one with this seat's own
