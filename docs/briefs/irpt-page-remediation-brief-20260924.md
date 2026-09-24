@@ -104,6 +104,18 @@ The Analysis tab is a stepper -- Input (selected client holdings OR an uploaded 
 needs (request id, revision, ingestion-gate / destination-policy / release-policy revisions, idempotency key, artifact ref,
 hash) is on the page behind ONE "Details" popover per report, never in the body. CONCEPTS s.2.4; defects A1-A11.
 
+**A prospect is a first-class subject, not a missing client** (Andrew-direct ~05:4xZ, verbatim *"the analysis done may
+not be for an existing client, it could be for a totally new one. so I'd keep that in mind when it comes to how its laid
+out"*; record `.../ANDREW_DIRECT_20260924_054xZ_ANALYSIS_MAY_BE_FOR_A_NEW_CLIENT.md`). So: the Analysis tab is reachable
+and complete with NO client selected; the header then shows a Prospect identity card (the uploaded portfolio's name /
+prepared-for, its as-of, its normalized total) in place of a client card, never "No client selected"; step 1 leads with
+the upload path when no client is selected and with the client-holdings path when one is; the history rail lists prospect
+reports under the advisor's own ownership (the contract's owned-request semantics -- prospect ownership comes from the
+authenticated API, never the selected client) so a new client's report is found the same way as an existing client's; and
+a prospect report can be re-opened and re-run from its retained normalized input without re-uploading, so a prospect who
+becomes a client keeps their history. Whether the wire needs a dedicated prospect-name field beyond `prepared_for` display
+text is a Part IV.3 question for the CTO at L2.
+
 ### O7 -- An advisor exports the tab they are looking at from one place
 
 One page-level Export action in the header (the page's single purple action under DESIGN.md) exports the ACTIVE tab at the
