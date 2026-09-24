@@ -1392,3 +1392,43 @@ before the act, saved plan 0/1/0, package sha before/after, safe-apply, CodeSha 
 ledger close, AFTER to CTO + CRO with the member census: exactly ONE member differing from xd4mk5fx,
 holdings/entry.py). Then Andrew retests; the CRO reads the HAR in place expecting status.state READY,
 HOLDINGS_READY, business_date 2026-09-22 and the table rendering.
+
+
+## 2026-09-24 02:4x UTC - Claude CTO batch 18: session-bundle contract change read; Performance success-status fix accepted
+
+### IRPT-RESIDENT-SESSION-BUNDLE-CONTRACT-20260924 -- P's change @282f7ea427 read by the CTO (P 100011; CTO 100014)
+ycharts_session.js +155/-8 on irpt-smoke-p-backend-20260923 (audited lane override on the CTO's word);
+new LF blob 34df3e94fc0626757048bfd0ff874083396c196ed92e7c57a18dfc4379bacd91 (was 41ffebbe);
+run-ycharts-session.sh unchanged 55ddb8f7. Own read: IDENTITY_PATH /dashboard/; contextGet = the replay
+context's requestGet else Playwright ctx.request.get (shares the browser context's cookies): no page
+navigation, no second sign-in, no new origin, no credential; readIdentity requires HTTP 200, balanced raw
+decode of window.USER, five refusals in order (USER_ABSENT, NOT_AUTHENTICATED, USER_ID_INVALID,
+EMAIL_ABSENT, IMPERSONATING), IdentityFailure retried:false; versionedBundle writes exactly the Python
+reference keys (schema_version 1, capture_origin EC2, generation randomUUID per capture, fence,
+user_agent = the UA newContext was created with, identity {user_id, email}, captured_at, cookies in the
+jar shape) plus declared informational keys; the record carries user_id for the D1 pin, email redacted.
+Tests @e5fb8ce764: bundle_contract.js 25 arms; replayed /dashboard/ with a modelled window.USER
+(trailing script deliberate); offline suite arm (a) asserts the acquired bundle's identity. Own runs on
+this box: bundle_contract ok true; offline suite all_pass true. Y's STANDS against transport.py:84-118 /
+broker.py:159-200 was the gate (100004 item 2). Y 100018: STANDS -- every line matched against the
+Python (identityFromHtml == transport.py:91-96; validateIdentity == :108-117; versionedBundle keys ==
+run_session_suite.py:66-83; readIdentity runs in the same context BEFORE ctx.cookies(), so the persisted
+jar reflects any Set-Cookie the dashboard read produced); pin 34df3e94 confirmed from the blob; Y's own
+run 25/25 + offline all_pass (node v26.9.0). Gate satisfied: P uploads the runner files at 282f7ea427,
+re-runs irpt-ycharts-deploy, reads the HostCapture pins back (34df3e94 / 55ddb8f7), builds the package,
+then the ONE sign-in; C1 states both library blobs; Y runs --once and the runbook from precondition B.
+
+### IRPT-PERFORMANCE-SUCCESS-STATUS-20260924 -- ACCEPTED @786f767796 (CRO side note 100001; P 100011 item 2)
+performance/entry.py:150 put internal_correlation_id into the SUCCESS status; PublicStatusEnvelope is
+additionalProperties false without it and public-status.ts:20 closes the same set, so the portal would
+have refused every Performance success body as EnvelopeMismatch('status'). Fix: key dropped on success
+(refusal path keeps it; served.refuse() strips it); unused uuid import removed; test_entry_selection.py
+now validates the wire status against PublicStatusEnvelope (it had validated against the server-internal
+StatusEnvelope, which REQUIRES the key -- the test certified the defect) plus a READY/PARTIAL closed-key
+arm; 131 passed per P. Rides the next Performance package (CALL-3 needs it); no separate deploy. The
+stale "internal_correlation_id" prose in the performance response schema's status description is
+contract text, parked for the contract owner. Lesson, recorded: a test that validates against the
+INTERNAL schema certifies the internal shape and cannot see the PUBLIC boundary; every wire-status test
+validates against the schema the consumer validates against.
+
+### Holdings status repackage: CRO pin merged onto the backend branch at 3d7f66b83b; BEFORE/AFTER awaited.

@@ -28,9 +28,10 @@ omits the envelope status the contract says is present on success (batch 15 ruli
 the CRO's three schema corrections; Andrew-direct ~02:2xZ "fix the ready flag, send the status": the CRO's
 pin cro-holdings-status-20260924 @01bdf54cfd is CTO-REVIEWED and GO'd (batch 17: own run 144 passed, own
 negative arm 2 failed on the pre-fix file); P deploys it code-only, then Andrew retests; portal unchanged); (1b) resident
-cutover: plan 04c77cbe APPLIED 01:53Z (host running, runner deployed); D1 STOPPED on S119 (JS bundle
-lacks the versioned contract) -- CTO word given for the ycharts_session.js change with Y's concurrence;
-then D1, C1 receipt, Y's 12.03 runbook; (2) P's Performance apply
+cutover: plan 04c77cbe APPLIED 01:53Z (host running, runner deployed); S119 (JS bundle lacked the
+versioned contract) FIXED @282f7ea427 (library 34df3e94), CTO read + Y STANDS (batch 18); P uploads,
+redeploys, reads pins back, builds the package, then the ONE D1 sign-in, C1 receipt, Y's 12.03 runbook;
+Performance success-status fix 786f767796 accepted, rides the next Performance package; (2) P's Performance apply
 receipt and the authority/host-tag apply receipt; (3) P's NOT_READY vocabulary addendum
 2cdbe2bd60 (ratified text); (4) M's 49F 7c0e7ce3 (160 writes) and INF 1ebc7696 (35 writes) publications have CTO GOs
 (batch 13); receipts + library-under-user reader matrices due; the function reads them only after the
