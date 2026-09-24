@@ -120,7 +120,16 @@ commit hashes, and any row.
 state at DEV HEAD in this environment; if the worker finds the cause is NOT in the component (a fixture, a stub or the
 harness itself), that is a row and AC3 is refused with the measurement, not rescued.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~09:0xZ.** Flipped by the ISSUER; the worker left the record face alone.
+3 of 3 criteria PASS, proof-of-spec rc=0 VALID (re-run by this seat inside the worker's worktree C:/tmp/wk-amgt-37-133).
+execPattern.harness.cjs CHECKS-OK 9 of 9; ui-class-census FILES 1 TOTAL 0 (was 26); tabs.harness.cjs 20 of 20 (exec_officers_rendered
+now 5 of 5 -- data-ceo-profile carries the object's own reading, ExecManagementTab.tsx:196-200), execText 5 of 5, execFallback 5 of 5
+(its two pinned byte-identity checks re-cut to fact checks plus a positive marker, per the file's own Z-S193/rk-80 precedent). No rows.
+Drained @2488c1bf0d; portal DEV ae1b9f42 (merge of 62ee58b3), gitlink cd1a7146 -> ae1b9f42. Drain-time ui-contract-check
+(contract-check-after-rl-4/): exec state unchanged at band 2 / weights / sizes / radii / shadows / purpleFills 4 -- those read on the
+shared chrome (lead panel, list) that rl-8 and rl-9 own. The PASS is owed by rl-9's re-assert.
+
+<status>complete</status>
 <round>37</round>
 <slot>~133</slot>
 <fabric>site-z</fabric>
