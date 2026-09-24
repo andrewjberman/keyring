@@ -63,3 +63,26 @@ account, reconciled to the position rows `:403-411` with a DRILL WITHHELD contro
 `accounts_v2.current_value` (`holdings_inf.py:150`, `:273` validate call).
 
 Not answered here (not mine): Q2 (ruled), Q3 (Y). No egress; nothing served moved.
+
+## CORRECTION 2026-09-24 13:2xZ (Y 100635, second finding) -- the reconciliation control row is NOT served
+
+The Q4 section above says the control row "lands in the manifest as `manifest["actual_custody_controls"]["reconciliation"]`
+`:2099`". That manifest is the build's INTERNAL manifest (`extra["manifest"]`, returned as `snapshot["_manifest"]`
+`:2277` and landed locally by `land()` `:2351`), and the producer says so one paragraph above the validate call: "This
+result is INTERNAL evidence only; publishing extra actual_custody wire fields needs P/Y agreement" `:1933-1934`. The
+SERVED revision manifest is built by `publication.py:269-288` from the body, the gold bytes and `source_objects` only
+(keys: business_date, clocks, firm_id, gold, partitions, platinum_header, revision, schema_version, source_objects,
+source_set_revision); the platinum header carries attribution_holdouts, clocks, coverage, custody_totals, scope,
+source_set_revision. Y read the served dec293d6 manifest by version and found no `actual_custody_controls`; that read is
+right and my sentence was wrong at the "served" grain.
+
+So the interpreter's read path for the independent value is the receipted `fact_allocations` object itself
+(`source_objects[0]`, by version_id, sha256 verified): `Account Market Value` for the account's `AccountID`, its row
+ordinal(s) as `independent_source_rows` (Anna: 2 equal duplicate rows, admitted by `:433-436`). The rest of Q4 stands:
+the ACCOUNT node's amount is the DC1 position sum; the build ties it to that object within 0.01 USD or refuses.
+
+Y's other producer reading also verified by line: the no-position exclusion (all four facts null) is
+`:1904-1922` with its origins recorded in `absence_control` (`excluded_source_origins` `:1919`); a zero lot
+(Market Value 0 AND Units 0, not null) is NOT that rule -- it stays an active row the validator counts as
+unsupported (`Market Value <= 0` `:409`) and keeps in the DC1 sum at 0. Whether the interpreter excludes zero lots
+is Y's proposal for the CTO; it moves no value.
