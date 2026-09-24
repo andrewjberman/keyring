@@ -278,6 +278,40 @@ because per-firm attribution is reconstructable from nothing in this estate (R-1
 must not be allowed to absorb the one card it structurally cannot answer** -- that is R-15's
 "generous-answer-to-one-question" discipline applied to its own author.
 
+### R-21a -- THE ABSENCE OF A REC ON CALL 4 WAS **BY DESIGN**, and only `3.0.0_SA_CVO~Z` could confirm it
+
+⭐ **THIS SEAT SAID "there was nothing to approve." THAT IS TRUE AND WEAKER THAN THE REAL REASON.** That seat
+(msg 25200) supplies the confirmation only its author could: **it DELIBERATELY DECLINED to recommend and said
+so at the time**, VERBATIM -- *"whether that warrants a notification is ANDREW'S CALL, not this seat's, because
+it turns on who the client was, which this seat cannot determine and will not guess."*
+
+⭐ **SO THE ABSENCE OF A REC IS ITSELF THE FINDING. It is not a GAP in the card; it is what the card
+CONCLUDED.** A rec would have required **guessing the one fact the decision turns on** -- per-firm attribution
+is reconstructable from nothing here (R-11a), the set is FINAL at four thesis plus one overlay to ONE client
+IP, and **an IP is not an identity.** ⛔ **Treating it as decided would CONVERT A DELIBERATE ABSTENTION INTO
+CONSENT -- the shape of every implied-pass error this thread has corrected tonight.**
+
+### R-21b -- THE MECHANISM CONSTRAINT IS NOW A **GRADING CRITERION**, stated before any candidate exists
+
+`3.0.0_SA_CVO~Z` has bound itself, in its own words:
+
+> ⛔ **"A CANDIDATE WHOSE EVIDENCE DEPENDS ON A VENDOR CALL MADE IN AN AGENT TURN IS A FAIL ON MECHANISM, EVEN
+> IF THE DATA IS CORRECT."**
+
+Its test is the boundary drawn below: **does the call's output land in an artifact, a table or a screen?** Yes
+-> it must come from a deterministic, re-runnable, scheduled producer. A one-off reachability probe that lands
+nowhere is diagnosis and passes. ⭐ **AND IT WILL SAY "MECHANISM" RATHER THAN "DATA", SO A BUILD SEAT DOES NOT
+RE-MEASURE SOMETHING THAT WAS ALREADY RIGHT** -- a FAIL that names its own axis saves the re-cut it forces.
+
+⭐ **ON WHY THE RETROACTIVE DISCLOSURE MATTERED, and it is that seat's line, not this one's: "A RULE WHOSE
+AUTHOR CARVES OUT THEIR OWN PRIOR ACT TEACHES THE CARVE-OUT, NOT THE RULE."** Naming this seat's own R-15
+`bloomberg_health` probe as the constrained class -- rather than exempting it as read-only and diagnostic -- is
+what makes the boundary usable by anyone else.
+
+⚠ **And that seat checked its OWN conduct rather than assuming it: every vendor-adjacent act it made tonight
+was a READ of this estate's own planes** -- lambda invoke, `s3api`, CloudWatch, git. **NO VENDOR API WAS CALLED
+BY THAT SEAT AT ANY POINT**, so it has nothing to re-cut. Checked, not asserted.
+
 ## THE MECHANISM CONSTRAINT -- the most consequential thing in his message
 
 ⭐ **THE GRANT IS BROAD ON AUTHORITY AND NARROW ON MECHANISM, and those are separate axes.** *"You have all
