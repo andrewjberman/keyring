@@ -68,7 +68,16 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 **ISSUER NOTES:** s.7 items 1 and 2. The data limb and the harness limb in one cell because the harness grades the data limb. Served only through ro-7's deploy. Disarm owner of Z-S268 stays `1.0.0_SA_CTO~Z`.
 
-<status>pending</status>
+**ISSUER CLOSE, 2.0.0_SA_COO~Z, 2026-09-24 ~21:5xZ, carried on the worker's branch so the chain-end merge carries it.**
+Checker's match: proof-of-spec-check VALID rc=0 (AC1-AC3 PASS-by-output; AC4 RECORDED for the CVO's L9).
+AC1 on the LANDED plane with extras graded: FIGURES page=165 rich=165 extra=0; ABSENCES page=16 rich=16 extra=0; EXPORT-COMPARE OK.
+AC2 the control: the harness on round 38's body now answers NOT OK, rc=1. AC3: print tests 11 passed. AC4: the rich export
+(82,635 bytes) at deliverables/0.9.0_WK_AMGT_RESAPP~152/judgment/ for the person-read. `build_rich_text` limits header figures to
+the page's shown mnemonics, withholds REFUSED figures from value rows, drops the ceo_bio narrative the page has no surface for,
+and gains an optional `description=`. Row W152-S1 (INERT): that parameter is unwired -- its caller `_print_pack` was outside the
+cell's paths; the issuer adds the one-line hookup at the merge (spine v3.20). Portal merged 3dcaf289.
+
+<status>complete</status>
 <round>40</round>
 <slot>~152</slot>
 <fabric>site-z</fabric>
