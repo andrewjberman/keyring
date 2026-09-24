@@ -1770,3 +1770,82 @@ confirmed; Y's own run 25/25 + offline all_pass. Observation, not a line: pageGe
 yields opaqueredirect status 0 and falls to the redirect-following path, so a later eviction's probe
 classifies the redirect target's body; the Python eviction verdict is its own instrument; a one-line
 note when P next touches the file. Next: upload at b1f269c6dd, redeploy, pins read back, ONE run.
+
+
+## 2026-09-24 04:0x UTC - Claude CTO batch 23: COT re-cut PUBLISHED; DEV consolidation on Andrew's word; display names ruled; speed pin GO; D1 third run worded
+
+### IRPT-COT-HOLDINGS-RECUT-PUBLICATION-GO-20260924 -- GO (CTO 100147) and EXECUTED (M 100152)
+CTO verification before the GO (own instruments): prepared_cot's only platinum candidate 2d067b4d,
+19,038,427 bytes, sha256 == revision; _platinum_plan -> header 28,027 B + 19 parts (max 1,046,285) =>
+22 creates + 1 index; nodes 16,749 = ACCOUNT 841 / MODEL_WRAPPER 462 / MODEL_LEAF 521 / SLEEVE 499 /
+SECURITY 14,426 (M's kinds exactly); acc_0698 subtree 41; live index head-object VersionId XbWnSWxM,
+ETag "ab460faa537d9fc0aa081cd5cb395782", the plan's IfMatch. M's 841-account census accepted: 0 of 841
+pies off; 46/46 strategies with a definition; 0 UNRESOLVED; assigned 462 / unassigned 379; 672
+uncovered observed positions as facts (20,642,062.66); reconcile 548,412,662.59 exact.
+EXECUTED 03:56:45-55Z: 22 immutable creates + ONE CAS index write (IfMatch ab460faa over XbWnSWxM ->
+new index VersionId .VLcr1BCEMXLODKeFWA00C31rlgnUBAr, row 2026-09-22 ac3adb97 -> 2d067b4d); every
+returned version read back before the index; the prior index version re-read equal
+(prior_index_version_retained true); ac3adb97's manifest still present (UCnp0Bq_...). Reader matrix
+LIBRARY-UNDER-USER: 0698 41 nodes / d486 75 / combined 116 READ_OK at 2d067b4d; 2026-09-23 refused
+x3; an excluded account refused. Receipt COT_RECUT_PUBLICATION_RECEIPT_20260924.json (M). EXERCISED:
+Andrew's ~04:0xZ page shows 75 nodes for d486 and "Model coverage 1 of 1" -- the re-cut is served.
+
+### ANDREW-DIRECT ~03:5xZ -- consolidate the portal branches for a DEV push (record: ANDREW_DIRECT_20260924_035xZ_CONSOLIDATE_PORTAL_BRANCHES_FOR_A_DEV_PUSH.md)
+Ruling IRPT-PORTAL-DEV-CONSOLIDATION-20260924 (CTO 100129): P builds ONE candidate off DEV head
+c1ac41ec merging M's codex/irpt-m-ui pin 67158601 (e7e6eaea, b0e2d9ad, 67158601; merge-base 8e6e2e38;
+M 100146: branch clean, no further portal commits until it lands) and P's p-reason-codes-20260924
+(8e616985 named per-firm browse failure; the additive adapter carry 92e2ad96); install / tsc / eslint /
+affected suites / production build with counts; diff stat against c1ac41ec; CTO reviews and GOes; MSTR
+pushes DEV on this word with the ls-remote hash; only committed, reviewed work rides. The gap (nobody
+assigned to consolidate) was the CTO's.
+
+### ANDREW-DIRECT ~04:0xZ -- Anna's page on DEV (record: ANDREW_DIRECT_20260924_040xZ_ANNA_PAGE_WONKY_RANDOM_STRINGS_NO_MODEL_NAMES.md)
+IRPT-HOLDINGS-DISPLAY-NAMES-20260924 (CTO 100156): the v1 node contract carries NO display name
+(measured: node properties closed, no label/name/symbol; SECURITY = security_id CUSIP only; model names
+only inside capability_facts strings), so the portal prints ids by construction. Additive `display`
+member on nodes {label, symbol?, description?}: P edits the schema + response example and the portal
+validator/adapter accept it FIRST (in the consolidation); M fills it in build_cot (and the 49F/INF
+builders) and republishes COT after the accepting portal is on DEV; M's render prefers display.label,
+then the facts parse, then the id. Also: P names HOLDINGS_READY / PERFORMANCE_READY in
+CONTRACT_NAMED_REASON_CODES (S52) and prints no code line on READY; P measures "Scope as of: unknown";
+"Cohort (not asserted)" / "withheld" stay (data, honest); the coarse category card stays (drill one
+click below with 67158601). Finding A: Anna appeared under Global on this load; P's harness (100142:
+resolve GLOBAL COMPLETE, all three READY, cottonwood browse 25 entries + cursor) did not reproduce (C);
+the named-failure alert (8e616985) prints the class if it recurs; the HAR ask stays open only on
+recurrence.
+
+### IRPT-LISTING-SPEED-PIN-GO-20260924 (CRO 100137; CTO 100162)
+cro-listing-speed-20260924 @773fcee3e2, five commits on ad8306b769 (B6 memory 512 -> 1769; B5 parallel
+Global resolve via ThreadPoolExecutor with ordered merge; B1+B2 one S3 client per container + per-request
+directory memo, ownership map deliberately NOT memoized; B3+B4 parsed directory cached per object
+version with IfNoneMatch on the cached ETag, 304 = reuse, no TTL, ownership/policy never cached, revision
+hash + browse order once per version; B7 part 1 warm event answered before the boundary). CTO own runs:
+directory 6 failed / 142 passed and _authz 7 failed / 165 passed at the pin AND the same at P's untouched
+base a5073c9461 (pre-existing); holdings + performance 275 passed. RULED: the conditional GET is the
+HEAD-by-VersionId bound's equivalent, accepted. GO: P merges, runs the suites, plans/applies B6 (0/1/0),
+packages irpt-directory-search code-only under the ledger discipline, AFTER with CloudWatch p50/p90 over
+the first hour beside the baseline (p50 1.33 s / p90 4.91 s / p99 6.95 s) + one timed Global list load.
+B7 part 2: org/standards/** is lane ANY_EXEC (.owned-paths.yaml:1977), so the CRO adds cadence token
+"5min" to NAMING_SCHEMA.json cadence.values (Rule 30: a registry row, never a workaround) and lands the
+rate(5 minutes) keep-warm schedule as its own commit; inside Andrew's approved always-on word.
+
+### IRPT-RESIDENT-D1-RERUN-20260924 -- third amendment (P 100126; Y 100150/100161; CTO 100134/100164)
+Run 3 (SSM 248c8bf6, 03:49:30-45Z at b1f269c6dd): the sign-in leg is PROVEN -- 1 submission, fields
+matched, reply 302, password visible, dashboard reached -- and the pair shows the probe URL
+/indices/table_data (the legacy market-data probe, ycharts_client.py:170-172, never live-verified)
+answers 405 with x-amzn-waf-action captcha from BOTH the in-page fetch and the Node port on the same
+11-cookie jar (ycsessionid, csrftoken, aws-waf-token cookie + header sent): the ENDPOINT's WAF rule, not
+the client class; Y's item 3 stays closed. Two submissions spent today (Y's count). WORD: the success
+predicate becomes the resident's own two routes from inside the page -- identity (GET /dashboard/ 200 +
+window.USER.authenticated true, userId int > 0) first, then the Overview template GET
+/custom_pdf_reports/generate/<template_id> (200 + JSON with id == template_id, report_type, sections)
+with classifyResponse's table on the template response; PROBE_PATH defaults to the template route;
+/indices/table_data stays behind YC_PROBE_PATH; a captcha solver is refused (a detector is not a
+handler). Authorization: the template GET is inside 6fc3f5f785 line 38 ("the report-generation calls")
+-- Y's reading of the record, adopted. CTO's miss: 100135 item 3 restated P's sentence that the replay
+"already carries /custom_pdf_reports statuses" -- Y measured the fixture (POST route only; an unmatched
+GET falls through to a 200 HTML page), so the template arm as worded would have been VACUOUS. STANDS
+conditions = Y's five (positive arm from a measured fixture; NEGATIVE arm: 200 non-JSON never LIVE;
+identity first / template second / eviction 403 still EVICTED_HARD; bundle_contract 25/25 + offline
+all_pass + node --check; the unsigned control reads DISTURBED). Then ONE run = the third submission.
+Host deps verified by Y (python 3.12.14; the irpt-common pins + pdfplumber set; hash 6a751288f048f127).

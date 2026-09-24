@@ -19,8 +19,12 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (00) LISTING SPEED (Andrew ~03:2xZ "embarassing/unusable"; his ~20:0xZ approval
-sat unassigned -- CTO gap): CRO writes B6/B5/B1+B2/B4/B7 as pins -> CTO GO -> P deploys; P takes F2/F5/F3/F7/F1;
+CTO review queue, in order: (000) DEV CONSOLIDATION on Andrew's ~03:5xZ word (batch 23): P builds ONE candidate
+off DEV head c1ac41ec merging M's pin 67158601 + P's 8e616985/92e2ad96 + the `display` acceptance and the named
+READY codes (Andrew's ~04:0xZ page-read word); CTO reviews, MSTR pushes DEV. (0d) COT re-cut PUBLISHED 2d067b4d
+03:56Z (index .VLcr1BCE; prior retained) and SERVED (Andrew's page: 75 nodes, coverage 1 of 1); display names =
+contract gap ruled (nodes gain `display`; portal first, then M republishes). (00) LISTING SPEED (Andrew ~03:2xZ "embarassing/unusable"; his ~20:0xZ approval
+sat unassigned -- CTO gap): CRO's pin 773fcee3e2 GO'd (batch 23; own runs match; cadence token 5min ruled) -> P merges + deploys; P takes F2/F5/F3/F7/F1;
 B3 + F1 ruled; B8 parked (batch 20). (0b) COT HOLDINGS TREE RULED (batch 20): strategy wrapper > constituent
 models (Primary/Custom by the registry, Opal by name, ASSIGNED dollars) + SMA + Client plug > securities; M's candidate
 c7f8cfdb38 SHAPE ACCEPTED (batch 22: 0698 41 nodes, d486 75, combined 116, reconcile exact); M runs the 841
