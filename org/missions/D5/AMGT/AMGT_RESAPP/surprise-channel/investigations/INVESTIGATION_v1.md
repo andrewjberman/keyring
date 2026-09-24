@@ -13679,6 +13679,32 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "Both facts the criterion asks for are true and measured; only the face's invocation could not print the second from the first's exit. The next face that needs a census after a check that may exit 1 separates them with `;` and prints exit codes beside each.",
     "disarm_owner": "2.0.0_SA_COO~Z -- DISARMED by this row at the rm-1 drain; the lesson is on the issuer's cut, carried into rm-2/rm-3's faces (their invocations do not chain a graded check before a required line).",
     "notes": "W140-S1 (the documentElement instruction) stays INERT as the worker dismissed it with reason; no row needed. Filed by the issuer at the drain."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S251",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-24T14:20:15Z",
+    "one_line": "rm-1 re-keyed the MEASUREMENT and left the CONCEALMENT intact: at least ELEVEN places in portal/ still assert the retired identity `--bg-band == #0A1733`, including Panel.tsx:8/:47 (the exact docstring that misled the round-37 grader) and index.css:88/:94 (the SAME FILE in which the token was re-pointed). R-65's ruling named the stale comments as part of the blast radius; the instrument was fixed and the comments were not, so the trap that cost round 37 is still armed for the next reader who does the right thing and reads the owning component to learn what a band is.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find '0A1733|10, ?23, ?51' portal/src portal/scripts --limit 30 -- DENOMINATOR: 28 hit(s) across 1032 file(s) scanned, corpus=all, 4 BINARY not searched; bands SURFACED=25 CONFIG=1 TEST=1 DOC=1; PAGE 1 of 1 showing 28 of 28 (the whole set, no pagination).",
+        "STALE ASSERTIONS OF THE RETIRED IDENTITY (prose/docstring, the concealment class): portal/src/ui/components/panels/Panel.tsx:8 'chart: Free-floating charts -> INVERTED BAND (--bg-band, #0A1733)' and :47 'A Panel is either an INVERTED BAND (#0A1733, --bg-band)'; portal/src/index.css:88 'a deliberate INVERTED BAND (#0A1733)' and :94 '--bg-band = dark field #0A1733 an enumerated inverted band'; portal/src/lib/designTokens.ts:13; portal/src/pages/InvestorReporting/export/ExportModal.tsx:37; portal/src/pages/TicketCenter/TicketCenter.tsx:12; portal/src/ui/components/Controls.tsx:27, :59, :91; portal/src/ui/components/graphic/HeroGraphic.tsx:27; portal/src/ui/components/states/PanelStates.tsx:21; portal/src/ui/components/panels/README.md:7.",
+        "A HUMAN-FACING INSTRUCTION POINTING AT THE WRONG COLOUR: portal/scripts/ui-smoke.mjs:630 prints 'NOW READ THE PNG against portal/DESIGN.md. Check: light text/buttons only on the ONE #0A1733 band' -- an instruction to a person to look for a value that is no longer the band.",
+        "ONE EXECUTABLE HIT INSIDE THE ROUND'S OWN PAGE: portal/src/pages/SecurityAnalysis/components/PrintExportAction.tsx:136 className='... bg-[rgba(10,23,51,0.6)]' -- a hardcoded copy of the old band value as a modal scrim, in code rather than a comment.",
+        "CORRECTLY RE-KEYED AND NOT AT ISSUE, recorded so the row is not read as a blanket census: ui-measure.mjs:21/:37/:42/:47/:94 now NAME the old hard-coded rgb(10,23,51) as the thing that was renamed to what it actually measures (the STRIP), which is rm-1 working as cut; and the test fixture uiMeasureFixture.html:30 pins --bg-header to 221 67% 12% with the comment 'rgb(10,23,51) -- the rendered strip / sidebar', which matches the re-key.",
+        "NON-APPLICATION per R-65's own clause, excluded from the eleven: portal/src/pages/InvestorReporting/render/brand.ts:43 midnightBlue '#0A1733' and brand.tokens.json:21 'hex' '#0A1733' are token DEFINITIONS and are their own authority."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R-65 @faaf80c5e7 ruled that a literal duplicating a token's value is a COORDINATE that reads that token, and stated the remedy as structural with the detector 'when a design token is re-pointed, grep the literal it USED to equal -- every hardcoded copy is now a silent wrong-object reader, AND THE COMMENTS ASSERTING THE OLD EQUALITY ARE PART OF THE BLAST RADIUS'. rm-1 was cut to re-key the instrument.",
+    "world_is": "The instrument is re-keyed and the blast radius is not. Eleven prose/docstring sites, one human-facing smoke instruction and one executable rgba literal still carry the retired equality, two of them in the exact pair of files (Panel.tsx, index.css) whose disagreement produced the round-37 error. The detector that found this is R-65's own and had never been run; nobody asked whether the band predicate was an instance or a class, and it is a class of 13.",
+    "disarm_owner": "2.0.0_SA_COO~Z (round 38 issuer) -- to route the comment/docstring correction into a cell with a POD_DE_ANY writer, since portal/** is not this seat's write surface and the CTO is not among that lane's permitted agents. Two judgments are the issuer's, not this row's: whether the eleven prose sites are one cell or ride rm-2's file set, and whether PrintExportAction.tsx:136's scrim is a real defect (it is a modal, so it may never render in a graded state) or a cosmetic literal to leave standing with its value reported.",
+    "notes": "Filed per CLAUDE.md section 2 by the seat that saw it, off-task, without halting: the census was one comp-find run while waiting on wave 1. NOT BLOCKING round 38 and NOT a reopening of rm-1, which did what it was cut to do -- the gap is between R-65's stated remedy and the cell's scope, which is the CTO's own drafting and is recorded against this seat. Round-37's L10 s.8 already carries the diagnosis; this row carries the POPULATION, which s.8 did not measure and explicitly left open as 'the estate-wide question this raises and does not answer'."
   }
 ]
 ```
