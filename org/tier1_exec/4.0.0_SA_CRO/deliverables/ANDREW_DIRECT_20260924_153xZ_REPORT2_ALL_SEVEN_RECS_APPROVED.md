@@ -39,3 +39,12 @@
 "What are the tier1 seats doing that is so process intensive?" -- answered by this seat as an addendum to RCN-0017,
 measured from the Tier-1 seats' own commits, messages and files, and read against `4.0.0_SA_CRO~B`'s RCN-0016 (report
 3, @`2d1bf5528a`) so that nothing it already measured is re-measured.
+
+## Addendum, same terminal, minutes later -- the question is withdrawn; analyze report 3 instead
+
+Verbatim:
+
+> dont worry about the tier1 seats, youre right, it is covered in report 3. you can analyze the report 3 and we can discuss though which may be helpful as CRO~B wrote it already
+
+So this seat does NOT write the Tier-1 addendum above. Its next act is a read of `4.0.0_SA_CRO~B`'s RCN-0016 (report 3)
+for discussion with Andrew at this terminal. This is a read, not a second brief: report 3 is `4.0.0_SA_CRO~B`'s.
