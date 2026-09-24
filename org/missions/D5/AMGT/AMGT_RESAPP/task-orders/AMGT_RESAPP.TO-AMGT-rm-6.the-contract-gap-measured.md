@@ -98,7 +98,19 @@ code is printed. Nothing else on the face moves.
 round-37 analysis as amended @`18d29a99c7`: content the CTO's, edit the named writer's; this cell supplies the measured
 cases and the draft so neither is cut blind. The `DESIGN.md` edit is carried (s.46g), not cut.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~14:5xZ.** Flipped by the ISSUER; the worker left the record face alone.
+3 of 3 criteria PASS, proof-of-spec rc=0 VALID (re-run by this seat inside the worker's worktree C:/tmp/wk-amgt-38-145).
+AC1: clippedTextBlocks 0 on all six states in BOTH scopes (24 of 24 measurement JSONs, samples empty; exit-main=1 / exit-body=1 on
+the other cells' graded FAILs, printed) -- rm-5 had already fixed the one case the CVO saw. The historical case reproduced BY
+READING portal 1f1555d2 (git show, never a checkout): the pre-rm-5 clip was UNSIGNALLED -- no overflow-hidden / clip / ellipsis on
+the leaf, parent or grandparent; the mechanism was flex-shrink-0 plus flexbox's implicit min-width:auto with the cut at an ancestor
+frame -- so rm-1's leaf-only clippedTextBlocks detector has a stated gap (C13 draft bullet 5), carried to the analysis. AC2: the
+proposal with the live and historical denominators, the estate census (truncate 97/59, text-ellipsis 0/0, whitespace-nowrap 64/35,
+overflow-hidden 121/69, break-words 4/2, line-clamp 4/3) and a five-bullet C13 draft in DESIGN.md's register for the CTO's L4-R;
+DESIGN.md untouched. AC3: 0 tracked changes in the portal, 0 files off its base. No rows. Drained @7e26b17aec (deliverables only; the
+gitlink did not move). The DESIGN.md edit stays carried (s.46g) until the CTO ratifies the text.
+
+<status>complete</status>
 <round>38</round>
 <slot>~145</slot>
 <fabric>site-z</fabric>
