@@ -2877,3 +2877,42 @@ parse / resolve design) or this interpreter; the card at Andrew says so. (4) Can
 the four routes; the SAMPLE maps in fe-s-13/routes and fe-s-14/header gaining `requestId` (a real repair: the arms fail on
 "needs path parameter requestId"); the five pre-existing fe-s-2 / fe-s-10 failures whose names sit in row DSGN_IRPTV1-W4-S2
 (P measures them in the nested checkout and repairs what is P's); then the export root's stale comments.
+
+
+## 2026-09-24 12:1x UTC - Claude CTO batch 46: portal candidate 5 reviewed on the CTO's own instruments and GO'd to MSTR (fast-forward onto DEV 310b83b8); the fe-s-2 / fe-s-10 five relayed from COO~D's row to P; the CRO's addendum 2 (the custody branch is ALSO a missing composition) filed beside batch 45
+
+Instruments: the CTO's own reads in C:/Users/AndrewBerman/Desktop/portal-dev-consolidation-20260924 (fetch 12:0xZ; origin/DEV =
+310b83b835; irpt-dev-candidate-5-20260924 = 694287b91e): merge-base --is-ancestor 310b83b8 rc=0 and --is-ancestor origin/DEV rc=0;
+git log 310b83b8..694287b9 = 2 commits (2ad36f43, 694287b9); git diff --stat = 10 files, +95 / -10; git diff --name-only filtered to
+non-__tests__ / non-fixtures paths = EMPTY; bunx tsc -b --noEmit rc=0 0 errors; eslint on the changed .ts files 0 problems. P's
+suite instrument as reported in 100563 (the routes suites resolve the flipped contract only in P's nested checkout): 96 tests / 20
+files; candidate 4 17 fail -> candidate 5 12 fail; diffed BY NAME 0 introduced, 5 fixed. Messages: 100563 (P, candidate 5),
+100564 (the CTO's relay ask to COO~D), 100566 / 100567 (the GO).
+
+### IRPT-PORTAL-CANDIDATE-5-GO-20260924 (P 100563; the CTO's GO 100566 to MSTR, 100567 to P)
+Candidate 5 = 2ad36f43 (the four routes' corpus records + prepared_for + the re-pinned literals + the SAMPLE maps in fe-s-13/routes
+and fe-s-14/header binding `requestId`) + 694287b9 (the selection-create record, the fifth route with no record since its
+declaration; the corpus 17 of 17). The CTO re-derived P's ancestry, file-set and toolchain claims on its own checkout, each with its
+denominator above; the ONE claim taken from P's instrument is the suite diff, because the routes suites resolve the flipped contract
+only in the nested checkout P measured in -- disclosed as such in the GO, and the twelve remaining failures are NAMED (F14-AC13 x2 /
+AC14 x3 as nested-layout ENOENT path artefacts to re-read in the workspace layout after landing; AC15; AC8 x3; FIELD_MAP's
+beginningValue / endingValue / retainedReport, a real debt of the Performance view; the directory-browse boundary; the holdings-route
+issue arm), so a later read can dispute each one. No product file in the set (the filtered name-only diff is empty), so VALGATE reads
+it as a no-op and the landing carries no served-output change. RULED: GO -- MSTR fetches and lands `merge --ff-only 694287b9` on
+origin/DEV if DEV is still 310b83b8, else the covered --no-ff merge with the staged set = exactly the ten files (any overlap outside
+them is a STOP); ls-remote read in the receipt; rollback = DEV re-pointed to the pre-merge head; under Andrew's standing consolidation
+word. Landing receipt: PENDING at MSTR (this batch is written before it; the receipt lands in the next).
+
+### IRPT-FE-S2-FE-S10-FIVE-RELAY-20260924 (the CTO's 100564 to COO~D)
+The five pre-existing fe-s-2 / fe-s-10 failures P is to repair are NAMED in row DSGN_IRPTV1-W4-S2, which sits on an undrained round-2
+worker branch P cannot read; the CTO asked 2.0.0_SA_COO~D to send P the five names with the denominator and the base ref (portal
+895752676a) in one message (delivered). P repairs from those names, never from the 18 its own nested run reports -- the two
+populations differ by layout (the ENOENT artefacts) and by base. Pending: COO~D's relay; P's repair candidate after the landing.
+
+### IRPT-CUSTODY-BRANCH-ADDENDUM-2-FILED-20260924 (the CRO's /closer addendum 2 @9a9138d4ab)
+The CRO's addendum 2 to the Analysis brief, read at HEAD: the custody branch is ALSO a missing composition with a design port
+(interpret_source / validate_evidence, 0 implementations), and addendum 1's "nearer live thread" sentence is WITHDRAWN. This is the
+same finding as batch 45 (P 100556) reached from the trace side on a different instrument (the CRO's read of the served refusal and
+the ports' census); the two agree and neither inherits the other. Nothing new to rule: batch 45's four rulings stand (nothing
+stubbed; P drafts the interpreter's design card; the first live Analysis submission waits on whichever composition lands first;
+candidate 5 proceeds -- and it has, above). The withdrawal is noted so no later reader cites addendum 1's sentence as live.
