@@ -37,6 +37,55 @@ failure domain from the tabs; treat it as a sixth surface in any trace.
 **TWO HOOKS = TWO STATE OWNERS:** `useSecurityAnalysisState.ts` (the five tabs) and `useLeadPanelApi.ts`
 (LeadPanel). ⚠ **A trace that exercises one hook has not exercised the other.**
 
+## 1a. ⛔ CORRECTION, ~02:1xZ -- SECTION 1/2's FETCH TOPOLOGY WAS CITED WRONG BY THIS SEAT AND CONCLUDED WRONG BY `3.0.0_SA_CVO~Z`. READ THIS BEFORE SECTION 2.
+
+**`3.0.0_SA_CVO~Z` (msg 25154) challenged the load-bearing fact. It was right about my EVIDENCE and wrong
+about its own CONCLUSION, and the file settles it in a docstring neither seat had read.**
+
+**WHAT THIS SEAT GOT WRONG -- THE CITATIONS.** `types.ts:299` describes `resolve_identity()`, which **every**
+`/api/scoped/amgt/security/{key}/*` route calls once at **its own SERVER-SIDE boundary**; it is a statement
+about **identity consistency ACROSS FOUR ROUTES and it PRESUPPOSES FOUR ROUTES.** ⛔ **THE SENTENCE I
+QUOTED AS EVIDENCE FOR "ONE FETCH" ENUMERATES FOUR THINGS IN ITS OWN TEXT** -- overlay, thesis bundle, peer
+set, coverage set. And `useSecurityAnalysisState.ts:47` **does no fetching at all** (exports
+`selectSecurity`, `clearSecuritySelection`). **Both citations are withdrawn.**
+
+**WHAT `3.0.0_SA_CVO~Z` GOT WRONG -- THE CONCLUSION "tabs ARE independent".** Four ADAPTERS is not four
+TABS, and that seat's own disclosed limit is the missing step: *"I did NOT trace which component invokes
+which function."* **Neither seat had. It is now traced.**
+
+**MEASURED AT THE BYTES, and this is the authoritative topology:**
+- **FOUR exported adapters on FOUR distinct routes** (`amgt-lead-panel.ts:124/131/137/144` ->
+  `/overlay`, `/thesis`, `/peers`, `/coverage`). `3.0.0_SA_CVO~Z` is right that these are four real
+  independent HTTP fetches.
+- ⭐ **ALL FOUR ARE ISSUED BY ONE HOOK: `hooks/useLeadPanelApi.ts`**, as four separate react-query
+  `queryFn`s at `:108`, `:118`, `:128`, `:138`. **NO TAB CALLS AN ADAPTER DIRECTLY** (12 hits across 983
+  files is the whole denominator: 4 declarations, 4 imports, 4 call sites, nothing else).
+- ⭐ **AND THE ORIGINAL CLAIM STANDS ON THE ADAPTER'S OWN DOCSTRING, `:128-130`:** *"The per-name bundle the
+  **Thesis, Exec Management, Model and Posture tabs** read ... **No route was added for them.**"*
+  **FOUR OF THE FIVE TABS DO SHARE `getThesisBundle`.** The route count and the tab count are simply
+  different numbers.
+
+**THE REAL MAPPING:** `thesis` -> Thesis + ExecManagement + Model + Posture (**4 tabs, 1 route**) ·
+`peers` -> Peers (1 tab) · `overlay` -> the header / `SecurityOverlay` · `coverage` -> **the Coverage TAB IS
+RETIRED** (`:141-143`), the call persisting as the client half of a still-mounted route.
+
+⛔ **BOTH SEATS ALSO HAD THE HOOKS BACKWARDS, INCLUDING SECTION 1 ABOVE.** `useLeadPanelApi.ts` is **not
+LeadPanel's private hook** -- it is **the data hook for the entire page**, issuing all four queries.
+`useSecurityAnalysisState.ts` is **selection state and fetches nothing.** So "two hooks = two state owners"
+is wrong: there is **ONE fetching owner and one selection owner.**
+
+⭐ **WHAT THIS MEANS FOR THE TRACE, which is why it was worth stopping for:** **FOUR routes must each be
+exercised** (not one, as my premise implied, and not five). **AND ROUTE-PROOF IS NOT RENDER-PROOF** -- a
+good `thesis` payload proves the DATA for four tabs and proves **nothing** about whether each of those four
+renders it correctly. So the honest trace surface is **4 routes x data + 5 tab renders + the overlay header
++ LeadPanel**, and `3.0.0_SA_CVO~Z` is right on the direction even though its conclusion is not: this is
+**more** work than my premise implied, not less.
+
+⚠ **CVO's CloudFront counts are consistent with the shared bundle rather than against it:** thesis **21**,
+overlay **17**, peers **6**. Thesis leads precisely because four tabs drive it and peers trails because one
+does. That seat read three different counts as refuting a shared fetch; they refute a **single shared route
+for all four adapters**, which nobody claimed.
+
 ## 2. THE ADAPTERS AND THE BACKEND
 
 - **Lambda: `opal-amgt-scoped-api`.**
