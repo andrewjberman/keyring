@@ -306,6 +306,44 @@ told the operator his own retired goal was blocking his restart.**
 COST: one read of the skill before quoting a gate. NON-APPLICATION: a gate whose definition this seat
 authored and holds.
 
+### R-13a -- THE DEFECT PROPAGATED ONE HOP TO THE OPERATOR, AND THE COLLISION WAS TWO SEATS AGAINST ONE
+
+⛔ **A SECOND INSTANCE, VOLUNTEERED BY `3.0.0_SA_CVO~Z` (msg 25150), THAT THIS SEAT COULD NOT HAVE KNOWN
+ABOUT: THAT SEAT RESTATED THE DEFECTIVE FRAMING TO ANDREW.** Its status report carried *"Cross-fabric
+integrate -- not met; origin/CLOUD at `b475b96309`, SITEZ ~1,100 ahead"* -- **taken from tick 12 and passed
+on unchecked.** So the framing did not stop in this seat's logs: **it propagated one hop, to a DIFFERENT
+AUDIENCE, through a seat holding no independent basis for it.** A wrong framing in a log is a record
+defect; the same framing restated by a peer is a fabric defect.
+
+⭐ **AND THAT SEAT'S OWN SHARPEST POINT IS THE FROZEN COORDINATE, WHICH IS NEW: "the verdict word was
+wrong AND the hash beside it was stale, and THE HASH IS WHAT MADE THE SENTENCE LOOK MEASURED. A stale pin
+inside a restated claim is WORSE THAN NO PIN: it supplies the APPEARANCE OF GROUNDING to a sentence the
+restating seat never grounded."** `b475b96309` was stale **by a whole merge** -- `origin/CLOUD` had moved
+to `69e36619ae` and the CLOUD -> SITEZ leg had landed at 00:52Z. Three defects in one restated sentence: a
+state reported as a failed gate, a superseded coordinate quoted as current, and **an undifferentiated
+"integrate" that HID THAT ONE LEG WAS COMPLETE** -- the half a reader most wants.
+
+⛔ **AND THE COLLISION WAS NOT SYMMETRIC: IT WAS TWO SEATS AGAINST ONE, AND THIS SEAT WAS THE OUTLIER.**
+`0.0.0_AB_MSTR~Z` reports (msg 25151) that laptop `0.0.0_AB_MSTR` used the same `forward = CLOUD -> SITEZ`
+sense in every frame tonight. ⭐ **SO THREE PARTIES WERE EACH INTERNALLY CONSISTENT AND THE MINORITY HOLDER
+GOT NO SIGNAL -- which is the real reason no sentence looked ambiguous.** A private convention does not
+feel private; **it feels like the convention.** The remedy is unchanged and is now adopted at all three
+seats: name the endpoints.
+
+⭐ **ONE MITIGATION THIS SEAT'S RULING OVERSTATED, and `0.0.0_AB_MSTR~Z` is right to name it:** both
+commit subjects carrying *"forward leg"* (`0e9ed7b1d8`, `da77d3365b`) **also name the direction explicitly
+in the same line** -- *"merge `origin/CLOUD @<sha>` into SITEZ"* -- so a reader of the subject alone still
+gets the direction. **Nothing is rewritten and the hazard was latent rather than realised.** R-13 implied
+those subjects were actively misleading; they are not.
+
+⚠ **AND THE VINTAGE RULE DEMONSTRATED ITSELF INSIDE THIS EXCHANGE: that seat measured the outstanding leg
+at 1,105 and this seat at 1,104**, because `b2f8ea91a7` landed between the two reads. Neither is wrong.
+**Two seats, ten minutes, one commit of difference** -- exactly the drift R-12's vintage clause names, and
+the reason an integrate count must never be quoted without its read time.
+
+The outstanding leg is held at both MSTRs for **Andrew's A/B word**; both seats have stated they will not
+report it as a blocker again.
+
 ## R-12 -- A TEARDOWN'S VERIFY-AFTER IS A **WORKTREE** READ, NEVER A **HISTORY** READ
 
 ⚠ **RULED IN A MESSAGE AND A TICK LOG FIRST, WHICH WAS THE WRONG CARRIER.** A log is a journal; a
