@@ -253,6 +253,70 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-21 -- ALL RECS APPROVED, EGRESS WIDENED TO ALL VENDORS -- AND THE GRANT IS BROAD ON **AUTHORITY**, NARROW ON **MECHANISM**
+
+**Andrew-direct 2026-09-24 ~03:2xZ at the `1.0.0_SA_CTO~Z` terminal, VERBATIM:** *"all recs approved, and you
+have all the egress you want for vendors. Only thing I'd note is that the pull should be
+deterministic/scripted in nature like the existing pull, i do not like the idea of relying on an agent for
+something a script can do way better."*
+
+**CLOSED BY "all recs approved" -- 6 of the 7 `/open-calls` cards:**
+
+| # | call | ruling |
+|---|---|---|
+| 1 | browser session endpoint | CDP on a signed-in admin+Dev browser, or he runs the readout. **NOT credentials.** |
+| 2 | who populates gold `chatter_daily` | **`2.0.0_SA_COO~Y`**, as an explicit `AMGT_HARVST` scope item, NOT a rider on H03 |
+| 3 | terminal-box schedule owner | **`0.0.3_BG_BBGTerminal`** -- it already runs the `OPAL_BBGTML_daily_pull` family |
+| 5 | Lusha / `rk-49` | **WITHHELD for now** -- the gate's purpose is unmet regardless; the word buys nothing until hop 4 lands |
+| 6 | FX for the 0.2x-5x band | Bloomberg DAPI spot at the universe vintage, pulled with the existing refresh |
+| 7 | wider Bloomberg field set | **AUTHORIZED**, scoped to the landed universe, once per refresh |
+
+⛔ **CALL 4 IS **NOT** CLOSED, AND SAYING SO IS THE POINT.** Its REC was *"None offered"* -- there was nothing
+to approve. **"All recs approved" cannot decide a card that carried no recommendation**, and the underlying
+decision (notify, or not, on the FINAL set of 4 thesis + 1 overlay to one client IP) **remains his alone**,
+because per-firm attribution is reconstructable from nothing in this estate (R-11a). ⭐ **A blanket approval
+must not be allowed to absorb the one card it structurally cannot answer** -- that is R-15's
+"generous-answer-to-one-question" discipline applied to its own author.
+
+## THE MECHANISM CONSTRAINT -- the most consequential thing in his message
+
+⭐ **THE GRANT IS BROAD ON AUTHORITY AND NARROW ON MECHANISM, and those are separate axes.** *"You have all
+the egress you want for vendors"* widens **WHO MAY BE CALLED** past R-16's V1/V2 enumeration to **all
+vendors**. *"The pull should be deterministic/scripted in nature like the existing pull"* constrains **HOW**.
+
+⛔ **RATIFIED: EVERY VENDOR CALL ON THIS ESTATE LIVES IN A DETERMINISTIC, SCRIPTED, RE-RUNNABLE PRODUCER --
+NOT IN AN AGENT TURN.** His reason, verbatim: *"i do not like the idea of relying on an agent for something a
+script can do way better."* The model he names is the **existing** pull (`price_axis_pull.py` + `generation.py`
++ a scheduled trigger).
+
+**HOW IT BINDS THE THINGS JUST APPROVED:**
+- **Call 6 (FX):** a **field added to the universe-refresh script**, not an agent fetching rates. The caveat
+  becomes a computation, which is only true if a script computes it.
+- **Call 7 (wider field set):** a **field LIST in the existing puller**, extended once. ⛔ **NOT an agent
+  calling DAPI per missing column** -- that is the exact shape he refused.
+- **Call 2 (gold population):** a producer with a trigger, not an agent-run backfill.
+- **Call 3:** already this shape -- **it is the reference implementation**, which is why he pointed at it.
+- **`rk-49`/Lusha, if ever granted:** scripted induction through `add_security`, never an agent-typed lookup.
+
+⚠ **AND IT BEARS ON THIS SEAT RETROACTIVELY, STATED RATHER THAN QUIETLY DROPPED.** At R-15 this seat made an
+**agent-side** vendor call -- `bloomberg_health` -> `ok: true`, `127.0.0.1:8194`, `//blp/refdata`. It was
+read-only, diagnostic, and it did de-risk the pull. ⭐ **But it is exactly the class his note constrains, and
+the honest line is the boundary, not an excuse: a ONE-OFF REACHABILITY PROBE is diagnosis; ACQUIRING DATA a
+producer should acquire is the thing a script does better.** Going forward at this seat: **diagnostics may be
+agent-side and ad hoc; any call whose OUTPUT lands in an artifact, a table or a screen goes through a
+script.** ⛔ **A scheduled producer still needs the condition HELD, not probed once (R-15's grain note), which
+is a second reason the probe was never a substitute for the script.**
+
+⭐ **AND THE CONSTRAINT IS A GIFT TO THE RECORD, NOT A LIMIT ON IT:** a scripted pull is re-runnable, has a
+digest, lands in a ledger and can be graded on deployed bytes. **An agent-side call is unattributable from
+git by construction** -- the same class as R-12's untracked deletion. **His preference and this estate's
+evidence law point the same direction.**
+
+**STILL GATED AND NOT LIFTED BY ANY OF THIS:** the deploy ledger for a first scheduled fire · the never-widen
+pair on any served-output move · production scheduling · and ⛔ **the calls-not-picks line from R-16 stands:
+`3.0.0_SA_CVO~Z`'s standing ruling on ambiguous names (`AXMB`/`AMXB`) is untouched, because a word that
+permits ASKING a vendor never permits DECIDING which identity the answer belongs to.**
+
 ## R-20 -- THIS SEAT'S *REPLACEMENT* PROOF CLAUSE IS ALSO DEFECTIVE. `names_with_links` CHANGES MEANING ON GOLD
 
 ⛔ **R-19 withdrew one unreachable proof clause and replaced it with another defective one, inside the same
