@@ -154,7 +154,21 @@ estate's own at rung 2. The DONE WHEN text in the ENDPOINT fence is unchanged; t
 "measure, close (b) on the landed producer, name the route ask". The serving of branch (b) is a route change and is the
 CTO's call at the round-37 analysis, carried by the worker's ROUTE_ASK document through the drain-end read.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~11:1xZ.** Flipped by the ISSUER; the worker left the record face alone.
+3 of 3 criteria PASS, proof-of-spec rc=0 VALID (re-run by this seat inside the worker's worktree C:/tmp/wk-amgt-37-139).
+MEASURED FIRST (AC1): the landed pack is 8 PAGES against the 2-page cap, model-block only (the four template blocks render
+[MACHINE-EMPTY] even where the landed thesis bundle carries drafted content), and 11 of 11 DESIGN_BIBLE A-C items read NOT MET;
+FIGURES page=162 pack=179 same=162 missing=0 extra=17, CITES page=43 pack=0, ABSENCES page=5 pack=5 same=0 -- the gap table with its
+denominators. BRANCH (b) CLOSED on the landed producer (AC2): build_rich_text beside build_pack, build_pack's three optional bundle
+kwargs additive, PDF + txt byte-identical with and without them (sha256; a wall-clock CreationDate in PdfPages was the one
+non-determinism, pinned), print tests 6 of 6, exportCompare on the rich document FIGURES 162/162 CITES 43/43 ABSENCES 5/5 missing=0
+extra=0, EXPORT-COMPARE OK. THE ROUTE ASK WRITTEN, NOT MADE (AC3): ROUTE_ASK_export_rich_text.md recommends the EXISTING /print leaf
+with `?format=rich` (default pdf, byte-identical), text/markdown; scoped_amgt.py and amgt-lead-panel.ts untouched (empty diff over
+src/api and lib/research/api); PrintExportAction.tsx census FILES 1 TOTAL 0 (was 12). No rows. Drained @fa3b0152d2; portal DEV
+c6ecc9ba (merge of 70d4e2b7), gitlink 1267a67e -> 70d4e2b7 at the merge (no conflict: CLOUD sat at the worker base), then -> c6ecc9ba (the DEV merge commit) in this close-out. FWD-30 returns to 1.0.0_SA_CTO~Z on the route ask before anything
+serves the rich document; FWD-30 grades on the analysis, not here.
+
+<status>complete</status>
 <round>37</round>
 <slot>~139</slot>
 <fabric>site-z</fabric>
