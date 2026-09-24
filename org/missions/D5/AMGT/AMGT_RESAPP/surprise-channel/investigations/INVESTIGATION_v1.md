@@ -13348,6 +13348,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The file lives at __harness__/tests/uiContractFixtures.json (byte-identical) and the check's default resolves it; a face naming the old path reads the file's NAME correctly and its DIRECTORY one level short -- the issuer names the tests/ path in every spawn prompt and no face is edited mid-round. Captured production values inside API-response fixtures are DATA; the tests/ exemption is the gate's own answer to grading them.",
     "disarm_owner": "2.0.0_SA_COO~Z -- GRADUATED with the remedy EXECUTED IN-ROUND (portal 513bb3c5, merged @5c2af33d86); no route, nothing further owed.",
     "notes": "Census FILES 30 TOTAL 341 against the walk's 18/246: different denominators (the census walks harness .cjs and .ts helpers too), not a disagreement -- carried to the round-37 analysis."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S245",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-24T08:30:00Z",
+    "one_line": "Independent verification of the close condition (AMGT_CLOSE_CONDITION_20260924.md @1ccf401cfd): the 49 denominator is EXACT and contiguous, and this seat finds NO outcome missing from the four-item exception list -- checked by subtraction over all 49 rather than by recall, by the seat that does not benefit from shrinking it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DENOMINATOR VERIFIED not adopted: AMGT_RESAPP declares 30 distinct FWD ids and AMGT_CORPUS 19, enumerated from the PRDs at 031c3a3a3e. Both CONTIGUOUS 1..N, zero gaps, zero ids beyond N. 30 + 19 = 49 exact, so no outcome hides outside the counted range.",
+        "EXCEPTION-LIST COMPLETENESS tested by SUBTRACTION per Rule 24, not recall: all 49 outcome blocks scanned with a deliberately OVER-BROAD regex for external-holder language (portal deploy, promote, PROD, MSTR, Andrew, per-use word, scheduled, expires, waits on, pending, RESERVED, outside). It flagged 20 of 49; every flagged candidate was then READ.",
+        "ALL 20 RESOLVED WITHOUT ADDING AN EXCEPTION. Most were SOURCE citations naming Andrew as the outcome's ORIGIN rather than its holder. Two needed the bytes: AMGT_RESAPP FWD-29's 'outside' is 'shadows == 0 OUTSIDE the focus ring', and FWD-23's 'reserved' is a fragment of 'preserved' -- both buildable with no external holder. AMGT_CORPUS FWD-17's 'schedule' is its own clause stating it is person-started with NO notifier and NO schedule.",
+        "THE TWO EXTERNAL HOLDERS THIS SEAT KNEW OF INDEPENDENTLY were tested BY NAME rather than left to the regex. (1) The 1ec5446c portal deploy occurs EXACTLY ONCE in the RESAPP PRD, at B.5, and that occurrence explicitly classes it a CLOSER ITEM feeding the round-N enrichment list -- it holds no FWD. (2) The price fallback expiring 2026-09-29, named in R-26, occurs ZERO times in the PRD.",
+        "ARITHMETIC OF THE RULED GRAMMAR: the close requires N REALIZED plus named exceptions to SUM TO 49. With the list at four (rk-49 Lusha; AMGT_CORPUS FWD-18; AMGT_CORPUS FWD-12 figures; AMGT_RESAPP FWD-30 branch (a)), the closing analysis must print 45 + 4 = 49."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT_CLOSE_CONDITION_20260924.md @1ccf401cfd: 'EVERY ONE OF THE 49 GRADES REALIZED, OR CARRIES A NAMED, MEASURED REASON IT CANNOT', exception list at four of forty-nine, with a standing invitation that a lane reading a missing exception says so.",
+    "world_is": "The denominator is exact and the exception list is COMPLETE on this seat's independent read. Nothing is added and nothing disputed. ONE OBSERVATION, not an exception: the 2026-09-29 price-fallback expiry R-26 names is carried in NEITHER PRD, so the close condition's own text cannot see it; it constrains an INSTRUMENT rather than an outcome's DONE WHEN, which is why it is raised as an observation for the round rather than as a 50th member or a 5th exception.",
+    "notes": "WHY THIS ROW EXISTS GIVEN IT ADDS NOTHING: the authoring seat wrote that 'a stop-condition satisfiable by shrinking its own denominator is not a stop-condition, and this seat is the party that would benefit from doing so.' A denominator verified only by the party that benefits is unverified; this is the check by the seat that does not, and its value is that it came back EMPTY. SCOPE: this verifies MEMBERSHIP of the 49 and COMPLETENESS of the exception list. It grades no outcome REALIZED, shortens no round and authorises no close. ID NOTE: S244 was minted concurrently by 2.0.0_SA_COO~Z at a0ca844eeb while this row was being written; this row took S245 after re-reading the channel at HEAD rather than trusting its own earlier read."
   }
 ]
 ```
