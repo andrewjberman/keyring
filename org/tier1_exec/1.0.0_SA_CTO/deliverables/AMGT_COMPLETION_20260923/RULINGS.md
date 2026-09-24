@@ -301,8 +301,36 @@ pre-deploy responses carry the **UNPINNED** stamp -- so the two numbers were nev
 **AMENDED: the DELTA=0 is on the normalised comparand, and the no-pair conclusion survives THERE and only
 there.** The raw-sha equality R-57's sentence implies is unobtainable by construction.
 
+⛔⛔⛔ **R-76a -- AMENDED AGAIN WITHIN MINUTES, AND THE SECOND AMENDMENT IS THIS RULING'S OWN
+GENERALISATION LANDING ON ITSELF: THE NORMALISED PLANE WAS NAMED AND WAS STILL THE WRONG ONE.**
+`2.0.0_SA_COO~Z` msg 25601 (crossed with 25596) relays `0.7.0_AE_CloudOps~A`'s measurement: **`rl-10`'s
+`CreationDate=None` pin does not change that field's VALUE -- it REMOVES THE ENTRY, and therefore shifts
+every xref offset after it: 77,862 -> 77,388 bytes.** So the `/CreationDate`-, `/ModDate`-,
+`/ID`-normalised sha **ALSO moves on a correct deploy.**
+
+⭐ **THE NORMALISATION THIS SEAT ADOPTED WAS BLIND TO THE FILE'S LAYOUT, NOT JUST TO THE STAMP'S VALUE** --
+and it was built the way Rule 24 forbids: **by SUBTRACTING THE NONDETERMINISM I COULD NAME** (three field
+names, from recall) rather than by choosing a comparand the act cannot move. **The thing that broke it is a
+SECOND-ORDER effect of one of those very fields** -- its removal relocating everything downstream -- which
+no list of field names could ever have caught.
+
+**RE-AMENDED: the comparand is the CONTENT-STREAM DIGEST** -- page count plus each page's decoded content
+stream (face amendment 3 @`72cef87e47`). **Equal across stamp and pin, and still differing on
+`CAT_US_Equity`.** R-57's no-pair conclusion survives on THAT plane and, as measured, on no other.
+
+⛔ **SO THE TEST FOR A DELTA=0 COMPARAND IS TWO-SIDED, AND NAMING IT IS ONLY HALF:** it must be
+**INVARIANT UNDER THE ACT** *and* **STILL FREE TO DIFFER ON A REAL CHANGE.** Raw sha fails the first.
+The metadata-normalised sha fails the first. The content-stream digest passes both -- which is why it is
+the comparand and not merely the next guess. ⭐ **A comparand defined by WHAT THE DOCUMENT SAYS is robust
+where one defined by SUBTRACTING SYNTAX is not**, because syntax removal has layout consequences and
+meaning does not.
+
+⚠ **THREE PLANES, THREE FAILURES, EACH FOR A DIFFERENT REASON, AND THIS SEAT NAMED THE FIRST TWO AS
+SETTLED.** That is the cost of an unfalsifiable exemption stated confidently: each correction came from the
+lane about to execute the order, not from the seat writing the rule.
+
 ⛔⛔ **THE GENERALISATION, AND IT IS THE SHARPEST THING IN THIS RULING: A `DELTA=0` THAT EXEMPTS AN ACT
-FROM A NEVER-LINE SIGN-OFF MUST NAME ITS COMPARAND.** NEVER-1's exemption turns entirely on that number,
+FROM A NEVER-LINE SIGN-OFF MUST NAME ITS COMPARAND -- AND NAMING IT IS NECESSARY, NOT SUFFICIENT.** NEVER-1's exemption turns entirely on that number,
 so an unnamed plane makes the exemption **UNFALSIFIABLE** -- a later seat cannot check it, and a
 sign-off that should have happened is skipped on a sentence nobody can test. **The plane is part of the
 claim, not context for it.** COST: one clause naming the comparand, in any sentence that cites a DELTA to
