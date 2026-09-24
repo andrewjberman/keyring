@@ -1726,3 +1726,47 @@ browse per returned firm scope in the directory harness (no live headers) and re
 browse refuses and why; the HAR of the Global view (resolve firms[].state/reason + the browse calls) is
 asked of Andrew and the CRO reads it in place. Withheld columns: none server-side (P; snapshot.project
 never reads the viewer's authority); M's producer authoritative=false stands as the whole answer.
+
+
+## 2026-09-24 03:4x UTC - Claude CTO batch 22: the COT tree candidate accepted in shape; probe fix STANDS; the one run cleared
+
+### IRPT-COT-HOLDINGS-TREE-20260924 -- CANDIDATE c7f8cfdb38 SHAPE ACCEPTED (M 100120; CTO 100123)
+M's re-cut on codex/irpt-m-completion (parent e6ab5d4841; naming gate PASS 0 graded): cot_constituent_
+taxonomy() imports the registry's rule from its one home (CANONICAL_KEY / is_auto_custom /
+OPAL_SMA_LEAF_KEYS / is_opal_name) -> Models > Primary | Models > Custom | SMA, non-Opal child -> Client;
+cot_constituents() = blend children + fact_model_definition components per sleeve + the strategy's
+depth-0 components; cot_actual_security_tree() = ACCOUNT (OBSERVED) > MODEL_WRAPPER = the strategy
+(ASSIGNED, whole value) > MODEL_LEAF per Opal/SMA child (ASSIGNED = value x absolute_allocation; facts
+model_name / is_opal by name / qualifier / blend_weight) + SLEEVE Client = the plug > SECURITY at value
+x component weight with the observed position as a fact; the roster default is gone; model_target_nodes
+stays manifest-private; build_cot reads fact_model_definition (2026-09-23, 1,583 rows).
+CTO READ of COT_TREE_CANDIDATE_CENSUS_20260924.json (M worktree; status CANDIDATE_UNPUBLISHED): 0698
+41 nodes (1/1/3/1/35; Models > Primary 32, Models > Custom 5, Client 2; constituent 25,435,293.20 +
+plug 868,008.97 = 26,303,302.17; partitions_off 0): OCG 60.7% Primary / OUSTI 20% Primary / OFI 16%
+Custom / Client plug 3.3% = PHYS (observed 1,137,731.50 as a fact); d486 75 nodes (leaves 4 incl. DIVZ
+SMA 7% under SMA 34; plug 591,175.35; 0 off); combined 116 (2/2/7/2/103; 44,549,962.70 + 1,459,184.32 =
+46,009,147.02; 0 off). Shared securities appear under each constituent that defines them.
+RULED: (i) the Client plug is basis ASSIGNED (a residual assignment; the splice check is right; the
+sleeve's facts say "residual of the strategy assignment"); (ii) observed positions the definition does
+not cover (FCASH 272,112.87 on 0698) are facts on the Client sleeve this round, not nodes; the plug's
+children are the strategy's root components at value x weight; an UNRESOLVED remainder node carries any
+difference, never redistributed. Enrichment (M owner, to Andrew in plain words): a fact-only partition
+under the plug listing uncovered observed positions with custody dollars.
+GATE: M runs the 841-account build and sends the GO request with per-account reconcile (0 off / 841),
+accounts by shape (assigned with definition / without / unassigned), strategies with vs without a
+definition, shared-security count, UNRESOLVED count + total, the Anna selections re-read from the built
+bytes, the suite count (the four pre-existing currency-state failures named), and the measured write
+plan (CAS create over the current COT index XbWnSWxM / ac3adb97, prior retained). CTO GOes on that read.
+UI 67158601 (chevron + child count; single-child nodes open below; "Rebalancer strategy: <name>"; 26
+assertions, tsc clean, eslint 0) ACCEPTED for the next portal build with b0e2d9ad; P's shape-neutral
+adapter carry may land now; wording "Client (residual, not in a model)".
+
+### IRPT-RESIDENT-D1-RERUN-20260924 -- Y STANDS on 160f99b3ea + b1f269c6dd (Y 100119); the ONE run may fire
+Y read the full diff: page fetch first, APIRequestContext, replay context, port last; per-step probe
+fields; both AuthError records carry warmup / login_path / password_visible_wait / login_submission /
+probe_pair; the pair control sends the FULL jar with values (context.cookies() :647) + X-AWS-WAF-Token
++ the resident's headers and records what was sent as counts/names and what came back; pin c8155201
+confirmed; Y's own run 25/25 + offline all_pass. Observation, not a line: pageGet redirect 'manual'
+yields opaqueredirect status 0 and falls to the redirect-following path, so a later eviction's probe
+classifies the redirect target's body; the Python eviction verdict is its own instrument; a one-line
+note when P next touches the file. Next: upload at b1f269c6dd, redeploy, pins read back, ONE run.

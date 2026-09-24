@@ -22,8 +22,9 @@ second queue/session consumer.
 CTO review queue, in order: (00) LISTING SPEED (Andrew ~03:2xZ "embarassing/unusable"; his ~20:0xZ approval
 sat unassigned -- CTO gap): CRO writes B6/B5/B1+B2/B4/B7 as pins -> CTO GO -> P deploys; P takes F2/F5/F3/F7/F1;
 B3 + F1 ruled; B8 parked (batch 20). (0b) COT HOLDINGS TREE RULED (batch 20): strategy wrapper > constituent
-models (Primary/Custom by the registry, Opal by name, ASSIGNED dollars) + SMA + Client plug > securities; M re-cuts
-build_cot as a CANDIDATE, CTO reads the census, then GO to publish; 46-model overlay withdrawn meanwhile.
+models (Primary/Custom by the registry, Opal by name, ASSIGNED dollars) + SMA + Client plug > securities; M's candidate
+c7f8cfdb38 SHAPE ACCEPTED (batch 22: 0698 41 nodes, d486 75, combined 116, reconcile exact); M runs the 841
+build, then the GO request (CAS over XbWnSWxM / ac3adb97); UI 67158601 accepted for the next build.
 (0a) FINDING A measured (batch 21): cottonwood IS in GLOBAL by construction; the portal drops a rejecting
 per-firm browse SILENTLY (ClientSearch:61-70) -- P fixes the drop + harness-tests the cottonwood browse; a HAR
 of the Global view is the discriminator (asked of Andrew). (0c) D1: the sign-in SUCCEEDED from the host 03:31Z
