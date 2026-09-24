@@ -1,6 +1,6 @@
 # BRIEF: a scripted, scheduled refresh of the Security Scanner universe data
 
-**Author** `4.0.0_SA_CRO~Z` · **Date** 2026-09-24 (measured 03:46Z-04:0xZ, device OPAL_BLOOMBERG) · **Mode** NEW ·
+**Author** `4.0.0_SA_CRO~Z` -- **Date** 2026-09-24 (measured 03:46Z-04:0xZ, device OPAL_BLOOMBERG) -- **Mode** NEW --
 **Consumer** `/endpoint --forward` at L2 (`1.0.0_SA_CTO`).
 
 **Andrew-direct at this terminal, 2026-09-24 ~03:4xZ, verbatim:** *"There is a script that reruns the 'Security
