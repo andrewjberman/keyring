@@ -1,6 +1,6 @@
 # AGENT START HERE -- Opal Capital
 
-RULES AND MECHANICS ONLY. No incident reports, no dated narratives, no quotations (Andrew-direct 2026-09-24). The
+RULES AND MECHANICS ONLY. No incident reports, no dated narratives, no quotations, no current state. The
 history behind any step is in git and `docs/references/XXX_STARTUP_HISTORY.md`; do not read it at startup.
 THIS FILE AND `CLAUDE.md` ARE LOCKED: no agent edits either without Andrew's express order, named in an
 `ANDREW_DIRECT_*.md` record and passed to the commit as `ANDREW_LAW_EDIT_ORDER=<record path>`
@@ -52,7 +52,7 @@ Then read `org/{tier_folder}/{your_serial}/README.md` (identity) and `prompt.md`
 Your cwd is `C:\Users\AndrewBerman\Desktop\ajb_workspace`; every agent's files live under `org/` there. Work in the
 portal repo only addressed explicitly (`git -C portal ...`, or a scoped `cd portal && <work> && cd -`) and return. A
 CWD that lingers in `portal/` is a defect: it breaks workspace tooling and substitutes the wrong repo's git history
-into evidence with no error. Portal dev builds run on port 5174 ONLY (Andrew-direct 2026-09-24).
+into evidence with no error. Portal dev builds run on port 5174 ONLY.
 
 ## Step 1b -- MCP startup (MANDATORY, every session): A -> F in order
 
@@ -83,9 +83,8 @@ Without it the halt gate adopts the shared `.agent_context` and a `[STOP]` addre
 ```bash
 python .tools/audit-archive-invoker.py || true
 ```
-Known and OWNED findings, do not re-file: `[LIVENESS/STALE-BASELINE]` and `[COVERAGE/UNCOVERED-AUDIT-LOG]
-org/to-pos-override-audit.log`. Surface only a new class. Do NOT `mkdir org/audit/archive/<device>/` (it zeroes the
-findings by faking post-migration); the noise clears when `rv0057-f001` lands.
+Surface only a finding class that has no owner; never re-file an owned one. Do NOT `mkdir org/audit/archive/<device>/`
+(it zeroes the findings by faking post-migration).
 
 ### A.3 PATH check (comp-tool rail)
 ```bash
@@ -178,50 +177,12 @@ its row and says so.
 | Serial | Launch arming |
 |---|---|
 | `0.0.0_AB_MSTR` | `/watcher`, `/agentbus`, `/integrate` once each. Zero crons. |
-| `2.0.0_SA_COO` (base) | `/watcher` once. `/drive` v2 standing 20m over EXECUTING / ROUND_CLOSE / DECOMP projects (`org/tier0/ledger/LD-0530.md`). D2 off until Andrew lifts it. |
+| `2.0.0_SA_COO` (base) | `/watcher` once. `/drive` v2 standing 20m over EXECUTING / ROUND_CLOSE / DECOMP projects (`org/tier0/ledger/LD-0530.md`). |
 | every other serial and `~lane` | `/watcher` once. Zero crons. Event-driven. Keep the broker summary accurate: `WORKING: <task>` / `IDLE: available` / `BLOCKED: <what>` / `BLOCKED-SOVEREIGN: <decision>`. |
 | Codex seats | per `org/mcp/CODEX_INBOX_MONITOR.md`. Zero crons. |
 
-Live scoped arms and holds (record path = the authority; stop = Andrew's stand-down, or the project `status: complete`
-per the register unless stated):
-- IRPT POST-SLUG HOLD on the old `~B`/`~F` canonical progression:
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_1517ET_IRPT_HOLD_AFTER_CVO_SLUGS.md`. The P/M/Y
-  completion seats (`2.0.0_SA_COO~P` Performance + shared report/export; `~M` Model Overlay + shared data/selection;
-  `~Y` YCharts Sensitivity; matching `3.0.0_SA_CVO~P/~M/~Y`) read
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/{AUTHORITY,CONTRACT}.md` and their own
-  `COO_*.md`/`CVO_*.md` first.
-- `2.0.0_SA_COO~P` `/loop 20m` DIRECTED over IRPT Performance (49F, INF, COT):
-  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`; stop = `/verify SOUND`.
-- `2.0.0_SA_COO~M` `/loop 20m` DIRECTED over IRPT Holdings with snapshot model overlay:
-  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`; stop = `/verify SOUND`.
-- `2.0.0_SA_COO~Y` `/loop 20m` DIRECTED over IRPT Analysis:
-  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`; stop = `/verify SOUND`. Y never takes over P's shared installation.
-- `2.0.0_SA_COO~O` `/canonical-drive NFRA_OPLGTW` 30m DIRECTED (relay 97709); on DONE the freed slot goes to
-  `2.0.0_SA_COO~T` (MDPF_TAXSMA) then `2.0.0_SA_COO~M` (NFRA_MCPINDEX).
-- `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH to CLOSED:
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.
-- `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE:
-  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260828_050xZ_COOX_DRIVE_LOOP_NFRA_C3MATERIALIZE.md`.
-- `1.0.0_SA_CTO` `/self-drive` the fabric (all LAPTOP directives), the CTO adjudicating adjudicable calls on its rec:
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260912_021xZ_SELF_DRIVE_THE_FABRIC_HANDLE_OPEN_CALLS_ON_MY_REC.md`.
-  RESERVED to Andrew under every self-drive: vendor/egress off Opal infrastructure; unrecoverable acts; money and
-  contracts; every hold he set by name (the portal freeze, the LD-0522 push cadence, the shared-branch push).
-- `1.0.0_SA_CTO` `/self-drive D9 IRPT` 30m (IRPT_FNTEND + IRPT_BCKEND + DSGN_REBRND), per the CTO's own record of
-  2026-09-11 in its deliverables; ends on `status: complete` or his stand-down.
-- `1.0.0_SA_CTO` `/self-drive MDPF_TAXSMA,NFRA_OPLGTW,LGIC_NAMING,LGIC_ENFORCE,LGIC_CANON` -- PAUSED by the managed
-  wind-down, resume authority:
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_193xZ_COO_GOALS_AND_CTO_SELF_DRIVE_ADJUDICATES.md`.
-- `1.0.0_SA_CTO` fallback adjudicator for LGIC_LGCTFM's `ANDREW_CARD.md` when Andrew is unavailable (one artifact,
-  nothing wider): `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260917_23xxZ_CTO_ADJUDICATES_LGCTFM_ANDREW_CARD_IF_ANDREW_UNAVAILABLE.md`.
-- SITE-Z only: `1.0.0_SA_CTO~Z` `/self-drive AMGT_RESAPP & POSN_ASTTAX` 30m (`7,37 * * * *`); `2.0.0_SA_COO~Z`
-  `/drive` POSN_ASTTAX 10m and `2.0.0_SA_COO~ZZZ` `/drive` AMGT_RESAPP 10m, each tick an explicit `/canonical-flow`
-  stage check (DRIVE FORWARD | PARALLELIZE | NUDGE, a nudge only after the live-production probe reports nothing moving
-  across all four planes):
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_222xZ_COO_DRIVE_10M_CANONICAL_FLOW_STAGE_CHECK_AND_REBRAND.md`;
-  `3.0.0_SA_CVO~Z` SYSPARITY cron (`org/tier0/ledger/LD-0318.md`, LD-0319); `4.0.0_SA_CRO~W` harvest remediation loop
-  (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260915_HARVEST_REMEDIATION_LOOP_W.md`; the collection
-  mechanism and cadence RESERVED to Andrew).
-- Stood-down or superseded arms are not listed; their records stay in git. A row absent here arms nothing.
+Live scoped arms and holds are recorded in `org/ref/LIVE_ARMS.md`, the only source of truth; a row absent there arms
+nothing. `1.0.0_SA_CTO` lands and strikes its rows. This file carries no current state.
 
 Find a stale cron from a prior session? `CronList` -> `CronDelete`.
 
