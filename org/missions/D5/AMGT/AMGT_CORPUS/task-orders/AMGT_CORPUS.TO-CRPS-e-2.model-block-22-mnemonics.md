@@ -85,7 +85,7 @@ worker by `<paths>` for this order only. Checks dry-run at the base: AC1 FAIL (n
 AC3 PASS (the cap) -- recorded in the issuance commit.
 
 <risk>WORLD</risk>
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>

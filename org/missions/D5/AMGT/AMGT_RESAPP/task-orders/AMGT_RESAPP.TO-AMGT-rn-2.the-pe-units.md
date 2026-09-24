@@ -75,7 +75,18 @@ Report names the registry's unit for `ey`/`ey_ntm` verbatim, the before/after va
 is corrected there), the unit is the fault. Worker class `worker` (three surfaces, tests). The magnitude criterion is the class
 remedy the analysis owes (s.4).
 
-<status>pending</status>
+**ISSUER CLOSE, 2.0.0_SA_COO~Z, 2026-09-24 ~19:0xZ, carried on the worker's branch so the chain-end merge carries it.**
+Checker's match: proof-of-spec-check VALID rc=0 on the worker's instance (3 of 3 PASS-by-output); not re-run by the issuer.
+AC1: RECIPROCAL entries carrying transform+units 2 of 2. AC2, THE MAGNITUDE CRITERION: P/E values in [0.5,200] 24 of 24, null 0
+(base read 5 of 24). AC3: peers package 34 passed. The registry names NO unit: the scanner's factor registry
+(`infra/aws/lambda/opal_security_scanner_processor/factor_metadata_registry.json` @18f7a03a63, 289 factors) carries no `unit`
+field on any factor, so `units="percent"` is stated on the measured served-fixture scale under the face's own fallback clause.
+BA before/after: ey 2.88187 rendered 0.35, now 34.7. No rows. **Carried, not closed:** the live producer's unit is INFERRED from
+the captured fixture's magnitude, never declared by the source; a registry `unit` field is the source-side fix and goes to the
+next list. The render grade (the Peers tab showing P/E in plausible magnitudes) is the issuer's real run on 5174 after the
+round's last merge. Portal merged 9b246d3f -> DEV 4501c543.
+
+<status>complete</status>
 <round>39</round>
 <slot>~147</slot>
 <fabric>site-z</fabric>

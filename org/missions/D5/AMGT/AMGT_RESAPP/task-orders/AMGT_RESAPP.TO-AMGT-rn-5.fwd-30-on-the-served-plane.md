@@ -46,7 +46,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/**
 ## 4. PROOF OF SPEC (literal; timeout 600)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-rn-5"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round39/checks/rn-5.AC1.py org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~150/served/served_fixture.BA_US_Equity.json; echo "exit=$?"</invocation><expect>served carries N of N landed top-level keys; missing: none; _served provenance ... -> OK; exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-rn-5"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round39/checks/rn-5.AC1.py org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~150/served/served_fixture.BA_US_Equity.json; echo "exit=$?"</invocation><expect>landed top-level keys: N; served carries N of them; missing: none -- then _served provenance: ... -> OK -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-rn-5"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round39/checks/rn-5.AC2.sh org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~150/served/served_fixture.BA_US_Equity.json org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~150/served/BA_US_Equity.rich.md; echo "exit=$?"</invocation><expect>the harness's own three set lines (figures n/n, cites m/m, absences k/k, each equal) on the SERVED fixture and the SERVED rich body, and exportCompare --rich on the served plane: rc=0, exit=0; a mismatch is the recorded output and a FAIL row, not a repair</expect></criterion>
 </proof_of_spec>
 
@@ -57,10 +57,27 @@ Report names the routes invoked (n of N), the CodeSha256 read, the three set cou
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
+**ISSUER AMENDMENT 1 (2026-09-24 ~19:1xZ, row AMGT_RESAPP-W150-S1):** AC1's expect named words `checks/rn-5.AC1.py` never
+prints; it now quotes the script's own line shape. The criterion's substance (every landed key served, provenance complete, exit 0)
+is unchanged. Graded on this modification by GATE (viii) (the order declares `<placeholders>` at HEAD); no other limb reads a
+modified order.
+
 **ISSUER NOTES:** s.7 item 9. `<risk>SERVED</risk>` declared ABOVE the gate's LOCAL floor because the claim is about served output
 (the CTO's read, msg 25671); no judgment criterion, so the CVO's grade reads the issuer's real-run record.
 
-<status>pending</status>
+**ISSUER CLOSE, 2.0.0_SA_COO~Z, 2026-09-24 ~19:1xZ, carried on the worker's branch so the chain-end merge carries it.**
+Complete AS A MEASUREMENT, which is what the face cut it to be ("a mismatch is recorded, never repaired: this cell measures").
+proof-of-spec-check VALID rc=0 on the worker's instance. AC1: the recorded output ("landed top-level keys: 7; served carries 7 of
+them; missing: none"; provenance OK; exit 0) meets the criterion; the worker's FAIL was against my face's wording, amended @c89e9febdf
+(row W150-S1). AC2: FAIL, recorded verbatim and standing as the cell's finding -- on the SERVED plane FIGURES 162/162 with 17
+rich-only, CITES 15/15, page absences covered 4 of 5 (the CIE_DES description line absent from the served rich body); on the LANDED
+plane the same harness reads 5 of 5 and OK. Row AMGT_RESAPP-Z-S268 (BLOCKING, ARMED, disarm owner the CTO) carries it, with the
+second finding the comparison exposed: on BOTH planes the export publishes 17 figures the page does not show, 10 of them the
+IS_DIV_PER_SHR series the page REFUSES, and the harness computes extras without grading them -- so FWD-30's round-38 REALIZED grade
+rested on an instrument blind to "NOTHING in the export that is not on the page". Routes invoked 5 of 5 (200); CodeSha256
+y5bJBQsP8Q7Lfudb5nwc5wEr72IcH53uS5cz2T8bn/w=; no AWS write. Portal: exportCompare.harness.cjs gains --fixture (6d9e6744).
+
+<status>complete</status>
 <round>39</round>
 <slot>~150</slot>
 <fabric>site-z</fabric>

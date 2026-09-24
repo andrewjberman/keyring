@@ -58,7 +58,7 @@ READ-ONLY: every other `lib/research/corpus/` module, `lib/research/identity/cro
 ## 5. PROOF OF SPEC (each invocation LITERAL, under `timeout 600`; the check files are the issuer's, read-only to you)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="CRPS-e-5"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/e5_AC1.sh</invocation><expect>(?m)^\d+ passed in </expect></criterion>
+  <criterion id="AC1" cell_refs="CRPS-e-5"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/e5_AC1.sh</invocation><expect>(?m)^\d+ passed(, \d+ deselected)? in </expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-e-5"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/e5_AC2.sh</invocation><expect>(?s)folders_read (\d+) dossier_served \d+ served_as_empty_shell [1-9]\d* resolved_no_prose \d+ unresolved_with_reason \d+ sum \1\b.*never_prose_named [1-9]\d*</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-e-5"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/e5_AC3.sh</invocation><expect>(?s)folder Costco COST.*disposition served-as-empty-shell.*(dossier_uri s3://opal-data-harvest/amgt/harvest/gold/research-dossier/|reason \S)</expect></criterion>
 </proof_of_spec>
@@ -73,6 +73,8 @@ READ-ONLY: every other `lib/research/corpus/` module, `lib/research/identity/cro
 4. Report ONCE: the AC2 totals line, the shell list, the scan vintage's S3 URI, and AC3's lines.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**ISSUER AMENDMENT 1 (2026-09-24 ~19:4xZ):** AC1's expect admits pytest's `-k`-filtered summary (`N passed, M deselected in`), which the as-cut pattern could never match (row AMGT_CORPUS-Z-W3-S4, found by `0.9.0_WK_AMGT_CORPUS~3`); at the base the check still FAILS (0 passed). Graded by: GATE (viii) (the order declares `<placeholders>`); no other limb grades a modification.
 
 **ISSUER NOTES:** the enum row (Rule 24 record in decomposition v3.0 s.2). Checks dry-run at the base: AC1 FAIL (no such tests),
 AC2 FAIL (no fourth token), AC3 FAIL (Costco reads dossier-served today) -- recorded in the issuance commit.
