@@ -531,6 +531,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "CLAUDE.md s.4: a value must carry its claim -- an artifact committed as the dry run's request list must be the dry run's output; d-5's face: the read-back is written as JSON to the worker's deliverables dir.",
     "world_is": "A hard-coded output directory shared by tests and the real run makes the committed artifact whichever process wrote last; the committed batch file is a fixture. No served output and no vendor call is affected; the fire's inputs are recorded separately.",
     "notes": "Remedy (a later cell on d-5's surface, not this round's frozen decomposition): run()/write_readback take a deliverables_dir parameter defaulting to DELIVERABLES_DIR, and the tests pass tmp_path; then re-run the dry run and commit its real batch file. disarm not needed: INERT."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S16",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T11:30:00Z",
+    "one_line": "EXPOSURE after the 11:11Z fire: the induction landed 20 MEASURED identities but the served crosswalk now carries, for each of the 20 folders, BOTH the folder's original UNRESOLVED coverage record AND the appended registration record, and both claim the folder's `security-<hash>` association form -- so crosswalk.resolve() reads those 20 forms AMBIGUOUS (a collision, refused) where it read an UNRESOLVED miss before, and the re-ingest at 11:19Z resolved the SAME 33 folders as before the fire (stored 124, put_performed 1, existed 123): 0 of the 20 inducted folders ingested. FWD-19 is REALIZED on identity and NOT on re-ingest.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Re-ingest log deliverables/2.0.0_SA_COO~X/evidence/reingest_after_fire_20260924T111909Z.log: `resolved_folders 33 files_in_resolved 124 stored 124 (put_performed 1 existed 123) read_failed 0`; per fired folder 20 of 20 carry only `AMBIGUOUS: the form 'security-...' is claimed by 2 canonical identities (<folder>, <KEY>_Equity)` lines (AstraZeneca 12, Nestle 9, Total 9, Nokia 8, Orange 6, Sanofi 6, Telefonica Brazil 6, Rio Tinto 5, JD.com 4, BAT 3, Coca Cola Femsa 3, GSK 3, OMAB 3, Iberdrola 3, ICT 3, UBS 3, BNP 2, CCB 2, Intesa 2, Manila 2).",
+        "Served document at VersionId tlVd1Cqrlhk93VurXE2jThhPNToWm0wA read 11:2xZ: association forms claimed by more than one canonical identity = 20, exactly the 20 new keys, each paired with the UNRESOLVED record of the same folder (e.g. security-e42479b2b86da0c7 -> UNRESOLVED, source_row folder 'UBS', provenance universe.json names[] entry; and MEASURED UBSG_SW_Equity, registrations.json folder 'UBS'). Denominators: UNRESOLVED 60 -> 60 across the fire (the tell this seat wrote down at 11:11Z without interrogating), records 254 -> 274, MEASURED 194 -> 214.",
+        "Mechanism at HEAD b00b740d0c: crosswalk.build_crosswalk :717 appends every non-ENRICH registration as a NEW record (_record_for_registration); ENRICH attaches by security_key (:690-705) and an UNRESOLVED coverage record has security_key None, so no registration can attach to it; add_security._register_one :461-468 sets mode ENRICH only for a same-folder record found in existing_by_key, which an UNRESOLVED record never is -- all 20 printed `mode APPEND`. crosswalk.resolve :992 refuses a form claimed by more than one identity.",
+        "NOT a rollback trigger under the pair (COO half 4bbd43777c, CTO half 9a6472e58f): one new version, 194 of 194 prior keys present, MEASURED not below 194. The pair's expected outcome named MEASURED and the key superset and did not name the UNRESOLVED count or the form-claim uniqueness; that omission is this seat's."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-19 (the induction half): the 60 today-unresolved folders are inducted by a scripted producer AND re-ingested. C-ONE-IDENTITY (crosswalk.schema.json title): ONE canonical security identity per economic security; a form is claimed by one identity.",
+    "world_is": "Twenty economic securities now carry two records each in the served crosswalk (one UNRESOLVED coverage record, one MEASURED registration), their association forms are multi-claimed, form-keyed readers read AMBIGUOUS for them, and the corpus ingest cannot resolve their folders. Key-keyed readers are unaffected; no screen was measured.",
+    "notes": "DISARMS WHEN: (1) a registration whose folder matches an UNRESOLVED coverage record RESOLVES that record instead of being appended beside it (crosswalk.build_crosswalk / add_security mode selection -- 2.0.0_SA_COO~Z's surface, its own acceptance: UNRESOLVED 60 -> 40, records 274 -> 254, MEASURED 214 unchanged, multi-claimed forms 20 -> 0); AND (2) ONE re-mint of crosswalk/v1/2026-09-24.json through the unified builder under a fresh never-widen pair (no Bloomberg call: the 20 identities are in registrations.json @b7819604e0 and raw-landed); AND (3) this seat's re-ingest reads resolved_folders 53 and the production sequence runs for the 20. d-4 stays behind (3) by design. Not a REMEDIATION row (the CVO's). Reported to 2.0.0_SA_COO~Z and 1.0.0_SA_CTO~Z 11:2xZ."
   }
 ]
 ```
