@@ -1,0 +1,140 @@
+{
+ "49f": {
+  "base": {
+   "base_proof": "local body digesting to the served revision; its partition plan reproduces the served header and 174 of 174 parts byte-for-byte",
+   "business_date": "2026-09-22",
+   "index_etag": null,
+   "index_version": "QC.bs6a5w9.HeojU8ugboRzNbhM.3mfD",
+   "served_revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56"
+  },
+  "candidate_revision": "9ab377cef98f0cc16afac867a5d487ccb16666d03432e939c25a2381ed1826ed",
+  "change": "the served tree to the byte plus asset_class / sub_asset_class / asset_class_basis (SECURITY) and model_code (MODEL_LEAF); every other member of every node byte-equal to the served one",
+  "classification_census": {
+   "by_asset_class": {
+    "alternatives": 6503,
+    "equity": 77673,
+    "fixed_income": 35685,
+    "unclassified": 236
+   },
+   "by_asset_class_basis": {
+    "NONE": 236,
+    "TABLE": 119152,
+    "TICKER_SHAPE": 709
+   },
+   "classifier_rows": 9732,
+   "model_leaf_nodes": 7475,
+   "model_leaf_nodes_with_code": 7475,
+   "security_nodes": 120097
+  },
+  "firm_id": "49financial",
+  "gold": {
+   "positive_control": "the same function reproduces the served gold 53a8852536849a337b54b5f7961f6f11ac8565fc5cbd38c8f90ac8fbcf00a22d byte-for-byte",
+   "rebuilt_by": "holdings_snapshot.gold_parquet_bytes",
+   "sha256": "da6140b7bc3f71623832d283f4f9737311e6da86b9168ead1d18f4b613db0acd"
+  },
+  "measured_write_plan": {
+   "immutable_creates": 187,
+   "index_writes": 1,
+   "multipart": true,
+   "parts": 184
+  },
+  "nodes": 151697,
+  "prepared_utc": "2026-09-24T22:50:00.144562+00:00",
+  "schema_valid": true,
+  "status": "PREPARED_UNPUBLISHED"
+ },
+ "cot": {
+  "base": {
+   "business_date": "2026-09-22",
+   "index_etag": null,
+   "index_version": "mSFR0vatS4UCLaQuUla4glG0Atks2BIn",
+   "reassembled_digest_equals_served": true,
+   "served_revision": "dec293d65d25cdc52cc590c34eedd8e930fcd0bdb342d3ee04b1800dbc792f30"
+  },
+  "candidate_revision": "fc199c8ed6fb50751f187e85a876e9144f465a6bfbb3ffe7b68cbfc36a08d62e",
+  "change": "the served tree to the byte plus asset_class / sub_asset_class / asset_class_basis (SECURITY) and model_code (MODEL_LEAF); every other member of every node byte-equal to the served one",
+  "classification_census": {
+   "by_asset_class": {
+    "alternatives": 1092,
+    "cash": 137,
+    "equity": 8140,
+    "fixed_income": 4824,
+    "unclassified": 233
+   },
+   "by_asset_class_basis": {
+    "NAME_ALIAS": 782,
+    "NAME_PATTERN": 452,
+    "NONE": 233,
+    "TABLE": 12507,
+    "TICKER_SHAPE": 452
+   },
+   "classifier_rows": 9732,
+   "model_leaf_nodes": 521,
+   "model_leaf_nodes_with_code": 519,
+   "security_nodes": 14426
+  },
+  "firm_id": "cottonwood",
+  "gold": {
+   "positive_control": "the same function reproduces the served gold 3813130b69fa4540d0d9c2e1f07d6e6774af165de39e712e057cae26bb538653 byte-for-byte",
+   "rebuilt_by": "holdings_snapshot.gold_parquet_bytes",
+   "sha256": "cb981eed767557c5b4e70bd0e6294ffa83c7bacf8b33219133d9bf7822d0b0e7"
+  },
+  "measured_write_plan": {
+   "immutable_creates": 29,
+   "index_writes": 1,
+   "multipart": true,
+   "parts": 26
+  },
+  "nodes": 16749,
+  "prepared_utc": "2026-09-24T22:44:25.001971+00:00",
+  "schema_valid": true,
+  "status": "PREPARED_UNPUBLISHED"
+ },
+ "inf": {
+  "base": {
+   "base_proof": "local body digesting to the served revision; its partition plan reproduces the served header and 40 of 40 parts byte-for-byte",
+   "business_date": "2026-09-22",
+   "index_etag": null,
+   "index_version": "k9U4ucuTS1iteq0p9eUweqXs6Lk93B07",
+   "served_revision": "d32e50c692d42bc8f23f5d57f19ed81ecb21aaabfa2b95dd84214028f668a47e"
+  },
+  "candidate_revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+  "change": "the served tree to the byte plus asset_class / sub_asset_class / asset_class_basis (SECURITY) and model_code (MODEL_LEAF); every other member of every node byte-equal to the served one",
+  "classification_census": {
+   "by_asset_class": {
+    "alternatives": 1499,
+    "cash": 271,
+    "equity": 18185,
+    "fixed_income": 10795,
+    "unclassified": 131
+   },
+   "by_asset_class_basis": {
+    "NAME_ALIAS": 80,
+    "NAME_PATTERN": 741,
+    "NONE": 131,
+    "TABLE": 25976,
+    "TICKER_SHAPE": 3953
+   },
+   "classifier_rows": 9732,
+   "model_leaf_nodes": 624,
+   "model_leaf_nodes_with_code": 547,
+   "security_nodes": 30881
+  },
+  "firm_id": "inflection",
+  "gold": {
+   "positive_control": "the same function reproduces the served gold b0e1231cafa2260e4bcaa3b057a2fd873309122c746a318acb54dce70efa0f7a byte-for-byte",
+   "rebuilt_by": "holdings_snapshot.gold_parquet_bytes",
+   "sha256": "5388fefff5f00382ae3ba31545670314e21a49c5e20f29a23be31c98b89be5f3"
+  },
+  "measured_write_plan": {
+   "immutable_creates": 46,
+   "index_writes": 1,
+   "multipart": true,
+   "parts": 43
+  },
+  "nodes": 33328,
+  "prepared_utc": "2026-09-24T22:48:21.325773+00:00",
+  "schema_valid": true,
+  "status": "PREPARED_UNPUBLISHED"
+ }
+}
