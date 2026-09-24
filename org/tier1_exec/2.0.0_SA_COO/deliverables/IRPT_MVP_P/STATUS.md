@@ -55,7 +55,7 @@ reached ycharts.com once unguarded; the suite now refuses to start unguarded).
    (ii) DONE 10:53Z. (iii) server side DONE 11:21Z (the two rows above); the client flag is CUT as
    portal candidate 4 @310b83b8 (irpt-dev-candidate-4-20260924 from origin/DEV f7a4e47f; tsc 0,
    eslint 0, 0 suite failures introduced vs the base, 4 fixed; receipt PORTAL_CANDIDATE_4) and sits
-   LANDED on DEV 310b83b8 by MSTR 11:44Z (fast-forward; VALGATE PASS). (iv): see the assessment sent 11:5xZ.
+   LANDED on DEV 310b83b8 by MSTR 11:44Z. Candidate 5 @694287b9 (the corpus 17 of 17, requestId samples, five literal re-pins; 0 introduced / 5 fixed) at the CTO. (iv): the cutover inputs are satisfied except a job to consume; (i-b) measured as a design cell (the custody economic interpreter has no implementation) -- P drafts its card; the first live Analysis submission is Andrew's browser act on whichever composition lands first.
    S122 (the builder's silent exit) is REMEDIED on the trunk @bf938bcf39 (row S123).
 2. Speed levers F7 / F2: held on a HAR from opalinvest.dev (the 04:32Z HAR was a localhost dev session).
 3. Andrew's browser act (G) last.
