@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "DECOMP",
   "created": "2026-09-24",
   "registered_under_tree": "2026-09-24",
   "placement": "LAPTOP",
@@ -28,8 +28,12 @@
     "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.4",
     "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.5"
   ],
-  "decompositions": [],
-  "decomposition_lineage": [],
+  "decompositions": [
+    "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md"
+  ],
+  "decomposition_lineage": [
+    "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md@v1"
+  ],
   "leads": {
     "cto": "1.0.0_SA_CTO",
     "coo": "2.0.0_SA_COO~D",
@@ -43,7 +47,7 @@
     "authority": "CLAUDE.md Rule 27 L4-R: the CRO signs the BRIEF half (4.0.0_SA_CRO~F stated it will sign when routed, msg 100235); 3.0.0_SA_CVO signs the RATIFIED-TEXT half"
   },
   "fabric_ruling": "laptop -- D13 Design placed LAPTOP by Andrew-direct 2026-09-11 ('it will be laptop fabric'); placement attaches to the directive (LD-0498, LD-0502).",
-  "blocking": "L4 PRD v0.5 2026-09-24 ~06:0xZ (brief half: backlog ids, portal base); ratified-text SIGNED by 3.0.0_SA_CVO @2c60ba747f; brief half owed by 4.0.0_SA_CRO at v0.5; DONE WHEN lines and the hop-6 one-use plan word at Andrew; 2.0.0_SA_COO~D live, L5 drafted offline, lands on ADMITTED; L6 precondition: the COT display republish SERVED and e5dd8487 on portal DEV.",
+  "blocking": "L5 decomposition v1 landed 2026-09-24 ~06:0xZ by 2.0.0_SA_COO~D on PRD v0.4 @c4b9056831 ADMITTED (both halves SIGNED). L6 issuance is cut when the COT display republish is SERVED (model names on Anna's page, 2.0.0_SA_COO~M) AND portal DEV carries M's labels pin e5dd8487 (CTO batch 27 sequencing word + finding F3); the round-1 drain trace additionally needs the Performance path (X10 ACTIVE + P's repackage; the one-use plan on Andrew's word, not waited on).",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md",
