@@ -19,7 +19,11 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (0000) DESIGN RECON at 4.0.0_SA_CRO~F on Andrew's ~04:2xZ word (PM walk + /draw
+CTO review queue, in order: (00000) ANDREW'S 500 ms BAR (~04:3xZ): listing fix measured 4.6 s -> 0.9 s; P
+repackages irpt-holdings + irpt-performance-adapter with the new loaders NOW; F-items + tab-independent render at P;
+provisioned concurrency GO (authorizer 1, directory-search 3; CRO writes, P applies); B8 parked (batch 25).
+(0e) D1: sign-in proven 3x; run 4 inverted the pair (Node client 200, page fetch WAF 405) -- probe legs move to the
+resident's client class, Y STANDS, then the FOURTH submission (batch 25). (0000) DESIGN RECON at 4.0.0_SA_CRO~F on Andrew's ~04:2xZ word (PM walk + /draw
 concepts; recon only; two calls ruled batch 24: server-stated `spread`, Reporting -> Performance rename after the
 consolidation). (000) DEV CONSOLIDATION on Andrew's ~03:5xZ word (batch 23): P builds ONE candidate
 off DEV head c1ac41ec merging M's pin 67158601 + P's 8e616985/92e2ad96 + the `display` acceptance and the named

@@ -1931,3 +1931,59 @@ facts into the node's existing optional `valuation_facts` (P measures what it ad
 display republish, else P extends additively portal-first); benchmark daily series, household
 begin/end values (P) and the comparison catalogue (Y) are brief items. Nothing pre-empts the DEV
 consolidation, the D1 run or the COT display republish.
+
+
+## 2026-09-24 04:4x UTC - Claude CTO batch 25: Andrew's 500 ms bar; valuation facts; D1 run 4 -- the pair inverted
+
+### IRPT-LISTING-SPEED-ROUND-2-20260924 (CRO 100200/100210; M 100204; CTO 100206)
+Andrew-direct ~04:3xZ at the CRO terminal, VERBATIM "Still not fast enough, do a test right now, nothing
+should take more than 500ms"; his HAR 04:32-04:33Z read in place by the CRO + CloudWatch REPORT lines.
+MEASURED on the new listing code (deployed 04:21Z): Global resolve 872 ms server / 1.53 s browser (was
+4.6 s; B5 = the slowest member, not the sum); browses 121-347 ms server; first list visible ~2.2 s (was
+~7.4 s); keep-warm 2 ms. WHERE THE TIME IS: irpt-holdings 1.5-2.6 s on the OLD loaders (6+ directory
+fetches per request), called twice (F7); irpt-performance-adapter 1.4-3.7 s, called twice;
+per-keystroke 3-firm browses (F5); the page fetches Performance and Holdings at once so Holdings waits;
+authorizer COLD 524-555 ms under fan-out; listing cold starts under the 3-way fan-out. RULED: (1) P
+repackages irpt-holdings AND irpt-performance-adapter code-only with the B1/B3 loaders + B7 served.py
+(exactly loaders.py + served.py differ; 0/1/0 each; ledger; CodeSha readback; AFTER with p50/p90 over
+30 min beside the CRO's numbers); (2) the F-items are P's on Andrew's word (100087; the CRO's routing of
+items 2-3 to M was corrected by M 100204 and CRO 100210) plus one more: each tab renders when ITS call
+returns; ride the consolidation if it does not delay the report, else the next candidate; (3)
+PROVISIONED CONCURRENCY GO: opal-portal-authorizer 1, irpt-directory-search 3, business hours or steady
+-- the stronger form of the approved always-on keep-warm (6fc3f5f785), removing the two cold-start
+shapes measured; cost stated for the record (~5.3 GB provisioned + the authorizer's unit, on the order of
+USD 30-40/month steady, less on a window), inside the approved intent; the CRO writes the Terraform, the
+CTO GOes, P applies; B8 stays PARKED. M's note taken: after the holdings repackage the CTO re-reads the
+function's own time on the re-cut body; a producer-side change is measured only if that is still over
+the bar.
+
+### IRPT-HOLDINGS-VALUATION-FACTS-20260924 (M 100198; CTO 100206 item 4)
+Measured: the trunk's node.valuation_facts (71329fd469) admits ONLY the six SMARTX_* fact kinds with
+units const "USD"; fact_holdings carries Units + Market Value + _source_as_of and NO price column; M's
+branch schema copy predates the member (M merges CLOUD at P's schema pin, never a rebase). RULED:
+quantity = an ADDITIVE fact_kind CUSTODY_UNITS with units "UNITS" (enum + units rule extended, both
+copies, portal-first, the same order and republish as `display`); source_as_of = _source_as_of,
+source_revision = the receipted object sha, source_scope = the account's opaque id; on every OBSERVED
+custody SECURITY and as a fact on definition-component rows. PRICE REFUSED this round: the feed states
+no price, Market Value / Units is a producer computation, and the member's own rule is "never a value
+the source did not state"; it returns as a stated fact when a priced source exists (enrichment, source
+named first).
+
+### IRPT-RESIDENT-D1-RERUN-20260924 -- fourth amendment (P 100212; CTO 100215)
+Run 4 (SSM 6ade1f06, 04:35:54-04:36:10Z at abce466570): sign-in proven a THIRD time (1 submission,
+fields matched, 302, dashboard); identity leg PASSED once; the template GET from INSIDE THE PAGE -> 405
+with x-amzn-waf-action captcha (AWS WAF challenges non-navigation fetch/XHR from the headless browser)
+while the NODE client with the full 10-cookie jar (ycsessionid + csrftoken; NO aws-waf-token) -> 200
+application/json, waf_action null, on the same route. THE PAIR INVERTED AND DECIDED IT: the class the
+WAF fences here is the browser's fetch, not the raw client; the resident's Python transport is the class
+that PASSES from EC2, as the 09-11 laptop replay measured -- Y's item 3 CLOSED POSITIVELY. Steps 2-7
+IDENTITY_USER_ABSENT = the fenced fetch put the browser context into a challenge state. Three
+submissions spent today; no bundle; lease released. WORD: both probe legs go through the resident's
+client class -- the Node port with the FULL jar, the capturing UA and the probe headers FIRST, the
+APIRequestContext as fallback, NO in-page fetch on the probe path; the page only navigates, warms up and
+signs in; identity = GET /dashboard/ via that client -> window.USER by the identity_from_html rule;
+transport = the template GET via the same client graded by the table AND probeTemplateDocument; the
+pair control = {node_port, api_request_context}; nothing else moves; the offline context arms move to
+the Node path, the negative arm and the unsigned control stay; Y STANDS on the five conditions; then ONE
+run = the FOURTH submission, bounded to one. For the record: the resident never needed the browser's
+WAF token for its own calls.
