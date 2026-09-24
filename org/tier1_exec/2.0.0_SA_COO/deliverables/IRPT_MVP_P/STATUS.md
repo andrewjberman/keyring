@@ -25,9 +25,10 @@ Directory listing: p50 2308 -> 160 ms, p90 4665 -> 634 ms, p99 6093 -> 972 ms (0
 ## The Performance thread (the CRO's trace @d8abd7dc65, hop by hop)
 
 Hops 4a (X10 ACTIVE), 4b, 3, 10, 12 CLOSED at the deployed bytes (CRO 100381); 11 on DEV.
-The ONE gate left before a number renders: hop 6, the one-use plan for acc_d486fc9455d6b2aa18e13af1
-on the default window -- Andrew's per-use word. Then: install the plan, ONE calculation, retained
-report, reopen without a vendor call, export.
+Hop 6: Andrew's per-use word GIVEN 12:5xZ (card 2 @9b36d8a481); the one-use plan is ARMED 13:12Z on the
+adapter for the YTD window 2026-01-01..2026-09-24 (expires 2026-09-25T00:00Z; plan sha 106eaa0e..; receipt
+PERFORMANCE_ONE_USE_PLAN_ARMED). The calculation fires on the signed-in request (Andrew's browser, today);
+then retained report, reopen without a vendor call, export -- the CRO second-reads the served result.
 
 ## D1 -- the YCharts session: CAPTURED
 
