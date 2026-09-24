@@ -2,6 +2,13 @@
 
 Seat `2.0.0_SA_COO~M` (CLAUDE, successor to the Codex seat since 2026-09-23 ~22:47Z). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.4. Reviewer `3.0.0_SA_CVO~M` (not live).
+As of 2026-09-24T14:1xZ. The deployed holdings path FIRED at 13:36Z (6 invocations, first since 06:20Z, clean) in a signed-in session
+shape (directory-search 11 + performance 2); /verify's MECHANICAL axis moved to 'fired, envelope unread' -- Andrew's HAR read in place closes it
+(card 4). Andrew-direct card 6: both retained captures are REQUIRED inputs now (the 49F/INF builds REFUSE when the env var is unset @06be82897f);
+their receipting is the holdings migration project (CRO L1 brief). Custody interpreter card closed on Q1-Q4 with M's producer lines
+(CUSTODY_SOURCE_OF_RECORD_Q1_Q4_20260924.md: rows object never manifest.gold; ACCOUNT value = DC1 sum, independent = fact_allocations
+row read from the receipted object; 49F ties net_mv_positions; INF sums is_active=false rows). Nothing further owed by M on the build side.
+Earlier state follows.
 As of 2026-09-24T09:1xZ. CUSTODY_UNITS SERVED at 49F and INF (CTO GO 100435 executed): 49F 5a25ae76 (manifest 9Vtkh61A -> QC.bs6a5w, etag
 732fa6d0, 09:00:43Z; 177 creates + 1 IfMatch; 3d59c80b retained) and INF d32e50c6 (.vBFsThYv -> k9U4ucuT, etag 0457b99e, 09:04:06Z; 43 creates +
 1 IfMatch; d03e91a4 retained). Each is the served labelled tree to the node plus one CUSTODY_UNITS fact per observed custody row (49F 5,836 of
