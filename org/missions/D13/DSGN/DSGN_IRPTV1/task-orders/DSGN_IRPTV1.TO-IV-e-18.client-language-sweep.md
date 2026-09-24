@@ -26,12 +26,22 @@ string. Re-scope `IR/__tests__/fe-s-5/fields.test.ts` to the PRD (account ids ne
 help tip count as reached), citing CTO 100865. Build a DOM census over the three bodies at 1440 with the disclosures as the
 positive control (every moved fact found there).
 
+**Amendment (issuer, 2026-09-24; the CVO's FAST-pin grades @ddb0339061, items N1-N4, FWD-15 and FWD-7/8):** (N1)
+`IR/tabs/analysis/GenerateComposer.tsx` and the `AnalysisTab.tsx` prop that feeds it read the header's selection: with a
+client chosen, the Generate panel never says "select a client" (today `inputs.clientId === ''` prints "select a client
+above" while the header shows a client). (N2) `IR/tabs/reporting/ReturnsHeatmap.tsx` prints no "UNAVAILABLE" in a cell:
+the cell reads "not supplied" and the reason moves to the cell's hover. (N3) `IR/tabs/holdings/HoldingsSummary.tsx` prints
+the observed time in the footer's date style, never a raw ISO string. (N4) `IR/tabs/holdings/SliceTable.tsx` prints
+Supervision and Advisory in advisor words ("Opal supervised", "Advised"), never the raw tokens; the token stays on
+the row hover.
+
 **The rules:** the FE derives nothing -- every figure is a wire fact; "not supplied", never zero; ids never print; a fact moves to a disclosure, it does not vanish; colour is keyed by code or served class, never a label substring or a guess; DESIGN.md governs (C1-C12).
 
 ### ACCEPTANCE
 
 <criterion id="IVE18-AC1" cell_refs="IV-e-18"><invocation>cd <WS>/portal && export OPAL_AGENT_SERIAL=0.9.0_WK_DSGN_IRPTV1~11; timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-18.census.test.ts 2>&1 | tail -25</invocation><expect>VERDICT: BODIES-CLEAN</expect></criterion>
-`IVE18-AC1` -- over Performance, Holdings and Analysis bodies: zero state tokens, reason codes, revisions, `sel_`/`acc_` ids (printed per body with the denominator of text nodes scanned). The test prints `VERDICT: BODIES-CLEAN` only when every arm holds.
+`IVE18-AC1` -- over Performance, Holdings and Analysis bodies: zero state tokens, reason codes, revisions, `sel_`/`acc_` ids, `UNAVAILABLE`, raw ISO timestamps, the raw cohort tokens
+(`opal-supervised`, `opal-unsupervised`, `advised`, `residual`) and, with a client selected, the text "select a client" (printed per body with the denominator of text nodes scanned). The test prints `VERDICT: BODIES-CLEAN` only when every arm holds.
 
 <criterion id="IVE18-AC2" cell_refs="IV-e-18"><invocation>cd <WS>/portal && export OPAL_AGENT_SERIAL=0.9.0_WK_DSGN_IRPTV1~11; timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-18.retained.test.ts 2>&1 | tail -25</invocation><expect>VERDICT: FACTS-RETAINED</expect></criterion>
 `IVE18-AC2` -- every fact the census removed is found in a disclosure (help tip, popover, row hover) -- printed fact by fact. The test prints `VERDICT: FACTS-RETAINED` only when every arm holds.
@@ -59,6 +69,10 @@ positive control (every moved fact found there).
 portal/src/pages/InvestorReporting/tabs/reporting/
 portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx
 portal/src/pages/InvestorReporting/global/FirmAttribution.tsx
+portal/src/pages/InvestorReporting/tabs/analysis/GenerateComposer.tsx
+portal/src/pages/InvestorReporting/tabs/analysis/AnalysisTab.tsx
+portal/src/pages/InvestorReporting/tabs/holdings/HoldingsSummary.tsx
+portal/src/pages/InvestorReporting/tabs/holdings/SliceTable.tsx
 portal/src/pages/InvestorReporting/__tests__/fe-s-5/fields.test.ts
 portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/
 org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md

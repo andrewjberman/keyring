@@ -21,7 +21,9 @@
 `IV-e-13` -- PRD v0.6 candidate C19 remainder (brief F4). DEV 9bb4c5da stops the drill pie at the model level and
 721170ca lays the models dialog out full width.
 
-**(a)** `IR/tabs/holdings/AllocationBars.tsx`: bars stop at the model level (no security-level bar). **(b)**
+**(a)** `IR/tabs/holdings/AllocationBars.tsx`: bars stop at the model level (no security-level bar), and each model's bar
+wears its Model Portfolios colour by the served `modelCode` through the library IV-e-11 fixes (amendment, issuer
+2026-09-24, the CVO's item N5 @ddb0339061: FWD-12 "every chart"; a bar with no code is Unclassified grey, never one navy). **(b)**
 `IR/tabs/holdings/HoldingsTreemap.tsx`: the Securities map carries the drill -- choosing a model narrows the map to that
 model's securities, with a way back -- and its hover is the Positioning hover card pattern
 (`pages/Positioning/tabs/HoldingsTab.tsx` `HoldingsTreemapTooltip`, READ ONLY -- copy the pattern onto
@@ -34,7 +36,8 @@ a "+N more" disclosure).
 ### ACCEPTANCE
 
 <criterion id="IVE13-AC1" cell_refs="IV-e-13"><invocation>cd <WS>/portal && export OPAL_AGENT_SERIAL=0.9.0_WK_DSGN_IRPTV1~8; timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-13.bars-stop.test.ts 2>&1 | tail -25</invocation><expect>VERDICT: BARS-STOP-OK</expect></criterion>
-`IVE13-AC1` -- with a Models > model > securities fixture, AllocationBars renders one bar per model and no security-level bar. The test prints `VERDICT: BARS-STOP-OK` only when every arm holds.
+`IVE13-AC1` -- with a Models > model > securities fixture, AllocationBars renders one bar per model and no security-level bar, and each model bar's fill equals the library colour
+for its served modelCode (a planted misleading label keeps the code's colour). The test prints `VERDICT: BARS-STOP-OK` only when every arm holds.
 
 <criterion id="IVE13-AC2" cell_refs="IV-e-13"><invocation>cd <WS>/portal && export OPAL_AGENT_SERIAL=0.9.0_WK_DSGN_IRPTV1~8; timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-13.map-drill.test.ts 2>&1 | tail -25</invocation><expect>VERDICT: MAP-DRILL-OK</expect></criterion>
 `IVE13-AC2` -- the map's drill narrows to one model's securities and back (pure derivation exported and asserted); the hover card renders ticker, name, value, weight and asset class through DataTooltip. The test prints `VERDICT: MAP-DRILL-OK` only when every arm holds.
