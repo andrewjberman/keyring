@@ -41,6 +41,26 @@ The two are different tables and the second is nearly empty, so the table can ho
 name and still grade it 0 of 5. That is the grade being HONEST, not wrong -- but a consumer ranking on
 `mention_score` without reading `publishers_covered` would be ranking over ungraded water.
 
+⛔ **AND THE READER WAS THEN EXERCISED AGAINST THE SNAPSHOT, WHICH IS THE QUESTION THE BUILD DOES NOT
+ANSWER: 2b DOES NOT UNBLOCK THE GOLD FLIP.** Dry run, `write_fn=None`, zero writes, `source=gold` over
+the live 09-24 table: **`RESOLVED 0 of 191 security windows`**, both products `state=FAILED`,
+`reason_code=INCOMPLETE_GOLD_INPUT`. The hold keys on `complete` being True for EVERY identity, and
+`complete` is False whenever any day is not `COMPLETE` -- so the same five-publisher ceiling that
+empties the success bucket also holds the flip. ⭐ **THE NUMBER DID NOT MOVE BUT ITS COMPOSITION DID:
+before 2b, 185 of 191 identities had NO rows at all and 6 were DENIED; now all 191 have dense rows and
+all are DENIED. Same `0 of 191`, one remaining cause instead of two** -- and that cause is publisher
+collection, nothing else.
+⭐ **THE SCHEMA CHANGE IS SAFE, measured on the same run rather than reasoned:** the adapter reads the
+new table with **0 malformed** on every identity tested, `store_item_count=267` (the dense per-security
+count), and real scores in the window -- `BA_US_Equity` 12 nonzero days of 30, `992_HK_Equity` 3,
+`HAL_US_Equity` 0. The two added columns cost the reader nothing.
+
+**`chatter_event` WAS REBUILT FOR LINEAGE, because writing a new newest mention snapshot silently
+re-pointed its input.** `date=2026-09-24/part-20260924T134754Z.parquet`: **12 events across 7
+securities**, from 5 across 3. Additive and checked before writing: **0 events present in the old
+snapshot and absent from the rebuild**, 7 new ones (992_HK 4, DELL 1, MSFT 1, NVDA 1). Consumer census
+first: `chatter_event` has **1 DEF and no code reader** -- the timeline spec describes a future one.
+
 **THE UNIVERSE -> `securities` STEP IS NOW CODE, NOT A HAND-WRITTEN FILE.**
 `lib/research/harvest/universe_securities.py` (new) reads the pool universe object and emits the list
 the `publication_gold` builders take. It resolves NOTHING: `security_key` is read straight off the
@@ -92,10 +112,13 @@ the chatter water was stale because `chatter_daily` held six names, and it now h
 
 ## Parked (one line each, owner, un-park condition)
 
-- **Scheduled producer for the gold chatter tables** -- `1.0.0_SA_CTO~Z` to route; un-parks when a
-  schedule exists or the table is ruled QA-only. ⚠ R-55 @`7dda0c24ab` sharpens this from a preference
-  to a NAMED DEFECT: ad-hoc gold runs are QA-only while production pipelines must be scheduled, so an
-  unscheduled production table is off-law, and the owner it needs is **not Andrew**.
+- **Scheduled producer for the gold chatter tables** -- ⛔ **ANSWERED AND CLOSED by R-69 @`e43fb730de`:
+  NOT OWED YET, and not as a deferral.** The rule binds a PRODUCTION table; nothing serves from
+  `chatter_daily` (the deployed producer reads `legacy`), so the three hand runs ARE QA runs and are
+  legal exactly as run. Arming a cadence now would be WORSE than waiting -- it would bake a daily
+  artifact nobody reads around a grade column that cannot move. **The schedule becomes owed AT THE
+  CUTOVER ACT** (the flip off `legacy`) and lands with it under one ledger entry, deploy leg to the AE
+  lane. ⭐ Expressly NOT a Rule 27 wait: the cutover is a deliberate act a named seat takes on demand.
 - **`listing_hit` collection for the four silent publishers** (`barrons`, `bbg`, `ft`, `sa`) -- this is
   the ONLY thing standing between this table and a non-empty success bucket. ⭐ **R-55 MEASURED WHAT THIS
   LINE ASSUMED, and the answer came back the other way from what the check expected:** the constraint is
@@ -104,7 +127,18 @@ the chatter water was stale because `chatter_daily` held six names, and it now h
   ZERO hits across the rulings file. Neither granted nor withheld, just unaddressed. The wider reading
   of "all the egress you want for vendors" is REFUSED as a silent widening (a word is relayed, never
   adjudicated wider). So this is now a **third reserved card at Andrew**, carried by `1.0.0_SA_CTO~Z`;
-  un-parks on his answer to the card, not on an inference from R-21.
+  un-parks on his answer to the card, not on an inference from R-21. ⭐ **R-69 @`e43fb730de` PUT THE
+  CARD TO HIM this tick**, framed narrowly as COLLECTION ACCESS for the four named publishers, and
+  named the real failure: *an unasked reserved card is indistinguishable from one asked and refused,
+  and it reads as compliance while the work does not happen.* The reservation itself passes the
+  citation test ("availability is not authorization") and nothing in R-69 lifts it. **This is now the
+  ONLY thing that can move the grade column, and it is Andrew's.**
+- **`AMGT_HARVST-Z-S20`** -- Z-S19 traced to origin: the misspelling is a ONEDRIVE FOLDER NAME the
+  pipeline faithfully carries, and the correct issuer name (`HALLIBURTON CO`, cik 45012) is ALREADY in
+  the same record as PROSE inside `resolution_reason` -- for **13 of 250** entries, none of them in a
+  structured field (`filing_identity` holds only source/cik/form_expected). It also fixes the second
+  disclosed residual (`ASML_NA_Equity` -> `ASML HOLDING NV`). Handed to `2.0.0_SA_COO~Z`, the lane
+  holding AMGT_RESAPP under which `build_universe.py` was built; un-parks on that lane's word.
 - **`AMGT_HARVST-Z-S19`** (universe misspells "Haliburton") -- routed to the `universe/v1` producer's
   owner; INERT (HAL has 0 mention rows today), un-parks if that name is ever ranked.
 - **`lib/research/price/**` explicit-state migration** rides in `6e9868b903` for coherence --

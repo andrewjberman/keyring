@@ -1034,6 +1034,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "The pool universe object is the AMGT universe's identity carrier, and its `name` column is the only company-name text any downstream consumer has -- the object carries no alias, company or display-name column beside it.",
     "world_is": "At least one of the 250 names is misspelled in that column. A word-bounded matcher built on it fails SILENTLY for that name: it returns zero mentions, which reads identically to a name that genuinely had no coverage. No gate fires, no count looks wrong, and the only detector available today is disagreement with a hand-written file that will not exist for the other 185 names.",
     "notes": "NOT REMEDIATED HERE and deliberately so: the universe object is written by the identity crosswalk producer, not by this lane, and hand-patching one name in a derived consumer would hide the defect rather than fix it (a field written to a derived artifact survives only until something regenerates it). ROUTED as an observation to whoever owns universe/v1 generation. WHAT THIS LANE DID INSTEAD: stated the two curated-vs-derived misses in lib/research/harvest/tests/test_universe_securities.py as asserted facts in the shape the universe actually carries, so a later correction to either shows up as a test change rather than as silent drift. THE KEEPABLE FORM: a name-matching pipeline's recall is bounded by the spelling of its name column, and nothing downstream of it can tell a misspelled name from a quiet one -- the only cheap detector is a second, independently authored list to disagree with, and that detector disappears the moment the curated list stops being maintained."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S20",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-24T14:05:00Z",
+    "one_line": "Z-S19 traced to its origin, and the finding is sharper than the row it follows: the misspelling is a ONEDRIVE FOLDER NAME the pipeline faithfully carries, AND the CORRECT company name is ALREADY IN THE SAME RECORD -- as prose inside `resolution_reason`, for 13 of 250 entries. Nobody reads it. The remedy is a structured field in build_universe.py, not a rename and not a hand-patch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORIGIN, traced not guessed: the landed coverage universe org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~4/universe.json (89 names) carries folder 'Haliburton HAL', whose own evidence string names the OneDrive path ...\\Asset Management\\Research\\Haliburton HAL\\. So the misspelling is a human-named research folder; build_universe.py (UNIVERSE_PREFIX at :449) carries the folder through as `name` and is behaving correctly",
+        "THE CORRECT NAME IS IN THE SAME RECORD: the pool entry for HAL_US_Equity carries resolution_reason naming \"'HALLIBURTON CO'\" with cik 45012 from the SEC ticker-to-CIK table -- spelled correctly, beside the misspelled `name`",
+        "AND IT IS PROSE, NOT A FIELD, which is the whole reason it is unread: filing_identity is STRUCTURED but holds only {source, cik, form_expected} -- no issuer name. Measured over the object: 13 of 250 entries carry a cik, and an issuer name is recoverable from the prose for 13 of those 13",
+        "IT FIXES BOTH DISCLOSED ALIAS RESIDUALS, not just this one: ASML_NA_Equity carries name 'ASML NA' (a ticker-shaped alias, the second residual named in test_universe_securities.py) and prose issuer 'ASML HOLDING NV'. BA reads 'Boeing BA' / 'BOEING CO' and COST 'Costco COST' / 'COSTCO WHOLESALE CORP /NEW', so the prose arm agrees with the derivation where the derivation was already right -- the 13 are a cross-check, not just a patch",
+        "BOUND, disclosed rather than omitted: this reaches 13 of 250 entries. For the other 237 the folder name remains the only company-name source in the record, so this narrows the exposure and does not close it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S19 said the universe's `name` column is the only company-name text any downstream consumer has, and routed the remedy upstream to whoever writes universe/v1.",
+    "world_is": "The routing was right and the premise was too narrow. A second, independently sourced company name is already present in the same record for the 13 entries that resolved to EDGAR -- it was simply never promoted out of a prose sentence into a field. The remedy is therefore local, cheap and owned by build_universe.py's lane, rather than requiring anyone to rename a folder on OneDrive.",
+    "notes": "THIS IS R-25a's CLASS ON A NEW OBJECT: the attribution was not absent, it was UNREAD -- and the tell was the same one, a seat going to check whether the field it was about to propose already existed. HANDED OFF to 2.0.0_SA_COO~Z as the lane holding AMGT_RESAPP, under which build_universe.py was built (TO-AMGT-rj-4 / rk-4), with 1.0.0_SA_CTO~Z copied. NOT REMEDIATED HERE: lib/research/identity/ is not this lane's write surface, and a consumer-side patch would hide a producer-side fix that serves every other consumer too. THE KEEPABLE FORM: before routing a data defect upstream, read the WHOLE record it sits in -- a field that is wrong is often sitting next to the same fact stated correctly for a different purpose, and the routing note is the last moment anyone looks."
   }
 ]
 ```
