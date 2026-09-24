@@ -66,7 +66,7 @@ the evidence table. Scratch `.scratch/e1/`. Your deliverables dir: `org/missions
 ## 5. PROOF OF SPEC (each invocation LITERAL, under `timeout 600`; the check files are the issuer's, read-only to you)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="CRPS-e-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/e1_AC1.sh</invocation><expect>(?m)^\d+ passed in </expect></criterion>
+  <criterion id="AC1" cell_refs="CRPS-e-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/e1_AC1.sh</invocation><expect>(?m)^\d+ passed(, \d+ deselected)? in </expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-e-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/e1_AC2.sh</invocation><expect>population (\d+) evidenced 40 ambiguous 0 disagreement 0 other \d+ called 40 registered \d+ already_registered \d+ refused \d+ errors \d+ bloomberg_calls 0 batch_calls 1 pool_puts 0 sum \1\b</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-e-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/e1_AC3.sh</invocation><expect>(?s)REFUSED: --fire requires OPAL_INDUCTION_FIRE=1.*bloomberg_calls 0\b</expect></criterion>
 </proof_of_spec>
@@ -88,6 +88,8 @@ the evidence table. Scratch `.scratch/e1/`. Your deliverables dir: `org/missions
 now call the US lines the universe already MEASURES (BZLFY, UNVGY), QXO associates, SLB registers (35 register, 5 associate; totals
 40 unchanged, so AC2's expect is unchanged). Graded by: GATE (viii) (the order declares `<placeholders>`); no other limb grades a
 modification.
+
+**ISSUER AMENDMENT 2 (2026-09-24 ~19:4xZ):** AC1's expect admits pytest's `-k`-filtered summary (`N passed, M deselected in`), which the as-cut pattern could never match (row AMGT_CORPUS-Z-W3-S4, found by `0.9.0_WK_AMGT_CORPUS~3`); at the base the check still FAILS (0 passed). Graded by: GATE (viii) (the order declares `<placeholders>`); no other limb grades a modification.
 
 **ISSUER NOTES:** the FIRE is the issuer's drain act under a fresh never-widen pair (decomposition v3.0 s.5 duty 2): `OPAL_INDUCTION_FIRE=1
 python -m lib.research.corpus.induction_run --fire --as-of <today> --evidence <table>` once, read-back recorded; the 5 association rows
