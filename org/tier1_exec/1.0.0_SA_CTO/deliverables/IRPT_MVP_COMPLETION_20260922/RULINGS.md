@@ -3275,3 +3275,43 @@ says is not published (:1934-1936). CORRECTED: the interpreter reads the indepen
 (source_objects[0], by version, sha256 verified), row ordinals as independent_source_rows -- the same object M named, one step more direct;
 no publication change asked. The substance of batch 50 (the DC1 value is a sum; fact_allocations "Account Market Value" is the independent
 source) stands.
+
+
+## 2026-09-24 13:4x UTC - Claude CTO batch 59: the custody INTERPRETER is BUILT by Y @47b2adf6df and accepted (oracle 15/15, the reader round-trip against P's modules, one real run admitting Anna's 55 positions within a cent); three exact-file integration rows granted to P at that pin; the composition is gated on a ledgered FIRM-bucket plan and the decoder question is build-ladder rung 2; M confirmed the zero-lot rule is a NEW interpreter rule, not a producer rule
+
+Instruments: Y's 100646 and the design @2aa5e22955; the CTO's own reads of the pin (git cat-file -t = commit; diff-tree --name-only = exactly
+intake/custody_interpreter.py, intake/tests/test_custody_interpreter.py, intake/tests/test_custody_interpreter_reader.py; the module 23,236 B
+with build_custody_ports, CUSTODY_FIRM_NOT_ADMITTED and the lazy pyarrow import present); M's 100644 (its own Q4 clause corrected on its record:
+the control row lives in the build's INTERNAL manifest, :1933-1934 / :2277 / land() :2351, never the served one, publication.py:269-288; the
+zero lot stays an active row in the producer, counted under unsupported_rows at :409 and kept in the DC1 sum at 0). Messages 100649-100651
+(the CTO to Y, P, the CRO); the grant commit 9c325ece24 and this batch.
+
+### IRPT-CUSTODY-INTERPRETER-BUILT-ACCEPTED-20260924 (Y 100646)
+build_custody_ports(get_object, *, read_rows=None, opaque=None) -> (interpret_source, validate_evidence), the two callables the accepted-custody
+reader takes; COT only in v1 (49F / INF refuse CUSTODY_FIRM_NOT_ADMITTED until measured); reads fact_holdings and fact_allocations for the
+receipt's business_date from manifest.source_objects BY VERSION, refuses unless sha256 and byte_length match, admits by the no-position rule
+and the zero-lot rule, returns the four-key evidence in the shapes custody_binding.validate_payload accepts (three receipts, six revision keys,
+the exclusions as a sha256 in economic_policy's revision); validate_evidence is pure over receipts, rule revisions and _validated. Measured by
+Y: the oracle 15 passed on a structural twin of Anna's capture (synthetic values only; refusals fire with code and count; a byte flip refuses
+on the receipt; six tampers rejected); arm (e) 1 passed with P's reader modules loaded beside Y's (create / seal / read identical; both objects
+fetched by version on each side); one local run over the real receipted objects admitted 55 rows = 55 positions, COMPLETE, reconciled within
+0.01 against both equal totals rows, validated, frozen, identical on re-read, copies deleted; regression unchanged but one pre-existing
+fixture-root failure. Nothing widens _validated. ACCEPTED as built. GRANTED: three exact-file rows to lane IRPT_Y_ACCESS_INTEGRATION_P at pin
+47b2adf6df (the batch-13 / batch-30 shape; Y semantic writer retained; no deploy grant). FOR P'S COMPOSITION, all behind the ledger: (1) the
+parquet decoder is BUILD-LADDER RUNG 2 -- pyarrow is not in irpt-common (its BUILD_MANIFEST names none), but M's holdings build already decodes
+these objects in some runtime; P names that layer or image and reuses it by ARN; a new pyarrow layer is refused unless that read is empty with
+its denominator, and then read_rows's alternative decoder is weighed by size and cold start with the CTO's word; (2) GetObject WITH VersionId --
+the plan grants s3:GetObjectVersion + GetObject on opal-data-assets blackdiamond/cottonwood/silver/{fact_holdings,fact_allocations}/* and the
+bucket's KMS, the cross-firm gate's enumeration read first, 49F / INF not granted until admitted; (3) IRPT_FIRM_REGISTRY in the hosting
+runtime; (4) every refusal code maps to a public class in build_entry's vocabulary -- the economic class by name (with count where Y carries
+one), the receipt/shape class to ONE public "custody source unavailable" code with the internal code in the record only; P proposes the
+spelling on card v2; (5) the ledger names the roots touched and a rollback per grant; safe-apply; no console; (6) the first live custody
+submission stays Andrew's browser act. Y proceeds to the next batch-28 item.
+
+### IRPT-ZERO-LOT-IS-A-NEW-INTERPRETER-RULE-M-CONFIRMS-20260924 (M 100644)
+M verified both of Y's producer readings by line and corrected its own 100588 Q4 clause on its record (the "manifest" in :2099 is the build's
+internal evidence, written locally by land(); the served revision manifest is body + gold + source_objects only). M also states what batch 58
+implied but did not say plainly: in the PRODUCER a zero lot is NOT excluded -- it stays an active row, counted under unsupported_rows (:409)
+and kept in the DC1 sum at 0 -- so the zero-lot rule is a NEW rule of the interpreter (accepted in batch 58 as interpreter semantics with
+_validated unchanged), analogous to and not an instance of the producer's no-position exclusion. Batch 58's phrase "the producer's own ruled
+no-position exclusion one step further" is read as that analogy, not as a claim the producer already does it. Nothing served moves.
