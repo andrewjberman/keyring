@@ -1,0 +1,9 @@
+HEAD crosswalk/v1/2026-09-22.json bytes 203327 LastModified 2026-09-22T17:21:29+00:00 ETag "6c668127ff4ef0a87b689937e1685cde"
+HEAD crosswalk/v1/2026-09-24.json bytes 523207 LastModified 2026-09-24T08:22:33+00:00 ETag "2c0ff894a1b0a3ac4dd20ca45811b76c"
+GET crosswalk/v1/2026-09-24.json bytes 523207 sha256 9bd953b9c06f7382
+records 254 states {'?': 254}
+top-level keys ['schema_version', 'as_of', 'coverage_source', 'registrations_source', 'coverage_vintage', 'key_conventions', 'denominators', 'records', 'identity_universe']
+RECEIPT (03:32:47Z publication): 523207 bytes, document-sha256 9bd953b9..., MEASURED 194 -- compare above
+SERVED ASML_US_Equity status 200 identity MEASURED security_key ASML_US_Equity basis absent members 0 peer_read SERVED crosswalk None
+SERVED CAT_US_Equity status 200 identity MEASURED security_key CAT_US_Equity basis derived members 12 peer_read SERVED crosswalk None
+SERVED AAPL_US_Equity status 200 identity MEASURED security_key AAPL_US_Equity basis derived members 10 peer_read SERVED crosswalk None
