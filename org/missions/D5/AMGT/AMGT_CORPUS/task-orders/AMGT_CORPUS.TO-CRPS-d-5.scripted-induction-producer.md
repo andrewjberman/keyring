@@ -45,17 +45,23 @@ collision (rc 4) and prints `bloomberg_calls N` on every path; the client seam i
 **RULED -- what you build, new module `lib/research/corpus/induction_run.py`:**
 - `rows_for_run(root)`: the induction request rebuilt FRESH (`induction_request.measure_population` +
   `build_request` over the backlog the universe carries UNRESOLVED) -- never a stored `induction_request.json`.
-- `run(rows, as_of, call, stdout)` where `call(argv) -> rc` defaults to `add_security.main`: for every row in state
-  `EVIDENCED`, ONE call `["--folder", <folder>, "--bloomberg", "<root> <cc>", "--as-of", as_of, "--write-pool"]` (AMENDMENT 2: the report-evidenced ticker root and exchange code from the request row, which agree with the folder token by amendment 1; NEVER `--folder` alone), its rc and printed lines captured;
+- `run(rows, as_of, call, stdout)` where `call(argv) -> rc` defaults to `add_security.main`: every row whose EFFECTIVE state is
+  `EVIDENCED` becomes ONE request `{"folder": <folder>, "bloomberg": "<root> <cc>"}` (AMENDMENT 2: the report-evidenced ticker root and
+  exchange code from the request row, which agree with the folder token by amendment 1; NEVER a folder alone) in the request's sorted
+  order, written as a JSON list to `induction_batch_<as_of>.json` in your deliverables dir; then EXACTLY ONE call
+  `["--batch", <that file's path>, "--as-of", as_of, "--write-pool"]` when the list is non-empty and NO call when it is empty
+  (AMENDMENT 3), its rc and printed lines captured;
   every row NOT evidenced (`AMBIGUOUS`, `NO_EVIDENCE`, any other state) is printed with its reason and NEVER called.
   Per-row read-back `{folder, state, called, rc, outcome: registered|already-registered|refused|unresolved|error,
   security_key|reason, bloomberg_calls}` (the outcome parsed from `add_security`'s own printed lines); totals FIRST and
   LAST: `population P evidenced E ambiguous A other O called C registered R already_registered K refused F errors X
   bloomberg_calls B sum P` where E + A + O = P and C = E. The read-back is written as JSON to your deliverables dir
   (`induction_run_<as_of>_<mode>.json`).
-- **`--dry-run`:** the whole loop with an INJECTED fake `call` that records argv, makes no call and returns a scripted rc
-  per folder (registered for the first evidenced row, already-registered for the second, refused for one, so every
-  outcome branch is exercised); `bloomberg_calls 0` by construction. Under the test poison, `add_security._load_blp_client`,
+- **`--dry-run`:** the whole loop with an INJECTED fake `call` that records argv, makes no call, READS the batch file the
+  argv names and prints one block per request in file order with a scripted outcome (registered for the first request,
+  already-registered for the second, refused for the third, so every outcome branch is exercised), each block ending in
+  its own `bloomberg_calls 0` line, then `BATCH: requested N landed L bloomberg_calls 0 pool_puts 0` and returns the max rc
+  (AMENDMENT 3); `bloomberg_calls 0` by construction. Under the test poison, `add_security._load_blp_client`,
   boto3 client construction, `subprocess.run` and sockets all RAISE, and the test proves each poison bites.
 - **`--fire`:** REFUSED unless BOTH `OPAL_INDUCTION_FIRE=1` is set in the environment AND `--as-of` names today (UTC), and
   refused inside pytest (`PYTEST_CURRENT_TEST` set). The refusal prints `REFUSED: --fire requires OPAL_INDUCTION_FIRE=1
@@ -75,7 +81,8 @@ collision (rc 4) and prints `bloomberg_calls N` on every path; the client seam i
   rule). An EVIDENCED row whose report ticker ROOT differs from the folder's ticker token is state `DISAGREEMENT`, NEVER
   called, printed with `folder_token X report_token Y no third source` as its reason, and carried in the read-back like any
   refused row. The totals line becomes `population P evidenced E ambiguous A disagreement D other O called C registered R
-  already_registered K refused F errors X bloomberg_calls B sum P` where E + A + D + O = P and C = E. A folder whose tokens
+  already_registered K refused F errors X bloomberg_calls B sum P` where E + A + D + O = P and C = E (AMENDMENT 3 inserts
+  `batch_calls Q pool_puts U` between `bloomberg_calls B` and `sum P`; see below). A folder whose tokens
   AGREE is unchanged. This is the mechanism form of the ruling: it refuses every future transposition, not one name.
 
 - **ISSUER AMENDMENT 2 (2026-09-24 ~08:1xZ) -- THE CALL CARRIES `--bloomberg`, MEASURED AT THE FIRE:** the issuer's fire at 08:02Z
@@ -89,6 +96,29 @@ collision (rc 4) and prints `bloomberg_calls N` on every path; the client seam i
   The read-back gains `bloomberg_arg` per called row. `--dry-run`'s fake `call` must ASSERT that every argv carries both
   `--folder` and a parseable `--bloomberg`, and a test proves a `--folder`-only argv is refused by the producer itself
   (never reaching `call`). AC2's totals line and expect are unchanged (bloomberg_calls 0 in a dry run by construction).
+
+- **ISSUER AMENDMENT 3 (2026-09-24 ~10:4xZ) -- ONE `--batch` CALL PER RUN, ONE POOL PUT (CTO R-38 / R-49 precondition 3):**
+  the per-name call shape put the served crosswalk key ONCE PER NAME (twenty puts in eighteen seconds at the 08:02Z fire, every
+  reader a partial object in between). The drained `add_security` (CLOUD @a125f8be8b) now takes `--batch <file>` -- a JSON list
+  of `{"folder": ..., "bloomberg": ...}` requests, each making its ONE `reference_data` call and landing its raw + registration
+  row, the pool document built and put ONCE at the end -- and prints, per request in order, the SAME per-name lines as before
+  (`already-registered:` / `REFUSED:` / `MEASURED:` / `UNRESOLVED:`, each block closed by exactly one `bloomberg_calls N` line),
+  then at most one `OK: uploaded ... pool_puts=1` line and exactly one `BATCH: requested N landed L bloomberg_calls C pool_puts P`
+  line; it returns the max per-request rc. So `run()` makes EXACTLY ONE call per run: it collects every effectively-EVIDENCED row
+  (sorted order) into the request list, writes the list to `induction_batch_<as_of>.json` in your deliverables dir, calls
+  `call(["--batch", <path>, "--as-of", as_of, "--write-pool"])` once when the list is non-empty (NO call when empty), and
+  parses the captured lines: the per-request blocks are split on the `bloomberg_calls N` line and assigned to the requests IN
+  ORDER (a block count that differs from the request count is an `error` outcome on every unassigned request, never a guess);
+  each block yields the row's `outcome` and `security_key|reason` exactly as before, and its own `bloomberg_calls`; the BATCH
+  line yields `pool_puts` (absent BATCH line: `pool_puts 0` and `errors` += 1). The read-back gains a top-level `batch` object
+  `{file, requests, argv, rc, landed, pool_puts, bloomberg_calls}` and per-row `rc` becomes null (the rc is the batch's). The
+  totals line becomes `population P evidenced E ambiguous A disagreement D other O called C registered R already_registered K
+  refused F errors X bloomberg_calls B batch_calls Q pool_puts U sum P` where E + A + D + O = P, C = E (rows placed in the
+  batch), Q is 1 when a call was made else 0, U is the BATCH line's pool_puts. The dry-run fake `call` ASSERTS its argv carries
+  `--batch` and neither `--folder` nor `--bloomberg`, reads the named file, and asserts every request carries BOTH a folder and a
+  parseable bloomberg; a test proves a run with zero effectively-evidenced rows makes NO call (`batch_calls 0`), a test proves the
+  block-to-request assignment on a 3-request fake output, and a test proves a block-count mismatch is counted as errors. AC2's
+  expect gains `batch_calls 1 pool_puts 0`. `add_security.py` stays READ-ONLY.
 
 **What this cell does NOT do:** no edit under `lib/research/identity/` (another lane's surface; imported, never
 changed); no Bloomberg call; no S3 write; no ingest re-run (the issuer runs the existing `ingest` after the fire).
@@ -122,7 +152,7 @@ org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-d-5.scripted-in
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CRPS-d-5"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/research/corpus/tests/test_induction_run.py -q --color=no -p no:cacheprovider 2>&1 | tail -3</invocation><expect>(?m)^\d+ passed in </expect></criterion>
-  <criterion id="AC2" cell_refs="CRPS-d-5"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.research.corpus.induction_run --dry-run --as-of 2026-09-24 2>&1 | tail -3</invocation><expect>population ([1-9]\d*) evidenced \d+ ambiguous [1-9]\d* disagreement [1-9]\d* other \d+ called \d+ registered \d+ already_registered \d+ refused \d+ errors \d+ bloomberg_calls 0 sum \1\b</expect></criterion>
+  <criterion id="AC2" cell_refs="CRPS-d-5"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.research.corpus.induction_run --dry-run --as-of 2026-09-24 2>&1 | tail -3</invocation><expect>population ([1-9]\d*) evidenced \d+ ambiguous [1-9]\d* disagreement [1-9]\d* other \d+ called \d+ registered \d+ already_registered \d+ refused \d+ errors \d+ bloomberg_calls 0 batch_calls 1 pool_puts 0 sum \1\b</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-d-5"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.research.corpus.induction_run --fire --as-of 2026-09-24 2>&1 | tail -3</invocation><expect>(?s)REFUSED: --fire requires OPAL_INDUCTION_FIRE=1.*bloomberg_calls 0\b</expect></criterion>
 </proof_of_spec>
 
@@ -149,13 +179,20 @@ line; AC2's expect gains `disagreement [1-9]\d*`; the order is re-opened to `pen
 path, not the report evidence). Amendment 2 fixes the call shape; the order re-opens to `pending` for the same worker. The
 issuer's fire read-back is at deliverables/2.0.0_SA_COO~X/induction_run_2026-09-24_fire_attempt1.json.
 
+**ISSUER REOPEN 3 2026-09-24 ~10:4xZ (2.0.0_SA_COO~X):** the per-name call shape is the served-output incident's mechanism (row
+AMGT_CORPUS-Z-S13: one put per name); CTO R-38/R-49 precondition 3 is ONE put per run, built by 2.0.0_SA_COO~Z as `--batch` and
+drained onto CLOUD @8c75f4f90d. R-49's count-first check, run by the issuer on the collision check's own in-memory object (194 keys,
+positive controls ASML/AAPL present): 0 of the 20 evidenced keys collide, so the ENRICH fork is moot and no change lands on
+`add_security`. Amendment 3 moves the induction to ONE `--batch` call; the order re-opens to `pending` for the same worker, whose
+worktree is fast-forwarded onto CLOUD by the issuer so the build sees the drained module.
+
 **ISSUER NOTES:** the FIRE is the issuer's drain act (decomposition s.5 duty 1, s.9 hold): after this cell drains VALID,
 ONE exchange with `2.0.0_SA_COO~Z` on the pinned candidate (`add_security` is its surface), READ_HERE s.2 sign-in state
 checked, then `OPAL_INDUCTION_FIRE=1 python -m lib.research.corpus.induction_run --fire --as-of <today>` once, the
 read-back recorded in this lane's deliverables, then the existing `ingest` re-run. A worker face carries the vendor ban;
 Andrew's word authorizes a scripted producer; the seat holding both the word and the terminal runs it.
 
-<status>complete</status>
+<status>pending</status>
 <round>2</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
