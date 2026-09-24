@@ -31,6 +31,7 @@ directory an engagement's artifacts live in.
 | **RCN-0012** | 2026-09-22 | **Claude for Financial Services** -- Anthropic's open-source FSI plugin marketplace + the LLY pack Yang built with it, and how its channels thread into AMGT_RESAPP | 2 briefs + 1 evidence folder (endpoint discovery card + JSON) | repo @574ed36 (19 entries, 5 `.mcp.json`, 3 SKILL.md); LLY pack 58 files (README/SOURCES in full, 3 xlsx, 2 docx); 12 of 12 MCP servers probed unauthenticated; 9 public doc pages; CTO~W card 1 | `4.0.0_SA_CRO~F` | **DELIVERED as CTO intake -- PROPOSAL ONLY, nothing dispatched.** Plugin = files not access (12 OAuth-gated vendor servers); LLY pack built from PUBLIC sources; core `.mcp.json` malformed at that vintage; 4 open calls at Andrew |
 | **RCN-0014** | 2026-09-23 | **`opal_ai`** -- the Opal Analyst as a microproduct: one agent + one indexed MCP in three slices (Opal -> Template -> Clients), tying Opal Analyst, D6 GraphQL, NFRA_OPLGTW, NFRA_MCPINDEX, the vendor-access paths and The Walk into one repo | 1 L1 brief (`docs/briefs/opal-ai-microproduct-repo-brief-20260923.md`) | repo reads only @`1b1244cecf`: 3 PRDs + 2 briefs + the 09-22 assessment; gateway code layout; the BG seat's prompt/refs/fence; 3 vendor designs-of-record + 2 standards; RCN-0001/0002 tooling; comp-which + its harness; RCN-0012 | `4.0.0_SA_CRO~X` | **DELIVERED as CTO intake -- nothing dispatched.** 12 outcomes, candidate thread = one Teams question answered through the MCP; 8 calls at Andrew (one repo vs the 09-22 `opal_analyst` naming; slice-first layout; the monitor conflict in the Third-Party Standard) |
 | **RCN-0015** | 2026-09-23 | **The GitOps split of `opal_ai` from `ajb_workspace`** -- portal-shaped (contained, separate, tooled), and what the portal's current wiring does and does not give a nested repo | 1 L1 brief (`docs/briefs/opal-ai-gitops-split-brief-20260923.md`) | local git + repo reads @`bd282e03e9`: `.gitmodules`, gitlinks, portal hooks/CI/branches, the owned-paths hook, safe-commit/safe-merge, wk-provision, both EC2 deploy scripts + manifest, the gateway's parent reaches, the launcher and parent `.claude` | `4.0.0_SA_CRO~X` | **DELIVERED as CTO intake -- nothing dispatched.** The portal is a nested clone + gitlink, not a submodule; its commits skip every parent git gate; installing the lane hook there without a lane file would block every commit (fail-closed by default -- CORRECTED from "fails open", msg 25107); both deploy guards read the parent; 24 work items, 8 calls |
+| **RCN-0017** | 2026-09-24 | **The canonical flow and the closer flow** -- where canonical still spends its time, how heavy the task orders are, which model the workers should run, a FAST closer mode, `/closer-drive`, and a mode lease to switch between them (Andrew's "report 2"; RCN-0016 is `4.0.0_SA_CRO~B`'s report 3) | 1 brief (`deliverables/REPORT2_CANONICAL_AND_CLOSER_FLOWS_SPEED_MODE_AND_SWITCH_20260924.md`) + Andrew-direct record | 12 h window 02:40Z-14:40Z: 29 task orders / 4 issuances / 2 projects (DSGN_IRPTV1 r1-2, AMGT_RESAPP r37-38) on all refs; 68 worker commits (trailers); 602 workspace + 90 portal commits by seat; `org/mcp/broker.db` read-only (714 msgs); seat logs and surprise rows at the bytes | `4.0.0_SA_CRO~A` | **DELIVERED as CTO intake -- proposals only, nothing dispatched.** Canonical is slow in execution, not hand-offs; orders median ~220 product lines inside an 11.8 KB wrapper, 31% hit a check defect mid-round; workers already run Sonnet 5 high; nine changes C1-C9 and six calls at Andrew |
 
 ---
 
@@ -928,3 +929,21 @@ short of the mode branch; corrected on `1.0.0_SA_CTO~Z`'s ruling, msg 25107, and
 parent's git, so a nested source would pass the clean-tree check over uncommitted edits and record the wrong commit.
 The brief recommends a real submodule and names 24 items that make it "tooled" as well. **Status: DELIVERED as CTO
 intake. Nothing created, moved or dispatched. Local reads only -- no GitHub read, nothing deployed.**
+
+## RCN-0017 -- Report 2: the canonical flow and the closer flow, a FAST mode, `/closer-drive`, and the switch
+
+**Date:** 2026-09-24. **Produced under:** `4.0.0_SA_CRO~A`, laptop. **Commissioned:** Andrew-direct at this terminal
+~14:3xZ; verbatim record `deliverables/ANDREW_DIRECT_20260924_143xZ_REPORT2_CANONICAL_AND_CLOSER_FLOWS_AND_THE_SWITCH.md`.
+**Package:** `deliverables/REPORT2_CANONICAL_AND_CLOSER_FLOWS_SPEED_MODE_AND_SWITCH_20260924.md`, for `1.0.0_SA_CTO`.
+Companion to report 1 (`deliverables/BRIEF_CANONICAL_FLOW_SPEED_CLOSER_FLOW_SKILLS_PARITY_20260923.md`) and to
+`4.0.0_SA_CRO~B`'s RCN-0016 (report 3, process debt), which it cites instead of re-measuring.
+
+**Finding in one line:** canonical is slow in execution, not in hand-offs (the slug-to-next-cut takes about 30 minutes).
+The rounds' 3-6 hours go to a fabric-wide usage stall, chains queued on shared files, check defects in 9 of 29 orders,
+and merge lag. The orders are light-to-moderate: median about 220 product lines inside an 11.8 KB order that is a
+quarter build instruction. Workers already run Sonnet 5 at high effort (68 of 68 commits), and the spine's "Opus" line
+is stale. One screenshot of the real page caught what every fixture check passed. The canonical and closer seats edited
+the same 5 files of one page in the same 12 hours. Proposal: one driver per project chosen by a timed MODE LEASE,
+FAST (`/closer-drive`, Andrew present) or FULL (`/canonical-drive`, the fail-closed default), plus seven smaller cuts.
+**Status: DELIVERED as CTO intake -- proposals only; nothing dispatched, no skill, spine or hook edited; six calls at
+Andrew. Repo, git and read-only broker reads only; no AWS, no vendor.**
