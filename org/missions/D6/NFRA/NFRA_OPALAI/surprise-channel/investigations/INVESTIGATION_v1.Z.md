@@ -191,6 +191,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "PRD C10: the asker is established server-side from the message the gateway read itself, and a prompt-injected agent cannot borrow a wider person's reach.",
     "world_is": "The gateway reads a sender server-side, but the AGENT picks which message. Nothing binds that message to the conversation being answered (no recency window, no match to the chat the reply is sent to, no account of the other members of a group chat), so the asker-scoping holds only for an honest agent. Bounded today by W2-S1 (data reach is the calling identity's catalog reach either way); what the hole defeats is the NO-PROFILE refusal and the 'query'-operation gate.",
     "notes": "Disarm options for the issuer, cheapest first: (1) OA-t-6 deploys with opal_asker_query NOT in the concierge identity's allowlist until fixed (INERT while undeployed for that identity); (2) bind the cited message: reject one older than a short window, and require the reply tool to send only into the SAME chat_id the query cited; (3) for group chats, scope to the intersection over every human member, not the sender alone. (2) is the minimum that restores C10 for 1:1 chats. Filed by the PRD owner; the contract is unchanged, and this is the round-1 analysis's input either way."
+  },
+  {
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-24T23:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_OPALAI-Z-S6",
+    "one_line": "DISARMS NFRA_OPALAI-Z-S5 (owner this seat): opal_asker_query deploys DARK for the concierge identity -- app/identity_scope.py's concierge allowlist does not name it (Z-S3), so no call from the Teams agent reaches the cited-message resolution; G-SCOPE (Andrew's widening) is not asked until the recency + reply-to-same-chat binding lands as round 2's repair cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_OPALAI-Z-S3 (merged @7b37d9bd8d): the concierge allowlist omits opal_asker_query; its docstring requires Andrew's ruling to widen, and no cell of round 1 widens it.",
+        "1.0.0_SA_CTO~O msg 25807: 'Your cut stands, per your msg 25803: the tool deploys dark, and the recency plus same-chat binding is the round-2 repair cell.'",
+        "EC2_MANIFEST.json at this row: opal-gateway deployed_commit 1764e54a16 carries no asker_scope.py; OA-t-6 has not deployed."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-S5 is ARMED with this seat as disarm_owner.",
+    "world_is": "The bypass needs an identity that can dispatch the tool; the only runtime identity cannot, by the allowlist, until a ruling this seat will not request before the binding exists. Disarmed, not remediated.",
+    "notes": "The close run's G-SCOPE ask is conditioned on the repair cell landing first. No gate is built here."
   }
 ]
 ```
