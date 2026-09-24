@@ -20,14 +20,14 @@ performs bounded ready integration batches while advancing Reporting. No broad b
 second queue/session consumer.
 
 CTO review queue, in order: (1) the Anna NOT_READY fence remedy (RULINGS batch 12: ROOT CAUSE = the
-DenyForeignFirmPrincipals bucket policy denies irpt-holdings-role on all three firm buckets; CRO adds
-the three exemptions.json rows, P plans shared-infra 0/3/0, CTO reviews + signs, P applies, CTO
+DenyForeignFirmPrincipals bucket policy denies irpt-holdings-role on all three firm buckets; CRO's
+three exemptions.json rows LANDED @8b4c15c6ba, P plans shared-infra 0/3/0, CTO reviews + signs, P applies, CTO
 re-simulates, Andrew retests) and P's code-only sink repackage (GO given); (1b) P's resident cutover
 plan 04c77cbe (decoded-plan review, then GO); (2) P's Performance apply
 receipt and the authority/host-tag apply receipt; (3) P's NOT_READY vocabulary addendum
-2cdbe2bd60 (ratified text); (4) M's 49F 1d0b700b / INF 882375a7 / COT-overlay candidates are
-ACCEPTED as source candidates with three bounded findings (RULINGS batch 3); publication waits on
-those fixes and Andrew's 49F/INF currency attestations; (5) P's resident factory / package / cutover receipt,
+2cdbe2bd60 (ratified text); (4) M's 49F 7c0e7ce3 (160 writes) and INF 1ebc7696 (35 writes) publications have CTO GOs
+(batch 13); receipts + library-under-user reader matrices due; the function reads them only after the
+fence apply; (5) P's resident factory / package / cutover receipt,
 then the host state-flip plan; (6) X10 enforcement matrix acceptance (CTO owner, M registry
 writer); (7) M c354c33a92 Tax runner/Silver candidate (after the Holdings thread reaches the
 screen; no Tax runtime GO yet). Parked: naming RAISE on "smartx/platform/silver/" (registry

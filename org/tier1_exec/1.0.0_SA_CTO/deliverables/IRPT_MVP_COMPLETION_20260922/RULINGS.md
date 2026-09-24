@@ -1157,3 +1157,63 @@ Plan 04c77cbe (1 add / 1 change: runner-resident policy + aws_ec2_instance_state
 is in the CTO review queue behind the fence remedy; the X10 ACTIVE review (P 6d3a9215d7) follows it.
 Sequencing question answered now so P is not idle: ONE apply (grants + start) is accepted in
 principle; the GO itself follows the decoded-plan review.
+
+
+## 2026-09-24 01:4x UTC - Claude CTO batch 13: fence rows landed, 49F + INF publication GOs, ORIGINAL_HOLDINGS accepted, one Y test row
+
+### FENCE REMEDY STEP 1 DONE (CRO 99926): exemptions.json @8b4c15c6ba on local CLOUD
+irpt-holdings-role admitted by exact ARN on opal-data-49financial (17 rows), opal-data-inflection (4)
+and opal-data-cottonwood (4); 18 lines added, 0 removed; validator OK at registry@b16e50739ce0ae05.
+CTO read the file in the shared tree and accepted. Step 2 (P: shared-infra plan from a tree containing
+8b4c15c6ba, expected 0 add / 3 change / 0 destroy, ledger before the act, decoded diff to CTO + CRO) is
+in flight (99931). Halves: CTO + 4.0.0_SA_CRO (free, 99926); 2.0.0_SA_COO~M only in the CRO's stead.
+CRO's found-not-fixed: modules/opal_name/generated_locals.tf lags scopes.json (stale header mark);
+the registry owner's item, untouched here.
+
+### IRPT-49F-HOLDINGS-PUBLICATION-GO-20260924 and IRPT-INF-HOLDINGS-PUBLICATION-GO-20260924 (M 99900)
+CTO verification on the prepared bytes in C:/Users/AndrewBerman/Desktop/ajb_irpt_m/.runtime/
+holdings-journey-20260923 (own instruments, 01:3x-01:4xZ):
+- 49F 7c0e7ce3: platinum 160,561,988 bytes, sha256 == revision; gold sha256 2abf2f8e == summary;
+  7,522 accounts / 151,697 nodes; clocks custody 2026-09-22 / overlay 2026-09-23 / business 2026-09-22;
+  currency ATTESTED -> ANDREW_49F_INF_USD_20260924.md @69e36619ae; publication._platinum_plan over the
+  bytes -> header 284,874 B + 156 parts (max 1,048,515 B) => 159 creates + 1 index = 160 writes.
+  Receipts 8 (schwab/08335338 x2 date=2026-09-22, smartx/platform x4 date=2026-09-23, opal-data-bd
+  directory 2026-09-17 + latest), each version_id + sha256.
+- INF 1ebc7696: platinum 31,180,092 bytes, sha256 == revision; gold 2623f60f == summary; 876 accounts /
+  33,328 nodes; same clocks; ATTESTED; _platinum_plan -> header 36,857 B + 31 parts => 34 + 1 = 35.
+  Receipts 8 (opal-data-inf accounts_v2 + positions_mv 2026-09-23, eclipse 2026-09-23 x4, directory x2).
+- Targets EMPTY (user/Andrew_Berman, 01:3xZ): index head-object 404 on both buckets; 0 keys under
+  irpt/49financial/ and irpt/inflection/; positive control cottonwood index 200 (522 B).
+- Cross-firm: 49F reads opal-data-assets + opal-data-bd only; INF reads opal-data-inf only.
+- Finding (not blocking): each prepared directory also holds the superseded revision (49F 99481820,
+  INF 0751e62d); the publish call names the GO'd bytes explicitly and the receipt states path + sha256.
+GO A: exactly 160 writes (159 immutable creates under
+opal-data-49financial/irpt/49financial/{gold,platinum}/holdings/date=2026-09-22/7c0e7ce3..., then ONE
+index create IfNoneMatch *). GO B: exactly 35 writes under opal-data-inflection/irpt/inflection/...,
+same shape. Publisher = HoldingsPublication.publish(body, gold, expected=begin(), validate=...,
+source_objects=<8 receipts>) as d940022b06; a refusal stops before the index. AFTER EACH: versions +
+hashes read back before the index, the index at its exact version, reader matrix stated as
+LIBRARY-UNDER-USER plus the one arm naming the role's expected explicitDeny (simulate WITH the bucket
+policy) until the fence rows apply. No claim that the function reads either publication before then.
+
+### IRPT-ORIGINAL-HOLDINGS-FAMILY-ACCEPTED-20260924 (M 99924, Y 99916/99929)
+Registry row ORIGINAL_HOLDINGS {tier state, table original_holdings, extension csv, unreferenced 30,
+ceiling 2555} appended to irpt-private-reporting @58ee5b36dd (M worktree, LOCAL; two files: the row and
+M's own family census test 587e782bc6 -> 11 state families). ACCEPTED as committed. The two departures
+from the CTO's text are the validator's, printed at HEAD: distinct tables (:1712-1713) so not
+prospect_inputs; one extension from {csv,json,pdf} (:1715) so not csv|xlsx. Y measured the retained key
+suffix as cosmetic to the template readback (parse keyed by the retained file_type), so widening the
+admitted set to xlsx is an ENRICHMENT item after the first trace, not a gate. policy_sha256 of
+irpt-x10-v1 moves cb9c4e6e... -> 7a7ed8f6...; P re-pins the X10 matrix on this acceptance (39
+destinations); the route-plane grant for the upload function is derived from the registry
+(irpt/<firm>/state/original_holdings/*), never typed. Y's hop-1 dependency row closes to "grant
+pending at P".
+
+### IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923, one more row (Y 99923)
+ops/tests/test_prospect_dates.py joins IRPT_Y_ACCESS_INTEGRATION_P as an exact row at Y pin 7fec957269
+(manifest extension 3), for the same reason as the two ycharts test rows: P's tree runs the affected
+three-arm case; semantic writer stays Y; packages exclude tests. P re-copies ops/prospect_dates.py
+(existing row) at the same pin.
+
+### Cutover plan 04c77cbe (P 99911, Y 99916): queued behind the fence apply; ONE apply accepted in
+principle; Y reviewed the family sets as correct for the resident path. GO follows the decoded-plan read.
