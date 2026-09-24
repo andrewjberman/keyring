@@ -8,6 +8,14 @@
 **Measured:** 2026-09-24 14:50-15:40Z on branch CLOUD (workspace) and DEV (portal). Re-runnable scripts:
 `org/tier1_exec/4.0.0_SA_CRO/scripts/process_census/`. This is a PROPOSAL: the fixes belong to their owners, and
 the law-locked items need Andrew's order.
+**Amended 2026-09-24 ~15:4xZ by `4.0.0_SA_CRO~A` on Andrew's word** ("Yes agreed to both, recs approved. Make the edits
+as needed to both your report and report3"). Record:
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_154xZ_REPORT3_REFINEMENTS_APPROVED_BOTH_REPORTS_TO_CTO.md`.
+- **Two refinements are approved:** one real run of each outcome at close, and a portal change landing on DEV only
+  counts as `LOCAL`.
+- **Where they land:** Cut 1, Wave 2, Wave 3 and section 4's overlap note. Each amended passage is marked
+  `[AMENDED 09-24]`; the rest of the text is `4.0.0_SA_CRO~B`'s as committed at `2d1bf5528a`.
+- **Status:** sent to `1.0.0_SA_CTO` for immediate implementation, on his word.
 
 ---
 
@@ -220,9 +228,16 @@ Rewrite it to about 15 lines: the three evidence rules, scoped to ad-hoc request
 
 ### Cut (ruthlessly)
 
-1. **Serial re-measurement of mechanical criteria.** For a criterion with a literal invocation and expectation, the
-   checker's match is the verdict. Cut the CVO's L9 re-read and the CTO's L10 exercised read for mechanical criteria,
-   except where the work changes served output or the world.
+1. **Serial re-measurement of mechanical criteria.** `[AMENDED 09-24, Andrew-approved]` For a criterion with a literal
+   invocation and expectation, the checker's match is the verdict.
+   - **Cut:** the CVO's L9 re-read, and every other seat-to-seat re-read of the same check.
+   - **Keep ONE real run of each outcome at close:** a live page or the real entry point, done by the COO at the merge.
+     It replaces the CTO's L10 exercised read for `LOCAL` and `SERVED` work. The CTO's exercised read stays only for
+     `WORLD` work (Wave 2).
+   - **Why the one run stays:** on 09-24 every mechanical check on DSGN_IRPTV1's new Holdings map passed on static
+     markup, and the first real render showed solid black tiles and a raw CUSIP printed as a security name. Row
+     `DSGN_IRPTV1-S6` records it; report 2 (RCN-0017) section 0 item 4 measures it. Of all the checks, only the look
+     at the real thing found it.
 2. **The incident -> memory -> rule pipeline.** It feeds 929 feedback memories and a 24.5 KB auto-loaded index of
    incidents. Keep only stable preferences in the index (under 6 KB) and move lessons out of auto-load. Stop writing
    incident narrative into commit subjects.
@@ -266,6 +281,12 @@ Rewrite it to about 15 lines: the three evidence rules, scoped to ad-hoc request
 
 Two items overlap. Wave 3's direct-act path below is the canonical-side counterpart of report 2's FAST mode; they
 should land as one rule with one size floor. The CTO decides which document carries it.
+`[AMENDED 09-24]` Andrew approved report 2's recs (~15:3xZ) and the joint model (~15:4xZ). The single rule:
+- presence (report 2's FAST lease or FULL) decides pace and reviewer;
+- `<risk>` plus the size floor decides checking;
+- every outcome gets one real run at close by the COO.
+
+Report 2's section 12 states it in full. The CTO carries it in the spine's Closer subsection and in Wave 2's field.
 
 **Step 0 (Andrew).** Choose which items to authorize. Items 1.4 and 1.5 touch law-locked or law-cited files and need
 his express order.
@@ -284,15 +305,18 @@ his express order.
 
 **Wave 2: the risk class, the systematic replacement for Rule 22 (one week).**
 
-- Add `<risk>` to every task order: `LOCAL` (code, tests or records; nothing served moves), `SERVED` (changes what a
-  person or pipeline reads) or `WORLD` (deploy, delete, grant, key, claim to Andrew). The to-pipeline gate refuses an
-  order without it and infers a floor from `<paths>` (infra paths or a deploy verb means WORLD).
+- Add `<risk>` to every task order `[AMENDED 09-24, Andrew-approved]`. The to-pipeline gate refuses an order without
+  it and infers a floor from `<paths>` (infra paths or a deploy verb means WORLD). The three values:
+  - `LOCAL`: code, tests or records, including **a portal change that lands on DEV only**; nothing served moves.
+  - `SERVED`: changes what a person or pipeline reads in production, meaning **a PROD promotion or a served data path**.
+  - `WORLD`: deploy, delete, grant, key, or a claim to Andrew.
 - The class mechanically decides which limbs engage:
-  - **LOCAL:** worker proof plus the checker's match is done. No CVO grade, no CTO exercised read, rows
-    OBSERVATION-only.
-  - **SERVED:** adds the CVO's grade of judgment criteria.
+  - **LOCAL:** the worker's proof plus the checker's match, plus **the COO's one real run of the outcome at close**
+    (Cut 1). No CVO grade, no CTO exercised read, rows OBSERVATION-only.
+  - **SERVED:** adds the CVO's grade of judgment criteria, **graded on the real run's artifact, never on static
+    markup.**
   - **WORLD:** adds the CTO's exercised read and the change-management entry.
-  - `COMPLETION_GRADES` skips LOCAL cells.
+  - `COMPLETION_GRADES` skips LOCAL cells; the COO's real-run record is their close.
 - Rule 22's table becomes the data behind `<risk>`, and the rule shrinks to a pointer. Agents no longer have to read
   it or reason about it; the gate assigns the checking.
 
@@ -300,6 +324,11 @@ his express order.
 
 - **Direct-act path:** one cell, a declared small size (for example under ~300 lines) and risk LOCAL means no L2,
   L4-R or L8-L10. The COO writes one order with `<direct_act>true</direct_act>`, a worker executes, and the order drains.
+  `[AMENDED 09-24]` Two consequences of the approved refinements:
+  - **A portal change landing on DEV only is LOCAL,** so it qualifies when it is under the floor. Report 2's 12-hour
+    sample had 19 of 24 orders under ~300 lines.
+  - **The direct-act path and report 2's FAST mode (approved 09-24) are ONE rule.** Presence (a FAST lease, or FULL)
+    decides pace and reviewer; risk and size decide checking. A FAST lease never lowers a class.
 - **Rulings:** the issuer rules inside its own decomposition (amend, re-point, grant paths). The CTO rules only on
   ENDPOINT changes and SERVED/WORLD work.
 - **Broker:**

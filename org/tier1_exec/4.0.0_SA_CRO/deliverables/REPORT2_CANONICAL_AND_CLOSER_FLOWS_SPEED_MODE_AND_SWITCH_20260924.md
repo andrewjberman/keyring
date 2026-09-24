@@ -7,6 +7,15 @@ to land, with six calls reserved to Andrew (section 9).
 **Commissioned by:** Andrew-direct at this terminal ~10:3x AM ET, verbatim record
 `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_143xZ_REPORT2_CANONICAL_AND_CLOSER_FLOWS_AND_THE_SWITCH.md`.
 
+**Status (2026-09-24 ~11:4x AM ET): APPROVED and sent to `1.0.0_SA_CTO` for immediate implementation.**
+- All seven `/open-calls` recs were approved at ~11:3x AM ET, with a GO for C1-C9. Record:
+  `ANDREW_DIRECT_20260924_153xZ_REPORT2_ALL_SEVEN_RECS_APPROVED.md`.
+- Two joint refinements with report 3 were approved at ~11:4x AM ET. Record:
+  `ANDREW_DIRECT_20260924_154xZ_REPORT3_REFINEMENTS_APPROVED_BOTH_REPORTS_TO_CTO.md`.
+
+Both records are in this folder. Section 12 carries the joint model. C6 and section 9 are amended to match, marked
+`[AMENDED 09-24]`.
+
 **How this fits with the other two reports.**
 - **Report 1** is yesterday's brief, `BRIEF_CANONICAL_FLOW_SPEED_CLOSER_FLOW_SKILLS_PARITY_20260923.md` (same folder).
   Its three canonical changes are now law (spine v3.16-v3.18):
@@ -96,7 +105,7 @@ classification or an estimate), and is labelled.
 | C3 | **What FAST relaxes and what it never relaxes**, written once in the spine's Closer subsection | the fast mode | `1.0.0_SA_CTO` | one paragraph plus calls 2, 3 and 6 |
 | C4 | **Checks are dry-run at the base before the cut**, and written as files, not inline one-liners | 31% mid-round defects | `2.0.0_SA_COO` (`/dispatch` Step 2; task-order protocol) | text |
 | C5 | **Worker rules live in `worker.md`, not in every order** | about 2.5-3 KB (up to a quarter) of every AMGT order is the same worker rules | `1.0.0_SA_CTO` | text |
-| C6 | **One real-screen check per round (canonical) and per candidate (closer)**, replacing fixture-only judgment checks on UI outcomes | the defect that passed | `2.0.0_SA_COO` (`/dispatch` Step 5); `/closer` | text; `/frontend-dev` exists |
+| C6 | **One real run of each outcome at close** -- a live page or the real entry point -- done by the COO at the merge (canonical), and one per candidate (closer). It replaces every seat-to-seat re-read of the same check and fixture-only judgment checks on UI outcomes. `[AMENDED 09-24: Andrew-approved, joint with report 3; section 12]` | the defect that passed | `2.0.0_SA_COO` (`/dispatch` Step 5); `/closer` | text; `/frontend-dev` exists |
 | C7 | **Two worker tiers**, plus a spine line that names no model | cost and speed of small cells | `1.0.0_SA_CTO` (spine, agent type); `2.0.0_SA_COO` (the trial) | one agent file, one spine line |
 | C8 | **Drain per chain in one commit; no blocking "instrument first" wave** | up to ~75-minute merge lag; an hour of wave 0 | `2.0.0_SA_COO` (`/dispatch`) | text |
 | C9 | **A PRD header that fails its schema fails LOUD at commit** | a silent 7-minute, one-version loss | `1.0.0_SA_CTO` | one hook limb |
@@ -278,7 +287,7 @@ Product lines changed per order: added plus deleted, test, harness, fixture and 
 |---|---|---|---|
 | checks as inline one-liners | 23-43% of the order; 31% break mid-round | **each mechanical check is a small test or script file the issuer writes and dry-runs at the base before the cut**; the face names the file and its expected line (C4) | the dominant defect class moves before the spawn |
 | worker rules in every order | 2.5-3 KB per AMGT order | **move them into `worker.md`**; the face keeps cell-specific lines only (C5) | up to a quarter of an AMGT order, and of every worker's context |
-| fixture-only judgment checks on UI outcomes | 12 of 12 DSGN orders carry one, graded on static markup or a stub page | **one real render of the running page, looked at, once per round at the merge** (`/frontend-dev`) (C6) | it catches what S6 caught |
+| fixture-only judgment checks on UI outcomes | 12 of 12 DSGN orders carry one, graded on static markup or a stub page | **one real run of each outcome at close, by the COO at the merge**: the running page looked at (`/frontend-dev`), or the real entry point (C6) `[AMENDED 09-24]` | it catches what S6 caught |
 | merge then close as two commits | 2 COO commits per order | **one commit per merged order, merged per chain end** (C8) | fewer record commits; less lag |
 | "instrument first" as a blocking wave | 59 min of wave 0, 0 product lines | **checkers are the COO's merge tooling, or ride the one repair cell, never a wave the product waits on** (C8) | an hour per round that needs one |
 | shared-file "touch" bounds | 2 CTO rulings, 11 touch exceptions; "one-line mount" checks | **one driver per surface** (C1) | the rulings stop being needed |
@@ -521,6 +530,10 @@ seat. No standing gate beyond the arm-time overlap refusal.
 
 ## 9. Calls for Andrew
 
+`[AMENDED 09-24]` **All approved at ~11:3x AM ET: "All of these recs are approved."** They were put to him as seven
+cards: the six below, plus a GO for the CTO to build C1-C9. Each REC now binds at the scope it was written. Record:
+`ANDREW_DIRECT_20260924_153xZ_REPORT2_ALL_SEVEN_RECS_APPROVED.md`.
+
 1. **Lease length and presence.** Default 2 hours, renewable by saying so. Should a one-line prompt hook auto-extend it
    while you are typing? **REC: yes to both.** The hook write is a timestamp, not a monitor.
 2. **Landing on DEV in FAST mode.** While a FAST lease is live, may the seat land PRODUCT candidates on portal DEV
@@ -577,3 +590,37 @@ seat. No standing gate beyond the arm-time overlap refusal.
 | no prompt hook today | `.claude/settings.json` hooks: PreToolUse, PostToolUse, SessionEnd only | HEAD |
 | report 1 | `BRIEF_CANONICAL_FLOW_SPEED_CLOSER_FLOW_SKILLS_PARITY_20260923.md` (this folder) | `ea031c3987` |
 | report 3 scope | `ANDREW_DIRECT_20260924_144xZ_PROCESS_ARCHITECTURE_BRIEF.md` (this folder) | `2b16316b41` |
+| report 3 | `docs/briefs/process-architecture-verification-bureaucracy-brief-20260924.md` (RCN-0016) | `2d1bf5528a`, amended 09-24 |
+
+---
+
+## 12. The joint model with report 3 `[AMENDED 09-24: Andrew-approved ~11:4x AM ET]`
+
+Record: `ANDREW_DIRECT_20260924_154xZ_REPORT3_REFINEMENTS_APPROVED_BOTH_REPORTS_TO_CTO.md` (this folder). Report 3
+(`docs/briefs/process-architecture-verification-bureaucracy-brief-20260924.md`) carries the same text in its Cut 1,
+Wave 2 and Wave 3.
+
+**Two settings on every project, independent of each other:**
+
+| setting | values | decides | source |
+|---|---|---|---|
+| **presence** | FAST lease (Andrew at the computer) / FULL (the fail-closed default) | pace and who reviews | this report, sections 5-7 |
+| **risk and size** | `LOCAL` / `SERVED` / `WORLD`, plus the direct-act size floor | how much checking the work gets | report 3, Waves 2-3 |
+
+**The two approved refinements:**
+1. **One real run of each outcome at close.** A live page or the real entry point, done by the COO at the merge. It
+   replaces every seat-to-seat re-read of the same check. The CTO's exercised read stays for `WORLD` work only.
+2. **A portal change that lands on DEV only is `LOCAL`.** `SERVED` starts at a PROD promotion or a served data path.
+
+**What each class gets, with both refinements in:**
+
+| class | checks |
+|---|---|
+| `LOCAL` | the worker's proof plus the checker's match, plus the COO's one real run of the outcome at close |
+| `SERVED` | adds the CVO's grade of judgment criteria, graded on the real run's artifact, never on static markup |
+| `WORLD` | adds the CTO's exercised read and the change-management entry |
+
+- **A FAST lease never lowers a class.** A deploy inside a FAST lease is still `WORLD` and keeps every guard in section
+  5.3's "never relaxed" list.
+- **Report 3's direct-act path and this report's FAST mode land as ONE rule:** presence decides pace and reviewer;
+  risk and size decide checking. The CTO carries it in the spine's Closer subsection (C3) and in Wave 2's field.
