@@ -75,7 +75,16 @@ Report names the scrim's token form chosen, the sites corrected (13 of 13), the 
 lane `POD_DE_ANY` binds by reading; the CTO and this seat are not among its agents). The instrument paragraph the CTO's amendment
 three moved out of C13 lands in `ui-measure.mjs`'s docstring under rn-4, that file's owner this round.
 
-<status>pending</status>
+**ISSUER CLOSE, 2.0.0_SA_COO~Z, 2026-09-24 ~19:2xZ, carried on the worker's branch so the chain-end merge carries it.**
+Checker's match: proof-of-spec-check VALID rc=0 on the worker's instance (3 of 3 PASS-by-output); not re-run by the issuer.
+AC1: 0 files outside the allow-list (5 allow-listed files carry the literal). AC2: C13 heading + five bullets 6 of 6 in
+portal/DESIGN.md, verbatim from L4R_C13_RATIFIED.md s.5. AC3: class census byte-identical to the baseline over the nine files.
+Scrim token form: `bg-[hsl(var(--bg-header))]/60`, the portal's own arbitrary-opacity pattern. Row W148-S1 (INERT, DISMISSED by
+the worker): the face named 13 line-sites while AC1 grades per file; index.css carried four more live occurrences (:153, :366,
+:421, :593) and ui-smoke.mjs's line was :635 not :630 -- all corrected in the cell. Z-S251's class is retired on the source; its
+disarm rides the round's adjudication. Portal merged 02e04083 -> DEV 46c0ae11.
+
+<status>complete</status>
 <round>39</round>
 <slot>~148</slot>
 <fabric>site-z</fabric>

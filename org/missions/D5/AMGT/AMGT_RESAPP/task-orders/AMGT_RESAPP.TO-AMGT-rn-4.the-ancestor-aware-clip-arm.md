@@ -65,7 +65,17 @@ Report names the rule implemented in one sentence, the fixture's DOM in one line
 **ISSUER NOTES:** s.7 item 6 (measure-first became build: the fixture IS the measurement and the arm its consumer). The six-state
 bound (`clippedTextBlocks` 0 in both scopes with the new arm) is the issuer's `checks/drain.rn-4.clipped.sh` on 5174 after the merge.
 
-<status>pending</status>
+**ISSUER CLOSE, 2.0.0_SA_COO~Z, 2026-09-24 ~18:5xZ, carried on the worker's branch so the chain-end merge carries it.**
+Checker's match: proof-of-spec-check VALID rc=0 on the worker's instance (2 of 2 PASS-by-output); not re-run by the issuer.
+AC1: `ANCESTOR-CLIP leafOnly=0 ancestorAware=1`, SELF-TEST OK, the seven existing self-test checks still passing; the worker
+ran a mutant control (the flex-sizing predicate disabled flips ancestorAware to 0 and fails the self-test) and reverted it.
+AC2: 0 src files moved off the base other than the fixture. Rule: a leaf counts as ancestor-clipped when an ancestor up to the
+panel frame has non-visible overflow, the path holds a flex-row child with flex-shrink:0 and min-width:auto, and the leaf's box
+is cut past that ancestor's edge; `clippedTextBlocks` is now the union, `clippedTextBlocksLeafOnly` and `clippedByAncestor`
+printed beside it. No rows. The six-state bound (clippedTextBlocks 0 in both scopes with the arm live) is the issuer's
+`checks/drain.rn-4.clipped.sh` on 5174 after the round's last merge. Portal merged 88305686 -> DEV e2ac795a.
+
+<status>complete</status>
 <round>39</round>
 <slot>~149</slot>
 <fabric>site-z</fabric>

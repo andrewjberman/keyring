@@ -56,7 +56,15 @@ Report names the token chosen, the two commit hashes, and any row.
 
 **ISSUER NOTES:** s.7 item 1. Render grade: the issuer's `checks/drain.real-run.sh` on 5174 after the merge (sizes PASS 6 of 6).
 
-<status>pending</status>
+**ISSUER CLOSE, 2.0.0_SA_COO~Z, 2026-09-24 ~18:4xZ, carried on the worker's branch so the chain-end merge carries it.**
+Checker's match: proof-of-spec-check VALID rc=0 on the worker's instance (2 of 2 PASS-by-output); not re-run by the issuer.
+AC1: the census reads size=0 on both files, no text-[9px|10px] token. AC2: tsc -b --noEmit exit=0. The token chosen:
+`text-[11px]` on the PanelHeader caller (:99); DataTimestamp.tsx untouched (its root is text-xs). Row W146-S1 (INERT: the
+worker committed the portal fix with plain git commit, reading `../.tools/safe-commit.sh` as absent from the nested repo --
+it is the outer repo's tool at that relative path; a plain commit inside portal/ runs no hook either way, Z-S255). The render
+grade (sizes PASS 6 of 6 inside main) is the issuer's real run on 5174 after the round's last merge.
+
+<status>complete</status>
 <round>39</round>
 <slot>~146</slot>
 <fabric>site-z</fabric>
