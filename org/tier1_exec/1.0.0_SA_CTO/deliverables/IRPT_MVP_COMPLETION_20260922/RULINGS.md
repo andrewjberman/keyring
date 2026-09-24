@@ -2454,3 +2454,45 @@ numstat 2/2 against the ruled 1/1, because a new component cannot be mounted in 
 ONE mount line PLUS at most ONE import line and nothing else (2/1 or 2/2, both hunks the mount and the import); an ISSUER
 AMENDMENT of IV1-AC3 / IV2-AC3 in one commit (the orders declare <placeholders>, gate (viii) grades the modification), the same
 subagents re-run AC3 in place; no re-cut; the refused row stands as an honest FAIL on the old text, superseded by the re-run.
+
+
+## 2026-09-24 09:4x UTC - Claude CTO batch 35: the YCharts resident is INSTALLED and RUNNING; the runner's post-capture lines proven without a sign-in; the CRO stands on the tokenless transport; the factory question answered from P's own branch; candidate 3b on portal DEV as a fast-forward
+
+Instruments: P's receipts (100470 runner + transport + candidate 3b; 100481 the install); the CRO's second read on the real bundle
+(100478); the CTO's own cat-file / grep of reports/resident_installed.py across three refs; the CTO's fetch and hunk-hash comparison
+of candidate 3b against 3c0a3e45; MSTR's push receipt (100473).
+
+### IRPT-RESIDENT-INSTALLED-20260924 (P 100481, on the word 100453 / 100475)
+Order executed as worded: (1) runner lines (a)-(c) at b9d36bc34e -- the closing probe grades the stored bundle, documentIdentity
+records its navigation's status / waf action / content type, a fresh context is seeded without the token -- deployed (blob
+dfc87d8312.. 84,158, readback exact) and PROVEN by one stored-bundle probe task (SSM d047ee26, 09:12:42Z) rc 0: getSession present,
+authenticated 200 LIVE on the template route, acquired false / persisted false, fence 12, NO sign-in (six today, unchanged).
+(2) the resident transport tokenless at 8576bec142 (+17/-4: NEVER_SENT_COOKIES = ("aws-waf-token",), the jar loader skips it, no
+X-AWS-WAF-Token header live or replay, ReplayTransport raises WAF_TOKEN_PRESENTED on a token-bearing request); the CRO STANDS
+(100478): read whole, exercised on the REAL captured bundle (headers_for carries no token, the jar carries none, 7 cookie names
+with ycsessionid + csrftoken), Y's suites 31/8 and 245/30 and the offline suite rc 0 on the CRO's own run. (3) the bundle grade
+PASS (batch 34). (4) THE FACTORY: P asked where resident_installed.py lives; the CTO read it -- P's OWN file,
+infra/aws/lambda/investor-reporting/reports/resident_installed.py @5e05823f4e (P, 09-23 21:02Z), on P's branch only, absent from
+CLOUD and Y's branch; build_resident_runtime(bindings_path) reads ONE bindings document (REQUIRED region, queue_url, jobs_table,
+requests_table, enrolled_user_id int > 0; CAPTURE_REQUIRED wrapper/library path + sha) and constructs ResidentSession with the pin;
+FACTORY = resident_installed:build_resident_runtime. (5) THE INSTALL: package ab2e088b5b (142 members: Y's resident half +
+the transport line + the X10 ACTIVE row + the 22 schemas + the maintained census 44853788fa..; manifest 1d4936cf..), bindings with
+enrolled_user_id 1276035 and the capture pins 55ddb8f7 / dfc87d83; the cutover receipt's four booleans read live (legacy probe
+disabled, per-job power cycle disabled, other consumers disabled, the factory installed); install-resident.sh rc 0 on Y's literal
+usage; a factory dry run with real clients and no poll; irpt-analysis-resident.service ACTIVE since 09:39:24Z, MainPID 43390,
+0 restarts, five IRPT_RESIDENT_POLL handled=0 lines at 20 s on the empty queue, no vendor call. Ledger
+irpt-resident-cutover-20260924 CLOSED. DISCLOSED: the first unit failed three restarts on PINNED_FILE_ABSENT:census -- the
+builder's host-root argument MSYS-converted inside the bindings (this box's path-conversion class); the factory refuses at
+verify_pins before any client exists, so the four-minute window held no act; rebuilt with MSYS_NO_PATHCONV=1. Runbook
+precondition B MET. RULED for the Analysis backend (i): the resident is the ONE consumer of irpt-generation (the receipt's own
+"other_queue_consumers_disabled" boolean is the rule) -- NO event source mapping; the generate function's Terraform diff carries
+sqs:SendMessage and the two revision env keys only; IRPT_LIVE_YCHARTS_CALL unset until the cutover word; P names the modules its
+grant does not cover and the CTO adds rows at Y's pin. The live thread's browser act (G) is Andrew's.
+
+### Candidate 3b on portal DEV (P 100470; MSTR 100469 / 100473; the CTO's own read)
+DEV had moved again (ae1b9f42 -> ccdb8699, site Z's rl-5 / rl-6 drains); P re-cut ONE cherry-pick of 3c0a3e45 on ccdb8699 as
+irpt-dev-candidate-3b-20260924 @013323f0 (+22/-5, tsc rc 0, eslint 0, fe-s-88 / 55 / 76 pass); the CTO fetched and read
+origin/DEV = 013323f08e (already pushed, fast-forward) and hashed the +/- lines of 013323f0 against 3c0a3e45's: identical; MSTR's
+receipt independently reads the same 16-hex diff prefix on both. Shape (B) ran, the fallback did not. The next candidate cuts from
+013323f0. DEV now carries candidates 1-3: display-first rows, the labels pin, hop 11, the Performance label, SELECTION_UNSUPPORTED,
+F1, F5, F3.

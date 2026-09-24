@@ -19,7 +19,11 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (00000000000000) D1: the SIXTH submission CAPTURED the bundle (fence 11, AWSCURRENT; the pair 200/405
+CTO review queue, in order: (000000000000000) THE RESIDENT IS INSTALLED AND RUNNING (irpt-analysis-resident.service 09:39:24Z,
+package ab2e088b5b, pin 1276035, empty-queue polls, no vendor call; ledger CLOSED); runbook precondition B MET; next = the
+Analysis backend (i)-(iii) at P -- NO event source mapping (the resident is the one consumer); P names uncovered modules, the CTO
+adds grant rows; the browser act (G) is Andrew's (batch 35). (000000000000000a) candidate 3b on portal DEV 013323f0 (ff; hunks
+identical to the reviewed 3c0a3e45) (batch 35). (00000000000000) D1: the SIXTH submission CAPTURED the bundle (fence 11, AWSCURRENT; the pair 200/405
 convicts the presented WAF token); CRO bundle grade PASS; runner lines (a)-(c) -> one stored-bundle probe (no sign-in) -> the
 tokenless transport line (P, CRO second-reads) -> install at 93ec16f4fe with pin 1276035 -> empty-queue run (batch 34).
 (00000000000000a) all three firms serve labels + UNITS (49F QC.bs6a5w, INF k9U4ucuT, COT mSFR0vat); M done on the build side;
