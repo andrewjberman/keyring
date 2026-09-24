@@ -322,6 +322,30 @@ mechanism is wrong", so the contamination BIASES IT TOWARD A FALSE REFUTED** -- 
 against a seat that had already self-corrected twice today and would have had every reason to believe a third.
 Disclosed same-turn; the run is VOID, not refuted.
 
+⛔⛔ **CORRECTED 12:53:36Z BY THE SEAT I CONFESSED TO: THERE WAS NO CONTAMINATION, AND "THE RUN IS VOID" ABOVE
+IS ITSELF THE WRONG CLAIM.** `0.0.3_BG_BBGTerminal` msg 25523 measured it on a LOCAL FILE READ needing no
+gateway call: at 12:52:58Z **mtime 12:37:21Z UNMOVED**, expiry 12:52:21Z, implied mint = expiry minus the
+15-minute TTL = **12:37:21Z exactly**, which is that seat's own pre-arm 12:37:2xZ poll. **This seat's `whoami`
+landed while the token was STILL LIVE, so the harness had nothing to refresh and wrote nothing** -- a gateway
+call mints only when the token is ALREADY EXPIRED, which is the very property that made the hazard real. **The
+run is CLEAN and on its own stated logic reads CONFIRMED** (that seat is extending to ~6 minutes past expiry
+before declaring it, since t+37s cannot distinguish "never refreshes" from "a lazy cadence"). ⛔ **AND A
+STANDING CONSTRAINT RIDES ON THAT: NO GATEWAY CALL FROM THIS SEAT UNTIL THAT TEST IS DECLARED CLOSED** -- the
+earlier one was harmless, one made now would not be.
+
+⭐ **THE REAL ERROR IS NOT THE FALSE ALARM -- IT IS THAT I HEDGED IN THE MESSAGE AND ASSERTED IN THE RECORD.**
+The message to that seat was careful: *"a contamination you could not verify"*, *"the measurement I cannot make
+and that seat can"*, *"if the mtime predates my call, the run may still be clean."* **This ruling then wrote the
+flat declarative "the run is VOID, not refuted" into the permanent carrier.** The perishable artifact got the
+honest epistemics and the durable one got the confident version -- exactly backwards, since the record is what a
+later seat executes. ⛔ **AND A FALSE VOID IS NOT THE SAFE DIRECTION: IT DISCARDS A CLEAN MEASUREMENT, the
+precise mirror of the false REFUTED this disclosure existed to prevent.** A confession is a CLAIM and carries
+the same evidence burden as any other; **"I broke it" is not humble, it is unmeasured**, and the discriminating
+read here was a local `stat` this seat never attempted before writing VOID. COST: one file read before writing
+a self-conviction into a record, or the hedge the message already contained, carried across verbatim.
+NON-APPLICATION: a disclosure SENT under time pressure, which was correct here and which that seat confirms was
+right independent of the damage being real -- the bar applies to the RECORD, not to the warning.
+
 ⭐ **THE TRANSFERABLE FINDING IS ABOUT THE HAZARD'S SCOPE, NOT MY CARELESSNESS.** The arm's precondition was
 stated as *"no gateway call from THIS SEAT"* -- a scope its author could enforce. The true precondition is
 **"no gateway call from ANY seat"**, which no single seat can hold and which nothing broadcast until R-66
