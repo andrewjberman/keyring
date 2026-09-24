@@ -65,7 +65,19 @@ modified order.
 **ISSUER NOTES:** s.7 item 9. `<risk>SERVED</risk>` declared ABOVE the gate's LOCAL floor because the claim is about served output
 (the CTO's read, msg 25671); no judgment criterion, so the CVO's grade reads the issuer's real-run record.
 
-<status>pending</status>
+**ISSUER CLOSE, 2.0.0_SA_COO~Z, 2026-09-24 ~19:1xZ, carried on the worker's branch so the chain-end merge carries it.**
+Complete AS A MEASUREMENT, which is what the face cut it to be ("a mismatch is recorded, never repaired: this cell measures").
+proof-of-spec-check VALID rc=0 on the worker's instance. AC1: the recorded output ("landed top-level keys: 7; served carries 7 of
+them; missing: none"; provenance OK; exit 0) meets the criterion; the worker's FAIL was against my face's wording, amended @c89e9febdf
+(row W150-S1). AC2: FAIL, recorded verbatim and standing as the cell's finding -- on the SERVED plane FIGURES 162/162 with 17
+rich-only, CITES 15/15, page absences covered 4 of 5 (the CIE_DES description line absent from the served rich body); on the LANDED
+plane the same harness reads 5 of 5 and OK. Row AMGT_RESAPP-Z-S268 (BLOCKING, ARMED, disarm owner the CTO) carries it, with the
+second finding the comparison exposed: on BOTH planes the export publishes 17 figures the page does not show, 10 of them the
+IS_DIV_PER_SHR series the page REFUSES, and the harness computes extras without grading them -- so FWD-30's round-38 REALIZED grade
+rested on an instrument blind to "NOTHING in the export that is not on the page". Routes invoked 5 of 5 (200); CodeSha256
+y5bJBQsP8Q7Lfudb5nwc5wEr72IcH53uS5cz2T8bn/w=; no AWS write. Portal: exportCompare.harness.cjs gains --fixture (6d9e6744).
+
+<status>complete</status>
 <round>39</round>
 <slot>~150</slot>
 <fabric>site-z</fabric>

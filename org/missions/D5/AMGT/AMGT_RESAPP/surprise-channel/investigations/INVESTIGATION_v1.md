@@ -14210,6 +14210,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The task order's AC1 <expect> clause asserts the checker prints 'served carries N of N landed top-level keys; missing: none' followed later by '-> OK; exit=0'.",
     "world_is": "The checker prints 'landed top-level keys: N; served carries N of them; missing: ...' on its own first line -- 'landed top-level keys' precedes 'served carries' rather than following it, and the phrase 'of N landed top-level keys' never appears verbatim; a semantically-passing run (7 of 7 keys, provenance complete, script rc=0) therefore fails the literal regex match proof-of-spec-check.py enforces.",
     "notes": "This worker recorded AC1 as FAIL in its proof-of-spec instance because the mechanism (expect-match, not self-report) is what decides a mechanical criterion per CLAUDE.md Rule 27/spine v3 L7 and this worker's own standing orders ('never repaired'/'never rescued'). The invocation output itself is recorded verbatim; nothing was edited to force a match."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S268",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-24T19:15Z",
+    "one_line": "FWD-30 is NOT met on the served plane, and its round-38 REALIZED grade rested on an instrument that cannot see half its DONE WHEN. (1) SERVED: the page, rendered from the deployed function's own responses, discloses 'ABSENT: no description header scalar [CIE_DES, CIE_DES_BULK] ... and no served D-1 company_description sentence ...'; the served format=rich body never mentions a description at all -- 4 of 5 page absences covered verbatim (landed plane: 5 of 5). (2) BOTH PLANES: the rich export carries 17 figures the page does not show, 10 of them the IS_DIV_PER_SHR fiscal series 2016-2025 that the page REFUSES as SIGN-UNRESOLVED, printed in the export as values with an UNRESOLVED label. FWD-30's DONE WHEN reads 'with NOTHING in the export that is not on the page'; exportCompare.harness.cjs computes the extras and never grades them.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "rn-5 (0.9.0_WK_AMGT_RESAPP~150) served capture: deliverables/0.9.0_WK_AMGT_RESAPP~150/served/served_fixture.BA_US_Equity.json + BA_US_Equity.rich.md, 5 of 5 GET routes 200 on opal-amgt-scoped-api, CodeSha256 y5bJBQsP8Q7Lfudb5nwc5wEr72IcH53uS5cz2T8bn/w= (rm-7's deploy)",
+        "served plane, checks/rn-5.AC2.sh: FIGURES page=162 rich=179 same=162 missing=0 extra=17; CITES 15/15; ABSENCES page=5 rich=15 same=3 missing=2 extra=12; EXPORT-COMPARE NOT OK (exit 1). The one uncovered page absence, printed by a throwaway copy of the harness (deleted): the CIE_DES description line",
+        "landed plane, same harness, rm-4's rich (deliverables/0.9.0_WK_AMGT_RESAPP~143/served/BA_US_Equity.md): FIGURES extra=17, CITES 43/43, page absences covered 5 of 5, EXPORT-COMPARE OK -- so the extras predate the deploy and the description miss is served-only",
+        "the 17 rich-only figures: header|NAME, CRNCY, CNTRY_OF_DOMICILE, GICS_SECTOR_NAME, EQY_SH_OUT_REAL, EQY_FREE_FLOAT_PCT, SHORT_INT_RATIO, and fiscal|IS_DIV_PER_SHR|2016..2025; the rich body prints e.g. 'IS_DIV_PER_SHR | 4.69 UNRESOLVED-ON-BA US Equity: sampled magnitude 0.0 does not discriminate ...'; the page carries 'REFUSED: IS_DIV_PER_SHR: unit/sign convention is SIGN-UNRESOLVED, not MEASURED'",
+        "exportCompare.harness.cjs:383-388 -- ok = no missing figures, no missing cites, every page absence covered, size > 20 KB; the extra sets are computed at :322-324 and printed, never in `ok`"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD ADDENDUM B FWD-30 DONE WHEN: 'a field-by-field comparison against the page shows the SAME figures, the SAME cites and the SAME absences, with NOTHING in the export that is not on the page'; round-38 analysis graded FWD-30 REALIZED on branch (b).",
+    "world_is": "On the deployed function the export omits one absence the page discloses, and on both planes it publishes 17 figures the page does not show, 10 of them a series the page refuses as unresolved. The round-38 grade read the harness's OK, which grades missing items only.",
+    "disarm_owner": "1.0.0_SA_CTO~Z -- FWD-30's grade is the CTO's at L10; the fix (render_pack.build_rich_text honouring the page's REFUSED rows and absence lines, and the harness grading extras) is a round-40 cell this issuer cuts on that analysis.",
+    "notes": "Filed by the issuer at rn-5's close. rn-5 is complete as a measurement: its AC2 FAIL is the cell's finding, recorded and not repaired, as its face directs."
   }
 ]
 ```
