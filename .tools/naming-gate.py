@@ -783,8 +783,13 @@ _CARRIED_CACHE = {}
 
 
 def _carried_at_head(value, path):
-    """The first tracked file at HEAD, other than `path`, that carries `value` byte for byte (fixed string,
-    tracked tree only); '' when none. One git grep per distinct value, cached for the run."""
+    """The first DECLARATION-TREE file at HEAD, other than `path`, that carries `value` byte for byte (fixed
+    string); '' when none. One git grep per distinct value, cached for the run.
+
+    Declaration tree only (LD-0611-ARM-01, 1.0.0_SA_CTO 99852): a hit under a record tree (org/**, docs/**, a
+    minted run directory) or in a file the gate does not grade is NOT a carrier. A key first typed into a
+    ledger, a message record or a log must not make its later copy in code read EXISTING -- and the ledger
+    naming this rule's own negative arm made that arm vacuous one commit after it was measured."""
     if not value or len(value) < 4:
         return ""
     if value not in _CARRIED_CACHE:
@@ -793,7 +798,7 @@ def _carried_at_head(value, path):
         if rc == 0:
             for line in text_of(out).splitlines():
                 hit = line.split(":", 1)[1] if line.startswith("HEAD:") else line
-                if hit and hit != path:
+                if hit and hit != path and not _is_record_tree(hit) and hit.endswith(GRADED_EXT):
                     hits.append(hit)
         _CARRIED_CACHE[value] = sorted(hits)
     hits = [h for h in _CARRIED_CACHE[value] if h != path]
