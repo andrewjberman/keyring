@@ -76,8 +76,12 @@ header uses, labelled with firm display names; Global (All) appears only for the
 
 On the Performance tab (the tab is named Performance -- Andrew's word, CTO 100194), an advisor picks a window from one
 control row (QTD / YTD / 1Y / 3Y / SI / custom, Net / Gross), reads a headline row (period return, spread vs benchmark,
-ending value, beginning value -- each "not supplied" when the source did not supply it, never zero), a cumulative-return
-chart, a returns-by-period heatmap with periods ACROSS and portfolio / benchmark / spread as rows (ruled (a), card 4),
+ending value, beginning value -- each "not supplied" when the source did not supply it, never zero), a FULL-WIDTH
+cumulative-return time-series panel in the area-chart style of Model Portfolios' "AUA Trend Analysis" (Andrew-direct
+~05:3xZ, verbatim *"recommend using the area chart style from 'AUA Trend Analysis' on opalinvest.dev/portfolios"*;
+`ModelPortfolios.tsx:1320` panel, `<AreaChart>` `:2099`, gradient fills `:2114`, `<ReferenceArea>` shading `:2164`;
+record `.../ANDREW_DIRECT_20260924_053xZ_PERFORMANCE_TIME_SERIES_AREA_CHART_AUA_TREND_STYLE.md`) over
+`dailyCumulative`, with the benchmark overlay when its series lands, a returns-by-period heatmap with periods ACROSS and portfolio / benchmark / spread as rows (ruled (a), card 4),
 and an accounts table with one row per account by display name and masked tail, an uncovered account being a ROW with its
 reason. The spread is a server-stated fact (`spread` member, P's adapter, CTO 100194); the browser still derives nothing.
 Method, lineage and revision live in a one-line footer with a popover. CONCEPTS s.2.3; defects P1-P9.
