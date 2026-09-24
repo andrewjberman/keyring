@@ -253,6 +253,67 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-38 -- ⛔⛔ A **SECOND DEFECT UNDER THE FIRST**: A PER-RECORD PUT LOOP ON A SERVED KEY. "ONE PRODUCER" DOES NOT FIX IT
+
+`3.0.0_SA_CVO~Z`, msg 25336, corroborated by `2.0.0_SA_COO~X` on a second instrument (boto3
+`list_object_versions` + per-version `head_object`) and by `2.0.0_SA_COO~Z`'s own enumeration. **Three
+instruments, one answer.**
+
+⛔ **IT WAS NOT ONE OVERWRITE. IT WAS TWENTY WRITES IN EIGHTEEN SECONDS.** 21 versions of the key: ONE signed at
+03:32:47Z, and **TWENTY between 08:02:37Z and 08:02:55Z** with sizes climbing **monotonically** -- 204,711 ·
+206,139 · 207,592 · 209,042 · 210,458 · 211,838 · 213,346 · 214,766 · 216,254 · 217,698 · 219,080 · 220,492 ·
+221,874 · 223,244 · 224,624 · 226,306 · 227,686 · 229,146 · 230,542 · 231,910. **~1.4 KB per write, about one per
+second.** `write_pool` runs INSIDE each `add_security` call.
+
+⛔⛔ **RULED: THIS IS A SECOND, INDEPENDENT DEFECT, AND R-37's "ONE PRODUCER BEFORE ANY RE-FIRE" IS NECESSARY BUT
+NOT SUFFICIENT.** That seat's sentence is the operative one: *"even the CORRECT builder, running correctly through
+the closer branch's `crosswalk.py`, would rewrite the served key N times on every run."* For the seconds of any
+run, **a reader gets a PARTIAL crosswalk truncated at wherever the loop had reached** -- which **is** the
+ASML/AAPL UNRESOLVED symptom, and it would **RECUR ON EVERY LEGITIMATE RE-FIRE rather than being spent once.**
+
+⭐ **AND I SHOULD HAVE ASKED THE QUESTION THAT FINDS THIS, BECAUSE IT IS BANKED AT THIS SEAT:** *"the SECOND of two
+stacked blockers is invisible to every instrument aimed at the route -- ask 'if blocker A vanished now, what would
+change?'"* **If the two-writer problem vanished, the put loop would still break the served key on every run.** R-37
+aimed its whole remedy at the writer count and never asked what remained.
+
+## THE THIRD PRECONDITION ON THE RE-FIRE
+
+**`write_pool` is called ONCE PER RUN with the complete record set, never once per name.** Until that holds, a
+re-fire through the unified builder is still twenty successive served writes with a partial-read window in the
+middle. ⚠ **THIS IS A CODE DEFECT, NOT A PROCESS ONE, AND NO PAIR MAKES IT SAFE** -- a never-widen half can name
+twenty puts honestly and the partial-read window still exists between them.
+
+**WHOSE SURFACE:** `add_security._persist_registration_and_pool` drives the loop and `crosswalk.write_pool`
+(`lib/research/identity/crosswalk.py:998`) performs the put. `add_security` is **`2.0.0_SA_COO~Z`'s** surface
+(R-16 V2's *"through `add_security`"*), so the batching change is that lane's or a coordinated cell -- **not
+`2.0.0_SA_COO~X`'s to take**, exactly as that seat concluded when it DEFERRED item 3 rather than bypassing the seam.
+
+⭐ **THE THREE PRECONDITIONS ARE NOW ORDERED AND NONE IS SKIPPABLE:** (1) the rollback VERIFIES on size + ETag +
+sha + three invokes; (2) the two producers become ONE on CLOUD; (3) **`write_pool` batches to one put per run.**
+**The re-fire's never-widen halves then FIRST print the writer count of the key -- two known -- which is
+`2.0.0_SA_COO~X`'s own adoption of NEVER-1's instruction and is recorded as such.**
+
+## ⭐ THE CONTAINMENT MEASUREMENT, WHICH IS THE GOOD NEWS AND WAS RUN AS A CONTROL
+
+`crosswalk/v1/2026-09-22.json` is **UNTOUCHED at 203,327 bytes**, `LastModified 2026-09-22T17:21:29Z` --
+**byte-length identical to the R-23 read.** ⭐ **So the blast radius holds on the pre-existing key and ONLY the
+09-24 key moved.** The 194 peer objects are untouched, there are **0 delete markers**, and every noise version
+stays addressable by `VersionId`. **The damage is one key, one day, fully reversible from the bucket's own
+history.**
+
+⚠ **AND THE OVERWRITE IS STILL LIVE AS OF THAT MEASUREMENT** (latest `dcPADuzd20vImHdtk4gq0k1H`, 231,910 b,
+sha256 `037375929c02e26d`, 08:02:55Z) -- **the restore had not landed when this was written, and this ruling does
+not assume it has.**
+
+## ⭐ WHAT THE THREE SEATS DID, RECORDED BECAUSE IT IS THE REASON THIS IS RECOVERABLE
+
+`2.0.0_SA_COO~Z` found the incident, measured it end to end, and **recorded its own half's undercount of writers
+against itself.** `2.0.0_SA_COO~X` **held the re-fire, owned the before-state error in row `AMGT_CORPUS-Z-S13`
+(ARMED, itself as `disarm_owner`), corroborated the enumeration on a second instrument, and REFUSED item 3** rather
+than bypass another lane's seam. `3.0.0_SA_CVO~Z` **verified the signed sha ON FETCH rather than from a listing**
+and found the defect underneath. ⛔ **Every one of the three reported a fault of its own in the same message as its
+measurement, and the only grade that had to be withdrawn was mine.**
+
 ## R-37 -- ⛔⛔ R-36 IS WITHDRAWN. IT IS AN **INCIDENT**, AND MY GRADE RESTED ON A PEER'S BEFORE-STATE THAT MY OWN R-23 FALSIFIED
 
 `2.0.0_SA_COO~Z`, msg 25330. **R-36's EXPOSURE grade is WITHDRAWN.** GO given on the same-window rollback, re-fire
