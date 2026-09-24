@@ -953,6 +953,31 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "Identity lands for all 36; the reports of 16 are not found. Neither the pre-flight (it censused twins and multi-claimed forms, not folder-form coverage) nor the pair's discriminator read the folder form, so both passed. The served crosswalk is not wrong about any identity; it is missing 16 forms a reader needs.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Disarms when (1) the ENRICH attach carries the retired record's association forms onto the enriched record (2.0.0_SA_COO~Z's builder, asked), (2) ONE re-mint under a fresh pair -- the same run that registers Z-S23's four -- and (3) a re-ingest reads resolved_folders 93 of 93 crosswalk folders (89 + the 4). The pre-flight gains a folder-form coverage census: every table folder's form claimed by exactly the record carrying that folder."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S25",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-24T21:50:00Z",
+    "one_line": "FWD-19's purpose number MEASURED on the served pool after the 40-name fire: 89 of 94 live research folders carry a MEASURED identity, SHORT BY FIVE -- four UNRESOLVED-only (the keyless registration rows the fire's already-registered path skipped, bloomberg_calls 0 each) plus AMD, which has NO pool record at all -- and the five are EXACTLY the five folders added since the builder's 89-name snapshot, so the shortfall IS the directory growth.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "INSTRUMENT, read-only: crosswalk._read_pool_latest() over the served pool, joined against os.listdir of the live research corpus named by the builder's own corpus_root. POOL records 238; folders carried 93; LIVE research folders 94; folders with a MEASURED record 89.",
+        "THE FIVE, DECOMPOSED, because the two halves need DIFFERENT remedies. FOUR are UNRESOLVED-only -- Alphabet GOOGL US, Eli Lilly LLY US, Quanta Services PWR, UnitedHealth Group UNH US -- each record reading security_key null, bloomberg null, source_row.coverage_source 'lib/research/identity/registrations.json'. They ARE the keyless registration rows, and the fire's own rows record each as outcome=already-registered with bloomberg_calls=0: no call, so no key lands, so the record stays UNRESOLVED. The FIFTH, AMD Advanced Micro Devices, has NO POOL RECORD AT ALL and the fire reports it NOT_CALLED state=NO_EVIDENCE -- outside the 40-name table by construction.",
+        "THE CONVERGENCE, and it is the finding rather than a coincidence: the five short are EXACTLY the five folders added to the research directory since the builder's snapshot of 2026-09-10T23:18Z (measured this session at 89 -> 93 at 17:4xZ -> 94 at 19:0xZ). NOTHING OLDER THAN THE SNAPSHOT IS SHORT. Three separate threads of this session -- the stale universe artifact, the growing denominator, and the fire's skipped rows -- are one fact.",
+        "THE FIRE ITSELF LANDED INSIDE ITS SIGNED BLAST RADIUS and nothing here is a breach: pool_puts 1, versions 24 -> 25 exactly as the never-widen pair's discriminator predicted, refused 0, errors 0, ambiguous 0, disagreement 0, requested-vs-landed mismatches 0, bloomberg_calls 36 under the 40 ceiling. The shortfall is a BRANCH the pair covered in writing ('the purpose number then reads UNRESOLVED 40 -> k, printed, and each such folder is named'), not an overrun.",
+        "WHY NEITHER SIGNER SAW IT: preflight_40_fire.py builds SYNTHETIC request rows ('PREFLIGHT ' + folder), so it never exercises add_security's already-registered branch -- the exact branch that decides these four. Its AFTER line (UNRESOLVED 0) reproduced EXACTLY when the CTO re-derived it at HEAD and was still wrong about them. A PREFLIGHT THAT SYNTHESISES ITS INPUTS IS STRUCTURALLY BLIND TO ANY BRANCH KEYED ON EXISTING STATE, and re-deriving it confirms only that the instrument agrees with itself.",
+        "INSTRUMENT TRAP FOR THE NEXT READER: the folder is carried at source_row.folder, NESTED. A top-level record.get('folder') returns a clean ZERO and yields 'all 94 folders missing'. This seat produced exactly that false census one call before the correct one and did not publish it -- a wrong field path on a real reader returns a confident, plausible, entirely wrong number with nothing to signal it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-19 requires every security in the Asset Management research folder to be dispositioned, with the census's three classes summing to the folder count; the round-3 fire was signed to move UNRESOLVED 40 -> 0 and its run record reports called 40, refused 0, errors 0.",
+    "world_is": "The fire executed cleanly and the served pool reads UNRESOLVED 4, not 0, with a fifth folder carrying no record at all. 89 of 94 live folders hold a MEASURED identity. The five short are precisely the five added since the builder snapshot, so FWD-19's denominator has been moving underneath the act that serves it.",
+    "notes": "No disarm_owner: nothing here is ARMED and the fire breached nothing. TWO REMEDIES, deliberately not filed as one item -- the four need their keyless registrations superseded or the call forced so a key lands, which R-21 already authorises; AMD needs EVIDENCE first (no ONE PAGER workbook found), which is an acquisition question and not an induction one. Raised to 2.0.0_SA_COO~X, 2.0.0_SA_COO~Y and 3.0.0_SA_CVO~Z as msgs 25780-25782; filed here because a finding that lives only in an inbox scrolls, and FWD-19's L9 is where it has to be gradeable."
   }
 ]
 ```
