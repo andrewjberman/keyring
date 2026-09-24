@@ -959,6 +959,27 @@ def _self_test():
                      _status_element_violations(tree, "<status>complete</status>\n" + v3))),
         ("status-element: a flat-root order is NOT graded (the legacy population, same scope as every limb here)",
          lambda: _status_element_violations("org/tier2_senior/A/task_orders/X.TO-1.md", v3) == []),
+        # GATE (xii) -- the risk class (spine v3.19 L6). One positive per class, the three refusals, and scope.
+        ("risk: <risk>LOCAL</risk> on a product-only order -> admitted",
+         lambda: _risk_violations(tree, "<risk>LOCAL</risk>\n<paths>\nportal/src/a.tsx\n</paths>\n" + v3) == []),
+        ("risk RED: no <risk> element -> refused",
+         lambda: any("NO <risk> element" in x for x in _risk_violations(tree, v3))),
+        ("risk RED: a prose mention of <risk>LOCAL</risk> is inert -> refused as missing",
+         lambda: any("NO <risk> element" in x for x in _risk_violations(tree, "declare <risk>LOCAL</risk> here\n" + v3))),
+        ("risk RED: off the enum -> refused",
+         lambda: any("off the enum" in x for x in _risk_violations(tree, "<risk>LOW</risk>\n" + v3))),
+        ("risk RED: LOCAL on an infra/ path -> below its WORLD floor",
+         lambda: any("below its floor WORLD" in x for x in
+                     _risk_violations(tree, "<risk>LOCAL</risk>\n<paths>\ninfra/aws/terraform/x/main.tf\n</paths>\n" + v3))),
+        ("risk RED: SERVED with a safe-apply invocation -> below its WORLD floor",
+         lambda: any("below its floor WORLD" in x for x in _risk_violations(
+             tree, "<risk>SERVED</risk>\n" + v3.replace("echo 1", "bash .tools/safe-apply.sh x")))),
+        ("risk: WORLD on an infra/ path -> admitted (at the floor)",
+         lambda: _risk_violations(tree, "<risk>WORLD</risk>\n<paths>\ninfra/aws/lambda/x.py\n</paths>\n" + v3) == []),
+        ("risk: SERVED above a LOCAL floor -> admitted (a class may sit above its floor)",
+         lambda: _risk_violations(tree, "<risk>SERVED</risk>\n" + v3) == []),
+        ("risk: a flat-root order is NOT graded",
+         lambda: _risk_violations("org/tier2_senior/A/task_orders/X.TO-1.md", v3) == []),
     ]
     failed = 0
     for name, fn in arms:
@@ -1178,6 +1199,53 @@ def _status_element_violations(rel, text):
         return ["%s: born terminal -- <status>%s</status> at issuance. An order is issued OPEN; a "
                 "terminal word belongs to the worker's close, not the issuance (row "
                 "AMGT_RESAPP-Z-S153)." % (rel, m.group(1))]
+    return []
+
+
+# GATE (xii) -- THE RISK CLASS (spine v3.19 L6; report 3 wave 2, Andrew-approved 2026-09-24, record
+# org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_154xZ_REPORT3_REFINEMENTS_APPROVED_BOTH_REPORTS_TO_CTO.md).
+# A NEWLY-ADDED tree order carries a line-anchored <risk>LOCAL|SERVED|WORLD</risk>; the class decides which limbs
+# engage (LOCAL: proof + checker + the COO's real run; SERVED adds the CVO's judgment grade; WORLD adds the CTO's
+# exercised read and the change-management entry). The floor is inferred: a <paths> entry under infra/ or an
+# invocation carrying a deploy verb is WORLD, and a declared class below it is refused. Newly-added only, like (xi).
+RISK_ELEMENT_RE = re.compile(r"^\s*<risk>\s*([A-Za-z]+)\s*</risk>", re.I | re.M)
+RISK_ORDER = ("LOCAL", "SERVED", "WORLD")
+RISK_DEPLOY_VERB_RE = re.compile(
+    r"\b(safe-apply|terraform\s+apply|safe-deploy|safe-ec2-deploy|aws\s+lambda\s+update-function|"
+    r"aws\s+s3\s+(?:cp|sync|mv|rm)\b[^\n<]*s3://|git\s+push|prod-deploy)\b", re.I)
+
+
+def _risk_floor(text):
+    """(floor, reason) from the order's own <paths> and invocations -- PURE."""
+    blk = re.search(r"^<paths>\s*$(.*?)^</paths>", text or "", re.M | re.S)
+    for ln in (blk.group(1).splitlines() if blk else []):
+        p = ln.strip().lstrip("-").strip().strip("`").replace("\\", "/")
+        if p.startswith("infra/"):
+            return "WORLD", "<paths> names %s (an infrastructure path)" % p
+    for inv in re.findall(r"<invocation>(.*?)</invocation>", text or "", re.S):
+        m = RISK_DEPLOY_VERB_RE.search(inv)
+        if m:
+            return "WORLD", "an invocation carries the deploy verb %r" % m.group(1)
+    return "LOCAL", "no infrastructure path and no deploy verb"
+
+
+def _risk_violations(rel, text):
+    """GATE (xii): PURE, no I/O. [] for flat-root orders."""
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel):
+        return []
+    m = RISK_ELEMENT_RE.search(text or "")
+    if m is None:
+        return ["%s: a NEW tree task order carries NO <risk> element on its own line -- declare "
+                "<risk>LOCAL</risk>, <risk>SERVED</risk> or <risk>WORLD</risk> in the record face (spine v3.19 L6: "
+                "the class decides which limbs engage)." % rel]
+    word = m.group(1).upper()
+    if word not in RISK_ORDER:
+        return ["%s: <risk>%s</risk> is off the enum (LOCAL, SERVED, WORLD)." % (rel, m.group(1))]
+    floor, why = _risk_floor(text)
+    if RISK_ORDER.index(word) < RISK_ORDER.index(floor):
+        return ["%s: <risk>%s</risk> is below its floor %s -- %s (spine v3.19 L6: a declared class below the "
+                "inferred floor is refused; declare %s)." % (rel, word, floor, why, floor)]
     return []
 
 
@@ -2458,7 +2526,8 @@ def check_prd_signoff(root, rel):
             notes.append("%s: L4-R not applied to %s -- %s" % (rel, rp, why))
             continue
         files = lib.read_signoff_files(os.path.join(os.path.dirname(ap), lib.SIGNOFF_DIR))
-        r = lib.evaluate(text, files, coo_lane_of_project=doc.get("coo_lane"), designated=lib.designated_brief_signer(doc)[0])
+        r = lib.evaluate(text, files, coo_lane_of_project=doc.get("coo_lane"), designated=lib.designated_brief_signer(doc)[0],
+                         brief_by_cro=lib.brief_written_by_cro(root, text)[0])
         sv = lib.violations(rel, code, rp, r)
         if sv:
             v.extend(sv)
@@ -2667,6 +2736,8 @@ def check_file(root, rel):
     # GATE (xi) -- a NEW tree TO carries a line-anchored <status> element, not born terminal
     # (row AMGT_RESAPP-Z-S153; cell AMGT-rk-56).
     v.extend(_status_element_violations(rel, text))
+    # GATE (xii) -- a NEW tree TO declares its <risk> class, never below the floor its paths and invocations imply.
+    v.extend(_risk_violations(rel, text))
     # GATE (iv) -- a NEW tree TO commits only under 2.0.0_SA_COO (LD-0521 A3).
     v.extend(_issuer_identity_violations(rel, _committer_serial(root)))
     # CELL REFERENCES resolve against the named decomposition at the cut (S5's class, 2026-09-03).

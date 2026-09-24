@@ -1,0 +1,4 @@
+# Presence stamps written by .tools/hooks/presence-stamp.sh: one <device>.last per device, device-local, never
+# committed. Only this file is tracked, so the directory exists on every checkout.
+*
+!.gitignore

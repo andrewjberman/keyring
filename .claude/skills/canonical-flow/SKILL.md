@@ -155,6 +155,7 @@ Measure each of these; ABSENT is a value, not a guess. Print the table.
 | brief | tree `brief/`, or the `brief_ref` the PRD header names, or `docs/briefs/` |
 | PRD | tree `prd/<CODE>_PRD.md` (PRD_HEADER block, ENDPOINT section, surface manifest, and from v3.16 the THREAD and ENRICHMENT BACKLOG sections; `prd_version` -- an addendum bumped it) or `docs/architecture/<CODE>_PRD.md` |
 | row flag | `project.json` `closer_contract` -- present means the project is `IN-CLOSER`: read it FIRST and route to `/closer`, never measure limbs past it |
+| mode lease | `python .tools/drive-mode.py read <CODE>` -- `FAST` means the project is `IN-FAST`: read its STATUS.md, never measure limbs past it; `HOLD` is a `SEQUENCED-BEHIND` hold; absent or `FULL` measures as below |
 | thread | the `FWD-1` trace artifact exercised this round (spine v3.16-3.18): `LIVE` / `NOT LIVE` / `NONE` (a pure governance project) |
 | decomposition | tree `decompositions/`, or `workflows/atom_decomposition/runs/<code-ish>/`; its dependency edges (the chains L6 derives fan-out from); its version against the issuance commit (a decomposition that moved after the cut is a finding: it is frozen for the round) |
 | task orders | `python .tools/to-check.py --all --project <CODE>` (both roots); the issuance commit and its `fanout:` line (`git log --format=%B -- task-orders/` on the newest issuance); for v2 assignees `python .tools/to-liveness-join.py` |
@@ -180,6 +181,8 @@ Measure each of these; ABSENT is a value, not a guess. Print the table.
 suspended for the named journeys, so do NOT run the ladder below -- read the contract folder and each lane's
 STATUS.md, report them, and route to `/closer` (Step 3, Decide 0). A limb measured on a closer's project is a dead
 limb and misclassifies its limbo. Absent -> measure as below, and record the `thread` line (Step 0b).
+**THEN READ THE MODE LEASE** (`python .tools/drive-mode.py read <CODE>`). `FAST` -> the class is `IN-FAST`: the seat
+builds directly under `/closer-drive`, so read `<project home>/STATUS.md` and stop; `HOLD` -> `SEQUENCED-BEHIND`.
 
 **The limb is the highest limb whose OUTPUT artifact exists and conforms** (the spine's section 1 names each
 limb's output). Read `dep_stage` too, but as a CLAIM: when the measured limb and `dep_stage` disagree, that
@@ -228,6 +231,7 @@ grantor for a flat row) and it goes into the report; it never overrides the meas
 | `ROUND-UNCUT` | the CTO's answer exists and no issuance has been cut from it | `2.0.0_SA_COO` (the recut, one issuance) or, after an addendum, `2.0.0_SA_COO` at L5 on the bumped PRD |
 | `SEQUENCED-BEHIND` | a named hold blocks the next limb (a register phase, a directive placement, an Andrew-direct record) | nobody: report the hold's carrier; only Andrew lifts a hold |
 | `IN-CLOSER` | the row carries `closer_contract` (spine v3.17, Closer): the canonical limbs are suspended for the named journeys and the contract governs until hand-back; rounds already cut are not re-opened | the contract's seats: `1.0.0_SA_CTO` rules and integrates, each implementing `2.0.0_SA_COO~x` runs `/closer run`, each `3.0.0_SA_CVO~x` runs `/closer review`; state is read from the contract folder and each lane's STATUS.md (`/closer status`), never recut |
+| `IN-FAST` | a live FAST mode lease (`.tools/drive-mode.py read <CODE>`; report 2 C1, spine Closer subsection, FAST mode): Andrew is present and the project's seat builds directly | the lease's seat runs `/closer-drive`; state is its STATUS.md; the CVO grades pins after the fact; never recut or dispatch while FAST |
 | `CLOSER-CANDIDATE` | 2 or more rounds and no live journey: no `FWD-1` thread trace exercised (spine v3.16-3.18) | `1.0.0_SA_CTO`, who may `/closer propose` it to Andrew; `4.0.0_SA_CRO` or any Tier-1 seat may `/closer trace` it with no word needed. It is a finding beside the blocking class, not a hold: the round keeps moving |
 
 ⛔ **WHY `IN-PROGRESS` EXISTS, AND WHY IT ARRIVES WITH A TEST RATHER THAN AS A LABEL** (row
@@ -356,6 +360,7 @@ and the next act of any seat must not overwrite it.
 **Decide, in this order:**
 0. If `IN-CLOSER` -> the contract governs. A seat named in it runs its `/closer` form; any other seat reports
    the contract path and each lane's STATUS.md and stops. Never recut or re-dispatch a closer's project.
+   If `IN-FAST` -> the lease's seat runs `/closer-drive`; any other seat reports the lease and STATUS.md and stops.
 1. If a `SEQUENCED-BEHIND` hold is named -> report it and stop. Do not lift it, do not work around it.
 2. If `UNFINISHED-EDITS` or `ORPHAN-WORKTREE` is present and you are not the COO -> report it to the COO first,
    with the file list, and do not touch those files; then continue with your own limb if it does not read or

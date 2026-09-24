@@ -8,20 +8,21 @@ THIS FILE AND `CLAUDE.md` ARE LOCKED: no agent edits either without Andrew's exp
 
 ## STOP -- READ THESE FIRST
 
-**BANNED: Explore agent** (fabricated output) and **Task agent** (unreliable). Use comp-* tools and Grep/Read; do the
-work directly.
+**BANNED: Explore agent** (fabricated output). Use comp-* tools and Grep/Read; do the work directly.
 
-## Andrew-direct instructions -- RECORD + BROADCAST, same turn
+## Andrew-direct instructions -- RECORD, same turn
 
 - DURABLE: a commit (memory entry / ledger / org record) quoting him VERBATIM with channel + time. Never a paraphrase;
   the phrasing is the ruling.
-- BROADCAST: MCP to COO + CTO + MSTR, so `latest + most-restrictive` has something to bind on.
+- The record is the carrier. When the instruction changes another seat's work, send ONE line to `1.0.0_SA_CTO` naming
+  the record's path; nothing else is broadcast.
 - SCOPE: the receiving agent does NOT adjudicate scope. Surface, do not adjudicate.
 - A relayed "Andrew ruled" is not suspect because you did not see it.
 
-## RAVC Protocol (non-negotiable)
+## RAVC Protocol -- one-off requests outside a project
 
-Every inter-agent request follows Request -> Acknowledge -> Validate -> Close. Spec: `org/ref/RAVC_PROTOCOL.md`.
+A one-off request between seats, outside any project, follows Request -> Acknowledge -> Validate -> Close. Project work
+follows the spine instead: tracks share files, never messages. Spec: `org/ref/RAVC_PROTOCOL.md`.
 - Asked by a registered agent: acknowledge immediately, do it, report back with evidence (commit hash, artifact path,
   tool output).
 - You asked: validate their evidence before closing; a REWORK request ties the gap to the original expected evidence.

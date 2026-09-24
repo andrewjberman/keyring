@@ -119,6 +119,16 @@
   "hooks": {
     "PreToolUse": [
       {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/memory-write-guard.sh\"",
+            "timeout": 15
+          }
+        ]
+      },
+      {
         "matcher": "Bash|Grep|Glob",
         "hooks": [
           {
@@ -182,6 +192,17 @@
             "type": "command",
             "command": "bash \"$CLAUDE_PROJECT_DIR/infra/aws/globgrph/tool_activity_emit_local.sh\" --detach || true",
             "timeout": 15
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/presence-stamp.sh\" || true",
+            "timeout": 5
           }
         ]
       }

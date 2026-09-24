@@ -178,11 +178,12 @@ travels to the worker.
   sign), the COO lane that will decompose this PRD (it cannot sign the brief half it decomposes), every worker.
   Andrew-direct 2026-09-10 ~21:2xZ: *"CRO and CVO should have to sign off on PRD before COO gets it"*; 2026-09-11
   ~05:3xZ: *"CVO should always be included. If CRO is not online, can do COO in their stead."*
-- **Binding:** a sign-off binds to the HASH of its half's sections at HEAD (`half_hash`), never to `prd_version`. A
-  bump that leaves a half byte-identical keeps that half's signature; a bump re-opens ONLY the half whose bytes
-  changed. Measured cause: thirteen PRD versions on 2026-09-10/11, the brief half unchanged across three of them and
-  re-signed each time because the file was version-bound. Sign-off files written before v3.15 (no `half_hash`)
-  bind to `prd_version` and re-open on any bump, as they did.
+- **Binding:** both halves bind to the HASH of the ENDPOINT section alone at HEAD (`half_hash`), never to
+  `prd_version` and never to any other section. A wording change anywhere else re-opens nothing and withholds no
+  delivery; only an ENDPOINT change re-signs. **The brief half is admitted without a signature when the brief was
+  written by a `4.0.0_SA_CRO` serial** (the brief's authoring commit, read by the lib), so on such a project the one
+  reviewer is the CVO. Sign-off files written before this binding carried their half's own sections; they are read
+  against the ENDPOINT hash from now on, so a file whose ENDPOINT is unchanged stays SIGNED.
 - **Trigger:** the L4 notifier, on every new or bumped header, for each half still owed at the current bytes; the
   message names the half, the review it asks for, the stamp command and the window.
 - **Input:** the PRD at HEAD; the brief at the pin `brief_ref` names; the endpoint at the pins the ENDPOINT section
@@ -213,14 +214,12 @@ travels to the worker.
   the sign-off commit; (2) `.tools/to-pipeline-gate.py` LIMB 6 refuses a task order whose PRD has a half MISSING,
   STALE, REFUSED, NOT-PERMITTED or unreadable, naming the half. Separation of duties: `prd/**` is lane `ANY_CTO`,
   `prd/signoff/**` is lane `TREE_PRD_SIGNOFF`; the author and the round-holding COO lane are refused by the lib.
-- **Multi-round (L10 -> L4):** an addendum is a bump and re-enters here; one that changes ENDPOINT only re-opens the
-  ratified-text half only, one that changes cells re-opens the brief half only, and the notifier asks the reviewer
-  who holds the context -- the CVO whose slug produced the addendum is always one of them.
+- **Multi-round (L10 -> L4):** an addendum is a bump and re-enters here only when it changes the ENDPOINT section;
+  the notifier then asks the CVO, and the brief half's owner unless the CRO wrote the brief.
 - **Vintage:** a PRD last committed before the L4-R law commit (`f8337502a9`) is grandfathered until its next
   `prd_version` bump (v3.13 non-retroactivity), and `status` says so.
 - **Cost:** two reads per changed half, on the critical path by design; a half's re-review is scoped to its delta.
-- **Non-application:** a header-only bump re-opens nothing (the header is in neither half); an L10 addendum that
-  changes no cell row re-opens the ratified-text half only.
+- **Non-application:** a header-only bump or any edit outside the ENDPOINT section re-opens nothing.
 
 ### L5 — Decomposition and battery
 
@@ -241,7 +240,11 @@ travels to the worker.
   the thread touches IAM. A lens whose neighborhood is not the cell's dependency chain, its dependencies' proof instances and the
   PRD rows it cites, but the filesystem around a cited path, states that blindness in its disposition. No cell is
   owned by a seat; every cell is served by a worker at L7. The dependency edges are the input L6 derives its fan-out
-  from: a maximal path through them is a chain, and two cells on one chain never run at once. The decomposition is
+  from: a maximal path through them is a chain, and two cells on one chain never run at once. **Cells are cut by write
+  set:** each cell owns files no other cell of the round writes. A one-line hookup in a shared file (a mount, an
+  import, a route entry, a registry line) belongs to no cell; the COO adds every hookup at the merge. An edge is a
+  real data dependency, one cell consuming another's output, never file contention. A batch cell that touches many
+  cells' files runs last in its round or folds into the merge. The decomposition is
   frozen at the cut: it does not version during a round; a cell's history lives in the proof-of-spec instances and
   in the round-N analysis, and the next cut starts from a clean rectangle.
 - **Tool:** `/atom-decomp` (`projects/ATOM_DECOMP`), the lenses.
@@ -259,7 +262,7 @@ travels to the worker.
   whose worker face is not sufficient on its own is defective at L6, never patched by a message. It carries
   `<decomp_ref>` with a delimited `<owned_cells>` list and the text of every owned cell inlined; the surfaces and the
   bounds; the battery's findings inlined where they touch the owned cells; `<paths>`, every file the worker reads or
-  writes, absolute from the root; and `<proof_of_spec>` with one clause per criterion: a mechanical criterion carries
+  writes, absolute from the root, its written files disjoint from every other cell's of the round; and `<proof_of_spec>` with one clause per criterion: a mechanical criterion carries
   its invocation and its expectation, the pattern the observed output must match, so that its pass is decided by a
   match and not by the worker; a judgment criterion is flagged as such, is never self-graded, and is graded by the
   CVO at L9; a criterion that conjoins clauses is refused at the cut. The record face, the status, the seating, the
@@ -282,11 +285,40 @@ travels to the worker.
   `dep_stage` or `fabric` is off its enum, whose preflight is incomplete, whose PRD fails L2 or L4's conditions above,
   whose row and folder disagree, whose `<issued_to>` names a Tier-0 or Tier-1 seat, whose criteria are not one
   clause each (a compound criterion, or a mechanical criterion without exactly one invocation and one expectation),
-  whose issuance leaves a cell of the decomposition unowned, or which is issued to a worker without a `<paths>`
-  block; an override is written to `org/to-pipeline-override-audit.log`. Lane `TREE_COO` refuses any other
+  whose issuance leaves a cell of the decomposition unowned, which is issued to a worker without a `<paths>`
+  block, or whose `<risk>` is absent, off its enum, or below the floor its `<paths>` and invocations imply; an
+  override is written to `org/to-pipeline-override-audit.log`. Lane `TREE_COO` refuses any other
   author's issuance; lane `TREE_PROJECT_ROW` admits the COO to the row for the `EXECUTING` flip.
 - **Handoff:** `dep_stage: EXECUTING`, flipped by the COO in the issuance commit, so the guards that key on the stage
   arm with the act that starts it.
+- **THE RISK CLASS DECIDES THE CHECKING.** Every task order carries `<risk>`, one of three values:
+  - `LOCAL` -- code, tests or records, including a portal change that lands on DEV only; nothing served moves.
+  - `SERVED` -- a PROD promotion or a served data path.
+  - `WORLD` -- a deploy, a delete, a grant, a key, or a claim to Andrew.
+
+  The L6 gate infers a floor from the order's `<paths>` and invocations (an infrastructure path or a deploy verb is
+  `WORLD`) and refuses a declared class below it. The class decides which limbs engage:
+  - `LOCAL`: the worker's proof, the checker's match, and the COO's one real run of the outcome at close (L7, the
+    drain). No CVO grade and no CTO exercised read.
+  - `SERVED`: adds the CVO's grade of its judgment criteria, on the real run's artifact, never on static markup.
+  - `WORLD`: adds the CTO's exercised read and the change-management entry.
+
+  A FAST mode lease never lowers a class.
+- **THE DIRECT-ACT PATH.** A unit of work that is one cell, of a declared small size (about 300 product lines or
+  fewer) and `LOCAL`, runs no L2, no L4-R and no L8 to L10:
+  - the COO writes one order carrying `<direct_act>true</direct_act>`;
+  - a worker executes it and it drains;
+  - the COO's one real run of the outcome is its close.
+- **THE ISSUER RULES INSIDE ITS OWN DECOMPOSITION.** The COO amends its own orders' criteria, re-points a path and
+  grants a path mid-round, and names in the amendment commit the gate limb that graded it or that none did; the
+  decomposition stays frozen. The CTO rules only on an ENDPOINT change and on `SERVED` or `WORLD` work.
+- **CHECKS ARE FILES, DRY-RUN AT THE BASE.** Each mechanical criterion's invocation is a small test or script file
+  the issuer writes and runs once against the base before the cut: a build check fails there and a bound or control
+  check passes there. One line per check in the issuance commit records the base run. A check that does neither is
+  recut before the spawn.
+- **THE FACE CARRIES THE CELL, NOT THE RULES.** The standing worker rules are the worker agent type's definition,
+  never restated on a face. `<worker_class>` names the agent type the spawn uses: `worker`, or `worker-light` for a
+  cell of about 100 product lines or fewer and for the batch repair cell.
 - **THE VERIFICATION DIET -- A TASK ORDER IS MOSTLY THE BUILD.** A build task order carries at most THREE mechanical
   criteria: the built behaviour; the hop's seam probe against its REAL neighbour where that neighbour is reachable, a
   fixture only where it is not; and at most one further criterion the cell genuinely needs. A fourth carries a
@@ -353,10 +385,9 @@ travels to the worker.
 - **The worker.** It starts with fresh context: the worker face of its task order, the standing law, and nothing else.
   It runs as the worker agent type, whose tools are the shell, the file tools and the search tools and nothing else:
   no broker tool, so it cannot register, send or receive; no subagent tool, so it cannot nest; no skill, gateway or
-  browser tool. Its model is Opus at high effort, declared by the worker agent type's own definition
-  (`.claude/agents/worker.md`, Andrew-direct 2026-09-09 ~21:5xZ at the `2.0.0_SA_COO~A` terminal: "All spawned workers for
-  /canonical-flow should be subagents in the same session box using Opus with effort high"), never chosen per task order
-  and never left to a per-spawn override. It exports its serial in every shell call and commits under it through `safe-commit.sh`
+  browser tool. Its model and effort are declared by its agent type's own definition (`.claude/agents/worker.md`, or
+  `.claude/agents/worker-light.md` when the face's `<worker_class>` names it), never chosen per task order and never
+  passed as a per-spawn override. It exports its serial in every shell call and commits under it through `safe-commit.sh`
   with that serial as author; the serial reads as Tier-2 to every guard and is registered nowhere. Its write surface
   is its task order: no lane enumerates a worker, and the lane resolver admits it to exactly the paths its order
   names in `<paths>` while that order is non-terminal at HEAD, to `deliverables/<serial>/` by convention, and to
@@ -406,7 +437,14 @@ travels to the worker.
   row whose `disarm_owner` is dark is the COO's to re-seat, since the COO is the seat that spawns, and one it cannot
   seat rides the COO's drain-end read to the CTO. A worker with an empty queue ends. A worker that dies mid-task-order
   leaves a branch; the COO merges it if its instance is valid and otherwise discards it and re-dispatches the task
-  order to a fresh slot.
+  order to a fresh slot. The COO merges per chain end, carrying the orders' status closes in the same merge, and adds
+  every shared-file hookup the round's reports name in one commit before the one real run. A
+  checker the round needs is merge tooling or rides the one repair cell, never a wave the product waits on.
+- **The one real run at close.** At the round's last merge the COO runs each outcome the round served once, for real:
+  the running page with real or served data, looked at, or the real entry point for a backend or pipeline outcome.
+  The artifact is committed under the COO's deliverables folder. It is the close record of every `LOCAL` cell and
+  the artifact the CVO grades `SERVED` judgment criteria on. It replaces every seat-to-seat re-read of the same
+  check: the checker's match is the verdict on a mechanical criterion, and nobody re-runs it.
 - **Gate:** `.tools/surprise-row-gate.py` at commit refuses a new investigation row without both halves, off its
   enums, off its project, whose id is off the grammar or already carried by another document of the plane, or off
   its coordinate: a worker's row carries its own slot's `W<n>` and a seat's row carries none.
@@ -423,8 +461,10 @@ travels to the worker.
 
 ### L8 — Compilation
 
-- **Owner:** `3.0.0_SA_CVO`, whose engagement with the project begins here. **Not engaged:** the owners of L1 to L7
-  as reviewers of this limb; every worker, which has no inbox. The CVO sends nothing to anyone during a round; its
+- **Owner:** `3.0.0_SA_CVO`, whose engagement with the project begins here, in a round carrying a `SERVED` or `WORLD`
+  cell. In a round of `LOCAL` cells only, the CVO is not engaged. The COO's drain-end message then carries the
+  real-run record and the round's `BLOCKING` and `ARMED` rows to the CTO, and stands in for the slug. **Not engaged:**
+  the owners of L1 to L7 as reviewers of this limb; every worker, which has no inbox. The CVO sends nothing to anyone during a round; its
   findings travel up in the slug at L10, to the CTO and to no one else, and reach the COO through the CTO's round-N
   analysis. The one exception is the law's own carrier: an Andrew-direct spoken at the CVO's terminal is recorded
   verbatim and broadcast the same turn, as every seat's law requires, and that broadcast is a relay of his word, not
@@ -454,11 +494,13 @@ travels to the worker.
 - **Owner:** `3.0.0_SA_CVO`. **Not engaged:** every other seat.
 - **Input:** the investigation rows and every proof-of-spec instance under the project. **Output:** in the CVO's own
   document, `org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/adjudications/ADJUDICATION_v<N>.md`, a `disposition` on
-  every investigation row (`UNDER_INVESTIGATION`, `GRADUATED`, `DISMISSED_WITH_REASON`, `DECOMP_INVALIDATING`), each
-  a new row naming the item it adjudicates, together with the CVO's corrections and its own observations, so that the
-  investigation document carries worker rows only; the grade of every judgment criterion, read against the
-  specification that issued it, since the checker grades no criterion's truth and the worker records without a
-  verdict; and, for graduated rows, remediation rows at
+  every `BLOCKING` or `ARMED` investigation row (`UNDER_INVESTIGATION`, `GRADUATED`, `DISMISSED_WITH_REASON`,
+  `DECOMP_INVALIDATING`), each a new row naming the item it adjudicates, together with the CVO's corrections and its
+  own observations, so that the investigation document carries worker rows only. An `OBSERVATION` row that is not
+  armed is NOTED at the round's close and needs no disposition; the CVO may still graduate one. The output also
+  carries the grade of every judgment criterion of a `SERVED` or `WORLD` cell, graded on the COO's real-run artifact
+  and read against the specification that issued it; the worker records without a verdict. The CVO does not re-read
+  a mechanical criterion: the checker's match is its verdict. For graduated rows, the output adds remediation rows at
   `org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/remediations/REMEDIATION_v<N>.md`, issued as ONE slug for the
   round at L10 (one artifact, one moment), never as a stream of messages during L7 to L9. Graduation is a grounding bar:
   a row graduates when its mechanism is attributed, its denominators carried and its remedy holder named; severity
@@ -479,14 +521,17 @@ travels to the worker.
 
 - **Owner:** `3.0.0_SA_CVO` issues the slug; `1.0.0_SA_CTO` routes, always; `2.0.0_SA_COO` recuts. **Not engaged:**
   every worker; `3.0.0_SA_CVO` after the slug; `2.0.0_SA_COO` until the round-N analysis reaches it.
-- **Precondition:** every task order under the project is terminal, each finished with a valid proof-of-spec instance
-  whose `surprises` entries resolve to rows, and every investigation row is dispositioned.
+- **Precondition:** every task order of the round is terminal, each finished with a valid proof-of-spec instance
+  whose `surprises` entries resolve to rows, and every `BLOCKING` or `ARMED` investigation row is dispositioned. An
+  `OBSERVATION` row that is not armed counts against nothing. An order of a later round never holds an earlier
+  round's slug.
 - **The slug.** The CVO writes the round's remediation document, the one artifact of the round, and sends its only
   message of the round: the slug's path and vintage, to `1.0.0_SA_CTO`. There is no route token and no route owner;
   the CTO is the single router of every round.
 - **The CTO's read.** First coverage: for each outcome in the PRD header, do the proof-of-spec instances at HEAD,
-  taken together, reach its `DONE WHEN`; this is the same read as the close's grades, one verdict per outcome, against
-  the exercised artifact, never the report. Then one of two answers. An outcome no cell ever served takes a PRD
+  taken together, reach its `DONE WHEN`. This is the same read as the close's grades, one verdict per outcome. For a
+  `LOCAL` or `SERVED` outcome it reads the COO's real-run record; for a `WORLD` outcome it reads the exercised
+  artifact itself; it never reads a report. Then one of two answers. An outcome no cell ever served takes a PRD
   addendum: the CTO bumps `prd_version`, the L4 notifier delivers the header to the two reviewers and, once both re-sign (L4-R), to the COO, and the loop runs forward from
   L4; this is rare by design, because an uncovered outcome means L5 missed it and the decomposition is over the thread
   and the manifest the CTO wrote. Otherwise the CTO writes `ledger/ROUND_ANALYSIS.round<N>.md`: per outcome, the expectation against
@@ -510,8 +555,9 @@ travels to the worker.
   cell holds a terminal task order with a valid proof-of-spec), writes `ledger/COMPLETION_REPORT.round<N>.json`: one
   row per outcome in the PRD header, the cells that served it, each cell's proof-of-spec, and the claim `COVERED` or
   `UNCOVERED`, both denominators printed, so an outcome no cell ever served shows in the COO's own report; it is the
-  final drain record. `1.0.0_SA_CTO` reads the exercised artifact each outcome's `DONE WHEN` names, never the report,
-  and writes `ledger/COMPLETION_GRADES.round<N>.json`: one verdict per outcome, `REALIZED`, `NOT_REALIZED` or
+  final drain record. `1.0.0_SA_CTO` writes the grades from the COO's real-run record for a `LOCAL` or `SERVED`
+  outcome, and from its own read of the exercised artifact each `WORLD` outcome's `DONE WHEN` names, never from the
+  report, in `ledger/COMPLETION_GRADES.round<N>.json`: one verdict per outcome, `REALIZED`, `NOT_REALIZED` or
   `NOT_EVALUATED`, the artifact and its vintage cited, the observed state matching the card's state, and the artifacts
   covering every limb of the card's acceptance clause; a control window that makes a limb true by construction is not
   evidence for it, and a limb no artifact covers grades `NOT_EVALUATED`; it is the last round-N analysis. `CLOSED`
@@ -522,9 +568,10 @@ travels to the worker.
   completion date, registry row. Contract: `org/standards/COMPLETION_REPORT.schema.json`.
 - **Tool:** the remediation document; `.tools/prd-header-notify.py` delivers an addendum's bumped header to the reviewers and, once both re-sign (L4-R), to the COO, and
   re-offers until READ; the round-N analysis travels by one message from the CTO to the COO.
-- **Gate:** `.tools/surprise-row-gate.py` refuses a remediation row while any task order under the project is not
-  terminal or any investigation item under it is not dispositioned; the items are the investigation document's rows,
-  and the CVO's own rows never count against the CVO's slug. An existing item is dispositioned by a new
+- **Gate:** `.tools/surprise-row-gate.py` refuses a remediation row while any task order of the slug's round is not
+  terminal, or any `BLOCKING` or `ARMED` investigation item is not dispositioned. The items are the investigation
+  document's rows; the CVO's own rows and unarmed `OBSERVATION` rows never count against the slug. It counts the
+  round's orders, never the project's, so a round N+1 issuance cut before round N's slug does not hold round N. An existing item is dispositioned by a new
   adjudication row that names it in `adjudicates`; the channel stays append-only. `.tools/missions-tree-index.py check`
   refuses a `CLOSED` row unless the completion report and the grades exist for the same round, cover exactly the
   header's outcomes, and every grade reads `REALIZED`.
@@ -587,6 +634,46 @@ watcher from its watermark, and the CTO does nothing. `/canonical-flow` is the i
   first outcome and its other journeys the enrichment backlog; any frontend and backend projects it was split into
   close as superseded; and the remaining work returns to canonical enrichment rounds under L10, or to the close.
 - **Tool:** `/closer`, in both runtimes; its templates are the four artifacts.
+- **FAST MODE -- one seat, one project, Andrew present.** Two settings on every project decide how its work runs,
+  independently of each other:
+  - **presence**, the mode lease, decides pace and reviewer;
+  - **risk and size**, `<risk>` plus the direct-act floor (L6), decide how much checking the work gets.
+
+  The mode lease:
+  - It is FAST while Andrew is at the computer and FULL, the default, otherwise.
+  - It is a device-local marker armed by `/drive-mode` (`.tools/drive-mode.py`): two hours by default, extended while
+    his presence stamp is under thirty minutes old.
+  - It fails closed to FULL: absent, expired or unreadable reads FULL, so a forgotten FAST never runs overnight.
+  - Every arm, end and lapse is one line of the committed drive-mode log.
+  - It names one seat and one surface. The only refusal the lease adds is at arm: a surface another live lease or
+    another project's open order already drives. Andrew resolves it with a hold on the other, or a narrower surface.
+  - The project's seat runs ONE loop, and each tick reads the lease: FULL runs `/canonical-drive`, FAST runs
+    `/closer-drive`.
+
+  While FAST:
+  - The seat builds each item itself: no task orders, no decomposition, no subagents, no surprise rows for in-scope
+    work. STATUS.md, overwritten in place, is the record.
+  - Per item: its own test, typecheck and lint on the touched package, and one real run looked at.
+  - The seat lands on portal DEV itself, with CI running and no CTO go-ahead or integrator push; the push gate admits
+    the lease's seat to DEV only, and PROD stays gated.
+  - The CVO grades each landed pin after the fact. A FAIL becomes the next item, and nothing waits on it.
+  - The seat raises no CTO ruling inside the lease's surface.
+  - The comp-tool search rail stands down for the seat for the lease's life.
+  - Messages are an interface published, a blocker or a review handoff, and nothing else.
+
+  Never relaxed: the commit gate, the seat's own worktree, no rebase on a shared branch, the never-widen sign-off, the
+  deploy ledger, `safe-apply`, vendor egress on Andrew's per-use word, PROD promotion, destructive-act confirmation,
+  the cross-firm guard, the naming builder for any new address or name, and secrets. **A FAST lease never lowers a
+  `<risk>` class:** a deploy inside it is still `WORLD`.
+
+  Boundaries:
+  - **FULL -> FAST:** the COO cuts nothing new, lets each worker finish the order in hand or flips it superseded
+    with its cell moved to the next-list, and writes STATUS.md from the open cells and the enrichment backlog.
+  - **FAST -> FULL:** the seat commits what builds and pins any unfinished edit on its branch. The next round is then
+    cut straight from STATUS.md's next-list with no CTO round-N analysis for that one cut. The analysis resumes at
+    that round's L10, and the CVO's next slug carries one section on the FAST interval.
+  - `closer_contract` stays the multi-seat rescue on Andrew's word. Both it and a FAST lease make `/canonical-drive`
+    stand aside.
 
 ### Cross-cutting — the integrator
 
@@ -624,11 +711,12 @@ measured channel backlog says otherwise.
 | L4 PRD | `1.0.0_SA_CTO` | `PRD` | lane `ANY_CTO` | — | `prd-header-notify.py` to the routed reviewer of each half still owed, on every bump |
 | L4-R sign-off | `3.0.0_SA_CVO` (ratified-text half, always); `4.0.0_SA_CRO` (brief half) or a live `2.0.0_SA_COO` not holding the round in its stead | `PRD` | lane `TREE_PRD_SIGNOFF` (the CTO and the round-holding COO lane are REFUSED); the stamp is `prd-signoff.py` | `to-pipeline-gate.py` LIMB 6 refuses a TO against a PRD with a half not SIGNED at its current bytes | `prd-header-notify.py` withholds the COO delivery until both halves SIGNED, nudges an overdue half (CTO copied), re-routes an overdue brief half, releases on the sign-off commit |
 | L5 decomposition | `2.0.0_SA_COO` | `DECOMP` | lane `TREE_COO` | — | — |
-| L6 issuance | `2.0.0_SA_COO` | `EXECUTING` | `to-proof-of-spec-check.sh`, `to-pipeline-gate.py` (coverage, criterion grammar, the worker's `<paths>`), lane `TREE_COO` | — | — |
+| L6 issuance | `2.0.0_SA_COO` | `EXECUTING` | `to-proof-of-spec-check.sh`, `to-pipeline-gate.py` (coverage, criterion grammar, the worker's `<paths>`, `<risk>` and its floor), lane `TREE_COO` | — | — |
 | L7 execution | a worker subagent | `EXECUTING` | `surprise-row-gate.py` (rows: halves, uniqueness, coordinate); `owned-paths-validate.py` (the order's `<paths>`); at the drain, `safe-merge.sh` (the row gate on the merged index) | `proof-of-spec-check.py` (the expectation match); the terminal-flip limb of `to-pipeline-gate.py` | — |
 | L8 compilation | `3.0.0_SA_CVO` | `EXECUTING` | at send: `org/mcp/cvo_send_guard.py` (the CVO to the CTO only) | — | `surprise-watch.sh` to the CVO |
 | L9 adjudication | `3.0.0_SA_CVO` | `EXECUTING` | `surprise-row-gate.py` (rows; the `C-` coordinate), lane `TREE_CVO` | — | — |
-| L10 slug, read, recut, close | `3.0.0_SA_CVO` issues the slug; `1.0.0_SA_CTO` reads and routes; `2.0.0_SA_COO` recuts; at the close `2.0.0_SA_COO` reports, `1.0.0_SA_CTO` grades | `ROUND_CLOSE`, `CLOSED` | `surprise-row-gate.py` (the precondition over worker rows); `missions-tree-index.py check` (the `CLOSED` flip) | — | `prd-header-notify.py` (an addendum's header) to the COO |
+| L10 slug, read, recut, close | `3.0.0_SA_CVO` issues the slug; `1.0.0_SA_CTO` reads and routes; `2.0.0_SA_COO` recuts; at the close `2.0.0_SA_COO` reports, `1.0.0_SA_CTO` grades | `ROUND_CLOSE`, `CLOSED` | `surprise-row-gate.py` (the precondition over the round's orders and its `BLOCKING` or `ARMED` worker rows); `missions-tree-index.py check` (the `CLOSED` flip) | — | `prd-header-notify.py` (an addendum's header) to the COO |
+| FAST mode (on the lease) | the lease's seat builds; Andrew reviews live; `3.0.0_SA_CVO` grades pins after the fact | unchanged | `drive-mode.py arm` (a surface another driver holds); `never-rules-gate.sh` (portal DEV push admitted to the lease's seat only) | — | — |
 
 Every notification and every acknowledgement is read on the broker's delivery ledger: sent, emitted and read are
 three states, and only an agent's own acknowledgement is read. A worker is on no ledger and in no telemetry stream;
@@ -700,3 +788,5 @@ verdict, read against the last round under the prior text on the same instrument
 | 3.16 | 2026-09-23 | Andrew-direct at the `1.0.0_SA_CTO~C` terminal (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260923_CANONICAL_FLOW_OPS_AND_CLOSER_FLOW.md` @c564b6262a): *"we need to focus on one round bringing a product or pipeline to MVP status ... subsequent rounds are all about enrichment"* and the closer flow formalised lightly; the brief he commissioned, `org/tier1_exec/4.0.0_SA_CRO/deliverables/BRIEF_CANONICAL_FLOW_SPEED_CLOSER_FLOW_SKILLS_PARITY_20260923.md` @ea031c3987 (R1-R4). Measured cause: IRPT_FNTEND 15 rounds and IRPT_BCKEND 18 rounds with zero journeys end to end and zero outcomes REALIZED, both PRDs leaving the frontend/backend seam jointly unowned; the frontend BUILD share of criteria falling from 68% in round 1 to 0% by round 15; the closer run reaching code in under an hour and then both live contacts failing on the shared first hop after about 8.5 hours offline | **THE THREAD FIRST**: a product's `FWD-1` is one live journey end to end on the deployed stack; the PRD gains THREAD and ENRICHMENT BACKLOG sections (brief half); a new product is one journey in one project; round 1's rectangle is over the thread's hops, with the battery defaulting to not-applicable except `comp-iam`. **ENRICHMENT ROUNDS**: the round-N analysis ends in an enrichment list for round N+1; remediations ride along, thread-breaking first and instrument/record/style repairs batched into one cell; the L6 sentence that made every later round a repair loop is replaced by one that covers THIS round's decomposition. **THE VERIFICATION DIET**: at most three mechanical criteria per build task order; repo-wide hygiene and the thread trace run at the drain; judgment only where needed; by prompting, no gate. **CLOSER**: a subsection beside Midstream for a product in flight on Andrew's word, its four artifacts, LIVE FIRST, FILES OVER MAIL and NO SIDE-QUESTS, and its hand-back to enrichment rounds; `/closer` is its instrument. Non-retroactive: a round already cut finishes under its cut task orders. No new gate or owner. |
 | 3.17 | 2026-09-23 | Andrew-direct ~16:3xZ at the `4.0.0_SA_CRO` terminal answering seven open calls on the v3.16 brief and text, VERBATIM *"1.) Hold is off. 2.) Yes. 3.) Yes. 4.) Rec approved. 5.) That does apply for projects that have a frontend but needs to be considered in the event it's purely a backend/infrastructure product (e.g. NFRA_GLOBGRPH, NFRA_COMPEFFICACY, LGIC_NAMING, LGIC_LGCTFM, etc.). 6.) Yes. 7.) Yes."* (record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260923_163xZ_HOLD_OFF_AND_CLOSER_OPEN_CALLS_RULINGS.md` @7303be1bbb), relayed to `1.0.0_SA_CTO~C` as message 99672 with the six non-sovereign fixes of the same `/open-calls` output | **LIVE** defined for a product with a frontend: the real backend, real data and real login, the frontend local or on DEV, a PROD release an enrichment item; for a purely backend or infrastructure product it is OPEN, and such a product stays outside the thread clause until defined. **L4** reworded: one product is one project, its first outcome one journey, never a frontend/backend split. **CLOSER**: a read-only trace needs no word from Andrew; the CTO may propose a closer at two or more rounds with no live journey; Andrew's word gates only the build; a closer is sequenced like any project and its Codex COO seats count toward the three-COO limit; the row carries `closer_contract` while it runs and `/canonical-drive` skips it; a Codex CVO grades on a live trace, deployed bytes or a test run, never a comp-tool read; the no-acknowledgement rule covers peer traffic only; at hand-back the product becomes one project and its split projects close as superseded. **DIET**: a difference-control arm is part of its criterion, not a fourth check. **PIPELINE THREAD**: its person is the consumer of the served output. No new gate or owner. |
 | 3.18 | 2026-09-23 | Andrew-direct ~17:0xZ at the `4.0.0_SA_CRO` terminal, VERBATIM *"Your rec is approved on call 5b. I will handle MSTR"* (addendum to `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260923_163xZ_HOLD_OFF_AND_CLOSER_OPEN_CALLS_RULINGS.md` @c4ec953322), approving `org/tier1_exec/4.0.0_SA_CRO/deliverables/PROPOSAL_THREAD_FOR_BACKEND_AND_INFRASTRUCTURE_PRODUCTS_20260923.md` @2dd215da34, relayed to `1.0.0_SA_CTO~C` as message 99684 | **THE BACKEND/INFRASTRUCTURE THREAD** (call 5's open half): one named consumer's one real use of the mechanism -- the real tool at HEAD from an ordinary seat shell or the deployed component, over real inputs, through the consumer's real entry -- ending in the consumer's observed result as one trace; the result may land on one machine's working branch or in a QA location, and shared-branch availability and production scheduling are enrichment items. L2's non-application narrows to a pure governance project, and so does the Closer's. Transition: `LGIC_NAMING` is `CLOSED` and not reopened; `NFRA_COMPEFFICACY` and `LGIC_LGCTFM` apply it from their next issuance. Served-output writes still carry the never-widen sign-off; no gate is lifted. No new gate or owner. |
+| 3.19 | 2026-09-24 | Andrew-direct ~15:3xZ at the `4.0.0_SA_CRO~A` terminal approving report 2's seven recs and C1-C9 (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_153xZ_REPORT2_ALL_SEVEN_RECS_APPROVED.md`, report `org/tier1_exec/4.0.0_SA_CRO/deliverables/REPORT2_CANONICAL_AND_CLOSER_FLOWS_SPEED_MODE_AND_SWITCH_20260924.md`); Andrew-direct ~15:4xZ there approving the joint model and sending reports 2 and 3 to the CTO for immediate implementation (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_154xZ_REPORT3_REFINEMENTS_APPROVED_BOTH_REPORTS_TO_CTO.md`, report 3 `docs/briefs/process-architecture-verification-bureaucracy-brief-20260924.md` Waves 1-3) | **FAST MODE AND THE RISK CLASS, ONE RULE:** presence (the mode lease) decides pace and reviewer, `<risk>` plus the direct-act floor decide checking; the Closer subsection carries FAST mode (the lease, the one refusal at arm, `/closer-drive`, the DEV landing, after-the-fact CVO grading, the rail stood down, the never-relaxed list, both boundaries); L6 gains `<risk>` (`LOCAL` / `SERVED` / `WORLD`, a floor inferred from paths and invocations), the direct-act path, issuer rulings inside its own decomposition, checks as files dry-run at the base, and `<worker_class>`; L7 names no model and adds the per-chain merge and the COO's one real run of each outcome at close, which replaces every seat-to-seat re-read; L8-L9 engage the CVO on `SERVED` / `WORLD` rounds only and disposition `BLOCKING` / `ARMED` rows only; L10's precondition and refuser count the slug's round, never the project, and the CTO's exercised read is kept for `WORLD` outcomes; L4-R binds both halves to the ENDPOINT hash alone and admits the brief half when the CRO wrote the brief. Law-locked edits (CLAUDE.md, org/XXX.md), the memory cap and the byte budgets are not in this version. |
+| 3.20 | 2026-09-24 | Andrew-direct ~17:0xZ at the `4.0.0_SA_CRO~A` terminal, VERBATIM "Yes, i like that item 1, send it" (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_170xZ_C10_CUT_TASK_ORDERS_BY_WRITE_SET.md`; report 2 section 13, C10) | **CELLS ARE CUT BY WRITE SET:** L5 -- each cell owns files no other cell of the round writes, a one-line hookup in a shared file belongs to no cell, an edge is a real data dependency and never file contention, a batch cell touching many cells' files runs last or folds into the merge; L6 -- a cell's written `<paths>` are disjoint from every other cell's of the round; L7 -- the COO adds every hookup the round's reports name in one commit at the merge, before the one real run. The `fanout:` line and the cap of eight are unchanged. |

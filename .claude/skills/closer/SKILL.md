@@ -118,7 +118,10 @@ ties and integrates the three-way verdict; no single lane closes the product.
 1. Read the CONTRACT, your MANDATE and the trace brief for your surface. Measure your starting pins.
 2. If you own the shared first hop, make the live thread pass FIRST (LIVE FIRST below). If you do not, build against
    the owner's published interface and do not count an offline closure toward an acceptance ID until the thread is live.
-3. Implement, test, and publish a pinned candidate: one message, interface published or review handoff.
+3. Implement and test. Then run the candidate ONCE for real: the page served with real or served data and looked
+   at (`/frontend-dev`), or the real entry point for a backend hop. Publish the pinned candidate with that run's
+   artifact in one message, an interface published or a review handoff (report 2 C6). The CVO grades the pin on
+   that artifact, never on static markup.
 4. Overwrite STATUS.md (`templates/STATUS.md`). Park anything off the thread (NO SIDE-QUESTS).
 5. On a FAIL from your CVO, fix directly and return a new pin. No recut, no round.
 

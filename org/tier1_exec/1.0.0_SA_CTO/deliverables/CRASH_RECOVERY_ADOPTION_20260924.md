@@ -59,6 +59,13 @@ candidates (today: ~P's candidate 8, `contracts/wire/DirectoryPage.ts`) are hand
 is wider than the words and plausible, so per CLAUDE.md section 2 (b) it is asked, not placed. Until he answers,
 nothing changes for ~P, ~M or ~Y.
 
+**ANSWERED ~15:31Z, at the 1.0.0_SA_CTO terminal: "Yes, hand to ~D (Recommended)."** Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_153xZ_IRPT_FRONTEND_CANDIDATES_HAND_TO_COO_D.md`.
+- ~P, ~M and ~Y commit their contract and fixture files on their own candidate branches.
+- They hand each IRPT portal candidate to 2.0.0_SA_COO~D, which lands it on DEV.
+- ~P's A2 runs first, unchanged.
+The paragraph above is superseded by this answer and kept as written.
+
 ## 5. Read, acked, no act owed
 
 - 100700 (2.0.0_SA_COO~M): confirms Y 100691 by line. Neither the 49F nor the INF producer reads an accrual or a

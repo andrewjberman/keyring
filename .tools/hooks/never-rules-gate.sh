@@ -679,7 +679,33 @@ if [ -n "$_PUSHPULL_HIT" ] \
             *[/:]Opal-Capital/portal|*[/:]Opal-Capital/portal.git) _DT_PORTAL_PROD=1 ;;
         esac
     fi
-    if [ "$_DT_PORTAL_PROD" -eq 0 ]        && ! printf '%s' "$_CALLER" | grep -qE -- '^0\.0\.0_AB_MSTR(~[A-Za-z0-9]+)?$'; then
+    # --- FAST-LEASE PORTAL-DEV CARVE-OUT (report 2 call 2, Andrew-approved 2026-09-24, record
+    # org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_153xZ_REPORT2_ALL_SEVEN_RECS_APPROVED.md):
+    # while a FAST lease is live, ITS seat lands product changes on portal DEV itself. Scoped four ways, all
+    # required: verb push; branch exactly DEV; origin Opal-Capital/portal; the caller is the `seat` of a live
+    # FAST lease in $DRIVE_MODE_DIR (default $WS/org/mcp/drive_mode, written by .tools/drive-mode.py). An
+    # absent, expired or unreadable lease admits nothing (fail-closed). PROD stays gated. The DEV hazard
+    # (publishing other seats' local commits) moves to /closer-drive step 5, which checks origin/DEV..HEAD.
+    _FAST_DEV=0
+    _DM_DIR="${DRIVE_MODE_DIR:-$WS/org/mcp/drive_mode}"
+    if [ "$BRANCH" = "DEV" ] && [ -n "$_CALLER" ] && [ -d "$_DM_DIR" ] \
+       && printf '%s' "$_PUSHPULL_HIT" | grep -qE -- "$_RE_PUSH_ONLY"; then
+        _origin_url="$(git -C "$REPO" config --get remote.origin.url 2>/dev/null)"
+        case "$_origin_url" in
+            *[/:]Opal-Capital/portal|*[/:]Opal-Capital/portal.git)
+                _dm_now="$(date +%s 2>/dev/null | tr -dc '0-9')"
+                for _lf in "$_DM_DIR"/*.json; do
+                    [ -f "$_lf" ] && [ -n "$_dm_now" ] || continue
+                    if "$JQ" -e --arg s "$_CALLER" --argjson n "$_dm_now" \
+                         '.mode == "FAST" and .seat == $s and ((.expires_epoch | tonumber) > $n)' \
+                         "$_lf" >/dev/null 2>&1; then
+                        _FAST_DEV=1; break
+                    fi
+                done ;;
+        esac
+    fi
+    if [ "$_DT_PORTAL_PROD" -eq 0 ] && [ "$_FAST_DEV" -eq 0 ] \
+       && ! printf '%s' "$_CALLER" | grep -qE -- '^0\.0\.0_AB_MSTR(~[A-Za-z0-9]+)?$'; then
         deny "BLOCKED (LD-0367 rule 2 / LD-0368 -- INTEGRATOR-ONLY push/pull on shared branch '$BRANCH'): only 0.0.0_AB_MSTR (base) / 0.0.0_AB_MSTR~Z (site-Z) may push or pull the shared branch; you are '${_CALLER:-UNRESOLVED}'. ONE EXCEPTION EXISTS AND IT DID NOT ADMIT THIS CALL (Andrew-direct 2026-09-01): a DT serial may push branch PROD or DEV in the PORTAL repo (/prod-deploy Steps 1a + 4; Andrew-direct 2026-09-01 and 2026-09-02), scoped to branch in {PROD,DEV} AND an origin remote of Opal-Capital/portal AND verb push -- so a DT is still denied on the workspace branches and on any pull, and any non-DT is still denied in the portal. An Andrew-directed non-DT uses this same audited override, citing his word (Andrew-direct 2026-09-02). WHY: a push from any other seat PUBLISHES EVERY OTHER SEAT'S LOCAL COMMITS along with yours -- neither of you chooses it and you cannot see what you carried (proven integration-window #1, 2026-07-31: a seat's push carried the site-Z integrator's held commit). Commit your work to a SEAM; the hourly INTEGRATION WINDOW (LD-0367) moves it -- the integrator MSTR runs the pull+push. 'git fetch' (incl. fetch-by-hash, LD-0367 rule 4) is NOT blocked. A scratch branch is your own business (this fired because HEAD is the shared '$BRANCH'). Audited override (rare -- coordinate with the integrator FIRST, because it still republishes the tree): append '# never-override: <reason>' to the SAME simple command."
     fi
 fi

@@ -190,6 +190,16 @@ if [ "$tool" = Bash ] && [ "$_search_shape" != none ]; then
   done <<EOF
 $_segs
 EOF
+  # REPORT 3 ITEM 1.6 (Andrew-approved 2026-09-24): comp-which answered NO FIT in this session within 10 minutes ->
+  # the raw search is ADMITTED and logged (shape=<shape>-nofit), not denied. comp-which writes the marker
+  # (org/mcp/sessions/<sid>.nofit, epoch expiry); absent, expired or unparseable -> the rail is unchanged.
+  if [ -n "$_search_seg" ] && [ -n "$sid" ] && [ -f "$WS/org/mcp/sessions/${sid}.nofit" ]; then
+    _nf=$(tr -dc '0-9' < "$WS/org/mcp/sessions/${sid}.nofit" 2>/dev/null); _nn=$(date +%s 2>/dev/null | tr -dc '0-9')
+    if [ -n "$_nf" ] && [ -n "$_nn" ] && [ "$_nn" -lt "$_nf" ] 2>/dev/null; then
+      echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  ALLOW-SEARCH  tool=Bash  shape=${_search_shape}-nofit  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
+      exit 0
+    fi
+  fi
   if [ -n "$_search_seg" ] && [ -f "$WS/org/mcp/comprail-gate1.enforce" ]; then
     class=repo_search
     msg="comp-tool on the HUD: a raw repo search in Bash (${_search_shape}: $(printf '%s' "$_search_seg" | head -c 80)). The rail is comp-find: \`comp-find '<pattern>' [pathspec]\` = content (graded bands, PRINTED denominator, gitignored content included by default); \`comp-find --name '<glob>' [pathspec]\` = files; \`comp-which \"<question>\"\` = the router. A \`cmd | grep\` pipe RECEIVER stays free."
