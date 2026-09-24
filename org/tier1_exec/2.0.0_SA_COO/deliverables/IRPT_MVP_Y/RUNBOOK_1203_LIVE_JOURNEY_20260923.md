@@ -44,7 +44,8 @@ recipient string; `report_title` "Retained input analysis". Firm = the signed-in
 
 1. Deployed digests: `irpt-ycharts-generate`, `irpt-status`, `irpt-export-render` CodeSha256 at run time versus the
    source map; host package `SHA256SUMS` sha and the factory module path from P's cutover receipt; wrapper and
-   library pins the session installed (`55ddb8f7...`, `57aeca54...`).
+   library pins the session installed (wrapper `55ddb8f7947cba7c...`, library `34df3e94fc062675...` at P 282f7ea427,
+   the S119 bundle-contract fix; `41ffebbe...` was the pre-fix blob).
 2. Immutable revisions: `input_id`, `identity.request_id`, `revision`, `composition_ref.sha256`, `accepted_at`,
    `report_id`, `certification_sha256`, the export receipt id.
 3. The authority evidence of the job (from the resident log line count, not the evidence body): decisions at
