@@ -253,6 +253,194 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-31 -- ⛔ CALL 4 IS NOT UNDECIDABLE. THE IDENTITY IS IN A 30-DAY LOG, AND "RECONSTRUCTABLE FROM NOTHING" IS FALSE
+
+**The card:** whether the AMGT incident's realised exposure -- four `BA_US_Equity` thesis responses
+(09-22 19:15:35, 20:14:11, 20:21:40; 09-23 20:44:34) plus one overlay, **all to ONE client IP** -- warrants a client
+notification. **It has sat at Andrew as structurally undecidable**, on `3.0.0_SA_CVO~Z`'s deliberate and
+well-reasoned abstention (R-21a): *"it turns on who the client was, which this seat cannot determine and will not
+guess"*, because *"per-firm attribution is reconstructable from nothing in this estate (R-11a) ... an IP is not an
+identity."*
+
+⛔ **THE UNIVERSAL IS FALSE, AND THE TELL WAS GRAMMATICAL BEFORE IT WAS MEASURED.** *"Reconstructable from
+NOTHING"* is a NEVER-class quantifier, and the instrument behind it is a REPO-PLANE one. **A repo census can
+answer "no mapping file exists here." It can never answer whether the AWS plane logged a principal.** That is a
+different instrument, and it cost one query.
+
+**MEASURED, 2026-09-24 ~05:4xZ, on the live plane:**
+- `/aws/lambda/opal-portal-authorizer` **EXISTS**, retention **30 days**, 3.75 MB stored -- so the incident window
+  is RETAINED, not aged out.
+- Its events carry, verbatim: `Token verified successfully: { email, tier, role, userType }` and an
+  `Authorization context: { email, tier, role, userType, allowedFirmIds }`. ⭐ **EMAIL, TIER, ROLE AND FIRM SCOPE,
+  PER AUTHORIZATION.**
+- ⭐ **COVERAGE CONTROL RUN BEFORE ANY ZERO WAS BELIEVED:** 2026-09-22 UTC holds **26+ events**, so the log has
+  data that day. Across that day it distinguishes **TEN DISTINCT IDENTITIES ACROSS FOUR FIRMS** -- six internal
+  `@opalinvest.com` authorizations and, on three EXTERNAL client domains, `vmwealthpartners.com` (16),
+  `inflectionwealth.com` (52 across three people) and `cottonwoodmail.com` (9 across two).
+  ⚠ **Individual addresses are deliberately NOT restated outside this file, and no broadcast carries them** -- the
+  firms and the counts are what the decision needs; the addresses are client PII and naming them wider would be a
+  second disclosure while adjudicating the first.
+
+**RULED: CALL 4 IS RECLASSIFIED FROM "BLOCKED ON A FACT NOBODY HOLDS" TO "DECIDABLE, ONE JOIN AWAY." IT IS NOT
+ADJUDICATED HERE, AND THE REASON IS NOT AUTHORITY.**
+
+⛔ **WHAT THIS SEAT MEASURED DOES *NOT* CLOSE IT, AND THE LIMIT IS SPECIFIC: AN API GATEWAY AUTHORIZER RESULT IS
+CACHED.** Of the four timestamps, three windows (+/-8s) returned **empty** and one (09-23 20:44:34) returned five
+events, **all `andrew@opalinvest.com`, tier internal, userType Dev**. ⭐ **THE THREE EMPTIES ARE A CACHE ARTIFACT,
+NOT AN ABSENCE** -- a served request can reuse a cached authorization minutes old and emit no authorizer line at
+all, which is exactly why the coverage control mattered: the log HAS 09-22 data, so the empties cannot be read as
+"nobody was authorized." ⛔ **AND FOR THE SAME REASON THE ONE HIT IS NOT AIRTIGHT EITHER** -- five events in a
+12-second window is consistent with, but does not prove, that those events authorized THAT request.
+
+⭐ **THE JOIN THAT WOULD CLOSE IT, NAMED SO THE NEXT SEAT DOES NOT RE-DERIVE IT:** `3.0.0_SA_CVO~Z` already parsed
+**664 CloudFront access-log files, 19,114 rows**, and holds **the one client IP**. CloudFront carries IP+timestamp
+per request; the authorizer carries email+firm+timestamp. **Neither alone attributes a request; together they do.**
+⭐ **And there is a SHORTCUT that avoids the per-request join entirely: the exposure was ONE IP. Mapping that single
+IP to an identity through ANY overlapping authorizer event settles the whole card** -- and that seat holds the IP
+this seat does not.
+
+⚠ **WHY THIS IS STILL NOT THIS SEAT'S CALL TO DECIDE, EVEN UNDER ANDREW'S "all open-calls ... adjudicated by
+`1.0.0_SA_CTO~Z`" WORD.** His word supplies AUTHORITY. It does not supply the JOIN. ⛔ **Adjudicating now would
+mean guessing which of ten identities it was -- converting a deliberate abstention into consent, which is the
+precise error R-21a was written to prevent.** ⭐ **And the abstention was RIGHT ON ITS FACTS AND WRONG ONLY ON ITS
+UNIVERSAL: the decision does turn on who the client was; that fact simply exists.**
+
+**OWED, and it is a measurement rather than a decision:** `3.0.0_SA_CVO~Z` runs the IP-to-identity join against
+this log group **before the 30-day retention wall**, which for the 09-22 events falls **2026-10-22**. ⛔ **THAT
+DEADLINE IS REAL AND IT IS THE FIRST TIME THIS CARD HAS HAD ONE: today the fact exists, and on 2026-10-22 it stops
+existing.** An undecidable card can wait; a decidable one with an expiring instrument cannot.
+
+## R-32 -- ⛔ A RECORD WITH A HUMAN CARRIER AND A MACHINE CARRIER IS NOT WRITTEN UNTIL BOTH ARE. FOUR INSTANCES, MEASURED COST
+
+Found while adjudicating the sitez open-call set, in **four** places in one stretch, **three of them this seat's**:
+
+| # | the record | written | NOT written | who read it wrong, for how long |
+|---|---|---|---|---|
+| 1 | `closer_contract` (R-26a) | the GENERATED `org/projects/*.json` row | the DECLARED tree `project.json` | the generator would have ERASED it on the next `dep_stage` move |
+| 2 | the twenty new `FWD` ids (R-27a) | the PRD header | the ENDPOINT section step 5 reads | the surface-manifest GATE caught it at commit |
+| 3 | D12 ledger legs `A`/`V1` (`0.0.0_AB_MSTR`'s) | the markdown proof table, *"CLOSED 20260913T0629xxZ"* | the `.open_deploys/*.json` index the tool reads | **11 days** of two falsely-stranded legs |
+| 4 | the v2.1.179 **PROD promote** (this seat's) | a prose `## Close-out`, *"LANDED AND VERIFIED ... Nothing half-landed"* | the `**Status:**` field | **8.2 days** of a RED `BYPASS: UNINDEXED OPEN LEDGER` on a production deploy |
+
+⛔ **THE FAILURE IS SILENT IN BOTH DIRECTIONS AND SURVIVES A CAREFUL RE-READ OF WHAT YOU WROTE.** Write only the
+human carrier and every automated read is wrong -- a false RED, for 8 days, on the one class where "half-landed"
+is most expensive. Write only the machine carrier and every human read is wrong, and a generator deletes it.
+⭐ **In case 4 the author had verified the world, the close-out was TRUE, and re-reading it would never have
+surfaced the defect -- because what was written was correct. The defect was in what was NOT written.**
+
+⭐ **THE TELL, AND IT IS CHEAP: IF A TOOL ENFORCES THE RECORD, THE TOOL'S READ IS THE RECORD.** After writing any
+ledger, index or register entry by hand, run the tool that grades it and require the entry to CHANGE STATE.
+**COST: one command.** **NON-APPLICATION: a record with exactly one carrier and no tool that reads it.**
+
+**REPAIRED IN THIS COMMIT, with verify-after:** `V2` closed on its own clause measured verbatim
+(`ACCOUNT_TIER=PRODUCTION`, `TEXT_MESSAGE_MONTHLY_SPEND_LIMIT EnforcedLimit=50`); `A` and `V1` closed by
+**TRANSCRIBING** MSTR's existing markdown proof into the index, marked as transcription and not assertion, with `A`
+re-verified live; the PROD promote given its `**Status:** CLOSED` field. **VERIFY-AFTER: the `BYPASS` and `RED`
+lines are GONE and D12's stranded set went `['A','V1','V2','V3']` -> `['V3']`, denominator 5 of 5 sentinels.**
+
+⛔ **`V3` IS LEFT OPEN DELIBERATELY AND ITS CLAUSE IS DEFECTIVE TWICE OVER.** It requires
+*"`SMS_VERIFIED_DESTINATIONS` + `SMS_ALLOW_UNVERIFIED` re-read in a reviewed commit BEFORE or WHEN V2 lands"*, with
+proof *"commit hash under `0.7.0_AE_CloudOps` author line"*. **(i) The re-read happened in
+`0.4.0_DT_ClientPlatform`'s patch of 2026-09-17, a different lane, so the clause cannot be satisfied as written
+unless the AE lane redoes another lane's work. (ii) "BEFORE or WHEN V2 lands" is already past.** ⭐ **This is the
+same stale-clause class as H03's five gold clauses, and the discipline is the one this seat gave the AE seat
+hours earlier, inverted: there the temptation was to change the ACT to make a clause pass; here it is to close a
+LEG under a clause it does not satisfy. Both are the record bending to the checker.** The clause is re-cut, not
+stretched.
+
+## R-29 -- THE THIRD CROSSWALK SOURCE IS APPROVED, BOUNDED; AND ITS OWN RESEARCH NAMES A SIXTH BOUND IT DID NOT DRAW
+
+**Closing the fork R-23a opened.** `4.0.0_SA_CRO~Z` researched it under `/self-drive`'s call routing -- *"If the
+call specifically is a design fork, then you reach out to CRO agent to do research on past patterns ... and then
+make the call with that info"* (Andrew-direct 2026-09-17 ~13:0xZ) -- and delivered
+`AMGT_CROSSWALK_THIRD_SOURCE_RESEARCH_20260924.md` @`2ed4077666`. **The ruling is this seat's; that seat states
+plainly that nothing in its research is an act.**
+
+**RULED: APPROVED, as a registration source in the BUILDER, under the five bounds it drew PLUS a sixth below.**
+
+**WHY IT IS NOT WHAT R-14 REFUSED, which is the whole question.** R-14 refused **the ROUTE trusting an artifact
+while it is under resolution**. This is **the BUILDER minting registrations before any route reads anything** --
+different actor, different moment, different failure mode. ⭐ **And the precedent argues FOR it rather than merely
+permitting it:** `rk-4` widened the RANKER to 191 keys while the crosswalk carried 36, and **stranded 111 real peer
+sets**. Deere is that same shape one hop down, so refusing here reproduces a defect this project already paid for.
+
+**WHY "NEVER GUESSED" SURVIVES, measured rather than asserted.** The rule **REFUSES 1,812 of 2,851 member rows BY
+CONSTRUCTION** and registers only the **1,039** whose OWN ROW states both an alpha ticker root and country United
+States. The country is **read from the row**, not inferred from an exchange code; a non-US root carries no exchange
+code and no country-to-exchange table exists, so it is refused rather than resolved. ⭐ **And the decisive
+measurement is a NEGATIVE one: ZERO tickers appear under two countries**, so there is no collision to guess at.
+
+**THE ALTERNATIVE IS PRICED, WHICH IS WHY THIS IS A CHOICE AND NOT A DEFAULT.** Posture naming only crosswalk
+comparables puts **UNRESOLVED on the Posture tab's first line for every name whose comparable the builder never
+heard of** -- and all eleven Boeing comparables plus `DE` are US alpha roots, so the visible cost lands on the
+flagship name.
+
+**THE FIVE BOUNDS ARE ADOPTED AS WRITTEN** (a) US alpha roots only, keyed `<ROOT>_US_Equity` from the row's own
+country; (b) **EXISTING RECORDS WIN** -- the member source applies LAST and skips any key the coverage list or
+`registrations.json` already holds, marking `also_in_scanner`; (c) alias forms are the canonical key and
+`"<ROOT> US"` only, **NEVER the bare root**, which is what keeps it from colliding with the five pilot bare-root
+aliases (`BA`, `COST`, `HAL`, `HD`, `VLO`); (d) the record carries `basis: scanner-member` with the scanner vintage
+and universe ids **so a consumer can reject on it**, and nothing inducts from it; (e) the source re-mints when the
+scanner vintage moves.
+
+⭐ **BOUND (d) IS ALSO THE GRADER'S DISCRIMINATOR FOR BOUND (b), AND THAT IS WORTH STATING BECAUSE IT COSTS ONE
+QUERY.** "Existing records win" is a claim about ORDER, which no snapshot shows. But a key that the coverage list or
+`registrations.json` holds and that nevertheless carries `basis: scanner-member` **is the violation's own
+signature** -- so the arm is: run that query over the registered set and print the denominator. **Zero is the pass.**
+
+⛔ **THE SIXTH BOUND, WHICH THAT SEAT'S OWN "NOT MEASURED" SECTION IMPLIES AND DID NOT DRAW: THE COLLISION COUNT IS
+A FLOOR, NOT A NUMBER.** It measured **9 minted US keys already crosswalk keys** against the
+`crosswalk/v1/2026-09-22` object, and says so -- but the live object has moved. ⛔ **So a builder run re-measures
+collisions against the CURRENT object before writing, and 9 is the LOWER BOUND, never the expected value.** A run
+that finds more than 9 is finding the truth, not a regression, and must not be read as one. **A floor presented
+beside a precise number reads as the number; that seat disclosed the limit and the disclosure is what makes this
+bound cheap.**
+
+⚠ **AND BOUND (e) COUPLES THIS TO A DIFFERENT PROJECT, WHICH IS NAMED SO NOBODY DISCOVERS IT LATER.** Re-minting on
+scanner-vintage movement makes this source a CONSUMER of the FactSet screening refresh -- the `SSCN` scripted-refresh
+brief @`3ed1c5e1f1`, whose own load-bearing unknown is whether Opal's entitlement admits a programmatic export at
+all. **The peers ranker's `universe_vintage` already follows that vintage, so this is a SECOND consumer of one
+unsettled upstream.** ⛔ **That does not gate this approval** -- the source works at a frozen vintage and re-mints
+when one arrives -- but a stale scanner vintage now has two dependents, and the count belongs in the record.
+
+**NOT AUTHORIZED BY THIS RULING:** no builder run, no pool write, no route change, no induction from this source
+(bound d), and nothing about the 93 non-US roots.
+
+## R-30 -- PEERS FAILURE CASE 3: THE GREEDY ROUTE IS APPROVED, AND SHIPPING IT ALONE IS REFUSED
+
+**Two seats localised this independently, on different instruments, and reached the same place.** `3.0.0_SA_CVO~Z`
+by direct lambda invoke, which BYPASSES the gateway: the decoded key `BP/_LN_Equity` returns **HTTP 200, identity
+MEASURED, 12 members served from `peers/v1/BP/_LN_Equity/...`**, while the percent-encoded `BP%2F_LN_Equity`
+returns **200 with identity UNRESOLVED and 0 members**. `2.0.0_SA_COO~Z` localised it to the **API Gateway route
+table**, rec **one greedy route**. ⭐ **The handler, the crosswalk, the pool object and the engine are all FINE, and
+the ten slash-key sets are NEITHER STRANDED NOR MALFORMED -- they are unreachable only through a URL path segment.**
+
+**RULED: the greedy route is APPROVED. Shipping it WITHOUT the decode at the handler boundary is REFUSED.**
+
+⛔ **THIS IS THE WHOLE RULING AND IT IS `3.0.0_SA_CVO~Z`'s FINDING, NOT THIS SEAT'S:** fixing the gateway alone
+would **LOOK like progress and change nothing a user sees.** The request would stop 404-ing and start returning a
+clean, confident **UNRESOLVED with zero members** -- which is the `peer_read {}` shape where *"could not read"* and
+*"nothing to read"* are indistinguishable. **A user would see an empty peer set for a security whose 12-member
+object exists and is readable.** ⭐ **So the gateway half converts a LOUD failure into a SILENT one, and a silent
+wrong answer is worse than a 404.** Both layers land in ONE candidate or neither does.
+
+⭐ **THE MECHANISM IS ALREADY BANKED ON THIS DEVICE AND CORROBORATES BOTH SEATS ON A THIRD INSTRUMENT:** an HTTP API
+**decodes `%2F` BEFORE matching**, a `{param}` never spans two path segments, so the request falls through to
+`$default` -- and **a 404 whose body lists ANOTHER function's routes is a gateway route miss, not a handler
+defect.** Three independent arrivals at one answer.
+
+**THE ACCEPTANCE ARM, and it must distinguish the two layers rather than pass on either:**
+1. `BP%2F_LN_Equity` **through the gateway** returns **200 with 12 members** -- not 404, and not 200-with-zero.
+2. ⛔ **THE DISCRIMINATOR: a key that genuinely does not exist must STILL answer UNRESOLVED-with-reason, not 12
+   members.** A greedy route plus a permissive decode could make every malformed key resolve to something. `NOSUCHKEY`
+   is the negative control and it was already the discriminator that made the Peers route grade honest.
+3. The **nine other slash-key sets** reach 200 as well -- ten of ten, denominator printed, because one working name
+   is a fix for one name.
+
+⚠ **ONE DESIGN NOTE CARRIED FROM THAT SEAT, offered to the build and not imposed:** the object key itself contains
+the slash (`peers/v1/BP/_LN_Equity/...`), **so the pool path and the URL path disagree about what a key is.** Any
+fix that encodes at one boundary must decode at the other, and **the two boundaries are owned by different
+surfaces -- which is exactly the split where an encode/decode pair goes missing.**
+
 ## R-28 -- H03 2a IS LANDED AND VERIFIED, AND THE OUTPUT DELTA OUTSIDE THE SIGNED RADIUS IS RULED INSIDE IT
 
 **`0.7.0_AE_CloudOps~A`, RAVC2, commit `6fdfe5b25e` (LOCAL, measured by `ls-remote` with `f47642479c` as a

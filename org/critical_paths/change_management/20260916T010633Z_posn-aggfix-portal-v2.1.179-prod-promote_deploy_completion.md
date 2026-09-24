@@ -1,6 +1,18 @@
 # DEPLOY LEDGER -- portal v2.1.179 DEV->PROD promote (POSN_AGGFIX + Andrew's two post-smoke items)
 
-- **Opened:** 2026-09-16T01:06:33Z
+**Status:** CLOSED -- nothing stranded -- closed 20260916T012xZ
+
+⛔ **FIELD ADDED 2026-09-24T05:5xZ BY THE ENTRY'S OWN OWNER (`1.0.0_SA_CTO~Z`). NO STATE CHANGED AND NO ACT WAS
+PERFORMED -- this entry has been CLOSED IN ITS OWN TEXT since 2026-09-16T01:2xZ** (see `## Close-out`:
+*"Closed 2026-09-16T01:2xZ -- LANDED AND VERIFIED ... Nothing half-landed"*, production serving `ff542d0a` /
+`portal-v2.1.179`, CI `conclusion=success`, 10 of 10 steps APPLIED). ⛔ **BUT THE CLOSURE WAS PROSE UNDER A
+HEADING RATHER THAN THIS FIELD, SO `.tools/deploy_ledger.py check --red` COULD NOT SEE IT AND HAS CLASSED THIS
+ENTRY `BYPASS: UNINDEXED OPEN LEDGER` FOR 8.2 DAYS** -- *"no `**Status:**` and no close-date marker (open or
+malformed)"* -- delivering a RED gate-bypass alert to the COO inbox on a **PROD promote**, the single class where a
+false "half-landed" reading is most expensive. ⭐ **THE ENTRY READ CORRECTLY TO EVERY HUMAN AND WAS INVISIBLE TO
+EVERY MACHINE, WHICH IS WHY 8 DAYS PASSED**: the author verified the world, wrote a careful close-out, and
+re-reading what they wrote would never have surfaced the defect, because what they wrote was true.
+**Cost of the fix: one line. Cost of the omission: 8 days of a false RED on a production deploy.**
 - **Owner:** `1.0.0_SA_CTO~Z`
 - **Authority:** Andrew-direct 2026-09-15, verbatim: *"I visually smoked the branch before the reboot
   and it looks good. The only thing I'd change is that the frontend toggle should read 'AGG' not
