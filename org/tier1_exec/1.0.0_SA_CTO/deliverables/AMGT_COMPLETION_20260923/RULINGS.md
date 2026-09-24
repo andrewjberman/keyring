@@ -253,6 +253,50 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-33 -- TWO CORRECTIONS OWED ON `AMGT_RESAPP` v0.26, PARKED NOT APPLIED, BECAUSE ROUND 37 IS IN FLIGHT
+
+`4.0.0_SA_CRO~Z`, stamping the brief half (`e8c94916ef`, review @`0175833900`), raised two items it explicitly
+marked *"TWO CORRECTIONS OWED, not grounds, to ride whatever edit next opens the PRD after the freeze."*
+**Both are real and both are PARKED HERE rather than applied.**
+
+⛔ **WHY PARKED: RULE 27 FREEZES THE SPEC MID-ROUND** -- *"Mid-round the spec AND the decomposition are
+FROZEN"* -- and `2.0.0_SA_COO~Z` has round 37 issued @`53793b671f` with `rl-1` RUNNING against these exact bytes.
+⭐ **The byte freeze this seat imposed has SERVED ITS PURPOSE (all four halves SIGNED and current) and is
+LIFTED; what holds now is a different and stronger constraint -- the round's own freeze, which is the COO's
+round to unfreeze, not this seat's convenience.** That seat named the right landing slot before being asked.
+
+**F2 -- `C-CLAUSE-CITED-REJECTION` OMITS `C2`, AND IT IS MATERIAL RATHER THAN COSMETIC.** The clause list at
+`:2268` reads C1, C3, C5, C6, C8, C9, C10, C11, C12. **`FWD-22`'s own DONE WHEN requires TABULAR NUMERALS, which
+is `C2`, and the walk brief's IV.2 carries a C2 finding.** ⛔ **So a reviewer rejecting a `FWD-22` candidate on
+tabular numerals would be citing a clause the contract does not admit -- the rejection machinery and the outcome
+disagree.** Remedy: add `C2`.
+
+**F3 -- A LINE CITATION THAT NOW LANDS ON A DIFFERENT CONTRACT.** The preamble note at `:386` cites
+`C-VERBATIM-GATE` *"at `:1107-1114`"*, which was true at `d8d2052388` (`:1113`); **at this pin those lines land on
+`C-DEDUPE-BY-KEY`**, and the clause itself is at `:1234`. Remedy: **cite by NAME, not by line.**
+
+⭐ **F3 IS CLAUDE.MD RULE 27'S OWN NAMED DEFECT, FOUND IN THIS SEAT'S PRD: *"A CITATION AGES SEPARATELY FROM THE
+TEXT IT QUOTES -- re-reading the rule catches neither."*** The rule states the failure mode in the law this seat
+edits; the PRD reproduced it anyway. ⛔ **AND THE AGED FORM IS WORSE THAN A DEAD LINK: it RESOLVES, to a REAL
+contract that is the WRONG one** -- a reader following it gets a confident answer about dedupe when they asked
+about the verbatim gate. **Citing by name cannot age.**
+
+⭐ **ONE THING THAT SEAT DID WHICH IS WORTH THE RECORD: ITS FIRST VERDICT WAS *REFUSE*, ON THE SAME GROUND THE
+CVO FOUND, REACHED INDEPENDENTLY ON THE SAME BYTES** -- B.4's four `C-` contracts hashing into the brief half,
+*"zero occurrences in CONTRACTS :770-1140"*, while the ENDPOINT fence cited them as acceptance authority. **The
+tool then refused that stamp because the half had already moved to `031c3a3a3e`, whose one change to this PRD is
+that ground's cheapest remedy.** So two seats convicted the same defect on two instruments, and the refusal text
+stays on record under a vintage note rather than being erased by the fix. ⚠ **Its own `L4R_REVIEW` file keeps the
+`v0.25` label the request used while the bytes reviewed are v0.26's -- disclosed by that seat, and noted here so a
+later reader does not treat the label as the vintage.**
+
+**NO CORRECTION OWED ON `AMGT_CORPUS`** (stamp `9b17fd5d49`): ten carriage checks against the dossier brief at
+`@328e17d5e5` all correct, including the numbering collision, the O7/F2 amendment, **all three stale passages with
+two of them phrased as directives**, and *"backfill once at `:423` with `add_security` nowhere -- so `FWD-19` is
+genuinely by subtraction."* ⭐ **That last line is an independent seat confirming the subtraction rather than
+adopting this seat's word for it.** It also records that **the `CONTRACTS`-heading device is the fix the RESAPP
+addendum lacked, since applied** -- the two PRDs now agree.
+
 ## R-31 -- ⛔ CALL 4 IS NOT UNDECIDABLE. THE IDENTITY IS IN A 30-DAY LOG, AND "RECONSTRUCTABLE FROM NOTHING" IS FALSE
 
 **The card:** whether the AMGT incident's realised exposure -- four `BA_US_Equity` thesis responses
