@@ -46,7 +46,7 @@ collision (rc 4) and prints `bloomberg_calls N` on every path; the client seam i
 - `rows_for_run(root)`: the induction request rebuilt FRESH (`induction_request.measure_population` +
   `build_request` over the backlog the universe carries UNRESOLVED) -- never a stored `induction_request.json`.
 - `run(rows, as_of, call, stdout)` where `call(argv) -> rc` defaults to `add_security.main`: for every row in state
-  `EVIDENCED`, ONE call `["--folder", <folder>, "--as-of", as_of, "--write-pool"]`, its rc and printed lines captured;
+  `EVIDENCED`, ONE call `["--folder", <folder>, "--bloomberg", "<root> <cc>", "--as-of", as_of, "--write-pool"]` (AMENDMENT 2: the report-evidenced ticker root and exchange code from the request row, which agree with the folder token by amendment 1; NEVER `--folder` alone), its rc and printed lines captured;
   every row NOT evidenced (`AMBIGUOUS`, `NO_EVIDENCE`, any other state) is printed with its reason and NEVER called.
   Per-row read-back `{folder, state, called, rc, outcome: registered|already-registered|refused|unresolved|error,
   security_key|reason, bloomberg_calls}` (the outcome parsed from `add_security`'s own printed lines); totals FIRST and
@@ -77,6 +77,18 @@ collision (rc 4) and prints `bloomberg_calls N` on every path; the client seam i
   refused row. The totals line becomes `population P evidenced E ambiguous A disagreement D other O called C registered R
   already_registered K refused F errors X bloomberg_calls B sum P` where E + A + D + O = P and C = E. A folder whose tokens
   AGREE is unchanged. This is the mechanism form of the ruling: it refuses every future transposition, not one name.
+
+- **ISSUER AMENDMENT 2 (2026-09-24 ~08:1xZ) -- THE CALL CARRIES `--bloomberg`, MEASURED AT THE FIRE:** the issuer's fire at 08:02Z
+  (20 calls as issued) made ZERO Bloomberg calls: `add_security._discover` with `--folder` alone reads the folder's ONE PAGER
+  workbook for the identifier (`build_universe.discover_bloomberg_ticker`) and returned UNRESOLVED for all 20 -- 12 folders carry
+  no ONE PAGER workbook, 8 carry the template placeholder `AAPL US` -- and persisted 20 UNRESOLVED registration rows (reverted
+  by the issuer as the uncommitted output of a mis-shaped call; the diff is kept in the issuer's deliverables). The request row
+  ALREADY holds the report-evidenced identifier (`root`, `cc` from `classify_folder`, agreeing with the folder token under
+  amendment 1), so the call passes BOTH `--folder <folder>` (add_security's idempotency key and registration folder) AND
+  `--bloomberg "<root> <cc>"` (the identifier: `_discover` takes the READY branch and the ONE reference_data call is made).
+  The read-back gains `bloomberg_arg` per called row. `--dry-run`'s fake `call` must ASSERT that every argv carries both
+  `--folder` and a parseable `--bloomberg`, and a test proves a `--folder`-only argv is refused by the producer itself
+  (never reaching `call`). AC2's totals line and expect are unchanged (bloomberg_calls 0 in a dry run by construction).
 
 **What this cell does NOT do:** no edit under `lib/research/identity/` (another lane's surface; imported, never
 changed); no Bloomberg call; no S3 write; no ingest re-run (the issuer runs the existing `ingest` after the fire).
@@ -132,6 +144,10 @@ org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-d-5.scripted-in
 incomplete -- it carried the CVO's AXMB/AMXB refusal as a NAME in the bounds and no MECHANISM in the rules, and the fresh
 request classifies that folder EVIDENCED. Amendment 1 adds the folder-vs-report disagreement refusal and one token to the totals
 line; AC2's expect gains `disagreement [1-9]\d*`; the order is re-opened to `pending` and the same worker is continued on it.
+
+**ISSUER REOPEN 2 2026-09-24 ~08:1xZ (2.0.0_SA_COO~X):** the fire as issued reached the vendor ZERO times (add_security's folder
+path, not the report evidence). Amendment 2 fixes the call shape; the order re-opens to `pending` for the same worker. The
+issuer's fire read-back is at deliverables/2.0.0_SA_COO~X/induction_run_2026-09-24_fire_attempt1.json.
 
 **ISSUER NOTES:** the FIRE is the issuer's drain act (decomposition s.5 duty 1, s.9 hold): after this cell drains VALID,
 ONE exchange with `2.0.0_SA_COO~Z` on the pinned candidate (`add_security` is its surface), READ_HERE s.2 sign-in state
