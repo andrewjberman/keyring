@@ -13275,6 +13275,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "For the UNTRACKED signature R-12 actually governs, git status is sound -- an untracked file has no index entry, so there is no stat cache to short-circuit and no clean filter to disagree with. For a TRACKED file it is NOT a content check: its verdict depends on the stat cache, so it can report CLEAN on a file that differs from its blob and MODIFIED on a file byte-identical to it. Both happened here in one sweep. R-12 is not wrong; a reader who extends it from 'detects untracked .tf' to 'tells me whether tracked terraform matches git' would be.",
     "disarm_owner": "1.0.0_SA_CTO~Z to route, per the surprise-row gate's routing for a CVO-authored row (R-19 bars the CVO). The underlying fix is re-committing etf-classifications.tf with LF endings so the blob matches its own `eol: lf` attribute -- a pure line-ending normalisation with NO semantic change -- and that is a content commit under infra/aws/terraform/, which is NOT this seat's lane to make. Until it lands the file will keep producing this hit in any worktree whose mtime gets touched.",
     "notes": "SCOPE: this corrects the EXCLUSION REASON, not the exclusion -- the file is correctly outside R-12's untracked-.tf signature either way, and 0.0.0_AB_MSTR~Z's sweep reached the right answer. It matters because 'that seat's live work' implies the hit resolves when the seat commits, and it does not: no seat can commit it away, this seat made no edit, and the file will recur as a hit for anyone who touches its mtime. ALSO NOT MEASURED: whether other files share the CRLF-blob-versus-eol-lf-attribute mismatch. The discriminator is a repo-wide compare of each blob's CRLF count against its check-attr eol setting; it is one pass, it was not run here, and a non-zero result would mean this is a class rather than one file -- the same instance-versus-class question R-12 itself turned on."
+  },
+  {
+    "id": "AMGT_RESAPP-W130-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~130",
+    "surfaced_at": "2026-09-24T02:40Z",
+    "one_line": "The naming-gate (LGIC_ENFORCE DEC-6, ENFORCE mode live) REFUSEs the AMGT-rl-1 fixtures file: its captured API-response DATA carries real production S3-key-shaped literal strings the gate's registry has no pattern for, so the byte-identical copy the cell requires at portal/src/pages/SecurityAnalysis/__harness__/uiContractFixtures.json cannot be committed as written.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh run on portal/src/pages/SecurityAnalysis/__harness__/uiContractFixtures.json (byte-identical copy of org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round37/uiContractFixtures.json, sha256 4ad01d45...8aa0e21 both sides) prints 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' with 12 REFUSE rows, all 'K1: segment 1 <word> is neither a source nor a tier / NEW and OUT-OF-PATTERN as S3Key', all on lines carrying holdings_source values like 'gold/holding/date=2026-09-11/holding.parquet' -- a captured field value from the live /api/scoped/amgt response, not a literal this worker authored.",
+        "the identical literal already exists at HEAD inside org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round37/uiContractFixtures.json (the source the cell orders copied byte-identical) and is NOT graded there -- naming-gate.py's own DENOMINATOR line states the declaration-tree domain excludes org/ and docs/, so the org/ copy was never checked; the portal/ copy is the first GRADED occurrence of this literal in the repository (git grep -l -F 'gold/holding/date=' HEAD across *.json/*.ts/*.tsx/*.js/*.mjs returns only org/ paths).",
+        ".tools/naming-gate.py:1421-1423 exempts only paths matching '/tests/' ('fixtures under */tests/* are not graded'); this cell's task order names the harness path as __harness__/, which the gate does not recognise as an exemption class.",
+        ".tools/safe-commit.sh:638,660 state --force bypasses only the contamination/sensitive check, never a gate FAILURE; the naming-gate's own REFUSE is a gate failure, so --force does not apply here.",
+        "the three companion scripts (scripts/ui-measure.mjs, scripts/ui-contract-check.mjs, scripts/ui-class-census.mjs) committed cleanly in a separate commit (c388c70d) once the fixtures file was excluded from the changeset -- isolating the refusal to the one file."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rl-1 section 2(4): 'the fixtures file, copied from the input above, byte-identical (sha256sum both and print)' at portal/src/pages/SecurityAnalysis/__harness__/uiContractFixtures.json, and section 6: 'the portal commit hash' as part of the worker's completion report -- both premised on this file being committable at that path.",
+    "world_is": "The file IS byte-identical on disk (sha256 4ad01d45...8aa0e21 both copies, confirmed under AC3) and every acceptance criterion that reads it from the worktree (AC1, AC3) passes against the live file; but the file cannot be COMMITTED at that path today because the naming-gate refuses its content, so the worker's portal commit does not carry it and the outer gitlink move will not include it either. The worktree deliverable is complete; the committed record is short by one file until this is resolved.",
+    "disarm_owner": "N/A -- hazard_standing INERT (no future-operation harm: the check and census scripts do not depend on the fixtures file being COMMITTED, only present, and the acceptance criteria read the worktree, not history). Resolution owner for the gate gap itself is out of this worker's lane (naming-gate.py and infra/logic/registry/ are not in AMGT-rl-1's <paths>); routing is the issuer's (2.0.0_SA_COO~Z) or the CTO's per Rule 30."
   }
 ]
 ```
