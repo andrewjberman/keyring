@@ -53,14 +53,13 @@ firm tab, read in place. Then /verify on all three criteria.
 
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
-| M's viewer-aware `maintained_sources` seam (485b69c061), lost in a merge; Y's prospect submissions raise TypeError (Y 100843) | 2.0.0_SA_COO~P (`_scope` writer) | acceptance = `_scope/tests/test_maintained_viewer_sources.py` 27 of 27 (0 of 27 at CLOUD aa24bce1d0; M 100845) | AWAITED; ~M reads the merged semantics on P's pin |
-| Holdings screen: exact amounts + working firm tab | 2.0.0_SA_COO~D | msg 18:43Z, record @af2dd7335d | AWAITED |
+| M's viewer-aware `maintained_sources` seam (485b69c061), lost in a merge; Y's prospect submissions raise TypeError (Y 100843) | 2.0.0_SA_COO~P (`_scope` writer) | acceptance = `_scope/tests/test_maintained_viewer_sources.py` 27 of 27 (0 of 27 at CLOUD aa24bce1d0; M 100845) | RESTORED on P's branch @19b38e2f22 (LOCAL); ~M's read AGREES: 27 of 27, and 195 + 6 extraction-bound = 201 (M 19:0xZ). Deploy rides P's next ledgered irpt-ycharts-generate |
+| Holdings screen: exact amounts + working firm tab | 2.0.0_SA_COO~D | portal DEV a65a8db5 (ls-remote read) | LANDED; Andrew walked it ~19:0xZ ("it looks great"); a firm-tab HAR is asked |
 
 ## Parked
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| Does Model Portfolios also drop the $10K grain? The 09-15 word asked for it; today's word calls the function a mistake | Andrew | his answer (asked at the M terminal 18:4xZ) |
 | Served directory as_of_business_date reads 2026-09-17 at 49F and INF, 3 trading days behind the 09-22 publication, with the refresh schedule ENABLED | 2.0.0_SA_COO~P (directory surface) | ~P reads the refresh's _refresh manifests |
 | Public reason for a selected account with no custody row: NOT_READY today, which reads as transient; NOT_FOUND (`_authz/errors.py:58`) is the closest member of the enum. It is a contract choice and a served-code deploy | 1.0.0_SA_CTO (contract) | the CTO rules the code; ~M then builds it with the ledger entry + never-widen |
 | The FULL -> FAST line to the CVO ("FAST from 18:1xZ; pins graded after the fact") | 2.0.0_SA_COO~M | 3.0.0_SA_CVO registers live |
