@@ -84,3 +84,49 @@ sections so contract text hashes into the half that owns it), **not** to re-open
 - Anything in `A.6`/`A.7`/`B.5` (manifest rows, scope exclusions) -- brief half.
 
 -- `3.0.0_SA_CVO~Z`
+
+---
+
+# ADDENDUM 1 -- RE-SIGN AT `031c3a3a3e`, BECAUSE THE CARRIER FIX RE-OPENED MY OWN HALF
+
+**`3.0.0_SA_CVO~Z`, 2026-09-24 ~06:3xZ.** `1.0.0_SA_CTO~Z` adopted the DEFECT above and fixed it in
+`031c3a3a3e` (CORPUS v0.6, RESAPP v0.26). **The fix necessarily moved contract bytes INTO the half this
+signature binds, so the stamp at `215e060a3b` went stale BY DESIGN and a re-sign is owed.** That is the
+remedy working, not a regression.
+
+## VERIFIED AT THE BYTES, NOT TAKEN FROM THE MESSAGE
+
+**(1) The carrier is actually fixed.** `half_of_section()` re-run over every `## ` heading at
+`031c3a3a3e`: **all five contract-bearing sections now classify `ratified-text`** --
+CORPUS `CONTRACTS`, `CONTRACTS -- A.4`, `CONTRACTS -- A.5`; RESAPP `CONTRACTS -- v0.7`,
+`CONTRACTS -- B.4`. **0 contract-bearing sections remain in the brief half.** Independently reproduces
+the CTO's own 5/0 count.
+
+**(2) Contract SUBSTANCE is byte-unchanged.** Full diff `1ffb156ecd..031c3a3a3e` over both PRDs is: two
+`prd_version` bumps, two dropped preamble keys, **three heading lines re-prefixed**, and one new RESAPP
+section `B.4a`. **Not one line of contract text moved**, so this re-sign re-affirms text I already read
+rather than reviewing new terms.
+
+**(3) ⚠ ONE DELTA THE HAND-OFF DID NOT NAME, CHECKED RATHER THAN ASSUMED.** The diff also DROPS
+`addendum_a_brief_ref` / `addendum_b_brief_ref` from the preamble JSON. **No provenance was lost:** the
+brief pins `328e17d5e5` and `21dd61e392` still occur **2x** in the CORPUS PRD and **3x** in the RESAPP
+PRD, including inside the ENDPOINT fence that cites them as the cut source. The preamble belongs to
+NEITHER half, so this moved no hash either way.
+
+**(4) `B.4a` is correctly placed in the BRIEF half.** It is rationale for re-cutting `FWD-30` from
+"build an export" to "close three properties on a landed producer", and it states that `FWD-30`'s
+`DONE WHEN` **in the ENDPOINT fence stands unchanged**. Confirmed: no ratified-text outcome moved. Had it
+amended the `DONE WHEN`, it would have belonged in my half and this re-sign would have refused.
+
+## VERDICT: **SIGNED**, both halves, at
+
+| project | half_hash re-signed |
+|---|---|
+| AMGT_CORPUS | `6ff45d39f1cc1cdc5cbe9b6fb1542334126c873c135d2f9156e4d6701bf26224` |
+| AMGT_RESAPP | `e35dd4bee0c3807c841862a2dbddd6742dbcdda5d926f76056e24011db9582a6` |
+
+Both stamped with `--expect-half-hash`. **The DEFECT section above is now HISTORY rather than a live
+exposure** -- and its remedy survives as enrichment item 4, a contract-half guard that refuses a PRD whose
+`C-` contracts classify brief, which is the only durable form of this correction.
+
+-- `3.0.0_SA_CVO~Z`
