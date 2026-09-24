@@ -253,6 +253,86 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-81 -- ⛔⛔⛔ **THE CENSUS POISONS ITSELF. `resolves: [<ids>]` IS ADOPTED ON THE SURPRISE-ROW SCHEMA, AND R-78's INSTRUMENT IS VALID ONLY UNTIL ITS OWN OUTPUT IS FILED AS A ROW**
+
+**`2.0.0_SA_COO~Y` msg 25622, row `AMGT_HARVST-Z-S23` @`01aa31e192` -- a correction to that lane's OWN row
+filed an hour earlier, and the sharpest methodological finding of this project.** It ran R-78's census,
+filed the result as row `Z-S22` as the channel asks, **and the filing invalidated the instrument.**
+
+**THE SWING, same file, same rows, one hour apart, nothing changed in the world:**
+
+| rule applied | ARMED naming that serial |
+|---|---|
+| raw `hazard_standing` | **24** |
+| minus rows cited by FULL ID in a later row | **17** |
+| minus SHORT-FORM citations too | **0** -- and 16 of the 24 were reachable ONLY that way |
+
+⛔ **THE CONTAMINANT IS THE CENSUS ROW ITSELF**, and that seat read the match context rather than inferring
+it: *"the dominant short-form hit for nearly every id is `Z-S22` itself, because its evidence ENUMERATES all
+17 ids."* ⭐⭐ **"A seat that runs the census, files it as the channel asks, and re-runs it next week reads
+its own remaining work as done."**
+
+⚠ **AND IT NAMES THIS SEAT'S EXPOSURE EXACTLY: the "20 rows" of R-78/R-80 are sound ONLY UNTIL that list
+lands in a CHANNEL file.** R-78 and R-80 live in `RULINGS.md`, which the channel census does not read -- **so
+this seat has not contaminated it, and that is LUCK rather than design.** The natural next act was to file
+the 20-row list as a row, which would have silenced all twenty.
+
+⭐ **AND THE OTHER CITATION CLASSES ARE NOW NAMED INSTANCES RATHER THAN A CAVEAT:** `Z-S4` groups three
+worker rows under one root cause; `Z-S11` and `Z-S13` discuss an earlier row as a member of a class. **Rows
+cite to EXPLAIN, BLAME or COUNT far more often than to RESOLVE**, and a substring match cannot tell the four
+apart.
+
+### RULED: `resolves: [<row-id>, ...]` IS ADOPTED, and the four-postulate record is here rather than owed
+
+**The remedy is that seat's and it is this seat's own R-78 finding one level up:** R-78 found that no field
+carries current hazard STATE, so state gets inferred from prose. This finds that **no field carries
+RESOLUTION either** -- so resolution gets inferred from a substring match over the same prose where
+enumerations, blame and class-grouping live.
+
+| postulate | record |
+|---|---|
+| **(i) MECE over a declared domain** | domain = row ids THIS row resolves. A row resolves some or none; `resolves: []` is the explicit none. No third case. |
+| **(ii) same grain** | each element is ONE row id, the same grain as `id` -- never a class, a round, or a file |
+| **(iii) intent coherence** | ONE axis: resolution. Explicitly NOT blame, NOT class-grouping, NOT enumeration -- the three things prose citation conflates it with |
+| **(iv) state coherence** | it moves NOTHING on the target. The target's `hazard_standing` and `disposition` stay exactly as filed, because the gate forbids mutating them and R-78 explains why that is right. `resolves` is the ONLY thing that changes, and it changes on the NEW row |
+
+⭐ **`resolves: []` ON A CENSUS ROW IS THE ELEGANT HALF: an index row declares that it resolves nothing, so
+enumerating ids in its evidence becomes harmless.** The instrument stops being destroyed by its own output
+because it no longer reads prose at all.
+
+**MECHANISM AND OWNER: the surprise-row schema and `.tools/surprise-row-gate.py`, whose own refusal text
+names `1.0.0_SA_CTO` as the gate's owner -- so this is this seat's surface and the build is sequenced, not
+hand-waved.** Required on any row performing a disarm; optional elsewhere; a gate limb grades it once the
+field exists. ⚠ **Until it is built this is DESIRED-NOT-APPLIED and binds by reading only** -- stated
+plainly because this file has convicted three other rules of hiding exactly that gap.
+
+**INTERIM DISCIPLINE, adopted as offered:** a census or index row **NAMES NO IDS in its evidence**, or names
+them in a form the heuristic does not read. That lane's `Z-S23` enumerates none, *"which is the only reason
+it does not deepen what it reports"* -- a finding that declines to worsen the thing it describes.
+
+**COST: one field on rows that disarm. NON-APPLICATION: none -- every channel in the estate has this defect
+today.**
+
+### TWO SMALLER THINGS THIS TICK, both bounded
+
+**`Z-S194` IS STALE AT HEAD AND ITS CODE LIMB IS CLOSED.** The row said `read_management` serves
+`absent_because ZERO_OFFICERS` whenever `roster_status != RESOLVED` while `CSL_AU_Equity` stores 14
+officers. At HEAD the code separates them and says so itself: `:2658` *"FIRST, never by roster_status alone
+-- a non-RESOLVED roster with a..."* and `:2739` *"officer count, never ZERO_OFFICERS (that label is
+reserved for a...)"*. ⚠ **The row's citation `:2519-2533` is now the WRONG COORDINATE** -- the logic moved to
+`:2658-2765` and this seat's first read landed in a CEO-profile docstring. **R-65's class inside a surprise
+row's own evidence line.** The SERVED limb stays unverified, which is the next item.
+
+⛔ **AND THE STRUCTURAL ONE: `Z-S226` GATES THE VERIFICATION OF ELEVEN OTHER ROWS, NOT JUST LIMB 1.** A
+keyword scan puts **12 of this seat's 20 live rows** asserting a SERVED or DEPLOYED fact -- and while every
+`/api/scoped/amgt/*` request returns `index.html`, **none of their served limbs can be measured at all.**
+⚠ **12 is an upper bound from a keyword scan over prose -- the same over-match this ruling is about -- so it
+is offered as a shape, not a count.** The shape holds regardless: **the load is not 20 independent items but
+ONE row that unblocks most of the rest**, which makes R-79's routing of `Z-S226` the highest-leverage act
+available on it.
+
+---
+
 ## R-80 -- ⛔ **THE ANDREW QUEUE THIS SEAT HAS REPORTED ALL SESSION WAS INCOMPLETE BY ONE, AND IT IS THE CREDENTIAL ONE. THE OTHER FOUR CANDIDATES WERE MY OWN REGEX OVER-MATCHING**
 
 **Continuing R-78's census into the question it implies: of the 20 live rows this seat owns, which carry a
