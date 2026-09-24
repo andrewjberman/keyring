@@ -253,6 +253,340 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-26 -- HAND-BACK TO CANONICAL FLOW ON ANDREW'S WORD; and `closer_contract` WAS ON THE CARRIER THE GENERATOR ERASES
+
+**Andrew-direct 2026-09-24 ~04:3xZ, VERBATIM:** *"I think we're positioned here to get back to canonical
+flow. I want you to essentially clean up any residue laying about, and essentially spec out a new analysis
+that can be handed off to new rounds for development on AMGT_CORPUS ... AMGT_RESAPP ... Then you can have
+COO~X take CORPUS and COO~Z take RESAPP."* Full text and the two round specs:
+`HANDBACK_TO_CANONICAL_20260924.md`.
+
+**RULED.** `AMGT_CORPUS` -> `2.0.0_SA_COO~X`, `AMGT_RESAPP` -> `2.0.0_SA_COO~Z`, both back to canonical
+enrichment rounds. `AMGT_HARVST` STAYS IN CLOSER -- 2a is mid-apply with the AE mandate issued, ledger
+`amgt-h03-leadpanel-y-20260924` OPEN, and the never-widen pair closed against one patch hash.
+**Closer work in flight completes under its own spec** (Rule 27): Peers consumer-2, failure case 3, the 2a
+apply and the `DE_US_Equity` fork are closer items, not round cells.
+
+⚠ **AND THE ANSWER TO HIS CONDITIONAL IS NO: DATA IS NOT THE ONLY THING MISSING FROM RESAPP.** Beyond
+CORPUS's reach: the 5-column render (needs the `1ec5446c` portal deploy), consumer 2 UNGRADED so every
+Peers case is half-graded, 0 of 3 failure cases exercised, `dated` absent from `RankingSet`, and the price
+producer on a fallback **expiring 2026-09-29**. **The frontend walk is necessary and NOT sufficient**, so
+the RESAPP round carries the non-data items too or it closes on a false completion.
+
+### R-26a -- ⛔ THIS SEAT PUT `closer_contract` ON THE **GENERATED** ROW. THE GENERATOR ERASES IT, AND NOTHING WOULD HAVE SAID SO
+
+Found while removing the field, which is the only reason it was found at all.
+
+1. ⛔ **WRONG CARRIER.** I wrote it to `org/projects/*.json` -- the GENERATED index.
+   `org/standards/PROJECT_TREE.contract.json:121`: *"an index entry carrying `home` is GENERATED from the
+   tree row at `home`/project.json and **is never hand-edited**"*. `closer_contract` is not among the
+   eleven `index.fields` (`:100-110`) at all.
+2. ⛔ **AND IT IS ERASED ON THE FIRST WRITE.** `.tools/missions-tree-index.py:356` is a FULL OVERWRITE with
+   `compose_index(t)`, built from the TREE row; `:352-354` skip that write only while all six
+   `compared_fields` match -- `directive, macro_code, fabric, `**`dep_stage`**`, `**`status`**`, name`.
+   **The field survived only because nothing had moved yet, and `dep_stage`/`status` are exactly what a
+   closer changes.** The HARVST skip I believed I had installed was one `derive --write` from vanishing.
+3. ⭐ **THE DISCRIMINATOR IS A CLEAN INVERTED PAIR AND IT SETTLES WHICH FILE IS RIGHT.** `IRPT_BCKEND` /
+   `IRPT_FNTEND` -- the precedent that CREATED this field -- carry it in the **tree** row
+   (`org/missions/D9/IRPT/*/project.json:41,43`) and **ABSENT** from their generated rows. AMGT carried it
+   in the **generated** row and **ABSENT** from the tree. **Exactly inverted; mine is the outlier**, and the
+   skills' own words are *"a project whose `project.json` carries..."*, which is the tree file.
+4. ⚠ **`missions-tree-index.py check` reads `RESULT: 0 violation(s)` BOTH BEFORE AND AFTER**, over 25 tree
+   projects and 374 index rows: an extra key in a generated row is not INDEX-DRIFT, which grades only the
+   six compared fields. **The instrument that exists for this file could not see it.**
+5. ⛔ **THE FIELD HAS NO MECHANICAL CONSUMER AT ALL.** Census: **49 hits across 72,197 files** --
+   `SURFACED=4` (three of them my own comp-rail log lines), `CONFIG=5` (the `project.json` rows),
+   `DOC=40` (skills + spine). **Not one `.py` or `.sh` reads it.** So the skip is a READING rule, not a
+   gate -- the law-stronger-than-tool shape this seat has ruled on four times tonight, asserted as
+   mechanical in this very hand-back's first draft.
+
+**REMEDIED IN ONE COMMIT:** off all three generated rows, onto the `AMGT_HARVST` **TREE** row, appended
+exactly as `IRPT_BCKEND` does. ⭐ Side effect: the three generated rows are now byte-canonical to what the
+generator writes (`indent=1, ensure_ascii=True`), where my earlier hand-edit had reformatted them to
+`indent=2` -- **so the next `derive --write` is a no-op instead of a diff**; the tree row keeps its
+hand-authored `indent=2`, making its diff 3 insertions / 2 deletions instead of 139 lines of churn.
+⭐ **THE GENERALISATION, WHICH IS THE PART WORTH KEEPING: A FIELD WRITTEN TO A DERIVED ARTIFACT READS BACK
+CORRECTLY FOR EXACTLY AS LONG AS NOTHING REGENERATES IT** -- every read passes, the checker passes, and the
+erasure is triggered by the very state change the field exists to survive. **Before writing a field, ask
+which file DECLARES it and which file is DERIVED from that one.**
+
+### R-26b -- THE RESIDUE SPLIT IS PUBLISHED WITH ITS DEFINITION, BECAUSE TWO RIGHT NUMBERS DISAGREE
+
+**67 local branches = `CLOUD` + 53 fully merged + 13 carrying unique commits.** ⚠ `git branch --merged
+CLOUD` reads **54 because it counts `CLOUD` itself**; 54 + 13 = 67 and the deletable set is **53**. Both
+numbers are correct under different definitions, so the definition is printed beside the number.
+⛔ **THIS SEAT DELETES NEITHER A WORKTREE NOR A BRANCH IT DOES NOT OWN, INCLUDING THE 53 "SAFE" ONES** --
+43 worktrees, 0 prunable, each a live seat's workspace; three of the 13 unmerged were written in the last
+90 minutes; and **a branch census cannot see whether a worker was ever spawned**, so a zero-commit `wk-*`
+reads identically live or abandoned. Routed to `0.0.0_AB_MSTR~Z` as an integrator decision with the
+denominator printed. `.runtmp_*`/`.scratch` regrowth: **0** -- the earlier ~38 MB sweep held.
+
+## R-25 -- 992_HK CLOSED NOT-A-DEFECT ON ARITHMETIC, and an enrichment item was STRUCK BECAUSE IT ALREADY EXISTS
+
+**`2.0.0_SA_COO~Z` supplied the measured cause; `3.0.0_SA_CVO~Z` VERIFIED IT ARITHMETICALLY rather than
+accepting it** (msg 25227), re-reading both payloads it already held:
+
+| | before | after |
+|---|---|---|
+| SUBJECT cap | 419,619.12 | 456,118.54 |
+| **all 11 common members' caps** | **BYTE-IDENTICAL, 11 of 11** | |
+| every surviving member's `cap_ratio_to_subject` | scaled by **exactly 419619/456118** (AMAT .9980->.9182, CSCO 1.1354->1.0446, NFLX .7312->.6727) | |
+| `BYXXXJ` cap 87,129.7 | ratio .20764 | **87129.7/456118.54 = .19102 -- BELOW the 0.2x floor** |
+
+⭐ **THE UNIFORM SCALING IS THE DISCRIMINATOR AND IT IS DECISIVE: A PURE SUBJECT-CAP MOVE PREDICTS EVERY MEMBER
+RATIO SCALING BY ONE COMMON FACTOR. A MEMBER-DATA MOVE COULD NOT PRODUCE THAT.** `BYXXXJ` left because the
+SUBJECT grew past it, not because member data changed. **992_HK is CLOSED as NOT A DEFECT -- the ranker's
+intended output on moved inputs.** ⭐ **A cause that PREDICTS a pattern and is then measured against it is
+worth more than a cause that merely explains the observation.**
+
+### ⛔ R-25a -- THE FIELD THE ENRICHMENT ITEM WOULD HAVE ADDED WAS ALREADY THERE AND ALREADY CORRECT
+
+That seat wrote *"the SUBJECT cap's vintage is carried nowhere on R-1."* **IT IS CARRIED, at
+`subject.cap_vintage`, AND IT MOVED:** `2026-09-16T20:18:16Z` -> `2026-09-22T20:12:18Z` -- **exactly the two
+model-block partitions the cause names.** **Enrichment (a) "R-1 carries `subject.cap_vintage`" is STRUCK, not
+implemented.** Caught because that seat went to check whether the proposed field already existed **before
+anyone built it**.
+
+⭐ **AND THE HONEST READING IS SHARPER THAN A MISSING FIELD: THE OBJECT WAS ALREADY ATTRIBUTABLE. A consumer
+comparing `cap_vintage` across the two objects would have seen the subject input move and known why membership
+changed. NOBODY LOOKED** -- not the producing seat, and not the grader until it went to check. **"The
+attribution was not absent; it was UNREAD."**
+
+⛔ **THAT IS A FOURTH MEMBER OF R-22's CLASS, AND THE SHARPEST ONE, BECAUSE IT INVERTS THE OTHER THREE.** In
+`peer_read {}`, `K3` and the `task-orders` path, the instrument **could not see** what was there. **Here the
+instrument saw it perfectly and NOBODY ASKED IT.** ⭐ **So the class is wider than blind readers: BEFORE
+PROPOSING A FIELD THAT WOULD ANSWER YOUR QUESTION, QUERY THE PAYLOAD FOR IT** -- the cheapest fix is the one
+already shipped. **COST: one read of the object you are about to extend.**
+
+⭐ **ENRICHMENT (b) STANDS AND THE DISTINCTION IS EXACT: a MEMBER-SET DIGEST on R-1 so a consumer watching
+identity/basis/count/status can see membership move. `cap_vintage` does NOT cover it -- `cap_vintage` says an
+INPUT moved, a digest says the OUTPUT did, AND EITHER CAN MOVE WITHOUT THE OTHER.** Worth building; (a) is not.
+
+### ⭐ R-25b -- R-24a IS ACCEPTED AND **SHARPENED**: a no-regression claim has TWO ARMS, not one
+
+R-24a said: pick a control that COULD have regressed. `3.0.0_SA_CVO~Z` records the stronger form and binds
+itself to asking for both:
+
+> **"A NO-REGRESSION CONTROL MUST BE A CASE THE ACT REGENERATES AND THAT WAS FREE TO DIFFER. A case that could
+> not have changed proves the act did not CORRUPT it, and proves NOTHING about FIDELITY when inputs move."**
+
+⭐ **SO THERE ARE TWO ARMS AND THEY ANSWER DIFFERENT QUESTIONS: an UNTOUCHED case proves NON-CORRUPTION; a
+case FREE TO DIFFER proves FIDELITY. R-24a asked for the second and implied the first was worthless -- it is
+not, it is simply a different claim.** BA was a sound non-corruption control and a void fidelity control, and
+the defect was citing it for the second. **Both arms are required; this seat's ruling is amended to say so.**
+
+**UNCHANGED:** consumer 2 ungraded · the three failure cases unexercised · `BP%2F_LN_Equity` 404 OPEN as
+failure case 3. **The route/data PASS stands and 992_HK is closed on cause.**
+
+## R-24 -- PEERS ROUTE LAYER **PASS**, and the grade found a SILENT MEMBER SWAP no summary field can see
+
+**`3.0.0_SA_CVO~Z`** graded `f12263b4e7` on deployed bytes **against its OWN pre-build baseline
+(`99f8d35d37`, 02:3xZ) rather than against the handoff's figures** (record @`bb4d36e32c`).
+**ROUTE/DATA LAYER: PASS.** `CodeSha256` UNCHANGED, so **every change is attributably the POOL PUBLICATION
+and not a code deploy** -- the cleanest possible attribution.
+
+| selection | before | after |
+|---|---|---|
+| `BA_US_Equity` | MEASURED/derived/12/SERVED | same |
+| `992_HK_Equity` | MEASURED/derived/12/SERVED | same *(summary fields)* |
+| **`ASML_US_Equity`** | UNRESOLVED/absent/0/(none) | **MEASURED/absent/0/SERVED** |
+| **`CAT_US_Equity`** | MEASURED/absent/0/ABSENT | **MEASURED/derived/12/SERVED** |
+| `NOSUCHKEY_ZZ` | UNRESOLVED/absent/0 | same |
+
+⭐ **THE DISCRIMINATOR, IN THAT SEAT'S WORDS: "EXACTLY THE TWO THE MANDATE SAID WOULD MOVE, MOVED; THE
+NEGATIVE CONTROL DID NOT. That is what separates 'the fix worked' from 'everything now resolves', and only
+the second would also show NOSUCHKEY resolving."** A fix that resolved the negative control would have been a
+widening, not a repair. Also graded sound: ASML's reason **names the missing model_block, cites F2/G-24, and
+records that NO NEW BLOOMBERG CALL was made** -- consistent with R-21's mechanism ruling; CAT's 12 members are
+security-scoped with a distinct payload hash; and 992_HK's FX caveat (*"NO FX rate is applied and none is
+invented"*) is **refusing to invent a rate, which IS the criterion, met.**
+
+### ⛔ THE FINDING: 992_HK's SUMMARY FIELDS ARE UNCHANGED AND ITS MEMBERS ARE NOT
+
+```
+BEFORE  BFZ7XB B7GJP7 BLN7Y2 BMZNGH  BYXXXJ  AMAT ORCL LRCX CSCO INTC BMMV2K NFLX
+AFTER   BFZ7XB B7GJP7 BLN7Y2 BMZNGH  CSCO AMAT ORCL INTC LRCX BMMV2K  B929F4  NFLX
+```
+
+**`BYXXXJ` LEFT, `B929F4` ARRIVED, plus reordering -- while identity MEASURED, basis derived, count 12 and
+status SERVED are IDENTICAL ACROSS THE CHANGE.** ⭐ **SO EVERY SUMMARY FIELD THE ROUTE SERVES IS INVARIANT
+UNDER A MEMBERSHIP CHANGE. A consumer watching identity/basis/count/status cannot detect it.**
+⭐ **AND BA IS THE CONTROL: its member list is BYTE-IDENTICAL IN THE SAME ORDER across the same republish**, so
+this is specific to 992_HK and **not** an artifact of regenerating every object.
+
+⛔ **NOT A DEFECT CLAIM, and that restraint is correct.** A regenerated set may legitimately differ on fresher
+inputs. **BUT `universe_vintage` is UNCHANGED at 2026-08-06, so the universe did not move.** **OPEN, and it
+needs ONE SENTENCE FROM THE PRODUCING SEAT, not an assumption from a grader: why did `BYXXXJ` leave and
+`B929F4` arrive, and is that the ranker's intended output on 2026-09-24 inputs? THE CASE CANNOT GO TO FULL
+PASS UNTIL THAT IS ANSWERED.** Relayed to `2.0.0_SA_COO~Z`.
+
+### ⭐ R-24a -- THE CONTROL THE BUILDER CHOSE WAS THE ONE CASE THAT COULD NOT REGRESS
+
+⛔ **THE STRUCTURAL POINT, offered with no suggestion of concealment and worth more than the swap itself: the
+handoff's post-act instrument list names AAPL, CAT, 6861_JP, ASML, BA and NOSUCHKEY -- NOT 992_HK -- and cites
+BA as the NO-REGRESSION evidence. BA IS THE SELECTION THAT DID NOT CHANGE.**
+
+⭐ **RATIFIED AS A STANDING TEST: A NO-REGRESSION CONTROL MUST BE A CASE THAT *COULD* HAVE REGRESSED.** BA was
+already derived/12/SERVED with unchanged inputs, so it had no room to move; citing it proves the act was
+survivable for cases the act does not touch, which is **not** what "no regression" claims. **The case that can
+regress is one the act DOES regenerate and whose content is free to differ** -- 992_HK.
+⚠ **A seat reasonably reports its own working set, and 992_HK sits in the CVO's mandate's five, not the
+builder's.** ⭐ **THIS IS PRECISELY THE GAP AN INDEPENDENT BASELINE EXISTS TO CLOSE, BECAUSE THE AFTER-STATE
+ALONE LOOKS PERFECTLY HEALTHY** -- and it is the third time tonight that grading against a
+*separately-captured* before-state beat grading against a report. **COST: pick the control by asking what it is
+free to do, not by whether it passed.** NON-APPLICATION: an act with a single affected case, where control and
+subject coincide.
+
+**NOT REACHED AND NOT IMPLIED (that seat's own limits, kept):** **CONSUMER 2 IS UNTOUCHED, so every case is
+HALF-GRADED by the mandate's own rule** and it will not credit one on the Peers side alone · nothing rendered
+(no column states, no "5 present / 12 absent of 17", no P/E 2026 label) · the three failure cases unexercised ·
+the trace folders and receipt are LOCAL on a branch and are **attributed, not verified** · and **direct invoke
+bypasses the edge, so a `/market` redirect is undetectable by that instrument.**
+**Standing findings acknowledged rather than worked around:** `BP%2F_LN_Equity` 404 is **mandate failure case 3
+and is OPEN**; `DE_US_Equity` UNRESOLVED (R-23a, routed to CRO~Z).
+
+## R-23 -- PEERS B04/P1 IS PUBLISHED. The signed act held its blast radius, VERIFIED BY THE SIGNER on an independent instrument
+
+**Act executed 03:33Z by `2.0.0_SA_COO~Z` under both halves** (COO @`4c7d0b2e7c`, CTO @`429efcdf30`).
+**Receipt:** `PEERS_CANDIDATE_20260924T0310Z/PUBLICATION_RECEIPT.json` @`f12263b4e7`.
+
+⭐ **THE BRANCH-B PRE-FLIGHT CONDITION WAS HONOURED IN-PROCESS, AND WIDER THAN THIS SEAT REQUIRED:**
+`head-object crosswalk/v1/2026-09-24.json` -> **404**, with the `2026-09-22` control at **200**, **plus peer
+keys 0 of 194 present** -- a check the half did not ask for. **Branch A confirmed AT PUT TIME, not at signing
+time, which is the whole point of the condition.** Then `publish_peers_candidate.py` put the exact signed
+bytes, sha-checked per file: **UPLOADED 194 of 194 + 1 crosswalk; READ-BACK 195 of 195.**
+
+⭐ **VERIFIED AT THIS SEAT ON AN INDEPENDENT INSTRUMENT, because a signer who never checks the act it
+authorized has signed nothing:** `crosswalk/v1/2026-09-24.json` = **523,207 bytes**, LastModified
+**2026-09-24T03:32:47Z**, `document-sha256 9bd953b9...`. ⭐ **AND THE BLAST-RADIUS PREMISE HELD: the PRIOR key
+`crosswalk/v1/2026-09-22.json` is STILL 203,327 bytes at LastModified 2026-09-22T17:21:29Z -- byte-length
+identical to this seat's pre-signature read and dated two days before the act. NOTHING PRE-EXISTING WAS
+TOUCHED**, measured rather than inferred from the producer's promise.
+
+**POST-ACT ON THREE INSTRUMENTS (that seat's):** (1) pool -- `load_crosswalk` answers from the new key,
+`resolve()` over the 191 prior pool keys = **191 MEASURED** (proof obligation 2, met). (2) deployed function,
+direct invoke, **`CodeSha256` UNCHANGED** -- `AAPL` derived 10 SERVED with `price`/`ev`/`ey` on members, `CAT`
+derived 12, `6861_JP` derived 4, **`ASML` SERVED with `basis: absent` and its "no classification" reason**
+(the hop-4 strand, resolved), `BA` derived 12 with carried fields, `NOSUCHKEY` UNRESOLVED. (3) served stack,
+signed-in re-walk 03:34Z against the 03:20Z before-state under **the same identity, bundle and function -- the
+only thing that moved between them is the pool publication.**
+
+⚠ **ONE THING CORRECTLY NOT CLAIMED: the counts line still reads "1 column(s) carry"** because the served
+bundle carries the OLD column map. **The 5-column render lands with the PORTAL DEPLOY of `1ec5446c`, which is
+MSTR's merge and Andrew's word -- NOT this act.** That seat scoped it rather than letting a pool publication
+appear to close a render.
+
+### R-23a -- THE `DE_US_Equity` CALL: a THIRD crosswalk source is NOT what R-14 refused, and this is a DESIGN FORK
+
+⭐ **`2.0.0_SA_COO~Z` CORRECTED ITS OWN INFERENCE, UNPROMPTED, WITHIN ~15 MINUTES.** Its 03:22Z handoff said
+`DE_US_Equity` *"is among the 158 the candidate registers"*. **It is NOT.** Deere is a scanner **MEMBER**, never
+a `universe/v1` **SUBJECT**, so no registration source carries it and Posture reads it UNRESOLVED after the act
+on **both** the browser and the direct invoke. Its own words: *"That sentence was inferred, not measured."*
+⚠ **This seat did NOT relay that inference** -- the never-widen reply carried the OBSERVATION (Posture returned
+UNRESOLVED) and not the explanation, which is the only reason the error stopped at one seat.
+
+**THE CALL:** the comparable key space is the **scanner candidate universe, 2,851 rows** -- **14x wider than
+the 194 subject keys** -- and R-1's member identity block already says UNRESOLVED for such members.
+**Its REC:** register scanner-row tickers carrying an exchange code as a **THIRD crosswalk registration source**
+under the same refusal rules. **Alternative:** Posture names only comparables inside the crosswalk.
+
+⛔ **AND THE FIRST THING TO SETTLE IS THAT THIS IS NOT WHAT R-14 REFUSED, OR A LATER READER WILL THINK THIS
+SEAT CONTRADICTED ITSELF.** R-14 refused **the ROUTE accepting a landed peers object's own identity block** --
+a resolver trusting the artifact it is resolving. **This proposes a new REGISTRATION SOURCE IN THE BUILDER,
+under refusal rules** -- which is *converging up to the producer*, the thing R-14 explicitly ENDORSED. **Same
+direction, different surface, and the distinction is the builder-versus-resolver line.**
+
+**RULED: this is a DESIGN FORK, and it is routed to `4.0.0_SA_CRO~Z` for pattern research before this seat
+decides** -- per the call-routing table, a design fork gets research first and the decision the tick it lands.
+**It is NOT blocking:** enrichment list, separate act, no build started. **The question to research is one
+sentence: does registering a 2,851-row member space under refusal rules preserve the crosswalk's "never
+guessed" property, or does it approach the make-any-key-resolvable state R-14 refused?** ⚠ **And the cost of
+the alternative is user-visible: Posture would render UNRESOLVED for legitimate comparables on a real screen**,
+so "do nothing" is not the safe default here -- both branches have a price.
+
+**PARKED at that seat under their own words:** the 60-name induction (**scripted and deterministic per R-21,
+never an agent turn**) and the slash-key route shape. **Standing findings handed to `3.0.0_SA_CVO~Z` to grade
+AGAINST rather than around:** the `BP%2F_LN_Equity` gateway 404 (10 slash-key objects unreachable), the
+`DE_US_Equity` UNRESOLVED, and the 5-column render pending the portal deploy.
+
+## R-22 -- THE CORPUS WAS NEVER THE PROBLEM: `O7` IS SMALL BECAUSE **THE ABSENCE WAS IN THE READER**
+
+**`4.0.0_SA_CRO~Y`** (msg 25203, package `PDF_EXTRACTABILITY_20260924/`, register row `RCN-0016`) on
+Andrew's word *"Begin with PDF Extractibility"* (record `32a7b8aa5e`). **This is input to the `AMGT_CORPUS`
+dossier addendum R-18 puts at this seat -- not the L1 brief itself.**
+
+⛔ **CORRECTION, AND IT IS THE FOURTH INSTANCE OF ONE CLASS TONIGHT. THIS RULING FIRST SAID THE L1 BRIEF WAS
+"STILL OWED FROM THAT SEAT". IT WAS ALREADY DELIVERED** -- `docs/briefs/amgt-corpus-dossier-fold-brief-20260924.md`,
+committed **`be09d62ef7`** (Parts 0-VII), amended `5ef3e9a89b` (Part VIII), and handed to this seat as **msg
+25189 at ~03:04Z**, about 35 minutes before this ruling was written. `4.0.0_SA_CRO~Y` corrected it (msg 25210).
+
+⭐ **AND THE SHARPEST DETAIL IS NOT THAT THE MESSAGE SAT UNREAD -- IT IS THAT THIS SEAT PRINTED THE COMMIT
+HASH OF THE ARTIFACT IT THEN CALLED ABSENT.** Tick 17's own Step-0 output reads `HEAD: be09d62ef7`. **That is
+the brief's commit.** The shared tree's HEAD *was* the brief, this seat echoed the hash in its own tool output,
+and then wrote a sentence denying the artifact existed. ⛔ **The evidence was not merely in the inbox; it was in
+this seat's own printed measurement, one screen up.**
+
+**The class, now four for four: the laptop scope limit ("not measured" while the answer sat in this inbox 90
+minutes) · the LEG-OUTSTANDING gate · step 2's sufficiency · this.** ⭐ **Every one is a claim about ANOTHER
+PARTY'S STATE made without reading what this seat already held** -- and the remedy is the same each time and
+costs one read: **before writing "X is owed / X does not exist / X was not measured", check your own
+holdings.** ⚠ **A statement about a peer's obligations is a measurement, not a courtesy.**
+
+⚠ **CONSEQUENCE FOR THE ADDENDUM, stated as a named condition rather than a vague wait: `4.0.0_SA_CRO~Y` is
+AMENDING the brief's `O7` and Part IV-F2 right now to cite this package, and will send the hash when it lands.
+Writing the L4 addendum against bytes mid-amendment would build on a read about to be superseded, so the
+addendum is cut at the AMENDED hash** -- which is one message away, not an open-ended hold.
+
+⭐ **THE HEADLINE INVERTS THE LEAD PANEL'S. There, the pipes worked and the water was missing. HERE THE WATER
+WAS ALWAYS THERE AND THE PIPE WAS BLIND:** of the 30 PDF-only folders, **26 carry a full research pack** -- 26
+pillars, 27 recommendation lines, 27 risks, 26 management, 26 all three cases, 24 thesis summaries, 24 company
+descriptions, 15 "Why we own" -- and **29 of 30 carry pillars or "Why we own"**. The single empty one is
+**QXO** (an investor Q&A PDF only). **`O7` is therefore SMALL, and it was a READER defect, not a corpus gap.**
+
+**THE POSITIVE CONTROL IS WHAT MAKES THAT RELIABLE:** 56 docx+pdf pairs of the same stem; of the 19 whose docx
+carries pillars under the ruled continuation rule, **17 FULL, 1 PARTIAL (Alibaba -- the PDF finds one MORE),
+1 NONE (Michelin, a blank template docx)**, and ⭐ **99 of 99 docx pillars recovered from the PDF.** The PDF
+path recovers everything the docx path finds and occasionally more. Population read: **157 top-level PDFs, 0
+zero-text, 0 read failures, 0 placeholders hydrated**, with 71 docx as the control side. ⚠ **28 further PDFs
+in one Copa subfolder were NOT read** -- a stated denominator gap, not a silent one.
+
+⛔ **THE CAUSE, AND IT IS A CLASS THIS SESSION HAS NOW MET THREE TIMES: `extract.py`'s `K3` heuristic looks for
+a STANDALONE LARGE/BOLD SHORT LINE, and the PFOE author's packs label their sections with INLINE BOLD LEADS.
+K3 sees NONE of them.** That is why K3 read **33 of 52** and why the scan filed those packs as "PDF-only
+unknowns". **The labels were present the whole time, in a shape the detector could not perceive** --
+`RECOMMENDATION`, `COMPANY DESCRIPTION`, `Long-term growth algorithm`, `INVESTMENT THESIS`, `RISKS`
+(Pre-mortem first), `Ownership`, `Management and capital allocation`, `Special items`, and on updates
+`Headline results`, `Positives`, `Negatives`, `Segment highlights`, `Guidance`, `Why we own`.
+
+⭐ **THE CLASS, NAMED BECAUSE THREE INDEPENDENT SURFACES HIT IT TONIGHT: AN INSTRUMENT THAT CANNOT
+DISTINGUISH "I CANNOT SEE IT" FROM "IT IS NOT THERE" REPORTS THE SECOND.** (i) `peer_read {}` -- a STRANDED
+set, an object that exists whose key will not resolve, is byte-identical in the response to a security that
+never existed (`3.0.0_SA_CVO~Z`, 111 sets). (ii) `K3` -- inline-lead sections reported as absent sections.
+(iii) This seat's own `task_orders` vs `task-orders` path, which returned a clean confident `0 of 0`.
+**In all three the world was fine and the reader was narrow, and in all three the output was a CONFIDENT
+NEGATIVE rather than an error.** ⛔ **So: when a census returns "absent", ask what SHAPE the instrument
+requires and whether the data is obliged to take it.**
+
+**TWO MORE MEASURED CAUSES, both cheap to fix:** the team's PDF headings carry a **trailing colon** and
+**"Valuation" is a PILLAR lead, not a section**; and a PFOE pillar lead can sit alone on its line with the
+colon in a **non-bold span**. ⭐ **And one candidate cause is RULED OUT by measurement rather than left
+hanging: the docx regex's 80-character lead cap is NOT a limit -- a 140-char variant gives identical counts.**
+
+**WHAT THE ADDENDUM WILL TAKE (that seat's recommendation, adopted as the shape to write):** `extract.py`
+gains the inline-lead section rule and the PFOE name set; `continuation.py`'s pillar rule gains a **PDF
+branch** carrying the three rules **with the docx branch KEPT AS THE CONTROL**; the dossier gains
+`thesis_summary`, `company_description`, `growth_algorithm`, `ownership`, `special_items`, `why_we_own`,
+`positives`/`negatives`, **each CITED or explicitly ABSENT**.
+
+⚠ **LIMITS CARRIED INTO THE ADDENDUM RATHER THAN DROPPED AT THE GOOD NEWS:** PFOE pillar recall has **no docx
+twin to control against** (2 per pack across 24 packs is self-consistent, **not controlled**); management,
+risks and cases are measured as **block presence, not typed fields**; the 28 unread Copa PDFs; and **nothing
+under the library root was written.**
+
+⚠ **AND THE FOLD CONSTRAINT FROM R-18 STILL BINDS THIS:** *"i wouldnt change AMGT_RESAPP page layout
+architecturally"*, and *"Peers largely stays as it is"* -- so a richer dossier feeds the EXISTING tabs and
+does not reshape them.
+
 ## R-21 -- ALL RECS APPROVED, EGRESS WIDENED TO ALL VENDORS -- AND THE GRANT IS BROAD ON **AUTHORITY**, NARROW ON **MECHANISM**
 
 **Andrew-direct 2026-09-24 ~03:2xZ at the `1.0.0_SA_CTO~Z` terminal, VERBATIM:** *"all recs approved, and you
