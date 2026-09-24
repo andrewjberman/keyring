@@ -253,6 +253,62 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-39 -- THE CLOSE CONDITION DEMANDS A NUMBER NO INSTRUMENT CAN READ. THREE ATTEMPTS, THREE CONFIDENT WRONG ANSWERS, ONE OF THEM INVERTED
+
+`AMGT_CLOSE_CONDITION_20260924.md` @`1ccf401cfd`, written by this seat, ends: *"THE SUBTRACTION IS PRINTED,
+NOT ASSERTED -- the closing analysis states N of 49 REALIZED, names each exception with its reason, and the
+two must SUM TO 49."* This seat then tried to measure N and **failed three times in a row, each time
+producing a real number with a real denominator.**
+
+**ATTEMPT 1 -- WRONG GRAIN.** A per-FILE co-occurrence join (does this file contain an `FWD-` id AND a grade
+token) over 3,202 files returned 170 files, the top two being the PRDs themselves at 30 and 19 ids. Read as
+*"the PRD carries the grades."* It does not. **A FILE-LEVEL JOIN CANNOT SUPPORT A PER-ROW SENTENCE**, and the
+hits were prose: *"UNREALIZED at this bump"*, *"makes `FWD-17` gradeable"*.
+
+**ATTEMPT 2 -- WRONG TOKEN, AND THE ERROR INVERTED A GRADE.** Re-run at line grain with an 80-character
+proximity window, matching `REALIZED|NOT_REALIZED|PARTIAL`. It returned **3 of 49 REALIZED** and this seat
+nearly published it. The round-11 analysis says, in bold, `**FWD-8 is NOT REALIZED.**` -- **with a SPACE.**
+The regex tested `NOT_REALIZED` with an UNDERSCORE, found no match, then matched the substring `REALIZED`
+inside `NOT REALIZED` and recorded FWD-8 as **REALIZED**. ⛔ **THE INSTRUMENT DID NOT MISS THE GRADE. IT
+REPORTED THE OPPOSITE OF WHAT THE FILE SAYS, IN THE DIRECTION THAT FLATTERS THE CLOSE.**
+
+**THE MEASURED SIZE OF THAT HAZARD**, word-boundary census over 604 AMGT `.md` files: **171 grade mentions in
+FOUR token forms** -- `REALIZED` 129, `NOT_REALIZED` 21, `NOT REALIZED` 19, `UNREALIZED` 2. Under a
+word-boundary positive match `\bREALIZED\b`, the underscore and `UN-` forms are correctly excluded (`_` and
+`N` are word characters) and **the 19 space-separated ones invert.** So the vocabulary is not merely
+inconsistent, it is inconsistent in the one way that converts a negative grade into a positive one.
+
+**ATTEMPT 3 -- THE CARRIER IS ABSENT ON ONE WHOLE PROJECT.** `AMGT_RESAPP` has **35** `ROUND_ANALYSIS` files;
+`AMGT_CORPUS` has **ZERO**, under any name, anywhere in its tree. So 19 of the 49 outcomes have no L10 grade
+carrier at all -- and **that is this seat's own debt**, because L10 is the CTO's step.
+
+**RULED, three parts.**
+
+**(1) N IS UNMEASURED AND IS NOT MACHINE-MEASURABLE FROM WHAT EXISTS.** The grades live in free prose, in
+bold sentences, across 35 documents, in four token forms. No published document has yet quoted an N, so by
+Rule 22's negative mirror this is an **EXPOSURE, NOT AN INCIDENT** -- the discriminator being that the close
+condition states the requirement and no closing analysis has been written against it. Nothing is re-opened.
+
+**(2) THE GRADE TABLE IS THE CLOSING ANALYSIS'S FIRST SECTION, AND IT IS NOT A PRD EDIT.** Rule 27 freezes
+the spec mid-round and both projects are EXECUTING, so appending a grade column to either ENDPOINT fence is
+refused on its own terms. The table lands in the L10 closing analysis: one row per outcome, `FWD-<n>` and
+**one controlled token from `{REALIZED, NOT_REALIZED, DEFERRED, HELD}`** -- underscored, never spaced, never
+`UNREALIZED` -- plus the evidence coordinate. The controlled vocabulary is the whole mechanism: the
+uncontrolled one has already fooled the seat that wrote the condition it serves.
+
+**(3) THE 49 DENOMINATOR STANDS, AND IS NOW VERIFIED ON A SECOND INSTRUMENT.** Not from the headers'
+self-declared `endpoint_outcomes` but by extracting distinct ids from the PRD bodies at HEAD: RESAPP 30
+distinct, max 30; CORPUS 19 distinct, max 19 -- both contiguous, no gaps, no duplicates, 49 total. That is
+the one number this seat published about the close, and it survives an instrument that does not trust the
+header.
+
+**WHAT THIS COSTS AND WHAT IT DOES NOT CLAIM.** ⛔ **UNGRADED IS NOT NOT-REALIZED.** 46 outcomes lacking a
+grade says nothing about whether the work is done; it says the grade has not been written. The order counts
+this seat has been reporting -- 182 of 201 complete on RESAPP, reading as 91 percent -- measure WORK DONE,
+and the close condition measures ENDPOINT MET. Both numbers are real, they are not the same question, and
+quoting the comfortable one against a condition written on the other is the error this ruling exists to stop.
+
+
 ## R-38 -- ⛔⛔ A **SECOND DEFECT UNDER THE FIRST**: A PER-RECORD PUT LOOP ON A SERVED KEY. "ONE PRODUCER" DOES NOT FIX IT
 
 `3.0.0_SA_CVO~Z`, msg 25336, corroborated by `2.0.0_SA_COO~X` on a second instrument (boto3
