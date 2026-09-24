@@ -273,6 +273,73 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Disarms S3 only. IV-e-5's proof instance is unchanged (typecheck was never a criterion); the fix commit reaches DEV inside the round-2 candidate MSTR lands."
+  },
+  {
+    "id": "DSGN_IRPTV1-W4-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~4",
+    "surfaced_at": "2026-09-24T11:08:24Z",
+    "one_line": "The pre-commit risk-reflex (comp-pulse) HELD this worker's edit to src/pages/InvestorReporting/index.tsx against FOUR unrelated AdvisorIntelligence partner components, apparently matched by the shared basename index.tsx rather than full path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output, portal commit bcf25837 (this worker, IV-e-3): '[risk-reflex] [HOLD] src/pages/InvestorReporting/index.tsx -> component:portal/src/pages/AdvisorIntelligence/_partners/{49financial,cottonwood,demo,inflection}/index.tsx (3 recorded claim(s))' for all four, each citing the SAME memory line: 'memory/reference_cot_advi_books_drill_artifact_chain.md:10 \"Cottonwood ADVI Books tab (portal `src/pages/AdvisorIntelligence/_part\"'",
+        "the cited memory file (reference_cot_advi_books_drill_artifact_chain.md, read at this worker's box) documents the Cottonwood ADVI Books tab's server-artifact drill chain (platinum/firm/dashboard.json, leaderboard.json, opal-users-v2 s3Bucket routing) -- nothing in it names src/pages/InvestorReporting/, the InvestorReporting header, IdentityCard, or any api/endpoints/investor-reporting.ts operation",
+        "the only textual thing the five files share is the basename `index.tsx`; this worker's edit is a single JSX prop-list change on the IdentityCard mount line, unrelated by import graph, route, data source or component tree to the AdvisorIntelligence partner dispatchers named in the HOLD"
+      ]
+    },
+    "spec_asserts": "The risk reflex's own banner: 'you are about to touch a node the estate has WRITTEN WARNINGS ABOUT. GO READ THE CITATION before this commit proceeds' -- implying the four cited components are genuinely at risk from this edit.",
+    "world_is": "The four cited components (AdvisorIntelligence partner dispatchers) and the memory citation they share describe a DIFFERENT page, a different data source (opal-partners-data / opal-users-v2), and a different served-artifact chain than InvestorReporting's index.tsx; the four HOLDs read as a basename collision (`component:.../index.tsx`) in the danger map's node identity rather than a real shared-surface risk. Not verified against comp-pulse's own matching code in this pass (out of this cell's <paths>) -- read as a pattern, not confirmed as the mechanism.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking: the commit proceeded (rc=0) and this worker read the citation as required, found it unrelated, and moved on rather than treating the HOLD as a stop. Filed so a seat that owns NFRA_NERVES/comp-pulse can check whether the danger map keys `component:` nodes by basename instead of full path -- if so, every same-named file (index.tsx recurs dozens of times under portal/src/pages/) gets spurious HOLDs on every unrelated edit, which teaches reviewers to skip the reflex."
+  },
+  {
+    "id": "DSGN_IRPTV1-W4-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~4",
+    "surfaced_at": "2026-09-24T11:38:24Z",
+    "one_line": "IVE4-AC2's premise ('the existing firm-dropdown and Global-mode suites still pass') is false at the UNTOUCHED base commit: 5 of 48 tests in __tests__/fe-s-2/ + __tests__/fe-s-10/ already fail before this worker changed anything, unrelated to FirmDropdown/index.tsx's actions block.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bun test src/pages/InvestorReporting/__tests__/fe-s-2/ src/pages/InvestorReporting/__tests__/fe-s-10/ run BEFORE any IV-e-4 edit (portal HEAD bcf25837, IV-e-3's own commit, before FirmDropdown.tsx/index.tsx were touched this round): 42 pass / 1 skip / 5 fail, 221 expect() calls, Ran 48 tests across 9 files -- the same command run AGAIN after this cell's edits (FirmDropdown.tsx +55/-0, index.tsx the actions block only): 42 pass / 1 skip / 5 fail, IDENTICAL five named failures both times",
+        "the five failing tests, by name: 'Global vs firm-scoped render parity > the RAW markup differs...' (fe-s-10/parity.test.ts); 'holdings tab mount > TabShell(initialTab: holdings)...' and 'holdings tab mount > the instrument can fail...' and 'reporting tab is unaffected > the default...' (all three fe-s-10/tabs-mounted.test.ts, concerning TabShell/ReportingTab/HoldingsTab mounting -- no file this cell's <paths> grants); 'firm dropdown options > no session claim is read anywhere in this page' (fe-s-2/dropdown.test.ts, asserting index.tsx contains neither the string 'isInternal' nor 'useAuth')",
+        "git show 895752676a45e83dc252d4253aebc5fa316a229e:src/pages/InvestorReporting/index.tsx (the project's OWN base pin, predating every DSGN_IRPTV1 round) already carries 'import { useAuth } from ...' (:10), 'const auth = useAuth()' (:36) and 'internal={auth.isInternal() || auth.isDev()}' (:55) -- none of them inside the actions-ternary span this cell's ruled touch T2 bounds (base lines 156-166), so the dropdown.test.ts failure predates this project entirely and cannot be resolved by any change T2 authorizes"
+      ]
+    },
+    "spec_asserts": "IVE4-AC2: 'the existing firm-dropdown and Global-mode suites still pass at your tip ... <expect> 0 fail'.",
+    "world_is": "The suite carries 5 of 48 failures at the UNTOUCHED base this worker's worktree branched from, none inside the ruled-touch span, and this cell's edits leave the failure set byte-for-byte unchanged (same 5 names, same count, before and after). 'Still pass' cannot be true of a suite that was never passing; 'unchanged by this cell's work' is what this worker can and did measure and is offered as the criterion's disposition instead.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking this order: IVE3-AC1/AC3/AC4 pass and IVE4-AC2 is reported REFUSED (as-written unsatisfiable) with this before/after measurement standing in its place, per the refusal clause -- never silently marked PASS, never repaired outside <paths> (four of the five failures touch TabShell/ReportingTab/HoldingsTab mounting, none granted to this cell; the fifth needs index.tsx's top-level auth wiring untouched by T2). Filed so a later round or the CTO can decide whether to open a repair cell for the 5, or re-baseline the criterion's own premise."
+  },
+  {
+    "id": "DSGN_IRPTV1-W4-S3",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~4",
+    "surfaced_at": "2026-09-24T12:28:10Z",
+    "one_line": "A working-tree source file carries CRLF line endings while `git show <pin>:<path>` always returns LF-normalized blob content -- a substring/byte-equality check comparing the two directly reads a real, unchanged file as CHANGED unless both sides are EOL-normalized first.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IVE8-AC2's own test (iv-e-8.selection-path.test.ts, first draft) extracted ClientSearch.tsx's unchanged `handleSelect` block from `git show 895752676a...:.../ClientSearch.tsx` (349 bytes, LF) and asserted it as a substring of `readFileSync('.../ClientSearch.tsx', 'utf8')` (the working-tree copy) -- FAILED (false) even though the block is byte-for-byte unmodified",
+        "python -c \"open(p,'rb').read().count(b'\\\\r\\\\n')\" on the working-tree file printed 213 (ClientSearch.tsx) / 207 (index.tsx) / 409 (IdentityCard.tsx) -- all pre-existing round-1/round-2 files carry CRLF on disk -- while `git show <any pin>:<same path>` always returns LF only (confirmed: 0 CRLF bytes in git-show output for the same files)",
+        "two brand-NEW files this worker created this round (BrowseDrawer.tsx, FirmDropdown.tsx's additive block) show 0 CRLF -- consistent with core.autocrlf converting a file to CRLF only on a CHECKOUT-class operation, which a freshly-Write-tooled new file has not yet gone through",
+        "fix applied in the test itself: `const normalize = (s) => s.split('\\r\\n').join('\\n')`, both sides normalized before the substring check -- re-run confirmed true"
+      ]
+    },
+    "spec_asserts": "IVE8-AC2's own text: 'ClientSearch.tsx's own handleSelect ... is BYTE-IDENTICAL between the base pin and this cell's tip (a source-level difference control)' -- read plainly this could be attempted with a direct string/substring comparison between a `git show` extract and a `readFileSync` read.",
+    "world_is": "On this box, a working-tree file and its own git-show blob differ in EOL bytes even when NO content changed, because core.autocrlf converts CRLF on checkout while git normalizes to LF in every stored blob -- so 'byte-identical' as a literal claim is only ever true post-normalization, and a naive substring check silently reads a real \"unchanged\" as \"changed\" (never the reverse -- it cannot false-positive PASS an actually-changed block, only false-negative an unchanged one).",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking: caught and fixed within this worker's own test before the criterion was graded (IVE8-AC2 PASSES post-fix, re-run confirmed). Filed because the SAME shape (git-show extract vs readFileSync, or two readFileSync calls from different vintages/checkouts) recurs across this project's own criteria (e.g. IVE3-AC3/IVE4-AC3/IVE8-AC3's own numstat/diff checkers, which are immune because `git diff`/`git show --numstat` are EOL-aware by construction) and could recur in a FUTURE cell's hand-written comparison that is NOT diff-based."
   }
 ]
 ```
