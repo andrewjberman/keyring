@@ -105,19 +105,22 @@ THESE, never those. The plan is correct; the earlier proof was stale.
   counts identities with >=1 publication-links object, the same 3 of 250 population as the baseline, so the
   before/after pair is on ONE population and reads 3 of 250 both sides.
 
-[SUPERSEDED by amendment 2, old bytes retained for the 2b pair -- these expected `gold` and are FALSE on a correct
-legacy apply:]
-- `tf`: ... env `CHATTER_AXIS_SOURCE=gold` ...
+[SUPERSEDED by amendment 2, old bytes retained VERBATIM for the 2b pair -- these expected `gold` and are FALSE on a
+correct legacy apply:]
+- `tf`: safe-apply receipt showing exactly the three changes and one import above; post-apply
+  `get-function-configuration` reads `CodeSha256 == Xdwp7IrPaNho7y0Nz1L4TsihsueqDG+QDuvRsA+acYM=`, env
+  `CHATTER_AXIS_SOURCE=gold`, 512 MB, 120 s; `get-role-policy` carries the one added prefix and nothing else new.
 - target-runtime read (zero writes): one invoke with `{"dry_run": true}` returning `source=gold`, `dry_run=true`,
   `input_coverage.required=191`, both products `FAILED` / `INCOMPLETE_GOLD_INPUT`, `rows_written=0`,
   `pointer_written=false`, `failed_marker_written=false` -- this is the Linux Arrow bytes reading the real
   parquet (writer Arrow 24, reader 15.0.2), the read R-15/R-17 said remained REQUIRED.
 - `daily`: the 10:00Z fire's run line `source=gold` with `INPUT_COVERAGE RESOLVED 0 of 191 security windows`,
   `PRODUCT ... state=FAILED ... pointer_written=False failed_marker_written=True`; then the NEGATIVE CONTROL:
-  the 09-23 pointers byte-identical to the baseline, and NO `_CURRENT` at `#2026-09-24` (or at the first
-  post-apply date).
-- `names_with_links` ... under `gold` it counts identities with a gold day record, a different population from
-  the 3 of 250 publication-link count.
+  `TRENDING_CHATTER#2026-09-23 _CURRENT` and `BREAKOUT_CHATTER#2026-09-23 _CURRENT` byte-identical to the
+  baseline (`generation_id 20260923T100026Z-d09ee37a8f3b` / `20260923T100028Z-25147d66b259`), and NO
+  `_CURRENT` at `#2026-09-24` (or at the first post-apply date).
+- `names_with_links`, if quoted at all, is quoted WITH `names_with_links_population` (R-20): under `gold` it
+  counts identities with a gold day record, a different population from the 3 of 250 publication-link count.
 
 ## WHAT THIS HALF DOES NOT SAY
 It does not claim H1-H4 or any acceptance ID (R-19: 2a claims none). It does not lift the deploy ledger, the
