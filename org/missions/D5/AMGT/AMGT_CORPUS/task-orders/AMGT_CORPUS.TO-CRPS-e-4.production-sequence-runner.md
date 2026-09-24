@@ -84,7 +84,7 @@ AC1 FAIL (no such test file), AC2 FAIL (no such module), AC3 FAIL (the sheet cit
 recorded in the issuance commit.
 
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
