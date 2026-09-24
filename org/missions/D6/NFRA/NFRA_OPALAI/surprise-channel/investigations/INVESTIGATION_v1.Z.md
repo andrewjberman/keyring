@@ -57,6 +57,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "The task order's <paths> block names `opal_ai` as this worker's write surface, and the registry's worker_grant stanza (.owned-paths.yaml:44-47, ADHC_OWNPTH.005) states a worker serial is admitted to exactly the <paths> a non-terminal task order issued_to it names at HEAD.",
     "world_is": "A path with NO existing lane row in .owned-paths.yaml (any first-mint top-level path, not opal_ai-specific) is refused as UNDEFINED before the worker_grant clause is ever consulted, because both the CLI loop and check_agent() return on an unresolved lane before reaching ADHC_OWNPTH.005 -- so the grant only ever supplements an EXISTING lane's permitted_agents, never covers a path that has none. Left alone this refuses every future worker's first commit of a brand-new top-level path (OA-w-2 lands `opal_ai/**` lane rows, which covers the SUBTREE but not the pattern class itself, so the next wholly-new path anywhere in the estate hits the identical wall).",
     "notes": "Not fixed here: .owned-paths.yaml and .tools/owned-paths-validate.py are outside this order's <paths> grant. The commit itself landed clean via the documented override; this row is the standing gate-gap, not a blocked commit."
+  },
+  {
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-24T23:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_OPALAI-Z-S4",
+    "one_line": "DISARMS NFRA_OPALAI-Z-W1-S1 (owner this seat): the lane resolver returned UNDEFINED for the granted path opal_ai before consulting the worker grant; the worker's audited author override covered exactly its three granted paths, and OA-w-2's lane rows for opal_ai/** close the gap for this project's later nested-path commits.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/git-author-override-audit.log, read by this seat at the drain: 2026-09-24T22:20:40Z BLOCK 0.9.0_WK_NFRA_OPALAI~1 3 (VIOLATION: opal_ai -- UNDEFINED); 22:27:53Z OVERRIDE 3; 22:45:46Z PASS 3.",
+        "Branch wk-NFRA_OPALAI-1 @074be9bf5f, git diff --stat fee6c9f89c..HEAD: .gitmodules, .tools/wk-provision.sh, opal_ai (gitlink 160000 90ca424fc7), the proof instance, a session log, the channel -- every staged path inside TO-OA-w-1's <paths> or its deliverables folder.",
+        "TO-OA-w-2 <paths> carries .owned-paths.yaml and its cell text lands lane rows for opal_ai/** BEFORE any hook."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-W1-S1 is ARMED with this seat as disarm_owner.",
+    "world_is": "No out-of-grant path moved. The residual is the resolver's ordering (a worker grant is never consulted for a path with no lane row), a fabric gate defect whose owner is the gate's, carried to the CTO in this round's drain-end read; NFRA_MCPORTAL's MP-w-1 (the mcportal gitlink) meets the same ordering.",
+    "notes": "No gate is built here."
   }
 ]
 ```
