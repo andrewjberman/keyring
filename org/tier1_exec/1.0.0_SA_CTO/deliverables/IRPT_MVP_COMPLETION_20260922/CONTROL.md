@@ -19,7 +19,10 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (000000000000000000000000) (iv) RULED: (i-b) custody branch cut as code; the FIRST live Analysis
+CTO review queue, in order: (0000000000000000000000000) (i-b) is a DESIGN, not a composition (interpret_source /
+validate_evidence exist nowhere; the CTO's premise was inherited -- owned); nothing stubbed; P drafts the interpreter's design
+card now with a live capture on Anna's account; the first live Analysis submission waits on whichever composition lands first
+(batch 45). (000000000000000000000000) (iv) RULED: (i-b) custody branch cut as code; the FIRST live Analysis
 submission bounded to Anna's account from Andrew's browser -- ONE card with the plan word; edge (a) served (pfAr3uZE); the
 fe-s-2/fe-s-10 five = P's repair in candidate 5 (batch 44). (000000000000000000000000a) DSGN round 2: IVE4-AC2 amended to a
 difference control; S3 product-file drain red -> the authoring worker (the rule); 3 of 8 terminal (batch 44).

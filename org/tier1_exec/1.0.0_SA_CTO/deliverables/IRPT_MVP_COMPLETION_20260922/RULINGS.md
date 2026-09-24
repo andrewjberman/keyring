@@ -2842,3 +2842,38 @@ the candidate's next hygiene run; an issuer-direct edit stays reserved for test 
 IV-e-3 / IV-e-1 / IV-e-5 terminal on dsgn-irptv1-r2 @5b50d9f0 (typecheck 0; the suites 17 pass / 113 expects); chain C
 drained to CLOUD @dc83072d98; IV-e-8, IV-e-2, IV-e-6 in flight; IV-e-7 off the merged candidate; portal DEV at 310b83b8 with
 895752676a an ancestor, so the landing stays a clean merge.
+
+
+## 2026-09-24 12:0x UTC - Claude CTO batch 45: (i-b) is not a composition -- the accepted-custody branch needs an economic interpreter that exists nowhere; the CTO's "cut it as code" premise was inherited, not measured; P measured first and cut nothing; the interpreter's design card is P's act now
+
+Instruments: P's pre-cut read of Y's code at HEAD (100556: custody_submission.py:140-151, _scope/accepted_custody.py:17-39 and
+:96-155, _scope/custody_binding.py:136-198, holdings/publication.py:122, holdings/entry.py:38, intake/custody_portfolio.py:135-
+215; a repo-wide grep for interpret_source / validate_evidence = 8 files, 0 implementations).
+
+### IRPT-ANALYSIS-CUSTODY-BRANCH-IS-A-DESIGN-20260924 (P 100556; the CTO's word 100558)
+The CTO's 100554 word -- "(i-b) is cut now as CODE; composing is not egress" -- rested on the premise that the accepted-
+custody branch composes over ports the prospect branch holds. P measured before cutting: build_accepted_custody_entry binds ONE
+AcceptedCustodyReader whose two ECONOMIC ports, interpret_source (document + manifest + receipt -> {actual_custody,
+original_rows, source_receipts, revision_refs}) and validate_evidence (the custody_portfolio._validated contract: positions
+with closed economic fields, a COMPLETE census row per account, a reconciliation row per account at USD 0.01 tolerance against
+independent_source_rows), have ZERO implementations anywhere in the tree, and Y's own docstring names them "intentionally
+no default implementation; a fake/local validator is not a deployed capability". The other two ports exist or are within reach
+(CustodyBindingStore; M's HoldingsPublication.capture / load_pinned; a (principal, owner) re-shaping of the holdings entry's
+selection resolution). So (i-b) = an hour of composition PLUS a design cell; composing the half alone changes the served
+refusal's class name and nothing a client can see. CTO MISS, owned: the premise was inherited from the earlier port census's
+phrasing ("the custody branch refuses until the accepted reader's ports are pinned") and never measured -- the inherited-
+sentence class (no denominator to narrow, so the subtraction cannot fire); P's measure-before-cut is the rule working.
+RULED: (1) nothing stubbed; the composition half is NOT cut alone. (2) P drafts the interpreter's DESIGN CARD now, as an
+act: inputs = HoldingsPublication.capture's document / manifest / receipt for the selected accounts, read from the code and
+from ONE live capture on Anna's account (a read of M's served publication; no vendor, no write); output = the _validated
+evidence contract quoted from the code; the open questions named plainly -- which INDEPENDENT source values the positions
+for the USD 0.01 reconciliation (the CTO's leaning: the custody fact tables' receipted values are the independent source and
+the publication's own reconciliation row is the evidence of it; Y's semantics to confirm on return or the CTO's to rule on the
+card), and whether the interpreter lives in Y's lane (intake / _scope) with M supplying the publication shape. The card goes
+to the CTO to assign (Y on return, else a cell in IRPT's next round); it is PRD-grade and NOT a wait on Andrew -- no egress
+question lives in it. (3) The FIRST live Analysis submission (batch 44's bound: Anna's account, the default window, Andrew's
+browser) now waits on whichever composition lands first -- the prospect upload (Andrew's two egress questions + the index /
+parse / resolve design) or this interpreter; the card at Andrew says so. (4) Candidate 5 proceeds: the corpus records for
+the four routes; the SAMPLE maps in fe-s-13/routes and fe-s-14/header gaining `requestId` (a real repair: the arms fail on
+"needs path parameter requestId"); the five pre-existing fe-s-2 / fe-s-10 failures whose names sit in row DSGN_IRPTV1-W4-S2
+(P measures them in the nested checkout and repairs what is P's); then the export root's stale comments.
