@@ -86,3 +86,23 @@ Y's other producer reading also verified by line: the no-position exclusion (all
 (Market Value 0 AND Units 0, not null) is NOT that rule -- it stays an active row the validator counts as
 unsupported (`Market Value <= 0` `:409`) and keeps in the DC1 sum at 0. Whether the interpreter excludes zero lots
 is Y's proposal for the CTO; it moves no value.
+
+## ADDENDUM 2026-09-24 14:0xZ -- the 49F and INF lines for the per-firm admission (CTO 100676; Y 100672)
+
+**49F, which total the producer ties:** `dim_balance.net_mv_positions`. `holdings_49f.py:285` reads it beside the
+ACCOUNT amount `net_mv_plus_cash` (`:284`); `:403-404` ties `sum(dim_position._mv)` to it within `RECON_TOLERANCE_USD`,
+and a miss withholds the drill (`:405-414`). Cash is a DERIVED remainder node, `cash = account_value - net_positions`
+(`:429-434`, security_id CASH/SCHWAB_CASH, fact "custody cash remainder") -- never a source row. `dim_position` carries no
+cash row: `accounting_rule_code` is the holding's account type (CASH 102,608 / MARGIN 2,589 / SHORT 1,300 / blank 2 in
+the served partition); `dim_balance` carries the cash FIELDS on its one row per account. The Q4 table's
+"net_mv_plus_cash" names the ACCOUNT-level total; the position-row tie is to `net_mv_positions`. Ruling (a) matches.
+
+**INF, the key-date rule and inactive rows:** `holdings_inf.py:145-151` reads accounts_v2 and positions_mv at the
+partition `hs._inf_positions_source_key` selects (`holdings_snapshot.py:1425-1446`: the latest `snapshot_date <= as_of`;
+for as_of 2026-09-23 that is 2026-09-23), refusing unless both partitions agree (`:146-147`); the custody clock is the
+prior trading day (`:266`) = the manifest's business_date. Rows with `is_active = false` are SUMMED as ordinary rows:
+`inf_positions.py:121-124` @a700417729 sums every positions_mv row of the account (`rows = p.loc[p.account_id ==
+account]; observed = sum(rows.current_value, Decimal(0))`) against `accounts_v2.current_value`, no filter on is_active /
+is_managed / is_custodial_cash anywhere in the validator or the builder's row path; the docstring says "No position
+deduplication is permitted". Every validated row becomes a SECURITY node under namespace VENDOR (`holdings_inf.py:312-313`),
+custodial cash included.
