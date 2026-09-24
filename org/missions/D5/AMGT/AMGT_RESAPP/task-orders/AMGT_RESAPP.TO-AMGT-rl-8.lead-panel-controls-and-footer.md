@@ -141,7 +141,18 @@ against each other at the drain (`tsc` is the meet). AC2 is the one census in th
 because the band is the ONE surface whose ink is light BY CONTRACT (C3) -- the admitted set is printed so the drain's
 page-wide census can subtract it.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~09:4xZ.** Flipped by the ISSUER; the worker left the record face alone.
+3 of 3 criteria PASS, proof-of-spec rc=0 VALID (re-run by this seat inside the worker's worktree C:/tmp/wk-amgt-37-137).
+leadPanelPattern.harness.cjs CHECKS-OK 12 of 12 (mutant control executed: the pre-cell filled-purple toggle flips purple_fill_classes);
+ui-class-census FILES 4 TOTAL 0; errorEmpty.harness.cjs 12 of 12; tsc -b clean. TWO rows: W137-S1 (ARMED -> resolved at this drain:
+the shared tabs.harness.cjs gained PanelFooter / Segmented / HelperTip stubs, portal 1267a67e; with them the harness LOADS and reads
+CHECKS-WRONG-WAY on three assertions the merged page no longer satisfies by design -- rl-9's AC3), W137-S2 (INERT, `dated` is a
+boolean on the live fixture, rendered from as_of_date). Drained @6b1f1d838d; portal DEV 1267a67e (merge of bf1b6149 at ae760a39 plus
+the stub commit), gitlink f67117d4 -> 1267a67e. Drain-time ui-contract-check (contract-check-after-rl-8/): list purpleFills 4 -> 3
+and bandContainersTopLevel 2 -> 3 (the lead panel's own containers now count as bands on the list state); weights/sizes/radii/shadows
+unchanged on every state. The PASS is owed by rl-9's re-assert, which now holds rows Z-S247 and W137-S1's residue.
+
+<status>complete</status>
 <round>37</round>
 <slot>~137</slot>
 <fabric>site-z</fabric>
