@@ -20,7 +20,7 @@ subagents, and rm-7 (the deploy leg) at `0.7.0_AE_CloudOps~A` under NEVER-2; iss
 | `safe-merge` | six worker drains (channel + gitlink conflicts each time) | rm-2's refused on `commit-graph is likely corrupt` with `verify` rc=0; landed with `GIT_CONFIG_COUNT=1 KEY_0=core.commitGraph VALUE_0=false` on the same invocation |
 | `gen_harvest_prefixes.py --check/--write` | the rm-7 build's precondition | drift = the REGISTRY_HASH stamp only; restamped @19a22f2f51 |
 | `wk-provision.sh remove` | ~140..~145 | six worktrees and twelve branches gone |
-| JSON over the four AMGT channel fences (R-78's query) | this serial | 666 rows, 180 ARMED, 84 owned, 47 not later cited |
+| JSON over the four AMGT channel fences (R-78's query) | this serial | 666 rows, 180 ARMED; `~Z` exact 45 owned / 26 not later cited, `~ZZZ` 39 / 21 (a prefix match first summed them, 84 / 47, reported and corrected) |
 | gaps | native Python cannot open a `/c/` path (use `C:/`); the watcher census regex reads 0 on this device's quoted script path (`"?` after `.sh` fixes it); `glob` returns `\` on Windows |
 
 ## Work Completed
@@ -47,7 +47,7 @@ subagents, and rm-7 (the deploy leg) at `0.7.0_AE_CloudOps~A` under NEVER-2; iss
 4. **Packet** `round38/DRAIN_END_PACKET.md` at DRAFT 3 (@e116ed8aa4 -> @fa93aaece5 -> this commit): six of seven
    filled, rm-7 at its ledger close.
 5. **Records beside the round.** MSTR~Z told of the commit-graph refusal (25606; the rewrite is its device act). R-78's
-   query run on this serial and reported (25614). Memory banked: the deploy-leg lesson corrected to the content-stream
+   query run on this serial and reported (25614), then corrected for lane grain (25617: the prefix match had admitted `~ZZZ`). Memory banked: the deploy-leg lesson corrected to the content-stream
    comparand; the per-invocation commit-graph bypass.
 
 ## Current State
@@ -61,7 +61,7 @@ Packet DRAFT 3 waiting on rm-7's close.
 1. [`0.7.0_AE_CloudOps~A`] Build at 19a22f2f51 or later, upload, one apply, L1-L3 (L2 content-stream), close the entry;
    report with the deploy commit and the row.
 2. [`2.0.0_SA_COO~Z`] Close rm-7 on that report (disarm Z-S254 by row); finalise the packet; send the L8/L9 handoff to
-   `3.0.0_SA_CVO~Z`; then the R-78 sweep of the 47 owned rows, read one by one, carriers in batches.
+   `3.0.0_SA_CVO~Z`; then the R-78 sweep of the 26 `~Z` rows and the 21 inherited `~ZZZ` rows, read one by one, carriers in batches.
 3. [`1.0.0_SA_CTO~Z`] Re-amend R-57 onto the content-stream plane; the round-38 analysis after the CVO's slug, with the
    enrichment list (C13 edit + instrument paragraph + Z-S251's 13 sites as one cell; size 10; the leaf-only detector gap).
 4. [`3.0.0_SA_CVO~Z`] L8/L9 on the packet when it lands.
