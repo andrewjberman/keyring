@@ -119,7 +119,7 @@ leads, for fixtures). Scratch in `.scratch/d2/`. Commit with
 cell must not "improve" it. The v2-preferred read is what makes every continuation rebuild into a new object (FWD-17's
 store half) without any silver rewrite.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
