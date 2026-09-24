@@ -5,7 +5,7 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-page-remediation-brief-20260924.md@fb90ad8fe0",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -154,19 +154,37 @@ object -- it moves, it does not vanish; DESIGN.md governs colour, weight, radius
 
 ## THE THREAD (FWD-1) -- round 1 builds it end to end
 
-One person: an Opal internal user (Global view). One journey, coarse grain, live: open Investor Reporting -> the firm
-control reads Global (All) -> find and select Anna Thiessen's Cottonwood brokerage account
-(`acc_d486fc9455d6b2aa18e13af1`, the account P and M share as their first live milestone) -> read the identity card
-(name, firm, accounts by name + masked tail, holdings total, business date) -> Performance: YTD net return, the
-server-stated spread, beginning/ending value or "not supplied" -> Holdings: the Models / SMAs / Client hero card and
-the security list. Default window, no export, no analysis. Hops: real login (the portal's auth), real
-resolve-scope / browse / selection / holdings-snapshot / performance-report against the deployed functions and the
-published Cottonwood revision; the frontend local or on DEV. A hop fed by a fixture fails FWD-1.
+One person: an Opal internal user (Global view). One journey, coarse grain, live, default window, no export, no analysis.
+The account is Anna Thiessen's Cottonwood brokerage account `acc_d486fc9455d6b2aa18e13af1`, the one P and M share as their
+first live milestone. Hops 1-4 exist and are consumed unchanged (P's shared surfaces); round 1 builds the four render
+adapters at hops 5-8. A hop fed by a fixture fails FWD-1. The live trace is the COO's drain act, not a cell (a worker has
+no browser; an auth-stubbed smoke fails FWD-1).
 
-Round 1 decomposes over those hops; a build cell carries at most THREE mechanical criteria; repo-wide hygiene runs at
-the drain. The round-1 analysis ends in the enrichment list the next round cuts (FWD-2..11 in the order the thread
-exposes them: header identity and firm control first, then Holdings three ways down, then Performance's chart and
-heatmap, then the drawer, then Analysis and the prospect, then Export and the page-wide conformity).
+1. Real login -> the portal session (the portal's auth, a real Opal user)
+2. Firm control reads Global (All) -> resolve-scope against the deployed directory function
+3. Browse / search -> Anna Thiessen's Cottonwood brokerage account found and chosen
+4. POST selections -> a selection id for that account
+5. Identity card -> name, firm, accounts by name + masked tail, holdings total, business date (C1)
+6. Performance headline -> YTD net return, the server-stated spread or "not supplied", beginning / ending value (C6's headline half)
+7. Holdings L0 hero -> the Models / SMAs / Client card from the published Cottonwood revision, names from `display` (C3)
+8. Security list -> the sortable table of securities with ticker, name, sleeve, weight and value (C4's table half)
+
+Chains: header (5), performance (6), holdings (7, 8). A build cell carries at most THREE mechanical criteria; repo-wide
+hygiene runs at the drain. The round-1 analysis ends in the enrichment list the next round cuts.
+
+## ENRICHMENT BACKLOG (everything off the thread, ordered)
+
+1. FWD-2 header identity card complete (entitlements, revisions and cohorts one click away) -- C1 remainder
+2. FWD-4 one firm control, the Model Portfolios dropdown, Global (All) for Opal users only -- C2
+3. FWD-6 Holdings: allocation bars per category with the per-account matrix; the treemap; asset class / sector columns when ruled -- C3, C4 remainder
+4. FWD-5 Performance: the control row (window, net / gross); the AUA Trend area chart; the returns heatmap; the accounts table with the uncovered-account row; the footer line with its popover -- C5, C6 remainder
+5. FWD-11 no system vocabulary on any tab body; the facts retained one click down -- C13
+6. FWD-3 the browse drawer (grouped by firm in the Global view; the paged dropdown gone) -- C7
+7. FWD-7 the Analysis stepper (Input, Review, Settings, Generate, Report) with the left rail and the per-report Details popover -- C8, C9
+8. FWD-8 the prospect as subject (prospect card in the header, upload-first step 1, the prospect's own history) -- C10
+9. FWD-9 one page-level Export on the header; the two disabled per-tab buttons gone -- C11
+10. FWD-10 the portal panel system on every panel; tab order Performance, Holdings, Analysis -- C12, C14
+11. The `spread` member consumed when P lands it (round 1 renders "not supplied" and the trace grades that hop with the reason)
 
 ## CELL CANDIDATES (the COO's decomposition; not task orders)
 
@@ -218,7 +236,8 @@ Relied on, not owned (the closer contract v1.4 and the sibling lanes): `portal/s
 and `api/**` (P, the shared client surface; the additive members' acceptance); the producers (M: custody publication,
 `display`, `CUSTODY_UNITS`; P: the Performance adapter and `spread`; Y: upload / job semantics, the catalogue);
 `portal/DESIGN.md` (DSGN_REBRND, the design law). Sequenced by the CTO against the IRPT post-slug HOLD and the P/M/Y
-closer contract: the D1 resident run and the COT `display` republish precede L5.
+closer contract: the COT `display` republish, SERVED (model names on Anna's page), precedes the L6 issuance -- hops 7
+and 8 read names from it; the D1 resident run is NOT a precondition (the thread does not touch Analysis).
 
 ## FIXTURES AND EVIDENCE
 
@@ -254,6 +273,12 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
   (`4.0.0_SA_CRO~F` offered, msg 100235). The L4 notifier delivers each half; the COO delivery is withheld until both
   are SIGNED at these bytes. `2.0.0_SA_COO~D` is seated at the L5 handoff on the CTO's word (a fourth COO instance
   against the 3-COO cap -- Andrew's call, raised by MSTR).
+- v0.2, 2026-09-24 ~05:1xZ, `1.0.0_SA_CTO` (Claude): header-only bump; the v0.1 header's `status` carried a prose qualifier
+  the closed enum refused, so the L4 notifier routed nothing at v0.1; no section text changed.
+- v0.3, 2026-09-24 ~05:3xZ, `1.0.0_SA_CTO` (Claude): THE THREAD rewritten as the spine's hop list (`N. A -> B`, eight hops)
+  and ENRICHMENT BACKLOG added as its own ordered section (spine :153 at HEAD, finding F1 of `2.0.0_SA_COO~D` 100278);
+  the sequencing line now names the served `display` republish as the L6 precondition and drops the D1 run from it.
+  Brief half only; ENDPOINT and CONTRACTS bytes unchanged (a ratified-text stamp at v0.2 still binds).
 
 ## SURFACE MANIFEST
 

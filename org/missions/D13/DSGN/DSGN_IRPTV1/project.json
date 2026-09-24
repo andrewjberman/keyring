@@ -23,7 +23,8 @@
   ],
   "prd_lineage": [
     "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.1",
-    "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.2"
+    "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.2",
+    "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.3"
   ],
   "decompositions": [],
   "decomposition_lineage": [],
@@ -40,7 +41,7 @@
     "authority": "CLAUDE.md Rule 27 L4-R: the CRO signs the BRIEF half (4.0.0_SA_CRO~F stated it will sign when routed, msg 100235); 3.0.0_SA_CVO signs the RATIFIED-TEXT half"
   },
   "fabric_ruling": "laptop -- D13 Design placed LAPTOP by Andrew-direct 2026-09-11 ('it will be laptop fabric'); placement attaches to the directive (LD-0498, LD-0502).",
-  "blocking": "L4 PRD v0.1 cut 2026-09-24 ~05:0xZ; L4-R halves owed (3.0.0_SA_CVO ratified-text, seated by MSTR on the CTO's word; 4.0.0_SA_CRO brief); DONE WHEN lines at Andrew; 2.0.0_SA_COO~D seated at the L5 handoff on the CTO's word (a fourth COO instance against the 3-COO cap -- Andrew's call, raised by MSTR).",
+  "blocking": "L4 PRD v0.3 (THREAD hop list + ENRICHMENT BACKLOG) 2026-09-24 ~05:3xZ; L4-R halves owed (3.0.0_SA_CVO ratified-text, seated by MSTR 05:17Z; 4.0.0_SA_CRO brief); DONE WHEN lines at Andrew; 2.0.0_SA_COO~D live (Andrew's launch), L5 drafted offline; L6 precondition: the COT display republish SERVED.",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md",
