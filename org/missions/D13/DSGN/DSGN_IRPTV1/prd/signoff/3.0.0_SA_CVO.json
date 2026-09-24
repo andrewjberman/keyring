@@ -1,12 +1,11 @@
 {
   "prd": "DSGN_IRPTV1_PRD.md",
-  "prd_version": "v0.3",
-  "prd_pin": "118613ddb00ab33ea6dd505ddc24bf3da81c553a",
+  "prd_version": "v0.4",
+  "prd_pin": "c4b9056831bbd8d18dc99dce33ac61079097d59e",
   "half": "ratified-text",
-  "half_hash": "4540ecd4e08a5d0c319f2915c037f4d337fa81552577b7c28aa52d1529661863",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_PRD_v0.3_L4R_RATIFIED_TEXT_REVIEW_20260924.md@e0915c97fe",
+  "half_hash": "a398ff25a80022f563308736b364591bc2f409ab0e53a8d295bd76daf754250f",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_PRD_v0.4_L4R_RATIFIED_TEXT_SIGNED_20260924.md@dee9e4cb9a",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-24T05:39:38Z",
-  "reason": "R1: CONTRACTS is silent on unprojected_grant while FWD-2 moves the counterpart's VISIBLE partial indicator behind a click (IRPT_FNTEND CONTRACTS v0.7-v0.9, row IRPT_BCKEND-W1-S28 ARMED); R2: 'the ten v1 operations' is ten CONTRACTS, routes.json enumerates 17 operations, 3 NO-HANDLER-AT-HEAD"
+  "signed_at": "2026-09-24T05:52:17Z"
 }
