@@ -674,3 +674,27 @@ Sonnet-medium trial (call 7) and shorter orders (C5) are what buy room for more 
 
 **Owner:** `1.0.0_SA_CTO` (spine L5/L6, `/dispatch`, task-order protocol). **Non-application:** a round whose cells
 share no file.
+
+---
+
+## 14. C11 -- goal loops read the lease `[ADDED 09-24: Andrew-approved ~18:1xZ, "Yes agreed, do it"]`
+
+Record: `ANDREW_DIRECT_20260924_181xZ_C11_GOAL_LOOPS_READ_THE_LEASE_P_M_Y.md` (this folder).
+
+**The gap.** The IRPT return brief (`IRPT_CLOSER_TO_CANONICAL_RETURN_BRIEF_20260924.md`, gap G2) found that `/goal-set`
+loops never read a lease. `2.0.0_SA_COO~P`, `~M` and `~Y` work IRPT_BCKEND in closer mode on 20-minute goal loops. So
+when Andrew leaves, `~D` drops to FULL but they keep blast-mode freedoms.
+
+**The rule:**
+1. **One FAST lease per project may name several seats**, each with its own surface, pairwise disjoint.
+   `.tools/drive-mode.py` gains that form; the arm-time overlap refusal still applies between seats.
+2. **Every `/goal-set` loop that works a project reads that project's lease at the start of each tick:**
+   - **FAST:** the FAST relaxations of section 5.3.
+   - **FULL:** keep working under the project's normal checks. For a closer project, that means the CVO grades each
+     pinned change before it counts and the CTO lands DEV candidates.
+   - **HOLD:** pause.
+3. **IRPT_BCKEND** gets one such lease for `~P`, `~M` and `~Y`, extended by presence like `~D`'s, so all four seats
+   change pace together.
+
+**Owner:** `1.0.0_SA_CTO` (`drive-mode.py`, `/drive-mode`, `/goal-set`, the IRPT_BCKEND lease; surfaces from each
+seat's STATUS write claims). **Non-application:** a goal loop that works no registered project.
