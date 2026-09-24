@@ -5,7 +5,7 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.7",
+ "prd_version": "v0.8",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ui-finish-design-brief-20260924.md@20f90739bd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18"],
@@ -86,7 +86,8 @@ The L5/L6 issuer is `2.0.0_SA_COO~D` by Andrew's name.
                     area style; a returns heatmap with periods across and portfolio, benchmark and spread as rows;
                     an accounts table with one row per account by name and masked tail, an uncovered account shown
                     as a row with its reason; the spread is a figure the server stated, never one the page worked
-                    out; method and lineage sit in a footer line with a popover
+                    out; method and lineage sit behind the panel's help tip, and the bottom bar carries only the
+                    source and the time (v0.8, FWD-18)
          SOURCE     brief O4 (card 4 ruled (a); the area-chart word ~05:3xZ); Part IV.3 data gaps; Part V bullet 1
 
   FWD-6  An advisor sees a client's holdings three ways down, including a security list
@@ -95,14 +96,15 @@ The L5/L6 issuer is `2.0.0_SA_COO~D` by Andrew's name.
                     then allocation bars per category with a per-account matrix, then a treemap and a sortable,
                     filterable table of the securities with ticker, name, sleeve, weight and value; asset class
                     and sector columns appear when their source is ruled and are absent, not blank, until then;
-                    basis, denominator and provenance move to the footer
+                    basis, denominator and provenance sit behind the panel's help tip, not in the bottom bar
+                    (v0.8, FWD-18)
          SOURCE     brief O5 (card 3 ruled (a)); Part III bullet 2; Part V bullet 7
 
   FWD-7  An advisor starts an analysis by choosing one of three variant cards, and always knows where to upload and
          what comes next
          DONE WHEN  EXERCISED -- an advisor completes one report from a card, leaving and returning to the tab while
                     it generates
-         ACCEPT     the first step is three cards in the Philosophy page's card style -- the portfolio on its own,
+         ACCEPT     the variant step is three cards in the Philosophy page's card style -- the portfolio on its own,
                     the portfolio against one Opal model, the portfolio against several Opal models; the upload is
                     a step with a visible place and a visible state, not a bare file button; the advisor can follow
                     each step to the report; there is no list of past requests and no request history on the tab;
@@ -515,6 +517,13 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
     owning seat's written spec. The producers keep the wire contract, and P keeps `api/**`.
   PATHS and SURFACE MANIFEST only; ENDPOINT and CONTRACTS bytes are unchanged, so the ratified-text half the CVO signs
   is the v0.6 text.
+- v0.8, 2026-09-24 ~23:0xZ, `1.0.0_SA_CTO` (Claude): ENDPOINT, three clauses only, on `3.0.0_SA_CVO`'s refusal 100924
+  (review @`12b89b8dd4`):
+  - R1: FWD-5's method and lineage, and FWD-6's basis, denominator and provenance, move from the footer to the panel's
+    help tip, because FWD-18 lets the bottom bar carry only source and time.
+  - R2: FWD-7 reads "the variant step is three cards", so it no longer contradicts FWD-8's upload-first step for a
+    prospect.
+  No other clause of either half changes (beyond the header version and this history line).
 
 ## SURFACE MANIFEST
 
