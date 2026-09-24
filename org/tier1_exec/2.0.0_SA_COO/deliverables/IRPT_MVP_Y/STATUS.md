@@ -20,11 +20,12 @@ CONTROL.md apply; CTO reviews directly (no CVO queue). Goal + loop authority:
 ## Live thread
 
 State: NOT LIVE. Last trace: none (18 focused offline cases + 4 controls at 2874, CTO 2dd385ed59; no installed/live proof).
-First failing hop: 0. Always-on host `i-0167fd745ad906a66` is STOPPED (enforcer StopInstances 21:21:18Z; Terraform
-`ycharts/instance.tf:131-135` declares `stopped`; no `AutoShutdown=disabled` tag) -> nothing consumes `irpt-generation`.
-Next hops measured behind it, all P shared surfaces: deployed generate Lambda is stale against the source map; its
-role has no `sqs:SendMessage`; `IRPT_LIVE_YCHARTS_CALL` is unset; `/analysis/inputs`, `/analysis/requests*` liveness
-UNDETERMINED by comp-routes (one `/api/scoped/investor-reporting/*` behavior to API Gateway).
+First failing hop: 0 -> precondition B. Host `i-0167fd745ad906a66` is RUNNING since 2026-09-24T01:52:51Z (P apply of plan
+04c77cbe under CTO GO 99937; Y readback 02:0xZ: SSM Online, `AutoShutdown=disabled` present, `irpt-ycharts-runner-resident-policy`
+applied with the six statements 4/1, 5/2, 1/2, 3/9, 2/6, 2/1). Ledger `irpt-resident-cutover-20260924` OPEN at P, leg A1 proven.
+Not yet: the resident install (package upload, D1 sign-in -- secret `ycharts/session/current` still has no version --, enrolled id,
+receipt, installer); nothing consumes `irpt-generation` (0 / 0). Behind it, P shared surfaces: deployed generate Lambda stale
+against the source map, no `sqs:SendMessage`, `IRPT_LIVE_YCHARTS_CALL` unset, three analysis routes NO-HANDLER-AT-HEAD.
 
 ## Acceptance IDs
 
