@@ -2496,3 +2496,61 @@ origin/DEV = 013323f08e (already pushed, fast-forward) and hashed the +/- lines 
 receipt independently reads the same 16-hex diff prefix on both. Shape (B) ran, the fallback did not. The next candidate cuts from
 013323f0. DEV now carries candidates 1-3: display-first rows, the labels pin, hop 11, the Performance label, SELECTION_UNSUPPORTED,
 F1, F5, F3.
+
+
+## 2026-09-24 10:0x UTC - Claude CTO batch 36: DSGN_IRPTV1 round 1 DRAINED (4 of 4, candidate dsgn-irptv1-r1 @7736e6cc reviewed); W3-S2 DISARMED by the CTO; S1 worded as an issuer-direct fix; the Analysis backend's (i) ruled twice -- the factory shape and revisions, then the port census: the upload composition is a DESIGN with two egress questions for Andrew
+
+Instruments: COO~D's drain-end message (100492) and the channel file at 91ccbc3c36 (rows W3-S2 and S1 read whole); the CTO's own
+review of the portal candidate (git, tsc); P's (i) reads (100488) and port census (100493) over the whole package with tests excluded.
+
+### DSGN_IRPTV1 ROUND 1 DRAIN-END (COO~D 100492; the CTO's review and words this tick)
+4 of 4 orders complete and merged at HEAD 91ccbc3c36 (5537b0a9fb IV-t-2; 7b8cd4571e IV-t-1 with the channel file; 0749cd6222
+IV-t-3 + IV-t-4, the append-only channel resolved by UNION after a first --continue was correctly REFUSED as a foreign-row sweep --
+the index-stage read had returned another project's file; nothing landed; the union rebuilt from refs and asserted on six ids).
+Each instance VALID on the issuer's own proof-of-spec run; the four AC4 judgment rows (static markup; two caveated ui-smoke PNGs)
+are the CVO's at L9. Portal candidate dsgn-irptv1-r1 @7736e6cc off DEV 7c542fd2: 14 files +1530/-6. CTO REVIEW, own instruments:
+the four ruled touch lines read exactly as amended (index.tsx 2/2, ReportingTab.tsx 2/2, HoldingsTab.tsx 2/0, DrillTree.tsx 57/2
+inside mdpfResultFromSnapshot); header/ScopeSummary.tsx untouched; tsc rc=2 with FIVE errors, all in the worker test file
+iv-t-3.hero-fed.test.ts (TS2339 at :82, TS18046 at :97 / :102 / :107 / :108) -- S1's row named three; the CTO's read is the
+disposition's count. S1 (OBSERVATION, owner COO~D): WORDED as an issuer-direct one-commit fix of that test file's typing on the
+candidate, typecheck rc=0 and the suites re-run green, the disarm row naming the commit and the count five; not a round-2 repair
+cell, because `bun run build` must build the candidate before MSTR can land it. W3-S2 (BLOCKING, owner 1.0.0_SA_CTO) -- DISARMED
+BY THIS COMMIT: the naming gate (LGIC_ENFORCE DEC-6) refused IV3-AC1's new test file for typing a fixture filename that carries a
+firm token, and its printed remedy names a lookup() with no JS/TS implementation (0 of 988 portal/src files); js_literals()
+applies no call-context exemption to .ts/.js and '/tests/' is the only directory exemption while this tree is `__tests__`. The
+worker's workaround (discover the fixture set from disk, never type the token) is ACCEPTED for this project and this round and
+binds every new test file under the tree until the gate is fixed; the defect is the gate's and rides to LGIC_ENFORCE as an
+enrichment item: js_literals applies the context rule with a portal-side escape the gate recognises, or exempts `__tests__/`
+fixture literals by directory. W1-S1 disarmed by the union merge; W1-S2 / W1-S4 superseded by the amendment; W1-S3 and W3-S1
+INERT for L9 (the chip toggle and the header snapshot feed; the L2 hover reads only children[label].members -- C3's remainder).
+THE LIVE TRACE is NOT EXERCISED by any seat (no credential; an auth-stubbed smoke fails FWD-1 by the PRD's rule): FWD-1 reads
+NOT_EVALUATED on the trace and NOT_REALIZED on the spread on the slug, as v0.5 states; the signed-in walk is Andrew's. L8/L9 are
+the CVO's (the base seat, live since 05:17Z, told this tick); the slug to the CTO; the round-1 analysis then carries the
+enrichment list (backlog 1-11 in order; S1's fix and W3-S1's L2 hover ride the first repair cell). Portal DEV has moved to
+1267a67ef0 since the cut; the landing is MSTR's merge-forward on Andrew's standing word after S1's fix and the CTO's GO.
+
+### IRPT-ANALYSIS-BACKEND-I-20260924 (P 100488 -> the CTO's word 100490; P 100493 -> the CTO's word this tick)
+The generate package at HEAD refuses every submission by construction (entry.py:175 builds with service=None ->
+DURABLE_SUBMISSION_SERVICE_REQUIRED) until an INSTALLED FACTORY composes Y's SubmissionService with real ports; none exists; so
+(i) = P's factory reports/generate_installed.py (P's lane, beside resident_installed.py; ycharts/generate is Y's), the package
+(ten modules added to files[], 12 stale rows re-pinned, the X10 row), Terraform (handler generate_installed.lambda_handler,
+sqs:SendMessage on irpt-generation, NO event source mapping -- the resident is the one consumer, IRPT_LIVE_YCHARTS_CALL unset;
+the dead consume statement stays, named). RULED: the PROSPECT factory first (the thread uploads a prospect), ONE handler routing
+by body shape, the custody branch refusing CUSTODY_FACTORY_REQUIRED until (i-b); the two revisions recorded on every accepted
+request (ingestion_gate_revision, destination_policy_revision; acceptance.py:109-110) are DERIVED at composition, never typed and
+never env vars: destination_revision = reporting_policy('irpt-x10-v1')['policy_sha256'] from the packaged registry;
+ingestion_revision = a content digest over the packaged v1 schema directory (sorted names + sha256s). THE PORT CENSUS (P): 8 of
+12 ports have production adapters; four do not and cannot be composed from any tree -- uploads (UploadService needs an upload
+INDEX store that does not exist, resolve_security through the resident's template resolver = a vendor call per unresolved symbol,
+resolve_prices with no producer), get_catalogue (no loader; fixtures only), ordinary_authorizer (named in Y's handoff, exists
+nowhere; optional), load_prospect_owner (the same absent index). So the runbook's hop 2 is a missing COMPOSITION, not a missing
+deploy. RULED: (a) land (i) now as the honest cut -- the 8 real ports, both branches refusing NAMED (UPLOAD_SERVICE_REQUIRED on
+the prospect branch), the revisions derived and printed; it does not move hop 2 and says so. (b) the upload composition is a
+design cell on Y's surface with the CTO's shape: the upload index = a PROSPECT_INPUT item kind in the EXISTING irpt-requests
+table under the tenant leading key (no new table, no new IAM); parse_mapping consumed as it stands; resolve_security through the
+resident's template resolver; prices NOT a v1 input (the upload carries the user's quantities and values; a row without a value
+refuses PRICE_NOT_SUPPLIED; no price producer, no vendor asked); get_catalogue = M's loader over the CRO's 09-11 packet, its own
+GO; ordinary_authorizer optional; resolution_kimi (an external LLM) never composed. THE CARD TO ANDREW: whether symbol resolution
+at upload through the resident's YCharts session sits inside the standing host-workflow authorization or is a new per-use class,
+and whether any price source is wanted on a prospect upload (the CTO recommends none in v1). P builds the non-egress parts under
+the CTO's word meanwhile and stubs nothing.

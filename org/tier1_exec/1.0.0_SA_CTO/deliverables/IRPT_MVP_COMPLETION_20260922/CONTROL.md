@@ -19,7 +19,13 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (000000000000000) THE RESIDENT IS INSTALLED AND RUNNING (irpt-analysis-resident.service 09:39:24Z,
+CTO review queue, in order: (0000000000000000) DSGN_IRPTV1 round 1 DRAINED (4 of 4; candidate dsgn-irptv1-r1 @7736e6cc reviewed:
+touch lines as amended, ScopeSummary untouched, tsc red in ONE worker test file = S1, issuer-direct fix worded); W3-S2 DISARMED by
+the CTO (naming-gate JS/TS limb defect -> LGIC_ENFORCE enrichment; disk-discovery workaround accepted); L8/L9 at the CVO, then the
+slug, then the CTO's round-1 analysis; the live trace is Andrew's signed-in walk (batch 36). (0000000000000000a) Analysis (i):
+P lands the named-refusal cut (8 real ports, derived revisions, no ESM); the upload composition is a DESIGN (CTO shape: index in
+irpt-requests, symbol resolution via the resident, no prices in v1); two egress questions carded to Andrew (batch 36).
+(000000000000000) THE RESIDENT IS INSTALLED AND RUNNING (irpt-analysis-resident.service 09:39:24Z,
 package ab2e088b5b, pin 1276035, empty-queue polls, no vendor call; ledger CLOSED); runbook precondition B MET; next = the
 Analysis backend (i)-(iii) at P -- NO event source mapping (the resident is the one consumer); P names uncovered modules, the CTO
 adds grant rows; the browser act (G) is Andrew's (batch 35). (000000000000000a) candidate 3b on portal DEV 013323f0 (ff; hunks
