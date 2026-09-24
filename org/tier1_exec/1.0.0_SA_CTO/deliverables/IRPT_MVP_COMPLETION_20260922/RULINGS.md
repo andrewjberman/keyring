@@ -2592,3 +2592,30 @@ run 7 proved, bounded per unresolved symbol. The CRO also names the custody bran
 upload is not the first journey -- a sequencing input; the prospect stays the thread because Andrew said an analysis may be for
 a totally new client (~05:4xZ), and the custody branch (i-b) is the nearer live EXERCISE of the same pipeline. The two egress
 questions remain Andrew's card.
+
+
+## 2026-09-24 10:2x UTC - Claude CTO batch 38: DSGN_IRPTV1 ROUND 1 CLOSED on the CVO's slug -- the round-1 analysis handed to COO~D with the enrichment list for round 2
+
+Instruments: the CVO's slug REMEDIATION_v1.md @13baec35aa with ADJUDICATION_v1.md (100517); the CTO's own reads of the same
+proof instances, the channel at 07c4156d08 and the candidate at 837983cb / DEV 895752676a; the spine at HEAD (:486-503, the
+CTO's read and the ledger/ROUND_ANALYSIS.round<N>.md carrier).
+
+### DSGN_IRPTV1 -- ROUND 1 CLOSED (analysis c06e435786; dep_stage EXECUTING -> ROUND_CLOSE)
+The CVO's L8: 8 rows seen, 0 undispositioned (GRADUATED W1-S1, W1-S3, W3-S1, S1; DISMISSED_WITH_REASON W1-S2, W1-S4, W3-S2,
+S2); its L9 on the four AC4 judgment criteria: IV1 identity card PASS; IV2 performance headline FAIL on style (600 weight on
+the values, slate inks); IV3 holdings hero PASS; IV4 security list FAIL on style AND on a contract breach -- tickerFor()
+@837983cb :61-69 prints the tail of securityId when display.symbol is absent ('1'..'4' on the fixtures, a CUSIP fragment on
+live data): the FE derived a value, "not supplied" was not used, and an id reached the body (FWD-11). C-S12 ARMED, owner
+COO~D; IV4-AC1's only ticker assertion ("no FULL securityId") passed by construction, so the repair carries a planted-symbol
+positive control. Every AC4 PNG was empty (the smoke fixtures never resolve a scope, C-S14); the grades rest on the static
+markup and say so. THE CTO'S READ (ledger/ROUND_ANALYSIS.round1.md): no outcome uncovered, none wrong or obsolete -- NO PRD
+ADDENDUM; FWD-1 NOT_EVALUATED on the trace (no credential at any seat; Andrew's signed-in walk on DEV grades it in whatever
+round is open) and NOT_REALIZED on the spread (IRPT_BCKEND's member); FWD-2, 5, 6 built with the two FAIL grades and the
+remainders named; FWD-3, 4, 7-10 not cut (the backlog); FWD-11 breached by C-S12. The four grades accepted as the artifact
+supports them. ENRICHMENT LIST FOR ROUND 2, eight items, the spine's two rules applied: (1) REPAIR C-S12 + W3-S1 first;
+(2) STYLE + INSTRUMENT C-S13 + C-S14 batched into one cell; (3) FWD-2 complete (W1-S3); (4) FWD-4 the firm control; (5) FWD-6
+L1 bars / matrix + treemap; (6) FWD-5 complete (control row, area chart, heatmap, accounts table, footer); (7) the FWD-11
+sweep; (8) the browse drawer. Backlog 7-10 are round 3's; the prospect item also waits on IRPT's upload composition (the card
+at Andrew). Handed to 2.0.0_SA_COO~D in one message with the slug; the recut is its decomp v2 and ONE issuance; portal_ref
+= the DEV head after a fetch; the CVO is engaged again when round 2 drains. The round-1 candidate is LIVE on portal DEV
+(895752676a), so the enrichment rounds build on a served thread, as the spine intends.
