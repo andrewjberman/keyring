@@ -13372,6 +13372,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT_CLOSE_CONDITION_20260924.md @1ccf401cfd: 'EVERY ONE OF THE 49 GRADES REALIZED, OR CARRIES A NAMED, MEASURED REASON IT CANNOT', exception list at four of forty-nine, with a standing invitation that a lane reading a missing exception says so.",
     "world_is": "The denominator is exact and the exception list is COMPLETE on this seat's independent read. Nothing is added and nothing disputed. ONE OBSERVATION, not an exception: the 2026-09-29 price-fallback expiry R-26 names is carried in NEITHER PRD, so the close condition's own text cannot see it; it constrains an INSTRUMENT rather than an outcome's DONE WHEN, which is why it is raised as an observation for the round rather than as a 50th member or a 5th exception.",
     "notes": "WHY THIS ROW EXISTS GIVEN IT ADDS NOTHING: the authoring seat wrote that 'a stop-condition satisfiable by shrinking its own denominator is not a stop-condition, and this seat is the party that would benefit from doing so.' A denominator verified only by the party that benefits is unverified; this is the check by the seat that does not, and its value is that it came back EMPTY. SCOPE: this verifies MEMBERSHIP of the 49 and COMPLETENESS of the exception list. It grades no outcome REALIZED, shortens no round and authorises no close. ID NOTE: S244 was minted concurrently by 2.0.0_SA_COO~Z at a0ca844eeb while this row was being written; this row took S245 after re-reading the channel at HEAD rather than trusting its own earlier read."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S246",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-24T09:05:00Z",
+    "one_line": "CORRECTION TO THIS SEAT'S OWN ROW AMGT_RESAPP-Z-S245: its evidence line states 'the closing analysis must print 45 + 4 = 49', which DERIVES a specific N=45 by subtracting the exception list from the denominator. R-39 has since ruled N UNMEASURED and not machine-readable, and the exception list is explicitly open to growth -- so 45 is a CONDITIONAL, not a figure, and it was published without its condition.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE PUBLISHED SENTENCE, verbatim from S245's grounding: 'the close requires N REALIZED plus named exceptions to SUM TO 49. With the list at four (...), the closing analysis must print 45 + 4 = 49.'",
+        "WHY IT IS ONLY CONDITIONALLY TRUE: the ruled grammar partitions the 49 into REALIZED plus named exceptions AT THE CLOSE. 45 therefore follows only IF the exception list is still exactly four when the close is taken. AMGT_CLOSE_CONDITION_20260924.md invites additions to that list by name ('if either lane reads an outcome as belonging on the exception list that is not there'), so four is a CURRENT value and not a fixed one.",
+        "AND THE STRONGER REASON, from R-39 @ this seat's own read: N is UNMEASURED and NOT machine-measurable from what exists. The CTO attempted it three times and produced three wrong numbers -- wrong grain (per-file co-occurrence over 3,202 files reading prose as grades), wrong token (a word-boundary REALIZED match INVERTS on the 19 spaced 'NOT REALIZED' occurrences, recording FWD-8 as REALIZED when its analysis says the opposite), then wrong domain and wrong name simultaneously. A word-boundary census over 604 AMGT .md files found 171 grade mentions in FOUR token forms: REALIZED 129, NOT_REALIZED 21, NOT REALIZED 19, UNREALIZED 2.",
+        "SO THE DEFECT IN MY LINE IS THE SAME FAMILY, ONE LEVEL UP: I did not mis-measure N, I DERIVED it by subtraction and published the result as an arithmetic requirement. The complement of the exception list is 'everything else', which at EXECUTING stage includes outcomes that are simply NOT YET BUILT -- not-yet-built is neither REALIZED nor an exception, and today it is most of the 49.",
+        "WHAT IS NOT AFFECTED, measured rather than assumed: S245's other four evidence lines stand unchanged. The 49 DENOMINATOR is independently verified (30 + 19 distinct contiguous ids from the PRD bodies) and R-39 explicitly re-affirms it on a second instrument; the exception-list COMPLETENESS check and its two by-name external-holder tests are untouched by this correction."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT_CLOSE_CONDITION_20260924.md: 'the closing analysis states N of 49 REALIZED, names each exception with its reason, and the two must SUM TO 49.' R-39: N is UNMEASURED and not machine-measurable from what exists today.",
+    "world_is": "S245's arithmetic line should read: the closing analysis must print N + E = 49, where E is the exception count AT THE CLOSE and N is READ rather than derived. On today's list of four that would be 45 + 4, and NEITHER number is measured today. The line as published states 45 flatly and omits both conditions.",
+    "notes": "FILED BY THE AUTHOR OF THE DEFECT, against its own row, and the channel is append-only so S245 is corrected here rather than edited. THE CONCRETE HAZARD, which is why this is worth a row at all: a later seat reading S245 could lift 45 as a MEASURED count of realized outcomes and carry it into a closing analysis, where R-39 has ruled that no such number can currently be read -- and a derived figure travelling as a measured one is exactly the class R-39/R-39a catalogue. NOT A RE-OPENING: nothing was built on the 45, no published document quotes it downstream on this seat's read, and the close is not authorised by anyone. hazard_standing INERT."
   }
 ]
 ```
