@@ -63,9 +63,7 @@ RULE NUMBERS ARE STABLE IDs, NOT READING ORDER. Rules 4-12 and 18 live in `/clou
       the CHANNEL compile (input: new investigation rows; output: the compiled channel + watermark). The COO's drain-end
       task-order packet is a different artifact sharing the label; that ambiguity is placed, not resolved.
     - **L9 adjudicate** -- JUDGMENT criteria are graded here and never self-graded.
-    - **L10** -- ONE SLUG to the CTO, always, only after every TO is terminal and every row dispositioned. The order
-      slug -> the CTO's ROUND-N ANALYSIS -> the COO's recut is load-bearing: a round N+1 issuance cut before round N's
-      slug deadlocks round N's L10, because the refuser counts open orders per project, never per round (LD-0521). The
+    - **L10** -- ONE SLUG to the CTO, always, only after every TO is terminal and every row dispositioned. The
       CTO answers with a PRD addendum (an FWD no cell served) or the ROUND-N ANALYSIS the COO recuts in ONE issuance;
       CLOSED when every FWD grades REALIZED. The three route tokens are retired.
     - **Round 1 builds the thread; every later round enriches** (spine v3.16-3.18). `FWD-1` of a product, pipeline or
