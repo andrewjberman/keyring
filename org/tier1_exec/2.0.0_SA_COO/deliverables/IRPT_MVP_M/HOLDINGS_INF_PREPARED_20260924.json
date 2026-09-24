@@ -1,0 +1,95 @@
+{
+  "status": "PREPARED_UNPUBLISHED",
+  "firm_id": "inflection",
+  "prepared_utc": "2026-09-24T01:03:53.469311+00:00",
+  "business_date": "2026-09-22",
+  "source_cutoff": "2026-09-23",
+  "revision": "1ebc7696d6e52be01c3fc431b222c80d9baf3f967f0681cf3879115e5ad476fa",
+  "platinum_key": "irpt/inflection/platinum/holdings/date=2026-09-22/1ebc7696d6e52be01c3fc431b222c80d9baf3f967f0681cf3879115e5ad476fa.json",
+  "gold_key": "irpt/inflection/gold/holdings/date=2026-09-22/1ebc7696d6e52be01c3fc431b222c80d9baf3f967f0681cf3879115e5ad476fa.parquet",
+  "platinum_bytes": 31180092,
+  "gold_sha256": "2623f60f84864ba06cec4f8d495648d2f65d19bca66bfe2e09d42ec628529f59",
+  "node_count": 33328,
+  "unique_account_count": 876,
+  "reconcile": [
+    true,
+    209358359.48,
+    209358359.48
+  ],
+  "schema_valid": true,
+  "currency_status": "ATTESTED",
+  "currency_authority": {
+    "schema_version": "firm-currency-attestation-v1",
+    "firm_id": "inflection",
+    "currency": "USD",
+    "authority": "ANDREW_ATTESTATION",
+    "reference": "69e36619ae3fe826b2664b3475625d7a077a4504:org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/ANDREW_49F_INF_USD_20260924.md",
+    "attested_at": "2026-09-24T00:45:00+00:00",
+    "scope": "Firm report market values and cash flows; not security-native currency or FX conversion."
+  },
+  "publication_refused": null,
+  "census": {
+    "models_whole": 553,
+    "models_whole_from_capture": 35,
+    "models_split": 71,
+    "client": 252,
+    "client_no_portfolio": 16,
+    "client_no_model": 176,
+    "client_incomplete_membership": 0,
+    "client_values_do_not_tie": 60,
+    "model_leaves": 624,
+    "positions_shown": 30881,
+    "drill_withheld": 71
+  },
+  "clocks": {
+    "denominator": "33328 of 33328",
+    "custody_as_of": "2026-09-22",
+    "overlay_as_of": "2026-09-23",
+    "clocks_differ": true,
+    "note": "DISTINCT means two FIELDS, not two values: a firm whose custody and overlay feeds land on the same date is correctly reported as equal. What is refused is a snapshot that cannot say which is which."
+  },
+  "holdouts": {
+    "account_count": 252,
+    "value": {
+      "value": 49356167.05,
+      "currency": "USD"
+    },
+    "basis": "OBSERVED",
+    "observable": "MEASURED",
+    "denominator": "252 of 876 custody account(s) have no overlay assignment",
+    "source": "accounts_v2 snapshot_date=2026-09-23 minus eclipse 2026-09-23 portfolios with a model and complete membership"
+  },
+  "holdouts_held": {
+    "expected_unassigned": 252,
+    "present_as_account_nodes": "252 of 252",
+    "block_count": 252,
+    "block_matches_expectation": true,
+    "custody_total": 209358359.48
+  },
+  "difference_control": {
+    "redistributing_build_holds_holdouts": false,
+    "redistributing_build_census": {
+      "expected_unassigned": 252,
+      "present_as_account_nodes": "0 of 252",
+      "block_count": 0,
+      "block_matches_expectation": false,
+      "custody_total": 209358359.48
+    },
+    "redistributing_build_total_drift_usd": 0.0,
+    "reading": "the wrong build moves 49356167.05 USD out of 252 account(s) and still reconciles to within 0.00 USD -- the total is not the control"
+  },
+  "measured_write_plan": {
+    "multipart": true,
+    "parts": 31,
+    "immutable_creates": 34,
+    "index_writes": 1,
+    "total_writes": 35,
+    "key_prefix": "irpt/inflection/platinum/holdings/date=2026-09-22/1ebc7696d6e52be01c3fc431b222c80d9baf3f967f0681cf3879115e5ad476fa"
+  },
+  "source_set_revision_entry": {
+    "completion_date": "2026-09-22",
+    "revision": "3c1c46176406a6b8798fdc6a65adb9f101a0ab1f6ee9ec51fce979121f41b1e6",
+    "source": "irpt-source-objects"
+  },
+  "source_receipts_count": 8
+}
