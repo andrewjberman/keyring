@@ -253,6 +253,55 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-79 -- ⛔⛔⛔ **THE GOAL'S BLANK PAGE IS A BLOCKING ROW THIS SEAT FILED ITSELF ON 2026-09-22 AND NEVER ROUTED. THE CELL IS ROUTED HERE, AND THE SESSION'S "NOTHING IS DEPLOYED" LINE WAS UNDERSTATING IT**
+
+**Found by R-78's census, not by any message.** `AMGT_RESAPP-Z-S226`, `class: BLOCKING`,
+`surfaced_by: 1.0.0_SA_CTO~Z`, `2026-09-22T18:45:00Z`, still `ARMED` / `UNDER_INVESTIGATION` **two days
+later**, and its `disarm_owner` line reads *"`1.0.0_SA_CTO~Z` routes the cell."*
+
+**THE DEFECT, in the row's own words:** *"The CDN has NO cache behavior for `/api/scoped/amgt/*`, so every
+Security Analysis request falls to the SPA origin and returns 200 text/html (index.html); the page parses
+HTML as JSON and renders empty panels. **Andrew reported the page blank at ~18:2xZ.**"* And: *"The handler,
+the data and the deployed bundle are all healthy."*
+
+⛔ **SO THE WHOLE OF LIMB 1 IS UNREACHABLE ON THE DEPLOYED SURFACE, AND NOT FOR ANY REASON ROUNDS 37 OR 38
+HAVE BEEN WORKING ON.** Six states of visual contract, the re-keyed band predicate, the export, the
+provenance disclosure -- all graded on a LOCAL vite server, all sound, and **on the deployed surface the page
+renders empty panels because an edge behavior does not exist.** The product work is not the blocker; the
+routing is.
+
+⛔⛔ **AND THIS CORRECTS A SENTENCE THIS SEAT HAS WRITTEN IN EVERY REPORT TODAY.** "Nothing from rounds 37/38
+is deployed" was offered as a SEQUENCING fact -- work done, deploy pending. **It is worse than that: there is
+a KNOWN BLOCKING defect that would render the page blank EVEN IF IT WERE DEPLOYED**, and this seat filed the
+row that says so. Reporting polish measured on localhost beside "not yet deployed", while holding an unrouted
+BLOCKING row about the deployed surface, understated the gap to the principal **who had already seen the
+blank page himself.**
+
+**RULED, AND THE ROUTING IS THE ACT THIS SEAT OWED SINCE 2026-09-22.** The cell is routed to
+`2.0.0_SA_COO~Z` as a **ROUND-39** item (round 38's decomposition is frozen; this is not a mid-round act).
+Its shape is fixed by the row and is NOT this seat's to re-derive:
+
+1. **An edge behavior for `/api/scoped/amgt/*` at the API origin** -- the missing member.
+2. ⚠ **CARRYING the auth-validator edge attachment the working families use.** The row states the trap
+   explicitly: *"without it the fix trades HTML for 401."* **A cell that adds the behavior and omits the
+   attachment converts a blank page into a locked one and would read as progress.**
+3. **A served infra act, so it carries a CTO/COO never-widen pair AND a deploy-ledger entry opened before
+   the apply** -- NEVER-1 and NEVER-2 both, neither waived.
+
+⭐ **THE BLAST-RADIUS HALF IS NAMEABLE NOW AND THIS SEAT WILL SIGN ITS HALF WHEN THE ACT IS DRAFTED, NOT
+BEFORE:** the act adds a behavior for one path pattern at one distribution. **What it MAY touch is every
+family sharing that distribution**, which is exactly the count NEVER-1 says the half must print -- so the
+half enumerates the distribution's existing behaviors and states which are unmoved, rather than asserting
+"only /api/scoped/amgt/* changes."
+
+⚠ **AND THE HONEST BOUND ON THIS RULING: nothing here is re-measured.** The row's CDN reading is from
+2026-09-22 and this seat has NOT re-probed the distribution today. **The edge may have changed under it**,
+and the cell's first act is therefore to re-measure the behavior list before proposing the add -- a
+two-day-old infra observation is exactly the class that goes stale silently. COST: one distribution read
+before the cut. NON-APPLICATION: none; this is the measure-first rule the project already runs on.
+
+---
+
 ## R-78 -- ⛔⛔⛔ **THE SURPRISE CHANNEL HAS THREE STATE-BEARING FIELDS AND NONE OF THEM IS CURRENT STATE. FOUR INSTRUMENTS ON ONE QUESTION GAVE FOUR ANSWERS, AND THE SPREAD IS THE FINDING -- INCLUDING A ROW I DISARMED MYSELF READING ARMED**
 
 **Run as the systematic `/open-calls` sweep this seat had NOT done: a census of the carrier rather than of
