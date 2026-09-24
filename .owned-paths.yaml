@@ -1161,6 +1161,15 @@ paths:
   "infra/aws/lambda/investor-reporting/directory/**":
     lane: IRPT_LIVE_SCOPE_P
     note: "CTO temporary P grant 09b9573688; incumbent permissions retained. Live-scope repair only; no deploy grant. Explicit CTO handback required."
+  "infra/aws/lambda/investor-reporting/directory/refresh.py":
+    lane: IRPT_COMPLETION_M
+    note: "CTO exact M grant 2026-09-24 on Andrew-direct ~20:0xZ ('lets fix that job'), record org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260924_200xZ_FIX_THE_DIRECTORY_REFRESH_JOB_NOW.md: the irpt-directory-refresh fix (row IRPT_BCKEND-S125). Returns to IRPT_LIVE_SCOPE_P when S125 is disarmed."
+  "infra/aws/lambda/investor-reporting/directory/tests/test_refresh_expiry.py":
+    lane: IRPT_COMPLETION_M
+    note: "Same exact M grant as directory/refresh.py (S125 fix); returns to IRPT_LIVE_SCOPE_P at the disarm."
+  "infra/aws/lambda/investor-reporting/directory/tests/test_refresh_previous_state.py":
+    lane: IRPT_COMPLETION_M
+    note: "Same exact M grant as directory/refresh.py (S125 fix); returns to IRPT_LIVE_SCOPE_P at the disarm."
   "infra/aws/lambda/investor-reporting/holdings/entry.py":
     lane: IRPT_LIVE_SCOPE_P
     note: "CTO exact P grant 20260923T135842Z under LOCAL_LIVE_PARTNER_SCOPE_20260923.md: M-OPAL-01 request-local roster continuity before/after reads only. Incumbents preserved; no other holdings or deployment grant. Independent CVO M retest required."
