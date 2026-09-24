@@ -167,6 +167,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "NFRA_OPALAI-Z-W1-S1 is ARMED with this seat as disarm_owner.",
     "world_is": "No out-of-grant path moved. The residual is the resolver's ordering (a worker grant is never consulted for a path with no lane row), a fabric gate defect whose owner is the gate's, carried to the CTO in this round's drain-end read; NFRA_MCPORTAL's MP-w-1 (the mcportal gitlink) meets the same ordering.",
     "notes": "No gate is built here."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W2-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~2",
+    "surfaced_at": "2026-09-24T23:48Z",
+    "one_line": "OA-t-6's own census (its cell step 1) finds 6 unreleased, non-OA-t-5 commits touching infra/aws/ec2/opal-gateway between the manifest's deployed_commit and this worktree's HEAD; deploying HEAD ships them alongside asker_scope.py. STOPPED per the cell's own instruction; no deploy act taken.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git log --oneline 1764e54a16b7bb12d34b36eec7866589b6ea785e..HEAD -- infra/aws/ec2/opal-gateway` at wk-NFRA_OPALAI-2 HEAD 050035f941 lists 7 commits touching the tree: cc22fdfb9d (OA-t-5, this project) and 050035f941 (this order's own audit.py hookup, admitted by the cell face) are the only two this order names; the other 5 are NOT this order's: 650c9a99cb (NFRA_MCPINDEX.TO-MX-c-2, app/refs/DATA_CATALOG.yaml), e8f800e6a9 (MDPF_TAXSMA.TO-TX-g-1 drain merge, app/config.py + app/server.py + new app/taxsma_workbook.py), 9e4074c33a and 6c37cc6b00 (NFRA_OPLGTW OG-r-2 / amend OG-r-1, tests/acceptance/onhost_bench.py + og_r2.py + runbooks/SCHWAB_PILOT_RUNBOOK.md), 8dce9aeb0b and 6abf60e5d5 (MDPF_TAXSMA.TO-TX-g-1, app/taxsma_workbook.py feat+fix) -- `git show --stat <hash> -- infra/aws/ec2/opal-gateway` confirms a real file touch under the tree for each of the 5.",
+        "EC2_MANIFEST.json services.opal-gateway.deployed_commit=1764e54a16b7bb12d34b36eec7866589b6ea785e, deployed_at=2026-09-18T05:58:16Z, deployed_by=0.9.0_WK_NFRA_OPLGTW~2 -- unchanged since; none of the 5 non-OA-t-5 commits is an ancestor of it (that is what the `A..B` range printed them means).",
+        "`ls org/critical_paths/change_management/ | grep -i gateway` -- the last opal-gateway deploy-completion record is `20260918T1624Z_nfra-oplgtw-gw-runtime-deleteitem_deploy_completion.md`; no later record exists for opal-gateway, so none of the 5 commits has been released through any other order's deploy leg either.",
+        "Task order NFRA_OPALAI.TO-OA-t-6.gateway-deploy.md s.1.1: 'If anything in that list is not OA-t-5's and is not already released, STOP: file a BLOCKING row naming each commit. Shipping another project's unreleased gateway change under this order is not yours to decide.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-t-6 s.1: census every commit between the manifest's deployed_commit and HEAD touching infra/aws/ec2/opal-gateway; ship only OA-t-5's changes plus this order's own audit.py hookup.",
+    "world_is": "Five commits from NFRA_MCPINDEX and MDPF_TAXSMA and NFRA_OPLGTW's OG-r-2/OG-r-1-amend sit unreleased in the same source tree safe-ec2-deploy.sh tarballs whole; no NEVER-2 ledger was opened and no artifact was built, uploaded or SSM-pulled by this worker -- the host still serves 1764e54a16 and EC2_MANIFEST.json is unedited by this order.",
+    "notes": "Owner of the decision named by the cell text itself: whoever can rule that the 5 commits are cleared to ship alongside OA-t-5 (or that this deploy must exclude them, e.g. by cherry-picking OA-t-5 + the audit hookup onto a clean branch off 1764e54a16 rather than deploying this worktree's HEAD). AC1-AC3 are not run: no ledger entry exists to read, no deploy commit exists to read, no host was pulled. Reported as BLOCKING, not FAIL -- the criteria are un-met-as-written, not failed."
   }
 ]
 ```
