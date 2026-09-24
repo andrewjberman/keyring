@@ -203,6 +203,28 @@ def _header(text, tpg):
         return None
 
 
+SCHEMA_REL = "org/standards/PRD_HEADER.schema.json"
+
+
+def _schema_errors(header):
+    """The schema's own messages for this header, or [] when it validates.
+
+    No jsonschema in this interpreter -> one WARN on stderr and no refusal: an environment gap must
+    not wedge every PRD commit (measured 2026-09-24: python 3.12.10 carries jsonschema 4.26.0).
+    """
+    try:
+        import jsonschema
+    except ImportError:
+        print("  [prd-manifest] WARN: jsonschema not importable -- limb G (header schema) NOT graded",
+              file=sys.stderr)
+        return []
+    root = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True,
+                          text=True).stdout.strip() or os.path.dirname(HERE)
+    with open(os.path.join(root, SCHEMA_REL), encoding="utf-8") as fh:
+        schema = json.load(fh)
+    return sorted(e.message for e in jsonschema.Draft7Validator(schema).iter_errors(header))
+
+
 def grade(text, tpg):
     """Every limb's complaint for a step-4 PRD. Empty list == conformant.
 
@@ -248,6 +270,16 @@ def grade(text, tpg):
     elif hdr is None:
         v.append("the first fenced json block does not parse. A header a consumer cannot read is "
                  "the same as no header, and fails silently rather than loudly.")
+
+    # ---- LIMB G: the header VALIDATES against its schema (report 2 C9) ----
+    # The L4 notifier validates the header and, on failure, prints one line to its own log and sends
+    # nothing -- so a schema-invalid header committed clean and was never routed. Measured:
+    # DSGN_IRPTV1 v0.1 @50f2387594, `status` "DRAFT -- L4-R halves owed (...)" outside the enum;
+    # limbs A-F all passed it. This limb refuses it at commit, with the schema's own message.
+    if hdr is not None and nfence == 1:
+        for err in _schema_errors(hdr):
+            v.append("PRD_HEADER fails %s: %s. The L4 notifier drops a header that fails its "
+                     "schema, so the COO would never be told." % (SCHEMA_REL, err))
 
     # ---- LIMB C: outcomes must be DEFINED, not pointed at ----
     # THE READ IS SCOPED TO THE SECTION THE CONSUMER READS, and when that section does not resolve
@@ -384,7 +416,7 @@ def run(paths):
         return 1
     if graded:
         print("  [prd-manifest] OK: %d step-4 PRD document(s) carry their key surfaces "
-              "(manifest, ENDPOINT, header, outcome cards, header/section agreement)" % graded)
+              "(manifest, ENDPOINT, header, header schema, outcome cards, header/section agreement)" % graded)
     return 0
 
 def census():
@@ -472,7 +504,9 @@ def self_test():
         print("SELF-TEST ERROR: to-pipeline-gate.py not importable", file=sys.stderr)
         return 2
 
-    HDRJ = '```json\n{"step": 4, "endpoint_outcomes": ["FWD-1"]}\n```\n\n'
+    HDRJ = ('```json\n{"project": "X_SELFTEST", "directive": "D0", "fabric": "laptop", '
+            '"prd_version": "v0.1", "step": 4, "brief_ref": "docs/briefs/x.md@0123456", '
+            '"endpoint_outcomes": ["FWD-1"], "status": "DRAFT"}\n```\n\n')
     ENDPOINT = ("## ENDPOINT (step 2, /endpoint --forward)\n\n```\n"
                 "  FWD-1  a real outcome card\n"
                 "         DONE WHEN  APPLIED -- it is in place\n"
@@ -517,6 +551,14 @@ def self_test():
         # ---- LIMB E: header and section must agree, BOTH directions ----
         ("LIMB E  header declares an outcome the section does not define",
          CONFORMING.replace('["FWD-1"]', '["FWD-1", "FWD-2"]'), True, "DISAGREE"),
+        # ---- LIMB G: the header validates against its schema (the DSGN_IRPTV1 v0.1 defect) ----
+        ("LIMB G  status outside the enum (DSGN_IRPTV1 v0.1 @50f2387594)",
+         CONFORMING.replace('"status": "DRAFT"',
+                            '"status": "DRAFT -- L4-R halves owed (3.0.0_SA_CVO ratified-text)"'),
+         True, "PRD_HEADER fails"),
+        ("LIMB G  a required key missing (brief_ref)",
+         CONFORMING.replace('"brief_ref": "docs/briefs/x.md@0123456", ', ''), True, "PRD_HEADER fails"),
+
         ("LIMB E  section defines an outcome the header does not declare",
          (HDRJ + ENDPOINT.replace("```\n  FWD-1", "```\n  FWD-9  another card\n         DONE WHEN"
                                   "  APPLIED -- x\n         ACCEPT     y\n\n  FWD-1")
