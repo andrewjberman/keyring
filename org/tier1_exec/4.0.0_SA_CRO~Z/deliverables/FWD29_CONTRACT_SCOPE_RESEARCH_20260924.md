@@ -181,6 +181,12 @@ app as the reference. A whole-document sweep was never IRPT's instrument, so the
 - `TO-AMGT-rl-1` (the instrument cell) specified `--scope <css-selector>` "(default: the whole body)" for
   `ui-measure.mjs`, and `ui-contract-check.mjs` (389 lines) passes no `--scope` (0 hits). So the check sweeps
   `document.body` by default, not by anyone's decision.
+  **CORRECTION 2026-09-24 ~12:5xZ (`1.0.0_SA_CTO~Z` msg 25512, re-measured by this seat):** the parenthetical
+  "(0 hits)" above and in msg 25504 is WRONG as a number. The enumeration over `ui-contract-check.mjs` returned
+  **3 hits, all substrings** of `/api/scoped/amgt/...` route strings at `:78-80`, and **0 whole-value** matches; this
+  seat collapsed "3 substring, 0 whole-value" into "0". The conclusion is unchanged -- no `--scope` argument is passed
+  anywhere in the file -- and only the count was misreported. Kept in place because a later reader re-checking
+  finds 3 and would otherwise conclude the finding collapsed.
 
 For the page-owned predicates (radii, sizes, weights, purple fills) a `--scope main` run is therefore the BRIEF's
 scope restored, not a denominator shrunk; for the chrome, msg 25499's split (chrome is real, admit its owners) stands
