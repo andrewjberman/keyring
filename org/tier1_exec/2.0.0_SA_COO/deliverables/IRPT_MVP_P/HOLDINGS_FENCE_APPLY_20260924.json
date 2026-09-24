@@ -1,0 +1,73 @@
+{
+  "observed_at": "2026-09-24T02:07:00Z",
+  "actor": "2.0.0_SA_COO~P",
+  "purpose": "APPLIED -- the firm-bucket fence (DenyForeignFirmPrincipals) admits irpt-holdings-role by exact ARN on the three firm buckets; CTO ruling dda3b7ab42 item 2, CRO registry rows 8b4c15c6ba, Andrew NO VETO (MSTR 99940)",
+  "tree": {
+    "worktree": "C:/Users/AndrewBerman/Desktop/irpt-p-fence-20260924",
+    "branch": "irpt-p-fence-20260924",
+    "base": "CLOUD HEAD 1b4b2e61e1 (contains 8b4c15c6ba)",
+    "ledger_sentinel_commit": "49fbc21c0c"
+  },
+  "plan": {
+    "file": ".runtime/holdings-fence/fence.tfplan",
+    "sha256": "1fef40d3e5eb37cc3e49e84819ad67999db8f428fb4bb0fbe4a4dd21379f70cd",
+    "terraform": "1.9.8",
+    "summary": {
+      "add": 0,
+      "change": 3,
+      "destroy": 0,
+      "resource_changes": 242,
+      "no_op": 239
+    },
+    "decoded_diff": ".runtime/holdings-fence/decoded_diff.json"
+  },
+  "never_widen": {
+    "cto_half": "1.0.0_SA_CTO message 99956 at plan 1fef40d3 / tree 1b4b2e61e1 / ledger 49fbc21c0c",
+    "cro_half": "4.0.0_SA_CRO message 99962, same pin, own show -json + live simulate of the role's reach"
+  },
+  "apply": {
+    "tool": ".tools/safe-apply.sh",
+    "halt_ack": "HALT_ACK=1 over 22 routine base-inbox subjects",
+    "result": "Apply complete 0 added / 3 changed / 0 destroyed rc=0",
+    "completed_at": "2026-09-24T02:04:06Z",
+    "log": ".runtime/holdings-fence/apply.log",
+    "log_sha256_prefix": "716622d80f834b35"
+  },
+  "readback": {
+    "instrument": "s3api get-bucket-policy, compared to the plan after-policy with sort_keys json",
+    "opal-data-cottonwood": {
+      "statements": 1,
+      "arn_not_like_entries": 5,
+      "irpt_holdings_role_present": true,
+      "live_equals_planned": true
+    },
+    "opal-data-inflection": {
+      "statements": 1,
+      "arn_not_like_entries": 5,
+      "irpt_holdings_role_present": true,
+      "live_equals_planned": true
+    },
+    "opal-data-49financial": {
+      "statements": 1,
+      "arn_not_like_entries": 18,
+      "irpt_holdings_role_present": true,
+      "live_equals_planned": true
+    },
+    "re_plan_rc": 0
+  },
+  "recorder": "not applicable -- record-terraform-deploy.sh is lambda-function scoped and this root has no function",
+  "ledger": {
+    "slug": "irpt-holdings-fence-20260924",
+    "status": "CLOSED",
+    "legs": {
+      "A1": "closed",
+      "R1": "closed",
+      "V1": "closed"
+    }
+  },
+  "rollback": "revert the three exemptions.json rows of 8b4c15c6ba and re-apply (0/3/0 back); no object touched either way",
+  "not_claimed": [
+    "Anna Holdings READY (CTO re-simulates irpt-holdings-role with each live bucket policy expecting allowed; Andrew retests)"
+  ],
+  "push_state": "LOCAL (irpt-p-fence-20260924 branch; MSTR pushes)"
+}
