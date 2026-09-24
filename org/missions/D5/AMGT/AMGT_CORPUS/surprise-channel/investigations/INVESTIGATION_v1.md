@@ -978,6 +978,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "FWD-19 requires every security in the Asset Management research folder to be dispositioned, with the census's three classes summing to the folder count; the round-3 fire was signed to move UNRESOLVED 40 -> 0 and its run record reports called 40, refused 0, errors 0.",
     "world_is": "The fire executed cleanly and the served pool reads UNRESOLVED 4, not 0, with a fifth folder carrying no record at all. 89 of 94 live folders hold a MEASURED identity. The five short are precisely the five added since the builder snapshot, so FWD-19's denominator has been moving underneath the act that serves it.",
     "notes": "No disarm_owner: nothing here is ARMED and the fire breached nothing. TWO REMEDIES, deliberately not filed as one item -- the four need their keyless registrations superseded or the call forced so a key lands, which R-21 already authorises; AMD needs EVIDENCE first (no ONE PAGER workbook found), which is an acquisition question and not an induction one. Raised to 2.0.0_SA_COO~X, 2.0.0_SA_COO~Y and 3.0.0_SA_CVO~Z as msgs 25780-25782; filed here because a finding that lives only in an inbox scrolls, and FWD-19's L9 is where it has to be gradeable."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S26",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T22:41:25Z",
+    "one_line": "INCIDENT on served output, this seat's act: the FWD-12 pull passed SECURITY KEYS (ADBE_US_Equity) to model_block_pull.py --securities, which expects Bloomberg identifiers (ADBE US Equity) and forms the key by replacing spaces (:395). Every DAPI request named a security that does not exist and landed an EMPTY raw object ({}), rc 0, 89 of 89 'landed'. The derive then minted 89 blocks with 0 FY rows and 0 figures (51 unresolved each), and newest-stamp-wins put them in front of the 31 keys that had served real blocks (~205 figures) from ~22:30:2xZ to 22:37:04Z. Rolled back by copying each prior block forward (31 of 31, verified through scoped_amgt.read_model_block). The 58 new keys still serve an empty block instead of none. The derive also rewrote field_map.json from empty data (+61,889/-7,653 lines, uncommitted); restored to HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/fwd12_derive_20260924T223018Z.log: 89 of 89 'DERIVE: ... (0 FY rows, 0 figures, 51 unresolved)'.",
+        "Raw bloomberg/harvest/bronze/histdata/security_key=ADBE_US_Equity/20260924T213626Z.json body is {} (this seat's read).",
+        "Rollback log org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/evidence/fwd12_rollback31_20260924T223735Z.log: 'APPLIED copy-forward: 31 of 31'; scoped_amgt.read_model_block: 2317_TT_Equity 205 figures, 992_HK_Equity 228 figures after; ADBE_US_Equity 0 figures (one of the 58).",
+        "The L2 verify leg checked that three raw OBJECTS existed per key, never that they carried data: presence was proven, content was not."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NEVER-1 pair (COO @2a3319e5ae, CTO @35e4cb93ef): derive replaces 31 served blocks with the 22 added and 46 re-derived; its discriminator samples scoped_amgt for the 22 present.",
+    "world_is": "The pull fed invalid identifiers, so every block was empty; the 31 were restored inside the pair's own rollback within ~7 minutes, before the running production sequence reached its dossier step. The 58 serve an all-unresolved block; no false FIGURE was ever served (0 figures), only absence mislabelled as 'empty/no value returned'.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Disarms when a corrected pull (identifiers with spaces) and derive land real blocks for the 89 under a newer stamp, verified by FY rows > 0 and the 22 present per key, OR the 58 are returned to ABSENT on Andrew's delete word. The pull's own dry run echoed security='8035_JP_Equity' and this seat did not read the request string against the vendor's form. Vendor authority for the corrected run asked of 1.0.0_SA_CTO~Z. Readers that may have consumed an empty block in the window: run_scores, render_pack, peers -- not yet measured."
   }
 ]
 ```
