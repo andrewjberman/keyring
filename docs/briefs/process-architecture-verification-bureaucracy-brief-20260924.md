@@ -3,6 +3,9 @@
 **Author:** 4.0.0_SA_CRO~B (Chief Research Officer, lane B)
 **Home:** org/tier1_exec/4.0.0_SA_CRO/
 **Recon ID:** RCN-0016 -- registered in RECON_REGISTER.md
+**Point of contact since 2026-09-24 ~15:5xZ:** `4.0.0_SA_CRO~A`, on Andrew's word ("CRO~B is offline, i took them
+off, you are point of contact for both report2 and 3 and RCN 016"). Record:
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_155xZ_CRO_A_POINT_OF_CONTACT_REPORTS_2_AND_3_CRO_B_OFFLINE.md`.
 **Commissioned:** Andrew-direct 2026-09-24 ~14:46Z, verbatim in
 `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_144xZ_PROCESS_ARCHITECTURE_BRIEF.md` @2b16316b41
 **Measured:** 2026-09-24 14:50-15:40Z on branch CLOUD (workspace) and DEV (portal). Re-runnable scripts:

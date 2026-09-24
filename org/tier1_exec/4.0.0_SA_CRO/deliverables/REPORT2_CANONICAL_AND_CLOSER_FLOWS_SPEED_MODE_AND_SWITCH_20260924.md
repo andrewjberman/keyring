@@ -16,6 +16,10 @@ to land, with six calls reserved to Andrew (section 9).
 Both records are in this folder. Section 12 carries the joint model. C6 and section 9 are amended to match, marked
 `[AMENDED 09-24]`.
 
+**Point of contact for report 2 AND report 3 (RCN-0016) since ~11:5x AM ET: `4.0.0_SA_CRO~A`.** CRO~B is offline on
+Andrew's word. Record: `ANDREW_DIRECT_20260924_155xZ_CRO_A_POINT_OF_CONTACT_REPORTS_2_AND_3_CRO_B_OFFLINE.md`. Where
+the text below names `4.0.0_SA_CRO~B` as report 3's holder, it names the author, not the current contact.
+
 **How this fits with the other two reports.**
 - **Report 1** is yesterday's brief, `BRIEF_CANONICAL_FLOW_SPEED_CLOSER_FLOW_SKILLS_PARITY_20260923.md` (same folder).
   Its three canonical changes are now law (spine v3.16-v3.18):
