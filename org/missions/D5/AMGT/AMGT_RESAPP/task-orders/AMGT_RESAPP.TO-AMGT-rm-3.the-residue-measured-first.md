@@ -98,7 +98,21 @@ hashes, and any row.
 **ISSUER NOTES:** wave 1, after rm-1 merges (its `--scope main` and marker-keyed band count are what this cell traces).
 Item 3 of the round-37 analysis, plus item 2's per-state band read on the re-keyed number (s.46a).
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~15:0xZ.** Flipped by the ISSUER; the worker left the record face alone.
+3 of 3 criteria PASS, proof-of-spec rc=0 VALID (re-run by this seat inside the worker's worktree C:/tmp/wk-amgt-38-142).
+AC1: --trace on all six states, trace.<state>.json per state with counts EQUAL to the summary's failing counts (18 of 18 elements
+dumped), the graded table unchanged from rm-1's shape, exit=1 on the standing FAILs (printed). AC2: ATTRIBUTION.md -- 18 dumped /
+18 attributed / 0 UNATTRIBUTED. Band count re-keyed reads 1 of 1 on all six (no element to name). weight 300 -> PageHeaderVariants.tsx:46
+(rm-2's). weight 600 and the 8px radii -> PanelHeader.tsx (title h3 :75, strip container :62; 5 of 6 states, peers has no strip):
+the radii are rm-2's, the 600 is THE RESIDUE, attributed for the first time (rm-2's face moves that same title to 700, so it may
+close in the same drain). size 10 -> DataTimestamp.tsx:38 rendered through PanelHeader.tsx:99's text-[10px] (thesis and model, the two
+PanelHeader calls passing a timestamp): THE RESIDUE. Exhaustive: every dumped 8px traces to the identical PanelHeader.tsx:62 string;
+no non-strip 8px exists. WHAT A FIX WOULD TOUCH: 3 files, 18 elements -- PageHeaderVariants.tsx (6), PanelHeader.tsx (10),
+DataTimestamp.tsx (2). AC3: 0 src files off the base; census FILES 31 TOTAL 0. No rows. Drained @20d0d02a7a; portal DEV ffef75aa
+(merge of f326daff), gitlink c7b022a1 -> ffef75aa. Round-39 input: PanelHeader.tsx:99 text-[10px] and DataTimestamp.tsx:38 (size 10);
+weight 600 if rm-2's 700 does not cover it.
+
+<status>complete</status>
 <round>38</round>
 <slot>~142</slot>
 <fabric>site-z</fabric>
