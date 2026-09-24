@@ -117,7 +117,7 @@ both because a justified exemption without a detecting control is still a defaul
 justification would force every fixture write into a false positive. The three earlier scanner rounds (Z-S7..S9) are
 disarmed by evidence in row Z-S12; this cell does not re-open them.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
