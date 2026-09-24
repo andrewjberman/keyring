@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-24T20:3xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-24T21:1xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -41,9 +41,18 @@ after S1 reads.
 ## Next-list (in order)
 
 1. S1: read Andrew's run (PERFORMANCE_USE#99052771.. row, PERFORMANCE_ACCEPTED# row, the adapter log); close or fix.
-2. 49F (SmartX) and INF (Orion) calculation paths composed behind the one-use gate; then one worded use each (Andrew).
-   Measured demand: 10 non-COT Performance requests 14:17Z-19:40Z. They now answer UNSUPPORTED_OPERATION by name
-   (7f6b5589f6, served 20:26Z); INF's estate performance dim is stale since 2026-04-28, so it is not a source.
+2. 49F Performance ON OUR ENGINE (Andrew-direct ~20:5xZ, record @964fb4ed6b, CTO 100886): read
+   `s3://opal-data-49financial/gold/advi/canonical/twr_daily` (557 partitions 2024-07-08..2026-09-23; schema 1.2:
+   r_net/r_gross, bmv/emv, cf_net/cf_gross, status; NO twr_periods table exists, measured). Link r_net over the latest
+   contiguous OK run inside the window (start date's return included, BD daysHeld convention), shape to BD
+   performancePeriod (BMV, EMV, net additions, days held, TWR; fees/income/MWR named absent), then the per-account BD
+   cross-check with the 08-19 harness (`4.0.0_SA_CRO~A/.../BD_PERFORMANCE_ENDPOINT_VS_GIPS_ENGINE_COMPARISON_20260819.md`).
+   Needs: an additive PerformanceReport `lineage.provider` value for our engine (contract, P; ~D regenerates), a
+   read grant on that prefix (ledgered plan; the cross-firm guard reads it), `COMPOSED_FIRMS` + 49financial. No vendor call.
+3. INF (Orion): card `IRPT_MVP_P/INF_PERFORMANCE_LIVE_PATH_CARD_20260924.md` @925835306a -- mapping direct
+   (accounts_v2.account_id), JWT auto-refreshed 09:51Z/21:01Z, request grammar reconstructed (one live proof needed:
+   Andrew's per-use word, or a cheaper Orion Performance-screen HAR first). 49F/INF answer UNSUPPORTED_OPERATION
+   by name until each lands (7f6b5589f6, served 20:26Z).
 4. Criterion 2 census: every active account per firm resolvable in Performance.
 5. Retained report -> reopen -> export verified on the served route after the COT run.
 6. Y compositions: hops 2+3 SERVED (ledger `irpt-upload-hop2-20260924`, S1 = Y's live 12.03 acceptance); hop 4 custody
