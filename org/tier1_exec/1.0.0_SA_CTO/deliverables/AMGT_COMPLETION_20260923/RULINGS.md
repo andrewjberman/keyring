@@ -253,6 +253,61 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-45 -- ⭐ **"ALL ORDERS COMPLETE" IS NOT "NOTHING LEFT."** `AMGT_HARVST` READS 18 OF 18 AT `ROUND_CLOSE` AND CANNOT CLOSE, BECAUSE THIS SEAT ADDED A SCOPE ITEM TO IT AT 09:5xZ
+
+**Provoked by testing this seat's own claim.** `GRADE_TABLE_49.md` asserts *"closing the 49 IS closing his goal,
+and no fifth artifact is owed."* Andrew's limb 3 names a CHANNEL -- *"complete backfill ... through the
+opal-data-harvest channels"* -- and `AMGT_HARVST` is a THIRD project his sentence does not name. **So the claim
+was worth exercising rather than restating.**
+
+### (1) THE CLAIM HOLDS, AND IT IS NOW MEASURED
+
+Limb 3's outcomes are **inside the 49**. `AMGT_CORPUS`'s artifact rows R1-R14 all land in
+`harvest / bronze | silver | gold / ...` and map to `FWD-1`, `FWD-3`, `FWD-5..7`, `FWD-10..13`, `FWD-19`,
+governed by `C-BACKFILL-DENOMINATOR-IS-THE-RESEARCH-FOLDER`. **The harvest channel is the SUBSTRATE of CORPUS's
+declared outcomes, not a fifth artifact.** No addendum is owed and `AMGT_HARVST` is not a goal limb.
+
+### (2) BUT THE CENSUS SURFACED A PROJECT THAT LOOKS CLOSEABLE AND IS NOT
+
+`AMGT_HARVST`: **18 orders, ALL 18 `complete`**, `dep_stage: ROUND_CLOSE`, `blocking: None`, no
+`closer_contract`. ⛔ **On an order census that is a project standing at the finish line** -- and this estate's
+own close condition cites its round 5 as the PROVEN zero-graduation precedent (*"an ISSUANCE OF NOTHING ... the
+subtraction leaves ZERO cells"*).
+
+⛔⛔ **IT CANNOT CLOSE, AND THE REASON IS THIS SEAT'S OWN ACT TWENTY MINUTES EARLIER.** The `2b` graded
+`chatter_daily` item was written into `COO_Y_HARVST.md` at `98edbe915d` per Andrew's card answer at R-21
+`:1493` -- *"an explicit AMGT_HARVST scope item"*. **It has NO ORDER CUT. So the subtraction is not empty and
+no zero-graduation round is available.** Nothing was shortcut and nothing is closed here.
+
+⭐⭐ **THE GENERALISABLE INSTRUMENT LESSON, and it is the one worth keeping:** **THE ZERO-GRADUATION TEST IS A
+SUBTRACTION OVER THE *ENRICHMENT LIST*, NEVER OVER THE *ORDER SET*.** An order census is **structurally blind to
+work that has been SCOPED but not yet CUT** -- and a scope item can be added by a seat that never touches the
+project's orders at all. ⭐ **Same family as this document's own coverage-is-not-realization line, one level up:
+there, an order naming an outcome was not the outcome met; here, every order being terminal is not the work
+being finished.** **COST:** one read of the lane's mandate beside the order census. **NON-APPLICATION:** a
+project whose mandate and order set are known to be in sync.
+
+### (3) SO THE SEATING JUDGMENT FROM THE PREVIOUS TICK IS REVERSED, AND ITS REASONS ARE NAMED
+
+Tick 28 declined to spawn `2.0.0_SA_COO~Y` on two grounds, **both of which have dissolved:** *"two COO lanes
+mid-drain raise index contention"* -- the index reads **CLEAR** and worker merges fell to **one in thirty
+minutes** (`6b1f1d838d`, rl-8); and *"2b carries no clock"* -- true, and **irrelevant, because 2b turns out to
+be the SOLE open scope item on a project whose every order is terminal.** ⚠ **That third condition was not in
+the un-park list this seat wrote** (it named a deadline or the drains finishing). **An un-park list is a
+forward enumeration and it omitted silently -- Rule 24's own warning, committed by the seat that quotes it.**
+
+**SPAWNED** `2.0.0_SA_COO~Y`, pid **51412**, 10:03:51Z, audit row `SPAWN 2.0.0_SA_COO~Y by 1.0.0_SA_CTO~Z`.
+COO capacity **2 of 3** before the spawn, so the cap was never the constraint.
+
+⛔ **AND THE FOUR-PLANE PRE-FLIGHT HAD TWO UNRELIABLE PLANES, BOTH CAUGHT BEFORE ACTING.** (a) MSYS `ps -ef`
+returned **3 rows** for the serial -- but `ps` and `Get-Process` see **DISJOINT NAMESPACES** on this box and
+`ps` cannot see `claude.exe` at all, so those rows were shell artifacts. (b) The spawn-audit grep returned
+three hits that were **this seat's OWN send-refusal rows**, whose `reason=` string contains recipient serials --
+**a wrong-object match, the same family as R-42's grep-inside-a-table.** The verdict rests on the WINDOWS plane
+(**0** of 8 `claude.exe` rows carried `~Y`; only `~X` and `~Z` visible), no watcher row, and 0 commits in 3h.
+⭐ **A DEAD VERDICT NEEDS BOTH NAMESPACES, AND ONLY ONE OF THEM COULD SEE THE PROCESS CLASS IN QUESTION.**
+**VERIFY-AFTER: exactly ONE row post-spawn** -- cardinality checked, not assumed.
+
 ## R-44 -- ⛔⛔⛔ **THE "IP SHORTCUT" DOES NOT EXIST. I ASSERTED IT IN R-31, IT WAS RESTATED TWICE, AND NOBODY EVER EXERCISED IT.** THE CARD'S EVIDENTIAL CEILING IS ALREADY REACHED, AND R-21a WAS MORE RIGHT THAN MY CORRECTION OF IT
 
 `3.0.0_SA_CVO~Z` msg 25396. **Measured, by the seat that holds the join, and the first thing a join needs is a
