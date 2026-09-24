@@ -2306,3 +2306,45 @@ Portal candidate 2 PUSHED to origin/DEV 7c542fd23e (MSTR 100364, under Andrew's 
 grant row ad18a6ddaa cherry-picked onto P's branch (b4ff9dc179, one conflict resolved to the CTO's side whole -- it also carried
 the batch-13 row P's branch had never received) and both Y test files committed in lane @04cf6ab521; generate/ byte-equal to Y's
 93ec16f4fe. Waiting: Y's STANDS then the sixth submission; M's rebuilt candidates; COO~D's issuance.
+
+
+## 2026-09-24 07:0x UTC - Claude CTO batch 32: the corrected 49F / INF GO issued on verified captures; the HAR doubles are a remount, "Holdings waits on Performance" retired; the F7 instrument GO and F2 ruled server-side; the Eclipse-map substrate card stated for Andrew
+
+Instruments: M's corrected census (100395) against the archived served bytes; the CRO's own read of the Eclipse map's identity
+(100399) beside M's; the CTO's re-read of both firm manifests; the CRO's HAR read (100394); P's code read to the boundary (100403).
+
+### IRPT-49F-INF-LABELLED-GO-CORRECTED-20260924 (M 100395 -> GO 100400)
+GO 49F 3d59c80b then GO INF d03e91a4, one word, in order, each etag re-read at execution. The three conditions of the withdrawal
+(batch 31) met: (1) captures set by path and sha-verified BEFORE the build -- the 49F taxsma snapshot sort-keys sha 032c68db.. ==
+the served provenance (MDPF_TAXSMA v0.5.0, 21 rows); the INF membership_map.json sha 789dd95d.. == the CRO's capture record
+@138fad2935 (860 rows), and the CRO read the same file to the same sha on its own instrument (100399); (2) census against the
+ARCHIVED served bytes: 49F 151,697 nodes, ids added 0 / removed 0 / changed 0 outside display, units, clocks and the ticker fact,
+tax-managed sleeves intact; INF 33,328 nodes, 0 / 0 / 0, models_whole_from_capture 35, the 553 / 71 / 252 / 624 census identical;
+reconciles exact; (3) both env-var inputs disclosed with path, sha and rows as UNRECEIPTED. CTO half: 49F manifest f3ea427b /
+EvNOT_ocng and INF 4283ce90 / J_FeUeEA re-read by the CTO, unchanged since the halt; one writer; both branches; rollback by
+re-point; the 158 aa6efd45 objects stay, named in the census.
+THE SUBSTRATE CARD (Rule 28), the CRO's text carried for Andrew beside the plan word: PROCESS -- a one-off Eclipse capture on
+Andrew's egress word 2026-09-23, no cadence; ARTIFACT -- one 212,882-byte file on ONE laptop, gitignored (client data), authority
+= nine receipted Eclipse responses; TRUST -- 860 of 860 membership accounts present in that day's Orion positions, 98 positions
+accounts with no Eclipse portfolio (disclosed), key space Eclipse portfolioId / accountId; FAILURE MODE -- an ABSENT file reads as
+"no capture" and a STALE file reads as current, and nothing dates it at read time; the served INF build depends on it through an
+environment variable, so it silently loses 35 models when the variable is unset (measured tonight) and cannot be reproduced if
+the box is lost. Remedy = the card already at Andrew: add the Eclipse membership read to the scheduled INF pull so the input is
+receipted, dated and scheduled; the 49F taxsma snapshot is the same class (MDPF_TAXSMA's contract) and rides the same card.
+
+### IRPT-HAR-DOUBLES-ARE-A-REMOUNT-20260924 (CRO 100394; P 100403; the CTO's word 100397 / 100405)
+The CRO's read of the 04:32Z HAR: every double is a SAME-INSTANT byte-identical pair (resolve 1 ms apart, tab fetches 0 ms), the
+browses are not doubled, and the one "Holdings waits on Performance" overlap was a tab switch 1.45 s after selecting while the
+cold performance pair was in flight -- TabShell mounts one tab at a time and no caller on DEV fetches both. Batch 25's sentence
+came from the CRO's first read and is CORRECTED; the item "Holdings not waiting on Performance" is RETIRED, nothing built. P read
+the code to its edge: a production bundle (StrictMode inert), effects keyed on primitives (a re-render cannot re-fire them),
+and the bootstrap resolve pair means TWO QueryClients (react-query dedupes same-key fetches inside one), i.e. two mounts of the
+page's session from a boundary ABOVE the page, not yet located; P will not guess it into a fix. GO for the instrument: one
+console.debug mount / unmount line with a per-mount uuid in InvestorReporting, SelectionWorkspace, ReportingTab and HoldingsTab
+in candidate 3 -- no network, no storage, no alert, removed in the candidate after the one whose console + HAR names the
+boundary; an instrument that answers one question once is not a monitor. F1 is real on its own (AuthContext refreshes the token
+on mount and every ~12 min, and the workspace was keyed on the access token, so each refresh remounted it and lost the
+selection) -- cut at 3c0a3e45 with the key on [email, claims]. F2 RULED server-side: directory/entry.py answers the resolve with
+page 1 of the Global browse inside the DirectoryContext; ClientSearch consumes it when present; P's own function, one act after
+candidate 3's report and before the Analysis backend, on Andrew's 500 ms bar. Candidate 3 @3c0a3e45 (F1, F5, F3) is reviewed by
+the CTO on its own instruments after the sixth submission's receipt.

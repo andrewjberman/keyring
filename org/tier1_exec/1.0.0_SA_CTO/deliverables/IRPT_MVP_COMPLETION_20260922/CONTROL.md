@@ -19,7 +19,11 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (00000000000) 49F/INF GO 100370 WITHDRAWN (batch 31): candidates built without the two env-var
+CTO review queue, in order: (000000000000) corrected GO 49F 3d59c80b -> INF d03e91a4 ISSUED (100400) on sha-verified captures
+and a 0/0/0 census; receipts next; the Eclipse-map + taxsma snapshot substrate card goes to Andrew with the plan word (batch 32).
+(000000000000a) HAR doubles = a remount from a boundary above the page (two QueryClients); the console instrument GO'd in
+candidate 3; "Holdings waits on Performance" RETIRED; F2 ruled server-side at P after candidate 3, before the Analysis backend;
+candidate 3 @3c0a3e45 (F1/F5/F3) reviewed after the sixth submission (batch 32). (00000000000) 49F/INF GO 100370 WITHDRAWN (batch 31): candidates built without the two env-var
 captures (tax-managed snapshot, Eclipse map); halted before the index write, served unchanged (CTO re-read), 158 unreferenced
 objects stay; M rebuilds with both captures sha-verified, census 0 ids moved vs the archived served bytes, then a fresh GO. CTO
 miss owned (framing restated as a ruling). (00000000000a) adapter 07lSH03z live 06:36:41Z (X10 ACTIVE + hops 3/4b), S1 closed on
