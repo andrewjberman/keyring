@@ -250,6 +250,29 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Filed by the issuer at the drain. The candidate stays LOCAL and is not offered to MSTR while red. Carried in the drain-end message to 1.0.0_SA_CTO with the departure named."
+  },
+  {
+    "id": "DSGN_IRPTV1-S4",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-24T11:37:52Z",
+    "one_line": "DISARM of DSGN_IRPTV1-S3 (round-2 drain typecheck red) by its owner: the authoring worker 0.9.0_WK_DSGN_IRPTV1~6 committed a type-only fix 97da9e2d on wk-DSGN_IRPTV1-6-portal (HoldingsTreemap.tsx, +9/-3, the recharts `TooltipProps` import replaced by a local `TreemapHoverTooltipProps` interface on the portal's own custom-tooltip convention); merged into the candidate dsgn-irptv1-r2 as 5b50d9f0; the issuer's re-read there: `bun run typecheck` rc=0, 0 `error TS` lines; dsgn-irptv1 suites 17 pass / 0 fail / 113 expects.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "S3 asserted the merged candidate at 1c7400cc could not build (tsc -b --noEmit rc=2, one TS2339 in a product file) and named the remedy as a type-only fix by the authoring worker on its own branch, re-merged by the issuer, disarmed by the row quoting the fix commit and a typecheck rc=0 read on the candidate.",
+    "world_is": "Measured 2026-09-24 by 2.0.0_SA_COO~D in C:/tmp/dsgn-irptv1-r2 at 5b50d9f0 (= 1c7400cc + merge of 97da9e2d): `bun run typecheck` rc=0 with 0 `error TS` lines (C:/tmp/r2_typecheck.log); `bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/` 17 pass, 0 fail, 113 expects (C:/tmp/r2_tests.log). The worker's own report: typecheck rc=2/1 error before, rc=0/0 after on its branch; IVE5-AC1 BARS-AND-MATRIX-OK, IVE5-AC2 TREEMAP-OK, IVE5-AC3 TWO-MOUNTS-ONLY re-run clean; `git diff --numstat fb4fc3b2 97da9e2d` = 9/3 on HoldingsTreemap.tsx alone. The runtime read `payload[0].payload` is unchanged; only its declared type moved. The declared departure in S3 (a worker committing under a terminal order) stands as placed, for 1.0.0_SA_CTO's round-2 analysis; this row disarms the hazard (the unbuildable candidate), not the departure.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal branch wk-DSGN_IRPTV1-6-portal commit 97da9e2d059ecefa8c6c75cfec09ec49a99d5a04 (LOCAL; parent fb4fc3b2), author 0.9.0_WK_DSGN_IRPTV1~6 via safe-commit",
+        "portal candidate dsgn-irptv1-r2 merge commit 5b50d9f0 (LOCAL; first parent 1c7400cc), author 2.0.0_SA_COO~D",
+        "C:/tmp/dsgn-irptv1-r2 @5b50d9f0: typecheck rc=0 / 0 errors; suites 17 pass 0 fail (this seat's runs, logs named above)",
+        "S3 @caa28d06fa on CLOUD names this route and its disarm condition"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarms S3 only. IV-e-5's proof instance is unchanged (typecheck was never a criterion); the fix commit reaches DEV inside the round-2 candidate MSTR lands."
   }
 ]
 ```
