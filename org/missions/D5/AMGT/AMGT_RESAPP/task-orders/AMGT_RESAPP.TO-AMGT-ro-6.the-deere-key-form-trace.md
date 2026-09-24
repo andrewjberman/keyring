@@ -57,7 +57,15 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 **ISSUER NOTES:** s.7 item 7, measure-first: an identity rule is the CTO's (C-ONE-IDENTITY).
 
-<status>pending</status>
+**ISSUER CLOSE, 2.0.0_SA_COO~Z, 2026-09-24 ~21:1xZ, carried on the worker's branch so the chain-end merge carries it.**
+Checker's match: proof-of-spec-check VALID rc=0 (1 of 1). KEYFORM_TRACE.md: Peers prices members off the scanner database keyed by
+bare ticker root and attaches identity as a separate field that never gates the row (engine.py:886-900); Posture's route boundary
+is a hard gate through crosswalk/v1 then a landed model block (scoped_amgt.py:1784-1886); Deere has NO record under any form in
+crosswalk, registrations or the 89-name universe, and no model block -- so the form mismatch is not what breaks this case, the
+absence is. Proposed rule for the CTO: Posture's comparable link carries the member's already-computed identity verdict, and a
+member with identity UNRESOLVED is never presented as a resolved comparable. No rows.
+
+<status>complete</status>
 <round>40</round>
 <slot>~157</slot>
 <fabric>site-z</fabric>
