@@ -1,0 +1,69 @@
+Now I'd like to move on to the analysis tab, another UI review.
+So at first glance, it looks okay.
+It seems like, yeah, the UI is lacking.
+It's not really designed.
+There's no standard fixtures or particularly aesthetic design,
+but it's a work in progress, so we don't mind.
+However, the moment that you select a client,
+you get an overload of these not specified,
+not supplied boxes in the identity.
+That's a huge error.
+And then furthermore, in the secondary box with the account selection,
+we get probably 1,000 plus account check boxes in there
+that extend all the way to the bottom of the page.
+This is horrible design by every metric.
+It really cannot ever work like that.
+And this actually brings me up to another item that I've noticed
+while we have been developing here,
+which is that we have these bubbles up top
+where the user will select an account
+after they've selected a client from the dropdown.
+Those bubbles should not be there.
+You should simply select a client from the dropdown,
+and that's all that that provides for you.
+Because the account level drill downs
+and selecting different accounts,
+that should be done much deeper into the page
+where it is relevant to do that.
+Because otherwise, you have to constantly be scrolling to the top of the page
+to change the account bubble,
+and that simply doesn't make sense for any kind of user flow.
+With that in mind, there's a handful of panels here
+that seem to just appear randomly the analysis requests
+and the request history.
+Both of those functions really should be...
+I don't even know if we need them.
+I might just scratch those two completely.
+That's something that we can store historically.
+When people make requests, we will store that.
+They don't need to be able to access their pass requests.
+We don't need to design that for them,
+so I would just pull those out outright.
+The biggest critique here, of course, is the big glitches,
+the big UI failures,
+but on a lesser extent, we want to actually design this properly.
+We want to improve the user interface to match Opal's branding,
+to elevate the patterns and components to look like the rest of the portal.
+Furthermore, I want to make sure that we are being parsimonious about text right now,
+again, as a continuous feedback point.
+There are a lot of random strings all over the place,
+and I recognize that's because we are early on
+and you're just surfacing things as they are listed
+and identified in the backend system,
+but that is not user-friendly whatsoever.
+We really need to simplify, focus on progressive disclosure,
+make it a lot easier on the user's eyes
+and find opportunities for pleasing visual components where we can.
+This may be a good opportunity to use some of those cards from the philosophy page.
+Something that I might recommend on that note is to actually use three cards,
+which will be emblematic of the three variants of Y-Charts comparison.
+That is a solo portfolio analysis,
+a portfolio versus one model that's variant two,
+and portfolio versus multiple Opal models as variant three.
+It might be interesting to provide those options in the philosophy fixture card form,
+somewhere on here to give some visual pop.
+And then beyond that, we really just want to know where do you even upload
+and can we make the input a little cleaner and a little better design
+so users can follow along where they are inputting information,
+because that is very small and unclear and covered in strings from the backend,
+so that's something we want to fix as well.

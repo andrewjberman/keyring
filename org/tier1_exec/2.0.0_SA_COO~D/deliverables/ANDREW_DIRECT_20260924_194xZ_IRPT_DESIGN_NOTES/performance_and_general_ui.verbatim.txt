@@ -1,0 +1,38 @@
+Now, lastly, I want to focus on the general page UI subject, as well as, of course, the
+performance tab.
+Now the performance tab is the least developed.
+I've never seen anything surface here, so I really don't know at all what it looks like.
+But there are a couple flaws I see right from the start that we should be able to identify
+and solve very quickly.
+One of them is on the tab bar.
+For some reason, there is a horizontal scroll bar attached to the navigation tabs.
+There's no reason for that to be there.
+There's plenty of space for three tabs on this page.
+We do not need a scroll bar attached to the nav bar where the tabs sit.
+That just doesn't even make any sense from design.
+So that needs to go immediately beyond that.
+We really just want to be consistent about the look of this page.
+I like the white tabs and white panels.
+That's all very nice.
+I think this is kind of our B-side look for client-facing applications where we're kind
+of using lighter colors.
+We have the same pattern in the philosophy page for the cards and the same pattern in
+the model portfolios page for the cards and modal pop-ups.
+That theme, which came from the Opal website, is very good, and that is what we should be
+using all over the investor reporting page as a whole.
+So that's something that we want to find opportunities to develop if we can take additional cues
+from the website, additional fixtures, really just focusing on being light and colorful.
+However, there are some features which really need to stay consistent.
+For example, in the footer bar, as I mentioned before, we need to stay true to patterns.
+We only ever put source and timestamp in the footer bars.
+That is consistent across the entire portal that has to be maintained.
+I could say the same thing about tooltips.
+There's some of these just basic patterns that we just need to do a once-over and make
+sure are adhered to.
+I also think that it would be preferable if there was some kind of sample view of the
+performance reporting components so that even if a user has not selected a relationship
+yet, there are lots of colorful, fun things that catch their eye, of course, adhering
+to best practice with progressive disclosure.
+But this gives an opportunity for those components to say something about, oh, select a user,
+select a client to see whatever the fuck data.
+Yes.
