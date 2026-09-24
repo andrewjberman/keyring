@@ -91,8 +91,19 @@ is unchanged. A reader can see "the team said ~2.5% in IDVZ, on this date, in th
 ### O7 -- An analyst gets the same fold for a name whose pack exists only as a PDF
 
 30 of 93 folders carry prose only as PDF (Part IV F2), and the current pillar rule reads Word only. An analyst opening
-one of those names (Alphabet, Adobe, Netflix, Visa, ...) gets pillars, management and cases from the PDF pack, or the
-tab says the PDF could not be read to that shape and why.
+one of those names (Adobe, Netflix, Visa, ...) gets pillars, management and cases from the PDF pack, or the tab says
+the PDF could not be read to that shape and why.
+
+**MEASURED 2026-09-24 03:1xZ-03:3xZ, after this brief's first commit (Andrew-direct *"Begin with PDF
+Extractibility"*; package `org/tier1_exec/4.0.0_SA_CRO~Y/deliverables/PDF_EXTRACTABILITY_20260924/`, SUMMARY.md
+@`d64d83a5d2`; CTO ruling R-22 @`61fdf4c12f`): O7 IS SMALL, AND THE ABSENCE WAS IN THE READER.** 26 of the 30
+PDF-only folders carry a full research pack; 26 yield pillars, 27 a recommendation line, 27 risks, 26 management, 26
+all three cases, 24 a one-sentence thesis summary, 24 a company description, 15 a "Why we own"; 29 of 30 yield pillars
+or a "Why we own" (Alphabet, Eli Lilly and UnitedHealth hold only an earnings update, whose "Why we own" is the
+thesis until a pack is filed); the one folder with nothing is QXO (an investor Q&A PDF only). On the positive control
+(56 same-stem docx+pdf pairs; 19 with pillars under the RULED docx rule) the PDF rule recovers **99 of 99** pillars,
+17 pairs FULL. So this outcome is met by a READER change, not by a content gap: the PFOE author's packs label their
+sections with INLINE BOLD LEADS that `extract.py`'s standalone-heading heuristic cannot see.
 
 ### O8 -- When the team files a new report, the name's dossier changes and the page shows the newer content, with the prior kept
 
@@ -172,7 +183,11 @@ folders, matching the 93 SharePoint folders listed by Graph the same hour):** 46
 **30 carry prose only as PDF**, 6 only as Word, 10 carry only a workbook (Costco, Halliburton, Home Depot, Hon Hai,
 National Grid, Quanta, RWE, SSE, Valero, Zurich), 1 is empty (Air Liquide). The current pillar rule reads Word only
 (`continuation.py`, "THESIS PILLARS: read ONLY from a docx extraction"), so pillars are ABSENT by rule for 30 of 93
-today, and 11 of 93 can never carry prose-derived fields.
+today, and 11 of 93 can never carry prose-derived fields. **SUPERSEDED IN PART by the O7 measurement above: the 30
+are a reader limit, not a content limit -- 26 of them carry a full pack whose skeleton the PDF path reads (99 of 99
+on the control); the 11 workbook-only or empty folders stand.** The PFOE skeleton is RICHER than the Word one and
+adds fields the dossier gets for free (thesis summary, company description, growth algorithm, ownership, special
+items, "Why we own", positives / negatives); the three reader rules that unlock it are in the package's SUMMARY.md.
 
 **F3 -- What is ingested today versus what the seed premise needs.** The last ingest run (`ingest_run.json`, scan
 vintage 2026-09-23T03:09Z): 33 folders resolved, 123 files stored; **60 folders and 228 files not ingested because the
