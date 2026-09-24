@@ -181,6 +181,50 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Disarms S1 only; W3-S2's disarm is the CTO's (100499, batch 36). The drain's three-error count was an under-read of a tail-limited tsc output -- the CTO's five is the disposition's number."
+  },
+  {
+    "id": "DSGN_IRPTV1-W6-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~6",
+    "surfaced_at": "2026-09-24T21:10:00Z",
+    "one_line": "IV-e-5's 'an expand affordance per bar that reveals THE per-account matrix' names N affordances and ONE matrix but not the mechanism joining them; this worker gave each bar its own native <details> carrying an identical full copy of the matrix rather than one shared disclosure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AllocationBars.tsx: each CategoryBar is rendered as its own `<details data-slot=\"allocation-bar-row\">` / `<summary>` pair (the pattern header/IdentityCard.tsx's own 'About this scope' disclosure already uses in this project, cited in this file's own header comment); the `<AccountMatrixTable>` sub-component is mounted INSIDE every one of those `<details>`, so N bars produce N byte-identical copies of the same table in the static markup",
+        "native HTML has no primitive that opens a SECOND element's content from a FIRST element's <summary> without added script, and this component renders via renderToStaticMarkup (no client JS) like every other tabs/holdings/*.tsx file measured so far in this project, so a single shared disclosure triggered by N separate summaries was not available without inventing interactivity the order's own words ('no separate loading UI invented here', HoldingsTab.tsx's own header) argue against",
+        "iv-e-5.allocation-bars.test.ts's `firstMatrixTable()` reads only the FIRST occurrence and the test still verifies full row x column correctness against `accountMatrixFrom` -- the duplication is provably harmless to IVE5-AC1's own grading, PASS confirmed (VERDICT: BARS-AND-MATRIX-OK, this worker's proof instance)"
+      ]
+    },
+    "spec_asserts": "Cell text: 'an \"expand\" affordance per bar that reveals the PER-ACCOUNT MATRIX: one row per `account` node ..., one column per category ...' -- one matrix is named, and 'per bar' is stated of the affordance, not of the matrix's cardinality.",
+    "world_is": "No single mechanism in this codebase's existing native-disclosure convention (<details>/<summary>, no client JS) can give N separate summaries control over ONE shared piece of revealed content; this worker resolved the tension by duplicating the (small, <=9-account) matrix once per bar rather than inventing a stateful toggle. A reader expecting exactly ONE <table data-slot=\"allocation-matrix\"> in the DOM will find as many as there are categories, all identical.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking: IVE5-AC1 is written and graded against the FIRST matrix occurrence plus full content correctness, and passes. Filed so a later round choosing to convert this to a single shared toggle (client-side state) does so deliberately, not by assuming today's shape is the only reading of the order's words."
+  },
+  {
+    "id": "DSGN_IRPTV1-W6-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~6",
+    "surfaced_at": "2026-09-24T21:10:00Z",
+    "one_line": "No committed HoldingsSnapshot fixture in this worktree's grant (holdingsSnapshot.success.json, every fe-s-7/holdings.*.json) carries a `display` block at all, so IVE5-AC2's 'a PLANTED symbol printed as the positive control' could not be exercised against any real fixture -- this worker built a small in-memory synthetic snapshot inline in the test instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`python -c \"json.load(...)\"` walk over every node of holdingsSnapshot.success.json and all 8 fe-s-7/holdings.*.json files: 0 of 0 nodes carry a truthy `display` key (measured before writing the test)",
+        "iv-e-5.treemap.test.ts's `buildSyntheticSnapshot()` constructs a minimal 3-node HoldingsSnapshot (root/model/security) entirely in-memory, satisfying the full HoldingsNode/HoldingsSnapshot contract shape, with `display: { label: ..., symbol: 'PLANTED-XYZ' }` on the leaf and a deliberately distinct `securityId: 'sec:opaque-secret-9f3'` beside it",
+        "the mutant control run (tickerFor falling back to securityId when display.symbol is absent) fired on this exact positive-control assertion (`!planted.ticker.includes('sec:opaque-secret-9f3')`), confirming the synthetic object genuinely exercises the C-S12 rule and is not a no-op"
+      ]
+    },
+    "spec_asserts": "IVE5-AC2: 'the hover label's ticker = display.symbol when present else \"not supplied\" with NO substring of securityId (the C-S12 rule as a negative arm) and a PLANTED symbol printed as the positive control.'",
+    "world_is": "Every fixture this cell's grant names or can discover on disk carries no `display` field on any node, so the positive control cannot be read off a checked-in fixture the way the negative arm is (all 9 named/discovered fixtures). No new fixture file was added (fixtures/** is not named in this order's <paths>, and BOUNDS lists <paths> as the write grant) -- the control instead lives as a literal object inside the test file itself.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking: IVE5-AC2 passes with the synthetic control firing correctly under mutation. Filed so a later round that adds a real display-bearing fixture (e.g. for IV-e-2 or a shared fe-s-7 addition) can retire this synthetic object in favour of one, if that is preferred."
   }
 ]
 ```
