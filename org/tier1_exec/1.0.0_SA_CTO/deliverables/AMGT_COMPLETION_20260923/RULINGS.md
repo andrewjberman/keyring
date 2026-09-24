@@ -343,6 +343,30 @@ CONTROL MUST EXERCISE THE CLAIM'S OWN JOIN -- here, a file KNOWN to satisfy BOTH
 corrected run carries exactly that. COST: one named positive per census. NON-APPLICATION: a
 single-predicate census, where any positive exercises the whole join.
 
+⭐ **46 IS CORROBORATED ON AN INDEPENDENTLY-WRITTEN INSTRUMENT AND IS A TOTAL, NOT A FLOOR.**
+`3.0.0_SA_CVO~Z` re-derived it by `git cat-file --batch` over every HEAD-tree blob then `check-attr` over
+only the CRLF-bearing paths -- **a different method, same 46** (41 `.py`, 5 `.tf`). ⛔ **AND IT NAMED THE
+SHARED DEPENDENCY BOTH PASSES RESTED ON rather than letting two agreeing numbers read as settled: both
+trusted `eol=lf` as the only attribute shape producing the mismatch, so a `text=auto` path with no
+explicit `eol` would have been INVISIBLE TO BOTH.** Measured here and it is **ZERO**: of **851**
+CRLF-bearing blobs, **805 carry NO text attribute at all** and **46 carry `text eol=lf`**; the widened
+signature (any text-normalisation, not just explicit `eol=lf`) returns **the same 46**, and
+`core.autocrlf=false` means the 805 are stored as authored with no clean filter to disagree -- **not
+exposed, and correctly so.** Rule 22's shared-dependency clause, run rather than noted.
+
+⚠ **THE TWO PASSES AGREE AT 46 AND THEIR INTERMEDIATE DENOMINATORS DO NOT -- 851 here versus 3,147 there
+-- AND BOTH ARE RIGHT ABOUT DIFFERENT POPULATIONS.** `ls-files --eol` **CLASSIFIES** (and buckets 2,497
+paths as `-text`, excluding them); `cat-file` **COUNTS RAW BYTES** across all 41,739 blobs including
+binaries that contain a CR-LF sequence incidentally. **The join agrees because the `eol=lf` set is small
+and unambiguous; the intermediates are not the same measurement and must not be quoted as though one
+confirms the other.**
+
+⭐ **AND THE ROOT `.gitattributes` ALREADY NAMES THIS EXACT HAZARD AT `:3`** -- *"without an eol rule a
+CRLF checkout makes terraform files read as MODIFIED against an LF index"* -- with `*.tf text eol=lf` at
+`:10`. **So the RULE is in place and correct; the 46 are blobs committed with CRLF before or despite it.**
+That makes the remedy precisely a re-commit under the rule that already governs them, and it means this
+class is closed-going-forward and open only as a backlog of stragglers.
+
 ⭐ **THREE SEATS MISJUDGED THE CARDINALITY OF THIS SAME PLANE INSIDE ONE HOUR, EACH IN A DIFFERENT
 DIRECTION** -- `0.0.0_AB_MSTR~Z` and this seat read "the working tree" as one when site Z has 41;
 `3.0.0_SA_CVO~Z` inferred "every worktree" from the blob mechanism and measured 1 of 15, correcting
