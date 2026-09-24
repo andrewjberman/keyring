@@ -9004,3 +9004,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The 'no request leaves the machine' property holds only under the preload; the suite itself does not check for the guard and runs its vendor-facing control regardless. One anonymous GET reached ycharts.com at 05:38Z. Remedy (the suite's owner's call, one line): the suite refuses to start when global.__YC_NETGUARD__ is absent, so the control can never fire unguarded. Not remedied in fc932d468b (that commit is the probe path only)."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S122",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-24T10:18:32Z",
+  "one_line": "build-and-upload.sh's BUILD_MANIFEST probe (the three-outcome block: DECLARED -> check, ABSENT -> skip with a printed notice, UNREADABLE -> refuse) has an unreachable ABSENT branch: the probe is a bare `python - \"$PY_SOURCE\" <<'PYEOF'` under `set -e` (:33), so when the manifest carries no declared_blobs the probe's exit 1 terminates the whole script BEFORE `MANIFEST_DECL=$?` runs -- no message, rc=1, the log's last line is the preceding limb's OK. Measured twice on irpt-ycharts-generate 10:1xZ (its staged BUILD_MANIFEST.json is Y's custody-factory manifest @c3add4090e, vendored_modules only). Fails CLOSED and SILENT: the safe direction, the wrong rendering. Worked around with the documented BAU_MANIFEST_SKIP=1 (disclosed in 5b1b2f8608), which does exactly what the ABSENT branch was written to do.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/build-and-upload.sh:33 @0879affa62 -- `set -e`; :428-439 -- the probe `python - \"$PY_SOURCE\" <<'PYEOF' ... sys.exit(0 if m.get(\"declared_blobs\") else 1)` followed by `MANIFEST_DECL=$?`; the comment above it (:418-427) names three outcomes and says ABSENT -> skip with a printed notice.",
+      "Scratchpad build_generate_2.log and build_generate_3.trace (10:1xZ): rc=1; last stdout line 'OK: import-closure -- 53 packaged .py file(s) ...'; the -x trace shows `+ python - 'C:\\...\\generate'` immediately followed by `+ cleanup` -- MANIFEST_DECL is never assigned and no ABSENT/UNREADABLE line prints.",
+      "Scratchpad build_generate_4.log with BAU_MANIFEST_SKIP=1: rc=0, artifact uHfng41l.. uploaded and write-verified; every other limb (staged_from sha256, parity, import-closure) ran and passed unchanged.",
+      "Positive control that the exit is the probe's: the staged BUILD_MANIFEST.json @c3add4090e parses (json.load succeeds; keys function/source_pin/vendored_modules/layer_dependencies/...) and has no declared_blobs key, so the probe returns 1, not 2."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "build-and-upload.sh:418-427 (the block's own comment): 'Three outcomes now, never two: DECLARED -> check; ABSENT -> skip with a printed notice; UNREADABLE -> REFUSE'.",
+  "world_is": "Two outcomes reach the operator: DECLARED (gate runs) and a silent rc=1 that covers both ABSENT and UNREADABLE (the UNREADABLE message prints from python, then set -e ends the script before the bash branch that says 'build REFUSED' runs; ABSENT prints nothing at all). Remedy (the builder's owner's call, one line): `python - ... <<'PYEOF' ... PYEOF; MANIFEST_DECL=$?` -> `MANIFEST_DECL=0; python - ... || MANIFEST_DECL=$?`, or `set +e` around the probe. Not remedied here: the builder is not this lane's file."
+}
+```
