@@ -253,6 +253,54 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-80 -- ⛔ **THE ANDREW QUEUE THIS SEAT HAS REPORTED ALL SESSION WAS INCOMPLETE BY ONE, AND IT IS THE CREDENTIAL ONE. THE OTHER FOUR CANDIDATES WERE MY OWN REGEX OVER-MATCHING**
+
+**Continuing R-78's census into the question it implies: of the 20 live rows this seat owns, which carry a
+limb RESERVED to Andrew that he has not been shown?** A keyword scan (`Andrew|sovereign|his word|
+destructive|rotat`) over `disarm_owner` + `one_line` returned **5**. ⛔ **Four are false positives, and
+reading them individually is the only thing that showed it:**
+
+| row | why the keyword fired | verdict |
+|---|---|---|
+| `Z-S226` | *"**Andrew** reported the page blank"* | Andrew as REPORTER, not a reserved limb; already routed by R-79 |
+| `Z-W37-S1` | quotes Andrew's VERBATIM bucket word as the gate's CONTEXT | `disarm_owner` is plain `1.0.0_SA_CTO~Z` -- **this seat's work** |
+| `Z-S185` | incidental | `disarm_owner` plain `1.0.0_SA_CTO~Z` -- this seat's work |
+| `AMGT_CORPUS-Z-S3` | genuinely reserved | ⭐ **but the row itself says it was ALREADY carried** -- *"has carried it to Andrew on the estate card"* |
+| **`Z-S230`** | genuinely reserved | ⛔ **AND NOT SURFACED. The one real finding.** |
+
+⭐ **SO THE HONEST NUMBER IS ONE, NOT FIVE -- and this seat nearly reported five.** The same shape as R-78's
+own instruments: a keyword regex over a PROSE field over-matches, arrives with a count, and reads as
+measured. **Per-row reading is what separated 1 from 5, exactly as R-78 concluded: a census cannot check
+itself; a named instance can.**
+
+### THE ONE REAL CARD -- `Z-S230`, and it is a credential
+
+Filed by this seat 2026-09-22T20:25Z. ⭐ **Its CODE limb is properly closed** -- both limbs hashed,
+exercised with five controls including a negative -- and the row's disposition is deliberately
+`UNDER_INVESTIGATION` rather than `GRADUATED` **because two limbs remain and both are Andrew's**, in the
+row's own words:
+
+> *"(a) the 4 TRACKED artifacts that already carry the value -- removal is a destructive git act and needs
+> Andrew's word; (b) whether the credential is ROTATED -- a sovereign vendor call. **This seat holds the
+> card to him** and does not assume either."*
+
+⛔ **"HOLDS THE CARD TO HIM" IS WHAT THE ROW SAYS AND IT IS NOT WHAT HAPPENED.** This seat has reported a
+4-then-5-item Andrew queue in every response today and `Z-S230` was in none of them. **The row is not the
+failure -- it is correct, careful, and it named its own reservation. The REPORT is the failure**, and it is
+the same over-restriction class as the publisher-access card: a correctly-reserved item that is never asked
+is indistinguishable from one asked and refused, and it reads as compliance while nothing moves. ⚠ **Here it
+sat for two days on a credential that the row itself classes as an INCIDENT rather than an exposure**,
+because the value is already committed in 4 tracked artifacts, oldest 2026-08-14.
+
+**RULED: both limbs go to him as ONE card with two questions, and NEITHER is assumed.** Removal from tracked
+history is destructive git and rotation is a sovereign vendor act -- ⛔ **this seat will not do either on its
+own word, and explicitly does not recommend a default on (a):** rewriting tracked history has its own blast
+radius and "clean it up" is not obviously the safer branch. **COST: one card. NON-APPLICATION: a reserved
+limb whose row records that it was already carried** -- which is precisely why `CORPUS-Z-S3` is excluded
+rather than double-reported.
+
+---
+
 ## R-79 -- ⛔⛔⛔ **THE GOAL'S BLANK PAGE IS A BLOCKING ROW THIS SEAT FILED ITSELF ON 2026-09-22 AND NEVER ROUTED. THE CELL IS ROUTED HERE, AND THE SESSION'S "NOTHING IS DEPLOYED" LINE WAS UNDERSTATING IT**
 
 **Found by R-78's census, not by any message.** `AMGT_RESAPP-Z-S226`, `class: BLOCKING`,
