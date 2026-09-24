@@ -13396,6 +13396,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT_CLOSE_CONDITION_20260924.md: 'the closing analysis states N of 49 REALIZED, names each exception with its reason, and the two must SUM TO 49.' R-39: N is UNMEASURED and not machine-measurable from what exists today.",
     "world_is": "S245's arithmetic line should read: the closing analysis must print N + E = 49, where E is the exception count AT THE CLOSE and N is READ rather than derived. On today's list of four that would be 45 + 4, and NEITHER number is measured today. The line as published states 45 flatly and omits both conditions.",
     "notes": "FILED BY THE AUTHOR OF THE DEFECT, against its own row, and the channel is append-only so S245 is corrected here rather than edited. THE CONCRETE HAZARD, which is why this is worth a row at all: a later seat reading S245 could lift 45 as a MEASURED count of realized outcomes and carry it into a closing analysis, where R-39 has ruled that no such number can currently be read -- and a derived figure travelling as a measured one is exactly the class R-39/R-39a catalogue. NOT A RE-OPENING: nothing was built on the 45, no published document quotes it downstream on this seat's read, and the close is not authorised by anyone. hazard_standing INERT."
+  },
+  {
+    "id": "AMGT_RESAPP-W135-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~135",
+    "surfaced_at": "2026-09-24T09:10:00Z",
+    "one_line": "AMGT-rl-6's target implies the four C12 designed states (`@/ui/components/states`, a read-only input this round), but the round's shared, read-only tabs.harness.cjs stubs `@/ui/components/panels` and carries no stub for that alias -- importing it from ModelTab.tsx makes tabs.harness.cjs throw MODULE_NOT_FOUND at module load, so this cell built the four states LOCAL to ModelTab.tsx instead of importing the shared components.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Importing `PanelEmpty, PanelLoading, PanelError` from '@/ui/components/states' in ModelTab.tsx and running `node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs` (unmodified) threw 'Error: Cannot find module @/ui/components/states', code MODULE_NOT_FOUND, at ModelTab.tsx:55:18 -- the import line -- before any CHECK line printed.",
+        "tabs.harness.cjs:73-95's STUBS object (read at HEAD, commit 513bb3c5) carries '@/ui/components/panels', '@/ui/components/Select', '@/ui/components/EmptyState', '@/hooks/useAuth', '@/lib/utils', 'react-router-dom', '@/contexts/PageThemeContext', '@/components/PageHeaderVariants', '@/hooks/useTabNavigation', '@/components/TabNavigation' and 'recharts' -- ten aliases, none named '@/ui/components/states'.",
+        "tabs.harness.cjs and its fixtures are both listed read-only in this task order's <paths> ('Of these you WRITE only the first three; the rest are read-only inputs'); src/ui/components/states/index.ts is separately listed as a read-only input in the same block, implying its use.",
+        "Reverting the import and building three local components (ModelEmptyState/ModelLoadingState/ModelErrorState, same navy-on-white/status-danger-icon/data-panel-state contract as PanelStates.tsx) let tabs.harness.cjs run to completion again with model_fiscal_rows_rendered still true and no check newly wrong-way beyond the pre-existing exec_officers_rendered."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rl-6's target: 'Every empty/loading/error state one of the four designed states (C12)', read alongside <paths> listing src/ui/components/states/index.ts as an input, together implying ModelTab.tsx imports the shared C12 components.",
+    "world_is": "The shared tabs.harness.cjs this same task order names read-only does not stub that alias and crashes on the import; the cell instead reimplements the same C12 shape locally in ModelTab.tsx (no shared-component dependency), which keeps both harnesses green but leaves the shared component unused by this tab.",
+    "disarm_owner": "N/A -- hazard_standing INERT (the local states carry the identical visual/ink contract; nothing drifts on its own). Should a later cell want ModelTab on the shared components, the fix is adding '@/ui/components/states' to tabs.harness.cjs's STUBS (or loading it as real source there), which is outside this cell's <paths>; routing is the issuer's (2.0.0_SA_COO~Z) per Rule 30."
   }
 ]
 ```
