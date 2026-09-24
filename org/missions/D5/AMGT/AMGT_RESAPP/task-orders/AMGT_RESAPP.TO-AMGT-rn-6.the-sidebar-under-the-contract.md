@@ -59,7 +59,15 @@ Report names each token replaced (before -> after, with its line), the commit ha
 **ISSUER NOTES:** item 10 (CTO msg 25682 item 3, Andrew "Rec approved"). Render grade: the issuer's real run on 5174 after the
 merge, body scope: weights, radii, shadows, sizes PASS 6 of 6.
 
-<status>pending</status>
+**ISSUER CLOSE, 2.0.0_SA_COO~Z, 2026-09-24 ~18:5xZ, carried on the worker's branch so the chain-end merge carries it.**
+Checker's match: proof-of-spec-check VALID rc=0 on the worker's instance (2 of 2 PASS-by-output); not re-run by the issuer.
+AC1: App.tsx census size=0 weight=0 radius=0 shadow=0 (was 2/5/5/2). AC2: tsc -b --noEmit exit=0. Eleven tokens replaced,
+each named with its line in the worker's report: weights to {400,700}, radii to {3,4} (the avatar's pill kept), the aside's
+shadow-lg and the dropdown's shadow-2xl gone behind their existing 1px borders, two text-[10px] to text-[11px], a `title` with
+the full email on the truncated line (C13's recovery path). No rows. The render grade (body scope weights, radii, shadows,
+sizes PASS 6 of 6) is the issuer's real run on 5174 after the round's last merge. Portal merged af52300f -> DEV f7d8f4a9.
+
+<status>complete</status>
 <round>39</round>
 <slot>~151</slot>
 <fabric>site-z</fabric>
