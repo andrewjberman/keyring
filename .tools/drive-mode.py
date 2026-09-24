@@ -126,8 +126,14 @@ def overlaps(a, b):
     return a == b or a.startswith(b + "/") or b.startswith(a + "/")
 
 
+def base_code(code):
+    """`IRPT_BCKEND~P` -> `IRPT_BCKEND`: a lane-keyed lease is one of several FAST seats on one project, each with a
+    disjoint surface (report 2 section 5.4 guard 3; spine Closer subsection, FAST mode)."""
+    return str(code).split("~", 1)[0]
+
+
 def project_home(code):
-    hits = glob.glob(os.path.join(ROOT, "org", "missions", "D*", "*", code))
+    hits = glob.glob(os.path.join(ROOT, "org", "missions", "D*", "*", base_code(code)))
     return hits[0] if hits else None
 
 
@@ -155,7 +161,7 @@ def open_orders(skip_codes):
 
 def conflicts(code, surfaces, live=None, orders=None):
     live = all_live() if live is None else live
-    held = {x["code"] for x in live if x.get("mode") == "HOLD"}
+    held = {base_code(x["code"]) for x in live if x.get("mode") == "HOLD"}
     hits = []
     for x in live:
         if x["code"] != code and x.get("mode") == "FAST":
@@ -163,7 +169,7 @@ def conflicts(code, surfaces, live=None, orders=None):
                 for o in x.get("surface", []):
                     if overlaps(s, o):
                         hits.append("live FAST lease %s (seat %s) surface %s" % (x["code"], x.get("seat"), o))
-    orders = open_orders(held | {code}) if orders is None else orders
+    orders = open_orders(held | {base_code(code)}) if orders is None else orders
     for ocode, f, paths in orders:
         for s in surfaces:
             for p in paths:
@@ -236,7 +242,8 @@ def arm(code, mode, surfaces, hours, seat, by):
     exp = t + int(hours * 3600)
     lease = {"code": code, "mode": mode, "seat": seat, "surface": surfaces, "armed_by": by,
              "armed_at": iso(t), "expires_at": iso(exp), "expires_epoch": exp,
-             "status_path": os.path.relpath(os.path.join(home, "STATUS.md"), ROOT).replace("\\", "/") if home else ""}
+             "status_path": os.path.relpath(os.path.join(home, "STATUS%s.md" % ("~" + code.split("~", 1)[1] if "~" in code else "")),
+                                             ROOT).replace("\\", "/") if home else ""}
     os.makedirs(LEASES, exist_ok=True)
     with open(lease_path(code), "w", encoding="utf-8") as fh:
         json.dump(lease, fh, indent=1)
@@ -309,6 +316,15 @@ def self_test():
         check("HOLD on the other project releases its orders",
               arm("OTHER_P", "HOLD", [], 2, "-", "t") == 0 and not conflicts("C_X", ["portal/src/pages/Other"]))
         check("prefix is component-bounded (mine vs mine-too)", not overlaps("portal/src/mine", "portal/src/mine-too"))
+        check("lane leases on ONE project with disjoint surfaces both arm (OTHER_P~A, OTHER_P~B)",
+              arm("OTHER_P~A", "FAST", ["svc/a"], 2, "S~A", "t") == 0 and arm("OTHER_P~B", "FAST", ["svc/b"], 2, "S~B", "t") == 0)
+        check("a third lane lease overlapping a sibling's surface is REFUSED",
+              arm("OTHER_P~C", "FAST", ["svc/a/deep"], 2, "S~C", "t") == 1)
+        check("a lane lease is not blocked by its OWN project's open orders", not conflicts("OTHER_P~D", ["portal/src/pages/Other"]))
+        check("a lane lease keeps its own STATUS file", load("OTHER_P~A") is None or
+              load("OTHER_P~A").get("status_path", "").endswith("STATUS~A.md") or load("OTHER_P~A").get("status_path") == "")
+        end("OTHER_P~A", "t")
+        end("OTHER_P~B", "t")
         with open(lease_path("A_X")) as fh:
             lz = json.load(fh)
         lz["expires_epoch"] = now() - 5
