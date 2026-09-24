@@ -2,7 +2,7 @@
 
 Seat `2.0.0_SA_COO~M` (CLAUDE, successor to the Codex seat since 2026-09-23 ~22:47Z). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.4. Reviewer `3.0.0_SA_CVO~M` (not live).
-As of 2026-09-24T00:05Z.
+As of 2026-09-24T00:20Z.
 
 Standing directive (Andrew-direct ~22:4xZ, record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md` @6890584d29; Step 1b-F row landed by the CTO @d78fdb2f1c):
 Holdings end to end for every 49 Financial and Inflection client, meshed across SmartX/Schwab and Eclipse/Orion, with a
@@ -41,7 +41,7 @@ report currency is attested).
 | M5 grants / exact subset / API | COT: reader library PASS on deployed bytes; authorizer hop not exercised | COT_DEPLOYED_READER_MATRIX_20260923.json |
 | M6 visible taxonomy + drill on screen | NOT LIVE (Andrew's re-test pending) | -- |
 | M7 fresh source -> screen, three firms | COT hop 3; 49F hop 1; INF hop 1 | -- |
-| Snapshot model overlay (Andrew 22:4xZ) | 49F: 7 models (assets TARGET at SmartX clock); INF: Eclipse models with OBSERVED Orion assets; COT: not started (Rebalancer membership not established) | HOLDINGS_49F/INF_MODEL_SNAPSHOT_20260923.json |
+| Snapshot model overlay (Andrew 22:4xZ) | 49F: 7 models (assets TARGET at SmartX clock); INF: 17 Eclipse models with OBSERVED Orion assets; COT: 46 Rebalancer models over the ACCEPTED publication (462 of 841 accounts assigned, 379 unnamed), assets OBSERVED, blend composition TARGET | HOLDINGS_49F/INF/COT_MODEL_SNAPSHOT_20260923.json |
 
 Offline-only work grades nothing until the live thread is live.
 
@@ -54,10 +54,9 @@ Offline-only work grades nothing until the live thread is live.
 
 (1) Andrew's signed-in Anna Holdings screen (hop 4). (2) On Andrew's currency attestation for 49F and INF (the binder
 accepts only ANDREW_ATTESTATION; P writes the records), publish both candidates through the existing publisher under
-CTO review, then their reader matrices. (3) COT snapshot model overlay: Rebalancer assignment -> model at the account
-grain (fact_model_assignment external_id, 973 of 973 z09-prefixed) as MODEL_LEAF membership over the accepted custody,
-targets stay separate; then a COT candidate that carries membership. (4) Own-UI check that the Holdings tab renders
-MODEL_LEAF children and the withheld-drill facts.
+CTO review, then their reader matrices. (3) Fold the COT membership into the tree as MODEL_LEAF children under CTO
+review (a re-publication, so a new GO), so the screen can show it; the projection artifact carries it today. (4) Own-UI
+read of the Holdings tab against MODEL_LEAF children and withheld-drill facts.
 
 ## Dependencies
 
