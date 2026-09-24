@@ -101,6 +101,51 @@ the two sum to 49.
 This list is NOT a licence to grow. A stop-condition satisfiable by shrinking its own denominator is not a
 stop-condition, and this seat is the party that would benefit.
 
+## ORDER COVERAGE OF THE 49 -- MEASURED BY SUBTRACTION, 2026-09-24 ~10:0xZ
+
+⛔ **COVERAGE IS NOT REALIZATION. An order NAMING an outcome is not the outcome being MET.** This section
+answers only *"does every declared outcome have a cell that was cut for it"*, which is the question the
+enrichment-list subtraction needs. The GRADE column above stays UNGRADED regardless.
+
+Instrument: every `FWD-<n>` id named in any task-order file, subtracted from the printed denominator.
+
+| project | denominator | orders scanned | outcomes named by >=1 order | **named by NO order** |
+|---|---|---|---|---|
+| `AMGT_RESAPP` | 30 | 201 | **30** | **0** |
+| `AMGT_CORPUS` | 19 | 17 | **18** | **1 -- `FWD-18`** |
+
+⭐⭐ **THE ONE UNCOVERED OUTCOME IS EXACTLY THE DEFERRED EXCEPTION THIS DOCUMENT ALREADY NAMED.** CORPUS
+`FWD-18` is the row marked DEFERRED above -- *"marked PROPOSAL and later enrichment by its own author"*. **So
+the subtraction independently re-derived a known exception and found NOTHING NEW**, which is a positive control
+on the instrument rather than a lucky agreement. The other three exceptions all HAVE orders: they are blocked
+on CONTENT, not on coverage.
+
+⚠ **AND THE CENSUS RETURNED AN IMPOSSIBLE COUNT FIRST -- "31 named of 30" -- WHICH IS WHAT SENT A READER TO
+THE BYTES.** The extra id is `FWD-99`, in `TO-AMGT-rh-1` (`complete`), and reading it shows *"FWD-99 control
+fires"*: **a deliberately nonexistent id used as a NEGATIVE CONTROL to prove the coverage checker detects an
+unknown outcome.** ⭐ **So an out-of-range id in an order census is a SENTINEL until read -- calling it a defect
+unread would have convicted good practice.** COST: one read. NON-APPLICATION: a census whose corpus carries no
+control sentinels.
+
+### THE SEVEN OUTCOMES IN FLIGHT, AND THEY ARE THE GOAL'S OWN LIMBS
+
+Outcomes carrying a NON-TERMINAL order: `AMGT_RESAPP` **17, 27, 28, 29, 30** · `AMGT_CORPUS` **14, 19**.
+Four non-terminal orders carry them, fabric-wide:
+
+| order | outcomes | Andrew's limb |
+|---|---|---|
+| `TO-AMGT-rl-10.the-export` | `FWD-30` | **limb 2** -- the export, brand-guideline form, 2pg or machine-readable |
+| `TO-AMGT-rl-9.designed-states` | `FWD-27/28/29` | **limb 1** -- the visually polished surface |
+| `TO-CRPS-d-4.coverage-census-93-of-93` | CORPUS `FWD-19`, `FWD-14` | **limb 4** -- every single security, all 93 |
+| `TO-AMGT-rk-49.lusha-domain` | `FWD-17` | HELD on Andrew's key-rotation fact |
+
+⭐⭐⭐ **SO EVERY BUILDABLE LIMB OF THE GOAL IS CARRIED BY AN ACTIVE WORKER ORDER, AND THE DECLARED ENDPOINT IS
+FULLY COVERED EXCEPT ONE DELIBERATELY-DEFERRED PROPOSAL.** What stands between this state and the close is:
+those four orders reaching terminal; the L10 analyses this seat owes once they drain; whatever round 38's
+enrichment list produces by subtraction; and **two facts from Andrew**. ⛔ **That is a statement about WORK
+REMAINING, never about outcomes realized** -- all 49 grades are still UNGRADED and only the closing analysis
+moves them.
+
 ## ANDREW'S COMPLETION TEST, MAPPED ONTO DECLARED OUTCOMES
 
 His sentence -- *"only when all of this is done for every single security in the Asset Management research
