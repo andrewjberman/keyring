@@ -1,0 +1,3924 @@
+{
+  "schema_version": "irpt-holdings-model-snapshot-v1",
+  "firm_id": "cottonwood",
+  "clocks": {
+    "custody_as_of": "2026-09-22",
+    "overlay_as_of": "2026-09-23"
+  },
+  "model_count": 7,
+  "models": [
+    {
+      "model_id": "ae9ef8d2-c12e-4447-9170-2dbf8c5b03c2",
+      "model_namespace": "COT_REBALANCER_MODEL",
+      "model_name": "Opal Intermediate-Term",
+      "accounts": [
+        {
+          "account_id": "acc_007cc1ed12fab338203955b9",
+          "assigned_value": 94331.89275,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_00ea7ba849b895eaaa2fd73f",
+          "assigned_value": 69556.0182,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0195b339e4e26828a93dc8f5",
+          "assigned_value": 76669.010925,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_020d09b1f89fed6660779eb8",
+          "assigned_value": 134207.64375,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0246a000e93cdfaf3eee1352",
+          "assigned_value": 95522.6354,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_02567fb4374b751fda040da4",
+          "assigned_value": 15819.0234,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_03220efc627942ca67ba56b2",
+          "assigned_value": 318249.85425,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0400791ec219632cbf715ad5",
+          "assigned_value": 961770.38025,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_043277a1e665ccd14cf0f44f",
+          "assigned_value": 117073.6614,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_04aa97983199b75b38c10330",
+          "assigned_value": 73022.0098,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0533cd05b8dd3456f893f3de",
+          "assigned_value": 375077.2336,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0691e546338aef178ba3f541",
+          "assigned_value": 1248932.6875,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_06d7a1bbe9d58790cee3595d",
+          "assigned_value": 77498.9601,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_07456e71c77e62e783da87a7",
+          "assigned_value": 73205.2119,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0775e69d7786a958c2efd336",
+          "assigned_value": 99565.8056,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_079cc101b89594f754789112",
+          "assigned_value": 246728.8495,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0afa1e62f18a39d6de38fdf8",
+          "assigned_value": 41337.4806,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0b6657c83b21dac317dadbea",
+          "assigned_value": 794759.8516,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0d4ed89f5918030f7aa5c7ca",
+          "assigned_value": 1168738.5235,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0eb9fe0fb1a4217541cd321d",
+          "assigned_value": 148456.250025,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0fcd810fadd45ab33d85dfde",
+          "assigned_value": 46855.82565,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_103c1d9112e9d9244ba07cd4",
+          "assigned_value": 21732.3414,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_106175f6bed8f91317e812c2",
+          "assigned_value": 406731.2022,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_11d2501cde2bb018a0871e9c",
+          "assigned_value": 1030255.8475,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_18297c3afdee3813da4d630a",
+          "assigned_value": 88476.1192,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_1ae4937a11dab51778396a59",
+          "assigned_value": 25455.7848,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_1b2690bda2a543a549746858",
+          "assigned_value": 139344.9495,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_1b31b35f30839eeb65753f4e",
+          "assigned_value": 332237.4132,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_1b519e4c4e683771c6cb7ceb",
+          "assigned_value": 232978.1912,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_1ed3de8f5cd6b2634a8b8a7c",
+          "assigned_value": 68800.5145,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_1f34fcee3a29018373c0fbb7",
+          "assigned_value": 71628.2772,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_203d34542743fb3b4a5eb3bb",
+          "assigned_value": 5400.993,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_210ed4531848587587dcb31d",
+          "assigned_value": 87282.0351,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2137702aa04b6eae52f379ea",
+          "assigned_value": 83452.4217,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2274bffc3c0657f738ecfcb2",
+          "assigned_value": 1788932.4403,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_22975f4119f8dc1a1bd54de0",
+          "assigned_value": 347908.8996,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2312f0056af77738d01a9756",
+          "assigned_value": 484272.9065,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_239c02dbd335a49303479c6e",
+          "assigned_value": 31544.26095,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_25f8ac3aa8e8e9346f1ba09c",
+          "assigned_value": 960097.9936,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2763105d88ad2007cb456fbf",
+          "assigned_value": 13845.7101,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_28e908a54adce35cee100d93",
+          "assigned_value": 325820.7682,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2a47ff688d6be7e2b4534db7",
+          "assigned_value": 128712.6266,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2af570a26ae5e7ab65967dd6",
+          "assigned_value": 153619.3914,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2b7cf8fe0efdc9b75a103e2f",
+          "assigned_value": 101760.94425,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2c74cc9abdad4f551c1dfaa7",
+          "assigned_value": 1772371.3436,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2c90dbd8d6c31cfa93165885",
+          "assigned_value": 73610.03985,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_33b1a66ea4e5bbf952916ded",
+          "assigned_value": 362948.5287,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_35147bcf2b7dd1b3fbdaf9d9",
+          "assigned_value": 130745.3652,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_375482cc25bca30b80dba28a",
+          "assigned_value": 102157.5198,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3816014dd3fb00974f4c218e",
+          "assigned_value": 238502.01345,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_38a9876a87e98e6ad3de33a4",
+          "assigned_value": 421867.0456,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3aafcb9656ba068e7a95a003",
+          "assigned_value": 168856.8963,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3b52f6c9c8d6aa2bde205b8a",
+          "assigned_value": 172528.91385,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3b812084a6ee3b7c1153e0af",
+          "assigned_value": 630085.2066,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3ca419e9d0154585c7e65368",
+          "assigned_value": 69981.48045,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3cb2e25289d35eb728d72633",
+          "assigned_value": 615123.7503,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3d14fe05d17b92a43414b9cc",
+          "assigned_value": 119155.1857,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3d3e056e752147feea0b47df",
+          "assigned_value": 50563.293,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3d45af64ed531573419331a3",
+          "assigned_value": 45231.882,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3df31767150693b2dcd44944",
+          "assigned_value": 355897.5088,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_4092a2483d7d37f5b93ea6d9",
+          "assigned_value": 1081395.62325,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_41486168224635fc356bce7f",
+          "assigned_value": 766015.5486,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_417e7ba916f8e968c6a7c06a",
+          "assigned_value": 295088.8542,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_41e43f093477bd82713e82bb",
+          "assigned_value": 292718.2028,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_423ceecefd85aedd8e015817",
+          "assigned_value": 169200.6109,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_43f17245f3497afc1e6217fb",
+          "assigned_value": 210323.926,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_44fc96a2a1155b8cc43fec84",
+          "assigned_value": 28031.1329,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_455ee035b18921674a8d0b44",
+          "assigned_value": 892720.5452,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_4565cd836c6ee284719dbd9e",
+          "assigned_value": 55775.6758,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_485e109c31eafdce33fdf299",
+          "assigned_value": 599355.732,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_49a7c5542e3f343393754cbe",
+          "assigned_value": 698113.6111,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_4b1830005895808398e450cb",
+          "assigned_value": 92651.9126,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_4cf1d15a73c7352e8a324692",
+          "assigned_value": 135564.88275,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_4d645761d623609d85461062",
+          "assigned_value": 171722.5359,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_4d80786f0642b24599857b6c",
+          "assigned_value": 109564.69845,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_4ed0e054514b2ecaebfd97cc",
+          "assigned_value": 161562.96705,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_50994879f0a298bb3ac180db",
+          "assigned_value": 39380.0996,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_51ac255d2e86676c4efd2628",
+          "assigned_value": 126562.4274,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_5306cb1729746a6975ce62a9",
+          "assigned_value": 30424.0322,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_5389ac04baa4edea55595d40",
+          "assigned_value": 685718.3272,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_541bd0ee98c5831645450bb7",
+          "assigned_value": 117198.5432,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_558c53e6538949bc302180db",
+          "assigned_value": 758725.2787,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_56feed3b8af16cc75c381fda",
+          "assigned_value": 1570155.518299,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_585e419231bc846e9ffc458d",
+          "assigned_value": 335529.9994,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_58bcab5e18e870dcce31bb41",
+          "assigned_value": 323140.2772,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_58f296596f34ca93030f94a2",
+          "assigned_value": 255596.9364,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_59ddd90b4dd4e1447283881e",
+          "assigned_value": 1023521.79405,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_59e6339c4167bc4c12787b90",
+          "assigned_value": 227353.3857,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_5aac626f69aa96e40b43b61a",
+          "assigned_value": 928321.512,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_5b623c008fc7d611b4b3bf85",
+          "assigned_value": 313193.3102,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_5c1d0dac62b5697dc2d32e44",
+          "assigned_value": 773565.7983,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_5d74bc38420d0f3d29397a27",
+          "assigned_value": 567251.232,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_602cfba83b5aff6fb94c328f",
+          "assigned_value": 165303.9294,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6135e9a8367e05575b246eb0",
+          "assigned_value": 54610.295,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_614c186bf4e0f42a86af912c",
+          "assigned_value": 355269.59145,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_615752ce6bef4f5d0ac46d8c",
+          "assigned_value": 42342.4497,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_62175fc84e30ea5152899357",
+          "assigned_value": 62627.6762,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_622ff992487a24a023c8bbe0",
+          "assigned_value": 86391.1494,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_63fea99255ad1c9e39b38a38",
+          "assigned_value": 251102.97825,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_64e714547c379ba2df9ca434",
+          "assigned_value": 307380.9844,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_65255c5f2b2e47f97f40acc9",
+          "assigned_value": 47964.864475,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_65ff0ae4815ddc21d4d5fa5d",
+          "assigned_value": 142031.5202,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_67497ceccf439519eb34c4ea",
+          "assigned_value": 871410.2028,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6a984851e28c03a79430e7a1",
+          "assigned_value": 1634107.8376,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6aeded1f707521fffedf6811",
+          "assigned_value": 2129156.8887,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6af8d7745de1ff60066c3d43",
+          "assigned_value": 139235.3835,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6bce62315b276c3238a372a0",
+          "assigned_value": 169814.5209,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6c52e8dd589fdbead287c9ec",
+          "assigned_value": 92806.4804,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6df496c4dc62dadca7adec36",
+          "assigned_value": 293200.23195,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6df91294b124daa84d7a8f25",
+          "assigned_value": 49999.0066,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6f6af29866d4fc021f12eb66",
+          "assigned_value": 8976.9058,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_701b7a153503c950d7aa5955",
+          "assigned_value": 455304.3558,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_70f09d38cfcde8a652dcce5f",
+          "assigned_value": 64401.272,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_719d8396fdc41e6841e5e185",
+          "assigned_value": 48444.351,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_7288be989cfbd698d588ca10",
+          "assigned_value": 13644.78065,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_72d8b9c38f87bc40ae90113d",
+          "assigned_value": 165049.1637,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_72f331a40e1887d836503c93",
+          "assigned_value": 52609.8492,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_7382f3ab9b08338a445c5628",
+          "assigned_value": 83178.5256,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_73a4fab67e8c4ecb238514aa",
+          "assigned_value": 56351.3634,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_752e4aba879f4d04458c41b8",
+          "assigned_value": 157567.0146,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_75ce7754bddc5a71039f311a",
+          "assigned_value": 277984.0869,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_76026807a4c4869aa46509d6",
+          "assigned_value": 78123.496875,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_7609c17915fa351c292b2720",
+          "assigned_value": 574673.4711,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_76ef2498c8aad0a2e5f55608",
+          "assigned_value": 220697.7976,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_77d817992309e934bb7ab796",
+          "assigned_value": 63015.3092,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_78ed6fb8be8e1bc0123207a3",
+          "assigned_value": 449916.9138,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_792e179a0a418d3ff27f8b55",
+          "assigned_value": 17198.8185,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_795b0c51428e606fdeed8e6f",
+          "assigned_value": 1072978.160395,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_79f3c858dab942817364892d",
+          "assigned_value": 116141.1948,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_7a4f195d9325113d70544046",
+          "assigned_value": 58182.1216,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_7ce26f27b5f48ddf3bc343ef",
+          "assigned_value": 101051.36055,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_7cf32d335f98861438e7dddb",
+          "assigned_value": 93409.9114,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_82fc5509df45d9cec2b01580",
+          "assigned_value": 329482.0719,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_8466122ed29ad9c562e76fb8",
+          "assigned_value": 78907.355,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_852e70b176039e478e06a6d3",
+          "assigned_value": 200338.8756,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_86bcd643ad1a037041611662",
+          "assigned_value": 15822.2624,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_89ea507085a81e9b9619ddc2",
+          "assigned_value": 92066.36865,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_8a14746e1e12fdd99ccfc021",
+          "assigned_value": 294599.9852,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_8ca918f64e91b7bbec2f5a98",
+          "assigned_value": 13379.56105,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_8d562a7e1df13fa8dd363409",
+          "assigned_value": 30459.715,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_8ee1b2fbcad788f889ac5d0f",
+          "assigned_value": 77672.996,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_8f30703d97ab5cd2e54f9552",
+          "assigned_value": 211275.54435,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_902b2c4b12caa6d2ec8cdaf2",
+          "assigned_value": 67262.83485,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_90457ceaf2a4e1beaab77ceb",
+          "assigned_value": 168246.2525,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_909bc67b7a0a3cd698673cd2",
+          "assigned_value": 1801375.837,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9320dfde89f584982efc971a",
+          "assigned_value": 145381.4954,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_935cbe76f153982a651ba145",
+          "assigned_value": 452247.34665,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_93aa14b89ed79a105769f87d",
+          "assigned_value": 28449.0271,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9740bf55fb482a6101a85338",
+          "assigned_value": 1657925.59095,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_975dd7360a9f634580730ee3",
+          "assigned_value": 488271.49755,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_988a1c3a35fda2da88bcae0a",
+          "assigned_value": 142987.176,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_997e6d64732fb15a14416645",
+          "assigned_value": 13185.6308,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_99ab8515a3c4fae65275dc84",
+          "assigned_value": 42866.5062,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9ac9b93af5bc23fd3f13b9b5",
+          "assigned_value": 2350669.0604,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9bce6b0eba23484e188dd55e",
+          "assigned_value": 77403.2775,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9bde1bba1e390c1bb593b57f",
+          "assigned_value": 18677.094,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9d706953294f1cf69d756742",
+          "assigned_value": 752487.4388,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9d9dc0eb651f830fdc6bfed1",
+          "assigned_value": 117802.7064,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9e106f8d78b58b711e021a23",
+          "assigned_value": 10831.4441,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9e821e4bd1fbba24b3226dcb",
+          "assigned_value": 96808.2609,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9ed045b075c955bb6e81b90d",
+          "assigned_value": 7756.1489,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a085306eaba00eee06219214",
+          "assigned_value": 95487.86205,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a1d5a1914c31dfcc3493e3b5",
+          "assigned_value": 156266.2582,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a3041377a06448e849096878",
+          "assigned_value": 50785.6798,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a578a05da84d2c677a1b36d5",
+          "assigned_value": 175984.455225,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a7bdb1333c15553b370effdc",
+          "assigned_value": 449775.12195,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a85f9d163dfdbb94d96f8ff7",
+          "assigned_value": 424517.829,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a8cb20a82f61b1a0cbec84fd",
+          "assigned_value": 1161846.02115,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_aa0020182f388b21b5c03042",
+          "assigned_value": 12931.25775,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_aae0e3c2f2c91e45256c7552",
+          "assigned_value": 500793.79035,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ac8534959ac62cea853fa712",
+          "assigned_value": 453823.5602,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ad0181357edd508877de1d85",
+          "assigned_value": 143433.6545,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_adafaae84dafc2e32b2f3ccd",
+          "assigned_value": 94148.33685,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_b0a6621dde872cb28794a653",
+          "assigned_value": 120088.58475,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_b718a3c86a6298e36a57e3b1",
+          "assigned_value": 621515.2084,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_b7430ed2a54fdb9cac5303cf",
+          "assigned_value": 596044.1552,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_b75c9707a3e7156a9878a502",
+          "assigned_value": 70920.27795,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_b850bb7c326ca8874a0df917",
+          "assigned_value": 746940.00435,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_b98d9939bb0f5e35acb8a150",
+          "assigned_value": 182703.9618,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_bbdd872b74bfe14240a657ce",
+          "assigned_value": 541721.8426,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_bcf817fe78d742c1730c5dd4",
+          "assigned_value": 510983.00925,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_bd09bac3a7284ee774df0bf7",
+          "assigned_value": 21076.6268,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_bd102a03c14e5a8ba4f69b52",
+          "assigned_value": 66067.6716,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_bd5061a6641b741a11a76f8c",
+          "assigned_value": 115126.2024,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_bdde2b150c26a1f38c53d426",
+          "assigned_value": 372060.0844,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_bf20302911377cd74f3a07fe",
+          "assigned_value": 101319.9065,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_c08b406a156bab04be4726b8",
+          "assigned_value": 110435.6594,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_c395a5ffcff5f5290c39fce1",
+          "assigned_value": 49319.6013,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_c5f3a23c7ac38a071b4bf1fc",
+          "assigned_value": 56228.8906,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_c6744dfbf44ca1ca70910625",
+          "assigned_value": 57875.44695,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_c9f1a964b96a897e8051ca5b",
+          "assigned_value": 1403308.2508,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_cb34383c18297ca5bc3372e5",
+          "assigned_value": 216616.430025,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_cbb5fff453ba33235d9845f4",
+          "assigned_value": 1311470.544,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_cd183a32483e89e82ee99c10",
+          "assigned_value": 176173.5935,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_cdda30207527c9464e8d0664",
+          "assigned_value": 306266.475225,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_cf00c24584ef1838e14cf9b4",
+          "assigned_value": 226428.01515,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d0b0919084a7817fbe4944c0",
+          "assigned_value": 23642.6264,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d1fd5bde42faf2f59a200cb1",
+          "assigned_value": 23166.7174,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d315007015566beeeef737cd",
+          "assigned_value": 50629.90635,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d3480ee4233cda42287e23b8",
+          "assigned_value": 481846.3642,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d38797f8d84ccd382735347b",
+          "assigned_value": 1401832.6666,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d5a95fc37f5569163b8e7443",
+          "assigned_value": 231311.50245,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d69376524e55a0496e223c13",
+          "assigned_value": 307618.6164,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d6d25558fe4f6ad068b5d7e7",
+          "assigned_value": 381416.5743,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d7928d5ff5c8f27c6e3486ef",
+          "assigned_value": 1093142.7294,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d7f53a1e3fcf87c5df7fb704",
+          "assigned_value": 93853.3578,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d830fbbb0ff91a73e1c89df2",
+          "assigned_value": 82851.1646,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d8528b2745899e8978c3e5d8",
+          "assigned_value": 236806.9482,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d91c4594016328232d999216",
+          "assigned_value": 248568.3844,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d93a4d6843cb1a9be05320a2",
+          "assigned_value": 204750.1232,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_da0845b6da980fa512e3cb82",
+          "assigned_value": 93413.11175,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_da3bf6f721238eed0fe8c7a4",
+          "assigned_value": 104420.02435,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_da4fa9bad0dbb0ea574eac4f",
+          "assigned_value": 30666.6555,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_dbddb2346df936f51522ee8f",
+          "assigned_value": 10151.4684,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_dd995c227c43ce0b9a4a82bf",
+          "assigned_value": 80893.1784,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ddba196e030859dcfde479ff",
+          "assigned_value": 23606.6628,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_de395de7c61dea6013d1511e",
+          "assigned_value": 609273.5091,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_dedfd62b8ef439a3b80c087f",
+          "assigned_value": 604086.18735,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_df1c5b62063097e4c978fa78",
+          "assigned_value": 42532.9297,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_df45d9b10575eb21e6aa8db3",
+          "assigned_value": 62655.7741,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_e1413ca3158f74a255476d0c",
+          "assigned_value": 484095.4412,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_e2bcb1586c1e3a8e32d1d73a",
+          "assigned_value": 110528.1117,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_e50c9f85b3061ce7e4842051",
+          "assigned_value": 181389.545,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_e6a06ff784dc848ec4ed8a69",
+          "assigned_value": 103885.2266,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_e6cb69317ac17f09dae2777f",
+          "assigned_value": 53819.385,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_e80f5359ba43fc66b73fd739",
+          "assigned_value": 299672.36805,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_e95f9f6e68a8ed87d8979ec6",
+          "assigned_value": 168153.456825,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_e9fc5ef05c1a4fa332de4270",
+          "assigned_value": 707259.512,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ea501a557249d1d94ed9609e",
+          "assigned_value": 67139.4787,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ed14e7bcc4d307d14f41820d",
+          "assigned_value": 600816.4011,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_eec05b086d0f96c38a149f12",
+          "assigned_value": 44357.0247,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f05c873963694e92211dd270",
+          "assigned_value": 1085758.13985,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f09e9f766c1d7d4ca5091aed",
+          "assigned_value": 435476.4941,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f2cbb8b6811c773920aa3130",
+          "assigned_value": 626669.3378,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f30f7fdd533ef72fe17ba44a",
+          "assigned_value": 257144.9661,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f50890ee59f453b0ef83af1e",
+          "assigned_value": 387214.05755,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f9434d560c1975e14c5ccd85",
+          "assigned_value": 66701.9212,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f97bcbbcc217b5585ffc94a6",
+          "assigned_value": 191482.119188,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f9907aaf2f1d2e7040918aa0",
+          "assigned_value": 58676.4601,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f9efba0a56bb78301de38781",
+          "assigned_value": 317775.544,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_fa06eb61bc23f73419ce8c68",
+          "assigned_value": 401992.8228,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_fb939f8897d6963baf24e958",
+          "assigned_value": 700334.555,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_fc800e63246ac4dc16792a32",
+          "assigned_value": 82806.6862,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_fdc42766da1bc74702a04d5c",
+          "assigned_value": 87673.888,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_fe432f28a12748c408e679cf",
+          "assigned_value": 112051.64205,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_fecd4371eeca85cb64f3b272",
+          "assigned_value": 119517.5858,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ff0902b43bf82a98c54cdf3a",
+          "assigned_value": 146493.703,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ffc9e5bfa657e3b117605991",
+          "assigned_value": 131420.5706,
+          "claim": "measured"
+        }
+      ],
+      "assigned_value": 79534965.22,
+      "assets": [
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "IEFA"
+          },
+          "label": "IEFA",
+          "kind": "SECURITY",
+          "value": 12439270.21,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "DIVZ"
+          },
+          "label": "DIVZ",
+          "kind": "SECURITY",
+          "value": 9456707.86,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "SPYM"
+          },
+          "label": "SPYM",
+          "kind": "SECURITY",
+          "value": 8152333.03,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "IDVZ"
+          },
+          "label": "IDVZ",
+          "kind": "SECURITY",
+          "value": 7420611.8,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "PFDE"
+          },
+          "label": "PFDE",
+          "kind": "SECURITY",
+          "value": 6243493.86,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "CLIP"
+          },
+          "label": "CLIP",
+          "kind": "SECURITY",
+          "value": 4573261.41,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "JAAA"
+          },
+          "label": "JAAA",
+          "kind": "SECURITY",
+          "value": 4398283.12,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "BIV"
+          },
+          "label": "BIV",
+          "kind": "SECURITY",
+          "value": 3364328.09,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "PFOE"
+          },
+          "label": "PFOE",
+          "kind": "SECURITY",
+          "value": 3260936.41,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "GLD"
+          },
+          "label": "GLD",
+          "kind": "SECURITY",
+          "value": 3181398.61,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "DFCF"
+          },
+          "label": "DFCF",
+          "kind": "SECURITY",
+          "value": 2823492.17,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "SPHY"
+          },
+          "label": "SPHY",
+          "kind": "SECURITY",
+          "value": 2179257.63,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VCSH"
+          },
+          "label": "VCSH",
+          "kind": "SECURITY",
+          "value": 2179257.63,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "PCHI"
+          },
+          "label": "PCHI",
+          "kind": "SECURITY",
+          "value": 2091768.64,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VEA"
+          },
+          "label": "VEA",
+          "kind": "SECURITY",
+          "value": 2012234.16,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VUG"
+          },
+          "label": "VUG",
+          "kind": "SECURITY",
+          "value": 1646374.24,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "IEMG"
+          },
+          "label": "IEMG",
+          "kind": "SECURITY",
+          "value": 1423675.83,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "QQQ"
+          },
+          "label": "QQQ",
+          "kind": "SECURITY",
+          "value": 1121443.06,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VXX"
+          },
+          "label": "VXX",
+          "kind": "SECURITY",
+          "value": 1049861.09,
+          "accounts": 248
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "CASH"
+          },
+          "label": "CASH",
+          "kind": "SECURITY",
+          "value": 516976.37,
+          "accounts": 248
+        }
+      ],
+      "asset_basis": [
+        "ASSIGNED"
+      ],
+      "account_count": 248
+    },
+    {
+      "model_id": "0e632e04-9881-4ed7-97af-00e3356e2fbc",
+      "model_namespace": "COT_REBALANCER_MODEL",
+      "model_name": "Opal Conservative Growth",
+      "accounts": [
+        {
+          "account_id": "acc_0246a000e93cdfaf3eee1352",
+          "assigned_value": 95522.6354,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_02567fb4374b751fda040da4",
+          "assigned_value": 15819.0234,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_028e1fa367e7ee8506e43345",
+          "assigned_value": 9906.8182,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_02eccc8c878ced217ba90acd",
+          "assigned_value": 100038.9018,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_03220efc627942ca67ba56b2",
+          "assigned_value": 318249.85425,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0550e6a8c8c86d57cce83ead",
+          "assigned_value": 256423.6026,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0698a3de842dbe7b3d48c787",
+          "assigned_value": 15966104.418525,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_06d7a1bbe9d58790cee3595d",
+          "assigned_value": 77498.9601,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_079cc101b89594f754789112",
+          "assigned_value": 246728.8495,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0bc690c21f00b0846bf11283",
+          "assigned_value": 48927.9428,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0d27b1b3fe111c3ec949ae29",
+          "assigned_value": 257225.0458,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0f1e215e521798954f80f291",
+          "assigned_value": 312454.137798,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0fb8cdc5f9941d211fec7a92",
+          "assigned_value": 483587.5168,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_103c1d9112e9d9244ba07cd4",
+          "assigned_value": 21732.3414,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_107e4411e5e80d982627cae9",
+          "assigned_value": 203578.6638,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_11d2501cde2bb018a0871e9c",
+          "assigned_value": 1030255.8475,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_1dc0d4b6ec64a48a47c3be60",
+          "assigned_value": 31116.6756,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_1e0cad2ba25820263f53a198",
+          "assigned_value": 11506.4726,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_219b34832c6b0914be1468e5",
+          "assigned_value": 256441.4806,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2242e47eba25592fc6a6c96e",
+          "assigned_value": 53034.0492,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_22975f4119f8dc1a1bd54de0",
+          "assigned_value": 347908.8996,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2312f0056af77738d01a9756",
+          "assigned_value": 484272.9065,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_26da29e8a09c4b24f30885e2",
+          "assigned_value": 398347.1563,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_28e908a54adce35cee100d93",
+          "assigned_value": 325820.7682,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_297ed4df9278ebc74d1f8f16",
+          "assigned_value": 241742.2706,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_38a9876a87e98e6ad3de33a4",
+          "assigned_value": 421867.0456,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_39239afb6852f303f512a386",
+          "assigned_value": 278292.6316,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3992a9f692946dc07f5fb4ec",
+          "assigned_value": 75657.2076,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3a4b44fe96bc37b288d5a71a",
+          "assigned_value": 302443.2218,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3aafcb9656ba068e7a95a003",
+          "assigned_value": 168856.8963,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3e813d8a1c9eeb8494a3f863",
+          "assigned_value": 23963.3228,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3e86e7d1ba9f75be53f5a143",
+          "assigned_value": 28502.7596,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3e8b5f2de5af74f2f23b4f01",
+          "assigned_value": 195679.0068,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3edfca6eca162f6c66403e74",
+          "assigned_value": 3740.353,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_401b9fe7e9e6958f73e0a52f",
+          "assigned_value": 728776.1,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_44f04630d560e10c2387bb3c",
+          "assigned_value": 110634.7325,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_44fc96a2a1155b8cc43fec84",
+          "assigned_value": 28031.1329,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_49218023f370af7737bcb39d",
+          "assigned_value": 2267552.46,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_49a7c5542e3f343393754cbe",
+          "assigned_value": 698113.6111,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_50994879f0a298bb3ac180db",
+          "assigned_value": 39380.0996,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_51ac255d2e86676c4efd2628",
+          "assigned_value": 126562.4274,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_531c4f24706f7a2d36b1cdfc",
+          "assigned_value": 1420898.0346,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_5a99adaa3729e607061955a3",
+          "assigned_value": 234561.8126,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_5aac626f69aa96e40b43b61a",
+          "assigned_value": 928321.512,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_5cf53cc34b195c8b6a4f9463",
+          "assigned_value": 116120.2952,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_5d6a2e44e5ec99da4e85b06f",
+          "assigned_value": 2776.587,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_5df361c5a2f44ee419123826",
+          "assigned_value": 203822.1732,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_615752ce6bef4f5d0ac46d8c",
+          "assigned_value": 42342.4497,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_622ff992487a24a023c8bbe0",
+          "assigned_value": 86391.1494,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6495078e6df2f226289e2700",
+          "assigned_value": 193472.542578,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_64e714547c379ba2df9ca434",
+          "assigned_value": 307380.9844,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6bf8847a0d4a322e10cf6e38",
+          "assigned_value": 115804.5964,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_70d8fd9d9f1da45a87ce8fc9",
+          "assigned_value": 332486.8796,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_70f09d38cfcde8a652dcce5f",
+          "assigned_value": 64401.272,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_722c33e2a7a7383feaa85da3",
+          "assigned_value": 42707.6578,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_7240f491ec896b3f497503a0",
+          "assigned_value": 89273.0132,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_7288be989cfbd698d588ca10",
+          "assigned_value": 13644.78065,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_74ce888ff7d3445f60111845",
+          "assigned_value": 80753.8618,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_76ef2498c8aad0a2e5f55608",
+          "assigned_value": 220697.7976,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_795b0c51428e606fdeed8e6f",
+          "assigned_value": 1072978.160395,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_7bf79ee10b7b06afa4913d3d",
+          "assigned_value": 110626.946,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_7f9476dd2b54229712954c1a",
+          "assigned_value": 21424.9826,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_81c87e1db8b6a904f590eefd",
+          "assigned_value": 148113.4494,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_88154a5569bc84a0b2bc284a",
+          "assigned_value": 248377.497,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_89ea507085a81e9b9619ddc2",
+          "assigned_value": 92066.36865,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_8ca918f64e91b7bbec2f5a98",
+          "assigned_value": 13379.56105,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_8de0b71662dc95cc810d0f5b",
+          "assigned_value": 223919.2699,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_8dfda32680ef1f7e28e93059",
+          "assigned_value": 1907702.028,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_921c2821f7cf2308a07bf62a",
+          "assigned_value": 765224.0466,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_92e00997d17118772d33e605",
+          "assigned_value": 53097.1024,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9320dfde89f584982efc971a",
+          "assigned_value": 145381.4954,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9433f62474b500fa296a57e6",
+          "assigned_value": 37633.1464,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_946579634afcef168215661d",
+          "assigned_value": 388651.0872,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_98313de1f12a5e8c87c409f6",
+          "assigned_value": 257178.0728,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_99ab8515a3c4fae65275dc84",
+          "assigned_value": 42866.5062,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9bce6b0eba23484e188dd55e",
+          "assigned_value": 77403.2775,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9bde1bba1e390c1bb593b57f",
+          "assigned_value": 18677.094,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9d9dc0eb651f830fdc6bfed1",
+          "assigned_value": 117802.7064,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9e106f8d78b58b711e021a23",
+          "assigned_value": 10831.4441,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a0348fda818d2c74b1717991",
+          "assigned_value": 497249.6732,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a07b46e1c83976f46b7cda09",
+          "assigned_value": 73223.7318,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a0e1a595cfb26d31da2b6b6a",
+          "assigned_value": 3211677.9982,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a3e06e6d580a096420a72655",
+          "assigned_value": 231416.6368,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a5d187fca43f422af9cfaf7a",
+          "assigned_value": 723313.6118,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_aa13fedb9bc4d6faa0068ace",
+          "assigned_value": 222155.0112,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ad0181357edd508877de1d85",
+          "assigned_value": 143433.6545,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ae9c14ab32d4ed51a6c60d81",
+          "assigned_value": 29644.1282,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_bd09bac3a7284ee774df0bf7",
+          "assigned_value": 21076.6268,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_bd14540b5293874dbf9abf05",
+          "assigned_value": 67326.3556,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_bf20302911377cd74f3a07fe",
+          "assigned_value": 101319.9065,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_c29efbeb9295c448c28441a3",
+          "assigned_value": 129225.988,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_c395a5ffcff5f5290c39fce1",
+          "assigned_value": 49319.6013,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_c41f1a37896bad5dd9f2f30c",
+          "assigned_value": 26015.4514,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_c588f11771dd50fba3db6e7b",
+          "assigned_value": 28399.2494,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_cdf842457054b7ac92d7677d",
+          "assigned_value": 64503.7882,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ce033b4f146e193a4acf30f0",
+          "assigned_value": 227694.9624,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d067c1336ceca13df3b7aa29",
+          "assigned_value": 47629.4534,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d38f217b3b8b8460d3491f70",
+          "assigned_value": 179689.4955,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d3d0f3176848c1cbf0c4556b",
+          "assigned_value": 14492.375,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d3ffe29bd87a4d7499bb5cfc",
+          "assigned_value": 309250.865,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d486fc9455d6b2aa18e13af1",
+          "assigned_value": 7094104.143588,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d50e5219ecfaca47cfffcb8f",
+          "assigned_value": 15598.1536,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_da3bf6f721238eed0fe8c7a4",
+          "assigned_value": 104420.02435,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_de395de7c61dea6013d1511e",
+          "assigned_value": 609273.5091,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_dee27e4523197f80ec6fb6e8",
+          "assigned_value": 62862.6344,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_df15b27307050175c67cdbf3",
+          "assigned_value": 3405064.3958,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_e50c9f85b3061ce7e4842051",
+          "assigned_value": 181389.545,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_e89fb5a28f6f8ead5540a743",
+          "assigned_value": 29169.7988,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_e9d1d6168a9b932eb0564505",
+          "assigned_value": 18958.1516,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ea501a557249d1d94ed9609e",
+          "assigned_value": 67139.4787,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_eacfee97fc0ee68c07c557a5",
+          "assigned_value": 229887.7106,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_edba08dc2b70fa323d4cc3ca",
+          "assigned_value": 119987.5858,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ee3ef63c7a6290ade501bb86",
+          "assigned_value": 76890.3016,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f078f8c76c0fb836248be7b5",
+          "assigned_value": 115455.9592,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f2cbb8b6811c773920aa3130",
+          "assigned_value": 626669.3378,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f9907aaf2f1d2e7040918aa0",
+          "assigned_value": 58676.4601,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f9efba0a56bb78301de38781",
+          "assigned_value": 317775.544,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_fc6259ca98be3ac9c4268de2",
+          "assigned_value": 58464.165,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_fe5790bff395ed080d65b933",
+          "assigned_value": 359749.8714,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_fecd4371eeca85cb64f3b272",
+          "assigned_value": 119517.5858,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ff0902b43bf82a98c54cdf3a",
+          "assigned_value": 146493.703,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ffc9e5bfa657e3b117605991",
+          "assigned_value": 131420.5706,
+          "claim": "measured"
+        }
+      ],
+      "assigned_value": 57688517.08,
+      "assets": [
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "IEFA"
+          },
+          "label": "IEFA",
+          "kind": "SECURITY",
+          "value": 9668562.96,
+          "accounts": 122
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "DIVZ"
+          },
+          "label": "DIVZ",
+          "kind": "SECURITY",
+          "value": 7926407.27,
+          "accounts": 122
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "IDVZ"
+          },
+          "label": "IDVZ",
+          "kind": "SECURITY",
+          "value": 7124545.6,
+          "accounts": 122
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "PFDE"
+          },
+          "label": "PFDE",
+          "kind": "SECURITY",
+          "value": 6443809.87,
+          "accounts": 122
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "SPYM"
+          },
+          "label": "SPYM",
+          "kind": "SECURITY",
+          "value": 5463106.26,
+          "accounts": 122
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "IJH"
+          },
+          "label": "IJH",
+          "kind": "SECURITY",
+          "value": 3392094.86,
+          "accounts": 122
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "PFOE"
+          },
+          "label": "PFOE",
+          "kind": "SECURITY",
+          "value": 3247861.0,
+          "accounts": 122
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "SPHY"
+          },
+          "label": "SPHY",
+          "kind": "SECURITY",
+          "value": 3057492.58,
+          "accounts": 122
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "CLIP"
+          },
+          "label": "CLIP",
+          "kind": "SECURITY",
+          "value": 2215245.26,
+          "accounts": 122
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "IEMG"
+          },
+          "label": "IEMG",
+          "kind": "SECURITY",
+          "value": 2203690.13,
+          "accounts": 122
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VUG"
+          },
+          "label": "VUG",
+          "kind": "SECURITY",
+          "value": 1713351.47,
+          "accounts": 122
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VEA"
+          },
+          "label": "VEA",
+          "kind": "SECURITY",
+          "value": 1696047.43,
+          "accounts": 122
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "GLD"
+          },
+          "label": "GLD",
+          "kind": "SECURITY",
+          "value": 1222986.51,
+          "accounts": 122
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VXX"
+          },
+          "label": "VXX",
+          "kind": "SECURITY",
+          "value": 1021089.27,
+          "accounts": 122
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "QQQ"
+          },
+          "label": "QQQ",
+          "kind": "SECURITY",
+          "value": 738423.07,
+          "accounts": 122
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "CASH"
+          },
+          "label": "CASH",
+          "kind": "SECURITY",
+          "value": 553803.56,
+          "accounts": 122
+        }
+      ],
+      "asset_basis": [
+        "ASSIGNED"
+      ],
+      "account_count": 122
+    },
+    {
+      "model_id": "ac3b8211-77f4-49dc-8a3f-47ec77ca05b1",
+      "model_namespace": "COT_REBALANCER_MODEL",
+      "model_name": "Opal Short-Term",
+      "accounts": [
+        {
+          "account_id": "acc_007cc1ed12fab338203955b9",
+          "assigned_value": 31443.96425,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_00ea7ba849b895eaaa2fd73f",
+          "assigned_value": 23185.3394,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0195b339e4e26828a93dc8f5",
+          "assigned_value": 25556.336975,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_020d09b1f89fed6660779eb8",
+          "assigned_value": 44735.88125,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0400791ec219632cbf715ad5",
+          "assigned_value": 320590.12675,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_043277a1e665ccd14cf0f44f",
+          "assigned_value": 117073.6614,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0691e546338aef178ba3f541",
+          "assigned_value": 1248932.6875,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_07456e71c77e62e783da87a7",
+          "assigned_value": 24401.7373,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0b6c67b60fa983270d786428",
+          "assigned_value": 432591.3154,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0eb9fe0fb1a4217541cd321d",
+          "assigned_value": 445368.750075,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0fcd810fadd45ab33d85dfde",
+          "assigned_value": 15618.60855,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_106175f6bed8f91317e812c2",
+          "assigned_value": 135577.0674,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_1b2690bda2a543a549746858",
+          "assigned_value": 46448.3165,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_210ed4531848587587dcb31d",
+          "assigned_value": 29094.0117,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2137702aa04b6eae52f379ea",
+          "assigned_value": 83452.4217,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_239c02dbd335a49303479c6e",
+          "assigned_value": 10514.75365,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2763105d88ad2007cb456fbf",
+          "assigned_value": 4615.2367,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_27e9a89f82cde8fd851cf0ac",
+          "assigned_value": 13861.9874,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2a47ff688d6be7e2b4534db7",
+          "assigned_value": 128712.6266,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2af570a26ae5e7ab65967dd6",
+          "assigned_value": 51206.4638,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2b7cf8fe0efdc9b75a103e2f",
+          "assigned_value": 33920.31475,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2c90dbd8d6c31cfa93165885",
+          "assigned_value": 24536.67995,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_33b1a66ea4e5bbf952916ded",
+          "assigned_value": 120982.8429,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3816014dd3fb00974f4c218e",
+          "assigned_value": 79500.67115,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3b52f6c9c8d6aa2bde205b8a",
+          "assigned_value": 57509.63795,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3b812084a6ee3b7c1153e0af",
+          "assigned_value": 210028.4022,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3ca419e9d0154585c7e65368",
+          "assigned_value": 23327.16015,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3cb2e25289d35eb728d72633",
+          "assigned_value": 205041.2501,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3d14fe05d17b92a43414b9cc",
+          "assigned_value": 119155.1857,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3d45af64ed531573419331a3",
+          "assigned_value": 15077.294,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_4092a2483d7d37f5b93ea6d9",
+          "assigned_value": 360465.20775,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_417e7ba916f8e968c6a7c06a",
+          "assigned_value": 98362.9514,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_49154b3350ec3c76a38bbee4",
+          "assigned_value": 42001.203,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_4cf1d15a73c7352e8a324692",
+          "assigned_value": 45188.29425,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_4d645761d623609d85461062",
+          "assigned_value": 57240.8453,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_4d80786f0642b24599857b6c",
+          "assigned_value": 36521.56615,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_4ed0e054514b2ecaebfd97cc",
+          "assigned_value": 53854.32235,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_5306cb1729746a6975ce62a9",
+          "assigned_value": 91272.0966,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_56feed3b8af16cc75c381fda",
+          "assigned_value": 523002.860734,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_58f296596f34ca93030f94a2",
+          "assigned_value": 85198.9788,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_59ddd90b4dd4e1447283881e",
+          "assigned_value": 341173.93135,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_59e6339c4167bc4c12787b90",
+          "assigned_value": 75784.4619,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_5b623c008fc7d611b4b3bf85",
+          "assigned_value": 939579.9306,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_5c1d0dac62b5697dc2d32e44",
+          "assigned_value": 257855.2661,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_614c186bf4e0f42a86af912c",
+          "assigned_value": 118423.19715,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_63fea99255ad1c9e39b38a38",
+          "assigned_value": 83700.99275,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_65255c5f2b2e47f97f40acc9",
+          "assigned_value": 143894.593425,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_65ff0ae4815ddc21d4d5fa5d",
+          "assigned_value": 142031.5202,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_67497ceccf439519eb34c4ea",
+          "assigned_value": 290470.0676,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6aeded1f707521fffedf6811",
+          "assigned_value": 2129156.8887,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6af8d7745de1ff60066c3d43",
+          "assigned_value": 46411.7945,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6bce62315b276c3238a372a0",
+          "assigned_value": 56604.8403,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6df496c4dc62dadca7adec36",
+          "assigned_value": 97733.41065,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_701b7a153503c950d7aa5955",
+          "assigned_value": 151768.1186,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_72d8b9c38f87bc40ae90113d",
+          "assigned_value": 55016.3879,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_72f331a40e1887d836503c93",
+          "assigned_value": 17536.6164,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_7382f3ab9b08338a445c5628",
+          "assigned_value": 27726.1752,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_73a4fab67e8c4ecb238514aa",
+          "assigned_value": 18783.7878,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_748d9e12ef31befe9c71504e",
+          "assigned_value": 1217902.6499,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_752e4aba879f4d04458c41b8",
+          "assigned_value": 52522.3382,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_75ce7754bddc5a71039f311a",
+          "assigned_value": 277984.0869,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_76026807a4c4869aa46509d6",
+          "assigned_value": 26041.165625,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_7609c17915fa351c292b2720",
+          "assigned_value": 191557.8237,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_78ed6fb8be8e1bc0123207a3",
+          "assigned_value": 149972.3046,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_792e179a0a418d3ff27f8b55",
+          "assigned_value": 5732.9395,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_7a4f195d9325113d70544046",
+          "assigned_value": 174546.3648,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_7ce26f27b5f48ddf3bc343ef",
+          "assigned_value": 33683.78685,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_7e4861b04df1675991c9aafa",
+          "assigned_value": 13630.0071,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_82fc5509df45d9cec2b01580",
+          "assigned_value": 329482.0719,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_86bcd643ad1a037041611662",
+          "assigned_value": 15822.2624,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_8ee1b2fbcad788f889ac5d0f",
+          "assigned_value": 77672.996,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_8f30703d97ab5cd2e54f9552",
+          "assigned_value": 70425.18145,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_902b2c4b12caa6d2ec8cdaf2",
+          "assigned_value": 67262.83485,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_90457ceaf2a4e1beaab77ceb",
+          "assigned_value": 168246.2525,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_935cbe76f153982a651ba145",
+          "assigned_value": 150749.11555,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_93aa14b89ed79a105769f87d",
+          "assigned_value": 28449.0271,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9740bf55fb482a6101a85338",
+          "assigned_value": 552641.86365,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_975dd7360a9f634580730ee3",
+          "assigned_value": 162757.16585,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9d706953294f1cf69d756742",
+          "assigned_value": 752487.4388,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9e821e4bd1fbba24b3226dcb",
+          "assigned_value": 32269.4203,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_9ed045b075c955bb6e81b90d",
+          "assigned_value": 23268.4467,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a085306eaba00eee06219214",
+          "assigned_value": 31829.28735,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a1d5a1914c31dfcc3493e3b5",
+          "assigned_value": 156266.2582,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a578a05da84d2c677a1b36d5",
+          "assigned_value": 58661.485075,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a7bdb1333c15553b370effdc",
+          "assigned_value": 149925.04065,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a85f9d163dfdbb94d96f8ff7",
+          "assigned_value": 141505.943,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_a8cb20a82f61b1a0cbec84fd",
+          "assigned_value": 387282.00705,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_aa0020182f388b21b5c03042",
+          "assigned_value": 4310.41925,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_aae0e3c2f2c91e45256c7552",
+          "assigned_value": 166931.26345,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_adafaae84dafc2e32b2f3ccd",
+          "assigned_value": 31382.77895,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_b0a6621dde872cb28794a653",
+          "assigned_value": 40029.52825,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_b75c9707a3e7156a9878a502",
+          "assigned_value": 23640.09265,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_b850bb7c326ca8874a0df917",
+          "assigned_value": 248980.00145,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_b98d9939bb0f5e35acb8a150",
+          "assigned_value": 60901.3206,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_bcf817fe78d742c1730c5dd4",
+          "assigned_value": 170327.66975,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_c6744dfbf44ca1ca70910625",
+          "assigned_value": 19291.81565,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_cb34383c18297ca5bc3372e5",
+          "assigned_value": 72205.476675,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_cbb5fff453ba33235d9845f4",
+          "assigned_value": 437156.848,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_cd183a32483e89e82ee99c10",
+          "assigned_value": 176173.5935,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_cdda30207527c9464e8d0664",
+          "assigned_value": 102088.825075,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_cf00c24584ef1838e14cf9b4",
+          "assigned_value": 75476.00505,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d0b0919084a7817fbe4944c0",
+          "assigned_value": 23642.6264,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d315007015566beeeef737cd",
+          "assigned_value": 16876.63545,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d5a95fc37f5569163b8e7443",
+          "assigned_value": 77103.83415,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d7f53a1e3fcf87c5df7fb704",
+          "assigned_value": 31284.4526,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d8528b2745899e8978c3e5d8",
+          "assigned_value": 78935.6494,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_da0845b6da980fa512e3cb82",
+          "assigned_value": 93413.11175,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_da4fa9bad0dbb0ea574eac4f",
+          "assigned_value": 10222.2185,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ddba196e030859dcfde479ff",
+          "assigned_value": 7868.8876,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_dedfd62b8ef439a3b80c087f",
+          "assigned_value": 201362.06245,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_df1c5b62063097e4c978fa78",
+          "assigned_value": 42532.9297,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_df45d9b10575eb21e6aa8db3",
+          "assigned_value": 62655.7741,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_e2bcb1586c1e3a8e32d1d73a",
+          "assigned_value": 36842.7039,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_e80f5359ba43fc66b73fd739",
+          "assigned_value": 99890.78935,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_e95f9f6e68a8ed87d8979ec6",
+          "assigned_value": 56051.152275,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ed14e7bcc4d307d14f41820d",
+          "assigned_value": 200272.1337,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_eec05b086d0f96c38a149f12",
+          "assigned_value": 14785.6749,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f05c873963694e92211dd270",
+          "assigned_value": 361919.37995,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f09e9f766c1d7d4ca5091aed",
+          "assigned_value": 435476.4941,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f30f7fdd533ef72fe17ba44a",
+          "assigned_value": 85714.9887,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f50890ee59f453b0ef83af1e",
+          "assigned_value": 116164.217265,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f97bcbbcc217b5585ffc94a6",
+          "assigned_value": 63827.373063,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_fa06eb61bc23f73419ce8c68",
+          "assigned_value": 133997.6076,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_fe432f28a12748c408e679cf",
+          "assigned_value": 37350.54735,
+          "claim": "measured"
+        }
+      ],
+      "assigned_value": 19926485.49,
+      "assets": [
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VGSH"
+          },
+          "label": "VGSH",
+          "kind": "SECURITY",
+          "value": 2351327.83,
+          "accounts": 124
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "BIV"
+          },
+          "label": "BIV",
+          "kind": "SECURITY",
+          "value": 2235753.1,
+          "accounts": 124
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "DFCF"
+          },
+          "label": "DFCF",
+          "kind": "SECURITY",
+          "value": 1893016.63,
+          "accounts": 124
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "JAAA"
+          },
+          "label": "JAAA",
+          "kind": "SECURITY",
+          "value": 1849176.94,
+          "accounts": 124
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "UTWO"
+          },
+          "label": "UTWO",
+          "kind": "SECURITY",
+          "value": 1839213.95,
+          "accounts": 124
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "DIVZ"
+          },
+          "label": "DIVZ",
+          "kind": "SECURITY",
+          "value": 1803346.68,
+          "accounts": 124
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "GLD"
+          },
+          "label": "GLD",
+          "kind": "SECURITY",
+          "value": 1671831.93,
+          "accounts": 124
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "OBIL"
+          },
+          "label": "OBIL",
+          "kind": "SECURITY",
+          "value": 1362971.15,
+          "accounts": 124
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "SPHY"
+          },
+          "label": "SPHY",
+          "kind": "SECURITY",
+          "value": 1121860.47,
+          "accounts": 124
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VCSH"
+          },
+          "label": "VCSH",
+          "kind": "SECURITY",
+          "value": 984368.43,
+          "accounts": 124
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "IDVZ"
+          },
+          "label": "IDVZ",
+          "kind": "SECURITY",
+          "value": 675507.65,
+          "accounts": 124
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VNLA"
+          },
+          "label": "VNLA",
+          "kind": "SECURITY",
+          "value": 555948.74,
+          "accounts": 124
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "PFDE"
+          },
+          "label": "PFDE",
+          "kind": "SECURITY",
+          "value": 496168.77,
+          "accounts": 124
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VEA"
+          },
+          "label": "VEA",
+          "kind": "SECURITY",
+          "value": 480228.5,
+          "accounts": 124
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "CLIP"
+          },
+          "label": "CLIP",
+          "kind": "SECURITY",
+          "value": 438382.68,
+          "accounts": 124
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "CASH"
+          },
+          "label": "CASH",
+          "kind": "SECURITY",
+          "value": 167382.02,
+          "accounts": 124
+        }
+      ],
+      "asset_basis": [
+        "ASSIGNED"
+      ],
+      "account_count": 124
+    },
+    {
+      "model_id": "b25ed964-29fc-4523-955d-d5f59f026b95",
+      "model_namespace": "COT_REBALANCER_MODEL",
+      "model_name": "Opal Ultra Short-Term Income",
+      "accounts": [
+        {
+          "account_id": "acc_000c147a49a4d234b37dab66",
+          "assigned_value": 188124.875,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0698a3de842dbe7b3d48c787",
+          "assigned_value": 5260660.43444,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_0f1e215e521798954f80f291",
+          "assigned_value": 153895.321602,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_299b66f2025f57813448d0d7",
+          "assigned_value": 94584.175,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_2fa8fd0e3768e292a621d2d5",
+          "assigned_value": 3314763.0848,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_531c4f24706f7a2d36b1cdfc",
+          "assigned_value": 731977.7754,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_56feed3b8af16cc75c381fda",
+          "assigned_value": 200713.817168,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_6495078e6df2f226289e2700",
+          "assigned_value": 1188474.190122,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_795b0c51428e606fdeed8e6f",
+          "assigned_value": 204488.71841,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_b91cb885b5ab5a7037c705cd",
+          "assigned_value": 13339.33,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d486fc9455d6b2aa18e13af1",
+          "assigned_value": 6502928.798289,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_e596f3602ef1637e8bdccd85",
+          "assigned_value": 52167.47,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_f50890ee59f453b0ef83af1e",
+          "assigned_value": 271049.840285,
+          "claim": "measured"
+        }
+      ],
+      "assigned_value": 18177167.83,
+      "assets": [
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VGSH"
+          },
+          "label": "VGSH",
+          "kind": "SECURITY",
+          "value": 2641142.82,
+          "accounts": 13
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VCSH"
+          },
+          "label": "VCSH",
+          "kind": "SECURITY",
+          "value": 2608421.83,
+          "accounts": 13
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VUSB"
+          },
+          "label": "VUSB",
+          "kind": "SECURITY",
+          "value": 1795905.12,
+          "accounts": 13
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "MINT"
+          },
+          "label": "MINT",
+          "kind": "SECURITY",
+          "value": 1748643.75,
+          "accounts": 13
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "OBIL"
+          },
+          "label": "OBIL",
+          "kind": "SECURITY",
+          "value": 1741374.77,
+          "accounts": 13
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VNLA"
+          },
+          "label": "VNLA",
+          "kind": "SECURITY",
+          "value": 1612314.45,
+          "accounts": 13
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "DFSD"
+          },
+          "label": "DFSD",
+          "kind": "SECURITY",
+          "value": 1270582.75,
+          "accounts": 13
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "SPHY"
+          },
+          "label": "SPHY",
+          "kind": "SECURITY",
+          "value": 1059728.08,
+          "accounts": 13
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "XBIL"
+          },
+          "label": "XBIL",
+          "kind": "SECURITY",
+          "value": 857961.38,
+          "accounts": 13
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "JAAA"
+          },
+          "label": "JAAA",
+          "kind": "SECURITY",
+          "value": 850692.39,
+          "accounts": 13
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "JPST"
+          },
+          "label": "JPST",
+          "kind": "SECURITY",
+          "value": 845240.05,
+          "accounts": 13
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "TBIL"
+          },
+          "label": "TBIL",
+          "kind": "SECURITY",
+          "value": 652559.05,
+          "accounts": 13
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "CLIP"
+          },
+          "label": "CLIP",
+          "kind": "SECURITY",
+          "value": 310829.7,
+          "accounts": 13
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "CASH"
+          },
+          "label": "CASH",
+          "kind": "SECURITY",
+          "value": 181771.68,
+          "accounts": 13
+        }
+      ],
+      "asset_basis": [
+        "ASSIGNED"
+      ],
+      "account_count": 13
+    },
+    {
+      "model_id": "09bfd1d1-ff67-45f8-9f4c-8b2ccb6e1f25",
+      "model_namespace": "COT_REBALANCER_MODEL",
+      "model_name": "Opal Fixed Income",
+      "accounts": [
+        {
+          "account_id": "acc_0698a3de842dbe7b3d48c787",
+          "assigned_value": 4208528.347552,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d486fc9455d6b2aa18e13af1",
+          "assigned_value": 4138227.417093,
+          "claim": "measured"
+        }
+      ],
+      "assigned_value": 8346755.76,
+      "assets": [
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "JAAA"
+          },
+          "label": "JAAA",
+          "kind": "SECURITY",
+          "value": 2525728.29,
+          "accounts": 2
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "JPST"
+          },
+          "label": "JPST",
+          "kind": "SECURITY",
+          "value": 2511538.81,
+          "accounts": 2
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "SPHY"
+          },
+          "label": "SPHY",
+          "kind": "SECURITY",
+          "value": 1655161.67,
+          "accounts": 2
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "USHY"
+          },
+          "label": "USHY",
+          "kind": "SECURITY",
+          "value": 1654326.99,
+          "accounts": 2
+        }
+      ],
+      "asset_basis": [
+        "ASSIGNED"
+      ],
+      "account_count": 2
+    },
+    {
+      "model_id": "31f17857-3456-4f9b-8a47-a4a8e383d56c",
+      "model_namespace": "COT_REBALANCER_MODEL",
+      "model_name": "DIVZ SMA",
+      "accounts": [
+        {
+          "account_id": "acc_d486fc9455d6b2aa18e13af1",
+          "assigned_value": 1379409.139031,
+          "claim": "measured"
+        }
+      ],
+      "assigned_value": 1379409.14,
+      "assets": [
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "PM"
+          },
+          "label": "PM",
+          "kind": "SECURITY",
+          "value": 83592.19,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VZ"
+          },
+          "label": "VZ",
+          "kind": "SECURITY",
+          "value": 78350.44,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "MPLX"
+          },
+          "label": "MPLX",
+          "kind": "SECURITY",
+          "value": 76419.27,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "UNH"
+          },
+          "label": "UNH",
+          "kind": "SECURITY",
+          "value": 73522.51,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "JNJ"
+          },
+          "label": "JNJ",
+          "kind": "SECURITY",
+          "value": 69660.16,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "CVX"
+          },
+          "label": "CVX",
+          "kind": "SECURITY",
+          "value": 61521.65,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "NEE"
+          },
+          "label": "NEE",
+          "kind": "SECURITY",
+          "value": 60418.12,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "MSFT"
+          },
+          "label": "MSFT",
+          "kind": "SECURITY",
+          "value": 57935.18,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "UPS"
+          },
+          "label": "UPS",
+          "kind": "SECURITY",
+          "value": 57383.42,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "CME"
+          },
+          "label": "CME",
+          "kind": "SECURITY",
+          "value": 51727.84,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "ABBV"
+          },
+          "label": "ABBV",
+          "kind": "SECURITY",
+          "value": 50348.43,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "GOOGL"
+          },
+          "label": "GOOGL",
+          "kind": "SECURITY",
+          "value": 48279.32,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "HD"
+          },
+          "label": "HD",
+          "kind": "SECURITY",
+          "value": 45106.68,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "XOM"
+          },
+          "label": "XOM",
+          "kind": "SECURITY",
+          "value": 44554.92,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "MO"
+          },
+          "label": "MO",
+          "kind": "SECURITY",
+          "value": 43865.21,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "BIPC"
+          },
+          "label": "BIPC",
+          "kind": "SECURITY",
+          "value": 43727.27,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "HSY"
+          },
+          "label": "HSY",
+          "kind": "SECURITY",
+          "value": 42623.74,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "CI"
+          },
+          "label": "CI",
+          "kind": "SECURITY",
+          "value": 42623.74,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "RTX"
+          },
+          "label": "RTX",
+          "kind": "SECURITY",
+          "value": 41520.22,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "AIG"
+          },
+          "label": "AIG",
+          "kind": "SECURITY",
+          "value": 39451.1,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "ENB"
+          },
+          "label": "ENB",
+          "kind": "SECURITY",
+          "value": 37795.81,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "TXN"
+          },
+          "label": "TXN",
+          "kind": "SECURITY",
+          "value": 37519.93,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "GS"
+          },
+          "label": "GS",
+          "kind": "SECURITY",
+          "value": 36968.16,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "UNP"
+          },
+          "label": "UNP",
+          "kind": "SECURITY",
+          "value": 33795.52,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "ATO"
+          },
+          "label": "ATO",
+          "kind": "SECURITY",
+          "value": 31450.53,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "AEP"
+          },
+          "label": "AEP",
+          "kind": "SECURITY",
+          "value": 31036.71,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "ABT"
+          },
+          "label": "ABT",
+          "kind": "SECURITY",
+          "value": 30484.94,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "QCOM"
+          },
+          "label": "QCOM",
+          "kind": "SECURITY",
+          "value": 21104.96,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "FCASH"
+          },
+          "label": "FCASH",
+          "kind": "SECURITY",
+          "value": 6621.16,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "BTI"
+          },
+          "label": "BTI",
+          "kind": "SECURITY",
+          "value": 0.0,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "KMI"
+          },
+          "label": "KMI",
+          "kind": "SECURITY",
+          "value": 0.0,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "PEP"
+          },
+          "label": "PEP",
+          "kind": "SECURITY",
+          "value": 0.0,
+          "accounts": 1
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "PG"
+          },
+          "label": "PG",
+          "kind": "SECURITY",
+          "value": 0.0,
+          "accounts": 1
+        }
+      ],
+      "asset_basis": [
+        "ASSIGNED"
+      ],
+      "account_count": 1
+    },
+    {
+      "model_id": "623b1942-4057-4add-ba61-bb36c76e44d1",
+      "model_namespace": "COT_REBALANCER_MODEL",
+      "model_name": "Opal Long-Term Aggressive",
+      "accounts": [
+        {
+          "account_id": "acc_0043be48de387145225a62dc",
+          "assigned_value": 103377.0976,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_3679eb04b55c83c7553bbbc0",
+          "assigned_value": 76553.9086,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_866a7f30a5659b4756a17045",
+          "assigned_value": 224419.3182,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_8c0d0f051f0ccf0185bd1fd2",
+          "assigned_value": 57797.67,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_b21cdda56fc6049f9d943079",
+          "assigned_value": 58264.1376,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_b68bbc2c10cf73bde34fc5bf",
+          "assigned_value": 42684.307,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_c40842735c4d4786c9d523d6",
+          "assigned_value": 72721.0662,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d3413aeebf470be663cd2177",
+          "assigned_value": 14312.6842,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_d68f4f7a07fcdd9d4c479a99",
+          "assigned_value": 43579.1376,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_ed92fcb8e76d4530f37a5819",
+          "assigned_value": 337013.5522,
+          "claim": "measured"
+        },
+        {
+          "account_id": "acc_edd61adad93a4f2e8fdb25be",
+          "assigned_value": 27522.134,
+          "claim": "measured"
+        }
+      ],
+      "assigned_value": 1058245.01,
+      "assets": [
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "IDVZ"
+          },
+          "label": "IDVZ",
+          "kind": "SECURITY",
+          "value": 150905.74,
+          "accounts": 11
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "IEFA"
+          },
+          "label": "IEFA",
+          "kind": "SECURITY",
+          "value": 137889.33,
+          "accounts": 11
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "PFDE"
+          },
+          "label": "PFDE",
+          "kind": "SECURITY",
+          "value": 130269.96,
+          "accounts": 11
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "DIVZ"
+          },
+          "label": "DIVZ",
+          "kind": "SECURITY",
+          "value": 128788.42,
+          "accounts": 11
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "IJH"
+          },
+          "label": "IJH",
+          "kind": "SECURITY",
+          "value": 122121.47,
+          "accounts": 11
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "SPYM"
+          },
+          "label": "SPYM",
+          "kind": "SECURITY",
+          "value": 78839.25,
+          "accounts": 11
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "PFOE"
+          },
+          "label": "PFOE",
+          "kind": "SECURITY",
+          "value": 67092.73,
+          "accounts": 11
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "IEMG"
+          },
+          "label": "IEMG",
+          "kind": "SECURITY",
+          "value": 51748.18,
+          "accounts": 11
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VUG"
+          },
+          "label": "VUG",
+          "kind": "SECURITY",
+          "value": 42753.1,
+          "accounts": 11
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "CLIP"
+          },
+          "label": "CLIP",
+          "kind": "SECURITY",
+          "value": 32170.65,
+          "accounts": 11
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VEA"
+          },
+          "label": "VEA",
+          "kind": "SECURITY",
+          "value": 31218.23,
+          "accounts": 11
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "PCHI"
+          },
+          "label": "PCHI",
+          "kind": "SECURITY",
+          "value": 31112.4,
+          "accounts": 11
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "VXX"
+          },
+          "label": "VXX",
+          "kind": "SECURITY",
+          "value": 18730.94,
+          "accounts": 11
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "QQQ"
+          },
+          "label": "QQQ",
+          "kind": "SECURITY",
+          "value": 14180.48,
+          "accounts": 11
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "CASH"
+          },
+          "label": "CASH",
+          "kind": "SECURITY",
+          "value": 11111.57,
+          "accounts": 11
+        },
+        {
+          "security_id": {
+            "namespace": "TICKER",
+            "value": "SPHY"
+          },
+          "label": "SPHY",
+          "kind": "SECURITY",
+          "value": 9312.56,
+          "accounts": 11
+        }
+      ],
+      "asset_basis": [
+        "ASSIGNED"
+      ],
+      "account_count": 11
+    }
+  ],
+  "published_revision": "2d067b4d7097f0762e69ac635f75db77591a9a2774ce8138914e134185caa859",
+  "publication_state": "PUBLISHED_VERIFIED",
+  "publication_go": "CTO 100147 IRPT-COT-HOLDINGS-RECUT-PUBLICATION-GO-20260924",
+  "business_date": "2026-09-22",
+  "index": {
+    "bucket": "opal-data-cottonwood",
+    "key": "irpt/cottonwood/platinum/holdings/current/manifest.json",
+    "version_id": ".VLcr1BCEMXLODKeFWA00C31rlgnUBAr"
+  },
+  "bytes_read": {
+    "path": ".runtime\\holdings-journey-20260923\\prepared_cot\\opal-data-cottonwood\\irpt\\cottonwood\\platinum\\holdings\\date=2026-09-22\\2d067b4d7097f0762e69ac635f75db77591a9a2774ce8138914e134185caa859.json",
+    "sha256": "2d067b4d7097f0762e69ac635f75db77591a9a2774ce8138914e134185caa859",
+    "byte_length": 19038427
+  },
+  "model_grain": "CONSTITUENT models (the Rebalancer blend children; Primary / Custom / SMA by the MDPF registry rule) -- the strategy wrappers are not models (Andrew-direct ~03:1xZ 2026-09-24)",
+  "supersedes": {
+    "artifact": "HOLDINGS_COT_MODEL_SNAPSHOT_20260923.json",
+    "model_count_there": 46,
+    "note": "that artifact counted the 46 client-named STRATEGIES as models; withdrawn"
+  }
+}
