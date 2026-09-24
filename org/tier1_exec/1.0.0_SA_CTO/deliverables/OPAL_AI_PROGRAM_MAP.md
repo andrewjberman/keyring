@@ -12,9 +12,9 @@ no project yet: mcportal (2026-09-17) and the D6 GraphQL client plane.
 
 | # | project | directive | state | next act | holder |
 |---|---|---|---|---|---|
-| 1 | NFRA_OPALAI -- opal_ai V1 (Analyst product, repo, runtime isolation, per-asker entitlements) | D6 | PRD v0.3 ADMITTED; L5 in progress | round-1 issuance | 2.0.0_SA_COO~O |
-| 2 | NFRA_MCPINDEX -- the tool index | D9 -> D6 | 9 of 38; wound down 09-21 on the laptop; held branch laptop-only | re-home to D6 on site Z; recover the held branch; close round 1 and re-cut onto opal_ai paths | 1.0.0_SA_CTO~O (re-home), 0.0.0_AB_MSTR~Z (branch), COO~O (round) |
-| 3 | NFRA_MCPORTAL -- the operator console at mcp.opalinvest.dev: MCP Server pages (tool library, per-user grants, audit, kill switch), user management, reports, health, cost, infosec | D6 | registered @8105cd4f0e; PRD v0.1 @842f67a802 | L4-R ratified half (3.0.0_SA_CVO~O); repo creation (0.0.0_AB_MSTR~Z, G-REPO) | 3.0.0_SA_CVO~O, 0.0.0_AB_MSTR~Z |
+| 1 | NFRA_OPALAI -- opal_ai V1 (Analyst product, repo, runtime isolation, per-asker entitlements) | D6 | PRD v0.4 ADMITTED (C11 @f06341327e); decomposition @0070f8a7ef (10 cells, FWD-1 thread) | round-1 issuance | 2.0.0_SA_COO~O |
+| 2 | NFRA_MCPINDEX -- the tool index | D9 -> D6 | 9 of 38; wound down 09-21 on the laptop; held branch laptop-only; laptop relay sent (bus MessageId 1ea278ae), ACK owed | on the laptop ACK: re-home to D6 on site Z; close round 1 and re-cut onto opal_ai paths | 1.0.0_SA_CTO~O (re-home), 0.0.0_AB_MSTR~Z (branch), COO~O (round) |
+| 3 | NFRA_MCPORTAL -- the operator console at mcp.opalinvest.dev: MCP Server pages (tool library, per-user grants, audit, kill switch), user management, reports, health, cost, infosec | D6 | registered @8105cd4f0e; PRD v0.1 @842f67a802; repo Opal-Capital/mcportal created, DEV=PROD fa1ff9693b (G-REPO done) | L4-R ratified half | 3.0.0_SA_CVO~O |
 | 4 | NFRA_OPLGTW -- the gateway's Schwab access and grant model | D9 | 30 of 33; stopped by Andrew 09-22 | **Andrew's call** (the stop is his by name) | Andrew |
 | 5 | opal_ai TEMPLATE slice (RCN-0014 O6-O9) | D6 | not started, on his order "after a proper V1, even V2" | register when NFRA_OPALAI closes | 1.0.0_SA_CTO~O |
 
@@ -54,3 +54,8 @@ NFRA_COMPTEAM, NFRA_WRKFLW, HEATMAP_PROCESS (closed) -> no remaining act. OPAL_T
   ruled: from the gateway process behind the ALB sign-in). Asked 0.0.0_AB_MSTR~Z for the laptop relay on NFRA_MCPINDEX
   (held-branch push, no laptop seat on it) and for the mcportal repo. Routed MSTR~Z's law-lock merge gap away, out of
   scope. NFRA_OPALAI is at DECOMP with 2.0.0_SA_COO~O.
+- 2026-09-24 ~21:3xZ, tick 2: NFRA_OPALAI's decomposition landed @0070f8a7ef (COO~O). Read against the request
+  catalog: portal rows reach data through the new gateway tool OA-t-5, but row 7 (Bloomberg view) runs a
+  workspace-launched MCP server that Opal_Agent cannot start. PRD v0.4 adds C11 (no silent drop at cutover) and S15
+  (the Bloomberg view server into opal_ai, first enrichment). mcportal repo created by 0.0.0_AB_MSTR~Z. Waiting:
+  CVO~O on MCPORTAL L4-R; the laptop ACK on MCPINDEX; COO~O's round-1 issuance; Andrew on the OPLGTW stop.
