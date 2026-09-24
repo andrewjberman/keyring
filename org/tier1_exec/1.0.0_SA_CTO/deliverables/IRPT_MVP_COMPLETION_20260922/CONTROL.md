@@ -19,7 +19,11 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (000000000000000000000000000000000000000) custody INTERPRETER BUILT by Y @47b2adf6df, accepted (oracle
+CTO review queue, in order: (0000000000000000000000000000000000000000) 13:36Z signed-in session (likely Andrew's, unconfirmed): holdings
+fired 6x clean; Performance on Anna's RELATIONSHIP -> SelectionUnsupported served as UNEXPECTED (hop 3 NOT SERVED AS NAMED); the one-use
+plan not reached, not spent; P: fix the served public code (ledgered repackage) + state the single-account UI act or name the missing
+control; Andrew told not to click Performance until P answers; HAR still asked (batch 60).
+(000000000000000000000000000000000000000) custody INTERPRETER BUILT by Y @47b2adf6df, accepted (oracle
 15/15, reader round-trip, one real run: Anna 55 positions within a cent); 3 exact-file rows granted to P at the pin; composition gated on
 the ledgered FIRM-bucket plan; decoder = rung 2 (reuse M's holdings runtime layer); M confirms zero-lot is a NEW interpreter rule
 (batch 59). (00000000000000000000000000000000000000) ZERO-LOT rule accepted (MV 0 AND Units 0 excluded like a

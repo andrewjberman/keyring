@@ -3315,3 +3315,30 @@ implied but did not say plainly: in the PRODUCER a zero lot is NOT excluded -- i
 and kept in the DC1 sum at 0 -- so the zero-lot rule is a NEW rule of the interpreter (accepted in batch 58 as interpreter semantics with
 _validated unchanged), analogous to and not an instance of the producer's no-position exclusion. Batch 58's phrase "the producer's own ruled
 no-position exclusion one step further" is read as that analogy, not as a claim the producer already does it. Nothing served moves.
+
+
+## 2026-09-24 13:4x UTC - Claude CTO batch 60: the 13:36Z signed-in session measured by M -- holdings fired 6x clean; the Performance tab on Anna's RELATIONSHIP raised SelectionUnsupported and served the public code UNEXPECTED (hop 3 NOT SERVED AS NAMED); the one-use plan was not reached and not spent; the plan binds one account while the page selects the relationship -- two acts at P, and Andrew told not to click Performance again until P answers
+
+Instruments: M's 100653 and 100658 (aws shim, logs filter-log-events on /aws/lambda/irpt-holdings, irpt-performance-adapter, irpt-directory-search
+for 13:30-13:45Z; application lines quoted with ids masked): holdings 6 invocations 13:36:07-24Z (cold 1906 ms, warm 552-690 ms, no error line,
+no application line -- the function logs nothing per request); performance-adapter 2 requests at 13:36:11Z (cold 3273 ms / warm 196 ms) each
+logging irpt_internal SelectionUnsupported "performance computes exactly one selected account" then irpt_error public_reason_code UNEXPECTED;
+directory-search 17 REPORTs = 11 real + 6 warmer pings; status / narrative / export / intake / ycharts 0. Messages 100655-100657 (the CTO's
+first ask), 100661-100663 (the CTO's two acts to P).
+
+### IRPT-1336Z-SESSION-HOP-3-NOT-SERVED-AS-NAMED-20260924 (M 100658)
+One signed-in session (search -> select Anna's relationship -> Holdings six loads across selection changes -> Performance tab twice ->
+UNEXPECTED), consistent with the CTO's ~13:2xZ ask to Andrew and UNCONFIRMED as his until he says so; the CTO holds no HAR and ran no trace;
+the CRO asked whether it traced. SETTLED regardless of who clicked: (a) the deployed holdings path FIRED on today's served revisions (/verify
+MECHANICAL fired; the envelope's revision is the HAR's to show, read in place); (b) the served Performance path's public code for a
+multi-account selection is UNEXPECTED -- the served build carries hop 3's class and raises it, but the translation to SELECTION_UNSUPPORTED did
+not reach the answer, so the hop graded APPLIED on the build is measured NOT SERVED on the path; the CTO re-grades it from the served answer
+after P's fix; (c) the refusal fired at selection, before the plan check, so the one-use plan (sha 106eaa0e..) was not reached and not spent
+(P confirms with the PERFORMANCE_ row count). TWO ACTS AT P: (1) measure the served translation (class registration in the served package,
+name-vs-identity across module copies, a raise outside the translation path), fix, prove with the negative control (two accounts ->
+SELECTION_UNSUPPORTED) and the positive control (one account reaches the plan check), code-only repackage under a ledger with readback;
+(2) the plan binds acc_d486fc9455d6b2aa18e13af1 alone by design while the page's Client search selects the relationship (two accounts) --
+P states the exact UI act on DEV f1d02f30 that yields a server-accepted single-account selection, or says no such control exists, in which
+case it is a product item (DSGN_IRPTV1 round 3 or a portal candidate) and the first Performance use waits on it; the plan is NOT widened to
+the relationship (a second word and a different calculation). Andrew is told: the click did not spend the use; do not click Performance again
+until P answers; the Holdings HAR stands. The CRO's cookie read stays owed before any next click.
