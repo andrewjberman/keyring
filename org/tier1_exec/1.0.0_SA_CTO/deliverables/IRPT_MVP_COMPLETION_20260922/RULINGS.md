@@ -3013,3 +3013,44 @@ HoldingsPublication vs the served page body in a HAR) and different vintages, so
 addendum states what batch 48 ruled: for the Holdings tab this is by design (the basis is on every node; the display ruling stands); for the
 Analysis custody branch it is a design input, and the interpreter reads the receipted custody rows, never the security nodes. No act asked,
 none taken beyond this record; the card's questions stay where batch 48 routed them (Q1 + Q4 at M, Q3 at Y on return, Q2 ruled).
+
+
+## 2026-09-24 12:3x UTC - Claude CTO batch 50: M answers Q1/Q4 from its own producer -- Q4's condition FAILED (the ACCOUNT node's DC1 value is a SUM over the position rows), the CTO's leaning WITHDRAWN and the card's reconciliation row moved to fact_allocations "Account Market Value" (its own row and receipt, already carried in the manifest's control row); Q1: the custody rows come from the receipted custody object in manifest.source_objects, never manifest.gold; P amends the card to v2
+
+Instruments: M's 100588 and its record org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CUSTODY_SOURCE_OF_RECORD_Q1_Q4_20260924.md (codex/irpt-m-
+completion after 43aaeb530b), every claim file:line @ commit: holdings_snapshot.py @d96513bc40 (:422-423, :429-437, :446-454, :550-579,
+:1871-1877, :1932-1933, :1978, :1990, :2009, :2099), holdings_49f.py @d96513bc40 (:183-184, :284, :403-417), holdings_inf.py @fb87f34940
+(:145-151, :273, :312-313). Message 100589 (the CTO's ruling to P, M, the CRO).
+
+### IRPT-CUSTODY-Q4-CONDITION-FAILED-LEANING-WITHDRAWN-20260924 (M 100588; the CTO's 100589)
+Batch 48 held the CTO's leaning (the custodian's account-level value is the independent source, the ACCOUNT node its evidence) CONDITIONALLY on
+M confirming the DC1 value is a custodian-supplied row and not a same-build sum. M read the producer: account_value = control_values[external_id]
+(:1990) = the reconciliation row's position_value (:1932-1933) = the accumulation over the DC1-collapsed fact_holdings Market Values (:422-423);
+the join_method string says so. THE CONDITION FAILED; THE LEANING IS WITHDRAWN. CTO note, owned: the leaning was a plausible reading of a
+join_method label ("fact_holdings (Market Value, deduped DC1)") -- a label's grammar implying a fact-table row it does not hold -- and holding it
+conditionally, routed to the one seat that could read the producer, is what kept it from becoming a design row; the shape to keep. The
+independent total EXISTS as its own row in a second fact table: fact_allocations/date=<total_date>/data.parquet, column "Account Market Value"
+per AccountID (:429-437), own object and receipt (served WeqLRnnX.., 128,660 B, 1,495 rows), conflicting duplicates refused; the build already
+ties the position sum to it within 0.01 USD or REFUSES (:446-449) and writes {account_id, position_value, independent_value, difference,
+independent_source_row_ordinals, independent_source_origins} into manifest.actual_custody_controls.reconciliation (:450-454, :2099). RULED: the
+card's `reconciliation.independent_value` = fact_allocations "Account Market Value" at the receipted revision; `independent_source_rows` = the
+totals row reference (s3 url of totals_key, ordinal) read from the manifest's control row and re-verifiable against the receipted object; the
+ACCOUNT node is not cited as the independent source. Per firm: 49F dim_balance.net_mv_plus_cash (holdings_49f.py:183 / :284; DRILL WITHHELD on a
+miss :403-411); INF accounts_v2.current_value (holdings_inf.py:150, :273).
+
+### IRPT-CUSTODY-Q1-SOURCE-OF-RECORD-20260924 (M 100588; the CTO's 100589)
+NOT manifest.gold: the gold parquet is the served document flattened (node_id, parent_node_id, node_kind, basis, amount_value, node_json; COT
+dec293d6 = 16,749 rows, one per node, the same model-implied SECURITY nodes) -- reading it would reproduce the 0-of-68 problem under a different
+name. RULED: `original_rows` / `positions` come from the ONE receipted custody object in manifest.source_objects the builder reads rows from --
+COT opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=<value_date>/data.parquet (:1871-1873; served receipt tGurdOTY.., 457,679
+B; AccountID raw -> opaque_id("account", firm, AccountID) :1978; identity columns AssetID / Symbol / Ticker / CUSIP / names / Relationship ID /
+PortfolioID; Market Value, Units, _source_as_of; reference = (object url, zero-based physical row ordinal), holdings_origins :1876, kept per
+position as source_row_ordinals + relationship_ids :424-427 after the DC1 collapse :412-421); 49F schwab/08335338/silver/dim_position
+(holdings_49f.py:184, :416-417; reference = row ordinal within the account group); INF opal-data-inf/silver/api_dims/positions_mv
+(holdings_inf.py:145-151, :312-313; reference = the Orion row id). The served nodes' CUSTODY_UNITS fact (source_revision = the object's sha256,
+:550-579) is a pointer to the object, not a row reference. DESIGN STATUS: the interpreter's inputs are fully named by the producer's own code;
+open on the design is Q3 only (Y on return; batch 48's provisional read stands). P amends the card to v2 in place with the two moved rows, M's
+citations and a per-firm table (rows object / totals object / reference shape) so it is one design across three firms. The composition stays
+gated on a ledgered Terraform grant plan, which grew by the totals object per firm and must name the FIRM buckets each lives in (COT rows and
+totals sit under opal-data-assets/blackdiamond/cottonwood/silver/, not the cottonwood platinum prefix -- the cross-firm gate's enumeration is read
+before the plan).

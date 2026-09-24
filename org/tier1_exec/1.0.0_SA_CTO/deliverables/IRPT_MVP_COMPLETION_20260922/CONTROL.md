@@ -19,7 +19,10 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (00000000000000000000000000000) portal candidate 6 LANDED fast-forward b9d244a474 (ls-remote read by MSTR
+CTO review queue, in order: (000000000000000000000000000000) M's Q1/Q4 ACCEPTED: Q4 condition FAILED (DC1 account value = a SUM),
+CTO leaning WITHDRAWN, independent value = fact_allocations "Account Market Value" via the manifest's control row; Q1 rows from the
+receipted custody object (fact_holdings / dim_position / positions_mv), never manifest.gold; P amends the card to v2; design open on
+Q3 only (Y) (batch 50). (00000000000000000000000000000) portal candidate 6 LANDED fast-forward b9d244a474 (ls-remote read by MSTR
 12:2xZ); candidate 7 = the Global-default arm re-pin + the generated SelectedAccounts fixture; the CRO's addendum 3 corroborates the
 card's 0-of-68 finding on the 04:32Z vintage (batch 49). (0000000000000000000000000000) custody INTERPRETER card @d8c8e6c716 ACCEPTED -- Q2 ruled (held
 positions, never model-implied nodes), Q4 conditional on M, Q1+Q4 at M, Q3 held for Y (provisional: zero-row account refuses);
