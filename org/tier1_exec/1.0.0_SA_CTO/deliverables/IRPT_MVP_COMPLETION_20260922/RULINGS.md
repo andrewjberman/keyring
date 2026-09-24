@@ -3214,3 +3214,31 @@ as the amended face now says); the standing rule for the CTO -- a PNG named in a
 says "as reported, unopened". NOTED for other owners: the Holdings answer band `OK [code not defined by the v1 contract]` (IV-e-7's sweep);
 a bare 9-character identifier (`037833100`) as a security name in the hero, legend and Name column -- fixture displayName on a checkout
 without IV-e-1's display.label rule, re-read at the drain; if it survives the merge it is a round-3 enrichment item (a CUSIP is not a label).
+
+
+## 2026-09-24 13:2x UTC - Claude CTO batch 57: card 2 EXECUTED by P -- the one-use Performance plan ARMED at 13:12:22Z for Anna's account on the default YTD window, unspent; RULED: an unspent re-cut for a new end date is the same one use, a spent use needs a second word; the 8-day BD session cookie is the pre-click risk and the CRO states its state from the hop-7 control without a vendor call; Andrew told the click
+
+Instruments: P's 100629 and receipt org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/PERFORMANCE_ONE_USE_PLAN_ARMED_20260924.json (backend
+worktree; public fields): plan sha 106eaa0e9ed064d301659ca9ad5d148a4a7f2b1dbbf7b2c95cd8320cc46b1a65 over a 557-byte canonical string; window
+2026-01-01..2026-09-24 (period.ts DEFAULT_PERIOD_PRESET = YTD); mapping as_of 2026-09-23, source_revision a560410f86e384c7..; requests digest
+over [performancePeriod, performanceSeries] with bd_helpers.py byte-identical to layer irpt-common:5; expires 2026-09-25T00:00Z; ledger
+irpt-performance-one-use-plan-20260924 (sentinel cedc2f2763, closed); plan 1 add (the root's own conditional per-use grant
+aws_iam_role_policy.performance_approved_session[0], GetSecretValue on the exact session ARN, retained.tf:104-122) / 1 change (+2 env keys) / 0
+destroy; safe-apply 13:12:22Z; readback CodeSha256 07lSH03z.. unchanged, Active / Successful, token == the var-file's sha; replan No changes;
+irpt-requests PERFORMANCE_ rows for cottonwood = 0. Messages 100637 / 100638 (the CTO to P and the CRO).
+
+### IRPT-CARD-2-ONE-USE-PLAN-ARMED-20260924 (P 100629; the CTO's 100637)
+Accepted as executed under Andrew's word (card 2, @9b36d8a481). The plan is what the deployed code makes it: OneUseTransportFactory admits a
+request only when firm, the one account, (start, end), the mapping's source_revision + vendor ids and the requests digest equal the approved
+plan and the egress token equals sha256 of the canonical string; it then claims PERFORMANCE_USE#<sha> by conditional put with no TTL (a failed
+or lost provider request consumes the use) and builds the Black Diamond transport with the COT session cookie. The trigger is the one thing no
+seat can do: the served boundary admits only a verified signed-in principal, so the calculation fires when Andrew, as a Global viewer on DEV,
+selects Anna's account on the Performance tab with the default YTD preset before 2026-09-25T00:00Z. RULED: a re-cut of the plan for a new end
+date while the claim count is still 0 is the SAME one use, inside the word (which bounded one SUBMISSION, not one plan string); a SPENT use --
+a claim row written, whether the provider answered, failed or refused on a dead cookie (DEPENDENCY_UNAVAILABLE) -- needs a second word. So the
+BD session cookie (blackdiamond/cot/session, LastChangedDate 2026-09-16, 8 days; metadata only, no value read) is the risk to retire BEFORE
+the click: 4.0.0_SA_CRO states its expected liveness from the hop-7 control and its own record WITHOUT a vendor call (a probe is egress and is
+covered by nothing on this thread); if it needs a refresh, that is Andrew's sign-in, put beside his HAR ask as one browser session. Recording
+after the use (P): the claim row, the accepted pointer, the retained evidence and report artifacts by reference and sha, the reopen without a
+second claim, the export -- keys, counts, digests; the CRO's second read; the CTO grades FWD-1's Performance hop from both. Andrew is told the
+click order in this turn's report: DEV, Anna, Holdings first (the HAR of card 4), then the Performance tab on the YTD preset, before 00:00Z.
