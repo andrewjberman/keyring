@@ -253,6 +253,62 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-22 -- THE CORPUS WAS NEVER THE PROBLEM: `O7` IS SMALL BECAUSE **THE ABSENCE WAS IN THE READER**
+
+**`4.0.0_SA_CRO~Y`** (msg 25203, package `PDF_EXTRACTABILITY_20260924/`, register row `RCN-0016`) on
+Andrew's word *"Begin with PDF Extractibility"* (record `32a7b8aa5e`). **This is input to the `AMGT_CORPUS`
+dossier addendum R-18 puts at this seat -- not the L1 brief itself, which is still owed from that seat.**
+
+⭐ **THE HEADLINE INVERTS THE LEAD PANEL'S. There, the pipes worked and the water was missing. HERE THE WATER
+WAS ALWAYS THERE AND THE PIPE WAS BLIND:** of the 30 PDF-only folders, **26 carry a full research pack** -- 26
+pillars, 27 recommendation lines, 27 risks, 26 management, 26 all three cases, 24 thesis summaries, 24 company
+descriptions, 15 "Why we own" -- and **29 of 30 carry pillars or "Why we own"**. The single empty one is
+**QXO** (an investor Q&A PDF only). **`O7` is therefore SMALL, and it was a READER defect, not a corpus gap.**
+
+**THE POSITIVE CONTROL IS WHAT MAKES THAT RELIABLE:** 56 docx+pdf pairs of the same stem; of the 19 whose docx
+carries pillars under the ruled continuation rule, **17 FULL, 1 PARTIAL (Alibaba -- the PDF finds one MORE),
+1 NONE (Michelin, a blank template docx)**, and ⭐ **99 of 99 docx pillars recovered from the PDF.** The PDF
+path recovers everything the docx path finds and occasionally more. Population read: **157 top-level PDFs, 0
+zero-text, 0 read failures, 0 placeholders hydrated**, with 71 docx as the control side. ⚠ **28 further PDFs
+in one Copa subfolder were NOT read** -- a stated denominator gap, not a silent one.
+
+⛔ **THE CAUSE, AND IT IS A CLASS THIS SESSION HAS NOW MET THREE TIMES: `extract.py`'s `K3` heuristic looks for
+a STANDALONE LARGE/BOLD SHORT LINE, and the PFOE author's packs label their sections with INLINE BOLD LEADS.
+K3 sees NONE of them.** That is why K3 read **33 of 52** and why the scan filed those packs as "PDF-only
+unknowns". **The labels were present the whole time, in a shape the detector could not perceive** --
+`RECOMMENDATION`, `COMPANY DESCRIPTION`, `Long-term growth algorithm`, `INVESTMENT THESIS`, `RISKS`
+(Pre-mortem first), `Ownership`, `Management and capital allocation`, `Special items`, and on updates
+`Headline results`, `Positives`, `Negatives`, `Segment highlights`, `Guidance`, `Why we own`.
+
+⭐ **THE CLASS, NAMED BECAUSE THREE INDEPENDENT SURFACES HIT IT TONIGHT: AN INSTRUMENT THAT CANNOT
+DISTINGUISH "I CANNOT SEE IT" FROM "IT IS NOT THERE" REPORTS THE SECOND.** (i) `peer_read {}` -- a STRANDED
+set, an object that exists whose key will not resolve, is byte-identical in the response to a security that
+never existed (`3.0.0_SA_CVO~Z`, 111 sets). (ii) `K3` -- inline-lead sections reported as absent sections.
+(iii) This seat's own `task_orders` vs `task-orders` path, which returned a clean confident `0 of 0`.
+**In all three the world was fine and the reader was narrow, and in all three the output was a CONFIDENT
+NEGATIVE rather than an error.** ⛔ **So: when a census returns "absent", ask what SHAPE the instrument
+requires and whether the data is obliged to take it.**
+
+**TWO MORE MEASURED CAUSES, both cheap to fix:** the team's PDF headings carry a **trailing colon** and
+**"Valuation" is a PILLAR lead, not a section**; and a PFOE pillar lead can sit alone on its line with the
+colon in a **non-bold span**. ⭐ **And one candidate cause is RULED OUT by measurement rather than left
+hanging: the docx regex's 80-character lead cap is NOT a limit -- a 140-char variant gives identical counts.**
+
+**WHAT THE ADDENDUM WILL TAKE (that seat's recommendation, adopted as the shape to write):** `extract.py`
+gains the inline-lead section rule and the PFOE name set; `continuation.py`'s pillar rule gains a **PDF
+branch** carrying the three rules **with the docx branch KEPT AS THE CONTROL**; the dossier gains
+`thesis_summary`, `company_description`, `growth_algorithm`, `ownership`, `special_items`, `why_we_own`,
+`positives`/`negatives`, **each CITED or explicitly ABSENT**.
+
+⚠ **LIMITS CARRIED INTO THE ADDENDUM RATHER THAN DROPPED AT THE GOOD NEWS:** PFOE pillar recall has **no docx
+twin to control against** (2 per pack across 24 packs is self-consistent, **not controlled**); management,
+risks and cases are measured as **block presence, not typed fields**; the 28 unread Copa PDFs; and **nothing
+under the library root was written.**
+
+⚠ **AND THE FOLD CONSTRAINT FROM R-18 STILL BINDS THIS:** *"i wouldnt change AMGT_RESAPP page layout
+architecturally"*, and *"Peers largely stays as it is"* -- so a richer dossier feeds the EXISTING tabs and
+does not reshape them.
+
 ## R-21 -- ALL RECS APPROVED, EGRESS WIDENED TO ALL VENDORS -- AND THE GRANT IS BROAD ON **AUTHORITY**, NARROW ON **MECHANISM**
 
 **Andrew-direct 2026-09-24 ~03:2xZ at the `1.0.0_SA_CTO~Z` terminal, VERBATIM:** *"all recs approved, and you
