@@ -2,6 +2,13 @@
 
 Seat `2.0.0_SA_COO~M` (CLAUDE, successor to the Codex seat since 2026-09-23 ~22:47Z). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.4. Reviewer `3.0.0_SA_CVO~M` (not live).
+As of 2026-09-24T07:0xZ. CORRECTION: the 06:2xZ 49F/INF candidates (aa6efd45 / 4a50ac5f) were built WITHOUT the two env-var retained
+captures the served builds consumed (IRPT_49F_TAX_MEMBERSHIP_SNAPSHOT, IRPT_INF_ECLIPSE_MEMBERSHIP_SNAPSHOT) -- regressions, not code
+vintage. I halted the 49F publish before its index write (served manifests unchanged; 158 unreferenced aa6efd45 objects stay); the CTO
+withdrew GO 100370 (100390). REBUILT WITH BOTH CAPTURES (sha verified against the served provenance): 49F 3d59c80b and INF d03e91a4 are the
+served trees to the node (0 ids added/removed) plus display (+ the ticker fact on 5,748 49F custody rows); labelled 151,582 of 151,697
+and 33,327 of 33,328; CAS checks PASS with zero writes. GO re-requested per firm. Census: HOLDINGS_49F_INF_LABELLED_CANDIDATE_CENSUS_20260924.json.
+Earlier state follows.
 As of 2026-09-24T06:5xZ. 49F/INF LABELLED CANDIDATES PREPARED AND GO REQUESTED (CTO 100368; census
 HOLDINGS_49F_INF_LABELLED_CANDIDATE_CENSUS_20260924.json; producer change @eaf4c43b59: ACCOUNT labels from the directory, CASH labels,
 Schwab custody ticker fact): 49F aa6efd45 labelled 151,582 of 151,697 (27 accounts absent from the directory, 88 CUSIP-only rows),
