@@ -253,6 +253,55 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-68 -- ⭐ **`Z-S17` ADJUDICATED: A WRITE-ONCE OBJECT'S BODY MUST BE A FUNCTION OF ITS KEY. `total` IS A BODY FIELD THE KEY DOES NOT DETERMINE, AND GOLD'S REFUSAL IS THE ESTATE DETECTING EXACTLY THAT**
+
+**The call.** `2.0.0_SA_COO~X` surfaced `AMGT_CORPUS-Z-S17` (ARMED, OBSERVATION, disarm owner that seat):
+`sector_template --write` raised `GoldImmutableError` on the first business type, aborting the loop, so
+**no sector template was re-measured for ANY type today, including the types the 20 newly inducted names
+joined.** Adjudicated here under Andrew's *"all open-calls on sitez fabric"* word.
+
+**THE DIAGNOSIS IS MEASURED, NOT INFERRED, AND IT CORRECTS THE OBVIOUS REMEDY.** Read at HEAD:
+
+- `sector_template.py:407-411` -- `fields = {"reports", "total", "sections", "kpi_set", "chart_pages"}`.
+  **`total` is in `fields`, the BODY.**
+- `:412` -- `inputs_sorted = sorted(inputs, ...)`, the per-record list; `_object_name(inputs)` at
+  `:431-435` hashes `{method_version, inputs}` ONLY. **`total` is not in the KEY.**
+- `sections`, `kpi_set`, `chart_pages` and `reports` are all computed from `records` -- that type's OWN
+  records. ⭐ **NO COMPUTED FIELD DEPENDS ON `total`.** It is a pure DISCLOSURE, the denominator printed
+  beside `reports` (`:580`, `:631`).
+
+**RULED, AND THE GOLD STORE IS NOT THE DEFECT.** `gold.py:70-102` refusing a different sha under an
+existing name is correct and load-bearing. The defect is stated exactly once: **the artifact's BODY
+carries a field its KEY does not determine**, so two genuinely different bodies compete for one name the
+moment the corpus grows. **A write-once object's body must be a function of its key** -- that invariant,
+not `total` specifically, is the thing to restore.
+
+⛔ **AND THE INTUITIVE FIX IS THE WEAKER OF THE TWO.** Putting `total` INTO the key also restores the
+invariant, but it **mints a new object for every type on every corpus growth while no measured field
+changed** -- 218 reports today against 124 at mint, so every type re-mints to move a disclosure line.
+That asserts a new measurement where none occurred, and it does so in a write-once store whose whole
+purpose is that a name means one measurement. **Between two fixes that both restore the invariant, take
+the one that does not claim work that did not happen.**
+
+⚠ **SO THE REMEDY FORKS ON ONE QUESTION THIS SEAT HAS NOT MEASURED AND WILL NOT GUESS: WHO READS
+`fields.total`?** If no consumer reads it, it leaves the body and the denominator keeps being disclosed
+where it already is -- the run's own printed output and any run-scoped manifest, neither of which is
+keyed by type-inputs. **If a consumer computes a SHARE from it, then `total` is a real input after all
+and belongs in the key, re-mint and all.** ⛔ **Naming the remedy without that census is NEVER-1's
+count-the-writers discipline inverted to the read side, and it is one query.** The census and the build
+are the disarm owner's; this ruling supplies the diagnosis, the invariant and the discriminator, not the
+patch.
+
+⚠ **BOUND ON THIS RULING'S OWN EVIDENCE:** it rests on a source read at HEAD and on that seat's
+traceback, and it does NOT re-derive the abort's blast radius -- *"only the first type in sorted order
+was attempted"* is that seat's measurement, carried, not re-run. **The estate-wide question it raises and
+this ruling does not answer: how many OTHER write-once producers embed a corpus-wide denominator in a
+body keyed on per-subject inputs?** That is the same defect wherever it exists, and nothing here measures
+its population. COST: one consumer census on one field. NON-APPLICATION: a mutable store, and a body
+whose every field the key already determines.
+
+---
+
 ## R-67 -- ⛔ **A TASK ORDER ACCUMULATES `<status>` TAGS AND THE FIRST ONE IS THE STALE ONE, SO A FIRST-MATCH PARSE REPORTS COMPLETED ORDERS AS OPEN**
 
 **Measured this tick against a live disagreement.** A census of `AMGT_RESAPP`'s 208 orders by first
