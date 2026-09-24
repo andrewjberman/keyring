@@ -19,7 +19,10 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (000000000000000000000) irpt-status SERVED with the installed assembly (5E8T+/LV, 10:53Z; the two
+CTO review queue, in order: (0000000000000000000000) the three Analysis routes SERVED (routes.json 17/17; history GETs on
+irpt-status; the upload POST on irpt-ycharts-generate 4fkloyC1 refusing by name; CRO route read corroborates); the X10 pin-by-NAME
+rule made standing after a never-served wrong-pin build; candidate 4 = the client flag, then (iv) (batch 42).
+(000000000000000000000) irpt-status SERVED with the installed assembly (5E8T+/LV, 10:53Z; the two
 history routes on its own table; CRO corroborated); (iii) routes server-first then the client flag; edge (a) mapped in the (iii)
 commit (batch 41). (00000000000000000000) S122 builder probe LANDED on CLOUD @bf938bcf39 by the CTO under the audited
 cross-lane override (one file, one lane); the generate function's served read corroborated by the CRO; NOT_READY ruled the

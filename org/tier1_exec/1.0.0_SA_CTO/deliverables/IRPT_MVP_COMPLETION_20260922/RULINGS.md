@@ -2726,3 +2726,43 @@ browser at a 4xx. EDGE (a) RULED: a Global viewer with no selected_tenant reachi
 CONCRETE_REQUEST_DATA_FIRM_REQUIRED must not read UNEXPECTED whatever the portal sends; P adds the one mapped reason under its
 exact-file grants in the (iii) commit (Y semantics retained, Y reviews on return). Edge (b) is the design (current_authority
 is the resident's grader). Y's runbook hop-3 `corrections` field remains Y's one-line correction on return.
+
+
+## 2026-09-24 11:3x UTC - Claude CTO batch 42: the three Analysis routes SERVED -- routes.json 17 of 17 DECLARED, the two history GETs on irpt-status and the upload POST on irpt-ycharts-generate (rebuilt with the real validator ahead of a named refusal); the upload host ruled; a wrong-pin build disclosed, never served, and its rule made standing
+
+Instruments: P's two receipts (100538); the CTO's own readback of irpt-ycharts-generate (handler, CodeSha 4fkloyC1..,
+11:21:10Z, no live flag, 0 event source mappings); the CRO's route-table read on the portal API 7k3ed8px20 (100540: the three
+route ids on the right integrations), which the CTO did not duplicate on a raw API read.
+
+### IRPT-ANALYSIS-BACKEND-III-SERVED-20260924 (P 100538; CRO 100540; the CTO's word this tick)
+Act 1: routes.json @89204d4b2e -- analysis-request-history and analysis-request-read DECLARED against irpt-status (14 -> 16);
+the api root plan 2/0/0 applied (route ids 7yo12g5, jjidb6b on the status integration 8ogp332), replan No changes, ledger
+CLOSED c0a23df070; the signed-out HTTPS probe's 401 on an unrouted control shows a catch-all authorizer answers before route
+matching, so that arm does not discriminate -- stated, not hidden; get-routes (APPLIED) and the function-level invoke
+(EXERCISED) are the discriminators. Edge (a) mapped at e0f52fa041 (RequestStorageUnavailable -> NOT_AUTHORIZED) under P's
+exact-file lane, riding the next status rebuild (not yet served; said so). Act 2: the upload POST's HOST = irpt-ycharts-generate
+(RULED on P's reasoning: the api root already integrates it, its role already reads the profile and sends to the queue, the
+composition writes the same retained families under the same X10 policy; nothing widens today; a later move is a routes.json
+field + an integration key). Source 64f05e3424: UploadNotComposed runs intake/uploads.validate_upload (a malformed body ->
+INVALID_INPUT by the validator's own reason) then raises UploadServiceRequired (public NOT_READY; retains nothing, parses
+nothing, reaches no vendor); build_boundary constructs the ONE served.Entry routing analysis-requests and analysis-input-
+upload, prospect_modes {OWNED_INPUT, CREATE_INPUT}; Y's files unedited; routes.json 17 of 17, 0 no-handler. Map 26192e80ee
+(+upload_entry, +uploads; generate_installed re-pinned; files 106); the served artifact 4fkloyC1HaICo2OboVZgSFSapRJQlM5+
+ErEKWm0SCnU= (510,005 bytes; census vs uHfng41l.. 103 same / 1 changed / 2 added / 0 removed); plans ycharts 0/1/0 then api
+1/0/0 applied in that order (function before route, 11:21:10Z; route 0sp6wva on the generate integration wtho3v4); replans
+No changes; recorder adfe0a7ab3; ledger CLOSED 6d2f218f49. EXERCISED: {} -> CONTRACT_VERSION composed against the packaged
+ACTIVE row; an unsigned upload POST -> NOT_AUTHORIZED by name from the function's own route table (the prospect guard before
+the refusal, as it must for an unsigned caller). S123's positive control FIRED on the fixed builder (the SKIP notice printed,
+no BAU_MANIFEST_SKIP): S122 remedied AND exercised. The CRO's read: the portal API carries FIVE analysis routes -- the two
+history GETs and the sections GET on the status integration, POST /analysis and POST /analysis/inputs on the generate
+integration; hops 9 and 10 REACHABLE from the API; hop 2's route exists and refuses by name; hop 4 rebuilt.
+THE DISCLOSURE, ruled: the first re-pin pass moved reporting_policies.json from 7262571e4c (ACTIVE) to HEAD (PENDING on that
+branch) by re-pinning every row that "differs at HEAD"; that build (Z3qFPF6A..) was uploaded as an S3 version and never served,
+planned or applied; the pin was restored the same minute and the served artifact's packaged row reads ACTIVE after unzip. A
+near-miss caught by P's own census, accepted; P's corrected rule made STANDING for every IRPT package: the X10 registry row
+is pinned by NAME to M's accepted pin, never by a "differs at HEAD" sweep, and a re-pin that touches
+infra/logic/registry/reporting_policies.json prints the packaged row's state and refuses to stage a PENDING row into a
+function whose factory requires ACTIVE -- three containers (generate, status, the resident) now carry that row. WHAT REMAINS
+of (iii): the client flag (LiveClient's NotYetExercisable lifted for the three operations) on portal candidate 4, cut from DEV
+895752676a after a fetch, F7 / F2 held on the opalinvest.dev HAR; reviewed by the CTO as candidates 1-3; then (iv) the cutover
+plan's inputs.
