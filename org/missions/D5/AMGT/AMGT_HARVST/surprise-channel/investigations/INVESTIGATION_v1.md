@@ -1186,6 +1186,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "Z-S24 disarmed five of this lane's seventeen rows and stated that the remaining twelve are each owed a read against the world.",
     "world_is": "Three more read: one fully disarmed, one HALF disarmed with its live half measured as never-fired, and one confirmed live on a mechanism this lane does not own. A row is not binary -- W9-S1's two call sites got different treatment in the same file, and a check that had stopped at the first one would have closed a row whose other half is untouched.",
     "notes": "THE KEEPABLE FORM FROM THIS BATCH: A ROW NAMING TWO CALL SITES NEEDS BOTH READ -- the fix landed on one of them, in the same file, four lines apart in the enumerate output, and closing the row on the first hit would have been wrong in exactly the direction nobody re-checks. \u2b50 And the second half of the same discipline: once the unfixed site is found, ASK WHETHER ITS PRECONDITION HAS EVER OCCURRED before escalating -- here one query over the retained corpus turned an alarming shape into a measured EXPOSURE with 0 of 1. OWNER NOTE: W11-S1 sits on .tools/missions-tree-index.py, a shared mechanism and not this project's content, so it stays ARMED and belongs to that tool's owner rather than to this lane's remediation. REMAINING for this lane: W3-S1, W8-S1, W8-S2, W10-S5, W10-S10, W14-S1, W14-S2, Z-S11 -- plus the live half of W9-S1 and W11-S1's routing."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S26",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-24T18:20:00Z",
+    "one_line": "MY 17 WAS NEVER A COUNT OF LIVE WORK. The gate's own resolver -- the instrument the L10 requirement reads -- returns 7 non-terminal for this project, and they are EXACTLY the seven rows I filed today. All 17 were already GRADUATED or DISMISSED. I ran the weaker instrument, in the very channel whose Z-S15..S18 chain documents this exact trap, and my census generated the entire live backlog it was trying to measure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE AUTHORITATIVE INSTRUMENT, run this tick: surprise-row-gate.py::_latest_dispositions('.', 'AMGT_HARVST') returns 47 ids, 0 unknown, 14 files, note empty -- GRADUATED 19, DISMISSED_WITH_REASON 21, UNDER_INVESTIGATION 7. The seven are Z-S19 through Z-S25: every row THIS LANE filed today, and nothing else",
+        "SO ALL SEVENTEEN OF Z-S22's 'open' ROWS READ TERMINAL on the resolver. My filter was `hazard_standing == ARMED` (a FROZEN filed-time field, which R-78 itself proves is never updated) minus a substring match over prose. The resolver folds the CVO's `adjudicates` lists, which is how a row actually gets dispositioned",
+        "AND `adjudicates` EXISTS, WHICH RETIRES MY OWN Z-S23 REMEDY: 1,120 of 5,577 rows across 234 channel files carry it, and the gate carries real limbs for it -- the resolver at :390-417, a phantom-adjudication refusal at :860, and limb A-1 at :1739-1746 refusing it on a WORKER's row because it is the CVO's L9 field, with self-tests at :2436-2685. 1.0.0_SA_CTO~Z withdrew R-81 on exactly this ground and is correct",
+        "WHAT SURVIVES OF Z-S23, narrower and still true: `adjudicates` is scoped to the CVO's L9 ACT. A lane that disarms its OWN row by ordinary work -- as this lane did five times today against HEAD -- still has no field to say so and writes prose. That is a real gap and it is much smaller than the one I described",
+        "WHAT SURVIVES OF Z-S24 AND Z-S25 ENTIRELY: every disarm in them was verified against HEAD code or measured data (comments naming the row id, AC5 PASS, a 0-of-1 corpus measurement), never against the census. Their FRAME was wrong -- 'five of seventeen open' -- while their FINDINGS stand on their own evidence"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S22 reported 17 rows as this lane's live load, and Z-S23/S24/S25 worked forward from that number.",
+    "world_is": "The live load by the instrument that governs was ZERO before today. The 17 were rows whose frozen ARMED field had outlived their disposition -- which is R-78's own finding, applied to R-78's own method and to mine. I then filed seven rows about the measurement, and those seven are now the project's entire non-terminal set.",
+    "notes": "THE COST IS MINE AND IT IS STATED PLAINLY: this project had 0 non-terminal rows this morning and has 7 tonight, all of them mine, all of them about instruments rather than about the product. They are the CVO's to disposition at L9, which is work this lane created for another seat. \u26d4 THIS THREAD CLOSES HERE -- no further meta-row from this lane; a row correcting a row correcting a census is the recursion Z-S18 already ruled against. \u2b50 THE KEEPABLE FORM, and this estate has now paid for it twice in the SAME channel: BEFORE COUNTING ANYTHING IN A CHANNEL, ASK WHICH INSTRUMENT THE CONSUMER OF THAT COUNT READS, AND RUN THAT ONE. Z-S15..S18 settled this in September on the same file -- '0 non-terminal by _latest_dispositions; N rows still read UNDER_INVESTIGATION in their own frozen fields' is the reporting form that was already adopted, and I reinvented the wrong half of it. A lesson banked in a channel does not fire when the same seat walks past it."
   }
 ]
 ```
