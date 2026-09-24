@@ -16,6 +16,18 @@
 #
 # HARNESS CONTRACT: prints NOTHING on stdout (a UserPromptSubmit hook's stdout is injected into the prompt) and
 # exits 0 on every path (a blocking exit would stop the prompt). stderr is left visible on purpose.
+#
+# DETACH: the hook runs with --detach. It re-spawns itself backgrounded and returns at once, so a prompt never
+# waits on the stamp. The fabric's detach idiom is { ... & } &>/dev/null; disown (tool_activity_emit_local.sh,
+# post-tool-telemetry.sh). Measured: the inline form timed out at 5 s on a COO launched beside three others
+# (4.0.0_SA_CRO msg 100801). Git Bash startup under contention costs seconds, and a stamp is never worth a
+# prompt's wait.
+if [ "${1:-}" = "--detach" ]; then
+    shift
+    { bash "${BASH_SOURCE[0]}" "$@" & } &>/dev/null
+    disown 2>/dev/null || true
+    exit 0
+fi
 root="${CLAUDE_PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 common="$(git -C "$root" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)"
 [ -n "$common" ] && root="$(dirname "$common")"
