@@ -47,6 +47,60 @@ an issuer to file 20-F while carrying no exchange-listed ticker, and this table 
 EDGAR company-name search (`/cgi-bin/browse-edgar?company=...&type=20-F`) would settle each definitively.
 That is egress and was NOT performed -- say the word and it is seven lookups.
 
+## EDGAR MEASURED (egress authorized by Andrew, 2026-09-24) -- 16 calls, positive control first
+
+My structural claim was HALF RIGHT and I had it wrong in one direction. EDGAR was queried by company
+name, then each candidate CIK resolved through `data.sec.gov/submissions` for its registrant name and
+full form history. **Positive control: Sanofi cik 1121404 returns `20-F` among 48 distinct forms**, so
+the form read discriminates.
+
+| issuer | EDGAR registrant | CIK | files 20-F | forms that ARE there |
+|---|---|---|---|---|
+| BNP Paribas | BNP PARIBAS | 310732 | **NO** | F-6, F-6 POS, F-6EF, ARS, 3, 4, SC 13D |
+| China Construction Bank | China Construction Bank Corp | 1445474 | **NO** | F-6 POS, F-6EF, 424B3 |
+| Iberdrola | IBERDROLA RENOVABLES S.A. UNIPERSONAL | 1424184 | **NO** | **12G3-2B**, F-6, F-6EF, ARS |
+| ICTSI | INTERNATIONAL CONTAINER SYSTEMS INC | 768832 | **NO** | S-4, S-4/A, 424B3 |
+| Intesa Sanpaolo | INTESA SANPAOLO IMI SECURITIES CORP. | 810882 | **NO** | FOCUSN, X-17A-5 |
+| Manila Electric | MANILA ELECTRIC CO | 61975 | **NO** | ARS, SUPPL |
+| Tokyo Electron | Tokyo Electron LTD | 1443276 | **NO** | F-6 POS, F-6EF, NO ACT |
+
+**WHAT I GOT WRONG:** I said these issuers were "not in EDGAR at all". They ARE -- all seven have a
+registrant record. The ticker-to-CIK table simply does not carry them, because that table maps
+EXCHANGE-LISTED tickers and these lines are OTC.
+
+**WHAT I GOT RIGHT, now measured rather than inferred: none of the seven files Form 20-F**, and the
+form types say why. **F-6 is the registration of the DEPOSITARY SHARES themselves** -- BNP, China
+Construction, Iberdrola and Tokyo Electron all carry F-6 filings, so an ADR facility exists while the
+issuer files no annual report. **Iberdrola's record carries the literal `12G3-2B` form**, which is the
+Rule 12g3-2(b) exemption named in this document before EDGAR was called.
+
+⛔ **AND THE PART THAT MATTERS MOST: THREE OF THE SEVEN CIKs ARE THE WRONG ENTITY.** A seat taking
+EDGAR's first name hit would have minted three wrong identities:
+- `IBERDROLA RENOVABLES S.A. UNIPERSONAL` is a SUBSIDIARY, not Iberdrola SA.
+- `INTERNATIONAL CONTAINER SYSTEMS INC` is a US company, NOT the Philippine ICTSI.
+- `INTESA SANPAOLO IMI SECURITIES CORP.` is Intesa's US BROKER-DEALER, not the Italian bank (its forms
+  are FOCUSN and X-17A-5, the broker-dealer reports -- the form history is what exposes it).
+Only BNP Paribas, China Construction Bank, Manila Electric and Tokyo Electron resolve to the issuer
+itself. **The form history is the discriminator; the name alone is not.**
+
+**THE THREE WRONG ENTITIES, CORRECTED (further EDGAR queries, same instrument):**
+
+| issuer | correct EDGAR registrant | CIK | country | 20-F | forms |
+|---|---|---|---|---|---|
+| ICTSI | International Container Terminal Services, Inc. | **1656958** | -- | NO | F-6EF |
+| Intesa Sanpaolo | Intesa Sanpaolo S.p.A. | **1374384** | L6 (Italy) | NO | **12G3-2B**, 6-K, 15F-12G, 425, 13F-HR |
+| Iberdrola SA | **NONE FOUND** | -- | -- | -- | only the subsidiary IBERDROLA RENOVABLES (1424184) exists, under three spellings tried |
+
+Intesa's record is the most informative: it carries **12G3-2B** (the exemption), **6-K** (the foreign
+issuer's interim reports) and **15F-12G** (termination of registration) -- a registrant that
+deregistered and now reports under the exemption, which is exactly no-20-F by design rather than by
+omission. The earlier `INTESA SANPAOLO IMI SECURITIES CORP.` (810882) is its US broker-dealer, and its
+`FOCUSN`/`X-17A-5` forms are what exposed it.
+
+**CONSEQUENCE FOR THE RESIDUAL:** EDGAR yields no 20-F CIK for any of the seven, so the usable identity
+stays the ADR line already in the universe -- `BNPQY`, `CICHY`, `IBDRY`, `ICT`, `ISNPY` -- and Manila
+Electric and Tokyo Electron remain without a universe line of any kind.
+
 ## What this does NOT claim
 
 - A CIK here is the registrant the ADR ticker maps to in the ingested table. I did **not** fetch filing
