@@ -3,7 +3,7 @@
   "project": "NFRA_OPALAI",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.3",
+  "prd_version": "v0.4",
   "step": 4,
   "brief_ref": "docs/briefs/opal-ai-microproduct-repo-brief-20260923.md@a47993af9c",
   "endpoint_outcomes": [
@@ -57,6 +57,12 @@ model. The ENDPOINT is unchanged. The runtime account and agent are named `Opal_
 **v0.3 (2026-09-24 ~21:1xZ)** resolves a contradiction `2.0.0_SA_COO~O` found in C4 (msg 25756). An account that
 cannot write its checkout cannot pull into it. The pull moves to the operator account, and `Opal_Agent` holds no
 GitHub credential. C3 and C4 are amended; the ENDPOINT is unchanged.
+
+**v0.4 (2026-09-24 ~21:3xZ)** adds C11, found by this seat reading the request catalog against C4. The Analyst's
+catalog row 7 (Bloomberg view-side lookups) is served today by a Bloomberg MCP server that launches from the workspace
+(`integrations/bloomberg/mcp/server.py`, 456 lines). `Opal_Agent` cannot launch it, and the decomposition places it
+outside round 1. The cutover would otherwise drop a capability colleagues use today with no word to them. The ENDPOINT
+is unchanged.
 
 The design this PRD binds is `org/tier1_exec/1.0.0_SA_CTO/deliverables/OPAL_AI_RUNTIME_ISOLATION_DESIGN_20260924.md`
 @45ce8406fc. The header stays DRAFT until L4-R. The author signs neither half.
@@ -309,6 +315,14 @@ schemas, a routing call, one-call retrieval, push instead of poll) are candidate
   `data_entitlement.py`), the identity allowlist, the tier model (`tier.py`) and the `_run` guard chain. Each cell's
   first act is to locate the existing implementation it extends.
 
+**C11 -- The cutover drops nothing silently.** At cutover, every APPROVED row of the request catalog is either served
+by the runtime through a mechanism it can reach, or answered with a plain, quotable "not available from the Analyst
+yet" reason naming who to ask. The catalog row text stays byte-unchanged (C7). The reason lives in the agent's runtime
+guardrails, not in the catalog. The cutover record lists every such row, with the enrichment that restores it. **Row 7
+(Bloomberg view) is the known case.** Restoring it means moving the view-only Bloomberg MCP server into `opal_ai` and
+proving `Opal_Agent` can reach the terminal's loopback API, and that is the first enrichment after round 1. The
+Bloomberg operator scripts, sign-in and daily pull stay in the workspace.
+
 ## SURFACE MANIFEST
 
 | id | surface | what it is | depends on | outcomes |
@@ -327,6 +341,7 @@ schemas, a routing call, one-call retrieval, push instead of poll) are candidate
 | S12 | gateway release path | the two deploy scripts, the manifest | S11 | FWD-11 |
 | S13 | release flow | DEV to PROD, pointer bump, runtime pull | S2, S7 | FWD-9 |
 | S14 | the index | delivered by NFRA_MCPINDEX into `opal_ai` | NFRA_MCPINDEX | FWD-4, FWD-12 |
+| S15 | Bloomberg view server | the view-only Bloomberg MCP server moved into `opal_ai` and reachable from `Opal_Agent`; until then, C11's plain decline | S7 | FWD-1, FWD-6 |
 
 **Gates, each an act a named holder can take on demand:**
 - **G-ACCT:** create the runtime account, an admin act on this box. Holder: a worker under this project, on R1.
