@@ -253,6 +253,85 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-55 -- ⭐⭐⭐ **2b IS ANSWERED AND THE ANSWER IS ZERO FOR A STRUCTURAL REASON.** THE R-41a QUESTION WAS ASKED AND CAME BACK THE OTHER WAY: PUBLISHER ACCESS WAS **NEVER PUT TO HIM**, SO MY MANDATE CONSTRAINT WAS CORRECT -- AND `AMGT_HARVST` IS **NOT** CLOSEABLE
+
+`2.0.0_SA_COO~Y`, 11:00Z, interface-published, merge `7383295c2a` on CLOUD.
+
+### (1) 2b IS ANSWERED, ON THE MANDATE'S OWN TERMS
+
+The `COO_Y_HARVST` mandate this seat wrote at ~09:5xZ said: *"if the honest answer is that no success bucket
+exists and the table would be uniformly DENIED, THAT IS A COMPLETE AND ACCEPTABLE ANSWER -- state it in
+STATUS.md with the denominator and stop."* ⭐ **That is exactly what arrived: 0 of 191 identities and 0 of 50,997
+rows carry a non-empty success bucket.** `data_status` DENIED 50,996 / PARTIAL 1 / COMPLETE 0, the single PARTIAL
+being `992_HK_Equity` at 1 of 5 off the only 20 `listing_hit` rows that exist at all.
+
+⭐⭐ **AND THAT SEAT INVERTED THE MANDATE'S OWN FRAMING, CORRECTLY.** The mandate warned that a table built from
+retained data *"grades the READER, not collection."* Its reply: *"the reader is fine, and this build is what
+proves it works over the whole universe rather than over six hand-written names."* **COMPLETE requires all five
+`ENABLED_PUBLISHERS` to cover the day and four of them have ZERO retained `listing_hit` rows -- so COMPLETE is
+not RARE here, it is STRUCTURALLY UNREACHABLE. That is a COLLECTION fact.** The predecessor snapshot held **6**
+securities / 1,596 rows; this holds **191 x 267 days = 50,997**, read back from S3 with `ContentLength` equal to
+bytes read rather than taken from the producer's summary.
+
+⭐⭐⭐ **THE SHARPEST THING IN IT IS A CORRECTION TO THE MANDATE'S TEST ITSELF:** *"`data_status` was a CLASS, and
+a class is not a denominator: PARTIAL alone cannot say whether one publisher covered the day or four."* So the
+schema gained `publishers_covered` and `publishers_enabled` **per row**, measured on the served bytes: **0 rows
+missing either, `publishers_enabled == 5` on all 50,997, and 0 rows where the class disagrees with the
+fraction.** ⭐ **This estate has spent the session on "a class is not a denominator" in other words; that seat
+applied it to a schema unprompted.**
+
+⚠ **AND THE FINDING A RANKING CONSUMER WOULD HAVE BEEN BITTEN BY: 55 of 191 securities carry at least one
+article day (against 4 of 6 before), and 201 rows carry articles WHILE READING DENIED** -- because mentions come
+from silver `article` and the grade from silver `listing_hit`, **two different tables, the second nearly empty.**
+*"A consumer ranking on `mention_score` without reading the coverage columns would be ranking over ungraded
+water."* **That is the R-46 stale-chatter symptom explained at its root.**
+
+**TWO CONTROLS RAN BEFORE ANY WRITE, both free to differ:** the derived alias set reproduces 4 of the 6
+hand-curated names, the two misses being source-data facts (one now row `AMGT_HARVST-Z-S19`: ⭐ *"the universe
+misspells 'Haliburton', so a text alias off its own name column can never match, and a name that cannot match
+reads identically to a quiet one"*); and the mention rebuild reproduces **every** row of the 09-23 snapshot, 0
+missing, with the 21 extra pairs **21 of 21** from articles absent from that snapshot (silver grew 94 -> 118
+keys) and **0** from a matching change. **BOUNDS HELD:** no vendor call, deploy, delete, promotion, notifier,
+publisher access or backfill; `write_gold` uses `IfNoneMatch="*"`; and ⭐ **the table is NOT served today** (the
+deployed `amgt-resapp-chatter-axis` reads `CHATTER_AXIS_SOURCE=legacy`, read live at 10:4xZ) **so this was not a
+served-output write and correctly needed no never-widen pair.**
+
+### ⭐⭐ (2) THE R-41a QUESTION, ASKED AND ANSWERED AGAINST THIS SEAT'S EXPECTATION
+
+That seat's item (b): publisher `listing_hit` collection for the four silent publishers *"needs Andrew's per-use
+word, which 2b explicitly does not come with"* -- **a constraint THIS SEAT wrote into that mandate at ~09:5xZ,
+six hours AFTER R-21 widened egress to all vendors at ~03:2xZ.** ⛔ **So R-41a's question was owed: had the word
+already been given, making my constraint an over-restriction?**
+
+**MEASURED, and per R-42 the WHOLE table was read rather than the row a term hit.** R-21's card-answer table has
+**seven rows (1, 2, 3, 5, 6, 7)** and **none names publisher access.** A grep for `publisher access`,
+`listing_hit`, `barrons`, `ENABLED_PUBLISHERS` across the entire rulings file returns **ZERO hits.**
+
+⭐ **SO IT WAS NEVER PUT TO HIM -- NEITHER GRANTED NOR WITHHELD, BUT UNADDRESSED, which is R-41a's own stated
+NON-APPLICATION ("an act never put to him, where there is no word to have missed"). The mandate constraint was
+CORRECT, not stale.** ⚠ **This seat expected the opposite and says so: asking the question is worth it precisely
+because it can come back either way, and a check that only ever confirms you is not a check.**
+
+⛔⛔ **AND THE WIDER READING IS REFUSED AS A SILENT WIDENING.** *"You have all the egress you want for vendors"*
+plausibly reaches a publisher -- barrons and ft are vendors. **But CLAUDE.md is explicit: relay, never adjudicate
+wider OR narrower, and IF WIDER SEEMS PLAUSIBLE, ASK.** ⭐ **Taking the wide reading here is exactly the widening
+that rule forbids, and R-15's own recorded read was NARROW and stated as such.** So publisher access becomes a
+**genuine THIRD reserved card**, derived rather than inherited -- unlike the four R-41 had to split.
+
+### (3) `AMGT_HARVST` IS **NOT** CLOSEABLE, AND R-45's TEST IS WHY
+
+R-45 found 2b the sole open scope item on a project reading 18 of 18 orders complete at `ROUND_CLOSE`. ⛔ **2b
+being ANSWERED does not empty the enrichment list, because that seat's own report parks TWO new items:**
+
+| parked item | class | owner |
+|---|---|---|
+| the gold build **has no schedule** -- all three snapshots are hand runs | ⛔ **a named CLAUDE.md defect**: *"Ad-hoc gold runs are PERMITTED FOR QA; production pipelines MUST be scheduled"* | a deploy act **outside** `2.0.0_SA_COO~Y`'s lane -- needs an owner, and it is NOT Andrew's |
+| `listing_hit` collection for the four silent publishers | vendor egress, **never put to him** | **Andrew** (card below) |
+
+⭐ **So the zero-graduation subtraction is NOT empty and no close is available** -- which is R-45's own lesson
+holding on its second application: *the test is a subtraction over the ENRICHMENT LIST, never over the ORDER
+SET*, and an answered item can still hand back new ones. **Nothing is closed here and nothing is shortcut.**
+
 ## R-54 -- ⭐⭐ **AMENDMENT 3 SATISFIES PRECONDITION (3) EXACTLY. BUT R-49's COLLISION COUNT IS ABSENT, AND ITS DRY RUN *CANNOT PRODUCE IT* -- A FAKE `call` NEVER REACHES THE REAL COLLISION CHECK.** THE COUNT IS STILL OBTAINABLE, AT ZERO VENDOR CALLS
 
 `AMGT_CORPUS.TO-CRPS-d-5` re-opened to `pending` with **ISSUER AMENDMENT 3 (~10:4xZ)**, which cites this seat's
