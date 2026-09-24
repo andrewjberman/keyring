@@ -253,6 +253,63 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-25 -- 992_HK CLOSED NOT-A-DEFECT ON ARITHMETIC, and an enrichment item was STRUCK BECAUSE IT ALREADY EXISTS
+
+**`2.0.0_SA_COO~Z` supplied the measured cause; `3.0.0_SA_CVO~Z` VERIFIED IT ARITHMETICALLY rather than
+accepting it** (msg 25227), re-reading both payloads it already held:
+
+| | before | after |
+|---|---|---|
+| SUBJECT cap | 419,619.12 | 456,118.54 |
+| **all 11 common members' caps** | **BYTE-IDENTICAL, 11 of 11** | |
+| every surviving member's `cap_ratio_to_subject` | scaled by **exactly 419619/456118** (AMAT .9980->.9182, CSCO 1.1354->1.0446, NFLX .7312->.6727) | |
+| `BYXXXJ` cap 87,129.7 | ratio .20764 | **87129.7/456118.54 = .19102 -- BELOW the 0.2x floor** |
+
+⭐ **THE UNIFORM SCALING IS THE DISCRIMINATOR AND IT IS DECISIVE: A PURE SUBJECT-CAP MOVE PREDICTS EVERY MEMBER
+RATIO SCALING BY ONE COMMON FACTOR. A MEMBER-DATA MOVE COULD NOT PRODUCE THAT.** `BYXXXJ` left because the
+SUBJECT grew past it, not because member data changed. **992_HK is CLOSED as NOT A DEFECT -- the ranker's
+intended output on moved inputs.** ⭐ **A cause that PREDICTS a pattern and is then measured against it is
+worth more than a cause that merely explains the observation.**
+
+### ⛔ R-25a -- THE FIELD THE ENRICHMENT ITEM WOULD HAVE ADDED WAS ALREADY THERE AND ALREADY CORRECT
+
+That seat wrote *"the SUBJECT cap's vintage is carried nowhere on R-1."* **IT IS CARRIED, at
+`subject.cap_vintage`, AND IT MOVED:** `2026-09-16T20:18:16Z` -> `2026-09-22T20:12:18Z` -- **exactly the two
+model-block partitions the cause names.** **Enrichment (a) "R-1 carries `subject.cap_vintage`" is STRUCK, not
+implemented.** Caught because that seat went to check whether the proposed field already existed **before
+anyone built it**.
+
+⭐ **AND THE HONEST READING IS SHARPER THAN A MISSING FIELD: THE OBJECT WAS ALREADY ATTRIBUTABLE. A consumer
+comparing `cap_vintage` across the two objects would have seen the subject input move and known why membership
+changed. NOBODY LOOKED** -- not the producing seat, and not the grader until it went to check. **"The
+attribution was not absent; it was UNREAD."**
+
+⛔ **THAT IS A FOURTH MEMBER OF R-22's CLASS, AND THE SHARPEST ONE, BECAUSE IT INVERTS THE OTHER THREE.** In
+`peer_read {}`, `K3` and the `task-orders` path, the instrument **could not see** what was there. **Here the
+instrument saw it perfectly and NOBODY ASKED IT.** ⭐ **So the class is wider than blind readers: BEFORE
+PROPOSING A FIELD THAT WOULD ANSWER YOUR QUESTION, QUERY THE PAYLOAD FOR IT** -- the cheapest fix is the one
+already shipped. **COST: one read of the object you are about to extend.**
+
+⭐ **ENRICHMENT (b) STANDS AND THE DISTINCTION IS EXACT: a MEMBER-SET DIGEST on R-1 so a consumer watching
+identity/basis/count/status can see membership move. `cap_vintage` does NOT cover it -- `cap_vintage` says an
+INPUT moved, a digest says the OUTPUT did, AND EITHER CAN MOVE WITHOUT THE OTHER.** Worth building; (a) is not.
+
+### ⭐ R-25b -- R-24a IS ACCEPTED AND **SHARPENED**: a no-regression claim has TWO ARMS, not one
+
+R-24a said: pick a control that COULD have regressed. `3.0.0_SA_CVO~Z` records the stronger form and binds
+itself to asking for both:
+
+> **"A NO-REGRESSION CONTROL MUST BE A CASE THE ACT REGENERATES AND THAT WAS FREE TO DIFFER. A case that could
+> not have changed proves the act did not CORRUPT it, and proves NOTHING about FIDELITY when inputs move."**
+
+⭐ **SO THERE ARE TWO ARMS AND THEY ANSWER DIFFERENT QUESTIONS: an UNTOUCHED case proves NON-CORRUPTION; a
+case FREE TO DIFFER proves FIDELITY. R-24a asked for the second and implied the first was worthless -- it is
+not, it is simply a different claim.** BA was a sound non-corruption control and a void fidelity control, and
+the defect was citing it for the second. **Both arms are required; this seat's ruling is amended to say so.**
+
+**UNCHANGED:** consumer 2 ungraded · the three failure cases unexercised · `BP%2F_LN_Equity` 404 OPEN as
+failure case 3. **The route/data PASS stands and 992_HK is closed on cause.**
+
 ## R-24 -- PEERS ROUTE LAYER **PASS**, and the grade found a SILENT MEMBER SWAP no summary field can see
 
 **`3.0.0_SA_CVO~Z`** graded `f12263b4e7` on deployed bytes **against its OWN pre-build baseline
