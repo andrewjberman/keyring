@@ -253,6 +253,59 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-13 -- THIS SEAT REPORTED `LEG-OUTSTANDING` AS A FAILED GATE ALL NIGHT, AND THE PROTOCOL FORBIDS EXACTLY THAT
+
+⛔ **EVERY TICK LOG TONIGHT CARRIED THE SENTENCE "THAT GATE IS NOT MET: `origin/CLOUD` unchanged at
+`b475b96309`, SITEZ 1,09x ahead / 0 behind" -- AND IT WENT TO ANDREW IN EVERY REPORT.** The `/integrate`
+skill @`d7454b855a` (2026-08-27, `0.0.0_AB_MSTR~Z`) says in terms: ⛔ **"`LEG-OUTSTANDING` still means what
+it said -- one YES and one NO -- but it is a STATE DESCRIPTION, not a defect, and IT MUST NOT BE REPORTED
+AS A FAILURE or drive further legs on its own."**
+
+**ANDREW RETIRED THE FIXED POINT AS A GOAL, VERBATIM (2026-08-27 ~23:2xZ):** *"parity is foundationally
+never going to happen unless work is stopped, which is not happening, the gist of it is that i want both
+fabrics to be updated with each others work, the big reason for this right now is that i need to run a
+/daily-sprint with the full render but i dont want to do it until we have all the info in from sitez."*
+**THE OBJECTIVE IS MUTUAL UPDATEDNESS ON A PRACTICAL CADENCE, NOT A FIXED POINT** -- both `is-ancestor`
+reads returning YES means the refs are EQUAL, and two live fabrics cannot hold that longer than it takes
+someone to commit. The skill also forbids asking a fabric to hold pushes to manufacture a both-YES read.
+
+⭐ **THE PROTOCOL'S OWN INSTRUCTION IS THE ONE THIS SEAT SKIPPED: "ASK WHAT THE INTEGRATION IS FOR, AND
+MEASURE THAT INSTEAD. A one-directional need has a one-directional test."** This seat never asked what the
+integrate was FOR. It reached for `rev-list --count`, got a real number, and reported the number as a
+verdict -- **an unasked-for denominator answering a question nobody had framed.** The 08-27 precedent is
+explicit that the satisfying read there was ONE direction alone and the other *"was irrelevant to the need
+and would have cost a push-hold to obtain."*
+
+**MEASURED STATE, 2026-09-24 ~01:3xZ, stated as a STATE and not as a grade:**
+- **PORTAL REPO: COMPLETE.** branch `DEV`, local `10141b6d` == `origin/DEV` == the parent's gitlink, **0
+  dirty paths** -- three reads agreeing, and the gitlink read matters because merging a gitlink never moves
+  what it points at.
+- **LEG CLOUD -> SITEZ: COMPLETE**, `is-ancestor(origin/CLOUD -> HEAD) = YES`, landed `da77d3365b`
+  **00:52:42Z -- AFTER Andrew's ~22:32Z break word**, merging `origin/CLOUD @69e36619ae` (the laptop CTO's
+  00:47:10Z commit carrying his own ~00:4xZ *"all recs approved"*, one rec of which was a CLOUD push).
+- **LEG SITEZ -> CLOUD: OUTSTANDING**, 1,104 commits, `is-ancestor(HEAD -> origin/CLOUD) = NO` (negative
+  control run in both directions). ⚠ **This is the direction that carries THIS fabric's work to the laptop,
+  which is the direction his 08-27 word cared about** -- so it is genuinely wanted, and it is **HELD AT BOTH
+  MSTRs FOR HIS WORD** by their own report, not stalled. **The merging act is the LAPTOP's** (`laptop leads
+  the push, SITEZ merges`), so it is not this fabric's to drive and the device guard keeps it that way.
+
+⛔ **AND A TERMINOLOGY COLLISION WORTH MORE THAN THE STATE IT DESCRIBES: `0.0.0_AB_MSTR~Z` CALLS
+CLOUD -> SITEZ THE "FORWARD LEG" (`da77d3365b`, `0e9ed7b1d8`, both) WHILE THIS SEAT HAS BEEN CALLING
+SITEZ -> CLOUD FORWARD.** Two seats using *forward* in **opposite senses about one operation**, in commit
+subjects that outlive every conversation. **A seat reading "forward leg done" can conclude the wrong
+direction landed, and nothing in either sentence looks ambiguous.** ⭐ **RATIFIED: name the direction
+explicitly -- `CLOUD -> SITEZ` / `SITEZ -> CLOUD` -- and never `forward` or `reverse`, in any integrate
+report, commit subject or log at this seat.** COST: two extra words. NON-APPLICATION: a context where only
+one direction exists.
+
+**THE CORRECT REPORT FORM, which this seat owes going forward:** name each leg by direction with its
+`is-ancestor` read and the act that satisfied it; say what the integration is FOR when that is known; and
+report an outstanding leg as a STATE with its owner, never as a failed gate. **Reporting it as a failure
+told the operator his own retired goal was blocking his restart.**
+
+COST: one read of the skill before quoting a gate. NON-APPLICATION: a gate whose definition this seat
+authored and holds.
+
 ## R-12 -- A TEARDOWN'S VERIFY-AFTER IS A **WORKTREE** READ, NEVER A **HISTORY** READ
 
 ⚠ **RULED IN A MESSAGE AND A TICK LOG FIRST, WHICH WAS THE WRONG CARRIER.** A log is a journal; a
