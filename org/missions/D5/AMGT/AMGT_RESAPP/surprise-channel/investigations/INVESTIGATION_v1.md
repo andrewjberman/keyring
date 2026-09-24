@@ -14053,6 +14053,60 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "Z-S262's fourteen resolutions are true and on the record but invisible to gate (iii)'s second limb, which reads `adjudicates` and nothing else; this row makes them visible to it without restating them. Every later batch of this sweep files through the field directly.",
     "disarm_owner": "2.0.0_SA_COO~Z -- the owner of every row adjudicated here; nothing on any target row is edited.",
     "notes": "Sibling of Z-S262, filed the same tick on R-81a's correction. Not round-38 L8 input."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S264",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-24T16:58Z",
+    "one_line": "ADJUDICATION CARRIER, batch 2 of the R-78 sweep, INHERITED: nineteen rows from rounds 1-9 (2026-09-11 to 09-13) whose disarm_owner is the predecessor lane 2.0.0_SA_COO~ZZZ -- a serial no longer seated on this project, so the rows have named an owner who could not act since round 13 (the stale-owner class /mstr-spawn 1d names). This project's issuer takes them as inherited, on its own read of each, and adjudicates the ones resolved in the world; each remedy is on its own evidence line. Nothing on any target row is edited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_RESAPP-Z-W4-S1 (re-running AMGT-s-12's f6_remeasure.py overwrites a peer's landed f6_remeasure.json in place): OUTPUT_PATH still writes beside the script (deliverables/0.9.0_WK_AMGT_RESAPP~3/f6_remeasure.py:65), and no order after round 1 names the script -- comp-find 'f6_remeasure' over the 208 task-order files: 2 hits, AMGT-s-12 and AMGT-s-8, both round 1 and complete. A dormant instrument nobody is asked to run; the hazard cannot fire without an order naming it.",
+        "AMGT_RESAPP-Z-W2-S3 (AC5's grep -r transiently counted a byte-coincidence inside a gitignored terraform provider binary): a face-craft lesson; the row's own reading cleared it once the .terraform/ cache was removed, and rd-2 drained complete.",
+        "AMGT_RESAPP-Z-W1-S7 (safe-apply's HALTGT checkpoint needed a session-keyed serial file outside the cell's <paths>): the file is the gate's own gitignored identity mechanism, not a deliverable; rd-1 (AMGT_RESAPP.TO-AMGT-rd-1.article-store-table.md) is complete and every later apply on this project has passed the same checkpoint the same way.",
+        "AMGT_RESAPP-Z-W2-S6 (rd-5's cell text never named which tickers the chatter axis ranks) and AMGT_RESAPP-Z-W2-S7 (the archive provider hit the one-required_providers-block ceiling): rd-5 (AMGT_RESAPP.TO-AMGT-rd-5.chatter-axis-scheduled-producer.md) is complete with the producer scheduled (cron(0 10 * * ? *), the project's one scheduled producer per rf-4's preflight); both were worked around inside the cell and named as such at its drain.",
+        "AMGT_RESAPP-Z-W10-S1 (an AC3 invocation whose last limb was `git checkout -- <file>`, destroying uncommitted work): a face defect on a round-3 order; the lesson is applied -- no face cut by this issuer since names a checkout/clean limb, and the round-38 faces forbid both to the worker verbatim ('Never push, merge, rebase, checkout -- or clean').",
+        "AMGT_RESAPP-Z-W10-S3 (the /api/scoped/amgt adapters were delivered as code but could not be mounted from the cell's grant): mounted since -- 16 API_ROUTEs live on api 7k3ed8px20 and CloudFront EVTSA9VEHNZVH behavior 28 of 29 for /api/scoped/amgt/* with auth-validator-edge:20 (rk-122/rk-123, 2026-09-22, ledger 20260922T2058Z closed 21:26Z; re-measured by the issuer 2026-09-24 16:0xZ: every AMGT path answers the edge's 401 unauthenticated, identical to the tickets family).",
+        "AMGT_RESAPP-Z-S27 (comp-iam cannot verdict a library, so the round-6 re-run could not discharge the IAM gap): rf-2 (AMGT_RESAPP.TO-AMGT-rf-2.the-mount-and-its-iam.md) is complete -- the mount and its IAM were the cell, and the 401-from-the-edge read above is the mount answering.",
+        "AMGT_RESAPP-Z-W11-S2 (rf-2 called itself a <paths> repair and its own <paths> omitted the two files that close it): rf-2 drained complete on the round-7 recut; the omission was repaired at that round's cut, which is the row's own named remedy.",
+        "AMGT_RESAPP-Z-S33 (two superproject branches, one gitlink, the second drain silently reverting the first) and AMGT_RESAPP-Z-S34 (a local fetch satisfied a gitlink's reachability check while the pushed pointer dangled): closed by mechanism -- every drain since resolves the gitlink explicitly (`git update-index --cacheinfo 160000,<sha>,portal` to the merged portal DEV head, six times today), and the one-trunk rule of 2026-09-24 retired SITEZ so there is one superproject head and MSTR pushes the portal with the workspace (memory: a drain that moves the gitlink names the portal commit).",
+        "AMGT_RESAPP-Z-S60 (a re-spawn into a REUSED worktree inherits every artifact of the previous occupant): closed by mechanism -- .tools/wk-provision.sh provisions a fresh worktree per slot and `remove` deletes it at the drain; six provisioned and six removed today (~140..~145), none reused.",
+        "AMGT_RESAPP-Z-S62, AMGT_RESAPP-Z-S63, AMGT_RESAPP-Z-S66, AMGT_RESAPP-Z-S68, AMGT_RESAPP-Z-S69, AMGT_RESAPP-Z-S71 (the predecessor lane's own method lessons: a zero read in the wrong layer; a nudge trigger keyed to an artifact the adjudicator does not produce while working; a fresh clone reported as an estate fact; '63 armed items' matching no instrument; a spawn prompt inventing an id grammar; native Python's empty read entering a set difference): each is a lesson about the seat's own reasoning, banked in that seat's memory at filing and carried into this issuer's practice (the census counts in this sweep print their denominators and their lane grain; worker prompts quote the channel header's grammar; every `git -C /c/...` read runs from bash); none names a world state that could still fire.",
+        "AMGT_RESAPP-Z-S70 (two rounds of portal repairs on no branch, held by refs/drains/* only, invisible to `git branch --contains`): a845a8be75 IS an ancestor of portal DEV today (`git -C portal merge-base --is-ancestor a845a8be75 DEV` -> true, 2026-09-24 16:5xZ); the work reached the trunk.",
+        "DENOMINATOR: 21 rows read by exact token on 2.0.0_SA_COO~ZZZ; 19 adjudicated here. The two not adjudicated are not named in this row and stay as filed pending a deeper read (a partition existence question and an always-pass criterion on a round-7 order)."
+      ]
+    },
+    "adjudicates": [
+      "AMGT_RESAPP-Z-W4-S1",
+      "AMGT_RESAPP-Z-W2-S3",
+      "AMGT_RESAPP-Z-W1-S7",
+      "AMGT_RESAPP-Z-W2-S6",
+      "AMGT_RESAPP-Z-W2-S7",
+      "AMGT_RESAPP-Z-W10-S1",
+      "AMGT_RESAPP-Z-W10-S3",
+      "AMGT_RESAPP-Z-S27",
+      "AMGT_RESAPP-Z-W11-S2",
+      "AMGT_RESAPP-Z-S33",
+      "AMGT_RESAPP-Z-S34",
+      "AMGT_RESAPP-Z-S60",
+      "AMGT_RESAPP-Z-S62",
+      "AMGT_RESAPP-Z-S63",
+      "AMGT_RESAPP-Z-S66",
+      "AMGT_RESAPP-Z-S68",
+      "AMGT_RESAPP-Z-S69",
+      "AMGT_RESAPP-Z-S70",
+      "AMGT_RESAPP-Z-S71"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "Each target row's disarm_owner reads 2.0.0_SA_COO~ZZZ, a lane instance that has not been seated on AMGT_RESAPP since round 13; R-78: a row keyed on a serial goes stale the moment that serial is re-scoped or closed, and no gate fires.",
+    "world_is": "The nineteen were resolved by drains, later rounds' mechanisms (the mount, the provisioning tool, the gitlink drain, the one-trunk rule) or were method lessons with no world state left to fire; their owner field could never be updated (append-only) and no carrier ever cited them. This row is the carrier, filed by the issuer that inherited the project from that lane.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- as the inheriting issuer of AMGT_RESAPP; nothing on any target row is edited.",
+    "notes": "Batch 2 of the sweep opened by R-78's census on this serial (CTO msgs 25617/25632). Not round-38 L8 input."
   }
 ]
 ```
