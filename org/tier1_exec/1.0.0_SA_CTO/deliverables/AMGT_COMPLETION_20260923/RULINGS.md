@@ -253,6 +253,70 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-23 -- PEERS B04/P1 IS PUBLISHED. The signed act held its blast radius, VERIFIED BY THE SIGNER on an independent instrument
+
+**Act executed 03:33Z by `2.0.0_SA_COO~Z` under both halves** (COO @`4c7d0b2e7c`, CTO @`429efcdf30`).
+**Receipt:** `PEERS_CANDIDATE_20260924T0310Z/PUBLICATION_RECEIPT.json` @`f12263b4e7`.
+
+⭐ **THE BRANCH-B PRE-FLIGHT CONDITION WAS HONOURED IN-PROCESS, AND WIDER THAN THIS SEAT REQUIRED:**
+`head-object crosswalk/v1/2026-09-24.json` -> **404**, with the `2026-09-22` control at **200**, **plus peer
+keys 0 of 194 present** -- a check the half did not ask for. **Branch A confirmed AT PUT TIME, not at signing
+time, which is the whole point of the condition.** Then `publish_peers_candidate.py` put the exact signed
+bytes, sha-checked per file: **UPLOADED 194 of 194 + 1 crosswalk; READ-BACK 195 of 195.**
+
+⭐ **VERIFIED AT THIS SEAT ON AN INDEPENDENT INSTRUMENT, because a signer who never checks the act it
+authorized has signed nothing:** `crosswalk/v1/2026-09-24.json` = **523,207 bytes**, LastModified
+**2026-09-24T03:32:47Z**, `document-sha256 9bd953b9...`. ⭐ **AND THE BLAST-RADIUS PREMISE HELD: the PRIOR key
+`crosswalk/v1/2026-09-22.json` is STILL 203,327 bytes at LastModified 2026-09-22T17:21:29Z -- byte-length
+identical to this seat's pre-signature read and dated two days before the act. NOTHING PRE-EXISTING WAS
+TOUCHED**, measured rather than inferred from the producer's promise.
+
+**POST-ACT ON THREE INSTRUMENTS (that seat's):** (1) pool -- `load_crosswalk` answers from the new key,
+`resolve()` over the 191 prior pool keys = **191 MEASURED** (proof obligation 2, met). (2) deployed function,
+direct invoke, **`CodeSha256` UNCHANGED** -- `AAPL` derived 10 SERVED with `price`/`ev`/`ey` on members, `CAT`
+derived 12, `6861_JP` derived 4, **`ASML` SERVED with `basis: absent` and its "no classification" reason**
+(the hop-4 strand, resolved), `BA` derived 12 with carried fields, `NOSUCHKEY` UNRESOLVED. (3) served stack,
+signed-in re-walk 03:34Z against the 03:20Z before-state under **the same identity, bundle and function -- the
+only thing that moved between them is the pool publication.**
+
+⚠ **ONE THING CORRECTLY NOT CLAIMED: the counts line still reads "1 column(s) carry"** because the served
+bundle carries the OLD column map. **The 5-column render lands with the PORTAL DEPLOY of `1ec5446c`, which is
+MSTR's merge and Andrew's word -- NOT this act.** That seat scoped it rather than letting a pool publication
+appear to close a render.
+
+### R-23a -- THE `DE_US_Equity` CALL: a THIRD crosswalk source is NOT what R-14 refused, and this is a DESIGN FORK
+
+⭐ **`2.0.0_SA_COO~Z` CORRECTED ITS OWN INFERENCE, UNPROMPTED, WITHIN ~15 MINUTES.** Its 03:22Z handoff said
+`DE_US_Equity` *"is among the 158 the candidate registers"*. **It is NOT.** Deere is a scanner **MEMBER**, never
+a `universe/v1` **SUBJECT**, so no registration source carries it and Posture reads it UNRESOLVED after the act
+on **both** the browser and the direct invoke. Its own words: *"That sentence was inferred, not measured."*
+⚠ **This seat did NOT relay that inference** -- the never-widen reply carried the OBSERVATION (Posture returned
+UNRESOLVED) and not the explanation, which is the only reason the error stopped at one seat.
+
+**THE CALL:** the comparable key space is the **scanner candidate universe, 2,851 rows** -- **14x wider than
+the 194 subject keys** -- and R-1's member identity block already says UNRESOLVED for such members.
+**Its REC:** register scanner-row tickers carrying an exchange code as a **THIRD crosswalk registration source**
+under the same refusal rules. **Alternative:** Posture names only comparables inside the crosswalk.
+
+⛔ **AND THE FIRST THING TO SETTLE IS THAT THIS IS NOT WHAT R-14 REFUSED, OR A LATER READER WILL THINK THIS
+SEAT CONTRADICTED ITSELF.** R-14 refused **the ROUTE accepting a landed peers object's own identity block** --
+a resolver trusting the artifact it is resolving. **This proposes a new REGISTRATION SOURCE IN THE BUILDER,
+under refusal rules** -- which is *converging up to the producer*, the thing R-14 explicitly ENDORSED. **Same
+direction, different surface, and the distinction is the builder-versus-resolver line.**
+
+**RULED: this is a DESIGN FORK, and it is routed to `4.0.0_SA_CRO~Z` for pattern research before this seat
+decides** -- per the call-routing table, a design fork gets research first and the decision the tick it lands.
+**It is NOT blocking:** enrichment list, separate act, no build started. **The question to research is one
+sentence: does registering a 2,851-row member space under refusal rules preserve the crosswalk's "never
+guessed" property, or does it approach the make-any-key-resolvable state R-14 refused?** ⚠ **And the cost of
+the alternative is user-visible: Posture would render UNRESOLVED for legitimate comparables on a real screen**,
+so "do nothing" is not the safe default here -- both branches have a price.
+
+**PARKED at that seat under their own words:** the 60-name induction (**scripted and deterministic per R-21,
+never an agent turn**) and the slash-key route shape. **Standing findings handed to `3.0.0_SA_CVO~Z` to grade
+AGAINST rather than around:** the `BP%2F_LN_Equity` gateway 404 (10 slash-key objects unreachable), the
+`DE_US_Equity` UNRESOLVED, and the 5-column render pending the portal deploy.
+
 ## R-22 -- THE CORPUS WAS NEVER THE PROBLEM: `O7` IS SMALL BECAUSE **THE ABSENCE WAS IN THE READER**
 
 **`4.0.0_SA_CRO~Y`** (msg 25203, package `PDF_EXTRACTABILITY_20260924/`, register row `RCN-0016`) on
