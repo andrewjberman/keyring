@@ -5,7 +5,7 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.4",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-page-remediation-brief-20260924.md@5cc838e696",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -187,14 +187,14 @@ hygiene runs at the drain. The round-1 analysis ends in the enrichment list the 
 
 1. FWD-2 header identity card complete (entitlements, revisions and cohorts one click away) -- C1 remainder
 2. FWD-4 one firm control, the Model Portfolios dropdown, Global (All) for Opal users only -- C2
-3. FWD-6 Holdings: allocation bars per category with the per-account matrix; the treemap; asset class / sector columns when ruled -- C3, C4 remainder
-4. FWD-5 Performance: the control row (window, net / gross); the AUA Trend area chart; the returns heatmap; the accounts table with the uncovered-account row; the footer line with its popover -- C5, C6 remainder
-5. FWD-11 no system vocabulary on any tab body; the facts retained one click down -- C13
-6. FWD-3 the browse drawer (grouped by firm in the Global view; the paged dropdown gone) -- C7
-7. FWD-7 the Analysis stepper (Input, Review, Settings, Generate, Report) with the left rail and the per-report Details popover -- C8, C9
-8. FWD-8 the prospect as subject (prospect card in the header, upload-first step 1, the prospect's own history) -- C10
-9. FWD-9 one page-level Export on the header; the two disabled per-tab buttons gone -- C11
-10. FWD-10 the portal panel system on every panel; tab order Performance, Holdings, Analysis -- C12, C14
+3. FWD-6 Holdings: allocation bars per category with the per-account matrix; the treemap; asset class / sector columns when ruled -- C5; C4 remainder
+4. FWD-5 Performance: the control row (window, net / gross); the AUA Trend area chart; the returns heatmap; the accounts table with the uncovered-account row; the footer line with its popover -- C6 remainder, C7, C8
+5. FWD-11 no system vocabulary on any tab body; the facts retained one click down -- C14
+6. FWD-3 the browse drawer (grouped by firm in the Global view; the paged dropdown gone) -- C9
+7. FWD-7 the Analysis stepper (Input, Review, Settings, Generate, Report) with the left rail and the per-report Details popover -- C10
+8. FWD-8 the prospect as subject (prospect card in the header, upload-first step 1, the prospect's own history) -- C11
+9. FWD-9 one page-level Export on the header; the two disabled per-tab buttons gone -- C12
+10. FWD-10 the portal panel system on every panel; tab order Performance, Holdings, Analysis -- C13
 11. The `spread` member consumed when P lands it (round 1 renders "not supplied" and the trace grades that hop with the reason;
     FWD-1's ACCEPT names the spread, so a passing round-1 trace leaves FWD-1 NOT_REALIZED until `spread` is served)
 
@@ -249,7 +249,11 @@ and `api/**` (P, the shared client surface; the additive members' acceptance); t
 `display`, `CUSTODY_UNITS`; P: the Performance adapter and `spread`; Y: upload / job semantics, the catalogue);
 `portal/DESIGN.md` (DSGN_REBRND, the design law). Sequenced by the CTO against the IRPT post-slug HOLD and the P/M/Y
 closer contract: the COT `display` republish, SERVED (model names on Anna's page), precedes the L6 issuance -- hops 7
-and 8 read names from it; the D1 resident run is NOT a precondition (the thread does not touch Analysis). The round-1
+and 8 read names from it -- AND M's labels pin `e5dd8487` is an ancestor of portal `DEV` (it rides P's next candidate,
+landed by MSTR on Andrew's word; at v0.5 `merge-base --is-ancestor e5dd8487 DEV` reads rc=1), because C3 / C4 build on
+those rows; the cut records `portal_ref` and that is-ancestor rc in the issuance's fanout data. If the candidate lags the
+served republish, the base stays DEV (a candidate-based worktree drains into a branch P must reconcile twice). The D1
+resident run is NOT a precondition (the thread does not touch Analysis). The round-1
 DRAIN TRACE additionally needs the Performance path READY for hop 6, and both of its parts sit outside this project's
 write surface: (i) X10 enforced -- the registry row ACTIVE with `enforcement_ref` = the CTO's accepting commit, and the
 adapter repackaged with it (CTO review, P repackage); (ii) ONE installed one-use plan for `acc_d486fc9455d6b2aa18e13af1`
@@ -303,6 +307,10 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
   path's readiness stated on the sequencing line; ratified-text half (`3.0.0_SA_CVO` 100290 @`e0915c97fe`): `unprojected_grant`
   as a partial-data fact with the visible indicator (CONTRACTS), "ten consumed contracts and the operations that serve them",
   the three no-handler routes deferred as Y's. Both halves change bytes; both stamps are owed again.
+- v0.5, 2026-09-24 ~06:0xZ, `1.0.0_SA_CTO` (Claude): `2.0.0_SA_COO~D` pre-read 100308 -- F2 the ENRICHMENT BACKLOG cited candidate
+  ids shifted against CELL CANDIDATES (items 3-10 re-lettered to the section's own ids; FWD ids and words unchanged); F3 the
+  portal base at the cut needs M's labels pin on DEV, added to the sequencing line. Brief half only; ENDPOINT and CONTRACTS
+  bytes unchanged (the `3.0.0_SA_CVO` stamp @`2c60ba747f` stands); the brief half's stamp is owed at these bytes.
 
 ## SURFACE MANIFEST
 

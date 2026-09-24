@@ -25,7 +25,8 @@
     "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.1",
     "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.2",
     "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.3",
-    "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.4"
+    "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.4",
+    "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.5"
   ],
   "decompositions": [],
   "decomposition_lineage": [],
@@ -42,7 +43,7 @@
     "authority": "CLAUDE.md Rule 27 L4-R: the CRO signs the BRIEF half (4.0.0_SA_CRO~F stated it will sign when routed, msg 100235); 3.0.0_SA_CVO signs the RATIFIED-TEXT half"
   },
   "fabric_ruling": "laptop -- D13 Design placed LAPTOP by Andrew-direct 2026-09-11 ('it will be laptop fabric'); placement attaches to the directive (LD-0498, LD-0502).",
-  "blocking": "L4 PRD v0.4 2026-09-24 ~05:4xZ (both halves re-cut on the v0.3 refusals); L4-R halves owed (3.0.0_SA_CVO ratified-text, 4.0.0_SA_CRO brief); DONE WHEN lines and the hop-6 one-use plan word at Andrew; 2.0.0_SA_COO~D live, L5 drafted offline; L6 precondition: the COT display republish SERVED; drain trace needs X10 ACTIVE + repackage and the installed plan.",
+  "blocking": "L4 PRD v0.5 2026-09-24 ~06:0xZ (brief half: backlog ids, portal base); ratified-text SIGNED by 3.0.0_SA_CVO @2c60ba747f; brief half owed by 4.0.0_SA_CRO at v0.5; DONE WHEN lines and the hop-6 one-use plan word at Andrew; 2.0.0_SA_COO~D live, L5 drafted offline, lands on ADMITTED; L6 precondition: the COT display republish SERVED and e5dd8487 on portal DEV.",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md",
