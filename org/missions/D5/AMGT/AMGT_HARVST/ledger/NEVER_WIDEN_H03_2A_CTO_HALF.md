@@ -89,11 +89,30 @@ already uploaded and read back both versions, so the ordering is satisfied.
 2. **The `{"dry_run": true}` invoke (zero writes) runs BEFORE the next 10:00Z fire** -- it is the first
    target-runtime exercise of Arrow 15 reading Arrow 24 parquet, which R-15/R-17 left REQUIRED, and the flag
    choice does not remove that need.
-3. **The daily-leg negative control stands as that seat wrote it:** `TRENDING_CHATTER#2026-09-23` and
-   `BREAKOUT_CHATTER#2026-09-23` `_CURRENT` stay **byte-identical to the baseline**, and **no `_CURRENT`
-   appears at the run date**. ⭐ Under `legacy` the expectation is different and must be stated: a NEW
-   same-day `_CURRENT` **is** expected, with `row_count 2` and `names_with_links 3 of 250` -- so the control is
-   that the **09-23 pointers stay byte-identical** while a fresh one appears, not that nothing appears.
+3. ⛔ **AMENDED 03:5xZ -- THE WHOLE PROOF-CLAUSE SECTION OF THE COO HALF IS WRITTEN FOR `gold` AND WAS NOT
+   AMENDED WITH THE FLAG. UNDER `legacy`, FIVE CLAUSES ARE FALSE ON A CORRECT APPLY.** The flip landed in the
+   PLAN (`B2`, `:102`, `:112`, with the old `=gold` bytes correctly retained in a supersession marker) and the
+   PROOF at `:79-94` still expects gold throughout:
+
+   | clause | as written (gold) | correct under `legacy` |
+   |---|---|---|
+   | `:83` | env `CHATTER_AXIS_SOURCE=gold` | **`legacy`** |
+   | `:84` | dry_run `source=gold`, both products `FAILED` / `INCOMPLETE_GOLD_INPUT`, `rows_written=0` | **`source=legacy`**; no gold-input failure; the run ranks legacy |
+   | `:88` | run line `source=gold`, `INPUT_COVERAGE RESOLVED 0 of 191`, `state=FAILED`, `pointer_written=False`, `failed_marker_written=True` | **`source=legacy`**, a generation WRITTEN, **`pointer_written=True`**, **no failed marker** |
+   | `:92` | **NO `_CURRENT` at `#2026-09-24`** | ⛔ **A FRESH SAME-DAY `_CURRENT` *IS* EXPECTED** (`row_count 2`) |
+   | `:93-94` | `names_with_links` population "under `gold`" (identities with a gold day record) | the **legacy publication-link population, 3 of 250** |
+
+   **THE CORRECTED CONTROL: the `09-23` pointers (`generation_id 20260923T100026Z-d09ee37a8f3b` /
+   `20260923T100028Z-25147d66b259`) stay BYTE-IDENTICAL to the baseline WHILE A FRESH `#2026-09-24` `_CURRENT`
+   APPEARS with `row_count 2` and `names_with_links 3 of 250` (population stated, R-20).**
+   ⛔ **THE HAZARD IS NOT A FAILED PROOF -- IT IS THE OPPOSITE: a proof that fails on CORRECT behaviour invites
+   someone to "fix" the APPLY to satisfy the PROOF, which would silently restore `gold` and with it the served
+   regression this half refused.**
+   ⚠ **AND THIS SEAT'S OWN CONDITION 3 CAUGHT ONE OF THE FIVE.** It named the daily control and missed the env
+   read, the dry_run source, the marker expectations and the population clause. ⭐ **THE LESSON IS MINE: I
+   verified the FLAG changed and did not census the flag's READERS. A one-token change had five dependent
+   clauses, and the grep that confirmed the flip printed a denominator of 7 hits I did not inspect.**
+   **A VALUE CHANGE IS COMPLETE ONLY WHEN EVERY CLAUSE THAT DEPENDS ON IT MOVES.**
 4. **`names_with_links` is reported WITH `names_with_links_population`** (R-20). Already built.
 5. **The ledger `amgt-h03-leadpanel-y-20260924` closes at completion or is rolled back** (NEVER-2). `pair`,
    `tf`, `daily` and `served` are OPEN.
