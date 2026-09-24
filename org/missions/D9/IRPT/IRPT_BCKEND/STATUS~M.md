@@ -45,8 +45,8 @@ branch. No code edit is open.
 2. On the CTO's routing of the widening request (`CLASSIFIER_WIDENING_REQUEST_20260924.md` @d8a88cef4b; 287 rows, 69
    readers): if the CTO rules it this seat's, fill 49F's 62 CUSIP-only rows (symbol and name from the Schwab security
    master) in the Holdings producer.
-3. The 5 stale tests in `investor_reporting/tests` (3 expect UNATTESTED currency; 2 predate the 06be82897f capture
-   guard).
+Done this lease: the investor_reporting suite is green, 267 passed and 0 failed @1848e5caef. Each stale test's premise
+is pinned (unattested currency, the required Eclipse capture, the lib.opal_naming binding); no assertion was loosened.
 
 ## Parked
 
