@@ -9,7 +9,7 @@
  "step": 4,
  "brief_ref": "docs/briefs/irpt-page-remediation-brief-20260924.md@fb90ad8fe0",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
- "status": "DRAFT -- L4-R halves owed (3.0.0_SA_CVO ratified-text; 4.0.0_SA_CRO brief)"
+ "status": "DRAFT"
 }
 ```
 
