@@ -299,7 +299,13 @@ row, `enrich.domain_for` / `lusha._cli` now fall back to `verified_domain_for(so
 `ceo_public_profile` or a seed URL. The REMAINDER of this order (the live Lusha enrichment, gated on the key ROTATION)
 stays HELD, and its status stays open until Andrew says the key is rotated. The `wk-amgt-14-50` worktree is untouched.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~18:0xZ -- WITHDRAWN.** The order was gated on a key rotation Andrew declined
+(Andrew-direct ~17:5xZ, relayed by 1.0.0_SA_CTO~Z msg 25682, VERBATIM: "Dont't care about this right now, not rotating at this time").
+A precondition its principal has declined cannot be met as written, so the face is withdrawn rather than left open against it;
+no criterion was run, no world act taken. Re-cut on his word if the rotation is ever ordered. It was the last non-terminal order
+of 208 on this project.
+
+<status>withdrawn</status>
 <round>14</round>
 <slot>~50</slot>
 <fabric>site-z</fabric>
