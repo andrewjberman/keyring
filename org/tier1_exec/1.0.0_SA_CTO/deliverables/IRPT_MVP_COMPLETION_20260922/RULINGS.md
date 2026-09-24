@@ -1849,3 +1849,85 @@ conditions = Y's five (positive arm from a measured fixture; NEGATIVE arm: 200 n
 identity first / template second / eviction 403 still EVICTED_HARD; bundle_contract 25/25 + offline
 all_pass + node --check; the unsigned control reads DISTURBED). Then ONE run = the third submission.
 Host deps verified by Y (python 3.12.14; the irpt-common pins + pdfplumber set; hash 6a751288f048f127).
+
+
+## 2026-09-24 04:3x UTC - Claude CTO batch 24: display sequence; DEV candidate; listing speed deployed; D1 predicate commit
+
+### IRPT-HOLDINGS-DISPLAY-NAMES-20260924 -- sequence amendment (M 100170; CTO 100172)
+M's fill @699bf9ed1b is GATED on the contract (display_admitted() reads the schema the runner validates
+against; emits nothing until `display` is admitted); labels from the directory's masked_discriminator
+(the relationship's; a per-account mask is a producer of its own), "Rebalancer strategy: <name>",
+model_name, "Client (residual, not in a model)" / "Client", "<symbol> -- <description>" from custody
+Symbol + Asset Display Name, definition component names, "Unallocated remainder ..."; an account absent
+from the directory gets no label; 49F/INF derive display from their name facts; 239 passed / 4
+pre-existing. THE SHAPE, fixed byte-for-byte: display {type object, additionalProperties false,
+required [label], properties label (string, minLength 1), symbol (string), description (string)},
+optional on the node. THE ORDER (M's trap: the deployed irpt-holdings validates against ITS OWN schema
+copy through the layer, so a member that reaches docs/ only makes the function refuse the republished
+body): 1 P edits BOTH copies (docs + holdings/contracts) + the response example; 2 the portal
+validator/adapter admit exactly the three keys in the DEV consolidation; 3 P repackages irpt-holdings
+code-only with the new copy (and any other function that validates HoldingsSnapshot); 4 M runs the 841
+build with the labelled-of-N census and asks for the GO (CAS over .VLcr1BCE, 2d067b4d retained); 5 M
+republishes after 2 and 3 are live.
+
+### IRPT-PORTAL-DEV-CONSOLIDATION-20260924 -- candidate built; one arm ruled (P 100175; M 100179; CTO 100176)
+Candidate irpt-dev-consolidation-20260924 @ba532e57 = c1ac41ec + merge 0149c442 (M 67158601) + merge
+ba532e57 (P 8e616985); 9 files +403/-22; seven conflicts resolved to the DEV side (byte-identical
+duplicates named); install / tsc / eslint 0 errors / build OK / m-overlay 26; every affected suite
+equal to the untouched DEV head except ONE arm: fe-s-76 revision-mismatch-guard.test.ts:320-329 (M's
+e5604c03) expects drilled.passes 2 at a zero-denominator BRANCH mount, receives 1 -- because 67158601
+auto-advanced past EVERY single-child node. RULED: the test stands; 100066 (b) was a FIRST-SCREEN rule
+for the ACCOUNT root of a single-account selection only. M narrowed it @d763531b (initialDrillRef: two+
+roots -> the list; a single non-account root -> as given; a single ACCOUNT root with exactly one
+non-empty child -> that child, one level; else the account); 28 assertions; fe-s-7/55/76 45 pass; P
+merges d763531b into the candidate, expects fe-s-7 48/3 (the DEV baseline's three) and fe-s-76 8/0,
+then adds the `display` acceptance, the named READY codes (no code line on READY) and the "Scope as of"
+measurement, and reports for the CTO's GO; MSTR pushes DEV on Andrew's word.
+
+### IRPT-LISTING-SPEED-PIN-GO-20260924 -- DEPLOYED (CRO 100166; P 100180/100185; CTO 100168)
+Pin extended to 5886d0b9bd (cadence "5min" row 4eae414dd4 in the ANY_EXEC standards lane; schedule
+irpt-directory-keepwarm-5min; naming gate 3/3). P: merged @19d1c3b387; the pre-existing 6 + 7 failures
+unchanged; package 6uxqQO2S (20 members; exactly entry.py / loaders.py / served.py differ); plan
+31060b25 = 3 add (keep-warm role, policy, schedule) / 1 change (memory 512 -> 1769 + hash/version) / 0
+destroy; ledger sentinel 145435aa6c before the act; APPLIED 04:21:24Z; readback CodeSha 6uxqQO2S,
+MemorySize 1769, schedule ENABLED rate(5 minutes) input {irpt_warm:true}; re-plan 0; recorder
+83a232fa71; ledger A1/V1/R1 closed @fc5d2e5507, M1 open by design. CTO own readback 04:3xZ:
+get-function-configuration CodeSha256 6uxqQO2Sm6SLY4k+XYWzuQ/Corssjy3zVW/DNDS6qMI=, MemorySize 1769,
+Timeout 15, Active / Successful, LastModified 04:21:18Z; get-schedule irpt-directory-keepwarm-5min
+ENABLED rate(5 minutes) -> irpt-directory-search, input {"irpt_warm":true}. M1 (first-hour p50/p90
+beside the baseline p50 1.33 s / p90 4.91 s / p99 6.95 s, one warm-fire line, one timed Global load)
+due ~05:21Z; no speed claim before it.
+
+### IRPT-RESIDENT-D1-RERUN-20260924 -- predicate commit landed (P 100183); CTO own run
+abce466570 (library a0ffa0e8; wrapper 55ddb8f7): PROBE_TEMPLATE_ID 14141822 (templates.json OVERVIEW,
+report_type aggregate_security_overview), PROBE_PATH default /custom_pdf_reports/generate/14141822
+(the market-data URL behind YC_PROBE_PATH); identity leg FIRST (readIdentity, five refusals, a refusal
+returns IDENTITY_<refusal> with the template GET unspent); template leg from inside the page, graded by
+classifyResponse AND probeTemplateDocument (String(id) == path id, report_type string, sections array;
+BODY_NOT_JSON / TEMPLATE_ID_MISMATCH / REPORT_TYPE_ABSENT / SECTIONS_NOT_ARRAY); authenticated =
+template LIVE AND identity ok; the pair control fires on the template route. Replay serves the document
+(integer id; the fixture cites recipe.py + templates.json, not memory) and a template_html negative
+mode; suite arm (a) 6 of 6 (HTML 200 -> NOT_LIVE BODY_NOT_JSON; document -> LIVE; unminted cookie ->
+403 DISTURBED; no identity cookie -> no request). CTO own run at abce466570: node --check ok,
+bundle_contract failed 0, offline all_pass, arm (a) "6 of 6", the four predicate identifiers present in
+the file. Y STANDS (100193, own run: node --check x3, 25/0, all_pass, arm (a) 6 of 6, non_loopback_hosts
+[]; the five conditions MET; bound stated: the identity-first leg is exercised LIVE only, so the run
+receipt must carry identity_via 'dashboard-window-user', identity_leg PASS and a positive integer
+user_id before the template line). The ONE run = the third submission may fire.
+
+### IRPT-DESIGN-RECON-CALLS-20260924 (CRO~F 100187: Andrew-direct ~04:2xZ, PM walk + /draw concepts; recon only)
+Andrew's word (verbatim in the CRO's record ANDREW_DIRECT_20260924_042xZ_IRPT_PAGE_PM_WALK_AND_DESIGN_
+CONCEPTS.md): walk the IRPT page as a PM, name every defect (random GUIDs, no holdings list, the
+paginated cut-off client dropdown, hashes on Analysis), reference Model Portfolios / Positioning for
+Holdings, Advisor Intelligence + the Benchmark tab for Performance, a flow-based Analysis layout; /draw
+concepts for the header, Performance, Analysis and Holdings; Andrew iterates the layout; then a brief.
+Two calls surfaced, RULED (CTO 100194): (a) the FE derives nothing -- a benchmark/portfolio spread is a
+SERVER-STATED fact: additive optional `spread` per comparison row on the PerformanceReport (value,
+basis, the two facts and their dates), emitted by the Performance adapter (P; both contract copies);
+(b) the tab rename Reporting -> Performance is inside Andrew's own word (he named it) and rides the
+portal candidate AFTER the DEV consolidation. Data asks: security name = the `display` ruling; asset
+class / sector = the taxonomy enrichment whose SOURCE is the open card; quantity / price = custody
+facts into the node's existing optional `valuation_facts` (P measures what it admits; M fills in the
+display republish, else P extends additively portal-first); benchmark daily series, household
+begin/end values (P) and the comparison catalogue (Y) are brief items. Nothing pre-empts the DEV
+consolidation, the D1 run or the COT display republish.
