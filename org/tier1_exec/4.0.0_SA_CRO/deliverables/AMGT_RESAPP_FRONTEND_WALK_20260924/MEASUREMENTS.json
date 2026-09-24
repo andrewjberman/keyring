@@ -1,0 +1,527 @@
+{
+ "walk": "AMGT_RESAPP_FRONTEND_WALK_20260924",
+ "author": "4.0.0_SA_CRO~Z",
+ "measured_window_utc": "2026-09-24T04:31Z..04:50Z",
+ "device": "OPAL_BLOOMBERG (site Z)",
+ "instrument": {
+  "renderer": "portal/scripts/ui-smoke.mjs (headless Edge, auth stub, fixtures) against vite dev on localhost:5175",
+  "measure": "scratchpad ui-measure.mjs (same stub; DOM pass: contrast per text node, fonts, sizes, weights, radii, shadows, band containers, long blocks, sibling overlaps)",
+  "occlusion": "scratchpad ui-occlusion.mjs (sticky height vs viewport after scrolling to the tab panel)",
+  "portal_pin": "10141b6d0b (DEV)",
+  "workspace_pin": "3ed1c5e1f1 (CLOUD)"
+ },
+ "fixtures": {
+  "source": "src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json + thesisBundle.drafted.BA_US_Equity.json (captured 2026-09-15) + tonight's live rankings/timeseries responses",
+  "thesis_sentences": 38,
+  "thesis_evidence_rows": 48,
+  "fiscal_figures": 165,
+  "officers": 12,
+  "peers": 12,
+  "header_figures": 14
+ },
+ "states": {
+  "01_list": {
+   "name": "Lead Panel list (no selection)",
+   "pageHeight": 900,
+   "visibleElements": 248,
+   "bandContainersTopLevel": 2,
+   "panelsOver300px": 3,
+   "textChars": 960,
+   "onBandChars": 400,
+   "onLightChars": 560,
+   "lowContrastChars": 0,
+   "lowContrastSamples": [],
+   "fonts": {
+    "Lato": 960
+   },
+   "weights": {
+    "300": 8,
+    "400": 643,
+    "500": 241,
+    "600": 37,
+    "700": 31
+   },
+   "sizes": {
+    "10": 304,
+    "12": 331,
+    "14": 309,
+    "30": 16
+   },
+   "radii": {
+    "8px": 22,
+    "3.35544e+07px": 2,
+    "4px": 6
+   },
+   "shadows": 1,
+   "translucentPaints": 0,
+   "overlaps": 10,
+   "overlapSamples": [
+    [
+     "INSIGHTS",
+     "Market Overview"
+    ],
+    [
+     "Market Overview",
+     "SECURITY"
+    ],
+    [
+     "Model Portfolios",
+     "Universe discovery, ranked ser"
+    ]
+   ],
+   "longBlocksOver240": 0,
+   "longestBlocks": [],
+   "purpleFills": 4,
+   "tables": 0
+  },
+  "02_thesis": {
+   "name": "Security mode, Thesis tab",
+   "pageHeight": 6548,
+   "visibleElements": 687,
+   "bandContainersTopLevel": 4,
+   "panelsOver300px": 6,
+   "textChars": 47393,
+   "onBandChars": 565,
+   "onLightChars": 46828,
+   "lowContrastChars": 280,
+   "lowContrastSamples": [
+    {
+     "text": "machine",
+     "ratio": 2.3,
+     "fg": "rgb(95, 59, 227)",
+     "bg": "rgb(25,38,67)",
+     "size": 9
+    },
+    {
+     "text": "machine",
+     "ratio": 2.3,
+     "fg": "rgb(95, 59, 227)",
+     "bg": "rgb(25,38,67)",
+     "size": 9
+    },
+    {
+     "text": "machine",
+     "ratio": 2.3,
+     "fg": "rgb(95, 59, 227)",
+     "bg": "rgb(25,38,67)",
+     "size": 9
+    }
+   ],
+   "fonts": {
+    "Lato": 47393
+   },
+   "weights": {
+    "300": 8,
+    "400": 46679,
+    "500": 393,
+    "600": 282,
+    "700": 31
+   },
+   "sizes": {
+    "9": 280,
+    "10": 6331,
+    "11": 18,
+    "12": 34480,
+    "14": 6258,
+    "16": 5,
+    "18": 5,
+    "30": 16
+   },
+   "radii": {
+    "8px": 23,
+    "3.35544e+07px": 2,
+    "4px": 42
+   },
+   "shadows": 1,
+   "translucentPaints": 0,
+   "overlaps": 14,
+   "overlapSamples": [
+    [
+     "INSIGHTS",
+     "Market Overview"
+    ],
+    [
+     "Market Overview",
+     "SECURITY"
+    ],
+    [
+     "Model Portfolios",
+     "Universe discovery, ranked ser"
+    ]
+   ],
+   "longBlocksOver240": 0,
+   "longestBlocks": [],
+   "purpleFills": 3,
+   "tables": 0
+  },
+  "03_exec": {
+   "name": "Exec Management tab",
+   "pageHeight": 1731,
+   "visibleElements": 429,
+   "bandContainersTopLevel": 3,
+   "panelsOver300px": 4,
+   "textChars": 4479,
+   "onBandChars": 449,
+   "onLightChars": 4030,
+   "lowContrastChars": 14,
+   "lowContrastSamples": [
+    {
+     "text": "machine",
+     "ratio": 2.3,
+     "fg": "rgb(95, 59, 227)",
+     "bg": "rgb(25,38,67)",
+     "size": 9
+    },
+    {
+     "text": "machine",
+     "ratio": 2.3,
+     "fg": "rgb(95, 59, 227)",
+     "bg": "rgb(25,38,67)",
+     "size": 9
+    }
+   ],
+   "fonts": {
+    "Lato": 4479
+   },
+   "weights": {
+    "300": 8,
+    "400": 3974,
+    "500": 393,
+    "600": 64,
+    "700": 40
+   },
+   "sizes": {
+    "9": 14,
+    "10": 743,
+    "11": 18,
+    "12": 3059,
+    "14": 619,
+    "16": 5,
+    "18": 5,
+    "30": 16
+   },
+   "radii": {
+    "8px": 22,
+    "3.35544e+07px": 2,
+    "4px": 3
+   },
+   "shadows": 1,
+   "translucentPaints": 0,
+   "overlaps": 12,
+   "overlapSamples": [
+    [
+     "INSIGHTS",
+     "Market Overview"
+    ],
+    [
+     "Market Overview",
+     "193510.78009600003"
+    ],
+    [
+     "Model Portfolios",
+     "790370020"
+    ]
+   ],
+   "longBlocksOver240": 0,
+   "longestBlocks": [],
+   "purpleFills": 3,
+   "tables": 1
+  },
+  "04_peers": {
+   "name": "Peers tab",
+   "pageHeight": 2390,
+   "visibleElements": 709,
+   "bandContainersTopLevel": 3,
+   "panelsOver300px": 4,
+   "textChars": 7367,
+   "onBandChars": 490,
+   "onLightChars": 6877,
+   "lowContrastChars": 14,
+   "lowContrastSamples": [
+    {
+     "text": "machine",
+     "ratio": 2.3,
+     "fg": "rgb(95, 59, 227)",
+     "bg": "rgb(25,38,67)",
+     "size": 9
+    },
+    {
+     "text": "machine",
+     "ratio": 2.3,
+     "fg": "rgb(95, 59, 227)",
+     "bg": "rgb(25,38,67)",
+     "size": 9
+    }
+   ],
+   "fonts": {
+    "Lato": 7367
+   },
+   "weights": {
+    "300": 8,
+    "400": 6840,
+    "500": 435,
+    "600": 54,
+    "700": 30
+   },
+   "sizes": {
+    "9": 14,
+    "10": 2378,
+    "11": 2745,
+    "12": 1565,
+    "14": 639,
+    "16": 5,
+    "18": 5,
+    "30": 16
+   },
+   "radii": {
+    "8px": 22,
+    "3.35544e+07px": 2,
+    "4px": 4
+   },
+   "shadows": 1,
+   "translucentPaints": 0,
+   "overlaps": 12,
+   "overlapSamples": [
+    [
+     "INSIGHTS",
+     "Market Overview"
+    ],
+    [
+     "Market Overview",
+     "193510.78009600003"
+    ],
+    [
+     "Model Portfolios",
+     "790370020"
+    ]
+   ],
+   "longBlocksOver240": 1,
+   "longestBlocks": [
+    {
+     "tag": "P",
+     "len": 696,
+     "w": 1266,
+     "text": "comparable = the deepest of four lexicographic rungs the can"
+    }
+   ],
+   "purpleFills": 3,
+   "tables": 1
+  },
+  "05_model": {
+   "name": "Model tab",
+   "pageHeight": 2122,
+   "visibleElements": 606,
+   "bandContainersTopLevel": 3,
+   "panelsOver300px": 4,
+   "textChars": 5148,
+   "onBandChars": 487,
+   "onLightChars": 4661,
+   "lowContrastChars": 14,
+   "lowContrastSamples": [
+    {
+     "text": "machine",
+     "ratio": 2.3,
+     "fg": "rgb(95, 59, 227)",
+     "bg": "rgb(25,38,67)",
+     "size": 9
+    },
+    {
+     "text": "machine",
+     "ratio": 2.3,
+     "fg": "rgb(95, 59, 227)",
+     "bg": "rgb(25,38,67)",
+     "size": 9
+    }
+   ],
+   "fonts": {
+    "Lato": 5148
+   },
+   "weights": {
+    "300": 8,
+    "400": 4576,
+    "500": 393,
+    "600": 141,
+    "700": 30
+   },
+   "sizes": {
+    "9": 14,
+    "10": 988,
+    "11": 18,
+    "12": 3466,
+    "14": 636,
+    "16": 5,
+    "18": 5,
+    "30": 16
+   },
+   "radii": {
+    "8px": 22,
+    "3.35544e+07px": 2,
+    "4px": 13
+   },
+   "shadows": 1,
+   "translucentPaints": 0,
+   "overlaps": 11,
+   "overlapSamples": [
+    [
+     "INSIGHTS",
+     "Market Overview"
+    ],
+    [
+     "Market Overview",
+     "193510.78009600003"
+    ],
+    [
+     "Model Portfolios",
+     "790370020"
+    ]
+   ],
+   "longBlocksOver240": 0,
+   "longestBlocks": [],
+   "purpleFills": 3,
+   "tables": 1
+  },
+  "06_posture": {
+   "name": "Posture tab",
+   "pageHeight": 2519,
+   "visibleElements": 409,
+   "bandContainersTopLevel": 3,
+   "panelsOver300px": 4,
+   "textChars": 7304,
+   "onBandChars": 460,
+   "onLightChars": 6844,
+   "lowContrastChars": 21,
+   "lowContrastSamples": [
+    {
+     "text": "machine",
+     "ratio": 2.3,
+     "fg": "rgb(95, 59, 227)",
+     "bg": "rgb(25,38,67)",
+     "size": 9
+    },
+    {
+     "text": "machine",
+     "ratio": 2.3,
+     "fg": "rgb(95, 59, 227)",
+     "bg": "rgb(25,38,67)",
+     "size": 9
+    },
+    {
+     "text": "machine",
+     "ratio": 2.3,
+     "fg": "rgb(95, 59, 227)",
+     "bg": "rgb(25,38,67)",
+     "size": 10
+    }
+   ],
+   "fonts": {
+    "Lato": 7304
+   },
+   "weights": {
+    "300": 8,
+    "400": 6771,
+    "500": 393,
+    "600": 100,
+    "700": 32
+   },
+   "sizes": {
+    "9": 14,
+    "10": 1318,
+    "11": 127,
+    "12": 4182,
+    "14": 1559,
+    "16": 83,
+    "18": 5,
+    "30": 16
+   },
+   "radii": {
+    "8px": 22,
+    "3.35544e+07px": 2,
+    "4px": 10
+   },
+   "shadows": 1,
+   "translucentPaints": 0,
+   "overlaps": 11,
+   "overlapSamples": [
+    [
+     "INSIGHTS",
+     "Market Overview"
+    ],
+    [
+     "Market Overview",
+     "193510.78009600003"
+    ],
+    [
+     "Model Portfolios",
+     "790370020"
+    ]
+   ],
+   "longBlocksOver240": 2,
+   "longestBlocks": [
+    {
+     "tag": "SPAN",
+     "len": 718,
+     "w": 1227,
+     "text": "filing passage P0189 (accession 000162828026004357): \"During"
+    },
+    {
+     "tag": "SPAN",
+     "len": 360,
+     "w": 1216,
+     "text": "thesis driver: BCA commercial aircraft deliveries (with 737 "
+    }
+   ],
+   "purpleFills": 3,
+   "tables": 0
+  }
+ },
+ "occlusion": {
+  "thesis_900": {
+   "stickyHeight": 907,
+   "stickyClass": "sticky top-0 z-40",
+   "tabPanelTop": 1145,
+   "coveredPxAfterScroll": 0,
+   "stickyBottomInViewportAfterScroll": 22
+  },
+  "peers_1080": {
+   "stickyHeight": 907,
+   "coveredPxAfterScroll": 0
+  }
+ },
+ "idiom_census_per_file": {
+  "LeadPanel.tsx": 26,
+  "PostureTab.tsx": 29,
+  "ExecManagementTab.tsx": 26,
+  "PeersTab.tsx": 24,
+  "SecurityOverlay.tsx": 22,
+  "RankedChart.tsx": 19,
+  "ModelTab.tsx": 18,
+  "RankedList.tsx": 16,
+  "ThesisTab.tsx": 14,
+  "HeaderBrief.tsx": 12,
+  "StarredList.tsx": 10,
+  "ThesisDriverChart.tsx": 9,
+  "CheckFaceBadge.tsx": 8,
+  "PrintExportAction.tsx": 8,
+  "IdentityLine.tsx": 4,
+  "ProvenanceLine.tsx": 3,
+  "GenerationCaption.tsx": 1,
+  "SecurityAnalysis.tsx": 0,
+  "note": "count of text-white*/bg-white/N/text-*-100..300/opacity-slash idioms per file; Panel variant='mixed' x20, 'chart' x1 across the page dir"
+ },
+ "reference_renders": {
+  "R1_market_dashboard": "/market",
+  "R2_positioning": "/positioning",
+  "R3_model_portfolios": "/portfolios",
+  "R3b_model_portfolios_benchmark": "/portfolios + Benchmark tab",
+  "R4_philosophy": "/philosophy",
+  "R5_advisor_intelligence": "/advisor-intelligence",
+  "note": "rendered without fixtures; chrome and empty/error states only"
+ },
+ "not_exercised": [
+  "signed-in browser walk (E0; Andrew's act)",
+  "the served PROD bundle (renders were the local dev server at portal 10141b6d0b)",
+  "Lead Panel chart view and starred-only view",
+  "the print/export action",
+  "mobile widths"
+ ]
+}
