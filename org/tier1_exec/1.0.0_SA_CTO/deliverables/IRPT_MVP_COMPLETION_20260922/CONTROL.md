@@ -19,11 +19,13 @@ integration grants. Y and M retain semantic implementation and full-tab exercise
 performs bounded ready integration batches while advancing Reporting. No broad branch grant or
 second queue/session consumer.
 
-CTO review queue, in order: (1) the Anna NOT_READY fence remedy (RULINGS batch 12: ROOT CAUSE = the
-DenyForeignFirmPrincipals bucket policy denies irpt-holdings-role on all three firm buckets; CRO's
-three exemptions.json rows LANDED @8b4c15c6ba, P plans shared-infra 0/3/0, CTO reviews + signs, P applies, CTO
-re-simulates, Andrew retests) and P's code-only sink repackage (GO given); (1b) P's resident cutover
-plan 04c77cbe (decoded-plan review, then GO); (2) P's Performance apply
+CTO review queue, in order: (1) Anna NOT_READY: ROOT CAUSE (batch 12) = the DenyForeignFirmPrincipals
+bucket policy denied irpt-holdings-role; REMEDY APPLIED 02:04:06Z (registry 8b4c15c6ba, plan 1fef40d3,
+halves CTO 99959 + CRO 99962, ledger CLOSED @7220e4a4f3) and CTO-VERIFIED (batch 14: role allowed 6/6
+with the live policies, was denied 6/6); sink repackage APPLIED (CodeSha xd4mk5fx). OPEN: Andrew's
+signed-in retest (asked via MSTR 99966) = the EXERCISED reading; (1b) resident cutover: plan 04c77cbe
+GO'd and APPLIED 01:53Z (host running); P's cutover receipt C1 (enrolled_user_id measured, HostCapture
+pins) awaited, then Y's 12.03 runbook; (2) P's Performance apply
 receipt and the authority/host-tag apply receipt; (3) P's NOT_READY vocabulary addendum
 2cdbe2bd60 (ratified text); (4) M's 49F 7c0e7ce3 (160 writes) and INF 1ebc7696 (35 writes) publications have CTO GOs
 (batch 13); receipts + library-under-user reader matrices due; the function reads them only after the

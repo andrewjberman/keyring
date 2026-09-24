@@ -1217,3 +1217,56 @@ three-arm case; semantic writer stays Y; packages exclude tests. P re-copies ops
 
 ### Cutover plan 04c77cbe (P 99911, Y 99916): queued behind the fence apply; ONE apply accepted in
 principle; Y reviewed the family sets as correct for the resident path. GO follows the decoded-plan read.
+
+
+## 2026-09-24 01:5x UTC - Claude CTO batch 14: fence plan half signed, baseline captured, sink and cutover applied
+
+### FENCE REMEDY STEP 2-3: plan 1fef40d3 read and the CTO half SIGNED (P 99951; CTO 99959/99960)
+Tree C:/Users/AndrewBerman/Desktop/irpt-p-fence-20260924 at CLOUD 1b4b2e61e1 (contains 8b4c15c6ba);
+ledger irpt-holdings-fence-20260924 sentinel 49fbc21c0c committed BEFORE the plan act; saved plan
+.runtime/holdings-fence/fence.tfplan sha256 1fef40d3e5eb37cc3e49e84819ad67999db8f428fb4bb0fbe4a4dd21379f70cd.
+CTO's OWN decode (pinned terraform 1.9.8 `show -json` on the saved plan, not P's decoded_diff.json):
+3 of 242 resource changes non-no-op, all update -- aws_s3_bucket_policy.lgic_firm["cottonwood"],
+lgic_firm["inflection"], opal_data_49financial; each: 1 statement before / 1 after, Sid
+DenyForeignFirmPrincipals, Effect Deny, Action s3:*, ArnNotLike aws:PrincipalArn 4->5 / 4->5 / 17->18,
+ADDED exactly arn:aws:iam::313476888478:role/irpt-holdings-role, REMOVED nothing, every other
+statement key and Condition key equal. Blast radius: three policies stop denying ONE exact principal;
+no Allow added; the role's identity policy stays the only grant; ONE writer of the property (this root
+from exemptions.json). Rollback: revert the three registry rows, re-apply (0/3/0 back). CTO half SIGNED
+by message 99959 at plan 1fef40d3 / tree 1b4b2e61e1 / sentinel 49fbc21c0c; the second half is
+4.0.0_SA_CRO's in its own message; P applies the SAVED plan only after both.
+CRO half SIGNED (99962, ~02:0xZ) on its own show -json parse (239 no-op / 3 update, same single ADD,
+0 drift), a writer census (2 declared resources in one root: s3-49financial.tf:103 and
+s3-lgic-firm-buckets.tf:142; no script writer of put-bucket-policy), and a different-instrument reach
+read (comp-iam simulate on the APPLIED identity plane: the holdings index GetObject ALLOWED, three
+foreign prefixes DENIED control-proven; PutObject / ListBucket implicitDeny UNPROVEN, no grant exists
+to control against). Both halves in; P may apply the saved plan.
+BASELINE for the discriminating pair (CTO, 01:5xZ, user/Andrew_Berman credentials, one resource ARN
+per call): for each of the three buckets, s3:GetObject on the current index and s3:GetObjectVersion on
+a date=2026-09-22 part, simulate-principal-policy for the role WITH the live bucket policy ->
+explicitDeny (Resource Policy) 6 of 6; identity-only -> allowed 6 of 6; each live policy names the
+role 0 times. After the apply the same script must read allowed 6 of 6 and "names the role" 1 per
+bucket; anything else is a STOP before Andrew is told to retest.
+APPLIED (P 99963): safe-apply of the saved plan 02:04:06Z, 0/3/0; readback get-bucket-policy x3 live ==
+planned (5 / 5 / 18 entries, the role PRESENT, nothing removed); re-plan "No changes"; ledger
+irpt-holdings-fence-20260924 CLOSED @7220e4a4f3 (fence branch); receipt HOLDINGS_FENCE_APPLY_20260924.json.
+CTO AFTER (02:0xZ, same script): each live policy names the role once; WITH the live bucket policy ->
+allowed (IAM Policy) 6 of 6; identity-only -> allowed 6 of 6. DESIRED = APPLIED. EXERCISED is Andrew's
+signed-in retest (MSTR 99966 asked for it); the CTO synthesizes no trusted headers. Expected screen:
+the 2026-09-22 combined publication (93 nodes, custody USD 46,009,147.02); on a refusal the served
+function's irpt_internal line now names the cause.
+INSTRUMENT TRAP found while building the baseline: passing TWO --resource-arns values through the
+.tools/aws shim collapses EvalResourceName to ${BucketName}/${KeyName} and returns implicitDeny at
+rc=0 for BOTH arms; one ARN per call returns the real decision. Recorded in box memory beside the
+simulate-principal-policy entry; the script loops one ARN per call.
+
+### IRPT-HOLDINGS-SINK-REPACKAGE AFTER (P 99951 item 2): ACCEPTED
+safe-apply of saved plan 06880e79, 0/1/0 at 01:38:06Z; irpt-holdings CodeSha256
+xd4mk5fxWRa4Uk9OmYcImm1LEC9FoNIGk6jN7A0vlx0= (== the built artifact), handler / layer irpt-common:5 /
+env / timeout 29 / memory 1024 unchanged, State Active, LastUpdateStatus Successful; post-apply plan 0;
+ledger irpt-holdings-sink-20260924 CLOSED @10a11bbef3; recorder d24c89a385. Not a READY claim: the
+fence still denies the role until the apply above lands; the next refusal prints its irpt_internal line.
+
+### Resident cutover apply (P 99951 item 3): executed 01:53:01Z from saved plan 04c77cbe, 1/1/0,
+ledger irpt-resident-cutover-20260924 sentinel 18642607a3; readbacks and the cutover receipt are owed
+in their own message before Y's runbook runs from precondition B.
