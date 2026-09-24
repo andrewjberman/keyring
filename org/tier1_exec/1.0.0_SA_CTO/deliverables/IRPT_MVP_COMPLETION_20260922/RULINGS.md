@@ -1091,3 +1091,129 @@ pin 79c53e1abe (manifest extension 2): both are test files whose semantic writer
 them at that pin so the eight cross-firm resident cases and the consumption test match the 11-field
 reader. Y's reading was right and the CTO's 99868 "no new P row" is superseded by this narrower fact:
 P cannot sync a file it holds no row for, and a branch merge would carry more than the grant.
+
+
+## 2026-09-24 01:3x UTC - Claude CTO batch 12: Anna NOT_READY root cause is the firm-bucket fence, not the reader
+
+### IRPT-HOLDINGS-NOT-READY-ROOT-CAUSE-20260924 (Andrew's 00:5xZ retest via MSTR 99893; M 99900/99904, P 99901/99908)
+FINDING (measured, discriminated): opal-data-cottonwood's bucket policy statement
+DenyForeignFirmPrincipals denies s3:* to every principal whose ARN is not like role/*-cot-* or one of
+the three exempted users (Andrew_Berman, Andrew_Berman_Console, Opal_Terminal). The deployed Holdings
+function runs as arn:aws:iam::313476888478:role/irpt-holdings-role, matches neither, and its first read
+(begin() on platinum/holdings/current/manifest.json) is refused; publication.py wraps that into
+PublicationRefused, snapshot.py into SnapshotUnavailable, entry.py maps it to NOT_READY, served.py
+refuses at :938 with the directory business date. That is the exact screen Andrew saw
+(Unavailable / No source age yet / NOT_READY).
+DISCRIMINATOR: aws iam simulate-principal-policy for irpt-holdings-role WITH --resource-policy = the
+live bucket policy -> s3:GetObject and s3:GetObjectVersion on the current index: explicitDeny,
+MatchedStatements ResourcePolicy. The same simulation WITHOUT the bucket policy -> allowed (positive
+control). Every offline replay (CTO RIE replay: success body, 93 nodes; M's deployed-bytes run
+outside the repo: READ_OK x3) ran under the CTO's or M's user credentials, which ARE the exempted
+users, so they could not see it. M's item 2 (comp-iam / identity-only simulate: ALLOWED) read the
+role's identity policy; the deny lives in the resource policy, which that instrument does not read.
+Rule 22: a check scoped to the members cannot see a defect in what the members share; the bucket
+fence is the shared dependency. Record with every eliminated cause:
+DIRECT_REVIEW_2020_20260923/HOLDINGS_NOT_READY_ROOT_CAUSE_20260924.json.
+CONSEQUENCE: the same Deny (wildcard role/*-<firm>-* plus named exemptions) fences
+opal-data-49financial and opal-data-inflection, so M's 49F and INF publications would be unreadable
+by the function the same way the moment they land. The 49financial fence already names 14 non-firm
+roles by exact ARN (registry precedent, LGIC_ENFORCE EN-w-7-r3): a shared reader is admitted by
+NAME, never by wildcard.
+RULING: within the ratified product (Opal has all functions for any firm; the reader is a registered,
+firm-bound, prefix-scoped consumer, contract S7). Surfaced to Andrew as a cross-firm-guard enumeration
+edit; the CTO proceeds unless he vetoes. NOT the remedy: renaming the role to match *-cot-* (widens
+by pattern), a console edit, moving the publication out of the firm bucket, or any change to the
+reader's identity policy (M/P 99904/99908 were right that no IAM change is indicated BY THEIR
+finding; the change indicated here is to the bucket's resource policy).
+REMEDY, one shape, three buckets, registry-driven (Rule 30: never a hand-typed policy):
+1. 4.0.0_SA_CRO (infra/logic/** lane; precedent 845343f925, the six operator rows) adds ONE row per
+   firm bucket to infra/logic/registry/exemptions.json under opal-data-cottonwood,
+   opal-data-49financial and opal-data-inflection: principal irpt-holdings-role, arn
+   arn:aws:iam::313476888478:role/irpt-holdings-role, reason citing this ruling and the discriminator
+   above, signoff_ref = the ledger entry P opens for the apply. Validator/generator run; commit LOCAL.
+2. 2.0.0_SA_COO~P (IRPT IaC writer; IB-rth-8 precedent on this root) plans
+   infra/aws/terraform/shared-infra from that commit: EXPECTED 0 add / 3 change / 0 destroy, the three
+   aws_s3_bucket_policy resources only (lgic_firm[cottonwood], lgic_firm[inflection], the 49financial
+   policy), each diff adding exactly the one ARN to ArnNotLike and removing nothing. Ledger opened and
+   committed before the act; the plan and its decoded diff to the CTO.
+3. CTO reviews the decoded plan and signs the CTO never-widen half; the second half is
+   4.0.0_SA_CRO's (as IB-rtj-2) or a live COO not holding the act (2.0.0_SA_COO~M) in its stead.
+4. P safe-applies; post-apply get-bucket-policy x3 read back; re-plan 0/0/0; ledger closed.
+5. CTO re-runs the resource-policy simulation for irpt-holdings-role on all three buckets expecting
+   allowed on GetObject (current index) and GetObjectVersion (date=* parts); then Andrew retests Anna
+   at localhost:5174. The sink repackage (below) makes the reason readable if anything else remains.
+ORDER: the registry edit and the sink repackage run now in parallel; the plan waits on the registry
+commit; nothing waits on the sink.
+
+### IRPT-HOLDINGS-SINK-REPACKAGE-GO-20260924 (P 99901/99908)
+GO for the CODE-ONLY irpt-holdings repackage carrying served.py at 3ac9cbdc98 (five error sites print
+the irpt_internal record and the public line; 80 boundary tests, ruff clean; behaviour unchanged).
+Bounds: same layer set (irpt-common:5), same handler, same env, same role; package sha to the CTO
+before and after; ledger opened before the act; readback of CodeSha against the built artifact. Not a
+fix for NOT_READY; it is the instrument that would have shown the fence refusal in the log.
+
+### IRPT-RESIDENT-CUTOVER-PLAN-RECEIVED-20260924 (P 99911)
+Plan 04c77cbe (1 add / 1 change: runner-resident policy + aws_ec2_instance_state stopped -> running)
+is in the CTO review queue behind the fence remedy; the X10 ACTIVE review (P 6d3a9215d7) follows it.
+Sequencing question answered now so P is not idle: ONE apply (grants + start) is accepted in
+principle; the GO itself follows the decoded-plan review.
+
+
+## 2026-09-24 01:4x UTC - Claude CTO batch 13: fence rows landed, 49F + INF publication GOs, ORIGINAL_HOLDINGS accepted, one Y test row
+
+### FENCE REMEDY STEP 1 DONE (CRO 99926): exemptions.json @8b4c15c6ba on local CLOUD
+irpt-holdings-role admitted by exact ARN on opal-data-49financial (17 rows), opal-data-inflection (4)
+and opal-data-cottonwood (4); 18 lines added, 0 removed; validator OK at registry@b16e50739ce0ae05.
+CTO read the file in the shared tree and accepted. Step 2 (P: shared-infra plan from a tree containing
+8b4c15c6ba, expected 0 add / 3 change / 0 destroy, ledger before the act, decoded diff to CTO + CRO) is
+in flight (99931). Halves: CTO + 4.0.0_SA_CRO (free, 99926); 2.0.0_SA_COO~M only in the CRO's stead.
+CRO's found-not-fixed: modules/opal_name/generated_locals.tf lags scopes.json (stale header mark);
+the registry owner's item, untouched here.
+
+### IRPT-49F-HOLDINGS-PUBLICATION-GO-20260924 and IRPT-INF-HOLDINGS-PUBLICATION-GO-20260924 (M 99900)
+CTO verification on the prepared bytes in C:/Users/AndrewBerman/Desktop/ajb_irpt_m/.runtime/
+holdings-journey-20260923 (own instruments, 01:3x-01:4xZ):
+- 49F 7c0e7ce3: platinum 160,561,988 bytes, sha256 == revision; gold sha256 2abf2f8e == summary;
+  7,522 accounts / 151,697 nodes; clocks custody 2026-09-22 / overlay 2026-09-23 / business 2026-09-22;
+  currency ATTESTED -> ANDREW_49F_INF_USD_20260924.md @69e36619ae; publication._platinum_plan over the
+  bytes -> header 284,874 B + 156 parts (max 1,048,515 B) => 159 creates + 1 index = 160 writes.
+  Receipts 8 (schwab/08335338 x2 date=2026-09-22, smartx/platform x4 date=2026-09-23, opal-data-bd
+  directory 2026-09-17 + latest), each version_id + sha256.
+- INF 1ebc7696: platinum 31,180,092 bytes, sha256 == revision; gold 2623f60f == summary; 876 accounts /
+  33,328 nodes; same clocks; ATTESTED; _platinum_plan -> header 36,857 B + 31 parts => 34 + 1 = 35.
+  Receipts 8 (opal-data-inf accounts_v2 + positions_mv 2026-09-23, eclipse 2026-09-23 x4, directory x2).
+- Targets EMPTY (user/Andrew_Berman, 01:3xZ): index head-object 404 on both buckets; 0 keys under
+  irpt/49financial/ and irpt/inflection/; positive control cottonwood index 200 (522 B).
+- Cross-firm: 49F reads opal-data-assets + opal-data-bd only; INF reads opal-data-inf only.
+- Finding (not blocking): each prepared directory also holds the superseded revision (49F 99481820,
+  INF 0751e62d); the publish call names the GO'd bytes explicitly and the receipt states path + sha256.
+GO A: exactly 160 writes (159 immutable creates under
+opal-data-49financial/irpt/49financial/{gold,platinum}/holdings/date=2026-09-22/7c0e7ce3..., then ONE
+index create IfNoneMatch *). GO B: exactly 35 writes under opal-data-inflection/irpt/inflection/...,
+same shape. Publisher = HoldingsPublication.publish(body, gold, expected=begin(), validate=...,
+source_objects=<8 receipts>) as d940022b06; a refusal stops before the index. AFTER EACH: versions +
+hashes read back before the index, the index at its exact version, reader matrix stated as
+LIBRARY-UNDER-USER plus the one arm naming the role's expected explicitDeny (simulate WITH the bucket
+policy) until the fence rows apply. No claim that the function reads either publication before then.
+
+### IRPT-ORIGINAL-HOLDINGS-FAMILY-ACCEPTED-20260924 (M 99924, Y 99916/99929)
+Registry row ORIGINAL_HOLDINGS {tier state, table original_holdings, extension csv, unreferenced 30,
+ceiling 2555} appended to irpt-private-reporting @58ee5b36dd (M worktree, LOCAL; two files: the row and
+M's own family census test 587e782bc6 -> 11 state families). ACCEPTED as committed. The two departures
+from the CTO's text are the validator's, printed at HEAD: distinct tables (:1712-1713) so not
+prospect_inputs; one extension from {csv,json,pdf} (:1715) so not csv|xlsx. Y measured the retained key
+suffix as cosmetic to the template readback (parse keyed by the retained file_type), so widening the
+admitted set to xlsx is an ENRICHMENT item after the first trace, not a gate. policy_sha256 of
+irpt-x10-v1 moves cb9c4e6e... -> 7a7ed8f6...; P re-pins the X10 matrix on this acceptance (39
+destinations); the route-plane grant for the upload function is derived from the registry
+(irpt/<firm>/state/original_holdings/*), never typed. Y's hop-1 dependency row closes to "grant
+pending at P".
+
+### IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923, one more row (Y 99923)
+ops/tests/test_prospect_dates.py joins IRPT_Y_ACCESS_INTEGRATION_P as an exact row at Y pin 7fec957269
+(manifest extension 3), for the same reason as the two ycharts test rows: P's tree runs the affected
+three-arm case; semantic writer stays Y; packages exclude tests. P re-copies ops/prospect_dates.py
+(existing row) at the same pin.
+
+### Cutover plan 04c77cbe (P 99911, Y 99916): queued behind the fence apply; ONE apply accepted in
+principle; Y reviewed the family sets as correct for the resident path. GO follows the decoded-plan read.

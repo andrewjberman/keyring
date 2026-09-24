@@ -228,6 +228,20 @@
      "integration": "exact_copy"
     }
    ]
+  },
+  {
+   "source": "7fec9572691e70b51c1706f2a0f87a565789f145",
+   "ruling": "IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923-batch13",
+   "new_grant_rows": [
+    "infra/aws/lambda/investor-reporting/ops/tests/test_prospect_dates.py"
+   ],
+   "paths": [
+    {
+     "path": "infra/aws/lambda/investor-reporting/ops/tests/test_prospect_dates.py",
+     "source_blob_sha256": "06470b6cd7971712f7e883d1a8a154b0de41b912fd818d21c8cc2770049a8a74",
+     "integration": "exact_copy"
+    }
+   ]
   }
  ]
 }
