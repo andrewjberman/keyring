@@ -1,8 +1,92 @@
 diff --git a/infra/aws/lambda/investor-reporting/reports/generate_installed.py b/infra/aws/lambda/investor-reporting/reports/generate_installed.py
-index b75167242e..4e05052f5c 100644
+index b75167242e..77dd4e835b 100644
 --- a/infra/aws/lambda/investor-reporting/reports/generate_installed.py
 +++ b/infra/aws/lambda/investor-reporting/reports/generate_installed.py
-@@ -230,6 +230,32 @@ class UploadNotComposed:
+@@ -113,15 +113,50 @@ def destination_revision_for(reporting_policy=None):
+     return digest
+ 
+ 
++class ComparisonCatalogueRequired(SubmissionNotReady):
++    """A comparison was selected; the maintained comparison catalogue has no producer yet."""
++
++
++def _comparison_catalogue_not_composed():
++    raise ComparisonCatalogueRequired("COMPARISON_CATALOGUE_REQUIRED")
++
++
++def _ordinary_viewer_not_composed(request, principal, owner):
++    """No ordinary (non-Opal) authorizer is composed: InteractiveAccess reads False, never True."""
++    return False
++
++
+ class RoutedSubmissionService:
+-    """The ONE service `entry.build_entry` installs: routes by body shape, refuses by name."""
++    """The ONE service `entry.build_entry` installs: routes by body shape, refuses by name.
++
++    `input_id` present -> Y's ProspectSubmissionFactory over the composed ports. An Overview (no
++    comparison) reads no catalogue; a selected comparison refuses COMPARISON_CATALOGUE_REQUIRED.
++    An ordinary viewer is refused until ports["ordinary_authorizer"] has a producer. Else the
++    custody branch, which still refuses CustodyFactoryRequired.
++    """
+ 
+     def __init__(self, ports):
+         self.ports = ports
++        self._factory = None
++
++    def _prospect(self):
++        if self._factory is None:
++            from prospect_submission import ProspectSubmissionFactory
++            p = self.ports
++            self._factory = ProspectSubmissionFactory(acceptance=p["acceptance"],
++                repositories=p["repositories"], uploads=p["uploads"], schema_directory=p["schema_directory"],
++                get_user=p["get_user"], get_partner_profile=p["get_partner_profile"],
++                get_organization=p["get_organization"],
++                get_catalogue=p["get_catalogue"] or _comparison_catalogue_not_composed,
++                send=p["send"], queue_url=p["queue_url"], ingestion_revision=p["ingestion_revision"],
++                destination_revision=p["destination_revision"],
++                ordinary_authorizer=p["ordinary_authorizer"] or _ordinary_viewer_not_composed,
++                configuration=p["configuration"])
++        return self._factory
+ 
+     def submit(self, payload, request, scope, event, ctx):
+         if isinstance(payload, dict) and "input_id" in payload:
+-            raise UploadServiceRequired("UPLOAD_SERVICE_REQUIRED")
++            return self._prospect().submit(payload, request, scope, event, ctx)
+         raise CustodyFactoryRequired("CUSTODY_FACTORY_REQUIRED")
+ 
+ 
+@@ -180,6 +215,17 @@ def compose_ports(*, clients=None, clock=None, environ=None, package_root=None,
+     def send(queue, body):
+         return clients["sqs"].send_message(QueueUrl=queue, MessageBody=body)
+ 
++    from repository import DynamoReportIndex
++    from upload_resolution import deferred_upload_service, input_owner_lookup
++
++    def uploads(access, stores):
++        # Request-local, as ProspectSubmissionFactory requires: the retained repositories bound to
++        # this request's access. read_input never reaches the vendor.
++        index = stores.artifacts.index
++        return deferred_upload_service(index=index, artifacts=stores.artifacts,
++            authorize_current=access.authorize_current, table=index.table,
++            send=lambda body: send(queue_url, body), clock=clock)
++
+     return {
+         "acceptance": acceptance,
+         "repositories": repositories,
+@@ -192,9 +238,9 @@ def compose_ports(*, clients=None, clock=None, environ=None, package_root=None,
+         "configuration": capture_configuration,
+         "ingestion_revision": ingestion_revision_for(schemas),
+         "destination_revision": destination_revision_for(reporting_policy),
+-        # The four with no production producer; named here so the receipt prints the gap.
+-        "uploads": None, "get_catalogue": None, "ordinary_authorizer": None,
+-        "load_prospect_owner": load_prospect_owner,
++        # The two with no production producer; named here so the receipt prints the gap.
++        "uploads": uploads, "get_catalogue": None, "ordinary_authorizer": None,
++        "load_prospect_owner": input_owner_lookup(DynamoReportIndex(clients["table"])),
+         "requests_table": requests_table, "jobs_table": jobs_table,
+     }
+ 
+@@ -230,6 +276,32 @@ class UploadNotComposed:
          raise UploadServiceRequired("UPLOAD_SERVICE_REQUIRED")
  
  
@@ -35,7 +119,7 @@ index b75167242e..4e05052f5c 100644
  def build_boundary(ports):
      """One Entry for the function's two routes: the analysis POST (Y's `entry.build_entry`
      wiring, reproduced line for line with the routed service installed) and the upload POST
-@@ -243,13 +269,14 @@ def build_boundary(ports):
+@@ -243,13 +315,14 @@ def build_boundary(ports):
      import ids
      from upload_entry import upload_csv
      service = RoutedSubmissionService(ports)
@@ -53,10 +137,55 @@ index b75167242e..4e05052f5c 100644
      routes = dict(generate_entry.ROUTES)
      routes[UPLOAD_ROUTE] = UPLOAD_OPERATION
 diff --git a/infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py b/infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py
-index 65cea44fa6..b6658a64b2 100644
+index 65cea44fa6..80eaa06d30 100644
 --- a/infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py
 +++ b/infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py
-@@ -130,3 +130,48 @@ def test_the_upload_route_refuses_by_name_after_the_real_validator():
+@@ -67,9 +67,9 @@ def test_compose_ports_composes_the_eight_and_names_the_absent_four():
+     ports = gi.compose_ports(clients=fake_clients(), clock=lambda: 1000.0, environ=ENV,
+                              package_root=None, reporting_policy=active_policy)
+     d = gi.describe(ports)
+-    assert set(d["absent_producers"]) == {"uploads", "get_catalogue", "ordinary_authorizer"}
++    assert set(d["absent_producers"]) == {"get_catalogue", "ordinary_authorizer"}
+     for name in ("acceptance", "repositories", "get_user", "get_partner_profile", "get_organization",
+-                 "send", "configuration", "load_prospect_owner"):
++                 "send", "configuration", "load_prospect_owner", "uploads"):
+         assert name in d["composed"]
+     assert d["queue_url"] == ENV[gi.QUEUE_URL_ENV]
+     assert d["ingestion_revision"].startswith("schemas-")
+@@ -86,15 +86,17 @@ def test_both_branches_refuse_by_name_with_the_public_code_not_ready():
+     sys.path.insert(0, str(ROOT / "infra/aws/lambda/investor-reporting/_authz"))
+     import errors
+     service = gi.RoutedSubmissionService(gi.compose_ports(clients=fake_clients(), environ=ENV, reporting_policy=active_policy))
+-    with pytest.raises(gi.UploadServiceRequired) as prospect:
+-        service.submit({"input_id": "IN-1", "request_id": "r"}, None, {}, {}, None)
+     with pytest.raises(gi.CustodyFactoryRequired) as custody:
+         service.submit({"snapshot_id": "snap", "request_id": "r"}, None, {}, {}, None)
+-    with pytest.raises(gi.UploadIndexRequired) as owner:
+-        gi.load_prospect_owner("cottonwood", "IN-1")
+-    for caught in (prospect, custody, owner):
++    with pytest.raises(gi.ComparisonCatalogueRequired) as catalogue:
++        gi._comparison_catalogue_not_composed()
++    for caught in (custody, catalogue):
+         assert errors.reason_for(caught.value) == "NOT_READY"
+-        assert errors.reason_for(caught.value) != "UNEXPECTED"
++    # The prospect branch now reaches Y's factory: a malformed body is the validator's refusal.
++    with pytest.raises(Exception) as prospect:
++        service.submit({"input_id": "IN-1", "request_id": "r"}, None, {}, {}, None)
++    assert errors.reason_for(prospect.value) not in ("NOT_READY", "UNEXPECTED")
++    assert gi._ordinary_viewer_not_composed(None, {}, {}) is False
+ 
+ 
+ def test_the_boundary_installs_the_routed_service_with_the_prospect_guard():
+@@ -105,7 +107,7 @@ def test_the_boundary_installs_the_routed_service_with_the_prospect_guard():
+     assert boundary.routes == {"POST /api/scoped/investor-reporting/analysis": "analysis-requests",
+                                gi.UPLOAD_ROUTE: gi.UPLOAD_OPERATION}
+     assert set(boundary.operations) == {"analysis-requests", "analysis-input-upload"}
+-    assert boundary.load_prospect_owner is gi.load_prospect_owner
++    assert boundary.load_prospect_owner is ports["load_prospect_owner"]
+     assert json.dumps(gi.describe(ports), sort_keys=True)  # the dry run's document is serialisable
+ 
+ 
+@@ -130,3 +132,92 @@ def test_the_upload_route_refuses_by_name_after_the_real_validator():
      answer = handler({"routeKey": gi.UPLOAD_ROUTE, "headers": {"x-contract-version": "v1"}, "body": json.dumps(good)})
      assert answer["ok"] is False and answer["operation"] == gi.UPLOAD_OPERATION
      assert answer["status"]["public_reason_code"] not in ("UNEXPECTED", None)
@@ -105,3 +234,47 @@ index 65cea44fa6..b6658a64b2 100644
 +    boundary, event, table, sent = _upload_world(None)
 +    answer = boundary.handle(event)
 +    assert "data" not in answer and not sent and not table.rows
++
++
++def test_hop3_the_prospect_factory_composes_from_the_real_ports():
++    ports = gi.compose_ports(clients=fake_clients(), environ=ENV, reporting_policy=active_policy)
++    factory = gi.RoutedSubmissionService(ports)._prospect()
++    assert factory.queue_url == ENV[gi.QUEUE_URL_ENV] and factory.get_catalogue is gi._comparison_catalogue_not_composed
++    assert factory.ordinary_authorizer is gi._ordinary_viewer_not_composed
++
++
++def test_hop3_the_input_owner_lookup_reads_a_resolved_input_and_refuses_an_unknown_one(monkeypatch):
++    sys.path.insert(0, str(ROOT / "infra/aws/lambda/investor-reporting/intake/tests"))
++    import test_deferred_resolution as deferred
++    from upload_resolution import input_owner_lookup
++    from uploads import UploadRefused
++    case = deferred.legacy.UploadIntegrationTests(methodName="runTest")
++    case.setUp()
++    case.table = deferred.StateTable()
++    case.service = case.new_service()
++    case.service.artifacts.families |= {"ORIGINAL_HOLDINGS"}
++    case.now, case.sent = [1_790_000_000], []
++    case.service.request_resolution, case.service.clock = case.sent.append, lambda: case.now[0]
++    case.service.transitions = deferred.NormalizationStates(case.table)
++    case.resident = lambda resolver: deferred.resident_upload_service(artifacts=case.service.artifacts,
++        authorize_current=case.authorize, resolver=resolver, clock=lambda: case.now[0])
++    deferred.post(case, deferred.payload())
++    resolved = deferred.resolve(case, deferred.offline_resolver([]))
++    lookup = input_owner_lookup(case.service.index)
++    assert lookup(case.owner["firm_id"], resolved["input_id"]) == case.owner
++    with pytest.raises(PermissionError):
++        lookup(case.owner["firm_id"], "portfolio_" + "0" * 64)
++    with pytest.raises(UploadRefused):
++        lookup(case.owner["firm_id"], "IN-1")
++
++
++@pytest.mark.xfail(raises=TypeError, strict=True,
++                   reason="BLOCKER Y 100842 / M 100846: M's viewer seam (485b69c061) is not in _scope/maintained_sources.py")
++def test_hop3_the_maintained_sources_accept_the_arguments_the_prospect_factory_passes():
++    import inspect
++    from maintained_sources import resolve_comparison_fields, resolve_profile_fields
++    viewer = {"input_owner": {}, "current_viewer": lambda: {}, "authorize_viewer_input": lambda *a: True}
++    # Exactly the keyword sets ycharts/generate/prospect_submission.py:82-88 passes.
++    inspect.signature(resolve_profile_fields).bind({}, {}, {}, get_user=None, get_partner_profile=None,
++                                                   get_organization=None, **viewer)
++    inspect.signature(resolve_comparison_fields).bind({}, {}, [], get_catalogue=None, **viewer)
