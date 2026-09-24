@@ -386,6 +386,33 @@ analysis routes on the API since 11:44Z; the client flags lifted on portal DEV c
 installed-factory cut with named refusals; hop 2 (prospect upload) and hop 4's custody branch are BOTH compositions
 with design ports -- the two cards. No fixture becomes a producer on either.
 
+## Addendum 3, 2026-09-24 ~12:2xZ -- the custody interpreter cannot read positions off the served publication for an assigned account
+
+From P's design card (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/CUSTODY_INTERPRETER_DESIGN_CARD_20260924.md`
+@d8c8e6c716, one live read of M's Cottonwood publication at business_date 2026-09-22) and this seat's independent
+cross-check on an EARLIER vintage -- the holdings body for `acc_d486fc9455d6b2aa18e13af1` in Andrew's 04:32Z HAR
+(before the 06:20Z republish), read in place.
+
+**The finding, two vintages, two instruments.** For an account with an assigned Rebalancer strategy (Anna's; P
+counts 462 of 841 at Cottonwood) the publication's SECURITY nodes are MODEL-IMPLIED allocations -- account market
+value x component weight -- not held positions. P: 0 of 68 security nodes join a custody row; the only custody FACT at
+node grain is the ACCOUNT node (`fact_holdings (Market Value, deduped DC1)`); the position rows live in the receipted
+gold parquet (`manifest.gold`) and the eight `source_objects` the manifest receipts. This seat, on the 04:32Z body: 75
+nodes = 1 ACCOUNT, 1 MODEL_WRAPPER, 4 MODEL_LEAF, 68 SECURITY, 1 SLEEVE; all 68 SECURITY nodes carry basis `ASSIGNED`
+and provenance `join_method` "component of <model>" (33 / 16 / 14 / 4 across four models, 1 strategy-root), claim
+`measured`, producer `holdings_snapshot.build...`. Same population, same answer.
+
+**What it means for hop 4's custody branch.** The interpreter (`interpret_source` -> `actual_custody`,
+`original_rows`, `source_receipts`, `revision_refs`) cannot take positions from the document's SECURITY nodes for an
+assigned account -- it must read the receipted custody rows (the gold parquet or the source objects the manifest
+names) and use the ACCOUNT node's market value as the independent value for the USD 0.01 reconciliation; a
+model-implied row is exactly what the card says the interpreter "must NOT invent a position from". For the Holdings
+TAB this is by design (basis `ASSIGNED` is stated on every such node and the CTO's display ruling stands); for the
+Analysis custody branch it is a real design input: the four questions on P's card (Q1 the source objects vs the
+parquet, Q2 held positions vs the model-implied allocation as "accepted custody" for an assigned account, Q3 an
+account with zero custody rows, Q4 the independent source) decide the interpreter, and none of them is an egress
+question -- the card carries no wait on Andrew.
+
 ## Andrew-direct request -- verbatim record
 
 Channel: the 4.0.0_SA_CRO terminal, 2026-09-24 ~05:3xZ.
