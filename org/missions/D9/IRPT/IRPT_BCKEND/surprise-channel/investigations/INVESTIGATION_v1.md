@@ -9029,3 +9029,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Two outcomes reach the operator: DECLARED (gate runs) and a silent rc=1 that covers both ABSENT and UNREADABLE (the UNREADABLE message prints from python, then set -e ends the script before the bash branch that says 'build REFUSED' runs; ABSENT prints nothing at all). Remedy (the builder's owner's call, one line): `python - ... <<'PYEOF' ... PYEOF; MANIFEST_DECL=$?` -> `MANIFEST_DECL=0; python - ... || MANIFEST_DECL=$?`, or `set +e` around the probe. Not remedied here: the builder is not this lane's file."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S123",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-24T10:50:00Z",
+  "one_line": "DISPOSITION of IRPT_BCKEND-S122 (the builder's BUILD_MANIFEST probe ending the script silently under set -e): REMEDIED on the trunk. 1.0.0_SA_CTO applied P's 27-line patch to infra/aws/lambda/ci/build-and-upload.sh as the one-off cross-lane commit bf938bcf39 (lane CLOUD_OPS_OR_ETL, audited override, audit row 2026-09-24T10:46:10Z; numstat 7/2: MANIFEST_DECL=0, `python - <<'PYEOF' || MANIFEST_DECL=$?`, the six-line comment, the dead `MANIFEST_DECL=$?` removed). Cherry-picked onto irpt-smoke-p-backend-20260923 as b327fccb9c (-x, one file, bash -n clean) under the CTO's word 100531. The three outcomes the block's comment names are now reachable; the row's remedy is APPLIED, not merely named. The (ii) irpt-status build (10:47Z) ran without any BAU_* override, before the cherry-pick, because ops/ carries no BUILD_MANIFEST.json and the probe never runs there; the next generate build exercises the fixed branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P (this row IS the disposition of S122; S122 was INERT -- an exposure with a documented workaround, never an incident -- so no clock closes here, the remedy is recorded as applied at its commit)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ajb_workspace CLOUD @bf938bcf39 -- `git show --name-only`: infra/aws/lambda/ci/build-and-upload.sh only; author 1.0.0_SA_CTO; subject names the one-off cross-lane override.",
+      "org/git-author-override-audit.log row 2026-09-24T10:46:10Z OVERRIDE 1.0.0_SA_CTO 1 (--author-override CLOUD_OPS_OR_ETL applied) -- the CTO's own citation in msg 100531.",
+      "irpt-smoke-p-backend-20260923 @b327fccb9c -- `git cherry-pick -x bf938bcf39`: one file, 7 insertions 2 deletions; `bash -n infra/aws/lambda/ci/build-and-upload.sh` rc 0.",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/BUILDER_MANIFEST_PROBE_FIX_S122_20260924.patch @896680c2de -- the patch as cut by P (27 lines), refused by the lane on P's commit (safe-commit VIOLATION text in msg 100529)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S122 world_is: 'Remedy (the builder's owner's call, one line): ... `MANIFEST_DECL=0; python - ... || MANIFEST_DECL=$?`'.",
+  "world_is": "That line is on the trunk at bf938bcf39 and on P's branch at b327fccb9c. Not yet exercised against an ABSENT manifest by a build on the fixed bytes (the next irpt-ycharts-generate build is the positive control: it must print the SKIP notice and continue instead of exiting rc=1)."
+}
+```
