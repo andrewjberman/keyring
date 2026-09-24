@@ -253,6 +253,68 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-59 -- ⭐⭐ **THE PAIR I SIGNED WAS EXERCISED AND EVERY NAMED ARM HELD. ⛔ AND THE BACKFILL ADVANCED BY ZERO ANYWAY -- `MEASURED 214` IS TRUE AND MISLEADING**, because the builder appended beside the UNRESOLVED record instead of superseding it
+
+`2.0.0_SA_COO~X` status `d553a67d00`, read from the committed artifact rather than waited for as a message.
+**The d-5 induction FIRED ONCE under the pair.**
+
+### ⭐ THE DISCRIMINATOR MY OWN HALF NAMED, AND IT HELD EXACTLY
+
+| my half's clause | measured |
+|---|---|
+| `MEASURED = 194 + R` | **214** -- and 194 + 20 = 214, **the arithmetic closes** |
+| exactly ONE new version | **versions 22 -> 23** |
+| `BATCH` line `pool_puts` 1 | **one put** |
+| the `landed >= 1` branch | 20 registered |
+
+⭐⭐ **So precondition (3) is proven IN THE WORLD rather than in tests: one call, one put, no partial-read
+window.** That is the defect R-38 found, R-49 graded and R-51 re-graded on bytes, closed by exercise. **The
+never-widen pair did its whole job and the served key moved once, atomically.**
+
+### ⛔⛔ AND THE BACKFILL ADVANCED BY ZERO
+
+*"the re-ingest stored nothing new -- **0 of 20 inducted folders ingested** because the builder appended each
+registration **beside** the folder's UNRESOLVED record (row `Z-S16` ARMED)."*
+
+⭐⭐⭐ **SO `MEASURED 214` IS A TRUE NUMBER THAT MEANS LESS THAN IT LOOKS.** The pool gained 20 MEASURED records
+and the 20 folders **still carry their UNRESOLVED records**, so the ingest -- which keys off the folder's record
+-- found nothing to do. ⛔ **THE COUNT WENT UP; THE RESOLUTION DID NOT.**
+
+⭐ **This is the FOURTH instance of one distinction in this session, now at the DATA layer:** an order naming an
+outcome is not the outcome met (coverage); every order terminal is not the work finished (R-45); an order OPEN is
+not the work underway (R-50); and now **a record ADDED is not a record RESOLVED.** ⭐⭐ **And it is this estate's
+banked supersession lesson exactly -- *a supersession marker sits on the SUPERSEDED bytes, not the replacement* --
+met from the other side: the replacement was written and the superseded row was left standing beside it.**
+
+### ⭐ MY SIGNATURE IS NOT IMPLICATED, AND SAYING SO PRECISELY MATTERS IN BOTH DIRECTIONS
+
+⛔ **The pair governs BLAST RADIUS, not producer SEMANTICS.** My half named what the act MAY TOUCH (one
+conditional put, 20 write-once bronze keys, `registrations.json`) and the rollback per key. It did **not** name
+whether an added record would supersede an existing one -- ⭐ **and it must not have, because that is the
+PRODUCER'S DECISION, which R-41 rules a sign-off never adjudicates.** A half that tried to certify record
+semantics would have been the over-reach this file has already convicted twice.
+⚠ **So: the pair was correct, the act was safe, and the defect is DOWNSTREAM of the pair.** Neither claiming
+credit for the clean write nor accepting blame for the empty ingest would be accurate, and the honest statement
+is that they are different questions on the same act.
+
+### THE CHAIN, AND A SECOND CTO HALF IS NOW OWED
+
+That seat's own sequencing, adopted: **remedy on the builder -> ONE re-mint under a FRESH PAIR -> the re-ingest
+-> `d-4`.** ⭐ **A FRESH pair is correct and this seat will owe a second CTO half**, because the first is bound
+to a before-state (`latest_version_id`) the fire has now changed -- **which is the binding my own half wrote into
+itself, working as intended.** ⚠ **And the re-mint's blast radius is NOT the first one's:** the before-state is
+now 23 versions with `MEASURED 214`, so the expected-outcome arithmetic changes and a half copied from the first
+would be wrong about its own act -- **the same trap R-51 caught when R-37's twenty-put shape inverted to one.**
+
+### ⛔ GOAL LIMB 3's HONEST STATE
+
+**Andrew's limb 3 -- "complete backfill for all of these securities through the opal-data-harvest channels" --
+ADVANCED BY ZERO today despite a clean, correctly-paired, successfully-discriminated fire.** The identity
+crosswalk moved; the harvest channel did not. **`d-4` (limb 4, the 93-of-93 census) sits behind it by design, so
+limb 4 has not slipped -- it was never in front.** ⭐ **That is worth stating plainly because the fire's own
+numbers read like success, and a seat skimming `20 registered, one put, MEASURED 214, versions 22 -> 23` would
+close the wrong thing.**
+
 ## R-58 -- ⭐⭐ **PLACEMENT CONFIRMED: ROUND 38, NOT THE CLOSER TRACK -- AND THE "ON THIS SEAT'S WORD ALONE" OPTION IS REFUSED BECAUSE A CLOSER'S BUILD PHASE IS ANDREW-GATED, NOT MINE TO AUTHORISE.** THE DEPLOY OWNER IS NAMED
 
 `2.0.0_SA_COO~Z` msg 25451, on R-57's approved FWD-30 route. That seat states its placement rather than leaving
