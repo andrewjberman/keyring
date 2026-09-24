@@ -5,15 +5,15 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1
 `org/mcp/drive-mode.log` line 1 (Andrew-direct ~17:4xZ blast mode), lease to 2026-09-24T21:14:14Z (re-armed 18:16:59Z, drive-mode.log line 5). Build place:
 the main portal checkout on DEV (Andrew-direct ~18:3xZ). Design direction: Andrew-direct ~19:4xZ,
 `org/tier1_exec/2.0.0_SA_COO~D/deliverables/ANDREW_DIRECT_20260924_194xZ_IRPT_DESIGN_NOTES/`.
-As of 2026-09-24T22:0xZ. The lease extends 30 minutes past Andrew's latest prompt (presence rule, `.tools/drive-mode.py`).
+As of 2026-09-24T22:1xZ. CTO 100904 (Andrew via the CRO): L5 from PRD v0.6 @4746617b10, ONE issuance, the FAST lease ends at the cut. The lease extends 30 minutes past Andrew's latest prompt (presence rule, `.tools/drive-mode.py`).
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal pin | `d99516cd` = origin DEV (ls-remote read after the push, via gh credentials -- see Parked) |
-| This session on DEV | P candidate 8 `237bdfda`; S6 `92d16efc`; firm tab + exact amounts `a65a8db5`; S7 `c1d7aefe`, `9902bf25`; breadcrumb `d6288d80` (merged over site Z as `c82f0bbb`); header `93b28880`; Analysis upload lane `088386fe`; Analysis declutter `68f46e18`; Holdings footers `c75a0fc9`; Performance footer `af66ed43`; drill table `f338e693` (merged over site Z as `06f079f5`); model colours `08a04fe2`; asset-class colours `86561aef`; models dialog `721170ca` (merged over site Z as `d99516cd`) |
+| Portal pin | `9bb4c5da` = origin DEV (ls-remote read after the push, via gh credentials -- see Parked) |
+| This session on DEV | P candidate 8 `237bdfda`; S6 `92d16efc`; firm tab + exact amounts `a65a8db5`; S7 `c1d7aefe`, `9902bf25`; breadcrumb `d6288d80` (merged over site Z as `c82f0bbb`); header `93b28880`; Analysis upload lane `088386fe`; Analysis declutter `68f46e18`; Holdings footers `c75a0fc9`; Performance footer `af66ed43`; drill table `f338e693` (merged over site Z as `06f079f5`); model colours `08a04fe2`; asset-class colours `86561aef`; models dialog `721170ca` (merged over site Z as `d99516cd`); drill stop `9bb4c5da` |
 | Deployed | DEV CI deploys opalinvest.dev from DEV; PROD `a0690a03` untouched (gated) |
 | Screen | `localhost:5174` from the main checkout (`bun run dev --port 5174`, its `.env.local`), log `C:/tmp/portal-main.vite5174.log` |
 | Workspace push state | CLOUD LOCAL |
@@ -41,18 +41,18 @@ NOT LIVE END TO END. Andrew's HAR at ~18:3xZ exercised the signed-in API journey
 | Drill pie: canonical Opal primary-model colours (Ultra Long Term red) | CANDIDATE @08a04fe2 | `model-colors.fast-run.{png,txt}`, `model-colors.fixture.json` |
 | Securities map + table: canonical asset-class colours (Opal ETF classifier; Unclassified grey otherwise) | CANDIDATE @86561aef | `asset-class.fast-run.{png,txt}`, `asset-class.fixture.json` |
 | Models dialog: one column, members coloured by asset class (IRPT only; additive `breakdown` prop) | CANDIDATE @721170ca | `models-dialog.fast-run.{png,txt}`, `models-dialog.fixture.json`, `models-dialog-probe-driver.mjs` |
+| Drill pie stops at the model level (no security-level slices) | CANDIDATE @9bb4c5da | `drill-stop.fast-run.{png,txt}`, `drill-stop-probe-driver.mjs` |
 
 Nothing here is CVO-graded yet.
 
 ## Write claims
 
-- `portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx` (the drill stops at the model level; the security
-  drill lives on the Securities map)
+- none in the portal (FAST work in hand is landed); this seat is on L5 for PRD v0.6.
 
 ## Next proof
 
-The drill pie stops at the model level (no security-level slices); the security drill lives on the Securities map.
-One real run on 5174 with a many-security model, screenshot read.
+L5: decomposition v3 and its battery over PRD v0.6 (FWD-2/3/7/8 amended, FWD-12..18, cells C15-C24, backlog 12-22),
+then ONE issuance (LIMB 6 waits on the CVO's ratified-text signature); the FAST lease ends at the cut.
 
 ## Next-list (Andrew's design notes first, most broken first)
 
@@ -94,6 +94,7 @@ One real run on 5174 with a many-security model, screenshot read.
 | Site Z edited an IRPT file's comment on DEV (`ExportModal.tsx`, AMGT-rn-3 `02e04083`) | `0.0.0_AB_MSTR~Z` | if IRPT files must stay single-writer |
 | Git's credential manager (`credential.helper=manager`) now refuses non-interactively on this box; `gh` is logged in as the same account, and pushes run with `-c credential.helper='!gh auth git-credential'` for that command only | Andrew | he re-signs the credential manager, or says to keep the gh route |
 | `lib/modelPortfolioColors.getModelColor` partial match: "Opal Ultra Long Term" hits "long term" first (worked around in DrillTree only) | the shared-library owner via `1.0.0_SA_CTO` | a ruling to prefer the longest key |
+| M 100907: HoldingsSnapshot asset_class / sub_asset_class / asset_class_basis / model_code -- the portal accepts them after P admits them | this seat, as a v0.6 cell | P's schema admit lands |
 | Leftover folders `C:/tmp/dsgn-irptv1-fast`, `-base` | Andrew | his OK for a recursive delete |
 
 ## Limits
