@@ -26,19 +26,24 @@
   "decomposition_lineage": [],
   "leads": {
     "cto": "1.0.0_SA_CTO",
-    "coo": "2.0.0_SA_COO~B",
+    "coo": "2.0.0_SA_COO~P (workstreams ~P, ~M, ~Y; Andrew-direct ~16:4xZ call 2)",
     "cvo": "3.0.0_SA_CVO",
     "cro": "4.0.0_SA_CRO",
     "workers": "0.9.0_WK_IRPT_BCKEND~<n>, per the L6 issuance"
   },
-  "coo_lane": "2.0.0_SA_COO~B",
+  "coo_lane": "2.0.0_SA_COO~P",
   "fabric_ruling": "laptop -- inherited from D9, placed LAPTOP 2026-09-10 ~18:5xZ (Andrew-direct, D9 as a whole).",
-  "blocking": "ROUND 5 IS UNBLOCKED AND ITS HIGHEST-VALUE CELL IS NAMED. (a) THE BOUNDED TEST PRINCIPAL, approved by Andrew-direct ~17:3xZ 2026-09-18 (verbatim and entire: \"Approved\"; record org/tier1_exec/2.0.0_SA_COO~B/deliverables/ANDREW_DIRECT_20260918_173xZ_TWO_OPEN_CALLS_APPROVED_IRPT_BCKEND.md @af794c77e3, relayed 98019): ONE firm-scoped test advisor identity with terminated-client visibility, under a never-widen sign-off (CTO+COO) naming its reachable routes, firm scope and THE DELETION AS ROLLBACK, exercised by artifact hash (R-40), DELETED at round close, never a standing account. IT GATES FWD-1/2/5/11 AND IS WHY THE ARRAY HAS READ ZERO OF 10 FOR FOUR ROUNDS. (b) THE TWO FIRM BUCKETS opal-data-inflection and opal-data-cottonwood -- RULE 30 PLACEMENT RULED BY 1.0.0_SA_CTO AS AN IRPT_BCKEND ROUND-5 CELL, NOT A D14 ACT, because his word provisions them \"NOW, ahead of D14's full migration\" and a D14 placement would re-couple the creation to the very thing that sentence decoupled it from. CREATION ONLY, names from lib/opal_naming.py name(), through safe-apply under a change-management entry; a builder refusal is a registry row to add, never a hand-typed workaround. NO OBJECT MOVES, NO READER CUT-OVER, NO LEGACY-PREFIX RETIREMENT -- those stay IB-rtd-7's port under BOTH never-widen halves plus the IRPT_FNTEND reader cell in ONE window, and the prior word (legacy bd/inf/cot are the ACTIVE channels until D14) is NOT reversed. (c) S68's CAUSE -- the .gitattributes eol=lf act, MDPF's owner's, which is this seat. (d) THE ZIP-VS-SOURCE HASH the CVO named as INFERRED-not-verified, with the remedy being declare the true source in files[] or stage from a pinned blob -- NOT a third copy, which is what the hand-off's over-wide summary would have led a reader to do. (e) IRPT_FNTEND's per-firm as-of consequence, UNCARRIED SINCE ROUND 3 and named so it does not decay: each firm's frontier picks its own date and today all three read 2026-09-16, so the consequence is currently invisible and will not stay that way. (f) W2-S57, the detector that cannot fire on its positive case, open since round 3.",
+  "blocking": "The three seats restart after the 10:19-10:22 ET crash: ~P first (crash steps A1-A3, C1; CTO msg 100730). Andrew's acts in flight: the signed-in Holdings HAR; the one-use Performance plan armed until 8:00 PM ET today; the 49F SmartX and INF Orion calls (each worded once); the first live Analysis submission. The 8 stale orders go to 2.0.0_SA_COO~M to dispose (IB-rtf-3 kept).",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
   "counterpart": "IRPT_FNTEND",
-  "phase": "L10 ROUND 4 CLOSED 2026-09-18 ~18:2xZ. Slug @61340c7fe9 (3.0.0_SA_CVO); ROUND-4 ANALYSIS at deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND4_ANALYSIS.md. 16 criteria, 8 declared judgment, SEVEN graded (R47-AC2 sat on IB-rtd-7, closed SUPERSEDED and never handed) -- ALL SEVEN PASS, none disturbed. CHANNEL at the CTO's own call of the gate limbs: 228 items, 0 undispositioned, 103 remediation rows, 0 rowless GRADUATED, 0 open orders of 54 -- ROUND 5 UNBLOCKED. ZERO OF 10 FWDs REALIZED, UNCHANGED FROM ROUND 3 AND CORRECT: all ten outcomes are advisor-facing and round 4's cells are trigger-plane, reconciliation and served-object work, so not one of them exercises an advisor at a session. THE BLOCKER IS STRUCTURAL -- there has been no PRINCIPAL to exercise them with. S56 DISCHARGED (round 3: 4 citations / 0 pinned; round 4: 31 / 31, and the CVO printed the bytes when its own regex flagged a false miss). S68 CLOSED AND VERIFIED BY THIS SEAT ON THE LIVE PLANE AGAINST ITS OWN SIGN-OFF'S STATED CONDITION: the never-widen CTO half @55825f9669 named STOP-unless-sha256-98f5e9c5 BEFORE the act, and s3api head-object + fetch-and-hash after it reads 13,516 bytes, sha256 98f5e9c51d016d52..., CR count 0, VersionId WXkE2epIOTpxH8OJap.2h35dhJkd1whq. S68's CAUSE IS NOT FIXED and is this seat's: git check-attr reads eol/text unspecified and core.autocrlf is true, so a fresh checkout can still render CRLF. NO PRD AMENDMENT.",
-  "last_updated": "2026-09-18T18:25:00Z",
-  "closer_contract": "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md"
+  "phase": "CLOSER RUNNING; the 09-22 hold lifted 2026-09-24 ~16:4xZ (Andrew call 1, record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_164xZ_IRPT_RETURN_FIVE_CALLS_ANSWERED.md). Path placed by 1.0.0_SA_CTO: each seat runs its Andrew-direct goal record to /verify SOUND, then hands back (brief org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_CLOSER_TO_CANONICAL_RETURN_BRIEF_20260924.md @c45fb31, sections 3 and 7). Round 18's L10 is closed into this path (ledger/ROUND_ANALYSIS.round18.md). Round 19 is cut per workstream at hand-back from each seat's frozen STATUS next-list. closer_contract stays until hand-back.",
+  "last_updated": "2026-09-24T17:25:00Z",
+  "closer_contract": "org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md",
+  "workstream_lanes": [
+    "2.0.0_SA_COO~P",
+    "2.0.0_SA_COO~M",
+    "2.0.0_SA_COO~Y"
+  ]
 }
