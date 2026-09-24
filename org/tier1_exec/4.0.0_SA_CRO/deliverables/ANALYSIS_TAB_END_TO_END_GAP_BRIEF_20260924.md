@@ -351,6 +351,41 @@ shape, the custody branch refusing `CUSTODY_FACTORY_REQUIRED` by name, the two r
 granted, no event source mapping). With the four ports above absent, that cut lands as named refusals and does not
 move hop 2.
 
+## Addendum 2, 2026-09-24 ~12:0xZ -- the custody branch has the same shape as the prospect branch; one sentence withdrawn
+
+Written after P measured (i-b) before cutting it (P 100557) and the CTO ruled on it (100559), corroborated by this
+seat's own census in P's worktree at 4a60318489 (tests excluded). It supersedes ONE sentence of the first addendum:
+*"The client-holdings path (hop 4's custody branch) does not cross this gap and is the nearer live thread if a
+prospect upload is not the first journey."* That sentence was inherited from the port census's phrasing ("until the
+accepted reader's ports are pinned") and not measured by this seat; it is WITHDRAWN.
+
+**Hop 4, the custody branch -- MISSING a composition whose hard port is a DESIGN.** `build_accepted_custody_entry`
+(`ycharts/generate/custody_submission.py:140-151`) binds one `AcceptedCustodyReader`
+(`_scope/accepted_custody.py:17-39`) whose two ECONOMIC ports have no implementation anywhere in the tree:
+`interpret_source(document, manifest, *, principal, owner, publication_receipt)` -> `{actual_custody, original_rows,
+source_receipts, revision_refs}` and `validate_evidence(evidence, ...)` -> True against the `_validated` contract
+(`intake/custody_portfolio.py:135-215`: positions with closed economic fields, a complete census row per account, a
+reconciliation row per account at USD 0.01 against `independent_source_rows`). Measured by this seat: `def
+interpret_source` 0, `def validate_evidence` 0 outside tests; every non-test mention (5 each) is the reader's own
+declaration and call in `_scope/accepted_custody.py`; Y's docstring at `:28` says it on purpose -- "both economic ports
+are mandatory for acceptance and intentionally have no default implementation. A fake/local validator is not a
+deployed capability." The other two ports exist or are within reach (`CustodyBindingStore`; M's
+`HoldingsPublication.capture / load_pinned`; a `(principal, owner)` re-shaping of the holdings entry's selection
+resolution). So (i-b) = an hour of composition PLUS a design cell -- the interpreter over M's served holdings
+publication and the question of which INDEPENDENT source values the positions for the reconciliation.
+
+**Ruled (CTO 100559):** nothing is stubbed and the composition half is not cut alone (it would change only the
+served refusal's class name); P drafts the interpreter's design card now from the two contracts with one live read of
+M's publication on `acc_d486fc9455d6b2aa18e13af1` (no vendor, no write); the card goes to the CTO for assignment (Y on
+return, else a cell in the next round). The first live Analysis submission waits on whichever composition lands first
+-- the prospect upload (Andrew's card, addendum 1) or this interpreter. The served function keeps refusing both
+branches by name (public NOT_READY, the class in the sink) meanwhile.
+
+**Trace state at 12:0xZ.** Hops 1, 5, 6, 9, 10 closed or reachable (the resident running since 09:39Z; the five
+analysis routes on the API since 11:44Z; the client flags lifted on portal DEV candidate 4); hop 4 served as the
+installed-factory cut with named refusals; hop 2 (prospect upload) and hop 4's custody branch are BOTH compositions
+with design ports -- the two cards. No fixture becomes a producer on either.
+
 ## Andrew-direct request -- verbatim record
 
 Channel: the 4.0.0_SA_CRO terminal, 2026-09-24 ~05:3xZ.
