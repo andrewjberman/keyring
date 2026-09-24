@@ -94,6 +94,48 @@ receipts) for the selected accounts.
 - Cottonwood specifically: the data window starts ~2026-04-22 (COT in BD is a sliver before May 2026; box
   memory); the first live custody submission on Anna's account reads the 2026-09-22 publication, inside the window.
 
+## 7. v2 -- 2026-09-24 12:5xZ: Q1, Q2, Q4 RULED; the two moved rows; one design across three firms
+
+Authority: 2.0.0_SA_COO~M's answers (org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CUSTODY_SOURCE_OF_RECORD_Q1_Q4_20260924.md,
+every claim file:line @ commit: holdings_snapshot.py @d96513bc40, holdings_49f.py @d96513bc40, holdings_inf.py @fb87f34940) and
+1.0.0_SA_CTO's rulings (batch 48: Q2; batch 50: Q1, Q4). Q3 stays with 2.0.0_SA_COO~Y (the CTO's provisional read: a selected
+account with 0 custody rows REFUSES by the contract as written; widening is Y's amendment).
+
+**Q2 (ruled, batch 48):** the ACCEPTED CUSTODY is the HELD POSITIONS -- the custody rows for the selected accounts at the
+receipted revision -- never the model-implied allocation the page shows for an assigned account. The document's nodes are
+consulted for scope, clocks and receipts only.
+
+**Q1 (ruled, batch 50) -- the row `original_rows` / `positions` MOVES:** the source of record is the ONE receipted custody
+object in `manifest.source_objects` that the builder reads rows from, NEVER `manifest.gold` (the gold parquet is the
+document flattened: one row per node, the same model-implied SECURITY nodes -- reading it reproduces 0-of-68 under another
+name). The served v2 SECURITY nodes' CUSTODY_UNITS fact (`source_revision` = the receipted object's sha256,
+holdings_snapshot.py:550-579) is a pointer to the object, not a row reference; the interpreter reads rows from the object.
+
+**Q4 (ruled, batch 50; the CTO's leaning WITHDRAWN) -- the row `reconciliation.independent_value` MOVES:** the ACCOUNT node's
+`fact_holdings (Market Value, deduped DC1)` amount is the POSITION SUM (holdings_snapshot.py:422-423, :1932-1933, :1990) --
+correct to the cent, a derivation of the same rows, NOT independent. The independent custodian-supplied total is its own row
+in a second fact table, `fact_allocations/date=<total_date>/data.parquet` column "Account Market Value" per AccountID
+(:429-437; served receipt WeqLRnnX.., 1,495 rows), which the build already ties to the position sum within 0.01 USD or
+REFUSES (:446-449) and writes into `manifest.actual_custody_controls.reconciliation` as {account_id, position_value,
+independent_value, difference, independent_source_row_ordinals, independent_source_origins} (:450-454, :2099; origins =
+(s3 url of totals_key, ordinal) :1877). So `independent_value` = fact_allocations "Account Market Value" for the account at
+the receipted revision and `independent_source_rows` = that totals row reference, read from the served manifest's control
+row and re-verifiable against the receipted object. The ACCOUNT node is NOT cited as the independent source.
+
+| firm | rows object (original_rows / positions) | identity columns the rows carry | source_row reference | totals object (independent_value) | totals column |
+|---|---|---|---|---|---|
+| cottonwood (COT) | `opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=<value_date>/data.parquet` (holdings_snapshot.py:1871-1873; served dec293d6 receipt tGurdOTY.., 457,679 B) | AccountID (raw -> opaque_id("account", firm, AccountID) :1978), AssetID / Symbol / Ticker / CUSIP / Asset Name / Asset Display Name / Relationship ID / PortfolioID, Market Value, Units, _source_as_of | (object url, zero-based physical row ordinal), holdings_origins :1876; kept per position as source_row_ordinals + relationship_ids :424-427 after the DC1 collapse :412-421 | `.../silver/fact_allocations/date=<total_date>/data.parquet` (totals_key :1872, read :1874; served receipt WeqLRnnX.., 128,660 B) | "Account Market Value" per AccountID (:429-437; conflicting duplicates refused) |
+| 49financial (49F) | `schwab/08335338/silver/dim_position` (holdings_49f.py:184 loader, :416-417 row -> node) | account_id, cusip / ticker_symbol / isin, market_value_settled_unsettled, quantity_settled_unsettled | row ordinal within the account group | `dim_balance` (holdings_49f.py:183, :284; DRILL WITHHELD on a miss :403-411) | net_mv_plus_cash |
+| inflection (INF) | `opal-data-inf/silver/api_dims/positions_mv` (holdings_inf.py:145-151, :312-313) | account_id, id, product_id, ticker, current_value, current_shares | the Orion row id | `accounts_v2` (holdings_inf.py:150, :273) | current_value |
+
+Consequences for section 5 (the composition, still GATED behind a planned ledger): the generate role's read set is per FIRM
+and per OBJECT -- the rows object AND the totals object each firm's manifest receipts (COT's live under
+`opal-data-assets/blackdiamond/cottonwood/silver/...`, not the cottonwood platinum prefix; 49F under the schwab silver
+prefix; INF under `opal-data-inf/silver/...`) plus the platinum publication index / manifest / parts and KMS via S3 -- so the
+cross-firm gate's enumeration (`.tools/ds-precommit-check.py` `_CROSS_FIRM_FOREIGN_*`) is read BEFORE the plan and the plan
+names every firm bucket it touches. The offline oracle records keys and counts of BOTH objects for Anna's account, never
+values. No code is cut on this card until the grants are applied under a ledger; Y's cell owns the interpreter.
+
 ## 6. What this card does not decide
 
 The first live Analysis submission (100554 (b)) stays Andrew's browser act on whichever composition lands

@@ -1,0 +1,20 @@
+{
+  "receipt": "portal candidate 7 -- fe-s-2's claim arm re-pinned to 'no claim is AUTHORITY' (CTO 100578); fixtures/wire/SelectedAccounts.valid.json published from the producer side",
+  "by": "2.0.0_SA_COO~P",
+  "at_utc": "2026-09-24T12:4xZ",
+  "branch": {
+    "name": "irpt-dev-candidate-7-20260924",
+    "head": "f1d02f30",
+    "base": "origin/DEV b9d244a4 (candidate 6 landed)",
+    "files": 2,
+    "product_files_changed": 0
+  },
+  "producer_side": "infra/aws/lambda/investor-reporting/_contracts/fixtures/SelectedAccounts.{valid,invalid}.json authored (label-digest identities, no client value); jsonschema Draft202012 accepts / rejects as stated; _contracts suite 33 fail with and without (0 introduced, 0 fixed; all in tests/test_seam_paired.py, pre-existing)",
+  "verification": {
+    "fe_s_2_and_10_portal_root": "48 pass / 1 skip / 0 fail (was 42 / 1 / 5 at every DEV vintage since 7c542fd2; DSGN_IRPTV1-W4-S2's five closed)",
+    "tsc": "0 errors",
+    "eslint": "0 problems",
+    "six_suites_nested": "170 pass / 25 fail -- the nested layout's known set plus F14-AC13 x2 / AC14 x3 now failing one step later: 'slice property entries does not $ref the document' (a response-contract slice debt, pre-existing, masked by the ENOENT)"
+  },
+  "push_state": "LOCAL; MSTR lands on the CTO's GO"
+}
