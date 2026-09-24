@@ -16,9 +16,9 @@ it* -- is the whole finding.
 | ID | State | Evidence |
 |---|---|---|
 | **B1** producer runs deterministically | **MET** | `integrations/bloomberg/research/price_axis_pull.py`, a scripted re-runnable producer invoked by a Windows Scheduled Task. No number below came from an agent-typed Bloomberg lookup. |
-| **B2** current-day generation exists and is SERVED | **MET for the STORE; the READER half is UNVERIFIED** -- see Limits | Pointers read back live (below). |
-| **B3** the schedule is the production trigger | **APPLIED, NOT YET EXERCISED** | The leg is on disk; the 07:00 ET fire has not yet run with it. |
-| **B4** the 09-29 fallback expiry no longer load-bearing | **MET for the store** once B3 exercises | A generation now exists at the frontier, inside the 14-day window. |
+| **B2** current-day generation exists and is SERVED | **MET at the store AND at the source reader** -- but see The Reader: it resolves via `dated: true`, so the clause *"rather than the dated fallback"* is structurally unreachable | Pointers read back live; `read_rankings` exercised. |
+| **B3** the schedule is the production trigger | **EXERCISED** | The 2026-09-24 07:00 ET fire ran the leg end to end: `PRICE LEG EXIT CODE: 0`, task `LastTaskResult 0`. See The Fire. |
+| **B4** the 09-29 fallback expiry no longer load-bearing | **MET, and now held by a PROVEN trigger** -- the fallback is still the serving mechanism, but at a 1-day walk and re-fed daily by an exercised schedule | See The Reader and The Fire. It was correct not to close this on the QA fire; B3's exercise is what closes it. |
 
 ## WHAT IS MEASURED
 
@@ -69,30 +69,104 @@ is the shape `etf_daily_pull` and `etf_constituents_pull` already established in
 `rc0->0`, `rc3->81`, `rc1->82`, `rc62->82`, script-missing->`80`, interpreter-missing->`83`; the
 models-chain `%RC%` sentinel survived all six.
 
+## THE FIRE -- B3's acceptance, 2026-09-24 07:00 ET
+
+The scheduled task fired at **07:00:01**, ran to completion and returned to `Ready` with
+`LastTaskResult 0` (it read `267009` = still-running at 07:03, so the 0 is a completed run, not a stale
+value). Verified **before** the fire that the task's action points at the edited file --
+`cmd.exe /c "...\integrationsloomberg\pipeline\scheduled_daily_pull.cmd"`, principal
+`Opal Bloomberg` / Interactive -- so this is not a wrong-object read of another copy.
+
+**The isolation held and the new leg perturbed nothing:**
+
+```
+:9    PRECONDITION: PASS -- DAPI UP, an entitled session answered a real refdata request
+:59   PULL EXIT CODE: 0
+:94   RESULT: PUBLISHED 2026-09-23 -- verified by content, not by self-report
+:97   RESULT: END-TO-END OK
+:124  ETF LEG EXIT CODE: 0
+:143  CONSTITUENTS LEG EXIT CODE: 0
+:145  PRICE LEG (AMGT Lead Panel price axis)
+:154  PRICE LEG EXIT CODE: 0 -- generation committed
+```
+
+**L4's discriminator is satisfied, which is the whole point of having written it that way:** the served
+pointers now carry `run_id` **`R20260924T110713Z`**, **distinct from the 09:52Z ad-hoc QA fire's
+`R20260924T095217Z`**. A scheduled result therefore cannot be a re-read of the ad-hoc one. Both axes
+`state=COMPLETE`, `row_count=32`, `written_at 2026-09-24T11:07Z`; denominators identical to the QA fire
+(34 names, 32 usable, 31 identity-resolved, 64 of 64 rows, 2 of 2 pointers, failed axes `[]`).
+
+**NEVER-1 re-checked across this SECOND write rather than assumed from the first:**
+`TRENDING_PRICE#2026-09-15/_CURRENT` re-read **byte-identical for the third time** -- `generation_id
+20260917T222503Z-c35c454d1e4f`, `run_id R20260917T222502Z`, `written_at 2026-09-17T22:25Z`. DELTA=0 holds
+for the scheduled fire as well as the ad-hoc.
+
+⚠ **THE GATE THIS CLEARED WAS REAL, NOT HYPOTHETICAL:** on 2026-09-23 the same 07:00 fire died at
+`PRECONDITION: FAILED` (rc 50, DAPI down) with every landing leg correctly skipped. B3 could never have
+been graded on the schedule merely existing.
+
+
 ## DEPENDENCIES, WITH OWNERS
 
 | What | Owner | State |
 |---|---|---|
-| **Commit of the three record paths** (`scheduled_daily_pull.cmd`, the `.open_deploys` json, the `change_management` md) | `0.0.0_AB_MSTR` / `~Z` -- this seat's **named integrator** | **ASKED.** `safe-commit` refused: `agent=0.0.3_BG_BBGTerminal not in permitted_agents` for lane `ANY_EXEC_OR_AE`. That refusal is CORRECT and by design -- this seat's README says no OWNPATHS lane exists for it and none should be added. Not escalated to `GIT_COMMIT_AUTHOR_OVERRIDE`: the named integrator is live and is the designed route. |
+| **Commit of the three record paths** | `0.0.0_AB_MSTR~Z` -- this seat's **named integrator** | **DONE** @`8d235eadb1`, on `origin/CLOUD` @`64df5daa18`. `safe-commit` refused this seat CORRECTLY (`not in permitted_agents`, lane `ANY_EXEC_OR_AE`) -- no OWNPATHS lane exists for it by README design. **`GIT_COMMIT_AUTHOR_OVERRIDE` was NOT used**; the designed route was available. |
+| **Commit of THIS file's later revisions** | same | **OWED.** `deliverables/` is refused to this seat under lane `TIER0_UTILITY` (only `logs/` + `task_orders/` are self-owned), so every STATUS.md revision after `8d235eadb1` needs an integrator pass. |
 | **DAPI up at 07:00 ET** | this seat (sign-in runbook) | Up now (`bloomberg_health ok:true`). **This is a real gate on B3:** on 2026-09-23 the precondition FAILED (rc 50, DAPI down, pull not attempted) and every landing leg was correctly skipped. 09-19..09-22 all ran end-to-end. |
-| **The Lead Panel READER actually serving 09-23** | AMGT reader owners (`lib/research/api/scoped_amgt.py`) | **UNVERIFIED by this seat** -- see Limits. |
+| **The Lead Panel READER actually serving 09-23** | AMGT reader owners (`lib/research/api/scoped_amgt.py`) | **VERIFIED AT SOURCE** -- `read_rankings` resolves to this seat's generation. Deployed bytes and the rendered screen remain unverified (401). See The Reader and Limits. |
+
+## THE READER -- EXERCISED, and it changes what B2 and B4 can honestly claim
+
+`lib/research/api/scoped_amgt.py:read_rankings` was run in-process against the live store (read-only):
+
+```
+trending/price   as_of_date 2026-09-23   requested_as_of 2026-09-24   dated TRUE
+                 SERVED   rows_read 32   generation_id 20260924T095217Z-7bfec22eec6f
+breakout/price   as_of_date 2026-09-23   requested_as_of 2026-09-24   dated TRUE
+                 SERVED   rows_read 32   generation_id 20260924T095218Z-4c1424d093c3
+```
+
+**The reader lands on THIS seat's generation, not the 2026-09-15 one.** That is the reader half of B2,
+verified rather than assumed.
+
+⛔ **BUT IT ARRIVES VIA THE DATED-FALLBACK BRANCH (`dated: true`), AND THAT IS STRUCTURAL, NOT A MISS.**
+`read_rankings` sets `requested_as_of = as_of_date or _today()` -- it asks for **2026-09-24** -- while the
+producer's as-of is `prev_trading_day` = **2026-09-23**. So the pointer at the requested date is ABSENT on
+every ordinary day, `_find_latest_served_pointer` walks back, and the list is served with `dated: true`.
+
+**So the mandate's B2 phrasing -- *"the Lead Panel reads it rather than the 14-day dated fallback"* -- is
+NOT REACHABLE while the reader requests today and the producer writes T-1.** What this work actually
+changed is the **fallback DISTANCE: 9 days (09-24 -> 09-15) down to 1 day (09-24 -> 09-23)**.
+
+⚠ **THEREFORE B4 IS DEFUSED BY THE SCHEDULE, NOT BY A ONE-OFF.** The 14-day window is still the mechanism
+carrying the panel; it is simply no longer near its edge. If the producer misses more than 14 consecutive
+days the list returns ABSENT again -- which is precisely why **B3, the daily trigger, is the acceptance and
+the ad-hoc fire is not.** Closing the 09-29 clock on the QA fire alone would have been a false close.
+
+**Not this seat's to change:** either the reader requesting the trading frontier, or the producer also
+writing a pointer at today's date, would remove the fallback from the path. Both sit in `lib/research/`,
+which the mandate's write surface explicitly excludes (`2.0.0_SA_COO~Z`'s). Reported, not patched.
 
 ## LIMITS -- what this file does NOT claim
 
-⛔ **B2's reader half is UNVERIFIED.** This seat measured the **STORE** (the `_CURRENT` pointers), not the
-**SCREEN**. The mandate's deliverable is *"a person opening the Lead Panel sees ... a price generation dated
-the current trading day"*, and a served pointer is a necessary, not sufficient, condition for that. No
-Lead Panel render was read. Stating the store result as though it were the panel result would be exactly the
-grain error the evidence law names.
+⛔ **THE READER EXERCISE IS THE REPO'S SOURCE, NOT THE DEPLOYED BYTES.** It imports
+`lib/research/api/scoped_amgt.py` from this working tree. It does **not** establish that the deployed
+Lambda behind the Lead Panel runs those bytes -- the code-instrument trap (diff deployed against the build
+input, never assume by filename).
 
-⛔ **B3 is APPLIED, NOT EXERCISED.** The leg is on disk and the arms are proven in a harness; the scheduled
-fire at 07:00 ET has not yet run it. Ledger legs **L3** and **L4** are open against precisely that, and L4
-requires a `run_id` **distinct from** the QA fire's `R20260924T095217Z` so a scheduled result can never be
-read off the ad-hoc one.
+⛔ **AND THE SCREEN WAS NEVER READ.** A direct GET of
+`https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/amgt/lead-panel/rankings/{trending,breakout}/price`
+returned **HTTP 401 `Missing or invalid Authorization header`** on both. The authenticated browser-session
+endpoint is R-21 call 1's subject and belongs to another seat, so this seat cannot close the last hop. The
+deliverable's wording is *"a person opening the Lead Panel sees ..."*; what is proven here is the store and
+the source reader, and stating either as the panel would be the grain error the evidence law names.
 
-⛔ **The record is on disk but NOT in git.** Site-Z scheduled tasks run the **working tree**, so the edit is
-already the deployed state; a `git checkout`/reset of this tree would silently revert the deploy while the
-ledger still read OPEN. That is the live exposure in the dependency row above.
+⭐ **THE RECORD IS NOW IN GIT AND THAT EXPOSURE IS CLOSED.** It is kept here because it is a STANDING
+PROPERTY OF THIS DEVICE, not an incident: site-Z scheduled tasks run the **working tree**, so an
+uncommitted edit to a task's target is not *"not yet deployed"* -- it IS the deployment, and a
+`checkout`/`reset` would have silently reverted a landed deploy while the ledger read OPEN. That window ran
+from ~09:5xZ to the integrator commit at ~10:21Z. It generalises to every file a Scheduled Task on this box
+executes.
 
 ## SURPRISED, NOT FIXED
 
@@ -108,6 +182,16 @@ it:** it resolves `PRICE_PY` itself and refuses with `rc=83`.
 
 ## NEXT PROOF
 
-The 07:00 ET fire. Close **L3** on the run log's `PRICE LEG EXIT CODE` line plus
-`Get-ScheduledTaskInfo` `LastRunTime`/`LastTaskResult`; close **L4** on a `_CURRENT` pointer whose
-`run_id` is distinct from `R20260924T095217Z`.
+**The mandate's own proofs are spent: B1-B4 met, ledger L1-L4 closed, entry CLOSED.** What remains is not
+this seat's to close:
+
+1. **The rendered panel** -- blocked on the authenticated browser-session endpoint (R-21 call 1), another
+   seat's. A direct GET returns 401.
+2. **The deployed reader's bytes** -- diff the Lambda against its build input; not measured here.
+3. **`AMGT_RESAPP-Z-S248`** -- `disarm_owner` is `1.0.0_SA_CTO~Z`; the leg is another owner's write surface.
+4. **The dated-fallback mismatch** (reader asks `_today()`, producer writes T-1) -- `lib/research/`, excluded
+   from this mandate's write surface.
+
+**The one standing duty this seat keeps:** the 07:00 ET fire is now the production trigger, and its
+precondition is DAPI liveness -- which failed on 2026-09-23. A sign-out at 07:00 skips the leg by correct
+design, so the recovery runbook remains this seat's.
