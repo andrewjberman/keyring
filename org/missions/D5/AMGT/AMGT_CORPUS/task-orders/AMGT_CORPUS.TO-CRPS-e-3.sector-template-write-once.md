@@ -30,7 +30,9 @@ gets the same name for a different body and `gold.gold_put` refuses (correctly: 
 - `total` leaves `fields` and the artifact body; the denominator stays disclosed in the printed lines (`business_type %s reports %d
   of %d` at `--write` and `--show-first-graded`, computed at print time from the run's `total`); `_assemble_artifact`/`_object_name`
   unchanged otherwise, so a type whose inputs did not change mints the SAME name with the SAME body (`existed`, no refusal).
-- `METHOD_VERSION` is NOT bumped (the measurement did not change; the body lost a disclosure field).
+- `METHOD_VERSION` IS bumped by one (ISSUER AMENDMENT 1): removing `total` changes the body for unchanged inputs, so the
+  object name must change ONCE or gold refuses the new body under the old name (row AMGT_CORPUS-Z-W3-S3). Old objects keep
+  their names; after this one re-mint a grown corpus with unchanged type inputs mints nothing new.
 - Tests: `body_without_total` (the artifact carries no `total`, the print line still does); `grown_corpus` (a fixture: the same
   type inputs under total 124 and total 218 produce byte-identical bodies and one name); the existing tests stay green.
 
@@ -54,7 +56,7 @@ Your deliverables dir: `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_A
 ## 5. PROOF OF SPEC (each invocation LITERAL, under `timeout 600`; the check files are the issuer's, read-only to you)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="CRPS-e-3"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/e3_AC1.sh</invocation><expect>(?m)^\d+ passed in </expect></criterion>
+  <criterion id="AC1" cell_refs="CRPS-e-3"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/e3_AC1.sh</invocation><expect>(?m)^\d+ passed(, \d+ deselected)? in </expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-e-3"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/e3_AC2.sh</invocation><expect>(?s)types [1-9]\d* reports_typed \d+ unmapped_reports \d+ other_excluded \d+.*securities_typed \d+ of \d+ unmapped_securities \d+ conflicts \d+</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-e-3"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/e3_AC3.sh</invocation><expect>business_type \S+ reports \d+ of \d+</expect></criterion>
 </proof_of_spec>
@@ -70,6 +72,8 @@ Your deliverables dir: `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_A
 4. Report ONCE: AC2's `types ...` and `securities_typed ...` lines and the per-type `put_performed` counts (new vs existed).
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**ISSUER AMENDMENT 1 (2026-09-24 ~19:4xZ):** the RULED bullet on `METHOD_VERSION` is reversed -- the issuer's ruling not to bump it was wrong (removing a body field for unchanged inputs requires a new name once; row Z-W3-S3). And AC1's expect admits pytest's `-k`-filtered summary (`N passed, M deselected in`), which the as-cut pattern could never match (row AMGT_CORPUS-Z-W3-S4, found by `0.9.0_WK_AMGT_CORPUS~3`); at the base the check still FAILS (0 passed). Graded by: GATE (viii) (the order declares `<placeholders>`); no other limb grades a modification.
 
 **ISSUER NOTES:** R-68's fork settled by the issuer's census (0 consumers of `total`); the intuitive fix (total into the key) is
 refused there because it would mint a new object per type on every corpus growth. Checks dry-run at the base: AC1 FAIL (no such
