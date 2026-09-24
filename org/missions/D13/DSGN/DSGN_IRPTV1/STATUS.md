@@ -1,4 +1,4 @@
-# DSGN_IRPTV1 -- status (FAST lease)
+# DSGN_IRPTV1 -- status (FULL: round 3 executing)
 
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.5
 @1cccbe6bc6. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Mode: FAST under
@@ -52,9 +52,9 @@ Nothing here is CVO-graded yet.
 
 ## Next proof
 
-L6: ONE issuance of the twelve round-3 orders IV-e-9..IV-e-20 over decomp v3 @cab01c4ccc (PRD v0.7 @8942931687). The
-dry run through safe-commit passed every limb except LIMB 6 (the ratified-text half STALE, owed by 3.0.0_SA_CVO; MSTR is
-seating a CVO). The drafts wait in this seat's scratchpad; the FAST lease ends at the cut (CTO 100904).
+L7: the four chain heads spawned (IV-e-9 slot ~7, IV-e-11 slot ~8, IV-e-14 slot ~9, IV-e-15 slot ~10), each on a worktree
+pair off portal DEV `13b5356f`; the JOIN chain (IV-e-18 -> 19 -> 20, slot ~11) after A-D land. Issuance @9e13e294c1; the
+FAST lease ENDED at the cut (drive-mode.log line 6, 23:06:33Z).
 
 ## Next-list (Andrew's design notes first, most broken first)
 
