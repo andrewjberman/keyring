@@ -25,6 +25,14 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`; stop = `/verify SOUND`.
 - `2.0.0_SA_COO~Y` `/loop 20m` DIRECTED over IRPT Analysis:
   `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`; stop = `/verify SOUND`. Y never takes over P's shared installation.
+- `1.0.0_SA_CTO~O` `/loop 30m` DIRECTED over NFRA_OPALAI (opal_ai V1), ruling the project's open calls on its own
+  rec, with `/next-steps` on an empty tick:
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_210xZ_CTO_O_LOOP_30M_DRIVE_OPAL_AI.md`. Chooser
+  Andrew; landed by 1.0.0_SA_CTO~O. The self-drive reservations apply (egress, unrecoverable, money, his named holds
+  including the OPLGTW stop and the push law). WIDENED the same minute by his goal: all D6 opal_ai work (MCPINDEX,
+  all MCP server work, entitlements, MCP integrations, all Opal Analyst / MCP prior art), with licence to create and
+  register projects: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_210xZ_CTO_O_GOAL_FINISH_ALL_D6_OPAL_AI.md`.
+  Stop: no new opal_ai project is left and no `/next-steps` can be named, or his stand-down.
 - `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH to CLOSED:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.
 - `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE:

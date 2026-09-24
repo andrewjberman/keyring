@@ -98,7 +98,7 @@ standing ruling on picks is not widened by this cell. Checks dry-run at the base
 (unrecognized `--evidence`), AC3 PASS (the bound) -- recorded in the issuance commit.
 
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>

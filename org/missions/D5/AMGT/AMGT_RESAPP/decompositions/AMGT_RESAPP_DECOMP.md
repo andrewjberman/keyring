@@ -5969,3 +5969,102 @@ as the face writes it; its printed line is the verdict. REFUSE, do not rescue.
 - **Z-S255** (portal has zero active hooks): estate-wide, routed to `0.0.0_AB_MSTR~Z` by the analysis.
 - **Z-S226's authenticated render check**: the issuer's at close (47a item 7).
 - **W85-S1** (no `lib/__init__.py`), **W117-S3** (no sys.path guard), **W58-S2** (gate (x) in main() only): hygiene, next list.
+
+
+## 48. ROUND 40 -- FWD-30 WITH ITS EXTRAS GRADED, THE P/E GUARD, THE THESIS VERDICT, TWO LABELS, THE POSTURE PATH, THE DEERE TRACE, AND THE SERVED ACTS. Seven orders over the round-39 analysis's eight items
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 39 ANALYSIS** (`ledger/ROUND_ANALYSIS.round39.md` @`269378b031`,
+ASCII fix @`c1997ce5be`; s.7 eight items, 9 of 10 REALIZED, `FWD-30` RETRACTED to NOT_REALIZED on row Z-S268) and its ruling:
+**a round whose cells touch served figures carries at least one JUDGMENT criterion** -- this round carries two (ro-1 AC4, ro-3
+AC3). The CTO's msg 25740: the harness is a `POD_DE_ANY` file, so ro-1's worker is the named writer. PRD v0.26 unchanged;
+`prd-signoff.py status`: ADMITTED.
+
+### 48a. THE EIGHT ITEMS AND WHERE EACH LANDS
+
+| s.7 item | lands in |
+|---|---|
+| 1 FWD-30's extras (Z-S268): stop publishing, AND the harness GRADES extras | `AMGT-ro-1` (build) + `AMGT-ro-7` (served) |
+| 2 at least one judgment criterion | ro-1 AC4, ro-3 AC3 |
+| 3 thesis's section, not the header | `AMGT-ro-3` |
+| 4 posture's "still loading" label | `AMGT-ro-4` |
+| 5 the raw Windows path on posture | `AMGT-ro-5` |
+| 6 `BLOOMBERG: UNKNOWN` beside the ticker | `AMGT-ro-4` |
+| 7 the Deere identity split (Z-S267) | `AMGT-ro-6` (measure-first: key-form trace + a proposed rule) |
+| 8 exec's `union of 250` / list's `2026-09-16` provenance | CARRIED (48g): both lines are the served pool and ranking objects stating truthfully what universe they were built on; they read the 94 only when those producers read a rebuilt universe/v1, which is not a RESAPP cell |
+
+**Found at the cut, and cut here (48b):** rn-2 broke `peersCarry.harness.cjs`, and its consumer returns the RAW yield when a
+P/E entry states no unit -- which every served peers/v1 object does today -- so the fixed page would show 2.88 under "P/E".
+`AMGT-ro-2` guards it; `AMGT-ro-7` rewrites the served peers pool with the units.
+
+### 48b. THREE MEASUREMENTS THE CUT RESTS ON
+
+1. **rn-2's fallback.** `cscTable.ts` returns `value` when `column.transform` is absent; `peersCarry.harness.cjs` exits 1 at
+   HEAD (expected [20, 25], got [0.05, 0.04]); stripping `transform`/`units` from the landed fixture's ey entries renders 24
+   numeric raw yields (`checks/ro-2.AC2.cjs` at the base: 0 absent, 24 numeric).
+2. **The served peers objects carry no unit.** They are pool objects the engine wrote before rn-2; the lambda serves them as
+   written. Through today's consumer the served P/E reads the raw yield (DE 2.88187), and **round 39's magnitude band
+   [0.5, 200] PASSES that** -- a raw percent yield sits inside it. The band cannot discriminate; `checks/pe-relation.cjs`
+   (P/E x percent yield == 100 within 1) can: served 0 of 24, landed 24 of 24.
+3. **The build precondition drifted again:** `gen_harvest_prefixes.py --check` rc 1 at the cut. The issuer restamps
+   immediately before ro-7's build, not now, since the registry can move again.
+
+### 48c. THE RECTANGLE -- write surfaces DISJOINT
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ro-1` | FWD-30: THE EXPORT ADDS NOTHING, AND THE HARNESS GRADES EXTRAS | `~152` | worker | SERVED | `lib/research/print/render_pack.py`, `lib/research/print/tests/**`, `portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs` |
+| `AMGT-ro-2` | THE P/E GUARD AND ITS HARNESS | `~153` | worker-light | LOCAL | `portal/src/pages/SecurityAnalysis/cscTable.ts`, `.../__harness__/peersCarry.harness.cjs` |
+| `AMGT-ro-3` | THE THESIS SECTION CARRIES THE HEADER'S VERDICT | `~154` | worker | SERVED | `lib/research/api/scoped_amgt.py` (thesis route only), `lib/research/api/tests/test_thesis_description_verdict.py`, `portal/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx`, `.../types.ts` |
+| `AMGT-ro-4` | TWO LABELS THAT MISSTATE | `~155` | worker-light | LOCAL | `.../tabs/PostureTab.tsx`, `.../components/SecurityOverlay.tsx` |
+| `AMGT-ro-5` | POSTURE'S REASON WITHOUT A PATH | `~156` | worker-light | LOCAL | `lib/research/posture/packs.py`, `lib/research/posture/tests/**` |
+| `AMGT-ro-6` | THE DEERE KEY-FORM TRACE | `~157` | worker-light | LOCAL | its deliverables only |
+| `AMGT-ro-7` | THE SERVED ACTS: the lambda deploy and the peers pool rewrite | `0.7.0_AE_CloudOps~A` | seat order | WORLD | `infra/aws/terraform/harvest/**` (apply only), its deliverables, the ledger |
+
+### 48d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.7's eight items (read from the file) + the one found at the cut (48b.1-2) = nine; minus item 8
+  (carried, 48a) and item 2 (a property of other cells) = seven, in seven cells. Item 7 is measure-first because its remedy
+  is an identity rule (C-ONE-IDENTITY), which the CTO rules on, not a cell.
+- **(ii) Same grain.** Four code cells (ro-1, ro-2, ro-3, ro-5), one label cell (ro-4), one trace (ro-6), one seat act (ro-7).
+- **(iii) Intent.** One axis: what the page and its export SAY is true -- the export adds nothing, the P/E is a P/E, a
+  section's heading matches its content, a label names what it measures.
+- **(iv) What a cell does NOT move.** ro-1 changes no pdf and no route; ro-2 changes no column but the two reciprocal ones;
+  ro-3 changes only the thesis payload's description verdict and the section's rendering; ro-4 moves no data; ro-5 changes
+  only the reason text; ro-6 edits nothing; ro-7 moves exactly what its sign-off pair names.
+
+### 48e. EDGES AND FAN-OUT
+
+```
+ro-1 -> ro-7   (the rich body the deploy serves)
+ro-3 -> ro-7   (the thesis payload the deploy serves)
+ro-2, ro-4, ro-5, ro-6 -> (none)
+```
+
+```
+fanout:
+  cap: 8
+  orders_total: 7
+  chains_total: 6
+  wave_0: [ro-1, ro-2, ro-3, ro-4, ro-5, ro-6]
+  wave_1: [ro-7]                       # a seat order: after ro-1 and ro-3 merge AND both never-widen halves are committed
+  portal_ref: 46c0ae11
+  no_vite_per_worker: true             # Andrew-direct "5174 only"; the issuer's real run grades every render
+  no_s3_deletes: true
+  no_vendor_call: true                 # the peers batch reads the scanner store (Opal's); no Bloomberg
+  egress: ro-7's build pip-downloads its pinned wheels from PyPI (declared on the face and the half)
+  route_change: none (ro-3 adds a field to the thesis payload; ro-1 removes content from the rich body)
+  no_promote: true
+```
+
+### 48f. BOUNDS
+
+No worker starts a server. No install. No push, merge, rebase, checkout -- or clean. Portal files commit inside `portal/`
+(branch `wk-AMGT_RESAPP-<n>-portal` at DEV `46c0ae11`), then the outer commit carries `portal` and the deliverables. Every check
+is a committed file under `deliverables/2.0.0_SA_COO~Z/round40/checks/`; base runs under `round40/base-runs/`.
+
+### 48g. CARRIED
+
+- **Item 8** (48a): to the universe owner (`2.0.0_SA_COO~Y`, AMGT universe) -- the pool and ranking producers read the 94 once
+  universe/v1 is rebuilt; the page then says so on its own.
+- **Item 7 of round 38/39** (the authenticated deployed render): carded to Andrew by the CTO.
+- Z-S238 (request log line, a pair), Z-S227 (isError branches), W85-S1 / W117-S3 / W58-S2 (hygiene), the registry `unit` field.

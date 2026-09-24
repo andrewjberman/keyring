@@ -3,7 +3,7 @@
   "project": "NFRA_OPALAI",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.1",
+  "prd_version": "v0.4",
   "step": 4,
   "brief_ref": "docs/briefs/opal-ai-microproduct-repo-brief-20260923.md@a47993af9c",
   "endpoint_outcomes": [
@@ -44,6 +44,25 @@ the workspace, as the portal is built.
 
 Two L1 briefs feed it: `docs/briefs/opal-ai-microproduct-repo-brief-20260923.md` @a47993af9c (RCN-0014, the header's
 `brief_ref`) and `docs/briefs/opal-ai-gitops-split-brief-20260923.md` @40b964f616 (RCN-0015).
+
+**v0.2 (2026-09-24 ~20:5xZ)** adds C10 and pulls the minimum of S10 into round 1, on Andrew-direct at the
+`2.0.0_SA_COO~O` terminal (record `org/tier1_exec/2.0.0_SA_COO~O/deliverables/ANDREW_DIRECT_20260924_204xZ_OPAL_AI_AGENT_NAME_AND_ENTITLEMENTS_SYNTHESIZE.md`
+@6426ebff2b): *"we dont have to name it a whole serial anymore if we don't want to, could just be \"Opal_Agent\".
+Effectively the purpose is that it's dynamic and the real engineering comes in its entitlements per user/entra-id. A
+lot of this work has already been done is just needs to all be synthesized cleanly."* Ruled by this seat on
+`2.0.0_SA_COO~O`'s question (msg 25752). The Analyst today calls the gateway as ONE service identity, so every
+colleague would get that identity's reach, and a round-1 thread built that way would bake in the wrong authorization
+model. The ENDPOINT is unchanged. The runtime account and agent are named `Opal_Agent` (C4).
+
+**v0.3 (2026-09-24 ~21:1xZ)** resolves a contradiction `2.0.0_SA_COO~O` found in C4 (msg 25756). An account that
+cannot write its checkout cannot pull into it. The pull moves to the operator account, and `Opal_Agent` holds no
+GitHub credential. C3 and C4 are amended; the ENDPOINT is unchanged.
+
+**v0.4 (2026-09-24 ~21:3xZ)** adds C11, found by this seat reading the request catalog against C4. The Analyst's
+catalog row 7 (Bloomberg view-side lookups) is served today by a Bloomberg MCP server that launches from the workspace
+(`integrations/bloomberg/mcp/server.py`, 456 lines). `Opal_Agent` cannot launch it, and the decomposition places it
+outside round 1. The cutover would otherwise drop a capability colleagues use today with no word to them. The ENDPOINT
+is unchanged.
 
 The design this PRD binds is `org/tier1_exec/1.0.0_SA_CTO/deliverables/OPAL_AI_RUNTIME_ISOLATION_DESIGN_20260924.md`
 @45ce8406fc. The header stays DRAFT until L4-R. The author signs neither half.
@@ -210,15 +229,21 @@ workspace seat's Teams duty stops, and nothing in between serves colleagues from
 
 **C3 -- Branches and release.** `DEV` integrates and `PROD` is what runs. Only `0.0.0_AB_MSTR` (or `~Z`) pushes
 either, on Andrew's word. Never rebase. A release is a merge of DEV into PROD, and the parent's pointer bump names the
-PROD commit now running. The runtime pulls PROD fast-forward only. A pull that would not fast-forward refuses.
+PROD commit now running. The launcher's pull step fetches PROD fast-forward only, as the operator account (C4). A pull
+that would not fast-forward refuses.
 
 **C4 -- The runtime boundary is the operating system (R1).**
-- A standard local Windows account, in neither `Administrators` nor `CodexSandboxUsers`, runs every team-facing agent.
+- A standard local Windows account named `Opal_Agent`, in neither `Administrators` nor `CodexSandboxUsers`, runs every
+  team-facing agent. The agent names itself `Opal_Agent` too, not a fabric serial.
 - Its product files come from a checkout of `opal_ai` PROD. The runtime account can READ that checkout and cannot
   write it, so the agent cannot edit its own prompt, guardrails, hooks or settings. It can write only its state
   directory.
-- The runtime pulls with a GitHub credential that is read-only and scoped to `Opal-Capital/opal_ai` alone. It holds no
-  credential for `ajb_workspace`.
+- **The pull runs as the OPERATOR account, never as `Opal_Agent`** (v0.3 ruling on `2.0.0_SA_COO~O` msg 25756: whoever
+  pulls must write the checkout, and `Opal_Agent` may not). The launcher's pull step uses the G-GH credential, which is
+  read-only, scoped to `Opal-Capital/opal_ai` alone, and held in the operator's profile. The checkout is ACL'd
+  read-and-execute for `Opal_Agent`. **`Opal_Agent` holds no GitHub credential at all**, and no credential for
+  `ajb_workspace`. The launch gate and the agent then run as `Opal_Agent`, and the gate checks (a)-(c) as written. The
+  operator side starts the agent as `Opal_Agent` and passes it no operator credential, token or environment.
 - Its Claude setup is its own: its own login and credential store, a `CLAUDE.md` holding only the agent's guardrails,
   a `.claude/` holding the fence hook and the Teams serve skills, and an MCP config listing `opal-gateway-bbg` and
   nothing that reaches the workspace. Andrew's proxy gateway `opal-gateway` is never configured in that account.
@@ -277,6 +302,27 @@ exchanges run on two clocks and are timed per stage (detection, turn overhead, r
 the 2026-08-20 baseline of 5m45s, of which the data layer was 0.92 s. The remedies named there (resident hot-tool
 schemas, a routing call, one-call retrieval, push instead of poll) are candidate cells, never presumed landed.
 
+**C10 -- Every answer is scoped to the ASKER's entitlement, never the agent's.**
+- The asker is identified by their Entra tenant and object id, never by email. This is the principal the gateway's
+  policy model already keys on (`app/data_entitlement.py`, `POLICY#<tid>#<oid>`, NFRA_OPLGTW C1-C2).
+- The gateway establishes the asker SERVER-SIDE, from the Teams message it read itself. The agent never asserts
+  whose behalf it acts on, and an identity the agent supplies in a call is ignored. A prompt-injected agent therefore
+  cannot borrow a wider person's reach.
+- The effective scope is the INTERSECTION of the asker's policy and the agent's own identity allowlist
+  (`app/identity_scope.py`). The agent's service identity never widens what an asker may see.
+- An asker with no policy gets a plain refusal that says how to get access. It never gets a default reach.
+- Existing work is carried and synthesized, never rebuilt: the policy store (`access_state.py`,
+  `data_entitlement.py`), the identity allowlist, the tier model (`tier.py`) and the `_run` guard chain. Each cell's
+  first act is to locate the existing implementation it extends.
+
+**C11 -- The cutover drops nothing silently.** At cutover, every APPROVED row of the request catalog is either served
+by the runtime through a mechanism it can reach, or answered with a plain, quotable "not available from the Analyst
+yet" reason naming who to ask. The catalog row text stays byte-unchanged (C7). The reason lives in the agent's runtime
+guardrails, not in the catalog. The cutover record lists every such row, with the enrichment that restores it. **Row 7
+(Bloomberg view) is the known case.** Restoring it means moving the view-only Bloomberg MCP server into `opal_ai` and
+proving `Opal_Agent` can reach the terminal's loopback API, and that is the first enrichment after round 1. The
+Bloomberg operator scripts, sign-in and daily pull stay in the workspace.
+
 ## SURFACE MANIFEST
 
 | id | surface | what it is | depends on | outcomes |
@@ -290,11 +336,12 @@ schemas, a routing call, one-call retrieval, push instead of poll) are candidate
 | S7 | runtime Claude setup and launcher | login, `CLAUDE.md`, `.claude/`, MCP config, launch gate, state directory | S5, S6, G-AUTH | FWD-1, FWD-7 |
 | S8 | Teams watch and hosted content | token refresh owned by the watch, read-failure fix, `hostedContents` tool | S5, S7 | FWD-2 |
 | S9 | speed | stage timing and the section 11 remedies | S7, S8 | FWD-3 |
-| S10 | operator controls | admit, scope and remove a colleague; explain a past answer from the audit | the gateway's identity scope | FWD-8 |
+| S10 | per-asker entitlements and operator controls | round 1: the asker resolved server-side and every answer scoped to the intersection (C10), one un-admitted asker refused; enrichment: admit, narrow and remove without a restart, and explain a past answer from the audit | the gateway's policy store and identity scope | FWD-1, FWD-8 |
 | S11 | gateway move | history split, pointer, seams cut | G-MOVE | FWD-5, FWD-11 |
 | S12 | gateway release path | the two deploy scripts, the manifest | S11 | FWD-11 |
 | S13 | release flow | DEV to PROD, pointer bump, runtime pull | S2, S7 | FWD-9 |
 | S14 | the index | delivered by NFRA_MCPINDEX into `opal_ai` | NFRA_MCPINDEX | FWD-4, FWD-12 |
+| S15 | Bloomberg view server | the view-only Bloomberg MCP server moved into `opal_ai` and reachable from `Opal_Agent`; until then, C11's plain decline | S7 | FWD-1, FWD-6 |
 
 **Gates, each an act a named holder can take on demand:**
 - **G-ACCT:** create the runtime account, an admin act on this box. Holder: a worker under this project, on R1.
@@ -398,7 +445,7 @@ Sum: 2+2+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1 = **28**.
 
 | id | acceptance | outcome |
 |---|---|---|
-| A1 | one live Teams exchange traced hop by hop (message, detection, agent in the runtime account, gateway call, reply), the figure and date matching the portal for that date, each hop a real call | FWD-1 |
+| A1 | one live Teams exchange traced hop by hop (message, detection, agent in the runtime account, the asker resolved server-side and the call scoped to their entitlement, gateway call, reply), the figure and date matching the portal for that date, each hop a real call; one un-admitted asker refused | FWD-1 |
 | A2 | messages sent after idle spells of at least an hour and one with hosted content, all answered unprompted; an unreadable one answered with a plain "could not read it" | FWD-2 |
 | A3 | a stage-timed table of real exchanges beside the 2026-08-20 baseline, with the method stated | FWD-3 |
 | A4 | graded on NFRA_MCPINDEX's delivery: a cold real-question set, the count routed right over the count asked, every miss listed | FWD-4 |
@@ -420,10 +467,11 @@ L5 is `2.0.0_SA_COO~O`'s. **FWD-1 is the thread, and round 1 builds it end to en
 2. the runtime account and read-only checkout (S6, G-ACCT, G-GH);
 3. the runtime Claude setup and launch gate (S7, G-AUTH);
 4. a Teams watch that sees (S8, the minimum for one exchange);
-5. one live exchange graded against A1.
+5. the asker's entitlement on the path (S10 round-1 half, C10);
+6. one live exchange graded against A1, plus one un-admitted asker refused.
 
-The repo wiring (S2, S3, S4) is a disjoint write surface and can run beside the thread in round 1. Speed (S9), operator
-controls (S10) and the release flow (S13) are enrichment rounds. The gateway move (S11, S12) waits on G-MOVE and is
+The repo wiring (S2, S3, S4) is a disjoint write surface and can run beside the thread in round 1. Speed (S9), the rest of
+S10 (admit, narrow, remove, explain) and the release flow (S13) are enrichment rounds. The gateway move (S11, S12) waits on G-MOVE and is
 cut in the round after G-MOVE is carried, never before. NFRA_MCPINDEX continues as its own project. Its round 1 is
 recommended closed and re-cut onto `opal_ai` paths once S2 lands, so its remaining orders do not execute against a
 path that is about to move.
