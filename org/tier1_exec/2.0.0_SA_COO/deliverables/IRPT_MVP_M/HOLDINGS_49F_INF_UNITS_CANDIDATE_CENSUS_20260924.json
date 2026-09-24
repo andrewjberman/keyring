@@ -1,0 +1,130 @@
+{
+  "status": "PREPARED_UNPUBLISHED_UNITS_CANDIDATES -- GO to be requested per firm (one act per GO)",
+  "prepared_by": "2.0.0_SA_COO~M",
+  "census_utc": "2026-09-24T08:53:00.231513+00:00",
+  "code_pin": "codex/irpt-m-completion @fb87f34940 (units fill d96513bc40 + the INF source_as_of fix)",
+  "ruling": "IRPT-HOLDINGS-VALUATION-FACTS-20260924 (CUSTODY_UNITS; price never computed)",
+  "retained_inputs_unreceipted": {
+    "49financial": {
+      "env": "IRPT_49F_TAX_MEMBERSHIP_SNAPSHOT",
+      "sort_keys_sha256": "032c68db251c871c75b558464f75fc0ea3a42a8f95505f438bb4727c0e8711eb",
+      "served_provenance_match": true
+    },
+    "inflection": {
+      "env": "IRPT_INF_ECLIPSE_MEMBERSHIP_SNAPSHOT",
+      "file_sha256": "789dd95d3d36b449172d5a5d5c0f6e900f4f04269cfbab0525771b65a0fb641e",
+      "rows": 860,
+      "served_match": true
+    }
+  },
+  "method": "prepare_candidate.py <firm> with the capture env set, zero cloud writes; census over the PREPARED bytes vs the SERVED labelled bytes (prepared_49f_labelled_served = 3d59c80b, prepared_inf_labelled_served = d03e91a4); publish_firm_cas_live.py check -> preconditions PASS at the live etag, zero writes",
+  "firms": {
+    "49financial": {
+      "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+      "served_revision_replaced_in_row_and_retained": "3d59c80b4e9cf59b1f527615a9dbe1600666a57afde65192860e37f0f21185d9",
+      "nodes": 151697,
+      "accounts": 7522,
+      "reconcile": [
+        true,
+        1835875624.28,
+        1835875624.28
+      ],
+      "currency_status": "ATTESTED",
+      "platinum_bytes": 179039131,
+      "delta_vs_served": {
+        "node_ids_added": 0,
+        "node_ids_removed": 0,
+        "shared_changed_outside_valuation_facts_and_clocks": "0 of 151,697",
+        "same_eight_receipts": true
+      },
+      "custody_units": {
+        "with": 5836,
+        "security_nodes": 120097,
+        "by_basis": {
+          "OBSERVED": [
+            5836,
+            5836
+          ],
+          "TARGET": [
+            114261,
+            0
+          ]
+        },
+        "source": "schwab dim_position.quantity_settled_unsettled",
+        "source_as_of": "2026-09-22 (the custody partition = the node's custody clock)",
+        "source_revision": "the dim_position receipt sha256 (one value on every fact)",
+        "source_scope": "the account's opaque id",
+        "negative_units": 1300,
+        "zero_units": 15,
+        "note": "TARGET rows are SmartX model assets, not custody: no fact by design"
+      },
+      "measured_write_plan": {
+        "multipart": true,
+        "parts": 174,
+        "immutable_creates": 177,
+        "index_writes": 1,
+        "total_writes": 178,
+        "key_prefix": "irpt/49financial/platinum/holdings/date=2026-09-22/5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56"
+      },
+      "cas_check": "preconditions PASS at etag \"ea06a1a0bf21d58e9ee172a77111a236\" version 9Vtkh61A05eiuWmm4DwyLVRRwynIdq2e, row 2026-09-22 = 3d59c80b; zero writes"
+    },
+    "inflection": {
+      "revision": "d32e50c692d42bc8f23f5d57f19ed81ecb21aaabfa2b95dd84214028f668a47e",
+      "served_revision_replaced_in_row_and_retained": "d03e91a466fd81adeb276ea65127adbe155ebc35d0db847ef2188c3aedbe2c0c",
+      "nodes": 33328,
+      "accounts": 876,
+      "reconcile": [
+        true,
+        209358359.48,
+        209358359.48
+      ],
+      "currency_status": "ATTESTED",
+      "platinum_bytes": 39974104,
+      "census": {
+        "models_whole": 553,
+        "models_whole_from_capture": 35,
+        "models_split": 71,
+        "client": 252,
+        "client_no_portfolio": 16,
+        "client_no_model": 176,
+        "client_incomplete_membership": 0,
+        "client_values_do_not_tie": 60,
+        "model_leaves": 624,
+        "positions_shown": 30881,
+        "drill_withheld": 71
+      },
+      "delta_vs_served": {
+        "node_ids_added": 0,
+        "node_ids_removed": 0,
+        "shared_changed_outside_valuation_facts_and_clocks": "0 of 33,328",
+        "same_eight_receipts": true
+      },
+      "custody_units": {
+        "with": 30881,
+        "security_nodes": 30881,
+        "by_basis": {
+          "OBSERVED": [
+            30881,
+            30881
+          ]
+        },
+        "source": "orion positions_mv.current_shares",
+        "source_as_of": "2026-09-22 (valuation_date = the node's custody clock; the first build 611ac74b read the snapshot key date 2026-09-23 and was withdrawn for that)",
+        "source_revision": "the positions_mv receipt sha256 (one value on every fact)",
+        "source_scope": "the account's opaque id",
+        "zero_units": 19763,
+        "zero_units_all_on_zero_value_nodes": true,
+        "column_sanity": "on the 12,424 source rows with shares != 0, current_value == shares x current_price within 1% on 100% (a read of the column's meaning; no price fact is emitted)"
+      },
+      "measured_write_plan": {
+        "multipart": true,
+        "parts": 40,
+        "immutable_creates": 43,
+        "index_writes": 1,
+        "total_writes": 44,
+        "key_prefix": "irpt/inflection/platinum/holdings/date=2026-09-22/d32e50c692d42bc8f23f5d57f19ed81ecb21aaabfa2b95dd84214028f668a47e"
+      },
+      "cas_check": "preconditions PASS at etag \"d866755b8e0cd59f59e154b95eeb314c\" version .vBFsThYvc4Gzhc5VZMJsyig7bhq9UNW, row 2026-09-22 = d03e91a4; zero writes"
+    }
+  }
+}
