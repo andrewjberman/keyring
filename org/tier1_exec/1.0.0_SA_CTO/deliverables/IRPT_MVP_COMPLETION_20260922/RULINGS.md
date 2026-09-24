@@ -1325,3 +1325,38 @@ next host deploy.
 ### Push state (MSTR 99987): origin/CLOUD f96a0b9dd4; origin carries exactly one workspace branch
 (CLOUD); SITEZ deleted (tag archive/SITEZ-20260924). Every CTO commit at or before f96a0b9dd4 is on
 origin; batch 14 (c83f5bc036) and this batch ride the next MSTR push.
+
+
+## 2026-09-24 02:3x UTC - Claude CTO batch 16: Andrew-direct on the ready flag; ruling 99995 amended on the CRO's three corrections
+
+### ANDREW-DIRECT 2026-09-24 ~02:2xZ at the 4.0.0_SA_CRO terminal (CRO 100001), VERBATIM: "fix the ready flag, send the status"
+Given after the CRO's HAR diagnosis. Scope: the Holdings success status. Routing under it: 4.0.0_SA_CRO
+writes the holdings_snapshot `_status` change in cro-holdings-status-20260924 (cut from P's b56b99c06f)
+and sends the CTO the pinned diff + test arms; the CTO reviews and GOes; 2.0.0_SA_COO~P packages and
+deploys the GO'd pin code-only under the sink discipline. Nothing wider is inferred from the word.
+
+### IRPT-HOLDINGS-SUCCESS-STATUS-20260924 -- AMENDMENT (CRO 100001; M 100000), the CTO's 99995 text was wrong on three details
+VERIFIED by the CTO in the shared tree: PublicStatusEnvelope.schema.json additionalProperties false,
+required {operation, state, source_dates, actions, public_reason_code}; public_reason_code string
+^[A-Z0-9_]+$ (null fails); source_dates closed over business_date / source_completion_date / as_of (+
+prospect keys). portal contracts/public-status.ts:20 closes the key set (internal_correlation_id
+rejected), :25 refuses a non-string reason code, :27 refuses custody_as_of / overlay_as_of;
+envelope.ts:289-291 turns each into EnvelopeMismatch('status') = the whole response refused, worse than
+UNCERTAIN. So: (1) public_reason_code HOLDINGS_READY on READY (PERFORMANCE_READY precedent, P's branch),
+OBJECT_NOT_COVERED on PARTIAL; (2) no internal_correlation_id; (3) source_dates = {business_date: slice
+clocks.business_date, source_completion_date: the revision's completion_date}; custody/overlay stay in
+data.clocks. Unchanged: actions []; the READY/PARTIAL rule (every retained account present AND
+unprojected_grant.count == 0); portal untouched; contract untouched.
+M's measured trap ACCEPTED: served.py status_envelope() (:209-250) refuses the ruled shape (closed
+BOUNDARY_REASONS with no success member; forced actions and source_dates), and no producer has ever
+emitted state READY (0 hits); the dict is built directly to the response schema and validated against
+it in test_entry_guarded.py (READY, PARTIAL with one selected account dropped, refusal arm), plus one
+closed-key arm mirroring requirePublicStatus so the FE-side refusal cannot recur. The census
+(unprojected_grant) lives at the boundary (served.py:829-833) while account presence is computable in
+the compute: the writer picks the side and states it in the diff; the CTO reviews that choice.
+CTO'S THIRD MISS THIS WINDOW, recorded: 99995 named three status members from memory of the internal
+StatusEnvelope, not from the PUBLIC schema the portal validates. A ruling that names wire fields cites
+the schema line it read, or it names none.
+SIDE FINDING routed to P (CRO): performance/entry.py on P's branch puts internal_correlation_id into
+its SUCCESS status; by the same closed-key rule a Performance success body would be refused. P verifies
+on its branch before the CALL-3 one-use run; if real, it rides the Performance package CALL-3 needs.

@@ -24,8 +24,10 @@ bucket policy denied irpt-holdings-role; REMEDY APPLIED 02:04:06Z (registry 8b4c
 halves CTO 99959 + CRO 99962, ledger CLOSED @7220e4a4f3) and CTO-VERIFIED (batch 14: role allowed 6/6
 with the live policies, was denied 6/6); sink repackage APPLIED (CodeSha xd4mk5fx). EXERCISED 02:12Z:
 Andrew's signed-in retest served 200 x2 (fence fix held); screen reads UNCERTAIN because the producer
-omits the envelope status the contract says is present on success (batch 15 ruling: P emits _status
-READY/PARTIAL, code-only repackage, CTO reviews the rule text then GO; portal unchanged); (1b) resident
+omits the envelope status the contract says is present on success (batch 15 ruling, AMENDED batch 16 on
+the CRO's three schema corrections; Andrew-direct ~02:2xZ "fix the ready flag, send the status": the CRO
+writes the _status change, CTO reviews the pinned diff + test arms then GO, P packages/deploys code-only;
+portal unchanged); (1b) resident
 cutover: plan 04c77cbe APPLIED 01:53Z (host running, runner deployed); D1 STOPPED on S119 (JS bundle
 lacks the versioned contract) -- CTO word given for the ycharts_session.js change with Y's concurrence;
 then D1, C1 receipt, Y's 12.03 runbook; (2) P's Performance apply
