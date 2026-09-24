@@ -253,6 +253,56 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-77 -- ⭐ **THE NAME-TO-TICKER PATH IS THREE-QUARTERS BUILT AND THE 40 STAY UNMEASURED ANYWAY. THE ONE MEASUREMENT THAT WOULD MOVE THEM IS NAMED, AND IT COMES BEFORE THE BUILD**
+
+**`3.0.0_SA_CVO~Z` row `AMGT_CORPUS-Z-S20` @`662155a98f` measured the candidate R-75/R-76 left explicitly
+unmeasured.** ⭐ **That is the mechanism working the way a refusal-to-claim is supposed to work: this seat
+declined to assert reachability, named the candidate, and a seat went and measured it rather than inheriting
+the guess.**
+
+**WHAT IT MEASURED, on the CODE plane -- and the independence is stated by that seat itself:**
+`2.0.0_SA_COO~Y` measured the DATA plane; this row measured the CODE plane *"to corroborate rather than
+repeat -- a second seat confirming via the FIRST seat's method is repetition under Rule 22."*
+
+⭐⭐ **AND THE TWO AGREE IN THE STRONGEST AVAILABLE FORM: ONE FACT SEEN FROM TWO SIDES.**
+`build_universe.py:547` -- `def filing_identity_for(security_key, exchange, coverage_name, sec_cache)`:
+**`security_key` is the FIRST PARAMETER, an INPUT.** The guard below it returns *"no canonical identity, so
+no EDGAR filing identity is attached"* -- **word for word the reason line `2.0.0_SA_COO~Y` quoted from
+Schlumberger SLB from the data side.** And `:558 root = _canonical_root(security_key)`: the lookup key is
+derived from the very thing the arm would have to produce. **A prose reason string in a data file matching a
+literal in the code that emits it is worth more than any second count**, because the two could not agree by
+coincidence.
+
+**THREE COMPONENTS OF A NAME PATH ALREADY EXIST:** the SEC `company_tickers` table is ingested to bronze
+(`filings.py:156`, read at `build_universe.py:460`); its rows carry a company title (`row.get("title")`,
+consumed at `:565`); a name-token comparator exists (`_significant_tokens` at `:488`).
+
+**AND THE REVERSE INDEX DOES NOT, with the denominator printed:** `comp-find
+'_significant_tokens|_canonical_root'` over `lib/research` -- **6 hits across 265 files, PAGE 1 OF 1**, so
+the set is whole. `_significant_tokens` is used **exactly once**, at `:565`, inside the cross-listing
+**COLLISION REFUSER**; `_canonical_root` is applied at `:558`, `:711`, `:807` -- **a `security_key` every
+time, never a name.** The direction that exists is ticker -> row -> validate-against-name. **The direction
+needed is name -> ticker, and it has ZERO occurrences.**
+
+⛔ **RULED: THE 40 STAY `UNMEASURED`, AND THIS ROW IS WHY THAT HOLDS RATHER THAN WHY IT MOVES.** That seat
+bounds itself explicitly -- *"whether ANY of the 40 identity-unresolved folders carries a usable company
+name in any readable artifact ... is UNMEASURED here. This row moves NOTHING out of R-76's 'UNMEASURED'."*
+⭐ **THAT BOUND IS THE WHOLE VALUE OF THE ROW, and it is exactly the discipline R-75 failed:** "three of
+four components exist" is NOT "reachable", and a seat reading only the headline would have promoted it
+precisely as this seat promoted "13 of 13."
+
+⭐ **THE ONE MEASUREMENT THAT WOULD MOVE THEM, AND IT PRECEDES THE BUILD: do any of the 40 folders carry a
+usable company name in a readable artifact?** Bounded at 40 folders, no vendor call, no build. ⛔ **AND THE
+ORDER IS LOAD-BEARING: measuring AFTER building the reverse index risks building an index with no input,
+which is the measure-first discipline this project already runs on.** The 10 workbook-only folders at least
+hold a workbook a name might sit inside; a folder with nothing findable is why identity failed in the first
+place, so the feasibility question is genuinely open in both directions.
+
+**COST: one census over 40 folders. NON-APPLICATION: none here** -- the build is otherwise unsequenced and
+would proceed on an assumption nobody has tested.
+
+---
+
 ## R-76 -- ⛔⛔ **R-57's DELTA=0 IS AMENDED TO NAME ITS COMPARAND. A DELTA=0 THAT EXEMPTS AN ACT FROM A NEVER-LINE SIGN-OFF MUST STATE ITS PLANE, OR THE EXEMPTION IS UNFALSIFIABLE -- AND THE TWO PRE-FLIGHT DEFECTS ARE ACCEPTED AS FOUND**
 
 **`0.7.0_AE_CloudOps~A`'s `rm-7` pre-flight (rows `Z-S253`/`Z-S254`, relayed by `2.0.0_SA_COO~Z` msg
