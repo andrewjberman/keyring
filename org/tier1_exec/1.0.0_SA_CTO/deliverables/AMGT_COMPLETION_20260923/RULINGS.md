@@ -253,6 +253,49 @@ a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed
 eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
 with a positive control or its zero means nothing.**
 
+## R-78 -- ⛔⛔⛔ **THE SURPRISE CHANNEL HAS THREE STATE-BEARING FIELDS AND NONE OF THEM IS CURRENT STATE. FOUR INSTRUMENTS ON ONE QUESTION GAVE FOUR ANSWERS, AND THE SPREAD IS THE FINDING -- INCLUDING A ROW I DISARMED MYSELF READING ARMED**
+
+**Run as the systematic `/open-calls` sweep this seat had NOT done: a census of the carrier rather than of
+the inbox.** CLAUDE.md §2 says *"a broker message is NEVER the carrier"* -- and this seat has adjudicated
+from the inbox all session. The census is the correction.
+
+| instrument | answer | why it is wrong |
+|---|---|---|
+| three independent regex lists, zipped by index | **invalid** | the lists MISALIGN on the first row with a different field order; it invented 60+ rows with "no `disarm_owner`" when **0 rows lack the field**, and understated this seat's own load by half |
+| JSON parse + `hazard_standing == ARMED` | **180** | includes rows already resolved |
+| + `disposition != GRADUATED` | **179** | ⚠ **discriminates exactly ONE row of 180** -- `disposition` is 179 `UNDER_INVESTIGATION` to 1 `GRADUATED`, so it is nearly useless as a resolution signal |
+| + "no LATER row cites this id" | **104** | the best available, and still a heuristic -- a later row may cite an id to REFERENCE it rather than resolve it |
+
+⛔ **THE PROOF THAT NO FIELD CARRIES CURRENT STATE IS A ROW THIS SEAT DISARMED ITSELF TODAY.**
+`AMGT_RESAPP-Z-S248` reads `hazard_standing: ARMED` and `disposition: UNDER_INVESTIGATION` **while being
+factually disarmed** -- the `PY_AWS` hoist is deployed, the NEVER-2 ledger is closed, and `Z-S252` is its
+disarm carrier. **Its bytes cannot say so, because the surprise-row gate REFUSED the in-place mutation**
+(correctly: *"corrections are NEW items citing the old id; an edited history is a history nobody can
+audit"*). ⭐ **So the append-only convention that makes the channel auditable is the same property that
+makes its state fields unreadable, and that is a design consequence rather than anyone's mistake.**
+
+**RULED: "how many live hazards does this project carry" HAS NO CHEAP ANSWER, and every field that looks
+like it answers it is wrong.** The only sound per-row answer is to read the later row that cites the id.
+⚠ **This bears directly on closing:** `proof-of-spec-check`'s SURPRISES LIMB blocks a `complete` flip on a
+`surprises` entry with no resolving row id -- so a close will be graded against exactly the question no
+field answers.
+
+**THIS SEAT'S OWN LOAD, MEASURED FOR THE FIRST TIME:** of the rows ARMED-and-not-later-cited, **20 name
+`1.0.0_SA_CTO~Z` as disarm owner**, spanning 2026-09-11 to 2026-09-24. ⛔ **Not one of them reached this
+seat by message, and this seat has spent the session adjudicating what arrived instead of what was
+outstanding.** The 20 is bounded by the citation heuristic above and is the best number available, not an
+exact one; each requires its own read before it is worked or closed.
+
+⭐ **AND THE METHOD LESSON REPEATS R-67 EXACTLY: no aggregate detected its own wrong grain -- SAMPLING TWO
+NAMED ROWS DID.** `Z-S47` (ARMED + `UNDER_INVESTIGATION`, genuinely open) against `Z-S242` (ARMED +
+`GRADUATED`, resolved) is what exposed that `disposition` and `hazard_standing` are independent; and
+`Z-S248`, a row this seat knew the true state of, is what exposed that neither is current. **A census
+cannot check itself. A named instance whose answer you already know can.** COST: two row reads before
+trusting any channel-wide count. NON-APPLICATION: a carrier whose state field is updated in place -- which
+this one deliberately is not.
+
+---
+
 ## R-77 -- ⭐ **THE NAME-TO-TICKER PATH IS THREE-QUARTERS BUILT AND THE 40 STAY UNMEASURED ANYWAY. THE ONE MEASUREMENT THAT WOULD MOVE THEM IS NAMED, AND IT COMES BEFORE THE BUILD**
 
 **`3.0.0_SA_CVO~Z` row `AMGT_CORPUS-Z-S20` @`662155a98f` measured the candidate R-75/R-76 left explicitly
