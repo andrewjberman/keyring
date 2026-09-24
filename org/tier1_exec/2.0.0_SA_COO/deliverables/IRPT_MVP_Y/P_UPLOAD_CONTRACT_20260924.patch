@@ -1,0 +1,249 @@
+diff --git a/docs/contracts/investor-reporting/v1/AnalysisUploadRequest.schema.json b/docs/contracts/investor-reporting/v1/AnalysisUploadRequest.schema.json
+index a0d731eb8f..47bdfd0ed7 100644
+--- a/docs/contracts/investor-reporting/v1/AnalysisUploadRequest.schema.json
++++ b/docs/contracts/investor-reporting/v1/AnalysisUploadRequest.schema.json
+@@ -6,8 +6,7 @@
+   "additionalProperties": false,
+   "required": [
+     "upload_token",
+-    "filename",
+-    "csv_base64"
++    "filename"
+   ],
+   "properties": {
+     "upload_token": {
+@@ -18,7 +17,7 @@
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 128,
+-      "pattern": "^[^\\\\/\\u0000-\\u001f]+\\.[cC][sS][vV]$"
++      "pattern": "^[^\\\\/\\u0000-\\u001f]+\\.([cC][sS][vV]|[xX][lL][sS][xX])$"
+     },
+     "csv_base64": {
+       "type": "string",
+@@ -49,6 +48,58 @@
+     "supersedes_input_id": {
+       "type": "string",
+       "pattern": "^portfolio_[0-9a-f]{64}$"
++    },
++    "file_base64": {
++      "type": "string",
++      "minLength": 1,
++      "maxLength": 1398104,
++      "description": "Template lane (Y's v2 holdings template): strict base64 of the original CSV or XLSX, at most 1048576 decoded bytes. The server retains it as ORIGINAL_HOLDINGS and resolves symbols on the resident host (CTO 100667 shape 2)."
++    },
++    "file_type": {
++      "enum": [
++        "csv",
++        "xlsx"
++      ],
++      "description": "Template lane only; must match the filename extension."
++    }
++  },
++  "oneOf": [
++    {
++      "title": "legacy CSV lane",
++      "required": [
++        "csv_base64"
++      ],
++      "not": {
++        "anyOf": [
++          {
++            "required": [
++              "file_base64"
++            ]
++          },
++          {
++            "required": [
++              "file_type"
++            ]
++          }
++        ]
++      },
++      "properties": {
++        "filename": {
++          "pattern": "\\.[cC][sS][vV]$"
++        }
++      }
++    },
++    {
++      "title": "template lane",
++      "required": [
++        "file_base64",
++        "file_type"
++      ],
++      "not": {
++        "required": [
++          "csv_base64"
++        ]
++      }
+     }
+-  }
++  ]
+ }
+diff --git a/docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json b/docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json
+index 18ea61d63c..3a9443a2fb 100644
+--- a/docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json
++++ b/docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json
+@@ -17,7 +17,8 @@
+     "state": {
+       "enum": [
+         "NORMALIZED",
+-        "NEEDS_CORRECTION"
++        "NEEDS_CORRECTION",
++        "RESOLVING"
+       ]
+     },
+     "input_id": {
+@@ -111,6 +112,25 @@
+     },
+     "reconciliation": {
+       "type": "object"
++    },
++    "findings": {
++      "type": "array",
++      "items": {
++        "type": "object"
++      },
++      "description": "Template lane NEEDS_CORRECTION: the stored findings (code, severity, row, column, sheet, value, actions), at most 500."
++    },
++    "findings_total": {
++      "type": [
++        "integer",
++        "null"
++      ],
++      "minimum": 0,
++      "description": "The true findings count when findings is a bounded prefix."
++    },
++    "template": {
++      "type": "object",
++      "description": "Template lane NEEDS_CORRECTION: the parser projection of the retained original, re-read server-side."
+     }
+   },
+   "allOf": [
+@@ -135,9 +155,6 @@
+         }
+       },
+       "else": {
+-        "required": [
+-          "reason"
+-        ],
+         "properties": {
+           "input_id": {
+             "type": "null"
+@@ -158,6 +175,50 @@
+           ]
+         }
+       }
++    },
++    {
++      "if": {
++        "properties": {
++          "state": {
++            "const": "NEEDS_CORRECTION"
++          }
++        }
++      },
++      "then": {
++        "required": [
++          "reason"
++        ]
++      }
++    },
++    {
++      "if": {
++        "properties": {
++          "state": {
++            "const": "RESOLVING"
++          }
++        }
++      },
++      "then": {
++        "not": {
++          "anyOf": [
++            {
++              "required": [
++                "reason"
++              ]
++            },
++            {
++              "required": [
++                "findings"
++              ]
++            },
++            {
++              "required": [
++                "template"
++              ]
++            }
++          ]
++        }
++      }
+     }
+   ]
+ }
+diff --git a/infra/aws/lambda/investor-reporting/_contracts/tests/test_upload_template_lane_contract.py b/infra/aws/lambda/investor-reporting/_contracts/tests/test_upload_template_lane_contract.py
+new file mode 100644
+index 0000000000..ecb808493b
+--- /dev/null
++++ b/infra/aws/lambda/investor-reporting/_contracts/tests/test_upload_template_lane_contract.py
+@@ -0,0 +1,59 @@
++"""The published upload contract admits what the deferred template lane actually sends and answers.
++
++Real UploadService outputs from Y's deferred world (offline storage, the resident resolving through an
++offline receipt) validated against docs/contracts/investor-reporting/v1, with negative arms.
++"""
++import base64
++import json
++from pathlib import Path
++import sys
++
++import pytest
++from jsonschema import Draft202012Validator
++
++HERE = Path(__file__).resolve()
++ROOT = HERE.parents[6]
++IR = ROOT / "infra/aws/lambda/investor-reporting"
++SCHEMAS = ROOT / "docs/contracts/investor-reporting/v1"
++for rel in ("intake/tests", "intake", "reports/tests", "reports", "_authz", "_scope", "_ids", "_keys",
++            "ycharts/generate", "ycharts/session", "ycharts/session/tests"):
++    if str(IR / rel) not in sys.path:
++        sys.path.insert(0, str(IR / rel))
++import test_deferred_resolution as deferred  # noqa: E402
++
++REQUEST = Draft202012Validator(json.loads((SCHEMAS / "AnalysisUploadRequest.schema.json").read_text(encoding="utf-8")))
++RESULT = Draft202012Validator(json.loads((SCHEMAS / "AnalysisUploadResult.schema.json").read_text(encoding="utf-8")))
++case = deferred.case
++B64 = base64.b64encode(b"Ticker,Dollars\nAAPL,10.01\nVNQ,2.02\n").decode()
++
++
++@pytest.mark.parametrize("body, valid", [
++    ({"upload_token": "tok_12345678", "filename": "p.csv", "file_base64": B64, "file_type": "csv"}, True),
++    ({"upload_token": "tok_12345678", "filename": "p.xlsx", "file_base64": B64, "file_type": "xlsx"}, True),
++    ({"upload_token": "tok_12345678", "filename": "p.csv", "csv_base64": B64, "declared_currency": "USD"}, True),
++    ({"upload_token": "tok_12345678", "filename": "p.csv", "csv_base64": B64, "file_base64": B64, "file_type": "csv"}, False),
++    ({"upload_token": "tok_12345678", "filename": "p.csv", "file_base64": B64}, False),
++    ({"upload_token": "tok_12345678", "filename": "p.xlsx", "csv_base64": B64}, False),
++    ({"upload_token": "tok_12345678", "filename": "p.pdf", "file_base64": B64, "file_type": "csv"}, False),
++])
++def test_the_request_contract_admits_exactly_the_two_lanes(body, valid):
++    assert REQUEST.is_valid(body) is valid
++
++
++def test_the_result_contract_admits_every_deferred_answer_the_service_produces(case):
++    resolving = deferred.post(case, deferred.payload())
++    assert resolving["state"] == "RESOLVING" and not list(RESULT.iter_errors(resolving))
++    deferred.resolve(case, deferred.offline_resolver([]))
++    normalized = deferred.post(case, deferred.payload())
++    assert normalized["state"] == "NORMALIZED"
++    assert not list(RESULT.iter_errors(json.loads(json.dumps(normalized))))
++    bad = deferred.payload(b"Ticker,Dollars\nMISSING,10\n", upload_token="contract-refused")
++    deferred.post(case, bad)
++    deferred.resolve(case, deferred.offline_resolver([]))
++    corrected = deferred.post(case, bad)
++    assert corrected["state"] == "NEEDS_CORRECTION"
++    assert not list(RESULT.iter_errors(json.loads(json.dumps(corrected))))
++    # Negative arms: RESOLVING carries no refusal fields; NEEDS_CORRECTION must name its reason.
++    assert not RESULT.is_valid(dict(resolving, reason="X"))
++    assert not RESULT.is_valid({k: v for k, v in corrected.items() if k != "reason"})
++    assert not RESULT.is_valid(dict(resolving, state="UNKNOWN"))

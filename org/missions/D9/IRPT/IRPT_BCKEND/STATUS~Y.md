@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
 Drive: the 20m goal loop (cron 87624362) reading `python .tools/drive-mode.py read IRPT_BCKEND~Y` each tick (C11, CTO
 100819). Lease FAST until 2026-09-24T21:13:40Z at 18:18Z. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-24T19:37Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
+As of 2026-09-24T20:15Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Pins
 
@@ -19,9 +19,12 @@ As of 2026-09-24T19:37Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverabl
 
 ## Live thread
 
-State: NOT LIVE end to end. Hops 1, 5, 6, 9, 10 are closed or reachable (CRO addenda). First failing hop: 2 (prospect
-upload) or 4 (custody branch), whichever composition serves first. Hops 2 and 3 are composed in the P patch; the viewer seam hop 3
-needs is restored at P `19b38e2f22` (Y 100842, M 100846, P 100851). Nothing of hops 2-3 is deployed.
+State: NOT LIVE end to end. Hops 2+3 SERVED (P 100866). Y verified: generate `LdjdnnLh...` 19:49:52Z Active, and its
+`upload_resolution.py` / `uploads.py` / `maintained_sources.py` are byte-identical to Y d16b7c8743 / P 19b38e2f22.
+The live route `POST .../analysis/inputs` goes to the generate integration. Queue and DLQ are 0. The resident is
+`f624e8a72f` per P. First failing hop: 1 in the PORTAL. It sends the legacy `csv_base64` body (refused
+`CSV_LANE_NOT_COMPOSED`), and its adapter throws on RESOLVING. The published contract admits neither the template lane
+nor RESOLVING. Fixes are handed over: contract patch to P, portal spec to ~D.
 
 ## Acceptance IDs
 
@@ -58,7 +61,8 @@ full-suite red P found (100860) and must ride the same rebuild.
 | `ports["ordinary_authorizer"]` producer (partner viewers) and `get_catalogue` (hop 3) | 2.0.0_SA_COO~P | generate_installed absent producers | AWAITED; an Opal viewer is not blocked by it |
 | Restore M's viewer seam `485b69c061` onto `_scope/maintained_sources.py` (8 conflict hunks vs `bc3727b3a3`) | 2.0.0_SA_COO~P (M reads semantics) | Y 100842; M 100846: `test_maintained_viewer_sources.py` 27/27 | DONE at P `19b38e2f22` (LOCAL); rides the hop-2 deploy |
 | Grants for hop 2 (both roles) | 2.0.0_SA_COO~P | P `54bc1359f4` APPLIED 19:22Z | DONE: Y reach-check 19:3xZ, DDB PutItem + SQS SendMessage allowed, with a negative control |
-| Portal upload screen polling RESOLVING by re-POST | 2.0.0_SA_COO~D | Y interface 18:29Z | AWAITED |
+| Portal: template body, RESOLVING adapter + poll, `.xlsx` (spec `D_UPLOAD_TEMPLATE_LANE_SPEC_20260924.md`) | 2.0.0_SA_COO~D | Y spec 20:1xZ | BLOCKS the live 12.03 run |
+| Contract: request template lane + result RESOLVING/findings (`P_UPLOAD_CONTRACT_20260924.patch`, `--check` clean at P `7f6b5589f6`) | 2.0.0_SA_COO~P | Y 20:1xZ | AWAITED |
 | Custody composition (hop 4) | 2.0.0_SA_COO~P | Y 47b2adf6df | AWAITED |
 | First live Analysis submission | Andrew (browser) | after a composition serves | AWAITED |
 
