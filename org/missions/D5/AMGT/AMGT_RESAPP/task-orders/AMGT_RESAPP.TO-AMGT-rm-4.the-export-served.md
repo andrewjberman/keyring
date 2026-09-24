@@ -116,7 +116,20 @@ action's label, the commit the deploy leg binds to, the portal and outer commit 
 (rl-10's ROUTE_ASK) and approved (R-57); the deploy is `AMGT-rm-7`'s (R-58: the AE lane's, under NEVER-2), issued in the
 same issuance with the edge rm-4 -> rm-7.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-24 ~14:0xZ.** Flipped by the ISSUER; the worker left the record face alone.
+3 of 3 criteria PASS, proof-of-spec rc=0 VALID (re-run by this seat inside the worker's worktree C:/tmp/wk-amgt-38-143).
+AC1: 9 of 9 tests (the new test_print_format_rich.py + the print tests); the sha256 triple default = fmt=pdf = build_pack's own
+PDF = f869ba63a722a06fec31b5f75c6d0cd1338c3934a694f5c99f17e9340a5bd387 (the DELTA=0 R-57's no-pair rests on, printed); a mutant
+control widening the fmt whitelist made the 400 arm fail and was reverted. AC2: the handler's own dispatch with format=rich over the
+fixture inputs wrote served/BA_US_Equity.md (84,784 bytes, text/markdown; charset=utf-8) and exportCompare reads EXPORT-COMPARE OK,
+FIGURES 162/162 missing=0 (extra=17, the same shape rl-10's own proven document carries over this producer+fixture and was graded
+PASS on), CITES 43/43 missing=0 extra=0, ABSENCES 5 of 5. AC3: exactly one /print line in the route table; 0 of 50 changed adapter
+lines touch route_table/ROUTE_PREFIX; PrintExportAction census FILES 1 TOTAL 0 with the second action "Export rich text (.md)";
+tsc clean. No rows. Drained @3350abb022 (the worker's code commit 791806b1c9 is the adapter's tip on CLOUD; its instance commit
+c542110d7b sits above it); portal DEV 2b410046 (merge of 9ca9ee57), gitlink 9bcbc290 -> 2b410046. THE DEPLOY LEG rm-7 is bound to
+3350abb022 by the issuer's message to 0.7.0_AE_CloudOps~A at this close; nothing is served until that seat's NEVER-2 entry closes.
+
+<status>complete</status>
 <round>38</round>
 <slot>~143</slot>
 <fabric>site-z</fabric>
