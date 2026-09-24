@@ -354,6 +354,23 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 - log: org/jq-ban-override-audit.log
 - detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\2026-09-11T224403Z\org_jq-ban-override-audit.log
 
+## 2026-09-22T145605Z -- SNAPSHOT-FAILURE -- COMMIT-FAILED
+<!-- sig: SNAPSHOT-FAILURE|COMMIT-FAILED||safe-commit rc=# (non-lane):    - wait for the merge to finish (a drain closes in its own time), then re-run;
+    - if the merge is YOURS, finish it (git merge --continue / --abort) first.
+  There is deliberately no override: a flag here re-opens the sweep.
+======================================================================
+ -->
+- detail: safe-commit rc=3 (non-lane):    - wait for the merge to finish (a drain closes in its own time), then re-run;
+    - if the merge is YOURS, finish it (git merge --continue / --abort) first.
+  There is deliberately no override: a flag here re-opens the sweep.
+======================================================================
+
+- note: distinct from DEATH: the invoker RAN, the commit failed
+
+## 2026-09-24T165903Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/law-edit-audit.log|baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\#-#-#T#Z\org_law-edit-audit.log -->
+- log: org/law-edit-audit.log
+- detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\2026-09-24T030114Z\org_law-edit-audit.log
 ## 2026-09-24T142407Z -- COVERAGE -- UNCOVERED-AUDIT-LOG
 <!-- sig: COVERAGE|UNCOVERED-AUDIT-LOG|org/law-edit-audit.log|audit-log-shaped file not in MANIFEST -- review + add or exclude -->
 - log: org/law-edit-audit.log
