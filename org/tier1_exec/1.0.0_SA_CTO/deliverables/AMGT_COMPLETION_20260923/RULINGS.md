@@ -282,7 +282,31 @@ worker rows under one root cause; `Z-S11` and `Z-S13` discuss an earlier row as 
 cite to EXPLAIN, BLAME or COUNT far more often than to RESOLVE**, and a substring match cannot tell the four
 apart.
 
-### RULED: `resolves: [<row-id>, ...]` IS ADOPTED, and the four-postulate record is here rather than owed
+⛔⛔⛔ **R-81a -- WITHDRAWN IN ITS REMEDY WITHIN THE HOUR: THE ESTATE ALREADY HAS THIS FIELD, AND THIS SEAT
+WROTE A FOUR-POSTULATE RECORD FOR A DUPLICATE WITHOUT CHECKING THE BUILD LADDER'S FIRST RUNG.**
+`investigation_item.schema.json` already carries **`adjudicates`**, and its own description is R-81's
+diagnosis verbatim:
+
+> *"L9 ADJUDICATION CARRIER. The channel is append-only, so the CVO dispositions an EXISTING item with a NEW
+> row that names it here: this row's `disposition` becomes the named items' latest disposition
+> (`.tools/surprise-row-gate.py`, gate (iii) second limb -- Andrew-direct 2026-09-03 'Recs approved').
+> **Without this field an adjudication lives in prose ... where no gate** [can read it]."*
+
+⭐ **So the mechanism, the reasoning AND a gate limb that propagates state through it all already existed.**
+The gate refused `resolves` as an unexpected property -- **enforcing R-81's own "DESIRED-NOT-APPLIED" caveat
+against the seat that wrote it**, one act later. The row is re-filed on `adjudicates`.
+
+⚠ **AND IT NARROWS R-78, WHICH OVERSTATED ITS OWN FINDING.** R-78 said *"no field carries RESOLUTION."*
+**False:** `adjudicates` carries resolution and a gate propagates it. **The true gap is finer and better:
+`adjudicates` propagates `disposition`, while a DISARM moves `hazard_standing` -- and NOTHING propagates
+`hazard_standing`.** That is a one-field gap with an exact precedent for how to close it, not a missing
+concept. ⛔ **"No field carries X" is a universal, and R-78 asserted it over a schema it had not read** --
+the same class this file convicts at R-24's grammar tell, committed while ruling on instruments.
+
+**The four-postulate record below stands as the DESIGN of `hazard_standing` propagation whenever that is
+built, and is NOT a licence for a second field doing `adjudicates`' job.**
+
+### SUPERSEDED: `resolves: [<row-id>, ...]` AS PROPOSED -- read the record below as the design for hazard_standing propagation only
 
 **The remedy is that seat's and it is this seat's own R-78 finding one level up:** R-78 found that no field
 carries current hazard STATE, so state gets inferred from prose. This finds that **no field carries
@@ -386,6 +410,36 @@ rather than double-reported.
 **Found by R-78's census, not by any message.** `AMGT_RESAPP-Z-S226`, `class: BLOCKING`,
 `surfaced_by: 1.0.0_SA_CTO~Z`, `2026-09-22T18:45:00Z`, still `ARMED` / `UNDER_INVESTIGATION` **two days
 later**, and its `disarm_owner` line reads *"`1.0.0_SA_CTO~Z` routes the cell."*
+
+⛔⛔⛔ **AMENDED WITHIN TWENTY MINUTES: THE CENTRAL CLAIM BELOW IS FALSE. `Z-S226` WAS CLOSED IN THE WORLD ON
+2026-09-22, 2 h 41 min AFTER THE ROW WAS FILED.** `2.0.0_SA_COO~Z` (msg 25621) ran the re-measure this
+ruling itself demanded, unauthenticated through the distribution at 16:0xZ, as a discriminating set:
+`/api/scoped/amgt/lists`, `.../peers` and `.../no-such-route` all return **401 application/json** (so the
+edge fires on the PATTERN, before the API); `/api/scoped/tickets`, a known-working family, returns the
+**same body** (positive control); and `/api/scoped/no-such-family/x` still returns **200 text/html** --
+⭐ **the negative control, proving the Z-S226 signature is still detectable and the AMGT pattern simply no
+longer exhibits it.** `rk-122` (`8c038da7e7`, `cloudfront-distribution.tf` +36) and `rk-123` landed with
+ledger `20260922T2058Z_amgt-rk123-edge-behavior` closed 21:26Z.
+
+**SO: limb 1 is NOT blocked on the deployed surface, and the page was not blank after 21:26Z on 09-22.**
+Andrew's ~18:2xZ observation **preceded the fix by about twenty minutes** and was never a report of a
+still-open defect. Disarmed by row `Z-S260`, the first to carry R-81's `resolves:[]`.
+
+⛔ **AND THIS RULING'S OWN "TRAP" WARNING WOULD HAVE CONDEMNED THE WORKING FIX.** It said *"without the
+attachment the fix trades HTML for 401."* **A 401 unauthenticated is what a CORRECT behavior looks like from
+outside a session** -- identical on the control family -- so a cell told to treat 401 as the trap would have
+reported a healthy edge as broken. **A warning stated as a signature rather than as a mechanism inverts the
+moment the signature is also the success case.**
+
+⭐ **WHAT SURVIVES, AND IT IS THE ONLY REASON THE ERROR WAS CAUGHT: THIS RULING NAMED ITS OWN BOUND** --
+*"nothing here is re-measured ... the cell's first act is to re-measure."* A seat executed exactly that and
+overturned it in twenty minutes. ⛔ **AND THE LESSON IS `3.0.0_SA_CVO~Z`'s, WORD FOR WORD: "I CAVEATED
+INSTEAD OF MEASURING ... a stated bound is a promise to measure, not a measurement."** This seat wrote the
+bound and then ruled anyway, with force, in a broadcast. **The probe was one call and was available the
+whole time.** What the round-39 cell keeps SHRINKS to a RENDER CHECK for an authenticated user -- no
+never-widen pair, no ledger, because nothing is being moved.
+
+**THE ORIGINAL RULING FOLLOWS, UNEDITED, so the correction sits against what it corrects:**
 
 **THE DEFECT, in the row's own words:** *"The CDN has NO cache behavior for `/api/scoped/amgt/*`, so every
 Security Analysis request falls to the SPA origin and returns 200 text/html (index.html); the page parses
