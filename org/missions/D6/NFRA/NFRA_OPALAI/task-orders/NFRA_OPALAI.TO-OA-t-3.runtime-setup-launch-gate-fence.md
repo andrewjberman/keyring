@@ -29,8 +29,9 @@ in `opal_ai/opal/runtime/` (the agent's product files live beside it in `opal_ai
 3. **`mcp.json.example`**: `mcpServers` holds exactly ONE server, `opal-gateway-bbg` (`https://mcp.opalinvest.dev/mcp`).
    Never `opal-gateway` (Andrew's proxy identity), never anything that reaches the workspace, no AWS profile.
 4. **`launcher.ps1 -Config <json>`**, run by the OPERATOR account (PRD C3/C4 v0.3):
-   - fetch `prod_ref` into `checkout_dir` fast-forward only (`--ff-only`), with the operator-held, repo-scoped,
-     read-only GitHub credential; a pull that would not fast-forward refuses;
+   - fetch `prod_ref` into `checkout_dir` fast-forward only (`--ff-only`), using the operator account's EXISTING GitHub
+     access on this box (no new credential is minted; PRD v0.5 retired the narrow one); a pull that would not
+     fast-forward refuses;
    - then start `launch-gate.ps1` and, only if it passes, the agent AS `Opal_Agent`, from `checkout_dir/opal/runtime`,
      passing it NO operator credential, token or environment.
    The config file has the keys `checkout_dir`, `state_dir`, `workspace_probe_file`, `prod_ref` (see
