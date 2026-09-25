@@ -9359,3 +9359,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It does, live. But the repo's shared branch still declares 09:00, so the next apply of this root from CLOUD, by any seat including ~M's R4 apply, silently moves it back. The R4 holdings principals and dispatch in the same root wait on this."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S136",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T19:10:00Z",
+  "one_line": "DISPOSITION of IRPT_BCKEND-S135: DISARMED. ~P's S126 schedule fix (86a3d27224) is on CLOUD at afefa09d7e, committed by ~M in lane IRPT_COMPLETION_M with ~P's bytes unchanged, and a plan of the directory root from CLOUD no longer changes irpt_directory_refresh.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P (authored the fix, msg 101004); landed by 2.0.0_SA_COO~M",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The working-tree hunks equalled 86a3d27224's (12 changed lines, identical as a set), with the holdings slot untouched; committed afefa09d7e.",
+      "terraform plan -lock=false of the directory root after afefa09d7e: Plan: 10 to add, 0 to change, 0 to destroy. irpt_directory_refresh is absent from the plan."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "IRPT_BCKEND-S135 world_is: 'the next apply of this root from CLOUD ... silently moves it back'.",
+  "world_is": "It does not: CLOUD declares cron(30 9 ? * MON-FRI *) America/New_York, equal to live."
+}
+```

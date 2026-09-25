@@ -94,8 +94,10 @@ branch. No code edit is open.
      log group). It stops at the missing Lambda artifact: its lambda-source-map member is ~P's lane, and a grant
      is asked of the CTO (msg 20260925T190215Z; the diff is ready). The plan ALSO shows
      irpt_directory_refresh cron(30 9)->cron(0 9): ~P's S126 fix lives only on ~P's branch, so an apply from CLOUD
-     would revert it. Row S135 is ARMED, disarm owner 2.0.0_SA_COO~P, asked (msg 20260925T190020Z). NO apply of
-     this root until S135 is disarmed and the packet is signed.
+     would revert it. S135 is DISARMED (S136): ~P's fix is landed at afefa09d7e, and the re-plan reads 10 to add,
+     0 to change. The source-map member is landed (db47ccb99c, audited override per CTO 101003). NEXT: build and
+     upload the Lambda artifact (ledger), a full plan, then the never-widen packet to the CTO. No apply before
+     it is signed.
      Then the never-widen packet (both halves), the apply, one --qa fire, and the enable half.
      Row 4a DONE (3e1ca981ab): the publication writes through a firm-scoped publish principal when the dispatch
      names one (IRPT_HOLDINGS_PUBLISH_ROLE_ARN); reads stay on the host (R-44 split by bucket). Rows 2 and 4b are
