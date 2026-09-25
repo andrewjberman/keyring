@@ -72,10 +72,9 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    IRPT_EVIDENCE_BUCKET (today's refuse-every-render behaviour), else grant.render_ports(); installed on the performance
    (build_entry) and status (build_owned_entry) boundaries. Test 18 passed; regressions _authz 160, performance 183,
    ops 160 (22 skipped), narrative 37 -- all pass; flat-layout cold-start import OK for adapter/status/narrative.
-   PARKED (owner 1.0.0_SA_CTO, un-parks on an exact P row, asked 20260925T170607Z): narrative/entry.py is
-   CLOUD_OPS_OR_ETL's -- its one-line install (render_ports=_entry.render_ports_from_env() in ENTRY) is saved as
-   scratchpad narrative_b0.patch; the test adds one BOUNDARIES tuple.
-   DEPLOY rides B1: package _render_identity/grant.py into the adapter/status(/narrative) zips, set IRPT_EVIDENCE_BUCKET,
+   NARRATIVE installed too: CTO exact row @773be128f1 (cherry-picked 7ac4047de8), 630de21b95 -- all three read
+   boundaries now carry the ports; _render_identity + narrative tests 57 passed.
+   DEPLOY rides B1: package _render_identity/grant.py into the adapter/status/narrative zips, set IRPT_EVIDENCE_BUCKET,
    grant s3:GetObject on firms/*/generations/*/render_grant.json (+ ListBucket on that prefix: missing -> 404 ->
    refusal, not 403 -> raise). The adapter redeploy waits until the INF one-use is spent or expires (00:00Z).
    Then B1 (submit writes the grant at freeze, QUEUED shape) -> B2 mint from mint_input -> B3 finalize.
