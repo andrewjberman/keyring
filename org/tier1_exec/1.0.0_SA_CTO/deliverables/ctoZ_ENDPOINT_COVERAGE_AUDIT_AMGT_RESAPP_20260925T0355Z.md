@@ -199,3 +199,39 @@ project's evidence base: **the served plane is captured for LAYOUT and for EXPOR
 page SAYS.**
 
 **3 of 20 graded: 1 REALIZED, 1 NOT_REALIZED, 1 NOT GRADEABLE.** 17 remain.
+
+---
+
+# RE-GRADE PASS, ENTRY 4 -- `FWD-17` -- **NOT_REALIZED**
+
+Fence `:575-587`. Its ACCEPT is a FOUR-part conjunction and the grade turns on parts three and four
+being read separately rather than as one "management tab exists" impression.
+
+| ACCEPT component | measured on the served export | verdict |
+|---|---|---|
+| one tab lists the senior executives | 12 officers under `## Management/Board` | **PRESENT** |
+| each with their ROLE and HOW LONG they have held it | role text plus `Tenure (yrs)` 6.37 / 3.70 / 3.54 / 2.54 ... 1.12 | **PRESENT** |
+| each with a PROFILE LINK | `Source` reads `filing` on all 12, and the section's last line reads **`CEO public-profile reading: UNREADABLE_OBJECT`** | **ABSENT, and its source is failing** |
+| states how the team's average tenure compares with the average **across EVERY COMPANY THE PAGE COVERS** | no pool line in this instrument; and `ADJUDICATION_v49` quotes the exec footer as *"the pool 4.09 years over 40 officer(s) of **7 name(s)**"* | **FAILS on the DENOMINATOR** |
+
+**The fourth component is the substantive failure and it is not about rendering.** The fence says *every
+company the page covers*; the pool is **7 names**. Whether the page covers 89 or 94 -- the card still at
+Andrew -- **7 is neither**, so the comparison a PM reads is against a pool two orders smaller than the
+one the outcome names. `3.0.0_SA_CVO~Z` had already flagged this as a **stale disclosed denominator**
+(`ADJUDICATION_v49`: *"two disclosed denominators went stale today by DECISION rather than by drift"*),
+and this grade is the endpoint consequence of that finding rather than a new one.
+
+**INSTRUMENT BOUND, stated:** the pool line may render on the exec TAB and simply not survive into the
+markdown export, so "absent" is bounded to this instrument. **It does not matter to the grade** -- the
+`v49` quote establishes the pool is 7 names wherever it renders, and a denominator of 7 fails the fence
+however well it is displayed. **This is the one component the served-content capture would NOT rescue.**
+
+**Component 4 of the fence -- *"where a person cannot be confirmed ... the page says so"* -- PASSES**, and
+notably: `CEO public-profile reading: UNREADABLE_OBJECT` is the page disclosing its own failed read
+rather than showing a blank. That is `FWD-10`'s virtue appearing in a second outcome, and it is worth
+recording as a thing this product does WELL, in a pass otherwise accumulating gaps.
+
+**DONE WHEN is separately unmet:** *"EXERCISED -- an analyst has used the profile to answer a question
+about a management team."* No analyst read is recorded, and the profile it names is the `UNREADABLE_OBJECT`.
+
+**4 of 20 graded: 1 REALIZED, 2 NOT_REALIZED, 1 NOT GRADEABLE.** 16 remain.
