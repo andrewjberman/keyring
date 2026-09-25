@@ -14732,6 +14732,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The disarm already landed through AMGT_CORPUS's derive (CRPS-g-1), which the CTO's analysis told this seat to copy. No RESAPP cell is needed for it; round 43 does not cut one.",
     "disarm_owner": "2.0.0_SA_COO~Z -- DISARMED on the served plane by AMGT_CORPUS round 5; this row is the read that shows it.",
     "notes": "Z-S279's ROG_SW case (px_last None) and ROG's served base were not re-read here."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S283",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~A",
+    "surfaced_at": "2026-09-25T22:30:00Z",
+    "one_line": "TWO DISTINCT 'R-21's exist in this estate and a bare 'R-21' does not disambiguate them: the ratified register rcg/rulings/RULINGS.jsonl holds an R-0021 that RESOLVES cleanly and is a COORDINATION ruling about spawning a CTO seat, while the vendor grant every AMGT order cites is a separate Andrew-direct R-21 @b390c36444 that lives only in the message record.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE WRONG OBJECT, read at the bytes: rcg/rulings/RULINGS.jsonl carries exactly ONE row whose id matches R-21 (as 'R-0021'), out of 32 rulings in the file. Its fields: date 2026-08-03, type 'coordination', verbatim 'Send the ferry, I am going to spawn 1.0.0_SA_CTO~B to coordinate with this work...', scope '1.0.0_SA_CTO~B spawned as the CTO-side coordination seat for RCG execution'. There is NO vendor, Bloomberg, egress or scripted-pull content anywhere in it.",
+        "THE RIGHT OBJECT lives in the MESSAGE RECORD, not in the rulings register: the ANDREW-DIRECT R-21 at commit b390c36444, 2026-09-24 ~03:2xZ, broadcast to 0.0.0_AB_MSTR, 0.0.3_BG_BBGTerminal, 3.0.0_SA_CVO~Z and 4.0.0_SA_CRO~Z. Andrew verbatim: 'all recs approved, and you have all the egress you want for vendors. Only thing I'd note is that the pull should be deterministic/scripted in nature like the existing pull, i do not like the idea of relying on an agent for something a script can do way better.'",
+        "DENOMINATOR on the ambiguity: comp-find 'R-21' reads 503 hits across 75041 files scanned (bands SURFACED=35 CONFIG=7 DOC=461). The vendor sense dominates usage -- integrations/bloomberg/pipeline/scheduled_daily_pull.cmd:317-319 ('owner 0.0.3_BG_BBGTerminal on Andrew-direct R-21 call 3 @b390c36444', 'R-21 constrains MECHANISM'), lib/research/corpus/induction_run.py:4,15,124 -- while the RATIFIED REGISTER holds only the coordination sense. So the register and the usage disagree about what R-21 names.",
+        "THE NEAR-MISS THAT MAKES THIS WORTH FILING, and it is this lane's own: rr-1 is a VENDOR-EGRESS order, which CLAUDE.md makes a hard stop requiring Andrew's word. Verifying that word, this lane went to the ratified rulings register FIRST -- the correct instinct -- found R-0021, and read a coordination ruling with no vendor content. Had it stopped there the conclusion would have been 'the cited authority does not say what the order claims', i.e. a REFUSAL of a properly authorized act. Only a second search over the message record surfaced the real grant.",
+        "NOT CLAIMED: that either id is wrong or should be renumbered, and that any seat has actually been misled by this. The CTO half for rr-1 (ledger/NEVER_WIDEN_ROUND43_RR1_CTO_HALF.md s.1) cites and quotes the CORRECT R-21 at the bytes, so the seat that signed was not confused. This row records a COLLISION IN THE NAMESPACE, not an error by any author."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The rr-1 order's face and both halves cite vendor authority as 'R-21 (standing, scripted)', naming no register and no commit on the face, as though 'R-21' were an unambiguous identifier.",
+    "world_is": "'R-21' resolves to two different objects depending on which register is read. The ratified rulings file returns a 2026-08-03 COORDINATION ruling with no vendor content; the vendor grant is a separate Andrew-direct item carried in the message record at b390c36444. A citation that resolves to a real row in the WRONG register is indistinguishable from a good citation until the row is read, and the failure it produces is the expensive direction: a seat doing the right thing -- checking the authority before a vendor call -- lands on a ruling that does not authorize it and raises a FALSE BLOCKER on an act Andrew actually approved. A false blocker is indistinguishable from a real one to every seat downstream.",
+    "disarm_owner": "1.0.0_SA_CTO~Z -- INERT, so nothing to disarm. The cheap remedy, which this lane does not take because the citation convention is not its surface: cite the vendor grant as 'R-21 @b390c36444' with its commit, the way the CTO half already does, so the identifier carries its own disambiguator. Whether the two should be renumbered is the CTO's call, not this lane's.",
+    "notes": "Filed by the executing lane at rr-1, during its own pre-act verification of a hard-stop authority rather than off-task. The act itself proceeded: the grant is genuine, broad on authority and narrow on mechanism, and every vendor call in this cell was made by model_block_pull.py with none composed by hand. The instrument lesson worth keeping is that a REGISTER LOOKUP IS NOT AN AUTHORITY CHECK when the identifier space is shared across registers -- the register answered, the answer was real, and it was about something else entirely. The tell was semantic, not structural: the row resolved, parsed and carried a plausible date, and only its CONTENT showed it was the wrong object."
   }
 ]
 ```
