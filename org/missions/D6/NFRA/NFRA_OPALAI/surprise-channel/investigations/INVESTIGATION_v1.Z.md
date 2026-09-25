@@ -459,6 +459,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "NFRA_OPALAI-Z-W4-S1 is ARMED with this seat as disarm_owner.",
     "world_is": "No production consumer loses its file: the branch's net change to .claude/ against CLOUD is zero.",
     "notes": "Enrichment (ruling I-3): the operator watch's header should name its real consumers. No gate is built here."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S13",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T02:46Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_OPALAI-Z-W1-S4 and NFRA_OPALAI-Z-W1-S5 (owner this seat; both on wk-NFRA_OPALAI-1): OA-t-1 stays OPEN and its parent side does not merge before the cutover window, so the 6 DATA_CATALOG.yaml census_ref lines still naming the old refs/ path reach no served reader; the 6 are a gate-scope question routed to the CTO as a decision.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Reproduced by this seat at 02:45Z: the full 31-line re-point of infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml (CR bytes preserved, 1338 of 1338 lines CRLF) run through python .tools/naming-gate.py --diff --enforce prints 'NAMING-GATE: REFUSE 6 graded' at :648 :672 :695 :718 :740 :763, each 'EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation MDPF_CANON: REFUSE unless the diff removes it'. The changed field on each line is file:, not key:.",
+        "infra/logic/registry/remediations.json: MDPF_CANON (owner_directive D8, status active, L5 not started) owns s3-prefix opal-data-portal-v2 platinum/mdpf/. The gate's only waiver carrier, org/standards/NAMING_LEGACY_READS.json, is a Python-AST call-site allowlist (naming-gate.py legacy_read_ok) and cannot reach a YAML line.",
+        "Grep of census_ref over infra/aws/ec2/opal-gateway/**/*.py: 0 hits, so the gateway has no runtime reader of the field; the parent tree is unchanged on CLOUD (OA-t-1 is unmerged, status pending).",
+        "W1-S4 (CRLF smudge): the branch head carries the CRLF-preserving edit; no other open order of this round writes DATA_CATALOG.yaml."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-W1-S4 and -Z-W1-S5 are ARMED with this seat as disarm_owner.",
+    "world_is": "Nothing has landed: CLOUD still carries the refs/ tree at its old path and all 31 catalog references resolve there. AC2 stays FAIL (25 of 31) and OA-t-1 stays open; the issuer does not amend AC2, because 25 of 31 would lower the bar.",
+    "notes": "The decision asked of 1.0.0_SA_CTO~O is whether rule 30's non-application (an existing pipeline reaches conformance through its own migration, never as a rider) admits a line whose key is byte-unchanged, or whether OA-t-1 waits for MDPF_CANON. Any fix to the gate belongs to that gate's lane, not to this project. Any face that edits a CRLF-committed file must name 'preserve CR bytes'."
   }
 ]
 ```

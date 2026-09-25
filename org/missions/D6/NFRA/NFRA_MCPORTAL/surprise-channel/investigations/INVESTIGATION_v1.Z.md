@@ -124,6 +124,28 @@
     "spec_asserts": "The two pages this cell builds both reach the shell through the same mechanism -- a router hookup the issuer adds -- and the brief's sidebar order (pages.ts) is the one place that order lives.",
     "world_is": "Only the entitlements page has a named sidebar home (MCP Server); recent-changes has none in the brief's eight-item order, so the issuer's hookup must choose one of: add a ninth PAGES entry (widening the brief's enumerated order), nest it as a sub-route reachable only from within MCP Server/entitlements, or leave it route-only with no sidebar link -- none of which this worker's face names or this worker's `<paths>` (pages.ts excluded) permits deciding.",
     "notes": "Not a defect in this cell's own build (RecentChanges renders and tests pass standalone); flagged so the issuer's hookup commit states which of the three it picked rather than silently defaulting to one."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S2",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T02:48Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_MCPORTAL-Z-W3-S3 (owner this seat): no apply ran, so the grant writer whose parents[5] cannot resolve inside its own zip is not deployed; the packaging defect goes to the CTO as a recut decision. Also CORRECTS W3-S2's premise: Andrew's Entra oid is on record, and that row's disarm stays Andrew's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "wk-NFRA_MCPORTAL-3 instance c2619fa81c, AC1: 'entry files at HEAD=0; sentinel at HEAD=no' -- no NEVER-2 entry was opened and safe-apply never ran.",
+        "Read by this seat: infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/lambda_function.py:42 '_REPO_ROOT = Path(__file__).resolve().parents[5]' and :47-48 import app.access_state and ops.schwab_entitlement_admin from the gateway tree; infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf:25-28 archive_file zips ONLY that function's source_dir, :85 handler lambda_function.lambda_handler. At /var/task/lambda_function.py, parents[5] raises IndexError, and the gateway modules are not in the zip.",
+        "Live read by this seat, dynamodb scan of gateway-access-state-table (118 items, Count 118, no LastEvaluatedKey): 6 of 6 rows carrying email andrew@opalinvest.com (sk oauth_refresh_family, written by the gateway from a verified Entra sign-in) carry one oid, 2e21f8e5-55ca-45c1-91b9-a4607bf28d4f, and one tid, 6810043e-d171-4adc-9975-068b35e179da."
+      ]
+    },
+    "spec_asserts": "W3-S2: no existing record names Andrew's Entra object id. W3-S3: ARMED, with this seat as disarm_owner.",
+    "world_is": "The oid is on record in the gateway's own access-state store, as the verified-token claim, consistent across 6 refresh families. MP-t-3 still cannot pass: its AC3 live invoke needs a writer package that carries the gateway modules and resolves them without parents[5]. That is a change to MP-t-2's built product, outside every open face.",
+    "notes": "Andrew confirms the oid (W3-S2 is his). The packaging fix, a staged build that carries app/ and ops/ plus a root resolved from the package, is a product change to a closed cell, and it is asked of 1.0.0_SA_CTO~O as a recut decision. MP-t-3 and MP-t-6 stay open."
   }
 ]
 ```
