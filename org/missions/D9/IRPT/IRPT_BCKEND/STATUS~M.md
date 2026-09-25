@@ -52,7 +52,7 @@ is pinned (unattested currency, the required Eclipse capture, the lib.opal_namin
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| Served directory stuck at 2026-09-17 (row IRPT_BCKEND-S125). Fix DEPLOYED 20:59:50Z (irpt-directory-refresh DXuzx9jp = a7e5c59042); ledger irpt-directory-refresh-s125-m-20260924 A1 closed, S1 open | 2.0.0_SA_COO~M | the next fire (Andrew: one now, or 09-25 09:00 ET); then read S1 and disarm S125 |
+| Served directory still 09-17. The S125 fix RAN at the 09-25 13:00Z fire: fired_on was recorded and the dispatch was reached at all 3 firms, then REFRESH_FAILED HAND_OVER_RUNNER_OFFLINE. The runner host starts 12:52Z (mdpf-feeder-trigger) and stops 16:41Z (ec2-auto-shutdown-enforcer), so the 13:00Z fire races it (row S126 @0efe2d88cc -> ~P). Ledger irpt-directory-refresh-s125-m-20260924 is HELD on that gate @d03b6e4 | 2.0.0_SA_COO~M (read S1); 2.0.0_SA_COO~P (schedule) | one fire while the host is Online (Andrew's word; up until 16:41Z), or the schedule moved inside the window |
 | Merging CLOUD into a seat branch is REFUSED by the law-lock budget: `.claude/skills/canonical-flow/SKILL.md` is 52,132 bytes and `dispatch/SKILL.md` 33,599, against 25,600 (org/law-edit-audit.log line `2026-09-24T23:04:17Z REFUSED-BUDGET author=2.0.0_SA_COO~M`) | 1.0.0_SA_CTO (the skills' owners) | the two files shrink under budget, or the gate exempts a merge carrying files the author did not change |
 | Public reason for a selected account with no custody row: NOT_READY (transient) vs NOT_FOUND (`_authz/errors.py:58`) | 1.0.0_SA_CTO (contract) | the CTO rules the code |
 | The FULL -> FAST line to the CVO ("FAST from 18:1xZ; pins graded after the fact") | 2.0.0_SA_COO~M | 3.0.0_SA_CVO registers live |
