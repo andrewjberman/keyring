@@ -16,7 +16,9 @@
      "investor-reporting/directory/"
     ]
    },
-   "dynamodb_scan": [],
+   "dynamodb_scan": [
+    "bd-securities"
+   ],
    "publication_bucket": "opal-data-cottonwood",
    "s3_write": [
     "irpt/cottonwood/gold/holdings/",
@@ -42,7 +44,9 @@
      "investor-reporting/directory/"
     ]
    },
-   "dynamodb_scan": [],
+   "dynamodb_scan": [
+    "bd-securities"
+   ],
    "publication_bucket": "opal-data-49financial",
    "s3_write": [
     "irpt/49financial/gold/holdings/",
@@ -64,7 +68,9 @@
      "silver/eclipse/"
     ]
    },
-   "dynamodb_scan": [],
+   "dynamodb_scan": [
+    "bd-securities"
+   ],
    "publication_bucket": "opal-data-inflection",
    "s3_write": [
     "irpt/inflection/gold/holdings/",
@@ -74,5 +80,6 @@
    ],
    "code_object": "irpt/inflection/code/gold/investor-reporting-holdings.tar.gz"
   }
- }
+ },
+ "correction_20260925": "dynamodb_scan was empty for every firm: the generator parsed trace lines with four fields and the DynamoDB line has three (no key), so \"dynamodb Scan bd-securities x3\" was skipped. Set from that trace line; the empty field made IAM refuse each firm policy (MalformedPolicyDocument) at the 19:36Z apply."
 }

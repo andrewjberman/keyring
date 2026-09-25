@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T19:2xZ (tick 10). Loop: /canonical-drive cron 6f699621 (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-25T19:4xZ (tick 11). Loop: /canonical-drive cron 6f699621 (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -97,9 +97,17 @@ branch. No code edit is open.
      would revert it. S135 is DISARMED (S136): ~P's fix is landed at afefa09d7e, and the re-plan reads 10 to add,
      0 to change. The dispatch moved to its own granted dir holdings_refresh/ (CTO @8f23a84826; 4a49b03031), and its
      artifact is built and uploaded (ledger irpt-holdings-refresh-artifact-m-20260925 CLOSED @a045790a3b). Full plan:
-     11 add / 2 change / 0 destroy, all R4's. The NEVER-WIDEN PACKET is sent (@885ae2f3d6, msg to the CTO): the COO
-     half is signed, the CTO half is owed. On the CTO's signature: the apply under a ledger, the read-back, one --qa
-     fire, then the enable half. ~P is told that the holdings/ resolve.py pin drift refuses its next build.
+     11 add / 2 change / 0 destroy, all R4's. BOTH HALVES ARE SIGNED (COO @885ae2f3d6, CTO @6c5c27a666), and it is
+     APPLIED: ledger irpt-holdings-principals-dispatch-m-20260925 has P1, AP1 and V1 closed (@253d92d48b).
+     - The first apply half-landed: IAM refused the 3 firm policies because the grants record's dynamodb_scan was
+       empty. Fixed @674a9c02f6 and finished in-session; a fresh plan reads No changes.
+     - Read-back: the schedule is DISABLED with target irpt-holdings-refresh-lambda; the CodeSha256 equals the
+       artifact's; 4 of 4 policies equal the planned JSON.
+     - N1 (the exercised negative arm) is HELD until the host's next window, Mon 2026-09-28 ~12:52Z. Interim
+       simulation: cross-firm reads are implicitDeny, own reads allowed.
+     NEXT, Monday in the window: N1 over SSM as each principal; one --qa fire (the dispatch function invoked with
+     the runner writing holdings_qa); then the ENABLE half to the CTO (R4 step 4). ~P is told that the holdings/
+     resolve.py pin drift refuses its next build.
      Then the never-widen packet (both halves), the apply, one --qa fire, and the enable half.
      Row 4a DONE (3e1ca981ab): the publication writes through a firm-scoped publish principal when the dispatch
      names one (IRPT_HOLDINGS_PUBLISH_ROLE_ARN); reads stay on the host (R-44 split by bucket). Rows 2 and 4b are

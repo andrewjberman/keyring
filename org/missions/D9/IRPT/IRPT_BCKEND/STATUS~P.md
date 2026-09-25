@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: /canonical-drive loop on Andrew-direct 17:3xZ (cron 57c0067c, every 10m; replaced goal loop f599225b), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T19:4xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T19:4xZ (tick 13). Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -143,9 +143,11 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    PORTAL CANDIDATE 5c2fc34d (portal branch p-render-token-20260925, worktree C:/Users/AndrewBerman/Desktop/portal-p-render-token,
    base local DEV 55ed4790): src/api/render-claim.ts + apiRequest -- on the print path with a render claim, Bearer =
    renderToken, nothing stored, a 401 neither refreshed nor redirected. 12 tests (parity with ProtectedRoute over six
-   token shapes), tsc -b clean, eslint clean, fe-s-88 5 pass. NOT on DEV yet.
-   NEXT (P): (1) the served print page looked at (/frontend-dev: the render request's reads carry the render Bearer),
-   then fast-forward local DEV to 5c2fc34d (no push: local DEV carries ~D's unpushed drains; MSTR pushes); (2) under ruling (a): mint at submit + put the token + SSM doc/host script read it (no operator
+   token shapes), tsc -b clean, eslint clean, fe-s-88 5 pass. LANDED on LOCAL portal DEV 19:3xZ (fast-forward
+   55ed4790 -> 5c2fc34d; not pushed -- local DEV carries ~D's drains, MSTR pushes; ~D told). Served run on :5174 (the
+   shared dev server, now on DEV): the print page's performance read went out with Bearer <renderToken>, stayed on the
+   print route (no /login, no refresh call), and displayed "This bundle was not rendered" for the unsigned probe token.
+   NEXT (P): (1) done (portal render Bearer on local DEV); (2) under ruling (a): mint at submit + put the token + SSM doc/host script read it (no operator
    session) + dispatch ON; the read functions' B0 deploy (grant.py + enforce at 755c13bc19 + grant read IAM) rides it.
    PARKED (owner P, un-parks at the next irpt-holdings build; ~M 101008, CTO 101007): holdings/resolve.py has drifted from
    its STAGE_MANIFEST pin (_scope/resolve.py@c76b7c7aee) -- build-and-upload refuses irpt-holdings until re-pinned.
