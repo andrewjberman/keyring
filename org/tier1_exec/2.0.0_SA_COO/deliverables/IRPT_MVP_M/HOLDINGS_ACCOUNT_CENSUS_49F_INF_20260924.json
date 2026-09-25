@@ -1,0 +1,202 @@
+{
+ "firms": {
+  "49financial": {
+   "active_unique_accounts": 7454,
+   "classes": {
+    "REFUSED_ABSENT_FROM_PUBLICATION": 37,
+    "RESOLVED_NO_MODEL_CLIENT_ONLY": 1509,
+    "RESOLVED_WITH_MODEL": 5908
+   },
+   "control_library_loads": [
+    {
+     "class": "REFUSED_ABSENT_FROM_PUBLICATION",
+     "reason": "selected accounts absent from accepted publication",
+     "status": "REFUSED"
+    },
+    {
+     "class": "REFUSED_ABSENT_FROM_PUBLICATION",
+     "reason": "selected accounts absent from accepted publication",
+     "status": "REFUSED"
+    },
+    {
+     "class": "REFUSED_ABSENT_FROM_PUBLICATION",
+     "reason": "selected accounts absent from accepted publication",
+     "status": "REFUSED"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_NO_MODEL_CLIENT_ONLY",
+     "nodes": 13,
+     "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_NO_MODEL_CLIENT_ONLY",
+     "nodes": 3,
+     "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_NO_MODEL_CLIENT_ONLY",
+     "nodes": 3,
+     "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_WITH_MODEL",
+     "nodes": 19,
+     "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_WITH_MODEL",
+     "nodes": 19,
+     "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_WITH_MODEL",
+     "nodes": 22,
+     "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56",
+     "status": "READ_OK"
+    }
+   ],
+   "directory": {
+    "as_of_business_date": "2026-09-17",
+    "bucket": "opal-data-bd",
+    "directory_revision": "irpt-dir/49financial/2026-09-17/1.0",
+    "key": "investor-reporting/directory/2026-09-17/directory.json",
+    "version_id": "KM0ObKDodUCHU2khf0j2VFuDCNMS1_V6"
+   },
+   "directory_account_rows_by_termination": {
+    "ACTIVE": 7454,
+    "TERMINATED": 78
+   },
+   "market_value_by_class": {
+    "RESOLVED_NO_MODEL_CLIENT_ONLY": 182618295.85,
+    "RESOLVED_WITH_MODEL": 1651861450.71
+   },
+   "node_kinds_by_class": {
+    "REFUSED_ABSENT_FROM_PUBLICATION": {},
+    "RESOLVED_NO_MODEL_CLIENT_ONLY": {
+     "ACCOUNT": 1509,
+     "CASH": 1501,
+     "SECURITY": 5810,
+     "SLEEVE": 1509
+    },
+    "RESOLVED_WITH_MODEL": {
+     "ACCOUNT": 5908,
+     "CASH": 7475,
+     "MODEL_LEAF": 7475,
+     "SECURITY": 114261,
+     "SLEEVE": 5908
+    }
+   },
+   "publication": {
+    "business_date": "2026-09-22",
+    "index_version": "QC.bs6a5w9.HeojU8ugboRzNbhM.3mfD",
+    "partitions": 174,
+    "revision": "5a25ae76a2df7b490b751b44121b5abbc2e45a8c523fddeba0f659c218b66a56"
+   },
+   "publication_accounts": 7522,
+   "published_not_active_in_directory": 105,
+   "published_not_active_in_directory_in_directory_any_state": 78
+  },
+  "inflection": {
+   "active_unique_accounts": 875,
+   "classes": {
+    "RESOLVED_NO_MODEL_CLIENT_ONLY": 251,
+    "RESOLVED_WITH_MODEL": 624
+   },
+   "control_library_loads": [
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_NO_MODEL_CLIENT_ONLY",
+     "nodes": 3,
+     "revision": "d32e50c692d42bc8f23f5d57f19ed81ecb21aaabfa2b95dd84214028f668a47e",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_NO_MODEL_CLIENT_ONLY",
+     "nodes": 15,
+     "revision": "d32e50c692d42bc8f23f5d57f19ed81ecb21aaabfa2b95dd84214028f668a47e",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_NO_MODEL_CLIENT_ONLY",
+     "nodes": 53,
+     "revision": "d32e50c692d42bc8f23f5d57f19ed81ecb21aaabfa2b95dd84214028f668a47e",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_WITH_MODEL",
+     "nodes": 76,
+     "revision": "d32e50c692d42bc8f23f5d57f19ed81ecb21aaabfa2b95dd84214028f668a47e",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_WITH_MODEL",
+     "nodes": 29,
+     "revision": "d32e50c692d42bc8f23f5d57f19ed81ecb21aaabfa2b95dd84214028f668a47e",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_WITH_MODEL",
+     "nodes": 36,
+     "revision": "d32e50c692d42bc8f23f5d57f19ed81ecb21aaabfa2b95dd84214028f668a47e",
+     "status": "READ_OK"
+    }
+   ],
+   "directory": {
+    "as_of_business_date": "2026-09-17",
+    "bucket": "opal-data-inf",
+    "directory_revision": "irpt-dir/inflection/2026-09-17/1.0",
+    "key": "investor-reporting/directory/2026-09-17/directory.json",
+    "version_id": "QQ4Ce4ROS2MrkjEF1cj8H0VOhacR8JYo"
+   },
+   "directory_account_rows_by_termination": {
+    "ACTIVE": 875
+   },
+   "market_value_by_class": {
+    "RESOLVED_NO_MODEL_CLIENT_ONLY": 49356167.05,
+    "RESOLVED_WITH_MODEL": 160002192.43
+   },
+   "node_kinds_by_class": {
+    "RESOLVED_NO_MODEL_CLIENT_ONLY": {
+     "ACCOUNT": 251,
+     "SECURITY": 5547,
+     "SLEEVE": 251
+    },
+    "RESOLVED_WITH_MODEL": {
+     "ACCOUNT": 624,
+     "MODEL_LEAF": 624,
+     "SECURITY": 25333,
+     "SLEEVE": 695
+    }
+   },
+   "publication": {
+    "business_date": "2026-09-22",
+    "index_version": "k9U4ucuTS1iteq0p9eUweqXs6Lk93B07",
+    "partitions": 40,
+    "revision": "d32e50c692d42bc8f23f5d57f19ed81ecb21aaabfa2b95dd84214028f668a47e"
+   },
+   "publication_accounts": 876,
+   "published_not_active_in_directory": 1,
+   "published_not_active_in_directory_in_directory_any_state": 0
+  }
+ },
+ "measured_at_utc": "2026-09-24T18:19:35.072656+00:00",
+ "mode": "READ_ONLY_OPERATOR_S3_LIBRARY_UNDER_USER",
+ "rule": "publication.py _load_parts: selected <= partition census, else PublicationRefused",
+ "source_pin": "da6d4e93657e2508d4adcc6255fc5b7dfbed9093"
+}

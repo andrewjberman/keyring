@@ -5,10 +5,10 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.5",
+ "prd_version": "v0.8",
  "step": 4,
- "brief_ref": "docs/briefs/irpt-page-remediation-brief-20260924.md@5cc838e696",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
+ "brief_ref": "docs/briefs/irpt-ui-finish-design-brief-20260924.md@20f90739bd",
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18"],
  "status": "DRAFT"
 }
 ```
@@ -21,6 +21,17 @@ this pin and once at the earlier one, the positive control the CRO's refusal 100
 `org/missions/D13/DSGN/DSGN_IRPTV1/project.json` @`c3508c07df`. Minted on Andrew-direct 2026-09-24 ~05:2xZ at the
 `4.0.0_SA_CRO~F` terminal, VERBATIM: *"This should be its own project. Tell CTO this will be D13 project, DSGN_IRPTV1. I
 want a proper canonical-flow issued on this from COO~D. Tell CTO that."*
+
+**v0.6 addendum (midstream).** Brief: `docs/briefs/irpt-ui-finish-design-brief-20260924.md` @`20f90739bd`, 25,285
+bytes, 365 lines, author `4.0.0_SA_CRO`. It is written on Andrew-direct 2026-09-24 (4:xx PM ET) to finish the UI and
+bring `2.0.0_SA_COO~D` back onto `/canonical-drive`. It amends FWD-2, FWD-3, FWD-7 and FWD-8 in place and adds FWD-12
+to FWD-18. Its three open calls were answered at the `1.0.0_SA_CTO` terminal (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_214xZ_IRPT_UI_CALLS_C1_C3_ANSWERED.md`):
+- C1: cash is GREEN, on Positioning too.
+- C2: progressive disclosure is PORTAL LAW.
+- C3: the search box and the paged list are SHARED components.
+
+The first brief (@`5cc838e696`) remains the source of FWD-1 to FWD-11.
 
 This is an EXECUTION-ONLY PRD for a PRODUCT surface: it names the thread, the cells, the contracts consumed, the write
 surface and the evidence each outcome is graded by; it invents no number the brief did not measure. Round 1 builds the
@@ -41,20 +52,24 @@ The L5/L6 issuer is `2.0.0_SA_COO~D` by Andrew's name.
                     call and a hop fed by a fixture fails the outcome
          SOURCE     brief O0 (the candidate thread), Part III bullets 1-3
 
-  FWD-2  An advisor knows who they are looking at from the header alone
-         DONE WHEN  EXERCISED -- an advisor reads the header for a real client and answers who / how much / over
-                    which accounts / as of when
-         ACCEPT     the header shows the client's name, firm, the accounts by name and masked tail, the holdings
-                    total and the business date; nothing about entitlements, revisions or cohorts is on it,
-                    and all of that is one click away
-         SOURCE     brief O1; Part III bullet 3
+  FWD-2  An advisor knows who they are looking at from the header alone, and picks accounts where the choice matters
+         DONE WHEN  EXERCISED -- an advisor reads the header for a real client and answers who / how much / as of
+                    when, then narrows to one account inside the view they are reading
+         ACCEPT     the header shows the client's name, firm, the holdings total and the business date, and picks
+                    only the client; there are no account bubbles on it; choosing accounts happens next to the view
+                    it narrows (the holdings drill, the performance accounts table, the analysis input); nothing
+                    about entitlements, revisions or cohorts is on the header, and all of that is one click away
+         SOURCE     brief O1; Part III bullet 3. AMENDED v0.6 (the outcome was wrong in part): accounts move out of
+                    the header, brief @20f90739bd O2 (A:16-30)
 
-  FWD-3  An advisor reaches any permitted client by browsing, not only by typing
-         DONE WHEN  EXERCISED -- an advisor who does not know a client's spelling finds them in the drawer
-         ACCEPT     a browse drawer lists the firm's clients (grouped by firm in the Global view) with name,
-                    masked tail, kind, active or terminated, and account count; the paged 25-row dropdown with
-                    "Load more clients" is gone; typing still works for those who know the name
-         SOURCE     brief O2 (card 1 ruled (a))
+  FWD-3  An advisor finds any client with one search box, and never scrolls a list or an account wall to do it
+         DONE WHEN  EXERCISED -- an advisor finds a real client by typing part of the name, and one they cannot
+                    spell by paging the list
+         ACCEPT     the client picker is a search box that suggests as you type, in the same dropdown look the rest
+                    of the portal uses, with ink you can read; a client list you can browse is split into pages,
+                    not cut off; no name, masked account ending or firm tag is ever clipped
+         SOURCE     brief O2 (card 1 ruled (a)). AMENDED v0.6 (the outcome was wrong: Andrew asked for a search bar
+                    and a paged list, not a drawer), brief @20f90739bd O1 (H:11-26, A:7-13)
 
   FWD-4  One firm control, whoever the viewer is
          DONE WHEN  APPLIED -- the same dropdown the Model Portfolios header uses, on this page
@@ -71,7 +86,8 @@ The L5/L6 issuer is `2.0.0_SA_COO~D` by Andrew's name.
                     area style; a returns heatmap with periods across and portfolio, benchmark and spread as rows;
                     an accounts table with one row per account by name and masked tail, an uncovered account shown
                     as a row with its reason; the spread is a figure the server stated, never one the page worked
-                    out; method and lineage sit in a footer line with a popover
+                    out; method and lineage sit behind the panel's help tip, and the bottom bar carries only the
+                    source and the time (v0.8, FWD-18)
          SOURCE     brief O4 (card 4 ruled (a); the area-chart word ~05:3xZ); Part IV.3 data gaps; Part V bullet 1
 
   FWD-6  An advisor sees a client's holdings three ways down, including a security list
@@ -80,25 +96,34 @@ The L5/L6 issuer is `2.0.0_SA_COO~D` by Andrew's name.
                     then allocation bars per category with a per-account matrix, then a treemap and a sortable,
                     filterable table of the securities with ticker, name, sleeve, weight and value; asset class
                     and sector columns appear when their source is ruled and are absent, not blank, until then;
-                    basis, denominator and provenance move to the footer
+                    basis, denominator and provenance sit behind the panel's help tip, not in the bottom bar
+                    (v0.8, FWD-18)
          SOURCE     brief O5 (card 3 ruled (a)); Part III bullet 2; Part V bullet 7
 
-  FWD-7  An advisor produces an analysis report through a five-step flow and always knows which step they are on
-         DONE WHEN  EXERCISED -- an advisor completes one report, leaving and returning to the tab while it
-                    generates
-         ACCEPT     the Analysis tab is a stepper -- Input, Review, Settings, Generate, Report -- with a left rail
-                    of the advisor's reports (status dot, title, date, filter); every identifier the system needs
-                    sits behind one "Details" popover per report and never in the body
-         SOURCE     brief O6 (card 5 ruled (a)); Part III bullet 6
+  FWD-7  An advisor starts an analysis by choosing one of three variant cards, and always knows where to upload and
+         what comes next
+         DONE WHEN  EXERCISED -- an advisor completes one report from a card, leaving and returning to the tab while
+                    it generates
+         ACCEPT     the variant step is three cards in the Philosophy page's card style -- the portfolio on its own,
+                    the portfolio against one Opal model, the portfolio against several Opal models; the upload is
+                    a step with a visible place and a visible state, not a bare file button; the advisor can follow
+                    each step to the report; there is no list of past requests and no request history on the tab;
+                    no identifier the system needs is ever in the body
+         SOURCE     brief O6 (card 5 ruled (a)); Part III bullet 6. AMENDED v0.6 (the outcome was wrong in part):
+                    the three cards are the variant step (brief @20f90739bd O8, A:57-69) and the left rail of
+                    reports is retired (O9, A:31-41). RETIRED CAPABILITY, stated: the page no longer promises that
+                    an advisor can find or re-open a past report from the Analysis tab; requests stay stored on the
+                    server
 
   FWD-8  A prospect is a first-class subject of an analysis, not a missing client
          DONE WHEN  EXERCISED -- an advisor produces a report for a portfolio that belongs to no existing client
          ACCEPT     with no client selected the Analysis tab is reachable and complete; the header shows a prospect
                     card (the uploaded portfolio's name, prepared-for, as-of and total) rather than "No client
-                    selected"; step 1 leads with the upload path; the prospect's report appears in the advisor's own
-                    history and can be re-opened and re-run without re-uploading, so a prospect who becomes a client
-                    keeps their history
-         SOURCE     brief O6, the prospect paragraph (Andrew-direct ~05:4xZ)
+                    selected"; the first step leads with the upload
+         SOURCE     brief O6, the prospect paragraph (Andrew-direct ~05:4xZ). AMENDED v0.6: the clause "the
+                    prospect's report appears in the advisor's own history and can be re-opened and re-run without
+                    re-uploading" is retired with FWD-7's rail (brief @20f90739bd O9, A:31-41). RETIRED CAPABILITY,
+                    stated: a prospect who becomes a client does not carry a re-openable report history on this page
 
   FWD-9  An advisor exports the tab they are looking at from one place
          DONE WHEN  APPLIED -- one page-level Export action on the header
@@ -121,12 +146,71 @@ The L5/L6 issuer is `2.0.0_SA_COO~D` by Andrew's name.
                     entitlement token, reason code or revision hash; the facts are retained one click down, so a
                     reviewer who needs a state or revision can still find it
          SOURCE     brief O9; Part III bullet 3; Part V bullet 6
+
+  FWD-12 An advisor sees every Opal model in its one colour, the same colour it wears on Model Portfolios
+         DONE WHEN  EXERCISED -- an advisor reads a real client's holdings and names each Opal model by its colour
+         ACCEPT     Ultra Long-Term is red here as it is on Model Portfolios, and every other Opal model wears its
+                    Model Portfolios colour on every chart, legend and dialog of this page; the same model never
+                    changes colour between charts, tabs or pages
+         SOURCE     brief @20f90739bd O3 (H:44-50; screenshot 151107, Ultra Long Term drawn blue)
+
+  FWD-13 An advisor sees every security coloured by its asset class, Opal and non-Opal alike
+         DONE WHEN  EXERCISED -- an advisor reads a real client's securities and tells equities from bonds from
+                    cash by colour
+         ACCEPT     blue for equities, green for fixed income and cash, pink for the structured hedge, gold for
+                    commodities, orange for alternatives -- the same colours the Positioning page shows, so an
+                    advisor never meets two colours for cash; a security not yet classified says "unclassified"
+                    rather than borrowing another class's colour
+         SOURCE     brief @20f90739bd O4 (H:35-42, H:69-73, H:87-96); call C1 answered green (Andrew, this terminal)
+
+  FWD-14 An advisor drills from total assets to models to securities, and no chart breaks at any depth
+         DONE WHEN  EXERCISED -- an advisor drills a real multi-model client from the top to one model's
+                    securities
+         ACCEPT     the pie and the bars stop at the model level; the securities of a model are drilled on the
+                    securities map, with the same hover card the Positioning page shows; a legend with many entries
+                    stays readable; the models dialog uses the full width for its securities list
+         SOURCE     brief @20f90739bd O5 (H:27-34, H:63-83; screenshots 151014, 151114)
+
+  FWD-15 An advisor reads only client-language labels, and every system fact is one deliberate click away
+         DONE WHEN  EXERCISED -- an advisor reads every column heading and label on a real client's page and asks
+                    no engineer what one means
+         ACCEPT     no column is headed with a system word such as node, basis, denominator or provenance; there is
+                    at most one share-of-total column; no code string, key, reason code or "unavailable" message
+                    appears in the body of any tab; supervision and advisory figures show wherever the data has them
+         SOURCE     brief @20f90739bd O6 (H:51-62, A:47-56, A:65-69; six screenshots). FWD-11 is RIGHT and this
+                    widens it from state words to every label, so it takes a new number
+
+  FWD-16 An advisor sees a short page and opens detail only when they want it
+         DONE WHEN  EXERCISED -- an advisor reads each tab for a real client without scrolling past a wall
+         ACCEPT     at rest each tab shows its headline and one main picture; everything else opens from a toggle, a
+                    tile, a pop-up or a help tip when the advisor asks for it; the same rule is written into the
+                    portal's design rules so every page can follow it
+         SOURCE     brief @20f90739bd O7 (H:96-101, A:54, P:34-35); call C2 answered portal-wide (Andrew, this
+                    terminal)
+
+  FWD-17 An advisor who opens a tab before choosing a client sees a sample of what it will show
+         DONE WHEN  EXERCISED -- an advisor lands on Performance and on Holdings with no client chosen
+         ACCEPT     each shows eye-catching sample components clearly marked as a sample, with one prompt to choose
+                    a client; nothing in the sample could be mistaken for a real client's numbers
+         SOURCE     brief @20f90739bd O10 (P:32-37)
+
+  FWD-18 The whole page reads as Opal's light, client-facing look
+         DONE WHEN  EXERCISED -- Andrew gives the page a once-over on a real client and finds nothing off the look
+         ACCEPT     white panels, cards and pop-ups in the style of the Philosophy and Model Portfolios pages; the
+                    bottom bars carry only the source and the time; one hover-card look for chart figures and one
+                    for help; no stray scroll bars; cues from the Opal website (numbered cards, the process band,
+                    the short-to-long model spectrum) wherever they help the advisor
+         SOURCE     brief @20f90739bd O11 (P:14-31; the commission's "drawing cues from the www.opalinvest.com
+                    website and existing art")
 ```
 
 Not promised (brief Part II, VII): the PDF / print package; the narrative page; the Global-view entitlement model's
 data half; any vendor call; any contract change beyond the additive members already ruled (`display`,
-`valuation_facts` extension, `spread`); the design team's own pass (DSGN_REBRND); asset class / sector columns
-until their source is ruled; the comparison catalogue picker until the catalogue serves names.
+`valuation_facts` extension, `spread`, and at v0.6 the holding's asset class and the model's code); the design team's own
+pass (DSGN_REBRND); sector columns until their source is ruled; the comparison catalogue picker until the catalogue
+serves names. Added by the v0.6 brief (Part II): PROD promotion (Andrew's word); widening the security classifier's
+coverage, which is a data-plane act and not a cell here; the reference pages Philosophy, Model Portfolios and
+Positioning are copied from, never edited, except the one Positioning colour change FWD-13 carries.
 
 ## CONTRACTS
 
@@ -145,7 +229,14 @@ Additive members this project RENDERS and does not author (ruled before this PRD
   FACTS-20260924); no price fact exists and none is rendered;
 - `PerformanceReport` per-comparison `spread` (IRPT-DESIGN-RECON-CALLS-20260924 (a)): the spread is a SERVER-STATED
   fact; the page derives nothing, ever ("Summary.tsx: IT COMPUTES NOTHING" stands).
-- Deferred, not blocking: asset class / sector on security nodes (the taxonomy SOURCE card at Andrew); the benchmark
+- v0.6, owed by `2.0.0_SA_COO~M` (IRPT_BCKEND Holdings, named by the CTO at v0.6 per brief Part II):
+  - `HoldingsSnapshot` security node `asset_class`, plus `sub_asset_class` where known, from the canonical classifier
+    (`data/black_diamond/scripts/gold/lib/etf_classifier.py`);
+  - an explicit unclassified value where the classifier has no row; the page renders "unclassified" and never guesses;
+  - a model node carries its canonical model code, or a code the page can derive without reading the display label.
+  The colour itself is the page's: `portal/src/lib/chartColors.ts` `ASSET_CLASS` and
+  `portal/src/lib/modelPortfolioColors.ts`, keyed by code, never by label substring (brief F1, F2, F3).
+- Deferred, not blocking: sector on security nodes; the benchmark
   daily series and household begin/end values (P, brief items); the comparison catalogue (Y); the three routes with NO
   HANDLER at HEAD -- analysis-input-upload, analysis-request-read, analysis-request-history (`routes.json` @`124c0694b7`)
   -- are Y's, and FWD-7 / FWD-8 stand on them as enrichment-round inputs.
@@ -173,12 +264,17 @@ no browser; an auth-stubbed smoke fails FWD-1).
 
 1. Real login -> the portal session (the portal's auth, a real Opal user)
 2. Firm control reads Global (All) -> resolve-scope against the deployed directory function
-3. Browse / search -> Anna Thiessen's Cottonwood brokerage account found and chosen
+3. One search box -> Anna Thiessen's Cottonwood brokerage account found and chosen (v0.6: FWD-3 as amended, C15)
 4. POST selections -> a selection id for that account
-5. Identity card -> name, firm, accounts by name + masked tail, holdings total, business date (C1)
+5. Identity card -> name, firm, holdings total, business date; accounts are chosen in the view, not here (C1, C16)
 6. Performance headline -> YTD net return, the server-stated spread or "not supplied", beginning / ending value (C6's headline half)
-7. Holdings L0 hero -> the Models / SMAs / Client card from the published Cottonwood revision, names from `display` (C3)
-8. Security list -> the sortable table of securities with ticker, name, sleeve, weight and value (C4's table half)
+7. Holdings L0 hero -> the Models / SMAs / Client card from the published Cottonwood revision, names from `display`,
+   each model in its canonical colour (C3, C17)
+8. Drill -> Models, then one model, then that model's securities on the securities map with the Positioning hover
+   card, each security in its asset-class colour (C4, C18, C19)
+
+v0.6: the thread is the same journey held to the design bar of brief @20f90739bd Part III. It is not a new journey.
+Its trace is one real signed-in run, looked at. The stubbed-auth smoke fixture fails it (brief Part VI S2).
 
 Chains: header (5), performance (6), holdings (7, 8). A build cell carries at most THREE mechanical criteria; repo-wide
 hygiene runs at the drain. The round-1 analysis ends in the enrichment list the next round cuts.
@@ -197,6 +293,22 @@ hygiene runs at the drain. The round-1 analysis ends in the enrichment list the 
 10. FWD-10 the portal panel system on every panel; tab order Performance, Holdings, Analysis -- C13
 11. The `spread` member consumed when P lands it (round 1 renders "not supplied" and the trace grades that hop with the reason;
     FWD-1's ACCEPT names the spread, so a passing round-1 trace leaves FWD-1 NOT_REALIZED until `spread` is served)
+
+v0.6 additions. The CTO's order is a suggestion; the sequence is the COO's at L5:
+12. FWD-12 canonical model colour by code -- C17
+13. FWD-13 asset-class colour on the map, the table and the models dialog, with cash green on Positioning too -- C18
+    (stands on M's served `asset_class`; renders "unclassified" until it lands)
+14. FWD-14 the drill: pie and bars stop at models, securities on the map with the Positioning hover card, the
+    full-width models dialog -- C19
+15. FWD-15 client-language labels on every tab -- C20 (with C14)
+16. FWD-16 progressive disclosure page-wide, and the portal-law clause -- C21
+17. FWD-3 as amended: the shared search box and the shared paged list -- C15 (supersedes C9)
+18. FWD-2 as amended: accounts chosen in the view -- C16
+19. FWD-7 / FWD-8 as amended: the three variant cards and the designed upload step; the request list and history
+    removed -- C22 (supersedes C10's rail and C11's history)
+20. FWD-17 the sample view before a client is chosen -- C23
+21. FWD-18 the light look across the page -- C24
+22. FWD-10's tab order still reads Performance, Analysis, Holdings in the code (brief Part VI S3) -- C13
 
 ## CELL CANDIDATES (the COO's decomposition; not task orders)
 
@@ -235,6 +347,37 @@ hygiene runs at the drain. The round-1 analysis ends in the enrichment list the 
 - C14 Vocabulary rule: on every tab the producer's states, reason codes, revisions, fingerprints render only in
   disclosure surfaces. Serves FWD-11; applied once per cell above and graded once at the drain.
 
+v0.6 candidates (brief @20f90739bd Part IV F1-F10; C9, C10's rail and C11's history are superseded as marked):
+- C15 Client picker: a shared searchable dropdown in the `PageSurfaceControl` look, and a shared paginator, both under
+  `portal/src/components/ui/`. The Catalyst `Combobox` dark-mode classes are gone (F10). It replaces `ClientSearch`'s
+  truncated menu. Other pages may adopt the new components later, as their own work. Serves FWD-3; supersedes C9.
+- C16 Accounts in the view: the account chips leave the header. An account filter sits next to the Holdings drill,
+  the Performance accounts table and the Analysis input. Serves FWD-2; amends C1.
+- C17 Model colour by code: `getModelColor` resolves through `canonicalModelCode`, never a label substring
+  (`modelPortfolioColors.ts:165-183`, `:361`; F1). This is a shared-lib change: the cell's criterion names Model
+  Portfolios, Positioning and Attribution as the other readers, with a before/after read of each. Serves FWD-12.
+- C18 Asset-class colour: the Securities map, the securities table and the models dialog colour by the served
+  `asset_class` through `chartColors.ts` `ASSET_CLASS` (F2, F3). Cash moves to green (C1), which is a shared-lib
+  change naming Positioning. The brand token set `design/brands/opal-capital.json` `--asset-*` is NOT adopted (F2
+  trap). An unclassified security shows its own state. Serves FWD-13.
+- C19 The drill: the pie and bars stop at models. The model-to-securities drill lives on the Securities map with
+  `HoldingsTreemapTooltip` on `DataTooltip` (F4). Legends scale. `CategoryBreakdownDialog` runs one-column,
+  full-width in the IRPT use (F6), as an additive prop. Serves FWD-14.
+- C20 Client language: no Node, Basis, Denominator or Provenance column; one share column; no catalog-key input or
+  key strings; Supervision and Advisory where served. Serves FWD-15.
+- C21 Progressive disclosure: headline plus one main visual at rest per tab; the rest behind toggle, tile
+  (`CategoryTile` pattern, F7), dialog or `PanelHeader` `helpText`. It also carries the portal-law clause in
+  `portal/DESIGN.md` (C2), written by `2.0.0_SA_COO~D` as the DSGN_REBRND COO lane in its own commit. Serves FWD-16.
+- C22 Analysis cards: the three variants as `PhilosophyPillars`-style cards on `HeroGraphic` (`GraphicPanel`,
+  `HeroDialog`; F5), mapped by `composer.ts:56-75`. The PRD states Andrew's A:57-64 as the indigo confirmation
+  `HeroGraphic.tsx:16-18` asks for. The upload is a designed step with a place and a state. The requests list and the
+  history panels are removed from the advisor surface. Serves FWD-7 and FWD-8; supersedes C10's rail and C11's history.
+- C23 Sample view: Performance and Holdings with no client show marked sample components and one prompt; no sample
+  figure is real client data. Serves FWD-17.
+- C24 The light look: the Philosophy / Model Portfolios card-and-dialog family (F6); footers source and timestamp only
+  (F8, `PanelFooter`); `DataTooltip` for chart data and `HelperTip` for help, replacing the default recharts tooltip at
+  `DrillTree.tsx:376`; no stray scrollbar; website motifs from `design/brand/opalinvest.com.md` and F9. Serves FWD-18.
+
 ## PATHS (the write surface)
 
 Owned: `portal/src/pages/InvestorReporting/**` -- the advisor-facing render (header, the three tabs, disclosure
@@ -244,8 +387,30 @@ components are EXTENDED or WRAPPED, never forked: `portal/src/components/Categor
 `components/ui/panels/**` -- a change to a shared component is a cell with its own criterion naming every other page
 that renders it, or it is wrapped locally.
 
-Relied on, not owned (the closer contract v1.4 and the sibling lanes): `portal/src/pages/InvestorReporting/contracts/**`
-and `api/**` (P, the shared client surface; the additive members' acceptance); the producers (M: custody publication,
+v0.6 adds shared writes, each on the same rule (a cell criterion naming every other reader):
+- `portal/src/lib/modelPortfolioColors.ts` (C17);
+- `portal/src/lib/chartColors.ts` (C18; the cash-green change reaches Positioning by Andrew's C1 word);
+- `portal/src/components/CategoryViewTree.tsx` (C19, additive prop);
+- the new shared searchable dropdown and paginator under `portal/src/components/ui/` (C15, Andrew's C3 word);
+- `portal/src/ui/components/catalyst/combobox.tsx` (C15, dark-mode classes; path corrected at v0.7, `2.0.0_SA_COO~D`
+  100917 F1).
+- One clause of `portal/DESIGN.md` (C21, Andrew's C2 word), written under DSGN_REBRND, whose COO lane is also
+  `2.0.0_SA_COO~D`; the commit names the DSGN_REBRND lane.
+
+The reference pages (`pages/CapitalMarketAssumptions/**`, `pages/ModelPortfolios/**`, `pages/Positioning/**`) are read
+and copied from, never edited.
+
+v0.7 ruling (`1.0.0_SA_CTO`, on `2.0.0_SA_COO~D` 100917 F3, under Andrew's ~15:31Z frontend-integrator word,
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_153xZ_IRPT_FRONTEND_CANDIDATES_HAND_TO_COO_D.md`):
+- `portal/src/pages/InvestorReporting/contracts/**`, including the generated `contracts/wire/**`, is this project's write
+  surface. It is the consumer side's ACCEPTANCE of a member: `2.0.0_SA_COO~D` lands each change on the owning seat's
+  written spec (P, M or Y names the member and its schema), never on its own initiative.
+- The wire contract itself stays the producers': `docs/contracts/investor-reporting/v1/**` and the backend
+  `_contracts`.
+- `portal/src/api/**` stays P's.
+
+Relied on, not owned (the closer contract v1.4 and the sibling lanes): `portal/src/api/**` (P, the shared client
+surface) and the member specs the acceptances follow; the producers (M: custody publication,
 `display`, `CUSTODY_UNITS`; P: the Performance adapter and `spread`; Y: upload / job semantics, the catalogue);
 `portal/DESIGN.md` (DSGN_REBRND, the design law). Sequenced by the CTO against the IRPT post-slug HOLD and the P/M/Y
 closer contract: the COT `display` republish, SERVED (model names on Anna's page), precedes the L6 issuance -- hops 7
@@ -281,6 +446,28 @@ qualitative bar) -> the ACCEPT lines. Part IV (substrate) -> CONTRACTS and CELL 
 true) -> the rules under CONTRACTS. Part VI is status, not outcome-bearing, and is not carried. 10 of 10 territory
 headings (O0-O9) covered, O6 carrying two outcomes; 0 uncovered.
 
+v0.6, brief @`20f90739bd`:
+- O1 -> FWD-3 (amended).
+- O2 -> FWD-2 (amended).
+- O3 -> FWD-12.
+- O4 -> FWD-13.
+- O5 -> FWD-14.
+- O6 -> FWD-15.
+- O7 -> FWD-16.
+- O8 -> FWD-7 (amended).
+- O9 -> FWD-7 and FWD-8 (amended, retirements stated).
+- O10 -> FWD-17.
+- O11 -> FWD-18.
+- The candidate thread -> FWD-1 unchanged in words; THE THREAD hops 3, 5, 7 and 8 are held to the bar.
+- Part II -> PATHS and CONTRACTS (the classifier's owner is named).
+- Part III -> the ACCEPT lines and the thread's trace rule.
+- Part IV -> C15-C24.
+- Part V -> CONTRACTS (M's served members), PATHS, and this ENDPOINT's amendments.
+- Part VII's calls C1-C3 were answered by Andrew.
+- Part VI is status, not carried.
+
+11 of 11 territory headings (O1-O11) covered; 0 uncovered.
+
 ## L2 FINDINGS CARRIED (from the endpoint record)
 
 New ids by Andrew's word (its own project); IRPT_FNTEND's FWD-12 is the lineage this list serves, not a member.
@@ -311,11 +498,41 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
   ids shifted against CELL CANDIDATES (items 3-10 re-lettered to the section's own ids; FWD ids and words unchanged); F3 the
   portal base at the cut needs M's labels pin on DEV, added to the sequencing line. Brief half only; ENDPOINT and CONTRACTS
   bytes unchanged (the `3.0.0_SA_CVO` stamp @`2c60ba747f` stands); the brief half's stamp is owed at these bytes.
+- v0.6, 2026-09-24 ~22:1xZ, `1.0.0_SA_CTO` (Claude): `/endpoint --forward` on the midstream brief
+  `docs/briefs/irpt-ui-finish-design-brief-20260924.md` @`20f90739bd` (`4.0.0_SA_CRO` 100892, on Andrew-direct):
+  - ENDPOINT: FWD-2, FWD-3, FWD-7 and FWD-8 are amended in place, with ids unchanged and retirements stated;
+    FWD-12 to FWD-18 are added.
+  - CONTRACTS: M's served `asset_class` and model code.
+  - THE THREAD: held to the design bar.
+  - Also changed: ENRICHMENT BACKLOG items 12-22, CELL CANDIDATES C15-C24, PATHS, BRIEF COVERAGE and the SURFACE
+    MANIFEST.
+  - Andrew's calls C1-C3 were answered at this terminal.
+  - Both halves change bytes. Under proportionate sign-off the brief half is accepted because the CRO wrote the brief;
+    the ENDPOINT change re-signs the ratified-text half at `3.0.0_SA_CVO`.
+  - NOT READ at this step: the DSGN_IRPTV1 task-order register and decomposition. The brief's own census read them
+    (its Part 0 names the leak); this addendum cites Andrew's words and the brief's findings, never a next-list.
+- v0.7, 2026-09-24 ~22:4xZ, `1.0.0_SA_CTO` (Claude): two fixes from `2.0.0_SA_COO~D`'s L5 read 100917 (decomp @`53c815d0cc`):
+  - F1: the combobox path is `portal/src/ui/components/catalyst/combobox.tsx`.
+  - F3 ruled: the portal-side `contracts/**` is this project's write surface, as the consumer side's acceptance on the
+    owning seat's written spec. The producers keep the wire contract, and P keeps `api/**`.
+  PATHS and SURFACE MANIFEST only; ENDPOINT and CONTRACTS bytes are unchanged, so the ratified-text half the CVO signs
+  is the v0.6 text.
+- v0.8, 2026-09-24 ~23:0xZ, `1.0.0_SA_CTO` (Claude): ENDPOINT, three clauses only, on `3.0.0_SA_CVO`'s refusal 100924
+  (review @`12b89b8dd4`):
+  - R1: FWD-5's method and lineage, and FWD-6's basis, denominator and provenance, move from the footer to the panel's
+    help tip, because FWD-18 lets the bottom bar carry only source and time.
+  - R2: FWD-7 reads "the variant step is three cards", so it no longer contradicts FWD-8's upload-first step for a
+    prospect.
+  No other clause of either half changes (beyond the header version and this history line).
 
 ## SURFACE MANIFEST
 
-WRITES: `portal/src/pages/InvestorReporting/**` (render + tests). EXTENDS (by a cell naming every other consumer):
-`portal/src/components/CategoryViewTree.tsx`, `components/BenchmarkHeatmap.tsx`, `components/ui/PageSurfaceControl.tsx`,
-`components/ui/panels/**`. READS: the ten v1 contracts and the three additive members; `portal/DESIGN.md`; the four
-reference pages (Model Portfolios, Positioning, Advisor Intelligence, the Benchmark tab). NEVER: `portal/src/api/**`,
-`portal/src/pages/InvestorReporting/contracts/**` (P's), any producer, any vendor call, `render/**` (the print package).
+WRITES: `portal/src/pages/InvestorReporting/**` (render + tests; at v0.7 `contracts/**` too, as the consumer side's
+acceptance on the owning seat's written spec); at v0.6 the new shared searchable dropdown and paginator under
+`portal/src/components/ui/`, and one `portal/DESIGN.md` clause under DSGN_REBRND. EXTENDS (by a cell naming every other
+consumer): `portal/src/components/CategoryViewTree.tsx`, `components/BenchmarkHeatmap.tsx`,
+`components/ui/PageSurfaceControl.tsx`, `components/ui/panels/**`, `portal/src/ui/components/catalyst/combobox.tsx`,
+`portal/src/lib/modelPortfolioColors.ts`, `portal/src/lib/chartColors.ts`. READS: the ten v1 contracts and the three additive members; `portal/DESIGN.md`; the four
+reference pages (Model Portfolios, Positioning, Advisor Intelligence, the Benchmark tab). NEVER: `portal/src/api/**`
+(P's), the producers' wire contract (`docs/contracts/investor-reporting/v1/**`, backend `_contracts`), any producer, any
+vendor call, `render/**` (the print package).

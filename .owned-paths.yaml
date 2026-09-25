@@ -1170,6 +1170,33 @@ paths:
   "infra/aws/lambda/investor-reporting/directory/tests/test_refresh_previous_state.py":
     lane: IRPT_COMPLETION_M
     note: "Same exact M grant as directory/refresh.py (S125 fix); returns to IRPT_LIVE_SCOPE_P at the disarm."
+  "infra/aws/users/lambda/portal-authorizer/**":
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO temporary P grant 2026-09-25, org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_IRPT_20260925.md R1: the IRPT export hop's render-identity live landing (A2, the V2 render branch and the exp-leeway fix). WORLD act, own ledger entry, negative arm before and after. Returns to CLOUD_OPS_OR_ETL when section A closes."
+  "infra/aws/lambda/investor-reporting/holdings_refresh/**":
+    lane: IRPT_COMPLETION_M
+    note: "CTO M grant 2026-09-25 (R4; 2.0.0_SA_COO~M 101006): the scheduled Holdings dispatch function's own source dir (refresh_dispatch.py + its test, moved unchanged out of holdings/, whose STAGE_MANIFEST pins another function). ~M's lane for the life of the function."
+  "infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf":
+    lane: IRPT_COMPLETION_M
+    note: "CTO exact M grant 2026-09-25 (RULINGS_IRPT_20260925.md R4; 2.0.0_SA_COO~M 100998): the scheduled Holdings producer -- 3 per-firm holdings principals (grants from HOLDINGS_FIRM_PRINCIPAL_GRANTS_20260925.json @4e995812bb) + the dispatch function. Principals are never-widen class: nothing applies before the CTO signs M's packet."
+  "infra/aws/terraform/investor-reporting/directory/schedule.tf":
+    lane: IRPT_COMPLETION_M
+    note: "CTO exact M grant 2026-09-25 (R4; 100998): ONLY the irpt-holdings-snapshot slot (retarget SQS -> the dispatch function, still DISABLED). Every other schedule in this file stays 2.0.0_SA_COO~P's; ~M edits nothing else here. Returns to IRPT_COMPLETION_P when R4's enable closes."
+  "infra/aws/lambda/investor-reporting/narrative/entry.py":
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO exact P grant 2026-09-25 (2.0.0_SA_COO~P 100978): the IRPT export hop B0 render-ports install in the narrative ENTRY (one line, render_ports=_entry.render_ports_from_env(), inert until IRPT_EVIDENCE_BUCKET ships with B1)."
+  "infra/aws/terraform/portal-auth/irpt-render-secrets.tf":
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO exact P grant 2026-09-25 (RULINGS_IRPT_20260925.md R1, A1; 2.0.0_SA_COO~P msg on 15:17Z): the two render-key secret CONTAINERS only, no secret_version (key material put out of band, never in state). Ledgered apply with the negative arm. Returns to CLOUD_OPS_OR_ETL when section A closes."
+  "infra/aws/terraform/portal-auth/lambdas.tf":
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO exact P grant 2026-09-25 (RULINGS_IRPT_20260925.md R1, A2; 2.0.0_SA_COO~P 100967): ONLY the `environment` block on aws_lambda_function.portal_authorizer setting IRPT_RENDER_JWT_PUBLIC_KEY_PEM. Apply -target only (an untargeted portal-auth plan removes three live WAF rules, row S130). Returns to CLOUD_OPS_OR_ETL when section A closes."
+  "infra/aws/terraform/portal-auth/waf-cloudfront.tf":
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO exact P grant 2026-09-25 (R1 A3; 2.0.0_SA_COO~P 100969, row S130): a NO-OP reconcile only -- declare the three live WAF rules (common-rule-set, ip-reputation, known-bad-inputs, count mode) exactly as live, proven by a targeted WAF plan reading No changes before A3 applies. No rule added, removed or moved to block. Returns to CLOUD_OPS_OR_ETL when section A closes."
+  "infra/aws/lambda-edge/auth-validator-edge/**":
+    lane: IRPT_LIVE_SCOPE_P
+    note: "Same temporary P grant as portal-authorizer/** (R1): A3, the V3 render branch and the exp-leeway fix on the Lambda@Edge every portal request crosses. Returns to CLOUD_OPS_OR_ETL when section A closes."
   "infra/aws/lambda/investor-reporting/holdings/entry.py":
     lane: IRPT_LIVE_SCOPE_P
     note: "CTO exact P grant 20260923T135842Z under LOCAL_LIVE_PARTNER_SCOPE_20260923.md: M-OPAL-01 request-local roster continuity before/after reads only. Incumbents preserved; no other holdings or deployment grant. Independent CVO M retest required."

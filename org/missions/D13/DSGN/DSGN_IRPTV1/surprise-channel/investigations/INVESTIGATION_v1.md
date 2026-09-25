@@ -543,6 +543,501 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "S7 disarms when the CTO rules the remaining 4 and each is landed or retired."
+  },
+  {
+    "id": "DSGN_IRPTV1-S10",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-24T23:13:46Z",
+    "one_line": "FAST pin 68f46e18 graded FAIL after the fact: with Cottonwood Trust selected in the header, the Analysis Generate panel reads 'Client: select a client above' and 'Select a client in the header first.', and a 'catalog key' input is on the body. Four more FWD-12/FWD-15 gaps (N2-N5) are in the grading record and no issued round-3 order names them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Pin 68f46e18 handoff (2.0.0_SA_COO~D msg 100883): the Analysis tab shows no account-id checkboxes, no request panels and no backend strings. PRD v0.8 FWD-7: the advisor can follow each step to the report; the client is chosen in the header (FWD-2).",
+    "world_is": "deliverables/2.0.0_SA_COO~D/analysis-declutter.fast-run.txt: after SELECT-OK true the probe reads \"client\":\"Client: select a client above\". The PNG shows the identity card for Cottonwood Trust ****CW01 in the header and, in the Generate panel below it, 'Select a client in the header first.' plus a 'catalog key' input with an Add button. Checkboxes 0 and request panels 0 do hold.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/analysis-declutter.fast-run.png, read by 3.0.0_SA_CVO",
+        "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/analysis-declutter.fast-run.txt line 4 (the ANALYSIS probe JSON)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Grading record: org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_FAST_PIN_GRADES_20260924.md @ddb0339061 (items N1-N5). The catalog key is covered by IV-e-14 (e). Not named by an issued round-3 order: the client-binding contradiction (N1), the heatmap's UNAVAILABLE cell (N2), the raw ISO 'Observed' time (N3), the raw 'opal-supervised'/'advised' values (N4) and the one-navy Allocation bars (N5). The issuer may amend its own criteria (Rule 27 L6). Filed as a row because the broker refuses a CVO send to the COO (spine v3.1 L8)."
+  },
+  {
+    "id": "DSGN_IRPTV1-S11",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-24T23:58:00Z",
+    "one_line": "S10's five unnamed items are now named by round-3 orders: N1-N4 on IV-e-18 (the join, not yet spawned), N5 on IV-e-13 (slot ~8, queue position 3), by the issuer's amendment 1215c0d07a.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "S10 notes: N1-N5 are not named by an issued round-3 order; the issuer may amend its own criteria (Rule 27 L6).",
+    "world_is": "CLOUD 1215c0d07a amends TO-IV-e-18 (cell text N1-N4, AC1 census arms, four paths added: tabs/analysis/GenerateComposer.tsx, tabs/analysis/AnalysisTab.tsx, tabs/holdings/HoldingsSummary.tsx, tabs/holdings/SliceTable.tsx) and TO-IV-e-13 (cell (a) and AC1: each model bar coloured by served modelCode). to-pipeline-gate GATE (viii) graded both modifications (2 of 2). The catalog-key input stays on IV-e-14 (e), spawned on slot ~9.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 1215c0d07a --stat: the two task orders",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_FAST_PIN_GRADES_20260924.md @ddb0339061 N1-N5"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "S10 closes when IV-e-13 and IV-e-18 drain with those arms passing and the drain's real run on 5174 shows the Generate panel reading the header's client."
+  },
+  {
+    "id": "DSGN_IRPTV1-S12",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-24T23:58:00Z",
+    "one_line": "/dispatch Step 5 says hand a slot's next order by CONTINUING the same worker subagent; in this session a completed worker cannot be continued (SendMessage: 'No transcript found for agent ID'), so each queue handoff is a fresh worker on the same slot, worktree and branches.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": ".claude/skills/dispatch/SKILL.md Step 5 item 5: 'Hand the next task order by CONTINUING the same subagent, context intact. No respawn, no cold start.'",
+    "world_is": "Two measured refusals at 2.0.0_SA_COO~D: slot ~8 after IV-e-11 completed and slot ~10 after IV-e-15 completed; ListAgents lists only running subagents. Both slots were re-spawned fresh with the next order's face plus one identity line naming the prior commits on the branch (IV-e-12 on ~8, IV-e-16 on ~10). Cost: the fresh worker re-reads its context; the branch and worktree carry the prior order's work.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SendMessage results in this session, 2026-09-24 ~23:4xZ and ~23:5xZ",
+        "ListAgents: 3 running subagents, the completed ones absent"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "For the /dispatch skill's owner: Step 5's continue-the-subagent instruction does not hold in this harness once a worker completes; a respawn on the same worktree is the working path."
+  },
+  {
+    "id": "DSGN_IRPTV1-W10-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~10",
+    "surfaced_at": "2026-09-24T21:00:00Z",
+    "one_line": "IV-e-16's own IVE16-AC1 ('zero per-tab Export buttons render on any tab') cannot be fully met within this cell's <paths> grant: tabs/analysis/AnalysisTab.tsx still carries a permanently-disabled data-slot=\"export-button\" control, and AnalysisTab.tsx is named nowhere in IV-e-16's decomp `writes` column or this order's <paths> -- this worker's own IVE16-AC1 test checks the criterion as written, finds this control, and reports VERDICT: PAGE-EXPORT-FAIL on the analysis arm rather than narrowing the check to pass.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D (a future cell holding AnalysisTab.tsx's own grant retires the control, or the CTO amends IVE16-AC1's scope to the tabs this cell actually owns)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/analysis/AnalysisTab.tsx:238-248 (this worktree's tip): an unconditional `<button type=\"button\" disabled aria-disabled=\"true\" data-slot=\"export-button\">Export</button>`, rendered on every mount regardless of `selectedRequest` -- confirmed by reading the file (not in this order's <paths>, so not edited)",
+        "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md v3 @2af10e4cd0, IV-e-16's `writes` column: `IR/index.tsx`, `IR/tabs/TabShell.tsx`, `IR/tabs/reporting/ReportingTab.tsx`, `IR/__tests__/fe-s-5/controls.test.ts`, `IR/__tests__/dsgn-irptv1/iv-e-16.*` -- AnalysisTab.tsx is absent from this list, and the task order's own <paths> block names the same set plus the surprise-channel file, also omitting AnalysisTab.tsx",
+        "this worker's __tests__/dsgn-irptv1/iv-e-16.page-export.test.ts, run at this tip: ARM1 (header: exactly one export-button-control) and ARM2 (it targets the active tab + selectedScopeRef.revision) hold clean on all three tabs; ARM3 (zero per-tab export markers) finds `data-action=\"export\"` retired (0 occurrences, this cell's own ReportingTab/PerformanceControls fix) but `data-slot=\"export-button\"` still renders once on the analysis tab -- full run: 'VERDICT: PAGE-EXPORT-FAIL -- arm 3 (analysis): per-tab export marker data-slot=\"export-button\" still renders (count 1)'",
+        "DSGN_IRPTV1-S9 (this same channel, filed 2026-09-24T19:27:38Z by 2.0.0_SA_COO~D) already named this exact test/control pair as one of the 4 legacy failures awaiting 'PRD backlog 9, FWD-9: the two disabled per-tab buttons gone' -- 'two', matching Reporting (this cell's own grant) and Analysis (not this cell's grant), corroborating that Analysis's retirement was always a distinct, ungranted act from this cell's own"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IVE16-AC1 (this order's WORKER FACE): 'exactly one Export control renders in the header; it targets the active tab and the revision on screen; zero per-tab Export buttons render on any tab.' The decomp cell IV-e-16's own prose: 'the per-tab disabled buttons retired (fe-s-5 controls re-scoped, CTO 100865)' -- naming only the fe-s-5 (Reporting) test, never AnalysisTab.tsx or an analysis-side test file.",
+    "world_is": "This cell's <paths> and the decomp's `writes` column grant exactly index.tsx, TabShell.tsx, ReportingTab.tsx and the two named test files -- never tabs/analysis/AnalysisTab.tsx. A worker's write surface is exactly its order's <paths> (CLAUDE.md rule 27, L7; `.tools/owned-paths-validate.py`), so this worker built the page-level Export control (index.tsx), retired Reporting's per-tab control (already gone at this worktree's tip; re-scoped fe-s-5/controls.test.ts in the same commit), reordered and re-laid-out the tabs (TabShell.tsx, ReportingTab.tsx), and left AnalysisTab.tsx's disabled control untouched because touching it would be an out-of-grant write. IVE16-AC1's literal 'any tab' clause is therefore unmeetable inside this order's own BOUNDS; per the order's own refusal clause ('If a criterion cannot be met as written, stop ... do not weaken the test to pass'), this worker's own test checks all three tabs honestly and reports the resulting FAIL rather than dropping the analysis arm.",
+    "notes": "Not silently worked around: IVE16-AC2 (tab order) and IVE16-AC3 (screen layout) both PASS clean at this tip, and IVE16-AC1's header-count and target arms (1 and 2 of 3) also pass on all three tabs -- only the per-tab-absence arm fails, and only on the one tab (analysis) this cell was never granted to touch. Filed so the COO's drain or the CTO's ruling can either open a small follow-up cell scoped to AnalysisTab.tsx, or amend IVE16-AC1 to name the tabs this cell actually owns (matching the decomp's own `writes` column), rather than reading this order's proof instance as a silent gap."
+  },
+  {
+    "id": "DSGN_IRPTV1-W7-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~7",
+    "surfaced_at": "2026-09-24T23:37:22Z",
+    "one_line": "TO-IV-e-9's mandated adoption (ClientSearch.tsx renders SearchSelect in place of the Catalyst Combobox) necessarily breaks IVE8-AC2's arm 2 wiring check ('Combobox onChange={handleSelect} still wired') from an earlier cell's already-graded test -- the semantic selection path (handleSelect's own body, byte-identical) is unchanged, only the literal onChange={handleSelect} text is gone because SearchSelect's onChange hands back an Option, not a SearchOptionRow.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- iv-e-8.selection-path.test.ts's arm 2 needs re-pointing at the new wiring text (`onChange={(option) => handleSelect(option ? option.row : null)}`) or retiring by ruling; this worker's grant does not include iv-e-8's test file and IVE9-AC2 does not name it.",
+    "spec_asserts": "TO-IV-e-9 cell (c): 'ClientSearch.tsx renders SearchSelect in place of the Catalyst Combobox (the same onSelectionChange path, the same selectionFor call)'. Separately, iv-e-8.selection-path.test.ts (a different, already-graded TO's test) asserts 'Arm 2: ClientSearch.tsx's own handleSelect code ... is BYTE-IDENTICAL between the base pin and this cell's tip' and literally greps for `onChange={handleSelect}`.",
+    "world_is": "After this cell's edit, `bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-8.selection-path.test.ts` (portal, 2026-09-24): ARM1 (deep-equal selection) true, handleSelect's own code block still byte-identical (349 bytes) true, but `comboboxWired = tipSource.includes('onChange={handleSelect}')` is now false because ClientSearch.tsx wires `onChange={(option) => handleSelect(option ? option.row : null)}` -- SearchSelect's onChange contract hands back the chosen option object, not the raw SearchOptionRow handleSelect expects. VERDICT: SAME-SELECTION-PATH-FAIL. IVE9-AC2 (this order's own criterion) verifies the same semantic path directly against selectionFor/toOptionRow and PASSES (VERDICT: PICKER-ADOPTION-OK).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/header/ClientSearch.tsx@this worker's worktree tip, line: onChange={(option) => handleSelect(option ? option.row : null)}",
+        "bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-8.selection-path.test.ts output: 'ARM2: Combobox onChange={handleSelect} still wired: false' / 'VERDICT: SAME-SELECTION-PATH-FAIL arm 2: Combobox no longer wired to handleSelect'",
+        "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~7/DSGN_IRPTV1.TO-IV-e-9.shared-search-and-paginator.proof_of_spec.json (this order's own IVE9-AC2 PASS)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking IVE9-AC2 (this order names only IVE9-AC1..AC4). Filed because IV-e-8's test lives outside this order's <paths> grant, so this worker cannot repair it without widening scope."
+  },
+  {
+    "id": "DSGN_IRPTV1-W7-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~7",
+    "surfaced_at": "2026-09-25T00:25:07Z",
+    "one_line": "TO-IV-e-10's Holdings mount (AccountFilter, above the drill) cannot receive a live Narrowing/SearchOptionRow/onNarrow -- that triple lives in index.tsx, threaded today only as far as the header, and TabShell.tsx/index.tsx (the only files that could carry it into HoldingsTab.tsx) are outside this order's <paths> grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- landing a live account filter inside Holdings (and the same gap applies to AccountsTable/ReportingTab.tsx on the Performance side) needs a follow-on cell that threads selection/row/onNarrow from index.tsx through TabShell.tsx into HoldingsTab.tsx and ReportingTab.tsx, both outside this cell's grant; until then AC4's real-run narrows nothing from inside either tab body.",
+    "spec_asserts": "TO-IV-e-10 cell (a): 'An account filter above the drill in HoldingsTab.tsx (ONE mount line + at most one import) ... choosing one narrows through the existing server-accepted selection path (narrowToOneAccount / restoreFullSelection in IdentityCard.tsx)'; cell (b) says the same of AccountsTable.tsx. AC4 (judgment, real run): 'an advisor narrows to one account from inside Holdings and Performance'.",
+    "world_is": "HoldingsTab.tsx's own HoldingsTabProps carries only api/scopeRef/scope/firmId (no selection/row/onNarrow); TabShell.tsx mounts it with exactly those four (measured at tabs/TabShell.tsx:105-112) and is not in this order's <paths>. ReportingTab.tsx (mounting AccountsTable.tsx) is symmetric: only api/scopeRef/scope, not in grant either. Both AccountFilter.tsx and AccountsTable.tsx's new props (selection/row/onNarrow) are built and unit-tested to spec (IVE10-AC1, IVE10-AC2 both PASS, calling narrowToOneAccount/restoreFullSelection directly with a recording onNarrow) and render/degrade to inert-but-harmless when those props are absent -- the SAME 'ADDITIVE, OPTIONAL props ... a one-line change wherever it happens' pattern HoldingsTab.tsx's own file header already documents for scope/firmId, and the same class of gap W7-S1 and this file's own TabShell-mounting doc comment already name.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/TabShell.tsx@this worker's worktree tip, lines 105-112 (HoldingsTab mount: api, scopeRef, scope, firmId, initialSnapshot, initialEnvelope -- no selection/row/onNarrow) and line 93 (ReportingTab mount: api, scopeRef, scope only)",
+        "portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx@this worker's worktree tip, HoldingsTabProps interface (api/scopeRef/scope/firmId/initialSnapshot/initialEnvelope only)",
+        "this order's own <paths>: TabShell.tsx and index.tsx are absent from the grant; only HoldingsTab.tsx, AccountFilter.tsx, AccountsTable.tsx and the test directory are listed",
+        "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~7/DSGN_IRPTV1.TO-IV-e-10.accounts-in-the-view.proof_of_spec.json (IVE10-AC1/AC2 PASS on the unit-level narrowing logic)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking IVE10-AC1..AC3 (mechanical, all PASS). IVE10-AC4 is RECORD/judgment, never self-graded by this worker; naming this gap so the CVO's real run at the drain does not read a silent 'nothing happened when I clicked' as this cell's own defect."
+  },
+  {
+    "id": "DSGN_IRPTV1-W8-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~8",
+    "surfaced_at": "2026-09-24T23:27:13Z",
+    "one_line": "IV-e-11 (b) names the hero cards (CategoryViewTree via DrillTree.tsx) as colouring a model 'by its served modelCode', but the L2 members CategoryViewTree actually renders carry no modelCode field at all -- only a name -- so that path resolves colour by canonicalized NAME (memberColor -> getModelColor(getCanonicalModelName(name))), never by code.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO IV-e-11 (b): \"the Investor Reporting hero cards (CategoryViewTree via IR/tabs/holdings/DrillTree.tsx) and the drill pie colour a model by its served modelCode ... and the label fallback in DrillTree.tsx (colorForSlice) is retired wherever a code exists.\"",
+    "world_is": "Measured against MdpfCategoryNode/MdpfCategoryChildNode (src/api/endpoints/aum.ts) and mdpfResultFromSnapshot (DrillTree.tsx @ this cell): neither the top-level card, its `children`, nor its `members` carry a `model_code`/`modelCode` field -- only `label`/`display_name`. CategoryViewTree.tsx's own `memberColor` (line 122-125) is the ONLY colour path its cards use, keyed by `getCanonicalModelName(displayName)`, and DrillTree.tsx never edits CategoryViewTree.tsx (its own header comment: 'IMPORTED, NEVER EDITED') nor feeds it a code. Only the DONUT PIE (`HoldingsNode.modelCode`, DrillTree.tsx's own `modelSliceColor`) is genuinely code-keyed; that half of (b) is met literally and is covered by IVE11-AC3. The hero-card half of (b) is met in EFFECT (AC4's screenshot: Ultra Long-Term reads red on both the hero cards and Model Portfolios) because this cell's getModelColor fix (longest-key/normalized partial match) makes the NAME-keyed path resolve correctly too -- but it is met by a name fix propagating through a shared library, not by the hero cards reading a served code, because the hero cards are never served one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/components/CategoryViewTree.tsx@13b5356fad4779b990e8e7a88636430204b30e42 lines 122-125 (memberColor) and its own header docstring line 5-6 ('IMPORTED, NEVER EDITED')",
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx@13b5356fad4779b990e8e7a88636430204b30e42 mdpfResultFromSnapshot (no modelCode field emitted onto MdpfCategoryNode/children/members)",
+        "portal/src/api/endpoints/aum.ts@13b5356fad4779b990e8e7a88636430204b30e42 MdpfCategoryNode/MdpfCategoryChildNode type definitions (no modelCode member)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No blocking effect on this order: IVE11-AC1/AC2/AC3/AC4 are all met (AC3 covers the pie's genuine code path; AC1's library fix covers the hero cards' name path; AC4 is the CVO's real-run screenshot check). Filed so a future cell that widens (b) literally (serving modelCode onto CategoryViewTree's contract) does not read this TO's close-out as having already done so."
+  },
+  {
+    "id": "DSGN_IRPTV1-W9-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~9",
+    "surfaced_at": "2026-09-25T00:00:00Z",
+    "one_line": "TO-IV-e-14's cell (c) asks GenerateComposer to list 'the included accounts by name + masked tail' for a chosen client, but that data source (scope.permittedAccountIds) is the SAME one an Andrew-direct already refused a per-account list on ('it printed every permitted account id (1,000+)'); this worker named a threshold (ACCOUNTS_NAMED_LIST_CAP=25) rather than reproduce the refused pattern or silently drop the ask.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- disarmed by either (a) an issued task order wiring the header's narrowed `Narrowing` (the SELECTED client's own few accounts, the way `header/IdentityCard.tsx`'s own `overWhatFor` already sources it) through `AnalysisTab.tsx`/`GenerateComposer.tsx` so the named list uses the narrow set instead of a capped slice of the wide one, which needs an `index.tsx` mount-line change outside this cell's <paths>; or (b) an explicit ruling that ACCOUNTS_NAMED_LIST_CAP's degrade-to-count above 25 is the accepted permanent shape.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/analysis/GenerateComposer.tsx (pre-edit, this worker's worktree HEAD): comment directly above the old `effectiveAccounts = permitted` line reads 'THE ACCOUNTS ARE THE SELECTION'S PERMITTED SET. Andrew-direct 2026-09-24 ~19:4xZ (design notes, Analysis): no per-account checkbox list here -- it printed every permitted account id (1,000+) -- and account-level choice lives deeper in the page.'",
+        "portal/src/pages/InvestorReporting/header/IdentityCard.tsx's own OVER WHAT comment (same Andrew-direct, same timestamp): 'the SELECTED client's own accounts, from the accepted selection -- never scope.permittedAccountIds, which is every account the viewer's firm permits (1,000+ at 49F)' -- IdentityCard reads `selection.scope.accountIds` (the narrow set) via a `Narrowing` prop `GenerateComposer.tsx`/`AnalysisTab.tsx` do not receive",
+        "AnalysisTabProps (AnalysisTab.tsx, this cell's own <paths>) carries `scope`/`firmId`/`selectedScopeRef` only, no `selection`/`row`; the narrowed `Narrowing` value lives in `index.tsx`'s own state, and this cell's <paths> does not include index.tsx",
+        "bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-14.prospect-and-accounts.test.ts prints VERDICT: PROSPECT-AND-ACCOUNTS-OK against the capped-list implementation (ACCOUNTS_NAMED_LIST_CAP=25, GenerateComposer.tsx)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IV-e-14 cell (c): 'Accounts in the input (GenerateComposer.tsx): when a client is chosen, the included accounts by name + masked tail (never an id), each removable.' -- stated with no cap and no reference to the standing Andrew-direct on this exact component.",
+    "world_is": "GenerateComposer.tsx has only `scope.permittedAccountIds` (the wide, possibly-1,000+ set) to draw a named list from; it has no access to the header's narrowed `Narrowing` (the small, actually-relevant set IdentityCard already uses for the identical UI problem) without a change to index.tsx's mount line, which sits outside this cell's <paths>. This worker implemented the name+masked-tail+removable list literally, but capped it (ACCOUNTS_NAMED_LIST_CAP=25, named and commented in GenerateComposer.tsx) so a firm-wide or relationship-wide scope degrades to the pre-existing count-only line above the cap, rather than either violating the Andrew-direct at scale or leaving cell (c) entirely unbuilt.",
+    "notes": "Not blocking IVE14-AC3 (its own test constructs a 3-account fixture, well under the cap, and the criterion's own wording never named a cap). Filed so the COO/CTO can rule whether a later round wires the narrowed selection through (removing the cap's practical bite) or accepts the capped degrade as this component's permanent shape."
+  },
+  {
+    "id": "DSGN_IRPTV1-W9-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~9",
+    "surfaced_at": "2026-09-25T00:27:51Z",
+    "one_line": "gen-wire.ts's WIRE_CONTRACTS denominator was missing 'DirectoryPage' even though its schema exists in docs/contracts/investor-reporting/v1/ and a generator-headed DirectoryPage.ts (commit 771e4d2d) already sat on disk -- a dropped contract from the generator's own list, not something TO-IV-e-17 named.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/ carries 23 *.schema.json files; gen-wire.ts's WIRE_CONTRACTS array (pre-edit, this worker's worktree HEAD) named only 22, omitting 'DirectoryPage'",
+        "portal/src/pages/InvestorReporting/contracts/wire/DirectoryPage.ts (pre-edit) carries the header 'GENERATED, DO NOT EDIT BY HAND ... Generator: src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts', so it was once produced BY this generator, not hand-authored",
+        "after this worker's regenerate step (WIRE_CONTRACTS unchanged), responses.ts's directory-browse envelope needed DirectoryPageWire (its $ref target changed to DirectoryPage.schema.json) but index.ts never re-exported it -- `bun run typecheck` failed on the unresolved import until 'DirectoryPage' was added back to WIRE_CONTRACTS"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IV-e-17 cell (b): 'Regenerate IR/contracts/wire/** from the workspace's docs/contracts/investor-reporting/v1/ ... this project's write surface (CTO 100919, PRD v0.7)' -- names no specific contract list, silently assuming the generator's own denominator is complete.",
+    "world_is": "The generator's denominator had silently dropped one of the 23 live document schemas at some earlier point (before this round); this worker added 'DirectoryPage' back to WIRE_CONTRACTS to make the regenerated output self-consistent (AC2's typecheck=0 bar), which is a repair the cell's text never named.",
+    "notes": "Not blocking any IVE17 criterion (AC2 requires typecheck 0, which needs this fix). Filed so the CTO/COO can confirm no other document schema is similarly missing from a generator's denominator elsewhere in the tree."
+  },
+  {
+    "id": "DSGN_IRPTV1-W9-S3",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~9",
+    "surfaced_at": "2026-09-25T00:27:51Z",
+    "one_line": "TO-IV-e-17 cell (c) says to 'drop the bridge' (TemplateUploadRequest/UploadState in prospect.ts), but an out-of-lane test (tabs/analysis/tests/prospect.test.tsx, not in this order's <paths>) imports TemplateUploadRequest by name; this worker kept the export, redefined to read the generated AnalysisUploadRequestWire, rather than delete it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/analysis/tests/prospect.test.tsx line 6: `import { prepareProspectAnalysis, prepareUpload, type TemplateUploadRequest } from '../prospect'`",
+        "TO-IV-e-17's <paths> block names portal/src/pages/InvestorReporting/tabs/analysis/prospect.ts but not tabs/analysis/tests/prospect.test.tsx",
+        "deleting TemplateUploadRequest and re-running `bun run typecheck` after the wire regen reproduces a resolvable-import failure at that test's line 6 (verified before restoring the export); with the export redefined as `AnalysisUploadRequestWire & { readonly file_base64: string; readonly file_type: 'csv' | 'xlsx' }`, `bun run typecheck` is clean and `bun test .../tests/prospect.test.tsx` is 10 pass / 0 fail"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IV-e-17 cell (c): 'Drop the bridge: TemplateUploadRequest / UploadState in IR/tabs/analysis/prospect.ts read the generated types.'",
+    "world_is": "UploadState was changed to read the generated type directly (AnalysisUploadResultWire['state'], no local widening) and prepareUpload's internal `as unknown as` cast was removed as instructed; TemplateUploadRequest could not be deleted outright without breaking an out-of-lane consumer this order grants no write access to, so it was kept as a name that now READS the generated wire type (an intersection narrowing AnalysisUploadRequestWire to its own template-lane shape) instead of the retired Omit-based bridge.",
+    "notes": "Not blocking any IVE17 criterion; IVE17-AC3 checks for no `as unknown as` cast in prospect.ts/adapt.ts for these fields, which holds. Filed so the COO/CTO can rule whether a later cell should widen this order's <paths> to include the test file and delete the export outright, or accept the redefined alias as the permanent shape."
+  },
+  {
+    "id": "DSGN_IRPTV1-W9-S4",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~9",
+    "surfaced_at": "2026-09-25T00:27:51Z",
+    "one_line": "Running the whole InvestorReporting portal test tree (a sweep beyond this cell's own criteria, taken to confirm no regression) shows 86 failing tests / 2 errors across files this worker never touched (e.g. src/api/endpoints/investor-reporting.ts's LiveClient route-building, FIELD_MAP coverage, F14/F19/F25/F26/F30/F31 etc.) -- pre-existing at this worktree's HEAD, not caused by TO-IV-e-17's edits.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- the drain's real run should confirm whether these 86 failures are already known/tracked or represent an untracked regression from an earlier round; `git diff --stat` at this worker's worktree shows only gen-wire.ts, wire/**, prospect.ts and adapt.ts's classificationMembers touched, none of which the failing tests' stack traces implicate (e.g. the LiveClient failures throw from src/api/endpoints/investor-reporting.ts:722/310, a file this order does not grant write access to and this worker did not edit).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`bun test src/pages/InvestorReporting` (this worker's worktree, post-edit): 705 pass, 27 skip, 86 fail, 2 errors, 3113 expect() calls, 818 tests across 170 files",
+        "`git -C portal diff --stat -- src/api/ src/pages/InvestorReporting/__tests__/` shows only __tests__/fe-s-13/gen-wire.ts changed (51 insertions, 2 deletions) -- no fixture, no test file, no api/ file touched by this worker",
+        "sample failure 'LiveClient > targets the DECLARED route' throws IrRequestError('An accepted account selection is required') from src/api/endpoints/investor-reporting.ts:722, a file outside this order's <paths> and unmodified in this worktree"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "No task-order criterion named a whole-suite run; IVE17-AC2's own invocation only asks for iv-e-17.regenerated.test.ts and `bun run typecheck` (both green). The whole-suite run was this worker's own no-regression check.",
+    "world_is": "A large pre-existing failure population (86 of 818 tests) already exists in this worktree outside this cell's write surface, unrelated to AnalysisUploadRequest/PerformanceReport/HoldingsSnapshot/DirectoryPage or the gen-wire generator.",
+    "notes": "Not blocking any IVE17 criterion (none of the three mechanical criteria's own invocations touch these files). Filed per the surprise-channel rule ('found something odd off-task, append one row and keep working') rather than investigated further, since fixing it is out of this cell's scope and paths."
+  },
+  {
+    "id": "DSGN_IRPTV1-S13",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-25T01:40:00Z",
+    "one_line": "Round-3 drain dispositions for five worker rows: W7-S1 disarmed at portal DEV 89a6d4f4; W7-S2, W9-S1 and W10-S1 disarmed by the drain-hookups commit 8cd2dab2; W9-S4's failures are the legacy baseline S7 already carries.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Each ARMED worker row names 2.0.0_SA_COO~D as disarm_owner (W7-S1, W7-S2, W9-S1, W10-S1, W9-S4); /dispatch Step 5: the issuer adds every hookup at the merge, in one commit.",
+    "world_is": "W7-S1: iv-e-8.selection-path arm 2 re-scoped to the SearchSelect wiring, 1 pass at 00806e0c and FAIL on a reverted mutant (89a6d4f4). W7-S2 + W9-S1: header/HeaderSelectionContext.ts, provided by index.tsx around TabShell, carries the accepted Narrowing, row, select, the accounts' entries and a prospect callback; AccountFilter, AccountsTable, GenerateComposer and ProspectComposer read it; HoldingsTab keeps its ruled two lines (iv-e-10.ruled-touch PASS). W10-S1: AnalysisTab's disabled per-tab Export removed; IVE16-AC1 PASS on DEV 8cd2dab2 (TO-IV-e-16 flipped complete, instance VALID rc=0). W9-S4: the IR suite on DEV reads 85 fail at 8cd2dab2 before the fe-s-11 colour fix in the same commit, every failing file a pre-round legacy file except fe-s-11 (fixed) -- the set S7 tracks.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal DEV 89a6d4f4 and 8cd2dab2 (local; the CTO lands origin DEV)",
+        "C:/tmp/failH.txt vs C:/tmp/failAB.txt (per-file failure census, 85 before / 85 after with iv-e-16 out and fe-s-11 in)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "S10's N1 (the Generate panel's client) is addressed by the same hookup; IV-e-18's census verifies it."
+  },
+  {
+    "id": "DSGN_IRPTV1-W11-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~11",
+    "surfaced_at": "2026-09-25T01:10:00Z",
+    "one_line": "The cell text names the firm-attribution chip among the facts to move to disclosure, but `FirmAttribution.tsx`'s rendered name text is the load-bearing assertion of an out-of-grant pinned test (`__tests__/fe-s-10/parity.test.ts`: `globalMarkup.includes('49 Financial<')`) -- this worker left `FirmAttribution.tsx` unchanged rather than break it, and did not move that one chip.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- rules whether fe-s-10/parity.test.ts is amended to check the firm name via a disclosure (title/details) instead of direct text, in the same round-3 JOIN chain or a later one; this worker's <paths> does not grant __tests__/fe-s-10/.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-10/parity.test.ts:83-84: `expect(globalMarkup.includes('49 Financial<')).toBe(true)` / `expect(firmMarkup.includes('49 Financial Advisors<')).toBe(true)` -- both assert the CHIP'S OWN TEXT CONTENT is the firm's display name, not a generic trigger with the name in a hover",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-10/parity.test.ts is not named in this order's <paths> (only tabs/reporting/, tabs/holdings/HoldingsTab.tsx, global/FirmAttribution.tsx, tabs/analysis/GenerateComposer.tsx, tabs/analysis/AnalysisTab.tsx, tabs/holdings/HoldingsSummary.tsx, tabs/holdings/SliceTable.tsx, __tests__/fe-s-5/fields.test.ts and __tests__/dsgn-irptv1/ are granted)",
+        "re-running `bun test src/pages/InvestorReporting/__tests__/fe-s-10/parity.test.ts` against a trial edit that swapped FirmAttribution's visible text for a generic label with the name in `title=` reproduced the failure at line 83 (before reverting the trial edit)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomp cell IV-e-18 (DSGN_IRPTV1_DECOMP.md row): 'client language on every body -- the status band's state and reason code, the \"Basis:\" chip, the firm-attribution chip, the accounts table's \"PERIOD:\" labels move to disclosures'; the task order's own text repeats 'the firm-attribution chip (IR/global/FirmAttribution.tsx, a ruled touch)' in the same list.",
+    "world_is": "FirmAttribution.tsx is a RULED touch this order may edit, but its rendered text is the exact discriminator FE-s-10's own parity test (a sibling cell's pinned regression check, not this order's to fix) uses to prove Global-mode and firm-scoped renders are otherwise byte-identical -- moving the name into a disclosure removes that discriminator and fails the test. This worker implemented every OTHER item in the cell's list (status band, \"Basis:\" chip, accounts-table PERIOD labels, plus the four numbered amendments N1-N4) and left FirmAttribution.tsx's visible name as-is, per BOUNDS' refusal clause (do not weaken a test to pass, and do not fix a defect outside this order's own criteria by breaking a neighbour's).",
+    "notes": "Not blocking any of IVE18-AC1..AC4 as written: none of their invocations exercise FirmAttribution's own text, and the DOM census (IVE18-AC1) does not name the firm chip among its enumerated banned tokens. Filed so the CTO/COO can decide whether fe-s-10/parity.test.ts is amended (e.g. to strip a `title=` attribute instead of the whole element's text) in a later cell with that file in its <paths>."
+  },
+  {
+    "id": "DSGN_IRPTV1-W11-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~11",
+    "surfaced_at": "2026-09-25T01:10:00Z",
+    "one_line": "Implementing amendment N2 as written (ReturnsHeatmap.tsx prints \"not supplied\" instead of UNAVAILABLE) necessarily breaks an out-of-grant pinned test, `__tests__/fe-s-5/states.test.ts`, which asserts the literal string `>UNAVAILABLE<` for the exact same cell this order names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- rules whether fe-s-5/states.test.ts's UNAVAILABLE assertion is re-scoped (the same treatment this order gives fe-s-5/fields.test.ts) in a later cell; this worker's <paths> does not grant __tests__/fe-s-5/states.test.ts.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-5/states.test.ts:92: `expect(markup.includes(\\`>${UNAVAILABLE_WORD}<\\`)).toBe(true)` against `performance.unsupported-benchmark.json` rendered through `ReportingTab` -- fails after N2's edit (measured: 'Expected: true / Received: false')",
+        "before this worker's N2 edit (measured on the untouched worktree): the same sub-test PASSED; two of the file's OTHER three sub-tests already failed at the untouched worktree's HEAD on an unrelated `data-block=\"summary\"` assertion (the `render/performance/Summary.tsx` component this project retired from ReportingTab.tsx in round 1, IV-t-2 -- confirmed via `git show HEAD:.../ReportingTab.tsx` naming `Summary` only in a comment, never an import)",
+        "the amendment's own words leave no room for both: 'ReturnsHeatmap.tsx prints no \"UNAVAILABLE\" in a cell: the cell reads \"not supplied\" and the reason moves to the cell's hover' -- unambiguous, and the reason (`fact.return.unavailableReason`) was already carried in that cell's own `title` attribute before this edit, unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's amendment N2 (issuer, 2026-09-24, the CVO's FAST-pin, items N1-N4): 'ReturnsHeatmap.tsx prints no \"UNAVAILABLE\" in a cell: the cell reads \"not supplied\" and the reason moves to the cell's hover.'",
+    "world_is": "fe-s-5/states.test.ts (a different, earlier cell's own file, not named in this order's <paths>) pins the OLD behaviour N2 explicitly retires for this exact component; the amendment is unambiguous and this worker implemented it, which necessarily turns that one sub-test's assertion false. The file's other two sub-tests were already failing before this edit on an unrelated, longer-standing gap (see grounding) -- this edit adds ONE new failing assertion to a file that was already red.",
+    "notes": "Not blocking any of IVE18-AC1..AC4: IVE18-AC1's own census (this order's graded criterion) requires the ABSENCE of UNAVAILABLE from the Performance body and PASSES; N2 is an explicit, numbered instruction this worker was ordered to carry out, not a discretionary change. Filed so the CTO/COO re-scopes fe-s-5/states.test.ts's UNAVAILABLE_WORD assertion (the same treatment this order already gives fe-s-5/fields.test.ts, IVE18-AC3) rather than reading the new failure as an unreviewed regression."
+  },
+  {
+    "id": "DSGN_IRPTV1-W11-S3",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~11",
+    "surfaced_at": "2026-09-25T02:20:00Z",
+    "one_line": "IV-e-19's own in-grant edit to HoldingsTab.tsx (progressive disclosure, DESIGN.md C14) necessarily grows the diff `__tests__/dsgn-irptv1/iv-e-10.ruled-touch.test.ts` (IVE10-AC3, an earlier cell's own pinned criterion) measures against a fixed base commit -- but that check was ALREADY RED (12 added/1 removed against its own <=2-added/0-removed bound) before this task order touched anything, from IV-e-18's prior edit to the same file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- rules whether iv-e-10.ruled-touch.test.ts's fixed-base bound is retired now that two later cells (IV-e-18, IV-e-19) have made further RULED, in-grant edits to the same file the bound was written to pin; this worker's <paths> does not grant __tests__/dsgn-irptv1/iv-e-10.ruled-touch.test.ts.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git diff --numstat 13b5356fad4779b990e8e7a88636430204b30e42 df5e41b5 -- src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx` (portal, before this worker's IV-e-19 edit): `12\\t1`, already outside the test's own bound `added<=2, removed==0` -- IVE10-AC3 was already FAILING at the commit this task order's own worktree pair was handed",
+        "`bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-10.ruled-touch.test.ts` after this worker's IV-e-19 commit (6de269cc): `NUMSTAT: \"39 5\"` / `VERDICT: RULED-TOUCH-FAIL added=39 removed=5` -- the same pre-existing failure, now larger by this order's own legitimate edit (paths grant tabs/holdings/HoldingsTab.tsx explicitly for this cell)",
+        "full `__tests__/dsgn-irptv1/` suite after this worker's commit: 68 pass, 1 fail (this one) of 69 tests across 55 files -- the sole failure in the directory, unrelated to any of IVE19-AC1..AC3's own graded invocations"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "iv-e-10.ruled-touch.test.ts (IV-e-10a's own criterion): `HoldingsTab.tsx` differs from base commit `13b5356f...` by AT MOST TWO ADDED LINES, ZERO REMOVED, forever, read directly off `git diff --numstat` against that one fixed commit.",
+    "world_is": "The decomp's own later cells (IV-e-18, then this cell IV-e-19) are BOUNDS-granted to make further RULED edits to the same file for their own FWDs (client-language disclosures; progressive disclosure/DESIGN.md C14) -- a fixed-base, ever-shrinking bound on ONE file cannot survive two more legitimate rounds of work on it. This worker did not touch iv-e-10.ruled-touch.test.ts (out of `<paths>`) and did not weaken it to pass; the file's own JOIN-2 task order explicitly grants `tabs/holdings/` and this cell's rules leave no smaller edit that both satisfies IVE19-AC1/AC2 and holds the count at 2.",
+    "notes": "Not blocking any of IVE19-AC1..AC4 as written: none of their invocations run iv-e-10.ruled-touch.test.ts. Filed so the CTO/COO retires or re-bases the fixed-base bound (e.g. pin to the LAST cell that was allowed to touch the file, or drop the numeric cap now that the file is under active, ruled, multi-round revision) rather than reading a future re-run as a fresh regression."
+  },
+  {
+    "id": "DSGN_IRPTV1-W11-S4",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~11",
+    "surfaced_at": "2026-09-25T02:55:00Z",
+    "one_line": "IVE20-AC2's own scrollbar census, run against the LIVE main portal checkout on :5174 (the worker face's own instructed instrument, pre-merge), found a real stray horizontal scrollbar in production-adjacent code TODAY: DrillTree.tsx's donut legend (`renderDrillLegend`, IV-e-13 round 2) sets `whitespace-nowrap` on each entry inside a `flex-wrap` row, so a single long model name (e.g. a canonical duration-ladder name) wider than the legend's own box at 390px cannot shrink or wrap and forces `scrollWidth(316) > clientWidth(250)` on `[data-slot=holdings-drill-legend]` -- confirmed a genuine `overflow-x: auto` computed value (not a false positive) because CSS forces the cross-axis to `auto` whenever `overflow-y: auto` is set on an element whose other axis was `visible`.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- merges this worker's fix (DrillTree.tsx: the legend `<li>` drops `whitespace-nowrap`, gains `max-w-full break-words`) into the round-3 candidate and re-runs `iv-e-20-scrollbar-driver.mjs` against the MERGED checkout's own dev server; only that re-run, not this worker's in-worktree fix, can flip IVE20-AC2 to PASS-by-output, per the worker face's own instruction that a fix living only in an unmerged worktree cannot be measured as fixed on :5174.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`node iv-e-20-scrollbar-driver.mjs http://localhost:5174 iv-e-20.fixture.json \"Cottonwood Trust\"` (this worker's own driver, run twice, before AND after the DrillTree.tsx fix -- both runs against the SAME unmerged :5174, since the fix lives only in this worktree): identical output both times -- `WIDTH 390 TAB Holdings CONTAINER [data-slot=holdings-drill-legend] <ul> ... scrollWidth=316 clientWidth=250 -- VIOLATION`, `CENSUS: 1 violation(s) across 6 width x tab combination(s)`, `VERDICT: SCROLLBARS-FAIL` -- proving the violation is a property of the SERVED page, not of this worker's own unmerged edit",
+        "at 1440 the same container reads `scrollWidth=621 clientWidth=621 -- ok` (no violation) -- the defect is width-dependent, only surfacing at the 390px bound this cell's own criterion names",
+        "`portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx` `renderDrillLegend` (committed at IV-e-13, round 2, well before this order): `<li ... className=\"inline-flex items-center gap-1.5 whitespace-nowrap\">` -- `whitespace-nowrap` prevents the entry's own text from wrapping, and a `flex-wrap` parent only wraps BETWEEN entries, never inside one, so one entry's own content width can exceed the container regardless of how many rows the legend spans",
+        "this worker's fix (committed on this branch): `className=\"inline-flex max-w-full items-center gap-1.5 break-words\"` -- `bun run typecheck` rc=0, `iv-e-13.legend-scale.test.ts` (the cell that authored this file) re-run clean (it asserts only the container's own `flex-wrap` class, never the `<li>`'s), full `__tests__/dsgn-irptv1/` suite unaffected"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IVE20-AC2: 'at 1440 and 390, no container other than the named table scrollers has scrollWidth > clientWidth (printed per container)'.",
+    "world_is": "The violation is real, measured on the currently-served main checkout (not a hypothetical or a fixture artifact), pre-dates this task order by two rounds (IV-e-13), and is fixed in this worker's own worktree but cannot be observed as fixed on :5174 until the COO's merge -- so IVE20-AC2 is reported FAIL-by-output against :5174 with this row as its status_reason, order left `pending`.",
+    "notes": "Not blocking the other three criteria (IVE20-AC1 TOOLTIPS-OK, IVE20-AC3 BANDS-OK both pass; IVE20-AC4 is judgment, RECORDED). Filed so the COO's merge + re-run is the one act that closes this row and flips IVE20-AC2, and so the CTO sees that the pre-existing legend defect (not something this order introduced) was caught by this cell's own new instrument."
+  },
+  {
+    "id": "DSGN_IRPTV1-S14",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-25T03:10:00Z",
+    "one_line": "Round-3 close: all twelve orders complete; W11-S3 and W11-S4 disarmed at the drain; the one real run on 5174 found and fixed a white-on-white account dropdown; W11-S1 and W11-S2 await 1.0.0_SA_CTO's ruling; three next-round items named.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "/dispatch Step 5: every hookup and repair lands at the merge; the one real run of each outcome at close; every ARMED row whose owner is this seat is dispositioned before the drain-end message.",
+    "world_is": "W11-S3: iv-e-10.ruled-touch now bounds IV-e-10's own commit a65074e7 (2 added, 0 removed; portal DEV ecfd327a). W11-S4: IVE20-AC2 PASS on 5174 after the join merge f9a954b3 (0 violations of 6), TO-IV-e-20 complete @0eb458269a. Close run (deliverables/2.0.0_SA_COO~D/round3-close.*, driver round3-real-run-driver.mjs, fixture round3-close.fixture.json) on DEV 8242412d: tabs Performance/Holdings/Analysis, one header Export, sample view marked Sample, the account filter names both accounts, the Generate panel reads the header's client, no UNAVAILABLE / raw ISO / acc_ id / dark: class on any body. It found AccountFilter's PageSurfaceControl dropdown rendering rgb(255,255,255) on white (C3), fixed with PRIMARY_ON_SILVER_DROPDOWN_CLASS at 8242412d. IR suite at f9a954b3+ecfd327a: 742 pass / 82 fail, the only round-3 residual fe-s-5/states (W11-S2). Next-round items: (1) SearchSelect has no combobox/listbox/option roles and no keyboard navigation; (2) the drill pie colours security slices from the extended palette by name hash, not a served class or code; (3) every real run is fixture-driven, never the signed-in thread (FWD-1).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal DEV ecfd327a, f9a954b3, 8242412d (local)",
+        "deliverables/2.0.0_SA_COO~D/round3-close.run.txt and round3-close.0{1..5}-*.png",
+        "round3-pie-probe.mjs: the account select's computed colour before and after"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The three next-round items are for 1.0.0_SA_CTO's round-3 analysis (L10)."
+  },
+  {
+    "id": "DSGN_IRPTV1-W14-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~14",
+    "surfaced_at": "2026-09-25T14:00:00Z",
+    "one_line": "IV-e-23's cell text (b) describes IdentityCard.tsx as still printing the raw firm token ('F-CW -- Account') on the WHO line, but at portal DEV 8242412d (this order's own base) IdentityCard.tsx line 344 already reads `scope?.verifiedRequestFirm?.displayName ?? 'not supplied'` -- the token never reached that line at this base; only FirmAttribution.tsx (part (a)) still needed the fix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`portal/src/pages/InvestorReporting/header/IdentityCard.tsx:344` at commit 8242412dde9a3ef807e118f648242cf24ffe2981 (this worktree's base): `const firmName = scope?.verifiedRequestFirm?.displayName ?? 'not supplied'` -- reads only the PermittedFirm's own displayName field, never `.firmId` (the token)",
+        "new test `iv-e-23.identity-firm.test.ts` (IVE23-AC2), run against the UNCHANGED file: VERDICT: IDENTITY-FIRM-OK, firm token absent from the WHO block and from the whole face outside the 'About this scope' disclosure -- confirming the criterion already held at base with zero edits to `IdentityCard.tsx`",
+        "`git log -1 --format=%H -- portal/src/pages/InvestorReporting/header/IdentityCard.tsx` (portal repo, from base 8242412d backward) was not re-derived here; the grounding is the byte read at the base pin itself, which is what this order's own criterion is graded against"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell IV-e-23 (b): 'IR/header/IdentityCard.tsx: the firm line under WHO reads the firm's display name + the kind word, never the token' -- framed alongside (a) as a joint repair the ADJUDICATION_v2 C-S15 failure (IVE18-AC4) required.",
+    "world_is": "By the time this order was issued (round 4, base 8242412d, round-3 merged) IdentityCard.tsx's WHO line had already been carrying `verifiedRequestFirm.displayName` since at least IV-e-3/round-1 work -- no commit in this order's own grant needed to touch it. This worker made NO edit to IdentityCard.tsx and instead wrote IVE23-AC2 as a proof that the already-correct behaviour holds, per the order's own environment note ('the test file does not exist at the base: you write it from the criterion's text').",
+    "notes": "Not blocking IVE23-AC2 (PASS-by-output) or any other criterion. Filed so the CTO/COO can confirm the ADJUDICATION_v2 C-S15 finding was scoped to the chip (FirmAttribution.tsx, part (a)) and not to the identity card, or correct this row if a different pin shows the card's own token leak."
+  },
+  {
+    "id": "DSGN_IRPTV1-W13-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~13",
+    "surfaced_at": "2026-09-25T05:00:00Z",
+    "one_line": "Off-task, while proving TO-IV-e-22's own three new tests clean against the broader suite: `__tests__/fe-s-15/job-states.test.ts` fails 2 of 3 tests with `EnvelopeMismatch: ... field 'status' does not satisfy the v1 contract` thrown by `contracts/envelope.ts`'s `parseIrEnvelope`, on the raw `fixtures/fe-s-15/job.*.json` fixtures -- before either failing test ever reaches a render, so it cannot be this order's `AnalysisTab.tsx`/`GenerateComposer.tsx` edits (a `git diff --stat` against this worker's own worktree shows only those two files touched).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/ src/pages/InvestorReporting/__tests__/fe-s-15/ src/pages/InvestorReporting/__tests__/fe-s-10/ src/pages/InvestorReporting/__tests__/fe-s-67/` on this worker's worktree (portal @8242412d + this order's uncommitted edit): `126 pass / 3 fail`, both `fe-s-15/job-states.test.ts` fails throwing `EnvelopeMismatch('status', 'analysis-report')` at `envelope.ts:296:98`, called from `job-states.test.ts:90` -- BEFORE `renderWithJob` (line 93) runs, so no component this order touched executes on that path",
+        "`git diff --stat -- portal/src/pages/InvestorReporting/tabs/analysis/AnalysisTab.tsx portal/src/pages/InvestorReporting/tabs/analysis/GenerateComposer.tsx` is this worktree's entire diff -- `envelope.ts` and `fixtures/fe-s-15/*` are untouched by this order",
+        "round-3 close (`DSGN_IRPTV1-S14`, this file) already recorded '742 pass / 82 fail' on the merged IR suite at f9a954b3+ecfd327a, so a residual failure count above the three fixed by round-3's own named item (fe-s-5/states) is consistent with a pre-existing, undispositioned baseline rather than a regression this order introduced"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's own BOUNDS: `<paths>` names only `AnalysisTab.tsx`, `ProspectComposer.tsx`, `GenerateComposer.tsx`, `VariantCards.tsx` and this cell's own `__tests__/dsgn-irptv1/` directory -- `contracts/envelope.ts` and `fixtures/fe-s-15/**` are out of this order's grant and were not read for correctness, only for the fact that this order's diff does not touch them.",
+    "world_is": "`fe-s-15/job-states.test.ts` fails 2 of 3 tests on this worktree, on a code path (`parseIrEnvelope` over a raw fixture body) this order's edits cannot reach; whether it also fails on the round-3 merged trunk (a residual of the already-recorded 82) or is a NEW drift on this worktree's own base (portal @8242412d) is unresolved and belongs to whichever seat owns `contracts/envelope.ts` / `fixtures/fe-s-15/`, not this task order.",
+    "notes": "Does not touch IVE22-AC1/AC2/AC3 (all three PASS-by-output on this worktree, isolated runs and combined runs alike) or IVE22-AC4 (judgment, recorded per the order). Filed so the drain's own full-suite read is not the first place this shows up."
+  },
+  {
+    "id": "DSGN_IRPTV1-W16-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~16",
+    "surfaced_at": "2026-09-25T00:00:00Z",
+    "one_line": "fe-s-9/resolve.test.ts's F9-AC9 first test (round-1, out of this order's grant) already fails at HEAD independent of IV-e-26's changes: PerformanceDocument's rendered markup carries no '0.0917' (or any 0.dddd figure) for performanceReport.success.json through an UNMODIFIED resolveBundle+FixtureAdapter path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timeout 120 bun test src/pages/InvestorReporting/__tests__/fe-s-9/resolve.test.ts at this worker's worktree (portal DEV 8242412d, post IV-e-26 edits) prints 'RENDERED PERFORMANCE DOCUMENT: 18058 bytes' then fails expect(html.includes('0.0917')).toBe(true), received false; 17 pass / 1 fail overall in that directory",
+        "a standalone repro at portal/.scratch/debug-resolve.ts, calling resolveBundle with the EXACT round-1 deps shape (no accountSelection/start/end -- the legacy/fallback branch this cell's diff leaves byte-identical) against a fresh FixtureAdapter and rendering PerformanceDocument, prints has 0.0917: false and all 0.dddd matches: null",
+        "git diff -- src/pages/InvestorReporting/export/resolveBundle.ts shows the no-window fallback branch of resolveOne's getPerformanceReport call is unchanged object-for-object from HEAD; PerformanceReport.ts and the fixture performanceReport.success.json (line 82/102, value 0.0917) carry no local modification (git status clean on both)",
+        "fe-s-31/every-page.test.ts's own baseline (run before and after this cell's edits) shows the SAME 2 pre-existing fails both times (MissingPayloadError from selectedReference's 'An accepted account selection is required', a DIFFERENT known root cause P 100987/this cell addresses for the print route specifically)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "fe-s-9/resolve.test.ts's own header and assertion: the FE-s-1 ExportBundle success fixture resolves through resolveBundle+FixtureAdapter to a PerformanceDocument whose rendered markup contains the fixture's own YTD return, 0.0917, printed exactly as given (no rounding).",
+    "world_is": "At this worktree's HEAD (portal DEV 8242412d plus this task order's IV-e-26 edits, which do not touch this test's call path), the rendered PerformanceDocument markup for that exact fixture pair contains no 0.dddd figure at all -- the YTD value is not merely reformatted, it is absent from the 18058-byte document. Root cause not investigated further: out of this order's <paths> grant (render/performance/**, contracts/adapt.ts and state/availability.ts are all out of grant) and orthogonal to IV-e-26's four criteria, none of which touch this rendering path.",
+    "notes": "Not blocking IV-e-26: none of IVE26-AC1..AC4 exercise fe-s-9/resolve.test.ts, PerformanceDocument or the cumulativeReturn rendering path, and this worker's own new/changed code is proven (by diff) not to alter the branch this failing test exercises. Filed as an OBSERVATION for the round's drain/analysis since it is a genuine round-1 regression this worker did not cause and cannot fix within this order's grant."
+  },
+  {
+    "id": "DSGN_IRPTV1-W15-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~15",
+    "surfaced_at": "2026-09-25T18:00:00Z",
+    "one_line": "Cell IV-e-25 (b) names 'a colour resolver per member' for the hero cards, but a model in a Holdings HoldingsSnapshot lands as an L1 CHILD of a top-level category (CategoryViewTree's L1Row/MdpfCategoryChildNode), never as an L2 `MdpfCategoryMember` -- so the additive prop this worker added to CategoryViewTree.tsx is a per-L1-ROW resolver (`rowColor`), not a per-member one, and DrillTree.tsx's `modelRowColorMap` builds it from `HoldingsNode.modelCode` (the same field the drill donut already read since IV-e-11).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DSGN_IRPTV1.TO-IV-e-25 cell text (b): 'The hero cards render through src/components/CategoryViewTree.tsx: add an OPTIONAL, additive prop (e.g. a colour resolver per member) -- Model Portfolios' own use must not change.'",
+    "world_is": "`mdpfResultFromSnapshot` (DrillTree.tsx) maps each top-level HoldingsSnapshot category's DIRECT CHILDREN into `MdpfCategoryNode.children` (an L1Row per child), and the fixture-confirmed shape (`holdingsSnapshot.success.json`: account -> model -> security) puts the model node exactly at that L1 level, never inside a category's own top-level `members` (L2). `CategoryViewTree`'s existing `BreakdownContext.memberColor` (L2, used by this same cell's clause (c) for security asset-class colour) could not carry a model's served code for this reason. The new `RowColorContext`/`rowColor` prop resolves colour at the L1 row (key+label) instead, consulted by the tile's bar segment, its row dot and the breakdown dialog's L1 mark, ahead of the pre-existing name-keyed `l1ColorOf`; absent (the default), every existing caller including Model Portfolios is byte-identical (IVE25-AC2 arm 3).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python read of src/pages/InvestorReporting/fixtures/holdingsSnapshot.success.json: root's one child is kind=account; that account's one child is kind=model ('Core Growth Model'); that model's one child is kind=security -- the model sits one level beneath the top-level category, i.e. CategoryViewTree's L1, not L2",
+        "src/api/endpoints/aum.ts: MdpfCategoryMember and MdpfCategoryChildNode carry no model_code field (comp-find '\"model_code\"' portal/src/api/endpoints/aum.ts -> 0 hits), confirming the L2 member contract this cell's own clause names cannot carry a served code either way",
+        "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-25.colour-by-code.test.ts (this worker's own AC2 test), arm 1: VERDICT: COLOUR-BY-CODE-OK -- a model node with served modelCode ULT and a misleading label resolves ULT's colour on both the drill pie (drillSliceColor) and the hero card (CategoryViewTree rendered with DrillTree's own rowColor resolver)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking: IVE25-AC1/AC2/AC3 all PASS-by-output under this shape. Filed so a reader comparing the cell text's 'per member' wording against the shipped `rowColor` (per L1 row) prop name does not read the difference as an unmet criterion -- the mechanism honours the cell's INTENT (a served-code resolver Holdings can opt into without touching Model Portfolios) at the grain the actual data shape offers, not at the L2 grain the wording implied."
+  },
+  {
+    "id": "DSGN_IRPTV1-S15",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-25T19:40:00Z",
+    "one_line": "Round-4 drain: five orders complete and merged (portal local DEV 55ed4790); the 14 ARMED rows the CVO census named are dispositioned (S3, S5, S6, S7, S9 here; the nine worker rows in S13, S14 and R6); the fixture close run is committed; the round's JUDGMENT criteria await Andrew's signed-in walk (asked through 1.0.0_SA_CTO); one next-round item: the firm chip prints the firm id because the ResolvedScope wire carries no display name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "CTO 100991: 'Disposition the 14 ARMED rows at your drain.' /dispatch Step 5: merge per chain end, drain hygiene once, the one real run at close.",
+    "world_is": "S3 disarmed: tsc -b rc=0 at portal 08144571 (the round-2 TS2339 is gone). S5 disarmed: IV-e-2 is terminal and every later criterion expects an anchored `VERDICT:` line (rounds 3-4, 17 orders). S6 disarmed: the round-3 and round-4 close runs render the selected client with 'DRIVER-FIXTURES-MATCH: matched 6 of 6' (round3-close.run.txt, round4-close.run.txt). S7 and S9 disarmed: 4 of the 8 legacy failures fixed at c1d7aefe and 9902bf25, the other 4 re-scoped under CTO 100865 (fe-s-5/fields by IV-e-18, fe-s-5/controls by IV-e-16) and passing in the round-4 suite. Round-4 suite at 08144571: 757 pass / 81 fail; fe-s-5/states green (IV-e-25, R6); the only new failure, iv-e-16.screen-layout arm 2 (render/PrintEntry.tsx moved under IV-e-26 on P's spec), re-scoped to IV-e-16's own commit at 55ed4790; every other failing file is the pre-round legacy set. Close run on 5174 @08144571 (round4-close.*): Performance and Holdings carry the account filter at rest, Analysis leads with the cards and one disclosure for the secondary inputs and a closed 'Analyze a prospect portfolio instead', the Generate panel reads the header's client, no UNAVAILABLE / raw ISO / acc_ / dark: on any body. The first close shot lost the selection on Holdings: a Vite full reload mid-run right after the chain-4 merge; round4-selection-probe.mjs in both navigation orders and the re-run keep the selection on every tab. Next-round item: FirmAttribution and the identity card print the firm id ('F-CW' on the fixture; the tenant slug live) because adaptResolvedScope sets displayName = firmId (contracts/adapt.ts:696-705, 'No display name crosses the wire'); the name exists in the firm catalogue FirmDropdown reads.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~D/round4-close.run.txt and round4-close.0{1..5}-*.png",
+        "deliverables/2.0.0_SA_COO~D/round4-selection-probe.mjs",
+        "portal DEV 08144571 and 55ed4790 (local)",
+        "portal/src/pages/InvestorReporting/contracts/adapt.ts:696-705"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The round's AC4 judgment grades and round 3's five NOT_EVALUATED land on Andrew's walk (CTO 100986), asked 2026-09-25 19:08Z."
   }
 ]
 ```

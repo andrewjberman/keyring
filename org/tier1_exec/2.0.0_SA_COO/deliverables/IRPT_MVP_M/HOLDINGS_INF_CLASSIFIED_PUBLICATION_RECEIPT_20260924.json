@@ -1,0 +1,152 @@
+{
+ "status": "PUBLISHED_VERIFIED",
+ "go": "CTO-100925/SIGNOFF@ba73ef808c",
+ "builder_commit": "7124375528",
+ "executed_by": "2.0.0_SA_COO~M",
+ "started_utc": "2026-09-24T23:15:37.611641+00:00",
+ "finished_utc": "2026-09-24T23:16:02.040914+00:00",
+ "firm_id": "inflection",
+ "business_date": "2026-09-22",
+ "revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+ "prior_revision": "d32e50c692d42bc8f23f5d57f19ed81ecb21aaabfa2b95dd84214028f668a47e",
+ "change": "the served tree to the byte plus asset_class / sub_asset_class / asset_class_basis (SECURITY) and model_code (MODEL_LEAF); every other member of every node byte-equal to the served one",
+ "index_location": [
+  "opal-data-inflection",
+  "irpt/inflection/platinum/holdings/current/manifest.json"
+ ],
+ "index_version": "ipomYxTGLoE0pAgeh.nNtVJ6QUm5ynJG",
+ "index_sha256": "298976ec03cc831d4c126f219d5af396a38bc061733818cafe0cdf824bdf632c",
+ "index_precondition": "IfMatch \"0457b99e45487da6fc2ac3e9a2fd4f49\" (version k9U4ucuTS1iteq0p9eUweqXs6Lk93B07)",
+ "immutable_write_count": 46,
+ "index_writes": 1,
+ "classification_census": {
+  "security_nodes": 30881,
+  "by_asset_class_basis": {
+   "TABLE": 25976,
+   "TICKER_SHAPE": 3953,
+   "NAME_PATTERN": 741,
+   "NONE": 131,
+   "NAME_ALIAS": 80
+  },
+  "by_asset_class": {
+   "fixed_income": 10795,
+   "equity": 18185,
+   "alternatives": 1499,
+   "cash": 271,
+   "unclassified": 131
+  },
+  "model_leaf_nodes": 624,
+  "model_leaf_nodes_with_code": 547,
+  "classifier_rows": 9732
+ },
+ "reader_matrix": [
+  {
+   "accounts": [
+    "acc_002c686393f239134019d60f"
+   ],
+   "as_of": null,
+   "status": "READ_OK",
+   "revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+   "nodes": 76,
+   "securities_with_asset_class": 73,
+   "securities": 73,
+   "model_leaves_with_code": 1
+  },
+  {
+   "accounts": [
+    "acc_002c686393f239134019d60f"
+   ],
+   "as_of": "2026-09-22",
+   "status": "READ_OK",
+   "revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+   "nodes": 76,
+   "securities_with_asset_class": 73,
+   "securities": 73,
+   "model_leaves_with_code": 1
+  },
+  {
+   "accounts": [
+    "acc_002c686393f239134019d60f"
+   ],
+   "as_of": "2026-09-23",
+   "status": "EXPECTED_REFUSAL",
+   "reason": "no accepted holdings revision for date"
+  },
+  {
+   "accounts": [
+    "acc_0051606d2db6c099080bcf60"
+   ],
+   "as_of": null,
+   "status": "READ_OK",
+   "revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+   "nodes": 29,
+   "securities_with_asset_class": 26,
+   "securities": 26,
+   "model_leaves_with_code": 1
+  },
+  {
+   "accounts": [
+    "acc_0051606d2db6c099080bcf60"
+   ],
+   "as_of": "2026-09-22",
+   "status": "READ_OK",
+   "revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+   "nodes": 29,
+   "securities_with_asset_class": 26,
+   "securities": 26,
+   "model_leaves_with_code": 1
+  },
+  {
+   "accounts": [
+    "acc_0051606d2db6c099080bcf60"
+   ],
+   "as_of": "2026-09-23",
+   "status": "EXPECTED_REFUSAL",
+   "reason": "no accepted holdings revision for date"
+  },
+  {
+   "accounts": [
+    "acc_002c686393f239134019d60f",
+    "acc_0051606d2db6c099080bcf60"
+   ],
+   "as_of": null,
+   "status": "READ_OK",
+   "revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+   "nodes": 105,
+   "securities_with_asset_class": 99,
+   "securities": 99,
+   "model_leaves_with_code": 2
+  },
+  {
+   "accounts": [
+    "acc_002c686393f239134019d60f",
+    "acc_0051606d2db6c099080bcf60"
+   ],
+   "as_of": "2026-09-22",
+   "status": "READ_OK",
+   "revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+   "nodes": 105,
+   "securities_with_asset_class": 99,
+   "securities": 99,
+   "model_leaves_with_code": 2
+  },
+  {
+   "accounts": [
+    "acc_002c686393f239134019d60f",
+    "acc_0051606d2db6c099080bcf60"
+   ],
+   "as_of": "2026-09-23",
+   "status": "EXPECTED_REFUSAL",
+   "reason": "no accepted holdings revision for date"
+  }
+ ],
+ "reader_matrix_proof_class": "LIBRARY_UNDER_USER (the function reads under its role)",
+ "rollback": "re-point the date row 2026-09-22 to d32e50c692d42bc8f23f5d57f19ed81ecb21aaabfa2b95dd84214028f668a47e under a fresh IfMatch; its objects and index version are retained",
+ "prod_parser_read": {
+  "portal_prod": "a0690a03 (origin/PROD, ls-remote read)",
+  "entry": "envelope.ts parseIrEnvelope(\"holdings-snapshot\") -> adaptHoldingsSnapshot",
+  "input": "Greene ****1506 SIMPLE (bbbbbb.har 18:36Z envelope) with every node's members as read back from the LIVE revision ba9001d5 through the reader library",
+  "result": "refused=false state=READY reason=HOLDINGS_READY nodes=5; 3 of 3 securities carry asset_class"
+ },
+ "immutable_write_count_note": "gold + platinum header + every part + the revision manifest, each read back by version; the index IfMatch write is counted in index_writes (corrected from the publisher's len(writes)-1)"
+}

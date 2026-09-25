@@ -9107,3 +9107,279 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The runner is never asked again. The no-op is inferred from a command that ran on 09-18, when 09-18's sources were incomplete, so no fire since has let the runner re-select. The served directory is still the 09-18 build of 09-17 (49F 4,576 entries). It lists 37 accounts ACTIVE that have no custody at 09-22 and omits any account opened since."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S126",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T13:20:00Z",
+  "one_line": "The directory refresh fires at 13:00Z, eight minutes after mdpf-feeder-trigger starts the shared runner host (12:52Z), and finds it not yet SSM-Online: the first fire of the S125 fix reached the dispatch at all three firms and failed HAND_OVER_RUNNER_OFFLINE. Every weekday fire will race the same start.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (the directory schedule, infra/aws/terraform/investor-reporting/directory/schedule.tf): move the refresh inside the host's up window (12:52Z-16:41Z, e.g. 09:30 America/New_York), or add a second fire; until then one ad-hoc fire while the host is Online (Andrew's word) un-sticks the day.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-{bd,inf,cot}/investor-reporting/directory/_refresh/2026-09-25/manifest.json (written 13:00:37-45Z): REFRESH_FAILED, notes 'dispatch failure token HAND_OVER_RUNNER_OFFLINE (HAND_OVER half)', fired_on 2026-09-25 -- the fixed code (DXuzx9jp, fired_on is its field) reached the dispatch instead of a no-op or a false miss.",
+      "CloudTrail i-02448edb624a7a7cf, 09-22..09-25: StartInstances mdpf-feeder-trigger 12:52:10Z daily; StartInstances mdpf-accrual-trigger 13:40:23Z; StopInstances ec2-auto-shutdown-enforcer 16:41:18Z daily; StartInstances irpt-directory-refresh 13:00:35/40/44Z on 09-25.",
+      "At 13:13Z the host reads running and SSM PingStatus Online (describe-instances, describe-instance-information).",
+      "refresh.py SsmBuildDispatcher.dispatch: a host not Online gets one start request and the fire ENDS ('the NEXT fire finds a host that has had time to come up') -- with one fire a day, the next fire meets the next morning's stopped host."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "schedule.tf: the refresh 'Fires every trading weekday at 09:00 America/New_York', and refresh.py expects the next fire to find the host up.",
+  "world_is": "The host is up 12:52Z-16:41Z. A 13:00Z fire lands 8 minutes after the start, before SSM reports Online, and the next fire is 24 hours later, after the 16:41Z stop. The S125 fix now reaches the dispatch every day, and every day it would meet this race. Ledger irpt-directory-refresh-s125-m-20260924 is HELD on it."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S127",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-25T13:35:00Z",
+  "one_line": "S126 DISARMED by its owner: the directory refresh now fires 09:30 America/New_York (13:30Z EDT / 14:30Z EST), inside the runner host's 12:52Z-16:41Z up window, 38 minutes after the start.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "86a3d27224 (irpt-p-publish-20260923): infra/aws/terraform/investor-reporting/directory/schedule.tf aws_scheduler_schedule.irpt_directory_refresh cron(0 9 ? * MON-FRI *) -> cron(30 9 ? * MON-FRI *), zone America/New_York unchanged.",
+      "Plan 0 add / 1 change / 0 destroy (that schedule's expression and description only); safe-apply tagauthz PASSED; applied 2026-09-25T13:3xZ.",
+      "scheduler get-schedule irpt-directory-refresh after apply: cron(30 9 ? * MON-FRI *) America/New_York ENABLED, target irpt-directory-refresh; terraform re-plan: No changes.",
+      "Ledger irpt-directory-refresh-schedule-s126-20260925 opened 13:23Z, closed with both legs proven."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row IRPT_BCKEND-S126: ARMED, disarm_owner 2.0.0_SA_COO~P -- 'move the refresh inside the host's up window (12:52Z-16:41Z, e.g. 09:30 America/New_York), or add a second fire'.",
+  "world_is": "Moved, not doubled: one fire a trading weekday at 09:30 ET. Today's 13:00Z fire already failed; the next scheduled fire is 2026-09-26T13:30Z. S126 also names one ad-hoc fire while the host is Online (until 16:41Z) to un-stick today, on Andrew's word -- not taken here.",
+  "notes": "Disarmed same turn as read (spine L7: an ARMED row is disarmed in the same turn by its named owner, and disarmed is not remediated). Carried for the CVO's L8 compile so the ARMED row reads resolved."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S128",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-25T13:40:00Z",
+  "one_line": "CORRECTS S127's world_is: the moved schedule fired TODAY at 13:30:29Z (the apply landed before 09:30 ET), the hand-over succeeded at all three firms and all three directories were republished -- S127's 'next fire 2026-09-26' was wrong.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "/aws/lambda/irpt-directory-refresh: START 13:00:29Z (the failed fire) and START 13:30:29Z (the moved schedule, CloudTrail AssumeRole 13:30:29Z).",
+      "s3://opal-data-{bd,inf,cot}/investor-reporting/directory/_refresh/2026-09-25/manifest.json (13:30:35-41Z): RUNNING, 'build handed to the runner by SSM; command ... is in flight (sent by this fire)'.",
+      "SSM list-commands 4237a59f / c23247b8 / 771aae84 (AWS-RunShellScript, 13:30:34-40Z): Success, 1 of 1 target, 0 errors.",
+      "investor-reporting/directory/latest.json rewritten 13:30:45-51Z: opal-data-bd as_of 2026-09-24 (was 2026-09-17), opal-data-inf as_of 2026-09-25, opal-data-cot as_of 2026-09-22."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row IRPT_BCKEND-S127: 'Today's 13:00Z fire already failed; the next scheduled fire is 2026-09-26T13:30Z.'",
+  "world_is": "The next fire was today's 09:30 ET, and it ran the production path end to end at all three firms. Today needs no ad-hoc fire. The 49F directory moved from 2026-09-17 to 2026-09-24, which changes goal criterion 2's 49F denominator (row S127's fire, P's 45ec3dd692 census read the 09-17 directory). Corrected to 2.0.0_SA_COO~M in the broker at 13:38Z.",
+  "notes": "A correction row, append-only; S127 stays as written."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S129",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T13:45:00Z",
+  "one_line": "DISPOSITION of IRPT_BCKEND-S125 (directory refresh dispatched no build since 09-18): REMEDIED and EXERCISED -- the fixed refresh dispatched at all three firms at the 09-25 13:30Z fire and the served directories moved off 2026-09-17.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (this row IS the disposition of S125; the host race it surfaced next is S126, disarmed by 2.0.0_SA_COO~P @61bce7ee33)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-directory-refresh CodeSha256 DXuzx9jp (fix a7e5c59042 on P 82679477a6), applied 2026-09-24T20:59:50Z; ledger irpt-directory-refresh-s125-m-20260924 CLOSED @2e4c33738e with both legs proven.",
+      "s3://opal-data-{bd,inf,cot}/investor-reporting/directory/_refresh/2026-09-25/manifest.json after the 13:30Z fire: REFRESH_DISPATCHED RUNNING, fired_on 2026-09-25, dispatched_for 2026-09-25, cids 4237a59f / c23247b8 / 771aae84.",
+      "latest.json rewritten 13:30:45-51Z: 49F as_of 2026-09-24 (was 09-17) 4,620 entries; INF as_of 2026-09-25 292 entries; COT as_of 2026-09-22 258 entries.",
+      "The multi-day drive of the real lambda_handler (tests test_s125_every_fire_asks_the_runner_and_none_reads_missed and test_s125_a_build_still_in_flight_is_never_sent_twice) passes on the fix and fails on 82679477a6 alone."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "S125 world_is: 'The runner is never asked again ... The served directory is still the 09-18 build of 09-17'.",
+  "world_is": "The runner is asked on every fire. The 09-25 13:30Z fire dispatched at all three firms and the served directories moved to 09-24 (49F), 09-25 (INF), 09-22 (COT). Tomorrow's fire accounts these builds and hands over its own. INF reading as_of 09-25 at a 09:30 ET fire is the Orion key-date semantic (a key D holds the prior close), worth a look by the directory's owner; it does not reopen this row."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S130",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-25T15:30:00Z",
+  "one_line": "An UNTARGETED terraform plan of infra/aws/terraform/portal-auth at CLOUD HEAD would REMOVE three live rules from the CloudFront WAF (aws_wafv2_web_acl.opal_cloudfront_protection): common-rule-set (p4), ip-reputation (p3), known-bad-inputs (p5), all managed rule groups in count mode -- the live ACL carries rules the tree does not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "vendored terraform 1.9.8 plan of portal-auth, 2026-09-25T15:2xZ: 'aws_wafv2_web_acl.opal_cloudfront_protection will be updated in-place' with three '- rule {...}' blocks (AWSManagedRulesCommonRuleSet, AWSManagedRulesAmazonIpReputationList, AWSManagedRulesKnownBadInputsRuleSet), beside P's two new secret containers.",
+      "P's A1 apply was -target'ed to the two containers (ledger irpt-render-keys-a1-20260925) and did NOT touch the ACL."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The portal-auth root declares the ACL it manages (waf-cloudfront.tf); a plan of a root at HEAD should show only the change being made.",
+  "world_is": "The live ACL has three count-mode managed rule groups the declaration lacks (added outside Terraform, or dropped from the file). The next untargeted portal-auth apply by any seat deletes them. Owner: the portal-auth / WAF lane (CLOUD_OPS_OR_ETL) -- declare them or remove them deliberately.",
+  "notes": "Off-task for P; a row, not a fix. P applies only -target'ed resources in this root until the owner reconciles."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S131",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T16:12:00Z",
+  "one_line": "A COT Holdings build REFUSES at every cutoff 2026-09-22..25 ('COT repeated row within relationship grain', holdings_snapshot.py:418-420): fact_holdings date=2026-09-22 carries 53 repeated (AccountID, AssetID, Relationship ID) groups (106 rows), so a scheduled COT publication would refuse today. The served COT revision (business date 09-22) came from the same one-version source object, which needs explaining.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (the Holdings producer, CTO R4); the source's duplicate rows belong to the COT silver owner if they are a source defect",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "hs.build_snapshot('cottonwood', VersionedInputs(s3), d) for d in 2026-09-22/23/24/25 on codex/irpt-m-completion @61f4b25171: ValueError REFUSED: COT repeated row within relationship grain, 4 of 4.",
+      "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet: 19,610 rows, 106 rows in 53 repeated (AccountID, AssetID, Relationship ID) groups, all from HOLDINGS_DAILY_2026-09-22.xlsx; 1 object version, LastModified 2026-09-23T11:46:02Z. It is the latest partition for every cutoff 09-22..25.",
+      "The guard landed at b3e63a795e (2026-09-23 15:51Z, 2.0.0_SA_COO~M). The served COT classified receipt names builder_commit 7124375528."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "HOLDINGS_SCHEDULED_PRODUCER_PLAN_20260925.md: 'Until then a scheduled fire REFUSES 49F and INF by the builders' own rule, and publishes COT only.'",
+  "world_is": "COT does not build either: every cutoff refuses on the source's repeated relationship rows. The newest COT fact_holdings partition is also 2026-09-22 for a 09-25 cutoff (2 trading days behind). Open: how the served 09-22 revision passed the guard (a bounded account set, or a different build path), and whether the 53 groups are a source defect or a legitimate grain the guard mis-reads."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S132",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-25T16:02:00Z",
+  "one_line": "The Lambda@Edge role (lambda-edge-execution-role, policy lambda-edge-secrets-logs, portal-auth/iam.tf:287-298) grants secretsmanager:GetSecretValue on opal/auth/* -- which includes opal/auth/jwt-private-key (the HUMAN signing key) and now opal/auth/irpt-render-jwt-private-key; auth-validator-edge only needs the two PUBLIC keys.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/portal-auth/iam.tf:295-297: Resource arn:aws:secretsmanager:us-east-1:<acct>:secret:opal/auth/* on aws_iam_role_policy.lambda_edge_secrets_logs.",
+      "render_auth.mjs reads only opal/auth/irpt-render-jwt-public-key; index.mjs's human path reads opal/auth/jwt-public-key (getJwtKeySlots)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND PRD item 1: a separate signing key so no runner holding a verifier's grant can mint another principal's token; least privilege for verifiers.",
+  "world_is": "Every edge container can read both PRIVATE signing keys. Pre-existing for the human key; the render key joined the same wildcard at A1. Owner: the portal-auth IAM lane (CLOUD_OPS_OR_ETL / NFRA_OPSEC) -- narrow the Resource to the two public-key ARNs.",
+  "notes": "Off-task for P; a row, not a fix. A3 needs no IAM change (the wildcard already covers the render public key)."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S133",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-25T16:08:00Z",
+  "one_line": "CORRECTION to S130: the tree DOES declare all three count-mode managed rule groups (waf-cloudfront.tf:176-230, OPSEC 7987571c9a). The plan's '- rule / + rule' pairs are a perpetual set diff on ONE attribute: managed_rule_group_statement.version, live \"\" vs tree unset (null). No rule is removed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform show -json of a -target=aws_wafv2_web_acl.opal_cloudfront_protection plan (vendored 1.9.8), before-vs-after rule diff by name: the only differing leaf in ip-reputation, common-rule-set, known-bad-inputs is statement[0].managed_rule_group_statement[0].version ('' -> null); no other top-level attribute differs.",
+      "Declaring version = \"\" is refused by the provider: 'expected length of ...version to be in the range (1 - 128)'. Edit reverted; waf-cloudfront.tf unchanged."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S130 world_is: 'The live ACL has three count-mode managed rule groups the declaration lacks ... The next untargeted portal-auth apply by any seat deletes them.'",
+  "world_is": "The declaration has them. An apply sends the same three rules without a version, which is the unpinned default the live empty string denotes, so the ACL's effective rules do not move; the plan then shows the same diff again. No declaration edit yields 'No changes'. The CTO's condition on the A3 grant ('any change -> stop and send it to me') is met, so it has been sent; A3 is not applied.",
+  "notes": "Corrects IRPT_BCKEND-S130 (row not mutated; this row supersedes its world_is). FOR THE NEXT portal-auth PLAN READER: the three '- rule / + rule' pairs on aws_wafv2_web_acl.opal_cloudfront_protection are this recurring version diff and are BENIGN (1.0.0_SA_CTO msg 100972 permits A3 to apply the versionless re-put under a get-web-acl before/after record)."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S134",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T16:25:00Z",
+  "one_line": "S131 explained: the served COT revision is a BOUNDED publication of 841 accepted accounts (of 981 in fact_holdings 09-22), and the 53 repeated relationship groups belong to 2 accounts ($729,826.75) outside it. A full-firm build, which is what a scheduled run is (run_firm refuses a bounded build against an existing index), refuses the WHOLE firm for those 2 accounts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (the Holdings producer, CTO R4): scope the refusal to the affected accounts, as the 49F drill does for a null market value, and carry them as explicitly refused",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The served COT manifest (fc199c8e) source_objects: fact_holdings date=2026-09-22 version tGurdOTYhnuidIUgThZYlJxOcaqNTuKl, sha256 737c2ccd... The current object is the same version and sha, so the source did not change.",
+      "COT_LABELLED_CANDIDATE_CENSUS_20260924.json: 'PREPARED over the 841 accepted accounts', code_pin 9cdb81368e. A full build at that pin in a detached worktree also refuses: REFUSED: COT repeated row within relationship grain.",
+      "Of the source's 981 accounts, 841 are served. The 2 accounts carrying all 53 repeated (AccountID, AssetID, Relationship ID) groups are 0 of 2 served.",
+      "holdings_snapshot.run_firm: 'REFUSED: bounded initial publication cannot replace an existing firm index'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND-S131 world_is: 'Open: how the served 09-22 revision passed the guard'.",
+  "world_is": "It passed because it was built over a bounded 841-account set that excludes both affected accounts. The full-firm COT build that a daily schedule needs refuses the whole firm on 2 accounts' duplicate rows. The remedy is a producer change: refuse per account, as 49F does. Whether the other 140 unaccepted accounts need the same per-account treatment is part of the remedy."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S135",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T19:05:00Z",
+  "one_line": "An apply of the investor-reporting/directory root FROM CLOUD would REVERT the S126 fix: the live irpt-directory-refresh fires cron(30 9 ...) America/New_York (applied from ~P's branch at 86a3d27224), but CLOUD's schedule.tf still reads cron(0 9 ...), so the plan shows an in-place change back to 09:00, which reopens the host-window race.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (the directory refresh schedule is ~P's slot in schedule.tf; landing 86a3d27224's schedule change on CLOUD disarms this). ~M applies nothing in this root until it has.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform plan -lock=false of infra/aws/terraform/investor-reporting/directory at CLOUD @33972b6da8: aws_scheduler_schedule.irpt_directory_refresh will be updated in-place, schedule_expression cron(30 9 ? * MON-FRI *) -> cron(0 9 ? * MON-FRI *).",
+      "aws scheduler get-schedule --name irpt-directory-refresh: ScheduleExpression cron(30 9 ? * MON-FRI *), America/New_York, ENABLED.",
+      "86a3d27224 (2.0.0_SA_COO~P, deploy IRPT_BCKEND-S126) is contained only in branch irpt-p-publish-20260923, not in CLOUD."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND-S126 disarmed: 'the directory refresh now fires 09:30 America/New_York'.",
+  "world_is": "It does, live. But the repo's shared branch still declares 09:00, so the next apply of this root from CLOUD, by any seat including ~M's R4 apply, silently moves it back. The R4 holdings principals and dispatch in the same root wait on this."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S136",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T19:10:00Z",
+  "one_line": "DISPOSITION of IRPT_BCKEND-S135: DISARMED. ~P's S126 schedule fix (86a3d27224) is on CLOUD at afefa09d7e, committed by ~M in lane IRPT_COMPLETION_M with ~P's bytes unchanged, and a plan of the directory root from CLOUD no longer changes irpt_directory_refresh.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P (authored the fix, msg 101004); landed by 2.0.0_SA_COO~M",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The working-tree hunks equalled 86a3d27224's (12 changed lines, identical as a set), with the holdings slot untouched; committed afefa09d7e.",
+      "terraform plan -lock=false of the directory root after afefa09d7e: Plan: 10 to add, 0 to change, 0 to destroy. irpt_directory_refresh is absent from the plan."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "IRPT_BCKEND-S135 world_is: 'the next apply of this root from CLOUD ... silently moves it back'.",
+  "world_is": "It does not: CLOUD declares cron(30 9 ? * MON-FRI *) America/New_York, equal to live."
+}
+```

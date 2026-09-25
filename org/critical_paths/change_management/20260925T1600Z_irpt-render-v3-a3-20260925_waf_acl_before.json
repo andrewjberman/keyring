@@ -1,0 +1,197 @@
+{
+    "WebACL": {
+        "Name": "opal-cloudfront-protection",
+        "Id": "a09833c0-4043-49fc-a92c-0dcdeaff9abd",
+        "ARN": "arn:aws:wafv2:us-east-1:313476888478:global/webacl/opal-cloudfront-protection/a09833c0-4043-49fc-a92c-0dcdeaff9abd",
+        "DefaultAction": {
+            "Allow": {}
+        },
+        "Description": "",
+        "Rules": [
+            {
+                "Name": "BlockedIPs",
+                "Priority": 0,
+                "Statement": {
+                    "OrStatement": {
+                        "Statements": [
+                            {
+                                "IPSetReferenceStatement": {
+                                    "ARN": "arn:aws:wafv2:us-east-1:313476888478:global/ipset/opal-blocked-ips-cloudfront/b2e008a6-40d9-4d07-bef5-1caa8b682bb3"
+                                }
+                            },
+                            {
+                                "IPSetReferenceStatement": {
+                                    "ARN": "arn:aws:wafv2:us-east-1:313476888478:global/ipset/opal-blocked-ips-cloudfront-ipv6/eb1a0caa-60a0-492e-a685-e5456cea8b7d"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "Action": {
+                    "Block": {}
+                },
+                "VisibilityConfig": {
+                    "SampledRequestsEnabled": true,
+                    "CloudWatchMetricsEnabled": true,
+                    "MetricName": "BlockedIPs"
+                }
+            },
+            {
+                "Name": "RateLimitRule",
+                "Priority": 1,
+                "Statement": {
+                    "RateBasedStatement": {
+                        "Limit": 2000,
+                        "EvaluationWindowSec": 300,
+                        "AggregateKeyType": "IP"
+                    }
+                },
+                "Action": {
+                    "Block": {}
+                },
+                "VisibilityConfig": {
+                    "SampledRequestsEnabled": true,
+                    "CloudWatchMetricsEnabled": true,
+                    "MetricName": "RateLimitRule"
+                }
+            },
+            {
+                "Name": "AuthLoginRateLimit",
+                "Priority": 2,
+                "Statement": {
+                    "RateBasedStatement": {
+                        "Limit": 100,
+                        "EvaluationWindowSec": 300,
+                        "AggregateKeyType": "IP",
+                        "ScopeDownStatement": {
+                            "OrStatement": {
+                                "Statements": [
+                                    {
+                                        "ByteMatchStatement": {
+                                            "SearchString": "L2F1dGgvbG9naW4=",
+                                            "FieldToMatch": {
+                                                "UriPath": {}
+                                            },
+                                            "TextTransformations": [
+                                                {
+                                                    "Priority": 0,
+                                                    "Type": "LOWERCASE"
+                                                }
+                                            ],
+                                            "PositionalConstraint": "STARTS_WITH"
+                                        }
+                                    },
+                                    {
+                                        "ByteMatchStatement": {
+                                            "SearchString": "L2F1dGgvZm9yZ290LXBhc3N3b3Jk",
+                                            "FieldToMatch": {
+                                                "UriPath": {}
+                                            },
+                                            "TextTransformations": [
+                                                {
+                                                    "Priority": 0,
+                                                    "Type": "LOWERCASE"
+                                                }
+                                            ],
+                                            "PositionalConstraint": "STARTS_WITH"
+                                        }
+                                    },
+                                    {
+                                        "ByteMatchStatement": {
+                                            "SearchString": "L2F1dGgvcmVzZXQtcGFzc3dvcmQ=",
+                                            "FieldToMatch": {
+                                                "UriPath": {}
+                                            },
+                                            "TextTransformations": [
+                                                {
+                                                    "Priority": 0,
+                                                    "Type": "LOWERCASE"
+                                                }
+                                            ],
+                                            "PositionalConstraint": "STARTS_WITH"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Action": {
+                    "Block": {}
+                },
+                "VisibilityConfig": {
+                    "SampledRequestsEnabled": true,
+                    "CloudWatchMetricsEnabled": true,
+                    "MetricName": "AuthLoginRateLimit"
+                }
+            },
+            {
+                "Name": "ip-reputation",
+                "Priority": 3,
+                "Statement": {
+                    "ManagedRuleGroupStatement": {
+                        "VendorName": "AWS",
+                        "Name": "AWSManagedRulesAmazonIpReputationList"
+                    }
+                },
+                "OverrideAction": {
+                    "Count": {}
+                },
+                "VisibilityConfig": {
+                    "SampledRequestsEnabled": true,
+                    "CloudWatchMetricsEnabled": true,
+                    "MetricName": "ip-reputation"
+                }
+            },
+            {
+                "Name": "common-rule-set",
+                "Priority": 4,
+                "Statement": {
+                    "ManagedRuleGroupStatement": {
+                        "VendorName": "AWS",
+                        "Name": "AWSManagedRulesCommonRuleSet"
+                    }
+                },
+                "OverrideAction": {
+                    "Count": {}
+                },
+                "VisibilityConfig": {
+                    "SampledRequestsEnabled": true,
+                    "CloudWatchMetricsEnabled": true,
+                    "MetricName": "common-rule-set"
+                }
+            },
+            {
+                "Name": "known-bad-inputs",
+                "Priority": 5,
+                "Statement": {
+                    "ManagedRuleGroupStatement": {
+                        "VendorName": "AWS",
+                        "Name": "AWSManagedRulesKnownBadInputsRuleSet"
+                    }
+                },
+                "OverrideAction": {
+                    "Count": {}
+                },
+                "VisibilityConfig": {
+                    "SampledRequestsEnabled": true,
+                    "CloudWatchMetricsEnabled": true,
+                    "MetricName": "known-bad-inputs"
+                }
+            }
+        ],
+        "VisibilityConfig": {
+            "SampledRequestsEnabled": true,
+            "CloudWatchMetricsEnabled": true,
+            "MetricName": "OpalCloudFrontWAF"
+        },
+        "Capacity": 947,
+        "ManagedByFirewallManager": false,
+        "LabelNamespace": "awswaf:313476888478:webacl:opal-cloudfront-protection:",
+        "RetrofittedByFirewallManager": false,
+        "OnSourceDDoSProtectionConfig": {
+            "ALBLowReputationMode": "ACTIVE_UNDER_DDOS"
+        }
+    },
+    "LockToken": "848a6d0b-d69f-40e0-876a-cfc0ce40b6b2"
+}
