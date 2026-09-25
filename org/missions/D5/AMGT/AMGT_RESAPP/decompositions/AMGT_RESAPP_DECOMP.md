@@ -6235,3 +6235,80 @@ the worker, so the check reads the same page inputs on both sides of the fix. Ch
 - The live group's five-name residue, on Andrew's word. `Z-S276` / `Z-W158-S1` (the '/' keys; identity is held for
   `2.0.0_SA_COO~X`'s CRPS-f-1). ACCEPT (carded). `Z-S272` (posture re-run, its own authorisation). The portal promote.
 - Standing: item 8, Z-S238, Z-S227, and W85-S1 / W117-S3 / W58-S2.
+
+
+## 51. ROUND 43 -- THE FIVE NO-BLOCK NAMES, THE MODEL CASES THE PAGE AND THE EXPORT BOTH HIDE, AND THE REDEPLOY. Three orders over the round-42 analysis's five items
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 42 ANALYSIS** (`ledger/ROUND_ANALYSIS.round42.md` @`7d7dc8413d`, s.7
+five items, ordered; round 42 CLOSED, `FWD-30` NOT_REALIZED on 89 of 94). PRD v0.26 unchanged. **Population:** the LIVE research
+library (Andrew's 2026-09-24 word, C-BACKFILL-DENOMINATOR-IS-THE-RESEARCH-FOLDER), read fresh with its read time printed; 94 at
+the cut. The 89-name snapshot remains the fixed page of the build cell's local check.
+
+### 51a. THE FIVE ITEMS AND WHERE EACH LANDS
+
+| s.7 item | lands in |
+|---|---|
+| 1 the five no-block names (AMD, GOOGL, LLY, PWR, UNH) -- closes FWD-30's equality over 94 and moves the backfill clause | `AMGT-rr-1` (seat order, WORLD) |
+| 2 Z-S279's base/px_last guard -- copy CRPS-g-1 | NOT CUT: already landed. AMGT_CORPUS round 5 re-derived the 89 blocks under CRPS-g-1's rule (ledger 20260925T1952Z), and the deployed function now refuses 6 of the 7 by name and serves RKT plausibly (row `Z-S282`, @eaf143941f) |
+| 3 Z-S281's Model Cases line -- the PRESENT branch | `AMGT-rr-2` (build) + `AMGT-rr-3` (served) |
+| 4 R-8 on the export harness -- grade a SERVED line | `AMGT-rr-2`: the same cell, because the harness is what proves item 3 |
+| 5 the 2-page branded export (a) | CARRIED: behind items 1-4, as the analysis orders; its table grain comes first (the CTO's spec @76bd6e76eb) |
+
+### 51b. FOUR MEASUREMENTS THE CUT RESTS ON
+
+1. **The page hides the cases too, not only the export.** `ModelTab.tsx` `CasesBlock` reads only `model_cases.status` and
+   `.reason` and never `base`, `upside` or `downside`. The served payload now carries `status: SERVED` with no `reason`, so the
+   PAGE renders "Upside / Base / Downside cases: SERVED -- the payload carries no case block" over a served base (RKT 7386.63), and
+   the export copies it byte for byte. Equality passes because both surfaces are wrong the same way -- which is R-8's class. **So
+   item 3's fix is a PAGE fix first and an export mirror second.**
+2. **The instrument at this vintage:** round 43's capture (`C:/tmp/amgt-r43-cache`, after AMGT_CORPUS round 5's re-derive)
+   reads local 89 of 89 OK on the round-42 harness (`round43/base-runs/`), and the harness prints no CASES line.
+3. **The five are genuinely empty:** `scoped_amgt.read_model_block` returns no block for any of them, and the served thesis
+   route carries 0 fiscal-year figures for each (`round43/base-runs/rr-1.AC*.log`).
+4. **The vendor path is authorised and live.** Andrew's standing grant R-21 covers a SCRIPTED pull (the CTO half for AMGT_CORPUS's
+   fire of 40, s.6), and `bloomberg_health` read `ok: true` at the cut.
+
+### 51c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-rr-1` | THE FIVE NO-BLOCK NAMES | `0.7.0_AE_CloudOps~A` | seat order | WORLD | the producer's raw and derived prefixes (run only), its deliverables, the ledger |
+| `AMGT-rr-2` | THE MODEL CASES, SHOWN AND EXPORTED | `~160` | worker | SERVED | `portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx`, `lib/research/print/render_pack.py`, `lib/research/print/tests/**`, `portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs` |
+| `AMGT-rr-3` | THE REDEPLOY | `0.7.0_AE_CloudOps~A` | seat order | WORLD | `infra/aws/terraform/harvest/**` (apply only), its deliverables, the ledger |
+
+### 51d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.7's five items. Item 2 has already landed (another project's derive; measured), and item 5 is ordered
+  behind. Items 1, 3 and 4 remain, in three orders: 3 and 4 share one cell because the harness proves the fix.
+- **(ii) Same grain.** One data act, one build cell, one deploy act.
+- **(iii) Intent.** One axis: every name in the population has a page and an export that say the same thing, and the thing they
+  say is what the payload holds.
+- **(iv) What a cell does NOT move.** rr-1 overwrites nothing (new stamps; first mints). rr-2 moves no data and no pdf path.
+  rr-3 moves exactly its sign-off pair's radius. The page change reaches portal DEV only; no promote is in scope.
+
+### 51e. EDGES AND FAN-OUT
+
+```
+rr-2 -> rr-3   (the rich body the deploy serves)
+rr-1 -> rr-3's AC2 (the live-94 served check needs the five blocks)
+fanout:
+  cap: 8
+  orders_total: 3
+  chains_total: 2
+  wave_0: [rr-1, rr-2]                 # rr-1 a seat order: after both of ITS halves are committed
+  wave_1: [rr-3]                       # a seat order: after rr-2 merges, rr-1 is complete, and both of ITS halves are committed
+  portal_ref: 4985f787
+  no_vite_per_worker: true
+  no_s3_deletes: true
+  vendor: rr-1's scripted pull under R-21 (Bloomberg, and the producer's Seeking Alpha fallback where it fires)
+  egress: rr-3's build pip-downloads its pinned wheels (declared)
+  route_change: none
+  no_promote: true
+```
+
+### 51f. CARRIED
+
+- Item 5 (the 2-page export, table grain first). The span write (21 of 23 thesis sentences held), the wiring class (FWD-6, 7,
+  12), the four-input concentration, the served PDF, and the universe citation missing from RESAPP's PRD. All are CTO inputs
+  (msgs 25878-25901), outside the round-42 analysis's ordered list, and each is for the analysis that follows this round.
+- Standing: ACCEPT (carded); Z-S272; Z-S276; the portal promote; item 8, Z-S238, Z-S227, and W85-S1 / W117-S3 / W58-S2.
