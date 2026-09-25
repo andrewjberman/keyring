@@ -135,9 +135,13 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    (IV-e-26, 08144571); the Bearer half is P's lane (portal/src/api/**, CTO 100919) -- api-client.ts reads ?renderToken=
    on /investor-reporting/print only for a render claim, sends Bearer on scoped reads, never persists (told ~D 192205Z).
    Token carriage: bound 13 bars a credential from an SSM command document -> card B2-CARRY @af9f24f901, (a) Parameter
-   Store SecureString per attempt RECOMMENDED; ruling asked of 1.0.0_SA_CTO 192213Z.
+   Store SecureString per attempt RECOMMENDED; ruling asked of 1.0.0_SA_CTO 192213Z -> RULED (a) 192232Z (msg 101013),
+   four conditions: IAM on /irpt/render-token/* only (Lambda Put+Delete, host Get+Delete, aws/ssm or a scoped key);
+   delete on EVERY terminal path + a sweep of names older than 15 min at the next export run; the value never logged or
+   echoed, command document and output carry only the name; negative arm shows another attempt's name and a
+   read-after-delete refused. WORLD: ledger it with the IAM change.
    NEXT (P): (1) portal api-client render-token Bearer (my lane; portal DEV candidate, typecheck + test + a served print
-   page look); (2) on the CTO's carriage ruling: mint at submit + put the token + SSM doc/host script read it (no operator
+   page look); (2) under ruling (a): mint at submit + put the token + SSM doc/host script read it (no operator
    session) + dispatch ON; the read functions' B0 deploy (grant.py + enforce at 755c13bc19 + grant read IAM) rides it.
    PARKED (owner P, un-parks at the next irpt-holdings build; ~M 101008, CTO 101007): holdings/resolve.py has drifted from
    its STAGE_MANIFEST pin (_scope/resolve.py@c76b7c7aee) -- build-and-upload refuses irpt-holdings until re-pinned.
