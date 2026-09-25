@@ -395,6 +395,30 @@
     "spec_asserts": "TO-MP-d-1 section 1 item 1(b): add the three .env lines and 'Change NOTHING else there'; AC2 expects EC2_MANIFEST.json to record a deployed_commit descending from f1f0fc6780 with NFRA_MCPORTAL's files; AC3 expects /api/admin/whoami and / at 401 or 403 on the served host.",
     "world_is": "The shipped script changed the printf argument binding as well; the release did not serve and was rolled back per BOUNDS #2, so the host serves f1f0fc6780 (whoami and / answer 404) and the manifest records the rollback redeploy of f1f0fc6780.",
     "notes": "ARMED: branch rel-nfra-mcportal-r2-gateway @c97839d7c8 (worktree /c/tmp/mp-2-rel) still carries the broken script and will take the gateway down again if deployed; a re-release must be re-cut with the corrected script (this branch's fix commit) and is not attempted here per BOUNDS #2. Cause of the defect: the edit that added the three lines lost the trailing space of its replacement text; the pre-act checks (bash -n, a grep of the added text, the gateway pytest) do not render the printf and missed it."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W2-S8",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~2",
+    "surfaced_at": "2026-09-25T21:50Z",
+    "one_line": "The 90-second rollback trigger cannot be met by the named rollback command: safe-ec2-deploy.sh's HALT-GATE spends about 12 minutes scanning the issuer's 186 pending messages before Step 2 reaches the host, with or without HALT_ACK=1, so a triggered rollback leaves the gateway down for 12-15 minutes, not seconds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This run, attempt without HALT_ACK from /c/tmp/mp-2-rel2: started 2026-09-25T20:53:38Z, 'HALT-GATE: blocked. Review the message(s) above, then re-run with HALT_ACK=1.' at 21:05:55Z (12 min 17 s in the gate alone; nothing built or uploaded).",
+        "This run, attempt with HALT_ACK=1: started 21:08:52Z; 'HALT-GATE: HALT_ACK set -- messages acknowledged. Proceeding.' then Step 2; S3 upload LastModified 21:25:18Z; host ActiveEnterTimestamp 21:25:38Z (about 16 min from invocation to the host, the build and upload taking under a minute of it).",
+        "The first attempt's rollback (row NFRA_MCPORTAL-Z-W2-S7) ran the same named command: started ~17:17Z, host active again 17:31:22Z.",
+        "The rollback command named in the ledger entry org/critical_paths/change_management/20260925T2034Z_nfra-mcportal-r2-gateway-release_deploy_completion.md @c70844d63a is the same safe-ec2-deploy.sh invocation, so it passes through the same gate."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MP-d-1 section 1 item 4a(ii) @894cf33916: 'Immediately after the SSM restart, poll /health on the host. If it is not 200 within 90 seconds, run the named rollback AT ONCE'.",
+    "world_is": "The trigger can fire within 90 s, but the named rollback's own halt-gate scan takes about 12 minutes before it touches the host, so the outage a triggered rollback bounds is 12-15 minutes. It did not fire this run: /health was 200 within 15 s of the restart.",
+    "notes": "ARMED for any later gateway release that relies on this rollback path while the issuer's inbox holds the routine backlog (row NFRA_MCPORTAL-Z-W2-S5 names the same 186 messages). Not measured: whether the scan time scales with the message count. safe-ec2-deploy.sh is read-only to this worker."
   }
 ]
 ```
