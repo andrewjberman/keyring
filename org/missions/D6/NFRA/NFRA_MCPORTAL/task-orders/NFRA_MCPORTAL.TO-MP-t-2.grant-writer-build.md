@@ -100,7 +100,7 @@ Instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPOR
 **ISSUER NOTES:** S4 build. WORLD by floor (infra/ + terraform). The next order in this slot's queue is MP-t-3 (the
 apply), provisioned off the post-merge HEAD.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>

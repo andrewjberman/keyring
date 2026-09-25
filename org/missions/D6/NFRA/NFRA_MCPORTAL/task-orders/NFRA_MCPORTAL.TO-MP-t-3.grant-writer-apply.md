@@ -80,7 +80,7 @@ Instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPOR
 
 **ISSUER NOTES:** WORLD: the CTO's exercised read. G-OWNER-OID routes to Andrew only if AC-free step 1 files it.
 
-<status>pending</status>
+<status>superseded -- CTO ruling R-1 (D-2, @aed83d11fe): the grant writer cannot import from its own zip; re-cut in round 2 behind the staged-build cell</status>
 <round>1</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>

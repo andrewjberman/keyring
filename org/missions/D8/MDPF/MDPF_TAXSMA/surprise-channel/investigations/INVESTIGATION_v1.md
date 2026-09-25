@@ -369,6 +369,29 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "TX-a-1 (MDPF_TAXSMA_DATA_CONTRACT v0.5.0) adds the Tax overlay to the firm/Global aggregate in dim_mdpf_aggregate_aua_timeseries.py, a module the EC2 runner's Stage 6 imports as its library (build_mdpf_spine.py:51) and that the gold Lambda's consolidator also imports (mdpf_gold_consolidator.py:79).",
     "world_is": "On the EC2 path the new import chain cannot resolve lib.opal_naming, so Stage 6 fails before its first write. The dispatch logs it 'NON-FATAL build-alongside; legacy chain + serving UNAFFECTED; no marker written', which is why nothing louder fired. Measured on today's 12:52Z run only; earlier runs were not read. The gold Lambda is NOT affected today: its running bundle is pin 48b8671569, which predates TX-a-1, and the Cottonwood deploy's pin 74d7efe144 does not carry TX-a-1 either.",
     "notes": "Surfaced while preparing the mdpf-gold-lambda Cottonwood auto-custom deploy (packet @f8c960746b, LEG B s.5); not chased. The Cottonwood code on the EC2 path runs only inside Stage 6, AFTER this import, so this break also masks whether that path would pass. DISARM: 2.0.0_SA_COO~T decides whether the runner tree gets lib/opal_naming.py (a code-prefix sync of lib/) or taxsma_assets resolves its address another way on the runner, then one Stage 6 run on the runner shows the import pass. ALSO OWED BEFORE ANY LAMBDA BUILD FROM A PIN AT OR AFTER TX-a-1: the same import in the flat Lambda zip (lib/ is not a PACKAGE member there either) -- that seat's build-time check, not this row's."
+  },
+  {
+    "id": "MDPF_TAXSMA-S6",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-25T00:57Z",
+    "one_line": "The next Opal Gateway deploy from CLOUD HEAD -- including this project's own TX-g-1 release -- ships 4 OTHER projects' unreleased commits with it: NFRA_OPALAI cc22fdfb9d, NFRA_MCPINDEX 650c9a99cb, NFRA_OPLGTW 9e4074c33a + 6c37cc6b00 (a cell closed with two FAILs, under Andrew's 2026-09-22 stop).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~T",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git log 1764e54a16..HEAD -- infra/aws/ec2/opal-gateway` at CLOUD 2026-09-25 ~00:3xZ lists 7 commits: MDPF_TAXSMA 6abf60e5d5, 8dce9aeb0b, e8f800e6a9 (TX-g-1); NFRA_OPALAI cc22fdfb9d; NFRA_MCPINDEX 650c9a99cb; NFRA_OPLGTW 9e4074c33a, 6c37cc6b00. 1764e54a16 is EC2_MANIFEST.json's deployed_commit for opal-gateway.",
+        "NFRA_OPALAI's own deploy (OA-t-6) found the same set at its census and was ruled to a NARROW release cut at 1764e54a16: org/missions/D6/NFRA/NFRA_OPALAI/deliverables/1.0.0_SA_CTO~O/RULING_OA-t-6_NARROW_GATEWAY_RELEASE_20260925.md @592e319a06; row NFRA_OPALAI-Z-W2-S3.",
+        "deploy-to-ec2.sh ships the whole infra/aws/ec2/opal-gateway tree at the workspace HEAD (SRC under WORKSPACE_ROOT, SHA = rev-parse HEAD), so a HEAD deploy cannot exclude a commit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A project's gateway release ships that project's change (TX-g-1) under that project's own gates.",
+    "world_is": "A release built from CLOUD HEAD also ships NFRA_OPALAI's asker-scoped tool (dark for the concierge), NFRA_MCPINDEX's catalog entries, and NFRA_OPLGTW's OG-r-2 harness and OG-r-1 amend -- the last under Andrew's stop -- none of them graded for release by this project.",
+    "notes": "Disarm, the issuer's call: cut this project's gateway release NARROW, at the deployed commit plus TX-g-1's three commits (the same shape NFRA_OPALAI's OA-t-6 was ruled to), or hold it until each other owner has released. Filed off-task by 1.0.0_SA_CTO~O (D6 program) because 2.0.0_SA_COO~T is not registered live, so a message would be a wish, not a delivery."
   }
 ]
 ```

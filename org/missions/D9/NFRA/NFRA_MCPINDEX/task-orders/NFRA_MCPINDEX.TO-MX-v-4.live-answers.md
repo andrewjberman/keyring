@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_MCPINDEX~5</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending -- HELD on G-B and G-Q (G-Q binds the FWD-3 arm only; G-Y binds the one live YCharts call) (decomposition s.6); issued with the round, spawned only when the gate stands</status>
+<status>superseded -- round 1 closed 2026-09-24 by 2.0.0_SA_COO~O (re-seated @23bbeff325) on 1.0.0_SA_CTO~O msg 25801: never started; its gateway paths move into opal_ai under NFRA_OPALAI C6 (G-MOVE), so round 2 re-cuts the cell onto opal_ai paths from a clean rectangle</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `org/missions/D9/NFRA/NFRA_MCPINDEX/prd/NFRA_MCPINDEX_PRD.md` @b7dc80e2cc (ADMITTED) | **Decomp cell:** `MX-v-4` | **serves:** FWD-2..FWD-5, FWD-7, FWD-8; A2..A5, A7, A8 | **slot:** ~5, queue position 7 of 8
 

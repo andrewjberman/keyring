@@ -27,8 +27,12 @@ messages and emits one line per message. Measured by the Analyst on 2026-09-24
 - **Blocker 2.** 33 of 33 reads failed with a LIVE token. The cause is an untested HYPOTHESIS: an MCP-audience token
   presented straight to `graph.microsoft.com`.
 
-Move the file to `opal_ai/opal/agent/teams_watch/teams-watch.py` (the parent copy removed on your branch) and change it
-so:
+Build the Analyst's watch at `opal_ai/opal/agent/teams_watch/teams-watch.py`, starting from the workspace file's
+content, and change it so the items below hold. **AMENDED (CTO ruling I-3, `org/missions/D6/NFRA/NFRA_OPALAI/deliverables/1.0.0_SA_CTO~O/ROUND1_ANALYSIS_INPUTS.md` @`c1717499bf`):
+the workspace `.claude/skills/teams-assist/teams-watch.py` STAYS, byte-unchanged, as the OPERATOR plane's tool.** It reads
+the operator's Claude credentials for the D7 intake runner (`integrations/ticketing/intake/runner.py:69`, `:107-123`) and
+Andrew's `/teams-assist`, which the runtime must never do. The two are different programs on different credential planes,
+so C1 holds; only the Analyst's USE of the workspace file ends, at cutover:
 
 1. **It holds its OWN gateway OAuth refresh family.** The gateway's OAuth server already supports this, so carry it and
    do not build one: `infra/aws/ec2/opal-gateway/app/oauth_as.py` has `GRANT_TYPES` incl. `refresh_token` (`:99`),
@@ -55,14 +59,14 @@ so:
    - `test_refresh_family_in_state_dir`: the rotated refresh token lands under the state dir only.
 4. The cursor discipline (`:26-34`, retry-not-drop, per-channel cursor files), the emit format and the identity pin are
    UNCHANGED, except that the cursor files move under the state dir.
-5. Re-point the operator's `.claude/skills/teams-assist/SKILL.md` to `opal_ai/opal/agent/teams_watch/teams-watch.py`.
+5. **(AMENDED, dropped.)** The operator's `.claude/skills/teams-assist/SKILL.md` and `teams-watch.py` stay byte-unchanged.
 
 ## 2. BOUNDS
 
 1. **`opal_ai` is a nested repository** at `<worktree>/opal_ai`, on branch `<your worktree branch>-opal_ai`. It has no
    hooks yet. Commit your nested files with `git -C opal_ai commit --author "0.9.0_WK_NFRA_OPALAI~4
    <0.9.0_WK_NFRA_OPALAI~4@opal.agent>" -F <msgfile> -- <nested paths>`, where the msgfile is written with the Write
-   tool. Parent files go through `safe-commit.sh`; the parent-side removal merges in the round's cutover window.
+   tool. Parent files go through `safe-commit.sh`. No parent-side removal: the workspace watch stays.
 2. **No login, no client registration, no token grant against the live gateway, and do not read
    `~/.claude/.credentials.json`.** Your only live call is AC2's metadata GET.
 3. `.claude/skills/teams-assist/channels.json` is not yours and stays in place.
@@ -90,7 +94,7 @@ Rows: `org/missions/D6/NFRA/NFRA_OPALAI/surprise-channel/investigations/INVESTIG
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OA-t-4"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/round1/checks/t4.AC1.sh; echo "exit=$?"</invocation><expect>pytest rc=0; named tests passed 3 of 3; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OA-t-4"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/round1/checks/t4.AC2.sh; echo "exit=$?"</invocation><expect>direct: refresh_token=yes registration=https://mcp.opalinvest.dev/register; watch: the same string -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="OA-t-4"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/round1/checks/t4.AC3.sh; echo "exit=$?"</invocation><expect>old path gone at HEAD=yes; moved watch committed in opal_ai=yes; code/config files naming the old path=0; /teams-assist SKILL.md names the new path>=1 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="OA-t-4"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/round1/checks/t4.AC3.sh; echo "exit=$?"</invocation><expect>moved watch committed in opal_ai=yes; operator teams-watch.py byte-equal to the cut=yes; operator /teams-assist SKILL.md byte-equal to the cut=yes -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -102,7 +106,7 @@ Instance at `org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~
 **ISSUER NOTES:** hop 4, S8 minimum. hostedContents (FWD-2) is enrichment. The watch's first authorization is G-AUTH at
 close, and the live read proves blocker 2's fix.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>

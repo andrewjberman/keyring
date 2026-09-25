@@ -696,8 +696,7 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Section 6 of this cell's own task order: 'python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3 --governing-order <this order> rc 0 ... Flip <status> to complete only if every criterion passes.'",
     "world_is": "AC1, AC2 and AC3 all PASS-by-output (verified independently against the literal check scripts in org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/), but the checker's rc is 1 because the decomp_ref alignment layer -- unrelated to any of this cell's three criteria -- cannot resolve CRPS-e-2 against a decomp doc that never spells out a single concrete prefixed cell id. The TO cannot be flipped to complete on this instance as written, though nothing about the built code, the test or the dry-run behaviour is at fault.",
     "notes": "Filed per CLAUDE.md section 2 ('had to do what the task order did not say, or could not do what it said') without halting; work is otherwise complete and reported. disarm_owner 2.0.0_SA_COO~X per this cell's own task order text ('rows AMGT_CORPUS-Z-W4-S<k>, disarm_owner 2.0.0_SA_COO~X'). Disarm is a one-line fix in the decomp doc (write the concrete 'CRPS-e-1' .. 'CRPS-e-5' forms, e.g. as the table's leftmost column value, alongside or instead of the bare 'e-N' labels) -- outside this cell's write grant, so recorded rather than fixed here. ARMED because every round-3 sibling (e-1, e-3, e-4, e-5) will independently hit this same alignment VIOLATION on its own proof-of-spec-check run for as long as the decomp doc stands as written; nothing about any individual cell's own build can disarm it."
-  }
-,
+  },
   {
     "id": "AMGT_CORPUS-Z-W3-S3",
     "project": "AMGT_CORPUS",
@@ -721,8 +720,7 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "AC2 (this order, S.5): 'the seam probe: `--write` completes on the live 218-report corpus (rc 0, every type reached)'.",
     "world_is": "`--write` reaches only the FIRST alphabetically-sorted business type (consumer-cyclicals+consumer-services) and raises before completing any type, exactly as Z-S17 measured before this cell's fix -- because the collision Z-S17 diagnosed is with a PRE-FIX stored object, and this cell's fix (correctly, per its own bound) cannot retroactively rewrite that object without bumping METHOD_VERSION or deleting it, both forbidden. The fix is real (proven by the mutant control and by the 4 of 9 types that now write cleanly on genuinely new inputs) but AC2 as literally written is permanently unsatisfiable against this corpus's existing gold state without a resolution outside this cell's bound (e.g. a deliberate METHOD_VERSION bump, or an owner-authorized deletion of the 5 stale objects).",
     "notes": "AC1 and AC3 both PASS-by-output (verified twice each, deterministic). AC2 is recorded FAIL in this worker's proof-of-spec instance with this row's evidence; status flip to complete withheld. Not a defect in this cell's own diff -- readonly to lib/research/corpus/gold.py per the order's own READ-ONLY list, and the order explicitly forbids both remedies available to a worker. Disarm is the issuer's: either accept AC2 as unsatisfiable-by-design (document a corpus-migration exception) or authorize one of the two forbidden moves for exactly the 5 stale objects."
-  }
-,
+  },
   {
     "id": "AMGT_CORPUS-Z-W3-S4",
     "project": "AMGT_CORPUS",
@@ -745,8 +743,7 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "AC1 (this order, S.5): invocation `bash .../e3_AC1.sh`, expect `(?m)^\\d+ passed in `.",
     "world_is": "The check script (issuer's, read-only to this cell) and the <expect> regex (issuer's, in the order) are mutually unsatisfiable given this file's test count: any `-k` filter that does not select every test in the file produces a 'deselected' clause pytest's summary always includes, and the anchored regex has no branch for that form. The 2 targeted tests pass; the criterion as literally specified cannot read PASS from any real run of its own invocation.",
     "notes": "Recorded FAIL in this worker's proof-of-spec instance, not overridden. Disarm is the issuer's: either the check script drops `-k` (run against a smaller purpose-built test module) or the <expect> regex gains a 'passed, N deselected in' branch."
-  }
-,
+  },
   {
     "id": "AMGT_CORPUS-Z-W3-S5",
     "project": "AMGT_CORPUS",
@@ -978,6 +975,378 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "FWD-19 requires every security in the Asset Management research folder to be dispositioned, with the census's three classes summing to the folder count; the round-3 fire was signed to move UNRESOLVED 40 -> 0 and its run record reports called 40, refused 0, errors 0.",
     "world_is": "The fire executed cleanly and the served pool reads UNRESOLVED 4, not 0, with a fifth folder carrying no record at all. 89 of 94 live folders hold a MEASURED identity. The five short are precisely the five added since the builder snapshot, so FWD-19's denominator has been moving underneath the act that serves it.",
     "notes": "No disarm_owner: nothing here is ARMED and the fire breached nothing. TWO REMEDIES, deliberately not filed as one item -- the four need their keyless registrations superseded or the call forced so a key lands, which R-21 already authorises; AMD needs EVIDENCE first (no ONE PAGER workbook found), which is an acquisition question and not an induction one. Raised to 2.0.0_SA_COO~X, 2.0.0_SA_COO~Y and 3.0.0_SA_CVO~Z as msgs 25780-25782; filed here because a finding that lives only in an inbox scrolls, and FWD-19's L9 is where it has to be gradeable."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S26",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-24T22:41:25Z",
+    "one_line": "INCIDENT on served output, this seat's act: the FWD-12 pull passed SECURITY KEYS (ADBE_US_Equity) to model_block_pull.py --securities, which expects Bloomberg identifiers (ADBE US Equity) and forms the key by replacing spaces (:395). Every DAPI request named a security that does not exist and landed an EMPTY raw object ({}), rc 0, 89 of 89 'landed'. The derive then minted 89 blocks with 0 FY rows and 0 figures (51 unresolved each), and newest-stamp-wins put them in front of the 31 keys that had served real blocks (~205 figures) from ~22:30:2xZ to 22:37:04Z. Rolled back by copying each prior block forward (31 of 31, verified through scoped_amgt.read_model_block). The 58 new keys still serve an empty block instead of none. The derive also rewrote field_map.json from empty data (+61,889/-7,653 lines, uncommitted); restored to HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/fwd12_derive_20260924T223018Z.log: 89 of 89 'DERIVE: ... (0 FY rows, 0 figures, 51 unresolved)'.",
+        "Raw bloomberg/harvest/bronze/histdata/security_key=ADBE_US_Equity/20260924T213626Z.json body is {} (this seat's read).",
+        "Rollback log org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/evidence/fwd12_rollback31_20260924T223735Z.log: 'APPLIED copy-forward: 31 of 31'; scoped_amgt.read_model_block: 2317_TT_Equity 205 figures, 992_HK_Equity 228 figures after; ADBE_US_Equity 0 figures (one of the 58).",
+        "The L2 verify leg checked that three raw OBJECTS existed per key, never that they carried data: presence was proven, content was not."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NEVER-1 pair (COO @2a3319e5ae, CTO @35e4cb93ef): derive replaces 31 served blocks with the 22 added and 46 re-derived; its discriminator samples scoped_amgt for the 22 present.",
+    "world_is": "The pull fed invalid identifiers, so every block was empty; the 31 were restored inside the pair's own rollback within ~7 minutes, before the running production sequence reached its dossier step. The 58 serve an all-unresolved block; no false FIGURE was ever served (0 figures), only absence mislabelled as 'empty/no value returned'.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Disarms when a corrected pull (identifiers with spaces) and derive land real blocks for the 89 under a newer stamp, verified by FY rows > 0 and the 22 present per key, OR the 58 are returned to ABSENT on Andrew's delete word. The pull's own dry run echoed security='8035_JP_Equity' and this seat did not read the request string against the vendor's form. Vendor authority for the corrected run asked of 1.0.0_SA_CTO~Z. Readers that may have consumed an empty block in the window: run_scores, render_pack, peers -- not yet measured."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S27",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-24T23:58:00Z",
+    "one_line": "THE BLOOMBERG BLOCK IS A SIGNED-OUT TERMINAL SITTING AT A VISIBLE LOGIN WINDOW, and the recovery record's four cheap remedies are now ALL ELIMINATED on this instance: 8194 has no listener across 6 probes, a bbcomm restart produced a new pid with still no listener, the network to Bloomberg is provably open with its control, and bbcomm's own sockets are loopback-only. A visible top-level window titled 'BLOOMBERG: Login' exists at pid 19952. The sign-in is the remedy, no seat may complete it, and both submit attempts are already spent.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z -- INERT because nothing is armed and no served state is at risk (Z-S26 left the served plane safe). The ACT is a human sign-in at the terminal, which BLOOMBERG_TERMINAL_SIGNIN_RECOVERY.md:134-137 places outside any seat's reach; carded to Andrew at 23:5xZ with these four eliminations attached, which is exactly the form that record requires.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUNG 1 -- 8194 LISTENER, SUSTAINED ABSENCE, NOT ONE UNLUCKY READ. 3 probes seconds apart before the bbcomm restart and 3 after: listeners=0 on all six. POSITIVE CONTROL beside every set: port 5174 (the vite dev server) reads listeners=1 on the same cmdlet, so Get-NetTCPConnection can see a listener on this box. netstat agreed independently (0 lines mentioning 8194, against 46 total LISTENING sockets).",
+        "RUNG 2 -- RESTART bbcomm: ELIMINATED. Preconditions measured first so the act stayed reversible: C:\\blp\\DAPI\\bbcomm.exe exists, pid 52036 was running from that exact path, and the instance count was exactly 1. Stopped 52036, 0 instances after, relaunched from that path, new pid 40748 alive. STILL listeners=0 across 3 further probes. This reproduces the record's own 2026-08-12 result verbatim: 'new pid, still no listener -- eliminated'. The restart is sanctioned as 'recoverable and cheap; it relaunches on demand anyway' (:124-125), and :321-327 measured twice that killing bbcomm does not force a down-state.",
+        "RUNG 3 -- NETWORK: ELIMINATED, with the control the record forbids skipping. Test-NetConnection 69.187.48.83:8194 TcpTestSucceeded True AND the unrelated control 8.8.8.8:53 True. Both arms matter: 'the far end is down' and 'this box has no network' are different faults with different owners, and neither is ours.",
+        "RUNG 4 -- bbcomm's OWN OUTBOUND SOCKETS: the record's 'up but not connecting' signature, exactly. Healthy looks like '...:8197 -> 69.187.48.83:8194 ESTABLISHED'. Measured on pid 52036: 6 sockets, ALL loopback -- two Bound on 0.0.0.0 and four ESTABLISHED 127.0.0.1 pairs. No outbound session to Bloomberg at all, with the path proven open by rung 3.",
+        "THE FINDING THE PROCESS CENSUS COULD NOT PRODUCE, and the record predicted that too. A visible top-level window titled 'BLOOMBERG: Login' EXISTS, owned by pid 19952 -- which is NOT any terminal pid (wintrv 41960, blpsmarthost 34688, blpwtk2_subprocess 18360/24208/43320 own NO visible titled window). Found by EnumWindows + GetWindowText, read-only, no focus and no keystrokes, over a printed denominator of 11 visible titled windows. This is precisely why :193-198 says the login window belongs to a separate SmartClient pid and that going via MainWindowHandle 'fails and looks like no window exists' -- my earlier Get-Process read showed an EMPTY MainWindowTitle on wintrv and would have supported the wrong conclusion.",
+        "WHY THE TWO SPENT SIGN-INS DO NOT CONTRADICT THIS, stated as a candidate and not a conclusion: 2.0.0_SA_COO~X reports two supervised sign-ins with VERIFIED FILLS that left no listener. The record names two ways a fill can verify and still fail -- :204-207, a TAB from Login Name lands in the language selector rather than Password, whose measured consequence was the password typed into the unmasked Login Name field and a burned attempt; and :319-320, that the verifier's dots/user reading is NOT evidence the fill landed. Which of these applied here is UNMEASURED by me and is COO~X's to state from its own screenshots.",
+        "TERMINAL AND bbcomm ARE BOTH UP, so this is not a dead-process fault: wintrv pid 41960 with 174s CPU plus blpsmarthost and three blpwtk2_subprocess, and bbcomm restarted by its updater at 22:50:25Z -- the same 22:50Z the issuer named. The record's P0 is explicit that the process readings are NON-DISCRIMINATING in both directions (:26-40), which is why the listener and the socket table, not the process list, carry this row."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BLOOMBERG_TERMINAL_SIGNIN_RECOVERY.md:119-137 requires the four cheap reversible remedies to be worked and RECORDED before the sign-in becomes the candidate remedy, and states that once they are eliminated the seat 'cannot complete one alone -- surface it with the eliminations attached and hold'. READ_HERE.md section 2 budgets `submit` at 2 attempts because Bloomberg locks the account after repeated failures.",
+    "world_is": "All four remedies are eliminated on this instance and recorded above, so the record's terminal branch is reached: hold and surface. TWO THINGS THE RECORD DOES NOT COVER AND THIS ROW ADDS. (1) The sign-in remedy has ALREADY been exercised twice on this instance and did not restore the listener, so it is not an untried candidate the way it was on 2026-08-12 -- the ladder terminates with its last rung already spent. (2) BOTH submit attempts are gone, so no seat and no scripted path may try again without risking the account lockout the budget exists to prevent. The remaining act is a HUMAN sign-in in the login window that is visible on screen right now at pid 19952. HELD BEHIND IT: the corrected FWD-12 re-pull and derive, and the re-mint of the 4 + AMD -- which is the goal's backfill clause, not a side item.",
+    "notes": "Filed after running the ladder myself rather than relaying the issuer's block. I had already carded the block to Andrew BEFORE reading this record, on a process census plus a single 8194 probe; that card was PREMATURE by the record's own rule, which requires the four eliminations attached, and it named no login window because the process list cannot see one. The keepable lesson is narrow and mechanical: an EXERCISED RECOVERY RECORD IS PART OF THE DIAGNOSIS, NOT BACKGROUND READING -- READ_HERE.md pointed at this file in one line and I escalated past it. Reading it first would have produced the same card an hour earlier with four eliminations and a pid, instead of a symptom."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S28",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-25T00:30:00Z",
+    "one_line": "CORRECTION TO AMGT_CORPUS-Z-S27, filed as a new row because the channel is append-only: the Bloomberg credential was NEVER TESTED. Neither fill-failure mode applies, the login dialog carries NO error an hour and a quarter after the second submit, and the two 'spent' attempts were spent in OUR LEDGER and not necessarily at the vendor -- so the remaining act is ONE HUMAN CLICK on an already-filled form, not a sign-in.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z -- INERT, nothing armed and no served state at risk (Z-S26). This row CORRECTS Z-S27 and does not supersede its measurements: Z-S27's four eliminations stand exactly as recorded. Z-S27 remains the BLOCKING row gating AMGT_CORPUS round 3's L10.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE ANSWER TO THE QUESTION Z-S27 LEFT OPEN IS 'NEITHER MODE'. 2.0.0_SA_COO~X answered from its own screenshots (msg 25813, acked): NOT :204-207 -- both fill shots show the 12-character username in Login Name and 9 masked dots in Password, so no password went into the unmasked field; and NOT :319-320 -- the dots were read off the window capture, not the verifier's count. After EACH submit a full-desktop capture showed the SAME login window, both fields still filled, and NO ERROR TEXT. It labelled the field state MEASURED and the click's fate INFERRED, which is the correct split.",
+        "I VERIFIED IT ON MY OWN FRESH CAPTURE rather than on the report. Read-only full-screen grab at 00:17:10Z, no clicks and no keystrokes: the 'BLOOMBERG: Login' window is on screen, Login Name reads 'alyssaakeith', Password carries masked dots, the Login button is UNCLICKED, and there is NO error text anywhere in the dialog (S/N 5401234-0, SID 13716864-4, Version 205.1.81, Netid 4013). A rejected credential renders an error; this dialog has none.",
+        "THE CORRECTION TO Z-S27, AND IT IS MINE: that row said both submit attempts were spent and a third 'risks the account'. That was TRUE OF OUR LEDGER AND UNMEASURED AT THE VENDOR. READ_HERE s.2's budget counts what BLOOMBERG sees; our ledger counts what our SCRIPT TRIED, and our own script writes it. Two clocks. They agreed on every previous instance, which is exactly why nobody had to distinguish them, and this instance separated them invisibly until a screenshot showed a dialog with no error.",
+        "WHAT IS NOT BEING DONE WITH THAT INFERENCE: no third scripted submit. The asymmetry is fatal -- if the inference is right a scripted click costs nothing, and if it is wrong it burns toward a real lockout -- and NO measurement available to a seat distinguishes 'click never delivered' from 'click delivered into an unresponsive dialog'. An inference that the budget is intact is not a measurement that it is. The hold stands; only the CARD changes, from 'troubleshoot Bloomberg access' to 'click the Login button on a form that is already correctly filled'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT_CORPUS-Z-S27 asserts that both READ_HERE s.2 submit attempts are spent and that a third risks the account lockout, and records the fill-failure mode as UNMEASURED by this seat and owed by 2.0.0_SA_COO~X.",
+    "world_is": "The fill was correct on both attempts and the dialog shows no error, so the credential was never tested and the failure is in CLICK DELIVERY. The attempt counter our ledger advanced is not known to have advanced at Bloomberg. Z-S27's four eliminations and its hold are both still correct; its sentence about the budget was stated more strongly than the instrument supported.",
+    "notes": "FILED AS A NEW ROW BECAUSE I FIRST TRIED TO EDIT Z-S27 IN PLACE AND THE GATE REFUSED IT, correctly: 'Corrections are NEW items citing the old id; an edited history is a history nobody can audit' (content hash ba6e47ebfa95 -> 01db1670edf0). Only a remediation row's own clocks may advance in place. I restored Z-S27 to its committed bytes and filed this instead. TWO THINGS I OWE THE RECORD: (a) the append-only rule is a property of this channel I had to be TAUGHT BY A GATE rather than one I read, and (b) earlier today I advised 0.7.0_AE_CloudOps~A to fix its own row's off-enum class 'edited in place on the committed bytes rather than appended' -- advice that runs straight into this same refusal. That lane is told."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S29",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T01:40:32Z",
+    "one_line": "The corrected FWD-12 re-pull (Bloomberg identifiers, 01:2xZ) lands refdata and bestdata WITH content but every histdata object is '{}' (2 bytes), 22 batches of 3 before this seat stopped it. CRPS-e-2 grew HIST_FIELDS from 23 to 39 (bb6b1f2f25), and blp_client.historical_data's handler returns early on any message without securityData (integrations/bloomberg/mcp/blp_client.py:285-287), so a request-level responseError is dropped and the call returns {} with rc 0. INFERRED, not measured here: Bloomberg's HistoricalDataRequest per-request field limit (widely documented as 25) rejects the 39-field request. The served history came from pulls at 23 fields.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/evidence/fwd12_repull_20260925T012903Z.log: 22 batches rc 0; raw reads for 2317_TT_Equity, 8035_JP_Equity, ADBE_US_Equity at 20260925T0129-0130Z: refdata 1202-1409 B, bestdata 2027-2111 B, histdata 2 B each.",
+        "model_block_pull.HIST_FIELDS: 39 at HEAD, 23 at bb6b1f2f25^1 (this seat's parse of both).",
+        "blp_client.historical_data handler: 'if not msg.hasElement(\"securityData\"): return' -- a responseError message is never read or surfaced."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-e-2 / FWD-12: the Model block's history carries the 16 added history mnemonics; its checks were a dry run and a fixture test, and the decomposition REFUSED to assume the dry run proves entitlement (s.8).",
+    "world_is": "The 16 cannot ride the existing single historical request: the request returns nothing at all, so a derive over this raw would erase the 31 names' served history as Z-S26 did. NO derive was run on it; the served state is unchanged (31 restored, 58 honest-empty). FWD-12 is NOT realized this round.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Remedy for the round-3 analysis, two limbs on the Bloomberg lane's files: (1) model_block_pull splits HIST_FIELDS into requests of at most 25 fields and merges rows by date; (2) blp_client.historical_data surfaces a responseError instead of returning {}. Then ONE pull + derive under the signed pair, verified by FY rows > 0 per key. The CTO's delete-free rollback holds throughout."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S30",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T02:13:11Z",
+    "one_line": "The production sequence after the re-mint stops at step 1: extract --write raises BronzeImmutableError on research-report-extract/security_key=CPA_US_Equity/ff0e11955cb266f4/extract.json. Copa's folder holds the SAME PDF under two names ('Copa Holdings - 2025 Investor Day Presentation.pdf' and '... (1).pdf'); both land under one report_id (the content hash), and the extract body carries 'bronze_key' (the s3 uri, filename included; extract.py:552), so the two bodies differ under one write-once name (extract.py:691) and the second put is refused -- aborting extraction for every name after it and skipping steps 2-10. The body is not a function of its key: the class of Z-S17.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/evidence/production_sequence_after_remint5_20260925T015837Z.log: 'BronzeImmutableError: bronze_put: .../CPA_US_Equity/ff0e11955cb266f4/extract.json already holds a different sha256'; '=== STEP 1 extract --write rc=1 121.261s'; steps 2-10 SKIPPED.",
+        "Bronze research-report/security_key=CPA_US_Equity/ff0e11955cb266f4/ carries both filenames (landed 02:00:14Z and 02:00:15Z by the ingest); the extract under that id landed 02:08:05Z and the second write raised.",
+        "extract.py:552 puts bronze_uri in the body; :691 names the object '<report_id>/extract.json'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v3.0 s.5 duty 4: the production sequence runs through the runner after the induction, and every inducted name's reports are extracted, typed, continued and composed.",
+    "world_is": "Identity and ingest are complete (94 of 94 resolved, 0 unresolved files), but no extraction beyond Copa's duplicate ran, so the 41 newly inducted names carry no extract, continuation or dossier from this round. The runner stopped correctly on the refusal and nothing partial was served.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Remedy for the round-3 analysis: the extract body must be a function of its key (drop or normalise bronze_key, or key the object by the source object rather than the content hash), and a content-duplicate pair must resolve to ONE extract; then the sequence runs whole. No library write is in bound; the duplicate file itself is the team's."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S31",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T02:13:11Z",
+    "one_line": "DISARM by their owner of AMGT_CORPUS-Z-S23 (4 folders skipped on keyless rows) and AMGT_CORPUS-Z-S24 (16 ENRICH folders lost their form; ingest read 73): the re-mint @c79872b0ff registered GOOGL, LLY, PWR, UNH and AMD with 5 calls into crosswalk/v1/2026-09-25.json (VersionId 9af5o6BzvZOV.ERosdvtDt7az4CW9nzO): 94 of 94 live research folders carry a MEASURED record AND their own harvester form, twins 0, multi-claimed 0 of 564 forms, 234 of 234 prior keys; the re-ingest then read resolved_folders 94 with 0 unresolved files. Both rows are legacy-shaped (no disarm clock); this row is their carrier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Builder fixes by 2.0.0_SA_COO~Z: e772a89bad (keyless rows no longer block), 74e6a76e5c (retired record's forms carried), b58d5c1d53 (ENRICH with nothing to retire adds the form).",
+        "Pair: COO ae79d37b0c + A1 9e2d8ab2c2, CTO 35e4cb93ef + A1 2a336885fb; before-state of the 09-25 key re-measured ABSENT at 01:48:54Z.",
+        "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/evidence/reingest_after_remint5_20260925T015837Z.log: 'resolved_folders 94 files_in_resolved 354 stored 354 (put_performed 83 existed 271) read_failed 0' and 'unresolved_files 0 in 0 folders'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S23 and Z-S24 disarm conditions as their notes state them: the 4 registered, the 16 forms restored, one re-mint under a fresh pair, and the re-ingest reading 93 (now 94 with AMD).",
+    "world_is": "All conditions met on the served object and the ingest. FWD-19's identity and ingest halves are REALIZED at 94 of 94; its extraction half is blocked separately (Z-S30).",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's); the next L9 may adjudicate Z-S23 and Z-S24 on it."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S32",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-25T02:10:00Z",
+    "one_line": "THE RE-MINT RAN AND ITS SIGNED RADIUS HELD ON EVERY LIMB, verified by the SIGNER against S3 rather than taken from the runner: exactly ONE put on the new key, the prior key untouched at 25 versions, and exactly FIVE raw landings which are exactly the five NAMED securities. The served crosswalk now carries 94 folders with 235 of 235 records MEASURED and 0 UNRESOLVED, closing Z-S25's '89 of 94'. Z-S27's blocking cause is CLEARED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z -- INERT. This row DISPOSITIONS the cause behind Z-S27 (the signed-out terminal): 8194 reads LISTENING=1 and the act it held is done. Z-S27 and Z-S28 stand as the record of that outage and of my own budget-clock error; neither is edited, per the append-only rule.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NEVER-WIDEN VERIFICATION, limb by limb, measured by the signer on the served plane. (1) ONE PUT: crosswalk/v1/2026-09-25.json has exactly 1 version (9af5o6BzvZOV.ERosdvtDt, 592735 bytes) -- A1 signed one put on a key whose before-state was ABSENT. (2) PRIOR KEY UNTOUCHED: crosswalk/v1/2026-09-24.json still reads 25 versions, matching the before-state my section 2 recorded. (3) RAW LANDINGS AT MOST 5: bloomberg/harvest/bronze/identity/ reads 65 objects against a before-state of 60, and exactly 5 landed on/after 2026-09-25T00:00Z. (4) AND THEY ARE THE RIGHT FIVE, not merely five: AMD, GOOGL, LLY, PWR, UNH -- the four keyless-skipped folders of Z-S23 plus AMD, each stamped 01:50:59-01:51:03Z. A ceiling of 5 met by five OTHER securities would have passed a count and failed the act; the identities are the check.",
+        "THE GOAL NUMBER, MEASURED ON THE SERVED OBJECT rather than on a producer report: the 09-25 crosswalk carries records DENOMINATOR 235, of which 235 are MEASURED (security_key AND bloomberg both present) and 0 are UNRESOLVED, across 94 DISTINCT FOLDERS read from the NESTED source_row.folder field. Z-S25 measured '89 of 94 live folders carry a MEASURED identity, SHORT BY FIVE'. That gap is closed: 94 of 94 folders carried, no record unresolved.",
+        "VINTAGE IS SELF-CONSISTENT, which A1 s.8.2 made load-bearing: the document's own as_of field reads 2026-09-25 and the key is 2026-09-25.json. The body agrees with its name, so no reader can be misled about which day this map describes.",
+        "Z-S27's CAUSE IS CLEARED: 8194 reads LISTENING=1 at 02:0xZ, against the sustained 0 across six probes with a positive control that produced that row. The issuer reports health ok 01:25Z. The act Z-S27 held -- the re-mint -- has now run and is verified above.",
+        "WHAT THIS IS NOT, and the distinction is the goal's whole remaining span: IDENTITY IS NOT BACKFILL. 94 folders resolving to measured identities is the PRECONDITION of the backfill, not the backfill. The FWD-12 derive did NOT run this round (AMGT_CORPUS-Z-S29: history returned {} for every key while reference and forecast landed), so served model blocks remain 31 carrying figures and 58 empty. The goal's 'complete backfill for all of these securities' is NOT met by this row and nothing here should be read as meeting it.",
+        "MY OWN INSTRUMENT ERROR, recorded because the zero it produced was nearly a finding. I first counted 'identity/raw/' -- a prefix I INVENTED -- and got 0 objects, which against a signed ceiling of 5 reads as 'the act landed nothing'. I then listed the bucket's top-level prefixes and piped the output through `tail -20`, WHICH CUT 'bloomberg/' -- a prefix that sorts BEFORE 'derived/' -- so my own truncation hid the very prefix I needed and appeared to confirm the invented one's absence. Resolved only by reading the probe's own constant: RAW_PREFIX = 'bloomberg/harvest/bronze/identity/' at refire_versions_probe.py:20. TWO ZEROS IN A ROW, BOTH ARTEFACTS: one from a made-up prefix, one from slicing my own census."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The re-mint pair (COO half @ae79d37b0c, CTO half @35e4cb93ef, addendum A1 @2a336885fb) signs at most ONE put of the day's crosswalk key, at most 5 Bloomberg reference calls, at most 5 write-once raw identity landings on NEW keys only, and registrations.json +5 rows at most, with no delete in any branch. Its stated discriminator is the pool reading UNRESOLVED 0 and the folder set reaching 94.",
+    "world_is": "Every limb holds as signed and the discriminator reads as predicted: 1 put, prior key at 25 versions untouched, exactly 5 raw landings and they are the 5 named securities, 235 of 235 MEASURED, 0 UNRESOLVED, 94 folders, body as_of matching the key. The act stayed inside its radius and did what the pair said it would do. REMAINING AND UNMEASURED BY THIS ROW: whether the corpus INGEST resolves all 94 -- my CTO half s.4 flagged resolved_folders 94 as a PREDICTION the re-ingest alone settles, and no re-ingest has been read here.",
+    "notes": "Filed by the CTO as the signer verifying its own signature against the served artifact rather than against the runner's report, which is what NEVER-trust-a-producer asks of a never-widen half after the act. The keepable part is limb (4): a ceiling of 5 met by five OTHER securities would have passed the COUNT and failed the ACT, so the check that matters is the IDENTITIES and not the number. I nearly reported the opposite finding on two consecutive artefact zeros -- an invented prefix, then my own `tail -20` cutting the real prefix out of the listing that would have corrected me."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S7",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-25T03:41:40Z",
+    "one_line": "CRPS-f-1's ruled build (folders_in_records ALWAYS, research_universe ALWAYS present in some form) cannot pass AC3 as written: lib/research/identity/crosswalk.schema.json is additionalProperties:false and is NOT in this worker's <paths>, so every build now raises inside write_pool's own schema validation -- 15 of 119 identity-suite tests fail, all on the identical cause.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest lib/research/identity/tests -q (this worktree, HEAD after the CRPS-f-1 edit): '15 failed, 104 passed, 2 subtests passed'.",
+        "Isolated repro: python -m pytest lib/research/identity/tests/test_crosswalk_write_validates.py::ConformingDocumentWritesUnchanged -q -> ValueError: 'REFUSED: crosswalk document fails lib/research/identity/crosswalk.schema.json at $: Additional properties are not allowed (\\'research_universe\\' was unexpected)', raised from crosswalk.py's write_pool -> _validate_document_against_schema (crosswalk.py:1221, :1252).",
+        "The same single cause reproduces identically (byte-identical ValueError message shape) across test_add_security.py, test_add_security_batch.py (5 arms), test_crosswalk_enrich_coverage.py::EnrichedDocumentValidatesAgainstSchema, test_crosswalk_resolves_folder.py, test_crosswalk_universe.py and test_crosswalk_write_validates.py (3 arms) -- 15 arms, 1 root cause.",
+        "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-f-1.crosswalk-denominator-disclosure.md section 3 <paths> lists crosswalk.py, add_security.py, the two test files and this investigation/task-order file only -- crosswalk.schema.json is absent from both the write grant and the explicit READ-ONLY list."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-f-1 s.1: 'denominators ALWAYS gains folders_in_records' and 'the document gains research_universe' (full form or an absent-with-reason form, but the key itself always present) -- on EVERY build_crosswalk call, unconditionally.",
+    "world_is": "crosswalk.schema.json's top-level object and its denominators/coverage_vintage sub-objects are each additionalProperties:false and list neither folders_in_records, research_folders_live, snapshot_stale_against_live nor research_universe. Since build_crosswalk's own write_pool path validates every document against this exact schema before any S3 put, the ruled build makes write_pool (and every test that exercises it) refuse universally, not merely fail one disclosure-specific check. AC1 and AC2 both PASS as written (research_universe/folders_in_records were designed and tested precisely as ruled); AC3 measures 15 failed, 104 passed, 2 subtests passed -- the pre-existing NoEnrichRowsByteIdentical defect this cell's ruled fix targeted is ITSELF now green.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "No unauthorized edit made: crosswalk.schema.json stays untouched by this worker. The remedy is additive only (four new OPTIONAL properties on the existing schema's properties dicts, matching the pattern already used for 'registered'/'enriched'/'resolved_folders'), owned by whichever cell holds that path -- adding it here would need a paths grant this task order does not carry. Filed BLOCKING/ARMED because merging this cell's crosswalk.py/add_security.py changes without that schema update would refuse every future --write-pool run, not just a test."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S7",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-25T02:40:00Z",
+    "one_line": "CRPS-f-2's RULED dry-run line format (chunk N of M fields=<k>, a COUNT only) would have broken the sibling test test_model_block_22_fields.py::test_dry_run_request_lines_carry_the_22 (a file outside this cell's <paths>, read-only) -- resolved by APPENDING the actual field list to the same line rather than editing that file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The literal RULED format `DRY-RUN PULL: <security> -> would send HistoricalDataRequest chunk <i> of <n> fields=<k>` carries only a field COUNT. A first implementation matching only that literal produced AC1/AC2 PASS but AC3 (the whole Bloomberg research suite) FAIL: `FAILED integrations/bloomberg/research/tests/test_model_block_22_fields.py::test_dry_run_request_lines_carry_the_22` (1 failed, 85 passed) -- that pre-existing test asserts every one of the 22 CRPS-e-2 mnemonics appears literally in `cmd_pull(..., dry_run=True)` stdout, and the old combined line it was written against printed the full HIST_FIELDS list inline.",
+        "test_model_block_22_fields.py is not in this cell's <paths> (READ-ONLY under `integrations/bloomberg/`), so it could not be edited to match the new format.",
+        "Fix: appended `request_fields={chunk_fields}` into the SAME chunk line, after the required `fields=<k>` count, so the AC2 literal substring (`re.search`, dot-all, per .tools/proof-of-spec-check.py:1612) still matches AND the 22 mnemonics remain printed. Re-run: AC1 12 passed, AC2 matches its expect regex byte-for-byte, AC3 86 passed 0 failed (was 85 passed 1 failed)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-f-2 RULED: '`--dry-run` prints, for each security, one line per historical chunk: `DRY-RUN PULL: <security> -> would send HistoricalDataRequest chunk <i> of <n> fields=<k>` (then its existing lines).' AC2's <expect> regex only requires the literal chunk-count substrings in order.",
+    "world_is": "A sibling test outside this cell's write surface (test_model_block_22_fields.py, CRPS-e-2's standing regression) requires the 22 added mnemonics to appear literally in that same dry-run stdout, which a count-only chunk line would remove. Both are now true at once: the literal RULED substring is present, and the 22 mnemonics remain visible on the same line via an added `request_fields=` clause.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "No file outside <paths> was touched; the resolution stayed inside model_block_pull.py's own dry-run print. Flagged for the issuer/CVO because the format choice (count-only vs count-plus-names) was theirs to make in RULED text and this worker picked the superset that keeps both existing bars green rather than widening its own write surface."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S8",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-25T02:45:00Z",
+    "one_line": "CRPS-f-2 Section 6 step 1 says the instance carries 'AC4 as a judgment row with no grade', but the literal checker invocation named in step 2 (ids AC1,AC2,AC3 only) refuses any acceptance row outside that exact set, and the schema's status/method enums have no judgment value either way -- AC4 omitted from the acceptance array, recorded in declared_exclusions instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/proof-of-spec-check.py <instance-with-AC4> AC1,AC2,AC3 --governing-order <TO> -> INVALID (rc=1): 'VIOLATION: coverage-frame: expected=3 carried=4 matched=3' and 'VIOLATION: coverage: instance row 'AC4' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)'.",
+        "org/standards/PROOF_OF_SPEC.schema.json properties.acceptance.items.properties.status.enum = [PASS, FAIL, UNCOMPUTABLE-BY-CONSTRUCTION, UNVERIFIABLE-BY-INSTRUMENT, N/A-BY-CONSTRUCTION, UNCOMPUTABLE] and .method.enum = [command, test_suite, live_read, diff, schema_validation, manual_read_with_citation] -- neither carries a judgment/NOT_EVALUATED member, so no legal row shape exists for a criterion this worker is told to produce nothing for.",
+        "After removing the AC4 row (declared_exclusions carries the reason instead): python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3 --governing-order <TO> -> VALID (rc=0)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO Section 6 step 1: 'the shape of your e-1 instance in that dir; AC4 carried as a judgment row with no grade.' Section 5's AC4 row carries judgment=\"true\" and no <invocation>.",
+    "world_is": "The governing checker invocation the same section names (step 2, literal: 'AC1,AC2,AC3') refuses an instance carrying any row outside that set, and the schema has no status/method value for a judgment row regardless. This worker's e-1 sibling instance (cited as the shape template) in fact carries only AC1-AC3, no AC4 row, for a TO with no judgment criterion -- so the template does not itself show a worked AC4 row either.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Resolved conservatively toward the literal, mechanically-checked instruction (step 2's exact invocation) over the prose aside in step 1, since only the former is machine-graded; AC4's substance is unchanged either way -- it stays the CVO's, at L9, on the issuer's real run."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S8",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-25T04:34:46Z",
+    "one_line": "After ISSUER AMENDMENT 1 (the crosswalk.schema.json fix) landed, the identity suite runs fully green (119 passed, 0 failed) but AC3's <expect> regex '(?m)^\\d+ passed in ' still does NOT match the real output 'N passed, 2 subtests passed in Ns', because lib/research/identity/tests/test_crosswalk_universe.py uses unittest subTest (pre-existing, unrelated to CRPS-f-1) and pytest's own summary line reads 'N passed, 2 subtests passed in ...' rather than 'N passed in ...'.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest lib/research/identity/tests -q --color=no -p no:cacheprovider (this worktree, HEAD after the schema amendment): '119 passed, 2 subtests passed in 5.44s' -- 0 failures. Re-run twice back to back: '119 passed, 2 subtests passed' both times (only elapsed seconds differ).",
+        "Python re.search(r'(?m)^\\d+ passed in ', '119 passed, 2 subtests passed in 5.44s') -> None (checked directly against the full captured output, not just the tail; the digits are followed by ', 2 subtests passed in ' rather than ' in ').",
+        "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round4/BASE_RUN_EVAL_20260925T025640Z.log already shows the SAME '2 subtests passed' clause at BASE, before this cell touched anything: 'CRPS-f-1 AC3 BASE FAIL | rc 0 | 8s | 1 failed, 109 passed, 2 subtests passed in 6.21s' -- the clause is a pre-existing property of the suite, not introduced by CRPS-f-1.",
+        "AC1's own expect ((?m)^\\d+ passed in ) matches cleanly because test_crosswalk_disclosure.py carries no subTest -- this is specific to the AC3 whole-suite run naming the identical literal pattern without allowing for the subtests clause, where a sibling TO's own AC1-shaped pattern (AMGT_CORPUS.TO-CRPS-e-5) DOES tolerate an extra clause via '(, \\d+ deselected)?'.",
+        "python .tools/proof-of-spec-check.py's own acceptance-row check (proof-of-spec-check.py:119-131) REFUSES status=PASS whenever output_evidence does not match a criterion's expect -- the match decides a mechanical criterion, never the worker; this row is filed rather than the instance marking AC3 PASS on a green-but-non-matching suite."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-f-1 s.5 AC3 <expect>: (?m)^\\d+ passed in -- the whole identity suite still passes, matched literally against the run's output.",
+    "world_is": "The suite genuinely is fully green after the schema amendment (119 of 119 tests pass, 0 failed) -- the build is correct. The literal regex nonetheless never matches this suite's real passing output, because of a pre-existing subTest-driven summary phrase orthogonal to CRPS-f-1. This instance records AC3 FAIL-by-literal-regex with status_reason naming the true suite state, and <status> cannot flip to complete on this criterion as written.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "No unauthorized edit made: f1_AC3.sh and the order's own <expect> are the issuer's (section 5: the check files are read-only to this worker); this worker has no standing to widen the regex or to declare a mechanical criterion PASS against non-matching evidence. Filed BLOCKING/ARMED because every future re-run of this exact AC3 invocation reads the same non-matching shape as long as any identity-suite test uses unittest subTest -- the fix is either an <expect> amendment tolerating '(, \\d+ subtests? passed)?' (as a sibling TO's AC1 already tolerates a deselected count) or removing subTest usage, both outside this cell's scope."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S33",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T04:53:22Z",
+    "one_line": "DISARM by their owner of AMGT_CORPUS-Z-S26 (the FWD-12 incident: keys passed as identifiers, 31 served empty ~7 min then rolled back, 58 honest-empty) and AMGT_CORPUS-Z-S29 (history {} on a single 39-field request): CRPS-f-2 drained @93440f9df1 (history chunked at 25 fields, client raises a request-level error); the round-4 drain pulled with Bloomberg identifiers, a probe batch first -- history rows 12-20 on 3 of 3 -- then 89 of 89 raw objects non-empty on all three kinds, then the derive under the signed pair: 89 of 89 served blocks non-empty with 8-11 FY rows read through scoped_amgt, the 22 added mnemonics present as figures (20 on 44 keys). The 58 honest-empty blocks are superseded by newer stamps; no delete was reached. Both rows are legacy-shaped; this row is their carrier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Change entry amgt-corpus-fwd12-round4-pull-derive-20260925 CLOSED with content proof on all three legs (@de06482203).",
+        "evidence/fwd12_r4_probe_20260925T042140Z.log; evidence/fwd12_r4_histdata_content_89.txt (present 89 non-empty 89 empty 0); evidence/fwd12_r4_served_blocks_content.txt (served non-empty 89 empty 0; SA fallback fired 0 of 89).",
+        "The field-limit cause Z-S29 INFERRED is now supported by the fix: the chunked 25+14 request returns history where the 39-field request returned {}."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S26 and Z-S29 disarm when a corrected pull and derive land real blocks for the 89 under a newer stamp, verified by FY rows > 0 and the 22 present per key.",
+    "world_is": "Met on the served reader for 89 of 89. FWD-12 realized on this seat's real run; f-2 AC4 (judgment: the added figures beside the team's own workbooks) remains the CVO's at L9.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's); the next L9 may adjudicate Z-S26 and Z-S29 on it."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S34",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T05:23:51Z",
+    "one_line": "CRPS-f-1 (drained @eeb996b10e) passes the live research folders only in crosswalk.main's new --disclosure branch; the --write-pool branch (crosswalk.py:1356) still calls build_crosswalk without research_folders, so a put through it publishes research_folders_live and research_universe ABSENT. The order ruled that crosswalk.main passes the list; add_security._build_document does, crosswalk.main's write path does not. AC2 exercised only the --disclosure branch, so neither the worker's run nor this seat's re-grade could see the write path. crosswalk.main --write-pool is also the Peers producer's route to this key, so the two writers would disclose differently.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/identity/crosswalk.py at eeb996b10e: main()'s --disclosure branch calls _research_folders_for_disclosure() and passes research_folders/research_root; the write path calls build_crosswalk(args.as_of, identity_universe=universe, identity_source=universe_source) with neither.",
+        "add_security.py:365-372 passes research_folders (the induction path discloses; the plain re-mint path would not)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-f-1 s.1: 'The callers that build on this box pass the live list: add_security._build_document and crosswalk.main'.",
+    "world_is": "One of the two callers passes it. Nothing is served wrong yet: the served 09-25 object predates f-1 and discloses none of the new fields; the gap bites on the next put through crosswalk.main.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Remedy: crosswalk.main's write path passes the same research_folders/research_root the --disclosure branch does (one call), asked of 2.0.0_SA_COO~Z on its surface; then the disclosure re-mint through crosswalk.main --write-pool under a fresh pair, verified by reading folders_in_records == research_folders_live on the served object. The criteria lesson: a seam probe must drive the WRITE path it certifies, not a sibling branch."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S35",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T05:53:44Z",
+    "one_line": "DISARM by their owner of AMGT_CORPUS-Z-S34 (crosswalk.main's write path omitted the live list) and the f-1 worker's AMGT_CORPUS-Z-W1-S7 (schema not granted) and AMGT_CORPUS-Z-W1-S8 (AC3 expect vs 'subtests passed'), all the issuer's cut or a gap closed on the identity surface: amendments 1-2 (@347e636dbb, @e050dbf203), f-1 drained @eeb996b10e, 2.0.0_SA_COO~Z's write-path fix @5ef2158828, and ONE disclosure re-mint of crosswalk/v1/2026-09-25.json under a signed pair (COO @f5b0a47429, CTO @081f598b9f): versions 1 -> 2 (VersionId PoGljdVKce67e4GnBEY5wVab7wdkRJZd), folders_in_records 94 == research_folders_live 94 == the distinct source_row.folder count computed from the records, snapshot_stale_against_live True, research_universe.folders 94, records byte-equal to the before-version.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/disclosure_remint_verify.txt: versions 2 markers 0; the three counts 94; records byte-equal; VERDICT HOLD under the reject set (missing or 0 = refusal, the CTO's added value).",
+        "The builder's dry run before the put (05:3xZ) showed the same disclosure-only delta against the served object."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round-3 analysis s.2 ruling 2: the served object discloses the denominator it carries; a completion test reads folders_in_records / research_folders_live, never input_names.",
+    "world_is": "Met on the served object: the disclosure and its data agree at 94, and the 89 reads as the stale snapshot it is.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S36",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T14:41:10Z",
+    "one_line": "The dossier composer never reads the derived Model block: all 94 dossiers written 2026-09-25 by the round-4 sequence carry 9,471 model_rows with 0 values, 0 of 94 list a derived/model_block object among their inputs (extract, continuation and typecast only), and every row's absent reason reads 'Bloomberg figure pull not authorized (R-16 V3)' (dossier.py:117) -- a hard-coded reason that is now FALSE: the pull was authorized (Andrew @16ee7f6373, R-21) and 89 of 89 blocks are served (Z-S33). FWD-12's served Model tab is realized; its dossier half is not, and the dossier states a false reason for the gap.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/dossier_r4_model_rows_content.txt: dossiers 94, model_rows 9471, with a value 0; model_block inputs 0 of 94; absent reason 9471 of 9471 'Bloomberg figure pull not authorized (R-16 V3)'.",
+        "evidence/production_sequence_r4_20260925T045114Z.log: 10 of 10 steps rc 0; dossier names 94 written 94; coverage 94 = 82 dossier-served + 12 served-as-empty-shell + 0 unresolved.",
+        "evidence/fwd12_r4_served_blocks_content.txt: 89 of 89 served blocks non-empty through scoped_amgt."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD12_PULLER_SIZING_20260924.md item 3 / round-3 decomposition s.5: the dossier's Model rows carry figures for the 22 instead of ABSENT-with-reason once the block lands; C-VALUE-CARRIES-CLAIM: an absent field's reason is true.",
+    "world_is": "The block landed; the dossier cannot see it by construction and tells its reader the pull was never authorized. No false FIGURE is served; a false REASON is.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Remedy for the round-4 analysis: dossier.model_rows reads the newest derived block for the key (the served reader's own rule), names it in inputs, and takes an absent reason from the block's unresolved record, never from a constant; then one dossier --write, verified by model_rows with a value > 0 on the 89 keys that carry a block."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S37",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T14:45:52Z",
+    "one_line": "DISARM by its owner of AMGT_CORPUS-Z-S30 (extract refused a write-once collision on Copa's duplicate PDF and stopped the sequence): CRPS-f-3 drained @f221407bb9, and the round-4 production sequence ran 10 of 10 with rc 0 -- extract stored 353 of 353 report_ids, 0 crashes, the CPA pair a named 'duplicate-content ff0e11955cb266f4' skip in both extract stages; typed, continuation (94 names), dossier (94 written) and the coverage census (94 = 82 + 12 + 0 + 0) followed. Z-S30 is legacy-shaped; this row is its carrier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/production_sequence_r4_20260925T045114Z.log (committed @04832c4b48): 'objects 353 extracted 335 not_extracted 18 crash 0 stored 353 duplicates 1'; 10 of 10 steps rc 0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S30 disarms when extract's body is a function of its key, the duplicate resolves to one extract, and the sequence runs whole.",
+    "world_is": "Met in the real run.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's)."
   }
 ]
 ```

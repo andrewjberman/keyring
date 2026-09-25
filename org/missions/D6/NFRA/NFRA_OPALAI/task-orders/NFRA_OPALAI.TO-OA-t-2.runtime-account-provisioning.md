@@ -86,7 +86,7 @@ Instance at `org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~
 **ISSUER NOTES:** hop 2. The elevated run (G-ACCT) and the DENIED-OK read are the close run's, by Andrew at the box,
 then the issuer runs `verify-boundary.ps1` (row NFRA_OPALAI-Z-S1).
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>

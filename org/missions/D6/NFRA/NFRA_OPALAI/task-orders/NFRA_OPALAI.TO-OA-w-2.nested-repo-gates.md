@@ -88,7 +88,7 @@ Instance at `org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~
 **ISSUER NOTES:** S3 / A14. The issuer installs the hook into the real opal_ai at the round's last merge (after every
 opal_ai cell has drained) and exercises one real nested commit through it.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>

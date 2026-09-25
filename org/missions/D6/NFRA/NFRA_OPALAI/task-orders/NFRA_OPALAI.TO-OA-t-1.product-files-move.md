@@ -27,8 +27,9 @@ consumer is re-pointed in the same change.
 1. The slice-first layout: `README.md` (names the three slices: `opal/` = the Opal implementation, all V1 code;
    `template/` and `clients/` = reserved, a README only, no code), `opal/README.md`, `template/README.md`,
    `clients/README.md`, `docs/README.md`.
-2. `opal/agent/refs/` receives every file of `org/tier0_utility/0.0.3_BG_BBGTerminal/refs/` (11 files, incl. `census/`),
-   byte-unchanged, EXCEPT `PORTAL_RETRIEVAL.md`. That file is re-written so the runtime data mechanism is the gateway MCP
+2. `opal/agent/refs/` receives the 7 top-level files of `org/tier0_utility/0.0.3_BG_BBGTerminal/refs/`, byte-unchanged,
+   EXCEPT `PORTAL_RETRIEVAL.md`. **`refs/census/` does NOT move** (CTO ruling I-4: it is the index's evidence, read by
+   `workflows/atom_decomposition/emit_catalog_v02.py`, and moves with the catalog in a later project); opal_ai carries none of it. That file is re-written so the runtime data mechanism is the gateway MCP
    tool `opal_asker_query(chat_id, message_id, key, params)`: the gateway identifies the asker from the Teams message
    itself and scopes the answer to them. `portal_lookup.py` is described as the development-side instrument (it needs
    AWS, which the runtime lacks). **`REQUEST_CATALOG.md` is NOT edited** (C7).
@@ -51,12 +52,12 @@ consumer is re-pointed in the same change.
      (Bloomberg view) takes that decline**: its server launches from the workspace and is the first enrichment. Row 5
      (news DynamoDB) is served only if the catalog holds a key for it; otherwise it too takes the decline.
 
-**In the parent (your worktree):** remove `org/tier0_utility/0.0.3_BG_BBGTerminal/prompt.md`, its `refs/**` (11 files),
-its `tools/portal_lookup.py`, and `.claude/skills/bbg-teams-assist/SKILL.md`. Re-point every code/config consumer. Measured
-at the cut: `infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml` names
-`org/tier0_utility/0.0.3_BG_BBGTerminal/refs/census/ARTIFACT_CENSUS_*.yaml` on 11 `census_ref` lines (`:85`, `:107`, `:129`,
-`:151`, `:230`, `:254`, `:302`, `:326`, `:350`, `:374`, `:425`). Re-point each to `opal_ai/opal/agent/refs/census/...`; change
-nothing else in that file. The seat's `README.md`, `threads/`, `logs/` and `deliverables/` STAY (state, C5).
+**In the parent (your worktree):** remove `org/tier0_utility/0.0.3_BG_BBGTerminal/prompt.md`, its 7 top-level `refs/` files
+(`refs/census/` STAYS, byte-equal to the cut),
+its `tools/portal_lookup.py`, and `.claude/skills/bbg-teams-assist/SKILL.md`. Re-point every code/config consumer. In
+`infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml` re-point exactly ONE line, `:1241` `guardrails_ref`, to
+`opal_ai/opal/agent/refs/BLOOMBERG_GUARDRAILS.md`; its 30 `census_ref` lines stay byte-unchanged. The file is committed
+with CRLF line endings: preserve every CR byte, so the diff against the cut is one line removed and one added. The seat's `README.md`, `threads/`, `logs/` and `deliverables/` STAY (state, C5).
 **Not yours:** `.tools/hooks/bg-concierge-gate.sh` and its test (OA-t-3), `.claude/skills/teams-assist/**` (OA-t-4),
 `.claude/settings.json` and `.tools/ajb.ps1` (the issuer's cutover hookups).
 
@@ -96,8 +97,8 @@ Rows: `org/missions/D6/NFRA/NFRA_OPALAI/surprise-channel/investigations/INVESTIG
 ## 4. PROOF OF SPEC (literal; run from your worktree root, after BOTH repos are committed)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OA-t-1"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/round1/checks/t1.AC1.sh; echo "exit=$?"</invocation><expect>present 19 of 19; content-equal 11 of 11 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OA-t-1"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/round1/checks/t1.AC2.sh; echo "exit=$?"</invocation><expect>moved paths absent at HEAD: 14 of 14; code/config files still referencing them: 0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OA-t-1"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/round1/checks/t1.AC1.sh; echo "exit=$?"</invocation><expect>present 15 of 15; content-equal 7 of 7; census files in opal_ai: 0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OA-t-1"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/round1/checks/t1.AC2.sh; echo "exit=$?"</invocation><expect>moved paths absent at HEAD: 10 of 10; census files kept at HEAD: 4 of 4; catalog lines added/removed vs cut: 1 1 (guardrails_ref re-pointed=yes); code/config files still referencing moved paths: 0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OA-t-1"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/round1/checks/t1.AC3.sh; echo "exit=$?"</invocation><expect>hard-lines byte-equal=yes; launch acts named: cut=N>0 runtime=0; whoami mentions>0; map rows 8 of 8, resolved 8 of 8; row 7 declined=1 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 

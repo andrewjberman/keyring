@@ -68,7 +68,7 @@ Instance at `org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~
 **ISSUER NOTES:** S2 census half / A10's census limb. `/integrate`, the sparse-cone recipe and the startup init are NOT
 this round (decomp s.9 item 4).
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~7</slot>
 <fabric>site-z</fabric>
