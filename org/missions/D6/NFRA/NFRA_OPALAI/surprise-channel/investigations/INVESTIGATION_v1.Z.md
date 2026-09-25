@@ -167,6 +167,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "NFRA_OPALAI-Z-W1-S1 is ARMED with this seat as disarm_owner.",
     "world_is": "No out-of-grant path moved. The residual is the resolver's ordering (a worker grant is never consulted for a path with no lane row), a fabric gate defect whose owner is the gate's, carried to the CTO in this round's drain-end read; NFRA_MCPORTAL's MP-w-1 (the mcportal gitlink) meets the same ordering.",
     "notes": "No gate is built here."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W3-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~3",
+    "surfaced_at": "2026-09-24T23:40Z",
+    "one_line": "t2.AC2.sh and t2.AC3.sh capture rc from a `cmd | tr -d '\\r'` pipeline with pipefail OFF, so `$?` is always tr's exit (0), never the underlying provision-account.ps1/verify-boundary.ps1 exit code -- their PASS conditions (`rc=3`, `rc=4`) can never be satisfied by any script, correct or not.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`set -o | grep pipefail` in this worktree's bash: `pipefail off`; t2.AC2.sh/t2.AC3.sh (and _root.sh) never set it.",
+        "Direct invocation (no pipe) of `opal_ai/opal/runtime/provision/provision-account.ps1 -Config <cfg>` in this non-elevated session: prints 'ELEVATION REQUIRED ...', `direct_rc=3` -- exactly the AC2 spec.",
+        "Direct invocation of `verify-boundary.ps1 -Config <cfg>` (no Opal_Agent account on this box): prints 'BOUNDARY: NOT-PROVISIONED', `direct_rc=4` -- exactly the AC3 spec.",
+        "Running the check scripts as issued, post-commit 2d83bdb8: t2.AC1.sh -> rc=0, PLAN acts matched 8 of 8, RESULT PASS, exit=0 (its expected rc=0 happens to equal tr's own exit, masking the bug). t2.AC2.sh -> 'session elevated=False; rc=0; ELEVATION REQUIRED lines=1; ...', RESULT FAIL, exit=1 (rc=0 fails the script's own `[ \"$rc\" = 3 ]` test). t2.AC3.sh -> 'rc=0; BOUNDARY: NOT-PROVISIONED', RESULT FAIL, exit=1 (rc=0 fails `[ \"$rc\" = 4 ]`)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2 expects `rc=3; ELEVATION REQUIRED lines>=1; ... -- RESULT: PASS -- exit=0`; AC3 expects `rc=4; BOUNDARY: NOT-PROVISIONED -- RESULT: PASS -- exit=0`.",
+    "world_is": "provision-account.ps1 and verify-boundary.ps1 both produce the exact specified refusal text and exit code when run directly; the check scripts that grade them lose that exit code to an un-guarded pipe before ever comparing it, so AC2 and AC3 read FAIL for any conforming implementation. Left alone, no worker on this cell can ever produce a PASS-by-output on AC2/AC3 as literally invoked.",
+    "notes": "t2.AC2.sh and t2.AC3.sh are 2.0.0_SA_COO~O's own artifacts, outside this order's <paths> (Read-only, not granted to write); not repaired here per bound 2.3 (never repair a criterion). A one-line fix (`set -o pipefail` before the pipe, or `${PIPESTATUS[0]}`) would let both scripts grade correctly."
   }
 ]
 ```
