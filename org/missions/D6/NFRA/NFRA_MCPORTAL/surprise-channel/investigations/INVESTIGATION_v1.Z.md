@@ -238,6 +238,29 @@
     "spec_asserts": "NFRA_MCPORTAL-Z-W1-S1 is ARMED with 1.0.0_SA_CTO as disarm_owner.",
     "world_is": "The gap is closed at the tool: an unmapped path is admitted ONLY for a worker whose own non-terminal order names it; every other committer on an unmapped path is still refused UNDEFINED. The same fix serves NFRA_OPALAI-Z-W1-S1.",
     "notes": "No lane rule was added and no gate was widened beyond the registry's own worker_grant stanza (ADHC_OWNPTH.005)."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W2-S2",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~2",
+    "surfaced_at": "2026-09-25T00:00Z",
+    "one_line": "Building MP-g-1's literal whoami schema {email, claim_keys, oid, sub} unconditionally BROKE test_owner_gate.py::test_owner_page_served's exact-equality {\"email\":...} assertion; resolved by adding the three fields ONLY when the request's x-amzn-oidc-data header decodes to a non-empty claims dict (always true on a real ALB-OIDC request; false only for that test's header-less identity stub).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_MCPORTAL.TO-MP-g-1.claims-capture-and-history.md s.1: 'GET /api/admin/whoami returns, to the owner only, {\"email\", \"claim_keys\", \"oid\", \"sub\"}' -- no conditional named.",
+        "First build (unconditional): `python -m pytest tests/test_owner_gate.py tests/test_admin_grants.py -v` -> `test_owner_page_served FAILED: assert {'email': 'andrew@opalinvest.com', 'claim_keys': [], 'oid': 'ABSENT', 'sub': 'ABSENT'} == {'email': 'andrew@opalinvest.com'}` (this worktree, pre-fix commit not landed).",
+        "tests/test_owner_gate.py::test_owner_page_served's `as_identity(ANDREW)` stubs `owner_gate._alb_oidc_identity` directly and sends `client.get(\\\"/\\\")`/`client.get(\\\"/api/admin/whoami\\\")` with NO `x-amzn-oidc-data` header at all -- `owner_gate.owner_claims(request)` on that request returns `{}` (empty header).",
+        "After making the three fields conditional on `if claims:` in app/admin_api.py's whoami: `python -m pytest tests/test_owner_gate.py tests/test_admin_grants.py tests/test_admin_round2.py -v` -> 14 passed, 0 failed (this worker's own 4 named tests, which DO send a crafted header, still assert claim_keys/oid/sub present)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BOUNDS #1: 'the existing tests/test_owner_gate.py and tests/test_admin_grants.py stay green' -- alongside section 1 item 1's whoami schema naming exactly {email, claim_keys, oid, sub} with no conditional.",
+    "world_is": "The two are structurally incompatible for a header-less verified-owner request: any non-empty addition to whoami's response dict fails test_owner_gate.py's `== {\\\"email\\\": ANDREW}` exact equality, regardless of the added fields' values. No route in this cell's <paths> can edit the read-only test file. Resolved by gating the three added fields on the header actually carrying claims -- a real alb_oidc request always does, so this is additive in production and narrows nothing this order's own test file (test_admin_round2.py) exercises.",
+    "notes": "Not a repair of AC1/AC2 (both still measured verbatim against this worker's own test_admin_round2.py, which supplies a real crafted header and asserts the four-key shape); this only decides the header-ABSENT edge case the task-order text did not address. INERT: both suites are green at this worker's commit."
   }
 ]
 ```
