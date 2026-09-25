@@ -19,18 +19,73 @@
 
 set -euo pipefail
 
+# GIT-ENV-CLEAN CROSS-REPO CALL (OA-w-2): inside a pre-commit hook, git EXPORTS
+# GIT_DIR/GIT_INDEX_FILE (and, for some invocations, GIT_WORK_TREE) pinned to the repo
+# whose commit is in flight -- measured here for a nested (submodule) commit, where
+# they point at the NESTED repo. Those env vars OUTRANK a bare `-C <other-repo>`: git
+# resolves "the current repo" from GIT_DIR first and only falls back to `-C`/cwd
+# discovery when it is unset, so `git -C "$SUPERPROJECT" rev-parse --git-common-dir`
+# silently answers for the NESTED repo again, one directory too deep, unless these are
+# cleared for that one call. Use `_git_x -C <dir> ...` for any query that must land on
+# a DIFFERENT repo than the one whose hook is running.
+_git_x() { env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE -u GIT_COMMON_DIR \
+    -u GIT_OBJECT_DIRECTORY -u GIT_ALTERNATE_OBJECT_DIRECTORIES git "$@"; }
+
 # precomp_v1 (RV0017-F002): orchestrator may pre-resolve REPO_ROOT via
 # PRECOMP_REPO_ROOT to skip the redundant git rev-parse subprocess.
 REPO_ROOT="${PRECOMP_REPO_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
 YAML="$REPO_ROOT/.owned-paths.yaml"
 VALIDATE="$REPO_ROOT/.tools/owned-paths-validate.py"
+
+# ---------------------------------------------------------------------------
+# NESTED-REPO GATE (OA-w-2, 2026-09-24): a commit made INSIDE a mapped submodule
+# (opal_ai/**) has REPO_ROOT above pointed at the NESTED repo's own toplevel, which
+# carries neither .owned-paths.yaml nor the validator -- in block mode (the default)
+# that fails EVERY nested commit closed before any lane is ever consulted. A nested
+# repo is graded against the PARENT's (superproject's) lane file instead, with staged
+# paths re-based to PARENT-relative (opal_ai/<path>) so a worker's <paths> grant
+# (written parent-relative) and the lane rows match on the same string. In the parent
+# itself (no superproject) SUPERPROJECT resolves empty and this is a no-op.
+# ---------------------------------------------------------------------------
+NESTED_PREFIX=""
+SUPERPROJECT="$(git rev-parse --show-superproject-working-tree 2>/dev/null || true)"
+_NESTED_MAIN_WT=""
+if [ -z "$SUPERPROJECT" ]; then
+    # A LINKED WORKTREE of the nested repo (not its main/registered checkout) has no
+    # superproject relationship of its OWN -- `--show-superproject-working-tree` only
+    # answers for the repo's registered (main) worktree. `git worktree list` always
+    # lists the main worktree first, from ANY worktree sharing that repo's commondir,
+    # so ask that one instead of guessing.
+    _NESTED_MAIN_WT="$(git worktree list --porcelain 2>/dev/null | awk '/^worktree /{print $2; exit}')"
+    if [ -n "$_NESTED_MAIN_WT" ]; then
+        SUPERPROJECT="$(_git_x -C "$_NESTED_MAIN_WT" rev-parse --show-superproject-working-tree 2>/dev/null || true)"
+    fi
+fi
+if [ -n "$SUPERPROJECT" ]; then
+    _PREFIX_BASE="${_NESTED_MAIN_WT:-$REPO_ROOT}"
+    NESTED_PREFIX="$(realpath --relative-to="$SUPERPROJECT" "$_PREFIX_BASE" 2>/dev/null || true)"
+    case "$NESTED_PREFIX" in
+        ""|.|..|../*) NESTED_PREFIX="" ;;  # could not place it under the superproject -- do not guess
+    esac
+    if [ -n "$NESTED_PREFIX" ]; then
+        REPO_ROOT="$SUPERPROJECT"
+        YAML="$REPO_ROOT/.owned-paths.yaml"
+        VALIDATE="$REPO_ROOT/.tools/owned-paths-validate.py"
+    fi
+fi
+
 # ONE LOG FOR EVERY WORKTREE (gap 4 of v3's first drain, 2026-09-04; 3.0.0_SA_CVO 94007, 4.0.0_SA_CRO 94014; placement
 # 0.0.0_AB_MSTR 94049): the audit log is gitignored, so a LINKED worktree (a spine-v3 worker's) wrote its PASS/BLOCK/OVERRIDE
 # rows into its own checkout's copy, which died with the worktree -- worker ~2's two OVERRIDE lines never reached the main
 # tree. The log now resolves to the MAIN worktree root (the parent of `git rev-parse --git-common-dir`), same filename, so
 # every reader keeps looking where it always did and every linked worktree writes the one log. In the main worktree the
 # two roots coincide; a git that cannot answer falls back to REPO_ROOT (never to nowhere).
-_GCD="$(git rev-parse --git-common-dir 2>/dev/null || true)"
+# `-C "$REPO_ROOT"` (not a bare cwd-scoped call): when the NESTED-REPO GATE above
+# re-pointed REPO_ROOT at the superproject, the common-dir must be THAT repo's, not
+# the nested repo's -- otherwise a nested commit's audit row would land in the wrong
+# tree's log (or fail to land at all). `_git_x` (defined above): GIT_DIR is pinned to
+# the nested repo in this process, which would otherwise silently out-rank `-C`.
+_GCD="$(_git_x -C "$REPO_ROOT" rev-parse --git-common-dir 2>/dev/null || true)"
 case "$_GCD" in
     "") MAIN_ROOT="$REPO_ROOT" ;;
     /*|[A-Za-z]:*) MAIN_ROOT="$(cd "$_GCD/.." 2>/dev/null && pwd || echo "$REPO_ROOT")" ;;
@@ -94,6 +149,14 @@ if [ -n "${OWNED_PATHS_STAGED_FILES:-}" ]; then
     STAGED="$OWNED_PATHS_STAGED_FILES"
 else
     STAGED="$(git diff --cached --name-only 2>/dev/null || true)"
+fi
+
+# NESTED-REPO GATE (cont'd): staged paths above are NESTED-repo-relative (e.g.
+# "src/foo.py"); re-base to PARENT-relative (opal_ai/src/foo.py) before grading, so
+# the resolved lane/worker-grant matches strings written parent-relative everywhere
+# else in the estate.
+if [ -n "$NESTED_PREFIX" ] && [ -n "$STAGED" ]; then
+    STAGED="$(printf '%s\n' "$STAGED" | sed "s#^#${NESTED_PREFIX}/#")"
 fi
 
 # Edge case: no staged files
