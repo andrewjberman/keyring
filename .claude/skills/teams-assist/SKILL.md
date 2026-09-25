@@ -125,8 +125,10 @@ Y", "summarize the Z thread deeper":
 (read) and `send_chat_message` (write, confirm-first).
 
 ## Notes
-- **Engine retired for this skill.** The old background poller `teams-watch.py` (0.5.0_AE-owned)
-  backed the monitor model; this ad-hoc skill does not use it. Left in place (not deleted) pending
-  AE's call on whether to keep it for any other consumer. History: the monitor + per-message-prompt
-  model was replaced by this pull-digest model on 2026-06-26 (Andrew-direct) because per-message
-  blocking prompts are wrong for a live conversation stream.
+- **Engine retired for this skill, and MOVED (NFRA_OPALAI OA-t-4).** The old background poller
+  `teams-watch.py` (0.5.0_AE-owned) backed the monitor model; this ad-hoc skill does not use it.
+  It no longer lives at this path -- it moved to
+  `opal_ai/opal/agent/teams_watch/teams-watch.py`, where it now holds its own gateway OAuth
+  refresh family instead of reading Claude Code's `~/.claude/.credentials.json`. History: the
+  monitor + per-message-prompt model was replaced by this pull-digest model on 2026-06-26
+  (Andrew-direct) because per-message blocking prompts are wrong for a live conversation stream.

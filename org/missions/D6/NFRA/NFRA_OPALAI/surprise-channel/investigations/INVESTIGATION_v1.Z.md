@@ -167,6 +167,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "NFRA_OPALAI-Z-W1-S1 is ARMED with this seat as disarm_owner.",
     "world_is": "No out-of-grant path moved. The residual is the resolver's ordering (a worker grant is never consulted for a path with no lane row), a fabric gate defect whose owner is the gate's, carried to the CTO in this round's drain-end read; NFRA_MCPORTAL's MP-w-1 (the mcportal gitlink) meets the same ordering.",
     "notes": "No gate is built here."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W4-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~4",
+    "surfaced_at": "2026-09-24T21:10Z",
+    "one_line": "OA-t-4's move (remove `.claude/skills/teams-assist/teams-watch.py`, change its whole auth model) breaks a LIVE PRODUCTION consumer neither OA-t-1 nor OA-t-4 names: integrations/ticketing/intake/runner.py imports that exact path and calls its read_token()/PIN_SERVER/PIN_IDENTITY/_gateway_call directly as the D7 ticket-intake buzz-send path, fired every 5 minutes by the Windows Scheduled Task OPAL_D7_ticket_intake.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/ticketing/intake/runner.py@b9da668e16 line 69: TEAMS_WATCH = REPO_ROOT / '.claude' / 'skills' / 'teams-assist' / 'teams-watch.py'; lines 106-115 _load_teams_watch() imports it by that literal path via importlib.util.spec_from_file_location; lines 118-138 gateway_send_factory() sets tw.PIN_SERVER/tw.PIN_IDENTITY module attributes and calls tw.read_token() and tw._gateway_call(...) directly.",
+        "runner.py's own header (lines 43-49): 'LIVE PRODUCTION -- executed by the Windows Scheduled Task OPAL_D7_ticket_intake, EVERY 5 MINUTES, FROM THIS WORKING TREE.'",
+        "Neither TO-OA-t-1 (product-files-move) nor TO-OA-t-4 (this order)'s <paths> or cell text names integrations/ticketing/intake/runner.py; TO-OA-t-4's own face states the parent copy is 'removed on your branch' as a premise, and TO-OA-t-1's face lists what it moves/removes without this file.",
+        "The new opal_ai/opal/agent/teams_watch/teams-watch.py (this order's build) has no read_token() function at all -- ensure_fresh_access_token()/_post_form() replace it -- so even a path re-point in runner.py would not restore the old call shape without its own rewrite."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OA-t-4 section 1: 'Move the file to opal_ai/opal/agent/teams_watch/teams-watch.py (the parent copy removed on your branch)' and AC3: 'no code/config files naming the old path' (grep scope: .claude/, .tools/, org/mcp/, *.ps1).",
+    "world_is": "The parent copy was NOT already removed at this order's cut (measured: byte-identical to the pre-move HEAD, git diff b9da668e16..HEAD -- .claude/skills/teams-assist/ empty before this cell's own edit); AC3's grep scope does not reach integrations/ticketing/intake/runner.py, so the check can PASS while a real 5-minute-cadence production consumer starts raising FileNotFoundError/AttributeError on every fire once this branch's removal lands at the round's cutover.",
+    "notes": "Not fixed here: integrations/ticketing/intake/runner.py is outside this order's <paths> (write) and outside its named Read-only set. A fix needs either (a) runner.py re-pointed at the new path and rewritten against the new ensure_fresh_access_token()/state-dir contract (its own OAuth client/state, since it cannot share teams-watch's runtime state dir from a workspace-side scheduled task), or (b) a ruling that the D7 runner keeps its own independent, un-migrated copy of the old CREDS-reading logic. Both are CTO/COO calls; named disarm_owner is the issuer per this project's standing 'issuer as disarm_owner' convention."
   }
 ]
 ```
