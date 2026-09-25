@@ -347,6 +347,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "NFRA_OPALAI-Z-W6-S1 is ARMED with this seat as disarm_owner.",
     "world_is": "The criteria now read the command's own exit; the order's instance is rewritten by a fresh worker on this slot against the fixed checker.",
     "notes": "Swept on the trigger: 19 check files read rc=$?, all through the one sourced root. No gate is built here."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W2-S4",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~2",
+    "surfaced_at": "2026-09-25T02:20Z",
+    "one_line": "safe-ec2-deploy.sh's own Step 3 manifest auto-commit refuses on this host because jq.exe rewrites EC2_MANIFEST.json with CRLF line endings, turning every one of the file's 658 lines into a diff hunk and pulling ~89 pre-existing unrelated naming-gate rows into the graded set -- REFUSE, non-fatal by the script's own design, but the manifest record is then left uncommitted on whichever branch the deploy ran from.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-ec2-deploy.sh opal-gateway run from /c/tmp/oa-2-rel (release worktree rel-nfra-opalai-r1-gateway): Step 3 printed '[naming-gate] NAMING-GATE: REFUSE 89 graded' then 'ERROR: Manifest safe-commit failed (contamination guard / owned-paths). The deploy LANDED --'.",
+        "git -C /c/tmp/oa-2-rel diff -- infra/aws/ec2/EC2_MANIFEST.json after that run showed every one of the file's lines as changed ('-{' / '+{' from line 1); python byte count on that worktree's copy: 658 of 658 newlines were CRLF (\\r\\n). This worktree's (oa-2) untouched copy of the same file: 0 of 658 CRLF.",
+        "The deploy itself (S3 upload, SSM pull+restart, on-box md5) succeeded and is unaffected; only the script's own bookkeeping commit is broken by this. Worked around by hand-editing only the two changed fields plus one added field on oa-2's own LF copy and committing there (9f323c7452), which the naming-gate then correctly scoped to 0 graded lines."
+      ]
+    },
+    "spec_asserts": "The task order's step 3 (\"record the release on THIS branch\") reads as: run the deploy, and its EC2_MANIFEST.json record lands through the script's own Step 3 commit.",
+    "world_is": "The script's own commit step cannot land the manifest record on this device class (jq.exe CRLF output at that write site, undocumented elsewhere), so every future opal-gateway (and likely every other jq-rewritten EC2_MANIFEST.json) deploy through safe-ec2-deploy.sh on this device silently degrades to the 'record manually' fallback the script prints -- a standing hazard for any worker who does not notice the ERROR line among the deploy's otherwise-successful output.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not fixed here: infra/aws/ec2/safe-ec2-deploy.sh is READ-ONLY under this task order's bounds (section 2.1: 'the deploy script and safe-ec2-deploy.sh are READ, never edited'). The fix is a tr -d '\\r' on the jq TEMP output before mv, the same pattern already applied at this script's SOURCE_PATH read (comment at safe-ec2-deploy.sh's SOURCE_PATH lookup)."
   }
 ]
 ```
