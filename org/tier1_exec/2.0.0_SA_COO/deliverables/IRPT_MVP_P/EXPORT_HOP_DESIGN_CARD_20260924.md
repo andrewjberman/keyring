@@ -73,6 +73,18 @@ B. IN P'S LANE (`export/`, `_render_identity/`, `_authz`), buildable now, dark u
       dispatch would fail on a missing required parameter;
    B3 finalize: the host's PDF write triggers `finalize_export`, or the served `export-receipt` read finalizes on
       first read (choose the one without a new event source; the header forbids a schedule).
+   B2-URL THE PRINT URL THE RENDER HOST OPENS (interface, published 2026-09-25T17:4xZ by P; portal half = ~D's lane).
+      MEASURED at portal DEV: PrintEntry -> resolveBundle -> api.getPerformanceReport({tenant, scopeFingerprint,
+      revision, start, end}) passes NO accountSetId, so selectedReference() throws "An accepted account selection is
+      required" in the browser before any request; and start = end = bundle.sourceTimestamps.businessAsOf, not the
+      retained window, while the retained reopen matches on the exact window. A Performance render prints nothing.
+      THE URL (every value from the render grant / frozen bundle, never the browser):
+        /investor-reporting/print?bundle=<bundle_id>&tenant=<firm>&revision=<export revision>&kind=performance
+          &selection=<accountSetId sel_...>&start=<retained dates.actual_start>&end=<retained dates.actual_end>
+          [&narrative=1]
+      The portal half: PrintEntry reads `selection`, `start`, `end` and resolveBundle passes them to
+      getPerformanceReport as accountSetId/start/end; a missing one refuses by name (no default window).
+      The backend half (P): the grant pins accountSetId = that selection; B2 builds this URL from the grant.
 C. PROOF: one real run per firm. COT and 49F each export a retained report; INF follows its own per-use word.
 
 ## What this card does not move
