@@ -1327,6 +1327,26 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The block landed; the dossier cannot see it by construction and tells its reader the pull was never authorized. No false FIGURE is served; a false REASON is.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Remedy for the round-4 analysis: dossier.model_rows reads the newest derived block for the key (the served reader's own rule), names it in inputs, and takes an absent reason from the block's unresolved record, never from a constant; then one dossier --write, verified by model_rows with a value > 0 on the 89 keys that carry a block."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S37",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T14:45:52Z",
+    "one_line": "DISARM by its owner of AMGT_CORPUS-Z-S30 (extract refused a write-once collision on Copa's duplicate PDF and stopped the sequence): CRPS-f-3 drained @f221407bb9, and the round-4 production sequence ran 10 of 10 with rc 0 -- extract stored 353 of 353 report_ids, 0 crashes, the CPA pair a named 'duplicate-content ff0e11955cb266f4' skip in both extract stages; typed, continuation (94 names), dossier (94 written) and the coverage census (94 = 82 + 12 + 0 + 0) followed. Z-S30 is legacy-shaped; this row is its carrier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/production_sequence_r4_20260925T045114Z.log (committed @04832c4b48): 'objects 353 extracted 335 not_extracted 18 crash 0 stored 353 duplicates 1'; 10 of 10 steps rc 0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S30 disarms when extract's body is a function of its key, the duplicate resolves to one extract, and the sequence runs whole.",
+    "world_is": "Met in the real run.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's)."
   }
 ]
 ```
