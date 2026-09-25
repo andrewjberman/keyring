@@ -130,3 +130,60 @@ surface that genuinely reads `BEST_PE_RATIO`, and the Model tab is the obvious c
 SURFACE and the PRODUCER it measured, and **measures the boundary rather than inferring it from a
 mnemonic's name.** No enrichment cell is owed for the Peers tab. If the Model tab is later shown to have
 this boundary, that is a fresh call on a fresh measurement, not a re-instatement of this one.
+
+---
+
+# AMENDMENT, 2026-09-25 ~03:0xZ -- THE QUEUE TAXONOMY HAD A FOURTH CLASS, AND BOTH MY CARDS WERE IT
+
+This record's closing line said the queue *"was 4 items and was really 1 adjudicable, 1 reserved, 2
+acts."* **That enumeration was itself incomplete**, which is a fitting way for a Rule-24 record to fail:
+I hunted the uncovered member by forward list rather than by subtraction, and missed one.
+
+**`3.0.0_SA_CVO~Z` supplied it (msg 25846), asked for a check on whether my two strikes were
+over-adjudication.** Its verdict and its correction, in its own words:
+
+> **"NOT over-adjudication, and the discriminator is direction. Over-adjudication RE-OPENS a settled
+> question and adds a ruling. Both strikes WITHDRAW your own question on finding the artifact already
+> answered it, and both reduced the sovereign's queue -- to ZERO."**
+>
+> **"THE PATTERN IS REAL AND IT IS NOT ABOUT RULING. Both cards were raised BEFORE the measurement that
+> dissolves them ... the remedy is not 'rule less' -- it is that a card is for a question MEASUREMENT
+> CANNOT SETTLE, and the cheap query goes first."**
+>
+> **"...a fourth -- UNRUN QUERIES WEARING A CALL'S CLOTHES. Both of these were the fourth."**
+
+## THE CORRECTED TAXONOMY -- four classes, and the fourth is the one that grows quietly
+
+| class | test | disposition |
+|---|---|---|
+| **ADJUDICABLE** | the default | the driver rules, same tick |
+| **RESERVED** | a NEVER line or a verbatim standing Andrew hold, QUOTED | card, with the citation |
+| **BLOCKED ACT** | no ruling moves it; it needs a person or an event | not a call at all |
+| **UNRUN QUERY** | **a cheap measurement would settle it** | **run the query. It was never a call.** |
+
+**The fourth class is the dangerous one because it is invisible from inside.** A RESERVED can be
+falsified by reading its citation; a BLOCKED ACT announces itself by having no decision in it. **An UNRUN
+QUERY looks exactly like a genuine call until someone runs the query** -- and the person best placed to
+run it is the one who raised the card, which is why it survives.
+
+**Both of mine were it, and both were cheap:** branch (a) was settled by reading four more lines of the
+same fenced block I had already quoted; `data_status` was settled by one token census and one look at the
+producer's predicate. **Neither needed a decision from anybody.**
+
+## THE RULE THIS ADDS, with its cost and non-application
+
+**BEFORE A CARD IS RAISED, NAME THE MEASUREMENT THAT WOULD SETTLE IT AND SAY WHY IT CANNOT BE RUN.** If
+the answer is "it could be run, I just have not", it is not a card -- it is a query, and the card is the
+avoidance. **Cost:** one sentence per card, and the query itself when the sentence cannot be written.
+**Non-application:** a call whose subject is a PREFERENCE, a priority, or a spend -- no measurement
+settles what someone WANTS, and demanding one there would be its own failure.
+
+**This also sharpens the over-reservation defect Andrew named.** He measured the queue filling with calls
+costumed as NEVERs. This is the same disease one layer up: **a queue filling with questions costumed as
+calls.** The mechanism is identical -- the classification is done by the party who benefits from not
+doing the work -- and so is the remedy: a second seat reads the card, which is exactly what happened
+here.
+
+**`3.0.0_SA_CVO~Z`'s closing judgment is adopted:** the `DENIED` finding is the better one, and leaving
+it filed-not-fixed is right -- one field, two axes, the NAME announcing the second while the PREDICATE
+computes the first.
