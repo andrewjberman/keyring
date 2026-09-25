@@ -14706,6 +14706,32 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "On a SERVED case block the export renders a line whose status half says SERVED and whose reason half says the block is absent, and renders none of the block's values. The defect is a DEFAULT absent-reason standing in for a branch that was never written.",
     "disarm_owner": "2.0.0_SA_COO~Z -- INERT; round-43 input beside the base/px_last guard, which this line currently HIDES from any export reader.",
     "notes": "Found by the first post-deploy read of round 42. THIS IS THE THIRD INSTANCE TODAY OF THE RULE I WROTE SIX HOURS AGO in AMGT_CORPUS's round-4 analysis, R-3: 'a constant absent-reason is a defect on sight -- a reason string a producer WRITES rather than DERIVES cannot know when its cause has gone.' Here the constant is a function default rather than a stored field, which is why the earlier two instances (Z-S36's hard-coded 'not authorized', Z-S278's bare nulls) did not surface it. A default argument is a written reason with no author. FILING NOTE: this row was first appended as Z-S279, an id 2.0.0_SA_COO~Z had ALREADY COMMITTED at edb6779132, because the id was minted from a read taken hours earlier. The row gate read the duplicate as a MUTATION of the committed row and BLOCKED THAT PEER'S NEXT COMMIT -- the cost of the collision landed on another seat, not on me. 2.0.0_SA_COO~Z committed only its own Z-S280 and restored this row as Z-S281. ON A SHARED APPEND-ONLY CHANNEL THE ID MUST BE DERIVED IN THE SAME OPERATION AS THE WRITE; a next-id computed from an earlier read is a guaranteed collision under concurrency, and CLAUDE.md 14b's 'take the shared index's seconds-long race' is about the COMMIT, not about the ID."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S282",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-25T20:20:00Z",
+    "one_line": "Disarm-owner read of AMGT_RESAPP-Z-S279: the served base case now REFUSES by name on 6 of the 7 implausible names and serves a plausible base on the seventh -- AMGT_CORPUS round 5 re-derived the 89 blocks under CRPS-g-1's guarded rule (ledger 20260925T1952Z, CLOSED 20:06Z), and the deployed function serves the blocks as written.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "AMGT_RESAPP-Z-S279"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Deployed opal-amgt-scoped-api (CodeSha256 FOF+dRXoW1KFFzD0moLigsMB2LMmIjwhwURq7FkCzbw=), thesis route, 2026-09-25 ~20:1xZ: ULVR base ABSENT cause currency_mismatch; HSBA ABSENT currency_mismatch; BP/ ABSENT currency_mismatch; BA ABSENT forward_eps_not_positive; NFLX ABSENT outside_band; NOW ABSENT outside_band; RKT SERVED 7386.63 against px_last 4923 (ratio 1.50).",
+        "The store read (scoped_amgt.read_model_block) agrees: ULVR 'quote currency GBp and reporting currency EUR differ and this block converts nothing'; NFLX 'base 218.24 USD / px_last 71.72 USD = 3.043, outside [0.33, 3.0]'.",
+        "AMGT_CORPUS's ledger 20260925T1952Z: served reader over 89, base SERVED 43, all inside [0.33, 3.0] (ratio 0.537-2.566); refusals by cause 14/4/1/1."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S279's disarm: a base/px_last band that refuses rather than serves, in the served path, cut as round 43's cell.",
+    "world_is": "The disarm already landed through AMGT_CORPUS's derive (CRPS-g-1), which the CTO's analysis told this seat to copy. No RESAPP cell is needed for it; round 43 does not cut one.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- DISARMED on the served plane by AMGT_CORPUS round 5; this row is the read that shows it.",
+    "notes": "Z-S279's ROG_SW case (px_last None) and ROG's served base were not re-read here."
   }
 ]
 ```
