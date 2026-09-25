@@ -10,7 +10,7 @@ Build place: the main portal checkout on DEV (Andrew-direct ~18:3xZ). As of 2026
 | What | Value |
 |---|---|
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal local DEV | `8242412d` (all of round 3 + the drain's repairs and hookups); origin DEV `13b5356f` (FULL mode: product changes reach origin through `1.0.0_SA_CTO`) |
+| Portal DEV | `8242412d` = origin DEV (ls-remote read 2026-09-25 ~15:0xZ; CTO review 100953, pushed by 0.0.0_AB_MSTR on Andrew's word) |
 | Round-3 merges on DEV | chain D `f9df6ab5` (+ repair `62055f14`); chain A `00806e0c` (+ repair `89a6d4f4`); chain B `16c11701`; chain C `d3d93838`; hookups `8cd2dab2`; join `6de269cc` (ff) + `f9a954b3`; repairs `ecfd327a`, `8242412d` |
 | CLOUD records | chain D `1588e5c247`; A `b2c65c13d0`; B `8c2235aa08`; C `cb7bd249c9`; join `4c8d0f570e`; IV-e-16 close `4047bdbea7` + `a109a7e0a9`; IV-e-20 close `6c8a16b536` + `0eb458269a` |
 | Screen | `localhost:5174` from the main checkout, serving local DEV |
@@ -43,6 +43,10 @@ disarmed. The DEV landing 13b5356f..8242412d is under the CTO's review; the push
 4. fe-s-5/states re-scoped per R6: the heatmap cell reads "not supplied", the reason on hover; the two sub-tests pinning the
    retired Summary block re-scoped or removed with the reason stated.
 5. The firm chip prints the firm token ("F-CW"); per R6 the chip shows the firm's name and the token moves to a disclosure.
+6. Model colour keyed by the served model_code only (CTO 100953; M serves it on model nodes since 23:2xZ); retire the
+   longest-key label fallback where a code exists.
+7. submit-export: accept a data-less QUEUED/RUNNING answer, the export id from status.operation.revision (P 100960;
+   schema @f6fd60f4fd, CTO R2); regenerate contracts/wire. The served route still answers NOT_READY until P's B1 lands.
 
 ## Parked
 
