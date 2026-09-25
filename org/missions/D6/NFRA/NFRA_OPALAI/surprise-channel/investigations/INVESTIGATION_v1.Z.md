@@ -303,6 +303,50 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "NFRA_OPALAI-Z-W3-S1 is ARMED with this seat as disarm_owner.",
     "world_is": "The criteria now read the command's own exit; the order's instance is rewritten by a fresh worker on this slot against the fixed checker.",
     "notes": "Swept on the trigger: 19 check files read rc=$?, all through the one sourced root. No gate is built here."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W6-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~6",
+    "surfaced_at": "2026-09-24T23:55Z",
+    "one_line": "w3.AC2.sh's rc=$? reads the exit status of the trailing `tr -d '\\r'` in its capture pipe, never run_checks.sh's own exit code, so the criterion's `[ \"$rc\" != 0 ]` limb can never be true regardless of what run_checks.sh does -- AC2 is structurally unable to PASS as written.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/round1/checks/w3.AC2.sh: `out=$(cd \"$T/c\" && timeout 100 env -u PYTHONPATH bash opal/checks/run_checks.sh 2>&1 | tr -d '\\r'); rc=$?` -- no `set -o pipefail` in this file or in the sourced `_root.sh`.",
+        "Positive control run in this worktree: `out=$(false | tr -d '\\r'); echo $?` prints 0 -- the pipe's reported status is always the last stage's (tr), never the first stage's (the command whose failure the criterion needs).",
+        "Running w3.AC2.sh against my built opal_ai/opal/checks/run_checks.sh (planted broken+non-ASCII file) printed `rc=0; CHECKS: FAIL; py_compile named=2; ascii named=2` -- every other limb of the criterion is satisfied (CHECKS: FAIL, both checks named) but `rc=0` fails the `[ \"$rc\" != 0 ]` test, so the script prints RESULT: FAIL, exit=1."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OA-w-3 AC2 expects: rc!=0; CHECKS: FAIL; py_compile named>=1; ascii named>=1 -- RESULT: PASS.",
+    "world_is": "The check's own pipe construction discards run_checks.sh's exit status before `rc=$?` reads it, so `rc` is always 0 (tr's own exit) no matter whether run_checks.sh exits 0 or 1 on a planted defect. A correct run_checks.sh that exits 1 on failure (as mine does, verified directly and via AC1's own `env -u PYTHONPATH bash opal/checks/run_checks.sh` PASS at exit=0) cannot make this criterion PASS; only editing the check's own pipeline (e.g. `set -o pipefail`, or reading `${PIPESTATUS[0]}`) would let it observe rc.",
+    "notes": "w3.AC2.sh is a COO deliverable outside this order's <paths> (org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/round1/checks/**); this worker did not edit it. AC2 is reported FAIL-by-output per the recorded invocation, with this row citing the cause."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S8",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T00:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_OPALAI-Z-W6-S1 (owner this seat): the checks' rc capture read tr's exit status, not the command's; fixed at CLOUD @0ad710832f with set -o pipefail in the shared _root.sh and carried onto wk-NFRA_OPALAI-6, where w3.AC2(rc!=0) now PASS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer re-dry-run under pipefail @0ad710832f: base builds FAIL with their expected sign; the same checks on wk-NFRA_OPALAI-6 PASS (recorded in the fix commit's message).",
+        "The defect was the issuer's: `out=$(cmd | tr -d CR); rc=$?` without pipefail yields tr's exit (0); the assignee refused rather than repaired and proved the direct exit codes."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-W6-S1 is ARMED with this seat as disarm_owner.",
+    "world_is": "The criteria now read the command's own exit; the order's instance is rewritten by a fresh worker on this slot against the fixed checker.",
+    "notes": "Swept on the trigger: 19 check files read rc=$?, all through the one sourced root. No gate is built here."
   }
 ]
 ```
