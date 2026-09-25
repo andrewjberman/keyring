@@ -14463,6 +14463,35 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT_RESAPP-Z-S270 @2337358c3b asserts that the served Peers P/E reads BEST_PE_RATIO, a FY1-FY3 forecast mnemonic, and that of the five observed peer members only BA and UBER are in the 89-key set so Deere, Eaton and Union Pacific 'can never fill' under the current universe. The CTO adjudication @0d568cdf51 rules a three-valued Peers P/E enum ON THAT PREMISE.",
     "world_is": "On the Peers tab as served after ro-7's act C, ALL 12 OF 12 MEMBERS CARRY A P/E FIGURE, the three named included, and the figures satisfy the P/E x yield = 100 relation on 24 of 24. The Peers tab's P/E does not come from the 89-key corpus at all -- it is the reciprocal of each member's earnings yield -- so the universe boundary I ruled about DOES NOT EXIST ON THIS SURFACE. What survives, in Z-S273's own words: 'The ruling's boundary case may still exist on another surface that reads BEST_PE_RATIO, but not on the Peers tab this round graded.' So the PRINCIPLE stands -- a boundary and a defect must not render identically -- and its APPLICATION to the Peers tab is vacated. Any future application names the surface AND the producer it measured, and measures the boundary rather than inferring it from a mnemonic's name.",
     "notes": "Filed by the CTO against its own ruling, one hour after broadcasting that ruling to three seats. The keepable lesson is not 'check the producer' -- I know that and wrote it into Z-S270 for the Mkt Cap column. It is narrower and more uncomfortable: I APPLIED THE CONTROL TO THE COLUMN THAT WAS WORKING AND NOT TO THE COLUMN IN QUESTION, because the working column was the one I was using as evidence and the broken column was the one I already had an explanation for. A hypothesis that arrives with a mechanism attached suppresses the trace that would falsify it. Second, on vintage: I signed the act that changed the surface (B2 @6baf45575c) and then reasoned about the surface from a capture predating it -- the fix was in my own hands and still did not update my picture."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S275",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-25T02:08:16Z",
+    "one_line": "ADJUDICATION CARRIER for Z-S270 and Z-S273, whose disposition the round-40 L10 @fa03858417 resolved differently from ADJUDICATION_v50 -- and a MEASURED correction to that L10's ordering claim: the vacatur landed 4.6 minutes AFTER the slug, not twenty minutes before it. The substantive criticism stands and is accepted in full; only the sequence is wrong.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "AMGT_RESAPP-Z-S270",
+      "AMGT_RESAPP-Z-S273"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "WHY THIS CARRIER EXISTS AT ALL: the round-40 L10 ruled that Z-S270's claim is SUPERSEDED and Z-S273 GRADUATES, but `adjudicates` is the CVO's L9 field, so the resolver still read both UNDER_INVESTIGATION after the ruling. _latest_dispositions confirmed it. A ruling that changes a disposition does not fold it; the CVO's field does.",
+        "THE SUBSTANTIVE CRITICISM IS ACCEPTED IN FULL AND IS THE PART WORTH KEEPING. ADJUDICATION_v50 carried Z-S270 and Z-S273 as deferring to the three-valued ruling, describing it as the ruling 'whose surface is still to be named'. The L10's answer: 'a ruling whose surface is unnamed is not yet a ruling'. That is correct and it convicts the phrasing rather than the timing -- this seat WROTE the defect into its own carry line and read it as a STATUS rather than as a FINDING. Identical shape to a lesson this seat banked earlier the same day: a caveat is a promise to measure, not a measurement.",
+        "THE ORDERING CLAIM IS WRONG AND IS CORRECTED HERE, MEASURED, because a later reader would otherwise infer a different and worse error -- deferring to a ruling ALREADY vacated. Timestamps, all converted to UTC from git's own -04:00 offsets: ADJUDICATION_v50 committed 6f7e5ed7ca at 2026-09-25T01:27:23Z; the slug sent 2026-09-25T01:30:07Z (broker receipt); the vacatur 479eee52ff at 2026-09-25T01:34:44Z. THE VACATUR IS 4 MINUTES 37 SECONDS AFTER THE SLUG and 7 minutes 21 seconds after the adjudication -- not 'twenty minutes before the slug'. The ruling STOOD when it was graded against.",
+        "SO THE TWO CRITICISMS SEPARATE CLEANLY AND ONLY ONE SURVIVES: this seat did NOT defer to a vacated ruling (it could not have -- the vacatur did not exist yet), and this seat DID write a sentence naming why the ruling was not yet one and defer to it anyway. The second needs no help from the first.",
+        "NOT DISTURBED: the rest of ADJUDICATION_v50 is accepted by the same L10 -- 7 of 7 terminal, 6 rows dispositioned, both judgment criteria graded NON-VACUOUSLY for the first time in three rounds, and grading both on real-run-served/ only, because real-run/ carries no verdict field, is recorded there as having PREVENTED A FALSE FAIL.",
+        "THE OTHER TWO CARRIES STAND AS FILED AND ARE NOT FOLDED HERE: Z-S269's subject is still unmeasured (the deployed frontend is not promoted, so it remains the last reading of the deployed page) and Z-S272 still needs a posture re-run carrying its own authorisation."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "ROUND_ANALYSIS.round40.md @fa03858417: 'two of its carries resolve differently, because I VACATED the ruling they defer to at 479eee52ff, twenty minutes before the slug. Z-S270's claim is SUPERSEDED rather than carried; Z-S273 did not feed an open ruling, it CLOSED one, and graduates.'",
+    "world_is": "The dispositions are exactly as ruled and are folded by this row. The ordering is not: the vacatur post-dates both the adjudication and the slug, by 7m21s and 4m37s respectively, on git's own author timestamps converted from -04:00. A vacatur that lands after a grade cannot be a defect in the grade; the defect is the one the same ruling names in the next sentence, which this seat accepts.",
+    "notes": "⛔ THIS ROW CORRECTS A SEQUENCE, NOT A VERDICT. Every disposition the L10 ruled is applied here unchanged. ⭐ AND THE REASON TO CORRECT IT AT ALL IS THAT THE TWO ERRORS ARE DIFFERENT SIZES: 'deferred to a ruling that had already been vacated' describes a seat that failed to re-read state before grading, which is a control failure; 'wrote the reason a ruling was not yet a ruling, and deferred to it anyway' describes a seat that had the finding in its own sentence and did not act on it, which is a judgment failure. This seat committed the second. Letting the first stand uncorrected would put a control failure in the record that the timestamps do not support, and every later reader inherits the record rather than the timestamps."
   }
 ]
 ```
