@@ -80,6 +80,28 @@
     "spec_asserts": "CLAUDE.md rule 14a and ADHC_OWNPTH.005's own doc comment: 'a worker serial 0.9.0_WK_<CODE>~<n> is admitted to exactly the paths that a NON-TERMINAL task order under <CODE>, issued_to that serial, names in its <paths> block AT HEAD -- and to nothing else', resolved 'from the order itself, never from a lane'.",
     "world_is": "In practice the grant only resolves for a path that ALSO already carries an entry in `.owned-paths.yaml`'s `paths_config` (any lane, any permitted_agents) -- a task-ordered path with zero prior YAML footprint (the common case for a worker's first cell standing up a brand-new top-level directory or submodule) is refused before the grant clause runs at all, regardless of what the order's <paths> block says.",
     "notes": "Disarm = have `_cmd_check_agent`'s UNDEFINED branch (and/or `check_agent`'s early `return False`) fall through to `_owns_task_order_paths(agent, path, grant, root, cache)` before concluding UNDEFINED, so an unmapped path can still be granted by a worker's own task order. Worked around THIS COMMIT via the documented audited escape hatch (`GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPORTAL~1`, CLAUDE.md 14a) rather than by editing `.tools/owned-paths-validate.py` or `.owned-paths.yaml`, neither of which are in this task order's `<paths>` grant. Not scoped to mcportal: any worker's first commit of a genuinely new top-level path hits this same gap."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W1-S2",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~1",
+    "surfaced_at": "2026-09-25T00:40Z",
+    "one_line": "MP-t-5 names `src/pages/recent-changes/` with no sidebar slot, and `src/shell/pages.ts` (the ONE place the sidebar order lives, verbatim from Andrew's brief word) enumerates exactly the brief's eight entries with no 'Recent Changes' member, so the router hookup the issuer owes cannot land it as a nav item without amending PAGES -- a change outside this cell's face.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Task face section 1 item 2 says entitlements is built 'under the sidebar's MCP Server entry'; item 3, for recent-changes, names only the page directory and its content, with no sidebar placement.",
+        "mcportal/src/shell/pages.ts:1-20 (read-only surface per this order's Bounds) -- the file's own header comment: 'This is the ONE place that order lives; the sidebar and its test both read it from here,' and its `PAGES` array holds exactly the brief's eight ids (home, operations-report, user-management, user-analytics, mcp-server, health-check, cost-management, infosec); no `recent-changes` id exists.",
+        "mcportal/src/pages/recent-changes/index.ts (this commit, 1eb686a) exports `RecentChanges` with no route wired -- reachable only once the issuer's hookup adds a `<Route>` for it, and pages.ts is not in this order's write surface (`<paths>` names only `src/api/admin.ts`, `.../entitlements/` and `.../recent-changes/`)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The two pages this cell builds both reach the shell through the same mechanism -- a router hookup the issuer adds -- and the brief's sidebar order (pages.ts) is the one place that order lives.",
+    "world_is": "Only the entitlements page has a named sidebar home (MCP Server); recent-changes has none in the brief's eight-item order, so the issuer's hookup must choose one of: add a ninth PAGES entry (widening the brief's enumerated order), nest it as a sub-route reachable only from within MCP Server/entitlements, or leave it route-only with no sidebar link -- none of which this worker's face names or this worker's `<paths>` (pages.ts excluded) permits deciding.",
+    "notes": "Not a defect in this cell's own build (RecentChanges renders and tests pass standalone); flagged so the issuer's hookup commit states which of the three it picked rather than silently defaulting to one."
   }
 ]
 ```
