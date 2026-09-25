@@ -926,6 +926,28 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The three next-round items are for 1.0.0_SA_CTO's round-3 analysis (L10)."
+  },
+  {
+    "id": "DSGN_IRPTV1-W15-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~15",
+    "surfaced_at": "2026-09-25T18:00:00Z",
+    "one_line": "Cell IV-e-25 (b) names 'a colour resolver per member' for the hero cards, but a model in a Holdings HoldingsSnapshot lands as an L1 CHILD of a top-level category (CategoryViewTree's L1Row/MdpfCategoryChildNode), never as an L2 `MdpfCategoryMember` -- so the additive prop this worker added to CategoryViewTree.tsx is a per-L1-ROW resolver (`rowColor`), not a per-member one, and DrillTree.tsx's `modelRowColorMap` builds it from `HoldingsNode.modelCode` (the same field the drill donut already read since IV-e-11).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DSGN_IRPTV1.TO-IV-e-25 cell text (b): 'The hero cards render through src/components/CategoryViewTree.tsx: add an OPTIONAL, additive prop (e.g. a colour resolver per member) -- Model Portfolios' own use must not change.'",
+    "world_is": "`mdpfResultFromSnapshot` (DrillTree.tsx) maps each top-level HoldingsSnapshot category's DIRECT CHILDREN into `MdpfCategoryNode.children` (an L1Row per child), and the fixture-confirmed shape (`holdingsSnapshot.success.json`: account -> model -> security) puts the model node exactly at that L1 level, never inside a category's own top-level `members` (L2). `CategoryViewTree`'s existing `BreakdownContext.memberColor` (L2, used by this same cell's clause (c) for security asset-class colour) could not carry a model's served code for this reason. The new `RowColorContext`/`rowColor` prop resolves colour at the L1 row (key+label) instead, consulted by the tile's bar segment, its row dot and the breakdown dialog's L1 mark, ahead of the pre-existing name-keyed `l1ColorOf`; absent (the default), every existing caller including Model Portfolios is byte-identical (IVE25-AC2 arm 3).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python read of src/pages/InvestorReporting/fixtures/holdingsSnapshot.success.json: root's one child is kind=account; that account's one child is kind=model ('Core Growth Model'); that model's one child is kind=security -- the model sits one level beneath the top-level category, i.e. CategoryViewTree's L1, not L2",
+        "src/api/endpoints/aum.ts: MdpfCategoryMember and MdpfCategoryChildNode carry no model_code field (comp-find '\"model_code\"' portal/src/api/endpoints/aum.ts -> 0 hits), confirming the L2 member contract this cell's own clause names cannot carry a served code either way",
+        "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-25.colour-by-code.test.ts (this worker's own AC2 test), arm 1: VERDICT: COLOUR-BY-CODE-OK -- a model node with served modelCode ULT and a misleading label resolves ULT's colour on both the drill pie (drillSliceColor) and the hero card (CategoryViewTree rendered with DrillTree's own rowColor resolver)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking: IVE25-AC1/AC2/AC3 all PASS-by-output under this shape. Filed so a reader comparing the cell text's 'per member' wording against the shipped `rowColor` (per L1 row) prop name does not read the difference as an unmet criterion -- the mechanism honours the cell's INTENT (a served-code resolver Holdings can opt into without touching Model Portfolios) at the grain the actual data shape offers, not at the L2 grain the wording implied."
   }
 ]
 ```
