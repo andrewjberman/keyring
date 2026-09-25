@@ -34,7 +34,8 @@
   "decomposition_lineage": [
     "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md@v1",
     "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md@v2",
-    "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md@v3"
+    "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md@v3",
+    "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md@v4"
   ],
   "leads": {
     "cto": "1.0.0_SA_CTO",
@@ -49,7 +50,7 @@
     "authority": "CLAUDE.md Rule 27 L4-R: the CRO signs the BRIEF half (4.0.0_SA_CRO~F stated it will sign when routed, msg 100235); 3.0.0_SA_CVO signs the RATIFIED-TEXT half"
   },
   "fabric_ruling": "laptop -- D13 Design placed LAPTOP by Andrew-direct 2026-09-11 ('it will be laptop fabric'); placement attaches to the directive (LD-0498, LD-0502).",
-  "blocking": "Round 3 L6 issuance cut 2026-09-24 ~23:0xZ by 2.0.0_SA_COO~D on CTO 100904 (Andrew-direct via 4.0.0_SA_CRO 100892): 12 task orders IV-e-9..IV-e-20 over decomp v3 @2af10e4cd0 on PRD v0.8 @31a61d0466 (ADMITTED: ratified-text signed by 3.0.0_SA_CVO, brief auto); chains A (slot ~7: IV-e-9, IV-e-10), B (slot ~8: IV-e-11, IV-e-12, IV-e-13), C (slot ~9: IV-e-14, IV-e-17), D (slot ~10: IV-e-15, IV-e-16); the JOIN chain (slot ~11: IV-e-18, IV-e-19, IV-e-20) after A-D land; portal_ref 13b5356f (DEV tip, ls-remote read). Every cell LOCAL; the drain lands on DEV in the main portal checkout (Andrew-direct ~18:3xZ). The FAST lease ended at this cut. FWD-1's trace remains Andrew's signed-in walk.",
+  "blocking": "Round 4 L6 issuance cut 2026-09-25 by 2.0.0_SA_COO~D under /canonical-drive (Andrew-direct ~17:2xZ) on 1.0.0_SA_CTO 100991 (ADJUDICATION_v2 @7bf1522657: re-cut the FAILs): 5 orders IV-e-21, 22, 23, 25, 26 over decomp v4 @d4add46f46 on PRD v0.8 @31a61d0466 (ADMITTED); 5 one-cell chains on slots ~12..~16, portal_ref 8242412d (= origin DEV). IVE16 (Holdings export) parked on the export producer. Every cell LOCAL; the drain runs the signed-in FWD-1 trace (CTO 100986) and grades the round's JUDGMENT criteria on it.",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md",
