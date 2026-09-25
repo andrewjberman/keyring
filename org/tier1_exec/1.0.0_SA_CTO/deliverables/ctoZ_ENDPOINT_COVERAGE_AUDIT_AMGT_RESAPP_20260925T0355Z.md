@@ -94,3 +94,53 @@ describes.
 
 Push state: this commit LOCAL on landing; origin/CLOUD @`4749dc06e2` at last read. This lane does not
 push.
+
+---
+
+# THE RE-GRADE PASS BEGINS -- `FWD-1`, graded 2026-09-25 ~04:0xZ
+
+**`FWD-1` -- NOT_REALIZED.** Graded against its own fence (`AMGT_RESAPP_PRD.md:426-433`), not re-asserted
+from round 1.
+
+**THE INSTRUMENT, and why it is sound.** Round 40's six `real-run-served/` captures are **DOM-LAYOUT
+measurements** (`visibleElements`, `bandContainers`, `textChars`) -- the instrument for `FWD-21`..`FWD-28`,
+and **the wrong instrument for a content claim.** There is no served CONTENT capture in round 40. So I
+used the served **rich export** instead, which is sound for exactly one reason: **`FWD-30`'s grade
+established the export is field-by-field EQUAL to the page** -- 165 figures, 15 cites, 17 absences,
+extras 0, missing 0. Reading the export therefore reads the page, on a verified equality rather than an
+assumed one.
+
+**ITS ACCEPT NAMES THREE THINGS ON SCREEN. Measured on `BA_US_Equity`, the best-covered name:**
+
+| item | measured | verdict |
+|---|---|---|
+| the model numbers | ten fiscal-year sections 2016-2025; `Revenue` x14; 165 figures | **PRESENT** |
+| the business description | `## Company Description` exists -- and its own subheading reads **"Filed detail (does not describe the business)"** | **NOT a business description** |
+| the segment breakdown | see control below | **ABSENT** |
+
+**THE SEGMENT CONTROL, because a bare-word zero is not an absence -- and it overturned my first read.**
+`segment` reads **0**, which I nearly published. The control on Boeing's real segment names reads
+`Commercial Airplanes` 1, `Global Services` 1, `BDS` 2, `Defense` 2. **So the names ARE in the document
+and the bare-word zero was wrong.** Locating them settles it: `BDS` is ONE filed backlog sentence inside
+the "does not describe the business" section, and `Commercial Airplanes`/`Global Services` appear **in
+the Management/Board table as parts of executives' JOB TITLES.** Neither is a breakdown of results by
+segment. **Positive controls on the same instrument: `Fiscal year` 12, `Revenue` 14, `Company
+Description` 1 -- the reader can see what it is meant to see.**
+
+**So two of the three named items fail**, and the second fails in a way worth stating precisely: the page
+does not silently omit a business description, it **discloses that the filed detail is not one.** That is
+honest behaviour and it is still not the outcome, because `FWD-1`'s analyst wanted the description, not
+a notice about it.
+
+**The EXERCISED limb is separately unmet:** *"an analyst has actually done it, not merely could"* -- no
+analyst read is recorded. Same person-limb shape as `FWD-30`'s ACCEPT, and it cannot be closed by any
+seat.
+
+**AND THE BOUND THAT MAKES THIS WORSE, NOT BETTER:** this is `BA_US_Equity`, the name every round has
+exercised. **If the best-covered name in the corpus carries no segment breakdown and no business
+description, the other 88 are not better.** The goal's clause *"with all Asset Management research
+companies folded in"* is therefore not met at its best case, before the population question is even
+reached.
+
+**1 of 20 graded. 19 remain**, and this one took a wrong-instrument correction and an overturned zero to
+get right -- which is the argument for grading them one at a time rather than in a batch.
