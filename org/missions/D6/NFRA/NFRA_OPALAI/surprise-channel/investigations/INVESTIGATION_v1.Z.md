@@ -549,6 +549,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "portal is NOT provisioned in this worktree and must read UNINITIALISED.",
     "world_is": "portal is initialised in this worktree (a linked worktree of the shared portal repo, sharing its .git/worktrees admin dir with the main tree's own portal checkout) and reads as an integer, same as opal_ai; only mcportal reads UNINITIALISED here. Both proof scripts (w4.AC1.sh, w4.AC2.sh) accept 'UNINITIALISED or an integer' for portal, so grading is unaffected either way.",
     "notes": "Not repaired: the build follows section 1's general rule (an integer count when a mapped path's .git entry is present, else UNINITIALISED), which is the spec's own instruction and does not depend on the bound's stale prediction. No gate is built here."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W7-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~7",
+    "surfaced_at": "2026-09-25T03:55Z",
+    "one_line": "w4.AC2.sh's `... | grep -m1 -oE ... || echo \"(no repos: field)\"` runs BOTH branches under `set -o pipefail`: grep -m1 quits after its first match and SIGPIPEs the upstream `tr`, so `tr` exits 141, the pipeline as a whole is non-zero despite grep having matched, and the `||` fallback text is appended after the real match -- harmless here (the real line is still first in $h and the regex extraction still finds it), but the printed 'RESULT' output is not what the script's author intended.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Reproduced this session: `bash -c 'set -o pipefail; h=$(timeout 100 python .tools/activity-check.py --days 30 2>&1 | tr -d \"\\r\" | grep -m1 -oE \"repos: .*\" || echo FALLBACK); echo \"H=[$h]\"'` prints both the real match and FALLBACK, 2 lines.",
+        "Running w4.AC2.sh as issued: stdout carried 'repos: parent=... opal_ai=... portal=...' followed immediately by '(no repos: field)', then 'RESULT: PASS -- exit=0' (the sed extraction on $h's first line still succeeds, so grading is unaffected)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "w4.AC2.sh's fallback branch `(no repos: field)` fires only when no 'repos:' line is found in activity-check.py's output.",
+    "world_is": "Under `set -o pipefail` (sourced from _root.sh), a `-m1` grep that matches early SIGPIPEs an upstream `tr`, making the pipeline's own exit non-zero even though the intended match succeeded -- so the `||` fallback always co-prints alongside a real match on this construction. AC1-AC2 both PASS by output regardless (the real line sorts first and the numeric extraction still lands), so this is cosmetic to this order's grading, not a criterion defect.",
+    "notes": "Not fixed here: w4.AC2.sh is a COO deliverable outside this order's <paths> (Read-only). A fix would use `${PIPESTATUS[1]}` (tr's own exit) or drop `-m1` in favour of `grep -oE ... | head -1` outside the pipefail'd stage."
   }
 ]
 ```
