@@ -9185,3 +9185,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "A correction row, append-only; S127 stays as written."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S129",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T13:45:00Z",
+  "one_line": "DISPOSITION of IRPT_BCKEND-S125 (directory refresh dispatched no build since 09-18): REMEDIED and EXERCISED -- the fixed refresh dispatched at all three firms at the 09-25 13:30Z fire and the served directories moved off 2026-09-17.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (this row IS the disposition of S125; the host race it surfaced next is S126, disarmed by 2.0.0_SA_COO~P @61bce7ee33)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-directory-refresh CodeSha256 DXuzx9jp (fix a7e5c59042 on P 82679477a6), applied 2026-09-24T20:59:50Z; ledger irpt-directory-refresh-s125-m-20260924 CLOSED @2e4c33738e with both legs proven.",
+      "s3://opal-data-{bd,inf,cot}/investor-reporting/directory/_refresh/2026-09-25/manifest.json after the 13:30Z fire: REFRESH_DISPATCHED RUNNING, fired_on 2026-09-25, dispatched_for 2026-09-25, cids 4237a59f / c23247b8 / 771aae84.",
+      "latest.json rewritten 13:30:45-51Z: 49F as_of 2026-09-24 (was 09-17) 4,620 entries; INF as_of 2026-09-25 292 entries; COT as_of 2026-09-22 258 entries.",
+      "The multi-day drive of the real lambda_handler (tests test_s125_every_fire_asks_the_runner_and_none_reads_missed and test_s125_a_build_still_in_flight_is_never_sent_twice) passes on the fix and fails on 82679477a6 alone."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "S125 world_is: 'The runner is never asked again ... The served directory is still the 09-18 build of 09-17'.",
+  "world_is": "The runner is asked on every fire. The 09-25 13:30Z fire dispatched at all three firms and the served directories moved to 09-24 (49F), 09-25 (INF), 09-22 (COT). Tomorrow's fire accounts these builds and hands over its own. INF reading as_of 09-25 at a 09:30 ET fire is the Orion key-date semantic (a key D holds the prior close), worth a look by the directory's owner; it does not reopen this row."
+}
+```
