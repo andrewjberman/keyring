@@ -904,6 +904,28 @@
     "spec_asserts": "IVE20-AC2: 'at 1440 and 390, no container other than the named table scrollers has scrollWidth > clientWidth (printed per container)'.",
     "world_is": "The violation is real, measured on the currently-served main checkout (not a hypothetical or a fixture artifact), pre-dates this task order by two rounds (IV-e-13), and is fixed in this worker's own worktree but cannot be observed as fixed on :5174 until the COO's merge -- so IVE20-AC2 is reported FAIL-by-output against :5174 with this row as its status_reason, order left `pending`.",
     "notes": "Not blocking the other three criteria (IVE20-AC1 TOOLTIPS-OK, IVE20-AC3 BANDS-OK both pass; IVE20-AC4 is judgment, RECORDED). Filed so the COO's merge + re-run is the one act that closes this row and flips IVE20-AC2, and so the CTO sees that the pre-existing legend defect (not something this order introduced) was caught by this cell's own new instrument."
+  },
+  {
+    "id": "DSGN_IRPTV1-S14",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-25T03:10:00Z",
+    "one_line": "Round-3 close: all twelve orders complete; W11-S3 and W11-S4 disarmed at the drain; the one real run on 5174 found and fixed a white-on-white account dropdown; W11-S1 and W11-S2 await 1.0.0_SA_CTO's ruling; three next-round items named.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "/dispatch Step 5: every hookup and repair lands at the merge; the one real run of each outcome at close; every ARMED row whose owner is this seat is dispositioned before the drain-end message.",
+    "world_is": "W11-S3: iv-e-10.ruled-touch now bounds IV-e-10's own commit a65074e7 (2 added, 0 removed; portal DEV ecfd327a). W11-S4: IVE20-AC2 PASS on 5174 after the join merge f9a954b3 (0 violations of 6), TO-IV-e-20 complete @0eb458269a. Close run (deliverables/2.0.0_SA_COO~D/round3-close.*, driver round3-real-run-driver.mjs, fixture round3-close.fixture.json) on DEV 8242412d: tabs Performance/Holdings/Analysis, one header Export, sample view marked Sample, the account filter names both accounts, the Generate panel reads the header's client, no UNAVAILABLE / raw ISO / acc_ id / dark: class on any body. It found AccountFilter's PageSurfaceControl dropdown rendering rgb(255,255,255) on white (C3), fixed with PRIMARY_ON_SILVER_DROPDOWN_CLASS at 8242412d. IR suite at f9a954b3+ecfd327a: 742 pass / 82 fail, the only round-3 residual fe-s-5/states (W11-S2). Next-round items: (1) SearchSelect has no combobox/listbox/option roles and no keyboard navigation; (2) the drill pie colours security slices from the extended palette by name hash, not a served class or code; (3) every real run is fixture-driven, never the signed-in thread (FWD-1).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal DEV ecfd327a, f9a954b3, 8242412d (local)",
+        "deliverables/2.0.0_SA_COO~D/round3-close.run.txt and round3-close.0{1..5}-*.png",
+        "round3-pie-probe.mjs: the account select's computed colour before and after"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The three next-round items are for 1.0.0_SA_CTO's round-3 analysis (L10)."
   }
 ]
 ```

@@ -1,40 +1,33 @@
-# DSGN_IRPTV1 -- status (FULL: round 3 draining)
+# DSGN_IRPTV1 -- status (FULL: round 3 drained; L10 with 3.0.0_SA_CVO)
 
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.8
 @31a61d0466 (ADMITTED). Round 3: issuance @9e13e294c1 (12 orders IV-e-9..20, decomp v3 @2af10e4cd0), amendment
 @1215c0d07a (the CVO's N1-N5 on IV-e-18 and IV-e-13). The FAST lease ended at the cut (drive-mode.log line 6).
-Build place: the main portal checkout on DEV (Andrew-direct ~18:3xZ). As of 2026-09-25T01:5xZ.
+Build place: the main portal checkout on DEV (Andrew-direct ~18:3xZ). As of 2026-09-25T03:1xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal local DEV | `8cd2dab2` (chains A-D merged + the drain's repairs and hookups); origin DEV `13b5356f` (FULL mode: product changes reach origin through `1.0.0_SA_CTO`) |
-| Round-3 merges on DEV | chain D `f9df6ab5` (+ repair `62055f14`); chain A `00806e0c` (+ repair `89a6d4f4`); chain B `16c11701`; chain C `d3d93838`; hookups `8cd2dab2` |
-| CLOUD records | chain D `1588e5c247`; A `b2c65c13d0`; B `8c2235aa08`; C `cb7bd249c9`; IV-e-16 close `4047bdbea7` + `a109a7e0a9` |
+| Portal local DEV | `8242412d` (all of round 3 + the drain's repairs and hookups); origin DEV `13b5356f` (FULL mode: product changes reach origin through `1.0.0_SA_CTO`) |
+| Round-3 merges on DEV | chain D `f9df6ab5` (+ repair `62055f14`); chain A `00806e0c` (+ repair `89a6d4f4`); chain B `16c11701`; chain C `d3d93838`; hookups `8cd2dab2`; join `6de269cc` (ff) + `f9a954b3`; repairs `ecfd327a`, `8242412d` |
+| CLOUD records | chain D `1588e5c247`; A `b2c65c13d0`; B `8c2235aa08`; C `cb7bd249c9`; join `4c8d0f570e`; IV-e-16 close `4047bdbea7` + `a109a7e0a9`; IV-e-20 close `6c8a16b536` + `0eb458269a` |
 | Screen | `localhost:5174` from the main checkout, serving local DEV |
 | Workspace push state | CLOUD LOCAL |
 
 ## Orders
 
-| Order | Slot | State |
-|---|---|---|
-| IV-e-9, IV-e-10 (chain A) | ~7 | complete, merged |
-| IV-e-11, IV-e-12, IV-e-13 (chain B) | ~8 | complete, merged |
-| IV-e-14, IV-e-17 (chain C) | ~9 | complete, merged |
-| IV-e-15, IV-e-16 (chain D) | ~10 | complete, merged (IVE16-AC1 passed after the merge repair) |
-| IV-e-18 | ~11 | complete on the slot branch (portal df5e41b5), not yet merged |
-| IV-e-19, IV-e-20 | ~11 | IV-e-19 executing; IV-e-20 queued |
+All twelve round-3 orders (IV-e-9..IV-e-20) complete; every worker slot drained and torn down.
 
 ## Drain checks
 
-- IR suite on DEV: 85 fail at 16c11701 (legacy set), 85 at 8cd2dab2 before the colour fix with iv-e-16 now PASS; every
-  round-3 test file green; tsc -b rc=0 (mutant control rc=2); eslint 0 errors on touched files.
-- Interim real run on 5174 @8cd2dab2 (`deliverables/2.0.0_SA_COO~D/round3-real-run-driver.mjs`,
-  `round3-close.fixture.json`, `r3-interim*.png`): tabs Performance/Holdings/Analysis; one header Export, no per-tab;
-  sample view marked Sample with one prompt; the Generate panel reads the header's client (N1); the Holdings account
-  filter names both accounts. Raw ISO on Holdings is IV-e-18's N3 (fixed on the slot branch).
+- IR suite on DEV (f9a954b3 + ecfd327a): 742 pass / 82 fail; the only round-3 residual is fe-s-5/states (W11-S2);
+  every round-3 test file green; tsc -b rc=0 (mutant control rc=2); eslint 0 errors on touched files.
+- The one real run on 5174 @8242412d: `deliverables/2.0.0_SA_COO~D/round3-close.{run.txt,01..05-*.png}` (driver
+  `round3-real-run-driver.mjs`, fixture `round3-close.fixture.json`). It found a white-on-white account dropdown,
+  fixed at 8242412d. Row S14 carries the close.
+- Channel: 40 investigation rows; the CVO's last compile (13baec35aa, round 1) covered 8.
 
 ## Rows owed a ruling (drain-end message)
 
