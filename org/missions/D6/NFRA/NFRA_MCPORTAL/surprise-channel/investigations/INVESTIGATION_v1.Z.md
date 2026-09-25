@@ -238,6 +238,27 @@
     "spec_asserts": "NFRA_MCPORTAL-Z-W1-S1 is ARMED with 1.0.0_SA_CTO as disarm_owner.",
     "world_is": "The gap is closed at the tool: an unmapped path is admitted ONLY for a worker whose own non-terminal order names it; every other committer on an unmapped path is still refused UNDEFINED. The same fix serves NFRA_OPALAI-Z-W1-S1.",
     "notes": "No lane rule was added and no gate was widened beyond the registry's own worker_grant stanza (ADHC_OWNPTH.005)."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S5",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T15:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_MCPORTAL-Z-W2-S3 (owner this seat): tests/test_owner_gate.py appends one line per run to the TRACKED infra/aws/ec2/opal-gateway/audit.jsonl, because the audit path defaults to ./audit.jsonl (app/config.py:307). Contained: MP-g-1's worker restored the file and committed none of it; this seat restored the same side effect in /c/tmp/mx-1 after a dry run. The fixture fix goes to the round-2 drain-end read as an enrichment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker report 0.9.0_WK_NFRA_MCPORTAL~2 (resume): 'The existing tests/test_owner_gate.py does: it adds one line per run, because the audit path defaults to ./audit.jsonl (app/config.py:307)'; audit.jsonl restored to HEAD, not committed.",
+        "This seat's MX-c-5 dry run in /c/tmp/mx-1 appended to the same file (git status ' M infra/aws/ec2/opal-gateway/audit.jsonl'); restored with git restore before any commit."
+      ]
+    },
+    "spec_asserts": "NFRA_MCPORTAL-Z-W2-S3 is ARMED with this seat as disarm_owner.",
+    "world_is": "No commit carries a test-run audit line. The hazard stands for any seat that commits the whole gateway tree after running its suite.",
+    "notes": "Enrichment: a conftest fixture pointing the audit path at a tmp file. It is the gateway suite's owner's to cut. No gate is built here."
   }
 ]
 ```
