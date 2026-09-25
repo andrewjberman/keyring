@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T16:5xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T17:0xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -68,10 +68,16 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    so the delegator slot needs NO CTO proposal. Test 21 passed (13 new + 8 pin tests unchanged, real served.Entry).
    Real run: S3 round trip in the evidence bucket under synthetic generation GENB0GRANTSYN -- read-back equal; None for
    another subject, a missing revision, another firm. Bucket from IRPT_EVIDENCE_BUCKET only (naming gate).
-   NEXT: B0 part 2 = install grant.render_ports on the three read functions (performance, status/analysis, narrative):
-   package _render_identity/grant.py into each, set IRPT_EVIDENCE_BUCKET, grant s3:GetObject on
-   firms/*/generations/*/render_grant.json (+ s3:ListBucket on that prefix so a missing grant reads 404 -> refusal, not
-   403 -> raise); ledgered deploy, negative arm = every human read unchanged + a render read with no grant refused.
+   B0 PART 2 LANDED bd52efb246 (backend): served.render_ports_from_env() -- None unless the function carries
+   IRPT_EVIDENCE_BUCKET (today's refuse-every-render behaviour), else grant.render_ports(); installed on the performance
+   (build_entry) and status (build_owned_entry) boundaries. Test 18 passed; regressions _authz 160, performance 183,
+   ops 160 (22 skipped), narrative 37 -- all pass; flat-layout cold-start import OK for adapter/status/narrative.
+   PARKED (owner 1.0.0_SA_CTO, un-parks on an exact P row, asked 20260925T170607Z): narrative/entry.py is
+   CLOUD_OPS_OR_ETL's -- its one-line install (render_ports=_entry.render_ports_from_env() in ENTRY) is saved as
+   scratchpad narrative_b0.patch; the test adds one BOUNDARIES tuple.
+   DEPLOY rides B1: package _render_identity/grant.py into the adapter/status(/narrative) zips, set IRPT_EVIDENCE_BUCKET,
+   grant s3:GetObject on firms/*/generations/*/render_grant.json (+ ListBucket on that prefix: missing -> 404 ->
+   refusal, not 403 -> raise). The adapter redeploy waits until the INF one-use is spent or expires (00:00Z).
    Then B1 (submit writes the grant at freeze, QUEUED shape) -> B2 mint from mint_input -> B3 finalize.
    R3 hop 4 = option (a): mint the cst_ binding only for a PUBLISHED revision whose scope covers the selection.
 
