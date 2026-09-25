@@ -1,0 +1,215 @@
+{
+ "schema_version": "irpt-render-chain-c-s219-v1",
+ "part": "1-3 of 3",
+ "by": "2.0.0_SA_COO~P",
+ "row": "IRPT_BCKEND-C-S219",
+ "base": "worker 21 chain (34366c30d1), imported, 12 of 12 today",
+ "one_token_three_routes": {
+  "token_count": 1,
+  "reads": [
+   {
+    "route": "GET /api/scoped/investor-reporting/performance/{accountSetId}",
+    "jti": "render-4eb83886b5904b7aab931475fe3e9e74",
+    "v3_admitted": true,
+    "v2_authorized": true,
+    "principal_class": "RENDER_DELEGATE",
+    "operation": "performance_report",
+    "refusal": "None",
+    "covered": true
+   },
+   {
+    "route": "GET /api/scoped/investor-reporting/analysis/{jobId}/sections",
+    "jti": "render-4eb83886b5904b7aab931475fe3e9e74",
+    "v3_admitted": true,
+    "v2_authorized": true,
+    "principal_class": "RENDER_DELEGATE",
+    "operation": "analysis_report",
+    "refusal": "None",
+    "covered": true
+   },
+   {
+    "route": "GET /api/scoped/investor-reporting/narrative/{reportId}",
+    "jti": "render-4eb83886b5904b7aab931475fe3e9e74",
+    "v3_admitted": true,
+    "v2_authorized": true,
+    "principal_class": "RENDER_DELEGATE",
+    "operation": "narrative_packet",
+    "refusal": "None",
+    "covered": true
+   }
+  ]
+ },
+ "swapped_id_each_route": [
+  {
+   "route": "GET /api/scoped/investor-reporting/performance/{accountSetId}",
+   "v3_admitted": true,
+   "v2_authorized": false,
+   "v2_error": null
+  },
+  {
+   "route": "GET /api/scoped/investor-reporting/analysis/{jobId}/sections",
+   "v3_admitted": true,
+   "v2_authorized": false,
+   "v2_error": null
+  },
+  {
+   "route": "GET /api/scoped/investor-reporting/narrative/{reportId}",
+   "v3_admitted": true,
+   "v2_authorized": false,
+   "v2_error": null
+  }
+ ],
+ "expiry": {
+  "measured": [
+   {
+    "seconds_past_exp": 1,
+    "v3_admitted": true,
+    "v2_authorized": true
+   },
+   {
+    "seconds_past_exp": 30,
+    "v3_admitted": true,
+    "v2_authorized": true
+   },
+   {
+    "seconds_past_exp": 59,
+    "v3_admitted": true,
+    "v2_authorized": true
+   },
+   {
+    "seconds_past_exp": 61,
+    "v3_admitted": false,
+    "v2_authorized": false
+   },
+   {
+    "seconds_past_exp": 120,
+    "v3_admitted": false,
+    "v2_authorized": false
+   }
+  ],
+  "stated_boundary": "a render token is refused at both verifiers once more than 60 s past exp; within 60 s past exp it is ADMITTED at [1, 30, 59] s (both verifiers pass clockTolerance 60 to jsonwebtoken, which applies it to exp as well as nbf)",
+  "prd": "IRPT_BCKEND_PRD.md item 2: nbf/iat with at most 60 s skew leeway; item 7(c): a token past exp is refused",
+  "consistent_with_prd_literal": false,
+  "effective_max_life_s": 360
+ },
+ "v1": {
+  "render_token": {
+   "verified": false,
+   "error": "invalid signature",
+   "name": "JsonWebTokenError"
+  },
+  "human_token": {
+   "verified": true,
+   "aud": "opal-portal-api",
+   "iss": "opal-portal-auth"
+  }
+ },
+ "human_on_three_routes": [
+  {
+   "route": "GET /api/scoped/investor-reporting/performance/{accountSetId}",
+   "v3_admitted": true,
+   "v2_authorized": true,
+   "v2_role": "user",
+   "v3_status": null,
+   "v3_message": null,
+   "principal_class": "FIRM_ADVISOR",
+   "render_token_full_v2_handler": true
+  },
+  {
+   "route": "GET /api/scoped/investor-reporting/analysis/{jobId}/sections",
+   "v3_admitted": true,
+   "v2_authorized": true,
+   "v2_role": "user",
+   "v3_status": null,
+   "v3_message": null,
+   "principal_class": "FIRM_ADVISOR",
+   "render_token_full_v2_handler": true
+  },
+  {
+   "route": "GET /api/scoped/investor-reporting/narrative/{reportId}",
+   "v3_admitted": true,
+   "v2_authorized": true,
+   "v2_role": "user",
+   "v3_status": null,
+   "v3_message": null,
+   "principal_class": "FIRM_ADVISOR",
+   "render_token_full_v2_handler": true
+  }
+ ],
+ "served_entry": {
+  "today_no_render_ports": [
+   {
+    "route": "GET /api/scoped/investor-reporting/performance/{accountSetId}",
+    "ok": false,
+    "code": "OBJECT_NOT_COVERED",
+    "body": null
+   },
+   {
+    "route": "GET /api/scoped/investor-reporting/analysis/{jobId}/sections",
+    "ok": false,
+    "code": "OBJECT_NOT_COVERED",
+    "body": null
+   },
+   {
+    "route": "GET /api/scoped/investor-reporting/narrative/{reportId}",
+    "ok": false,
+    "code": "OBJECT_NOT_COVERED",
+    "body": null
+   }
+  ],
+  "pinned_reads": [
+   {
+    "route": "GET /api/scoped/investor-reporting/performance/{accountSetId}",
+    "ok": true,
+    "code": null,
+    "body": "BODY:AS-S219-1"
+   },
+   {
+    "route": "GET /api/scoped/investor-reporting/analysis/{jobId}/sections",
+    "ok": true,
+    "code": null,
+    "body": "BODY:JOB-S219-1"
+   },
+   {
+    "route": "GET /api/scoped/investor-reporting/narrative/{reportId}",
+    "ok": true,
+    "code": null,
+    "body": "BODY:REP-S219-1"
+   }
+  ],
+  "negatives": {
+   "unpinned_same_account_report": {
+    "ok": false,
+    "code": "OBJECT_NOT_COVERED",
+    "body": null
+   },
+   "bundle_pins_no_ids": {
+    "ok": false,
+    "code": "OBJECT_NOT_COVERED",
+    "body": null
+   }
+  },
+  "human": [
+   {
+    "route": "GET /api/scoped/investor-reporting/performance/{accountSetId}",
+    "ok": true,
+    "code": null,
+    "body": "BODY:AS-S219-1"
+   },
+   {
+    "route": "GET /api/scoped/investor-reporting/analysis/{jobId}/sections",
+    "ok": true,
+    "code": null,
+    "body": "BODY:JOB-S219-1"
+   },
+   {
+    "route": "GET /api/scoped/investor-reporting/narrative/{reportId}",
+    "ok": true,
+    "code": null,
+    "body": "BODY:REP-S219-1"
+   }
+  ]
+ },
+ "failures": [],
+ "verdict": "PASS"
+}

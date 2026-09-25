@@ -201,17 +201,79 @@ def human_on_three_routes():
     return rows
 
 
+# --------------------------------------------------------------------------- PART 3: served.Entry + the body read
+def _flat(v3_headers):
+    flat = {k.lower(): (v[0]["value"] if isinstance(v, list) else v) for k, v in (v3_headers or {}).items()}
+    flat[w._served.CONTRACT_VERSION_HEADER] = "v1"
+    return flat
+
+
+def _entry(pins, with_ports=True):
+    """The REAL served.Entry over the three published routes. Each compute reads the report body the
+    path id names from a fixture store; storage is the world's recorded directory/ownership/policy."""
+    store = {v: "BODY:" + v for v in list(IDS.values()) + [IDS["reportId"] + "-UNPINNED"]}
+    operations = {op: (lambda claim: lambda req, scope, ev, ctx: {"body": store[ev["pathParameters"][claim]]})(claim)
+                  for op, _route_key, claim, _uri in ROUTES}
+
+    def bundle(tenant, revision):
+        return {**WORLD["load_render_bundle"](tenant, revision), **({"pinned_ids": pins} if pins else {})}
+    return w._served.Entry(
+        function_name="irpt-c-s219", operations=operations,
+        deps=lambda t: (WORLD["load_directory"], WORLD["load_ownership"], WORLD["load_policy"]),
+        opaque_firm_for=lambda t: WORLD["opaque"], routes={rk: op for op, rk, _c, _u in ROUTES},
+        render_ports=(lambda t: (bundle, WORLD["load_delegator_identity"])) if with_ports else None)
+
+
+def _handle(entry, headers, route_key, claim, value):
+    out = entry.handle({"routeKey": route_key, "pathParameters": {claim: value}, "headers": headers})
+    # A success envelope carries `data` and no `ok`; a refusal carries `ok: false` and a status code.
+    return {"ok": out.get("ok", "data" in out), "code": (out.get("status") or {}).get("public_reason_code"),
+            "body": (out.get("data") or {}).get("body") if isinstance(out.get("data"), dict) else None}
+
+
+def served_entry_arms():
+    token = w._mint.mint_render_token(WORLD["bundle"], private_key_pem=w.PRIV_PEM).token
+    rows = {"today_no_render_ports": [], "pinned_reads": [], "negatives": {}, "human": []}
+    for published_op, route_key, claim, uri in ROUTES:
+        headers = _flat(bridge2("v3", token, uri=uri)["headers"])
+        today = _handle(_entry(IDS, with_ports=False), headers, route_key, claim, IDS[claim])
+        rows["today_no_render_ports"].append({"route": route_key, **today})
+        w.check("SERVED (today) %s: with no render ports installed the read refuses" % published_op,
+                today["ok"] is False, str(today["code"]))
+        got = _handle(_entry(IDS), headers, route_key, claim, IDS[claim])
+        rows["pinned_reads"].append({"route": route_key, **got})
+        w.check("SERVED %s: the pinned id's report body is read through served.Entry" % published_op,
+                got["ok"] is True and got["body"] == "BODY:" + IDS[claim], str(got["code"]))
+    op, route_key, claim, uri = ROUTES[2]
+    headers = _flat(bridge2("v3", token, uri=uri)["headers"])
+    unpinned = _handle(_entry(IDS), headers, route_key, claim, IDS[claim] + "-UNPINNED")
+    no_pins = _handle(_entry(None), headers, route_key, claim, IDS[claim])
+    rows["negatives"] = {"unpinned_same_account_report": unpinned, "bundle_pins_no_ids": no_pins}
+    w.check("SERVED (k): a same-account report the bundle does not pin is refused, no body",
+            unpinned["ok"] is False and unpinned["body"] is None, str(unpinned["code"]))
+    w.check("SERVED: a bundle that pins no ids refuses rather than serving", no_pins["ok"] is False,
+            str(no_pins["code"]))
+    human = human_token()
+    for published_op, route_key, claim, uri in ROUTES:
+        got = _handle(_entry(IDS), _flat(bridge2("v3", human, uri=uri)["headers"]), route_key, claim, IDS[claim])
+        rows["human"].append({"route": route_key, **got})
+        w.check("SERVED (f) %s: the human token reads through the same Entry as the advisor" % published_op,
+                got["ok"] is True and got["body"] == "BODY:" + IDS[claim], str(got["code"]))
+    return rows
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", required=True)
     args = ap.parse_args(argv)
-    receipt = {"schema_version": "irpt-render-chain-c-s219-v1", "part": "1-2 of 3", "by": "2.0.0_SA_COO~P",
+    receipt = {"schema_version": "irpt-render-chain-c-s219-v1", "part": "1-3 of 3", "by": "2.0.0_SA_COO~P",
                "row": "IRPT_BCKEND-C-S219", "base": "worker 21 chain (34366c30d1), imported, 12 of 12 today",
                "one_token_three_routes": one_token_three_routes(),
                "swapped_id_each_route": swapped_id_each_route(),
                "expiry": expiry_boundary(),
                "v1": v1_arms(),
-               "human_on_three_routes": human_on_three_routes()}
+               "human_on_three_routes": human_on_three_routes(),
+               "served_entry": served_entry_arms()}
     receipt["failures"] = list(w.FAILURES)
     receipt["verdict"] = "PASS" if not w.FAILURES else "FAIL"
     Path(args.out).write_text(json.dumps(receipt, indent=1) + "\n", encoding="utf-8")
