@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T19:5xZ (tick 12). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-25T20:4xZ (tick 13). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -60,10 +60,15 @@ branch. No code edit is open.
      bd-securities-batch-a-m-20260925 is CLOSED @f99c664dd0: 204 of 204 put, 0 condition refusals, read-back 204,
      and a fresh loader classifies 204 of 204 by name. Census sha e7b289a26d08a3f4; receipt 9f84ff97ee (M branch).
      Holdings classes these at its next publication; COT C_06 moves about $21.6M out of equity at its next run.
-   - **Batch B (37 `other`) stays held** until: C_06 admits `other`; D_03 and D_04 separate their unknown sentinel;
-     the Holdings enum and the v1 contract admit `other`; ~D maps it.
-   - ORDER: Holdings must admit `other` (ASSET_CLASS_VALUES and the v1 contract) BEFORE the write, because
-     classify_security refuses a class outside its enum. ~D colours it.
+   - **Batch B (37 `other`) stays held.** Its prerequisites:
+     - Holdings enum and contract: DONE (~P @3d5a590ad0; ~M @82eaf1a581).
+     - ~D's IR `other` mapping: on local DEV 959a59a2 (TO-IV-e-27); origin DEV follows via the CTO and MSTR.
+     - COT gold (CTO 101022, ~M owns it): census @c2aa94d8c8; code: C_06 admits `other`, D_03/D_04 unknown ->
+       `unclassified` (7889280827, CLOUD 68a732b792, NOT deployed); per client: 22 relationships, $48.5M
+       (COT_OTHER_PER_CLIENT_20260925.json).
+     - The never-widen packet is SENT (@4b972e4088; msg 20260925T202818Z); the CTO half is owed.
+     - On signature: the deploy under a ledger, one scheduled COT run read back, then the batch B write.
+   - Preferred stock = fixed_income, standing (Andrew-direct ~17:3xZ, @42def02a36).
    - The two defects (COT `B_01b` scanning an empty prefix; the loader skipping rows without a ticker) are ~M's under
      exact-file grants on request.
 3. **The scheduled daily Holdings producer is ~M's** (CTO R4, msg 100947;
