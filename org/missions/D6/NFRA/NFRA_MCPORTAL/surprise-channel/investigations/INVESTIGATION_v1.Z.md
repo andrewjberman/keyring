@@ -195,6 +195,27 @@
     "spec_asserts": "MP-t-3 step 3: 'Packaging the function's code follows the map's tf_resource / build convention ... A zero-diff apply with no artifact built is a failed leg, not a pass' -- implying a correctly packaged artifact lets the function run for real (PRD C4, AC3's live refusal arms).",
     "world_is": "No packaging choice within this worker's granted paths (`infra/aws/lambda/mcportal/`, `infra/aws/lambda/ci/lambda-source-map.json`, no `.tf`/source logic changes permitted) can make the module import succeed once deployed, because `lambda_function.py`'s own repo-root computation is incompatible with the depth AWS Lambda's handler resolution forces on it. AC3 would FAIL on a live invoke (Runtime.ImportModuleError) even after G-OWNER-OID clears and a full apply lands.",
     "notes": "Not fixed here: fixing requires a logic change to `lambda_function.py` (e.g. reading the gateway root from an env var/layer path instead of `parents[5]`, or a different handler/source_dir shape) or to the `.tf`'s `handler`/`source_dir`, both explicitly out of bounds for this cell ('Change no logic in them; a needed logic change is a BLOCKING row'). Surfaced now, before a wasted apply, so a re-issued packaging cell can carry the fix alongside G-OWNER-OID's resolution."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S3",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T03:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Relays the CTO's ruling R-1 onto NFRA_MCPORTAL-Z-W3-S2 (disarm_owner Andrew): the measured owner oid 2e21f8e5-55ca-45c1-91b9-a4607bf28d4f is ACCEPTED as the writer's owner configuration because the setting fails closed. MP-t-3 and MP-t-6 are superseded as cut (571afcb7b4), so no apply waits on the oid this round.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/1.0.0_SA_CTO~O/ROUND1_RULINGS.md R-1 @aed83d11fe: 'the measured oid ... is ACCEPTED as the writer's owner configuration. Andrew's separate confirmation is not needed, because the setting fails CLOSED'.",
+        "Row NFRA_MCPORTAL-Z-S2: the oid is one value across 6 of 6 of Andrew's refresh-family rows in gateway-access-state-table (118 of 118 items scanned)."
+      ]
+    },
+    "spec_asserts": "NFRA_MCPORTAL-Z-W3-S2: no existing record names Andrew's Entra object id, so MP-t-3 cannot configure the writer's owner.",
+    "world_is": "The oid is on record, and the PRD owner has accepted it as the configuration. Round 2's re-cut of MP-t-3 carries it.",
+    "notes": "This is a relay of R-1. It adds no rule and does not speak for Andrew."
   }
 ]
 ```
