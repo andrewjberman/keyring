@@ -66,10 +66,13 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    closed; live get-schedule verified; re-plan No changes). Disarm row S127 @61bce7ee33. CORRECTED (row S128): the apply landed
    before 09:30 ET, so the schedule fired TODAY 13:30:29Z -- hand-over Success at all 3 firms, directories republished 13:30:4xZ
    (49F as_of 09-24, was 09-17; INF 09-25; COT 09-22). ~M corrected in the broker 13:38Z. Criterion 2's 49F census read the
-   09-17 directory -- re-run against 09-24 next.
+   09-17 directory -- RE-RUN on the fresh directories (below).
 4. Criterion 2 census DONE (ee51ffafac). 49F's 762 non-computable accounts NARROWED 45ec3dd692
    (`IRPT_MVP_P/F49_UNRESOLVED_BALANCES_20260925.json`, custodian dim_balance 2026-09-23, net_mv_plus_cash): 722 empty
    + 38 absent from the custodian = 760 directory-termination gaps; 2 funded accounts (~$105K) are the real engine gap.
+   RE-READ 13:4xZ on today's republished directories (receipt PERFORMANCE_RESOLVABILITY_CENSUS_20260925.json,
+   F49_UNRESOLVED_BALANCES_20260925b.json): COT 843/843, INF 878/878; 49F 6698 of 7497 (72 now TERMINATED), 790 hold
+   nothing, 9 FUNDED (~$945K) non-computable -- the real 49F gap, up from 2.
 5. EXPORT HOP NOT BUILT -- design card `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/EXPORT_HOP_DESIGN_CARD_20260924.md`.
    Served submit answers NOT_READY; 11/11 host renders Failed (SESSION_ABSENT); 0 PDFs; render signing keys ABSENT;
    V2/V3 render branches coded, not deployed. A (keys + V2 + V3, shared auth plane) is outside P's surface: owner
@@ -123,8 +126,8 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
 | `build-and-upload.sh` removes tracked `performance/*.py` from the publish worktree's working tree on every irpt-performance-adapter build (18:41Z and 20:2xZ; restored from HEAD each time; generate/refresh builds do not) | 1.0.0_SA_CTO to route (ci/ owner) | the next performance build |
-| 49F engine: 2 FUNDED accounts (~$105K, net_mv_plus_cash) with no linkable YTD day (45ec3dd692); vs BD: 219 of 5194 DIVERGENT over all accounts (db699faf13); in the 300 sample, 7 of 293 DIVERGENT (3 engine coverage gaps of 35-98 neutral days; 1 in-kind signature +4452% vs +96%, the open ADVI_49F.c02-CFINPUT clause; 3 fully linked at 108-496bp), receipt F49_BD_CROSSCHECK_20260924.json | 1.0.0_SA_CTO to route to the 49F engine lane (DS) | the engine lane's next c02 act |
-| 49F directory (as of 2026-09-17) states no termination for 760 accounts the custodian shows empty (722) or absent (38) on 2026-09-23 -- criterion 2's denominator counts them active (45ec3dd692) | 2.0.0_SA_COO~M (directory refresh) | M's next directory refresh or termination source |
+| 49F engine: 9 FUNDED accounts (~$945K, net_mv_plus_cash, directory 09-24) with no linkable YTD day (was 2 on 09-17); vs BD: 219 of 5194 DIVERGENT over all accounts (db699faf13); in the 300 sample, 7 of 293 DIVERGENT (3 engine coverage gaps of 35-98 neutral days; 1 in-kind signature +4452% vs +96%, the open ADVI_49F.c02-CFINPUT clause; 3 fully linked at 108-496bp), receipt F49_BD_CROSSCHECK_20260924.json | 1.0.0_SA_CTO to route to the 49F engine lane (DS) | the engine lane's next c02 act |
+| 49F directory (as of 2026-09-24, 72 TERMINATED) still lists 790 not-terminated accounts the custodian shows empty (752) or absent (38) on 2026-09-24 -- criterion 2's denominator counts them active (45ec3dd692) | 2.0.0_SA_COO~M (directory refresh) | M's next directory refresh or termination source |
 | `holdings/tests` 44 fail in the P worktree at HEAD (test_publication_entry 39, test_runner_destination 3, test_snapshot 2) | 2.0.0_SA_COO~M (holdings lane) | M reads it against its own branch |
 | portal `bun test src/pages/InvestorReporting` 89 fail on origin/DEV 5e339ffd (87 unique), not CI-run | 2.0.0_SA_COO~D | ~D's S6/S7 rows |
 
