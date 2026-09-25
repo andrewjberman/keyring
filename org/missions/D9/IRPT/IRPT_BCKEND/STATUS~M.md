@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T17:5xZ. Loop: /canonical-drive cron 6f699621 (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-25T17:4xZ (tick 2). Loop: /canonical-drive cron 6f699621 (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -79,9 +79,10 @@ branch. No code edit is open.
      s3://opal-data-{49financial,inflection,cottonwood}/irpt/<firm>/code/gold/investor-reporting-holdings.tar.gz.
      Constraint found: CODE_TREES bundles are commit-routed (bundle_for_member returns the FIRST bundle; a
      non-distribution member LEAVES its loose leg). The closure holds 12 MDPF gold scripts, lib/ and the registry
-     JSONs, so declaring it there would freeze other pipelines' deploys. NEXT: a standalone declaration outside
-     CODE_TREES, minted explicitly as a release step (find_bundle resolves it; the routing never sees it); then
-     row 2 (dispatch) and row 4 (IAM). Merge to CLOUD is waiting on other seats' staged files.
+     JSONs, so declaring it there would freeze other pipelines' deploys. DONE: STANDALONE_BUNDLES (ec48c5d144, M branch):
+     irpt_holdings_{49f,inf,cot}, 40 members each, manifest-stamped (92 bytes of metadata), never commit-routed.
+     NEXT: the merge to CLOUD (waiting on another seat's staged trade-cash-indicator ledger file), then the mint
+     from CLOUD under a ledger (WORLD), then row 2 (dispatch) and row 4 (IAM). Merge to CLOUD is waiting on other seats' staged files.
    - **S131 / S134 explained** (9c0fb0c8f2): the served COT revision is a BOUNDED publication of 841 of 981 accounts.
      The 53 repeated relationship groups sit in 2 unserved accounts ($729,826.75). The source is unchanged (same
      version and sha as served). A full-firm (scheduled) COT build refuses the whole firm for those 2 accounts.
