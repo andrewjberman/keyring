@@ -120,9 +120,12 @@ needing a posture re-run this round did not hold).
 1. **`FWD-30` ACROSS THE POPULATION.** The export exercised on a SAMPLE of the 89, not a second pass on
    BA, with per-name `FIGURES/CITES/ABSENCES same/missing/extra` and the denominator per name. This is
    the goal's own clause and the largest unmeasured thing in the project.
-2. **Branch (a) is untouched.** DONE WHEN offers *"(a) a presentation in Opal Brand Guidelines form ...
-   AT MOST TWO PAGES"* OR (b). Only (b) has ever been exercised. Whether (a) is wanted is Andrew's --
-   the goal text names both -- and no cell is cut for it until he says.
+2. **Branch (a) is untouched.** [**CORRECTED 2026-09-25 ~03:0xZ -- SEE THE AMENDMENT AT THE END OF THIS
+   FILE. The sentence below is WRONG and the card it raised is STRUCK: the PRD already rules that either
+   branch satisfies, so branch (a) is NOT owed and was never Andrew's to decide.**] DONE WHEN offers
+   *"(a) a presentation in Opal Brand Guidelines form ... AT MOST TWO PAGES"* OR (b). Only (b) has ever
+   been exercised. ~~Whether (a) is wanted is Andrew's -- the goal text names both -- and no cell is cut
+   for it until he says.~~
 3. **The ACCEPT clause** -- a person forwarding the output unreformatted. Needs a person, so it is
    carded, not cut.
 4. **`Z-S272`'s posture re-run**, which needs its own authorisation.
@@ -145,3 +148,40 @@ INFERRED.
 
 **ROUND 40 IS CLOSED.** `FWD-30` REALIZED (branch b, served plane, `BA_US_Equity`, ACCEPT owed).
 `2.0.0_SA_COO~Z` recuts round 41 from section 5 in ONE issuance.
+
+---
+
+# AMENDMENT 1, 2026-09-25 ~03:0xZ -- SECTION 5 ITEM 2 IS WRONG AND ITS CARD IS STRUCK
+
+**I carded a question to Andrew that this project's own PRD already answers.** Section 5 item 2 said
+branch (a) was *"Andrew's -- the goal text names both"*. The PRD's `FWD-30` fence, at
+`AMGT_RESAPP_PRD.md:753-756`, rules it outright:
+
+> **"THE 'OR' IS HIS AND IS NOT COLLAPSED: either branch satisfies; the 2-page cap binds branch (a)
+> only; 'functional' means an artifact a person opens, not a button that resolves."**
+
+**RULING: branch (a) is NOT OWED.** Branch (b) satisfies `FWD-30`'s DONE WHEN on its own, by the
+outcome's own connective and by Andrew's own "or", which the fence explicitly declines to collapse. **The
+card is STRUCK, not answered** -- there was never a decision to make, and carrying it to Andrew asked him
+to re-rule his own word.
+
+**Why I got it wrong, because the mechanism is the point.** I read the DONE WHEN's `EITHER ... OR` at the
+bytes and quoted it correctly, then **stopped four lines short of the SOURCE fence that interprets it.**
+The clause I needed was in the same fenced block, below the text I had already decided was the answer.
+**A contract's operative sentence and the clause that governs how to read it are not always adjacent, and
+having quoted the first correctly is exactly what stops you reading the second.** The cost of the error
+is not small: it put a settled question into the queue of the one person whose time the queue exists to
+protect, which is the over-reservation defect in its purest form -- not a call costumed as a NEVER, but a
+**closed** call re-opened by its own adjudicator.
+
+**One thing the fence ADDS rather than corrects**, and it strengthens what section 1b already recorded:
+*"functional means an artifact a person opens, not a button that resolves."* That is the same limb as the
+ACCEPT clause, which this analysis already booked as OWED. **It does not change the `FWD-30` grade** --
+the DONE WHEN's testable half is the EXERCISED production plus the field-by-field comparison, both met at
+extras 0 -- but it does mean the person-limb is named TWICE in the contract, and neither naming is
+satisfied yet.
+
+**NET EFFECT ON THE CARDS AT ANDREW: two becomes ONE.** Only `data_status COMPLETE` remains, and that one
+is genuinely his because it narrows the standard the GOAL is measured against. **Round 41's list loses
+item 2 entirely**; no cell is cut for branch (a), now or later, unless Andrew asks for the deck form as a
+new want rather than as a condition of `FWD-30`.
