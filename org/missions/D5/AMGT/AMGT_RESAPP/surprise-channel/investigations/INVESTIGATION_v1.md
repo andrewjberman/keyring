@@ -14542,6 +14542,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "For 2 of 89 names the resolved key carries '/', which the single-segment gateway template cannot match when sent raw. This is a standing exposure on the served page for those two names, predating this round; no act of this round reaches it. The remedy is in the identity layer (a key must never carry '/'), whose files this seat holds for 2.0.0_SA_COO~X's CRPS-f-1 until it drains.",
     "disarm_owner": "2.0.0_SA_COO~Z -- no act of this round fires it; carried to the round-41 analysis with two measurements owed: the page's key encoding, and an authenticated HTTP read of one of the two names.",
     "notes": "Filed as the disarm owner's read of the worker's row, per the row's own disarm_owner line."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S277",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-25T05:30:00Z",
+    "one_line": "The served plane moved under round 42: after AMGT_CORPUS round 4 re-pulled the model blocks, FWD-30's served comparison reads 0 of 89 OK (round 41: 5 of 89), 89 of 89 pages now carry figures (round 41: 31), and figure extras appear on 88 names -- a data change, not a code change.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ONE capture of all 89 snapshot names (C:/tmp/amgt-r42-cache2, 2026-09-25 04:46Z to ~05:1xZ, deployed CodeSha256 pmH20bb+L1Kcejf4MKS4tVt+tCIPgeHwSZAsTe+nXZo=, unchanged since round 40): served verdicts OK 0, NOT_OK 89, CAPTURE_FAILED 0 (round42/base-runs/rq-1.served_same_capture.base.tsv).",
+        "Classes at that capture: figure extras on 88 names (5,261 extra figures), absence extras 1,496, absence misses 168; figure misses on 5 names.",
+        "Round 41's served table (0.9.0_WK_AMGT_RESAPP~158/fwd30_population.tsv, ~03:0xZ) read 5 OK and 31 pages with figures, on the SAME deployed code.",
+        "AMGT_CORPUS round 4 drained CRPS-f-2 (the Model-block history request split into chunks of at most 25 fields) at 93440f9df1, 2026-09-25T04:12Z; the model blocks read afterwards carry about 280 to 413 figures per name, including names whose pages showed none.",
+        "The local rebuild equals the deployed body on all 19 fields for 89 of 89 names at the same capture, so the instrument is not the moving part."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 41's analysis grades FWD-30 at 5 of 89 served names and 31 of 89 pages with figures.",
+    "world_is": "At the next vintage the same code serves 0 of 89 OK. The export prints every figure the new blocks carry, while the page's Model tab shows a narrower window, so the fiscal-year class grew from 12 names to 88. Round 42's rq-1 targets the page as captured at this vintage.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- INERT; round 42's rq-1 is cut against this vintage (decomposition s.50b.4).",
+    "notes": "Found by the round-42 base run. The served FWD-30 grade moves with AMGT_CORPUS's data, so a population grade names its capture time."
   }
 ]
 ```

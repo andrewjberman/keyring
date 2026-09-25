@@ -6142,3 +6142,96 @@ the repository; the commit carries the sweep script, the table and a per-name lo
 - Items 2, 3 and 4 above.
 - Standing: Z-S269 (its subject superseded by Z-S273), Z-S272, item 8 (universe provenance, `2.0.0_SA_COO~Y`), Z-S238,
   Z-S227, and W85-S1 / W117-S3 / W58-S2.
+
+
+## 50. ROUND 42 -- THE EXPORT SAYS ABSENT THE WAY THE PAGE DOES, AND THE REDEPLOY. Two orders over the round-41 analysis's five items
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 41 ANALYSIS** (`ledger/ROUND_ANALYSIS.round41.md` @`9621fe75ab`,
+s.7 five items; `FWD-30` NOT_REALIZED, 84 of 89 names divergent). PRD v0.26 unchanged. Population, axis and vintage stated per
+the analysis s.5-6: **89 names, the `universe.json` snapshot read 2026-09-10T23:18Z; the ABSENCE axis on all 89, the FIGURE axis
+on the 31 whose pages carry figures.** The live group reads 94; its five-name residue waits on Andrew's carded word.
+
+### 50a. THE FIVE ITEMS AND WHERE EACH LANDS
+
+| s.7 item | lands in |
+|---|---|
+| 1 the unconditional absence-marker emission, 72 of 84, with a judgment criterion | `AMGT-rq-1` (build) + `AMGT-rq-2` (served) |
+| 2 the residue: ADDS figures 12, DROPS a figure 1 | `AMGT-rq-1`: the SAME file (`render_pack.py`), so the same cell -- cells are cut by write set |
+| 3 the page-side design question | CARRIED: an input to the CTO, not a cell, until the CTO rules |
+| 4 the 58 zero-figure pages | NOT a cell: `AMGT_CORPUS` `FWD-12` owns them |
+| 5 population, axis and vintage stated | a rule: applied to every face below |
+
+**Also taken, from `1.0.0_SA_CTO~Z`'s input (msg 25865), not a cell:** a SERVED CONTENT CAPTURE -- the API bodies behind each tab
+for a stratified sample of eight names -- is committed with this issuance under `round42/content-capture/`. It comes from the
+same page-side captures the round's check caches, so it costs no extra call.
+
+### 50b. FOUR MEASUREMENTS THE CUT RESTS ON
+
+1. **The instrument reproduces the served plane.** `round42/checks/rq-1.local_sweep.py` rebuilds each name's export IN PROCESS
+   from the working tree over the SAME served inputs the page renders from (the model block saved at capture time, every other
+   reader stubbed from the capture). At the base, over ONE capture (`C:/tmp/amgt-r42-cache2`, 2026-09-25 04:46Z to ~05:1xZ), the local
+   rebuild and the deployed body read **equal on all 19 fields for 89 of 89 names** (`round42/base-runs/`). So a local pass
+   predicts a served pass before any deploy.
+2. **Three instrument gaps were found by that equivalence and closed in the instrument, not the product.** (a) The thesis
+   payload's `fiscal_year_figures` are a SUBSET of the block (992 HK: 2016-2026 against the block's 2016-2029), so the model
+   block is read, never rebuilt from the thesis; and (c) it is read AT CAPTURE TIME and saved beside the page, since the store
+   moves (measurement 4). (b) Windows refuses `*` in a file name (`WALMEX*_MM_Equity`); the local rebuild
+   swaps it in the temp file name only. The Lambda's Linux temp dir takes it as is.
+3. **The page's own words are the target** (`portal/src/pages/SecurityAnalysis/tabs/`): Thesis `PanelEmpty` "No drafted prose
+   for this name yet." (`ThesisTab.tsx:288-291`); Exec "Exec Management: ABSENT (<absent_because>)." with its detail
+   (`ExecManagementTab.tsx:216-221`); Posture's verdict line `ABSENT -- no call was made` and its reason (`PostureTab.tsx:78`,
+   `:442-444`); the Model tab's fiscal-year window (`ModelTab.tsx`).
+4. **The served plane moved under the round, and the baseline is re-read at that vintage.** `AMGT_CORPUS` round 4 re-pulled the
+   model blocks after round 41's capture. At the new vintage **0 of 89 read OK** (round 41: 5), **89 of 89 pages now carry
+   figures** (round 41: 31), and the classes are: figure extras on 88 names (5,261 extra figures), absence extras 1,496, absence
+   misses 168 (row `Z-S277`). The fiscal-year window (class 4 below) is now the largest class, not the smallest. The cell's
+   target is the page as captured at that vintage.
+
+### 50c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-rq-1` | THE EXPORT SAYS ABSENT THE WAY THE PAGE DOES | `~159` | worker | SERVED | `lib/research/print/render_pack.py`, `lib/research/print/tests/**` |
+| `AMGT-rq-2` | THE REDEPLOY | `0.7.0_AE_CloudOps~A` | seat order | WORLD | `infra/aws/terraform/harvest/**` (apply only), its deliverables, the ledger |
+
+### 50d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.7's five items (read from the file). Item 3 is carried as the CTO's input, item 4 belongs to
+  another project, and item 5 is a rule. That leaves items 1 and 2, in one build cell (one file) plus its served act. The
+  round-41 classes subtract to zero uncovered (the analysis s.3).
+- **(ii) Same grain.** One build cell, one seat act.
+- **(iii) Intent.** One axis: the export carries exactly what the page shows, name by name.
+- **(iv) What a cell does NOT move.** rq-1 changes no page file and no pdf path (`build_pack`); rq-2 moves exactly what its
+  sign-off pair names. Neither touches the 58 zero-figure names' data.
+
+### 50e. EDGES AND FAN-OUT
+
+```
+rq-1 -> rq-2   (the rich body the deploy serves)
+fanout:
+  cap: 8
+  orders_total: 2
+  chains_total: 1
+  wave_0: [rq-1]
+  wave_1: [rq-2]                       # a seat order: after rq-1 merges AND both never-widen halves are committed
+  portal_ref: fe618e50
+  no_vite_per_worker: true
+  no_s3_deletes: true
+  no_vendor_call: true
+  egress: rq-1 reads the deployed function (lambda invoke, GET routes) for its check; rq-2's build pip-downloads its pinned wheels (declared)
+  route_change: none
+  no_promote: true
+```
+
+### 50f. BOUNDS
+
+No server. The page-side captures live OUTSIDE the repository at `C:/tmp/amgt-r42-cache`, shared by the issuer's base run and
+the worker, so the check reads the same page inputs on both sides of the fix. Checks are under
+`deliverables/2.0.0_SA_COO~Z/round42/checks/`, and the base runs under `round42/base-runs/`.
+
+### 50g. CARRIED
+
+- Item 3 (the CTO's design ruling) and item 4 (`AMGT_CORPUS` `FWD-12`).
+- The live group's five-name residue, on Andrew's word. `Z-S276` / `Z-W158-S1` (the '/' keys; identity is held for
+  `2.0.0_SA_COO~X`'s CRPS-f-1). ACCEPT (carded). `Z-S272` (posture re-run, its own authorisation). The portal promote.
+- Standing: item 8, Z-S238, Z-S227, and W85-S1 / W117-S3 / W58-S2.
