@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: /canonical-drive loop on Andrew-direct 17:3xZ (cron 57c0067c, every 10m; replaced goal loop f599225b), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T19:0xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T19:1xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -122,10 +122,16 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    roster of that subject (served's own internal seam), intersected with the pin; serve_submit validates the grant BEFORE
    any write. Tests per package rc=0: _render_identity 27, export 92, performance 188, _authz 160, narrative 37, ops 160.
    Limit: an Opal delegator's CLASS is the one verified at freeze; its SCOPE is re-resolved at read time.
-   NEXT (P): B1 DEPLOY -- re-pin the publish row's export files + grant.py at 755c13bc19, flat probe, build-and-upload,
-   re-plan (export root e14cd90571), ledgered safe-apply. Negative arm: a direct invoke answers the boundary's refusal
-   before and after (an ungranted advisor -> NOT_AUTHORIZED; measured 18:4xZ), unauthenticated POST 401 at the edge, 0
-   objects under generations/exr_*; the positive run waits on the first retained report (Andrew's signed-in run).
+   B1 LIVE 19:1xZ (ledger irpt-export-b1-submit-20260925 CLOSED): irpt-export-render CodeSha256 1oJDheft.. (publish
+   7bfd665d0e, re-pinned WHOLE at 755c13bc19 -- the old row mixed enforce/errors/loaders/prospect/owner_reads at an older
+   pin under a newer served.py; caught by a pin-faithful probe), export root e14cd90571 applied (1 add / 1 change), env +
+   irpt-export-render-submit-policy live, re-plan No changes. Negative arm by direct invoke, before -> after: internal
+   submit of a nonexistent report UNEXPECTED -> OBJECT_NOT_COVERED; internal receipt UNEXPECTED -> NOT_FOUND (the OLD
+   artifact failed every internal user on every export route, silently); ungranted advisor NOT_AUTHORIZED both; 0 writes.
+   The positive run (a real QUEUED export) waits on the first retained report -- Andrew's signed-in Performance run.
+   NEXT (P): B2 -- mint the render token from the grant (mint_input) and dispatch the render host with the print URL
+   (card B2-URL; needs ~D's print-page half); B0's read-function deploy (performance/status/narrative with grant.py +
+   enforce at 755c13bc19, grant read IAM) rides B2; the performance adapter redeploy waits for the INF one-use.
    AFTER B1-B3 (CTO 100993, from ~D 100992, DSGN_IRPTV1 decomp v4 section 7 @d4add46f46): a HOLDINGS export report kind
    beside performance/analysis, additive on the contract, same freeze + render path; ~D wires EXPORT_KIND_BY_TAB.
    DEPLOY rides B1: package _render_identity/grant.py into the adapter/status/narrative zips, set IRPT_EVIDENCE_BUCKET,
