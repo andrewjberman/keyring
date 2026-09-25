@@ -81,7 +81,7 @@ Instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPOR
 **ISSUER NOTES:** S5 + S7 pages. Provisioned `--nested mcportal=wk-NFRA_MCPORTAL-1-mcportal` after MP-w-1 drains. The
 render is the issuer's real run.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
