@@ -2220,6 +2220,30 @@ repeated it would create a second carrier of one obligation. The cell's own AC0 
 > in the Asset Management research folder is the goal complete. Finish AMGT_RESAPP, AMGT_CORPUS and close them out
 > and their addendums."*
 
+**AND THE POPULATION IN THAT SENTENCE IS ALREADY RATIFIED -- IN THE SIBLING PROJECT'S PRD, WHICH THIS ONE DID NOT
+CITE UNTIL NOW.** `org/missions/D5/AMGT/AMGT_CORPUS/prd/AMGT_CORPUS_PRD.md:719-733` carries
+**`C-BACKFILL-DENOMINATOR-IS-THE-RESEARCH-FOLDER`**, which quotes this same Andrew-direct sentence and rules on it:
+*"SO THE POPULATION IS THE FOLDER, IT IS 93, AND IT IS ALREADY MEASURED"* -- *"which makes `FWD-19` gradeable from
+day one instead of gated behind a card"*, `K6` CLOSED by his word (2026-09-24 ~05:0xZ). **Every `AMGT_RESAPP` fence
+whose population is the companies the page covers resolves through that contract**, read the way the contract
+requires -- *"EVERY population claim is A SUBTRACTION FROM A FRESH READ of the Asset Management research folder,
+WITH THE DENOMINATOR PRINTED"* -- which answered **93** on 2026-09-24 and **94** on 2026-09-25 (three independent
+reads). **The number is a READING, never a constant, and no fence in this PRD pins one.** The contract's own
+caution survives with it: **11 folders can never carry prose-derived fields, so the grade is "N of N
+DISPOSITIONED", never "N of N populated".**
+
+**Why this cross-reference exists, recorded because its absence had a measured cost:** `1.0.0_SA_CTO~Z` carried
+*"89 or 94?"* as an open card at Andrew across five ticks and then issued an adjudication re-ruling a question he
+had already answered in writing -- because `comp-find 'C-BACKFILL-DENOMINATOR'` over `org/missions/D5/AMGT/`
+returns **six references and all six sit inside `AMGT_CORPUS`.** A population contract ratified in one project's
+PRD binds its sibling's outcomes, and **standing in this file the answer was unreachable by reading anything this
+file pointed at.** That adjudication is withdrawn at
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_AMGT_RESAPP_20260925T1450Z_THE_UNIVERSE.md` amendment
+A1; the authority is Andrew's word and this contract, not a CTO ruling.
+
+**L4-R:** this is a CROSS-REFERENCE to an already-ratified contract and changes **no ENDPOINT and no outcome
+text**. Under PROPORTIONATE SIGN-OFF it re-opens no half and withholds no delivery.
+
 ## B.1 -- ⛔ THE EXPORT IS IN NEITHER BRIEF, AND ONLY A SUBTRACTION FINDS THAT
 
 The frontend brief's nine outcomes (`O1`-`O9`) are **all render outcomes**, and its own Part VII lists *"the print
