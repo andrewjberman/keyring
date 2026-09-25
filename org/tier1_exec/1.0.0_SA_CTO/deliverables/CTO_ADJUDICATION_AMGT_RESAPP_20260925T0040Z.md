@@ -23,7 +23,12 @@ no ruling can move.
   and a defect must not render identically.
 +---------------------------------------------------------------------+
 
-**RULING -- (b), and the enum is three-valued, not two.** The Peers P/E cell resolves to exactly one
+**RULING -- (b), and the enum is three-valued, not two.**
+[VACATED AS SCOPED TO THE PEERS TAB, 2026-09-25 ~01:2xZ -- SEE THE VACATUR AT THE END OF THIS FILE.
+Its premise is falsified: the Peers tab's P/E is NOT `BEST_PE_RATIO` but the reciprocal of each member's
+earnings yield, and all 12 of 12 members carry a figure. Do not act on the text below without reading
+the vacatur.]
+The Peers P/E cell resolves to exactly one
 of: a FIGURE; `not carried` (in-universe, producer ran, no value -- the finding `ro-7`'s section 4
 describes); or `outside research universe` (no producer covers this name). Grounds:
 
@@ -82,3 +87,46 @@ stays visible rather than being defined away.
 blocked acts reads as a sovereign workload and hides the one call that actually needed a ruling.
 
 Push state: this commit LOCAL on landing; origin/CLOUD @`83d71eb8d8`. This lane does not push.
+
+---
+
+# VACATUR, 2026-09-25 ~01:2xZ -- CALL 1's RULING IS VACATED AS SCOPED TO THE PEERS TAB
+
+**Cause:** `2.0.0_SA_COO~Z`'s row `AMGT_RESAPP-Z-S273` @`21a1d44bdc`, accepted in full. My acceptance and
+the two errors behind it are recorded as `AMGT_RESAPP-Z-S274`. This vacatur was written ONE HOUR after I
+broadcast the ruling to three seats (msgs 25819-25821), who are told in the same turn.
+
+**What was measured against me.** On the served Peers tab after `ro-7`'s act C -- deployed CodeSha256
+`pmH20bb+L1Kcejf4MKS4tVt+tCIPgeHwSZAsTe+nXZo=`, `peers.as_of 2026-09-24T2252Z` -- `csc_columns.present`
+names `P/E 2025` and `P/E 2026` with **transform `reciprocal`, units `percent`**, and **members carrying
+`ey`: 12 of 12**, Deere 2.88187, Eaton 2.20018, Union Pacific 4.17716 included. Rendered: DE **34.70**,
+ETN 45.45, UNP 23.94. Corroborated on a DIFFERENT instrument -- `0.7.0_AE_CloudOps~A`'s `ro-7` AC3 read
+the relation `P/E x percent yield == 100 (+/-1)` on **24 of 24**, off-relation 0, null 0.
+
+**So the boundary I ruled about does not exist on this surface.** The Peers tab's P/E is not drawn from
+the 89-key corpus at all, which is the entire basis of CALL 1's "outside research universe" value.
+
+**My two errors, both mine and neither subtle.**
+1. **WRONG PRODUCER, committed while excluding other hypotheses.** I traced the served P/E to
+   `scoped_amgt.py:132`'s `_FORECAST_MNEMONICS` and its consumers at `peers_v.py:103/:161` and concluded
+   the PEERS TAB reads it. **I found A path that mentions P/E and treated it as THE path.** The control
+   was already in my hand: `Z-S270` traced Mkt Cap to its producer by reading `universe.py:528`. **I
+   applied that control to the column that was WORKING and not to the column in question** -- because
+   the working column was my evidence and the broken column already had an explanation attached. A
+   hypothesis that arrives with a mechanism suppresses the trace that would falsify it.
+2. **A STALE CAPTURE, and this one is worse.** `Z-S269`'s render was Andrew's interactive sign-in at
+   ~20:25Z. Act C wrote the 2252Z partitions and closed at 22:55:35Z. I surfaced `Z-S270` at 22:58Z on
+   the 20:25Z observation and never re-captured. **I had signed amendment B2 for that very act at
+   `6baf45575c` and then reasoned about the surface as though nothing had landed.** A finding built on a
+   capture is only as current as the capture.
+
+**WHAT SURVIVES, precisely.** The PRINCIPLE stands -- **a boundary and a defect must not render
+identically** -- and so does section 6.3 of the `ro-7` half @`6baf45575c`, whose narrowing was about how
+act C is GRADED and is untouched by this. What is vacated is the APPLICATION to the Peers P/E columns
+and the three-valued enum for them; `Z-S273` allows that the boundary case may still exist on another
+surface that genuinely reads `BEST_PE_RATIO`, and the Model tab is the obvious candidate.
+
+**THE REPLACEMENT RULE, which is the part worth keeping:** a ruling that a cell CANNOT fill names the
+SURFACE and the PRODUCER it measured, and **measures the boundary rather than inferring it from a
+mnemonic's name.** No enrichment cell is owed for the Peers tab. If the Model tab is later shown to have
+this boundary, that is a fresh call on a fresh measurement, not a re-instatement of this one.
