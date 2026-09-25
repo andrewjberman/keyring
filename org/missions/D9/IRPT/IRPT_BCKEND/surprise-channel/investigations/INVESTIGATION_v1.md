@@ -9133,3 +9133,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The host is up 12:52Z-16:41Z. A 13:00Z fire lands 8 minutes after the start, before SSM reports Online, and the next fire is 24 hours later, after the 16:41Z stop. The S125 fix now reaches the dispatch every day, and every day it would meet this race. Ledger irpt-directory-refresh-s125-m-20260924 is HELD on it."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S127",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-25T13:35:00Z",
+  "one_line": "S126 DISARMED by its owner: the directory refresh now fires 09:30 America/New_York (13:30Z EDT / 14:30Z EST), inside the runner host's 12:52Z-16:41Z up window, 38 minutes after the start.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "86a3d27224 (irpt-p-publish-20260923): infra/aws/terraform/investor-reporting/directory/schedule.tf aws_scheduler_schedule.irpt_directory_refresh cron(0 9 ? * MON-FRI *) -> cron(30 9 ? * MON-FRI *), zone America/New_York unchanged.",
+      "Plan 0 add / 1 change / 0 destroy (that schedule's expression and description only); safe-apply tagauthz PASSED; applied 2026-09-25T13:3xZ.",
+      "scheduler get-schedule irpt-directory-refresh after apply: cron(30 9 ? * MON-FRI *) America/New_York ENABLED, target irpt-directory-refresh; terraform re-plan: No changes.",
+      "Ledger irpt-directory-refresh-schedule-s126-20260925 opened 13:23Z, closed with both legs proven."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row IRPT_BCKEND-S126: ARMED, disarm_owner 2.0.0_SA_COO~P -- 'move the refresh inside the host's up window (12:52Z-16:41Z, e.g. 09:30 America/New_York), or add a second fire'.",
+  "world_is": "Moved, not doubled: one fire a trading weekday at 09:30 ET. Today's 13:00Z fire already failed; the next scheduled fire is 2026-09-26T13:30Z. S126 also names one ad-hoc fire while the host is Online (until 16:41Z) to un-stick today, on Andrew's word -- not taken here.",
+  "notes": "Disarmed same turn as read (spine L7: an ARMED row is disarmed in the same turn by its named owner, and disarmed is not remediated). Carried for the CVO's L8 compile so the ARMED row reads resolved."
+}
+```
