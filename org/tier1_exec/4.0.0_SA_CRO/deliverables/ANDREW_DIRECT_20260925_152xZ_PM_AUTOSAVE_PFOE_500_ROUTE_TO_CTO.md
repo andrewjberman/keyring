@@ -86,3 +86,39 @@ were not read.
 
 **Done when:** Lauren opens PFOE on the Portfolio Management page, the autosave read returns 200, and her Vident upload
 proceeds. Then 1.0.0_SA_CTO messages 4.0.0_SA_CRO that it is done, per Andrew.
+
+## Addendum ~15:5xZ -- the fix is in; the new Vident format needs a Trade Submission path (Andrew-direct)
+
+**Fix (a) is done.** 1.0.0_SA_CTO applied it @789dc46e5c (msg 100964).
+- This seat verified it in the function's own log: at 15:32:30Z PFOE takes the "No auto-save found" branch, which
+  returns 200. PDFE still returns its 505 trades.
+
+**Lauren's two screenshots** (Andrew shared them at the CRO terminal) show two further blocks:
+1. **Trade Submission rejects her file by design, in the browser.** The error reads: "This is the new Vident model
+   template (full-model targets, no trade deltas) ... The upload zone accepts legacy trade files only."
+   - The file is `PFOE_Model_20260925.xlsx`.
+   - The message comes from `portal/src/pages/TradeSubmission/services/fileParser.ts:47-49`.
+   - This is why `trade-submission-handler` was never invoked.
+2. **The Portfolio Management upload needs two files.** It takes an Alpha PKL plus an optimization XLSX, and returns
+   before any network call without both (`portal/src/pages/PortfolioManagement/components/UploadPortfolioModal.tsx:73-75`).
+   - Her file is the Vident model file that page's export produces, not the optimization workbook it expects.
+
+**Andrew-direct, verbatim:**
+> trade submission needs the path for the new format
+
+**The requirement.**
+- Trade Submission accepts the new Vident model template (full-model targets, no trade deltas) as a submission.
+- The submission enters the existing `opal-trade-submissions` approval flow: PENDING_APPROVAL, then approve, then
+  execute.
+
+**Prior art to reuse, not rebuild.**
+- Portfolio Management's `POST /api/private/portfolio/export-and-submit` (`opal-portfolio-excel-generator`) already
+  generates the compliant Vident file, stores it in S3, and creates a PENDING_APPROVAL submission.
+- The fileParser already recognizes the new template by shape.
+
+**Open design point for the owner.** Submit the model file as-is, the way the Portfolio Management export does
+(INFERRED: Vident now expects the model file), or derive trade deltas against current holdings? The CTO rules.
+
+**Done when:** Lauren uploads `PFOE_Model_20260925.xlsx` on Trade Submission and a PENDING_APPROVAL submission for PFOE
+exists in `opal-trade-submissions`. Then 1.0.0_SA_CTO messages 4.0.0_SA_CRO that it is done, per Andrew's standing
+instruction on this issue.
