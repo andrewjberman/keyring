@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T17:4xZ (tick 2). Loop: /canonical-drive cron 6f699621 (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-25T17:5xZ (tick 3). Loop: /canonical-drive cron 6f699621 (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -81,8 +81,11 @@ branch. No code edit is open.
      non-distribution member LEAVES its loose leg). The closure holds 12 MDPF gold scripts, lib/ and the registry
      JSONs, so declaring it there would freeze other pipelines' deploys. DONE: STANDALONE_BUNDLES (ec48c5d144, M branch):
      irpt_holdings_{49f,inf,cot}, 40 members each, manifest-stamped (92 bytes of metadata), never commit-routed.
-     NEXT: the merge to CLOUD (waiting on another seat's staged trade-cash-indicator ledger file), then the mint
-     from CLOUD under a ledger (WORLD), then row 2 (dispatch) and row 4 (IAM). Merge to CLOUD is waiting on other seats' staged files.
+     Row 4a DONE (3e1ca981ab): the publication writes through a firm-scoped publish principal when the dispatch
+     names one (IRPT_HOLDINGS_PUBLISH_ROLE_ARN); reads stay on the host (R-44 split by bucket). Rows 2 and 4b are
+     designed in the plan addendum (M branch). NEXT: the CLOUD merge (another seat's staged
+     trade-cash-indicator ledger file blocks it), the mint from CLOUD under a ledger, then row 2's dispatch
+     function and row 4b's principals (infra, safe-apply). Merge to CLOUD is waiting on other seats' staged files.
    - **S131 / S134 explained** (9c0fb0c8f2): the served COT revision is a BOUNDED publication of 841 of 981 accounts.
      The 53 repeated relationship groups sit in 2 unserved accounts ($729,826.75). The source is unchanged (same
      version and sha as served). A full-firm (scheduled) COT build refuses the whole firm for those 2 accounts.
