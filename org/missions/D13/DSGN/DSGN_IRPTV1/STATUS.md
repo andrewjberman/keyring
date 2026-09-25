@@ -25,11 +25,15 @@ round 3's five NOT_EVALUATED wait on Andrew's signed-in walk on 5174, asked thro
 IVE16 (Holdings export) waits on P's 'holdings' ReportKind (CTO 100994). origin DEV is 8242412d; the round-4 candidate
 reaches origin through the CTO's review and 0.0.0_AB_MSTR's push.
 
+Direct act IV-e-27 (M 101020, asset class `other` -> "Other", PALETTE.purple600) merged on local DEV 959a59a2 (CLOUD
+b8281039d8); unblocks M's batch B once origin DEV carries it. Local DEV also carries P's render-token commit 5c2fc34d.
+
 ## Round-5 candidates
 
 1. The firm chip and identity card read the firm catalogue's name (ResolvedScope carries no display name: adapt.ts:696-705).
 2. The print route's render token: P's own (api-client.ts reads it on the print route; PrintEntry needs nothing, P 101011).
 3. IVE16's one-line EXPORT_KIND_BY_TAB hookup when P serves 'holdings'.
+4. iv-e-17.regenerated / iv-e-26.wire-regen run gen-wire IN PLACE: a suite run rewrites contracts/wire/** with LF endings (0 content lines, 25 files shown modified in the main checkout); regenerate into a temp dir and compare.
 
 ## Round-3 drain checks
 
