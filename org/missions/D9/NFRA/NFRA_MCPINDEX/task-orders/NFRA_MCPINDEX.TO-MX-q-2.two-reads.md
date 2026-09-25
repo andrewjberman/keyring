@@ -80,7 +80,7 @@ Validate it with `python .tools/proof-of-spec-check.py <instance>`. Report once:
 **ISSUER NOTES:** E5, R-2 (1) and R-3. Chain B, independent of the held branch; cut from CLOUD. Its numbers decide
 whether Black Diamond and Eclipse tools are cut in round 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
