@@ -369,6 +369,51 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "TO-OA-t-4: the watch moves into opal_ai and its parent copy is removed on the branch (C1, move never copy).",
     "world_is": "The workspace copy has a second consumer outside NFRA_OPALAI -- a D7 production runner -- that depends on exactly the behaviour the Analyst's watch is moving away from (reading Claude Code's own token). C1's 'move, never copy' cannot hold for this file without the D7 runner's own change.",
     "notes": "Decision asked of 1.0.0_SA_CTO~O: (a) the D7 runner owns its own token selection (its owner writes it; the Analyst's watch moves), or (b) the runner re-points to the moved watch and adopts its refresh family. OA-t-4 stays open until then. No gate is built here."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W5-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~5",
+    "surfaced_at": "2026-09-25T01:13Z",
+    "one_line": "install-owned-paths.sh --submodule <path> resolves REPO_ROOT from the invoking shell's AMBIENT cwd, not from anything tied to the intended repo -- a caller that invokes it by absolute path without first cd-ing into that repo silently targets whichever repo the ambient cwd sits in instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This cell's own bound #1 (\"never install a hook into the real opal_ai... the real install is the issuer's act at the round's last merge\") already anticipates the risk that a --submodule invocation could reach the real tree; it names WHO may do it, not a mechanism that refuses when they do not mean to.",
+        "REPRODUCED THIS SESSION: an exercise call of `bash \"$P/.tools/git-hooks/install-owned-paths.sh\" --submodule opal_ai` (absolute script path, no prior `cd \"$P\"`) was issued while this worker's own harness had reset its Bash-call cwd to the PRIMARY workspace root between calls (per this harness's own documented behavior) -- `git rev-parse --show-toplevel` from that cwd resolved to the REAL main tree, and `SUB_ABS=\"$REPO_ROOT/opal_ai\"` resolved to the REAL opal_ai submodule checkout, which exists there (unlike in this worker's own worktree, where opal_ai is uninitialised).",
+        "Effect measured: `/c/Users/Opal Bloomberg/Desktop/ajb_workspace/.git/modules/opal_ai/hooks/pre-commit` was created (905 bytes, this cell's own wrapper text verbatim, including its 'OA-w-2 (2026-09-24)' comment) at 20:49 local -- confirmed by `cat`, byte-identical to install-owned-paths.sh's generated WRAPPER.",
+        "Found and removed same-turn by this worker: `rm -f` on that path at 2026-09-25T01:08Z; `ls` immediately after shows only git's stock `*.sample` files in that hooks dir (applypatch-msg.sample .. update.sample, all timestamped 19:10, the submodule's own init), i.e. the real opal_ai's hooks dir is back to its pre-incident state. `git status`/`git -C opal_ai status` at the main tree show no other unexpected change from this; the one unrelated staged change there (`.gitmodules` +mcportal submodule) predates this session and is another live seat's work."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The build spec's bound (\"never install a hook into the real opal_ai... the round's issuer is the only caller with standing to name the real one\") is enforced by WHO is allowed to pass the real path, and that is sufficient.",
+    "world_is": "Nothing in install-owned-paths.sh itself distinguishes a scratch fixture from the real tree, and its only signal is a resolved-path string in its own stdout (\"OK: ... installed at <path>\") that a caller must read to notice a wrong target -- a silent cwd mismatch (this harness's own reset-between-calls behavior is one concrete source) reaches the real opal_ai with no refusal. Left alone, the round's own last-merge install call carries the identical exposure this row measured on itself.",
+    "notes": "Not fixed here (out of this cell's stated build): a hardening would have the script print (or the caller verify) the RESOLVED repo identity before writing, or accept an explicit --root override instead of trusting ambient cwd. Left for the disarm_owner's real install to read this row first."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S11",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T01:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_OPALAI-Z-W5-S1 (owner this seat): the hook the worker briefly installed into the real opal_ai is gone -- the main tree's .git/modules/opal_ai/hooks holds 14 files, all stock .sample, and no pre-commit -- so no nested commit is being graded mid-round; install-owned-paths.sh --submodule's reliance on ambient cwd is recorded for the round-1 read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer read 2026-09-25 ~01:4xZ: `ls --indicator-style=none <main>/.git/modules/opal_ai/hooks` = 14 entries, non-.sample 0, pre-commit absent. (A first count read 14 non-sample because ls here appends '*' to executables and defeats a $-anchored pattern; recounted without indicators.)",
+        "Worker report 0.9.0_WK_NFRA_OPALAI~5 on TO-OA-w-2 @77043416d3: the install happened from a call without an explicit cd (the harness resets cwd per call to the workspace root), and was removed the same turn."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-W5-S1 is ARMED with this seat as disarm_owner; TO-OA-w-2 bound 1 forbids a hook in the real opal_ai mid-round.",
+    "world_is": "The bound was crossed briefly and restored; the real install stays the issuer's act at the round's last merge. Defect for the L10 read: the installer should resolve REPO_ROOT from its own location, not from cwd.",
+    "notes": "No gate is built here."
   }
 ]
 ```
