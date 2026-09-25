@@ -42,8 +42,10 @@ branch. No code edit is open.
 ## Next list (in order)
 
 1. Andrew's firm-tab HAR, then /verify on the goal.
-2. Republish holdings at a newer business date: the directory now leads holdings, so its new accounts refuse. This is a
-   rebuild from sources under a CTO GO.
+2. Make holdings a SCHEDULED daily producer, not another ad-hoc republish. `irpt-holdings-snapshot` has been DISABLED
+   since 09-11, its bundle lacks 7 of 12 runner files (re-arm test IF-ENABLED-NOW: FAIL), and the classification code
+   is M-branch only. Owner asked of the CTO (msg 20260925T140741Z;
+   `HOLDINGS_SCHEDULED_PRODUCER_ROUTING_REQUEST_20260925.md` @ae4f0659d4).
 3. On the CTO's routing of the widening request (`CLASSIFIER_WIDENING_REQUEST_20260924.md` @d8a88cef4b; 287 rows, 69
    readers): if the CTO rules it this seat's, fill 49F's 62 CUSIP-only rows (symbol and name from the Schwab security
    master) in the Holdings producer.
