@@ -64,7 +64,7 @@ waived: **bronze `news_listing` holds 2 objects, ALL wsj**, so no rebuild from h
 ## 3. SURFACES -- what you may read and write
 
 <paths>
-org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~19/
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~20/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-s-1.sa-listing-capture-retried.md
 </paths>
@@ -84,7 +84,7 @@ a BLOCKING row and the cell stops.
   functions. A gold snapshot is a separate act with its own never-widen question.
 - No portal, no Terraform, no deploy, no schedule, no notifier.
 - Work ONLY in the worktree whose absolute path is in your spawn prompt. Every Bash call begins
-  `export OPAL_AGENT_SERIAL=0.9.0_WK_AMGT_HARVST~19;`.
+  `export OPAL_AGENT_SERIAL=0.9.0_WK_AMGT_HARVST~20;`.
 - Your FIRST act prints `git rev-parse --abbrev-ref HEAD` and `git rev-parse --show-toplevel` and tests that every
   path in section 3 exists. If any is absent, STOP with a BLOCKING row.
 
@@ -92,7 +92,7 @@ a BLOCKING row and the cell stops.
 
 <proof_of_spec>
   <criterion id="AC0" cell_refs="HVST-s-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/s1/ac0.py</invocation><expect>the BEFORE state read from S3 at run time and NOT copied from this order: silver listing_hit rows per publisher with the five-publisher DENOMINATOR, and bronze news_listing object counts per publisher with their denominator; sa's listing_hit count printed explicitly; plus the deployed persist location confirmed by printing the bytes at worker.py around the `finally`</expect></criterion>
-  <criterion id="AC1" cell_refs="HVST-s-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.opal_data_harvest run --publishers sa --harvest-grammar --security-json org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~4/securities.json --max-jobs 2 2>&1 | tail -25</invocation><expect>the producer's own run output, recorded VERBATIM whatever it says -- a success and a failure are both results. If it raises, the traceback is the evidence and AC2 records the zero honestly. NO retry.</expect></criterion>
+  <criterion id="AC1" cell_refs="HVST-s-1" superseded_by="AC1a+AC1b" status="SUPERSEDED -- DO NOT RUN"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.opal_data_harvest run --publishers sa --harvest-grammar --security-json org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~4/securities.json --max-jobs 2 2>&1 | tail -25</invocation><expect>SUPERSEDED BY AMENDMENT 1 (section 7) -- DO NOT RUN THIS INVOCATION: the securities file it names is an ARRAY and crashes at worker.py:330, and `run` alone writes no S3. Run AC1a THEN AC1b instead. Retained verbatim so the superseded bytes carry their own marker. ORIGINAL TEXT: the producer's own run output, recorded VERBATIM whatever it says -- a success and a failure are both results. If it raises, the traceback is the evidence and AC2 records the zero honestly. NO retry.</expect></criterion>
   <criterion id="AC2" cell_refs="HVST-s-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/s1/ac2.py</invocation><expect>the AFTER state on the SAME instrument as AC0, with the DELTA printed per publisher: silver listing_hit rows and bronze news_listing objects. sa's delta stated as a signed number against its AC0 value. A delta of ZERO is a legitimate outcome and is reported as such, never explained away</expect></criterion>
   <criterion id="AC3" cell_refs="HVST-s-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/s1/ac3.py</invocation><expect>publisher_coverage run PURE over the post-run listing_hit rows: the number of securities for which sa now yields a non-empty span, with the denominator of securities tested; each span printed as (start, end). If sa yields none, that is the finding and is printed as "sa spans 0 of N"</expect></criterion>
   <criterion id="AC4" cell_refs="HVST-s-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/s1/ac4.py</invocation><expect>daily_rows run PURE and IN MEMORY (no gold write) over the same inputs: the data_status distribution BEFORE and AFTER, and the count of (security, day) rows that moved DENIED -> PARTIAL, with publishers_covered / publishers_enabled printed on a sample moved row. The string COMPLETE must appear ZERO times in any moved row; if it appears, STOP and file a BLOCKING row</expect></criterion>
@@ -135,7 +135,7 @@ finding is what produced this amendment.
 
 ## 6. WHEN YOU ARE DONE
 
-Write your proof-of-spec instance to `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~19/`,
+Write your proof-of-spec instance to `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~20/`,
 commit under your own author line, and report ONCE in your final message. **If the producer fails, you have still
 completed the cell** -- the failure, recorded with its denominator and its before/after delta, is the result the
 round asked for. Do not retry, do not widen, do not fix code to make it pass.
