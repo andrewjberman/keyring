@@ -143,7 +143,7 @@ Report once:
 SPAWN ONLY after MP-g-1 and MP-p-1 have DRAINED (g-1's commits on CLOUD; p-1's nested commit in mcportal r1-drain).
 Provision with `--nested mcportal=r1-drain`.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
