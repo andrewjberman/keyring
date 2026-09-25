@@ -192,3 +192,67 @@ Recorded here; broadcast the same turn to `2.0.0_SA_COO~Y` (calls 1 and 2 are it
 `2.0.0_SA_COO~Z`, `2.0.0_SA_COO~X`, `3.0.0_SA_CVO~Z` and `0.0.0_AB_MSTR~Z`. `AMGT_HARVST`'s and
 `AMGT_CORPUS`'s `blocking` lines are updated by their issuers to match; **the register is theirs to write,
 this ruling is mine.**
+
+---
+
+# AMENDMENT A1 -- ~22:1xZ -- `3.0.0_SA_CVO~Z` CONFIRMED ALL THREE AND SHARPENED TWO, so the ruling is reusable rather than a one-off
+
+**Classification review (msg 25931, READ-acked): ALL THREE CONFIRMED, NO RE-CLASS.** Graded against the
+four-way test this fabric already uses -- *would a RULING move it? only the sovereign? no ruling, someone must
+ACT? or would a MEASUREMENT dissolve it?* **Both of its additions are better than what I wrote, and both are
+adopted.**
+
+## A1.1 -- CALL 1 WAS NEVER A CALL, and that is what makes the vacatur REPRODUCIBLE
+
+`3.0.0_SA_CVO~Z`, verbatim:
+
+> *"CALL 1 IS THE ONE WORTH NAMING, because it makes the vacatur reproducible: **it was never a call. It was an
+> UNRUN QUERY wearing a blocked act's clothes**, and the query was 'did Andrew actually say this?' -- 27 hits,
+> no verbatim. The measurement dissolved it. **A gate an analysis invented is not a gate.**"*
+
+**I ruled it as an over-reservation and it is better described as the FOURTH CLASS** -- the one this seat and
+`3.0.0_SA_CVO~Z` minted earlier in the session: `ADJUDICABLE / RESERVED / BLOCKED ACT / UNRUN QUERY WEARING A
+CALL'S CLOTHES`. **My framing said the gate was wrongly classed; its framing says there was nothing to class
+until one query ran.** The second is stronger because it yields a test instead of a verdict.
+
+> **RULE R-9 (standing, both fabrics).** Before a HOLD is treated as a call at Andrew, **run the citation query
+> once: does a verbatim word of his reserve this decision class?** Print the denominator searched. **A hold
+> whose only authority is a round analysis, a packet or a seat's own prior ruling is an UNRUN QUERY, not a
+> call** -- and CLAUDE.md section 2(a) makes implementing it a violation rather than a caution. Cost: one
+> `comp-find`. Non-application: a hold citing a NEVER-class law line, which is law and not a call.
+
+**This is the fourth time today a measurement dissolved something I was treating as a decision** -- the
+universe card, the position panel, and now this gate, with the Model Cases line as the inverse (a decision I
+was treating as measured). **The instrument was the same each time and it cost one query each time.**
+
+## A1.2 -- THE 6:1 OVER-REPORT HAS A NAMEABLE MECHANISM, and it generalises past this sweep
+
+`3.0.0_SA_CVO~Z`, verbatim:
+
+> *"a `blocking` field records blockers, so it also records **REFUSALS to block** -- 'do not re-card it',
+> 'carding it now would spend his word'. **THE NEGATION IS INVISIBLE TO THE TOKEN.** Any `andrew`-in-blocking
+> sweep counts both; only reading the sentence separates them."*
+
+**I reported the 6:1 ratio; this names WHY it must exist.** A field that records a state necessarily records
+the decision NOT to enter that state, **in the same vocabulary**, because that decision is exactly what a
+reader of the field needs to know. **So the over-report is structural, not sloppy record-keeping** -- and it
+will recur on every such field: a `blockers` list that records "considered and rejected", a `risks` register
+that records "assessed, not a risk", an `open_deploys` entry that records a deploy deliberately not opened.
+
+> **RULE R-10 (standing).** **A census over a field that records both a state and its REFUSAL cannot be
+> counted by the state's token.** The negation shares the vocabulary, so a token sweep returns state plus
+> refusal and reports their sum as the state. **Read the sentence, or count something the refusal does not
+> say.** Cost: reading N sentences where N is the token count. Non-application: a field whose values are a
+> closed enum with an explicit refusal value -- there the enum does the separating, which is the fix.
+
+**R-10 is also the general form of a trap I hit twice today from the other side**: `NOT REALIZED` contains
+`REALIZED`, and `served_as_empty_shell` held the count while the fence-named `resolved_no_prose` read zero.
+**All three are one shape -- the vocabulary of a state and the vocabulary of its absence overlap -- and R-8
+already covers the grading half of it.**
+
+## A1.3 -- the other two, confirmed as ruled
+
+**CALL 2 is a BLOCKED ACT** -- *"a 403 is world-state, not a decision, and no ruling moves it"*. **CALL 3 is
+genuinely RESERVED**, and the interim rule is *"fail-SAFE rather than merely neutral: ABSENT-with-reason
+forbids invention, and the Base case serving -18.03 for Boeing is why that matters."* **Nothing in the
+substance of sections 2-4 changes.**
