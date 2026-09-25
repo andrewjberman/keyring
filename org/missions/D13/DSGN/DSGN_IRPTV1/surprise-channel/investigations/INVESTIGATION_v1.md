@@ -1038,6 +1038,30 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The round's AC4 judgment grades and round 3's five NOT_EVALUATED land on Andrew's walk (CTO 100986), asked 2026-09-25 19:08Z."
+  },
+  {
+    "id": "DSGN_IRPTV1-W19-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~19",
+    "surfaced_at": "2026-09-25T21:55:00Z",
+    "one_line": "ConsolidatedOverviewPanel now accepts an optional `tenantLayout` prop that resolves cash/other colour through the layout's colorPalette (IVE29-b), but none of its three real PROD call chains (CanonicalBookView.tsx and its callers AdvisorBookView.tsx / ClientsTab.tsx / AdvisorBookClientDetail.tsx) pass it -- all outside this TO's <paths> grant -- so the client-drill donut/legend will keep rendering `cash`/`other` via the global MIX_PIE fallback (amber500 / gray500) on PROD until a follow-on TO threads the prop through those three files.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- a follow-on cell threading `tenantLayout` (from useTenantLayout(firmId, firmOverride)) through CanonicalBookView.tsx into its ConsolidatedOverviewPanel call, and through AdvisorBookView.tsx / ClientsTab.tsx / AdvisorBookClientDetail.tsx into CanonicalBookView, none of which are in this TO's <paths>.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'ConsolidatedOverviewPanel' portal/src/pages/AdvisorIntelligence shows exactly one caller, CanonicalBookView.tsx:97, which spreads overview/composition/selectedAssetClass/onSelectAssetClass/quarterlyMix/readonlyAssetClass and no tenantLayout",
+        "comp-find 'CanonicalBookView' portal/src/pages/AdvisorIntelligence shows its only three callers -- AdvisorBookClientDetail.tsx:171, AdvisorBookView.tsx:1086, tabs/ClientsTab.tsx:812 -- none of which are named in this TO's <paths> block",
+        "this TO's <paths> lists only portal/src/pages/AdvisorIntelligence/_partners/cottonwood/layout.ts, _shared/panels/ConsolidatedOverviewPanel.tsx, _shared/lib/composition.ts and __tests__/cot-other/ -- CanonicalBookView.tsx and the three callers above are not covered",
+        "cot-drill-legend.test.ts renders ConsolidatedOverviewPanel directly with `tenantLayout: COTTONWOOD_LAYOUT` passed explicitly and PASSES (VERDICT: DRILL-LEGEND-OK) -- proving the component-level fix is correct, but that direct construction is not how the real page mounts the panel"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IVE29-AC3 (as written): 'ConsolidatedOverviewPanel's vertical legend, rendered from a Cottonwood composition carrying `other` and `cash`, lists an \"Other\" entry and a \"Cash\" entry with their formatted amounts and each class's own colour' -- graded by a test this worker writes against the component directly, which is what cot-drill-legend.test.ts does and PASSES. The cell's (b) instruction separately says 'colour every entry by its served class through the layout's palette', describing the intended real-page behaviour.",
+    "world_is": "The component-level fix (optional `tenantLayout` prop, strictly additive) is built, wired to the tenant `colorPalette` override the same way PartnerAnalytics.tsx's `resolveMixClassMeta` already does, and passes AC3 exactly as specified. Reaching PROD's actual client-drill donut/legend requires four additional files this TO's <paths> grant does not cover; per the refusal clause this worker did not widen its grant to touch them. Until a follow-on cell threads the prop, Cottonwood's real client-drill view keeps showing cash amber and other grey (the pre-existing W18-S1 gap), even though 'other' now lists in the legend at all (that structural gain -- the hardcoded array now including 'other' -- IS live on PROD once merged, since it needs no new prop: composition.mix already carries 'other' for Cottonwood via AdvisorBookView.tsx's existing tenant-driven normalizeMixTo4Class call).",
+    "notes": "Not blocking IVE29-AC1/AC2/AC3, all of which PASS-by-output as literally written. Filed ARMED because AC4's PROD read (one named relationship's cash slice, one all-cash client at 100%) is graded on the REAL page, where the colour half of this fix is not yet live -- the amounts/shares will be correct (driven by C_06 + the already-wired includeCash/includeOther options), but cash will render amber and other grey instead of green/purple600 until the follow-on wiring lands."
   }
 ]
 ```
