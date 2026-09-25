@@ -31,16 +31,20 @@ Build:
    `python infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/build_package.py --out <zip>` does four things:
    - writes a zip holding `lambda_function.py` at its root;
    - adds every module of the IMPORT CLOSURE of `app.access_state` and `ops.schwab_entitlement_admin` within the
-     gateway tree, copied byte-for-byte from `infra/aws/ec2/opal-gateway/` at the same checkout (same relative paths,
-     e.g. `app/access_state.py`, `ops/schwab_entitlement_admin.py`) -- derive the closure by reading their imports,
+     gateway tree, copied byte-for-byte at its REPO-RELATIVE path (e.g. `infra/aws/ec2/opal-gateway/app/access_state.py`,
+     `infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py`) -- derive the closure by reading their imports,
      never by a hand-kept list;
-   - adds any data file those modules load at import or call time;
+   - adds any data file those modules load, also at its repo-relative path (e.g.
+     `org/standards/NFRA_OPLGTW_CONTRACT.json`);
    - exits 0.
-   A zero-byte `__init__.py` may be added where the source tree has none (the gateway's `ops/` has none). The package is
-   an artifact of the source, never a second copy that can drift.
-2. **`lambda_function.py`**: imports `app` and `ops` as top-level packages and NEVER edits `sys.path` or climbs
-   `parents[N]`. In the package they sit beside it. In the source tree, the tests' `conftest.py` puts the gateway tree
-   on the path.
+   The package MIRRORS the repository layout because `ops/schwab_entitlement_admin.py:49` climbs `parents[5]` to the
+   repo root at import time. At Lambda's `/var/task` a zip-root copy has too few parents and raises IndexError (row
+   NFRA_MCPORTAL-Z-W1-S3). `ops/` is NFRA_OPLGTW's and is never edited. Mirrored, `parents[5]` lands on the package's
+   own root. A zero-byte `__init__.py` may be added where the source tree has none. The package is an artifact of the
+   source, never a second copy that can drift.
+2. **`lambda_function.py`**: sits at the zip root (the handler), never climbs `parents[N]`, and puts the package's
+   mirrored gateway directory (`infra/aws/ec2/opal-gateway`, joined to its OWN directory) first on `sys.path` before
+   importing `app` and `ops`. In the source tree, the tests' `conftest.py` puts the gateway tree on the path as today.
 3. **`tests/conftest.py`**: also put `infra/aws/ec2/opal-gateway/` on `sys.path`, resolved from the repo root through
    `git rev-parse --show-toplevel` or the file's own location; never a hard-coded drive path. The existing
    `tests/test_grant_writer.py` stays green.
@@ -85,9 +89,9 @@ Rows: `org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/INVEST
 ## 4. PROOF OF SPEC (literal; run from your worktree root, after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MP-b-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~O/round2/checks/b1.AC1.sh; echo "exit=$?"</invocation><expect>build rc=0 built zip=yes; lambda_handler callable=yes; app and ops resolved inside the zip 2 of 2 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MP-b-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~O/round2/checks/b1.AC2.sh; echo "exit=$?"</invocation><expect>build rc=0; in-zip lambda_handler with no owner header -> verdict=REFUSED NO-OWNER-HEADER -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="MP-b-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~O/round2/checks/b1.AC3.sh; echo "exit=$?"</invocation><expect>zip members byte-equal to the gateway tree at HEAD k of k (k>=2, required members present 2 of 2); parents[ in lambda_function.py=0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MP-b-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~O/round2/checks/b1.AC1.sh; echo "exit=$?"</invocation><expect>build rc=0 built zip=yes; extracted at Lambda depth; lambda_handler callable=yes; app and ops resolved inside the package 2 of 2 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MP-b-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~O/round2/checks/b1.AC2.sh; echo "exit=$?"</invocation><expect>build rc=0; in-package lambda_handler (Lambda depth) with no owner header -> verdict=REFUSED NO-OWNER-HEADER -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="MP-b-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~O/round2/checks/b1.AC3.sh; echo "exit=$?"</invocation><expect>zip members byte-equal to their repo path at HEAD k of k (k>=2, required members present 2 of 2); parents[ in lambda_function.py=0 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
