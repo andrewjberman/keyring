@@ -29,16 +29,20 @@ All twelve round-3 orders (IV-e-9..IV-e-20) complete; every worker slot drained 
   fixed at 8242412d. Row S14 carries the close.
 - Channel: 40 investigation rows; the CVO's last compile (13baec35aa, round 1) covered 8.
 
-## Rows owed a ruling (drain-end message)
+## Rulings received
 
-- W11-S1: fe-s-10/parity pins the firm chip's visible name; moving it to a disclosure needs the test re-scoped.
-- W11-S2: fe-s-5/states pins "UNAVAILABLE" in the heatmap, which FWD-15 (v0.8) bars.
+1.0.0_SA_CTO 100948 (RULINGS_IRPT_20260925.md @75156f2b18, R6): W11-S1 keep fe-s-10/parity (a firm's name is client
+language; only a system token on the chip moves to a disclosure); W11-S2 re-scope fe-s-5/states next round. Both rows
+disarmed. The DEV landing 13b5356f..8242412d is under the CTO's review; the push is 0.0.0_AB_MSTR's on Andrew's word.
 
 ## Next-list (round 4 candidates)
 
 1. SearchSelect accessibility: no combobox/listbox/option roles, no keyboard navigation (the Catalyst picker had them).
 2. The hero cards colour by model name, not served modelCode (CategoryViewTree's contract carries no code; row W8-S1).
 3. The live signed-in thread (FWD-1): every real run so far is fixture-driven.
+4. fe-s-5/states re-scoped per R6: the heatmap cell reads "not supplied", the reason on hover; the two sub-tests pinning the
+   retired Summary block re-scoped or removed with the reason stated.
+5. The firm chip prints the firm token ("F-CW"); per R6 the chip shows the firm's name and the token moves to a disclosure.
 
 ## Parked
 
