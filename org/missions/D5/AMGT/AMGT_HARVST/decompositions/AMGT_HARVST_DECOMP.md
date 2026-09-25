@@ -892,3 +892,66 @@ the same object.**
 never offline-safe; what it did not say, and what this cell establishes, is that it is also **the only way any
 listing row reaches S3 at all.** A corrected cell is `run --publishers sa --harvest-grammar` with a
 SINGLE-security JSON, THEN `upload-harvest`, with AC2 measuring after the second.
+
+### 17h. THE SECOND ATTEMPT (`~20`) REACHED THE CELL'S AUTHORIZATION CEILING -- the producer has NO BOUNDED-FETCH MODE, and that is an ANDREW CALL, not an amendment
+
+**AMENDMENT 1 was correct and is not the blocker.** Slot `~20` ran the amended order to its end: AC0, AC1b,
+AC2, AC3, AC4 and AC5 all PASS-by-output with their denominators, the proof-of-spec instance is VALID, and AC1
+was correctly skipped as SUPERSEDED. **AC1a did not run, and the worker was right not to run it.** Row
+`AMGT_HARVST-Z-W20-S1`, BLOCKING.
+
+**WHAT THE WORKER FOUND:** the producer resolves its runtime root to the **worktree** root
+(`publishers.py:22` `ROOT = Path(__file__).resolve().parents[2]`, config `runtime_root: .runtime/opal-data-harvest`).
+A linked worktree has no `.runtime`, so `worker.py:152` `self.sessions.get(publisher)` finds no saved envelope and
+falls through `auth.py:23-24` `saved or self.refresh(publisher)` into a **headed credentialed Chrome login** whose
+bot wall is solved by a third-party vision model, in a `subprocess.run` with no timeout. That is a different and
+larger act than this cell's ONE BOUNDED VENDOR ACT, so the cell stopped.
+
+**THE ISSUER'S THREE READS, all made after the worker reported, each on a different instrument:**
+
+1. **THE UPLOAD-ONLY PATH DOES NOT EXIST -- MEASURED, AND IT CORROBORATES `Z-W15-S1` ON A NEW INSTRUMENT.** The
+   worker's own hypothesis was that the original 502 run's captured pages sit in the MAIN tree's outbox, invisible
+   from the worktree. They do not. `.runtime/opal-data-harvest/progress.sqlite3` `harvest_listing_outbox` holds
+   **2 rows TOTAL, both wsj, both `uploaded`; sa holds ZERO.** Beside it `harvest_raw_outbox` holds **sa 3
+   `uploaded`, wsj 11** -- so sa's ARTICLES persisted and its LISTINGS did not, which is exactly what `Z-W15-S1`
+   predicted from the code and is now measured on the OUTBOX rather than on the S3 surfaces. **Round 4's
+   precondition ("no rebuild from held data exists for the other four") is re-confirmed on a second instrument.**
+   The only path to an sa listing row is a FRESH capture.
+
+2. **A SAVED ENVELOPE WOULD PREVENT THE LOGIN AT THE START -- `load()` HAS NO EXPIRY CHECK.**
+   `SessionVault.load` (`storage.py:51-55`) tests `path.exists()` and decrypts; it does not read an expiry. So
+   `get()` short-circuits on any existing `sa.dpapi`, and `.runtime/opal-data-harvest/secrets/sa.dpapi` exists
+   (26,438 B, 2026-09-15). **Pointing `--runtime-root` at the main tree therefore does disarm the STARTUP login** --
+   which is why option 1 in the row looked sufficient.
+
+3. ⛔ **AND IT IS NOT SUFFICIENT, WHICH IS THE FINDING: THE ESCALATION IS ALSO MID-RUN, AND IT IS NOT SCOPED TO
+   bbg/barrons.** `worker.py:274-293` has two recovery branches and they differ:
+   - `VerificationRequired` -> `repair_verification`, but **guarded**: `if attempt or publisher not in {"bbg",
+     "barrons"}: raise`. sa raises. Safe.
+   - `AuthExpired` -> **`self.sessions.refresh(publisher)` on the first attempt, for ANY publisher including sa.**
+     That is the same headed credentialed login, reached automatically from an ordinary fetch whose cookies the
+     server has since expired.
+   **So a ten-day-old session does not fail closed -- it fails INTO the login.** And no flag turns that off: a
+   census for a bounded-fetch/no-refresh switch over `lib/opal_data_harvest/` returns **4 hits of 43 files, every
+   one of them a `credentials_entered: False` telemetry field, and none a control.**
+
+**THEREFORE THE CELL CANNOT BE EXECUTED WITHIN ITS OWN BOUND BY ANY AMENDMENT I CAN WRITE.** Whether the act stays
+bounded depends on whether sa's saved cookies are still live server-side, **and that fact cannot be read without
+making the call** -- the measurement and the hazard are the same act. `--runtime-root` buys the startup branch and
+not the mid-run one, so offering it as "the fix" would be a bound that holds only on the lucky branch.
+
+⭐ **THE SHAPE, and it is the one NEVER-1 states one level up:** I counted the WRITERS of the session state and
+stopped at the entry point. **A recovery path is a second writer of the same state, and it runs on a branch the
+happy path never shows you.** Reading `get()` alone certifies a login-free run that the `except` clause twelve
+lines later can still perform. COST: one read of every `except` in the call path. NON-APPLICATION: a producer with
+no recovery branch.
+
+**ROUTED TO ANDREW AS ONE CARD, and the round holds there.** The question is not "may the pipeline call sa" --
+that is settled and scripted. It is whether a **credentialed headed re-login to seekingalpha.com, with a
+third-party vision model solving the bot wall**, is authorized as part of this retry. It is a different act from
+the one round 6 was cut for, and `NEVER call an external vendor API without Andrew's explicit per-use word`
+plus the moratorium on inferring wider scope both land on HIS word, not on mine. **No gate is being built and
+nothing is being narrowed: the cell simply stops at the edge of what it was authorized to do.**
+
+**STATE:** `HVST-s-1` stays OPEN at `pending`, round 6 does not close, and no L10 slug is cut -- an open order is
+the honest carrier of a blocked act. The `~20` instance stands as filed.
