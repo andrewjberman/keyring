@@ -543,6 +543,30 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "S7 disarms when the CTO rules the remaining 4 and each is landed or retired."
+  },
+  {
+    "id": "DSGN_IRPTV1-W9-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~9",
+    "surfaced_at": "2026-09-25T00:00:00Z",
+    "one_line": "TO-IV-e-14's cell (c) asks GenerateComposer to list 'the included accounts by name + masked tail' for a chosen client, but that data source (scope.permittedAccountIds) is the SAME one an Andrew-direct already refused a per-account list on ('it printed every permitted account id (1,000+)'); this worker named a threshold (ACCOUNTS_NAMED_LIST_CAP=25) rather than reproduce the refused pattern or silently drop the ask.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- disarmed by either (a) an issued task order wiring the header's narrowed `Narrowing` (the SELECTED client's own few accounts, the way `header/IdentityCard.tsx`'s own `overWhatFor` already sources it) through `AnalysisTab.tsx`/`GenerateComposer.tsx` so the named list uses the narrow set instead of a capped slice of the wide one, which needs an `index.tsx` mount-line change outside this cell's <paths>; or (b) an explicit ruling that ACCOUNTS_NAMED_LIST_CAP's degrade-to-count above 25 is the accepted permanent shape.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/analysis/GenerateComposer.tsx (pre-edit, this worker's worktree HEAD): comment directly above the old `effectiveAccounts = permitted` line reads 'THE ACCOUNTS ARE THE SELECTION'S PERMITTED SET. Andrew-direct 2026-09-24 ~19:4xZ (design notes, Analysis): no per-account checkbox list here -- it printed every permitted account id (1,000+) -- and account-level choice lives deeper in the page.'",
+        "portal/src/pages/InvestorReporting/header/IdentityCard.tsx's own OVER WHAT comment (same Andrew-direct, same timestamp): 'the SELECTED client's own accounts, from the accepted selection -- never scope.permittedAccountIds, which is every account the viewer's firm permits (1,000+ at 49F)' -- IdentityCard reads `selection.scope.accountIds` (the narrow set) via a `Narrowing` prop `GenerateComposer.tsx`/`AnalysisTab.tsx` do not receive",
+        "AnalysisTabProps (AnalysisTab.tsx, this cell's own <paths>) carries `scope`/`firmId`/`selectedScopeRef` only, no `selection`/`row`; the narrowed `Narrowing` value lives in `index.tsx`'s own state, and this cell's <paths> does not include index.tsx",
+        "bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-14.prospect-and-accounts.test.ts prints VERDICT: PROSPECT-AND-ACCOUNTS-OK against the capped-list implementation (ACCOUNTS_NAMED_LIST_CAP=25, GenerateComposer.tsx)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IV-e-14 cell (c): 'Accounts in the input (GenerateComposer.tsx): when a client is chosen, the included accounts by name + masked tail (never an id), each removable.' -- stated with no cap and no reference to the standing Andrew-direct on this exact component.",
+    "world_is": "GenerateComposer.tsx has only `scope.permittedAccountIds` (the wide, possibly-1,000+ set) to draw a named list from; it has no access to the header's narrowed `Narrowing` (the small, actually-relevant set IdentityCard already uses for the identical UI problem) without a change to index.tsx's mount line, which sits outside this cell's <paths>. This worker implemented the name+masked-tail+removable list literally, but capped it (ACCOUNTS_NAMED_LIST_CAP=25, named and commented in GenerateComposer.tsx) so a firm-wide or relationship-wide scope degrades to the pre-existing count-only line above the cap, rather than either violating the Andrew-direct at scale or leaving cell (c) entirely unbuilt.",
+    "notes": "Not blocking IVE14-AC3 (its own test constructs a 3-account fixture, well under the cap, and the criterion's own wording never named a cap). Filed so the COO/CTO can rule whether a later round wires the narrowed selection through (removing the cap's practical bite) or accepts the capped degrade as this component's permanent shape."
   }
 ]
 ```
