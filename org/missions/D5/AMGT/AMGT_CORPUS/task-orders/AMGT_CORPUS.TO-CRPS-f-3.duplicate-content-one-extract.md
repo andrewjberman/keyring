@@ -87,3 +87,8 @@ such test file), AC2 FAIL (no `--duplicates` flag), AC3 bound -- recorded in the
 <round>4</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
+
+**WORKER CLOSE (`0.9.0_WK_AMGT_CORPUS~3`):** AC1/AC2/AC3 all PASS at commit `1e65df55c3` (proof-of-spec-check rc=0,
+VALID). No surprise rows filed -- every criterion was satisfiable as written.
+
+<status>complete</status>

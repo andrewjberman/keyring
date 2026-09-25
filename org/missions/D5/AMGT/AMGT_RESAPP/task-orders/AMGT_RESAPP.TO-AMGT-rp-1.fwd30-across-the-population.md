@@ -77,7 +77,17 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 **ISSUER NOTES:** s.5 item 1, the analysis's largest unmeasured thing. SERVED declared above the LOCAL floor as rn-5 was: the cell writes nothing served but its claim is about served output. AC4 is a judgment criterion although the cell touches no served figure: a NOT_OK row needs a person to say which side is wrong. The checks were dry-run at the base (round41/base-runs/): AC1 and AC2 FAIL (no table), AC3 PASSES (a control). AC1 was also run on a synthetic 89-row table (OK) and on two broken ones (NOT OK), and AC2 on a temporary BA row (15 of 15, then 14 of 15 on one changed count).
 
-<status>pending</status>
+**WORKER CLOSE, 0.9.0_WK_AMGT_RESAPP~158.** proof-of-spec-check VALID rc=0 (AC1-AC3 PASS-by-output; AC4 RECORDED for L9/L10).
+AC1: rows 89 of 89, missing/extra/duplicated 0, distinct keys 89, TABLE SHAPE OK. verdicts OK 5 (BA_US_Equity, COST_US_Equity,
+HD_US_Equity, NU_US_Equity, SAP_GY_Equity), NOT_OK 84, CAPTURE_FAILED 0 -- every one of the 89 x 5 = 445 route invokes returned
+200. AC2: BA_US_Equity row equals a fresh served read, 15 of 15 counts. AC3: the difference control fires as expected, rc=1 on
+round 38's stale body. AC4: all 84 NOT_OK rows printed whole for a person's judgment. Row AMGT_RESAPP-Z-W158-S1 (OBSERVATION,
+ARMED, disarm_owner 2.0.0_SA_COO~Z): 2 of 89 resolved security_keys (BP/_LN_Equity, NG/_LN_Equity) carry a literal '/' from an
+unescaped landed-model-block display value; lambda:Invoke tolerated it but the real API Gateway HTTP route is unmeasured.
+Commits: cc181e5be849f899c212f8d1b31d5e67e67bf325 (sweep.py, capture_lib.py, fwd30_population.tsv, 89 logs, the surprise row),
+6c1f20eabb (the proof-of-spec instance). Both LOCAL on wk-AMGT_RESAPP-158, never pushed. Portal untouched (read-only).
+
+<status>complete</status>
 <round>41</round>
 <slot>~158</slot>
 <fabric>site-z</fabric>

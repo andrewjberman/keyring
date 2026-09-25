@@ -1168,6 +1168,52 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "crosswalk.schema.json's top-level object and its denominators/coverage_vintage sub-objects are each additionalProperties:false and list neither folders_in_records, research_folders_live, snapshot_stale_against_live nor research_universe. Since build_crosswalk's own write_pool path validates every document against this exact schema before any S3 put, the ruled build makes write_pool (and every test that exercises it) refuse universally, not merely fail one disclosure-specific check. AC1 and AC2 both PASS as written (research_universe/folders_in_records were designed and tested precisely as ruled); AC3 measures 15 failed, 104 passed, 2 subtests passed -- the pre-existing NoEnrichRowsByteIdentical defect this cell's ruled fix targeted is ITSELF now green.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "No unauthorized edit made: crosswalk.schema.json stays untouched by this worker. The remedy is additive only (four new OPTIONAL properties on the existing schema's properties dicts, matching the pattern already used for 'registered'/'enriched'/'resolved_folders'), owned by whichever cell holds that path -- adding it here would need a paths grant this task order does not carry. Filed BLOCKING/ARMED because merging this cell's crosswalk.py/add_security.py changes without that schema update would refuse every future --write-pool run, not just a test."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S7",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-25T02:40:00Z",
+    "one_line": "CRPS-f-2's RULED dry-run line format (chunk N of M fields=<k>, a COUNT only) would have broken the sibling test test_model_block_22_fields.py::test_dry_run_request_lines_carry_the_22 (a file outside this cell's <paths>, read-only) -- resolved by APPENDING the actual field list to the same line rather than editing that file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The literal RULED format `DRY-RUN PULL: <security> -> would send HistoricalDataRequest chunk <i> of <n> fields=<k>` carries only a field COUNT. A first implementation matching only that literal produced AC1/AC2 PASS but AC3 (the whole Bloomberg research suite) FAIL: `FAILED integrations/bloomberg/research/tests/test_model_block_22_fields.py::test_dry_run_request_lines_carry_the_22` (1 failed, 85 passed) -- that pre-existing test asserts every one of the 22 CRPS-e-2 mnemonics appears literally in `cmd_pull(..., dry_run=True)` stdout, and the old combined line it was written against printed the full HIST_FIELDS list inline.",
+        "test_model_block_22_fields.py is not in this cell's <paths> (READ-ONLY under `integrations/bloomberg/`), so it could not be edited to match the new format.",
+        "Fix: appended `request_fields={chunk_fields}` into the SAME chunk line, after the required `fields=<k>` count, so the AC2 literal substring (`re.search`, dot-all, per .tools/proof-of-spec-check.py:1612) still matches AND the 22 mnemonics remain printed. Re-run: AC1 12 passed, AC2 matches its expect regex byte-for-byte, AC3 86 passed 0 failed (was 85 passed 1 failed)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-f-2 RULED: '`--dry-run` prints, for each security, one line per historical chunk: `DRY-RUN PULL: <security> -> would send HistoricalDataRequest chunk <i> of <n> fields=<k>` (then its existing lines).' AC2's <expect> regex only requires the literal chunk-count substrings in order.",
+    "world_is": "A sibling test outside this cell's write surface (test_model_block_22_fields.py, CRPS-e-2's standing regression) requires the 22 added mnemonics to appear literally in that same dry-run stdout, which a count-only chunk line would remove. Both are now true at once: the literal RULED substring is present, and the 22 mnemonics remain visible on the same line via an added `request_fields=` clause.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "No file outside <paths> was touched; the resolution stayed inside model_block_pull.py's own dry-run print. Flagged for the issuer/CVO because the format choice (count-only vs count-plus-names) was theirs to make in RULED text and this worker picked the superset that keeps both existing bars green rather than widening its own write surface."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S8",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-25T02:45:00Z",
+    "one_line": "CRPS-f-2 Section 6 step 1 says the instance carries 'AC4 as a judgment row with no grade', but the literal checker invocation named in step 2 (ids AC1,AC2,AC3 only) refuses any acceptance row outside that exact set, and the schema's status/method enums have no judgment value either way -- AC4 omitted from the acceptance array, recorded in declared_exclusions instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/proof-of-spec-check.py <instance-with-AC4> AC1,AC2,AC3 --governing-order <TO> -> INVALID (rc=1): 'VIOLATION: coverage-frame: expected=3 carried=4 matched=3' and 'VIOLATION: coverage: instance row 'AC4' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)'.",
+        "org/standards/PROOF_OF_SPEC.schema.json properties.acceptance.items.properties.status.enum = [PASS, FAIL, UNCOMPUTABLE-BY-CONSTRUCTION, UNVERIFIABLE-BY-INSTRUMENT, N/A-BY-CONSTRUCTION, UNCOMPUTABLE] and .method.enum = [command, test_suite, live_read, diff, schema_validation, manual_read_with_citation] -- neither carries a judgment/NOT_EVALUATED member, so no legal row shape exists for a criterion this worker is told to produce nothing for.",
+        "After removing the AC4 row (declared_exclusions carries the reason instead): python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3 --governing-order <TO> -> VALID (rc=0)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO Section 6 step 1: 'the shape of your e-1 instance in that dir; AC4 carried as a judgment row with no grade.' Section 5's AC4 row carries judgment=\"true\" and no <invocation>.",
+    "world_is": "The governing checker invocation the same section names (step 2, literal: 'AC1,AC2,AC3') refuses an instance carrying any row outside that set, and the schema has no status/method value for a judgment row regardless. This worker's e-1 sibling instance (cited as the shape template) in fact carries only AC1-AC3, no AC4 row, for a TO with no judgment criterion -- so the template does not itself show a worked AC4 row either.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Resolved conservatively toward the literal, mechanically-checked instruction (step 2's exact invocation) over the prose aside in step 1, since only the former is machine-graded; AC4's substance is unchanged either way -- it stays the CVO's, at L9, on the issuer's real run."
   }
 ]
 ```

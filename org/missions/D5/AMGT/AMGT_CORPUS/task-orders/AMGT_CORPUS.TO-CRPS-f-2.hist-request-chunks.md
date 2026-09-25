@@ -97,7 +97,7 @@ that still returns nothing, or raises `BlpResponseError`, stops the pull and bec
 request of 39), AC3 bound -- recorded in the issuance commit.
 
 <risk>WORLD</risk>
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
