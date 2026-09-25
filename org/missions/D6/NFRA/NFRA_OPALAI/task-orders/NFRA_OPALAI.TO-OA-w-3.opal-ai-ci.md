@@ -73,7 +73,7 @@ Instance at `org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~
 **ISSUER NOTES:** S4 / FWD-13. The issuer re-runs `run_checks.sh` on the merged opal_ai DEV at the cutover (the sibling
 cells' files must pass it too); CI green on a real push is A13 at G-PUSH.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~6</slot>
 <fabric>site-z</fabric>
