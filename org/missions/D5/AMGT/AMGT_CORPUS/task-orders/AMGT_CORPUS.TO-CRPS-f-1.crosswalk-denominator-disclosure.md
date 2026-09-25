@@ -70,6 +70,10 @@ cut. The schema file is now in `<paths>`. RULED: add `folders_in_records` and `r
 schema's existing pattern (as `registered`/`enriched`/`resolved_folders` are), `research_universe` admitting both its present
 shape and its `{"absent": ...}` shape. Nothing else in the schema moves; keep its line endings.
 
+**ISSUER AMENDMENT 2 (2026-09-25 ~05:0xZ, `2.0.0_SA_COO~X`, on your row `AMGT_CORPUS-Z-W1-S8`):** AC3's expect now admits pytest's
+`, N subtests passed` clause (the identity suite uses `unittest.subTest`); the suite being wholly green is what AC3 bounds, and a
+failure still reads `N failed` before it. The issuer's cut, as round 3's `deselected` clause was.
+
 ## 4. BOUNDS
 - Pure ASCII source, LF, Python 3.9-compatible. NO S3 write, NO `--write-pool`, NO change to `registrations.json`, NO change to
   any record, key, form or resolution. Other seats commit to this package: merge CLOUD into your branch before you close.
@@ -80,7 +84,7 @@ shape and its `{"absent": ...}` shape. Nothing else in the schema moves; keep it
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CRPS-f-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round4/f1_AC1.sh</invocation><expect>(?m)^\d+ passed in </expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-f-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round4/f1_AC2.sh</invocation><expect>folders_in_records (\d+) research_folders_live \1 snapshot_input_names \d+ snapshot_stale_against_live (True|False)</expect></criterion>
-  <criterion id="AC3" cell_refs="CRPS-f-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round4/f1_AC3.sh</invocation><expect>(?m)^\d+ passed in </expect></criterion>
+  <criterion id="AC3" cell_refs="CRPS-f-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round4/f1_AC3.sh</invocation><expect>(?m)^\d+ passed(, \d+ subtests passed)? in </expect></criterion>
 </proof_of_spec>
 
 - AC1 the built behaviour; AC2 the seam probe: the builder's own read-only disclosure line shows the records' folder count EQUAL
