@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: /canonical-drive loop on Andrew-direct 17:3xZ (cron 57c0067c, every 10m; replaced goal loop f599225b), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T19:4xZ (tick 13). Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T19:5xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -147,7 +147,17 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    55ed4790 -> 5c2fc34d; not pushed -- local DEV carries ~D's drains, MSTR pushes; ~D told). Served run on :5174 (the
    shared dev server, now on DEV): the print page's performance read went out with Bearer <renderToken>, stayed on the
    print route (no /login, no refresh call), and displayed "This bundle was not rendered" for the unsigned probe token.
-   NEXT (P): (1) done (portal render Bearer on local DEV); (2) under ruling (a): mint at submit + put the token + SSM doc/host script read it (no operator
+   B2 CORE LANDED 3190ac41e9 (backend, OFF until deployed): _render_identity/carriage.py (SecureString
+   /irpt/render-token/<ATT-id>, put-once, idempotent prefix-bound delete, 15-min sweep, value never returned/logged);
+   dispatch.render_request gains RenderTokenName + PrintQuery (a name + issued ids/dates); serve_submit with
+   ports.render_enabled: sweep -> mint -> put -> preflight/dispatch -> delete if not sent or raised. _render_identity 36,
+   export 97 rc=0. Real run LIVE Parameter Store (dummy value): put/readback equal, second put refused, delete, read after
+   delete refused ParameterNotFound, 0 names left.
+   NEXT (P): (1) done (portal render Bearer on local DEV); (1b) B2 host + infra: SSM document params RenderTokenName +
+   PrintQuery; run-export-render.sh reads the name (get-parameter --with-decryption, never echoed), render_export.cjs opens
+   origin + print route + PrintQuery + &renderToken= with NO storageState, then deletes the name; submit_installed composes
+   ssm/mint/dispatch + IRPT_EXPORT_RENDER=on; IAM per ruling (Lambda Put+Delete+Describe on /irpt/render-token/*, secret
+   read of the render private key; host role Get+Delete); ledgered deploy with the ruling's negative arm; (2) under ruling (a): mint at submit + put the token + SSM doc/host script read it (no operator
    session) + dispatch ON; the read functions' B0 deploy (grant.py + enforce at 755c13bc19 + grant read IAM) rides it.
    PARKED (owner P, un-parks at the next irpt-holdings build; ~M 101008, CTO 101007): holdings/resolve.py has drifted from
    its STAGE_MANIFEST pin (_scope/resolve.py@c76b7c7aee) -- build-and-upload refuses irpt-holdings until re-pinned.
