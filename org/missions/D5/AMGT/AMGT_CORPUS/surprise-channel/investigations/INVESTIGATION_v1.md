@@ -1304,6 +1304,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Round-3 analysis s.2 ruling 2: the served object discloses the denominator it carries; a completion test reads folders_in_records / research_folders_live, never input_names.",
     "world_is": "Met on the served object: the disclosure and its data agree at 94, and the 89 reads as the stale snapshot it is.",
     "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S36",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T14:41:10Z",
+    "one_line": "The dossier composer never reads the derived Model block: all 94 dossiers written 2026-09-25 by the round-4 sequence carry 9,471 model_rows with 0 values, 0 of 94 list a derived/model_block object among their inputs (extract, continuation and typecast only), and every row's absent reason reads 'Bloomberg figure pull not authorized (R-16 V3)' (dossier.py:117) -- a hard-coded reason that is now FALSE: the pull was authorized (Andrew @16ee7f6373, R-21) and 89 of 89 blocks are served (Z-S33). FWD-12's served Model tab is realized; its dossier half is not, and the dossier states a false reason for the gap.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/dossier_r4_model_rows_content.txt: dossiers 94, model_rows 9471, with a value 0; model_block inputs 0 of 94; absent reason 9471 of 9471 'Bloomberg figure pull not authorized (R-16 V3)'.",
+        "evidence/production_sequence_r4_20260925T045114Z.log: 10 of 10 steps rc 0; dossier names 94 written 94; coverage 94 = 82 dossier-served + 12 served-as-empty-shell + 0 unresolved.",
+        "evidence/fwd12_r4_served_blocks_content.txt: 89 of 89 served blocks non-empty through scoped_amgt."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD12_PULLER_SIZING_20260924.md item 3 / round-3 decomposition s.5: the dossier's Model rows carry figures for the 22 instead of ABSENT-with-reason once the block lands; C-VALUE-CARRIES-CLAIM: an absent field's reason is true.",
+    "world_is": "The block landed; the dossier cannot see it by construction and tells its reader the pull was never authorized. No false FIGURE is served; a false REASON is.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Remedy for the round-4 analysis: dossier.model_rows reads the newest derived block for the key (the served reader's own rule), names it in inputs, and takes an absent reason from the block's unresolved record, never from a constant; then one dossier --write, verified by model_rows with a value > 0 on the 89 keys that carry a block."
   }
 ]
 ```
