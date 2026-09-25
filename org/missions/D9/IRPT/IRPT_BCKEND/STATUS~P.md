@@ -63,8 +63,10 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
 3c. DONE 13:3xZ (row S126 ARMED, disarm owner P, ~M msg 100941): the directory refresh fired 09:00 ET (13:00Z), 8 min
    after the shared runner host's 12:52Z start, and failed HAND_OVER_RUNNER_OFFLINE at all 3 firms. Now fires 09:30
    America/New_York (86a3d27224 on the publish branch, applied under ledger irpt-directory-refresh-schedule-s126-20260925,
-   closed; live get-schedule verified; re-plan No changes). Disarm row S127 @61bce7ee33. Next fire 2026-09-26T13:30Z; today's
-   ad-hoc fire stays with ~M's ledger and Andrew's word.
+   closed; live get-schedule verified; re-plan No changes). Disarm row S127 @61bce7ee33. CORRECTED (row S128): the apply landed
+   before 09:30 ET, so the schedule fired TODAY 13:30:29Z -- hand-over Success at all 3 firms, directories republished 13:30:4xZ
+   (49F as_of 09-24, was 09-17; INF 09-25; COT 09-22). ~M corrected in the broker 13:38Z. Criterion 2's 49F census read the
+   09-17 directory -- re-run against 09-24 next.
 4. Criterion 2 census DONE (ee51ffafac). 49F's 762 non-computable accounts NARROWED 45ec3dd692
    (`IRPT_MVP_P/F49_UNRESOLVED_BALANCES_20260925.json`, custodian dim_balance 2026-09-23, net_mv_plus_cash): 722 empty
    + 38 absent from the custodian = 760 directory-termination gaps; 2 funded accounts (~$105K) are the real engine gap.

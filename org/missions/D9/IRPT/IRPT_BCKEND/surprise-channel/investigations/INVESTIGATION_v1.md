@@ -9159,3 +9159,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Disarmed same turn as read (spine L7: an ARMED row is disarmed in the same turn by its named owner, and disarmed is not remediated). Carried for the CVO's L8 compile so the ARMED row reads resolved."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S128",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-25T13:40:00Z",
+  "one_line": "CORRECTS S127's world_is: the moved schedule fired TODAY at 13:30:29Z (the apply landed before 09:30 ET), the hand-over succeeded at all three firms and all three directories were republished -- S127's 'next fire 2026-09-26' was wrong.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "/aws/lambda/irpt-directory-refresh: START 13:00:29Z (the failed fire) and START 13:30:29Z (the moved schedule, CloudTrail AssumeRole 13:30:29Z).",
+      "s3://opal-data-{bd,inf,cot}/investor-reporting/directory/_refresh/2026-09-25/manifest.json (13:30:35-41Z): RUNNING, 'build handed to the runner by SSM; command ... is in flight (sent by this fire)'.",
+      "SSM list-commands 4237a59f / c23247b8 / 771aae84 (AWS-RunShellScript, 13:30:34-40Z): Success, 1 of 1 target, 0 errors.",
+      "investor-reporting/directory/latest.json rewritten 13:30:45-51Z: opal-data-bd as_of 2026-09-24 (was 2026-09-17), opal-data-inf as_of 2026-09-25, opal-data-cot as_of 2026-09-22."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row IRPT_BCKEND-S127: 'Today's 13:00Z fire already failed; the next scheduled fire is 2026-09-26T13:30Z.'",
+  "world_is": "The next fire was today's 09:30 ET, and it ran the production path end to end at all three firms. Today needs no ad-hoc fire. The 49F directory moved from 2026-09-17 to 2026-09-24, which changes goal criterion 2's 49F denominator (row S127's fire, P's 45ec3dd692 census read the 09-17 directory). Corrected to 2.0.0_SA_COO~M in the broker at 13:38Z.",
+  "notes": "A correction row, append-only; S127 stays as written."
+}
+```
