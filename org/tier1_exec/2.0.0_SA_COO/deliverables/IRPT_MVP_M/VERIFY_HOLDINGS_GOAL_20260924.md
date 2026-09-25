@@ -160,3 +160,26 @@ the SmartX map (run_date 2026-09-23).
   you want to confirm from the HAR exactly?" This is the signed-in, eyes-on screen check on the fixed build.
 - **Still unread, in a HAR:** whether the firm-tab path sends the registry tenant, whether any FIRM_BINDING remains,
   and whether Holdings reads READY on the served revisions through a65a8db5.
+
+## ADDENDUM 2026-09-25 ~14:1xZ -- criterion (2) re-measured on the CURRENT directories
+
+The fixed refresh (S125, ledger closed @2e4c33738e) moved the directories off 2026-09-17. Census
+`HOLDINGS_ACCOUNT_CENSUS_49F_INF_20260925.json` @f247a922a5 (M branch), against the served classified revisions
+(business date 2026-09-22: 49F 9ab377ce, INF ba9001d5):
+
+| Firm | Directory as_of | Active | With model | Client only | Refused explicitly | Silently empty |
+|---|---|---|---|---|---|---|
+| 49F | 2026-09-24 | 7,497 | 5,907 | 1,536 | 54 | 0 |
+| INF | 2026-09-25 | 878 | 624 | 252 | 2 | 0 |
+
+Library controls: 49F 6 READ_OK + 3 REFUSED, INF 6 READ_OK + 2 REFUSED, each as classified.
+
+Where the refusals come from (measured against the 2026-09-17 directory, the only earlier one at either firm):
+- 49F: 37 of the 54 were ACTIVE on 09-17. These are the 37 already characterized as having no custody row. The other
+  17 are absent from the 09-17 directory.
+- INF: both refusals are absent from the 09-17 directory.
+
+INFERRED, not measured: the 19 new accounts entered the directory after the holdings business date (09-22). No
+directory exists between 09-17 and 09-24, so an account added 09-18 to 09-22 cannot be told apart here. Either way,
+each one refuses explicitly and none reads silently empty. Criterion (2) holds as worded. The next step is the same
+in both cases: republish holdings at a newer business date.
