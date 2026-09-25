@@ -37,10 +37,11 @@ In order:
    - (b) add to the host `.env` it writes: `DASHBOARD_OWNER_EMAILS=andrew@opalinvest.com`,
      `GRANT_WRITER_FUNCTION_NAME=mcportal-grant-writer-lambda` and `MCPORTAL_CHANGES_TABLE=mcportal-grant-changes-table`.
      Both writer names fail closed until the writer exists. Change NOTHING else there.
-2. **The release tree.** `git worktree add -b rel-nfra-mcportal-r2-gateway /c/tmp/mp-2-rel f1f0fc6780`, then
-   `git -C /c/tmp/mp-2-rel cherry-pick --no-commit` the commits above, in order, and commit on that branch under your
+2. **The release tree** (AMENDED: a FRESH branch and path; see 4a(ii)).
+   `git worktree add -b rel-nfra-mcportal-r2-gateway-2 /c/tmp/mp-2-rel2 f1f0fc6780`, then
+   `git -C /c/tmp/mp-2-rel2 cherry-pick --no-commit` the commits above, in order, and commit on that branch under your
    serial.
-   - **Census before anything else:** `git -C /c/tmp/mp-2-rel diff --stat f1f0fc6780 HEAD -- infra/aws/ec2/opal-gateway`
+   - **Census before anything else:** `git -C /c/tmp/mp-2-rel2 diff --stat f1f0fc6780 HEAD -- infra/aws/ec2/opal-gateway`
      names ONLY files those commits changed. Any other file: STOP, a BLOCKING row.
    - The release base predates this order, so the lane resolver cannot see your grant there. **The issuer authorizes
      the audited `GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPORTAL~2` for exactly the release-branch commit(s) of
@@ -49,12 +50,22 @@ In order:
    (opal's r1-drain with MP-p-1). Record that commit.
 4. **Rollback proven before the act:** rebuild `f1f0fc6780`'s gateway artifact from a clean `f1f0fc6780` tree WITHOUT
    uploading, and name the command that would re-deploy it. If it cannot be shown: STOP, no deploy, a BLOCKING row.
+4a. **AMENDED after the first attempt's outage (row NFRA_MCPORTAL-Z-W2-S7; ~17:14-17:31Z, 2026-09-25):**
+   - **(i) The `.env` rendered BEFORE the act.** Extract the release tree's `printf 'MOCK_GRAPH...` line from
+     `deploy-to-ec2.sh`, run it locally with every `%s` argument replaced by a distinct marker (e.g. `V_REGION`,
+     `V_PORT`, ...), and print the rendered `KEY=VALUE` lines. Every marker must land on ITS OWN key, and the three new
+     keys must be present. Paste that rendered list (markers only, no secrets) into your result. Any misalignment: STOP.
+   - **(ii) A fast rollback trigger.** The attempt that shipped the defect re-used `rel-nfra-mcportal-r2-gateway`
+     (@`c97839d7c8`, which carries it). NEVER deploy that branch. Build a FRESH release branch,
+     `rel-nfra-mcportal-r2-gateway-2`, carrying the fixed script (`83cbd1a605` on this branch). Immediately after the SSM
+     restart, poll `/health` on the host. If it is not 200 within 90 seconds, run the named rollback AT ONCE, close the
+     entry as rolled back, and stop.
 5. **NEVER-2 ledger, on THIS branch (`wk-NFRA_MCPORTAL-2`), in this order:**
    - `python .tools/deploy_ledger.py open ...` with slug `nfra-mcportal-r2-gateway-release`. Legs: bundle build,
      release build + upload, SSM pull + restart, manifest record. Plus the census, the rollback, and the analysis's path;
    - commit the entry AND its sentinel `org/critical_paths/.open_deploys/nfra-mcportal-r2-gateway-release.json`;
    - ACT from the RELEASE worktree with ITS copy of the scripts:
-     `cd /c/tmp/mp-2-rel && bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`.
+     `cd /c/tmp/mp-2-rel2 && bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`.
      The script's Step-3 manifest auto-commit can fail on this device (jq.exe writes CRLF; row NFRA_OPALAI-Z-W2-S4).
      Read its ERROR line, and record by hand on an LF copy as below;
    - **record the release on THIS branch:** `EC2_MANIFEST.json` `services.opal-gateway` gets the release commit as

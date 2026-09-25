@@ -395,6 +395,28 @@
     "spec_asserts": "MP-b-2 section 1 item 4: env MCPORTAL_OWNER_KEY_CLAIM / MCPORTAL_OWNER_KEY replace MCPORTAL_OWNER_OID. Section 3 <paths> names lambda_function.py, the two tests, mcportal_grant_writer.tf and the record folders, and does not name lambda-source-map.json.",
     "world_is": "The replacement landed in the code and the Terraform. The source map's `_note` for mcportal-grant-writer-lambda still names MCPORTAL_OWNER_OID and oid-only matching, and it is not writable from this order. The MP-a-1 apply also has to supply the two new variables in place of var.mcportal_owner_oid: any tfvars or apply invocation still passing mcportal_owner_oid now names an undeclared variable.",
     "notes": "Not repaired here (face section 2 item 3). This is a prose record, so it has no runtime effect."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S7",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T17:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_MCPORTAL-Z-W2-S7 (owner this seat). The first MP-d-1 release took the gateway DOWN ~17:14-17:31:22Z: the deploy script's .env printf lost the space between its closing quote and \"${REGION}\", so every value shifted onto the wrong key. The worker rolled back. This seat verified live: /health 200, active since 17:31:22Z, server.py md5 = f1f0fc6780's. The face is amended: a fresh release branch carrying the fixed script, a local .env render gate before the act, and a 90-second /health rollback trigger. The branch rel-nfra-mcportal-r2-gateway @c97839d7c8 is NEVER deployed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Character diff of the printf line, base f1f0fc6780 -> broken ece3aab4b5: '...globgrph\\n' \"${REGION}\"' became '...changes-table\\n'\"${REGION}\"' (no space). Base -> fixed 83cbd1a605: only the three new KEY=VALUE lines inserted, with the space kept. Placeholders 9 = args 9 in all three.",
+        "Live read by this seat over SSM at ~17:48Z: health=200; active since Fri 2026-09-25 17:31:22 UTC; /opt/opal-gateway/app/server.py md5 42c7fd424ac4 = git show f1f0fc6780:.../app/server.py md5 42c7fd424ac4; the .env key list is the pre-release set.",
+        "Ledger: org/critical_paths/change_management/20260925T1636Z_nfra-mcportal-r2-gateway-release_deploy_completion.md, closed as rolled back by the worker (on wk-NFRA_MCPORTAL-2)."
+      ]
+    },
+    "spec_asserts": "NFRA_MCPORTAL-Z-W2-S7 is ARMED: deploying rel-nfra-mcportal-r2-gateway takes the gateway down again.",
+    "world_is": "The gateway serves f1f0fc6780, healthy. The defective release branch stays undeployed, and the retry builds a fresh branch behind a render gate and a fast rollback trigger.",
+    "notes": "Checker lesson: no criterion or pre-act step rendered the .env the deploy writes. The render gate (face 4a(i)) is the missing pre-act check. The outage is recorded for the CTO's round-2 analysis."
   }
 ]
 ```
