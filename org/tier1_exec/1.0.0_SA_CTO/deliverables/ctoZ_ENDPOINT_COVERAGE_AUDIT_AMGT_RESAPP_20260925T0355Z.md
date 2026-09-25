@@ -144,3 +144,58 @@ reached.
 
 **1 of 20 graded. 19 remain**, and this one took a wrong-instrument correction and an overturned zero to
 get right -- which is the argument for grading them one at a time rather than in a batch.
+
+---
+
+# RE-GRADE PASS, ENTRIES 2-3 -- and a rule that governs the remaining 17
+
+## `FWD-10` -- **REALIZED**
+
+Fence `:499-506`. DONE WHEN *"EXERCISED -- a check has actually refused something and the refusal was
+seen on the page"*; ACCEPT *"a failure shows as a MARKED VALUE -- never as a blank, a zero, or a row that
+quietly disappeared."*
+
+**Measured on the served export:** `REFUSED` x1, and it is a marked value carrying its own cause --
+`IS_DIV_PER_SHR: REFUSED -- unit/sign convention is 'SIGN-UNRESOLVED', not MEASURED`. `ABSENT` x18
+alongside it. **Not a blank, not a zero, not a vanished row.** Round 40's `ro-1` AC4 independently
+established the same string is the PAGE's own refusal, so it is on both surfaces.
+
+## THE RULE THIS PRODUCED -- READ THE DONE WHEN'S QUANTIFIER BEFORE DEMANDING A POPULATION
+
+Round 41 made a one-name pass look like a cardinal sin. **It is not, and the distinction is in the
+fence's own grammar:**
+
+- **`FWD-30` is a UNIVERSAL.** *"a field-by-field comparison against the page shows the SAME figures"* is
+  a claim about **the name a PM exports**, so it must hold for any of them. One name proved nothing, and
+  84 of 89 duly failed.
+- **`FWD-10` is an EXISTENTIAL.** *"a check has ACTUALLY REFUSED SOMETHING and the refusal was seen"* is
+  satisfied by ONE exercised refusal -- that is what EXERCISED means, and demanding 89 of them would be
+  inventing a bar the fence does not set.
+
+**So the population question is not owed by every outcome; it is owed by the ones whose DONE WHEN
+quantifies over names.** Applying round 41's lesson indiscriminately would have been over-correction --
+the mirror of the error it corrected. **For each of the remaining outcomes the pass asks first: is this
+fence an EXISTENCE claim or a UNIVERSAL? Only universals carry a population bound.**
+
+## `FWD-9` -- **NOT GRADEABLE on the available evidence**, and the reason is an instrument bound
+
+Fence `:490-497`. Two limbs: **(a)** the marking is in place so an analyst can tell **at a glance** which
+sentences a machine wrote; **(b)** the machine-written ones **sit beside the evidence** behind them.
+
+**Limb (b) is MEASURED and PASSES.** Every drafted sentence in `## Investment Thesis` and `## Risks and
+Considerations` is immediately followed by its source, blockquoted with the passage id, the accession and
+the paragraph -- e.g. a capex sentence followed by `> P0234 -- accession 000162828026004357 -- ITEM 7 ...
+paragraph 141` and the quoted text. The evidence is adjacent, not filed elsewhere.
+
+**Limb (a) CANNOT BE READ FROM THIS INSTRUMENT, and saying so is the point.** A "tell at a glance" marking
+is VISUAL -- rounds 38-39 record PASS badges on the thesis sentences -- and **the export is markdown.**
+`FWD-30`'s verified equality covers **figures, cites and absences**; it says nothing about badges.
+**Extending a three-axis equality to a fourth axis is exactly the wrong-instrument error this pass already
+made once on `FWD-1`**, where round 40's DOM-layout captures were reached for to settle a content claim.
+
+**So `FWD-9` waits on a served PAGE read, not on more argument.** It is the second outcome in three whose
+grade is gated by an instrument rather than by the product -- which is itself a finding about this
+project's evidence base: **the served plane is captured for LAYOUT and for EXPORT, and not for what the
+page SAYS.**
+
+**3 of 20 graded: 1 REALIZED, 1 NOT_REALIZED, 1 NOT GRADEABLE.** 17 remain.
