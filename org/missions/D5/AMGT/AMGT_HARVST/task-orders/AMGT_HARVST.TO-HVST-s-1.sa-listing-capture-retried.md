@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md</decomp_doc>
 <owned_cells>HVST-s-1</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_AMGT_HARVST~19</issued_to>
+<issued_to>0.9.0_WK_AMGT_HARVST~20</issued_to>
 <issued_by>2.0.0_SA_COO~Y</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -102,6 +102,37 @@ a BLOCKING row and the cell stops.
 Write `.scratch/s1/ac0.py`, `ac2.py`, `ac3.py`, `ac4.py`, `ac5.py` yourself. **Record each criterion's ACTUAL
 OUTPUT and its DENOMINATOR.** No judgment criterion in this cell.
 
+## 7. AMENDMENT 1 -- AC1 IS REPLACED, BY THE ISSUER, BECAUSE THE ORIGINAL COULD NOT HAVE PASSED
+
+**The first attempt (`0.9.0_WK_AMGT_HARVST~19`, row `Z-W19-S1`) executed this order exactly as written and the
+cell failed AT THE CUT. No vendor call was made. Both defects are the issuer's, not the worker's**, and they are
+recorded in decomposition section 17g:
+
+1. **`--security-json` takes ONE SECURITY OBJECT, and its own `--help` says so.** `__main__.py:138` reads
+   `securities = [json.loads(...)]` -- it WRAPS the parsed value in a list. The six-name file is an ARRAY, so the
+   wrap produced `[[...]]` and `Worker.run()` raised `TypeError` at `worker.py:330`. ⛔ **THIS IS MISUSE OF A
+   DOCUMENTED FLAG, NOT A CODE DEFECT -- do not "fix" `__main__.py`.**
+2. ⛔ **`run --harvest-grammar` DOES NOT WRITE S3.** It persists listing pages to a LOCAL sqlite/file outbox
+   (`worker.py:91-108`). The bronze/silver listing writes happen only in `HarvestUploader._run_listings`
+   (`uploads.py:253-283`), reached ONLY via the separate `upload-harvest` command. The original AC2 measured S3
+   surfaces after a command that does not touch them, so its delta was pinned at `+0` before anything ran.
+
+**AC1 IS REPLACED BY AC1a AND AC1b. AC0 and AC3-AC5 are unchanged. AC2 is unchanged in text and now measures
+after AC1b rather than after AC1.**
+
+<proof_of_spec_amendment_1>
+  <criterion id="AC1a" cell_refs="HVST-s-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.opal_data_harvest run --publishers sa --harvest-grammar --security-json org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/sa_one_security_992HK.json --max-jobs 1 2>&1 | tail -25</invocation><expect>the producer's own output recorded VERBATIM whatever it says -- success and failure are both results. NO retry. The securities file is a single JSON OBJECT, which is the shape the flag documents</expect></criterion>
+  <criterion id="AC1b" cell_refs="HVST-s-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.opal_data_harvest upload-harvest --max-objects 40 2>&1 | tail -25</invocation><expect>the uploader's own output recorded VERBATIM. THIS is the command that writes bronze/silver; it is never offline-safe and always builds a real S3 client (row W10-S6). If AC1a captured nothing, this legitimately uploads nothing and says so</expect></criterion>
+</proof_of_spec_amendment_1>
+
+**GATE LIMB THAT GRADES THIS MODIFICATION (Andrew-direct card 3, 2026-09-24):** this order declares
+`<placeholders>NONE</placeholders>` at HEAD, so **`to-pipeline-gate.py` GATE (viii) -- the `<placeholders>`
+declaration -- grades it as a staged MODIFICATION.** No other limb reads a modified order; LIMB 6 and the rest
+are NEWLY-ADDED only. No CTO ruling is sought and none is owed.
+
+**Re-issued to slot `~20`.** The `~19` instance stands as filed: its criteria passed on their own terms and its
+finding is what produced this amendment.
+
 ## 6. WHEN YOU ARE DONE
 
 Write your proof-of-spec instance to `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~19/`,
@@ -126,7 +157,7 @@ round asked for. Do not retry, do not widen, do not fix code to make it pass.
 <risk>WORLD</risk>
 <status>pending</status>
 <round>6</round>
-<slot>~19</slot>
+<slot>~20</slot>
 <fabric>site-z</fabric>
 
 **RISK CLASS, and why WORLD rather than LOCAL:** this cell makes a LIVE EXTERNAL VENDOR CALL to
