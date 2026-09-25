@@ -258,6 +258,51 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "NFRA_OPALAI-Z-W2-S3 is ARMED with this seat as disarm_owner.",
     "world_is": "OA-t-6 stays open (pending) until the CTO rules the release scope; the worker's refusal was the order's own census clause working as written.",
     "notes": "NFRA_MCPORTAL's gateway merges and NFRA_MCPINDEX's MX-c-4 drain wait on the same ruling. No gate is built here."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W3-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~3",
+    "surfaced_at": "2026-09-24T23:40Z",
+    "one_line": "t2.AC2.sh and t2.AC3.sh capture rc from a `cmd | tr -d '\\r'` pipeline with pipefail OFF, so `$?` is always tr's exit (0), never the underlying provision-account.ps1/verify-boundary.ps1 exit code -- their PASS conditions (`rc=3`, `rc=4`) can never be satisfied by any script, correct or not.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`set -o | grep pipefail` in this worktree's bash: `pipefail off`; t2.AC2.sh/t2.AC3.sh (and _root.sh) never set it.",
+        "Direct invocation (no pipe) of `opal_ai/opal/runtime/provision/provision-account.ps1 -Config <cfg>` in this non-elevated session: prints 'ELEVATION REQUIRED ...', `direct_rc=3` -- exactly the AC2 spec.",
+        "Direct invocation of `verify-boundary.ps1 -Config <cfg>` (no Opal_Agent account on this box): prints 'BOUNDARY: NOT-PROVISIONED', `direct_rc=4` -- exactly the AC3 spec.",
+        "Running the check scripts as issued, post-commit 2d83bdb8: t2.AC1.sh -> rc=0, PLAN acts matched 8 of 8, RESULT PASS, exit=0 (its expected rc=0 happens to equal tr's own exit, masking the bug). t2.AC2.sh -> 'session elevated=False; rc=0; ELEVATION REQUIRED lines=1; ...', RESULT FAIL, exit=1 (rc=0 fails the script's own `[ \"$rc\" = 3 ]` test). t2.AC3.sh -> 'rc=0; BOUNDARY: NOT-PROVISIONED', RESULT FAIL, exit=1 (rc=0 fails `[ \"$rc\" = 4 ]`)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2 expects `rc=3; ELEVATION REQUIRED lines>=1; ... -- RESULT: PASS -- exit=0`; AC3 expects `rc=4; BOUNDARY: NOT-PROVISIONED -- RESULT: PASS -- exit=0`.",
+    "world_is": "provision-account.ps1 and verify-boundary.ps1 both produce the exact specified refusal text and exit code when run directly; the check scripts that grade them lose that exit code to an un-guarded pipe before ever comparing it, so AC2 and AC3 read FAIL for any conforming implementation. Left alone, no worker on this cell can ever produce a PASS-by-output on AC2/AC3 as literally invoked.",
+    "notes": "t2.AC2.sh and t2.AC3.sh are 2.0.0_SA_COO~O's own artifacts, outside this order's <paths> (Read-only, not granted to write); not repaired here per bound 2.3 (never repair a criterion). A one-line fix (`set -o pipefail` before the pipe, or `${PIPESTATUS[0]}`) would let both scripts grade correctly."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S7",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T00:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_OPALAI-Z-W3-S1 (owner this seat): the checks' rc capture read tr's exit status, not the command's; fixed at CLOUD @0ad710832f with set -o pipefail in the shared _root.sh and carried onto wk-NFRA_OPALAI-3, where t2.AC2(rc=3)+t2.AC3(rc=4) now PASS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer re-dry-run under pipefail @0ad710832f: base builds FAIL with their expected sign; the same checks on wk-NFRA_OPALAI-3 PASS (recorded in the fix commit's message).",
+        "The defect was the issuer's: `out=$(cmd | tr -d CR); rc=$?` without pipefail yields tr's exit (0); the assignee refused rather than repaired and proved the direct exit codes."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-W3-S1 is ARMED with this seat as disarm_owner.",
+    "world_is": "The criteria now read the command's own exit; the order's instance is rewritten by a fresh worker on this slot against the fixed checker.",
+    "notes": "Swept on the trigger: 19 check files read rc=$?, all through the one sourced root. No gate is built here."
   }
 ]
 ```
