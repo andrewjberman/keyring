@@ -2345,10 +2345,10 @@ paths:
   # -----------------------------------------------------------------------
   "opal_ai":
     lane: ANY
-    note: "opal_ai submodule pointer file (parent-repo SHA) -- same posture as the portal pointer row above: a gitlink bump is not content authorship, so the standing lane check has nothing to grade it against. NFRA_OPALAI OA-w-2 (2026-09-24): landed BEFORE any nested-repo hook so a bump never fails closed on an UNDEFINED YAML entry."
+    note: "opal_ai/ submodule pointer file (parent-repo SHA) -- same posture as the portal pointer row above: a gitlink bump is not content authorship, so the standing lane check has nothing to grade it against. NFRA_OPALAI OA-w-2 (2026-09-24): landed BEFORE any nested-repo hook so a bump never fails closed on an UNDEFINED YAML entry."
   "opal_ai/**":
     lane: ANY_EXEC_OR_AE
-    note: "opal_ai content, standing (non-worker) authorship -- exec/AE, the same posture infra/architectural_docs/** already carries for a new infra-adjacent tree with no dedicated pod yet. A spine-v3 WORKER'S access to opal_ai/** during a round comes from its own task order's <paths> (ADHC_OWNPTH.005, worker_grant), never from this row -- this row exists so this path is never bare-UNDEFINED for a standing seat, and so OA-w-2's nested-repo gate has a real lane to resolve against (git show HEAD:.owned-paths.yaml must carry >=1 opal_ai/ entry -- AC2). NFRA_OPALAI OA-w-2 (2026-09-24)."
+    note: "opal_ai/** content, standing (non-worker) authorship -- exec/AE, the same posture infra/architectural_docs/** already carries for a new infra-adjacent tree with no dedicated pod yet. A spine-v3 WORKER'S access to opal_ai/** during a round comes from its own task order's <paths> (ADHC_OWNPTH.005, worker_grant), never from this row -- this row exists so this path is never bare-UNDEFINED for a standing seat, and so OA-w-2's nested-repo gate has a real lane to resolve against. NFRA_OPALAI OA-w-2 (2026-09-24)."
 
   # -----------------------------------------------------------------------
   # docs/ — documentation

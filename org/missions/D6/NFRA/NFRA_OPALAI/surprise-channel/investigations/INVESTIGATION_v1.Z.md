@@ -167,6 +167,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "NFRA_OPALAI-Z-W1-S1 is ARMED with this seat as disarm_owner.",
     "world_is": "No out-of-grant path moved. The residual is the resolver's ordering (a worker grant is never consulted for a path with no lane row), a fabric gate defect whose owner is the gate's, carried to the CTO in this round's drain-end read; NFRA_MCPORTAL's MP-w-1 (the mcportal gitlink) meets the same ordering.",
     "notes": "No gate is built here."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W5-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~5",
+    "surfaced_at": "2026-09-25T01:13Z",
+    "one_line": "install-owned-paths.sh --submodule <path> resolves REPO_ROOT from the invoking shell's AMBIENT cwd, not from anything tied to the intended repo -- a caller that invokes it by absolute path without first cd-ing into that repo silently targets whichever repo the ambient cwd sits in instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This cell's own bound #1 (\"never install a hook into the real opal_ai... the real install is the issuer's act at the round's last merge\") already anticipates the risk that a --submodule invocation could reach the real tree; it names WHO may do it, not a mechanism that refuses when they do not mean to.",
+        "REPRODUCED THIS SESSION: an exercise call of `bash \"$P/.tools/git-hooks/install-owned-paths.sh\" --submodule opal_ai` (absolute script path, no prior `cd \"$P\"`) was issued while this worker's own harness had reset its Bash-call cwd to the PRIMARY workspace root between calls (per this harness's own documented behavior) -- `git rev-parse --show-toplevel` from that cwd resolved to the REAL main tree, and `SUB_ABS=\"$REPO_ROOT/opal_ai\"` resolved to the REAL opal_ai submodule checkout, which exists there (unlike in this worker's own worktree, where opal_ai is uninitialised).",
+        "Effect measured: `/c/Users/Opal Bloomberg/Desktop/ajb_workspace/.git/modules/opal_ai/hooks/pre-commit` was created (905 bytes, this cell's own wrapper text verbatim, including its 'OA-w-2 (2026-09-24)' comment) at 20:49 local -- confirmed by `cat`, byte-identical to install-owned-paths.sh's generated WRAPPER.",
+        "Found and removed same-turn by this worker: `rm -f` on that path at 2026-09-25T01:08Z; `ls` immediately after shows only git's stock `*.sample` files in that hooks dir (applypatch-msg.sample .. update.sample, all timestamped 19:10, the submodule's own init), i.e. the real opal_ai's hooks dir is back to its pre-incident state. `git status`/`git -C opal_ai status` at the main tree show no other unexpected change from this; the one unrelated staged change there (`.gitmodules` +mcportal submodule) predates this session and is another live seat's work."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The build spec's bound (\"never install a hook into the real opal_ai... the round's issuer is the only caller with standing to name the real one\") is enforced by WHO is allowed to pass the real path, and that is sufficient.",
+    "world_is": "Nothing in install-owned-paths.sh itself distinguishes a scratch fixture from the real tree, and its only signal is a resolved-path string in its own stdout (\"OK: ... installed at <path>\") that a caller must read to notice a wrong target -- a silent cwd mismatch (this harness's own reset-between-calls behavior is one concrete source) reaches the real opal_ai with no refusal. Left alone, the round's own last-merge install call carries the identical exposure this row measured on itself.",
+    "notes": "Not fixed here (out of this cell's stated build): a hardening would have the script print (or the caller verify) the RESOLVED repo identity before writing, or accept an explicit --root override instead of trusting ambient cwd. Left for the disarm_owner's real install to read this row first."
   }
 ]
 ```
