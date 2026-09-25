@@ -677,6 +677,28 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not blocking IVE10-AC1..AC3 (mechanical, all PASS). IVE10-AC4 is RECORD/judgment, never self-graded by this worker; naming this gap so the CVO's real run at the drain does not read a silent 'nothing happened when I clicked' as this cell's own defect."
+  },
+  {
+    "id": "DSGN_IRPTV1-W8-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~8",
+    "surfaced_at": "2026-09-24T23:27:13Z",
+    "one_line": "IV-e-11 (b) names the hero cards (CategoryViewTree via DrillTree.tsx) as colouring a model 'by its served modelCode', but the L2 members CategoryViewTree actually renders carry no modelCode field at all -- only a name -- so that path resolves colour by canonicalized NAME (memberColor -> getModelColor(getCanonicalModelName(name))), never by code.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO IV-e-11 (b): \"the Investor Reporting hero cards (CategoryViewTree via IR/tabs/holdings/DrillTree.tsx) and the drill pie colour a model by its served modelCode ... and the label fallback in DrillTree.tsx (colorForSlice) is retired wherever a code exists.\"",
+    "world_is": "Measured against MdpfCategoryNode/MdpfCategoryChildNode (src/api/endpoints/aum.ts) and mdpfResultFromSnapshot (DrillTree.tsx @ this cell): neither the top-level card, its `children`, nor its `members` carry a `model_code`/`modelCode` field -- only `label`/`display_name`. CategoryViewTree.tsx's own `memberColor` (line 122-125) is the ONLY colour path its cards use, keyed by `getCanonicalModelName(displayName)`, and DrillTree.tsx never edits CategoryViewTree.tsx (its own header comment: 'IMPORTED, NEVER EDITED') nor feeds it a code. Only the DONUT PIE (`HoldingsNode.modelCode`, DrillTree.tsx's own `modelSliceColor`) is genuinely code-keyed; that half of (b) is met literally and is covered by IVE11-AC3. The hero-card half of (b) is met in EFFECT (AC4's screenshot: Ultra Long-Term reads red on both the hero cards and Model Portfolios) because this cell's getModelColor fix (longest-key/normalized partial match) makes the NAME-keyed path resolve correctly too -- but it is met by a name fix propagating through a shared library, not by the hero cards reading a served code, because the hero cards are never served one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/components/CategoryViewTree.tsx@13b5356fad4779b990e8e7a88636430204b30e42 lines 122-125 (memberColor) and its own header docstring line 5-6 ('IMPORTED, NEVER EDITED')",
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx@13b5356fad4779b990e8e7a88636430204b30e42 mdpfResultFromSnapshot (no modelCode field emitted onto MdpfCategoryNode/children/members)",
+        "portal/src/api/endpoints/aum.ts@13b5356fad4779b990e8e7a88636430204b30e42 MdpfCategoryNode/MdpfCategoryChildNode type definitions (no modelCode member)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No blocking effect on this order: IVE11-AC1/AC2/AC3/AC4 are all met (AC3 covers the pie's genuine code path; AC1's library fix covers the hero cards' name path; AC4 is the CVO's real-run screenshot check). Filed so a future cell that widens (b) literally (serving modelCode onto CategoryViewTree's contract) does not read this TO's close-out as having already done so."
   }
 ]
 ```
