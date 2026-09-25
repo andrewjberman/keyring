@@ -14567,6 +14567,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "At the next vintage the same code serves 0 of 89 OK. The export prints every figure the new blocks carry, while the page's Model tab shows a narrower window, so the fiscal-year class grew from 12 names to 88. Round 42's rq-1 targets the page as captured at this vintage.",
     "disarm_owner": "2.0.0_SA_COO~Z -- INERT; round 42's rq-1 is cut against this vintage (decomposition s.50b.4).",
     "notes": "Found by the round-42 base run. The served FWD-30 grade moves with AMGT_CORPUS's data, so a population grade names its capture time."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W159-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~159",
+    "surfaced_at": "2026-09-25T06:30:00Z",
+    "one_line": "AC1 cannot reach 89 of 89 OK: 25 names' remaining FIGURES-extra is the exportCompare harness's OWN pageFigures() regex failing to parse a <td data-model-cell> that carries a nested CheckFaceBadge <span> for any non-PASS verdict, so a genuinely page-shown figure reads absent to the instrument -- not a render_pack.py defect, and the harness is outside this cell's <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "After every render_pack.py fix in this cell (undrafted thesis, exec management, posture, header-REFUSE, fiscal-year window, peers basis=absent), a fresh rq-1.local_sweep.py run over C:/tmp/amgt-r42-cache2 reads 'local rebuild over 89 of 89 folders: OK 64, NOT_OK 25, CAPTURE_FAILED 0'; every one of the 25 NOT_OK rows' figDiff.missing and absDiff.extra are both empty ([]), only figDiff.extra is populated.",
+        "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx:122-130 (`ModelCell`): a non-PASS check-face verdict renders `{value}<CheckFaceBadge .../>` inside the SAME `<td data-model-cell>` -- measured on BABA_US_Equity's rendered modelHtml: `<td data-model-cell=\"true\" ...>101143<span title=\"SALES_REV_TURN: unit/sign convention not yet checked (status='PENDING')\" ...>...PROVISIONAL</span></td>`.",
+        "portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs:234 `pageFigures()`'s `/<td([^>]*)>([^<]*)<\\/td>/g` requires NO nested tag inside the td; against a copy of this harness run standalone (`.scratch/diag_export_compare.cjs`, this worker's own worktree, never committed) the SALES_REV_TURN row's matchAll produces zero matches for every PROVISIONAL-badged year, so those cells never reach PAGE_FIGURES though the page renders their values.",
+        "The SAME 25 names' figDiff.extra sets are each the SAME small mnemonic family (SALES_REV_TURN, IS_OPER_INC, EBITDA, EBITDA_ADJUSTED, IS_EPS, BOOK_VAL_PER_SH, IS_SH_FOR_DILUTED_EPS, CAPITAL_EXPEND, CF_FREE_CASH_FLOW, IS_DIV_PER_SHR) repeated across every declared fiscal year, consistent with a per-name check-face verdict that sits non-PASS for those mnemonics in every year, not a per-year anomaly."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1's literal expect: 'local rebuild over 89 of 89 folders: OK 89, NOT_OK 0, CAPTURE_FAILED 0 -- and exit=0'.",
+    "world_is": "AC1 reads OK 64, NOT_OK 25, exit=1 (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~159/rq-1.AC1.output.txt, this commit). The 25 remaining names' own EXPORT text is correct against the page's real content (the value the page shows is the value this module writes); the instrument that grades the comparison cannot see a page cell that carries a badge, so it reads that page as narrower than it is. BOUNDS 2 of this task order forbids a page-file change and the harness lives under portal/src/pages/SecurityAnalysis/__harness__/, outside this cell's <paths> grant -- a fix here would be an edit outside the task order's write surface.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- fixing exportCompare.harness.cjs's pageFigures() td regex to tolerate a nested badge span (or reading via a DOM parser instead of a hand regex) is the disarm act; no worker holds that path.",
+    "notes": "Filed as a row per BOUNDS 2's 'a row, not a rescue': the class cannot be closed inside this cell's <paths>. All four of round 41's named classes (undrafted thesis, exec management, posture, fiscal-year window) are closed in this cell's commit; this row is the ONE remaining reason AC1 does not read 89 of 89."
   }
 ]
 ```
