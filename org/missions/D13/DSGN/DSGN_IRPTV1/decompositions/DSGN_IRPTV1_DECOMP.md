@@ -1,4 +1,4 @@
-# DSGN_IRPTV1 -- DECOMPOSITION (L5) -- ROUND 3, THE UI FINISH (PRD v0.6)
+# DSGN_IRPTV1 -- DECOMPOSITION (L5) -- ROUND 4, THE FAILS RE-CUT (PRD v0.8)
 
 ```json
 {
@@ -6,200 +6,91 @@
  "directive": "D13",
  "macro": "DSGN",
  "fabric": "laptop",
- "decomp_version": "v3",
+ "decomp_version": "v4",
  "step": 5,
- "prd_ref": "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@31a61d0466 (v0.8: three ENDPOINT clauses on the CVO refusal 100924 -- FWD-5/6 facts behind the help tip, FWD-7 the variant step is three cards)",
- "prd_half_hashes": {"ratified-text": "STALE -- OWED BY 3.0.0_SA_CVO (the ENDPOINT changed at v0.6; prd-signoff status 2026-09-24T22:1xZ: WITHHELD)", "brief": "ADMITTED (auto: the CRO wrote the brief, spine v3.19 L4-R)"},
- "round_analysis_ref": "none -- the first cut after the FAST interval (closer-drive FAST -> FULL, call 5); input = PRD v0.6 + org/missions/D13/DSGN/DSGN_IRPTV1/STATUS.md@3730d145b5",
- "order_ref": "1.0.0_SA_CTO 100904 (Andrew-direct via 4.0.0_SA_CRO 100892: finish the IRPT UI; back onto /canonical-drive)",
+ "prd_ref": "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@31a61d0466 (v0.8, ADMITTED)",
+ "prd_half_hashes": {"ratified-text": "SIGNED by 3.0.0_SA_CVO, current (prd-signoff status 2026-09-25)", "brief": "ADMITTED (auto: the CRO wrote the brief)"},
+ "round_analysis_ref": "1.0.0_SA_CTO 100991 on ADJUDICATION_v2.md@7bf1522657 (C-S15: 2 PASS / 5 FAIL / 5 NOT_EVALUATED): re-cut each FAIL as an enrichment cell; the NOT_EVALUATED grade on the signed-in drain trace (CTO 100986)",
+ "order_ref": "Andrew-direct 2026-09-25 ~17:2xZ (/canonical-drive on IRPT to completion); CTO 100991, 100986, 100953, R6 (RULINGS_IRPT_20260925.md@75156f2b18)",
  "author": "2.0.0_SA_COO~D",
- "round": 3,
- "rectangle": "PRD v0.6 ENRICHMENT BACKLOG items 12-22 plus the still-open items 5, 9, 10, 11, each measured against the FAST interval's landed pins",
- "cells": 12,
- "chains": 4,
- "join_cells": 3,
- "portal_base": "DEV 13b5356f (the FAST interval's last landing; re-measured by fetch at the cut)",
+ "round": 4,
+ "rectangle": "the four FE-servable FAILs of C-S15 (IVE10, IVE14 + IVE19, IVE18), the repairs batched into one cell (R6, CTO 100953, rows S14 and W8-S1), and the export hop's consumer side on P's written specs (100960, 100987); IVE16 is parked on the producer",
+ "cells": 5,
+ "chains": 5,
+ "join_cells": 0,
+ "portal_base": "DEV 8242412d = origin DEV (ls-remote read 2026-09-25); PROD cb48eff8 carries round 3",
  "frozen": true
 }
 ```
 
-**Author:** `2.0.0_SA_COO~D` (L5 is the COO's). **Input:** PRD v0.6 @`4746617b10` (ENDPOINT FWD-1..FWD-18; CELL CANDIDATES
-C15-C24; ENRICHMENT BACKLOG 12-22) and the FAST interval's STATUS.md @`3730d145b5`, which names every pin landed on portal
-DEV between 17:4xZ and 22:2xZ. There is no round-2 analysis: the FAST interval ran in its place, and the spine's call 5
-cuts this round straight from the next-list. Round 2's decomposition (v2 @`2a26e433b3`) is spent (7 of 8 cells merged and
-on DEV since `a3f4c860`; `IV-e-7` superseded by the FAST lease, drive-mode.log line 1). **Frozen at the cut.**
+**Author:** `2.0.0_SA_COO~D`. **Input:** the CTO's round-3 analysis 100991 over the CVO's grades
+(`surprise-channel/adjudications/ADJUDICATION_v2.md@7bf1522657`), the CTO's notes 100953 (colour by the served
+`model_code`; 2.0.0_SA_COO~M serves it since 23:2xZ) and 100986 (the signed-in FWD-1 trace is the drain act, not a cell),
+ruling R6 (fe-s-10/parity kept; fe-s-5/states re-scoped this round), and 2.0.0_SA_COO~P's written interface specs 100960
+(submit-export data optional while QUEUED/RUNNING, schema @f6fd60f4fd) and 100987 (the print URL, design card B2-URL
+@bc3f70d22c). Round 3 (v3 @2af10e4cd0) is spent: 12 of 12 orders complete and on origin DEV 8242412d. **Frozen at the cut.**
 
-**Rulings reaching every cell:** Andrew's calls C1-C3 (record
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_214xZ_IRPT_UI_CALLS_C1_C3_ANSWERED.md`): cash is green,
-on Positioning too; progressive disclosure is portal law; the search box and the paged list are shared components.
-Andrew-direct ~19:4xZ design notes (`org/tier1_exec/2.0.0_SA_COO~D/deliverables/ANDREW_DIRECT_20260924_194xZ_IRPT_DESIGN_NOTES/`).
-Andrew-direct ~18:3xZ: the build place is the main portal checkout on DEV. CTO 100865: a test re-scope inside this lease
-surface is this seat's own call, cited to the ruling it serves. PRD CONTRACTS: the FE derives nothing; "not supplied",
-never zero; ids never print; facts move to a disclosure, they do not vanish; the colour is the page's, keyed by code or
-served class, never by a label substring or a guess. Spine L6 diet: a build cell carries at most THREE mechanical criteria;
-repo-wide hygiene at the drain.
+**Rulings reaching every cell:** PRD CONTRACTS (the FE derives nothing; "not supplied", never zero; ids never print; a fact
+moves to a disclosure, it does not vanish; colour keyed by code or served class, never a label or a guess); Andrew's calls
+C1-C3; CTO 100919 (contracts/** incl. wire is this project's consumer-side surface, landing on the owning seat's written
+spec; P keeps portal/src/api/**); CTO 100991: in a LOCAL-only round the JUDGMENT criterion names the COO's close run (the
+signed-in trace where reachable) or Andrew's once-over where the AC says so, never the CVO. Spine L6 diet: at most THREE
+mechanical criteria per build cell; repo-wide hygiene at the drain.
 
 ---
 
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
-The rectangle is PRD v0.6's backlog, every item not yet CLOSED, measured against DEV `13b5356f` (the main checkout,
-2026-09-24 ~22:2xZ) and STATUS.md's acceptance table:
+Denominator: the 12 AC4 grades of C-S15. PASS 2 (IVE15, IVE17) -> no cell. NOT_EVALUATED 5 (IVE9, IVE11, IVE12, IVE13,
+IVE20) -> graded on the round-4 drain's signed-in trace (CTO 100986, 100991), no cell. FAIL 5 -> IVE10 (`IV-e-21`), IVE14 and
+IVE19's Analysis half (`IV-e-22`, one write set: the Analysis tab), IVE18 (`IV-e-23` for the chip and the card;
+`IV-e-22` for the two Analysis strings, its write set), IVE16 (PARKED, section 7: the fix is a Holdings report kind the
+export producer does not serve; an FE cell has nothing to build). Remainder after subtraction: zero FAILs unplaced.
+Repairs outside the grades (R6, CTO 100953, row S14's next-round items, row W8-S1) -> `IV-e-25`. P's two consumer asks ->
+`IV-e-26`.
 
-```
-  item  outcome            landed in the FAST interval (pin)                       open remainder                         cell
-  ----  -----------------  -----------------------------------------------------  -------------------------------------  --------
-   5    FWD-11             footers (c75a0fc9, af66ed43); drill table (f338e693)    status band tokens; "Basis" chip; firm  IV-e-18
-                                                                                   chip; "PERIOD:" labels; census
-   9    FWD-9              --                                                      one page-level Export; per-tab gone     IV-e-16
-  10    FWD-10             tab-bar scrollbar (93b28880)                            tab order P/H/A; print sheet off Perf   IV-e-16
-  11    FWD-1 (spread)     --                                                      P's `spread` -- DEFERRED, not a cell    --
-  12    FWD-12             drill pie by served model_code (13b5356f), label        shared lib by code; hero cards by code  IV-e-11
-                           fallback (08a04fe2)
-  13    FWD-13             map/table/dialog by served asset_class (13b5356f)       cash green in chartColors (Positioning) IV-e-12
-  14    FWD-14             pie stops at models (9bb4c5da); full-width dialog        bars stop at models; map drill + the    IV-e-13
-                           (721170ca)                                              Positioning hover card; legends scale
-  15    FWD-15             drill table (f338e693); Analysis strings (68f46e18)     every other body label; fe-s-5 fields  IV-e-18
-  16    FWD-16             --                                                      per tab + the DESIGN.md clause         IV-e-19
-  17    FWD-3 (amended)    readable input under OS dark mode (93b28880)            shared search select + paginator        IV-e-9
-  18    FWD-2 (amended)    header chips + id bubbles gone (93b28880)               account filter in Holdings + Perf       IV-e-10
-  19    FWD-7/8 (amended)  request panels gone (68f46e18); upload lane (088386fe)  three cards; upload step; prospect card IV-e-14
-  20    FWD-17             --                                                      the sample view                         IV-e-15
-  21    FWD-18             footers; tab scrollbar                                   tooltip families; motifs; band census   IV-e-20
-  22    FWD-10 tab order   --                                                      (with item 10)                          IV-e-16
-  --    repair             upload bridge type (088386fe); gen-wire has no oneOf    gen-wire oneOf rule; regenerate; drop   IV-e-17
-                           rule (UnrenderableSchemaError)                          the bridge + the members' casts
-```
+## 2. THE CELLS -- 5 (round 4)
 
-```
-  backlog items 5, 9-22 (the open population) ............................................... 15
-  minus 11 (P's `spread`: a producer act, consumed when served; no page work until then) ..... -1
-  minus 22 (the same act as 10: one cell carries both) ........................................ -1
-  plus the repair (a gap the FAST interval exposed: the generator cannot render oneOf) ........ +1
-  ------------------------------------------------------------------------------------------------
-  CELLS IN ROUND 3 ............................................................................. 12   (IV-e-9 .. IV-e-20, no gaps)
-```
+Ids continue from round 3. Paths portal-relative; `IR/` = `src/pages/InvestorReporting/`.
 
-**The unscoped control.** Read from the PRD's CELL CANDIDATES C15-C24 rather than the backlog: C15 -> IV-e-9, C16 ->
-IV-e-10 (+ IV-e-14 for the Analysis input), C17 -> IV-e-11, C18 -> IV-e-12, C19 -> IV-e-13, C20 -> IV-e-18, C21 ->
-IV-e-19, C22 -> IV-e-14, C23 -> IV-e-15, C24 -> IV-e-20 (+ IV-e-13 for the hover card); C12, C13 -> IV-e-16; C14 ->
-IV-e-18. Every candidate lands in a cell; no cell serves a candidate outside the PRD. Read from STATUS.md's parked table:
-the asset-class data for non-Opal securities, the "withheld" supervision/advisory, the credential manager and the leftover
-folders are not page work and stay parked with their owners.
-
-**Status vocabulary** -- `MEASURED` (evidence in hand, instrument named) - `DECLARED` - `NOT-EVALUATED` - `N/A`.
-
----
-
-## 2. THE CELLS -- 12 (round 3)
-
-Ids per `org/standards/DECOMP_CELL_ID_CONVENTION.md` shape 1: prefix `IV`, axis `e`, numbering continued from round 2.
-Paths portal-relative; `IR/` = `src/pages/InvestorReporting/`.
-
-| cell | what it builds (the remainder only) | serves | writes | reads (never writes) | risk |
+| cell | what it builds | serves | writes | reads (never writes) | risk |
 |---|---|---|---|---|---|
-| `IV-e-9` | C15: a shared searchable dropdown (the `PageSurfaceControl` look, suggestions as you type, no clipping) and a shared paginator under `src/components/ui/`; `IR/header/ClientSearch.tsx` and `IR/header/BrowseDrawer.tsx` adopt them; the Catalyst combobox's `dark:` classes leave `src/ui/components/catalyst/combobox.tsx` with every other reader named and read before/after | FWD-3 | `src/components/ui/SearchSelect.tsx` (new), `src/components/ui/Paginator.tsx` (new), `src/ui/components/catalyst/combobox.tsx`, `IR/header/ClientSearch.tsx`, `IR/header/BrowseDrawer.tsx`, `IR/__tests__/dsgn-irptv1/iv-e-9.*` | `components/ui/PageSurfaceControl.tsx`, `pages/ModelPortfolios.tsx` (the dropdown reference) | LOCAL |
-| `IV-e-10` | C16: an account filter next to the Holdings drill and the Performance accounts table (name + masked tail from the directory, never an id); the Analysis input's account choice rides `IV-e-14` | FWD-2 | `IR/tabs/holdings/HoldingsTab.tsx` (one filter mount, ruled), `IR/tabs/reporting/AccountsTable.tsx`, `IR/__tests__/dsgn-irptv1/iv-e-10.*` | `IR/header/IdentityCard.tsx` (`fetchIdentityCardData`, `overWhatFor`), `IR/header/search.ts` | LOCAL |
-| `IV-e-11` | C17: `getModelColor` resolves through `canonicalModelCode`, never a label substring (the "Opal Ultra Long Term" -> Long Term blue defect); the hero cards colour by code; `IR/tabs/holdings/DrillTree.tsx`'s label fallback retired where a code exists | FWD-12 | `src/lib/modelPortfolioColors.ts`, `IR/tabs/holdings/DrillTree.tsx`, `IR/__tests__/dsgn-irptv1/iv-e-11.*` | readers of the lib: Model Portfolios, Positioning, Attribution -- a before/after read of each is the criterion | LOCAL |
-| `IV-e-12` | C18 remainder: `ASSET_CLASS.cash` moves to green in `src/lib/chartColors.ts` (Andrew's C1), Positioning named and read before/after; the legend and hover say "Unclassified" for an unclassified security | FWD-13 | `src/lib/chartColors.ts`, `IR/tabs/holdings/assetClass.ts`, `IR/__tests__/dsgn-irptv1/iv-e-12.*` | `pages/Positioning/tabs/HoldingsTab.tsx` (reader; never edited) | LOCAL |
-| `IV-e-13` | C19 remainder: the allocation bars stop at the model level; the Securities map carries the model-to-securities drill with the Positioning hover card pattern on `DataTooltip` (copied, never imported from the Positioning page); a legend with many entries stays readable | FWD-14, FWD-18 | `IR/tabs/holdings/AllocationBars.tsx`, `IR/tabs/holdings/HoldingsTreemap.tsx`, `IR/tabs/holdings/DrillTree.tsx` (legend only), `IR/__tests__/dsgn-irptv1/iv-e-13.*` | `pages/Positioning/tabs/HoldingsTab.tsx` (`HoldingsTreemapTooltip`, read only), `components/DataTooltip.tsx` | LOCAL |
-| `IV-e-14` | C22 + FWD-8: the VARIANT step as three cards (the portfolio alone / vs one Opal model / vs several) in the Philosophy card style on `HeroGraphic` (v0.8 FWD-7), the upload leading for a prospect (FWD-8); the upload as a designed step with a place and a state; the Analysis input's account choice (C16's third view); a prospect card in the header when no client is chosen; the comparison-key input in advisor words | FWD-7, FWD-8, FWD-2 | `IR/tabs/analysis/AnalysisTab.tsx`, `IR/tabs/analysis/ProspectComposer.tsx`, `IR/tabs/analysis/GenerateComposer.tsx`, `IR/tabs/analysis/VariantCards.tsx` (new), `IR/header/IdentityCard.tsx` (the prospect card), `IR/__tests__/dsgn-irptv1/iv-e-14.*` | `pages/Philosophy/**` (`PhilosophyPillars`, read only), `components/HeroGraphic.tsx`, `IR/tabs/analysis/composer.ts` | LOCAL |
-| `IV-e-15` | C23: Performance and Holdings with no client show sample components marked as a sample, and one prompt to choose a client; no sample figure is real client data | FWD-17 | `IR/tabs/TabShell.tsx` (the selection-required branch), `IR/tabs/SampleView.tsx` (new), `IR/__tests__/dsgn-irptv1/iv-e-15.*` | the smoke fixtures (the sample's shape, never its values) | LOCAL |
-| `IV-e-16` | C12 + C13: one page-level Export on the header exporting the active tab at the revision on screen; the per-tab disabled buttons retired (fe-s-5 controls re-scoped, CTO 100865); the tabs read Performance, Holdings, Analysis; the Performance tab off `render/print.css` / `.ir-page` onto screen layout | FWD-9, FWD-10 | `IR/index.tsx` (the header action, ruled), `IR/tabs/TabShell.tsx` (TABS order), `IR/tabs/reporting/ReportingTab.tsx` (the `.ir-page` wrapper and Export mount, ruled), `IR/__tests__/fe-s-5/controls.test.ts` (re-scope), `IR/__tests__/dsgn-irptv1/iv-e-16.*` | `IR/export/**` (the existing submit/receipt path, consumed unchanged), `render/**` (never written) | LOCAL |
-| `IV-e-17` | REPAIR: `IR/__tests__/fe-s-13/gen-wire.ts` renders a oneOf of object alternatives; the wire types are regenerated from CLOUD's v1 (AnalysisUpload request/result, PerformanceReport provider `OPAL_ENGINE`, the HoldingsSnapshot members); the bridge type in `IR/tabs/analysis/prospect.ts` and the members' casts are dropped | FWD-7, FWD-5, FWD-13 | `IR/__tests__/fe-s-13/gen-wire.ts`, `IR/contracts/wire/**` (regenerated output: a RULED touch on P's surface, asked by P 100861 / 100893), `IR/tabs/analysis/prospect.ts`, `IR/__tests__/dsgn-irptv1/iv-e-17.*` | `docs/contracts/investor-reporting/v1/**` (workspace, read) | LOCAL |
-| `IV-e-18` | JOIN 1 -- C20 + C14: client language on every body -- the status band's state and reason code, the "Basis:" chip, the firm-attribution chip, the accounts table's "PERIOD:" labels move to disclosures; fe-s-5/fields re-scoped to the PRD (CTO 100865); a DOM census over the three bodies printing zero state tokens, reason codes, revisions, `sel_`/`acc_` ids, with the disclosures as the positive control | FWD-15, FWD-11 | `IR/tabs/reporting/*`, `IR/tabs/holdings/HoldingsTab.tsx`, `IR/global/FirmAttribution.tsx` (ruled), `IR/__tests__/fe-s-5/fields.test.ts` (re-scope), `IR/__tests__/dsgn-irptv1/iv-e-18.*` | `IR/tabs/reporting/AnswerStatus.tsx` (P-written: wrapped at the mount, never edited) | LOCAL |
-| `IV-e-19` | JOIN 2 -- C21: at rest each tab shows its headline and one main picture; everything else opens from a toggle, a tile, a dialog or a help tip; the portal-law clause lands in `portal/DESIGN.md` under the DSGN_REBRND lane in its own commit (Andrew's C2) | FWD-16 | `IR/tabs/**` (the at-rest composition), `portal/DESIGN.md` (one clause, DSGN_REBRND), `IR/__tests__/dsgn-irptv1/iv-e-19.*` | `DESIGN.md` C1-C12 | LOCAL |
-| `IV-e-20` | JOIN 3 -- C24: `DataTooltip` for every chart figure and `HelperTip` for help (the drill pie's default recharts tooltip replaced); a stray-scrollbar census at 1440 and 390; the website motifs (numbered cards, the process band, the short-to-long model spectrum) where they help; a dark-band census against C3 (one band per page) | FWD-18 | `IR/tabs/**`, `IR/header/**` (presentation only), `IR/__tests__/dsgn-irptv1/iv-e-20.*` | `design/brand/opalinvest.com.md`, `pages/ModelPortfolios.tsx`, `pages/Philosophy/**` | LOCAL |
+| `IV-e-21` | IVE10: Performance offers the account choice at rest -- the shared `AccountFilter` mounted above the Performance headline (reading `HeaderSelectionContext`), not only inside the collapsed accounts table | FWD-2 | `IR/tabs/reporting/ReportingTab.tsx` (one mount + one import), `IR/__tests__/dsgn-irptv1/iv-e-21.*` | `IR/tabs/holdings/AccountFilter.tsx`, `IR/header/HeaderSelectionContext.ts` | LOCAL |
+| `IV-e-22` | IVE14 + IVE19 + IVE18's Analysis strings: with a client chosen the variant cards come first and the prospect upload sits behind one toggle; with no client the upload leads (FWD-8); the Generate form's secondary inputs open from a disclosure so Analysis at rest is the cards and one action; the report title placeholder is the client's name, never a code; the comparison input speaks "Opal model" with no "key" | FWD-7, FWD-8, FWD-16, FWD-15 | `IR/tabs/analysis/AnalysisTab.tsx`, `IR/tabs/analysis/ProspectComposer.tsx`, `IR/tabs/analysis/GenerateComposer.tsx`, `IR/tabs/analysis/VariantCards.tsx`, `IR/__tests__/dsgn-irptv1/iv-e-22.*` | `IR/tabs/analysis/composer.ts` | LOCAL |
+| `IV-e-23` | IVE18's header half: the firm chip shows the firm's name (a firm name is client language, R6) with the firm token in a disclosure; the identity card's firm line reads the firm's name, never the token | FWD-15, FWD-2 | `IR/global/FirmAttribution.tsx`, `IR/header/IdentityCard.tsx`, `IR/__tests__/dsgn-irptv1/iv-e-23.*` | `IR/__tests__/fe-s-10/parity.test.ts` (kept, R6: must stay green) | LOCAL |
+| `IV-e-25` | REPAIRS, one cell: (a) fe-s-5/states re-scoped per R6 (the heatmap cell reads "not supplied", the reason on hover; the two Summary-block sub-tests re-scoped or removed with the reason stated); (b) models coloured by the served `modelCode` only on the hero cards and the drill pie (CTO 100953, row W8-S1); (c) the drill pie colours a security by its served asset class, never the name hash (row S14 item 2); (d) `SearchSelect` gains combobox/listbox/option roles and arrow/Enter/Escape keys (row S14 item 1) | FWD-15, FWD-12, FWD-13, FWD-3 | `IR/__tests__/fe-s-5/states.test.ts`, `IR/tabs/holdings/DrillTree.tsx`, `src/components/CategoryViewTree.tsx` (additive props only), `src/components/ui/SearchSelect.tsx`, `IR/__tests__/dsgn-irptv1/iv-e-25.*` | `src/lib/modelPortfolioColors.ts`, `IR/tabs/holdings/assetClass.ts` | LOCAL |
+| `IV-e-26` | THE EXPORT HOP, consumer side, on P's written specs: `contracts/wire/**` regenerated from the workspace contracts (submit-export `data` optional while QUEUED/RUNNING); `export/submit.ts` accepts that answer and reads the export id from `status.operation.revision`; `render/PrintEntry.tsx` reads `selection`, `start` and `end` from the print URL and `export/resolveBundle.ts` passes them to `getPerformanceReport`, refusing by name when one is missing | FWD-9 | `IR/contracts/wire/`, `IR/export/submit.ts`, `IR/export/resolveBundle.ts`, `IR/render/PrintEntry.tsx`, `IR/__tests__/dsgn-irptv1/iv-e-26.*` | `docs/contracts/investor-reporting/v1/**`, `IR/__tests__/fe-s-13/gen-wire.ts` (run, not edited) | LOCAL |
 
-**Risk, stated:** every cell is `LOCAL` -- a worker builds and proves on fixtures in its own worktree and never pushes. The
-round's DEV landing is the COO's drain act and is `SERVED` (DEV CI deploys the portal to its DEV host); the COO runs each
-outcome once there at the close. PROD stays gated.
-
-**Ruled touches on files this project does not own, named for the CTO before the issuance:** `IR/index.tsx` (IV-e-16, the
-header action), `IR/tabs/reporting/ReportingTab.tsx` (IV-e-16, IV-e-18), `IR/tabs/holdings/HoldingsTab.tsx` (IV-e-10,
-IV-e-18), `IR/global/FirmAttribution.tsx` (IV-e-18), and the shared
-files `src/lib/modelPortfolioColors.ts`, `src/lib/chartColors.ts`, `src/ui/components/catalyst/combobox.tsx`, `portal/DESIGN.md`.
-
----
+`IV-e-24` is reserved for IVE16 (section 7) and not cut.
 
 ## 3. PLACEMENT AND BASE
 
-**Every cell executes on LAPTOP**, served by `0.9.0_WK_DSGN_IRPTV1~<n>` in a worktree pair
-(`.tools/wk-provision.sh provision DSGN_IRPTV1 <n> --path <abs> --portal-ref <portal_ref>`), slots numbered from ~7 so a
-row id never collides with rounds 1-2. **Base:** `portal_ref` = portal DEV HEAD at the cut (`13b5356f` at this write,
-re-fetched at the issuance and written into the `fanout:` data). The drain merges into DEV in the main portal checkout
-(Andrew-direct ~18:3xZ) and pushes under the normal rule; a JOIN cell is provisioned off DEV's tip once the chains it
-waits on have landed, so it reads the surfaces as they will stand.
-
----
+Every cell is a portal cell on a worktree pair provisioned by `.tools/wk-provision.sh provision DSGN_IRPTV1 <n> --portal-ref
+8242412d`. The drain lands on DEV in the main portal checkout; origin DEV through 1.0.0_SA_CTO's review and 0.0.0_AB_MSTR's
+push. The signed-in FWD-1 trace runs at the drain on IRPT_BCKEND's bounded test principal (IB-rtf-3) if live, else one
+signed-in walk by Andrew asked through 1.0.0_SA_CTO (CTO 100986); it grades the five NOT_EVALUATED criteria and every
+round-4 JUDGMENT criterion.
 
 ## 4. DEPENDENCY EDGES AND CHAINS
 
-Edges keyed to write collision (two worktrees on one file conflict at the drain) and to observed completion.
-
-```
-  IV-e-9  --> IV-e-10                 chain A (header + accounts): ClientSearch, BrowseDrawer, the lib combobox; HoldingsTab
-                                       filter, AccountsTable
-  IV-e-11 --> IV-e-12 --> IV-e-13     chain B (colour + drill): modelPortfolioColors, chartColors, assetClass.ts, DrillTree,
-                                       AllocationBars, HoldingsTreemap
-  IV-e-14 --> IV-e-17                 chain C (analysis + wire): the analysis files, IdentityCard (prospect), prospect.ts, wire
-  IV-e-15 --> IV-e-16                 chain D (shell): TabShell (sample, tab order), index.tsx, ReportingTab
-  {A, B, C, D} --> IV-e-18 --> IV-e-19 --> IV-e-20   the JOIN chain: each reads every body the chains moved
-```
-
-**CHAINS: M = 4 at the cut** (A, B, C, D pairwise disjoint in write surface); the JOIN chain runs after all four land.
-**Fan-out: N = 4 of M = 4 chains, cap 8; join_cells: 3 (IV-e-18, IV-e-19, IV-e-20, serial).** Queue order is the arrow.
-
----
+No edge: the five write sets are pairwise disjoint (section 2 `writes`), and no cell consumes another's output. M = 5
+chains of one cell each; N = 5; cap 8. The hookups a cell needs in a shared file are added at the merge (C10).
 
 ## 5. BATTERY DISPOSITION
 
-- **`comp-adversary` -- RUN** (`comp-adversary compose org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md`,
-  2026-09-24 ~22:3xZ, rc=0): cited commits 10 attempted / 10 VERIFIED; cited paths 12 attempted / 11 stable / 1 flagged --
-  `portal/src/components/catalyst/combobox.tsx` GONE (finding F1 below); uncited neighbourhood 1,494 siblings, cap declared.
-- **`comp-schedule` -- the gate register this round creates:** (1) FWD-1's signed-in trace -- Andrew's walk on DEV;
-  (2) P's `spread` -- consumed when served; (3) M's emission of the classification members per firm under the CTO's GO --
-  the map reads Unclassified until then, and the drain reads the served snapshot; (4) the CVO's ratified-text signature at
-  v0.6 -- LIMB 6 refuses the issuance until it lands.
-- **`comp-iam` -- DECLARED-NOT-APPLICABLE:** no cell writes an AWS surface; the deployed functions are consumed unchanged.
-- **The drain's hygiene (every chain, before its DEV landing):** `tsc -b` 0; `eslint` 0 errors on the touched files;
-  `bun test src/pages/InvestorReporting` with its failing set diffed against DEV's (0 new); `bun run build`; one real run
-  per cell on `localhost:5174` served from the main checkout, the screenshot read; the shared-lib cells add the named
-  readers' before/after screenshots.
-
----
+comp-iam: not applicable (no AWS surface). comp-schedule: none of its four entries is owed. comp-adversary: each cell names
+files measured at DEV 8242412d; `IR/tabs/holdings/HoldingsTab.tsx` is M-written and NOT in any write set this round
+(`IV-e-21` mounts on the Performance side only).
 
 ## 6. RULE 24 FOUR-POSTULATE RECORD
 
-**(i) MECE.** Section 1: fifteen open items minus two plus one = twelve cells; falsified from the PRD's C15-C24 (all
-inside) and STATUS.md's parked table (all outside by owner). Touch is not exclusive (`DrillTree.tsx`: IV-e-11, IV-e-13;
-`HoldingsTab.tsx`: IV-e-10, IV-e-18; `ReportingTab.tsx`: IV-e-16, IV-e-18); section 4 serialises every shared file.
-
-**(ii) SAME GRAIN.** Each cell is one advisor-facing capability, graded by its built behaviour on a fixture, a control
-(a planted value, a before/after reader read, a census with its positive control), and the ruled-touch bound.
-
-**(iii) INTENT COHERENCE.** One axis: finishing the advisor-facing render to PRD v0.6. Not the producers, not `spread`,
-not the print package, not PROD, not the design team's pass.
-
-**(iv) STATE COHERENCE -- what each remedy does NOT move.** IV-e-9 moves how a client is found, not the selection request
-or the entitlement. IV-e-10 moves where accounts are chosen, not who may see them. IV-e-11/12 move colours, not a figure,
-a class or a model's identity. IV-e-13 moves the drill's depth and hover, not a weight. IV-e-14 moves the Analysis
-composition, not the request the server receives. IV-e-15 adds a sample that no real figure feeds. IV-e-16 moves the
-Export's place and the tab order, not what an export produces. IV-e-17 moves generated types, not a wire byte. IV-e-18/19/20
-move where facts print and how the page looks; every fact is retained one click down.
-
----
+(i) MECE over the declared domain, the 12 C-S15 grades, by subtraction (section 1): every FAIL placed or parked with a
+reason. (ii) Same grain: one cell per write set. (iii) One intent per cell, except `IV-e-25`, the spine's one batched repair
+cell. (iv) State coherence: `IV-e-25` does not move the Positioning or Model Portfolios colours (their readers are named in
+round 3's IV-e-11 and IV-e-12 criteria and stay unchanged).
 
 ## 7. FINDINGS FOR THE CTO (at the cut)
 
-- **F1** -- CLOSED by PRD v0.7 @8942931687 (CTO 100919): the PRD now names `portal/src/ui/components/catalyst/combobox.tsx`.
-- **F2** -- the Positioning hover card `HoldingsTreemapTooltip` is defined inside `pages/Positioning/tabs/HoldingsTab.tsx`,
-  a reference page this project never edits: IV-e-13 copies the pattern onto `DataTooltip`; it does not import it.
-- **F3** -- the FAST interval touched P's contract surface twice on its owners' asks (`contracts/envelope.ts` on Y's spec
-  edit 2 @088386fe; `contracts/wire/consumed.ts` regenerated on P 100861 @9902bf25) and once on the CTO's step-2 routing
-  (`contracts/adapt.ts` + `contracts/index.ts` @13b5356f, CTO 100905). PRD SURFACE MANIFEST says NEVER for
-  `contracts/**`; IV-e-17 carries one more such touch (generated output). CLOSED by CTO 100919 / PRD v0.7:
-  `portal/src/pages/InvestorReporting/contracts/**` (wire included) is DSGN_IRPTV1's write surface, a change landing only on
-  the owning seat's written spec; the producers keep `docs/contracts/investor-reporting/v1/**`, P keeps `portal/src/api/**`.
-- **F4** -- this seat's interim classifier lookup (86561aef) guessed a class from the Positioning ETF table; 13b5356f
-  retired it for the served member, so a fixture or firm without the member reads Unclassified until M emits.
+- **IVE16 (FWD-9, Export on Holdings): PARKED on the producer.** `render/manifest.ts` `ReportKind` is `'performance' |
+  'analysis'`; `index.tsx` `EXPORT_KIND_BY_TAB.holdings = null`. The fix is a Holdings report kind the export producer
+  (2.0.0_SA_COO~P) serves; the FE hookup is one map line at the merge once it exists. Routing asked of 1.0.0_SA_CTO.
