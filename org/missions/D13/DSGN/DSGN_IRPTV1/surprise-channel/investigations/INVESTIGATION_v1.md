@@ -543,6 +543,30 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "S7 disarms when the CTO rules the remaining 4 and each is landed or retired."
+  },
+  {
+    "id": "DSGN_IRPTV1-W10-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~10",
+    "surfaced_at": "2026-09-24T21:00:00Z",
+    "one_line": "IV-e-16's own IVE16-AC1 ('zero per-tab Export buttons render on any tab') cannot be fully met within this cell's <paths> grant: tabs/analysis/AnalysisTab.tsx still carries a permanently-disabled data-slot=\"export-button\" control, and AnalysisTab.tsx is named nowhere in IV-e-16's decomp `writes` column or this order's <paths> -- this worker's own IVE16-AC1 test checks the criterion as written, finds this control, and reports VERDICT: PAGE-EXPORT-FAIL on the analysis arm rather than narrowing the check to pass.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D (a future cell holding AnalysisTab.tsx's own grant retires the control, or the CTO amends IVE16-AC1's scope to the tabs this cell actually owns)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/analysis/AnalysisTab.tsx:238-248 (this worktree's tip): an unconditional `<button type=\"button\" disabled aria-disabled=\"true\" data-slot=\"export-button\">Export</button>`, rendered on every mount regardless of `selectedRequest` -- confirmed by reading the file (not in this order's <paths>, so not edited)",
+        "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md v3 @2af10e4cd0, IV-e-16's `writes` column: `IR/index.tsx`, `IR/tabs/TabShell.tsx`, `IR/tabs/reporting/ReportingTab.tsx`, `IR/__tests__/fe-s-5/controls.test.ts`, `IR/__tests__/dsgn-irptv1/iv-e-16.*` -- AnalysisTab.tsx is absent from this list, and the task order's own <paths> block names the same set plus the surprise-channel file, also omitting AnalysisTab.tsx",
+        "this worker's __tests__/dsgn-irptv1/iv-e-16.page-export.test.ts, run at this tip: ARM1 (header: exactly one export-button-control) and ARM2 (it targets the active tab + selectedScopeRef.revision) hold clean on all three tabs; ARM3 (zero per-tab export markers) finds `data-action=\"export\"` retired (0 occurrences, this cell's own ReportingTab/PerformanceControls fix) but `data-slot=\"export-button\"` still renders once on the analysis tab -- full run: 'VERDICT: PAGE-EXPORT-FAIL -- arm 3 (analysis): per-tab export marker data-slot=\"export-button\" still renders (count 1)'",
+        "DSGN_IRPTV1-S9 (this same channel, filed 2026-09-24T19:27:38Z by 2.0.0_SA_COO~D) already named this exact test/control pair as one of the 4 legacy failures awaiting 'PRD backlog 9, FWD-9: the two disabled per-tab buttons gone' -- 'two', matching Reporting (this cell's own grant) and Analysis (not this cell's grant), corroborating that Analysis's retirement was always a distinct, ungranted act from this cell's own"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IVE16-AC1 (this order's WORKER FACE): 'exactly one Export control renders in the header; it targets the active tab and the revision on screen; zero per-tab Export buttons render on any tab.' The decomp cell IV-e-16's own prose: 'the per-tab disabled buttons retired (fe-s-5 controls re-scoped, CTO 100865)' -- naming only the fe-s-5 (Reporting) test, never AnalysisTab.tsx or an analysis-side test file.",
+    "world_is": "This cell's <paths> and the decomp's `writes` column grant exactly index.tsx, TabShell.tsx, ReportingTab.tsx and the two named test files -- never tabs/analysis/AnalysisTab.tsx. A worker's write surface is exactly its order's <paths> (CLAUDE.md rule 27, L7; `.tools/owned-paths-validate.py`), so this worker built the page-level Export control (index.tsx), retired Reporting's per-tab control (already gone at this worktree's tip; re-scoped fe-s-5/controls.test.ts in the same commit), reordered and re-laid-out the tabs (TabShell.tsx, ReportingTab.tsx), and left AnalysisTab.tsx's disabled control untouched because touching it would be an out-of-grant write. IVE16-AC1's literal 'any tab' clause is therefore unmeetable inside this order's own BOUNDS; per the order's own refusal clause ('If a criterion cannot be met as written, stop ... do not weaken the test to pass'), this worker's own test checks all three tabs honestly and reports the resulting FAIL rather than dropping the analysis arm.",
+    "notes": "Not silently worked around: IVE16-AC2 (tab order) and IVE16-AC3 (screen layout) both PASS clean at this tip, and IVE16-AC1's header-count and target arms (1 and 2 of 3) also pass on all three tabs -- only the per-tab-absence arm fails, and only on the one tab (analysis) this cell was never granted to touch. Filed so the COO's drain or the CTO's ruling can either open a small follow-up cell scoped to AnalysisTab.tsx, or amend IVE16-AC1 to name the tabs this cell actually owns (matching the decomp's own `writes` column), rather than reading this order's proof instance as a silent gap."
   }
 ]
 ```
