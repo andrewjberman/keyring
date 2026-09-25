@@ -85,7 +85,7 @@ Instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPOR
 **ISSUER NOTES:** S5 + S7 backend, stacked on wk-NFRA_MCPORTAL-2 (MP-t-1, unmerged). Chain B merges once, at its end, after
 NFRA_OPALAI's OA-t-6 closes.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
