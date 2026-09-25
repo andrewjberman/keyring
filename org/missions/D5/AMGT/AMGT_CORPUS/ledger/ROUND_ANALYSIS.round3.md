@@ -57,6 +57,9 @@ he made the universe the LIVE research directory.**
 2. **Round 4 cuts ONE cell that rebuilds the denominators block and re-pins `identity_universe` to the
    live research directory**, so the object's disclosure matches its contents. It is a DISCLOSURE fix,
    not a data fix -- the contents are already correct, which is what makes it cheap.
+   [**CORRECTED 2026-09-25 ~03:4xZ -- SEE AMENDMENT 1. "re-pins `identity_universe`" IS WRONG AS
+   WRITTEN and `2.0.0_SA_COO~X` caught it: that field is the RESOLUTION INPUT, not the denominator of
+   record. Taking my instruction literally would have broken identity resolution to fix a disclosure.**]
 3. **A VALUE MUST CARRY ITS CLAIM applies to a denominator as much as to a figure.** An artifact whose
    own count field disagrees with its own rows is the failure that law exists to prevent, and it is worse
    here than a missing field would be, because a WRONG denominator is confidently readable.
@@ -141,3 +144,46 @@ dossier sequence is blocked at step 1, and `FWD-12` and `FWD-19` are both NOT RE
 ---
 
 **ROUND 3 IS CLOSED.** `2.0.0_SA_COO~X` recuts round 4 from section 7 in ONE issuance.
+
+---
+
+# AMENDMENT 1, 2026-09-25 ~03:4xZ -- SECTION 2's INSTRUCTION WAS WRONG AND THE ISSUER'S READING IS RIGHT
+
+`2.0.0_SA_COO~X`'s decomposition v4.0 s.8 flags its own reading for my correction, which is the right way
+to raise it. **The reading is correct and my instruction was not.**
+
+**What I wrote:** *"re-pins `identity_universe` to the live research directory."*
+
+**What that would have done:** `identity_universe` is the builder's **RESOLUTION INPUT** -- its 250 names
+are what folder forms resolve AGAINST. Re-pinning it to the 94-folder research directory would have
+narrowed the resolver's own input from 250 to 94, **breaking identity resolution in order to fix a
+disclosure.** The two things my sentence ran together are: the SET A RESOLVER SEARCHES, and the
+POPULATION A COMPLETION TEST COUNTS. They are different fields with different consumers and only the
+second was ever my subject.
+
+**The issuer's reading, adopted verbatim as this analysis's own:** `identity_universe` stays the identity
+input; the DENOMINATOR OF RECORD becomes the live directory, disclosed in `research_universe` and
+`denominators.research_folders_live`. **And it correctly declines the data change** -- rebuilding
+coverage records from the live listing is NOT cut, because section 2 already said the contents are
+correct and this is a disclosure fix.
+
+**The keepable form, and it is the same failure I have now made twice tonight in different clothes:** I
+named a FIELD when I meant a PROPERTY. Section 2's finding was about the object's *disclosed
+denominator*; naming `identity_universe` as the thing to re-pin was me reaching for the nearest field
+that mentioned "universe" -- the same reflex that had me trace Peers P/E to the first path mentioning
+P/E. **A ruling that names a field commits its reader to that field; a ruling that names the property
+lets the implementer pick the field that carries it, and the implementer knows the schema better than
+the ruler does.**
+
+**So the standing form for my own rulings from here:** where a ruling can name a PROPERTY (*"the
+disclosed denominator must match the contents"*) rather than a FIELD (*"re-pin `identity_universe`"*),
+it names the property and says which consumer must be able to read it. **Cost:** nothing -- it is
+shorter. **Non-application:** where the field IS the subject (a schema's enum, a named key in a
+contract), name it exactly, because there the field and the property are the same thing.
+
+**One consequence worth recording beside it:** decomp v4.0 s.5 has f-3's drain verifying *"dossiers
+present for the 94 folders' resolved keys"*, while `AMGT_RESAPP`'s `rp-1` measures `FWD-30` across **89**.
+**Both are internally correct** -- CORPUS works the live corpus, RESAPP the coverage-list snapshot -- but
+the two projects are now demonstrably working to DIFFERENT POPULATIONS. That is not a defect to fix here;
+it is the measured consequence of the universe card at Andrew, and it makes that card concrete rather
+than theoretical.
