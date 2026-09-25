@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-24T23:5xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T00:0xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -40,7 +40,8 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
 
 ## Next-list (in order)
 
-1. S1: read Andrew's run (PERFORMANCE_USE#99052771.. row, PERFORMANCE_ACCEPTED# row, the adapter log); close or fix.
+1. S1: the COT one-use plan 99052771.. EXPIRED UNSPENT at 2026-09-25T00:00Z (full scan 00:00:18Z: no USE or ACCEPTED
+   row for it). A COT run now needs Andrew's new per-use word and a re-arm (var-file pattern `rearm.tfvars.json`).
 2. 49F Performance SERVED on our engine (21:28Z): f49_engine 94cf4cd61e + retained 4573b3e3e3 + grants 55b39f2d11;
    contract provider OPAL_ENGINE (on CLOUD 69cac32dce, ~D told). YTD/QTD/1Y, one account; real read-only run: median
    account YTD +6.72%, 182 days linked. BD cross-check DONE on a 300-account sample (ed9ea1ba55,
@@ -66,8 +67,11 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    not-yet-rendered export has no honest answer (asked of 1.0.0_SA_CTO). Measured for B1: evidence keys accept
    `RPT-<32 hex>` as the generation segment at all three firms; the export zip stages 15 files vs performance's 61
    (no reports/, narrative/ or registry modules).
-6. Y compositions: hops 2+3 SERVED (ledger `irpt-upload-hop2-20260924`, S1 = Y's live 12.03 acceptance); hop 4 custody
-   (admitted_firms under the ledgered plan naming all three firms' objects, CTO 100712) remains.
+6. Y compositions: hops 2+3 SERVED (ledger `irpt-upload-hop2-20260924`, S1 = Y's live 12.03 acceptance). Hop 4 custody:
+   card `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/CUSTODY_HOP4_CARD_20260925.md` -- installer, reader and
+   interpreter ports never constructed; no served writer of the `cst_` binding; the portal sends the holdings
+   `sourceSetRevision` where the reader accepts only `cst_<64 hex>`, so every custody submit refuses. Link-3 decision
+   (who mints the binding) asked of 1.0.0_SA_CTO.
 7. C-S219 (round 18): a complete offline served-route chain for V1 verification (may be superseded by the live trace).
 8. A1 `_authz` log-line fix (4fffe13f01): SERVED on irpt-ycharts-generate; rides the next rebuild of the others.
 
@@ -75,7 +79,7 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
 
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
-| The COT browser run | Andrew | plan 99052771.. before 2026-09-25T00:00Z | AWAITED |
+| The COT browser run | Andrew | a NEW per-use word (plan 99052771.. expired unspent) | NOT ASKED |
 | A per-use word for 49F and for INF | Andrew | card 2 shape, one each | NOT ASKED (build first) |
 | Portal renders dates.actual_* | 2.0.0_SA_COO~D | PerformanceReport v1 dates block | UNREAD |
 
@@ -90,5 +94,5 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
 
 ## Limits
 
-COT has a live path on the one-use plan (expires 2026-09-25T00:00Z); 49F is served on Opal's engine; INF is not composed live. No vendor call is made by this seat; the one use fires only
+COT has no live use (plan expired unspent); 49F is served on Opal's engine; INF is not composed live. No vendor call is made by this seat; the one use fires only
 on Andrew's signed-in request. Nothing here is pushed.
