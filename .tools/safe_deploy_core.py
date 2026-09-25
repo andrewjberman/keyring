@@ -883,8 +883,24 @@ def build_bundle_payload(b: dict) -> tuple[Optional[bytes], dict, str]:
     import io
     import tarfile
 
+    # >> OPT-IN "stamp": "manifest" (2.0.0_SA_COO~M, CTO R4 row 3). S3 user metadata is capped at 2,048 bytes,
+    # and one sha key per member plus source-repo-paths overflows it past about 15 members (the holdings runner's
+    # runtime closure measured 30+ files). A manifest bundle carries a generated SHA256SUMS member INSIDE the tar
+    # (one "<sha256>  <member name>" line per member, sorted) and stamps only its digest and the member count.
+    # Bundles that do not declare it are byte-identical to before. <<
+    manifest_mode = b.get("stamp") == "manifest"
     shas: dict[str, str] = {}
+    sums: list[str] = []
     raw = io.BytesIO()
+
+    def add(tar, member_name, data):
+        info = tarfile.TarInfo(name=member_name)
+        info.size = len(data)
+        info.mtime = 0
+        info.uid = info.gid = 0
+        info.uname = info.gname = ""
+        tar.addfile(info, io.BytesIO(data))
+
     with tarfile.open(fileobj=raw, mode="w", format=tarfile.GNU_FORMAT) as tar:
         for member_name in sorted(b["members"]):
             spec = b["members"][member_name]
@@ -892,13 +908,18 @@ def build_bundle_payload(b: dict) -> tuple[Optional[bytes], dict, str]:
             if not src.exists():
                 return None, {}, f"member authority missing: {spec['repo_path']}"
             data = src.read_bytes()
-            shas[spec["sha_metadata_key"]] = hashlib.sha256(data).hexdigest()
-            info = tarfile.TarInfo(name=member_name)
-            info.size = len(data)
-            info.mtime = 0
-            info.uid = info.gid = 0
-            info.uname = info.gname = ""
-            tar.addfile(info, io.BytesIO(data))
+            digest = hashlib.sha256(data).hexdigest()
+            if manifest_mode:
+                sums.append(f"{digest}  {member_name}\n")
+            else:
+                shas[spec["sha_metadata_key"]] = digest
+            add(tar, member_name, data)
+        if manifest_mode:
+            if "SHA256SUMS" in b["members"]:
+                return None, {}, "a manifest bundle cannot declare a member named SHA256SUMS"
+            listing = "".join(sums).encode("utf-8")
+            add(tar, "SHA256SUMS", listing)
+            shas = {"members-sha256": hashlib.sha256(listing).hexdigest(), "member-count": str(len(sums))}
     gz = io.BytesIO()
     with gzip.GzipFile(fileobj=gz, mode="wb", mtime=0) as fh:
         fh.write(raw.getvalue())
@@ -922,9 +943,10 @@ def mint_bundle(label: str, bname: str, b: dict) -> tuple[str, str, dict]:
         return "UPLOAD_FAIL", "aws CLI not found in PATH", shas
 
     metadata = dict(shas)
-    metadata["source-repo-paths"] = ";".join(
-        sorted(m["repo_path"] for m in b["members"].values())
-    )
+    if b.get("stamp") != "manifest":  # a manifest bundle names its members in SHA256SUMS, inside the tar
+        metadata["source-repo-paths"] = ";".join(
+            sorted(m["repo_path"] for m in b["members"].values())
+        )
     local_md5 = hashlib.md5(payload).hexdigest()
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="safe_deploy_bundle_"))
     local = tmp / pathlib.PurePosixPath(b["s3_key"]).name
