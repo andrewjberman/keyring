@@ -9408,3 +9408,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It builds the 841 supported accounts and carries the 140 others explicitly refused with their reasons in actual_custody_controls.account_screen."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S138",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T20:35:00Z",
+  "one_line": "COT C_06's MIX_ASSET_CLASSES has no `cash`: bd-securities carries `cash` items, so any client holding a security the classifier calls `cash` has that money dropped from the published mix, and the mix fractions sum below 1. This predates the `other` admission and is not moved by it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (CTO 101029: file it, owned by ~M)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/C_06.client_mix_timeseries.py:169 lists equity, fixed_income, alternatives and (since 7889280827) other; no cash. The mix is built as `for ac in MIX_ASSET_CLASSES: mix[ac] = mix_agg.get(ac)/total_mv` (:473-474) after a pct_sum check over ALL classes (:466-470).",
+      "The live bd-securities scan includes items classed `cash` (8 of the 41 existing keys from the one classification run read `cash`, BD_SECURITIES_WRITE_SET_20260925.json).",
+      "D_04:525 iterates ('equity','fixed_income','alternatives','cash'); C_06 alone omits cash."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The C_06 client mix is a complete partition of a client's market value by asset class.",
+  "world_is": "It omits cash. Measure the affected clients and dollars, then add cash under its own never-widen half, since the served mix changes."
+}
+```
