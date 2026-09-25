@@ -430,3 +430,133 @@ Three of the four are ONE card at Andrew; this one is a SECOND card, and it is a
 contract's own words, and nothing in the loop waits on it.
 
 **8 of 20 graded: 1 REALIZED, 6 NOT_REALIZED, 1 NOT GRADEABLE.** 12 remain.
+
+---
+
+## FOUR OUTCOMES ON ONE MEASUREMENT -- `FWD-6`, `FWD-7`, `FWD-12`, `FWD-14`
+
+**The measurement that grades all four is a DIFF WITH BOTH DENOMINATORS PRINTED**, and the adapter predicted
+its own result. `scoped_amgt.handler`'s docstring (`:3945-3960`): *"THE ROUTE TABLE IS THE DENOMINATOR.
+SIXTEEN routes ... eleven of these sixteen have a client call, five do not yet. A reader who diffs this table
+against the client's call set will find five routes with no caller -- that is the true state, not drift."*
+
+**ADAPTER SIDE, as DATA not as prose:** `scoped_amgt_route_table()` returns **16** routes.
+**CLIENT SIDE:** `portal/src/api/endpoints/amgt-lead-panel.ts` builds **10** call functions on **11** routes
+(`setStarred` is star-or-unstar). **BY SUBTRACTION from the printed 16 -- Rule 24's method, never a forward
+list -- the FIVE with no client call are:**
+
+| route, served but uncalled | the outcome it was built for |
+|---|---|
+| `GET /api/scoped/amgt/freshness` | `FWD-7` |
+| `GET /api/scoped/amgt/lists` | `FWD-14` |
+| `GET /api/scoped/amgt/security/{key}/ledger` | `FWD-12` |
+| `GET /api/scoped/amgt/security/{key}/versions` | `FWD-6` |
+| `GET /api/scoped/amgt/security/{key}/compare` | `FWD-6` |
+
+WARN: **MY FIRST INSTRUMENT FOR THIS WAS BROKEN AND ITS OWN POSITIVE CONTROL CAUGHT IT.** I searched
+`apiRequest[^)]*(peers|coverage)` and got ONE hit, on a different route -- because
+`encodeURIComponent(securityKey)` puts a `)` inside the path and `[^)]*` stops there. **A route I knew was
+called did not appear, so the matching zero on the five was worthless.** Re-run on
+`BASE\}/security/[^']*/(...)`: the positive arm returns all five called leaves at `:125 :132 :138 :145 :155`,
+and two independent negative patterns return **0 across 1042 scanned files**. That is the zero I am grading on.
+
+**AND THE SERVED HALF IS REAL AND GOOD -- five live invokes, all `status 200`:** `freshness` 102,013 body
+chars, `lists` 1,661, `ledger` 1,461, `versions` 1,807, `compare` 11,744. Every one returns a `denominators`
+block. **So `C-ROUND12-SURFACED-OUTCOMES` is satisfied on its first limb and fails on its second** -- the
+contract's words are *"each get a SERVED ROUTE **and a PAGE SURFACE**"*, and *"an outcome whose only
+implementation is a hand-run module is NOT REALIZED, whatever its rows say."* These are better than hand-run
+modules and they are still not on a page.
+
+### `FWD-6` -- **NOT_REALIZED, and it is the strongest near-miss in the product**
+
+Fence `:468-473`. **BOTH ACCEPT CLAUSES MEASURE TRUE on the served plane:**
+
+- *"Refreshing adds a version; it does not overwrite the old one"* -- `versions` returns **10 versions**,
+  `objects_listed 10`, stamps from `20260910T224432Z` to `20260925T043907Z`. **Nothing was overwritten.**
+- *"can say what moved, naming the earlier version that shows it"* -- `compare` returns `from_stamp`,
+  `to_stamp`, and `added 212, removed 0, changed 7, unchanged 172` over `figures_from 179 -> figures_to 391`.
+  **It names the versions and itemises the movement.** `reason` is `null` because it had no reason to refuse.
+
+**So the failure is not substance and not rendering. It is ELEVEN LINES OF CLIENT CODE THAT DO NOT EXIST.**
+Of everything graded in this pass, `FWD-6` is the one where the product's own capability is complete and the
+outcome is unreachable anyway. **That is a different failure class from the other nine and should be cut
+differently** -- it is a wiring cell, not a build cell.
+
+**DONE WHEN unmet:** *"EXERCISED -- someone has actually compared two versions."* Nobody has, because there
+is nowhere to do it from.
+
+**AND ONE CROSS-INSTRUMENT AGREEMENT WORTH BANKING:** `compare`'s `figures_to` is **391**, which is exactly
+the figure-line count I measured independently off the served PDF. Two unrelated instruments on the same
+object agreeing is worth more than either. It also shows the model block roughly **DOUBLED today** (179 ->
+391, `added 212`) -- `AMGT_CORPUS` round 4's re-pull landing on the served plane, corroborating row `Z-S277`
+from a third direction.
+
+### `FWD-7` -- **NOT_REALIZED, and its denominator is a FOURTH universe: 250**
+
+Fence `:475-480`. `freshness` serves **250 rows** with `last_refreshed` and a `per_input` map per name
+(`bloomberg`, `seekingalpha`, `serp`). The content is right and the surface is absent.
+
+**THE DENOMINATOR IS THE FINDING.** `universe_denominators` on the route's own body:
+`coverage 89, holdings_distinct 167, union 250, both 6, resolved 191, unresolved 59`. The fence says *"every
+company the team covers"*; the route serves **the UNION, 250** -- wider than the fence, not narrower, so the
+content clause passes. **But this is now the FOURTH denominator loose in one project: 89 (frozen snapshot),
+94 (live research group), 7 (`FWD-17`'s tenure pool), 250 (this route's union).** The card at Andrew is no
+longer a tidying question.
+
+**AND THE ROUTE MEASURES THE GOAL'S BACKFILL CLAUSE DIRECTLY, which nothing else has:**
+**`never_refreshed 196` of 250, `with_something_landed 54`.** Against `coverage 89`, at most **54 of 89**
+covered names carry anything at all. The goal asks for *"complete backfill for all of these securities"*;
+**this is the first number in the record that bounds how far that is from done, and it came out of an
+outcome grade rather than a backfill measurement.**
+
+One blemish, recorded: every row carries the same `rot` string
+(*"publishers: not stale (0/2 stale ...) | social_accounts: not stale (0/267 stale ...)"*). That is
+`FWD-14`'s list-rot field replicated onto all 250 rows; it is not per-company staleness, and a reader could
+take it for one.
+
+### `FWD-12` -- **NOT_REALIZED, and the fence's own disqualifier names what the client DOES call**
+
+Fence `:519-527`. The `ledger` route returns `classes`, `latest_by_class`, `entries_total`, `outcomes` --
+per-input provenance, which is the fence's first half. **No client call.**
+
+**The second half is where it is sharpest.** The fence says *"any one can be re-run on its own. **A single
+button that refreshes everything under one timestamp does not count.**"* The ONE refresh route the client
+does call is `POST ${BASE}/refresh` (`amgt-lead-panel.ts:115`), which is `FWD-2`'s whole-pack enqueue --
+**precisely the single button the fence disqualifies.** So the page offers the disqualified control and
+withholds the qualifying one.
+
+### `FWD-14` -- **NOT_REALIZED, blocked by TWO reservations, and its refusals are exemplary**
+
+Fence `:541-549`. `lists` serves both declared lists (`lists_declared 2, lists_served 2`) with
+`entries_total`, `entries_stale`, `reviewed_at`, `review_interval_days`.
+
+**The fence's first clause is *"each have a named person responsible"*, and the route answers, verbatim:**
+`"owner": "UNASSIGNED -- Andrew names the owner (C-NO-CONTACT: not Adam's team directly)"`,
+`"owner_status": "UNASSIGNED"` -- **for both lists.** The field exists, it is honest, and the value is
+RESERVED to Andrew by the contract's own words. **The second clause, *"when one goes out of date somebody is
+told"*, is reserved a second time** -- the standing moratorium forbids building a notifier without Andrew's
+explicit ask. **Two reservations on one outcome; no cell can close it.**
+
+**AND THE ROUTE REFUSES ONE LIMB IN THE BEST WAY I HAVE SEEN IN THIS PRODUCT:**
+`"unresolvable_count": "NOT_EXERCISED"` with `"dns_limb": "not exercised by the served route: resolving every
+publisher domain is egress off this estate's infrastructure taken on behalf of a request; run the lists
+module by hand for that count"`. **A served route declining to take egress on a caller's behalf, naming the
+egress, and pointing at the hand-run path instead.** That is the vendor-egress law applied by the code
+without a seat in the loop, and it is the right call.
+
+**12 of 20 graded: 1 REALIZED, 10 NOT_REALIZED, 1 NOT GRADEABLE.** 8 remain
+(`FWD-3`, `FWD-4`, `FWD-11`, `FWD-13`, `FWD-15`, `FWD-16`, `FWD-18`, `FWD-20`).
+
+## THE FAILURES NOW SPLIT INTO THREE CLASSES, and they need different cells
+
+**Ten NOT_REALIZED is not ten problems.** Sorted by what would close them:
+
+| class | outcomes | what closes it |
+|---|---|---|
+| **WIRING** -- the capability is built and served, nothing calls it | `FWD-6`, `FWD-7`, `FWD-12` | client calls plus a surface. Cheapest by far, and `FWD-6` needs no backend work at all |
+| **SUBSTANCE** -- the frame renders, the content behind it is thin or absent | `FWD-1`, `FWD-5`, `FWD-8`, `FWD-17`, `FWD-19`, `FWD-30` | real work: a 2-page branded export, a business description, a segment breakdown, a business-similarity peer set, a 94-name tenure pool |
+| **RESERVED** -- a word only Andrew can give | `FWD-2` (queue-drain cadence), `FWD-14` (list owner + notification) | nothing the fabric can cut |
+
+**The three classes were invisible while the pass reported a running NOT_REALIZED count.** Naming them is
+what lets round 43 cut the cheap class first: **`FWD-6` alone converts a complete, measured, unreachable
+capability into a reachable one.**
