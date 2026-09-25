@@ -80,11 +80,13 @@ B. IN P'S LANE (`export/`, `_render_identity/`, `_authz`), buildable now, dark u
       retained window, while the retained reopen matches on the exact window. A Performance render prints nothing.
       THE URL (every value from the render grant / frozen bundle, never the browser):
         /investor-reporting/print?bundle=<bundle_id>&tenant=<firm>&revision=<export revision>&kind=performance
-          &selection=<accountSetId sel_...>&start=<retained dates.actual_start>&end=<retained dates.actual_end>
+          &selection=<accountSetId sel_...>&start=<retained dates.requested_start>&end=<retained dates.requested_end>
           [&narrative=1]
       The portal half: PrintEntry reads `selection`, `start`, `end` and resolveBundle passes them to
       getPerformanceReport as accountSetId/start/end; a missing one refuses by name (no default window).
       The backend half (P): the grant pins accountSetId = that selection; B2 builds this URL from the grant.
+      CORRECTED 17:5xZ: the window is the REQUESTED one -- the retained reopen matches the accepted request's
+      start/end (retained.py reopen), so the actual window would miss the report (backend print_query 523890feda).
 C. PROOF: one real run per firm. COT and 49F each export a retained report; INF follows its own per-use word.
 
 ## What this card does not move

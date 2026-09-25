@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: /canonical-drive loop on Andrew-direct 17:3xZ (cron 57c0067c, every 10m; replaced goal loop f599225b), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T17:4xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T17:5xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -85,9 +85,14 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    render prints nothing. Interface published: card B2-URL @bc3f70d22c (print URL carries selection/start/end from the
    grant); portal half asked of 2.0.0_SA_COO~D 20260925T173801Z. Backend half is mine: grant pins accountSetId = that
    selection, reportId = the retained report id, jobId = the export's job; B2 builds the URL from the grant.
-   NEXT (P): B1 served submit -- resolve the body's (report_id, revision) through the retained repository under the
-   CURRENT principal (never the browser's sha256), freeze + persist the bundle, write the grant, answer QUEUED with the
-   export id in status.operation.revision; dispatch stays off until B2.
+   B1 CORE LANDED 523890feda (backend): export/retained_export.py -- authorizer (caller IS the stored owner and its
+   current scope covers the report), resolve (one report via the real ReportRepository; server-built row, never the
+   body's sha), render_grant (accountSetId = owner's selection, reportId, jobId = export revision), print_query
+   (REQUESTED window; card corrected). 8 tests over the real repository; export suite 77 passed. Real run blocked:
+   irpt-requests has 28 rows and NO REPORT# row at any firm -- no signed-in Performance run has retained a report.
+   NEXT (P): B1 wiring -- export/entry.py submit_export composes the repository (irpt-requests + reporting
+   destination via opal_naming, as performance/installed.py does), resolves, freezes + persists the bundle, writes
+   the grant, answers QUEUED (export id in status.operation.revision); dispatch off until B2. Then the deploy.
    DEPLOY rides B1: package _render_identity/grant.py into the adapter/status/narrative zips, set IRPT_EVIDENCE_BUCKET,
    grant s3:GetObject on firms/*/generations/*/render_grant.json (+ ListBucket on that prefix: missing -> 404 ->
    refusal, not 403 -> raise). The adapter redeploy waits until the INF one-use is spent or expires (00:00Z).
