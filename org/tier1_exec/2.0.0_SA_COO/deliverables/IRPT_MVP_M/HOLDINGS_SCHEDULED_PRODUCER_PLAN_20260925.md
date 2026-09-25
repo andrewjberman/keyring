@@ -55,3 +55,41 @@ publish, or a REFUSED build that leaves the prior revision served.
 - Whether the infra lane takes row 4 as one change with row 2.
 
 Both are asks, made one at a time.
+
+## ADDENDUM 2026-09-25 ~17:5xZ -- rows 2 and 4, concrete (measured against the directory chain)
+
+Progress since the plan:
+- Row 5 is DONE: retained inputs landed (1c4ca93511) and read latest-at-or-before D (61f4b25171).
+- Row 3's tooling is DONE: manifest stamps (7d3e4255a8) and STANDALONE_BUNDLES irpt_holdings_{49f,inf,cot} with 40
+  members each, per-firm code homes from address() (ec48c5d144). The mint from CLOUD is still owed.
+- S134 is remedied: a full-firm COT build screens each account (ce64116275).
+
+**Row 2, the dispatch.** Mirror the directory refresh (`infra/aws/lambda/investor-reporting/directory/refresh.py`):
+- a scheduled function sends ONE SSM command per firm to the mdpf-daily-runner;
+- the host shell is thin: fetch that firm's own package, `sha256sum -c SHA256SUMS`, an import check, then
+  `python3 holdings_snapshot.py --firms <firm> --upload`, with no `--as-of`, so the runner's own trading-day walk picks
+  the date;
+- it runs inside the host window (12:52Z-16:41Z), after the directory's 09:30 ET fire;
+- it needs NONE of the directory's previous-state accounting, because the holdings publication is its own
+  compare-and-set index. A refused build leaves the prior revision served. The function records each fire's command
+  ids, and the next fire reads their outcome, so a failure is visible and not silent.
+
+**Row 4, the principals (R-44).** The directory chain splits its calls BY BUCKET:
+- shared buckets on the host session;
+- a firm's own bucket through that firm's assumed source principal (`IRPT_DIRECTORY_SOURCE_ROLE_MAP` ->
+  `IRPT_SOURCE_READ_ROLE_ARN`; `directory_runner.Firm49F._gold`), because the firm bucket's policy admits only a
+  principal carrying the firm's scope.
+
+The holdings runner:
+- READS shared or legacy buckets (opal-data-assets Schwab/SmartX/COT silver/retained captures; opal-data-inf Orion and
+  Eclipse; DynamoDB bd-securities);
+- WRITES each publication into the firm's OWN bucket (opal-data-{49financial,inflection,cottonwood}, index, manifest,
+  parts, gold);
+- has no principal split today, and every served revision so far was written by an operator's user credentials.
+
+So row 4 is:
+- (a) the producer: the publisher's client assumes a firm-scoped principal named by the dispatch (~M, producer code),
+  while reads stay on the host session;
+- (b) that principal's grants: write the firm's `irpt/<firm>/{gold,platinum}/holdings*` prefixes and read its code
+  home, plus the host's reads of the source prefixes above (infra lane, a ledger and safe-apply, under the cross-firm
+  guard).
