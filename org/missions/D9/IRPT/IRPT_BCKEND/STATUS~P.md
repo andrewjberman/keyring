@@ -66,7 +66,9 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    submit-export response requires a complete ExportReceipt (artifact sha256, page_count >= 1), so a submitted,
    not-yet-rendered export has no honest answer (asked of 1.0.0_SA_CTO). Measured for B1: evidence keys accept
    `RPT-<32 hex>` as the generation segment at all three firms; the export zip stages 15 files vs performance's 61
-   (no reports/, narrative/ or registry modules).
+   (no reports/, narrative/ or registry modules). B2 first half LANDED 7b0b59b77f (backend branch, LOCAL, not
+   deployed -- rides the B1 deploy): dispatch now sends `PortalOrigin`, which the live SSM document requires with no
+   default (read-only check: pre-fix set missing it; post-fix none missing, none undeclared); 69 export tests pass.
 6. Y compositions: hops 2+3 SERVED (ledger `irpt-upload-hop2-20260924`, S1 = Y's live 12.03 acceptance). Hop 4 custody:
    card `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/CUSTODY_HOP4_CARD_20260925.md` -- installer, reader and
    interpreter ports never constructed; no served writer of the `cst_` binding; the portal sends the holdings
