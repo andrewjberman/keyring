@@ -283,3 +283,91 @@ fresh read and was already right about a number I arrived late to; the crosswalk
 as data. **And a served route is publishing a negative target price for Boeing, seventeen of nineteen outcomes
 have never been graded, and the slot the fence said was empty got filled by a machine.** Both halves are true
 and the second half is what round 5 is for.
+
+---
+
+# AMENDMENT A1 -- 2026-09-25 ~16:4xZ -- **I RAN THE ONE-LINE PLAUSIBILITY CHECK AND SECTION 3 IS TOO GENEROUS BY SIX NAMES**
+
+**Section 3 concluded: *"this is one wrong value and a missing guard -- not 32 wrong values."* MY OWN NEXT
+MEASUREMENT DISCONFIRMS IT.** The check is `base / px_last` -- **both values are in the same served block** --
+and it took one sweep of the 32 names whose Base case is SERVED.
+
+## THE CHECK, and why it should shame the round count
+
+**191 keyed names swept, 32 with `base` SERVED. Seven are implausible against their OWN served last price.**
+
+| key | base | `px_last` | base/px |
+|---|---|---|---|
+| `BA_US_Equity` | **-18.032** | 196.80 | **-0.09** |
+| `ULVR_LN_Equity` | 65.705 | 4708.5 | **0.014** |
+| `HSBA_LN_Equity` | 22.034 | 1499.8 | **0.015** |
+| `RKT_LN_Equity` | 73.866 | 4923.0 | **0.015** |
+| `BP/_LN_Equity` | 26.552 | 571.8 | **0.046** |
+| `NFLX_US_Equity` | 218.244 | 71.72 | **3.04** |
+| `NOW_US_Equity` | 613.522 | 137.78 | **4.45** |
+| `ROG_SW_Equity` | 447.304 | **None** | **no price to check against** |
+
+The other 24 sit between **0.54 and 2.00** -- a believable band for a forward Base case. **The seven are not
+at the edges of that band; they are off it by one to two orders of magnitude.**
+
+## SEVEN FAILURES, THREE SIGNATURES -- not seven bugs
+
+1. **NEGATIVE FORWARD EPS -- 1 name.** `BA` only, and section 3 has it right: `BEST_EPS` -0.828 times a
+   positive multiple. **It is the only name whose forward EPS is negative, which is why it is the only
+   negative output.**
+2. **A CURRENCY-UNIT MISMATCH -- 4 names, AND ALL FOUR ARE LONDON-LISTED.** `ULVR`, `HSBA`, `RKT`, `BP/` are
+   the only `_LN_` names in the 32 and they are the only four in the 0.014-0.046 band. **A London price quotes
+   in GBp (pence) while per-share earnings carry GBP (pounds)** -- a factor of 100 between the two sides of
+   the ratio. **THIS IS THE `AMGT_RESAPP-Z-S265` CLASS RECURRING ON A DIFFERENT FIGURE:** the same
+   hundred-fold unit error, on the Base case instead of the P/E, on a client-called route. Section 1 of this
+   analysis credits `f-2` AC4 with being *"the test that would have caught `Z-S265` ... it did not fire"* --
+   **and that credit stands exactly as far as its sample: AC4 tested `ASML_NA` and `2317_TT`. NEITHER IS
+   LONDON-LISTED, and the two names it tested sit at 0.90 and 0.79, comfortably inside the band.** The oracle
+   did not fire because **the defect was not in front of it**, which is R-1's point arriving from the other
+   direction: a sample that excludes a venue excludes that venue's unit conventions.
+3. **A PROBABLE SPLIT-ADJUSTMENT MISMATCH -- 2 names.** `NFLX` at 3.04x and `NOW` at 4.45x, both US, both
+   with a `px_last` far below the level their historical per-share figures imply. **Stated as PROBABLE, not
+   measured:** I have not read the split history, and the signature (price low relative to historical EPS,
+   multiple therefore too high) is consistent with a split-adjusted price beside unadjusted history. **It is
+   named so it is not absorbed into signature 2, which it is not.**
+
+**Plus `ROG_SW_Equity`: a Base case of 447.30 served with `px_last` ABSENT.** Not implausible -- **uncheckable**,
+which is worse in one specific way: the block's own plausibility input is missing and the block does not say so.
+
+## WHAT SECTION 3 GETS WRONG, and the correction
+
+| section 3 said | measured |
+|---|---|
+| *"exactly ONE is negative"* | **TRUE, and it stands** -- 1 of 32 |
+| *"one wrong value and a missing guard -- not 32 wrong values"* | **WRONG. Seven of 32 are implausible**, and the negative one is the only one I had looked at. The other six are positive, in-range-looking numbers that are off by 100x or 3-4x |
+| the guard needed | **not one guard, THREE** -- a domain check on forward EPS <= 0; a currency-unit reconciliation between `px_last` and the per-share inputs; a plausibility band on `base/px_last` that refuses rather than serves |
+
+**My error has a shape worth naming: I found a NEGATIVE number, and negativity is the signature I then went
+looking for.** The sweep in section 3 asked *"how many are negative?"* and answered 1 of 32 correctly. **It
+never asked "how many are WRONG", and the six worst-looking values in the set are positive.** A found defect
+supplies the predicate for the next census, and that predicate inherits the first defect's shape -- so the
+census confirms the first finding's scope and is blind to its siblings. **The fix is the one that worked here:
+after any per-item defect, run a check that is ABOUT THE QUANTITY rather than about the defect.**
+
+## AND THE PART THAT IS NOT MY ERROR BUT THE LOOP'S
+
+**`base` and `px_last` are fields of the same served object.** The ratio needs no second source, no vendor
+call, no fixture and no new instrument -- **one division, thirty-two times.** `AMGT_RESAPP` has run 42 rounds
+and `AMGT_CORPUS` 4; `Z-S265` taught this estate that a served valuation figure can be 100x wrong; and **no
+round in either project has ever divided the Base case by the price beside it.**
+
+> **RULE R-5 (round 4, both projects, and it supersedes nothing).** **Any served figure that shares an object
+> with a natural comparator is checked against it, in the round that first serves it.** A Base case has
+> `px_last` beside it; a P/E has price and EPS beside it; a market cap has shares and price. **The comparator
+> is already in the payload, so the check costs one division and needs no sample.** Cost: one line per
+> served figure with a same-object comparator. Non-application: a figure with no comparator in its own object
+> -- and that absence is itself worth printing, as `ROG_SW`'s missing `px_last` shows.
+
+**Round-5 enrichment item 1 is amended accordingly:** the urgent act is **not** one domain check on forward
+EPS. It is **the `base/px_last` band, refusing rather than serving**, which catches all three signatures at
+once and catches the next one without knowing its shape. The EPS domain check and the GBp reconciliation are
+then real fixes behind a guard that is already holding the line.
+
+**The four London names are the item I would put first if only one thing were cut:** a negative number reads
+as obviously broken to any PM who sees it, and **`ULVR` at 65.71 against a price of 4708.5 reads as a
+considered valuation.** The dangerous defect here is not the one that looks wrong.
