@@ -81,7 +81,7 @@ READ-ONLY: every other `lib/research/` module, `integrations/bloomberg/`. Scratc
 re-derive so rows read guarded blocks. Checks dry-run at the base: AC1 FAIL (no such file), AC2 FAIL (no probe), AC3 bound.
 
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
