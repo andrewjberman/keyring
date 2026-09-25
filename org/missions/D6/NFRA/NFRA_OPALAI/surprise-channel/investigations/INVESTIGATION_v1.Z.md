@@ -526,6 +526,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The script's own commit step cannot land the manifest record on this device class (jq.exe CRLF output at that write site, undocumented elsewhere), so every future opal-gateway (and likely every other jq-rewritten EC2_MANIFEST.json) deploy through safe-ec2-deploy.sh on this device silently degrades to the 'record manually' fallback the script prints -- a standing hazard for any worker who does not notice the ERROR line among the deploy's otherwise-successful output.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not fixed here: infra/aws/ec2/safe-ec2-deploy.sh is READ-ONLY under this task order's bounds (section 2.1: 'the deploy script and safe-ec2-deploy.sh are READ, never edited'). The fix is a tr -d '\\r' on the jq TEMP output before mv, the same pattern already applied at this script's SOURCE_PATH read (comment at safe-ec2-deploy.sh's SOURCE_PATH lookup)."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W7-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~7",
+    "surfaced_at": "2026-09-25T03:40Z",
+    "one_line": "OA-w-4 bound 2 asserts portal is NOT provisioned in this worktree and must read UNINITIALISED, but at build time portal IS a real initialised checkout here (its own .git file, HEAD fe618e50, git log works) and counts 589 commits/30d -- the bound's premise does not hold; the build followed the general spec (an integer when initialised) instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-OA-w-4 section 2 bound 2: \"'portal' is NOT provisioned in your worktree, so it must read UNINITIALISED.\"",
+        "`cat portal/.git` in this worktree: 'gitdir: C:/Users/Opal Bloomberg/Desktop/ajb_workspace/portal/.git/worktrees/portal3'; `cd portal && git log -1 --oneline` prints fe618e50 (a real commit), `git rev-parse --show-toplevel` = C:/tmp/oa-7/portal.",
+        "`git submodule status opal_ai portal mcportal`: opal_ai and portal both show a '+' (checked out, differs from index), mcportal shows '-' (not initialised, no .git entry present in mcportal/); mcportal is the one genuinely UNINITIALISED mapped path here.",
+        "fabric-commits.py --json --days 30 by_repo: {'parent': 15972, 'opal_ai': 4, 'portal': 412, 'mcportal': 'UNINITIALISED'}; activity-check.py --days 30 repos: parent=17219 opal_ai=7 portal=589 mcportal=UNINITIALISED."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "portal is NOT provisioned in this worktree and must read UNINITIALISED.",
+    "world_is": "portal is initialised in this worktree (a linked worktree of the shared portal repo, sharing its .git/worktrees admin dir with the main tree's own portal checkout) and reads as an integer, same as opal_ai; only mcportal reads UNINITIALISED here. Both proof scripts (w4.AC1.sh, w4.AC2.sh) accept 'UNINITIALISED or an integer' for portal, so grading is unaffected either way.",
+    "notes": "Not repaired: the build follows section 1's general rule (an integer count when a mapped path's .git entry is present, else UNINITIALISED), which is the spec's own instruction and does not depend on the bound's stale prediction. No gate is built here."
   }
 ]
 ```
