@@ -957,3 +957,88 @@ Each is this seat's call at L5, stated so it can be argued with, and revertible 
    NOT-EVALUATED.** A refusal is a row, and the issuer seats the path for that order alone.
 8. **The chain count and the constraint table are readings.** M = 448 follows from the 93 edges this document declares;
    a missing edge would show as false width.
+
+---
+
+# ROUND 2 -- THE THREAD (L5, v3)
+
+```json
+{
+ "project": "NFRA_MCPINDEX",
+ "decomp_version": "v3",
+ "step": 5,
+ "round": 2,
+ "fabric": "site-z",
+ "input": "org/missions/D9/NFRA/NFRA_MCPINDEX/ledger/ROUND_ANALYSIS.round1.md@ad67fd0409 (section 4, E1-E6; rulings R-2..R-8)",
+ "prd_ref": "org/missions/D9/NFRA/NFRA_MCPINDEX/prd/NFRA_MCPINDEX_PRD.md@b7dc80e2cc",
+ "author": "2.0.0_SA_COO~O",
+ "cells": 7,
+ "chains": 3,
+ "held_branch": "wk-nfra_mcpindex-1-1d",
+ "frozen": true
+}
+```
+
+**Author:** `2.0.0_SA_COO~O` (re-seated @23bbeff325). **Input:** the CTO's round-1 analysis @ad67fd0409, cut in ONE
+issuance. Round 1 (sections 1-12 above) stays frozen as its own record. The gateway stays on its CURRENT path (R-8).
+
+## R2.1 THE CELLS -- 7
+
+| Cell | From | Builds | Base | Risk |
+|---|---|---|---|---|
+| `MX-c-5` | E3 (R-5, D-3) | the 9 ycharts/opal_portal/globgrph tools declare their class in their own integration dirs; AC11 over 49 is 44 classified + 5 schwab HELD (registered, not enabled); MX-c-4's AC8 (`read_teams_attachment` SAFE) carried as this cell's judgment criterion | the held branch itself | WORLD (infra floor) |
+| `MX-d-2` | E1 (S2) | the discover family (`opal_discover`), reading the ONE repository catalog: property, dataset, freshness field and latest value, firm scope, caveats and the next tool; an uncatalogued subject names nothing | the held branch after MX-c-5 | WORLD (infra floor) |
+| `MX-t-8` | E2 (S3, FWD-2, R-7) | the portal purpose-built tools (`portal_index`) over the mdpf, etfs and 49financial advi keys MX-a-1 proposed, reading the SAME precomputed objects by exact key prefix; each tool's class and catalog entry ride its own cell (@5f3b4a20c6 (b)); "model composition and weights" answered or named unanswerable | the held branch after MX-c-5 | WORLD (infra floor) |
+| `MX-v-6` | E4 | the routing harness (the `.tools/comp-which-routing-test.py` lesson) and a question set drawn from REAL asks (the Analyst's thread memory), never from catalog descriptions | the held branch after MX-d-2 and MX-t-8 | WORLD (infra floor) |
+| `MX-q-2` | E5 (R-2 (1), R-3) | two read-only live reads: the Black Diamond null-cusip rate in silver transactions since 2026-04-14 (and any served figure joining on cusip), and Eclipse's distinct firm/rep ids against the Inflection allowlist | CLOUD | WORLD (live read) |
+| `MX-b-2` | E6 | the batch cell: C-S15's emitter docstring line, and W1-S3 by the issuer's pick -- `catalog_v02/validation_report.json` becomes gitignored and untracked (a run artifact every run rewrites) | CLOUD | LOCAL |
+| `MX-r-3` | E3's release (R-8) | the NARROW gateway release: the deployed commit at this cell's own cut plus ONLY this project's gateway commits (MX-c-4's build and MX-c-5, MX-d-2, MX-t-8 and MX-v-6), shipped DORMANT for the new integrations | CLOUD after the held branch drains | WORLD |
+
+## R2.2 CHAINS, THE HELD BRANCH, AND THE ONE WAIT THE RULINGS IMPOSE
+
+```
+chain A (held branch)  MX-c-5 --> {MX-d-2 || MX-t-8} --> MX-v-6 --> [CVO grades AC8] --> drain --> MX-r-3
+chain B                MX-q-2
+chain C                MX-b-2
+```
+
+- The held branch changes a LIVE gateway behaviour (`read_teams_attachment` becomes SAFE), so it drains to CLOUD only
+  after `3.0.0_SA_CVO~O` grades MX-c-5's AC8. That is R-5 as written, and the CTO's affirmed hold (@5f3b4a20c6 section 4).
+- Every cell stacked on it is cut FROM the held branch. The issuer merges each stacked worker branch INTO the held
+  branch, not into CLOUD.
+- The AC8 grading is a mid-round L9 act. The issuer's drain-end read names it when MX-v-6 is terminal.
+
+**Fan-out:** `N = 3 of M = 3 chains, cap 8`.
+- Spawn now: `~1` MX-c-5, `~4` MX-q-2, `~5` MX-b-2.
+- After MX-c-5: `~2` MX-d-2 and `~3` MX-t-8.
+- After both: `~2` MX-v-6.
+- After the drain: `~1` MX-r-3.
+
+## R2.3 STANDING RULES ON EVERY FACE (R-6)
+
+1. W1-S6: a device-neutral interpreter (`python`), never `py -3.12`.
+2. W4-S1: every tool and read fence works by EXACT KEY PREFIX, never by bucket, with a negative control that reads a
+   sibling property's prefix and is refused.
+3. W1-S1: a criterion that exercises a served file names that file in `<paths>` at the cut.
+4. W1-S3: `catalog_v02/validation_report.json` is gitignored by MX-b-2 (the issuer's pick). Until MX-b-2 drains, a
+   cell that runs the validator restores that file before committing and says so.
+
+## R2.4 GATES AND THE CLOSE RUN
+
+- **G-A:** Andrew's word to ENABLE the released integrations (the round-1 gate).
+- **G-B:** a non-author asker for the live cold run (Andrew admits the person).
+- **The close run:**
+  - E1 and E2 are exercised live through the gateway, one question per portal surface that has a tool (mdpf, etfs,
+    49financial advi);
+  - each answer's figure and date equal the portal's;
+  - the `json/*` surface is answered by discover only, since its tools wait on FWD-6 and a registry row (MX-a-1 AC7);
+  - with G-B, the FWD-1 cold run.
+- **Subtracted,** per the analysis section 4: Schwab (G-Q, G-OPLGTW), Black Diamond/Eclipse/Orion/SmartX tools, ETF
+  tools (TrueShares on R-4), the typed query, entity resolution, on-demand paths and the roster.
+
+## R2.5 WHAT THIS CUT DOES NOT CLAIM
+
+1. No cell has run. The null-cusip rate, the Eclipse tenancy, the deployed commit at MX-r-3's cut and the live tool
+   surface are measured by their cells.
+2. The CRO's question lists named by the analysis were not located by this seat's census. MX-v-6 records what it found
+   and uses the Analyst's thread memory in any case.
