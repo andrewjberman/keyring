@@ -93,3 +93,34 @@ So row 4 is:
 - (b) that principal's grants: write the firm's `irpt/<firm>/{gold,platinum}/holdings*` prefixes and read its code
   home, plus the host's reads of the source prefixes above (infra lane, a ledger and safe-apply, under the cross-firm
   guard).
+
+## ADDENDUM 2 2026-09-25 ~18:3xZ -- row 4b, measured: ONE principal per firm, holding that firm's reads and writes
+
+- **The fence** (`directory/principal_49f.tf:1-34`): each firm bucket's policy (shared-infra/s3-<firm>.tf,
+  DenyForeignFirmPrincipals) denies every principal whose name lacks the firm's scope slot. The host role
+  (`mdpf-daily-runner-ec2-role`) lacks it, and widening it is the cross-firm act CLAUDE.md forbids. So the host cannot
+  even fetch a package from a firm's code home. Creating a firm principal is a NEVER-WIDEN-CLASS act (R-44
+  condition 2): declared first, applied only after both halves (1.0.0_SA_CTO and a COO) are signed.
+- **The design:** one `irpt-<short>-holdings-role` per firm, name from module.opal_name, carrying the scope slot the
+  fence admits, trusted only by the host role.
+  - The host script assumes it FIRST and runs the fetch and the whole build under it: aws sts assume-role, then
+    exported credentials.
+  - The host role gains nothing.
+  - (The producer's publish_client, 3e1ca981ab, stays for operator runs.)
+- **Grants = the build's own receipts**, measured in a real build_snapshot per firm (VersionedInputs, cutoff
+  2026-09-24):
+  - COT: opal-data-assets/blackdiamond/cottonwood/silver/{fact_allocations,fact_holdings,fact_model_assignment,
+    fact_model_blend,fact_model_definition,fact_model_roster}/; opal-data-cot/investor-reporting/directory/.
+  - 49F: opal-data-assets/schwab/08335338/silver/{dim_asset,dim_balance,dim_position}/;
+    opal-data-assets/smartx/platform/silver/{fact_allocation_account_map,fact_allocation_positions,
+    fact_allocation_valuation,fact_model_allocation_roster}/;
+    opal-data-assets/gateway/49financial/bronze/taxsma_workbook_projection/; opal-data-bd/investor-reporting/directory/.
+  - INF: opal-data-inf/silver/api_dims/{accounts_v2,positions_mv}/; opal-data-inf/silver/eclipse/;
+    opal-data-assets/eclipse/inflection/bronze/eclipse_membership_map/; opal-data-inf/investor-reporting/directory/.
+  - Every firm, beyond the receipts:
+    - s3:ListBucket conditioned on exactly those prefixes (the partition walks);
+    - dynamodb:Scan on bd-securities (the classifier);
+    - GetObject on its own code-home key;
+    - Get/Put on its own irpt/<firm>/{gold,platinum}/holdings prefixes in opal-data-<firm>.
+  - COT's mdpf slice and pair modules may read beyond the receipts. They are re-measured with a boto3 call hook
+    before the declaration is frozen.
