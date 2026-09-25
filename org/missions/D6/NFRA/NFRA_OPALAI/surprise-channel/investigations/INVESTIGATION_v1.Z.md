@@ -613,6 +613,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "NFRA_OPALAI-Z-W3-S2 is ARMED with this seat as disarm_owner.",
     "world_is": "No runtime file the agent loads names the workspace. The only hit was the probe key the spec mandates. OA-t-3's built files are unchanged.",
     "notes": "A checker defect: a scan scoped by directory counted a value the same spec mandates. It is filed for the round-1 checker lessons."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S17",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T05:10Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The issuer installed the owned-paths hook into the real opal_ai and exercised it. In the main nested checkout it BLOCKS an unordered worker serial and passes this seat. In an opal_ai linked worktree OUTSIDE any parent worktree it fails OPEN: a WARN, the lane check skipped, and the violation commit landed. The wrapper's fallback reads the first 'git worktree list' entry, which for a submodule is the gitdir .git/modules/opal_ai, and that has no superproject.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/git-hooks/install-owned-paths.sh --submodule opal_ai: 'OK: owned-paths hook installed at .git/modules/opal_ai/hooks/pre-commit', rc=0.",
+        "Main checkout, scratch branch: the violation arm (author 0.9.0_WK_NFRA_OPALAI~9) exits rc=1 with 'VIOLATION: opal_ai/HOOK_PROBE.md -- lane=ANY_EXEC_OR_AE'; the granted arm (author 2.0.0_SA_COO~O) exits rc=0. The scratch branch was deleted and the checkout restored to 90ca424.",
+        "Linked worktree /c/tmp/oa-hookprobe: 'WARN: owned-paths-check.sh not found at C:/tmp/oa-hookprobe/.tools/git-hooks/owned-paths-check.sh -- skipping lane check', rc=0, and the violation commit landed on a scratch branch that was then deleted.",
+        "rev-parse --show-superproject-working-tree: worker-shaped nested checkouts /c/tmp/oa-1/opal_ai and /c/tmp/oa-3/opal_ai resolve to their parent worktree; /c/tmp/oa-r1-drain and /c/tmp/oa-hookprobe resolve to empty."
+      ]
+    },
+    "spec_asserts": "OA-w-2: a commit inside a nested repo is graded by the parent's gates.",
+    "world_is": "True wherever the nested checkout sits inside a parent worktree, which covers every worker face this round. False for a nested linked worktree outside any parent (issuer drain worktrees), where the wrapper fails open.",
+    "notes": "Enrichment for round 2: the fallback should resolve the parent through 'git rev-parse --git-common-dir' (.git/modules/<name> -> the parent's .git) and fail CLOSED when it cannot. The fail-open WARN predates OA-w-2 (ADHC_OWNPTH.003's portability posture)."
   }
 ]
 ```
