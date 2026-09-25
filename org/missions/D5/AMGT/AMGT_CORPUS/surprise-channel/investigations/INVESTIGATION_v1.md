@@ -1214,6 +1214,31 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The governing checker invocation the same section names (step 2, literal: 'AC1,AC2,AC3') refuses an instance carrying any row outside that set, and the schema has no status/method value for a judgment row regardless. This worker's e-1 sibling instance (cited as the shape template) in fact carries only AC1-AC3, no AC4 row, for a TO with no judgment criterion -- so the template does not itself show a worked AC4 row either.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Resolved conservatively toward the literal, mechanically-checked instruction (step 2's exact invocation) over the prose aside in step 1, since only the former is machine-graded; AC4's substance is unchanged either way -- it stays the CVO's, at L9, on the issuer's real run."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S8",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-25T04:34:46Z",
+    "one_line": "After ISSUER AMENDMENT 1 (the crosswalk.schema.json fix) landed, the identity suite runs fully green (119 passed, 0 failed) but AC3's <expect> regex '(?m)^\\d+ passed in ' still does NOT match the real output 'N passed, 2 subtests passed in Ns', because lib/research/identity/tests/test_crosswalk_universe.py uses unittest subTest (pre-existing, unrelated to CRPS-f-1) and pytest's own summary line reads 'N passed, 2 subtests passed in ...' rather than 'N passed in ...'.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest lib/research/identity/tests -q --color=no -p no:cacheprovider (this worktree, HEAD after the schema amendment): '119 passed, 2 subtests passed in 5.44s' -- 0 failures. Re-run twice back to back: '119 passed, 2 subtests passed' both times (only elapsed seconds differ).",
+        "Python re.search(r'(?m)^\\d+ passed in ', '119 passed, 2 subtests passed in 5.44s') -> None (checked directly against the full captured output, not just the tail; the digits are followed by ', 2 subtests passed in ' rather than ' in ').",
+        "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round4/BASE_RUN_EVAL_20260925T025640Z.log already shows the SAME '2 subtests passed' clause at BASE, before this cell touched anything: 'CRPS-f-1 AC3 BASE FAIL | rc 0 | 8s | 1 failed, 109 passed, 2 subtests passed in 6.21s' -- the clause is a pre-existing property of the suite, not introduced by CRPS-f-1.",
+        "AC1's own expect ((?m)^\\d+ passed in ) matches cleanly because test_crosswalk_disclosure.py carries no subTest -- this is specific to the AC3 whole-suite run naming the identical literal pattern without allowing for the subtests clause, where a sibling TO's own AC1-shaped pattern (AMGT_CORPUS.TO-CRPS-e-5) DOES tolerate an extra clause via '(, \\d+ deselected)?'.",
+        "python .tools/proof-of-spec-check.py's own acceptance-row check (proof-of-spec-check.py:119-131) REFUSES status=PASS whenever output_evidence does not match a criterion's expect -- the match decides a mechanical criterion, never the worker; this row is filed rather than the instance marking AC3 PASS on a green-but-non-matching suite."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-f-1 s.5 AC3 <expect>: (?m)^\\d+ passed in -- the whole identity suite still passes, matched literally against the run's output.",
+    "world_is": "The suite genuinely is fully green after the schema amendment (119 of 119 tests pass, 0 failed) -- the build is correct. The literal regex nonetheless never matches this suite's real passing output, because of a pre-existing subTest-driven summary phrase orthogonal to CRPS-f-1. This instance records AC3 FAIL-by-literal-regex with status_reason naming the true suite state, and <status> cannot flip to complete on this criterion as written.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "No unauthorized edit made: f1_AC3.sh and the order's own <expect> are the issuer's (section 5: the check files are read-only to this worker); this worker has no standing to widen the regex or to declare a mechanical criterion PASS against non-matching evidence. Filed BLOCKING/ARMED because every future re-run of this exact AC3 invocation reads the same non-matching shape as long as any identity-suite test uses unittest subTest -- the fix is either an <expect> amendment tolerating '(, \\d+ subtests? passed)?' (as a sibling TO's AC1 already tolerates a deselected count) or removing subTest usage, both outside this cell's scope."
   }
 ]
 ```
