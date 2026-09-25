@@ -103,10 +103,10 @@ def fmt_age(dt: datetime, now: datetime) -> str:
     return f"{h / 24:.1f}d"
 
 
-def window_commits(days: int):
+def window_commits(days: int, cwd: Path = WS, repo: str = "parent"):
     r = subprocess.run(
         ["git", "log", f"--since={days} days ago", f"--pretty=%H{FS}%an{FS}%aI{FS}%s"],
-        capture_output=True, text=True, cwd=str(WS), errors="replace",
+        capture_output=True, text=True, cwd=str(cwd), errors="replace",
     )
     out = []
     for ln in r.stdout.splitlines():
@@ -116,8 +116,47 @@ def window_commits(days: int):
         sha, an, aiso, subj = parts
         if not AGENT_RE.match(an):  # fabric-agent serials only
             continue
-        out.append({"sha": sha[:9], "author": an, "iso": aiso, "subj": subj})
+        out.append({"sha": sha[:9], "author": an, "iso": aiso, "subj": subj, "repo": repo})
     return out
+
+
+def mapped_submodule_paths() -> list[str]:
+    """Paths .gitmodules maps (`git config -f .gitmodules --get-regexp path`), never a
+    hard-coded list. An unmapped gitlink (models/factor_scanner) is not iterated."""
+    gm = WS / ".gitmodules"
+    if not gm.is_file():
+        return []
+    r = subprocess.run(
+        ["git", "config", "-f", str(gm), "--get-regexp", "path"],
+        capture_output=True, text=True, cwd=str(WS), errors="replace",
+    )
+    paths = []
+    for ln in r.stdout.splitlines():
+        parts = ln.split(None, 1)
+        if len(parts) == 2:
+            paths.append(parts[1].strip())
+    return paths
+
+
+def submodule_initialised(path: str) -> bool:
+    """A mapped submodule is initialised in THIS checkout when its `.git` entry exists
+    (file for a linked worktree/gitlink, dir for a plain clone)."""
+    return (WS / path / ".git").exists()
+
+
+def all_window_commits(days: int):
+    """Parent commits + commits from every INITIALISED mapped submodule, each tagged
+    with its repo. repo_counts: {'parent': N, <path>: N | 'UNINITIALISED'}."""
+    commits = window_commits(days, cwd=WS, repo="parent")
+    repo_counts = {"parent": len(commits)}
+    for path in mapped_submodule_paths():
+        if submodule_initialised(path):
+            nested = window_commits(days, cwd=WS / path, repo=path)
+            commits.extend(nested)
+            repo_counts[path] = len(nested)
+        else:
+            repo_counts[path] = "UNINITIALISED"
+    return commits, repo_counts
 
 
 def top4_other(counter: Counter):
@@ -132,7 +171,7 @@ def top4_other(counter: Counter):
 def build(days: int) -> dict:
     now = datetime.now(timezone.utc)
     codes = known_codes()
-    commits = window_commits(days)
+    commits, repo_counts = all_window_commits(days)
     macro_ct, proj_ct, agent_ct = Counter(), Counter(), Counter()
     by_agent = defaultdict(list)
     for c in commits:
@@ -158,7 +197,8 @@ def build(days: int) -> dict:
             except ValueError:
                 age = "?"
             recent.append({"sha": c["sha"], "age": age, "subj": c["subj"],
-                           "code": c["code"] or "(none)", "macro": c["macro"] or "(none)"})
+                           "code": c["code"] or "(none)", "macro": c["macro"] or "(none)",
+                           "repo": c.get("repo", "parent")})
         agents.append({"agent": name, "role": role_from_name(name),
                        "n_window": len(cs), "recent": recent,
                        "last_age": recent[0]["age"] if recent else "?",
@@ -174,6 +214,7 @@ def build(days: int) -> dict:
         "n_active_agents": len(agents),
         "n_commits": len(commits),
         "n_directed": sum(proj_ct.values()),
+        "repos": repo_counts,
         "agents": agents,
         "pie_macro": top4_other(macro_ct),
         "pie_project": top4_other(proj_ct),
@@ -202,12 +243,14 @@ def main():
     p(f"ACTIVITY-CHECK  {data['as_of']}  |  {data['n_active_agents']} agents, MOST-RECENTLY-ACTIVE FIRST  "
       f"|  looked back {days}d  ({data['n_commits']} commits)")
     p("  (real-time view: agents ordered by their LATEST commit; lead line = time since it)")
+    p("repos: " + " ".join(f"{k}={v}" for k, v in data["repos"].items()))
     p("")
     for a in data["agents"]:
         p(f"{a['agent']}  --  last commit {a['last_age']} ago   (role {a['role']}, {a['n_window']} commits/{days}d)")
         for c in a["recent"]:
             tag = c["code"] if c["code"] != "(none)" else "(no project)"
-            p(f"    {c['age']:>4}  [{tag}]  {c['subj'][:74]}")
+            repo_tag = "" if c.get("repo", "parent") == "parent" else f" <{c['repo']}>"
+            p(f"    {c['age']:>4}  [{tag}]{repo_tag}  {c['subj'][:74]}")
         p("")
     if "--summary" in args:  # the 7d AGGREGATE, opt-in only (default view is real-time)
         p(f"-- {days}d aggregate summary --")

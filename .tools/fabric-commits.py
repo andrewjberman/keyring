@@ -46,14 +46,14 @@ def project_codes() -> list[str]:
     return sorted(codes, key=len, reverse=True)
 
 
-def scrape(days: int = DEFAULT_DAYS) -> list[dict]:
-    """Raw commit list (sha, author, ts_unix, subject) since `days` ago."""
+def scrape(days: int = DEFAULT_DAYS, cwd: str = ROOT) -> list[dict]:
+    """Raw commit list (sha, author, ts_unix, subject) since `days` ago, in `cwd`'s repo."""
     fmt = US.join(["%H", "%an", "%at", "%s"])
     try:
         out = subprocess.run(
             ["git", "log", f"--since={days} days ago", "--no-merges",
              f"--pretty=format:{fmt}"],
-            cwd=ROOT, capture_output=True, text=True,
+            cwd=cwd, capture_output=True, text=True,
             encoding="utf-8", errors="replace", timeout=90,
         )
         lines = out.stdout.splitlines()
@@ -72,6 +72,57 @@ def scrape(days: int = DEFAULT_DAYS) -> list[dict]:
     return commits
 
 
+def mapped_submodule_paths() -> list[str]:
+    """Paths .gitmodules maps (`git config -f .gitmodules --get-regexp path`), never a
+    hard-coded list. An unmapped gitlink (models/factor_scanner) is not iterated."""
+    gm = os.path.join(ROOT, ".gitmodules")
+    if not os.path.isfile(gm):
+        return []
+    try:
+        out = subprocess.run(
+            ["git", "config", "-f", gm, "--get-regexp", "path"],
+            cwd=ROOT, capture_output=True, text=True,
+            encoding="utf-8", errors="replace", timeout=30,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return []
+    paths = []
+    for ln in out.stdout.splitlines():
+        parts = ln.split(None, 1)
+        if len(parts) == 2:
+            paths.append(parts[1].strip())
+    return paths
+
+
+def submodule_initialised(path: str) -> bool:
+    """A mapped submodule is initialised in THIS checkout when its `.git` entry exists
+    (file for a linked worktree/gitlink, dir for a plain clone)."""
+    return os.path.exists(os.path.join(ROOT, path, ".git"))
+
+
+def all_commits(days: int = DEFAULT_DAYS) -> list[dict]:
+    """Parent commits + commits from every INITIALISED mapped submodule, combined."""
+    commits = list(scrape(days, cwd=ROOT))
+    for path in mapped_submodule_paths():
+        if submodule_initialised(path):
+            commits.extend(scrape(days, cwd=os.path.join(ROOT, path)))
+    return commits
+
+
+def by_repo(days: int = DEFAULT_DAYS) -> dict:
+    """{'parent': N, <mapped path>: N | 'UNINITIALISED'} -- parent count EXACTLY as
+    today's scrape counts it (unchanged); a mapped submodule counts its own commits over
+    the same window when initialised in this checkout, else the string 'UNINITIALISED'
+    (never 0, never omitted)."""
+    out = {"parent": len(scrape(days, cwd=ROOT))}
+    for path in mapped_submodule_paths():
+        if submodule_initialised(path):
+            out[path] = len(scrape(days, cwd=os.path.join(ROOT, path)))
+        else:
+            out[path] = "UNINITIALISED"
+    return out
+
+
 def match_codes(text: str, codes: list[str]) -> list[str]:
     """Codes referenced in text, longest-first with consume (specific code wins over its prefix)."""
     found = []
@@ -84,10 +135,11 @@ def match_codes(text: str, codes: list[str]) -> list[str]:
 
 
 def by_project(days: int = DEFAULT_DAYS, codes: list[str] | None = None) -> dict:
-    """{code: [commits...]} newest-first. A commit can map to multiple codes (real: close(A + B))."""
+    """{code: [commits...]} newest-first. A commit can map to multiple codes (real: close(A + B)).
+    Nested (submodule) commits join the same way parent commits do."""
     if codes is None:
         codes = project_codes()
-    commits = scrape(days)
+    commits = all_commits(days)
     out: dict[str, list[dict]] = {}
     for c in commits:
         for code in match_codes(c["subject"], codes):
@@ -98,9 +150,10 @@ def by_project(days: int = DEFAULT_DAYS, codes: list[str] | None = None) -> dict
 
 
 def by_author(days: int = DEFAULT_DAYS) -> dict:
-    """{author: [commits...]} newest-first."""
+    """{author: [commits...]} newest-first. Nested (submodule) commits join the same way
+    parent commits do."""
     out: dict[str, list[dict]] = {}
-    for c in scrape(days):
+    for c in all_commits(days):
         out.setdefault(c["author"], []).append(c)
     for a in out:
         out[a].sort(key=lambda x: x["ts"], reverse=True)
@@ -135,6 +188,7 @@ def main():
 
     if "--json" in args:
         print(json.dumps({"days": days, "ts": now,
+                          "by_repo": by_repo(days),
                           "by_project": by_project(days),
                           "by_author": by_author(days)}, indent=2))
         return
@@ -147,6 +201,8 @@ def main():
             print(f"  {a:<32} {len(cs):>3} commits | latest {_age(now-cs[0]['ts'])} ago: {cs[0]['subject'][:80]}")
         return
 
+    br = by_repo(days)
+    print("  repos: " + " ".join(f"{k}={v}" for k, v in br.items()))
     bp = by_project(days)
     if proj:
         cs = bp.get(proj, [])
