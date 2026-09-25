@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T13:3xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T15:0xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -39,6 +39,19 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
 `infra/aws/lambda/investor-reporting/export/`, `infra/aws/terraform/investor-reporting/export/`, the `irpt-export-render` source-map row.
 
 ## Next-list (in order)
+
+0. INF ARMED 15:0xZ (Andrew-direct @dd8178481e, CTO 100945): ONE Orion call, account acc_41e2e972281c3e42ef3f7a55 (INF, the
+   Transfer on Death account ending 0279 in the "Martin" household -- NOT the Roth ending 4696 the entry shows), window
+   2026-01-01..2026-09-25, expires 2026-09-26T00:00Z (plan digest b0b85aa98a09..). Deployed and verified under ledger
+   irpt-performance-inf-one-use-20260925 (backend 510b75ef86; modules provider-renamed orion_selected / orion_account_mapping
+   d39fa9692d; source map 09b5725451 on the publish branch; CodeSha256 jbojclF3..). S1 = Andrew's signed-in request: INF,
+   select ONLY that one account, Performance, YTD (the preset sends today's UTC date) before 00:00Z. A refusal spends it.
+   Then read PERFORMANCE_USE#b0b85aa9.., PERFORMANCE_ACCEPTED#, the adapter log; close S1.
+0b. CTO RULINGS 100946 (RULINGS_IRPT_20260925.md @75156f2b18): R1 export section A is P's (V2/V3 directories granted to
+   IRPT_LIVE_SCOPE_P) -- FIRST remove exp leeway at V2 and V3 (PRD 7(c); C-S219 measured +60 s), then A1 keys (name the
+   Terraform file -> row), A2 V2, A3 V3, each ledgered with a negative arm; R2 QUEUED submit shape as proposed (data
+   optional while QUEUED/RUNNING) -> B1 unblocked; the delegator slot needs its own proposal; R3 hop 4 = option (a): mint
+   the cst_ binding only for a PUBLISHED revision whose scope covers the selection.
 
 1. S1: the COT one-use plan 99052771.. EXPIRED UNSPENT at 2026-09-25T00:00Z (full scan 00:00:18Z: no USE or ACCEPTED
    row for it). A COT run now needs Andrew's new per-use word and a re-arm (var-file pattern `rearm.tfvars.json`).
