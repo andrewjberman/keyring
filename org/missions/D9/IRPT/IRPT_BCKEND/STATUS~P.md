@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T15:3xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T15:4xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -51,7 +51,10 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    IRPT_LIVE_SCOPE_P; grant cherry-picked 5ab28b7175) -- exp leeway REMOVED at V2 and V3 ed0f7447af (not deployed; C-S219 49/49:
    refused 1..120 s past exp, admitted 30 s before); A1 KEYS LIVE 15:2xZ (portal-auth/irpt-render-secrets.tf, row @f855b1912d,
    containers only, material out of band; ledger irpt-render-keys-a1-20260925 closed, negative arm held; WAF drift in the
-   same root = row S130, apply only -target'ed there); R2 contract landed 119b0b776e / CLOUD f6fd60f4fd (~D told). Next A2, then A3 (name the
+   same root = row S130, apply only -target'ed there); R2 contract landed 119b0b776e / CLOUD f6fd60f4fd (~D told). A2 (V2 = portal-auth/lambdas.tf
+   aws_lambda_function.portal_authorizer, build-nodejs-lambda.sh) WAITS on one row: lambdas.tf env block
+   IRPT_RENDER_JWT_PUBLIC_KEY_PEM (asked 15:38Z). V2 source since its 09-09 deploy (26ffa22b79) is +231/-0; V3 since
+   240fe36222 is +441/-0 incl. the origin-marker/asset-allowlist change (review at A3). Then A3 (name the
    Terraform file -> row), A2 V2, A3 V3, each ledgered with a negative arm; R2 QUEUED submit shape as proposed (data
    optional while QUEUED/RUNNING) -> B1 unblocked; the delegator slot needs its own proposal; R3 hop 4 = option (a): mint
    the cst_ binding only for a PUBLISHED revision whose scope covers the selection.
