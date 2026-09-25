@@ -83,7 +83,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 **ISSUER NOTES:** Amendment 1 (the instrument fix and the cap's removal, <paths> widened by the harness file) was cut on row Z-W159-S1 after the worker's first pass read 64 of 89; no criterion changed, and no gate limb grades a modification of an order without <placeholders>. s.7 items 1 and 2 in one cell because both live in render_pack.py (cells are cut by write set). SERVED: the change reaches the served body at rq-2. AC4 is the judgment criterion s.7 item 1 requires. The instrument's base runs are in round42/base-runs/ (s.50b).
 
-<status>pending</status>
+<status>complete</status>
 <round>42</round>
 <slot>~159</slot>
 <fabric>site-z</fabric>
