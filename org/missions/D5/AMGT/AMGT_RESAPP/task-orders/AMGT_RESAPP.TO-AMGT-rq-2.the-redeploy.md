@@ -59,7 +59,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/A
 
 **ISSUER NOTES:** Amended at the cut's CTO half (msg 25872): the pdf-branch stop limb added to step (1); no criterion changed, so no gate limb grades this modification. Seat order; the issuer restamps lib/research/api/_harvest_prefixes.py immediately before naming the build commit if gen_harvest_prefixes.py --check reads rc 1. The lane is live at the cut (process read).
 
-<status>pending</status>
+<status>complete</status>
 <round>42</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
