@@ -14493,5 +14493,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The dispositions are exactly as ruled and are folded by this row. The ordering is not: the vacatur post-dates both the adjudication and the slug, by 7m21s and 4m37s respectively, on git's own author timestamps converted from -04:00. A vacatur that lands after a grade cannot be a defect in the grade; the defect is the one the same ruling names in the next sentence, which this seat accepts.",
     "notes": "⛔ THIS ROW CORRECTS A SEQUENCE, NOT A VERDICT. Every disposition the L10 ruled is applied here unchanged. ⭐ AND THE REASON TO CORRECT IT AT ALL IS THAT THE TWO ERRORS ARE DIFFERENT SIZES: 'deferred to a ruling that had already been vacated' describes a seat that failed to re-read state before grading, which is a control failure; 'wrote the reason a ruling was not yet a ruling, and deferred to it anyway' describes a seat that had the finding in its own sentence and did not act on it, which is a judgment failure. This seat committed the second. Letting the first stand uncorrected would put a control failure in the record that the timestamps do not support, and every later reader inherits the record rather than the timestamps."
   }
+,
+  {
+    "id": "AMGT_RESAPP-Z-W158-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~158",
+    "surfaced_at": "2026-09-25T02:49:31Z",
+    "one_line": "2 of 89 coverage-list identities resolve to a security_key carrying a literal '/' (folder 'BP PLC' -> 'BP/_LN_Equity', folder 'National Grid NG LN' -> 'NG/_LN_Equity'); a direct lambda:Invoke tolerated it (200 on all 5 routes) but that bypasses API Gateway's own path-segment matcher, so whether a real HTTP hit to /security/{key}/* resolves the same way is UNMEASURED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z -- name whether the deployed API Gateway route for /security/{key}/* resolves a key containing '/' the same way a direct lambda:Invoke does, or whether the landed-model-block display value ('BP/_LN_Equity', 'NG/_LN_Equity') should never have become the security_key scoped_amgt.resolve_identity returns for these two folders.",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "sweep.py's resolve_key() (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~158/sweep.py), run over all 89 folders of 0.9.0_WK_AMGT_RESAPP~4/universe.json via crosswalk.harvester_key + scoped_amgt.resolve_identity, returns 'BP/_LN_Equity' for folder 'BP PLC' and 'NG/_LN_Equity' for folder 'National Grid NG LN', both IDENTITY_BASIS_LANDED_BLOCK (surface 2: the landed model_block_<key>.json's own 'security' field), not the crosswalk (surface 1).",
+        "capture_lib.capture('BP/_LN_Equity', <tmp>) -- lambda:Invoke of opal-amgt-scoped-api with rawPath '/api/scoped/amgt/security/BP/_LN_Equity/overlay' (and thesis/peers/print) -- returned status=200 on all 5 routes, bytes 18232/10203/10058/1980/3299; same for 'NG/_LN_Equity'. The harness comparison for both ran to a verdict (NOT_OK, ABSENCES set(s) differ, the same failure class as 71 of the other 83 NOT_OK rows) rather than a route error, so nothing in this cell's own measurement was blocked.",
+        "NOT MEASURED: a real HTTP request to the API Gateway endpoint carrying the literal '/'. lambda:Invoke calls the function directly and never passes through API Gateway's own path-segment matcher, so a 200 on invoke does not establish a 200 on the served HTTP route an actual browser/portal session would hit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's step 1 (KEY) and step 2 (CAPTURE) treat 'security_key' as a plain token safe to place inside a URL path segment and (per this worker's own generalisation of served_capture.py) inside a filename; the coverage list is spec'd as 89 such tokens.",
+    "world_is": "2 of the 89 resolved keys carry a literal '/', copied through unescaped from a landed model block's own 'security' display field. It is safe as a lambda:Invoke rawPath (measured) and was made safe as a filename by this worker's own capture_lib._filename_slug (a fix to this worker's OWN instrument, not to the production system, per BOUNDS 2 no-fix). Whether it is safe as a real served API Gateway path segment is not measured here.",
+    "notes": "Filed as a row rather than a fix: BOUNDS 2 of this cell's own task order ('No fix. You change no code outside your deliverables folder.') forbids touching resolve_identity or the landed-block writer; the filename crash this caused in my own script (a stray '/' splitting served_fixture.BP/_LN_Equity.json into a bad path) was fixed in capture_lib.py itself (this worker's own instrument), not in production."
+  }
 ]
 ```
