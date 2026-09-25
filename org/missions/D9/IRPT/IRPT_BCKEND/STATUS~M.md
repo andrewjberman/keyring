@@ -9,11 +9,11 @@ Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andr
 
 | What | Value |
 |---|---|
-| Working branch / worktree | `codex/irpt-m-completion` at `../ajb_irpt_m` @f8e54f2931 (LOCAL) |
+| Working branch / worktree | `codex/irpt-m-completion` at `../ajb_irpt_m`; MERGED into CLOUD @f606108549 (safe-merge, 16 files, 0 overlap); investor_reporting suite on merged CLOUD 267 passed |
 | Served holdings (since 23:14-23:21Z) | COT fc199c8e (index ykQofbha); INF ba9001d5 (ipomYxTG); 49F 9ab377ce (OqjgF6qs) -- the prior served revisions plus the v0.6 classification members |
 | Prior revisions (rollback) | COT dec293d6, INF d32e50c6, 49F 5a25ae76, retained |
 | Receipts | `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/HOLDINGS_{COT,INF,49F}_CLASSIFIED_PUBLICATION_RECEIPT_20260924.json` @7e57abcabd |
-| Push state | LOCAL; shared pushes are 0.0.0_AB_MSTR's |
+| Push state | LOCAL: origin/CLOUD aa5568155e (ls-remote read 14:1xZ) does not carry f606108549; shared pushes are 0.0.0_AB_MSTR's |
 
 ## Live thread
 
@@ -44,7 +44,7 @@ branch. No code edit is open.
 1. Andrew's firm-tab HAR, then /verify on the goal.
 2. Make holdings a SCHEDULED daily producer, not another ad-hoc republish. `irpt-holdings-snapshot` has been DISABLED
    since 09-11, its bundle lacks 7 of 12 runner files (re-arm test IF-ENABLED-NOW: FAIL), and the classification code
-   is M-branch only. Owner asked of the CTO (msg 20260925T140741Z;
+   was M-branch only; it is on CLOUD since @f606108549. Owner asked of the CTO (msg 20260925T140741Z;
    `HOLDINGS_SCHEDULED_PRODUCER_ROUTING_REQUEST_20260925.md` @ae4f0659d4).
 3. On the CTO's routing of the widening request (`CLASSIFIER_WIDENING_REQUEST_20260924.md` @d8a88cef4b; 287 rows, 69
    readers): if the CTO rules it this seat's, fill 49F's 62 CUSIP-only rows (symbol and name from the Schwab security
