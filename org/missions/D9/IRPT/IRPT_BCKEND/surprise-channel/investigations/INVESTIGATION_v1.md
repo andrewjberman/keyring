@@ -9457,3 +9457,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "178 clients, $19.23M; two are all-cash clients whose mix is empty. The next step is a fix packet (C_06 admits cash, plus the AI Cottonwood views render cash), the same shape as the `other` packet."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S140",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-25T23:30:00Z",
+  "one_line": "49 Financial Performance cannot run: opal-data-49financial's bucket policy DenyForeignFirmPrincipals denies s3:* to every principal outside its allow-list, and irpt-performance-adapter-role is not on it (irpt-holdings-role is) -- the 49F engine read (f49_engine.EngineSource.partition_dates) fails AccessDenied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-performance-adapter log 2026-09-25T23:25:05Z corr-ce840e1463fb: AccessDenied ListObjectsV2 ... not authorized to perform s3:ListBucket on arn:aws:s3:::opal-data-49financial with an explicit deny in a resource-based policy",
+      "get-bucket-policy opal-data-49financial: Sid DenyForeignFirmPrincipals, Principal *, Action s3:*, ArnNotLike aws:PrincipalArn [role/*-49f-*, ..., role/irpt-holdings-role] -- the adapter role absent",
+      "The adapter's retention grants (performance/retained.tf ReadEngineTwrDailyPartition*) allow the read in IAM; the resource policy's explicit deny wins."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "STATUS~P.md: '49F Performance SERVED on our engine (21:28Z 09-24) ... awaiting a signed-in run' -- the engine read was never exercised by the served role.",
+  "world_is": "Every 49F Performance request fails before any calculation (the first signed-in 49F run, 23:25Z, answered UNEXPECTED). COT and INF are unaffected (their reads are other buckets). Goal criterion 1 at 49F is blocked until the allow-list admits the adapter role for the engine prefix.",
+  "disarm_owner": "the firm-separation bucket-policy owner (shared-infra registry-derived allow-list, e229f49515 lineage) -- add irpt-performance-adapter-role, ideally scoped to the advi gold_root canonical/twr_daily prefix; P routes it to 1.0.0_SA_CTO",
+  "notes": "Found by P while waiting on the INF re-arm run; the INF plan 01209afb is unspent (the 23:25Z request was a 49F client)."
+}
+```
