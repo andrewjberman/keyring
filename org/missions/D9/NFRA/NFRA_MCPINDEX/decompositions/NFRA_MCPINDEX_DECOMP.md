@@ -1042,3 +1042,14 @@ chain C                MX-b-2
    surface are measured by their cells.
 2. The CRO's question lists named by the analysis were not located by this seat's census. MX-v-6 records what it found
    and uses the Analyst's thread memory in any case.
+
+## R2.6 ADDENDUM -- two DS cells, on Andrew's option 4 (record @bda25438c8; CTO msg 25944)
+
+`0.0.0_AB_MSTR~Z` seated `0.4.0_DS_ClientPlatform~D` at 22:55:02Z for the two DS acts the round-1 analysis PARKED (R-2 (2),
+R-4). DS owns silver scripts, their QA deploy and production schedules (CLAUDE.md rule 13). They are added to round 2
+as one supplementary issuance with a stated reason. They touch nothing on the held branch.
+
+| Cell | From | Builds | Risk |
+|---|---|---|---|
+| `MX-s-1` | R-4, row W3-S2 | why TrueShares DIVZ/IDVZ holdings never reach `opal-data-assets` `trueshares/{fund}/silver/fact_holdings/`; the converter fixed; the missed dates since 2026-08-24 backfilled; the completeness guard made to count the holdings feed | WORLD (silver writes) |
+| `MX-s-2` | R-2 (2), C-S13 | the Black Diamond asset-to-cusip bridge builder (`build_bd_assets_dim.py`) on a PRODUCTION schedule; the one affected served figure (`gold/timeseries/holdings_lots`, 22,172 null-cusip rows on 2026-09-18) named and corrected under a never-widen sign-off (CTO+COO) | WORLD (a served move) |
