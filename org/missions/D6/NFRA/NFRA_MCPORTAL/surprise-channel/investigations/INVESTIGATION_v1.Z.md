@@ -238,6 +238,30 @@
     "spec_asserts": "NFRA_MCPORTAL-Z-W1-S1 is ARMED with 1.0.0_SA_CTO as disarm_owner.",
     "world_is": "The gap is closed at the tool: an unmapped path is admitted ONLY for a worker whose own non-terminal order names it; every other committer on an unmapped path is still refused UNDEFINED. The same fix serves NFRA_OPALAI-Z-W1-S1.",
     "notes": "No lane rule was added and no gate was widened beyond the registry's own worker_grant stanza (ADHC_OWNPTH.005)."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W1-S3",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~1",
+    "surfaced_at": "2026-09-25T15:00Z",
+    "one_line": "The staged grant-writer zip still cannot import at /var/task: ops/schwab_entitlement_admin.py:49 (read-only for MP-b-1) computes Path(__file__).resolve().parents[5] at IMPORT time, and /var/task/ops/schwab_entitlement_admin.py has only 4 parents, so the import raises IndexError. The MP-b-1 checks run the zip from a deep temp path where parents[5] exists, so they PASS and cannot see it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py@af11e91097 (last touched 7a5554face) :49 `_REPO_ROOT = Path(__file__).resolve().parents[5]` and :50 `_CONTRACT_PATH = _REPO_ROOT / \"org\" / \"standards\" / \"NFRA_OPLGTW_CONTRACT.json\"`, both module-level, so they run on `from ops import schwab_entitlement_admin`.",
+        "python -c \"from pathlib import PurePosixPath as P; P('/var/task/ops/schwab_entitlement_admin.py').parents[5]\" -> IndexError 5 (measured 2026-09-25 on this worktree's interpreter).",
+        "build_package.py --out .scratch/mcpw.zip (this cell) -> members app/__init__.py, app/access_state.py, app/config.py, app/context.py, app/data_entitlement.py, lambda_function.py, ops/__init__.py, ops/schwab_entitlement_admin.py, org/standards/NFRA_OPLGTW_CONTRACT.json; ops/schwab_entitlement_admin.py is byte-equal to the gateway source, as the face requires, so the build cannot rewrite line 49.",
+        "b1.AC1.sh / b1.AC2.sh put the zip at ${TMPDIR:-/tmp}/mp_b1_acN_$$/mcpw.zip; on this host that path has more than 5 ancestors, so parents[5] resolves there and the in-zip import succeeds."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MP-b-1 section 1: the grant writer 'cannot run as packaged' because lambda_function.py climbs parents[5]; staging the import closure beside it, with lambda_function.py climbing nothing, makes it run from its own zip.",
+    "world_is": "Removing the climb from lambda_function.py moves the same IndexError one module down: the gateway's ops/schwab_entitlement_admin.py climbs parents[5] at import. Separately, even once the import succeeds, admin.load_contract() (called by lambda_function.handle on the narrow path) opens parents[5]/org/standards/NFRA_OPLGTW_CONTRACT.json, which is not where the zip carries it (org/standards/... at the zip root, i.e. /var/task/org/standards/...). The fix is in infra/aws/ec2/opal-gateway/ops/ (a lazy or guarded path, or a contract path the caller passes), which is outside this order's <paths>.",
+    "notes": "Not repaired here (face section 2 item 3; ops/ is read-only for this cell). AC1-AC3 are recorded as their scripts print them; this row states what they cannot see."
   }
 ]
 ```
