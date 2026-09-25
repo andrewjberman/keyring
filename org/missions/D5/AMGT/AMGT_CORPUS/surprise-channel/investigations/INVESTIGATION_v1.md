@@ -1261,6 +1261,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Z-S26 and Z-S29 disarm when a corrected pull and derive land real blocks for the 89 under a newer stamp, verified by FY rows > 0 and the 22 present per key.",
     "world_is": "Met on the served reader for 89 of 89. FWD-12 realized on this seat's real run; f-2 AC4 (judgment: the added figures beside the team's own workbooks) remains the CVO's at L9.",
     "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's); the next L9 may adjudicate Z-S26 and Z-S29 on it."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S34",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T05:23:51Z",
+    "one_line": "CRPS-f-1 (drained @eeb996b10e) passes the live research folders only in crosswalk.main's new --disclosure branch; the --write-pool branch (crosswalk.py:1356) still calls build_crosswalk without research_folders, so a put through it publishes research_folders_live and research_universe ABSENT. The order ruled that crosswalk.main passes the list; add_security._build_document does, crosswalk.main's write path does not. AC2 exercised only the --disclosure branch, so neither the worker's run nor this seat's re-grade could see the write path. crosswalk.main --write-pool is also the Peers producer's route to this key, so the two writers would disclose differently.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/identity/crosswalk.py at eeb996b10e: main()'s --disclosure branch calls _research_folders_for_disclosure() and passes research_folders/research_root; the write path calls build_crosswalk(args.as_of, identity_universe=universe, identity_source=universe_source) with neither.",
+        "add_security.py:365-372 passes research_folders (the induction path discloses; the plain re-mint path would not)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-f-1 s.1: 'The callers that build on this box pass the live list: add_security._build_document and crosswalk.main'.",
+    "world_is": "One of the two callers passes it. Nothing is served wrong yet: the served 09-25 object predates f-1 and discloses none of the new fields; the gap bites on the next put through crosswalk.main.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Remedy: crosswalk.main's write path passes the same research_folders/research_root the --disclosure branch does (one call), asked of 2.0.0_SA_COO~Z on its surface; then the disclosure re-mint through crosswalk.main --write-pool under a fresh pair, verified by reading folders_in_records == research_folders_live on the served object. The criteria lesson: a seam probe must drive the WRITE path it certifies, not a sibling branch."
   }
 ]
 ```
