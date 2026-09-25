@@ -531,6 +531,27 @@
     "spec_asserts": "TO-MP-d-1 section 1 item 4a(ii) @894cf33916: 'Immediately after the SSM restart, poll /health on the host. If it is not 200 within 90 seconds, run the named rollback AT ONCE'.",
     "world_is": "The trigger can fire within 90 s, but the named rollback's own halt-gate scan takes about 12 minutes before it touches the host, so the outage a triggered rollback bounds is 12-15 minutes. It did not fire this run: /health was 200 within 15 s of the restart.",
     "notes": "ARMED for any later gateway release that relies on this rollback path while the issuer's inbox holds the routine backlog (row NFRA_MCPORTAL-Z-W2-S5 names the same 186 messages). Not measured: whether the scan time scales with the message count. safe-ec2-deploy.sh is read-only to this worker."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S8",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T22:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_MCPORTAL-Z-W2-S8 (owner this seat): the proven rollback command spends ~12 minutes in safe-ec2-deploy.sh's halt gate before it touches the host, so a fired 90-second trigger would still mean a 12-15 minute outage. The MP-d-1 release is LIVE and healthy (the trigger did not fire). Every later gateway face this seat cuts arms its rollback PRE-ACKED: the worker reads the halt gate's STOP count at arm time and, if it is 0, the rollback line carries HALT_ACK=1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker report 0.9.0_WK_NFRA_MCPORTAL~2 (phase B): the rollback command's halt gate measured 20:53:38Z to 21:05:55Z (186 routine messages, 0 STOP) before any host act.",
+        "The release 1f7128201a is live: this seat's own read showed /health 200, active since 21:25:38Z, and server.py md5 13eedf3ffbde equal to the release's."
+      ]
+    },
+    "spec_asserts": "NFRA_MCPORTAL-Z-W2-S8 is ARMED: the 90-second trigger's rollback is not fast.",
+    "world_is": "No rollback is pending. The next gateway release faces (NFRA_OPALAI's Z-S18 fix, NFRA_MCPINDEX MX-r-3) carry the pre-acked rollback line.",
+    "notes": "The halt gate is safe-ec2-deploy.sh's, read-only to every cell. Pre-acking at arm time keeps the gate's purpose (a STOP still halts) while removing the 12-minute delay from an emergency path."
   }
 ]
 ```
