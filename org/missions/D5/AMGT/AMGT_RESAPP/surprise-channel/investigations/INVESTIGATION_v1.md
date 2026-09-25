@@ -14390,6 +14390,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "17/17 holds on the LANDED FIXTURE and does not transfer to the SERVED plane, where the same harness at the same bytes reads 16 of 17. The join closed the case where the page and the export read ONE field (description_verdict_reason); it did not close the case where the PAGE COMPOSES a reason from two sources (the model block's header-scalar census plus the thesis verdict) and the export echoes only the second. The gap is a CONTENT mismatch between two writers of one sentence, not a deployment defect: the deployed bytes equal the intended build input, AC1 and AC3 both pass, and the pre-act artifact cannot cover the line at all.",
     "disarm_owner": "2.0.0_SA_COO~Z -- INERT, so nothing to disarm. The remedy is a ro-1/ro-3 CONTENT cut the issuer owns, and it has two shapes: either render_pack composes the same joined sentence the page composes, or the thesis payload carries the composed reason so both surfaces echo one field. This lane took neither: both are lib/research writes outside its <paths>, and choosing between them is a spec decision, not a deploy act.",
     "notes": "Filed by the deploying lane at ro-7, ON-task rather than off-task, because the order's section 5 invites 'any row' and the finding is about the ACCEPTANCE's reach rather than about this cell's acts. The instrument lesson worth keeping: the join's green was measured with the harness's DEFAULT fixture and the served run passes --fixture, and the two differ so much that the CITES denominator alone moves 43 -> 15 -- so a criterion carried from a fixture run to a served run is a NEW criterion against a NEW population, and its previous green says nothing. The CITES drop is not itself a defect here (15 of 15 reach the export, 0 missing, 0 extra); it is the evidence that the populations differ."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S272",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-25T00:45:00Z",
+    "one_line": "ro-5 removed the raw Windows path from posture's reason in the PRODUCER, but the served page still shows it: the posture packs are served verbatim from the stored 2026-09-15 posture snapshot, so the fix reaches the page only when posture is re-run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "WORLD: the served capture at 2026-09-25T00:28:15Z (ro-7.served.sh, deployed CodeSha256 pmH20bb+L1Kcejf4MKS4tVt+tCIPgeHwSZAsTe+nXZo=) carries 'ABSENT org\\missions\\D5\\AMGT\\AMGT_RESAPP\\deliverables\\0.9.0_WK_AMGT_RESAPP~1\\model_block_DE_US_Equity.json (no model block landed for this name)' at 4 JSON paths: overlay.posture.packs.DE_US_Equity.absent[3] and .sources.model_block, and the same two under thesis.posture.",
+        "MECHANISM: lib/research/api/scoped_amgt.py:2949 serves 'packs': document.get('packs') -- the stored posture document's own field, verbatim; nothing at read time recomputes it through lib/research/posture/packs.py.",
+        "SPEC: AMGT-ro-5 is <risk>LOCAL</risk>; its criteria grade the producer's reason text (path-tokens=none) and the posture tests, both PASS at its drain 40dabe0e56. It never promised the served plane, so this is not a failed order.",
+        "DENOMINATOR: 1 comparable pack (DE_US_Equity) of 1 in the served posture; 4 of 4 occurrences of the path sit inside that stored pack."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 39's analysis item 5 names 'the raw Windows path on posture' as something the page shows; round 40 cut AMGT-ro-5 to remove it.",
+    "world_is": "The producer no longer writes the path, and the page still shows it. The served posture object predates the fix (snapshot 2026-09-15), and the adapter serves its packs verbatim. The path leaves the page only when posture is re-run, and a posture run makes a model call (the snapshot names model claude-opus-5), so it needs its own authorisation.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- INERT, nothing to disarm. Carried to the round-40 analysis as an enrichment item: either a posture re-run under its own authorisation, or the adapter re-derives the absent-source text at read time.",
+    "notes": "Found at the round-40 real run. The run's default fixture (uiContractFixtures.json) also still shows the path, so the fixture PNG set cannot tell the two planes apart; the served-content set in round40/real-run-served/ is the one that measures the served plane."
   }
 ]
 ```
