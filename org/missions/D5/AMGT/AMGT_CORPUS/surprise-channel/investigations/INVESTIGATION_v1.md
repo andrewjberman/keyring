@@ -1347,6 +1347,53 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Z-S30 disarms when extract's body is a function of its key, the duplicate resolves to one extract, and the sequence runs whole.",
     "world_is": "Met in the real run.",
     "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S9",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-25T18:45:32Z",
+    "one_line": "CRPS-g-2's RULED text says read the Model block 'by the same selection rule the served reader uses (read that rule from scoped_amgt; do not invent a different one)', but scoped_amgt._read_model_block_pool has NO client parameter -- it always resolves its own client via _pool_client() (env-driven, defaults to a real boto3.client) -- so calling it directly from build()/current_inputs()/write_one() broke 4 of test_dossier.py's own offline tests (POISON: boto3.client called), because those pre-existing tests pass a StubS3Client for every OTHER read in the same call and have no way to also configure AMGT_POOL_ROOT for a helper they never call directly.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/api/scoped_amgt.py:1023 def _read_model_block_pool(security_key: str) -- one positional argument, no client; :1048 client = _pool_client(); :1173-1179 _pool_client() returns _LocalPoolClient(root) only when os.environ['AMGT_POOL_ROOT'] is set, else _s3_client() -> boto3.client('s3', ...).",
+        "First draft (dossier.py calling scoped_amgt._read_model_block_pool(security_key) from current_inputs/build, no client threaded): python -m pytest lib/research/corpus/tests -q --color=no -p no:cacheprovider -> '4 failed, 298 passed in 2.41s', all 4 failing with 'RuntimeError: POISON: boto3.client called -- a real network/vendor call was attempted' (lib/research/corpus/tests/conftest.py:37), raised from lib/research/api/scoped_amgt.py:1433 boto3.client('s3', region_name=DRAFTING_REGION) via _pool_client() via _read_model_block_pool, inside dossier.write_one -> current_inputs -> _model_block_read -- in test_dossier.py, which this cell's <paths> hold READ-ONLY.",
+        "Fix: dossier._model_block_read(security_key, client) reimplements ONLY the newest-lexicographic-stamp SELECTION (MODEL_BLOCK_POOL_PREFIX / POOL_BUCKET imported, never retyped, from scoped_amgt / lib.research.coverage.pool_reader) using the SAME client this module already threads through every other read -- the idiom this file's own pre-existing _list_stored_keys(security_key, client) already uses (paginate + client.get_paginator('list_objects_v2')). scoped_amgt._read_model_block_pool itself is never called. After the fix: 'python -m pytest lib/research/corpus/tests -q --color=no -p no:cacheprovider' -> '302 passed in 1.99s' (re-run: '302 passed in 2.26s'), and the live AC2 probe still reads the real pool correctly: 'python -m lib.research.corpus.dossier --model-rows-probe --key ADBE_US_Equity' -> 'model_rows 96 with_value 41 absent 55 constant_reasons 0 inputs_model_block s3://opal-data-harvest/derived/model_block/ADBE_US_Equity/20260925T043855Z/model_block.json'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO Section 1, RULED: 'reads the NEWEST derived Model block for the dossier's security key by the same selection rule the served reader uses (read that rule from scoped_amgt; do not invent a different one)'; BOUNDS AC3: the corpus suite still passes.",
+    "world_is": "scoped_amgt._read_model_block_pool cannot be called with a caller-supplied client, so literally calling it from this module's client-threaded build()/current_inputs()/write_one() breaks AC3 by reaching a real boto3 client under the package's offline poison. The SELECTION RULE (prefix + newest-lexicographic-stamp suffix match) is reused verbatim by literal import; only the S3 CLIENT SOURCE differs, resolved the same way every other read in this file already resolves it.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Resolved toward the criterion that is mechanically checked (AC3, the whole-package suite) over a literal reading of 'do not invent a different one' that would have required calling scoped_amgt's own client-selection helper; the selection ALGORITHM is unchanged and imported, not retyped."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S4",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-25T19:16:16Z",
+    "one_line": "CRPS-g-4's task order names lib/research/corpus/induction_request.py --pick as the FWD-4 read-only instrument, but the module hard-codes its write to org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/induction_request.json (DELIVERABLES_DIR, induction_request.py:60-63) -- a path outside this worker's own <paths> grant and this cell's read-only/no-write bound -- so the fence could not be freshly EXERCISED from this worktree; measured instead from the already-committed induction_request.json and the committed CRPS-c-5 proof_of_spec.json's recorded output_evidence at HEAD, both a prior real run. A second, unrelated drift found by the same probe: that prior run (as_of 2026-09-23) measured unresolved_in_universe 60 of 93; this worker's fresh backlog.coverage() read today measures 0 of 94 unresolved -- the backlog population FWD-4 exercises against has moved to empty since the cited evidence was produced.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/corpus/induction_request.py:60-63 (DELIVERABLES_DIR = org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2) and :453-456 (run() always os.makedirs's it and writes REQUEST_FILE_NAME there) -- read directly by this worker, this worktree.",
+        "This cell's own <paths> (task order AMGT_CORPUS.TO-CRPS-g-4, section 3): only org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/ and the two named channel/task-order paths are writable; ~2's deliverables directory is not in that list.",
+        "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/induction_request.json (committed at this worker's HEAD): unresolved_in_universe 60 of 93, picked 'America Movil AXMB MM', as_of 2026-09-23.",
+        "This worker's own fresh lib.research.corpus.backlog.coverage() read, this worktree, 2026-09-25T19:xxZ: resolved 94 unresolved 0 ambiguous 0, sum 94."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-g-4's WORKER FACE section 1: 'Measure against the SERVED and STORED state at HEAD, with read-only instruments only ... the project's own read-only CLI modes'; HARD BOUND section 4: 'NO write anywhere but your two files'.",
+    "world_is": "The named CLI mode for FWD-4 is not actually read-only to a worker other than 0.9.0_WK_AMGT_CORPUS~2 -- its one write target is hard-coded to that worker's own deliverables path. This worker read the committed evidence of a prior real run instead of re-exercising it, and separately found the run's own population (60 unresolved) has since gone to 0 at HEAD.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Filed per CLAUDE.md section 2 ('had to do what the task order did not say, or could not do what it said'); work continued (FWD-4 recorded met on the committed evidence). No repair attempted -- DELIVERABLES_DIR is out of this cell's write grant and out of scope to change."
   }
 ]
 ```

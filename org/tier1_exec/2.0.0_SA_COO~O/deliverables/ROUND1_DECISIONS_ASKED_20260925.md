@@ -74,3 +74,25 @@ without lowering a bar or changing a closed cell's product.
   - (a) supersede MX-c-4 as cut, and carry the 14 declarations to a re-cut cell granted the four integration
     directories, with MX-c-4's build as its base; or
   - (b) another route you name.
+
+## D-4 (NFRA_MCPINDEX MX-t-8, round 2): the portal tools must read legacy served keys, and the naming gate refuses every such literal
+
+- **Measured by `0.9.0_WK_NFRA_MCPINDEX~3`** (branch `wk-NFRA_MCPINDEX-3` @1aaca33efa, row NFRA_MCPINDEX-Z-W3-S6):
+  - `.tools/naming-gate.py` (ENFORCE) prints `REFUSE 19 graded` on `app/integrations/portal_index/integration.py`;
+  - the 10 tools read the exact objects the portal serves today, in `opal-data-portal-v2`: `platinum/mdpf/{scope}/*.json`,
+    `platinum/etfs/positioning_data.json` and `platinum/advi/49financial/*.json`;
+  - those objects exist ONLY at those legacy keys. The LGIC canonical keys `address()` would produce are absent from the
+    bucket (a read-only listing: none; the legacy prefix lists normally);
+  - the module is kept, never run, as `candidate/portal_index/`.
+- **Why the issuer does not act:** the gate's one waiver, `org/standards/NAMING_LEGACY_READS.json` (IRPT-M-LEGACY-READ-01
+  precedent), needs a CTO authority record per literal and call site, landed before the reader's commit. Typing the
+  canonical keys would read nothing. Dodging the literal is refused. MDPF_CANON (D8) owns the migration.
+- **The decision:**
+  - (a) LEGACY-READ entries for these reader call sites under a CTO authority record, so the module commits under the
+    gate as it stands; or
+  - (b) an R20 departure Andrew acknowledges; or
+  - (c) MX-t-8 waits for MDPF_CANON's canonical keys; or
+  - (d) another route you name.
+- **Issuer's own acts, not asked:** the cut missed `app/data_entitlement.py` (tool classes; the guard would deny all 10
+  tools and MX-d-2's 2), `app/integrations/registry.py` (the factory wiring an enable needs), and a portal-bearing
+  worktree for the emitter. MX-t-8 is re-cut with those paths once D-4 lands.

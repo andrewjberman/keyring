@@ -31,6 +31,17 @@ IT) rules this release: **`f1f0fc6780` plus ONLY NFRA_MCPORTAL's gateway commits
 - this order's own `deploy-to-ec2.sh` commit.
 
 In order:
+0. **The privacy condition** (AMENDED, CTO sign-off
+   `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/1.0.0_SA_CTO~O/RULING_MP-d-1_RELEASE_SIGNOFF_20260925.md`
+   @384fd85543, READ IT). The header capture records claim KEYS only; no claim VALUE ever reaches a log line, an audit
+   record or a committed file.
+   - On THIS branch, change `app/owner_gate.py` so its once-per-process line is exactly
+     `OWNER-HEADER-CLAIMS keys=<sorted comma-separated claim keys>`, with no value of any claim.
+   - `GET /api/admin/whoami` may return the owner's own `oid`/`sub` in its RESPONSE to the verified owner only, never
+     logged or audited.
+   - Update `tests/test_admin_round2.py::test_claim_keys_logged_once_without_other_values` so it asserts that no claim
+     value at all appears in the line: planted oid, sub, email and name values are all absent.
+   - Commit it. It is one of "this project's gateway commits" the release carries.
 1. **The deploy script** (on THIS branch, committed first). In `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`:
    - (a) build `mcportal` at its checked-out commit (`bun install` + `bun run build`) and put `mcportal/dist/` into the
      artifact at the path `DASHBOARD_BUNDLE_DIR` names (default `dashboard/` beside `app/`);
@@ -60,6 +71,10 @@ In order:
      `rel-nfra-mcportal-r2-gateway-2`, carrying the fixed script (`83cbd1a605` on this branch). Immediately after the SSM
      restart, poll `/health` on the host. If it is not 200 within 90 seconds, run the named rollback AT ONCE, close the
      entry as rolled back, and stop.
+   - **(iii) The CTO's post-act read 3, yours:** the MCP tool surface does not move. Before the act and after it, list
+     the registered tool names on the host (on-box, through the service's own venv and `.env`). Record the two lists'
+     counts and their difference, which must be empty. A non-empty difference: roll back. The post-act reads 1 and 2
+     (owner served; a signed-in non-owner refused) need a signed-in human, so they are the close run's.
 5. **NEVER-2 ledger, on THIS branch (`wk-NFRA_MCPORTAL-2`), in this order:**
    - `python .tools/deploy_ledger.py open ...` with slug `nfra-mcportal-r2-gateway-release`. Legs: bundle build,
      release build + upload, SSM pull + restart, manifest record. Plus the census, the rollback, and the analysis's path;
@@ -85,6 +100,8 @@ In order:
 
 <paths>
 infra/aws/ec2/opal-gateway/deploy-to-ec2.sh
+infra/aws/ec2/opal-gateway/app/owner_gate.py
+infra/aws/ec2/opal-gateway/tests/test_admin_round2.py
 infra/aws/ec2/EC2_MANIFEST.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-mcportal-r2-gateway-release.json
@@ -126,7 +143,7 @@ Report once:
 SPAWN ONLY after MP-g-1 and MP-p-1 have DRAINED (g-1's commits on CLOUD; p-1's nested commit in mcportal r1-drain).
 Provision with `--nested mcportal=r1-drain`.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
