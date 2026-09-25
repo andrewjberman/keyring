@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: /canonical-drive loop on Andrew-direct 17:3xZ (cron 57c0067c, every 10m; replaced goal loop f599225b), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T19:5xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T20:2xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -153,7 +153,20 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    ports.render_enabled: sweep -> mint -> put -> preflight/dispatch -> delete if not sent or raised. _render_identity 36,
    export 97 rc=0. Real run LIVE Parameter Store (dummy value): put/readback equal, second put refused, delete, read after
    delete refused ParameterNotFound, 0 names left.
-   NEXT (P): (1) done (portal render Bearer on local DEV); (1b) B2 host + infra: SSM document params RenderTokenName +
+   B2 DOCUMENT + INSTALLATION LANDED 3b750ae8f0 (backend): ssm.tf RenderTokenName/PrintQuery params (default "");
+   submit_installed composes ssm/dispatch/mint (render key secret only, refuses any other) behind IRPT_EXPORT_RENDER=on.
+   export 101 rc=0. HOST HALF WRITTEN, HELD uncommitted in the backend worktree (render_export.cjs + run-export-render.sh
+   are CLOUD_OPS_OR_ETL's; exact rows asked of 1.0.0_SA_CTO 20xxZ): token by name into node memory only, no operator
+   session, delete in finally + top-level catch; a live Parameter Store run CAUGHT a catch-all that reported a failed
+   delete as "already absent" -- fixed (only ParameterNotFound is absent; else WARN NOT deleted), value 0x in output.
+   B2 TERRAFORM LANDED bf002b826e (backend, NOT applied): b2_render.tf -- var.export_render (default off), the export
+   role Put+Delete on /irpt/render-token/* + DescribeParameters + the render key secret only; the host role Get+Delete on
+   the prefix only; lambda.tf switch + secret name. Plan 2 add / 2 change / 0 destroy. IAM simulator on the planned
+   documents: 10 of 10 cases as the ruling states (Lambda cannot Get a token or read the human key; host cannot Put;
+   nothing outside the prefix).
+   NEXT (P): (1) done (portal render Bearer on local DEV); (1b) the B2 deploy, one ledger, when the CTO grants the two
+   host-script rows: upload the host half to ec2/investor-reporting-export/, apply the export root with
+   export_render=on, and ship the read functions' B0 packaging (grant.py + enforce at 755c13bc19 + grant read IAM) -- SSM document params RenderTokenName +
    PrintQuery; run-export-render.sh reads the name (get-parameter --with-decryption, never echoed), render_export.cjs opens
    origin + print route + PrintQuery + &renderToken= with NO storageState, then deletes the name; submit_installed composes
    ssm/mint/dispatch + IRPT_EXPORT_RENDER=on; IAM per ruling (Lambda Put+Delete+Describe on /irpt/render-token/*, secret
