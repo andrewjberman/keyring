@@ -859,6 +859,30 @@
     "spec_asserts": "iv-e-10.ruled-touch.test.ts (IV-e-10a's own criterion): `HoldingsTab.tsx` differs from base commit `13b5356f...` by AT MOST TWO ADDED LINES, ZERO REMOVED, forever, read directly off `git diff --numstat` against that one fixed commit.",
     "world_is": "The decomp's own later cells (IV-e-18, then this cell IV-e-19) are BOUNDS-granted to make further RULED edits to the same file for their own FWDs (client-language disclosures; progressive disclosure/DESIGN.md C14) -- a fixed-base, ever-shrinking bound on ONE file cannot survive two more legitimate rounds of work on it. This worker did not touch iv-e-10.ruled-touch.test.ts (out of `<paths>`) and did not weaken it to pass; the file's own JOIN-2 task order explicitly grants `tabs/holdings/` and this cell's rules leave no smaller edit that both satisfies IVE19-AC1/AC2 and holds the count at 2.",
     "notes": "Not blocking any of IVE19-AC1..AC4 as written: none of their invocations run iv-e-10.ruled-touch.test.ts. Filed so the CTO/COO retires or re-bases the fixed-base bound (e.g. pin to the LAST cell that was allowed to touch the file, or drop the numeric cap now that the file is under active, ruled, multi-round revision) rather than reading a future re-run as a fresh regression."
+  },
+  {
+    "id": "DSGN_IRPTV1-W11-S4",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~11",
+    "surfaced_at": "2026-09-25T02:55:00Z",
+    "one_line": "IVE20-AC2's own scrollbar census, run against the LIVE main portal checkout on :5174 (the worker face's own instructed instrument, pre-merge), found a real stray horizontal scrollbar in production-adjacent code TODAY: DrillTree.tsx's donut legend (`renderDrillLegend`, IV-e-13 round 2) sets `whitespace-nowrap` on each entry inside a `flex-wrap` row, so a single long model name (e.g. a canonical duration-ladder name) wider than the legend's own box at 390px cannot shrink or wrap and forces `scrollWidth(316) > clientWidth(250)` on `[data-slot=holdings-drill-legend]` -- confirmed a genuine `overflow-x: auto` computed value (not a false positive) because CSS forces the cross-axis to `auto` whenever `overflow-y: auto` is set on an element whose other axis was `visible`.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- merges this worker's fix (DrillTree.tsx: the legend `<li>` drops `whitespace-nowrap`, gains `max-w-full break-words`) into the round-3 candidate and re-runs `iv-e-20-scrollbar-driver.mjs` against the MERGED checkout's own dev server; only that re-run, not this worker's in-worktree fix, can flip IVE20-AC2 to PASS-by-output, per the worker face's own instruction that a fix living only in an unmerged worktree cannot be measured as fixed on :5174.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`node iv-e-20-scrollbar-driver.mjs http://localhost:5174 iv-e-20.fixture.json \"Cottonwood Trust\"` (this worker's own driver, run twice, before AND after the DrillTree.tsx fix -- both runs against the SAME unmerged :5174, since the fix lives only in this worktree): identical output both times -- `WIDTH 390 TAB Holdings CONTAINER [data-slot=holdings-drill-legend] <ul> ... scrollWidth=316 clientWidth=250 -- VIOLATION`, `CENSUS: 1 violation(s) across 6 width x tab combination(s)`, `VERDICT: SCROLLBARS-FAIL` -- proving the violation is a property of the SERVED page, not of this worker's own unmerged edit",
+        "at 1440 the same container reads `scrollWidth=621 clientWidth=621 -- ok` (no violation) -- the defect is width-dependent, only surfacing at the 390px bound this cell's own criterion names",
+        "`portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx` `renderDrillLegend` (committed at IV-e-13, round 2, well before this order): `<li ... className=\"inline-flex items-center gap-1.5 whitespace-nowrap\">` -- `whitespace-nowrap` prevents the entry's own text from wrapping, and a `flex-wrap` parent only wraps BETWEEN entries, never inside one, so one entry's own content width can exceed the container regardless of how many rows the legend spans",
+        "this worker's fix (committed on this branch): `className=\"inline-flex max-w-full items-center gap-1.5 break-words\"` -- `bun run typecheck` rc=0, `iv-e-13.legend-scale.test.ts` (the cell that authored this file) re-run clean (it asserts only the container's own `flex-wrap` class, never the `<li>`'s), full `__tests__/dsgn-irptv1/` suite unaffected"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IVE20-AC2: 'at 1440 and 390, no container other than the named table scrollers has scrollWidth > clientWidth (printed per container)'.",
+    "world_is": "The violation is real, measured on the currently-served main checkout (not a hypothetical or a fixture artifact), pre-dates this task order by two rounds (IV-e-13), and is fixed in this worker's own worktree but cannot be observed as fixed on :5174 until the COO's merge -- so IVE20-AC2 is reported FAIL-by-output against :5174 with this row as its status_reason, order left `pending`.",
+    "notes": "Not blocking the other three criteria (IVE20-AC1 TOOLTIPS-OK, IVE20-AC3 BANDS-OK both pass; IVE20-AC4 is judgment, RECORDED). Filed so the COO's merge + re-run is the one act that closes this row and flips IVE20-AC2, and so the CTO sees that the pre-existing legend defect (not something this order introduced) was caught by this cell's own new instrument."
   }
 ]
 ```
