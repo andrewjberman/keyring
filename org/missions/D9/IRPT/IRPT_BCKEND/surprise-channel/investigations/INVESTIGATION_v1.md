@@ -9235,3 +9235,52 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Off-task for P; a row, not a fix. P applies only -target'ed resources in this root until the owner reconciles."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S131",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T16:12:00Z",
+  "one_line": "A COT Holdings build REFUSES at every cutoff 2026-09-22..25 ('COT repeated row within relationship grain', holdings_snapshot.py:418-420): fact_holdings date=2026-09-22 carries 53 repeated (AccountID, AssetID, Relationship ID) groups (106 rows), so a scheduled COT publication would refuse today. The served COT revision (business date 09-22) came from the same one-version source object, which needs explaining.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (the Holdings producer, CTO R4); the source's duplicate rows belong to the COT silver owner if they are a source defect",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "hs.build_snapshot('cottonwood', VersionedInputs(s3), d) for d in 2026-09-22/23/24/25 on codex/irpt-m-completion @61f4b25171: ValueError REFUSED: COT repeated row within relationship grain, 4 of 4.",
+      "s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-22/data.parquet: 19,610 rows, 106 rows in 53 repeated (AccountID, AssetID, Relationship ID) groups, all from HOLDINGS_DAILY_2026-09-22.xlsx; 1 object version, LastModified 2026-09-23T11:46:02Z. It is the latest partition for every cutoff 09-22..25.",
+      "The guard landed at b3e63a795e (2026-09-23 15:51Z, 2.0.0_SA_COO~M). The served COT classified receipt names builder_commit 7124375528."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "HOLDINGS_SCHEDULED_PRODUCER_PLAN_20260925.md: 'Until then a scheduled fire REFUSES 49F and INF by the builders' own rule, and publishes COT only.'",
+  "world_is": "COT does not build either: every cutoff refuses on the source's repeated relationship rows. The newest COT fact_holdings partition is also 2026-09-22 for a 09-25 cutoff (2 trading days behind). Open: how the served 09-22 revision passed the guard (a bounded account set, or a different build path), and whether the 53 groups are a source defect or a legitimate grain the guard mis-reads."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S132",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-25T16:02:00Z",
+  "one_line": "The Lambda@Edge role (lambda-edge-execution-role, policy lambda-edge-secrets-logs, portal-auth/iam.tf:287-298) grants secretsmanager:GetSecretValue on opal/auth/* -- which includes opal/auth/jwt-private-key (the HUMAN signing key) and now opal/auth/irpt-render-jwt-private-key; auth-validator-edge only needs the two PUBLIC keys.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/portal-auth/iam.tf:295-297: Resource arn:aws:secretsmanager:us-east-1:<acct>:secret:opal/auth/* on aws_iam_role_policy.lambda_edge_secrets_logs.",
+      "render_auth.mjs reads only opal/auth/irpt-render-jwt-public-key; index.mjs's human path reads opal/auth/jwt-public-key (getJwtKeySlots)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND PRD item 1: a separate signing key so no runner holding a verifier's grant can mint another principal's token; least privilege for verifiers.",
+  "world_is": "Every edge container can read both PRIVATE signing keys. Pre-existing for the human key; the render key joined the same wildcard at A1. Owner: the portal-auth IAM lane (CLOUD_OPS_OR_ETL / NFRA_OPSEC) -- narrow the Resource to the two public-key ARNs.",
+  "notes": "Off-task for P; a row, not a fix. A3 needs no IAM change (the wildcard already covers the render public key)."
+}
+```
