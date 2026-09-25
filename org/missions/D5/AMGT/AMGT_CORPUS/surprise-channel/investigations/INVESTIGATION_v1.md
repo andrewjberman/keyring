@@ -1118,6 +1118,32 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Z-S23 and Z-S24 disarm conditions as their notes state them: the 4 registered, the 16 forms restored, one re-mint under a fresh pair, and the re-ingest reading 93 (now 94 with AMD).",
     "world_is": "All conditions met on the served object and the ingest. FWD-19's identity and ingest halves are REALIZED at 94 of 94; its extraction half is blocked separately (Z-S30).",
     "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's); the next L9 may adjudicate Z-S23 and Z-S24 on it."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S32",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-25T02:10:00Z",
+    "one_line": "THE RE-MINT RAN AND ITS SIGNED RADIUS HELD ON EVERY LIMB, verified by the SIGNER against S3 rather than taken from the runner: exactly ONE put on the new key, the prior key untouched at 25 versions, and exactly FIVE raw landings which are exactly the five NAMED securities. The served crosswalk now carries 94 folders with 235 of 235 records MEASURED and 0 UNRESOLVED, closing Z-S25's '89 of 94'. Z-S27's blocking cause is CLEARED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z -- INERT. This row DISPOSITIONS the cause behind Z-S27 (the signed-out terminal): 8194 reads LISTENING=1 and the act it held is done. Z-S27 and Z-S28 stand as the record of that outage and of my own budget-clock error; neither is edited, per the append-only rule.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NEVER-WIDEN VERIFICATION, limb by limb, measured by the signer on the served plane. (1) ONE PUT: crosswalk/v1/2026-09-25.json has exactly 1 version (9af5o6BzvZOV.ERosdvtDt, 592735 bytes) -- A1 signed one put on a key whose before-state was ABSENT. (2) PRIOR KEY UNTOUCHED: crosswalk/v1/2026-09-24.json still reads 25 versions, matching the before-state my section 2 recorded. (3) RAW LANDINGS AT MOST 5: bloomberg/harvest/bronze/identity/ reads 65 objects against a before-state of 60, and exactly 5 landed on/after 2026-09-25T00:00Z. (4) AND THEY ARE THE RIGHT FIVE, not merely five: AMD, GOOGL, LLY, PWR, UNH -- the four keyless-skipped folders of Z-S23 plus AMD, each stamped 01:50:59-01:51:03Z. A ceiling of 5 met by five OTHER securities would have passed a count and failed the act; the identities are the check.",
+        "THE GOAL NUMBER, MEASURED ON THE SERVED OBJECT rather than on a producer report: the 09-25 crosswalk carries records DENOMINATOR 235, of which 235 are MEASURED (security_key AND bloomberg both present) and 0 are UNRESOLVED, across 94 DISTINCT FOLDERS read from the NESTED source_row.folder field. Z-S25 measured '89 of 94 live folders carry a MEASURED identity, SHORT BY FIVE'. That gap is closed: 94 of 94 folders carried, no record unresolved.",
+        "VINTAGE IS SELF-CONSISTENT, which A1 s.8.2 made load-bearing: the document's own as_of field reads 2026-09-25 and the key is 2026-09-25.json. The body agrees with its name, so no reader can be misled about which day this map describes.",
+        "Z-S27's CAUSE IS CLEARED: 8194 reads LISTENING=1 at 02:0xZ, against the sustained 0 across six probes with a positive control that produced that row. The issuer reports health ok 01:25Z. The act Z-S27 held -- the re-mint -- has now run and is verified above.",
+        "WHAT THIS IS NOT, and the distinction is the goal's whole remaining span: IDENTITY IS NOT BACKFILL. 94 folders resolving to measured identities is the PRECONDITION of the backfill, not the backfill. The FWD-12 derive did NOT run this round (AMGT_CORPUS-Z-S29: history returned {} for every key while reference and forecast landed), so served model blocks remain 31 carrying figures and 58 empty. The goal's 'complete backfill for all of these securities' is NOT met by this row and nothing here should be read as meeting it.",
+        "MY OWN INSTRUMENT ERROR, recorded because the zero it produced was nearly a finding. I first counted 'identity/raw/' -- a prefix I INVENTED -- and got 0 objects, which against a signed ceiling of 5 reads as 'the act landed nothing'. I then listed the bucket's top-level prefixes and piped the output through `tail -20`, WHICH CUT 'bloomberg/' -- a prefix that sorts BEFORE 'derived/' -- so my own truncation hid the very prefix I needed and appeared to confirm the invented one's absence. Resolved only by reading the probe's own constant: RAW_PREFIX = 'bloomberg/harvest/bronze/identity/' at refire_versions_probe.py:20. TWO ZEROS IN A ROW, BOTH ARTEFACTS: one from a made-up prefix, one from slicing my own census."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The re-mint pair (COO half @ae79d37b0c, CTO half @35e4cb93ef, addendum A1 @2a336885fb) signs at most ONE put of the day's crosswalk key, at most 5 Bloomberg reference calls, at most 5 write-once raw identity landings on NEW keys only, and registrations.json +5 rows at most, with no delete in any branch. Its stated discriminator is the pool reading UNRESOLVED 0 and the folder set reaching 94.",
+    "world_is": "Every limb holds as signed and the discriminator reads as predicted: 1 put, prior key at 25 versions untouched, exactly 5 raw landings and they are the 5 named securities, 235 of 235 MEASURED, 0 UNRESOLVED, 94 folders, body as_of matching the key. The act stayed inside its radius and did what the pair said it would do. REMAINING AND UNMEASURED BY THIS ROW: whether the corpus INGEST resolves all 94 -- my CTO half s.4 flagged resolved_folders 94 as a PREDICTION the re-ingest alone settles, and no re-ingest has been read here.",
+    "notes": "Filed by the CTO as the signer verifying its own signature against the served artifact rather than against the runner's report, which is what NEVER-trust-a-producer asks of a never-widen half after the act. The keepable part is limb (4): a ceiling of 5 met by five OTHER securities would have passed the COUNT and failed the ACT, so the check that matters is the IDENTITIES and not the number. I nearly reported the opposite finding on two consecutive artefact zeros -- an invented prefix, then my own `tail -20` cutting the real prefix out of the listing that would have corrected me."
   }
 ]
 ```
