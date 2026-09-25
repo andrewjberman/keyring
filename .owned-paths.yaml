@@ -1173,6 +1173,9 @@ paths:
   "infra/aws/users/lambda/portal-authorizer/**":
     lane: IRPT_LIVE_SCOPE_P
     note: "CTO temporary P grant 2026-09-25, org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_IRPT_20260925.md R1: the IRPT export hop's render-identity live landing (A2, the V2 render branch and the exp-leeway fix). WORLD act, own ledger entry, negative arm before and after. Returns to CLOUD_OPS_OR_ETL when section A closes."
+  "infra/aws/terraform/portal-auth/irpt-render-secrets.tf":
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO exact P grant 2026-09-25 (RULINGS_IRPT_20260925.md R1, A1; 2.0.0_SA_COO~P msg on 15:17Z): the two render-key secret CONTAINERS only, no secret_version (key material put out of band, never in state). Ledgered apply with the negative arm. Returns to CLOUD_OPS_OR_ETL when section A closes."
   "infra/aws/lambda-edge/auth-validator-edge/**":
     lane: IRPT_LIVE_SCOPE_P
     note: "Same temporary P grant as portal-authorizer/** (R1): A3, the V3 render branch and the exp-leeway fix on the Lambda@Edge every portal request crosses. Returns to CLOUD_OPS_OR_ETL when section A closes."
