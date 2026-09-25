@@ -347,6 +347,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "NFRA_OPALAI-Z-W6-S1 is ARMED with this seat as disarm_owner.",
     "world_is": "The criteria now read the command's own exit; the order's instance is rewritten by a fresh worker on this slot against the fixed checker.",
     "notes": "Swept on the trigger: 19 check files read rc=$?, all through the one sourced root. No gate is built here."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S10",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T01:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "OA-t-4's parent side is HELD unmerged, and its row NFRA_OPALAI-Z-W4-S1 (ARMED, owner this seat, on branch wk-NFRA_OPALAI-4 only) is carried here: the live D7 ticket-intake runner imports .claude/skills/teams-assist/teams-watch.py by path and calls its Claude-credential token selection, so moving the watch as the order says would break a production pipeline. Disarmed by the hold; the fix is a cross-directive decision routed to 1.0.0_SA_CTO~O.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/ticketing/intake/runner.py at CLOUD HEAD, read by this seat: :69 TEAMS_WATCH = REPO_ROOT / '.claude' / 'skills' / 'teams-assist' / 'teams-watch.py'; :107 'Import the estate's ONE pinned-token selection (teams-watch.py) -- never re-implement it'; :121-123 sets tw.PIN_SERVER and calls tw.read_token(). Scheduled every 5 min as OPAL_D7_ticket_intake (worker report).",
+        "Worker 0.9.0_WK_NFRA_OPALAI~4 on TO-OA-t-4, branch wk-NFRA_OPALAI-4 @182c475633: AC1 3 of 3, AC2 live metadata PASS, AC3 FAIL (the old path still named by runner.py and by OA-t-1's own SKILL.md); instance VALID (rc=0, issuer re-run). Its nested watch (own OAuth refresh family, never reads ~/.claude/.credentials.json) is merged into opal_ai branch r1-drain @79f7ad3; the opal_ai checks pass there.",
+        "Not merged: wk-NFRA_OPALAI-4's parent commit e459c5d6df removes .claude/skills/teams-assist/teams-watch.py; CLOUD keeps it."
+      ]
+    },
+    "spec_asserts": "TO-OA-t-4: the watch moves into opal_ai and its parent copy is removed on the branch (C1, move never copy).",
+    "world_is": "The workspace copy has a second consumer outside NFRA_OPALAI -- a D7 production runner -- that depends on exactly the behaviour the Analyst's watch is moving away from (reading Claude Code's own token). C1's 'move, never copy' cannot hold for this file without the D7 runner's own change.",
+    "notes": "Decision asked of 1.0.0_SA_CTO~O: (a) the D7 runner owns its own token selection (its owner writes it; the Analyst's watch moves), or (b) the runner re-points to the moved watch and adopts its refresh family. OA-t-4 stays open until then. No gate is built here."
   }
 ]
 ```
