@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T18:4xZ (tick 7). Loop: /canonical-drive cron 6f699621 (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-25T19:0xZ (tick 8). Loop: /canonical-drive cron 6f699621 (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -88,9 +88,11 @@ branch. No code edit is open.
      ONE principal per firm holding exactly its reads and writes. The fence denies the host role, and a firm
      principal is NEVER-WIDEN-CLASS (R-44), so both halves are needed before any apply. Grants were measured from each
      firm build's receipts (plan addendum 2), then from EVERY botocore call:
-     HOLDINGS_FIRM_PRINCIPAL_GRANTS_20260925.json (M branch). No read crosses into another firm. NEXT: the
-     Terraform reading that record (3 principals, the dispatch function, the schedule retarget kept DISABLED), then
-     the never-widen packet (both halves). Then one --qa fire, then the never-widen half for the enable.
+     HOLDINGS_FIRM_PRINCIPAL_GRANTS_20260925.json (4e995812bb). No read crosses into another firm. The Terraform
+     is WRITTEN and VALIDATES (holdings_refresh.tf, and the schedule.tf slot retargeted and kept DISABLED), but the
+     directory root is lane IRPT_COMPLETION_P, so it is UNCOMMITTED in ../ajb_irpt_m. An exact-file grant is asked
+     of the CTO (msg 20260925T18xxZ). The host script assumes the firm principal for the whole run (61b497f14f).
+     Then the never-widen packet (both halves), the apply, one --qa fire, and the enable half.
      Row 4a DONE (3e1ca981ab): the publication writes through a firm-scoped publish principal when the dispatch
      names one (IRPT_HOLDINGS_PUBLISH_ROLE_ARN); reads stay on the host (R-44 split by bucket). Rows 2 and 4b are
      designed in the plan addendum (M branch). NEXT: the CLOUD merge (another seat's staged
