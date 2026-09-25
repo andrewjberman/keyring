@@ -109,23 +109,28 @@ def _forged(seconds_past_exp):
 
 
 def expiry_boundary():
+    """PRD item 7(c) + CTO ruling R1 @75156f2b18: exp gets NO leeway. Every token past exp is refused at
+    BOTH verifiers; control: a token 30 s before exp (same 300 s life) is admitted at both."""
     published_op, route_key, claim, uri = ROUTES[0]
     rows = []
-    for past in (1, 30, 59, 61, 120):
+    for past in (-30, 1, 30, 59, 61, 120):
         out, _err = w.call_bridge(_forged(past), uri, "GET", _route(route_key, claim, IDS[claim]))
-        rows.append({"seconds_past_exp": past, "v3_admitted": out["v3"]["admitted"],
-                     "v2_authorized": out["v2"]["authorized"]})
-        if past > 60:
-            w.check("EXPIRY %ss past exp: refused at V3 and V2" % past,
-                    out["v3"]["admitted"] is False and out["v2"]["authorized"] is False)
-    admitted_past_exp = [r["seconds_past_exp"] for r in rows if r["v3_admitted"] or r["v2_authorized"]]
+        row = {"seconds_past_exp": past, "v3_admitted": out["v3"]["admitted"],
+               "v2_authorized": out["v2"]["authorized"]}
+        rows.append(row)
+        if past < 0:
+            w.check("EXPIRY control: %ss BEFORE exp is admitted at V3 and V2" % -past,
+                    row["v3_admitted"] is True and row["v2_authorized"] is True)
+        else:
+            w.check("EXPIRY %ss past exp: refused at V3 and V2 (no leeway)" % past,
+                    row["v3_admitted"] is False and row["v2_authorized"] is False)
+    admitted_past_exp = [r["seconds_past_exp"] for r in rows
+                         if r["seconds_past_exp"] > 0 and (r["v3_admitted"] or r["v2_authorized"])]
     return {"measured": rows,
-            "stated_boundary": ("a render token is refused at both verifiers once more than 60 s past exp; "
-                                "within 60 s past exp it is %s (both verifiers pass clockTolerance 60 to "
-                                "jsonwebtoken, which applies it to exp as well as nbf)"
-                                % ("ADMITTED at %s s" % admitted_past_exp if admitted_past_exp else "refused")),
-            "prd": ("IRPT_BCKEND_PRD.md item 2: nbf/iat with at most 60 s skew leeway; item 7(c): a token past "
-                    "exp is refused"),
+            "stated_boundary": ("a render token is refused at both verifiers from its exp on (no leeway); "
+                                "nbf/iat keep the 60 s skew allowance" if not admitted_past_exp else
+                                "ADMITTED past exp at %s s" % admitted_past_exp),
+            "prd": "IRPT_BCKEND_PRD.md item 2: nbf/iat with at most 60 s skew leeway; item 7(c): a token past exp is refused",
             "consistent_with_prd_literal": not admitted_past_exp,
             "effective_max_life_s": 300 + (60 if admitted_past_exp else 0)}
 
