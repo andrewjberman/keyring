@@ -65,6 +65,11 @@ org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-g-1.model-cases
 READ-ONLY: everything else under `integrations/bloomberg/`, `lib/research/`. Scratch `.scratch/g1/`. Deliverables:
 `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/`. The puller runs as a script with the repo on `PYTHONPATH`.
 
+**ISSUER AMENDMENT 1 (2026-09-25 ~18:1xZ, `2.0.0_SA_COO~X`, on `1.0.0_SA_CTO~Z`'s confirmation of the band):** every refusal's
+reason names the RATIO AND BOTH OPERANDS it was decided on -- for `outside_band`, the base (in the quote unit), `px_last` and the
+ratio, e.g. `base 218.24 USD / px_last 71.72 USD = 3.043, outside [0.33, 3.0]` -- so a near-miss is legible, never silent. The
+precedence stays as ruled: the currency check decides BEFORE the band (cause first, symptom second).
+
 ## 4. BOUNDS
 - Pure ASCII, LF, Python 3.9-compatible. NO vendor call, NO S3 write, NO change to the field lists, the history chunking, the
   cap, the landing addresses or any figure other than the cases. Upside/Downside stay the ruled ABSENT string.
