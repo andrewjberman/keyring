@@ -660,6 +660,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "PRD C4/C7 and FWD-6/FWD-7: the Teams-facing Analyst cannot be talked into changing anything; identity_scope.py frame (iii): no upload row for the concierge identity.",
     "world_is": "Server-side, the concierge identity may call opal_data_refresh_upload (it fires the yang-pipeline with confirm=True). The only barrier for a Teams-facing session is its client-side fence. The row was added identity-wide, presumably so the Bloomberg daily upload could use the same Entra identity, so the operator duty and the Teams-facing agent share one server-side reach.",
     "notes": "Disarm for the issuer, before the NFRA_OPALAI cutover puts Opal_Agent on this identity: bind the upload row to the OPERATOR's OAuth client, not the identity -- identity_scope keyed on (identity, client_id), since the gateway's OAuth AS registers each client (Opal_Agent's own Claude login registers its own client). Then the operator's client keeps the upload and the runtime's client is refused. The test is pointed at an explicit fixture overlay so it stops reading the live file. No new M365 account or licence is needed. If an Andrew ruling added the row, the row's PURPOSE stands; only its scope narrows. Filed by the PRD owner."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S19",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T21:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_OPALAI-Z-S18 (owner this seat) by a CUTOVER PRECONDITION: the NFRA_OPALAI cutover (the only act that puts Opal_Agent on the opalbloomberg identity) does not run until opal_data_refresh_upload is refused to the runtime. Either server-side, identity_scope keyed on (identity, OAuth client_id) with the upload granted to the operator's client only, or at minimum the runtime fence opal_ai/opal/agent/hooks/concierge-gate.sh denying it. Both are round-2 cells.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/identity_tool_allowlist.txt:13 grants 'opalbloomberg@opalinvest.com opal_data_refresh_upload'; its :11-12 state the design intent: 'FALLBACK capability only -- the system cron (OPAL_BBGTML_daily_pull 07:00 ET) stays the primary path'.",
+        "The runtime fence at opal_ai r1-drain (opal/agent/hooks/concierge-gate.sh:115) denies email and site writes only; it has no line for opal_data_refresh_upload. The workspace fence .tools/hooks/bg-concierge-gate.sh:45 names 'the terminal-upload data channel' as the seat's deliberate outbound surface.",
+        "The cutover is gated on Andrew (G-PUSH, G-ACCT, G-AUTH, G-ASKER) and has not run; Opal_Agent is not live on the identity."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-S18 is ARMED with this seat as disarm_owner: the concierge identity can fire opal_data_refresh_upload.",
+    "world_is": "Today the reach is held only by the workspace BG seat, as the documented fallback upload duty. The Teams-facing Opal_Agent runtime gains it only at cutover, and this row makes the cutover conditional on the refusal. The pinned tool count (45 vs 44) is recounted on each release base, per the CTO's note.",
+    "notes": "Round-2 cells for NFRA_OPALAI: (1) identity_scope keyed on (identity, client_id), upload to the operator's client only, with test_scoped_deny_by_default pointed at a fixture overlay; (2) the runtime fence denies opal_data_refresh_upload as belt-and-braces. No new M365 account is needed. The row's purpose (Andrew's fallback upload) stands; only its scope narrows."
   }
 ]
 ```
