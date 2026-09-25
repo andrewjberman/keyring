@@ -60,6 +60,11 @@ def main(argv=None):
     ap.add_argument("--expires-at", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--tfvars", required=True)
+    # 2026-09-25 23:0xZ: the 0279 plan picked an account whose directory entry held TWO accounts; the portal
+    # selects a whole entry and Performance computes exactly one account, so it was unreachable. A plan is now
+    # picked only among entries holding exactly ONE account (the default), and cites the approval it runs under.
+    ap.add_argument("--any-entry", action="store_true", help="drop the single-account-entry constraint")
+    ap.add_argument("--approval-ref", default=APPROVAL_REF)
     args = ap.parse_args(argv)
     firm = tenants._CANONICAL_INF
     start = "%s-01-01" % args.end[:4]
@@ -69,9 +74,13 @@ def main(argv=None):
     ptr = json.loads(s3.get_object(Bucket=bucket, Key="investor-reporting/directory/latest.json")["Body"].read())
     art = json.loads(s3.get_object(Bucket=bucket, Key=ptr["key"])["Body"].read())
     active = set()
+    names = {}
     for entry in art.get("entries", []):
-        if (entry.get("termination") or {}).get("indicator") != "TERMINATED":
-            active.update((entry.get("ids") or {}).get("account_ids") or [])
+        accounts = (entry.get("ids") or {}).get("account_ids") or []
+        if (entry.get("termination") or {}).get("indicator") != "TERMINATED" and (args.any_entry or len(accounts) == 1):
+            active.update(accounts)
+            for a in accounts:
+                names[a] = "%s %s" % (entry.get("display_name"), entry.get("masked_discriminator"))
 
     prefix = orion_account_mapping.table_prefix()
     days = sorted(p["Prefix"][len(prefix):].rstrip("/").split("=", 1)[1]
@@ -94,14 +103,15 @@ def main(argv=None):
     mapping.update(bind_report_currency(firm, mapping.get("currency")))      # as retained.compute does
     requests = orion_selected.requests_for(mapping, account, start, args.end)
     expires = calendar.timegm(time.strptime(args.expires_at, "%Y-%m-%dT%H:%M:%SZ"))
-    plan = {"schema_version": "irpt-performance-one-use-v1", "approval_ref": APPROVAL_REF, "firm_id": firm,
+    plan = {"schema_version": "irpt-performance-one-use-v1", "approval_ref": args.approval_ref, "firm_id": firm,
             "account_id": account, "vendor_account_id": mapping["vendor_account_id"],
             "vendor_external_id": mapping.get("vendor_external_id"), "mapping_revision": mapping["source_revision"],
             "start": start, "end": args.end, "expires_at": expires, "requests_sha256": digest(requests)}
     plan_json = json.dumps(plan, sort_keys=True, separators=(",", ":"))
-    receipt = {"schema_version": "irpt-inf-one-use-plan-v1", "by": "2.0.0_SA_COO~P", "approval_ref": APPROVAL_REF,
-               "rule": "INF directory not-terminated, accounts_v2 at cutoff, is_active, not sweep/sleeve, opened "
-                       "before the window start, 75th percentile of current_value",
+    receipt = {"schema_version": "irpt-inf-one-use-plan-v1", "by": "2.0.0_SA_COO~P", "approval_ref": args.approval_ref,
+               "rule": ("INF directory not-terminated%s, accounts_v2 at cutoff, is_active, not sweep/sleeve, opened "
+                        "before the window start, 75th percentile of current_value"
+                        % ("" if args.any_entry else ", the entry holds exactly ONE account")),
                "eligible": int(len(frame)), "picked_rank": int(0.75 * (len(frame) - 1)),
                "accounts_v2_cutoff": cut, "directory_as_of": ptr.get("as_of_business_date"),
                "plan": plan, "plan_sha256_of_digest": digest(plan),
@@ -111,6 +121,8 @@ def main(argv=None):
     Path(args.tfvars).write_text(json.dumps({"approved_performance_plan": plan_json}) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in receipt.items() if k != "plan"}, indent=1))
     print(json.dumps({k: plan[k] for k in ("account_id", "start", "end", "expires_at", "mapping_revision")}, indent=1))
+    # The client to search for, printed to the terminal for the operator only -- never written to a file.
+    print("SEARCH FOR (terminal only):", names.get(account))
     return 0
 
 

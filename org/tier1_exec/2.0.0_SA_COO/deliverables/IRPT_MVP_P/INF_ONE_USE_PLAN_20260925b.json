@@ -1,0 +1,26 @@
+{
+ "schema_version": "irpt-inf-one-use-plan-v1",
+ "by": "2.0.0_SA_COO~P",
+ "approval_ref": "Andrew-direct 2026-09-25T23:0xZ (2.0.0_SA_COO~P session): go -- one new Orion call on a single-account Inflection client; supersedes the unreachable 0279 plan b0b85aa9",
+ "rule": "INF directory not-terminated, the entry holds exactly ONE account, accounts_v2 at cutoff, is_active, not sweep/sleeve, opened before the window start, 75th percentile of current_value",
+ "eligible": 75,
+ "picked_rank": 55,
+ "accounts_v2_cutoff": "2026-09-23",
+ "directory_as_of": "2026-09-25",
+ "plan": {
+  "schema_version": "irpt-performance-one-use-v1",
+  "approval_ref": "Andrew-direct 2026-09-25T23:0xZ (2.0.0_SA_COO~P session): go -- one new Orion call on a single-account Inflection client; supersedes the unreachable 0279 plan b0b85aa9",
+  "firm_id": "inflection",
+  "account_id": "acc_5510a3054a409d548a12c57d",
+  "vendor_account_id": 1098,
+  "vendor_external_id": null,
+  "mapping_revision": "3ab7f2bd1ed4b463d7ce5f177ed0788d8a9f7a48d5ecd7a66c9f2cf118e58a6d",
+  "start": "2026-01-01",
+  "end": "2026-09-25",
+  "expires_at": 1790424000,
+  "requests_sha256": "e2f06ebfafe82f38e69db7b27a971bd9504838f4ce0e368c11f7e7d4a0992e0f"
+ },
+ "plan_sha256_of_digest": "01209afbd746d1e85c479010640808af95efa201af6329830ce143c8d04b0ed6",
+ "plan_json_sha256": "01209afbd746d1e85c479010640808af95efa201af6329830ce143c8d04b0ed6",
+ "vendor_call_made": false
+}
