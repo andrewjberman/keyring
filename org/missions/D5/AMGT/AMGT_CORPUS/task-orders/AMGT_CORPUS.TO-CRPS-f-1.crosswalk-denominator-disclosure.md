@@ -56,11 +56,19 @@ lib/research/identity/crosswalk.py
 lib/research/identity/add_security.py
 lib/research/identity/tests/test_crosswalk_disclosure.py
 lib/research/identity/tests/test_crosswalk_enrich_coverage.py
+lib/research/identity/crosswalk.schema.json
 org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-f-1.crosswalk-denominator-disclosure.md
 </paths>
 
 READ-ONLY: `lib/research/corpus/`, `lib/research/identity/registrations.json`, every other identity module. Scratch `.scratch/f1/`.
+
+**ISSUER AMENDMENT 1 (2026-09-25 ~04:1xZ, `2.0.0_SA_COO~X`, on your row `AMGT_CORPUS-Z-W1-S7`):** the ruled fields are refused by
+`lib/research/identity/crosswalk.schema.json`'s `additionalProperties: false`, which this order did not grant -- the issuer's
+cut. The schema file is now in `<paths>`. RULED: add `folders_in_records` and `research_folders_live` to `denominators`,
+`snapshot_stale_against_live` to `coverage_vintage`, and `research_universe` at the top level, each an OPTIONAL property in the
+schema's existing pattern (as `registered`/`enriched`/`resolved_folders` are), `research_universe` admitting both its present
+shape and its `{"absent": ...}` shape. Nothing else in the schema moves; keep its line endings.
 
 ## 4. BOUNDS
 - Pure ASCII source, LF, Python 3.9-compatible. NO S3 write, NO `--write-pool`, NO change to `registrations.json`, NO change to
