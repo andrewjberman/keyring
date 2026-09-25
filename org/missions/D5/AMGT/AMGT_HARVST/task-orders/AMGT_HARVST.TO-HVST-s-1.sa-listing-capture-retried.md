@@ -126,7 +126,7 @@ recorded in decomposition section 17g:
 after AC1b rather than after AC1.**
 
 <proof_of_spec_amendment_1>
-  <criterion id="AC1a" cell_refs="HVST-s-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.opal_data_harvest run --publishers sa --harvest-grammar --security-json org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/sa_one_security_992HK.json --max-jobs 1 2>&1 | tail -25</invocation><expect>the producer's own output recorded VERBATIM whatever it says -- success and failure are both results. NO retry. The securities file is a single JSON OBJECT, which is the shape the flag documents</expect></criterion>
+  <criterion id="AC1a" cell_refs="HVST-s-1" status="NOT_EXERCISED -- UNEXERCISABLE BY ANY SEAT (see AMENDMENT 2, section 8)"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.opal_data_harvest run --publishers sa --harvest-grammar --security-json org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/sa_one_security_992HK.json --max-jobs 1 2>&1 | tail -25</invocation><expect>the producer's own output recorded VERBATIM whatever it says -- success and failure are both results. NO retry. The securities file is a single JSON OBJECT, which is the shape the flag documents</expect></criterion>
   <criterion id="AC1b" cell_refs="HVST-s-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.opal_data_harvest upload-harvest --max-objects 40 2>&1 | tail -25</invocation><expect>the uploader's own output recorded VERBATIM. THIS is the command that writes bronze/silver; it is never offline-safe and always builds a real S3 client (row W10-S6). If AC1a captured nothing, this legitimately uploads nothing and says so</expect></criterion>
 </proof_of_spec_amendment_1>
 
@@ -145,6 +145,58 @@ commit under your own author line, and report ONCE in your final message. **If t
 completed the cell** -- the failure, recorded with its denominator and its before/after delta, is the result the
 round asked for. Do not retry, do not widen, do not fix code to make it pass.
 
+
+## 8. AMENDMENT 2 -- AC1a IS RECORDED `NOT_EXERCISED` AND THE CELL IS TERMINAL AT `closed`, NOT `complete`
+
+**AC1a was never run, by either slot, and it cannot be run by any seat.** It is therefore recorded as
+UNEXERCISABLE with its precise reason, and this order goes terminal. **The authority is the issuer's own:
+Rule 27 -- the issuer amends its own task-order criteria without a CTO ruling (Andrew-direct 2026-09-24).**
+`1.0.0_SA_CTO~Z` confirmed the split rather than granting it (msg 25933): the criterion is mine, the ENDPOINT
+consequence -- whether FWD-1's sa limb reads NOT REALIZED with a named cause -- is the CTO's, written in the
+round-6 analysis.
+
+**THE REASON, stated once and precisely.** AC1a's invocation does not perform "one bounded vendor act". Reaching
+the fetch requires a session envelope; a worker worktree has none; and the producer's own recovery path escalates
+to a **headed, credentialed Chrome login against seekingalpha.com whose bot wall is solved by a third-party
+vision model**. That is a HUMAN act with its own authorization, not a scripted producer call:
+- `worker.py:152` `self.sessions.get(publisher)` -> `auth.py:23-24` `saved or self.refresh(publisher)` ->
+  `auth.py:86-89` -> the login script. This is the STARTUP branch.
+- `SessionVault.load` (`storage.py:51-55`) tests `path.exists()` with **no expiry check**, so pointing
+  `--runtime-root` at the main tree disarms that startup branch -- **and only that one.**
+- `worker.py:293` calls `self.sessions.refresh(publisher)` on `AuthExpired` **on the first attempt, for ANY
+  publisher.** Its sibling at `:275` (`VerificationRequired`) IS guarded to bbg/barrons; this one is not. So a
+  ten-day-old session does not fail closed -- **it fails INTO the login.**
+- No switch disables it: a census over `lib/opal_data_harvest/` for a no-refresh control returns **4 hits of 43
+  files, every one a `credentials_entered` telemetry field.**
+- And the only non-vendor alternative is measured absent: `harvest_listing_outbox` holds **2 rows, both wsj,
+  both uploaded, sa ZERO** (beside `harvest_raw_outbox` sa 3 / wsj 11) -- sa's ARTICLES persisted, its LISTINGS
+  did not. Only a FRESH capture can produce an sa listing row.
+
+⛔ **WHY TERMINAL RATHER THAN HELD, which is the part worth keeping:** a criterion that no seat can exercise is
+named UNEXERCISABLE; it does not sit holding a round open. Held, this ONE criterion blocks round 6, which blocks
+round 7's decomposition, which blocks two cells (the timeline BUILD and the ft/barrons diagnostic) that need no
+Andrew word at all -- **a whole project stalled on a login.** That is the shape Rule 27's L2 already forbids
+("NO FWD IS A WAIT"), arriving one level down as a criterion instead of an outcome.
+
+⭐ **AND IT CARDS RATHER THAN HOLDS, WHICH ARE NOT THE SAME THING.** The sa re-login **remains an open card at
+Andrew and is not decided here.** Making the cell terminal decides only that NOTHING WAITS ON IT -- which is the
+entire point of carding. If he authorizes the login, sa's retry returns as a cell of a later round with the human
+act named in it; if he does not, sa is recorded tried-and-blocked with its cause. **Both branches stay open; only
+the stall is closed.**
+
+**STATUS IS `closed`, DELIBERATELY NOT `complete`.** Both are terminal to the gate
+(`surprise-row-gate.py:152` `TERMINAL_TO_WORDS`), but `complete` would assert this cell reached its endpoint and
+it did not: sa still holds **0 listing_hit rows**, AC2's delta is **+0**, AC3 reads **sa spans 0 of 6**, and AC4
+moved **0 of 1608** rows DENIED -> PARTIAL. `closed` says terminal without claiming an achievement, and that
+distinction is exactly what the round-6 analysis has to grade.
+
+**WHAT STANDS UNCHANGED:** slot `~20`'s instance is VALID and is NOT rewritten -- AC1a stays **FAIL** in the
+worker's own proof-of-spec, because that is what the worker honestly measured and an issuer does not edit a
+worker's grades. This amendment records the ISSUER's disposition of the criterion, beside the worker's record of
+its attempt. AC0, AC1b, AC2, AC3, AC4 and AC5 all PASS with their denominators. Row `AMGT_HARVST-Z-W20-S1`
+remains BLOCKING/ARMED and is the CVO's to disposition at L9 -- a worker's row cannot be graduated by this seat
+(`surprise-row-gate.py:115-116`).
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES (L5/L6):**
@@ -160,7 +212,7 @@ round asked for. Do not retry, do not widen, do not fix code to make it pass.
    a second cell inside this one and would put a code change on a path this cell cannot grade.
 
 <risk>WORLD</risk>
-<status>pending</status>
+<status>closed</status>
 <round>6</round>
 <slot>~20</slot>
 <fabric>site-z</fabric>
