@@ -191,6 +191,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "The build spec's bound (\"never install a hook into the real opal_ai... the round's issuer is the only caller with standing to name the real one\") is enforced by WHO is allowed to pass the real path, and that is sufficient.",
     "world_is": "Nothing in install-owned-paths.sh itself distinguishes a scratch fixture from the real tree, and its only signal is a resolved-path string in its own stdout (\"OK: ... installed at <path>\") that a caller must read to notice a wrong target -- a silent cwd mismatch (this harness's own reset-between-calls behavior is one concrete source) reaches the real opal_ai with no refusal. Left alone, the round's own last-merge install call carries the identical exposure this row measured on itself.",
     "notes": "Not fixed here (out of this cell's stated build): a hardening would have the script print (or the caller verify) the RESOLVED repo identity before writing, or accept an explicit --root override instead of trusting ambient cwd. Left for the disarm_owner's real install to read this row first."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S11",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T01:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_OPALAI-Z-W5-S1 (owner this seat): the hook the worker briefly installed into the real opal_ai is gone -- the main tree's .git/modules/opal_ai/hooks holds 14 files, all stock .sample, and no pre-commit -- so no nested commit is being graded mid-round; install-owned-paths.sh --submodule's reliance on ambient cwd is recorded for the round-1 read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer read 2026-09-25 ~01:4xZ: `ls --indicator-style=none <main>/.git/modules/opal_ai/hooks` = 14 entries, non-.sample 0, pre-commit absent. (A first count read 14 non-sample because ls here appends '*' to executables and defeats a $-anchored pattern; recounted without indicators.)",
+        "Worker report 0.9.0_WK_NFRA_OPALAI~5 on TO-OA-w-2 @77043416d3: the install happened from a call without an explicit cd (the harness resets cwd per call to the workspace root), and was removed the same turn."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-W5-S1 is ARMED with this seat as disarm_owner; TO-OA-w-2 bound 1 forbids a hook in the real opal_ai mid-round.",
+    "world_is": "The bound was crossed briefly and restored; the real install stays the issuer's act at the round's last merge. Defect for the L10 read: the installer should resolve REPO_ROOT from its own location, not from cwd.",
+    "notes": "No gate is built here."
   }
 ]
 ```
