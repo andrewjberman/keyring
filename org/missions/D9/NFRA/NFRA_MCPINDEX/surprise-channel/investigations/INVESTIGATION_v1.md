@@ -269,6 +269,49 @@ carries none.
     "spec_asserts": "W4-S2 (ARMED, disarm_owner the COO lane): MX-a-3's drain did not carry its deliverables or its status flip. W1-S5 (ARMED): AC11 is unsatisfiable in-grant. W1-S6 (BLOCKING): every invocation pins py -3.12, which site Z lacks.",
     "world_is": "MX-a-3's work is at HEAD. MX-c-4 is superseded, and its build waits on its branch for the re-cut cell. The interpreter pin is fixed in the re-cut face, not in a superseded order.",
     "notes": "W3-S2 (ARMED, disarm_owner 0.4.0_DS_ClientPlatform, the trueshares fact_holdings gap) is outside this lane. It rides this seat's drain-end read to the CTO."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W4-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~4",
+    "surfaced_at": "2026-09-25T15:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-q-2 (R-3) asks for the distinct firm or rep identifiers across live Eclipse silver rows. No Eclipse silver table has a rep_id or firm id column, so the rep ids were read through the producer's own join to accounts_v2.",
+    "spec_asserts": "TO-MX-q-2 section 1 item 2: 'Measure the distinct firm or rep identifiers across live Eclipse silver rows, and how many fall outside the Inflection allowlist'. The allowlist is INFLECTION_REP_IDS, a rep_id set.",
+    "world_is": "s3://opal-data-inf/silver/eclipse/2026-09-25/: portfolios_simple (845 rows) has no column naming rep, firm, advisor or team. portfolios_full (859 rows) has only 'team', with 3 distinct values, which are not rep_ids. The worker took rep_id through INF_E_00's join (eclipse_account_id_int -> accounts_v2.account_id): 787 rows joined and carry 5 distinct rep_ids, 0 outside the allowlist. 58 rows have a null eclipse_account_id and resolve to no id. Whether accounts_v2 is itself Inflection-filtered upstream is unmeasured; if it is, a non-Inflection account would show as unjoined (0 today).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "INSTRUMENT: timeout 120 python org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~4/probes/mx_q_2.py ECL, rc=0, read_at 2026-09-25T15:38:35Z. Output line: 'portfolios_simple rows=845; columns naming rep/firm/advisor/team: []'.",
+        "JOIN SOURCE: data/inf/scripts/gold/INF_E_00.eclipse_model_portfolios.py:206 @09daf8fb2b (acct.merge(av_slice, left_on='eclipse_account_id_int', ...)).",
+        "ALLOWLIST: data/inf/scripts/silver/_orion_api_silver_lib.py:113 @09daf8fb2b, INFLECTION_REP_IDS = {3, 6, 10, 11, 12}."
+      ]
+    },
+    "notes": "The ECLIPSE-SCOPE line in round2-reads.result.md carries the join-derived count. The route is recorded here so the issuer can judge it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W4-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~4",
+    "surfaced_at": "2026-09-25T15:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Black Diamond gold canonical_lots_unrealized and canonical_lots_realized were last written 2026-07-23, 64 days before this read. MX-q-2 reads their cusip nulls at that partition.",
+    "spec_asserts": "TO-MX-q-2 section 1 item 1: 'Measure, for every SERVED figure that joins on cusip ..., whether it carries a null-cusip row today.'",
+    "world_is": "ListObjectsV2 on 2026-09-25: the newest gold/canonical/lots_unrealized/ object is 2026-07-23.parquet (latest of 658), and so is the newest gold/canonical/lots_realized/ object (latest of 1,402). The sibling gold/canonical/holdings/ and gold/timeseries/holdings_lots/ are current to 2026-09-23 and 2026-09-18. Whether a live consumer still reads the lots figures was not measured.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "INSTRUMENT: timeout 120 python org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~4/probes/mx_q_2.py BD, rc=0. Output lines: 'FIGURE canonical_lots_unrealized ... key=s3://opal-data-bd/gold/canonical/lots_unrealized/2026-07-23.parquet (latest of 658)' and 'FIGURE canonical_lots_realized ... 2026-07-23.parquet (latest of 1402)', read_at 2026-09-25T15:40:00Z.",
+        "PRODUCER: data/black_diamond/scripts/gold/B_02.canonical_lots.py:37-38 @09daf8fb2b names both outputs."
+      ]
+    },
+    "notes": "Off-task freshness observation. The worker judges its form, not its significance. The issuer can re-class hazard_standing if a live consumer is found."
   }
 ]
 ```
