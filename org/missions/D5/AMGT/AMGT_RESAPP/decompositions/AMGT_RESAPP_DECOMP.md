@@ -6068,3 +6068,77 @@ is a committed file under `deliverables/2.0.0_SA_COO~Z/round40/checks/`; base ru
   universe/v1 is rebuilt; the page then says so on its own.
 - **Item 7 of round 38/39** (the authenticated deployed render): carded to Andrew by the CTO.
 - Z-S238 (request log line, a pair), Z-S227 (isError branches), W85-S1 / W117-S3 / W58-S2 (hygiene), the registry `unit` field.
+
+
+## 49. ROUND 41 -- FWD-30 ACROSS THE POPULATION: the served export measured on all 89 coverage-list names. One order over the round-40 analysis's five items
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 40 ANALYSIS** (`ledger/ROUND_ANALYSIS.round40.md` @`fa03858417`,
+s.5 five items; round 40 CLOSED, `FWD-30` REALIZED on branch (b) for `BA_US_Equity` only, ACCEPT owed). PRD v0.26 unchanged.
+
+### 49a. THE FIVE ITEMS AND WHERE EACH LANDS
+
+| s.5 item | lands in |
+|---|---|
+| 1 `FWD-30` across the population, per-name denominators | `AMGT-rp-1` |
+| 2 branch (a), the Opal Brand Guidelines two-page form | CARRIED: the analysis cards it to Andrew and cuts no cell until he says |
+| 3 the ACCEPT person-read | CARRIED: needs a person; carded |
+| 4 `Z-S272`'s posture re-run | CARRIED: a posture run makes a model call and needs its own authorisation, which this round does not hold |
+| 5 the three-valued P/E rendering | STRUCK by the analysis s.4 (the ruling was vacated at `479eee52ff`) |
+
+### 49b. TWO MEASUREMENTS THE CUT RESTS ON
+
+1. **The population is the coverage list, and every name resolves.** `deliverables/0.9.0_WK_AMGT_RESAPP~4/universe.json` holds
+   89 folders (C-UNION-UNIVERSE's coverage half). Each folder's own association form, `crosswalk.harvester_key(folder,
+   crosswalk.load_pilots())[0]`, resolved through the route's own `scoped_amgt.resolve_identity` at the cut: **89 of 89
+   MEASURED, 89 distinct keys, 0 shared.** The sweep therefore needs no identity rule of its own.
+2. **The instrument is round 40's, proven both ways.** `exportCompare.harness.cjs --fixture --rich` over a served capture is
+   what `ro-7.AC2` graded on the deployed bytes (BA 165/15/17, extras 0). It fails on round 38's stale body (`ro-1.AC2`), so
+   a per-name OK is free to fail.
+
+### 49c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-rp-1` | FWD-30 ACROSS THE POPULATION | `~158` | worker | SERVED | its deliverables only |
+
+`<risk>SERVED</risk>` is declared above the LOCAL floor, as `rn-5` was: the cell writes nothing served, but its claim is about
+served output.
+
+### 49d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.5's five items (read from the file). Items 2 and 3 are carded to Andrew, item 4 lacks its
+  authorisation, and item 5 is struck. That leaves one item, in one cell. The cell's own population is also written by
+  subtraction: 89 folders, minus 0 unresolved, gives 89 keys.
+- **(ii) Same grain.** One measurement cell.
+- **(iii) Intent.** One axis: whether the export adds nothing and drops nothing, for every name the goal names.
+- **(iv) What the cell does NOT move.** No code, no served object and no page file. A NOT_OK row is the measurement, and its
+  remedy is the next round's cut.
+
+### 49e. EDGES AND FAN-OUT
+
+```
+fanout:
+  cap: 8
+  orders_total: 1
+  chains_total: 1
+  wave_0: [rp-1]
+  portal_ref: fe618e50
+  no_vite_per_worker: true
+  no_s3_deletes: true
+  no_vendor_call: true
+  egress: ONE AWS READ SURFACE -- lambda invoke of Opal's own opal-amgt-scoped-api, GET routes, 89 keys
+  route_change: none
+  no_promote: true
+```
+
+### 49f. BOUNDS
+
+No server (the harness is plain node). No AWS write. The captures (about 0.5 MB per name) stay in a temp directory OUTSIDE
+the repository; the commit carries the sweep script, the table and a per-name log. Checks are under
+`deliverables/2.0.0_SA_COO~Z/round41/checks/`, and the base runs under `round41/base-runs/`.
+
+### 49g. CARRIED
+
+- Items 2, 3 and 4 above.
+- Standing: Z-S269 (its subject superseded by Z-S273), Z-S272, item 8 (universe provenance, `2.0.0_SA_COO~Y`), Z-S238,
+  Z-S227, and W85-S1 / W117-S3 / W58-S2.
