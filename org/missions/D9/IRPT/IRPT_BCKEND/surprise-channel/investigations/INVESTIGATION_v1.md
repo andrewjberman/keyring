@@ -9107,3 +9107,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The runner is never asked again. The no-op is inferred from a command that ran on 09-18, when 09-18's sources were incomplete, so no fire since has let the runner re-select. The served directory is still the 09-18 build of 09-17 (49F 4,576 entries). It lists 37 accounts ACTIVE that have no custody at 09-22 and omits any account opened since."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S126",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T13:20:00Z",
+  "one_line": "The directory refresh fires at 13:00Z, eight minutes after mdpf-feeder-trigger starts the shared runner host (12:52Z), and finds it not yet SSM-Online: the first fire of the S125 fix reached the dispatch at all three firms and failed HAND_OVER_RUNNER_OFFLINE. Every weekday fire will race the same start.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (the directory schedule, infra/aws/terraform/investor-reporting/directory/schedule.tf): move the refresh inside the host's up window (12:52Z-16:41Z, e.g. 09:30 America/New_York), or add a second fire; until then one ad-hoc fire while the host is Online (Andrew's word) un-sticks the day.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-{bd,inf,cot}/investor-reporting/directory/_refresh/2026-09-25/manifest.json (written 13:00:37-45Z): REFRESH_FAILED, notes 'dispatch failure token HAND_OVER_RUNNER_OFFLINE (HAND_OVER half)', fired_on 2026-09-25 -- the fixed code (DXuzx9jp, fired_on is its field) reached the dispatch instead of a no-op or a false miss.",
+      "CloudTrail i-02448edb624a7a7cf, 09-22..09-25: StartInstances mdpf-feeder-trigger 12:52:10Z daily; StartInstances mdpf-accrual-trigger 13:40:23Z; StopInstances ec2-auto-shutdown-enforcer 16:41:18Z daily; StartInstances irpt-directory-refresh 13:00:35/40/44Z on 09-25.",
+      "At 13:13Z the host reads running and SSM PingStatus Online (describe-instances, describe-instance-information).",
+      "refresh.py SsmBuildDispatcher.dispatch: a host not Online gets one start request and the fire ENDS ('the NEXT fire finds a host that has had time to come up') -- with one fire a day, the next fire meets the next morning's stopped host."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "schedule.tf: the refresh 'Fires every trading weekday at 09:00 America/New_York', and refresh.py expects the next fire to find the host up.",
+  "world_is": "The host is up 12:52Z-16:41Z. A 13:00Z fire lands 8 minutes after the start, before SSM reports Online, and the next fire is 24 hours later, after the 16:41Z stop. The S125 fix now reaches the dispatch every day, and every day it would meet this race. Ledger irpt-directory-refresh-s125-m-20260924 is HELD on it."
+}
+```
