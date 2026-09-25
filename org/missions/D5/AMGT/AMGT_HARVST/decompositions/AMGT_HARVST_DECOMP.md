@@ -749,3 +749,88 @@ coverage question and on `Z-S3` being carried -- **not on the channel count.** R
 field** -- `3.0.0_SA_CVO~Z`'s form is the model and is adopted here: *"0 non-terminal by `_latest_dispositions`; N
 rows still read UNDER_INVESTIGATION in their own frozen fields."* **A disagreement about a number is first a
 question about UNITS.**
+
+## 17. ROUND 6 (v1.5) -- ONE CELL, and it is the publisher nobody counted as movable
+
+**From the L10 round-5 analysis @`4aa2c9d11d` (`1.0.0_SA_CTO~Z`), section 6: "round 6 is cuttable and MUST be
+PARTIAL-shaped."** Round 5 closed. This cut obeys section 6's four constraints and adds one cell that section 6
+did not name, because the fact that makes it cuttable had not been measured when that analysis was written.
+
+### 17a. Rule 24 record -- the subtraction, from a printed denominator
+
+**Printed denominator: section 6's cut list carries FIVE numbered items.**
+- MINUS item 1, **bbg** -- movable only on Andrew's own sentence, which the analysis itself calls **an OFFER of an
+  ACT, not a grant and not a decision**, and which is untaken. **No cell can take up another party's offer**, so
+  this is a card at Andrew and not a cell.
+- MINUS item 2, **ft and barrons** -- the analysis states they are NOT cuttable as access work: a 403 on a search
+  path and a rejection AFTER a successful re-auth are not reached by authorization (`Z-S14`).
+- MINUS item 3, **the field-naming requirement** -- satisfied BEFORE this cut rather than by a cell: both fields
+  are now measured with their denominators (17b). It CONSTRAINS the cell below; it is not itself work.
+- MINUS item 4, **the channel** -- recomputed at **48 rows, GRADUATED 19 / DISMISSED_WITH_REASON 21 /
+  UNDER_INVESTIGATION 8**, error arm empty, by `_latest_dispositions(".", "AMGT_HARVST")`. All 8 non-terminal rows
+  are `Z-S19`..`Z-S26`, this lane's own rows about instruments; **their disposition is the CVO's L9 act, not a
+  cell this lane can cut.**
+- MINUS item 5, which is a legality statement about an empty round rather than an item of work.
+- **REMAINDER: ONE CELL.** Not invented to fill the round -- surfaced by executing item 3.
+
+### 17b. Both fields named, with denominators -- section 6 item 3 discharged
+
+| field | barrons | bbg | ft | sa | wsj | denominator |
+|---|---|---|---|---|---|---|
+| silver `listing_hit` rows (drives `publisher_coverage` -> `data_status`) | 0 | 0 | 0 | **0** | 20 | 20 rows |
+| silver `article`.`discovered_for` rows | 15 | 19 | 14 | **44** | 26 | 118 rows |
+
+**Both of the disagreeing claims were TRUE of different objects.** All five publishers returned ARTICLES; only
+wsj kept LISTINGS. So "four publishers at zero" is not "four returned nothing" -- it is four whose COVERAGE
+EVIDENCE is missing.
+
+### 17c. THE CELL -- `HVST-s-1`: sa's listing capture, retried
+
+**WHY IT IS CUTTABLE AND NEEDS NOBODY.** Four publishers sit at zero `listing_hit` while only THREE refusals were
+ever recorded. The fourth is **sa**, and `Z-S14`'s own evidence line reads **"upstream_unavailable (HTTP 502 from
+seekingalpha.com, 24 accepted of which 3 genuinely new)"**. **A 502 is an OUTAGE, not an access decision** -- the
+one failure class of the four that a retry addresses. bbg's challenge, ft's 403 and barrons' post-auth rejection
+are decisions no retry moves.
+
+**AND THE CHAIN EXPLAINS THE ZERO RATHER THAN ASSUMING IT.** sa's 502 raised MID-LOOP, and at that vintage
+`_write_harvest_listings` sat AFTER the per-article loop, so every listing page already captured for that job was
+discarded -- row `Z-W15-S1`. That is why sa shows 44 silver ARTICLE rows and 0 `listing_hit` rows. The persist now
+sits in a `finally` WRAPPING the loop (`worker.py:223`, with `Z-S10`'s guard at `:245-261`), both verified at HEAD
+and disarmed in `Z-S24`. **A retry would both get further AND keep its pages.**
+
+**ROUND 4's PRECONDITION ON ANY VENDOR ACT IS MET AND MEASURED, NOT WAIVED.** Round 4 asked, before a further
+vendor act, whether the question is answerable from objects already held. It is NOT, and here is the denominator:
+**bronze `news_listing` holds 2 objects, ALL wsj, across all five publishers.** The four publishers' listing pages
+were never persisted to bronze either, so no rebuild from held data exists. (First pass read table `"listing"` and
+returned 0 for wsj TOO -- wsj was the positive control and its failure is what caught the wrong table name. The
+correct table is `news_listing`, written by `harvest_grammar.put_listing_bronze` at `:113`.)
+
+**MECHANISM (R-21b), non-negotiable:** the cell runs the EXISTING deterministic scripted producer
+(`python -m lib.opal_data_harvest run --publishers sa --harvest-grammar ...`). **No agent-typed vendor call is
+evidence for anything in this cell**; a candidate whose evidence depends on one is a FAIL ON MECHANISM even if the
+data is right.
+
+**ACCEPTANCE -- PARTIAL-SHAPED BY CONSTRUCTION, per msg 25731 and section 6:**
+- `listing_hit` rows for sa move from **0** to a printed count, with the before-count re-read at run time rather
+  than taken from this document.
+- `publisher_coverage` yields a non-empty span for at least one security on sa.
+- `data_status` for at least one (security, day) moves from `DENIED` to `PARTIAL`, with `publishers_covered` /
+  `publishers_enabled` printed on the row.
+- ⛔ **COMPLETE IS NOT AN ACCEPTANCE OF THIS CELL AND MUST NOT BE WRITTEN AS ONE.** sa plus wsj is 2 of 5, and
+  `data_status COMPLETE` requires all five to cover the day. A criterion that cannot pass the day it is written is
+  a defect AT THE CUT.
+
+### 17d. What round 6 does NOT attempt
+
+- **No bbg, ft or barrons work.** bbg is Andrew's untaken offer; the other two are carded.
+- **No re-definition of `COMPLETE`.** That is the RESERVED call at Andrew (round-5 analysis s.7), and a driver may
+  not move its own stop-condition.
+- **No disposition of the 8 non-terminal rows.** They are the CVO's L9 act.
+- **No 2b re-run.** Nothing in this cell changes the chatter_daily gold build.
+
+### 17e. The one thing this cut rests on that is NOT yet answered
+
+The 502-is-not-a-refusal correction was sent to `1.0.0_SA_CTO~Z` at ~01:23Z and **is unanswered at this cut**. It
+corrects that analysis's own "bbg is the ONE MOVABLE" premise. L5 is this lane's act and the cut proceeds, but the
+dependency is named here rather than buried: **if that seat rules sa is not retryable, this cell falls and round 6
+becomes an issuance of nothing**, which section 6 item 5 already makes legal.
