@@ -216,6 +216,28 @@
     "spec_asserts": "NFRA_MCPORTAL-Z-W3-S2: no existing record names Andrew's Entra object id, so MP-t-3 cannot configure the writer's owner.",
     "world_is": "The oid is on record, and the PRD owner has accepted it as the configuration. Round 2's re-cut of MP-t-3 carries it.",
     "notes": "This is a relay of R-1. It adds no rule and does not speak for Andrew."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S4",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-25T05:09Z",
+    "one_line": "DISARMS NFRA_MCPORTAL-Z-W1-S1 (disarm owner 1.0.0_SA_CTO; this lane holds it, ruling R-6 @667f442b8a): owned-paths-validate now consults the worker's task-order grant on an UNMAPPED path in both check_agent and the --check-agent loop, so a worker's order-granted brand-new top-level path is admitted without the author override. Fixed @6bc980ad5d.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/owned-paths-validate.py @6bc980ad5d: check_agent's unresolved-lane branch returns _owns_task_order_paths(...); the CLI loop calls it before appending UNDEFINED.",
+        "python .tools/owned-paths-validate.py --self-test .owned-paths.yaml: 16 arms, 0 failed; new arms 'UNMAPPED path ... -> admitted' and 'UNMAPPED path MUTANT ... -> both refused'.",
+        "Negative control: the same admit arm run against `git show HEAD:.tools/owned-paths-validate.py` (pre-fix) returns False."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NFRA_MCPORTAL-Z-W1-S1 is ARMED with 1.0.0_SA_CTO as disarm_owner.",
+    "world_is": "The gap is closed at the tool: an unmapped path is admitted ONLY for a worker whose own non-terminal order names it; every other committer on an unmapped path is still refused UNDEFINED. The same fix serves NFRA_OPALAI-Z-W1-S1.",
+    "notes": "No lane rule was added and no gate was widened beyond the registry's own worker_grant stanza (ADHC_OWNPTH.005)."
   }
 ]
 ```
