@@ -197,6 +197,78 @@ carries none.
     "world_is": "The tree is NOT fully converted: `fact_holdings` (a registered, coded conversion target, `etf_conversion.py:279-347`) has ZERO silver objects for both DIVZ and IDVZ, against 28 live bronze deliveries per fund spanning 2026-08-24 through 2026-09-20 -- 28 dates of un-converted data the guard's PASS verdict never mentions. The guard's own 'expected 68' figure equals exactly the NETASSETS feed's bronze/silver count and appears to never include the holdings feed in what it considers 'expected' at all, so the guard is blind to this feed rather than reporting it as a hole. This is Rule 22's negative mirror: a completeness GUARD EXISTS, reports PASS, and the underlying state contradicts it for an entire registered feed.",
     "disarm_owner": "0.4.0_DS_ClientPlatform",
     "notes": "OBSERVATION/ARMED, not BLOCKING: this cell's own 10 mechanical criteria (MXA7-AC1..AC9, AC11) all PASS with this gap named and reasoned around (no tool proposed for the empty combo, AC6/AC9; the gap named per-fund at AC11) -- the finding does not block MX-a-7's own analysis. Filed because a LATER act that trusts the backfill-status guard's PASS/holes:[] verdict at face value (a future MX-t-7 tool-building cell deciding whether TrueShares holdings data exists, or an ops dashboard reading the same file) would conclude the tree is complete when a whole feed sits 28 days unconverted. disarm_owner `0.4.0_DS_ClientPlatform` (etf_conversion.py's own docstring names 'AUTHOR HALF (DS lane, Rule 13)' as this pipeline's author) should either wire the holdings feed into the sweep's 'expected' set so the guard actually covers it, or run the sweep/force-convert against the 28 pending bronze objects and confirm the guard's own denominator grows to include them."
+  },
+  {
+    "id": "NFRA_MCPINDEX-W1-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-21T09:15:00Z",
+    "one_line": "MXC4-AC11 ('the tool's catalog-entry reference resolves to an entry in CAT -- zero tools fail any of the three') is UNSATISFIABLE as written within this cell's <paths>: DATA_CATALOG.yaml carries 0 tool-reference fields for any of the 49 registered tools, and adding one requires either hand-editing CAT (bound 10 forbids: generated-only) or editing the 4 real integrations' own directories (outside <paths>) -- REFUSED per bound 9, measured, never grandfathered.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ISSUER CONTEXT (this worker's face preamble, verbatim): 'AC1 has validate_integration_spec refuse a spec lacking a per-tool catalog-entry reference... but AC5 requires the four EXISTING integrations... those tools have no catalog entries today, and their integration directories are NOT in your <paths>. Measure it... REFUSE it and report the measurement... do not grandfather, exempt or widen on your own reading, and do not write outside <paths>.'",
+        "TO: org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-4.classification-composition.md <paths> block, 7 entries -- APP/destructive_ops.py, APP/data_entitlement.py, INT/base.py, INT/registry.py, TST/test_entitlement_admin.py, TST/test_tool_classification_composition.py, the investigation file -- none of the 4 integration directories (INT/ycharts/, INT/opal_portal/, INT/globgrph/, INT/schwab/) and not CAT itself.",
+        "MEASURED (probes/mx_c_4.py AC11, this cell's own commit): a python walk of the parsed infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml for any 'tools'/'tool_ref'/'tool_refs' field anywhere in the document returns 0 hits across 15 channels / 36 artifacts -- printed denominator, zero catalog tool-reference fields exist today.",
+        "MEASURED (same run): over the DENOMINATOR of 49 registered tool names (NATIVE_TOOLS | INTEGRATION_TOOLS | SCHWAB_TOOLS at this cell's HEAD), 49 of 49 fail the catalog-entry-reference axis (100%); 14 of 49 (the ycharts/opal_portal/globgrph/schwab tools) additionally fail the destructive_ops.classify axis because their owning specs' tool_classifications are empty by construction (their integration.py files, outside <paths>, never populate the new per-tool manifest this cell adds); 0 of 49 fail the data_entitlement.classify axis (unaffected).",
+        "BOUND 9 (worker face, verbatim): 'The spec is frozen, and the face instructs refusal. A criterion that cannot be satisfied as written is REFUSED and reported with its measurement, never repaired, widened or met by another route.' BOUND 10: 'The catalog is generated, never hand-edited or hand-merged.'",
+        "By contrast, MXC4-AC1/AC3/AC4/AC12 (the mechanism itself, on planted specs) and MXC4-AC5/AC6/AC9 (the real population's REGISTRATION and CLASSIFICATION stability) all measure PASS at this same commit -- the tension is specifically and only the catalog-entry-reference axis over the REAL population, not the composition mechanism this cell built."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MXC4-AC11 demands, for EVERY registered tool (denominator printed), that a catalog-entry reference resolves to an entry in CAT, with zero tools failing any of three axes (destructive_ops, data_entitlement, catalog).",
+    "world_is": "DATA_CATALOG.yaml's 36 artifact rows describe PORTAL DATA SURFACES (business meaning, freshness, firm scope) and carry no field that names an MCP tool at all; C1's own text says a future entry SHOULD carry 'the tools that serve it', but no cell has populated that yet (MX-c-1/MX-c-2, this project's OWN earlier cells, extend the catalog's SCHEMA and its silver rows -- neither adds a tool-reference field, and neither is in this cell's <paths> to check or extend). So AC11's third axis fails for all 49 real tools, not from a defect in this cell's mechanism (AC1/AC5/AC6/AC9/AC12 all measure clean) but because the DATA it depends on does not exist yet and this cell has no legal route to create it -- editing CAT by hand is bound 10's own prohibition, and editing the 4 integrations' own files to add a self-declared reference is outside <paths>. Filed rather than silently grandfathered or widened, per the issuer's own explicit instruction.",
+    "disarm_owner": "2.0.0_SA_COO~M",
+    "notes": "OBSERVATION/ARMED: left alone, MXC4-AC11 will fail identically on every future re-run of this exact cell until either (a) a future cell/PRD amendment adds a per-tool catalog-entry-reference field to CAT's schema and populates it (an MX-c-2-class extension, or a new cell), or (b) the CTO/COO narrows AC11's letter to acknowledge the catalog-population gap is out of this cell's scope (an L10 addendum). Until then, MXC4-AC11 is the one criterion in this task order's proof_of_spec graded FAIL by output; every other mechanical criterion (AC1-AC7, AC9, AC10, AC12) measures PASS and AC8 is judgment (CVO, ungraded here). disarm_owner 2.0.0_SA_COO~M (the issuing COO) as the nearest live seat to route either remedy; may re-route to 1.0.0_SA_CTO if this is read as a ratified-text (PRD C2/AC11) tension rather than a sequencing gap."
+  },
+  {
+    "id": "NFRA_MCPINDEX-W1-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-25T00:00:00Z",
+    "one_line": "Every mechanical criterion's invocation in TO-MX-c-4 names 'py -3.12' verbatim; on this device today only Python 3.11 registers with the py launcher (py -3.12 rc=103 'No suitable Python runtime found' for all 11 mechanical criteria AC1-AC7,AC9-AC12), so none of the named invocations produced a VERDICT line.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO: NFRA_MCPINDEX.TO-MX-c-4.classification-composition.md, every AC1-AC7/AC9-AC12 <invocation> block verbatim -- 'cd <WS> && timeout 120 py -3.12 org/missions/.../probes/mx_c_4.py AC<n>'.",
+        "INSTRUMENT: 2026-09-25, this worker's worktree /c/tmp/mx-1 -- `timeout 120 py -3.12 <probe> AC1` (and identically for AC2..AC12) each returned rc=103, stdout+stderr 'No suitable Python runtime found / Pass --list (-0) to see all detected environments on your machine / or set environment variable PYLAUNCHER_ALLOW_INSTALL to use winget / or open the Microsoft Store to the requested version.'",
+        "CENSUS: `py -0` and `py -0p` list only ' -V:3.11 * ... Python 3.11 (64-bit)'; filesystem sweep finds no Python312 directory under AppData/Local/Programs/Python nor Program Files, and a Python314 directory exists under Program Files but is unregistered with the launcher (`py -3.14` also rc=103).",
+        "PRIOR STATE: this cell's own classification-composition.result.md (build commit 119a49eef0) line 137 -- 'py -0 (only Python 3.12 installed)' -- so the device's registered interpreter changed from 3.12-only to 3.11-only between the build and this re-run; both python 3.11 and the prior 3.12 carry the needed packages (checked: pyyaml 6.0.3, jsonschema 4.26.0, pytest 9.1.1 all resolve under 3.11), so this is an interpreter-label drift, not a missing-package defect.",
+        "BOUND: decomp s.8 bound 14 verbatim -- 'No new dependency. A missing instrument is a refusal, never an install.' -- installing/registering a Python 3.12 is out of grant and out of scope; bound 9 -- 'A criterion that cannot be satisfied as written is REFUSED and reported with its measurement, never repaired, widened or met by another route.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every AC1-AC7/AC9-AC12 invocation names the literal command 'py -3.12 <probe> AC<n>' as the criterion's instrument, to be run verbatim under a bound.",
+    "world_is": "py -3.12 does not resolve on this device today (rc=103, 'No suitable Python runtime found') for any of the 11 mechanical criteria; py -3.11 (the only launcher-registered interpreter) carries the identical dependency set the probe needs. The worker ran each invocation exactly as named, recorded rc=103 verbatim, and reports each mechanical criterion FAIL-by-output rather than substituting an unnamed interpreter or installing one.",
+    "notes": "BLOCKING on all 11 mechanical criteria (AC1-AC7, AC9-AC12); AC8 is judgment and unaffected. INERT: no live state changed; the probe code itself (already amended for the AC11 registry-limbs-only text per issuer commit 0bec07601a) is otherwise unexercised this pass. disarm_owner 2.0.0_SA_COO (the issuing seat) as nearest live owner to decide whether the invocation's pinned interpreter is updated to match the device's registered Python or the device's launcher registration is restored to include 3.12."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T05:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The seat re-seated to NFRA_MCPINDEX (2.0.0_SA_COO~O, @23bbeff325) answers three rows. DISARMS NFRA_MCPINDEX-W4-S2: its premise no longer holds at HEAD. ANSWERS NFRA_MCPINDEX-W1-S5: MX-c-4 is superseded as cut (CTO ruling D-3 R-1 @9c70622d13) after AC11 was amended (@fc2835958a, ruling @5f3b4a20c6). ANSWERS NFRA_MCPINDEX-W1-S6: the re-cut cell's invocations name a device-neutral interpreter, per the same ruling.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W4-S2, read at HEAD by this seat: 'git ls-tree HEAD deliverables/0.9.0_WK_NFRA_MCPINDEX~4/' lists analysis-blackdiamond.result.md and the MX-a-3 proof instance; the MX-a-3 order's last <status> reads 'complete'; 'git merge-base --is-ancestor edf584f64a HEAD' is true.",
+        "W1-S5 and W1-S6 are carried onto CLOUD verbatim by this commit from branch wk-nfra_mcpindex-1-1d @7e1347ee8c, which stays HELD until the re-cut cell drains it (D-3).",
+        "D-3 R-1 (org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/ROUND1_RULINGS.md @9c70622d13): the re-cut classifies the 9 ycharts/opal_portal/globgrph tools; the 5 schwab tools are HELD behind the OPLGTW stop (registered, not enabled); AC11 stays 49, graded 44 classified + 5 HELD; the py -3.12 pin is the issuer's to amend."
+      ]
+    },
+    "spec_asserts": "W4-S2 (ARMED, disarm_owner the COO lane): MX-a-3's drain did not carry its deliverables or its status flip. W1-S5 (ARMED): AC11 is unsatisfiable in-grant. W1-S6 (BLOCKING): every invocation pins py -3.12, which site Z lacks.",
+    "world_is": "MX-a-3's work is at HEAD. MX-c-4 is superseded, and its build waits on its branch for the re-cut cell. The interpreter pin is fixed in the re-cut face, not in a superseded order.",
+    "notes": "W3-S2 (ARMED, disarm_owner 0.4.0_DS_ClientPlatform, the trueshares fact_holdings gap) is outside this lane. It rides this seat's drain-end read to the CTO."
   }
 ]
 ```
