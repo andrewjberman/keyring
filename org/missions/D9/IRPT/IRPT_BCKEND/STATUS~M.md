@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T15:0xZ.
+(not live; the FAST line is parked below). As of 2026-09-25T15:3xZ.
 
 ## Pins
 
@@ -42,34 +42,36 @@ branch. No code edit is open.
 ## Next list (in order)
 
 1. Andrew's firm-tab HAR, then /verify on the goal.
-2. **The scheduled daily Holdings producer is ~M's** (CTO R4, msg 100947;
-   `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_IRPT_20260925.md` @75156f2b18):
-   - Step 1 (the code on CLOUD): DONE @f606108549.
-   - Step 3 (does the resident runner take a holdings message off irpt-generation): asked of 2.0.0_SA_COO~P, msg
-     20260925T143825Z.
-   - Step 2 (re-mint the bundle) is blocked on a limit, not a person. One `investor_reporting` bundle carrying all 12
-     runner files is 17 members, whose sha stamps plus `source-repo-paths` come to 2,440 bytes of S3 user metadata
-     against the 2,048 cap (local build 14:5xZ, 121,448 bytes, no dirty member). The mint would refuse at upload, and a
-     committed 17-member declaration would break the next member-detector re-mint, including the directory runner's.
-     Not committed; reverted. The package shape (a separate holdings bundle, or a hash manifest inside the tar) follows
-     step 3's host answer.
-   - Step 4 (the enable) goes to the CTO as a never-widen half.
-3. **CTO R5 and Andrew's two answers** (msg 100951;
+2. **CTO R5, with Andrew's two answers** (msg 100951;
    `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260925_144xZ_CLASSIFIER_OTHER_OPENAI_RUN_AND_DEV_PUSH.md`
-   @705be61575):
-   - DONE: the 49F no-ticker rows are named from the Schwab security master (cb8cd03113 on the M branch; CLOUD
-     @6c54a74490). Real dry run on 09-24 sources: 66 of 66 no-ticker rows with a CUSIP are named. The master carries no
-     ticker for any of them, so only the name is filled.
-   - NEXT: ONE OpenAI classification run (B_01b's method) over the named unclassified rows only (COT 101, 49F 78,
-     INF 108). This is Andrew's per-use word; there is no second run. First freeze the exact input list (ids, names,
-     count) as a file.
-   - Then a never-widen half to the CTO for the `bd-securities` write, naming the flipped securities and their
-     readers (69 paths, Positioning included).
-   - The classification rule: investment real estate such as a REIT is `alternatives`; personal and held-away assets
-     are the new class `other`. The Holdings enum and the contract gain `other`. ~D colours it through Positioning's
-     existing mapping.
+   @705be61575). Done so far:
+   - **49F fill:** no-ticker rows named from the Schwab master (cb8cd03113); 66 of 66 with a CUSIP on the 09-24 dry
+     run.
+   - **INF fill:** rows named by Orion's own `name` (e0f680f0df). The served "names" were masked CUSIPs. On the
+     CURRENT table, 121 of 124 masked rows classify with no write. 1,541 of 31,170 INF answers move: 960 from NONE, and
+     581 off a ticker-shape `equity`, all at $0.
+   - **The ONE OpenAI run:** 285 of 285 answered, 0 invalid, 8 needs_review (input sha 0bafa803..., 8c1e79083b;
+     results 9c769fba15). Andrew's rule reads back: Voya and the Home are `other`, the Eiger LPs and the Vornado REIT
+     are `alternatives`.
+   - **The write set:** 41 of the 285 keys already exist in bd-securities, and B_01b's own rule excludes them, which
+     leaves 244 new `NAME::` keys. Over those 244: 112 unchanged, 128 NONE to a class (66 equity, 37 other, 16
+     fixed_income, 9 alternatives), 4 flips (2 fixed_income to alternatives, 2 preferreds fixed_income to equity).
+   - NEXT: the reader census for `other` (Explore agent running); then the never-widen half to 1.0.0_SA_CTO for the
+     244-key write.
+   - ORDER: Holdings must admit `other` (ASSET_CLASS_VALUES and the v1 contract) BEFORE the write, because
+     classify_security refuses a class outside its enum. ~D colours it.
    - The two defects (COT `B_01b` scanning an empty prefix; the loader skipping rows without a ticker) are ~M's under
-     exact-file grants on request. The loader's sign-off counts the securities that flip from NONE.
+     exact-file grants on request.
+3. **The scheduled daily Holdings producer is ~M's** (CTO R4, msg 100947;
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_IRPT_20260925.md` @75156f2b18):
+   - Step 1: DONE (code on CLOUD).
+   - Step 3 is answered by 2.0.0_SA_COO~P (msg 100955): the resident runner REJECTS a holdings message
+     (resident_worker.py:262-270 routes resolve_upload only). Every fire would be a poison message ending in the DLQ,
+     so the retarget is ~M's.
+   - The candidate target is the directory refresh's own path: an SSM dispatch to the mdpf-daily-runner. It needs
+     the host's IAM (mdpf-pipeline/iam.tf grants "the directory chain's prefixes, and NOTHING wider") and a package
+     under the 2,048-byte S3 metadata cap: 17 members measured 2,440 bytes, so a separate holdings bundle.
+   - Step 4 (the enable) goes to the CTO as a never-widen half.
 
 Done this lease:
 - The investor_reporting suite is green, 267 passed and 0 failed, on the M branch @1848e5caef and on merged CLOUD.
