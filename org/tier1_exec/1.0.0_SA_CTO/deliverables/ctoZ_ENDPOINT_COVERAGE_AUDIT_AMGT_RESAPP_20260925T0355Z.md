@@ -668,3 +668,195 @@ reads an absence off it.**
 `FWD-8`, `FWD-17`, `FWD-18`, `FWD-19`, `FWD-20`, `FWD-30`; RESERVED `FWD-2`, `FWD-14`. **And the substance
 class now has a cheapest member of its own: the 21 held sentences.** One producer-side span write moves
 `FWD-18`, `FWD-9` and `FWD-3` together, which no other substance fix does.
+
+---
+
+# THE LAST SIX, AND A CORRECTION OF MY OWN GRADE
+
+All six graded off live reads of the `overlay`, `thesis` and `lead-panel/rankings` routes at
+`2026-09-25 ~07:0xZ`. **Every one of these routes is client-called**, so unlike the previous block the
+page-surface half is not in question here.
+
+## FIRST: `FWD-9` -- **I GRADED IT ON THE WRONG INSTRUMENT AND THE GRADE IS WITHDRAWN**
+
+I recorded `FWD-9` **NOT GRADEABLE** with the reason *"evidence limb PASSES; the MARKING limb is visual and
+the export is markdown."* **That was measured on the export and the marking is served as DATA, one invoke
+away, on a route the client already calls.**
+
+`overlay.check_face` is an array of per-figure verdicts. **Denominator 17: 16 `PASS`, 1 `REFUSE`.** Each
+carries a `marker`:
+
+> `{"figure_id": "header:EQY_FUND_CRNCY", "value": "USD", "verdict": "REFUSE", "reason":`
+> `"EQY_FUND_CRNCY: unit/sign convention is 'NOT-YET-BUILT', not MEASURED",`
+> `"marker": {"verdict": "REFUSE", "colour_token": "red", "icon": "BLOCKED"}}`
+
+**Colour tokens: 16 green, 1 red.** So a figure that failed its check carries a distinct verdict, a distinct
+colour token and a distinct icon, beside its reason -- **the marking limb's DATA is present, correct, and
+discriminating.** Whether the page paints the token is a page question and a different one.
+
+**`FWD-9` is therefore NOT_REALIZED, not NOT GRADEABLE** -- its DONE WHEN is *APPLIED*, *"the marking is in
+place and sits beside the evidence the sentence was drawn from"*, and the marking on PROSE is what
+`held_no_span_count 21` withholds: the two served sentences sit beside their evidence, the twenty-one do not
+exist on the page to be marked. **The figure marking is built; the prose marking reaches 2 of 23 sentences.**
+
+**THE LESSON IS MINE AND IT IS THE SECOND TIME THIS PASS.** I banked *"the served plane is captured for
+layout and for export, and not for what the page says"* as an instrument bound, and then let that bound stop
+me from looking at the JSON routes, which say plenty. **A bound on one instrument is not a bound on the
+question.** `FWD-1`'s content claim and `FWD-9`'s marking claim were both answerable off `overlay` and
+`thesis` the whole time.
+
+## `FWD-3` -- **NOT_REALIZED, and 27 figures are the reason**
+
+Fence `:444-450`. ACCEPT: *"Someone asks where a figure came from, on what basis, and as of when."*
+
+**MEASURED, and the first two-thirds are outstanding.** Every one of the **391** served figures carries its
+mnemonic, its Bloomberg field description, its as-of stamp and its source (`bloomberg-dapi`) -- *where it
+came from* and *as of when*, 391 times, on both the pdf and the rich export. **I have not seen a research
+artifact anywhere in this estate carry provenance this densely.**
+
+***"On what basis"* is where it fails, and the number is exact: 27 mnemonics carry NO unit/sign convention**
+-- 26 reading `NOT-YET-BUILT` and one (`IS_DIV_PER_SHR`) reading `SIGN-UNRESOLVED`, which is the very figure
+`FWD-10` passes on. **192 of 391 figure lines on the served pdf are affected.** A figure whose unit is
+unresolved cannot be defended on its basis, and the list includes `NET_INCOME`, `GROSS_MARGIN`,
+`RETURN_ON_CAP` and every `BEST_*` estimate. **DONE WHEN unmet** (*"a figure has actually been challenged and
+answered from the page"*): no challenge is recorded.
+
+## `FWD-4` -- **NOT_REALIZED. The feed serves ONE item, and the frequency ordering declares itself ABSENT**
+
+Fence `:452-459`. `overlay.feed`: `coverage_status SERVED`, `item_count 1`, `store_item_count 2`.
+
+The one item is real and clickable -- a WSJ article with its URL, title, `published_at 2026-09-03T09:30:00Z`,
+`words 842` and a `body_sha256`. **And the ordering clause answers itself, honestly:**
+`"order": "newest first by published_at (P-1's own order)"`, and
+**`"most_discussed_basis": "ABSENT -- P-1 carries no discussion count, so no item is ordered by it"`.**
+
+The fence asks for commentary *"ordered by how recent AND how often it came up"* and for three kinds --
+*"news, analyst writing, and mentions from the company's own investor channel."* **One publisher, one item,
+one of the three kinds, and half the ordering rule declared absent with its reason.** The surface is right
+and nearly empty. This is a SUBSTANCE failure: the feed needs items, not code.
+
+## `FWD-11` -- **NOT_REALIZED, and the absence is a BARE NULL, which is its own finding**
+
+Fence `:508-517`. **`overlay.chatter` is `null`.** Not an absent-record; a bare `null`.
+
+**AND THE CONTRAST IS ON THE SAME PAYLOAD, WHICH IS WHY IT IS A FINDING RATHER THAN A QUIBBLE.**
+`description`, `feed` and `posture` each carry a `status`/`coverage_status` and a reason. **The two keys that
+carry a bare `null` are `chatter` and `price`.** So a consumer reading this payload can tell WHY the
+description or the feed is thin, and cannot tell whether `chatter` is absent because nothing was collected,
+because the read failed, or because the field was never wired -- **the exact state
+`docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md` exists to forbid, inside a product that carries its claim
+everywhere else.** Two keys, one payload, and the fix is the estate's own `classify.absent()` helper that
+five neighbouring fields already use.
+
+The fence's substantive clause -- *"each item is there because it met a written rule the analyst can read"* --
+cannot be graded at all while the feed is null: **there are no items to carry a rule.** Recorded as UNGRADED
+within a NOT_REALIZED outcome rather than as a second finding.
+
+## `FWD-13` -- **NOT_REALIZED on the DONE WHEN; the identity machinery is the most thorough thing in the product**
+
+Fence `:529-539`. ACCEPT: *"The numbers, the recent commentary, the comparison list and the social posts on a
+page are all about the same company. Where the page cannot confirm that two sources describe the same
+company, it says so."*
+
+**The confirm-or-say-so clause PASSES and is over-built in the right direction.** Every per-security reader
+takes ONE resolved identity carried unchanged from the route boundary (`scoped_amgt.py:4024-4034`: *"ONE
+resolution, carried unchanged into whichever reader serves the leaf: no reader below resolves again, and none
+transforms it"*); `_print_pack` refuses outright when the landed display form does not resolve back to the
+same key (`:4128-4136`); and `peers` returns an absent arm naming *"which absence it is"*.
+
+**But the fence names FOUR surfaces and one of them is `null`.** *"The social posts on a page"* cannot be
+confirmed as the same company when there are no social posts -- and, per `FWD-11`, the payload does not say
+why. **The identity guarantee is real for the numbers, the commentary and the comparison list, and vacuous
+for the fourth.** DONE WHEN separately unmet: *"EXERCISED -- checked on a name that more than one business
+uses, and found not mixed."* No such name has been exercised on the served plane; `BA` is not that name.
+
+## `FWD-15` -- **NOT_REALIZED on the DONE WHEN, and the PRICE axis substantively WORKS**
+
+Fence `:551-562`. The fence is an **OR** -- *"names that are moving in price OR spiking in discussion"* -- so
+one working axis satisfies the substantive clause. **Read both:**
+
+| axis | `as_of_date` | `row_count` | scores |
+|---|---|---|---|
+| `trending/price` | **2026-09-24** | **10** | a real spread: `16.95, 16.75, 12.47, 8.17, 4.18, 3.09, 2.74, 2.59, 0.15, -0.33` |
+| `trending/chatter` | **2026-09-25** | **2** | **both `0`** |
+
+**`ranking_status SERVED`, `state COMPLETE`, `empty_reason null` on both**, and the route is client-called
+(`amgt-lead-panel.ts:69`). **So the price axis delivers exactly what the fence describes: a short ranked list
+with a real spread a PM could act on** -- `992 HK, PBR US, VLO US, BP/ LN, 9433 JP, 2317 TT, SSE LN, RWE GR,
+ASML NA, BBSE3 BZ`.
+
+**TWO DEFECTS THE GRADE TURNED UP, neither of which is the outcome failing:**
+
+1. **The chatter axis is DEGENERATE and does not say so.** Two rows, both scoring `0`, `state COMPLETE`,
+   `empty_reason null`. `BA US` is `rank 1` on a `raw_chatter_count` of **0**. **A ranked list whose top name
+   scores zero is not a ranking, and `COMPLETE` with a null `empty_reason` asserts that it is.** That is the
+   `FWD-11` null feed surfacing on a second route, and here it wears a success state.
+2. **The two axes disagree on vintage by a day** -- price `2026-09-24`, chatter `2026-09-25`. A panel showing
+   both shows two different days beside each other, and only the per-axis field says so.
+
+**And a third thing worth a card rather than a fix:** none of the ten price-ranked tickers is obviously a
+covered name. The fence says *"which COVERED names are worth looking at"*; these look like the holdings union.
+**That is the 89/94/7/250 denominator question arriving on a fifth surface.**
+
+## `FWD-16` -- **NOT_REALIZED. The description PASSES outright; the day's items are the `FWD-4`/`FWD-11` gap**
+
+Fence `:564-573`. ACCEPT: above the tabs, *"a one-line description of the company AND the day's news and
+social items about it, newest and most-discussed first, each one clickable."*
+
+**The description clause PASSES, measured and clean:** `overlay.description` = `status SERVED`,
+`source "bloomberg CIE_DES"`, `field "CIE_DES"`, **`generated: false`** -- so it is the company's own
+description, not machine prose, and the payload says which. Text: *"The Boeing Company operates as an
+aerospace company. The Company develops, manufactures, and services commercial airplanes, defense products,
+and space systems. Boeing serves clients worldwide."*
+
+**The rest of the fence is the same two gaps already graded:** the day's news is the one-item `feed`
+(`FWD-4`), the day's social is `null` (`FWD-11`), and *"most-discussed first"* is the ordering the feed
+declares ABSENT. **`FWD-16` therefore closes when `FWD-4` and `FWD-11` do, and needs nothing of its own.**
+
+**AND ONE THING THE DESCRIPTION READ SETTLES that `FWD-1` left open.** `FWD-1` graded NOT_REALIZED partly
+because the export's Company Description section is subheaded *"Filed detail (does not describe the
+business)"*. **The business description EXISTS and is served** -- on `overlay.description`, from `CIE_DES`,
+and the pdf carries it too. So `FWD-1`'s business-description limb is **a rendering-placement gap in the
+export, not a missing datum**, while its segment-breakdown limb remains genuinely absent. **A correction to
+the weight of that grade, not to its verdict.**
+
+---
+
+# 20 OF 20 GRADED -- THE PASS IS COMPLETE
+
+**1 REALIZED, 18 NOT_REALIZED, 1 correction (`FWD-9`, from NOT GRADEABLE to NOT_REALIZED).**
+No outcome is NOT GRADEABLE. The 30-outcome endpoint's first twenty now have a grade read against their own
+PRD fence, and `FWD-21`..`FWD-30` were graded in rounds 38-41.
+
+## The four classes, final
+
+| class | outcomes | what closes it |
+|---|---|---|
+| **REALIZED** | `FWD-10` | -- |
+| **WIRING** -- served, measured, nothing calls it | `FWD-6`, `FWD-7`, `FWD-12` | client calls plus a surface. `FWD-6` needs no backend work at all |
+| **SUBSTANCE** -- the frame is right, the content is thin or absent | `FWD-1`, `FWD-3`, `FWD-4`, `FWD-5`, `FWD-8`, `FWD-9`, `FWD-11`, `FWD-13`, `FWD-15`, `FWD-16`, `FWD-17`, `FWD-18`, `FWD-19`, `FWD-20`, `FWD-30` | real work, but it CONCENTRATES -- see below |
+| **RESERVED** -- a word only Andrew can give | `FWD-2`, `FWD-14` | nothing the fabric can cut |
+
+## THE FIFTEEN SUBSTANCE FAILURES ARE NOT FIFTEEN PROBLEMS -- FOUR INPUTS CARRY ELEVEN OF THEM
+
+This is the finding the pass exists to produce, and it is only visible now that all twenty are graded:
+
+| one fix | closes or unblocks |
+|---|---|
+| **write character spans on the drafting object** (21 held sentences) | `FWD-18` (*biggest bets*), `FWD-9` (prose marking), `FWD-3` (defensibility of prose claims) |
+| **build the 27 missing unit/sign conventions** | `FWD-3` (*on what basis*), `FWD-5` (the pdf's 192 unmarked lines), `FWD-20` (`BEST_ESTIMATE_FCF` is `D`'s subtrahend) |
+| **land social items + give `chatter` an absent-record** | `FWD-11`, `FWD-13` (its fourth surface), `FWD-15` (the degenerate chatter axis), `FWD-16` (half its content) |
+| **answer the universe question** | `FWD-17` (pool of 7), `FWD-19` (Deere outside the corpus), `FWD-15` (ranking the union, not coverage), `rp-1` |
+
+**Four inputs reach eleven outcomes. The remaining four substance failures are genuinely separate work:**
+the 2-page branded export (`FWD-5`), a business-similarity peer set (`FWD-8`), the house FCF forecast
+(`FWD-20`'s minuend), and the export absence-marker fix already cut as round 42's `rq-1` (`FWD-30`).
+
+**AND THE PRODUCT IS BETTER THAN 1-OF-20 SOUNDS, which the running count hid.** Measured this pass, on the
+served plane: 391 figures each carrying source, basis and as-of; 17 figure verdicts with discriminating
+colour tokens; twelve peer columns each declaring its absence against the 289-factor registry; a filing
+chart chosen for Boeing with a passage id and a character span on every point; two thesis sentences whose
+cited paragraphs contain them verbatim; ten versions of a model block with a 212/0/7/172 diff between two of
+them; a served route declining a DNS sweep because it would be egress on a caller's behalf.
+**The machinery is real and honest. It is starved of content and under-wired, and those are different
+projects from the one the round count implies.**
