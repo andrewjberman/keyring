@@ -79,8 +79,11 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
 7. C-S219 (round 18) -- the render chain's offline proof, the gate before export card section A deploys. Part 1 of 3
    DONE 7f784f1068 (backend branch): one token on all three pinned routes, swapped ids refused, 18 of 18; expiry
    MEASURED -- admitted up to 60 s past exp at V2 and V3 (clockTolerance applies to exp), not the PRD's literal
-   wording; recorded on the export card for A's owner. Next: part 2 (a real human-key token on the same routes;
-   actual V1 `/auth/...`), part 3 (served.Entry + report-body read; unpinned same-account report refused).
+   wording; recorded on the export card for A's owner. Part 2 DONE af282c4a18: the real V1 verifyAccessToken
+   refuses the render token (separate key) and accepts a human token; a V1-shaped human-key token on all three
+   routes passes V3 and the FULL V2 handler as a FIRM_ADVISOR, never RENDER_DELEGATE; the render token passes V2's
+   full handler (origin gate first). Parts 1+2: 30 of 30. Next: part 3 (served.Entry + the report-body read; an
+   unpinned same-account report refused).
    Verifiers' node_modules junctioned from the main workspace into the backend worktree (gitignored).
 8. A1 `_authz` log-line fix (4fffe13f01): SERVED on irpt-ycharts-generate; rides the next rebuild of the others.
    Census fix 1fcefdad74 (LOCAL, not deployed): all 17 published routes resolve and read guarded -- installed entry
