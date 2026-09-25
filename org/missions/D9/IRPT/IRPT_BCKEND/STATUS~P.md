@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: /canonical-drive loop on Andrew-direct 17:3xZ (cron 57c0067c, every 10m; replaced goal loop f599225b), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T20:5xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T21:0xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -189,6 +189,9 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    irpt-render-deps:1, IRPT_EXPORT_RENDER=off; token-carriage + host-token policies, pending.json on the receipt grant,
    SSM document v5 (RenderTokenName/PrintQuery); re-plan No changes. Arm before -> after identical (OBJECT_NOT_COVERED /
    NOT_AUTHORIZED / NOT_FOUND), 0 writes, 0 token names.
+   DEPLOY (B) PREP: performance root render_grant.tf + IRPT_EVIDENCE_BUCKET (backend, NOT applied) -- grant-only read,
+   IAM-simulated 6/6. Only the ADAPTER matters for a Performance export (the print query leaves narrative off), so (B) =
+   adapter (render ports + render principal at HEAD, grant.py staged, this TF) + export_render=on.
    NEXT (P): (1) done (portal render Bearer on local DEV); (1b) deploy (B) after 00:00Z: upload the host half to ec2/investor-reporting-export/, apply the export root with
    export_render=on, and ship the read functions' B0 packaging (grant.py + enforce at 755c13bc19 + grant read IAM) -- SSM document params RenderTokenName +
    PrintQuery; run-export-render.sh reads the name (get-parameter --with-decryption, never echoed), render_export.cjs opens
