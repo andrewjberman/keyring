@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T15:3xZ.
+(not live; the FAST line is parked below). As of 2026-09-25T15:4xZ.
 
 ## Pins
 
@@ -56,18 +56,20 @@ branch. No code edit is open.
    - **The write set:** 41 of the 285 keys already exist in bd-securities, and B_01b's own rule excludes them, which
      leaves 244 new `NAME::` keys. Over those 244: 112 unchanged, 128 NONE to a class (66 equity, 37 other, 16
      fixed_income, 9 alternatives), 4 flips (2 fixed_income to alternatives, 2 preferreds fixed_income to equity).
-   - **The half is asked** (msg 20260925T152125Z; `NEVER_WIDEN_HALF_REQUEST_BD_SECURITIES_WRITE_20260925.md`
-     @368950498a, write set `BD_SECURITIES_WRITE_SET_20260925.json`):
-     - Batch A (207 keys): sign now.
-     - Batch B (37 `other` keys): held, because COT `C_06` MIX_ASSET_CLASSES would drop $48.5M from the published
-       mix.
-     - Reader census: 0 raise; Positioning reads `etf-classifications`, so NOT_REACHED.
+   - **Batch A is WRITTEN.** The CTO signed 204 keys (the three preferreds struck; @8214723353). Ledger
+     bd-securities-batch-a-m-20260925 is CLOSED @f99c664dd0: 204 of 204 put, 0 condition refusals, read-back 204,
+     and a fresh loader classifies 204 of 204 by name. Census sha e7b289a26d08a3f4; receipt 9f84ff97ee (M branch).
+     Holdings classes these at its next publication; COT C_06 moves about $21.6M out of equity at its next run.
+   - **Batch B (37 `other`) stays held** until: C_06 admits `other`; D_03 and D_04 separate their unknown sentinel;
+     the Holdings enum and the v1 contract admit `other`; ~D maps it.
    - ORDER: Holdings must admit `other` (ASSET_CLASS_VALUES and the v1 contract) BEFORE the write, because
      classify_security refuses a class outside its enum. ~D colours it.
    - The two defects (COT `B_01b` scanning an empty prefix; the loader skipping rows without a ticker) are ~M's under
      exact-file grants on request.
 3. **The scheduled daily Holdings producer is ~M's** (CTO R4, msg 100947;
    `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_IRPT_20260925.md` @75156f2b18):
+   - Plan: `HOLDINGS_SCHEDULED_PRODUCER_PLAN_20260925.md` @875dc1f64b (M branch). 7 prerequisites are measured;
+     rows 3 (package) and 5 (the local-only retained inputs) block a fire.
    - Step 1: DONE (code on CLOUD).
    - Step 3 is answered by 2.0.0_SA_COO~P (msg 100955): the resident runner REJECTS a holdings message
      (resident_worker.py:262-270 routes resolve_upload only). Every fire would be a poison message ending in the DLQ,
@@ -90,6 +92,7 @@ Done this lease:
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
+| The M branch's last merge (batch A script, receipt, plan) was REFUSED because the shared index carried 4 staged ledger-open files belonging to other seats (irpt-render-keys-a1, pm-autosave-list) | 2.0.0_SA_COO~M | those seats commit their ledger opens; then safe-merge again |
 | Merging CLOUD into a seat branch is REFUSED by the law-lock budget: `.claude/skills/canonical-flow/SKILL.md` is 52,132 bytes and `dispatch/SKILL.md` 33,599, against 25,600 (org/law-edit-audit.log line `2026-09-24T23:04:17Z REFUSED-BUDGET author=2.0.0_SA_COO~M`) | 1.0.0_SA_CTO (the skills' owners) | the two files shrink under budget, or the gate exempts a merge carrying files the author did not change |
 | Public reason for a selected account with no custody row: NOT_READY (transient) vs NOT_FOUND (`_authz/errors.py:58`) | 1.0.0_SA_CTO (contract) | the CTO rules the code |
 | The FULL -> FAST line to the CVO ("FAST from 18:1xZ; pins graded after the fact") | 2.0.0_SA_COO~M | 3.0.0_SA_CVO registers live |
