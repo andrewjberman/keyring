@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T16:2xZ.
+(not live; the FAST line is parked below). As of 2026-09-25T16:5xZ.
 
 ## Pins
 
@@ -76,8 +76,9 @@ branch. No code edit is open.
    - **S131 / S134 explained** (9c0fb0c8f2): the served COT revision is a BOUNDED publication of 841 of 981 accounts.
      The 53 repeated relationship groups sit in 2 unserved accounts ($729,826.75). The source is unchanged (same
      version and sha as served). A full-firm (scheduled) COT build refuses the whole firm for those 2 accounts.
-     **NEXT ITEM:** scope the COT duplicate-grain refusal to the affected accounts (carried as explicitly refused, as
-     49F's drill does), then decide the other 140 unaccepted accounts the same way.
+     **DONE** @ce64116275 (M branch): a full-firm COT build screens each account and refuses the account, not the
+     firm. Live run at cutoff 09-24: 981 / 841 / 140 (138 missing fields, 2 repeated rows), valid, $548,412,662.59, and
+     the 841 built accounts equal the served set. The 140 are carried as explicitly refused, with reasons.
    - Step 1: DONE (code on CLOUD).
    - Step 3 is answered by 2.0.0_SA_COO~P (msg 100955): the resident runner REJECTS a holdings message
      (resident_worker.py:262-270 routes resolve_upload only). Every fire would be a poison message ending in the DLQ,
