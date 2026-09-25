@@ -105,3 +105,74 @@ what a reservation is supposed to cost.
 Recorded here; broadcast the same turn to `2.0.0_SA_COO~Z`, `2.0.0_SA_COO~X`, `3.0.0_SA_CVO~Z` and
 `0.0.0_AB_MSTR`. Cited by `FWD-15`/`FWD-17`/`FWD-19`'s round-43 inputs and by `rp-1`'s vintage note.
 **Call 2 remains in the ordinary `/open-calls` queue at Andrew.**
+
+---
+
+# AMENDMENT A1 -- 2026-09-25 ~15:3xZ -- **THE CALL WAS ALREADY ANSWERED BY ANDREW, IN WRITING, AND I RULED IT ANYWAY**
+
+**I found this myself, twenty minutes after signing, while reading `AMGT_CORPUS`'s PRD for its round-4 L10
+analysis. It is the failure `/open-calls` names as its own worst one, and I committed the harder version of
+it: not re-asking a settled question, but RE-RULING one.**
+
+## The contract that already settled it
+
+`org/missions/D5/AMGT/AMGT_CORPUS/prd/AMGT_CORPUS_PRD.md:719-733`, ratified contract
+**`C-BACKFILL-DENOMINATOR-IS-THE-RESEARCH-FOLDER`**, quoting **Andrew-direct 2026-09-24 ~05:0xZ, VERBATIM**:
+
+> *"Only when all of this is done for every single security in the Asset Management research folder is the
+> goal complete."*
+
+and ruling on it, in the PRD's own words:
+
+> **"SO THE POPULATION IS THE FOLDER, IT IS 93, AND IT IS ALREADY MEASURED"** -- *"which makes `FWD-19`
+> gradeable from day one instead of gated behind a card. `K6` is CLOSED by his word."*
+
+**`AMGT_CORPUS` raised this exact question as a Rule-28 card (`K6`), got Andrew's word on 2026-09-24, closed
+the card, and wrote the answer into a ratified contract.** `FWD-19`'s own fence (`:399-414`) then reads
+*"EVERY SECURITY IN THE ASSET MANAGEMENT RESEARCH FOLDER"* and cites the contract by name.
+
+## What survives, what is withdrawn
+
+**THE SUBSTANCE OF CALL 1 STANDS AND IS UNCHANGED** -- the population is the live research library. **Its
+AUTHORITY is withdrawn and replaced:** it rests on **Andrew's word of 2026-09-24 ~05:0xZ and the ratified
+contract**, not on a CTO adjudication and not on my reading of the goal sentence. **A ruling that restates a
+sovereign word as though it were the ruler's own is worse than no ruling: it launders his authority into
+mine and makes the record harder to trace, not easier.** Clauses 2-6 stand as ENGINEERING CONSEQUENCES of
+the contract -- what to do about 89, 250 and 7 is not in the contract and is properly mine.
+
+**AND THE CARD SHOULD NEVER HAVE BEEN CARRIED AT ALL.** I carried "89 or 94?" to Andrew across five ticks,
+and sharpened it twice, for a question he had answered in writing the previous day. **Every tick that
+reported it as an open card at Andrew was wrong**, and `FWD-17`, `FWD-19` and `rp-1` were reported as blocked
+on a word that existed.
+
+## WHY IT WAS INVISIBLE, which is a real finding and not an excuse
+
+`comp-find 'C-BACKFILL-DENOMINATOR'` over `org/missions/D5/AMGT/`: **6 hits across 1839 scanned files, ALL
+SIX INSIDE `AMGT_CORPUS`** (its PRD twice, its round-2 decomposition, the `CRPS-d-4` order, one channel row).
+**ZERO in `AMGT_RESAPP`** -- not its PRD, not its ledger, not its decomposition.
+
+**So a POPULATION CONTRACT ratified in one project's PRD binds outcomes in its sibling's, and the sibling
+does not cite it.** Standing in `AMGT_RESAPP`'s ledger, where the card lived, the answer was not reachable by
+reading anything `AMGT_RESAPP` points at. **That is the mechanism, and the fix is a cross-reference**:
+`AMGT_RESAPP`'s PRD must cite `C-BACKFILL-DENOMINATOR-IS-THE-RESEARCH-FOLDER` wherever a fence says
+*"every company the page covers"*. **Round-43 item, and it is the cheapest item on any list I have written
+today.**
+
+**THE GENERAL RULE, and it is the part worth keeping:** before carrying a population or semantics card to
+Andrew, run ONE unscoped census of the term over every SIBLING project under the same directive -- not just
+the project holding the card. **A card is not open because MY project has no answer; it is open because the
+DIRECTIVE has none.** Cost: one `comp-find`. Non-application: a question with no sibling project.
+
+## AND THE NUMBER MOVED, which is why the contract's METHOD matters more than its figure
+
+The contract says **93**. My live read today says **94** (`library.list_folders(library_root())`, root
+`.../Asset Management/Research`, 14:4xZ), and `3.0.0_SA_CVO~Z` independently read 94 at 15:2xZ in
+`ADJUDICATION_v7`. **One folder has been added since 2026-09-24.**
+
+**The contract anticipated exactly this and is written to survive it:** *"EVERY `FWD-19` POPULATION CLAIM IS
+A SUBTRACTION FROM A FRESH READ OF THE ASSET MANAGEMENT RESEARCH FOLDER, WITH THE DENOMINATOR PRINTED."*
+**So 93 is a reading, not a constant -- which is what clause 6 above says, and it turns out to be the
+contract's own discipline rather than my addition.** Any artifact or census still asserting 93 as the
+population is now one folder short, and `FWD-19`'s three counts must sum to **94** at the next census, not 93.
+**That is a live consequence for `CRPS-d-4` and for round 5, and it is the one genuinely new thing this
+amendment produces.**
