@@ -1,0 +1,78 @@
+{
+ "measured": "holdings_snapshot.run_firm per firm (qa, no upload, retained variables unset, cutoff 2026-09-24), every botocore call hooked; CLOUD @4f58a95c84",
+ "rule": "each firm principal holds exactly its firm reads plus its own writes; every firm reads the classifier table (it caches after its first scan, so the trace shows it once)",
+ "firms": {
+  "cottonwood": {
+   "s3_read": {
+    "opal-data-assets": [
+     "blackdiamond/cottonwood/silver/fact_allocations/",
+     "blackdiamond/cottonwood/silver/fact_holdings/",
+     "blackdiamond/cottonwood/silver/fact_model_assignment/",
+     "blackdiamond/cottonwood/silver/fact_model_blend/",
+     "blackdiamond/cottonwood/silver/fact_model_definition/",
+     "blackdiamond/cottonwood/silver/fact_model_roster/"
+    ],
+    "opal-data-cot": [
+     "investor-reporting/directory/"
+    ]
+   },
+   "dynamodb_scan": [],
+   "publication_bucket": "opal-data-cottonwood",
+   "s3_write": [
+    "irpt/cottonwood/gold/holdings/",
+    "irpt/cottonwood/gold/holdings_qa/",
+    "irpt/cottonwood/platinum/holdings/",
+    "irpt/cottonwood/platinum/holdings_qa/"
+   ],
+   "code_object": "irpt/cottonwood/code/gold/investor-reporting-holdings.tar.gz"
+  },
+  "49financial": {
+   "s3_read": {
+    "opal-data-assets": [
+     "gateway/49financial/bronze/taxsma_workbook_projection/",
+     "schwab/08335338/silver/dim_asset/",
+     "schwab/08335338/silver/dim_balance/",
+     "schwab/08335338/silver/dim_position/",
+     "smartx/platform/silver/fact_allocation_account_map/",
+     "smartx/platform/silver/fact_allocation_positions/",
+     "smartx/platform/silver/fact_allocation_valuation/",
+     "smartx/platform/silver/fact_model_allocation_roster/"
+    ],
+    "opal-data-bd": [
+     "investor-reporting/directory/"
+    ]
+   },
+   "dynamodb_scan": [],
+   "publication_bucket": "opal-data-49financial",
+   "s3_write": [
+    "irpt/49financial/gold/holdings/",
+    "irpt/49financial/gold/holdings_qa/",
+    "irpt/49financial/platinum/holdings/",
+    "irpt/49financial/platinum/holdings_qa/"
+   ],
+   "code_object": "irpt/49financial/code/gold/investor-reporting-holdings.tar.gz"
+  },
+  "inflection": {
+   "s3_read": {
+    "opal-data-assets": [
+     "eclipse/inflection/bronze/eclipse_membership_map/"
+    ],
+    "opal-data-inf": [
+     "investor-reporting/directory/",
+     "silver/api_dims/accounts_v2/",
+     "silver/api_dims/positions_mv/",
+     "silver/eclipse/"
+    ]
+   },
+   "dynamodb_scan": [],
+   "publication_bucket": "opal-data-inflection",
+   "s3_write": [
+    "irpt/inflection/gold/holdings/",
+    "irpt/inflection/gold/holdings_qa/",
+    "irpt/inflection/platinum/holdings/",
+    "irpt/inflection/platinum/holdings_qa/"
+   ],
+   "code_object": "irpt/inflection/code/gold/investor-reporting-holdings.tar.gz"
+  }
+ }
+}
