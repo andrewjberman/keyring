@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T00:0xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T00:2xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -46,7 +46,9 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    contract provider OPAL_ENGINE (on CLOUD 69cac32dce, ~D told). YTD/QTD/1Y, one account; real read-only run: median
    account YTD +6.72%, 182 days linked. BD cross-check DONE on a 300-account sample (ed9ea1ba55,
    `IRPT_MVP_P/F49_BD_CROSSCHECK_20260924.json`): 244 of 293 within 10bp, 286 within 100bp, median 3.3bp, 7 divergent
-   (parked below). ~D verified OPAL_ENGINE renders (100895). OPEN: S1 (Andrew's signed-in 49F request); `--all` census.
+   (parked below). ~D verified OPAL_ENGINE renders (100895). ALL-ACCOUNTS census DONE db699faf13
+   (`IRPT_MVP_P/F49_BD_CROSSCHECK_ALL_20260925.json`): 5194 of 5309 compared, 4372 within 10bp (84.2%), 4975 within
+   100bp (95.8%), 219 divergent (4.2%), median 3.3bp, p90 20.8bp -- the sample holds. OPEN: S1 (Andrew's signed-in 49F request).
 3. INF (Orion): inf_selected 312e4be3a0 (captured Scope grammar scoped to one account; orion_adapter parse; identity +
    window gates; 7 tests); mapping 55ccf7e99f (reverse of the directory mint; 25/25 served directory ids map back); OrionTransport daffb01f77
    (estate session JWT orion/jwt/current by jwt_freshness's own constant; live token decodes, 8.7h left); per-firm
@@ -76,6 +78,10 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    (who mints the binding) asked of 1.0.0_SA_CTO.
 7. C-S219 (round 18): a complete offline served-route chain for V1 verification (may be superseded by the live trace).
 8. A1 `_authz` log-line fix (4fffe13f01): SERVED on irpt-ycharts-generate; rides the next rebuild of the others.
+   Census fix 1fcefdad74 (LOCAL, not deployed): all 17 published routes resolve and read guarded -- installed entry
+   modules resolve from their staged rows; `served.installed_entry` gives performance/runtime, generate_installed and
+   status_installed an earned mark (build at first call, refused unless the Entry matches its declared routes);
+   `_authz` 152 passed (was 7 failed). Rides each function's next rebuild; its source-map pins move then.
 
 ## Dependencies
 
@@ -90,8 +96,8 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
 | `build-and-upload.sh` removes tracked `performance/*.py` from the publish worktree's working tree on every irpt-performance-adapter build (18:41Z and 20:2xZ; restored from HEAD each time; generate/refresh builds do not) | 1.0.0_SA_CTO to route (ci/ owner) | the next performance build |
-| `_authz/tests/test_unguarded_census.py` 7 failures: declared entry modules not on disk in the installation (generate_installed.py, status_installed.py) | 2.0.0_SA_COO~P | the next `_authz` edit |
-| 49F engine vs BD: 7 of 293 DIVERGENT (3 engine coverage gaps of 35-98 neutral days; 1 in-kind signature +4452% vs +96%, the open ADVI_49F.c02-CFINPUT clause; 3 fully linked at 108-496bp), receipt F49_BD_CROSSCHECK_20260924.json | 1.0.0_SA_CTO to route to the 49F engine lane (DS) | the engine lane's next c02 act |
+| 49F engine vs BD: 219 of 5194 DIVERGENT over all accounts (db699faf13); in the 300 sample, 7 of 293 DIVERGENT (3 engine coverage gaps of 35-98 neutral days; 1 in-kind signature +4452% vs +96%, the open ADVI_49F.c02-CFINPUT clause; 3 fully linked at 108-496bp), receipt F49_BD_CROSSCHECK_20260924.json | 1.0.0_SA_CTO to route to the 49F engine lane (DS) | the engine lane's next c02 act |
+| `reports/tests` full-suite run: 3 failed at HEAD too (test_status_installed's documented run-alone `entry` shadowing x2; test_currency_authority DID NOT RAISE) | 2.0.0_SA_COO~P | the next reports/ edit |
 | portal `bun test src/pages/InvestorReporting` 89 fail on origin/DEV 5e339ffd (87 unique), not CI-run | 2.0.0_SA_COO~D | ~D's S6/S7 rows |
 
 ## Limits
