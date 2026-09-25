@@ -279,3 +279,53 @@ LABEL and its GRAIN differ** -- independently confirming `Z-S273`'s reciprocal f
 own mouth, and exactly the "a value must carry its claim" behaviour the estate keeps asking for.
 
 **5 of 20 graded: 1 REALIZED, 3 NOT_REALIZED, 1 NOT GRADEABLE.** 15 remain.
+
+---
+
+# RE-GRADE PASS, ENTRY 6 -- `FWD-8` -- **NOT_REALIZED**, and the fence hands the verdict to a person
+
+Fence `:482-488`. **DONE WHEN *"EXERCISED -- an analyst who distrusted it has stopped"*** -- the test is
+an analyst's restored trust, which no seat can supply. **Unmet, and unmeetable from here.** What I CAN
+measure is the composition, and it bears directly on whether that trust would be restored.
+
+**MEASURED -- the peer set served for `BA_US_Equity`:** 12 members, **every one `Industrials` /
+`United States`**, market caps 100,405 to 266,414 musd. So the set is selected by **SECTOR + COUNTRY +
+SIZE**, not by what the business does.
+
+| genuinely aerospace/defence | everything else |
+|---|---|
+| Lockheed Martin, General Dynamics, Howmet Aerospace -- **3 of 12** | Deere (agricultural machinery), Eaton (electrical), Union Pacific (railroads), **Uber (ride-hailing)**, Trane (HVAC), Vertiv (data-centre infrastructure), Quanta (utility construction), GE Vernova (energy), Parker-Hannifin (motion control) |
+
+**`Uber Technologies` as a Boeing comparable is the tell.** It is GICS-Industrials by classification and
+shares no business with Boeing. The fence asks for a list *"genuinely about the company being shown"*;
+a sector-and-size screen is a defensible METHOD and it does not clear that bar on this evidence.
+
+**BUT COMPONENT 2 IS SATISFIED, and the distinction matters.** The fence's named failure mode is
+*"showing ANOTHER COMPANY'S list"* -- `F6`, *"48 of 54 measured wrong today"*, which is what this outcome
+was written for. **That is not happening here:** these are BA's own screen results, not another name's
+peers. **The defect this outcome was created to catch is fixed; a different and weaker one remains.**
+
+**So the grade is NOT_REALIZED on the DONE WHEN, and the ACCEPT is SPLIT** -- cross-contamination gone,
+business comparability thin. **I am not converting my own read of "Uber is not a Boeing peer" into the
+grade**, because the fence deliberately assigns that judgment to an analyst who distrusted the block.
+**Naming the composition is the useful act; declaring the trust restored or withheld is not mine.**
+
+**AND THE ABSENCE DISCLOSURES HERE ARE THE BEST IN THE PRODUCT**, recorded because this pass should not
+only accumulate gaps. Twelve columns are declared ABSENT and **each names its own cause against a printed
+denominator** -- *"no preferred-equity code among the 289 registry factors"*, *"the growth category tops
+out at a THREE-year window"*, *"cash_mv is 'Cash to Market Value', a RATIO; no absolute cash level"*,
+*"P/E 2027: the value category carries trailing (ey) and NTM (ey_ntm) only -- no second-forward-year
+estimate at any grain"*. **That is a value carrying its claim, twelve times over, with the registry as
+its denominator.**
+
+**6 of 20 graded: 1 REALIZED, 4 NOT_REALIZED, 1 NOT GRADEABLE.** 14 remain.
+
+## PATTERN AFTER SIX -- worth stating before the remaining fourteen
+
+**Five of the six failures are NOT rendering defects.** They are: a missing business description and
+segment breakdown (`FWD-1`), a pool of 7 where the fence says every covered company (`FWD-17`), a
+comparable outside the corpus with no pack (`FWD-19`), a population that diverges on 84 of 89
+(`FWD-30`), and a peer set screened by sector rather than business (`FWD-8`). **The product RENDERS what
+it has, discloses what it lacks, and cites what it asserts -- consistently and well.** What it does not
+yet have is the SUBSTANCE behind the frames. That is the same split the endpoint audit found from the
+other direction, and two independent readings agreeing is worth more than either alone.
