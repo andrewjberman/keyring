@@ -1,0 +1,31 @@
+{
+ "ruling": "1.0.0_SA_CTO msg 100965 (R4): land both retained inputs in S3; the build reads latest-at-or-before D",
+ "landed": [
+  {
+   "input": "IRPT_49F_TAX_MEMBERSHIP_SNAPSHOT",
+   "bucket": "opal-data-assets",
+   "key": "gateway/49financial/bronze/taxsma_workbook_projection/date=2026-09-23/taxsma_workbook_projected_snapshot.json",
+   "manifest_key": "gateway/49financial/bronze/taxsma_workbook_projection/date=2026-09-23/manifest.json",
+   "version_id": "3Wf8ddk9jy1drAHCeAuB5ns6yvPbOnE7",
+   "sha256": "84ffd98a82a68c47fcb22325309f0782e2975994d8b4616d716e41ec447f0716",
+   "read_back_equal": true,
+   "bytes": 5804,
+   "rows": 21,
+   "captured_at_utc": "2026-09-23T20:54:47Z",
+   "captured_at_claim": "measured (the capture's own observed_at_utc)"
+  },
+  {
+   "input": "IRPT_INF_ECLIPSE_MEMBERSHIP_SNAPSHOT",
+   "bucket": "opal-data-assets",
+   "key": "eclipse/inflection/bronze/eclipse_membership_map/date=2026-09-24/membership_map.json",
+   "manifest_key": "eclipse/inflection/bronze/eclipse_membership_map/date=2026-09-24/manifest.json",
+   "version_id": "mRMw5L.hKdTv9CZj1qpfq5fbDd3NQ8do",
+   "sha256": "789dd95d3d36b449172d5a5d5c0f6e900f4f04269cfbab0525771b65a0fb641e",
+   "read_back_equal": true,
+   "bytes": 212882,
+   "rows": 860,
+   "captured_at_utc": "2026-09-24T00:44:01Z",
+   "captured_at_claim": "inferred (the local file mtime; the capture carries no time of its own)"
+  }
+ ]
+}
