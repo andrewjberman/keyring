@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: /canonical-drive loop on Andrew-direct 17:3xZ (cron 57c0067c, every 10m; replaced goal loop f599225b), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T19:1xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T19:2xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -129,9 +129,19 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    submit of a nonexistent report UNEXPECTED -> OBJECT_NOT_COVERED; internal receipt UNEXPECTED -> NOT_FOUND (the OLD
    artifact failed every internal user on every export route, silently); ungranted advisor NOT_AUTHORIZED both; 0 writes.
    The positive run (a real QUEUED export) waits on the first retained report -- Andrew's signed-in Performance run.
-   NEXT (P): B2 -- mint the render token from the grant (mint_input) and dispatch the render host with the print URL
-   (card B2-URL; needs ~D's print-page half); B0's read-function deploy (performance/status/narrative with grant.py +
-   enforce at 755c13bc19, grant read IAM) rides B2; the performance adapter redeploy waits for the INF one-use.
+   B2 DESIGN (19:2xZ): the host authenticates today with an OPERATOR storageState session, not the render token. Measured
+   at portal DEV: ProtectedRoute admits ?renderToken=, but the typed client never sends it (only ProtectedRoute.tsx and
+   App.tsx read it) -> the print page's reads would be refused. ~D landed the selection/start/end half on local DEV
+   (IV-e-26, 08144571); the Bearer half is P's lane (portal/src/api/**, CTO 100919) -- api-client.ts reads ?renderToken=
+   on /investor-reporting/print only for a render claim, sends Bearer on scoped reads, never persists (told ~D 192205Z).
+   Token carriage: bound 13 bars a credential from an SSM command document -> card B2-CARRY @af9f24f901, (a) Parameter
+   Store SecureString per attempt RECOMMENDED; ruling asked of 1.0.0_SA_CTO 192213Z.
+   NEXT (P): (1) portal api-client render-token Bearer (my lane; portal DEV candidate, typecheck + test + a served print
+   page look); (2) on the CTO's carriage ruling: mint at submit + put the token + SSM doc/host script read it (no operator
+   session) + dispatch ON; the read functions' B0 deploy (grant.py + enforce at 755c13bc19 + grant read IAM) rides it.
+   PARKED (owner P, un-parks at the next irpt-holdings build; ~M 101008, CTO 101007): holdings/resolve.py has drifted from
+   its STAGE_MANIFEST pin (_scope/resolve.py@c76b7c7aee) -- build-and-upload refuses irpt-holdings until re-pinned.
+   S135 disarmed: ~M landed the schedule fix for P (afefa09d7e).
    AFTER B1-B3 (CTO 100993, from ~D 100992, DSGN_IRPTV1 decomp v4 section 7 @d4add46f46): a HOLDINGS export report kind
    beside performance/analysis, additive on the contract, same freeze + render path; ~D wires EXPORT_KIND_BY_TAB.
    DEPLOY rides B1: package _render_identity/grant.py into the adapter/status/narrative zips, set IRPT_EVIDENCE_BUCKET,
