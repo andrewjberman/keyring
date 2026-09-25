@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T00:4xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T01:0xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -76,15 +76,12 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    interpreter ports never constructed; no served writer of the `cst_` binding; the portal sends the holdings
    `sourceSetRevision` where the reader accepts only `cst_<64 hex>`, so every custody submit refuses. Link-3 decision
    (who mints the binding) asked of 1.0.0_SA_CTO.
-7. C-S219 (round 18) -- the render chain's offline proof, the gate before export card section A deploys. Part 1 of 3
-   DONE 7f784f1068 (backend branch): one token on all three pinned routes, swapped ids refused, 18 of 18; expiry
-   MEASURED -- admitted up to 60 s past exp at V2 and V3 (clockTolerance applies to exp), not the PRD's literal
-   wording; recorded on the export card for A's owner. Part 2 DONE af282c4a18: the real V1 verifyAccessToken
-   refuses the render token (separate key) and accepts a human token; a V1-shaped human-key token on all three
-   routes passes V3 and the FULL V2 handler as a FIRM_ADVISOR, never RENDER_DELEGATE; the render token passes V2's
-   full handler (origin gate first). Parts 1+2: 30 of 30. Next: part 3 (served.Entry + the report-body read; an
-   unpinned same-account report refused).
-   Verifiers' node_modules junctioned from the main workspace into the backend worktree (gitignored).
+7. C-S219 COMPLETE d2e014dbf9 (43 of 43, offline; receipt `IRPT_MVP_P/RENDER_CHAIN_C_S219_20260925.json`): one
+   render token on all three routes; swapped ids refused; expiry measured (admitted up to 60 s past exp -- on the
+   export card for section A); actual V1 refuses the render token; a human token unaffected at V3, full V2 and
+   served.Entry; pinned bodies read and an unpinned same-account report refused through a real served.Entry. Fix
+   fe854ce6f1 (LOCAL, not deployed): Enforcer object pin + `served.Entry(render_ports=...)`. MEASURED: no deployed
+   function installs render ports, so every render read refuses today -- export card B0.
 8. A1 `_authz` log-line fix (4fffe13f01): SERVED on irpt-ycharts-generate; rides the next rebuild of the others.
    Census fix 1fcefdad74 (LOCAL, not deployed): all 17 published routes resolve and read guarded -- installed entry
    modules resolve from their staged rows; `served.installed_entry` gives performance/runtime, generate_installed and
@@ -108,6 +105,8 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
 |---|---|---|
 | `build-and-upload.sh` removes tracked `performance/*.py` from the publish worktree's working tree on every irpt-performance-adapter build (18:41Z and 20:2xZ; restored from HEAD each time; generate/refresh builds do not) | 1.0.0_SA_CTO to route (ci/ owner) | the next performance build |
 | 49F engine vs BD: 219 of 5194 DIVERGENT over all accounts (db699faf13); in the 300 sample, 7 of 293 DIVERGENT (3 engine coverage gaps of 35-98 neutral days; 1 in-kind signature +4452% vs +96%, the open ADVI_49F.c02-CFINPUT clause; 3 fully linked at 108-496bp), receipt F49_BD_CROSSCHECK_20260924.json | 1.0.0_SA_CTO to route to the 49F engine lane (DS) | the engine lane's next c02 act |
+| `directory/tests` 6 fail at HEAD too (test_custody_owner x4 owned-read entry; test_entry x2 2.0 event body / base64) | 2.0.0_SA_COO~P | the next directory/ edit outside refresh.py |
+| `holdings/tests` 44 fail in the P worktree at HEAD (test_publication_entry 39, test_runner_destination 3, test_snapshot 2) | 2.0.0_SA_COO~M (holdings lane) | M reads it against its own branch |
 | portal `bun test src/pages/InvestorReporting` 89 fail on origin/DEV 5e339ffd (87 unique), not CI-run | 2.0.0_SA_COO~D | ~D's S6/S7 rows |
 
 ## Limits
