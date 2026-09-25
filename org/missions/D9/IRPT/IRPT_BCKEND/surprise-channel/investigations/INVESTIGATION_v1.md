@@ -9383,3 +9383,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It does not: CLOUD declares cron(30 9 ? * MON-FRI *) America/New_York, equal to live."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S137",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T19:50:00Z",
+  "one_line": "DISPOSITION of IRPT_BCKEND-S131/S134: REMEDIED -- a full-firm COT build screens each account through the source controls (holdings_snapshot.cot_screen_accounts, ce64116275, on CLOUD since de042e1e4b) and refuses the account, never the firm; the live run reproduces the accepted census and the served account set exactly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (the Holdings producer, CTO R4)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run_firm('cottonwood', qa, no upload, cutoff 2026-09-24) on CLOUD: 981 source accounts, 841 supported, 140 refused (138 'custody missing required actual fields/rows', 2 'repeated row within relationship grain'); valid; reconciled $548,412,662.59.",
+      "The 841 built ACCOUNT nodes equal, as a set, the served COT revision fc199c8e's 841 accounts.",
+      "The 40-member holdings package built COT from its extracted tree alone with rc=0 (refresh_dispatch host script, local run)."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "IRPT_BCKEND-S134 world_is: 'The full-firm COT build that a daily schedule needs refuses the whole firm on 2 accounts' duplicate rows.'",
+  "world_is": "It builds the 841 supported accounts and carries the 140 others explicitly refused with their reasons in actual_custody_controls.account_screen."
+}
+```
