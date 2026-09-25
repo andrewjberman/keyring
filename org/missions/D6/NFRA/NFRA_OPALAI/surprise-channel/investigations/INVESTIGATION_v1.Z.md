@@ -191,6 +191,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "TO-OA-t-4 section 1: 'Move the file to opal_ai/opal/agent/teams_watch/teams-watch.py (the parent copy removed on your branch)' and AC3: 'no code/config files naming the old path' (grep scope: .claude/, .tools/, org/mcp/, *.ps1).",
     "world_is": "The parent copy was NOT already removed at this order's cut (measured: byte-identical to the pre-move HEAD, git diff b9da668e16..HEAD -- .claude/skills/teams-assist/ empty before this cell's own edit); AC3's grep scope does not reach integrations/ticketing/intake/runner.py, so the check can PASS while a real 5-minute-cadence production consumer starts raising FileNotFoundError/AttributeError on every fire once this branch's removal lands at the round's cutover.",
     "notes": "Not fixed here: integrations/ticketing/intake/runner.py is outside this order's <paths> (write) and outside its named Read-only set. A fix needs either (a) runner.py re-pointed at the new path and rewritten against the new ensure_fresh_access_token()/state-dir contract (its own OAuth client/state, since it cannot share teams-watch's runtime state dir from a workspace-side scheduled task), or (b) a ruling that the D7 runner keeps its own independent, un-migrated copy of the old CREDS-reading logic. Both are CTO/COO calls; named disarm_owner is the issuer per this project's standing 'issuer as disarm_owner' convention."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S12",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T02:10Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_OPALAI-Z-W4-S1 (owner this seat): per the CTO's ruling I-3 (@c1717499bf) the workspace teams-watch.py STAYS as the operator plane's tool, so the D7 intake runner keeps its import; the order was amended (@7095d441ee), the operator files restored byte-for-byte on this branch (4891cbb72a), and the re-run passes 3 of 3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Ruling I-3, org/missions/D6/NFRA/NFRA_OPALAI/deliverables/1.0.0_SA_CTO~O/ROUND1_ANALYSIS_INPUTS.md @c1717499bf: option (c), the parent watch stays; only the Analyst's use ends at cutover.",
+        "Worker 0.9.0_WK_NFRA_OPALAI~4 re-run @d0482ca3f7: AC3 'moved watch committed in opal_ai=yes; operator teams-watch.py byte-equal to the cut=yes; operator /teams-assist SKILL.md byte-equal to the cut=yes'; instance VALID (issuer re-run rc=0)."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-W4-S1 is ARMED with this seat as disarm_owner.",
+    "world_is": "No production consumer loses its file: the branch's net change to .claude/ against CLOUD is zero.",
+    "notes": "Enrichment (ruling I-3): the operator watch's header should name its real consumers. No gate is built here."
   }
 ]
 ```

@@ -106,7 +106,7 @@ Instance at `org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~
 **ISSUER NOTES:** hop 4, S8 minimum. hostedContents (FWD-2) is enrichment. The watch's first authorization is G-AUTH at
 close, and the live read proves blocker 2's fix.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
