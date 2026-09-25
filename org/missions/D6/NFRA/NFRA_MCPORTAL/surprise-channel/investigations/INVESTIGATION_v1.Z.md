@@ -374,6 +374,27 @@
     "spec_asserts": "MP-b-1 section 2 item 1: the local interpreter supplies PyJWT for the import, and AC1/AC2 need nothing else from it.",
     "world_is": "The local interpreter also supplies python-dotenv, which app/config.py loads at import; with the check's stdin __main__ and zip-internal module paths, dotenv raises AssertionError, so the verdict of AC1 and AC2 is decided by the interpreter, not by the package. At /var/task dotenv is not in the layer (ImportError, caught) and the extracted files exist, so this path does not fire there. Meeting the check from this cell would need a dotenv block in lambda_function.py or an edit to app/config.py, neither of which the face names; refused.",
     "notes": "AC1 and AC2 are recorded FAIL with this measurement; the order stays open."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W1-S5",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~1",
+    "surfaced_at": "2026-09-25T16:54Z",
+    "one_line": "MP-b-2 retires the grant writer's MCPORTAL_OWNER_OID env var for MCPORTAL_OWNER_KEY_CLAIM + MCPORTAL_OWNER_KEY (and adds MCPORTAL_CHANGES_TABLE), but infra/aws/lambda/ci/lambda-source-map.json:5064, outside this order's <paths>, still describes the function as exact-matching the oid from MCPORTAL_OWNER_OID. The source map's prose is now stale; nothing reads the var at runtime.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'mcportal_owner_oid|MCPORTAL_OWNER_OID' --corpus default on wk-NFRA_MCPORTAL-1 @fd2db15313 plus this cell's uncommitted edit: 12 hits across 42763 files (DEF=1 CONFIG=4 TEST=1 DOC=6). The only non-record hits outside this order's <paths> are infra/aws/lambda/ci/lambda-source-map.json:5064 (the `_note`, prose) and deliverables/2.0.0_SA_COO~O/round2/checks/b1.AC2.sh:23, which also sets MCPORTAL_OWNER_OID. That extra env var is now unused and harmless; the same line sets MCPORTAL_OWNER_KEY_CLAIM/MCPORTAL_OWNER_KEY, and b1.AC2 PASSes after this change.",
+        "infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/lambda_function.py (this cell): reads MCPORTAL_OWNER_KEY_CLAIM, MCPORTAL_OWNER_KEY and MCPORTAL_CHANGES_TABLE, and no longer reads MCPORTAL_OWNER_OID. infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf (this cell): var.mcportal_owner_oid is replaced by var.mcportal_owner_key_claim + var.mcportal_owner_key."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MP-b-2 section 1 item 4: env MCPORTAL_OWNER_KEY_CLAIM / MCPORTAL_OWNER_KEY replace MCPORTAL_OWNER_OID. Section 3 <paths> names lambda_function.py, the two tests, mcportal_grant_writer.tf and the record folders, and does not name lambda-source-map.json.",
+    "world_is": "The replacement landed in the code and the Terraform. The source map's `_note` for mcportal-grant-writer-lambda still names MCPORTAL_OWNER_OID and oid-only matching, and it is not writable from this order. The MP-a-1 apply also has to supply the two new variables in place of var.mcportal_owner_oid: any tfvars or apply invocation still passing mcportal_owner_oid now names an undeclared variable.",
+    "notes": "Not repaired here (face section 2 item 3). This is a prose record, so it has no runtime effect."
   }
 ]
 ```

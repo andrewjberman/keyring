@@ -100,7 +100,7 @@ Report once:
 **ISSUER NOTES:** R-2 (both branches, configured) and R-4 (the writer's own record, writer side and grants).
 Chain A, after MP-b-1 on the same slot.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
