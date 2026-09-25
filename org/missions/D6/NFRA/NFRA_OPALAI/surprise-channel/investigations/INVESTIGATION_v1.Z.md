@@ -592,6 +592,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "A worker writes exactly the <paths> its order names; an escape through the author override is the lane's audited instrument, not a worker's route.",
     "world_is": "One worker commit sits outside the grant, taken through the audited override. Its effect is inert until the cutover merge, which re-sets the gitlink anyway.",
     "notes": "For the CVO's read. A face that moves files into a submodule should say whether the worker bumps the gitlink; this one said nothing, and the worker filled the gap."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S16",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T04:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_OPALAI-Z-W3-S2 (owner this seat; on wk-NFRA_OPALAI-3): the AC2 hit was the issuer's checker over-reaching. The face REQUIRES workspace_probe_file to name a workspace file, so the scan now exempts that one key. Fixed at 4c183eef3c on CLOUD and df6be72199 on the branch; the worker re-runs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Face NFRA_OPALAI.TO-OA-t-3 item 5(a): the gate's read of workspace_probe_file must be DENIED, so the key names a workspace path by design. opal_ai r1-drain opal/runtime/provision/runtime.config.example.json:4 names ajb_workspace/CLAUDE.md, as OA-t-2 wrote it.",
+        "Dry-run of the fixed check by this seat: base FAIL; wk-NFRA_OPALAI-3 @faae15254b PASS (runtime files naming workspace/AWS/serial=0); mutant with a workspace path appended to opal/runtime/CLAUDE.md FAIL, reverted."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-W3-S2 is ARMED with this seat as disarm_owner.",
+    "world_is": "No runtime file the agent loads names the workspace. The only hit was the probe key the spec mandates. OA-t-3's built files are unchanged.",
+    "notes": "A checker defect: a scan scoped by directory counted a value the same spec mandates. It is filed for the round-1 checker lessons."
   }
 ]
 ```
