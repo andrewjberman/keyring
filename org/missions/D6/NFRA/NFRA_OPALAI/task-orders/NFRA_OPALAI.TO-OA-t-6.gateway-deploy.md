@@ -94,7 +94,7 @@ Instance at `org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~
 **ISSUER NOTES:** WORLD. Spawned only after OA-t-5 merges; the slot's new worktree is provisioned off the post-merge
 HEAD. Adds the CTO's exercised read. The live refusal of an un-profiled asker is the close run's.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
