@@ -1283,6 +1283,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "One of the two callers passes it. Nothing is served wrong yet: the served 09-25 object predates f-1 and discloses none of the new fields; the gap bites on the next put through crosswalk.main.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Remedy: crosswalk.main's write path passes the same research_folders/research_root the --disclosure branch does (one call), asked of 2.0.0_SA_COO~Z on its surface; then the disclosure re-mint through crosswalk.main --write-pool under a fresh pair, verified by reading folders_in_records == research_folders_live on the served object. The criteria lesson: a seam probe must drive the WRITE path it certifies, not a sibling branch."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S35",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T05:53:44Z",
+    "one_line": "DISARM by their owner of AMGT_CORPUS-Z-S34 (crosswalk.main's write path omitted the live list) and the f-1 worker's AMGT_CORPUS-Z-W1-S7 (schema not granted) and AMGT_CORPUS-Z-W1-S8 (AC3 expect vs 'subtests passed'), all the issuer's cut or a gap closed on the identity surface: amendments 1-2 (@347e636dbb, @e050dbf203), f-1 drained @eeb996b10e, 2.0.0_SA_COO~Z's write-path fix @5ef2158828, and ONE disclosure re-mint of crosswalk/v1/2026-09-25.json under a signed pair (COO @f5b0a47429, CTO @081f598b9f): versions 1 -> 2 (VersionId PoGljdVKce67e4GnBEY5wVab7wdkRJZd), folders_in_records 94 == research_folders_live 94 == the distinct source_row.folder count computed from the records, snapshot_stale_against_live True, research_universe.folders 94, records byte-equal to the before-version.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/disclosure_remint_verify.txt: versions 2 markers 0; the three counts 94; records byte-equal; VERDICT HOLD under the reject set (missing or 0 = refusal, the CTO's added value).",
+        "The builder's dry run before the put (05:3xZ) showed the same disclosure-only delta against the served object."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round-3 analysis s.2 ruling 2: the served object discloses the denominator it carries; a completion test reads folders_in_records / research_folders_live, never input_names.",
+    "world_is": "Met on the served object: the disclosure and its data agree at 94, and the 89 reads as the stale snapshot it is.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's)."
   }
 ]
 ```
