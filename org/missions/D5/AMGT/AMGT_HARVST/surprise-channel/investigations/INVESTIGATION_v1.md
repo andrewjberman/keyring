@@ -1235,6 +1235,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "world_is": "The literal AC1 invocation never reaches the retry loop at all (TypeError on argument shaping, rc=1, zero vendor contact) -- and even a run that DID reach the loop would keep whatever it captured only in a LOCAL sqlite/file outbox, never in the S3 bronze/silver surfaces this cell's own criteria measure, absent a further `upload-harvest` call this cell's BOUNDS section explicitly excludes (sa ONLY, one invocation, no loop, no second attempt).",
     "disarm_owner": "2.0.0_SA_COO~Y",
     "notes": "Not filed as BLOCKING: the task order's own section 6 anticipates exactly this shape ('If the producer fails, you have still completed the cell'; 'A delta of ZERO is a legitimate outcome'), and MECHANISM (R-21b) forbids widening the invocation or adding a retry/upload-harvest call to reach a different result. Filed as OBSERVATION because the round's own reasoning in section 1 states an implication ('gets further AND keeps whatever it captured') that the literal, bounded cell cannot make TRUE OR FALSE within its own criteria -- worth the next round's attention when choosing HVST-s-1's successor cell, never this worker's to fix."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S27",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-25T18:36:20Z",
+    "one_line": "THE CLI's OWN HELP FOR --harvest-grammar SAYS 'writes' FOR A FLAG THAT WRITES NOTHING TO S3. Read alone it asserts the exact belief that made round 6's first cut unpassable, and it reads as authoritative because it is the tool describing itself. The function's docstring three files away says the opposite and is correct.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE HELP TEXT, printed this tick from `python -m lib.opal_data_harvest --help`: `--harvest-grammar   run: turn on harvest-grammar bronze/silver writes (config key harvest_grammar) and build+pass a harvest_client to Worker so its harvest path is reachable (HVST-h-10 row AMGT_HARVST-Z-W10-S2)`. The words 'bronze/silver writes' name S3 surfaces",
+        "THE SOURCE SAYS LOCAL, in its own docstring, printed at worker.py:91-108: `_write_harvest_listings` -- 'each dict Publisher.listings accumulated for this job lands in a local harvest_listing_outbox outbox file beside the record, FOR THE HARVEST UPLOADER TO PUT AS BRONZE through harvest_grammar.put_listing_bronze'. The docstring names the uploader as the putter, explicitly",
+        "THE S3 PUT IS IN THE OTHER COMMAND: HarvestUploader._run_listings, uploads.py:253-283, reached only via the separate `upload-harvest` subcommand (confirmed present in the parser's positional choices: run, plan, status, universe, import-session, migrate, upload, upload-legacy, upload-harvest)",
+        "BOTH READINGS ARE DEFENSIBLE FOR THE FLAG, which is what makes it a hazard rather than a typo: the flag DOES enable the harvest-grammar write PATH end to end, and the bronze/silver writes are its eventual effect. What the help omits is that the effect is performed by a DIFFERENT COMMAND the reader must also run. A flag description that names an effect it does not itself produce is indistinguishable, at the call site, from one that does",
+        "NEGATIVE CONTROL ON THE SIBLING FLAG: `--security-json`'s help reads 'run/plan: one security object, in place of --tickers/pilot_securities' -- precise, and it is the line that would have prevented the OTHER defect in the same cut had it been read. So the help is not uniformly loose; this one line is"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The CLI help is the surface an issuer reads to learn what an invocation does, and `--harvest-grammar` describes itself as turning on bronze/silver writes.",
+    "world_is": "`run --harvest-grammar` writes only a LOCAL sqlite/file outbox. Nothing reaches bronze or silver until `upload-harvest` runs. A criterion that measures an S3 surface after `run` alone is pinned at +0 before it starts, which is precisely what happened to this round's AC2.",
+    "notes": "FILED, NOT CHASED -- lib/opal_data_harvest is NOT in this cell's write grant and this is mid-round, so the remedy is a later act by that module's owner, not a rider on HVST-s-1. THE DIRECTION OF THE NEAR-MISS IS THE INTERESTING PART AND IS STATED AGAINST MYSELF: I met this help text AFTER writing amendment 1, while verifying my own new AC1b, and for a moment read it as evidence that my amendment was unnecessary. Had I read it BEFORE the amendment it would have CONFIRMED the defect instead of exposing it. A tool's self-description is not a second instrument -- it is the same author as the code, one remove further from the behavior, and it ages separately from what it describes. THE DISCRIMINATOR COST ONE READ: the function's docstring, which names who performs the put."
   }
 ]
 ```

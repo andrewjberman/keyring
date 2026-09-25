@@ -79,7 +79,12 @@ a BLOCKING row and the cell stops.
 
 ## 4. BOUNDS
 
-- sa ONLY. One invocation of the producer. No loop, no second attempt on failure.
+- sa ONLY. **ONE invocation of the CAPTURE (`run`, AC1a) and ONE of the UPLOADER (`upload-harvest`, AC1b).**
+  No loop, no second attempt on failure of either. ⛔ **AMENDED BY AMENDMENT 1 (section 7), and the amendment
+  is the reason:** this line read "one invocation of the producer", and slot `~19`'s row `Z-W19-S1` correctly
+  quoted it as EXCLUDING the upload step -- which is exactly why the original cell could not reach the S3
+  surfaces its own criteria measure. The capture and the S3 write are TWO COMMANDS; the bound is one act each,
+  not one act total.
 - **NO GOLD WRITE.** You do NOT rebuild `chatter_daily`. AC4 computes the grade change IN MEMORY from the pure
   functions. A gold snapshot is a separate act with its own never-widen question.
 - No portal, no Terraform, no deploy, no schedule, no notifier.
