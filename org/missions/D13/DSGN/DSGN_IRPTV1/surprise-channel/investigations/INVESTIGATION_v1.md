@@ -699,6 +699,97 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "No blocking effect on this order: IVE11-AC1/AC2/AC3/AC4 are all met (AC3 covers the pie's genuine code path; AC1's library fix covers the hero cards' name path; AC4 is the CVO's real-run screenshot check). Filed so a future cell that widens (b) literally (serving modelCode onto CategoryViewTree's contract) does not read this TO's close-out as having already done so."
+  },
+  {
+    "id": "DSGN_IRPTV1-W9-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~9",
+    "surfaced_at": "2026-09-25T00:00:00Z",
+    "one_line": "TO-IV-e-14's cell (c) asks GenerateComposer to list 'the included accounts by name + masked tail' for a chosen client, but that data source (scope.permittedAccountIds) is the SAME one an Andrew-direct already refused a per-account list on ('it printed every permitted account id (1,000+)'); this worker named a threshold (ACCOUNTS_NAMED_LIST_CAP=25) rather than reproduce the refused pattern or silently drop the ask.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- disarmed by either (a) an issued task order wiring the header's narrowed `Narrowing` (the SELECTED client's own few accounts, the way `header/IdentityCard.tsx`'s own `overWhatFor` already sources it) through `AnalysisTab.tsx`/`GenerateComposer.tsx` so the named list uses the narrow set instead of a capped slice of the wide one, which needs an `index.tsx` mount-line change outside this cell's <paths>; or (b) an explicit ruling that ACCOUNTS_NAMED_LIST_CAP's degrade-to-count above 25 is the accepted permanent shape.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/analysis/GenerateComposer.tsx (pre-edit, this worker's worktree HEAD): comment directly above the old `effectiveAccounts = permitted` line reads 'THE ACCOUNTS ARE THE SELECTION'S PERMITTED SET. Andrew-direct 2026-09-24 ~19:4xZ (design notes, Analysis): no per-account checkbox list here -- it printed every permitted account id (1,000+) -- and account-level choice lives deeper in the page.'",
+        "portal/src/pages/InvestorReporting/header/IdentityCard.tsx's own OVER WHAT comment (same Andrew-direct, same timestamp): 'the SELECTED client's own accounts, from the accepted selection -- never scope.permittedAccountIds, which is every account the viewer's firm permits (1,000+ at 49F)' -- IdentityCard reads `selection.scope.accountIds` (the narrow set) via a `Narrowing` prop `GenerateComposer.tsx`/`AnalysisTab.tsx` do not receive",
+        "AnalysisTabProps (AnalysisTab.tsx, this cell's own <paths>) carries `scope`/`firmId`/`selectedScopeRef` only, no `selection`/`row`; the narrowed `Narrowing` value lives in `index.tsx`'s own state, and this cell's <paths> does not include index.tsx",
+        "bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-14.prospect-and-accounts.test.ts prints VERDICT: PROSPECT-AND-ACCOUNTS-OK against the capped-list implementation (ACCOUNTS_NAMED_LIST_CAP=25, GenerateComposer.tsx)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IV-e-14 cell (c): 'Accounts in the input (GenerateComposer.tsx): when a client is chosen, the included accounts by name + masked tail (never an id), each removable.' -- stated with no cap and no reference to the standing Andrew-direct on this exact component.",
+    "world_is": "GenerateComposer.tsx has only `scope.permittedAccountIds` (the wide, possibly-1,000+ set) to draw a named list from; it has no access to the header's narrowed `Narrowing` (the small, actually-relevant set IdentityCard already uses for the identical UI problem) without a change to index.tsx's mount line, which sits outside this cell's <paths>. This worker implemented the name+masked-tail+removable list literally, but capped it (ACCOUNTS_NAMED_LIST_CAP=25, named and commented in GenerateComposer.tsx) so a firm-wide or relationship-wide scope degrades to the pre-existing count-only line above the cap, rather than either violating the Andrew-direct at scale or leaving cell (c) entirely unbuilt.",
+    "notes": "Not blocking IVE14-AC3 (its own test constructs a 3-account fixture, well under the cap, and the criterion's own wording never named a cap). Filed so the COO/CTO can rule whether a later round wires the narrowed selection through (removing the cap's practical bite) or accepts the capped degrade as this component's permanent shape."
+  },
+  {
+    "id": "DSGN_IRPTV1-W9-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~9",
+    "surfaced_at": "2026-09-25T00:27:51Z",
+    "one_line": "gen-wire.ts's WIRE_CONTRACTS denominator was missing 'DirectoryPage' even though its schema exists in docs/contracts/investor-reporting/v1/ and a generator-headed DirectoryPage.ts (commit 771e4d2d) already sat on disk -- a dropped contract from the generator's own list, not something TO-IV-e-17 named.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/ carries 23 *.schema.json files; gen-wire.ts's WIRE_CONTRACTS array (pre-edit, this worker's worktree HEAD) named only 22, omitting 'DirectoryPage'",
+        "portal/src/pages/InvestorReporting/contracts/wire/DirectoryPage.ts (pre-edit) carries the header 'GENERATED, DO NOT EDIT BY HAND ... Generator: src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts', so it was once produced BY this generator, not hand-authored",
+        "after this worker's regenerate step (WIRE_CONTRACTS unchanged), responses.ts's directory-browse envelope needed DirectoryPageWire (its $ref target changed to DirectoryPage.schema.json) but index.ts never re-exported it -- `bun run typecheck` failed on the unresolved import until 'DirectoryPage' was added back to WIRE_CONTRACTS"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IV-e-17 cell (b): 'Regenerate IR/contracts/wire/** from the workspace's docs/contracts/investor-reporting/v1/ ... this project's write surface (CTO 100919, PRD v0.7)' -- names no specific contract list, silently assuming the generator's own denominator is complete.",
+    "world_is": "The generator's denominator had silently dropped one of the 23 live document schemas at some earlier point (before this round); this worker added 'DirectoryPage' back to WIRE_CONTRACTS to make the regenerated output self-consistent (AC2's typecheck=0 bar), which is a repair the cell's text never named.",
+    "notes": "Not blocking any IVE17 criterion (AC2 requires typecheck 0, which needs this fix). Filed so the CTO/COO can confirm no other document schema is similarly missing from a generator's denominator elsewhere in the tree."
+  },
+  {
+    "id": "DSGN_IRPTV1-W9-S3",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~9",
+    "surfaced_at": "2026-09-25T00:27:51Z",
+    "one_line": "TO-IV-e-17 cell (c) says to 'drop the bridge' (TemplateUploadRequest/UploadState in prospect.ts), but an out-of-lane test (tabs/analysis/tests/prospect.test.tsx, not in this order's <paths>) imports TemplateUploadRequest by name; this worker kept the export, redefined to read the generated AnalysisUploadRequestWire, rather than delete it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/analysis/tests/prospect.test.tsx line 6: `import { prepareProspectAnalysis, prepareUpload, type TemplateUploadRequest } from '../prospect'`",
+        "TO-IV-e-17's <paths> block names portal/src/pages/InvestorReporting/tabs/analysis/prospect.ts but not tabs/analysis/tests/prospect.test.tsx",
+        "deleting TemplateUploadRequest and re-running `bun run typecheck` after the wire regen reproduces a resolvable-import failure at that test's line 6 (verified before restoring the export); with the export redefined as `AnalysisUploadRequestWire & { readonly file_base64: string; readonly file_type: 'csv' | 'xlsx' }`, `bun run typecheck` is clean and `bun test .../tests/prospect.test.tsx` is 10 pass / 0 fail"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IV-e-17 cell (c): 'Drop the bridge: TemplateUploadRequest / UploadState in IR/tabs/analysis/prospect.ts read the generated types.'",
+    "world_is": "UploadState was changed to read the generated type directly (AnalysisUploadResultWire['state'], no local widening) and prepareUpload's internal `as unknown as` cast was removed as instructed; TemplateUploadRequest could not be deleted outright without breaking an out-of-lane consumer this order grants no write access to, so it was kept as a name that now READS the generated wire type (an intersection narrowing AnalysisUploadRequestWire to its own template-lane shape) instead of the retired Omit-based bridge.",
+    "notes": "Not blocking any IVE17 criterion; IVE17-AC3 checks for no `as unknown as` cast in prospect.ts/adapt.ts for these fields, which holds. Filed so the COO/CTO can rule whether a later cell should widen this order's <paths> to include the test file and delete the export outright, or accept the redefined alias as the permanent shape."
+  },
+  {
+    "id": "DSGN_IRPTV1-W9-S4",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~9",
+    "surfaced_at": "2026-09-25T00:27:51Z",
+    "one_line": "Running the whole InvestorReporting portal test tree (a sweep beyond this cell's own criteria, taken to confirm no regression) shows 86 failing tests / 2 errors across files this worker never touched (e.g. src/api/endpoints/investor-reporting.ts's LiveClient route-building, FIELD_MAP coverage, F14/F19/F25/F26/F30/F31 etc.) -- pre-existing at this worktree's HEAD, not caused by TO-IV-e-17's edits.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- the drain's real run should confirm whether these 86 failures are already known/tracked or represent an untracked regression from an earlier round; `git diff --stat` at this worker's worktree shows only gen-wire.ts, wire/**, prospect.ts and adapt.ts's classificationMembers touched, none of which the failing tests' stack traces implicate (e.g. the LiveClient failures throw from src/api/endpoints/investor-reporting.ts:722/310, a file this order does not grant write access to and this worker did not edit).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`bun test src/pages/InvestorReporting` (this worker's worktree, post-edit): 705 pass, 27 skip, 86 fail, 2 errors, 3113 expect() calls, 818 tests across 170 files",
+        "`git -C portal diff --stat -- src/api/ src/pages/InvestorReporting/__tests__/` shows only __tests__/fe-s-13/gen-wire.ts changed (51 insertions, 2 deletions) -- no fixture, no test file, no api/ file touched by this worker",
+        "sample failure 'LiveClient > targets the DECLARED route' throws IrRequestError('An accepted account selection is required') from src/api/endpoints/investor-reporting.ts:722, a file outside this order's <paths> and unmodified in this worktree"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "No task-order criterion named a whole-suite run; IVE17-AC2's own invocation only asks for iv-e-17.regenerated.test.ts and `bun run typecheck` (both green). The whole-suite run was this worker's own no-regression check.",
+    "world_is": "A large pre-existing failure population (86 of 818 tests) already exists in this worktree outside this cell's write surface, unrelated to AnalysisUploadRequest/PerformanceReport/HoldingsSnapshot/DirectoryPage or the gen-wire generator.",
+    "notes": "Not blocking any IVE17 criterion (none of the three mechanical criteria's own invocations touch these files). Filed per the surprise-channel rule ('found something odd off-task, append one row and keep working') rather than investigated further, since fixing it is out of this cell's scope and paths."
   }
 ]
 ```
