@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: /canonical-drive loop on Andrew-direct 17:3xZ (cron 57c0067c, every 10m; replaced goal loop f599225b), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T17:5xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T18:0xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -90,9 +90,16 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    body's sha), render_grant (accountSetId = owner's selection, reportId, jobId = export revision), print_query
    (REQUESTED window; card corrected). 8 tests over the real repository; export suite 77 passed. Real run blocked:
    irpt-requests has 28 rows and NO REPORT# row at any firm -- no signed-in Performance run has retained a report.
+   B1 NARRATIVE LANDED bcb153c789 + test fix 600140b8cf (backend; bcb153c789's "suite passed" was FALSE -- 3 failed on
+   a handler-name collision, fixed; export suite 81 passed): export/narrative_submit.py builds the packet at submit
+   from the retained report (cutoff = actual_end 23:59:59Z), binds only a contract-validated packet by the sha of the
+   stored + read-back bytes (CTO R2). Real run: LIVE opal-news-trending-daily, validated, prose released, persisted
+   under synthetic GENB1NARRSYN. Deploy note: stage narrative/handler.py under another name in the export zip.
    NEXT (P): B1 wiring -- export/entry.py submit_export composes the repository (irpt-requests + reporting
    destination via opal_naming, as performance/installed.py does), resolves, freezes + persists the bundle, writes
    the grant, answers QUEUED (export id in status.operation.revision); dispatch off until B2. Then the deploy.
+   AFTER B1-B3 (CTO 100993, from ~D 100992, DSGN_IRPTV1 decomp v4 section 7 @d4add46f46): a HOLDINGS export report kind
+   beside performance/analysis, additive on the contract, same freeze + render path; ~D wires EXPORT_KIND_BY_TAB.
    DEPLOY rides B1: package _render_identity/grant.py into the adapter/status/narrative zips, set IRPT_EVIDENCE_BUCKET,
    grant s3:GetObject on firms/*/generations/*/render_grant.json (+ ListBucket on that prefix: missing -> 404 ->
    refusal, not 403 -> raise). The adapter redeploy waits until the INF one-use is spent or expires (00:00Z).
