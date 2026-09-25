@@ -14516,6 +14516,32 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The task order's step 1 (KEY) and step 2 (CAPTURE) treat 'security_key' as a plain token safe to place inside a URL path segment and (per this worker's own generalisation of served_capture.py) inside a filename; the coverage list is spec'd as 89 such tokens.",
     "world_is": "2 of the 89 resolved keys carry a literal '/', copied through unescaped from a landed model block's own 'security' display field. It is safe as a lambda:Invoke rawPath (measured) and was made safe as a filename by this worker's own capture_lib._filename_slug (a fix to this worker's OWN instrument, not to the production system, per BOUNDS 2 no-fix). Whether it is safe as a real served API Gateway path segment is not measured here.",
     "notes": "Filed as a row rather than a fix: BOUNDS 2 of this cell's own task order ('No fix. You change no code outside your deliverables folder.') forbids touching resolve_identity or the landed-block writer; the filename crash this caused in my own script (a stray '/' splitting served_fixture.BP/_LN_Equity.json into a bad path) was fixed in capture_lib.py itself (this worker's own instrument), not in production."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S276",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-25T04:05:00Z",
+    "one_line": "Disarm-owner read of AMGT_RESAPP-Z-W158-S1: the scoped API's 16 AMGT routes use a single-segment {security_key} template (0 greedy), so a key sent with a raw '/' (BP/_LN_Equity, NG/_LN_Equity) matches no route; whether an encoded %2F reaches the function, and how the page's request builder encodes the key, is UNMEASURED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "adjudicates": [
+      "AMGT_RESAPP-Z-W158-S1"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws apigatewayv2 get-routes --api-id 7k3ed8px20 (a read, 2026-09-25 ~04:0xZ): 106 routes, NextToken none; 16 carry 'amgt'; every security route is 'GET /api/scoped/amgt/security/{security_key}/<leaf>' with one path parameter, authorization CUSTOM; none is {proxy+}.",
+        "The worker's direct lambda:Invoke returned 200 on all 5 routes for both keys; that path bypasses the gateway's matcher, so it cannot answer the HTTP question (W158-S1's own bound).",
+        "The key comes from a landed model block's display value, carried through identity resolution (W158-S1)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every coverage-list name's page is reachable at /api/scoped/amgt/security/{key}/*.",
+    "world_is": "For 2 of 89 names the resolved key carries '/', which the single-segment gateway template cannot match when sent raw. This is a standing exposure on the served page for those two names, predating this round; no act of this round reaches it. The remedy is in the identity layer (a key must never carry '/'), whose files this seat holds for 2.0.0_SA_COO~X's CRPS-f-1 until it drains.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- no act of this round fires it; carried to the round-41 analysis with two measurements owed: the page's key encoding, and an authenticated HTTP read of one of the two names.",
+    "notes": "Filed as the disarm owner's read of the worker's row, per the row's own disarm_owner line."
   }
 ]
 ```
