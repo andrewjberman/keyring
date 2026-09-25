@@ -14491,9 +14491,8 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "disposition": "GRADUATED",
     "spec_asserts": "ROUND_ANALYSIS.round40.md @fa03858417: 'two of its carries resolve differently, because I VACATED the ruling they defer to at 479eee52ff, twenty minutes before the slug. Z-S270's claim is SUPERSEDED rather than carried; Z-S273 did not feed an open ruling, it CLOSED one, and graduates.'",
     "world_is": "The dispositions are exactly as ruled and are folded by this row. The ordering is not: the vacatur post-dates both the adjudication and the slug, by 7m21s and 4m37s respectively, on git's own author timestamps converted from -04:00. A vacatur that lands after a grade cannot be a defect in the grade; the defect is the one the same ruling names in the next sentence, which this seat accepts.",
-    "notes": "⛔ THIS ROW CORRECTS A SEQUENCE, NOT A VERDICT. Every disposition the L10 ruled is applied here unchanged. ⭐ AND THE REASON TO CORRECT IT AT ALL IS THAT THE TWO ERRORS ARE DIFFERENT SIZES: 'deferred to a ruling that had already been vacated' describes a seat that failed to re-read state before grading, which is a control failure; 'wrote the reason a ruling was not yet a ruling, and deferred to it anyway' describes a seat that had the finding in its own sentence and did not act on it, which is a judgment failure. This seat committed the second. Letting the first stand uncorrected would put a control failure in the record that the timestamps do not support, and every later reader inherits the record rather than the timestamps."
-  }
-,
+    "notes": "\u26d4 THIS ROW CORRECTS A SEQUENCE, NOT A VERDICT. Every disposition the L10 ruled is applied here unchanged. \u2b50 AND THE REASON TO CORRECT IT AT ALL IS THAT THE TWO ERRORS ARE DIFFERENT SIZES: 'deferred to a ruling that had already been vacated' describes a seat that failed to re-read state before grading, which is a control failure; 'wrote the reason a ruling was not yet a ruling, and deferred to it anyway' describes a seat that had the finding in its own sentence and did not act on it, which is a judgment failure. This seat committed the second. Letting the first stand uncorrected would put a control failure in the record that the timestamps do not support, and every later reader inherits the record rather than the timestamps."
+  },
   {
     "id": "AMGT_RESAPP-Z-W158-S1",
     "project": "AMGT_RESAPP",
@@ -14681,6 +14680,32 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "For a name with no landed model block the page renders its absences and the export refuses to render at all. Either the export writes the page's absences for such a name, or AMGT_CORPUS lands blocks for the five; the first is RESAPP's, the second is data.",
     "disarm_owner": "2.0.0_SA_COO~Z -- INERT; carried to round 43 beside the CTO's inputs.",
     "notes": "Measured at round 42's close run on the live population, per the CTO's universe correction (msg 25891)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S281",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-25T18:50Z",
+    "one_line": "The rich export's Model Cases line CONTRADICTS ITSELF -- it reads 'Upside / Base / Downside cases: SERVED -- the payload carries no case block' while the served route carries a full base block -- because `_model_cases_markdown` reads only `cases`/`status`/`reason` and NEVER reads `base`, `upside` or `downside`, so a SERVED block with no `reason` key falls through to a DEFAULT absent-reason. Boeing's served base of -18.03 therefore never reaches the export at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "POST-DEPLOY read, 18:45Z, deployed CodeSha256 FOF+dRXoW1KFFzD0moLigsMB2LMmIjwhwURq7FkCzbw= (rq-2 landed 18:31:46Z): the rich export for BA_US_Equity carries the literal line 'Upside / Base / Downside cases: SERVED -- the payload carries no case block'.",
+        "The SAME deployed function's thesis route carries model_cases = {status: SERVED, cases: [Upside, Base, Downside], base: {status: SERVED, value: -18.032184, formula: 'consensus EPS (FY1) x trailing-median P/E', inputs: {...}, px_last: {...}}, upside: {status: ABSENT, reason: 'methodology to be discussed with Andrew'}, downside: {same}}. The block has NO top-level `reason` key.",
+        "CAUSE at the bytes, lib/research/print/render_pack.py:711-720: `cases.get('status','ABSENT')` correctly yields SERVED, and `cases.get('reason','the payload carries no case block')` falls through to the DEFAULT because a SERVED block carries no reason -- a reason is what an ABSENT block carries. The two halves of one formatted line then contradict each other.",
+        "AND THE FUNCTION NEVER READS THE CONTENT: `base`, `upside` and `downside` appear nowhere in it. Its own docstring states the intent -- 'the ONE case block a name genuinely carries no cases for reads as the SAME absence on both surfaces (C-EXPORT-ADDS-NOTHING)' -- so the ABSENT branch was designed and the PRESENT branch was never written.",
+        "NOT introduced by rq-1: `git log -S` dates the string to 299e560858 (AMGT-rl-10). rq-1 changed this same file by 168 insertions and 32 deletions (drain 9b7b146d9a) and left the line standing.",
+        "BOUND STATED: whether the PAGE's CasesBlock renders the base VALUE is NOT measured here -- no DOM capture was taken. If it does, the export SUBTRACTS content, which is the opposite direction of C-EXPORT-ADDS-NOTHING and an FWD-30 divergence; if it does not, both surfaces are equally blind and the contract holds while both are wrong."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-EXPORT-ADDS-NOTHING: the export renders the SAME line the Model tab renders, byte-identical, so an absence reads identically on both surfaces.",
+    "world_is": "On a SERVED case block the export renders a line whose status half says SERVED and whose reason half says the block is absent, and renders none of the block's values. The defect is a DEFAULT absent-reason standing in for a branch that was never written.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- INERT; round-43 input beside the base/px_last guard, which this line currently HIDES from any export reader.",
+    "notes": "Found by the first post-deploy read of round 42. THIS IS THE THIRD INSTANCE TODAY OF THE RULE I WROTE SIX HOURS AGO in AMGT_CORPUS's round-4 analysis, R-3: 'a constant absent-reason is a defect on sight -- a reason string a producer WRITES rather than DERIVES cannot know when its cause has gone.' Here the constant is a function default rather than a stored field, which is why the earlier two instances (Z-S36's hard-coded 'not authorized', Z-S278's bare nulls) did not surface it. A default argument is a written reason with no author. FILING NOTE: this row was first appended as Z-S279, an id 2.0.0_SA_COO~Z had ALREADY COMMITTED at edb6779132, because the id was minted from a read taken hours earlier. The row gate read the duplicate as a MUTATION of the committed row and BLOCKED THAT PEER'S NEXT COMMIT -- the cost of the collision landed on another seat, not on me. 2.0.0_SA_COO~Z committed only its own Z-S280 and restored this row as Z-S281. ON A SHARED APPEND-ONLY CHANNEL THE ID MUST BE DERIVED IN THE SAME OPERATION AS THE WRITE; a next-id computed from an earlier read is a guaranteed collision under concurrency, and CLAUDE.md 14b's 'take the shared index's seconds-long race' is about the COMMIT, not about the ID."
   }
 ]
 ```
