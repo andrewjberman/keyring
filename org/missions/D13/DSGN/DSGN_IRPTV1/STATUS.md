@@ -1,4 +1,4 @@
-# DSGN_IRPTV1 -- status (FULL: round 4 executing, /canonical-drive)
+# DSGN_IRPTV1 -- status (FULL: round 4 drained; the signed-in walk owed, /canonical-drive)
 
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.8
 @31a61d0466 (ADMITTED). Round 3: issuance @9e13e294c1 (12 orders IV-e-9..20, decomp v3 @2af10e4cd0), amendment
@@ -18,10 +18,18 @@ Build place: the main portal checkout on DEV (Andrew-direct ~18:3xZ). As of 2026
 
 ## Orders
 
-Round 4 (CTO 100991 over ADJUDICATION_v2 @7bf1522657): decomp v4 @d4add46f46, issuance @761450ff61, five one-cell chains
-on slots ~12..~16 off DEV 8242412d -- IV-e-21 (Performance account filter), IV-e-22 (Analysis at rest), IV-e-23 (firm
-name, not token), IV-e-25 (repairs), IV-e-26 (export hop consumer). IVE16 parked on P (routing asked of 1.0.0_SA_CTO).
-Round 3: twelve orders complete, on origin DEV 8242412d and PROD cb48eff8.
+Round 4 DRAINED: IV-e-21, 22, 23, 25, 26 complete and merged on portal local DEV (08144571 + the drain repair 55ed4790);
+CLOUD merges 147cc46055, ece848b113, 3a67336837, 0bd9852c47, 736f69a15b. Suite 757 pass / 81 fail (legacy set only);
+tsc -b rc=0. Fixture close run: deliverables/2.0.0_SA_COO~D/round4-close.* (row S15). The round's AC4 judgment grades and
+round 3's five NOT_EVALUATED wait on Andrew's signed-in walk on 5174, asked through 1.0.0_SA_CTO 19:08Z (CTO 100986).
+IVE16 (Holdings export) waits on P's 'holdings' ReportKind (CTO 100994). origin DEV is 8242412d; the round-4 candidate
+reaches origin through the CTO's review and 0.0.0_AB_MSTR's push.
+
+## Round-5 candidates
+
+1. The firm chip and identity card read the firm catalogue's name (ResolvedScope carries no display name: adapt.ts:696-705).
+2. The print route's render token: P's own (api-client.ts reads it on the print route; PrintEntry needs nothing, P 101011).
+3. IVE16's one-line EXPORT_KIND_BY_TAB hookup when P serves 'holdings'.
 
 ## Round-3 drain checks
 

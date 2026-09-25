@@ -1015,6 +1015,29 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not blocking: IVE25-AC1/AC2/AC3 all PASS-by-output under this shape. Filed so a reader comparing the cell text's 'per member' wording against the shipped `rowColor` (per L1 row) prop name does not read the difference as an unmet criterion -- the mechanism honours the cell's INTENT (a served-code resolver Holdings can opt into without touching Model Portfolios) at the grain the actual data shape offers, not at the L2 grain the wording implied."
+  },
+  {
+    "id": "DSGN_IRPTV1-S15",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-25T19:40:00Z",
+    "one_line": "Round-4 drain: five orders complete and merged (portal local DEV 55ed4790); the 14 ARMED rows the CVO census named are dispositioned (S3, S5, S6, S7, S9 here; the nine worker rows in S13, S14 and R6); the fixture close run is committed; the round's JUDGMENT criteria await Andrew's signed-in walk (asked through 1.0.0_SA_CTO); one next-round item: the firm chip prints the firm id because the ResolvedScope wire carries no display name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "CTO 100991: 'Disposition the 14 ARMED rows at your drain.' /dispatch Step 5: merge per chain end, drain hygiene once, the one real run at close.",
+    "world_is": "S3 disarmed: tsc -b rc=0 at portal 08144571 (the round-2 TS2339 is gone). S5 disarmed: IV-e-2 is terminal and every later criterion expects an anchored `VERDICT:` line (rounds 3-4, 17 orders). S6 disarmed: the round-3 and round-4 close runs render the selected client with 'DRIVER-FIXTURES-MATCH: matched 6 of 6' (round3-close.run.txt, round4-close.run.txt). S7 and S9 disarmed: 4 of the 8 legacy failures fixed at c1d7aefe and 9902bf25, the other 4 re-scoped under CTO 100865 (fe-s-5/fields by IV-e-18, fe-s-5/controls by IV-e-16) and passing in the round-4 suite. Round-4 suite at 08144571: 757 pass / 81 fail; fe-s-5/states green (IV-e-25, R6); the only new failure, iv-e-16.screen-layout arm 2 (render/PrintEntry.tsx moved under IV-e-26 on P's spec), re-scoped to IV-e-16's own commit at 55ed4790; every other failing file is the pre-round legacy set. Close run on 5174 @08144571 (round4-close.*): Performance and Holdings carry the account filter at rest, Analysis leads with the cards and one disclosure for the secondary inputs and a closed 'Analyze a prospect portfolio instead', the Generate panel reads the header's client, no UNAVAILABLE / raw ISO / acc_ / dark: on any body. The first close shot lost the selection on Holdings: a Vite full reload mid-run right after the chain-4 merge; round4-selection-probe.mjs in both navigation orders and the re-run keep the selection on every tab. Next-round item: FirmAttribution and the identity card print the firm id ('F-CW' on the fixture; the tenant slug live) because adaptResolvedScope sets displayName = firmId (contracts/adapt.ts:696-705, 'No display name crosses the wire'); the name exists in the firm catalogue FirmDropdown reads.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~D/round4-close.run.txt and round4-close.0{1..5}-*.png",
+        "deliverables/2.0.0_SA_COO~D/round4-selection-probe.mjs",
+        "portal DEV 08144571 and 55ed4790 (local)",
+        "portal/src/pages/InvestorReporting/contracts/adapt.ts:696-705"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The round's AC4 judgment grades and round 3's five NOT_EVALUATED land on Andrew's walk (CTO 100986), asked 2026-09-25 19:08Z."
   }
 ]
 ```
