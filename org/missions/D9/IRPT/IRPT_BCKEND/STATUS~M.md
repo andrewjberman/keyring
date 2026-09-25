@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T19:4xZ (tick 11). Loop: /canonical-drive cron 6f699621 (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-25T19:5xZ (tick 12). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -118,7 +118,7 @@ branch. No code edit is open.
      exports the firm principal, and is stateless (the previous outcome comes from SSM history). The local host-script
      run from the extracted 40-member COT package built with rc=0. Owed: Terraform (function, schedule DISABLED,
      roles) with row 4b. Merge to CLOUD is waiting on other seats' staged files.
-   - **S131 / S134 explained** (9c0fb0c8f2): the served COT revision is a BOUNDED publication of 841 of 981 accounts.
+   - **S131 / S134 DISPOSED** (S137 @d3ab268cb0, GRADUATED). Explained at 9c0fb0c8f2: the served COT revision is a BOUNDED publication of 841 of 981 accounts.
      The 53 repeated relationship groups sit in 2 unserved accounts ($729,826.75). The source is unchanged (same
      version and sha as served). A full-firm (scheduled) COT build refuses the whole firm for those 2 accounts.
      **DONE** @ce64116275 (M branch): a full-firm COT build screens each account and refuses the account, not the
