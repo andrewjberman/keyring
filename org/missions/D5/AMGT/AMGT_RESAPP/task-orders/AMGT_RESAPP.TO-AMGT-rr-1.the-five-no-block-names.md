@@ -24,7 +24,7 @@ PWR and UNH (`AMD US Equity`, `GOOGL US Equity`, `LLY US Equity`, `PWR US Equity
 the print route refuses each (row `AMGT_RESAPP-Z-S280`). **The acts, in order, under ONE NEVER-2 entry opened AND COMMITTED before
 the first pull:** (1) `bloomberg_health` reads `ok: true`, printed; (2) `PYTHONPATH="$(pwd)" python
 integrations/bloomberg/research/model_block_pull.py pull --securities <up to three>` in two invocations (3 + 2), stopping at the
-first non-zero rc; (3) `... model_block_pull.py derive --securities <the same>` in the same two batches; (4) verify with the two
+first non-zero rc; (3) `... model_block_pull.py derive --securities <the same>` in the same two batches, run at CLOUD HEAD at or after `025224c2cd` (the guarded base-case rule; the CTO half's condition) with `git rev-parse HEAD` printed beside each derived stamp; (4) verify with the two
 criteria; close the entry. This is the SAME producer and the SAME invocation shape AMGT_CORPUS's round-4 pull used
 (`org/critical_paths/change_management/20260925T0418Z_amgt-corpus-fwd12-round4-pull-derive-20260925_deploy_completion.md`).
 
@@ -57,7 +57,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/A
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-**ISSUER NOTES:** s.7 item 1, first by the analysis's ruling. Seat order to the AE lane, which is live at the cut (process read) and holds only AMGT_RESAPP orders. Vendor authority: R-21 (standing, scripted), as ruled for AMGT_CORPUS's fire of 40.
+**ISSUER NOTES:** Amended at the CTO half's one condition (msg 25925, @c940964bea): act B binds a HEAD floor 025224c2cd; no criterion changed, so no gate limb grades this modification. s.7 item 1, first by the analysis's ruling. Seat order to the AE lane, which is live at the cut (process read) and holds only AMGT_RESAPP orders. Vendor authority: R-21 (standing, scripted), as ruled for AMGT_CORPUS's fire of 40.
 
 <status>pending</status>
 <round>43</round>
