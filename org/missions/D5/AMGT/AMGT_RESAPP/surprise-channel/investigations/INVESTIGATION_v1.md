@@ -14613,6 +14613,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "Two blocks, chatter and price, serve a bare null on every name, so the page cannot tell a producer that never ran from one that ran and found nothing.",
     "disarm_owner": "2.0.0_SA_COO~Z -- INERT; carried to round 43 beside the CTO's four-input concentration.",
     "notes": "Filed on the CTO's word that this defect wants a row; the population count is this seat's, the chatter-ranking half is the CTO's."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W159-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~159",
+    "surfaced_at": "2026-09-25T17:15:00Z",
+    "one_line": "Worker's own read of row Z-W159-S1 after AMENDMENT 1 (issuer): the two harness limits named there are fixed IN THE INSTRUMENT (pageAbsences' {1,300} cap removed; the Model-sheet <td> parser now spans a nested CheckFaceBadge span), never by bending the export to them (_page_absence_cap removed). One further, previously-masked class closed on the same pass: CRNCY reaches the page ONLY as the price Stat tile's own prefix, so it is withheld from the header table whenever PX_LAST carries no figure. rq-1.AC1.sh now reads 'local rebuild over 89 of 89 folders: OK 89, NOT_OK 0, CAPTURE_FAILED 0', exit=0. Filed UNDER_INVESTIGATION per A-1/LGIC_ENFORCE-C-S24 -- adjudicating S1 and any GRADUATED transfer are the CVO's at L9, not this worker's to declare.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs (commit on wk-AMGT_RESAPP-159-portal, this session): pageAbsences()'s two `{1,300}` quantifiers became `+` (unbounded, still stopping at '<' or newline); the Model-sheet cellTags regex became `<td([^>]*)>([\\s\\S]*?)<\\/td>` (spans nested tags) with the cell's own text read as `inner.split('<')[0]` (the value before any badge).",
+        "lib/research/print/render_pack.py (commit on wk-AMGT_RESAPP-159, this session): `_page_absence_cap` and its helpers removed; the four call sites write the reason in full again; `_posture_markdown`'s SERVED `verdict=='absent'` line now also carries `LeadPanel.tsx` `PostureHeaderLine`'s own closing disclaimer verbatim (needed once the harness stopped truncating before reaching it); `header_figs` withholds CRNCY when PX_LAST carries no header figure (measured on ROG_SW_Equity: CRNCY='CHF' present, PX_LAST absent, 'CHF' nowhere in the rendered page).",
+        "rq-1.AC1.sh, this commit: 'local rebuild over 89 of 89 folders: OK 89, NOT_OK 0, CAPTURE_FAILED 0', exit=0 (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~159/rq-1.AC1.output.txt). rq-1.AC3.sh unchanged: the stale round-38 body still reads NOT OK, rc=1, on this session's harness."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1's literal expect: 'local rebuild over 89 of 89 folders: OK 89, NOT_OK 0, CAPTURE_FAILED 0 -- and exit=0' (unchanged by amendment 1).",
+    "world_is": "AC1 reads exactly that line, exit=0. The instrument's own two limits (the absence-reason cap, the badge-blind cell parser) are fixed at the bytes, per amendment 1's instruction never to bend the product to an instrument defect; the removed `_page_absence_cap` is gone from render_pack.py, not merely unused.",
+    "notes": "Filed per the amendment's own instruction to update the row with what it closed; S1 is left standing, unedited, as the record of the first pass's finding. This row reports the fix's own measurement -- a worker does not adjudicate or GRADUATE a row (A-1, LGIC_ENFORCE-C-S24); that reading is 3.0.0_SA_CVO's at L9."
   }
 ]
 ```
