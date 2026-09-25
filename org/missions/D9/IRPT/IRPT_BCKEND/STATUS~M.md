@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T20:4xZ (tick 13). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-25T20:4xZ (tick 14). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -66,8 +66,11 @@ branch. No code edit is open.
      - COT gold (CTO 101022, ~M owns it): census @c2aa94d8c8; code: C_06 admits `other`, D_03/D_04 unknown ->
        `unclassified` (7889280827, CLOUD 68a732b792, NOT deployed); per client: 22 relationships, $48.5M
        (COT_OTHER_PER_CLIENT_20260925.json).
-     - The never-widen packet is SENT (@4b972e4088; msg 20260925T202818Z); the CTO half is owed.
-     - On signature: the deploy under a ledger, one scheduled COT run read back, then the batch B write.
+     - SIGNED: act 1 by the CTO @4fdc4284c9. ACT 1 DEPLOYED and verified (ledger cot-other-admission-m-20260925:
+       D1 closed; R1 HELD for the first scheduled COT run, Mon 2026-09-28).
+     - Act 2 (the batch B write) is held on: act 1 read back; ~D's IR mapping on origin DEV; and (CTO-added) the AI
+       Cottonwood views rendering Other on PROD, proven on z09305589's $19.65M, which the CTO routes to ~D.
+     - S138 is filed and ~M-owned: C_06's mix omits `cash` (pre-existing), to measure and then fix under its own half.
    - Preferred stock = fixed_income, standing (Andrew-direct ~17:3xZ, @42def02a36).
    - The two defects (COT `B_01b` scanning an empty prefix; the loader skipping rows without a ticker) are ~M's under
      exact-file grants on request.
