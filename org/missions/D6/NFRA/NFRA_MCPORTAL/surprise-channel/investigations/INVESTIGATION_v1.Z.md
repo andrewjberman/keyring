@@ -305,6 +305,27 @@
     "spec_asserts": "BOUNDS #1: 'the existing tests/test_owner_gate.py ... stay green' (they must be run) and BOUNDS #2: 'The gateway writes nothing.'",
     "world_is": "Each run of test_owner_gate.py writes a real audit line into a tracked repo file, so every worktree that runs the regression suite is left with a dirty tracked file that a wide commit or drain could carry. The test file and config are read-only to this order; the file was restored to HEAD and not committed.",
     "notes": "ARMED because it recurs on every future regression run in any worktree; disarm (e.g. AUDIT_PATH to tmp in the test fixture) is outside this worker's paths."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S6",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T16:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_MCPORTAL-Z-W1-S3 and -Z-W1-S4 (owner this seat). The face and checks were amended at 051240c792 (CLOUD) / b7281eb222 (branch): the package mirrors the repo layout so ops' parents[5] lands on the package root, and the checks extract the zip at Lambda's /var/task depth and import through a script file. The rebuild passes 3 of 3 (db3bae76ba).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The amended b1.AC1 dry-run on the earlier gateway-relative build f6ce4d1ca3 read 'IMPORT-FAILED IndexError: 5': the Lambda failure made visible.",
+        "Rebuild db3bae76ba: AC1 'extracted at Lambda depth; lambda_handler callable=yes; app and ops resolved inside the package 2 of 2'; AC2 'verdict=REFUSED NO-OWNER-HEADER'; AC3 '8 of 8 byte-equal to their repo path'. Worker control: with the sys.path guard disabled, AC1 fails 'No module named app'."
+      ]
+    },
+    "spec_asserts": "Z-W1-S3 (ops parents[5] at /var/task) and Z-W1-S4 (the stdin probe trips dotenv) are ARMED with this seat as disarm_owner.",
+    "world_is": "The package imports and refuses at Lambda depth. ops/ is unedited. Nothing is applied until MP-a-1.",
+    "notes": "Checker lesson for the round: a proof that imports from a deep temp path cannot see a parents[N] defect. Reproduce the runtime's depth."
   }
 ]
 ```
