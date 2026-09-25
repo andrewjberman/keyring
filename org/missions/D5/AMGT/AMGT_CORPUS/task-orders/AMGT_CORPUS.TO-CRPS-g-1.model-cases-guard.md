@@ -109,3 +109,13 @@ then re-derives. Checks dry-run at the base: AC1 FAIL (no such test file), AC2 F
 <round>5</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+
+**WORKER CLOSE (`0.9.0_WK_AMGT_CORPUS~1`):** AC1/AC2/AC3 all PASS (proof-of-spec-check rc=0, VALID). ISSUER AMENDMENT 1
+(56cc8d7113) folded before close: `outside_band`'s reason now names both operands (base in the quote unit, px_last) and
+the ratio. AC2 real, live-S3 (no vendor call, no write): `cases BA_US_Equity base ABSENT ratio none cause
+forward_eps_not_positive`, `cases ULVR_LN_Equity base ABSENT ratio none cause currency_mismatch`, `cases RKT_LN_Equity
+base SERVED ratio 1.5004339488117002`, `cases_report served 1 refused 2`. AC4 left as a declared exclusion (judgment,
+the CVO's at L9) -- no acceptance row for it, per section 6. No surprise rows filed -- every criterion was satisfiable
+as written.
+
+<status>complete</status>
