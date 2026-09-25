@@ -25,11 +25,15 @@ gateway is live with the claim capture (MP-d-1): Andrew has opened the dashboard
 holds an `OWNER-HEADER-CLAIMS keys=... oid=... sub=... iat=... exp=...` line.
 
 In order:
-1. **Read the measurement.** Over SSM on `i-07dccb1615503ac99`, read the latest `OWNER-HEADER-CLAIMS` line from
+1. **Read the measurement** (AMENDED to the CTO's privacy condition @384fd85543: the line carries claim KEYS only, and
+   the owner-key VALUE is written ONLY into this function's configuration, never into a log, an audit record or a
+   committed file). Over SSM on `i-07dccb1615503ac99`, read the latest `OWNER-HEADER-CLAIMS keys=...` line from
    `journalctl -u opal-gateway`. Then pick the branch:
-   - `oid` present: `MCPORTAL_OWNER_KEY_CLAIM=oid`, and the key is that value;
-   - `oid` ABSENT: `sub`, with that value.
-   If `oid` or `iat` reads ABSENT, the PRD's C4 must already say so: `org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md`
+   - `oid` among the keys: `MCPORTAL_OWNER_KEY_CLAIM=oid`, and the key is the measured oid ruling R-1 accepted,
+     `2e21f8e5-55ca-45c1-91b9-a4607bf28d4f`;
+   - no `oid`: `sub`. The value is the one Andrew reads from his own `/api/admin/whoami` response and supplies in the
+     issuer's spawn note, and you pass it straight to the variable. Never echo, log or commit it.
+   If `oid` or `iat` is absent from the keys, the PRD's C4 must already say so: `org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md`
    at HEAD names the subject identifier (or the header's own lifetime), and `python .tools/prd-signoff.py status NFRA_MCPORTAL`
    shows the ratified-text half SIGNED at the current bytes. If not: STOP, a BLOCKING row. If the line is missing, or
    neither `oid` nor `sub` is present: STOP, a BLOCKING row.
@@ -77,7 +81,7 @@ Rows: `org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/INVEST
 <proof_of_spec>
   <criterion id="AC1" cell_refs="MP-a-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~O/round2/checks/a1.AC1.sh; echo "exit=$?"</invocation><expect>entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR printed -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="MP-a-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~O/round2/checks/a1.AC2.sh; echo "exit=$?"</invocation><expect>no header -> REFUSED NO-OWNER-HEADER; table items with reason NO-OWNER-HEADER>=1 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="MP-a-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~O/round2/checks/a1.AC3.sh; echo "exit=$?"</invocation><expect>ssm status=Success; line=yes; have_claim equals want_claim; value_match=yes -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="MP-a-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~O/round2/checks/a1.AC3.sh; echo "exit=$?"</invocation><expect>ssm status=Success; line=yes values_in_line=no; have_claim equals want_claim; value_ok=yes; verdict=OK -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
