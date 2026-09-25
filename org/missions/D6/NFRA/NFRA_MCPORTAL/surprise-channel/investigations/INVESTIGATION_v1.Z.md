@@ -417,6 +417,120 @@
     "spec_asserts": "NFRA_MCPORTAL-Z-W2-S7 is ARMED: deploying rel-nfra-mcportal-r2-gateway takes the gateway down again.",
     "world_is": "The gateway serves f1f0fc6780, healthy. The defective release branch stays undeployed, and the retry builds a fresh branch behind a render gate and a fast rollback trigger.",
     "notes": "Checker lesson: no criterion or pre-act step rendered the .env the deploy writes. The render gate (face 4a(i)) is the missing pre-act check. The outage is recorded for the CTO's round-2 analysis."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W2-S4",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~2",
+    "surfaced_at": "2026-09-25T16:30Z",
+    "one_line": "MP-g-1's gateway commit d0ba96d27c also carries a surprise-channel row, so `git cherry-pick --no-commit d0ba96d27c` onto the f1f0fc6780 release base stops on a modify/delete conflict the task order does not name; the channel file was dropped from the release branch (git rm) and never committed to CLOUD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show --stat d0ba96d27c: 5 files, 4 under infra/aws/ec2/opal-gateway plus org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/INVESTIGATION_v1.Z.md (+23).",
+        "/c/tmp/mp-2-rel, git cherry-pick --no-commit d0ba96d27c: 'CONFLICT (modify/delete): .../INVESTIGATION_v1.Z.md deleted in HEAD and modified in d0ba96d27c'; resolved by git rm; release commit c97839d7c8 on rel-nfra-mcportal-r2-gateway changes 9 paths, all under infra/aws/ec2/opal-gateway (git diff --name-only f1f0fc6780 c97839d7c8 | wc -l = 9).",
+        "Same resolution as the NFRA_OPALAI precedent f1f0fc6780's own commit message (its channel file dropped from rel-nfra-opalai-r1-gateway).",
+        "Also on the release tree: the pre-act run of tests/test_owner_gate.py appended one line to the tracked infra/aws/ec2/opal-gateway/audit.jsonl (row W2-S3's class), which would have tripped safe-ec2-deploy.sh Step 1's uncommitted-changes prompt under SOURCE_PATH; restored to HEAD bytes (git cat-file blob) before the act."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MP-d-1 section 1 item 2: 'git -C /c/tmp/mp-2-rel cherry-pick --no-commit the commits above, in order, and commit on that branch under your serial' -- no conflict resolution is named.",
+    "world_is": "The third commit's cherry-pick conflicts on a non-gateway file absent at the release base. The gateway census is unaffected (9 files, 0 outside the four commits' set); the release branch carries no channel file.",
+    "notes": "INERT: the release commit and the deployed artifact contain only gateway paths; the row itself lives on CLOUD's channel through d0ba96d27c's merge b860f8194e."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W2-S5",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~2",
+    "surfaced_at": "2026-09-25T16:50Z",
+    "one_line": "The face's literal act command (`cd /c/tmp/mp-2-rel && bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`) exits 1 at the HALT-GATE before Step 2 on 186 ROUTINE pending messages (0 STOP-class) in the issuer's inboxes; it passes only with HALT_ACK=1, which the face does not name. Re-run with HALT_ACK=1 after reviewing the list.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Attempt 1 (16:41:29Z, AGENT_NAME=0.9.0_WK_NFRA_MCPORTAL~2): 'HALT-GATE: 186 pending message(s) -- review before proceeding (safe-ec2-deploy:opal-gateway)' ... 'HALT-GATE: blocked. Review the message(s) above, then re-run with HALT_ACK=1.' exit=1; no Step 2 line, nothing built or uploaded.",
+        "Sender tally of the 186: 141 deploy_ledger.py gate-bypass scan RED, 16 deploy_ledger.py on behalf of 0.7.0_AE_CloudOps, 11 4.0.0_SA_CRO~W, 15 further deploy_ledger.py HELD-STALE/on-behalf nudges, 1 2.0.0_SA_COO~Z; '[STOP]'/'[HALT]' token count 0; none names opal-gateway or this release.",
+        ".tools/halt-gate-check.sh:13: routine pending -> 'Re-invoke with HALT_ACK=1 to pass (exit 0)'; :14 STOP-class -> hard-block exit 2 (not this case)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MP-d-1 section 1 item 5: 'ACT from the RELEASE worktree with ITS copy of the scripts: cd /c/tmp/mp-2-rel && bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh'.",
+    "world_is": "As written the command cannot pass the halt gate while the issuer's base inbox holds unread routine mail; the gate's own documented routine acknowledgement (HALT_ACK=1) was added to the same command.",
+    "notes": "INERT for this act (no STOP was bypassed; HALT_OVERRIDE was not used). Recurs for any worker deploy under this issuer while the base COO inbox holds the 141 unread gate-bypass REDs."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W2-S6",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~2",
+    "surfaced_at": "2026-09-25T16:35Z",
+    "one_line": "EC2_MANIFEST.json services.opal-gateway.file_checksums does not describe the artifact deployed at f1f0fc6780: the record says app/server.py a101f27e..., the S3 artifact opal-gateway-f1f0fc6780.tar.gz (and a clean rebuild of f1f0fc6780) carries 42c7fd42...; same for app/tools.py, app/audit.py, app/config.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/EC2_MANIFEST.json@f50bd03775 services.opal-gateway.file_checksums: app/server.py a101f27ea37009d73cb19b247eef26e7, app/tools.py eccf03c379985e5441e8e06182cb635f, app/audit.py 5f8342859f23ad773b059c4030d4c402, app/config.py 20836f8aa54ee27ffb7209686fa27df7.",
+        "s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/opal-gateway-f1f0fc6780.tar.gz (ETag 4a8b6016294ddfbb53c825606c77cdcc) members: app/server.py 42c7fd424ac441719eb8c75880655596, app/tools.py 7c0d2941b678c063ea2710c495356857, app/audit.py 9b32695304929ca08f84d045b9c30437, app/config.py 881be540ca15f2cbeaa566bbee6e3ece; a clean git-archive rebuild of f1f0fc6780 matches the S3 artifact 69 of 69 members."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "EC2_MANIFEST.json's file_checksums field reads as the deployed files' md5s.",
+    "world_is": "The field was not refreshed by earlier deploys; it matches neither f1f0fc6780's artifact nor this release. This order's recording names deployed_commit, mcportal_commit and release_note only, so the field was left untouched.",
+    "notes": "INERT: no gate found reading file_checksums in this act; recorded so a reader does not verify the host against it."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W2-S7",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~2",
+    "surfaced_at": "2026-09-25T17:20Z",
+    "one_line": "The narrow release c97839d7c8 FAILED on the host and was ROLLED BACK: this worker's own deploy-to-ec2.sh commit ece3aab4b5 dropped the space between the .env printf format and its first argument, so every value shifted one key, BIND_PORT received a non-integer and opal-gateway never bound 8080 (down ~17:14Z-17:31:22Z). AC2 and AC3 cannot pass; the release branch still carries the defect.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff f1f0fc6780 c97839d7c8 -- infra/aws/ec2/opal-gateway/deploy-to-ec2.sh: the printf line ends `...MCPORTAL_CHANGES_TABLE=mcportal-grant-changes-table\\n'\"${REGION}\"` (no space), so bash joins the region onto the format string; f1f0fc6780 has `...globgrph\\n' \"${REGION}\"`.",
+        "ssm:a6aa8d9e-6404-43c0-8be6-b0ea630bea5e Status Failed: 'OK: opal-gateway active' then 'ERROR: opal-gateway active but /health never came up in 30s'; journal 17:14:26Z app/config.py line 154 `BIND_PORT: int = int(os.environ.get(\"BIND_PORT\", \"8080\"))` -> ValueError: invalid literal for int() with base 10 (a GUID); opal-gateway.service Main process exited status=1/FAILURE.",
+        "Rollback with the ledger's named command from a clean f1f0fc6780 worktree /c/tmp/mp-2-rb: ssm:469e6d98-0ef0-4d71-ac7f-843623061ab5 'OK: deploy Success', {\"ok\":true}, '/mcp unauth -> 401'. Independent read ssm:0ccf22a4-a835-4570-94b5-9ddc07d06af0: md5 app/server.py 42c7fd42, app/tools.py 7c0d2941, app/audit.py 9b326953, app/config.py 881be540 (== the f1f0fc6780 artifact, 4 of 4), ActiveEnterTimestamp 17:31:22 UTC, /health=200, .env 23 keys with no DASHBOARD_/GRANT_WRITER_/MCPORTAL_ key.",
+        "Fix on wk-NFRA_MCPORTAL-2 (this worker's branch, not deployed): the space restored; the new printf line minus the three added .env lines is byte-equal to f1f0fc6780's (.scratch/cmp_printf.py: True), %s count 9 = 9."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MP-d-1 section 1 item 1(b): add the three .env lines and 'Change NOTHING else there'; AC2 expects EC2_MANIFEST.json to record a deployed_commit descending from f1f0fc6780 with NFRA_MCPORTAL's files; AC3 expects /api/admin/whoami and / at 401 or 403 on the served host.",
+    "world_is": "The shipped script changed the printf argument binding as well; the release did not serve and was rolled back per BOUNDS #2, so the host serves f1f0fc6780 (whoami and / answer 404) and the manifest records the rollback redeploy of f1f0fc6780.",
+    "notes": "ARMED: branch rel-nfra-mcportal-r2-gateway @c97839d7c8 (worktree /c/tmp/mp-2-rel) still carries the broken script and will take the gateway down again if deployed; a re-release must be re-cut with the corrected script (this branch's fix commit) and is not attempted here per BOUNDS #2. Cause of the defect: the edit that added the three lines lost the trailing space of its replacement text; the pre-act checks (bash -n, a grep of the added text, the gateway pytest) do not render the printf and missed it."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W2-S8",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~2",
+    "surfaced_at": "2026-09-25T21:50Z",
+    "one_line": "The 90-second rollback trigger cannot be met by the named rollback command: safe-ec2-deploy.sh's HALT-GATE spends about 12 minutes scanning the issuer's 186 pending messages before Step 2 reaches the host, with or without HALT_ACK=1, so a triggered rollback leaves the gateway down for 12-15 minutes, not seconds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This run, attempt without HALT_ACK from /c/tmp/mp-2-rel2: started 2026-09-25T20:53:38Z, 'HALT-GATE: blocked. Review the message(s) above, then re-run with HALT_ACK=1.' at 21:05:55Z (12 min 17 s in the gate alone; nothing built or uploaded).",
+        "This run, attempt with HALT_ACK=1: started 21:08:52Z; 'HALT-GATE: HALT_ACK set -- messages acknowledged. Proceeding.' then Step 2; S3 upload LastModified 21:25:18Z; host ActiveEnterTimestamp 21:25:38Z (about 16 min from invocation to the host, the build and upload taking under a minute of it).",
+        "The first attempt's rollback (row NFRA_MCPORTAL-Z-W2-S7) ran the same named command: started ~17:17Z, host active again 17:31:22Z.",
+        "The rollback command named in the ledger entry org/critical_paths/change_management/20260925T2034Z_nfra-mcportal-r2-gateway-release_deploy_completion.md @c70844d63a is the same safe-ec2-deploy.sh invocation, so it passes through the same gate."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MP-d-1 section 1 item 4a(ii) @894cf33916: 'Immediately after the SSM restart, poll /health on the host. If it is not 200 within 90 seconds, run the named rollback AT ONCE'.",
+    "world_is": "The trigger can fire within 90 s, but the named rollback's own halt-gate scan takes about 12 minutes before it touches the host, so the outage a triggered rollback bounds is 12-15 minutes. It did not fire this run: /health was 200 within 15 s of the restart.",
+    "notes": "ARMED for any later gateway release that relies on this rollback path while the issuer's inbox holds the routine backlog (row NFRA_MCPORTAL-Z-W2-S5 names the same 186 messages). Not measured: whether the scan time scales with the message count. safe-ec2-deploy.sh is read-only to this worker."
   }
 ]
 ```
