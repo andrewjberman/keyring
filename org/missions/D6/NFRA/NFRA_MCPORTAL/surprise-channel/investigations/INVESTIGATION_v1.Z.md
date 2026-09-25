@@ -326,6 +326,54 @@
     "spec_asserts": "Z-W1-S3 (ops parents[5] at /var/task) and Z-W1-S4 (the stdin probe trips dotenv) are ARMED with this seat as disarm_owner.",
     "world_is": "The package imports and refuses at Lambda depth. ops/ is unedited. Nothing is applied until MP-a-1.",
     "notes": "Checker lesson for the round: a proof that imports from a deep temp path cannot see a parents[N] defect. Reproduce the runtime's depth."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W1-S3",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~1",
+    "surfaced_at": "2026-09-25T15:00Z",
+    "one_line": "The staged grant-writer zip still cannot import at /var/task: ops/schwab_entitlement_admin.py:49 (read-only for MP-b-1) computes Path(__file__).resolve().parents[5] at IMPORT time, and /var/task/ops/schwab_entitlement_admin.py has only 4 parents, so the import raises IndexError. The MP-b-1 checks run the zip from a deep temp path where parents[5] exists, so they PASS and cannot see it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py@af11e91097 (last touched 7a5554face) :49 `_REPO_ROOT = Path(__file__).resolve().parents[5]` and :50 `_CONTRACT_PATH = _REPO_ROOT / \"org\" / \"standards\" / \"NFRA_OPLGTW_CONTRACT.json\"`, both module-level, so they run on `from ops import schwab_entitlement_admin`.",
+        "python -c \"from pathlib import PurePosixPath as P; P('/var/task/ops/schwab_entitlement_admin.py').parents[5]\" -> IndexError 5 (measured 2026-09-25 on this worktree's interpreter).",
+        "build_package.py --out .scratch/mcpw.zip (this cell) -> members app/__init__.py, app/access_state.py, app/config.py, app/context.py, app/data_entitlement.py, lambda_function.py, ops/__init__.py, ops/schwab_entitlement_admin.py, org/standards/NFRA_OPLGTW_CONTRACT.json; ops/schwab_entitlement_admin.py is byte-equal to the gateway source, as the face requires, so the build cannot rewrite line 49.",
+        "b1.AC1.sh / b1.AC2.sh put the zip at ${TMPDIR:-/tmp}/mp_b1_acN_$$/mcpw.zip; on this host that path has more than 5 ancestors, so parents[5] resolves there and the in-zip import succeeds."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MP-b-1 section 1: the grant writer 'cannot run as packaged' because lambda_function.py climbs parents[5]; staging the import closure beside it, with lambda_function.py climbing nothing, makes it run from its own zip.",
+    "world_is": "Removing the climb from lambda_function.py moves the same IndexError one module down: the gateway's ops/schwab_entitlement_admin.py climbs parents[5] at import. Separately, even once the import succeeds, admin.load_contract() (called by lambda_function.handle on the narrow path) opens parents[5]/org/standards/NFRA_OPLGTW_CONTRACT.json, which is not where the zip carries it (org/standards/... at the zip root, i.e. /var/task/org/standards/...). The fix is in infra/aws/ec2/opal-gateway/ops/ (a lazy or guarded path, or a contract path the caller passes), which is outside this order's <paths>.",
+    "notes": "Not repaired here (face section 2 item 3; ops/ is read-only for this cell). AC1-AC3 are recorded as their scripts print them; this row states what they cannot see."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W1-S4",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~1",
+    "surfaced_at": "2026-09-25T15:20Z",
+    "one_line": "b1.AC1.sh and b1.AC2.sh cannot PASS on this host's interpreter: the in-zip import reaches app/config.py, which calls python-dotenv's load_dotenv() at import when dotenv is installed (it is: python-dotenv 1.2.2), and under `python -` with the modules inside a zip, find_dotenv() walks every frame (no frame's file exists on disk) and raises AssertionError, which config.py's `except ImportError` does not catch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "b1.AC1.sh at 0da92f4675: `IMPORT-FAILED AssertionError:` / `build rc=0 built zip=yes; lambda_handler callable=no; app and ops resolved inside the zip 0 of 2` / RESULT: FAIL exit=1. b1.AC2.sh: `RUN-FAILED AssertionError:` / verdict=NONE / RESULT: FAIL exit=1.",
+        "Traceback reproduced with the check's own shape (python - <zip>, cwd the temp dir): lambda_function.py:43 -> ops/schwab_entitlement_admin.py:46 `from app import context` -> app/context.py:18 `from .config import get_config` -> app/config.py:9 `load_dotenv()` -> dotenv/main.py:367 `assert frame.f_back is not None` -> AssertionError.",
+        "Control: the SAME zip imported by `python .scratch/tb.py <zip>` (a __main__ whose file exists) prints `OK import`, so find_dotenv stops at the script frame; the tests (gateway tree on sys.path, real files) pass 4 of 4.",
+        "infra/aws/ec2/opal-gateway/app/config.py@af11e91097 :7-11 `try: from dotenv import load_dotenv; load_dotenv() except ImportError: pass` -- only ImportError is caught."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MP-b-1 section 2 item 1: the local interpreter supplies PyJWT for the import, and AC1/AC2 need nothing else from it.",
+    "world_is": "The local interpreter also supplies python-dotenv, which app/config.py loads at import; with the check's stdin __main__ and zip-internal module paths, dotenv raises AssertionError, so the verdict of AC1 and AC2 is decided by the interpreter, not by the package. At /var/task dotenv is not in the layer (ImportError, caught) and the extracted files exist, so this path does not fire there. Meeting the check from this cell would need a dotenv block in lambda_function.py or an edit to app/config.py, neither of which the face names; refused.",
+    "notes": "AC1 and AC2 are recorded FAIL with this measurement; the order stays open."
   }
 ]
 ```

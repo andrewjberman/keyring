@@ -108,7 +108,7 @@ Report once:
 
 **ISSUER NOTES:** E2, rulings R-1 and R-3 (@667f442b8a). Chain A's root. The slot continues with MP-b-2, then MP-a-1.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
