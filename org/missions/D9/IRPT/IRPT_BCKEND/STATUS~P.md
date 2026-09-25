@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: /canonical-drive loop on Andrew-direct 17:3xZ (cron 57c0067c, every 10m; replaced goal loop f599225b), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T20:3xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T20:4xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -171,7 +171,19 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    pointer's accounts. export 106 rc=0 incl. an end-to-end submit -> real PDF -> READY receipt valid against
    ExportReceipt. iam.tf adds EXP-*/pending.json (not applied).
    HOST SCRIPTS LANDED 266741ad88 under the CTO's rows @ea77e30c9c (cherry-picked 0efcf8a629).
-   NEXT (P): (1) done (portal render Bearer on local DEV); (1b) the ONE ledgered export deploy (B2 + B3), rows granted: upload the host half to ec2/investor-reporting-export/, apply the export root with
+   DEPENDENCY GAP MEASURED (20:2xZ): irpt-common:5 has neither jose nor pypdf -> the minter cannot import and
+   finalize_export -> validate_pdf raises ValidationUnavailable in the function (no receipt could ever finalize there).
+   LAYER BUILDER LANDED 83e8b9577a: irpt-render-deps from ALREADY-INSTALLED pure-Python dists (python-jose, rsa, pyasn1,
+   ecdsa, six, pypdf; no download), 188 members sha256 04624dab..; proven with cryptography BLOCKED: pure rsa backend
+   signs RS256, token verifies (PyJWT), validate_pdf reads a real PDF.
+   DEPLOY PLAN (two ledgers): (A) NOW-ish -- upload the layer + declare aws_lambda_layer_version in the export root,
+   attach to irpt-export-render, repackage the export function at backend HEAD (B2/B3 code, render switch OFF), upload the
+   host half to ec2/investor-reporting-export/, apply the export root (IAM from b2_render.tf + pending.json); negative arm:
+   B1 probes unchanged, a submit of a nonexistent report still OBJECT_NOT_COVERED, 0 writes. (B) after the INF one-use is
+   spent or expires (00:00Z): the adapter/status/narrative render ports (grant.py + enforce + render principal at HEAD +
+   grant read IAM), then export_render=on with the ruling's negative arm (another attempt's name refused, read after
+   delete refused).
+   NEXT (P): (1) done (portal render Bearer on local DEV); (1b) deploy (A) as planned above, then (B): upload the host half to ec2/investor-reporting-export/, apply the export root with
    export_render=on, and ship the read functions' B0 packaging (grant.py + enforce at 755c13bc19 + grant read IAM) -- SSM document params RenderTokenName +
    PrintQuery; run-export-render.sh reads the name (get-parameter --with-decryption, never echoed), render_export.cjs opens
    origin + print route + PrintQuery + &renderToken= with NO storageState, then deletes the name; submit_installed composes
