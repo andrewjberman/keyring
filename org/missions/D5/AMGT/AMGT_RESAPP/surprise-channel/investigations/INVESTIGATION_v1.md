@@ -14414,6 +14414,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The producer no longer writes the path, and the page still shows it. The served posture object predates the fix (snapshot 2026-09-15), and the adapter serves its packs verbatim. The path leaves the page only when posture is re-run, and a posture run makes a model call (the snapshot names model claude-opus-5), so it needs its own authorisation.",
     "disarm_owner": "2.0.0_SA_COO~Z -- INERT, nothing to disarm. Carried to the round-40 analysis as an enrichment item: either a posture re-run under its own authorisation, or the adapter re-derives the absent-source text at read time.",
     "notes": "Found at the round-40 real run. The run's default fixture (uiContractFixtures.json) also still shows the path, so the fixture PNG set cannot tell the two planes apart; the served-content set in round40/real-run-served/ is the one that measures the served plane."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S273",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-25T00:55:00Z",
+    "one_line": "The CTO's three-valued Peers P/E ruling (@0d568cdf51) rests on row Z-S270, which says the Peers P/E reads BEST_PE_RATIO and that Deere, Eaton and Union Pacific can never fill. On the served Peers tab after ro-7's act C, P/E is the reciprocal of each member's earnings yield, and all 12 of 12 members carry a figure, those three included.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SERVED, captured 2026-09-25T00:28:15Z by ro-7.served.sh at deployed CodeSha256 pmH20bb+L1Kcejf4MKS4tVt+tCIPgeHwSZAsTe+nXZo=: peers.as_of 2026-09-24T2252Z (ro-7 act C's partition); csc_columns.present names 'P/E 2025' and 'P/E 2026' with transform 'reciprocal' and units 'percent'; members carrying ey: 12 of 12. DE ey 2.88187, ETN 2.20018, UNP 4.17716, UBER 6.65489.",
+        "RENDERED from that capture on 5174 (round40/real-run-served/peers.png): P/E (trailing) DE 34.70, ETN 45.45, UNP 23.94, UBER 15.03; every one of the 12 rows carries both P/E columns.",
+        "RELATION: ro-7.AC3 on the deployed response reads P/E x percent yield == 100 (+/-1) 24 of 24, off-relation 0, null 0 (0.7.0_AE_CloudOps~A, ledger leg L4).",
+        "VINTAGE: Z-S270 was surfaced at 2026-09-24T22:58:00Z. Act C wrote the 2252Z partitions and closed its leg at 22:55:35Z, so Z-S270's observation likely predates the rewrite reaching the page; its BEST_PE_RATIO path (scores/peers_v.py) is a different producer from the Peers tab's csc columns."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO adjudication @0d568cdf51: Deere, Eaton and Union Pacific are outside the 89-key set and 'can never fill', yet render the same string a data failure renders, so the Peers P/E cell must go three-valued.",
+    "world_is": "On the Peers tab as served now, those three members show P/E figures that satisfy the P/E x yield = 100 relation. The ruling's boundary case may still exist on another surface that reads BEST_PE_RATIO, but not on the Peers tab this round graded.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- INERT, nothing to disarm. For the CTO's round-40 analysis: name the surface the three-valued ruling applies to before it enters the enrichment list.",
+    "notes": "Filed as a row rather than a message: the ruling is an enrichment item, read at the round-40 analysis."
   }
 ]
 ```
