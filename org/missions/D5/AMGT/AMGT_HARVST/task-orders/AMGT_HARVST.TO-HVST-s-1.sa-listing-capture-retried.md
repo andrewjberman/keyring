@@ -124,7 +124,7 @@ round asked for. Do not retry, do not widen, do not fix code to make it pass.
    a second cell inside this one and would put a code change on a path this cell cannot grade.
 
 <risk>WORLD</risk>
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~19</slot>
 <fabric>site-z</fabric>
