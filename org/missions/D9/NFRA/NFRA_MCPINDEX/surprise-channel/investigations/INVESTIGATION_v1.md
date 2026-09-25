@@ -291,6 +291,134 @@ carries none.
     "spec_asserts": "Each of the 9 tools declares its class in its own integration directory 'through the same declaration MX-c-4 built'.",
     "world_is": "MX-c-4's declaration has two parts: `tools` (the manifest that engages validation, requiring BOTH a class and a catalog ref) and `tool_classifications` (read by classify). Only the second is declared, because the catalog refs belong to the MX-t cells; a later cell that adds `tools` must add the refs in the same commit or the integration de-registers.",
     "notes": "Form recorded, not a defect claim. Each integration.py carries a comment stating why `tools` is omitted."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-25T18:49:43Z",
+    "one_line": "opal_discover is not wired into the registry's factory list: registry.py is read-never-write for MX-d-2, so on a gateway with ENABLED_INTEGRATIONS=opal_discover the id reports 'unknown integration id' and adds zero tools; the tests register the factory for their own duration only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/integrations/registry.py:34-55 -- _load_builtin_factories registers ycharts, opal_portal, globgrph, schwab; :93 an unregistered id reports {'error': 'unknown integration id'}.",
+        "MEASURED (python 3.11.9, this worktree, new package present, no test factory): registry.register_enabled(mcp, ['opal_discover']) -> {'opal_discover': {'error': 'unknown integration id', 'available': ['globgrph', 'opal_portal', 'schwab', 'ycharts']}}.",
+        "TO: org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-d-2.discover-family.md <paths> names app/integrations/opal_discover/ and tests/test_opal_discover.py only."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: 'with its id set it adds exactly its pinned list'; s.3 lists app/integrations/registry.py under 'Read (never write)'.",
+    "world_is": "The id-to-factory wiring lives only in registry._load_builtin_factories (registry.py:34-55 @d59217f5a8). Without a line there the id is unknown to register_enabled. test_discover_registers_dormant registers the factory with registry.register_factory for the test's duration and restores the registry afterwards.",
+    "notes": "Specify/write owner is the issuer (2.0.0_SA_COO~O): one register_factory line in registry.py, in a cell whose <paths> names it. Nothing is deployed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-25T18:49:43Z",
+    "one_line": "Both discover tools resolve to SAFE through destructive_ops.classify (MX-c-4's composed path), but app/data_entitlement.classify returns None for them, so register_enabled reports them 'unclassified' and the OG-z-1 guard would deny both to every principal at discovery and dispatch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/data_entitlement.py:102 TOOL_CLASSES over NATIVE_TOOLS | INTEGRATION_TOOLS | SCHWAB_TOOLS; :164 classify returns TOOL_CLASSES.get(tool); :320-324 decide() denies 'tool_unclassified' for None.",
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/integrations/registry.py:129 unclassified = registered tools whose data_entitlement classify is None, reported with the note 'denied at discovery and dispatch until classified in app/data_entitlement.py'.",
+        "MEASURED (python 3.11.9, factory registered): register_enabled(mcp, ['opal_discover']) -> tools ['opal_discover', 'opal_describe'], unclassified ['opal_discover', 'opal_describe']; pytest prints 'data_entitlement.classify=None' for both.",
+        "CHECK: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/d2.AC2.sh comment lines 3-5."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: 'Every tool declares its class through MX-c-4's declaration.' The AC2 check script's comment glosses test_discover_tools_carry_class as 'every discover tool resolves by name through destructive_ops.classify and data_entitlement to a declared class'.",
+    "world_is": "The class is declared on the spec and destructive_ops.classify returns it; data_entitlement.TOOL_CLASSES is a hard-coded name set in app/data_entitlement.py (outside <paths> and not on the read list) that does not compose from the spec. test_discover_tools_carry_class asserts the destructive_ops limb and PRINTS data_entitlement.classify (None); it does not assert it.",
+    "notes": "Whether the data_entitlement limb belongs to AC2 is the issuer's and L9's reading, not the worker's. Enabling the family without a data_entitlement.py entry ships two tools no principal can call; the registry report says so."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-25T18:49:43Z",
+    "one_line": "The catalog carries no structured latest-value field: every row has vintage_field (36 of 36) but a latest value appears only as prose 'live YYYY-MM-DD' in vintage_semantics, on 10 of 36 rows. The answer carries latest_value with its claim: 'held' (quoted from that prose) or 'absent'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED (python 3.11.9) over infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml @d59217f5a8: 36 artifact rows across 15 channels; vintage_field present 36/36; the pattern 'live YYYY-MM-DD' in vintage_semantics hits 10/36; no other per-row field carries a value.",
+        "Example: mp.04.model-portfolio-timeseries vintage_semantics 'THE vintage is top-level `data_as_of` (live 2026-08-10)' -> latest_value {'value': '2026-08-10', 'claim': 'held'}."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: 'the answer names ... its freshness field and latest value', reading the catalog through the existing load path, never the S3 archive.",
+    "world_is": "Without an S3 read the only latest value the family can give is the certification-time date the catalog's prose records. 26 of 36 rows record none; for them latest_value is {value: null, claim: 'absent'}.",
+    "notes": "The date is the catalog's recorded observation, never a fresh read; the claim field lets a consumer reject it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-25T18:49:43Z",
+    "one_line": "The family egresses nowhere, but validate_integration_spec refuses an empty hosts allowlist; the spec declares the single reserved, never-resolving name 'no-egress.invalid' (RFC 2606) so validation returns [] without allowlisting any real host.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/integrations/base.py:207-208.",
+        "MEASURED: base.validate_integration_spec(opal_discover SPEC) -> [] with hosts=('no-egress.invalid',)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: 'validate_integration_spec returns []'; preflight: the family reads the repository catalog only, EGRESS CLASS NONE.",
+    "world_is": "base.py:207-208 appends 'hosts allowlist is empty (egress-governance axis)' for hosts=(). No declared shape exists for a no-egress integration; the worker chose a .invalid name.",
+    "notes": "Form recorded for the issuer."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-25T18:49:43Z",
+    "one_line": "tool_catalog_refs expects a DATA_CATALOG.yaml artifact entity id per tool, but both discover tools read the whole catalog, not one row; each declares 'catalog:app/refs/DATA_CATALOG.yaml', which is not an entity id.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/integrations/base.py:78-79, and validate_integration_spec's per-tool loop (non-empty check only).",
+        "MEASURED: 36 entity ids in DATA_CATALOG.yaml @d59217f5a8, none naming the catalog as a whole."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: 'Every tool declares its class through MX-c-4's declaration' (whose validator demands a non-empty catalog-entry ref for every declared tool).",
+    "world_is": "base.py:78-79 defines the ref as an artifact entity id; no entity describes the catalog itself. A later check that resolves refs against entity ids will not resolve these two.",
+    "notes": "Form recorded; the ref shape for a catalog-wide tool is the issuer's to specify."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-25T18:49:43Z",
+    "one_line": "No MCP tool fetches a catalog key, so the 'NEXT tool to call' is named as query_v0 (the gateway's catalog-gated fetch, POST /query/v0 with the key); the catalog's own channel 'tool' field names tools/portal_lookup.py, a repository script, not a gateway tool.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/query_v0.py:1-5 (POST /query/v0 {key}) and :112 handle; DATA_CATALOG.yaml channel 'tool' = tools/portal_lookup.py on 11 of 15 channels."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: 'the answer names ... the NEXT tool to call'.",
+    "world_is": "The gateway's catalog-gated read of one key is the REST route /query/v0 (app/query_v0.py handle), audited as tool 'query_v0'. The worker named that; an MCP-only client cannot call it as an MCP tool.",
+    "notes": "Form recorded for the issuer."
   }
 ]
 ```
