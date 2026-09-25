@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T21:3xZ (tick 15). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-25T22:2xZ (tick 16). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -117,7 +117,9 @@ branch. No code edit is open.
        artifact's; 4 of 4 policies equal the planned JSON.
      - N1 (the exercised negative arm) is HELD until the host's next window, Mon 2026-09-28 ~12:52Z. Interim
        simulation: cross-firm reads are implicitDeny, own reads allowed.
-     NEXT, Monday in the window: N1 over SSM as each principal; one --qa fire (the dispatch function invoked with
+     Monday is PRE-STAGED: r4_monday_negative_arm.py (--send / --read), and the exclusive trust is already shown
+     (Andrew_Berman's AssumeRole on the 3 firm roles -> AccessDenied, 3 of 3). NEXT, Monday in the window: N1 over SSM
+     as each principal; one --qa fire (the dispatch function invoked with
      the runner writing holdings_qa); then the ENABLE half to the CTO (R4 step 4). ~P is told that the holdings/
      resolve.py pin drift refuses its next build.
      Then the never-widen packet (both halves), the apply, one --qa fire, and the enable half.
