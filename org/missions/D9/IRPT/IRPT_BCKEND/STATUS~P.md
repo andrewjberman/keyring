@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: /canonical-drive loop on Andrew-direct 17:3xZ (cron 57c0067c, every 10m; replaced goal loop f599225b), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T18:4xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T19:0xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -109,11 +109,23 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    from the backend + 25 staged rows (sha-verified) incl. the five CURRENT contract schemas under irpt_contracts/.
    MEASURED: layer irpt-common:5's PerformanceReport / NarrativePacket / ExportBundle schemas are STALE (parsed != tree).
    Flat package probe with the B1 env: missing_ports [], package 1.0.0, schemas from irpt_contracts/, all modules local.
-   NEXT (P): B1 DEPLOY -- export root Terraform (infra/aws/terraform/investor-reporting/export/): env IRPT_REQUESTS_TABLE,
-   IRPT_PORTAL_CHECKOUT=/var/task/render_package_checkout, IRPT_CONTRACTS_DIR=/var/task/irpt_contracts; IAM irpt-requests
-   read (+ the retention rows), the reporting destination read, opal-news-trending-daily read, evidence put/get on
-   firms/*/generations/*; build-and-upload irpt-export-render; ledgered safe-apply; negative arm: human submit of a
-   nonexistent report -> OBJECT_NOT_COVERED and 0 objects written; export-receipt/download unchanged.
+   B1 TERRAFORM LANDED e14cd90571 (backend, NOT applied): b1_submit.tf (GetItem on irpt-requests in the enabled client
+   firms' partitions, the PERFORMANCE report prefixes, news Query/Scan, exr_* grant/packet objects) + lambda.tf env
+   (contracts + manifest in the zip, requests table); plan 1 add / 1 change / 0 destroy.
+   DEPLOY HELD (18:5xZ) on a MEASURED defect: cottonwood's ownership map holds 0 advisors, and the real users (Andrew)
+   are internal OPAL_GLOBAL principals (served.verified_internal_subject: x-firm-id opal-capital or user type Dev;
+   advisor_id None, home_firm_id opal-capital). B1's grant requires a FIRM_ADVISOR/OPERATIONS delegator with an advisor
+   id -> Andrew's export would refuse AFTER the packet + bundle were written; and Enforcer._resolve_render_delegate only
+   models advisor delegators. No ledger opened, nothing applied, nothing half-landed.
+   OPAL_GLOBAL DELEGATORS LANDED 755c13bc19 (backend): the grant stamps the delegator's full identity (OPAL_GLOBAL allowed,
+   advisor id required only for an advisor, home_firm_id); the Enforcer resolves an Opal delegator NOW with a request-local
+   roster of that subject (served's own internal seam), intersected with the pin; serve_submit validates the grant BEFORE
+   any write. Tests per package rc=0: _render_identity 27, export 92, performance 188, _authz 160, narrative 37, ops 160.
+   Limit: an Opal delegator's CLASS is the one verified at freeze; its SCOPE is re-resolved at read time.
+   NEXT (P): B1 DEPLOY -- re-pin the publish row's export files + grant.py at 755c13bc19, flat probe, build-and-upload,
+   re-plan (export root e14cd90571), ledgered safe-apply. Negative arm: a direct invoke answers the boundary's refusal
+   before and after (an ungranted advisor -> NOT_AUTHORIZED; measured 18:4xZ), unauthenticated POST 401 at the edge, 0
+   objects under generations/exr_*; the positive run waits on the first retained report (Andrew's signed-in run).
    AFTER B1-B3 (CTO 100993, from ~D 100992, DSGN_IRPTV1 decomp v4 section 7 @d4add46f46): a HOLDINGS export report kind
    beside performance/analysis, additive on the contract, same freeze + render path; ~D wires EXPORT_KIND_BY_TAB.
    DEPLOY rides B1: package _render_identity/grant.py into the adapter/status/narrative zips, set IRPT_EVIDENCE_BUCKET,
