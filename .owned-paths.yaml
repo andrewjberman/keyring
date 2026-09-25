@@ -1173,6 +1173,9 @@ paths:
   "infra/aws/users/lambda/portal-authorizer/**":
     lane: IRPT_LIVE_SCOPE_P
     note: "CTO temporary P grant 2026-09-25, org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_IRPT_20260925.md R1: the IRPT export hop's render-identity live landing (A2, the V2 render branch and the exp-leeway fix). WORLD act, own ledger entry, negative arm before and after. Returns to CLOUD_OPS_OR_ETL when section A closes."
+  "infra/aws/lambda/investor-reporting/holdings_refresh/**":
+    lane: IRPT_COMPLETION_M
+    note: "CTO M grant 2026-09-25 (R4; 2.0.0_SA_COO~M 101006): the scheduled Holdings dispatch function's own source dir (refresh_dispatch.py + its test, moved unchanged out of holdings/, whose STAGE_MANIFEST pins another function). ~M's lane for the life of the function."
   "infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf":
     lane: IRPT_COMPLETION_M
     note: "CTO exact M grant 2026-09-25 (RULINGS_IRPT_20260925.md R4; 2.0.0_SA_COO~M 100998): the scheduled Holdings producer -- 3 per-firm holdings principals (grants from HOLDINGS_FIRM_PRINCIPAL_GRANTS_20260925.json @4e995812bb) + the dispatch function. Principals are never-widen class: nothing applies before the CTO signs M's packet."
