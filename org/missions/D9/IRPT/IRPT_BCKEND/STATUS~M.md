@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T22:2xZ (tick 16). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-25T23:4xZ (tick 17). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -68,13 +68,14 @@ branch. No code edit is open.
        (COT_OTHER_PER_CLIENT_20260925.json).
      - SIGNED: act 1 by the CTO @4fdc4284c9. ACT 1 DEPLOYED and verified (ledger cot-other-admission-m-20260925:
        D1 closed; R1 HELD for the first scheduled COT run, Mon 2026-09-28).
-     - Act 2 (the batch B write) is held on: act 1 read back; ~D's IR mapping on origin DEV; and (CTO-added) the AI
-       Cottonwood views rendering Other on PROD, proven on z09305589's $19.65M, which the CTO routes to ~D.
-     - S138 is ~M-owned and MEASURED (S139 @5cc4fc3367): C_06 drops $19.23M of `cash` across 178 clients, and 2
-       all-cash clients publish an all-zero mix. The CTO SIGNED cash as its OWN deploy (@d257eb67aa, msg 101038):
-       only after the AI Cottonwood views render cash and `other` on PROD (added to ~D's order). The read-back names
-       one client's cash slice summing to 1 and one all-cash client at 100%. The cash line is WITHDRAWN from the M
-       branch (b6cfa36f91) so no merge carries it early; re-apply 74feb04b1e then.
+     - Act 2 (the batch B write) is held on: act 1 read back (Monday's first COT run); ~D's IR mapping on origin
+       DEV. The CTO-added render condition is MET: PROD 36a37afc (tag portal-v2.1.188, ~D msg 101054), whose
+       cottonwood/layout.ts:125-128 turns on cash and other. ~D reads z09305589's Other slice once batch B lands.
+     - S138 cash is DEPLOYED as its own act (CTO @d257eb67aa). Re-applied 7fd8149448, merged to CLOUD 75cc52a285, and
+       C_06 is on s3://opal-data-cot/code/gold/ at version LmvfjXlB... (read-back: line 173 carries cash; rollback is
+       prior version HJa2V4VY..., the act-1 bytes). Ledger cot-cash-admission-m-20260925: D1 closed; R1 HELD for
+       Monday's first COT run: z09308463 (0.37 cash at 09-22) shows a cash slice with shares summing to 1, and
+       z09326138 or z09308511 shows 100% cash.
    - Preferred stock = fixed_income, standing (Andrew-direct ~17:3xZ, @42def02a36).
    - The two defects (COT `B_01b` scanning an empty prefix; the loader skipping rows without a ticker) are ~M's under
      exact-file grants on request.
