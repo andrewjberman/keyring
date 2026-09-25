@@ -235,3 +235,47 @@ recording as a thing this product does WELL, in a pass otherwise accumulating ga
 about a management team."* No analyst read is recorded, and the profile it names is the `UNREADABLE_OBJECT`.
 
 **4 of 20 graded: 1 REALIZED, 2 NOT_REALIZED, 1 NOT GRADEABLE.** 16 remain.
+
+---
+
+# RE-GRADE PASS, ENTRY 5 -- `FWD-19` -- **NOT_REALIZED**, and it lands on the universe card
+
+Fence `:603-617`. The machinery is built, honest and well-cited. **It cannot deliver the outcome, and the
+reason is not a defect in this project.**
+
+**WHAT IS PRESENT, and it is substantial:**
+- **The verdict and its named comparable:** `Verdict: hold (comparable: DE_US_Equity)`.
+- **Reasons, each linked to what it rests on** -- five sentences, every one carrying a `> cites:` line of
+  specific evidence ids across six prefixes (`S:` sections, `F:` figures, `E:` passages, `FIT:` factors,
+  `B:` membership, `C:` rung). **This is the strongest provenance I have seen in the export** and it
+  satisfies the fence's *"gives the reasons with each one linked to what it rests on"* outright.
+- **Not an instruction:** `hold` is a verdict, and nothing in the section directs a trade.
+
+**WHY IT STILL FAILS -- the posture's own first sentence:**
+
+> *"The comparable Deere pack carries **no thesis, management, peer or model evidence at all**, so no
+> side-by-side judgment of its fundamentals is possible from these packs."*
+
+The fence requires the page to *"say whether this company looks like a better or a worse pick than the
+most similar name on the other side."* **The page instead says, correctly and in its own words, that the
+comparison cannot be made.** That is honest behaviour and it is not the outcome.
+
+WARN: **AND THE COMPARABLE IS `DE_US_Equity` -- DEERE -- WHICH `Z-S270` MEASURED AS OUTSIDE THE 89-KEY
+SET.** So the posture selects its symmetric comparable from a universe WIDER than the corpus covers, and
+the selected name has no pack **because nothing in scope ever built one for it.** `FWD-19` is therefore
+**blocked by the universe question, not by the posture engine** -- the same card that bounds `rp-1` and
+that `FWD-17`'s pool-of-7 sits beside. **Three outcomes now turn on one unanswered word.**
+
+**Two components NOT gradeable from this instrument**, and both are the marking problem again: *"marked
+as a machine's view for a person to accept or reject"* (visual), and *"a line in the header"* (the Header
+section was not read for this). **Not asserted either way.**
+
+**DONE WHEN unmet:** *"EXERCISED -- a PM has read a posture and acted on it, or declined it, on the page."*
+
+**A finding recorded in passing, because it is the product behaving well:** the Peers column table
+declares `Present columns (5 of 17 declared)` and states, per column, `P/E 2025 | ey | RECIPROCAL:
+P/E = 1 / ey; trailing grain, NOT a 2025 fiscal-year estimate`. **The page discloses that its own column
+LABEL and its GRAIN differ** -- independently confirming `Z-S273`'s reciprocal finding from the product's
+own mouth, and exactly the "a value must carry its claim" behaviour the estate keeps asking for.
+
+**5 of 20 graded: 1 REALIZED, 3 NOT_REALIZED, 1 NOT GRADEABLE.** 15 remain.
