@@ -85,6 +85,13 @@ B. IN P'S LANE (`export/`, `_render_identity/`, `_authz`), buildable now, dark u
       The portal half: PrintEntry reads `selection`, `start`, `end` and resolveBundle passes them to
       getPerformanceReport as accountSetId/start/end; a missing one refuses by name (no default window).
       The backend half (P): the grant pins accountSetId = that selection; B2 builds this URL from the grant.
+      THE TOKEN (added 19:2xZ). The host opens the URL with &renderToken=<jwt> (minted from the render grant,
+      grant.mint_input -> mint.mint_render_token, 300 s, exp without leeway) and NO operator session.
+      MEASURED at portal DEV: ProtectedRoute admits the print page on ?renderToken= (aud irpt-render, role
+      renderer), but NOTHING in the typed client sends it -- only ProtectedRoute.tsx and App.tsx read it -- so
+      the page's performance-report / narrative-packet reads go out without it and V3 refuses them. The portal
+      half therefore also owes: on the print route with an admitted render claim, the typed client sends
+      Authorization: Bearer <renderToken> on its scoped reads, and never persists it.
       CORRECTED 17:5xZ: the window is the REQUESTED one -- the retained reopen matches the accepted request's
       start/end (retained.py reopen), so the actual window would miss the report (backend print_query 523890feda).
 C. PROOF: one real run per firm. COT and 49F each export a retained report; INF follows its own per-use word.
