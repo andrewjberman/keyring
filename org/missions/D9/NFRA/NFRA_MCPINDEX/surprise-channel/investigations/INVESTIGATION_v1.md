@@ -426,6 +426,96 @@ carries none.
     "spec_asserts": "TO face s.1: build a new integration portal_index (app/integrations/portal_index/) whose tools each read ONE whole precomputed object by its EXACT key prefix, the SAME objects the portal reads; CLAUDE.md rule 30: every S3 address is address() output, and a builder refusal is a registry row, never a hand-typed workaround.",
     "world_is": "The objects the portal reads exist only at legacy keys. The LGIC canon names their future canonical keys, which do not exist yet. A new reader of today's objects must type legacy keys, and the gate refuses every such literal as NEW and OUT-OF-PATTERN. The in-grant remedies either read nonexistent keys or dodge the gate, and both are refused here. The remedy is a naming-canon entry admitting the opal-data-portal-v2 legacy served keys for readers, or an R20 departure Andrew acknowledges. Both are outside this order's <paths>.",
     "notes": "No override was used and the gate was not weakened. All three criteria fail on the committed tree because the tests import app.integrations.portal_index. The issuer's call: route the naming remedy, then land the candidate module unchanged."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T22:02:00Z",
+    "one_line": "MX-t-8 PHASE 2 will be refused even after the CTO lands the three LEGACY-READ entries: the naming gate consumes a waiver only for an EXISTING literal, and every literal of the new file portal_index/integration.py is NEW. judge() returns REFUSE on all three roots with valid entries fed in.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @b5b1402e89 (CLOUD): .tools/naming-gate.py:1293 `new = pre_text is None or not _in_pre(lit, pre_text)`; :1324 `if new and verdict in (\"OUT-OF-PATTERN\", \"ALIAS\"): return \"REFUSE\"`; the waiver is consumed only below that, at :1326-1327 (`if rem:` ... 'THE ONE CONSUMPTION POINT OF THE LEGACY-READ WAIVER ... It sits BELOW the NEW branch above, which is why a NEW or CHANGED literal can never reach it'). A new file has pre_text None.",
+        "MEASURED (.scratch/compute_entries.py, the gate's own functions at b5b1402e89 with its lib/opal_naming.py and registry staged read-only): for each of 'platinum/mdpf/', 'platinum/etfs/positioning_data.json' and 'platinum/advi/49financial/', legacy_read_ok(entry, module bytes) = True and authority_ok = True; judge(new file, waivers fed in) = REFUSE, REFUSE, REFUSE. The same literals graded as EXISTING: WAIVED-READ, OUT-OF-PATTERN (WARN), WAIVED-READ.",
+        "MEASURED (the same gate on a /dev/null diff of the module, sha256 8f8bb4d3d61c...): 'REFUSE :168 platinum/mdpf/ why: NEW and OUT-OF-PATTERN as S3Key', ':170 platinum/etfs/positioning_data.json' likewise, ':172 platinum/advi/49financial/' likewise plus the 49financial carrier; org/mcp/naming-gate.enforce is present in this worktree."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face item 9 and LEGACY_READ_AUTHORITY_MX-t-8_20260925.md @212e0b2471: the CTO's entries, landed in NAMING_LEGACY_READS.json before the module's commit, admit the portal's legacy keys for this reader; item 12 PHASE 2: commit the module unchanged once the entries are at HEAD.",
+    "world_is": "The waiver's recognizer admits each literal at its call site (all three legacy_read_ok True), but the gate never asks it for a NEW literal. A new module's literals are all NEW, so PHASE 2's commit is refused with the entries in place. The precedent IRPT-M-LEGACY-READ-01 was an existing literal in an existing file.",
+    "notes": "PHASE 1 done as ordered; the module is on disk uncommitted. Not fixable in my <paths>: the gate, the carrier and the authority are outside it. The issuer's and CTO's call (a gate change that lets a waiver reach a NEW literal at an approved site, or another route)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T22:02:00Z",
+    "one_line": "The LEGACY-READ entries cannot all carry MDPF_CANON: the gate's remediation_of() resolves 'platinum/advi/49financial/' to ADVI_FIRMBKTS and 'platinum/etfs/positioning_data.json' to NO remediation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DATA @b5b1402e89: infra/logic/registry/remediations.json: ADVI_FIRMBKTS surfaces include {s3-prefix, opal-data-portal-v2, platinum/advi/49financial/}; MDPF_CANON surfaces include {s3-prefix, opal-data-portal-v2, platinum/mdpf/}; no surface covers platinum/etfs/.",
+        "MEASURED (.scratch/compute_entries.py, Naming.remediation_of at b5b1402e89): MDPF_CANON, None, ADVI_FIRMBKTS for the mdpf, etfs and advi roots.",
+        "CODE @b5b1402e89: .tools/naming-gate.py judge(): a waiver applies only when entry.remediation == the resolved remediation; with no remediation the EXISTING literal is OUT-OF-PATTERN WARN and the waiver is never read."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LEGACY_READ_AUTHORITY_MX-t-8_20260925.md @212e0b2471: 'Remediation owner of the keys: MDPF_CANON (D8)' for all three prefixes.",
+    "world_is": "The gate assigns the advi root to ADVI_FIRMBKTS and the etfs key to no remediation. org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~3/legacy_read_entries.json writes ADVI_FIRMBKTS for advi (the gate's value, so the entry is consumable), and MDPF_CANON for etfs as the authority says; the gate can never consume the etfs entry. Its computed_with.checks block records all three values.",
+    "notes": "For the CTO's verification of the entries. My file follows the gate where the gate decides consumption."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T22:02:00Z",
+    "one_line": "This worktree's HEAD (1b7e16e1ec) does not carry the ruling, the authority record, NAMING_LEGACY_READS.json, or legacy_read_ok/_norm_body in .tools/naming-gate.py. I read all of them at CLOUD and computed the entries with the gate at b5b1402e89.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: `git merge-base --is-ancestor 212e0b2471 HEAD` rc=1; org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/ absent on disk; org/standards/NAMING_LEGACY_READS.json absent on disk; `def legacy_read_ok|def _norm_body` has 0 matches in this worktree's .tools/.",
+        "MEASURED: merge-base(HEAD, CLOUD) = 60464dd3f8, 4340 commits behind CLOUD b5b1402e89; the task order's bytes are identical at HEAD and at CLOUD (`git diff HEAD CLOUD --stat` on the order is empty).",
+        "READ: the ruling at 212e0b2471:.../ROUND1_RULINGS.md R-3, the authority record at 212e0b2471, and the gate at b5b1402e89:.tools/naming-gate.py:926 (_norm_body) and :1131 (legacy_read_ok), staged under .scratch/ read-only."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face item 9: READ both CTO files; shape for .tools/naming-gate.py legacy_read_ok; compute helper_body_sha256 with the gate's own _norm_body; item 12 PHASE 2 once the CTO's entries are at your HEAD.",
+    "world_is": "The paths are on CLOUD, not at this branch's HEAD. The worktree's own gate has no waiver mechanism, so a PHASE 2 commit graded by this HEAD's gate refuses whatever the carrier holds.",
+    "notes": "Nothing was rebuilt or extracted into the tree; CLOUD was read, not merged. PHASE 2 needs this branch to carry CLOUD's gate and the landed entries; that is the issuer's merge."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T22:02:00Z",
+    "one_line": "Item 10's registry wiring makes tests/test_entitlement_admin.py::test_ogz2_ac08 (outside my <paths>) fail: it instantiates every registered factory, and opal_discover's module is not on this tree. It also pins the registry to 4 ids and 44 tools, so it will still fail on portal_index and opal_discover after the discover drain.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED (python, this worktree, module present): registry.available_ids() = ['globgrph', 'opal_discover', 'opal_portal', 'portal_index', 'schwab', 'ycharts']; instantiating each factory: 5 OK, 'FAIL opal_discover ModuleNotFoundError No module named app.integrations.opal_discover'.",
+        "CODE @1b7e16e1ec: infra/aws/ec2/opal-gateway/tests/test_entitlement_admin.py:310 iterates registry.available_ids(); :339 _pinned_by_id names ycharts/opal_portal/globgrph/schwab only; :349 calls registry._FACTORIES[_iid](); :355 asserts 44 tools.",
+        "MEASURED: that module does not collect here ('ModuleNotFoundError: No module named moto', like 12 other gateway test modules), so the failure is derived from the code, not run. The discover family is on the held branch wk-nfra_mcpindex-1-1d @9dd139a74d (app/integrations/opal_discover/)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face item 10: wire both factories in app/integrations/registry.py so ENABLED_INTEGRATIONS can name them.",
+    "world_is": "The discover module is not on this tree, and an existing test outside <paths> pins the registry's id set. I wired both as factories that import on enablement only, so gateway import stays clean (the portal and classification-composition suites: 38 passed). The pin test needs its two new ids and the discover module.",
+    "notes": "Not fixed: the test file is outside my grant."
   }
 ]
 ```
