@@ -926,6 +926,29 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The three next-round items are for 1.0.0_SA_CTO's round-3 analysis (L10)."
+  },
+  {
+    "id": "DSGN_IRPTV1-W16-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~16",
+    "surfaced_at": "2026-09-25T00:00:00Z",
+    "one_line": "fe-s-9/resolve.test.ts's F9-AC9 first test (round-1, out of this order's grant) already fails at HEAD independent of IV-e-26's changes: PerformanceDocument's rendered markup carries no '0.0917' (or any 0.dddd figure) for performanceReport.success.json through an UNMODIFIED resolveBundle+FixtureAdapter path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timeout 120 bun test src/pages/InvestorReporting/__tests__/fe-s-9/resolve.test.ts at this worker's worktree (portal DEV 8242412d, post IV-e-26 edits) prints 'RENDERED PERFORMANCE DOCUMENT: 18058 bytes' then fails expect(html.includes('0.0917')).toBe(true), received false; 17 pass / 1 fail overall in that directory",
+        "a standalone repro at portal/.scratch/debug-resolve.ts, calling resolveBundle with the EXACT round-1 deps shape (no accountSelection/start/end -- the legacy/fallback branch this cell's diff leaves byte-identical) against a fresh FixtureAdapter and rendering PerformanceDocument, prints has 0.0917: false and all 0.dddd matches: null",
+        "git diff -- src/pages/InvestorReporting/export/resolveBundle.ts shows the no-window fallback branch of resolveOne's getPerformanceReport call is unchanged object-for-object from HEAD; PerformanceReport.ts and the fixture performanceReport.success.json (line 82/102, value 0.0917) carry no local modification (git status clean on both)",
+        "fe-s-31/every-page.test.ts's own baseline (run before and after this cell's edits) shows the SAME 2 pre-existing fails both times (MissingPayloadError from selectedReference's 'An accepted account selection is required', a DIFFERENT known root cause P 100987/this cell addresses for the print route specifically)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "fe-s-9/resolve.test.ts's own header and assertion: the FE-s-1 ExportBundle success fixture resolves through resolveBundle+FixtureAdapter to a PerformanceDocument whose rendered markup contains the fixture's own YTD return, 0.0917, printed exactly as given (no rounding).",
+    "world_is": "At this worktree's HEAD (portal DEV 8242412d plus this task order's IV-e-26 edits, which do not touch this test's call path), the rendered PerformanceDocument markup for that exact fixture pair contains no 0.dddd figure at all -- the YTD value is not merely reformatted, it is absent from the 18058-byte document. Root cause not investigated further: out of this order's <paths> grant (render/performance/**, contracts/adapt.ts and state/availability.ts are all out of grant) and orthogonal to IV-e-26's four criteria, none of which touch this rendering path.",
+    "notes": "Not blocking IV-e-26: none of IVE26-AC1..AC4 exercise fe-s-9/resolve.test.ts, PerformanceDocument or the cumulativeReturn rendering path, and this worker's own new/changed code is proven (by diff) not to alter the branch this failing test exercises. Filed as an OBSERVATION for the round's drain/analysis since it is a genuine round-1 regression this worker did not cause and cannot fix within this order's grant."
   }
 ]
 ```
