@@ -90,7 +90,7 @@ Validate it with `python .tools/proof-of-spec-check.py <instance>`. Report once:
 **ISSUER NOTES:** E3, R-5, D-3. Chain A's root, on the held branch. After it: MX-d-2 and MX-t-8, cut from the held
 branch's head.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
