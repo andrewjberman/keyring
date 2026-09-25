@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: /canonical-drive loop on Andrew-direct 17:3xZ (cron 57c0067c, every 10m; replaced goal loop f599225b), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T18:0xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T18:2xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -95,9 +95,17 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    from the retained report (cutoff = actual_end 23:59:59Z), binds only a contract-validated packet by the sha of the
    stored + read-back bytes (CTO R2). Real run: LIVE opal-news-trending-daily, validated, prose released, persisted
    under synthetic GENB1NARRSYN. Deploy note: stage narrative/handler.py under another name in the export zip.
-   NEXT (P): B1 wiring -- export/entry.py submit_export composes the repository (irpt-requests + reporting
-   destination via opal_naming, as performance/installed.py does), resolves, freezes + persists the bundle, writes
-   the grant, answers QUEUED (export id in status.operation.revision); dispatch off until B2. Then the deploy.
+   B1 SERVICE LANDED 83673d731c (backend): served.py status-only answer ({"_no_data": True} -> `data` omitted, only
+   QUEUED/RUNNING); export/submit_service.serve_submit (resolve -> export revision -> narrative bind -> freeze + persist,
+   dispatch OFF -> grant -> QUEUED, export id in status.operation.revision). End-to-end test over the real repository,
+   narrative builder, controller and envelope: the QUEUED envelope validates against the published schema, 0 errors.
+   Suites rc=0 (export 84, _authz 160, performance 188, narrative 37, ops 160, _render_identity 23); _contracts' 33
+   failures are all test_seam_paired (pre-existing, unrelated). Live run blocked: no REPORT# row at any firm yet.
+   NEXT (P): B1 install -- export/entry.py submit_export composes the ports from the function (IRPT_REQUESTS_TABLE,
+   IRPT_EVIDENCE_BUCKET, opal_naming reporting policy/destination, the report validator, DynamoTopicStore,
+   narrative handler staged as narrative_build.py, package facts packaged as JSON) and refuses NOT_READY by name
+   when any is missing; then the source-map rows + Terraform (env, IAM: irpt-requests read, reporting destination
+   read, news table read, evidence put/get) under a ledgered deploy with a negative arm.
    AFTER B1-B3 (CTO 100993, from ~D 100992, DSGN_IRPTV1 decomp v4 section 7 @d4add46f46): a HOLDINGS export report kind
    beside performance/analysis, additive on the contract, same freeze + render path; ~D wires EXPORT_KIND_BY_TAB.
    DEPLOY rides B1: package _render_identity/grant.py into the adapter/status/narrative zips, set IRPT_EVIDENCE_BUCKET,
