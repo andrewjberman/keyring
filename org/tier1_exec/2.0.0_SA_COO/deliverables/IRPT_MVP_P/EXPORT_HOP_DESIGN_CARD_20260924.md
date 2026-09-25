@@ -71,6 +71,18 @@ B. IN P'S LANE (`export/`, `_render_identity/`, `_authz`), buildable now, dark u
    B2 mint one render token from the frozen bundle (`mint.py`), passed to the host as a parameter; the SSM document
       gains `RenderToken` and `PortalOrigin`, which `dispatch.render_request` does not send today, so a READY
       dispatch would fail on a missing required parameter;
+   B2-CARRY HOW THE TOKEN REACHES THE HOST (open, 19:2xZ; ruling asked of 1.0.0_SA_CTO). This card's B2 line said
+      "passed to the host as a parameter"; export/dispatch.py's own bound 13 says no credential enters a command
+      document, and SSM Run Command keeps its parameters in command history (ssm:ListCommands shows them). So:
+        (a) SSM Parameter Store SecureString, one name per attempt (/irpt/render-token/<ATT-id>), written by the
+            export Lambda after the grant, read by the host role for that name only (GetParameter
+            WithDecryption), deleted at B3 finalize; KMS-encrypted, not in command history; the command document
+            carries only the parameter NAME (an issued id). RECOMMENDED.
+        (b) an S3 object under the attempt's exports prefix -- a credential at rest in the evidence bucket, and the
+            host role has no DeleteObject; weaker.
+        (c) the host mints the token itself -- the host would hold the render private key and could mint for any
+            bundle; refused.
+      Either way the 300 s life and exp-without-leeway (C-S219) bound the exposure; the token is never logged.
    B3 finalize: the host's PDF write triggers `finalize_export`, or the served `export-receipt` read finalizes on
       first read (choose the one without a new event source; the header forbids a schedule).
    B2-URL THE PRINT URL THE RENDER HOST OPENS (interface, published 2026-09-25T17:4xZ by P; portal half = ~D's lane).
