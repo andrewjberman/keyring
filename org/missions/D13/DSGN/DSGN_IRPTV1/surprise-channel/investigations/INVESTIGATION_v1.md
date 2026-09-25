@@ -836,6 +836,29 @@
     "spec_asserts": "The task order's amendment N2 (issuer, 2026-09-24, the CVO's FAST-pin, items N1-N4): 'ReturnsHeatmap.tsx prints no \"UNAVAILABLE\" in a cell: the cell reads \"not supplied\" and the reason moves to the cell's hover.'",
     "world_is": "fe-s-5/states.test.ts (a different, earlier cell's own file, not named in this order's <paths>) pins the OLD behaviour N2 explicitly retires for this exact component; the amendment is unambiguous and this worker implemented it, which necessarily turns that one sub-test's assertion false. The file's other two sub-tests were already failing before this edit on an unrelated, longer-standing gap (see grounding) -- this edit adds ONE new failing assertion to a file that was already red.",
     "notes": "Not blocking any of IVE18-AC1..AC4: IVE18-AC1's own census (this order's graded criterion) requires the ABSENCE of UNAVAILABLE from the Performance body and PASSES; N2 is an explicit, numbered instruction this worker was ordered to carry out, not a discretionary change. Filed so the CTO/COO re-scopes fe-s-5/states.test.ts's UNAVAILABLE_WORD assertion (the same treatment this order already gives fe-s-5/fields.test.ts, IVE18-AC3) rather than reading the new failure as an unreviewed regression."
+  },
+  {
+    "id": "DSGN_IRPTV1-W11-S3",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~11",
+    "surfaced_at": "2026-09-25T02:20:00Z",
+    "one_line": "IV-e-19's own in-grant edit to HoldingsTab.tsx (progressive disclosure, DESIGN.md C14) necessarily grows the diff `__tests__/dsgn-irptv1/iv-e-10.ruled-touch.test.ts` (IVE10-AC3, an earlier cell's own pinned criterion) measures against a fixed base commit -- but that check was ALREADY RED (12 added/1 removed against its own <=2-added/0-removed bound) before this task order touched anything, from IV-e-18's prior edit to the same file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- rules whether iv-e-10.ruled-touch.test.ts's fixed-base bound is retired now that two later cells (IV-e-18, IV-e-19) have made further RULED, in-grant edits to the same file the bound was written to pin; this worker's <paths> does not grant __tests__/dsgn-irptv1/iv-e-10.ruled-touch.test.ts.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git diff --numstat 13b5356fad4779b990e8e7a88636430204b30e42 df5e41b5 -- src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx` (portal, before this worker's IV-e-19 edit): `12\\t1`, already outside the test's own bound `added<=2, removed==0` -- IVE10-AC3 was already FAILING at the commit this task order's own worktree pair was handed",
+        "`bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-10.ruled-touch.test.ts` after this worker's IV-e-19 commit (6de269cc): `NUMSTAT: \"39 5\"` / `VERDICT: RULED-TOUCH-FAIL added=39 removed=5` -- the same pre-existing failure, now larger by this order's own legitimate edit (paths grant tabs/holdings/HoldingsTab.tsx explicitly for this cell)",
+        "full `__tests__/dsgn-irptv1/` suite after this worker's commit: 68 pass, 1 fail (this one) of 69 tests across 55 files -- the sole failure in the directory, unrelated to any of IVE19-AC1..AC3's own graded invocations"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "iv-e-10.ruled-touch.test.ts (IV-e-10a's own criterion): `HoldingsTab.tsx` differs from base commit `13b5356f...` by AT MOST TWO ADDED LINES, ZERO REMOVED, forever, read directly off `git diff --numstat` against that one fixed commit.",
+    "world_is": "The decomp's own later cells (IV-e-18, then this cell IV-e-19) are BOUNDS-granted to make further RULED edits to the same file for their own FWDs (client-language disclosures; progressive disclosure/DESIGN.md C14) -- a fixed-base, ever-shrinking bound on ONE file cannot survive two more legitimate rounds of work on it. This worker did not touch iv-e-10.ruled-touch.test.ts (out of `<paths>`) and did not weaken it to pass; the file's own JOIN-2 task order explicitly grants `tabs/holdings/` and this cell's rules leave no smaller edit that both satisfies IVE19-AC1/AC2 and holds the count at 2.",
+    "notes": "Not blocking any of IVE19-AC1..AC4 as written: none of their invocations run iv-e-10.ruled-touch.test.ts. Filed so the CTO/COO retires or re-bases the fixed-base bound (e.g. pin to the LAST cell that was allowed to touch the file, or drop the numeric cap now that the file is under active, ruled, multi-round revision) rather than reading a future re-run as a fresh regression."
   }
 ]
 ```
