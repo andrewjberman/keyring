@@ -63,6 +63,16 @@ Ids continue from round 3. Paths portal-relative; `IR/` = `src/pages/InvestorRep
 
 `IV-e-24` is reserved for IVE16 (section 7) and not cut.
 
+**Addendum (issuer, 2026-09-25 ~19:5xZ; the issuer rules inside its own decomposition, /canonical-drive obligation 7):**
+one DIRECT-ACT cell, on 2.0.0_SA_COO~M's written ask 101020 (Andrew-direct 2026-09-25 ~14:4xZ: personal and held-away
+assets are the class `other`, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260925_144xZ_CLASSIFIER_OTHER_OPENAI_RUN_AND_DEV_PUSH.md`
+@705be61575; the v1 contract admits it, ~P @3d5a590ad0). The CTO's sign-off @8214723353 holds M's bd-securities batch B
+until the portal maps it, so it is cut now, not at round 5.
+
+| cell | what it builds | serves | writes | reads (never writes) | risk |
+|---|---|---|---|---|---|
+| `IV-e-27` | DIRECT-ACT: the served asset class `other` maps to its own class "Other" (never folded into Unclassified), with a label and a colour distinct from every other class and from Unclassified; an unknown class still reads Unclassified | FWD-13 | `IR/contracts/adapt.ts` (`ASSET_CLASS_FOR_WIRE`), `IR/contracts/index.ts` (the `assetClass` union), `IR/tabs/holdings/assetClass.ts`, `IR/__tests__/dsgn-irptv1/iv-e-27.*` | `src/lib/chartColors.ts` (READ ONLY: a PALETTE token no ASSET_CLASS entry uses) | LOCAL |
+
 ## 3. PLACEMENT AND BASE
 
 Every cell is a portal cell on a worktree pair provisioned by `.tools/wk-provision.sh provision DSGN_IRPTV1 <n> --portal-ref
