@@ -104,3 +104,12 @@ round 3's IV-e-11 and IV-e-12 criteria and stay unchanged).
 - **IVE16 (FWD-9, Export on Holdings): PARKED on the producer.** `render/manifest.ts` `ReportKind` is `'performance' |
   'analysis'`; `index.tsx` `EXPORT_KIND_BY_TAB.holdings = null`. The fix is a Holdings report kind the export producer
   (2.0.0_SA_COO~P) serves; the FE hookup is one map line at the merge once it exists. Routing asked of 1.0.0_SA_CTO.
+
+**Addendum 2 (issuer, 2026-09-25 ~20:4xZ):** one DIRECT-ACT cell routed by 1.0.0_SA_CTO (101030) under
+`SIGNOFF_COT_OTHER_20260925.md` @4fdc4284c9, act 2 precondition 3: the Advisor Intelligence Cottonwood views render `other`,
+the reader of IV-e-27's class outside the IR page. The PROD promotion (Andrew allows a full /prod-deploy) is a separate act
+after the drain; the proof is one real read of z09305589 on PROD after batch B.
+
+| cell | what it builds | serves | writes | reads (never writes) | risk |
+|---|---|---|---|---|---|
+| `IV-e-28` | DIRECT-ACT: an opt-in `other` class on the Advisor Intelligence mix (the `includesCash` pattern), ON for Cottonwood only, coloured PALETTE.purple600, labelled "Other"; 49financial and Inflection unchanged | FWD-13 (reader: Advisor Intelligence) | `src/pages/AdvisorIntelligence/_shared/lib/composition.ts`, `_shared/types/TenantLayoutConfig.ts`, `_shared/hooks/useTenantLayout.ts`, `_shared/AdvisorBookView.tsx`, `_shared/components/PartnerAnalytics.tsx`, `_partners/cottonwood/layout.ts`, `__tests__/cot-other/` | `src/lib/chartColors.ts` | LOCAL |
