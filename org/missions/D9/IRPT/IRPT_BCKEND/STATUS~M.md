@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T21:2xZ (tick 15). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-25T21:3xZ (tick 15). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -71,8 +71,10 @@ branch. No code edit is open.
      - Act 2 (the batch B write) is held on: act 1 read back; ~D's IR mapping on origin DEV; and (CTO-added) the AI
        Cottonwood views rendering Other on PROD, proven on z09305589's $19.65M, which the CTO routes to ~D.
      - S138 is ~M-owned and MEASURED (S139 @5cc4fc3367): C_06 drops $19.23M of `cash` across 178 clients, and 2
-       all-cash clients publish an all-zero mix. The fix is coded (C_06 + `cash`, 74feb04b1e, M branch, not
-       deployed); the sign-off and the cash render are asked of the CTO (msg 20260925T212438Z).
+       all-cash clients publish an all-zero mix. The CTO SIGNED cash as its OWN deploy (@d257eb67aa, msg 101038):
+       only after the AI Cottonwood views render cash and `other` on PROD (added to ~D's order). The read-back names
+       one client's cash slice summing to 1 and one all-cash client at 100%. The cash line is WITHDRAWN from the M
+       branch (b6cfa36f91) so no merge carries it early; re-apply 74feb04b1e then.
    - Preferred stock = fixed_income, standing (Andrew-direct ~17:3xZ, @42def02a36).
    - The two defects (COT `B_01b` scanning an empty prefix; the loader skipping rows without a ticker) are ~M's under
      exact-file grants on request.
