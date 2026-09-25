@@ -9334,3 +9334,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It passed because it was built over a bounded 841-account set that excludes both affected accounts. The full-firm COT build that a daily schedule needs refuses the whole firm on 2 accounts' duplicate rows. The remedy is a producer change: refuse per account, as 49F does. Whether the other 140 unaccepted accounts need the same per-account treatment is part of the remedy."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S135",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T19:05:00Z",
+  "one_line": "An apply of the investor-reporting/directory root FROM CLOUD would REVERT the S126 fix: the live irpt-directory-refresh fires cron(30 9 ...) America/New_York (applied from ~P's branch at 86a3d27224), but CLOUD's schedule.tf still reads cron(0 9 ...), so the plan shows an in-place change back to 09:00, which reopens the host-window race.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (the directory refresh schedule is ~P's slot in schedule.tf; landing 86a3d27224's schedule change on CLOUD disarms this). ~M applies nothing in this root until it has.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform plan -lock=false of infra/aws/terraform/investor-reporting/directory at CLOUD @33972b6da8: aws_scheduler_schedule.irpt_directory_refresh will be updated in-place, schedule_expression cron(30 9 ? * MON-FRI *) -> cron(0 9 ? * MON-FRI *).",
+      "aws scheduler get-schedule --name irpt-directory-refresh: ScheduleExpression cron(30 9 ? * MON-FRI *), America/New_York, ENABLED.",
+      "86a3d27224 (2.0.0_SA_COO~P, deploy IRPT_BCKEND-S126) is contained only in branch irpt-p-publish-20260923, not in CLOUD."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND-S126 disarmed: 'the directory refresh now fires 09:30 America/New_York'.",
+  "world_is": "It does, live. But the repo's shared branch still declares 09:00, so the next apply of this root from CLOUD, by any seat including ~M's R4 apply, silently moves it back. The R4 holdings principals and dispatch in the same root wait on this."
+}
+```
