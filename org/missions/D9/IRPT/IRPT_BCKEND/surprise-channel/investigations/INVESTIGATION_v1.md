@@ -9211,3 +9211,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The runner is asked on every fire. The 09-25 13:30Z fire dispatched at all three firms and the served directories moved to 09-24 (49F), 09-25 (INF), 09-22 (COT). Tomorrow's fire accounts these builds and hands over its own. INF reading as_of 09-25 at a 09:30 ET fire is the Orion key-date semantic (a key D holds the prior close), worth a look by the directory's owner; it does not reopen this row."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S130",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-25T15:30:00Z",
+  "one_line": "An UNTARGETED terraform plan of infra/aws/terraform/portal-auth at CLOUD HEAD would REMOVE three live rules from the CloudFront WAF (aws_wafv2_web_acl.opal_cloudfront_protection): common-rule-set (p4), ip-reputation (p3), known-bad-inputs (p5), all managed rule groups in count mode -- the live ACL carries rules the tree does not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "vendored terraform 1.9.8 plan of portal-auth, 2026-09-25T15:2xZ: 'aws_wafv2_web_acl.opal_cloudfront_protection will be updated in-place' with three '- rule {...}' blocks (AWSManagedRulesCommonRuleSet, AWSManagedRulesAmazonIpReputationList, AWSManagedRulesKnownBadInputsRuleSet), beside P's two new secret containers.",
+      "P's A1 apply was -target'ed to the two containers (ledger irpt-render-keys-a1-20260925) and did NOT touch the ACL."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The portal-auth root declares the ACL it manages (waf-cloudfront.tf); a plan of a root at HEAD should show only the change being made.",
+  "world_is": "The live ACL has three count-mode managed rule groups the declaration lacks (added outside Terraform, or dropped from the file). The next untargeted portal-auth apply by any seat deletes them. Owner: the portal-auth / WAF lane (CLOUD_OPS_OR_ETL) -- declare them or remove them deliberately.",
+  "notes": "Off-task for P; a row, not a fix. P applies only -target'ed resources in this root until the owner reconciles."
+}
+```
