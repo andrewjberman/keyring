@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T16:3xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T16:5xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -61,8 +61,18 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    before and after; human Auth OK 8 on v21, 0 runtime errors. Targeted re-plan: edge + distribution No changes; the only
    residue is the recurring benign ACL version diff (row S133 corrects S130). Section A (A1 keys, A2 V2, A3 V3) is DONE.
    Edge role reads opal/auth/* incl. both private keys = row IRPT_BCKEND-S132 (owner portal-auth IAM).
-   NEXT: B0 render ports / production render-bundle loader (the delegator slot needs its own proposal to the CTO) -> B1 serve
-   submit-export in the QUEUED shape (R2 landed 119b0b776e / CLOUD f6fd60f4fd) -> B2 mint + SSM RenderToken -> B3 finalize.
+   B0 PART 1 LANDED f304108913 (backend): _render_identity/grant.py -- one internal render-grant record per export
+   revision (firms/<firm>/generations/<revision>/render_grant.json, key grammar; read back on write) feeding BOTH the
+   Enforcer's render ports (pinned accounts + pinned accountSetId/jobId/reportId + the delegator advisor id stamped at
+   freeze, answered only for the subject the grant names) and mint_input() for B2. No ExportBundle v1 contract change,
+   so the delegator slot needs NO CTO proposal. Test 21 passed (13 new + 8 pin tests unchanged, real served.Entry).
+   Real run: S3 round trip in the evidence bucket under synthetic generation GENB0GRANTSYN -- read-back equal; None for
+   another subject, a missing revision, another firm. Bucket from IRPT_EVIDENCE_BUCKET only (naming gate).
+   NEXT: B0 part 2 = install grant.render_ports on the three read functions (performance, status/analysis, narrative):
+   package _render_identity/grant.py into each, set IRPT_EVIDENCE_BUCKET, grant s3:GetObject on
+   firms/*/generations/*/render_grant.json (+ s3:ListBucket on that prefix so a missing grant reads 404 -> refusal, not
+   403 -> raise); ledgered deploy, negative arm = every human read unchanged + a render read with no grant refused.
+   Then B1 (submit writes the grant at freeze, QUEUED shape) -> B2 mint from mint_input -> B3 finalize.
    R3 hop 4 = option (a): mint the cst_ binding only for a PUBLISHED revision whose scope covers the selection.
 
 1. S1: the COT one-use plan 99052771.. EXPIRED UNSPENT at 2026-09-25T00:00Z (full scan 00:00:18Z: no USE or ACCEPTED
