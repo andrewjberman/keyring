@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T14:5xZ.
+(not live; the FAST line is parked below). As of 2026-09-25T15:0xZ.
 
 ## Pins
 
@@ -54,9 +54,22 @@ branch. No code edit is open.
      Not committed; reverted. The package shape (a separate holdings bundle, or a hash manifest inside the tar) follows
      step 3's host answer.
    - Step 4 (the enable) goes to the CTO as a never-widen half.
-3. **CTO R5:** the two classifier defects are ~M's under exact-file grants on request. The loader change's sign-off
-   counts the securities flipping from NONE and their readers before it deploys. The 49F CUSIP-only rows: yes, fill
-   symbol and name from the Schwab security master in the Holdings producer.
+3. **CTO R5 and Andrew's two answers** (msg 100951;
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260925_144xZ_CLASSIFIER_OTHER_OPENAI_RUN_AND_DEV_PUSH.md`
+   @705be61575):
+   - DONE: the 49F no-ticker rows are named from the Schwab security master (cb8cd03113 on the M branch; CLOUD
+     @6c54a74490). Real dry run on 09-24 sources: 66 of 66 no-ticker rows with a CUSIP are named. The master carries no
+     ticker for any of them, so only the name is filled.
+   - NEXT: ONE OpenAI classification run (B_01b's method) over the named unclassified rows only (COT 101, 49F 78,
+     INF 108). This is Andrew's per-use word; there is no second run. First freeze the exact input list (ids, names,
+     count) as a file.
+   - Then a never-widen half to the CTO for the `bd-securities` write, naming the flipped securities and their
+     readers (69 paths, Positioning included).
+   - The classification rule: investment real estate such as a REIT is `alternatives`; personal and held-away assets
+     are the new class `other`. The Holdings enum and the contract gain `other`. ~D colours it through Positioning's
+     existing mapping.
+   - The two defects (COT `B_01b` scanning an empty prefix; the loader skipping rows without a ticker) are ~M's under
+     exact-file grants on request. The loader's sign-off counts the securities that flip from NONE.
 
 Done this lease:
 - The investor_reporting suite is green, 267 passed and 0 failed, on the M branch @1848e5caef and on merged CLOUD.
