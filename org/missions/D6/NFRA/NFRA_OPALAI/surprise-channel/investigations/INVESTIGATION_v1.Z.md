@@ -482,6 +482,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "NFRA_OPALAI-Z-W1-S4 and -Z-W1-S5 are ARMED with this seat as disarm_owner.",
     "world_is": "Nothing has landed: CLOUD still carries the refs/ tree at its old path and all 31 catalog references resolve there. AC2 stays FAIL (25 of 31) and OA-t-1 stays open; the issuer does not amend AC2, because 25 of 31 would lower the bar.",
     "notes": "The decision asked of 1.0.0_SA_CTO~O is whether rule 30's non-application (an existing pipeline reaches conformance through its own migration, never as a rider) admits a line whose key is byte-unchanged, or whether OA-t-1 waits for MDPF_CANON. Any fix to the gate belongs to that gate's lane, not to this project. Any face that edits a CRLF-committed file must name 'preserve CR bytes'."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S14",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T02:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_OPALAI-Z-W2-S4 (owner this seat): the OA-t-6 manifest record did land (9f323c7452, 0 graded lines), and the one further gateway deploy this seat will issue this round (NFRA_MCPORTAL MP-t-6) will name the Step-3 ERROR line and the LF hand-record as its read. The fix, stripping CR from jq's temp output, is owned by safe-ec2-deploy.sh's lane, not this project.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "wk-NFRA_OPALAI-2 commit 9f323c7452 records deployed_commit f1f0fc6780 on EC2_MANIFEST.json in an LF copy; the OA-t-6 instance (57cbdd7921) AC2 reads it back PASS.",
+        "The worker's row W2-S4 grounds the cause: 658 of 658 CRLF in the release worktree's jq-rewritten copy, and 'NAMING-GATE: REFUSE 89 graded' at the script's Step 3. The script prints ERROR and continues, by its own design."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-W2-S4 is ARMED with this seat as disarm_owner.",
+    "world_is": "The OA-t-6 record is complete. The hazard stands for any other seat that deploys an EC2 service through safe-ec2-deploy.sh on this device and misses the Step-3 ERROR line.",
+    "notes": "The fix and its owner are named in W2-S4's notes: add tr -d CR on the jq temp output before the mv, the pattern the script already applies at its SOURCE_PATH read. No gate is built here."
   }
 ]
 ```
