@@ -1050,6 +1050,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "AMGT_CORPUS-Z-S27 asserts that both READ_HERE s.2 submit attempts are spent and that a third risks the account lockout, and records the fill-failure mode as UNMEASURED by this seat and owed by 2.0.0_SA_COO~X.",
     "world_is": "The fill was correct on both attempts and the dialog shows no error, so the credential was never tested and the failure is in CLICK DELIVERY. The attempt counter our ledger advanced is not known to have advanced at Bloomberg. Z-S27's four eliminations and its hold are both still correct; its sentence about the budget was stated more strongly than the instrument supported.",
     "notes": "FILED AS A NEW ROW BECAUSE I FIRST TRIED TO EDIT Z-S27 IN PLACE AND THE GATE REFUSED IT, correctly: 'Corrections are NEW items citing the old id; an edited history is a history nobody can audit' (content hash ba6e47ebfa95 -> 01db1670edf0). Only a remediation row's own clocks may advance in place. I restored Z-S27 to its committed bytes and filed this instead. TWO THINGS I OWE THE RECORD: (a) the append-only rule is a property of this channel I had to be TAUGHT BY A GATE rather than one I read, and (b) earlier today I advised 0.7.0_AE_CloudOps~A to fix its own row's off-enum class 'edited in place on the committed bytes rather than appended' -- advice that runs straight into this same refusal. That lane is told."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S29",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T01:40:32Z",
+    "one_line": "The corrected FWD-12 re-pull (Bloomberg identifiers, 01:2xZ) lands refdata and bestdata WITH content but every histdata object is '{}' (2 bytes), 22 batches of 3 before this seat stopped it. CRPS-e-2 grew HIST_FIELDS from 23 to 39 (bb6b1f2f25), and blp_client.historical_data's handler returns early on any message without securityData (integrations/bloomberg/mcp/blp_client.py:285-287), so a request-level responseError is dropped and the call returns {} with rc 0. INFERRED, not measured here: Bloomberg's HistoricalDataRequest per-request field limit (widely documented as 25) rejects the 39-field request. The served history came from pulls at 23 fields.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/evidence/fwd12_repull_20260925T012903Z.log: 22 batches rc 0; raw reads for 2317_TT_Equity, 8035_JP_Equity, ADBE_US_Equity at 20260925T0129-0130Z: refdata 1202-1409 B, bestdata 2027-2111 B, histdata 2 B each.",
+        "model_block_pull.HIST_FIELDS: 39 at HEAD, 23 at bb6b1f2f25^1 (this seat's parse of both).",
+        "blp_client.historical_data handler: 'if not msg.hasElement(\"securityData\"): return' -- a responseError message is never read or surfaced."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-e-2 / FWD-12: the Model block's history carries the 16 added history mnemonics; its checks were a dry run and a fixture test, and the decomposition REFUSED to assume the dry run proves entitlement (s.8).",
+    "world_is": "The 16 cannot ride the existing single historical request: the request returns nothing at all, so a derive over this raw would erase the 31 names' served history as Z-S26 did. NO derive was run on it; the served state is unchanged (31 restored, 58 honest-empty). FWD-12 is NOT realized this round.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Remedy for the round-3 analysis, two limbs on the Bloomberg lane's files: (1) model_block_pull splits HIST_FIELDS into requests of at most 25 fields and merges rows by date; (2) blp_client.historical_data surfaces a responseError instead of returning {}. Then ONE pull + derive under the signed pair, verified by FY rows > 0 per key. The CTO's delete-free rollback holds throughout."
   }
 ]
 ```
