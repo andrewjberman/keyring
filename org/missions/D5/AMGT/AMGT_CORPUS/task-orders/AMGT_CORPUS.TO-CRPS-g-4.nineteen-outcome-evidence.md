@@ -75,7 +75,7 @@ READ-ONLY: the whole repository and every S3 object. Scratch `.scratch/g4/`.
 the grades are theirs. Checks dry-run at the base: AC1 FAIL (MISSING), AC2 FAIL (MISSING), AC3 bound PASS (no branch changes yet).
 
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>

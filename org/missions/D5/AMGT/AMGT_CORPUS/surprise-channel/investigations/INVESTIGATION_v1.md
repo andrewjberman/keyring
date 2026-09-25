@@ -1370,6 +1370,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "scoped_amgt._read_model_block_pool cannot be called with a caller-supplied client, so literally calling it from this module's client-threaded build()/current_inputs()/write_one() breaks AC3 by reaching a real boto3 client under the package's offline poison. The SELECTION RULE (prefix + newest-lexicographic-stamp suffix match) is reused verbatim by literal import; only the S3 CLIENT SOURCE differs, resolved the same way every other read in this file already resolves it.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Resolved toward the criterion that is mechanically checked (AC3, the whole-package suite) over a literal reading of 'do not invent a different one' that would have required calling scoped_amgt's own client-selection helper; the selection ALGORITHM is unchanged and imported, not retyped."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S4",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-25T19:16:16Z",
+    "one_line": "CRPS-g-4's task order names lib/research/corpus/induction_request.py --pick as the FWD-4 read-only instrument, but the module hard-codes its write to org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/induction_request.json (DELIVERABLES_DIR, induction_request.py:60-63) -- a path outside this worker's own <paths> grant and this cell's read-only/no-write bound -- so the fence could not be freshly EXERCISED from this worktree; measured instead from the already-committed induction_request.json and the committed CRPS-c-5 proof_of_spec.json's recorded output_evidence at HEAD, both a prior real run. A second, unrelated drift found by the same probe: that prior run (as_of 2026-09-23) measured unresolved_in_universe 60 of 93; this worker's fresh backlog.coverage() read today measures 0 of 94 unresolved -- the backlog population FWD-4 exercises against has moved to empty since the cited evidence was produced.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/corpus/induction_request.py:60-63 (DELIVERABLES_DIR = org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2) and :453-456 (run() always os.makedirs's it and writes REQUEST_FILE_NAME there) -- read directly by this worker, this worktree.",
+        "This cell's own <paths> (task order AMGT_CORPUS.TO-CRPS-g-4, section 3): only org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/ and the two named channel/task-order paths are writable; ~2's deliverables directory is not in that list.",
+        "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/induction_request.json (committed at this worker's HEAD): unresolved_in_universe 60 of 93, picked 'America Movil AXMB MM', as_of 2026-09-23.",
+        "This worker's own fresh lib.research.corpus.backlog.coverage() read, this worktree, 2026-09-25T19:xxZ: resolved 94 unresolved 0 ambiguous 0, sum 94."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-g-4's WORKER FACE section 1: 'Measure against the SERVED and STORED state at HEAD, with read-only instruments only ... the project's own read-only CLI modes'; HARD BOUND section 4: 'NO write anywhere but your two files'.",
+    "world_is": "The named CLI mode for FWD-4 is not actually read-only to a worker other than 0.9.0_WK_AMGT_CORPUS~2 -- its one write target is hard-coded to that worker's own deliverables path. This worker read the committed evidence of a prior real run instead of re-exercising it, and separately found the run's own population (60 unresolved) has since gone to 0 at HEAD.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Filed per CLAUDE.md section 2 ('had to do what the task order did not say, or could not do what it said'); work continued (FWD-4 recorded met on the committed evidence). No repair attempted -- DELIVERABLES_DIR is out of this cell's write grant and out of scope to change."
   }
 ]
 ```
