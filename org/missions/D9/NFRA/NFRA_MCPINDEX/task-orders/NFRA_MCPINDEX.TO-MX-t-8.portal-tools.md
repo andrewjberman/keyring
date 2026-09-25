@@ -51,6 +51,31 @@ Build **a new integration `portal_index`** (`app/integrations/portal_index/`) re
    - `test_parity_with_served_object` (for mdpf, etfs and 49financial advi: the tool's figure and as-of date equal the
      served object's own for one fixture, and a one-day date shift reports the mismatch)
 
+**AMENDED after the first run (rows NFRA_MCPINDEX-Z-W3-S1, -S2, -S3, -S6):**
+9. **The legacy keys, under LEGACY-READ waivers.** The CTO's ruling D-4 (`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/ROUND1_RULINGS.md`
+   R-3 @212e0b2471, and `LEGACY_READ_AUTHORITY_MX-t-8_20260925.md` in the same folder, READ BOTH) admits the portal's
+   legacy served keys for these readers.
+   - Shape the code for `.tools/naming-gate.py`'s `legacy_read_ok`: each literal key (or key prefix) is a POSITIONAL
+     argument to ONE read helper, called in ONE enclosing function, with the bucket argument bound EXACTLY ONCE there
+     to `opal-data-portal-v2`. Under advi, only `platinum/advi/49financial/`.
+   - Compute each literal's `read_context` (`helper`, `helper_body_sha256` computed with the gate's own `_norm_body`
+     over the FINAL helper bytes, `arg_index`, `enclosing_function`, `bucket_arg`, `occurrences`). Write the entries
+     to `deliverables/0.9.0_WK_NFRA_MCPINDEX~3/legacy_read_entries.json`, in the grammar of
+     `org/standards/NAMING_LEGACY_READS.json`, with the authority record and `as_of_cutoff` 2026-10-02.
+10. **Enable-readiness, for this family AND the discover family:**
+    - add the tool classes to `app/data_entitlement.py`, so neither the portal tools nor `opal_discover`/`opal_describe`
+      are denied to everyone;
+    - wire both factories in `app/integrations/registry.py`, so `ENABLED_INTEGRATIONS` can name them.
+    Both stay dormant.
+11. **The catalog regeneration** runs in this worktree with `portal/` checked out (the issuer provisions it).
+12. **TWO PHASES.**
+    - PHASE 1: commit everything EXCEPT `app/integrations/portal_index/integration.py`. That means the tests, the
+      registry and entitlement lines, the catalog entries, `legacy_read_entries.json` and the regenerated catalog.
+      Keep the module on disk, uncommitted, byte-identical to what the entries were computed on. STOP, and report the
+      entries file's path and hash.
+    - PHASE 2, on the issuer's word once the CTO's entries are at your HEAD: commit the module unchanged, then run the
+      proof.
+
 **Standing rules (R-6):**
 - the interpreter is `python`;
 - the prefix fence is item 1 and its control is item 2;
@@ -72,6 +97,8 @@ infra/aws/ec2/opal-gateway/app/integrations/portal_index/
 infra/aws/ec2/opal-gateway/tests/test_portal_index.py
 workflows/atom_decomposition/catalog_entries/
 infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml
+infra/aws/ec2/opal-gateway/app/data_entitlement.py
+infra/aws/ec2/opal-gateway/app/integrations/registry.py
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~3/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/**
 </paths>
