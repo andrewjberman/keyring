@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: /canonical-drive loop on Andrew-direct 17:3xZ (cron 57c0067c, every 10m; replaced goal loop f599225b), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T21:2xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T21:2xZ (tick 23). Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -207,6 +207,10 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    4/4, manifest-index-check 3/3 MATCH, holdings tests 147 pass. The two manifests are IRPT_COMPLETION_M's -> ~M commits
    all four (msg 21xxZ); files uncommitted in the CLOUD tree until then.
    S135 disarmed: ~M landed the schedule fix for P (afefa09d7e).
+   HOLDINGS KIND DESIGNED 21:2xZ (card B4): producer half (P: submit kind=holdings on a published snapshot, Enforcer
+   op holdings_snapshot, irpt-holdings render ports, print query) + portal half (render package: ReportKind holdings,
+   HoldingsDocument, resolveBundle branch; ~D's map line). Built AFTER the Performance export runs end to end.
+   S135/holdings: ~M committed the irpt-holdings restage 4c1805f2e6 (P's bytes).
    AFTER B1-B3 (CTO 100993, from ~D 100992, DSGN_IRPTV1 decomp v4 section 7 @d4add46f46): a HOLDINGS export report kind
    beside performance/analysis, additive on the contract, same freeze + render path; ~D wires EXPORT_KIND_BY_TAB.
    DEPLOY rides B1: package _render_identity/grant.py into the adapter/status/narrative zips, set IRPT_EVIDENCE_BUCKET,
