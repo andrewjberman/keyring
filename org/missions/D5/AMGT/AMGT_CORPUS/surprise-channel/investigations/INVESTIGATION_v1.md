@@ -696,8 +696,7 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Section 6 of this cell's own task order: 'python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3 --governing-order <this order> rc 0 ... Flip <status> to complete only if every criterion passes.'",
     "world_is": "AC1, AC2 and AC3 all PASS-by-output (verified independently against the literal check scripts in org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/), but the checker's rc is 1 because the decomp_ref alignment layer -- unrelated to any of this cell's three criteria -- cannot resolve CRPS-e-2 against a decomp doc that never spells out a single concrete prefixed cell id. The TO cannot be flipped to complete on this instance as written, though nothing about the built code, the test or the dry-run behaviour is at fault.",
     "notes": "Filed per CLAUDE.md section 2 ('had to do what the task order did not say, or could not do what it said') without halting; work is otherwise complete and reported. disarm_owner 2.0.0_SA_COO~X per this cell's own task order text ('rows AMGT_CORPUS-Z-W4-S<k>, disarm_owner 2.0.0_SA_COO~X'). Disarm is a one-line fix in the decomp doc (write the concrete 'CRPS-e-1' .. 'CRPS-e-5' forms, e.g. as the table's leftmost column value, alongside or instead of the bare 'e-N' labels) -- outside this cell's write grant, so recorded rather than fixed here. ARMED because every round-3 sibling (e-1, e-3, e-4, e-5) will independently hit this same alignment VIOLATION on its own proof-of-spec-check run for as long as the decomp doc stands as written; nothing about any individual cell's own build can disarm it."
-  }
-,
+  },
   {
     "id": "AMGT_CORPUS-Z-W3-S3",
     "project": "AMGT_CORPUS",
@@ -721,8 +720,7 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "AC2 (this order, S.5): 'the seam probe: `--write` completes on the live 218-report corpus (rc 0, every type reached)'.",
     "world_is": "`--write` reaches only the FIRST alphabetically-sorted business type (consumer-cyclicals+consumer-services) and raises before completing any type, exactly as Z-S17 measured before this cell's fix -- because the collision Z-S17 diagnosed is with a PRE-FIX stored object, and this cell's fix (correctly, per its own bound) cannot retroactively rewrite that object without bumping METHOD_VERSION or deleting it, both forbidden. The fix is real (proven by the mutant control and by the 4 of 9 types that now write cleanly on genuinely new inputs) but AC2 as literally written is permanently unsatisfiable against this corpus's existing gold state without a resolution outside this cell's bound (e.g. a deliberate METHOD_VERSION bump, or an owner-authorized deletion of the 5 stale objects).",
     "notes": "AC1 and AC3 both PASS-by-output (verified twice each, deterministic). AC2 is recorded FAIL in this worker's proof-of-spec instance with this row's evidence; status flip to complete withheld. Not a defect in this cell's own diff -- readonly to lib/research/corpus/gold.py per the order's own READ-ONLY list, and the order explicitly forbids both remedies available to a worker. Disarm is the issuer's: either accept AC2 as unsatisfiable-by-design (document a corpus-migration exception) or authorize one of the two forbidden moves for exactly the 5 stale objects."
-  }
-,
+  },
   {
     "id": "AMGT_CORPUS-Z-W3-S4",
     "project": "AMGT_CORPUS",
@@ -745,8 +743,7 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "AC1 (this order, S.5): invocation `bash .../e3_AC1.sh`, expect `(?m)^\\d+ passed in `.",
     "world_is": "The check script (issuer's, read-only to this cell) and the <expect> regex (issuer's, in the order) are mutually unsatisfiable given this file's test count: any `-k` filter that does not select every test in the file produces a 'deselected' clause pytest's summary always includes, and the anchored regex has no branch for that form. The 2 targeted tests pass; the criterion as literally specified cannot read PASS from any real run of its own invocation.",
     "notes": "Recorded FAIL in this worker's proof-of-spec instance, not overridden. Disarm is the issuer's: either the check script drops `-k` (run against a smaller purpose-built test module) or the <expect> regex gains a 'passed, N deselected in' branch."
-  }
-,
+  },
   {
     "id": "AMGT_CORPUS-Z-W3-S5",
     "project": "AMGT_CORPUS",
@@ -1002,6 +999,33 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The pull fed invalid identifiers, so every block was empty; the 31 were restored inside the pair's own rollback within ~7 minutes, before the running production sequence reached its dossier step. The 58 serve an all-unresolved block; no false FIGURE was ever served (0 figures), only absence mislabelled as 'empty/no value returned'.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Disarms when a corrected pull (identifiers with spaces) and derive land real blocks for the 89 under a newer stamp, verified by FY rows > 0 and the 22 present per key, OR the 58 are returned to ABSENT on Andrew's delete word. The pull's own dry run echoed security='8035_JP_Equity' and this seat did not read the request string against the vendor's form. Vendor authority for the corrected run asked of 1.0.0_SA_CTO~Z. Readers that may have consumed an empty block in the window: run_scores, render_pack, peers -- not yet measured."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S27",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-24T23:58:00Z",
+    "one_line": "THE BLOOMBERG BLOCK IS A SIGNED-OUT TERMINAL SITTING AT A VISIBLE LOGIN WINDOW, and the recovery record's four cheap remedies are now ALL ELIMINATED on this instance: 8194 has no listener across 6 probes, a bbcomm restart produced a new pid with still no listener, the network to Bloomberg is provably open with its control, and bbcomm's own sockets are loopback-only. A visible top-level window titled 'BLOOMBERG: Login' exists at pid 19952. The sign-in is the remedy, no seat may complete it, and both submit attempts are already spent.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z -- INERT because nothing is armed and no served state is at risk (Z-S26 left the served plane safe). The ACT is a human sign-in at the terminal, which BLOOMBERG_TERMINAL_SIGNIN_RECOVERY.md:134-137 places outside any seat's reach; carded to Andrew at 23:5xZ with these four eliminations attached, which is exactly the form that record requires.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUNG 1 -- 8194 LISTENER, SUSTAINED ABSENCE, NOT ONE UNLUCKY READ. 3 probes seconds apart before the bbcomm restart and 3 after: listeners=0 on all six. POSITIVE CONTROL beside every set: port 5174 (the vite dev server) reads listeners=1 on the same cmdlet, so Get-NetTCPConnection can see a listener on this box. netstat agreed independently (0 lines mentioning 8194, against 46 total LISTENING sockets).",
+        "RUNG 2 -- RESTART bbcomm: ELIMINATED. Preconditions measured first so the act stayed reversible: C:\\blp\\DAPI\\bbcomm.exe exists, pid 52036 was running from that exact path, and the instance count was exactly 1. Stopped 52036, 0 instances after, relaunched from that path, new pid 40748 alive. STILL listeners=0 across 3 further probes. This reproduces the record's own 2026-08-12 result verbatim: 'new pid, still no listener -- eliminated'. The restart is sanctioned as 'recoverable and cheap; it relaunches on demand anyway' (:124-125), and :321-327 measured twice that killing bbcomm does not force a down-state.",
+        "RUNG 3 -- NETWORK: ELIMINATED, with the control the record forbids skipping. Test-NetConnection 69.187.48.83:8194 TcpTestSucceeded True AND the unrelated control 8.8.8.8:53 True. Both arms matter: 'the far end is down' and 'this box has no network' are different faults with different owners, and neither is ours.",
+        "RUNG 4 -- bbcomm's OWN OUTBOUND SOCKETS: the record's 'up but not connecting' signature, exactly. Healthy looks like '...:8197 -> 69.187.48.83:8194 ESTABLISHED'. Measured on pid 52036: 6 sockets, ALL loopback -- two Bound on 0.0.0.0 and four ESTABLISHED 127.0.0.1 pairs. No outbound session to Bloomberg at all, with the path proven open by rung 3.",
+        "THE FINDING THE PROCESS CENSUS COULD NOT PRODUCE, and the record predicted that too. A visible top-level window titled 'BLOOMBERG: Login' EXISTS, owned by pid 19952 -- which is NOT any terminal pid (wintrv 41960, blpsmarthost 34688, blpwtk2_subprocess 18360/24208/43320 own NO visible titled window). Found by EnumWindows + GetWindowText, read-only, no focus and no keystrokes, over a printed denominator of 11 visible titled windows. This is precisely why :193-198 says the login window belongs to a separate SmartClient pid and that going via MainWindowHandle 'fails and looks like no window exists' -- my earlier Get-Process read showed an EMPTY MainWindowTitle on wintrv and would have supported the wrong conclusion.",
+        "WHY THE TWO SPENT SIGN-INS DO NOT CONTRADICT THIS, stated as a candidate and not a conclusion: 2.0.0_SA_COO~X reports two supervised sign-ins with VERIFIED FILLS that left no listener. The record names two ways a fill can verify and still fail -- :204-207, a TAB from Login Name lands in the language selector rather than Password, whose measured consequence was the password typed into the unmasked Login Name field and a burned attempt; and :319-320, that the verifier's dots/user reading is NOT evidence the fill landed. Which of these applied here is UNMEASURED by me and is COO~X's to state from its own screenshots.",
+        "TERMINAL AND bbcomm ARE BOTH UP, so this is not a dead-process fault: wintrv pid 41960 with 174s CPU plus blpsmarthost and three blpwtk2_subprocess, and bbcomm restarted by its updater at 22:50:25Z -- the same 22:50Z the issuer named. The record's P0 is explicit that the process readings are NON-DISCRIMINATING in both directions (:26-40), which is why the listener and the socket table, not the process list, carry this row."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BLOOMBERG_TERMINAL_SIGNIN_RECOVERY.md:119-137 requires the four cheap reversible remedies to be worked and RECORDED before the sign-in becomes the candidate remedy, and states that once they are eliminated the seat 'cannot complete one alone -- surface it with the eliminations attached and hold'. READ_HERE.md section 2 budgets `submit` at 2 attempts because Bloomberg locks the account after repeated failures.",
+    "world_is": "All four remedies are eliminated on this instance and recorded above, so the record's terminal branch is reached: hold and surface. TWO THINGS THE RECORD DOES NOT COVER AND THIS ROW ADDS. (1) The sign-in remedy has ALREADY been exercised twice on this instance and did not restore the listener, so it is not an untried candidate the way it was on 2026-08-12 -- the ladder terminates with its last rung already spent. (2) BOTH submit attempts are gone, so no seat and no scripted path may try again without risking the account lockout the budget exists to prevent. The remaining act is a HUMAN sign-in in the login window that is visible on screen right now at pid 19952. HELD BEHIND IT: the corrected FWD-12 re-pull and derive, and the re-mint of the 4 + AMD -- which is the goal's backfill clause, not a side item.",
+    "notes": "Filed after running the ladder myself rather than relaying the issuer's block. I had already carded the block to Andrew BEFORE reading this record, on a process census plus a single 8194 probe; that card was PREMATURE by the record's own rule, which requires the four eliminations attached, and it named no login window because the process list cannot see one. The keepable lesson is narrow and mechanical: an EXERCISED RECOVERY RECORD IS PART OF THE DIAGNOSIS, NOT BACKGROUND READING -- READ_HERE.md pointed at this file in one line and I escalated past it. Reading it first would have produced the same card an hour earlier with four eliminations and a pid, instead of a symptom."
   }
 ]
 ```
