@@ -14567,6 +14567,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "At the next vintage the same code serves 0 of 89 OK. The export prints every figure the new blocks carry, while the page's Model tab shows a narrower window, so the fiscal-year class grew from 12 names to 88. Round 42's rq-1 targets the page as captured at this vintage.",
     "disarm_owner": "2.0.0_SA_COO~Z -- INERT; round 42's rq-1 is cut against this vintage (decomposition s.50b.4).",
     "notes": "Found by the round-42 base run. The served FWD-30 grade moves with AMGT_CORPUS's data, so a population grade names its capture time."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S278",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-25T14:55:00Z",
+    "one_line": "overlay.chatter and overlay.price are BARE NULLS on 89 of 89 served overlays, while description, feed and posture on the same payload each carry a status and reason on 89 of 89 -- a null that says nothing about why (defect named by 1.0.0_SA_CTO~Z, msg 25884, @74ed138afa).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Round 42's served capture of the 89 snapshot names (C:/tmp/amgt-r42-cache2, 2026-09-25 04:46Z to ~05:1xZ, CodeSha256 pmH20bb+L1Kcejf4MKS4tVt+tCIPgeHwSZAsTe+nXZo=): overlay.chatter None on 89 of 89; overlay.price None on 89 of 89; overlay.description, .feed and .posture a dict carrying status or reason on 89 of 89.",
+        "1.0.0_SA_CTO~Z (msg 25884) also measured trending/chatter serving 2 rows, both scoring 0, with state COMPLETE and empty_reason null; not re-measured here."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every block on the overlay payload states what it carries or why it is absent (the payload's own pattern on description, feed and posture).",
+    "world_is": "Two blocks, chatter and price, serve a bare null on every name, so the page cannot tell a producer that never ran from one that ran and found nothing.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- INERT; carried to round 43 beside the CTO's four-input concentration.",
+    "notes": "Filed on the CTO's word that this defect wants a row; the population count is this seat's, the chatter-ranking half is the CTO's."
   }
 ]
 ```
