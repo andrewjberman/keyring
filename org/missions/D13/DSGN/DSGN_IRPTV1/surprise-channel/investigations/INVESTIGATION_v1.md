@@ -790,6 +790,27 @@
     "spec_asserts": "No task-order criterion named a whole-suite run; IVE17-AC2's own invocation only asks for iv-e-17.regenerated.test.ts and `bun run typecheck` (both green). The whole-suite run was this worker's own no-regression check.",
     "world_is": "A large pre-existing failure population (86 of 818 tests) already exists in this worktree outside this cell's write surface, unrelated to AnalysisUploadRequest/PerformanceReport/HoldingsSnapshot/DirectoryPage or the gen-wire generator.",
     "notes": "Not blocking any IVE17 criterion (none of the three mechanical criteria's own invocations touch these files). Filed per the surprise-channel rule ('found something odd off-task, append one row and keep working') rather than investigated further, since fixing it is out of this cell's scope and paths."
+  },
+  {
+    "id": "DSGN_IRPTV1-S13",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-25T01:40:00Z",
+    "one_line": "Round-3 drain dispositions for five worker rows: W7-S1 disarmed at portal DEV 89a6d4f4; W7-S2, W9-S1 and W10-S1 disarmed by the drain-hookups commit 8cd2dab2; W9-S4's failures are the legacy baseline S7 already carries.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Each ARMED worker row names 2.0.0_SA_COO~D as disarm_owner (W7-S1, W7-S2, W9-S1, W10-S1, W9-S4); /dispatch Step 5: the issuer adds every hookup at the merge, in one commit.",
+    "world_is": "W7-S1: iv-e-8.selection-path arm 2 re-scoped to the SearchSelect wiring, 1 pass at 00806e0c and FAIL on a reverted mutant (89a6d4f4). W7-S2 + W9-S1: header/HeaderSelectionContext.ts, provided by index.tsx around TabShell, carries the accepted Narrowing, row, select, the accounts' entries and a prospect callback; AccountFilter, AccountsTable, GenerateComposer and ProspectComposer read it; HoldingsTab keeps its ruled two lines (iv-e-10.ruled-touch PASS). W10-S1: AnalysisTab's disabled per-tab Export removed; IVE16-AC1 PASS on DEV 8cd2dab2 (TO-IV-e-16 flipped complete, instance VALID rc=0). W9-S4: the IR suite on DEV reads 85 fail at 8cd2dab2 before the fe-s-11 colour fix in the same commit, every failing file a pre-round legacy file except fe-s-11 (fixed) -- the set S7 tracks.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal DEV 89a6d4f4 and 8cd2dab2 (local; the CTO lands origin DEV)",
+        "C:/tmp/failH.txt vs C:/tmp/failAB.txt (per-file failure census, 85 before / 85 after with iv-e-16 out and fe-s-11 in)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "S10's N1 (the Generate panel's client) is addressed by the same hookup; IV-e-18's census verifies it."
   }
 ]
 ```
