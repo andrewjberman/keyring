@@ -113,3 +113,11 @@ after the drain; the proof is one real read of z09305589 on PROD after batch B.
 | cell | what it builds | serves | writes | reads (never writes) | risk |
 |---|---|---|---|---|---|
 | `IV-e-28` | DIRECT-ACT: an opt-in `other` class on the Advisor Intelligence mix (the `includesCash` pattern), ON for Cottonwood only, coloured PALETTE.purple600, labelled "Other"; 49financial and Inflection unchanged | FWD-13 (reader: Advisor Intelligence) | `src/pages/AdvisorIntelligence/_shared/lib/composition.ts`, `_shared/types/TenantLayoutConfig.ts`, `_shared/hooks/useTenantLayout.ts`, `_shared/AdvisorBookView.tsx`, `_shared/components/PartnerAnalytics.tsx`, `_partners/cottonwood/layout.ts`, `__tests__/cot-other/` | `src/lib/chartColors.ts` | LOCAL |
+
+**Addendum 3 (issuer, 2026-09-25 ~22:0xZ):** one DIRECT-ACT cell routed by 1.0.0_SA_CTO (101039) under
+`SIGNOFF_COT_CASH_S138_20260925.md` @d257eb67aa (render first: cash must show on PROD before M's C_06 cash deploy), plus row
+W18-S1 (the client-drill legend in ConsolidatedOverviewPanel hardcodes its classes). Same PROD release as IV-e-28.
+
+| cell | what it builds | serves | writes | reads (never writes) | risk |
+|---|---|---|---|---|---|
+| `IV-e-29` | DIRECT-ACT: cash ON for Cottonwood in ASSET_CLASS.cash green beside `other`; the client-drill legend lists every served class incl. Other and Cash; 49financial and Inflection unchanged | FWD-13 (reader: Advisor Intelligence) | `src/pages/AdvisorIntelligence/_partners/cottonwood/layout.ts`, `_shared/panels/ConsolidatedOverviewPanel.tsx`, `_shared/lib/composition.ts`, `__tests__/cot-other/` | `src/lib/chartColors.ts` | LOCAL |
