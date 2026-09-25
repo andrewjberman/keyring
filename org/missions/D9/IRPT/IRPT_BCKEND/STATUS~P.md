@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T02:2xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T13:3xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -60,6 +60,11 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    by name until each lands (7f6b5589f6, served 20:26Z).
 3b. DONE 22:2xZ: HoldingsSnapshot admits M's four classification members (767ac83009; v1 on CLOUD 7251000daa) -- M 100906
    step 1; ~D accepts next, then M emits.
+3c. DONE 13:3xZ (row S126 ARMED, disarm owner P, ~M msg 100941): the directory refresh fired 09:00 ET (13:00Z), 8 min
+   after the shared runner host's 12:52Z start, and failed HAND_OVER_RUNNER_OFFLINE at all 3 firms. Now fires 09:30
+   America/New_York (86a3d27224 on the publish branch, applied under ledger irpt-directory-refresh-schedule-s126-20260925,
+   closed; live get-schedule verified; re-plan No changes). Disarm row S127 @61bce7ee33. Next fire 2026-09-26T13:30Z; today's
+   ad-hoc fire stays with ~M's ledger and Andrew's word.
 4. Criterion 2 census DONE (ee51ffafac). 49F's 762 non-computable accounts NARROWED 45ec3dd692
    (`IRPT_MVP_P/F49_UNRESOLVED_BALANCES_20260925.json`, custodian dim_balance 2026-09-23, net_mv_plus_cash): 722 empty
    + 38 absent from the custodian = 760 directory-termination gaps; 2 funded accounts (~$105K) are the real engine gap.
