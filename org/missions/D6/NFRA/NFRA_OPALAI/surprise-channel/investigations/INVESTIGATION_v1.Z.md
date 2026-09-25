@@ -191,6 +191,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-t-6 s.1: census every commit between the manifest's deployed_commit and HEAD touching infra/aws/ec2/opal-gateway; ship only OA-t-5's changes plus this order's own audit.py hookup.",
     "world_is": "Five commits from NFRA_MCPINDEX and MDPF_TAXSMA and NFRA_OPLGTW's OG-r-2/OG-r-1-amend sit unreleased in the same source tree safe-ec2-deploy.sh tarballs whole; no NEVER-2 ledger was opened and no artifact was built, uploaded or SSM-pulled by this worker -- the host still serves 1764e54a16 and EC2_MANIFEST.json is unedited by this order.",
     "notes": "Owner of the decision named by the cell text itself: whoever can rule that the 5 commits are cleared to ship alongside OA-t-5 (or that this deploy must exclude them, e.g. by cherry-picking OA-t-5 + the audit hookup onto a clean branch off 1764e54a16 rather than deploying this worktree's HEAD). AC1-AC3 are not run: no ledger entry exists to read, no deploy commit exists to read, no host was pulled. Reported as BLOCKING, not FAIL -- the criteria are un-met-as-written, not failed."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S9",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T00:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_OPALAI-Z-W2-S3 for THIS order (owner this seat): OA-t-6 took no deploy act -- no ledger entry, no artifact, no SSM pull, no manifest edit -- so nothing shipped; the standing hazard (the next gateway deploy by ANY seat ships 5 unreleased commits of three other projects) is carried to 1.0.0_SA_CTO~O as a release decision.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EC2_MANIFEST.json opal-gateway.deployed_commit still 1764e54a16 at the drain; git log 1764e54a16..HEAD -- infra/aws/ec2/opal-gateway, read by this seat: cc22fdfb9d (OA-t-5) plus 650c9a99cb (NFRA_MCPINDEX MX-c-2), 6abf60e5d5 + 8dce9aeb0b + e8f800e6a9 (MDPF_TAXSMA TX-g-1), 9e4074c33a + 6c37cc6b00 (NFRA_OPLGTW OG-r-2).",
+        "2.0.0_SA_COO~O to 1.0.0_SA_CTO~O, 2026-09-25T00:22Z, DECISION message naming the five commits, the recommendation (one coordinated release the CTO rules, each owner's gates cited) and the alternative (OA-t-5 cherry-picked off 1764e54a16)."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-W2-S3 is ARMED with this seat as disarm_owner.",
+    "world_is": "OA-t-6 stays open (pending) until the CTO rules the release scope; the worker's refusal was the order's own census clause working as written.",
+    "notes": "NFRA_MCPORTAL's gateway merges and NFRA_MCPINDEX's MX-c-4 drain wait on the same ruling. No gate is built here."
   }
 ]
 ```
