@@ -9433,3 +9433,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It omits cash. Measure the affected clients and dollars, then add cash under its own never-widen half, since the served mix changes."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S139",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T21:25:00Z",
+  "one_line": "IRPT_BCKEND-S138 measured: C_06 drops $19,230,791 of `cash` from the published COT mix across 178 client relationships (310 holdings, 3.5% of $549.96M); two clients are 100% cash, so their published mix is all zeros.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (the fix is C_06 admitting `cash` and the AI Cottonwood views rendering it, under its own never-widen half)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C_06.classify_holding (the deployed code, CLOUD 68a732b792) over COT fact_holdings date=2026-09-22, deduplicated on (AccountID, AssetID, Relationship ID): equity 10,830 ($350.97M), fixed_income 7,373 ($130.40M), alternatives 1,044 ($49.36M), cash 310 ($19.23M).",
+      "cash held in 178 relationships; the largest cash shares are z09326138 1.00, z09308511 1.00, z09308463 0.37. MIX_ASSET_CLASSES (C_06:169) has no cash, so mix[cash] is never published."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND-S138: 'Measure the affected clients and dollars'.",
+  "world_is": "178 clients, $19.23M; two are all-cash clients whose mix is empty. The next step is a fix packet (C_06 admits cash, plus the AI Cottonwood views render cash), the same shape as the `other` packet."
+}
+```
