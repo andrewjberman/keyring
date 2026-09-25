@@ -1073,6 +1073,51 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The 16 cannot ride the existing single historical request: the request returns nothing at all, so a derive over this raw would erase the 31 names' served history as Z-S26 did. NO derive was run on it; the served state is unchanged (31 restored, 58 honest-empty). FWD-12 is NOT realized this round.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Remedy for the round-3 analysis, two limbs on the Bloomberg lane's files: (1) model_block_pull splits HIST_FIELDS into requests of at most 25 fields and merges rows by date; (2) blp_client.historical_data surfaces a responseError instead of returning {}. Then ONE pull + derive under the signed pair, verified by FY rows > 0 per key. The CTO's delete-free rollback holds throughout."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S30",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T02:13:11Z",
+    "one_line": "The production sequence after the re-mint stops at step 1: extract --write raises BronzeImmutableError on research-report-extract/security_key=CPA_US_Equity/ff0e11955cb266f4/extract.json. Copa's folder holds the SAME PDF under two names ('Copa Holdings - 2025 Investor Day Presentation.pdf' and '... (1).pdf'); both land under one report_id (the content hash), and the extract body carries 'bronze_key' (the s3 uri, filename included; extract.py:552), so the two bodies differ under one write-once name (extract.py:691) and the second put is refused -- aborting extraction for every name after it and skipping steps 2-10. The body is not a function of its key: the class of Z-S17.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/evidence/production_sequence_after_remint5_20260925T015837Z.log: 'BronzeImmutableError: bronze_put: .../CPA_US_Equity/ff0e11955cb266f4/extract.json already holds a different sha256'; '=== STEP 1 extract --write rc=1 121.261s'; steps 2-10 SKIPPED.",
+        "Bronze research-report/security_key=CPA_US_Equity/ff0e11955cb266f4/ carries both filenames (landed 02:00:14Z and 02:00:15Z by the ingest); the extract under that id landed 02:08:05Z and the second write raised.",
+        "extract.py:552 puts bronze_uri in the body; :691 names the object '<report_id>/extract.json'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v3.0 s.5 duty 4: the production sequence runs through the runner after the induction, and every inducted name's reports are extracted, typed, continued and composed.",
+    "world_is": "Identity and ingest are complete (94 of 94 resolved, 0 unresolved files), but no extraction beyond Copa's duplicate ran, so the 41 newly inducted names carry no extract, continuation or dossier from this round. The runner stopped correctly on the refusal and nothing partial was served.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Remedy for the round-3 analysis: the extract body must be a function of its key (drop or normalise bronze_key, or key the object by the source object rather than the content hash), and a content-duplicate pair must resolve to ONE extract; then the sequence runs whole. No library write is in bound; the duplicate file itself is the team's."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S31",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T02:13:11Z",
+    "one_line": "DISARM by their owner of AMGT_CORPUS-Z-S23 (4 folders skipped on keyless rows) and AMGT_CORPUS-Z-S24 (16 ENRICH folders lost their form; ingest read 73): the re-mint @c79872b0ff registered GOOGL, LLY, PWR, UNH and AMD with 5 calls into crosswalk/v1/2026-09-25.json (VersionId 9af5o6BzvZOV.ERosdvtDt7az4CW9nzO): 94 of 94 live research folders carry a MEASURED record AND their own harvester form, twins 0, multi-claimed 0 of 564 forms, 234 of 234 prior keys; the re-ingest then read resolved_folders 94 with 0 unresolved files. Both rows are legacy-shaped (no disarm clock); this row is their carrier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Builder fixes by 2.0.0_SA_COO~Z: e772a89bad (keyless rows no longer block), 74e6a76e5c (retired record's forms carried), b58d5c1d53 (ENRICH with nothing to retire adds the form).",
+        "Pair: COO ae79d37b0c + A1 9e2d8ab2c2, CTO 35e4cb93ef + A1 2a336885fb; before-state of the 09-25 key re-measured ABSENT at 01:48:54Z.",
+        "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/evidence/reingest_after_remint5_20260925T015837Z.log: 'resolved_folders 94 files_in_resolved 354 stored 354 (put_performed 83 existed 271) read_failed 0' and 'unresolved_files 0 in 0 folders'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S23 and Z-S24 disarm conditions as their notes state them: the 4 registered, the 16 forms restored, one re-mint under a fresh pair, and the re-ingest reading 93 (now 94 with AMD).",
+    "world_is": "All conditions met on the served object and the ingest. FWD-19's identity and ingest halves are REALIZED at 94 of 94; its extraction half is blocked separately (Z-S30).",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's); the next L9 may adjudicate Z-S23 and Z-S24 on it."
   }
 ]
 ```
