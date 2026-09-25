@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T02:1xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T02:2xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -109,7 +109,7 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
 |---|---|---|---|
 | The COT browser run | Andrew | a NEW per-use word (plan 99052771.. expired unspent) | NOT ASKED |
 | A per-use word for 49F and for INF | Andrew | card 2 shape, one each | NOT ASKED (build first) |
-| Portal renders dates.actual_* | 2.0.0_SA_COO~D | PerformanceReport v1 dates block | UNREAD |
+| Portal renders dates.actual_* (criterion 3, COT window disclosed) | 2.0.0_SA_COO~D | PerformanceReport v1 dates block | MET IN CODE (read 02:2xZ, portal@13b5356f): Summary.tsx:28-50 shows the answered window; MethodsAndSources.tsx:112-131 shows requested vs answered and, when they differ by trading days, the note that history outside the answered window is not represented. Proof on real data = the COT signed-in run. |
 
 ## Parked
 
