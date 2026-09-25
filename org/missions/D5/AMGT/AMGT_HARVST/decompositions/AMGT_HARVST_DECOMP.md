@@ -854,3 +854,41 @@ publisher spans -- NOT a demonstrated refusal"* -- and the `2b` acceptance built
 consumer reads *0 of 5* or *2 of 5* directly and never has to interpret the word. The ambiguity the finding names
 is real in the STRING and absent from the ROW. A future cell proposing to rename a served enum value should first
 count the consumers that read the string rather than the pair -- and on today's evidence that set may be empty.
+
+### 17g. `HVST-s-1` RAN AND THE CELL FAILED AT THE CUT, NOT AT THE WORLD -- the defect is the issuer's
+
+**No vendor call was made.** `0.9.0_WK_AMGT_HARVST~19` executed the order exactly as written, recorded the
+failure without retrying, and filed row `AMGT_HARVST-Z-W19-S1`. Every criterion produced its output with its
+denominator; AC5 reads `outside_allowed []` with both delete methods raising on the positive control. **The
+worker's conduct is not at issue. The ORDER is.**
+
+**TWO DEFECTS, BOTH MINE, AND THE SECOND IS WORSE THAN THE FIRST.**
+
+1. **The literal AC1 invocation crashes before any vendor call.** `__main__.py`'s `--security-json` handling
+   wraps whatever the file parses to in a single-element list, so a multi-security ARRAY file breaks
+   `Worker.run()` at `worker.py:330` with `TypeError: list indices must be integers or slices, not str`. I
+   pointed the order at the six-name `securities.json` without exercising the flag against that file shape.
+
+2. ⛔ **THE CELL COULD NOT HAVE PASSED EVEN IF sa HAD ANSWERED PERFECTLY.** `run --harvest-grammar` persists
+   listing pages to a LOCAL sqlite/file outbox (`Worker._write_harvest_listings`, `worker.py:91-108`). **The S3
+   bronze/silver listing writes happen only inside `HarvestUploader._run_listings`
+   (`uploads.py:253-283`), reached only through the SEPARATE `upload-harvest` command.** My criteria measured S3
+   surfaces (AC0/AC2 count `listing_hit` rows and bronze `news_listing` objects) against a command that does not
+   write them. **AC2's delta was structurally pinned at +0 before the worker started.**
+
+⛔ **THAT IS EXACTLY THE DEFECT CLASS THE ROUND-5 ANALYSIS RULED ON FOUR HOURS EARLIER** -- *"a criterion that
+cannot pass the day it is written is a defect AT THE CUT, not a stretch goal"* -- and I wrote one into the very
+round that ruling shaped, while quoting the ruling on the order's own face. **Knowing the rule and citing it in
+the same document did not prevent committing it.**
+
+⭐ **THE CHEAP CONTROL I SKIPPED, and it is the one this project keeps paying for:** the order names TWO planes
+-- a command and an S3 surface -- and I never asked WHICH PLANE THE COMMAND WRITES. One read of
+`uploads.py:253-283` before the cut, or one dry invocation of the flag against the actual file, would have
+caught either defect. **COST: one read. NON-APPLICATION: a criterion whose invocation and whose measurement are
+the same object.**
+
+**WHAT THE ROUND ACTUALLY LEARNED, which is not nothing:** the capture and the S3 write are TWO commands, and
+`upload-harvest` is the only path to the listing surfaces. `W10-S6`'s disarm note already said that command is
+never offline-safe; what it did not say, and what this cell establishes, is that it is also **the only way any
+listing row reaches S3 at all.** A corrected cell is `run --publishers sa --harvest-grammar` with a
+SINGLE-security JSON, THEN `upload-harvest`, with AC2 measuring after the second.
