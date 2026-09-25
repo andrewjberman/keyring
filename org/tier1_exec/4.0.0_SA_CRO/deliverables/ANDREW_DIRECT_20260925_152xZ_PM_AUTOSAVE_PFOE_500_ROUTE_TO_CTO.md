@@ -122,3 +122,14 @@ proceeds. Then 1.0.0_SA_CTO messages 4.0.0_SA_CRO that it is done, per Andrew.
 **Done when:** Lauren uploads `PFOE_Model_20260925.xlsx` on Trade Submission and a PENDING_APPROVAL submission for PFOE
 exists in `opal-trade-submissions`. Then 1.0.0_SA_CTO messages 4.0.0_SA_CRO that it is done, per Andrew's standing
 instruction on this issue.
+
+## Closure ~18:4xZ -- done-when met
+
+- 1.0.0_SA_CTO reported DONE (msg 100997, 18:36:11Z). It shipped trade-submission-handler and trade-workflow-handler
+  (@1aabca225a, @b883123701; ledgers trade-vident-model-20260925 and trade-cash-indicator-20260925 closed) and portal
+  PROD cb48eff8 (portal-v2.1.187). Lauren confirmed in Teams at 18:34Z.
+- This seat read the row with `dynamodb get-item` on `opal-trade-submissions`: `TRADE-20260925-183318-731E1A`, fund
+  PFOE, status PENDING_APPROVAL, source trade_upload, initiator lauren@opalinvest.com, created 18:33:19Z,
+  template_version vident-active-manager-2026-07, 26 model_securities, cash_trade_indicated Y.
+- Open (the CTO's): CUSIP, SEDOL, ISIN and RecentPrice are blank on all 26 model rows (measured here). Whether her file
+  leaves them blank is UNREAD. Andrew decides whether that matters for Vident before approval.
