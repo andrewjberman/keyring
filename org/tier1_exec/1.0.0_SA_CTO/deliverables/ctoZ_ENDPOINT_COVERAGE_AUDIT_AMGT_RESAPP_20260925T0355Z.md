@@ -560,3 +560,111 @@ without a seat in the loop, and it is the right call.
 **The three classes were invisible while the pass reported a running NOT_REALIZED count.** Naming them is
 what lets round 43 cut the cheap class first: **`FWD-6` alone converts a complete, measured, unreachable
 capability into a reachable one.**
+
+---
+
+## `FWD-18` -- **NOT_REALIZED, and it has the best ACCEPT showing in the pass: THREE of four clauses measure TRUE**
+
+Fence `:589-599`. Instrument: a fresh live read of the `thesis` route (client-called at
+`amgt-lead-panel.ts:132`) plus a fresh rich export, both taken at `2026-09-25 ~06:2xZ`.
+
+| clause | measured |
+|---|---|
+| *"in the company's own words and with each sentence linked to the passage in the filing it came from"* | **PASSES** -- each served sentence carries `P0234 -- accession 000162828026004357 -- ITEM 7. MANAGEMENT'S DISCUSSION AND ANALYSIS / paragraph 141` and the paragraph's full text |
+| *"what the company is doing now, its biggest challenges and its biggest bets"* | **TWO of three.** Capex trend (doing now) and the 737-9 door-plug response (challenges). **"biggest bets" is ABSENT** |
+| *"one chart, chosen for that company, of the thing it lives or dies on"* | **PASSES, and it is good** -- see below |
+| *"the Model tab's figures are the plain financial model, built the same way for every company"* | the same mnemonic set across names; **27 of them REFUSED** (see `FWD-5`'s registry finding) |
+
+**THE ONE CHART IS SERVED AND IT IS THE BEST-CHOSEN THING IN THIS PRODUCT.** `thesis_driver_chart`:
+`status SERVED`, `driver_series "Commercial Airplanes (BCA) aircraft deliveries"`, `source "filing"`,
+three points -- **2023: 528, 2024: 348, 2025: 600 aircraft** -- **each carrying its own `passage_id` and a
+character `span` into the filing**, `held_uncited_count 0`. And the driver's own stated reason:
+*"BCA revenue growth and the swing in operating cash flow were both driven primarily by higher
+deliveries, making delivery volume the measurable hinge of the business."* **That is a chart chosen for
+Boeing specifically, of the thing Boeing lives or dies on, with every point traceable to a filing
+passage.** The fence's hardest-to-fake clause is the one that passes cleanest.
+
+WARN: **I NEARLY FILED A FABRICATED-CITATION FINDING AND THE CAUSE WAS MY OWN TRUNCATION.** My first read
+printed each line at 170 characters. The drafted sentence *"Capital expenditures totaled $2.9 billion in
+2025, up from $2.2 billion in 2024 and $1.5 billion in 2023"* sat beside a quote that opened *"Investing
+Activities Net cash provided by investing activities during 2025 was $0.5 billion, compared with cash used
+of $12.0 billion..."* -- different subject, different numbers, and it read as a sentence cited to a
+paragraph that does not support it. **The paragraph is 1,122 characters and its NINTH sentence is
+"Capital expenditures totaled $2.9 billion in 2025, compared with $2.2 billion in 2024 and $1.5 billion in
+2023."** The citation is exact. **The positional-slice trap, for the fourth time this session, and this
+time it would have accused the product of the one defect that would most damage trust in it.** The rule
+that saved it is the one already in the record: go back for the untruncated bytes before converting a
+mismatch into a finding.
+
+### AND THE REASON THERE ARE ONLY TWO SENTENCES IS MEASURED, NAMED, AND PRODUCER-SIDE
+
+**`held_no_span_count: 21`**, with `held_no_span_basis: "READ_GATE_ONLY_OBJECT_FIELD_ABSENT"` and
+`held_uncited_count: 0`, `drafting_status SERVED`, `drafting_read_completed true`.
+
+**So the Thesis has 23 drafted sentences and serves 2.** Twenty-one are withheld by the read gate because
+**the span field is ABSENT ON THE OBJECT** -- the drafting producer did not write character spans for them,
+and the reader correctly refuses to serve a sentence it cannot point at. **The gate is behaving exactly as
+FWD-9 demands, and the cost is 91% of the drafted prose.**
+
+**THIS IS THE SHARPEST SUBSTANCE FINDING OF THE PASS, and it is ONE producer-side fix.** `FWD-18`'s missing
+*"biggest bets"* is almost certainly among the 21; `FWD-9`'s marking limb and `FWD-3`'s defensibility limb
+both ride on the same 21. **A single cell that writes spans on the drafting object moves three outcomes** --
+and unlike the wiring class, it is invisible from the served artifact, because the page shows two
+well-cited sentences and says nothing about the twenty-one it is holding.
+
+**DONE WHEN unmet:** *"EXERCISED -- an analyst has clicked a filing-derived figure through to the passage
+it came from."* Not recorded.
+
+---
+
+## `FWD-20` -- **NOT_REALIZED. The house forecast DOES NOT EXIST, was RULED not to exist, and says so correctly**
+
+Fence `:618-637`. This is the largest single unbuilt thing in the endpoint, and the record is unambiguous.
+
+**THE MODULE'S OWN DOCSTRING IS THE GRADE** (`lib/research/scores/divergence.py:12-19`, ruled Andrew-direct
+2026-09-15 ~18:3xZ @`287d2c2619`):
+
+> *"THE HOUSE FORECAST DOES NOT EXIST YET (FWD-20, CTO~W call 4, adopted verbatim): 'D is ABSENT with reason
+> until FWD-20 serves' ... `score_divergence` in this module therefore ALWAYS returns ABSENT for D today, by
+> construction (no `model_fcf` producer to call) -- and that is the CORRECT, RULED behaviour, not a failure
+> this cell owes a fix for."*
+
+`score_divergence(model_fcf=None)` returns, and I read it live off the served `thesis` route
+(`scores_status SERVED`):
+
+> `{"D": null, "U": null, "Delta": null, "state": "ABSENT_SOURCE", "absent_reason": "FWD-20's house FCF`
+> `forecast has not been built yet (no model_fcf producer exists); D is ruled ABSENT with reason until it`
+> `serves, per CTO~W adjudication call 4", "dispersion": null}`
+
+**So the fence's DISCLOSURE clause -- *"states ABSENT, with the reason, for every name where the house
+forecast does not yet serve"* -- PASSES, on a served, client-called route.** And the degeneracy guard
+(*"the spread of Divergence across the covered universe is checked for the sign that the drivers were
+seeded from consensus after all"*) is satisfied vacuously: nothing is shown, so nothing is shown unchecked.
+**The fence's SUBSTANTIVE clause -- *"a forward free-cash-flow forecast is produced for a covered name from
+the company's own filings and its history, seeded independently of consensus"* -- is UNBUILT.**
+
+**AND THE STREET SIDE OF THE COMPARISON IS ALSO REFUSED, which nothing had joined up.** The rich export's
+Model Notes refuses **every `BEST_*` consensus figure** -- `BEST_EBITDA`, `BEST_DPS`, `BEST_DIV_YLD`,
+`BEST_EBIT`, `BEST_NET_INCOME`, `BEST_CAPEX`, `BEST_ESTIMATE_FCF`, `BEST_BPS` -- each
+*"unit/sign convention is 'NOT-YET-BUILT', not MEASURED"*. **`BEST_ESTIMATE_FCF` is the consensus NTM FCF
+that is `D`'s own subtrahend.** So `D = (model NTM FCF - consensus NTM FCF) / dispersion` is missing BOTH
+operands: the minuend has no producer and the subtrahend is refused for want of a unit convention.
+**The house-forecast cell is not the only prerequisite, and that was not visible from either side alone.**
+
+### AND ONE STALENESS FINDING THE GRADE TURNED UP
+
+**The served scores object is `as_of 2026-09-17`. The model block it sits beside is `2026-09-25`.**
+Eight days, across the day `AMGT_CORPUS` round 4 roughly doubled the block (179 -> 391 figures). So
+`robustness` (*"n=1 of 6 measured ... below the n>=5 eligibility floor"*) and `peers_v` (`K=12`, every
+measure *"ABSENT for the subject"*) were both computed against a block that no longer exists.
+**Their absences may be artefacts of the vintage rather than of the data**, and neither carries a field
+that would let a consumer tell. Routed as a round-43 input: **re-run the scores producer before anyone
+reads an absence off it.**
+
+**14 of 20 graded: 1 REALIZED, 12 NOT_REALIZED, 1 NOT GRADEABLE.** 6 remain
+(`FWD-3`, `FWD-4`, `FWD-11`, `FWD-13`, `FWD-15`, `FWD-16`).
+
+**THE THREE-CLASS SPLIT UPDATES:** WIRING `FWD-6`, `FWD-7`, `FWD-12`; **SUBSTANCE** `FWD-1`, `FWD-5`,
+`FWD-8`, `FWD-17`, `FWD-18`, `FWD-19`, `FWD-20`, `FWD-30`; RESERVED `FWD-2`, `FWD-14`. **And the substance
+class now has a cheapest member of its own: the 21 held sentences.** One producer-side span write moves
+`FWD-18`, `FWD-9` and `FWD-3` together, which no other substance fix does.
