@@ -144,3 +144,188 @@ reached.
 
 **1 of 20 graded. 19 remain**, and this one took a wrong-instrument correction and an overturned zero to
 get right -- which is the argument for grading them one at a time rather than in a batch.
+
+---
+
+# RE-GRADE PASS, ENTRIES 2-3 -- and a rule that governs the remaining 17
+
+## `FWD-10` -- **REALIZED**
+
+Fence `:499-506`. DONE WHEN *"EXERCISED -- a check has actually refused something and the refusal was
+seen on the page"*; ACCEPT *"a failure shows as a MARKED VALUE -- never as a blank, a zero, or a row that
+quietly disappeared."*
+
+**Measured on the served export:** `REFUSED` x1, and it is a marked value carrying its own cause --
+`IS_DIV_PER_SHR: REFUSED -- unit/sign convention is 'SIGN-UNRESOLVED', not MEASURED`. `ABSENT` x18
+alongside it. **Not a blank, not a zero, not a vanished row.** Round 40's `ro-1` AC4 independently
+established the same string is the PAGE's own refusal, so it is on both surfaces.
+
+## THE RULE THIS PRODUCED -- READ THE DONE WHEN'S QUANTIFIER BEFORE DEMANDING A POPULATION
+
+Round 41 made a one-name pass look like a cardinal sin. **It is not, and the distinction is in the
+fence's own grammar:**
+
+- **`FWD-30` is a UNIVERSAL.** *"a field-by-field comparison against the page shows the SAME figures"* is
+  a claim about **the name a PM exports**, so it must hold for any of them. One name proved nothing, and
+  84 of 89 duly failed.
+- **`FWD-10` is an EXISTENTIAL.** *"a check has ACTUALLY REFUSED SOMETHING and the refusal was seen"* is
+  satisfied by ONE exercised refusal -- that is what EXERCISED means, and demanding 89 of them would be
+  inventing a bar the fence does not set.
+
+**So the population question is not owed by every outcome; it is owed by the ones whose DONE WHEN
+quantifies over names.** Applying round 41's lesson indiscriminately would have been over-correction --
+the mirror of the error it corrected. **For each of the remaining outcomes the pass asks first: is this
+fence an EXISTENCE claim or a UNIVERSAL? Only universals carry a population bound.**
+
+## `FWD-9` -- **NOT GRADEABLE on the available evidence**, and the reason is an instrument bound
+
+Fence `:490-497`. Two limbs: **(a)** the marking is in place so an analyst can tell **at a glance** which
+sentences a machine wrote; **(b)** the machine-written ones **sit beside the evidence** behind them.
+
+**Limb (b) is MEASURED and PASSES.** Every drafted sentence in `## Investment Thesis` and `## Risks and
+Considerations` is immediately followed by its source, blockquoted with the passage id, the accession and
+the paragraph -- e.g. a capex sentence followed by `> P0234 -- accession 000162828026004357 -- ITEM 7 ...
+paragraph 141` and the quoted text. The evidence is adjacent, not filed elsewhere.
+
+**Limb (a) CANNOT BE READ FROM THIS INSTRUMENT, and saying so is the point.** A "tell at a glance" marking
+is VISUAL -- rounds 38-39 record PASS badges on the thesis sentences -- and **the export is markdown.**
+`FWD-30`'s verified equality covers **figures, cites and absences**; it says nothing about badges.
+**Extending a three-axis equality to a fourth axis is exactly the wrong-instrument error this pass already
+made once on `FWD-1`**, where round 40's DOM-layout captures were reached for to settle a content claim.
+
+**So `FWD-9` waits on a served PAGE read, not on more argument.** It is the second outcome in three whose
+grade is gated by an instrument rather than by the product -- which is itself a finding about this
+project's evidence base: **the served plane is captured for LAYOUT and for EXPORT, and not for what the
+page SAYS.**
+
+**3 of 20 graded: 1 REALIZED, 1 NOT_REALIZED, 1 NOT GRADEABLE.** 17 remain.
+
+---
+
+# RE-GRADE PASS, ENTRY 4 -- `FWD-17` -- **NOT_REALIZED**
+
+Fence `:575-587`. Its ACCEPT is a FOUR-part conjunction and the grade turns on parts three and four
+being read separately rather than as one "management tab exists" impression.
+
+| ACCEPT component | measured on the served export | verdict |
+|---|---|---|
+| one tab lists the senior executives | 12 officers under `## Management/Board` | **PRESENT** |
+| each with their ROLE and HOW LONG they have held it | role text plus `Tenure (yrs)` 6.37 / 3.70 / 3.54 / 2.54 ... 1.12 | **PRESENT** |
+| each with a PROFILE LINK | `Source` reads `filing` on all 12, and the section's last line reads **`CEO public-profile reading: UNREADABLE_OBJECT`** | **ABSENT, and its source is failing** |
+| states how the team's average tenure compares with the average **across EVERY COMPANY THE PAGE COVERS** | no pool line in this instrument; and `ADJUDICATION_v49` quotes the exec footer as *"the pool 4.09 years over 40 officer(s) of **7 name(s)**"* | **FAILS on the DENOMINATOR** |
+
+**The fourth component is the substantive failure and it is not about rendering.** The fence says *every
+company the page covers*; the pool is **7 names**. Whether the page covers 89 or 94 -- the card still at
+Andrew -- **7 is neither**, so the comparison a PM reads is against a pool two orders smaller than the
+one the outcome names. `3.0.0_SA_CVO~Z` had already flagged this as a **stale disclosed denominator**
+(`ADJUDICATION_v49`: *"two disclosed denominators went stale today by DECISION rather than by drift"*),
+and this grade is the endpoint consequence of that finding rather than a new one.
+
+**INSTRUMENT BOUND, stated:** the pool line may render on the exec TAB and simply not survive into the
+markdown export, so "absent" is bounded to this instrument. **It does not matter to the grade** -- the
+`v49` quote establishes the pool is 7 names wherever it renders, and a denominator of 7 fails the fence
+however well it is displayed. **This is the one component the served-content capture would NOT rescue.**
+
+**Component 4 of the fence -- *"where a person cannot be confirmed ... the page says so"* -- PASSES**, and
+notably: `CEO public-profile reading: UNREADABLE_OBJECT` is the page disclosing its own failed read
+rather than showing a blank. That is `FWD-10`'s virtue appearing in a second outcome, and it is worth
+recording as a thing this product does WELL, in a pass otherwise accumulating gaps.
+
+**DONE WHEN is separately unmet:** *"EXERCISED -- an analyst has used the profile to answer a question
+about a management team."* No analyst read is recorded, and the profile it names is the `UNREADABLE_OBJECT`.
+
+**4 of 20 graded: 1 REALIZED, 2 NOT_REALIZED, 1 NOT GRADEABLE.** 16 remain.
+
+---
+
+# RE-GRADE PASS, ENTRY 5 -- `FWD-19` -- **NOT_REALIZED**, and it lands on the universe card
+
+Fence `:603-617`. The machinery is built, honest and well-cited. **It cannot deliver the outcome, and the
+reason is not a defect in this project.**
+
+**WHAT IS PRESENT, and it is substantial:**
+- **The verdict and its named comparable:** `Verdict: hold (comparable: DE_US_Equity)`.
+- **Reasons, each linked to what it rests on** -- five sentences, every one carrying a `> cites:` line of
+  specific evidence ids across six prefixes (`S:` sections, `F:` figures, `E:` passages, `FIT:` factors,
+  `B:` membership, `C:` rung). **This is the strongest provenance I have seen in the export** and it
+  satisfies the fence's *"gives the reasons with each one linked to what it rests on"* outright.
+- **Not an instruction:** `hold` is a verdict, and nothing in the section directs a trade.
+
+**WHY IT STILL FAILS -- the posture's own first sentence:**
+
+> *"The comparable Deere pack carries **no thesis, management, peer or model evidence at all**, so no
+> side-by-side judgment of its fundamentals is possible from these packs."*
+
+The fence requires the page to *"say whether this company looks like a better or a worse pick than the
+most similar name on the other side."* **The page instead says, correctly and in its own words, that the
+comparison cannot be made.** That is honest behaviour and it is not the outcome.
+
+WARN: **AND THE COMPARABLE IS `DE_US_Equity` -- DEERE -- WHICH `Z-S270` MEASURED AS OUTSIDE THE 89-KEY
+SET.** So the posture selects its symmetric comparable from a universe WIDER than the corpus covers, and
+the selected name has no pack **because nothing in scope ever built one for it.** `FWD-19` is therefore
+**blocked by the universe question, not by the posture engine** -- the same card that bounds `rp-1` and
+that `FWD-17`'s pool-of-7 sits beside. **Three outcomes now turn on one unanswered word.**
+
+**Two components NOT gradeable from this instrument**, and both are the marking problem again: *"marked
+as a machine's view for a person to accept or reject"* (visual), and *"a line in the header"* (the Header
+section was not read for this). **Not asserted either way.**
+
+**DONE WHEN unmet:** *"EXERCISED -- a PM has read a posture and acted on it, or declined it, on the page."*
+
+**A finding recorded in passing, because it is the product behaving well:** the Peers column table
+declares `Present columns (5 of 17 declared)` and states, per column, `P/E 2025 | ey | RECIPROCAL:
+P/E = 1 / ey; trailing grain, NOT a 2025 fiscal-year estimate`. **The page discloses that its own column
+LABEL and its GRAIN differ** -- independently confirming `Z-S273`'s reciprocal finding from the product's
+own mouth, and exactly the "a value must carry its claim" behaviour the estate keeps asking for.
+
+**5 of 20 graded: 1 REALIZED, 3 NOT_REALIZED, 1 NOT GRADEABLE.** 15 remain.
+
+---
+
+# RE-GRADE PASS, ENTRY 6 -- `FWD-8` -- **NOT_REALIZED**, and the fence hands the verdict to a person
+
+Fence `:482-488`. **DONE WHEN *"EXERCISED -- an analyst who distrusted it has stopped"*** -- the test is
+an analyst's restored trust, which no seat can supply. **Unmet, and unmeetable from here.** What I CAN
+measure is the composition, and it bears directly on whether that trust would be restored.
+
+**MEASURED -- the peer set served for `BA_US_Equity`:** 12 members, **every one `Industrials` /
+`United States`**, market caps 100,405 to 266,414 musd. So the set is selected by **SECTOR + COUNTRY +
+SIZE**, not by what the business does.
+
+| genuinely aerospace/defence | everything else |
+|---|---|
+| Lockheed Martin, General Dynamics, Howmet Aerospace -- **3 of 12** | Deere (agricultural machinery), Eaton (electrical), Union Pacific (railroads), **Uber (ride-hailing)**, Trane (HVAC), Vertiv (data-centre infrastructure), Quanta (utility construction), GE Vernova (energy), Parker-Hannifin (motion control) |
+
+**`Uber Technologies` as a Boeing comparable is the tell.** It is GICS-Industrials by classification and
+shares no business with Boeing. The fence asks for a list *"genuinely about the company being shown"*;
+a sector-and-size screen is a defensible METHOD and it does not clear that bar on this evidence.
+
+**BUT COMPONENT 2 IS SATISFIED, and the distinction matters.** The fence's named failure mode is
+*"showing ANOTHER COMPANY'S list"* -- `F6`, *"48 of 54 measured wrong today"*, which is what this outcome
+was written for. **That is not happening here:** these are BA's own screen results, not another name's
+peers. **The defect this outcome was created to catch is fixed; a different and weaker one remains.**
+
+**So the grade is NOT_REALIZED on the DONE WHEN, and the ACCEPT is SPLIT** -- cross-contamination gone,
+business comparability thin. **I am not converting my own read of "Uber is not a Boeing peer" into the
+grade**, because the fence deliberately assigns that judgment to an analyst who distrusted the block.
+**Naming the composition is the useful act; declaring the trust restored or withheld is not mine.**
+
+**AND THE ABSENCE DISCLOSURES HERE ARE THE BEST IN THE PRODUCT**, recorded because this pass should not
+only accumulate gaps. Twelve columns are declared ABSENT and **each names its own cause against a printed
+denominator** -- *"no preferred-equity code among the 289 registry factors"*, *"the growth category tops
+out at a THREE-year window"*, *"cash_mv is 'Cash to Market Value', a RATIO; no absolute cash level"*,
+*"P/E 2027: the value category carries trailing (ey) and NTM (ey_ntm) only -- no second-forward-year
+estimate at any grain"*. **That is a value carrying its claim, twelve times over, with the registry as
+its denominator.**
+
+**6 of 20 graded: 1 REALIZED, 4 NOT_REALIZED, 1 NOT GRADEABLE.** 14 remain.
+
+## PATTERN AFTER SIX -- worth stating before the remaining fourteen
+
+**Five of the six failures are NOT rendering defects.** They are: a missing business description and
+segment breakdown (`FWD-1`), a pool of 7 where the fence says every covered company (`FWD-17`), a
+comparable outside the corpus with no pack (`FWD-19`), a population that diverges on 84 of 89
+(`FWD-30`), and a peer set screened by sector rather than business (`FWD-8`). **The product RENDERS what
+it has, discloses what it lacks, and cites what it asserts -- consistently and well.** What it does not
+yet have is the SUBSTANCE behind the frames. That is the same split the endpoint audit found from the
+other direction, and two independent readings agreeing is worth more than either alone.

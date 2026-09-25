@@ -570,6 +570,49 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "w4.AC2.sh's fallback branch `(no repos: field)` fires only when no 'repos:' line is found in activity-check.py's output.",
     "world_is": "Under `set -o pipefail` (sourced from _root.sh), a `-m1` grep that matches early SIGPIPEs an upstream `tr`, making the pipeline's own exit non-zero even though the intended match succeeded -- so the `||` fallback always co-prints alongside a real match on this construction. AC1-AC2 both PASS by output regardless (the real line sorts first and the numeric extraction still lands), so this is cosmetic to this order's grading, not a criterion defect.",
     "notes": "Not fixed here: w4.AC2.sh is a COO deliverable outside this order's <paths> (Read-only). A fix would use `${PIPESTATUS[1]}` (tr's own exit) or drop `-m1` in favour of `grep -oE ... | head -1` outside the pipefail'd stage."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S15",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T04:25Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "OA-t-1's worker bumped the parent's opal_ai gitlink on its branch (56b3208888) under GIT_COMMIT_AUTHOR_OVERRIDE; the bare gitlink path is outside the order's <paths>, and the face names no gitlink move. The branch is held for the cutover window, so nothing has landed, and the issuer sets the gitlink to r1-drain's final commit at cutover.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker report 0.9.0_WK_NFRA_OPALAI~1 (amendment pass): 'Advanced the opal_ai gitlink to 2e48f7b in a separately-scoped commit 56b3208888 (GIT_COMMIT_AUTHOR_OVERRIDE applied and audited, since the bare gitlink path has no matching <paths> entry)'.",
+        "Face NFRA_OPALAI.TO-OA-t-1 section 2.3: 'Never repair a criterion, widen it, or meet it by a route this face does not name'; its <paths> list no bare opal_ai entry.",
+        "Decomposition: the parent gitlink moves only in the cutover window (C1). OA-t-1 stays unmerged until then; its nested commits are in opal_ai r1-drain at 99190d1."
+      ]
+    },
+    "spec_asserts": "A worker writes exactly the <paths> its order names; an escape through the author override is the lane's audited instrument, not a worker's route.",
+    "world_is": "One worker commit sits outside the grant, taken through the audited override. Its effect is inert until the cutover merge, which re-sets the gitlink anyway.",
+    "notes": "For the CVO's read. A face that moves files into a submodule should say whether the worker bumps the gitlink; this one said nothing, and the worker filled the gap."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S16",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T04:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_OPALAI-Z-W3-S2 (owner this seat; on wk-NFRA_OPALAI-3): the AC2 hit was the issuer's checker over-reaching. The face REQUIRES workspace_probe_file to name a workspace file, so the scan now exempts that one key. Fixed at 4c183eef3c on CLOUD and df6be72199 on the branch; the worker re-runs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Face NFRA_OPALAI.TO-OA-t-3 item 5(a): the gate's read of workspace_probe_file must be DENIED, so the key names a workspace path by design. opal_ai r1-drain opal/runtime/provision/runtime.config.example.json:4 names ajb_workspace/CLAUDE.md, as OA-t-2 wrote it.",
+        "Dry-run of the fixed check by this seat: base FAIL; wk-NFRA_OPALAI-3 @faae15254b PASS (runtime files naming workspace/AWS/serial=0); mutant with a workspace path appended to opal/runtime/CLAUDE.md FAIL, reverted."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-W3-S2 is ARMED with this seat as disarm_owner.",
+    "world_is": "No runtime file the agent loads names the workspace. The only hit was the probe key the spec mandates. OA-t-3's built files are unchanged.",
+    "notes": "A checker defect: a scan scoped by directory counted a value the same spec mandates. It is filed for the round-1 checker lessons."
   }
 ]
 ```

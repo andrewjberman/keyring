@@ -1239,6 +1239,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The suite genuinely is fully green after the schema amendment (119 of 119 tests pass, 0 failed) -- the build is correct. The literal regex nonetheless never matches this suite's real passing output, because of a pre-existing subTest-driven summary phrase orthogonal to CRPS-f-1. This instance records AC3 FAIL-by-literal-regex with status_reason naming the true suite state, and <status> cannot flip to complete on this criterion as written.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "No unauthorized edit made: f1_AC3.sh and the order's own <expect> are the issuer's (section 5: the check files are read-only to this worker); this worker has no standing to widen the regex or to declare a mechanical criterion PASS against non-matching evidence. Filed BLOCKING/ARMED because every future re-run of this exact AC3 invocation reads the same non-matching shape as long as any identity-suite test uses unittest subTest -- the fix is either an <expect> amendment tolerating '(, \\d+ subtests? passed)?' (as a sibling TO's AC1 already tolerates a deselected count) or removing subTest usage, both outside this cell's scope."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S33",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T04:53:22Z",
+    "one_line": "DISARM by their owner of AMGT_CORPUS-Z-S26 (the FWD-12 incident: keys passed as identifiers, 31 served empty ~7 min then rolled back, 58 honest-empty) and AMGT_CORPUS-Z-S29 (history {} on a single 39-field request): CRPS-f-2 drained @93440f9df1 (history chunked at 25 fields, client raises a request-level error); the round-4 drain pulled with Bloomberg identifiers, a probe batch first -- history rows 12-20 on 3 of 3 -- then 89 of 89 raw objects non-empty on all three kinds, then the derive under the signed pair: 89 of 89 served blocks non-empty with 8-11 FY rows read through scoped_amgt, the 22 added mnemonics present as figures (20 on 44 keys). The 58 honest-empty blocks are superseded by newer stamps; no delete was reached. Both rows are legacy-shaped; this row is their carrier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Change entry amgt-corpus-fwd12-round4-pull-derive-20260925 CLOSED with content proof on all three legs (@de06482203).",
+        "evidence/fwd12_r4_probe_20260925T042140Z.log; evidence/fwd12_r4_histdata_content_89.txt (present 89 non-empty 89 empty 0); evidence/fwd12_r4_served_blocks_content.txt (served non-empty 89 empty 0; SA fallback fired 0 of 89).",
+        "The field-limit cause Z-S29 INFERRED is now supported by the fix: the chunked 25+14 request returns history where the 39-field request returned {}."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S26 and Z-S29 disarm when a corrected pull and derive land real blocks for the 89 under a newer stamp, verified by FY rows > 0 and the 22 present per key.",
+    "world_is": "Met on the served reader for 89 of 89. FWD-12 realized on this seat's real run; f-2 AC4 (judgment: the added figures beside the team's own workbooks) remains the CVO's at L9.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's); the next L9 may adjudicate Z-S26 and Z-S29 on it."
   }
 ]
 ```
