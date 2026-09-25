@@ -2,10 +2,10 @@
 
 Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 (COO_P.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
-Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
+Drive: /canonical-drive loop on Andrew-direct 17:3xZ (cron 57c0067c, every 10m; replaced goal loop f599225b), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T17:0xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T17:3xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -74,6 +74,12 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    ops 160 (22 skipped), narrative 37 -- all pass; flat-layout cold-start import OK for adapter/status/narrative.
    NARRATIVE installed too: CTO exact row @773be128f1 (cherry-picked 7ac4047de8), 630de21b95 -- all three read
    boundaries now carry the ports; _render_identity + narrative tests 57 passed.
+   B1 PREREQUISITE LANDED 164190e2db (backend): MEASURED a render request to the performance route was refused at
+   principal resolution (InteractiveAccess -> ProspectOwnershipRefused) before any scope check. Now the grant stamps
+   delegator_principal_class and principal_row(grant) EQUALS the delegator's own InteractiveAccess row; performance
+   _request_principal() uses it only under the Enforcer's RENDER_DELEGATE scope and only when the grant names the
+   verified delegator. 28 new/updated tests; regressions performance 188, _authz 160, narrative 37, ops 160 pass.
+   Limit: an operations-user delegator with no advisor id is refused at freeze (named).
    DEPLOY rides B1: package _render_identity/grant.py into the adapter/status/narrative zips, set IRPT_EVIDENCE_BUCKET,
    grant s3:GetObject on firms/*/generations/*/render_grant.json (+ ListBucket on that prefix: missing -> 404 ->
    refusal, not 403 -> raise). The adapter redeploy waits until the INF one-use is spent or expires (00:00Z).
