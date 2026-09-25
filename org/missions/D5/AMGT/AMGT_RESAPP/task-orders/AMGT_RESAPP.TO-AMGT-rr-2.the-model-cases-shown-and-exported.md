@@ -72,7 +72,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 **ISSUER NOTES:** s.7 items 3 and 4 in one cell: the harness is what proves the page and export fix. SERVED: the export change reaches the served body at rr-3; the page change reaches portal DEV only. The issuer's real run on 5174 reads the Model tab at the close. Print tests run as drain hygiene (three mechanical criteria).
 
-<status>pending</status>
+<status>complete</status>
 <round>43</round>
 <slot>~160</slot>
 <fabric>site-z</fabric>
