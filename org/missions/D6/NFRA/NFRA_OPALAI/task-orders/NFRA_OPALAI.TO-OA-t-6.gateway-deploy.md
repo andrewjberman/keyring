@@ -20,7 +20,7 @@ EGRESS CLASS, declared: AWS WRITE on Opal's own plane -- one S3 artifact upload 
 
 The earlier worker on this slot built the audit hookup (`050035f941`, `app/audit.py` `_ARGS_ALLOWLIST` gains
 `opal_asker_query`) and then correctly STOPPED at the census. Between the deployed commit `1764e54a16` and CLOUD HEAD,
-`infra/aws/ec2/opal-gateway` carries five unreleased commits of three other projects (row `NFRA_OPALAI-Z-W2-S3`). The CTO
+`infra/aws/ec2/opal-gateway` carries six unreleased commits of three other projects (the earlier census counted five) (row `NFRA_OPALAI-Z-W2-S3`). The CTO
 ruled (`org/missions/D6/NFRA/NFRA_OPALAI/deliverables/1.0.0_SA_CTO~O/RULING_OA-t-6_NARROW_GATEWAY_RELEASE_20260925.md`
 @`592e319a06`, READ IT FIRST): **the release is `1764e54a16` plus NFRA_OPALAI's two changes and nothing else.** The two
 changes are `cc22fdfb9d` (OA-t-5: `app/asker_scope.py` new, one registration in `app/tools.py`, one `NATIVE_TOOLS` line in
@@ -45,7 +45,7 @@ changes are `cc22fdfb9d` (OA-t-5: `app/asker_scope.py` new, one registration in 
      opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`;
    - **record the release on THIS branch:** `infra/aws/ec2/EC2_MANIFEST.json`'s `services.opal-gateway` gets the
      release commit as `deployed_commit` (plus the script's other fields verbatim from the release worktree's manifest),
-     and a `release_note` stating in words that CLOUD HEAD holds the five foreign commits
+     and a `release_note` stating in words that CLOUD HEAD holds the six foreign commits
      (`650c9a99cb`, `6abf60e5d5`, `8dce9aeb0b`, `e8f800e6a9`, `9e4074c33a`, `6c37cc6b00`) UNRELEASED;
    - close every leg with its proof, and commit the close BEFORE the AC reads.
 
