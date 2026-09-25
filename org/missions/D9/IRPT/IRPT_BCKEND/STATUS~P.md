@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T16:0xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T16:3xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -55,17 +55,15 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    aws_lambda_function.portal_authorizer, build-nodejs-lambda.sh) WAITS on one row: lambdas.tf env block
    IRPT_RENDER_JWT_PUBLIC_KEY_PEM -- A2 LIVE 15:48Z (row @67ce0f3296; ledger irpt-render-v2-a2-20260925 closed: CodeSha256
    sgQWoygZ.., env == render public key, no-token/bogus deny before+after, 4 human verifications after / 0 failures).
-   A3 BLOCKED 16:00Z: bundle built (auth-validator-edge Mfo4c4PG.., artifact uploaded); targeted plan's distribution diff is
-   clean (26 behaviors off v20) but -target pulls in the WAF ACL (3 to change). CTO granted waf-cloudfront.tf @0e1fd07d4c
-   for a no-op reconcile. 16:1xZ measured: the file already declares all three rules (S130 wrong -> correction row S133);
-   the only diff is managed_rule_group_statement.version, live "" vs unset, and the provider refuses version = "" (1-128),
-   so no edit reaches "No changes" (edit reverted). Per the grant's stop condition, sent the CTO the diff 20260925T161039Z,
-   asking to apply A3 with the identical, versionless ACL re-put. Ledger irpt-render-v3-a3-20260925 open, nothing applied. Edge role reads
-   opal/auth/* incl. both private keys = row IRPT_BCKEND-S132 (owner portal-auth IAM). V2 source since its 09-09 deploy (26ffa22b79) is +231/-0; V3 since
-   240fe36222 is +441/-0 incl. the origin-marker/asset-allowlist change (review at A3). Then A3 (name the
-   Terraform file -> row), A2 V2, A3 V3, each ledgered with a negative arm; R2 QUEUED submit shape as proposed (data
-   optional while QUEUED/RUNNING) -> B1 unblocked; the delegator slot needs its own proposal; R3 hop 4 = option (a): mint
-   the cst_ binding only for a PUBLISHED revision whose scope covers the selection.
+   A3 LIVE 16:2xZ (CTO 100972 permitted the identical versionless WAF ACL re-put; ledger irpt-render-v3-a3-20260925
+   CLOSED): auth-validator-edge:21 CodeSha256 Mfo4c4PG.. == built artifact, 26/26 behaviors on :21 (was :20), distribution
+   Deployed; WAF rollback record ..._waf_acl_before.json, after-diff 0 of 6 rules, LockToken unchanged; no-token/bogus 401 x4
+   before and after; human Auth OK 8 on v21, 0 runtime errors. Targeted re-plan: edge + distribution No changes; the only
+   residue is the recurring benign ACL version diff (row S133 corrects S130). Section A (A1 keys, A2 V2, A3 V3) is DONE.
+   Edge role reads opal/auth/* incl. both private keys = row IRPT_BCKEND-S132 (owner portal-auth IAM).
+   NEXT: B0 render ports / production render-bundle loader (the delegator slot needs its own proposal to the CTO) -> B1 serve
+   submit-export in the QUEUED shape (R2 landed 119b0b776e / CLOUD f6fd60f4fd) -> B2 mint + SSM RenderToken -> B3 finalize.
+   R3 hop 4 = option (a): mint the cst_ binding only for a PUBLISHED revision whose scope covers the selection.
 
 1. S1: the COT one-use plan 99052771.. EXPIRED UNSPENT at 2026-09-25T00:00Z (full scan 00:00:18Z: no USE or ACCEPTED
    row for it). A COT run now needs Andrew's new per-use word and a re-arm (var-file pattern `rearm.tfvars.json`).
