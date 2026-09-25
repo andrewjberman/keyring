@@ -91,7 +91,7 @@ Report once:
 **ISSUER NOTES:** E1's capture (the measurement is G-HDR plus MP-a-1's read) and E6's read (R-4). Chain B's root; the
 slot continues with MP-d-1.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
