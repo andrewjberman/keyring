@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T14:1xZ.
+(not live; the FAST line is parked below). As of 2026-09-25T14:5xZ.
 
 ## Pins
 
@@ -42,15 +42,30 @@ branch. No code edit is open.
 ## Next list (in order)
 
 1. Andrew's firm-tab HAR, then /verify on the goal.
-2. Make holdings a SCHEDULED daily producer, not another ad-hoc republish. `irpt-holdings-snapshot` has been DISABLED
-   since 09-11, its bundle lacks 7 of 12 runner files (re-arm test IF-ENABLED-NOW: FAIL), and the classification code
-   was M-branch only; it is on CLOUD since @f606108549. Owner asked of the CTO (msg 20260925T140741Z;
-   `HOLDINGS_SCHEDULED_PRODUCER_ROUTING_REQUEST_20260925.md` @ae4f0659d4).
-3. On the CTO's routing of the widening request (`CLASSIFIER_WIDENING_REQUEST_20260924.md` @d8a88cef4b; 287 rows, 69
-   readers): if the CTO rules it this seat's, fill 49F's 62 CUSIP-only rows (symbol and name from the Schwab security
-   master) in the Holdings producer.
-Done this lease: the investor_reporting suite is green, 267 passed and 0 failed @1848e5caef. Each stale test's premise
-is pinned (unattested currency, the required Eclipse capture, the lib.opal_naming binding); no assertion was loosened.
+2. **The scheduled daily Holdings producer is ~M's** (CTO R4, msg 100947;
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_IRPT_20260925.md` @75156f2b18):
+   - Step 1 (the code on CLOUD): DONE @f606108549.
+   - Step 3 (does the resident runner take a holdings message off irpt-generation): asked of 2.0.0_SA_COO~P, msg
+     20260925T143825Z.
+   - Step 2 (re-mint the bundle) is blocked on a limit, not a person. One `investor_reporting` bundle carrying all 12
+     runner files is 17 members, whose sha stamps plus `source-repo-paths` come to 2,440 bytes of S3 user metadata
+     against the 2,048 cap (local build 14:5xZ, 121,448 bytes, no dirty member). The mint would refuse at upload, and a
+     committed 17-member declaration would break the next member-detector re-mint, including the directory runner's.
+     Not committed; reverted. The package shape (a separate holdings bundle, or a hash manifest inside the tar) follows
+     step 3's host answer.
+   - Step 4 (the enable) goes to the CTO as a never-widen half.
+3. **CTO R5:** the two classifier defects are ~M's under exact-file grants on request. The loader change's sign-off
+   counts the securities flipping from NONE and their readers before it deploys. The 49F CUSIP-only rows: yes, fill
+   symbol and name from the Schwab security master in the Holdings producer.
+
+Done this lease:
+- The investor_reporting suite is green, 267 passed and 0 failed, on the M branch @1848e5caef and on merged CLOUD.
+  Each stale test's premise is pinned (unattested currency, the required Eclipse capture, the lib.opal_naming
+  binding); no assertion was loosened.
+- The deployed `refresh.py` is landed on CLOUD @fecbf0dc43. Before it, CLOUD carried neither S125 fix, so the next
+  build from CLOUD would have rolled the directory back to the 09-17 freeze. The deployed zip's `refresh.py` equals
+  a7e5c59042's by content.
+- `holdings/tests` on CLOUD: 147 passed and 0 failed. ~P's parked "44 fail" belongs to ~P's worktree HEAD, not CLOUD.
 
 ## Parked
 
@@ -59,6 +74,7 @@ is pinned (unattested currency, the required Eclipse capture, the lib.opal_namin
 | Merging CLOUD into a seat branch is REFUSED by the law-lock budget: `.claude/skills/canonical-flow/SKILL.md` is 52,132 bytes and `dispatch/SKILL.md` 33,599, against 25,600 (org/law-edit-audit.log line `2026-09-24T23:04:17Z REFUSED-BUDGET author=2.0.0_SA_COO~M`) | 1.0.0_SA_CTO (the skills' owners) | the two files shrink under budget, or the gate exempts a merge carrying files the author did not change |
 | Public reason for a selected account with no custody row: NOT_READY (transient) vs NOT_FOUND (`_authz/errors.py:58`) | 1.0.0_SA_CTO (contract) | the CTO rules the code |
 | The FULL -> FAST line to the CVO ("FAST from 18:1xZ; pins graded after the fact") | 2.0.0_SA_COO~M | 3.0.0_SA_CVO registers live |
+| `directory/tests` on CLOUD has 6 failures that predate the refresh port (control: unmodified HEAD, the same 6): test_custody_owner.py x4, test_entry.py x2, AttributeError 'NoneType' has no attribute 'headers' | 2.0.0_SA_COO~P (directory-search entry and custody owner) | the next change to directory/entry.py or the custody owner read |
 | IRPT_BCKEND-S124: the bundle mint reads working-tree bytes | owner of .tools/safe_deploy_core.py | next bundle re-mint |
 
 Done: the directory refresh is fixed and EXERCISED. The 09-25 13:30Z fire dispatched at all 3 firms; served directories
