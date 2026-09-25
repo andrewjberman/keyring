@@ -1146,6 +1146,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "notes": "Filed by the CTO as the signer verifying its own signature against the served artifact rather than against the runner's report, which is what NEVER-trust-a-producer asks of a never-widen half after the act. The keepable part is limb (4): a ceiling of 5 met by five OTHER securities would have passed the COUNT and failed the ACT, so the check that matters is the IDENTITIES and not the number. I nearly reported the opposite finding on two consecutive artefact zeros -- an invented prefix, then my own `tail -20` cutting the real prefix out of the listing that would have corrected me."
   },
   {
+    "id": "AMGT_CORPUS-Z-W1-S7",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-25T03:41:40Z",
+    "one_line": "CRPS-f-1's ruled build (folders_in_records ALWAYS, research_universe ALWAYS present in some form) cannot pass AC3 as written: lib/research/identity/crosswalk.schema.json is additionalProperties:false and is NOT in this worker's <paths>, so every build now raises inside write_pool's own schema validation -- 15 of 119 identity-suite tests fail, all on the identical cause.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest lib/research/identity/tests -q (this worktree, HEAD after the CRPS-f-1 edit): '15 failed, 104 passed, 2 subtests passed'.",
+        "Isolated repro: python -m pytest lib/research/identity/tests/test_crosswalk_write_validates.py::ConformingDocumentWritesUnchanged -q -> ValueError: 'REFUSED: crosswalk document fails lib/research/identity/crosswalk.schema.json at $: Additional properties are not allowed (\\'research_universe\\' was unexpected)', raised from crosswalk.py's write_pool -> _validate_document_against_schema (crosswalk.py:1221, :1252).",
+        "The same single cause reproduces identically (byte-identical ValueError message shape) across test_add_security.py, test_add_security_batch.py (5 arms), test_crosswalk_enrich_coverage.py::EnrichedDocumentValidatesAgainstSchema, test_crosswalk_resolves_folder.py, test_crosswalk_universe.py and test_crosswalk_write_validates.py (3 arms) -- 15 arms, 1 root cause.",
+        "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-f-1.crosswalk-denominator-disclosure.md section 3 <paths> lists crosswalk.py, add_security.py, the two test files and this investigation/task-order file only -- crosswalk.schema.json is absent from both the write grant and the explicit READ-ONLY list."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-f-1 s.1: 'denominators ALWAYS gains folders_in_records' and 'the document gains research_universe' (full form or an absent-with-reason form, but the key itself always present) -- on EVERY build_crosswalk call, unconditionally.",
+    "world_is": "crosswalk.schema.json's top-level object and its denominators/coverage_vintage sub-objects are each additionalProperties:false and list neither folders_in_records, research_folders_live, snapshot_stale_against_live nor research_universe. Since build_crosswalk's own write_pool path validates every document against this exact schema before any S3 put, the ruled build makes write_pool (and every test that exercises it) refuse universally, not merely fail one disclosure-specific check. AC1 and AC2 both PASS as written (research_universe/folders_in_records were designed and tested precisely as ruled); AC3 measures 15 failed, 104 passed, 2 subtests passed -- the pre-existing NoEnrichRowsByteIdentical defect this cell's ruled fix targeted is ITSELF now green.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "No unauthorized edit made: crosswalk.schema.json stays untouched by this worker. The remedy is additive only (four new OPTIONAL properties on the existing schema's properties dicts, matching the pattern already used for 'registered'/'enriched'/'resolved_folders'), owned by whichever cell holds that path -- adding it here would need a paths grant this task order does not carry. Filed BLOCKING/ARMED because merging this cell's crosswalk.py/add_security.py changes without that schema update would refuse every future --write-pool run, not just a test."
+  },
+  {
     "id": "AMGT_CORPUS-Z-W2-S7",
     "project": "AMGT_CORPUS",
     "fabric": "site-z",
@@ -1192,6 +1216,31 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "notes": "Resolved conservatively toward the literal, mechanically-checked instruction (step 2's exact invocation) over the prose aside in step 1, since only the former is machine-graded; AC4's substance is unchanged either way -- it stays the CVO's, at L9, on the issuer's real run."
   },
   {
+    "id": "AMGT_CORPUS-Z-W1-S8",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-25T04:34:46Z",
+    "one_line": "After ISSUER AMENDMENT 1 (the crosswalk.schema.json fix) landed, the identity suite runs fully green (119 passed, 0 failed) but AC3's <expect> regex '(?m)^\\d+ passed in ' still does NOT match the real output 'N passed, 2 subtests passed in Ns', because lib/research/identity/tests/test_crosswalk_universe.py uses unittest subTest (pre-existing, unrelated to CRPS-f-1) and pytest's own summary line reads 'N passed, 2 subtests passed in ...' rather than 'N passed in ...'.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest lib/research/identity/tests -q --color=no -p no:cacheprovider (this worktree, HEAD after the schema amendment): '119 passed, 2 subtests passed in 5.44s' -- 0 failures. Re-run twice back to back: '119 passed, 2 subtests passed' both times (only elapsed seconds differ).",
+        "Python re.search(r'(?m)^\\d+ passed in ', '119 passed, 2 subtests passed in 5.44s') -> None (checked directly against the full captured output, not just the tail; the digits are followed by ', 2 subtests passed in ' rather than ' in ').",
+        "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round4/BASE_RUN_EVAL_20260925T025640Z.log already shows the SAME '2 subtests passed' clause at BASE, before this cell touched anything: 'CRPS-f-1 AC3 BASE FAIL | rc 0 | 8s | 1 failed, 109 passed, 2 subtests passed in 6.21s' -- the clause is a pre-existing property of the suite, not introduced by CRPS-f-1.",
+        "AC1's own expect ((?m)^\\d+ passed in ) matches cleanly because test_crosswalk_disclosure.py carries no subTest -- this is specific to the AC3 whole-suite run naming the identical literal pattern without allowing for the subtests clause, where a sibling TO's own AC1-shaped pattern (AMGT_CORPUS.TO-CRPS-e-5) DOES tolerate an extra clause via '(, \\d+ deselected)?'.",
+        "python .tools/proof-of-spec-check.py's own acceptance-row check (proof-of-spec-check.py:119-131) REFUSES status=PASS whenever output_evidence does not match a criterion's expect -- the match decides a mechanical criterion, never the worker; this row is filed rather than the instance marking AC3 PASS on a green-but-non-matching suite."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-f-1 s.5 AC3 <expect>: (?m)^\\d+ passed in -- the whole identity suite still passes, matched literally against the run's output.",
+    "world_is": "The suite genuinely is fully green after the schema amendment (119 of 119 tests pass, 0 failed) -- the build is correct. The literal regex nonetheless never matches this suite's real passing output, because of a pre-existing subTest-driven summary phrase orthogonal to CRPS-f-1. This instance records AC3 FAIL-by-literal-regex with status_reason naming the true suite state, and <status> cannot flip to complete on this criterion as written.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "No unauthorized edit made: f1_AC3.sh and the order's own <expect> are the issuer's (section 5: the check files are read-only to this worker); this worker has no standing to widen the regex or to declare a mechanical criterion PASS against non-matching evidence. Filed BLOCKING/ARMED because every future re-run of this exact AC3 invocation reads the same non-matching shape as long as any identity-suite test uses unittest subTest -- the fix is either an <expect> amendment tolerating '(, \\d+ subtests? passed)?' (as a sibling TO's AC1 already tolerates a deselected count) or removing subTest usage, both outside this cell's scope."
+  },
+  {
     "id": "AMGT_CORPUS-Z-S33",
     "project": "AMGT_CORPUS",
     "fabric": "site-z",
@@ -1212,6 +1261,92 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Z-S26 and Z-S29 disarm when a corrected pull and derive land real blocks for the 89 under a newer stamp, verified by FY rows > 0 and the 22 present per key.",
     "world_is": "Met on the served reader for 89 of 89. FWD-12 realized on this seat's real run; f-2 AC4 (judgment: the added figures beside the team's own workbooks) remains the CVO's at L9.",
     "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's); the next L9 may adjudicate Z-S26 and Z-S29 on it."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S34",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T05:23:51Z",
+    "one_line": "CRPS-f-1 (drained @eeb996b10e) passes the live research folders only in crosswalk.main's new --disclosure branch; the --write-pool branch (crosswalk.py:1356) still calls build_crosswalk without research_folders, so a put through it publishes research_folders_live and research_universe ABSENT. The order ruled that crosswalk.main passes the list; add_security._build_document does, crosswalk.main's write path does not. AC2 exercised only the --disclosure branch, so neither the worker's run nor this seat's re-grade could see the write path. crosswalk.main --write-pool is also the Peers producer's route to this key, so the two writers would disclose differently.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/identity/crosswalk.py at eeb996b10e: main()'s --disclosure branch calls _research_folders_for_disclosure() and passes research_folders/research_root; the write path calls build_crosswalk(args.as_of, identity_universe=universe, identity_source=universe_source) with neither.",
+        "add_security.py:365-372 passes research_folders (the induction path discloses; the plain re-mint path would not)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-f-1 s.1: 'The callers that build on this box pass the live list: add_security._build_document and crosswalk.main'.",
+    "world_is": "One of the two callers passes it. Nothing is served wrong yet: the served 09-25 object predates f-1 and discloses none of the new fields; the gap bites on the next put through crosswalk.main.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Remedy: crosswalk.main's write path passes the same research_folders/research_root the --disclosure branch does (one call), asked of 2.0.0_SA_COO~Z on its surface; then the disclosure re-mint through crosswalk.main --write-pool under a fresh pair, verified by reading folders_in_records == research_folders_live on the served object. The criteria lesson: a seam probe must drive the WRITE path it certifies, not a sibling branch."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S35",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T05:53:44Z",
+    "one_line": "DISARM by their owner of AMGT_CORPUS-Z-S34 (crosswalk.main's write path omitted the live list) and the f-1 worker's AMGT_CORPUS-Z-W1-S7 (schema not granted) and AMGT_CORPUS-Z-W1-S8 (AC3 expect vs 'subtests passed'), all the issuer's cut or a gap closed on the identity surface: amendments 1-2 (@347e636dbb, @e050dbf203), f-1 drained @eeb996b10e, 2.0.0_SA_COO~Z's write-path fix @5ef2158828, and ONE disclosure re-mint of crosswalk/v1/2026-09-25.json under a signed pair (COO @f5b0a47429, CTO @081f598b9f): versions 1 -> 2 (VersionId PoGljdVKce67e4GnBEY5wVab7wdkRJZd), folders_in_records 94 == research_folders_live 94 == the distinct source_row.folder count computed from the records, snapshot_stale_against_live True, research_universe.folders 94, records byte-equal to the before-version.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/disclosure_remint_verify.txt: versions 2 markers 0; the three counts 94; records byte-equal; VERDICT HOLD under the reject set (missing or 0 = refusal, the CTO's added value).",
+        "The builder's dry run before the put (05:3xZ) showed the same disclosure-only delta against the served object."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round-3 analysis s.2 ruling 2: the served object discloses the denominator it carries; a completion test reads folders_in_records / research_folders_live, never input_names.",
+    "world_is": "Met on the served object: the disclosure and its data agree at 94, and the 89 reads as the stale snapshot it is.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S36",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T14:41:10Z",
+    "one_line": "The dossier composer never reads the derived Model block: all 94 dossiers written 2026-09-25 by the round-4 sequence carry 9,471 model_rows with 0 values, 0 of 94 list a derived/model_block object among their inputs (extract, continuation and typecast only), and every row's absent reason reads 'Bloomberg figure pull not authorized (R-16 V3)' (dossier.py:117) -- a hard-coded reason that is now FALSE: the pull was authorized (Andrew @16ee7f6373, R-21) and 89 of 89 blocks are served (Z-S33). FWD-12's served Model tab is realized; its dossier half is not, and the dossier states a false reason for the gap.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/dossier_r4_model_rows_content.txt: dossiers 94, model_rows 9471, with a value 0; model_block inputs 0 of 94; absent reason 9471 of 9471 'Bloomberg figure pull not authorized (R-16 V3)'.",
+        "evidence/production_sequence_r4_20260925T045114Z.log: 10 of 10 steps rc 0; dossier names 94 written 94; coverage 94 = 82 dossier-served + 12 served-as-empty-shell + 0 unresolved.",
+        "evidence/fwd12_r4_served_blocks_content.txt: 89 of 89 served blocks non-empty through scoped_amgt."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD12_PULLER_SIZING_20260924.md item 3 / round-3 decomposition s.5: the dossier's Model rows carry figures for the 22 instead of ABSENT-with-reason once the block lands; C-VALUE-CARRIES-CLAIM: an absent field's reason is true.",
+    "world_is": "The block landed; the dossier cannot see it by construction and tells its reader the pull was never authorized. No false FIGURE is served; a false REASON is.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Remedy for the round-4 analysis: dossier.model_rows reads the newest derived block for the key (the served reader's own rule), names it in inputs, and takes an absent reason from the block's unresolved record, never from a constant; then one dossier --write, verified by model_rows with a value > 0 on the 89 keys that carry a block."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S37",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-25T14:45:52Z",
+    "one_line": "DISARM by its owner of AMGT_CORPUS-Z-S30 (extract refused a write-once collision on Copa's duplicate PDF and stopped the sequence): CRPS-f-3 drained @f221407bb9, and the round-4 production sequence ran 10 of 10 with rc 0 -- extract stored 353 of 353 report_ids, 0 crashes, the CPA pair a named 'duplicate-content ff0e11955cb266f4' skip in both extract stages; typed, continuation (94 names), dossier (94 written) and the coverage census (94 = 82 + 12 + 0 + 0) followed. Z-S30 is legacy-shaped; this row is its carrier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/production_sequence_r4_20260925T045114Z.log (committed @04832c4b48): 'objects 353 extracted 335 not_extracted 18 crash 0 stored 353 duplicates 1'; 10 of 10 steps rc 0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S30 disarms when extract's body is a function of its key, the duplicate resolves to one extract, and the sequence runs whole.",
+    "world_is": "Met in the real run.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's)."
   }
 ]
 ```

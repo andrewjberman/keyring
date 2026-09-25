@@ -238,6 +238,73 @@
     "spec_asserts": "NFRA_MCPORTAL-Z-W1-S1 is ARMED with 1.0.0_SA_CTO as disarm_owner.",
     "world_is": "The gap is closed at the tool: an unmapped path is admitted ONLY for a worker whose own non-terminal order names it; every other committer on an unmapped path is still refused UNDEFINED. The same fix serves NFRA_OPALAI-Z-W1-S1.",
     "notes": "No lane rule was added and no gate was widened beyond the registry's own worker_grant stanza (ADHC_OWNPTH.005)."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S5",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T15:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_MCPORTAL-Z-W2-S3 (owner this seat): tests/test_owner_gate.py appends one line per run to the TRACKED infra/aws/ec2/opal-gateway/audit.jsonl, because the audit path defaults to ./audit.jsonl (app/config.py:307). Contained: MP-g-1's worker restored the file and committed none of it; this seat restored the same side effect in /c/tmp/mx-1 after a dry run. The fixture fix goes to the round-2 drain-end read as an enrichment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker report 0.9.0_WK_NFRA_MCPORTAL~2 (resume): 'The existing tests/test_owner_gate.py does: it adds one line per run, because the audit path defaults to ./audit.jsonl (app/config.py:307)'; audit.jsonl restored to HEAD, not committed.",
+        "This seat's MX-c-5 dry run in /c/tmp/mx-1 appended to the same file (git status ' M infra/aws/ec2/opal-gateway/audit.jsonl'); restored with git restore before any commit."
+      ]
+    },
+    "spec_asserts": "NFRA_MCPORTAL-Z-W2-S3 is ARMED with this seat as disarm_owner.",
+    "world_is": "No commit carries a test-run audit line. The hazard stands for any seat that commits the whole gateway tree after running its suite.",
+    "notes": "Enrichment: a conftest fixture pointing the audit path at a tmp file. It is the gateway suite's owner's to cut. No gate is built here."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W2-S2",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~2",
+    "surfaced_at": "2026-09-25T00:00Z",
+    "one_line": "Building MP-g-1's literal whoami schema {email, claim_keys, oid, sub} unconditionally BROKE test_owner_gate.py::test_owner_page_served's exact-equality {\"email\":...} assertion; resolved by adding the three fields ONLY when the request's x-amzn-oidc-data header decodes to a non-empty claims dict (always true on a real ALB-OIDC request; false only for that test's header-less identity stub).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_MCPORTAL.TO-MP-g-1.claims-capture-and-history.md s.1: 'GET /api/admin/whoami returns, to the owner only, {\"email\", \"claim_keys\", \"oid\", \"sub\"}' -- no conditional named.",
+        "First build (unconditional): `python -m pytest tests/test_owner_gate.py tests/test_admin_grants.py -v` -> `test_owner_page_served FAILED: assert {'email': 'andrew@opalinvest.com', 'claim_keys': [], 'oid': 'ABSENT', 'sub': 'ABSENT'} == {'email': 'andrew@opalinvest.com'}` (this worktree, pre-fix commit not landed).",
+        "tests/test_owner_gate.py::test_owner_page_served's `as_identity(ANDREW)` stubs `owner_gate._alb_oidc_identity` directly and sends `client.get(\\\"/\\\")`/`client.get(\\\"/api/admin/whoami\\\")` with NO `x-amzn-oidc-data` header at all -- `owner_gate.owner_claims(request)` on that request returns `{}` (empty header).",
+        "After making the three fields conditional on `if claims:` in app/admin_api.py's whoami: `python -m pytest tests/test_owner_gate.py tests/test_admin_grants.py tests/test_admin_round2.py -v` -> 14 passed, 0 failed (this worker's own 4 named tests, which DO send a crafted header, still assert claim_keys/oid/sub present)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BOUNDS #1: 'the existing tests/test_owner_gate.py and tests/test_admin_grants.py stay green' -- alongside section 1 item 1's whoami schema naming exactly {email, claim_keys, oid, sub} with no conditional.",
+    "world_is": "The two are structurally incompatible for a header-less verified-owner request: any non-empty addition to whoami's response dict fails test_owner_gate.py's `== {\\\"email\\\": ANDREW}` exact equality, regardless of the added fields' values. No route in this cell's <paths> can edit the read-only test file. Resolved by gating the three added fields on the header actually carrying claims -- a real alb_oidc request always does, so this is additive in production and narrows nothing this order's own test file (test_admin_round2.py) exercises.",
+    "notes": "Not a repair of AC1/AC2 (both still measured verbatim against this worker's own test_admin_round2.py, which supplies a real crafted header and asserts the four-key shape); this only decides the header-ABSENT edge case the task-order text did not address. INERT: both suites are green at this worker's commit."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W2-S3",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~2",
+    "surfaced_at": "2026-09-25T07:10Z",
+    "one_line": "Running BOUNDS #1's regression suite tests/test_owner_gate.py appends one line per run to the TRACKED file infra/aws/ec2/opal-gateway/audit.jsonl (outside this order's <paths>); the two proof invocations g1.AC1.sh/g1.AC2.sh do not write it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/config.py@d0ba96d27c:307: AUDIT_PATH defaults to os.environ.get(\"AUDIT_PATH\", \"./audit.jsonl\") -- the gateway dir's tracked file when pytest runs from there; the line is unchanged by build d0ba96d27c (git diff af11e91097 d0ba96d27c touches no audit writer).",
+        "This worktree, restored to HEAD bytes first each time: `python -m pytest -q tests/test_owner_gate.py` rc=0 -> git diff --numstat audit.jsonl added=1; `python -m pytest -q tests/test_admin_grants.py` rc=0 -> added=0; g1.AC1.sh and g1.AC2.sh -> file clean.",
+        "The earlier run of this slot left 3 such lines (user someone.else@opalinvest.com, tool sprint_view, 2026-09-25T06:42-06:51Z); restored to HEAD, never committed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BOUNDS #1: 'the existing tests/test_owner_gate.py ... stay green' (they must be run) and BOUNDS #2: 'The gateway writes nothing.'",
+    "world_is": "Each run of test_owner_gate.py writes a real audit line into a tracked repo file, so every worktree that runs the regression suite is left with a dirty tracked file that a wide commit or drain could carry. The test file and config are read-only to this order; the file was restored to HEAD and not committed.",
+    "notes": "ARMED because it recurs on every future regression run in any worktree; disarm (e.g. AUDIT_PATH to tmp in the test fixture) is outside this worker's paths."
   }
 ]
 ```

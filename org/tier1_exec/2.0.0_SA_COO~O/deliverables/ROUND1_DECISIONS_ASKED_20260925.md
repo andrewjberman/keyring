@@ -56,3 +56,21 @@ without lowering a bar or changing a closed cell's product.
 | --- | --- |
 | MP-t-3 | open, D-2 |
 | MP-t-6 | open, D-2 |
+
+## D-3 (NFRA_MCPINDEX MX-c-4): amended AC11 still fails on a gap outside the grant
+
+- **Measured by `0.9.0_WK_NFRA_MCPINDEX~1`** (branch `wk-nfra_mcpindex-1-1d` @7e1347ee8c, `classification-composition.result.md`):
+  - the build is unchanged at 119a49eef0, and AC11's probe is conformed to the two-limb amendment (fc2835958a / 0bec07601a);
+  - under the device's only interpreter (3.11), 10 of 11 mechanical criteria PASS;
+  - AC11 FAILS: `DENOMINATOR 49`; `fails destructive_ops.classify: 14 of 49` (9 ycharts/opal_portal/globgrph + 5 schwab
+    tools whose own `integration.py` declares no per-tool class); `fails data_entitlement.classify: 0 of 49`.
+  - The 14 are pre-existing (AC6: 0 of 49 changed class). The fix is in the four integrations' own directories, which
+    are outside the order's `<paths>`, so the order cannot complete as cut.
+- **Separately, this seat's own act, not asked:** every MX-c-4 invocation pins `py -3.12`. Site Z registers only 3.11,
+  so all 11 read rc=103 (row W1-S6). If MX-c-4 is re-run, the issuer amends the pin to a device-neutral interpreter.
+- **The branch stays held,** on your affirmed hold (@5f3b4a20c6 section 4): it changes a live gateway behaviour
+  (`read_teams_attachment` becomes SAFE), and the CVO's AC8 judgment is ungraded.
+- **The decision:**
+  - (a) supersede MX-c-4 as cut, and carry the 14 declarations to a re-cut cell granted the four integration
+    directories, with MX-c-4's build as its base; or
+  - (b) another route you name.

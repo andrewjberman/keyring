@@ -106,7 +106,7 @@ dry-run at the base: AC1 FAIL (no such test file), AC2 FAIL (no `--disclosure` f
 supersession arm above, caused by the issuer's re-mint) -- this cell's ruled test fix is what turns it; recorded in the issuance commit.
 
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

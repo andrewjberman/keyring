@@ -24,7 +24,7 @@ commit), AND both never-widen halves are committed:
 The halves name what each act may touch and its rollback; act only inside them. **The acts, in order, under ONE NEVER-2 entry
 opened before the build:** (1) run `bash infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh --build-only <tmp>` and
 print the closure diff against the deployed build input (`git diff --stat <deployed build commit> <build commit> --
-lib/research`); a file outside the halves' list, or a change to `build_pack`, is a STOP and a report; (2) build and upload the
+lib/research`); a file outside the halves' list, a change to `build_pack`, or a change to `scoped_amgt.py`'s pdf branch (the `if fmt == "rich":` gate or the `build_pack(display_form, block)` call in `_print_pack`) is a STOP and a report; (2) build and upload the
 ONE artifact (record the prior VersionId), then ONE `safe-apply`; (3) verify with the two criteria; close the entry. A criterion
 that fails after the apply is the ROLLBACK trigger named in the halves. AC2 sweeps the 89-name snapshot (`0.9.0_WK_AMGT_RESAPP~4/universe.json`, read 2026-09-10T23:18Z); the ABSENCE axis on all 89, the FIGURE axis on every name whose page carries figures on the served plane.
 
@@ -57,7 +57,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/A
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-**ISSUER NOTES:** Seat order; the issuer restamps lib/research/api/_harvest_prefixes.py immediately before naming the build commit if gen_harvest_prefixes.py --check reads rc 1. The lane is live at the cut (process read).
+**ISSUER NOTES:** Amended at the cut's CTO half (msg 25872): the pdf-branch stop limb added to step (1); no criterion changed, so no gate limb grades this modification. Seat order; the issuer restamps lib/research/api/_harvest_prefixes.py immediately before naming the build commit if gen_harvest_prefixes.py --check reads rc 1. The lane is live at the cut (process read).
 
 <status>pending</status>
 <round>42</round>

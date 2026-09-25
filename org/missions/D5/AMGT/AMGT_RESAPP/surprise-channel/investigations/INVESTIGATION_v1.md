@@ -14591,6 +14591,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "AC1 reads OK 64, NOT_OK 25, exit=1 (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~159/rq-1.AC1.output.txt, this commit). The 25 remaining names' own EXPORT text is correct against the page's real content (the value the page shows is the value this module writes); the instrument that grades the comparison cannot see a page cell that carries a badge, so it reads that page as narrower than it is. BOUNDS 2 of this task order forbids a page-file change and the harness lives under portal/src/pages/SecurityAnalysis/__harness__/, outside this cell's <paths> grant -- a fix here would be an edit outside the task order's write surface.",
     "disarm_owner": "2.0.0_SA_COO~Z -- fixing exportCompare.harness.cjs's pageFigures() td regex to tolerate a nested badge span (or reading via a DOM parser instead of a hand regex) is the disarm act; no worker holds that path.",
     "notes": "Filed as a row per BOUNDS 2's 'a row, not a rescue': the class cannot be closed inside this cell's <paths>. All four of round 41's named classes (undrafted thesis, exec management, posture, fiscal-year window) are closed in this cell's commit; this row is the ONE remaining reason AC1 does not read 89 of 89."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S278",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-25T14:55:00Z",
+    "one_line": "overlay.chatter and overlay.price are BARE NULLS on 89 of 89 served overlays, while description, feed and posture on the same payload each carry a status and reason on 89 of 89 -- a null that says nothing about why (defect named by 1.0.0_SA_CTO~Z, msg 25884, @74ed138afa).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Round 42's served capture of the 89 snapshot names (C:/tmp/amgt-r42-cache2, 2026-09-25 04:46Z to ~05:1xZ, CodeSha256 pmH20bb+L1Kcejf4MKS4tVt+tCIPgeHwSZAsTe+nXZo=): overlay.chatter None on 89 of 89; overlay.price None on 89 of 89; overlay.description, .feed and .posture a dict carrying status or reason on 89 of 89.",
+        "1.0.0_SA_CTO~Z (msg 25884) also measured trending/chatter serving 2 rows, both scoring 0, with state COMPLETE and empty_reason null; not re-measured here."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every block on the overlay payload states what it carries or why it is absent (the payload's own pattern on description, feed and posture).",
+    "world_is": "Two blocks, chatter and price, serve a bare null on every name, so the page cannot tell a producer that never ran from one that ran and found nothing.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- INERT; carried to round 43 beside the CTO's four-input concentration.",
+    "notes": "Filed on the CTO's word that this defect wants a row; the population count is this seat's, the chatter-ranking half is the CTO's."
   }
 ]
 ```

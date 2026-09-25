@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_MCPINDEX~1</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>superseded -- CTO ruling D-3 R-1 (@9c70622d13): as cut; the re-cut cell builds on branch wk-nfra_mcpindex-1-1d, classifies the 9 ycharts/opal_portal/globgrph tools, drains the held branch and releases NARROW; the 5 schwab tools HELD behind the OPLGTW stop</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `org/missions/D9/NFRA/NFRA_MCPINDEX/prd/NFRA_MCPINDEX_PRD.md` @b7dc80e2cc (ADMITTED) | **Decomp cell:** `MX-c-4` | **serves:** C2, V.4, A11, FWD-10 | **slot:** ~1, queue position 3 of 5
 

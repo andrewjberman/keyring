@@ -33,6 +33,14 @@ Round 41 measured the served export against the page across the 89-name snapshot
 4. **Fiscal years.** The export's fiscal-year figures are limited to the years the Model tab shows (`ModelTab.tsx`); on 12 names it
    printed years the page does not show. And the one figure the page shows that the export drops (`9433_JP_Equity`) reaches it.
 
+**AMENDMENT 1 (issuer, 2026-09-25 ~16:0xZ, on row `AMGT_RESAPP-Z-W159-S1`):** the 25 names still NOT_OK trace to the INSTRUMENT,
+and the instrument is fixed in the instrument, never by bending the product to it. (5) **Remove `_page_absence_cap`** from
+`render_pack.py`: the export writes every absence reason IN FULL, as the page shows it. (6) **Fix
+`portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs`** (you are its named `POD_DE_ANY` writer for this
+amendment): `pageAbsences` reads the whole reason (no 300-character cap), and the Model-sheet parser reads a value cell that
+carries a nested `CheckFaceBadge` span. Portal files commit inside `portal/` on `wk-AMGT_RESAPP-159-portal`. The criteria are
+unchanged: AC3's control must still read the stale body as NOT OK after the harness change.
+
 Read each target from the page file, never from this text. **The instrument** is
 `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round42/checks/rq-1.local_sweep.py`: it rebuilds each name's
 export IN PROCESS from your tree over the SAME served inputs the page renders from. Its page-side captures and model blocks are
@@ -53,6 +61,7 @@ Run it with `--only KEY,...` while you work. Unit tests for each limb go in `lib
 <paths>
 lib/research/print/render_pack.py
 lib/research/print/tests/**
+portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~159/**
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/**
 </paths>
@@ -72,7 +81,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-**ISSUER NOTES:** s.7 items 1 and 2 in one cell because both live in render_pack.py (cells are cut by write set). SERVED: the change reaches the served body at rq-2. AC4 is the judgment criterion s.7 item 1 requires. The instrument's base runs are in round42/base-runs/ (s.50b).
+**ISSUER NOTES:** Amendment 1 (the instrument fix and the cap's removal, <paths> widened by the harness file) was cut on row Z-W159-S1 after the worker's first pass read 64 of 89; no criterion changed, and no gate limb grades a modification of an order without <placeholders>. s.7 items 1 and 2 in one cell because both live in render_pack.py (cells are cut by write set). SERVED: the change reaches the served body at rq-2. AC4 is the judgment criterion s.7 item 1 requires. The instrument's base runs are in round42/base-runs/ (s.50b).
 
 <status>pending</status>
 <round>42</round>
