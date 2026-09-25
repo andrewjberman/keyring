@@ -14589,6 +14589,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "Two blocks, chatter and price, serve a bare null on every name, so the page cannot tell a producer that never ran from one that ran and found nothing.",
     "disarm_owner": "2.0.0_SA_COO~Z -- INERT; carried to round 43 beside the CTO's four-input concentration.",
     "notes": "Filed on the CTO's word that this defect wants a row; the population count is this seat's, the chatter-ranking half is the CTO's."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S279",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-25T17:05:00Z",
+    "one_line": "The served Model base case is implausible against its own px_last on 7 of 32 served names (1.0.0_SA_CTO~Z msg 25897): the four London names at ~1/100 (GBp price against a GBP-scale EPS x P/E -- the Z-S265 100x class on the base case), BA negative, NFLX and NOW 3-4.5x; no guard refuses base/px_last outside a band, so the page serves ULVR 65.70 against 4708.5 as a considered valuation.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~Z (msg 25897, AMGT_CORPUS ROUND_ANALYSIS.round4.md A1 @047b6211e1): 191 keyed names swept, 32 bases SERVED, 7 implausible -- BA -18.032 vs 196.80; ULVR 65.705 vs 4708.5; HSBA 22.034 vs 1499.8; RKT 73.866 vs 4923.0; BP/ 26.552 vs 571.8; NFLX 218.244 vs 71.72; NOW 613.522 vs 137.78; ROG_SW 447.30 with px_last None; the other 24 at 0.54-2.00.",
+        "Re-read on a DIFFERENT capture (round 42's served capture, C:/tmp/amgt-r42-cache2, thesis.model_cases.base, formula 'consensus EPS (FY1) x trailing-median P/E'): ULVR base 65.7049 vs PX_LAST 4708.5; HSBA 22.0339 vs 1499.8; BA -18.0322 vs 196.8; NFLX 218.2437 vs 71.72 -- 4 of 4 agree with the CTO's figures.",
+        "The producer is AMGT_RESAPP's: model_block_pull.py:1119, cut by TO-AMGT-rk-37 (the CTO's citation; not re-read here)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The Model tab's base case is a valuation a person can read against the price beside it.",
+    "world_is": "On 7 of 32 served names the base case is off by ~100x, negative, or 3-4.5x, and nothing refuses it; the London four read as considered valuations.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- the disarm is a base/px_last band that REFUSES rather than serves, in the served path; it needs a cell and a deploy, so it is round 43's FIRST cell (the CTO's ask). Round 42 is mid-flight and frozen; no act of round 42 touches model_cases.",
+    "notes": "The CTO named it urgent; this seat re-read 4 of the 7 on its own capture before filing. Until round 43's guard deploys, the exposure stands on the served page for these 7 names."
   }
 ]
 ```
