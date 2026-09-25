@@ -834,3 +834,23 @@ The 502-is-not-a-refusal correction was sent to `1.0.0_SA_CTO~Z` at ~01:23Z and 
 corrects that analysis's own "bbg is the ONE MOVABLE" premise. L5 is this lane's act and the cut proceeds, but the
 dependency is named here rather than buried: **if that seat rules sa is not retryable, this cell falls and round 6
 becomes an issuance of nothing**, which section 6 item 5 already makes legal.
+
+### 17f. Amendment 2 to the round-5 L10 @`a6c25f4b18`, absorbed -- and the DENIED finding is ALREADY CARRIED here
+
+**RULING ABSORBED, and it binds this cut: `ENABLED_PUBLISHERS` IS NOT NARROWED.** Dropping ft and barrons would
+make `COMPLETE` attainable while meaning something different AND LOOKING IDENTICAL IN THE DATA -- the row would
+read `COMPLETE` with `publishers_enabled` quietly at 3. **No cell of round 6 proposes it**; if any future cell
+does, that is Andrew's call and is carded then. The struck card also removes the RESERVED item section 17d listed,
+so round 6 now waits on nothing at Andrew.
+
+**THE `DENIED` FINDING IS NOT NEW TO THIS PROJECT, and saying so matters because it changes what the remedy
+costs.** The analysis files it as a Rule 24 INTENT COHERENCE defect: `DENIED` reads as *access was denied* and
+COMPUTES *not covered*, so a day every publisher refused and a quiet day nothing was published on write the
+IDENTICAL string. **This lane's own mandate already states the semantic** -- *"`DENIED` means zero covered
+publisher spans -- NOT a demonstrated refusal"* -- and the `2b` acceptance built on it.
+
+⭐ **AND THE REMEDY IS ALREADY SHIPPED, which is why the rename may never be owed.** `publishers_covered` /
+`publishers_enabled` are written on EVERY row (`publication_gold.py:610-611`, this lane's `2b` addition), so a
+consumer reads *0 of 5* or *2 of 5* directly and never has to interpret the word. The ambiguity the finding names
+is real in the STRING and absent from the ROW. A future cell proposing to rename a served enum value should first
+count the consumers that read the string rather than the pair -- and on today's evidence that set may be empty.
