@@ -191,6 +191,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "AC2 expects `rc=3; ELEVATION REQUIRED lines>=1; ... -- RESULT: PASS -- exit=0`; AC3 expects `rc=4; BOUNDARY: NOT-PROVISIONED -- RESULT: PASS -- exit=0`.",
     "world_is": "provision-account.ps1 and verify-boundary.ps1 both produce the exact specified refusal text and exit code when run directly; the check scripts that grade them lose that exit code to an un-guarded pipe before ever comparing it, so AC2 and AC3 read FAIL for any conforming implementation. Left alone, no worker on this cell can ever produce a PASS-by-output on AC2/AC3 as literally invoked.",
     "notes": "t2.AC2.sh and t2.AC3.sh are 2.0.0_SA_COO~O's own artifacts, outside this order's <paths> (Read-only, not granted to write); not repaired here per bound 2.3 (never repair a criterion). A one-line fix (`set -o pipefail` before the pipe, or `${PIPESTATUS[0]}`) would let both scripts grade correctly."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S7",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-25T00:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_OPALAI-Z-W3-S1 (owner this seat): the checks' rc capture read tr's exit status, not the command's; fixed at CLOUD @0ad710832f with set -o pipefail in the shared _root.sh and carried onto wk-NFRA_OPALAI-3, where t2.AC2(rc=3)+t2.AC3(rc=4) now PASS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer re-dry-run under pipefail @0ad710832f: base builds FAIL with their expected sign; the same checks on wk-NFRA_OPALAI-3 PASS (recorded in the fix commit's message).",
+        "The defect was the issuer's: `out=$(cmd | tr -d CR); rc=$?` without pipefail yields tr's exit (0); the assignee refused rather than repaired and proved the direct exit codes."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-W3-S1 is ARMED with this seat as disarm_owner.",
+    "world_is": "The criteria now read the command's own exit; the order's instance is rewritten by a fresh worker on this slot against the fixed checker.",
+    "notes": "Swept on the trigger: 19 check files read rc=$?, all through the one sourced root. No gate is built here."
   }
 ]
 ```
