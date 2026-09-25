@@ -790,6 +790,52 @@
     "spec_asserts": "No task-order criterion named a whole-suite run; IVE17-AC2's own invocation only asks for iv-e-17.regenerated.test.ts and `bun run typecheck` (both green). The whole-suite run was this worker's own no-regression check.",
     "world_is": "A large pre-existing failure population (86 of 818 tests) already exists in this worktree outside this cell's write surface, unrelated to AnalysisUploadRequest/PerformanceReport/HoldingsSnapshot/DirectoryPage or the gen-wire generator.",
     "notes": "Not blocking any IVE17 criterion (none of the three mechanical criteria's own invocations touch these files). Filed per the surprise-channel rule ('found something odd off-task, append one row and keep working') rather than investigated further, since fixing it is out of this cell's scope and paths."
+  },
+  {
+    "id": "DSGN_IRPTV1-W11-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~11",
+    "surfaced_at": "2026-09-25T01:10:00Z",
+    "one_line": "The cell text names the firm-attribution chip among the facts to move to disclosure, but `FirmAttribution.tsx`'s rendered name text is the load-bearing assertion of an out-of-grant pinned test (`__tests__/fe-s-10/parity.test.ts`: `globalMarkup.includes('49 Financial<')`) -- this worker left `FirmAttribution.tsx` unchanged rather than break it, and did not move that one chip.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- rules whether fe-s-10/parity.test.ts is amended to check the firm name via a disclosure (title/details) instead of direct text, in the same round-3 JOIN chain or a later one; this worker's <paths> does not grant __tests__/fe-s-10/.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-10/parity.test.ts:83-84: `expect(globalMarkup.includes('49 Financial<')).toBe(true)` / `expect(firmMarkup.includes('49 Financial Advisors<')).toBe(true)` -- both assert the CHIP'S OWN TEXT CONTENT is the firm's display name, not a generic trigger with the name in a hover",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-10/parity.test.ts is not named in this order's <paths> (only tabs/reporting/, tabs/holdings/HoldingsTab.tsx, global/FirmAttribution.tsx, tabs/analysis/GenerateComposer.tsx, tabs/analysis/AnalysisTab.tsx, tabs/holdings/HoldingsSummary.tsx, tabs/holdings/SliceTable.tsx, __tests__/fe-s-5/fields.test.ts and __tests__/dsgn-irptv1/ are granted)",
+        "re-running `bun test src/pages/InvestorReporting/__tests__/fe-s-10/parity.test.ts` against a trial edit that swapped FirmAttribution's visible text for a generic label with the name in `title=` reproduced the failure at line 83 (before reverting the trial edit)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomp cell IV-e-18 (DSGN_IRPTV1_DECOMP.md row): 'client language on every body -- the status band's state and reason code, the \"Basis:\" chip, the firm-attribution chip, the accounts table's \"PERIOD:\" labels move to disclosures'; the task order's own text repeats 'the firm-attribution chip (IR/global/FirmAttribution.tsx, a ruled touch)' in the same list.",
+    "world_is": "FirmAttribution.tsx is a RULED touch this order may edit, but its rendered text is the exact discriminator FE-s-10's own parity test (a sibling cell's pinned regression check, not this order's to fix) uses to prove Global-mode and firm-scoped renders are otherwise byte-identical -- moving the name into a disclosure removes that discriminator and fails the test. This worker implemented every OTHER item in the cell's list (status band, \"Basis:\" chip, accounts-table PERIOD labels, plus the four numbered amendments N1-N4) and left FirmAttribution.tsx's visible name as-is, per BOUNDS' refusal clause (do not weaken a test to pass, and do not fix a defect outside this order's own criteria by breaking a neighbour's).",
+    "notes": "Not blocking any of IVE18-AC1..AC4 as written: none of their invocations exercise FirmAttribution's own text, and the DOM census (IVE18-AC1) does not name the firm chip among its enumerated banned tokens. Filed so the CTO/COO can decide whether fe-s-10/parity.test.ts is amended (e.g. to strip a `title=` attribute instead of the whole element's text) in a later cell with that file in its <paths>."
+  },
+  {
+    "id": "DSGN_IRPTV1-W11-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~11",
+    "surfaced_at": "2026-09-25T01:10:00Z",
+    "one_line": "Implementing amendment N2 as written (ReturnsHeatmap.tsx prints \"not supplied\" instead of UNAVAILABLE) necessarily breaks an out-of-grant pinned test, `__tests__/fe-s-5/states.test.ts`, which asserts the literal string `>UNAVAILABLE<` for the exact same cell this order names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- rules whether fe-s-5/states.test.ts's UNAVAILABLE assertion is re-scoped (the same treatment this order gives fe-s-5/fields.test.ts) in a later cell; this worker's <paths> does not grant __tests__/fe-s-5/states.test.ts.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-5/states.test.ts:92: `expect(markup.includes(\\`>${UNAVAILABLE_WORD}<\\`)).toBe(true)` against `performance.unsupported-benchmark.json` rendered through `ReportingTab` -- fails after N2's edit (measured: 'Expected: true / Received: false')",
+        "before this worker's N2 edit (measured on the untouched worktree): the same sub-test PASSED; two of the file's OTHER three sub-tests already failed at the untouched worktree's HEAD on an unrelated `data-block=\"summary\"` assertion (the `render/performance/Summary.tsx` component this project retired from ReportingTab.tsx in round 1, IV-t-2 -- confirmed via `git show HEAD:.../ReportingTab.tsx` naming `Summary` only in a comment, never an import)",
+        "the amendment's own words leave no room for both: 'ReturnsHeatmap.tsx prints no \"UNAVAILABLE\" in a cell: the cell reads \"not supplied\" and the reason moves to the cell's hover' -- unambiguous, and the reason (`fact.return.unavailableReason`) was already carried in that cell's own `title` attribute before this edit, unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's amendment N2 (issuer, 2026-09-24, the CVO's FAST-pin, items N1-N4): 'ReturnsHeatmap.tsx prints no \"UNAVAILABLE\" in a cell: the cell reads \"not supplied\" and the reason moves to the cell's hover.'",
+    "world_is": "fe-s-5/states.test.ts (a different, earlier cell's own file, not named in this order's <paths>) pins the OLD behaviour N2 explicitly retires for this exact component; the amendment is unambiguous and this worker implemented it, which necessarily turns that one sub-test's assertion false. The file's other two sub-tests were already failing before this edit on an unrelated, longer-standing gap (see grounding) -- this edit adds ONE new failing assertion to a file that was already red.",
+    "notes": "Not blocking any of IVE18-AC1..AC4: IVE18-AC1's own census (this order's graded criterion) requires the ABSENCE of UNAVAILABLE from the Performance body and PASSES; N2 is an explicit, numbered instruction this worker was ordered to carry out, not a discretionary change. Filed so the CTO/COO re-scopes fe-s-5/states.test.ts's UNAVAILABLE_WORD assertion (the same treatment this order already gives fe-s-5/fields.test.ts, IVE18-AC3) rather than reading the new failure as an unreviewed regression."
   }
 ]
 ```
