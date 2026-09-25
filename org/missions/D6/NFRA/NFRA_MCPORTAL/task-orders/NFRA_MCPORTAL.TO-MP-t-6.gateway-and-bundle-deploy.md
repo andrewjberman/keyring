@@ -85,7 +85,7 @@ Instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPOR
 **ISSUER NOTES:** the JOIN, WORLD: the CTO's exercised read. Spawned only after chains A, B and C drain AND NFRA_OPALAI's
 OA-t-6 closes. Provisioned with `--nested mcportal=<the merged pages branch>`.
 
-<status>pending</status>
+<status>superseded -- CTO ruling R-1 (D-2, @aed83d11fe): the grant writer cannot import from its own zip; re-cut in round 2 behind the staged-build cell</status>
 <round>1</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>

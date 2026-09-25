@@ -146,6 +146,55 @@
     "spec_asserts": "W3-S2: no existing record names Andrew's Entra object id. W3-S3: ARMED, with this seat as disarm_owner.",
     "world_is": "The oid is on record in the gateway's own access-state store, as the verified-token claim, consistent across 6 refresh families. MP-t-3 still cannot pass: its AC3 live invoke needs a writer package that carries the gateway modules and resolves them without parents[5]. That is a change to MP-t-2's built product, outside every open face.",
     "notes": "Andrew confirms the oid (W3-S2 is his). The packaging fix, a staged build that carries app/ and ops/ plus a root resolved from the package, is a product change to a closed cell, and it is asked of 1.0.0_SA_CTO~O as a recut decision. MP-t-3 and MP-t-6 stay open."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W3-S2",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~3",
+    "surfaced_at": "2026-09-25T02:03Z",
+    "one_line": "No existing record anywhere in the repo or the checked live AWS stores names Andrew's Entra object id (`G-OWNER-OID`) -- MP-t-3 cannot supply `var.mcportal_owner_oid` and STOPS before the ledger/apply per the task order's own step 1.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "Andrew",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The decomposition itself already flags this as unresolved: `org/missions/D6/NFRA/NFRA_MCPORTAL/decompositions/NFRA_MCPORTAL_DECOMP.md:91` '(b) Andrew's Entra oid source is NOT-EVALUATED (MP-t-3).' and `:186` 'G-OWNER-OID (only if MP-t-3 cannot find it): Andrew's Entra object id for the writer's owner config. Holder: Andrew.'",
+        "Repo-wide identity for Andrew is carried ONLY by email, never by oid: `infra/aws/ec2/opal-gateway/app/config.py:253` `MASTER_ADMIN_EMAILS` defaults to `andrew@opalinvest.com`; no analogous `MASTER_ADMIN_OID`/`ANDREW_OID` constant exists anywhere (comp-find -i 'andrew' across `infra/aws/ec2/opal-gateway`, `org/missions/D6/NFRA/NFRA_MCPORTAL`, `users/configs/opal-capital.json` -- 86 hits across 37 files, none an Entra object id for him).",
+        "The gateway's own POLICY# access-state partition (the example the task order names, 'a principal record the gateway's audit or policy store already holds') carries no live record at all in this tree: comp-find 'POLICY#' under `infra/aws/ec2/opal-gateway` returns only the schema definition (`app/access_state.py:55` `POLICY_PREFIX`) and synthetic test fixtures (`tests/test_access_state.py`, `tests/test_entitlement_admin.py` -- literal placeholders like `tid-a#oid-b`, `_TID`/`_OID`), never a committed real oid.",
+        "Live AWS check (read-only, no gateway authentication triggered): `.tools/aws ssm describe-parameters` and `.tools/aws secretsmanager list-secrets`, names filtered for andrew|oid|mcportal|owner -- SSM: 0 hits; Secrets Manager: 2 hits (`opal/openai/andrew-fideles`, `google/andrew-goldengate/credentials`), neither an Entra object id.",
+        "Per the task order text verbatim: 'If no existing record names it, STOP: file a BLOCKING row (G-OWNER-OID, owner Andrew) and do not apply. Never guess or derive it from an email.' -- this row is that stop; the ledger was never opened and no apply was attempted."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MP-t-3 step 1: 'Find it in an EXISTING record, never by asking the gateway to authenticate anyone... If no existing record names it, STOP: file a BLOCKING row (G-OWNER-OID, owner Andrew) and do not apply.'",
+    "world_is": "No existing record (repo-committed or live-AWS, read-only) names Andrew's Entra object id anywhere this worker can reach; the decomposition had already scoped this as NOT-EVALUATED and pre-named the gate. Ledger open, safe-apply, and AC1/AC2/AC3 are all downstream of `var.mcportal_owner_oid` and are not attempted.",
+    "notes": "AC1/AC2/AC3 were still run literally per the worker rule (unapplied state): AC1 'entry files at HEAD=0; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR: 8 of 8 sentinel(s) scanned' FAIL exit=1; AC2 'function ... state=... gateway invoke=Invalid length for parameter ResourceArns[0] ...' FAIL exit=1 (function does not exist); AC3 'no header -> NONE NONE; forged header -> NONE NONE' FAIL exit=1 (function does not exist). All three recorded verbatim in this worker's proof-of-spec instance as FAIL, not repaired. Disarm = Andrew supplies the oid (e.g. via an Entra/Graph lookup he runs, or a committed operator artifact he authors naming it) for a future MP-t-3 re-attempt."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W3-S3",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~3",
+    "surfaced_at": "2026-09-25T02:03Z",
+    "one_line": "Even once G-OWNER-OID clears, `lambda_function.py`'s own `_REPO_ROOT = Path(__file__).resolve().parents[5]` (line 42) cannot resolve at runtime: the frozen `.tf`'s `handler = \"lambda_function.lambda_handler\"` (mcportal_grant_writer.tf:85) requires the file to sit at the deployed package's ROOT (only 3 `.parents` levels exist there), so the module-level import crashes before any refusal branch runs -- AC3's live invoke cannot pass regardless of how the app/ops trees or PyJWT/cryptography are packaged.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/lambda_function.py:42-45` (HEAD 0c303246e4, this worktree): `_REPO_ROOT = Path(__file__).resolve().parents[5]` then `_GATEWAY_ROOT = _REPO_ROOT / \"infra\" / \"aws\" / \"ec2\" / \"opal-gateway\"`, run unconditionally at module import time, before `from app import access_state as acs` / `from ops import schwab_entitlement_admin as admin` and before any handler code.",
+        "`infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf:27` `source_dir = \"${path.module}/../../lambda/mcportal/mcportal-grant-writer-lambda\"` (the function's OWN directory, flattened -- `archive_file` zips its contents relative to that root) and `:85` `handler = \"lambda_function.lambda_handler\"`. AWS Lambda's Python handler resolution requires the named module importable from `sys.path` (only `/var/task` by default), which for a bare `lambda_function.lambda_handler` string means `lambda_function.py` must sit at the zip's root (`/var/task/lambda_function.py`) -- a dotted path through `infra.aws.lambda.mcportal.mcportal-grant-writer-lambda...` is impossible in any case because `mcportal-grant-writer-lambda` contains a hyphen, not a valid Python identifier.",
+        "Empirically verified: `python3 -c \"from pathlib import PurePosixPath; p=PurePosixPath('/var/task/lambda_function.py'); print(list(p.parents)); p.parents[5]\"` -> parents = [`/var/task`, `/var`, `/`] (3 entries, indices 0-2); `p.parents[5]` raises `IndexError: 5`. This is a deterministic property of the path depth, independent of AWS account state, so no packaging arrangement inside `infra/aws/lambda/mcportal/` (this worker's only writable surface for the artifact) can supply a 6th parent for a file whose deployed path is fixed at `/var/task/lambda_function.py`.",
+        "The comment at `lambda_function.py:33` ('This file lives 5 parents below the repo root ... the same depth ops/schwab_entitlement_admin.py computes for itself') and the source-map note at `infra/aws/lambda/ci/lambda-source-map.json` (`mcportal-grant-writer-lambda._note`, 'the deploy package must also carry infra/aws/ec2/opal-gateway's app/ and ops/ trees ... MP-t-3's packaging concern') both assume packaging alone resolves this; it does not, because the FILE THAT EXECUTES (root of the zip, per the frozen handler) is not the file 5 levels deep the comment describes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MP-t-3 step 3: 'Packaging the function's code follows the map's tf_resource / build convention ... A zero-diff apply with no artifact built is a failed leg, not a pass' -- implying a correctly packaged artifact lets the function run for real (PRD C4, AC3's live refusal arms).",
+    "world_is": "No packaging choice within this worker's granted paths (`infra/aws/lambda/mcportal/`, `infra/aws/lambda/ci/lambda-source-map.json`, no `.tf`/source logic changes permitted) can make the module import succeed once deployed, because `lambda_function.py`'s own repo-root computation is incompatible with the depth AWS Lambda's handler resolution forces on it. AC3 would FAIL on a live invoke (Runtime.ImportModuleError) even after G-OWNER-OID clears and a full apply lands.",
+    "notes": "Not fixed here: fixing requires a logic change to `lambda_function.py` (e.g. reading the gateway root from an env var/layer path instead of `parents[5]`, or a different handler/source_dir shape) or to the `.tf`'s `handler`/`source_dir`, both explicitly out of bounds for this cell ('Change no logic in them; a needed logic change is a BLOCKING row'). Surfaced now, before a wasted apply, so a re-issued packaging cell can carry the fix alongside G-OWNER-OID's resolution."
   }
 ]
 ```
