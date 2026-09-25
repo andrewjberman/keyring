@@ -37,8 +37,15 @@ and answers `{"verdict": "WRITTEN"|"REFUSED", "reason"}`; its name is `lib/opal_
   `test_gateway_never_writes_policy` (trap the store's write API: any call fails the test), and
   `test_changes_newest_first`.
 
-The ONE line that registers these handlers in `app/admin_api.py` is a HOOKUP, and it is not yours: export your
-routes (a list or a mount function) and name the line you need in your report. The issuer adds it at the merge.
+Register these handlers in `app/admin_api.py` yourself: your worktree is stacked on `MP-t-1`'s branch, the same chain,
+so no other cell writes it.
+
+**Also yours (issuer amendment at the drain of MP-t-1):** `MP-t-1` serves `/` as an EXACT route returning
+`DASHBOARD_BUNDLE_DIR/index.html`, and nothing serves the Vite bundle's `/assets/*`, so the page would load blank. In
+`app/server.py`, add a static route for `/assets` from `DASHBOARD_BUNDLE_DIR/assets`, BEHIND THE SAME OWNER GATE (a
+non-owner gets 401/403 on an asset exactly as on `/`). It must shadow no existing route. Add one test to
+`tests/test_admin_grants.py` named `test_assets_served_to_owner_only` (a stub bundle dir with one asset: the owner gets it,
+a verified non-owner is refused).
 
 ## 2. BOUNDS
 
@@ -51,6 +58,8 @@ routes (a list or a mount function) and name the line you need in your report. T
 <paths>
 infra/aws/ec2/opal-gateway/app/admin_grants.py
 infra/aws/ec2/opal-gateway/tests/test_admin_grants.py
+infra/aws/ec2/opal-gateway/app/admin_api.py
+infra/aws/ec2/opal-gateway/app/server.py
 org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~2/**
 org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/**
 </paths>
@@ -69,14 +78,14 @@ Rows: `org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/INVEST
 
 ## 5. WHEN YOU ARE DONE
 
-Instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~2/NFRA_MCPORTAL.TO-MP-t-4.grant-handlers.proof_of_spec.json`. Report once: what you changed and where, the commit hash, the hookup line you need, and any row.
+Instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~2/NFRA_MCPORTAL.TO-MP-t-4.grant-handlers.proof_of_spec.json`. Report once: what you changed and where, the commit hash, how /assets sits in the route order, and any row.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-**ISSUER NOTES:** S5 + S7 backend. Merge HELD with MP-t-1's until NFRA_OPALAI's OA-t-6 closes. Hookup at merge: the
-router registration line in `app/admin_api.py`.
+**ISSUER NOTES:** S5 + S7 backend, stacked on wk-NFRA_MCPORTAL-2 (MP-t-1, unmerged). Chain B merges once, at its end, after
+NFRA_OPALAI's OA-t-6 closes.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>

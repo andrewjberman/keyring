@@ -1,150 +1,116 @@
-# AMGT_CORPUS -- L5 decomposition v3.0 -- ROUND 3 (the enrichment round after the round-2 analysis)
+# AMGT_CORPUS -- L5 decomposition v5.0 -- ROUND 5 (the enrichment round after the round-4 analysis)
 
-Author `2.0.0_SA_COO~X` (site Z), 2026-09-24 ~18:3xZ. Supersedes v2.0 (kept as `AMGT_CORPUS_DECOMP.round2.md`; round 1 as
-`.round1.md`). Inputs: the CTO's round-2 analysis `ledger/ROUND_ANALYSIS.round2.md` s.7 @`e05085196c` plus its amendment carrying
-FWD-12 (CTO msg 25701); Andrew's two words today (FWD-12 V3 @`16ee7f6373`; the 40-folder call @`090ffea`); the reconciled draft
-@`18f7a03a63`; spine v3.19/v3.20 (the `<risk>` class, cells cut by WRITE SET, checks as files dry-run at the base,
-`<worker_class>`). PRD v0.6 @`031c3a3a3e`, both L4-R halves SIGNED current (`prd-signoff.py status` 18:2xZ: ADMITTED).
+**Issuer:** `2.0.0_SA_COO~X`, 2026-09-25 ~17:xxZ. **Source:** `1.0.0_SA_CTO~Z`'s round-4 analysis
+`ledger/ROUND_ANALYSIS.round4.md` @`2f9b10b7d3` + amendment A1 @`047b6211e1`: section 8 (eight enrichment items, item 1 amended
+by A1 to the base/px_last band), rules R-1..R-5. Round 4's decomposition is kept as `AMGT_CORPUS_DECOMP.round4.md`. PRD v0.6
+@`031c3a3a3e`, both halves SIGNED current.
 
-## 0. What this round IS, by subtraction from the analysis's list
+## 0. What this round IS, by subtraction from the analysis's eight items
 
-s.7 names EIGHT items (denominator 8) plus FWD-12 by the CTO's amendment (9). MINUS the ones that are not this project's cells:
-item 1's REGISTRATION of the 3 collisions (e-0, `2.0.0_SA_COO~Z`'s closer cell on its own surface, msg 25703); item 7 (round 1's
-unfolded dispositions -- the CVO's `adjudicates` fold, a named owner's act); item 8 (the universe builder's staleness --
-`build_universe.py`, the identity lane's, noted in the packet). MINUS item 3, ANSWERED before the cut (the 40-folder census on
-Andrew's word: 40 of 40 callable, `UNRESOLVED40_CALLS_20260924.{md,json}`). Left: FIVE cells over items 1, 2, 4, 5, 6 and
-FWD-12, plus one round rule (item 6: every cell declares the FWD it serves).
+| item | disposition |
+|---|---|
+| 1 FWD-12 limb 3 -- the base/px_last band refusing, the forward-EPS domain check, the GBp reconciliation | cell `CRPS-g-1` |
+| 2 Z-S36 -- the dossier Model rows, reasons derived from the data (R-3) | cell `CRPS-g-2` |
+| 3 R-2 -- the FWD-19 census emits the fence's three names | cell `CRPS-g-3` |
+| 4 the 19-outcome re-grade pass, its own cell and budget | cell `CRPS-g-4` (EVIDENCE only; grading stays L9/L10) |
+| 5 cite `C-BACKFILL-DENOMINATOR-IS-THE-RESEARCH-FOLDER` from AMGT_RESAPP's PRD | NOT CUT -- a PRD edit is L4, `1.0.0_SA_CTO~Z`'s lane; routed |
+| 6 the trailing-P/E window, declared | inside `CRPS-g-1` (the block names its window rule) |
+| 7 R-1 on every judgment criterion | applied: `CRPS-g-1` AC4's sample is a floor with every venue named |
+| 8 R-4 on every round analysis | the analysis's own format; this seat's drain packet prints the same three integers |
 
-## 1. The rectangle -- five cells `CRPS-e-<n>`, cut by WRITE SET (v3.20: no two cells write one file)
+The team's OWN Upside/Base/Downside cases cited to their workbooks (limb 3's second half) are not cut: the Upside/Downside
+methodology is a card at Andrew (analysis s.9 card 1), and no seat chooses a spread.
 
-(Cell ids in the table carry the `CRPS-` prefix the orders' `cell_refs` cite -- corrected ~19:4xZ, row Z-W3-S5; the checker's
-alignment limb reads the decomposition's id space. No cell changed.)
+## 1. The rectangle -- four cells `CRPS-g-<n>`, cut by WRITE SET (no two cells write one file)
 
-| cell | serves (FWD) | `<risk>` | class | write set (`<paths>`, disjoint) | the build |
+| cell | serves | `<risk>` | class | write set (`<paths>`) | the build |
 |---|---|---|---|---|---|
-| `CRPS-e-1` | FWD-19 (identity for 37 of the 40) | SERVED (the drain's one put moves the served pool) | worker | `lib/research/corpus/induction_run.py`, `lib/research/corpus/tests/test_induction_run.py` | `--evidence <table.json>`: a curated evidence table (the 40-folder calls) makes a NO_EVIDENCE row EVIDENCED with the table's root/cc and its cited basis; all 40 rows are called (since CLOUD @e640337205 `add_security` ENRICHES a folder onto a no-folder MEASURED record, so the 3 `associate` rows need no holding); `run()`/`write_readback` take a `deliverables_dir` (Z-S15) |
-| `CRPS-e-2` | FWD-12 (the 22 mnemonics' figures) | WORLD (the drain's run leaves Opal infrastructure: Bloomberg) | worker | `integrations/bloomberg/research/model_block_pull.py`, `integrations/bloomberg/research/tests/test_model_block_22_fields.py` | the 22 added mnemonics join the request lists with basis text; the dry run shows them; NO call in the cell |
-| `CRPS-e-3` | FWD-6 (Z-S17) | LOCAL | worker-light | `lib/research/corpus/sector_template.py`, `lib/research/corpus/tests/test_sector_template.py` | `total` leaves the artifact body; the disclosure stays in the printed line; a grown corpus with unchanged type inputs mints no new object |
-| `CRPS-e-4` | FWD-19 (Z-S18) + the interface's coordinate (item 5) | LOCAL | worker | `lib/research/corpus/production_sequence.py` (new), `lib/research/corpus/tests/test_production_sequence.py` (new), `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/DOSSIER_INTERFACE.md` | ONE runner executing the drain sequence in the RULED order (extract --write, extract --run-v2, typed, backlog --write, continuation, sector_template, fund_form, typecast, dossier, backlog --coverage), each step's denominators printed, stop on refusal, `--list` prints the order; the sheet's `types.ts:955` citation re-pointed to the live `ThesisBundle` line |
-| `CRPS-e-5` | FWD-19 / FWD-14 (item 4) | LOCAL | worker-light | `lib/research/corpus/backlog.py`, `lib/research/corpus/tests/test_backlog.py` | a FOURTH disposition `served-as-empty-shell` (resolved; a dossier object exists; the folder is workbook-only or empty so every field is absent) so the census partition is honest; `--folder` answers with it |
+| `CRPS-g-1` | FWD-12 limb 3 | SERVED (the drain's re-derive moves the served Model block) | worker | `integrations/bloomberg/research/model_block_pull.py`, `integrations/bloomberg/research/tests/test_model_cases_guard.py` (new) | `_compute_cases` REFUSES (status ABSENT, derived reason) when forward EPS <= 0, when px_last is absent, or when base/px_last falls outside [0.33, 3.0]; expresses the Base case in px_last's quote unit (a minor-unit quote such as GBp scales by its factor) and carries both currencies; names its P/E window rule; a read-only `cases-report` mode prints the decision per key |
+| `CRPS-g-2` | FWD-12 dossier half (Z-S36) | SERVED (the drain's dossier write) | worker | `lib/research/corpus/dossier.py`, `lib/research/corpus/tests/test_dossier_model_rows.py` (new) | `model_rows` read the newest derived Model block for the key by the served reader's own rule, fill each row's figure from it, name the block in `inputs`, and derive every absent reason from the data; the constant `FIGURE_ABSENT_REASON` is gone; a read-only `--model-rows-probe` prints the counts |
+| `CRPS-g-3` | FWD-19 census (R-2) | LOCAL | worker-light | `lib/research/corpus/backlog.py`, `lib/research/corpus/tests/test_backlog_fence_names.py` (new) | the coverage census prints ONE fence line in the fence's own three names, with its own classes mapped onto them; a read-only `--coverage-dry-run` computes and prints without writing |
+| `CRPS-g-4` | FWD-1..FWD-19 (analysis s.7) | LOCAL | worker | `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/FWD_EVIDENCE_ROUND5.json`, `.../FWD_EVIDENCE_ROUND5.md` | one evidence row per outcome: the fence's DONE-WHEN quoted verbatim from the PRD, the instrument run at HEAD against served state, its output, and a state (`met` / `unmet` / `unmeasurable` with reason). No grade: grading is L9's and L10's |
 
-e-0 (`2.0.0_SA_COO~Z`, closer cell, its surface): a registration whose key is MEASURED on a record with NO folder ATTACHES
-the folder (+ LEI/CIK); folder-vs-folder still refuses. LANDED on CLOUD @`e640337205` before this cut (msg 25707), so e-1's one
-batch covers all 40 and nothing is held.
+## 1a. Re-groundings at L5
 
-Rule of the round (s.7 item 6): the drain-end packet's per-order table carries a `serves FWD` column, filled from this table.
+- **g-1:** `_compute_cases` (`model_block_pull.py:1073-1135` @HEAD) multiplies FY1 `BEST_EPS` by the median of every closed
+  fiscal year's `PE_RATIO` and carries `PX_LAST` "as context only". All eight names the analysis flags (BA, ULVR, HSBA, RKT,
+  BP/, NFLX, NOW, ROG_SW) are among this project's 89 keys, so the drain's re-derive reaches every one. Band [0.33, 3.0] is the
+  ISSUER'S choice, stated so the CTO can correct it: the 24 plausible served cases sit at 0.54-2.00 (A1), and the band refuses
+  all seven flagged signatures (0.014-0.046, -0.09, 3.04, 4.45) with margin on the plausible side.
+- **g-2:** `dossier._model_rows` (`dossier.py:407-440`) writes `FIGURE_ABSENT_REASON` (`:117`) on every row and reads no block;
+  94 dossiers, 9,471 rows, 0 values (Z-S36).
+- **g-3:** the round-4 census prints `dossier_served 82 served_as_empty_shell 12 resolved_no_prose 0 unresolved_with_reason 0`;
+  the fence (PRD `:399-408`) names three classes and `served_as_empty_shell` IS its `resolved-but-no-prose` (analysis s.4).
+- **g-4:** the PRD's `endpoint_outcomes` lists FWD-1..FWD-19; 2 of 19 have ever carried a grade (analysis s.7).
 
-## 1a. Re-groundings performed at L5 (CLOUD HEAD at the cut)
+## 2. Rule 24 record, for what this file ADDS
 
-- The 40: `UNRESOLVED40_CALLS_20260924.json` -- 40 rows, 37 `register`, 3 `associate` (Copa, Uber, Schlumberger); tiers DOC 12,
-  FOLDER+LISTING 9, FOLDER-PAIR 19. `2.0.0_SA_COO~Y` confirmed it as ITS input (msg 25688); the live directory reads 94 folders
-  (AMD appeared after the 14:58Z census) -- e-1's dry run prints the population it finds, and a folder the table does not name
-  stays NO_EVIDENCE.
-- The 22: all absent from the puller's 46 field names at HEAD and all present in today's typecast core (counts 88-96 of 96
-  workbooks); the puller caps `--securities` at 3 per call (F2/G-24), so the drain's run is batches of 3, one word, one run
-  sequence; the puller runs as a script with the repo on `PYTHONPATH` (no package marker under `integrations/bloomberg/research/`).
-- `sector_template.py:407-413` builds `fields` with `total`; `_object_name` :431-435 hashes `{method_version, inputs}`; 0 consumers
-  of `total` in 30 files (R-68's query).
-- `backlog.py` (220 lines): `coverage()` writes a scan vintage with per-folder `disposition`; `continuation`/`dossier` enumerate
-  RESOLVED names from `read_latest()` -- e-5 must keep `state`/`security_key` exactly.
-- `DOSSIER_INTERFACE.md` cites `types.ts:955`; the live file's `export interface ThesisBundle {` sits at :969 (1,037 lines).
-- The served pool: VersionId `BN_TiAyAX_EwRm_nP.PMymkiUnFBMA1N`, records 254, MEASURED 214, UNRESOLVED 40.
+g-1's refusal reasons are one derived string per cause (four causes, disjoint by the order they are tested: EPS domain, price
+absent, unit, band); g-3's fence line maps four own classes onto three fence names (`served_as_empty_shell` and
+`resolved_no_prose` both onto `resolved-but-no-prose`), a subtraction the line prints; g-4's `state` enum is three values over
+the 19 outcomes, `unmeasurable` always carrying its reason. No record, key or identity moves in any cell.
 
-## 2. Rule 24 four-postulate record, for what this file ADDS
+## 3. Placement and holds on others' surfaces
 
-- `served-as-empty-shell` (e-5) joins the disposition enum {dossier-served, resolved-but-no-prose, unresolved-with-reason}:
-  (i) MECE over the 93/94 folders -- resolved AND a dossier object exists AND the folder has no prose file (workbook-only/empty);
-  disjoint from dossier-served (a prose file exists) and from resolved-but-no-prose (no dossier object); (ii) same grain (one
-  folder); (iii) one axis, coverage; (iv) it moves nothing on `state`/`security_key`. Token census: the word does not occur in
-  `lib/research/corpus/` today (e-5's AC1 asserts it).
-- e-1 adds no enum value: rows keep the classifier's own `state`; `effective_state` and `evidence_source` (`report-text` |
-  `evidence-table`) are read-back fields; the totals grammar is round 2's.
-
-## 2b. Battery disposition per lens
-
-### `comp-schedule --drift` -- RUN 18:2xZ
-`REACHED-DENOMINATORS: C1=23; C2=5; C3=12; C4=21; C5=334`; `GATES ARMED: 2` (G-3 owner CTO, a DRIFT CANDIDATE by its own
-text; G-7 owner POD4); 5 open deploy-ledger entries in the shared tree; 21 orders carry a scope_guard. None names a harvest,
-research or corpus surface. e-2's drain run opens ITS OWN change-management entry (WORLD) before the first batch.
-
-### `comp-iam` -- NOT re-run this cut (round-1 read: 214 roles, DESIRED plane), stated. Every writing cell measures the
-credential with its first conditional PUT; e-2's cell writes nothing to S3 (its run is the issuer's, at the drain).
-
-### `comp-adversary` -- RUN on this file; declaration at section 7.
-
-### `comp-blast` -- DECLARED-NOT-APPLICABLE for the cells; APPLICABLE at TWO drain acts, each under its own control: the 37-name
-fire (a never-widen pair, one put) and the 22-field pull (Andrew's V3 word, a change-management entry, batches of 3).
-
-## 2c. Bounds the battery added to cells
-
-Every cell: pure ASCII, LF, py39; tests offline under the poison; no vendor call, no S3 write from a worker turn (e-1's dry run
-fakes the call; e-2's dry run stops before the client); `add_security.py`, `crosswalk.py`, `dossier.py`, `library.py` READ-ONLY
-to every cell; the library listed only. e-2 reads `integrations/bloomberg/READ_HERE.md` first (the CTO's bound) and changes no
-cap, no basis text of an existing field, no landing address.
-
-## 3. Placement axis
-
-All five cells are corpus-side (this project); e-2's file is the Bloomberg lane's, granted to the worker by `<paths>` for this
-order only, its owner named in the packet. Nothing lands on the page; the page project consumes the interface as before.
+g-1 on the Bloomberg lane's puller, granted by `<paths>` for this order only (as e-2 and f-2 were). g-2 and g-3 on this
+project's corpus package. g-4 writes only its worker's deliverables. Item 5 is routed to `1.0.0_SA_CTO~Z` in the issuance message.
 
 ## 4. Dependency edges, keyed to OBSERVED completion
 
-- e-4 -> e-5 (same slot, in order: the runner exists before the census gains its fourth disposition, so the drain runs the
-  runner once and the census last).
-- e-1 -> the drain's fire (issuer): needs e-1 VALID and e-0 landed only for the 3 associations (all 40 in one batch since e-0 landed @e640337205).
-- e-2 -> the drain's pull (issuer): needs e-2 VALID, the entry opened, READ_HERE s.2.
-- e-3 is independent; its `--write` at the drain precedes the dossier step of the runner.
+- The four cells are independent at build time.
+- g-1 -> the drain's re-derive (a derive-pair ADDENDUM, since the rule changes what is served: the expected outcome read from
+  `cases-report` over the 89 before the run).
+- g-2 -> the drain's `dossier --write`, AFTER the re-derive, so the rows read the guarded blocks.
+- g-3 -> the drain's `backlog --coverage` last.
+- g-4 -> laid out for the CVO at L8.
 
 ## 5. The round -- one issuance, fan-out as data
 
-- **ONE issuance covers all 5 cells.** Four worker slots: `~1` e-4 then e-5 (continued); `~2` e-1; `~3` e-3 (worker-light); `~4`
-  e-2. `fanout: 4 of 4 chains, cap 8, reason: the widest antichain at the start is four; e-4/e-5 share a file family and a slot.`
-- **Drain duties owed by this seat, in order:**
-  1. At every merge: the corpus suite, `py_compile`, ruff, beside `safe-merge.sh`'s row gate; the per-chain merge.
-  2. When e-1 drains VALID: the never-widen pair for the 40-name fire (COO half + CTO half, before-state re-measured), then ONE
-     `OPAL_INDUCTION_FIRE=1 python -m lib.research.corpus.induction_run --fire --as-of <today> --evidence <table.json>`,
-     read-back recorded, then the ingest.
-  3. When e-2 drains VALID: `integrations/bloomberg/READ_HERE.md` s.2, `bloomberg_health`, the change-management entry, then the
-     pull over the resolved keys in batches of 3 (one run sequence under the word @`16ee7f6373`), read-back recorded; then
-     `derive` per security; the dossier step then carries the figures.
-  4. When e-4 drains VALID: the production sequence runs THROUGH the runner (`production_sequence --run`), which places
-     `backlog --write` before continuation/dossier and `backlog --coverage` last (e-5's disposition included once e-5 drained).
-  5. The COO's one real run of each outcome at close: the census line (93/94 = substantive + shell + unresolved), one dossier
-     read for a newly registered name, the puller's read-back line.
-- The surprise channel is `org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md` (seat rows to
-  `Z-S19`; workers mint `AMGT_CORPUS-Z-W<n>-S<k>`, `disarm_owner 2.0.0_SA_COO~X`).
+- **ONE issuance covers all 4 cells.** Four worker slots: `~1` g-1, `~2` g-2, `~3` g-3 (worker-light), `~4` g-4.
+  `fanout: 4 of 4 chains, cap 8, reason: four independent cells, no shared file.`
+- **Drain duties owed by this seat, in order, every verify leg reading CONTENT and every served figure checked against its
+  same-object comparator (R-5):**
+  1. At every merge: the package suites, `py_compile`, ruff, beside `safe-merge.sh`'s row gate.
+  2. g-1 VALID: `cases-report` over the 89 (read-only) -> the expected outcome for the addendum (COO half + CTO half); then the
+     re-derive of the 89 under a change-management entry; verify on the served reader: every SERVED base inside [0.33, 3.0]
+     of its own `px_last`, every refusal carrying a derived reason, printed as `served / refused / by cause` over 89.
+  3. g-2 VALID and item 2 done: `dossier --write`; verify: model_rows with a value > 0 on every key whose block has figures;
+     no row carries a constant reason; the dossier names its block in `inputs`.
+  4. g-3 VALID: `backlog --coverage`; verify the fence line sums to the live folder count.
+  5. The COO's one real run of each outcome, and f-style evidence for g-1 AC4 laid out for the CVO; the packet prints
+     `graded this round / graded ever / endpoint denominator` (R-4).
+- Surprise channel: `org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md` (seat rows to
+  `Z-S37`; workers mint `AMGT_CORPUS-Z-W<n>-S<k>`, `disarm_owner 2.0.0_SA_COO~X`).
 
 ## 6. `<preflight>` -- what this decomposition actually ran
+
 ```
-prd-signoff.py status AMGT_CORPUS        v0.6 @031c3a3a3e; ratified-text SIGNED current (3.0.0_SA_CVO~Z); brief SIGNED current (4.0.0_SA_CRO~Z); ADMITTED
-sequence-check.py --project AMGT_CORPUS  not sequenced; 3 live COO lanes on this box
-to-check.py --all --assignee 2.0.0_SA_COO~X   0 held on this project
-comp-schedule --drift                    2 armed, 0 on these surfaces (C1=23 C2=5 C3=12 C4=21 C5=334)
-comp-iam roles                           NOT re-run this cut (round-1 read: 214, DESIRED plane)
-task-order status census (anchored)      17 of 17 complete on this project -> LD-0521's refuser sees 0 open
-proof-of-spec-check.py CELL_ID_RE        CRPS-e-<n> matches the [a-z]{1,4}-[a-z]?\d+ branch
-checks as files                          org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round3/*.sh, each run once at the base; the issuance commit records one line per check
+prd-signoff.py status AMGT_CORPUS        v0.6 @031c3a3a3e; both halves SIGNED current; ADMITTED
+task-order status census (last <status>)  25 of 25 terminal on this project -> 0 open
+comp-schedule --drift                    2 armed (G-3 CTO, G-7 POD4), 0 on these surfaces
+named-name coverage                      8 of 8 flagged names are in the 89 keys (FWD12_PULL_KEYS_20260924.json)
+checks as files                          org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round5/*, each run once at the base
 ```
 
 ## 7. comp-adversary declaration
-This file specifies; it produces no artifact. The adversary lens applies at the drain to the two world-facing acts (the fire,
-the pull), each under its own control named in s.2b/s.5.
+
+This file specifies; it produces no artifact. The adversary lens applies at the drain's two served acts (the re-derive, the
+dossier write), each under its control in section 5.
 
 ## 8. Rulings this decomposition makes, and what it REFUSES to assume
-- The 40-folder table is EVIDENCE under Andrew's word (@`090ffea`); e-1 consumes it and prints its basis per row; the CVO's
-  standing ruling on picks is not widened: the pick was Andrew's, delegated to this seat's read, recorded per folder.
-- R-16 V2's word covers ONE call for each of the 60, once; 20 spent; e-1's drain spends the remaining 40; no name is called twice.
-- The FWD-12 pull's word is ONE use (@`16ee7f6373`): the drain's run sequence over the resolved keys is that use.
-- REFUSED to assume: that e-2's dry run proves entitlement (only the run does); that AMD or any folder outside the table
-  resolves; that e-5's fourth disposition changes what the CVO already ruled (it records it).
 
-## 9. Holds, and whose they are
+- The band [0.33, 3.0] is the issuer's; the refusal serves ABSENT with its cause, never a clipped or adjusted number.
+- A minor-unit quote (GBp and its kin) is reconciled by the currency fields the block already carries (round-3 `currencies`
+  block), never by a venue list typed into code.
+- REFUSED to assume: that the flagged seven are the only implausible values (the band runs over all 89 at the drain, R-5); that
+  a split explains NFLX/NOW (A1 calls it PROBABLE; the band refuses them either way and the reason names the ratio).
+
+## 9. Holds
 
 | hold | on | owner | what lifts it |
 |---|---|---|---|
-| the 40-name FIRE | this lane's drain | `2.0.0_SA_COO~X`, under a fresh never-widen pair | e-1 VALID; before-state re-measured; READ_HERE s.2; one run |
-| the 22-field PULL | this lane's drain | `2.0.0_SA_COO~X`, Andrew's V3 word (one use) | e-2 VALID; the change-management entry; bloomberg_health; batches of 3 |
-| the 11 folders unreachable by pipeline work | Andrew (via the CTO, R-75) | Andrew | his word: "we are going to get all of them" (msg 25684) -- identity is callable for all 11; prose is not; they read `served-as-empty-shell` / never-prose |
-| FWD-18 | the analysis | `1.0.0_SA_CTO~Z` | re-listed or not |
+| the re-derive | this lane's drain | `2.0.0_SA_COO~X` + `1.0.0_SA_CTO~Z` (addendum) | g-1 VALID; the addendum signed |
+| the dossier write | this lane's drain | `2.0.0_SA_COO~X` | g-2 VALID; the re-derive done |
+| the team's Upside/Downside cases | Andrew | Andrew | card 1 of the round-4 analysis s.9 |
 
 -- `2.0.0_SA_COO~X`

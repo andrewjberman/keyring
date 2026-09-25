@@ -279,7 +279,10 @@ def check_agent(agent: str, path: str, lanes: dict[str, Any],
     worker_grant stanza; the repo root for the HEAD read); the three older callers pass none and lose nothing."""
     lane_name = resolve_lane(path, paths_config)
     if lane_name is None:
-        return False  # unmapped path
+        # ADHC_OWNPTH.005 reaches UNMAPPED paths too (NFRA_OPALAI-Z-W1-S1 / NFRA_MCPORTAL-Z-W1-S1, 1.0.0_SA_CTO~O
+        # 2026-09-25): a brand-new top-level path a worker's NON-TERMINAL order names is the worker's grant, exactly
+        # as a mapped one is. Additive only: every other committer on an unmapped path is still refused.
+        return _owns_task_order_paths(agent, path, grant, root, cache)
 
     lane = lanes.get(lane_name, {})
     permitted = lane.get("permitted_agents", [])
@@ -410,6 +413,8 @@ def _cmd_check_agent(agent: str, yaml_path: str) -> int:
             continue
         lane_name = resolve_lane(path, paths_config)
         if lane_name is None:
+            if _owns_task_order_paths(agent, path, grant, root, cache):
+                continue  # ADHC_OWNPTH.005 on an unmapped path: the worker's order is the grant (see check_agent)
             violations.append(
                 f"VIOLATION: {path} -- UNDEFINED (no matching path rule; agent={agent})"
             )
@@ -441,7 +446,7 @@ def _self_test(yaml_path: str) -> int:
     root = os.path.dirname(os.path.abspath(yaml_path))
     WK = "0.9.0_WK_X_PRJ~2"
     orders = [("org/missions/D9/X/X_PRJ/task-orders/X_PRJ.TO-1.md", "0.9.0_WK_X_PRJ~2",
-               ["org/modules/graph/cli.py", ".tools/tests/test_x_*.py", "docs/x/"])]
+               ["org/modules/graph/cli.py", ".tools/tests/test_x_*.py", "docs/x/", "newtop/"])]
     cache = {"X_PRJ": orders}
     own = lambda agent, path, g=grant, c=cache: _owns_task_order_paths(agent, path, g, root, c)  # noqa: E731
     arms = [
@@ -463,6 +468,11 @@ def _self_test(yaml_path: str) -> int:
         ("switch: no stanza -> nothing admitted; wrong source -> nothing admitted",
          lambda: not own(WK, "org/modules/graph/cli.py", None) and not own(WK, "org/modules/graph/cli.py", {"serial_glob": "0.9.0_WK_*", "source": "lanes"})),
         ("fail-closed: a census that could not run (None) admits nothing", lambda: not _owns_task_order_paths(WK, "org/modules/graph/cli.py", grant, root, {"X_PRJ": None})),
+        ("UNMAPPED path (no lane rule): worker ~2 whose order names it -> admitted by check_agent",
+         lambda: check_agent(WK, "newtop/a.txt", {}, {}, grant, root, cache)),
+        ("UNMAPPED path MUTANT: worker ~3 with no such order, and a seat serial -> both refused",
+         lambda: not check_agent("0.9.0_WK_X_PRJ~3", "newtop/a.txt", {}, {}, grant, root, cache)
+         and not check_agent("2.0.0_SA_COO", "newtop/a.txt", {}, {}, grant, root, cache)),
         ("terminal orders grant nothing (live parse of NFRA_COMPEFFICACY at HEAD returns a list; every order in it is non-terminal)",
          lambda: isinstance(_worker_orders(root, "NFRA_COMPEFFICACY"), list)),
     ]

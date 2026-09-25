@@ -82,7 +82,7 @@ the drain, BEFORE teardown: `git submodule update --init mcportal` in the main t
 branch `wk-NFRA_MCPORTAL-1-mcportal` from the worktree's module git dir into it. Later mcportal cells are provisioned
 `--nested mcportal=wk-NFRA_MCPORTAL-1-mcportal`. The FE render check is the issuer's real run at close.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

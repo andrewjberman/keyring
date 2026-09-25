@@ -98,7 +98,7 @@ Instance at `org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~
 **ISSUER NOTES:** C10, S10 round-1 half. Disjoint from NFRA_MCPINDEX MX-t-1 (`app/integrations/portal_index/`). The drain
 runs py_compile + ruff py39 over the gateway app once.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>

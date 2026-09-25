@@ -749,3 +749,146 @@ coverage question and on `Z-S3` being carried -- **not on the channel count.** R
 field** -- `3.0.0_SA_CVO~Z`'s form is the model and is adopted here: *"0 non-terminal by `_latest_dispositions`; N
 rows still read UNDER_INVESTIGATION in their own frozen fields."* **A disagreement about a number is first a
 question about UNITS.**
+
+## 17. ROUND 6 (v1.5) -- ONE CELL, and it is the publisher nobody counted as movable
+
+**From the L10 round-5 analysis @`4aa2c9d11d` (`1.0.0_SA_CTO~Z`), section 6: "round 6 is cuttable and MUST be
+PARTIAL-shaped."** Round 5 closed. This cut obeys section 6's four constraints and adds one cell that section 6
+did not name, because the fact that makes it cuttable had not been measured when that analysis was written.
+
+### 17a. Rule 24 record -- the subtraction, from a printed denominator
+
+**Printed denominator: section 6's cut list carries FIVE numbered items.**
+- MINUS item 1, **bbg** -- movable only on Andrew's own sentence, which the analysis itself calls **an OFFER of an
+  ACT, not a grant and not a decision**, and which is untaken. **No cell can take up another party's offer**, so
+  this is a card at Andrew and not a cell.
+- MINUS item 2, **ft and barrons** -- the analysis states they are NOT cuttable as access work: a 403 on a search
+  path and a rejection AFTER a successful re-auth are not reached by authorization (`Z-S14`).
+- MINUS item 3, **the field-naming requirement** -- satisfied BEFORE this cut rather than by a cell: both fields
+  are now measured with their denominators (17b). It CONSTRAINS the cell below; it is not itself work.
+- MINUS item 4, **the channel** -- recomputed at **48 rows, GRADUATED 19 / DISMISSED_WITH_REASON 21 /
+  UNDER_INVESTIGATION 8**, error arm empty, by `_latest_dispositions(".", "AMGT_HARVST")`. All 8 non-terminal rows
+  are `Z-S19`..`Z-S26`, this lane's own rows about instruments; **their disposition is the CVO's L9 act, not a
+  cell this lane can cut.**
+- MINUS item 5, which is a legality statement about an empty round rather than an item of work.
+- **REMAINDER: ONE CELL.** Not invented to fill the round -- surfaced by executing item 3.
+
+### 17b. Both fields named, with denominators -- section 6 item 3 discharged
+
+| field | barrons | bbg | ft | sa | wsj | denominator |
+|---|---|---|---|---|---|---|
+| silver `listing_hit` rows (drives `publisher_coverage` -> `data_status`) | 0 | 0 | 0 | **0** | 20 | 20 rows |
+| silver `article`.`discovered_for` rows | 15 | 19 | 14 | **44** | 26 | 118 rows |
+
+**Both of the disagreeing claims were TRUE of different objects.** All five publishers returned ARTICLES; only
+wsj kept LISTINGS. So "four publishers at zero" is not "four returned nothing" -- it is four whose COVERAGE
+EVIDENCE is missing.
+
+### 17c. THE CELL -- `HVST-s-1`: sa's listing capture, retried
+
+**WHY IT IS CUTTABLE AND NEEDS NOBODY.** Four publishers sit at zero `listing_hit` while only THREE refusals were
+ever recorded. The fourth is **sa**, and `Z-S14`'s own evidence line reads **"upstream_unavailable (HTTP 502 from
+seekingalpha.com, 24 accepted of which 3 genuinely new)"**. **A 502 is an OUTAGE, not an access decision** -- the
+one failure class of the four that a retry addresses. bbg's challenge, ft's 403 and barrons' post-auth rejection
+are decisions no retry moves.
+
+**AND THE CHAIN EXPLAINS THE ZERO RATHER THAN ASSUMING IT.** sa's 502 raised MID-LOOP, and at that vintage
+`_write_harvest_listings` sat AFTER the per-article loop, so every listing page already captured for that job was
+discarded -- row `Z-W15-S1`. That is why sa shows 44 silver ARTICLE rows and 0 `listing_hit` rows. The persist now
+sits in a `finally` WRAPPING the loop (`worker.py:223`, with `Z-S10`'s guard at `:245-261`), both verified at HEAD
+and disarmed in `Z-S24`. **A retry would both get further AND keep its pages.**
+
+**ROUND 4's PRECONDITION ON ANY VENDOR ACT IS MET AND MEASURED, NOT WAIVED.** Round 4 asked, before a further
+vendor act, whether the question is answerable from objects already held. It is NOT, and here is the denominator:
+**bronze `news_listing` holds 2 objects, ALL wsj, across all five publishers.** The four publishers' listing pages
+were never persisted to bronze either, so no rebuild from held data exists. (First pass read table `"listing"` and
+returned 0 for wsj TOO -- wsj was the positive control and its failure is what caught the wrong table name. The
+correct table is `news_listing`, written by `harvest_grammar.put_listing_bronze` at `:113`.)
+
+**MECHANISM (R-21b), non-negotiable:** the cell runs the EXISTING deterministic scripted producer
+(`python -m lib.opal_data_harvest run --publishers sa --harvest-grammar ...`). **No agent-typed vendor call is
+evidence for anything in this cell**; a candidate whose evidence depends on one is a FAIL ON MECHANISM even if the
+data is right.
+
+**ACCEPTANCE -- PARTIAL-SHAPED BY CONSTRUCTION, per msg 25731 and section 6:**
+- `listing_hit` rows for sa move from **0** to a printed count, with the before-count re-read at run time rather
+  than taken from this document.
+- `publisher_coverage` yields a non-empty span for at least one security on sa.
+- `data_status` for at least one (security, day) moves from `DENIED` to `PARTIAL`, with `publishers_covered` /
+  `publishers_enabled` printed on the row.
+- ⛔ **COMPLETE IS NOT AN ACCEPTANCE OF THIS CELL AND MUST NOT BE WRITTEN AS ONE.** sa plus wsj is 2 of 5, and
+  `data_status COMPLETE` requires all five to cover the day. A criterion that cannot pass the day it is written is
+  a defect AT THE CUT.
+
+### 17d. What round 6 does NOT attempt
+
+- **No bbg, ft or barrons work.** bbg is Andrew's untaken offer; the other two are carded.
+- **No re-definition of `COMPLETE`.** That is the RESERVED call at Andrew (round-5 analysis s.7), and a driver may
+  not move its own stop-condition.
+- **No disposition of the 8 non-terminal rows.** They are the CVO's L9 act.
+- **No 2b re-run.** Nothing in this cell changes the chatter_daily gold build.
+
+### 17e. The one thing this cut rests on that is NOT yet answered
+
+The 502-is-not-a-refusal correction was sent to `1.0.0_SA_CTO~Z` at ~01:23Z and **is unanswered at this cut**. It
+corrects that analysis's own "bbg is the ONE MOVABLE" premise. L5 is this lane's act and the cut proceeds, but the
+dependency is named here rather than buried: **if that seat rules sa is not retryable, this cell falls and round 6
+becomes an issuance of nothing**, which section 6 item 5 already makes legal.
+
+### 17f. Amendment 2 to the round-5 L10 @`a6c25f4b18`, absorbed -- and the DENIED finding is ALREADY CARRIED here
+
+**RULING ABSORBED, and it binds this cut: `ENABLED_PUBLISHERS` IS NOT NARROWED.** Dropping ft and barrons would
+make `COMPLETE` attainable while meaning something different AND LOOKING IDENTICAL IN THE DATA -- the row would
+read `COMPLETE` with `publishers_enabled` quietly at 3. **No cell of round 6 proposes it**; if any future cell
+does, that is Andrew's call and is carded then. The struck card also removes the RESERVED item section 17d listed,
+so round 6 now waits on nothing at Andrew.
+
+**THE `DENIED` FINDING IS NOT NEW TO THIS PROJECT, and saying so matters because it changes what the remedy
+costs.** The analysis files it as a Rule 24 INTENT COHERENCE defect: `DENIED` reads as *access was denied* and
+COMPUTES *not covered*, so a day every publisher refused and a quiet day nothing was published on write the
+IDENTICAL string. **This lane's own mandate already states the semantic** -- *"`DENIED` means zero covered
+publisher spans -- NOT a demonstrated refusal"* -- and the `2b` acceptance built on it.
+
+⭐ **AND THE REMEDY IS ALREADY SHIPPED, which is why the rename may never be owed.** `publishers_covered` /
+`publishers_enabled` are written on EVERY row (`publication_gold.py:610-611`, this lane's `2b` addition), so a
+consumer reads *0 of 5* or *2 of 5* directly and never has to interpret the word. The ambiguity the finding names
+is real in the STRING and absent from the ROW. A future cell proposing to rename a served enum value should first
+count the consumers that read the string rather than the pair -- and on today's evidence that set may be empty.
+
+### 17g. `HVST-s-1` RAN AND THE CELL FAILED AT THE CUT, NOT AT THE WORLD -- the defect is the issuer's
+
+**No vendor call was made.** `0.9.0_WK_AMGT_HARVST~19` executed the order exactly as written, recorded the
+failure without retrying, and filed row `AMGT_HARVST-Z-W19-S1`. Every criterion produced its output with its
+denominator; AC5 reads `outside_allowed []` with both delete methods raising on the positive control. **The
+worker's conduct is not at issue. The ORDER is.**
+
+**TWO DEFECTS, BOTH MINE, AND THE SECOND IS WORSE THAN THE FIRST.**
+
+1. **The literal AC1 invocation crashes before any vendor call.** `__main__.py`'s `--security-json` handling
+   wraps whatever the file parses to in a single-element list, so a multi-security ARRAY file breaks
+   `Worker.run()` at `worker.py:330` with `TypeError: list indices must be integers or slices, not str`. I
+   pointed the order at the six-name `securities.json` without exercising the flag against that file shape.
+
+2. ⛔ **THE CELL COULD NOT HAVE PASSED EVEN IF sa HAD ANSWERED PERFECTLY.** `run --harvest-grammar` persists
+   listing pages to a LOCAL sqlite/file outbox (`Worker._write_harvest_listings`, `worker.py:91-108`). **The S3
+   bronze/silver listing writes happen only inside `HarvestUploader._run_listings`
+   (`uploads.py:253-283`), reached only through the SEPARATE `upload-harvest` command.** My criteria measured S3
+   surfaces (AC0/AC2 count `listing_hit` rows and bronze `news_listing` objects) against a command that does not
+   write them. **AC2's delta was structurally pinned at +0 before the worker started.**
+
+⛔ **THAT IS EXACTLY THE DEFECT CLASS THE ROUND-5 ANALYSIS RULED ON FOUR HOURS EARLIER** -- *"a criterion that
+cannot pass the day it is written is a defect AT THE CUT, not a stretch goal"* -- and I wrote one into the very
+round that ruling shaped, while quoting the ruling on the order's own face. **Knowing the rule and citing it in
+the same document did not prevent committing it.**
+
+⭐ **THE CHEAP CONTROL I SKIPPED, and it is the one this project keeps paying for:** the order names TWO planes
+-- a command and an S3 surface -- and I never asked WHICH PLANE THE COMMAND WRITES. One read of
+`uploads.py:253-283` before the cut, or one dry invocation of the flag against the actual file, would have
+caught either defect. **COST: one read. NON-APPLICATION: a criterion whose invocation and whose measurement are
+the same object.**
+
+**WHAT THE ROUND ACTUALLY LEARNED, which is not nothing:** the capture and the S3 write are TWO commands, and
+`upload-harvest` is the only path to the listing surfaces. `W10-S6`'s disarm note already said that command is
+never offline-safe; what it did not say, and what this cell establishes, is that it is also **the only way any
+listing row reaches S3 at all.** A corrected cell is `run --publishers sa --harvest-grammar` with a
+SINGLE-security JSON, THEN `upload-harvest`, with AC2 measuring after the second.

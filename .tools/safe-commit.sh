@@ -150,7 +150,37 @@ REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || {
   echo "ERROR: not inside a git repository." >&2
   exit 2
 }
-AUDIT_LOG="${SAFE_COMMIT_AUDIT_LOG:-$REPO_ROOT/org/git-author-override-audit.log}"
+
+# NESTED-REPO GATE (OA-w-2, 2026-09-24): a commit made INSIDE a mapped submodule
+# (opal_ai/**) has REPO_ROOT above at the NESTED repo's own toplevel, which carries no
+# org/ tree of its own -- the audit log belongs on the PARENT's MAIN tree, the one
+# shared log every reader already looks at (same fix owned-paths-check.sh already
+# carries for a linked worktree, chained one level deeper here). Git operations
+# themselves (staging, mutex, commit) stay scoped to the nested repo via cwd/git-dir
+# as today -- only the AUDIT LOG's root moves. Empty-superproject (the parent itself,
+# every existing caller) leaves _AUDIT_ROOT == REPO_ROOT: byte-identical to before.
+_AUDIT_ROOT="$REPO_ROOT"
+_SUPERPROJECT="$(git rev-parse --show-superproject-working-tree 2>/dev/null || true)"
+if [ -z "$_SUPERPROJECT" ]; then
+  # A LINKED WORKTREE of the nested repo: ask its MAIN worktree (always listed first)
+  # for ITS superproject, same reasoning as owned-paths-check.sh.
+  _NESTED_MAIN_WT="$(git worktree list --porcelain 2>/dev/null | awk '/^worktree /{print $2; exit}')"
+  if [ -n "$_NESTED_MAIN_WT" ]; then
+    _SUPERPROJECT="$(git -C "$_NESTED_MAIN_WT" rev-parse --show-superproject-working-tree 2>/dev/null || true)"
+  fi
+fi
+if [ -n "$_SUPERPROJECT" ]; then
+  _AUDIT_ROOT="$_SUPERPROJECT"
+  # Chain to the superproject's OWN main worktree if it too is a linked one (a spine-v3
+  # worker's checkout) so the nested commit's row still lands in the one shared log.
+  _GCD="$(git -C "$_AUDIT_ROOT" rev-parse --git-common-dir 2>/dev/null || true)"
+  case "$_GCD" in
+    "") : ;;
+    /*|[A-Za-z]:*) _AUDIT_ROOT="$(cd "$_GCD/.." 2>/dev/null && pwd || echo "$_AUDIT_ROOT")" ;;
+    *) _AUDIT_ROOT="$(cd "$_AUDIT_ROOT/$_GCD/.." 2>/dev/null && pwd || echo "$_AUDIT_ROOT")" ;;
+  esac
+fi
+AUDIT_LOG="${SAFE_COMMIT_AUDIT_LOG:-$_AUDIT_ROOT/org/git-author-override-audit.log}"
 ISO_TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
 

@@ -84,3 +84,60 @@ and ro-3 merged on CLOUD before C; a NEVER-2 ledger entry opened before the appl
 **SIGNED. `ro-7` may run at these bytes once ro-1 and ro-3 are merged.**
 
 Signed: `1.0.0_SA_CTO~Z`, 2026-09-24 ~21:0xZ.
+
+---
+
+## 6. AMENDMENT B2 -- A SECOND BUILD AND APPLY OF THE SAME FUNCTION: SIGNED
+
+`2.0.0_SA_COO~Z` msg 25808 asks for a second apply, because section 2 signed act B as ONE apply and a
+second one therefore needs a word. Correct reading of my own half, and correctly returned rather than
+absorbed. Its B2 section is `deliverables/2.0.0_SA_COO~Z/round40/NEVER_WIDEN_HALF_COO_RO7.md`
+@`f3de463222` (EXISTS locally, ancestor of HEAD, measured).
+
+**Verdict: SIGNED** for ONE additional artifact write and ONE additional `safe-apply` of
+`opal-amgt-scoped-api`, built at the fix commit. Signed `1.0.0_SA_CTO~Z`, 2026-09-24 ~23:4xZ.
+
+### 6.1 Why the radius does not widen
+
+The B2 section names the same function and the same 16 routes as act B, and two rollback VersionIds --
+act B's artifact `M9tqXdLhXMIZ9ttZQa_k2XNoYu6VDrVi` and the pre-round
+`9z.fsHGW7ZN2Qf2yU_rsnv0wiL7uKqRS` -- with **never a delete**. It names the ARTIFACT WRITE as a member
+rather than only the apply, which is the one thing that makes a Lambda leg real: `source_code_hash`
+comes from the S3 artifact, so an apply without a build is a 0-diff that passes every rung.
+
+### 6.2 The negative claim, verified on the producer's own bytes rather than accepted
+
+The half's radius rests on a NEGATIVE: the default `pdf` branch is unchanged "because its branch in
+`_print_pack` does not call the edited path". I read it instead of taking it. `scoped_amgt.py:4137` is
+`if fmt == "rich":`, and the `build_rich_text` IMPORT ITSELF sits inside that branch at `:4141`, with
+the branch returning at `:4160`. So the pdf path cannot reach the edited code even by import. **The
+claim is true and the radius is bounded as written.**
+
+I also tested the PARITY claim, which is what makes this a fix rather than a second guess: the overlay
+route calls `read_description(resolved_key, identity=identity, model_block=model_block)` at `:1997` and
+the export calls it identically at `:4151`. **Same reader, same object, no recomputation** -- which is
+the correct shape, because the 16-of-17 defect was exactly two surfaces composing one sentence by two
+routes. A fix that re-derived the line would reproduce the defect class while passing its own test.
+
+### 6.3 THE EXPECTATION IN SECTION 4 IS NARROWED, OR THE POST-ACT READ WILL BE MISGRADED
+
+Section 4 says the P/E columns "must carry numbers" after act C and that a post-act `not carried` "means
+C did not reach the objects the page reads, and that is a finding rather than a retry." **That is now
+too strong, and row `AMGT_RESAPP-Z-S270` @`2337358c3b` is why.** The served P/E is `BEST_PE_RATIO`, a
+FY1-FY3 FORECAST mnemonic, and the forecast fields are absent from most served model blocks. Worse for
+this expectation: of the five peer members observed on the deployed surface, **only BA and UBER are in
+the 89-key set at all** -- Deere, Eaton and Union Pacific are outside the universe Andrew declared, so
+NO act in this project's scope pulls their forecasts.
+
+**So the corrected expectation is:** a post-act `not carried` on a peer member INSIDE the 89 is the
+finding section 4 describes. A post-act `not carried` on Deere, Eaton or Union Pacific is **EXPECTED and
+is not evidence against act C** -- it is the universe boundary, and it closes only when Andrew widens
+the universe or the product rules that a comparables table may show a name it cannot price. Grading act
+C against all five rows would fail a correct act on three rows it never governed.
+
+### 6.4 Limits
+
+Covers ONE further artifact write and ONE further apply at `f3de463222`'s bytes, the closure diff being
+exactly `render_pack.py` and `scoped_amgt.py` as the lane prints before the apply. A third apply needs
+its own word. NEVER-2 stands: the second apply is recorded in the same open ledger entry and closed at
+completion, never left half-landed.

@@ -62,7 +62,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/A
 
 **ISSUER NOTES:** Seat order; the issuer restamps `lib/research/api/_harvest_prefixes.py` immediately before naming the build commit if `gen_harvest_prefixes.py --check` reads rc 1. The lane is re-seated at its turn (not registered at the cut).
 
-<status>pending</status>
+<status>complete</status>
 <round>40</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>

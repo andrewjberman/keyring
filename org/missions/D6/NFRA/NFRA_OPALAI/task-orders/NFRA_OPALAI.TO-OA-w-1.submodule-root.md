@@ -77,7 +77,7 @@ Instance at `org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~
 opal_ai cell's slot is provisioned with `--nested opal_ai=<main-tree opal_ai HEAD>`. The drain runs
 `wk-provision.sh --self-test` once (portal unchanged).
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

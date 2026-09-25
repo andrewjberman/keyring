@@ -90,7 +90,7 @@ Instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPOR
 **ISSUER NOTES:** S2 + S3. Merge HELD until NFRA_OPALAI's OA-t-6 deploy entry closes (decomp sequencing (b)). The second
 signed-in account's live refusal is the close run's.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_MCPINDEX~1</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>superseded -- CTO ruling D-3 R-1 (@9c70622d13): as cut; the re-cut cell builds on branch wk-nfra_mcpindex-1-1d, classifies the 9 ycharts/opal_portal/globgrph tools, drains the held branch and releases NARROW; the 5 schwab tools HELD behind the OPLGTW stop</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `org/missions/D9/NFRA/NFRA_MCPINDEX/prd/NFRA_MCPINDEX_PRD.md` @b7dc80e2cc (ADMITTED) | **Decomp cell:** `MX-c-4` | **serves:** C2, V.4, A11, FWD-10 | **slot:** ~1, queue position 3 of 5
 
@@ -58,7 +58,7 @@ Write `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~1/
 `MXC4-AC10` -- the Gateway suite's collected, passed and failed counts are printed before and after the edit, and no test that passed before fails after
 
 <criterion id="MXC4-AC11" cell_refs="MX-c-4"><invocation>cd <WS> && timeout 120 py -3.12 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~1/probes/mx_c_4.py AC11</invocation><expect>(?m)^VERDICT: PASS-MXC4-AC11(?![0-9])</expect></criterion>
-`MXC4-AC11` -- C2's bar, EXERCISED (CTO 98944): for every registered tool, denominator printed, a lookup by name through `destructive_ops.classify` returns its declared class and a lookup by name through `data_entitlement` returns its tool class, and the tool's catalog-entry reference resolves to an entry in `CAT` -- zero tools fail any of the three
+`MXC4-AC11` -- C2's bar, EXERCISED (CTO 98944; AMENDED to the CTO's ruling @5f3b4a20c6): for every registered tool, denominator printed, a lookup by name through `destructive_ops.classify` returns its declared class and a lookup by name through `data_entitlement` returns its tool class -- zero tools fail either. The sweep stays over EVERY registered tool. The catalog-entry limb is not this criterion's: it is graded on each tool's own shipping cell (`MX-t-1` .. `MX-t-7`)
 
 <criterion id="MXC4-AC12" cell_refs="MX-c-4"><invocation>cd <WS> && timeout 120 py -3.12 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~1/probes/mx_c_4.py AC12</invocation><expect>(?m)^VERDICT: PASS-MXC4-AC12(?![0-9])</expect></criterion>
 `MXC4-AC12` -- (difference) a planted tool reachable by the composed registration path but resolving through neither registry is REFUSED at registration, while the same tool with both declarations registers (a composed path that could ship it FAILS C2)

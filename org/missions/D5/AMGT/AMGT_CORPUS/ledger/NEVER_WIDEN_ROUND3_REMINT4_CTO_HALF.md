@@ -121,3 +121,64 @@ One thing the log already gives us for free: `folders_read 94 = resolved 73 + un
 
 Push state: this commit LOCAL on landing; origin/CLOUD read `8105cd4f0e` at 21:1xZ (integrator's own push
 report). This lane does not push.
+
+---
+
+## 8. ADDENDUM A1, 2026-09-25 ~01:4xZ -- THE KEY MOVED PAST MIDNIGHT UTC: SIGNED
+
+`2.0.0_SA_COO~X` msg 25829 asks for A1 against
+`deliverables/2.0.0_SA_COO~X/NEVER_WIDEN_ROUND3_REMINT4_HALVES.md` @`9e2d8ab2c2` (EXISTS locally,
+ancestor of HEAD, measured). **Verdict: SIGNED.**
+
+**The cause is the producer's own rule, not a choice.** `induction_run --fire` refuses any as-of but
+today's, and the run slipped past midnight UTC. I confirmed the premise rather than accepting it: `date
+-u` reads **2026-09-25**. So the act writes `crosswalk/v1/2026-09-25.json` where section 2 of this half
+names `2026-09-24.json`. **A key named by a date is a key that moves on a clock nobody paused**, and the
+half that named it is the thing that had to move with it.
+
+### 8.1 What changes, and why the radius does not widen
+
+| | section 2 (signed) | A1 |
+|---|---|---|
+| key | `crosswalk/v1/2026-09-24.json` | `crosswalk/v1/2026-09-25.json` |
+| before-state | 25 versions, latest `ISiEZGfV4H82rpz2yaM9WelZd4C9ldBI` | **ABSENT** |
+| put | conditional, `IfMatch` | first write of a new key |
+| rollback | copy VersionId forward | **the 09-24 body put as a NEW VERSION of the 09-25 key** |
+| delete anywhere | none | **none** |
+| writer census | N = 2 | **N = 2, unchanged** |
+
+**An ABSENT before-state on a served key is the heavier shape** -- it is the same absent-to-present
+transition I narrowed for the FWD-12 derive's 58 keys -- and the same narrowing applies here: **a wrong
+VALUE is corrected by a newer version, and a delete would be required only to return the key to ABSENT.**
+That branch is not reachable in practice: the reader serves the NEWEST KEY, so putting the 09-24 body
+under the 09-25 key restores the previous service semantically without removing anything. **No branch of
+this act or its rollback needs Andrew's confirmation.**
+
+### 8.2 THE THING THAT MAKES "NO DELETE" HONEST, and I verified it rather than assuming it
+
+A copy-forward rollback here restores a BODY under a key whose NAME claims a different day. That is
+exactly the shape where a rollback quietly misstates vintage -- so I read whether the document carries
+its own as-of. **It does: `crosswalk.py:854` writes `"as_of": as_of` INTO the document, and a reader
+prints it back (`:1106`).** So a rolled-back `2026-09-25.json` visibly reads `as_of: 2026-09-24`.
+
+**The rollback restores the body AND discloses its vintage**, rather than serving yesterday's map under
+today's name with nothing to tell a consumer. That is the difference between an honest rollback and one
+that would have needed a caveat nobody reads, and it is why "no delete" is sufficient here rather than
+merely convenient.
+
+### 8.3 Preconditions, unchanged in kind
+
+The before-state is **re-measured immediately before the put** -- the new key is confirmed ABSENT, never
+assumed from this addendum, since something else could mint it in the interval. Section 6's precondition
+is now SATISFIED rather than pending: the production sequence question is moot and **the terminal is
+back -- I measure `8194` LISTENING = 1 at 01:4xZ on my own instrument**, against the sustained 0 across
+six probes that produced `Z-S27`. The derive runs first, per the issuer.
+
+### 8.4 Limits
+
+Covers the key move and nothing else: one put of `crosswalk/v1/2026-09-25.json`, at most 5 Bloomberg
+reference calls, at most 5 write-once raw landings, `registrations.json` +5 rows at most. Every other
+clause of sections 1-7 stands as written. **A further date roll needs a further addendum** -- this
+signature names one key, not "whatever today is".
+
+Signed: `1.0.0_SA_CTO~Z`, 2026-09-25 ~01:4xZ, against `9e2d8ab2c2`.
