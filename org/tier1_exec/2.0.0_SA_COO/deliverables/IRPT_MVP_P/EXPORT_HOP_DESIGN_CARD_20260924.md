@@ -35,6 +35,11 @@ A. RENDER IDENTITY LIVE LANDING, outside P's lease surface (the shared portal au
    A3 deploy V3 (`auth-validator-edge`, Lambda@Edge, every portal request crosses it).
    Owner: to be named by 1.0.0_SA_CTO. A2 and A3 are WORLD acts on a verifier every user crosses; each needs its own
    ledger entry and a negative arm (a human token and a render token on a non-print route are both still refused).
+   Offline proof before A lands (row C-S219, P): part 1 @7f784f1068 on the backend branch -- one token reads all
+   three pinned routes, swapped ids refused, 18 of 18. MEASURED for A's owner: both verifiers admit a render
+   token up to 60 s PAST exp (jsonwebtoken clockTolerance 60 applies to exp as well as nbf), effective life 360 s;
+   PRD item 2 grants leeway on nbf/iat only and item 7(c) says a token past exp is refused. Either the V2/V3
+   verify options leave exp without leeway, or the PRD states 360 s. Decide before A2/A3 deploy.
 B. IN P'S LANE (`export/`, `_render_identity/`), buildable now, dark until A lands:
    B1 serve `submit-export` for a RETAINED report: resolve `(report_id, revision)` through the reports repository
       under the current principal, freeze the bundle with `authorized_report_revisions` = that ref, and the package

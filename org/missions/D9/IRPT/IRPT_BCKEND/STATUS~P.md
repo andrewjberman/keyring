@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T00:2xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T00:4xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -76,7 +76,12 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    interpreter ports never constructed; no served writer of the `cst_` binding; the portal sends the holdings
    `sourceSetRevision` where the reader accepts only `cst_<64 hex>`, so every custody submit refuses. Link-3 decision
    (who mints the binding) asked of 1.0.0_SA_CTO.
-7. C-S219 (round 18): a complete offline served-route chain for V1 verification (may be superseded by the live trace).
+7. C-S219 (round 18) -- the render chain's offline proof, the gate before export card section A deploys. Part 1 of 3
+   DONE 7f784f1068 (backend branch): one token on all three pinned routes, swapped ids refused, 18 of 18; expiry
+   MEASURED -- admitted up to 60 s past exp at V2 and V3 (clockTolerance applies to exp), not the PRD's literal
+   wording; recorded on the export card for A's owner. Next: part 2 (a real human-key token on the same routes;
+   actual V1 `/auth/...`), part 3 (served.Entry + report-body read; unpinned same-account report refused).
+   Verifiers' node_modules junctioned from the main workspace into the backend worktree (gitignored).
 8. A1 `_authz` log-line fix (4fffe13f01): SERVED on irpt-ycharts-generate; rides the next rebuild of the others.
    Census fix 1fcefdad74 (LOCAL, not deployed): all 17 published routes resolve and read guarded -- installed entry
    modules resolve from their staged rows; `served.installed_entry` gives performance/runtime, generate_installed and
