@@ -811,6 +811,99 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "S10's N1 (the Generate panel's client) is addressed by the same hookup; IV-e-18's census verifies it."
+  },
+  {
+    "id": "DSGN_IRPTV1-W11-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~11",
+    "surfaced_at": "2026-09-25T01:10:00Z",
+    "one_line": "The cell text names the firm-attribution chip among the facts to move to disclosure, but `FirmAttribution.tsx`'s rendered name text is the load-bearing assertion of an out-of-grant pinned test (`__tests__/fe-s-10/parity.test.ts`: `globalMarkup.includes('49 Financial<')`) -- this worker left `FirmAttribution.tsx` unchanged rather than break it, and did not move that one chip.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- rules whether fe-s-10/parity.test.ts is amended to check the firm name via a disclosure (title/details) instead of direct text, in the same round-3 JOIN chain or a later one; this worker's <paths> does not grant __tests__/fe-s-10/.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-10/parity.test.ts:83-84: `expect(globalMarkup.includes('49 Financial<')).toBe(true)` / `expect(firmMarkup.includes('49 Financial Advisors<')).toBe(true)` -- both assert the CHIP'S OWN TEXT CONTENT is the firm's display name, not a generic trigger with the name in a hover",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-10/parity.test.ts is not named in this order's <paths> (only tabs/reporting/, tabs/holdings/HoldingsTab.tsx, global/FirmAttribution.tsx, tabs/analysis/GenerateComposer.tsx, tabs/analysis/AnalysisTab.tsx, tabs/holdings/HoldingsSummary.tsx, tabs/holdings/SliceTable.tsx, __tests__/fe-s-5/fields.test.ts and __tests__/dsgn-irptv1/ are granted)",
+        "re-running `bun test src/pages/InvestorReporting/__tests__/fe-s-10/parity.test.ts` against a trial edit that swapped FirmAttribution's visible text for a generic label with the name in `title=` reproduced the failure at line 83 (before reverting the trial edit)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomp cell IV-e-18 (DSGN_IRPTV1_DECOMP.md row): 'client language on every body -- the status band's state and reason code, the \"Basis:\" chip, the firm-attribution chip, the accounts table's \"PERIOD:\" labels move to disclosures'; the task order's own text repeats 'the firm-attribution chip (IR/global/FirmAttribution.tsx, a ruled touch)' in the same list.",
+    "world_is": "FirmAttribution.tsx is a RULED touch this order may edit, but its rendered text is the exact discriminator FE-s-10's own parity test (a sibling cell's pinned regression check, not this order's to fix) uses to prove Global-mode and firm-scoped renders are otherwise byte-identical -- moving the name into a disclosure removes that discriminator and fails the test. This worker implemented every OTHER item in the cell's list (status band, \"Basis:\" chip, accounts-table PERIOD labels, plus the four numbered amendments N1-N4) and left FirmAttribution.tsx's visible name as-is, per BOUNDS' refusal clause (do not weaken a test to pass, and do not fix a defect outside this order's own criteria by breaking a neighbour's).",
+    "notes": "Not blocking any of IVE18-AC1..AC4 as written: none of their invocations exercise FirmAttribution's own text, and the DOM census (IVE18-AC1) does not name the firm chip among its enumerated banned tokens. Filed so the CTO/COO can decide whether fe-s-10/parity.test.ts is amended (e.g. to strip a `title=` attribute instead of the whole element's text) in a later cell with that file in its <paths>."
+  },
+  {
+    "id": "DSGN_IRPTV1-W11-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~11",
+    "surfaced_at": "2026-09-25T01:10:00Z",
+    "one_line": "Implementing amendment N2 as written (ReturnsHeatmap.tsx prints \"not supplied\" instead of UNAVAILABLE) necessarily breaks an out-of-grant pinned test, `__tests__/fe-s-5/states.test.ts`, which asserts the literal string `>UNAVAILABLE<` for the exact same cell this order names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- rules whether fe-s-5/states.test.ts's UNAVAILABLE assertion is re-scoped (the same treatment this order gives fe-s-5/fields.test.ts) in a later cell; this worker's <paths> does not grant __tests__/fe-s-5/states.test.ts.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-5/states.test.ts:92: `expect(markup.includes(\\`>${UNAVAILABLE_WORD}<\\`)).toBe(true)` against `performance.unsupported-benchmark.json` rendered through `ReportingTab` -- fails after N2's edit (measured: 'Expected: true / Received: false')",
+        "before this worker's N2 edit (measured on the untouched worktree): the same sub-test PASSED; two of the file's OTHER three sub-tests already failed at the untouched worktree's HEAD on an unrelated `data-block=\"summary\"` assertion (the `render/performance/Summary.tsx` component this project retired from ReportingTab.tsx in round 1, IV-t-2 -- confirmed via `git show HEAD:.../ReportingTab.tsx` naming `Summary` only in a comment, never an import)",
+        "the amendment's own words leave no room for both: 'ReturnsHeatmap.tsx prints no \"UNAVAILABLE\" in a cell: the cell reads \"not supplied\" and the reason moves to the cell's hover' -- unambiguous, and the reason (`fact.return.unavailableReason`) was already carried in that cell's own `title` attribute before this edit, unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's amendment N2 (issuer, 2026-09-24, the CVO's FAST-pin, items N1-N4): 'ReturnsHeatmap.tsx prints no \"UNAVAILABLE\" in a cell: the cell reads \"not supplied\" and the reason moves to the cell's hover.'",
+    "world_is": "fe-s-5/states.test.ts (a different, earlier cell's own file, not named in this order's <paths>) pins the OLD behaviour N2 explicitly retires for this exact component; the amendment is unambiguous and this worker implemented it, which necessarily turns that one sub-test's assertion false. The file's other two sub-tests were already failing before this edit on an unrelated, longer-standing gap (see grounding) -- this edit adds ONE new failing assertion to a file that was already red.",
+    "notes": "Not blocking any of IVE18-AC1..AC4: IVE18-AC1's own census (this order's graded criterion) requires the ABSENCE of UNAVAILABLE from the Performance body and PASSES; N2 is an explicit, numbered instruction this worker was ordered to carry out, not a discretionary change. Filed so the CTO/COO re-scopes fe-s-5/states.test.ts's UNAVAILABLE_WORD assertion (the same treatment this order already gives fe-s-5/fields.test.ts, IVE18-AC3) rather than reading the new failure as an unreviewed regression."
+  },
+  {
+    "id": "DSGN_IRPTV1-W11-S3",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~11",
+    "surfaced_at": "2026-09-25T02:20:00Z",
+    "one_line": "IV-e-19's own in-grant edit to HoldingsTab.tsx (progressive disclosure, DESIGN.md C14) necessarily grows the diff `__tests__/dsgn-irptv1/iv-e-10.ruled-touch.test.ts` (IVE10-AC3, an earlier cell's own pinned criterion) measures against a fixed base commit -- but that check was ALREADY RED (12 added/1 removed against its own <=2-added/0-removed bound) before this task order touched anything, from IV-e-18's prior edit to the same file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- rules whether iv-e-10.ruled-touch.test.ts's fixed-base bound is retired now that two later cells (IV-e-18, IV-e-19) have made further RULED, in-grant edits to the same file the bound was written to pin; this worker's <paths> does not grant __tests__/dsgn-irptv1/iv-e-10.ruled-touch.test.ts.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git diff --numstat 13b5356fad4779b990e8e7a88636430204b30e42 df5e41b5 -- src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx` (portal, before this worker's IV-e-19 edit): `12\\t1`, already outside the test's own bound `added<=2, removed==0` -- IVE10-AC3 was already FAILING at the commit this task order's own worktree pair was handed",
+        "`bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-10.ruled-touch.test.ts` after this worker's IV-e-19 commit (6de269cc): `NUMSTAT: \"39 5\"` / `VERDICT: RULED-TOUCH-FAIL added=39 removed=5` -- the same pre-existing failure, now larger by this order's own legitimate edit (paths grant tabs/holdings/HoldingsTab.tsx explicitly for this cell)",
+        "full `__tests__/dsgn-irptv1/` suite after this worker's commit: 68 pass, 1 fail (this one) of 69 tests across 55 files -- the sole failure in the directory, unrelated to any of IVE19-AC1..AC3's own graded invocations"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "iv-e-10.ruled-touch.test.ts (IV-e-10a's own criterion): `HoldingsTab.tsx` differs from base commit `13b5356f...` by AT MOST TWO ADDED LINES, ZERO REMOVED, forever, read directly off `git diff --numstat` against that one fixed commit.",
+    "world_is": "The decomp's own later cells (IV-e-18, then this cell IV-e-19) are BOUNDS-granted to make further RULED edits to the same file for their own FWDs (client-language disclosures; progressive disclosure/DESIGN.md C14) -- a fixed-base, ever-shrinking bound on ONE file cannot survive two more legitimate rounds of work on it. This worker did not touch iv-e-10.ruled-touch.test.ts (out of `<paths>`) and did not weaken it to pass; the file's own JOIN-2 task order explicitly grants `tabs/holdings/` and this cell's rules leave no smaller edit that both satisfies IVE19-AC1/AC2 and holds the count at 2.",
+    "notes": "Not blocking any of IVE19-AC1..AC4 as written: none of their invocations run iv-e-10.ruled-touch.test.ts. Filed so the CTO/COO retires or re-bases the fixed-base bound (e.g. pin to the LAST cell that was allowed to touch the file, or drop the numeric cap now that the file is under active, ruled, multi-round revision) rather than reading a future re-run as a fresh regression."
+  },
+  {
+    "id": "DSGN_IRPTV1-W11-S4",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~11",
+    "surfaced_at": "2026-09-25T02:55:00Z",
+    "one_line": "IVE20-AC2's own scrollbar census, run against the LIVE main portal checkout on :5174 (the worker face's own instructed instrument, pre-merge), found a real stray horizontal scrollbar in production-adjacent code TODAY: DrillTree.tsx's donut legend (`renderDrillLegend`, IV-e-13 round 2) sets `whitespace-nowrap` on each entry inside a `flex-wrap` row, so a single long model name (e.g. a canonical duration-ladder name) wider than the legend's own box at 390px cannot shrink or wrap and forces `scrollWidth(316) > clientWidth(250)` on `[data-slot=holdings-drill-legend]` -- confirmed a genuine `overflow-x: auto` computed value (not a false positive) because CSS forces the cross-axis to `auto` whenever `overflow-y: auto` is set on an element whose other axis was `visible`.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- merges this worker's fix (DrillTree.tsx: the legend `<li>` drops `whitespace-nowrap`, gains `max-w-full break-words`) into the round-3 candidate and re-runs `iv-e-20-scrollbar-driver.mjs` against the MERGED checkout's own dev server; only that re-run, not this worker's in-worktree fix, can flip IVE20-AC2 to PASS-by-output, per the worker face's own instruction that a fix living only in an unmerged worktree cannot be measured as fixed on :5174.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`node iv-e-20-scrollbar-driver.mjs http://localhost:5174 iv-e-20.fixture.json \"Cottonwood Trust\"` (this worker's own driver, run twice, before AND after the DrillTree.tsx fix -- both runs against the SAME unmerged :5174, since the fix lives only in this worktree): identical output both times -- `WIDTH 390 TAB Holdings CONTAINER [data-slot=holdings-drill-legend] <ul> ... scrollWidth=316 clientWidth=250 -- VIOLATION`, `CENSUS: 1 violation(s) across 6 width x tab combination(s)`, `VERDICT: SCROLLBARS-FAIL` -- proving the violation is a property of the SERVED page, not of this worker's own unmerged edit",
+        "at 1440 the same container reads `scrollWidth=621 clientWidth=621 -- ok` (no violation) -- the defect is width-dependent, only surfacing at the 390px bound this cell's own criterion names",
+        "`portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx` `renderDrillLegend` (committed at IV-e-13, round 2, well before this order): `<li ... className=\"inline-flex items-center gap-1.5 whitespace-nowrap\">` -- `whitespace-nowrap` prevents the entry's own text from wrapping, and a `flex-wrap` parent only wraps BETWEEN entries, never inside one, so one entry's own content width can exceed the container regardless of how many rows the legend spans",
+        "this worker's fix (committed on this branch): `className=\"inline-flex max-w-full items-center gap-1.5 break-words\"` -- `bun run typecheck` rc=0, `iv-e-13.legend-scale.test.ts` (the cell that authored this file) re-run clean (it asserts only the container's own `flex-wrap` class, never the `<li>`'s), full `__tests__/dsgn-irptv1/` suite unaffected"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IVE20-AC2: 'at 1440 and 390, no container other than the named table scrollers has scrollWidth > clientWidth (printed per container)'.",
+    "world_is": "The violation is real, measured on the currently-served main checkout (not a hypothetical or a fixture artifact), pre-dates this task order by two rounds (IV-e-13), and is fixed in this worker's own worktree but cannot be observed as fixed on :5174 until the COO's merge -- so IVE20-AC2 is reported FAIL-by-output against :5174 with this row as its status_reason, order left `pending`.",
+    "notes": "Not blocking the other three criteria (IVE20-AC1 TOOLTIPS-OK, IVE20-AC3 BANDS-OK both pass; IVE20-AC4 is judgment, RECORDED). Filed so the COO's merge + re-run is the one act that closes this row and flips IVE20-AC2, and so the CTO sees that the pre-existing legend defect (not something this order introduced) was caught by this cell's own new instrument."
   }
 ]
 ```
