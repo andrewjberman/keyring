@@ -403,6 +403,94 @@ CODE_TREES: dict[str, dict] = {
     },
 }
 
+# ---------------------------------------------------------------------------
+# STANDALONE BUNDLES -- minted ONLY by an explicit `--mint-bundle <name>`, never commit-routed.
+#
+# The routing (bundle_for_member, detect_bundle_member_files, route_bundle_members) reads CODE_TREES only. There, a
+# member script LEAVES its loose leg and a path belongs to the FIRST bundle that lists it. The scheduled holdings
+# runner's closure includes 12 MDPF gold scripts, lib/ and the LGIC registry, each served on its own leg, so declaring
+# it there would freeze other pipelines' deploys. A standalone bundle is a release artifact instead: the act that
+# ships the holdings runner mints it (CTO R4 row 3, 2.0.0_SA_COO~M, RULINGS_IRPT_20260925.md @75156f2b18).
+#
+# THE CLOSURE: every repo file a real `holdings_snapshot.run_firm` opens or imports for all three firms (qa, no
+# upload, both retained-input variables unset, CLOUD @de042e1e4b). It was measured with an `open` audit hook plus
+# sys.modules: 29 modules and 11 data files. Re-measure it when a builder gains an import.
+# ---------------------------------------------------------------------------
+_IRPT_HOLDINGS_CLOSURE = (
+    "data/assets/scripts/gold/build_cottonwood_mdpf_pair.py",
+    "data/assets/scripts/gold/build_cottonwood_mdpf_slice.py",
+    "data/assets/scripts/gold/build_dim_model_portfolio.py",
+    "data/assets/scripts/gold/investor_reporting/holdings_49f.py",
+    "data/assets/scripts/gold/investor_reporting/holdings_inf.py",
+    "data/assets/scripts/gold/investor_reporting/holdings_membership.py",
+    "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+    "data/assets/scripts/gold/investor_reporting/inf_positions.py",
+    "data/assets/scripts/gold/investor_reporting/source_inputs.py",
+    "data/assets/scripts/silver/rebalancer_schemas.py",
+    "data/black_diamond/scripts/gold/lib/etf_classifier.py",
+    "data/inf/scripts/silver/_orion_api_silver_lib.py",
+    "data/inf/scripts/silver/convert_eclipse_portfolios_to_silver.py",
+    "data/mdpf/scripts/gold/dim_mdpf_account_distribution.py",
+    "data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py",
+    "data/mdpf/scripts/gold/dim_mdpf_aum_metrics.py",
+    "data/mdpf/scripts/gold/mdpf_aggregate_aua.py",
+    "data/mdpf/scripts/gold/mdpf_calendar_binding.py",
+    "data/mdpf/scripts/gold/mdpf_category_registry.py",
+    "data/mdpf/scripts/gold/mdpf_name_discovery.py",
+    "data/mdpf/scripts/gold/mdpf_revamp_model_crosswalk.py",
+    "data/mdpf/scripts/gold/taxsma_assets.py",
+    "data/mdpf/scripts/gold/taxsma_membership.py",
+    "data/mdpf/scripts/silver/taxsma_workbook.py",
+    "infra/aws/lambda/investor-reporting/_ids/ids.py",
+    "infra/aws/lambda/investor-reporting/holdings/publication.py",
+    "infra/aws/lambda/investor-reporting/reports/currency_authority.py",
+    "lib/opal_naming.py",
+    "lib/trading_calendar.py",
+    "data/firm_registry.json",
+    "docs/contracts/investor-reporting/v1/CurrencyAuthorities.json",
+    "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
+    "infra/logic/registry/exemptions.json",
+    "infra/logic/registry/remediations.json",
+    "infra/logic/registry/reporting_policies.json",
+    "infra/logic/registry/resources.json",
+    "infra/logic/registry/scopes.json",
+    "infra/logic/registry/systems.json",
+    "infra/logic/registry/tiers.json",
+    "org/standards/NAMING_SCHEMA.json",
+)
+_IRPT_HOLDINGS_OBJECT = "investor-reporting-holdings.tar.gz"
+
+
+def _irpt_holdings_bundles() -> dict[str, dict]:
+    """One manifest-stamped bundle per firm the runner builds, at that firm's own code home. The firms are read
+    from holdings_snapshot.BUILDERS (parsed, not imported) and each key is lib/opal_naming.address() output
+    (rule 30), so no firm token or bucket is typed here. A firm's run pulls only its own firm's copy."""
+    import ast
+    import importlib.util
+
+    runner = WORKSPACE / "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py"
+    naming = WORKSPACE / "lib/opal_naming.py"
+    if not runner.exists() or not naming.exists():
+        return {}
+    firms = []
+    for node in ast.parse(runner.read_text(encoding="utf-8")).body:
+        if isinstance(node, ast.Assign) and any(getattr(t, "id", None) == "BUILDERS" for t in node.targets):
+            firms = [k.value for k in node.value.keys]
+    spec = importlib.util.spec_from_file_location("_safe_deploy_opal_naming", str(naming))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    members = {p: {"repo_path": p, "sha_metadata_key": "manifest"} for p in _IRPT_HOLDINGS_CLOSURE}
+    out = {}
+    for firm in firms:
+        uri = module.address("irpt", firm, "code", "gold", _IRPT_HOLDINGS_OBJECT)
+        bucket, key = uri[len("s3" + "://"):].split("/", 1)
+        out["irpt_holdings_" + module.lookup(firm)["short"]] = {
+            "members": members, "stamp": "manifest", "bucket": bucket, "s3_key": key}
+    return out
+
+
+STANDALONE_BUNDLES: dict[str, dict] = _irpt_holdings_bundles()
+
 # Pipeline detection table: data_dir_name -> (s3_bucket, pipeline_label).
 # DERIVED -- the deploy gate is exactly the deploy_gated trees. Byte-identical to
 # the hand-written table it replaces: {black_diamond, inf, cot}.
@@ -797,6 +885,8 @@ def find_bundle(name: str) -> Optional[tuple[str, str, dict]]:
         b = tree.get("bundles", {}).get(name)
         if b is not None:
             return tree["label"], name, b
+    if name in STANDALONE_BUNDLES:  # explicit mint only; the commit routing never reads this table
+        return "standalone", name, STANDALONE_BUNDLES[name]
     return None
 
 
