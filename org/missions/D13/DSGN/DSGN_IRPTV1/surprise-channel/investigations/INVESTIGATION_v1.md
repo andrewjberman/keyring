@@ -566,6 +566,30 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not blocking IVE9-AC2 (this order names only IVE9-AC1..AC4). Filed because IV-e-8's test lives outside this order's <paths> grant, so this worker cannot repair it without widening scope."
+  },
+  {
+    "id": "DSGN_IRPTV1-W7-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~7",
+    "surfaced_at": "2026-09-25T00:25:07Z",
+    "one_line": "TO-IV-e-10's Holdings mount (AccountFilter, above the drill) cannot receive a live Narrowing/SearchOptionRow/onNarrow -- that triple lives in index.tsx, threaded today only as far as the header, and TabShell.tsx/index.tsx (the only files that could carry it into HoldingsTab.tsx) are outside this order's <paths> grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- landing a live account filter inside Holdings (and the same gap applies to AccountsTable/ReportingTab.tsx on the Performance side) needs a follow-on cell that threads selection/row/onNarrow from index.tsx through TabShell.tsx into HoldingsTab.tsx and ReportingTab.tsx, both outside this cell's grant; until then AC4's real-run narrows nothing from inside either tab body.",
+    "spec_asserts": "TO-IV-e-10 cell (a): 'An account filter above the drill in HoldingsTab.tsx (ONE mount line + at most one import) ... choosing one narrows through the existing server-accepted selection path (narrowToOneAccount / restoreFullSelection in IdentityCard.tsx)'; cell (b) says the same of AccountsTable.tsx. AC4 (judgment, real run): 'an advisor narrows to one account from inside Holdings and Performance'.",
+    "world_is": "HoldingsTab.tsx's own HoldingsTabProps carries only api/scopeRef/scope/firmId (no selection/row/onNarrow); TabShell.tsx mounts it with exactly those four (measured at tabs/TabShell.tsx:105-112) and is not in this order's <paths>. ReportingTab.tsx (mounting AccountsTable.tsx) is symmetric: only api/scopeRef/scope, not in grant either. Both AccountFilter.tsx and AccountsTable.tsx's new props (selection/row/onNarrow) are built and unit-tested to spec (IVE10-AC1, IVE10-AC2 both PASS, calling narrowToOneAccount/restoreFullSelection directly with a recording onNarrow) and render/degrade to inert-but-harmless when those props are absent -- the SAME 'ADDITIVE, OPTIONAL props ... a one-line change wherever it happens' pattern HoldingsTab.tsx's own file header already documents for scope/firmId, and the same class of gap W7-S1 and this file's own TabShell-mounting doc comment already name.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/TabShell.tsx@this worker's worktree tip, lines 105-112 (HoldingsTab mount: api, scopeRef, scope, firmId, initialSnapshot, initialEnvelope -- no selection/row/onNarrow) and line 93 (ReportingTab mount: api, scopeRef, scope only)",
+        "portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx@this worker's worktree tip, HoldingsTabProps interface (api/scopeRef/scope/firmId/initialSnapshot/initialEnvelope only)",
+        "this order's own <paths>: TabShell.tsx and index.tsx are absent from the grant; only HoldingsTab.tsx, AccountFilter.tsx, AccountsTable.tsx and the test directory are listed",
+        "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~7/DSGN_IRPTV1.TO-IV-e-10.accounts-in-the-view.proof_of_spec.json (IVE10-AC1/AC2 PASS on the unit-level narrowing logic)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking IVE10-AC1..AC3 (mechanical, all PASS). IVE10-AC4 is RECORD/judgment, never self-graded by this worker; naming this gap so the CVO's real run at the drain does not read a silent 'nothing happened when I clicked' as this cell's own defect."
   }
 ]
 ```
