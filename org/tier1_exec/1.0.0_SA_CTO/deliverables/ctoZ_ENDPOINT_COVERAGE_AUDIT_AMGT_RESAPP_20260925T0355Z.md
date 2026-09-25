@@ -329,3 +329,104 @@ comparable outside the corpus with no pack (`FWD-19`), a population that diverge
 it has, discloses what it lacks, and cites what it asserts -- consistently and well.** What it does not
 yet have is the SUBSTANCE behind the frames. That is the same split the endpoint audit found from the
 other direction, and two independent readings agreeing is worth more than either alone.
+
+---
+
+## `FWD-5` -- **NOT_REALIZED.** THE SERVED PDF IS **13 PAGES**, AND THE GOAL SAYS 2
+
+Fence `:461-466`. **The instrument was already ruled, which is why this grade is possible at all:**
+`ROUND_ANALYSIS.round11.md@4055200e2f` A1.3 R2 -- *"NOT ruled a browser act: `FWD-5`'s displacement test is
+that a person forwards the output AS PRODUCED, and a browser-rendered print is the analyst's own
+reformatting under another name."* So the object to grade is the SERVED pdf, and nothing else.
+
+**AND NO ROUND HAD EVER TAKEN THAT MEASUREMENT.** Round 40's served capture
+(`0.9.0_WK_AMGT_RESAPP~150/served_capture.py:120`) builds `{"path": print_path, "query": {"format": "rich"}}`
+-- **rich only.** The pdf axis has been unmeasured through 42 rounds. This is its first read.
+
+**MEASURED** -- one `lambda:Invoke` of `opal-amgt-scoped-api` (`CodeSha256 pmH20bb+L1Kcejf4MKS4tVt+tCIPgeHwSZAsTe+nXZo=`,
+`LastModified 2026-09-24T23:54:02Z`), at `/api/scoped/amgt/security/BA_US_Equity/print` with **no format
+argument** and again with `format=pdf`. Both: `status 200`, `Content-Type application/pdf`,
+`isBase64Encoded True`, **113,853 pdf bytes**.
+
+| what the fence and the goal ask | what the served pdf is |
+|---|---|
+| the goal: *"2pg max"* | **13 PAGES** (`pypdf`, `len(reader.pages)`) |
+| *"replaces the document he circulates today"* | 420 extracted lines, of which **391 are figure lines** -- one line per figure, each carrying value, unit class, mnemonic, **the full Bloomberg field description in parentheses**, the as-of stamp and the source |
+| *"rather than looking like a screenshot of a dashboard"* | **it does not look like a dashboard screenshot. It looks like a FIELD DICTIONARY** -- a third thing the fence never named |
+
+**AND THE PDF CARRIES LESS THAN THE RICH EXPORT, not more.** Its sections, read off the extracted text:
+title (`BOEING CO/THE [BA US Equity] Research Note`), `MODEL BLOCK`, `Header`, `Fiscal year 2016` through
+`Fiscal year 2028` (13 years), `Management/Board`. **That is all.** No Recommendation, no Company
+Description, no Investment Thesis, no Risks, no Peers, no Analyst Posture, no Model Notes, no Model Cases
+-- **every one of which the 402-line rich export carries.** So the pdf is a strict SUBSET of the rich
+document, rendered at 13 pages because each figure occupies a full line of provenance.
+
+**THIS SPLITS THE GOAL'S OWN SENTENCE, and that is the finding worth more than the grade.** The goal reads
+*"presentation in Opal Brand Guidelines form mimicking Asset Mgmt team's earnings reports 2pg max **or**
+machine readable rich text output"*. **The rich-text branch is BUILT** (`FWD-30` branch (b); the 402-line
+markdown). **The 2-page branded branch does not exist at all** -- what sits at the pdf route is a 13-page
+provenance dump carrying a subset of the rich document's content. An `or` was satisfied on one side and the
+other side was never started, and because the route answers 200 with a real pdf, **nothing in the record
+read as missing.**
+
+**DONE WHEN separately unmet:** *"EXERCISED -- Adam has actually forwarded one."* No forward is recorded,
+and this is not a thing a seat can supply.
+
+### A SECOND FINDING FROM THE SAME RUN -- 192 of 391 figure lines carry NO UNIT CLASS
+
+Counted, denominator printed: **391 figure lines, 192 of them `[UNRESOLVED UNIT]` -- 49%.** Distinct
+mnemonics on the pdf: **64**. Distinct mnemonics with no unit class: **26**, and they are not a random tail:
+
+`BEST_BPS BEST_CAPEX BEST_DIV_YLD BEST_DPS BEST_EBIT BEST_EBITDA BEST_ESTIMATE_FCF BEST_NET_INCOME`
+`BS_CASH_NEAR_CASH_ITEM BS_TOTAL_LIABILITIES EBITDA_TO_REVENUE EQY_DPS EQY_FUND_CRNCY`
+`FREE_CASH_FLOW_MARGIN FREE_CASH_FLOW_YIELD GROSS_MARGIN IS_ADJUSTED_GROSS_PROFIT`
+`IS_ADJUSTED_OPERATING_INCOME IS_COMP_EPS_ADJUSTED IS_DIL_EPS_CONT_OPS NET_INCOME`
+`PX_TO_FREE_CASH_FLOW RETURN_ON_CAP RETURN_ON_INV_CAPITAL RETURN_ON_TANGIBLE_ASSETS REVENUE_PER_SH`
+
+**EVERY `BEST_*` FORWARD ESTIMATE IS IN THAT LIST, and so is `NET_INCOME`.** The resolved ones
+(`SALES_REV_TURN MILLIONS`, `OPER_MARGIN PERCENT`, `PE_RATIO RATIO`) are the older registry entries; the
+unresolved ones are the later additions. **This is a REGISTRY-COVERAGE boundary showing through to the
+served artifact**, not a renderer defect -- the renderer prints exactly what the registry gave it and marks
+the gap, which is the right behaviour. **It bears on `FWD-3`** (*"defend every number on the page"*): a
+figure whose unit is `[UNRESOLVED UNIT]` cannot be defended in a meeting, and `NET_INCOME` is not a
+figure anyone will let pass. **Routed to `2.0.0_SA_COO~Z` as a round-43 input; not a cell I cut.**
+
+**7 of 20 graded: 1 REALIZED, 5 NOT_REALIZED, 1 NOT GRADEABLE.** 13 remain.
+
+---
+
+## `FWD-2` -- **NOT_REALIZED, and its blocker is a RESERVATION this fabric cannot lift**
+
+Fence `:435-442`. ACCEPT: an analyst types the ticker of a never-covered company and **gets the same
+assembled page**, which **says plainly it is being fetched now** rather than shown from an earlier save.
+DONE WHEN: *"EXERCISED -- a real uncovered name has been pulled and read."*
+
+**THE PRD ALREADY RULED WHY THIS CANNOT CLOSE HERE.** `C-ROUND12-PULL-WIRED` (`AMGT_RESAPP_PRD.md:1042-1051`),
+`FWD-2`'s own named carrier, ruled at L10 `ROUND_ANALYSIS.round11.md@4055200e2f` A1.3 R3 as corrected by
+Addendum 2 C1, verbatim:
+
+> *"The on-demand pull is WIRED, not retired: the page calls the enqueue route, and the adapter DECLARES its
+> queue carrier so the refresh route stops answering 501. THE CONSUMER STAYS BOX-SIDE AND IS NOT A LAMBDA.
+> ... **NO LAMBDA CONSUMER IS BUILT**, and the consumer's CADENCE is RESERVED to Andrew by name, on the same
+> standing as the harvest cadence -- a card, never a cell."*
+
+**So the half of `FWD-2` the fabric can build is the ENQUEUE, and the half that makes it an outcome is the
+DRAIN -- which is reserved, unbuilt, and box-side by a dependency rather than a preference** (the consumer
+reaches the Bloomberg desktop interface on the terminal box's loopback, so a Lambda consumer would fail
+every message at the health check). A name typed today enqueues and is never pulled. **`FWD-2` is
+NOT_REALIZED, and no round can move it.**
+
+**AND I DID NOT EXERCISE IT, deliberately.** Calling the refresh route for an uncovered ticker is the act
+the outcome describes, and it is a WRITE that enqueues work whose consumer reaches a vendor terminal. Under
+*"NEVER call an external vendor API without Andrew's explicit per-use word -- availability is not
+authorization"*, the exercise is not mine to run. **The instrument bound and the law point the same way
+here, which is the cheap case:** grading it on the PRD's own ruled contract costs one read and reaches the
+same answer the exercise would.
+
+**THIS IS THE FOURTH OUTCOME OF THE PASS BLOCKED BY SOMETHING OUTSIDE THE PRODUCT** -- `FWD-17` and
+`FWD-19` on the unanswered universe word, `rp-1` on the same, and now `FWD-2` on a reserved cadence.
+Three of the four are ONE card at Andrew; this one is a SECOND card, and it is a different question:
+**not "which universe", but "who drains the queue, and how often".** It goes to him as a card, per the
+contract's own words, and nothing in the loop waits on it.
+
+**8 of 20 graded: 1 REALIZED, 6 NOT_REALIZED, 1 NOT GRADEABLE.** 12 remain.
