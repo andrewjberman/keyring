@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T19:1xZ (tick 10). Loop: /canonical-drive cron 6f699621 (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-25T19:2xZ (tick 10). Loop: /canonical-drive cron 6f699621 (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -95,12 +95,11 @@ branch. No code edit is open.
      is asked of the CTO (msg 20260925T190215Z; the diff is ready). The plan ALSO shows
      irpt_directory_refresh cron(30 9)->cron(0 9): ~P's S126 fix lives only on ~P's branch, so an apply from CLOUD
      would revert it. S135 is DISARMED (S136): ~P's fix is landed at afefa09d7e, and the re-plan reads 10 to add,
-     0 to change. The source-map member is landed (db47ccb99c, audited override per CTO 101003). The artifact
-     build REFUSED inside holdings/ on that dir's OTHER function's STAGE_MANIFEST (the vendored resolve.py has
-     drifted from its pin _scope/resolve.py@c76b7c7aee; ~P's irpt-holdings state). A move to a new dir
-     holdings_refresh/ hit lane CLOUD_OPS_OR_ETL; it is reverted, and the grant is asked of the CTO
-     (msg 20260925T19xxZ). Ledger irpt-holdings-refresh-artifact-m-20260925 is OPEN @504421bdc0, no leg done yet.
-     Then a full plan, then the never-widen packet. No apply before it is signed.
+     0 to change. The dispatch moved to its own granted dir holdings_refresh/ (CTO @8f23a84826; 4a49b03031), and its
+     artifact is built and uploaded (ledger irpt-holdings-refresh-artifact-m-20260925 CLOSED @a045790a3b). Full plan:
+     11 add / 2 change / 0 destroy, all R4's. The NEVER-WIDEN PACKET is sent (@885ae2f3d6, msg to the CTO): the COO
+     half is signed, the CTO half is owed. On the CTO's signature: the apply under a ledger, the read-back, one --qa
+     fire, then the enable half. ~P is told that the holdings/ resolve.py pin drift refuses its next build.
      Then the never-widen packet (both halves), the apply, one --qa fire, and the enable half.
      Row 4a DONE (3e1ca981ab): the publication writes through a firm-scoped publish principal when the dispatch
      names one (IRPT_HOLDINGS_PUBLISH_ROLE_ARN); reads stay on the host (R-44 split by bucket). Rows 2 and 4b are
