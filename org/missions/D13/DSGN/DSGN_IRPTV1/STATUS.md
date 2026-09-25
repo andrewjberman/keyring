@@ -1,4 +1,4 @@
-# DSGN_IRPTV1 -- status (FULL: round 3 drained; L10 with 3.0.0_SA_CVO)
+# DSGN_IRPTV1 -- status (FULL: round 4 executing, /canonical-drive)
 
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.8
 @31a61d0466 (ADMITTED). Round 3: issuance @9e13e294c1 (12 orders IV-e-9..20, decomp v3 @2af10e4cd0), amendment
@@ -10,7 +10,7 @@ Build place: the main portal checkout on DEV (Andrew-direct ~18:3xZ). As of 2026
 | What | Value |
 |---|---|
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal DEV | `8242412d` = origin DEV (ls-remote read 2026-09-25 ~15:0xZ; CTO review 100953, pushed by 0.0.0_AB_MSTR on Andrew's word) |
+| Portal DEV / PROD | PROD cb48eff8 (portal-v2.1.187) includes round 3 (CTO 100986); DEV `8242412d` = origin DEV (ls-remote read 2026-09-25 ~15:0xZ; CTO review 100953, pushed by 0.0.0_AB_MSTR on Andrew's word) |
 | Round-3 merges on DEV | chain D `f9df6ab5` (+ repair `62055f14`); chain A `00806e0c` (+ repair `89a6d4f4`); chain B `16c11701`; chain C `d3d93838`; hookups `8cd2dab2`; join `6de269cc` (ff) + `f9a954b3`; repairs `ecfd327a`, `8242412d` |
 | CLOUD records | chain D `1588e5c247`; A `b2c65c13d0`; B `8c2235aa08`; C `cb7bd249c9`; join `4c8d0f570e`; IV-e-16 close `4047bdbea7` + `a109a7e0a9`; IV-e-20 close `6c8a16b536` + `0eb458269a` |
 | Screen | `localhost:5174` from the main checkout, serving local DEV |
@@ -18,9 +18,12 @@ Build place: the main portal checkout on DEV (Andrew-direct ~18:3xZ). As of 2026
 
 ## Orders
 
-All twelve round-3 orders (IV-e-9..IV-e-20) complete; every worker slot drained and torn down.
+Round 4 (CTO 100991 over ADJUDICATION_v2 @7bf1522657): decomp v4 @d4add46f46, issuance @761450ff61, five one-cell chains
+on slots ~12..~16 off DEV 8242412d -- IV-e-21 (Performance account filter), IV-e-22 (Analysis at rest), IV-e-23 (firm
+name, not token), IV-e-25 (repairs), IV-e-26 (export hop consumer). IVE16 parked on P (routing asked of 1.0.0_SA_CTO).
+Round 3: twelve orders complete, on origin DEV 8242412d and PROD cb48eff8.
 
-## Drain checks
+## Round-3 drain checks
 
 - IR suite on DEV (f9a954b3 + ecfd327a): 742 pass / 82 fail; the only round-3 residual is fe-s-5/states (W11-S2);
   every round-3 test file green; tsc -b rc=0 (mutant control rc=2); eslint 0 errors on touched files.
@@ -39,7 +42,9 @@ disarmed. The DEV landing 13b5356f..8242412d is under the CTO's review; the push
 
 1. SearchSelect accessibility: no combobox/listbox/option roles, no keyboard navigation (the Catalyst picker had them).
 2. The hero cards colour by model name, not served modelCode (CategoryViewTree's contract carries no code; row W8-S1).
-3. The live signed-in thread (FWD-1): every real run so far is fixture-driven.
+3. The live signed-in thread (FWD-1) is round 4's DRAIN ACT, not a cell (CTO 100986): run it on IRPT_BCKEND's bounded
+   test principal (IB-rtf-3) if live, else ask Andrew through 1.0.0_SA_CTO for one signed-in walk on 5174; hops fed by P's
+   gaps (spread, B1) grade from the live refusal, FWD-1 NOT_REALIZED stated.
 4. fe-s-5/states re-scoped per R6: the heatmap cell reads "not supplied", the reason on hover; the two sub-tests pinning the
    retired Summary block re-scoped or removed with the reason stated.
 5. The firm chip prints the firm token ("F-CW"); per R6 the chip shows the firm's name and the token moves to a disclosure.
@@ -47,6 +52,9 @@ disarmed. The DEV landing 13b5356f..8242412d is under the CTO's review; the push
    longest-key label fallback where a code exists.
 7. submit-export: accept a data-less QUEUED/RUNNING answer, the export id from status.operation.revision (P 100960;
    schema @f6fd60f4fd, CTO R2); regenerate contracts/wire. The served route still answers NOT_READY until P's B1 lands.
+8. Print route (P 100987; EXPORT_HOP_DESIGN_CARD_20260924.md B2-URL @bc3f70d22c): PrintEntry reads selection/start/end
+   from the URL and resolveBundle passes them to getPerformanceReport, refusing by name when one is missing (today it
+   throws "An accepted account selection is required" and sends start = end = businessAsOf).
 
 ## Parked
 
