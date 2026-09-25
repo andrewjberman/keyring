@@ -926,6 +926,28 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The three next-round items are for 1.0.0_SA_CTO's round-3 analysis (L10)."
+  },
+  {
+    "id": "DSGN_IRPTV1-W14-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~14",
+    "surfaced_at": "2026-09-25T14:00:00Z",
+    "one_line": "IV-e-23's cell text (b) describes IdentityCard.tsx as still printing the raw firm token ('F-CW -- Account') on the WHO line, but at portal DEV 8242412d (this order's own base) IdentityCard.tsx line 344 already reads `scope?.verifiedRequestFirm?.displayName ?? 'not supplied'` -- the token never reached that line at this base; only FirmAttribution.tsx (part (a)) still needed the fix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`portal/src/pages/InvestorReporting/header/IdentityCard.tsx:344` at commit 8242412dde9a3ef807e118f648242cf24ffe2981 (this worktree's base): `const firmName = scope?.verifiedRequestFirm?.displayName ?? 'not supplied'` -- reads only the PermittedFirm's own displayName field, never `.firmId` (the token)",
+        "new test `iv-e-23.identity-firm.test.ts` (IVE23-AC2), run against the UNCHANGED file: VERDICT: IDENTITY-FIRM-OK, firm token absent from the WHO block and from the whole face outside the 'About this scope' disclosure -- confirming the criterion already held at base with zero edits to `IdentityCard.tsx`",
+        "`git log -1 --format=%H -- portal/src/pages/InvestorReporting/header/IdentityCard.tsx` (portal repo, from base 8242412d backward) was not re-derived here; the grounding is the byte read at the base pin itself, which is what this order's own criterion is graded against"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell IV-e-23 (b): 'IR/header/IdentityCard.tsx: the firm line under WHO reads the firm's display name + the kind word, never the token' -- framed alongside (a) as a joint repair the ADJUDICATION_v2 C-S15 failure (IVE18-AC4) required.",
+    "world_is": "By the time this order was issued (round 4, base 8242412d, round-3 merged) IdentityCard.tsx's WHO line had already been carrying `verifiedRequestFirm.displayName` since at least IV-e-3/round-1 work -- no commit in this order's own grant needed to touch it. This worker made NO edit to IdentityCard.tsx and instead wrote IVE23-AC2 as a proof that the already-correct behaviour holds, per the order's own environment note ('the test file does not exist at the base: you write it from the criterion's text').",
+    "notes": "Not blocking IVE23-AC2 (PASS-by-output) or any other criterion. Filed so the CTO/COO can confirm the ADJUDICATION_v2 C-S15 finding was scoped to the chip (FirmAttribution.tsx, part (a)) and not to the identity card, or correct this row if a different pin shows the card's own token leak."
   }
 ]
 ```
