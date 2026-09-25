@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T15:0xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T15:2xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -48,7 +48,8 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    select ONLY that one account, Performance, YTD (the preset sends today's UTC date) before 00:00Z. A refusal spends it.
    Then read PERFORMANCE_USE#b0b85aa9.., PERFORMANCE_ACCEPTED#, the adapter log; close S1.
 0b. CTO RULINGS 100946 (RULINGS_IRPT_20260925.md @75156f2b18): R1 export section A is P's (V2/V3 directories granted to
-   IRPT_LIVE_SCOPE_P) -- FIRST remove exp leeway at V2 and V3 (PRD 7(c); C-S219 measured +60 s), then A1 keys (name the
+   IRPT_LIVE_SCOPE_P; grant cherry-picked 5ab28b7175) -- exp leeway REMOVED at V2 and V3 ed0f7447af (not deployed; C-S219 49/49:
+   refused 1..120 s past exp, admitted 30 s before), then A1 keys (name the
    Terraform file -> row), A2 V2, A3 V3, each ledgered with a negative arm; R2 QUEUED submit shape as proposed (data
    optional while QUEUED/RUNNING) -> B1 unblocked; the delegator slot needs its own proposal; R3 hop 4 = option (a): mint
    the cst_ binding only for a PUBLISHED revision whose scope covers the selection.
