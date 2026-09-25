@@ -8,7 +8,7 @@ the indicator census printed). Each is tested by the SAME identity rule the serv
                opaque_account(firm, external_id) must match once, external_id z09 + the 8-digit BD id.
   49financial  f49_engine: the engine key (twr_daily, latest partition) by opaque_account, then the engine
                lane's own YTD cell (parity_period_returns) -- COMPUTED or its UNAVAILABLE-* outcome.
-  inflection   inf_account_mapping: opaque_account(firm, str(accounts_v2.account_id)) at the cutoff.
+  inflection   orion_account_mapping: opaque_account(firm, str(accounts_v2.account_id)) at the cutoff.
 "Resolvable" is the identity half only for COT and INF: a live number there also needs a worded one-use plan.
 Output: counts per firm and outcome; no account id is written.
 
@@ -35,7 +35,7 @@ for p in (ROOT / "lib", IR / "_ids", IR / "reports", IR / "performance", ROOT / 
 import boto3  # noqa: E402
 import pandas as pd  # noqa: E402
 
-import inf_account_mapping  # noqa: E402
+import orion_account_mapping  # noqa: E402
 import parity_period_returns as ppr  # noqa: E402
 import tenants  # noqa: E402
 from f49_engine import TABLE_DAILY  # noqa: E402
@@ -97,7 +97,7 @@ def census_cot(s3, as_of, active):
 def census_inf(s3, as_of, active):
     firm = tenants._CANONICAL_INF
     bucket = routed_bucket(firm)
-    prefix = inf_account_mapping.table_prefix()
+    prefix = orion_account_mapping.table_prefix()
     day = latest_partition(s3, bucket, prefix, "snapshot_date=", as_of)
     frame = pd.read_parquet(io.BytesIO(s3.get_object(Bucket=bucket, Key="%ssnapshot_date=%s/data.parquet" % (prefix, day))["Body"].read()))
     minted = {opaque_account(firm, str(int(v))) for v in frame["account_id"].dropna()}
