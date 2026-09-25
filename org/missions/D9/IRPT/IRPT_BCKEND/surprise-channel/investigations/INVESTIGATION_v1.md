@@ -9308,3 +9308,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Corrects IRPT_BCKEND-S130 (row not mutated; this row supersedes its world_is). FOR THE NEXT portal-auth PLAN READER: the three '- rule / + rule' pairs on aws_wafv2_web_acl.opal_cloudfront_protection are this recurring version diff and are BENIGN (1.0.0_SA_CTO msg 100972 permits A3 to apply the versionless re-put under a get-web-acl before/after record)."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S134",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T16:25:00Z",
+  "one_line": "S131 explained: the served COT revision is a BOUNDED publication of 841 accepted accounts (of 981 in fact_holdings 09-22), and the 53 repeated relationship groups belong to 2 accounts ($729,826.75) outside it. A full-firm build, which is what a scheduled run is (run_firm refuses a bounded build against an existing index), refuses the WHOLE firm for those 2 accounts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (the Holdings producer, CTO R4): scope the refusal to the affected accounts, as the 49F drill does for a null market value, and carry them as explicitly refused",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The served COT manifest (fc199c8e) source_objects: fact_holdings date=2026-09-22 version tGurdOTYhnuidIUgThZYlJxOcaqNTuKl, sha256 737c2ccd... The current object is the same version and sha, so the source did not change.",
+      "COT_LABELLED_CANDIDATE_CENSUS_20260924.json: 'PREPARED over the 841 accepted accounts', code_pin 9cdb81368e. A full build at that pin in a detached worktree also refuses: REFUSED: COT repeated row within relationship grain.",
+      "Of the source's 981 accounts, 841 are served. The 2 accounts carrying all 53 repeated (AccountID, AssetID, Relationship ID) groups are 0 of 2 served.",
+      "holdings_snapshot.run_firm: 'REFUSED: bounded initial publication cannot replace an existing firm index'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND-S131 world_is: 'Open: how the served 09-22 revision passed the guard'.",
+  "world_is": "It passed because it was built over a bounded 841-account set that excludes both affected accounts. The full-firm COT build that a daily schedule needs refuses the whole firm on 2 accounts' duplicate rows. The remedy is a producer change: refuse per account, as 49F does. Whether the other 140 unaccepted accounts need the same per-account treatment is part of the remedy."
+}
+```
