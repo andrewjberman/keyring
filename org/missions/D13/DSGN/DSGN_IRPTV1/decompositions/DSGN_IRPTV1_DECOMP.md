@@ -121,3 +121,11 @@ W18-S1 (the client-drill legend in ConsolidatedOverviewPanel hardcodes its class
 | cell | what it builds | serves | writes | reads (never writes) | risk |
 |---|---|---|---|---|---|
 | `IV-e-29` | DIRECT-ACT: cash ON for Cottonwood in ASSET_CLASS.cash green beside `other`; the client-drill legend lists every served class incl. Other and Cash; 49financial and Inflection unchanged | FWD-13 (reader: Advisor Intelligence) | `src/pages/AdvisorIntelligence/_partners/cottonwood/layout.ts`, `_shared/panels/ConsolidatedOverviewPanel.tsx`, `_shared/lib/composition.ts`, `__tests__/cot-other/` | `src/lib/chartColors.ts` | LOCAL |
+
+**Addendum 4 (issuer, 2026-09-25 ~23:0xZ):** one DIRECT-ACT cell disarming row W19-S1 (ARMED): IV-e-29's tenant-palette
+prop on ConsolidatedOverviewPanel reaches no product caller, so Cottonwood's real client drill colours cash by the MIX_PIE
+fallback. Same PROD release as IV-e-28 and IV-e-29.
+
+| cell | what it builds | serves | writes | reads (never writes) | risk |
+|---|---|---|---|---|---|
+| `IV-e-30` | DIRECT-ACT: CanonicalBookView and AdvisorBookClientDetail take an optional `tenantLayout` and forward it; every caller passes the viewed firm's layout, so the client drill colours cash and other by the tenant palette | FWD-13 (reader: Advisor Intelligence) | `_shared/panels/CanonicalBookView.tsx`, `_shared/AdvisorBookClientDetail.tsx`, `_shared/AdvisorBookView.tsx`, `_shared/tabs/ClientsTab.tsx`, `__tests__/cot-other/` | `_shared/panels/ConsolidatedOverviewPanel.tsx` | LOCAL |
