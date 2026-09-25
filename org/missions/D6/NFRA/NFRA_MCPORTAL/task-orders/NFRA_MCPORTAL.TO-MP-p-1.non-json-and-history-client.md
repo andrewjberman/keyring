@@ -75,7 +75,7 @@ Report once: what you changed and where, the commit hashes in BOTH repos, and an
 
 **ISSUER NOTES:** E5 (R-5) and E6's client. Chain C, a single cell; MP-d-1 builds the bundle from it.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
