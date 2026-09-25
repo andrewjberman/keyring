@@ -82,6 +82,9 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    modules resolve from their staged rows; `served.installed_entry` gives performance/runtime, generate_installed and
    status_installed an earned mark (build at first call, refused unless the Entry matches its declared routes);
    `_authz` 152 passed (was 7 failed). Rides each function's next rebuild; its source-map pins move then.
+   Reports suite green in one run a22cdc8578 (87 passed; was 3 failed): the currency refusal arm follows Andrew's
+   49F/INF USD attestations (815dbc5507); each installer test pins its own `entry`. Suites: _authz 152, performance
+   179, reports 87, export 69.
 
 ## Dependencies
 
@@ -97,7 +100,6 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
 |---|---|---|
 | `build-and-upload.sh` removes tracked `performance/*.py` from the publish worktree's working tree on every irpt-performance-adapter build (18:41Z and 20:2xZ; restored from HEAD each time; generate/refresh builds do not) | 1.0.0_SA_CTO to route (ci/ owner) | the next performance build |
 | 49F engine vs BD: 219 of 5194 DIVERGENT over all accounts (db699faf13); in the 300 sample, 7 of 293 DIVERGENT (3 engine coverage gaps of 35-98 neutral days; 1 in-kind signature +4452% vs +96%, the open ADVI_49F.c02-CFINPUT clause; 3 fully linked at 108-496bp), receipt F49_BD_CROSSCHECK_20260924.json | 1.0.0_SA_CTO to route to the 49F engine lane (DS) | the engine lane's next c02 act |
-| `reports/tests` full-suite run: 3 failed at HEAD too (test_status_installed's documented run-alone `entry` shadowing x2; test_currency_authority DID NOT RAISE) | 2.0.0_SA_COO~P | the next reports/ edit |
 | portal `bun test src/pages/InvestorReporting` 89 fail on origin/DEV 5e339ffd (87 unique), not CI-run | 2.0.0_SA_COO~D | ~D's S6/S7 rows |
 
 ## Limits
