@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: /canonical-drive loop on Andrew-direct 17:3xZ (cron 57c0067c, every 10m; replaced goal loop f599225b), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T20:2xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T20:3xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -164,8 +164,14 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    the prefix only; lambda.tf switch + secret name. Plan 2 add / 2 change / 0 destroy. IAM simulator on the planned
    documents: 10 of 10 cases as the ruling states (Lambda cannot Get a token or read the human key; host cannot Put;
    nothing outside the prefix).
-   NEXT (P): (1) done (portal render Bearer on local DEV); (1b) the B2 deploy, one ledger, when the CTO grants the two
-   host-script rows: upload the host half to ec2/investor-reporting-export/, apply the export root with
+   B3 LANDED 357f6a0d3b (backend): export-receipt finalizes on first read -- the submit writes
+   firms/<firm>/generations/<EXP-id>/pending.json (ids + the token NAME); no PDF -> NOT_READY (export-receipt requires
+   data, so in-flight is a refusal), >15 min -> DEPENDENCY_UNAVAILABLE, PDF -> the REAL finalize_export over the stored
+   bundle, receipt written where the route reads it, token name deleted; the viewer's current scope must cover the
+   pointer's accounts. export 106 rc=0 incl. an end-to-end submit -> real PDF -> READY receipt valid against
+   ExportReceipt. iam.tf adds EXP-*/pending.json (not applied).
+   HOST SCRIPTS LANDED 266741ad88 under the CTO's rows @ea77e30c9c (cherry-picked 0efcf8a629).
+   NEXT (P): (1) done (portal render Bearer on local DEV); (1b) the ONE ledgered export deploy (B2 + B3), rows granted: upload the host half to ec2/investor-reporting-export/, apply the export root with
    export_render=on, and ship the read functions' B0 packaging (grant.py + enforce at 755c13bc19 + grant read IAM) -- SSM document params RenderTokenName +
    PrintQuery; run-export-render.sh reads the name (get-parameter --with-decryption, never echoed), render_export.cjs opens
    origin + print route + PrintQuery + &renderToken= with NO storageState, then deletes the name; submit_installed composes
