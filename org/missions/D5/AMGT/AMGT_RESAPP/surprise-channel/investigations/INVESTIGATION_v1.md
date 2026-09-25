@@ -14612,6 +14612,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "On 7 of 32 served names the base case is off by ~100x, negative, or 3-4.5x, and nothing refuses it; the London four read as considered valuations.",
     "disarm_owner": "2.0.0_SA_COO~Z -- the disarm is a base/px_last band that REFUSES rather than serves, in the served path; it needs a cell and a deploy, so it is round 43's FIRST cell (the CTO's ask). Round 42 is mid-flight and frozen; no act of round 42 touches model_cases.",
     "notes": "The CTO named it urgent; this seat re-read 4 of the 7 on its own capture before filing. Until round 43's guard deploys, the exposure stands on the served page for these 7 names."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W159-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~159",
+    "surfaced_at": "2026-09-25T06:30:00Z",
+    "one_line": "AC1 cannot reach 89 of 89 OK: 25 names' remaining FIGURES-extra is the exportCompare harness's OWN pageFigures() regex failing to parse a <td data-model-cell> that carries a nested CheckFaceBadge <span> for any non-PASS verdict, so a genuinely page-shown figure reads absent to the instrument -- not a render_pack.py defect, and the harness is outside this cell's <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "After every render_pack.py fix in this cell (undrafted thesis, exec management, posture, header-REFUSE, fiscal-year window, peers basis=absent), a fresh rq-1.local_sweep.py run over C:/tmp/amgt-r42-cache2 reads 'local rebuild over 89 of 89 folders: OK 64, NOT_OK 25, CAPTURE_FAILED 0'; every one of the 25 NOT_OK rows' figDiff.missing and absDiff.extra are both empty ([]), only figDiff.extra is populated.",
+        "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx:122-130 (`ModelCell`): a non-PASS check-face verdict renders `{value}<CheckFaceBadge .../>` inside the SAME `<td data-model-cell>` -- measured on BABA_US_Equity's rendered modelHtml: `<td data-model-cell=\"true\" ...>101143<span title=\"SALES_REV_TURN: unit/sign convention not yet checked (status='PENDING')\" ...>...PROVISIONAL</span></td>`.",
+        "portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs:234 `pageFigures()`'s `/<td([^>]*)>([^<]*)<\\/td>/g` requires NO nested tag inside the td; against a copy of this harness run standalone (`.scratch/diag_export_compare.cjs`, this worker's own worktree, never committed) the SALES_REV_TURN row's matchAll produces zero matches for every PROVISIONAL-badged year, so those cells never reach PAGE_FIGURES though the page renders their values.",
+        "The SAME 25 names' figDiff.extra sets are each the SAME small mnemonic family (SALES_REV_TURN, IS_OPER_INC, EBITDA, EBITDA_ADJUSTED, IS_EPS, BOOK_VAL_PER_SH, IS_SH_FOR_DILUTED_EPS, CAPITAL_EXPEND, CF_FREE_CASH_FLOW, IS_DIV_PER_SHR) repeated across every declared fiscal year, consistent with a per-name check-face verdict that sits non-PASS for those mnemonics in every year, not a per-year anomaly."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1's literal expect: 'local rebuild over 89 of 89 folders: OK 89, NOT_OK 0, CAPTURE_FAILED 0 -- and exit=0'.",
+    "world_is": "AC1 reads OK 64, NOT_OK 25, exit=1 (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~159/rq-1.AC1.output.txt, this commit). The 25 remaining names' own EXPORT text is correct against the page's real content (the value the page shows is the value this module writes); the instrument that grades the comparison cannot see a page cell that carries a badge, so it reads that page as narrower than it is. BOUNDS 2 of this task order forbids a page-file change and the harness lives under portal/src/pages/SecurityAnalysis/__harness__/, outside this cell's <paths> grant -- a fix here would be an edit outside the task order's write surface.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- fixing exportCompare.harness.cjs's pageFigures() td regex to tolerate a nested badge span (or reading via a DOM parser instead of a hand regex) is the disarm act; no worker holds that path.",
+    "notes": "Filed as a row per BOUNDS 2's 'a row, not a rescue': the class cannot be closed inside this cell's <paths>. All four of round 41's named classes (undrafted thesis, exec management, posture, fiscal-year window) are closed in this cell's commit; this row is the ONE remaining reason AC1 does not read 89 of 89."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W159-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~159",
+    "surfaced_at": "2026-09-25T17:15:00Z",
+    "one_line": "Worker's own read of row Z-W159-S1 after AMENDMENT 1 (issuer): the two harness limits named there are fixed IN THE INSTRUMENT (pageAbsences' {1,300} cap removed; the Model-sheet <td> parser now spans a nested CheckFaceBadge span), never by bending the export to them (_page_absence_cap removed). One further, previously-masked class closed on the same pass: CRNCY reaches the page ONLY as the price Stat tile's own prefix, so it is withheld from the header table whenever PX_LAST carries no figure. rq-1.AC1.sh now reads 'local rebuild over 89 of 89 folders: OK 89, NOT_OK 0, CAPTURE_FAILED 0', exit=0. Filed UNDER_INVESTIGATION per A-1/LGIC_ENFORCE-C-S24 -- adjudicating S1 and any GRADUATED transfer are the CVO's at L9, not this worker's to declare.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs (commit on wk-AMGT_RESAPP-159-portal, this session): pageAbsences()'s two `{1,300}` quantifiers became `+` (unbounded, still stopping at '<' or newline); the Model-sheet cellTags regex became `<td([^>]*)>([\\s\\S]*?)<\\/td>` (spans nested tags) with the cell's own text read as `inner.split('<')[0]` (the value before any badge).",
+        "lib/research/print/render_pack.py (commit on wk-AMGT_RESAPP-159, this session): `_page_absence_cap` and its helpers removed; the four call sites write the reason in full again; `_posture_markdown`'s SERVED `verdict=='absent'` line now also carries `LeadPanel.tsx` `PostureHeaderLine`'s own closing disclaimer verbatim (needed once the harness stopped truncating before reaching it); `header_figs` withholds CRNCY when PX_LAST carries no header figure (measured on ROG_SW_Equity: CRNCY='CHF' present, PX_LAST absent, 'CHF' nowhere in the rendered page).",
+        "rq-1.AC1.sh, this commit: 'local rebuild over 89 of 89 folders: OK 89, NOT_OK 0, CAPTURE_FAILED 0', exit=0 (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~159/rq-1.AC1.output.txt). rq-1.AC3.sh unchanged: the stale round-38 body still reads NOT OK, rc=1, on this session's harness."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1's literal expect: 'local rebuild over 89 of 89 folders: OK 89, NOT_OK 0, CAPTURE_FAILED 0 -- and exit=0' (unchanged by amendment 1).",
+    "world_is": "AC1 reads exactly that line, exit=0. The instrument's own two limits (the absence-reason cap, the badge-blind cell parser) are fixed at the bytes, per amendment 1's instruction never to bend the product to an instrument defect; the removed `_page_absence_cap` is gone from render_pack.py, not merely unused.",
+    "notes": "Filed per the amendment's own instruction to update the row with what it closed; S1 is left standing, unedited, as the record of the first pass's finding. This row reports the fix's own measurement -- a worker does not adjudicate or GRADUATE a row (A-1, LGIC_ENFORCE-C-S24); that reading is 3.0.0_SA_CVO's at L9."
   }
 ]
 ```
