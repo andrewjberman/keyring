@@ -31,7 +31,7 @@ a0690a03 parser reads READY at every firm.
 | Criterion | State | Evidence |
 |---|---|---|
 | (1) signed-in journey, 49F / INF / COT | API EXERCISED at all three; screen walked by Andrew on the fixed build; the firm-tab HAR is the one artifact asked | VERIFY_HOLDINGS_GOAL_20260924.md addenda |
-| (2) every active 49F/INF account resolvable, or refused explicitly | 49F 7,417 resolve + 37 refused (no custody at 09-22), 0 empty of 7,454; INF 875 resolve, 0 empty | HOLDINGS_ACCOUNT_CENSUS_49F_INF_20260924.json @acaa51635d |
+| (2) every active 49F/INF account resolvable, or refused explicitly | on the CURRENT directories (49F 09-24, INF 09-25): 49F 7,443 resolve + 54 refused, 0 empty of 7,497; INF 876 resolve + 2 refused, 0 empty of 878. The refusals grew because holdings is still business date 09-22 | HOLDINGS_ACCOUNT_CENSUS_49F_INF_20260925.json (M branch) |
 | (3) COT soundness + window disclosed | disclosed in the receipts | COT_LABELLED_PUBLICATION_RECEIPT_20260924.json |
 
 ## Write claims
@@ -42,6 +42,8 @@ branch. No code edit is open.
 ## Next list (in order)
 
 1. Andrew's firm-tab HAR, then /verify on the goal.
+3. Republish holdings at a newer business date (the directory now leads it; accounts opened after 09-22 refuse): a
+   rebuild from sources under a CTO GO.
 2. On the CTO's routing of the widening request (`CLASSIFIER_WIDENING_REQUEST_20260924.md` @d8a88cef4b; 287 rows, 69
    readers): if the CTO rules it this seat's, fill 49F's 62 CUSIP-only rows (symbol and name from the Schwab security
    master) in the Holdings producer.
