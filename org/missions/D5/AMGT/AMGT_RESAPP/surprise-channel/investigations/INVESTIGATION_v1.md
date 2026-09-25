@@ -14658,6 +14658,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC1's literal expect: 'local rebuild over 89 of 89 folders: OK 89, NOT_OK 0, CAPTURE_FAILED 0 -- and exit=0' (unchanged by amendment 1).",
     "world_is": "AC1 reads exactly that line, exit=0. The instrument's own two limits (the absence-reason cap, the badge-blind cell parser) are fixed at the bytes, per amendment 1's instruction never to bend the product to an instrument defect; the removed `_page_absence_cap` is gone from render_pack.py, not merely unused.",
     "notes": "Filed per the amendment's own instruction to update the row with what it closed; S1 is left standing, unedited, as the record of the first pass's finding. This row reports the fix's own measurement -- a worker does not adjudicate or GRADUATE a row (A-1, LGIC_ENFORCE-C-S24); that reading is 3.0.0_SA_CVO's at L9."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S280",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-25T19:00:00Z",
+    "one_line": "On the LIVE population the served export reads 89 of 94 OK after rq-2; the 5 NOT_OK are exactly the names added since the snapshot (AMD, GOOGL, LLY, PWR, UNH), none with a landed model block, and for each the print route REFUSES ('no printable pack') while the page shows 16 absence lines -- the export has no path for a name without a model block.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "round42/close-run/served_live94.tsv: served over 94 of 94 folders (LIVE research library, read_at 2026-09-25T18:42:56Z) at CodeSha256 FOF+dRXoW1KFFzD0moLigsMB2LMmIjwhwURq7FkCzbw= (rq-2): OK 89, NOT_OK 5, CAPTURE_FAILED 0; the 89 OK are the snapshot's 89.",
+        "AMD and UNH, printed line by line: ABSENCES page=16 rich=0 same=0 missing=16 extra=0; the page's lines include 'no landed model block for this name' and 'no O-1 posture object'.",
+        "AMD's served print body: {\"refused\": true, \"reason\": \"no printable pack for 'AMD_US_Equity': identity MEASURED, landed display form None -- the renderer is never handed a form this module made up\"} (scoped_amgt._print_pack's no-display-form refusal)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-30: the export shows the SAME absences as the page for every name in the population (the live research library, 94).",
+    "world_is": "For a name with no landed model block the page renders its absences and the export refuses to render at all. Either the export writes the page's absences for such a name, or AMGT_CORPUS lands blocks for the five; the first is RESAPP's, the second is data.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- INERT; carried to round 43 beside the CTO's inputs.",
+    "notes": "Measured at round 42's close run on the live population, per the CTO's universe correction (msg 25891)."
   }
 ]
 ```
