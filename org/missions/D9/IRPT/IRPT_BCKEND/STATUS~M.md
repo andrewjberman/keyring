@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T15:4xZ.
+(not live; the FAST line is parked below). As of 2026-09-25T16:0xZ.
 
 ## Pins
 
@@ -69,7 +69,9 @@ branch. No code edit is open.
 3. **The scheduled daily Holdings producer is ~M's** (CTO R4, msg 100947;
    `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_IRPT_20260925.md` @75156f2b18):
    - Plan: `HOLDINGS_SCHEDULED_PRODUCER_PLAN_20260925.md` @875dc1f64b (M branch). 7 prerequisites are measured;
-     rows 3 (package) and 5 (the local-only retained inputs) block a fire.
+     Row 3 (package) blocks a fire. Row 5 is DONE (CTO ruling msg 100965): both captures are landed in S3
+     (1c4ca93511), and with no env var the 49F and INF builds read the latest capture at or before D and state its
+     vintage (61f4b25171, M branch). Real run: valid and reconciled at both firms; INF models_whole_from_capture 35.
    - Step 1: DONE (code on CLOUD).
    - Step 3 is answered by 2.0.0_SA_COO~P (msg 100955): the resident runner REJECTS a holdings message
      (resident_worker.py:262-270 routes resolve_upload only). Every fire would be a poison message ending in the DLQ,
