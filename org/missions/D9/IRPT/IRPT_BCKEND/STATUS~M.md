@@ -56,8 +56,12 @@ branch. No code edit is open.
    - **The write set:** 41 of the 285 keys already exist in bd-securities, and B_01b's own rule excludes them, which
      leaves 244 new `NAME::` keys. Over those 244: 112 unchanged, 128 NONE to a class (66 equity, 37 other, 16
      fixed_income, 9 alternatives), 4 flips (2 fixed_income to alternatives, 2 preferreds fixed_income to equity).
-   - NEXT: the reader census for `other` (Explore agent running); then the never-widen half to 1.0.0_SA_CTO for the
-     244-key write.
+   - **The half is asked** (msg 20260925T152125Z; `NEVER_WIDEN_HALF_REQUEST_BD_SECURITIES_WRITE_20260925.md`
+     @368950498a, write set `BD_SECURITIES_WRITE_SET_20260925.json`):
+     - Batch A (207 keys): sign now.
+     - Batch B (37 `other` keys): held, because COT `C_06` MIX_ASSET_CLASSES would drop $48.5M from the published
+       mix.
+     - Reader census: 0 raise; Positioning reads `etf-classifications`, so NOT_REACHED.
    - ORDER: Holdings must admit `other` (ASSET_CLASS_VALUES and the v1 contract) BEFORE the write, because
      classify_security refuses a class outside its enum. ~D colours it.
    - The two defects (COT `B_01b` scanning an empty prefix; the loader skipping rows without a ticker) are ~M's under
