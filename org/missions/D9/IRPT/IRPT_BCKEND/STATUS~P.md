@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Drive: the 20m goal loop (cron f599225b, :07/:27/:47), reading `python .tools/drive-mode.py read IRPT_BCKEND~P` each tick
 (C11, CTO 100817). Lease FAST until 2026-09-24T21:14:15Z at 18:25Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T01:3xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
+As of 2026-09-25T01:5xZ. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/STATUS.md` (09:4xZ; branch-resident).
 
 ## Pins
 
@@ -92,6 +92,14 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    179, reports 87, export 69.
    Directory suite green f3cca0b550 (160; was 6 failed): stale tests only -- checked first as a possible selection-hop
    defect, none found. The owned-read guard's after-compute re-check is now proven (Opal viewer, owner without principal).
+   COLD-START HAZARD FIXED 892f4b6099 (LOCAL): the publish worktree's source map (the real build input) does not
+   package the INF modules, while retained.py / authorization.py imported them at module level -- re-pinning
+   either (e.g. for 1fcefdad74) would have shipped a Performance zip dying at import for every firm (measured at
+   pre-fix HEAD). INF now composes only when packaged, like 49F's engine port. Check:
+   `IRPT_MVP_P/flat_import_check.py --map-root <publish worktree>` -- all 7 functions import, guarded. Performance
+   suite 183 passed (the commit message's "187" is wrong: 179 + 4 new = 183). No IRPT user traffic 22:5x-01:5xZ
+   (logs, keep-warm control 108 on directory-search): no signed-in run yet, no live defect seen.
+   RE-PIN RULE for the next rebuild of each function: run flat_import_check --map-root first.
 
 ## Dependencies
 
