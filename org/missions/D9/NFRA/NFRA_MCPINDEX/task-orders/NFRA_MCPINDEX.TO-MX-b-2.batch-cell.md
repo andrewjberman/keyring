@@ -69,7 +69,7 @@ Validate it with `python .tools/proof-of-spec-check.py <instance>`. Report once:
 
 **ISSUER NOTES:** E6 (C-S15, W1-S3). Chain C, independent; cut from CLOUD.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>
