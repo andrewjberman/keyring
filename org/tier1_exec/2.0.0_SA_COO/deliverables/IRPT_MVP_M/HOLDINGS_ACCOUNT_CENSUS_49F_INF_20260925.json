@@ -1,0 +1,214 @@
+{
+ "firms": {
+  "49financial": {
+   "active_unique_accounts": 7497,
+   "classes": {
+    "REFUSED_ABSENT_FROM_PUBLICATION": 54,
+    "RESOLVED_NO_MODEL_CLIENT_ONLY": 1536,
+    "RESOLVED_WITH_MODEL": 5907
+   },
+   "control_library_loads": [
+    {
+     "class": "REFUSED_ABSENT_FROM_PUBLICATION",
+     "reason": "selected accounts absent from accepted publication",
+     "status": "REFUSED"
+    },
+    {
+     "class": "REFUSED_ABSENT_FROM_PUBLICATION",
+     "reason": "selected accounts absent from accepted publication",
+     "status": "REFUSED"
+    },
+    {
+     "class": "REFUSED_ABSENT_FROM_PUBLICATION",
+     "reason": "selected accounts absent from accepted publication",
+     "status": "REFUSED"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_NO_MODEL_CLIENT_ONLY",
+     "nodes": 13,
+     "revision": "9ab377cef98f0cc16afac867a5d487ccb16666d03432e939c25a2381ed1826ed",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_NO_MODEL_CLIENT_ONLY",
+     "nodes": 3,
+     "revision": "9ab377cef98f0cc16afac867a5d487ccb16666d03432e939c25a2381ed1826ed",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_NO_MODEL_CLIENT_ONLY",
+     "nodes": 3,
+     "revision": "9ab377cef98f0cc16afac867a5d487ccb16666d03432e939c25a2381ed1826ed",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_WITH_MODEL",
+     "nodes": 19,
+     "revision": "9ab377cef98f0cc16afac867a5d487ccb16666d03432e939c25a2381ed1826ed",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_WITH_MODEL",
+     "nodes": 19,
+     "revision": "9ab377cef98f0cc16afac867a5d487ccb16666d03432e939c25a2381ed1826ed",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_WITH_MODEL",
+     "nodes": 22,
+     "revision": "9ab377cef98f0cc16afac867a5d487ccb16666d03432e939c25a2381ed1826ed",
+     "status": "READ_OK"
+    }
+   ],
+   "directory": {
+    "as_of_business_date": "2026-09-24",
+    "bucket": "opal-data-bd",
+    "directory_revision": "irpt-dir/49financial/2026-09-24/1.0",
+    "key": "investor-reporting/directory/2026-09-24/directory.json",
+    "version_id": "AueNdoBATvZJNexk5HgWSkMJ8P4Dta7C"
+   },
+   "directory_account_rows_by_termination": {
+    "ACTIVE": 7497,
+    "TERMINATED": 79
+   },
+   "market_value_by_class": {
+    "RESOLVED_NO_MODEL_CLIENT_ONLY": 184013608.42,
+    "RESOLVED_WITH_MODEL": 1651756115.84
+   },
+   "node_kinds_by_class": {
+    "REFUSED_ABSENT_FROM_PUBLICATION": {},
+    "RESOLVED_NO_MODEL_CLIENT_ONLY": {
+     "ACCOUNT": 1536,
+     "CASH": 1528,
+     "SECURITY": 5836,
+     "SLEEVE": 1536
+    },
+    "RESOLVED_WITH_MODEL": {
+     "ACCOUNT": 5907,
+     "CASH": 7474,
+     "MODEL_LEAF": 7474,
+     "SECURITY": 114243,
+     "SLEEVE": 5907
+    }
+   },
+   "publication": {
+    "business_date": "2026-09-22",
+    "index_version": "OqjgF6qs7e5QsF7HScOre54hxJ18Ktgf",
+    "partitions": 184,
+    "revision": "9ab377cef98f0cc16afac867a5d487ccb16666d03432e939c25a2381ed1826ed"
+   },
+   "publication_accounts": 7522,
+   "published_not_active_in_directory": 79,
+   "published_not_active_in_directory_in_directory_any_state": 79
+  },
+  "inflection": {
+   "active_unique_accounts": 878,
+   "classes": {
+    "REFUSED_ABSENT_FROM_PUBLICATION": 2,
+    "RESOLVED_NO_MODEL_CLIENT_ONLY": 252,
+    "RESOLVED_WITH_MODEL": 624
+   },
+   "control_library_loads": [
+    {
+     "class": "REFUSED_ABSENT_FROM_PUBLICATION",
+     "reason": "selected accounts absent from accepted publication",
+     "status": "REFUSED"
+    },
+    {
+     "class": "REFUSED_ABSENT_FROM_PUBLICATION",
+     "reason": "selected accounts absent from accepted publication",
+     "status": "REFUSED"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_NO_MODEL_CLIENT_ONLY",
+     "nodes": 3,
+     "revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_NO_MODEL_CLIENT_ONLY",
+     "nodes": 15,
+     "revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_NO_MODEL_CLIENT_ONLY",
+     "nodes": 53,
+     "revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_WITH_MODEL",
+     "nodes": 76,
+     "revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_WITH_MODEL",
+     "nodes": 29,
+     "revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+     "status": "READ_OK"
+    },
+    {
+     "account_node_matches": true,
+     "class": "RESOLVED_WITH_MODEL",
+     "nodes": 36,
+     "revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+     "status": "READ_OK"
+    }
+   ],
+   "directory": {
+    "as_of_business_date": "2026-09-25",
+    "bucket": "opal-data-inf",
+    "directory_revision": "irpt-dir/inflection/2026-09-25/1.0",
+    "key": "investor-reporting/directory/2026-09-25/directory.json",
+    "version_id": "LPVmQQWHD80EAFJAtUxWnFZE5h3jTRJz"
+   },
+   "directory_account_rows_by_termination": {
+    "ACTIVE": 878
+   },
+   "market_value_by_class": {
+    "RESOLVED_NO_MODEL_CLIENT_ONLY": 49356167.05,
+    "RESOLVED_WITH_MODEL": 160002192.43
+   },
+   "node_kinds_by_class": {
+    "REFUSED_ABSENT_FROM_PUBLICATION": {},
+    "RESOLVED_NO_MODEL_CLIENT_ONLY": {
+     "ACCOUNT": 252,
+     "SECURITY": 5548,
+     "SLEEVE": 252
+    },
+    "RESOLVED_WITH_MODEL": {
+     "ACCOUNT": 624,
+     "MODEL_LEAF": 624,
+     "SECURITY": 25333,
+     "SLEEVE": 695
+    }
+   },
+   "publication": {
+    "business_date": "2026-09-22",
+    "index_version": "ipomYxTGLoE0pAgeh.nNtVJ6QUm5ynJG",
+    "partitions": 43,
+    "revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773"
+   },
+   "publication_accounts": 876,
+   "published_not_active_in_directory": 0,
+   "published_not_active_in_directory_in_directory_any_state": 0
+  }
+ },
+ "measured_at_utc": "2026-09-25T13:54:25.760573+00:00",
+ "mode": "READ_ONLY_OPERATOR_S3_LIBRARY_UNDER_USER",
+ "rule": "publication.py _load_parts: selected <= partition census, else PublicationRefused",
+ "source_pin": "1848e5caef7edfffd9b1b25a7e741cc76d71af02"
+}

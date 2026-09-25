@@ -72,3 +72,114 @@ candidate for 49F/INF, and re-reading the function's log for the closing evidenc
 - Verdict unchanged at the grain that matters: MECHANICAL moves from "not fired" to "fired, envelope unread";
   it closes on the HAR's holdings response read in place (revision / manifest version, display.label on the
   leaves, status READY) by the CTO or the CRO.
+
+## ADDENDUM 18:4xZ -- goal criteria re-measured on the served revisions (closer mode, lease IRPT_BCKEND~M)
+
+Served now (index reads through the library, 18:3xZ): 49F 5a25ae76 (index QC.bs6a5w, 174 parts), INF d32e50c6
+(k9U4ucuT, 40 parts), COT dec293d6.
+
+**(1) Signed-in journey.** Evidence: a signed-in HAR in Andrew's Downloads, `aaaaaa.har` (mtime 10:19 AM ET, 359
+entries, 14:17:06-14:18:55Z), read in place. Only envelopes were printed; no header or token left the file. It matches
+the function's own log: 5 REPORT lines at 14:17:32-14:17:47Z on `/aws/lambda/irpt-holdings`.
+- COT: POST selections, then GET holdings, on two selections. Both READY / HOLDINGS_READY. The operation revision is
+  dec293d6, the served row. Anna's pair returns 116 nodes, 116 labelled (2 wrappers "Rebalancer strategy: Anna *9237 /
+  *9238", 7 leaves incl. "DIVZ SMA"). Her single account returns 41 nodes. unprojected_grant 0. **EXERCISED.**
+- 49F: one selection, READY / HOLDINGS_READY on 5a25ae76. It holds 3 nodes (ACCOUNT, SLEEVE, CASH), all labelled: a
+  Client-only cash account. The journey is **EXERCISED**, but no model node was on the path.
+- INF: **ABSENT** from the HAR. Not exercised signed-in.
+- The screen render (taxonomy + drill) is not provable from a HAR. It is the portal's; 2.0.0_SA_COO~D owns that surface.
+
+**(2) Account census.** `HOLDINGS_ACCOUNT_CENSUS_49F_INF_20260924.json` @acaa51635d, by `holdings_account_census.py`.
+Denominator: the served directory's ACTIVE entries.
+
+| Firm | Active | With model | Client only | Refused | Silently empty |
+|---|---|---|---|---|---|
+| 49F | 7,454 | 5,908 | 1,509 | 37 | 0 |
+| INF | 875 | 624 | 251 | 0 | 0 |
+
+- **Refusal path:** a refused account raises `selected accounts absent from accepted publication` in the library.
+  `snapshot.py:147-152` turns that into SnapshotUnavailable, which the public envelope reads as NOT_READY
+  (`entry.py:146`). Explicit, never an empty 200.
+- **Control:** the library's own `load()` on 3 accounts per class, 18 of 18 as classified.
+- **The 37 refused 49F accounts** are RELATIONSHIP-scope entries with cohort UNKNOWN. Of them, 15 have no Black
+  Diamond cross-reference; 11 are flagged in the 0833 universe and 11 are not. The publication header names none of
+  them (0 of 37), so the user sees NOT_READY with no reason.
+- **Published but not ACTIVE in the directory** (not selectable): 49F 105 (78 of them TERMINATED in the directory);
+  INF 1.
+- **Directory age:** as_of_business_date is 2026-09-17 at both firms, behind the 09-22 publication.
+
+**(3) COT soundness.** Unchanged from the COT receipts: 841 accepted accounts; the refused population and the Black
+Diamond window are disclosed in COT_LABELLED_PUBLICATION_RECEIPT_20260924.json and STATUS.md Parked (140 refused, CRO
+re-check October 2026).
+
+**Verdict: UNVERIFIED.**
+- MECHANICAL closes on one signed-in INF read, and one 49F account that carries a model.
+- DECLARATIVE PASS.
+- SEMANTIC PASS on the served bytes and the census.
+- Two enrichments: a refusal reason that names "not covered" rather than NOT_READY, and a disclosed refused-account
+  population in the 49F header.
+
+**The 37 refused 49F accounts carry no custody (18:5xZ).** Every raw account key in the build's four 49F source copies
+(`.runtime/holdings-journey-20260923/`) was mapped through `ids.opaque` in 3 forms each (as-is, zero-padded to 10,
+zero-stripped). The sources: Schwab dim_balance (business_date 2026-09-22, 7,522 rows), dim_position, fact_acc, and
+the SmartX map (run_date 2026-09-23).
+- **Matched to the 37:** 0 in every source.
+- **Positive control:** the same mapping recovers 7,522 of 7,522 publication accounts, and 7,417 of 7,454
+  directory-ACTIVE accounts.
+- **Reading:** the 37 are ACTIVE in the 09-17 directory, and 49F custody holds no row for them at 09-22. The explicit
+  refusal is the correct answer, not a dropped account. They sit in 29 entries (15 single-account, 14 multi-account).
+- **Next-list item 3 closes on this read.**
+
+## ADDENDUM 18:4xZ -- Andrew's second HAR (`bbbbbb.har`, 18:34-18:37Z), read in place
+
+- **(1) EXERCISED at all three firms through the deployed API:**
+  - INF: Greene ****1506 SIMPLE, READY / HOLDINGS_READY on d32e50c6. 5 nodes, Client-only, all labelled.
+  - 49F: Alison Horton ****3941 IRA, READY on 5a25ae76. 19 nodes, including MODEL_LEAF "Opal Ultra Long Term" under
+    the "Models" sleeve.
+  - COT: READY on dec293d6 (14:17Z HAR).
+  - The function log carries 6 REPORT lines at 18:36:11-18:37:01Z.
+- **SEMANTIC FAIL on the screen.** Amounts render on a $10K grain: `portal/src/components/CategoryViewTree.tsx:360`,
+  reached through `DrillTree.tsx:316`. The API carries cents, 24 of 24.
+- **Journey defect on the firm tab.** `global/firms.ts:53` feeds the opaque firm id back as `selected_tenant`, and
+  the server answers FIRM_BINDING.
+- **Record and routing:** both are recorded at `ANDREW_DIRECT_20260924_184xZ_IRPT_FIRM_TAB_FILTER_AND_10K_ROUNDING.md`
+  @af2dd7335d and routed to 2.0.0_SA_COO~D (portal owner).
+- **Verdict: UNVERIFIED@SEMANTIC (screen).** It closes when ~D's fixes land on DEV and a re-walk shows exact amounts
+  plus a working firm tab.
+
+## ADDENDUM 19:0xZ -- both screen fixes on DEV; Andrew's eyes-on walk
+
+- **2.0.0_SA_COO~D landed both fixes on portal DEV a65a8db5** (ls-remote read 19:0xZ; the 5174 main checkout is at
+  a65a8db5 on DEV).
+  - `FirmDropdown.tsx`: the internal viewer's tenant is no longer rewritten to the one-firm opaque firmId.
+  - `CategoryViewTree exactAmounts`, turned on in `DrillTree.tsx:316`. Model Portfolios keeps its grain, per
+    1.0.0_SA_CTO record @06730dfa2a.
+  - ~D's run used stub fixtures (`DRIVER-FIXTURES-MATCH 5 of 5`): resolve tenants `["global","global"]`, against
+    `["global","global","F-CW"]` before the fix.
+- **Andrew, at the M terminal (~19:0xZ), verbatim:** "I just walked the Holdings page and it looks great, what did
+  you want to confirm from the HAR exactly?" This is the signed-in, eyes-on screen check on the fixed build.
+- **Still unread, in a HAR:** whether the firm-tab path sends the registry tenant, whether any FIRM_BINDING remains,
+  and whether Holdings reads READY on the served revisions through a65a8db5.
+
+## ADDENDUM 2026-09-25 ~14:1xZ -- criterion (2) re-measured on the CURRENT directories
+
+The fixed refresh (S125, ledger closed @2e4c33738e) moved the directories off 2026-09-17. Census
+`HOLDINGS_ACCOUNT_CENSUS_49F_INF_20260925.json` @f247a922a5 (M branch), against the served classified revisions
+(business date 2026-09-22: 49F 9ab377ce, INF ba9001d5):
+
+| Firm | Directory as_of | Active | With model | Client only | Refused explicitly | Silently empty |
+|---|---|---|---|---|---|---|
+| 49F | 2026-09-24 | 7,497 | 5,907 | 1,536 | 54 | 0 |
+| INF | 2026-09-25 | 878 | 624 | 252 | 2 | 0 |
+
+Library controls: 49F 6 READ_OK + 3 REFUSED, INF 6 READ_OK + 2 REFUSED, each as classified.
+
+Where the refusals come from (measured against the 2026-09-17 directory, the only earlier one at either firm):
+- 49F: 37 of the 54 were ACTIVE on 09-17. These are the 37 already characterized as having no custody row. The other
+  17 are absent from the 09-17 directory.
+- INF: both refusals are absent from the 09-17 directory.
+
+INFERRED, not measured: the 19 new accounts entered the directory after the holdings business date (09-22). No
+directory exists between 09-17 and 09-24, so an account added 09-18 to 09-22 cannot be told apart here. Either way,
+each one refuses explicitly and none reads silently empty. Criterion (2) holds as worded. The next step is the same
+in both cases: republish holdings at a newer business date.
