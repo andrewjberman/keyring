@@ -9284,3 +9284,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Off-task for P; a row, not a fix. A3 needs no IAM change (the wildcard already covers the render public key)."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S133",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-25T16:08:00Z",
+  "one_line": "CORRECTION to S130: the tree DOES declare all three count-mode managed rule groups (waf-cloudfront.tf:176-230, OPSEC 7987571c9a). The plan's '- rule / + rule' pairs are a perpetual set diff on ONE attribute: managed_rule_group_statement.version, live \"\" vs tree unset (null). No rule is removed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform show -json of a -target=aws_wafv2_web_acl.opal_cloudfront_protection plan (vendored 1.9.8), before-vs-after rule diff by name: the only differing leaf in ip-reputation, common-rule-set, known-bad-inputs is statement[0].managed_rule_group_statement[0].version ('' -> null); no other top-level attribute differs.",
+      "Declaring version = \"\" is refused by the provider: 'expected length of ...version to be in the range (1 - 128)'. Edit reverted; waf-cloudfront.tf unchanged."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S130 world_is: 'The live ACL has three count-mode managed rule groups the declaration lacks ... The next untargeted portal-auth apply by any seat deletes them.'",
+  "world_is": "The declaration has them. An apply sends the same three rules without a version, which is the unpinned default the live empty string denotes, so the ACL's effective rules do not move; the plan then shows the same diff again. No declaration edit yields 'No changes'. The CTO's condition on the A3 grant ('any change -> stop and send it to me') is met, so it has been sent; A3 is not applied.",
+  "notes": "Corrects IRPT_BCKEND-S130 (row not mutated; this row supersedes its world_is). FOR THE NEXT portal-auth PLAN READER: the three '- rule / + rule' pairs on aws_wafv2_web_acl.opal_cloudfront_protection are this recurring version diff and are BENIGN (1.0.0_SA_CTO msg 100972 permits A3 to apply the versionless re-put under a get-web-acl before/after record)."
+}
+```

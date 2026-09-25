@@ -56,8 +56,11 @@ Item in hand: none building (B1 blocked on the contract ruling). Claimed surface
    IRPT_RENDER_JWT_PUBLIC_KEY_PEM -- A2 LIVE 15:48Z (row @67ce0f3296; ledger irpt-render-v2-a2-20260925 closed: CodeSha256
    sgQWoygZ.., env == render public key, no-token/bogus deny before+after, 4 human verifications after / 0 failures).
    A3 BLOCKED 16:00Z: bundle built (auth-validator-edge Mfo4c4PG.., artifact uploaded); targeted plan's distribution diff is
-   clean (26 behaviors off v20) but -target pulls in the WAF ACL and would DELETE its three live rules (row S130); asked
-   1.0.0_SA_CTO who reconciles waf-cloudfront.tf. Ledger irpt-render-v3-a3-20260925 open, nothing applied. Edge role reads
+   clean (26 behaviors off v20) but -target pulls in the WAF ACL (3 to change). CTO granted waf-cloudfront.tf @0e1fd07d4c
+   for a no-op reconcile. 16:1xZ measured: the file already declares all three rules (S130 wrong -> correction row S133);
+   the only diff is managed_rule_group_statement.version, live "" vs unset, and the provider refuses version = "" (1-128),
+   so no edit reaches "No changes" (edit reverted). Per the grant's stop condition, sent the CTO the diff 20260925T161039Z,
+   asking to apply A3 with the identical, versionless ACL re-put. Ledger irpt-render-v3-a3-20260925 open, nothing applied. Edge role reads
    opal/auth/* incl. both private keys = row IRPT_BCKEND-S132 (owner portal-auth IAM). V2 source since its 09-09 deploy (26ffa22b79) is +231/-0; V3 since
    240fe36222 is +441/-0 incl. the origin-marker/asset-allowlist change (review at A3). Then A3 (name the
    Terraform file -> row), A2 V2, A3 V3, each ledgered with a negative arm; R2 QUEUED submit shape as proposed (data
