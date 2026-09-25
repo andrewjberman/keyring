@@ -948,6 +948,28 @@
     "spec_asserts": "Cell IV-e-23 (b): 'IR/header/IdentityCard.tsx: the firm line under WHO reads the firm's display name + the kind word, never the token' -- framed alongside (a) as a joint repair the ADJUDICATION_v2 C-S15 failure (IVE18-AC4) required.",
     "world_is": "By the time this order was issued (round 4, base 8242412d, round-3 merged) IdentityCard.tsx's WHO line had already been carrying `verifiedRequestFirm.displayName` since at least IV-e-3/round-1 work -- no commit in this order's own grant needed to touch it. This worker made NO edit to IdentityCard.tsx and instead wrote IVE23-AC2 as a proof that the already-correct behaviour holds, per the order's own environment note ('the test file does not exist at the base: you write it from the criterion's text').",
     "notes": "Not blocking IVE23-AC2 (PASS-by-output) or any other criterion. Filed so the CTO/COO can confirm the ADJUDICATION_v2 C-S15 finding was scoped to the chip (FirmAttribution.tsx, part (a)) and not to the identity card, or correct this row if a different pin shows the card's own token leak."
+  },
+  {
+    "id": "DSGN_IRPTV1-W13-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~13",
+    "surfaced_at": "2026-09-25T05:00:00Z",
+    "one_line": "Off-task, while proving TO-IV-e-22's own three new tests clean against the broader suite: `__tests__/fe-s-15/job-states.test.ts` fails 2 of 3 tests with `EnvelopeMismatch: ... field 'status' does not satisfy the v1 contract` thrown by `contracts/envelope.ts`'s `parseIrEnvelope`, on the raw `fixtures/fe-s-15/job.*.json` fixtures -- before either failing test ever reaches a render, so it cannot be this order's `AnalysisTab.tsx`/`GenerateComposer.tsx` edits (a `git diff --stat` against this worker's own worktree shows only those two files touched).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/ src/pages/InvestorReporting/__tests__/fe-s-15/ src/pages/InvestorReporting/__tests__/fe-s-10/ src/pages/InvestorReporting/__tests__/fe-s-67/` on this worker's worktree (portal @8242412d + this order's uncommitted edit): `126 pass / 3 fail`, both `fe-s-15/job-states.test.ts` fails throwing `EnvelopeMismatch('status', 'analysis-report')` at `envelope.ts:296:98`, called from `job-states.test.ts:90` -- BEFORE `renderWithJob` (line 93) runs, so no component this order touched executes on that path",
+        "`git diff --stat -- portal/src/pages/InvestorReporting/tabs/analysis/AnalysisTab.tsx portal/src/pages/InvestorReporting/tabs/analysis/GenerateComposer.tsx` is this worktree's entire diff -- `envelope.ts` and `fixtures/fe-s-15/*` are untouched by this order",
+        "round-3 close (`DSGN_IRPTV1-S14`, this file) already recorded '742 pass / 82 fail' on the merged IR suite at f9a954b3+ecfd327a, so a residual failure count above the three fixed by round-3's own named item (fe-s-5/states) is consistent with a pre-existing, undispositioned baseline rather than a regression this order introduced"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's own BOUNDS: `<paths>` names only `AnalysisTab.tsx`, `ProspectComposer.tsx`, `GenerateComposer.tsx`, `VariantCards.tsx` and this cell's own `__tests__/dsgn-irptv1/` directory -- `contracts/envelope.ts` and `fixtures/fe-s-15/**` are out of this order's grant and were not read for correctness, only for the fact that this order's diff does not touch them.",
+    "world_is": "`fe-s-15/job-states.test.ts` fails 2 of 3 tests on this worktree, on a code path (`parseIrEnvelope` over a raw fixture body) this order's edits cannot reach; whether it also fails on the round-3 merged trunk (a residual of the already-recorded 82) or is a NEW drift on this worktree's own base (portal @8242412d) is unresolved and belongs to whichever seat owns `contracts/envelope.ts` / `fixtures/fe-s-15/`, not this task order.",
+    "notes": "Does not touch IVE22-AC1/AC2/AC3 (all three PASS-by-output on this worktree, isolated runs and combined runs alike) or IVE22-AC4 (judgment, recorded per the order). Filed so the drain's own full-suite read is not the first place this shows up."
   }
 ]
 ```
