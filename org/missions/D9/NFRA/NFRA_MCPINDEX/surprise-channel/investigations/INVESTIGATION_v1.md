@@ -269,6 +269,28 @@ carries none.
     "spec_asserts": "W4-S2 (ARMED, disarm_owner the COO lane): MX-a-3's drain did not carry its deliverables or its status flip. W1-S5 (ARMED): AC11 is unsatisfiable in-grant. W1-S6 (BLOCKING): every invocation pins py -3.12, which site Z lacks.",
     "world_is": "MX-a-3's work is at HEAD. MX-c-4 is superseded, and its build waits on its branch for the re-cut cell. The interpreter pin is fixed in the re-cut face, not in a superseded order.",
     "notes": "W3-S2 (ARMED, disarm_owner 0.4.0_DS_ClientPlatform, the trueshares fact_holdings gap) is outside this lane. It rides this seat's drain-end read to the CTO."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W5-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~5",
+    "surfaced_at": "2026-09-25T11:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "safe-commit cannot commit a 'git rm --cached' of a file that stays on disk: its stager (cg_stage_pathspec) runs 'git add -f' on any declared path present on disk, re-adding the removal the face asked for.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/commit_gate_lib.sh:95-110 @09daf8fb2b: a path treated as a deletion only if '[ ! -e \"$p\" ]'; otherwise 'git add -f'.",
+        "First commit e453057195 (declared the report with 'git rm --cached' staged) landed 2 files, not the removal; git cat-file -e HEAD:<report> still succeeded after it. A second safe-commit carrying only the report path aborted rc=1 with the removal un-staged again (nothing to commit).",
+        "Route used: moved the report to .scratch/, 'git rm --cached', safe-commit (c781f95ffb, 440 deletions), moved it back; sha1sum -c of the pre-move digest reads OK. End state is what the face names: untracked at HEAD, ignored, still on disk."
+      ]
+    },
+    "spec_asserts": "MX-b-2 face section 1.2: remove the report from the index with git rm --cached (file on disk stays), committed under safe-commit.sh.",
+    "world_is": "safe-commit re-adds a --cached removal when the file exists on disk; the removal commits only if the file is off disk during the safe-commit run.",
+    "notes": "No gate was bypassed. The file was off disk only for the safe-commit call. Whether safe-commit should honour an already-staged removal of a file still present on disk is for the tool's owner; this worker makes no change to it."
   }
 ]
 ```
