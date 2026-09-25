@@ -1144,6 +1144,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "The re-mint pair (COO half @ae79d37b0c, CTO half @35e4cb93ef, addendum A1 @2a336885fb) signs at most ONE put of the day's crosswalk key, at most 5 Bloomberg reference calls, at most 5 write-once raw identity landings on NEW keys only, and registrations.json +5 rows at most, with no delete in any branch. Its stated discriminator is the pool reading UNRESOLVED 0 and the folder set reaching 94.",
     "world_is": "Every limb holds as signed and the discriminator reads as predicted: 1 put, prior key at 25 versions untouched, exactly 5 raw landings and they are the 5 named securities, 235 of 235 MEASURED, 0 UNRESOLVED, 94 folders, body as_of matching the key. The act stayed inside its radius and did what the pair said it would do. REMAINING AND UNMEASURED BY THIS ROW: whether the corpus INGEST resolves all 94 -- my CTO half s.4 flagged resolved_folders 94 as a PREDICTION the re-ingest alone settles, and no re-ingest has been read here.",
     "notes": "Filed by the CTO as the signer verifying its own signature against the served artifact rather than against the runner's report, which is what NEVER-trust-a-producer asks of a never-widen half after the act. The keepable part is limb (4): a ceiling of 5 met by five OTHER securities would have passed the COUNT and failed the ACT, so the check that matters is the IDENTITIES and not the number. I nearly reported the opposite finding on two consecutive artefact zeros -- an invented prefix, then my own `tail -20` cutting the real prefix out of the listing that would have corrected me."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S7",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-25T03:41:40Z",
+    "one_line": "CRPS-f-1's ruled build (folders_in_records ALWAYS, research_universe ALWAYS present in some form) cannot pass AC3 as written: lib/research/identity/crosswalk.schema.json is additionalProperties:false and is NOT in this worker's <paths>, so every build now raises inside write_pool's own schema validation -- 15 of 119 identity-suite tests fail, all on the identical cause.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest lib/research/identity/tests -q (this worktree, HEAD after the CRPS-f-1 edit): '15 failed, 104 passed, 2 subtests passed'.",
+        "Isolated repro: python -m pytest lib/research/identity/tests/test_crosswalk_write_validates.py::ConformingDocumentWritesUnchanged -q -> ValueError: 'REFUSED: crosswalk document fails lib/research/identity/crosswalk.schema.json at $: Additional properties are not allowed (\\'research_universe\\' was unexpected)', raised from crosswalk.py's write_pool -> _validate_document_against_schema (crosswalk.py:1221, :1252).",
+        "The same single cause reproduces identically (byte-identical ValueError message shape) across test_add_security.py, test_add_security_batch.py (5 arms), test_crosswalk_enrich_coverage.py::EnrichedDocumentValidatesAgainstSchema, test_crosswalk_resolves_folder.py, test_crosswalk_universe.py and test_crosswalk_write_validates.py (3 arms) -- 15 arms, 1 root cause.",
+        "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-f-1.crosswalk-denominator-disclosure.md section 3 <paths> lists crosswalk.py, add_security.py, the two test files and this investigation/task-order file only -- crosswalk.schema.json is absent from both the write grant and the explicit READ-ONLY list."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-f-1 s.1: 'denominators ALWAYS gains folders_in_records' and 'the document gains research_universe' (full form or an absent-with-reason form, but the key itself always present) -- on EVERY build_crosswalk call, unconditionally.",
+    "world_is": "crosswalk.schema.json's top-level object and its denominators/coverage_vintage sub-objects are each additionalProperties:false and list neither folders_in_records, research_folders_live, snapshot_stale_against_live nor research_universe. Since build_crosswalk's own write_pool path validates every document against this exact schema before any S3 put, the ruled build makes write_pool (and every test that exercises it) refuse universally, not merely fail one disclosure-specific check. AC1 and AC2 both PASS as written (research_universe/folders_in_records were designed and tested precisely as ruled); AC3 measures 15 failed, 104 passed, 2 subtests passed -- the pre-existing NoEnrichRowsByteIdentical defect this cell's ruled fix targeted is ITSELF now green.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "No unauthorized edit made: crosswalk.schema.json stays untouched by this worker. The remedy is additive only (four new OPTIONAL properties on the existing schema's properties dicts, matching the pattern already used for 'registered'/'enriched'/'resolved_folders'), owned by whichever cell holds that path -- adding it here would need a paths grant this task order does not carry. Filed BLOCKING/ARMED because merging this cell's crosswalk.py/add_security.py changes without that schema update would refuse every future --write-pool run, not just a test."
   }
 ]
 ```
