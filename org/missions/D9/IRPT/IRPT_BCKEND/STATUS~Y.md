@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
 Drive: the 20m goal loop (cron 87624362) reading `python .tools/drive-mode.py read IRPT_BCKEND~Y` each tick (C11, CTO
 100819). Lease FAST until 2026-09-24T21:13:40Z at 18:18Z. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-24T21:03Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
+As of 2026-09-25T22:15Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Pins
 
@@ -46,11 +46,14 @@ never committed, never pushed). Y makes no commit on P's branch.
 
 ## Next proof
 
-Live hops 1a-1d, then 3-10, per `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/RUNBOOK_1203_LIVE_JOURNEY_20260923.md`
-(revised 19:1xZ for the deferred path). P deploys; Andrew posts the 12.03 template as an Opal viewer. Y reads the resident's
-journal and the rows and records the digests. Y never runs `--once` against the live queue: the service is the one consumer.
-P has cherry-picked Y's three commits (`2d6937be5e`, `e8dd4cdfc7`, `9efaf2850e` on its branch); `522afcfd17` fixes the
-full-suite red P found (100860) and must ride the same rebuild.
+Live hops 1a-10 per `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/RUNBOOK_1203_LIVE_JOURNEY_20260923.md` once Andrew
+posts `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/aapl-vnq-12.03.csv` as an Opal viewer. At 22:12Z on 09-25 there are
+still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at `8242412d` and still carries the template lane
+(`prospect.ts:65`). No Y build item is unblocked:
+- Custody hop 4 is P's composition (CTO 100649). It needs P's binding store, current_selection and M's publication_for.
+  Y's part is delivered: `build_custody_ports` @47b2adf6df and the decoder rung-2 read @70c464cec9.
+- Comparisons need M's policy consumer.
+- Shares is parked on CTO 100887.
 
 ## Dependencies
 
