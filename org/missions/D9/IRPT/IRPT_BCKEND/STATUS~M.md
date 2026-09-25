@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T16:1xZ.
+(not live; the FAST line is parked below). As of 2026-09-25T16:2xZ.
 
 ## Pins
 
@@ -73,12 +73,11 @@ branch. No code edit is open.
      (the registry JSONs, NAMING_SCHEMA, CurrencyAuthorities, the contract, firm_registry), plus the classifier and
      COT's modules, so 30 or more members. A per-member sha stamp cannot fit the 2,048-byte cap; the package needs a
      hash manifest INSIDE the tar with one digest in metadata, which is a mint_bundle change.
-   - **NEW, S131** (HEAD, swept into ~P's 513c84487d under ~P's authorship): a COT build REFUSES at every cutoff
-     09-22..25 on 53 repeated (AccountID, AssetID, Relationship ID) groups in fact_holdings date=2026-09-22 (one
-     version, 09-23 11:46Z). The newest COT holdings partition is 09-22. How the served 09-22 revision passed my
-     guard (b3e63a795e) is open. Next item. Row 5 is DONE (CTO ruling msg 100965): both captures are landed in S3
-     (1c4ca93511), and with no env var the 49F and INF builds read the latest capture at or before D and state its
-     vintage (61f4b25171, M branch). Real run: valid and reconciled at both firms; INF models_whole_from_capture 35.
+   - **S131 / S134 explained** (9c0fb0c8f2): the served COT revision is a BOUNDED publication of 841 of 981 accounts.
+     The 53 repeated relationship groups sit in 2 unserved accounts ($729,826.75). The source is unchanged (same
+     version and sha as served). A full-firm (scheduled) COT build refuses the whole firm for those 2 accounts.
+     **NEXT ITEM:** scope the COT duplicate-grain refusal to the affected accounts (carried as explicitly refused, as
+     49F's drill does), then decide the other 140 unaccepted accounts the same way.
    - Step 1: DONE (code on CLOUD).
    - Step 3 is answered by 2.0.0_SA_COO~P (msg 100955): the resident runner REJECTS a holdings message
      (resident_worker.py:262-270 routes resolve_upload only). Every fire would be a poison message ending in the DLQ,
