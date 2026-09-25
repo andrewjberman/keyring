@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-24T23:2xZ.
+(not live; the FAST line is parked below). As of 2026-09-25T14:1xZ.
 
 ## Pins
 
@@ -31,7 +31,7 @@ a0690a03 parser reads READY at every firm.
 | Criterion | State | Evidence |
 |---|---|---|
 | (1) signed-in journey, 49F / INF / COT | API EXERCISED at all three; screen walked by Andrew on the fixed build; the firm-tab HAR is the one artifact asked | VERIFY_HOLDINGS_GOAL_20260924.md addenda |
-| (2) every active 49F/INF account resolvable, or refused explicitly | on the CURRENT directories (49F 09-24, INF 09-25): 49F 7,443 resolve + 54 refused, 0 empty of 7,497; INF 876 resolve + 2 refused, 0 empty of 878. The refusals grew because holdings is still business date 09-22 | HOLDINGS_ACCOUNT_CENSUS_49F_INF_20260925.json (M branch) |
+| (2) every active 49F/INF account resolvable, or refused explicitly | MET on the CURRENT directories (49F 09-24, INF 09-25): 49F 7,443 resolve + 54 refused, 0 empty of 7,497; INF 876 resolve + 2 refused, 0 empty of 878. Of the refusals, 37 at 49F are the no-custody accounts known since 09-17, and 19 (17 at 49F, 2 at INF) are new to the directory since 09-17 (that they postdate the 09-22 holdings date is INFERRED) | census @f247a922a5; VERIFY addendum 09-25 (M branch) |
 | (3) COT soundness + window disclosed | disclosed in the receipts | COT_LABELLED_PUBLICATION_RECEIPT_20260924.json |
 
 ## Write claims
@@ -42,9 +42,9 @@ branch. No code edit is open.
 ## Next list (in order)
 
 1. Andrew's firm-tab HAR, then /verify on the goal.
-3. Republish holdings at a newer business date (the directory now leads it; accounts opened after 09-22 refuse): a
+2. Republish holdings at a newer business date: the directory now leads holdings, so its new accounts refuse. This is a
    rebuild from sources under a CTO GO.
-2. On the CTO's routing of the widening request (`CLASSIFIER_WIDENING_REQUEST_20260924.md` @d8a88cef4b; 287 rows, 69
+3. On the CTO's routing of the widening request (`CLASSIFIER_WIDENING_REQUEST_20260924.md` @d8a88cef4b; 287 rows, 69
    readers): if the CTO rules it this seat's, fill 49F's 62 CUSIP-only rows (symbol and name from the Schwab security
    master) in the Holdings producer.
 Done this lease: the investor_reporting suite is green, 267 passed and 0 failed @1848e5caef. Each stale test's premise
