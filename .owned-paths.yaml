@@ -1182,6 +1182,12 @@ paths:
   "infra/aws/terraform/investor-reporting/directory/schedule.tf":
     lane: IRPT_COMPLETION_M
     note: "CTO exact M grant 2026-09-25 (R4; 100998): ONLY the irpt-holdings-snapshot slot (retarget SQS -> the dispatch function, still DISABLED). Every other schedule in this file stays 2.0.0_SA_COO~P's; ~M edits nothing else here. Returns to IRPT_COMPLETION_P when R4's enable closes."
+  "infra/aws/ec2/investor-reporting-export/render_export.cjs":
+    lane: IRPT_LIVE_SCOPE_P
+    note: "CTO exact P grant 2026-09-25 (2.0.0_SA_COO~P 101025; ruling on 101012 (a)): the render host reads the per-attempt render token by NAME into memory only and deletes it on every path."
+  "infra/aws/ec2/investor-reporting-export/run-export-render.sh":
+    lane: IRPT_LIVE_SCOPE_P
+    note: "Same exact P grant as render_export.cjs (101025): passes the token NAME through, never the value."
   "infra/aws/lambda/investor-reporting/narrative/entry.py":
     lane: IRPT_LIVE_SCOPE_P
     note: "CTO exact P grant 2026-09-25 (2.0.0_SA_COO~P 100978): the IRPT export hop B0 render-ports install in the narrative ENTRY (one line, render_ports=_entry.render_ports_from_env(), inert until IRPT_EVIDENCE_BUCKET ships with B1)."
