@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
 Drive: /closer-drive loop (cron 7a9ea1ce, every 30m at :17/:47; CTO 101098, Andrew-direct ~03:0xZ; replaced /canonical-drive 57c0067c); lease FAST re-armed to 15:01Z. Egress: vendor API calls permitted this session, each ledgered (CTO 101098). Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-26T13:5xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
+As of 2026-09-26T14:1xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
 
 ## Pins
 
@@ -57,8 +57,12 @@ None building. Next surface: the adapter package + performance root (deploy B), 
 1c. ADMIN+DEV UI WALK LIVE: principal irpt-uiwalk-1790430787@opal.test created 13:53:14Z under packet v3 07b7a000 (CTO
    b70ede1756, CRO a157c45762); ledger irpt-ui-walk-principal-20260926 OPEN (C1 closed). ~D walks (HAR), ~Y makes ONE
    upload (K4). P deletes on both "done" or at 14:53Z (cron 3d36d71d), then the route-graded audit vs the 13:51Z census.
+   K4 DONE: ~Y's ONE POST 13:54:56Z -> resident handled=1 13:55:02Z -> NORMALIZED 12.03 (first live Analysis upload;
+   IRPT_MVP_Y/LIVE_UPLOAD_1203_EVIDENCE_20260926.md @3cc73f2b79) -> ledger irpt-upload-hop2-20260924 CLOSED (S1).
 2. Deploy (B) -- packet blob 3c916b9c: CTO half SIGNED b70ede1756 (+ INF-unarmed before/after arm, reverse-order
-   rollback); CRO second half asked by the CTO. Build + apply after the CRO half lands. Was: upload the adapter (publish 4872b28043), apply render_grant.tf +
+   rollback); CRO half SIGNED f8fc5ff21d (+ a three-firm human-read arm). CTO ruling (c) @ca0b3b6ecb, CRO accepted:
+   synthetic arm before D1 / after D2 (deploy_b_human_arm.py; before-run recorded); the real 49F 200 BEFORE from ~D's
+   walk HAR, AFTER in the step-6 principal window; D1 starts after the walk closes. Was: upload the adapter (publish 4872b28043), apply render_grant.tf +
    IRPT_EVIDENCE_BUCKET, export_render=on; ledger with the CTO's negative arm (another attempt's token name refused, read
    after delete refused). REHEARSED 00:3xZ (plan only, CLOUD tree, live plan values as vars): 1 add
    (performance_render_grant_read) / 1 change (env + IRPT_EVIDENCE_BUCKET = the same bucket irpt-export-render writes
