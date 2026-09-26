@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
 Drive: /closer-drive loop (cron 7a9ea1ce, every 30m at :17/:47; CTO 101098, Andrew-direct ~03:0xZ; replaced /canonical-drive 57c0067c); lease FAST re-armed to 15:01Z. Egress: vendor API calls permitted this session, each ledgered (CTO 101098). Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-26T05:2xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
+As of 2026-09-26T13:3xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
 
 ## Pins
 
@@ -51,9 +51,12 @@ None building. Next surface: the adapter package + performance root (deploy B), 
    268 points, Account group == 1098). CODE COMMITTED a7e9f51c77 on the backend branch (orion_account_mapping household check,
    orion_selected entity 5, orion_live HTTP status in the error; tests perf 189 / _authz 160 / reports 87 pass). Adapter row re-pinned for it on the publish branch 55c42208a9. Then: ledgered deploy (rides deploy (B)), a new
    one-use plan on a one-account-household client, and one signed-in run (needs a principal window).
-1b. irpt-ycharts-generate package: three staged_from rows ADDED 45d905110c (publish branch; pins re-hashed 3/3 MATCH;
-   flat_import_check ok) -- then rebuild, ledgered deploy, the AST
-   import-closure walk returns zero missing; then a new principal window for ~Y's one upload (new sign-off).
+1b. DONE 13:29Z: irpt-ycharts-generate LIVE at IJD6bd1I.. (ledger irpt-generate-closure-fix-20260926 CLOSED): closure
+   0 missing (was 3), CodeSha256 == artifact, CONTRACT_VERSION arm before/after, replan No changes. ~Y's upload rides the
+   admin+Dev window as K4.
+1c. ADMIN+DEV UI WALK (Andrew-direct "Agent on an admin+dev login", CTO 101151): packet v2 blob 4ae2693b @b108b016cb
+   (route-graded HAR, K3 selections kept, K4 ~Y upload). CTO signed v1; CRO refused v1 (0-non-GET audit fails a correct
+   walk), fixed in v2; re-sign of both halves asked 13:3xZ. Create only after both halves at HEAD.
 2. Deploy (B) -- UNBLOCKED (plan b spent 03:20:31Z): upload the adapter (publish 4872b28043), apply render_grant.tf +
    IRPT_EVIDENCE_BUCKET, export_render=on; ledger with the CTO's negative arm (another attempt's token name refused, read
    after delete refused). REHEARSED 00:3xZ (plan only, CLOUD tree, live plan values as vars): 1 add
