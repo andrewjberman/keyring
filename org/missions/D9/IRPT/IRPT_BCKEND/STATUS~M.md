@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T23:4xZ (tick 17). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-26T00:3xZ (tick 18). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -77,8 +77,12 @@ branch. No code edit is open.
        Monday's first COT run: z09308463 (0.37 cash at 09-22) shows a cash slice with shares summing to 1, and
        z09326138 or z09308511 shows 100% cash.
    - Preferred stock = fixed_income, standing (Andrew-direct ~17:3xZ, @42def02a36).
-   - The two defects (COT `B_01b` scanning an empty prefix; the loader skipping rows without a ticker) are ~M's under
-     exact-file grants on request.
+   - The two R5 defects (IRPT_MVP_M/R5_CLASSIFIER_DEFECTS_20260926.md):
+     - The loader skip is CLOSED with no change: `ticker` is bd-securities' HASH key, and batch A's 204 name-keyed
+       items classify by name.
+     - COT `B_01b` should list `gold/canonical/holdings/` (121 partitions). On 09-22 it would find 574 new keys
+       ($145.07M of $549.14M). The exact-file grant is asked of the CTO. Any upload needs Andrew's per-use OpenAI word
+       plus a never-widen half.
 3. **The scheduled daily Holdings producer is ~M's** (CTO R4, msg 100947;
    `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_IRPT_20260925.md` @75156f2b18):
    - Plan: `HOLDINGS_SCHEDULED_PRODUCER_PLAN_20260925.md` @875dc1f64b (M branch). 7 prerequisites are measured;
