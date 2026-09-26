@@ -6312,3 +6312,75 @@ fanout:
   12), the four-input concentration, the served PDF, and the universe citation missing from RESAPP's PRD. All are CTO inputs
   (msgs 25878-25901), outside the round-42 analysis's ordered list, and each is for the analysis that follows this round.
 - Standing: ACCEPT (carded); Z-S272; Z-S276; the portal promote; item 8, Z-S238, Z-S227, and W85-S1 / W117-S3 / W58-S2.
+
+
+## 52. ROUND 44 -- THE CASE VALUE NAMES ITS CURRENCY, THE REDEPLOY, AND THE FOUR-INPUT TRACE. Three orders over the round-43 analysis's five items
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 43 ANALYSIS** (`ledger/ROUND_ANALYSIS.round43.md` @`37217d8053`, s.4 five
+items; round 43 CLOSED). The CTO asked this round not to wait on FWD-30's re-grade (msg 26010); the evidence for it is committed at
+@`2e4382ecd4` (the LIVE research library, 95 folders read at 2026-09-26T03:55:02Z: OK 95 of 95, cases 285 of 285). PRD v0.26 unchanged.
+
+### 52a. THE FIVE ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 the currency-less case value | `AMGT-rs-1` (build) + `AMGT-rs-2` (served) |
+| 2 `adjudicates` on a non-terminal row | NOT a cell -- a RAISE: row `Z-S287` @6d2b1e14c2, disarm owner 1.0.0_SA_CTO (the gate's owner); `surprise-row-gate.py:425` |
+| 3 Z-S285 superseded | NOT a cell -- done as a NEW correction row `Z-S286` @64d3cad229; the CTO accepted that RC2 refuses an in-place edit without the audited override (msg 26010) |
+| 4 FWD-30's five missing names | NOT a cell -- rr-1 landed them; the live 95 read 95 of 95 (@2e4382ecd4) |
+| 5 the four inputs carrying eleven of fifteen substance failures | `AMGT-rs-3` -- MEASURE FIRST: a trace of each input to its producer, owner and write surface, so round 45 cuts them where they live |
+
+### 52b. THREE MEASUREMENTS THE CUT RESTS ON
+
+1. **The payload does not carry the case's currency.** Of 48 SERVED cases across the live 95 (round 44's fixed capture,
+   `C:/tmp/amgt-r43-live95`), 45 carry no `quote_currency` at all and 3 (the London names) carry `GBp`/`GBP`. So the page cannot
+   read a currency off the case.
+2. **The case is expressed in the price's currency.** The served guard admits a base only inside [0.33, 3.0] of the name's own
+   `px_last`, so the base is in the unit of that price, and the page's Price tile prints that price's currency from the header's
+   `CRNCY` (RKT: "GBp 4923.00"). The fix labels a SERVED case with `CRNCY`; where a case's own `quote_currency` disagrees with
+   `CRNCY`, that is a row, not a guess.
+3. **The four inputs have no single owner.** Spans sit on the drafting object, the 27 unit/sign conventions in a registry, social
+   and chatter in the harvest, and the universe in the crosswalk. Cutting them here without the trace would build into other
+   projects' surfaces.
+
+### 52c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-rs-1` | THE CASE VALUE NAMES ITS CURRENCY | `~161` | worker | SERVED | `portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx`, `lib/research/print/render_pack.py`, `lib/research/print/tests/**`, `portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs` |
+| `AMGT-rs-2` | THE REDEPLOY | `0.7.0_AE_CloudOps~A` | seat order | WORLD | `infra/aws/terraform/harvest/**` (apply only), its deliverables, the ledger |
+| `AMGT-rs-3` | THE FOUR-INPUT TRACE | `~162` | worker-light | LOCAL | its deliverables only |
+
+### 52d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's five items. Items 2, 3 and 4 are settled by other acts, each named in 52a. Items 1 and 5 remain:
+  one build plus its served act, and one trace.
+- **(ii) Same grain.** One build, one deploy, one trace.
+- **(iii) Intent.** One axis: a figure on the page says what it is, in what, and where it comes from.
+- **(iv) What a cell does NOT move.** rs-1 moves no data and no pdf path; rs-2 moves exactly its sign-off pair's radius; rs-3
+  edits nothing.
+
+### 52e. EDGES AND FAN-OUT
+
+```
+rs-1 -> rs-2   (the rich body the deploy serves)
+fanout:
+  cap: 8
+  orders_total: 3
+  chains_total: 2
+  wave_0: [rs-1, rs-3]
+  wave_1: [rs-2]                       # a seat order: after rs-1 merges and both never-widen halves are committed
+  portal_ref: 53ccbc52
+  no_vite_per_worker: true
+  no_s3_deletes: true
+  no_vendor_call: true
+  egress: rs-2's build pip-downloads its pinned wheels (declared)
+  route_change: none
+  no_promote: true
+```
+
+### 52f. CARRIED
+
+- The CORPUS render seam (FWD-10/11/15): the CTO's decision, not yet made (analysis s.4).
+- FWD-7's route covering the research folder (msg 25945); the portal promote; ACCEPT (carded); Z-S272; Z-S276; item 8, Z-S238,
+  Z-S227, W85-S1 / W117-S3 / W58-S2.
