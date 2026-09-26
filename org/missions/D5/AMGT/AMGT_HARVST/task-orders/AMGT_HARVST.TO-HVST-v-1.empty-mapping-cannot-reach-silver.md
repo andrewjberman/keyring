@@ -88,7 +88,7 @@ Plus `.scratch/r1/` in your worktree for check scripts.
 
   <criterion id="AC2" cell_refs="HVST-v-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r1/ac2.py</invocation><expect>THE POSITIVE CONTROL, and it is the criterion that can fail this cell: wsj's held listing payload produces a BYTE-IDENTICAL row set and an IDENTICAL arrow schema before and after the change -- print both schemas and the comparison verdict, plus the row count. AND a populated mapping still writes AS A STRUCT: construct a row whose mapping has at least one key, show its arrow type is struct with that child, and show it writes. A fix that re-types a column wsj already writes is a silver schema change wearing a bug fix's clothes and must be caught here</expect></criterion>
 
-  <criterion id="AC3" cell_refs="HVST-v-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/opal_data_harvest/ -q 2>&1 | tail -15</invocation><expect>the opal_data_harvest suite runs and its pass/fail counts are printed as a BOUND -- the number of tests passing, stated with the count, and zero regressions against the pre-change run of the same command (print both numbers). Your new test for the empty-mapping case is part of this suite and is named in the output</expect></criterion>
+  <criterion id="AC3" cell_refs="HVST-v-1"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/opal_data_harvest/ -q 2>&1 | tail -15</invocation><expect>the opal_data_harvest suite runs and its pass/fail counts are printed as a BOUND -- the number of tests passing, stated with the count, and zero regressions against the pre-change run of the same command (print both numbers). Your new test for the empty-mapping case is part of this suite. ⛔ **THIS CLAUSE ORIGINALLY READ "and is named in the output" AND WAS UNSATISFIABLE AS WRITTEN -- SEE AMENDMENT 1. `pytest -q` names a nodeid only for a FAILING test, so a PASSING new test can never appear.** The substitute oracle is a `-v` run naming the test, recorded beside the `-q` bound</expect></criterion>
 </proof_of_spec>
 
 Write `.scratch/r1/ac1.py` and `ac2.py` yourself. **Record each criterion's ACTUAL OUTPUT and its
@@ -108,6 +108,52 @@ and it will run on your commit.
 If you find something odd that is off-task, append ONE row to
 `org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md` (`class` is
 OBSERVATION or BLOCKING -- there is no DEFECT value) and KEEP WORKING.
+
+
+## 7. AMENDMENT 1 -- AC3's "named in the output" CLAUSE WAS UNSATISFIABLE WHEN I WROTE IT. AC3 PASSES. `Z-W21-S1` IS DISARMED
+
+**The issuer amends its own criteria (Rule 27); GATE (viii) grades this modification.**
+
+`0.9.0_WK_AMGT_HARVST~21` reported AC3 as passing its BOUND while refusing to self-grade one clause, and
+routed the call here: *"If the issuer reads that clause as load-bearing, AC3 is a FAIL and the order stays
+open on it -- that call is the issuer's at L9, not mine."* **That was exactly right, and the answer is that
+the clause was defective at the cut.**
+
+⛔ **`pytest -q` PRINTS A NODEID ONLY FOR A FAILING TEST.** A test that PASSES cannot be named in `-q`
+output, ever. So the clause demanded evidence its own named invocation is structurally incapable of
+producing -- **my third cut defect of the night, and the same family as the other two: a criterion written
+against behaviour I had not exercised.** The worker measured it honestly (0 grep hits in both the tailed and
+the untailed stream) instead of quietly substituting a different command and calling it a pass.
+
+**RULING: AC3 PASSES.** Its substance is the BOUND and the regression comparison, and both are met and
+printed: pre-change `3 failed, 160 passed`, post-change `3 failed, 161 passed`, **+1 with zero regressions**,
+against a collected denominator of 162 the worker re-measured with `--collect-only` after catching its own
+error (the summary line's failed+passed overstates the population by 2). **The clause is rewritten rather
+than waived, so the next reader of this order is not misled into thinking `-q` can do this.**
+
+⭐ **`AMGT_HARVST-Z-W21-S1` IS DISARMED BY THIS AMENDMENT** -- the hazard was "a criterion demands what its
+invocation cannot print", and the criterion no longer does. Disarm owner `2.0.0_SA_COO~Y`, disarmed in the
+same turn it was read, per the standing rule.
+
+## 8. `Z-W21-S2` IS NOT MINE TO FIX AND IS NOT DISARMED -- IT IS ROUTED
+
+**The graded suite is ALREADY RED AT HEAD: 3 failures before this cell touched anything.** So AC3's
+"zero regressions" is measured against a red baseline, which is the correct comparison for THIS cell and is
+still a weaker guarantee than a green one. Worse, the worker measured that **one failure changed its CAUSE
+between two runs at the same nodeid** (`KeyError 'bundle'` then `FileExistsError [WinError 183]`) -- a
+flapping failure, not a stable one.
+
+⛔ **THAT IS A PRE-EXISTING CONDITION OF `lib/opal_data_harvest`, NOT AN ARTEFACT OF THIS ROUND**, and it is
+not in this round's write grant. It stays **ARMED** and is carried into the round-7 analysis. **I am not
+disarming a hazard I have not remedied** -- an exposure closed by "nothing went wrong in my cell" is the
+ABSENT-vs-EXERCISED-AGAINST conflation.
+
+## 9. DECLARED EXCLUSION, recorded so no one reads this cell as wider than it is
+
+**`article_rows` (the silver `article` table) was deliberately NOT changed.** An empty mapping in an ARTICLE
+payload still fails at the same parquet writer. The worker declared it rather than silently widening its own
+grant, which is the right call: this cell's domain was the LISTING path. **It is an open exposure on a second
+table, not a fixed one**, and it belongs to the round-7 analysis alongside `Z-W21-S2`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
