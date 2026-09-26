@@ -48,9 +48,8 @@ None building. Next surface: the adapter package + performance root (deploy B), 
 1. S143 FIX PROVEN LIVE 05:07Z (ledger irpt-orion-household-scope-proof-20260926 CLOSED; receipt
    IRPT_MVP_P/ORION_HOUSEHOLD_SCOPE_PROOF_20260926.json): the household-scoped Scope body (entity 5, one-account household)
    -> Orion 200 -> orion_selected.calculate returns a contract-validated Purfeerst report (YTD 0.0682, 01-01..09-25 exact,
-   268 points, Account group == 1098). CODE UNCOMMITTED in the backend worktree (orion_account_mapping household check,
-   orion_selected entity 5, orion_live HTTP status in the error; tests perf 189 / _authz 160 / reports 87 pass) -- held
-   by MSTR's disk rule (asked 05:1xZ). Then: commit, adapter package re-pin, ledgered deploy (rides deploy (B)), a new
+   268 points, Account group == 1098). CODE COMMITTED a7e9f51c77 on the backend branch (orion_account_mapping household check,
+   orion_selected entity 5, orion_live HTTP status in the error; tests perf 189 / _authz 160 / reports 87 pass). Then: commit, adapter package re-pin, ledgered deploy (rides deploy (B)), a new
    one-use plan on a one-account-household client, and one signed-in run (needs a principal window).
 1b. irpt-ycharts-generate package: add the three missing modules (~Y 101125), rebuild, ledgered deploy, the AST
    import-closure walk returns zero missing; then a new principal window for ~Y's one upload (new sign-off).
