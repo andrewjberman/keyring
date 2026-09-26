@@ -133,7 +133,9 @@ graded destroys the seal and FAILS this criterion** -- the probe checks AC5's re
   laptop 1.0.0_SA_CTO's ruling (msg 101169): the sealed tree lives under `%LOCALAPPDATA%/opal/og-salt/`, NEVER `C:/tmp`
   (the `C:/tmp` salt was lost, row `NFRA_OPLGTW-S42`). The ONE permitted edit to the instrument is
   `compute_expected.py:51`: `SEALED_DIR = "C:/tmp/nfra-oplgtw-sealed"` becomes
-  `SEALED_DIR = os.path.join(os.environ["LOCALAPPDATA"], "opal", "og-salt").replace("\\", "/")` (import `os` if absent). No
+  `SEALED_DIR = (os.environ.get("OG_SEALED_DIR") or os.path.join(os.environ["LOCALAPPDATA"], "opal", "og-salt")).replace("\\", "/")`
+  (import `os` if absent): an env override `OG_SEALED_DIR`, defaulting to the laptop value `%LOCALAPPDATA%\opal\og-salt\`
+  (laptop 1.0.0_SA_CTO, 16:43Z). Record the resolved value in the AC8 artifact as a PATH SHAPE only. No
   other line of the instrument changes; commit that one-line edit on its own, before the run, and cite it in the
   AC8 artifact. That is a path, not a reimplementation.
 - **PHASE 1 RE-RUNS A COMMITTED INSTRUMENT; IT DOES NOT REIMPLEMENT ONE.** `OG-v-3`'s sealing script SURVIVES in this
