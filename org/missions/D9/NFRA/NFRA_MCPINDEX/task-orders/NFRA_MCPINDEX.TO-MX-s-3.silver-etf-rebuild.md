@@ -30,7 +30,9 @@ Do (CLAUDE.md rule 13 and NEVER-9: a Lambda code change is Terraform only, throu
 1. Re-vendor the 8 modules from CLOUD HEAD into the function's build directory, the way its Terraform/build expects
    (read `infra/aws/terraform/opal-assets/` and the function directory first). Update `BUILD_MANIFEST.json`'s
    `vendor_sha256` to the new bytes.
-2. Run the silver suite the manifest names (`data/assets/tests/`), and record the result.
+2. Run the silver suite, `data/assets/scripts/silver/tests/`, and record the result. (AMENDED @ its own commit on
+   0.7.0_AE_CloudOps~I's msg 26040: the first cut named `data/assets/tests/`, which does not exist; BUILD_MANIFEST.json
+   names no suite path.)
 3. NEVER-2 ledger with slug `nfra-mcpindex-silver-etf-rebuild`:
    - open it, and commit the entry and its sentinel;
    - apply the ONE function's code change through `safe-apply`. The plan must name only `opal-assets-silver-etf`
