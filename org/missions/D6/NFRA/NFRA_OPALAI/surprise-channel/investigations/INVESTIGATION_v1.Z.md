@@ -964,6 +964,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "W9-S1: the owner's read-back omits portal_channels, so the grant OA-g-3 will write reads back as empty.",
     "world_is": "The read-back carries portal_channels; Schwab-only grants read back unchanged.",
     "notes": "The fix reaches the host with OA-g-2's release."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W8-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~8",
+    "surfaced_at": "2026-09-26T07:55Z",
+    "one_line": "TO-OA-f-2 guard (ii), as relayed at GO, polls https://<the gateway>/health and rolls back on anything but 200 within 90 s. The public https://mcp.opalinvest.dev/health can never read 200: the ALB answers it with a 302 to Entra login (Server awselb/2.0), so the request never reaches the gateway. It read 302 on 30 of 30 polls after the forward deploy while the gateway served healthy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Poll log /c/tmp/oa-8/.scratch/act.log: 30 polls of https://mcp.opalinvest.dev/health from 07:44:44Z to 07:47:23Z (the act exited 07:44:41Z), 30 of 30 http_code=302.",
+        "curl -D at 07:54:40Z: 'HTTP/1.1 302 Moved Temporarily', 'Server: awselb/2.0', 'Location: https://login.microsoftonline.com/<tenant>/oauth2/v2.0/authorize?...'. This is the ALB's authenticate-oidc default action (EC2_MANIFEST opal-gateway _status: 'default-action 302 to Entra'); the gateway process is not in the path.",
+        "Discriminators, same minute: public /mcp unauth 401 and public /.well-known/oauth-authorization-server 200 (both forwarded to the gateway); on-box http://localhost:8080/health 200 on 3 of 3 (ssm:0e97c001-f7b7-48e1-adbe-2bcd07418ef6); opal-gateway active since 07:43:23Z, NRestarts=0.",
+        "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh@c5f8099440:230-235 polls http://localhost:${GATEWAY_PORT}/health on the box right after the restart; it returned {\"ok\":true} inside its 30 s loop (ssm:6861b726-9f08-4a9f-9e0c-e870c5d5c373)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Guard (ii): immediately after the restart, poll /health (GO prompt: https://<the gateway>/health, host read from the deploy script); not 200 within 90 seconds -> run the rollback at once.",
+    "world_is": "The public /health path is behind the ALB's OIDC default action and returns 302 for every state of the gateway, healthy or down, so as a public read the guard cannot discriminate and would roll back every deploy, the rollback included. The deploy script's own /health read is on-box (localhost:8080) and returned 200. I took the on-box reads plus public /mcp 401 as the guard (ii) reading and did NOT roll back. The rollback stays ready (clean base tree /c/tmp/oa-8-rb at 0af72fb1d0).",
+    "notes": "Deviation from the letter of the GO prompt, measured and reported. Disarm: the issuer rules whether the on-box reading satisfies guard (ii) or orders the named rollback; a future order's /health guard names the on-box URL or an ALB path that forwards unauthenticated."
   }
 ]
 ```
