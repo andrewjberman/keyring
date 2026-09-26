@@ -5,10 +5,10 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.10",
+ "prd_version": "v0.11",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ui-finish-design-brief-20260924.md@20f90739bd",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
  "status": "DRAFT"
 }
 ```
@@ -214,6 +214,17 @@ The L5/L6 issuer is `2.0.0_SA_COO~D` by Andrew's name.
                     holdings total; when one account cannot be computed, the page says so in plain words
          SOURCE     Andrew-direct 2026-09-26 ~15:1xZ, record @`07c4b8b84e` (C1-C4); the route proposal @`889160ce2c`;
                     "opens on the client's largest account" is the Call 1 ruling (b) in ROUTE STRUCTURE below
+  FWD-20 An advisor sees every account's year-to-date return side by side inside the client, and spots the lagging
+         one at a glance
+         DONE WHEN  EXERCISED -- an advisor opens a real client with several accounts and names the lagging account
+                    from the list, without opening each account in turn
+         ACCEPT     each of the client's accounts shows its own year-to-date return beside its name where the
+                    advisor chooses accounts; the figures fill in as they arrive, and the page stays usable while
+                    they do; an account that cannot be computed says so in plain words in its place; there is still
+                    no single return for the whole client
+         SOURCE     Andrew-direct 2026-09-26 ~16:0xZ, "recs approved for all" on the open-calls frame of ~15:5xZ,
+                    Call 2, record @`a6700b211e`; it builds on FWD-19 and restores FWD-5's "lagging account in one
+                    screen" at account level
 ```
 
 Not promised (brief Part II, VII): the PDF / print package; the narrative page; the Global-view entitlement model's
@@ -296,8 +307,10 @@ rules, and the code each retires. In summary:
   the one-main-picture-at-rest law (FWD-16), and the chooser says whose figure it is.
 - **Call 2, deep links: (a).** Route state only, in-page. No client or account id goes into the URL, because ids
   never print. An opaque server reference (the `sel_` id) is the path if deep links are asked for later.
-- **Call 3, a client-level list of every account's figure on Performance: PARKED** as enrichment. It costs one
-  request per account (up to 70 at 49F), and FWD-19 is met without it. Andrew may un-park it.
+- **Call 3, a client-level list of every account's figure on Performance: APPROVED by Andrew** (~16:0xZ, "recs approved
+  for all"), as FWD-20, in the round after FWD-19's C25. Each account's YTD shows beside its name in the chooser and
+  loads progressively: one one-account request per account, up to 70 at 49F's largest client. There is still no
+  combined client return.
 
 **What this does not change:** the backend, its contracts and its one-account rule (`performance/retained.py:77-80`);
 the PATHS (every file the proposal's section 5 names is under `portal/src/pages/InvestorReporting/**`); rounds already
@@ -362,6 +375,7 @@ v0.6 additions. The CTO's order is a suggestion; the sequence is the COO's at L5
 
 v0.9 addition, FIRST in round 6 because it is the FWD-1 blocker (every client-set Performance read is refused today):
 23. FWD-19 the client context and per-account Performance route structure (ROUTE STRUCTURE above) -- C25
+24. FWD-20 every account's YTD beside its name in the chooser, loaded progressively; the round after C25 -- C26
 
 ## CELL CANDIDATES (the COO's decomposition; not task orders)
 
@@ -436,6 +450,10 @@ v0.6 candidates (brief @20f90739bd Part IV F1-F10; C9, C10's rail and C11's hist
   `POST /selections` and preselects the largest account; the directory account-name search is removed. Acceptance is
   the proposal's section 7, with a HAR census showing 0 `/performance` GETs carrying the client set. Serves FWD-19,
   FWD-1, FWD-2 and FWD-5.
+- C26 Per-account YTD list (v0.11, Andrew's Call 2): the chooser shows each account's YTD beside its name, fetched
+  one account at a time (a one-account `POST /selections`, cached, then `GET /performance`), and fills in
+  progressively without blocking the tab. A refusal shows in words in the account's row. There is no client
+  aggregate. Built on C25's account list. Serves FWD-20 and FWD-5.
 
 ## PATHS (the write surface)
 
@@ -601,6 +619,12 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
   - R2: no seat serial in the ENDPOINT section; FWD-19's SOURCE cites by pin.
   - R3: FWD-19's SOURCE names the Call 1 ruling.
   - THE THREAD hop 3 is aligned to the client pick and then account focus (brief half).
+- v0.11, 2026-09-26 ~16:0xZ, `1.0.0_SA_CTO` (Claude): on Andrew-direct "recs approved for all" (record @`a6700b211e`):
+  - Call 2 un-parks the per-account YTD list, and FWD-20 is ADDED;
+  - ROUTE STRUCTURE Call 3 now reads APPROVED;
+  - backlog item 24 and C26 are added;
+  - FWD-5 stays at account level (v0.10).
+  It is cut before the v0.10 re-sign landed, so ONE ratified-text re-sign covers v0.10 and v0.11 together.
 
 ## SURFACE MANIFEST
 
