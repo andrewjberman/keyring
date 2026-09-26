@@ -150,3 +150,9 @@ That meets the condition above. v5 supersedes v4. A repeated create is branch (d
 - Deploy B stays OUT of the window.
 - No FWD-1 re-trace; relationship Performance is not fixed yet.
 - The admitted vendor calls stay as v5 named them: K4's one GET and K5's chain, nothing else.
+
+**v6 wording (2.0.0_SA_COO~Y msg 101248):** K5 at `:128` still binds window 1's input (`portfolio_99e76df8..`, owned
+by the deleted principal), which contradicts "K4's new input" at `:144`. The CTO signs the `:144` reading.
+
+**The CTO half stands without a fresh read on a v7** that changes ONLY `:128` to "the input THIS window's K4
+normalizes" (and the header line naming it). Any other change needs a fresh read.
