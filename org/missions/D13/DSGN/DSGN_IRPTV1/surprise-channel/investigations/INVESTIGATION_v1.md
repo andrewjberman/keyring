@@ -1152,6 +1152,73 @@
     "disposition": "UNDER_INVESTIGATION",
     "disarm_owner": "the Advisor Intelligence data-route owner (the Lambda@Edge router / opal-partners-data lane) -- disarmed by naming why these platinum drill files answer 403 to every principal (absent objects masked as 403, a PII route refusal, or a missing grant) and either serving them or ruling them retired. S16's disarm clause is superseded by this one.",
     "notes": "Not an IRPT cell. S16 stays as filed (append-only); this row carries the corrected reading and its disarm."
-  }
+  },
+{
+  "id": "DSGN_IRPTV1-W22-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~22",
+  "surfaced_at": "2026-09-26T20:10:00Z",
+  "one_line": "IV-e-33's mandated retirement of IdentityCard.fetchIdentityCardData's directory-search half (CRO route proposal @889160ce2c section 5) breaks the sibling iv-e-3.card-fed.test.ts (IVE3-AC1) both at runtime (VERDICT: CARD-FED-FAIL) and at `bun run typecheck` (rc=2, 7 errors, the only typecheck errors in the whole portal) -- that test asserts the exact directory-search call and 4-argument signature this cell's own Build text names for removal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D (drain) -- update iv-e-3.card-fed.test.ts to call `fetchIdentityCardData(api, scopeRef)` (2 args) and drop its directory-search/accountEntries assertions (both retired per proposal section 5), or retire the file outright; until then `bun run typecheck` on the portal worktree returns rc=2 from this one file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal `bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-3.card-fed.test.ts` after this cell's edit: `VERDICT: CARD-FED-FAIL directory-search called 0 times, expected 1; directory-search not scoped to scopeRef; directory-search kinds != [account]; fetched accountEntries length 0 != 2; chip count 0 != 2; named+masked chips 0 != 2`",
+      "portal `bun run typecheck` (tsc -b --noEmit) after this cell's edit: exactly 7 errors, all in `src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-3.card-fed.test.ts` (lines 116/127/141/143x2/144/148) -- `initialFetchedAccountEntries` no longer a prop, `fetchIdentityCardData` called with 4 args against a 2-arg signature, `accountEntries` no longer on the fetch's return type; zero errors anywhere else in the portal, confirming this cell's own production edits (IdentityCard.tsx, index.tsx, HeaderSelectionContext.ts, BrowseDrawer.tsx, ScopeSummary.tsx, ClientSearch.tsx) are type-clean",
+      "IdentityCard.tsx's own file header, before this edit, named this test explicitly: 'a test that wants the FED body ... awaits fetchIdentityCardData itself (the exact call the effect makes, against the SAME stubbed api)' -- iv-e-3.card-fed.test.ts is that test, and the CRO proposal section 5 names `IdentityCard.tsx:118-143` (the directory-search half) as retired by this cell"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "This cell's own Build text (b): 'IdentityCard.fetchIdentityCardData's directory account-name search IS REMOVED'; CRO route proposal section 5: 'IdentityCard.tsx:118-143: the directory account-name search is removed, and names come from R1's snapshot.'",
+  "world_is": "iv-e-3.card-fed.test.ts (a different cell's committed test, IVE3-AC1, outside this cell's <paths> and named criteria) asserts the OLD contract byte-for-byte: one `directory-search` call, a 4-argument `fetchIdentityCardData(api, scopeRef, scope, row)`, and an `accountEntries` field on its return. Implementing this cell's own explicit, spec-named retirement makes that assertion false by construction -- the retirement and the old test's assertions cannot both hold. Per BOUNDS ('do not weaken the test to pass', 'never fix a neighbouring defect'), this worker implemented the retirement as specified and left iv-e-3.card-fed.test.ts exactly as committed rather than editing another cell's test file.",
+  "notes": "Not blocking IVE33-AC1/AC2 (both PASS-by-output, verdicts CLIENT-CONTEXT-OK / CLIENT-WORDS-OK, recorded in this worker's report). Filed ARMED because the typecheck break is repo-wide (a red `bun run typecheck` on this worktree) rather than scoped to one test file's own pass/fail."
+},
+{
+  "id": "DSGN_IRPTV1-W22-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~22",
+  "surfaced_at": "2026-09-26T20:10:00Z",
+  "one_line": "IV-e-33's rule C1 ('every option ... say Client', proposal section 4 rule 1) makes IdentityCard always render the kind word 'Client', breaking the sibling iv-e-23.identity-firm.test.ts (IVE23-AC2, VERDICT: IDENTITY-FIRM-FAIL kind word absent from WHO block) -- that test asserts the entry's OWN mapped kind word (e.g. 'Relationship' for `directoryEntry.success.json`'s kind) appears in the WHO block.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D (drain) -- iv-e-23.identity-firm.test.ts's own `EXPECTED_KIND_WORD` (its local `KIND_WORDS` table keyed on `ENTRY.kind`) needs re-cutting to expect the literal 'Client' now that C1 retires the per-kind word IdentityCard.tsx used to render; until then this file's own test fails on this worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal `bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-23.identity-firm.test.ts` after this cell's edit: `VERDICT: IDENTITY-FIRM-FAIL kind word absent from WHO block` (its `EXPECTED_KIND_WORD` = 'Relationship', off `directoryEntry.success.json`'s own `kind: \"relationship\"`, via the test's own local copy of the retired `KIND_WORDS` table)",
+      "IdentityCard.tsx's own `kindWord()` before this edit mapped `relationship|account|client|firm` to their own capitalized word; after this edit it returns literally 'Client' whenever a row exists, per this cell's rule (c) and the CRO proposal's rule 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "This cell's own Build text (c): 'Every search option, the browse drawer row and the identity card say \"Client\" (IdentityCard.tsx:145-156, BrowseDrawer.tsx:272, ScopeSummary.tsx:81-82); the entry's scope kind is carried, never shown.' CRO route proposal section 4 rule 1: 'C1: search by client. Every option, the browse drawer and the identity card say \"Client\".'",
+  "world_is": "iv-e-23.identity-firm.test.ts (IVE23-AC2, a different cell's committed test, outside this cell's <paths> and named criteria) asserts the pre-C1 behaviour (the entry's own kind word, e.g. 'Relationship') is present in the WHO block. C1 retires exactly that word in favour of the literal 'Client'. This worker implemented C1 as specified in IdentityCard.tsx (in-bounds) and left iv-e-23.identity-firm.test.ts (a sibling cell's test) unedited, per 'never fix a neighbouring defect' and 'do not weaken the test to pass'.",
+  "notes": "Not blocking IVE33-AC2 (PASS-by-output, VERDICT: CLIENT-WORDS-OK, recorded in this worker's report -- that test deliberately uses the SAME relationship-kind fixture to prove C1 holds even when the entry's own kind is not 'client')."
+},
+{
+  "id": "DSGN_IRPTV1-W22-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~22",
+  "surfaced_at": "2026-09-26T20:10:00Z",
+  "one_line": "The same C1 change to BrowseDrawer.tsx:272 (per-row kind word retired to the literal 'Client', proposal section 5) breaks the sibling iv-e-8.browse-drawer.test.ts (VERDICT: DRAWER-FAIL no row detail names Account kind + 1 account(s); no row detail names Relationship kind), which asserts the retired per-row 'Account'/'Relationship' words.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D (drain) -- iv-e-8.browse-drawer.test.ts's own row-detail assertions need re-cutting to expect the literal 'Client' on every row now that C1 retires BrowseDrawer's per-row kind word; until then this file's own test fails on this worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal `bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-8.browse-drawer.test.ts` after this cell's edit: `VERDICT: DRAWER-FAIL no row detail names Account kind + 1 account(s); no row detail names Relationship kind`",
+      "BrowseDrawer.tsx's own `kindWord()`/`KIND_WORDS` table (retired by this cell, per CRO proposal section 5's explicit `BrowseDrawer.tsx:272` citation) previously rendered each row's own kind ('Account', 'Relationship', 'Client', 'Firm'); the row detail now reads the literal 'Client' for every row, per this cell's rule (c)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "This cell's own Build text (c) and CRO route proposal section 5: 'IdentityCard.tsx:145-156, BrowseDrawer.tsx:272, ScopeSummary.tsx:81-82: the kind word becomes \"Client\".'",
+  "world_is": "iv-e-8.browse-drawer.test.ts (a different cell's committed test, outside this cell's <paths> and named criteria) asserts the pre-C1 per-row kind words ('Account', 'Relationship'). C1 retires them in favour of the literal 'Client' on every row, exactly as the proposal's own retirement list names this line. This worker implemented the change in-bounds and left the sibling test unedited.",
+  "notes": "Not blocking IVE33-AC2 (PASS-by-output, VERDICT: CLIENT-WORDS-OK, recorded in this worker's report, which exercises BrowseDrawer's row detail directly and confirms it now says 'Client')."
+}
 ]
 ```
