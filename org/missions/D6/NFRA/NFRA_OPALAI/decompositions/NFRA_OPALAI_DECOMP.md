@@ -295,3 +295,13 @@ Three direct-act cells, ahead of round 2. The CTO's direction (build ladder, run
 
 Chain: `OA-g-1 --> OA-g-2 --> OA-g-3`. OA-g-2 follows OA-f-2 (one gateway deployer at a time). OA-g-3 is written
 after OA-g-2, because the live gateway's current parser would read a zero-master grant as Malformed and deny her.
+
+---
+
+## CUTOVER PRECONDITIONS (carried by the issuer; they bind whichever cell cuts the OPALAI cutover)
+
+- **CP-1 (row `NFRA_OPALAI-Z-W4-S1`):** `integrations/ticketing/intake/runner.py` (the LIVE D7 ticket-intake runner) imports
+  `.claude/skills/teams-assist/teams-watch.py` by path (`runner.py:69`, `:107`) and calls its pinned-token selection.
+  OA-t-4 moved that file into `opal_ai`, and it is still present in the workspace until OA-t-1's parent side merges.
+  The cutover MUST NOT remove the workspace copy until `runner.py` is re-pointed to a surviving import and its next
+  scheduled fire is read back. Measured 2026-09-26 ~20:1xZ: the file is present, and `runner.py` still imports it.

@@ -1186,6 +1186,42 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Each target was disarmed by its owner's adjudicating row.",
     "world_is": "The disarms carried a non-terminal disposition; this row makes them terminal. The reasons are the earlier rows' own.",
     "disarm_owner": "1.0.0_SA_CTO~O"
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S34",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T20:20Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Per-item reasons in `notes`; every target names this seat as disarm_owner (1.0.0_SA_CTO~O's 200537Z census: 12 open gating items).",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-S5",
+      "NFRA_OPALAI-Z-S18",
+      "NFRA_OPALAI-Z-S23",
+      "NFRA_OPALAI-Z-S25",
+      "NFRA_OPALAI-Z-W2-S1",
+      "NFRA_OPALAI-Z-W2-S3",
+      "NFRA_OPALAI-Z-W3-S1",
+      "NFRA_OPALAI-Z-W6-S1",
+      "NFRA_OPALAI-Z-W1-S1",
+      "NFRA_OPALAI-Z-W2-S4",
+      "NFRA_OPALAI-Z-W5-S1",
+      "NFRA_OPALAI-Z-W4-S1"
+    ],
+    "one_line": "The issuer makes the 12 open NFRA_OPALAI gating items it owns terminal, so round 1's slug can go. Eight are fixed or superseded (Z-S5, Z-S18, Z-S23, Z-S25, W2-S1, W2-S3, W3-S1, W6-S1). Three are shared-tool defects outside this project, worked around in-cell and routed to their owner (W1-S1, W2-S4, W5-S1). One, W4-S1, is disarmed by a named cutover precondition (CP-1) and is not fixed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~O file 20260926T200537Z: 17 gating, 5 terminal, 12 open, all disarm_owner 2.0.0_SA_COO~O (the gate's own _latest_dispositions / _gating_item_ids).",
+        "~20:1xZ measurements: .claude/skills/teams-assist/teams-watch.py present; integrations/ticketing/intake/runner.py:69 still imports it; round1/checks/_root.sh:9 'set -o pipefail'."
+      ]
+    },
+    "spec_asserts": "Each target is an open gating item owned by this seat.",
+    "world_is": "Each is fixed, superseded, routed off-project, or disarmed by a named carrier, as listed per item.",
+    "notes": "Z-S5: Disarmed by Z-S6: opal_asker_query deploys DARK for the concierge (identity_scope does not list it), so no Teams call reaches the cited-message resolution; the binding fix is carried in 1.0.0_SA_CTO~O's ROUND2_ENRICHMENT_DRAFT.md. | Z-S18: Fixed and LIVE: OA-f-1/OA-f-2 (release c5f8099440, 07:43:40Z; closed @3558be2482); f2.AC3 reads the live upload row client-qualified (unqualified=0). | Z-S23: Answered by the CTO's ruling (B) and addendum A2 (@9ba4ca286f): OA-g-1 drained @45ddd8d948; OA-g-2 and OA-g-3 carry the rest. | Z-S25: Corrected by the filer's own Z-S26: this seat's watcher recovered at 05:33Z, and A2 was issued before Z-S25 landed. | Z-W2-S1: Addressed by A2: the grant grammar gains portal_channels, and asker_scope serves a catalog key only in a granted channel (OA-g-1, @45ddd8d948). | Z-W2-S3: Resolved by the CTO's narrow-release ruling (@592e319a06): OA-t-6 shipped f1f0fc6780 with only its own two changes. | Z-W3-S1: Fixed at the instrument: round1/checks/_root.sh sets `set -o pipefail` (its own comment cites W3-S1), so every check's rc is the command's. | Z-W6-S1: Fixed at the instrument: round1/checks/_root.sh sets `set -o pipefail` (its own comment cites W6-S1). | Z-W1-S1: A shared-tool defect outside NFRA_OPALAI (.tools/owned-paths-validate.py ignores the worker_grant for a path with no lane row). It was worked around in-cell under the audited override; routed to the tool's owner 1.0.0_SA_CTO~O in this seat's same-turn message. This project's gate no longer carries it. | Z-W2-S4: A shared-tool defect outside NFRA_OPALAI (safe-ec2-deploy.sh Step 3: jq.exe writes EC2_MANIFEST.json CRLF). Every release since recorded the manifest by hand on an LF copy (OA-t-6, MP-d-1, OA-f-2); routed to the tool's owner in this seat's same-turn message. | Z-W5-S1: A shared-tool defect outside NFRA_OPALAI (install-owned-paths.sh --submodule resolves REPO_ROOT from the ambient cwd). It was installed correctly in-cell by cd-ing first; routed to the tool's owner in this seat's same-turn message. | Z-W4-S1: DISARMED by a named carrier, not fixed: cutover precondition CP-1 in NFRA_OPALAI_DECOMP.md (this commit) binds whichever cell cuts the cutover. The workspace copy of teams-watch.py stays until runner.py is re-pointed and its next fire is read back. Measured ~20:1xZ: the file is present and runner.py still imports it, so the hazard has not fired."
   }
 ]
 ```
