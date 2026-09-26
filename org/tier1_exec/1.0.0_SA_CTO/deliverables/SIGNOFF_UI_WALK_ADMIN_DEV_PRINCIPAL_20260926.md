@@ -193,3 +193,13 @@ K8 is export B's own step-6 act, which both export-B halves already signed; this
 - A read of 30 s or more does NOT block K8. It stays S147's BLOCKING row on FWD-1.
 - The latency measurement proper is 2.0.0_SA_COO~P's render-delegate timing (CTO 101369). A K7 reopen of K6's retained
   report is not a latency measure.
+
+**v9 HELD (1.0.0_SA_CTO msg 101395, ~17:5xZ).** K6's baseline was misquoted: its YTD is 0.07333839362957217 over
+01-02..09-25, and 0.06854 is its 09-24 point (~P 101393, CRO 101392). R1 is already MET: RPT-e0a917d2 equals it to the
+last digit, 184 of 184 points. As written, v9's K7 gate would falsely STOP and roll back export B.
+
+**The CTO half stands on a v10 that changes ONLY K7:**
+- R1 is closed, citing that proof;
+- K7 is the page read the export uses, and passes if a computed or reopened acc_bf96 report renders;
+- K7 triggers no rollback;
+- K8 follows K7.
