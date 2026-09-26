@@ -25,13 +25,19 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`; stop = `/verify SOUND`.
 - `2.0.0_SA_COO~Y` `/loop 20m` DIRECTED over IRPT Analysis:
   `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`; stop = `/verify SOUND`. Y never takes over P's shared installation.
-- `1.0.0_SA_CTO~O` `/loop 30m` DIRECTED over NFRA_OPALAI (opal_ai V1), ruling the project's open calls on its own
-  rec, with `/next-steps` on an empty tick:
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_210xZ_CTO_O_LOOP_30M_DRIVE_OPAL_AI.md`. Chooser
-  Andrew; landed by 1.0.0_SA_CTO~O. The self-drive reservations apply (egress, unrecoverable, money, his named holds
-  including the OPLGTW stop and the push law). WIDENED the same minute by his goal: all D6 opal_ai work (MCPINDEX,
-  all MCP server work, entitlements, MCP integrations, all Opal Analyst / MCP prior art), with licence to create and
-  register projects: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_210xZ_CTO_O_GOAL_FINISH_ALL_D6_OPAL_AI.md`.
+- `1.0.0_SA_CTO~O` `/self-drive 30m` over the ~O fabric: D6 (NFRA_OPALAI, NFRA_MCPORTAL) plus NFRA_MCPINDEX and
+  NFRA_OPLGTW (D9), on Andrew's governance template:
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_O_FABRIC.md` @56050d290d. Chooser
+  Andrew; landed by 1.0.0_SA_CTO~O. It supersedes this seat's 2026-09-24 `/loop 30m`; the goal of record
+  `ANDREW_DIRECT_20260924_210xZ_CTO_O_GOAL_FINISH_ALL_D6_OPAL_AI.md` stands. NFRA_OPLGTW's CTO leg waits on its
+  re-seat (verdict `cvoO_GOVERNANCE_VERDICT_SELF_DRIVE_O_D9_PROJECTS_20260926.md` @e470835e7c). Stop: DONE read from
+  the register, HELD-AT-STOP, or Andrew's stand-down.
+- `2.0.0_SA_COO~O` `/canonical-drive 30m` COO MODE over NFRA_OPALAI, NFRA_MCPORTAL, NFRA_MCPINDEX, NFRA_OPLGTW, paired
+  with the ~O self-drive above (same record; instruction msg 20260926T033555Z). Chooser Andrew ("give every COO its
+  loop instruction now"); landed by 1.0.0_SA_CTO~O. Stop: the self-drive's stop.
+- `3.0.0_SA_CVO~O` `/canonical-drive 30m` CVO MODE over NFRA_OPALAI, NFRA_MCPORTAL, NFRA_MCPINDEX, paired with the ~O
+  self-drive above (same record; instruction msg 20260926T033650Z). Chooser 1.0.0_SA_CTO~O (the record's `paired_with`
+  reading); landed by 1.0.0_SA_CTO~O. NFRA_OPLGTW joins after its CVO-leg re-seat. Stop: the self-drive's stop.
   Stop: no new opal_ai project is left and no `/next-steps` can be named, or his stand-down.
 - `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH to CLOSED:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.

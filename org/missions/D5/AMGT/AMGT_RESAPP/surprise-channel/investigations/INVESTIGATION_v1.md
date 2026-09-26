@@ -14806,6 +14806,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The folder is a moving population: one name arrived mid-round with no identity. rr-3's AC2 is amended to the 94 the cut measured (population_at_cut.txt); AIA Group needs an identity registration and a Model block, which is round 44's.",
     "disarm_owner": "2.0.0_SA_COO~Z -- INERT; round 44 input (identity for AIA Group, then the rr-1 pull shape for its block).",
     "notes": "Found by the AE lane's served sweep, which held rather than grading a name with no page as an export failure."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S286",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-26T04:05:00Z",
+    "one_line": "CORRECTION of AMGT_RESAPP-Z-S285 (a new item citing the old id, per the channel protocol): Z-S285 was FALSE WHEN WRITTEN. AIA Group gained a canonical identity at 23:48:58Z (1299_HK_Equity), ten minutes before Z-S285 said it had none, and now also carries a Model block (325 figures).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~Z's round-43 analysis s.2.3 (@37217d8053): its own read of the served crosswalk at 23:49:31Z, 61 s after the 23:48:58Z write -- version 3, folders_in_records 95 == research_folders_live 95, UNRESOLVED 0, 1299_HK_Equity present.",
+        "Re-read here at ~04:0xZ: scoped_amgt.resolve_identity(crosswalk.harvester_key('AIA Group')) -> 1299_HK_Equity MEASURED; scoped_amgt.read_model_block('1299_HK_Equity') -> a block with 325 figures.",
+        "Z-S285's own evidence was the AE lane's HOLD at 23:47:58Z, one minute BEFORE the identity write, which this seat restated at 23:58 without re-reading the crosswalk."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S285: 'AIA Group ... has no canonical identity ... no page, no Model block and no export'.",
+    "world_is": "AIA Group has an identity and a Model block. Z-S285 stays in the channel (append-only: RC2 refuses an in-place edit without the audited override); this row is the record that it was false.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- INERT.",
+    "notes": "The cause is this seat's: a measurement relayed 10 minutes late was restated as current without a re-read. The in-place supersession the CTO's analysis asks for (item 3) needs the gate's audited override; this seat did not take it on its own."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S287",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-26T04:25:00Z",
+    "one_line": "RAISE (round-43 analysis item 2, fabric-wide): `_resolve_latest` in .tools/surprise-row-gate.py copies an adjudicating row's OWN disposition onto its target (`latest[target] = r.get(\"disposition\")`, :425), so an `adjudicates` written by a row that is itself non-terminal leaves its target reading OPEN, and nothing refuses or reports it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/surprise-row-gate.py:413-425 @65a5506886: for each row with `adjudicates`, `latest[target] = r.get(\"disposition\")` -- the ADJUDICATING row's disposition, whatever it is; no check that it is terminal, no refusal, no state emitted.",
+        "3.0.0_SA_CVO~Z's round-43 slug (msg 25983) and 1.0.0_SA_CTO~Z's analysis @37217d8053 s.2.2: a BLOCKING ARMED row read as adjudicated for six hours because of this path.",
+        "The refusal text of .tools/safe-merge.sh names the gate's owner: 'route it to the gate's owner (1.0.0_SA_CTO)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R-10: a field recording a state also records its refusal. An `adjudicates` is a disposition act.",
+    "world_is": "An `adjudicates` from a non-terminal row is silently a no-op on the target's disposition. The remedy, per the analysis: refuse such a row at commit, or emit the refusal as a state the consumer reads.",
+    "disarm_owner": "1.0.0_SA_CTO -- the gate's owner, per safe-merge.sh's own routing line. Raised here, not patched in AMGT_RESAPP; the base serial has no live session, so this row is the carrier, per CLAUDE.md's rule on parking an item with its owner.",
+    "notes": "Filed by the issuer as round 44's item 2 (a raise, not a build)."
   }
 ]
 ```

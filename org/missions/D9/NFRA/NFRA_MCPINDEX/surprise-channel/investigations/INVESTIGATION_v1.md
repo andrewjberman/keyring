@@ -456,6 +456,757 @@ carries none.
     "world_is": "Both pathfinder funds have been sitting at missing 2 with nobody named, in the same guard file whose TrueShares sibling was the subject of W3-S2. Which 2 dates, and whether they are a vendor non-delivery or a conversion failure, is unmeasured here -- this order's write surface is trueshares only and chasing it would be the halt-and-investigate CLAUDE.md section 2 forbids.",
     "disarm_owner": "2.0.0_SA_COO~O",
     "notes": "One read sizes it: list pathfinder/{PFDE,PFOE}/bronze/ against silver/, diff the dates, and check whether the 2 missing dates have bronze at all. Routed, not actioned."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T04:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W2-S7"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W2-S7 (the issuer's own check defect). v6.AC1's overlap limb compared the questions against `description` keys the catalog does not carry, so it read 0 strings and could not fail. It is amended on the held branch (@ae03e6cf86) to read EVERY catalog string and to FAIL when it read none. On the merged bytes it reads 1069 strings, overlap 0, PASS. A planted catalog sentence reads overlap 1, FAIL.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Held branch wk-nfra_mcpindex-1-1d @ae03e6cf86: v6.AC1.sh walk() collects every str value, and the verdict requires descriptions>0.",
+        "Run from /c/tmp/mx-2v and /c/tmp/mx-1: questions=27 sources_at_head=27 expected_tools=27 catalog_overlap=0 descriptions=1069 -> PASS. Control: one question set to a catalog sentence gives questions=28 catalog_overlap=1 -> FAIL, and the tree was restored by git checkout."
+      ]
+    },
+    "spec_asserts": "v6.AC1: NO question shares a run of 6 or more consecutive words with any catalog description.",
+    "world_is": "The check now measures what it states, over every catalog string, with a positive control.",
+    "notes": "The fix lives on the held branch and reaches CLOUD when the held branch drains, after the CVO grades MX-c-5's AC4."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-26T04:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "THE ROOT CAUSE OF C-S13, one level above where R-2 (2) points: the Black Diamond asset-dim download has failed 69 consecutive runs since 2026-06-23 on a single portal login timeout, so build_bd_assets_dim.py's only input is frozen on the same day the bridge is -- scheduling the builder as ruled would rebuild identical bytes and resolve 0 of the 791 missing asset_ids.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "all 119 of s3://opal-data-bd/logs/asset-dim-download-*.log read IN FULL (denominator printed): 69 FAILED, 50 OK, 0 unclassifiable; last OK 2026-06-22, first FAILED 2026-06-23, last FAILED 2026-09-25. 69 of 69 failures carry the SAME login TimeoutError -- one signature, one cause, not 69.",
+        "SSM get_command_invocation on the exact CommandId 2978c0a0-5aa2-4640-97e0-516a5dc2e5a3 from the 2026-09-25 lambda log (used as a positive control after list_commands returned a bare 0): stdout carries 'Phase 1: Login / FAILED / Error: TimeoutError: forURL: Timeout 30000ms exceeded. waiting for navigation to \"**/bd3.bdreporting.com/**\"' then 'SKIP: silver conversion skipped (download_rc=1)' and 'ERROR: Asset-dim pipeline failed (download_rc=1 merge_rc=99)'.",
+        "live heads: silver/bd_assets_dim.parquet LastModified 2026-04-14T20:44:16Z; silver/bd_assets.parquet (its ONLY input, N=1 writer convert_assets_to_silver.py by comp-find over 75,160 files) LastModified 2026-04-14T20:09:23Z, trade_date range ending 2026-04-13. Both carry the SAME 10,937 asset_ids.",
+        "this seat's read: 791 distinct asset_ids appear in silver transactions since 2026-04-14 and are absent from the bridge; the number of those present in the builder's source today is 0.",
+        "forwardfill_v2/assets/ newest object is AssetDimTXNs_OpalCapital_Daily_2026-06-18_to_2026-06-18.xlsx and silver/assets/ stops at 2026-06-18, while forwardfill_v2/transactions/ is current to 2026-09-26 -- the transactions leg is alive, only the asset-dim leg is dead."
+      ]
+    },
+    "spec_asserts": "Ruling R-2 (2) of ROUND_ANALYSIS.round1.md: 'Scheduling build_bd_assets_dim.py ahead of the daily merge, as a production schedule' is the remedy for the frozen cusip bridge, and MX-s-2 restates it as 'No scheduler runs its builder.'",
+    "world_is": "A schedule for the leg ALREADY EXISTS and is ENABLED -- bd-asset-dim-pipeline-trigger, cron(10 22 ? * MON-FRI *) -- and it fired last night. What is broken is beneath it: the BD portal login times out, so the download writes nothing and the conversion is skipped by its own guard. The builder's input is therefore frozen at 2026-04-14, and a builder scheduled on top of a frozen input rebuilds the same 10,937 rows. The remedy as ruled would move LastModified, satisfy AC1's freshness limb, and fix none of the 791 missing assets. There are also TWO sequential breaks, not one: the compaction to bd_assets.parquet stopped at 2026-04-14 while silver/assets/ was still landing through 2026-06-18.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "The ordered remedy is in deliverables/0.4.0_DS_ClientPlatform~D/bd-cusip-bridge.result.md section 5: (1) fix the portal login on opal-bd-asset-dim-download, EC2 i-0e6f6dc014fdcf1cd -- this is the whole fix and everything else is a no-op before it; (2) make the wrapper's exit code honest (see the sibling row); (3) restore the compaction to bd_assets.parquet; (4) only then add the builder. Steps 1-3 are AE/CloudOps and DT; a credential or vendor interaction is Andrew's word. NOT actioned here: this lane built no trigger (rule 13 gives PROD triggers to DT/AE and the order says not to work around the gate)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-26T04:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The asset-dim SSM wrapper exits 0 on a failed pipeline, so SSM records Status=Success / ResponseCode=0 for a run whose own stdout says 'ERROR: Asset-dim pipeline failed (download_rc=1 merge_rc=99)' -- which is why 95 days of nightly failure were invisible to every instrument above it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM get_command_invocation, CommandId 2978c0a0-5aa2-4640-97e0-516a5dc2e5a3, instance i-0e6f6dc014fdcf1cd, document opal-bd-asset-dim-download, 2026-09-25T22:11:06Z: Status 'Success', StatusDetails 'Success', ResponseCode 0 -- while the SAME invocation's StandardOutputContent ends 'Download exit code: 1 / SKIP: silver conversion skipped (download_rc=1) / ERROR: Asset-dim pipeline failed (download_rc=1 merge_rc=99)'.",
+        "the invoking lambda bd-asset-dim-trigger logs END/REPORT with no error after 'SSM command sent' -- it dispatches and never reads the result, so its own success is real and says nothing about the pipeline.",
+        "69 consecutive such runs since 2026-06-23 (full-corpus log read, denominator 119)."
+      ]
+    },
+    "spec_asserts": "A scheduled producer's run status is the signal that it produced. CLAUDE.md: NEVER trust a producer's self-report or rc=0 -- verify against the SERVED artifact.",
+    "world_is": "Here the producer's self-report is not merely untrustworthy, it is inverted: the wrapper returns 0 on the failure path, so the honest failure text sits inside a run stamped Success. Every layer above -- SSM console, the lambda's own logs, any status sweep -- reads green. The evidence was in S3 the entire time, one object per night, and nothing was looking at it.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "The fix is a non-zero exit on the failure path in the SSM document's script, which is a producer reporting its own result honestly and is NOT an alarm, monitor or notification under the standing moratorium. Owner AE/CloudOps with the login fix; they are one act. This row is the generalisable half: the login is one outage, the lying exit code is why any future outage on this path will also be silent."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-26T04:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-s-2 AC3 cannot be satisfied or even computed as written: its cash rule keys on asset_id, which the served partition does not carry, and its bar of zero is unreachable because 1,037 of the bridge's 10,937 assets have no cusip at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gold/timeseries/holdings_lots/2026-09-18.parquet columns read live: lot_id, snapshot_date, account_id, relationship_id, account_name, account_type, account_registration_type, tax_status, qualified_flag, asset_name, ticker, cusip, acquisition_date, purchase_year, lot_index, original_units, current_units, cost_per_unit, cost_basis, current_price, market_value, accrued_gain, holding_period_days, term, is_open, price_quality, market_value_uncapped -- there is NO asset_id column.",
+        "B_01.holdings_lots.py:284-292 keys its cash normalisation on asset_id=4 / cusip='CASH', so 'not cash by B_01's own cash rule' is not expressible over the artifact AC3 names.",
+        "live read of the bridge: 10,937 asset_ids, 9,900 with a usable cusip, 1,037 with none -- BD supplies no cusip for those, so no rebuild resolves them.",
+        "probe mx_s_2.py AC3 under a STATED substitute name-token rule: 1,264,679 rows, 22,173 null-or-CASH cusip, 15,185 cash by the substitute, 6,988 non-cash, of which 98 carry a blank asset_name and are unclassifiable either way.",
+        "probe mx_s_2.py DIAG: of the 6,988, 1,798 carry a ticker today's bridge could resolve and 5,190 do not -- and 1,798 is an UPPER bound, because B_01 joins on asset_id while this bounding join uses ticker."
+      ]
+    },
+    "spec_asserts": "MX-s-2 step 3: the probe 'counts null-cusip rows that are NOT cash by B_01's own cash rule' and 'prints VERDICT: PASS-MXS2-AC3 only when that count is 0.'",
+    "world_is": "Two distinct defects in one criterion. (i) The rule is not computable: the discriminating column was dropped by the producer before the artifact was written, so any probe must substitute a different rule and should say so rather than quietly approximate. (ii) The bar is unreachable: a permanent floor of null cusips exists that no bridge state can remove, because BD itself supplies 1,037 assets without one. AC3 would read FAIL forever even after C-S13 is fully repaired.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "The probe is delivered and working with its substitute rule printed, its tokens listed and its unclassifiable residual counted -- it does not claim to be B_01's rule. A re-cut criterion wants a DELTA bar against a measured baseline (for example: non-cash null-cusip rows fall below N once the bridge is current), not an absolute zero. Proposed, not adopted: the issuer amends its own criteria."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W1-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-25T17:26:42Z",
+    "one_line": "A class an integration declares on its own spec is visible to destructive_ops.classify only after register_enabled() makes that spec active, and the gateway's ENABLED_INTEGRATIONS default is EMPTY on this box; the conformed AC11/AC6 therefore read the enabled set from deploy-to-ec2.sh:170 (ycharts opal_portal globgrph) and register it before classifying.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @97f1aad836: infra/aws/ec2/opal-gateway/app/destructive_ops.py classify() falls to registry.classification_for_tool(), which reads _ACTIVE_BY_TOOL; infra/aws/ec2/opal-gateway/app/integrations/registry.py populates _ACTIVE_BY_TOOL only inside register_enabled().",
+        "CODE @97f1aad836: infra/aws/ec2/opal-gateway/app/config.py ENABLED_INTEGRATIONS = os.environ ENABLED_INTEGRATIONS split, default '' (empty); infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:170 writes ENABLED_INTEGRATIONS=ycharts opal_portal globgrph into the box .env.",
+        "MEASURED (this worktree, after the MX-c-5 declarations, python 3.11.9): classify over the 49 names with register_enabled(['ycharts','opal_portal','globgrph']) -> 5 unclassified (the schwab five); with register_enabled([]) (the env default here) -> 14 unclassified, identical to the base @97f1aad836 (14).",
+        "TO face (NFRA_MCPINDEX.TO-MX-c-5.classification-recut.md s.1 item 3): 'A HELD name is a schwab tool that is registered but absent from ENABLED_INTEGRATIONS.' -- the face does not say which ENABLED_INTEGRATIONS (env default vs deployed .env)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC11 conformed: print the 49-name denominator, report 44 classified + 5 HELD, where HELD = a schwab tool registered but absent from ENABLED_INTEGRATIONS.",
+    "world_is": "ENABLED_INTEGRATIONS has two values: the gateway config default (env, empty on this box, under which all four integrations would be 'absent' and no declared class is visible) and the deployed .env value written by deploy-to-ec2.sh:170. The probe reads the deployed value, prints both, and registers the deployed set before classifying; it refuses (RuntimeError) unless exactly one ENABLED_INTEGRATIONS= value is found in the deploy script.",
+    "notes": "Instrument choice recorded for the L9 reader; the probe prints the env value beside the deployed value on every AC6/AC11 run. No live state touched."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W1-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-25T17:26:42Z",
+    "one_line": "The face names only AC11's conform, but the round-1 probe's AC6 compared this base with itself (0 differences, read_teams_attachment included) and AC10's BEFORE was MX-c-4's pre-edit py -3.12 count; both were re-based on this cell's base @97f1aad836 so that AC2/AC3 measure what the face glosses.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED before any MX-c-5 edit (python 3.11.9, worktree @97f1aad836): `python org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~1/probes/mx_c_4.py AC6` printed 'all differences (0): []' and PASS -- its BEFORE snapshot reverted only MX-c-4's 4 files to HEAD, which at this base ARE HEAD's bytes, and it never registered an integration, so it could not see a declared class.",
+        "MEASURED before any MX-c-5 edit: `python org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~1/probes/mx_c_4.py AC10` -> '1 failed, 137 passed, 56 warnings, 34 subtests passed in 14.64s' over the 11 files; the probe's hard-coded BEFORE was '1 failed, 130 passed' over 10 files under py -3.12 at MX-c-4's cut.",
+        "TO face s.4 glosses: MXC5-AC2 'the 40 tools that already resolved keep their class; the 9 newly classified are listed with their class and reason'; MXC5-AC3 'no gateway test that passed at this cell's base fails'.",
+        "CHANGE (this cell's commit, org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~1/probes/mx_c_4.py): AC6 BEFORE = every tracked app/ file at 97f1aad836 (66 files, git show, binary), both sides register the deployed enabled set; PASS requires 49 names, 40 kept with 0 changed, exactly 9 newly classified, each with a stated reason. AC10 BEFORE_SUMMARY = the base measurement above, same 11 files on both sides."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Conform your probe's AC11 to the ruling (face s.1 item 3); AC2/AC3 run the probe's AC6/AC10 verbatim.",
+    "world_is": "Run unchanged, AC6 would PASS vacuously (it cannot see any declared class and compares the base tree with itself) and AC10's BEFORE described a different base and interpreter. The worker conformed both inside its own deliverables folder; the reasons AC6 prints are the worker's stated claims (held), graded at L9 as MXC5-AC4, never by the probe.",
+    "notes": "Worker-owned instrument edit, inside <paths>. The issuer may read this as a widening of the conform instruction; the pre-edit outputs are quoted above for that reading."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W1-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-25T17:26:42Z",
+    "one_line": "The 9 classes are declared through tool_classifications ONLY, not the `tools` manifest: declaring `tools` makes validate_integration_spec demand a catalog ref per tool, and a spec failing it is SKIPPED whole at register_enabled -- which on deploy would drop all 9 enabled ycharts/opal_portal/globgrph tools from the live surface.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @97f1aad836: infra/aws/ec2/opal-gateway/app/integrations/base.py validate_integration_spec -- `for name in spec.tools:` appends an error when tool_classifications OR tool_catalog_refs lacks the name; tool_classifications keys outside `tools` are not checked.",
+        "CODE @97f1aad836: infra/aws/ec2/opal-gateway/app/integrations/registry.py register_enabled -- a spec with any validation error is reported and `continue`d, its tools never registered (SKIP-REGISTRATION, fail-closed).",
+        "RULING R-1 @9c70622d13 item 3 and MX-c-4's amendment @0bec07601a: the catalog-entry limb is struck from AC11 and graded on each tool's own shipping cell (MX-t-*).",
+        "MEASURED (this cell, python 3.11.9): with the declarations in place, register_enabled(['ycharts','opal_portal','globgrph']) registers 6+1+2 tools and classify resolves all 9 (AC6 output 'NEWLY CLASSIFIED: 9')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Each of the 9 tools declares its class in its own integration directory 'through the same declaration MX-c-4 built'.",
+    "world_is": "MX-c-4's declaration has two parts: `tools` (the manifest that engages validation, requiring BOTH a class and a catalog ref) and `tool_classifications` (read by classify). Only the second is declared, because the catalog refs belong to the MX-t cells; a later cell that adds `tools` must add the refs in the same commit or the integration de-registers.",
+    "notes": "Form recorded, not a defect claim. Each integration.py carries a comment stating why `tools` is omitted."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-25T18:49:43Z",
+    "one_line": "opal_discover is not wired into the registry's factory list: registry.py is read-never-write for MX-d-2, so on a gateway with ENABLED_INTEGRATIONS=opal_discover the id reports 'unknown integration id' and adds zero tools; the tests register the factory for their own duration only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/integrations/registry.py:34-55 -- _load_builtin_factories registers ycharts, opal_portal, globgrph, schwab; :93 an unregistered id reports {'error': 'unknown integration id'}.",
+        "MEASURED (python 3.11.9, this worktree, new package present, no test factory): registry.register_enabled(mcp, ['opal_discover']) -> {'opal_discover': {'error': 'unknown integration id', 'available': ['globgrph', 'opal_portal', 'schwab', 'ycharts']}}.",
+        "TO: org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-d-2.discover-family.md <paths> names app/integrations/opal_discover/ and tests/test_opal_discover.py only."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: 'with its id set it adds exactly its pinned list'; s.3 lists app/integrations/registry.py under 'Read (never write)'.",
+    "world_is": "The id-to-factory wiring lives only in registry._load_builtin_factories (registry.py:34-55 @d59217f5a8). Without a line there the id is unknown to register_enabled. test_discover_registers_dormant registers the factory with registry.register_factory for the test's duration and restores the registry afterwards.",
+    "notes": "Specify/write owner is the issuer (2.0.0_SA_COO~O): one register_factory line in registry.py, in a cell whose <paths> names it. Nothing is deployed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-25T18:49:43Z",
+    "one_line": "Both discover tools resolve to SAFE through destructive_ops.classify (MX-c-4's composed path), but app/data_entitlement.classify returns None for them, so register_enabled reports them 'unclassified' and the OG-z-1 guard would deny both to every principal at discovery and dispatch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/data_entitlement.py:102 TOOL_CLASSES over NATIVE_TOOLS | INTEGRATION_TOOLS | SCHWAB_TOOLS; :164 classify returns TOOL_CLASSES.get(tool); :320-324 decide() denies 'tool_unclassified' for None.",
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/integrations/registry.py:129 unclassified = registered tools whose data_entitlement classify is None, reported with the note 'denied at discovery and dispatch until classified in app/data_entitlement.py'.",
+        "MEASURED (python 3.11.9, factory registered): register_enabled(mcp, ['opal_discover']) -> tools ['opal_discover', 'opal_describe'], unclassified ['opal_discover', 'opal_describe']; pytest prints 'data_entitlement.classify=None' for both.",
+        "CHECK: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/d2.AC2.sh comment lines 3-5."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: 'Every tool declares its class through MX-c-4's declaration.' The AC2 check script's comment glosses test_discover_tools_carry_class as 'every discover tool resolves by name through destructive_ops.classify and data_entitlement to a declared class'.",
+    "world_is": "The class is declared on the spec and destructive_ops.classify returns it; data_entitlement.TOOL_CLASSES is a hard-coded name set in app/data_entitlement.py (outside <paths> and not on the read list) that does not compose from the spec. test_discover_tools_carry_class asserts the destructive_ops limb and PRINTS data_entitlement.classify (None); it does not assert it.",
+    "notes": "Whether the data_entitlement limb belongs to AC2 is the issuer's and L9's reading, not the worker's. Enabling the family without a data_entitlement.py entry ships two tools no principal can call; the registry report says so."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-25T18:49:43Z",
+    "one_line": "The catalog carries no structured latest-value field: every row has vintage_field (36 of 36) but a latest value appears only as prose 'live YYYY-MM-DD' in vintage_semantics, on 10 of 36 rows. The answer carries latest_value with its claim: 'held' (quoted from that prose) or 'absent'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED (python 3.11.9) over infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml @d59217f5a8: 36 artifact rows across 15 channels; vintage_field present 36/36; the pattern 'live YYYY-MM-DD' in vintage_semantics hits 10/36; no other per-row field carries a value.",
+        "Example: mp.04.model-portfolio-timeseries vintage_semantics 'THE vintage is top-level `data_as_of` (live 2026-08-10)' -> latest_value {'value': '2026-08-10', 'claim': 'held'}."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: 'the answer names ... its freshness field and latest value', reading the catalog through the existing load path, never the S3 archive.",
+    "world_is": "Without an S3 read the only latest value the family can give is the certification-time date the catalog's prose records. 26 of 36 rows record none; for them latest_value is {value: null, claim: 'absent'}.",
+    "notes": "The date is the catalog's recorded observation, never a fresh read; the claim field lets a consumer reject it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-25T18:49:43Z",
+    "one_line": "The family egresses nowhere, but validate_integration_spec refuses an empty hosts allowlist; the spec declares the single reserved, never-resolving name 'no-egress.invalid' (RFC 2606) so validation returns [] without allowlisting any real host.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/integrations/base.py:207-208.",
+        "MEASURED: base.validate_integration_spec(opal_discover SPEC) -> [] with hosts=('no-egress.invalid',)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: 'validate_integration_spec returns []'; preflight: the family reads the repository catalog only, EGRESS CLASS NONE.",
+    "world_is": "base.py:207-208 appends 'hosts allowlist is empty (egress-governance axis)' for hosts=(). No declared shape exists for a no-egress integration; the worker chose a .invalid name.",
+    "notes": "Form recorded for the issuer."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-25T18:49:43Z",
+    "one_line": "tool_catalog_refs expects a DATA_CATALOG.yaml artifact entity id per tool, but both discover tools read the whole catalog, not one row; each declares 'catalog:app/refs/DATA_CATALOG.yaml', which is not an entity id.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/integrations/base.py:78-79, and validate_integration_spec's per-tool loop (non-empty check only).",
+        "MEASURED: 36 entity ids in DATA_CATALOG.yaml @d59217f5a8, none naming the catalog as a whole."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: 'Every tool declares its class through MX-c-4's declaration' (whose validator demands a non-empty catalog-entry ref for every declared tool).",
+    "world_is": "base.py:78-79 defines the ref as an artifact entity id; no entity describes the catalog itself. A later check that resolves refs against entity ids will not resolve these two.",
+    "notes": "Form recorded; the ref shape for a catalog-wide tool is the issuer's to specify."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-25T18:49:43Z",
+    "one_line": "No MCP tool fetches a catalog key, so the 'NEXT tool to call' is named as query_v0 (the gateway's catalog-gated fetch, POST /query/v0 with the key); the catalog's own channel 'tool' field names tools/portal_lookup.py, a repository script, not a gateway tool.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/query_v0.py:1-5 (POST /query/v0 {key}) and :112 handle; DATA_CATALOG.yaml channel 'tool' = tools/portal_lookup.py on 11 of 15 channels."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: 'the answer names ... the NEXT tool to call'.",
+    "world_is": "The gateway's catalog-gated read of one key is the REST route /query/v0 (app/query_v0.py handle), audited as tool 'query_v0'. The worker named that; an MCP-only client cannot call it as an MCP tool.",
+    "notes": "Form recorded for the issuer."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T18:59:44Z",
+    "one_line": "MX-t-8 AC1: data_entitlement.classify returns None for all 10 portal_index tools. Its classification is a static table in app/data_entitlement.py, which is outside this order's <paths>, so test_portal_tools_register_dormant_with_class fails on that limb.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/data_entitlement.py:164-166 `def classify(tool): return TOOL_CLASSES.get(tool)`; TOOL_CLASSES (:102-103) is built from the literal NATIVE_TOOLS, INTEGRATION_TOOLS and SCHWAB_TOOLS sets and does not read the integration registry.",
+        "CODE @d59217f5a8: data_entitlement.py:320-324 decide() denies a tool with classify None to every principal ('tool_unclassified'); registry.py register_enabled reports such tools under `unclassified`, 'denied at discovery and dispatch until classified in app/data_entitlement.py'.",
+        "MEASURED (python 3.11, worktree wk-NFRA_MCPINDEX-3, before the commit, with the module in place -- see row -Z-W3-S6 for why it is not committed): tests/test_portal_index.py printed 'data_entitlement.classify returns None for 10 of 10 tools'; destructive_ops.classify resolves all 10 to SAFE through the spec's own declaration.",
+        "TO face s.3 @d59217f5a8: <paths> names app/integrations/portal_index/, tests/test_portal_index.py, catalog_entries/, DATA_CATALOG.yaml, the deliverables folder and the channel; app/data_entitlement.py is neither written nor read-listed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "round2/checks/t8.AC1.sh: 'every tool resolves through destructive_ops.classify and data_entitlement by name'.",
+    "world_is": "destructive_ops.classify composes through the spec (MX-c-4); data_entitlement.classify does not. Adding the 10 names to data_entitlement.INTEGRATION_TOOLS is a one-line edit in a file this order does not grant.",
+    "notes": "Criterion refused on this limb as written. Until it is closed, enabling portal_index would register 10 tools that every principal is denied (fail-closed, so no harm)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T18:59:44Z",
+    "one_line": "MX-t-8 AC1: DATA_CATALOG.yaml cannot be regenerated in this worktree. emit_catalog_v02.py refuses because portal/src/api is absent (portal is an empty gitlink here), so the 10 portal_* catalog refs do not resolve.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED (this worktree, `python emit_catalog_v02.py` from workflows/atom_decomposition/, run before and after adding the entries): 'EMIT REFUSED: accessor index is EMPTY -- portal/src/api not readable at C:\\tmp\\mx-3\\portal\\src\\api (the portal submodule must be present)', rc=2.",
+        "MEASURED @d59217f5a8: `git ls-tree HEAD portal` -> '160000 commit 2453a7b4c6... portal'; .gitmodules is 0 bytes at HEAD; portal/ is an empty directory in the worktree.",
+        "MEASURED: emit_catalog_v02.load_catalog_entries() accepts all 10 catalog_entries/portal_*.yaml files, with no errors.",
+        "MEASURED before the commit, with the module in place (row -Z-W3-S6): tests/test_portal_index.py::test_portal_tools_catalog_refs_resolve printed '10 tools, 0 resolve in DATA_CATALOG.yaml'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1 item 5: 'Add the entries as emitter inputs under workflows/atom_decomposition/catalog_entries/portal_*, then regenerate the catalog with emit_catalog_v02.py. Never hand-edit it.'",
+    "world_is": "The entries are written and validate. The regeneration step cannot run without the portal source tree. The worker bar forbids extracting or reconstructing a tree to make an order executable, and hand-editing is forbidden. DATA_CATALOG.yaml is therefore unchanged.",
+    "notes": "The fix is to run the emitter on a tree whose portal submodule is checked out at the gitlink 2453a7b4c6. It will also restamp built_at_git_head."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T18:59:44Z",
+    "one_line": "portal_index is not wired into registry._load_builtin_factories, because registry.py is read-only for this order. In production, ENABLED_INTEGRATIONS=portal_index would report 'unknown integration id' and add zero tools.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/integrations/registry.py:34-58 `_load_builtin_factories` registers ycharts, opal_portal, globgrph and schwab by explicit import; nothing imports a package by id.",
+        "DOC @d59217f5a8: docs/architecture/NFRA_INTEGRATIONS_STANDARD.md s.5 step 2 'Register the factory in registry.py via register_factory(id, Factory)'.",
+        "MEASURED: the AC1 test registers PortalIndexIntegration with the public registry.register_factory for the test only (the planted_factory pattern of tests/test_tool_classification_composition.py) and prints the untouched production available_ids without portal_index."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1 item 6: 'with ENABLED_INTEGRATIONS empty it adds zero tools; with its id set it adds exactly its pinned list'; face s.3 lists app/integrations/registry.py as read, never write.",
+    "world_is": "The integration adds exactly its pinned list once its factory is registered. The one production registration line belongs in a file this order does not grant.",
+    "notes": "Dormant either way; this blocks only the eventual enable deploy."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T18:59:44Z",
+    "one_line": "catalog_entries/ is the silver-dataset mechanism. The emitter writes its rows under `silver_datasets:` with a header saying 'no S3 key, no precomputed artifact', and the 8-field C1 schema has no key field. So the portal_* entries cannot carry the exact key they describe.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: workflows/atom_decomposition/emit_catalog_v02.py:813-823 writes catalog_entries rows under silver_datasets: with the comment 'silver queried live -- no S3 key, no precomputed artifact'.",
+        "CODE @d59217f5a8: emit_catalog_v02.py:202-205 ENTRY_REQUIRED_FIELDS is exactly 8 fields; validate_entry refuses any other field.",
+        "CODE @d59217f5a8: emit_catalog_v02.py:58-61 EMISSION_MAP already carries mp.01.aum-metrics, mp.02.account-distribution, mp.03.aggregate-aua-timeseries and mp.11.non-model-assets, the same platinum/mdpf objects that 4 of the portal_* entries describe."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1 item 5: portal tools' catalog entries are added as emitter inputs under catalog_entries/portal_*.",
+    "world_is": "Once emitted, those rows would sit under a header that describes them wrongly. Four of the mdpf objects would have two catalog rows (a channel row and a silver row). The exact key is carried in each entry's `producer` text and in the integration's FENCES, not in a field a consumer can reject on.",
+    "notes": "Form recorded, per the face. Whether portal tools should point at the existing channel rows instead is the issuer's call."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T18:59:44Z",
+    "one_line": "IntegrationSpec.tool_prefix is one string, but the face's C3 tool names span three systems (mdpf_, etfs_, advi_). portal_index declares 'mdpf_|etfs_|advi_'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/integrations/base.py:64 `tool_prefix: str  # every tool this integration registers starts with this`; validate_integration_spec checks only that it is non-empty.",
+        "TO face s.1: one integration `portal_index` registering mdpf_*, etfs_* and advi_* tools."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "base.py: a single tool_prefix that every registered tool starts with.",
+    "world_is": "No single prefix covers the ten names. The field holds the three alternatives joined by '|'. Nothing reads it except summary().",
+    "notes": "INERT: no consumer matches on it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T19:16:00Z",
+    "one_line": "MX-t-8 AC1-AC3: the naming commit gate (ENFORCE) refuses app/integrations/portal_index/integration.py. The exact keys the portal serves today are legacy-layout literals (platinum/mdpf/..., platinum/etfs/..., platinum/advi/49financial/...), which address() cannot produce and no registry row covers. The module is therefore not in the gateway tree, and all six named tests fail at import.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED (bash .tools/safe-commit.sh, this worktree): 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode)'; 'NAMING-GATE: REFUSE 19 graded'. The 17 REFUSE lines are all in integration.py, e.g. ':49 platinum/mdpf/ -> mdpf/{scope}/platinum/ why: NEW and OUT-OF-PATTERN as S3Key: REFUSE' and ':42 49financial -> lookup('49financial') why: NEW hand-kept carrier'.",
+        "CODE @d59217f5a8: .tools/naming-gate.py:6-7 (DEC-6: NEW and OUT-OF-PATTERN -> REFUSE) and :21-24 (a firm token is permitted only in registry files, generated files, or inside key()/address()/name()/lookup() arguments); org/mcp/naming-gate.enforce is present (last touched d181e0ac5a).",
+        "DATA @d59217f5a8: org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json:14-15 maps today's served keys ('/api/general/mdpf/* -> platinum/mdpf/* in opal-data-portal-v2 ... -> mdpf/{scope}/platinum/<leaf>', 'platinum/etfs/positioning_data.json ... -> etfs/{scope}/platinum/positioning_data.json'); its `paths` list (39) holds only the canonical {source}/{scope}/platinum/ form.",
+        "MEASURED (read-only .tools/aws s3api list-objects-v2, opal-data-portal-v2, 2026-09-25): prefixes mdpf/global/platinum/, etfs/opal/platinum/, advi/49financial/platinum/ and mdpf/ return None. The positive control platinum/mdpf/global/ returns account-distribution.json, aggregate-aua-timeseries.json and aum-metrics.json. The canonical-layout keys do not exist; the served objects are the legacy keys.",
+        "RECORD: the refused module is kept, unexecuted, at org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~3/candidate/portal_index/integration.py (org/** is outside the gate's domain as a record tree). Before the commit, with it in place under app/integrations/portal_index/, tests/test_portal_index.py read '2 failed, 4 passed' (the two failures are rows -Z-W3-S1 and -S2)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: build a new integration portal_index (app/integrations/portal_index/) whose tools each read ONE whole precomputed object by its EXACT key prefix, the SAME objects the portal reads; CLAUDE.md rule 30: every S3 address is address() output, and a builder refusal is a registry row, never a hand-typed workaround.",
+    "world_is": "The objects the portal reads exist only at legacy keys. The LGIC canon names their future canonical keys, which do not exist yet. A new reader of today's objects must type legacy keys, and the gate refuses every such literal as NEW and OUT-OF-PATTERN. The in-grant remedies either read nonexistent keys or dodge the gate, and both are refused here. The remedy is a naming-canon entry admitting the opal-data-portal-v2 legacy served keys for readers, or an R20 departure Andrew acknowledges. Both are outside this order's <paths>.",
+    "notes": "No override was used and the gate was not weakened. All three criteria fail on the committed tree because the tests import app.integrations.portal_index. The issuer's call: route the naming remedy, then land the candidate module unchanged."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T22:02:00Z",
+    "one_line": "MX-t-8 PHASE 2 will be refused even after the CTO lands the three LEGACY-READ entries: the naming gate consumes a waiver only for an EXISTING literal, and every literal of the new file portal_index/integration.py is NEW. judge() returns REFUSE on all three roots with valid entries fed in.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @b5b1402e89 (CLOUD): .tools/naming-gate.py:1293 `new = pre_text is None or not _in_pre(lit, pre_text)`; :1324 `if new and verdict in (\"OUT-OF-PATTERN\", \"ALIAS\"): return \"REFUSE\"`; the waiver is consumed only below that, at :1326-1327 (`if rem:` ... 'THE ONE CONSUMPTION POINT OF THE LEGACY-READ WAIVER ... It sits BELOW the NEW branch above, which is why a NEW or CHANGED literal can never reach it'). A new file has pre_text None.",
+        "MEASURED (.scratch/compute_entries.py, the gate's own functions at b5b1402e89 with its lib/opal_naming.py and registry staged read-only): for each of 'platinum/mdpf/', 'platinum/etfs/positioning_data.json' and 'platinum/advi/49financial/', legacy_read_ok(entry, module bytes) = True and authority_ok = True; judge(new file, waivers fed in) = REFUSE, REFUSE, REFUSE. The same literals graded as EXISTING: WAIVED-READ, OUT-OF-PATTERN (WARN), WAIVED-READ.",
+        "MEASURED (the same gate on a /dev/null diff of the module, sha256 8f8bb4d3d61c...): 'REFUSE :168 platinum/mdpf/ why: NEW and OUT-OF-PATTERN as S3Key', ':170 platinum/etfs/positioning_data.json' likewise, ':172 platinum/advi/49financial/' likewise plus the 49financial carrier; org/mcp/naming-gate.enforce is present in this worktree."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face item 9 and LEGACY_READ_AUTHORITY_MX-t-8_20260925.md @212e0b2471: the CTO's entries, landed in NAMING_LEGACY_READS.json before the module's commit, admit the portal's legacy keys for this reader; item 12 PHASE 2: commit the module unchanged once the entries are at HEAD.",
+    "world_is": "The waiver's recognizer admits each literal at its call site (all three legacy_read_ok True), but the gate never asks it for a NEW literal. A new module's literals are all NEW, so PHASE 2's commit is refused with the entries in place. The precedent IRPT-M-LEGACY-READ-01 was an existing literal in an existing file.",
+    "notes": "PHASE 1 done as ordered; the module is on disk uncommitted. Not fixable in my <paths>: the gate, the carrier and the authority are outside it. The issuer's and CTO's call (a gate change that lets a waiver reach a NEW literal at an approved site, or another route)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T22:02:00Z",
+    "one_line": "The LEGACY-READ entries cannot all carry MDPF_CANON: the gate's remediation_of() resolves 'platinum/advi/49financial/' to ADVI_FIRMBKTS and 'platinum/etfs/positioning_data.json' to NO remediation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DATA @b5b1402e89: infra/logic/registry/remediations.json: ADVI_FIRMBKTS surfaces include {s3-prefix, opal-data-portal-v2, platinum/advi/49financial/}; MDPF_CANON surfaces include {s3-prefix, opal-data-portal-v2, platinum/mdpf/}; no surface covers platinum/etfs/.",
+        "MEASURED (.scratch/compute_entries.py, Naming.remediation_of at b5b1402e89): MDPF_CANON, None, ADVI_FIRMBKTS for the mdpf, etfs and advi roots.",
+        "CODE @b5b1402e89: .tools/naming-gate.py judge(): a waiver applies only when entry.remediation == the resolved remediation; with no remediation the EXISTING literal is OUT-OF-PATTERN WARN and the waiver is never read."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LEGACY_READ_AUTHORITY_MX-t-8_20260925.md @212e0b2471: 'Remediation owner of the keys: MDPF_CANON (D8)' for all three prefixes.",
+    "world_is": "The gate assigns the advi root to ADVI_FIRMBKTS and the etfs key to no remediation. org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~3/legacy_read_entries.json writes ADVI_FIRMBKTS for advi (the gate's value, so the entry is consumable), and MDPF_CANON for etfs as the authority says; the gate can never consume the etfs entry. Its computed_with.checks block records all three values.",
+    "notes": "For the CTO's verification of the entries. My file follows the gate where the gate decides consumption."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T22:02:00Z",
+    "one_line": "This worktree's HEAD (1b7e16e1ec) does not carry the ruling, the authority record, NAMING_LEGACY_READS.json, or legacy_read_ok/_norm_body in .tools/naming-gate.py. I read all of them at CLOUD and computed the entries with the gate at b5b1402e89.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: `git merge-base --is-ancestor 212e0b2471 HEAD` rc=1; org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/ absent on disk; org/standards/NAMING_LEGACY_READS.json absent on disk; `def legacy_read_ok|def _norm_body` has 0 matches in this worktree's .tools/.",
+        "MEASURED: merge-base(HEAD, CLOUD) = 60464dd3f8, 4340 commits behind CLOUD b5b1402e89; the task order's bytes are identical at HEAD and at CLOUD (`git diff HEAD CLOUD --stat` on the order is empty).",
+        "READ: the ruling at 212e0b2471:.../ROUND1_RULINGS.md R-3, the authority record at 212e0b2471, and the gate at b5b1402e89:.tools/naming-gate.py:926 (_norm_body) and :1131 (legacy_read_ok), staged under .scratch/ read-only."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face item 9: READ both CTO files; shape for .tools/naming-gate.py legacy_read_ok; compute helper_body_sha256 with the gate's own _norm_body; item 12 PHASE 2 once the CTO's entries are at your HEAD.",
+    "world_is": "The paths are on CLOUD, not at this branch's HEAD. The worktree's own gate has no waiver mechanism, so a PHASE 2 commit graded by this HEAD's gate refuses whatever the carrier holds.",
+    "notes": "Nothing was rebuilt or extracted into the tree; CLOUD was read, not merged. PHASE 2 needs this branch to carry CLOUD's gate and the landed entries; that is the issuer's merge."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T22:02:00Z",
+    "one_line": "Item 10's registry wiring makes tests/test_entitlement_admin.py::test_ogz2_ac08 (outside my <paths>) fail: it instantiates every registered factory, and opal_discover's module is not on this tree. It also pins the registry to 4 ids and 44 tools, so it will still fail on portal_index and opal_discover after the discover drain.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED (python, this worktree, module present): registry.available_ids() = ['globgrph', 'opal_discover', 'opal_portal', 'portal_index', 'schwab', 'ycharts']; instantiating each factory: 5 OK, 'FAIL opal_discover ModuleNotFoundError No module named app.integrations.opal_discover'.",
+        "CODE @1b7e16e1ec: infra/aws/ec2/opal-gateway/tests/test_entitlement_admin.py:310 iterates registry.available_ids(); :339 _pinned_by_id names ycharts/opal_portal/globgrph/schwab only; :349 calls registry._FACTORIES[_iid](); :355 asserts 44 tools.",
+        "MEASURED: that module does not collect here ('ModuleNotFoundError: No module named moto', like 12 other gateway test modules), so the failure is derived from the code, not run. The discover family is on the held branch wk-nfra_mcpindex-1-1d @9dd139a74d (app/integrations/opal_discover/)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face item 10: wire both factories in app/integrations/registry.py so ENABLED_INTEGRATIONS can name them.",
+    "world_is": "The discover module is not on this tree, and an existing test outside <paths> pins the registry's id set. I wired both as factories that import on enablement only, so gateway import stays clean (the portal and classification-composition suites: 38 passed). The pin test needs its two new ids and the discover module.",
+    "notes": "Not fixed: the test file is outside my grant."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T23:40:00Z",
+    "one_line": "Ruling D-5 = (c) keys each portal tool from 'its OWN existing catalog row, through catalog_gate', but 7 of the 10 tools have no such row. category-views, etfs positioning and all four advi tools have no row catalog_gate indexes, and non-model-assets' row is verdict_class deny. Built as ruled, only 3 of 10 tools resolve, so AC2 and AC3 FAIL by output, and AC1 fails through the file-wide rc.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d36d31f8c5: infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py:62-73 load_catalog indexes ONLY channels.*.artifacts[].key (plus the {scope} member expansion). silver_datasets is never indexed.",
+        "MEASURED @d36d31f8c5 (python, catalog_gate.load_catalog on app/refs/DATA_CATALOG.yaml): of the 36 indexed rows, platinum/mdpf/{scope}/aum-metrics.json (serve), account-distribution.json (serve-with-caveat), aggregate-aua-timeseries.json (serve) and platinum/mdpf/global/non-model-assets.json (deny) are the only rows under the portal tools' objects. No row exists for mdpf category-views, platinum/etfs/positioning_data.json or anything under platinum/advi/.",
+        "READ @2c25c4c831: the 10 phase-1 silver_datasets entries (portal_*) carry the C1 schema's 8 fields, and none is a key. The key appears only as prose inside `producer`. The ruling's premise that the catalog already holds the keys 'as existing data (phase 1 @2c25c4c831)' holds for the silver ENTRIES, not for KEYS catalog_gate can resolve.",
+        "MEASURED, proof invocations at d36d31f8c5: AC1 'pytest rc=1; named tests passed 2 of 2; failed/error lines 3'; AC2 'named tests passed 2 of 4'; AC3 'named tests passed 0 of 1'. test_portal_tool_reads_its_exact_prefix_only prints 'tools reading their whole exact-key domain: 3 of 10'. Each of the 7 refusals is 'off-catalog: 0 catalog rows name the portal accessor <X>', or for non-model-assets 'catalog_gate refused ... verdict_class=deny'.",
+        "CONTROL (.scratch/planted_rows_control.py, not committed): the same 4 tests over a catalog COPY carrying a servable row for each of the 7 accessors, with non-model-assets flipped to serve, print 10 of 10 / 650 refused, 0 leaked / 10 of 10 / parity 3 of 3, and all 4 PASS. The module is not the cause; the missing and denied rows are."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face item 9 (ruling D-5 = (c), R-4 @3805559000): each tool resolves its object key from its OWN existing catalog row, through catalog_gate.py; only EXISTING, gate-admitted rows are read; a NEW row goes through the gate on its own merits, never smuggled in with a tool. Items 1-3 and 8 need all 10 tools to read their exact keys, and the mdpf, etfs and 49financial advi families to reach parity.",
+    "world_is": "Built to the ruling at 84a725073b. The module holds no key literal (0 hits over 185 constants; the naming gate WARN, rc 0; a planted-literal mutant is REFUSED, rc 1). Only 3 of 10 tools resolve against the real catalog. I added no row, because that would be the smuggling the ruling forbids, and the catalog header says widening is Andrew-only. The 7 tools refuse, deny-by-default, with zero S3 calls.",
+    "notes": "Needs an issuer decision. Either the missing rows land as their own gate-admitted catalog change (category-views, etfs positioning, 4 advi objects, and a non-deny verdict for non-model-assets or dropping that tool), or the criteria are recut to the 3 resolvable tools. The accessor each tool looks for is in ROWS in the module."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T23:40:00Z",
+    "one_line": "The round-2 check helper pytest_named reads 'passed 0 of N; failed/error lines 0' for any test that prints through capsys.disabled(). Under -v the uncaptured output lands between `::name` and PASSED/FAILED, so neither verdict is on the line its greps match.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED @84a725073b: t8.AC1.sh printed 'pytest rc=1; named tests passed 0 of 2; failed/error lines 0', while `pytest -v` shows both AC1 tests PASSED, each verdict on its own line after the printed measurement lines.",
+        "CODE: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/_root.sh pytest_named greps -E \"::$t(\\[.*\\])? PASSED\" (same line) and -cE ' FAILED| ERROR' (leading space). The split-off verdicts start at column 0, so both counts read zero.",
+        "MEASURED @d36d31f8c5, after _say prints into the capture: AC1 'named tests passed 2 of 2; failed/error lines 3'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The AC1-AC3 invocations report the named tests' PASSED count and the FAILED/ERROR lines of the file.",
+    "world_is": "They do only when the tests keep their output inside pytest's capture. The error runs toward FAIL, since the rc and the pass count still gate, never toward a false PASS. But with 'failed/error lines 0' beside a real failure, the check hides WHICH tests failed. Fixed in my own test file at d36d31f8c5. The helper is unchanged, because it is outside my paths.",
+    "notes": "Any other cell whose tests print through capsys.disabled() under a pytest_named check reads the same way."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S13",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-26T01:20:00Z",
+    "one_line": "To read item 13 over the 3 tools, I removed the 7 catalog_entries/portal_* source files of the tools that left the cell and regenerated DATA_CATALOG.yaml. Item 13 names no catalog-entry removal; it says only that no catalog ROW is added for them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ, TO face item 13 (amendment ac5445b2ba on CLOUD, relayed in the launch prompt): 'Every item above now reads over the 3' and 'Do NOT add catalog rows for them'. Item 5 requires each tool's catalog-entry reference to resolve to an entry, and test_portal_tools_catalog_refs_resolve asserts that the portal_* source files equal the tools' refs.",
+        "CODE @6345d36f04: the 7 removed files (portal_mdpf_category_views, portal_mdpf_non_model_assets, portal_etfs_positioning, portal_advi_{leaderboard,mix_summary,partner_analytics,growth_chart}.yaml) were my own sources, first added in 81d37aafda / 2c25c4c831 on this branch. None is on CLOUD ('exists on disk, but not in CLOUD').",
+        "MEASURED @bc0cde67f0: emit_catalog_v02.py rc=0, 'SILVER DATASET ENTRIES (MX-c-2, catalog_entries/*.yaml): 3 emitted, 0 refused (denominator 3 source files)'. The DATA_CATALOG.yaml diff is the 7 silver_datasets entries plus the two vintage lines."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Item 13: the cell registers only the 3 resolving tools, every item reads over the 3, and no catalog rows are added for the other 7.",
+    "world_is": "The 7 silver entries would otherwise stay in the catalog, each naming a tool no integration registers. I removed them. Round 3's catalog-row cell re-adds them from 6345d36f04 (git show 6345d36f04:workflows/atom_decomposition/catalog_entries/portal_<name>.yaml) if it wants them.",
+    "notes": "If the issuer meant the 7 entries to stay, revert the 7 deletions in bc0cde67f0, re-run the emitter, and relax the source-set equality in test_portal_tools_catalog_refs_resolve to a subset."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W1-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-26T03:33:23Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The schwab per-tool class declaration needs destructive_ops.OpClass, which integrations/schwab/integration.py did not import; the edit adds ONE import line beside the declaration, so the file's diff is the declaration plus that import.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @b643047a05: infra/aws/ec2/opal-gateway/app/destructive_ops.py classify() tests `tag['class'] is OpClass.SAFE` (is_guarded) -- the tag's class must be the OpClass enum member, not a string.",
+        "CODE @b643047a05: infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py imported nothing from app/destructive_ops.py.",
+        "DIFF (this cell's commit): integration.py gains 26 lines and loses 0 -- `from ...destructive_ops import OpClass as _OpClass` plus the tool_classifications= argument inside SPEC; no other line changes."
+      ]
+    },
+    "spec_asserts": "Face item 5: that file's per-tool class declaration is the ONLY edit in integrations/schwab/, and no line of that file other than the declaration changes.",
+    "world_is": "The declaration cannot be written without OpClass in scope. The worker read the import as part of the declaration and added it (the ycharts/opal_portal/globgrph declarations at 37f208249f carry the same import). No existing line was modified.",
+    "notes": "If the issuer reads the import as outside item 5, the alternative is the same enum reached another way; the declaration's behaviour does not change."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W1-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-26T03:33:23Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "schwab stays NOT enabled, so on the deployed set destructive_ops.classify still returns the fail-closed tag for all 5 schwab tools; AC11/AC6 now also register every registered-not-enabled integration onto a fake mcp in the probe's child process, and HELD is re-read as 'registered with no declared class'.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @b643047a05: infra/aws/ec2/opal-gateway/app/integrations/registry.py classification_for_tool reads _ACTIVE_BY_TOOL, populated only inside register_enabled().",
+        "MEASURED (this cell, python 3.11.9): `python .../probes/mx_c_4.py AC11` printed 'deployed-set-only view (register_enabled(['ycharts', 'opal_portal', 'globgrph'])): 5 unclassified -> [the 5 schwab tools]' and, registering the registered-not-enabled set as well, '49 = 49 classified + 0 HELD', 'classified in the deployed view but different once schwab registers: 0'.",
+        "Probe at the previous close (37f208249f) defined HELD as 'a schwab tool registered but absent from ENABLED_INTEGRATIONS', under which the amended AC11 (0 HELD) cannot pass while item 5 keeps schwab un-enabled."
+      ]
+    },
+    "spec_asserts": "Face item 6: AC11 PASSES only on 49 classified + 0 HELD, naming the 5 schwab tools with their classes; item 5: they stay registered and NOT enabled, ENABLED_INTEGRATIONS untouched.",
+    "world_is": "A declared class becomes visible to classify only through an active spec, and only enabled integrations are active in the gateway. The probe registers the not-enabled integrations (opal_discover, portal_index, schwab) onto a fake mcp in its own child process to read the declared class, prints the deployed-only view beside it, and writes no ENABLED_INTEGRATIONS value.",
+    "notes": "Instrument choice for the L9 reader: 'classified' in AC11 now means 'resolves through its integration's own declaration once registered', not 'resolves in the deployed gateway today'."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W1-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-26T03:33:23Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The AC11/AC6 denominator (NATIVE_TOOLS|INTEGRATION_TOOLS|SCHWAB_TOOLS = 35+9+5 = 49) no longer covers every registered tool: the registry now also registers opal_discover (opal_describe, opal_discover) and portal_index (3 mdpf_* tools), 5 tools outside the 49.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED (this worktree @b643047a05 + this cell's edit, python 3.11.9): len(NATIVE_TOOLS)=35, len(INTEGRATION_TOOLS)=9, len(SCHWAB_TOOLS)=5, union 49; 'opal_describe', 'opal_discover', 'mdpf_get_account_distribution', 'mdpf_get_aggregate_aua', 'mdpf_get_aum_metrics' are each NOT in that union.",
+        "MEASURED: register_enabled(fake, registry.available_ids()) registers 6 integrations (globgrph 2, opal_discover 2, opal_portal 1, portal_index 3, schwab 5, ycharts 6 = 19 integration tools); destructive_ops.classify returns SAFE (declared, not unclassified) for all 5 out-of-denominator tools.",
+        "GIT: portal_index arrived on this branch at b10111278c (drain of TO-MX-t-8)."
+      ]
+    },
+    "spec_asserts": "Face item 6: AC11 prints the 49-name denominator and passes on 49 = 49 classified + 0 HELD.",
+    "world_is": "49 is the population data_entitlement names, not every tool the registry registers (54 names). The 5 extra tools are classified SAFE by their own integrations' declarations, so no unclassified tool hides outside the denominator today; the probe keeps the face's 49 and does not widen it.",
+    "notes": "Not fixed here: the denominator and data_entitlement's sets are outside this order's paths."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-26T03:32:00Z",
+    "one_line": "v6.AC1's catalog_overlap reads 0 because it compares questions against ZERO catalog text: it walks DATA_CATALOG.yaml for the key 'description', and the runtime catalog has none, so the check cannot fail for any question set.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHECK @d4292f792c: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/v6.AC1.sh collects only values under a key named 'description'. Its own output on this branch: 'questions=27 sources_at_head=27 expected_tools=27 catalog_overlap=0 descriptions=0'.",
+        "CATALOG @d4292f792c: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml holds 1069 string values and 0 'description' keys. Its prose sits under business_meaning, serves, serve_verdict_with_caveats, vintage_semantics, semantics_provenance and similar keys.",
+        "SEPARATE MEASUREMENT (this worker, not the check): the 27 questions share 0 six-word runs and 0 four-word runs with any of the 1069 catalog strings. The set meets the criterion's intent, but the check did not measure that."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1 item 1: 'No question may reuse the catalog's own description words.' AC1 expects catalog_overlap=0.",
+    "world_is": "The check's denominator is 0 descriptions. A question copied word for word from a catalog row's business_meaning would still read catalog_overlap=0 and PASS.",
+    "notes": "The form is recorded for the issuer. One way to disarm it is to have the check walk every string value, or the keys the catalog actually uses, and fail when that denominator is 0. The worker did not edit the check because it is outside <paths>."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-26T03:32:00Z",
+    "one_line": "Routing defect in the discover family, measured on 27 real asks (21 of 27 hit). The 6 misses fall into 3 signatures: one common word selects a whole channel (3), an unranked channel puts the served dataset behind catalog order (2), and an index ask matches no keyword (1).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d4292f792c: infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py discover(). A channel keyword hit (_keyword_hit, substring over normalised text) marks EVERY artifact in that channel as a match. Matches are returned in catalog order, and the answer carries no ranking.",
+        "RUN: python infra/aws/ec2/opal-gateway/tests/routing/run_routing.py printed 'MISSES: Q05, Q07, Q09, Q13, Q22, Q25' and 'ROUTING: 21 of 27 routed to the expected tool'.",
+        "Signature A, a common word selects the whole channel, 3 of 6 misses. Q09 (TrueShares holdings, not catalogued) matched 'holdings' and routed to json/positioning/allocation_summary.json. Q13 (a gold-run readiness ask) matched 'inflection' and routed to mdpf_get_aum_metrics. Q25 (account value over time) matched the factor keyword 'value' and routed to json/correlations/correlation_data.json.",
+        "Signature B, right channel but the wrong first dataset, 2 of 6 misses. Q05 (ST model YTD) and Q07 (INT model YTD) routed to json/benchmarks/model_portfolio_timeseries.json. The dataset the recorded serve read, json/benchmarks/model_portfolio_benchmarks.json, is among the 6 candidates but not first.",
+        "Signature C, no match, 1 of 6 misses. Q22 ('where is the S&P at?') matched no keyword and no entity slug."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: the discover family 'names the next tool for a question'; s.2 bound 1: 'A routing defect you find is a ROW, never a fix here.'",
+    "world_is": "All 21 hits are uncatalogued asks correctly answered NOT_CATALOGUED. Of the 3 asks whose expected tool is a dataset, 0 route to it first. So the headline 21 of 27 mostly measures true negatives.",
+    "notes": "Nothing is deployed and the integration is dormant, so the hazard is INERT. The expected tools are the worker's reading of each ask (questions.yaml `note`), and G-B's live cold run is the independent read."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-26T03:32:00Z",
+    "one_line": "The Analyst's thread memory holds 8 asks, not 20, and only 1 of them is a data ask. The CRO's question lists were not located. 19 of the 27 questions come from other records that quote a staff member verbatim, and 24 of the 27 expect NOT_CATALOGUED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THREADS @d4292f792c: org/tier0_utility/0.0.3_BG_BBGTerminal/threads/** is 10 tracked files. It records 11 inbound staff messages, all from Andrew. 8 are asks and all 8 are used (Q01-Q06, Q26, Q27). The other 3 are a comms-style instruction, a 'No need thanks' reply and an attachment-only message. The one data ask is the ST YTD question.",
+        "CRO: no question list was found under org/tier1_exec/4.0.0_SA_CRO*/**, whether searched for 'question list', staff-question or real-ask phrasing. The PRD's evidence boundary (prd/NFRA_MCPINDEX_PRD.md:89-90) says the per-property common questions 'are not enumerated anywhere yet', and the decomposition's R2.5 item 2 records the same census miss. The analysis-portal AC5 list is authored by a worker and says it is not measured demand, so it was not used.",
+        "OTHER SOURCES USED: agent session logs, orders and change records quoting Andrew verbatim (14). One Teams DM from Alyssa Keith (Q07). Two call transcripts, org/tier1_exec/1.0.0_SA_CTO/deliverables/partner_calls/*.vtt, for Andrew and Yang Liu (3). docs/handoffs/2026-01-18_yang_transcript_reference.md for Yang Liu (1). Partner-side (49F) speakers were not used."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1 item 1: 'at least 20 questions staff actually asked ... Draw them from the Analyst's thread memory ... and from any other real-ask record you find.'",
+    "world_is": "The recorded real-ask population is mostly engineering and status asks by one person. Only 3 of the 27 target a catalogued dataset (Q05, Q07, Q22), so the harness measures uncatalogued-ask rejection far more than dataset selection.",
+    "notes": "The form is recorded for the issuer, and G-B's cold run with a non-author asker is where data-shaped asks would come from."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-26T08:37Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S6"
+    ],
+    "one_line": "ANSWERS the open question in Z-S6 as a NEW row, not an edit: the pathfinder gap is 4 partitions of the fact_dailynav feed for 2026-08-29 and 2026-08-30, and it is a CONVERSION failure, not a vendor non-delivery -- both bronze units are present, on time and well-formed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the missing keys, named: pathfinder/{PFDE,PFOE}/silver/fact_dailynav/date={2026-08-29,2026-08-30}/data.parquet -- 4 partitions, the DAILYNAV feed, not holdings. Z-S6 recorded 'missing 2' per fund without knowing which.",
+        "bronze PRESENT for both dates: pathfinder/filepoint/bronze/dailynav/20260829/DailyNAV.csv (531 bytes, LastModified 2026-08-29T22:00:11Z) and .../20260830/DailyNAV.csv (531 bytes, 2026-08-30T22:00:12Z). The vendor delivered; the converter did not produce silver.",
+        "A HYPOTHESIS OF MINE, REFUTED and recorded as refuted: both dates are a weekend, so I expected empty shells the converter would rightly refuse. They are not. Each carries header + 2 data rows -- the SAME shape as Friday 2026-08-28 (545 bytes) and Tuesday 2026-09-01 (547 bytes) either side.",
+        "both funds' meta/backfill-status.json read live: holes=[] against guard detail 'expected 146 landed 144 matched 144 missing 2 alien 0', so the hole has been ANONYMOUS for about four weeks. mirror_conversion.set_identity's V2-6 law treats a hole without a reason as not honest.",
+        "instrument: the sweep's READ-ONLY halves (expected_partitions_etf, _landed_silver, set_identity) run from the FIXED repo bytes against live state. run_sweep was not called and nothing was written."
+      ]
+    },
+    "spec_asserts": "Z-S6 left its own question open: 'Which 2 dates, and whether they are a vendor non-delivery or a conversion failure, is unmeasured here.'",
+    "world_is": "Measured. It is 4 partitions, not 2; it is the dailynav feed; and it is a conversion failure on two well-formed, on-time deliveries. Why the conversion failed is STILL unmeasured -- reading the converter's own refusal for those two units is the next act, and it is a filepoint question outside this order's trueshares-only write surface. This row does not disarm Z-S6; it narrows it.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "FILED AS A NEW ROW BECAUSE THE GATE WAS RIGHT AND I WAS WRONG. I first wrote this measurement INTO Z-S6 in place; .tools/surprise-row-gate.py refused the commit -- 'Corrections are NEW items citing the old id; an edited history is a history nobody can audit', with only a remediation row's own clocks permitted to advance in place. I had misapplied a supersede-in-place rule that belongs to a different artifact class. The mutation was reverted to Z-S6's exact HEAD bytes (verified: empty diff) and re-filed here. The audited override existed and was NOT taken: the gate was enforcing correctly, so the state to fix was mine. Remaining act for the owner is narrow: run the filepoint dailynav converter against those two bronze units, read its refusal, then either fix it or record the two dates as NAMED holes with a reason."
   }
 ]
 ```

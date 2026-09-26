@@ -87,7 +87,7 @@ Validate it with `python .tools/proof-of-spec-check.py <instance>`. Report once:
 **ISSUER NOTES:** E1 (S2). SPAWN ONLY after MX-c-5 is complete ON the held branch. Cut the worktree from
 `wk-nfra_mcpindex-1-1d`'s head; the issuer merges this branch back INTO the held branch.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>

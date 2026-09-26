@@ -777,6 +777,169 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "It does now: deployed_commit on origin/CLOUD = 0af72fb1d0 = the served commit. A release cut from the manifest's base now carries the Teams fixes. The release_note text is stale (describes 1f7128201a); no reader derives a base from that text.",
     "disarm_owner": "1.0.0_SA_CTO",
     "notes": "Disarmed, not remediated: the release_note residue is left to OA-f-2's manifest record, which names its base (the laptop release) in words per its own order text. No other act."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S23",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T03:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Andrew's call 2 (Alyssa Keith, 'portal figures only', written 'through the existing operator path') cannot be written as ruled. The existing path, ops/schwab_entitlement_admin.py, writes only the NFRA_OPLGTW grant model. Every grant there must name at least one Schwab master, its account ids, Schwab datasets and columns. opal_asker_query honours only the grant's 'query' operation. So any grant written today would ALSO name Schwab custodial accounts, which is wider than 'portal figures only'.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE app/data_entitlement.py:202-237 parse_scope: masters must be a non-empty subset of the contract's MASTERS; scope.accounts must name the accounts of every granted master; datasets must be a non-empty subset of DATASETS, and columns must name every granted dataset.",
+        "READ org/standards/NFRA_OPLGTW_CONTRACT.json: masters = 2 Schwab master ids; datasets = [dim_position, dim_balance, dim_asset]; operations = [list, describe, query, download_filtered]. No portal or catalog dimension exists.",
+        "CODE app/data_entitlement.py:279-282 allowed_tools: a restricted profile admits ONLY SCHWAB_TOOLS. CODE app/asker_scope.py:15-39 (points c, d): the asker grant's datasets have no mapping to the portal catalog, and only 'operations: query' is honoured before catalog_gate serves the CALLING identity's rows.",
+        "Also unmeasured: Alyssa Keith's Entra tid/oid. She holds no refresh family in gateway-access-state-table (census 2026-09-26 ~00:1xZ: 8 active families, all andrew@ or opalbloomberg@)."
+      ]
+    },
+    "spec_asserts": "ANDREW_DIRECT_20260926_022xZ call 2: 'Alyssa Keith, scoped to portal figures only. 2.0.0_SA_COO~O writes the permission through the existing operator path (runbook step 6); nothing new is built.'",
+    "world_is": "The existing operator path can express only a Schwab-data grant. 'Portal figures only' needs a grant shape that does not exist, which means building something, and the call says nothing new is built.",
+    "notes": "Options go to 1.0.0_SA_CTO~O as a decision: (A) a minimal NFRA_OPLGTW grant with operations [query] -- expressible now, but it names a Schwab master and accounts (wider than the call); (B) a portal-scoped asker grant, cut as a round-2 cell. Runbook step 6 waits on the answer. Nothing was written to the POLICY store."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W8-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~8",
+    "surfaced_at": "2026-09-26T03:35Z",
+    "one_line": "TO-OA-f-2 step 3 plans the rollback's halt gate at about 12 minutes (row NFRA_MCPORTAL-Z-S8). Read now from the rollback tree, the gate resolves serial 2.0.0_SA_COO~O, finds 0 STOP-class and 186 routine pending messages, and had listed 114 of the 186 when a 900 s bound expired. At that rate the full gate takes about 24 minutes, so the guard (ii) rollback path through safe-ec2-deploy.sh would leave the host down for about 24 minutes before the redeploy starts.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read-only read: .tools/halt-gate-check.sh@72897184fd sourced from /c/tmp/oa-8-rb (0af72fb1d0) with safe-ec2-deploy.sh's own HALT_GATE_* env (lines 43-64); halt_gate_resolve_serial printed '2.0.0_SA_COO~O' (the session serial file), start 03:12:06Z.",
+        "Output: 'HALT-GATE: 186 pending message(s) -- review before proceeding'. This Verdict-2 banner prints only after the STOP-class check (halt-gate-check.sh:428-449) found none, so STOP-class = 0.",
+        "`timeout 900` expired (rc 124) with 114 '  from ' entries printed out of 186. The per-message listing loop (halt-gate-check.sh:457-460) is where the time goes. 186 x 900/114 is about 1470 s.",
+        "HALT_ACK=1 passes the routine verdict (halt-gate-check.sh:461-464), but it does not skip the listing loop, which runs before the ack check."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Pre-acknowledge the rollback's halt gate: HALT_ACK=1 when the halt gate reads 0 STOP (the gate takes about 12 minutes).",
+    "world_is": "The gate reads 0 STOP, and HALT_ACK=1 is the correct pre-ack. It takes about 24 minutes, not 12, because 186 routine messages are pending on 2.0.0_SA_COO~O's inbox. The forward deploy also goes through this gate before it touches the instance. A guard (ii) rollback after a failed /health would leave the host serving nothing for that time, unless the issuer names another rollback path. The standalone form, bash infra/aws/ec2/opal-gateway/deploy-to-ec2.sh i-07dccb1615503ac99 from the rollback tree, skips the gate and the manifest record.",
+    "notes": "Not acted on: no inbox was touched and nothing was acked. Disarm: before GO, the issuer rules which rollback command guard (ii) runs."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S24",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T03:58Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-W8-S2"
+    ],
+    "one_line": "DISARMS NFRA_OPALAI-Z-W8-S2. Guard (ii) of OA-f-2 runs the rollback command the worker named (HALT_ACK=1, from the clean 0af72fb1d0 tree at /c/tmp/oa-8-rel's sibling /c/tmp/oa-8-rb). The halt gate's ~24 minutes under 186 routine pending messages is ACCEPTED, and the act is confined to outside US business hours (before 12:00Z). No gate is bypassed and no second rollback route is invented.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W8-S2 (worker 0.9.0_WK_NFRA_OPALAI~8, drained @3229aa6fb6): the halt gate reads 0 STOP with 186 routine pending and takes ~24 minutes, not the ~12 that row NFRA_MCPORTAL-Z-S8 measured.",
+        "The rollback artifact opal-gateway-0af72fb1d0.tar.gz (381002 bytes) was built without upload from a clean base tree. Against the live S3 base artifact, 70 of 75 files are byte-identical, including every .py file; the other 5 differ only in CRLF line endings (worker report, pre-GO)."
+      ]
+    },
+    "spec_asserts": "OA-f-2 guard (ii): if /health is not 200 within 90 s of the restart, the rollback runs AT ONCE.",
+    "world_is": "The rollback starts at once but spends ~24 minutes in the halt gate before it restores the host, so a failed release means up to ~25 minutes of gateway outage.",
+    "notes": "The exposure is bounded by timing (off-hours) rather than by skipping the pre-deploy gate: 'pre-existing mechanical gates stand'. If the halt gate's scan time is itself a defect, that is its owner's row, not this release's."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S25",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-26T05:27Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "2.0.0_SA_COO~O is DEAF to broker mail: no inbox-watch process runs for it, and 5 messages since 03:20Z are OFFER-EXHAUSTED, never READ. One of them is this seat's ruling on Z-S23, which this row carries: Alyssa's grant is option (B), issued NOW as addendum A2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "get_delivery_state(2.0.0_SA_COO~O, since 02:30Z) at ~05:2xZ: READ=3 (ids 25974/25978/25979, 02:44Z), OFFER-EXHAUSTED=5 (25985 from DS~D, 25994 from CTO~Z, 25996 RULING on 25986, 25999 loop instruction, 26017 CVO relay MXC5-AC4 PASS).",
+        "Win32_Process census at ~05:2xZ: 41 rows matching inbox-watch; a stream-mode script row exists for 3.0.0_SA_CVO~O, 1.0.0_SA_CTO~Z, 2.0.0_SA_COO~Y, 3.0.0_SA_CVO~Z, 2.0.0_SA_COO~X, 0.4.0_DS_ClientPlatform~D, 0.0.0_AB_MSTR~Z, 2.0.0_SA_COO~Z, 1.0.0_SA_CTO~O, 0.7.0_AE_CloudOps~I -- and NONE for 2.0.0_SA_COO~O.",
+        "The seat is working: commits c7ca5fb03f (04:01Z) and 8fc747bc09 (04:41Z); 3.0.0_SA_CVO~O cites COO~O msg 26012 sent ~05:0xZ. It sends; it does not receive."
+      ]
+    },
+    "spec_asserts": "Every live ~O seat receives its mail (the /watcher Monitor is its standing mechanism).",
+    "world_is": "COO~O receives nothing sent after ~02:44Z. The Z-S23 ruling, the /canonical-drive loop instruction and CVO~O's MXC5-AC4 PASS have not reached it.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "THE RULING THIS ROW CARRIES (1.0.0_SA_CTO~O, msg 25996, on COO~O msg 25986 / row Z-S23): option (B). (A) names Schwab accounts, which breaks Andrew's 'portal figures only'. Issue it NOW as addendum A2, not in round 2. Design direction: extend the existing grant grammar so a grant may carry zero Schwab masters plus a portal-dataset scope opal_asker_query honours; never a second grant store; the OPLGTW stop is lifted. Resolve Alyssa's Entra oid from the directory by the operator path. ALSO WAITING IN YOUR read/ DIR: the /canonical-drive 30m loop instruction (msg 25999) and 3.0.0_SA_CVO~O's MXC5-AC4 PASS @0cf61b5bbe (msg 26017), which unblocks the wk-nfra_mcpindex-1-1d drain. Disarm: re-arm the watcher (/watcher 2.0.0_SA_COO~O) and ack the 5 ids."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S26",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-26T07:22Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "CORRECTS NFRA_OPALAI-Z-S25 (this seat's own row): its limb 'the Z-S23 ruling has not reached COO~O' was FALSE when filed. 2.0.0_SA_COO~O issued addendum A2 on that ruling at 05:28:49Z (@9ba4ca286f: OA-g-1, OA-g-2, OA-g-3), 7 minutes before Z-S25 landed at 05:36:22Z. The missing inbox-watch process was real; the inference drawn from it was not checked against the task-order tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --diff-filter=A on NFRA_OPALAI.TO-OA-g-1.portal-only-grant.md: 9ba4ca286f 2.0.0_SA_COO~O 2026-09-26T05:28:49Z issue(NFRA_OPALAI addendum A2 ... on the CTO's ruling (B) (msg 25996 ...).",
+        "git log -1 --format=%aI 8833cafab2 (Z-S25) = 2026-09-26T05:36:22Z.",
+        "The same wrong 'A2 not issued' statement is in this seat's tick-7 log @cffa8e5603 and its tick-8 report; both read commits by grep on seat names and never listed the order files."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-S25: COO~O had not received the Z-S23 ruling (msg 25996).",
+    "world_is": "COO~O had read and acted on it (A2 issued 05:28:49Z) before the row was filed. It read the file in its read/ directory without acking it; the broker ack came at 05:33:21Z. Only the watcher-process census in Z-S25 stands.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "notes": "Inert: nothing was re-issued and no second COO was spawned on the wrong limb. Lesson carried in the commit: before stating an order was not issued, list the task-order files, not the commit log."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W9-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~9",
+    "surfaced_at": "2026-09-26T07:14Z",
+    "one_line": "The owner grant-read route (app/admin_grants.py _grant_json, GET of a principal's grant) builds its scope from a fixed list of six dimensions, so it drops portal_channels. After OA-g-1 a portal-only grant reads there as masters [], datasets [], accounts {}, columns {}, operations [query], with no channel shown. app/admin_grants.py is outside OA-g-1's <paths> and was not edited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE infra/aws/ec2/opal-gateway/app/admin_grants.py@9ba4ca286f :91-101 _grant_json returns scope keys masters, datasets, accounts, dates, columns and operations only.",
+        "MEASURED at da7749916d: _grant_json(parse_grant(grant_item(..., scope with portal_channels ['capital_markets'] and an empty Schwab half))) printed {'revision': 1, 'status': 'active', 'scope': {'masters': [], 'datasets': [], 'accounts': {}, 'dates': {'mode': 'rolling_complete_window', 'dates': []}, 'columns': {}, 'operations': ['query']}}. portal_channels is absent.",
+        "The access decision is unaffected: data_entitlement.parse_scope and asker_scope read the stored record, not _grant_json (tests/test_portal_grant.py at da7749916d, 6 of 6 passed)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-g-1: extend the EXISTING grammar so a portal-only grant (portal_channels, zero Schwab masters) is a first-class grant; existing grants keep their meaning.",
+    "world_is": "The grammar, asker path and operator command carry portal_channels. The owner's read-back route does not, so a GET of the grant that OA-g-3 writes shows an apparently empty grant.",
+    "notes": "Not fixed here, because it is outside <paths>. Disarm: the issuer decides whether a read-back of OA-g-3's grant goes through this route, and if it does, cuts the one-line addition of portal_channels to _grant_json."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W9-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~9",
+    "surfaced_at": "2026-09-26T09:00Z",
+    "one_line": "Item 5 of OA-g-1 (amended on row Z-W9-S1) is built: app/admin_grants.py _grant_json now returns scope.portal_channels whenever the grant carries it, and a grant without it reads back with no portal_channels key, as before. This row disarms nothing. Row W9-S1 stays ARMED until its disarm_owner 2.0.0_SA_COO~O dispositions it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE infra/aws/ec2/opal-gateway/app/admin_grants.py@9a28cfbbe6 _grant_json adds scope['portal_channels'] = sorted(s.portal_channels) when that set is non-empty.",
+        "TEST infra/aws/ec2/opal-gateway/tests/test_portal_grant.py@9a28cfbbe6 test_admin_readback_shows_portal_channels: a portal-only grant reads back portal_channels ['capital_markets', 'valuation'] with masters [] and accounts {}. A Schwab grant reads back with no portal_channels key. A None grant reads back None.",
+        "MEASURED at 9a28cfbbe6: g1.AC3.sh printed 'pytest rc=0; named tests passed 3 of 3; failed/error lines 0', RESULT: PASS, exit=0. tests/test_admin_grants.py: 5 passed (no moto needed)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-g-1 item 5: the owner's read-back carries portal_channels, so a portal-only grant never reads back as empty.",
+    "world_is": "It does, at 9a28cfbbe6 on branch wk-NFRA_OPALAI-9 (LOCAL; not drained, not deployed). The live gateway still runs the pre-item-5 bytes until OA-g-2 deploys.",
+    "notes": "This row does not disarm W9-S1; the issuer does. A side observation: the safe-commit call for 9a28cfbbe6 ran past a 120 s bound. The harness moved it to the background and it exited 0 with the commit landed, so the rc 124 shape did not arise."
   }
 ]
 ```

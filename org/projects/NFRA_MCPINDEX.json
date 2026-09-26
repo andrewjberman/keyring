@@ -3,7 +3,7 @@
  "home": "org/missions/D9/NFRA/NFRA_MCPINDEX",
  "directive": "D9",
  "macro_code": "NFRA",
- "fabric": "laptop",
+ "fabric": "site-z",
  "dep_stage": "EXECUTING",
  "status": "active",
  "name": "The Opal MCP tool index -- every Opal data property answerable in Claude from ONE catalog: a discover family, purpose-built tools per property (portal, Schwab, Black Diamond, Orion, Eclipse, SmartX, ETFs), a typed fallback query, and on-demand history and market data",
