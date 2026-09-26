@@ -9,7 +9,7 @@
   "dep_stage": "EXECUTING",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-09-26T06:43:27Z",
+  "last_updated": "2026-09-26T16:40:10Z",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -49,8 +49,8 @@
     "THE BACKLOG POPULATION IS HIS, SEPARATELY. Andrew-direct ~18:3xZ, VERBATIM: 'all of the Research folders in the Opal Sharepoint Shared Asset Management/Research/ subfolder will be the basis for our backfill and initial pool.' Record ANDREW_DIRECT_20260922_183xZ_RESEARCH_FOLDERS_ARE_THE_BACKFILL_BASIS_AND_INITIAL_POOL.md. The folder list is a MEASURED DENOMINATOR (93 at the 2026-09-22 scan), never a transcribed list, and an unresolved folder is printed, never dropped.",
     "SENDING BLOOMBERG MODEL-BLOCK FIGURES TO THE CLAUDE API IS ALLOWED (same record, '3.) That is allowed.') -- this closes the CRO's card 1 for both this project and the addendum."
   ],
-  "phase": "L7 EXECUTING (round 6): ONE issuance of 5 orders CRPS-h-1..5 over decomposition v6.0, cut from the round-5 analysis @37217d8053 s.5 -- h-1 read_dossier serves the LAST WRITE on the newest date (FWD-17 (b), row Z-S41: 37 rewrites on unchanged inputs), h-2 the Base-case ratio census by name + the team's workbook cells beside the served Base case (AC4 judgment), h-3 FWD-9's census third state (unresolved listed, never counted as reaching), h-4 FWD-14's fence triple with a disclosed remainder, h-5 FWD-18's data half (pillar and KPI terms). Round 5 CLOSED (L10 @37217d8053; 10 of 19 REALIZED, FWD-10/11/15 NOT REALIZED on the whole-fence rule per the correction @1c1735a226).",
-  "blocking": "FWD-10, FWD-11, FWD-15 and FWD-12 limb 3 (data half MET @2dae84b5a9) hold on AMGT_RESAPP's render (FWD-11's obligation owned there by FWD-31 @c2c6c507d6). Every dossier --write is HELD at this seat (Z-S42) until h-1 drains.",
+  "phase": "L8 (round 6): 5 of 5 orders CRPS-h-1..5 complete and drained (issuance @e52d265f5c), packet deliverables/2.0.0_SA_COO~X/ROUND6_DRAIN_END_PACKET.md handed to 3.0.0_SA_CVO~Z -- FWD-17 (b) read on the served table (IMB --write twice, wrote 0 both, DELTA=0); FWD-9 tristate library 0 unresolved 4; FWD-14 fence14 83/0/12 sum 95 outside 0; h-2's ratio census + workbook side-by-side laid out for AC4; h-5's terms built but its served rewrite HELD (Z-S45: the continuation readers would serve /2 on 49 of 95).",
+  "blocking": "Z-S45 (BLOCKING, held by Z-S46): the continuation readers take the first input-matching key by hash order, so FWD-18's served rewrite waits on a reader build. FWD-10, FWD-11, FWD-15 and FWD-12 limb 3 hold on AMGT_RESAPP's render (FWD-11 owned there by FWD-31 @c2c6c507d6; FWD-12 limb 3 data half MET @2dae84b5a9).",
   "threads": [],
   "thread_counter": 0
 }
