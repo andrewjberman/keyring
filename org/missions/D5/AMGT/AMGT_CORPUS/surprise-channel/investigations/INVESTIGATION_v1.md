@@ -1530,6 +1530,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Round-5 analysis s.5 item 8: 'the 1 is unexplained and outside the fence's own clause.'",
     "world_is": "Explained: one report_id with two byte-identical files; FWD-2's bronze-to-silver count is per report_id, and the census's two denominators differ by the one duplicate.",
     "notes": "No cell. The census could print the duplicate beside its two denominators so the next reader does not re-ask; that is a one-line enrichment for whoever next owns typed.py, not a round-6 cell."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S10",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-26T08:10:00Z",
+    "one_line": "3 of 51 SERVED Base cases carry no `ratio_to_px_last`/`band` field at all -- an older-vintage model_block.json stamp predating CRPS-g-1's guard rewrite -- so a reader that trusts `ratio_to_px_last` alone silently reads a real SERVED case as not-computable.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/CASE_EVIDENCE_ROUND6.json (this cell's own producer, run 2026-09-26): 6861_JP_Equity, CAT_US_Equity and CSL_AU_Equity are `status SERVED` with a real `value` and `px_last.value` but no `ratio_to_px_last`/`band`/`formula`-with-cause keys on the live s3://opal-data-harvest/derived/model_block/<key>/<newest stamp>/model_block.json object (stamps 20260919T15215xZ for the JP/AU pair, pre-dating the CRPS-g-1 guard's own commit 70eb0ac96c).",
+        "integrations/bloomberg/research/model_block_pull.py:1253-1266 (_compute_cases, current HEAD) always writes `ratio_to_px_last`/`band` on a SERVED base -- the three landed blocks above are stale writes from before this code ran, never regenerated since.",
+        "case_evidence.py's own first pass (pre-fix) put these 3 keys in the `not-computable` bin (30 vs. the expected 27 = 25 no-cause + 1 no_price + 1 null-cases); recomputing ratio from the served `value`/`px_last.value` when `ratio_to_px_last` is absent (this cell's own fix, same commit as this row) moves all 3 into their correct numeric bins."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-h-2's task order: cases.base is either SERVED (carrying `value`) or ABSENT (carrying `cause`/`inputs`/`px_last`) -- read as every SERVED case being on the CURRENT guard shape (CRPS-g-1, ratio_to_px_last/band included).",
+    "world_is": "97 landed model_block.json keys include at least 3 SERVED bases on a pre-CRPS-g-1 stamp, carrying `value`/`px_last` but not `ratio_to_px_last`/`band`; nothing has re-pulled them since the guard landed.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Disarmed IN THIS CELL by computing ratio from `value`/`px_last.value` rather than depending on `ratio_to_px_last`'s presence (case_evidence.py `_ratio_for`), so CASE_EVIDENCE_ROUND6.json's own bins are correct regardless. The standing hazard is that any OTHER reader of a served Model block that keys off `ratio_to_px_last` alone will misread these 3 (and any future stale stamp) the same way; a re-pull of the 3 named keys would also close it, but is out of this cell's bounds (no producer edit, no S3 write)."
   }
 ]
 ```
