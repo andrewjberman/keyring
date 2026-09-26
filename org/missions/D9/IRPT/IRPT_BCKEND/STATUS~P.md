@@ -2,9 +2,9 @@
 
 Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`.
 Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
-Drive: PAUSED 15:26Z on Andrew-direct "pause drive tick" (CTO 101277, all COOs); cron 7a9ea1ce DELETED. Only in-flight safety closure runs (window-2 ledger A1); resume on Andrew's word or the CTO's relay.
+Drive: /closer-drive loop RESUMED 16:0xZ on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c every 30m.
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-26T15:3xZ (PAUSED). The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
+As of 2026-09-26T17:4xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
 
 ## Pins
 
@@ -45,20 +45,21 @@ None building. Next surface: the adapter package + performance root (deploy B), 
 
 ## Next-list (in order)
 
-0. CLOSED BY ANDREW (CTO 101270, @07c4b8b84e): "Performance is always going to be account-level, not client level".
-   The one-account rule (performance/retained.py:77-80) STANDS; option B (R8) is SUPERSEDED and NOT built (the
-   uncommitted refactor is kept only as .scratch/option_b_retained_SUPERSEDED.patch). The fix is frontend routing --
-   CRO /closer traces -> PRD addendum -> round 6 (~D). Card RELATIONSHIP_PERFORMANCE_CARD_20260926.md stays as the record.
-0b. WINDOW 2 DONE: principal irpt-uiwalk-1790435397 [15:10:02Z, deleted 15:26:02Z; login refused 401]; ledger
-   irpt-ui-walk-principal-w2-20260926 C1+D1 closed, A1 (audit) finishing under the pause (users 50 -> 50 digest equal;
-   SELECTION# +4). K4 NORMALIZED (portfolio_f40b800e..). K5 UNEXPECTED: irpt-ycharts-generate-role denied
-   s3:GetObjectVersion on the NORMALIZED_PORTFOLIO (nothing written) -> ~Y's grant patch @e5daacce0b HELD (pause).
-   K6: ONE GET fired, browser cancelled it -> its answer must be read server-side (HELD).
-0c. DONE 14:52:47Z: irpt-ycharts-generate jsonschema fix LIVE (85TXFzzv + irpt-common:5; ledger
-   irpt-generate-jsonschema-fix-20260926 CLOSED): negative control FAILS on IJD6bd1I, both checkers pass, deployed
-   import census 59 / 0 failed (CTO 101229). Tool: IRPT_MVP_P/package_import_check.py.
-0d. DONE 14:4xZ: admin+Dev UI walk CLOSED (ledger irpt-ui-walk-principal-20260926): K4 NORMALIZED 12.03, K5 died on
-   jsonschema with nothing written, route-graded audit clean, users unchanged, +3 selections.
+0. EXPORT DEPLOY (B) LIVE 17:3xZ -- D1+D2+D3 (ledger irpt-export-deploy-b-20260926, R1 open):
+   - D1+D2: adapter Zs2OK7C5 (render ports + grant.py, S143 Orion household, S147 S3 pool), render-grant read policy,
+     IRPT_EVIDENCE_BUCKET; human-read arm IDENTICAL before/after (49F/COT/INF incl. INF unarmed).
+   - D3 export_render ON: first on, N1 FAILED (the render host read ANY SSM parameter via AmazonSSMManagedInstanceCore),
+     rolled back the same turn with 0 tokens minted; CTO ruled (1) 101347 -> fence LIVE (ledger
+     irpt-render-host-parameter-fence-20260926 CLOSED: Deny ssm:GetParameter* outside /irpt/render-token/*; host 7/7,
+     export role 4/4, resident 40/40) -> D3 back ON @f35dfe003c. Rows S148 (IRPT, owner CTO), S149 (estate-wide, cloud-ops).
+   - R1 OPEN: the AFTER read -- K6's account acc_bf96.. YTD must equal 0.06854 (else STOP + rollback reverse); >= 30 s is a
+     BLOCKING row (S147), not a rollback. Needs the next principal window (a page read).
+   - The first real export render: one of the retained 49F reports, by an Opal login in a principal window.
+1. HOP 3 (FWD-1 generate): window 3 K4 NORMALIZED again; K5 refused "maintained recipe title descriptor required" (no
+   producer; ~Y builds it, CTO 101353). The generate package + grants are proven: jsonschema LIVE (85TXFzzv +
+   irpt-common:5, census 59/0), submission grants LIVE (be7647e48f), full-path IAM 0 denied (Y @2789ac3bbd, P
+   @c2349731ac). Windows 1-3 CLOSED (ledgers irpt-ui-walk-principal[-w2,-w3]-20260926).
+2. S147: 49F served reads near/over the 30 s gateway cap; pool fix LIVE in D1 -- measure on R1.
 1. S143 FIX PROVEN LIVE 05:07Z (ledger irpt-orion-household-scope-proof-20260926 CLOSED; receipt
    IRPT_MVP_P/ORION_HOUSEHOLD_SCOPE_PROOF_20260926.json): the household-scoped Scope body (entity 5, one-account household)
    -> Orion 200 -> orion_selected.calculate returns a contract-validated Purfeerst report (YTD 0.0682, 01-01..09-25 exact,
