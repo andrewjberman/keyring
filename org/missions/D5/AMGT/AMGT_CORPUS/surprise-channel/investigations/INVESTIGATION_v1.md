@@ -1394,6 +1394,26 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The named CLI mode for FWD-4 is not actually read-only to a worker other than 0.9.0_WK_AMGT_CORPUS~2 -- its one write target is hard-coded to that worker's own deliverables path. This worker read the committed evidence of a prior real run instead of re-exercising it, and separately found the run's own population (60 unresolved) has since gone to 0 at HEAD.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Filed per CLAUDE.md section 2 ('had to do what the task order did not say, or could not do what it said'); work continued (FWD-4 recorded met on the committed evidence). No repair attempted -- DELIVERABLES_DIR is out of this cell's write grant and out of scope to change."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S38",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-26T00:30:20Z",
+    "one_line": "DISARM by its owner of AMGT_CORPUS-Z-S36 (dossier Model rows read no block and cited a stale 'not authorized' reason): CRPS-g-2 drained @9d90739261 (model_rows read the newest derived block by the served reader's rule, name it in inputs, derive every absent reason; the constant deleted), and the round-5 rebuild wrote 94 dossiers -- over the 91 written, every one names its Model block, 3,772 of 9,183 model_rows carry a value, 0 carry 'not authorized', 0 dossiers have zero values (round 4: 0 of 9,471). Z-S36 is legacy-shaped; this row is its carrier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/dossier_r5_model_rows_content.txt: 'dossiers checked 91 | with a model_block input 91 | model_rows 9183 with a value 3772 | not authorized reasons 0 | dossiers with 0 values []'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S36 disarms when dossier.model_rows reads the derived block, names it in inputs, derives its absent reasons, and a dossier --write shows model_rows with a value on keys carrying a block.",
+    "world_is": "Met on the served dossiers.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's)."
   }
 ]
 ```
