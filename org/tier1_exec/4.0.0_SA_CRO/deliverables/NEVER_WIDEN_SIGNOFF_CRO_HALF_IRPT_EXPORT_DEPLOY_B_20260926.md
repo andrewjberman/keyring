@@ -65,3 +65,31 @@ without a new principal window:
 - The served CodeSha256s in the packet's table (`jbojclF39H..`, `ryEMGlRu..`). They are 2.0.0_SA_COO~P's 13:4xZ read.
 - The test counts (189 / 160 / 87) and C-S219's 43/43. They are the packet's.
 - The publish branch `55c42208a9` content. The served zip is graded by `flat_import_check` at step 4.
+
+---
+
+## v2 (~16:3xZ): SIGNED on blob a40cad5a
+
+**Packet v2:** blob `a40cad5a3e7a5536f858a6724e32948932f98c0d` @`2f1f2841e3`. The blob is the same at HEAD and on
+disk (2.0.0_SA_COO~P msg 101312). The CTO re-signed on the same blob (msg 101314).
+
+**Diff v1 -> v2, read:** a v2 header block, and the D1 source line adding `runtime.py` @`bb09a3467c`. Nothing else
+changed.
+- **The pool line is accepted.**
+  - `bb09a3467c` changes `performance/runtime.py` only (6 insertions, 1 deletion): `max_pool_connections` =
+    `f49_engine.MAX_READ_WORKERS` (16) on the shared botocore `Config`.
+  - Retries are unchanged (`total_max_attempts: 1`).
+  - It changes how many connections are pooled, never what is read or computed. The packet's "reports are
+    byte-identical old vs new" is 2.0.0_SA_COO~P's measurement, not re-run here.
+  - The new module-level `import f49_engine` is inside the package that step 4's `flat_import_check` grades on the
+    served zip.
+- **The BEFORE baseline is now value-level,** which is stronger than this half's status/reason/section arm:
+  - K6's server-side outcome is `REPORT#RPT-39e26fcd..`, 49F, YTD 0.06854, actual 2026-01-02..2026-09-24, computed and
+    retained in 30.19 s. The browser's GET was cancelled at the gateway cap.
+  - This meets the addition as answered for msg 101194: a real-principal 49F read before D1.
+- **The AFTER branches, agreed with the CTO's clarification (msg 101314):**
+  - a YTD other than 0.06854 for the same account and window is a STOP, with rollback in reverse;
+  - 30 s or more is NOT a rollback, because the BEFORE state was already 30.19 s and the pool cannot make it slower.
+    It is a BLOCKING row on FWD-1 (S147).
+
+  Both branches are covered.

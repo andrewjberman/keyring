@@ -4,6 +4,15 @@
 `2.0.0_SA_COO~P`, 2026-09-26 ~13:4xZ. **Nothing is applied by this packet. STOP until the CTO half is at HEAD naming this
 file's blob.**
 
+**v2 (16:2xZ): the diff vs blob 3c916b9c is two lines of fact, nothing widened.**
+- D1 also carries backend `bb09a3467c`: `performance/runtime.py`'s S3 client pool = the engine's 16 read workers
+  (row S147: the served 49F read took 30.19 s with "Connection pool is full, discarding connection"). The reports are
+  byte-identical old vs new.
+- The export-B BEFORE baseline is K6's SERVER-SIDE outcome (window 2, ruling (c)); the browser's GET was cancelled:
+  adapter RequestId c5e23977.. computed and RETAINED `REPORT#RPT-39e26fcd..` (acc_bf96.., 49F, YTD 0.06854, actual
+  2026-01-02..2026-09-24) in 30.19 s. The AFTER read is the same account and window in the step-6 window; it must
+  answer the same YTD value, and under 30 s.
+
 **What is served today (read 13:4xZ):**
 
 | function | CodeSha256 | IRPT_EXPORT_RENDER | IRPT_EVIDENCE_BUCKET |
@@ -19,7 +28,7 @@ received a rendered PDF, and nothing that works today is at risk.
 ### D1 -- irpt-performance-adapter code
 
 - **Source:** the publish branch `55c42208a9` row: the whole row at backend `b905df2c60`, plus `grant.py`, plus the
-  three Orion modules at `a7e9f51c77`.
+  three Orion modules at `a7e9f51c77`, plus `runtime.py` at `bb09a3467c` (the S3 pool, row S147).
 - **What moves** vs the live `jbojcl..` build (row `4872b28043` census: 7 of 68 members; S143: 3 more):
   - `served` / `enforce` / `entry`: render ports, installed only when `IRPT_EVIDENCE_BUCKET` is set; the render
     principal answers only for the subject a grant names;

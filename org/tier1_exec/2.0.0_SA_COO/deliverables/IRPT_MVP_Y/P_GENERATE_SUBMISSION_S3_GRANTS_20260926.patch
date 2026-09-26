@@ -1,0 +1,35 @@
+diff --git a/infra/aws/terraform/investor-reporting/ycharts/generate.tf b/infra/aws/terraform/investor-reporting/ycharts/generate.tf
+index 92fcabf..9891bd3 100644
+--- a/infra/aws/terraform/investor-reporting/ycharts/generate.tf
++++ b/infra/aws/terraform/investor-reporting/ycharts/generate.tf
+@@ -155,6 +155,30 @@ resource "aws_iam_role_policy" "generate" {
+           "arn:aws:s3:::${local.resident_bucket}/${local.resident_reporting_policy.source}/${local.resident_scopes[key].long}/${local.resident_reporting_policy.families["ORIGINAL_HOLDINGS"].tier}/${local.resident_reporting_policy.families["ORIGINAL_HOLDINGS"].table}/*"
+         ]
+       },
++      {
++        # The /analysis submission (ycharts/generate/submission_service.py) READS the frozen input,
++        # NORMALIZED_PORTFOLIO (:62, artifacts.get -> get_object by VersionId), which the resident
++        # writes. The live K5 of window 2 (15:16:38Z, corr-fd24ee4063ad) was refused
++        # s3:GetObjectVersion here before any write (IRPT_BCKEND~Y 15:2xZ). Read only.
++        Sid    = "ReadNormalizedPortfolioInputsOnly"
++        Effect = "Allow"
++        Action = ["s3:GetObject", "s3:GetObjectVersion"]
++        Resource = [
++          for key in keys(local.resident_scopes) :
++          "arn:aws:s3:::${local.resident_bucket}/${local.resident_reporting_policy.source}/${local.resident_scopes[key].long}/${local.resident_reporting_policy.families["NORMALIZED_PORTFOLIO"].tier}/${local.resident_reporting_policy.families["NORMALIZED_PORTFOLIO"].table}/*"
++        ]
++      },
++      {
++        # The same submission RETAINS its REQUEST_COMPOSITION (:137 artifacts.put -> put_object, then
++        # the verify get_object by VersionId) and re-reads it on a replay (:89). The resident READS it.
++        Sid    = "RetainRequestCompositionsOnly"
++        Effect = "Allow"
++        Action = ["s3:PutObject", "s3:GetObject", "s3:GetObjectVersion"]
++        Resource = [
++          for key in keys(local.resident_scopes) :
++          "arn:aws:s3:::${local.resident_bucket}/${local.resident_reporting_policy.source}/${local.resident_scopes[key].long}/${local.resident_reporting_policy.families["REQUEST_COMPOSITION"].tier}/${local.resident_reporting_policy.families["REQUEST_COMPOSITION"].table}/*"
++        ]
++      },
+       {
+         Sid      = "UseSystemKeyForTheEvidenceBucketAndTables"
+         Effect   = "Allow"

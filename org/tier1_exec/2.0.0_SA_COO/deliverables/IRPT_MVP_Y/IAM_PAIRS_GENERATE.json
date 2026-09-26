@@ -1,0 +1,193 @@
+[
+ {
+  "action": "s3:PutObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/original_holdings/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "uploads.py:189 -> repository.py:458 put_object"
+ },
+ {
+  "action": "s3:GetObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/original_holdings/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "repository.py:464 head_object / :472 get_object"
+ },
+ {
+  "action": "s3:GetObjectVersion",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/original_holdings/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "repository.py:472 get_object(VersionId)"
+ },
+ {
+  "action": "s3:GetObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/normalized_portfolios/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "submission_service.py:62 artifacts.get"
+ },
+ {
+  "action": "s3:GetObjectVersion",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/normalized_portfolios/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "control-positive",
+  "source": "submission_service.py:62 -- the action K5 was DENIED at 15:16:38Z (corr-fd24ee4063ad)"
+ },
+ {
+  "action": "s3:PutObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/request_compositions/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "submission_service.py:137 artifacts.put"
+ },
+ {
+  "action": "s3:GetObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/request_compositions/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "submission_service.py:89/:137 verify get"
+ },
+ {
+  "action": "s3:GetObjectVersion",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/request_compositions/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "control-positive",
+  "source": "submission_service.py:137 -- the second denial the 15:2xZ patch named"
+ },
+ {
+  "action": "dynamodb:GetItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "acceptance.py:69; repository.py:416; selection_store.py:30"
+ },
+ {
+  "action": "dynamodb:PutItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "repository.py:421; retention.py:275; upload_resolution.py:86; acceptance.py:122 (transaction Put)"
+ },
+ {
+  "action": "dynamodb:PutItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "acceptance.py:122 (transaction Put)"
+ },
+ {
+  "action": "dynamodb:UpdateItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "acceptance.py:144, :158 (outbox claim/sent)"
+ },
+ {
+  "action": "dynamodb:Query",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/opal-users-v2/index/email-index",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "canonical_profile_reads.py:71"
+ },
+ {
+  "action": "dynamodb:GetItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/opal-users-v2",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "canonical_profile_reads.py:86, :134"
+ },
+ {
+  "action": "dynamodb:Query",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests",
+  "expect": "denied",
+  "path": "closure-unreachable",
+  "source": "repository.py:439 page(): its only callers are repository.py:231 list() and report_index.py:37 page(), and nothing in the served zip calls either (method-call scan over 60 .py files, 2026-09-26 16:2xZ); history is served by irpt-status. Not granted, and not needed."
+ },
+ {
+  "action": "sqs:SendMessage",
+  "resource": "arn:aws:sqs:us-east-1:313476888478:irpt-generation",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "generate_installed.py:216 send (upload resolve_upload; acceptance analysis_generate)"
+ },
+ {
+  "action": "kms:GenerateDataKey",
+  "resource": "arn:aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "SSE-KMS on opal-data-irpt, irpt-requests, irpt-jobs, irpt-generation (writes)"
+ },
+ {
+  "action": "kms:Decrypt",
+  "resource": "arn:aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "SSE-KMS reads on the same four"
+ },
+ {
+  "action": "kms:Decrypt",
+  "resource": "arn:aws:kms:us-east-1:313476888478:key/64f25291-4015-42c5-ad41-40e42325deb7",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "opal-users-v2 CMK through DynamoDB (conditioned grant)",
+  "context": [
+   {
+    "ContextKeyName": "kms:ViaService",
+    "ContextKeyValues": [
+     "dynamodb.us-east-1.amazonaws.com"
+    ],
+    "ContextKeyType": "string"
+   },
+   {
+    "ContextKeyName": "kms:EncryptionContext:aws:dynamodb:tableName",
+    "ContextKeyValues": [
+     "opal-users-v2"
+    ],
+    "ContextKeyType": "string"
+   }
+  ]
+ },
+ {
+  "action": "s3:GetObject",
+  "resource": "arn:aws:s3:::opal-data-cot/investor-reporting/directory/directory.json",
+  "expect": "allowed",
+  "path": "closure",
+  "source": "loaders.py:122/:158 (directory reads; directory/selection routes)"
+ },
+ {
+  "action": "s3:GetObject",
+  "resource": "arn:aws:s3:::opal-data-cot/platinum/cottonwood/ownership_map.json",
+  "expect": "allowed",
+  "path": "closure",
+  "source": "loaders.py:122"
+ },
+ {
+  "action": "secretsmanager:GetSecretValue",
+  "resource": "arn:aws:secretsmanager:us-east-1:313476888478:secret:ycharts/session/current-AbCdEf",
+  "expect": "allowed",
+  "path": "closure",
+  "source": "transport.py:405 (legacy Lambda consumer; the resident consumes)"
+ },
+ {
+  "action": "s3:DeleteObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/normalized_portfolios/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "denied",
+  "path": "control-negative",
+  "source": "no code deletes; must be denied"
+ },
+ {
+  "action": "dynamodb:DeleteItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests",
+  "expect": "denied",
+  "path": "control-negative",
+  "source": "no code deletes; must be denied"
+ },
+ {
+  "action": "s3:PutObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/platinum/analysis_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "denied",
+  "path": "control-negative",
+  "source": "the resident publishes ANALYSIS, never generate"
+ }
+]

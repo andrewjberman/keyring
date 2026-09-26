@@ -142,3 +142,99 @@ Nothing else changed.
 **Not measured by this seat:** whether `irpt-ycharts-generate` runs this live. Its `lambda_handler` refuses a live
 transport without `IRPT_LIVE_YCHARTS_CALL` (`ycharts/generate/job.py:602`), and the resident path is ~Y's to state. A
 refusal is K5's reported outcome, not a new act.
+
+---
+
+## v7 (~15:0xZ): SIGNED on blob 3edebd85 -- window 2 (new principal, K4 + K5 again, K6)
+
+**Packet v7:** blob `3edebd851f9c5c3a035d83f17293278796a5f1c3` @`683e73871e`. The blob is the same at HEAD and on
+disk (2.0.0_SA_COO~P msg 101253). Asked by the CTO in msg 101242; the CTO half is signed on v7 (msgs 101257, 101259).
+
+**v6 (blob `71146fdd` @`34f4619882`) was never signed by this half.** Its K5 bound window 1's input
+`portfolio_99e76df8..`, owned by the deleted principal, while its K5 order line said "K4's new input"
+(2.0.0_SA_COO~Y msg 101249). v7 changes only that line and one header line (diff v6->v7 read), so K5 has one
+reading: exactly one POST on the input THIS window's K4 normalizes.
+
+**Window 1's principal is gone, read by this seat at 14:56Z:**
+- `opal-users-v2` holds 0 `usr_irptuiwalk` / `irpt-uiwalk` rows of 79 scanned, with a positive control of 1 of 79;
+- `/irpt/ui-walk-principal` holds 0 parameters.
+
+**Diff v5 -> v6 (carried into v7), all accepted:**
+- a NEW principal of the same K1 shape, and its times;
+- K4 and K5 run again as signed in v5, in order, one POST each. The 14:35Z cutoff is replaced by the principal's own
+  60-min life;
+- **K6:** ONE 49F account-level Performance read by the page (one `/selections` POST under K3, one Performance GET). It
+  is deploy (B)'s real BEFORE baseline per ruling (c). The report it retains (`REPORT#` / `RETENTION#` rows and object)
+  is kept, and no vendor call is made;
+- deploy (B) stays OUT of the window, and no FWD-1 re-trace rides it.
+
+**One item named, not a condition on K1-K4 or K6:**
+- K5's vendor authority is Andrew-direct "egress is permitted for API calls", which CTO msg 101098 records as "Egress
+  for this session", in the same message that re-armed the FAST leases to 15:01Z.
+- Window 2 opens after 15:01Z.
+- This half reads "this session" as Andrew's working session, not the lease. That reading is 1.0.0_SA_CTO's to
+  confirm, because the CTO recorded the word.
+- If the CTO says it lapsed with the lease, K5 is struck by this half and hop 3 goes to Andrew's own upload and
+  Generate.
+
+---
+
+## v8 (~16:4xZ): SIGNED on blob acca1b3e -- window 3 (new principal, K4 + K5 again; K6 not re-run)
+
+**Packet v8:** blob `acca1b3e275ae7f724127869f39bb17409f1560f` @`b17feaa434`. The blob is the same at HEAD and on
+disk (2.0.0_SA_COO~P msg 101321). The CTO signed on the same blob (msg 101324).
+
+**Diff v7 -> v8, read:** one header block only (11 lines), accepted:
+- a new principal and its times;
+- K4 and K5 re-run;
+- K6 done and not re-run;
+- the IAM simulation pinned: ~Y @`2789ac3bbd`, and P's corroboration @`c2349731ac`.
+
+**The header governs the unchanged K6 section.** The K6 section's text still reads as an act, while the header says K6
+is not run. Any Performance GET in window 3 is an ordinary page read under the GET class, and it retains a report as
+every human read does. No second K6 baseline is taken.
+
+**The egress item named at v7 is closed.** The CTO half grounds K5's vendor GET in "this session's egress arm"
+(@`ce6aa15a17`, Andrew-direct ~03:0xZ, "egress is permitted for API calls"), the self-drive arming record, not the
+15:01Z lease. Andrew's resume "recs approved for all" (@`a6700b211e`) lifted the pause. K5 runs.
+
+**Window 2 is closed:** ledger `irpt-ui-walk-principal-w2-20260926` CLOSED 15:40Z (packet header). This seat did not
+re-read that principal's deletion.
+
+---
+
+## v9 (~17:4xZ): SIGNED on blob c8da5676 -- window 4 (R1 AFTER read, the first real export), with one condition on K7
+
+**Packet v9:** blob `c8da567612cac3d21df2e296ef4c2f0d6b920b0a` @`825b320ab0`. The blob is the same at HEAD and on
+disk (2.0.0_SA_COO~P msg 101371).
+
+**Diff v8 -> v9, read:**
+- a header block;
+- the K7 and K8 sections;
+- one route-table row ("POST, exactly 1, by ~D, `/export`").
+
+Nothing else changed. K4 and K5 are not run.
+
+**Window 3 is gone, read by this seat at 17:38Z:** `opal-users-v2` holds 0 `usr_irpt*` / `irpt-uiwalk` /
+`irpt-walk` rows of 79 scanned, with a positive control of 1 of 79, and `/irpt` holds 0 SSM parameters.
+
+**K8 (E1) accepted as written:**
+- exactly one `POST .../export`, then the receipt and one download read;
+- the writes are named and kept (bundle, grant, `pending.json`, PDF, receipt, one `SendCommand`);
+- the one render token lives under the S148 fence and is deleted on every terminal path, with P reading
+  `ParameterNotFound` after;
+- no vendor call.
+
+This is the first time a PDF is served. It is a PDF of a report its requester already reads (export deploy (B)
+radius, branch R).
+
+**CONDITION on K7 (R1): a REOPEN is not the AFTER measurement.**
+- The packet itself says the page may reopen K6's retained report `RPT-39e26fcd..` (the accepted pointer). If it does,
+  the YTD shown is the same stored value K6 computed on the pre-D1 build. It matches 0.06854 whether or not D1 changed
+  the computation, so the check cannot fail and proves nothing about D1.
+- So R1 satisfies export deploy (B)'s AFTER arm (ruling (c), msg 101313) ONLY if the answer is a RECOMPUTE on the D1
+  build: a new `REPORT#` id, or the adapter log for that request showing the compute path on the D1 code.
+- **If it is a reopen, this is NOT a STOP and NOT a rollback.** The AFTER arm stays OWED. Ledger
+  `irpt-export-deploy-b-20260926` keeps R1 open, and the result names it "reopen, not the AFTER read". A recompute is
+  obtained in a later window, by whatever the adapter's own reuse rule requires. That rule was not read here.
+- Latency: only a recompute's time is an S147 measurement, as the packet already says.

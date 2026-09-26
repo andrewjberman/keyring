@@ -1,0 +1,88 @@
+{
+ "firm": "cottonwood",
+ "method": "account_mask_publication_diff.py dry --pin-served (served source partitions pinned) + holdings_publication_diff_classes.py",
+ "served_revision": "fc199c8ed6fb50751f187e85a876e9144f465a6bfbb3ffe7b68cbfc36a08d62e",
+ "served_business_date": "2026-09-22",
+ "cutoff": "2026-09-23",
+ "candidate_revision": "90c80c371f9854f9b44c3cbfa86e90a5bd6c813fd5d53002bcee64d37dc9d5b3",
+ "schema_valid": true,
+ "reconcile_ok": true,
+ "counts": {
+  "label_account": 595,
+  "classification": 1693
+ },
+ "dollars": {},
+ "examples": {
+  "label_account": [
+   {
+    "node_id": "acc_00085efd234a85e6122d0952",
+    "served": "****8960 / JOINT",
+    "candidate": "****8962 / IRA"
+   },
+   {
+    "node_id": "acc_000c147a49a4d234b37dab66",
+    "served": "****9030 / IRA",
+    "candidate": "****9029 / IRA"
+   },
+   {
+    "node_id": "acc_0027c0b03b6b77a89334e942",
+    "served": "****8663 / IRA",
+    "candidate": "****7347 / CREDITCARD"
+   },
+   {
+    "node_id": "acc_0045df3f6a4b4ea8f34639e8",
+    "served": "****8857 / ROTHIRA",
+    "candidate": "****5907 / NO ACCOUNT TYPE ASSIGNED"
+   },
+   {
+    "node_id": "acc_015421367eb5030894578cf4",
+    "served": "****2239 / JOINT",
+    "candidate": "****8909 / BROKERAGE"
+   }
+  ],
+  "classification": [
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:position:8310d03e2ff35d8e6a7c7ab31575c114bfce1c485b2ca9657f2b66a71823ca50",
+    "node_kind": "SECURITY",
+    "fields": [
+     "asset_class_basis",
+     "sub_asset_class"
+    ]
+   },
+   {
+    "node_id": "acc_0045df3f6a4b4ea8f34639e8:position:d28137129d47821d18e025863690738e0d9fb87942f2a59b090439b29ee09db7",
+    "node_kind": "SECURITY",
+    "fields": [
+     "asset_class_basis",
+     "sub_asset_class"
+    ]
+   },
+   {
+    "node_id": "acc_015421367eb5030894578cf4:position:1b20cf548f4a1267a7006c59861256fff39330c2bfd8430a9405ec7a8e5385d8",
+    "node_kind": "SECURITY",
+    "fields": [
+     "asset_class_basis",
+     "sub_asset_class"
+    ]
+   },
+   {
+    "node_id": "acc_015421367eb5030894578cf4:position:1dff33d5b6af24541f0b07516c9a28407b26c4868be2cef336b4c6057501e7f5",
+    "node_kind": "SECURITY",
+    "fields": [
+     "asset_class",
+     "asset_class_basis",
+     "sub_asset_class"
+    ]
+   },
+   {
+    "node_id": "acc_015421367eb5030894578cf4:position:27d7f02d859b80e70db12067eade1c55fc6a19b310ee4a1b16fa73bacdbf732c",
+    "node_kind": "SECURITY",
+    "fields": [
+     "asset_class",
+     "asset_class_basis",
+     "sub_asset_class"
+    ]
+   }
+  ]
+ }
+}

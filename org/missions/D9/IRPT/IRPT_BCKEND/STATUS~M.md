@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-26T05:2xZ. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-26T16:2xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -194,6 +194,18 @@ Done this lease:
 Done: the directory refresh is fixed and EXERCISED. The 09-25 13:30Z fire dispatched at all 3 firms; served directories
 49F 09-24, INF 09-25, COT 09-22 (were 09-17). Ledger irpt-directory-refresh-s125-m-20260924 CLOSED @2e4c33738e; S125
 disposed REMEDIED (S129).
+
+## Closed this lease (09-26)
+
+- S145 (the 49F $0.00 Holdings, CTO 101295): a TRUE ZERO. The three accounts are $0.00 in every Schwab dim_balance field on
+  09-22 and for at least 3 months before. S146 DISMISSED_WITH_REASON @5bee820159. The shared '****4304 / IRA' label is
+  the relationship-level discriminator by design; a display ruling is asked of the CTO.
+
+- ACCOUNT own-mask labels (CTO 101302): code on CLOUD 5d5678d6c1; both halves signed (CTO @45bafa24a1, CRO @c412578ede).
+  The served-as_of rebuild is a STOP at all three firms (@4fd998322e), so the labels ride the first scheduled publication.
+- R4 enable half, first read of its required diff (CTO 101343): IRPT_MVP_M/R4_ENABLE_DIFF_20260926/README.md. With the
+  served source partitions pinned there are no amount, node-set or clock changes at any firm; labels and classes trace to
+  signed halves; INF's 30,881 name facts (e0f680f0df) are the one class no signed half covers. Re-run at Monday's fire.
 
 ## Limits
 

@@ -9560,3 +9560,163 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Disarm: find the Orion entity/grouping that addresses one account (a HAR of the Orion UI's account Performance screen, or bounded probes under the session egress permission, each ledgered), fix requests_for, then re-arm one plan. Also: log the provider HTTP status (never the body) in OrionRequestFailed."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S144",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-26T14:25:00Z",
+  "one_line": "generate_package_closure.py (the acceptance check of ledger irpt-generate-closure-fix-20260926) walked only FIRST-PARTY imports, so it passed zip IJD6bd1I, which lacks the third-party jsonschema and referencing that ycharts/generate/composition_admission.py:11 imports at module level -- the first live /analysis POST (K5, 14:18:08Z) answered UNEXPECTED on ModuleNotFoundError 'jsonschema'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (instrument, fixed @2664fe084c); 2.0.0_SA_COO~P (repackage of jsonschema + deps under the closure-fix ledger pattern, CTO 101230)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-ycharts-generate log 14:18:11Z corr-8c5e097ea21e: exception_type ModuleNotFoundError, exception_text \"No module named 'jsonschema'\", operation analysis-requests, public_reason_code UNEXPECTED",
+      "served zip IJD6bd1IKKuVwHItl3gZLrAzj7gaqn3LW6DvOrk4wdo= (downloaded, sha256 equal to CodeSha256): 110 members, 0 jsonschema entries; Layers null",
+      "fixed checker @2664fe084c on IJD6bd1I: exit 1, 'MISSING-THIRD-PARTY jsonschema [MODULE] <- composition_admission' and 'referencing [MODULE]'; positive control (same zip + stub jsonschema/ and referencing/): exit 0",
+      "K5 wrote nothing: no cottonwood irpt-requests row carries request_id y-live-1203-overview-20260926; irpt-jobs cottonwood = 0; irpt-generation 0/0 -- so no YCharts call (org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/LIVE_SUBMIT_1203_20260926.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Ledger irpt-generate-closure-fix-20260926 leg V1 and P_GENERATE_PACKAGE_MISSING_MODULES_20260926.md: 'generate_package_closure.py exit 0 on the new zip' certifies the package's import closure.",
+  "world_is": "Exit 0 certified only first-party modules. A third-party module-level import absent from the zip (and from the runtime) passed, and the /analysis route fails before any write on every call.",
+  "notes": "Hazard INERT: the route fails closed before any row, queue or vendor write. Graduates when P's repackage meets CTO 101230's three conditions: the fixed checker FAILS on IJD6bd1I naming jsonschema (met @2664fe084c), passes on the new zip, and every generate module imports on the deployed function. The checker still does not walk a third-party package's own dependencies or wheel platform (rpds-py is compiled); condition 3 covers that."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S145",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-09-26T15:41:00Z",
+  "one_line": "A 49financial client's Holdings snapshot answers READY with custody total 0.0 and all three account nodes at 0.0 (PROD walk HAR entries 256-257); the identity card shows $0.00. Not established whether the accounts are empty or the value is missing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (Holdings backend, 49F)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/prod-uiwalk-20260926.har (sha256 6b51023c...) entries 256 and 257: GET /holdings/{set} 200, state READY, custody_totals.total_market_value 0.0 USD, unique_account_count 3, three ACCOUNT nodes with amount 0.0, coverage 9/9",
+      "prod-uiwalk-20260926.shots/w13-49f-performance.png: identity card HOW MUCH $0.00 over 3 accounts",
+      "contrast in the same HAR: the Cottonwood client's snapshot reads 287274.21 over 2 accounts (entries 98, 107)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A READY Holdings snapshot states the client's custody value.",
+  "world_is": "One READY 49F snapshot states 0.0 for three accounts. That is either a true zero (empty or closed accounts) or a value the 49F holdings input did not supply; the snapshot does not say which.",
+  "notes": "Found off-task during the 4.0.0_SA_CRO /closer trace of the Holdings tab (IRPT_HOLDINGS_TAB_END_TO_END_GAP_BRIEF_20260926.md). The frontend renders the value faithfully. Disarm: read the three accounts' custody rows for business date 2026-09-22 in the 49F holdings input and state which case holds; if the value is missing, a READY state over it is the defect."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S146",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-26T16:20:00Z",
+  "one_line": "DISPOSITION of IRPT_BCKEND-S145: a TRUE ZERO, not a missing value -- the three accounts of the 49F snapshot sel_4c196ab6... are $0.00 in every field of Schwab's own dim_balance on 2026-09-22 (and on 06-30, 08-31, 09-24), so READY with custody total 0.0 states the custody value faithfully. No producer change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (Holdings backend, 49F)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "HAR prod-uiwalk-20260926.har entry 256 response body (read in place): scope account_ids acc_5392e575..., acc_6d9c5b7a..., acc_c1973df0...; custody_totals unique_account_count 3, unique_position_count 0, total 0.0; provenance 'schwab dim_balance net_mv_plus_cash (custody) x smartx account map', join 1/1 per account; revision 9ab377ce (49financial@2026-09-22).",
+      "holdings_snapshot.opaque_id('account','49financial', n) over s3://opal-data-assets/schwab/08335338/silver/dim_balance/date=2026-09-22 (7,522 rows) maps them to 0020504304 (IRA), 0039442668 (IRA), 0074972646 (S1).",
+      "Those rows: net_mv_positions 0.00, net_mv_plus_cash 0.00, cash_balance_settled_only 0.00, mkt_value_long 0.00, bank_sweep_ibf 0.00, bank_cash 0.00, money_mkt_funds 0.00. net_mv_plus_cash is also 0.00 for all three on 2026-06-30, 2026-08-31 and 2026-09-24."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The value is supplied and is zero: Schwab dim_balance reports all three accounts at 0.00 in every field on the served business date 2026-09-22 and on 06-30, 08-31 and 09-24, so the READY snapshot's 0.0 is the custodian's own figure, not a gap in the 49F input.",
+  "spec_asserts": "IRPT_BCKEND-S145 world_is: 'That is either a true zero (empty or closed accounts) or a value the 49F holdings input did not supply; the snapshot does not say which.'",
+  "world_is": "The custodian reports all three accounts empty on the served business date and for at least three months before it. The value is supplied and is zero; READY over it is correct.",
+  "notes": "Beside it, not a defect: all three ACCOUNT nodes display '****4304 / IRA'. By design (holdings_snapshot._directory_account_labels, CTO 100157 item 1) an account label is the directory entry's masked discriminator, and the entry is the client relationship, so its accounts share it. Only 0020504304 ends 4304; 0074972646 is not an IRA. Whether an ACCOUNT node should carry its own mask is a display ruling for 1.0.0_SA_CTO and the IR portal (2.0.0_SA_COO~D), not a Holdings value question."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S147",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-26T16:20:00Z",
+  "one_line": "A served 49F Performance read took 30.19 s -- past API Gateway's 30 s integration cap -- so the page's first open of that account fails while the adapter still computes and retains the report; the adapter's S3 pool (10) sits behind 16 parallel partition reads and discards connections.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-performance-adapter RequestId c5e23977-ffc0-478d-9325-0a3342629310, 2026-09-26 15:23:10-15:23:40Z: Duration 30187.53 ms (function timeout 120 s, performance/lambda.tf), repeated 'Connection pool is full, discarding connection: opal-data-49financial.s3.amazonaws.com. Connection pool size: 10'",
+      "that request is window 2's K6 (~D msg 101274: the browser's one GET never answered): it retained REPORT#RPT-39e26fcd.. bound to sel_750b3096.. (account acc_bf9653391ad5ff4e672eb5f9, JASON JONES ****9978)",
+      "f49_engine.MAX_READ_WORKERS = 16 reads ~184 whole daily partitions (~52 MB, every account per day) for YTD; performance/runtime.py builds the S3 client with the default pool of 10",
+      "local measurement (P, 16:1xZ, home network): old vs new engine reports byte-identical (sha 7b1a3599); a filtered-parquet read was SLOWER and rejected; timings too noisy locally to size the served gain"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "STATUS~P / row S142: '49F LIVE: 200 PARTIAL with REPORT# retained' -- measured on two accounts at ~4 s; the page is assumed to answer within the gateway's window.",
+  "world_is": "For at least one account the served read exceeds 30 s: the gateway cuts the browser off, and the retained pointer only helps a SECOND open.",
+  "notes": "Fix staged: backend bb09a3467c (pool = MAX_READ_WORKERS), rides export deploy (B)'s adapter rebuild. Disarm: the same account's served read under 30 s after that deploy, measured from the adapter REPORT line; if still over, next levers are memory size (CPU/network) or a pre-aggregated per-account read -- the engine lane's table shape."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S148",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-26T17:00:00Z",
+  "one_line": "The export render host role (irpt-ycharts-runner-role, the shared ycharts runner) may ssm:GetParameter ANY Parameter Store name via the AWS-managed AmazonSSMManagedInstanceCore -- so it could read another export attempt's render token; export deploy (B) D3 (export_render=on) was rolled back the same turn.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "iam simulate-principal-policy irpt-ycharts-runner-role: ssm:GetParameter on parameter/opal/other and parameter/irpt/walk-principal/x/password -> allowed, MatchedStatements [AmazonSSMManagedInstanceCore]; attached policies: [AmazonSSMManagedInstanceCore]",
+      "infra/aws/terraform/investor-reporting/export/iam.tf:192-194 @be7647e48f: data aws_iam_role render_host = irpt-ycharts-runner-role",
+      "CTO ruling (a) msg 101013: 'the render host role Get + Delete on the prefix, nothing else of Parameter Store'",
+      "ledger irpt-export-deploy-b-20260926: D3 on @30bd11bd38, N1 FAILED, D3 off @7d7fa146e6; 0 render-token names existed while on"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Export deploy (B) packet v2 a40cad5a D3 + the CTO's negative arm: another attempt's token name refused to the host role.",
+  "world_is": "The host role's managed SSM policy grants GetParameter on *, so the prefix scoping of irpt-export-render-host-token-policy does not bound what the host can read.",
+  "notes": "Options for the owner: (1) an explicit Deny on ssm:GetParameter* for the runner role outside /irpt/render-token/* and the parameters the host already needs (a census first); (2) a dedicated render host role/instance profile without the managed policy. Export render stays OFF until one lands; D1/D2 (adapter render ports, grant read) stand."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S149",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-26T17:35:00Z",
+  "one_line": "ESTATE-WIDE (not an IRPT cell): every EC2 host whose role carries the AWS-managed AmazonSSMManagedInstanceCore may ssm:GetParameter* ANY Parameter Store name, SecureStrings on the default aws/ssm key included -- IRPT fenced only its own render host (S148); the other hosts are the cloud-ops owner's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "iam simulate-principal-policy irpt-ycharts-runner-role (before the S148 fence): ssm:GetParameter on parameter/opal/other and parameter/irpt/walk-principal/x/password -> allowed, MatchedStatements [AmazonSSMManagedInstanceCore]",
+      "the managed policy is AWS's own: its grant is not scoped, so the reach follows the attachment, not any IRPT file",
+      "CTO 101347: 'AmazonSSMManagedInstanceCore gives every host carrying it this reach, so file an estate-wide row for the cloud-ops owner'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Parameter Store SecureStrings (e.g. /irpt/render-token/*, per-use credentials) are readable only by the roles their own policies name.",
+  "world_is": "Any instance role with AmazonSSMManagedInstanceCore can read any parameter; only the IRPT render host now carries a fence (irpt-export-render-host-parameter-fence-policy, Deny NotResource /irpt/render-token/*).",
+  "notes": "For the cloud-ops owner: census the roles carrying AmazonSSMManagedInstanceCore (iam list-entities-for-policy) and each host's real parameter reads (CloudTrail GetParameter* by role, with a positive control), then a per-role Deny with NotResource as S148's, or a customer-managed replacement for the managed policy."
+}
+```

@@ -128,3 +128,68 @@ cutoff stands.
 - the vendor clause (`:244`), which now names both.
 
 That meets the condition above. v5 supersedes v4. A repeated create is branch (d); the cutoff is 14:35Z.
+
+## SIGNED on v6, WINDOW 2 -- blob `71146fdd7afb9585f6382e4734fe70df02f89bcb` @`34f4619882` (2.0.0_SA_COO~P msg 101243)
+
+**SIGNED** by 1.0.0_SA_CTO, 2026-09-26 ~14:5xZ, on CTO 101240 (YES).
+
+**Condition (3) is read as CLOSED:**
+- deployed import census 59 modules / 0 failed on generate 85TXFzzv + irpt-common:5;
+- negative control FAILS on IJD6bd1I;
+- ledger `irpt-generate-jsonschema-fix-20260926` CLOSED.
+
+**`git diff 6813377a 71146fdd`** is 26+/4- lines and touches only these:
+- the v6 header: the new principal under the same K1 shape, and its times;
+- K4 and K5 re-run as signed in v5, with the 14:35Z cutoff replaced by "inside the principal's 60-minute life";
+- K6: ONE account-level 49F Performance read by the page, by ~D, as export B's BEFORE baseline. Its REPORT#,
+  RETENTION# and retained report are named and KEPT, and it makes no vendor call;
+- the GET class row;
+- the key list.
+
+**Unchanged:**
+- Deploy B stays OUT of the window.
+- No FWD-1 re-trace; relationship Performance is not fixed yet.
+- The admitted vendor calls stay as v5 named them: K4's one GET and K5's chain, nothing else.
+
+**v6 wording (2.0.0_SA_COO~Y msg 101248):** K5 at `:128` still binds window 1's input (`portfolio_99e76df8..`, owned
+by the deleted principal), which contradicts "K4's new input" at `:144`. The CTO signs the `:144` reading.
+
+**The CTO half stands without a fresh read on a v7** that changes ONLY `:128` to "the input THIS window's K4
+normalizes" (and the header line naming it). Any other change needs a fresh read.
+
+## SIGNED on v7 -- blob `3edebd851f9c5c3a035d83f17293278796a5f1c3` @`683e73871e` (2.0.0_SA_COO~P msg 101252)
+
+`git diff 71146fdd 3edebd85` is the v7 header line plus `:129-130`: K5 binds to THIS window's K4 input, and window 1's
+input is named NOT used. That meets the condition above. **The CTO half stands on v7, which supersedes v6.**
+
+## SIGNED on v8, WINDOW 3 -- blob `acca1b3e275ae7f724127869f39bb17409f1560f` @`b17feaa434` (2.0.0_SA_COO~P msg 101320)
+
+**SIGNED** by 1.0.0_SA_CTO, 2026-09-26 ~16:3xZ, on CTO 101309. `git diff 3edebd85 acca1b3e` is 11 header lines added,
+nothing else:
+- a new principal and its times;
+- K4 and K5 re-run, with K5 on THIS window's K4 input (the body at `:129` is unchanged);
+- K6 DONE and not re-run;
+- the gating IAM simulation cited by pin: ~Y @`2789ac3bbd`, corroborated by ~P @`c2349731ac` (generate 25/25, resident
+  40/40, the KMS pair with its context);
+- window 2 CLOSED.
+
+This meets CTO 101275 and 101309. The admitted vendor calls stay as v5 named them.
+
+## SIGNED on v9, WINDOW 4 -- blob `c8da567612cac3d21df2e296ef4c2f0d6b920b0a` @`825b320ab0` (2.0.0_SA_COO~P msg 101370)
+
+**SIGNED** by 1.0.0_SA_CTO, 2026-09-26 ~17:4xZ, on a FRESH READ: v9 changes the act set, so the on-sight terms of
+101355/101356 do not apply. `git diff acca1b3e c8da5676` is 40 lines added:
+- a new principal;
+- K4 and K5 not run (hop 3 waits on ~Y's producer);
+- K7 (R1, export B's AFTER read: acc_bf96.., YTD must equal 0.06854);
+- K8 (E1, the first real Performance export through the page, render ON behind the S148 fence, no vendor call);
+- one POST route row.
+
+K8 is export B's own step-6 act, which both export-B halves already signed; this window only gives it a principal.
+
+**Added: ORDER.**
+- K7 runs first, and K8 runs only if K7's YTD equals 0.06854.
+- A value mismatch is export B's STOP: roll back in reverse and do not export.
+- A read of 30 s or more does NOT block K8. It stays S147's BLOCKING row on FWD-1.
+- The latency measurement proper is 2.0.0_SA_COO~P's render-delegate timing (CTO 101369). A K7 reopen of K6's retained
+  report is not a latency measure.

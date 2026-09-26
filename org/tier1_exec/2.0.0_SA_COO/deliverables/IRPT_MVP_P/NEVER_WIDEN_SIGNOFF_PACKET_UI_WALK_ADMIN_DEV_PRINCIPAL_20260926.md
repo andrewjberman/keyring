@@ -5,6 +5,66 @@
 **Walkers:** `2.0.0_SA_COO~D`: one signed-in PROD walk of `/investor-reporting` with a HAR scrubbed in-stream. In the
 same window, `2.0.0_SA_COO~Y`: ONE Analysis upload of its v2 input, logged and scrubbed (Y msg 101161). This saves a
 second create under a second packet.
+**v9 (17:4xZ) -- WINDOW 4: export deploy (B)'s AFTER read and the FIRST real export, by ~D in the page.** The diff
+against v8 acca1b3e is exactly:
+- a NEW principal (the same K1 shape, new `<epoch>`) and its times;
+- K4 and K5 are NOT run in this window. Hop 3 waits on ~Y's title-descriptor producer (CTO 101353) and rides a later
+  window;
+- K7, R1 (below);
+- K8, E1 (below);
+- the route classes and the vendor line that name them.
+Window 3 is CLOSED (ledger `irpt-ui-walk-principal-w3-20260926`). Export deploy (B) is LIVE with render ON behind the S148
+host fence (ledgers `irpt-export-deploy-b-20260926`, R1 open; `irpt-render-host-parameter-fence-20260926` CLOSED).
+
+## K7 -- R1, export-B's AFTER read (CTO rulings (c) + 101313)
+
+- **The act:** ONE 49F account-level Performance page read by `2.0.0_SA_COO~D`, of K6's account: JASON JONES ****9978,
+  `acc_bf9653391ad5ff4e672eb5f9`, YTD. It is the page's own `POST /selections` (K3) and one
+  `GET .../performance/{accountSetId}`.
+- **The expectation:**
+  - YTD equals 0.06854. A different value is a STOP, and deploy (B) rolls back in reverse (D3, D2, D1).
+  - An answer at or over 30 s is a BLOCKING row on FWD-1 (S147), not a rollback.
+  - If the page reopens K6's retained report (the accepted pointer), the read proves the new served path's reopen, not a
+    recompute, and the latency is not an S147 measurement. Both are named in the result.
+- **What it writes:** only a reopen or, if recomputed, a retained report (REPORT#/RETENTION#), KEPT. No vendor call.
+
+## K8 -- E1, the FIRST real export (FWD-1's export hop, render ON)
+
+- **The act:** from that report, ONE Performance export through the page by ~D: exactly one `POST .../export`, then the
+  page's receipt reads `GET .../export/{exportId}` (finalize-on-read) and one `GET .../export/{exportId}/download` if
+  READY.
+- **What it writes** (export B1-B3, all KEPT as the product's record):
+  - the frozen bundle, render grant and `pending.json` in the evidence bucket;
+  - ONE SecureString `/irpt/render-token/<ATT-id>`, deleted on every terminal path plus the 15-min sweep. The host reads
+    it by name; the S148 fence allows the host that prefix only;
+  - ONE SSM `SendCommand` of `irpt-export-render-run` to the render host;
+  - the rendered PDF;
+  - the finalized receipt.
+- **No vendor call:** the render prints Opal's own route.
+- **Expectation:** READY with a PDF (`%PDF`, page_count >= 1), or a named NOT_READY, then DEPENDENCY_UNAVAILABLE after
+  15 min, with the token name deleted either way (`ParameterNotFound`, read by P after).
+
+**v8 (16:3xZ) -- WINDOW 3 (Andrew-direct resume "recs approved for all", CTO 101296 @a6700b211e; CTO 101309).** The
+diff against v7 3edebd85 is exactly:
+- a NEW principal (the same K1 shape under a new `<epoch>`) and its times;
+- K4 and K5 re-run: ~Y's ONE upload, then ONE `/analysis` on THIS window's new K4 input;
+- K6 is DONE and is NOT run again. Window 2's K6 was computed and retained server-side (`REPORT#RPT-39e26fcd..`, row
+  S147), so no Performance read is admitted in this window beyond ordinary page GETs;
+- the full-path IAM simulation that gates this window, cited by pin: ~Y's pairs and run @2789ac3bbd (generate 16/16
+  hop-3 + controls, resident 37/37) and P's corroboration @c2349731ac
+  (`IRPT_MVP_P/IAM_HOP3_SIMULATION_P_CORROBORATION_20260926.md`: generate 25/25 met, resident 40/40 met), after the
+  generate grants applied @be7647e48f (ledger `irpt-generate-submission-grants-20260926` CLOSED).
+Window 2 (principal `irpt-uiwalk-1790435397`) is closed: ledger `irpt-ui-walk-principal-w2-20260926` CLOSED 15:40Z.
+**v7 (15:0xZ): K5 is bound to THIS window's K4 input, not window 1's (~Y 101247); the only change vs v6.**
+**v6 (14:5xZ) -- WINDOW 2 (CTO 101240 YES).** The first principal (`irpt-uiwalk-1790430787`) was created 13:53:14Z,
+deleted 14:22:22Z and audited; ledger `irpt-ui-walk-principal-20260926` is CLOSED. The diff against v5 is:
+- a NEW principal: the same K1 shape under a new `<epoch>`, created only after both halves name this blob;
+- its times;
+- K6, the export-B BEFORE read, below.
+K4 and K5 run again as signed in v5: the first K4 input is owned by the deleted principal, and the generate function
+now carries `jsonschema` (85TXFzzv + irpt-common:5, LIVE 14:52:47Z, ledger `irpt-generate-jsonschema-fix-20260926`
+CLOSED, deployed import census 59 modules / 0 failed). Export deploy (B) stays OUT of this window, so the superadmin
+session never spans a deploy. Relationship-level Performance is NOT fixed yet, so no FWD-1 re-trace rides this window.
 **AMENDED (v5, 14:1xZ): K5 also names the hop-6/7 recipe's YCharts reads and queue redelivery of at most 5 receives
 (~Y 101209).**
 **AMENDED (v4, 14:1xZ): K5 added -- runbook hop 3, ONE `POST /analysis` (Overview) by ~Y on K4's input (CTO 101204 YES,
@@ -116,8 +176,8 @@ producer's own code.
 ## K5 -- ~Y's ONE Analysis submission (hop 3) on K4's live input
 
 - **The act:** exactly ONE `POST /api/scoped/investor-reporting/analysis` (Overview), by `2.0.0_SA_COO~Y` as this
-  principal, on the input K4 normalized (`portfolio_99e76df8..`; full id and keys in
-  `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/LIVE_UPLOAD_1203_EVIDENCE_20260926.md` @3cc73f2b79).
+  principal, on the input THIS window's K4 normalizes. A fresh upload mints a new input id, because the owner is part
+  of the frozen content. Window 1's input (`portfolio_99e76df8..`, owned by the deleted principal) is NOT used.
   - It is observed only by read-only DynamoDB and S3 reads: no re-POST and no retry.
   - A provider error is reported as the outcome, not repaired.
 - **Why in this window:** the input's owner row binds `principal_id` to THIS principal, and the binding dies with it.
@@ -132,8 +192,20 @@ producer's own code.
 - **What it writes (Opal side):** the submission's own request, job and report rows and objects, which are the
   product's record. ~Y names every row and object key.
 - **The YCharts objects it creates** (the holdings upload, portfolio, report and PDF) are named in the ledger and KEPT.
-- **Cutoff:** it runs only if both halves name this blob at HEAD by 14:35Z. Otherwise K5 is skipped, and hop 3 goes to
-  Andrew's own upload and Generate.
+- **Order (window 2):** K4 first, then K5 on K4's new input, one POST each. No cutoff: both run inside the principal's
+  60-min life, or not at all.
+
+## K6 -- the export-B BEFORE read (CTO rulings (c) and 101240)
+
+- **The act:** ONE account-level 49F Performance read by the PAGE, by `2.0.0_SA_COO~D`: a single-account 49F client
+  selected, Performance opened (YTD).
+  - Two requests: the page's own `POST /selections` (K3) and one `GET .../performance/{accountSetId}`.
+  - The answer is recorded (HTTP status, `ok`, state, reason, and for a 200 the section count and completeness) as
+    deploy (B)'s real BEFORE baseline.
+- **What it writes:** a successful Performance read RETAINS its report, as every human read does: `REPORT#` and
+  `RETENTION#` rows in `irpt-requests` plus the retained report object. These are named in the ledger and KEPT, since
+  they are the product's record. A refusal writes nothing.
+- **No vendor call:** 49F computes on Opal's own engine.
 
 ## K2 -- the session, never recorded
 
@@ -180,7 +252,8 @@ its denominator printed. Every request must fall in exactly one admitted class:
 | POST | `/api/scoped/investor-reporting/directory/resolve` (page load); `/api/scoped/investor-reporting/selections` (each selection -> K3) |
 | POST, exactly 1, by ~Y | `/api/scoped/investor-reporting/analysis/inputs` (K4) |
 | POST, exactly 1, by ~Y | `/api/scoped/investor-reporting/analysis` (K5) |
-| GET / HEAD | any page read |
+| POST, exactly 1, by ~D | `/api/scoped/investor-reporting/export` (K8, window 4) |
+| GET / HEAD | any page read, including K6's ONE 49F account-level Performance GET |
 
 Any request outside these classes is branch (d). This includes, explicitly:
 - any request of any method to `/auth/admin/`;
@@ -247,5 +320,6 @@ The census prints the count per class, the count outside the classes (must be 0)
 
 ## WHAT THE HALVES SIGN AGAINST
 
-This file's committed blob, the key list K1 + K1-CRED + K2 + K3 (retained) + K4 (retained, strike-able) + K5 (retained, cutoff 14:35Z) above, the stated superadmin radius, and the sequence's
+This file's committed blob, the key list K1 + K1-CRED + K2 + K3 (retained) + K4 (retained, strike-able) + K5 (retained) + K6 (the BEFORE read; its retained report kept) above, for window 2's NEW
+principal, the stated superadmin radius, and the sequence's
 rollback and audit.
