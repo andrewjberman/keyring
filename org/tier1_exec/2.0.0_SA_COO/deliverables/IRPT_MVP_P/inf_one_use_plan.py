@@ -27,6 +27,10 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[5]
+# --tree <worktree>: build the plan with THAT tree's modules. The plan's requests_sha256 must equal what the DEPLOYED
+# adapter computes, so a plan for a not-yet-merged adapter change is cut from the tree the package is built from.
+if "--tree" in sys.argv:
+    ROOT = Path(sys.argv[sys.argv.index("--tree") + 1]).resolve()
 IR = ROOT / "infra/aws/lambda/investor-reporting"
 for p in (ROOT / "lib", IR / "_ids", IR / "reports", IR / "performance",
           ROOT / "infra/aws/lambda/inf-pipeline/inf-accounts-v2-daily"):
@@ -65,6 +69,7 @@ def main(argv=None):
     # picked only among entries holding exactly ONE account (the default), and cites the approval it runs under.
     ap.add_argument("--any-entry", action="store_true", help="drop the single-account-entry constraint")
     ap.add_argument("--approval-ref", default=APPROVAL_REF)
+    ap.add_argument("--tree", help="worktree whose adapter modules build the plan (default: this workspace)")
     args = ap.parse_args(argv)
     firm = tenants._CANONICAL_INF
     start = "%s-01-01" % args.end[:4]
@@ -89,6 +94,10 @@ def main(argv=None):
     cut = max(d for d in days if d <= args.mapping_as_of)
     frame = pd.read_parquet(io.BytesIO(s3.get_object(
         Bucket=bucket, Key="%ssnapshot_date=%s/data.parquet" % (prefix, cut))["Body"].read()))
+    # Row IRPT_BCKEND-S143 (backend a7e9f51c77): Orion is addressed through the account's HOUSEHOLD, so only an account
+    # whose household holds no other account in this snapshot (any status) is reachable; the mapping refuses the rest.
+    per_household = frame.groupby("household_id")["account_id"].transform("count")
+    frame = frame[per_household == 1]
     frame = frame[frame["is_active"].astype(bool) & ~frame["is_sweep_account"].fillna(False).astype(bool)
                   & ~frame["is_sleeve_account"].fillna(False).astype(bool)]
     frame = frame[pd.to_datetime(frame["account_start_date"], errors="coerce", utc=True)
@@ -109,7 +118,7 @@ def main(argv=None):
             "start": start, "end": args.end, "expires_at": expires, "requests_sha256": digest(requests)}
     plan_json = json.dumps(plan, sort_keys=True, separators=(",", ":"))
     receipt = {"schema_version": "irpt-inf-one-use-plan-v1", "by": "2.0.0_SA_COO~P", "approval_ref": args.approval_ref,
-               "rule": ("INF directory not-terminated%s, accounts_v2 at cutoff, is_active, not sweep/sleeve, opened "
+               "rule": ("INF directory not-terminated%s, the Orion household holds only that account (S143), accounts_v2 at cutoff, is_active, not sweep/sleeve, opened "
                         "before the window start, 75th percentile of current_value"
                         % ("" if args.any_entry else ", the entry holds exactly ONE account")),
                "eligible": int(len(frame)), "picked_rank": int(0.75 * (len(frame) - 1)),

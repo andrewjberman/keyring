@@ -33,3 +33,38 @@ personally, have an agent do those walks and record HAR."
 
    The agent signs in as IRPT_BCKEND's approved bounded test principal (IB-rtf-3: create, exercise, delete; never a
    standing login). No sign-in as Andrew. The HAR and the screenshots are committed as the drain artifacts.
+
+## Addendum ~02:5xZ -- the walk principal is Opal-class (Andrew confirms)
+
+The IB-rtf-3 principal named above is a 49financial FIRM_ADVISOR, and it reaches only one of the five acts
+(2.0.0_SA_COO~P 101078). 4.0.0_SA_CRO's half (@909dd40acc) named the gap between that wording and the principal
+actually signed. Put to Andrew at the 1.0.0_SA_CTO terminal, verbatim:
+
+> "For the agent walk you delegated, the existing 49F test account can only reach one of the five acts. So the plan
+> uses a temporary Opal staff login instead: it can read every firm's Investor Reporting data for up to an hour, is
+> limited by script to the walk, is recorded in full, and is deleted and verified afterward. OK to proceed?"
+
+**Answer, verbatim:** "Yes, use the Opal login (Recommended)"
+
+This binds: the walk principal is ONE bounded Opal-class login, per packet blob `fe8e8d89` and both halves
+(CTO @`ba29004a1b`, CRO @`909dd40acc`).
+
+## Addendum ~03:1xZ -- the UI walk runs on an admin + Dev walk login (Andrew chooses)
+
+The Opal-class principal could not open `/investor-reporting`: ProtectedRoute requires admin + internal + Dev
+(App.tsx:105,436; Andrew-direct 2026-09-22), per 2.0.0_SA_COO~D msg 101105. The backend acts ran by API instead
+(2.0.0_SA_COO~P 101129). Put to Andrew at the 1.0.0_SA_CTO terminal, verbatim:
+
+> "UI walk-through: the Investor Reporting page only admits admin + developer accounts (your 09-22 rule), so the
+> temporary staff login couldn't open it. ... How should the page walk-through happen?"
+
+The options offered:
+- "I'll walk it myself (Recommended)";
+- "Agent on an admin+dev login";
+- "Open the page to staff".
+
+**Answer, verbatim:** "Agent on an admin+dev login"
+
+This binds: ONE temporary admin + Dev login, created, walked by an agent, then deleted and verified, under a NEW
+two-half packet. It is much wider than the Opal-class login, since admin bypasses apply everywhere for its life.
+Nothing else about the page's gate changes.

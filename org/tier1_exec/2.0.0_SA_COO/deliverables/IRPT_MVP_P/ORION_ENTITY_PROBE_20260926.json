@@ -1,0 +1,102 @@
+{
+ "url": "https://api.cloud.orionadvisor.com/api/v1/Reporting/Scope",
+ "egress_ref": "CTO 101098, ledgered",
+ "results": [
+  {
+   "at": "2026-09-26T04:56:13.352050+00:00",
+   "entity": 5,
+   "entityIds": [
+    381
+   ],
+   "status": 200,
+   "body_sha256": "5e714bb30d65747250eeb6b19c8803a3d18533802d299b4697dc3141a6ac0c13",
+   "summary": {
+    "top_keys": [
+     "asOfDate",
+     "calculations",
+     "dataLastUpdated",
+     "sessionId"
+    ],
+    "calculations": [
+     {
+      "$type": "calculated-list",
+      "calculations": "list[1]"
+     }
+    ]
+   }
+  },
+  {
+   "at": "2026-09-26T04:56:17.051772+00:00",
+   "entity": 3,
+   "entityIds": [
+    1098
+   ],
+   "status": 501,
+   "body_sha256": "0ef796fc5faa27ede9fa159a2472d4338184bf87f0b3ad22ba7273723f9c5056",
+   "summary": {
+    "error": "An error has occurred."
+   }
+  },
+  {
+   "at": "2026-09-26T04:56:17.245616+00:00",
+   "entity": 1,
+   "entityIds": [
+    1098
+   ],
+   "status": 501,
+   "body_sha256": "c3817a1a1a1566354b5210bb752b34d872796f05084fcb196cbce404cc73a0c3",
+   "summary": {
+    "error": "An error has occurred."
+   }
+  },
+  {
+   "at": "2026-09-26T04:56:17.463849+00:00",
+   "entity": 2,
+   "entityIds": [
+    1098
+   ],
+   "status": 404,
+   "body_sha256": "59d546fa7189fd8d2a0cc0c76cc2695a96337b45daebefa4eb3e7820f9fc8deb",
+   "summary": {
+    "error": "Object does not exist"
+   }
+  },
+  {
+   "at": "2026-09-26T04:56:17.711836+00:00",
+   "entity": 6,
+   "entityIds": [
+    1098
+   ],
+   "status": 200,
+   "body_sha256": "f9020ef48d44c0e9d3df352248968215f0c8b93ac75bc97a424119a74373d9cc",
+   "summary": {
+    "top_keys": [
+     "asOfDate",
+     "calculations",
+     "dataLastUpdated",
+     "sessionId"
+    ],
+    "calculations": [
+     {
+      "$type": "calculated-list",
+      "calculations": "list[1]"
+     }
+    ]
+   }
+  }
+ ],
+ "follow_up": {
+  "at": "2026-09-26T05:0xZ",
+  "case": "6:1098 re-sent once to read its grouping",
+  "finding": "the single Account-grouping row's name matches neither account 1098's accounts_v2 account_name nor account 630's (registration_id 1098): entity 6 addresses some other object type, NOT the account",
+  "accounts_v2_2026-09-23": {
+   "household_381_accounts": [
+    1098
+   ],
+   "registration_1032_accounts": [
+    1098
+   ]
+  },
+  "conclusion": "entity 5 (Household) with the adapter's own body answers 200; entity 4 (the adapter's ACCOUNT_ENTITY) 404; 2 404; 1 and 3 501; 6 = not the account. The Account entity value is still unknown. A one-account household (381 = only 1098) scoped as entity 5 returns exactly that account through the Account grouping."
+ }
+}

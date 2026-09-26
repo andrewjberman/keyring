@@ -124,15 +124,15 @@ Seven rows: 2 REMEDIATED and closed inside the round (the channel-tree race, the
     "owner": "2.0.0_SA_COO~D",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~D",
       "round": "v1"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~D",
-      "at": null
+      "at": "2026-09-24T11:12:46Z"
     }
   },
   {

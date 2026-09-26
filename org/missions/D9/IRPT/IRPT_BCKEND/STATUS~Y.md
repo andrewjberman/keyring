@@ -2,9 +2,10 @@
 
 Seat `2.0.0_SA_COO~Y` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
-Drive: the 20m goal loop (cron 87624362) reading `python .tools/drive-mode.py read IRPT_BCKEND~Y` each tick (C11, CTO
-100819). Lease FAST until 2026-09-24T21:13:40Z at 18:18Z. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-25T22:15Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
+Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 2f72865f), per CTO 101100 (Andrew-direct ~03:0xZ, 09-26; record
+`ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Lease FAST until 2026-09-26T15:01:17Z. Vendor API egress
+is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
+As of 2026-09-26T13:33Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Pins
 
@@ -19,12 +20,25 @@ As of 2026-09-25T22:15Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverabl
 
 ## Live thread
 
-State: NOT LIVE end to end. Hops 2+3 SERVED (P 100866). Y verified: generate `LdjdnnLh...` 19:49:52Z Active, and its
-`upload_resolution.py` / `uploads.py` / `maintained_sources.py` are byte-identical to Y d16b7c8743 / P 19b38e2f22.
-The live route `POST .../analysis/inputs` goes to the generate integration. Queue and DLQ are 0. The resident is
-`f624e8a72f` per P. First failing hop was 1 in the PORTAL, fixed by ~D at `088386fe` (20:1xZ). It sends the legacy `csv_base64` body (refused
-`CSV_LANE_NOT_COMPOSED`), and its adapter throws on RESOLVING. The published contract admits neither the template lane
-nor RESOLVING. Fixes are handed over: contract patch to P, portal spec to ~D.
+State: NOT LIVE. The FIRST LIVE UPLOAD was attempted at 03:17Z by API as the walk principal (CTO 101110, P 101113):
+- login through CloudFront answered 200;
+- the upload POST (`selected_tenant=cottonwood`) answered UNEXPECTED, correlation `corr-32b49d41af2a`: ModuleNotFoundError
+  `interactive_access`.
+
+The deployed generate zip (LdjdnnLh, 107 members) lacks `_scope/interactive_access.py`, which served.py:883 and
+compose_upload import for an Opal subject. That was Y's patch miss. The import-closure walk finds THREE missing modules (interactive_access, template_reader,
+security_resolution). The exact staged_from rows are in `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/P_GENERATE_PACKAGE_MISSING_MODULES_20260926.md`.
+P committed the three rows at `45d905110c` (05:16Z). Y confirmed they are byte-identical to Y's rows (the pins and
+sha256 match). 0.0.0_AB_MSTR met the 5 GB disk floor at 13:16Z (101157). P opened ledger
+`irpt-generate-closure-fix-20260926` at 13:18Z. `irpt-ycharts-generate` moved to `IJD6bd1I` at 13:30:11Z. Y downloaded the
+served zip, and its sha256 equals the CodeSha256. `generate_package_closure.py` on that zip against P's tree prints OK and
+exits 0: the closure is 39 modules, and the zip carries 59 `.py` files, 56 plus the 3 added. The upload rerun is now
+waiting only on the principal window.
+
+The walk principal was deleted at 03:30Z (P 101124). The rerun needs a new principal window under its own sign-off. Y
+asked P at 13:20Z to start that re-sign in parallel and to create the principal after the deploy. Nothing was written
+(0 rows). Log:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/LIVE_UPLOAD_1203_20260926.json` (scrubbed).
 
 ## Acceptance IDs
 
@@ -65,7 +79,7 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 | Restore M's viewer seam `485b69c061` onto `_scope/maintained_sources.py` (8 conflict hunks vs `bc3727b3a3`) | 2.0.0_SA_COO~P (M reads semantics) | Y 100842; M 100846: `test_maintained_viewer_sources.py` 27/27 | DONE at P `19b38e2f22` (LOCAL); rides the hop-2 deploy |
 | Grants for hop 2 (both roles) | 2.0.0_SA_COO~P | P `54bc1359f4` APPLIED 19:22Z | DONE: Y reach-check 19:3xZ, DDB PutItem + SQS SendMessage allowed, with a negative control |
 | Portal: template body, RESOLVING adapter + poll, `.xlsx` (spec `D_UPLOAD_TEMPLATE_LANE_SPEC_20260924.md`) | 2.0.0_SA_COO~D | ~D 100877: edits 1-3 LANDED on portal DEV `088386fe` (the 5174 server's HEAD, Y read 20:2xZ); edit 4 (wire regen) waits on the contract patch | DONE for the live run |
-| First live 12.03 upload (file `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/aapl-vnq-12.03.csv`) | Andrew (browser, Opal login, localhost:5174) | runbook hops 1a-1d | AWAITED -- notified 20:2xZ. Baseline 20:2xZ: irpt-requests UPLOAD#/NORMALIZATION#/INPUT# = 0 in cottonwood, 49financial and inflection (consistent query; control SELECTION# cottonwood = 14). Contract landed at P `a47102cc8f` (100878). |
+| First live 12.03 upload (file `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/aapl-vnq-12.03.csv`) | 2.0.0_SA_COO~D's signed-in PROD walk with a HAR (Andrew via CTO 101075, record @37025a10e9); P mints the test principal (Opal-class, confirmed by Andrew in f7284ddeed); the walk must select a concrete firm, since Global refuses FIRM_BINDING (Y addendum 03:0xZ) | runbook hops 1a-1d; Y reads its part from the committed HAR plus the rows | AWAITED -- notified 20:2xZ. Baseline 20:2xZ: irpt-requests UPLOAD#/NORMALIZATION#/INPUT# = 0 in cottonwood, 49financial and inflection (consistent query; control SELECTION# cottonwood = 14). Contract landed at P `a47102cc8f` (100878). |
 | Contract: request template lane + result RESOLVING/findings (`P_UPLOAD_CONTRACT_20260924.patch`, `--check` clean at P `7f6b5589f6`) | 2.0.0_SA_COO~P | Y 20:1xZ | AWAITED |
 | Custody composition (hop 4) | 2.0.0_SA_COO~P | Y 47b2adf6df; decoder read `CUSTODY_DECODER_RUNG2_READ_20260924.md` (rung 2 empty for py3.12: 18 layers, 2 pyarrow, both py3.11) | AWAITED |
 | First live Analysis submission | Andrew (browser) | after a composition serves | AWAITED |
@@ -81,6 +95,7 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 
 ## Limits
 
-Nothing on hop 2 is deployed or exercised live. The resident resolution uses no price source: SHARES templates answer
+Hops 2+3 are deployed (generate `LdjdnnLh`, 09-24 19:49Z), but no live upload has succeeded: the one attempt failed on the
+missing module before any write. The resident resolution uses no price source: SHARES templates answer
 NEEDS_CORRECTION by name until one is composed. No vendor call is made by this seat; the resident's one batched
 `securities_info` GET is the standing host-workflow authorization (CTO 100667 (1)).

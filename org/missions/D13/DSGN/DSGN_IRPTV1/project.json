@@ -29,7 +29,8 @@
     "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md@v0.5"
   ],
   "decompositions": [
-    "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md"
+    "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md",
+    "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md@v5"
   ],
   "decomposition_lineage": [
     "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md@v1",
@@ -50,7 +51,7 @@
     "authority": "CLAUDE.md Rule 27 L4-R: the CRO signs the BRIEF half (4.0.0_SA_CRO~F stated it will sign when routed, msg 100235); 3.0.0_SA_CVO signs the RATIFIED-TEXT half"
   },
   "fabric_ruling": "laptop -- D13 Design placed LAPTOP by Andrew-direct 2026-09-11 ('it will be laptop fabric'); placement attaches to the directive (LD-0498, LD-0502).",
-  "blocking": "Round 4 L6 issuance cut 2026-09-25 by 2.0.0_SA_COO~D under /canonical-drive (Andrew-direct ~17:2xZ) on 1.0.0_SA_CTO 100991 (ADJUDICATION_v2 @7bf1522657: re-cut the FAILs): 5 orders IV-e-21, 22, 23, 25, 26 over decomp v4 @d4add46f46 on PRD v0.8 @31a61d0466 (ADMITTED); 5 one-cell chains on slots ~12..~16, portal_ref 8242412d (= origin DEV). IVE16 (Holdings export) parked on the export producer. Every cell LOCAL; the drain runs the signed-in FWD-1 trace (CTO 100986) and grades the round's JUDGMENT criteria on it.",
+  "blocking": "Round 5 L6 issuance cut 2026-09-26 by 2.0.0_SA_COO~D under /canonical-drive (CTO 101101) on 1.0.0_SA_CTO's ROUND_ANALYSIS.round4.md @61cd39d895 (rounds 2-4 closed): 2 orders IV-e-31 (FWD-12 remainder) and IV-e-32 (S7 by class) over decomp v5, one chain on slot ~21, portal_ref 1e02be40 (= origin DEV). The drain act is the admin + Dev signed-in walk (CTO 101152) under its two-half packet, grading every EXERCISED outcome. IVE16 waits on P's holdings kind.",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md",

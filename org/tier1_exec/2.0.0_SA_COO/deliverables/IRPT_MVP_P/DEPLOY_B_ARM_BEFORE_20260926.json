@@ -1,0 +1,36 @@
+{
+ "at": "2026-09-26T14:01:52.173064+00:00",
+ "phase": "before",
+ "results": [
+  {
+   "firm": "49financial",
+   "account_set_id": "sel_97df18a732d3d88c9ab9c09f1e042dec5a36a4d102f59ee8e2f8e0dab0120b47",
+   "function_error": null,
+   "ok": false,
+   "state": "UNAVAILABLE",
+   "reason": "OBJECT_NOT_COVERED",
+   "sections": null,
+   "section_count": 0
+  },
+  {
+   "firm": "cottonwood",
+   "account_set_id": "sel_f97c759a128548bd2986aa99195ad3112934ace407fa7c6ca95dc2fb49ba626a",
+   "function_error": null,
+   "ok": false,
+   "state": "UNAVAILABLE",
+   "reason": "DEPENDENCY_UNAVAILABLE",
+   "sections": null,
+   "section_count": 0
+  },
+  {
+   "firm": "inflection",
+   "account_set_id": "sel_366d48915cb564219ef3623da3827b40edb0c8c8728e82f2d89e65486be734b2",
+   "function_error": null,
+   "ok": false,
+   "state": "UNAVAILABLE",
+   "reason": "DEPENDENCY_UNAVAILABLE",
+   "sections": null,
+   "section_count": 0
+  }
+ ]
+}

@@ -129,3 +129,19 @@ fallback. Same PROD release as IV-e-28 and IV-e-29.
 | cell | what it builds | serves | writes | reads (never writes) | risk |
 |---|---|---|---|---|---|
 | `IV-e-30` | DIRECT-ACT: CanonicalBookView and AdvisorBookClientDetail take an optional `tenantLayout` and forward it; every caller passes the viewed firm's layout, so the client drill colours cash and other by the tenant palette | FWD-13 (reader: Advisor Intelligence) | `_shared/panels/CanonicalBookView.tsx`, `_shared/AdvisorBookClientDetail.tsx`, `_shared/AdvisorBookView.tsx`, `_shared/tabs/ClientsTab.tsx`, `__tests__/cot-other/` | `_shared/panels/ConsolidatedOverviewPanel.tsx` | LOCAL |
+
+## v5 -- round 5 (issuer, 2026-09-26 ~13:4xZ)
+
+From 1.0.0_SA_CTO's ROUND_ANALYSIS.round4.md @61cd39d895 section 3 (the enrichment list); rounds 2-4 closed there. Of its six
+items: (1) S7 and (2) the FWD-12 remainder are cut below; (3) SearchSelect accessibility is MET AT THE BASE and not cut --
+`src/components/ui/SearchSelect.tsx` at 1e02be40 carries combobox/listbox/option roles and ArrowUp/ArrowDown handling (IV-e-25,
+2cac0a83); its keyboard grade is the walk's (IVE25-AC4); (4) IVE16 waits on 2.0.0_SA_COO~P's `holdings` report kind (unmet
+dependency, not cut); (5) the admin + Dev walk is the round's DRAIN ACT, not a cell; (6) the Monday PROD reads are parked
+(STATUS.md). The AI drill 403 is surprise row S16 (filed by the issuer), not an IRPT cell.
+
+| cell | what it builds | serves | writes | reads (never writes) | risk |
+|---|---|---|---|---|---|
+| `IV-e-31` | a model slice coloured by its served model_code only; `ASSET_CLASS.other` when no code resolves; the label fallback retires for models | FWD-12 | `tabs/holdings/DrillTree.tsx`, `AllocationBars.tsx`, `SecurityList.tsx`, `__tests__/dsgn-irptv1/` | `src/lib/**` | LOCAL |
+| `IV-e-32` | S7 by class (R/G/H/Q) over every failing IR test, the class table at `ledger/S7_CLASS_TABLE.json` | FWD-11, S7 | `src/pages/InvestorReporting/**`, the class table | the ENDPOINT, the PRD | LOCAL |
+
+**Chains:** ONE -- IV-e-31 then IV-e-32 on slot ~21; the batch cell's grant covers the narrow cell's files, so it runs last.
