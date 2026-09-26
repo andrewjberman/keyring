@@ -1110,6 +1110,34 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The contract carries an ~O-authored v1.2 amendment. It is additive and optional (absent_means v1.1), so no existing grant reads differently and nothing served moved on it. The contract text has not been ratified by OPLGTW's CTO leg.",
     "disarm_owner": "1.0.0_SA_CTO~O",
     "notes": "Inert because the amendment is optional and backward-compatible; the OA-g-2 release moves no current answer (sign-off @321a726fc6). Governance fork pitched to 3.0.0_SA_CVO~O: keep and ratify at the OPLGTW re-seat, or revert. Cause: the verdict narrowed an authorization this seat had issued 28 minutes earlier, and this seat did not withdraw it."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S31",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T18:45Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each target was already disarmed by the issuer's own adjudicating row with its reason stated there; this row only makes the disposition terminal.",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-W8-S2",
+      "NFRA_OPALAI-Z-W8-S3",
+      "NFRA_OPALAI-Z-W9-S1",
+      "NFRA_OPALAI-Z-W9-S3",
+      "NFRA_OPALAI-Z-W9-S4"
+    ],
+    "one_line": "DISPOSITION CORRECTION by the issuer. My earlier disarm rows adjudicated these items but carried disposition UNDER_INVESTIGATION, which _latest_dispositions (surprise-row-gate.py:426) passes to the target, so the items kept reading OPEN and gating. This row carries the terminal disposition: W8-S2 by Z-S24 (the 24-min halt gate is accepted, off-hours only); W8-S3 by Z-S28 (guard (ii) reads on-box /health); W9-S1 by Z-S27 (the read-back carries portal_channels, @9a28cfbbe6); W9-S3 and W9-S4 by Z-S29 (OA-g-2's census amended to 5 files @2ae3e0a96d; the contract-dependent test does not ship).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Fold measured at ~18:40Z with the gate's own _latest_dispositions/_gating_item_ids: each target listed read UNDER_INVESTIGATION and gating, while an issuer disarm row already adjudicated it.",
+        "3.0.0_SA_CVO~Z's finding (relayed by 1.0.0_SA_CTO~O, file 20260926T182052Z) that Z-W9-S3 read UNDER_INVESTIGATION at 18:3xZ."
+      ]
+    },
+    "spec_asserts": "Each target was disarmed by the issuer's adjudicating row.",
+    "world_is": "The disarms carried a non-terminal disposition; this row makes them terminal. The reasons are the earlier rows' own."
   }
 ]
 ```
