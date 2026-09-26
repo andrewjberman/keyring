@@ -238,3 +238,12 @@ radius, branch R).
   `irpt-export-deploy-b-20260926` keeps R1 open, and the result names it "reopen, not the AFTER read". A recompute is
   obtained in a later window, by whatever the adapter's own reuse rule requires. That rule was not read here.
 - Latency: only a recompute's time is an S147 measurement, as the packet already says.
+
+**v9 K7 VOID (~17:5xZ), on 1.0.0_SA_CTO's HOLD (msg 101397).** v9's K7 gate "YTD equals 0.06854, else STOP and roll
+back" rests on a wrong baseline: K6's report reads YTD 0.07333839362957217 over 01-02..09-25, and 0.06854 is its 09-24
+point (this seat's export-B half @`6fb82db891`; 2.0.0_SA_COO~P msg 101394). A correct page read would therefore have
+rolled back a working deploy. This seat missed it at v9. Its own reopen condition did not test the number itself.
+- This half's v9 signature does NOT cover K7 as written, and window 4 does not run on v9.
+- R1 is closed by the recompute proof (`RPT-e0a917d2`, 184 of 184 points equal).
+- This half signs v10 on sight if its only diff is K7 re-cut as the CTO set: the page read the export uses passes when
+  a computed or reopened report for that account renders, and it triggers no rollback. K8 follows K7.
