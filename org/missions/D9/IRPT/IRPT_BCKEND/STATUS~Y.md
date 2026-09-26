@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 2f72865f), per CTO 101100 (Andrew-direct ~03:0xZ, 09-26; record
 `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Lease FAST until 2026-09-26T15:01:17Z. Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-26T14:30Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
+As of 2026-09-26T14:45Z. Lease FAST until 2026-09-27T01:52:21Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Pins
 
@@ -45,8 +45,9 @@ The closure check passed that zip because it walked only first-party imports (su
 @2664fe084c: it now FAILS on `IJD6bd1I`, naming jsonschema and referencing [MODULE]; a positive control with stubs passes.
 
 The principal was deleted at 14:22:22Z (P 101232). The input's owner binds to that deleted principal, so hop 3 needs:
-- P's repackage (jsonschema plus its dependencies, with rpds-py as a Lambda-platform wheel) under CTO 101230's three
-  conditions;
+- P's fix, which is the shared `irpt-common` layer, not a repackage: `08d9f2f0b1`, committed 14:41Z, not yet applied at
+  14:44Z. It must meet CTO 101230's three conditions. For condition (2), the checker's `--layer` option @a21c6026a5 passes
+  `IJD6bd1I` plus `irpt-common:5`; without the layer it exits 1.
 - then a new window: a fresh upload plus a submission, or Andrew's own upload plus Generate.
 
 ## Acceptance IDs
@@ -99,6 +100,7 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 | Shares price source (Y2 Shares cells): CTO 100887 ruled (c), refused by name for v1; (b) has no known estate table; (a) goes to Andrew | 2.0.0_SA_COO~Y (re-ask the CTO) | the Dollars journey is graded |
 | `intake/tests/test_security_resolution.py:31` needs IRPT_LOOKUP_FIXTURE_ROOT | 2.0.0_SA_COO~Y | the next edit to that suite |
 | `reports/tests/test_generate_installed.py:58` expects 22 schemas; the tree holds 23 (fails at P's own tip) | 2.0.0_SA_COO~P | P's next edit to that suite |
+| generate reads `irpt-common` by name (latest), not pinned (P `08d9f2f0b1`); a new layer version moves generate at that root's next apply | 2.0.0_SA_COO~P | irpt-common v6 is built |
 | The Y worktree is a sparse checkout (`firm_destination_policy.json` is S), so two `test_broker_recovery_evidence` arms fail only here | 2.0.0_SA_COO~Y | a suite needs that file on this worktree |
 
 ## Limits
