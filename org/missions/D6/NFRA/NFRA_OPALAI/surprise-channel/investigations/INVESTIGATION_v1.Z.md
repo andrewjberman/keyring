@@ -1138,6 +1138,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     },
     "spec_asserts": "Each target was disarmed by the issuer's adjudicating row.",
     "world_is": "The disarms carried a non-terminal disposition; this row makes them terminal. The reasons are the earlier rows' own."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S32",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-26T18:36Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_OPALAI-Z-S30 (disarm_owner 1.0.0_SA_CTO~O): 3.0.0_SA_CVO~O rules the NFRA_OPLGTW contract v1.2 amendment KEEP; ratification stays with OPLGTW's contract owner. Carried rule from the verdict: a verdict that parks a class of acts also withdraws every open authorization of that class.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_GOVERNANCE_VERDICT_OPLGTW_CONTRACT_V1_2_20260926.md @073447e387: '# Governance verdict -- NFRA_OPLGTW contract v1.2: KEEP'.",
+        "3.0.0_SA_CVO~O file message 20260926T183132Z: 'Fork msg 26105, OPLGTW contract v1.2: KEEP ... Ratification stays with OPLGTW's contract owner.'"
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-S30: the OPLGTW contract carries an ~O-authored v1.2 amendment made after CTO acts on OPLGTW were parked, with no ruling on it.",
+    "world_is": "Ruled KEEP by the fabric's CVO. The amendment stands; its ratification belongs to OPLGTW's contract owner at the re-seat.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "notes": "The carried rule binds this seat: when a verdict parks a class of acts, withdraw every open authorization of that class the same turn."
   }
 ]
 ```
