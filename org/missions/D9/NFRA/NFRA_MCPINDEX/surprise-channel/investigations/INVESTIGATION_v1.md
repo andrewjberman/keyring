@@ -1179,6 +1179,34 @@ carries none.
     "spec_asserts": "TO face s.1 item 1: 'at least 20 questions staff actually asked ... Draw them from the Analyst's thread memory ... and from any other real-ask record you find.'",
     "world_is": "The recorded real-ask population is mostly engineering and status asks by one person. Only 3 of the 27 target a catalogued dataset (Q05, Q07, Q22), so the harness measures uncatalogued-ask rejection far more than dataset selection.",
     "notes": "The form is recorded for the issuer, and G-B's cold run with a non-author asker is where data-shaped asks would come from."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-26T08:37Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S6"
+    ],
+    "one_line": "ANSWERS the open question in Z-S6 as a NEW row, not an edit: the pathfinder gap is 4 partitions of the fact_dailynav feed for 2026-08-29 and 2026-08-30, and it is a CONVERSION failure, not a vendor non-delivery -- both bronze units are present, on time and well-formed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the missing keys, named: pathfinder/{PFDE,PFOE}/silver/fact_dailynav/date={2026-08-29,2026-08-30}/data.parquet -- 4 partitions, the DAILYNAV feed, not holdings. Z-S6 recorded 'missing 2' per fund without knowing which.",
+        "bronze PRESENT for both dates: pathfinder/filepoint/bronze/dailynav/20260829/DailyNAV.csv (531 bytes, LastModified 2026-08-29T22:00:11Z) and .../20260830/DailyNAV.csv (531 bytes, 2026-08-30T22:00:12Z). The vendor delivered; the converter did not produce silver.",
+        "A HYPOTHESIS OF MINE, REFUTED and recorded as refuted: both dates are a weekend, so I expected empty shells the converter would rightly refuse. They are not. Each carries header + 2 data rows -- the SAME shape as Friday 2026-08-28 (545 bytes) and Tuesday 2026-09-01 (547 bytes) either side.",
+        "both funds' meta/backfill-status.json read live: holes=[] against guard detail 'expected 146 landed 144 matched 144 missing 2 alien 0', so the hole has been ANONYMOUS for about four weeks. mirror_conversion.set_identity's V2-6 law treats a hole without a reason as not honest.",
+        "instrument: the sweep's READ-ONLY halves (expected_partitions_etf, _landed_silver, set_identity) run from the FIXED repo bytes against live state. run_sweep was not called and nothing was written."
+      ]
+    },
+    "spec_asserts": "Z-S6 left its own question open: 'Which 2 dates, and whether they are a vendor non-delivery or a conversion failure, is unmeasured here.'",
+    "world_is": "Measured. It is 4 partitions, not 2; it is the dailynav feed; and it is a conversion failure on two well-formed, on-time deliveries. Why the conversion failed is STILL unmeasured -- reading the converter's own refusal for those two units is the next act, and it is a filepoint question outside this order's trueshares-only write surface. This row does not disarm Z-S6; it narrows it.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "FILED AS A NEW ROW BECAUSE THE GATE WAS RIGHT AND I WAS WRONG. I first wrote this measurement INTO Z-S6 in place; .tools/surprise-row-gate.py refused the commit -- 'Corrections are NEW items citing the old id; an edited history is a history nobody can audit', with only a remediation row's own clocks permitted to advance in place. I had misapplied a supersede-in-place rule that belongs to a different artifact class. The mutation was reverted to Z-S6's exact HEAD bytes (verified: empty diff) and re-filed here. The audited override existed and was NOT taken: the gate was enforcing correctly, so the state to fix was mine. Remaining act for the owner is narrow: run the filepoint dailynav converter against those two bronze units, read its refusal, then either fix it or record the two dates as NAMED holes with a reason."
   }
 ]
 ```
