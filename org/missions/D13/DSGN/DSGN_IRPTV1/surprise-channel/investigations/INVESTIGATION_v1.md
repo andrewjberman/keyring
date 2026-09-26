@@ -1379,6 +1379,28 @@
     "spec_asserts": "Cell rule 5 (proposal section 4, PRD v0.12): 'Export follows the tab's scope. On Performance, the page Export targets R3a's account set and its report revision, never clientSetId.'",
     "world_is": "The SUBMISSION (what the advisor's Export click actually posts) carries R3a's account set and report revision -- graded and PASS-by-output (IVE34-AC2). The PREVIEW shown inside the export modal before that submit, when it fetches its own performance report copy (a cache-miss path), still falls back to `resolveBundle`'s no-`accountSetId` branch because `Preview.tsx` is out of this cell's grant to wire -- a live-stack gap this cell cannot close.",
     "notes": "Not blocking IVE34-AC2 (the criterion's own text is about the export SUBMISSION, which this cell does correctly target at the focused account; PASS-by-output, VERDICT: FOCUS-REFUSAL-EXPORT-OK)."
+  },
+  {
+    "id": "DSGN_IRPTV1-W27-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~27",
+    "surfaced_at": "2026-09-26T21:40:00Z",
+    "one_line": "No fixture on disk (fixtures/**, fixtures/fe-s-7/**) carries a genuinely MULTI-ROOTED HoldingsSnapshot (several `parentRef: null` nodes, no common wrapper) -- the exact shape UIR-39 needs to reproduce the bug and prove the fix -- so IVE41-AC1's test builds that shape in-file, cloning `holdingsSnapshot.success.json`'s own real envelope and account subtrees (never a hand-typed firm token), the identical precedent `iv-e-33.client-context.test.tsx`'s own header already recorded for a different field-shape gap.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`node -e` walk (this worker's own measurement) over every `fixtures/*.json` and `fixtures/fe-s-7/*.json` HoldingsSnapshot: `holdingsSnapshot.success.json` has exactly 1 node with `parentRef === null` (`nd-root`, kind `scope`); every `fe-s-7/holdings.*.json` file likewise has exactly 1 such node -- 0 of 9 files carry more than one root",
+        "IVE41-AC1's test (`iv-e-41.every-account.test.tsx`) constructs FLAT_TWO_ACCOUNT / NESTED_TWO_ACCOUNT / DIVERGENT_FACTS_TWO_ACCOUNT by spreading `clone(BASE_SNAPSHOT)`'s own envelope (scope/revision/availability/sourceTimestamps/coverage) and replacing only `nodes`, reusing `BASE_SNAPSHOT`'s own two real account subtrees (nd-a1001 with its model/sleeve/security children, nd-a1002 flat) with `parentRef` pointed at `null` instead of the wrapper `nd-root` -- the same clone-and-override technique `iv-e-33.client-context.test.tsx`'s header (lines 26-42, this same worktree) already used and documented for its own gap ('No committed fixture carries a multi-account holdings snapshot with current-shape drill_refs ... the fixture's own ENVELOPE is cloned verbatim and only the nodes array is replaced')",
+        "arm 3 (DrillTree.tsx's `modelRowColorMap`/`mdpfResultFromSnapshot`) needs a shape no real fixture node carries even after reparenting -- two INDEPENDENT account roots, each with its own L0 category wrapping an L1 model row bearing a served `modelCode` -- so that arm's `MULTI_ROOT_MODEL_SNAPSHOT` is built from synthetic placeholder ids ('root-acct-1', 'cat-1', 'model-1', etc.), never a real firm/account token, following the same envelope-clone technique"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's BOUNDS: 'Fixtures: discover fixture names from disk (row W3-S2); never type a firm token or a real client figure into a new file.' and the cell text: 'write it from the rows above against fixtures (IR/fixtures, discovered from disk)'.",
+    "world_is": "Every on-disk HoldingsSnapshot fixture this project's grant can discover is single-rooted, so none can be loaded UNMODIFIED to exercise UIR-39's own defect shape (several independent account roots). No new fixture FILE was added (fixtures/** is not named in this order's <paths>): the multi-root snapshots instead live as TypeScript object literals inside the granted test file itself, built by cloning a real fixture's envelope and real account subtrees (never inventing a firm token) for three of the four arms, and from wholly synthetic placeholder ids for the one arm (DrillTree's model-row colour map) that needs a shape no real node provides even after reparenting.",
+    "notes": "Not blocking: IVE41-AC1 passes; every synthetic id used ('root-acct-1', 'cat-1', 'model-1', etc.) is legible scaffolding, never a real client/firm token, matching the BOUNDS clause's own wording. Filed so a later round that adds a real multi-root fixture (if one becomes needed elsewhere) can retire these in-file constructions in favour of it."
   }
 ]
 ```
