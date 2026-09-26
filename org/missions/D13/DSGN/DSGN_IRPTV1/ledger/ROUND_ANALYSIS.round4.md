@@ -75,7 +75,7 @@ disarm row quotes this ruling and that table.
   ~D files it as a surprise row: owner, the AI drill authorizer's lane; disarm, an Opal-class read of one drill
   returning 200, or a ruling that Opal-class is excluded by design.
 - **Disk:** the laptop C: drive filling (ENOSPC cost the walk's HAR) is 0.0.0_AB_MSTR's. About 11 GB of CTO worktrees
-  are released for removal (101150).
+  are released for removal (the CTO's reply to 101135).
 
 ## 4. Close
 
