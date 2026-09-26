@@ -1056,3 +1056,12 @@ as one supplementary issuance with a stated reason. They touch nothing on the he
 | `MX-s-3` | MX-s-1 AC2 (DS msg 25985), rows Z-S4/Z-S5 | the `opal-assets-silver-etf` Lambda re-vendored from CLOUD HEAD and applied through safe-apply (DT/AE, rule 13), so the TrueShares holdings converter runs in production; issued @79deb6ea42 to `0.7.0_AE_CloudOps~I` | WORLD (a Lambda code change) |
 | `MX-s-4` | MX-s-2 (DS msg 26021), rows Z-S8/Z-S9 | the Black Diamond asset-dim download logs in again, its wrapper exit code made honest, the compaction restored and the bridge rebuilt once; issued @3920db09bd to `0.7.0_AE_CloudOps~I` | WORLD (producer repair) |
 | `MX-s-5` | row Z-S12 (filed under MX-s-3) | `infra/aws/lambda/ci/lambda-source-map.json` goes ASCII (23 mojibake characters), so step 7 of the canonical Lambda deploy runs on site Z; issued @fa1af39c3c to `0.7.0_AE_CloudOps~I` | SERVED (a shared CI data file) |
+
+**QUEUED, NOT ISSUED (Andrew-direct 2026-09-26 ~18:1xZ, "all recs approved", call 3 as ruled: (b) QUEUE; record
+`org/tier2_senior/0.7.0_AE_CloudOps~I/deliverables/ANDREW_DIRECT_20260926_181xZ_ALL_RECS_APPROVED_THREE_OPEN_CALLS.md`
+@ac15460755; owner `2.0.0_SA_COO~O`):** a sweep of the other stale converter snapshots. Of 7 `opal-assets-silver-*`
+families, 3 carry vendored modules whose bytes differ from repo source: blackdiamond (2), eclipse (3) and orion (3).
+Their manifests are self-consistent. When cut, this is one repair cell per family on the MX-s-3 pattern (re-vendor
+from CLOUD HEAD, safe-apply, deployed-bytes check). It is NOT cut in this round. Its un-park condition is the
+round-2 close or an Andrew word to DO it.
+
