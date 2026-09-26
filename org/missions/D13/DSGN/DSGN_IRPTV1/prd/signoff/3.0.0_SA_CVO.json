@@ -1,13 +1,12 @@
 {
   "prd": "DSGN_IRPTV1_PRD.md",
-  "prd_version": "v0.9",
-  "prd_pin": "a7f40397879e7d5c6697b5237343faa705e5d3d2",
+  "prd_version": "v0.10",
+  "prd_pin": "54410c6a9032881926e63a4e24ed829b4c04e343",
   "half": "ratified-text",
-  "half_hash": "fd1beac474bd8f70889d25e952daf5a554f19087cd8ab7a322e9a8fc43385558",
-  "endpoint_hash": "037ce301186c5b2533a65da48f211cc0c7db20bbe4ef377252f8df577c900a79",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_PRD_v0.9_L4R_RATIFIED_TEXT_REVIEW_20260926.md@f29ac70e15",
+  "half_hash": "77a30f5bf98d126fce0f81b156001a63b2fee70acefeed5cef3189da1dc10800",
+  "endpoint_hash": "3062a5b77abc1858136b8be43ac748d565a4b233d1c01d33690be9901ca58642",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_PRD_v0.10_L4R_RATIFIED_TEXT_SIGNED_20260926.md@4240be7a60",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-26T15:55:09Z",
-  "reason": "FWD-5 (:80-88) still promises a real client's return and the lagging account in one screen, against FWD-19 (:205-211) and Andrew's C3; amend FWD-5 to account level or un-park Call 3; plus seat serial in FWD-19 SOURCE and the Call 1 ruling uncited"
+  "signed_at": "2026-09-26T16:00:51Z"
 }
