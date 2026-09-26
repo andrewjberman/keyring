@@ -14968,6 +14968,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "A worker cannot publish (never push), so that instruction always meets the publication gate; the gitlink move belongs to the issuer after publication. The generator gen_r45_cut.py wording is retired for round 46.",
     "disarm_owner": "2.0.0_SA_COO -- the issuer of round 46 carries the template change (checkpoint item).",
     "notes": "Filed at this seat's wind-down so the BLOCKING row's disarm is on the record; the CVO dispositions W163-S1."
-  }
+  },
+{
+  "id": "AMGT_RESAPP-Z-S291",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-09-26T22:40:00Z",
+  "one_line": "The served /print pdf content-stream DIGESTS do not reconcile between round 44's rs-2 capture and round 45's tt-2 capture on the SAME deployment, while the content-stream BYTE LENGTHS match exactly on all four keys -- so limb 5's oracle is stable within a run but not comparable across runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tt-2 L2 capture, 2026-09-26T22:35:16Z, against CodeSha256 LK9h47juBfZPaAyfztAxDe9z65W2ZtEw6H2IJ/DcO4s= (LastModified 2026-09-26T11:28:27Z): BA_US_Equity content-stream 1176514 B cs-sha a3ae3625efe0a1ee; 992_HK_Equity 1168016 B 9e697906cd07913b; IMB_LN_Equity 1072129 B 66ec27ea525de376; AZN_LN_Equity 1441031 B 15859513f39d95e5.",
+      "rs-2's L7 record (org/critical_paths/change_management/20260926T0935Z_amgt-rs-2-the-redeploy_deploy_completion.md), captured 2026-09-26T11:41:41Z against the SAME CodeSha256 LK9h47ju...DcO4s=: the identical four byte lengths (1176514, 1168016, 1072129, 1441031) but cs-shas b16d5b0b21e3659f, 309a12765e0a2309, f175aca50b75bebc, fe80c74195b3a5a4.",
+      "Same deployment and same four lengths with four different digests means a length-stable, content-varying component, not a code difference.",
+      "WITHIN this run the oracle is stable: BA_US_Equity captured THREE times against the unchanged deployment returned cs-sha a3ae3625efe0a1ee every time, and the raw pdf sha f62ada78424c1af6 every time.",
+      "A probe of the DECOMPRESSED content stream for volatile fields found 0 HH:MM tokens, 0 ISO dates, 0 Z-times, 0 'as of/generated/rendered/printed' phrases, and the raw pdf carries no /CreationDate at all. THE PROBE IS INCONCLUSIVE ABOUT CONTENT, not negative: page text in a subsetted-font pdf is not searchable as latin-1, so this probe cannot see a date that is there. The stability measurement, not this probe, is what licenses grading limb 5."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A served /print pdf content-stream digest identifies the rendered output of a given deployment, so a digest captured against one CodeSha256 is comparable to any later digest captured against that same CodeSha256.",
+  "world_is": "It is not comparable across runs. Two captures of the same deployment hours apart produced different digests at identical byte lengths on 4 of 4 keys, while three captures minutes apart produced identical digests. Limb 5 as written is unaffected -- it grades a BEFORE/AFTER pair captured inside one act, and tt-2's pair is internally controlled -- but any future limb that compares a pdf digest to one recorded in an earlier round's ledger would read a difference that is not the product moving.",
+  "disarm_owner": "2.0.0_SA_COO~Z -- the issuer, to route whether a cross-round pdf digest comparison is ever relied on, and if so to name the length-stable varying component (a per-render id or a date rendered as glyphs are the two candidates this row did not distinguish).",
+  "notes": "Filed while executing AMGT-tt-2 L2; I did not halt. tt-2's limb 5 is graded on its own before/after pair with an instrument control in each capture, which is the grading the half specifies. This row claims no defect in the product and none in rs-2's close, whose L7 verdict rested on its own internally-controlled pair exactly as this one does."
+}
 ]
 ```
