@@ -713,6 +713,72 @@ carries none.
     "spec_asserts": "Item 13: the cell registers only the 3 resolving tools, every item reads over the 3, and no catalog rows are added for the other 7.",
     "world_is": "The 7 silver entries would otherwise stay in the catalog, each naming a tool no integration registers. I removed them. Round 3's catalog-row cell re-adds them from 6345d36f04 (git show 6345d36f04:workflows/atom_decomposition/catalog_entries/portal_<name>.yaml) if it wants them.",
     "notes": "If the issuer meant the 7 entries to stay, revert the 7 deletions in bc0cde67f0, re-run the emitter, and relax the source-set equality in test_portal_tools_catalog_refs_resolve to a subset."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W1-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-26T03:33:23Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The schwab per-tool class declaration needs destructive_ops.OpClass, which integrations/schwab/integration.py did not import; the edit adds ONE import line beside the declaration, so the file's diff is the declaration plus that import.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @b643047a05: infra/aws/ec2/opal-gateway/app/destructive_ops.py classify() tests `tag['class'] is OpClass.SAFE` (is_guarded) -- the tag's class must be the OpClass enum member, not a string.",
+        "CODE @b643047a05: infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py imported nothing from app/destructive_ops.py.",
+        "DIFF (this cell's commit): integration.py gains 26 lines and loses 0 -- `from ...destructive_ops import OpClass as _OpClass` plus the tool_classifications= argument inside SPEC; no other line changes."
+      ]
+    },
+    "spec_asserts": "Face item 5: that file's per-tool class declaration is the ONLY edit in integrations/schwab/, and no line of that file other than the declaration changes.",
+    "world_is": "The declaration cannot be written without OpClass in scope. The worker read the import as part of the declaration and added it (the ycharts/opal_portal/globgrph declarations at 37f208249f carry the same import). No existing line was modified.",
+    "notes": "If the issuer reads the import as outside item 5, the alternative is the same enum reached another way; the declaration's behaviour does not change."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W1-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-26T03:33:23Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "schwab stays NOT enabled, so on the deployed set destructive_ops.classify still returns the fail-closed tag for all 5 schwab tools; AC11/AC6 now also register every registered-not-enabled integration onto a fake mcp in the probe's child process, and HELD is re-read as 'registered with no declared class'.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @b643047a05: infra/aws/ec2/opal-gateway/app/integrations/registry.py classification_for_tool reads _ACTIVE_BY_TOOL, populated only inside register_enabled().",
+        "MEASURED (this cell, python 3.11.9): `python .../probes/mx_c_4.py AC11` printed 'deployed-set-only view (register_enabled(['ycharts', 'opal_portal', 'globgrph'])): 5 unclassified -> [the 5 schwab tools]' and, registering the registered-not-enabled set as well, '49 = 49 classified + 0 HELD', 'classified in the deployed view but different once schwab registers: 0'.",
+        "Probe at the previous close (37f208249f) defined HELD as 'a schwab tool registered but absent from ENABLED_INTEGRATIONS', under which the amended AC11 (0 HELD) cannot pass while item 5 keeps schwab un-enabled."
+      ]
+    },
+    "spec_asserts": "Face item 6: AC11 PASSES only on 49 classified + 0 HELD, naming the 5 schwab tools with their classes; item 5: they stay registered and NOT enabled, ENABLED_INTEGRATIONS untouched.",
+    "world_is": "A declared class becomes visible to classify only through an active spec, and only enabled integrations are active in the gateway. The probe registers the not-enabled integrations (opal_discover, portal_index, schwab) onto a fake mcp in its own child process to read the declared class, prints the deployed-only view beside it, and writes no ENABLED_INTEGRATIONS value.",
+    "notes": "Instrument choice for the L9 reader: 'classified' in AC11 now means 'resolves through its integration's own declaration once registered', not 'resolves in the deployed gateway today'."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W1-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-26T03:33:23Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The AC11/AC6 denominator (NATIVE_TOOLS|INTEGRATION_TOOLS|SCHWAB_TOOLS = 35+9+5 = 49) no longer covers every registered tool: the registry now also registers opal_discover (opal_describe, opal_discover) and portal_index (3 mdpf_* tools), 5 tools outside the 49.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED (this worktree @b643047a05 + this cell's edit, python 3.11.9): len(NATIVE_TOOLS)=35, len(INTEGRATION_TOOLS)=9, len(SCHWAB_TOOLS)=5, union 49; 'opal_describe', 'opal_discover', 'mdpf_get_account_distribution', 'mdpf_get_aggregate_aua', 'mdpf_get_aum_metrics' are each NOT in that union.",
+        "MEASURED: register_enabled(fake, registry.available_ids()) registers 6 integrations (globgrph 2, opal_discover 2, opal_portal 1, portal_index 3, schwab 5, ycharts 6 = 19 integration tools); destructive_ops.classify returns SAFE (declared, not unclassified) for all 5 out-of-denominator tools.",
+        "GIT: portal_index arrived on this branch at b10111278c (drain of TO-MX-t-8)."
+      ]
+    },
+    "spec_asserts": "Face item 6: AC11 prints the 49-name denominator and passes on 49 = 49 classified + 0 HELD.",
+    "world_is": "49 is the population data_entitlement names, not every tool the registry registers (54 names). The 5 extra tools are classified SAFE by their own integrations' declarations, so no unclassified tool hides outside the denominator today; the probe keeps the face's 49 and does not widen it.",
+    "notes": "Not fixed here: the denominator and data_entitlement's sets are outside this order's paths."
   }
 ]
 ```
