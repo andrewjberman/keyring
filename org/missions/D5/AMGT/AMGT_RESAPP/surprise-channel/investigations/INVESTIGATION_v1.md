@@ -14923,6 +14923,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "Since 2026-09-26 (this hook's adoption), that act requires publishing the submodule branch first, which only a push can do, and workers are barred from pushing. I completed AC1/AC2/AC3 and committed the outer repo's non-portal changes (render_pack.py, the new test file, this deliverables folder, the TO status flip) WITHOUT the portal path staged, leaving the portal gitlink at its pre-existing value; the portal repo itself already carries the fix, committed, on wk-AMGT_RESAPP-163-portal at 4e29386e6a11b591d3604d26ad297f974cec316a, awaiting a push/merge only the drain (or a seat permitted to push) can perform.",
     "disarm_owner": "2.0.0_SA_COO~Z -- owns the L7 worker commit mechanics this TO's instructions describe and the drain that publishes worker branches; the gate's adopting seat is 3.0.0_SA_CVO~Z.",
     "notes": "Every future worker whose cell touches portal/ under an outer-commit-including-gitlink instruction hits this same wall until the mechanics are reconciled (either the drain publishes portal branches before workers need to reference them, or the worker instruction is corrected to stop naming the gitlink as the worker's own act)."
+  },
+  {
+    "id": "AMGT_RESAPP-W165-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~165",
+    "surfaced_at": "2026-09-26T00:00:00Z",
+    "one_line": "Re-running two still-OPEN rows' own claims today (AMGT-tt-4's measurement cell) finds both defects APPEAR RESOLVED in the world, though neither carries a disarm carrier: Z-S236's deployed no-span reader now serves 0 no-span sentences across the same 12 documents (was 179), and Z-S251's eleven-plus stale #0A1733 prose sites are gone from a repeat of the row's own comp-find query (only the row's own allow-listed 10 remain).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measure_served.py (the CRO's own instrument for Z-S236, org/tier1_exec/4.0.0_SA_CRO/deliverables/AMGT_R_CLOSER_20260923/measure_served.py) re-run today against the deployed opal-amgt-scoped-api: code_sha256_base64 LK9h47juBfZPaAyfztAxDe9z65W2ZtEw6H2IJ/DcO4s=, last_modified 2026-09-26T11:28:27Z -- DIFFERENT from Z-S236's recorded r93CxQqrk8k8h2Q8KO4Iicn3pk8kyF4SFo47a9Cca5w=, i.e. the function was redeployed since the row was filed. documents_requested 12, documents_with_served_no_span 0, served_sentences 210, served_no_span 0.",
+        "comp-find '0A1733|10, ?23, ?51' portal/src portal/scripts --limit 30 (Z-S251's own query, re-run today): DENOMINATOR 10 hit(s) across 1135 file(s); bands SURFACED=7 CONFIG=1 TEST=2 -- all 10 are the row's own excluded categories (ui-measure.mjs comments, brand.ts/brand.tokens.json/print.css token definitions, uiClipFixture.html/uiMeasureFixture.html comments). None of the eleven prose/docstring sites the row named (Panel.tsx:8/:47, index.css:88/:94, designTokens.ts:13, ExportModal.tsx:37, TicketCenter.tsx:12, Controls.tsx:27/:59/:91, HeroGraphic.tsx:27, PanelStates.tsx:21, panels/README.md:7), the ui-smoke.mjs:635 instruction, or PrintExportAction.tsx:136's rgba literal are present today."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S236 and Z-S251 both stand `hazard_standing: ARMED` with `disposition: UNDER_INVESTIGATION` in the channel, each naming a disarm owner (Z-S236: R repair + CVO acceptance + CTO/COO cutover; Z-S251: 2.0.0_SA_COO~Z to route a portal comment fix) and neither carries a disarm carrier row citing it.",
+    "world_is": "Both rows' own re-run instruments read the underlying defect as gone TODAY -- 0 no-span sentences on Z-S236's exact probe, 0 uncleaned prose sites beyond Z-S251's own allow-list. Neither is adjudicated as disarmed: this is a measurement of world state, not a disposition, and this row's own text is not a claim that either hazard's full DONE WHEN (independent verification, adjudication) is satisfied.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- to route a CVO read of whether these measurements amount to the disarm each row's own text requires (Z-S236 names independent CVO acceptance explicitly), and, if so, to fold each with its own disarm carrier citing this row.",
+    "notes": "Filed while running AMGT-tt-4's measurement cell (measure, never disposition); both rows are left exactly as they stand in the channel. W144-S1's confirmed-fixed pattern (Z-S257 disarming by re-measurement) is the precedent shape a CVO disarm carrier for either row would follow."
   }
 ]
 ```

@@ -60,6 +60,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 **ISSUER NOTES:** s.6 items 3 and 5. Base: AC1 FAILS (no table; the resolver reads 68 files, 627 items, 11 of the 22 open). One mechanical criterion; the table's content feeds the CVO's L9 dispositions.
 
 <status>pending</status>
+<status>complete</status>
 <round>45</round>
 <slot>~165</slot>
 <fabric>site-z</fabric>
