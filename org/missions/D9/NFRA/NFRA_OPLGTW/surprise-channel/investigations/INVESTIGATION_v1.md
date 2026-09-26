@@ -3610,3 +3610,29 @@ name the one known failure instead of silently inheriting it.
   }
 ]
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-S63",
+  "project": "NFRA_OPLGTW",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-26T19:22:00Z",
+  "one_line": "The handing seat's re-verification of OGV4-AC8 (18:06:01Z, og_v4.py AC8 run by 2.0.0_SA_COO~Y after the worker's report) RE-SEALED: it minted a fresh salt into %LOCALAPPDATA%/opal/og-salt/expected/ and rewrote SEALED_EXPECTED.json (UNCOMMITTED, worktree wk-nfra-oplgtw-og-v-4-p1), so the COMMITTED phase-1 seal b0d4bba5df (digests sha256:d5b2c473.., on origin scratch branch wk-nfra_oplgtw-og-v-4-p1) no longer has its salt.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (loss hazard disarmed same turn: 0.0.0_AB_MSTR told NOT to remove the worktree, reply to 101450 at 19:21:36Z; a byte copy of the working seal is kept, sha256 37c706063b739a78..); 2.0.0_SA_COO~O (the record decision: which seal is phase 1's)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "stat mtimes: SALT.txt, RQ1.txt and the worktree's SEALED_EXPECTED.json all 2026-09-26 14:06:01 -0400 (18:06:01Z, Y's probe run); the committed SEALED_EXPECTED.json is from b0d4bba5df at 13:49:30 -0400",
+      "git diff in the worktree: preseal_absence_check.commit 23d3928342 -> ae1b74558f; each RQ expected_answer_hash changes (RQ1 d5b2c473.. -> 09981a85..); G-C and G-D recorded ABSENT at ae1b74558f",
+      "Y's probe output at 18:06Z printed 'old=d5b2c473.. new=09981a85.. differ=True' for RQ1..6: the 'old' side was the worker's just-committed seal, not OG-v-3's"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OGV4-AC8's probe grades the re-seal; a re-run by a verifier reads as a check (Y's 'never trust a self-report' re-run).",
+  "world_is": "og_v4.py AC8 is an ACT, not a read: every invocation mints a new salt and re-cuts the seal. The salt on disk now matches only the uncommitted 18:06Z seal (still valid in property: pre-walkthrough, G-C/G-D absent at a named commit), and the committed 17:49Z seal is unverifiable.",
+  "notes": "REC to the issuer: record the 18:06Z working seal as phase 1's seal of record (commit it on wk-nfra_oplgtw-og-v-4-p1 as a supersession of b0d4bba5df's digests), since it is the only seal whose salt exists; and mark AC8's probe as MUTATING in the order so a verifier re-runs only a read-back. Until then: no further AC8 invocation, no worktree removal, no salt edit."
+}
+```
