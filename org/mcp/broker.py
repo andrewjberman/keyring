@@ -175,10 +175,16 @@ db: sqlite3.Connection = None  # initialized in main
 # Event logging
 # ---------------------------------------------------------------------------
 
-def _log_event(event_type: str, agent: str = "", detail: str = ""):
-    """Record a telemetry event."""
+def _log_event(event_type: str, agent: str = "", detail: str = "", conn=None):
+    """Record a telemetry event.
+
+    `conn` lets a caller running OFF THE MAIN THREAD pass its own connection. The
+    module-level `db` is created on the main thread with sqlite3's default
+    check_same_thread=True, so any Timer-thread caller that touches it raises
+    ProgrammingError. Defaults to `db` so every existing call site is unchanged.
+    """
     now = datetime.now(timezone.utc)
-    db.execute(
+    (conn or db).execute(
         "INSERT INTO events (ts, ts_epoch, event_type, agent, detail) VALUES (?, ?, ?, ?, ?)",
         (now.isoformat(), time.time(), event_type, agent, detail),
     )
@@ -219,24 +225,64 @@ def _clean_stale():
     marked delivered via _handle_poll_messages, so a re-registered agent picks
     them up on the next poll cycle.
     """
-    rows = db.execute("SELECT serial, pid FROM agents").fetchall()
-    for row in rows:
-        if not _pid_alive(row["pid"]):
-            _log_event("agent_stale", row["serial"], f"PID {row['pid']} no longer alive")
-            db.execute("DELETE FROM agents WHERE serial = ?", (row["serial"],))
+    # THIS RUNS ON A Timer THREAD (_schedule_cleanup, every 30 s). The module-level
+    # `db` was created on the MAIN thread with sqlite3's default check_same_thread=True,
+    # so touching it from here raises
+    #     sqlite3.ProgrammingError: SQLite objects created in a thread can only be
+    #     used in that same thread
+    # on the first cycle. Measured 2026-09-26: the running broker's stderr held exactly
+    # ONE such traceback in a 30-minute run, because the raise also killed the Timer
+    # (see _schedule_cleanup), so stale agent rows were NEVER cleaned again, silently,
+    # while the server kept answering -- a dead maintenance task behind a healthy /health.
+    #
+    # The fix is a SHORT-LIVED connection owned by this thread. It is preferred over
+    # check_same_thread=False on the shared connection, which would let the Timer thread
+    # and the request thread interleave on one connection for a 30-second housekeeping
+    # task -- a wider change than the defect needs.
+    conn = sqlite3.connect(str(DB_PATH), timeout=5)
+    conn.row_factory = sqlite3.Row
+    try:
+        conn.execute("PRAGMA busy_timeout = 3000")
+        rows = conn.execute("SELECT serial, pid FROM agents").fetchall()
+        for row in rows:
+            if not _pid_alive(row["pid"]):
+                _log_event("agent_stale", row["serial"],
+                           f"PID {row['pid']} no longer alive", conn=conn)
+                conn.execute("DELETE FROM agents WHERE serial = ?", (row["serial"],))
 
-    # Prune old events
-    db.execute(
-        "DELETE FROM events WHERE id NOT IN (SELECT id FROM events ORDER BY id DESC LIMIT ?)",
-        (MAX_EVENTS,),
-    )
+        # Prune old events
+        conn.execute(
+            "DELETE FROM events WHERE id NOT IN (SELECT id FROM events ORDER BY id DESC LIMIT ?)",
+            (MAX_EVENTS,),
+        )
 
-    db.commit()
+        conn.commit()
+    finally:
+        try:
+            conn.close()
+        except Exception:
+            pass
 
 
 def _schedule_cleanup():
     """Run stale cleanup every 30 seconds; self-restart past max uptime."""
-    _clean_stale()
+    # A CLEANUP FAILURE MUST NEVER KILL THE TIMER. Until 2026-09-26 this call was
+    # UNGUARDED and the re-arm sits at the END of this function, so the FIRST raise
+    # ended stale cleanup for the entire life of the process -- silently, behind a
+    # /health that keeps answering 200.
+    #
+    # The tell was a COUNT, not an error: exactly ONE ProgrammingError traceback in a
+    # 30-minute run, where a genuinely per-cycle failure would have produced about 60.
+    # One occurrence of a repeating error means the repeat stopped, which is worse than
+    # the error itself.
+    #
+    # _parent_watchdog already had this shape ("Watchdog failures must never crash the
+    # broker; log and re-arm"). This brings the sibling timer into line with it.
+    try:
+        _clean_stale()
+    except Exception as exc:
+        print(f"[opal-broker] cleanup error (timer re-armed, cleanup skipped this cycle): "
+              f"{type(exc).__name__}: {exc}", file=sys.stderr, flush=True)
     # Max-uptime graceful self-restart so the weekly archive catch-up is guaranteed
     # to fire even if the broker never crash-restarts (CTO arch concern, LD-0246).
     if time.time() - _start_time > BROKER_MAX_UPTIME_S:
