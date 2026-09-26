@@ -358,6 +358,104 @@ carries none.
     "spec_asserts": "W3-S11 (BLOCKING, ARMED): ruling D-5 (c) keys each tool from its own catalog row, and 7 of 10 tools have none, so MX-t-8's criteria cannot pass as cut.",
     "world_is": "MX-t-8 now covers 3 tools that resolve under D-5 (c). The 7 unrowed tools are a round-3 catalog-row cell. No catalog row is added by this cell.",
     "notes": "FWD-2's parity now covers the mdpf family only this round. The CTO's round-N analysis reads it from here."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-26T02:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The mirror framework's float64 parse-or-raise is guarded by `df[c].dtype == object`, which pandas 3 reads False for a column of strings, so _numeric_or_raise is skipped for EVERY float64-declared column and arrow coerces unvalidated. mirror_conversion.py:330 is the shared copy, vendored into the blackdiamond, eclipse, etf, orion and schwab silver bundles.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured on this interpreter: pandas 3.0.3 / numpy 2.4.6; pd.DataFrame built from string rows infers dtype 'str', and `df[c].dtype == object` is False.",
+        "data/assets/scripts/silver/mirror_conversion.py:330 -- `elif t == \"float64\" and df[c].dtype == object:`; the same line is vendored at infra/aws/lambda/opal-assets/opal-assets-silver-{blackdiamond,eclipse,etf,orion}/mirror_conversion.py.",
+        "comp-find 'dtype == object' --all: DENOMINATOR 26 hit(s) across 75199 file(s); 8 are this guard (1 etf_conversion + 1 mirror_conversion in data/, 6 vendored).",
+        "negative control on the etf copy, run this session: reverting the fixed guard alone makes a bad numeric surface as pyarrow ArrowInvalid instead of the converter's own VendorDriftError, and Shares reads back 'str'.",
+        "the DEPLOYED path is UNAFFECTED, measured: partitions written by the lambdas at 2026-09-25T22:00Z (pathfinder fact_holdings, trueshares fact_netassets_page) read back float64, reachable only through the object branch."
+      ]
+    },
+    "spec_asserts": "_numeric_or_raise's docstring: 'A string that does NOT parse RAISES naming column and value: coercing it to null would be judgment (fillna's evil twin), and Rule 17 forbids exactly that.' The converter promises a named raise on every float64-declared column.",
+    "world_is": "On pandas 3 the guard never selects the column, so that promise is not kept by the converter at all. A bad value still fails, but as pyarrow's ArrowInvalid from from_pandas -- naming neither the column nor the vendor -- and a well-formed partition records pandas metadata 'str', so a pandas reader gets strings out of a double column. No bad value has been written and the physical parquet type was always correct: this is an error-quality and round-trip-type defect, not data corruption.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "FIXED in the etf copy only (data/assets/scripts/silver/etf_conversion.py, commit 23efc28a2f), because that is the converter MX-s-1's backfill runs through and MX-s-1 requires Rule 17 STRICT. mirror_conversion.py is the shared framework for five pipelines and five vendored bundles -- far wider than this order's write surface -- so it is NOT touched here. The replacement predicate is `not pd.api.types.is_numeric_dtype(df[c])`, equivalent on the deployed pandas-2 path. Exposure today is limited to seats running these converters locally (QA, ad-hoc backfills) on pandas 3; the scheduled lambdas are on the older layer."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-26T02:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The deployed opal-assets-silver-etf bundle predates the TrueShares holdings converter by two months and contains ZERO occurrences of _convert_trueshares_holdings, and no S3 notification rule matches a holdings .csv at all -- so MX-s-1's repo fix changes no production behaviour until a DT/AE rebuild, and MX-s-1 AC2 cannot pass from the DS lane.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "live get_function 2026-09-26: opal-assets-silver-etf LastModified 2026-07-15T23:24:02Z, CodeSha256 a14fYacwkjPlkj7P5qb7QGTKDeQ2A9GTnkM/t1rTxcs=; the zip was downloaded and its sha256 re-computed equal, so these are the running bytes.",
+        "in that zip, etf_conversion.py sha256 623568f38934f491a25c0f09d11a331297618445ef1afa5a22f8337336c56436 -- equal to BUILD_MANIFEST.json's vendor_sha256 -- carries 0 occurrences of _convert_trueshares_holdings and no `kc.feed == \"holdings\"` dispatch.",
+        "the converter landed in the repo at e442e30964 (2026-08-24), six weeks AFTER the deployed bundle was built at 2705444350 (2026-07-15).",
+        "live get_bucket_notification_configuration on opal-data-assets: the trueshares rules are prefix 'trueshares/{DIVZ,IDVZ}/bronze/' suffix '.html'. A key trueshares/DIVZ/bronze/holdings/20260824/divz_holdings.csv matches 0 of 11 rules; the netassets .html matches 1.",
+        "MX-s-1 AC2 run live after the backfill: 'guard expected=73 missing=0 live silver=106 of which fact_holdings=33 ... 0 of 2 -- RESULT: FAIL -- exit=1'. 106 minus 33 equals 73 exactly: the served guard is still the stale bundle's netassets-only denominator.",
+        "safe-deploy.sh measured on this path: it maps data/assets/scripts/silver/ to s3://opal-data-mdpf/code/scripts/silver/, probes 404 and reports SKIP-NOT-MEMBER, 'NOTHING WAS DEPLOYED' -- and that S3 code prefix is not how this converter runs."
+      ]
+    },
+    "spec_asserts": "MX-s-1 step 2 says to fix the converter and 'Deploy through .tools/safe-deploy.sh as rule 13 requires', and its preflight declares 'the existing daily conversion runs unchanged'.",
+    "world_is": "There is no safe-deploy path for this file: it is not a member of the only S3 prefix safe-deploy maps for data/assets/scripts/silver/, and the code that actually runs is a vendored Lambda zip. Rebuilding it is a DT/AE act under CLAUDE.md rule 13 and NEVER-9 (Terraform only). The existing daily conversion could not have converted holdings at any point: the bundle has no such function, and no event rule even delivers the object. The daily sweep at cron(30 23 * * ? *) lists bronze directly, so the missing event rule is a latency gap rather than a second cause -- once the bundle is rebuilt, holdings converts on the sweep rather than on delivery.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "The repo fix is committed (6c6232a5d7, 23efc28a2f) and proven by tests including a planted-hole control. What remains is a bundle rebuild per BUILD_MANIFEST.json's vendored_modules list plus a Terraform apply -- DT/AE. A separate, smaller question for the same owner: whether to add a '.csv' notification rule for the trueshares holdings prefix so the feed converts on delivery like netassets, instead of waiting for the 23:30Z sweep."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-26T02:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-s-1's backfill landed 66 fact_holdings partitions the DEPLOYED guard does not model, so the next scheduled sweep will rewrite trueshares/{DIVZ,IDVZ}/meta/backfill-status.json from PASS to FAIL with alien 33 -- a served verdict flip caused by this order, self-clearing the moment the bundle is rebuilt.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "currently served, read live before the next sweep: trueshares/DIVZ and /IDVZ meta/backfill-status.json both backfill_complete true, verdict PASS, 'expected 73 landed 73 matched 73 missing 0 alien 0', updated_by 'opal-assets-silver-etf (sweep)', LastModified 2026-09-25T23:30:16Z.",
+        "simulation of the NEXT sweep run against LIVE bucket state using the DEPLOYED bytes (the sha256-matched vendored copy), read-only: trueshares/DIVZ expected=73 landed=106 matched=73 missing=0 alien=33 -> FAIL, backfill_complete would be False; IDVZ identical.",
+        "mirror_conversion.set_identity:771 -- `verdict = \"PASS\" if not missing and not alien else \"FAIL\"`, so 33 alien keys alone flip it.",
+        "the sweep rule opal-assets-silver-etf-sweep-daily is ENABLED at cron(30 23 * * ? *), input {\"mode\":\"sweep\"}, so the flip lands at the next 23:30Z."
+      ]
+    },
+    "spec_asserts": "Landing a missing feed in silver should make the tree's completeness guard MORE accurate, not less; an ops reader of backfill-status.json takes PASS/FAIL as the tree's health.",
+    "world_is": "Against the stale deployed guard the new partitions are ALIEN, not expected, so the honest-but-alarming verdict is FAIL on two trees that read PASS an hour ago. The FAIL is a true statement about the deployed guard's model versus the world -- the previous PASS was the false one, over a tree missing an entire feed -- but it will read to anyone watching as 'DS broke the ETF guard' unless it is announced. It clears itself with no data act: once the rebuilt bundle computes expected=106, alien falls to 0 and the verdict returns to PASS.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "TIMING, so the flip can simply be avoided: the sweep already ran at 2026-09-25T23:30Z, so the next fire is 2026-09-26T23:30Z. A bundle rebuild before that window means the served verdict never flips at all. Rides NFRA_MCPINDEX-Z-S4; disarmed by the same act."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-26T02:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Off-task and pre-existing, filed rather than chased: the served completeness guard for pathfinder/{PFDE,PFOE} already reads verdict FAIL, backfill_complete false, 'missing 2' on each fund, and no row names it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "read live 2026-09-26, BEFORE any act of this order touched those trees: pathfinder/PFDE and /PFOE meta/backfill-status.json both backfill_complete false, verdict FAIL, 'expected 146 landed 144 matched 144 missing 2 alien 0', LastModified 2026-09-25T23:30:16Z and :17Z.",
+        "the same figures reproduce in a read-only simulation of the sweep against live state, so they are the current steady state rather than one bad run.",
+        "NOT caused by this order: MX-s-1 wrote only under trueshares/{DIVZ,IDVZ}/silver/fact_holdings/, and these rows predate the backfill in the served artifact's own LastModified."
+      ]
+    },
+    "spec_asserts": "A silver tree whose guard reads FAIL with named missing partitions is a live completeness gap someone owns.",
+    "world_is": "Both pathfinder funds have been sitting at missing 2 with nobody named, in the same guard file whose TrueShares sibling was the subject of W3-S2. Which 2 dates, and whether they are a vendor non-delivery or a conversion failure, is unmeasured here -- this order's write surface is trueshares only and chasing it would be the halt-and-investigate CLAUDE.md section 2 forbids.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "One read sizes it: list pathfinder/{PFDE,PFOE}/bronze/ against silver/, diff the dates, and check whether the 2 missing dates have bronze at all. Routed, not actioned."
   }
 ]
 ```
