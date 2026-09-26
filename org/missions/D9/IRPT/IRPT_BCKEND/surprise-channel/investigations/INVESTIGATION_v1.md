@@ -9587,3 +9587,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Hazard INERT: the route fails closed before any row, queue or vendor write. Graduates when P's repackage meets CTO 101230's three conditions: the fixed checker FAILS on IJD6bd1I naming jsonschema (met @2664fe084c), passes on the new zip, and every generate module imports on the deployed function. The checker still does not walk a third-party package's own dependencies or wheel platform (rpds-py is compiled); condition 3 covers that."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S145",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-09-26T15:41:00Z",
+  "one_line": "A 49financial client's Holdings snapshot answers READY with custody total 0.0 and all three account nodes at 0.0 (PROD walk HAR entries 256-257); the identity card shows $0.00. Not established whether the accounts are empty or the value is missing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (Holdings backend, 49F)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/prod-uiwalk-20260926.har (sha256 6b51023c...) entries 256 and 257: GET /holdings/{set} 200, state READY, custody_totals.total_market_value 0.0 USD, unique_account_count 3, three ACCOUNT nodes with amount 0.0, coverage 9/9",
+      "prod-uiwalk-20260926.shots/w13-49f-performance.png: identity card HOW MUCH $0.00 over 3 accounts",
+      "contrast in the same HAR: the Cottonwood client's snapshot reads 287274.21 over 2 accounts (entries 98, 107)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A READY Holdings snapshot states the client's custody value.",
+  "world_is": "One READY 49F snapshot states 0.0 for three accounts. That is either a true zero (empty or closed accounts) or a value the 49F holdings input did not supply; the snapshot does not say which.",
+  "notes": "Found off-task during the 4.0.0_SA_CRO /closer trace of the Holdings tab (IRPT_HOLDINGS_TAB_END_TO_END_GAP_BRIEF_20260926.md). The frontend renders the value faithfully. Disarm: read the three accounts' custody rows for business date 2026-09-22 in the 49F holdings input and state which case holds; if the value is missing, a READY state over it is the defect."
+}
+```
