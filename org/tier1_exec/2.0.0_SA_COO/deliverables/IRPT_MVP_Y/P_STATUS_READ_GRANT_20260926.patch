@@ -1,0 +1,17 @@
+diff --git a/infra/aws/terraform/investor-reporting/ops/iam.tf b/infra/aws/terraform/investor-reporting/ops/iam.tf
+index 7d5ea9a..fa19010 100644
+--- a/infra/aws/terraform/investor-reporting/ops/iam.tf
++++ b/infra/aws/terraform/investor-reporting/ops/iam.tf
+@@ -70,9 +70,11 @@ data "aws_iam_policy_document" "irpt_status" {
+   # opal_naming reads, never typed. The bucket's key is the system key already granted below.
+   # No write, no list, no other family (vendor documents, evidence, exports stay unreadable here).
+   statement {
++    # The readers fetch each retained object BY VERSION (repository.py get_object(VersionId)), which S3 authorizes
++    # as s3:GetObjectVersion (measured offline, IRPT_BCKEND~Y HOPS_8_10_PREFLIGHT_20260926.md).
+     sid     = "ReadRetainedAnalysisFamiliesUnderThePolicyPrefixesOnly"
+     effect  = "Allow"
+-    actions = ["s3:GetObject"]
++    actions = ["s3:GetObject", "s3:GetObjectVersion"]
+     resources = flatten([
+       for f in local.om_client_firms : [
+         for family in ["platinum/analysis_reports", "state/request_compositions", "state/normalized_portfolios", "state/prospect_inputs"] :

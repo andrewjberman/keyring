@@ -1,0 +1,27 @@
+run 2026-09-26T19:34:43Z
+OK   allowed       dynamodb:GetItem               hop8-9     arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs
+OK   allowed       dynamodb:GetItem               hop8-9     arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests
+OK   allowed       dynamodb:Query                 hop8-9     arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests
+OK   allowed       s3:GetObject                   hop8-9     -0000000000000000000000000000000000000000000000000000000000000000/x.json
+MISS implicitDeny  s3:GetObjectVersion            hop8-9     -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObject                   hop8-9     -0000000000000000000000000000000000000000000000000000000000000000/x.json
+MISS implicitDeny  s3:GetObjectVersion            hop8-9     -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       kms:Decrypt                    hop8-9     :aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111
+OK   implicitDeny  s3:PutObject                   control-negative -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   implicitDeny  dynamodb:DeleteItem            control-negative arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests
+irpt-status-role: 6 of 10 allowed; 8 of 10 met their expectation
+   path control-negative  2 of 2 met
+   path hop8-9            6 of 8 met
+OK   allowed       dynamodb:GetItem               hop10-read arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests
+MISS implicitDeny  dynamodb:Query                 hop10-read arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests
+MISS implicitDeny  s3:GetObject                   hop10-read -0000000000000000000000000000000000000000000000000000000000000000/x.json
+MISS implicitDeny  s3:GetObjectVersion            hop10-read -0000000000000000000000000000000000000000000000000000000000000000/x.json
+MISS implicitDeny  s3:GetObject                   hop10-read -0000000000000000000000000000000000000000000000000000000000000000/x.json
+MISS implicitDeny  s3:GetObjectVersion            hop10-read -0000000000000000000000000000000000000000000000000000000000000000/x.json
+MISS implicitDeny  kms:Decrypt                    hop10-read :aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111
+OK   implicitDeny  s3:PutObject                   control-negative -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   implicitDeny  s3:DeleteObject                control-negative -0000000000000000000000000000000000000000000000000000000000000000/x.json
+irpt-export-render-role: 1 of 9 allowed; 3 of 9 met their expectation
+   path control-negative  2 of 2 met
+   path hop10-read        1 of 7 met
+rc=1

@@ -1,0 +1,65 @@
+[
+ {
+  "action": "dynamodb:GetItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests",
+  "expect": "allowed",
+  "path": "hop10-read",
+  "source": "REPORT# row of the authorized revision"
+ },
+ {
+  "action": "dynamodb:Query",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests",
+  "expect": "allowed",
+  "path": "hop10-read",
+  "source": "report index read"
+ },
+ {
+  "action": "s3:GetObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/platinum/analysis_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop10-read",
+  "source": "the certified report being exported"
+ },
+ {
+  "action": "s3:GetObjectVersion",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/platinum/analysis_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop10-read",
+  "source": "get_object(VersionId)"
+ },
+ {
+  "action": "s3:GetObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/vendor_documents/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop10-read",
+  "source": "the vendor original download"
+ },
+ {
+  "action": "s3:GetObjectVersion",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/vendor_documents/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop10-read",
+  "source": "get_object(VersionId)"
+ },
+ {
+  "action": "kms:Decrypt",
+  "resource": "arn:aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111",
+  "expect": "allowed",
+  "path": "hop10-read",
+  "source": "SSE-KMS reads"
+ },
+ {
+  "action": "s3:PutObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/platinum/analysis_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "denied",
+  "path": "control-negative",
+  "source": "export never rewrites the certified report"
+ },
+ {
+  "action": "s3:DeleteObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/vendor_documents/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "denied",
+  "path": "control-negative",
+  "source": "export never deletes the original"
+ }
+]

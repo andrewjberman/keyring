@@ -1,0 +1,72 @@
+[
+ {
+  "action": "dynamodb:GetItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs",
+  "expect": "allowed",
+  "path": "hop8-9",
+  "source": "measured: job status / owned record reads"
+ },
+ {
+  "action": "dynamodb:GetItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests",
+  "expect": "allowed",
+  "path": "hop8-9",
+  "source": "measured: request record, REPORT# and ARTIFACT# index reads"
+ },
+ {
+  "action": "dynamodb:Query",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests",
+  "expect": "allowed",
+  "path": "hop8-9",
+  "source": "measured: history page (owned_requests) and REPORT# listing"
+ },
+ {
+  "action": "s3:GetObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/platinum/analysis_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop8-9",
+  "source": "measured: the certified report for sections"
+ },
+ {
+  "action": "s3:GetObjectVersion",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/platinum/analysis_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop8-9",
+  "source": "measured: get_object(VersionId)"
+ },
+ {
+  "action": "s3:GetObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/request_compositions/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop8-9",
+  "source": "measured: the accepted composition for the request read"
+ },
+ {
+  "action": "s3:GetObjectVersion",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/request_compositions/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop8-9",
+  "source": "measured: get_object(VersionId)"
+ },
+ {
+  "action": "kms:Decrypt",
+  "resource": "arn:aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111",
+  "expect": "allowed",
+  "path": "hop8-9",
+  "source": "SSE-KMS on irpt-requests, irpt-jobs, opal-data-irpt"
+ },
+ {
+  "action": "s3:PutObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/platinum/analysis_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "denied",
+  "path": "control-negative",
+  "source": "a reader never writes the certified report"
+ },
+ {
+  "action": "dynamodb:DeleteItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests",
+  "expect": "denied",
+  "path": "control-negative",
+  "source": "a reader never deletes"
+ }
+]

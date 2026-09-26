@@ -46,6 +46,7 @@ def main(argv=None):
     ap.add_argument("--pdf", required=True)
     ap.add_argument("--census", required=True)
     ap.add_argument("--overlay")
+    ap.add_argument("--out", help="directory to dump the post-job world (for the hop 8-10 read-path proof)")
     a = ap.parse_args(argv)
 
     root = os.path.join(tempfile.mkdtemp(prefix="irpt-resident-job-"), "pkg")
@@ -179,6 +180,14 @@ def main(argv=None):
     reports = [k for k in ddb.mem if k[0] == "irpt-requests" and '"S": "REPORT#' in k[2]]
     print("\nREPORT# rows published:", len(reports))
     state = row.get("state", {}).get("S") if row else None
+    if a.out:
+        os.makedirs(a.out, exist_ok=True)
+        rt.dump(os.path.join(a.out, "state.json"), ddb, s3, sqs)
+        shutil.copyfile(os.path.join(a.state, "seeded_users.json"), os.path.join(a.out, "seeded_users.json"))
+        report = [k[2] for k in reports]
+        json.dump({"tenant": message.get("tenant"), "request_id": message.get("request_id"), "report_keys": report,
+                   "job_state": state}, open(os.path.join(a.out, "job.json"), "w", encoding="utf-8"))
+        print("WROTE", a.out)
     print("\nRESULT:", state or "NO JOB ROW", "| handled", handled)
     return 0 if state == "READY" else 1
 

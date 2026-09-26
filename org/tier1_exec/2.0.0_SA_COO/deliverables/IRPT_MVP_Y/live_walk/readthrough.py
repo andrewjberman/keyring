@@ -36,7 +36,10 @@ def fail(code="ConditionalCheckFailedException", op="PutItem"):
 
 class Writes:
     def __init__(self):
-        self.log = []
+        self.log, self.reads = [], []
+
+    def read(self, kind, **what):
+        self.reads.append(dict(kind=kind, **what))
 
     def add(self, kind, **what):
         self.log.append(dict(kind=kind, **what))
@@ -67,10 +70,12 @@ class Dynamo:
         return self._live(table, key)
 
     def get_item(self, TableName, Key, **kw):
+        self.writes.read("dynamodb:GetItem", table=TableName, key=[next(iter(v.values())) for v in Key.values()])
         item = self.current(TableName, Key)
         return {"Item": item} if item is not None else {}
 
     def query(self, **kw):
+        self.writes.read("dynamodb:Query", table=kw.get("TableName"), index=kw.get("IndexName"))
         if kw.get("TableName") == "opal-users-v2" and kw.get("IndexName") == "email-index":
             email = next(iter(kw["ExpressionAttributeValues"].values()))["S"]
             if email in self.users:
@@ -207,11 +212,13 @@ class S3:
         return {"VersionId": version}
 
     def head_object(self, Bucket, Key, **kw):
+        self.writes.read("s3:HeadObject", bucket=Bucket, key=Key, version=bool(kw.get("VersionId")))
         if (Bucket, Key) in self.mem:
             return {"VersionId": self.mem[(Bucket, Key)][0], "ContentLength": len(self.mem[(Bucket, Key)][1])}
         return self.real.head_object(Bucket=Bucket, Key=Key, **kw)
 
     def get_object(self, Bucket, Key, **kw):
+        self.writes.read("s3:GetObject", bucket=Bucket, key=Key, version=bool(kw.get("VersionId")))
         if (Bucket, Key) in self.mem:
             version, data = self.mem[(Bucket, Key)]
             return {"Body": io.BytesIO(data), "VersionId": version, "ContentLength": len(data)}
