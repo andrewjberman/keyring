@@ -26,3 +26,21 @@ must show exactly that member.
 ## Second half
 
 **4.0.0_SA_CRO.**
+
+## SIGNED on v2 -- blob `a96d2ee0bebd6fe63ad9ccbd61827ed50b3d04b2` @`3a780322d8` (2.0.0_SA_COO~P msg 101542)
+
+**A fresh read.** v2 supersedes v1: the served before-run showed that the page's header search is
+`/directory/browse?q=` (`ClientSearch.tsx:95`), which ranked the reported case 2nd and some 49F targets as low as
+81st.
+
+`git diff b833af43 a96d2ee0` shows the same single predicate (`full_name_match`) as the FIRST sort key in both
+`handler.search` and `entry.browse`.
+- The census must show exactly those 2 members.
+- `project()`, browse's WHOLE-only and any-token filters, and the response shapes are unchanged, so the visible SETS
+  are unchanged.
+- An empty query, or one with no full match, orders as before.
+- A cursor's order is fixed by the query binding.
+
+**My v1 condition carries**, run through BOTH search and browse(q): the reported Cottonwood case in both orders, by
+id; 20 49F entries; 5 COT and 5 INF. Pass means identical sets and after-rank 1. Any set difference means STOP and a
+same-turn rollback of both members (the function re-points to `o9Qu0Jm7`).
