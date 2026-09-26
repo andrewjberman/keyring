@@ -1,0 +1,107 @@
+AC2 -- HVST-v-1 POSITIVE CONTROL: wsj unchanged, populated mapping still a struct
+pyarrow 24.0.0 | BEFORE = git show HEAD:lib/opal_data_harvest/silver_from_bronze.py (carries fix: False) | AFTER = worktree (carries fix: True)
+
+==============================================================================
+ARM A -- wsj HELD listing payloads: byte-identical rows AND identical arrow schema
+==============================================================================
+
+-- wsj_p1_45058f937f5eff24.html (598358 bytes held)  rows BEFORE = 20  rows AFTER = 20
+   canonical row-set sha256 BEFORE = ea63967cc060054e302c78d84ee9875950139803df673ea39b1b13db0588229b (27195 bytes)
+   canonical row-set sha256 AFTER  = ea63967cc060054e302c78d84ee9875950139803df673ea39b1b13db0588229b (27195 bytes)
+   ROW SET VERDICT: BYTE-IDENTICAL
+   direct equality (before_rows == after_rows): True
+   arrow schema BEFORE (25 fields):
+      articleUrl: string
+      commerceProduct: string
+      contentTag: string
+      bylineData: list<item: struct<text: string, ref: string, phrase_type: string, id: string, type: string, name: string>>
+      flashline: string
+      headline: string
+      imageAlt: string
+      printHeadline: string
+      printPublicationDate: string
+      seoPathValue: string
+      summary: string
+      timestamp: string
+      article_id: null
+      url: string
+      search_rank: int64
+      search_page: int64
+      search_query: string
+      query_sha256: string
+      source: string
+      publisher: string
+      fetch_date_utc: date32[day]
+      bronze_key: string
+      fetched_at: timestamp[us, tz=UTC]
+      retrieval_mode: string
+      run_stamp: string
+   arrow schema AFTER  (25 fields):
+      articleUrl: string
+      commerceProduct: string
+      contentTag: string
+      bylineData: list<item: struct<text: string, ref: string, phrase_type: string, id: string, type: string, name: string>>
+      flashline: string
+      headline: string
+      imageAlt: string
+      printHeadline: string
+      printPublicationDate: string
+      seoPathValue: string
+      summary: string
+      timestamp: string
+      article_id: null
+      url: string
+      search_rank: int64
+      search_page: int64
+      search_query: string
+      query_sha256: string
+      source: string
+      publisher: string
+      fetch_date_utc: date32[day]
+      bronze_key: string
+      fetched_at: timestamp[us, tz=UTC]
+      retrieval_mode: string
+      run_stamp: string
+   SCHEMA VERDICT: IDENTICAL
+   parquet row count BEFORE = 20  AFTER = 20
+   table data equality: True
+
+-- wsj_p2_bfec5a47fe3ed50b.html (529261 bytes held)  rows BEFORE = 0  rows AFTER = 0
+   canonical row-set sha256 BEFORE = 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945 (2 bytes)
+   canonical row-set sha256 AFTER  = 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945 (2 bytes)
+   ROW SET VERDICT: BYTE-IDENTICAL
+   direct equality (before_rows == after_rows): True
+   0 rows on this held page -- no schema to compare (searchResults is an empty list in the captured bytes); row-set identity still measured above
+
+ARM A row denominator: 20 wsj listing rows compared across 2 held pages
+
+==============================================================================
+ARM B -- a POPULATED mapping still writes AS A STRUCT (and a nested empty one is nulled)
+==============================================================================
+rows built = 1 of 1 expected
+themes value  = {'berkshire': 'primary'}
+nested value  = {'kept': {'inner': 7}, 'dropped': None}
+links value   = {'self': '/news/901-populated'}
+arrow type of themes = struct<berkshire: string>
+arrow type of nested = struct<kept: struct<inner: int64>, dropped: null>
+arrow type of links  = struct<self: string>
+WRITE: SUCCEEDED -- parquet bytes = 6701, rows = 1
+read back from the parquet bytes: themes = {'berkshire': 'primary'}
+read back from the parquet bytes: nested = {'kept': {'inner': 7}, 'dropped': None}
+
+  wsj_p1_45058f937f5eff24.html arrow schema identical        PASS
+  wsj_p1_45058f937f5eff24.html arrow table data identical    PASS
+  wsj_p1_45058f937f5eff24.html parquet row count unchanged   PASS
+  wsj_p1_45058f937f5eff24.html row set byte-identical        PASS
+  wsj_p1_45058f937f5eff24.html row count unchanged           PASS
+  wsj_p2_bfec5a47fe3ed50b.html row set byte-identical        PASS
+  wsj_p2_bfec5a47fe3ed50b.html row count unchanged           PASS
+  populated themes is a struct with its child                PASS
+  populated themes value preserved                           PASS
+  populated parent stays a struct with an empty child nulled PASS
+  populated links unchanged                                  PASS
+  populated-mapping row writes to parquet                    PASS
+  populated themes survives the parquet round trip           PASS
+
+AC2 denominator: 13 of 13 checks PASS (wsj rows compared: 20)
+AC2: PASS -- wsj row set and schema unmoved; a populated mapping is still a struct

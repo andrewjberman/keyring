@@ -1,0 +1,30 @@
+AC1 -- HVST-v-1: empty mapping in a listing row, BEFORE and AFTER, one held sa payload
+held payload: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\.runtime\opal-data-harvest\harvest_listing\sa_p1_990943eddbd5a172.json (137260 bytes)
+pyarrow 24.0.0 | write path = pa.Table.from_pylist + pq.write_table (store.py:348 verbatim, in-memory buffer, NO S3)
+
+ARM PROVENANCE (the control that the BEFORE arm is really pre-change bytes)
+  BEFORE source = <git show HEAD:lib/opal_data_harvest/silver_from_bronze.py>  carries '_null_empty_mappings': False
+  AFTER  source = lib/opal_data_harvest/silver_from_bronze.py (worktree)  carries '_null_empty_mappings': True
+
+BEFORE (HEAD bytes): rows built = 20 of 20 expected; empty-mapping field values = 20
+  themes on row[0] = {}   (type dict)
+  WRITE RAISED: ArrowNotImplementedError: Cannot write struct type 'themes' with no child field to Parquet. Consider adding a dummy child field.
+  raised at: pyarrow.lib.ArrowNotImplementedError: Cannot write struct type 'themes' with no child field to Parquet. Consider adding a dummy child field.
+
+AFTER (worktree bytes): rows built = 20 of 20 expected; empty-mapping field values = 0
+  themes on row[0] = None   (type NoneType)
+  WRITE: SUCCEEDED -- parquet row count written = 20 of 20 expected
+  arrow type of themes AFTER = null
+  columns = 25
+
+  BEFORE arm ran pre-change bytes (no fix marker)      PASS
+  AFTER arm ran post-change bytes (fix marker present) PASS
+  BEFORE write raised ArrowNotImplementedError         PASS
+  BEFORE error names a struct with no child field      PASS
+  AFTER write succeeded                                PASS
+  AFTER parquet row count == 20                        PASS
+  AFTER rows carry no empty mapping                    PASS
+  BEFORE rows carried 20 empty mappings                PASS
+
+AC1 denominator: 8 of 8 checks PASS
+AC1: PASS -- defect reproduced on pre-change bytes and gone on post-change bytes

@@ -1,0 +1,10 @@
+[1m============================= test session starts =============================[0m
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Opal Bloomberg\AppData\Local\Programs\Python\Python311\python.exe
+rootdir: C:\tmp\wk-hvst-r1
+configfile: pytest.ini
+plugins: anyio-4.14.1
+[1mcollecting ... [0mcollected 17 items / 16 deselected / 1 selected
+
+lib/opal_data_harvest/test_silver_from_bronze.py::test_empty_mapping_in_a_listing_row_is_nulled_and_writes_for_every_publisher [32mPASSED[0m[32m [100%][0m
+
+[32m====================== [32m[1m1 passed[0m, [33m16 deselected[0m[32m in 0.49s[0m[32m =======================[0m
