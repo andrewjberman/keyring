@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-26T03:4xZ. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-26T05:2xZ. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -84,8 +84,9 @@ branch. No code edit is open.
      is DISARMED (S141).
      - SIGNED by the CTO @ab4a2e41bb, with an a07 precondition. a07 measured: 49F 10 keys $56,952, INF 8 keys $0,
        COT 122 keys, 0 outside the keys. **PART 1 WRITTEN** @aaef2843a8: 941 of 941, 0 refused, read back 941. The loader
-       agrees on 935; 6 NAME:: duplicates serve fixed_income through a ticker sibling, +$149,663 vs the half, and the
-       CTO is asked whether to align them. Ledger bd-securities-cot-new-p1-m-20260926: R1 HELD for Monday's COT and BD
+       agrees on 935; 6 NAME:: duplicates serve fixed_income through a ticker sibling, +$149,663 vs the half. They are
+       ALIGNED to fixed_income on ~M's REC (served DELTA=0 verified, COT 19,510 + BD 108,849 rows; ledger
+       bd-securities-cot-new-align6-m-20260926 CLOSED @1d2b27a1c2). Ledger bd-securities-cot-new-p1-m-20260926: R1 HELD for Monday's COT and BD
        runs.
      - Part 2 (26 `other`) is signed and waits on the act-1 read-back (Monday) plus ~D's mapping on origin DEV.
      - **B_01b deploy PARKED by ~M** (see Parked): it is not in COT's scheduled chain, and a deploy would re-send the
