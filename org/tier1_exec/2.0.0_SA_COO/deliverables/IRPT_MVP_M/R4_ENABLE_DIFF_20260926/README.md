@@ -41,3 +41,24 @@ partitions pinned, all of them vanish.
 **Not covered here:** the classification table is DynamoDB, so it is NOT pinned. The class counts are therefore the
 table as of today, including Part 1 and the alignment. A table write between now and the enable fire changes them, and
 the enable half's re-run reads them fresh.
+
+## Addendum 1 (~17:3xZ): the INF name census (the CTO's condition on that line, msg 101360)
+
+The CTO accepted the first read and admits the INF names as their own line, with one condition: count INF display names
+that contain a run of 6 or more digits, or an email-like token, which could be an account number or a personal
+detail from a manual or held-away row. Print the count and the examples, then mask, drop or state why each is safe.
+
+Scanned on the pinned INF candidate (614e.../b681cc8d..., business date 2026-09-22): every SECURITY node's
+`display.label`, `display.description` and `company=` fact. 30,881 SECURITY nodes, 3,044 distinct name texts.
+
+- **Email-like tokens:** 0.
+- **6+ digit runs:** 8 distinct texts, 8 occurrences, each on one account. All are SECURITY identifiers carried in the
+  vendor's own product name, not an account number or a personal detail:
+  - `NHX203903 -- NH Portfolio 2039 (Fidelity Index)`, `NHB203907 -- NH Portfolio 2039 (Fidelity Blend)`,
+    `NH2036000 -- NH Portfolio 2036 (Fidelity Fund Port)`: New Hampshire 529 portfolio product codes. The digits are
+    the target year and a series suffix.
+  - `AZN-OLD02022026 -- AstraZeneca PLC ADR`, `TTE-OLD12092025 -- TotalEnergies SE`,
+    `TEVA-OLD09152026 -- Teva Pharmaceutical industries Ltd`, `THMR-OLD04152026 -- Thornburg Mortgage Inc`,
+    `OGI-OLD04032025 -- OrganiGram Global Inc`: pre-corporate-action tickers suffixed with the action date (MMDDYYYY).
+- **Disposition: SAFE, no mask or drop.** Each hit names a listed or registered security, and none carries a client
+  identifier. The same census re-runs on Monday's candidate; a new hit is dispositioned there before the schedule turns on.
