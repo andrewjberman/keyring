@@ -102,3 +102,41 @@ the served input `gold/canonical/holdings/2026-09-22.parquet` with the ghost exc
 only (`market_value > 0`, C_06:462), so the two agree. The rule would also drop the 3 personal-liability rows from D_03,
 and that delta is measured before the deploy. (b): deploy C_06 and D_04 only, and hold D_03 on today's code. The
 relationship composition then keeps the cash line as equity while C_06 shows cash.
+
+## Addendum 3 (~23:5xZ): ruling (a) built, and every moved D_03 scope measured (CTO 101616, CRO 101619)
+
+**Code:** `irpt-m-cot-cash-line` @0deac23f1e, still NOT merged.
+- `positive_rows()` in D_03 keeps `market_value > 0` before the ghost exclusion and the classification, as C_06:462
+  does.
+- New test `test_d03_composition_never_exceeds_100_with_a_negative_cash_line`. test_other_admission.py has 5 tests and
+  all 5 pass. The commit message says 6; that count is wrong.
+
+**Measurement:** `d03_positive_rows_diff.py` produced `D03_POSITIVE_ROWS_DIFF_20260926.json` (beside this file).
+- It runs D_03's own steps for BOTH versions (CLOUD code, then the branch) on `gold/canonical/holdings/2026-09-22.parquet`:
+  canonical holdings, the open filter, ghost exclusion, classification, the architect join (client_dimension fallback,
+  as D_03 does) and the canonical-AUA normalization.
+- It then calls each version's `_build_composition` for every scope.
+- **Scopes:** 1 firm, 222 relationships, and 0 advisor compositions (every architect resolves to Unassigned, for both
+  versions).
+
+**Results:**
+- **Over 100.0% (tolerance 0.05pp):** 0 of 223 before, and **0 of 223 after**. This is the pre-deploy form of condition
+  (2); the post-deploy read repeats it.
+- **Totals do not move for any scope.** D_03 scales each composition to the account_performance AUA (:382-386), so
+  dropping the negative rows changes the mix, not the total.
+- **Mix moves:** the firm plus **27 relationships** move by $1 or more, or by 0.005pp or more. Another 22 move by under
+  $1 (a rounding change in the AUA scale factor); they are listed by id in the JSON.
+  - All 17 cash-line net-negative relationships are among the moves; z09305667 (-$1.07) is in the under-$1 set.
+  - Largest: z09305653, cash 0.4% -> 82.5% (the $63.2M BD cash line); z09305727, 0% -> 17.6%.
+  - The firm's cash share goes from 3.50% to 15.33%.
+  - The JSON's `material_moves` has every row: before and after cash, equity and other, the largest class move, and the
+    largest pp move.
+- **The 3 personal-liability rows (condition 1), all in relationship z09305672:**
+  - rows: Mortgage -$544,000 (z0927135161), Car -$21,521 (z0927135171), Credit Card -$9,000 (z0927137001);
+  - total unchanged at $8,838,093.55;
+  - before: equity 79.65%, fixed_income 15.40%, alternatives 4.61%, cash 0.34%;
+  - after: 80.51%, 14.45%, 4.33%, 0.71%.
+- **Found, not fixed here:** the classifier puts those three liabilities in `equity`, and they are dropped only because
+  they are negative. Under Andrew-direct 02:3xZ ("the only context for other is personal assets ... their credit card
+  line"), they are `other`. Owner: ~M, under the R5 `other` admission, as its own measured half.
+- **C_06 (condition 3):** its delta is +$66,055,897.80 over the positive rows (addendum 2), replacing the $59.25M net.
