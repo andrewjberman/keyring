@@ -6384,3 +6384,85 @@ fanout:
 - The CORPUS render seam (FWD-10/11/15): the CTO's decision, not yet made (analysis s.4).
 - FWD-7's route covering the research folder (msg 25945); the portal promote; ACCEPT (carded); Z-S272; Z-S276; item 8, Z-S238,
   Z-S227, W85-S1 / W117-S3 / W58-S2.
+
+
+## 53. ROUND 45 -- THE DROPPED ABSENCE, ITS REDEPLOY, THE AC4 SAMPLE CHOSEN AGAINST ITS CLAUSES, AND THE ROWS MEASURED. Four orders over the round-44 analysis's five items
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 44 ANALYSIS** (`ledger/ROUND_ANALYSIS.round44.md` @`799381448c`, s.6 five
+items; round 44 CLOSED). The ratified-text half is SIGNED at v0.28 (@`e8534d7433`, FWD-31 and the FWD-23 amendment), so a newly-added
+order is not held by LIMB 6.
+
+### 53a. THE FIVE ITEMS AND WHERE EACH LANDS
+
+| s.6 item | lands in |
+|---|---|
+| 1 re-sample rs-1 AC4 against its FULL clause set | `AMGT-tt-3` (one cell with item 2: the sample and the traversal are the same capture) |
+| 2 clause (b): one served value observed traversing to the render | `AMGT-tt-3` builds post-deploy fixtures; the issuer's close run on 5174 renders them |
+| 3 the 14 row ids lacking `-Z-`, the BLOCKING one first | `AMGT-tt-4` (one cell with item 5: the two sets overlap on W130-S1) |
+| 4 FWD-30's dropped absence, 86 of 95, one per name | `AMGT-tt-1` (build) + `AMGT-tt-2` (served) |
+| 5 the 9 carried rows | `AMGT-tt-4` |
+
+### 53b. FOUR MEASUREMENTS THE CUT RESTS ON
+
+1. **The dropped absence is the POSTURE line, and it is the EXPORT that drops it.** The page shows the posture absence in TWO places:
+   the header's machine posture line and the Posture tab's line (`PostureTab.tsx:443`, "Posture: ABSENT -- <reason>. Nothing is
+   rendered in its place."). The export writes ONE (`render_pack._posture_markdown`, `:690`). Measured on the served capture read at
+   2026-09-26T13:29Z: RKT_LN_Equity's page carries the header form (ending "-- a machine's view for a person to accept or reject,
+   never an instruction.") and a tab form the export does not; AMD_US_Equity's page carries the header form ending "has not landed
+   one" (no trailing sentence) that the export does not. 86 of 95 names read `abs_missing` 1; 9 read 0.
+2. **The verdict never saw it.** The harness's OK predicate (`exportCompare.harness.cjs:489-497`) tests `pageAbsencesCoveredInRich`
+   -- a verbatim REASON found anywhere in the export -- and not `absDiff.missing`. So the round-44 close run's "OK 95 of 95" held
+   while 86 names dropped a line; that close run and row Z-S268's graduation rested on it. The base run of tt-1 AC2 reads OK on both
+   pinned pre-fix exports.
+3. **The AC4 sample's clauses need names with a render AND a `px_last`.** Clause (a) is met (48 of 48 SERVED cases name a currency).
+   Clause (b) was read on round 43's fixture (the page COMPUTED GBp); clause (c) reached 1 of 3 names (AMD, GOOGL had no render or
+   `px_last` in the evidence). The first-mint five of round 43 are AMD, GOOGL, LLY, PWR, UNH.
+4. **Of the 22 rows (14 unmarked + 9 carried, W130-S1 in both), 11 are open by `_latest_dispositions` (68 files, 627 items):**
+   W130-S1, W135-S1, W136-S1 and the eight carried `Z-` rows; the other 11 are GRADUATED or DISMISSED. Worker rows mint
+   `<CODE>-W<n>-S<k>` by the spine (CLAUDE.md rule 27), so the ids are correct; the defect is a census anchored on `-Z-`. The cell
+   measures each open row against the world now; the CVO dispositions at L9.
+
+### 53c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-tt-1` | THE EXPORT CARRIES EVERY PAGE ABSENCE, AND THE VERDICT COUNTS A DROPPED ONE | `~163` | worker | SERVED | `lib/research/print/render_pack.py`, `lib/research/print/tests/**`, `portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs` |
+| `AMGT-tt-2` | THE REDEPLOY | `0.7.0_AE_CloudOps~A` | seat order | WORLD | `infra/aws/terraform/harvest/**` (apply only), its deliverables, the ledger |
+| `AMGT-tt-3` | THE AC4 SAMPLE, CHOSEN AGAINST ITS CLAUSES | `~164` | worker-light | LOCAL | its deliverables only (one AWS read surface) |
+| `AMGT-tt-4` | THE UNMARKED AND CARRIED ROWS, MEASURED NOW | `~165` | worker-light | LOCAL | its deliverables only |
+
+### 53d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.6's five items; each lands in exactly one cell (53a). Nothing in s.6 is left uncut; s.6's "NOT a cell"
+  (carried item 3) is struck by the CTO and not cut.
+- **(ii) Same grain.** One build, one deploy, one sample, one measurement.
+- **(iii) Intent.** One axis: what the round-44 evidence claimed must be what the world shows, on every clause.
+- **(iv) What a cell does NOT move.** tt-1 moves no page file and no pdf path; tt-2 moves exactly its sign-off pair's radius; tt-3
+  and tt-4 write only their deliverables and move no row's disposition (the CVO's).
+
+### 53e. EDGES AND FAN-OUT
+
+```
+tt-1 -> tt-2   (the rich body the deploy serves)
+fanout:
+  cap: 2                               # site Z contention: 0.0.0_AB_MSTR~Z measured git status 380 ms paused vs 822 ms with ten seats live (16:18Z)
+  orders_total: 4
+  chains_total: 3
+  wave_0: [tt-1, tt-4]
+  wave_1: [tt-3]                       # when a wave-0 worker drains
+  wave_2: [tt-2]                       # a seat order: after tt-1 merges and both never-widen halves are committed
+  portal_ref: DEV
+  no_vite_per_worker: true
+  no_s3_deletes: true
+  no_vendor_call: true
+  egress: tt-2's build pip-downloads its pinned wheels (declared); tt-3 reads Opal's own deployed function (GET routes)
+  route_change: none
+  no_promote: true
+```
+
+### 53f. CARRIED
+
+- FWD-24: the team's own cited cases on the Model sheet (34 of 95 dossiers; the served "methodology to be discussed" reason is stale).
+  Not on s.6's list; carried to the CTO's round-45 analysis.
+- Raw float repr in served values (e.g. "537.6961078500001 USD"), recorded by the CVO at round 44, not held against the grade.
+- The portal promote; FWD-7's route coverage; the span write; the wiring class; ACCEPT (carded); Z-S287 (resolver).

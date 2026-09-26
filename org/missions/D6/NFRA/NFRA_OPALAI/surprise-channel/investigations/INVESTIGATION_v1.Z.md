@@ -940,6 +940,176 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-g-1 item 5: the owner's read-back carries portal_channels, so a portal-only grant never reads back as empty.",
     "world_is": "It does, at 9a28cfbbe6 on branch wk-NFRA_OPALAI-9 (LOCAL; not drained, not deployed). The live gateway still runs the pre-item-5 bytes until OA-g-2 deploys.",
     "notes": "This row does not disarm W9-S1; the issuer does. A side observation: the safe-commit call for 9a28cfbbe6 ran past a 120 s bound. The harness moved it to the background and it exited 0 with the commit landed, so the rc 124 shape did not arise."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S27",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T09:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-W9-S1"
+    ],
+    "one_line": "DISARMS NFRA_OPALAI-Z-W9-S1. OA-g-1 was amended with item 5 (@fb7efc02b8) and built at 9a28cfbbe6: app/admin_grants.py _grant_json now returns portal_channels whenever the grant carries them, so a portal-only grant no longer reads back as empty on the owner dashboard. g1.AC3 passes 3 of 3 on the issuer's re-run, and the work is drained to CLOUD @45ddd8d948.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "g1.AC3 on wk-NFRA_OPALAI-9 @c0d5df8623: 'pytest rc=0; named tests passed 3 of 3; failed/error lines 0' (includes test_admin_readback_shows_portal_channels).",
+        "Worker report: tests/test_admin_grants.py 5 passed (no moto needed)."
+      ]
+    },
+    "spec_asserts": "W9-S1: the owner's read-back omits portal_channels, so the grant OA-g-3 will write reads back as empty.",
+    "world_is": "The read-back carries portal_channels; Schwab-only grants read back unchanged.",
+    "notes": "The fix reaches the host with OA-g-2's release."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W8-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~8",
+    "surfaced_at": "2026-09-26T07:55Z",
+    "one_line": "TO-OA-f-2 guard (ii), as relayed at GO, polls https://<the gateway>/health and rolls back on anything but 200 within 90 s. The public https://mcp.opalinvest.dev/health can never read 200: the ALB answers it with a 302 to Entra login (Server awselb/2.0), so the request never reaches the gateway. It read 302 on 30 of 30 polls after the forward deploy while the gateway served healthy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Poll log /c/tmp/oa-8/.scratch/act.log: 30 polls of https://mcp.opalinvest.dev/health from 07:44:44Z to 07:47:23Z (the act exited 07:44:41Z), 30 of 30 http_code=302.",
+        "curl -D at 07:54:40Z: 'HTTP/1.1 302 Moved Temporarily', 'Server: awselb/2.0', 'Location: https://login.microsoftonline.com/<tenant>/oauth2/v2.0/authorize?...'. This is the ALB's authenticate-oidc default action (EC2_MANIFEST opal-gateway _status: 'default-action 302 to Entra'); the gateway process is not in the path.",
+        "Discriminators, same minute: public /mcp unauth 401 and public /.well-known/oauth-authorization-server 200 (both forwarded to the gateway); on-box http://localhost:8080/health 200 on 3 of 3 (ssm:0e97c001-f7b7-48e1-adbe-2bcd07418ef6); opal-gateway active since 07:43:23Z, NRestarts=0.",
+        "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh@c5f8099440:230-235 polls http://localhost:${GATEWAY_PORT}/health on the box right after the restart; it returned {\"ok\":true} inside its 30 s loop (ssm:6861b726-9f08-4a9f-9e0c-e870c5d5c373)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Guard (ii): immediately after the restart, poll /health (GO prompt: https://<the gateway>/health, host read from the deploy script); not 200 within 90 seconds -> run the rollback at once.",
+    "world_is": "The public /health path is behind the ALB's OIDC default action and returns 302 for every state of the gateway, healthy or down, so as a public read the guard cannot discriminate and would roll back every deploy, the rollback included. The deploy script's own /health read is on-box (localhost:8080) and returned 200. I took the on-box reads plus public /mcp 401 as the guard (ii) reading and did NOT roll back. The rollback stays ready (clean base tree /c/tmp/oa-8-rb at 0af72fb1d0).",
+    "notes": "Deviation from the letter of the GO prompt, measured and reported. Disarm: the issuer rules whether the on-box reading satisfies guard (ii) or orders the named rollback; a future order's /health guard names the on-box URL or an ALB path that forwards unauthenticated."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S28",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T09:50Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-W8-S3"
+    ],
+    "one_line": "DISARMS NFRA_OPALAI-Z-W8-S3 with a ruling: guard (ii) reads /health ON THE HOST, never the public URL. The public https://mcp.opalinvest.dev/health sits behind the load balancer's Entra sign-in (awselb/2.0) and returned 302 on 30 of 30 polls, whether or not the gateway was up. OA-f-2's worker read on-box /health 200 (inside the deploy script and 3 of 3 at 07:54Z), public /mcp 401 and the auth metadata 200, with the service active since 07:43:23Z and 0 restarts. That satisfies guard (ii), and not rolling back was correct. OA-g-2's face is amended to the on-box read in this commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker report 0.9.0_WK_NFRA_OPALAI~8 (proof @3cd49937ab, drained @837d4d1e1d): public /health 302 on 30 of 30; on-box /health 200; tools 46 = 46; f2.AC2 and f2.AC3 PASS.",
+        "Issuer's own read at 07:50Z: public /health 302; the live identity_scope.py md5 equals the release branch's."
+      ]
+    },
+    "spec_asserts": "OA-f-2 guard (ii): poll /health; if it is not 200 within 90 s, roll back.",
+    "world_is": "Only the on-box /health can answer that question; the public one never reaches the gateway.",
+    "notes": "MX-r-3's face is read for the same guard at its own spawn."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W9-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~9",
+    "surfaced_at": "2026-09-26T12:45Z",
+    "one_line": "OA-g-2 step 2 census: the release tree names FIVE gateway files, not the face's four. The fifth is app/admin_grants.py, which comes from 9a28cfbbe6 (OA-g-1 item 5). The issuer's hand-off names that commit, but the face's census list does not, and neither does the order's <paths>. The face says any other file means STOP and a BLOCKING row. Nothing has been deployed.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: `git -C /c/tmp/oa-9-rel diff --stat c5f8099440 HEAD -- infra/aws/ec2/opal-gateway` (rc=0, HEAD df724ef284) printed 5 files: app/admin_grants.py 10, app/asker_scope.py 24, app/data_entitlement.py 58, ops/schwab_entitlement_admin.py 47, tests/test_portal_grant.py 290; 411 insertions and 18 deletions. The whole-tree diff names the same 5 files and nothing outside infra/aws/ec2/opal-gateway/.",
+        "SPEC org/missions/D6/NFRA/NFRA_OPALAI/task-orders/NFRA_OPALAI.TO-OA-g-2.portal-grant-release.md@1d76febf04, section 1 step 2: the census names ONLY app/data_entitlement.py, app/asker_scope.py, ops/schwab_entitlement_admin.py and tests/test_portal_grant.py; 'Any other file: STOP, a BLOCKING row.' The <paths> list omits app/admin_grants.py.",
+        "CODE git show --stat 9a28cfbbe6: infra/aws/ec2/opal-gateway/app/admin_grants.py (+8/-2) and tests/test_portal_grant.py. This is the commit the issuer 2.0.0_SA_COO~O named in the OA-g-2 hand-off ('the admin_grants read-back plus its test'). The file ships in the host artifact under app/.",
+        "Each of the 5 files in the release tree is byte-identical to its version at 9a28cfbbe6 (md5 compared per file)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-g-2 step 2: the release census names only the four gateway files that OA-g-1 changed. Any other file means STOP and a BLOCKING row.",
+    "world_is": "OA-g-1 changed five gateway files, because item 5 (9a28cfbbe6, amended on row Z-W9-S1) added app/admin_grants.py after the face was cut. The census therefore reads 5 files. The release commit df724ef284 (LOCAL, branch rel-nfra-opalai-portal-grant-gateway) carries all five, under audited override use 1 of GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_OPALAI~9.",
+    "notes": "The worker does not judge whether the fifth file belongs in the release. That is the issuer's decision: either amend the census list and <paths> to include app/admin_grants.py, or cut a release without 9a28cfbbe6. Nothing was uploaded, nothing on the instance was changed, and no ledger was opened. The issuer asked for the remaining pre-GO local steps (step 3 rollback build, step 4(i) .env render and step 1 announcement), and those were completed."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W9-S4",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~9",
+    "surfaced_at": "2026-09-26T12:45Z",
+    "one_line": "In the OA-g-2 release tree, tests/test_portal_grant.py gives 2 failed and 5 passed. Both failures read org/standards/NFRA_OPLGTW_CONTRACT.json, which the release restores to the base (no portal_grant section), as the face and the issuer direct. The same file gives 7 passed on the CLOUD-merged tree with contract v1.2. Neither the contract nor ops/ nor tests/ ships in the host artifact.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED /c/tmp/oa-9-rel/infra/aws/ec2/opal-gateway `python -m pytest tests/test_portal_grant.py -q`: pytest rc=1, '2 failed, 5 passed'. The failures are test_admin_accepts_portal_only_candidate (KeyError 'portal_grant' at tests/test_portal_grant.py:221) and test_admin_rejects_unknown_portal_channel (the message was 'scope.portal_channels is not admitted by this contract (no portal_grant)', not the expected 'does not hold', at :258).",
+        "CONTROL /c/tmp/oa-9 (wk-NFRA_OPALAI-9 at 1e71306a97, CLOUD merged): the same test file gives pytest rc=0, '7 passed'.",
+        "CODE infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py@df724ef284:56 reads _CONTRACT_PATH = <repo>/org/standards/NFRA_OPLGTW_CONTRACT.json, and :193-195 rejects portal_channels when the contract has no portal_grant, so it fails closed.",
+        "CODE infra/aws/ec2/opal-gateway/deploy-to-ec2.sh@c5f8099440:94-98: the tarball carries app, deploy, requirements.txt, identity_tool_allowlist.txt and the dashboard bundle. It carries no ops/, no tests/ and no org/standards.",
+        "The other test files in the release tree: tests/test_asker_scope.py rc=0 '4 passed'; tests/test_identity_scope.py rc=0 '9 passed'; tests/test_admin_grants.py rc=0 '5 passed, 1 warning'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-g-2 step 2: run tests/test_portal_grant.py, test_asker_scope.py and test_identity_scope.py inside the release tree and record the results. The hand-off says to restore the contract under org/standards to the base.",
+    "world_is": "Two of the seven portal-grant tests depend on the repo contract at v1.2. With the base contract restored, they fail in the release tree while the host artifact code is unaffected. The operator command run from the release tree would refuse a portal-only candidate (fail-closed).",
+    "notes": "The result is recorded, not repaired, and no contract file was carried into the release. Whether this leaves the order open is the issuer's call."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S29",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T13:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-W9-S3",
+      "NFRA_OPALAI-Z-W9-S4"
+    ],
+    "one_line": "DISARMS NFRA_OPALAI-Z-W9-S3 and adjudicates W9-S4. W9-S3: OA-g-2's census list and <paths> omitted app/admin_grants.py, which is OA-g-1 item 5 (the owner read-back, 9a28cfbbe6). That is the issuer's omission when item 5 was added; the face is amended in this commit to include it, so the 5-file census is the correct one. W9-S4: test_portal_grant's 2 failures in the release tree read the repo contract (org/standards), which does not ship to the host; on the CLOUD-merged tree it passes 7 of 7. INERT, no act.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker 0.9.0_WK_NFRA_OPALAI~9 pre-GO report (announcement @b5f2d7afe5, drained @3f0798fdd0): census 5 files +411/-18, each byte-identical to 9a28cfbbe6; the rollback artifact is 75/75 byte-identical to the live base.",
+        "OA-g-1 amendment @fb7efc02b8 (item 5), drained @45ddd8d948."
+      ]
+    },
+    "spec_asserts": "OA-g-2 step 2: the census names ONLY the 4 files the face lists.",
+    "world_is": "The shipping set is 5 files; the 5th is the read-back fix the issuer itself added.",
+    "notes": "GO waits for outside US business hours (Z-S24): not before 21:05Z today."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S30",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-26T14:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "NFRA_OPLGTW's contract was amended v1.1 -> v1.2 (portal_grant) at 07:01Z by OA-g-1 (@da7749916d), on this seat's ruling (B) of 03:33Z, which said the contract 'may be amended'. At 04:01Z 3.0.0_SA_CVO~O ruled that no CTO act on OPLGTW issues from ~O until its CTO leg is re-seated here (@e470835e7c). This seat executed that verdict but never withdrew the earlier authorization, so an act the verdict parked went ahead on it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log on org/standards/NFRA_OPLGTW_CONTRACT.json: da7749916d 0.9.0_WK_NFRA_OPALAI~9 2026-09-26T07:01:09Z build(NFRA_OPALAI.TO-OA-g-1 ...).",
+        "git diff c5f8099440 HEAD -- org/standards/NFRA_OPLGTW_CONTRACT.json: contract_version 1.1 -> 1.2 and a new portal_grant block; absent_means 'the record parses exactly as contract v1.1'.",
+        "1.0.0_SA_CTO~O msg 25996 (03:33Z): 'The OPLGTW stop is lifted, so its contract may be amended.'",
+        "3.0.0_SA_CVO~O verdict @e470835e7c (04:01Z): 'Until then OPLGTW's round work stays with COO~O, and no CTO or CVO act on OPLGTW issues from ~O.'",
+        "NFRA_OPLGTW project.json leads.cto = 1.0.0_SA_CTO~A (unchanged at this row); the laptop release was asked at 04:58Z (msg 20260926T045815Z) and has not landed."
+      ]
+    },
+    "spec_asserts": "No CTO-leg act on NFRA_OPLGTW (its contract included) issues from the ~O fabric before the re-seat record lands.",
+    "world_is": "The contract carries an ~O-authored v1.2 amendment. It is additive and optional (absent_means v1.1), so no existing grant reads differently and nothing served moved on it. The contract text has not been ratified by OPLGTW's CTO leg.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "notes": "Inert because the amendment is optional and backward-compatible; the OA-g-2 release moves no current answer (sign-off @321a726fc6). Governance fork pitched to 3.0.0_SA_CVO~O: keep and ratify at the OPLGTW re-seat, or revert. Cause: the verdict narrowed an authorization this seat had issued 28 minutes earlier, and this seat did not withdraw it."
   }
 ]
 ```

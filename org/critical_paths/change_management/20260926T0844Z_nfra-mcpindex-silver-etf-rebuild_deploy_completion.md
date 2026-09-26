@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-26T08:44:38.514587+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20260926T105116Z
 **Deploy:** opal-assets-silver-etf rebuilt from CLOUD HEAD so the TrueShares holdings converter runs in production (NFRA_MCPINDEX MX-s-3)
 **Authored by:** 0.7.0_AE_CloudOps~I
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -12,61 +12,22 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | git | CLOUD: re-vendored 8 modules + BUILD_MANIFEST.json vendor_sha256 | commit hash of the source change and of its drain |  | OPEN |
-| L2 | s3-prefix | s3://opal-313476888478-lambda-artifacts/opal-assets/opal-assets-silver-etf.zip | build-and-upload.sh verified-write line (head-object ContentLength == local size AND content-sha256 metadata == this build's sha) |  | OPEN |
-| L3 | activation | module.silver_converter["etf"].aws_lambda_function.this via .tools/safe-apply.sh | get-function-configuration CodeSha256 == the new artifact content-sha256, LastModified after the apply |  | OPEN |
-| L4 | verify | terraform plan re-run after apply | 0-diff (No changes) on infra/aws/terraform/opal-assets |  | OPEN |
-| L5 | verify | deployed import-health smoke on the live function | invoke returns no Runtime.ImportModuleError and the handler imports etf_conversion |  | OPEN |
-| L6 | git | infra/aws/lambda/ci/lambda-source-map.json artifact_sha256 + the ledger close | commit hash |  | OPEN |
-| opal-assets-silver-etf | tf-lambda | module.silver_converter["etf"].aws_lambda_function.this | TF apply (0 destroy) + 0-diff replan + deployed source_code_hash matches uploaded sha + verify-on-served |  | OPEN |
+| L1 | git | CLOUD: re-vendored 8 modules + BUILD_MANIFEST.json vendor_sha256 | commit hash of the source change and of its drain | source re-vendored 753fe90fb1 (branch ae-i/nfra-mcpindex-silver-etf-rebuild), drained to CLOUD 37af228a0c via safe-merge (row gate clean on merged index); ledger-open e76b307c67. Shared-tree content oracle: vendored etf_conversion.py sha256 013dfca3b41c == git show 23efc28a2f:data/assets/scripts/silver/etf_conversion.py, converter occurrences 2. Suite data/assets/scripts/silver/tests/ 305 passed 11 skipped 0 failed. commit-gate exit 0, 5 of 5 clean. | CLOSED 20260926T092051Z |
+| L2 | s3-prefix | s3://opal-313476888478-lambda-artifacts/opal-assets/opal-assets-silver-etf.zip | build-and-upload.sh verified-write line (head-object ContentLength == local size AND content-sha256 metadata == this build's sha) | build-and-upload.sh opal-assets opal-assets-silver-etf, exit 0: 'write VERIFIED: size=60041, sha256 metadata match'. INDEPENDENTLY RE-READ by this seat, not taken from the builder: s3api head-object -> VersionId gesNxwjqa.Nwa872ryiKNhjy6D8TX0vc, content-sha256 ZyhzyrjuHLi9TfRC9CFSpvPHY6Rcyq/aPgseJafmuTg=, ContentLength 60041, LastModified 2026-09-26T09:05:22Z (prior version prXNS9i0cDwKGWlFPhbwER.0tMof8kGj retained = rollback). Downloaded and opened: 9 members, etf_conversion.py sha256 013dfca3b41c == repo source, _convert_trueshares_holdings occurrences 2, CR bytes 0 across all members (no CRLF ship). Import-closure gate: 9 packaged .py, every top-level import satisfied. | CLOSED 20260926T092052Z |
+| L3 | activation | module.silver_converter["etf"].aws_lambda_function.this via .tools/safe-apply.sh | get-function-configuration CodeSha256 == the new artifact content-sha256, LastModified after the apply | safe-apply.sh -chdir=infra/aws/terraform/opal-assets apply -auto-approve, exit 0. PLAN AS DECLARED, PASS BRANCH EXACTLY: 'Plan: 0 to add, 1 to change, 0 to destroy'; the only resource named is module.silver_converter["etf"].aws_lambda_function.this, updated in-place, with s3_object_version prXNS9i0cDwKGWlFPhbwER.0tMof8kGj -> gesNxwjqa.Nwa872ryiKNhjy6D8TX0vc and source_code_hash a14fYacwkjPlkj7P5qb7QGTKDeQ2A9GTnkM/t1rTxcs= -> ZyhzyrjuHLi9TfRC9CFSpvPHY6Rcyq/aPgseJafmuTg=, 28 attributes and 4 blocks unchanged. No sibling family, schedule, event rule, role, layer or the monolith_bronze notification singleton appeared. Result: 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.' LIVE READ AFTER: get-function-configuration CodeSha256 ZyhzyrjuHLi9TfRC9CFSpvPHY6Rcyq/aPgseJafmuTg= (== the artifact's content-sha256), CodeSize 60041, LastModified 2026-09-26T09:26:39.000+0000, State Active, LastUpdateStatus Successful. | CLOSED 20260926T094618Z |
+| L4 | verify | terraform plan re-run after apply | 0-diff (No changes) on infra/aws/terraform/opal-assets | terraform plan -detailed-exitcode on infra/aws/terraform/opal-assets AFTER the apply: EXIT 0. -detailed-exitcode is the sound oracle here (0 = no changes, 2 = a diff is present, 1 = error), so this is not a grep for the words. Output: 'No changes. Your infrastructure matches the configuration.' | CLOSED 20260926T094619Z |
+| L5 | verify | deployed import-health smoke on the live function | invoke returns no Runtime.ImportModuleError and the handler imports etf_conversion | Deployed import-health smoke, the one BUILD_MANIFEST/lambda_function.py name ('lambda_entry refuses loudly on anything that is neither an S3 event nor a sweep -- the import-health smoke expects exactly that designed refusal'). Invoked live with {"smoke":"import-health"}: StatusCode 200, FunctionError Unhandled, and the error is the MODULE'S OWN ValueError -- 'event carried no S3 records and no sweep mode -- refusing to silently no-op' raised at /var/task/etf_conversion.py:694 through /var/task/lambda_function.py:31. THAT IS THE DISCRIMINATOR: the designed refusal can only be raised by code that IMPORTED, so pandas/pyarrow via the layer and mirror_conversion -> stream_parquet all resolved. Runtime.ImportModuleError absent, 'Unable to import module' absent (both checked explicitly, not assumed from a 200). Init Duration 2444.32 ms, Max Memory Used 184 MB of 1024. requestId fe6c19ed-3fd7-48b8-a78e-abed4e554992. NOTE: line 694 is itself corroboration -- the pre-act zip's etf_conversion.py was 29130 bytes and had no such line. | CLOSED 20260926T094620Z |
+| L6 | git | infra/aws/lambda/ci/lambda-source-map.json artifact_sha256 + the ledger close | commit hash | 5f7b13787a -- lambda-assets source map: artifact_sha256 ZyhzyrjuHLi9TfRC9CFSpvPHY6Rcyq/aPgseJafmuTg= (written by build-and-upload.sh, which uses node), plus last_deployed_commit 69d825580d -> 753fe90fb1 and last_deployed_at 2026-07-15T23:24:56Z -> 2026-09-26T09:26:39Z written BY HAND. WHY BY HAND: record-terraform-deploy.sh exits 1 on this device (UnicodeDecodeError, byte 0x9d at position 32218; its reader at :259 is an unguarded open()). Row NFRA_MCPINDEX-Z-S12 filed, BLOCKING/INERT, disarm_owner 2.0.0_SA_COO~O; the tool NOT fixed, TO bound 1 forbids a shared-CI rider. The hand-written value reproduces the script's own documented rule -- the last commit touching the function's source_dir, explicitly NOT HEAD. BLAST RADIUS MEASURED, not asserted: every one of the 218 function rows was diffed against HEAD; exactly 1 moved, 3 fields, 3 insertions / 3 deletions. | CLOSED 20260926T105115Z |
+| opal-assets-silver-etf | tf-lambda | module.silver_converter["etf"].aws_lambda_function.this | TF apply (0 destroy) + 0-diff replan + deployed source_code_hash matches uploaded sha + verify-on-served | TF apply 0 destroy (0 added, 1 changed, 0 destroyed); 0-diff replan via -detailed-exitcode exit 0; deployed source_code_hash ZyhzyrjuHLi9TfRC9CFSpvPHY6Rcyq/aPgseJafmuTg= == the uploaded artifact's content-sha256 metadata, read from get-function-configuration and from s3api head-object independently. VERIFY-ON-SERVED: the live zip was downloaded from S3 and opened -- 9 members, etf_conversion.py sha256 013dfca3b41c == the repo source at 23efc28a2f, _convert_trueshares_holdings occurrences 2 (was 0), 0 CR bytes across all members. | CLOSED 20260926T094621Z |
 
 ## Log
 
 - 20260926T084438Z OPENED by 0.7.0_AE_CloudOps~I with 7 leg(s)
-
-## Blast radius and rollback per key (NEVER-2; measured BEFORE the act, not predicted from shape)
-
-**WRITE SET -- exactly two objects. Anything else in the plan is a STOP.**
-
-1. `s3://opal-313476888478-lambda-artifacts/opal-assets/opal-assets-silver-etf.zip` (bucket is VERSIONED).
-   PRE-ACT, read at 2026-09-26T08:3xZ via `s3api head-object`:
-     VersionId       prXNS9i0cDwKGWlFPhbwER.0tMof8kGj
-     content-sha256  a14fYacwkjPlkj7P5qb7QGTKDeQ2A9GTnkM/t1rTxcs=
-     ContentLength   51829
-     LastModified    2026-07-15T23:22:38+00:00
-   ROLLBACK: `s3api copy-object` that VersionId back over the same key, re-setting
-   `--metadata content-sha256=a14fYacwkjPlkj7P5qb7QGTKDeQ2A9GTnkM/t1rTxcs= --metadata-directive REPLACE`,
-   then re-run safe-apply. The old bytes are never deleted -- versioning is the rollback.
-
-2. Lambda `opal-assets-silver-etf`. PRE-ACT, `get-function-configuration`:
-     CodeSha256   a14fYacwkjPlkj7P5qb7QGTKDeQ2A9GTnkM/t1rTxcs=   (== the artifact's, so deployed == artifact)
-     LastModified 2026-07-15T23:24:02.000+0000
-     CodeSize 51829 | Runtime python3.11 | Memory 1024 | Timeout 900
-   ROLLBACK: restore (1), then safe-apply.
-
-**NOT TOUCHED, and why it cannot be.** The other six silver families (orion, eclipse, blackdiamond,
-schwab, smartx, bd49finsurance) each carry their OWN `artifact_key` -- `opal-assets/opal-assets-silver-
-<family>.zip` (silver.tf, module "silver_converter", for_each over local.silver_families). Rebuilding
-etf's key cannot move theirs, EVEN THOUGH THEY VENDOR THE SAME mirror-framework modules from the same
-repo source; each keeps the bytes it was last built from until it is rebuilt on its own motion. That is
-the standing drift this order does not close and does not widen to.
-
-**No env-var row.** `etf` is absent from `local.silver_build_commit` (only `schwab` is in that map), so
-the `contains(keys(...))` merge contributes nothing for this family and the environment block does not
-move. No schedule, event rule, IAM role, layer or the `aws_s3_bucket_notification.monolith_bronze`
-singleton is in this act.
-
-**EXPECTED PLAN, BOTH BRANCHES, read from the producer's own rule (modules/yang-lambda/main.tf:
-`s3_object_version = data.aws_s3_object.artifact.version_id`, `source_code_hash =
-data.aws_s3_object.artifact.metadata["content-sha256"]`):**
-  - PASS branch: exactly ONE in-place update, `module.silver_converter["etf"].aws_lambda_function.this`,
-    with `s3_object_version` and `source_code_hash` changing and nothing else. 0 to add, 1 to change,
-    0 to destroy.
-  - STOP branch: any other resource named, or any destroy -> NO APPLY, a BLOCKING surprise row, and this
-    ledger goes to HELD rather than CLOSE. TO bound 1 makes this refusal, not a judgment call.
-
-**Grant delta: NONE, measured.** `comp-iam service opal-assets-silver-etf` reads "No AWS operations
-detected" -- it parses only `lambda_function.py`, so that is a FLOOR and not an answer. The answer is the
-call-surface diff between the OLD vendored bytes (753fe90fb1^) and the NEW (HEAD) across all 9 files:
-services added NONE, calls added NONE, calls removed NONE; both sides read the same 4
-(`get_object`, `get_paginator`, `head_object`, `put_object`). No new grant need, so no BLOCKING row.
+- 20260926T092051Z LEG L1 closed: source re-vendored 753fe90fb1 (branch ae-i/nfra-mcpindex-silver-etf-rebuild), drained to CLOUD 37af228a0c via safe-merge
+- 20260926T092052Z LEG L2 closed: build-and-upload.sh opal-assets opal-assets-silver-etf, exit 0: 'write VERIFIED: size=60041, sha256 metadata match'. IND
+- 20260926T094618Z LEG L3 closed: safe-apply.sh -chdir=infra/aws/terraform/opal-assets apply -auto-approve, exit 0. PLAN AS DECLARED, PASS BRANCH EXACTLY:
+- 20260926T094619Z LEG L4 closed: terraform plan -detailed-exitcode on infra/aws/terraform/opal-assets AFTER the apply: EXIT 0. -detailed-exitcode is the 
+- 20260926T094620Z LEG L5 closed: Deployed import-health smoke, the one BUILD_MANIFEST/lambda_function.py name ('lambda_entry refuses loudly on anything t
+- 20260926T094621Z LEG opal-assets-silver-etf closed: TF apply 0 destroy (0 added, 1 changed, 0 destroyed); 0-diff replan via -detailed-exitcode exit 0; deployed source_code_
+- 20260926T105115Z LEG L6 closed: 5f7b13787a -- lambda-assets source map: artifact_sha256 ZyhzyrjuHLi9TfRC9CFSpvPHY6Rcyq/aPgseJafmuTg= (written by build-a
+- 20260926T105116Z CLOSED -- all 7 legs proven

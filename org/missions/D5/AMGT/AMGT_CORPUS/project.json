@@ -9,7 +9,7 @@
   "dep_stage": "EXECUTING",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-09-25T17:20:18Z",
+  "last_updated": "2026-09-26T16:40:10Z",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -49,8 +49,8 @@
     "THE BACKLOG POPULATION IS HIS, SEPARATELY. Andrew-direct ~18:3xZ, VERBATIM: 'all of the Research folders in the Opal Sharepoint Shared Asset Management/Research/ subfolder will be the basis for our backfill and initial pool.' Record ANDREW_DIRECT_20260922_183xZ_RESEARCH_FOLDERS_ARE_THE_BACKFILL_BASIS_AND_INITIAL_POOL.md. The folder list is a MEASURED DENOMINATOR (93 at the 2026-09-22 scan), never a transcribed list, and an unresolved folder is printed, never dropped.",
     "SENDING BLOOMBERG MODEL-BLOCK FIGURES TO THE CLAUDE API IS ALLOWED (same record, '3.) That is allowed.') -- this closes the CRO's card 1 for both this project and the addendum."
   ],
-  "phase": "L7 EXECUTING (round 5): ONE issuance of 4 orders CRPS-g-1..4 over decomposition v5.0 @09fb000683, cut from the round-4 analysis @2f9b10b7d3 + A1 -- g-1 the Base-case guard (refuse on EPS<=0 / no price / currency mismatch / outside [0.33, 3.0]; GBp reconciled; the ONE judgment criterion), g-2 dossier Model rows from the served block (Z-S36), g-3 the census's fence names, g-4 evidence for all 19 outcomes. Round 4 CLOSED (L10 @2f9b10b7d3): FWD-12 NOT REALIZED on limb 3.",
-  "blocking": "FWD-12 limb 3: 7 of 32 served Base cases implausible against their own price, and the slot the fence called ABSENT is filled by a machine formula; the dossier Model rows read no block (Z-S36). Upside/Downside methodology is a card at Andrew.",
+  "phase": "L8 (round 6): 5 of 5 orders CRPS-h-1..5 complete and drained (issuance @e52d265f5c), packet deliverables/2.0.0_SA_COO~X/ROUND6_DRAIN_END_PACKET.md handed to 3.0.0_SA_CVO~Z -- FWD-17 (b) read on the served table (IMB --write twice, wrote 0 both, DELTA=0); FWD-9 tristate library 0 unresolved 4; FWD-14 fence14 83/0/12 sum 95 outside 0; h-2's ratio census + workbook side-by-side laid out for AC4; h-5's terms built but its served rewrite HELD (Z-S45: the continuation readers would serve /2 on 49 of 95).",
+  "blocking": "Z-S45 (BLOCKING, held by Z-S46): the continuation readers take the first input-matching key by hash order, so FWD-18's served rewrite waits on a reader build. FWD-10, FWD-11, FWD-15 and FWD-12 limb 3 hold on AMGT_RESAPP's render (FWD-11 owned there by FWD-31 @c2c6c507d6; FWD-12 limb 3 data half MET @2dae84b5a9).",
   "threads": [],
   "thread_counter": 0
 }

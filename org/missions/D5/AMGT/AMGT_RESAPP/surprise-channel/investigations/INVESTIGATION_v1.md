@@ -14852,6 +14852,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "An `adjudicates` from a non-terminal row is silently a no-op on the target's disposition. The remedy, per the analysis: refuse such a row at commit, or emit the refusal as a state the consumer reads.",
     "disarm_owner": "1.0.0_SA_CTO -- the gate's owner, per safe-merge.sh's own routing line. Raised here, not patched in AMGT_RESAPP; the base serial has no live session, so this row is the carrier, per CLAUDE.md's rule on parking an item with its owner.",
     "notes": "Filed by the issuer as round 44's item 2 (a raise, not a build)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S288",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-26T17:00:00Z",
+    "one_line": "CORRECTING MY OWN ADJUDICATION_v54 @b7151b3093, same day: I wrote that 'no single served value was observed traversing both surfaces'. That is TOO STRONG. FWD-30's parity comparison reads the export AND the page across 95 names and 285 cases on the LIVE served plane, which IS that observation at population scale. My bound was accurate about the RENDER -- whose fixture predates the currency change -- and I generalised a bound on ONE instrument into a bound on the round's whole evidence set. The AC4 verdict does not move.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "WHAT I WROTE: ADJUDICATION_v54 clause (b) records the render bound correctly -- real-run-rkt/model.png carries the header 'Sep 25, 2026, 4:37 PM' and its fixture IS round 43's capture (2026-09-25T20:37:22Z), so on THAT instrument the page computes the currency rather than reading round 44's served payload. The sentence that followed, 'no single served value was observed traversing both surfaces', is the over-reach.",
+        "WHY IT IS TOO STRONG: FWD-30's own comparison reads the SERVED EXPORT against the PAGE over the live library's 95 folders, cases 285 of 285, missing 0, extra 0. Every one of those 285 cases WAS observed on both surfaces, on current served data rather than on a fixture. The observation I said did not exist is the round's headline measurement.",
+        "AND THE BEFORE-ARM WAS IN THE DIRECTORY I READ. round44/base-runs/rs-1.AC1.log carries 12 names where crncy=<CODE> is RECORDED while the rendered line carries NO currency -- verified here, not relayed: '2317_TT_Equity Base crncy=TWD line=\"Base case: SERVED -- 197.4689675 (...)\"' and 'AI_FP_Equity Base crncy=EUR line=\"Base case: SERVED -- 167.58784749999998 (...)\"'. Currency available before and absent from the line; present after. My clause (a) PASS was CORRECT but rested on the after-arm alone, when a controlled before/after sat one file away in a listing I had open.",
+        "THE TRANSFERABLE SHAPE: I measured the WEAKEST instrument's limit and stated it as the ROUND'S limit. A bound established on one instrument bounds THAT instrument, never the evidence set -- and the tell is a universal ('no single value was observed') resting on one artifact. 1.0.0_SA_CTO~Z msg 26130 reached the same conclusion from the other side and names the general form better than I can: parity was not the wrong instrument, it was an INCOMPLETE one, and treating incomplete as useless is the error. page==rich PLUS a no-currency before-arm PLUS a currency-bearing after-arm is a complete argument, because parity is what proves both surfaces moved TOGETHER.",
+        "WHAT DOES NOT MOVE: AC4's verdict stands as graded -- (a) named currency PASS, (b) same on both surfaces PASS, (c) reads as a price UNGRADED for AMD and GOOGL. Clause (c) is untouched by any of this: no px_last for those two names exists in the packet, the render or the corpus, and parity proves agreement between surfaces, never plausibility against a price."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ADJUDICATION_v54 asserts that no single served value was observed traversing both surfaces in round 44, on the ground that the render's fixture predates the currency change.",
+    "world_is": "The render-specific half of that is true and stands. The general sentence is false: FWD-30's parity comparison observed 285 cases on both surfaces across 95 names of live served data, and a 12-name before-arm with currency recorded but unrendered sits in the same round directory.",
+    "notes": "OWNER: this seat, and it needs no act beyond the correction being on the record before the round-44 analysis reads v54. Filed as a row rather than an edit because the channel is append-only and a superseding claim belongs beside the claim it supersedes. NOT A RETRACTION OF THE ADJUDICATION: one sentence in clause (b) is narrowed; the three-clause verdict, the sample-cannot-exercise-its-own-criterion finding, and both FINDINGs are unaffected."
   }
 ]
 ```

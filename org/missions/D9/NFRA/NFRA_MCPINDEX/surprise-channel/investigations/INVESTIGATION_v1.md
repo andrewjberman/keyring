@@ -1207,6 +1207,33 @@ carries none.
     "world_is": "Measured. It is 4 partitions, not 2; it is the dailynav feed; and it is a conversion failure on two well-formed, on-time deliveries. Why the conversion failed is STILL unmeasured -- reading the converter's own refusal for those two units is the next act, and it is a filepoint question outside this order's trueshares-only write surface. This row does not disarm Z-S6; it narrows it.",
     "disarm_owner": "2.0.0_SA_COO~O",
     "notes": "FILED AS A NEW ROW BECAUSE THE GATE WAS RIGHT AND I WAS WRONG. I first wrote this measurement INTO Z-S6 in place; .tools/surprise-row-gate.py refused the commit -- 'Corrections are NEW items citing the old id; an edited history is a history nobody can audit', with only a remediation row's own clocks permitted to advance in place. I had misapplied a supersede-in-place rule that belongs to a different artifact class. The mutation was reverted to Z-S6's exact HEAD bytes (verified: empty diff) and re-filed here. The audited override existed and was NOT taken: the gate was enforcing correctly, so the state to fix was mine. Remaining act for the owner is narrow: run the filepoint dailynav converter against those two bronze units, read its refusal, then either fix it or record the two dates as NAMED holes with a reason."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-26T10:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "record-terraform-deploy.sh -- step 7 of the canonical Lambda deploy sequence, and the writer Rule 4's source map depends on -- CANNOT RUN on any device whose default encoding is not UTF-8. Its reader at :259 is a bare open(source_map_path), and lambda-source-map.json carries 23 non-ASCII characters.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED, not inferred: `bash infra/aws/lambda/ci/record-terraform-deploy.sh opal-assets --function opal-assets-silver-etf --version opal-assets-v0.50.0 --author '0.7.0_AE_CloudOps~I <...>'` exits 1 with UnicodeDecodeError: 'charmap' codec can't decode byte 0x9d in position 32218.",
+        "THE DEFECT, LOCATED: record-terraform-deploy.sh:259 is `with open(source_map_path) as f:` -- no encoding= argument, so Python takes locale.getpreferredencoding(False), which reads cp1252 on this device.",
+        "THE DATA: infra/aws/lambda/ci/lambda-source-map.json is 288159 bytes and holds 23 non-ASCII CHARACTERS -- counted as sum(1 for ch in text if ord(ch) > 127), never as a byte delta (CLAUDE.md section 4). Byte 32218 is 0x9d, which is UNDEFINED in cp1252; that is why it raises loudly instead of decoding wrong.",
+        "The failing bytes are PRE-EXISTING mojibake -- the context reads 'image <mangled> CI updates image_uri via', i.e. a UTF-8 em-dash that already round-tripped through cp1252 once. A git log pickaxe over that character dates it to 2026-02-25 and 2026-03-10 across four authors. NOT introduced by this order.",
+        "DISCRIMINATING CONTROL, both arms run on the same file: json.load(open(path)) raises UnicodeDecodeError at 32218; json.load(open(path, encoding='utf-8')) returns OK. The file is valid UTF-8. The reader is what is wrong, not the data.",
+        "NOTHING WAS HALF-WRITTEN: the script is set -e and the failure is in the reader, before any write. git status after the exit-1 shows only the artifact_sha256 change build-and-upload.sh had already made. Verified, not assumed.",
+        "A HYPOTHESIS OF MINE, REFUTED, AND RECORDED AS REFUTED. I expected the WRITER at :340 (`with open(source_map_path, 'w') as f:`, equally unguarded) to be the worse half -- a silent cp1252 re-encode corrupting the shared map for all 218 functions. MEASURED ON THIS DEVICE: it does not. json.dump defaults to ensure_ascii=True, so every non-ASCII character leaves as an escape and nothing unencodable ever reaches the codec. The unguarded write SUCCEEDED and its output re-read as UTF-8 with 0 replacement characters. The writer is safe by accident of a default rather than by design, but it is safe. Filing the claim I could prove instead of the one I expected to prove."
+      ]
+    },
+    "spec_asserts": "cloud-ops Rule 4 makes lambda-source-map.json the pairing record every Lambda must carry an entry in, and build-and-upload.sh's own 'Full deployment sequence' names step 7 as `record-terraform-deploy.sh {pipeline} --version ... --author ...`, the act that closes a Terraform Lambda deploy and sets last_deployed_commit / last_deployed_at.",
+    "world_is": "On site Z that step is UNRUNNABLE -- it exits 1 before doing anything. Any AE deploying a Lambda from a Windows device silently loses the last_deployed_commit / last_deployed_at half of Rule 4's record unless they read the exit code and route around it by hand. build-and-upload.sh's own artifact_s3_key / artifact_sha256 write is UNAFFECTED -- it goes through node, not this reader -- so the map looks half-updated rather than untouched, which is the shape that hides the miss.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "SCOPE: not fixed here, deliberately. TO-MX-s-3 bound 1 is 'One function's code. No schedule, event rule, role, layer or other function changes', and record-terraform-deploy.sh is shared CI tooling for 218 functions -- editing it mid-deploy is exactly the rider that bound forbids. The fix is one argument in two places (encoding='utf-8' at :259 and :340; the writer does not need it today but is one ensure_ascii=False away from needing it, so both). FOR THIS DEPLOY the two fields were written BY HAND, reproducing the tool's own documented rule rather than inventing one: last_deployed_commit = the last commit touching the function's source_dir (753fe90fb1), explicitly NOT HEAD (4dc8fa1221) -- the script's own :198-210 note records that a HEAD-derived or files[]-derived value makes verify-local.sh report non-packaged files as undeployed change. The hand-write is recorded here so it is auditable as a workaround and never mistaken for the tool having run."
   }
 ]
 ```

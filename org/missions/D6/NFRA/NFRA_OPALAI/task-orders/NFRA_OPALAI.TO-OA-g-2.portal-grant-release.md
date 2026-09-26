@@ -46,8 +46,9 @@ In order:
      cherry-pick --no-commit` OA-g-1's commits, restore every file outside `infra/aws/ec2/opal-gateway/` to the base, and
      commit under your serial.
    - Census: `git -C /c/tmp/oa-9-rel diff --stat <base> HEAD -- infra/aws/ec2/opal-gateway` names ONLY the gateway files
-     OA-g-1 changed (`app/data_entitlement.py`, `app/asker_scope.py`, `ops/schwab_entitlement_admin.py`,
-     `tests/test_portal_grant.py`). Any other file: STOP, a BLOCKING row.
+     OA-g-1 changed (`app/data_entitlement.py`, `app/asker_scope.py`, `app/admin_grants.py`,
+     `ops/schwab_entitlement_admin.py`, `tests/test_portal_grant.py`). (AMENDED on row Z-W9-S3: `app/admin_grants.py` is
+     OA-g-1 item 5, the owner read-back, and ships.) Any other file: STOP, a BLOCKING row.
    - Put the nested `mcportal` checkout at `a3bff71ffa3f5c73aa0fb7ea1e7386434e233054` for the bundle build.
    - **The issuer authorizes the audited `GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_OPALAI~9` for exactly the
      release-branch commit(s).** Name each use in your report.
@@ -62,7 +63,9 @@ In order:
 4. **Guards (from the 2026-09-25 outage, row `NFRA_MCPORTAL-Z-W2-S7`):**
    - (i) render the release tree's `.env` `printf` line locally with a distinct marker per `%s`, and show every marker
      on its own key (markers only, no secrets). Any misalignment: STOP.
-   - (ii) immediately after the restart, poll `/health`; not 200 within 90 seconds -> run the rollback at once, close
+   - (ii) immediately after the restart, poll `/health` ON THE HOST over SSM (`curl -s -o /dev/null -w %{http_code}
+     http://127.0.0.1:<port>/health`; the public URL sits behind the load balancer's Entra sign-in and always returns 302,
+     row NFRA_OPALAI-Z-W8-S3); not 200 within 90 seconds -> run the rollback at once, close
      the entry as rolled back, and stop.
    - (iii) list the registered MCP tool names on the host before and after (on-box, the service's own venv and
      `.env`). The difference must be empty; a non-empty difference means roll back.
@@ -93,6 +96,7 @@ In order:
 infra/aws/ec2/EC2_MANIFEST.json
 infra/aws/ec2/opal-gateway/app/data_entitlement.py
 infra/aws/ec2/opal-gateway/app/asker_scope.py
+infra/aws/ec2/opal-gateway/app/admin_grants.py
 infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py
 infra/aws/ec2/opal-gateway/tests/test_portal_grant.py
 org/critical_paths/change_management/

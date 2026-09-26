@@ -104,3 +104,15 @@ Tier-2 seat).
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+<status>complete</status>
+<!-- complete flipped by 0.7.0_AE_CloudOps~I 2026-09-26T12:2xZ. AC1 PASS exit=0, AC2 PASS exit=0, AC3 PASS exit=0.
+     Instance: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~I/NFRA_MCPINDEX.TO-MX-s-3.silver-etf-rebuild.proof_of_spec.json
+     proof-of-spec-check VALID (rc=0), re-run by this seat after 2.0.0_SA_COO~O added the MX-s-3 decomp row @9f323d492d.
+     Live: opal-assets-silver-etf CodeSha256 ZyhzyrjuHLi9TfRC9CFSpvPHY6Rcyq/aPgseJafmuTg=, LastModified 2026-09-26T09:26:39Z.
+     Ledger nfra-mcpindex-silver-etf-rebuild CLOSED at 547cd9f613, 7 of 7 legs proven, sentinel removed.
+     One row raised: NFRA_MCPINDEX-Z-S12 (record-terraform-deploy.sh reader, BLOCKING/INERT), ruled into MX-s-5.
+     The APPEND is deliberate: the earlier tag above is left standing, because an order's status history is
+     append-only and the LAST tag is the live one. This comment deliberately does NOT spell the earlier tag
+     out -- a first draft did, and a literal copy of it inside this comment became a THIRD tag that won the
+     last-tag read and silently reverted the flip. A status parser cannot tell prose from a tag. -->

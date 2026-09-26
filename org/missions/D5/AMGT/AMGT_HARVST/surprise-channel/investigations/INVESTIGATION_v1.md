@@ -1384,6 +1384,203 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "The cell's section 3 names the held payloads as 'sa and wsj pages already on disk' and AC2 speaks of 'wsj's held listing payload' as the positive control, without distinguishing the two wsj pages.",
     "world_is": "Only one of the two held wsj pages produces listing rows. The second is a real captured page whose search result set is empty, so it can serve as a control for row-set identity (0 == 0) but carries no schema and no rows. AC2 was run over BOTH and states the per-page counts and the 20-row denominator explicitly rather than reporting '2 wsj pages compared'.",
     "notes": "NOT A DEFECT CLAIM ABOUT THE EXTRACTOR -- an empty searchResults is faithfully zero hits, and returning [] is the correct reading of those bytes. INERT because nothing operates on this automatically; it is a denominator correction for whoever counts wsj listing coverage, and for the round-7 analysis, which will otherwise read two held wsj pages as two populated ones."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W22-S1",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~22",
+    "surfaced_at": "2026-09-26T10:15:19Z",
+    "one_line": "AC2'S 25-NAME CEILING IS UNREACHABLE IN ONE INVOCATION BY CONSTRUCTION: `--max-jobs 8` caps JOBS (securities x publishers), not securities, so the literal invocation can ATTEMPT only 8 of the 89 resolved names -- the binding ceiling of this call is 8, and 25 is the ceiling of the POPULATION, not of the act.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worker.py:332 builds `jobs = [(s, p) for s in securities for p in publishers]` and worker.py:341 executes `for _ in range(count)` where `count = max_jobs`, so `--max-jobs 8` with `--publishers sa` executes exactly 8 (security, sa) jobs of the 89 available.",
+        "Measured zero-network before the capture (scripts/ac2_ceiling.py, output ac2_ceiling_output.txt): `--all-securities resolves: 89`; `carry a usable sa_symbol: 25 of 89`; `carry a usable ticker, WHOLE POPULATION: 32 of 89`; `carry NEITHER: 45 of 89`; subtraction check 25 + 19 + 45 = 89. The amendment's 25/32/45 all reproduce; its '32 carry a ticker' is the whole-population count and 19 is the ticker-only slice (13 rows carry both).",
+        "Same output, the job cap printed with its denominator: `jobs = 89 securities x 1 publisher(s) = 89; --max-jobs 8 executes 8 of them`, plan cursor 0, and the 8 names the cursor selects are ASML, Adobe, Air Liquide, Alibaba, America Movil, AstraZeneca, BB Seguridade, BNP Paribas -- `of the 8 attempted: 8 carry a usable sa_symbol, 0 do not`.",
+        "So the criterion's skipped-for-missing-symbol arm is STRUCTURALLY ZERO for this invocation (0 of 8), not because no such names exist (64 of 89 lack a symbol) but because the cursor's first 8 all carry one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDMENT 1 and AC2's <expect>: 'the expected upper bound of this capture is 25 names, not 89 ... A count BELOW 25 is an accepted outcome reported with its cause; a count ABOVE 25 means the symbol census is wrong and is a finding'.",
+    "world_is": "The capture's upper bound is min(--max-jobs, names carrying a symbol reachable from the cursor) = 8, so a count below 25 was guaranteed before the call was made and carries no information about the symbol census. The 25 is a true property of the POPULATION (re-measured here, it reproduces exactly); it is not a property of ONE invocation of this criterion's literal command.",
+    "notes": "INERT: nothing acts on this automatically and no served artifact is wrong -- it is a denominator correction for the round-7 analysis, which would otherwise read '1 of 89 names captured' as an 89-name or 25-name attempt that mostly failed. The cursor is PERSISTENT per plan (worker.py:336-338), so a second identical invocation attempts the NEXT 8 names rather than repeating these; reaching all 25 symbol-carrying names needs repeated invocations, which this cell's BOUNDS forbid (ONE capture invocation, no retry loop)."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W22-S2",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~22",
+    "surfaced_at": "2026-09-26T10:15:19Z",
+    "one_line": "ONE SLOW ARTICLE BODY COST THE WHOLE BATCH: job 1's Timeout set a PUBLISHER-LEVEL cooldown, and the remaining 7 jobs of the same invocation finished `status: cooldown, accepted: 0` within 30 ms -- so 1 of 8 attempted securities was actually queried, and a per-security failure is charged to every later security in the run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC2's own recorded output (ac2_run_output.txt, 8 lines, all of stdout): job 1 `security-81a74ed057551e58` (ASML) `status: error, accepted: 2` at 09:47:18.904Z; jobs 2-8 `status: cooldown, accepted: 0` at 09:47:18.906Z through 09:47:18.934Z -- 30 ms for seven jobs, i.e. no request was made for any of them.",
+        "The producer's own run receipt for job 1 (.runtime/opal-data-harvest/runs/20260926T094447Z-sa-ee1fa71c16.json): `error_type: Timeout`, `accepted` 2 articles (sa:4640871, sa:4640637), `auth_refreshes: 0`, `verification_repairs: 0`, `retry_at: 1790416938.899476`.",
+        "The vendor plane confirms the shape: events.jsonl for the window holds exactly 4 http rows, all 200 -- /api/v3/account/1btfwdu/info (5149 B), /api/v3/symbols/asml/news (154875 B), /api/v3/articles/4640871 (10354 B), /api/v3/articles/4640637 (9868 B) -- then nothing until the eight job_finished rows. articles_per_security is 5, so the Timeout fell on the THIRD body request.",
+        "The cooldown is keyed by PUBLISHER, not by security: progress.sqlite3's `cooldown` table carries one row per publisher ('sa', 'wsj', 'bbg', 'ft', 'barrons'), and ac2_ceiling.py printed the pre-run rows with expiries already in the past (sa 1790125229.93 vs now ~1790412967), which is why job 1 ran at all.",
+        "CONSEQUENCE, measured not inferred: the capture landed 1 listing page (20 rows) + 2 article bodies from 1 security, not from 8. AC2's upload leg then put exactly that: sa listing_hit +20, bronze news_listing +1, silver article parts +2 (ac2_upload_output.txt)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2's <expect> asks for 'how many were attempted, how many skipped for a missing symbol, how many returned rows, each with its denominator', which presumes the per-security outcomes of one invocation are independent.",
+    "world_is": "They are not independent. A single transport Timeout on one article body of one security sets a publisher-level cooldown that suppresses every remaining job in the SAME invocation without a request. Attempted 8 of 89; queried 1 of 8; suppressed by cooldown 7 of 8; skipped for a missing symbol 0 of 8; returned rows 1 of 8.",
+    "notes": "ARMED because it is a live mechanism, not a one-off: any future cut that widens the batch to reach the 25 symbol-carrying names gets, in the worst case, ONE name per invocation, and the failure is silent in the sense that it reports rc 0 with seven zero-row jobs. NOT A DEFECT CLAIM AND NOT FIXABLE HERE -- the cooldown is a deliberate politeness mechanism and `lib/` is outside this cell's write grant. DISARM OPTIONS, all the issuer's: (a) cut the batch as N invocations of --max-jobs 1 and accept the cursor's advance as the progress record; (b) state in the criterion that the expected yield of ONE invocation is 1 name whenever any job errors; (c) ask the code owner for a per-security rather than per-publisher cooldown on a transport Timeout. This cell reports the numbers with their denominators rather than working around the bound (no retry loop was run)."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W22-S3",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~22",
+    "surfaced_at": "2026-09-26T10:15:19Z",
+    "one_line": "THE LISTING-ROW JOIN CANNOT SEE A SYMBOL-QUERIED PAGE: `_listing_hit_security_match` word-bounds a security's ALIASES against the row's `search_query`, but sa is queried by VENDOR SYMBOL, so all 20 drained LNVGY rows file under NO security in the 6-name gold population (0 of 6 sa spans, 0 of 1614 daily rows moved) while the 20 ASML rows file 20 of 20 -- for the accidental reason that ASML's company name IS its sa_symbol.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "publication_gold.py:476-481: `query = row.get('search_query') or ''; return any(_alias_pattern(alias).search(query) for alias in _security_aliases(security))`, and _security_aliases is `security.get('aliases') or [security['company']]` (:128-131). The matcher never reads the row's title, content or url.",
+        "The held sa page was queried by symbol: harvest_listing_outbox row id 3 carries `query = 'LNVGY'`, and the 20 silver rows carry `search_query = 'LNVGY'` (ac4_evidence.json). 992_HK_Equity's alias set is ['Lenovo'] (printed in ac4_output.txt), and `(?<!\\w)Lenovo(?!\\w)` does not match 'LNVGY'.",
+        "AC3, population A (the 6 securities `build_daily` is actually invoked with): `securities for which sa NOW yields a NON-EMPTY span: 0 of 6`; data_status distribution unchanged at {'DENIED': 1613, 'PARTIAL': 1} over 1614 rows; `rows that MOVED at all: 0 of 1614`. That +0 is fully explained by this row and by nothing else -- the 20 rows ARE in silver (AC1 sa delta +20).",
+        "AC3, population B (the 89-name universe): `1 of 89` -- security-81a74ed057551e58, span (2026-07-15, 2026-09-26), 74 of 23941 rows DENIED -> PARTIAL, publishers_covered 1 of 5. That security's company name is 'ASML' and its sa_symbol is 'ASML', so the alias matched the symbol by coincidence of spelling.",
+        "AC4's census over all 40 sa rows: population A files 0 of 40 rows under any key; population B files 20 of 40 (every ASML row, no LNVGY row). EIGHT of the 20 LNVGY titles literally contain 'Lenovo' ('Lenovo inks MOU with MemryX...', 'Lenovo gets upgraded to Buy at BofA...', 'Lenovo Group jumps on strong Q1 revenue...', and five more, counted over the 20 rows in ac4_evidence.json), so the information the matcher needs is present in the row and is not read."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell's section 1: 'publisher_coverage builds each publisher's coverage SPAN from listing_hit rows, and daily_rows grades data_status from those spans', with AC1's held rows as the free evidence that the drain moves the grade.",
+    "world_is": "Reaching silver is necessary but not sufficient: a listing row moves a security's grade only if the security's ALIAS SET word-bounds the string the vendor was QUERIED with. For sa that string is a symbol, so coverage lands only where a company name happens to equal its symbol. The rows landed (+20, +20) and the grade moved 0 rows in the population the gold builder uses.",
+    "notes": "ARMED: left alone, every future sa capture adds silver rows that can never become coverage for a symbol-queried name, and the resulting chatter_daily reads DENIED while the bytes are held -- a false negative in a served grade rather than a missing row. NOT FIXABLE HERE: lib/research/harvest/publication_gold.py is outside this cell's write grant and HVST-v-1 owns the code half of round 7. DISARM OPTIONS, the issuer's to cut: (a) add each security's sa_symbol/ticker to its alias set in the securities the gold builder is invoked with (data, not code); (b) match on the row's own vendor symbol field rather than on search_query; (c) carry the security_key on the listing_hit row at capture time, where the producer already knows it (the job is per-security). Option (a) is the smallest and is testable against the 40 rows already in silver."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W22-S4",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~22",
+    "surfaced_at": "2026-09-26T10:15:19Z",
+    "one_line": "THE ORDER ON DISK AND THE WORKER FACE NAME DIFFERENT SCRIPT PATHS: AC1/AC3's literal invocations in the committed task order run `.scratch/r2/ac1.py`, while the face this worker was spawned with redirects them to the deliverables folder and forbids `.scratch/` -- the proof instance therefore cites an invocation that differs from the order's bytes at HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The order at HEAD (org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-v-2.drain-what-is-held-then-capture.md, section 5): AC1 `<invocation>cd \"$(git rev-parse --show-toplevel)\" && python .scratch/r2/ac1.py</invocation>`, AC3 the same shape, plus 'Write `.scratch/r2/ac1.py` and `ac3.py` yourself' and section 3's 'Plus `.scratch/r2/` in your worktree'.",
+        "The spawn face, verbatim: 'PUT YOUR CHECK SCRIPTS IN org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~22/scripts/ AND COMMIT THEM -- not in .scratch/. Slot ~21's order sent them to .scratch/, which the drain destroys', and it restates AC1/AC3's invocations against that path.",
+        "RESOLUTION TAKEN, stated so no reader has to guess: the FACE was followed (scripts committed under the deliverables folder, nothing written to .scratch/), because the face's reason is mechanical -- a .scratch/ script does not survive the drain and cannot be re-read by the grader -- and because that path is inside this cell's <paths> write grant while .scratch/r2/ is granted too but not durable.",
+        "Both forms of each invocation were run from the repo top-level as the criterion requires; only the script's PATH differs, and the script bytes are identical because there is one copy."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1 and AC3 declare LITERAL invocations naming `.scratch/r2/ac1.py` and `.scratch/r2/ac3.py`.",
+    "world_is": "The executed invocations name org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~22/scripts/ac1.py and .../ac3.py, per the spawn face's explicit redirection. The proof-of-spec instance records the executed path.",
+    "notes": "INERT -- a citation-form divergence, not a measurement one; the grader can re-run both criteria from the committed scripts, which is what the face's redirection was for. Filed rather than silently reconciled because 'the invocation is literal' is the rule that makes a criterion re-runnable, and a future reader diffing the order against the instance would otherwise find a mismatch with no recorded cause."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W22-S5",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~22",
+    "surfaced_at": "2026-09-26T11:17:52Z",
+    "one_line": "THE FLIP IS BLOCKED, NOT THE WORK: `proof-of-spec-check.py`'s invocation-alignment limb REFUSES this instance (rc=1) because AC1's recorded invocation names the deliverables path the SPAWN FACE ordered while the task-order FILE still names `.scratch/r2/ac1.py` -- and AC1 cannot be re-run from the literal path without a SECOND `upload-harvest` invocation, which the cell's BOUNDS forbid.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The gate's own words, verbatim: `VIOLATION: invocation-alignment[AC1]: the RECORDED invocation is NOT the criterion's invocation modulo the placeholder(s) ['MAIN_TREE']. TO-CRITERION: cd \"$(git rev-parse --show-toplevel)\" && python .scratch/r2/ac1.py / INSTANCE-RECORD: cd \"$(git rev-parse --show-toplevel)\" && python org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~22/scripts/ac1.py ... -- a correction that reaches the spawn prompt and never the task-order FILE leaves the record ungoverned; the prompt is gone, the record is what the CVO grades (IRPT_FNTEND-S31)`. Invocation `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4`, rc=1, `invocation-frame: placeholders DECLARED ['MAIN_TREE'] -> ENFORCE`.",
+        "THE FACE AND THE FILE DISAGREE, and the divergence is the issuer's own correction: the spawn face says 'PUT YOUR CHECK SCRIPTS IN org/.../deliverables/0.9.0_WK_AMGT_HARVST~22/scripts/ AND COMMIT THEM -- not in .scratch/. Slot ~21's order sent them to .scratch/, which the drain destroys, and the issuer could not relocate them afterwards', and it restates AC1/AC3's invocations against that path. The FILE at HEAD still carries `.scratch/r2/`. Filed at OBSERVATION strength as AMGT_HARVST-Z-W22-S4 before the gate was run; this row is the MECHANICAL CONSEQUENCE, measured.",
+        "AC3's half of the same divergence IS DISCHARGED, which is how we know the path is the whole cause: ac3.py was copied to `.scratch/r2/ac3.py` (`cmp` -> byte-identical) and the criterion's LITERAL invocation was run from there; output diffed against the first run -> IDENTICAL, and the limb now reports AC3 as matching (`1/3 comparable row(s) match`).",
+        "AC1 CANNOT BE DISCHARGED THE SAME WAY, and this is the part that is not a worker's to fix: AC1's act is a ONE-SHOT drain. Its BOUNDS read 'ONE invocation of the uploader for the held rows (AC1) ... No retry loop', and the outbox is now empty -- a second run of the same script would make a SECOND `upload-harvest` invocation (out of bounds), print `sa +0` instead of the `+20` the criterion asks for, and OVERWRITE ac1_before_after.json, whose pre-cell record keys are AC3's BEFORE arm. Re-running to satisfy a path string would destroy the evidence it is supposed to certify.",
+        "NOT A WORKER'S EDIT EITHER: rule 27 gives criterion amendment to the ISSUER ('The issuer amends its own task-order criteria WITHOUT a CTO ruling'), and a worker amending the criterion it is graded on would be self-grading. The task-order file is in this cell's <paths> only so the <status> can be flipped."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1's <invocation> in the committed order: `cd \"$(git rev-parse --show-toplevel)\" && python .scratch/r2/ac1.py`, with the worker rule that rc 0 from proof-of-spec-check plus PASS-by-output on every mechanical criterion is what licenses the <status> flip.",
+    "world_is": "All three mechanical criteria PASS BY OUTPUT (sa silver listing_hit +20 then +20, the capture's split printed with denominators, 74 of 23941 rows DENIED -> PARTIAL with COMPLETE appearing 0 times), and the instance is refused by ONE limb on ONE row for a script PATH the issuer itself redirected. The order therefore stays `pending` and this row is the worker's final report on the flip.",
+    "notes": "DISARM, the issuer's and cheap: amend AC1's (and AC3's, for symmetry) <invocation> in the order FILE to `python org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~22/scripts/ac1.py`, naming in the amendment commit which gate limb graded the modification, then re-run `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4` -- the instance needs NO other change for AC1. A SECOND blocker rides the same rc (row AMGT_HARVST-Z-W22-S6) and must be disarmed too, or the rc stays 1. GENERAL, not local to this cell: any face-level correction of an invocation reproduces this exactly, which is why the gate's message names the pattern rather than the cell."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W22-S6",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~22",
+    "surfaced_at": "2026-09-26T11:17:52Z",
+    "one_line": "A PLACEHOLDER CANNOT EXPAND TO A PATH WITH A SPACE: the invocation-alignment limb builds `(\\S+)` for each declared placeholder, and site Z's MAIN_TREE is `C:/Users/Opal Bloomberg/Desktop/ajb_workspace` -- so AC2's record diverges on ONE SPACE while every other character is identical, and no faithful record of this invocation can pass the limb on this device.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The mechanism, read at the bytes: `.tools/proof-of-spec-check.py:1355-1372` `_invocation_pattern` -- 'literal everywhere, `(\\S+)` at each occurrence of a placeholder ... `\\S+` cannot cross whitespace or a newline'. The built pattern around the token, printed: `-grammar\\ \\-\\-runtime\\-root\\ \"(\\S+)/\\.runtime/opal\\-data\\-harvest\"\\ \\-`.",
+        "POSITIVE CONTROL, run against the checker's OWN function: the string AS RUN (`--runtime-root \"C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest\"`) -> `re.fullmatch` False; the SAME string with the single space removed from the expansion only (`.../OpalBloomberg/Desktop/...`) -> True. One space is the entire difference, measured, not inferred.",
+        "The gate's verbatim complaint confirms the two strings are otherwise character-identical: `TO-CRITERION: ... --runtime-root \"<MAIN_TREE>/.runtime/opal-data-harvest\" --all-securities --max-jobs 8 2>&1 | tail -40` against `INSTANCE-RECORD: ... --runtime-root \"C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest\" --all-securities --max-jobs 8 2>&1 | tail -40`.",
+        "THE EXPANSION IS NOT THE WORKER'S CHOICE: the spawn face states it verbatim ('<MAIN_TREE> RESOLVES TO: C:/Users/Opal Bloomberg/Desktop/ajb_workspace -- use that exact string wherever the order writes <MAIN_TREE>'), the cell's RUNTIME ROOT GRANT requires exactly that path (a linked worktree has no .runtime, which is how round 6 died), and the path with a space is a standing property of this device (banked lesson: 'Path has a space -- 4 faces, all report SUCCESS SHAPE').",
+        "SCOPE, so this is not read as bigger than it is: the limb's ENFORCE mode is OPT-IN per TO (`invocation-frame: placeholders DECLARED ['MAIN_TREE'] -> ENFORCE`), so today it binds only orders that DECLARE <placeholders>. On site Z, every such order whose placeholder is a workspace path is in this position."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The limb's own docstring: a recorded invocation matches the criterion's 'modulo the declared placeholders and trailing/leading whitespace ONLY', which presumes a declared placeholder's expansion is a single whitespace-free token.",
+    "world_is": "On this device the expansion contains one space, so `(\\S+)` cannot match it and a TRUTHFUL record is refused. The only records that would pass are false ones (a path not used, or the placeholder left unexpanded contrary to the face's instruction), which is the failure mode the limb exists to prevent, pointed the other way.",
+    "notes": "ARMED and NOT FIXABLE HERE: `.tools/proof-of-spec-check.py` is outside this cell's write grant and this cell may not widen. DISARM OPTIONS: (a) the checker's placeholder group becomes non-greedy `(.+?)` anchored on the literal tail -- one character, and the limb keeps its whole purpose since the literal tail still has to match; (b) the ISSUER stops declaring a path placeholder and writes the absolute path into the criterion, which costs the order's device-portability; (c) the issuer declares the placeholder but quotes the expansion in the criterion as `\"<MAIN_TREE>\"` including the quotes, so the space sits inside a literal segment. (a) is the fabric's to make and is the only one that fixes every future order; the issuer can escalate it as a gate finding rather than absorb it per-order. Until one of these lands, no faithful instance for an order declaring a path placeholder can reach rc=0 on site Z."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S29",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-26T14:27:20Z",
+    "one_line": "FOUR CORRECT MECHANISMS COMPOSE INTO A DEADLOCK: HVST-v-2's order cannot be amended because its instance is INVALID, the instance is INVALID on one annotated field, only the worker may edit that field, and the worker cannot be resumed. No act available to the issuer closes the cell.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LIMB 1 -- to-pipeline-gate REFUSES the order edit: 'REFUSED -- 3 violation(s) across 0 newly-added TO file(s) and 1 modified declaring TO file(s) ... instance VIOLATION: invocation-alignment[AC1]'. So while the instance is INVALID the order file cannot be modified AT ALL -- including to record the verdict that it is invalid",
+        "LIMB 2 -- the instance is INVALID on exactly ONE row now. AC2 was fixed by the issuer (the <MAIN_TREE> placeholder replaced with the literal path and <placeholders> set to NONE, so the limb compares literal-to-literal and the (\\S+) space defect cannot fire); AC3 was already aligned. Measured after the fix: 'invocation-alignment 2/3 comparable row(s) match; 1 diverge', VIOLATION on AC1 only",
+        "LIMB 3 -- AC1's recorded `invocation` field is 342 characters where the command is ~136; the remainder is the worker's own bracketed annotation. The limb compares the WHOLE string, so it can never match. The fix is to relocate the annotation to a notes field, changing NO output, count or denominator",
+        "LIMB 4 -- ONLY the worker may make that edit. owned-paths lane TREE_DELIVERABLES permits exactly the serial named by the sub-folder (ADHC_OWNPTH.004), measured earlier this round when four of this issuer's file copies were REFUSED at deliverables/0.9.0_WK_AMGT_HARVST~21/scripts/. A NEW worker serial cannot fix it either -- the grant follows the path, not the round",
+        "LIMB 5 -- the worker cannot be resumed: 'No transcript found for agent ID'. It reported NEXT: ready for the next task order and then became unreachable. Its worktree C:/tmp/wk-hvst-v2 is intact and can now commit (the gitlink hook was repaired ~12:5xZ), but no agent exists to commit from it",
+        "EACH MECHANISM IS CORRECT IN ISOLATION and I am not proposing any of them be weakened: the gate should refuse an order whose instance is invalid; the limb should compare the whole field; owned-paths should keep an issuer out of a worker's evidence; a completed agent should not be silently resumable"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An issuer amends its own task-order criteria under Rule 27, and a proof instance is repaired by the worker that owns it.",
+    "world_is": "Both are true and neither is reachable here. The issuer's amendment is blocked BY the instance's invalidity; the instance's repair is blocked by the worker's absence; and the one field at fault carries no measurement -- it is an annotation in a compared field.",
+    "notes": "THE AUDITED ESCAPE EXISTS AND I HAVE NOT USED IT. GIT_COMMIT_AUTHOR_OVERRIDE would let this seat commit past the lane refusal, and earlier this round I declined it on the ground that writing into another serial's folder is the precise sweep that rule prevents. That ground has NOT changed just because the cost is now higher, so the call is ROUTED to 1.0.0_SA_CTO~Z rather than taken. THE COMPOSITION IS THE KEEPABLE FINDING, not any one limb: a gate that refuses an edit while a record is invalid, plus a record only one absent party may fix, is a deadlock that NO PARTICIPANT CAN SEE FROM ITS OWN SIDE -- each mechanism reports a correct refusal and none reports a cycle. COST OF THE CHEAP PREVENTION, measured against what actually happened: the annotation was the worker's own editorial addition to a FIELD THE CHECKER COMPARES. An instance format that separated `invocation` (compared) from `invocation_note` (never compared) makes this class impossible; today nothing stops a worker annotating a compared field, and the annotation was a genuinely useful finding about the face-vs-file divergence."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S30",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-26T17:45:00Z",
+    "one_line": "AMGT_HARVST round 7 is NOT TERMINAL IN THE RECORD, and I reported twice today that it was. HVST-v-2 reads <status>pending</status> at HEAD and <status>closed</status> ONLY in the worktree, with 113 insertions and 5 deletions uncommitted (13,931 -> 22,198 bytes). The round-7 packet's own 'STATUS: OPEN -- HVST-v-2 is still executing' is CORRECT; my reads were the stale ones, because every L7 state read I made opened the FILE ON DISK instead of the committed bytes. No L8/L9 was compiled and no slug was cut.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED on both planes for HVST-v-2 (AMGT_HARVST.TO-HVST-v-2.drain-what-is-held-then-capture.md): git show HEAD:<order> is 13,931 bytes with status tags ['pending']; the worktree file is 22,198 bytes with status tags ['closed']. git diff --stat reads 113 insertions, 5 deletions, unstaged. So the terminal flip and roughly 8.3 KB of evidence exist only in a working tree.",
+        "CONTROL on the sibling order: HVST-v-1 reads 'complete' at HEAD AND in the worktree -- the two planes agree there. So the divergence is specific to v-2 and is not an artifact of how either plane is read. Round 7 is 1 of 2 orders terminal in the record.",
+        "THE PACKET WAS RIGHT AND I WAS WRONG. ROUND7_DRAIN_END_PACKET.md opens with 'STATUS: OPEN. HVST-v-2 is still executing' and leaves section 6 an explicit stub, stating that 'a packet published as complete while a cell runs would assert a terminal state that does not exist'. That is exactly the state, and it is the state I failed to read.",
+        "MY ERROR, NAMED: every L7 read I made for this order today -- before the pause and again after the resume -- opened the file on disk. A file read reports the WORKTREE; the spine's terminal state is what the RECORD carries. Reading the worktree means grading another seat's unsaved draft, and it is indistinguishable from a landed flip at the call site.",
+        "THE TELL WAS AVAILABLE AND I WALKED PAST IT TWICE: git status printed ' M' on that order. I had already been caught today by a ' M' that was merely stat-dirty (the AMGT_CORPUS PRD, bytes identical), and I generalised 'a  M is not an edit' into not checking. The correct move is the same one in both directions -- compare the bytes, never trust the flag either way.",
+        "NOT AN ACCUSATION AND NOTHING IS ASKED OF THE ISSUER: 2.0.0_SA_COO~Y is actively draining v-2, the CTO authorized an audited override for its proof instance at 15:33Z (msg 26112), and the uncommitted bytes are work in progress that will presumably land. This row records a READING error of mine and the discipline that prevents it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This seat reported, twice on 2026-09-26, that AMGT_HARVST round 7 was terminal with its L8/L9 owed, on the strength of HVST-v-2 reading 'closed'.",
+    "world_is": "HVST-v-2 reads 'pending' in the record and 'closed' only on disk, with 113 uncommitted insertions. The round is 1 of 2 terminal, no L10 precondition is met, and no compile or slug was produced for it.",
+    "notes": "THE DISCIPLINE, stated so it is executable: an L7 terminal-state read for L8/L9 comes from `git show HEAD:<order>`, never from open(<order>). COST: one git show per order in place of one file read. NON-APPLICATION: a seat reading orders it is itself editing in its own worktree, where the worktree IS the object. OWNER: this seat, for its own L7 procedure. Related: the same plane confusion in the opposite direction is why a census reading the git INDEX cannot see an unlanded row."
   }
 ]
 ```

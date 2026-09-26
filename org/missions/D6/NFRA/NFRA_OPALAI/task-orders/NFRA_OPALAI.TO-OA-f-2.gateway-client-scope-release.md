@@ -130,7 +130,7 @@ Report once, with:
 release branch; live 06b5f86a = the identity_scope.py at laptop release `b4101ea371`/`0af72fb1d0`), f2.AC3 FAIL
 (unqualified=1).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~8</slot>
 <fabric>site-z</fabric>

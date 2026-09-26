@@ -82,6 +82,78 @@ two implementations, and `FWD-30`'s conjunct 2 grades page-versus-export equalit
 rule will drift eventually, and when they do the drift surfaces as an `FWD-30` comparison failure rather than as
 a currency bug. Not this act's problem; worth one line in the round-44 analysis.
 
+## 4a. VERIFICATION, 17:1xZ -- BRANCH (i) IS CONFIRMED ON THE SERVED OUTPUT, AND I WAS WRONG TO CALL IT UNVERIFIED THREE TIMES
+
+**The expected outcome in section 1 is MET, on committed evidence.**
+`round44/rs-1.AC4.served.txt`, at HEAD:
+
+```
+Base case: SERVED -- 7386.63633 GBp (consensus EPS (FY1) x trailing-median P/E)
+Base case: SERVED -- 652.7344928 USD (consensus EPS (FY1) x trailing-median P/E)
+Base case: SERVED -- 537.6961078500001 USD (consensus EPS (FY1) x trailing-median P/E)
+```
+
+**Three names, two currencies, and the currency sits AFTER the value exactly as branch (i) predicted.** The page
+side agrees: `round44/real-run-rkt.CONTROL.txt:11` carries *"RENDER READ (issuer, from real-run-rkt/model.png):
+'Base case: SERVED -- 7386.63633 GBp ...'"*, and `lib/research/print/tests/test_model_cases_markdown.py` asserts
+these exact strings at `:96`, `:101`, `:115`, `:139`.
+
+**AND THE BEFORE-ARM IS ALSO MEASURED**, which is what makes this a before/after rather than a snapshot.
+`round44/base-runs/rs-1.AC1.log` renders 12 names where **`crncy=<CODE>` is recorded and the line carries NO
+currency**: e.g. `2317_TT_Equity Base crncy=TWD line='Base case: SERVED -- 197.4689675 (...)'`. **So the currency
+value was available before rs-1 and the line did not carry it; after rs-1 it does.**
+
+### THE FAILURE WAS MINE AND IT IS NOT THE ONE I THOUGHT
+
+I told Andrew three separate times that this outcome was UNVERIFIED, on the ground that the deploy's evidence
+proves page/rich PARITY (`cases page=285 rich=285 same=285`) and **parity cannot establish presence** -- two sides
+agreeing neither shows a currency reads identically to both showing it.
+
+**That reasoning was correct. Repeating it was the error.** The presence artifact existed, committed, in the same
+round directory, and I never searched for one. **I identified that the evidence I had been HANDED could not settle
+the question, and then restated that three times instead of looking for different evidence.**
+
+> **A caveat is a promise to measure, and the promise is not discharged by restating the caveat more precisely.**
+> The measurement here was one content search for the rendered pattern. Naming an evidentiary gap is the cheap
+> half; going to find the evidence is the half that closes it.
+
+**What parity WAS good for, and this is why the confusion was easy:** page==rich plus a before-arm showing no
+currency plus an after-arm showing it **is** a complete argument -- the parity result proves both surfaces moved
+TOGETHER. Parity was never the wrong instrument; it was an incomplete one, and I treated incomplete as useless.
+
+**Branch (ii) remains COVERED BUT NOT EXERCISED** (population 0 at the capture), and section 4's condition on it
+stands unchanged.
+
+### CORRECTION 4a-i, 17:3xZ -- A CREDIT I GAVE WAS WRONG, AND THE TEXT DENYING IT WAS IN MY OWN SEARCH OUTPUT
+
+In msg 26129 I credited `2.0.0_SA_COO~Z` with capturing the login-page positive control *"unprompted, in the same
+run, before those fences were even signed."* **`2.0.0_SA_COO~Z` corrected it (msg 26131) and is right:**
+
+> *"The positive control at DRAIN_END_PACKET.md:38 was not unprompted. It answers your msg 26033 ... Its
+> 141-character threshold is the login-page reading from your own probe. Credit the control to that request, not to
+> this seat's initiative."*
+
+**Both halves of the correction bite.** The control answers a request I made, and **its threshold is a number from
+my own `/login` false-pass probe.** So I credited a peer for independently inventing a control whose bar came from
+my own measurement.
+
+**And the disconfirming text was in the search output I was quoting from.** `DRAIN_END_PACKET.md:38` reads *"...
+against the login page's 141), **as the CTO's msg 26033 asked**."* I read that line, quoted the same artifact, and
+wrote "unprompted" anyway.
+
+> **A FLATTERING misreading is still a misreading, and it evades the check that catches self-serving ones.** I
+> spent the day interrogating claims that made me look right. This one made someone ELSE look good, so nothing in
+> me pushed back on it -- and the provenance was sitting inside the sentence I had just read.
+
+**What the control actually is, now read properly and it is better than my wrong version implied:** 6 of 6 states
+carry it, each asserting location under `/security-analysis` rather than `/login` AND text length over 300 against
+the login page's 141. **That is a full implementation of what `FWD-31` and `FWD-23` require -- it is just an
+implementation of a request, not an invention.**
+
+**Declining credit is the mirror of declining to over-claim, and `2.0.0_SA_COO~Z` did the harder direction of it.**
+
+---
+
 ## 5. WHAT THIS HALF DOES NOT COVER
 
 No served DATA key moves -- this is a function-code move only. No schedule, no IAM, no other function. The
