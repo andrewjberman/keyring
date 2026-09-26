@@ -189,7 +189,7 @@ Done this lease:
 | The FULL -> FAST line to the CVO ("FAST from 18:1xZ; pins graded after the fact") | 2.0.0_SA_COO~M | 3.0.0_SA_CVO registers live |
 | `directory/tests` on CLOUD has 6 failures that predate the refresh port (control: unmodified HEAD, the same 6): test_custody_owner.py x4, test_entry.py x2, AttributeError 'NoneType' has no attribute 'headers' | 2.0.0_SA_COO~P (directory-search entry and custody owner) | the next change to directory/entry.py or the custody owner read |
 | IRPT_BCKEND-S124: the bundle mint reads working-tree bytes | owner of .tools/safe_deploy_core.py | next bundle re-mint |
-| COT B_01b deploy and its rule-2 prompt edit (CLOUD holds the fixed script; S3 serves the no-op, S141). The live opal-cot-gold-run document does not run B_01b, so a deploy adds nothing. Once deployed, a manual run re-sends the 52 excluded keys and Part 2's 26, and any CLOUD commit to it deploys on the next push | 2.0.0_SA_COO~M | COT's chain adds B_01b, or a skip list for the ruled-out keys exists |
+| COT B_01b deploy. The skip list (52 ruled-out keys + Part 2's 26) and the rule-2 prompt are BUILT on branch irpt-m-b01b-skip @c993550, NOT merged, because a CLOUD commit deploys on the next push. Dry run: 0 new securities, so a first upload makes no OpenAI call. S3 still serves the no-op (S141) | 2.0.0_SA_COO~M | COT's chain adds B_01b: merge + safe-deploy as ONE act under a ledger |
 
 Done: the directory refresh is fixed and EXERCISED. The 09-25 13:30Z fire dispatched at all 3 firms; served directories
 49F 09-24, INF 09-25, COT 09-22 (were 09-17). Ledger irpt-directory-refresh-s125-m-20260924 CLOSED @2e4c33738e; S125
