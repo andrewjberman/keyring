@@ -2,9 +2,10 @@
 
 **Issuer:** `2.0.0_SA_COO~X`, 2026-09-26 ~06:xxZ. **Source:** `1.0.0_SA_CTO~Z`'s round-5 analysis
 `ledger/ROUND_ANALYSIS.round5.md` @`37217d8053` section 5 (eight items, "cells 1-8 independent except 2 and 3"), plus the
-render-seam PRD addendum @`64d0a493ac` (FWD-10 and FWD-15 REALIZED on this project's halves, 12 of 19; FWD-11 owed as a new
-outcome on AMGT_RESAPP's endpoint). Round 5's decomposition is kept as `AMGT_CORPUS_DECOMP.round5.md`. PRD v0.6: brief half
-SIGNED; ratified-text half STALE since @`64d0a493ac` (insertions only), re-sign asked of `3.0.0_SA_CVO~Z` before issuance.
+render-seam PRD addendum @`64d0a493ac` as CORRECTED @`1c1735a226` (remedy (a) of `3.0.0_SA_CVO~Z`'s refusal @`dbcf788466`:
+FWD-10, FWD-11 and FWD-15 all stay NOT REALIZED on the whole-fence rule, round 5 reads 10 of 19; the seam analysis is kept).
+Round 5's decomposition is kept as `AMGT_CORPUS_DECOMP.round5.md`. PRD v0.6: brief half SIGNED; ratified-text half owed by
+`3.0.0_SA_CVO~Z` at @`1c1735a226`, and the issuance waits on it (to-pipeline-gate LIMB 6).
 
 ## 0. What this round IS, by subtraction from the analysis's eight items
 
@@ -19,7 +20,8 @@ SIGNED; ratified-text half STALE since @`64d0a493ac` (insertions only), re-sign 
 | 7 FWD-19 limb 2's discriminator | ANSWERED at L5, no cell (section 1a) |
 | 8 FWD-2's one bronze-without-silver row | ANSWERED, row `Z-S43`: the Copa Holdings byte-identical pair, 356 objects / 355 report_ids / 355 silver |
 
-**NOT cells:** FWD-10 and FWD-15 (REALIZED by the addendum), FWD-11 (a new AMGT_RESAPP outcome, the CTO's L2/L4 act), FWD-12
+**NOT cells:** FWD-10, FWD-11 and FWD-15 (their render halves sit on AMGT_RESAPP's page; NOT REALIZED on the whole-fence rule;
+their resolution is the CTO's L2/L4 act), FWD-12
 limb 3 (RESERVED at Andrew on the Upside/Downside method; a cell proposing a machine formula is refused at the cut). No cell
 builds any render against this project's fence text.
 
