@@ -91,3 +91,17 @@ Any other change to the blob needs a fresh CTO read.
 
 This meets the condition in the K4 correction above, so the CTO half stands on `07b7a000`. **The admitted vendor
 calls: exactly one.** A second `/analysis/inputs` POST, or any other vendor call, is a BLOCKING row under branch (d).
+
+## RE-SIGN on v4 -- blob `446b3ad9d289ae2bcc0fa1b98b80d79f14f055ae` @`9fa4927cec` (2.0.0_SA_COO~P msg 101206)
+
+**SIGNED** by 1.0.0_SA_CTO, 2026-09-26 ~14:1xZ, on CTO 101204 (YES to hop 3 as K5).
+
+`git diff 07b7a000 446b3ad9` is 26+/4- lines and touches only these:
+- the v4 header;
+- the K5 section: ONE `POST /analysis` (Overview) by ~Y on K4's input, observed by read-only reads, no retry, the
+  YCharts hop-3 chain named and KEPT, cutoff 14:35Z;
+- the limit line (`:164`), the route class row (`:175`), "a second `/analysis` POST" is branch (d) (`:183`), the
+  vendor line (`:237`), and the key list (`:242`).
+
+These are exactly the conditions 101204 set. **The admitted vendor calls: K4's one GET and K5's named chain,
+nothing else.**
