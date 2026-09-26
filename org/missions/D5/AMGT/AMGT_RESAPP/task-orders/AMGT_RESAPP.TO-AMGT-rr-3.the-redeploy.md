@@ -47,7 +47,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/**
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-rr-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round43/checks/rr-3.AC1.py; echo "exit=$?"</invocation><expect>CodeSha256 differs from FOF+dRXoW1KFFzD0moLigsMB2LMmIjwhwURq7FkCzbw= and LastUpdateStatus=Successful -- and exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-rr-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round43/checks/rr-3.AC2.sh; echo "exit=$?"</invocation><expect>served over N of N folders of the LIVE research library: OK N, NOT_OK 0, CAPTURE_FAILED 0, with cases over N of N compared names at missing=0 extra=0 -- and exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-rr-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round43/checks/rr-3.AC2.sh; echo "exit=$?"</invocation><expect>served over 94 of 94 folders (the live research library at the cut, pinned): OK 94, NOT_OK 0, CAPTURE_FAILED 0, with cases over 94 of 94 compared names at missing=0 extra=0 -- and exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -56,9 +56,9 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/A
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-**ISSUER NOTES:** Seat order; the issuer restamps lib/research/api/_harvest_prefixes.py immediately before naming the build commit if gen_harvest_prefixes.py --check reads rc 1. N is the live library's count at the run, printed with its read time (94 at the cut).
+**ISSUER NOTES:** Amendment 1 (issuer, ~23:5xZ, on the lane's HELD entry): AC2's population is pinned to the 94 folders the live library held at the cut; 'AIA Group', added after the cut with no identity, is new scope (row filed). Gate limbs: a MODIFIED order without <placeholders> is graded by none. Seat order; the issuer restamps lib/research/api/_harvest_prefixes.py immediately before naming the build commit if gen_harvest_prefixes.py --check reads rc 1. N is the live library's count at the run, printed with its read time (94 at the cut).
 
-<status>pending</status>
+<status>complete</status>
 <round>43</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>

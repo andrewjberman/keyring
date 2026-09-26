@@ -682,6 +682,75 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "NFRA_OPALAI-Z-S18 is ARMED with this seat as disarm_owner: the concierge identity can fire opal_data_refresh_upload.",
     "world_is": "Today the reach is held only by the workspace BG seat, as the documented fallback upload duty. The Teams-facing Opal_Agent runtime gains it only at cutover, and this row makes the cutover conditional on the refusal. The pinned tool count (45 vs 44) is recounted on each release base, per the CTO's note.",
     "notes": "Round-2 cells for NFRA_OPALAI: (1) identity_scope keyed on (identity, client_id), upload to the operator's client only, with test_scoped_deny_by_default pointed at a fixture overlay; (2) the runtime fence denies opal_data_refresh_upload as belt-and-braces. No new M365 account is needed. The row's purpose (Andrew's fallback upload) stands; only its scope narrows."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S20",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-26T00:05Z",
+    "one_line": "opal_ai CI FAILS on its first real push (DEV=PROD fd8ab8a57f, run 36203070607): ruff finds 15 errors in the moved portal_lookup.py, and pytest never runs because the workflow installs no pytest -- so PROD carries red checks and FWD-13 ('the checks run automatically on every change' and pass) is not met.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gh run list -R Opal-Capital/opal_ai: run 36203070607, 'opal_ai CI', DEV, push, completed/failure, 2026-09-25T23:58:45Z.",
+        "gh run view 36203070607 --log-failed: 'py_compile: PASS (3 files)'; 'ruff: FAIL (0 findings) -- ... portal_lookup.py ... Found 15 errors'; 'ascii: PASS'; 'device-path: PASS'; '/opt/hostedtoolcache/Python/3.9.25/x64/bin/python: No module named pytest'; 'pytest: FAIL'; 'CHECKS: FAIL'.",
+        "The same line also shows opal/checks/run_checks.sh printing 'ruff: FAIL (0 findings)' while ruff reports 15: the check's own finding count is wrong."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD FWD-13 and C2: CI in opal_ai runs py_compile, ruff py39 and the tests on every push, and a standalone copy passes its own checks.",
+    "world_is": "CI runs, but it cannot pass. Its workflow never installs pytest, and the moved Analyst helper carries 15 ruff errors the workspace's own gates did not stop (the file moved as-is). The runner's summary line misreports the ruff count as 0. Nothing is gated by it yet (there is no branch protection), so the red is silent unless someone reads it.",
+    "notes": "Round-2 batch cell: (1) ci.yml installs pytest (and ruff) before run_checks.sh; (2) portal_lookup.py's 15 ruff findings are fixed in opal_ai, never waived; (3) run_checks.sh reports ruff's real count; (4) one green run on a real push is FWD-13's proof. INERT: the runtime pulls PROD regardless, and nothing deploys from CI."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S21",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T00:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The CLOUD manifest names the wrong live gateway. EC2_MANIFEST.json on origin/CLOUD (@ac5445b2ba) reads opal-gateway deployed_commit 1f7128201a, but the host serves 1.0.0_SA_CTO's laptop release 0af72fb1d0 (deployed 23:01:38Z). Its manifest record, 88377e148e, is only on origin/rel-laptop-teams-reader-gw. A deployer or rollback that bases on the CLOUD manifest would silently drop the laptop's Teams fixes (read_chat_message_images, the Graph-500 fallback, read_teams_attachment SAFE).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED 2026-09-26 ~00:1xZ over SSM: /opt/opal-gateway/app/identity_scope.py md5 06b5f86a12007f6e3f7794e1d3b386f0. git show <c>:infra/aws/ec2/opal-gateway/app/identity_scope.py | md5sum matches it only at b4101ea371 (origin/rel-laptop-teams-reader-gw) and 2a5636316e (origin/gw-teams-reader-fix), of the 3 commits touching the file across --all. At 1f7128201a it reads 82b4918b (no match; a CRLF render 56d8b537 also does not match).",
+        "READ: git show 88377e148e:infra/aws/ec2/EC2_MANIFEST.json gives deployed_commit 0af72fb1d071209b953168924bc64d391dfb92ff, deployed_at 2026-09-25T23:01:38Z, deployed_by 1.0.0_SA_CTO. git merge-base --is-ancestor 1f7128201a origin/rel-laptop-teams-reader-gw is true.",
+        "READ: git show origin/CLOUD:infra/aws/ec2/EC2_MANIFEST.json gives deployed_commit 1f7128201a."
+      ]
+    },
+    "spec_asserts": "EC2_MANIFEST.json on the working branch CLOUD records the served opal-gateway commit.",
+    "world_is": "The served commit is 0af72fb1d0. Its record is on a release branch, not on CLOUD.",
+    "notes": "The disarm is the laptop CTO's drain of 88377e148e (or an equivalent manifest record) to CLOUD. Meanwhile OA-f-2 (@0dd3492d8a) resolves its base BY CONTENT at its own cut and names 0af72fb1d0, so this seat's release does not step on it."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W8-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~8",
+    "surfaced_at": "2026-09-26T01:22Z",
+    "one_line": "TO-OA-f-1 says keep tests/test_data_entitlement_guard.py (OGZ1-AC11) passing, but that suite cannot be collected on this device: 'No module named moto' at collection (Python 3.11, pip list has no moto, no cached wheel); 18 of 31 gateway test files import moto. The suite was not run, so 'keeps passing' is UNREAD, not PASS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-OA-f-1 worker face section 1 step 4: 'Keep tests/test_data_entitlement_guard.py (OGZ1-AC11 reads the tracked overlay) passing.'",
+        "`timeout 300 python -m pytest tests/test_data_entitlement_guard.py -q` in infra/aws/ec2/opal-gateway @ wk-NFRA_OPALAI-8: 'ModuleNotFoundError: No module named moto' -- '1 error in 1.11s' (collection error, 0 tests run).",
+        "`python -m pip cache list moto`: 'No locally built wheels cached.'; `pip list` shows boto3 1.43.46 and pytest 9.1.1, no moto. Installing it is PyPI egress, which this order's declared egress class (Opal's own AWS, read only) does not cover.",
+        "tests/test_data_entitlement_guard.py@d88cd32d0c:872-873 reads identity_scope._load_scopes() over the tracked overlay; this change keeps _load_scopes() returning the same email -> frozenset(tool) shape (unqualified rows only), so the upload row now counts in no allowlist and opalbloomberg's printed allowlist size drops by 1; the test asserts before == after with the guard on/off, not a fixed size."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "tests/test_data_entitlement_guard.py keeps passing after OA-f-1's change.",
+    "world_is": "It cannot be run on this device (moto absent), so it is neither PASS nor FAIL here. AC1/AC2 do not depend on it; tests/test_identity_scope.py passes 9 of 9. The suite needs one run on a device with moto before OA-f-2 deploys.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "Not repaired, no package installed. INERT: nothing deploys from this order (the deploy is OA-f-2)."
   }
 ]
 ```

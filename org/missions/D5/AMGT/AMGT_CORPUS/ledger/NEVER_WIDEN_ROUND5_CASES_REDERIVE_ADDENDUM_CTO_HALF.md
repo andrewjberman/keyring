@@ -96,3 +96,59 @@ Signed `1.0.0_SA_CTO~Z`, 2026-09-25 ~19:4xZ, bound to the COO half at `7c123a1c1
 `2a3319e5ae` / `35e4cb93ef`, and to the bytes cited above. **No new condition on the act:** the rule is
 sound, both branches are covered, the rollback is real, and the discriminator is the issuer's own. The lane
 runs on commit.
+
+---
+
+# AMENDMENT A1 -- 2026-09-26 ~00:0xZ -- **THE PAIR IS EXTENDED TO ONE MORE KEY: `1299_HK_Equity` (AIA Group)**
+
+**Asked by `2.0.0_SA_COO~X`, msg 25955 (READ-acked): extend the derive pair (COO `2a3319e5ae` / CTO
+`35e4cb93ef`, this addendum @`ccfcb0aa88`) to `1299_HK_Equity`. GRANTED, with the one condition rr-1 carried.**
+
+AIA is registered @`2c35b9a062` and **I verified the registration's outcome on the served object** -- 
+`crosswalk/v1/2026-09-25.json` v3 at 23:48:58Z: `records 236`, `registered 48`,
+`folders_in_records 95 == research_folders_live 95`, `UNRESOLVED 0`, `1299_HK_Equity` present, `AIA Group`
+among 95 distinct folders in records. **The identity layer is level with the goal's own population.**
+
+## A1.1 -- THE BEFORE-STATE IS ABSENT, MEASURED BY ME, WITH A CONTROL
+
+| | refdata | histdata | bestdata | `derived/model_block/` |
+|---|---|---|---|---|
+| `1299_HK_Equity` | **0** | **0** | **0** | **0** |
+| `BA_US_Equity` (control) | -- | -- | -- | **11** |
+
+**So this is a FIRST MINT on a key that serves nothing**, exactly as the five no-block names were, and the
+same reasoning applies: **NEVER-1 protects served output, and there is none here.** A first mint on a key with
+no prior object cannot regress a served figure, which is why *"rollback is a copy-forward, or Andrew's word to
+return it to absent"* is an honest rollback rather than a gap -- **the rollback is empty because the
+before-state is empty.**
+
+**The raw is not landed yet** (0 across all three families at my read), so the pull runs first. **It is raw
+only, under `R-21` and Andrew's `"go ahead with AIA"`** -- the same authority I verified at the bytes for the
+registration, and its mechanism constraint binds identically: the scripted producer makes the call, no agent
+composes one.
+
+## A1.2 -- THE CONDITION, unchanged from `rr-1` and for the same reason
+
+**The guarded rule is at HEAD** -- `git show HEAD:integrations/bloomberg/research/model_block_pull.py` carries
+`CASE_BAND_LOW = 0.33` and `_is_minor_unit_quote` at my read. **So the floor costs nothing to satisfy.**
+
+> **CONDITION:** the derive for `1299_HK_Equity` runs at **CLOUD HEAD >= `025224c2cd`** (`CRPS-g-1`'s drain),
+> and the run's report prints its `git rev-parse HEAD` beside the minted stamp.
+
+**Why it repeats:** a worker derives at whatever commit its worktree carries. **Below that floor AIA gets an
+UNGUARDED base case minted on a write-once store that refuses deletes** -- correctable only by a
+later-sorting re-derive, never in place. **On `rr-1` this condition was adopted into the order and the deploy
+entry, and the result was five base cases all SERVED IN BAND (0.79 to 1.56) with nothing unguarded minted.**
+The condition has a measured record of working; it is not a formality.
+
+## A1.3 -- WHAT ELSE I ADOPT
+
+- **Same guarded rule, same four readers** as the pair -- no new reader, no new write surface, one more key.
+- **AIA is a HONG KONG listing, so the minor-unit and currency causes are live for it**, and that is exactly
+  what `CRPS-g-1`'s rule exists for: `HKD` quote against an `HKD` report is no mismatch, while a genuine
+  cross-currency pair refuses and converts nothing. **`1299_HK_Equity` is a fair test of the rule rather than
+  a name that avoids it.**
+- **One key, one block, one stamp.** Nothing else written, no delete.
+
+**SIGNED** `1.0.0_SA_CTO~Z`, 2026-09-26 ~00:0xZ. The derive runs on this amendment plus the pull's completion;
+nothing waits on me.

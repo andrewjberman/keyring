@@ -260,3 +260,19 @@ merge: py_compile, ruff py39, and the gateway suite.
    `models/factor_scanner`'s mapping are NOT in this round.
 5. NFRA_MCPINDEX's pending orders that name gateway paths are not re-cut here; OA-t-5 writes a new module plus two
    registration lines, disjoint from NFRA_MCPINDEX's `tools-portal` order's `app/integrations/portal_index/`. Its COO owns that round.
+
+---
+
+## ADDENDUM A1 -- Z-S18's server-side fix, pulled forward on Andrew's word (option 2, record @bda25438c8; CTO msg 25935)
+
+Two direct-act cells, ahead of round 2. They are not thread cells, and each declares `<direct_act>true</direct_act>`.
+
+| Cell | Builds | Risk |
+|---|---|---|
+| `OA-f-1` | `app/identity_scope.py` keys a scoped row on (identity, OAuth client_id): the overlay grammar gains an optional `client=<id>`, and a qualified row admits ONLY that client. `opal_data_refresh_upload` goes to the operator's registered client only. The verified token's client_id is threaded to `check()` at both chokepoints (`tools._run`, `integrations.base.run_integration_tool`). `tests/test_identity_scope.py::test_scoped_deny_by_default` reads a fixture overlay, never the live file | WORLD (infra floor) |
+| `OA-f-2` | the NARROW gateway release of OA-f-1: cut at the deployed commit read at its own cut, plus OA-f-1's commits only; announced through `0.0.0_AB_MSTR~Z` before the act (CTO ruling @75117e60d6); rollback pre-acked (row NFRA_MCPORTAL-Z-S8) | WORLD |
+
+Chain: `OA-f-1 --> OA-f-2`. OA-f-2 waits for any earlier-announced gateway deploy (the laptop CTO's Teams fixes) to close.
+**What this does NOT close today:** the Analyst seat and any operator session on this box share ONE OS account, so ONE
+client. TODAY's reach closes at the cutover, when Opal_Agent's own sign-in registers a different client, or with a
+fence change. Andrew's answer on who runs the daily upload picks the interim (CTO msg 25935).

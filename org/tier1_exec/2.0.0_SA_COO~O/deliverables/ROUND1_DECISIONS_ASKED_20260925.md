@@ -96,3 +96,25 @@ without lowering a bar or changing a closed cell's product.
 - **Issuer's own acts, not asked:** the cut missed `app/data_entitlement.py` (tool classes; the guard would deny all 10
   tools and MX-d-2's 2), `app/integrations/registry.py` (the factory wiring an enable needs), and a portal-bearing
   worktree for the emitter. MX-t-8 is re-cut with those paths once D-4 lands.
+
+## D-5 (NFRA_MCPINDEX MX-t-8): the D-4 waiver cannot reach a NEW file's literals
+
+- **Measured by `0.9.0_WK_NFRA_MCPINDEX~3`** (phase 1 @2c25c4c831, row NFRA_MCPINDEX-Z-W3-S7), and re-read by this seat at
+  `.tools/naming-gate.py:1321-1327`:
+  - `judge()` returns REFUSE for a NEW out-of-pattern literal BEFORE the LEGACY-READ waiver is consulted, and the code
+    notes that this is structural;
+  - the 3 entries built to D-4 (`deliverables/0.9.0_WK_NFRA_MCPINDEX~3/legacy_read_entries.json`, sha256 65b5cc47...)
+    each pass `legacy_read_ok` and `authority_ok`, yet the gate still refuses the module, because every literal in it
+    is new;
+  - also measured (row S8): the gate assigns the advi root to ADVI_FIRMBKTS and the etfs key to no remediation, not
+    MDPF_CANON.
+- **The decision:**
+  - (a) the gate's owner lets a waiver reach a NEW literal when its authority record names the file and call site;
+  - (b) an R20 departure Andrew acknowledges;
+  - (c) the module carries no key literal: each tool reads its object key from its own catalog entry. The phase-1
+    commit admitted the catalog entries and the regenerated DATA_CATALOG.yaml under the gate. Is that a design or a
+    dodge? This seat does not rule it;
+  - (d) MX-t-8 waits for MDPF_CANON's canonical keys.
+- **Held meanwhile:** the phase-1 branch is unmerged. Row S10 (the registry wiring breaks
+  `test_entitlement_admin.py::test_ogz2_ac08`, a pinned 4-integration / 44-tool count) is the re-cut's: that test joins
+  MX-t-8's paths, because C2 moves the pinned count with each tool.

@@ -14732,6 +14732,80 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The disarm already landed through AMGT_CORPUS's derive (CRPS-g-1), which the CTO's analysis told this seat to copy. No RESAPP cell is needed for it; round 43 does not cut one.",
     "disarm_owner": "2.0.0_SA_COO~Z -- DISARMED on the served plane by AMGT_CORPUS round 5; this row is the read that shows it.",
     "notes": "Z-S279's ROG_SW case (px_last None) and ROG's served base were not re-read here."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S283",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~A",
+    "surfaced_at": "2026-09-25T22:30:00Z",
+    "one_line": "TWO DISTINCT 'R-21's exist in this estate and a bare 'R-21' does not disambiguate them: the ratified register rcg/rulings/RULINGS.jsonl holds an R-0021 that RESOLVES cleanly and is a COORDINATION ruling about spawning a CTO seat, while the vendor grant every AMGT order cites is a separate Andrew-direct R-21 @b390c36444 that lives only in the message record.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE WRONG OBJECT, read at the bytes: rcg/rulings/RULINGS.jsonl carries exactly ONE row whose id matches R-21 (as 'R-0021'), out of 32 rulings in the file. Its fields: date 2026-08-03, type 'coordination', verbatim 'Send the ferry, I am going to spawn 1.0.0_SA_CTO~B to coordinate with this work...', scope '1.0.0_SA_CTO~B spawned as the CTO-side coordination seat for RCG execution'. There is NO vendor, Bloomberg, egress or scripted-pull content anywhere in it.",
+        "THE RIGHT OBJECT lives in the MESSAGE RECORD, not in the rulings register: the ANDREW-DIRECT R-21 at commit b390c36444, 2026-09-24 ~03:2xZ, broadcast to 0.0.0_AB_MSTR, 0.0.3_BG_BBGTerminal, 3.0.0_SA_CVO~Z and 4.0.0_SA_CRO~Z. Andrew verbatim: 'all recs approved, and you have all the egress you want for vendors. Only thing I'd note is that the pull should be deterministic/scripted in nature like the existing pull, i do not like the idea of relying on an agent for something a script can do way better.'",
+        "DENOMINATOR on the ambiguity: comp-find 'R-21' reads 503 hits across 75041 files scanned (bands SURFACED=35 CONFIG=7 DOC=461). The vendor sense dominates usage -- integrations/bloomberg/pipeline/scheduled_daily_pull.cmd:317-319 ('owner 0.0.3_BG_BBGTerminal on Andrew-direct R-21 call 3 @b390c36444', 'R-21 constrains MECHANISM'), lib/research/corpus/induction_run.py:4,15,124 -- while the RATIFIED REGISTER holds only the coordination sense. So the register and the usage disagree about what R-21 names.",
+        "THE NEAR-MISS THAT MAKES THIS WORTH FILING, and it is this lane's own: rr-1 is a VENDOR-EGRESS order, which CLAUDE.md makes a hard stop requiring Andrew's word. Verifying that word, this lane went to the ratified rulings register FIRST -- the correct instinct -- found R-0021, and read a coordination ruling with no vendor content. Had it stopped there the conclusion would have been 'the cited authority does not say what the order claims', i.e. a REFUSAL of a properly authorized act. Only a second search over the message record surfaced the real grant.",
+        "NOT CLAIMED: that either id is wrong or should be renumbered, and that any seat has actually been misled by this. The CTO half for rr-1 (ledger/NEVER_WIDEN_ROUND43_RR1_CTO_HALF.md s.1) cites and quotes the CORRECT R-21 at the bytes, so the seat that signed was not confused. This row records a COLLISION IN THE NAMESPACE, not an error by any author."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The rr-1 order's face and both halves cite vendor authority as 'R-21 (standing, scripted)', naming no register and no commit on the face, as though 'R-21' were an unambiguous identifier.",
+    "world_is": "'R-21' resolves to two different objects depending on which register is read. The ratified rulings file returns a 2026-08-03 COORDINATION ruling with no vendor content; the vendor grant is a separate Andrew-direct item carried in the message record at b390c36444. A citation that resolves to a real row in the WRONG register is indistinguishable from a good citation until the row is read, and the failure it produces is the expensive direction: a seat doing the right thing -- checking the authority before a vendor call -- lands on a ruling that does not authorize it and raises a FALSE BLOCKER on an act Andrew actually approved. A false blocker is indistinguishable from a real one to every seat downstream.",
+    "disarm_owner": "1.0.0_SA_CTO~Z -- INERT, so nothing to disarm. The cheap remedy, which this lane does not take because the citation convention is not its surface: cite the vendor grant as 'R-21 @b390c36444' with its commit, the way the CTO half already does, so the identifier carries its own disambiguator. Whether the two should be renumbered is the CTO's call, not this lane's.",
+    "notes": "Filed by the executing lane at rr-1, during its own pre-act verification of a hard-stop authority rather than off-task. The act itself proceeded: the grant is genuine, broad on authority and narrow on mechanism, and every vendor call in this cell was made by model_block_pull.py with none composed by hand. The instrument lesson worth keeping is that a REGISTER LOOKUP IS NOT AN AUTHORITY CHECK when the identifier space is shared across registers -- the register answered, the answer was real, and it was about something else entirely. The tell was semantic, not structural: the row resolved, parsed and carried a plausible date, and only its CONTENT showed it was the wrong object."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S284",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~A",
+    "surfaced_at": "2026-09-25T23:40:00Z",
+    "one_line": "rr-3's AC2 grades a LIVE population that GREW under it -- 94 folders at the cut, 95 at the run -- and the new member 'AIA Group' has no minted canonical identity, so the sweep records CAPTURE_FAILED 1 and the criterion fails on a name the deployed code never touched.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE READ: rr-3.AC2 at the deployed bytes 982nlz5TEI32UQZSqFqbtVwu7/qgVLPn89tMF6kmYvo= prints 'population: LIVE research library ..., 95 folders, read_at 2026-09-25T23:27:17Z', then '1/95 None CAPTURE_FAILED TypeError: expected string or bytes-like object, got NoneType', then 'served over 95 of 95 folders: OK 94, NOT_OK 0, CAPTURE_FAILED 1' and 'cases over 94 of 94 compared names: page=282 rich=282 same=282 missing=0 extra=0'. exit=1, read from the script's own 'exit $rc' and not from a pipe.",
+        "THE SHAPE OF THE FAILURE IS THE FINDING: NOT_OK is 0 and the CASES axis is perfect at 282/282 missing=0 extra=0. Every folder that could be captured compared correctly. Exactly one could not be captured at all.",
+        "THE MEMBER: folder 'AIA Group' maps to harvester_key 'security-a49e6fe67bebe3a9' and resolve_identity returns NO security_key for it. Reproduced read-only over the live library: UNRESOLVABLE 1 of 95, and it is that folder. It is absent from the 89-name snapshot universe.json, and the crosswalk mentions neither 'AIA' nor the harvester hash -- so no canonical identity has ever been minted for it.",
+        "POPULATION DRIFT, MEASURED: the order's ISSUER NOTES record 'N is the live library's count at the run, printed with its read time (94 at the cut)', and sweep.py's own comment cites the 1.0.0_SA_CTO~Z ruling @ea24753b1b as '94 on 2026-09-25'. The run read 95. The population grew by one between the cut and the run, and the new member is the failing one.",
+        "IT IS NOT THE DEPLOY, AND THAT IS MEASURED RATHER THAN ARGUED: the failure occurs at crosswalk.harvester_key / scoped_amgt.resolve_identity, which is a LOCAL lookup -- inspect.getsource over resolve_identity finds NO network token (no requests, urllib, lambda invoke or http), it reads crosswalk/v1. So the TypeError is raised before any call reaches the deployed function, and the deployed bytes cannot affect it.",
+        "THEREFORE THE NAMED ROLLBACK CANNOT REPAIR IT. Act B's rollback re-points the artifact to VersionId ujFHMNbjbg6Yv3wFotVvfDPnF4reNQdO, which changes the Lambda's code; it cannot mint an identity for a research folder. Rolling back would leave CAPTURE_FAILED at 1 and additionally remove rr-2's Model Cases rule from the served plane, where the cases axis currently reads 282/282 with 0 missing and 0 extra.",
+        "NOT CLAIMED: whether 'AIA Group' SHOULD have an identity, or which security it denotes. That is a calls-not-picks question -- R-21's own text records that a word permitting a vendor to be ASKED never permits DECIDING which identity an answer belongs to -- and 3.0.0_SA_CVO~Z holds the standing ruling on ambiguous names. This lane measured the gap and did not choose a name."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "rr-3's AC2 expects 'served over N of N folders of the LIVE research library: OK N, NOT_OK 0, CAPTURE_FAILED 0 ... and exit=0', with N read at the run, and the order records N as 94 at the cut.",
+    "world_is": "N was 95 at the run, not 94, because the live library gained a folder between the cut and the act. The new member has no minted canonical identity, so it cannot be captured at all and the sweep records CAPTURE_FAILED 1 -- a value the criterion forbids. Every measurable axis is clean: OK 94, NOT_OK 0, cases 282/282 missing=0 extra=0. A criterion whose denominator is a LIVE, GROWING population can be failed by an addition nobody in the cell touched, and the failure is indistinguishable in the exit code from a genuine served-plane regression. The two are only separable by reading WHERE the failure is raised, which here is a local identity lookup, not the deployed function.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- INERT, so nothing to disarm. Two shapes, and choosing between them is the issuer's: (a) mint a canonical identity for 'AIA Group' so the 95th member becomes capturable, which is an identity act outside this lane's <paths> and reserved on the picks question to 3.0.0_SA_CVO~Z; or (b) re-cut AC2 so its population is PINNED at a named read rather than read live at the run, which is what makes the criterion stable against additions. This lane took neither and held ledger leg L2 on gate (a).",
+    "notes": "Filed by the deploying lane at rr-3, ON-task. The deploy itself is sound and is left landed: AC1 passes, all three stop limbs were graded clear before the apply, and the cases axis the act exists to move reads 282/282. The instrument lesson worth keeping is that A LIVE POPULATION IS NOT A FIXED DENOMINATOR: rq-2's AC2 swept a PINNED 89-name snapshot and was stable, while rr-3's AC2 reads the library fresh at the run, so the same cell shape acquires a failure mode that has nothing to do with its own act. The tell was that the printed denominator (95) disagreed with the denominator the order recorded (94) -- which is only visible because the sweep prints its population and read time on the first line."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S285",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-25T23:58:00Z",
+    "one_line": "The LIVE research library grew to 95 during round 43: 'AIA Group' was added after the cut and has no canonical identity (harvester_key security-a49e6fe67bebe3a9), so it has no page, no Model block and no export -- rr-3's served sweep over the live library held on it (0.7.0_AE_CloudOps~A).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "library.list_folders(library.library_root()) at ~23:5xZ: 95 folders; the round-42 close run read 94 at 18:42:56Z; the one added is 'AIA Group'.",
+        "rr-3's NEVER-2 entry (org/critical_paths/.open_deploys/amgt-rr-3-the-redeploy.json): HELD-SOVEREIGN-GATED at 23:47:58Z, gate 'a canonical identity for the research folder AIA Group (harvester_key security-a49e6fe67bebe3a9), which has none'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-BACKFILL-DENOMINATOR-IS-THE-RESEARCH-FOLDER: the population is the live research folder, read fresh.",
+    "world_is": "The folder is a moving population: one name arrived mid-round with no identity. rr-3's AC2 is amended to the 94 the cut measured (population_at_cut.txt); AIA Group needs an identity registration and a Model block, which is round 44's.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- INERT; round 44 input (identity for AIA Group, then the rr-1 pull shape for its block).",
+    "notes": "Found by the AE lane's served sweep, which held rather than grading a name with no page as an export failure."
   }
 ]
 ```

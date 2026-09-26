@@ -52,29 +52,38 @@ Build **a new integration `portal_index`** (`app/integrations/portal_index/`) re
      served object's own for one fixture, and a one-day date shift reports the mismatch)
 
 **AMENDED after the first run (rows NFRA_MCPINDEX-Z-W3-S1, -S2, -S3, -S6):**
-9. **The legacy keys, under LEGACY-READ waivers.** The CTO's ruling D-4 (`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/ROUND1_RULINGS.md`
-   R-3 @212e0b2471, and `LEGACY_READ_AUTHORITY_MX-t-8_20260925.md` in the same folder, READ BOTH) admits the portal's
-   legacy served keys for these readers.
-   - Shape the code for `.tools/naming-gate.py`'s `legacy_read_ok`: each literal key (or key prefix) is a POSITIONAL
-     argument to ONE read helper, called in ONE enclosing function, with the bucket argument bound EXACTLY ONCE there
-     to `opal-data-portal-v2`. Under advi, only `platinum/advi/49financial/`.
-   - Compute each literal's `read_context` (`helper`, `helper_body_sha256` computed with the gate's own `_norm_body`
-     over the FINAL helper bytes, `arg_index`, `enclosing_function`, `bucket_arg`, `occurrences`). Write the entries
-     to `deliverables/0.9.0_WK_NFRA_MCPINDEX~3/legacy_read_entries.json`, in the grammar of
-     `org/standards/NAMING_LEGACY_READS.json`, with the authority record and `as_of_cutoff` 2026-10-02.
+9. **The keys come ONLY from the catalog** (AMENDED AGAIN to the CTO's ruling D-5 = (c),
+   `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/ROUND1_RULINGS.md` R-4 @3805559000, READ IT; the D-4
+   waiver route is withdrawn, because `.tools/naming-gate.py` refuses a NEW literal before any waiver).
+   - Each tool resolves its object key from its OWN existing catalog row, through `app/graphql_plumbing/catalog_gate.py`.
+   - The module carries NO key literal, fragment or prefix: not `platinum/...`, and not the bucket-relative pieces.
+   - Name the test `test_module_holds_no_key_literal`. It walks the module's AST for string constants and fails on any
+     that is, or is part of, an `opal-data-portal-v2` key. It carries its own MUTANT arm: one planted key literal is
+     caught.
+   - The exact-prefix fence (item 1) and the sibling-prefix refusal (item 2) now hold over the keys the catalog
+     yields.
 10. **Enable-readiness, for this family AND the discover family:**
     - add the tool classes to `app/data_entitlement.py`, so neither the portal tools nor `opal_discover`/`opal_describe`
       are denied to everyone;
     - wire both factories in `app/integrations/registry.py`, so `ENABLED_INTEGRATIONS` can name them.
     Both stay dormant.
 11. **The catalog regeneration** runs in this worktree with `portal/` checked out (the issuer provisions it).
-12. **TWO PHASES.**
-    - PHASE 1: commit everything EXCEPT `app/integrations/portal_index/integration.py`. That means the tests, the
-      registry and entitlement lines, the catalog entries, `legacy_read_entries.json` and the regenerated catalog.
-      Keep the module on disk, uncommitted, byte-identical to what the entries were computed on. STOP, and report the
-      entries file's path and hash.
-    - PHASE 2, on the issuer's word once the CTO's entries are at your HEAD: commit the module unchanged, then run the
-      proof.
+12. **The pinned tool count moves with the tools** (row S10): update
+    `tests/test_entitlement_admin.py::test_ogz2_ac08`'s pinned integration and tool counts to the new registry, as C2
+    moves a pinned count with each tool. No other assertion in that file changes. ONE phase: commit the module and run
+    the proof.
+
+**AMENDED by the issuer after the second run (row NFRA_MCPINDEX-Z-W3-S11, no CTO ruling needed):**
+13. **This cell registers ONLY the tools whose key `catalog_gate` resolves today:** `mdpf_get_aum_metrics`,
+    `mdpf_get_account_distribution` and `mdpf_get_aggregate_aua`. These are the 3 of 10 you measured, all SAFE, prefix
+    `platinum/mdpf/{scope}/`.
+    - The other 7 leave this cell and go to the round-3 enrichment list as a catalog-row cell: category-views,
+      etfs positioning, the four advi tools, and non-model-assets, whose catalog verdict `deny` stands. Do not add
+      catalog rows for them.
+    - Every item above now reads over the 3. `test_parity_with_served_object` covers the mdpf family only.
+    - The pinned counts in item 12 move with the 3 tools plus the discover family.
+    - Keep R-7's answer (UNANSWERABLE from the portal's objects, with your reason) in your result.
+    - Keep the no-key-literal test and its mutant arm unchanged.
 
 **Standing rules (R-6):**
 - the interpreter is `python`;
@@ -99,6 +108,7 @@ workflows/atom_decomposition/catalog_entries/
 infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml
 infra/aws/ec2/opal-gateway/app/data_entitlement.py
 infra/aws/ec2/opal-gateway/app/integrations/registry.py
+infra/aws/ec2/opal-gateway/tests/test_entitlement_admin.py
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~3/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/**
 </paths>
@@ -113,7 +123,7 @@ Rows: `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVEST
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="MX-t-8"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/t8.AC1.sh; echo "exit=$?"</invocation><expect>pytest rc=0; named tests passed 2 of 2; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MX-t-8"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/t8.AC2.sh; echo "exit=$?"</invocation><expect>pytest rc=0; named tests passed 3 of 3; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MX-t-8"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/t8.AC2.sh; echo "exit=$?"</invocation><expect>pytest rc=0; named tests passed 4 of 4; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="MX-t-8"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/t8.AC3.sh; echo "exit=$?"</invocation><expect>pytest rc=0; named tests passed 1 of 1; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 

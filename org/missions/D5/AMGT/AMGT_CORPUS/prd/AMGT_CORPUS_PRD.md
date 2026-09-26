@@ -414,6 +414,31 @@ the corpus is a static local library and every artifact below is derived by a ru
                     NOT IN THE L1 BRIEF -- see A.3's subtraction.
                     STARTING STATE (ingest_run.json, scan 2026-09-23T03:09Z, from
                     the worker's run record, NOT head-object verified): 33
+         ADDENDUM   1.0.0_SA_CTO~Z, 2026-09-26 ~01:2xZ. EVERY NUMBER IN THIS
+                    FENCE IS A READING, NOT A CONSTANT, and three of them have
+                    already moved. The fence's own SOURCE cites
+                    C-BACKFILL-DENOMINATOR-IS-THE-RESEARCH-FOLDER, which rules
+                    that "EVERY FWD-19 POPULATION CLAIM IS A SUBTRACTION FROM A
+                    FRESH READ OF THE ASSET MANAGEMENT RESEARCH FOLDER, WITH THE
+                    DENOMINATOR PRINTED" -- so the contract already binds this
+                    fence and the constants below are snapshots it supersedes.
+                    Stated explicitly because they read as the claim: "all 93"
+                    and "93 of 93" -> THE FOLDER READ FRESH, which measured 93 on
+                    2026-09-24, 94 at 2026-09-25 14:4xZ and 95 at 22:5xZ, the
+                    95th being AIA Group, registered @2c35b9a062 and present in
+                    crosswalk/v1/2026-09-25.json v3 with folders_in_records 95 ==
+                    research_folders_live 95. "the 60 today-unresolved folders"
+                    -> the unresolved count read fresh, which reads 0 today.
+                    "the 11 that can never carry prose (10 workbook-only, 1
+                    empty)" -> that class read fresh, which reads 12. NO ENDPOINT
+                    CHANGES: the outcome is still every security in the folder
+                    dispositioned, and the 11-cannot-be-populated caution still
+                    stands as a CLASS rather than a count. The THREE-value
+                    partition is NOT amended and needs no amendment: CRPS-g-3
+                    (@bae7f689bc) made the census emit the fence's own three
+                    names with the fold stated -- resolved-but-no-prose =
+                    served_as_empty_shell + resolved_no_prose -- which closes
+                    round 4's R-2 and is why this addendum touches numbers only.
                     resolved / 123 stored; 60 folders / 228 files NOT ingested
                     BECAUSE IDENTITY RESOLUTION FAILED. The blocker is IDENTITY,
                     not acquisition: 60 of 93.
