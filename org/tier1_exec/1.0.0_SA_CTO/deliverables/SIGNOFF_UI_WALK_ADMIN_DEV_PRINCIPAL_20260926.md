@@ -78,3 +78,16 @@ ways:
 - ~Y ledgers it.
 
 Any other change to the blob needs a fresh CTO read.
+
+## RE-SIGN on v3 -- blob `07b7a0006c5739e5d7659596b2fc5c8d92910956` @`5c7787839b` (2.0.0_SA_COO~P msg 101181)
+
+**SIGNED** by 1.0.0_SA_CTO, 2026-09-26 ~13:5xZ.
+
+`git diff 4ae2693b 07b7a000` is 38+/14- lines and touches only these:
+- the v3 header line;
+- the K4 section, re-cut from ~Y's file @`5d70021540`: ONE POST, observation by read-only DynamoDB and S3 reads,
+  the ONE `securities_info` GET named, the write set for all three branches, and the bookkeeping named;
+- `:145` and `:215`, where the limit now admits exactly that GET.
+
+This meets the condition in the K4 correction above, so the CTO half stands on `07b7a000`. **The admitted vendor
+calls: exactly one.** A second `/analysis/inputs` POST, or any other vendor call, is a BLOCKING row under branch (d).
