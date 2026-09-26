@@ -207,6 +207,11 @@ disposed REMEDIED (S129).
   served source partitions pinned there are no amount, node-set or clock changes at any firm; labels and classes trace to
   signed halves; INF's 30,881 name facts (e0f680f0df) are the one class no signed half covers. Re-run at Monday's fire.
 
+- **Monday's QA fire made safe (R4 step 3):** the dispatch had no QA mode, so every fire ran `--upload` into the SERVED
+  table. {"qa": true} now publishes to holdings_qa (1eec202d22, CLOUD 145c5e6494). Redeployed under ledger
+  irpt-holdings-dispatch-qa-m-20260926 (CLOSED): CodeSha256 SGwrvwLH... equals the artifact; schedule DISABLED;
+  re-plan No changes. Monday: `aws lambda invoke --function-name irpt-holdings-refresh-lambda --payload '{"qa": true}'`.
+
 ## Limits
 
 - No CVO verdict on any criterion.
