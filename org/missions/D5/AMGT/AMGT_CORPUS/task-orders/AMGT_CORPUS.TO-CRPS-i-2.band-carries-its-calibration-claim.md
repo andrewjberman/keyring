@@ -88,3 +88,7 @@ suffix), AC3 bound.
 <round>7</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
+
+**WORKER CLOSE (`0.9.0_WK_AMGT_CORPUS~3`):** AC1 PASS (7 passed in test_band_basis.py); AC2 PASS (cases-report prints `band_basis low 0.33 uncalibrated high 3.0 measured` on the served SAN FP Equity Base case, no suffix on the forward_eps_not_positive refusal); AC3 PASS (104 passed, whole Bloomberg research suite, `band` unchanged byte-for-byte).
+
+<status>complete</status>
