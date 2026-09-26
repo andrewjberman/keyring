@@ -51,6 +51,28 @@ Build **a new integration `portal_index`** (`app/integrations/portal_index/`) re
    - `test_parity_with_served_object` (for mdpf, etfs and 49financial advi: the tool's figure and as-of date equal the
      served object's own for one fixture, and a one-day date shift reports the mismatch)
 
+**AMENDED after the first run (rows NFRA_MCPINDEX-Z-W3-S1, -S2, -S3, -S6):**
+9. **The keys come ONLY from the catalog** (AMENDED AGAIN to the CTO's ruling D-5 = (c),
+   `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/ROUND1_RULINGS.md` R-4 @3805559000, READ IT; the D-4
+   waiver route is withdrawn, because `.tools/naming-gate.py` refuses a NEW literal before any waiver).
+   - Each tool resolves its object key from its OWN existing catalog row, through `app/graphql_plumbing/catalog_gate.py`.
+   - The module carries NO key literal, fragment or prefix: not `platinum/...`, and not the bucket-relative pieces.
+   - Name the test `test_module_holds_no_key_literal`. It walks the module's AST for string constants and fails on any
+     that is, or is part of, an `opal-data-portal-v2` key. It carries its own MUTANT arm: one planted key literal is
+     caught.
+   - The exact-prefix fence (item 1) and the sibling-prefix refusal (item 2) now hold over the keys the catalog
+     yields.
+10. **Enable-readiness, for this family AND the discover family:**
+    - add the tool classes to `app/data_entitlement.py`, so neither the portal tools nor `opal_discover`/`opal_describe`
+      are denied to everyone;
+    - wire both factories in `app/integrations/registry.py`, so `ENABLED_INTEGRATIONS` can name them.
+    Both stay dormant.
+11. **The catalog regeneration** runs in this worktree with `portal/` checked out (the issuer provisions it).
+12. **The pinned tool count moves with the tools** (row S10): update
+    `tests/test_entitlement_admin.py::test_ogz2_ac08`'s pinned integration and tool counts to the new registry, as C2
+    moves a pinned count with each tool. No other assertion in that file changes. ONE phase: commit the module and run
+    the proof.
+
 **Standing rules (R-6):**
 - the interpreter is `python`;
 - the prefix fence is item 1 and its control is item 2;
@@ -72,6 +94,9 @@ infra/aws/ec2/opal-gateway/app/integrations/portal_index/
 infra/aws/ec2/opal-gateway/tests/test_portal_index.py
 workflows/atom_decomposition/catalog_entries/
 infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml
+infra/aws/ec2/opal-gateway/app/data_entitlement.py
+infra/aws/ec2/opal-gateway/app/integrations/registry.py
+infra/aws/ec2/opal-gateway/tests/test_entitlement_admin.py
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~3/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/**
 </paths>
@@ -86,7 +111,7 @@ Rows: `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVEST
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="MX-t-8"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/t8.AC1.sh; echo "exit=$?"</invocation><expect>pytest rc=0; named tests passed 2 of 2; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MX-t-8"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/t8.AC2.sh; echo "exit=$?"</invocation><expect>pytest rc=0; named tests passed 3 of 3; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MX-t-8"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/t8.AC2.sh; echo "exit=$?"</invocation><expect>pytest rc=0; named tests passed 4 of 4; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="MX-t-8"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/t8.AC3.sh; echo "exit=$?"</invocation><expect>pytest rc=0; named tests passed 1 of 1; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 

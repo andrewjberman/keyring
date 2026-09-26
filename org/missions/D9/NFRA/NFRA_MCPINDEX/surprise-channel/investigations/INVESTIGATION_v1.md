@@ -419,6 +419,300 @@ carries none.
     "spec_asserts": "TO face s.1: 'the answer names ... the NEXT tool to call'.",
     "world_is": "The gateway's catalog-gated read of one key is the REST route /query/v0 (app/query_v0.py handle), audited as tool 'query_v0'. The worker named that; an MCP-only client cannot call it as an MCP tool.",
     "notes": "Form recorded for the issuer."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T18:59:44Z",
+    "one_line": "MX-t-8 AC1: data_entitlement.classify returns None for all 10 portal_index tools. Its classification is a static table in app/data_entitlement.py, which is outside this order's <paths>, so test_portal_tools_register_dormant_with_class fails on that limb.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/data_entitlement.py:164-166 `def classify(tool): return TOOL_CLASSES.get(tool)`; TOOL_CLASSES (:102-103) is built from the literal NATIVE_TOOLS, INTEGRATION_TOOLS and SCHWAB_TOOLS sets and does not read the integration registry.",
+        "CODE @d59217f5a8: data_entitlement.py:320-324 decide() denies a tool with classify None to every principal ('tool_unclassified'); registry.py register_enabled reports such tools under `unclassified`, 'denied at discovery and dispatch until classified in app/data_entitlement.py'.",
+        "MEASURED (python 3.11, worktree wk-NFRA_MCPINDEX-3, before the commit, with the module in place -- see row -Z-W3-S6 for why it is not committed): tests/test_portal_index.py printed 'data_entitlement.classify returns None for 10 of 10 tools'; destructive_ops.classify resolves all 10 to SAFE through the spec's own declaration.",
+        "TO face s.3 @d59217f5a8: <paths> names app/integrations/portal_index/, tests/test_portal_index.py, catalog_entries/, DATA_CATALOG.yaml, the deliverables folder and the channel; app/data_entitlement.py is neither written nor read-listed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "round2/checks/t8.AC1.sh: 'every tool resolves through destructive_ops.classify and data_entitlement by name'.",
+    "world_is": "destructive_ops.classify composes through the spec (MX-c-4); data_entitlement.classify does not. Adding the 10 names to data_entitlement.INTEGRATION_TOOLS is a one-line edit in a file this order does not grant.",
+    "notes": "Criterion refused on this limb as written. Until it is closed, enabling portal_index would register 10 tools that every principal is denied (fail-closed, so no harm)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T18:59:44Z",
+    "one_line": "MX-t-8 AC1: DATA_CATALOG.yaml cannot be regenerated in this worktree. emit_catalog_v02.py refuses because portal/src/api is absent (portal is an empty gitlink here), so the 10 portal_* catalog refs do not resolve.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED (this worktree, `python emit_catalog_v02.py` from workflows/atom_decomposition/, run before and after adding the entries): 'EMIT REFUSED: accessor index is EMPTY -- portal/src/api not readable at C:\\tmp\\mx-3\\portal\\src\\api (the portal submodule must be present)', rc=2.",
+        "MEASURED @d59217f5a8: `git ls-tree HEAD portal` -> '160000 commit 2453a7b4c6... portal'; .gitmodules is 0 bytes at HEAD; portal/ is an empty directory in the worktree.",
+        "MEASURED: emit_catalog_v02.load_catalog_entries() accepts all 10 catalog_entries/portal_*.yaml files, with no errors.",
+        "MEASURED before the commit, with the module in place (row -Z-W3-S6): tests/test_portal_index.py::test_portal_tools_catalog_refs_resolve printed '10 tools, 0 resolve in DATA_CATALOG.yaml'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1 item 5: 'Add the entries as emitter inputs under workflows/atom_decomposition/catalog_entries/portal_*, then regenerate the catalog with emit_catalog_v02.py. Never hand-edit it.'",
+    "world_is": "The entries are written and validate. The regeneration step cannot run without the portal source tree. The worker bar forbids extracting or reconstructing a tree to make an order executable, and hand-editing is forbidden. DATA_CATALOG.yaml is therefore unchanged.",
+    "notes": "The fix is to run the emitter on a tree whose portal submodule is checked out at the gitlink 2453a7b4c6. It will also restamp built_at_git_head."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T18:59:44Z",
+    "one_line": "portal_index is not wired into registry._load_builtin_factories, because registry.py is read-only for this order. In production, ENABLED_INTEGRATIONS=portal_index would report 'unknown integration id' and add zero tools.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/integrations/registry.py:34-58 `_load_builtin_factories` registers ycharts, opal_portal, globgrph and schwab by explicit import; nothing imports a package by id.",
+        "DOC @d59217f5a8: docs/architecture/NFRA_INTEGRATIONS_STANDARD.md s.5 step 2 'Register the factory in registry.py via register_factory(id, Factory)'.",
+        "MEASURED: the AC1 test registers PortalIndexIntegration with the public registry.register_factory for the test only (the planted_factory pattern of tests/test_tool_classification_composition.py) and prints the untouched production available_ids without portal_index."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1 item 6: 'with ENABLED_INTEGRATIONS empty it adds zero tools; with its id set it adds exactly its pinned list'; face s.3 lists app/integrations/registry.py as read, never write.",
+    "world_is": "The integration adds exactly its pinned list once its factory is registered. The one production registration line belongs in a file this order does not grant.",
+    "notes": "Dormant either way; this blocks only the eventual enable deploy."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T18:59:44Z",
+    "one_line": "catalog_entries/ is the silver-dataset mechanism. The emitter writes its rows under `silver_datasets:` with a header saying 'no S3 key, no precomputed artifact', and the 8-field C1 schema has no key field. So the portal_* entries cannot carry the exact key they describe.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: workflows/atom_decomposition/emit_catalog_v02.py:813-823 writes catalog_entries rows under silver_datasets: with the comment 'silver queried live -- no S3 key, no precomputed artifact'.",
+        "CODE @d59217f5a8: emit_catalog_v02.py:202-205 ENTRY_REQUIRED_FIELDS is exactly 8 fields; validate_entry refuses any other field.",
+        "CODE @d59217f5a8: emit_catalog_v02.py:58-61 EMISSION_MAP already carries mp.01.aum-metrics, mp.02.account-distribution, mp.03.aggregate-aua-timeseries and mp.11.non-model-assets, the same platinum/mdpf objects that 4 of the portal_* entries describe."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1 item 5: portal tools' catalog entries are added as emitter inputs under catalog_entries/portal_*.",
+    "world_is": "Once emitted, those rows would sit under a header that describes them wrongly. Four of the mdpf objects would have two catalog rows (a channel row and a silver row). The exact key is carried in each entry's `producer` text and in the integration's FENCES, not in a field a consumer can reject on.",
+    "notes": "Form recorded, per the face. Whether portal tools should point at the existing channel rows instead is the issuer's call."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T18:59:44Z",
+    "one_line": "IntegrationSpec.tool_prefix is one string, but the face's C3 tool names span three systems (mdpf_, etfs_, advi_). portal_index declares 'mdpf_|etfs_|advi_'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d59217f5a8: infra/aws/ec2/opal-gateway/app/integrations/base.py:64 `tool_prefix: str  # every tool this integration registers starts with this`; validate_integration_spec checks only that it is non-empty.",
+        "TO face s.1: one integration `portal_index` registering mdpf_*, etfs_* and advi_* tools."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "base.py: a single tool_prefix that every registered tool starts with.",
+    "world_is": "No single prefix covers the ten names. The field holds the three alternatives joined by '|'. Nothing reads it except summary().",
+    "notes": "INERT: no consumer matches on it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T19:16:00Z",
+    "one_line": "MX-t-8 AC1-AC3: the naming commit gate (ENFORCE) refuses app/integrations/portal_index/integration.py. The exact keys the portal serves today are legacy-layout literals (platinum/mdpf/..., platinum/etfs/..., platinum/advi/49financial/...), which address() cannot produce and no registry row covers. The module is therefore not in the gateway tree, and all six named tests fail at import.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED (bash .tools/safe-commit.sh, this worktree): 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode)'; 'NAMING-GATE: REFUSE 19 graded'. The 17 REFUSE lines are all in integration.py, e.g. ':49 platinum/mdpf/ -> mdpf/{scope}/platinum/ why: NEW and OUT-OF-PATTERN as S3Key: REFUSE' and ':42 49financial -> lookup('49financial') why: NEW hand-kept carrier'.",
+        "CODE @d59217f5a8: .tools/naming-gate.py:6-7 (DEC-6: NEW and OUT-OF-PATTERN -> REFUSE) and :21-24 (a firm token is permitted only in registry files, generated files, or inside key()/address()/name()/lookup() arguments); org/mcp/naming-gate.enforce is present (last touched d181e0ac5a).",
+        "DATA @d59217f5a8: org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json:14-15 maps today's served keys ('/api/general/mdpf/* -> platinum/mdpf/* in opal-data-portal-v2 ... -> mdpf/{scope}/platinum/<leaf>', 'platinum/etfs/positioning_data.json ... -> etfs/{scope}/platinum/positioning_data.json'); its `paths` list (39) holds only the canonical {source}/{scope}/platinum/ form.",
+        "MEASURED (read-only .tools/aws s3api list-objects-v2, opal-data-portal-v2, 2026-09-25): prefixes mdpf/global/platinum/, etfs/opal/platinum/, advi/49financial/platinum/ and mdpf/ return None. The positive control platinum/mdpf/global/ returns account-distribution.json, aggregate-aua-timeseries.json and aum-metrics.json. The canonical-layout keys do not exist; the served objects are the legacy keys.",
+        "RECORD: the refused module is kept, unexecuted, at org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~3/candidate/portal_index/integration.py (org/** is outside the gate's domain as a record tree). Before the commit, with it in place under app/integrations/portal_index/, tests/test_portal_index.py read '2 failed, 4 passed' (the two failures are rows -Z-W3-S1 and -S2)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: build a new integration portal_index (app/integrations/portal_index/) whose tools each read ONE whole precomputed object by its EXACT key prefix, the SAME objects the portal reads; CLAUDE.md rule 30: every S3 address is address() output, and a builder refusal is a registry row, never a hand-typed workaround.",
+    "world_is": "The objects the portal reads exist only at legacy keys. The LGIC canon names their future canonical keys, which do not exist yet. A new reader of today's objects must type legacy keys, and the gate refuses every such literal as NEW and OUT-OF-PATTERN. The in-grant remedies either read nonexistent keys or dodge the gate, and both are refused here. The remedy is a naming-canon entry admitting the opal-data-portal-v2 legacy served keys for readers, or an R20 departure Andrew acknowledges. Both are outside this order's <paths>.",
+    "notes": "No override was used and the gate was not weakened. All three criteria fail on the committed tree because the tests import app.integrations.portal_index. The issuer's call: route the naming remedy, then land the candidate module unchanged."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T22:02:00Z",
+    "one_line": "MX-t-8 PHASE 2 will be refused even after the CTO lands the three LEGACY-READ entries: the naming gate consumes a waiver only for an EXISTING literal, and every literal of the new file portal_index/integration.py is NEW. judge() returns REFUSE on all three roots with valid entries fed in.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @b5b1402e89 (CLOUD): .tools/naming-gate.py:1293 `new = pre_text is None or not _in_pre(lit, pre_text)`; :1324 `if new and verdict in (\"OUT-OF-PATTERN\", \"ALIAS\"): return \"REFUSE\"`; the waiver is consumed only below that, at :1326-1327 (`if rem:` ... 'THE ONE CONSUMPTION POINT OF THE LEGACY-READ WAIVER ... It sits BELOW the NEW branch above, which is why a NEW or CHANGED literal can never reach it'). A new file has pre_text None.",
+        "MEASURED (.scratch/compute_entries.py, the gate's own functions at b5b1402e89 with its lib/opal_naming.py and registry staged read-only): for each of 'platinum/mdpf/', 'platinum/etfs/positioning_data.json' and 'platinum/advi/49financial/', legacy_read_ok(entry, module bytes) = True and authority_ok = True; judge(new file, waivers fed in) = REFUSE, REFUSE, REFUSE. The same literals graded as EXISTING: WAIVED-READ, OUT-OF-PATTERN (WARN), WAIVED-READ.",
+        "MEASURED (the same gate on a /dev/null diff of the module, sha256 8f8bb4d3d61c...): 'REFUSE :168 platinum/mdpf/ why: NEW and OUT-OF-PATTERN as S3Key', ':170 platinum/etfs/positioning_data.json' likewise, ':172 platinum/advi/49financial/' likewise plus the 49financial carrier; org/mcp/naming-gate.enforce is present in this worktree."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face item 9 and LEGACY_READ_AUTHORITY_MX-t-8_20260925.md @212e0b2471: the CTO's entries, landed in NAMING_LEGACY_READS.json before the module's commit, admit the portal's legacy keys for this reader; item 12 PHASE 2: commit the module unchanged once the entries are at HEAD.",
+    "world_is": "The waiver's recognizer admits each literal at its call site (all three legacy_read_ok True), but the gate never asks it for a NEW literal. A new module's literals are all NEW, so PHASE 2's commit is refused with the entries in place. The precedent IRPT-M-LEGACY-READ-01 was an existing literal in an existing file.",
+    "notes": "PHASE 1 done as ordered; the module is on disk uncommitted. Not fixable in my <paths>: the gate, the carrier and the authority are outside it. The issuer's and CTO's call (a gate change that lets a waiver reach a NEW literal at an approved site, or another route)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T22:02:00Z",
+    "one_line": "The LEGACY-READ entries cannot all carry MDPF_CANON: the gate's remediation_of() resolves 'platinum/advi/49financial/' to ADVI_FIRMBKTS and 'platinum/etfs/positioning_data.json' to NO remediation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DATA @b5b1402e89: infra/logic/registry/remediations.json: ADVI_FIRMBKTS surfaces include {s3-prefix, opal-data-portal-v2, platinum/advi/49financial/}; MDPF_CANON surfaces include {s3-prefix, opal-data-portal-v2, platinum/mdpf/}; no surface covers platinum/etfs/.",
+        "MEASURED (.scratch/compute_entries.py, Naming.remediation_of at b5b1402e89): MDPF_CANON, None, ADVI_FIRMBKTS for the mdpf, etfs and advi roots.",
+        "CODE @b5b1402e89: .tools/naming-gate.py judge(): a waiver applies only when entry.remediation == the resolved remediation; with no remediation the EXISTING literal is OUT-OF-PATTERN WARN and the waiver is never read."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LEGACY_READ_AUTHORITY_MX-t-8_20260925.md @212e0b2471: 'Remediation owner of the keys: MDPF_CANON (D8)' for all three prefixes.",
+    "world_is": "The gate assigns the advi root to ADVI_FIRMBKTS and the etfs key to no remediation. org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~3/legacy_read_entries.json writes ADVI_FIRMBKTS for advi (the gate's value, so the entry is consumable), and MDPF_CANON for etfs as the authority says; the gate can never consume the etfs entry. Its computed_with.checks block records all three values.",
+    "notes": "For the CTO's verification of the entries. My file follows the gate where the gate decides consumption."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T22:02:00Z",
+    "one_line": "This worktree's HEAD (1b7e16e1ec) does not carry the ruling, the authority record, NAMING_LEGACY_READS.json, or legacy_read_ok/_norm_body in .tools/naming-gate.py. I read all of them at CLOUD and computed the entries with the gate at b5b1402e89.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: `git merge-base --is-ancestor 212e0b2471 HEAD` rc=1; org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/ absent on disk; org/standards/NAMING_LEGACY_READS.json absent on disk; `def legacy_read_ok|def _norm_body` has 0 matches in this worktree's .tools/.",
+        "MEASURED: merge-base(HEAD, CLOUD) = 60464dd3f8, 4340 commits behind CLOUD b5b1402e89; the task order's bytes are identical at HEAD and at CLOUD (`git diff HEAD CLOUD --stat` on the order is empty).",
+        "READ: the ruling at 212e0b2471:.../ROUND1_RULINGS.md R-3, the authority record at 212e0b2471, and the gate at b5b1402e89:.tools/naming-gate.py:926 (_norm_body) and :1131 (legacy_read_ok), staged under .scratch/ read-only."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face item 9: READ both CTO files; shape for .tools/naming-gate.py legacy_read_ok; compute helper_body_sha256 with the gate's own _norm_body; item 12 PHASE 2 once the CTO's entries are at your HEAD.",
+    "world_is": "The paths are on CLOUD, not at this branch's HEAD. The worktree's own gate has no waiver mechanism, so a PHASE 2 commit graded by this HEAD's gate refuses whatever the carrier holds.",
+    "notes": "Nothing was rebuilt or extracted into the tree; CLOUD was read, not merged. PHASE 2 needs this branch to carry CLOUD's gate and the landed entries; that is the issuer's merge."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T22:02:00Z",
+    "one_line": "Item 10's registry wiring makes tests/test_entitlement_admin.py::test_ogz2_ac08 (outside my <paths>) fail: it instantiates every registered factory, and opal_discover's module is not on this tree. It also pins the registry to 4 ids and 44 tools, so it will still fail on portal_index and opal_discover after the discover drain.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED (python, this worktree, module present): registry.available_ids() = ['globgrph', 'opal_discover', 'opal_portal', 'portal_index', 'schwab', 'ycharts']; instantiating each factory: 5 OK, 'FAIL opal_discover ModuleNotFoundError No module named app.integrations.opal_discover'.",
+        "CODE @1b7e16e1ec: infra/aws/ec2/opal-gateway/tests/test_entitlement_admin.py:310 iterates registry.available_ids(); :339 _pinned_by_id names ycharts/opal_portal/globgrph/schwab only; :349 calls registry._FACTORIES[_iid](); :355 asserts 44 tools.",
+        "MEASURED: that module does not collect here ('ModuleNotFoundError: No module named moto', like 12 other gateway test modules), so the failure is derived from the code, not run. The discover family is on the held branch wk-nfra_mcpindex-1-1d @9dd139a74d (app/integrations/opal_discover/)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face item 10: wire both factories in app/integrations/registry.py so ENABLED_INTEGRATIONS can name them.",
+    "world_is": "The discover module is not on this tree, and an existing test outside <paths> pins the registry's id set. I wired both as factories that import on enablement only, so gateway import stays clean (the portal and classification-composition suites: 38 passed). The pin test needs its two new ids and the discover module.",
+    "notes": "Not fixed: the test file is outside my grant."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T23:40:00Z",
+    "one_line": "Ruling D-5 = (c) keys each portal tool from 'its OWN existing catalog row, through catalog_gate', but 7 of the 10 tools have no such row. category-views, etfs positioning and all four advi tools have no row catalog_gate indexes, and non-model-assets' row is verdict_class deny. Built as ruled, only 3 of 10 tools resolve, so AC2 and AC3 FAIL by output, and AC1 fails through the file-wide rc.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d36d31f8c5: infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py:62-73 load_catalog indexes ONLY channels.*.artifacts[].key (plus the {scope} member expansion). silver_datasets is never indexed.",
+        "MEASURED @d36d31f8c5 (python, catalog_gate.load_catalog on app/refs/DATA_CATALOG.yaml): of the 36 indexed rows, platinum/mdpf/{scope}/aum-metrics.json (serve), account-distribution.json (serve-with-caveat), aggregate-aua-timeseries.json (serve) and platinum/mdpf/global/non-model-assets.json (deny) are the only rows under the portal tools' objects. No row exists for mdpf category-views, platinum/etfs/positioning_data.json or anything under platinum/advi/.",
+        "READ @2c25c4c831: the 10 phase-1 silver_datasets entries (portal_*) carry the C1 schema's 8 fields, and none is a key. The key appears only as prose inside `producer`. The ruling's premise that the catalog already holds the keys 'as existing data (phase 1 @2c25c4c831)' holds for the silver ENTRIES, not for KEYS catalog_gate can resolve.",
+        "MEASURED, proof invocations at d36d31f8c5: AC1 'pytest rc=1; named tests passed 2 of 2; failed/error lines 3'; AC2 'named tests passed 2 of 4'; AC3 'named tests passed 0 of 1'. test_portal_tool_reads_its_exact_prefix_only prints 'tools reading their whole exact-key domain: 3 of 10'. Each of the 7 refusals is 'off-catalog: 0 catalog rows name the portal accessor <X>', or for non-model-assets 'catalog_gate refused ... verdict_class=deny'.",
+        "CONTROL (.scratch/planted_rows_control.py, not committed): the same 4 tests over a catalog COPY carrying a servable row for each of the 7 accessors, with non-model-assets flipped to serve, print 10 of 10 / 650 refused, 0 leaked / 10 of 10 / parity 3 of 3, and all 4 PASS. The module is not the cause; the missing and denied rows are."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face item 9 (ruling D-5 = (c), R-4 @3805559000): each tool resolves its object key from its OWN existing catalog row, through catalog_gate.py; only EXISTING, gate-admitted rows are read; a NEW row goes through the gate on its own merits, never smuggled in with a tool. Items 1-3 and 8 need all 10 tools to read their exact keys, and the mdpf, etfs and 49financial advi families to reach parity.",
+    "world_is": "Built to the ruling at 84a725073b. The module holds no key literal (0 hits over 185 constants; the naming gate WARN, rc 0; a planted-literal mutant is REFUSED, rc 1). Only 3 of 10 tools resolve against the real catalog. I added no row, because that would be the smuggling the ruling forbids, and the catalog header says widening is Andrew-only. The 7 tools refuse, deny-by-default, with zero S3 calls.",
+    "notes": "Needs an issuer decision. Either the missing rows land as their own gate-admitted catalog change (category-views, etfs positioning, 4 advi objects, and a non-deny verdict for non-model-assets or dropping that tool), or the criteria are recut to the 3 resolvable tools. The accessor each tool looks for is in ROWS in the module."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T23:40:00Z",
+    "one_line": "The round-2 check helper pytest_named reads 'passed 0 of N; failed/error lines 0' for any test that prints through capsys.disabled(). Under -v the uncaptured output lands between `::name` and PASSED/FAILED, so neither verdict is on the line its greps match.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED @84a725073b: t8.AC1.sh printed 'pytest rc=1; named tests passed 0 of 2; failed/error lines 0', while `pytest -v` shows both AC1 tests PASSED, each verdict on its own line after the printed measurement lines.",
+        "CODE: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/_root.sh pytest_named greps -E \"::$t(\\[.*\\])? PASSED\" (same line) and -cE ' FAILED| ERROR' (leading space). The split-off verdicts start at column 0, so both counts read zero.",
+        "MEASURED @d36d31f8c5, after _say prints into the capture: AC1 'named tests passed 2 of 2; failed/error lines 3'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The AC1-AC3 invocations report the named tests' PASSED count and the FAILED/ERROR lines of the file.",
+    "world_is": "They do only when the tests keep their output inside pytest's capture. The error runs toward FAIL, since the rc and the pass count still gate, never toward a false PASS. But with 'failed/error lines 0' beside a real failure, the check hides WHICH tests failed. Fixed in my own test file at d36d31f8c5. The helper is unchanged, because it is outside my paths.",
+    "notes": "Any other cell whose tests print through capsys.disabled() under a pytest_named check reads the same way."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S13",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-26T01:20:00Z",
+    "one_line": "To read item 13 over the 3 tools, I removed the 7 catalog_entries/portal_* source files of the tools that left the cell and regenerated DATA_CATALOG.yaml. Item 13 names no catalog-entry removal; it says only that no catalog ROW is added for them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ, TO face item 13 (amendment ac5445b2ba on CLOUD, relayed in the launch prompt): 'Every item above now reads over the 3' and 'Do NOT add catalog rows for them'. Item 5 requires each tool's catalog-entry reference to resolve to an entry, and test_portal_tools_catalog_refs_resolve asserts that the portal_* source files equal the tools' refs.",
+        "CODE @6345d36f04: the 7 removed files (portal_mdpf_category_views, portal_mdpf_non_model_assets, portal_etfs_positioning, portal_advi_{leaderboard,mix_summary,partner_analytics,growth_chart}.yaml) were my own sources, first added in 81d37aafda / 2c25c4c831 on this branch. None is on CLOUD ('exists on disk, but not in CLOUD').",
+        "MEASURED @bc0cde67f0: emit_catalog_v02.py rc=0, 'SILVER DATASET ENTRIES (MX-c-2, catalog_entries/*.yaml): 3 emitted, 0 refused (denominator 3 source files)'. The DATA_CATALOG.yaml diff is the 7 silver_datasets entries plus the two vintage lines."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Item 13: the cell registers only the 3 resolving tools, every item reads over the 3, and no catalog rows are added for the other 7.",
+    "world_is": "The 7 silver entries would otherwise stay in the catalog, each naming a tool no integration registers. I removed them. Round 3's catalog-row cell re-adds them from 6345d36f04 (git show 6345d36f04:workflows/atom_decomposition/catalog_entries/portal_<name>.yaml) if it wants them.",
+    "notes": "If the issuer meant the 7 entries to stay, revert the 7 deletions in bc0cde67f0, re-run the emitter, and relax the source-set equality in test_portal_tools_catalog_refs_resolve to a subset."
   }
 ]
 ```
