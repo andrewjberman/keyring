@@ -1,0 +1,1005 @@
+{
+ "schema_version": "1.0",
+ "claim_field": "Each finding carries cause.claim = measured | inferred. 'measured' = seen in the screenshot and, where cited, a source line or HAR entry; 'inferred' = the named cause is not yet checked in code.",
+ "source": {
+  "reviewer": "Andrew Berman (Andrew-direct 2026-09-26 ~21:0xZ, the 4.0.0_SA_CRO terminal)",
+  "compiled_by": "4.0.0_SA_CRO",
+  "build_observed": "localhost:5174 dev build (address bar in 165743); the running bundle's commit was not recorded. The shared portal working copy read fdccc6e6; origin DEV 1e02be40; PROD 36a37afc.",
+  "client_walked": "a Cottonwood client with two accounts (165515-165932); search on 49financial and Global",
+  "screenshots": [
+   "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165424.png",
+   "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165438.png",
+   "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165446.png",
+   "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165515.png",
+   "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165530.png",
+   "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165611.png",
+   "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165641.png",
+   "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165650.png",
+   "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165743.png",
+   "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165932.png"
+  ]
+ },
+ "outcomes": {
+  "O1": "An advisor types a client's name and the right client is the first thing they see, in a list nothing else on the page covers or competes with.",
+  "O2": "An advisor reads who the client is and which firm it is in, in client language: no account number, token, code or double hyphen in the client's identity.",
+  "O3": "An advisor tells every account of a client apart wherever accounts are listed, and every listed account opens.",
+  "O4": "An advisor reads one account's performance (never a client blend), and when it cannot be shown reads the true reason in plain words, with no control offered that does nothing.",
+  "O5": "An advisor moves from the client total down to one account and its models and back, always seeing where they are, with every percentage labelled with what it is a share of.",
+  "O6": "Every holdings view shows every account of the client.",
+  "O7": "One colour means one thing on the page: no two items in a chart share a colour, and the model palette and the asset-class palette never reuse each other's colours.",
+  "O8": "The page shows client facts on its face and system facts one click away: one navy band, one date format, one money format, no raw codes or system words, no wrapped amounts, no duplicate totals.",
+  "O9": "An advisor reads the securities map: each security once with its total, every tile legible, filters grouped by account.",
+  "O10": "An advisor can trust the holdings figures: they are as of the last trading day, and model amounts are the positions actually held."
+ },
+ "findings": [
+  {
+   "id": "UIR-01",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165424.png",
+   "surface": "search",
+   "observed": "The client dropdown opens on an EMPTY query and lists the firm's entries A-Z, acting as a browse list rather than a search.",
+   "outcome": "O1",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "The search list renders results with no query typed.",
+    "evidence": null
+   },
+   "acceptance": "With the search box focused and empty, no result list shows; results appear only for typed text (Browse stays the listing)."
+  },
+  {
+   "id": "UIR-02",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165424.png",
+   "surface": "search",
+   "observed": "The PERFORMANCE tab strip draws ON TOP of the open dropdown, cutting it between the first and second option.",
+   "outcome": "O1",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "Stacking order: the tab strip sits above the dropdown layer.",
+    "evidence": null
+   },
+   "acceptance": "With the dropdown open over the tabs, every option is fully visible and the tab strip is underneath it."
+  },
+  {
+   "id": "UIR-03",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165424.png",
+   "surface": "search",
+   "observed": "Options are account registrations, not clients: 'A HARE CUST FOR' appears three times with three account tails; every row shows one account's tail and a raw type code ('S1', 'FB').",
+   "outcome": "O1",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The directory's display_name for many 49F entries is a registration title; the frontend appends the masked discriminator (header/search.ts:94-96 optionLabel).",
+    "evidence": "portal src/pages/InvestorReporting/header/search.ts:94-96; screenshot 165424"
+   },
+   "acceptance": "Each option names a client in client language; a client with several registrations appears once; no raw type code in the option."
+  },
+  {
+   "id": "UIR-04",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165424.png",
+   "surface": "search",
+   "observed": "The firm prints as a token chip ('49financial', 'cottonwood') on every row, inline on some rows and wrapped to its own line on others.",
+   "outcome": "O2",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "known",
+   "known_ref": "walk IVE23-AC4 FAIL, org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/prod-uiwalk-20260926.md",
+   "design_rule": "FWD-15 (IVE23)",
+   "cause": {
+    "claim": "measured",
+    "text": "The firm token is used as the display name.",
+    "evidence": null
+   },
+   "acceptance": "Every option shows the firm's display name (e.g. 'Cottonwood'), laid out the same on every row."
+  },
+  {
+   "id": "UIR-05",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165424.png",
+   "surface": "page",
+   "observed": "Behind the dropdown: 'Choose a client to confirm its firm and accounts in Resolution.' uses the system word 'Resolution'.",
+   "outcome": "O8",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "Copy uses an internal term.",
+    "evidence": null
+   },
+   "acceptance": "The empty-state line uses client language only (no 'Resolution')."
+  },
+  {
+   "id": "UIR-06",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165424.png",
+   "surface": "page",
+   "observed": "Before any client is chosen, the Performance area shows a figure ('VS BENCHMARK +2.00%') from the illustrative sample panel.",
+   "outcome": "O1",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "The sample view (tabs/SampleView.tsx) renders under the live page before selection.",
+    "evidence": null
+   },
+   "acceptance": "With no client chosen, the page shows no number that reads like client data."
+  },
+  {
+   "id": "UIR-07",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165438.png",
+   "surface": "search",
+   "observed": "Typing 'anna thiessen' matches on 'anna' only and lists alphabetically; the real match 'Thiessen, Anna' (Cottonwood) is LAST. Name order differs by firm ('ANNA GARCIA' vs 'Thiessen, Anna') and search does not adjust.",
+   "outcome": "O1",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "No relevance ranking and no name-order normalization; the frontend keeps server order (header/search.ts toOptions has no filter).",
+    "evidence": "screenshots 165438, 165446"
+   },
+   "acceptance": "A full-name query in either order ('anna thiessen', 'thiessen anna') puts the exact client first. The CTO rules whether ranking is server-side (IRPT_BCKEND directory search) or client-side."
+  },
+  {
+   "id": "UIR-08",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165438.png",
+   "surface": "search",
+   "observed": "The tab strip again covers part of the list: 'ANNA BOROWINSKI' is cut off under it.",
+   "outcome": "O1",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "The same stacking defect as UIR-02.",
+    "evidence": null
+   },
+   "acceptance": "No option is ever hidden under another element."
+  },
+  {
+   "id": "UIR-09",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165438.png",
+   "surface": "search",
+   "observed": "Browser spell-check underlines the typed client name.",
+   "outcome": "O1",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "The search input does not disable spell-check.",
+    "evidence": null
+   },
+   "acceptance": "The client search input shows no spell-check underline."
+  },
+  {
+   "id": "UIR-10",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165438.png",
+   "surface": "search",
+   "observed": "In Global mode the list mixes all three firms with no grouping and no result count.",
+   "outcome": "O1",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The options are one flat list.",
+    "evidence": null
+   },
+   "acceptance": "In Global mode results are grouped (or clearly marked) by firm and the list states how many matched."
+  },
+  {
+   "id": "UIR-11",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165446.png",
+   "surface": "page",
+   "observed": "'Illustrative sample -- not a client's data.' shows through behind the search list.",
+   "outcome": "O1",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The sample panel renders under the live search.",
+    "evidence": null
+   },
+   "acceptance": "No sample content renders while the live search is in use."
+  },
+  {
+   "id": "UIR-12",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165515.png",
+   "surface": "identity",
+   "observed": "WHO reads 'Thiessen, Anna ****9237 / BROKERAGE': a two-account client is labelled with one account's tail and type.",
+   "outcome": "O2",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The identity card reuses the option label (name + one masked discriminator).",
+    "evidence": "portal src/pages/InvestorReporting/header/IdentityCard.tsx:343 (who = row.label)"
+   },
+   "acceptance": "WHO shows the client's name only; accounts appear under Over what."
+  },
+  {
+   "id": "UIR-13",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165515.png",
+   "surface": "identity",
+   "observed": "'cottonwood -- Client': the lower-case firm token and an ASCII double hyphen show on the page.",
+   "outcome": "O2",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "known",
+   "known_ref": "walk IVE23-AC4 FAIL",
+   "design_rule": "FWD-15 (IVE23)",
+   "cause": {
+    "claim": "measured",
+    "text": "The firm token is used as the display name; '--' separator in copy.",
+    "evidence": null
+   },
+   "acceptance": "The line reads the firm's display name with normal punctuation."
+  },
+  {
+   "id": "UIR-14",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165515.png",
+   "surface": "header",
+   "observed": "The Firm menu still says 'Global (All)' after a Cottonwood client is chosen.",
+   "outcome": "O2",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The firm menu does not follow the chosen client's firm.",
+    "evidence": null
+   },
+   "acceptance": "After choosing a client the firm control shows that client's firm (or clearly says the list is all firms)."
+  },
+  {
+   "id": "UIR-15",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165515.png",
+   "surface": "performance",
+   "observed": "The account picker lists '****9237 / BROKERAGE' twice, with no value beside either.",
+   "outcome": "O3",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "known",
+   "known_ref": "own-mask labels half CRO @c412578ede (publishes with the next scheduled Holdings publication); PRD v0.12 C25 label + value",
+   "design_rule": "C25 / FWD-19 (PRD v0.12)",
+   "cause": {
+    "claim": "measured",
+    "text": "Holdings ACCOUNT labels repeat within a client; C25 v0.12 requires label AND value keyed by id.",
+    "evidence": null
+   },
+   "acceptance": "Each picker entry shows a distinct label and the account's value."
+  },
+  {
+   "id": "UIR-16",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165515.png",
+   "surface": "performance",
+   "observed": "The Performance account picker offers 'All accounts', although Performance is per account.",
+   "outcome": "O4",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-19 / C25 (route R3a)",
+   "cause": {
+    "claim": "measured",
+    "text": "Performance mounts the shared AccountFilter, which always adds ALL_ACCOUNTS (tabs/holdings/AccountFilter.tsx:99-100).",
+    "evidence": "portal src/pages/InvestorReporting/tabs/holdings/AccountFilter.tsx:99-100; tabs/reporting/ReportingTab.tsx mounts it"
+   },
+   "acceptance": "The Performance picker has no 'All accounts' option; it lists accounts only."
+  },
+  {
+   "id": "UIR-17",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165530.png",
+   "surface": "identity",
+   "observed": "'Over what' expands to two identical '****9237 / BROKERAGE' lines, neither clickable.",
+   "outcome": "O3",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C25 rule 4",
+   "cause": {
+    "claim": "measured",
+    "text": "Over what lists repeated labels; entries are not links.",
+    "evidence": null
+   },
+   "acceptance": "Over what lists every account distinctly, and each opens that account's Performance."
+  },
+  {
+   "id": "UIR-18",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165515.png",
+   "surface": "performance",
+   "observed": "'Performance for this account is temporarily unavailable right now.' is not true for Cottonwood: it needs a one-use Black Diamond plan per account and will not clear by itself. The raw code DEPENDENCY_UNAVAILABLE shows under Details.",
+   "outcome": "O4",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "The refusal copy maps DEPENDENCY_UNAVAILABLE to a generic 'temporarily' message; the backend's per-account plan gate is as designed.",
+    "evidence": null
+   },
+   "acceptance": "The refusal says in plain words why the figure is not available for this account and what makes it available; no raw code on the face."
+  },
+  {
+   "id": "UIR-19",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165515.png",
+   "surface": "performance",
+   "observed": "The refusal renders as an amber-tinted block.",
+   "outcome": "O4",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "portal DESIGN.md C12",
+   "cause": {
+    "claim": "measured",
+    "text": "The status panel uses a tinted block.",
+    "evidence": null
+   },
+   "acceptance": "A canvas-level refusal is a status icon beside navy text, never a tinted block."
+  },
+  {
+   "id": "UIR-20",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165515.png",
+   "surface": "header",
+   "observed": "Export is enabled while there is no report to export.",
+   "outcome": "O4",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-9",
+   "cause": {
+    "claim": "measured",
+    "text": "The page Export control does not depend on an answer-bearing report.",
+    "evidence": null
+   },
+   "acceptance": "Export is disabled whenever the active tab has no answer-bearing report."
+  },
+  {
+   "id": "UIR-21",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165515.png",
+   "surface": "performance",
+   "observed": "The 'Account:' label and picker float on the page canvas outside any panel; the period controls sit in a separate panel.",
+   "outcome": "O4",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "portal CLAUDE.md panel rule",
+   "cause": {
+    "claim": "measured",
+    "text": "The picker is mounted outside Panel > PanelHeader > PanelContent.",
+    "evidence": null
+   },
+   "acceptance": "The account picker and the period controls sit together inside one panel."
+  },
+  {
+   "id": "UIR-22",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165515.png",
+   "surface": "identity",
+   "observed": "'About this scope' is a system word on the face.",
+   "outcome": "O8",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "Copy uses an internal term.",
+    "evidence": null
+   },
+   "acceptance": "The disclosure uses client language, or moves behind the system-facts click."
+  },
+  {
+   "id": "UIR-23",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165515.png",
+   "surface": "data",
+   "observed": "Holdings are as of 2026-09-22 on Saturday 2026-09-26: three trading days behind Friday 2026-09-25.",
+   "outcome": "O10",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The served Holdings revision is 2026-09-22; the scheduled publication (R4 enable) is not on yet.",
+    "evidence": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R4_ENABLE_DIFF_20260926/README.md (served 2026-09-22)"
+   },
+   "acceptance": "Holdings read as of the last trading day (T-1), on a scheduled publication."
+  },
+  {
+   "id": "UIR-24",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165611.png",
+   "surface": "holdings",
+   "observed": "Both pie slices are labelled 'Unknown' while the table beside them names the accounts.",
+   "outcome": "O3",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "known",
+   "known_ref": "walk IVE20-AC4 FAIL item 1",
+   "design_rule": "FWD-18 (IVE20-1)",
+   "cause": {
+    "claim": "inferred",
+    "text": "The pie label reads a field the ACCOUNT node does not carry.",
+    "evidence": null
+   },
+   "acceptance": "The pie labels each slice with the same name the table shows."
+  },
+  {
+   "id": "UIR-25",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165611.png",
+   "surface": "holdings",
+   "observed": "Both account slices and both legend dots are the same cyan.",
+   "outcome": "O7",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "Colour is assigned by label or type, not per item.",
+    "evidence": null
+   },
+   "acceptance": "No two slices in one chart share a colour."
+  },
+  {
+   "id": "UIR-26",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165611.png",
+   "surface": "holdings",
+   "observed": "The two account rows carry identical labels ('****9237 / BROKERAGE').",
+   "outcome": "O3",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "status": "known",
+   "known_ref": "own-mask labels half CRO @c412578ede; row IRPT_BCKEND-S146",
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "ACCOUNT nodes carry the relationship's masked tail, not their own.",
+    "evidence": null
+   },
+   "acceptance": "Each account row shows its own masked tail and type."
+  },
+  {
+   "id": "UIR-27",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165611.png",
+   "surface": "holdings",
+   "observed": "Supervision and Advisory read 'withheld' on every row: system facts on the face.",
+   "outcome": "O8",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "The columns render on the face.",
+    "evidence": null
+   },
+   "acceptance": "Supervision and Advisory are one click away (or hidden when withheld on every row)."
+  },
+  {
+   "id": "UIR-28",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165611.png",
+   "surface": "holdings",
+   "observed": "The summary card shows 'Unique accounts', 'Model coverage' and 'Source dates Business/Observed' on the face, in two date formats.",
+   "outcome": "O8",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-15, FWD-16",
+   "cause": {
+    "claim": "measured",
+    "text": "System facts render on the summary card.",
+    "evidence": null
+   },
+   "acceptance": "The summary card shows client facts; source dates and coverage are one click away, in one date format."
+  },
+  {
+   "id": "UIR-29",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165611.png",
+   "surface": "holdings",
+   "observed": "Money is 'USD 46,009,147.02' here and '$46,009,147.02' in the identity card, and the client total appears twice.",
+   "outcome": "O8",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Two money formatters; the total is repeated.",
+    "evidence": null
+   },
+   "acceptance": "One money format across the page; the client total appears once."
+  },
+  {
+   "id": "UIR-30",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165611.png",
+   "surface": "holdings",
+   "observed": "The 'cottonwood' token chip at the top right.",
+   "outcome": "O2",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "known",
+   "known_ref": "walk IVE23-AC4 FAIL",
+   "design_rule": "FWD-15 (IVE23)",
+   "cause": {
+    "claim": "measured",
+    "text": "The firm token is used as the display name.",
+    "evidence": null
+   },
+   "acceptance": "The firm shows by display name, once."
+  },
+  {
+   "id": "UIR-31",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165641.png",
+   "surface": "holdings",
+   "observed": "After drilling into account 1 the account filter still says 'All accounts': the drill and the filter do not know about each other.",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-19 route R2a",
+   "cause": {
+    "claim": "measured",
+    "text": "Drill state and account focus are separate mechanisms.",
+    "evidence": null
+   },
+   "acceptance": "Drilling into an account sets the account focus, and choosing an account opens its drill; the two always agree."
+  },
+  {
+   "id": "UIR-32",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165641.png",
+   "surface": "holdings",
+   "observed": "The breadcrumb skips the account level, and the drilled row reads 'Rebalancer strategy: Anna *9238', a different tail from the account's '****9237'. Masking switches between one and four asterisks.",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The breadcrumb omits ACCOUNT nodes; the account label is the relationship's tail (UIR-26) while the strategy name carries the account's own; two masking styles.",
+    "evidence": null
+   },
+   "acceptance": "The breadcrumb names the account, the account and its strategy show the same tail, and one masking style is used."
+  },
+  {
+   "id": "UIR-33",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165641.png",
+   "surface": "holdings",
+   "observed": "The pie shows 100.00% while the table shows 57.17% for the same row: two bases, neither labelled.",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The pie's base is the drilled node; the table's base is the client total.",
+    "evidence": null
+   },
+   "acceptance": "Every percentage states its base (of this account / of the client), or both views use one base."
+  },
+  {
+   "id": "UIR-34",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165641.png",
+   "surface": "holdings",
+   "observed": "A one-slice grey pie carries no information.",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-16",
+   "cause": {
+    "claim": "measured",
+    "text": "The pie renders for a single child.",
+    "evidence": null
+   },
+   "acceptance": "A level with one child shows no pie (or shows the next level down)."
+  },
+  {
+   "id": "UIR-35",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165641.png",
+   "surface": "holdings",
+   "observed": "Amounts wrap onto two lines ('USD / 26,303,302.17').",
+   "outcome": "O8",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The amount column is too narrow.",
+    "evidence": null
+   },
+   "acceptance": "No amount wraps at 1440 px."
+  },
+  {
+   "id": "UIR-36",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165650.png",
+   "surface": "holdings",
+   "observed": "For the same model the pie says 60.70% and the table 34.70%, with different bases and no label.",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "As UIR-33.",
+    "evidence": null
+   },
+   "acceptance": "As UIR-33."
+  },
+  {
+   "id": "UIR-37",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165650.png",
+   "surface": "holdings",
+   "observed": "The colour systems collide: blue is an Opal model in this pie but Equity on the securities map; orange is a model here but Alternatives there; Opal Fixed Income is grey, the 'unknown' colour.",
+   "outcome": "O7",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-12, FWD-13",
+   "cause": {
+    "claim": "measured",
+    "text": "The model palette and the asset-class palette share hues; a model without a canonical code falls back to grey.",
+    "evidence": null
+   },
+   "acceptance": "No hue means both a model and an asset class; every Opal model draws its canonical colour."
+  },
+  {
+   "id": "UIR-38",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165650.png",
+   "surface": "holdings",
+   "observed": "The 'Primary', 'Custom' and 'Opal model' chips are jargon, and 'Opal model' breaks across two lines.",
+   "outcome": "O8",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "Classification chips render on the face.",
+    "evidence": null
+   },
+   "acceptance": "No classification chip on the face (or client-language chips that never wrap)."
+  },
+  {
+   "id": "UIR-39",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165743.png",
+   "surface": "holdings",
+   "observed": "Allocation shows ONE bar (57.17%) and drops the second account's 42.83%.",
+   "outcome": "O6",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "AllocationBars.rootOf returns the FIRST node with parentRef null (tabs/holdings/AllocationBars.tsx:64-65, 138-139). A multi-account snapshot has one parentless ACCOUNT node per account, so only the first account's children render; slices.ts:148 rootNode has the same shape.",
+    "evidence": "portal AllocationBars.tsx:64-65,138-139; slices.ts:148-150; PROD walk HAR entries 98 and 256 (2 and 3 parentless ACCOUNT nodes)"
+   },
+   "acceptance": "Every holdings view lists every account (Allocation shows 2 of 2 bars for a two-account client)."
+  },
+  {
+   "id": "UIR-40",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165743.png",
+   "surface": "holdings",
+   "observed": "At least four dark navy bands on one page (Allocation and Securities Map headers and footers).",
+   "outcome": "O8",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "portal DESIGN.md C3",
+   "cause": {
+    "claim": "measured",
+    "text": "Panel headers and footers use the band colour.",
+    "evidence": null
+   },
+   "acceptance": "One band per page."
+  },
+  {
+   "id": "UIR-41",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165743.png",
+   "surface": "securities map",
+   "observed": "The filter chips repeat each model once per account and mix models, sleeves, strategies and 'DIVZ SMA', with no account grouping.",
+   "outcome": "O9",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Chips are one per node, with no grouping.",
+    "evidence": null
+   },
+   "acceptance": "Chips are grouped by account (or de-duplicated by model), and each chip says what it is."
+  },
+  {
+   "id": "UIR-42",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165743.png",
+   "surface": "securities map",
+   "observed": "The right third of the treemap collapses into unreadable hairline slivers.",
+   "outcome": "O9",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The treemap lays out many tiny tiles in one strip.",
+    "evidence": null
+   },
+   "acceptance": "Every tile is legible, or small items group into one labelled 'other' tile."
+  },
+  {
+   "id": "UIR-43",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165743.png",
+   "surface": "securities map",
+   "observed": "One security splits into several tiles, one per model (SPHY x3, JAAA x2, JPST x2), so its total cannot be read.",
+   "outcome": "O9",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The map tiles positions per model, not securities.",
+    "evidence": null
+   },
+   "acceptance": "Each security appears once with its total (per-model splits one click away)."
+  },
+  {
+   "id": "UIR-44",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165743.png",
+   "surface": "securities map",
+   "observed": "The legend's Cash green is almost the same as Fixed Income green; no Cash tile shows; grey and white slivers have no legend entry.",
+   "outcome": "O7",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-13",
+   "cause": {
+    "claim": "measured",
+    "text": "Two near-identical greens; unclassified slivers are not in the legend.",
+    "evidence": null
+   },
+   "acceptance": "Every colour in the map is in the legend, and no two legend colours are near-identical."
+  },
+  {
+   "id": "UIR-45",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165743.png",
+   "surface": "page",
+   "observed": "Three date formats on one page ('September 22nd, 2026, 5:00p ET', '2026-09-22', 'September 24th ... 2:02a ET'); 'Source: Opal Capital Analysis.' is vague.",
+   "outcome": "O8",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Several date formatters; generic source copy.",
+    "evidence": null
+   },
+   "acceptance": "One date format across the page; the source line names the actual source."
+  },
+  {
+   "id": "UIR-46",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165932.png",
+   "surface": "holdings",
+   "observed": "DIVZ SMA and Opal Fixed Income are both grey, so two slices look the same.",
+   "outcome": "O7",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "Items without a canonical colour all fall back to grey.",
+    "evidence": null
+   },
+   "acceptance": "As UIR-25."
+  },
+  {
+   "id": "UIR-47",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165932.png",
+   "surface": "holdings",
+   "observed": "Pie and table percentages use different bases again (36% against 15.42%).",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "As UIR-33.",
+    "evidence": null
+   },
+   "acceptance": "As UIR-33."
+  },
+  {
+   "id": "UIR-48",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165932.png",
+   "surface": "data",
+   "observed": "Model amounts are EXACT percentages of the account: 36.0000 / 33.0000 / 21.0000 / 7.0000 / 3.0000% (account 2) and 60.7 / 20.0 / 16.0 / 3.3% (account 1), including 'Client (residual, not in a model)'. Real positions would not land on round numbers; this looks like target weight x account value.",
+   "outcome": "O10",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "Not established. The model-level amounts appear to be allocated from model targets rather than summed from held positions.",
+    "evidence": "screenshots 165650 and 165932; ratios computed to 4 decimals by 4.0.0_SA_CRO (e.g. 7,094,104.14 / 19,705,844.84 = 36.0000%)"
+   },
+   "acceptance": "Model amounts are the sum of the positions held in that model (or are labelled as target allocations), and the residual is the true unassigned remainder."
+  },
+  {
+   "id": "UIR-49",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165932.png",
+   "surface": "holdings",
+   "observed": "The account filter still says 'All accounts' while drilled into account 2; the breadcrumb again skips the account.",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "As UIR-31 and UIR-32.",
+    "evidence": null
+   },
+   "acceptance": "As UIR-31 and UIR-32."
+  }
+ ],
+ "coverage": {
+  "finding_count": 49,
+  "by_outcome": {
+   "O1": [
+    "UIR-01",
+    "UIR-02",
+    "UIR-03",
+    "UIR-06",
+    "UIR-07",
+    "UIR-08",
+    "UIR-09",
+    "UIR-10",
+    "UIR-11"
+   ],
+   "O2": [
+    "UIR-04",
+    "UIR-12",
+    "UIR-13",
+    "UIR-14",
+    "UIR-30"
+   ],
+   "O3": [
+    "UIR-15",
+    "UIR-17",
+    "UIR-24",
+    "UIR-26"
+   ],
+   "O4": [
+    "UIR-16",
+    "UIR-18",
+    "UIR-19",
+    "UIR-20",
+    "UIR-21"
+   ],
+   "O5": [
+    "UIR-31",
+    "UIR-32",
+    "UIR-33",
+    "UIR-34",
+    "UIR-36",
+    "UIR-47",
+    "UIR-49"
+   ],
+   "O6": [
+    "UIR-39"
+   ],
+   "O7": [
+    "UIR-25",
+    "UIR-37",
+    "UIR-44",
+    "UIR-46"
+   ],
+   "O8": [
+    "UIR-05",
+    "UIR-22",
+    "UIR-27",
+    "UIR-28",
+    "UIR-29",
+    "UIR-35",
+    "UIR-38",
+    "UIR-40",
+    "UIR-45"
+   ],
+   "O9": [
+    "UIR-41",
+    "UIR-42",
+    "UIR-43"
+   ],
+   "O10": [
+    "UIR-23",
+    "UIR-48"
+   ]
+  },
+  "by_owner": {
+   "DSGN_IRPTV1": 45,
+   "IRPT_BCKEND": 4
+  },
+  "by_status": {
+   "new": 43,
+   "known": 6
+  },
+  "by_claim": {
+   "inferred": 10,
+   "measured": 39
+  }
+ },
+ "coverage_rule": "Every UIR id (49) must appear in the PRD addendum with its FWD and criterion, and must be graded by the CVO. Check: python docs/briefs/irpt-ui-review-coverage-check.py"
+}
