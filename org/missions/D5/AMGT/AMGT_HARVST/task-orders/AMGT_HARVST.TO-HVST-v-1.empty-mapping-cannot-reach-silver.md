@@ -123,7 +123,7 @@ OBSERVATION or BLOCKING -- there is no DEFECT value) and KEEP WORKING.
    judgment criterion sits on `v-2`, which is where a green number can be green over the wrong rows.
 
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <slot>~21</slot>
 <fabric>site-z</fabric>
