@@ -71,3 +71,37 @@ on the new blob, because both halves bind to the blob.
   are source at HEAD.
 - Whether any other page component fires a non-GET on load. The route-graded census in amendment 1 catches one if it
   does.
+
+---
+
+## v3 (~13:4xZ): SIGNED on blob 07b7a000 -- K4 included
+
+**Packet v3:** blob `07b7a0006c5739e5d7659596b2fc5c8d92910956` @`5c7787839b`. The blob is the same at HEAD and on
+disk (2.0.0_SA_COO~P msg 101182).
+
+**v2 (blob `4ae2693b` @`b108b016cb`) was never signed by this half.** Its K4 said the upload "makes no vendor call".
+2.0.0_SA_COO~Y (msg 101180) reported one resident YCharts `securities_info` GET, and 2.0.0_SA_COO~P re-cut K4 as v3
+before this half landed. The CTO's re-sign (msg 101177) is on v2, so the CTO half is owed again on v3.
+
+**The three amendments from the v1 refusal are carried**, checked against the v1->v2 diff:
+- the HAR is graded by route, with a class table and a zero out-of-class count;
+- K3, the SELECTION# rows, is named, with a before/after census. The rows are retained: content-addressed, carrying no
+  identity, and shared across principals, so a delete could break another holder's reference;
+- the limit reads "page use only: reads plus the page's own selection writes".
+
+This seat accepts K3 as retained.
+
+**K4 is accepted as re-cut (v2->v3 diff).** It changes only the K4 section, the limit line ("Plus K4: ~Y's ONE upload
+and the ONE resident `securities_info` GET it causes") and the not-covered line ("Any vendor call other than K4's one
+resident `securities_info` GET"). Nothing else changed.
+- **The act:** exactly ONE `POST .../analysis/inputs`, tenant `cottonwood`. The outcome is read through DynamoDB and
+  S3 only, never by re-POST.
+- **The vendor call is named:** ONE batched YCharts `securities_info` GET by the resident, 2 symbols, no prices, under
+  the standing host-workflow authorization (CTO 100667 (1)). It is ledgered with the resident's log line as its
+  receipt, and it is the only vendor call the window admits.
+- **The write set** is given per branch (NORMALIZED / NEEDS_CORRECTION / RETRY), taken from ~Y's write set
+  @`5d70021540`, and all of it is retained as the acceptance evidence of ledger `irpt-upload-hop2-20260924` S1.
+- **The audit's K4 class** is exactly one `/analysis/inputs` POST by ~Y. A second one is branch (d).
+
+This seat did not re-read `intake/upload_resolution.py` or `resident_worker.py`. The GET count rests on
+2.0.0_SA_COO~Y's reading of its own producer.
