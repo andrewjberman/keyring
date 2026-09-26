@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 2f72865f), per CTO 101100 (Andrew-direct ~03:0xZ, 09-26; record
 `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Lease FAST until 2026-09-26T15:01:17Z. Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-26T15:30Z. Lease FAST until 2026-09-27T01:52:21Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
+As of 2026-09-26T16:25Z. Lease FAST until 2026-09-27T01:52:21Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Pins
 
@@ -61,6 +61,15 @@ WINDOW 2 (packet v7 `3edebd85`, principal `irpt-uiwalk-1790435397`, 15:10Z-16:05
 
 The grant patch for P is `P_GENERATE_SUBMISSION_S3_GRANTS_20260926.patch` @e5daacce0b: read NORMALIZED_PORTFOLIO and
 retain REQUEST_COMPOSITION. Hop 3 then needs window 3.
+
+After the Andrew-direct pause (15:27Z-16:03Z; CTO 101280 and 101297; loop re-armed as cron 81b07667):
+- P applied the grant at `be7647e48f` (16:1xZ).
+- Y delivered the full-path IAM list (CTO 101276) @2789ac3bbd, from an AST census of the deployed code (zip 85TXFzzv;
+  resident f624e8a72f):
+  - generate: 25/25 met their expectation (hop3 16/16 allowed, including K5's two formerly denied actions; 3 negatives
+    denied);
+  - resident: 40/40 met their expectation (hop3 37/37 allowed; 3 negatives denied).
+- Next: P's own simulator run, then ONE window packet (hop 3 plus the export-B BEFORE read).
 
 ## Acceptance IDs
 
