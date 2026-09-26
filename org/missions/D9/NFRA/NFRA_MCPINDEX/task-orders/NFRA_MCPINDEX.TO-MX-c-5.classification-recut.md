@@ -36,10 +36,26 @@ READ IT):
    registered but absent from `ENABLED_INTEGRATIONS`.
 4. **The interpreter is `python`** (device-neutral, row W1-S6), never `py -3.12`.
 
+**AMENDED by the issuer after the stop was lifted (Andrew-direct 2026-09-26 ~02:2xZ, call 5, "lift fully"; record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260926_022xZ_CTO_O_OPEN_CALLS_1_TO_6_ANSWERED.md`; CTO msg
+25978):**
+5. **The 5 schwab tools are no longer HELD.** D-3 R-1 held them only because `integrations/schwab/` sat under the
+   NFRA_OPLGTW stop, and that stop is lifted. Each of the 5 now declares its class, the same way the 9 did, in
+   `infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py` ONLY.
+   - That file's per-tool class declaration is the ONLY edit in `integrations/schwab/`. No other file there changes,
+     and no line of that file other than the declaration changes.
+   - Read each tool's code before you choose, and state the reason for each class. A tool that can place, change or
+     cancel anything is never SAFE.
+   - They stay registered and NOT enabled. `ENABLED_INTEGRATIONS` is not touched.
+6. **Items 2 and 3 are superseded by item 5.** Your probe's AC11 now prints the 49-name denominator and PASSES only on
+   `49 classified + 0 HELD`, naming the 5 schwab tools with their classes. AC2's list of newly classified tools grows
+   from 9 to 14. AC4's question now covers all 14 new classes.
+
 ## 2. BOUNDS
 
 1. Nothing is deployed. The branch stays HELD until the CVO grades AC4 (R-5).
-2. `integrations/schwab/` is read, never edited. The gateway suite adds no failure.
+2. `integrations/schwab/` changes ONLY in `integration.py`'s per-tool class declaration (item 5). The gateway suite adds
+   no failure.
 3. Standing: no push, no install, no vendor call, no AWS. REFUSE a criterion you cannot meet as written, and report the
    refusal with its measurement. Never repair a criterion, widen it, or meet it by a route this face does not name.
 
@@ -49,6 +65,7 @@ READ IT):
 infra/aws/ec2/opal-gateway/app/integrations/ycharts/
 infra/aws/ec2/opal-gateway/app/integrations/opal_portal/
 infra/aws/ec2/opal-gateway/app/integrations/globgrph/
+infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py
 infra/aws/ec2/opal-gateway/tests/test_tool_classification_composition.py
 infra/aws/ec2/opal-gateway/tests/test_entitlement_admin.py
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~1/**
@@ -90,7 +107,7 @@ Validate it with `python .tools/proof-of-spec-check.py <instance>`. Report once:
 **ISSUER NOTES:** E3, R-5, D-3. Chain A's root, on the held branch. After it: MX-d-2 and MX-t-8, cut from the held
 branch's head.
 
-<status>complete</status>
+<status>pending</status>
 <round>2</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
