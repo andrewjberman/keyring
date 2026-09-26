@@ -1191,6 +1191,9 @@ paths:
   "infra/aws/lambda/investor-reporting/narrative/entry.py":
     lane: IRPT_LIVE_SCOPE_P
     note: "CTO exact P grant 2026-09-25 (2.0.0_SA_COO~P 100978): the IRPT export hop B0 render-ports install in the narrative ENTRY (one line, render_ports=_entry.render_ports_from_env(), inert until IRPT_EVIDENCE_BUCKET ships with B1)."
+  "data/cot/scripts/gold/B_01b.classify_new_securities.py":
+    lane: IRPT_COMPLETION_M
+    note: "CTO exact M grant 2026-09-25 (R5 decision 3; 2.0.0_SA_COO~M 101067, R5_CLASSIFIER_DEFECTS_20260926.md @a82954a9c5): repoint the empty-prefix scan to gold/canonical/holdings/. CODE + DRY RUN ONLY -- any bd-securities write stays gated on Andrew's per-use OpenAI word and its own never-widen half. Safe-deploy of this script is also a separate act."
   "infra/aws/terraform/shared-infra/s3-49financial.tf":
     lane: IRPT_LIVE_SCOPE_P
     note: "CTO exact P grant 2026-09-25 (row IRPT_BCKEND-S140; 2.0.0_SA_COO~P 101057/101059): ONLY aws_s3_bucket_policy.opal_data_49financial -- exclude irpt-performance-adapter-role from DenyForeignFirmPrincipals and add three adapter-only Deny statements so it is left with s3:GetObject + prefix-conditioned s3:ListBucket on <advi gold_root>/canonical/twr_daily* and twr_periods* and nothing else. -target apply under a ledger; negative arm (other prefix, any write, a COT-only role) exercised. Returns to its prior lane when S140 disarms."
