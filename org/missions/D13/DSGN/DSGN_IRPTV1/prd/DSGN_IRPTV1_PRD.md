@@ -5,7 +5,7 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.13",
+ "prd_version": "v0.14",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ui-finish-design-brief-20260924.md@20f90739bd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23"],
@@ -245,8 +245,11 @@ The L5/L6 issuer is `2.0.0_SA_COO~D` by Andrew's name.
                     with model amounts that are what the client actually holds
          ACCEPT     holdings are dated the last trading day; a model's amount is the sum of the positions actually
                     held in it, or is plainly labelled as a target; the amount outside any model is the true
-                    remainder
-         SOURCE     the UI review brief @`fd463341e3` O10; findings UIR-23, UIR-48
+                    remainder; every security shows its correct class, and a security the ETF Classifier already
+                    tags keeps that class (VXX is Structured; GLD and PHYS are Commodities), never a lumped
+                    "Alternatives"
+         SOURCE     the UI review brief @`fd463341e3` O10; findings UIR-23, UIR-48; UIR-50 (Andrew-direct
+                    2026-09-26 ~21:2xZ, record @`714ba46408`)
 ```
 
 Not promised (brief Part II, VII): the PDF / print package; the narrative page; the Global-view entitlement model's
@@ -368,12 +371,15 @@ caught, all of them should be included."
 | O7 one colour, one meaning | FWD-12, FWD-13 |
 | O8 client facts on the face | FWD-11, FWD-15, FWD-16, FWD-18 |
 | O9 the securities map | new FWD-22 |
-| O10 trustworthy figures | new FWD-23 |
+| O10 trustworthy figures and correct classes | new FWD-23 |
 
 **The CTO's rulings on the brief's open points** (1.0.0_SA_CTO, ~21:2xZ):
 - **UIR-07, search ranking: SERVER-SIDE.** The IRPT_BCKEND directory search (2.0.0_SA_COO~P's surface) ranks an
   exact full-name match first, in either name order. The page renders results in served order and never re-ranks,
   because it sees only one page of results and a client-side re-rank would bury a match on page two.
+- **UIR-50 (ETF Classifier precedence), ruled (a) (CTO 101511):** the class list admits every ETF Classifier tag value not already in it,
+  the tag wins for every listed security, and PHYS is Commodities by Andrew's word. It is IRPT_BCKEND ~M's half,
+  with a census of every asset_class reader. The portal maps the new classes with their own label and colour (C34).
 - **UIR-03, UIR-23, UIR-26 and UIR-48 are IRPT_BCKEND (2.0.0_SA_COO~M).**
   - UIR-26 is met when the own-mask labels publish, which rides the R4 enable.
   - UIR-23 is met by the R4 scheduled publication (T-1).
@@ -432,6 +438,7 @@ caught, all of them should be included."
 | UIR-47 | O5 | FWD-14, FWD-6 | DSGN_IRPTV1 | As UIR-33. |
 | UIR-48 | O10 | FWD-23 | IRPT_BCKEND ~M | Model amounts are the sum of the positions held in that model (or are labelled as target allocations), and the residual is the true unassigned remainder. |
 | UIR-49 | O5 | FWD-14, FWD-6 | DSGN_IRPTV1 | As UIR-31 and UIR-32. |
+| UIR-50 | O10 | FWD-23 | IRPT_BCKEND ~M | Every security the ETF Classifier table lists shows its classifier tag (VXX Structured; GLD, PHYS Commodities), never a collapsed class. |
 
 ## THE THREAD (FWD-1) -- round 1 builds it end to end
 
@@ -503,7 +510,9 @@ accounts):
 29. O5 the drill, with every percentage's base labelled (UIR-31, 32, 33, 34, 36, 47, 49) -- C31
 30. O7 one colour, one meaning (UIR-25, 37, 44, 46) -- C32
 31. FWD-22 the securities map (UIR-41, 42, 43) -- C33
-IRPT_BCKEND, not DSGN cells: UIR-03, UIR-23, UIR-26, UIR-48 (~M), and UIR-07's ranking (~P).
+32. UIR-50's portal half: the new asset classes (structured, commodities and any other ETF Classifier tag values)
+    get a client-language label and their own colour, distinct from every model colour -- C34
+IRPT_BCKEND, not DSGN cells: UIR-03, UIR-23, UIR-26, UIR-48, UIR-50's producer half (~M), and UIR-07's ranking (~P).
 
 ## CELL CANDIDATES (the COO's decomposition; not task orders)
 
@@ -584,6 +593,7 @@ v0.6 candidates (brief @20f90739bd Part IV F1-F10; C9, C10's rail and C11's hist
   aggregate. Built on C25's account list. Serves FWD-20 and FWD-5.
 - C27-C33 (v0.13): one cell per backlog item 25-31. Each cell's criteria are the named UIR rows of the UI REVIEW
   FINDINGS table, verbatim. C27 carries the `slices.ts rootNode` caller census.
+- C34 (v0.14): the portal mapping for UIR-50's new asset classes (label and colour, O7), cut once ~M's half lands.
 
 ## PATHS (the write surface)
 
@@ -768,6 +778,11 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
   - Backlog items 25-31 and C27-C33 are added.
   - The ENDPOINT change re-signs the ratified-text half at 3.0.0_SA_CVO. The brief half is accepted, because the CRO
     wrote the brief.
+- v0.14, 2026-09-26 ~21:3xZ, `1.0.0_SA_CTO` (Claude): UIR-50 (Andrew-direct: the ETF Classifier's tags take precedence,
+  record @`714ba46408`; register @`4a17009de0`):
+  - FWD-23's ACCEPT gains the correct-class clause, id unchanged;
+  - UIR-50's row, ruling (a), backlog item 32 and C34 are added.
+  Cut before the v0.13 re-sign landed, so ONE ratified-text re-sign covers v0.13 and v0.14.
 
 ## SURFACE MANIFEST
 
