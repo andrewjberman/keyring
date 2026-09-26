@@ -54,10 +54,11 @@ None building. Next surface: the adapter package + performance root (deploy B), 
 1b. DONE 13:29Z: irpt-ycharts-generate LIVE at IJD6bd1I.. (ledger irpt-generate-closure-fix-20260926 CLOSED): closure
    0 missing (was 3), CodeSha256 == artifact, CONTRACT_VERSION arm before/after, replan No changes. ~Y's upload rides the
    admin+Dev window as K4.
-1c. ADMIN+DEV UI WALK (Andrew-direct "Agent on an admin+dev login", CTO 101151): packet v2 blob 4ae2693b @b108b016cb
-   (route-graded HAR, K3 selections kept, K4 ~Y upload). CTO signed v1; CRO refused v1 (0-non-GET audit fails a correct
-   walk), fixed in v2; re-sign of both halves asked 13:3xZ. Create only after both halves at HEAD.
-2. Deploy (B) -- UNBLOCKED (plan b spent 03:20:31Z): upload the adapter (publish 4872b28043), apply render_grant.tf +
+1c. ADMIN+DEV UI WALK (Andrew-direct "Agent on an admin+dev login", CTO 101151): packet v3 blob 07b7a000 @5c7787839b
+   (route-graded HAR, K3 selections kept, K4 ~Y's one upload incl. the ONE resident YCharts GET it causes). CTO signed
+   v1 and v2; CRO refused v1; v3 re-sign of both halves asked 13:43Z. Create only after both halves at HEAD.
+2. Deploy (B) -- packet blob 3c916b9c @5c7787839b sent for the CTO half 13:43Z (CTO 101098: served move); build
+   + apply after the half lands. Was: upload the adapter (publish 4872b28043), apply render_grant.tf +
    IRPT_EVIDENCE_BUCKET, export_render=on; ledger with the CTO's negative arm (another attempt's token name refused, read
    after delete refused). REHEARSED 00:3xZ (plan only, CLOUD tree, live plan values as vars): 1 add
    (performance_render_grant_read) / 1 change (env + IRPT_EVIDENCE_BUCKET = the same bucket irpt-export-render writes
