@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 2f72865f), per CTO 101100 (Andrew-direct ~03:0xZ, 09-26; record
 `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Lease FAST until 2026-09-26T15:01:17Z. Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-26T14:55Z. Lease FAST until 2026-09-27T01:52:21Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
+As of 2026-09-26T15:30Z. Lease FAST until 2026-09-27T01:52:21Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Pins
 
@@ -51,6 +51,16 @@ The principal was deleted at 14:22:22Z (P 101232). The input's owner binds to th
   conditions (1) and (2). Condition (3), importing every module on the deployed function, is P's.
 - then a new window: a fresh upload plus a submission, or Andrew's own upload plus Generate. Y asked 1.0.0_SA_CTO at
   14:5xZ for a K4+K5 window after condition (3).
+
+WINDOW 2 (packet v7 `3edebd85`, principal `irpt-uiwalk-1790435397`, 15:10Z-16:05Z):
+- K4 NORMALIZED again: input `portfolio_f40b800e..`, the resident logged `handled=1` at 15:14:04Z, and the 7 new rows
+  are all K4's.
+- K5 at 15:16:38Z answered UNEXPECTED, `corr-fd24ee4063ad`: `irpt-ycharts-generate-role` was denied
+  `s3:GetObjectVersion` on `opal-data-irpt/irpt/cottonwood/state/normalized_portfolios/...`.
+- K5 wrote nothing and made no vendor call.
+
+The grant patch for P is `P_GENERATE_SUBMISSION_S3_GRANTS_20260926.patch` @e5daacce0b: read NORMALIZED_PORTFOLIO and
+retain REQUEST_COMPOSITION. Hop 3 then needs window 3.
 
 ## Acceptance IDs
 
