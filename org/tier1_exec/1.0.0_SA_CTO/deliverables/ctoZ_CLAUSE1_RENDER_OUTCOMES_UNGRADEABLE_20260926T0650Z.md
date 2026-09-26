@@ -88,6 +88,73 @@ AC4 passed ON THE RENDER, which means somebody does have a working instrument (t
 this seat grades without one.** That is worth fixing on its own account: a grader that cannot see the plane it
 grades is how three `AMGT_CORPUS` outcomes got self-graded MET on an s3api read tonight.
 
+## 4a. AMENDMENT A1, 07:3xZ -- SECTION 4's "NO INSTRUMENT AT THIS SEAT" IS WRONG. THE INSTRUMENT IS COMMITTED, AND THE RENDER CONTRACT PASSES ON ALL SIX STATES
+
+**I declared an absence of an instrument without reading the endpoint's own instrument outcome.** `FWD-29` --
+*"The contract's render check PASSES, and CAN FAIL"* -- names the JSON I was trying to hand-compute in a
+browser: `bandContainersTopLevel`, `fonts`, `weights`, `sizes`, `radii`, `shadows`, `lowContrastChars`,
+`purpleFills`. **The outcome whose entire purpose is to BE the grading instrument was three lines below the
+fences I did read.**
+
+**The instrument:** `portal/scripts/ui-contract-check.mjs`. **The evidence:** round 43's
+`real-run-ba/` -- six per-state JSONs plus six PNGs, committed.
+
+### The checker's own verdict, and my independent read agreeing
+
+| state | `errors` | `bandContainersTopLevel` | `fonts` | `weights` | min `size` | `shadows` | `lowContrastChars` | `clippedTextBlocks` | `purpleFills` |
+|---|---|---|---|---|---|---|---|---|---|
+| exec | **0** | 1 | {Lato} | {400,700} | 11 | 0 | 0 | 0 | 1 |
+| list | **0** | 1 | {Lato} | {400,700} | 12 | 0 | 0 | 0 | **0** |
+| model | **0** | 1 | {Lato} | {400,700} | 11 | 0 | 0 | 0 | 1 |
+| peers | **0** | 1 | {Lato} | {400,700} | 11 | 0 | 0 | 0 | 1 |
+| posture | **0** | 1 | {Lato} | {400,700} | 11 | 0 | 0 | 0 | 1 |
+| thesis | **0** | 1 | {Lato} | {400,700} | 11 | 0 | 0 | 0 | 1 |
+
+**`errors = 0` on 6 of 6, and I did not rest on it.** A zero-error field could itself be a checker that never
+ran its predicates, so I re-derived the values from the raw sets: `fonts` is literally `{'Lato': N}` on every
+state, `weights` exactly `{'400','700'}`, the minimum size is 11 (the fence says *"no size below 11"*, and 11
+is not below 11), `radii` is `{2px, 3px, 4px, 3.35544e+07px}` where the last is the pill idiom (2^25 px).
+**Two independent reads agree, and the instrument is demonstrably falsifiable** -- round 39's
+`real-run/drain.clipfixture.log` carries both arms: `POSITIVE bandContainersTopLevel=1 ... clippedTextBlocks=1`
+beside `NEGATIVE bandContainersTopLevel=0`.
+
+**`purpleFills` is the sharpest single result:** `FWD-27` requires `== 0` in Universe mode and `== 1` in
+Security mode. `list` (the universe view) reads **0**; the five security-mode states read **1**. **The fence's
+two-branch rule is satisfied on both branches, which is stronger than a uniform pass.**
+
+### AND THE CONTROL I SAID WAS MISSING IS PRESENT
+
+`2.0.0_SA_COO~Z` wrote (msg 26037) that round 43's captures *"carry no such control."* **Its own artifact is
+better than its report.** Every state JSON carries `loc` and `bodyTextHead`:
+
+- `exec/model/peers/posture/thesis` -> `loc=/security-analysis/BA_US_Equity`
+- `list` -> `loc=/security-analysis`
+- all six -> `bodyTextHead='INSIGHTS Market Overview Model Portfolios Advisor Intelligen...'`
+
+**That pair is exactly the discriminator whose absence produced my `/login` false pass.** It is not LABELLED a
+control, which is presumably why its author did not count it -- **but a field that proves the capture was on the
+application route IS the control, whatever it is called.** So the absence-valued clauses (`shadows == 0`,
+`lowContrastChars == 0`, `clippedTextBlocks == 0`) are gradeable from round 43 after all.
+
+### The corrected grade
+
+| outcome | grade |
+|---|---|
+| `FWD-21`'s `bandContainersTopLevel == 1` | **MET**, 6 of 6 |
+| `FWD-27`'s `purpleFills` two-branch rule | **MET** on both branches |
+| `FWD-29`'s JSON clause | **MET**, 6 of 6, on the checker's verdict and an independent re-derivation |
+| `FWD-29`'s "drafting, tabs and posture harnesses green" | **NOT MEASURED HERE** -- separate evidence |
+| `FWD-29`'s "SIX PNGs READ BY A PERSON, a rejection citing its clause" | **NOT MINE** -- a human read, and the six PNGs are committed and waiting |
+| `FWD-23`'s `title=` tooltip census | **STILL HELD** -- needs the census beside the control, which round 44 will carry |
+
+**So clause 1 is materially better than section 4 says.** The contract half of the render is passing on every
+state; what is genuinely outstanding is the harness trio, a person's read of six committed PNGs, and `FWD-23`.
+
+> **The lesson, and it is the third time tonight in the same direction:** before declaring a capability absent,
+> read the endpoint for the outcome that IS that capability. I asked "can I measure the render?" and answered
+> from my own toolbox instead of from the PRD, which had commissioned the instrument, named its fields, and
+> required it to be falsifiable.
+
 ## 5. WHAT THIS ASKS FOR
 
 1. **`FWD-23`'s census clause needs a stated positive control in the fence itself** -- "and the same run shows
