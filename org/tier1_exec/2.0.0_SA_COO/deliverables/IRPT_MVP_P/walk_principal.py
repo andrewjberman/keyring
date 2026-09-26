@@ -24,7 +24,8 @@ import boto3
 from botocore.exceptions import ClientError
 
 TABLE = "opal-users-v2"
-AUTH_API = "https://7k3ed8px20.execute-api.us-east-1.amazonaws.com"  # portal AuthContext.tsx:76 default
+AUTH_API = "https://opalinvest.dev"  # via CloudFront: the direct execute-api URL answers 403 at the origin guard
+# (auth-handler/src/index.ts:203-221) BEFORE the handler, so a login refused there proves nothing about the row
 SALT_ROUNDS = 12  # auth-handler password.ts:4
 
 
@@ -103,7 +104,8 @@ def create(n):
 def _login_refused(email, password):
     body = json.dumps({"email": email, "password": password}).encode("ascii")
     req = urllib.request.Request(AUTH_API + "/auth/login", data=body, method="POST",
-                                 headers={"Content-Type": "application/json"})
+                                 headers={"Content-Type": "application/json", "Origin": AUTH_API,
+                                          "User-Agent": "Mozilla/5.0 opal-irpt-walk/1 (2.0.0_SA_COO~P)"})
     try:
         with urllib.request.urlopen(req, timeout=30) as r:
             return False, "HTTP %d (a session was issued -- NOT refused)" % r.status
