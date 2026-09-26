@@ -918,7 +918,7 @@
    "id": "UIR-50",
    "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165743.png",
    "surface": "classification",
-   "observed": "Securities the ETF Classifier table already tags are shown with a collapsed class: VXX (tagged 'Structured') and GLD / PHYS (tagged 'Commodities') all show as 'Alternatives' (orange in the securities map; the classification table reads 'Alternatives').",
+   "observed": "Securities the ETF Classifier table already tags are shown with a collapsed class: VXX (tagged 'Structured') and GLD (tagged 'Commodities') show as 'Alternatives', and so does PHYS, which is NOT in the Classifier table but which Andrew names Commodities (orange in the securities map; the classification table reads 'Alternatives'). Correction ~21:3xZ per 1.0.0_SA_CTO msg 101513.",
    "outcome": "O10",
    "owner_project": "IRPT_BCKEND",
    "owner_seat": "2.0.0_SA_COO~M",
@@ -930,7 +930,7 @@
     "text": "The served classification does not give the ETF Classifier table's tag precedence over the other class sources (bd-securities class writes, the model classifier, the Holdings classification).",
     "evidence": "screenshot 165743 (VXX, GLD, PHYS orange = Alternatives); Andrew's words in the record above. A change to served classifications is a served move under a never-widen half with its per-firm delta."
    },
-   "acceptance": "Every security the ETF Classifier table lists shows its classifier tag (VXX Structured; GLD, PHYS Commodities), never a collapsed class."
+   "acceptance": "Every security the ETF Classifier table lists shows its classifier tag (VXX Structured; GLD Commodities), never a collapsed class; PHYS shows Commodities by Andrew's word; each new class value is mapped by every asset_class reader (CTO ruling (a), msg 101513)."
   }
  ],
  "coverage": {
