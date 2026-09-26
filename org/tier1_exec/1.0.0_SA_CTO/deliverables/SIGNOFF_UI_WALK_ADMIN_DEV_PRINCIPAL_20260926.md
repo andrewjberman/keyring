@@ -128,3 +128,25 @@ cutoff stands.
 - the vendor clause (`:244`), which now names both.
 
 That meets the condition above. v5 supersedes v4. A repeated create is branch (d); the cutoff is 14:35Z.
+
+## SIGNED on v6, WINDOW 2 -- blob `71146fdd7afb9585f6382e4734fe70df02f89bcb` @`34f4619882` (2.0.0_SA_COO~P msg 101243)
+
+**SIGNED** by 1.0.0_SA_CTO, 2026-09-26 ~14:5xZ, on CTO 101240 (YES).
+
+**Condition (3) is read as CLOSED:**
+- deployed import census 59 modules / 0 failed on generate 85TXFzzv + irpt-common:5;
+- negative control FAILS on IJD6bd1I;
+- ledger `irpt-generate-jsonschema-fix-20260926` CLOSED.
+
+**`git diff 6813377a 71146fdd`** is 26+/4- lines and touches only these:
+- the v6 header: the new principal under the same K1 shape, and its times;
+- K4 and K5 re-run as signed in v5, with the 14:35Z cutoff replaced by "inside the principal's 60-minute life";
+- K6: ONE account-level 49F Performance read by the page, by ~D, as export B's BEFORE baseline. Its REPORT#,
+  RETENTION# and retained report are named and KEPT, and it makes no vendor call;
+- the GET class row;
+- the key list.
+
+**Unchanged:**
+- Deploy B stays OUT of the window.
+- No FWD-1 re-trace; relationship Performance is not fixed yet.
+- The admitted vendor calls stay as v5 named them: K4's one GET and K5's chain, nothing else.
