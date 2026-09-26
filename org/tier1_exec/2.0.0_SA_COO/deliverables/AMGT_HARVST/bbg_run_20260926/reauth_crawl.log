@@ -1,0 +1,100 @@
+[bbg-harvest 16:46:07] headless=False park=False egress=native-IP kimi=kimi-k3 google_creds=google/andrew-goldengate/credentials
+[bbg-harvest 16:46:13] baseline cookies at start: 83
+[bbg-harvest 16:46:14] modal DOM dumped -> C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\tier1_exec\4.0.0_SA_CRO\scripts\bbg_modal_dom_20260926T204605Z_step0.html
+C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\tier1_exec\4.0.0_SA_CRO\scripts\bloomberg_harvest_session.py:109: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  px = list(img.getdata())
+[bbg-harvest 16:46:15] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 1/2)
+[bbg-harvest 16:46:16] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 2/2)
+[bbg-harvest 16:46:16] step 0: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', 'ab', 'mc']
+[bbg-harvest 16:46:16] module matched: 'overlay_modal'
+[bbg-harvest 16:46:16] dismissed overlay via "button:has-text('Accept')"
+[bbg-harvest 16:46:19] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 1/2)
+[bbg-harvest 16:46:20] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 2/2)
+[bbg-harvest 16:46:20] step 1: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', 'DotomiTest', 'ab', 'cmpconsentmodal', 'mc']
+[bbg-harvest 16:46:20] module matched: 'sign_in_needed'
+[bbg-harvest 16:46:21] clicked 'Sign In'
+[bbg-harvest 16:46:24] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 1/2)
+[bbg-harvest 16:46:25] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 2/2)
+[bbg-harvest 16:46:25] step 2: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', 'DotomiTest', '_ga_Q3LPRFYJJ3', 'ab', 'cmpconsentmodal', 'mc']
+[bbg-harvest 16:46:25] module matched: 'bot_wall'
+[bbg-harvest 16:46:26] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 1/2)
+[bbg-harvest 16:46:27] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 2/2)
+[bbg-harvest 16:46:27] bot wall: no text match and no vision locate on any open page -> waiting 10s
+[bbg-harvest 16:46:44] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 1/2)
+[bbg-harvest 16:46:45] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 2/2)
+[bbg-harvest 16:46:45] step 3: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', 'DotomiTest', '_ga_Q3LPRFYJJ3', 'ab', 'cmpconsentmodal', 'mc']
+[bbg-harvest 16:46:45] module matched: 'bot_wall'
+[bbg-harvest 16:46:46] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 1/2)
+[bbg-harvest 16:46:47] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 2/2)
+[bbg-harvest 16:46:47] bot wall: no text match and no vision locate on any open page -> waiting 10s
+[bbg-harvest 16:47:04] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 1/2)
+[bbg-harvest 16:47:05] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 2/2)
+[bbg-harvest 16:47:05] step 4: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '_ga_Q3LPRFYJJ3', 'ab', 'cmpconsentmodal', 'mc']
+[bbg-harvest 16:47:05] module matched: 'bot_wall'
+[bbg-harvest 16:47:06] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 1/2)
+[bbg-harvest 16:47:07] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 2/2)
+[bbg-harvest 16:47:07] bot wall: no text match and no vision locate on any open page -> waiting 10s
+[bbg-harvest 16:47:24] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 1/2)
+[bbg-harvest 16:47:25] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 2/2)
+[bbg-harvest 16:47:25] step 5: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '_ga_Q3LPRFYJJ3', 'ab', 'cmpconsentmodal', 'mc']
+[bbg-harvest 16:47:25] module matched: 'bot_wall'
+[bbg-harvest 16:47:26] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 1/2)
+[bbg-harvest 16:47:26] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 2/2)
+[bbg-harvest 16:47:26] bot wall: no text match and no vision locate on any open page -> waiting 10s
+[bbg-harvest 16:47:44] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 1/2)
+[bbg-harvest 16:47:44] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 2/2)
+[bbg-harvest 16:47:45] step 6: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '_ga_Q3LPRFYJJ3', 'ab', 'cmpconsentmodal', 'mc']
+[bbg-harvest 16:47:45] module matched: 'bot_wall'
+[bbg-harvest 16:47:46] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 1/2)
+[bbg-harvest 16:47:46] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 2/2)
+[bbg-harvest 16:47:46] bot wall: no text match and no vision locate on any open page -> waiting 10s
+[bbg-harvest 16:48:03] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 1/2)
+[bbg-harvest 16:48:04] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 2/2)
+[bbg-harvest 16:48:04] step 7: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '_ga_Q3LPRFYJJ3', 'ab', 'cmpconsentmodal', 'mc']
+[bbg-harvest 16:48:04] module matched: 'bot_wall'
+[bbg-harvest 16:48:05] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 1/2)
+[bbg-harvest 16:48:06] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 2/2)
+[bbg-harvest 16:48:06] bot wall: no text match and no vision locate on any open page -> waiting 10s
+[bbg-harvest 16:48:23] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 1/2)
+[bbg-harvest 16:48:24] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 2/2)
+[bbg-harvest 16:48:24] step 8: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '_ga_Q3LPRFYJJ3', 'ab', 'cmpconsentmodal', 'mc']
+[bbg-harvest 16:48:24] module matched: 'bot_wall'
+[bbg-harvest 16:48:24] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 1/2)
+[bbg-harvest 16:48:25] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 2/2)
+[bbg-harvest 16:48:25] bot wall: no text match and no vision locate on any open page -> waiting 10s
+[bbg-harvest 16:48:42] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 1/2)
+[bbg-harvest 16:48:44] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 2/2)
+[bbg-harvest 16:48:44] step 9: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '_ga_Q3LPRFYJJ3', 'ab', 'cmpconsentmodal', 'mc']
+[bbg-harvest 16:48:44] module matched: 'bot_wall'
+[bbg-harvest 16:48:45] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 1/2)
+[bbg-harvest 16:48:45] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 2/2)
+[bbg-harvest 16:48:45] bot wall: no text match and no vision locate on any open page -> waiting 10s
+[bbg-harvest 16:49:03] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 1/2)
+[bbg-harvest 16:49:04] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 2/2)
+[bbg-harvest 16:49:04] step 10: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '_ga_Q3LPRFYJJ3', 'ab', 'cmpconsentmodal', 'mc']
+[bbg-harvest 16:49:04] module matched: 'bot_wall'
+[bbg-harvest 16:49:04] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 1/2)
+[bbg-harvest 16:49:05] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 2/2)
+[bbg-harvest 16:49:05] bot wall: no text match and no vision locate on any open page -> waiting 10s
+[bbg-harvest 16:49:22] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 1/2)
+[bbg-harvest 16:49:23] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 2/2)
+[bbg-harvest 16:49:23] step 11: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '_ga_Q3LPRFYJJ3', 'ab', 'cmpconsentmodal', 'mc']
+[bbg-harvest 16:49:23] module matched: 'bot_wall'
+[bbg-harvest 16:49:24] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 1/2)
+[bbg-harvest 16:49:26] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 2/2)
+[bbg-harvest 16:49:26] bot wall: no text match and no vision locate on any open page -> waiting 10s
+[bbg-harvest 16:49:43] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 1/2)
+[bbg-harvest 16:49:43] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 2/2)
+[bbg-harvest 16:49:43] step 12: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '_ga_Q3LPRFYJJ3', 'ab', 'cmpconsentmodal', 'mc']
+[bbg-harvest 16:49:43] module matched: 'bot_wall'
+[bbg-harvest 16:49:44] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 1/2)
+[bbg-harvest 16:49:45] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 2/2)
+[bbg-harvest 16:49:45] bot wall: no text match and no vision locate on any open page -> waiting 10s
+[bbg-harvest 16:50:02] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 1/2)
+[bbg-harvest 16:50:03] classify: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/completions (try 2/2)
+[bbg-harvest 16:50:03] step 13: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '_ga_Q3LPRFYJJ3', 'ab', 'cmpconsentmodal', 'mc']
+[bbg-harvest 16:50:03] module matched: 'bot_wall'
+[bbg-harvest 16:50:03] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 1/2)
+[bbg-harvest 16:50:04] locate: KIMI_ERROR HTTPError 429 Client Error: Too Many Requests for url: https://api.moonshot.ai/v1/chat/com (try 2/2)
+[bbg-harvest 16:50:04] bot wall: no text match and no vision locate on any open page -> waiting 10s
+[bbg-harvest 16:50:20] END rc=1 new_cookies=['APC', '_ga_Q3LPRFYJJ3', 'ab', 'cmpconsentmodal', 'mc'] network_auth_corroborated=True network_auth_event_count=23 total_cookies=87

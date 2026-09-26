@@ -81,3 +81,56 @@ is the same intermittent, burst-sensitive behaviour the 09-14 artifact recorded,
 not re-run it. ~38 names remain unanswered (13 search-refused, 10 never reached, the rest not yet in
 population). The block decays over hours; another burst now re-extends it and costs the headroom the remainder
 needs.
+
+---
+
+## CALL 3 -- bloomberg.com, 2026-09-26 20:32Z (harvest 1), 20:46Z (crawl 1), 22:03Z (crawl 2), 22:26Z (harvest 2)
+
+| field | value |
+|---|---|
+| seat | `2.0.0_SA_COO~Y` |
+| vendors touched | **bloomberg.com** AND **api.moonshot.ai (Kimi-VL)** -- two, and the second is METERED |
+| authorization | **Andrew-direct 2026-09-26, verbatim: "Run that after SA, we have a bbg harvest script designed for this that has succeeded. If we do not have a functioning cookie, then we need to be using that re-harvester crawl to get it, just like the pattern decrees."** |
+| mechanism | `python -m lib.opal_data_harvest run --publishers bbg --harvest-grammar --runtime-root <main> --all-securities --max-jobs 8`; re-auth via `python bloomberg_harvest_session.py --max-steps N`; install via `import-session --publishers bbg` |
+| agent-turn fetch? | **NO.** Existing scripted producers throughout, unchanged |
+| harvest 1 | envelope `captured_at 2026-09-15T03:42:10Z`. `HTTP 200 bytes=549` -> verification fired -> repair was a NO-OP (`challenge_observed: false`, `script_actions: 0`) -> job `error` (HTTPError). `auth_refreshes: 0`. Jobs 2-8 `cooldown`, 0 attempts |
+| crawl 1 | **FAILED rc=1.** Every Kimi classify/locate returned **HTTP 429** across 14 steps -- the account was OUT OF CREDITS (Andrew diagnosed and refilled). Never classified a screen, never reached OAuth. `resolved=False` |
+| crawl 2 | **SUCCEEDED rc=0.** Press&Hold solved on a cached perceptual match, `signin_iframe` -> Continue with Google -> OAuth popup -> vision handoff -> step 9 **`resolved=True`, LOGGED_IN**, 47 auth events, 124 cookies. Bundle written, 142 cookies |
+| install | `import-session --publishers bbg` -> DPAPI envelope rewritten 18:18 local (44,358 B) |
+| harvest 2 | envelope `captured_at 2026-09-26T22:07:12Z` (20 minutes old, LOGGED_IN). **`HTTP 200 bytes=549` AGAIN -> verification -> `request_rejected`.** `auth_refreshes: 0` |
+| spend | ⛔ **Kimi/moonshot credits WERE consumed by crawl 2.** Metered third party. Andrew refilled the account himself immediately before authorising the retry, so the spend is his act and his word; it is recorded here rather than inferred to be free. bloomberg.com itself: an entitlement already held, nothing metered |
+| S3 written | **NONE.** No object reached bronze or silver from any bbg run |
+| evidence | `org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/bbg_run_20260926/` (`run.log`, `reauth_crawl.log`, `reauth_crawl2.log`, `run2.log`) |
+
+⛔ **THE CRAWL WAS NOT NEEDED AND THE MEASUREMENT PROVES IT. Andrew-direct, verbatim: "if you have a long
+term cookie that is working, then you do not need to do the crawl, the only reason you need to do the crawl
+is if the long term trust token is not working."** This seat inferred the token was bad from a verification
+challenge and escalated straight to a credentialed headed crawl **without first testing the token.**
+
+⭐ **THE DISCRIMINATING PAIR, same code path, only the token differs:** a **5-day-old** envelope and a
+**20-minute-old LOGGED_IN** envelope both produced `HTTP 200 bytes=549` and both died at the same
+verification wall (`error`, then `request_rejected`). `auth_refreshes: 0` in both. **A fresh trust token
+changed NOTHING, so the token was never the failing axis.**
+
+⭐ **THE FREE CHECK THAT WAS SKIPPED IS IN BOTH LOGS: THE 549-BYTE HTTP 200.** A signed-in search response is
+not 549 bytes -- that is an interstitial. Reading that body costs one read and answers "is this token
+working" before anyone spends a credentialed crawl and a metered vision quota. **COST: one read of a
+response already fetched. NON-APPLICATION: a failure whose first response never arrives at all.**
+
+**WHAT bbg's BLOCKER ACTUALLY IS:** a PerimeterX press-and-hold at REQUEST time that the in-run solver cannot
+clear -- *"no checkmark or peak detected within 12s ... releasing anyway"*, twice -- then `request_rejected`.
+Job 1's rejection cooled the publisher, so 7 of 8 jobs never attempted. **Identity is fine; the wall is the
+problem.** `Z-S14`'s original classification of bbg as "a verification challenge" stands and is now measured
+twice more.
+
+**ONE THING THE SUCCESSFUL CRAWL DID BUY, unrelated to the harvest:** Bloomberg's identity cookies are now
+KNOWN -- `_user-id`, `_user-jwt`, `_user-role`, `_user-token`, `_breg-uid`, `_breg-user`.
+`bloomberg_harvest_session.py`'s own header records that this was unknown as of 2026-09-11 and asks for
+`IDENTITY_COOKIES` to be hardcoded once a real success reveals them. That is an open item for that script's
+owner, not a change made here.
+
+⚠ **CREDENTIAL HYGIENE, and it was a live exposure:** the crawl wrote its 142-cookie bundle to
+`org/tier1_exec/4.0.0_SA_CRO/scripts/bloomberg_session_20260926T220354Z.json` -- **inside the repo and NOT
+gitignored**, one `git add -A` from being committed. It was imported to DPAPI and then deleted, with absence
+verified by a read. The harvester's ROE says the only persisted artifact is the session bundle; it does not
+say the bundle's default home is safe.
