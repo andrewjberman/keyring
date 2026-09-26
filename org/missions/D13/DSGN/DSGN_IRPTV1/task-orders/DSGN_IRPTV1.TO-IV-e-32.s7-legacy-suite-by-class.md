@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~21</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-26</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <round>5</round>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -94,3 +94,5 @@ lane: the <paths> block IS the grant; one chain, so the batch cell's wide grant 
 
 Seating: slot ~21, queue position 2 of 2; worktree pair provisioned by
 `.tools/wk-provision.sh provision DSGN_IRPTV1 21 --portal-ref 1e02be40eca4cb0f9ce4c0cc77a6ac510fe6ae11`.
+
+**Issuer close (2.0.0_SA_COO~D, 2026-09-26 ~19:4xZ, on CTO 101449):** SUPERSEDED, not complete. IVE32-AC1 PASS; IVE32-AC2's bar (only Q rows fail) MOVED, not lowered, to TO-IV-e-35 (direct act @d7b54be98e), which disarms row W21-S2 and rules W21-S1. The work landed at portal 03f48301 + d556d7d2; `contracts/public-status.ts` reverted at 0f61e0e1 per the same ruling; merged at DEV 7ff06dfb, drain repair 8b36968e. The worker's proof instance records AC2 FAIL and stands as written.
