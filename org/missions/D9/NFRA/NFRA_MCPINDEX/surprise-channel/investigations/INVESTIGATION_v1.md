@@ -516,6 +516,53 @@ carries none.
     "spec_asserts": "TO face item 10: wire both factories in app/integrations/registry.py so ENABLED_INTEGRATIONS can name them.",
     "world_is": "The discover module is not on this tree, and an existing test outside <paths> pins the registry's id set. I wired both as factories that import on enablement only, so gateway import stays clean (the portal and classification-composition suites: 38 passed). The pin test needs its two new ids and the discover module.",
     "notes": "Not fixed: the test file is outside my grant."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T23:40:00Z",
+    "one_line": "Ruling D-5 = (c) keys each portal tool from 'its OWN existing catalog row, through catalog_gate', but 7 of the 10 tools have no such row. category-views, etfs positioning and all four advi tools have no row catalog_gate indexes, and non-model-assets' row is verdict_class deny. Built as ruled, only 3 of 10 tools resolve, so AC2 and AC3 FAIL by output, and AC1 fails through the file-wide rc.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d36d31f8c5: infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py:62-73 load_catalog indexes ONLY channels.*.artifacts[].key (plus the {scope} member expansion). silver_datasets is never indexed.",
+        "MEASURED @d36d31f8c5 (python, catalog_gate.load_catalog on app/refs/DATA_CATALOG.yaml): of the 36 indexed rows, platinum/mdpf/{scope}/aum-metrics.json (serve), account-distribution.json (serve-with-caveat), aggregate-aua-timeseries.json (serve) and platinum/mdpf/global/non-model-assets.json (deny) are the only rows under the portal tools' objects. No row exists for mdpf category-views, platinum/etfs/positioning_data.json or anything under platinum/advi/.",
+        "READ @2c25c4c831: the 10 phase-1 silver_datasets entries (portal_*) carry the C1 schema's 8 fields, and none is a key. The key appears only as prose inside `producer`. The ruling's premise that the catalog already holds the keys 'as existing data (phase 1 @2c25c4c831)' holds for the silver ENTRIES, not for KEYS catalog_gate can resolve.",
+        "MEASURED, proof invocations at d36d31f8c5: AC1 'pytest rc=1; named tests passed 2 of 2; failed/error lines 3'; AC2 'named tests passed 2 of 4'; AC3 'named tests passed 0 of 1'. test_portal_tool_reads_its_exact_prefix_only prints 'tools reading their whole exact-key domain: 3 of 10'. Each of the 7 refusals is 'off-catalog: 0 catalog rows name the portal accessor <X>', or for non-model-assets 'catalog_gate refused ... verdict_class=deny'.",
+        "CONTROL (.scratch/planted_rows_control.py, not committed): the same 4 tests over a catalog COPY carrying a servable row for each of the 7 accessors, with non-model-assets flipped to serve, print 10 of 10 / 650 refused, 0 leaked / 10 of 10 / parity 3 of 3, and all 4 PASS. The module is not the cause; the missing and denied rows are."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face item 9 (ruling D-5 = (c), R-4 @3805559000): each tool resolves its object key from its OWN existing catalog row, through catalog_gate.py; only EXISTING, gate-admitted rows are read; a NEW row goes through the gate on its own merits, never smuggled in with a tool. Items 1-3 and 8 need all 10 tools to read their exact keys, and the mdpf, etfs and 49financial advi families to reach parity.",
+    "world_is": "Built to the ruling at 84a725073b. The module holds no key literal (0 hits over 185 constants; the naming gate WARN, rc 0; a planted-literal mutant is REFUSED, rc 1). Only 3 of 10 tools resolve against the real catalog. I added no row, because that would be the smuggling the ruling forbids, and the catalog header says widening is Andrew-only. The 7 tools refuse, deny-by-default, with zero S3 calls.",
+    "notes": "Needs an issuer decision. Either the missing rows land as their own gate-admitted catalog change (category-views, etfs positioning, 4 advi objects, and a non-deny verdict for non-model-assets or dropping that tool), or the criteria are recut to the 3 resolvable tools. The accessor each tool looks for is in ROWS in the module."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-25T23:40:00Z",
+    "one_line": "The round-2 check helper pytest_named reads 'passed 0 of N; failed/error lines 0' for any test that prints through capsys.disabled(). Under -v the uncaptured output lands between `::name` and PASSED/FAILED, so neither verdict is on the line its greps match.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED @84a725073b: t8.AC1.sh printed 'pytest rc=1; named tests passed 0 of 2; failed/error lines 0', while `pytest -v` shows both AC1 tests PASSED, each verdict on its own line after the printed measurement lines.",
+        "CODE: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/_root.sh pytest_named greps -E \"::$t(\\[.*\\])? PASSED\" (same line) and -cE ' FAILED| ERROR' (leading space). The split-off verdicts start at column 0, so both counts read zero.",
+        "MEASURED @d36d31f8c5, after _say prints into the capture: AC1 'named tests passed 2 of 2; failed/error lines 3'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The AC1-AC3 invocations report the named tests' PASSED count and the FAILED/ERROR lines of the file.",
+    "world_is": "They do only when the tests keep their output inside pytest's capture. The error runs toward FAIL, since the rc and the pass count still gate, never toward a false PASS. But with 'failed/error lines 0' beside a real failure, the check hides WHICH tests failed. Fixed in my own test file at d36d31f8c5. The helper is unchanged, because it is outside my paths.",
+    "notes": "Any other cell whose tests print through capsys.disabled() under a pytest_named check reads the same way."
   }
 ]
 ```
