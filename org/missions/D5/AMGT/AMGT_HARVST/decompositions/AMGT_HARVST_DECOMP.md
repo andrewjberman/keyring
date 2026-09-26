@@ -955,3 +955,89 @@ nothing is being narrowed: the cell simply stops at the edge of what it was auth
 
 **STATE:** `HVST-s-1` stays OPEN at `pending`, round 6 does not close, and no L10 slug is cut -- an open order is
 the honest carrier of a blocked act. The `~20` instance stands as filed.
+
+## 18. ROUND 7 -- L5 DECOMPOSITION v1.6, over the round-6 analysis (`ledger/ROUND_ANALYSIS.round6.md`)
+
+**The critical path is TWO CELLS DEEP and serial, and the analysis says so: cell 2's output is unreadable
+until cell 1 lands.** Two further cells are independent of that path and run beside it.
+
+### 18a. Rule 24 record -- the subtraction, from a PRINTED denominator
+
+**Printed denominator: the analysis's enrichment list carries FIVE numbered items; two further cells were
+ruled cuttable by the CTO at msg 25928 (@`9f0201abd2`) and are carried here because THIS SEAT TOLD THE CTO
+they would land in the next issuance. 5 + 2 = SEVEN candidates.**
+
+- Item 1, **Z-S28 disarm** -> **CELL `HVST-r-1`.** BLOCKING and it leads: everything else fires into a path
+  that cannot reach silver.
+- Item 2, **the bounded vendor act** -> **CELL `HVST-r-2`.** ⚠ **AND ITS SHAPE CHANGED BETWEEN THE ANALYSIS
+  AND THIS CUT, which the cut must not paper over:** the analysis was written believing AC1a had never run.
+  It ran at `02:17:52Z` under Andrew's SEPARATE per-use word, rc 0, `accepted: 5`, and **20 listing rows are
+  already held in the local outbox**. So cell 2's first criterion needs NO vendor call at all -- it drains
+  held pages. The fresh capture is its second criterion. Ledgered: `ledger/VENDOR_CALLS_2.0.0_SA_COO_Y.md`.
+- Item 3, **the 8 ungraded judgment criteria** -> **NOT A CELL. A CONSTRAINT ON THE CUT.** L9 is the CVO's
+  act and is never self-graded; what a decomposition controls is whether L9 has anything TO grade. Round 6
+  gave it zero and had no plausibility oracle. **Round 7 carries a judgment criterion on the cell that can
+  be wrong in a way no mechanical column shows** -- `r-2`, where a green delta over the wrong rows reads
+  identical to a green delta over the right ones.
+- Item 4, **the COO drain-end packet** -> **NOT A WORKER CELL. THE ISSUER'S OWN ARTIFACT**, produced at
+  drain-end. Its absence is what bounded the slug's scope to the channel and the order; no worker can
+  produce it, because it is a record OF the issuer's acts.
+- Item 5, **the 3 carried channel rows** -> **NOT A CELL.** Disposition is the CVO's L9 act.
+- **PLUS the timeline BUILD cell** (gate vacated as agent-made) -> **CELL `HVST-r-3`**, write surface
+  disjoint from the sa path.
+- **PLUS the ft/barrons DIAGNOSTIC** (authorization settled, what remains is diagnosis) -> **CELL
+  `HVST-r-4`**, write surface disjoint.
+
+⛔ **THE TWO CARRIED CELLS ARE NOT ON THE ANALYSIS'S LIST AND THAT IS STATED, NOT SMUGGLED.** The analysis is
+the authoritative recut input and it names five items. `r-3` and `r-4` come from the CTO's own earlier
+ruling, and this seat answered that ruling by saying both would land in the NEXT issuance -- this one.
+Including them silently would be the COO widening a round; excluding them silently would be dropping a
+commitment. **They are cut, they are named as additions, and they sit OFF the critical path.**
+
+### 18b. THE CELLS, by WRITE SET
+
+| cell | write set | risk | depends on |
+|---|---|---|---|
+| `HVST-r-1` | `lib/opal_data_harvest/` + its tests | LOCAL | -- |
+| `HVST-r-2` | S3 bronze/silver `sa`; the local outbox; the vendor ledger | **WORLD** | `r-1` |
+| `HVST-r-3` | the timeline build surface | LOCAL | -- |
+| `HVST-r-4` | diagnostic evidence only, no producer change | **WORLD** (a live ft/barrons call) | -- |
+
+**Fan-out: 3 chains, cap 8.** `r-1 -> r-2` serial; `r-3` and `r-4` independent. Derived from the dependency
+graph above, not chosen.
+
+### 18c. `HVST-r-1` -- make sa's listing pages reach silver
+
+**The defect, already isolated (`Z-S28`):** sa's payload carries `themes` = `{}` on all 20 rows; arrow types
+it `struct<>`; parquet refuses *"Cannot write struct type themes with no child field"*. **Emptiness, not
+struct-ness** -- `links` (`struct<self: string>`) writes fine, and the isolating pair is in the row.
+
+⛔ **THE FIX IS PUBLISHER-NEUTRAL OR IT IS NOT THE FIX.** Special-casing `themes`, or sa, leaves ft, barrons
+and bbg to fail identically the first time one of them writes a listing row -- and **none of the three ever
+has**, so the next failure is equally invisible. The cell coerces an EMPTY MAPPING to null wherever it
+appears in a silver row, for every publisher.
+
+**Its positive control is the whole point:** wsj's held payload must produce a BYTE-IDENTICAL row set and an
+identical arrow schema before and after the change. A fix that quietly re-types a column wsj already writes
+is a silver schema change wearing a bug fix's clothes.
+
+### 18d. `HVST-r-2` -- drain what is held, then capture, then measure
+
+**Criterion order is load-bearing and is the correction round 6 paid for:** drain the ALREADY-HELD pages
+FIRST. They need no vendor call, they exercise `r-1` against real sa bytes, and if the fix is wrong the cell
+learns it before spending a vendor act rather than after.
+
+⛔ **THE VENDOR WORD IS SESSION-SCOPED AND EXPIRES SILENTLY.** Nothing refuses when it lapses; the seat
+simply no longer holds what it believes it holds. **This cell runs while the word is live or it does not
+run**, and a cell that cannot is a card to Andrew, never a queued order that quietly loses its
+authorization.
+
+⛔ **AND THE RUNTIME ROOT IS A GRANT THE ORDER MUST MAKE EXPLICITLY -- round 6 died on exactly this.** A
+worker worktree has NO `.runtime`, so the producer finds no session vault and falls through to the headed
+credentialed login. The order names `--runtime-root <main tree>/.runtime/opal-data-harvest` so the SAVED
+envelope resolves. **If that envelope has expired, the cell STOPS with a BLOCKING row; it does not
+re-authenticate.** Re-auth is a human act and is not this cell's to perform.
+
+**Its JUDGMENT criterion (the CVO's, at L9):** are the listing rows that reached silver ABOUT the security
+they are filed under? A mechanical delta counts rows; it cannot see rows counted against the wrong name,
+and `r-2` is exactly where round 6 had no oracle.
