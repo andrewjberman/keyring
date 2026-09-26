@@ -29,3 +29,25 @@
 - 20260926T170715Z LEG N1 closed: FAILED (the reason D3 is rolled back). iam_simulate_pairs.py: irpt-export-render-role 4 of 4 met (Put+Delete on /irpt/re
 - 20260926T174601Z LEG R1 closed: RECOMPUTE on the D1 build (CRO condition @8840cf8762: a reopen does not count): direct invoke of irpt-performance-adapte
 - 20260926T174601Z CLOSED -- all 6 legs proven
+
+
+## ADDENDUM 2026-09-26T18:0xZ -- R1 at full precision (CTO 101390): a CORRECTION, then the valid comparison
+
+**Correction.** Packet v2 (blob a40cad5a) and P's messages quoted K6's baseline as "YTD 0.06854, actual
+2026-01-02..2026-09-24". That was WRONG: 0.06854 was P's local recompute over 01-01..09-24, not K6's retained bytes.
+K6's retained report `RPT-39e26fcd..` (pre-D1 build jbojcl, requested 01-01..09-26) reads YTD 0.07333839362957217 over
+the answered window 2026-01-02..2026-09-25 (the engine had advanced a day). The R1 proof above therefore compared
+DIFFERENT windows and did not stand as written.
+
+**The valid comparison (same answered window, full precision).** `RPT-e0a917d2..` -- a RECOMPUTE on the D1 build
+Zs2OK7C5 (latency run 1, requested 01-01..09-25, 17:4xZ) -- answered 2026-01-02..2026-09-25:
+
+| retained report | build | answered window | YTD (full precision) |
+|---|---|---|---|
+| RPT-39e26fcd.. (K6) | pre-D1 jbojcl | 2026-01-02..2026-09-25 | 0.07333839362957217 |
+| RPT-e0a917d2.. (R1) | D1 Zs2OK7C5 | 2026-01-02..2026-09-25 | 0.07333839362957217 |
+
+EQUAL to the last digit. Beyond the YTD, the two reports' `summary_returns`, `period_returns`, all 184
+`daily_cumulative_series` points, `account_detail` and `measurement_basis` are identical; only
+`lineage.source_revision` differs, which digests the requested window (09-26 vs 09-25). R1 is MET on this comparison.
+RPT-c0121326 (01-01..09-24, YTD 0.06853598728842192) is a further recompute on a different window, not the baseline.
