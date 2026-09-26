@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-26T00:3xZ (tick 18). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-26T03:3xZ. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -76,6 +76,12 @@ branch. No code edit is open.
        prior version HJa2V4VY..., the act-1 bytes). Ledger cot-cash-admission-m-20260925: D1 closed; R1 HELD for
        Monday's first COT run: z09308463 (0.37 cash at 09-22) shows a cash slice with shares summing to 1, and
        z09326138 or z09308511 shows 100% cash.
+   - **COT-new write (CALL 2, @37025a10e9) + batch B re-cut:** the ONE OpenAI run answered 1,012 of 1,012 (file only,
+     @c3dde578b9). Andrew ~02:3xZ: established equities stay; `other` is personal held-away assets only. The write set
+     is 967 keys (R1 7, R2b 35, R3 10 excluded): Part 1 has 941 keys (COT $12.99M, BD $7.31M of corrections) and Part 2
+     has 26 `other` keys (COT $48.72M, 20 relationships). Half requested of the CTO:
+     IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_COT_NEW_WRITE_20260926.md; it replaces batch B act 2. The B_01b auto-deploy
+     is DISARMED (S141).
    - Preferred stock = fixed_income, standing (Andrew-direct ~17:3xZ, @42def02a36).
    - The two R5 defects (IRPT_MVP_M/R5_CLASSIFIER_DEFECTS_20260926.md):
      - The loader skip is CLOSED with no change: `ticker` is bd-securities' HASH key, and batch A's 204 name-keyed
