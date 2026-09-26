@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-26T03:3xZ. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-26T03:4xZ. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -88,9 +88,10 @@ branch. No code edit is open.
        CTO is asked whether to align them. Ledger bd-securities-cot-new-p1-m-20260926: R1 HELD for Monday's COT and BD
        runs.
      - Part 2 (26 `other`) is signed and waits on the act-1 read-back (Monday) plus ~D's mapping on origin DEV.
-     - **B_01b deploy HELD by ~M.** Deployed, its first --upload re-sends every key not in the table: the 52 excluded
-       by R1/R2b/R3 and Part 2's 26. The excluded keys need a table answer first (their C_06 class today, or a skip
-       list), then the rule-2 prompt amendment and a dry run.
+     - **B_01b deploy PARKED by ~M** (see Parked): it is not in COT's scheduled chain, and a deploy would re-send the
+       excluded keys.
+     - Part 2's second condition is MET: ~D's IV-e-27 (959a59a2) is an ancestor of origin/DEV and origin/PROD (fetch
+       + is-ancestor read by ~M 03:3xZ). Part 2 waits only on the act-1 read-back.
    - Preferred stock = fixed_income, standing (Andrew-direct ~17:3xZ, @42def02a36).
    - The two R5 defects (IRPT_MVP_M/R5_CLASSIFIER_DEFECTS_20260926.md):
      - The loader skip is CLOSED with no change: `ticker` is bd-securities' HASH key, and batch A's 204 name-keyed
@@ -187,6 +188,7 @@ Done this lease:
 | The FULL -> FAST line to the CVO ("FAST from 18:1xZ; pins graded after the fact") | 2.0.0_SA_COO~M | 3.0.0_SA_CVO registers live |
 | `directory/tests` on CLOUD has 6 failures that predate the refresh port (control: unmodified HEAD, the same 6): test_custody_owner.py x4, test_entry.py x2, AttributeError 'NoneType' has no attribute 'headers' | 2.0.0_SA_COO~P (directory-search entry and custody owner) | the next change to directory/entry.py or the custody owner read |
 | IRPT_BCKEND-S124: the bundle mint reads working-tree bytes | owner of .tools/safe_deploy_core.py | next bundle re-mint |
+| COT B_01b deploy and its rule-2 prompt edit (CLOUD holds the fixed script; S3 serves the no-op, S141). The live opal-cot-gold-run document does not run B_01b, so a deploy adds nothing. Once deployed, a manual run re-sends the 52 excluded keys and Part 2's 26, and any CLOUD commit to it deploys on the next push | 2.0.0_SA_COO~M | COT's chain adds B_01b, or a skip list for the ruled-out keys exists |
 
 Done: the directory refresh is fixed and EXERCISED. The 09-25 13:30Z fire dispatched at all 3 firms; served directories
 49F 09-24, INF 09-25, COT 09-22 (were 09-17). Ledger irpt-directory-refresh-s125-m-20260924 CLOSED @2e4c33738e; S125
