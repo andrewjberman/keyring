@@ -1553,6 +1553,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "97 landed model_block.json keys include at least 3 SERVED bases on a pre-CRPS-g-1 stamp, carrying `value`/`px_last` but not `ratio_to_px_last`/`band`; nothing has re-pulled them since the guard landed.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Disarmed IN THIS CELL by computing ratio from `value`/`px_last.value` rather than depending on `ratio_to_px_last`'s presence (case_evidence.py `_ratio_for`), so CASE_EVIDENCE_ROUND6.json's own bins are correct regardless. The standing hazard is that any OTHER reader of a served Model block that keys off `ratio_to_px_last` alone will misread these 3 (and any future stale stamp) the same way; a re-pull of the 3 named keys would also close it, but is out of this cell's bounds (no producer edit, no S3 write)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S44",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-26T16:26:00Z",
+    "one_line": "DISARM by its owner of AMGT_CORPUS-Z-S41 (read_dossier served the greatest inputs hash, not the last write, so write_one rewrote on unchanged inputs) and LIFT of the hold AMGT_CORPUS-Z-S42: CRPS-h-1 drained @dd82056420 (read_dossier returns the object written last on the newest as_of date), and FWD-17 (b)'s exercised arm read on the served table -- dossier --write --security-key IMB_LN_Equity, run twice, printed 'unchanged inputs_sha16 fc1e3a62101e4598 wrote 0' both times, and the store is byte-for-byte where it was: IMB 5 objects before and after, newest write 2026-09-25T21:45:30Z, table 373 objects, rewrites_on_unchanged_inputs 37 unchanged, read_dossier serves the last write 95 of 95.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Before-state at 16:23:45Z on HEAD 174790d015 with the fixed reader: IMB_LN_Equity objects 5, served as_of=2026-09-25.fc1e3a62101e4598.json, fresh current_inputs == served inputs True.",
+        "evidence/fwd17b_imb_write_twice_20260926.txt: the two 'unchanged ... wrote 0' lines, then the census 'partitions 95 objects 373 | rewrites_on_unchanged_inputs 37 | read_dossier serves the last write 95 of 95', then 'after: IMB objects 5 | newest write 2026-09-25T21:45:30+00:00'.",
+        "CRPS-h-1 re-graded by this seat at 7adb677b72: AC1 4 passed (hash order reversed against write order returns the later write), AC2 95 of 95, AC3 312 passed; drained @dd82056420."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S41 disarms when read_dossier selects the last write and a second --write on unchanged inputs writes 0; Z-S42 lifts on the same reading.",
+    "world_is": "Met on the served table. The dossier --write hold is lifted; the 37 historical rewrites stay as additive gold, never served over a newer object.",
+    "notes": "Owner's disarm and lift, evidence-cited. Not a REMEDIATION row (the CVO's). The drain act ran after Andrew's resume (relayed by 0.0.0_AB_MSTR~Z, 16:18Z)."
   }
 ]
 ```
