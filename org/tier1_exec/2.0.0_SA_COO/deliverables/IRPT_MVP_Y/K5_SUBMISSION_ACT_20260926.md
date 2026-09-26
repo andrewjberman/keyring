@@ -55,3 +55,35 @@ checkpointed. This is the only server-side repeat, and the halves either admit i
 
 Every row, S3 object and vendor object above is kept. ~Y's evidence file names each key: the job id, the request
 rows, the S3 keys with versions and sha256, and the vendor portfolio and report ids from the job row's checkpoints.
+
+## Measured write set (addendum 20:2xZ, for the next window's packet; CTO 101465)
+
+Measured by the offline pre-flight, which applies no write to AWS:
+- hop 3 is `HOP3_OFFLINE_PROOF_20260926.md`;
+- hops 5-7 are `HOPS_5_7_PREFLIGHT_20260926.md` @0d7ec20003;
+- the world after the job is dumped by `live_walk/resident_job_preflight.py --out`.
+
+It is the deployed generate `/iFhTAvT` and resident `fe64236bbb` content, run on window 3's real input.
+
+**Correction:** the ORIGINAL_VENDOR_PDF is retained in `opal-data-irpt`, not `opal-data-ycharts` as "What it causes" says
+above.
+
+| Store | Tenant / prefix | Rows or objects at READY |
+|---|---|---|
+| `irpt-requests` | `cottonwood`, `analysis#REQ-...#1` | 1 (the submission) |
+| `irpt-requests` | `cottonwood`, `ARTIFACT#` | 3 (composition, vendor PDF, extraction evidence) |
+| `irpt-requests` | `cottonwood`, `RETENTION#` + `RETENTION#...#PROMOTION#` | 6 + 5 |
+| `irpt-requests` | `cottonwood`, `REPORT#RPT-...#<revision>` | 1 |
+| `irpt-jobs` | `cottonwood`, `REQ-...` | 1 (the job, READY) |
+| `irpt-jobs` | **`_opal`**, `PROVIDER_OPERATION#<sha256>` | 1 (the vendor session lease, `ycharts/session/operation_lease.py:54`) |
+| `opal-data-irpt` | `irpt/cottonwood/state/request_compositions/ART-...` | 1 |
+| `opal-data-irpt` | `irpt/cottonwood/state/vendor_documents/ART-...` | 1 (ORIGINAL_VENDOR_PDF) |
+| `opal-data-irpt` | `irpt/cottonwood/state/extraction_evidence/ART-...` | 1 |
+| `opal-data-irpt` | `irpt/cottonwood/platinum/analysis_reports/RPT-.../<sha>.json` | 1 |
+| `irpt-generation` (SQS) | one `analysis_generate` message | sent, then deleted at READY |
+
+- The `_opal` row is the only write outside the firm tenant. It is the global provider-operation lease, not firm data.
+- Hops 8-9 (sections, job status, history, request read) are read-only: `status_read_proof.py` made 32 reads and captured
+  0 writes (`HOPS_8_10_PREFLIGHT_20260926.md`).
+- Vendor: the replay shows one holdings upload, one portfolio create, one report generate and one PDF download, as listed
+  above. A live YCharts answer can differ.
