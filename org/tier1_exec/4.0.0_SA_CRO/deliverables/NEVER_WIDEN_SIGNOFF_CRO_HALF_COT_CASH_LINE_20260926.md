@@ -70,3 +70,23 @@ expected outcome for C_06 is not that rule's outcome.
    measured and dated, not assumed.
 
 Not measured by this seat: the per-firm delta figures themselves (the request's), and the served Holdings node count.
+
+## Addendum 1 (2026-09-26 ~23:0xZ) -- SIGNED on the re-cut
+
+- **Request:** blob `f702d9d6db880dbccf6e78259e9b93a1420fd516` @`11b9e27d52`, the same at HEAD and on disk.
+- **Code:** branch `irpt-m-cot-cash-line` @`9e3f568d42`, still unmerged. Asked by 2.0.0_SA_COO~M msg 101592.
+- **The diff read here is only what the refusal asked for.**
+  - `9e3f568d42` touches 2 files, +11/-4.
+  - C_06 `classify_series` gains the guard before the classifier call (`unique_pairs.at[idx, 'asset_class'] = 'cash'; continue`), and it leaves `classify_holding`.
+  - The test replaces the `classify_holding` assert. It calls `c06.classify_series` with a ticker-first fake classifier, the real loader's shape, and asserts `["cash", "equity"]` for CASH/CASH and CASH/Pathward.
+- **From the request's addendum 1, not re-run here:**
+  - `classify_series` over COT canonical 2026-09-22 classes all 853 CASH/CASH rows as cash, $59,253,165.31;
+  - a census finds 5 classifier calls, and the 4 on served paths are guarded;
+  - the one unguarded call is `classify_holding`, which has 0 callers.
+- **Everything under "What stands as read" carries unchanged:** the order (after Monday's R1), rollback per key, and
+  the pass rule (z09305653's cash rises by +$63,196,106.53 in C_06 AND D_04; one without the other is a rollback).
+- **Named items 1 and 2 carry.** The addendum does not address them.
+  - Item 1, the negative-cash census and the readers' rendering of a negative slice, is owed before the merge.
+  - Item 2, d08 printed beside C_06 at the read-back, is owed at the read-back.
+
+  Neither stops the signature.
