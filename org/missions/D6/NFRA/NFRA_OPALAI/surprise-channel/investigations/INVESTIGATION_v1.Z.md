@@ -728,6 +728,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "It cannot be run on this device (moto absent), so it is neither PASS nor FAIL here. AC1/AC2 do not depend on it; tests/test_identity_scope.py passes 9 of 9. The suite needs one run on a device with moto before OA-f-2 deploys.",
     "disarm_owner": "2.0.0_SA_COO~O",
     "notes": "Not repaired, no package installed. INERT: nothing deploys from this order (the deploy is OA-f-2)."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W8-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~8",
+    "surfaced_at": "2026-09-26T03:35Z",
+    "one_line": "TO-OA-f-2 step 3 plans the rollback's halt gate at about 12 minutes (row NFRA_MCPORTAL-Z-S8). Read now from the rollback tree, the gate resolves serial 2.0.0_SA_COO~O, finds 0 STOP-class and 186 routine pending messages, and had listed 114 of the 186 when a 900 s bound expired. At that rate the full gate takes about 24 minutes, so the guard (ii) rollback path through safe-ec2-deploy.sh would leave the host down for about 24 minutes before the redeploy starts.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read-only read: .tools/halt-gate-check.sh@72897184fd sourced from /c/tmp/oa-8-rb (0af72fb1d0) with safe-ec2-deploy.sh's own HALT_GATE_* env (lines 43-64); halt_gate_resolve_serial printed '2.0.0_SA_COO~O' (the session serial file), start 03:12:06Z.",
+        "Output: 'HALT-GATE: 186 pending message(s) -- review before proceeding'. This Verdict-2 banner prints only after the STOP-class check (halt-gate-check.sh:428-449) found none, so STOP-class = 0.",
+        "`timeout 900` expired (rc 124) with 114 '  from ' entries printed out of 186. The per-message listing loop (halt-gate-check.sh:457-460) is where the time goes. 186 x 900/114 is about 1470 s.",
+        "HALT_ACK=1 passes the routine verdict (halt-gate-check.sh:461-464), but it does not skip the listing loop, which runs before the ack check."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Pre-acknowledge the rollback's halt gate: HALT_ACK=1 when the halt gate reads 0 STOP (the gate takes about 12 minutes).",
+    "world_is": "The gate reads 0 STOP, and HALT_ACK=1 is the correct pre-ack. It takes about 24 minutes, not 12, because 186 routine messages are pending on 2.0.0_SA_COO~O's inbox. The forward deploy also goes through this gate before it touches the instance. A guard (ii) rollback after a failed /health would leave the host serving nothing for that time, unless the issuer names another rollback path. The standalone form, bash infra/aws/ec2/opal-gateway/deploy-to-ec2.sh i-07dccb1615503ac99 from the rollback tree, skips the gate and the manifest record.",
+    "notes": "Not acted on: no inbox was touched and nothing was acked. Disarm: before GO, the issuer rules which rollback command guard (ii) runs."
   }
 ]
 ```
