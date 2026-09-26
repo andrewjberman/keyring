@@ -33,6 +33,8 @@ last commit on P's branch. Each sha256 is the blob, LF, cross-checked with `sha2
 
 ## Acceptance after the rebuild
 
-1. Rerun the same closure walk over the new zip: zero missing modules.
+1. `python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/generate_package_closure.py <new zip> --tree <P's investor-reporting dir>`
+   must print `OK` and exit 0. Measured at ~03:5xZ: the deployed zip exits 1 with exactly these three MISSING. The same
+   zip with the three files added exits 0, and the closure stays at 39 modules, so these three rows are the complete fix.
 2. On the next principal window, Y reruns the one upload. Expected: RESOLVING, then the resident's `handled=1`, then
    NORMALIZED 12.03.
