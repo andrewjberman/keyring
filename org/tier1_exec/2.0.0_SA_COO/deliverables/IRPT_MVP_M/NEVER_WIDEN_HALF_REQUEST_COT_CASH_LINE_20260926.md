@@ -59,3 +59,16 @@ R1), so that read-back stays clean. The Holdings part rides the R4 enable public
 2. The Holdings change rides the R4 enable publication (the pinned diff lists it as its own class).
 
 Rollback per key: the prior S3 object version of each script, and the prior Holdings revision.
+
+## Addendum 1 (~23:0xZ): the re-cut after the CRO's refusal (@9946616779)
+
+- **Refused, correctly:** C_06's guard sat in `classify_holding`, which has 0 callers. The served mix classifies through
+  `classify_series` (C_06:471, reached through the call at :217), so C_06 would have stayed equity while D_03/D_04 moved.
+- **Re-cut @9e3f568d42** (branch `irpt-m-cot-cash-line`, still NOT merged): the guard sits in `classify_series` before
+  the classifier call, and has left `classify_holding`. The test calls `classify_series`: CASH/CASH gives cash,
+  CASH/Pathward gives equity.
+- **Real run on the branch:** `classify_series` over COT canonical 2026-09-22 classes all 853 CASH/CASH rows cash,
+  $59,253,165.31.
+- **Census of every classifier call in C_06, D_03 and D_04 (CTO 101583):** 5 calls. The 4 on served paths are guarded
+  (C_06:217 by :213; D_03:133 by :131, reached from :686; D_04:1346 by :1344; D_04:2916 by :2914). The 1 unguarded call,
+  C_06:186 `classify_holding`, has 0 callers.
