@@ -682,6 +682,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "NFRA_OPALAI-Z-S18 is ARMED with this seat as disarm_owner: the concierge identity can fire opal_data_refresh_upload.",
     "world_is": "Today the reach is held only by the workspace BG seat, as the documented fallback upload duty. The Teams-facing Opal_Agent runtime gains it only at cutover, and this row makes the cutover conditional on the refusal. The pinned tool count (45 vs 44) is recounted on each release base, per the CTO's note.",
     "notes": "Round-2 cells for NFRA_OPALAI: (1) identity_scope keyed on (identity, client_id), upload to the operator's client only, with test_scoped_deny_by_default pointed at a fixture overlay; (2) the runtime fence denies opal_data_refresh_upload as belt-and-braces. No new M365 account is needed. The row's purpose (Andrew's fallback upload) stands; only its scope narrows."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S20",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-26T00:05Z",
+    "one_line": "opal_ai CI FAILS on its first real push (DEV=PROD fd8ab8a57f, run 36203070607): ruff finds 15 errors in the moved portal_lookup.py, and pytest never runs because the workflow installs no pytest -- so PROD carries red checks and FWD-13 ('the checks run automatically on every change' and pass) is not met.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gh run list -R Opal-Capital/opal_ai: run 36203070607, 'opal_ai CI', DEV, push, completed/failure, 2026-09-25T23:58:45Z.",
+        "gh run view 36203070607 --log-failed: 'py_compile: PASS (3 files)'; 'ruff: FAIL (0 findings) -- ... portal_lookup.py ... Found 15 errors'; 'ascii: PASS'; 'device-path: PASS'; '/opt/hostedtoolcache/Python/3.9.25/x64/bin/python: No module named pytest'; 'pytest: FAIL'; 'CHECKS: FAIL'.",
+        "The same line also shows opal/checks/run_checks.sh printing 'ruff: FAIL (0 findings)' while ruff reports 15: the check's own finding count is wrong."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD FWD-13 and C2: CI in opal_ai runs py_compile, ruff py39 and the tests on every push, and a standalone copy passes its own checks.",
+    "world_is": "CI runs, but it cannot pass. Its workflow never installs pytest, and the moved Analyst helper carries 15 ruff errors the workspace's own gates did not stop (the file moved as-is). The runner's summary line misreports the ruff count as 0. Nothing is gated by it yet (there is no branch protection), so the red is silent unless someone reads it.",
+    "notes": "Round-2 batch cell: (1) ci.yml installs pytest (and ruff) before run_checks.sh; (2) portal_lookup.py's 15 ruff findings are fixed in opal_ai, never waived; (3) run_checks.sh reports ruff's real count; (4) one green run on a real push is FWD-13's proof. INERT: the runtime pulls PROD regardless, and nothing deploys from CI."
   }
 ]
 ```
