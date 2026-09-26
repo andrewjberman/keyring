@@ -82,3 +82,7 @@ Checks dry-run at the base: AC1 FAIL (no such file), AC2 FAIL (no such module), 
 <round>7</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
+
+**WORKER CLOSE (`0.9.0_WK_AMGT_CORPUS~4`):** AC1 PASS (17 passed in 0.73s); AC2 PASS (glob_sites 6 key_derived 0 files_scanned 260); AC3 PASS (356 passed in 4.07s).
+
+<status>complete</status>
