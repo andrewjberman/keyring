@@ -79,3 +79,10 @@ SELF-DRIVE SCOPE: ~O fabric -> D6 + 2 D9 projects -> 4 project(s) [NFRA_OPALAI, 
   OA-g-2, and the COO~O GO condition). Every recipient is a Tier-1 seat under the same pause.
 - Re-arm: on Andrew's resume word, off this record (skill section 0.4). The last committed log is the tick-21 log
   @f0057f1a13; ticks 22-23 are in `org/mcp/drive_ticks/1.0.0_SA_CTO~O.md`.
+
+## RESUMED 2026-09-26 ~16:2xZ -- Andrew's word, relayed by 0.0.0_AB_MSTR~Z (msg 20260926T161816Z)
+
+> "resume tier 1"
+
+- The pause above is lifted. Re-armed off this record (skill section 0.4) with a new cron; the scope, terms and stop
+  are unchanged. No re-plan or report was asked.
