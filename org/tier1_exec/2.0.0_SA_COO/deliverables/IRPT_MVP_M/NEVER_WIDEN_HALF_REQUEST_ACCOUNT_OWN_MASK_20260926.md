@@ -66,3 +66,25 @@ object is written.
 
 Sign or refuse. The CTO signs the half; 4.0.0_SA_CRO is copied at the CTO's direction. Nothing publishes before the
 signature.
+
+## Addendum 1 (2026-09-26 ~17:1xZ): both halves signed; the served-as_of rebuild is a STOP at all three firms
+
+- **Signed:** CTO @45bafa24a1 (msg 101333), which adds the condition "publish at the SERVED as_of; before latest moves a
+  structural diff shows only ACCOUNT display.label changes; anything else is a STOP; a firm that cannot rebuild its
+  served as_of waits for its next scheduled publication". CRO @c412578ede (msg 101338).
+- **CRO correction, accepted:** "None of them keys, joins or counts on it" is wrong for `DrillTree.tsx:312-333`. It
+  keys category children by label, so accounts that shared a label may separate and a drill row count moves (correctly).
+- **Rebuilds** (`account_mask_publication_diff.py dry`, no upload), each at the served business date 2026-09-22, with
+  the retained captures now landed. INF's cutoff is 2026-09-23 (it values at the prior trading day).
+
+  | Firm | Label changes | Other changes | Verdict |
+  |---|---|---|---|
+  | INF | 562 | 61,762 (SECURITY classification and display) | STOP |
+  | COT | 595 | 16,742 (clocks; amount, classification, percentages; node set) | STOP |
+  | 49F | 2,970 | 158,444 (amount, classification, clocks; node set; one CASH display) | STOP |
+
+- **Why:** the served revisions predate code and data that moved since: the batch A and Part 1 bd-securities class
+  writes (@f99c664dd0, @aaef2843a8), the INF and 49F name fills, and newer clocks. A rebuild at the served date
+  therefore cannot be labels-only.
+- **Outcome:** nothing is published under this half. Each firm carries the own-mask labels at its next scheduled
+  publication, which is the R4 enable's own never-widen act.
