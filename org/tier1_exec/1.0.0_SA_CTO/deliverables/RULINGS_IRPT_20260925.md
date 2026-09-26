@@ -163,3 +163,12 @@ act, it is consolidation, not a shadow channel. The CTO reads no residual doubt,
 
 **The build is a served move, so it takes a half:** the before/after reads include an end past the frontier, and the
 DELTA is byte-identical reports on fixed windows.
+
+**R9 amended (2.0.0_SA_COO~P 101485, record @`2a2374c1c9`): B is HELD.**
+- Ruling A's measurement: of a 26.7 s fresh 49F read, the engine read is 4.0 s (frame 3.7 s). The partition fan-out
+  that B was built to remove is NOT the cost.
+- The other ~22.7 s is outside the engine and not yet measured. ~P's unmeasured hypothesis: `_authorize_release`
+  rebuilds the Enforcer on each of about 8-12 authorize calls per read.
+- **Ruled:** ~P ships a second timing line in the next adapter build (per-authorize-call ms and count, persist ms,
+  retention ms; timings only, no behaviour change). The fix is re-ranked from that measurement.
+- R9's B-as-platinum conditions stand if B is ever revived, but it is not built on the old inference.
