@@ -1,0 +1,29 @@
+{
+ "account_detail": [
+  {
+   "account_id": "acc_5510a3054a409d548a12c57d",
+   "level": "Account",
+   "value": 0.06823927977
+  }
+ ],
+ "account_id": "acc_5510a3054a409d548a12c57d",
+ "at": "2026-09-26T05:07:50.363962+00:00",
+ "contract_validated": true,
+ "dates": {
+  "actual_end": "2026-09-25",
+  "actual_start": "2026-01-01",
+  "requested_end": "2026-09-25",
+  "requested_start": "2026-01-01"
+ },
+ "egress_ref": "CTO 101098, ledgered irpt-orion-household-scope-proof-20260926",
+ "orion_account": 1098,
+ "orion_household": 381,
+ "outcome": "REPORT",
+ "provider": "ORION",
+ "report_sha256": "df69cac9323f92726e7548eaa78b7226c3a3ab4dedd7e0c9113da3d5e063549f",
+ "requested": [
+  "2026-01-01",
+  "2026-09-25"
+ ],
+ "series_points": 268
+}
