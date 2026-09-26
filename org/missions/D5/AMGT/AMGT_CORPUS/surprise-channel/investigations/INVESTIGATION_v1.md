@@ -1575,6 +1575,51 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Z-S41 disarms when read_dossier selects the last write and a second --write on unchanged inputs writes 0; Z-S42 lifts on the same reading.",
     "world_is": "Met on the served table. The dossier --write hold is lifted; the 37 historical rewrites stay as additive gold, never served over a newer object.",
     "notes": "Owner's disarm and lift, evidence-cited. Not a REMEDIATION row (the CVO's). The drain act ran after Andrew's resume (relayed by 0.0.0_AB_MSTR~Z, 16:18Z)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S45",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-26T16:40:00Z",
+    "one_line": "h-5's served rewrite WOULD LAND ON 49 OF 95 NAMES, not 95: continuation objects are named <sha16 of {method_version, inputs}>, so METHOD_VERSION /2 writes a NEW object for every name -- but both readers (continuation.read_latest and substrate._pick_stored) return the FIRST key in sorted order whose `inputs` equal current inputs, and `inputs` does not carry the method version. A /1 and a /2 object with identical inputs then compete by hash order: measured read-only over the 95 resolved names, the readers would serve /2 (with terms) on 49 and keep serving /1 (no terms) on 46. The same defect class as Z-S41 on the next table over.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/continuation_v2_pick_census_20260926.txt (read-only, at CLOUD after the h-5 drain @b8798b1548, METHOD_VERSION asserted /2): 'resolved names 95 | partitions with a /1 continuation 95 | none 0'; 'first-match readers would serve: /2 (with terms) 49, /1 (no terms) 46'; e.g. 1299_HK_Equity /1 46e01f4b82307004 sorts before /2 af5b123ef99f68ad.",
+        "lib/research/corpus/continuation.py write_one: object_name = '%s.json' % _inputs_sha16(document['inputs']), and _inputs_sha16 hashes {method_version, inputs}; read_latest: 'for key in sorted(keys): ... if document.get(\"inputs\") == wanted: return document'.",
+        "lib/research/corpus/substrate.py _pick_stored: 'for key in sorted(keys): if docs[key].get(\"inputs\") == wanted_inputs: return docs[key], ..., True' -- the dossier's continuation input comes through this reader.",
+        "Nothing has been written: this seat has run no continuation --write since the h-5 drain; the census computed the /2 names from the stored /1 objects' own inputs."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-h-5 / decomposition v6.0 s.5 item 3: after h-5 drains, the continuation rewrite puts `terms` on every pillar on the served continuation, and every dossier carries the new continuation in inputs.",
+    "world_is": "The producer would write 95 /2 objects, and the served readers would pick them on 49 names only. FWD-18's data half would read as met on a sample and unmet on 46 names, with no error anywhere.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Remedy is a build, not a drain act: both first-match readers must prefer, among objects whose inputs match, the one whose method_version is the producer's CURRENT one (the last write breaking any remaining tie, as h-1 ruled for the dossier). A round-7 cell for the CTO's analysis. This seat's same-turn disarm is Z-S46. h-5's code is correct as specified; its served act is what the reader defeats."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S46",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-26T16:41:00Z",
+    "one_line": "DISARM BY HOLD of AMGT_CORPUS-Z-S45 by its owner: this seat runs NO continuation --write (and so no h-5 served rewrite and no dossier rewrite for it) until the continuation readers prefer the current method version. The writer census is this seat alone: continuation --write has only ever run in this seat's production sequences, and no scheduled producer writes the table.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/continuation_v2_pick_census_20260926.txt: no /2 object exists yet (the census computed /2 names; it wrote none), so holding the only writer holds the split at zero.",
+        "Decomposition v6.0 s.5 item 3 named this seat as the only runner of the continuation rewrite, under a never-widen pair that was never opened."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S45 disarms when the one writer holds; it closes when both readers pick the current-method object and a /2 rewrite serves /2 on every resolved name.",
+    "world_is": "Held from 16:41Z.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's)."
   }
 ]
 ```
