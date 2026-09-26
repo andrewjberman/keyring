@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
 Drive: /closer-drive loop (cron 7a9ea1ce, every 30m at :17/:47; CTO 101098, Andrew-direct ~03:0xZ; replaced /canonical-drive 57c0067c); lease FAST re-armed to 15:01Z. Egress: vendor API calls permitted this session, each ledgered (CTO 101098). Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-26T14:1xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
+As of 2026-09-26T14:5xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
 
 ## Pins
 
@@ -45,6 +45,19 @@ None building. Next surface: the adapter package + performance root (deploy B), 
 
 ## Next-list (in order)
 
+0. LIVE-THREAD DEFECT (CTO 101236): relationship-level Performance -- the page selects whole relationships, and every
+   multi-account selection answers SELECTION_UNSUPPORTED ("performance computes exactly one selected account") at 49F
+   and COT (~D's walk HAR, 4 of 4 Performance reads). FWD-1's Performance hop is blocked on it; it goes into the round
+   analysis. Design first: an account-set aggregate (49F engine linking; Orion/BD per provider), or a named per-account
+   breakdown.
+0b. WINDOW 2 (CTO 101240): packet v6 blob 71146fdd @34f4619882 out for halves -- new principal; K4 upload + K5 /analysis
+   (hop 3) on the jsonschema-fixed generate; K6 = ~D's ONE 49F account-level Performance page read = export-B BEFORE.
+   Create after both halves are at HEAD.
+0c. DONE 14:52:47Z: irpt-ycharts-generate jsonschema fix LIVE (85TXFzzv + irpt-common:5; ledger
+   irpt-generate-jsonschema-fix-20260926 CLOSED): negative control FAILS on IJD6bd1I, both checkers pass, deployed
+   import census 59 / 0 failed (CTO 101229). Tool: IRPT_MVP_P/package_import_check.py.
+0d. DONE 14:4xZ: admin+Dev UI walk CLOSED (ledger irpt-ui-walk-principal-20260926): K4 NORMALIZED 12.03, K5 died on
+   jsonschema with nothing written, route-graded audit clean, users unchanged, +3 selections.
 1. S143 FIX PROVEN LIVE 05:07Z (ledger irpt-orion-household-scope-proof-20260926 CLOSED; receipt
    IRPT_MVP_P/ORION_HOUSEHOLD_SCOPE_PROOF_20260926.json): the household-scoped Scope body (entity 5, one-account household)
    -> Orion 200 -> orion_selected.calculate returns a contract-validated Purfeerst report (YTD 0.0682, 01-01..09-25 exact,
