@@ -58,7 +58,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/A
 
 **ISSUER NOTES:** Amendment 1 (issuer, ~23:5xZ, on the lane's HELD entry): AC2's population is pinned to the 94 folders the live library held at the cut; 'AIA Group', added after the cut with no identity, is new scope (row filed). Gate limbs: a MODIFIED order without <placeholders> is graded by none. Seat order; the issuer restamps lib/research/api/_harvest_prefixes.py immediately before naming the build commit if gen_harvest_prefixes.py --check reads rc 1. N is the live library's count at the run, printed with its read time (94 at the cut).
 
-<status>pending</status>
+<status>complete</status>
 <round>43</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
