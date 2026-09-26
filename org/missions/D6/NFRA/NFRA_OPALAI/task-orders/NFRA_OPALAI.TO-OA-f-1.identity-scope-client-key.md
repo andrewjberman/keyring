@@ -111,7 +111,7 @@ opalbloomberg@ refresh family, 1 client (so today the Analyst seat and the opera
 SHAPE; TODAY's reach closes at the cutover or with a fence change (decomposition ADDENDUM A1). Checks were dry-run at
 base: f1.AC1 FAIL (0 of 3), f1.AC2 FAIL (unqualified=1, match=no).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~8</slot>
 <fabric>site-z</fabric>

@@ -727,6 +727,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "EC2_MANIFEST.json on the working branch CLOUD records the served opal-gateway commit.",
     "world_is": "The served commit is 0af72fb1d0. Its record is on a release branch, not on CLOUD.",
     "notes": "The disarm is the laptop CTO's drain of 88377e148e (or an equivalent manifest record) to CLOUD. Meanwhile OA-f-2 (@0dd3492d8a) resolves its base BY CONTENT at its own cut and names 0af72fb1d0, so this seat's release does not step on it."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W8-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~8",
+    "surfaced_at": "2026-09-26T01:22Z",
+    "one_line": "TO-OA-f-1 says keep tests/test_data_entitlement_guard.py (OGZ1-AC11) passing, but that suite cannot be collected on this device: 'No module named moto' at collection (Python 3.11, pip list has no moto, no cached wheel); 18 of 31 gateway test files import moto. The suite was not run, so 'keeps passing' is UNREAD, not PASS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-OA-f-1 worker face section 1 step 4: 'Keep tests/test_data_entitlement_guard.py (OGZ1-AC11 reads the tracked overlay) passing.'",
+        "`timeout 300 python -m pytest tests/test_data_entitlement_guard.py -q` in infra/aws/ec2/opal-gateway @ wk-NFRA_OPALAI-8: 'ModuleNotFoundError: No module named moto' -- '1 error in 1.11s' (collection error, 0 tests run).",
+        "`python -m pip cache list moto`: 'No locally built wheels cached.'; `pip list` shows boto3 1.43.46 and pytest 9.1.1, no moto. Installing it is PyPI egress, which this order's declared egress class (Opal's own AWS, read only) does not cover.",
+        "tests/test_data_entitlement_guard.py@d88cd32d0c:872-873 reads identity_scope._load_scopes() over the tracked overlay; this change keeps _load_scopes() returning the same email -> frozenset(tool) shape (unqualified rows only), so the upload row now counts in no allowlist and opalbloomberg's printed allowlist size drops by 1; the test asserts before == after with the guard on/off, not a fixed size."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "tests/test_data_entitlement_guard.py keeps passing after OA-f-1's change.",
+    "world_is": "It cannot be run on this device (moto absent), so it is neither PASS nor FAIL here. AC1/AC2 do not depend on it; tests/test_identity_scope.py passes 9 of 9. The suite needs one run on a device with moto before OA-f-2 deploys.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "Not repaired, no package installed. INERT: nothing deploys from this order (the deploy is OA-f-2)."
   }
 ]
 ```
