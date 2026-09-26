@@ -71,9 +71,13 @@ fi
   echo 'if [ -z "$CHECK" ]; then'
   echo '  echo "WARN: gitlink-publication-check.sh not found in this worktree ($ROOT) or the main tree ($MAIN)." >&2'
   echo '  echo "WARN: gitlink publication gate SKIPPED for this commit -- FAIL-OPEN, and this line is the disclosure." >&2'
-  echo '  exit 0'
+  echo '  CHECK=""'
   echo 'fi'
-  echo 'exec bash "$CHECK" "$@"'
+  echo '# NEITHER `exec` NOR a bare `exit 0` here. Another installer (owned-paths) INLINES this'
+  echo '# hook into a wrapper and APPENDS its own check after it. `exec` replaces the shell and'
+  echo '# `exit 0` ends it, and either one silently kills every appended check -- measured'
+  echo '# 2026-09-26: the owned-paths LANE check sat dead after the inline, with no error.'
+  echo 'if [ -n "$CHECK" ]; then bash "$CHECK" "$@" || exit $?; fi'
 } > "$HOOK"
 chmod +x "$HOOK"
 
