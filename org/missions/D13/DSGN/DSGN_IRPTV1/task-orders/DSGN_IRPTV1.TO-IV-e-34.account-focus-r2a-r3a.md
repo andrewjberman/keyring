@@ -40,6 +40,13 @@ client set (`export/ExportButton.tsx`, `export/resolveBundle.ts`); Holdings has 
 period preset (YTD, 1Y, 3Y, Since inception) ENDS on the data's as-of (business) date taken from the served response or R1's snapshot, never on
 the browser's calendar date (`tabs/reporting/period.ts` `dateWindowForPreset` today uses `new Date()`; the T-1 trading-calendar rule). Before
 the as-of date is known, no Performance request is sent. A Custom range is the advisor's own and is unchanged.
+(f) **Disarm rows W22-S1..S3** (amendment 2, issuer 2026-09-26 ~19:1xZ): IV-e-33's spec-mandated changes (the directory-search
+retirement in `fetchIdentityCardData`; rule C1's kind word "Client") break three sibling tests inside this order's grant:
+`__tests__/dsgn-irptv1/iv-e-3.card-fed.test.ts` (runtime AND `bun run typecheck`), `iv-e-23.identity-firm.test.ts` (kind-word assertion) and
+`iv-e-8.browse-drawer.test.ts` (per-row kind-word assertion). Re-scope each to the R1 spec (class R: retired by FWD-19, PRD v0.12 ROUTE
+STRUCTURE / proposal @713a49f7b8 section 5 and rule C1), naming the retiring FWD and version in the test's header comment; never weaken what
+the current ENDPOINT still requires. `bun run typecheck` must read 0 errors on your branch. These are graded at the drain (typecheck and the
+suite), not as a criterion here.
 
 **The spec is the CRO's route proposal, AT ITS PIN:** read it with `git -C <WS> show 713a49f7b8:org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_FRONTEND_ROUTE_STRUCTURE_PROPOSAL_20260926.md` (the working copy has moved since; the PRD adopts the pinned text). Sections 2 (the routes R0-R4), 3 (each route's exact calls), 4 (the six rules, each a test) and 5 (the code each retires) are binding; the PRD's ROUTE STRUCTURE section (`org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md`) carries the CTO's rulings: Call 1 (b) the client's LARGEST account by the snapshot's value is preselected on Performance (the first in snapshot order on a tie) with the chooser always visible; Call 2 (a) route state only, in-page -- no client or account id ever goes into the URL.
 
