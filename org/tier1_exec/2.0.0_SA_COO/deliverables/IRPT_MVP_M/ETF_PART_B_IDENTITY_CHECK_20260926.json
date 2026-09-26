@@ -1,0 +1,234 @@
+[
+ {
+  "ticker": "DBC",
+  "etf_name": "Invesco DB Commodity Index Tracking Fund",
+  "bd_name": "DBC",
+  "held": []
+ },
+ {
+  "ticker": "GLD",
+  "etf_name": "SPDR Gold Shares",
+  "bd_name": "GLD",
+  "held": [
+   {
+    "firm": "49f",
+    "name": "GLD",
+    "cusip": "78463V107",
+    "nodes": 5
+   },
+   {
+    "firm": "inf",
+    "name": "GLD",
+    "cusip": "",
+    "nodes": 6
+   },
+   {
+    "firm": "cot",
+    "name": "SPDR GOLD SHARES",
+    "cusip": "",
+    "nodes": 574
+   },
+   {
+    "firm": "cot",
+    "name": "SPDR GOLD SHARES",
+    "cusip": "78463V107",
+    "nodes": 42
+   },
+   {
+    "firm": "cot",
+    "name": "GLD - SPDR GOLD SHARES",
+    "cusip": "",
+    "nodes": 1
+   }
+  ]
+ },
+ {
+  "ticker": "GSG",
+  "etf_name": "iShares S&P GSCI Commodity-Indexed Trust",
+  "bd_name": "GSG",
+  "held": []
+ },
+ {
+  "ticker": "IAU",
+  "etf_name": "iShares Gold Trust",
+  "bd_name": "IAU",
+  "held": [
+   {
+    "firm": "49f",
+    "name": "IAU",
+    "cusip": "464285204",
+    "nodes": 6
+   }
+  ]
+ },
+ {
+  "ticker": "JEPI",
+  "etf_name": "JPMorgan Equity Premium Income ETF",
+  "bd_name": "JPMorgan Equity Premium Income ETF",
+  "held": [
+   {
+    "firm": "49f",
+    "name": "JEPI",
+    "cusip": "46641Q332",
+    "nodes": 11
+   },
+   {
+    "firm": "cot",
+    "name": "JPMORGAN EQUITY PREMIUM INCOME ETF",
+    "cusip": "",
+    "nodes": 15
+   },
+   {
+    "firm": "cot",
+    "name": "JPMORGAN EQUITY PREMIUM INCOME ETF",
+    "cusip": "46641Q332",
+    "nodes": 9
+   }
+  ]
+ },
+ {
+  "ticker": "PDBC",
+  "etf_name": "Invesco Optimum Yield Diversified Commodity Strategy No K-1 ETF",
+  "bd_name": "Invesco Optimum Yield Diversified Commodity Strategy No K-1 ETF",
+  "held": [
+   {
+    "firm": "49f",
+    "name": "PDBC",
+    "cusip": "46090F100",
+    "nodes": 4
+   }
+  ]
+ },
+ {
+  "ticker": "QBER",
+  "etf_name": "TrueShares Quarterly Bear Hedge ETF",
+  "bd_name": "TrueShares Quarterly Bear Hedge ETF",
+  "held": [
+   {
+    "firm": "49f",
+    "name": "QBER",
+    "cusip": "210322509",
+    "nodes": 2
+   }
+  ]
+ },
+ {
+  "ticker": "SLV",
+  "etf_name": "iShares Silver Trust",
+  "bd_name": "SLV",
+  "held": [
+   {
+    "firm": "49f",
+    "name": "SLV",
+    "cusip": "46428Q109",
+    "nodes": 4
+   },
+   {
+    "firm": "inf",
+    "name": "SLV",
+    "cusip": "",
+    "nodes": 1
+   },
+   {
+    "firm": "cot",
+    "name": "ISHARES SILVER TRUST",
+    "cusip": "46428Q109",
+    "nodes": 1
+   }
+  ]
+ },
+ {
+  "ticker": "USO",
+  "etf_name": "United States Oil Fund",
+  "bd_name": "USO",
+  "held": [
+   {
+    "firm": "49f",
+    "name": "USO",
+    "cusip": "91232N207",
+    "nodes": 1
+   }
+  ]
+ },
+ {
+  "ticker": "UVXY",
+  "etf_name": "ProShares Ultra VIX Short-Term Futures ETF",
+  "bd_name": "ProShares Ultra VIX Short-Term Futures ETF",
+  "held": [
+   {
+    "firm": "inf",
+    "name": "UVXY",
+    "cusip": "",
+    "nodes": 2
+   }
+  ]
+ },
+ {
+  "ticker": "VIXY",
+  "etf_name": "ProShares VIX Short-Term Futures ETF",
+  "bd_name": "VIXY",
+  "held": []
+ },
+ {
+  "ticker": "VXX",
+  "etf_name": "iPath Series B S&P 500 VIX Short-Term Futures ETN",
+  "bd_name": "iPath Series B S&P 500 VIX Short-Term Futures ETN",
+  "held": [
+   {
+    "firm": "49f",
+    "name": "iPath Series B S&P 500 VIX Short-Term Fu",
+    "cusip": "",
+    "nodes": 6444
+   },
+   {
+    "firm": "49f",
+    "name": "VXX",
+    "cusip": "06748M196",
+    "nodes": 2
+   },
+   {
+    "firm": "inf",
+    "name": "VXX",
+    "cusip": "",
+    "nodes": 508
+   },
+   {
+    "firm": "cot",
+    "name": "IPATH SERIES B S&P 500 VIX SHORT-TERM FU",
+    "cusip": "",
+    "nodes": 381
+   },
+   {
+    "firm": "cot",
+    "name": "IPATH SERIES B S&P 500 VIX SHORT-TERM FU",
+    "cusip": "06748M196",
+    "nodes": 3
+   }
+  ]
+ },
+ {
+  "ticker": "PHYS",
+  "etf_name": null,
+  "bd_name": "SPROTT ASSET MANAGEMENT LP PHYSICAL GOLD TR",
+  "held": [
+   {
+    "firm": "49f",
+    "name": "PHYS",
+    "cusip": "85207H104",
+    "nodes": 1
+   },
+   {
+    "firm": "cot",
+    "name": "SPROTT ASSET MANAGEMENT LP PHYSICAL GOLD",
+    "cusip": "85207H104",
+    "nodes": 10
+   },
+   {
+    "firm": "cot",
+    "name": "SPROTT ASSET MANAGEMENT LP PHYSICAL GOLD",
+    "cusip": "",
+    "nodes": 2
+   }
+  ]
+ }
+]
