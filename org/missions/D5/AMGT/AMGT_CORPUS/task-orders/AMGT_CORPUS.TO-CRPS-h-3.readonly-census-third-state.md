@@ -85,3 +85,7 @@ Checks dry-run at the base: AC1 FAIL (no such file), AC2 FAIL (no tristate line)
 <round>6</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
+
+**WORKER CLOSE (`0.9.0_WK_AMGT_CORPUS~3`):** AC1 PASS (9 passed in test_readonly_proof_tristate.py); AC2 PASS (live census prints `tristate library 0 unresolved 4 clear 43 write_like_calls 47` with the 4 unresolved_site lines all in induction_run.py at :462/:464/:688/:690, listed not changed); AC3 PASS (317 passed in lib/research/corpus/tests, existing reaches_library assertions untouched).
+
+<status>complete</status>
