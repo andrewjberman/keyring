@@ -1085,6 +1085,31 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-g-2 step 2: the census names ONLY the 4 files the face lists.",
     "world_is": "The shipping set is 5 files; the 5th is the read-back fix the issuer itself added.",
     "notes": "GO waits for outside US business hours (Z-S24): not before 21:05Z today."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S30",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-26T14:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "NFRA_OPLGTW's contract was amended v1.1 -> v1.2 (portal_grant) at 07:01Z by OA-g-1 (@da7749916d), on this seat's ruling (B) of 03:33Z, which said the contract 'may be amended'. At 04:01Z 3.0.0_SA_CVO~O ruled that no CTO act on OPLGTW issues from ~O until its CTO leg is re-seated here (@e470835e7c). This seat executed that verdict but never withdrew the earlier authorization, so an act the verdict parked went ahead on it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log on org/standards/NFRA_OPLGTW_CONTRACT.json: da7749916d 0.9.0_WK_NFRA_OPALAI~9 2026-09-26T07:01:09Z build(NFRA_OPALAI.TO-OA-g-1 ...).",
+        "git diff c5f8099440 HEAD -- org/standards/NFRA_OPLGTW_CONTRACT.json: contract_version 1.1 -> 1.2 and a new portal_grant block; absent_means 'the record parses exactly as contract v1.1'.",
+        "1.0.0_SA_CTO~O msg 25996 (03:33Z): 'The OPLGTW stop is lifted, so its contract may be amended.'",
+        "3.0.0_SA_CVO~O verdict @e470835e7c (04:01Z): 'Until then OPLGTW's round work stays with COO~O, and no CTO or CVO act on OPLGTW issues from ~O.'",
+        "NFRA_OPLGTW project.json leads.cto = 1.0.0_SA_CTO~A (unchanged at this row); the laptop release was asked at 04:58Z (msg 20260926T045815Z) and has not landed."
+      ]
+    },
+    "spec_asserts": "No CTO-leg act on NFRA_OPLGTW (its contract included) issues from the ~O fabric before the re-seat record lands.",
+    "world_is": "The contract carries an ~O-authored v1.2 amendment. It is additive and optional (absent_means v1.1), so no existing grant reads differently and nothing served moved on it. The contract text has not been ratified by OPLGTW's CTO leg.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "notes": "Inert because the amendment is optional and backward-compatible; the OA-g-2 release moves no current answer (sign-off @321a726fc6). Governance fork pitched to 3.0.0_SA_CVO~O: keep and ratify at the OPLGTW re-seat, or revert. Cause: the verdict narrowed an authorization this seat had issued 28 minutes earlier, and this seat did not withdraw it."
   }
 ]
 ```
