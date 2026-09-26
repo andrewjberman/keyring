@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
 Drive: /closer-drive loop (cron 7a9ea1ce, every 30m at :17/:47; CTO 101098, Andrew-direct ~03:0xZ; replaced /canonical-drive 57c0067c); lease FAST re-armed to 15:01Z. Egress: vendor API calls permitted this session, each ledgered (CTO 101098). Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-26T05:1xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
+As of 2026-09-26T05:2xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
 
 ## Pins
 
@@ -49,9 +49,10 @@ None building. Next surface: the adapter package + performance root (deploy B), 
    IRPT_MVP_P/ORION_HOUSEHOLD_SCOPE_PROOF_20260926.json): the household-scoped Scope body (entity 5, one-account household)
    -> Orion 200 -> orion_selected.calculate returns a contract-validated Purfeerst report (YTD 0.0682, 01-01..09-25 exact,
    268 points, Account group == 1098). CODE COMMITTED a7e9f51c77 on the backend branch (orion_account_mapping household check,
-   orion_selected entity 5, orion_live HTTP status in the error; tests perf 189 / _authz 160 / reports 87 pass). Then: commit, adapter package re-pin, ledgered deploy (rides deploy (B)), a new
+   orion_selected entity 5, orion_live HTTP status in the error; tests perf 189 / _authz 160 / reports 87 pass). Adapter row re-pinned for it on the publish branch 55c42208a9. Then: ledgered deploy (rides deploy (B)), a new
    one-use plan on a one-account-household client, and one signed-in run (needs a principal window).
-1b. irpt-ycharts-generate package: add the three missing modules (~Y 101125), rebuild, ledgered deploy, the AST
+1b. irpt-ycharts-generate package: three staged_from rows ADDED 45d905110c (publish branch; pins re-hashed 3/3 MATCH;
+   flat_import_check ok) -- then rebuild, ledgered deploy, the AST
    import-closure walk returns zero missing; then a new principal window for ~Y's one upload (new sign-off).
 2. Deploy (B) -- UNBLOCKED (plan b spent 03:20:31Z): upload the adapter (publish 4872b28043), apply render_grant.tf +
    IRPT_EVIDENCE_BUCKET, export_render=on; ledger with the CTO's negative arm (another attempt's token name refused, read
