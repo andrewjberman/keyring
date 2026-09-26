@@ -1379,6 +1379,50 @@
     "spec_asserts": "Cell rule 5 (proposal section 4, PRD v0.12): 'Export follows the tab's scope. On Performance, the page Export targets R3a's account set and its report revision, never clientSetId.'",
     "world_is": "The SUBMISSION (what the advisor's Export click actually posts) carries R3a's account set and report revision -- graded and PASS-by-output (IVE34-AC2). The PREVIEW shown inside the export modal before that submit, when it fetches its own performance report copy (a cache-miss path), still falls back to `resolveBundle`'s no-`accountSetId` branch because `Preview.tsx` is out of this cell's grant to wire -- a live-stack gap this cell cannot close.",
     "notes": "Not blocking IVE34-AC2 (the criterion's own text is about the export SUBMISSION, which this cell does correctly target at the focused account; PASS-by-output, VERDICT: FOCUS-REFUSAL-EXPORT-OK)."
+  },
+  {
+    "id": "DSGN_IRPTV1-W26-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~26",
+    "surfaced_at": "2026-09-26T21:15:00Z",
+    "one_line": "renderToStaticMarkup HTML-entity-encodes an ASCII apostrophe in JSX text content, so a naive `markup.includes(sourceStringWithApostrophe)` substring check false-negatives an unchanged, correctly-rendered message -- the fix (reword to avoid the apostrophe) is forced because the CLAUDE.md ASCII-only rule rules out the obvious alternative (a Unicode curly quote).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IVE39-AC1's first draft set WORDED_REFUSAL_WORDS.OBJECT_NOT_COVERED to a sentence containing \"this firm's covered set\" (one ASCII apostrophe, U+0027); the test's `markup.includes(WORDED_REFUSAL_WORDS.OBJECT_NOT_COVERED)` read false against the real renderToStaticMarkup output, while the sibling DEPENDENCY_UNAVAILABLE message (no apostrophe) matched -- run: `bun test .../iv-e-39.account-picker-refusal.test.tsx`, output `VERDICT: PICKER-REFUSAL-FAIL UIR-18 [OBJECT_NOT_COVERED]: the advisor-words message is not visible on the body`",
+        "reworded to 'the covered set for this firm' (no apostrophe, no contraction); re-run: `wordsVisible=true` for both codes, VERDICT: PICKER-REFUSAL-OK",
+        "portal/src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx@fea63064 carries the reworded, apostrophe-free string as the committed fix"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IVE39-AC1's own bar (UIR-18): the refusal text is graded by whether it is 'visible on the body' -- a plain substring/inclusion check against the source string is the obvious instrument. CLAUDE.md rule 4: 'No non-ASCII in production code/logs/AWS'.",
+    "world_is": "React's server renderer (renderToStaticMarkup) escapes a literal `'` in a JSX text child to the HTML entity `&#x27;`, so the rendered markup and the source string diverge at exactly that byte for any advisor-facing copy using a contraction/possessive -- a test author who writes the natural English sentence (with an apostrophe) and checks for it verbatim gets a false FAIL on genuinely correct output. Swapping to a Unicode right single quote (U+2019) would make the substring check pass again, but would introduce non-ASCII into a production TSX file, violating the workspace's own ASCII-only rule -- so the only compliant fix is to avoid the apostrophe in the copy entirely (rewording), not to \"fix\" the character.",
+    "notes": "Not blocking: caught and resolved within this cell (IVE39-AC1 PASSES, VERDICT: PICKER-REFUSAL-OK). Filed because the same trap recurs for any future advisor-facing copy string in this project that is both (a) asserted by markup substring match in a `renderToStaticMarkup` test and (b) naturally phrased with an apostrophe -- a future worker hitting the same false FAIL may reach for the Unicode-quote fix instead of the ASCII-only-compliant reword."
+  },
+  {
+    "id": "DSGN_IRPTV1-W26-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~26",
+    "surfaced_at": "2026-09-26T21:15:00Z",
+    "one_line": "This worker's portal worktree started with 25 files under src/pages/InvestorReporting/contracts/wire/ already showing as modified (LF-vs-CRLF only, per `git diff`'s own EOL warning on each), none of them in this cell's <paths> grant and none touched by this worker -- the same CRLF/autocrlf class row W4-S3 already named, recurring on a different file set at a fresh worktree's start rather than mid-session.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git -C <WS>/portal status --short` at this worker's session start (before any edit) lists 25 modified paths, all under contracts/wire/ (AnalysisReport.ts through responses.ts plus index.ts) -- none named in this cell's <paths>",
+        "`git -C <WS>/portal diff src/pages/InvestorReporting/contracts/wire/index.ts` prints only git's own 'LF will be replaced by CRLF the next time Git touches it' warning lines and no content hunk, for every one of the 25 files",
+        "none of this worker's own commits (fea63064) touch any file under contracts/wire/ -- `git show --stat fea63064` lists exactly the 4 files this cell edited/added"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BOUNDS: this worker's write grant is exactly the <paths> the task order names; contracts/** is READ, never edited, by this cell.",
+    "world_is": "The 25 pre-modified files are EOL-only drift (core.autocrlf converting checked-out LF blobs to CRLF on this box, the same mechanism row DSGN_IRPTV1-W4-S3 documented for a different file set on 2026-09-24) already present in this worktree before this worker's session began -- left untouched and uncommitted by this worker, since they are outside <paths> and carry no content change to commit.",
+    "notes": "Not blocking: no criterion of this cell reads or depends on contracts/wire/**, and this worker committed nothing there. Filed so a future drain does not mistake a `git status` full-worktree read for evidence of an in-scope change -- these 25 paths were already dirty at worktree provisioning, independent of any worker's own edits, matching W4-S3's diagnosis rather than a new defect."
   }
 ]
 ```
