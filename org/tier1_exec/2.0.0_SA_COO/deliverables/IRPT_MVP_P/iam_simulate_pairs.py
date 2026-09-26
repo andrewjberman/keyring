@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """iam simulate-principal-policy over an explicit (action, resource) list, printed with its denominator.
 
-    python iam_simulate_pairs.py <role-name> <pairs.json> [--expect-allowed]
+    python iam_simulate_pairs.py <role-name> <pairs.json> [--policy-input <policy.json>]
+
+--policy-input adds a CANDIDATE identity policy to the role's own for the simulation (a pre-apply check).
 
 <pairs.json> is a JSON list of [action, resource_arn] (or {"action":..,"resource":..,"expect":"allowed"|"denied",
 "context": [<IAM ContextEntries>]} -- context for a conditioned grant, e.g. kms:ViaService + an EncryptionContext).
@@ -19,6 +21,9 @@ import boto3
 
 def main(argv):
     role, path = argv[1], argv[2]
+    extra = []
+    if "--policy-input" in argv:
+        extra = [open(argv[argv.index("--policy-input") + 1], encoding="utf-8").read()]
     raw = json.load(open(path, encoding="utf-8"))
     pairs = []
     for item in raw:
@@ -31,6 +36,8 @@ def main(argv):
     met = allowed = 0
     for action, resource, expect, context in pairs:
         kw = {"ContextEntries": context} if context else {}
+        if extra:
+            kw["PolicyInputList"] = extra
         r = iam.simulate_principal_policy(PolicySourceArn=arn, ActionNames=[action], ResourceArns=[resource], **kw)
         decision = r["EvaluationResults"][0]["EvalDecision"]
         is_allowed = decision == "allowed"
