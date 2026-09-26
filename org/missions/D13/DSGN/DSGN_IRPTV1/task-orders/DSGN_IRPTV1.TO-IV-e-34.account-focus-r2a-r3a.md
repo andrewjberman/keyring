@@ -36,6 +36,10 @@ page's `select`; R2 (no focus) reads R1's snapshot with no second fetch.
 body with the code one click away (a disclosure); no raw reason code prints on the body.
 (d) **Rule 5, export follows the tab.** On Performance the page Export targets R3a's account set and its report revision, never the
 client set (`export/ExportButton.tsx`, `export/resolveBundle.ts`); Holdings has no export kind today, unchanged.
+(e) **Presets end on the data's as-of date** (amendment 1, issuer 2026-09-26 ~18:3xZ, CTO 101422 accepting ~D's window-4 finding): every
+period preset (YTD, 1Y, 3Y, Since inception) ENDS on the data's as-of (business) date taken from the served response or R1's snapshot, never on
+the browser's calendar date (`tabs/reporting/period.ts` `dateWindowForPreset` today uses `new Date()`; the T-1 trading-calendar rule). Before
+the as-of date is known, no Performance request is sent. A Custom range is the advisor's own and is unchanged.
 
 **The spec is the CRO's route proposal, AT ITS PIN:** read it with `git -C <WS> show 889160ce2c:org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_FRONTEND_ROUTE_STRUCTURE_PROPOSAL_20260926.md` (the working copy has moved since; the PRD adopts the pinned text). Sections 2 (the routes R0-R4), 3 (each route's exact calls), 4 (the six rules, each a test) and 5 (the code each retires) are binding; the PRD's ROUTE STRUCTURE section (`org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md`) carries the CTO's rulings: Call 1 (b) the client's LARGEST account by the snapshot's value is preselected on Performance (the first in snapshot order on a tie) with the chooser always visible; Call 2 (a) route state only, in-page -- no client or account id ever goes into the URL.
 
@@ -53,10 +57,13 @@ client set (`export/ExportButton.tsx`, `export/resolveBundle.ts`); Holdings has 
 <criterion id="IVE34-AC2" cell_refs="IV-e-34"><invocation>cd C:/Users/AndrewBerman/Desktop/wk-DSGN_IRPTV1-22/portal && export OPAL_AGENT_SERIAL=0.9.0_WK_DSGN_IRPTV1~22; timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-34.focus-refusal-export.test.tsx 2>&1 | tail -25</invocation><expect>VERDICT: FOCUS-REFUSAL-EXPORT-OK</expect></criterion>
 `IVE34-AC2` -- a one-account OBJECT_NOT_COVERED answer renders in advisor words with its code only inside a closed disclosure (the code string is absent from the visible body); the Performance export submission carries the focused account's set and report revision, never the client set; focusing one account on Holdings issues a one-account selection and a holdings GET for that set while R1 (client, card, total) is unchanged. It prints `VERDICT: FOCUS-REFUSAL-EXPORT-OK` only when every arm holds.
 
+<criterion id="IVE34-AC4" cell_refs="IV-e-34"><invocation>cd C:/Users/AndrewBerman/Desktop/wk-DSGN_IRPTV1-22/portal && export OPAL_AGENT_SERIAL=0.9.0_WK_DSGN_IRPTV1~22; timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-34.preset-asof.test.ts 2>&1 | tail -25</invocation><expect>VERDICT: PRESET-ASOF-OK</expect></criterion>
+`IVE34-AC4` -- with the browser clock set to 2026-09-26 and a served as-of date of 2026-09-22, the YTD preset requests start 2026-01-01 and end 2026-09-22 (and 1Y / 3Y / Since inception end on 2026-09-22 too); with no as-of date known yet, no Performance request is sent; a Custom range is sent exactly as chosen (the difference-control arm). It prints `VERDICT: PRESET-ASOF-OK` only when every arm holds.
+
 <criterion id="IVE34-AC3" cell_refs="IV-e-34" judgment="true"/>
 `IVE34-AC3` -- graded by `2.0.0_SA_COO~D` on the live walk on portal DEV (the C25 walk): a 49F 3-account client -> Performance opens on its largest account with a computed figure -> a second account -> Holdings shows the client total unchanged -> clear empties the card; a COT 2-account client renders each account, a refusal in words; the HAR shows every /performance GET paired with a one-account /selections and 0 carrying the client set (FWD-19, FWD-1 ACCEPT; proposal section 7). RECORD; never self-graded.
 
-<expected_criteria>IVE34-AC1, IVE34-AC2, IVE34-AC3</expected_criteria>
+<expected_criteria>IVE34-AC1, IVE34-AC2, IVE34-AC4, IVE34-AC3</expected_criteria>
 
 ## BOUNDS
 
@@ -89,8 +96,8 @@ org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: IVE34-AC1, IVE34-AC2, IVE34-AC3. Instance at `org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~22/DSGN_IRPTV1.TO-IV-e-34.account-focus-r2a-r3a.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> IVE34-AC1,IVE34-AC2,IVE34-AC3` BEFORE the flip. `IVE34-AC3` recorded
+Criterion ids: IVE34-AC1, IVE34-AC2, IVE34-AC4, IVE34-AC3. Instance at `org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~22/DSGN_IRPTV1.TO-IV-e-34.account-focus-r2a-r3a.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> IVE34-AC1,IVE34-AC2,IVE34-AC4,IVE34-AC3` BEFORE the flip. `IVE34-AC3` recorded
 `UNVERIFIABLE-BY-INSTRUMENT` naming `2.0.0_SA_COO~D`'s live walk on portal DEV.
 </proof_of_spec>
 
