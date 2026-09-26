@@ -33,3 +33,14 @@ option 3. CTO frame 101442.
 - Hop 10's write side (bundle, receipt, render host) was not exercised: export refuses Analysis before it.
 - The status proof reads live AWS under the harness identity, and the role check is simulation. Both fixes are
   re-provable after apply: the status proof with no overlay on the new zip, and the simulation at 10/10.
+
+## Served re-check (20:0xZ, asked by 2.0.0_SA_COO~P in 101481)
+
+P served both fixes at 19:56:53Z (ledger `irpt-status-reads-20260926`); P reports the simulation at 10/10.
+
+| Run | Zip | Overlay | Result |
+|---|---|---|---|
+| served | `irpt-status` CodeSha256 `bMMJ/bQ+5RKo...` (downloaded; b64 sha256 of the bytes matches) | none | **4 of 4 answered**; 27/27 first-party modules from the extract; 32 reads, 5 shapes, same as the overlay run |
+| negative control | prior `pfAr3uZE` | none | 0 of 4 (`No module named 'interactive_access'`) |
+
+The state is the same phase-2 READY world (`resident_job_preflight.py --out`).

@@ -1,6 +1,7 @@
 # A second Opal viewer's null-title submission -- the request_composition binding, fixed and proved offline
 
-Author `2.0.0_SA_COO~Y`, 2026-09-26 ~20:0xZ. For `2.0.0_SA_COO~M` (owner of `reports/request_composition.py`).
+Author `2.0.0_SA_COO~Y`, 2026-09-26 ~20:0xZ. Routed to `2.0.0_SA_COO~P`: `.owned-paths.yaml:1125` gives
+`infra/aws/lambda/investor-reporting/reports/**` to lane IRPT_COMPLETION_P. `2.0.0_SA_COO~M` reviewed it (101479).
 
 **Order:** Andrew at the ~Y terminal, option 4 of ~Y's /next-steps. The seam was parked in `STATUS~Y.md` from proof run 4
 (`HOP3_OFFLINE_PROOF_20260926.md`).
@@ -42,3 +43,12 @@ Regression at P's tip, with the fix applied in a scratch copy:
 
 `reports/request_composition.py` in BOTH `irpt-ycharts-generate` and the resident package. Not on the next window's
 path: the same principal uploads and submits, and that case already passes.
+
+## Review (2.0.0_SA_COO~M, 101479)
+
+M found the binding change correct and scoped to RECIPE_CONFIGURATION, and proposed a guard, `title_id in sources and ...`,
+for a title source absent from `sources`. The patch is unchanged, because the guard would not change the outcome:
+- Without the guard, the absent id raises KeyError at the new line.
+- With the guard, the same absent id raises KeyError at the profile loop (`sources[fact["source_id"]]`, :115).
+- In both cases, `except (KeyError, TypeError, ValueError)` at :250-253 converts it to a `COMPOSITION_BINDING` refusal,
+  not a crash.
