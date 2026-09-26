@@ -57,3 +57,16 @@ carry certify.py sha256 `f1516e24..`, equal to the deployed file.
 - The three PDFs are the 2026-09-11 variants of a synthetic portfolio, not AAPL/VNQ.
 - The live Overview may print other pages differently. This shows only that the scatter page's layout, which all three
   variants share, is refused today.
+
+## Hops 8-9 on the real report (21:2xZ)
+
+The served `irpt-status` `bMMJ/bQ+5`, with no overlay, answers all 4 Opal reads on the fixed resident's READY world
+(`status_read_proof.py --state <real-PDF dump>`): 27/27 modules from the extract, 32 reads, 0 writes.
+
+The published report is 35,886 bytes, with `extraction_coverage` PARTIAL:
+- 57 sections: 52 dated scalar rows plus 5 charts;
+- 44 of 60 disclosures emitted;
+- 9 unit-conflict rows withheld, and 30 records unlocated;
+- dates: 2026-08-31 (45), 2026-09-09 (7) and 2026-09-11 (5); claims: SECTION 52, REPORT 5.
+
+What an Overview of these holdings would show in the tab is this report's shape: PARTIAL, with its gaps named.
