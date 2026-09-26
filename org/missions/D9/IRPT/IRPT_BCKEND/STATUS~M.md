@@ -212,11 +212,15 @@ disposed REMEDIED (S129).
   irpt-holdings-dispatch-qa-m-20260926 (CLOSED): CodeSha256 SGwrvwLH... equals the artifact; schedule DISABLED;
   re-plan No changes. Monday: `aws lambda invoke --function-name irpt-holdings-refresh-lambda --payload '{"qa": true}'`.
 
-- **ETF Classifier tags win (Andrew-direct ~21:2xZ, CTO 101502/101511, ruled (a)):** `structured` and `commodities` become
-  asset classes; the tag wins for all 285 tagged tickers; PHYS is commodities. Measured @4b5e994609
-  (ETF_CLASSIFIER_TAGS_VS_SERVED_20260926.md). Proposed write set: ETF_TAG_WRITE_SET_20260926.json, 30 keys (15 update,
-  15 put). A reader census of the 69 paths plus any added since is RUNNING; then the never-widen half to CTO and CRO,
-  with ~D's portal mapping as a v0.14 cell.
+- **ETF Classifier tags win (Andrew-direct ~21:2xZ; CTO 101511 ruled (a)):** `structured` and `commodities` become
+  classes. Half @09cd2a3e50, with a reader census (69 paths plus those added since). CTO signed (101540):
+  - Part A: 15 puts SIGNED (ride R4). VNQ HELD for Andrew; the tag is alternatives, which agrees with the REIT rule
+    and conflicts only with "established equities stay". CASH HELD.
+  - CASH is a ticker collision: bd = Pathward Financial stock (49F, CUSIP 59100U108); ETF row = a synthetic cash row;
+    COT's 620 "CASH -- CASH" nodes ($2.87M) are BD's cash line, served as equity. REC to the CTO: drop CASH, and fix
+    COT's cash line by row (~M's C_06 grant, own half).
+  - Part B SIGNED as a sequence: guard the seeds, then B1 readers admit (3 RAISE, 11 silent drops today; owners named),
+    then a re-census at 0/0, then B2 writes 13 keys, then B3 Holdings. ~D has the portal lines (v0.14). CRO half requested.
 
 ## Limits
 
