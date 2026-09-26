@@ -86,6 +86,9 @@ def main(argv=None):
     parser.add_argument("--out", required=True)
     parser.add_argument("--census-pin", default="2874e37647")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--override", action="append", default=[], metavar="REPO_PATH=PIN",
+                        help="package ONE member from another commit (e.g. a fix landed after --pin); recorded in the "
+                             "bindings provenance. The member must already exist at --pin")
     args = parser.parse_args(argv)
 
     pin = git("rev-parse", args.pin).strip()
@@ -100,6 +103,15 @@ def main(argv=None):
         for path in tracked_under(pin, directory):
             if path.endswith(".json"):
                 members[path] = (pin, path)
+    overrides = {}
+    for item in args.override:
+        repo_path, _, other = item.partition("=")
+        packaged = repo_path[len(IR) + 1:] if repo_path.startswith(IR + "/") else repo_path
+        if packaged not in members or members[packaged][1] != repo_path:
+            raise SystemExit("override %s is not a member at --pin" % repo_path)
+        other = git("rev-parse", other).strip()
+        members[packaged] = (other, repo_path)
+        overrides[repo_path] = other
     members["census/" + CENSUS.rsplit("/", 1)[1]] = (git("rev-parse", args.census_pin).strip(), CENSUS)
     members["ycharts-host/run-ycharts-session.sh"] = (pin, WRAPPER)
     members["ycharts-host/ycharts_session.js"] = (pin, LIBRARY)
@@ -136,7 +148,8 @@ def main(argv=None):
         # package-root members are one level up.
         "census": {"path": "../census/" + CENSUS.rsplit("/", 1)[1], "sha256": CENSUS_SHA},
         "schema_directory": "../docs/contracts/investor-reporting/v1",
-        "provenance": {"package_pin": pin, "census_pin": args.census_pin, "core_state_serial": serial,
+        "provenance": {"package_pin": pin, "member_overrides": overrides, "census_pin": args.census_pin,
+                       "core_state_serial": serial,
                        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
                        "generated_by": "2.0.0_SA_COO~P build_resident_package.py"},
     }
@@ -148,7 +161,7 @@ def main(argv=None):
     if not args.dry_run:
         (out / "reports/resident_bindings.json").write_bytes(bindings_bytes)
         (out / "SHA256SUMS").write_text(sums_text, encoding="utf-8", newline="\n")
-    report = {"package_pin": pin, "census_pin": args.census_pin, "members": len(sums),
+    report = {"package_pin": pin, "member_overrides": overrides, "census_pin": args.census_pin, "members": len(sums),
               "package_manifest_sha256": manifest_sha, "core_state_serial": serial,
               "queue_url": bindings["queue_url"], "jobs_table": bindings["jobs_table"],
               "requests_table": bindings["requests_table"], "wrapper_sha256": wrapper_sha,
