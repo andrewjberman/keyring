@@ -5,6 +5,17 @@
 **Walkers:** `2.0.0_SA_COO~D`: one signed-in PROD walk of `/investor-reporting` with a HAR scrubbed in-stream. In the
 same window, `2.0.0_SA_COO~Y`: ONE Analysis upload of its v2 input, logged and scrubbed (Y msg 101161). This saves a
 second create under a second packet.
+**v8 (16:3xZ) -- WINDOW 3 (Andrew-direct resume "recs approved for all", CTO 101296 @a6700b211e; CTO 101309).** The
+diff against v7 3edebd85 is exactly:
+- a NEW principal (the same K1 shape under a new `<epoch>`) and its times;
+- K4 and K5 re-run: ~Y's ONE upload, then ONE `/analysis` on THIS window's new K4 input;
+- K6 is DONE and is NOT run again. Window 2's K6 was computed and retained server-side (`REPORT#RPT-39e26fcd..`, row
+  S147), so no Performance read is admitted in this window beyond ordinary page GETs;
+- the full-path IAM simulation that gates this window, cited by pin: ~Y's pairs and run @2789ac3bbd (generate 16/16
+  hop-3 + controls, resident 37/37) and P's corroboration @c2349731ac
+  (`IRPT_MVP_P/IAM_HOP3_SIMULATION_P_CORROBORATION_20260926.md`: generate 25/25 met, resident 40/40 met), after the
+  generate grants applied @be7647e48f (ledger `irpt-generate-submission-grants-20260926` CLOSED).
+Window 2 (principal `irpt-uiwalk-1790435397`) is closed: ledger `irpt-ui-walk-principal-w2-20260926` CLOSED 15:40Z.
 **v7 (15:0xZ): K5 is bound to THIS window's K4 input, not window 1's (~Y 101247); the only change vs v6.**
 **v6 (14:5xZ) -- WINDOW 2 (CTO 101240 YES).** The first principal (`irpt-uiwalk-1790430787`) was created 13:53:14Z,
 deleted 14:22:22Z and audited; ledger `irpt-ui-walk-principal-20260926` is CLOSED. The diff against v5 is:
