@@ -84,3 +84,7 @@ empty-or-workbook-only 12, outside-fence 0, sum 95 (from the FWD-19 line's 83 / 
 <round>6</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
+
+**WORKER CLOSE (`0.9.0_WK_AMGT_CORPUS~4`):** AC1 PASS (6 passed in test_backlog_fence14.py); AC2 PASS (live --coverage-dry-run: `fence14 resolved 83 ambiguous 0 empty-or-workbook-only 12 sum 95 outside-fence 0 folders_read 95`); AC3 PASS (314 passed in lib/research/corpus/tests).
+
+<status>complete</status>
