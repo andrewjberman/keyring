@@ -41,9 +41,9 @@ period preset (YTD, 1Y, 3Y, Since inception) ENDS on the data's as-of (business)
 the browser's calendar date (`tabs/reporting/period.ts` `dateWindowForPreset` today uses `new Date()`; the T-1 trading-calendar rule). Before
 the as-of date is known, no Performance request is sent. A Custom range is the advisor's own and is unchanged.
 
-**The spec is the CRO's route proposal, AT ITS PIN:** read it with `git -C <WS> show 889160ce2c:org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_FRONTEND_ROUTE_STRUCTURE_PROPOSAL_20260926.md` (the working copy has moved since; the PRD adopts the pinned text). Sections 2 (the routes R0-R4), 3 (each route's exact calls), 4 (the six rules, each a test) and 5 (the code each retires) are binding; the PRD's ROUTE STRUCTURE section (`org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md`) carries the CTO's rulings: Call 1 (b) the client's LARGEST account by the snapshot's value is preselected on Performance (the first in snapshot order on a tie) with the chooser always visible; Call 2 (a) route state only, in-page -- no client or account id ever goes into the URL.
+**The spec is the CRO's route proposal, AT ITS PIN:** read it with `git -C <WS> show 713a49f7b8:org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_FRONTEND_ROUTE_STRUCTURE_PROPOSAL_20260926.md` (the working copy has moved since; the PRD adopts the pinned text). Sections 2 (the routes R0-R4), 3 (each route's exact calls), 4 (the six rules, each a test) and 5 (the code each retires) are binding; the PRD's ROUTE STRUCTURE section (`org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md`) carries the CTO's rulings: Call 1 (b) the client's LARGEST account by the snapshot's value is preselected on Performance (the first in snapshot order on a tie) with the chooser always visible; Call 2 (a) route state only, in-page -- no client or account id ever goes into the URL.
 
-**Rulings since the PRD (binding):** each level-0 ACCOUNT node's `display.label` carries that account's own masked tail and type (e.g. "****4304 / IRA"; 2.0.0_SA_COO~M serves it) -- the page READS the label and never derives a mask from an id (CTO 101303); accounts are keyed by the snapshot's account id (via `drill_refs`), NEVER by label (CTO 101340; `tabs/holdings/DrillTree.tsx:312-333` keys category children by label today -- do not copy that); the chooser shows each account's value beside its label (CRO @713a49f7b8).
+**Rulings since the PRD (binding):** each level-0 ACCOUNT node's `display.label` carries that account's own masked tail and type (e.g. "****4304 / IRA"; 2.0.0_SA_COO~M serves it) -- the page READS the label and never derives a mask from an id (CTO 101303); accounts are keyed by the snapshot's account id (via `drill_refs`), NEVER by label (CTO 101340; `tabs/holdings/DrillTree.tsx:312-333` keys category children by label today -- do not copy that); EVERY account-list surface -- the identity card's "over what", the Holdings filter, the Performance chooser, Analysis's included accounts -- shows each account's label AND its value, keyed by account id (proposal rule 4 at @713a49f7b8; PRD v0.12, CTO 101447).
 
 **The rules:** the FE derives nothing; ids never print (not in the body, not in the URL); "not supplied", never zero; a refusal reads in advisor words with its code one click away; colour is keyed by served code or class.
 
@@ -111,7 +111,7 @@ validated with `python .tools/proof-of-spec-check.py <instance> IVE34-AC1,IVE34-
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE no scheduled producer or schedule surface is touched.
 comp-iam: DECLARED-NOT-APPLICABLE -- no cell writes an AWS surface.
-comp-adversary: RUN at L5 v6 -- the write paths are the proposal's section 5 at its pin 889160ce2c, measured at portal DEV 1e02be40 (IdentityCard.fetchIdentityCardData :118, narrowToOneAccount :234).
+comp-adversary: RUN at L5 v6 -- the write paths are the proposal's section 5 at its pin 713a49f7b8, measured at portal DEV 1e02be40 (IdentityCard.fetchIdentityCardData :118, narrowToOneAccount :234).
 lane: the <paths> block IS the grant; one chain, IV-e-34 consumes IV-e-33's account list on the same worktree.
 </preflight>
 
