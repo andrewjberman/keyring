@@ -29,7 +29,7 @@
   "O7": "One colour means one thing on the page: no two items in a chart share a colour, and the model palette and the asset-class palette never reuse each other's colours.",
   "O8": "The page shows client facts on its face and system facts one click away: one navy band, one date format, one money format, no raw codes or system words, no wrapped amounts, no duplicate totals.",
   "O9": "An advisor reads the securities map: each security once with its total, every tile legible, filters grouped by account.",
-  "O10": "An advisor can trust the holdings figures: they are as of the last trading day, and model amounts are the positions actually held."
+  "O10": "An advisor can trust the holdings figures: they are as of the last trading day, model amounts are the positions actually held, and every security carries its correct class (the ETF Classifier table's tag first)."
  },
  "findings": [
   {
@@ -913,10 +913,28 @@
     "evidence": null
    },
    "acceptance": "As UIR-31 and UIR-32."
+  },
+  {
+   "id": "UIR-50",
+   "screenshot": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\Screenshot 2026-09-26 165743.png",
+   "surface": "classification",
+   "observed": "Securities the ETF Classifier table already tags are shown with a collapsed class: VXX (tagged 'Structured') and GLD / PHYS (tagged 'Commodities') all show as 'Alternatives' (orange in the securities map; the classification table reads 'Alternatives').",
+   "outcome": "O10",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "status": "new",
+   "known_ref": "Andrew-direct record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260926_212xZ_ETF_CLASSIFIER_TAGS_TAKE_PRECEDENCE.md; added on 1.0.0_SA_CTO msg 101503",
+   "design_rule": "Andrew-direct 2026-09-26 ~21:2xZ precedence rule",
+   "cause": {
+    "claim": "measured",
+    "text": "The served classification does not give the ETF Classifier table's tag precedence over the other class sources (bd-securities class writes, the model classifier, the Holdings classification).",
+    "evidence": "screenshot 165743 (VXX, GLD, PHYS orange = Alternatives); Andrew's words in the record above. A change to served classifications is a served move under a never-widen half with its per-firm delta."
+   },
+   "acceptance": "Every security the ETF Classifier table lists shows its classifier tag (VXX Structured; GLD, PHYS Commodities), never a collapsed class."
   }
  ],
  "coverage": {
-  "finding_count": 49,
+  "finding_count": 50,
   "by_outcome": {
    "O1": [
     "UIR-01",
@@ -985,21 +1003,22 @@
    ],
    "O10": [
     "UIR-23",
-    "UIR-48"
+    "UIR-48",
+    "UIR-50"
    ]
   },
   "by_owner": {
    "DSGN_IRPTV1": 45,
-   "IRPT_BCKEND": 4
+   "IRPT_BCKEND": 5
   },
   "by_status": {
-   "new": 43,
+   "new": 44,
    "known": 6
   },
   "by_claim": {
    "inferred": 10,
-   "measured": 39
+   "measured": 40
   }
  },
- "coverage_rule": "Every UIR id (49) must appear in the PRD addendum with its FWD and criterion, and must be graded by the CVO. Check: python docs/briefs/irpt-ui-review-coverage-check.py"
+ "coverage_rule": "Every UIR id (50) must appear in the PRD addendum with its FWD and criterion, and must be graded by the CVO. Check: python docs/briefs/irpt-ui-review-coverage-check.py"
 }

@@ -1,19 +1,20 @@
-# Investor Reporting -- the UI review of 2026-09-26: 49 findings, one register
+# Investor Reporting -- the UI review of 2026-09-26: 50 findings, one register
 
 **Mode:** `/brief-create --midstream DSGN_IRPTV1`. **Author:** 4.0.0_SA_CRO, 2026-09-26 ~21:1xZ, on Andrew-direct at
 this terminal (verbatim at the end).
 **The machine-readable register is the source of truth:** `docs/briefs/irpt-ui-review-findings-20260926.json`.
-- It holds 49 findings. Each has an id (UIR-01..UIR-49), its screenshot, the observation, the outcome it belongs to, an
+- It holds 50 findings: the 49 of the review, plus UIR-50 added on Andrew-direct at the CTO terminal. Each has an id
+  (UIR-01..UIR-50), its screenshot, the observation, the outcome it belongs to, an
   owner project and seat, a known/new status with its earlier reference, the design rule it breaks, a cause marked
   `measured` or `inferred`, and a testable acceptance line.
 - Every table in this file is generated from that register.
 
 **Coverage rule (Andrew: "i dont want any of these slipping through the cracks"):**
-- Every one of the 49 UIR ids must appear in the DSGN_IRPTV1 PRD addendum, with its FWD and criterion.
+- Every one of the 50 UIR ids must appear in the DSGN_IRPTV1 PRD addendum, with its FWD and criterion.
 - The CVO grades each id.
-- The check is `python docs/briefs/irpt-ui-review-coverage-check.py`. It prints "N of 49" with every missing id, and it
-  exits 1 until all 49 are present. The register itself reads 49 of 49; the current PRD reads 0 of 49, as expected
-  before the addendum.
+- The check is `python docs/briefs/irpt-ui-review-coverage-check.py`. It prints "N of 50" with every missing id, and it
+  exits 1 until all 50 are present. PRD v0.13 @`6ce514ca80` read 49 of 49 before UIR-50 was added; UIR-50 lands
+  next (CTO msg 101503).
 
 ---
 
@@ -96,19 +97,20 @@ Findings: UIR-41, UIR-42, UIR-43.
 
 ### O10
 
-An advisor can trust the holdings figures: they are as of the last trading day, and model amounts are the positions actually held.
+An advisor can trust the holdings figures: they are as of the last trading day, model amounts are the positions actually held, and every security carries its correct class (the ETF Classifier table's tag first).
 
-Findings: UIR-23, UIR-48.
+Findings: UIR-23, UIR-48, UIR-50.
 
 ## PART II -- Where the boundary sits
 
 - **This brief owns** (DSGN_IRPTV1, 2.0.0_SA_COO~D; 45 findings): everything the page renders and every call it
   makes, under PRD v0.12's ROUTE STRUCTURE.
-- **It relies on, and routes to, IRPT_BCKEND** (2.0.0_SA_COO~M; 4 findings):
+- **It relies on, and routes to, IRPT_BCKEND** (2.0.0_SA_COO~M; 5 findings):
   - UIR-03, directory display names that are registration titles;
   - UIR-23, the served Holdings as of 2026-09-22, where the R4 scheduled publication is not on;
   - UIR-26, account labels repeating, which the own-mask half @`c412578ede` fixes on the next scheduled publication;
-  - UIR-48, model amounts equal to exact target percentages.
+  - UIR-48, model amounts equal to exact target percentages;
+  - UIR-50, ETF Classifier tags taking precedence (VXX Structured; GLD and PHYS Commodities).
 - **Shared, the CTO to rule:** UIR-07, search ranking. It is server-side (the IRPT_BCKEND directory search) or
   client-side (the portal re-ranks without filtering).
 - **Out of scope:** the Analysis tab (not in these screenshots) and Export's rendering (Export appears only as UIR-20,
@@ -180,6 +182,7 @@ The full register, generated from the JSON. The "Outcome" and "Owner" columns ar
 | UIR-47 | 165932 | holdings | Pie and table percentages use different bases again (36% against 15.42%). | O5 | DSGN_IRPTV1 (2.0.0_SA_COO~D) | new |
 | UIR-48 | 165932 | data | Model amounts are EXACT percentages of the account: 36.0000 / 33.0000 / 21.0000 / 7.0000 / 3.0000% (account 2) and 60.7 / 20.0 / 16.0 / 3.3% (account 1), including 'Client (residual, not in a model)'. Real positions would not land on round numbers; this looks like target weight x account value. | O10 | IRPT_BCKEND (2.0.0_SA_COO~M) | new |
 | UIR-49 | 165932 | holdings | The account filter still says 'All accounts' while drilled into account 2; the breadcrumb again skips the account. | O5 | DSGN_IRPTV1 (2.0.0_SA_COO~D) | new |
+| UIR-50 | 165743 | classification | Securities the ETF Classifier table already tags are shown with a collapsed class: VXX (tagged 'Structured') and GLD / PHYS (tagged 'Commodities') all show as 'Alternatives' (orange in the securities map; the classification table reads 'Alternatives'). | O10 | IRPT_BCKEND (2.0.0_SA_COO~M) | new; Andrew-direct record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260926_212xZ_ETF_CLASSIFIER_TAGS_TAKE_PRECEDENCE.md; added on 1.0.0_SA_CTO msg 101503 |
 
 Causes measured at source, beyond the screenshots:
 - **UIR-39:** `AllocationBars.rootOf` returns the FIRST node with `parentRef === null`
@@ -208,10 +211,10 @@ Causes measured at source, beyond the screenshots:
 - **Build observed:** localhost:5174 dev build (address bar in 165743). The running bundle's commit was not recorded.
   The shared portal working copy read `fdccc6e6`, origin DEV `1e02be40`, PROD `36a37afc` (21:0xZ).
 - **Counts** (from the register):
-  - by outcome: O1 9, O2 5, O3 4, O4 5, O5 7, O6 1, O7 4, O8 9, O9 3, O10 2;
-  - by owner: DSGN_IRPTV1 45, IRPT_BCKEND 4;
-  - by status: new 43, known 6;
-  - by cause claim: inferred 10, measured 39.
+  - by outcome: O1 9, O2 5, O3 4, O4 5, O5 7, O6 1, O7 4, O8 9, O9 3, O10 3;
+  - by owner: DSGN_IRPTV1 45, IRPT_BCKEND 5;
+  - by status: new 44, known 6;
+  - by cause claim: inferred 10, measured 40.
 
 ## PART VII -- What this brief does not claim
 
@@ -229,11 +232,11 @@ Causes measured at source, beyond the screenshots:
 
 ```
   BRIEF PATH        docs/briefs/irpt-ui-review-brief-20260926.md
-  REGISTER          docs/briefs/irpt-ui-review-findings-20260926.json   (49 findings, schema_version 1.0)
-  COVERAGE CHECK    docs/briefs/irpt-ui-review-coverage-check.py        (exit 0 only when all 49 ids are cited)
-  PROJECT           DSGN_IRPTV1 (owner of 45); IRPT_BCKEND (owner of 4)
+  REGISTER          docs/briefs/irpt-ui-review-findings-20260926.json   (50 findings, schema_version 1.0)
+  COVERAGE CHECK    docs/briefs/irpt-ui-review-coverage-check.py        (exit 0 only when all 50 ids are cited)
+  PROJECT           DSGN_IRPTV1 (owner of 45); IRPT_BCKEND (owner of 5)
   EXISTING PRD      org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md (v0.12)
-  SIBLING PROJECTS  IRPT_BCKEND (2.0.0_SA_COO~M: UIR-03, 23, 26, 48)
+  SIBLING PROJECTS  IRPT_BCKEND (2.0.0_SA_COO~M: UIR-03, 23, 26, 48, 50)
   PRIOR ART         route structure @713a49f7b8 (C25); walk grades prod-uiwalk-20260926.md (IVE20/21/23);
                     own-mask labels half @c412578ede; R4 enable first read @707490f568
   MEASURED AT       2026-09-26 ~20:5xZ-21:1xZ (screenshots 16:54-16:59 local)
@@ -252,3 +255,10 @@ Channel: the 4.0.0_SA_CRO terminal, 2026-09-26 ~21:0xZ.
 > of these slipping through the cracks."
 
 > "so there are 49 issues you caught, all of them should be included."
+
+UIR-50, Andrew-direct at the 1.0.0_SA_CTO terminal ~21:2xZ (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260926_212xZ_ETF_CLASSIFIER_TAGS_TAKE_PRECEDENCE.md`):
+
+> "yes another thing is that securities which were already listed/tagged in the ETF CLassifier table should retain the
+> same classification. For example, VXX is tagged to "Structured" and GLD or PHYS are tagged to "Commodities". The
+> classification table shows both as "Alternatives", which is incorrect."
