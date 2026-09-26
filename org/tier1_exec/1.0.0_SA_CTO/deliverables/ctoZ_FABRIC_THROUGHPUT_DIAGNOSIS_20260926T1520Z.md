@@ -203,6 +203,58 @@ correct loop; and this seat, having fixed its loop, agrees with both.
 
 ---
 
+## 5c. AMENDMENT A3, 16:2xZ -- A CROSS-DEVICE CONTROL SEPARATES TWO AXES THIS RECORD CONFLATED
+
+`0.0.0_AB_MSTR` ran the control neither device could run alone. **It is the strongest evidence in this record and
+it is not mine.**
+
+| device | worktrees | tracked files | bare `git status` |
+|---|---|---|---|
+| laptop, after its cleanup | **12** | 44,574 | **1335 / 910 / 865 ms** (three runs) |
+| site Z | **56** | 44,589 | **822 ms** (one run) |
+
+**Nearly identical file counts, a 4.7x difference in worktree count, and THE FEWER-WORKTREE DEVICE IS NOT
+FASTER.**
+
+### THE TWO AXES, WHICH SECTION 2 RAN TOGETHER
+
+Section 2 listed `56 worktrees on one index.lock` beside `822 ms git status` as if they were one cost. **They are
+two, and the control separates them:**
+
+| axis | driven by | evidence |
+|---|---|---|
+| **PER-COMMAND LATENCY** -- why one `git status` costs ~1 s | **FILE COUNT** (44.5k), not worktree count | the control: 12 trees is not faster than 56 at the same file count |
+| **CONTENTION** -- why live seats serialize and a commit needs 2-3 retries | **CONCURRENT SEATS on one shared lock** | the lock measured ABSENT between my failed attempts while peer git processes ran |
+
+**Neither axis is "worktree count."** A tree that nobody is committing from contributes to neither.
+
+### SO LEVER 1 FAILS ON A THIRD GROUND
+
+1. A1: not cheap -- 53 of 56 carry unmerged commits or dirty files, only 3 safe.
+2. A1: destructive, and needs Andrew's word.
+3. **A3: it would not help even if it were FREE.** Pruning to 12 is exactly the laptop's state, and the laptop is
+   not faster. **The remedy was aimed at a term that is not the dominant one.**
+
+### AND MY OWN 822 ms IS A WEAKER NUMBER THAN IT LOOKED
+
+The laptop ran **three** samples and they spread **1335 -> 910 -> 865 ms** -- a 1.5x warm-up effect. **My 822 ms
+was ONE run, with no repeat and no stated cache state.** It is probably a warm figure, and I reported it as
+though it were the device's characteristic latency. **The contrast in method is what exposed that; the number
+itself looked fine.**
+
+### THE LIMITS, WHICH MSTR STATED FIRST AND I ADOPT RATHER THAN SOFTEN
+
+*"That is a natural experiment, not a designed one ... different hardware, three runs against one, and no attempt
+to hold anything else constant. It cannot put a number on either term."* **So this settles DIRECTION only.** It
+does not tell us how much of the wall clock is file-count latency versus contention, and nothing here should be
+quoted as a magnitude.
+
+> **A diagnosis that names two causes in one breath invites a remedy aimed at whichever is easier to change.** I
+> named worktrees and file count together, then recommended pruning worktrees -- the one of the two that was
+> visible, destructive and irrelevant.
+
+---
+
 ## 6. WHAT THIS RECORD DOES NOT CLAIM
 
 It does not claim the fabric is stalled -- **12 commits across 9 authors in 90 minutes**, and round-6 cells
