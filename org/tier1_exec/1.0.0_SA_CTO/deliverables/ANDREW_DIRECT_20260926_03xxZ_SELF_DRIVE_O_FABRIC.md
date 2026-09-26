@@ -67,3 +67,15 @@ SELF-DRIVE SCOPE: ~O fabric -> D6 + 2 D9 projects -> 4 project(s) [NFRA_OPALAI, 
   is planned, under its two-half sign-off.
 - The egress term does not cover entitlements: an access grant for a colleague still rests on its own word (call 2 of
   record `ANDREW_DIRECT_20260926_022xZ_CTO_O_OPEN_CALLS_1_TO_6_ANSWERED.md`).
+
+## PAUSED 2026-09-26 ~14:4xZ -- Andrew's word, relayed by 0.0.0_AB_MSTR~Z (msg 20260926T144454Z)
+
+> "Issue a note to all tier 1 agents to pause activity. I want to assess state with the respective CTO agents and once assessed, resume. You may continue with your push/pull GitOps"
+
+- Read narrow: PAUSE, not stand-down. It stops new activity at this Tier-1 seat and holds in place. It abandons and
+  rolls back nothing. The resume is Andrew's word, never a relay.
+- The cron (job 9999d604) is deleted. The inbox watcher stays armed so the seat can be reached for his assessment.
+- Held at the pause: asks already sent (the CVO~O governance fork on row NFRA_OPALAI-Z-S30, the CVO~O second half for
+  OA-g-2, and the COO~O GO condition). Every recipient is a Tier-1 seat under the same pause.
+- Re-arm: on Andrew's resume word, off this record (skill section 0.4). The last committed log is the tick-21 log
+  @f0057f1a13; ticks 22-23 are in `org/mcp/drive_ticks/1.0.0_SA_CTO~O.md`.
