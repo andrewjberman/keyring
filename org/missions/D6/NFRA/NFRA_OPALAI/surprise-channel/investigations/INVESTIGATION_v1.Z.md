@@ -872,6 +872,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-g-1: extend the EXISTING grammar so a portal-only grant (portal_channels, zero Schwab masters) is a first-class grant; existing grants keep their meaning.",
     "world_is": "The grammar, asker path and operator command carry portal_channels. The owner's read-back route does not, so a GET of the grant that OA-g-3 writes shows an apparently empty grant.",
     "notes": "Not fixed here, because it is outside <paths>. Disarm: the issuer decides whether a read-back of OA-g-3's grant goes through this route, and if it does, cuts the one-line addition of portal_channels to _grant_json."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W9-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~9",
+    "surfaced_at": "2026-09-26T09:00Z",
+    "one_line": "Item 5 of OA-g-1 (amended on row Z-W9-S1) is built: app/admin_grants.py _grant_json now returns scope.portal_channels whenever the grant carries it, and a grant without it reads back with no portal_channels key, as before. This row disarms nothing. Row W9-S1 stays ARMED until its disarm_owner 2.0.0_SA_COO~O dispositions it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE infra/aws/ec2/opal-gateway/app/admin_grants.py@9a28cfbbe6 _grant_json adds scope['portal_channels'] = sorted(s.portal_channels) when that set is non-empty.",
+        "TEST infra/aws/ec2/opal-gateway/tests/test_portal_grant.py@9a28cfbbe6 test_admin_readback_shows_portal_channels: a portal-only grant reads back portal_channels ['capital_markets', 'valuation'] with masters [] and accounts {}. A Schwab grant reads back with no portal_channels key. A None grant reads back None.",
+        "MEASURED at 9a28cfbbe6: g1.AC3.sh printed 'pytest rc=0; named tests passed 3 of 3; failed/error lines 0', RESULT: PASS, exit=0. tests/test_admin_grants.py: 5 passed (no moto needed)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-g-1 item 5: the owner's read-back carries portal_channels, so a portal-only grant never reads back as empty.",
+    "world_is": "It does, at 9a28cfbbe6 on branch wk-NFRA_OPALAI-9 (LOCAL; not drained, not deployed). The live gateway still runs the pre-item-5 bytes until OA-g-2 deploys.",
+    "notes": "This row does not disarm W9-S1; the issuer does. A side observation: the safe-commit call for 9a28cfbbe6 ran past a 120 s bound. The harness moved it to the background and it exited 0 with the commit landed, so the rc 124 shape did not arise."
   }
 ]
 ```
