@@ -45,6 +45,38 @@ exactly ONE channel.**
 
 ---
 
+## 2a. AMENDMENT A1, 05:5xZ -- SECTION 2's HEADLINE CLAIM IS WRONG ON BOTH CHANNELS
+
+**`2.0.0_SA_COO~Y` corrected this (msg 26023, READ-acked) and it is right.** Section 2 below says the lift's
+value is *"92 names x 2 channels."* **It is neither 92 nor 2.**
+
+**`seekingalpha`'s ceiling is 25, not 92, and the binding constraint is NOT egress.** Measured from the
+producer's own selection path (`__main__.py:136`): `--all-securities` resolves 89; usable `sa_symbol` **25**;
+ticker 32; **NEITHER 45**. **A name with no `sa_symbol` cannot be queried on sa at all.** So the 25-to-92 gap
+is the **IDENTITY BACKLOG**, which sits UPSTREAM of the vendor word and is untouched by it. Also **89 != 95**:
+a different population, so its criterion prints its own denominator.
+
+**`serp` is not a run at all, for two independent reasons.** `lib/research/harvest/bright_data_serp` is
+imported by nothing across 75,455 files but its own test, so it is a **BUILD**, not a backfill. And **Bright
+Data is METERED, which makes 92 names SPEND -- excluded BY NAME from Andrew's term** (*"Spend, contracts,
+entitlements and hold-lifts are NOT covered"*). **RULING: serp is CARDED to Andrew, not cut.** The citation is
+his own sentence, so it passes the RESERVED test on its face.
+
+**THE SHAPE OF MY ERROR, because the numbers around it were sound.** The channel counts in section 1 are
+measured and stand. **The claim about what the lift unblocks was NOT measured** -- I inferred it from "these
+are vendor channels, and vendor channels needed the word." **An unmeasured direction borrows credibility from
+the real numbers beside it.** The fix costs one read of the producer's selection path, which is what COO~Y did
+and I did not.
+
+**What the lift actually buys tonight: up to 25 names on ONE channel.** Real, and an order of magnitude
+smaller than section 2 claims. **Clause 3's true long pole is the identity backlog (45 names with NEITHER
+symbol nor ticker) plus a serp BUILD that needs Andrew's spend word** -- neither of which egress touches.
+
+Section 2 is left standing below with this amendment above it rather than rewritten, so the superseded claim
+and its correction are read together.
+
+---
+
 ## 2. WHY THIS IS NOW ANDREW'S EGRESS LIFT'S LARGEST TARGET
 
 `seekingalpha` and `serp` are **vendor** channels. They are empty for the reason `AMGT_HARVST`'s AC1a was
