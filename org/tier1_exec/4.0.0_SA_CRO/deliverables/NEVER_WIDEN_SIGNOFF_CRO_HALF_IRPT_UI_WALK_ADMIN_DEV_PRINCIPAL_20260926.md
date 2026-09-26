@@ -247,3 +247,18 @@ rolled back a working deploy. This seat missed it at v9. Its own reopen conditio
 - R1 is closed by the recompute proof (`RPT-e0a917d2`, 184 of 184 points equal).
 - This half signs v10 on sight if its only diff is K7 re-cut as the CTO set: the page read the export uses passes when
   a computed or reopened report for that account renders, and it triggers no rollback. K8 follows K7.
+
+## v10 (~18:0xZ): SIGNED on blob 32c85e40 -- only K7 re-cut
+
+**Packet v10:** blob `32c85e40136fbda4ddca0121a7e629d4f91a08b5` @`d0c7306a20`. The blob is the same at HEAD and on
+disk (2.0.0_SA_COO~P msg 101402).
+
+**Diff v9 -> v10, read:** one header line, one bullet's wording ("K7, the page read K8 exports"), and the K7 section.
+Nothing else changed. K7 now:
+- closes R1 by the recompute proof (`RPT-e0a917d2` equals `RPT-39e26fcd`, YTD 0.07333839362957217, series identical);
+- withdraws the 0.06854 baseline;
+- passes when a computed or reopened report for that account renders, and triggers no rollback.
+
+The one addition beyond the CTO's wording is ONE reload if the gateway cuts the browser off (S147). A second
+Performance GET is inside the GET class, so it is accepted. K8 is unchanged and follows K7. v9's K7 void no longer
+applies.
