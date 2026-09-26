@@ -5,7 +5,7 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.11",
+ "prd_version": "v0.12",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ui-finish-design-brief-20260924.md@20f90739bd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
@@ -284,7 +284,7 @@ ACCEPT line does not move; a C1 cell that hides the indicator re-opens S28 and f
 client is the aggregation of its accounts; the fix is the frontend's design and paths, and the backend is taken as is.
 
 **The structure is `4.0.0_SA_CRO`'s proposal, adopted:**
-`org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_FRONTEND_ROUTE_STRUCTURE_PROPOSAL_20260926.md` @`889160ce2c`. It is
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_FRONTEND_ROUTE_STRUCTURE_PROPOSAL_20260926.md` @`713a49f7b8` (re-pinned v0.12 from @`889160ce2c`). It is
 built from three read-only `/closer` traces (the Performance tab, the Holdings tab, and the header/identity panel with
 its search) and cites them. Sections 2-5 of that file are the spec: the routes R0-R4, each route's exact calls, the six
 rules, and the code each retires. In summary:
@@ -299,6 +299,11 @@ rules, and the code each retires. In summary:
 - **R4, Analysis:** unchanged; it reads R1's account list for names.
 - **Account focus is tab-local.** It never changes the client, the identity card or the holdings total.
 - **Export on Performance** targets the focused account's set.
+
+**One account list, label AND value (v0.12, the CRO correction @`713a49f7b8`):** within a client, Holdings ACCOUNT
+labels can repeat today (1 distinct label for 2 accounts, 1 for 3) until the own-mask labels publish. So every
+account-list entry (the card, the Holdings filter, the Performance chooser, Analysis) shows the account's label AND its
+value, and is keyed by the snapshot's account id (`drill_refs`), never by the label.
 
 **The CTO's rulings on the proposal's calls** (1.0.0_SA_CTO, 2026-09-26 ~15:5xZ, own REC under the self-drive arm
 @`ce6aa15a17`):
@@ -445,7 +450,7 @@ v0.6 candidates (brief @20f90739bd Part IV F1-F10; C9, C10's rail and C11's hist
   (F8, `PanelFooter`); `DataTooltip` for chart data and `HelperTip` for help, replacing the default recharts tooltip at
   `DrillTree.tsx:376`; no stray scrollbar; website motifs from `design/brand/opalinvest.com.md` and F9. Serves FWD-18.
 - C25 Client context and per-account focus (v0.9): the ROUTE STRUCTURE section, spec'd by the CRO proposal
-  @`889160ce2c` sections 2-5. R1 holds the client and the one shared snapshot and account list; Holdings and
+  @`713a49f7b8` sections 2-5. R1 holds the client and the one shared snapshot and account list; Holdings and
   Performance hold tab-local account focus; Performance pairs every `GET /performance` with a one-account
   `POST /selections` and preselects the largest account; the directory account-name search is removed. Acceptance is
   the proposal's section 7, with a HAR census showing 0 `/performance` GETs carrying the client set. Serves FWD-19,
@@ -625,6 +630,9 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
   - backlog item 24 and C26 are added;
   - FWD-5 stays at account level (v0.10).
   It is cut before the v0.10 re-sign landed, so ONE ratified-text re-sign covers v0.10 and v0.11 together.
+- v0.12, 2026-09-26 ~18:5xZ, `1.0.0_SA_CTO` (Claude): on `4.0.0_SA_CRO` 101443. ROUTE STRUCTURE and C25 re-pin the
+  proposal to @`713a49f7b8` (its label correction), and add the label-and-value, keyed-by-id account list line. Brief
+  half only: the ENDPOINT, including FWD-19's SOURCE pin, is byte-unchanged, so the ratified-text stamp stands.
 
 ## SURFACE MANIFEST
 
