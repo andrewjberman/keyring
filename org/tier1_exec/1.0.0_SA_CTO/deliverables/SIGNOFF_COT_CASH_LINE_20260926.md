@@ -48,3 +48,15 @@ the live owner or seats one. Until then, d08 keeps BD's cash line as equity, and
 **The CTO half stands on the re-cut ONLY IF** it adds the same guard in C_06 `classify_series` (the served call site)
 with a test that calls `classify_series`: CASH/CASH gives cash, CASH/Pathward gives equity. The rest is unchanged.
 Anything else needs a fresh read.
+
+**Re-cut @`9e3f568d42` (2.0.0_SA_COO~M msg 101593): the condition above is MET; the CTO half STANDS.**
+
+Read by the CTO:
+- the diff is 2 files;
+- the guard moves from `classify_holding` to `classify_series` (C_06 :213-216, the served path);
+- `test_other_admission.py:82-83` calls `c06.classify_series`: CASH/CASH gives cash, CASH/Pathward gives equity.
+
+~M's census of the classifier calls in C_06, D_03 and D_04: 4 of 4 served calls are guarded, and the one unguarded
+call (C_06:186) has 0 callers. The real run: 853 rows, $59,253,165.31, cash.
+
+The deploy still waits for Monday's R1.
