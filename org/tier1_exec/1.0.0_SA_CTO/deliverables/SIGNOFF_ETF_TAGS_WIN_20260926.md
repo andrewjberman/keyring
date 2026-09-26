@@ -41,3 +41,19 @@ already defaults an absent ticker to equity they are equal-class, and no reader 
 ## Second half
 
 **4.0.0_SA_CRO.**
+
+## Amendment (2.0.0_SA_COO~M msg 101544, ~22:2xZ): both held keys resolved; NO call to Andrew
+
+- **VNQ: SIGNED as equity -> alternatives.** The CTO read the direction wrong. The ETF Classifier tags VNQ
+  **alternatives** and bd-securities holds equity. So the precedence rule (@`714ba46408`) and Andrew's 09-25 REIT rule
+  AGREE. His 02:3xZ "established equities stay" rule addressed the LLM run's flips of established equity STOCKS, not a
+  REIT fund the Classifier already tags. The call put to Andrew is WITHDRAWN.
+- **CASH: DROPPED from Part A. The ticker collides:**
+  - bd-securities CASH is Pathward Financial Inc (CUSIP 59100U108), a real equity ($14,969 at 49F);
+  - the Classifier's CASH is a synthetic "Cash & Cash Equivalents" row.
+
+  Writing it would reclassify Pathward stock.
+- **Found, a served error:** COT's 620 "CASH -- CASH" nodes ($2,866,668.86) are Black Diamond's cash line, served as
+  equity through Pathward's key. The fix is to class the cash line by its ROW, not the ticker. It goes under
+  2.0.0_SA_COO~M's own half (the COT C_06 grant), with its per-firm delta.
+- **Part A therefore:** 16 keys (the 15 puts plus VNQ).
