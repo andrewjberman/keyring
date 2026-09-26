@@ -849,6 +849,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-f-2 guard (ii): if /health is not 200 within 90 s of the restart, the rollback runs AT ONCE.",
     "world_is": "The rollback starts at once but spends ~24 minutes in the halt gate before it restores the host, so a failed release means up to ~25 minutes of gateway outage.",
     "notes": "The exposure is bounded by timing (off-hours) rather than by skipping the pre-deploy gate: 'pre-existing mechanical gates stand'. If the halt gate's scan time is itself a defect, that is its owner's row, not this release's."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W9-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~9",
+    "surfaced_at": "2026-09-26T07:14Z",
+    "one_line": "The owner grant-read route (app/admin_grants.py _grant_json, GET of a principal's grant) builds its scope from a fixed list of six dimensions, so it drops portal_channels. After OA-g-1 a portal-only grant reads there as masters [], datasets [], accounts {}, columns {}, operations [query], with no channel shown. app/admin_grants.py is outside OA-g-1's <paths> and was not edited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE infra/aws/ec2/opal-gateway/app/admin_grants.py@9ba4ca286f :91-101 _grant_json returns scope keys masters, datasets, accounts, dates, columns and operations only.",
+        "MEASURED at da7749916d: _grant_json(parse_grant(grant_item(..., scope with portal_channels ['capital_markets'] and an empty Schwab half))) printed {'revision': 1, 'status': 'active', 'scope': {'masters': [], 'datasets': [], 'accounts': {}, 'dates': {'mode': 'rolling_complete_window', 'dates': []}, 'columns': {}, 'operations': ['query']}}. portal_channels is absent.",
+        "The access decision is unaffected: data_entitlement.parse_scope and asker_scope read the stored record, not _grant_json (tests/test_portal_grant.py at da7749916d, 6 of 6 passed)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-g-1: extend the EXISTING grammar so a portal-only grant (portal_channels, zero Schwab masters) is a first-class grant; existing grants keep their meaning.",
+    "world_is": "The grammar, asker path and operator command carry portal_channels. The owner's read-back route does not, so a GET of the grant that OA-g-3 writes shows an apparently empty grant.",
+    "notes": "Not fixed here, because it is outside <paths>. Disarm: the issuer decides whether a read-back of OA-g-3's grant goes through this route, and if it does, cuts the one-line addition of portal_channels to _grant_json."
   }
 ]
 ```
