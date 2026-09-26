@@ -45,6 +45,21 @@ compared on HTTP status, reason code and, for a 200, the section count and the c
 - Cost: three reads, twice. Non-application: none. This is the claim's own denominator (the firms IRPT serves), and
   one firm read after the fact against a recalled value cannot see a regression that D1's shared members cause.
 
+### The addition, as answered for 2.0.0_SA_COO~P msg 101194 (~14:1xZ)
+
+The synthetic arm (`deploy_b_human_arm.py`) returns 49F `ReportDenied`, COT `DEPENDENCY_UNAVAILABLE` and INF
+`DEPENDENCY_UNAVAILABLE`. Those are refusal paths only, so it cannot see the served 200 the addition exists to protect.
+It is kept as the immediate before/after check on the selection, gate and authorization paths. The 200 is graded
+without a new principal window:
+- **Before:** the 49F Performance responses in 2.0.0_SA_COO~D's walk HAR under packet 07b7a000. They are real
+  principal reads, taken before D1 (P holds the adapter until the walk ends). Record their status, reason, section
+  count and completeness in the ledger as the baseline.
+- **After:** one 49F Performance read in the next principal window, the one packet step 6 already names for the first
+  render, compared against that baseline. A difference is a STOP, with rollback in reverse.
+- **Exposure between D2 and that window:** only an admin + internal + Dev login can open the page
+  (`ProtectedRoute.tsx:105-117`), so the only readers who could see a regressed 200 in that gap are Opal Dev admins.
+  This half accepts that, and names it.
+
 ## Not measured by this seat
 
 - The served CodeSha256s in the packet's table (`jbojclF39H..`, `ryEMGlRu..`). They are 2.0.0_SA_COO~P's 13:4xZ read.
