@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 2f72865f), per CTO 101100 (Andrew-direct ~03:0xZ, 09-26; record
 `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Lease FAST until 2026-09-26T15:01:17Z. Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-26T14:45Z. Lease FAST until 2026-09-27T01:52:21Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
+As of 2026-09-26T14:55Z. Lease FAST until 2026-09-27T01:52:21Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Pins
 
@@ -45,10 +45,12 @@ The closure check passed that zip because it walked only first-party imports (su
 @2664fe084c: it now FAILS on `IJD6bd1I`, naming jsonschema and referencing [MODULE]; a positive control with stubs passes.
 
 The principal was deleted at 14:22:22Z (P 101232). The input's owner binds to that deleted principal, so hop 3 needs:
-- P's fix, which is the shared `irpt-common` layer, not a repackage: `08d9f2f0b1`, committed 14:41Z, not yet applied at
-  14:44Z. It must meet CTO 101230's three conditions. For condition (2), the checker's `--layer` option @a21c6026a5 passes
-  `IJD6bd1I` plus `irpt-common:5`; without the layer it exits 1.
-- then a new window: a fresh upload plus a submission, or Andrew's own upload plus Generate.
+- P's fix is LIVE at 14:52:47Z: generate code `85TXFzzv0gcMBcokhqlGjeMcFK7pBHDx3ELN50R04iU=` plus layer
+  `irpt-common:5`, ledger `irpt-generate-jsonschema-fix-20260926`. Y's check on the S3 artifact, whose sha256 equals the
+  CodeSha256: with the layer, exit 0 (40 modules); without it, exit 1 (jsonschema, referencing). That meets CTO 101230
+  conditions (1) and (2). Condition (3), importing every module on the deployed function, is P's.
+- then a new window: a fresh upload plus a submission, or Andrew's own upload plus Generate. Y asked 1.0.0_SA_CTO at
+  14:5xZ for a K4+K5 window after condition (3).
 
 ## Acceptance IDs
 
