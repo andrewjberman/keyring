@@ -314,6 +314,60 @@ carrying it to him rather than claiming the result in advance.
 
 ---
 
+## 5e. AMENDMENT A5, 16:4xZ -- THE LOADED ARM RAN. CONTENTION IS THE DOMINANT TERM, AND THE VARIANCE PROVES IT
+
+**Andrew resumed Tier 1 at ~16:18Z** (*"resume tier 1"*, relayed by `0.0.0_AB_MSTR~Z`), which made the loaded arm
+runnable. `0.0.0_AB_MSTR~Z` named this test; this is its other half.
+
+### THE THREE ARMS, ONE DEVICE, FILE COUNT AND TREE COUNT HELD
+
+| arm | timings (ms) | spread | concurrency | files | worktrees |
+|---|---|---|---|---|---|
+| PAUSE (`0.0.0_AB_MSTR~Z`) | **393 / 385 / 379** | **14** | quiet | 44,595 | 56 |
+| POST-RESUME (this seat) | **774 / 1119 / 1004** | **345** | 10 `claude.exe` | 44,597 | 56 |
+| my original, section 2 | 822, ONE run | -- | ~10 seats | 44,589 | 56 |
+
+**File count moved by 8 files across all three. Worktrees did not move at all. Only CONCURRENCY changed.**
+
+### THE RESULT
+
+**Latency 2 to 3x higher under load -- and the SPREAD widened from 14 ms to 345 ms, about 25x.**
+
+> **The variance is the proof, not the mean.** A file-count-bound operation is SLOW BUT STABLE: the same walk
+> costs the same every time. A LOCK-CONTENDED operation is ERRATIC, because what it waits for depends on who else
+> is holding the lock at that instant. **385/385/379 is a device doing work. 774/1119/1004 is a device waiting.**
+
+**So CONTENTION BETWEEN CONCURRENT SEATS IS THE DOMINANT TERM in the latency Andrew measured.** That answers the
+question he actually asked -- why tokens-per-runtime collapsed with an idle CPU -- and it took five amendments
+and three seats.
+
+**And it vindicates my 822 ms while condemning how I reported it:** 822 sits inside the post-resume band
+(774-1119). The number was real. **What was missing was its condition, and without that it was one moment wearing
+a device's name.**
+
+### WHAT THIS RETIRES
+
+- **A3's "per-command latency tracks FILE COUNT" is now wrong as stated.** File count sets a FLOOR (~385 ms);
+  concurrency is what moved the number Andrew saw. A4 already softened it; A5 replaces it.
+- **Lever 1 is dead five times over.** Tree count is the one variable held constant across every arm while the
+  latency tripled.
+- **The laptop's 865-1335 ms is now explicable without file count:** it too was taken at an unstated
+  concurrency, so A3's cross-device "12 is not faster than 56" was probably comparing load states. **The
+  cross-device comparison should not be leaned on at all now that a single-device before/after exists.**
+
+### WHAT IS STILL NOT HELD
+
+**Cache warmth** -- the pause arm ran after hours of quiet, this one minutes after resume. **Time of day** is now
+largely controlled: both arms are the same device within about half an hour, which the cross-device comparison
+never achieved. **What no arm has is a load arm with the SAME cache state as the pause arm**, and I am not
+claiming past that.
+
+**The remedy this points at is NOT a repo change.** It is concurrency: fewer seats committing simultaneously, or
+staggering the gate-heavy acts. That is a scheduling decision and Andrew's, not a device fix -- **and it is the
+opposite of what lever 1 proposed.**
+
+---
+
 ## 6. WHAT THIS RECORD DOES NOT CLAIM
 
 It does not claim the fabric is stalled -- **12 commits across 9 authors in 90 minutes**, and round-6 cells
