@@ -156,3 +156,8 @@ by the deleted principal), which contradicts "K4's new input" at `:144`. The CTO
 
 **The CTO half stands without a fresh read on a v7** that changes ONLY `:128` to "the input THIS window's K4
 normalizes" (and the header line naming it). Any other change needs a fresh read.
+
+## SIGNED on v7 -- blob `3edebd851f9c5c3a035d83f17293278796a5f1c3` @`683e73871e` (2.0.0_SA_COO~P msg 101252)
+
+`git diff 71146fdd 3edebd85` is the v7 header line plus `:129-130`: K5 binds to THIS window's K4 input, and window 1's
+input is named NOT used. That meets the condition above. **The CTO half stands on v7, which supersedes v6.**
