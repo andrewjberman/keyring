@@ -2044,7 +2044,17 @@ async def _deliver_to_one(from_agent: str, to_agent: str, subject: str, body: st
     broker_target = to_agent if _instance_suffix(to_agent) else to_folder.name
 
     _msg_id = None
-    if _broker_available:
+    # _broker_available is a MODULE GLOBAL whose only setter is _ensure_broker(), and
+    # _ensure_broker() is called from exactly ONE place: register_agent(). A process whose
+    # register_agent never ran -- or ran while the probe read anything but "ok" -- carries
+    # False for its whole life, and every send from it skips this leg SILENTLY: filesystem
+    # + channel push land, no broker row is created, so no Msg-ID is stamped at :2063 and
+    # the recipient can never ack. Measured 2026-09-26: 12 of 12 sends from one seat with
+    # no Msg-ID while GET /health returned {"status": "ok"} and every INBOUND message to
+    # that same seat carried one. Re-probe instead of trusting the stale flag; _ensure_broker
+    # sets the global on "ok", refuses to start a second daemon on "unknown", and starts one
+    # only on a decisive "absent" -- exactly as it already behaves on the register path.
+    if _broker_available or _ensure_broker():
         result = _broker_fetch("/send-message", {
             "from_serial": from_agent,
             "to_serial": broker_target,
