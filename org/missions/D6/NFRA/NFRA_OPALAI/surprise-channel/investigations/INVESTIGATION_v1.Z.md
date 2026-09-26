@@ -777,6 +777,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "It does now: deployed_commit on origin/CLOUD = 0af72fb1d0 = the served commit. A release cut from the manifest's base now carries the Teams fixes. The release_note text is stale (describes 1f7128201a); no reader derives a base from that text.",
     "disarm_owner": "1.0.0_SA_CTO",
     "notes": "Disarmed, not remediated: the release_note residue is left to OA-f-2's manifest record, which names its base (the laptop release) in words per its own order text. No other act."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S23",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T03:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Andrew's call 2 (Alyssa Keith, 'portal figures only', written 'through the existing operator path') cannot be written as ruled. The existing path, ops/schwab_entitlement_admin.py, writes only the NFRA_OPLGTW grant model. Every grant there must name at least one Schwab master, its account ids, Schwab datasets and columns. opal_asker_query honours only the grant's 'query' operation. So any grant written today would ALSO name Schwab custodial accounts, which is wider than 'portal figures only'.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE app/data_entitlement.py:202-237 parse_scope: masters must be a non-empty subset of the contract's MASTERS; scope.accounts must name the accounts of every granted master; datasets must be a non-empty subset of DATASETS, and columns must name every granted dataset.",
+        "READ org/standards/NFRA_OPLGTW_CONTRACT.json: masters = 2 Schwab master ids; datasets = [dim_position, dim_balance, dim_asset]; operations = [list, describe, query, download_filtered]. No portal or catalog dimension exists.",
+        "CODE app/data_entitlement.py:279-282 allowed_tools: a restricted profile admits ONLY SCHWAB_TOOLS. CODE app/asker_scope.py:15-39 (points c, d): the asker grant's datasets have no mapping to the portal catalog, and only 'operations: query' is honoured before catalog_gate serves the CALLING identity's rows.",
+        "Also unmeasured: Alyssa Keith's Entra tid/oid. She holds no refresh family in gateway-access-state-table (census 2026-09-26 ~00:1xZ: 8 active families, all andrew@ or opalbloomberg@)."
+      ]
+    },
+    "spec_asserts": "ANDREW_DIRECT_20260926_022xZ call 2: 'Alyssa Keith, scoped to portal figures only. 2.0.0_SA_COO~O writes the permission through the existing operator path (runbook step 6); nothing new is built.'",
+    "world_is": "The existing operator path can express only a Schwab-data grant. 'Portal figures only' needs a grant shape that does not exist, which means building something, and the call says nothing new is built.",
+    "notes": "Options go to 1.0.0_SA_CTO~O as a decision: (A) a minimal NFRA_OPLGTW grant with operations [query] -- expressible now, but it names a Schwab master and accounts (wider than the call); (B) a portal-scoped asker grant, cut as a round-2 cell. Runbook step 6 waits on the answer. Nothing was written to the POLICY store."
   }
 ]
 ```
