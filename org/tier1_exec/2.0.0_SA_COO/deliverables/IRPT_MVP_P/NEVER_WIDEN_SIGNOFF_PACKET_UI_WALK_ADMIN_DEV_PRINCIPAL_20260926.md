@@ -5,6 +5,45 @@
 **Walkers:** `2.0.0_SA_COO~D`: one signed-in PROD walk of `/investor-reporting` with a HAR scrubbed in-stream. In the
 same window, `2.0.0_SA_COO~Y`: ONE Analysis upload of its v2 input, logged and scrubbed (Y msg 101161). This saves a
 second create under a second packet.
+**v9 (17:4xZ) -- WINDOW 4: export deploy (B)'s AFTER read and the FIRST real export, by ~D in the page.** The diff
+against v8 acca1b3e is exactly:
+- a NEW principal (the same K1 shape, new `<epoch>`) and its times;
+- K4 and K5 are NOT run in this window. Hop 3 waits on ~Y's title-descriptor producer (CTO 101353) and rides a later
+  window;
+- K7, R1 (below);
+- K8, E1 (below);
+- the route classes and the vendor line that name them.
+Window 3 is CLOSED (ledger `irpt-ui-walk-principal-w3-20260926`). Export deploy (B) is LIVE with render ON behind the S148
+host fence (ledgers `irpt-export-deploy-b-20260926`, R1 open; `irpt-render-host-parameter-fence-20260926` CLOSED).
+
+## K7 -- R1, export-B's AFTER read (CTO rulings (c) + 101313)
+
+- **The act:** ONE 49F account-level Performance page read by `2.0.0_SA_COO~D`, of K6's account: JASON JONES ****9978,
+  `acc_bf9653391ad5ff4e672eb5f9`, YTD. It is the page's own `POST /selections` (K3) and one
+  `GET .../performance/{accountSetId}`.
+- **The expectation:**
+  - YTD equals 0.06854. A different value is a STOP, and deploy (B) rolls back in reverse (D3, D2, D1).
+  - An answer at or over 30 s is a BLOCKING row on FWD-1 (S147), not a rollback.
+  - If the page reopens K6's retained report (the accepted pointer), the read proves the new served path's reopen, not a
+    recompute, and the latency is not an S147 measurement. Both are named in the result.
+- **What it writes:** only a reopen or, if recomputed, a retained report (REPORT#/RETENTION#), KEPT. No vendor call.
+
+## K8 -- E1, the FIRST real export (FWD-1's export hop, render ON)
+
+- **The act:** from that report, ONE Performance export through the page by ~D: exactly one `POST .../export`, then the
+  page's receipt reads `GET .../export/{exportId}` (finalize-on-read) and one `GET .../export/{exportId}/download` if
+  READY.
+- **What it writes** (export B1-B3, all KEPT as the product's record):
+  - the frozen bundle, render grant and `pending.json` in the evidence bucket;
+  - ONE SecureString `/irpt/render-token/<ATT-id>`, deleted on every terminal path plus the 15-min sweep. The host reads
+    it by name; the S148 fence allows the host that prefix only;
+  - ONE SSM `SendCommand` of `irpt-export-render-run` to the render host;
+  - the rendered PDF;
+  - the finalized receipt.
+- **No vendor call:** the render prints Opal's own route.
+- **Expectation:** READY with a PDF (`%PDF`, page_count >= 1), or a named NOT_READY, then DEPENDENCY_UNAVAILABLE after
+  15 min, with the token name deleted either way (`ParameterNotFound`, read by P after).
+
 **v8 (16:3xZ) -- WINDOW 3 (Andrew-direct resume "recs approved for all", CTO 101296 @a6700b211e; CTO 101309).** The
 diff against v7 3edebd85 is exactly:
 - a NEW principal (the same K1 shape under a new `<epoch>`) and its times;
@@ -213,6 +252,7 @@ its denominator printed. Every request must fall in exactly one admitted class:
 | POST | `/api/scoped/investor-reporting/directory/resolve` (page load); `/api/scoped/investor-reporting/selections` (each selection -> K3) |
 | POST, exactly 1, by ~Y | `/api/scoped/investor-reporting/analysis/inputs` (K4) |
 | POST, exactly 1, by ~Y | `/api/scoped/investor-reporting/analysis` (K5) |
+| POST, exactly 1, by ~D | `/api/scoped/investor-reporting/export` (K8, window 4) |
 | GET / HEAD | any page read, including K6's ONE 49F account-level Performance GET |
 
 Any request outside these classes is branch (d). This includes, explicitly:
