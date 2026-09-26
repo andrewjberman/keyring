@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-26T20:24Z. Lease FAST until 2026-09-27T01:52:21Z.
+As of 2026-09-26T20:55Z. Lease FAST until 2026-09-27T01:52:21Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now (Andrew-direct at ~Y, ~18:5xZ: "dont need option 2, but do 1 3 and 4 in order"; CTO 101442, 101465)
@@ -28,6 +28,12 @@ overlays are content-equal to those six files once CRLF is stripped. The one byt
 endings, which changes only the offline composition's `configuration_sha256`.
 
 Next window (CTO 101465): upload, generate, READY, sections, history. A+B are applied and the pre-flights are pinned.
+- **Hop-7 defect, found offline (20:5xZ):**
+  - On every retained real vendor PDF (overview, comparison and multicomp), the deployed resident is refused
+    CHART_DATE_CERTIFICATION_FAILED, and the job stays CERTIFYING.
+  - The fix is `P_HOP7_CHART_DATE_CERTIFY_20260926.patch` (Y branch @74b4368bef). With it, the resident goes to READY on
+    the real Overview.
+  - P must ship it in the resident before the window.
 - P cuts the packet.
 - Y handed P the measured write set for its blast radius: `K5_SUBMISSION_ACT_20260926.md` @f36c5ee4c4. The vendor PDF is
   retained in `opal-data-irpt`, and there is one `_opal` lease row.
@@ -126,7 +132,8 @@ and window 4 re-runs K4+K5 (+R1).
 
 ## Write claims
 
-None in flight. RESOLVE_UPLOAD landed @bb1eb7f92b and @10a16bd89d. The scratch worktree `irpt-y-pcompose-20260924` was
+None in flight. The hop-7 certify fix landed on the Y branch @74b4368bef (`HOP7_CHART_DATE_CERTIFY_20260926.md`).
+RESOLVE_UPLOAD landed @bb1eb7f92b and @10a16bd89d. The scratch worktree `irpt-y-pcompose-20260924` was
 removed by 0.0.0_AB_MSTR at 13:3xZ after Y's content check (101172); its branch is kept. Y makes no commit on P's branch.
 
 ## Next proof

@@ -1,0 +1,104 @@
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/extract/certify.py b/infra/aws/lambda/investor-reporting/ycharts/extract/certify.py
+index 2d5e96a851..05741b0f0b 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/extract/certify.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/extract/certify.py
+@@ -340,6 +340,24 @@ def _grade_date(row, pages):
+         out["detail"] = ("the row claims SECTION on a date line from page %s while the value is "
+                          "on page %s -- another page's block" % (prov["page"], row.get("page")))
+         return out
++    if row.get("section_type") == "source_chart_representation":
++        # A chart is represented by its WHOLE PAGE (value top 0.0), so no date line can sit above
++        # it and the position test below could never pass. The page dates the chart only when
++        # EVERY 'Data as of' line the page prints states this one date; any other date on the
++        # page is a neighbouring block's, and the claim is refused.
++        others = [(top, date) for top, date in _page_dates(page) if date != row["as_of_date"]]
++        if others:
++            out["verdict"] = FAIL_DATE_NEIGHBOUR
++            out["detail"] = ("the chart claims SECTION date %s for its whole page %s, but the page "
++                             "also prints %s -- the page does not state one date"
++                             % (row["as_of_date"], prov["page"],
++                                "; ".join("%s at top %.2f" % (d, t) for t, d in others[:3])))
++            return out
++        out["verdict"] = PASS
++        out["detail"] = ("date_claim SECTION: %s read back from %s, the only date page %s prints"
++                         % (row["as_of_date"], prov["bbox"], prov["page"]))
++        out["date_tie"] = DATE_CLAIM_SECTION
++        return out
+     between = _date_lines_between(page, bottom, value_top)
+     if between:
+         out["verdict"] = FAIL_DATE_NEIGHBOUR
+@@ -363,6 +381,20 @@ def _grade_date(row, pages):
+     return out
+ 
+ 
++def _page_dates(page, *, tol=1.5):
++    """Every 'Data as of' date the page prints, EACH occurrence: two blocks side by side share a
++    text row, and reading one date per row would let the second hide behind the first."""
++    rows = {}
++    for word in page.extract_words(use_text_flow=False, keep_blank_chars=False):
++        rows.setdefault(round(float(word["top"]) / tol) * tol, []).append(word)
++    found = []
++    for words in rows.values():
++        text = " ".join(w["text"] for w in sorted(words, key=lambda w: float(w["x0"])))
++        top = min(float(w["top"]) for w in words)
++        found.extend((top, parse_as_of(m.group(0))) for m in DATE_LINE_ANY.finditer(text))
++    return sorted(found, key=lambda item: item[0])
++
++
+ def _date_lines_between(page, line_bottom, value_top, *, tol=1.5):
+     """Every 'Data as of' line printed strictly between a date line and the value it claims.
+ 
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/extract/tests/test_publication.py b/infra/aws/lambda/investor-reporting/ycharts/extract/tests/test_publication.py
+index a90b139c5d..9d8a9b5e19 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/extract/tests/test_publication.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/extract/tests/test_publication.py
+@@ -77,6 +77,49 @@ def test_absent_census_prose_and_chart_are_gaps_never_published():
+     assert coverage["counts"]["chart_emitted"] == 0
+ 
+ 
++def chart_page_pdf(*dates, beside=True):
++    """A dated scalar page, then a chart page printing each date BELOW its title, as a vendor
++    chart page does (the retained real Overview's page 8: one 'Data as of' line under the title).
++    A second date goes beside the first on the same text row, or on a row further down."""
++    doc = fitz.open()
++    page = doc.new_page()
++    page.insert_text((40, 40), "Data as of: Sep. 22, 2026")
++    page.insert_text((40, 80), "Return")
++    page.insert_text((300, 80), "10.30%")
++    page = doc.new_page()
++    page.insert_text((40, 50), "Growth of Wealth")
++    for i, date in enumerate(dates):
++        page.insert_text((40 + 200 * i, 70) if beside else (40, 70 + 150 * i), "Data as of: " + date)
++    page.insert_text((40, 300), "All investments")
++    page.insert_text((40, 315), "carry risk.")
++    data = doc.tobytes()
++    doc.close()
++    return data
++
++
++def chart_row(data):
++    [row] = extracted(data)["charts"]
++    return publication._chart(row, extract.read_pages(data))
++
++
++def test_chart_page_with_one_date_publishes_that_date_as_section():
++    data = chart_page_pdf("Aug. 31, 2026")
++    chart = chart_row(data)
++    assert chart["date_claim"] == "SECTION" and chart["as_of_date"] == "2026-08-31"
++    graded = certify.certify([chart], data, census=census())
++    assert graded["rows"][0]["verdict"] == certify.PASS, graded["rows"][0]["detail"]
++    build(data)
++
++
++@pytest.mark.parametrize("beside", [True, False])
++def test_chart_section_date_refused_when_its_page_prints_another_date(beside):
++    chart = chart_row(chart_page_pdf("Aug. 31, 2026"))
++    other = chart_page_pdf("Aug. 31, 2026", "Sep. 22, 2026", beside=beside)
++    graded = certify.certify([chart], other, census=census())
++    assert graded["rows"][0]["verdict"] == certify.FAIL_DATE_NEIGHBOUR
++    assert "2026-09-22" in graded["rows"][0]["detail"]
++
++
+ def test_ambiguous_chart_title_does_not_pick_a_page():
+     view = build(pdf(ambiguous=True))["fragment"]
+     assert view["extraction_coverage"]["counts"]["chart_emitted"] == 0
