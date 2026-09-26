@@ -5,6 +5,8 @@
 **Walkers:** `2.0.0_SA_COO~D`: one signed-in PROD walk of `/investor-reporting` with a HAR scrubbed in-stream. In the
 same window, `2.0.0_SA_COO~Y`: ONE Analysis upload of its v2 input, logged and scrubbed (Y msg 101161). This saves a
 second create under a second packet.
+**AMENDED (v4, 14:1xZ): K5 added -- runbook hop 3, ONE `POST /analysis` (Overview) by ~Y on K4's input (CTO 101204 YES,
+cutoff 14:35Z). The diff vs v3 is K5 plus the limit, route and vendor lines that name it.**
 **AMENDED (v3, 13:4xZ): K4 re-cut from ~Y's write set @5d70021540 -- K4 causes ONE resident YCharts GET, named.**
 **AMENDED (v2) per the CRO's refusal @f8fa80bddc (msg 101163) and CTO msg 101166:**
 - the audit grades the HAR by ROUTE;
@@ -109,6 +111,23 @@ producer's own code.
 - **RETENTION:** all of it is KEPT, as the acceptance evidence of ledger `irpt-upload-hop2-20260924` S1. ~Y's log names
   every row key and object key.
 
+## K5 -- ~Y's ONE Analysis submission (hop 3) on K4's live input
+
+- **The act:** exactly ONE `POST /api/scoped/investor-reporting/analysis` (Overview), by `2.0.0_SA_COO~Y` as this
+  principal, on the input K4 normalized (`portfolio_99e76df8..`; full id and keys in
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/LIVE_UPLOAD_1203_EVIDENCE_20260926.md` @3cc73f2b79).
+  - It is observed only by read-only DynamoDB and S3 reads: no re-POST and no retry.
+  - A provider error is reported as the outcome, not repaired.
+- **Why in this window:** the input's owner row binds `principal_id` to THIS principal, and the binding dies with it.
+- **VENDOR WRITES, named:** the submission drives the YCharts hop-3 chain -- ONE `holdings_upload`, ONE
+  `portfolio_create`, ONE `report_create` and ONE PDF download. It rides the API egress permission (CTO 101100 / 101098),
+  ledgered.
+- **What it writes (Opal side):** the submission's own request, job and report rows and objects, which are the
+  product's record. ~Y names every row and object key.
+- **The YCharts objects it creates** (the holdings upload, portfolio, report and PDF) are named in the ledger and KEPT.
+- **Cutoff:** it runs only if both halves name this blob at HEAD by 14:35Z. Otherwise K5 is skipped, and hop 3 goes to
+  Andrew's own upload and Generate.
+
 ## K2 -- the session, never recorded
 
 The access token's TTL is 15 min (`jwt.ts:17`). The refresh token re-reads the row (CRO @909dd40acc measured this on the
@@ -142,7 +161,8 @@ the above for its life. The bound on what is done is the walker's script plus th
 CTO limit, verbatim in substance:
 
 **THE LIMIT (reworded, CTO 101166):** "page use only: reads plus the page's own selection writes; no admin, export,
-grant or vendor call." Plus K4: ~Y's ONE upload and the ONE resident `securities_info` GET it causes.
+grant or vendor call." Plus K4: ~Y's ONE upload and the ONE resident `securities_info` GET it causes. Plus K5: ~Y's ONE
+`/analysis` submission and the YCharts hop-3 writes it causes.
 
 **THE AUDIT, GRADED BY ROUTE.** The combined log (~D's HAR plus ~Y's upload log) is censused request by request, with
 its denominator printed. Every request must fall in exactly one admitted class:
@@ -152,13 +172,15 @@ its denominator printed. Every request must fall in exactly one admitted class:
 | any method | `/auth/login`, `/auth/refresh` |
 | POST | `/api/scoped/investor-reporting/directory/resolve` (page load); `/api/scoped/investor-reporting/selections` (each selection -> K3) |
 | POST, exactly 1, by ~Y | `/api/scoped/investor-reporting/analysis/inputs` (K4) |
+| POST, exactly 1, by ~Y | `/api/scoped/investor-reporting/analysis` (K5) |
 | GET / HEAD | any page read |
 
 Any request outside these classes is branch (d). This includes, explicitly:
 - any request of any method to `/auth/admin/`;
 - any POST/PUT/PATCH/DELETE to any other path;
 - any `/export` request;
-- any second `/analysis/inputs` POST.
+- any second `/analysis/inputs` POST;
+- any second `/analysis` POST.
 
 The census prints the count per class, the count outside the classes (must be 0), and the denominator.
 
@@ -212,10 +234,10 @@ The census prints the count per class, the count outside the classes (must be 0)
 - Any write beyond K3 (the page's own selections) and K4 (~Y's one upload): no settings, user, grant, roster,
   ownership-map or directory write.
 - Any export or render.
-- Any vendor call other than K4's one resident `securities_info` GET.
+- Any vendor call other than K4's one resident `securities_info` GET and K5's named hop-3 chain.
 - Any change to the auth-handler, the authorizer, the edge or the JWT keys.
 
 ## WHAT THE HALVES SIGN AGAINST
 
-This file's committed blob, the key list K1 + K1-CRED + K2 + K3 (retained) + K4 (retained, strike-able) above, the stated superadmin radius, and the sequence's
+This file's committed blob, the key list K1 + K1-CRED + K2 + K3 (retained) + K4 (retained, strike-able) + K5 (retained, cutoff 14:35Z) above, the stated superadmin radius, and the sequence's
 rollback and audit.
