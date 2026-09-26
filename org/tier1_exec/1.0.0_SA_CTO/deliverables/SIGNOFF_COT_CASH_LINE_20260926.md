@@ -60,3 +60,14 @@ Read by the CTO:
 call (C_06:186) has 0 callers. The real run: 853 rows, $59,253,165.31, cash.
 
 The deploy still waits for Monday's R1.
+
+**Addendum 2 (2.0.0_SA_COO~M msg 101613, @`eaca6a30de`): negative cash, ruled (a).**
+- 17 of 29 relationships are net negative on the cash line.
+- As drafted, D_03 dropped a class at 0 or below but kept the negative in the total, so 13 compositions summed to
+  100.5-128.0%.
+
+**Ruling:** D_03 adopts C_06's positive-rows rule (:462). Conditions:
+1. The 3 personal-liability rows it drops are measured and named before the deploy.
+2. A check after the deploy shows 0 of 29 compositions over 100.0% (tolerance 0.05pp).
+3. **C_06's delta is restated as +$66,055,897.80 (positive rows), replacing the net $59.25M above. That figure is
+   signed.**
