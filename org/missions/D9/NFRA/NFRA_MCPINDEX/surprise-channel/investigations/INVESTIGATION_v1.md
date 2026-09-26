@@ -1234,6 +1234,35 @@ carries none.
     "world_is": "On site Z that step is UNRUNNABLE -- it exits 1 before doing anything. Any AE deploying a Lambda from a Windows device silently loses the last_deployed_commit / last_deployed_at half of Rule 4's record unless they read the exit code and route around it by hand. build-and-upload.sh's own artifact_s3_key / artifact_sha256 write is UNAFFECTED -- it goes through node, not this reader -- so the map looks half-updated rather than untouched, which is the shape that hides the miss.",
     "disarm_owner": "2.0.0_SA_COO~O",
     "notes": "SCOPE: not fixed here, deliberately. TO-MX-s-3 bound 1 is 'One function's code. No schedule, event rule, role, layer or other function changes', and record-terraform-deploy.sh is shared CI tooling for 218 functions -- editing it mid-deploy is exactly the rider that bound forbids. The fix is one argument in two places (encoding='utf-8' at :259 and :340; the writer does not need it today but is one ensure_ascii=False away from needing it, so both). FOR THIS DEPLOY the two fields were written BY HAND, reproducing the tool's own documented rule rather than inventing one: last_deployed_commit = the last commit touching the function's source_dir (753fe90fb1), explicitly NOT HEAD (4dc8fa1221) -- the script's own :198-210 note records that a HEAD-derived or files[]-derived value makes verify-local.sh report non-packaged files as undeployed change. The hand-write is recorded here so it is auditable as a workaround and never mistaken for the tool having run."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S13",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-26T18:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S12"
+    ],
+    "one_line": "NARROWS AND CORRECTS MY OWN Z-S12. I filed it as 'the recorder cannot READ the file'. Measured: the recorder's read+write pair MANUFACTURES the corruption it later dies on, and the two writers of lambda-source-map.json hold OPPOSITE encoding policies, so the ASCII property MX-s-5 just restored is enforced by nothing.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE LOOP, EXERCISED one character in, not reasoned: pass 0, a file authored in UTF-8 holding ONE U+2014 em dash. pass 1, the recorder's own read (:259 bare open, cp1252 here) plus its write (:340 json.dump) -> the single character has BECOME THREE, U+00E2 U+20AC U+201D, and the file still looks ASCII because json.dump escapes them. pass 2, build-and-upload.sh's node updater re-emits those three as literal UTF-8 bytes. pass 3, the recorder reads again and RAISES on byte 0x9d. That reproduces the MX-s-3 failure state including the exact byte value.",
+        "SO THE READER IS THE CORRUPTER, not merely the victim. :259 decodes UTF-8 bytes as cp1252; :340 then writes the mangled characters back faithfully. Nothing complains, because the output is still valid ASCII JSON. The loud failure is the SECOND symptom, and it only arrives once a pass happens to produce a byte the code page has no character for.",
+        "THE TWO WRITERS DISAGREE, measured with both controls green (node rc=0 AND the output bytes verified to have changed, so a 0 would be node's own 0): python json.dump defaults to ensure_ascii=True and escapes non-ASCII, keeping the file readable by a default-codepage open(); node JSON.stringify does not escape and writes the character LITERALLY. One node write of any future non-ASCII value re-breaks the recorder exactly as before.",
+        "A FIRST MEASUREMENT OF MINE WAS INVALID AND THE CONTROL CAUGHT IT. My first node arm reported 0 non-ASCII bytes and I nearly recorded 'the writers agree'. I had not checked node's exit code: it was rc=1, so the bytes I read were still PYTHON's output. A second attempt also failed (rc=1, wrong argv index). Only the third run, with rc=0 AND a positive control proving node had actually rewritten the file, returned the real answer -- which was the OPPOSITE of the first reading.",
+        "THE HISTORY SAYS THIS HAS BEEN HAPPENING FOR MONTHS AND NOBODY JOINED IT UP. A git pickaxe on the exact 8-codepoint run returns 105 commits touching it. Four commit subjects name the mechanism outright: 911f95d458 'restore pure ASCII after the recorder's own write mojibaked it' (2026-09-14, 0.9.0_WK_POSN_ASTTAX~20), 13ec619b49 and c08ace5530 the same week, and d6e5fbe667 (0.7.0_AE_CloudOps~Z) 'drop the serialization churn my own record-terraform-deploy...'. Seats have been hand-repairing the symptom repeatedly; the repairer was the cause.",
+        "WHY MX-s-5's FIX HOLDS ANYWAY, and why a subset would not have: cp1252-reading pure ASCII is lossless, so with 0 non-ASCII characters left the loop has nothing to mangle. Verified after the fact -- the recorder ran to exit 0 and the file still reads 0 non-ASCII characters afterwards. That is CLAUDE.md's 'ALL non-ASCII out' arm working as designed."
+      ]
+    },
+    "spec_asserts": "Z-S12, my own row, said: 'record-terraform-deploy.sh ... CANNOT RUN on any device whose default encoding is not UTF-8. Its reader at :259 is a bare open().' It classed the hazard INERT on the grounds that the tool fails closed and corrupts nothing.",
+    "world_is": "True but shallow, and the INERT call was wrong. The tool does not merely fail on corruption it inherited -- it CREATES that corruption on every pass over any non-ASCII character, silently, and only becomes loud later. Z-S12's remedy (take the characters out) is still the right act and is done. What Z-S12 missed is that nothing PREVENTS recurrence: the two writers' opposing policies mean the next non-ASCII value written by node re-arms the loop. Hence ARMED, not INERT.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "NOT FIXED HERE, deliberately. MX-s-5 bound 1 is 'The one data file, plus the recorder re-run. No other file changes', and the order's own step 2 says 'Do not fix other tools here.' The fix is one argument in two places: encoding='utf-8' at record-terraform-deploy.sh :259 and :340. The reader is the urgent half; the writer needs it only to stay correct if ensure_ascii is ever turned off. A durable guard would be a commit-time ASCII check on lambda-source-map.json, which would have caught all 105 of those commits -- proposing it, not implementing it (CLAUDE.md section 2: never implement a gate unless Andrew asks)."
   }
 ]
 ```
