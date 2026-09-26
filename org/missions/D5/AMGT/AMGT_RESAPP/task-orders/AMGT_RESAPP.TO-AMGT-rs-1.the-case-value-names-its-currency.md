@@ -71,7 +71,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 **ISSUER NOTES:** s.4 item 1 (the slug's own recommendation). SERVED: the export change reaches the served body at rs-2; the page change reaches portal DEV only. AC1's 48 is the count at the fixed capture; a case withheld under limb 2 is a row and an issuer amendment, not a silent pass.
 
-<status>pending</status>
+<status>complete</status>
 <round>44</round>
 <slot>~161</slot>
 <fabric>site-z</fabric>
