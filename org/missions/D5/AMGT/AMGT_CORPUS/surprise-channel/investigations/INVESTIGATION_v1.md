@@ -1620,6 +1620,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Z-S45 disarms when the one writer holds; it closes when both readers pick the current-method object and a /2 rewrite serves /2 on every resolved name.",
     "world_is": "Held from 16:41Z.",
     "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S47",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-26T19:05:00Z",
+    "one_line": "A blanket re-derive would UN-SERVE two good Base cases: under today's rule over the landed raw, cases-report reads 6861_JP_Equity and CSL_AU_Equity ABSENT 'no PE_RATIO history on the landed block', while their served blocks (stamp 20260919T152154Z, raw_stamp_used 20260919T152125Z / 152121Z) are SERVED with a 10-year trailing-median P/E -- and the histdata object at exactly that raw stamp is still landed (9,074 and 8,864 bytes). So the derive's raw-stamp selection no longer reaches the history the served block was built from. NVDA_US_Equity likewise reads 'no consensus EPS on the landed block' over a block that carries no cases at all. The round-7 re-derive (i-2's drain act A) therefore EXCLUDES these three keys and runs over the other 94, whose disposition and ratio do not move.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/r7_cases_report_all_20260926T184758Z.log: cases-report under the i-2 rule over all 97 block keys, in batches of 3 (the stage's cap): 97 of 97 reported; SERVED 49, every one carrying band_basis; outside_band 4 of 4 carrying it; against the served before-state (evidence/r7_blocks_before_rederive.txt) exactly three keys move -- 6861_JP SERVED -> ABSENT, CSL_AU SERVED -> ABSENT, NVDA_US (no cases) -> ABSENT.",
+        "Served blocks read directly: 6861_JP_Equity and CSL_AU_Equity newest stamp 20260919T152154Z, base SERVED, formula 'consensus EPS (FY1) x trailing-median P/E', trailing_median_pe n 10; NVDA_US_Equity newest stamp 20260911T005402Z carries no base.",
+        "bloomberg/harvest/bronze/histdata/security_key=6861_JP_Equity/20260919T152125Z.json (9,074 B) and .../CSL_AU_Equity/20260919T152121Z.json (8,864 B) are landed -- the raw the served blocks name.",
+        "model_block_pull.py's CLI takes only a stage, --securities and --dry-run; there is no raw-stamp selector, so a derive cannot be pointed back at the raw that carries the history."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v7.0 s.4 and CRPS-i-2's record face: the drain re-derives EVERY block key and re-mints Z-W2-S10's three pre-g-1 blocks with band and currency fields.",
+    "world_is": "Only CAT_US_Equity of Z-W2-S10's three can be re-minted without losing its served case; 6861_JP and CSL_AU keep their pre-g-1 blocks (in band 1.257 and 1.390, unconfirmable by field) until the derive can read the raw they were built from. The re-derive runs over 94 keys, not 97.",
+    "notes": "No hazard is armed: the three keys are excluded by the act's literal key list, which this seat controls. Round-8 input: find why _latest_stamp's selection loses the landed history (a later stamp on another request type is the likely shape), then either select the stamp that carries all three request types or re-pull (vendor, ledgered under the session lift)."
   }
 ]
 ```
