@@ -201,6 +201,12 @@ disposed REMEDIED (S129).
   09-22 and for at least 3 months before. S146 DISMISSED_WITH_REASON @5bee820159. The shared '****4304 / IRA' label is
   the relationship-level discriminator by design; a display ruling is asked of the CTO.
 
+- ACCOUNT own-mask labels (CTO 101302): code on CLOUD 5d5678d6c1; both halves signed (CTO @45bafa24a1, CRO @c412578ede).
+  The served-as_of rebuild is a STOP at all three firms (@4fd998322e), so the labels ride the first scheduled publication.
+- R4 enable half, first read of its required diff (CTO 101343): IRPT_MVP_M/R4_ENABLE_DIFF_20260926/README.md. With the
+  served source partitions pinned there are no amount, node-set or clock changes at any firm; labels and classes trace to
+  signed halves; INF's 30,881 name facts (e0f680f0df) are the one class no signed half covers. Re-run at Monday's fire.
+
 ## Limits
 
 - No CVO verdict on any criterion.

@@ -58,6 +58,60 @@ def _served_revision(s3, firm):
     return doc["dates"][doc["latest_date"]]["revision"], doc["latest_date"]
 
 
+_DATE = __import__('re').compile(r"\d{4}-\d{2}-\d{2}")
+
+
+class PinnedListing:
+    """An S3 client whose partition LISTINGS show, for each table the served build read, only the partition it read
+    (from the served manifest's source_objects), so a rebuild selects the served inputs exactly. Reads pass through;
+    VersionedInputs still pins and hashes every object it reads."""
+
+    def __init__(self, s3, source_objects):
+        self._s3 = s3
+        self._pins = []  # (bucket, table_prefix, date)
+        for o in source_objects:
+            m = _DATE.search(o["key"])
+            if m:
+                self._pins.append((o["bucket"], o["key"][:m.start()], m.group(0)))
+
+    def __getattr__(self, name):
+        return getattr(self._s3, name)
+
+    def _visible(self, bucket, key):
+        for b, prefix, date in self._pins:
+            if b == bucket and key.startswith(prefix) and _DATE.search(key[len(prefix):len(prefix) + 32] or ""):
+                return date in key[len(prefix):]
+        return True
+
+    def get_paginator(self, name):
+        inner = self._s3.get_paginator(name)
+        if name != "list_objects_v2":
+            return inner
+        outer = self
+
+        class _P:
+            def paginate(self, **kw):
+                for page in inner.paginate(**kw):
+                    page = dict(page)
+                    page["Contents"] = [c for c in page.get("Contents", []) if outer._visible(kw["Bucket"], c["Key"])]
+                    page["CommonPrefixes"] = [c for c in page.get("CommonPrefixes", [])
+                                              if outer._visible(kw["Bucket"], c["Prefix"])]
+                    yield page
+        return _P()
+
+    def list_objects_v2(self, **kw):
+        page = dict(self._s3.list_objects_v2(**kw))
+        page["Contents"] = [c for c in page.get("Contents", []) if self._visible(kw["Bucket"], c["Key"])]
+        page["CommonPrefixes"] = [c for c in page.get("CommonPrefixes", []) if self._visible(kw["Bucket"], c["Prefix"])]
+        return page
+
+
+def _served_source_objects(s3, firm):
+    from publication import HoldingsPublication
+    idx = HoldingsPublication(s3, firm, qa=False).begin()['document']
+    return json.loads(_get(s3, idx['dates'][idx['latest_date']]['manifest'])).get('source_objects') or []
+
+
 def _next_trading_day(tcal, iso):
     day = dt.date.fromisoformat(iso) + dt.timedelta(days=1)
     while not tcal.is_trading_day(day):
@@ -92,12 +146,21 @@ def structural_diff(served, cand):
     return labels, other
 
 
-def dry(firm, out):
+def dry(firm, out, pin_served=False):
     import boto3
     import holdings_snapshot as hs
     s3 = boto3.client('s3', region_name='us-east-1')
     served = _served(s3, firm)
     as_of = served['clocks']['business_date']
+    if pin_served:
+        # Rebuild from the served build's own source partitions: the cutoff is the latest served source date, and
+        # each table lists only its served partition. What differs then is code and the classification table.
+        objs = [o for o in _served_source_objects(s3, firm) if not o['key'].endswith('latest.json')]
+        cutoff = max(_DATE.search(o['key']).group(0) for o in objs if _DATE.search(o['key']))
+        result = hs.run_firm(firm, PinnedListing(s3, objs), qa=False, upload=False, local_out=out, as_of=cutoff)
+        if result['business_date'] != as_of:
+            raise SystemExit('STOP: pinned rebuild business date %s != served %s' % (result['business_date'], as_of))
+        return _report(firm, s3, served, as_of, cutoff, result, out)
     # The CUTOFF that rebuilds the served business date: INF values at the prior trading day of its custody key, so
     # its served 09-22 comes from a 09-23 cutoff. Try the date itself, then the next trading day; keep the build whose
     # own business date equals the served one.
@@ -107,6 +170,10 @@ def dry(firm, out):
             break
     else:
         raise SystemExit('STOP: no cutoff rebuilds served business date %s' % as_of)
+    return _report(firm, s3, served, as_of, cutoff, result, out)
+
+
+def _report(firm, s3, served, as_of, cutoff, result, out):
     cands = sorted(Path(out).rglob('*.json'))
     cand_path = next(p for p in cands if 'platinum' in str(p) and 'date=%s' % as_of in str(p)
                      and not p.name.endswith(('.manifest.json', '.header.json')))
@@ -136,11 +203,12 @@ def main():
     d = sub.add_parser('dry')
     d.add_argument('--firm', required=True)
     d.add_argument('--out', required=True)
+    d.add_argument('--pin-served', action='store_true')
     c = sub.add_parser('check')
     c.add_argument('--firm', required=True)
     c.add_argument('--expect', required=True)
     a = ap.parse_args()
-    return dry(a.firm, a.out) if a.mode == 'dry' else check(a.firm, a.expect)
+    return dry(a.firm, a.out, a.pin_served) if a.mode == 'dry' else check(a.firm, a.expect)
 
 
 if __name__ == '__main__':
