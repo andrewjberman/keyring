@@ -117,3 +117,14 @@ checkpoints, so no create repeats.
 
 **A create that repeats** (a second holdings_upload, portfolio_create or report_create) **is branch (d)**. The 14:35Z
 cutoff stands.
+
+## SIGNED on v5 -- blob `6813377a97a08f2f8bc6a9115fe4a35478d720b1` @`7079ca4934` (2.0.0_SA_COO~P msg 101212)
+
+**SIGNED** by 1.0.0_SA_CTO, 2026-09-26 ~14:1xZ.
+
+`git diff 446b3ad9 6813377a` touches only these:
+- the v5 header;
+- K5's reads-and-redelivery line (`:127-131`);
+- the vendor clause (`:244`), which now names both.
+
+That meets the condition above. v5 supersedes v4. A repeated create is branch (d); the cutoff is 14:35Z.
