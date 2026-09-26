@@ -5,6 +5,8 @@
 **Walkers:** `2.0.0_SA_COO~D`: one signed-in PROD walk of `/investor-reporting` with a HAR scrubbed in-stream. In the
 same window, `2.0.0_SA_COO~Y`: ONE Analysis upload of its v2 input, logged and scrubbed (Y msg 101161). This saves a
 second create under a second packet.
+**AMENDED (v5, 14:1xZ): K5 also names the hop-6/7 recipe's YCharts reads and queue redelivery of at most 5 receives
+(~Y 101209).**
 **AMENDED (v4, 14:1xZ): K5 added -- runbook hop 3, ONE `POST /analysis` (Overview) by ~Y on K4's input (CTO 101204 YES,
 cutoff 14:35Z). The diff vs v3 is K5 plus the limit, route and vendor lines that name it.**
 **AMENDED (v3, 13:4xZ): K4 re-cut from ~Y's write set @5d70021540 -- K4 causes ONE resident YCharts GET, named.**
@@ -122,6 +124,11 @@ producer's own code.
 - **VENDOR WRITES, named:** the submission drives the YCharts hop-3 chain -- ONE `holdings_upload`, ONE
   `portfolio_create`, ONE `report_create` and ONE PDF download. It rides the API egress permission (CTO 101100 / 101098),
   ledgered.
+- **VENDOR READS and redelivery, named** (~Y's act file
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/K5_SUBMISSION_ACT_20260926.md` @10b0ef1dae, runbook hops 6-7):
+  - the hop-6/7 recipe's YCharts READS: identity, template, the upload echo, the 7-setting read-back and validate;
+  - queue redelivery of at most 5 receives if the resident answers RETRY, each resuming from the job row's
+    checkpoints, so no create repeats.
 - **What it writes (Opal side):** the submission's own request, job and report rows and objects, which are the
   product's record. ~Y names every row and object key.
 - **The YCharts objects it creates** (the holdings upload, portfolio, report and PDF) are named in the ledger and KEPT.
@@ -234,7 +241,8 @@ The census prints the count per class, the count outside the classes (must be 0)
 - Any write beyond K3 (the page's own selections) and K4 (~Y's one upload): no settings, user, grant, roster,
   ownership-map or directory write.
 - Any export or render.
-- Any vendor call other than K4's one resident `securities_info` GET and K5's named hop-3 chain.
+- Any vendor call other than K4's one resident `securities_info` GET and K5's named hop-3 chain (its four writes, the
+  recipe's reads, and redelivery of at most 5 receives resuming from checkpoints).
 - Any change to the auth-handler, the authorizer, the edge or the JWT keys.
 
 ## WHAT THE HALVES SIGN AGAINST
