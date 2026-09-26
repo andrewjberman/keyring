@@ -1,0 +1,276 @@
+{
+ "measured_at": "2026-09-26T21:5xZ",
+ "rows": [
+  {
+   "ticker": "2602335D",
+   "name": "TPG Inc",
+   "etf_asset_class": "equity",
+   "etf_sub_asset_class": "Financials",
+   "bd_asset_class_now": null,
+   "bd_present": false,
+   "act": "put"
+  },
+  {
+   "ticker": "BBSEY",
+   "name": "BB Seguridade Participacoes SA",
+   "etf_asset_class": "equity",
+   "etf_sub_asset_class": "Financials",
+   "bd_asset_class_now": null,
+   "bd_present": false,
+   "act": "put"
+  },
+  {
+   "ticker": "BKRKY",
+   "name": "Bank Rakyat Indonesia Persero",
+   "etf_asset_class": "equity",
+   "etf_sub_asset_class": "Financials",
+   "bd_asset_class_now": null,
+   "bd_present": false,
+   "act": "put"
+  },
+  {
+   "ticker": "CASH",
+   "name": "Cash & Cash Equivalents",
+   "etf_asset_class": "fixed_income",
+   "etf_sub_asset_class": "Ultra Short Duration",
+   "bd_asset_class_now": "equity",
+   "bd_present": true,
+   "act": "update"
+  },
+  {
+   "ticker": "CICHY",
+   "name": "China Construction Bank Corp",
+   "etf_asset_class": "equity",
+   "etf_sub_asset_class": "Financials",
+   "bd_asset_class_now": null,
+   "bd_present": false,
+   "act": "put"
+  },
+  {
+   "ticker": "DBC",
+   "name": "Invesco DB Commodity Index Tracking Fund",
+   "etf_asset_class": "commodities",
+   "etf_sub_asset_class": "Commodities",
+   "bd_asset_class_now": "alternatives",
+   "bd_present": true,
+   "act": "update"
+  },
+  {
+   "ticker": "FXFXX",
+   "name": "First American Treasury Obligations Fund",
+   "etf_asset_class": "fixed_income",
+   "etf_sub_asset_class": "Ultra Short Duration",
+   "bd_asset_class_now": null,
+   "bd_present": false,
+   "act": "put"
+  },
+  {
+   "ticker": "GLD",
+   "name": "SPDR Gold Shares",
+   "etf_asset_class": "commodities",
+   "etf_sub_asset_class": "Metals",
+   "bd_asset_class_now": "alternatives",
+   "bd_present": true,
+   "act": "update"
+  },
+  {
+   "ticker": "GSG",
+   "name": "iShares S&P GSCI Commodity-Indexed Trust",
+   "etf_asset_class": "commodities",
+   "etf_sub_asset_class": "Commodities",
+   "bd_asset_class_now": "alternatives",
+   "bd_present": true,
+   "act": "update"
+  },
+  {
+   "ticker": "IAU",
+   "name": "iShares Gold Trust",
+   "etf_asset_class": "commodities",
+   "etf_sub_asset_class": "Metals",
+   "bd_asset_class_now": "alternatives",
+   "bd_present": true,
+   "act": "update"
+  },
+  {
+   "ticker": "ICT",
+   "name": "International Container Terminal Services Inc",
+   "etf_asset_class": "equity",
+   "etf_sub_asset_class": "Industrials",
+   "bd_asset_class_now": null,
+   "bd_present": false,
+   "act": "put"
+  },
+  {
+   "ticker": "JEPI",
+   "name": "JPMorgan Equity Premium Income ETF",
+   "etf_asset_class": "structured",
+   "etf_sub_asset_class": "Options Income",
+   "bd_asset_class_now": "equity",
+   "bd_present": true,
+   "act": "update"
+  },
+  {
+   "ticker": "KCDMY",
+   "name": "Kimberly-Clark de Mexico SAB de CV",
+   "etf_asset_class": "equity",
+   "etf_sub_asset_class": "Consumer Staples",
+   "bd_asset_class_now": null,
+   "bd_present": false,
+   "act": "put"
+  },
+  {
+   "ticker": "KKPNY",
+   "name": "Koninklijke KPN NV",
+   "etf_asset_class": "equity",
+   "etf_sub_asset_class": "Communication Services",
+   "bd_asset_class_now": null,
+   "bd_present": false,
+   "act": "put"
+  },
+  {
+   "ticker": "KOF",
+   "name": "Coca-Cola Femsa SAB de CV",
+   "etf_asset_class": "equity",
+   "etf_sub_asset_class": "Consumer Staples",
+   "bd_asset_class_now": null,
+   "bd_present": false,
+   "act": "put"
+  },
+  {
+   "ticker": "MER",
+   "name": "Manila Electric Co",
+   "etf_asset_class": "equity",
+   "etf_sub_asset_class": "Utilities",
+   "bd_asset_class_now": null,
+   "bd_present": false,
+   "act": "put"
+  },
+  {
+   "ticker": "OMAB",
+   "name": "Grupo Aeroportuario del Centro Norte SAB de CV",
+   "etf_asset_class": "equity",
+   "etf_sub_asset_class": "Industrials",
+   "bd_asset_class_now": null,
+   "bd_present": false,
+   "act": "put"
+  },
+  {
+   "ticker": "ORANY",
+   "name": "Orange SA",
+   "etf_asset_class": "equity",
+   "etf_sub_asset_class": "Communication Services",
+   "bd_asset_class_now": null,
+   "bd_present": false,
+   "act": "put"
+  },
+  {
+   "ticker": "PDBC",
+   "name": "Invesco Optimum Yield Diversified Commodity Strategy No K-1 ETF",
+   "etf_asset_class": "commodities",
+   "etf_sub_asset_class": "Commodities",
+   "bd_asset_class_now": "equity",
+   "bd_present": true,
+   "act": "update"
+  },
+  {
+   "ticker": "QBER",
+   "name": "TrueShares Quarterly Bear Hedge ETF",
+   "etf_asset_class": "structured",
+   "etf_sub_asset_class": "Hedge",
+   "bd_asset_class_now": "alternatives",
+   "bd_present": true,
+   "act": "update"
+  },
+  {
+   "ticker": "RBGLD",
+   "name": "Reckitt Benckiser Group PLC",
+   "etf_asset_class": "equity",
+   "etf_sub_asset_class": "Consumer Staples",
+   "bd_asset_class_now": null,
+   "bd_present": false,
+   "act": "put"
+  },
+  {
+   "ticker": "SALXX",
+   "name": "State Street U.S. Government MMKT",
+   "etf_asset_class": "fixed_income",
+   "etf_sub_asset_class": "Ultra Short Duration",
+   "bd_asset_class_now": null,
+   "bd_present": false,
+   "act": "put"
+  },
+  {
+   "ticker": "SLV",
+   "name": "iShares Silver Trust",
+   "etf_asset_class": "commodities",
+   "etf_sub_asset_class": "Metals",
+   "bd_asset_class_now": "alternatives",
+   "bd_present": true,
+   "act": "update"
+  },
+  {
+   "ticker": "USO",
+   "name": "United States Oil Fund",
+   "etf_asset_class": "commodities",
+   "etf_sub_asset_class": "Oil",
+   "bd_asset_class_now": "alternatives",
+   "bd_present": true,
+   "act": "update"
+  },
+  {
+   "ticker": "UVXY",
+   "name": "ProShares Ultra VIX Short-Term Futures ETF",
+   "etf_asset_class": "structured",
+   "etf_sub_asset_class": "Hedge",
+   "bd_asset_class_now": "alternatives",
+   "bd_present": true,
+   "act": "update"
+  },
+  {
+   "ticker": "VIV",
+   "name": "Telefonica Brasil SA",
+   "etf_asset_class": "equity",
+   "etf_sub_asset_class": "Communication Services",
+   "bd_asset_class_now": null,
+   "bd_present": false,
+   "act": "put"
+  },
+  {
+   "ticker": "VIXY",
+   "name": "ProShares VIX Short-Term Futures ETF",
+   "etf_asset_class": "structured",
+   "etf_sub_asset_class": "Hedge",
+   "bd_asset_class_now": "alternatives",
+   "bd_present": true,
+   "act": "update"
+  },
+  {
+   "ticker": "VNQ",
+   "name": "Vanguard Real Estate ETF",
+   "etf_asset_class": "alternatives",
+   "etf_sub_asset_class": "Real Estate",
+   "bd_asset_class_now": "equity",
+   "bd_present": true,
+   "act": "update"
+  },
+  {
+   "ticker": "VXX",
+   "name": "iPath Series B S&P 500 VIX Short-Term Futures ETN",
+   "etf_asset_class": "structured",
+   "etf_sub_asset_class": "Hedge",
+   "bd_asset_class_now": "alternatives",
+   "bd_present": true,
+   "act": "update"
+  },
+  {
+   "ticker": "PHYS",
+   "name": "Sprott Physical Gold Trust",
+   "etf_asset_class": "commodities",
+   "etf_sub_asset_class": "Metals",
+   "bd_asset_class_now": "alternatives",
+   "bd_present": true,
+   "act": "update",
+   "basis": "Andrew-direct ~21:2xZ via CTO 101502/101511 (not in etf-classifications)"
+  }
+ ]
+}
