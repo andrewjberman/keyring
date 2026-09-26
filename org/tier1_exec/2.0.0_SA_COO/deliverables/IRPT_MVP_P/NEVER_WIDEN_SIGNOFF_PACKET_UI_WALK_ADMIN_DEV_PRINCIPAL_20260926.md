@@ -5,6 +5,7 @@
 **Walkers:** `2.0.0_SA_COO~D`: one signed-in PROD walk of `/investor-reporting` with a HAR scrubbed in-stream. In the
 same window, `2.0.0_SA_COO~Y`: ONE Analysis upload of its v2 input, logged and scrubbed (Y msg 101161). This saves a
 second create under a second packet.
+**v7 (15:0xZ): K5 is bound to THIS window's K4 input, not window 1's (~Y 101247); the only change vs v6.**
 **v6 (14:5xZ) -- WINDOW 2 (CTO 101240 YES).** The first principal (`irpt-uiwalk-1790430787`) was created 13:53:14Z,
 deleted 14:22:22Z and audited; ledger `irpt-ui-walk-principal-20260926` is CLOSED. The diff against v5 is:
 - a NEW principal: the same K1 shape under a new `<epoch>`, created only after both halves name this blob;
@@ -125,8 +126,8 @@ producer's own code.
 ## K5 -- ~Y's ONE Analysis submission (hop 3) on K4's live input
 
 - **The act:** exactly ONE `POST /api/scoped/investor-reporting/analysis` (Overview), by `2.0.0_SA_COO~Y` as this
-  principal, on the input K4 normalized (`portfolio_99e76df8..`; full id and keys in
-  `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/LIVE_UPLOAD_1203_EVIDENCE_20260926.md` @3cc73f2b79).
+  principal, on the input THIS window's K4 normalizes. A fresh upload mints a new input id, because the owner is part
+  of the frozen content. Window 1's input (`portfolio_99e76df8..`, owned by the deleted principal) is NOT used.
   - It is observed only by read-only DynamoDB and S3 reads: no re-POST and no retry.
   - A provider error is reported as the outcome, not repaired.
 - **Why in this window:** the input's owner row binds `principal_id` to THIS principal, and the binding dies with it.
