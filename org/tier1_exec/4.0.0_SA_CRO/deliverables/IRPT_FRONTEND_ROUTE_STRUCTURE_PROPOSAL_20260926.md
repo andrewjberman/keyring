@@ -20,7 +20,11 @@ field or contract is needed.
    Each entry's `ids.account_ids` equals the set its selection returns (3 of 3).
 2. **The client's snapshot names its accounts.** `GET /holdings/{client set}` returns every account as a level-0
    `ACCOUNT` node, with a `display.label` and `drill_refs {ref_kind: ACCOUNT, ref_id}`: 5 of 5 accounts, 6 of 6
-   snapshots. No other measured source names them: the directory account search named 0 of 5.
+   snapshots. No other measured source identifies them: the directory account search named 0 of 5.
+   **CORRECTION 16:4xZ:** the labels repeat within a client (1 distinct label of 2, 1 of 3). Each account node carries
+   the client's masked tail and type, not its own. The ids are distinct. Until 2.0.0_SA_COO~M's own-mask labels
+   (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_ACCOUNT_OWN_MASK_20260926.md`) are
+   served, every account-list surface shows the account's value beside its label (rule 4).
 3. **Performance answers one account and refuses a set.**
    - Client-set requests: 4 of 4 `SELECTION_UNSUPPORTED`.
    - One-account requests (`POST /selections {ACCOUNT, [id]}` -> `accounts=1`, 5 of 5):
@@ -81,7 +85,8 @@ Deep links are parked (Call 2).
    - The account chooser renders ABOVE the answer gate, in every state (Performance brief, hops 2-3).
    - A one-account client opens R3a directly.
 4. **One account list.** R1's `accountList` feeds the card's "over what", the Holdings filter, the Performance chooser
-   and Analysis's included accounts. `IdentityCard.fetchIdentityCardData`'s directory search is removed.
+   and Analysis's included accounts. Each entry shows its label and its value. The value is what tells two
+   same-labelled accounts apart until ~M's own-mask labels are served; it is kept after that. `IdentityCard.fetchIdentityCardData`'s directory search is removed.
 5. **Export follows the tab's scope.** On Performance, the page Export targets R3a's account set and its report
    revision, never `clientSetId` (a client-set Performance export would carry a refused report). On Holdings it has no
    kind today (`EXPORT_KIND_BY_TAB`), as now.

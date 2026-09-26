@@ -93,11 +93,16 @@ The exact mismatch:
 - the walk's name searches asked for `limit` 843 (COT) and 7,576 (49F) and returned 0 of 2 and 0 of 3 of the
   selected accounts;
 - the holdings snapshot the page already fetches for the same client carries every account as a level-0 `ACCOUNT`
-  node, with a non-generic `display.label` and a `drill_refs` entry of `ref_kind: ACCOUNT` naming the account id:
-  5 of 5 accounts across both clients walked, 6 of 6 snapshots.
+  node, with a `display.label` and a `drill_refs` entry of `ref_kind: ACCOUNT` naming the account id: 5 of 5
+  accounts across both clients walked, 6 of 6 snapshots.
+- **CORRECTION 16:4xZ:** those labels do NOT tell the accounts apart. Within each client, every account node carries
+  the same label, the client's masked tail and type: 1 distinct label of 2, and 1 of 3. The ids are distinct. The fix
+  is 2.0.0_SA_COO~M's own-mask labels, each account node carrying its own tail and type
+  (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_ACCOUNT_OWN_MASK_20260926.md`).
 
 Close: the client's account list (id, label, value) is read from the holdings snapshot's level-0 `ACCOUNT` nodes, the
-only measured source that names them; the directory account search is retired. Proof: the chooser lists n named
+only measured source that identifies them; the directory account search is retired. Until ~M's own-mask labels are
+served, the chooser also shows each account's value, so identical labels stay distinguishable. Proof: the chooser lists n distinguishable
 accounts for an n-account client.
 
 ### 5. One-account set -> Performance -- WORKS (backend, as is)

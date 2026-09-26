@@ -90,7 +90,8 @@ Measured: `limit` 843 (COT) and 7,576 (49F); 0 of 2 and 0 of 3 selected accounts
 unnamed, so they are not clickable (`IdentityCard.tsx:270-277`). The Analysis tab's nameless included accounts
 (IVE20-5) are consistent with the same missing names; that was not traced here.
 
-Close: the account list is the client snapshot's level-0 `ACCOUNT` nodes (5 of 5 named, with ids by `drill_refs`), shared
+Close: the account list is the client snapshot's level-0 `ACCOUNT` nodes (5 of 5 labelled, with ids by `drill_refs`;
+correction 16:4xZ: the labels repeat within a client until ~M's own-mask labels are served, so the value disambiguates), shared
 with the tabs. The directory account search is retired. Proof: the card lists every account by name, and each entry
 opens that account's Performance.
 

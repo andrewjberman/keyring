@@ -33,8 +33,8 @@ Machine-readable evidence: `org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_FRONTE
 
 | Firm | Endpoint | Measured | Gap |
 |---|---|---|---|
-| COT | `GET /holdings/{client set}` | 4 of 4 READY; 2 accounts, 2 of 2 account nodes named | account filter absent; narrowing is page-wide |
-| 49F | the same | 2 of 2 READY; 3 accounts, 3 of 3 account nodes named; custody total and all 3 account values read 0.0 | the same, plus an unexplained zero total (see limits) |
+| COT | `GET /holdings/{client set}` | 4 of 4 READY; 2 accounts, 2 of 2 account nodes labelled, 1 distinct label (correction 16:4xZ) | account filter absent; narrowing is page-wide |
+| 49F | the same | 2 of 2 READY; 3 accounts, 3 of 3 account nodes labelled, 1 distinct label (correction 16:4xZ); custody total and all 3 account values read 0.0 | the same, plus an unexplained zero total (see limits) |
 | INF | the same | not walked | -- |
 
 ## Start-to-finish walk
@@ -67,7 +67,9 @@ which returned 0 of 2 and 0 of 3 selected accounts in the walk (Performance brie
 Measured: no account filter above the drill in `w03`.
 
 Close: the account list comes from this snapshot's level-0 `ACCOUNT` nodes. Each carries a `display.label` and a
-`drill_refs` entry `{ref_kind: ACCOUNT, ref_id: <account id>}`: 5 of 5 accounts, 6 of 6 snapshots. Proof: the filter
+`drill_refs` entry `{ref_kind: ACCOUNT, ref_id: <account id>}`: 5 of 5 accounts, 6 of 6 snapshots. CORRECTION 16:4xZ:
+the labels repeat within a client (1 distinct of 2, 1 of 3; `w03` shows both rows as `****8749 / ROTHIRA`), so the
+filter also shows each account's value until 2.0.0_SA_COO~M's own-mask labels are served. Proof: the filter
 lists every account of a 2- and a 3-account client.
 
 ### 4. Account filter -> what it narrows -- MISMATCHED with C2

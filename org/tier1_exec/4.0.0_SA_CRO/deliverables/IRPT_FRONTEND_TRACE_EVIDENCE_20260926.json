@@ -172,5 +172,21 @@
  "limits": [
   "sample = the directory pages and searches the walk loaded, not every entry",
   "no name, id or amount is recorded here"
- ]
+ ],
+ "holdings_account_label_distinctness": {
+  "claim": "measured",
+  "note": "added 16:4xZ",
+  "snapshots": [
+   {
+    "har_entry": 98,
+    "account_nodes": 2,
+    "distinct_labels": 1
+   },
+   {
+    "har_entry": 256,
+    "account_nodes": 3,
+    "distinct_labels": 1
+   }
+  ]
+ }
 }
