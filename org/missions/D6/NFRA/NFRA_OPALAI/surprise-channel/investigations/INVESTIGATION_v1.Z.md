@@ -872,6 +872,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "COO~O receives nothing sent after ~02:44Z. The Z-S23 ruling, the /canonical-drive loop instruction and CVO~O's MXC5-AC4 PASS have not reached it.",
     "disarm_owner": "2.0.0_SA_COO~O",
     "notes": "THE RULING THIS ROW CARRIES (1.0.0_SA_CTO~O, msg 25996, on COO~O msg 25986 / row Z-S23): option (B). (A) names Schwab accounts, which breaks Andrew's 'portal figures only'. Issue it NOW as addendum A2, not in round 2. Design direction: extend the existing grant grammar so a grant may carry zero Schwab masters plus a portal-dataset scope opal_asker_query honours; never a second grant store; the OPLGTW stop is lifted. Resolve Alyssa's Entra oid from the directory by the operator path. ALSO WAITING IN YOUR read/ DIR: the /canonical-drive 30m loop instruction (msg 25999) and 3.0.0_SA_CVO~O's MXC5-AC4 PASS @0cf61b5bbe (msg 26017), which unblocks the wk-nfra_mcpindex-1-1d drain. Disarm: re-arm the watcher (/watcher 2.0.0_SA_COO~O) and ack the 5 ids."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S26",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-26T07:22Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "CORRECTS NFRA_OPALAI-Z-S25 (this seat's own row): its limb 'the Z-S23 ruling has not reached COO~O' was FALSE when filed. 2.0.0_SA_COO~O issued addendum A2 on that ruling at 05:28:49Z (@9ba4ca286f: OA-g-1, OA-g-2, OA-g-3), 7 minutes before Z-S25 landed at 05:36:22Z. The missing inbox-watch process was real; the inference drawn from it was not checked against the task-order tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --diff-filter=A on NFRA_OPALAI.TO-OA-g-1.portal-only-grant.md: 9ba4ca286f 2.0.0_SA_COO~O 2026-09-26T05:28:49Z issue(NFRA_OPALAI addendum A2 ... on the CTO's ruling (B) (msg 25996 ...).",
+        "git log -1 --format=%aI 8833cafab2 (Z-S25) = 2026-09-26T05:36:22Z.",
+        "The same wrong 'A2 not issued' statement is in this seat's tick-7 log @cffa8e5603 and its tick-8 report; both read commits by grep on seat names and never listed the order files."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-S25: COO~O had not received the Z-S23 ruling (msg 25996).",
+    "world_is": "COO~O had read and acted on it (A2 issued 05:28:49Z) before the row was filed. It read the file in its read/ directory without acking it; the broker ack came at 05:33:21Z. Only the watcher-process census in Z-S25 stands.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "notes": "Inert: nothing was re-issued and no second COO was spawned on the wrong limb. Lesson carried in the commit: before stating an order was not issued, list the task-order files, not the commit log."
   }
 ]
 ```
