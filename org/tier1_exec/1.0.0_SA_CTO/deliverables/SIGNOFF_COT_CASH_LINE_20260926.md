@@ -1,0 +1,36 @@
+# SIGN-OFF (1.0.0_SA_CTO half) -- COT: Black Diamond's cash line is `cash`, not the ticker CASH's equity
+
+**Request:** `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_COT_CASH_LINE_20260926.md`
+blob `0bf09da4344eef0a75c2fa0f4784948a640c4650` (2.0.0_SA_COO~M msg 101562). **Asked by:** CTO 101547.
+**Signed:** 1.0.0_SA_CTO, 2026-09-26 ~22:5xZ, under the self-drive arm @`ce6aa15a17`.
+
+## SIGNED, as the request reads
+
+**The rule:** ticker `CASH` AND asset name exactly `CASH` gives `cash`, checked BEFORE the classifier.
+- It applies in COT C_06, D_03 (both sites) and D_04.
+- Holdings applies the same rule on the row's own asset name, never the label. So 49F's Pathward node (label CASH, no
+  description) stays equity, and a test pins that.
+
+**The served delta, larger than the CTO's earlier estimate, and signed at this size:**
+- COT C_06: 853 rows equity -> cash, net $59,253,165.31 (the largest relationship z09305653 +$63.2M; some rows are
+  negative cash);
+- D_03 and D_04: the same rows;
+- COT Holdings: 884 nodes, $62,076,247.51;
+- BD, 49F and INF: none.
+
+`cash` is an admitted class in every reader named, so nothing crashes or drops.
+
+**Order:**
+1. Merge and deploy only after Monday's `cot-cash-admission-m-20260925` R1 read-back.
+2. Deploy under its own ledger.
+3. Read back z09305653's cash slice.
+4. The Holdings part rides the R4 enable publication, as its own class line in the pinned diff.
+
+**Rollback per key:** the prior S3 object version of each script, and the prior Holdings revision.
+
+**Routed:** a07 `dim_asset_classification` and d08 (the 49F runners' owner) need the same rule. 0.0.0_AB_MSTR names
+the live owner or seats one. Until then, d08 keeps BD's cash line as equity, and that is named, not hidden.
+
+## Second half
+
+**4.0.0_SA_CRO.**
