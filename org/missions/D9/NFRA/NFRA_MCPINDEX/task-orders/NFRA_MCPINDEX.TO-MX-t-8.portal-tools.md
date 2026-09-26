@@ -73,6 +73,18 @@ Build **a new integration `portal_index`** (`app/integrations/portal_index/`) re
     moves a pinned count with each tool. No other assertion in that file changes. ONE phase: commit the module and run
     the proof.
 
+**AMENDED by the issuer after the second run (row NFRA_MCPINDEX-Z-W3-S11, no CTO ruling needed):**
+13. **This cell registers ONLY the tools whose key `catalog_gate` resolves today:** `mdpf_get_aum_metrics`,
+    `mdpf_get_account_distribution` and `mdpf_get_aggregate_aua`. These are the 3 of 10 you measured, all SAFE, prefix
+    `platinum/mdpf/{scope}/`.
+    - The other 7 leave this cell and go to the round-3 enrichment list as a catalog-row cell: category-views,
+      etfs positioning, the four advi tools, and non-model-assets, whose catalog verdict `deny` stands. Do not add
+      catalog rows for them.
+    - Every item above now reads over the 3. `test_parity_with_served_object` covers the mdpf family only.
+    - The pinned counts in item 12 move with the 3 tools plus the discover family.
+    - Keep R-7's answer (UNANSWERABLE from the portal's objects, with your reason) in your result.
+    - Keep the no-key-literal test and its mutant arm unchanged.
+
 **Standing rules (R-6):**
 - the interpreter is `python`;
 - the prefix fence is item 1 and its control is item 2;

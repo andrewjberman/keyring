@@ -334,6 +334,30 @@ carries none.
     "spec_asserts": "MX-b-2 face section 1.2: remove the report from the index with git rm --cached (file on disk stays), committed under safe-commit.sh.",
     "world_is": "safe-commit re-adds a --cached removal when the file exists on disk; the removal commits only if the file is off disk during the safe-commit run.",
     "notes": "No gate was bypassed. The file was off disk only for the safe-commit call. Whether safe-commit should honour an already-staged removal of a file still present on disk is for the tool's owner; this worker makes no change to it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T00:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W3-S11"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W3-S11. The issuer amends MX-t-8, without a CTO ruling, to register only the 3 tools catalog_gate resolves today: mdpf aum-metrics, account-distribution and aggregate-aua. The other 7 go to the round-3 enrichment list as a catalog-row cell, and non-model-assets' deny verdict stands.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W3-S11, on the worker's branch wk-NFRA_MCPINDEX-3 @6345d36f04: catalog_gate.load_catalog indexes only channels.*.artifacts[].key. 3 of 10 tools resolve. A catalog copy with the 7 rows planted passes all 4 tests, so the gap is catalog rows, not the module.",
+        "The amendment is item 13 of org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-t-8.portal-tools.md, in this commit. The issuer amends its own criteria without a CTO ruling (CLAUDE.md rule 27 L5/L6, Andrew-direct 2026-09-24). No gate limb grades a modification of a direct-act order other than GATE (viii)."
+      ]
+    },
+    "spec_asserts": "W3-S11 (BLOCKING, ARMED): ruling D-5 (c) keys each tool from its own catalog row, and 7 of 10 tools have none, so MX-t-8's criteria cannot pass as cut.",
+    "world_is": "MX-t-8 now covers 3 tools that resolve under D-5 (c). The 7 unrowed tools are a round-3 catalog-row cell. No catalog row is added by this cell.",
+    "notes": "FWD-2's parity now covers the mdpf family only this round. The CTO's round-N analysis reads it from here."
   }
 ]
 ```
