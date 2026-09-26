@@ -9483,3 +9483,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Found by P while waiting on the INF re-arm run; the INF plan 01209afb is unspent (the 23:25Z request was a 49F client)."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S141",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-26T02:45:00Z",
+  "one_line": "A code-and-dry-run-only grant does not survive an integrator push: 0.0.0_AB_MSTR's CLOUD push 079fbf7d8e had the deploy gate write the fixed COT B_01b (CLOUD e20b0990d5, grant @930e0f3 'CODE + DRY RUN ONLY') to s3://opal-data-cot/code/gold/ at 02:39:19Z. DISARMED 02:44:33Z by restoring the prior version.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "list-object-versions code/gold/B_01b.classify_new_securities.py: PbDCWhVV... 2026-09-26T02:39:19Z ETag 28b33a17... (the fixed bytes) over jRtJ.LnIa... 2026-06-11 ETag eedfd1d1... (pre-fix).",
+      "Restore: copy-object of jRtJ.LnIa... -> latest nSr3.NM7HCW0e83wNvVPeWnSSm.sPf5M, ETag eedfd1d1...; read-back shows HOLDINGS_LOTS_PREFIX (the empty-prefix no-op). Ledger cot-b01b-disarm-m-20260926 CLOSED.",
+      "No upload ran in the window: gold/manifests/classify_watermark.json is 404 (B_01b writes it on --upload). The live SSM document opal-cot-gold-run names B_01b 0 times; only a manual gold_dispatch.sh canonical/holdings-seed run (:86, --upload) reaches it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO grant @930e0f348f (.owned-paths.yaml note): 'CODE + DRY RUN ONLY ... Safe-deploy of this script is also a separate act.'",
+  "world_is": "The push-time deploy gate deploys every changed gold script in the pushed range, so a grant's 'no deploy' scope holds only until the next CLOUD push. S3 now serves the pre-fix bytes while CLOUD holds the fixed ones: the next push that touches B_01b (the rule-2 prompt amendment) deploys again.",
+  "disarm_owner": "2.0.0_SA_COO~M: no further B_01b commit lands on CLOUD before the CTO's never-widen half for the COT-new write is signed; the push-gate scope question is the deploy gate owner's (0.0.0_AB_MSTR, routed via 1.0.0_SA_CTO msg 101088)",
+  "notes": "Found by 1.0.0_SA_CTO (msg 101088); disarmed by ~M same turn."
+}
+```

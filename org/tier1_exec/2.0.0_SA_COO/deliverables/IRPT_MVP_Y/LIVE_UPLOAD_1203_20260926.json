@@ -1,0 +1,82 @@
+{
+ "principal": "irpt-walk-1790391192@opal.test",
+ "tenant": "cottonwood",
+ "upload_token": "y-live-1203-20260926T031708",
+ "authority": "CTO 101110 / P 101113 (Andrew-direct via CTO 101075)",
+ "calls": [
+  {
+   "at": "2026-09-26T03:17:05.820066Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/login",
+   "request_headers": {
+    "Content-Type": "application/json"
+   },
+   "request_body": {
+    "email": "irpt-walk-1790391192@opal.test",
+    "password": "<redacted>"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "ESXgAh2ZoAMEP4g=",
+    "set-cookie": "<redacted>"
+   },
+   "response_body": {
+    "accessToken": "<redacted>",
+    "user": {
+     "email": "irpt-walk-1790391192@opal.test",
+     "name": "IRPT walk principal (Andrew-direct 20260926)",
+     "role": "user",
+     "mustChangePassword": false
+    }
+   }
+  },
+  {
+   "at": "2026-09-26T03:17:08.706561Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/investor-reporting/analysis/inputs?selected_tenant=cottonwood",
+   "request_headers": {
+    "Content-Type": "application/json",
+    "Authorization": "<redacted>",
+    "X-Contract-Version": "v1"
+   },
+   "request_body": {
+    "upload_token": "y-live-1203-20260926T031708",
+    "filename": "aapl-vnq-12.03.csv",
+    "file_base64": "VGlja2VyLERvbGxhcnMKQUFQTCwxMC4wMQpWTlEsMi4wMgo=",
+    "file_type": "csv",
+    "declared_currency": "USD"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "ESXgci4dIAMEZ9Q="
+   },
+   "response_body": {
+    "ok": false,
+    "contract_version": "v1",
+    "operation": "analysis-input-upload",
+    "status": {
+     "operation": {
+      "operation_id": "analysis-input-upload",
+      "operation_kind": "read",
+      "revision": "v1"
+     },
+     "state": "UNAVAILABLE",
+     "source_dates": {
+      "source_completion_date": null
+     },
+     "actions": [
+      {
+       "action": "NONE",
+       "safe": true,
+       "description": "no retry or recovery action is offered for this outcome"
+      }
+     ],
+     "public_reason_code": "UNEXPECTED"
+    },
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2"
+   }
+  }
+ ]
+}
