@@ -83,7 +83,7 @@ Validate it with `python .tools/proof-of-spec-check.py <instance>`. Report once:
 **ISSUER NOTES:** E4. SPAWN ONLY after MX-d-2 AND MX-t-8 are merged INTO the held branch. Cut from its head, then
 merge back into it. The live cold run is G-B, at the close.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
