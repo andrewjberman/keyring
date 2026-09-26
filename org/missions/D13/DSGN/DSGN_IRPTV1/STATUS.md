@@ -76,6 +76,12 @@ disarmed. The DEV landing 13b5356f..8242412d is under the CTO's review; the push
    from the URL and resolveBundle passes them to getPerformanceReport, refusing by name when one is missing (today it
    throws "An accepted account selection is required" and sends start = end = businessAsOf).
 
+## Round-6 inputs (recorded as they arrive; nothing changes mid-round)
+
+1. Andrew-direct ~15:1xZ (CTO 101271, record @07c4b8b84e; R8 SUPERSEDED): "Performance is always going to be account-level, not client level"; people search by client. The frontend route structure comes from 4.0.0_SA_CRO's /closer traces, then a PRD addendum, then round 6. Today a relationship selection prints the raw `SELECTION_UNSUPPORTED` on Performance and offers no account narrowing (prod-uiwalk-20260926.md, IVE20/IVE21).
+
+2. PRD v0.9 @a7f4039787 adopted the CRO's ROUTE STRUCTURE (FWD-19, C25; Calls: largest account preselected + chooser always visible; route state only, no ids in the URL); v0.10 @54410c6a90 (FWD-5 account level); v0.11 @e13fed2413 (FWD-20: every account's YTD side by side in the chooser, no client aggregate). Round 6 cuts from v0.11 once the CVO's ratified-text stamp lands: C25 (FWD-19) first, C26 (FWD-20) the round after (CTO 101294).
+
 ## Parked
 
 | Question (off-thread) | Owner | Un-parks when |
@@ -85,7 +91,7 @@ disarmed. The DEV landing 13b5356f..8242412d is under the CTO's review; the push
 | Git's credential manager refuses non-interactively; pushes use `gh auth git-credential` per command | Andrew | he re-signs it at his keyboard (his option (a), ~17:2xZ) |
 | A completed worker cannot be continued (row S12); each queue handoff is a fresh spawn | the /dispatch skill's owner | the skill says so |
 | IVE29-AC4 on PROD: z09308463's cash slice (0.37 at 09-22) with shares summing to 1; all-cash z09326138 or z09308511 at 100% cash | the COO seat holding DSGN_IRPTV1 (`2.0.0_SA_COO~D` at close) | 2.0.0_SA_COO~M reports Monday 2026-09-28's first scheduled COT gold run (C_06 cash deployed 23:44Z, version LmvfjXlB; M 101064) |
-| IVE28-AC4 on PROD: z09305589 shows Other at $19.65M | same | 2.0.0_SA_COO~M reports batch B written (held until act 1 reads back on that Monday run; M 101064) |
+| IVE28-AC4 on PROD: z09305589 shows Other at $19,653,063.27 (bd-securities Part 2, 26 `other` keys; Part 1 wrote 941 keys and moves no `other`; M 101121, re-cut per Andrew-direct @c3dde578b9) | same | 2.0.0_SA_COO~M reports Part 2 written (after Monday's act-1 read-back; the IR `other` mapping is on origin DEV and PROD already) |
 | IVE30-AC3, round 4's AC4 judgments, round 3's five NOT_EVALUATED: a signed-in look (the stubbed page 401s all 24 AI data calls) | Andrew (asked through 1.0.0_SA_CTO, 100986 / 101005) | his signed-in walk on 5174 or PROD |
 | Round 5 cut (candidates above) | `1.0.0_SA_CTO`, then the issuing COO | the CTO's round-4 analysis arrives |
 | The drain checks omitted `bun run lint`; one unused import reached DEV (fixed 1e821a6e) | the COO seat holding DSGN_IRPTV1 | next drain: run lint beside tsc and the suite |

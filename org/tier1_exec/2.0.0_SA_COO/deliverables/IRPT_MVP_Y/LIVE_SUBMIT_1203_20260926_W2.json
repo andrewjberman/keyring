@@ -1,0 +1,85 @@
+{
+ "principal": "irpt-uiwalk-1790435397@opal.test",
+ "tenant": "cottonwood",
+ "authority": "window 2: packet v7 blob 3edebd85 K5 (CTO 543f5426f2, CRO 36b060964b); P 101268; ledger irpt-uiwalk-principal-w2-20260926",
+ "calls": [
+  {
+   "at": "2026-09-26T15:16:33.681918Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/login",
+   "request_headers": {
+    "Content-Type": "application/json"
+   },
+   "request_body": {
+    "email": "irpt-uiwalk-1790435397@opal.test",
+    "password": "<redacted>"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EUA46j7QoAMEPMw=",
+    "set-cookie": "<redacted>"
+   },
+   "response_body": {
+    "accessToken": "<redacted>",
+    "user": {
+     "email": "irpt-uiwalk-1790435397@opal.test",
+     "name": "IRPT UI walk principal (Andrew-direct 20260926)",
+     "role": "admin",
+     "mustChangePassword": false
+    }
+   }
+  },
+  {
+   "at": "2026-09-26T15:16:36.781111Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/investor-reporting/analysis?selected_tenant=cottonwood",
+   "request_headers": {
+    "Content-Type": "application/json",
+    "Authorization": "<redacted>",
+    "X-Contract-Version": "v1"
+   },
+   "request_body": {
+    "request_id": "y-live-1203-overview-20260926",
+    "client_id": null,
+    "account_ids": [],
+    "snapshot_id": null,
+    "variant": "overview",
+    "comparison_keys": [],
+    "report_title": null,
+    "prepared_for": "IRPT live walk 12.03",
+    "input_id": "portfolio_f40b800ea2217cf4c126b43faab6d21e7239ff33e02fc126aa93fd5685b56f29"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EUA5aih0oAMEPoQ="
+   },
+   "response_body": {
+    "ok": false,
+    "contract_version": "v1",
+    "operation": "analysis-requests",
+    "status": {
+     "operation": {
+      "operation_id": "analysis-requests",
+      "operation_kind": "read",
+      "revision": "v1"
+     },
+     "state": "UNAVAILABLE",
+     "source_dates": {
+      "source_completion_date": null
+     },
+     "actions": [
+      {
+       "action": "NONE",
+       "safe": true,
+       "description": "no retry or recovery action is offered for this outcome"
+      }
+     ],
+     "public_reason_code": "UNEXPECTED"
+    },
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2"
+   }
+  }
+ ]
+}

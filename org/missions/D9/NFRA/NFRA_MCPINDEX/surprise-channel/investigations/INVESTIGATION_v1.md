@@ -1234,6 +1234,109 @@ carries none.
     "world_is": "On site Z that step is UNRUNNABLE -- it exits 1 before doing anything. Any AE deploying a Lambda from a Windows device silently loses the last_deployed_commit / last_deployed_at half of Rule 4's record unless they read the exit code and route around it by hand. build-and-upload.sh's own artifact_s3_key / artifact_sha256 write is UNAFFECTED -- it goes through node, not this reader -- so the map looks half-updated rather than untouched, which is the shape that hides the miss.",
     "disarm_owner": "2.0.0_SA_COO~O",
     "notes": "SCOPE: not fixed here, deliberately. TO-MX-s-3 bound 1 is 'One function's code. No schedule, event rule, role, layer or other function changes', and record-terraform-deploy.sh is shared CI tooling for 218 functions -- editing it mid-deploy is exactly the rider that bound forbids. The fix is one argument in two places (encoding='utf-8' at :259 and :340; the writer does not need it today but is one ensure_ascii=False away from needing it, so both). FOR THIS DEPLOY the two fields were written BY HAND, reproducing the tool's own documented rule rather than inventing one: last_deployed_commit = the last commit touching the function's source_dir (753fe90fb1), explicitly NOT HEAD (4dc8fa1221) -- the script's own :198-210 note records that a HEAD-derived or files[]-derived value makes verify-local.sh report non-packaged files as undeployed change. The hand-write is recorded here so it is auditable as a workaround and never mistaken for the tool having run."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S13",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-26T18:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S12"
+    ],
+    "one_line": "NARROWS AND CORRECTS MY OWN Z-S12. I filed it as 'the recorder cannot READ the file'. Measured: the recorder's read+write pair MANUFACTURES the corruption it later dies on, and the two writers of lambda-source-map.json hold OPPOSITE encoding policies, so the ASCII property MX-s-5 just restored is enforced by nothing.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE LOOP, EXERCISED one character in, not reasoned: pass 0, a file authored in UTF-8 holding ONE U+2014 em dash. pass 1, the recorder's own read (:259 bare open, cp1252 here) plus its write (:340 json.dump) -> the single character has BECOME THREE, U+00E2 U+20AC U+201D, and the file still looks ASCII because json.dump escapes them. pass 2, build-and-upload.sh's node updater re-emits those three as literal UTF-8 bytes. pass 3, the recorder reads again and RAISES on byte 0x9d. That reproduces the MX-s-3 failure state including the exact byte value.",
+        "SO THE READER IS THE CORRUPTER, not merely the victim. :259 decodes UTF-8 bytes as cp1252; :340 then writes the mangled characters back faithfully. Nothing complains, because the output is still valid ASCII JSON. The loud failure is the SECOND symptom, and it only arrives once a pass happens to produce a byte the code page has no character for.",
+        "THE TWO WRITERS DISAGREE, measured with both controls green (node rc=0 AND the output bytes verified to have changed, so a 0 would be node's own 0): python json.dump defaults to ensure_ascii=True and escapes non-ASCII, keeping the file readable by a default-codepage open(); node JSON.stringify does not escape and writes the character LITERALLY. One node write of any future non-ASCII value re-breaks the recorder exactly as before.",
+        "A FIRST MEASUREMENT OF MINE WAS INVALID AND THE CONTROL CAUGHT IT. My first node arm reported 0 non-ASCII bytes and I nearly recorded 'the writers agree'. I had not checked node's exit code: it was rc=1, so the bytes I read were still PYTHON's output. A second attempt also failed (rc=1, wrong argv index). Only the third run, with rc=0 AND a positive control proving node had actually rewritten the file, returned the real answer -- which was the OPPOSITE of the first reading.",
+        "THE HISTORY SAYS THIS HAS BEEN HAPPENING FOR MONTHS AND NOBODY JOINED IT UP. A git pickaxe on the exact 8-codepoint run returns 105 commits touching it. Four commit subjects name the mechanism outright: 911f95d458 'restore pure ASCII after the recorder's own write mojibaked it' (2026-09-14, 0.9.0_WK_POSN_ASTTAX~20), 13ec619b49 and c08ace5530 the same week, and d6e5fbe667 (0.7.0_AE_CloudOps~Z) 'drop the serialization churn my own record-terraform-deploy...'. Seats have been hand-repairing the symptom repeatedly; the repairer was the cause.",
+        "WHY MX-s-5's FIX HOLDS ANYWAY, and why a subset would not have: cp1252-reading pure ASCII is lossless, so with 0 non-ASCII characters left the loop has nothing to mangle. Verified after the fact -- the recorder ran to exit 0 and the file still reads 0 non-ASCII characters afterwards. That is CLAUDE.md's 'ALL non-ASCII out' arm working as designed."
+      ]
+    },
+    "spec_asserts": "Z-S12, my own row, said: 'record-terraform-deploy.sh ... CANNOT RUN on any device whose default encoding is not UTF-8. Its reader at :259 is a bare open().' It classed the hazard INERT on the grounds that the tool fails closed and corrupts nothing.",
+    "world_is": "True but shallow, and the INERT call was wrong. The tool does not merely fail on corruption it inherited -- it CREATES that corruption on every pass over any non-ASCII character, silently, and only becomes loud later. Z-S12's remedy (take the characters out) is still the right act and is done. What Z-S12 missed is that nothing PREVENTS recurrence: the two writers' opposing policies mean the next non-ASCII value written by node re-arms the loop. Hence ARMED, not INERT.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "NOT FIXED HERE, deliberately. MX-s-5 bound 1 is 'The one data file, plus the recorder re-run. No other file changes', and the order's own step 2 says 'Do not fix other tools here.' The fix is one argument in two places: encoding='utf-8' at record-terraform-deploy.sh :259 and :340. The reader is the urgent half; the writer needs it only to stay correct if ensure_ascii is ever turned off. A durable guard would be a commit-time ASCII check on lambda-source-map.json, which would have caught all 105 of those commits -- proposing it, not implementing it (CLAUDE.md section 2: never implement a gate unless Andrew asks)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S14",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T18:45Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W2-S7",
+      "NFRA_MCPINDEX-Z-W3-S11"
+    ],
+    "one_line": "DISPOSITION CORRECTION by the issuer. My earlier disarm rows adjudicated these items but carried disposition UNDER_INVESTIGATION, which _latest_dispositions (surprise-row-gate.py:426) passes to the target, so the items kept reading OPEN and gating. This row carries the terminal disposition: W2-S7 by Z-S7 (v6.AC1 reads all 1069 catalog strings, planted control caught); W3-S11 by Z-S2 (MX-t-8 amended to the 3 tools catalog_gate resolves).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Fold measured at ~18:40Z with the gate's own _latest_dispositions/_gating_item_ids: each target listed read UNDER_INVESTIGATION and gating, while an issuer disarm row already adjudicated it.",
+        "3.0.0_SA_CVO~Z's finding (relayed by 1.0.0_SA_CTO~O, file 20260926T182052Z) that Z-W9-S3 read UNDER_INVESTIGATION at 18:3xZ."
+      ]
+    },
+    "spec_asserts": "Each target was disarmed by the issuer's adjudicating row.",
+    "world_is": "The disarms carried a non-terminal disposition; this row makes them terminal. The reasons are the earlier rows' own.",
+    "dismissal_reason": "Each target was already disarmed by the issuer's own adjudicating row with its reason stated there; this row only makes the disposition terminal."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S15",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-26T20:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-s-4 step 3's premise is wrong, and fixing the login will NOT restore the compaction. convert_assets_to_silver.py gates write_compacted on --backfill, not on the absence of --no-compacted; the scheduled path passes --latest, so silver/bd_assets.parquet has NEVER been written by a scheduled run.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE GATE, read at the single call site: the script has exactly ONE `write_compacted(df)` call, at line 279, and line 278 reads `if args.backfill and not args.no_compacted:`. Compaction is therefore conditional on --backfill. The absence of --no-compacted is necessary but NOT sufficient, which is precisely what the order's step 3 assumes.",
+        "WHAT THE SCHEDULE ACTUALLY PASSES: the SSM document opal-bd-asset-dim-download runs `python3 convert_assets_to_silver.py --latest`. No --backfill, anywhere in the document. So on the scheduled path the compaction branch is unreachable -- not skipped by a flag, simply never entered.",
+        "CONSISTENT WITH THE FROZEN ARTIFACT: silver/bd_assets.parquet last moved 2026-04-14, which is a manual --backfill, not a scheduled run. The DS measurement recorded the file as frozen and read it as a symptom of the download outage; it is independent of it.",
+        "NO DRIFT BETWEEN REPO AND DEPLOYED, so the code read IS the code running: the S3 copy s3://opal-data-bd/code/silver/convert_assets_to_silver.py (2026-05-11, 9680 bytes) and the repo copy data/black_diamond/scripts/silver/convert_assets_to_silver.py are byte-identical, sha256 0b9983667285. The repo file is git-tracked and not ignored.",
+        "AN INSTRUMENT TRAP I WALKED INTO AND RECORD SO THE NEXT READER DOES NOT. `comp-find 'convert_assets_to_silver' --band HEAD` returned a MEASURED ZERO over 76,147 files, and on that zero I briefly concluded the script had no repo copy and lived only in S3. That was WRONG: the file is named exactly that, is tracked, and sits at data/black_diamond/scripts/silver/. A plain `ls` found it in one call. The HEAD band's zero was the instrument, not the world."
+      ]
+    },
+    "spec_asserts": "MX-s-4 step 3: 'Restore the compaction to silver/bd_assets.parquet. Check what the SSM document passes to convert_assets_to_silver.py; it writes the compacted file unless --no-compacted is passed.'",
+    "world_is": "It writes the compacted file only under --backfill. The SSM document passes --latest and has never passed --backfill, so --no-compacted is a red herring: adding or removing it changes nothing. Two consequences the order does not anticipate. (1) Step 3 is NOT downstream of step 1 -- repairing the Black Diamond login restores the date partitions but leaves the compacted file frozen exactly where it is. (2) The remedy is a change to the script's condition, and under CLAUDE.md rule 13 data/*/scripts/silver/*.py is DS-owned for commit-to-QA-deploy, so it is NOT this AE lane's to make. Passing --backfill from the SSM document would compact, but it also rebuilds silver from backfill_v2 + forwardfill_v2 on every scheduled run, which is a different and much larger act than the order asked for -- naming it here so it is visibly REJECTED rather than silently unconsidered.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "NOT FIXED HERE, and the ownership is the reason rather than the bound: rule 13 puts the silver script on the DS lane. Routing, not acting. MX-s-4 bound 4 also forbids meeting a criterion 'by a route this face does not name', and --backfill-on-a-schedule is exactly such a route. AC2 (silver/bd_assets.parquet written after issue) therefore CANNOT PASS from this lane as the order is written, whatever happens to the login -- that is the refusal MX-s-4 bound 4 asks me to report with its measurement, and this row is it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S16",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T21:40Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Ruled and re-routed: the compaction and bridge rebuild are DS-owned silver acts (rule 13), now order NFRA_MCPINDEX.TO-MX-s-6 to 0.4.0_DS_ClientPlatform~D; MX-s-4 is amended to steps 1-2 (AC1, AC4).",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S15"
+    ],
+    "one_line": "DISARMS Z-S15 (0.7.0_AE_CloudOps~I, BLOCKING). It is correct: convert_assets_to_silver.py writes the compacted file only under --backfill, and the schedule passes --latest, so MX-s-4 step 3's premise was wrong and its AC2/AC3 could not pass from an AE lane. MX-s-4 now carries only the login and the honest exit. The compaction fix and bridge rebuild are MX-s-6 (DS), reusing s4.AC2/AC3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Row Z-S15 @b629459239 (0.7.0_AE_CloudOps~I).",
+        "MX-s-4 amended and MX-s-6 issued in this commit."
+      ]
+    },
+    "spec_asserts": "MX-s-4 step 3: the converter writes the compacted file unless --no-compacted is passed.",
+    "world_is": "It writes it only under --backfill; the remedy is a DS script change, now MX-s-6."
   }
 ]
 ```

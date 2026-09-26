@@ -1,0 +1,36 @@
+CARRIED        38 already-ANSWERED folder(s) skipped and carried into the output
+RETRIED        0 folder(s) the vendor had refused -- a refusal is not an answer
+UNIVERSE       org\missions\D5\AMGT\AMGT_RESAPP\deliverables\0.9.0_WK_AMGT_RESAPP~4\universe.json
+DENOMINATOR    89 folders   THIS BATCH 26
+PROVIDER       seekingalpha.com, DIRECT, unauthenticated, no vendor
+BARS           window 30 days, density >= 3 in window
+MODE           LIVE
+
+  [ 1] JD.com 9618 HK                           JD       ACCEPTED JD -- SA names it 'JD.com, Inc.' (test a) and 32 of 50 re
+  [ 2] KDDI                                     KDDIY    ACCEPTED KDDIY -- SA names it 'KDDI Corporation' (test a) and 20 o
+  [ 3] Kimberly Clark KMB                       KMB      ACCEPTED KMB -- SA names it 'Kimberly-Clark Corporation' (test a) 
+  [ 4] Koninklijke KPN NA                       KKPNY    ACCEPTED KKPNY -- SA names it 'Koninklijke KPN N.V.' (test a) and 
+  [ 5] Lenovo 992 HK                            LNVGY    ACCEPTED LNVGY -- SA names it 'Lenovo Group Limited' (test a) and 
+  [ 6] MSCI Inc MSCI US                         MSCI     ACCEPTED MSCI -- SA names it 'MSCI Inc.' (test a) and 33 of 50 ret
+  [ 7] Manila MER PER                           MAEOY    ACCEPTED MAEOY -- SA names it 'Manila Electric Company' (test a) a
+  [ 8] Mastercard MA                            MA       ACCEPTED MA -- SA names it 'Mastercard Incorporated' (test a) and 
+  [ 9] MercadoLibre MELI US                     MELI     ACCEPTED MELI -- SA names it 'MercadoLibre, Inc.' (test a) and 39 
+  [10] Michelin ML FP                           MGDDF    ACCEPTED MGDDF -- SA names it 'Compagnie Générale des Établissemen
+  [11] Mitsubishi UFJ Financial Group 8306 JP   MUFG     ACCEPTED MUFG -- SA names it 'Mitsubishi UFJ Financial Group, Inc.
+  [12] Monster MNST                             MNST     ACCEPTED MNST -- SA names it 'Monster Beverage Corporation' (test 
+  [13] National Grid NG LN                      NGG      ACCEPTED NGG -- SA names it 'National Grid plc' (test a) and 40 of
+  [14] Nestle NESN SW                           --       NOT ASKED, HTTP 403
+  [15] Netflix NFLX                             --       NOT ASKED, HTTP 403
+  [16] Nike NKE US                              --       NOT ASKED, HTTP 403
+
+  STOPPING: 3 consecutive vendor refusals. The rest of the batch would record absences never asked about.
+
+CALLS          40 (all free, direct, no quota)
+POPULATION     38 carried + 26 this batch = 64 record(s)
+ASKED          51 of 64
+NEVER REACHED  10  <- the stop guard fired before these
+NOT ASKED      13 search-refused + 0 news-refused  <- vendor refusals, NOT findings about those names
+RESOLVED       49 of 51 asked
+REFUSED        2 of 51 asked  <- a 0 here means the rule is NOT discriminating
+SERVEABLE      16 of 51 asked  <- resolved AND clearing the density bar
+WROTE          org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/sa_symbol_pass_20260926/batch2.json

@@ -2,9 +2,10 @@
 
 Seat `2.0.0_SA_COO~Y` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
-Drive: the 20m goal loop (cron 87624362) reading `python .tools/drive-mode.py read IRPT_BCKEND~Y` each tick (C11, CTO
-100819). Lease FAST until 2026-09-24T21:13:40Z at 18:18Z. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-25T22:15Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
+Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 2f72865f), per CTO 101100 (Andrew-direct ~03:0xZ, 09-26; record
+`ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Lease FAST until 2026-09-26T15:01:17Z. Vendor API egress
+is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
+As of 2026-09-26T16:25Z. Lease FAST until 2026-09-27T01:52:21Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Pins
 
@@ -19,19 +20,63 @@ As of 2026-09-25T22:15Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverabl
 
 ## Live thread
 
-State: NOT LIVE end to end. Hops 2+3 SERVED (P 100866). Y verified: generate `LdjdnnLh...` 19:49:52Z Active, and its
-`upload_resolution.py` / `uploads.py` / `maintained_sources.py` are byte-identical to Y d16b7c8743 / P 19b38e2f22.
-The live route `POST .../analysis/inputs` goes to the generate integration. Queue and DLQ are 0. The resident is
-`f624e8a72f` per P. First failing hop was 1 in the PORTAL, fixed by ~D at `088386fe` (20:1xZ). It sends the legacy `csv_base64` body (refused
-`CSV_LANE_NOT_COMPOSED`), and its adapter throws on RESOLVING. The published contract admits neither the template lane
-nor RESOLVING. Fixes are handed over: contract patch to P, portal spec to ~D.
+State: LIVE THROUGH HOP 1d (upload -> resolve -> NORMALIZED). At 13:54:56Z Y made ONE `POST /analysis/inputs` by API as
+the admin+Dev walk principal `irpt-uiwalk-1790430787@opal.test` (packet v3 blob `07b7a000`, K4; CTO `b70ede1756`, CRO
+`a157c45762`; P 101191):
+- the POST answered RESOLVING;
+- the resident logged `handled=1` at 13:55:02Z;
+- NORMALIZATION# reads NORMALIZED;
+- `INPUT#portfolio_99e76df8...` is `irpt-normalized-portfolio.v2`: total 12.03, AAPL 10.01, VNQ 2.02, both resolved by
+  YCharts.
+
+Evidence with every row and object key: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/LIVE_UPLOAD_1203_EVIDENCE_20260926.md`
+@3cc73f2b79. The scrubbed log is `LIVE_UPLOAD_1203_20260926_RUN2.json`. The 03:17Z failure (the missing `interactive_access`)
+was fixed by P at `45d905110c`, served as generate `IJD6bd1I` at 13:30Z; the closure check exits 0.
+
+Hop 3 was ATTEMPTED as K5 (packet v5 `6813377a`: CTO `3b43a23f92`, CRO `80b1a711f3`; CTO 101203). At 14:18:08Z Y made ONE
+`POST /analysis` (Overview) on that input, which answered UNEXPECTED, `corr-8c5e097ea21e`: generate raised
+ModuleNotFoundError `jsonschema`.
+- `ycharts/generate/composition_admission.py:11` imports jsonschema and referencing at module level.
+- Zip `IJD6bd1I` carries neither.
+- Nothing was written: no row, no job, no queue message, no vendor call.
+- Log: `LIVE_SUBMIT_1203_20260926.json`.
+
+The closure check passed that zip because it walked only first-party imports (surprise row S144 @fa8aff523f). Y fixed it
+@2664fe084c: it now FAILS on `IJD6bd1I`, naming jsonschema and referencing [MODULE]; a positive control with stubs passes.
+
+The principal was deleted at 14:22:22Z (P 101232). The input's owner binds to that deleted principal, so hop 3 needs:
+- P's fix is LIVE at 14:52:47Z: generate code `85TXFzzv0gcMBcokhqlGjeMcFK7pBHDx3ELN50R04iU=` plus layer
+  `irpt-common:5`, ledger `irpt-generate-jsonschema-fix-20260926`. Y's check on the S3 artifact, whose sha256 equals the
+  CodeSha256: with the layer, exit 0 (40 modules); without it, exit 1 (jsonschema, referencing). That meets CTO 101230
+  conditions (1) and (2). Condition (3), importing every module on the deployed function, is P's.
+- then a new window: a fresh upload plus a submission, or Andrew's own upload plus Generate. Y asked 1.0.0_SA_CTO at
+  14:5xZ for a K4+K5 window after condition (3).
+
+WINDOW 2 (packet v7 `3edebd85`, principal `irpt-uiwalk-1790435397`, 15:10Z-16:05Z):
+- K4 NORMALIZED again: input `portfolio_f40b800e..`, the resident logged `handled=1` at 15:14:04Z, and the 7 new rows
+  are all K4's.
+- K5 at 15:16:38Z answered UNEXPECTED, `corr-fd24ee4063ad`: `irpt-ycharts-generate-role` was denied
+  `s3:GetObjectVersion` on `opal-data-irpt/irpt/cottonwood/state/normalized_portfolios/...`.
+- K5 wrote nothing and made no vendor call.
+
+The grant patch for P is `P_GENERATE_SUBMISSION_S3_GRANTS_20260926.patch` @e5daacce0b: read NORMALIZED_PORTFOLIO and
+retain REQUEST_COMPOSITION. Hop 3 then needs window 3.
+
+After the Andrew-direct pause (15:27Z-16:03Z; CTO 101280 and 101297; loop re-armed as cron 81b07667):
+- P applied the grant at `be7647e48f` (16:1xZ).
+- Y delivered the full-path IAM list (CTO 101276) @2789ac3bbd, from an AST census of the deployed code (zip 85TXFzzv;
+  resident f624e8a72f):
+  - generate: 25/25 met their expectation (hop3 16/16 allowed, including K5's two formerly denied actions; 3 negatives
+    denied);
+  - resident: 40/40 met their expectation (hop3 37/37 allowed; 3 negatives denied).
+- Next: P's own simulator run, then ONE window packet (hop 3 plus the export-B BEFORE read).
 
 ## Acceptance IDs
 
 | ID | State | Evidence |
 |---|---|---|
 | Y1 custody + owned CSV/XLSX + disposition | OFFLINE + one real-object run | interpreter @47b2adf6df, oracle 15/15 |
-| Y2 immutable normalized input | OFFLINE ONLY | deferred lane @bb1eb7f92b + @58280c8dd4: Dollars 12.03, XLSX, TARGET_WEIGHT with notional, missing notional refused by name, correction lineage, race arm; SHARES refused by name (no price source) |
+| Y2 immutable normalized input | LIVE for Dollars CSV (one run, 13:55Z, @3cc73f2b79); the other arms OFFLINE | deferred lane @bb1eb7f92b + @58280c8dd4: Dollars 12.03, XLSX, TARGET_WEIGHT with notional, missing notional refused by name, correction lineage, race arm; SHARES refused by name (no price source) |
 | Y3 acceptance, dispatch, recovery | INSTALLED, not exercised | P 100483 |
 | Y4 vendor PDFs (3 variants) | NOT STARTED live | session graded |
 | Y5 certified typed report | OFFLINE ONLY | publisher |
@@ -40,9 +85,8 @@ nor RESOLVING. Fixes are handed over: contract patch to P, portal spec to ~D.
 
 ## Write claims
 
-None in flight. RESOLVE_UPLOAD landed @bb1eb7f92b and @10a16bd89d. The patch for P's `reports/generate_installed.py` was
-written in scratch worktree `C:/Users/AndrewBerman/Desktop/irpt-y-pcompose-20260924` (branch `y-scratch-pcompose-20260924`,
-never committed, never pushed). Y makes no commit on P's branch.
+None in flight. RESOLVE_UPLOAD landed @bb1eb7f92b and @10a16bd89d. The scratch worktree `irpt-y-pcompose-20260924` was
+removed by 0.0.0_AB_MSTR at 13:3xZ after Y's content check (101172); its branch is kept. Y makes no commit on P's branch.
 
 ## Next proof
 
@@ -65,7 +109,7 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 | Restore M's viewer seam `485b69c061` onto `_scope/maintained_sources.py` (8 conflict hunks vs `bc3727b3a3`) | 2.0.0_SA_COO~P (M reads semantics) | Y 100842; M 100846: `test_maintained_viewer_sources.py` 27/27 | DONE at P `19b38e2f22` (LOCAL); rides the hop-2 deploy |
 | Grants for hop 2 (both roles) | 2.0.0_SA_COO~P | P `54bc1359f4` APPLIED 19:22Z | DONE: Y reach-check 19:3xZ, DDB PutItem + SQS SendMessage allowed, with a negative control |
 | Portal: template body, RESOLVING adapter + poll, `.xlsx` (spec `D_UPLOAD_TEMPLATE_LANE_SPEC_20260924.md`) | 2.0.0_SA_COO~D | ~D 100877: edits 1-3 LANDED on portal DEV `088386fe` (the 5174 server's HEAD, Y read 20:2xZ); edit 4 (wire regen) waits on the contract patch | DONE for the live run |
-| First live 12.03 upload (file `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/aapl-vnq-12.03.csv`) | Andrew (browser, Opal login, localhost:5174) | runbook hops 1a-1d | AWAITED -- notified 20:2xZ. Baseline 20:2xZ: irpt-requests UPLOAD#/NORMALIZATION#/INPUT# = 0 in cottonwood, 49financial and inflection (consistent query; control SELECTION# cottonwood = 14). Contract landed at P `a47102cc8f` (100878). |
+| First live 12.03 upload (file `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/aapl-vnq-12.03.csv`) | 2.0.0_SA_COO~D's signed-in PROD walk with a HAR (Andrew via CTO 101075, record @37025a10e9); P mints the test principal (Opal-class, confirmed by Andrew in f7284ddeed); the walk must select a concrete firm, since Global refuses FIRM_BINDING (Y addendum 03:0xZ) | runbook hops 1a-1d; Y reads its part from the committed HAR plus the rows | AWAITED -- notified 20:2xZ. Baseline 20:2xZ: irpt-requests UPLOAD#/NORMALIZATION#/INPUT# = 0 in cottonwood, 49financial and inflection (consistent query; control SELECTION# cottonwood = 14). Contract landed at P `a47102cc8f` (100878). |
 | Contract: request template lane + result RESOLVING/findings (`P_UPLOAD_CONTRACT_20260924.patch`, `--check` clean at P `7f6b5589f6`) | 2.0.0_SA_COO~P | Y 20:1xZ | AWAITED |
 | Custody composition (hop 4) | 2.0.0_SA_COO~P | Y 47b2adf6df; decoder read `CUSTODY_DECODER_RUNG2_READ_20260924.md` (rung 2 empty for py3.12: 18 layers, 2 pyarrow, both py3.11) | AWAITED |
 | First live Analysis submission | Andrew (browser) | after a composition serves | AWAITED |
@@ -77,10 +121,12 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 | Shares price source (Y2 Shares cells): CTO 100887 ruled (c), refused by name for v1; (b) has no known estate table; (a) goes to Andrew | 2.0.0_SA_COO~Y (re-ask the CTO) | the Dollars journey is graded |
 | `intake/tests/test_security_resolution.py:31` needs IRPT_LOOKUP_FIXTURE_ROOT | 2.0.0_SA_COO~Y | the next edit to that suite |
 | `reports/tests/test_generate_installed.py:58` expects 22 schemas; the tree holds 23 (fails at P's own tip) | 2.0.0_SA_COO~P | P's next edit to that suite |
+| generate reads `irpt-common` by name (latest), not pinned (P `08d9f2f0b1`); a new layer version moves generate at that root's next apply | 2.0.0_SA_COO~P | irpt-common v6 is built |
 | The Y worktree is a sparse checkout (`firm_destination_policy.json` is S), so two `test_broker_recovery_evidence` arms fail only here | 2.0.0_SA_COO~Y | a suite needs that file on this worktree |
 
 ## Limits
 
-Nothing on hop 2 is deployed or exercised live. The resident resolution uses no price source: SHARES templates answer
+Hops 2+3 are deployed (generate `LdjdnnLh`, 09-24 19:49Z), but no live upload has succeeded: the one attempt failed on the
+missing module before any write. The resident resolution uses no price source: SHARES templates answer
 NEEDS_CORRECTION by name until one is composed. No vendor call is made by this seat; the resident's one batched
 `securities_info` GET is the standing host-workflow authorization (CTO 100667 (1)).

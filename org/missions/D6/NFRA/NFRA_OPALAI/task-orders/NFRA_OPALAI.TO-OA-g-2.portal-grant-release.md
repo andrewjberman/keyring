@@ -46,8 +46,9 @@ In order:
      cherry-pick --no-commit` OA-g-1's commits, restore every file outside `infra/aws/ec2/opal-gateway/` to the base, and
      commit under your serial.
    - Census: `git -C /c/tmp/oa-9-rel diff --stat <base> HEAD -- infra/aws/ec2/opal-gateway` names ONLY the gateway files
-     OA-g-1 changed (`app/data_entitlement.py`, `app/asker_scope.py`, `ops/schwab_entitlement_admin.py`,
-     `tests/test_portal_grant.py`). Any other file: STOP, a BLOCKING row.
+     OA-g-1 changed (`app/data_entitlement.py`, `app/asker_scope.py`, `app/admin_grants.py`,
+     `ops/schwab_entitlement_admin.py`, `tests/test_portal_grant.py`). (AMENDED on row Z-W9-S3: `app/admin_grants.py` is
+     OA-g-1 item 5, the owner read-back, and ships.) Any other file: STOP, a BLOCKING row.
    - Put the nested `mcportal` checkout at `a3bff71ffa3f5c73aa0fb7ea1e7386434e233054` for the bundle build.
    - **The issuer authorizes the audited `GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_OPALAI~9` for exactly the
      release-branch commit(s).** Name each use in your report.
@@ -95,6 +96,7 @@ In order:
 infra/aws/ec2/EC2_MANIFEST.json
 infra/aws/ec2/opal-gateway/app/data_entitlement.py
 infra/aws/ec2/opal-gateway/app/asker_scope.py
+infra/aws/ec2/opal-gateway/app/admin_grants.py
 infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py
 infra/aws/ec2/opal-gateway/tests/test_portal_grant.py
 org/critical_paths/change_management/

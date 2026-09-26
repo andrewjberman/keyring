@@ -1,0 +1,38 @@
+CARRIED        18 already-ANSWERED folder(s) skipped and carried into the output
+RETRIED        71 folder(s) the vendor had refused -- a refusal is not an answer
+UNIVERSE       org\missions\D5\AMGT\AMGT_RESAPP\deliverables\0.9.0_WK_AMGT_RESAPP~4\universe.json
+DENOMINATOR    89 folders   THIS BATCH 20
+PROVIDER       seekingalpha.com, DIRECT, unauthenticated, no vendor
+BARS           window 30 days, density >= 3 in window
+MODE           LIVE
+
+  [ 1] Coca Cola Femsa                          KOF      ACCEPTED KOF -- SA names it 'Coca-Cola FEMSA, S.A.B. de C.V.' (tes
+  [ 2] Copa CPA                                 CPA      ACCEPTED CPA -- SA names it 'Copa Holdings, S.A.' (test a) and 49 
+  [ 3] Enel SpA ENEL IM                         ENLAY    ACCEPTED ENLAY -- SA names it 'Enel SpA' (test a) and 38 of 50 ret
+  [ 4] GSK LN                                   GSK      ACCEPTED GSK -- SA names it 'GSK plc' (test a) and 26 of 50 return
+  [ 5] Global Payments GPN                      GPN      ACCEPTED GPN -- SA names it 'Global Payments Inc.' (test a) and 46
+  [ 6] Grupo Aeroportuario del Centro OMAB MM   OMAB     ACCEPTED OMAB -- SA names it 'Grupo Aeroportuario del Centro Norte
+  [ 7] HEICO Corporation HEI US                 HEI      ACCEPTED HEI -- SA names it 'HEICO Corporation' (test a) and 36 of
+  [ 8] HSBC HSBA LN                             HSBC     ACCEPTED HSBC -- SA names it 'HSBC Holdings plc' (test a) and 38 o
+  [ 9] Haliburton HAL                           --       REFUSED -- 0 candidate(s) returned, 0 passed the name test, and no
+  [10] Hermes RMS                               FHI      ACCEPTED FHI -- SA names it 'Federated Hermes, Inc.' (test a) and 
+  [11] Home Depot HD                            HD       ACCEPTED HD -- SA names it 'The Home Depot, Inc.' (test a) and 30 
+  [12] Hon Hai 2317 TT                          HNHPF    ACCEPTED HNHPF -- SA names it 'Hon Hai Precision Industry Co., Ltd
+  [13] ICICI Bank ICICIBC IN                    IBN      ACCEPTED IBN -- SA names it 'ICICI Bank Limited' (test a) and 27 o
+  [14] Iberdrola IBE SM                         IBDSF    ACCEPTED IBDSF -- SA names it 'Iberdrola, S.A.' (test a) and 45 of
+  [15] Idexx IDXX                               IDXX     ACCEPTED IDXX -- SA names it 'IDEXX Laboratories, Inc.' (test a) a
+  [16] Imperial Brands IMB LN                   IMBBY    ACCEPTED IMBBY -- SA names it 'Imperial Brands PLC' (test a) and 2
+  [17] International Container Terminals        --       REFUSED -- 10 candidate(s) returned, 1 passed the name test, and n
+  [18] Intesa Sanpaolo ISP IM                   ISNPY    ACCEPTED ISNPY -- SA names it 'Intesa Sanpaolo S.p.A.' (test a) an
+  [19] Intuit INTU                              INTU     ACCEPTED INTU -- SA names it 'Intuit Inc.' (test a) and 30 of 50 r
+  [20] Intuitive Surgical ISRG US               ISRG     ACCEPTED ISRG -- SA names it 'Intuitive Surgical, Inc.' (test a) a
+
+CALLS          54 (all free, direct, no quota)
+POPULATION     18 carried + 20 this batch = 38 record(s)
+ASKED          38 of 38
+NEVER REACHED  0  <- the stop guard fired before these
+NOT ASKED      0 search-refused + 0 news-refused  <- vendor refusals, NOT findings about those names
+RESOLVED       36 of 38 asked
+REFUSED        2 of 38 asked  <- a 0 here means the rule is NOT discriminating
+SERVEABLE      13 of 38 asked  <- resolved AND clearing the density bar
+WROTE          org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/sa_symbol_pass_20260926/batch1.json

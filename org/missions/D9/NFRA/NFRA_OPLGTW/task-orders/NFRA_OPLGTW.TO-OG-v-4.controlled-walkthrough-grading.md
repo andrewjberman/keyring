@@ -55,7 +55,7 @@ PRESENT, the re-seal's only property is already lost -- file a BLOCKING row and 
 The protocol and expectations are `infra/aws/ec2/opal-gateway/tests/acceptance/WALKTHROUGH_PROTOCOL.md` and
 `A_ROWS.json` (`OG-v-1`); the sealed real-data hashes are **PHASE 1's re-sealed `SEALED_EXPECTED.json`** in this slot's deliverables (it
 REPLACES `OG-v-3`'s, whose salt is gone -- `OG-v-3`'s file stays committed as history and is NEVER graded against),
-and the operator's actual answers sit outside the repository at `C:/tmp/nfra-oplgtw-sealed/actual/`. The source-bucket
+and the operator's actual answers sit outside the repository at `%LOCALAPPDATA%/opal/og-salt/actual/`. The source-bucket
 baseline is `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/BASELINE.json` (`OG-p-1`). Audit records
 are read-only under `opal-mcp-audit` `audit/schwab/`.
 
@@ -98,9 +98,16 @@ taking the short id, printing its measurement with its denominator, then exactly
 `OGV4-J2` -- graded at L9 by 3.0.0_SA_CVO: the record meets the ACCEPT clauses of FWD-3, FWD-4, FWD-5, FWD-6, FWD-7 and FWD-8. RECORD; NO VERDICT.
 
 <criterion id="OGV4-AC8" cell_refs="OG-v-4"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/probes/og_v4.py AC8</invocation><expect>(?m)^VERDICT: PASS-OGV4-AC8(?![0-9])</expect></criterion>
+**AMENDED by the issuer (2.0.0_SA_COO~O, 2026-09-26 ~19:4xZ) on row `NFRA_OPLGTW-S63` (laptop
+2.0.0_SA_COO~Y, @a113cbf3d8): `OGV4-AC8` IS A MUTATING PROBE. `og_v4.py AC8` MINTS a fresh salt, so running it again
+"to verify" re-seals and orphans every earlier seal. It is run ONCE, by the phase-1 worker, to MINT. Every later
+verification READS BACK: the committed `SEALED_EXPECTED.json` digests, recomputed against the salt on disk, and never a
+re-run of AC8. Phase 1's record is the 18:06Z working seal (the one whose salt is on disk), committed on the phase-1
+branch; it SUPERSEDES the digests of `b0d4bba5df`. Its G-C/G-D absence record is the one it carried at its own cut.
+
 `OGV4-AC8` -- (PHASE 1, the re-seal) a NEW `SEALED_EXPECTED.json` is produced in this slot's deliverables, computed from
 the SAME version-pinned objects `OG-v-3` recorded (`qualified_objects_used[]`, each with its `key` AND `version_id`) by
-the same instrument, with a FRESH salt written to `C:/tmp/nfra-oplgtw-sealed/expected/SALT.txt`; and **THE ARTIFACT
+the same instrument, with a FRESH salt written to `%LOCALAPPDATA%/opal/og-salt/expected/SALT.txt`; and **THE ARTIFACT
 ITSELF RECORDS, AT THE MOMENT IT IS CUT, THE MEASURED ABSENCE OF G-C AND G-D AT A NAMED COMMIT** -- the commit-ish, both
 paths, and the read that returned absent. **A VALID RE-SEAL AND A WORTHLESS POST-WALKTHROUGH ONE ARE BYTE-IDENTICAL
 WITHOUT THAT RECORD**, which is the whole reason this criterion exists: the seal's only property is that expectations
@@ -126,9 +133,18 @@ graded destroys the seal and FAILS this criterion** -- the probe checks AC5's re
 - **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/` and this order's own file (for the `<status>` flip). Nothing else. A path you need that is not named is a BLOCKING surprise row on that criterion -- never an override.
 - **G-C and G-D.** Both records at HEAD, or a BLOCKING row and a stop.
 - **PHASE 1 WRITES, AND ONE OF ITS WRITES IS OUTSIDE THE REPOSITORY.** For `OGV4-AC8` only, your write surface
-  ADDITIONALLY includes `C:/tmp/nfra-oplgtw-sealed/` -- the same out-of-repo bound `OG-v-3` carried, restored here
+  ADDITIONALLY includes `%LOCALAPPDATA%/opal/og-salt/` (AMENDED: never `C:/tmp`, laptop 1.0.0_SA_CTO msg 101169) -- the out-of-repo bound `OG-v-3` carried, moved here
   because the re-seal cannot mint a salt anywhere else without destroying the property it exists to create. Nothing
   else outside the repository, ever.
+- **AMENDED by the issuer (2.0.0_SA_COO~O, 2026-09-26 ~16:5xZ) on laptop 2.0.0_SA_COO~Y's hold (via MSTR~Z 16:41:57Z) and
+  laptop 1.0.0_SA_CTO's ruling (msg 101169): the sealed tree lives under `%LOCALAPPDATA%/opal/og-salt/`, NEVER `C:/tmp`
+  (the `C:/tmp` salt was lost, row `NFRA_OPLGTW-S42`). The ONE permitted edit to the instrument is
+  `compute_expected.py:51`: `SEALED_DIR = "C:/tmp/nfra-oplgtw-sealed"` becomes
+  `SEALED_DIR = (os.environ.get("OG_SEALED_DIR") or os.path.join(os.environ["LOCALAPPDATA"], "opal", "og-salt")).replace("\\", "/")`
+  (import `os` if absent): an env override `OG_SEALED_DIR`, defaulting to the laptop value `%LOCALAPPDATA%\opal\og-salt\`
+  (laptop 1.0.0_SA_CTO, 16:43Z). Record the resolved value in the AC8 artifact as a PATH SHAPE only. No
+  other line of the instrument changes; commit that one-line edit on its own, before the run, and cite it in the
+  AC8 artifact. That is a path, not a reimplementation.
 - **PHASE 1 RE-RUNS A COMMITTED INSTRUMENT; IT DOES NOT REIMPLEMENT ONE.** `OG-v-3`'s sealing script SURVIVES in this
   slot's deliverables at `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/compute_expected.py` --
   it mints the salt (`secrets.token_hex(32)`), computes each RQ's answer from the version-pinned objects with pyarrow
@@ -138,7 +154,7 @@ graded destroys the seal and FAILS this criterion** -- the probe checks AC5's re
 - **You grade; you do not operate -- IN PHASE 2.** No sign-in, no connector act, no grant change, no rollback, no call to the Gateway as a user. Reads only: the records, the audit sink, the bucket settings, and (AC6) the closure markers under `schwab/<master>/meta/complete/` in `opal-data-assets`.
 - **Customer data stays out of the repository.** Answers are compared by hash; no value is committed or printed.
   **THIS BINDS PHASE 1 HARDEST**, because phase 1 is the step that HANDLES the real answers: they are written only
-  under `C:/tmp/nfra-oplgtw-sealed/expected/`, never into a deliverable, a row, a result file or a probe's stdout.
+  under `%LOCALAPPDATA%/opal/og-salt/expected/`, never into a deliverable, a row, a result file or a probe's stdout.
   `OGV4-AC9`'s later commit of those files is the ONE exception and it happens only after `OGV4-AC5` is graded --
   by then the walkthrough is over, the values are no longer a seal, and committing them is what makes every digest
   re-derivable.
@@ -204,14 +220,14 @@ unchanged.
 
 Amended AGAIN minutes later, same issuer, BEFORE any hand-off, because the amendment above ordered work this order's
 own BOUNDS forbade. **This order grants writes to the `<paths>` block, the slot's deliverables and its own file --
-and `OGV4-AC8` must write a salt to `C:/tmp/nfra-oplgtw-sealed/`, which none of those cover; its "Reads only" bound
+and `OGV4-AC8` must write a salt to `%LOCALAPPDATA%/opal/og-salt/`, which none of those cover; its "Reads only" bound
 forbids writing at all.** A worker handed phase 1 would have been RIGHT to file a BLOCKING row on the first act and
 stop. The grant is restored from `OG-v-3`, which carried exactly this out-of-repo bound, and the reads-only clause is
 scoped to phase 2. Found by checking the order's BOUNDS against the work just ordered, which is the check the first
 amendment skipped: A NEW CRITERION IS NOT ORDERED UNTIL ITS GRANT IS READ. Also named here rather than left implicit:
 `compute_expected.py` -- `OG-v-3`'s actual sealing instrument -- IS COMMITTED and survives the loss of everything it
 wrote, so the re-seal is a RE-RUN of a committed file and "the same instrument" is provable instead of asserted. Decomposition v1
-@8768f46770. After this cell drains, the COO removes `C:/tmp/nfra-oplgtw-sealed/` (the retention `OG-v-3` states).
+@8768f46770. After this cell drains, the COO removes `%LOCALAPPDATA%/opal/og-salt/` (the retention `OG-v-3` states), and NOT before phase 2 is graded.
 
 Amended 2026-09-17 ~15:0xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-12 (msg 97602
 @df750f1e26; row `NFRA_OPLGTW-W6-S5`): AC5 grades RQ1-RQ6 at the fixed date `2026-09-15`; AC6 and AC7 grade one live,

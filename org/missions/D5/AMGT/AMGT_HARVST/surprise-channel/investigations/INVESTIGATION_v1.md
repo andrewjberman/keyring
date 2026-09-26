@@ -1530,6 +1530,57 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "The limb's own docstring: a recorded invocation matches the criterion's 'modulo the declared placeholders and trailing/leading whitespace ONLY', which presumes a declared placeholder's expansion is a single whitespace-free token.",
     "world_is": "On this device the expansion contains one space, so `(\\S+)` cannot match it and a TRUTHFUL record is refused. The only records that would pass are false ones (a path not used, or the placeholder left unexpanded contrary to the face's instruction), which is the failure mode the limb exists to prevent, pointed the other way.",
     "notes": "ARMED and NOT FIXABLE HERE: `.tools/proof-of-spec-check.py` is outside this cell's write grant and this cell may not widen. DISARM OPTIONS: (a) the checker's placeholder group becomes non-greedy `(.+?)` anchored on the literal tail -- one character, and the limb keeps its whole purpose since the literal tail still has to match; (b) the ISSUER stops declaring a path placeholder and writes the absolute path into the criterion, which costs the order's device-portability; (c) the issuer declares the placeholder but quotes the expansion in the criterion as `\"<MAIN_TREE>\"` including the quotes, so the space sits inside a literal segment. (a) is the fabric's to make and is the only one that fixes every future order; the issuer can escalate it as a gate finding rather than absorb it per-order. Until one of these lands, no faithful instance for an order declaring a path placeholder can reach rc=0 on site Z."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S29",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-26T14:27:20Z",
+    "one_line": "FOUR CORRECT MECHANISMS COMPOSE INTO A DEADLOCK: HVST-v-2's order cannot be amended because its instance is INVALID, the instance is INVALID on one annotated field, only the worker may edit that field, and the worker cannot be resumed. No act available to the issuer closes the cell.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LIMB 1 -- to-pipeline-gate REFUSES the order edit: 'REFUSED -- 3 violation(s) across 0 newly-added TO file(s) and 1 modified declaring TO file(s) ... instance VIOLATION: invocation-alignment[AC1]'. So while the instance is INVALID the order file cannot be modified AT ALL -- including to record the verdict that it is invalid",
+        "LIMB 2 -- the instance is INVALID on exactly ONE row now. AC2 was fixed by the issuer (the <MAIN_TREE> placeholder replaced with the literal path and <placeholders> set to NONE, so the limb compares literal-to-literal and the (\\S+) space defect cannot fire); AC3 was already aligned. Measured after the fix: 'invocation-alignment 2/3 comparable row(s) match; 1 diverge', VIOLATION on AC1 only",
+        "LIMB 3 -- AC1's recorded `invocation` field is 342 characters where the command is ~136; the remainder is the worker's own bracketed annotation. The limb compares the WHOLE string, so it can never match. The fix is to relocate the annotation to a notes field, changing NO output, count or denominator",
+        "LIMB 4 -- ONLY the worker may make that edit. owned-paths lane TREE_DELIVERABLES permits exactly the serial named by the sub-folder (ADHC_OWNPTH.004), measured earlier this round when four of this issuer's file copies were REFUSED at deliverables/0.9.0_WK_AMGT_HARVST~21/scripts/. A NEW worker serial cannot fix it either -- the grant follows the path, not the round",
+        "LIMB 5 -- the worker cannot be resumed: 'No transcript found for agent ID'. It reported NEXT: ready for the next task order and then became unreachable. Its worktree C:/tmp/wk-hvst-v2 is intact and can now commit (the gitlink hook was repaired ~12:5xZ), but no agent exists to commit from it",
+        "EACH MECHANISM IS CORRECT IN ISOLATION and I am not proposing any of them be weakened: the gate should refuse an order whose instance is invalid; the limb should compare the whole field; owned-paths should keep an issuer out of a worker's evidence; a completed agent should not be silently resumable"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An issuer amends its own task-order criteria under Rule 27, and a proof instance is repaired by the worker that owns it.",
+    "world_is": "Both are true and neither is reachable here. The issuer's amendment is blocked BY the instance's invalidity; the instance's repair is blocked by the worker's absence; and the one field at fault carries no measurement -- it is an annotation in a compared field.",
+    "notes": "THE AUDITED ESCAPE EXISTS AND I HAVE NOT USED IT. GIT_COMMIT_AUTHOR_OVERRIDE would let this seat commit past the lane refusal, and earlier this round I declined it on the ground that writing into another serial's folder is the precise sweep that rule prevents. That ground has NOT changed just because the cost is now higher, so the call is ROUTED to 1.0.0_SA_CTO~Z rather than taken. THE COMPOSITION IS THE KEEPABLE FINDING, not any one limb: a gate that refuses an edit while a record is invalid, plus a record only one absent party may fix, is a deadlock that NO PARTICIPANT CAN SEE FROM ITS OWN SIDE -- each mechanism reports a correct refusal and none reports a cycle. COST OF THE CHEAP PREVENTION, measured against what actually happened: the annotation was the worker's own editorial addition to a FIELD THE CHECKER COMPARES. An instance format that separated `invocation` (compared) from `invocation_note` (never compared) makes this class impossible; today nothing stops a worker annotating a compared field, and the annotation was a genuinely useful finding about the face-vs-file divergence."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S30",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-26T17:45:00Z",
+    "one_line": "AMGT_HARVST round 7 is NOT TERMINAL IN THE RECORD, and I reported twice today that it was. HVST-v-2 reads <status>pending</status> at HEAD and <status>closed</status> ONLY in the worktree, with 113 insertions and 5 deletions uncommitted (13,931 -> 22,198 bytes). The round-7 packet's own 'STATUS: OPEN -- HVST-v-2 is still executing' is CORRECT; my reads were the stale ones, because every L7 state read I made opened the FILE ON DISK instead of the committed bytes. No L8/L9 was compiled and no slug was cut.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED on both planes for HVST-v-2 (AMGT_HARVST.TO-HVST-v-2.drain-what-is-held-then-capture.md): git show HEAD:<order> is 13,931 bytes with status tags ['pending']; the worktree file is 22,198 bytes with status tags ['closed']. git diff --stat reads 113 insertions, 5 deletions, unstaged. So the terminal flip and roughly 8.3 KB of evidence exist only in a working tree.",
+        "CONTROL on the sibling order: HVST-v-1 reads 'complete' at HEAD AND in the worktree -- the two planes agree there. So the divergence is specific to v-2 and is not an artifact of how either plane is read. Round 7 is 1 of 2 orders terminal in the record.",
+        "THE PACKET WAS RIGHT AND I WAS WRONG. ROUND7_DRAIN_END_PACKET.md opens with 'STATUS: OPEN. HVST-v-2 is still executing' and leaves section 6 an explicit stub, stating that 'a packet published as complete while a cell runs would assert a terminal state that does not exist'. That is exactly the state, and it is the state I failed to read.",
+        "MY ERROR, NAMED: every L7 read I made for this order today -- before the pause and again after the resume -- opened the file on disk. A file read reports the WORKTREE; the spine's terminal state is what the RECORD carries. Reading the worktree means grading another seat's unsaved draft, and it is indistinguishable from a landed flip at the call site.",
+        "THE TELL WAS AVAILABLE AND I WALKED PAST IT TWICE: git status printed ' M' on that order. I had already been caught today by a ' M' that was merely stat-dirty (the AMGT_CORPUS PRD, bytes identical), and I generalised 'a  M is not an edit' into not checking. The correct move is the same one in both directions -- compare the bytes, never trust the flag either way.",
+        "NOT AN ACCUSATION AND NOTHING IS ASKED OF THE ISSUER: 2.0.0_SA_COO~Y is actively draining v-2, the CTO authorized an audited override for its proof instance at 15:33Z (msg 26112), and the uncommitted bytes are work in progress that will presumably land. This row records a READING error of mine and the discipline that prevents it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This seat reported, twice on 2026-09-26, that AMGT_HARVST round 7 was terminal with its L8/L9 owed, on the strength of HVST-v-2 reading 'closed'.",
+    "world_is": "HVST-v-2 reads 'pending' in the record and 'closed' only on disk, with 113 uncommitted insertions. The round is 1 of 2 terminal, no L10 precondition is met, and no compile or slug was produced for it.",
+    "notes": "THE DISCIPLINE, stated so it is executable: an L7 terminal-state read for L8/L9 comes from `git show HEAD:<order>`, never from open(<order>). COST: one git show per order in place of one file read. NON-APPLICATION: a seat reading orders it is itself editing in its own worktree, where the worktree IS the object. OWNER: this seat, for its own L7 procedure. Related: the same plane confusion in the opposite direction is why a census reading the git INDEX cannot see an unlanded row."
   }
 ]
 ```

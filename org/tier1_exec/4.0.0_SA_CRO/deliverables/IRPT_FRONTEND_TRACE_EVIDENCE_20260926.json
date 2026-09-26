@@ -1,0 +1,192 @@
+{
+ "claim": "measured",
+ "source": {
+  "har": "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/prod-uiwalk-20260926.har",
+  "sha256": "6b51023cefc04fb200ae52273b6a8de8261f192a4c6477672b6e09fe6727fe96",
+  "entries": 350,
+  "site": "https://opalinvest.dev PROD 36a37afc (portal-v2.1.188)",
+  "walker": "2.0.0_SA_COO~D",
+  "window": "2026-09-26 13:59-14:14Z"
+ },
+ "irpt_calls": {
+  "GET (root)": 2,
+  "POST directory/resolve": 3,
+  "GET directory/browse": 13,
+  "POST selections": 3,
+  "GET directory/search": 5,
+  "GET performance": 4,
+  "GET holdings": 6
+ },
+ "selections": [
+  {
+   "scope_kind": "RELATIONSHIP",
+   "accounts": 2
+  },
+  {
+   "scope_kind": "RELATIONSHIP",
+   "accounts": 2
+  },
+  {
+   "scope_kind": "RELATIONSHIP",
+   "accounts": 3
+  }
+ ],
+ "performance": [
+  {
+   "status": 200,
+   "state": "UNAVAILABLE",
+   "reason": "SELECTION_UNSUPPORTED"
+  },
+  {
+   "status": 200,
+   "state": "UNAVAILABLE",
+   "reason": "SELECTION_UNSUPPORTED"
+  },
+  {
+   "status": 200,
+   "state": "UNAVAILABLE",
+   "reason": "SELECTION_UNSUPPORTED"
+  },
+  {
+   "status": 200,
+   "state": "UNAVAILABLE",
+   "reason": "SELECTION_UNSUPPORTED"
+  }
+ ],
+ "holdings": [
+  {
+   "status": 200,
+   "state": "READY",
+   "accounts": 2,
+   "account_nodes": 2,
+   "account_nodes_named": 2,
+   "account_nodes_with_account_ref": 2
+  },
+  {
+   "status": 200,
+   "state": "READY",
+   "accounts": 2,
+   "account_nodes": 2,
+   "account_nodes_named": 2,
+   "account_nodes_with_account_ref": 2
+  },
+  {
+   "status": 200,
+   "state": "READY",
+   "accounts": 2,
+   "account_nodes": 2,
+   "account_nodes_named": 2,
+   "account_nodes_with_account_ref": 2
+  },
+  {
+   "status": 200,
+   "state": "READY",
+   "accounts": 2,
+   "account_nodes": 2,
+   "account_nodes_named": 2,
+   "account_nodes_with_account_ref": 2
+  },
+  {
+   "status": 200,
+   "state": "READY",
+   "accounts": 3,
+   "account_nodes": 3,
+   "account_nodes_named": 3,
+   "account_nodes_with_account_ref": 3
+  },
+  {
+   "status": 200,
+   "state": "READY",
+   "accounts": 3,
+   "account_nodes": 3,
+   "account_nodes_named": 3,
+   "account_nodes_with_account_ref": 3
+  }
+ ],
+ "directory_search": [
+  {
+   "limit": 843,
+   "q_len": 36,
+   "results": 36,
+   "kinds": {
+    "RELATIONSHIP": 34,
+    "ACCOUNT": 2
+   }
+  },
+  {
+   "limit": 2,
+   "q_len": 0,
+   "results": 2,
+   "kinds": {
+    "RELATIONSHIP": 2
+   }
+  },
+  {
+   "limit": 843,
+   "q_len": 0,
+   "results": 0,
+   "kinds": {}
+  },
+  {
+   "limit": 843,
+   "q_len": 36,
+   "results": 36,
+   "kinds": {
+    "RELATIONSHIP": 34,
+    "ACCOUNT": 2
+   }
+  },
+  {
+   "limit": 7576,
+   "q_len": 28,
+   "results": 100,
+   "kinds": {
+    "RELATIONSHIP": 90,
+    "ACCOUNT": 10
+   }
+  }
+ ],
+ "directory_entries_sampled": {
+  "unique_client_entries": 436,
+  "permitted_scope_kinds": {
+   "RELATIONSHIP": 317,
+   "ACCOUNT": 19,
+   "CLIENT": 100
+  },
+  "relationships_with_more_than_one_client_entry": 0
+ },
+ "api_walk_one_account": {
+  "source": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/WALK_API_LOG_20260926.jsonl",
+  "account_selections": 5,
+  "accounts_per_selection": 1,
+  "performance_outcomes": {
+   "49financial": {
+    "PERFORMANCE_PARTIAL (computed)": 2,
+    "OBJECT_NOT_COVERED": 2
+   },
+   "inflection": {
+    "DEPENDENCY_UNAVAILABLE": 1
+   }
+  }
+ },
+ "limits": [
+  "sample = the directory pages and searches the walk loaded, not every entry",
+  "no name, id or amount is recorded here"
+ ],
+ "holdings_account_label_distinctness": {
+  "claim": "measured",
+  "note": "added 16:4xZ",
+  "snapshots": [
+   {
+    "har_entry": 98,
+    "account_nodes": 2,
+    "distinct_labels": 1
+   },
+   {
+    "har_entry": 256,
+    "account_nodes": 3,
+    "distinct_labels": 1
+   }
+  ]
+ }
+}

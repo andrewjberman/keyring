@@ -58,7 +58,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/A
 
 **ISSUER NOTES:** Seat order; the issuer restamps lib/research/api/_harvest_prefixes.py before naming the build commit if the check reads rc 1. AC2's base run is the live-95 evidence @2e4382ecd4 (same instrument): it PASSES at the base, so AC2 is this order's no-regression bound and AC1 its build check.
 
-<status>pending</status>
+<status>complete</status>
 <round>44</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>

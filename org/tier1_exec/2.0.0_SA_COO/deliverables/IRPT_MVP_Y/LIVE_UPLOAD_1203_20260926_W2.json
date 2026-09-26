@@ -1,0 +1,72 @@
+{
+ "principal": "irpt-uiwalk-1790435397@opal.test",
+ "tenant": "cottonwood",
+ "upload_token": "y-live-1203-20260926T151358",
+ "authority": "window 2: packet v7 blob 3edebd85 K4 (CTO 543f5426f2, CRO 36b060964b); P 101268; ledger irpt-uiwalk-principal-w2-20260926",
+ "calls": [
+  {
+   "at": "2026-09-26T15:13:53.666522Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/login",
+   "request_headers": {
+    "Content-Type": "application/json"
+   },
+   "request_body": {
+    "email": "irpt-uiwalk-1790435397@opal.test",
+    "password": "<redacted>"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EUAf6gGTIAMES4w=",
+    "set-cookie": "<redacted>"
+   },
+   "response_body": {
+    "accessToken": "<redacted>",
+    "user": {
+     "email": "irpt-uiwalk-1790435397@opal.test",
+     "name": "IRPT UI walk principal (Andrew-direct 20260926)",
+     "role": "admin",
+     "mustChangePassword": false
+    }
+   }
+  },
+  {
+   "at": "2026-09-26T15:13:58.206856Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/investor-reporting/analysis/inputs?selected_tenant=cottonwood",
+   "request_headers": {
+    "Content-Type": "application/json",
+    "Authorization": "<redacted>",
+    "X-Contract-Version": "v1"
+   },
+   "request_body": {
+    "upload_token": "y-live-1203-20260926T151358",
+    "filename": "aapl-vnq-12.03.csv",
+    "file_base64": "VGlja2VyLERvbGxhcnMKQUFQTCwxMC4wMQpWTlEsMi4wMgo=",
+    "file_type": "csv",
+    "declared_currency": "USD"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EUAgrgTUoAMEakw="
+   },
+   "response_body": {
+    "contract_version": "v1",
+    "operation": "analysis-input-upload",
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2",
+    "data": {
+     "upload_id": "UP-efdc729f1337356a32419b7486d0fddecc251421ab14906fe28b39b213947397",
+     "input_id": null,
+     "state": "RESOLVING"
+    },
+    "unprojected_grant": {
+     "count": 0,
+     "denominator": 0,
+     "kinds": {}
+    }
+   }
+  }
+ ]
+}
