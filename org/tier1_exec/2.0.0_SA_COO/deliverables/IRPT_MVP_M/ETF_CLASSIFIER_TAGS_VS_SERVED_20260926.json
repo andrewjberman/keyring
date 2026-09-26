@@ -1,0 +1,190 @@
+{
+ "49financial": {
+  "equity -> equity": {
+   "nodes": 73653,
+   "usd": 1163088237.72,
+   "tickers": [
+    "AAPL",
+    "ABBV",
+    "ABT",
+    "ACWI",
+    "ADM",
+    "AEP",
+    "AIG",
+    "AIZ"
+   ]
+  },
+  "fixed_income -> fixed_income": {
+   "nodes": 35486,
+   "usd": 335450155.61,
+   "tickers": [
+    "AGG",
+    "BIL",
+    "BIV",
+    "BND",
+    "BNDX",
+    "BSCQ",
+    "BSCR",
+    "BSJQ"
+   ]
+  },
+  "structured -> alternatives": {
+   "nodes": 6448,
+   "usd": 20987193.95,
+   "tickers": [
+    "QBER",
+    "VXX"
+   ]
+  },
+  "commodities -> alternatives": {
+   "nodes": 16,
+   "usd": 241817.14,
+   "tickers": [
+    "GLD",
+    "IAU",
+    "SLV",
+    "USO"
+   ]
+  },
+  "structured -> equity": {
+   "nodes": 11,
+   "usd": 265977.1,
+   "tickers": [
+    "JEPI"
+   ]
+  },
+  "commodities -> equity": {
+   "nodes": 4,
+   "usd": 951.84,
+   "tickers": [
+    "PDBC"
+   ]
+  },
+  "alternatives -> equity": {
+   "nodes": 2,
+   "usd": 2558.1,
+   "tickers": [
+    "VNQ"
+   ]
+  },
+  "fixed_income -> equity": {
+   "nodes": 1,
+   "usd": 14969.08,
+   "tickers": [
+    "CASH"
+   ]
+  }
+ },
+ "inflection": {
+  "fixed_income -> fixed_income": {
+   "nodes": 5065,
+   "usd": 38511841.4,
+   "tickers": [
+    "AGG",
+    "BIL",
+    "BIV",
+    "BND",
+    "BNDX",
+    "CLIP",
+    "DFCF",
+    "DFSD"
+   ]
+  },
+  "equity -> equity": {
+   "nodes": 7363,
+   "usd": 100096001.75,
+   "tickers": [
+    "AAPL",
+    "ABBV",
+    "ABT",
+    "AEP",
+    "AIG",
+    "AMAT",
+    "AMD",
+    "AMP"
+   ]
+  },
+  "structured -> alternatives": {
+   "nodes": 510,
+   "usd": 1749317.15,
+   "tickers": [
+    "UVXY",
+    "VXX"
+   ]
+  },
+  "commodities -> alternatives": {
+   "nodes": 7,
+   "usd": 0.0,
+   "tickers": [
+    "GLD",
+    "SLV"
+   ]
+  },
+  "alternatives -> equity": {
+   "nodes": 3,
+   "usd": 0.0,
+   "tickers": [
+    "VNQ"
+   ]
+  }
+ },
+ "cottonwood": {
+  "fixed_income -> equity": {
+   "nodes": 624,
+   "usd": 2868028.92,
+   "tickers": [
+    "CASH",
+    "FXFXX"
+   ]
+  },
+  "fixed_income -> fixed_income": {
+   "nodes": 3471,
+   "usd": 70640418.27,
+   "tickers": [
+    "BIV",
+    "CLIP",
+    "DFCF",
+    "DFSD",
+    "JAAA",
+    "JPST",
+    "MINT",
+    "OBIL"
+   ]
+  },
+  "equity -> equity": {
+   "nodes": 4861,
+   "usd": 114063427.23,
+   "tickers": [
+    "AAPL",
+    "ABBV",
+    "ABT",
+    "ADM",
+    "AEP",
+    "AIG",
+    "AIZ",
+    "AMAT"
+   ]
+  },
+  "structured -> alternatives": {
+   "nodes": 381,
+   "usd": 2089681.3,
+   "tickers": [
+    "VXX"
+   ]
+  },
+  "commodities -> alternatives": {
+   "nodes": 575,
+   "usd": 9492046.91,
+   "tickers": [
+    "GLD"
+   ]
+  },
+  "structured -> equity": {
+   "nodes": 15,
+   "usd": 1219918.21,
+   "tickers": [
+    "JEPI"
+   ]
+  }
+ }
+}
