@@ -1401,6 +1401,30 @@
     "spec_asserts": "Cell text 'Where it lives': 'UIR-06 / UIR-11: tabs/SampleView.tsx ... is mounted by tabs/TabShell.tsx' and 'UIR-10: ClientSearch.tsx ... builds one flat list; header/BrowseDrawer.tsx ... already groups by firm (reuse, do not fork).'",
     "world_is": "UIR-11's live defect is index.tsx's select(null,null) path, triggered from ClientSearch.tsx's onQuery (in-grant) rather than from SampleView.tsx/TabShell.tsx themselves (which only read the resulting scopeRef, unchanged). UIR-10 is satisfied by a new additive SearchSelect prop + per-row firm tag, not by forking/reusing BrowseDrawer's grouped-catalogue functions, which operate over a materially different shape.",
     "notes": "Not blocking IVE37-AC1 (mechanical criterion passes) or IVE37-AC2 (judgment criterion, unrun by this worker)."
+  },
+  {
+    "id": "DSGN_IRPTV1-W25-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~25",
+    "surfaced_at": "2026-09-26T23:05:00Z",
+    "one_line": "IV-e-38's 'Where it lives' map cites the exact lines carrying THREE rows' defects (UIR-12 row.label, UIR-13's '--' separator) rather than an already-correct answer; the other three named rows (UIR-14, UIR-22, UIR-30) were already satisfied by existing code at fdccc6e6 and needed only a locking test, no source edit; UIR-13's own 'normal punctuation' has no spec-given literal, so this worker chose a shape by precedent already live in this codebase.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IdentityCard.tsx:435 (fdccc6e6) read `const who = row ? row.label : ...` -- row.label is displayName + maskedDiscriminator (header/search.ts optionLabel); rendered WHO for the committed directoryEntry.success.json fixture printed 'Coastal Ridge Trust ****4417', which fails UIR-12 ('WHO shows the client's name only') as a masked, account-shaped tail on the client's own name; fixed to row.displayName, re-rendered WHO = 'Coastal Ridge Trust' only, confirmed by this cell's own test (iv-e-38.header-identity.test.tsx UIR-12 arm) and by a restore-and-mutant round-trip (row.label reinstated -> VERDICT: HEADER-IDENTITY-FAIL naming the exact masked-tail leak; restored -> VERDICT: HEADER-IDENTITY-OK, re-run twice identical)",
+        "IdentityCard.tsx:464 (fdccc6e6) read `${firmName} -- ${kind}` (the doc-comment '--' em-dash substitute this repo's OWN prose convention uses, e.g. this very CLAUDE.md); on a client-facing line that reads as two literal hyphens, not the punctuation a reader would call 'normal' -- no fixture or PRD text gives a literal replacement string for UIR-13, so this worker adopted the SAME 'name (qualifier)' shape already live in this exact file's own sibling control (header/firm.ts: `${o.name} (unavailable)`, consumed by FirmDropdown.tsx), producing 'Opal Partner One (Client)'",
+        "UIR-14 (header/FirmDropdown.tsx / index.tsx:264-268): traced both live paths -- the validated single/multi-firm path only ever offers clients from the currently-resolved scope (contexts is built from `resolved`, which the dropdown's own value already names), so a picked client's firm can never disagree with the control; the internal Global-catalogue path renders 'Global (All)' as selected for as long as firmId stays 'global', independent of which client search returned -- both confirmed by direct FirmDropdown renders (this cell's UIR-14 arms), no source edit made",
+        "UIR-22 ('About this scope' disclosure, IdentityCard.tsx:525-528): the summary text is already plain client language and ScopeSummary's own system vocabulary (fingerprints, 'Scope match', revisions) is already nested inside that <details>, confirmed by this cell's UIR-22 arm reading zero of six named system-vocabulary tokens outside the disclosure boundary -- no source edit made",
+        "UIR-30 (global/FirmAttribution.tsx:54): findPermittedFirm returns at most one match and the component renders it in exactly one visible span (the firm TOKEN only ever appears in the non-visible `title` attribute); confirmed by an occurrences() count of 1 against the fixture's own display name -- no source edit made"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell's 'Where it lives' section names one code location per row (UIR-05, UIR-12, UIR-13, UIR-14, UIR-22, UIR-30) with no statement of whether each named location is already correct or is the defect itself; UIR-13's acceptance line ('normal punctuation') names no literal string.",
+    "world_is": "Two of the six named locations (UIR-12, UIR-13) were the live defect and needed a source edit within <paths>; three (UIR-14, UIR-22, UIR-30) were already correct at fdccc6e6 and needed only a test; UIR-05 (index.tsx:291) was also a live defect (the word 'Resolution'), fixed. UIR-13's replacement punctuation was chosen by this worker from an existing in-repo precedent rather than a spec-given literal.",
+    "notes": "Not blocking: IVE38-AC1 passes with every arm (VERDICT: HEADER-IDENTITY-OK), a mutant control on the UIR-12 fix fired as expected, and typecheck/eslint are clean on every touched file. Filed so the CVO's live walk (IVE38-AC2) reads UIR-13's exact chosen wording ('Opal Partner One (Client)') as a judgment call, not a literal spec quote, and so a later cell touching these same three already-correct rows (UIR-14/22/30) knows they were verified, not re-implemented, this round."
   }
 ]
 ```
