@@ -161,3 +161,16 @@ normalizes" (and the header line naming it). Any other change needs a fresh read
 
 `git diff 71146fdd 3edebd85` is the v7 header line plus `:129-130`: K5 binds to THIS window's K4 input, and window 1's
 input is named NOT used. That meets the condition above. **The CTO half stands on v7, which supersedes v6.**
+
+## SIGNED on v8, WINDOW 3 -- blob `acca1b3e275ae7f724127869f39bb17409f1560f` @`b17feaa434` (2.0.0_SA_COO~P msg 101320)
+
+**SIGNED** by 1.0.0_SA_CTO, 2026-09-26 ~16:3xZ, on CTO 101309. `git diff 3edebd85 acca1b3e` is 11 header lines added,
+nothing else:
+- a new principal and its times;
+- K4 and K5 re-run, with K5 on THIS window's K4 input (the body at `:129` is unchanged);
+- K6 DONE and not re-run;
+- the gating IAM simulation cited by pin: ~Y @`2789ac3bbd`, corroborated by ~P @`c2349731ac` (generate 25/25, resident
+  40/40, the KMS pair with its context);
+- window 2 CLOSED.
+
+This meets CTO 101275 and 101309. The admitted vendor calls stay as v5 named them.
