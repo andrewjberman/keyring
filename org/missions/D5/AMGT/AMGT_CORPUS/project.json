@@ -9,7 +9,7 @@
   "dep_stage": "EXECUTING",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-09-25T17:20:18Z",
+  "last_updated": "2026-09-26T06:43:27Z",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -49,8 +49,8 @@
     "THE BACKLOG POPULATION IS HIS, SEPARATELY. Andrew-direct ~18:3xZ, VERBATIM: 'all of the Research folders in the Opal Sharepoint Shared Asset Management/Research/ subfolder will be the basis for our backfill and initial pool.' Record ANDREW_DIRECT_20260922_183xZ_RESEARCH_FOLDERS_ARE_THE_BACKFILL_BASIS_AND_INITIAL_POOL.md. The folder list is a MEASURED DENOMINATOR (93 at the 2026-09-22 scan), never a transcribed list, and an unresolved folder is printed, never dropped.",
     "SENDING BLOOMBERG MODEL-BLOCK FIGURES TO THE CLAUDE API IS ALLOWED (same record, '3.) That is allowed.') -- this closes the CRO's card 1 for both this project and the addendum."
   ],
-  "phase": "L7 EXECUTING (round 5): ONE issuance of 4 orders CRPS-g-1..4 over decomposition v5.0 @09fb000683, cut from the round-4 analysis @2f9b10b7d3 + A1 -- g-1 the Base-case guard (refuse on EPS<=0 / no price / currency mismatch / outside [0.33, 3.0]; GBp reconciled; the ONE judgment criterion), g-2 dossier Model rows from the served block (Z-S36), g-3 the census's fence names, g-4 evidence for all 19 outcomes. Round 4 CLOSED (L10 @2f9b10b7d3): FWD-12 NOT REALIZED on limb 3.",
-  "blocking": "FWD-12 limb 3: 7 of 32 served Base cases implausible against their own price, and the slot the fence called ABSENT is filled by a machine formula; the dossier Model rows read no block (Z-S36). Upside/Downside methodology is a card at Andrew.",
+  "phase": "L7 EXECUTING (round 6): ONE issuance of 5 orders CRPS-h-1..5 over decomposition v6.0, cut from the round-5 analysis @37217d8053 s.5 -- h-1 read_dossier serves the LAST WRITE on the newest date (FWD-17 (b), row Z-S41: 37 rewrites on unchanged inputs), h-2 the Base-case ratio census by name + the team's workbook cells beside the served Base case (AC4 judgment), h-3 FWD-9's census third state (unresolved listed, never counted as reaching), h-4 FWD-14's fence triple with a disclosed remainder, h-5 FWD-18's data half (pillar and KPI terms). Round 5 CLOSED (L10 @37217d8053; 10 of 19 REALIZED, FWD-10/11/15 NOT REALIZED on the whole-fence rule per the correction @1c1735a226).",
+  "blocking": "FWD-10, FWD-11, FWD-15 and FWD-12 limb 3 (data half MET @2dae84b5a9) hold on AMGT_RESAPP's render (FWD-11's obligation owned there by FWD-31 @c2c6c507d6). Every dossier --write is HELD at this seat (Z-S42) until h-1 drains.",
   "threads": [],
   "thread_counter": 0
 }
