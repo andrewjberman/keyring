@@ -1012,6 +1012,54 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-f-2 guard (ii): poll /health; if it is not 200 within 90 s, roll back.",
     "world_is": "Only the on-box /health can answer that question; the public one never reaches the gateway.",
     "notes": "MX-r-3's face is read for the same guard at its own spawn."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W9-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~9",
+    "surfaced_at": "2026-09-26T12:45Z",
+    "one_line": "OA-g-2 step 2 census: the release tree names FIVE gateway files, not the face's four. The fifth is app/admin_grants.py, which comes from 9a28cfbbe6 (OA-g-1 item 5). The issuer's hand-off names that commit, but the face's census list does not, and neither does the order's <paths>. The face says any other file means STOP and a BLOCKING row. Nothing has been deployed.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: `git -C /c/tmp/oa-9-rel diff --stat c5f8099440 HEAD -- infra/aws/ec2/opal-gateway` (rc=0, HEAD df724ef284) printed 5 files: app/admin_grants.py 10, app/asker_scope.py 24, app/data_entitlement.py 58, ops/schwab_entitlement_admin.py 47, tests/test_portal_grant.py 290; 411 insertions and 18 deletions. The whole-tree diff names the same 5 files and nothing outside infra/aws/ec2/opal-gateway/.",
+        "SPEC org/missions/D6/NFRA/NFRA_OPALAI/task-orders/NFRA_OPALAI.TO-OA-g-2.portal-grant-release.md@1d76febf04, section 1 step 2: the census names ONLY app/data_entitlement.py, app/asker_scope.py, ops/schwab_entitlement_admin.py and tests/test_portal_grant.py; 'Any other file: STOP, a BLOCKING row.' The <paths> list omits app/admin_grants.py.",
+        "CODE git show --stat 9a28cfbbe6: infra/aws/ec2/opal-gateway/app/admin_grants.py (+8/-2) and tests/test_portal_grant.py. This is the commit the issuer 2.0.0_SA_COO~O named in the OA-g-2 hand-off ('the admin_grants read-back plus its test'). The file ships in the host artifact under app/.",
+        "Each of the 5 files in the release tree is byte-identical to its version at 9a28cfbbe6 (md5 compared per file)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-g-2 step 2: the release census names only the four gateway files that OA-g-1 changed. Any other file means STOP and a BLOCKING row.",
+    "world_is": "OA-g-1 changed five gateway files, because item 5 (9a28cfbbe6, amended on row Z-W9-S1) added app/admin_grants.py after the face was cut. The census therefore reads 5 files. The release commit df724ef284 (LOCAL, branch rel-nfra-opalai-portal-grant-gateway) carries all five, under audited override use 1 of GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_OPALAI~9.",
+    "notes": "The worker does not judge whether the fifth file belongs in the release. That is the issuer's decision: either amend the census list and <paths> to include app/admin_grants.py, or cut a release without 9a28cfbbe6. Nothing was uploaded, nothing on the instance was changed, and no ledger was opened. The issuer asked for the remaining pre-GO local steps (step 3 rollback build, step 4(i) .env render and step 1 announcement), and those were completed."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W9-S4",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~9",
+    "surfaced_at": "2026-09-26T12:45Z",
+    "one_line": "In the OA-g-2 release tree, tests/test_portal_grant.py gives 2 failed and 5 passed. Both failures read org/standards/NFRA_OPLGTW_CONTRACT.json, which the release restores to the base (no portal_grant section), as the face and the issuer direct. The same file gives 7 passed on the CLOUD-merged tree with contract v1.2. Neither the contract nor ops/ nor tests/ ships in the host artifact.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED /c/tmp/oa-9-rel/infra/aws/ec2/opal-gateway `python -m pytest tests/test_portal_grant.py -q`: pytest rc=1, '2 failed, 5 passed'. The failures are test_admin_accepts_portal_only_candidate (KeyError 'portal_grant' at tests/test_portal_grant.py:221) and test_admin_rejects_unknown_portal_channel (the message was 'scope.portal_channels is not admitted by this contract (no portal_grant)', not the expected 'does not hold', at :258).",
+        "CONTROL /c/tmp/oa-9 (wk-NFRA_OPALAI-9 at 1e71306a97, CLOUD merged): the same test file gives pytest rc=0, '7 passed'.",
+        "CODE infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py@df724ef284:56 reads _CONTRACT_PATH = <repo>/org/standards/NFRA_OPLGTW_CONTRACT.json, and :193-195 rejects portal_channels when the contract has no portal_grant, so it fails closed.",
+        "CODE infra/aws/ec2/opal-gateway/deploy-to-ec2.sh@c5f8099440:94-98: the tarball carries app, deploy, requirements.txt, identity_tool_allowlist.txt and the dashboard bundle. It carries no ops/, no tests/ and no org/standards.",
+        "The other test files in the release tree: tests/test_asker_scope.py rc=0 '4 passed'; tests/test_identity_scope.py rc=0 '9 passed'; tests/test_admin_grants.py rc=0 '5 passed, 1 warning'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-g-2 step 2: run tests/test_portal_grant.py, test_asker_scope.py and test_identity_scope.py inside the release tree and record the results. The hand-off says to restore the contract under org/standards to the base.",
+    "world_is": "Two of the seven portal-grant tests depend on the repo contract at v1.2. With the base contract restored, they fail in the release tree while the host artifact code is unaffected. The operator command run from the release tree would refuse a portal-only candidate (fail-closed).",
+    "notes": "The result is recorded, not repaired, and no contract file was carried into the release. Whether this leaves the order open is the issuer's call."
   }
 ]
 ```
