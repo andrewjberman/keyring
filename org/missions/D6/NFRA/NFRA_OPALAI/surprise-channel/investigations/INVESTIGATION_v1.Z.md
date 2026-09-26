@@ -751,6 +751,32 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "It cannot be run on this device (moto absent), so it is neither PASS nor FAIL here. AC1/AC2 do not depend on it; tests/test_identity_scope.py passes 9 of 9. The suite needs one run on a device with moto before OA-f-2 deploys.",
     "disarm_owner": "2.0.0_SA_COO~O",
     "notes": "Not repaired, no package installed. INERT: nothing deploys from this order (the deploy is OA-f-2)."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S22",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-26T02:48Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_OPALAI-Z-S21 (disarm_owner 1.0.0_SA_CTO): origin/CLOUD's EC2_MANIFEST now names the served gateway commit 0af72fb1d0, and the laptop's Teams fixes are on CLOUD. One residue: the manifest's release_note still describes 1f7128201a, because the laptop's appended 0af72fb1d0 entry did not survive the merge; OA-f-2 rewrites that record at its release.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ 2026-09-26 ~02:47Z: git ls-remote/fetch origin CLOUD = 079fbf7d8e (0.0.0_AB_MSTR pull-merge on Andrew's call-1 YES, record ANDREW_DIRECT_20260926_022xZ_CTO_O_OPEN_CALLS_1_TO_6_ANSWERED.md).",
+        "READ: git show origin/CLOUD:infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway.deployed_commit = 0af72fb1d071209b953168924bc64d391dfb92ff.",
+        "READ: git merge-base --is-ancestor 52809cd052 origin/CLOUD = true (the laptop cherry-picks 678891171b..52809cd052 are on origin).",
+        "READ: origin/CLOUD app/audit.py carries opal_asker_query (2 lines) and read_chat_message_images (1); app/data_entitlement.py carries each once.",
+        "READ: the release_note (1141 chars as JSON) contains no '0af72fb1d0'; it cites the MP-d-1 sign-off and the one-base ruling, i.e. the 1f7128201a release.",
+        "Served side: the host's identity_scope.py md5 matched only b4101ea371/0af72fb1d0 at Z-S21 (00:1xZ, SSM); OA-f-2, the only pending gateway deploy, is still <status>pending</status> at this row, so the served commit has not moved."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-S21 is ARMED: EC2_MANIFEST.json on CLOUD does not record the served opal-gateway commit.",
+    "world_is": "It does now: deployed_commit on origin/CLOUD = 0af72fb1d0 = the served commit. A release cut from the manifest's base now carries the Teams fixes. The release_note text is stale (describes 1f7128201a); no reader derives a base from that text.",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "notes": "Disarmed, not remediated: the release_note residue is left to OA-f-2's manifest record, which names its base (the laptop release) in words per its own order text. No other act."
   }
 ]
 ```
