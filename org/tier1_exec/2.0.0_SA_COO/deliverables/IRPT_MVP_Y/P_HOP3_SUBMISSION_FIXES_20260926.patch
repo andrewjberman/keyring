@@ -1,0 +1,352 @@
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/templates.json b/infra/aws/lambda/investor-reporting/ycharts/generate/templates.json
+index eb39f58..af986de 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/templates.json
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/templates.json
+@@ -32,7 +32,8 @@
+       "live_overview": "docs/research/investor_reporting_ycharts_cloud_20260911/README.md and lambda_generate_02.json -- Overview 14141822 generated live 2026-09-11, 201 with report_url/zip_url, 26.76 s whole-invocation",
+       "prd": "IRPT_BCKEND_PRD.md row B9 @62301f71e0; v0.8 measured contracts @d67e9813b5"
+     },
+-    "what_is_NOT_established": "SUPERSEDED by the live variant run: all three recipes now have live proof. What is STILL not established: public-security and mixed comparisons (the live run used one and two saved Opal MODELS), the maximum cardinality (3, 4 and 5 comparisons are unexercised anywhere -- the live Multi used TWO, as the August HAR did), percent-input conversion, ambiguous tickers/CUSIPs/share classes, and proxy substitutions. PRD v0.9 arm (5) is satisfied by the CRO's run on Andrew's word, NOT by this cell: NO LIVE YCHARTS CALL still binds here."
++    "what_is_NOT_established": "SUPERSEDED by the live variant run: all three recipes now have live proof. What is STILL not established: public-security and mixed comparisons (the live run used one and two saved Opal MODELS), the maximum cardinality (3, 4 and 5 comparisons are unexercised anywhere -- the live Multi used TWO, as the August HAR did), percent-input conversion, ambiguous tickers/CUSIPs/share classes, and proxy substitutions. PRD v0.9 arm (5) is satisfied by the CRO's run on Andrew's word, NOT by this cell: NO LIVE YCHARTS CALL still binds here.",
++    "default_report_title_source": "MAINTAINED, not measured: each row's default_report_title is 1.0.0_SA_CTO ruling (a) msg 101367 (2026-09-26, on 2.0.0_SA_COO~Y 101363). A null browser report_title derives from it through recipe_snapshot.capture_title_source; an explicit title always overrides."
+   },
+   "body_shapes": {
+     "_note": "The 34-key August body and the 33-key July body, MEASURED. The difference is exactly ONE root key and TWO modal fields -- not a redesign, which is why a builder that emits the August shape can also emit July's by subtraction rather than by a second template.",
+@@ -210,7 +211,8 @@
+       "report_type": "aggregate_security_overview",
+       "secondary_security": "ABSENT -- the single secondarySecurity block is present but null-valued",
+       "template_id": "14141822",
+-      "variant": "OVERVIEW"
++      "variant": "OVERVIEW",
++      "default_report_title": "Portfolio Overview"
+     },
+     {
+       "comparison_securities": {
+@@ -232,7 +234,8 @@
+       "report_type": "aggregate_security_comparison",
+       "secondary_security": "SINGLE -- secondary_security_id_present true, comparison_array_count 0: the one comparison travels in the secondarySecurity BLOCK, not in the array",
+       "template_id": "14141824",
+-      "variant": "COMPARISON"
++      "variant": "COMPARISON",
++      "default_report_title": "Portfolio Comparison"
+     },
+     {
+       "captured_cardinality_caveat": "BOTH the August HAR and the LIVE variant run used TWO comparisons. max 5 is the declared range, NOT a measured one: cardinalities 3, 4 and 5 are unexercised anywhere in this estate.",
+@@ -255,7 +258,8 @@
+       "report_type": "multi_security_comparison",
+       "secondary_security": "ABSENT -- secondary_security_id_present false: the comparisons travel in the comparisonSecurities ARRAY",
+       "template_id": "14141847",
+-      "variant": "MULTI"
++      "variant": "MULTI",
++      "default_report_title": "Multi-Security Comparison"
+     }
+   ],
+   "variant_selection": {
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py b/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
+index d64c20c..f18ab75 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
+@@ -58,7 +58,12 @@ import transport as tx
+ _HERE = os.path.dirname(os.path.abspath(__file__))
+ 
+ TEMPLATES_PATH = os.path.join(_HERE, "templates.json")
+-SETTINGS_PATH = os.path.normpath(os.path.join(_HERE, "..", "..", "intake", "settings.json"))
++# The flat irpt-ycharts-generate zip stages intake/settings.json beside this module (lambda-source-map
++# staged_from "packaged_as": "settings.json"); the tree, and the resident's package, keep it at intake/. From
++# /var/task the tree path would resolve to /intake/settings.json, which does not exist.
++_PACKAGED_SETTINGS = os.path.join(_HERE, "settings.json")
++SETTINGS_PATH = (_PACKAGED_SETTINGS if os.path.isfile(_PACKAGED_SETTINGS)
++                 else os.path.normpath(os.path.join(_HERE, "..", "..", "intake", "settings.json")))
+ 
+ STEPS = ("identity", "template", "upload", "create", "validate", "generate", "download")
+ 
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/recipe_snapshot.py b/infra/aws/lambda/investor-reporting/ycharts/generate/recipe_snapshot.py
+index fdc7146..7a089f6 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/recipe_snapshot.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/recipe_snapshot.py
+@@ -15,6 +15,7 @@ from submission import canonical_bytes, digest, validate_public_request
+ 
+ RECIPE_SOURCE = "ycharts-recipe-configuration"
+ SETTINGS_SOURCE = "ycharts-settings-configuration"
++TITLE_RULING = "1.0.0_SA_CTO msg 101367 ruling (a), 2026-09-26"
+ TEMPLATE_FIELDS = ("template_id", "variant", "report_type", "orientation", "primary_securities")
+ # Supported recorded modes, not default values. Adding another mode requires
+ # an evidenced recipe/readback mapping; a value for another field is not one.
+@@ -106,6 +107,28 @@ def capture_configuration(owner, browser, *, templates_path=TEMPLATES_PATH, sett
+         "source_descriptors": sources, "recipe_source_id": RECIPE_SOURCE, "settings_source_id": SETTINGS_SOURCE}))
+ 
+ 
++def capture_title_source(owner, browser, *, templates_path=TEMPLATES_PATH):
++    """The maintained default report title of the browser's variant, as the resolver's recipe_title_source.
++
++    maintained_sources consults it only when the browser's report_title is null (the contract's "derive it"),
++    and refuses rather than invent a title. The text is each templates.json row's default_report_title
++    (TITLE_RULING); the row is selected exactly as capture_configuration selects it. `owner` is the actor the
++    resolver binds the recipe to: the current viewer at the input's firm, or the owner when there is no viewer.
++    """
++    browser = validate_public_request(browser)
++    template_bytes = Path(templates_path).read_bytes()
++    variant = variant_for_comparison_count(len(browser["comparison_keys"]))
++    matches = [row for row in json.loads(template_bytes)["templates"] if row["variant"] == variant]
++    if len(matches) != 1:
++        raise RecipeRefused("UNAMBIGUOUS_RECORDED_TEMPLATE_REQUIRED")
++    title = matches[0].get("default_report_title")
++    if not isinstance(title, str) or not title.strip():
++        raise RecipeRefused("MAINTAINED_DEFAULT_TITLE_REQUIRED")
++    projection = {"report_title": title, "template_id": matches[0]["template_id"], "variant": variant,
++                  "ruling": TITLE_RULING, "configuration_sha256": hashlib.sha256(template_bytes).hexdigest()}
++    return json.loads(canonical_bytes(_descriptor(owner, Path(templates_path).resolve(), projection)))
++
++
+ def consume_configuration(prepared):
+     """Reconstruct only from a successfully prepared frozen-worker result.
+ 
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py b/infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py
+index 6dc9d25..a5197ce 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py
+@@ -9,7 +9,7 @@ import copy
+ from acceptance import AcceptanceRefused
+ from composition_admission import CompositionAdmission
+ from maintained_sources import resolve_comparison_fields, resolve_profile_fields
+-from recipe_snapshot import capture_configuration
++from recipe_snapshot import capture_configuration, capture_title_source
+ from submission import validate_public_request
+ from submission_service import SubmissionService
+ 
+@@ -18,12 +18,13 @@ class ProspectSubmissionFactory:
+     def __init__(self, *, acceptance, repositories, uploads, schema_directory,
+                  get_user, get_partner_profile, get_organization, get_catalogue,
+                  send, queue_url, ingestion_revision, destination_revision,
+-                 ordinary_authorizer, configuration=capture_configuration):
++                 ordinary_authorizer, configuration=capture_configuration,
++                 title_source=capture_title_source):
+         # repositories(access) and uploads(access, stores) are request-local
+         # SERVER installers, never a browser-selected callback or identity.
+         if not all(callable(port) for port in (repositories, uploads, get_user,
+                 get_partner_profile, get_organization, get_catalogue, send,
+-                ordinary_authorizer, configuration)):
++                ordinary_authorizer, configuration, title_source)):
+             raise AcceptanceRefused("PROSPECT_RUNTIME_PORTS_REQUIRED")
+         if not queue_url or not ingestion_revision or not destination_revision:
+             raise AcceptanceRefused("PROSPECT_RUNTIME_CONFIGURATION_REQUIRED")
+@@ -33,6 +34,7 @@ class ProspectSubmissionFactory:
+         self.send, self.queue_url = send, queue_url
+         self.ingestion_revision, self.destination_revision = ingestion_revision, destination_revision
+         self.ordinary_authorizer, self.configuration = ordinary_authorizer, configuration
++        self.title_source = title_source
+         self.admission = CompositionAdmission(schema_directory)
+ 
+     def submit(self, body, request, scope, event, ctx):
+@@ -79,10 +81,16 @@ class ProspectSubmissionFactory:
+         def resolve_inputs(accepted_browser, principal, owner):
+             if owner != request_owner or not authorize_exact(principal, input_owner, input_ref):
+                 raise AcceptanceRefused("CURRENT_INPUT_ACCESS_REQUIRED")
++            # A null title derives from the maintained default (CTO 101367). The resolver binds the recipe to the
++            # current viewer at the input's firm, so the descriptor is minted for exactly that actor.
++            title_source = (self.title_source(dict(access.current(), firm_id=input_owner["firm_id"]),
++                                              accepted_browser)
++                            if accepted_browser.get("report_title") is None else None)
+             fields = resolve_profile_fields(request.headers, input_ref, accepted_browser,
+                 get_user=self.get_user, get_partner_profile=self.get_partner_profile,
+                 get_organization=self.get_organization, input_owner=input_owner,
+-                current_viewer=access.current, authorize_viewer_input=authorize_exact)
++                current_viewer=access.current, authorize_viewer_input=authorize_exact,
++                recipe_title_source=title_source)
+             comparisons = resolve_comparison_fields(request.headers, input_ref, browser["comparison_keys"],
+                 get_catalogue=self.get_catalogue, input_owner=input_owner,
+                 current_viewer=access.current, authorize_viewer_input=authorize_exact)
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/custody_submission.py b/infra/aws/lambda/investor-reporting/ycharts/generate/custody_submission.py
+index a8880eb..5f40264 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/custody_submission.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/custody_submission.py
+@@ -16,7 +16,7 @@ from composition import build_retained_repositories
+ from composition_admission import CompositionAdmission
+ from custody import CustodyAccess
+ from portfolio import verify_frozen_portfolio
+-from recipe_snapshot import capture_configuration
++from recipe_snapshot import capture_configuration, capture_title_source
+ from submission import canonical_bytes, validate_public_request
+ from submission_service import SubmissionService
+ from maintained_sources import resolve_custody_profile_fields
+@@ -99,9 +99,13 @@ class CustodySubmissionFactory:
+                         and stored["data"] == canonical_bytes(document))
+ 
+             authorize = access.profile_authorizer(ref, retained_authorized)
++            # A null title derives from the maintained default (CTO 101367); with no viewer the resolver binds the
++            # recipe to this custody owner.
+             fields = resolve_custody_profile_fields(request.headers, owner, ref, body,
+                 get_user=self.readers.get_user, get_organization=self.readers.get_organization,
+-                authorize_input=authorize)
++                authorize_input=authorize,
++                recipe_title_source=(capture_title_source(owner, body)
++                                     if body.get("report_title") is None else None))
+             comparisons = {"comparison_catalog": {}, "source_descriptors": {}}
+             if body["comparison_keys"]:
+                 comparisons = self.comparison_resolver(body, principal, owner, ref, authorize)
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/submission.py b/infra/aws/lambda/investor-reporting/ycharts/generate/submission.py
+index 05ef213..5655e90 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/submission.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/submission.py
+@@ -14,6 +14,8 @@ import unicodedata
+ CUSTODY_FIELDS = frozenset(("request_id", "client_id", "account_ids", "snapshot_id",
+                             "variant", "comparison_keys", "report_title", "prepared_for"))
+ PUBLIC_FIELDS = CUSTODY_FIELDS | {"input_id"}
++# The two lanes whose frozen input a prospect submission names (intake/uploads.py mints both).
++PROSPECT_UPLOAD_LANES = frozenset(("CSV_UPLOAD", "TEMPLATE_UPLOAD"))
+ VARIANTS = {"auto": "auto", "overview": "OVERVIEW", "comparison": "COMPARISON",
+             "multicomp": "MULTI"}
+ 
+@@ -94,7 +96,9 @@ def input_repository_owner(resolved):
+     if owner.get("firm_id") != resolved["owner"].get("firm_id"):
+         raise SubmissionRefused("SINGLE_INPUT_STORAGE_FIRM_REQUIRED")
+     source = document.get("source") or {}
+-    if source.get("lane") == "CSV_UPLOAD":
++    # Both upload lanes retain their input under the upload-bound repository owner (uploads.repository_owner):
++    # the deferred template lane (CTO 100667 shape 2) exactly as the CSV lane.
++    if source.get("lane") in PROSPECT_UPLOAD_LANES:
+         upload = source.get("upload_id")
+         if (not isinstance(upload, str) or not upload
+                 or resolved["owner"].get("account_ids") != []
+@@ -129,7 +133,7 @@ def compose_frozen_request(browser, resolved, *, recipe_version, settings):
+                 or not isinstance(owner.get("home_firm_id"), str) or not owner["home_firm_id"].strip()
+                 or any(input_owner.get(key) != value for key, value in original_owner.items()
+                        if key not in ("account_ids", "prospect_input_id"))
+-                or (normalized.get("source") or {}).get("lane") != "CSV_UPLOAD"):
++                or (normalized.get("source") or {}).get("lane") not in PROSPECT_UPLOAD_LANES):
+             raise SubmissionRefused("EXACT_PROSPECT_OWNER_REQUIRED")
+     if custody_opal:
+         # This is a cross-field check, not an authorization grant. The shared
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_recipe_title_source.py b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_recipe_title_source.py
+new file mode 100644
+index 0000000..aeb3503
+--- /dev/null
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_recipe_title_source.py
+@@ -0,0 +1,79 @@
++"""capture_title_source: the maintained default report title (CTO 101367) as the resolver's recipe_title_source.
++
++The acceptance predicate is maintained_sources._profile_fields_from_snapshot's (the `title is None` branch), checked
++with that module's own _owner_binding and projection_sha256 so the test cannot drift from the resolver it feeds.
++"""
++import json
++import sys
++from pathlib import Path
++
++import pytest
++
++ROOT = Path(__file__).resolve().parents[3]
++for child in ("ycharts/generate", "_scope", "_authz", "_ids", "reports", "intake", "ops"):
++    sys.path.insert(0, str(ROOT / child))
++import maintained_sources  # noqa: E402
++import recipe_snapshot  # noqa: E402
++from recipe import RecipeRefused  # noqa: E402
++
++VIEWER = {"firm_id": "49financial", "principal_id": "someone@opal.test", "principal_class": "OPAL_GLOBAL",
++          "advisor_id": True, "home_firm_id": "opal-capital", "ownership_fingerprint": "f" * 64,
++          "schema_version": "prospect-owner-v1"}
++
++
++def body(keys=(), title=None):
++    return {"request_id": "title-test", "client_id": None, "account_ids": [], "snapshot_id": None,
++            "input_id": "portfolio_" + "a" * 64, "variant": "auto", "comparison_keys": list(keys),
++            "report_title": title, "prepared_for": "Recipient"}
++
++
++def accepted_by_resolver(source, recipe_owner, display_scope):
++    """maintained_sources.py (title is None branch): the exact refusal predicate, inverted."""
++    return (isinstance(source, dict) and source.get("source_kind") == "RECIPE_CONFIGURATION"
++            and source.get("binding") == maintained_sources._owner_binding(recipe_owner)
++            and isinstance(source.get("source_scope"), dict)
++            and all(source["source_scope"].get(k) in (None, display_scope[k])
++                    for k in ("firm_id", "principal_id", "advisor_id"))
++            and source.get("projection_sha256") == maintained_sources.projection_sha256(source.get("projection")))
++
++
++@pytest.mark.parametrize("keys,title", [((), "Portfolio Overview"), (("VFIAX",), "Portfolio Comparison"),
++                                        (("VFIAX", "VTSAX"), "Multi-Security Comparison")])
++def test_each_variant_carries_its_ruled_default(keys, title):
++    source = recipe_snapshot.capture_title_source(VIEWER, body(keys))
++    assert source["projection"]["report_title"] == title
++    assert source["projection"]["ruling"] == recipe_snapshot.TITLE_RULING
++    display = {k: VIEWER[k] for k in ("firm_id", "principal_id", "advisor_id")}
++    assert accepted_by_resolver(source, VIEWER, display)
++
++
++def test_binding_carries_the_opal_home_and_a_foreign_actor_is_refused():
++    source = recipe_snapshot.capture_title_source(VIEWER, body())
++    assert source["binding"]["home_firm_id"] == "opal-capital"
++    other = dict(VIEWER, principal_id="another@opal.test")
++    display = {k: other[k] for k in ("firm_id", "principal_id", "advisor_id")}
++    assert not accepted_by_resolver(source, other, display)  # negative control: minted for a different actor
++
++
++def test_a_tampered_projection_is_refused_by_the_resolver_predicate():
++    source = recipe_snapshot.capture_title_source(VIEWER, body())
++    source["projection"]["report_title"] = "Invented"
++    display = {k: VIEWER[k] for k in ("firm_id", "principal_id", "advisor_id")}
++    assert not accepted_by_resolver(source, VIEWER, display)
++
++
++def test_a_row_without_the_maintained_default_refuses(tmp_path):
++    catalogue = json.loads(Path(recipe_snapshot.TEMPLATES_PATH).read_bytes())
++    for row in catalogue["templates"]:
++        row.pop("default_report_title", None)
++    stripped = tmp_path / "templates.json"
++    stripped.write_text(json.dumps(catalogue), encoding="utf-8")
++    with pytest.raises(RecipeRefused, match="MAINTAINED_DEFAULT_TITLE_REQUIRED"):
++        recipe_snapshot.capture_title_source(VIEWER, body(), templates_path=stripped)
++
++
++def test_the_catalogue_names_a_default_for_every_template():
++    catalogue = json.loads(Path(recipe_snapshot.TEMPLATES_PATH).read_bytes())
++    assert {row["variant"]: row["default_report_title"] for row in catalogue["templates"]} == {
++        "OVERVIEW": "Portfolio Overview", "COMPARISON": "Portfolio Comparison",
++        "MULTI": "Multi-Security Comparison"}
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_template_lane_submission.py b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_template_lane_submission.py
+new file mode 100644
+index 0000000..60839a6
+--- /dev/null
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_template_lane_submission.py
+@@ -0,0 +1,42 @@
++"""A prospect submission on a TEMPLATE_UPLOAD input binds exactly as one on a CSV_UPLOAD input.
++
++Both lanes retain their input under uploads.repository_owner (account_ids [] and prospect_input_id = upload id), measured
++on the live window-3 ARTIFACT# rows. Before this fix, submission.input_repository_owner bound only CSV_UPLOAD, and the
++Opal prospect check refused any other lane with EXACT_PROSPECT_OWNER_REQUIRED, in generate and in the resident's replay.
++"""
++import sys
++from pathlib import Path
++
++import pytest
++
++ROOT = Path(__file__).resolve().parents[3]
++sys.path.insert(0, str(ROOT / "ycharts/generate"))
++import submission  # noqa: E402
++
++OWNER = {"schema_version": "prospect-owner-v1", "firm_id": "cottonwood", "principal_id": "p@opal.test",
++         "principal_class": "OPAL_GLOBAL", "advisor_id": None, "home_firm_id": "opal-capital",
++         "ownership_fingerprint": "f" * 64}
++
++
++def resolved(lane):
++    upload = "UP-" + "a" * 64
++    return {"input_owner": dict(OWNER), "owner": dict(OWNER, account_ids=[], prospect_input_id=upload),
++            "document": {"owner": dict(OWNER), "source": {"lane": lane, "upload_id": upload}}}
++
++
++@pytest.mark.parametrize("lane", ["CSV_UPLOAD", "TEMPLATE_UPLOAD"])
++def test_both_upload_lanes_bind_the_upload_scoped_repository_owner(lane):
++    owner = submission.input_repository_owner(resolved(lane))
++    assert owner["account_ids"] == [] and owner["prospect_input_id"] == "UP-" + "a" * 64
++
++
++def test_a_template_input_still_refuses_a_foreign_upload_binding():
++    case = resolved("TEMPLATE_UPLOAD")
++    case["owner"]["prospect_input_id"] = "UP-" + "b" * 64  # negative control: another upload's scope
++    with pytest.raises(submission.SubmissionRefused, match="ORIGINAL_PROSPECT_INPUT_BINDING"):
++        submission.input_repository_owner(case)
++
++
++def test_an_unknown_lane_is_not_an_upload_lane():
++    assert "CUSTODY" not in submission.PROSPECT_UPLOAD_LANES
++    assert submission.input_repository_owner(resolved("CUSTODY")).get("prospect_input_id") is None
