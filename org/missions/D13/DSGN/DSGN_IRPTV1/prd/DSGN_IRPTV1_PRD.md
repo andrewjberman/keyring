@@ -5,10 +5,10 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.8",
+ "prd_version": "v0.9",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ui-finish-design-brief-20260924.md@20f90739bd",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19"],
  "status": "DRAFT"
 }
 ```
@@ -202,6 +202,17 @@ The L5/L6 issuer is `2.0.0_SA_COO~D` by Andrew's name.
                     the short-to-long model spectrum) wherever they help the advisor
          SOURCE     brief @20f90739bd O11 (P:14-31; the commission's "drawing cues from the www.opalinvest.com
                     website and existing art")
+  FWD-19 An advisor searches by client, and reads performance one account at a time inside that client
+         DONE WHEN  EXERCISED -- an advisor picks a real client with several accounts, reads one account's return,
+                    switches to another, and sees the client's holdings total unchanged
+         ACCEPT     the search and the header only ever offer clients, never accounts; the client's accounts are
+                    listed by name inside the client; Performance always says which account its figure belongs to,
+                    opens on the client's largest account with the others one click away, and never shows a return
+                    for the whole client; switching accounts never changes who the client is or the client's
+                    holdings total; when one account cannot be computed, the page says so in plain words
+         SOURCE     Andrew-direct 2026-09-26 ~15:1xZ, record
+                    `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260926_151xZ_PERFORMANCE_ACCOUNT_LEVEL_FRONTEND_ROUTES_CLOSER_TRACE.md`
+                    @`07c4b8b84e` (C1-C4); the route proposal of `4.0.0_SA_CRO` @`889160ce2c`
 ```
 
 Not promised (brief Part II, VII): the PDF / print package; the narrative page; the Global-view entitlement model's
@@ -253,6 +264,43 @@ view, the header included; its kinds, denominator and revision go to the disclos
 carrying `public_reason_code` UNPROJECTED_GRANT renders its reason and no count. The irpt-holdings count is structurally
 zero until IB-rtf-8 folds the fork. FWD-2's "entitlements, revisions or cohorts" does not name this indicator, so its
 ACCEPT line does not move; a C1 cell that hides the indicator re-opens S28 and fails FWD-2's brief-half reading.
+
+## ROUTE STRUCTURE (v0.9 -- client context, per-account Performance; serves FWD-19, FWD-1, FWD-2, FWD-5)
+
+**Andrew-direct 2026-09-26 ~15:1xZ** (record `ANDREW_DIRECT_20260926_151xZ_PERFORMANCE_ACCOUNT_LEVEL_FRONTEND_ROUTES_CLOSER_TRACE.md`
+@`07c4b8b84e`): *"Performance is always going to be account-level, not client level"*; people search by client only; a
+client is the aggregation of its accounts; the fix is the frontend's design and paths, and the backend is taken as is.
+
+**The structure is `4.0.0_SA_CRO`'s proposal, adopted:**
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_FRONTEND_ROUTE_STRUCTURE_PROPOSAL_20260926.md` @`889160ce2c`. It is
+built from three read-only `/closer` traces (the Performance tab, the Holdings tab, and the header/identity panel with
+its search) and cites them. Sections 2-5 of that file are the spec: the routes R0-R4, each route's exact calls, the six
+rules, and the code each retires. In summary:
+- **R0, no client:** search and browse, clients only.
+- **R1, the client:** the page's unit of selection. There is ONE `POST /selections` with the entry's own scope and ONE
+  `GET /holdings/{client set}`. That snapshot's level-0 ACCOUNT nodes are the page's one account list, and they
+  replace the directory account-name search.
+- **R2 / R2a, Holdings:** the client aggregate, and one account focused inside the tab.
+- **R3 / R3a, Performance:** always one account, as a one-account `POST /selections` then a
+  `GET /performance/{account set}`. The client set is never sent to `/performance`, so `SELECTION_UNSUPPORTED` cannot
+  occur.
+- **R4, Analysis:** unchanged; it reads R1's account list for names.
+- **Account focus is tab-local.** It never changes the client, the identity card or the holdings total.
+- **Export on Performance** targets the focused account's set.
+
+**The CTO's rulings on the proposal's calls** (1.0.0_SA_CTO, 2026-09-26 ~15:5xZ, own REC under the self-drive arm
+@`ce6aa15a17`):
+- **Call 1, what Performance shows at rest for a multi-account client: (b).** The client's largest account by the
+  snapshot's value is preselected (the first in snapshot order on a tie), with the chooser always visible. This holds
+  the one-main-picture-at-rest law (FWD-16), and the chooser says whose figure it is.
+- **Call 2, deep links: (a).** Route state only, in-page. No client or account id goes into the URL, because ids
+  never print. An opaque server reference (the `sel_` id) is the path if deep links are asked for later.
+- **Call 3, a client-level list of every account's figure on Performance: PARKED** as enrichment. It costs one
+  request per account (up to 70 at 49F), and FWD-19 is met without it. Andrew may un-park it.
+
+**What this does not change:** the backend, its contracts and its one-account rule (`performance/retained.py:77-80`);
+the PATHS (every file the proposal's section 5 names is under `portal/src/pages/InvestorReporting/**`); rounds already
+cut.
 
 ## THE THREAD (FWD-1) -- round 1 builds it end to end
 
@@ -309,6 +357,9 @@ v0.6 additions. The CTO's order is a suggestion; the sequence is the COO's at L5
 20. FWD-17 the sample view before a client is chosen -- C23
 21. FWD-18 the light look across the page -- C24
 22. FWD-10's tab order still reads Performance, Analysis, Holdings in the code (brief Part VI S3) -- C13
+
+v0.9 addition, FIRST in round 6 because it is the FWD-1 blocker (every client-set Performance read is refused today):
+23. FWD-19 the client context and per-account Performance route structure (ROUTE STRUCTURE above) -- C25
 
 ## CELL CANDIDATES (the COO's decomposition; not task orders)
 
@@ -377,6 +428,12 @@ v0.6 candidates (brief @20f90739bd Part IV F1-F10; C9, C10's rail and C11's hist
 - C24 The light look: the Philosophy / Model Portfolios card-and-dialog family (F6); footers source and timestamp only
   (F8, `PanelFooter`); `DataTooltip` for chart data and `HelperTip` for help, replacing the default recharts tooltip at
   `DrillTree.tsx:376`; no stray scrollbar; website motifs from `design/brand/opalinvest.com.md` and F9. Serves FWD-18.
+- C25 Client context and per-account focus (v0.9): the ROUTE STRUCTURE section, spec'd by the CRO proposal
+  @`889160ce2c` sections 2-5. R1 holds the client and the one shared snapshot and account list; Holdings and
+  Performance hold tab-local account focus; Performance pairs every `GET /performance` with a one-account
+  `POST /selections` and preselects the largest account; the directory account-name search is removed. Acceptance is
+  the proposal's section 7, with a HAR census showing 0 `/performance` GETs carrying the client set. Serves FWD-19,
+  FWD-1, FWD-2 and FWD-5.
 
 ## PATHS (the write surface)
 
@@ -524,6 +581,16 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
   - R2: FWD-7 reads "the variant step is three cards", so it no longer contradicts FWD-8's upload-first step for a
     prospect.
   No other clause of either half changes (beyond the header version and this history line).
+- v0.9, 2026-09-26 ~15:5xZ, `1.0.0_SA_CTO` (Claude): the `/endpoint` re-entry on Andrew-direct @`07c4b8b84e`
+  ("Performance is always going to be account-level, not client level"; search by client only):
+  - ENDPOINT: FWD-19 is ADDED. The outcome set was RIGHT and INCOMPLETE; no id is renumbered and FWD-1..18 are
+    unchanged.
+  - The ROUTE STRUCTURE section is added, adopting `4.0.0_SA_CRO`'s proposal @`889160ce2c`, with the CTO's rulings
+    on its Calls 1-3.
+  - ENRICHMENT BACKLOG item 23 and CELL CANDIDATE C25 are added.
+  - Re-sign: the ENDPOINT change re-signs the ratified-text half at `3.0.0_SA_CVO`. The brief half is accepted,
+    because the CRO wrote the proposal.
+  - The round-6 cut waits for the COO resume (Andrew-direct pause @`13c1c55b8b`).
 
 ## SURFACE MANIFEST
 
