@@ -48,7 +48,7 @@ The CTO accepted the first read and admits the INF names as their own line, with
 that contain a run of 6 or more digits, or an email-like token, which could be an account number or a personal
 detail from a manual or held-away row. Print the count and the examples, then mask, drop or state why each is safe.
 
-Scanned on the pinned INF candidate (614e.../b681cc8d..., business date 2026-09-22): every SECURITY node's
+Scanned on the pinned INF candidate (revision b681cc8d..., business date 2026-09-22): every SECURITY node's
 `display.label`, `display.description` and `company=` fact. 30,881 SECURITY nodes, 3,044 distinct name texts.
 
 - **Email-like tokens:** 0.
