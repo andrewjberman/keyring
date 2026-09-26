@@ -79,3 +79,32 @@ One fresh 49F read (acc_0030c178.., 2026-01-01..2026-09-19; Lambda Duration **26
   - A reopen makes about 3 such calls, and warm reopens measured 0.17-4.8 s.
 - **Consequence for R9 (B as platinum):** B removes at most the ~4 s engine read. On this measurement it cannot bring
   a 26.7 s read under the 30 s cap with margin by itself.
+
+## 7. Measured -- the second timing line (20:4xZ, adapter ZP7KM9Bc, ledger irpt-adapter-timing2-20260926) and the re-ranked fix
+
+**The hypothesis is confirmed.** One fresh 49F read (01-01..09-17, Duration 25,843 ms):
+
+| Where | ms | Note |
+|---|---|---|
+| authorize calls | **64 calls, 301-365 ms each, sum 20,464** | `_authorize_release` rebuilds the Enforcer on every call |
+| engine read (`calculate_ms`) | 4,379 | frame 3,683 ms; this includes 1 authorize |
+| evidence put / retention promote / persist / readback / reopen | 4,450 / 1,909 / 7,544 / 3,290 / 3,323 | these laps CONTAIN most of the 64 authorize calls |
+| select / release | 150 / 310 | |
+
+Warm reopens (Duration 4.3 s and 8.0 s, the latter with a cold start) make 11 authorize calls, 3,458-3,546 ms. Without
+the calls, each read is roughly 0.8 s of other work.
+
+The cost is 64 x ~0.32 s of repeated authorization, not data volume. B (platinum) would save at most ~4 s.
+
+### Re-ranked fix options
+
+| # | Option | Expected (fresh / reopen) | What it touches | Risk |
+|---|---|---|---|---|
+| **M** | **A per-request memo of `_authorize_release`.** Each request's closure caches its last successful release. The cache is dropped at every point where `retained.compute` deliberately re-checks after slow I/O (after the engine/provider read). `entry.py`'s final release, before any data leaves, ALWAYS runs un-memoized | ~6 s / ~1.3 s (3-4 real calls instead of 64/11) | `performance/entry.py` only (the closure), plus tests | A grant revoked mid-request is seen at the next real check, never later than the final release. No data is released under a revoked grant; a retained write in Opal's own store may complete (as it can today between two checks) |
+| C | Fewer calls: `repository._allow` / `retention._allow` re-authorize on every put/get/reserve/publish/require_live, and one fresh read makes 64 | depends on the count cut | `reports/` (lane P), shared by Analysis | A larger change to a shared authorization surface |
+| L | A cheaper rebuild: cache the directory/ownership/policy loads per container, revalidated per call (a conditional GET or revision check) | ~2-3 s saved; the per-call cost is not yet split between fetch and parse | `_authz` / loaders (shared by every function) | Estate-wide blast radius |
+| B | Platinum per-account extract (R9) | saves ~4 s of 26 | new producer + registry row | HELD (CTO 101487) |
+
+**REC: M now**, under its own half (the CTO's 101487 expectation). It stays inside one file, is measured before and
+after by the two timing lines, and keeps the one property that matters: the final release before any response is
+always a fresh, full authorization. C and L stay open for a later card; B stays held.
