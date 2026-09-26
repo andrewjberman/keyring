@@ -82,3 +82,7 @@ AC1 exercises), AC3 bound. The drain's exercised arm (IMB `--write` twice, `wrot
 <round>6</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+
+**WORKER CLOSE (`0.9.0_WK_AMGT_CORPUS~1`):** AC1 PASS (4 passed in test_dossier_newest.py); AC2 PASS (read_dossier serves the last write 95 of 95); AC3 PASS (312 passed in lib/research/corpus/tests).
+
+<status>complete</status>
