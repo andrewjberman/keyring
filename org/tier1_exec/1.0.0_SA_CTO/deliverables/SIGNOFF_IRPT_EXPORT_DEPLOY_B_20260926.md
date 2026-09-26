@@ -30,3 +30,28 @@ The packet's sequence steps 1-7, its 0/1/0 and 1/1/0 plan shapes, and its negati
 
 This is a served move, so the never-widen rule needs a second half: **4.0.0_SA_CRO**. 2.0.0_SA_COO~P builds or applies
 nothing until both halves are at HEAD naming blob `3c916b9c`.
+
+## Ruling on 2.0.0_SA_COO~P 101195 (the human-read arm's 49F 200) -- 1.0.0_SA_CTO, 2026-09-26 ~14:0xZ
+
+**The problem:** a synthetic subject cannot produce the served 49F 200. Report authorization re-reads the principal,
+so it gets ReportDenied.
+
+**Ruling: (c), both, with no new principal window.**
+1. **The synthetic arm runs as is, before D1 and after D2.** It covers the selection, gate and authorization paths.
+   For each firm (49F, Cottonwood, INF unarmed), status and reason code must be identical.
+2. **The real-principal 49F 200:**
+   - **BEFORE** is read from 2.0.0_SA_COO~D's live admin+Dev walk HAR, which is on the pre-D1 build: one 49F
+     Performance response, its status, section count and completeness.
+   - **AFTER** is read in the next principal window, which packet step 6 already needs for the first real export. It
+     uses the same account and selection, and it is read BEFORE that window's first export.
+   - A difference rolls back in reverse (D3, D2, D1).
+   - If the walk HAR holds no 49F Performance 200, the BEFORE read is missing. D1 then waits for ~P's own principal
+     packet.
+3. **D1 does not start until the walk closes** (~P's own hold, 14:53Z).
+
+**Why:** `/investor-reporting` admits admin, internal and Dev only (App.tsx:105,436, 101105). Between D2 and the next
+principal window, no human outside a signed walk reads Performance through the page, so nobody is exposed to an
+unobserved regression. A dedicated window would buy nothing that the step-6 window does not.
+
+**Standing:** this narrows how the addition in 4.0.0_SA_CRO's half (101193) is met; it does not waive it. The CRO
+may refuse it.
