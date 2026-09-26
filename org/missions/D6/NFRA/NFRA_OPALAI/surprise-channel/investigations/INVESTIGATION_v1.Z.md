@@ -825,6 +825,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Pre-acknowledge the rollback's halt gate: HALT_ACK=1 when the halt gate reads 0 STOP (the gate takes about 12 minutes).",
     "world_is": "The gate reads 0 STOP, and HALT_ACK=1 is the correct pre-ack. It takes about 24 minutes, not 12, because 186 routine messages are pending on 2.0.0_SA_COO~O's inbox. The forward deploy also goes through this gate before it touches the instance. A guard (ii) rollback after a failed /health would leave the host serving nothing for that time, unless the issuer names another rollback path. The standalone form, bash infra/aws/ec2/opal-gateway/deploy-to-ec2.sh i-07dccb1615503ac99 from the rollback tree, skips the gate and the manifest record.",
     "notes": "Not acted on: no inbox was touched and nothing was acked. Disarm: before GO, the issuer rules which rollback command guard (ii) runs."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S24",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T03:58Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-W8-S2"
+    ],
+    "one_line": "DISARMS NFRA_OPALAI-Z-W8-S2. Guard (ii) of OA-f-2 runs the rollback command the worker named (HALT_ACK=1, from the clean 0af72fb1d0 tree at /c/tmp/oa-8-rel's sibling /c/tmp/oa-8-rb). The halt gate's ~24 minutes under 186 routine pending messages is ACCEPTED, and the act is confined to outside US business hours (before 12:00Z). No gate is bypassed and no second rollback route is invented.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W8-S2 (worker 0.9.0_WK_NFRA_OPALAI~8, drained @3229aa6fb6): the halt gate reads 0 STOP with 186 routine pending and takes ~24 minutes, not the ~12 that row NFRA_MCPORTAL-Z-S8 measured.",
+        "The rollback artifact opal-gateway-0af72fb1d0.tar.gz (381002 bytes) was built without upload from a clean base tree. Against the live S3 base artifact, 70 of 75 files are byte-identical, including every .py file; the other 5 differ only in CRLF line endings (worker report, pre-GO)."
+      ]
+    },
+    "spec_asserts": "OA-f-2 guard (ii): if /health is not 200 within 90 s of the restart, the rollback runs AT ONCE.",
+    "world_is": "The rollback starts at once but spends ~24 minutes in the halt gate before it restores the host, so a failed release means up to ~25 minutes of gateway outage.",
+    "notes": "The exposure is bounded by timing (off-hours) rather than by skipping the pre-deploy gate: 'pre-existing mechanical gates stand'. If the halt gate's scan time is itself a defect, that is its owner's row, not this release's."
   }
 ]
 ```
