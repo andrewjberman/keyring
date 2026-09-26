@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-26T19:55Z. The previous stamp read "19:00Z" but was written ~18:45Z. Lease FAST until 2026-09-27T01:52:21Z.
+As of 2026-09-26T20:12Z. Lease FAST until 2026-09-27T01:52:21Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now (Andrew-direct at ~Y, ~18:5xZ: "dont need option 2, but do 1 3 and 4 in order"; CTO 101442, 101465)
@@ -17,16 +17,18 @@ All three are done, and every proof is offline: reads are live, writes are captu
    - (A) irpt-status lacks `interactive_access.py`: 0/4 Opal reads as deployed, 4/4 with it;
    - (B) irpt-status-role lacks `s3:GetObjectVersion`, a simulated deny; patch `P_STATUS_READ_GRANT_20260926.patch`;
    - (C) Analysis export is unbuilt, refused by name. The CTO ruled it an enrichment under FWD-9, off the window (101465).
-   A and B are at P (101463).
-3. **M's cross-viewer title binding** (`M_CROSS_VIEWER_TITLE_BINDING_20260926.md` @1b40d23954): the patch is at M. A
-   2nd viewer goes from refused to ACCEPTED; the resident is ADMITTED.
+   **A and B are SERVED** (P 101481, 19:56:53Z; irpt-status `bMMJ/bQ+5`; simulation 10/10).
+   Y's no-overlay proof on the served zip is 4 of 4; the prior zip is the control at 0 of 4 (@1d70f8ec6c).
+3. **Cross-viewer title binding** (`M_CROSS_VIEWER_TITLE_BINDING_20260926.md` @1b40d23954): a 2nd viewer goes from
+   refused to ACCEPTED, and the resident goes from refused to ADMITTED. The patch is routed to P, whose lane
+   IRPT_COMPLETION_P owns `reports/**`; M reviewed it (101479).
 
 Deployed: P served the hop-3 patch (generate `/iFhTAvT`, resident `fe64236bbb`; content proof 6/6, P 101467). Y's
 overlays are content-equal to those six files once CRLF is stripped. The one byte difference is templates.json line
 endings, which changes only the offline composition's `configuration_sha256`.
 
-Next window (CTO 101465): upload, generate, READY, sections, history. It is cut after P applies A+B and the pre-flights
-are pinned.
+Next window (CTO 101465): upload, generate, READY, sections, history. A+B are applied and the pre-flights are pinned.
+Per Andrew, the re-prove and window 4 are not Y's to run unless he asks.
 
 ## Pins
 
@@ -158,8 +160,8 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 | `intake/tests/test_security_resolution.py:31` needs IRPT_LOOKUP_FIXTURE_ROOT | 2.0.0_SA_COO~Y | the next edit to that suite |
 | `reports/tests/test_generate_installed.py:58` expects 22 schemas; the tree holds 23 (fails at P's own tip) | 2.0.0_SA_COO~P | P's next edit to that suite |
 | generate reads `irpt-common` by name (latest), not pinned (P `08d9f2f0b1`); a new layer version moves generate at that root's next apply | 2.0.0_SA_COO~P | irpt-common v6 is built |
-| request_composition.py:88 binds the recipe title source to the INPUT owner (the cross-viewer null title) -- patch delivered @1b40d23954 | 2.0.0_SA_COO~M | M applies; ships in generate AND the resident |
-| OG-v-4 phase 1: Y's AC8 re-check re-sealed. The committed seal b0d4bba5df lost its salt; the uncommitted 18:06Z seal in wk-nfra-oplgtw-og-v-4-p1 is the only one that matches (row NFRA_OPLGTW-S63 @a113cbf3d8) | 2.0.0_SA_COO~O (the record decision) | ~O answers 101456; the worktree is HELD, and nobody runs AC8 |
+| request_composition.py:88 binds the recipe title source to the INPUT owner (the cross-viewer null title) -- patch delivered @1b40d23954, routed to P 20:09Z | 2.0.0_SA_COO~P | P applies; ships in generate AND the resident |
+| OG-v-4 phase 1 (S63): ~O ruled (101477). The 18:06Z seal is committed as the record, superseding b0d4bba5df: `0f2bd1c0d3` on origin `wk-nfra_oplgtw-og-v-4-p1` (MSTR 101482). AC8 is MUTATING; nobody runs it again | 2.0.0_SA_COO~O (drain to CLOUD) | the issuer drains phase 1 |
 | The Y worktree is a sparse checkout (`firm_destination_policy.json` is S), so two `test_broker_recovery_evidence` arms fail only here | 2.0.0_SA_COO~Y | a suite needs that file on this worktree |
 
 ## Limits
