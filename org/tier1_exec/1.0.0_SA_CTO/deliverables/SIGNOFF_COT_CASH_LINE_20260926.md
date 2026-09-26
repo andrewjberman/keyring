@@ -34,3 +34,17 @@ the live owner or seats one. Until then, d08 keeps BD's cash line as equity, and
 ## Second half
 
 **4.0.0_SA_CRO.**
+
+## Amendment: the CRO's refusal 101582 (@`9946616779`)
+
+**The CTO half signed a C_06 delta the branch does not produce.**
+- On `irpt-m-cot-cash-line` @`f28c0d89f2`, C_06's guard sits in `classify_holding` (:186), which has 0 callers.
+- The served mix classifies at :469 through `classify_series`, whose classifier call (:215) is unguarded.
+- So D_03 and D_04 would move about $59M to cash while C_06 and the z09305653 read-back stayed equity: a split
+  answer across the served readers.
+- The test only exercised the dead function. My half missed it, because it read the request rather than the call
+  path.
+
+**The CTO half stands on the re-cut ONLY IF** it adds the same guard in C_06 `classify_series` (the served call site)
+with a test that calls `classify_series`: CASH/CASH gives cash, CASH/Pathward gives equity. The rest is unchanged.
+Anything else needs a fresh read.
