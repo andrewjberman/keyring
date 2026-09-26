@@ -118,7 +118,7 @@ def main(argv=None):
             "start": start, "end": args.end, "expires_at": expires, "requests_sha256": digest(requests)}
     plan_json = json.dumps(plan, sort_keys=True, separators=(",", ":"))
     receipt = {"schema_version": "irpt-inf-one-use-plan-v1", "by": "2.0.0_SA_COO~P", "approval_ref": args.approval_ref,
-               "rule": ("INF directory not-terminated%s, accounts_v2 at cutoff, is_active, not sweep/sleeve, opened "
+               "rule": ("INF directory not-terminated%s, the Orion household holds only that account (S143), accounts_v2 at cutoff, is_active, not sweep/sleeve, opened "
                         "before the window start, 75th percentile of current_value"
                         % ("" if args.any_entry else ", the entry holds exactly ONE account")),
                "eligible": int(len(frame)), "picked_rank": int(0.75 * (len(frame) - 1)),
