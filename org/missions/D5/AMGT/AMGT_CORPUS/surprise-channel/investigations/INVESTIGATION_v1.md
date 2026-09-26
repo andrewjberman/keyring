@@ -1414,6 +1414,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Z-S36 disarms when dossier.model_rows reads the derived block, names it in inputs, derives its absent reasons, and a dossier --write shows model_rows with a value on keys carrying a block.",
     "world_is": "Met on the served dossiers.",
     "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S39",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-26T01:58:00Z",
+    "one_line": "THREE of the 89 Base-case security keys carry a shell/glob metacharacter -- BP/_LN_Equity and NG/_LN_Equity (literal '/') and WALMEX*_MM_Equity (literal '*'). AMGT_RESAPP's Z-W158-S1 named the two '/' keys on its own 89; the '*' is a THIRD metacharacter nobody has named, and it fails in the OPPOSITE direction: a '/' breaks a path LOUDLY, a '*' silently WIDENS any glob, fnmatch or shell path built by interpolating a key. Measured as an EXPOSURE, not an incident: zero key-interpolating glob sites in lib/research today.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Found while grading AMGT_CORPUS g-1 AC4 over all 89 keys of cases_report_89_20260925T190913Z.log. A metacharacter census over the 89 keys returns 3: BP/_LN_Equity, NG/_LN_Equity (literal '/') and WALMEX*_MM_Equity (literal '*'). All three are genuine Bloomberg ticker conventions, not corruption -- '*' is real in Mexican share classes.",
+        "THE EXPOSURE IS MEASURED AND BOUNDED, so this is an EXPOSURE and NOT an INCIDENT and nothing is re-opened. comp-find over lib/research for 'rglob|fnmatch|glob.glob|.glob' returns 6 hits across 275 files. One is substring noise ('www.globalpaymentsinc.com' in registrations.json, matched on '.glob'), two are tests, and the three real sites use CONSTANT patterns (readonly_proof.py:341 rglob(\"*.py\"), freshness/build_view.py:217 a module constant) or CLI argv (provenance/validate.py:99, main() globbing command-line paths). ZERO sites interpolate a security key into a glob.",
+        "THE FIRST CENSUS OF THIS WAS WRONG AND THE TOOL CAUGHT IT: the pattern was first written 'rglob\\(|\\.glob\\(|Prefix=', whose escaped parens and pipe reach python re as LITERAL characters. comp-find warned explicitly and the run returned 54 hits that were 'Prefix=' ALONE -- a confident number for a question the glob arms never asked. Re-run with bare pipes it is 6. A malformed pattern that still returns plausible hits is the failure mode, not a zero.",
+        "THE TWO CHARACTERS ARE HAZARDS ON DIFFERENT SURFACES, so one remedy does not cover both. S3 treats '*' as a LITERAL in a key or prefix, so WALMEX* is safe there; but S3 treats '/' as a DELIMITER, which is exactly where the '/' keys bite and why Z-W158-S1 found them on the identity layer. Python glob/fnmatch inverts it: '*' is a wildcard that widens a match silently, '/' merely breaks a path component. A guard written for one character on one surface will pass the other.",
+        "SHARED-DEPENDENCY SHAPE (Rule 22): AMGT_CORPUS and AMGT_RESAPP read the SAME 89-key universe, so this is one defect beneath two per-project checks. RESAPP's row censused for '/' and could not see '*'; this row censused the character class and found all three. A check scoped to the members cannot see a defect in what the members SHARE."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT_RESAPP-Z-W158-S1 asserts that 2 of 89 keys carry a literal '/' and treats that as the key-metacharacter exposure for the shared universe.",
+    "world_is": "THREE of the 89 carry a metacharacter, not two: the third is a literal '*' in WALMEX*_MM_Equity, which no row has named. The '/' exposure is correctly described by Z-W158-S1; the '*' exposure is new, is silent rather than loud, and lives on a different surface (glob/fnmatch, not S3 prefixes).",
+    "notes": "REMEDY IS A GUARD, NOT A RE-OPEN: no served output is implicated and no glob site takes a key today. The cheap durable form is a single validator on the key space that refuses or escapes the metacharacter class at mint time, which covers both characters and any future one, rather than two per-character guards on two surfaces. OWNER: whoever next cuts the identity-layer cell that owns Z-W158-S1 -- the two rows should be remedied together because they are one defect. DISCRIMINATOR for any future claim that this fired: search for a glob/fnmatch/rglob call whose pattern argument derives from a security key, and print the denominator."
   }
 ]
 ```
