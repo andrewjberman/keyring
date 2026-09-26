@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 2f72865f), per CTO 101100 (Andrew-direct ~03:0xZ, 09-26; record
 `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Lease FAST until 2026-09-26T15:01:17Z. Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-26T13:22Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
+As of 2026-09-26T13:33Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Pins
 
@@ -30,8 +30,10 @@ compose_upload import for an Opal subject. That was Y's patch miss. The import-c
 security_resolution). The exact staged_from rows are in `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/P_GENERATE_PACKAGE_MISSING_MODULES_20260926.md`.
 P committed the three rows at `45d905110c` (05:16Z). Y confirmed they are byte-identical to Y's rows (the pins and
 sha256 match). 0.0.0_AB_MSTR met the 5 GB disk floor at 13:16Z (101157). P opened ledger
-`irpt-generate-closure-fix-20260926` at 13:18Z; its leg V1 is `generate_package_closure.py` exit 0 on the new zip. At
-13:22Z, `irpt-ycharts-generate` is still `LdjdnnLh`, and Y is watching its CodeSha256.
+`irpt-generate-closure-fix-20260926` at 13:18Z. `irpt-ycharts-generate` moved to `IJD6bd1I` at 13:30:11Z. Y downloaded the
+served zip, and its sha256 equals the CodeSha256. `generate_package_closure.py` on that zip against P's tree prints OK and
+exits 0: the closure is 39 modules, and the zip carries 59 `.py` files, 56 plus the 3 added. The upload rerun is now
+waiting only on the principal window.
 
 The walk principal was deleted at 03:30Z (P 101124). The rerun needs a new principal window under its own sign-off. Y
 asked P at 13:20Z to start that re-sign in parallel and to create the principal after the deploy. Nothing was written
