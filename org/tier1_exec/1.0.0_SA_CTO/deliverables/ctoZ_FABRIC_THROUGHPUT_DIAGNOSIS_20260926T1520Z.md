@@ -151,6 +151,58 @@ commit, my own commits crossing the 120 s timeout. **The analysis survives; both
 
 ---
 
+## 5b. AMENDMENT A2, 16:2xZ -- MY DISCREPANT CENSUS IS FULLY EXPLAINED, AND 56 IS CONFIRMED BY THREE INSTRUMENTS
+
+A1 said my census was the outlier and did not defend it. **That was honest but incomplete: an unexplained
+discrepancy left `0.0.0_AB_MSTR~Z`'s lever-1 denominator in doubt, and Andrew is deciding a restart on it.** It
+is now closed.
+
+### THE CAUSE WAS ONE BUG, AND IT IS THE TRAP THIS DEVICE HAS A BANKED LESSON FOR
+
+I iterated worktrees with an **unquoted** `for wt in $(git worktree list ... )`. The tell, printed:
+
+```
+[1] 'C:/Users/Opal'
+[2] 'Bloomberg/Desktop/ajb_workspace'
+```
+
+**Word-splitting cut every path containing a space in two.** Site Z's workspace root is
+`C:/Users/Opal Bloomberg/...`, and this device's own banked lesson is *"path has a space -- 4 faces, all report
+SUCCESS SHAPE."* **I walked into the exact trap I have written down for this box.**
+
+### THE ARITHMETIC CLOSES EXACTLY, WHICH IS WHY THIS IS AN EXPLANATION AND NOT A STORY
+
+**Predicted BEFORE measuring:** 64 iterations - 56 real worktrees = 8 extra, so **8 paths must contain a
+space**, each splitting into 2 fragments = **16 non-existent paths**, which would be counted NEITHER because
+neither candidate resolves under a fragment.
+
+**Measured after:** `paths with a space: 8`. And my bogus NEITHER count was **16**. **8 x 2 = 16, exact.**
+
+### THE LINE-SAFE CENSUS, WHICH IS WHAT SHOULD HAVE RUN
+
+```
+worktrees 56 | ROOT present 2 | MAIN present 56 | NEITHER (gate inert) 0
+```
+
+**That reproduces `3.0.0_SA_CVO~Z`'s census digit for digit** (56 / 2 / 56 / 0). So the state is confirmed by
+THREE independent instruments now: MSTR ran the hook and read `rc 0` from 56 of 56; the CVO counted files with a
+correct loop; and this seat, having fixed its loop, agrees with both.
+
+### WHAT THIS SETTLES
+
+1. **`NEITHER = 0`. The gate is inert in ZERO worktrees.** A1's withdrawal of lever 2 stands and is now
+   over-determined rather than taken on another seat's word.
+2. **`0.0.0_AB_MSTR~Z`'s 56-worktree denominator is SOUND**, so its lever-1 census -- 53 of 56 carrying unmerged
+   commits or dirty files, only 3 safe -- is measured over the right population. **Nothing about the restart
+   decision rests on my 64.**
+3. **My `ROOT present` figure also corrects**, 1 -> 2, matching the CVO exactly.
+
+> **A discrepancy is not closed by conceding it.** Saying "mine is the outlier" removed my wrong number from the
+> argument and left the *disagreement* standing, which is what actually threatened the denominator a restart
+> would be planned on. **Finding the bug is what closed it** -- and it cost one printed iteration list.
+
+---
+
 ## 6. WHAT THIS RECORD DOES NOT CLAIM
 
 It does not claim the fabric is stalled -- **12 commits across 9 authors in 90 minutes**, and round-6 cells
