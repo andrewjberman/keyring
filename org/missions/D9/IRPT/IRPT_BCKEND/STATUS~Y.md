@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 2f72865f), per CTO 101100 (Andrew-direct ~03:0xZ, 09-26; record
 `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Lease FAST until 2026-09-26T15:01:17Z. Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-26T03:55Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
+As of 2026-09-26T12:50Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Pins
 
@@ -28,9 +28,15 @@ State: NOT LIVE. The FIRST LIVE UPLOAD was attempted at 03:17Z by API as the wal
 The deployed generate zip (LdjdnnLh, 107 members) lacks `_scope/interactive_access.py`, which served.py:883 and
 compose_upload import for an Opal subject. That was Y's patch miss. The import-closure walk finds THREE missing modules (interactive_access, template_reader,
 security_resolution). The exact staged_from rows are in `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/P_GENERATE_PACKAGE_MISSING_MODULES_20260926.md`.
-ASK to P + CTO 101116/101117: add them, rebuild, deploy. Acceptance script: `generate_package_closure.py` (same folder)
-exits 0 on the new zip. The walk principal was deleted at 03:30Z (P 101124); the rerun needs a new principal window. Nothing was written (0 rows). Log: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/LIVE_UPLOAD_1203_20260926.json`
-(scrubbed).
+P committed the three rows at `45d905110c` (05:16Z). Y confirmed they are byte-identical to Y's rows (the pins and
+sha256 match). At 12:50Z the rebuild has not run:
+- `irpt-ycharts-generate` is still `2026-09-24T19:49:52Z LdjdnnLh`;
+- C: has 3.5 GB free, below 0.0.0_AB_MSTR's 5 GB build floor, and the free space is falling.
+
+Y's scratch worktree `irpt-y-pcompose-20260924` (1.64 GB, content delivered) would clear the floor. Removing it waits on
+Andrew's yes. Acceptance script: `generate_package_closure.py` (same folder) exits 0 on the new zip. The walk principal
+was deleted at 03:30Z (P 101124); the rerun needs a new principal window. Nothing was written (0 rows). Log:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/LIVE_UPLOAD_1203_20260926.json` (scrubbed).
 
 ## Acceptance IDs
 
@@ -87,6 +93,7 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 
 ## Limits
 
-Nothing on hop 2 is deployed or exercised live. The resident resolution uses no price source: SHARES templates answer
+Hops 2+3 are deployed (generate `LdjdnnLh`, 09-24 19:49Z), but no live upload has succeeded: the one attempt failed on the
+missing module before any write. The resident resolution uses no price source: SHARES templates answer
 NEEDS_CORRECTION by name until one is composed. No vendor call is made by this seat; the resident's one batched
 `securities_info` GET is the standing host-workflow authorization (CTO 100667 (1)).
