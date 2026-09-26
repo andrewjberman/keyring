@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
 Drive: /closer-drive loop (cron 7a9ea1ce, every 30m at :17/:47; CTO 101098, Andrew-direct ~03:0xZ; replaced /canonical-drive 57c0067c); lease FAST re-armed to 15:01Z. Egress: vendor API calls permitted this session, each ledgered (CTO 101098). Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-26T03:5xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
+As of 2026-09-26T05:0xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
 
 ## Pins
 
@@ -45,8 +45,12 @@ None building. Next surface: the adapter package + performance root (deploy B), 
 
 ## Next-list (in order)
 
-1. S143: find the Orion Scope grammar for ONE account (HAR of the Orion account Performance screen, or bounded
-   probes under the session egress, each ledgered); fix orion_selected.requests_for; log the provider HTTP status; re-arm.
+1. S143 NARROWED 04:5xZ (ledger irpt-orion-entity-probe-20260926 CLOSED; receipt IRPT_MVP_P/ORION_ENTITY_PROBE_20260926.json):
+   the adapter's own Scope body is ACCEPTED with entity 5 (Household) -- the control 5/[381] answered 200; ACCOUNT_ENTITY=4
+   404s; 1 and 3 501; 2 404; 6 answers but is not the account. FIX (next, code): scope the ONE account through its
+   household when that household holds exactly that one account (381 = only 1098 in accounts_v2), and require the
+   Account grouping to return exactly one row matching the mapped account; refuse otherwise (OBJECT_NOT_COVERED).
+   Log the provider HTTP status in OrionRequestFailed. Then a new one-use plan (egress CTO 101098, ledgered) + a run.
 1b. irpt-ycharts-generate package: add the three missing modules (~Y 101125), rebuild, ledgered deploy, the AST
    import-closure walk returns zero missing; then a new principal window for ~Y's one upload (new sign-off).
 2. Deploy (B) -- UNBLOCKED (plan b spent 03:20:31Z): upload the adapter (publish 4872b28043), apply render_grant.tf +
