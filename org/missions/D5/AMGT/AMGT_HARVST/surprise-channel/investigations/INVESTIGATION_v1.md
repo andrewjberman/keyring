@@ -1285,6 +1285,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "world_is": "From a worker worktree that invocation performs no listing retry and reaches no sa listing endpoint: the producer's session vault and local outbox live in the MAIN tree's .runtime, so the first thing the job does is miss the vault and fall into an unbounded headed re-auth with third-party vision egress. The act the order authorizes and the act the literal invocation would perform are different acts, so AC1a was not run; the retry class (a 502 outage) remains UNTESTED on this fabric rather than tested and recorded.",
     "disarm_owner": "2.0.0_SA_COO~Y",
     "notes": "Disarm options for the issuer, none of them a worker's to take: (a) re-cut AC1a with an explicit --runtime-root naming the device runtime root and add that path to the write grant; (b) issue this cell to a seat that works in the main tree where the vault and outbox already sit; (c) make seeding the worktree runtime root from the device vault an explicit, granted step of the order. THE SAME LOCALITY HITS AC1b: HarvestUploader drains harvest_listing_outbox out of the SAME runtime root, so whatever pages the original 502 run captured in the main tree are invisible from here and AC1b can only ever report an empty drain from this worktree. AC1b, AC2, AC3, AC4 and AC5 were still run and recorded."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S28",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-26T02:37:37Z",
+    "one_line": "THE SILVER listing_hit WRITER CANNOT WRITE ANY PUBLISHER PAYLOAD CARRYING AN EMPTY DICT. sa's 'themes' is {} on all 20 rows, arrow types it struct<>, and parquet refuses a struct with no child field -- so sa's captured listing pages cannot reach silver at all. wsj's payload has no such column, which is the only reason this never surfaced.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EXERCISED, not reasoned: `upload-harvest --max-objects 40` rc=2, result {\"listing_id\": 3, \"status\": \"pending\", \"error_code\": \"ArrowNotImplementedError\"}, remaining_pending 1. The uploader swallows the exception into a type NAME (uploads.py:288), which is why the code alone names no column",
+        "THE COLUMN AND THE EXACT MESSAGE, reproduced locally with NO S3 write: pq.write_table on the 25-column table raises ArrowNotImplementedError 'Cannot write struct type themes with no child field to Parquet. Consider adding a dummy child field.' pyarrow 24.0.0, 20 rows produced by silver_from_bronze.listing_hit_rows",
+        "IT IS EMPTINESS, NOT STRUCT-NESS -- the isolating pair: selecting `themes` (struct<>) alone REFUSES; selecting `links` (struct<self: string>) alone WRITES OK. And every column passes pa.array() individually, so the failure is at the PARQUET WRITE and not at type inference",
+        "THE DISCRIMINATOR, and it explains the whole history: running the SAME code path over wsj's held listing payload produces 20 rows, 25 columns, and ZERO empty-struct columns; sa's produces exactly one. The defect is PUBLISHER-SHAPED. wsj is the only publisher that ever had listing rows in silver, so the writer has never met this input before",
+        "NOTHING PARTIAL LANDED: the bronze put and the silver append both sit inside the try that raised (uploads.py:268-283), the outbox row is still `pending` with retry_at set, and 1 sa row remains queued. The capture itself is intact -- `run` rc=0, status complete_candidates, accepted 5"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 6's causal chain: a listing_hit row is what gives a publisher a coverage SPAN, so capturing sa's listing pages moves data_status DENIED -> PARTIAL.",
+    "world_is": "The capture works and the pages are held, but they cannot be WRITTEN. sa's listing payload contains a field the silver writer cannot serialise at all, so the chain breaks one step after the vendor -- at our own parquet writer rather than at seeking-alpha.",
+    "notes": "FILED WHILE THE REMEDY IS AT ANDREW. The fix is one line in the silver path -- coerce an empty dict to None before the table is built, which is information-preserving (an empty dict carries nothing) and leaves a POPULATED themes writing normally as a struct. It is NOT applied here: lib/opal_data_harvest is a shared production writer used by every publisher, and patching it is a change this lane asked for a word on rather than took. FORWARD-LOOKING, and this is why the row is BLOCKING rather than an observation: ft, barrons and bbg have NEVER written a listing_hit row, so none of their payloads has met this writer either. Any one of them carrying an empty dict fails identically, and the failure is invisible until the upload step -- the capture succeeds and reports rc=0. NEGATIVE CONTROL ALREADY RUN: this is an EXPOSURE with one measured firing, not a silent history -- sa is the first publisher whose payload ever reached this writer with an empty dict, and its very first attempt is the one that raised."
   }
 ]
 ```
