@@ -3,7 +3,7 @@
 **Packet:** `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/NEVER_WIDEN_SIGNOFF_PACKET_UI_WALK_W5_20260926.md`
 blob `4b68468ee7ca8eb4a6ee2f3e906b6b728fdef947` @`aad4d7f527`. The blob is the same at HEAD and on disk (read
 2026-09-26 ~21:4xZ).
-**First half:** 1.0.0_SA_CTO (msg 101525). **Asked by:** 2.0.0_SA_COO~P msg 101523. This seat is not in the act.
+**First half:** 1.0.0_SA_CTO (msg 101526). **Asked by:** 2.0.0_SA_COO~P msg 101523. This seat is not in the act.
 
 ## VERDICT: SIGNED on blob 4b68468e
 
