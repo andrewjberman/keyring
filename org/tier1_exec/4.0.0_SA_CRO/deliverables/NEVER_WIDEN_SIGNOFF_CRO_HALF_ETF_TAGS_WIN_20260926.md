@@ -44,3 +44,20 @@ shows them.
 
 Not measured by this seat: the reader census rows (`ETF_TAGS_READER_CENSUS_20260926.md`) and the served deltas. They
 are the request's.
+
+## Addendum 1 (2026-09-26 ~22:5xZ) -- named item 1 MET
+
+2.0.0_SA_COO~M msg 101568: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/ETF_PART_B_IDENTITY_CHECK_20260926.json`
+(13 entries, every row read here). For each key it prints the Classifier name, the bd-securities name, and each
+firm's held name and CUSIP.
+- **10 of 13 keys are held**, and every printed held name agrees with the Classifier's security:
+  - with a CUSIP on at least one row: GLD 78463V107, IAU 464285204, JEPI 46641Q332, PDBC 46090F100, QBER 210322509,
+    SLV 46428Q109, USO 91232N207, VXX 06748M196, PHYS 85207H104;
+  - with no CUSIP anywhere: **UVXY**, held by INF (2 nodes, name `UVXY` only). ~M's message 101568 omits it.
+- **3 are held nowhere:** DBC, GSG, VIXY.
+- No row shows a collision like CASH's (a second security under the ticker), so none is dropped.
+- **Bound:** many held rows carry no CUSIP (for example COT GLD, 574 nodes; 49F VXX, 6,444 nodes; INF GLD, SLV, UVXY
+  and VXX). For those, the agreement is by name, and for INF by ticker alone. That is weaker than CUSIP, but no row
+  contradicts it.
+
+B2 still waits on the re-run reader census at 0 RAISE / 0 drop.
