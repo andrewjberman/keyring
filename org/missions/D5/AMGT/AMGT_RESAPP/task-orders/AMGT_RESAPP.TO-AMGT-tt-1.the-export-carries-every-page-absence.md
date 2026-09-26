@@ -78,3 +78,21 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 <fabric>site-z</fabric>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
+
+<status>complete</status>
+
+**WORKER CLOSE (`0.9.0_WK_AMGT_RESAPP~163`):** `_posture_markdown` (`lib/research/print/render_pack.py`) now writes BOTH the
+header form and the Posture tab's own form of an ABSENT posture line, for both the non-SERVED branch (header: "Posture: ABSENT
+-- <reason>"; tab: "...-- <reason>. Nothing is rendered in its place.") and the SERVED+verdict=='absent' branch (tab: "ABSENT --
+no call was made: <reason>"; header: same + the machine disclaimer) -- byte-identical to the page's own words in
+`SecurityOverlay.tsx` (the file actually mounted as the page header) and `PostureTab.tsx`. `exportCompare.harness.cjs`'s `ok`
+predicate now also requires `absDiff.missing.length === 0`. AC1: absences missing=0 on 95 of 95, EXPORT-COMPARE OK on 95 of 95,
+sweep rc=0. AC2: THE VERDICT COUNTS A DROPPED ABSENCE: YES on 2 of 2 (both pinned pre-fix exports now read harness rc=1). AC3: 43
+passed (36 pre-existing + 7 new in `lib/research/print/tests/test_posture_markdown.py`). Both fixes mutant-tested against their
+own pre-fix state (reproduced the issuer's exact base runs) then restored byte-identical before the real commits. No surprise row
+filed (no premise failure, no missing writer, no capability gap encountered).
+<round>45</round>
+<slot>~163</slot>
+<fabric>site-z</fabric>
+<risk>SERVED</risk>
+<worker_class>worker</worker_class>
