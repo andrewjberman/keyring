@@ -563,6 +563,28 @@ carries none.
     "spec_asserts": "The AC1-AC3 invocations report the named tests' PASSED count and the FAILED/ERROR lines of the file.",
     "world_is": "They do only when the tests keep their output inside pytest's capture. The error runs toward FAIL, since the rc and the pass count still gate, never toward a false PASS. But with 'failed/error lines 0' beside a real failure, the check hides WHICH tests failed. Fixed in my own test file at d36d31f8c5. The helper is unchanged, because it is outside my paths.",
     "notes": "Any other cell whose tests print through capsys.disabled() under a pytest_named check reads the same way."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W3-S13",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~3",
+    "surfaced_at": "2026-09-26T01:20:00Z",
+    "one_line": "To read item 13 over the 3 tools, I removed the 7 catalog_entries/portal_* source files of the tools that left the cell and regenerated DATA_CATALOG.yaml. Item 13 names no catalog-entry removal; it says only that no catalog ROW is added for them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ, TO face item 13 (amendment ac5445b2ba on CLOUD, relayed in the launch prompt): 'Every item above now reads over the 3' and 'Do NOT add catalog rows for them'. Item 5 requires each tool's catalog-entry reference to resolve to an entry, and test_portal_tools_catalog_refs_resolve asserts that the portal_* source files equal the tools' refs.",
+        "CODE @6345d36f04: the 7 removed files (portal_mdpf_category_views, portal_mdpf_non_model_assets, portal_etfs_positioning, portal_advi_{leaderboard,mix_summary,partner_analytics,growth_chart}.yaml) were my own sources, first added in 81d37aafda / 2c25c4c831 on this branch. None is on CLOUD ('exists on disk, but not in CLOUD').",
+        "MEASURED @bc0cde67f0: emit_catalog_v02.py rc=0, 'SILVER DATASET ENTRIES (MX-c-2, catalog_entries/*.yaml): 3 emitted, 0 refused (denominator 3 source files)'. The DATA_CATALOG.yaml diff is the 7 silver_datasets entries plus the two vintage lines."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Item 13: the cell registers only the 3 resolving tools, every item reads over the 3, and no catalog rows are added for the other 7.",
+    "world_is": "The 7 silver entries would otherwise stay in the catalog, each naming a tool no integration registers. I removed them. Round 3's catalog-row cell re-adds them from 6345d36f04 (git show 6345d36f04:workflows/atom_decomposition/catalog_entries/portal_<name>.yaml) if it wants them.",
+    "notes": "If the issuer meant the 7 entries to stay, revert the 7 deletions in bc0cde67f0, re-run the emitter, and relax the source-set equality in test_portal_tools_catalog_refs_resolve to a subset."
   }
 ]
 ```
