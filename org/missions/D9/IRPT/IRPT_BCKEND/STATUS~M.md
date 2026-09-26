@@ -190,6 +190,7 @@ Done this lease:
 | Public reason for a selected account with no custody row: NOT_READY (transient) vs NOT_FOUND (`_authz/errors.py:58`) | 1.0.0_SA_CTO (contract) | the CTO rules the code |
 | The FULL -> FAST line to the CVO ("FAST from 18:1xZ; pins graded after the fact") | 2.0.0_SA_COO~M | 3.0.0_SA_CVO registers live |
 | `directory/tests` on CLOUD has 6 failures that predate the refresh port (control: unmodified HEAD, the same 6): test_custody_owner.py x4, test_entry.py x2, AttributeError 'NoneType' has no attribute 'headers' | 2.0.0_SA_COO~P (directory-search entry and custody owner) | the next change to directory/entry.py or the custody owner read |
+| COT serves 6 stale D_03 composition files (data_as_of 08-25, 08-28, 09-18; 2 each) that D_03 no longer rewrites (COT_SERVED_COMPOSITION_BASELINE_20260927.json) | 2.0.0_SA_COO~M (COT gold grant) | after Monday's run: if they are still stale, a delete needs a human confirmation |
 | IRPT_BCKEND-S124: the bundle mint reads working-tree bytes | owner of .tools/safe_deploy_core.py | next bundle re-mint |
 | COT B_01b deploy. The skip list (52 ruled-out keys + Part 2's 26) and the rule-2 prompt are BUILT on branch irpt-m-b01b-skip @c993550, NOT merged, because a CLOUD commit deploys on the next push. Dry run: 0 new securities, so a first upload makes no OpenAI call. S3 still serves the no-op (S141) | 2.0.0_SA_COO~M | COT's chain adds B_01b: merge + safe-deploy as ONE act under a ledger |
 
@@ -230,7 +231,8 @@ disposed REMEDIED (S129).
   100% before and after; firm + 27 relationships' mix moves (@625e331ded). The 3 personal liabilities in z09305672
   classify `equity` today; they are already among Part 2's 26 `other` keys (signed @ab4a2e41bb), so no new half. DEPLOY: Monday, after R1 of
   cot-cash-admission-m-20260925; merge the branch, safe-deploy C_06/D_03/D_04 under one ledger; read back z09305653's
-  cash slice, 0 of 223 over 100%, and d08 beside C_06.
+  cash slice, 0 over 100% (`cot_served_composition_check.py`; the served baseline has 9 over 100%, written 09-23 by
+  the July D_03, addendum 4), and d08 beside C_06.
 - **B1 reader admissions (CTO 101573/101578):** ~M's COT C_06/D_03/D_04 admit structured/commodities @ccb9b38dd8 (same
   branch; D_04's firm mix now reads every C_06 class). `0.4.0_DS_ClientPlatform~X` SEATED under
   IRPT_MVP_M/WORK_ORDER_DS_X_B1_AND_CASH_LINE_20260926.md (amendment 1 @8b45af0917): a07/d08 cash line, d06/d08/BD
