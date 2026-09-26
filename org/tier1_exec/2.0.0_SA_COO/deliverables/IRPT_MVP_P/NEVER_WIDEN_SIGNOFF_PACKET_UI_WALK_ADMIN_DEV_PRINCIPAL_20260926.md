@@ -5,27 +5,31 @@
 **Walkers:** `2.0.0_SA_COO~D`: one signed-in PROD walk of `/investor-reporting` with a HAR scrubbed in-stream. In the
 same window, `2.0.0_SA_COO~Y`: ONE Analysis upload of its v2 input, logged and scrubbed (Y msg 101161). This saves a
 second create under a second packet.
+**v10 (18:0xZ): ONLY K7 changes (CTO 101395) -- R1 closed; K7 is the page read K8 exports, no rollback key.**
 **v9 (17:4xZ) -- WINDOW 4: export deploy (B)'s AFTER read and the FIRST real export, by ~D in the page.** The diff
 against v8 acca1b3e is exactly:
 - a NEW principal (the same K1 shape, new `<epoch>`) and its times;
 - K4 and K5 are NOT run in this window. Hop 3 waits on ~Y's title-descriptor producer (CTO 101353) and rides a later
   window;
-- K7, R1 (below);
+- K7, the page read K8 exports (below; re-cut in v10);
 - K8, E1 (below);
 - the route classes and the vendor line that name them.
 Window 3 is CLOSED (ledger `irpt-ui-walk-principal-w3-20260926`). Export deploy (B) is LIVE with render ON behind the S148
 host fence (ledgers `irpt-export-deploy-b-20260926`, R1 open; `irpt-render-host-parameter-fence-20260926` CLOSED).
 
-## K7 -- R1, export-B's AFTER read (CTO rulings (c) + 101313)
+## K7 -- the page read the export uses (v10: re-cut per CTO 101395; R1 is CLOSED and is NOT this read)
 
-- **The act:** ONE 49F account-level Performance page read by `2.0.0_SA_COO~D`, of K6's account: JASON JONES ****9978,
-  `acc_bf9653391ad5ff4e672eb5f9`, YTD. It is the page's own `POST /selections` (K3) and one
-  `GET .../performance/{accountSetId}`.
-- **The expectation:**
-  - YTD equals 0.06854. A different value is a STOP, and deploy (B) rolls back in reverse (D3, D2, D1).
-  - An answer at or over 30 s is a BLOCKING row on FWD-1 (S147), not a rollback.
-  - If the page reopens K6's retained report (the accepted pointer), the read proves the new served path's reopen, not a
-    recompute, and the latency is not an S147 measurement. Both are named in the result.
+- **R1 is closed.** Export deploy (B)'s AFTER read was met by a RECOMPUTE on the D1 build. `RPT-e0a917d2..` (01-02..09-25)
+  equals K6's `RPT-39e26fcd..` to the last digit: YTD 0.07333839362957217, and the series is identical (ledger
+  `irpt-export-deploy-b-20260926`, addendum @6ae846091a). The v9 baseline "0.06854" was wrong (it is RPT-39e26fcd's
+  09-24 point) and is withdrawn: no rollback is keyed on it.
+- **The act:** ONE 49F account-level Performance page read by `2.0.0_SA_COO~D` of JASON JONES ****9978
+  (`acc_bf9653391ad5ff4e672eb5f9`), YTD: the page's `POST /selections` (K3) and one `GET .../performance/{accountSetId}`.
+  It is the report K8 exports.
+- **Passes if:** a computed or reopened report for that account renders on the page. Name which it was, and its YTD
+  and answered window. It triggers NO rollback.
+- **30 s or more:** if the browser is cut off at the gateway (S147, 25.9-29.7 s measured), ~D reloads ONCE, and the
+  reopen of the report the first request retained is the read. Both requests are named.
 - **What it writes:** only a reopen or, if recomputed, a retained report (REPORT#/RETENTION#), KEPT. No vendor call.
 
 ## K8 -- E1, the FIRST real export (FWD-1's export hop, render ON)
