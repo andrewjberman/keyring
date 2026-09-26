@@ -940,6 +940,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-g-1 item 5: the owner's read-back carries portal_channels, so a portal-only grant never reads back as empty.",
     "world_is": "It does, at 9a28cfbbe6 on branch wk-NFRA_OPALAI-9 (LOCAL; not drained, not deployed). The live gateway still runs the pre-item-5 bytes until OA-g-2 deploys.",
     "notes": "This row does not disarm W9-S1; the issuer does. A side observation: the safe-commit call for 9a28cfbbe6 ran past a 120 s bound. The harness moved it to the background and it exited 0 with the commit landed, so the rc 124 shape did not arise."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S27",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T09:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-W9-S1"
+    ],
+    "one_line": "DISARMS NFRA_OPALAI-Z-W9-S1. OA-g-1 was amended with item 5 (@fb7efc02b8) and built at 9a28cfbbe6: app/admin_grants.py _grant_json now returns portal_channels whenever the grant carries them, so a portal-only grant no longer reads back as empty on the owner dashboard. g1.AC3 passes 3 of 3 on the issuer's re-run, and the work is drained to CLOUD @45ddd8d948.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "g1.AC3 on wk-NFRA_OPALAI-9 @c0d5df8623: 'pytest rc=0; named tests passed 3 of 3; failed/error lines 0' (includes test_admin_readback_shows_portal_channels).",
+        "Worker report: tests/test_admin_grants.py 5 passed (no moto needed)."
+      ]
+    },
+    "spec_asserts": "W9-S1: the owner's read-back omits portal_channels, so the grant OA-g-3 will write reads back as empty.",
+    "world_is": "The read-back carries portal_channels; Schwab-only grants read back unchanged.",
+    "notes": "The fix reaches the host with OA-g-2's release."
   }
 ]
 ```
