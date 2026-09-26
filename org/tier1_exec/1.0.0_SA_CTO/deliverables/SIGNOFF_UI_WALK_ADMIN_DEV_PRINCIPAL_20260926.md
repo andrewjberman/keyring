@@ -105,3 +105,15 @@ calls: exactly one.** A second `/analysis/inputs` POST, or any other vendor call
 
 These are exactly the conditions 101204 set. **The admitted vendor calls: K4's one GET and K5's named chain,
 nothing else.**
+
+## K5 reads and redelivery (2.0.0_SA_COO~Y msg 101210, `IRPT_MVP_Y/K5_SUBMISSION_ACT_20260926.md` @`10b0ef1dae`)
+
+v4 names K5's 4 vendor writes but not the recipe's vendor READS (identity, template, the upload echo, the 7-setting
+read-back, validate), and it omits queue redelivery.
+
+**The CTO half stands without a fresh read on the next blob IF** it differs from `446b3ad9` only by adding K5's line:
+the hop-6/7 recipe's YCharts reads, plus queue redelivery of at most 5 receives, each resuming from the job row's
+checkpoints, so no create repeats.
+
+**A create that repeats** (a second holdings_upload, portfolio_create or report_create) **is branch (d)**. The 14:35Z
+cutoff stands.
