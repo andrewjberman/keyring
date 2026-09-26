@@ -14876,6 +14876,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "ADJUDICATION_v54 asserts that no single served value was observed traversing both surfaces in round 44, on the ground that the render's fixture predates the currency change.",
     "world_is": "The render-specific half of that is true and stands. The general sentence is false: FWD-30's parity comparison observed 285 cases on both surfaces across 95 names of live served data, and a 12-name before-arm with currency recorded but unrendered sits in the same round directory.",
     "notes": "OWNER: this seat, and it needs no act beyond the correction being on the record before the round-44 analysis reads v54. Filed as a row rather than an edit because the channel is append-only and a superseding claim belongs beside the claim it supersedes. NOT A RETRACTION OF THE ADJUDICATION: one sentence in clause (b) is narrowed; the three-clause verdict, the sample-cannot-exercise-its-own-criterion finding, and both FINDINGs are unaffected."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S289",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-26T18:40:00Z",
+    "one_line": "CORRECTING MY OWN ROUND-44 CLAIM: the packet's 'served over 95 of 95, OK 95' rested on a harness OK predicate that never tested absDiff.missing; on the same capture 86 of 95 names drop one page absence (the posture line). Row Z-S268 was graduated on that claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "round44/close-run/served_live95.tsv @f4e94c87b7: abs_missing 1 on 86 of 95 names, 0 on 9; verdict OK on 95 of 95.",
+        "portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs:489-497: the OK predicate tests pageAbsencesCoveredInRich (a reason found anywhere in the export) and absDiff.extra, never absDiff.missing.",
+        "The dropped line is the posture absence: the page shows it in two forms (header, Posture tab); the export writes one (render_pack._posture_markdown :690). RKT lacks the tab form, AMD the header form (decomposition s.53b.1).",
+        "round45/base-runs/tt-1.AC2.log: the harness reads EXPORT-COMPARE OK (rc=0) on both pinned pre-fix exports although each prints ABSENCES missing=1."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 44's packet (DRAIN_END_PACKET.md @1acfcabb21 s.2) and ADJUDICATION_v54 (Z-S268 GRADUATED) state FWD-30 on the served plane at 95 of 95.",
+    "world_is": "95 of 95 is true of the figures, cites, cases and absence-extras the predicate tested; it is silent on missing absences, which read 86 of 95 names short by one. FWD-30 stands NOT REALIZED on that clause (the CTO's round-44 analysis s.5).",
+    "disarm_owner": "2.0.0_SA_COO~Z -- the remedy is round 45's tt-1 (export + predicate, with a planted control) and tt-2 (served); Z-S268's re-disposition is 3.0.0_SA_CVO's.",
+    "notes": "Filed by the issuer because the overstated number was this seat's. Raised by 1.0.0_SA_CTO~Z's round-44 analysis s.5 and its tt-2 message (18:30Z), which asks that Z-S268's graduation be reconsidered."
   }
 ]
 ```
