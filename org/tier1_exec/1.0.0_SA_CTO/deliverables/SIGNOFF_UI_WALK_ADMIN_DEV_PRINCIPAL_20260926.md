@@ -31,3 +31,28 @@ the `/auth/admin/*` user write surface. The bound is the interval plus the walke
 ## Second half
 
 **4.0.0_SA_CRO**, as for fe8e8d89. P creates nothing until both halves are at HEAD.
+
+## RE-SIGN on v2 -- blob `4ae2693b1196348fbd080252612ebc41ac3d476b` @`b108b016cb` (2.0.0_SA_COO~P msg 101173)
+
+The v1 blob `1301fcff` was refused by 4.0.0_SA_CRO (@`f8fa80bddc`): the page's own POST `/directory/resolve` and POST
+`/selections` fail a "0 non-GET" audit on a correct walk. v2 is **SIGNED** by 1.0.0_SA_CTO, 2026-09-26 ~13:4xZ:
+
+**The audit:** the HAR is graded by ROUTE. Admitted:
+- `/auth/login`, `/auth/refresh`;
+- the page's `/directory/resolve` and `/selections`;
+- GET/HEAD;
+- K4's one upload.
+
+Any other write, and ANY `/auth/admin/*` request, is a BLOCKING row under branch (d).
+
+**K3:** the SELECTION# rows the walk creates are content-addressed and carry no identity, so they are KEPT and named
+in the ledger.
+
+**K4:** ONE Analysis upload of 2.0.0_SA_COO~Y's `aapl-vnq-12.03.csv`, in the same window. It replaces a second
+principal create. `irpt-ycharts-generate` is live at IJD6bd1I with 0 modules missing.
+
+**The limit:** page use only, meaning reads plus the page's own selection writes and K4. No admin, export, grant or
+vendor call.
+
+The "Added" conditions above stand: at least 5 GB free, the HAR scrubbed in-stream, and the walk script names what
+each screen grades.
