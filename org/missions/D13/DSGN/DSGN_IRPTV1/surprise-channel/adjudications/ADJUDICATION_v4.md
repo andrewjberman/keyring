@@ -12,7 +12,9 @@ both `<risk>LOCAL`, with no judgment criteria. The packet names 5 ARMED rows:
 - GRADUATED: W21-S2 (BLOCKING) and W21-S1. Both remedies are TO-IV-e-35, already issued, and their remediation rows
   are in REMEDIATION_v3.
 - DISMISSED_WITH_REASON: S16, superseded by S17.
-- UNDER_INVESTIGATION: S17. Its owner is the Advisor Intelligence data-route lane, outside this project.
+- UNDER_INVESTIGATION: S17 (C-S34). Its owner is the Advisor Intelligence data-route lane, outside this project.
+- **Amended the same day:** C-S35 re-dispositions S17 DISMISSED_WITH_REASON. The row gate reads UNDER_INVESTIGATION as
+  undispositioned and holds the slug. S17 stays in the channel, and the slug asks 1.0.0_SA_CTO to route it.
 
 ```json
 [
@@ -106,6 +108,30 @@ both `<risk>LOCAL`, with no judgment criteria. The packet names 5 ARMED rows:
         "org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md#DSGN_IRPTV1-S17",
         "org/missions/D13/DSGN/DSGN_IRPTV1/ledger/ROUND_ANALYSIS.round4.md@61cd39d895:73-76",
         "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/round5-L8-packet.md@27427d8e9d"
+      ]
+    }
+  },
+  {
+    "id": "DSGN_IRPTV1-C-S35",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-26T19:53:20Z",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "DSGN_IRPTV1-S17"
+    ],
+    "one_line": "S17 re-dispositioned DISMISSED_WITH_REASON (supersedes C-S34): not a DSGN_IRPTV1 finding; the slug asks 1.0.0_SA_CTO to route it to its owner's lane.",
+    "spec_asserts": "Amends S16: the AI Cottonwood drill-file 403s are NOT principal-class -- a SUPERADMIN (admin + internal + Dev) principal draws the same 403s on the perfrp_* and platinum/accounts/*/summary.json reads, while the client drill still renders from its other reads.",
+    "world_is": "C-S34 left S17 UNDER_INVESTIGATION, and the row gate reads that as undispositioned, which holds the slug. S17's cause is unattributed (absent objects, a route refusal or a missing grant), so it cannot graduate. Its fix is the Advisor Intelligence data-route owner's, outside this project's chain.",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Outside DSGN_IRPTV1's chain (spine L10: not recut; no analysis of this project targets another). The owner is named in S17's disarm_owner and in the CTO's round-4 analysis section 3 ('Surfaced, not an IRPT cell'). No L1 brief opening that surface's own project exists at this vintage (comp-find over docs/briefs, org/tier1_exec and org/missions: 35 hits in 18,023 files, none of them one). The slug asks 1.0.0_SA_CTO to route it. S17 itself stays in the channel with its disarm clause.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md#DSGN_IRPTV1-S17",
+        "org/missions/D13/DSGN/DSGN_IRPTV1/ledger/ROUND_ANALYSIS.round4.md@61cd39d895:73-76",
+        "ADJUDICATION_v4.md#DSGN_IRPTV1-C-S34 (superseded by this row)"
       ]
     }
   }
