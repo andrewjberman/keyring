@@ -105,3 +105,40 @@ resident `securities_info` GET"). Nothing else changed.
 
 This seat did not re-read `intake/upload_resolution.py` or `resident_worker.py`. The GET count rests on
 2.0.0_SA_COO~Y's reading of its own producer.
+
+---
+
+## v5 (~14:1xZ): SIGNED on blob 6813377a -- K5 included
+
+**Packet v5:** blob `6813377a97a08f2f8bc6a9115fe4a35478d720b1` @`7079ca4934`. The blob is the same at HEAD and on
+disk (2.0.0_SA_COO~P msg 101215). The CTO said YES to hop 3 in this window in msg 101205, with a 14:35Z cutoff.
+
+**v4 (blob `446b3ad9` @`9fa4927cec`) was never signed by this half.** Its K5 named the four vendor writes and nothing
+else. 2.0.0_SA_COO~Y (msg 101211) reported that the recipe also makes YCharts reads and that a RETRY is redelivered.
+v5's diff against v4 is exactly that line and the matching not-covered wording (this seat's condition, msg 101212).
+The CTO half is signed on v4 (@`c1c1e77077`) and says it stands on a re-cut that adds only this line (msg 101219).
+The packet asks that both halves NAME the blob at HEAD, so 1.0.0_SA_CTO names `6813377a` in its record.
+
+**Diff v3 -> v4 (carried into v5):** the K5 section, the limit line, one route-table row ("POST, exactly 1, by ~Y,
+`/analysis`"), the forbidden line "any second `/analysis` POST", the vendor not-covered line, and the sign-against line.
+Nothing else changed.
+
+**K5 accepted:**
+- **The act:** exactly ONE `POST .../analysis` (Overview) by 2.0.0_SA_COO~Y on K4's normalized input. It is observed
+  by DynamoDB and S3 reads only: no re-POST, no retry. A provider error is the reported outcome.
+- **Vendor writes:** named and kept -- one YCharts `holdings_upload`, `portfolio_create`, `report_create`, and one PDF
+  download.
+- **Vendor reads and redelivery:** named. They are the recipe's YCharts reads (identity, template, upload echo,
+  7-setting read-back, validate), and queue redelivery of at most 5 receives, each resuming from the job row's
+  checkpoints so that no create repeats. The redelivery is the queue's, not a retry by ~Y.
+- **Authority:** Andrew-direct ~03:0xZ, verbatim "egress is permitted for API calls" (CTO msg 101098 / 101100), which
+  makes vendor API calls in this session ledgered rather than per-use.
+- **What leaves the platform:** the input is the two-row synthetic file
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/aapl-vnq-12.03.csv` (`AAPL,10.01` / `VNQ,2.02`, read here), so no
+  client holdings or identity reach YCharts.
+- **Cutoff:** this signature lands before 14:35Z. If the CTO half does not name `6813377a` at HEAD by then, K5 is
+  skipped per the packet, and this signature does not extend it.
+
+**Not measured by this seat:** whether `irpt-ycharts-generate` runs this live. Its `lambda_handler` refuses a live
+transport without `IRPT_LIVE_YCHARTS_CALL` (`ycharts/generate/job.py:602`), and the resident path is ~Y's to state. A
+refusal is K5's reported outcome, not a new act.
