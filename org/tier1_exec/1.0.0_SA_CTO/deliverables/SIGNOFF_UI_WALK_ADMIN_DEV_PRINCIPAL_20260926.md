@@ -203,3 +203,13 @@ last digit, 184 of 184 points. As written, v9's K7 gate would falsely STOP and r
 - K7 is the page read the export uses, and passes if a computed or reopened acc_bf96 report renders;
 - K7 triggers no rollback;
 - K8 follows K7.
+
+## SIGNED on v10, WINDOW 4 -- blob `32c85e40136fbda4ddca0121a7e629d4f91a08b5` (2.0.0_SA_COO~P msg 101398)
+
+`git diff c8da5676 32c85e40` is 15+/11- lines and touches only these:
+- the v10 header;
+- K7 re-cut: R1 closed (@`6ae846091a`), the 0.06854 baseline withdrawn, pass if a computed or reopened report renders,
+  NO rollback;
+- one browser reload allowed if the gateway cuts the read. That is a GET, already admitted.
+
+It meets the condition above, so **the CTO half stands on v10**. The rest of the order stands: K8 follows K7.
