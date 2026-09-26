@@ -1,0 +1,24 @@
+{
+ "zip": "ad-new2.zip",
+ "zip_sha256": "64feca33d05c1b3ef8e9feb5d154f890607599f5d0def7c26b950724f2d8aa45",
+ "selection": "sel_97df18a732d3d88c9ab9c09f1e042dec5a36a4d102f59ee8e2f8e0dab0120b47",
+ "results": [
+  {
+   "window": [
+    "2026-01-01",
+    "2026-09-10"
+   ],
+   "retained_path": [
+    "fresh"
+   ],
+   "state": "PARTIAL",
+   "reason": "PERFORMANCE_PARTIAL",
+   "actual_end": "2026-09-10",
+   "report_sha256": "41ab9198e1e771588d56fdbf6515c029d1a0d0f558f1e29c3f756d03e559563d",
+   "authorize_calls": 64,
+   "authorize_ms_sum": 45866.7,
+   "full_releases": 64
+  }
+ ],
+ "captured_writes": 9
+}
