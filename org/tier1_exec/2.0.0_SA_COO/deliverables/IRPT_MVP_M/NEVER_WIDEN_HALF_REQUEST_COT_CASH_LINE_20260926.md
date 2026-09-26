@@ -157,7 +157,7 @@ It reads every SERVED D_03 composition in s3://opal-data-cot: the firm file plus
 - **Correction to addendum 3's "0 of 223 before":** that count is the CLOUD code on the 09-22 input. The served bytes
   differ; they are the 9 above.
 - The "after" bar is unchanged: **0 over 100%** at the first scheduled run that carries this act.
-- **Also in the served set:** 3 relationship files are stale, with data_as_of 2026-08-25, 2026-08-28 and 2026-09-18 (2
-  files each counted with the firm set; see the JSON). D_03 no longer writes them. Parked, not in this act.
+- **Also in the served set:** 6 of the 226 files are stale, 2 each with data_as_of 2026-08-25, 2026-08-28 and
+  2026-09-18 (220 carry 2026-09-22; see the JSON). D_03 no longer rewrites them. Parked, not in this act.
 - **Monday:** re-run this script after the run. Before the merge it reads the act-1 and cash-admission bytes; after
   the cash-line deploy, the bar is 0.
