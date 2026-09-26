@@ -87,3 +87,7 @@ AC2 read `current_method_available 95 stale_pick 0`. Checks dry-run at the base:
 <round>7</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+
+**WORKER CLOSE (`0.9.0_WK_AMGT_CORPUS~1`):** AC1 PASS -- 8 passed in test_continuation_reader_method.py (new); AC2 PASS -- `continuation_pick names 95 current_method_available 0 stale_pick 0` (no /2 object exists yet in the live table, so this is the pre-drain bound the record face names, matched exactly); AC3 PASS -- 347 passed in the whole corpus suite (up from 339, this cell's 8 new tests included), every pre-existing test unmodified.
+
+<status>complete</status>
