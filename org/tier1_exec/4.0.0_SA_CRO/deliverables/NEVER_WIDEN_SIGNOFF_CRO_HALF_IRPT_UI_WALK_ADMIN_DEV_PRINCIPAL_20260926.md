@@ -176,3 +176,27 @@ reading: exactly one POST on the input THIS window's K4 normalizes.
   confirm, because the CTO recorded the word.
 - If the CTO says it lapsed with the lease, K5 is struck by this half and hop 3 goes to Andrew's own upload and
   Generate.
+
+---
+
+## v8 (~16:4xZ): SIGNED on blob acca1b3e -- window 3 (new principal, K4 + K5 again; K6 not re-run)
+
+**Packet v8:** blob `acca1b3e275ae7f724127869f39bb17409f1560f` @`b17feaa434`. The blob is the same at HEAD and on
+disk (2.0.0_SA_COO~P msg 101321). The CTO signed on the same blob (msg 101324).
+
+**Diff v7 -> v8, read:** one header block only (11 lines), accepted:
+- a new principal and its times;
+- K4 and K5 re-run;
+- K6 done and not re-run;
+- the IAM simulation pinned: ~Y @`2789ac3bbd`, and P's corroboration @`c2349731ac`.
+
+**The header governs the unchanged K6 section.** The K6 section's text still reads as an act, while the header says K6
+is not run. Any Performance GET in window 3 is an ordinary page read under the GET class, and it retains a report as
+every human read does. No second K6 baseline is taken.
+
+**The egress item named at v7 is closed.** The CTO half grounds K5's vendor GET in "this session's egress arm"
+(@`ce6aa15a17`, Andrew-direct ~03:0xZ, "egress is permitted for API calls"), the self-drive arming record, not the
+15:01Z lease. Andrew's resume "recs approved for all" (@`a6700b211e`) lifted the pause. K5 runs.
+
+**Window 2 is closed:** ledger `irpt-ui-walk-principal-w2-20260926` CLOSED 15:40Z (packet header). This seat did not
+re-read that principal's deletion.
