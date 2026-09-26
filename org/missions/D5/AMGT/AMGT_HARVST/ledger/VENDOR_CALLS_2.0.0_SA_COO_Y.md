@@ -49,3 +49,35 @@ so nothing must be re-fetched from the vendor to complete the write.**
 authorization SILENTLY -- nothing refuses, the seat simply no longer holds the word it thinks it holds.
 Any future row in this file states the authorization it ran under at the time it ran, never the one that was
 live when the cell was written.
+
+---
+
+## CALL 2 -- seeking-alpha symbol-resolution pass, 2026-09-26 ~19:3xZ (batch 1) and ~19:5xZ (batch 2)
+
+| field | value |
+|---|---|
+| seat | `2.0.0_SA_COO~Y` |
+| vendor | seeking-alpha (`seekingalpha.com`) |
+| endpoint class | REST, `/api/v3/searches` (symbol search) + `/api/v3/symbols/{s}/news` (density corroboration) |
+| mechanism | `python org/tier1_exec/4.0.0_SA_CRO/scripts/sa_symbol_resolve_pass.py --exclude-done <prior> --limit N --sleep 20 --out <batch>` |
+| agent-turn fetch? | **NO.** The existing scripted producer, unchanged, run from the command line |
+| authorization | **Andrew-direct 2026-09-26 ~19:2xZ, verbatim: "Run it right now."** Under the session egress term (@`f3b85ff6a5` s.1) |
+| credential used | **NONE. This producer is deliberately UNAUTHENTICATED** -- direct HTTPS, no cookie, no proxy, no quota. Its own header records why: the vendor path returned a smaller, structurally corrupted payload than the direct GET |
+| batch 1 | `--limit 20`, **54 calls, ZERO vendor refusals.** 38 records, 38 asked, 36 resolved, 2 REFUSED on evidence |
+| batch 2 | `--limit 26`, **40 calls.** Stop guard fired on 3 consecutive refusals: 13 search-refused, 10 never reached. 64 records, 51 asked, 49 resolved, 2 refused on evidence |
+| **net movement** | **sa_symbol resolved 18 -> 49 of 89.** Serveable at the density bar: **16 of 51 asked** |
+| spend | none -- an unmetered public endpoint, no entitlement consumed |
+| S3 written | **NONE.** Both batches write one local JSON artifact each |
+| evidence | `org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/sa_symbol_pass_20260926/` (batch1/2 `.json` + `.log`) |
+
+⛔ **THE BLOCKER WAS RATE LIMITING, NOT AUTHENTICATION, AND THIS SEAT HAD IT WRONG IN THE CARD IT
+RAISED.** The card recommended running the pass "authenticated" and said tonight supplied "both things that
+pass lacked: the egress word and a proven-valid session." **The producer takes no session and never has.**
+What the word supplied was permission; what moved the number was that the 403 measured on 2026-09-14 had
+DECAYED -- batch 1 took 54 calls without a single refusal. **The refusal then returned inside batch 2**, which
+is the same intermittent, burst-sensitive behaviour the 09-14 artifact recorded, re-measured five days later.
+
+⭐ **STOPPED RATHER THAN RETRIED.** The producer's stop guard fired at 3 consecutive refusals and this seat did
+not re-run it. ~38 names remain unanswered (13 search-refused, 10 never reached, the rest not yet in
+population). The block decays over hours; another burst now re-extends it and costs the headroom the remainder
+needs.
