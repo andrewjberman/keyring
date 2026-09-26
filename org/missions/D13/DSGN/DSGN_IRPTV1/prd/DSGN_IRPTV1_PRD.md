@@ -5,7 +5,7 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.9",
+ "prd_version": "v0.10",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ui-finish-design-brief-20260924.md@20f90739bd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19"],
@@ -77,18 +77,20 @@ The L5/L6 issuer is `2.0.0_SA_COO~D` by Andrew's name.
                     Opal user sees "Global (All)"
          SOURCE     brief O3
 
-  FWD-5  An advisor reads a client's performance the way they read a model's on Model Portfolios
-         DONE WHEN  EXERCISED -- an advisor reads a real client's return, spread and the lagging account in one
-                    screen instead of opening Black Diamond or SmartX
+  FWD-5  An advisor reads an account's performance the way they read a model's on Model Portfolios
+         DONE WHEN  EXERCISED -- an advisor reads each of a real client's accounts -- its return and spread -- and
+                    finds the lagging one by switching, on one tab, instead of opening Black Diamond or SmartX
          ACCEPT     one control row picks the window and net or gross; a headline row shows period return, spread
                     to the benchmark, beginning and ending value, each saying "not supplied" rather than zero when
                     the source did not supply it; a full-width cumulative-return chart in the "AUA Trend Analysis"
                     area style; a returns heatmap with periods across and portfolio, benchmark and spread as rows;
-                    an accounts table with one row per account by name and masked tail, an uncovered account shown
-                    as a row with its reason; the spread is a figure the server stated, never one the page worked
+                    the account chooser lists the client's accounts by name and masked tail, and an account that
+                    cannot be computed says so in plain words; the spread is a figure the server stated, never one the page worked
                     out; method and lineage sit behind the panel's help tip, and the bottom bar carries only the
                     source and the time (v0.8, FWD-18)
-         SOURCE     brief O4 (card 4 ruled (a); the area-chart word ~05:3xZ); Part IV.3 data gaps; Part V bullet 1
+         SOURCE     brief O4 (card 4 ruled (a); the area-chart word ~05:3xZ); Part IV.3 data gaps; Part V bullet 1.
+                    AMENDED v0.10 (the outcome was wrong in part): account level, per Andrew-direct @`07c4b8b84e`
+                    ("Performance is always going to be account-level, not client level")
 
   FWD-6  An advisor sees a client's holdings three ways down, including a security list
          DONE WHEN  EXERCISED -- an advisor answers "what does the IRA hold" from the security list
@@ -210,9 +212,8 @@ The L5/L6 issuer is `2.0.0_SA_COO~D` by Andrew's name.
                     opens on the client's largest account with the others one click away, and never shows a return
                     for the whole client; switching accounts never changes who the client is or the client's
                     holdings total; when one account cannot be computed, the page says so in plain words
-         SOURCE     Andrew-direct 2026-09-26 ~15:1xZ, record
-                    `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260926_151xZ_PERFORMANCE_ACCOUNT_LEVEL_FRONTEND_ROUTES_CLOSER_TRACE.md`
-                    @`07c4b8b84e` (C1-C4); the route proposal of `4.0.0_SA_CRO` @`889160ce2c`
+         SOURCE     Andrew-direct 2026-09-26 ~15:1xZ, record @`07c4b8b84e` (C1-C4); the route proposal @`889160ce2c`;
+                    "opens on the client's largest account" is the Call 1 ruling (b) in ROUTE STRUCTURE below
 ```
 
 Not promised (brief Part II, VII): the PDF / print package; the narrative page; the Global-view entitlement model's
@@ -312,7 +313,8 @@ no browser; an auth-stubbed smoke fails FWD-1).
 
 1. Real login -> the portal session (the portal's auth, a real Opal user)
 2. Firm control reads Global (All) -> resolve-scope against the deployed directory function
-3. One search box -> Anna Thiessen's Cottonwood brokerage account found and chosen (v0.6: FWD-3 as amended, C15)
+3. One search box -> Anna Thiessen found and chosen as the client, then her Cottonwood brokerage account focused inside
+   the client (v0.6: FWD-3 as amended, C15; v0.10: FWD-19, C25)
 4. POST selections -> a selection id for that account
 5. Identity card -> name, firm, holdings total, business date; accounts are chosen in the view, not here (C1, C16)
 6. Performance headline -> YTD net return, the server-stated spread or "not supplied", beginning / ending value (C6's headline half)
@@ -591,6 +593,14 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
   - Re-sign: the ENDPOINT change re-signs the ratified-text half at `3.0.0_SA_CVO`. The brief half is accepted,
     because the CRO wrote the proposal.
   - The round-6 cut waits for the COO resume (Andrew-direct pause @`13c1c55b8b`).
+- v0.10, 2026-09-26 ~16:0xZ, `1.0.0_SA_CTO` (Claude): on `3.0.0_SA_CVO`'s refusal 101289 (review @`f29ac70e15`):
+  - R1, option (a): FWD-5 is AMENDED in place to account level, id unchanged. "A real client's return" becomes each
+    account's return, the lagging account is found by switching, and the accounts table becomes the account chooser.
+    Call 3 stays parked. If Andrew un-parks it (put to him at /open-calls ~15:5xZ), a later addendum restores the
+    one-screen list.
+  - R2: no seat serial in the ENDPOINT section; FWD-19's SOURCE cites by pin.
+  - R3: FWD-19's SOURCE names the Call 1 ruling.
+  - THE THREAD hop 3 is aligned to the client pick and then account focus (brief half).
 
 ## SURFACE MANIFEST
 
