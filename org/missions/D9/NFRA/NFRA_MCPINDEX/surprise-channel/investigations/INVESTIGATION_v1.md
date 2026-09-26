@@ -1313,6 +1313,30 @@ carries none.
     "world_is": "It writes the compacted file only under --backfill. The SSM document passes --latest and has never passed --backfill, so --no-compacted is a red herring: adding or removing it changes nothing. Two consequences the order does not anticipate. (1) Step 3 is NOT downstream of step 1 -- repairing the Black Diamond login restores the date partitions but leaves the compacted file frozen exactly where it is. (2) The remedy is a change to the script's condition, and under CLAUDE.md rule 13 data/*/scripts/silver/*.py is DS-owned for commit-to-QA-deploy, so it is NOT this AE lane's to make. Passing --backfill from the SSM document would compact, but it also rebuilds silver from backfill_v2 + forwardfill_v2 on every scheduled run, which is a different and much larger act than the order asked for -- naming it here so it is visibly REJECTED rather than silently unconsidered.",
     "disarm_owner": "2.0.0_SA_COO~O",
     "notes": "NOT FIXED HERE, and the ownership is the reason rather than the bound: rule 13 puts the silver script on the DS lane. Routing, not acting. MX-s-4 bound 4 also forbids meeting a criterion 'by a route this face does not name', and --backfill-on-a-schedule is exactly such a route. AC2 (silver/bd_assets.parquet written after issue) therefore CANNOT PASS from this lane as the order is written, whatever happens to the login -- that is the refusal MX-s-4 bound 4 asks me to report with its measurement, and this row is it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S16",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T21:40Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Ruled and re-routed: the compaction and bridge rebuild are DS-owned silver acts (rule 13), now order NFRA_MCPINDEX.TO-MX-s-6 to 0.4.0_DS_ClientPlatform~D; MX-s-4 is amended to steps 1-2 (AC1, AC4).",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S15"
+    ],
+    "one_line": "DISARMS Z-S15 (0.7.0_AE_CloudOps~I, BLOCKING). It is correct: convert_assets_to_silver.py writes the compacted file only under --backfill, and the schedule passes --latest, so MX-s-4 step 3's premise was wrong and its AC2/AC3 could not pass from an AE lane. MX-s-4 now carries only the login and the honest exit. The compaction fix and bridge rebuild are MX-s-6 (DS), reusing s4.AC2/AC3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Row Z-S15 @b629459239 (0.7.0_AE_CloudOps~I).",
+        "MX-s-4 amended and MX-s-6 issued in this commit."
+      ]
+    },
+    "spec_asserts": "MX-s-4 step 3: the converter writes the compacted file unless --no-compacted is passed.",
+    "world_is": "It writes it only under --backfill; the remedy is a DS script change, now MX-s-6."
   }
 ]
 ```

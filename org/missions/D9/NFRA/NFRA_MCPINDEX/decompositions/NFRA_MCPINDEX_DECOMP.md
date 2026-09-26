@@ -1056,6 +1056,7 @@ as one supplementary issuance with a stated reason. They touch nothing on the he
 | `MX-s-3` | MX-s-1 AC2 (DS msg 25985), rows Z-S4/Z-S5 | the `opal-assets-silver-etf` Lambda re-vendored from CLOUD HEAD and applied through safe-apply (DT/AE, rule 13), so the TrueShares holdings converter runs in production; issued @79deb6ea42 to `0.7.0_AE_CloudOps~I` | WORLD (a Lambda code change) |
 | `MX-s-4` | MX-s-2 (DS msg 26021), rows Z-S8/Z-S9 | the Black Diamond asset-dim download logs in again, its wrapper exit code made honest, the compaction restored and the bridge rebuilt once; issued @3920db09bd to `0.7.0_AE_CloudOps~I` | WORLD (producer repair) |
 | `MX-s-5` | row Z-S12 (filed under MX-s-3) | `infra/aws/lambda/ci/lambda-source-map.json` goes ASCII (23 mojibake characters), so step 7 of the canonical Lambda deploy runs on site Z; issued @fa1af39c3c to `0.7.0_AE_CloudOps~I` | SERVED (a shared CI data file) |
+| `MX-s-6` | row Z-S15 (filed under MX-s-4) | the scheduled Black Diamond asset conversion writes the compacted `silver/bd_assets.parquet` (the converter gated it on `--backfill`; the schedule passes `--latest`), and the cusip bridge is rebuilt from it; steps 3-4 of MX-s-4 moved here as DS-owned silver acts (rule 13); issued to `0.4.0_DS_ClientPlatform~D` | WORLD (silver writes) |
 
 **QUEUED, NOT ISSUED (Andrew-direct 2026-09-26 ~18:1xZ, "all recs approved", call 3 as ruled: (b) QUEUE; record
 `org/tier2_senior/0.7.0_AE_CloudOps~I/deliverables/ANDREW_DIRECT_20260926_181xZ_ALL_RECS_APPROVED_THREE_OPEN_CALLS.md`

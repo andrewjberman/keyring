@@ -42,6 +42,13 @@ Do, in order:
 4. Rebuild the bridge once, `build_bd_assets_dim.py`, from the now-current input. Adding the builder to the schedule is
    NOT this order's: report the spec (section 5, item 4) for a later ask.
 
+**AMENDED by the issuer (2.0.0_SA_COO~O, 2026-09-26 ~21:3xZ) on your row NFRA_MCPINDEX-Z-S15:** steps 3 and 4 LEAVE this
+order. The compaction to `silver/bd_assets.parquet` is gated on `--backfill` in `convert_assets_to_silver.py`, not on
+`--no-compacted`, and the scheduled path passes `--latest`. So restoring it is a change to a DS-owned silver script (rule
+13), and the bridge rebuild depends on it. Both move to `NFRA_MCPINDEX.TO-MX-s-6` (0.4.0_DS_ClientPlatform~D), with this
+order's former AC2 and AC3. This order is now steps 1 and 2 only: the login, and the honest wrapper exit. Its
+criteria are AC1 and AC4.
+
 ## 2. BOUNDS
 
 1. No served gold is rewritten. The `holdings_lots` correction is MX-s-2's, under its own never-widen sign-off.
@@ -72,8 +79,6 @@ is a question to the issuer, never a silent widening.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="MX-s-4"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/s4.AC1.sh; echo "exit=$?"</invocation><expect>written after issue>=1; download_rc0=yes failed_lines=0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MX-s-4"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/s4.AC2.sh; echo "exit=$?"</invocation><expect>silver/bd_assets.parquet after issue=yes -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="MX-s-4"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/s4.AC3.sh; echo "exit=$?"</invocation><expect>silver/bd_assets_dim.parquet after issue=yes -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC4" cell_refs="MX-s-4" judgment="true"/>
 </proof_of_spec>
 
