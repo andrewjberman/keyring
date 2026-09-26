@@ -40,7 +40,7 @@ As of 2026-09-26T23:2xZ. Earlier forms of this file are in git (`git log -p -- <
 
 ## Write claims
 
-None building. Window 6 waits on both halves.
+Window 6 LIVE: principal irpt-uiwalk-1790464832 created 23:22:09Z; ~Y K4 -> K5, ~D K10; delete on both "done" or 00:20Z (cron b5a7fb99).
 
 ## Next-list (in order)
 
@@ -58,6 +58,7 @@ None building. Window 6 waits on both halves.
 
 | Question | Owner | Un-parks when |
 |---|---|---|
+| The kept test inputs and reports from windows 1-6 in cottonwood (UPLOAD#/INPUT#/analysis#/REPORT# rows and objects owned by deleted walk principals) must be excluded from any firm viewer's lists, or removed, before the route opens to firm users; closes as not needed if history lists by owner only (4.0.0_SA_CRO 101609) | the release cutter | the route opening to firm users |
 | The backend worktree's directory Terraform root predates M's holdings resources (a full plan would destroy 11); UIR-07 used -target | 2.0.0_SA_COO~P | the next directory-root apply: merge CLOUD into the backend worktree first |
 | `build-and-upload.sh` deletes tracked performance/*.py from the publish tree on each adapter build | 1.0.0_SA_CTO to route (ci/ owner) | the next performance build |
 | `build-and-upload.sh` zips a source_dir JSON with the checkout's EOL (CRLF here), and its artifact record passes through MSYS path conversion (`/iFh..` became `C:/Program Files/Git/iFh..`) | 1.0.0_SA_CTO to route (ci/ owner) | the next build of a function whose hash starts with `/`, or that hashes a JSON member |
