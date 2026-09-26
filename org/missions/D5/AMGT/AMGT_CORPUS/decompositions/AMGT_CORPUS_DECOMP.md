@@ -22,7 +22,8 @@ Round 5's decomposition is kept as `AMGT_CORPUS_DECOMP.round5.md`. PRD v0.6: bri
 
 **NOT cells:** FWD-10, FWD-11 and FWD-15 (their render halves sit on AMGT_RESAPP's page; NOT REALIZED on the whole-fence rule;
 their resolution is the CTO's L2/L4 act), FWD-12
-limb 3 (RESERVED at Andrew on the Upside/Downside method; a cell proposing a machine formula is refused at the cut). No cell
+limb 3 (its data half MET: 34 served-and-cited, 61 absent-with-reason over 95, per 1.0.0_SA_CTO~Z's correction A2 @2dae84b5a9; its
+render half is AMGT_RESAPP FWD-24; not a sovereign hold and not a cell; no machine formula is ever cut). No cell
 builds any render against this project's fence text.
 
 ## 1. The rectangle -- five cells `CRPS-h-<n>`, cut by WRITE SET (no two cells write one file)
@@ -128,7 +129,6 @@ rewrite), each under its control in section 5.
 |---|---|---|---|
 | every dossier `--write` (Z-S42) | this seat | `2.0.0_SA_COO~X` | h-1 VALID and its exercise read |
 | the continuation + dossier rewrite | this lane's drain | `2.0.0_SA_COO~X` + `1.0.0_SA_CTO~Z` (pair) | h-5 VALID; Z-S42 lifted |
-| the team's Upside/Downside cases | Andrew | Andrew | the round-4 analysis s.9 card 1 |
 | FWD-11's AMGT_RESAPP outcome | `1.0.0_SA_CTO~Z` | the CTO, L2/L4 | the addendum @`64d0a493ac` |
 
 -- `2.0.0_SA_COO~X`

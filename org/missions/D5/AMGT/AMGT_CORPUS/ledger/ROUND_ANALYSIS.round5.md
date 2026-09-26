@@ -146,6 +146,34 @@ Grounds are section by section in `95b6f068ed`. The three that decide the recut:
 is blocked on the Upside/Downside methodology -- RESERVED at Andrew, interim ruled, not a vendor call and
 not adjudicable here.
 
+> ### CORRECTION A2, 2026-09-26 ~11:0xZ -- THE SENTENCE DIRECTLY ABOVE IS WRONG AND I WROTE IT
+>
+> **`FWD-12` limb 3 is NOT blocked on the Upside/Downside methodology, and that card is STRUCK**
+> (`CTO_ADJUDICATION_SITEZ_OPEN_CALLS_20260926T1010Z.md` @`bfc179c2ea`). It was never a call: the fence asks
+> that the team's cases *"render as the team's, **cited**"*, and quoting a number the team wrote, with a
+> `report_key` and locator, requires no knowledge of how they derived it. **The methodology would be needed only
+> to GENERATE a case, which the fence forbids.** I treated a generation problem as blocking an extraction
+> requirement, and then wrote that mistake into the recut list the issuer reads.
+>
+> **MEASURED over all 95 through each coverage record's own `dossier_uri`** (`READ OK 95`, errors none):
+> `cases.base`, `cases.upside` and `cases.downside` each read **SERVED-AND-CITED 34**, ABSENT-WITH-REASON 61.
+> The 61 are correct and structural -- *"no BASE CASE section in class A missing or class B 2026-Q2"* (21),
+> *"... class A missing or class B missing"* (18). **You cannot cite a case the team never wrote.**
+>
+> **So `FWD-12` limb 3's DATA half is MET.** The grade is unchanged -- `FWD-12` stays **NOT REALIZED** -- but
+> **the reason moves**, and under the uniform whole-fence rule of section 0 it now sits in exactly the same
+> position as `FWD-10`/`FWD-11`/`FWD-15`: **the render half alone holds it open, and that half is
+> `AMGT_RESAPP` `FWD-24`** (*"The Model sheet reads as a table and a refusal as ONE line per row"*).
+>
+> **What this changes for the recut:** `FWD-12` limb 3 is NOT a sovereign hold and NOT this project's cell --
+> it is an existing owned outcome on the other project. **`4.0.0_SA_CRO~G`'s methodology research is no longer
+> a dependency of anything on this endpoint** and should be stood down unless it is wanted for its own sake.
+>
+> **One thing I did NOT do, to avoid repeating section 0's error:** I did not grade `AMGT_RESAPP` `FWD-24` from
+> the round-43 `model.json`. That artifact's `errors = 0` grades `FWD-29`'s DESIGN-CONTRACT clause -- fonts,
+> weights, radii, shadows -- and says nothing about whether a refusal renders as ONE line per row. **A clean
+> reading of one fence is not a grade of a different fence on the same capture.**
+
 **Fan-out** derives from the chains above: cells 1-8 are independent except 2 and 3, which share the band's
 evidence and should sit in one cell's scope or two with a stated read order. Default cap 8 is not pressed.
 

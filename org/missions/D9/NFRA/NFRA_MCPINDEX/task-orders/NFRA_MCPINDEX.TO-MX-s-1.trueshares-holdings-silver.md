@@ -79,7 +79,7 @@ Validate it with `python .tools/proof-of-spec-check.py <instance>`. Report once 
 **ISSUER NOTES:** R-4, W3-S2. Supplementary issuance on Andrew's option 4 (@bda25438c8; CTO msg 25944; MSTR seated the
 lane at 22:55:02Z). While TrueShares stays unfixed, the ETF tools must exclude it and say so (R-4).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~D</slot>
 <fabric>site-z</fabric>

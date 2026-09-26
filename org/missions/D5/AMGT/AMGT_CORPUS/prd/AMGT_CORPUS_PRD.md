@@ -352,7 +352,7 @@ the corpus is a static local library and every artifact below is derived by a ru
                     NOT MAKE THIS OUTCOME REALIZED, AND THE GRADE REVERTS TO
                     NOT REALIZED. The refusal's ground, adopted: the addendum
                     graded this outcome on the EXISTENCE of AMGT_RESAPP's
-                    FWD-21 and FWD-23 and never on their GRADE, and a fence
+                    own FWD-21 and FWD-23, never on their GRADE, and a fence
                     existing elsewhere is not that half being MET. Worse, my
                     own record 48 minutes later
                     (ctoZ_CLAUSE1_RENDER_OUTCOMES_UNGRADEABLE_20260926T0650Z.md)
@@ -452,9 +452,9 @@ the corpus is a static local library and every artifact below is derived by a ru
                     ground: THIS OUTCOME REVERTS TO NOT REALIZED. The addendum
                     graded it on the EXISTENCE of AMGT_RESAPP FWD-26, never on
                     its grade, and AMGT_RESAPP FWD-26 is NOT GRADED BY THIS
-                    SEAT AT ALL -- A1 of the clause-1 record graded FWD-21,
-                    FWD-27 and FWD-29's contract clauses, and FWD-26 was not
-                    among them. So this borrow is weaker than FWD-10's, not
+                    SEAT AT ALL -- A1 of the clause-1 record graded only the
+                    AMGT_RESAPP contract clauses FWD-21, FWD-27 and FWD-29,
+                    and FWD-26 was not among them. So this borrow is weaker than FWD-10's, not
                     stronger. The uniform rule stands: the outcome is graded on
                     the WHOLE fence and the render half alone holds it open.
                     The half this project OWNS is still MET and still stated
