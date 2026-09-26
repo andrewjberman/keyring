@@ -1,12 +1,13 @@
 {
   "prd": "DSGN_IRPTV1_PRD.md",
-  "prd_version": "v0.13",
-  "prd_pin": "6ce514ca80d88d77e998930d56f8258bb2997490",
+  "prd_version": "v0.14",
+  "prd_pin": "c23678836519b6e5618b26394115b0fb0f4f045a",
   "half": "ratified-text",
-  "half_hash": "ca5635125a23b8e65e442dced363229fa9968f85a17cbbbd0c76a4c996d007c9",
-  "endpoint_hash": "d465c33061976eb23e9286ad99443698b638c3d03072c57fc0070ecfc3e7e5b1",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_PRD_v0.13_L4R_RATIFIED_TEXT_SIGNED_20260926.md@9883284cf6",
+  "half_hash": "8e820005ecbd1e7b67716952e944c159ef32f3f43436993d5a8eff8866b9cae4",
+  "endpoint_hash": "816f28fccf7cbda3435a6ee1fd952a99c3eeb5d039cf4ef6bc6698eafbcd6f91",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_PRD_v0.14_L4R_RATIFIED_TEXT_REVIEW_20260926.md@78d777ddad",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-26T21:25:50Z"
+  "signed_at": "2026-09-26T21:35:17Z",
+  "reason": "FWD-23 ACCEPT (:248) 'every security shows its correct class' goes beyond Andrew's precedence rule @714ba46408 and contradicts FWD-13 'unclassified' (:164) and the Not-promised classifier widening (:259); drop the phrase"
 }
