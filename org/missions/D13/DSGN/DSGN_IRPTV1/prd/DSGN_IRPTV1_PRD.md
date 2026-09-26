@@ -5,7 +5,7 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.14",
+ "prd_version": "v0.15",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ui-finish-design-brief-20260924.md@20f90739bd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23"],
@@ -245,8 +245,8 @@ The L5/L6 issuer is `2.0.0_SA_COO~D` by Andrew's name.
                     with model amounts that are what the client actually holds
          ACCEPT     holdings are dated the last trading day; a model's amount is the sum of the positions actually
                     held in it, or is plainly labelled as a target; the amount outside any model is the true
-                    remainder; every security shows its correct class, and a security the ETF Classifier already
-                    tags keeps that class (VXX is Structured; GLD and PHYS are Commodities), never a lumped
+                    remainder; a security the ETF Classifier already tags keeps that class (VXX is Structured, GLD
+                    is Commodities), PHYS is Commodities as Andrew named it, and none of them shows as a lumped
                     "Alternatives"
          SOURCE     the UI review brief @`fd463341e3` O10; findings UIR-23, UIR-48; UIR-50 (Andrew-direct
                     2026-09-26 ~21:2xZ, record @`714ba46408`)
@@ -783,6 +783,9 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
   - FWD-23's ACCEPT gains the correct-class clause, id unchanged;
   - UIR-50's row, ruling (a), backlog item 32 and C34 are added.
   Cut before the v0.13 re-sign landed, so ONE ratified-text re-sign covers v0.13 and v0.14.
+- v0.15, 2026-09-26 ~21:4xZ, `1.0.0_SA_CTO` (Claude): on `3.0.0_SA_CVO`'s refusal 101519 (review @`78d777ddad`),
+  FWD-23 drops "every security shows its correct class", which went beyond Andrew's rule and conflicted with FWD-13's
+  "unclassified". The precedence clause stands. PHYS is named on Andrew's word, because it is not in the Classifier.
 
 ## SURFACE MANIFEST
 
