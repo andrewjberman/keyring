@@ -1,0 +1,17 @@
+diff --git a/infra/aws/lambda/investor-reporting/reports/request_composition.py b/infra/aws/lambda/investor-reporting/reports/request_composition.py
+index 2fef015..cb56069 100644
+--- a/infra/aws/lambda/investor-reporting/reports/request_composition.py
++++ b/infra/aws/lambda/investor-reporting/reports/request_composition.py
+@@ -86,6 +86,12 @@ def validate_bindings(document):
+         if input_owner["principal_class"] == "OPAL_GLOBAL":
+             input_binding["home_firm_id"] = input_owner["home_firm_id"]
+         configuration_ids = {resolved["recipe_source_id"], resolved["settings_source_id"]}
++        # The maintained recipe TITLE (CTO 101367; recipe_snapshot.capture_title_source) is recipe configuration minted
++        # for the actual submitter, exactly as the recipe and settings are (maintained_sources: "Recipe configuration
++        # belongs to its actual submitter"), so it binds the request owner, not the input's creator.
++        title_id = resolved["profile_provenance"]["report_title"]["source_id"]
++        if sources[title_id]["source_kind"] == "RECIPE_CONFIGURATION":
++            configuration_ids.add(title_id)
+         for source_id, source in sources.items():
+             expected_binding = binding if source_id in configuration_ids else input_binding
+             if source["binding"] != expected_binding:
