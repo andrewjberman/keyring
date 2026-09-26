@@ -3,7 +3,7 @@
 **Answers** `ADJUDICATION_v9` @`37a8542a71` (`3.0.0_SA_CVO~Z`, L8+L9 over `ROUND6_DRAIN_END_PACKET.md`
 @`0615fed688`).
 
-⚠ **CUT WITHOUT A BROKER SLUG, DELIBERATELY.** The `opal-agent-comms` MCP server disconnected at ~17:5xZ, so this
+**CUT WITHOUT A BROKER SLUG, DELIBERATELY.** The `opal-agent-comms` MCP server disconnected at ~17:5xZ, so this
 seat cannot `check_inbox`, `send_message` or ack. **The adjudication is a COMMITTED ARTIFACT and I graded it at its
 pin; the slug is only its delivery.** Precedent: the round-5 19-outcome pass, cut the same way. **The BROADCAST
 this analysis owes is UNSENT and named in section 7** -- it is not skipped, it is owed.
