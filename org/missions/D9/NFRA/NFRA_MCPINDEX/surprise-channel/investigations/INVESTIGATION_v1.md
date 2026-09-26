@@ -456,6 +456,103 @@ carries none.
     "world_is": "Both pathfinder funds have been sitting at missing 2 with nobody named, in the same guard file whose TrueShares sibling was the subject of W3-S2. Which 2 dates, and whether they are a vendor non-delivery or a conversion failure, is unmeasured here -- this order's write surface is trueshares only and chasing it would be the halt-and-investigate CLAUDE.md section 2 forbids.",
     "disarm_owner": "2.0.0_SA_COO~O",
     "notes": "One read sizes it: list pathfinder/{PFDE,PFOE}/bronze/ against silver/, diff the dates, and check whether the 2 missing dates have bronze at all. Routed, not actioned."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T04:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W2-S7"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W2-S7 (the issuer's own check defect). v6.AC1's overlap limb compared the questions against `description` keys the catalog does not carry, so it read 0 strings and could not fail. It is amended on the held branch (@ae03e6cf86) to read EVERY catalog string and to FAIL when it read none. On the merged bytes it reads 1069 strings, overlap 0, PASS. A planted catalog sentence reads overlap 1, FAIL.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Held branch wk-nfra_mcpindex-1-1d @ae03e6cf86: v6.AC1.sh walk() collects every str value, and the verdict requires descriptions>0.",
+        "Run from /c/tmp/mx-2v and /c/tmp/mx-1: questions=27 sources_at_head=27 expected_tools=27 catalog_overlap=0 descriptions=1069 -> PASS. Control: one question set to a catalog sentence gives questions=28 catalog_overlap=1 -> FAIL, and the tree was restored by git checkout."
+      ]
+    },
+    "spec_asserts": "v6.AC1: NO question shares a run of 6 or more consecutive words with any catalog description.",
+    "world_is": "The check now measures what it states, over every catalog string, with a positive control.",
+    "notes": "The fix lives on the held branch and reaches CLOUD when the held branch drains, after the CVO grades MX-c-5's AC4."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-26T04:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "THE ROOT CAUSE OF C-S13, one level above where R-2 (2) points: the Black Diamond asset-dim download has failed 69 consecutive runs since 2026-06-23 on a single portal login timeout, so build_bd_assets_dim.py's only input is frozen on the same day the bridge is -- scheduling the builder as ruled would rebuild identical bytes and resolve 0 of the 791 missing asset_ids.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "all 119 of s3://opal-data-bd/logs/asset-dim-download-*.log read IN FULL (denominator printed): 69 FAILED, 50 OK, 0 unclassifiable; last OK 2026-06-22, first FAILED 2026-06-23, last FAILED 2026-09-25. 69 of 69 failures carry the SAME login TimeoutError -- one signature, one cause, not 69.",
+        "SSM get_command_invocation on the exact CommandId 2978c0a0-5aa2-4640-97e0-516a5dc2e5a3 from the 2026-09-25 lambda log (used as a positive control after list_commands returned a bare 0): stdout carries 'Phase 1: Login / FAILED / Error: TimeoutError: forURL: Timeout 30000ms exceeded. waiting for navigation to \"**/bd3.bdreporting.com/**\"' then 'SKIP: silver conversion skipped (download_rc=1)' and 'ERROR: Asset-dim pipeline failed (download_rc=1 merge_rc=99)'.",
+        "live heads: silver/bd_assets_dim.parquet LastModified 2026-04-14T20:44:16Z; silver/bd_assets.parquet (its ONLY input, N=1 writer convert_assets_to_silver.py by comp-find over 75,160 files) LastModified 2026-04-14T20:09:23Z, trade_date range ending 2026-04-13. Both carry the SAME 10,937 asset_ids.",
+        "this seat's read: 791 distinct asset_ids appear in silver transactions since 2026-04-14 and are absent from the bridge; the number of those present in the builder's source today is 0.",
+        "forwardfill_v2/assets/ newest object is AssetDimTXNs_OpalCapital_Daily_2026-06-18_to_2026-06-18.xlsx and silver/assets/ stops at 2026-06-18, while forwardfill_v2/transactions/ is current to 2026-09-26 -- the transactions leg is alive, only the asset-dim leg is dead."
+      ]
+    },
+    "spec_asserts": "Ruling R-2 (2) of ROUND_ANALYSIS.round1.md: 'Scheduling build_bd_assets_dim.py ahead of the daily merge, as a production schedule' is the remedy for the frozen cusip bridge, and MX-s-2 restates it as 'No scheduler runs its builder.'",
+    "world_is": "A schedule for the leg ALREADY EXISTS and is ENABLED -- bd-asset-dim-pipeline-trigger, cron(10 22 ? * MON-FRI *) -- and it fired last night. What is broken is beneath it: the BD portal login times out, so the download writes nothing and the conversion is skipped by its own guard. The builder's input is therefore frozen at 2026-04-14, and a builder scheduled on top of a frozen input rebuilds the same 10,937 rows. The remedy as ruled would move LastModified, satisfy AC1's freshness limb, and fix none of the 791 missing assets. There are also TWO sequential breaks, not one: the compaction to bd_assets.parquet stopped at 2026-04-14 while silver/assets/ was still landing through 2026-06-18.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "The ordered remedy is in deliverables/0.4.0_DS_ClientPlatform~D/bd-cusip-bridge.result.md section 5: (1) fix the portal login on opal-bd-asset-dim-download, EC2 i-0e6f6dc014fdcf1cd -- this is the whole fix and everything else is a no-op before it; (2) make the wrapper's exit code honest (see the sibling row); (3) restore the compaction to bd_assets.parquet; (4) only then add the builder. Steps 1-3 are AE/CloudOps and DT; a credential or vendor interaction is Andrew's word. NOT actioned here: this lane built no trigger (rule 13 gives PROD triggers to DT/AE and the order says not to work around the gate)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-26T04:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The asset-dim SSM wrapper exits 0 on a failed pipeline, so SSM records Status=Success / ResponseCode=0 for a run whose own stdout says 'ERROR: Asset-dim pipeline failed (download_rc=1 merge_rc=99)' -- which is why 95 days of nightly failure were invisible to every instrument above it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM get_command_invocation, CommandId 2978c0a0-5aa2-4640-97e0-516a5dc2e5a3, instance i-0e6f6dc014fdcf1cd, document opal-bd-asset-dim-download, 2026-09-25T22:11:06Z: Status 'Success', StatusDetails 'Success', ResponseCode 0 -- while the SAME invocation's StandardOutputContent ends 'Download exit code: 1 / SKIP: silver conversion skipped (download_rc=1) / ERROR: Asset-dim pipeline failed (download_rc=1 merge_rc=99)'.",
+        "the invoking lambda bd-asset-dim-trigger logs END/REPORT with no error after 'SSM command sent' -- it dispatches and never reads the result, so its own success is real and says nothing about the pipeline.",
+        "69 consecutive such runs since 2026-06-23 (full-corpus log read, denominator 119)."
+      ]
+    },
+    "spec_asserts": "A scheduled producer's run status is the signal that it produced. CLAUDE.md: NEVER trust a producer's self-report or rc=0 -- verify against the SERVED artifact.",
+    "world_is": "Here the producer's self-report is not merely untrustworthy, it is inverted: the wrapper returns 0 on the failure path, so the honest failure text sits inside a run stamped Success. Every layer above -- SSM console, the lambda's own logs, any status sweep -- reads green. The evidence was in S3 the entire time, one object per night, and nothing was looking at it.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "The fix is a non-zero exit on the failure path in the SSM document's script, which is a producer reporting its own result honestly and is NOT an alarm, monitor or notification under the standing moratorium. Owner AE/CloudOps with the login fix; they are one act. This row is the generalisable half: the login is one outage, the lying exit code is why any future outage on this path will also be silent."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-26T04:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-s-2 AC3 cannot be satisfied or even computed as written: its cash rule keys on asset_id, which the served partition does not carry, and its bar of zero is unreachable because 1,037 of the bridge's 10,937 assets have no cusip at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gold/timeseries/holdings_lots/2026-09-18.parquet columns read live: lot_id, snapshot_date, account_id, relationship_id, account_name, account_type, account_registration_type, tax_status, qualified_flag, asset_name, ticker, cusip, acquisition_date, purchase_year, lot_index, original_units, current_units, cost_per_unit, cost_basis, current_price, market_value, accrued_gain, holding_period_days, term, is_open, price_quality, market_value_uncapped -- there is NO asset_id column.",
+        "B_01.holdings_lots.py:284-292 keys its cash normalisation on asset_id=4 / cusip='CASH', so 'not cash by B_01's own cash rule' is not expressible over the artifact AC3 names.",
+        "live read of the bridge: 10,937 asset_ids, 9,900 with a usable cusip, 1,037 with none -- BD supplies no cusip for those, so no rebuild resolves them.",
+        "probe mx_s_2.py AC3 under a STATED substitute name-token rule: 1,264,679 rows, 22,173 null-or-CASH cusip, 15,185 cash by the substitute, 6,988 non-cash, of which 98 carry a blank asset_name and are unclassifiable either way.",
+        "probe mx_s_2.py DIAG: of the 6,988, 1,798 carry a ticker today's bridge could resolve and 5,190 do not -- and 1,798 is an UPPER bound, because B_01 joins on asset_id while this bounding join uses ticker."
+      ]
+    },
+    "spec_asserts": "MX-s-2 step 3: the probe 'counts null-cusip rows that are NOT cash by B_01's own cash rule' and 'prints VERDICT: PASS-MXS2-AC3 only when that count is 0.'",
+    "world_is": "Two distinct defects in one criterion. (i) The rule is not computable: the discriminating column was dropped by the producer before the artifact was written, so any probe must substitute a different rule and should say so rather than quietly approximate. (ii) The bar is unreachable: a permanent floor of null cusips exists that no bridge state can remove, because BD itself supplies 1,037 assets without one. AC3 would read FAIL forever even after C-S13 is fully repaired.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "The probe is delivered and working with its substitute rule printed, its tokens listed and its unclassifiable residual counted -- it does not claim to be B_01's rule. A re-cut criterion wants a DELTA bar against a measured baseline (for example: non-cash null-cusip rows fall below N once the bridge is current), not an absolute zero. Proposed, not adopted: the issuer amends its own criteria."
   }
 ]
 ```
