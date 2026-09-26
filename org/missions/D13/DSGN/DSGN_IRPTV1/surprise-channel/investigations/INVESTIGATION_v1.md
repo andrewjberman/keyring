@@ -1379,6 +1379,28 @@
     "spec_asserts": "Cell rule 5 (proposal section 4, PRD v0.12): 'Export follows the tab's scope. On Performance, the page Export targets R3a's account set and its report revision, never clientSetId.'",
     "world_is": "The SUBMISSION (what the advisor's Export click actually posts) carries R3a's account set and report revision -- graded and PASS-by-output (IVE34-AC2). The PREVIEW shown inside the export modal before that submit, when it fetches its own performance report copy (a cache-miss path), still falls back to `resolveBundle`'s no-`accountSetId` branch because `Preview.tsx` is out of this cell's grant to wire -- a live-stack gap this cell cannot close.",
     "notes": "Not blocking IVE34-AC2 (the criterion's own text is about the export SUBMISSION, which this cell does correctly target at the focused account; PASS-by-output, VERDICT: FOCUS-REFUSAL-EXPORT-OK)."
+  },
+  {
+    "id": "DSGN_IRPTV1-W25-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~25",
+    "surfaced_at": "2026-09-26T22:40:15Z",
+    "one_line": "UIR-11's actual root cause lives in ClientSearch.tsx's onQuery handler (not named by the cell's 'Where it lives' map for UIR-06/UIR-11, which cites only tabs/SampleView.tsx and tabs/TabShell.tsx), and UIR-10 was satisfied by a NEW SearchSelect prop + matched-count caption rather than by literally reusing BrowseDrawer's group-by-firm function the map named ('reuse, do not fork').",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "index.tsx's select() (out of this cell's <paths> grant) nulls accepted/selection/row whenever called with (null, null); ClientSearch.tsx's own onQuery prop called onSelectionChange?.(null, null) on EVERY keystroke, so typing a new search while a real client's report was on screen swapped TabShell straight into SampleView's pre-selection Sample content (TabShell's own `!scopeRef` gate, unchanged) -- the fix (dropping that call, keeping only setQuery) lives entirely inside ClientSearch.tsx, in-grant, so no BOUNDS violation, but the map's own file list for these two rows did not name it",
+        "PRD v0.15 UIR-10 text offers an explicit disjunct -- 'grouped (OR clearly marked) by firm' -- BrowseDrawer.tsx's own loadBrowseGroups/filterGroups/pageGroups operate over a DIFFERENT shape (BrowseGroup[], paginated, its own full-catalogue walk) than ClientSearch's flat SearchOptionRow[] server-narrowed list, so literally forking/reusing those functions here would require re-shaping ClientSearch's whole result pipeline into paged groups; instead this cell added SearchSelect.tsx's own optional resultSummary prop (a matched-count caption) plus relied on UIR-04's now-guaranteed per-row firm tag to satisfy the 'clearly marked' half, verified by iv-e-37.search.test.tsx's UIR-10 arm (VERDICT: SEARCH-OK)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Both rows are graded PASS-by-output on this worker's own criterion (IVE37-AC1, VERDICT: SEARCH-OK) and mechanically confirmed (bun test, typecheck, eslint all clean); the deviation from the map's literal file/mechanism list is a documentation gap in the cell text, not a defect in the fix -- filed so the L9 judgment walk (IVE37-AC2) knows to look at ClientSearch.tsx for UIR-11 and at SearchSelect.tsx's resultSummary caption (rather than a BrowseDrawer-style grouped list) for UIR-10.",
+    "spec_asserts": "Cell text 'Where it lives': 'UIR-06 / UIR-11: tabs/SampleView.tsx ... is mounted by tabs/TabShell.tsx' and 'UIR-10: ClientSearch.tsx ... builds one flat list; header/BrowseDrawer.tsx ... already groups by firm (reuse, do not fork).'",
+    "world_is": "UIR-11's live defect is index.tsx's select(null,null) path, triggered from ClientSearch.tsx's onQuery (in-grant) rather than from SampleView.tsx/TabShell.tsx themselves (which only read the resulting scopeRef, unchanged). UIR-10 is satisfied by a new additive SearchSelect prop + per-row firm tag, not by forking/reusing BrowseDrawer's grouped-catalogue functions, which operate over a materially different shape.",
+    "notes": "Not blocking IVE37-AC1 (mechanical criterion passes) or IVE37-AC2 (judgment criterion, unrun by this worker)."
   }
 ]
 ```
