@@ -1,0 +1,65 @@
+{
+ "bucket": "opal-data-cot",
+ "scopes_read": 226,
+ "relationships": 225,
+ "data_as_of": {
+  "2026-09-22": 220,
+  "2026-08-25": 2,
+  "2026-08-28": 2,
+  "2026-09-18": 2
+ },
+ "over_100pct": 9,
+ "over_detail": [
+  {
+   "key": "gold/entities/clients/z09304677_composition.json",
+   "pct_sum": 1.014346,
+   "last_modified": "2026-09-23T11:35:59+00:00"
+  },
+  {
+   "key": "gold/entities/clients/z09305548_composition.json",
+   "pct_sum": 1.021397,
+   "last_modified": "2026-09-23T11:36:00+00:00"
+  },
+  {
+   "key": "gold/entities/clients/z09305614_composition.json",
+   "pct_sum": 1.033462,
+   "last_modified": "2026-09-23T11:36:00+00:00"
+  },
+  {
+   "key": "gold/entities/clients/z09305639_composition.json",
+   "pct_sum": 1.007193,
+   "last_modified": "2026-09-23T11:35:59+00:00"
+  },
+  {
+   "key": "gold/entities/clients/z09305643_composition.json",
+   "pct_sum": 1.002397,
+   "last_modified": "2026-09-23T11:36:00+00:00"
+  },
+  {
+   "key": "gold/entities/clients/z09305647_composition.json",
+   "pct_sum": 1.084441,
+   "last_modified": "2026-09-23T11:36:00+00:00"
+  },
+  {
+   "key": "gold/entities/clients/z09305707_composition.json",
+   "pct_sum": 1.12286,
+   "last_modified": "2026-09-23T11:35:59+00:00"
+  },
+  {
+   "key": "gold/entities/clients/z09305719_composition.json",
+   "pct_sum": 1.034163,
+   "last_modified": "2026-09-23T11:35:59+00:00"
+  },
+  {
+   "key": "gold/entities/clients/z09305724_composition.json",
+   "pct_sum": 1.028151,
+   "last_modified": "2026-09-23T11:35:59+00:00"
+  }
+ ],
+ "z09305653": {
+  "fixed_income": 0.826325,
+  "equity": 0.173319,
+  "alternatives": 0.000356,
+  "_last_modified": "2026-09-23T11:36:00+00:00"
+ }
+}

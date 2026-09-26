@@ -143,3 +143,21 @@ relationship composition then keeps the cash line as equity while C_06 shows cas
     `- CREDIT CARD`) are already among COT-new Part 2's 26 `other` keys, signed @ab4a2e41bb. Part 2 makes them
     `other`; the positive-rows rule still keeps them out of C_06 and D_03, because they are negative.
 - **C_06 (condition 3):** its delta is +$66,055,897.80 over the positive rows (addendum 2), replacing the $59.25M net.
+
+## Addendum 4 (00:1xZ 09-27): the served baseline for the post-deploy check
+
+Script `cot_served_composition_check.py`, output `COT_SERVED_COMPOSITION_BASELINE_20260927.json` (beside this file).
+It reads every SERVED D_03 composition in s3://opal-data-cot: the firm file plus 225 relationship files.
+
+- **9 served relationship compositions sum above 100% today** (100.24%-112.29%): z09304677, z09305548, z09305614,
+  z09305639, z09305643, z09305647, z09305707, z09305719 and z09305724.
+- **Why:** the files were generated 2026-09-23 11:35Z by the D_03 that S3 served then (version mHFLoYZcd1, 2026-07-07).
+  That version put unknowns in `other` (z09304677 serves BRK.B as `other`) and drops a class whose value is 0 or less.
+- **The deployed D_03 has not run on a schedule yet:** S3 version lv.RgLOiJs, 2026-09-26 02:39Z.
+- **Correction to addendum 3's "0 of 223 before":** that count is the CLOUD code on the 09-22 input. The served bytes
+  differ; they are the 9 above.
+- The "after" bar is unchanged: **0 over 100%** at the first scheduled run that carries this act.
+- **Also in the served set:** 3 relationship files are stale, with data_as_of 2026-08-25, 2026-08-28 and 2026-09-18 (2
+  files each counted with the firm set; see the JSON). D_03 no longer writes them. Parked, not in this act.
+- **Monday:** re-run this script after the run. Before the merge it reads the act-1 and cash-admission bytes; after
+  the cash-line deploy, the bar is 0.
