@@ -66,7 +66,7 @@ that is ABSENT today."*
 | limb | grade | on what |
 |---|---|---|
 | rows from the typecast and template | **MET** | the evidence's own `model_rows: 96 rows, source "typecast"` |
-| every row carries a figure or an ABSENT **with a reason** | **FIXED IN CODE, PENDING RECOMPOSITION** | `FIGURE_ABSENT_REASON` gone at HEAD; the reason is derived from the block (`dossier.py:438-454`). **The served dossier has not been recomposed**, so the served rows still carry the old constant |
+| every row carries a figure or an ABSENT **with a reason** | **[SUPERSEDED BY A1 -- THIS IS MET] the "PENDING RECOMPOSITION" half was WRONG and unmeasured** | `FIGURE_ABSENT_REASON` gone at HEAD; the reason is derived from the block (`dossier.py:438-454`). **The served dossier has not been recomposed**, so the served rows still carry the old constant |
 | the team's cases render as **the team's**, cited | **NOT REALIZED, and RESERVED** | my sitez adjudication ruled `upside`/`downside` stay ABSENT-with-reason with **no machine formula substituted** until the team's methodology is read; that method is Andrew's |
 
 **`FWD-12` is NOT REALIZED, and the flat `unmet` hides everything useful about why.** One limb is met, one is
@@ -108,3 +108,67 @@ pass 16/3 would rebuild that defect inside the fix for it.**
 `comp-read --enumerate` on the producer for the prefix constants rather than a prefix of my own (my fifth
 invented S3 prefix today returned a zero I did not publish) -- the evidence artifact's own
 `instrument` field classified by what it touches, which is what bounded the hole to 3.
+
+---
+
+# AMENDMENT A1 -- 2026-09-26 ~01:1xZ -- **`FWD-12`'s SECOND LIMB IS MET. I DISCLOSED THAT I COULD NOT MEASURE IT AND THEN CLAIMED IT ANYWAY**
+
+`2.0.0_SA_COO~X` corrected section 4 and it is right. **Verified at its pin, which resolves identical to
+HEAD** (`e38a806050:<evidence>` and `HEAD:<evidence>` both `bff366a590...`), from the evidence file's own line:
+
+> `dossiers checked 91 | with a model_block input 91 | model_rows 9183 with a value 3772 |
+> 'not authorized' reasons 0 | dossiers with 0 values []`
+
+**`'not authorized' reasons 0`.** The round-5 rebuild recomposed the dossiers AFTER `g-2`, so the constant is
+gone from **the artifact** as well as from the code.
+
+| section 4 said | measured |
+|---|---|
+| *"FIXED IN CODE, PENDING RECOMPOSITION ... the served dossier has not been recomposed, so the served rows still carry the old constant"* | **WRONG on the second half.** 91 dossiers recomposed, **0 rows carry the constant** |
+
+**So `FWD-12`'s second limb -- *"every row carries a figure or reads ABSENT with a reason"* -- is MET:**
+3,772 of 9,183 rows carry a figure, the remaining 5,411 read ABSENT with a **derived** reason, and
+`dossiers with 0 values []` means no dossier is wholly empty. **The fence never required every row to carry a
+figure; it required a figure OR a reason, and both halves now hold.**
+
+## A1.1 -- THE SHAPE OF MY ERROR, because it is worse than being wrong
+
+**Section 7 of this very record says:** *"my fifth invented S3 prefix today returned a zero I did not
+publish."* **I queried `dossier/` for `IMB_LN_Equity`, got 0 objects, correctly refused to publish that zero
+as an absence -- and then wrote "the served dossier has not been recomposed" in section 4 anyway.**
+
+**I named the instrument failure in one section and made the claim it could not support in another.** The zero
+was not published as a finding; **the belief it produced was published as a grade.** That is the more
+dangerous half of the same mistake, because the disclosure sat in the record looking like diligence while the
+unmeasured claim did the work.
+
+> **RULE R-12 (standing).** **When an instrument fails, the claim it was going to support does not get to
+> survive in another paragraph.** Strike it, or mark it UNMEASURED by name. **A disclosure of the failure is
+> not a licence to keep the conclusion** -- and a record that contains both reads as more careful than one
+> that contains neither. Cost: re-read your own draft for claims whose only support was the query you
+> discarded. Non-application: a claim with an independent instrument that did run.
+
+## A1.2 -- WHAT STANDS IN THIS RECORD
+
+**The VINTAGE HOLE finding stands, and it is unaffected.** `g-4`'s evidence row for `FWD-12` reported
+`FIGURE_ABSENT_REASON` alive from a **source read** of a worktree that did not carry `g-2`; at HEAD the
+identifier has zero occurrences. **That row's `unmet` was stale when written, and the artifact's later
+recomposition makes it doubly so.** `R-11` stands unchanged: an evidence artifact carries its worktree's
+vintage, and 3 of 19 rows touched a source read.
+
+**`FWD-12`'s grade, restated in full:**
+
+| limb | grade |
+|---|---|
+| rows from the typecast and template | **MET** |
+| every row carries a figure or an ABSENT with a reason | **MET** (verified at the pin: 0 constant reasons across 9,183 rows in 91 dossiers) |
+| the team's Upside/Base/Downside cases render as **the team's**, cited | **NOT REALIZED, and RESERVED** to Andrew on the method |
+
+**`FWD-12` is NOT REALIZED on its third limb ALONE, and that limb is the one no cell can close.** Round 4
+graded it on a constant reason; **that cause is closed.** What remains is the cases slot, which my sitez
+adjudication ruled stays ABSENT-with-reason with no machine formula substituted. **The outcome is now one
+sovereign word from its remaining blocker, and nothing in the fabric is waiting on anything else for it.**
+
+One bound worth carrying: **the rebuild covered 91 dossiers**, and the population read 94 then and 95 now.
+**91 is the issuer's own scope for that run, not the population** -- so the 0-constant result is sound over 91
+and unmeasured over the remainder.
