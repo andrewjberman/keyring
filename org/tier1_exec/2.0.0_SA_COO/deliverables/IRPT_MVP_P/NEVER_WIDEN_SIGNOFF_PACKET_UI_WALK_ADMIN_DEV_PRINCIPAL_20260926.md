@@ -5,6 +5,7 @@
 **Walkers:** `2.0.0_SA_COO~D`: one signed-in PROD walk of `/investor-reporting` with a HAR scrubbed in-stream. In the
 same window, `2.0.0_SA_COO~Y`: ONE Analysis upload of its v2 input, logged and scrubbed (Y msg 101161). This saves a
 second create under a second packet.
+**AMENDED (v3, 13:4xZ): K4 re-cut from ~Y's write set @5d70021540 -- K4 causes ONE resident YCharts GET, named.**
 **AMENDED (v2) per the CRO's refusal @f8fa80bddc (msg 101163) and CTO msg 101166:**
 - the audit grades the HAR by ROUTE;
 - the page's own selection rows are named as K3;
@@ -72,18 +73,41 @@ reads it by NAME into browser memory only. The ledger records the name and the i
   same selection; they carry no identity or credential. The ledger records each new `request_revision` the HAR shows the
   walk minted, as a before/after row census (count and ids).
 
-## K4 -- ~Y's ONE Analysis upload (strike-able)
+## K4 -- ~Y's ONE Analysis upload (strike-able) -- RE-CUT (v3) from ~Y's write set
 
-- **The act:** ONE `POST /api/scoped/investor-reporting/analysis/inputs`, the file
-  `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/aapl-vnq-12.03.csv` (AAPL 10.01 / VNQ 2.02), USD box ticked
-  (Y msg 101077).
-- **Precondition:** it runs only on `irpt-ycharts-generate` CodeSha256 `IJD6bd1IKKuVwHItl3gZLrAzj7gaqn3LW6DvOrk4wdo=`,
-  deployed 13:29:39Z under ledger `irpt-generate-closure-fix-20260926`, and after ~Y's own `generate_package_closure.py`
-  exits 0 on it.
-- **What it writes:** the upload lane's own request rows and objects, the product's record of the first live upload. It
-  makes no vendor call.
-- **RETENTION:** kept, as the acceptance evidence of ledger `irpt-upload-hop2-20260924` S1. ~Y names each row and object
-  key in its log.
+Source: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/K4_UPLOAD_WRITE_SET_20260926.md` @5d70021540, read from the
+producer's own code.
+
+- **The act:** exactly ONE `POST /api/scoped/investor-reporting/analysis/inputs` of
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/aapl-vnq-12.03.csv` (AAPL 10.01 / VNQ 2.02, USD box ticked,
+  tenant `cottonwood`).
+  - ~Y observes the outcome only through read-only DynamoDB and S3 reads, NEVER by re-POSTing the same `upload_token`
+    (the browser's polling pattern).
+  - A lost queue message is therefore not redriven: it stays RESOLVING and is reported as such.
+- **Precondition:** `irpt-ycharts-generate` CodeSha256 `IJD6bd1IKKuVwHItl3gZLrAzj7gaqn3LW6DvOrk4wdo=` (LIVE 13:29:39Z,
+  ledger `irpt-generate-closure-fix-20260926`), and ~Y's own `generate_package_closure.py` exits 0 on it.
+- **K4 CAUSES ONE VENDOR CALL -- named:**
+  - The POST sends one `resolve_upload` message.
+  - The resident answers it with ONE batched YCharts `securities_info` GET: 2 symbols, no prices, lease-fenced
+    (`intake/upload_resolution.py:3-9`; `ycharts/generate/resident_worker.py` `ResidentAssembly.resolve_upload`).
+  - Authority: the standing host-workflow authorization, CTO 100667 (1), and this session's egress permission,
+    CTO 101098. It is ledgered in this act's ledger with the resident's log line as its receipt.
+  - It is the ONLY vendor call this window admits.
+- **Write set by the POST** (`irpt-ycharts-generate`, `intake/uploads.py`, tenant `cottonwood`):
+  - the retained original, an S3 object;
+  - `irpt-requests` row `UPLOAD#<upload_id>`;
+  - row `NORMALIZATION#<upload_id>#<revision>` (RESOLVING, `dispatched_at`);
+  - ONE SQS `resolve_upload` message on the generation queue.
+- **Write set by the resident, one of three branches:**
+  - **NORMALIZED:** the NORMALIZED_PORTFOLIO S3 object, row `INPUT#<input_id>`, and the NORMALIZATION# row flipped
+    RESOLVING -> NORMALIZED by a conditional put.
+  - **NEEDS_CORRECTION:** the NORMALIZATION# row flipped with its reason and findings; no INPUT# row and no normalized
+    object.
+  - **RETRY** (provider outage): nothing flipped; the message returns to the queue and the row stays RESOLVING.
+  - Also: any lease or journal entry the resident session writes around its GET is the session's own bookkeeping, named
+    in ~Y's log from the resident's output.
+- **RETENTION:** all of it is KEPT, as the acceptance evidence of ledger `irpt-upload-hop2-20260924` S1. ~Y's log names
+  every row key and object key.
 
 ## K2 -- the session, never recorded
 
@@ -118,7 +142,7 @@ the above for its life. The bound on what is done is the walker's script plus th
 CTO limit, verbatim in substance:
 
 **THE LIMIT (reworded, CTO 101166):** "page use only: reads plus the page's own selection writes; no admin, export,
-grant or vendor call." Plus K4: ~Y's ONE upload.
+grant or vendor call." Plus K4: ~Y's ONE upload and the ONE resident `securities_info` GET it causes.
 
 **THE AUDIT, GRADED BY ROUTE.** The combined log (~D's HAR plus ~Y's upload log) is censused request by request, with
 its denominator printed. Every request must fall in exactly one admitted class:
@@ -188,7 +212,7 @@ The census prints the count per class, the count outside the classes (must be 0)
 - Any write beyond K3 (the page's own selections) and K4 (~Y's one upload): no settings, user, grant, roster,
   ownership-map or directory write.
 - Any export or render.
-- Any vendor call.
+- Any vendor call other than K4's one resident `securities_info` GET.
 - Any change to the auth-handler, the authorizer, the edge or the JWT keys.
 
 ## WHAT THE HALVES SIGN AGAINST
