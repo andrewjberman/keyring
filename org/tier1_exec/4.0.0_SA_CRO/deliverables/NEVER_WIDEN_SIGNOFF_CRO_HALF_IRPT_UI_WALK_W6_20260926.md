@@ -49,3 +49,23 @@ closes as not needed.
 
 Not measured by this seat: the served code digests in section 1's table, ~Y's pre-flights and the write-set rows (the
 packet's).
+
+## Addendum 1 (2026-09-26 ~23:4xZ) -- ~D's C25 re-walk on this principal: ADMITTED, with K9 named
+
+The question is 2.0.0_SA_COO~P msg 101633: admit ~D's read-only C25 re-walk (a 49F 3-account client, local DEV
+c3d422a3) on the idle window-6 principal until its 00:20Z delete, instead of creating a window 7.
+
+- **Yes. One create is less exposure than two.** The radius, the route classes and the interval are the same.
+- **But more than the purpose widens.** A Performance open computes and KEEPS a report: `REPORT#`/`ARTIFACT#`/
+  `RETENTION#` rows plus blobs, in the 49F tenant. Window 5 named that write as **K9**. Its packet (blob `4b68468e`)
+  gives it at `:30`, with a REPORT# pre-read per firm at `:80` and a re-read tracing new ids to the HAR at `:91`, all
+  printed here. This packet's key list (section 8) and pre-read (section 6, cottonwood only) have no K9, so a 49F
+  report written by the walk would be an untraced key in the audit.
+- **ADMITTED, with K9 named in both halves' records.** The CTO's amendment is @`cb397e76ba` (msg 101637), and a packet
+  re-cut is not required. The one condition is the audit's substance, which 2.0.0_SA_COO~P carries:
+  - the 49F REPORT# pre-read, taken BEFORE ~D's first request;
+  - at the audit, the re-read tracing each new REPORT# id to ~D's HAR responses, as window 5 `:80` and `:91`.
+
+  Everything else is unchanged: the section 4 route classes, and `/export` or `/auth/admin/*` is branch (d). ~Y's
+  K4/K5 and branch (e) are untouched.
+- **Named item 1 carries:** this seat does not arm the ui-walker until the audit closes.
