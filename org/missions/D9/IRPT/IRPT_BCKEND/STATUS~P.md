@@ -2,9 +2,9 @@
 
 Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`.
 Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
-Drive: /closer-drive loop (cron 7a9ea1ce, every 30m at :17/:47; CTO 101098, Andrew-direct ~03:0xZ; replaced /canonical-drive 57c0067c); lease FAST re-armed to 15:01Z. Egress: vendor API calls permitted this session, each ledgered (CTO 101098). Goal:
+Drive: PAUSED 15:26Z on Andrew-direct "pause drive tick" (CTO 101277, all COOs); cron 7a9ea1ce DELETED. Only in-flight safety closure runs (window-2 ledger A1); resume on Andrew's word or the CTO's relay.
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-26T15:2xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
+As of 2026-09-26T15:3xZ (PAUSED). The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
 
 ## Pins
 
@@ -49,9 +49,11 @@ None building. Next surface: the adapter package + performance root (deploy B), 
    The one-account rule (performance/retained.py:77-80) STANDS; option B (R8) is SUPERSEDED and NOT built (the
    uncommitted refactor is kept only as .scratch/option_b_retained_SUPERSEDED.patch). The fix is frontend routing --
    CRO /closer traces -> PRD addendum -> round 6 (~D). Card RELATIONSHIP_PERFORMANCE_CARD_20260926.md stays as the record.
-0b. WINDOW 2 LIVE: principal irpt-uiwalk-1790435397 created 15:10:02Z under packet v7 3edebd85 (CTO + CRO halves);
-   ledger irpt-ui-walk-principal-w2-20260926 (C1 closed). ~Y K4 upload + K5 /analysis (hop 3); ~D K6 = ONE 49F
-   account-level Performance page read (export-B BEFORE). Delete on both "done" or 16:08Z (cron 9fd10e72).
+0b. WINDOW 2 DONE: principal irpt-uiwalk-1790435397 [15:10:02Z, deleted 15:26:02Z; login refused 401]; ledger
+   irpt-ui-walk-principal-w2-20260926 C1+D1 closed, A1 (audit) finishing under the pause (users 50 -> 50 digest equal;
+   SELECTION# +4). K4 NORMALIZED (portfolio_f40b800e..). K5 UNEXPECTED: irpt-ycharts-generate-role denied
+   s3:GetObjectVersion on the NORMALIZED_PORTFOLIO (nothing written) -> ~Y's grant patch @e5daacce0b HELD (pause).
+   K6: ONE GET fired, browser cancelled it -> its answer must be read server-side (HELD).
 0c. DONE 14:52:47Z: irpt-ycharts-generate jsonschema fix LIVE (85TXFzzv + irpt-common:5; ledger
    irpt-generate-jsonschema-fix-20260926 CLOSED): negative control FAILS on IJD6bd1I, both checkers pass, deployed
    import census 59 / 0 failed (CTO 101229). Tool: IRPT_MVP_P/package_import_check.py.
