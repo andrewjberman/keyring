@@ -1060,6 +1060,31 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-g-2 step 2: run tests/test_portal_grant.py, test_asker_scope.py and test_identity_scope.py inside the release tree and record the results. The hand-off says to restore the contract under org/standards to the base.",
     "world_is": "Two of the seven portal-grant tests depend on the repo contract at v1.2. With the base contract restored, they fail in the release tree while the host artifact code is unaffected. The operator command run from the release tree would refuse a portal-only candidate (fail-closed).",
     "notes": "The result is recorded, not repaired, and no contract file was carried into the release. Whether this leaves the order open is the issuer's call."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S29",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T13:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-W9-S3",
+      "NFRA_OPALAI-Z-W9-S4"
+    ],
+    "one_line": "DISARMS NFRA_OPALAI-Z-W9-S3 and adjudicates W9-S4. W9-S3: OA-g-2's census list and <paths> omitted app/admin_grants.py, which is OA-g-1 item 5 (the owner read-back, 9a28cfbbe6). That is the issuer's omission when item 5 was added; the face is amended in this commit to include it, so the 5-file census is the correct one. W9-S4: test_portal_grant's 2 failures in the release tree read the repo contract (org/standards), which does not ship to the host; on the CLOUD-merged tree it passes 7 of 7. INERT, no act.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker 0.9.0_WK_NFRA_OPALAI~9 pre-GO report (announcement @b5f2d7afe5, drained @3f0798fdd0): census 5 files +411/-18, each byte-identical to 9a28cfbbe6; the rollback artifact is 75/75 byte-identical to the live base.",
+        "OA-g-1 amendment @fb7efc02b8 (item 5), drained @45ddd8d948."
+      ]
+    },
+    "spec_asserts": "OA-g-2 step 2: the census names ONLY the 4 files the face lists.",
+    "world_is": "The shipping set is 5 files; the 5th is the read-back fix the issuer itself added.",
+    "notes": "GO waits for outside US business hours (Z-S24): not before 21:05Z today."
   }
 ]
 ```
