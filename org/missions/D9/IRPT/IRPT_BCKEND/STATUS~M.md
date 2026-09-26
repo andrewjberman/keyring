@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-26T23:5xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-27T00:0xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -227,8 +227,8 @@ disposed REMEDIED (S129).
 - **COT cash line (CTO 101547):** BOTH HALVES SIGNED on 9e3f568d42 + 0deac23f1e (CTO 101597/101616; CRO 101595,
   101629). Negative-cash census @eaca6a30de: 17 of 29 relationships net negative on the cash line; C_06 moves
   +$66,055,897.80 (positive rows only). D_03 ruled (a) (CTO 101616): positive-rows rule; 0 of 223 compositions over
-  100% before and after; firm + 27 relationships' mix moves (@625e331ded). Found: the 3 personal liabilities in
-  z09305672 classify `equity`, not `other` (~M, under R5, its own half). DEPLOY: Monday, after R1 of
+  100% before and after; firm + 27 relationships' mix moves (@625e331ded). The 3 personal liabilities in z09305672
+  classify `equity` today; they are already among Part 2's 26 `other` keys (signed @ab4a2e41bb), so no new half. DEPLOY: Monday, after R1 of
   cot-cash-admission-m-20260925; merge the branch, safe-deploy C_06/D_03/D_04 under one ledger; read back z09305653's
   cash slice, 0 of 223 over 100%, and d08 beside C_06.
 - **B1 reader admissions (CTO 101573/101578):** ~M's COT C_06/D_03/D_04 admit structured/commodities @ccb9b38dd8 (same

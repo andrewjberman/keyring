@@ -139,4 +139,7 @@ relationship composition then keeps the cash line as equity while C_06 shows cas
 - **Found, not fixed here:** the classifier puts those three liabilities in `equity`, and they are dropped only because
   they are negative. Under Andrew-direct 02:3xZ ("the only context for other is personal assets ... their credit card
   line"), they are `other`. Owner: ~M, under the R5 `other` admission, as its own measured half.
+  - **Correction (00:0xZ 09-27):** no new half is needed. All three (`NAME::INVESTOR MANUAL ASSET - MORTGAGE`, `- CAR`,
+    `- CREDIT CARD`) are already among COT-new Part 2's 26 `other` keys, signed @ab4a2e41bb. Part 2 makes them
+    `other`; the positive-rows rule still keeps them out of C_06 and D_03, because they are negative.
 - **C_06 (condition 3):** its delta is +$66,055,897.80 over the positive rows (addendum 2), replacing the $59.25M net.
