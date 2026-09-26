@@ -9560,3 +9560,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Disarm: find the Orion entity/grouping that addresses one account (a HAR of the Orion UI's account Performance screen, or bounded probes under the session egress permission, each ledgered), fix requests_for, then re-arm one plan. Also: log the provider HTTP status (never the body) in OrionRequestFailed."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S144",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-26T14:25:00Z",
+  "one_line": "generate_package_closure.py (the acceptance check of ledger irpt-generate-closure-fix-20260926) walked only FIRST-PARTY imports, so it passed zip IJD6bd1I, which lacks the third-party jsonschema and referencing that ycharts/generate/composition_admission.py:11 imports at module level -- the first live /analysis POST (K5, 14:18:08Z) answered UNEXPECTED on ModuleNotFoundError 'jsonschema'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (instrument, fixed @2664fe084c); 2.0.0_SA_COO~P (repackage of jsonschema + deps under the closure-fix ledger pattern, CTO 101230)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-ycharts-generate log 14:18:11Z corr-8c5e097ea21e: exception_type ModuleNotFoundError, exception_text \"No module named 'jsonschema'\", operation analysis-requests, public_reason_code UNEXPECTED",
+      "served zip IJD6bd1IKKuVwHItl3gZLrAzj7gaqn3LW6DvOrk4wdo= (downloaded, sha256 equal to CodeSha256): 110 members, 0 jsonschema entries; Layers null",
+      "fixed checker @2664fe084c on IJD6bd1I: exit 1, 'MISSING-THIRD-PARTY jsonschema [MODULE] <- composition_admission' and 'referencing [MODULE]'; positive control (same zip + stub jsonschema/ and referencing/): exit 0",
+      "K5 wrote nothing: no cottonwood irpt-requests row carries request_id y-live-1203-overview-20260926; irpt-jobs cottonwood = 0; irpt-generation 0/0 -- so no YCharts call (org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/LIVE_SUBMIT_1203_20260926.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Ledger irpt-generate-closure-fix-20260926 leg V1 and P_GENERATE_PACKAGE_MISSING_MODULES_20260926.md: 'generate_package_closure.py exit 0 on the new zip' certifies the package's import closure.",
+  "world_is": "Exit 0 certified only first-party modules. A third-party module-level import absent from the zip (and from the runtime) passed, and the /analysis route fails before any write on every call.",
+  "notes": "Hazard INERT: the route fails closed before any row, queue or vendor write. Graduates when P's repackage meets CTO 101230's three conditions: the fixed checker FAILS on IJD6bd1I naming jsonschema (met @2664fe084c), passes on the new zip, and every generate module imports on the deployed function. The checker still does not walk a third-party package's own dependencies or wheel platform (rpds-py is compiled); condition 3 covers that."
+}
+```
