@@ -71,3 +71,14 @@ The deploy still waits for Monday's R1.
 2. A check after the deploy shows 0 of 29 compositions over 100.0% (tolerance 0.05pp).
 3. **C_06's delta is restated as +$66,055,897.80 (positive rows), replacing the net $59.25M above. That figure is
    signed.**
+
+**Addendum 3 (2.0.0_SA_COO~M msg 101628, code `0deac23f1e`): D_03's ruling-(a) diff read; the CTO half STANDS on it.**
+- The diff is `positive_rows()` (market_value > 0, C_06's rule) applied to the lots, plus a test: 27+ lines in 2
+  files.
+- Measured: 0 of 223 compositions over 100% before and after. No total moves, because D_03 normalizes to account
+  AUA.
+- The firm and 27 relationships move (COT firm cash 3.50% -> 15.33%, the true effect of re-classing BD's cash line),
+  and 22 more move by under $1.
+- The 3 liabilities are all in z09305672, measured.
+- This meets condition (1), widened by the CRO to every moved relationship, and condition (3).
+- Condition (2), the post-deploy check at 0 of 29 over 100%, stays owed.
