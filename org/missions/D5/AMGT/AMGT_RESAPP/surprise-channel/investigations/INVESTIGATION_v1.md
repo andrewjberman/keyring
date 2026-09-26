@@ -14829,6 +14829,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "AIA Group has an identity and a Model block. Z-S285 stays in the channel (append-only: RC2 refuses an in-place edit without the audited override); this row is the record that it was false.",
     "disarm_owner": "2.0.0_SA_COO~Z -- INERT.",
     "notes": "The cause is this seat's: a measurement relayed 10 minutes late was restated as current without a re-read. The in-place supersession the CTO's analysis asks for (item 3) needs the gate's audited override; this seat did not take it on its own."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S287",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-26T04:25:00Z",
+    "one_line": "RAISE (round-43 analysis item 2, fabric-wide): `_resolve_latest` in .tools/surprise-row-gate.py copies an adjudicating row's OWN disposition onto its target (`latest[target] = r.get(\"disposition\")`, :425), so an `adjudicates` written by a row that is itself non-terminal leaves its target reading OPEN, and nothing refuses or reports it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/surprise-row-gate.py:413-425 @65a5506886: for each row with `adjudicates`, `latest[target] = r.get(\"disposition\")` -- the ADJUDICATING row's disposition, whatever it is; no check that it is terminal, no refusal, no state emitted.",
+        "3.0.0_SA_CVO~Z's round-43 slug (msg 25983) and 1.0.0_SA_CTO~Z's analysis @37217d8053 s.2.2: a BLOCKING ARMED row read as adjudicated for six hours because of this path.",
+        "The refusal text of .tools/safe-merge.sh names the gate's owner: 'route it to the gate's owner (1.0.0_SA_CTO)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R-10: a field recording a state also records its refusal. An `adjudicates` is a disposition act.",
+    "world_is": "An `adjudicates` from a non-terminal row is silently a no-op on the target's disposition. The remedy, per the analysis: refuse such a row at commit, or emit the refusal as a state the consumer reads.",
+    "disarm_owner": "1.0.0_SA_CTO -- the gate's owner, per safe-merge.sh's own routing line. Raised here, not patched in AMGT_RESAPP; the base serial has no live session, so this row is the carrier, per CLAUDE.md's rule on parking an item with its owner.",
+    "notes": "Filed by the issuer as round 44's item 2 (a raise, not a build)."
   }
 ]
 ```
