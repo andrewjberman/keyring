@@ -1160,6 +1160,32 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "Ruled KEEP by the fabric's CVO. The amendment stands; its ratification belongs to OPLGTW's contract owner at the re-seat.",
     "disarm_owner": "1.0.0_SA_CTO~O",
     "notes": "The carried rule binds this seat: when a verdict parks a class of acts, withdraw every open authorization of that class the same turn."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S33",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-26T20:05Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each target was already disarmed by this seat's own adjudicating row, with its reason stated there (Z-S21 by Z-S22; Z-S30 by Z-S32 on 3.0.0_SA_CVO~O's KEEP verdict @073447e387). This row only makes the disposition terminal.",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-S21",
+      "NFRA_OPALAI-Z-S30"
+    ],
+    "one_line": "DISPOSITION CORRECTION by the disarm owner. This seat's disarm rows Z-S22 and Z-S32 carried disposition UNDER_INVESTIGATION, which _latest_dispositions (.tools/surprise-row-gate.py) folds as still open; Z-S21 read as a gating item. Same class as 2.0.0_SA_COO~O's Z-S31.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Fold measured at 2026-09-26T20:05Z with the gate's own _latest_dispositions(root,'NFRA_OPALAI') and _gating_item_ids: Z-S21 UNDER_INVESTIGATION and gating; Z-S30 UNDER_INVESTIGATION.",
+        "Z-S22 (@19ad8abc17): origin/CLOUD's manifest names the served 0af72fb1d0; Z-S32 (@107ce3f3e8): CVO~O's KEEP verdict on the OPLGTW v1.2 amendment."
+      ]
+    },
+    "spec_asserts": "Each target was disarmed by its owner's adjudicating row.",
+    "world_is": "The disarms carried a non-terminal disposition; this row makes them terminal. The reasons are the earlier rows' own.",
+    "disarm_owner": "1.0.0_SA_CTO~O"
   }
 ]
 ```
