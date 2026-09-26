@@ -1666,6 +1666,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "Neither hypothesised cause explains the 196 residual empty `right` cells (measured: 0 net recovery from the dimension fix, 0 uncached-formula hits); the true cause is a 2D header layout the rule's own row/column scan cannot reach. Applied over the whole corpus, the rule's OWN selections read as the team's true Base-case number in 0 of 42 computable cases -- the mechanism is exactly as specified, and the specification does not fit this corpus's dominant template.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Not a defect in this cell's code: `_select_right`/`_select_below` implement section 1's rule literally and CRPS-i-3's own mechanical criteria (AC1-AC3, all PASS) test structure (coverage, coordinates, venue floor), never value correctness -- AC4 is the CVO's judgment and this row is exactly the evidence AC4 needs to read against. A remedy (locating the value via the row-label column, e.g. matching a 'Price' row under the same section header) is a round-8 cell, not this one's to build (section 4 BOUNDS: no producer edit beyond this order's own paths, no Base/Upside/Downside figure computed)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S48",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-26T19:35:00Z",
+    "one_line": "DISARM by its owner of AMGT_CORPUS-Z-W2-S11 (CRPS-i-3's selection rule finds the team's Base-case number in 0 of 42 computable selections): the 61 'selections' live only in CASE_EVIDENCE_ROUND7.json/.md, an evidence file that no producer, reader or page consumes -- so no wrong number can be served as the team's case. The finding itself stands for the CVO's AC4 and the round-7 analysis: a row/column scan cannot reach a Base-case number set in a flanking column below a spanning section title.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CRPS-i-3 re-graded VALID by this seat at 3420ac0c29 and drained @28912c4123: 'i3 OK census_rows 97 keys_with_block 97 base_labels 200 right_nonempty 4 names_with_selection 53 selections_without_coord 0'; the worker's two cause counts: the read_only dimension fix corrected 47 of 366 sheets and recovered 0 net right-hand cells over round 6's 4 of 200; 0 of 196 empty cells were uncached formulas.",
+        "Reader census: comp-find 'CASE_EVIDENCE_ROUND7' over lib, integrations and infra -- 0 hits across 9,329 files; the portal submodule read directly (git -C portal grep 'CASE_EVIDENCE') -- 0 files against a positive control of 214 (useState); the only consumers are the issuer's check (checks/round7/i3_check.py) and the packet; nothing serves it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-W2-S11 is ARMED on the risk that a rule output is read as the team's own Base case.",
+    "world_is": "No served surface reads the selections; they are labelled rule outputs in an evidence file. AC4's workbook half remains ungradeable for a different, now-measured reason: the layout, not the reader.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's). Round-8 input: a template-aware reader (find the Base-case section by its title, then read the value block beneath it, cited by coordinate) or a ruling that AC4's workbook half is answered by the cases the team WROTE in prose (34 served-and-cited per correction A2 @2dae84b5a9) rather than by the one-pager."
   }
 ]
 ```
