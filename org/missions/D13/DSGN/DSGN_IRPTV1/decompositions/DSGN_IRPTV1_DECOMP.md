@@ -215,3 +215,8 @@ Slot ~30, direct act, LOCAL; the CTO reviews it before DEV. Disjoint from every 
 first by the server's predicate, in Global only, each firm's served order kept otherwise. Writes header/ClientSearch.tsx,
 header/search.ts, one new test. Queued on slot ~25 after IV-e-38, on top of IV-e-37's ClientSearch changes. Direct act, LOCAL.
 
+**v7 addendum 3 (issuer, 2026-09-26 ~23:2xZ):** `IV-e-48` = PRD C34, cut on its trigger: 2.0.0_SA_COO~P's contract enum admits
+`structured` and `commodities` (CLOUD d3c5467ce1 + ae32ac98d7). The page maps both (regenerated wire, contracts union, adapt.ts,
+assetClass.ts CLASS_FOR_SERVED) with their existing colours; ~M writes the values after it drains. Slot ~31, direct act, LOCAL;
+disjoint from every running chain. Chain Z's TO-IV-e-43 (colours) runs after it on merged DEV.
+
