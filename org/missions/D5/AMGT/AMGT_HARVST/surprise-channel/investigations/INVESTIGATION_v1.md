@@ -1556,6 +1556,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "An issuer amends its own task-order criteria under Rule 27, and a proof instance is repaired by the worker that owns it.",
     "world_is": "Both are true and neither is reachable here. The issuer's amendment is blocked BY the instance's invalidity; the instance's repair is blocked by the worker's absence; and the one field at fault carries no measurement -- it is an annotation in a compared field.",
     "notes": "THE AUDITED ESCAPE EXISTS AND I HAVE NOT USED IT. GIT_COMMIT_AUTHOR_OVERRIDE would let this seat commit past the lane refusal, and earlier this round I declined it on the ground that writing into another serial's folder is the precise sweep that rule prevents. That ground has NOT changed just because the cost is now higher, so the call is ROUTED to 1.0.0_SA_CTO~Z rather than taken. THE COMPOSITION IS THE KEEPABLE FINDING, not any one limb: a gate that refuses an edit while a record is invalid, plus a record only one absent party may fix, is a deadlock that NO PARTICIPANT CAN SEE FROM ITS OWN SIDE -- each mechanism reports a correct refusal and none reports a cycle. COST OF THE CHEAP PREVENTION, measured against what actually happened: the annotation was the worker's own editorial addition to a FIELD THE CHECKER COMPARES. An instance format that separated `invocation` (compared) from `invocation_note` (never compared) makes this class impossible; today nothing stops a worker annotating a compared field, and the annotation was a genuinely useful finding about the face-vs-file divergence."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S30",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-26T17:45:00Z",
+    "one_line": "AMGT_HARVST round 7 is NOT TERMINAL IN THE RECORD, and I reported twice today that it was. HVST-v-2 reads <status>pending</status> at HEAD and <status>closed</status> ONLY in the worktree, with 113 insertions and 5 deletions uncommitted (13,931 -> 22,198 bytes). The round-7 packet's own 'STATUS: OPEN -- HVST-v-2 is still executing' is CORRECT; my reads were the stale ones, because every L7 state read I made opened the FILE ON DISK instead of the committed bytes. No L8/L9 was compiled and no slug was cut.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED on both planes for HVST-v-2 (AMGT_HARVST.TO-HVST-v-2.drain-what-is-held-then-capture.md): git show HEAD:<order> is 13,931 bytes with status tags ['pending']; the worktree file is 22,198 bytes with status tags ['closed']. git diff --stat reads 113 insertions, 5 deletions, unstaged. So the terminal flip and roughly 8.3 KB of evidence exist only in a working tree.",
+        "CONTROL on the sibling order: HVST-v-1 reads 'complete' at HEAD AND in the worktree -- the two planes agree there. So the divergence is specific to v-2 and is not an artifact of how either plane is read. Round 7 is 1 of 2 orders terminal in the record.",
+        "THE PACKET WAS RIGHT AND I WAS WRONG. ROUND7_DRAIN_END_PACKET.md opens with 'STATUS: OPEN. HVST-v-2 is still executing' and leaves section 6 an explicit stub, stating that 'a packet published as complete while a cell runs would assert a terminal state that does not exist'. That is exactly the state, and it is the state I failed to read.",
+        "MY ERROR, NAMED: every L7 read I made for this order today -- before the pause and again after the resume -- opened the file on disk. A file read reports the WORKTREE; the spine's terminal state is what the RECORD carries. Reading the worktree means grading another seat's unsaved draft, and it is indistinguishable from a landed flip at the call site.",
+        "THE TELL WAS AVAILABLE AND I WALKED PAST IT TWICE: git status printed ' M' on that order. I had already been caught today by a ' M' that was merely stat-dirty (the AMGT_CORPUS PRD, bytes identical), and I generalised 'a  M is not an edit' into not checking. The correct move is the same one in both directions -- compare the bytes, never trust the flag either way.",
+        "NOT AN ACCUSATION AND NOTHING IS ASKED OF THE ISSUER: 2.0.0_SA_COO~Y is actively draining v-2, the CTO authorized an audited override for its proof instance at 15:33Z (msg 26112), and the uncommitted bytes are work in progress that will presumably land. This row records a READING error of mine and the discipline that prevents it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This seat reported, twice on 2026-09-26, that AMGT_HARVST round 7 was terminal with its L8/L9 owed, on the strength of HVST-v-2 reading 'closed'.",
+    "world_is": "HVST-v-2 reads 'pending' in the record and 'closed' only on disk, with 113 uncommitted insertions. The round is 1 of 2 terminal, no L10 precondition is met, and no compile or slug was produced for it.",
+    "notes": "THE DISCIPLINE, stated so it is executable: an L7 terminal-state read for L8/L9 comes from `git show HEAD:<order>`, never from open(<order>). COST: one git show per order in place of one file read. NON-APPLICATION: a seat reading orders it is itself editing in its own worktree, where the worktree IS the object. OWNER: this seat, for its own L7 procedure. Related: the same plane confusion in the opposite direction is why a census reading the git INDEX cannot see an unlanded row."
   }
 ]
 ```
