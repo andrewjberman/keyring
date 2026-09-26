@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 2f72865f), per CTO 101100 (Andrew-direct ~03:0xZ, 09-26; record
 `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Lease FAST until 2026-09-26T15:01:17Z. Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-26T13:33Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
+As of 2026-09-26T14:30Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Pins
 
@@ -20,32 +20,41 @@ As of 2026-09-26T13:33Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverabl
 
 ## Live thread
 
-State: NOT LIVE. The FIRST LIVE UPLOAD was attempted at 03:17Z by API as the walk principal (CTO 101110, P 101113):
-- login through CloudFront answered 200;
-- the upload POST (`selected_tenant=cottonwood`) answered UNEXPECTED, correlation `corr-32b49d41af2a`: ModuleNotFoundError
-  `interactive_access`.
+State: LIVE THROUGH HOP 1d (upload -> resolve -> NORMALIZED). At 13:54:56Z Y made ONE `POST /analysis/inputs` by API as
+the admin+Dev walk principal `irpt-uiwalk-1790430787@opal.test` (packet v3 blob `07b7a000`, K4; CTO `b70ede1756`, CRO
+`a157c45762`; P 101191):
+- the POST answered RESOLVING;
+- the resident logged `handled=1` at 13:55:02Z;
+- NORMALIZATION# reads NORMALIZED;
+- `INPUT#portfolio_99e76df8...` is `irpt-normalized-portfolio.v2`: total 12.03, AAPL 10.01, VNQ 2.02, both resolved by
+  YCharts.
 
-The deployed generate zip (LdjdnnLh, 107 members) lacks `_scope/interactive_access.py`, which served.py:883 and
-compose_upload import for an Opal subject. That was Y's patch miss. The import-closure walk finds THREE missing modules (interactive_access, template_reader,
-security_resolution). The exact staged_from rows are in `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/P_GENERATE_PACKAGE_MISSING_MODULES_20260926.md`.
-P committed the three rows at `45d905110c` (05:16Z). Y confirmed they are byte-identical to Y's rows (the pins and
-sha256 match). 0.0.0_AB_MSTR met the 5 GB disk floor at 13:16Z (101157). P opened ledger
-`irpt-generate-closure-fix-20260926` at 13:18Z. `irpt-ycharts-generate` moved to `IJD6bd1I` at 13:30:11Z. Y downloaded the
-served zip, and its sha256 equals the CodeSha256. `generate_package_closure.py` on that zip against P's tree prints OK and
-exits 0: the closure is 39 modules, and the zip carries 59 `.py` files, 56 plus the 3 added. The upload rerun is now
-waiting only on the principal window.
+Evidence with every row and object key: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/LIVE_UPLOAD_1203_EVIDENCE_20260926.md`
+@3cc73f2b79. The scrubbed log is `LIVE_UPLOAD_1203_20260926_RUN2.json`. The 03:17Z failure (the missing `interactive_access`)
+was fixed by P at `45d905110c`, served as generate `IJD6bd1I` at 13:30Z; the closure check exits 0.
 
-The walk principal was deleted at 03:30Z (P 101124). The rerun needs a new principal window under its own sign-off. Y
-asked P at 13:20Z to start that re-sign in parallel and to create the principal after the deploy. Nothing was written
-(0 rows). Log:
-`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/LIVE_UPLOAD_1203_20260926.json` (scrubbed).
+Hop 3 was ATTEMPTED as K5 (packet v5 `6813377a`: CTO `3b43a23f92`, CRO `80b1a711f3`; CTO 101203). At 14:18:08Z Y made ONE
+`POST /analysis` (Overview) on that input, which answered UNEXPECTED, `corr-8c5e097ea21e`: generate raised
+ModuleNotFoundError `jsonschema`.
+- `ycharts/generate/composition_admission.py:11` imports jsonschema and referencing at module level.
+- Zip `IJD6bd1I` carries neither.
+- Nothing was written: no row, no job, no queue message, no vendor call.
+- Log: `LIVE_SUBMIT_1203_20260926.json`.
+
+The closure check passed that zip because it walked only first-party imports (surprise row S144 @fa8aff523f). Y fixed it
+@2664fe084c: it now FAILS on `IJD6bd1I`, naming jsonschema and referencing [MODULE]; a positive control with stubs passes.
+
+The principal was deleted at 14:22:22Z (P 101232). The input's owner binds to that deleted principal, so hop 3 needs:
+- P's repackage (jsonschema plus its dependencies, with rpds-py as a Lambda-platform wheel) under CTO 101230's three
+  conditions;
+- then a new window: a fresh upload plus a submission, or Andrew's own upload plus Generate.
 
 ## Acceptance IDs
 
 | ID | State | Evidence |
 |---|---|---|
 | Y1 custody + owned CSV/XLSX + disposition | OFFLINE + one real-object run | interpreter @47b2adf6df, oracle 15/15 |
-| Y2 immutable normalized input | OFFLINE ONLY | deferred lane @bb1eb7f92b + @58280c8dd4: Dollars 12.03, XLSX, TARGET_WEIGHT with notional, missing notional refused by name, correction lineage, race arm; SHARES refused by name (no price source) |
+| Y2 immutable normalized input | LIVE for Dollars CSV (one run, 13:55Z, @3cc73f2b79); the other arms OFFLINE | deferred lane @bb1eb7f92b + @58280c8dd4: Dollars 12.03, XLSX, TARGET_WEIGHT with notional, missing notional refused by name, correction lineage, race arm; SHARES refused by name (no price source) |
 | Y3 acceptance, dispatch, recovery | INSTALLED, not exercised | P 100483 |
 | Y4 vendor PDFs (3 variants) | NOT STARTED live | session graded |
 | Y5 certified typed report | OFFLINE ONLY | publisher |
@@ -54,9 +63,8 @@ asked P at 13:20Z to start that re-sign in parallel and to create the principal 
 
 ## Write claims
 
-None in flight. RESOLVE_UPLOAD landed @bb1eb7f92b and @10a16bd89d. The patch for P's `reports/generate_installed.py` was
-written in scratch worktree `C:/Users/AndrewBerman/Desktop/irpt-y-pcompose-20260924` (branch `y-scratch-pcompose-20260924`,
-never committed, never pushed). Y makes no commit on P's branch.
+None in flight. RESOLVE_UPLOAD landed @bb1eb7f92b and @10a16bd89d. The scratch worktree `irpt-y-pcompose-20260924` was
+removed by 0.0.0_AB_MSTR at 13:3xZ after Y's content check (101172); its branch is kept. Y makes no commit on P's branch.
 
 ## Next proof
 
