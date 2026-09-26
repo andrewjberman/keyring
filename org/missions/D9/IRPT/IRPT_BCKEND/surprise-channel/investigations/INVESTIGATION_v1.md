@@ -9667,3 +9667,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Fix staged: backend bb09a3467c (pool = MAX_READ_WORKERS), rides export deploy (B)'s adapter rebuild. Disarm: the same account's served read under 30 s after that deploy, measured from the adapter REPORT line; if still over, next levers are memory size (CPU/network) or a pre-aggregated per-account read -- the engine lane's table shape."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S148",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-26T17:00:00Z",
+  "one_line": "The export render host role (irpt-ycharts-runner-role, the shared ycharts runner) may ssm:GetParameter ANY Parameter Store name via the AWS-managed AmazonSSMManagedInstanceCore -- so it could read another export attempt's render token; export deploy (B) D3 (export_render=on) was rolled back the same turn.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "iam simulate-principal-policy irpt-ycharts-runner-role: ssm:GetParameter on parameter/opal/other and parameter/irpt/walk-principal/x/password -> allowed, MatchedStatements [AmazonSSMManagedInstanceCore]; attached policies: [AmazonSSMManagedInstanceCore]",
+      "infra/aws/terraform/investor-reporting/export/iam.tf:192-194 @be7647e48f: data aws_iam_role render_host = irpt-ycharts-runner-role",
+      "CTO ruling (a) msg 101013: 'the render host role Get + Delete on the prefix, nothing else of Parameter Store'",
+      "ledger irpt-export-deploy-b-20260926: D3 on @30bd11bd38, N1 FAILED, D3 off @7d7fa146e6; 0 render-token names existed while on"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Export deploy (B) packet v2 a40cad5a D3 + the CTO's negative arm: another attempt's token name refused to the host role.",
+  "world_is": "The host role's managed SSM policy grants GetParameter on *, so the prefix scoping of irpt-export-render-host-token-policy does not bound what the host can read.",
+  "notes": "Options for the owner: (1) an explicit Deny on ssm:GetParameter* for the runner role outside /irpt/render-token/* and the parameters the host already needs (a census first); (2) a dedicated render host role/instance profile without the managed policy. Export render stays OFF until one lands; D1/D2 (adapter render ports, grant read) stand."
+}
+```
