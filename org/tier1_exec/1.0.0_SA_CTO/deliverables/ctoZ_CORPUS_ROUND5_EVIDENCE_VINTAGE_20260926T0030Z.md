@@ -172,3 +172,76 @@ sovereign word from its remaining blocker, and nothing in the fabric is waiting 
 One bound worth carrying: **the rebuild covered 91 dossiers**, and the population read 94 then and 95 now.
 **91 is the issuer's own scope for that run, not the population** -- so the 0-constant result is sound over 91
 and unmeasured over the remainder.
+
+---
+
+# AMENDMENT A2 -- 2026-09-26 ~02:0xZ -- **ALL THREE SOURCE-READ ROWS ARE NOW RESOLVED BY THIS SEAT. THE 19-OUTCOME PASS IS UNBLOCKED**
+
+Section 5 said the three doubted rows should be re-run **and routed the re-run as a round-6 cell.** **That
+routing was wrong in kind:** re-reading three fields at HEAD is a GRADING act, not a build, and it is this
+seat's own instrument work. **Routing it to a worker made the 19-outcome pass depend on a round that cannot be
+cut until round 5 closes, which cannot close without a slug that does not exist.** So I did it here.
+
+## A2.1 -- `FWD-12`: RESOLVED (A1). Limb 2 **MET**, limb 3 NOT REALIZED and RESERVED.
+
+## A2.2 -- `FWD-18`: **NOT REALIZED -- the grade STANDS and its grounding was wrong**
+
+Fence: *"a pillar's terms are readable on the page and the feed filters to them for at least one name."*
+
+**The evidence read `dossier.py` for a field `dossier.py` does not own.** `dossier.py:30` carries
+`"thesis_pillars": <continuation's own field, unchanged shape>` -- **it passes pillars through and constructs
+none.** The producer is `lib/research/corpus/continuation.py` (`_resolve_thesis_pillars` at `:627`, assigned at
+`:801`).
+
+**Re-measured at the RIGHT object, with controls that passed:** in `continuation.py` at HEAD the fields pillars
+do carry appear as expected (`pillar` x4, `text` x11, `citation` x21), and **`terms` appears 5 times -- none of
+them a pillar field**: `:45` and `:83` are docstring and prose, and `:188-191` is a **local variable
+collecting KPI keys** (`terms = set()` / `terms.update((row.get("kpi") or {}).keys())` / `return
+sorted(terms)`) inside a `kpi_set` builder. `keyword`, `keywords`, `feed_filter` and `filter`: **zero.**
+
+**So there is no pillar-level terms field and no feed filter, and `unmet` is CORRECT.** But it was reached by
+reading a file that does not own the field -- **a right answer on a wrong instrument, which is a different
+state from a right answer** and matters to anyone who later re-reads the evidence to extend it.
+
+WARN: **my own first re-measurement repeated the worker's error and my control caught it.** I grepped
+`dossier.py` for `terms` (x0) and ran a control for `"pillar"` which returned **0** -- a field I knew pillars
+carry. **A control returning zero on a known-present field means the instrument is wrong, not that the field
+is absent**, and that is what sent me to `continuation.py`. **Without the control I would have published the
+same wrong-object zero the evidence did, one layer deeper.**
+
+## A2.3 -- `FWD-17`: **UNMEASURABLE on one half, and its passive read surfaced a CANDIDATE VIOLATION of the other**
+
+Fence, two halves: **(a)** a new report lands, a new `report_id16` appears beside the old, `inputs_sha16`
+changes, the page serves the newer pillars, the prior `as_of` object still reads; **(b)** *"a rebuild with
+UNCHANGED inputs writes NOTHING and says so."*
+
+**(a) is genuinely UNMEASURABLE from a read-only bound** -- exercising it needs a report to land and a
+`dossier.py --write` rebuild, both write acts the worker was barred from. **`unmeasurable` is honest for that
+worker and remains honest for this pass: I am not running a write act to grade an outcome.**
+
+**(b) IS WHERE THE EVIDENCE SAYS MORE THAN ITS OWN STATE DOES.** The passive read found, under
+`security_key=IMB_LN_Equity/`: **4 objects -- `as_of=2026-09-24` x3 with distinct hashed suffixes, plus
+`as_of=2026-09-25` x1** -- all four still listing and reading, none overwritten (which is (a)'s
+prior-object-still-reads clause, incidentally satisfied). **And the three same-day objects carry the SAME first
+extract input key+sha with DIFFERENT `content_sha256`.**
+
+**The worker stated it could not explain that without the write-gated comparison, and declined to call it.
+That was right, and the thing it declined to call is a candidate violation of (b):** three objects written on
+one day from an unchanged first input is either a genuine new input on another field, **or a rebuild that
+wrote when its inputs had not changed** -- which is precisely what (b) forbids.
+
+> **GRADE:** `FWD-17` is **NOT REALIZED**, not merely unmeasurable. **(a)** unmeasurable read-only, with its
+> prior-object clause incidentally satisfied. **(b)** carries a **CANDIDATE VIOLATION with a named
+> discriminator**: run `dossier.py --write --security-key IMB_LN_Equity` twice in a row and read whether the
+> second writes. **A flat "unmeasurable" would have retired a possible no-op defect as an instrument
+> limitation.**
+
+## A2.4 -- WHAT THIS UNBLOCKS
+
+**All 3 doubted rows are resolved, so the 19-outcome pass has no remaining dependency**: 16 rows read the world
+and carry the world's vintage, and the 3 source-read rows are now graded at HEAD by this seat. **The pass can
+be cut whole, as section 5 required, without waiting on a round-6 cell.**
+
+**And the re-run that section 5 routed to a worker is WITHDRAWN as a cell** -- it was three reads and a control,
+not a build. **A grading act routed as a cell becomes a dependency on a round; the same act taken in lane is
+three tool calls.**
