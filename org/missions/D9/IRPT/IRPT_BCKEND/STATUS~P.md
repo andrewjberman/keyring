@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
 Drive: /closer-drive loop (cron 7a9ea1ce, every 30m at :17/:47; CTO 101098, Andrew-direct ~03:0xZ; replaced /canonical-drive 57c0067c); lease FAST re-armed to 15:01Z. Egress: vendor API calls permitted this session, each ledgered (CTO 101098). Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-26T02:5xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
+As of 2026-09-26T03:5xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
 
 ## Pins
 
@@ -19,17 +19,17 @@ As of 2026-09-26T02:5xZ. The prior long form of this file (B0-B3 build history) 
 
 ## Live thread
 
-- AGENT WALK (Andrew-direct ~02:1xZ "have an agent do those walks and record HAR"; "Yes, use the Opal login"):
-  walk principal irpt-walk-1790391192@opal.test LIVE since 02:53:17Z (packet blob fe8e8d89, CTO ba29004a1b,
-  CRO 909dd40acc; ledger irpt-walk-principal-20260926 OPEN 47ac618a50, C1 closed). 2.0.0_SA_COO~D walks: 49F retry,
-  Purfeerst Performance (spends plan b), ONE ~Y upload; HAR committed scrubbed. P deletes on ~D's word or at 04:00Z at
-  the latest (`walk_principal.py delete 1790391192`), then the audit leg; a refused delete = branch (c) + escalate.
-
-- INF plan b ARMED (Andrew "go"): plan 01209afb.., account acc_5510a3054a409d548a12c57d = "Purfeerst ****4944 / INDIVIDUAL"
-  (a single-account directory entry), expires 2026-09-26T12:00Z. Receipt `IRPT_MVP_P/INF_ONE_USE_PLAN_20260925b.json`.
-  Plan a (acc 0279) was unreachable: its entry "Martin ****4696" holds 2 accounts -> SelectionUnsupported.
-- 49F: the 23:25Z request failed AccessDenied at the bucket fence (S140); fixed and applied. A retry has not arrived.
-- Adapter log: no request since 23:25:05Z (read 23:54Z).
+- AGENT WALK DONE (Andrew-direct ~02:1xZ; CTO 101109 split it: backend acts by API on the SAME principal). Walk principal
+  irpt-walk-1790391192@opal.test lived [02:53:17Z, 03:39:08Z last token exp], deleted 03:30:33Z, ~D's reload landed
+  /login; ledger irpt-walk-principal-20260926 CLOSED. Log: IRPT_MVP_P/WALK_API_LOG_20260926.jsonl @ff0a6c63bb.
+- 49F LIVE: 200 PARTIAL (actual 01-02..09-24 disclosed) with REPORT# retained -- first retained reports at any firm.
+  S140 DISARMED (row S142); ledger irpt-f49-bucket-adapter-read-20260925 CLOSED.
+- INF FAILED: plan 01209afb SPENT 03:20:31Z; Orion 404 "Object does not exist" to the Scope body (replayed once,
+  ledger irpt-orion-scope-diagnostic-20260926). Row S143 ARMED, owner P: the entity/grouping grammar is wrong.
+- UI walk deferred: /investor-reporting admits only admin + internal + Dev (portal App.tsx) -- to Andrew as a card (CTO).
+- ~Y's upload: irpt-ycharts-generate zip lacks interactive_access / template_reader / security_resolution (~Y 101125,
+  IRPT_MVP_Y/P_GENERATE_PACKAGE_MISSING_MODULES_20260926.md @f12cd8bb52) -> P's item.
+- C: drive hit 0 bytes free at 03:4xZ (a ledger write truncated; restored from HEAD); ~2.6 GB free after. [STUCK] to MSTR.
 
 ## Acceptance (goal Done criteria)
 
@@ -45,9 +45,11 @@ None building. Next surface: the adapter package + performance root (deploy B), 
 
 ## Next-list (in order)
 
-1. Read Andrew's runs: PERFORMANCE_USE#01209afb / ACCEPTED rows, any REPORT# row, the adapter log. Close ledger
-   `irpt-performance-inf-one-use-b-20260925` S1 (INF) and `irpt-f49-bucket-adapter-read-20260925` N1 (49F 200 -> disarm S140).
-2. Deploy (B) after plan b is spent or expires (12:00Z): upload the adapter (publish 4872b28043), apply render_grant.tf +
+1. S143: find the Orion Scope grammar for ONE account (HAR of the Orion account Performance screen, or bounded
+   probes under the session egress, each ledgered); fix orion_selected.requests_for; log the provider HTTP status; re-arm.
+1b. irpt-ycharts-generate package: add the three missing modules (~Y 101125), rebuild, ledgered deploy, the AST
+   import-closure walk returns zero missing; then a new principal window for ~Y's one upload (new sign-off).
+2. Deploy (B) -- UNBLOCKED (plan b spent 03:20:31Z): upload the adapter (publish 4872b28043), apply render_grant.tf +
    IRPT_EVIDENCE_BUCKET, export_render=on; ledger with the CTO's negative arm (another attempt's token name refused, read
    after delete refused). REHEARSED 00:3xZ (plan only, CLOUD tree, live plan values as vars): 1 add
    (performance_render_grant_read) / 1 change (env + IRPT_EVIDENCE_BUCKET = the same bucket irpt-export-render writes
