@@ -14900,6 +14900,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "95 of 95 is true of the figures, cites, cases and absence-extras the predicate tested; it is silent on missing absences, which read 86 of 95 names short by one. FWD-30 stands NOT REALIZED on that clause (the CTO's round-44 analysis s.5).",
     "disarm_owner": "2.0.0_SA_COO~Z -- the remedy is round 45's tt-1 (export + predicate, with a planted control) and tt-2 (served); Z-S268's re-disposition is 3.0.0_SA_CVO's.",
     "notes": "Filed by the issuer because the overstated number was this seat's. Raised by 1.0.0_SA_CTO~Z's round-44 analysis s.5 and its tt-2 message (18:30Z), which asks that Z-S268's graduation be reconsidered."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W163-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~163",
+    "surfaced_at": "2026-09-26T18:40:00Z",
+    "one_line": "AMGT-tt-1's TO instructs 'the outer commit, including the portal gitlink', but the gitlink-publication-check hook (ADOPTED TODAY 2026-09-26 by 3.0.0_SA_CVO~Z, .tools/git-hooks/gitlink-publication-check.sh) BLOCKS an outer commit naming an unpublished portal commit, and the worker standing rule is 'never push'. I could not do both.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh (via gitlink-publication-check.sh, adopted 2026-09-26 per its own header) refused: \"BLOCKED: gitlink-publication-check: 'portal' -> 4e29386e6a11b591d3604d26ad297f974cec316a is NOT PUBLISHED\" against 7 tested remote heads, none matching, when I staged the outer commit with 'portal' included after committing the harness fix on wk-AMGT_RESAPP-163-portal at 4e29386e.",
+        "This worker's own launch instructions (worker face preamble, not the TO body): 'Push: do not push.' and the standing worker rule 'Commit on your worktree branch only; never push, merge, rebase, checkout --, or clean.'",
+        "The TO's own worker instructions (external launch text, section on commits): 'Portal files first: commit inside portal/ ... Then the outer commit, including the portal gitlink.' -- written before (or without accounting for) this hook's adoption today."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The TO's commit instructions assume a worker can complete 'the outer commit, including the portal gitlink' unassisted.",
+    "world_is": "Since 2026-09-26 (this hook's adoption), that act requires publishing the submodule branch first, which only a push can do, and workers are barred from pushing. I completed AC1/AC2/AC3 and committed the outer repo's non-portal changes (render_pack.py, the new test file, this deliverables folder, the TO status flip) WITHOUT the portal path staged, leaving the portal gitlink at its pre-existing value; the portal repo itself already carries the fix, committed, on wk-AMGT_RESAPP-163-portal at 4e29386e6a11b591d3604d26ad297f974cec316a, awaiting a push/merge only the drain (or a seat permitted to push) can perform.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- owns the L7 worker commit mechanics this TO's instructions describe and the drain that publishes worker branches; the gate's adopting seat is 3.0.0_SA_CVO~Z.",
+    "notes": "Every future worker whose cell touches portal/ under an outer-commit-including-gitlink instruction hits this same wall until the mechanics are reconciled (either the drain publishes portal branches before workers need to reference them, or the worker instruction is corrected to stop naming the gitlink as the worker's own act)."
   }
 ]
 ```
