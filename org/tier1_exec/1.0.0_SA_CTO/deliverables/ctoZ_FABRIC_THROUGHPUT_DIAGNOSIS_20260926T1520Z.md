@@ -255,6 +255,65 @@ quoted as a magnitude.
 
 ---
 
+## 5d. AMENDMENT A4, 16:3xZ -- SITE Z READS 385 ms UNDER THE PAUSE. A4 PARTLY REVERSES A3, AND FIXES AN ATTRIBUTION I GOT WRONG
+
+### CORRECTION 1: THE THREE LAPTOP SAMPLES ARE NOT `0.0.0_AB_MSTR~Z`'s
+
+A3 credits `0.0.0_AB_MSTR~Z` with running 1335 / 910 / 865 ms. **It did not.** The LAPTOP seat
+`0.0.0_AB_MSTR` ran them; `~Z` relayed them and put them beside mine. Its own objection is the right one and
+worth keeping as a rule:
+
+> *"an instrument credited to the wrong seat cannot be asked for its method."*
+
+**Mis-attributing a measurement does not just misplace credit -- it breaks the only route back to how the number
+was produced.**
+
+### CORRECTION 2: THE SAME DEVICE NOW READS HALF WHAT I REPORTED
+
+`0.0.0_AB_MSTR~Z`, site Z, three runs, bare `git status`: **393 / 385 / 379 ms.** Tracked files **44,595**,
+worktrees **56** -- both unchanged from my reading.
+
+| site Z reading | value | fabric state when taken |
+|---|---|---|
+| mine, section 2 | **822 ms**, ONE run | ~10 seats LIVE |
+| MSTR~Z's, now | **393 / 385 / 379 ms**, three runs | Andrew's Tier-1 PAUSE, fabric QUIET |
+
+**Same device, same file count, same worktree count, roughly HALF the latency.**
+
+### SO A3'S ATTRIBUTION WAS OVER-READ, AND THIS IS THE ANSWER TO ANDREW'S QUESTION
+
+A3 concluded that per-command latency *tracks FILE COUNT*. **That over-read the evidence, because my 822 ms was
+itself inflated by concurrency.** Under quiet, site Z does 385 ms at the same 44.5k files.
+
+> **A LARGE SHARE OF THE LATENCY ANDREW MEASURED IS CONTENTION, NOT PER-COMMAND COST -- AND THE PAUSE IS ITSELF
+> RELIEVING IT.**
+
+That is the most decision-relevant sentence in this record, and it took four amendments and three seats to reach.
+**It also means A3's cross-device comparison is confounded on BOTH arms:** the laptop's 865-1335 ms was taken at
+an unstated concurrency too, so "12 trees is not faster than 56" may be comparing two different load states
+rather than two tree counts. **The direction A3 claimed survives only as a weaker statement: worktree count is
+not established as the dominant term.**
+
+### LEVER 1 FAILS A FOURTH TIME
+
+Site Z with **56** worktrees at 385 ms is **two to three times FASTER** than the laptop with **12** at
+865-1335 ms. Whatever the confounds, nothing in any reading makes 56 trees the problem.
+
+### WHAT NOBODY HAS HELD CONSTANT, STATED AS MSTR~Z STATED IT
+
+Cache warmth and time of day also differ between these readings and **neither was held.** So the contention
+reading is the honest interpretation, not a proven one.
+
+**THE CLEAN TEST, and it needs Andrew:** three runs under load and three under pause, **back to back on one
+device**, holding file count and tree count fixed. **The loaded arm cannot be run while the pause holds** -- so
+this is a proposal for his resume, not something to assume past. `0.0.0_AB_MSTR~Z` named it first and I am
+carrying it to him rather than claiming the result in advance.
+
+> **My 822 ms was a single sample taken under a condition I never recorded.** A timing number without its
+> concurrency state is not a device measurement; it is one moment wearing a device's name.
+
+---
+
 ## 6. WHAT THIS RECORD DOES NOT CLAIM
 
 It does not claim the fabric is stalled -- **12 commits across 9 authors in 90 minutes**, and round-6 cells
