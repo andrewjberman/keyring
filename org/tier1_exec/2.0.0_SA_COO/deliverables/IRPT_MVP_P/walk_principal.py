@@ -29,7 +29,15 @@ AUTH_API = "https://opalinvest.dev"  # via CloudFront: the direct execute-api UR
 SALT_ROUNDS = 12  # auth-handler password.ts:4
 
 
+# Two signed shapes. "walk": packet blob fe8e8d89 (role user, opal-capital). "uiwalk": packet v3 blob 07b7a000
+# (role admin, opal-capital, userType Dev) -- the ONLY differences are the three role fields and the names.
+KIND = "walk"
+
+
 def names(epoch):
+    if KIND == "uiwalk":
+        return {"pk": "USER#usr_irptuiwalk_%s" % epoch, "email": "irpt-uiwalk-%s@opal.test" % epoch,
+                "param": "/irpt/ui-walk-principal/%s/password" % epoch}
     return {"pk": "USER#usr_irptwalk_%s" % epoch, "email": "irpt-walk-%s@opal.test" % epoch,
             "param": "/irpt/walk-principal/%s/password" % epoch}
 
@@ -43,10 +51,14 @@ def _ssm():
 
 
 def k1_item(n, pw_hash, now):
-    return {"PK": {"S": n["pk"]}, "SK": {"S": "PROFILE"}, "email": {"S": n["email"]},
+    item = {"PK": {"S": n["pk"]}, "SK": {"S": "PROFILE"}, "email": {"S": n["email"]},
             "passwordHash": {"S": pw_hash}, "name": {"S": "IRPT walk principal (Andrew-direct 20260926)"},
             "role": {"S": "user"}, "firmId": {"S": "opal-capital"}, "status": {"S": "active"},
             "createdAt": {"S": now}, "createdBy": {"S": "2.0.0_SA_COO~P walk-principal-20260926"}}
+    if KIND == "uiwalk":
+        item.update({"name": {"S": "IRPT UI walk principal (Andrew-direct 20260926)"}, "role": {"S": "admin"},
+                     "userType": {"S": "Dev"}, "createdBy": {"S": "2.0.0_SA_COO~P ui-walk-20260926"}})
+    return item
 
 
 def digest(item):
@@ -71,6 +83,32 @@ def param_exists(n):
         return True
     except IndexError:
         return False
+
+
+def census():
+    """Audit baselines for the uiwalk packet: opal-users-v2 PROFILE status digest (no PII printed) and the
+    irpt-requests SELECTION# ids."""
+    ddb = _ddb()
+    profiles, kw = [], {"TableName": TABLE, "FilterExpression": "SK = :p",
+                        "ExpressionAttributeValues": {":p": {"S": "PROFILE"}}}
+    while True:
+        r = ddb.scan(**kw)
+        profiles += [(i["PK"]["S"], (i.get("status") or {}).get("S"), (i.get("role") or {}).get("S"),
+                      (i.get("userType") or {}).get("S")) for i in r["Items"]]
+        if "LastEvaluatedKey" not in r:
+            break
+        kw["ExclusiveStartKey"] = r["LastEvaluatedKey"]
+    sels, kw = [], {"TableName": "irpt-requests"}
+    while True:
+        r = ddb.scan(**kw)
+        sels += [i["request_revision"]["S"] for i in r["Items"] if i["request_revision"]["S"].startswith("SELECTION#")]
+        if "LastEvaluatedKey" not in r:
+            break
+        kw["ExclusiveStartKey"] = r["LastEvaluatedKey"]
+    digest_users = hashlib.sha256(json.dumps(sorted(profiles)).encode()).hexdigest()
+    print("CENSUS %s: users %d (status/role/type digest %s); SELECTION# rows %d"
+          % (dt.datetime.now(dt.timezone.utc).isoformat(), len(profiles), digest_users[:16], len(sels)))
+    return {"users": len(profiles), "users_digest": digest_users, "selections": sorted(sels)}
 
 
 def preread(n):
@@ -143,7 +181,15 @@ def delete(n):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3 or sys.argv[1] not in ("preread", "create", "delete"):
-        raise SystemExit("usage: walk_principal.py preread|create|delete <epoch>")
-    n = names(sys.argv[2])
-    {"preread": preread, "create": create, "delete": delete}[sys.argv[1]](n)
+    args = [a for a in sys.argv[1:] if not a.startswith("--kind=")]
+    for a in sys.argv[1:]:
+        if a.startswith("--kind="):
+            KIND = a.split("=", 1)[1]
+    if KIND not in ("walk", "uiwalk") or len(args) != 2 or args[0] not in ("preread", "create", "delete", "census"):
+        raise SystemExit("usage: walk_principal.py [--kind=walk|uiwalk] preread|create|delete|census <epoch|out.json>")
+    if args[0] == "census":
+        with open(args[1], "w", encoding="utf-8", newline=chr(10)) as f:
+            json.dump(census(), f, indent=1)
+    else:
+        n = names(args[1])
+        {"preread": preread, "create": create, "delete": delete}[args[0]](n)
