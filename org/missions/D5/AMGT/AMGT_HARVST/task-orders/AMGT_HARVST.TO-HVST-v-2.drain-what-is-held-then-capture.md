@@ -90,7 +90,7 @@ cell passes the absolute runtime root of the MAIN tree**, given in your spawn pr
 <proof_of_spec>
   <criterion id="AC1" cell_refs="HVST-v-2"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r2/ac1.py</invocation><expect>THE HELD ROWS REACH SILVER, with NO vendor call: the BEFORE state read live from S3 (sa listing_hit rows and bronze news_listing objects, with the five-publisher denominator), then `upload-harvest --max-objects 40 --runtime-root "<MAIN_TREE>/.runtime/opal-data-harvest"` run through the producer and its output recorded VERBATIM, then the AFTER state on the SAME instrument with sa's delta as a signed number. Expected: sa's 20 held listing rows land. If the uploader still raises, record it verbatim and STOP -- that is HVST-v-1 not working and it is a BLOCKING row, not something to work around</expect></criterion>
 
-  <criterion id="AC2" cell_refs="HVST-v-2"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.opal_data_harvest run --publishers sa --harvest-grammar --runtime-root "<MAIN_TREE>/.runtime/opal-data-harvest" --security-json org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~4/securities.json --max-jobs 2 2>&1 | tail -25</invocation><expect>the producer's own output recorded VERBATIM whatever it says, then a SECOND `upload-harvest` run so the newly captured pages reach S3, also recorded verbatim. NO retry. ⛔ If the output shows an auth refresh or a browser starting, STOP per clause 4. AND the ledger row for this call is appended in the same commit -- name the file and print the row you wrote. NOTE the securities file named here is an ARRAY of six; if the flag refuses an array (it takes ONE object), that is a cut defect -- file a BLOCKING row and run the single-security file at org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/sa_one_security_992HK.json instead, recording BOTH attempts</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-v-2"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.opal_data_harvest run --publishers sa --harvest-grammar --runtime-root "<MAIN_TREE>/.runtime/opal-data-harvest" --all-securities --max-jobs 8 2>&1 | tail -40</invocation><expect>the producer's own output recorded VERBATIM whatever it says, then a SECOND `upload-harvest` run so the newly captured pages reach S3, also recorded verbatim. NO retry. ⛔ If the output shows an auth refresh or a browser starting, STOP per clause 4. AND the ledger row for this call is appended in the same commit -- name the file and print the row you wrote. AND THE CEILING IS MEASURED, NOT HOPED FOR -- print it: `--all-securities` resolves 89 securities and only 25 OF THOSE 89 CARRY A USABLE sa_symbol (32 carry a ticker; 45 carry NEITHER). A name with no sa_symbol cannot be queried on sa at all, so the expected upper bound of this capture is 25 names, not 89. Print how many were attempted, how many were skipped for a missing symbol, and how many returned rows, each with its denominator. A count BELOW 25 is an accepted outcome reported with its cause; a count ABOVE 25 means the symbol census is wrong and is a finding</expect></criterion>
 
   <criterion id="AC3" cell_refs="HVST-v-2"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r2/ac3.py</invocation><expect>publisher_coverage and daily_rows run PURE and IN MEMORY over the post-run listing_hit rows (no gold write): the number of securities for which sa now yields a non-empty span with the denominator tested and each span printed as (start, end); and the data_status distribution BEFORE and AFTER with the count of (security, day) rows that moved DENIED -> PARTIAL, plus publishers_covered / publishers_enabled on a sample moved row. The string COMPLETE must appear ZERO times in any moved row</expect></criterion>
 
@@ -105,6 +105,45 @@ DENOMINATOR.** **A ZERO DELTA IS AN ACCEPTED OUTCOME** and is reported as such, 
 Write your proof-of-spec instance to `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~22/`,
 commit under your own author line (`-F <msgfile written by the Write tool, NOT printf/heredoc>`), and report
 ONCE in your final message. **The ledger row and the evidence land in the SAME commit.**
+
+
+## 7. AMENDMENT 1 -- AC2's BATCH WIDENS FROM SIX PILOT NAMES TO THE WHOLE RESOLVED UNIVERSE, AND ITS CEILING IS 25, NOT 92
+
+**The issuer amends its own criteria (Rule 27). No CTO ruling is sought and none is owed. GATE (viii) grades
+this modification** -- this order declares `<placeholders>` at HEAD, so `to-pipeline-gate.py` reads it through
+`_staged_modified()`; LIMB 6 and every other limb are NEWLY-ADDED only.
+
+**WHY:** `1.0.0_SA_CTO~Z` (msg 26018) measured the goal's clause 3 over the full population -- 95 folders, 95
+resolved, `bloomberg 95 of 95`, `seekingalpha 3 of 95`, `serp 0 of 95`, **92 names carrying exactly one
+channel** -- and asked for a cell landing seekingalpha and serp for those 92. The sa half is served by
+widening THIS criterion rather than by a second issuance into a frozen round.
+
+⛔ **BUT THE ASK CANNOT BE SERVED AT 92, AND THE REASON IS NOT EGRESS -- IT IS IDENTITY.** Measured at the
+cut, from the producer's own selection path (`__main__.py:136` -> `universe(config)`):
+
+| population | n |
+|---|---|
+| `--all-securities` resolves | **89** |
+| of those, carry a usable `sa_symbol` | **25** |
+| carry a usable `ticker` | 32 |
+| carry NEITHER | **45** |
+
+**A name with no `sa_symbol` cannot be queried on sa at all.** So the capture's upper bound is 25, and the
+gap between 25 and 92 is the identity backlog this project already carries -- not a permission this cell
+lacks. **`--all-securities` is also 89, not 95: it is a DIFFERENT POPULATION from the CTO's folder census**,
+and the criterion prints its own denominator rather than inheriting that number.
+
+⭐ **THAT IS THE FINDING, and it is worth more than the capture: the egress lift removed the constraint
+everyone was watching, and the binding one turned out to be upstream of it.** An unmeasured widening here
+would have run 89 names, quietly skipped 64, and reported a number that looked like coverage.
+
+**WHAT CHANGED, exactly:** `--security-json <six-name array>` -> `--all-securities`, `--max-jobs 2` -> `8`,
+and the expectation now demands the attempted / skipped-for-missing-symbol / returned-rows split with
+denominators. **The array hazard that killed slot `~19` is retired by this change rather than guarded** --
+`--all-securities` takes no file, so the one-object-vs-array trap cannot fire.
+
+**UNCHANGED:** every standing clause, the AC1-before-AC2 ordering, the `--runtime-root` grant, the hard STOP
+on any auth refresh, the ledger condition, and AC4 as the round's only judgment criterion.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
