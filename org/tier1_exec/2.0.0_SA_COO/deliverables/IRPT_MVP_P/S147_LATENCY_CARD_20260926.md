@@ -108,3 +108,16 @@ The cost is 64 x ~0.32 s of repeated authorization, not data volume. B (platinum
 **REC: M now**, under its own half (the CTO's 101487 expectation). It stays inside one file, is measured before and
 after by the two timing lines, and keeps the one property that matters: the final release before any response is
 always a fresh, full authorization. C and L stay open for a later card; B stays held.
+
+## 8. Fix M served (21:28:13Z, adapter Ll6t4VPa, ledger irpt-authz-memo-20260926) -- S147 closed on measurement
+
+| read | before M (ZP7KM9Bc) | after M (Ll6t4VPa) |
+|---|---|---|
+| fresh 49F YTD, Duration | 25,843-26,861 ms | **6,187-6,942 ms** (3 windows) |
+| full releases per fresh read | 64 (20,464 ms) | **2** (685-721 ms for all 64 calls) |
+| reopen, Duration (warm) | 4,262-4,762 ms | **1,181 ms** |
+
+- DELTA=0: reopen reads are identical before and after. Fresh reports are byte-identical across builds on 3 fixed
+  windows (in-process), and 3 served fresh reads validate.
+- The remaining fresh cost is the engine read (calculate 4.6-5.3 s). B (platinum) could still take that to about 1 s;
+  it stays held per R9 as amended, as an enrichment, not a cap fix.

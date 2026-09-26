@@ -1,0 +1,44 @@
+[
+ {
+  "subject": "V1",
+  "window": [
+   "2026-01-01",
+   "2026-09-08"
+  ],
+  "at": "2026-09-26T21:29:18.284276+00:00",
+  "function_error": null,
+  "ok": null,
+  "state": "PARTIAL",
+  "reason": "PERFORMANCE_PARTIAL",
+  "retained_ref": {
+   "immutable": true,
+   "report_id": "RPT-858feb754a9ae446454ed41fd27c2bfe",
+   "report_kind": "PERFORMANCE",
+   "revision": "cab7a101a17d99afd92bea52cb0bf7e28e9e6dd3f2368aba93ca3a0d3e78654d",
+   "sha256": "cab7a101a17d99afd92bea52cb0bf7e28e9e6dd3f2368aba93ca3a0d3e78654d"
+  },
+  "data_sha256": "93212594589bf7672828e902ea8eed4fbb263d9121a7f2744a13ad65ee138cba",
+  "actual_end": "2026-09-08"
+ },
+ {
+  "subject": "V1",
+  "window": [
+   "2026-01-01",
+   "2026-09-05"
+  ],
+  "at": "2026-09-26T21:29:25.362661+00:00",
+  "function_error": null,
+  "ok": null,
+  "state": "PARTIAL",
+  "reason": "PERFORMANCE_PARTIAL",
+  "retained_ref": {
+   "immutable": true,
+   "report_id": "RPT-9b0f6bb22830fdd1a2366ff334768a29",
+   "report_kind": "PERFORMANCE",
+   "revision": "d5f5a9c16a0e475732e41ec0a574e5c7605aa070815208d2a65a150427c2f6ff",
+   "sha256": "d5f5a9c16a0e475732e41ec0a574e5c7605aa070815208d2a65a150427c2f6ff"
+  },
+  "data_sha256": "5e310249aa9e51a9b4d9c3b373d6495bfd3230a1a4c6faae4d98cc4dfbb57de5",
+  "actual_end": "2026-09-04"
+ }
+]

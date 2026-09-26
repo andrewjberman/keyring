@@ -1,0 +1,80 @@
+{
+ "at": "2026-09-26T21:22:14.573058+00:00",
+ "phase": "before",
+ "rows": {
+  "selection": "sel_97df18a732d3d88c9ab9c09f1e042dec5a36a4d102f59ee8e2f8e0dab0120b47",
+  "V1": {
+   "subject": "V1",
+   "window": [
+    "2026-01-01",
+    "2026-09-26"
+   ],
+   "at": "2026-09-26T21:21:57.947036+00:00",
+   "function_error": null,
+   "ok": null,
+   "state": "PARTIAL",
+   "reason": "PERFORMANCE_PARTIAL",
+   "retained_ref": {
+    "report_id": "RPT-2b65b391de49902ae9b5fbe390648813",
+    "immutable": true,
+    "sha256": "f26d1e2a310ce6fa8e9d73bbed331f097742b1195d0a8e56d4086eeb10213ec2",
+    "revision": "f26d1e2a310ce6fa8e9d73bbed331f097742b1195d0a8e56d4086eeb10213ec2",
+    "report_kind": "PERFORMANCE"
+   },
+   "data_sha256": "d956115014a809d694bfb090c783fed5e2c9ab57ae632f4d630a4a8bcd8db800",
+   "actual_end": "2026-09-25"
+  },
+  "V2": {
+   "subject": "V2",
+   "window": [
+    "2026-01-01",
+    "2026-09-26"
+   ],
+   "at": "2026-09-26T21:22:08.375787+00:00",
+   "function_error": null,
+   "ok": null,
+   "state": "PARTIAL",
+   "reason": "PERFORMANCE_PARTIAL",
+   "retained_ref": {
+    "report_id": "RPT-2b65b391de49902ae9b5fbe390648813",
+    "immutable": true,
+    "sha256": "f26d1e2a310ce6fa8e9d73bbed331f097742b1195d0a8e56d4086eeb10213ec2",
+    "revision": "f26d1e2a310ce6fa8e9d73bbed331f097742b1195d0a8e56d4086eeb10213ec2",
+    "report_kind": "PERFORMANCE"
+   },
+   "data_sha256": "d956115014a809d694bfb090c783fed5e2c9ab57ae632f4d630a4a8bcd8db800",
+   "actual_end": "2026-09-25"
+  },
+  "V0_selection": null,
+  "V0": {
+   "subject": "V0",
+   "window": [
+    "2026-01-01",
+    "2026-09-26"
+   ],
+   "at": "2026-09-26T21:22:13.446336+00:00",
+   "function_error": null,
+   "ok": false,
+   "state": "UNAVAILABLE",
+   "reason": "NOT_AUTHORIZED",
+   "retained_ref": null,
+   "data_sha256": null,
+   "actual_end": null
+  },
+  "owner": {
+   "tenant": "49financial",
+   "owner_sha256": "f0de54d8df291b268119e5d7d0c3dc429a2fd890fa6b50691e018450a9f5521c",
+   "owner_keys": [
+    "account_ids",
+    "account_set_id",
+    "directory_revision",
+    "firm_id",
+    "principal_id"
+   ],
+   "owner_accounts": [
+    "acc_0030c178052a2db50d683027"
+   ],
+   "principal_sha12": "a2bdcb8898f7"
+  }
+ }
+}
