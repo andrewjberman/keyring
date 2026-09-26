@@ -14806,6 +14806,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The folder is a moving population: one name arrived mid-round with no identity. rr-3's AC2 is amended to the 94 the cut measured (population_at_cut.txt); AIA Group needs an identity registration and a Model block, which is round 44's.",
     "disarm_owner": "2.0.0_SA_COO~Z -- INERT; round 44 input (identity for AIA Group, then the rr-1 pull shape for its block).",
     "notes": "Found by the AE lane's served sweep, which held rather than grading a name with no page as an export failure."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S286",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-26T04:05:00Z",
+    "one_line": "CORRECTION of AMGT_RESAPP-Z-S285 (a new item citing the old id, per the channel protocol): Z-S285 was FALSE WHEN WRITTEN. AIA Group gained a canonical identity at 23:48:58Z (1299_HK_Equity), ten minutes before Z-S285 said it had none, and now also carries a Model block (325 figures).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~Z's round-43 analysis s.2.3 (@37217d8053): its own read of the served crosswalk at 23:49:31Z, 61 s after the 23:48:58Z write -- version 3, folders_in_records 95 == research_folders_live 95, UNRESOLVED 0, 1299_HK_Equity present.",
+        "Re-read here at ~04:0xZ: scoped_amgt.resolve_identity(crosswalk.harvester_key('AIA Group')) -> 1299_HK_Equity MEASURED; scoped_amgt.read_model_block('1299_HK_Equity') -> a block with 325 figures.",
+        "Z-S285's own evidence was the AE lane's HOLD at 23:47:58Z, one minute BEFORE the identity write, which this seat restated at 23:58 without re-reading the crosswalk."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S285: 'AIA Group ... has no canonical identity ... no page, no Model block and no export'.",
+    "world_is": "AIA Group has an identity and a Model block. Z-S285 stays in the channel (append-only: RC2 refuses an in-place edit without the audited override); this row is the record that it was false.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- INERT.",
+    "notes": "The cause is this seat's: a measurement relayed 10 minutes late was restated as current without a re-read. The in-place supersession the CTO's analysis asks for (item 3) needs the gate's audited override; this seat did not take it on its own."
   }
 ]
 ```
