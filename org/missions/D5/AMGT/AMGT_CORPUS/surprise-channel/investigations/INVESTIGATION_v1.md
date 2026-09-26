@@ -1438,6 +1438,31 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "AMGT_RESAPP-Z-W158-S1 asserts that 2 of 89 keys carry a literal '/' and treats that as the key-metacharacter exposure for the shared universe.",
     "world_is": "THREE of the 89 carry a metacharacter, not two: the third is a literal '*' in WALMEX*_MM_Equity, which no row has named. The '/' exposure is correctly described by Z-W158-S1; the '*' exposure is new, is silent rather than loud, and lives on a different surface (glob/fnmatch, not S3 prefixes).",
     "notes": "REMEDY IS A GUARD, NOT A RE-OPEN: no served output is implicated and no glob site takes a key today. The cheap durable form is a single validator on the key space that refuses or escapes the metacharacter class at mint time, which covers both characters and any future one, rather than two per-character guards on two surfaces. OWNER: whoever next cuts the identity-layer cell that owns Z-W158-S1 -- the two rows should be remedied together because they are one defect. DISCRIMINATOR for any future claim that this fired: search for a glob/fnmatch/rglob call whose pattern argument derives from a security key, and print the denominator."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S40",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-26T03:32:00Z",
+    "one_line": "NARROWING MY OWN BOUND IN ADJUDICATION_v8 BEFORE THE ROUND-5 ANALYSIS READS IT: I left g-1 AC4's workbook half UNGRADED for two reasons, and the Andrew-direct of 2026-09-26 (msg 25991, @f3b85ff6a5) retires the authorization clause of the second one. The half is still ungraded -- no workbook-derived Base case exists in the corpus, which is the load-bearing reason and is untouched -- but a cell cut against it is NOT blocked on Andrew's per-use word, and anyone cutting one now inherits a CONDITION instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "WHAT I WROTE: ADJUDICATION_v8 @b0494255ce grades g-1 AC4 PASS on its refusal half over all 89 keys and UNGRADED on its workbook half, for two stated reasons -- (a) no workbook-derived Base case exists in the corpus, and (b) 'the read is a gateway call while the AIA dossier production sequence is running'.",
+        "WHAT CHANGED: Andrew-direct 2026-09-26, relayed by 1.0.0_SA_CTO~Z msg 25991, record @f3b85ff6a5 section 1, VERBATIM: 'Egress is permitted for API calls this session -- no per-use word per vendor call, but every call is ledgered by the seat that makes it. Spend, contracts, entitlements and hold-lifts are NOT covered.'",
+        "REASON (a) IS UNTOUCHED AND IS THE LOAD-BEARING ONE. The comparator does not exist in the corpus: a search for team workbook Base/Bull/Bear values degraded to a bare 354,817-hit comp-find and answered nothing. AC4's workbook half stays UNGRADED and this row does not reopen it or the round.",
+        "REASON (b) SPLITS INTO TWO CLAUSES AND ONLY ONE MOVED. The AUTHORIZATION clause is retired for this session. The MECHANISM clause is NOT: the lift is on the authorization, not the mechanism, so a workbook read still belongs in a deterministic scripted re-runnable producer and never in an agent turn. The producer-running clause was a timing bound, never an authorization one, and it expires on its own.",
+        "THE CONDITION A FUTURE CELL INHERITS: per-seat ledgering is a CONDITION of the lift, not a courtesy -- a seat that cannot ledger its call does not have the word. So a cell cutting the workbook comparison must carry its own ledger leg for every call it makes. Never-widen is untouched; Andrew said so himself.",
+        "WHY THIS IS A ROW AND NOT A MESSAGE: the L8 correspondence gate permits this seat ONE send per dep_stage and round 5's was the L10 slug @03:08Z, which predates msg 25991. The three tracks share FILES, never messages, so the channel is the carrier that reaches the round-5 analysis without a second send."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ADJUDICATION_v8 asserts AC4's workbook half is ungraded partly because the comparator read is a gateway call, written at 02:24Z under the standing rule that no vendor API call is made without Andrew's explicit per-use word.",
+    "world_is": "As of 03:29Z that standing rule is lifted for this session for API calls, under a per-seat ledgering condition, with spend, contracts, entitlements and hold-lifts excluded and the scripted-producer mechanism unchanged. The bound as written is now wider than the world; the grade it supports is unchanged.",
+    "notes": "OWNER: 1.0.0_SA_CTO~Z for the round-5 analysis, which is being cut now and would otherwise read my bound as saying the workbook cell needs Andrew's word. It does not. What it needs is a comparator that does not yet exist, a scripted producer rather than an agent turn, and its own ledger leg per call. FILED AGAINST MY OWN WORK, five minutes after the slug: a bound is a claim and ages like any other, and this one aged in eight minutes."
   }
 ]
 ```
