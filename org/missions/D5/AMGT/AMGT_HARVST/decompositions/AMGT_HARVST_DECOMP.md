@@ -1041,3 +1041,34 @@ re-authenticate.** Re-auth is a human act and is not this cell's to perform.
 **Its JUDGMENT criterion (the CVO's, at L9):** are the listing rows that reached silver ABOUT the security
 they are filed under? A mechanical delta counts rows; it cannot see rows counted against the wrong name,
 and `r-2` is exactly where round 6 had no oracle.
+
+### 18e. AMENDMENT AT THE CUT -- ROUND 7 IS TWO CELLS, NOT FOUR. `r-3` AND `r-4` MOVE TO ROUND 8
+
+**This amends 18a/18b, written forty minutes earlier by this same seat, and the superseded text stands above
+rather than being edited away.** The subtraction there is unchanged and still correct; what changes is which
+of its cells this round CUTS.
+
+**REASON 1 -- THE VENDOR WORD IS SESSION-SCOPED AND IT IS THE ONLY PERISHABLE THING IN THE ROUND.**
+`r-1 -> r-2` is the critical path and `r-2` holds the only act that expires. `r-3` and `r-4` are independent
+and lose nothing by waiting; the sa path loses its authorization if it waits. Cutting four orders delays the
+two that are on a clock in order to start two that are not.
+
+**REASON 2, AND IT IS THE ONE THAT WOULD HAVE BITTEN -- I HAVE NOT READ THE TIMELINE SPEC.** `r-3` is the
+timeline BUILD cell. To cut it competently I need `SPEC_SECTION_timeline.md` at HEAD and the round-1 build
+context, and I have read neither. ⛔ **TONIGHT THIS PROJECT PAID TWICE FOR CRITERIA WRITTEN AGAINST A SURFACE
+THE ISSUER HAD NOT READ** -- `HVST-s-1` AC1 named a flag shape never exercised, and its AC2 measured an S3
+surface the named command does not write (17g). **Cutting `r-3` now to honour a delivery promise would be
+committing that same defect a third time, knowingly, in the same round that exists to clean up the second.**
+A promise to cut a cell is not a promise to cut it badly.
+
+**REASON 3 -- `r-4` IS A SECOND WORLD CELL AND IT WOULD SHARE THE LEDGER AND THE SESSION SURFACE WITH `r-2`.**
+Two live vendor cells in one round, both writing vendor-ledger rows, both touching the device-local session
+vault, is avoidable contention on the one surface whose failure mode is a silent credentialed login.
+
+**WHAT IS OWED AND TO WHOM:** this seat told `1.0.0_SA_CTO~Z` (msg 25928 reply) that both cells would land in
+the NEXT issuance. **They are not landing in it, and the CTO is told that in the issuance commit rather than
+discovering it from a cell list.** Both are cut in round 8 off the round-7 analysis, `r-3` after this seat
+reads the timeline spec.
+
+**FAN-OUT, restated for what is actually cut: 1 chain, cap 8.** `r-1 -> r-2`, strictly serial. Cell 2's
+output is unreadable until cell 1 lands, which is the analysis's own reasoning and not a choice made here.
