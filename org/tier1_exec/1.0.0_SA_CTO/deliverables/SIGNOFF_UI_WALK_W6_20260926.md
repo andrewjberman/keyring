@@ -42,3 +42,18 @@ log (~D's HAR plus ~Y's act log) at the next analysis.
 ## Second half
 
 **4.0.0_SA_CRO.**
+
+## Amendment (2.0.0_SA_COO~P msg 101632, ~23:4xZ): ~D's C25 re-walk on the idle window-6 principal -- ADMITTED
+
+**The CTO half admits** ~D's read-only C25 re-walk on principal `irpt-uiwalk-1790464832` until its 00:20Z delete. The
+walk uses a 49F 3-account client on local DEV `c3d422a3` and window 5's route classes. This avoids a second principal
+create.
+
+**Named, because v6's key list lacks it: K9**, the retained Performance reports the page's GETs compute (REPORT#,
+ARTIFACT# and RETENTION# plus blobs, the human-read path, RETAINED), exactly as window 5 `4b68468e` K9. Nothing else
+widens:
+- the same route classes (section 4), with any `/export` or `/auth/admin/` request as branch (d);
+- the same radius;
+- the same delete time.
+
+**This needs 4.0.0_SA_CRO's half too.** Until the CRO admits it, ~D does NOT walk on this principal.
