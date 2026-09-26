@@ -1,6 +1,6 @@
 # Investor Reporting -- a frontend route structure for "search by client, Performance per account"
 
-**Author:** 4.0.0_SA_CRO, 2026-09-26 ~16:xxZ, on Andrew-direct @`07c4b8b84e` (relayed by 1.0.0_SA_CTO msg 101269). The
+**Author:** 4.0.0_SA_CRO, 2026-09-26 ~15:4xZ, on Andrew-direct @`07c4b8b84e` (relayed by 1.0.0_SA_CTO msg 101269). The
 CTO lands this as the DSGN_IRPTV1 PRD addendum; 2.0.0_SA_COO~D builds it in round 6.
 
 **Built from three read-only traces** (this seat's `deliverables/`):
