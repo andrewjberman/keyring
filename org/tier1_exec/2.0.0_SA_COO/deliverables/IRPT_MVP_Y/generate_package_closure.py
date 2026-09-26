@@ -15,6 +15,7 @@ rpds, jsonschema_specifications) and its compiled wheels' platform are not walke
 every module on the deployed function (CTO 101230 condition 3).
 
     python generate_package_closure.py <zip> [--tree <investor-reporting dir>] [--entry generate_installed]
+                                       [--layer <layer zip>]...
 
 Found necessary on 2026-09-26:
 - the deployed zip LdjdnnLh lacked interactive_access, template_reader and security_resolution, and the first live
@@ -94,10 +95,21 @@ def first_party(tree_dir):
     return found
 
 
-def missing_modules(zip_path, tree_dir, entry):
+def layer_names(layer_zips):
+    """Top-level importable names a Lambda layer puts on sys.path (its `python/` folder, after the function's own code)."""
+    names = set()
+    for path in layer_zips:
+        for member in zipfile.ZipFile(path).namelist():
+            parts = member.split("/")
+            if len(parts) >= 2 and parts[0] == "python" and parts[1]:
+                names.add(parts[1][:-3] if parts[1].endswith(".py") else parts[1])
+    return names
+
+
+def missing_modules(zip_path, tree_dir, entry, layers=()):
     archive = zipfile.ZipFile(zip_path)
     packaged = {n.rsplit("/", 1)[-1][:-3]: n for n in archive.namelist() if n.endswith(".py")}
-    top_dirs = {n.split("/", 1)[0] for n in archive.namelist() if "/" in n}
+    top_dirs = {n.split("/", 1)[0] for n in archive.namelist() if "/" in n} | layer_names(layers)
     tree = first_party(tree_dir)
     if entry not in packaged:
         raise SystemExit("ERROR: entry module %r is not in the zip" % entry)
@@ -132,8 +144,12 @@ def main(argv=None):
     parser.add_argument("zip")
     parser.add_argument("--tree", default=default_tree)
     parser.add_argument("--entry", default="generate_installed")
+    parser.add_argument("--layer", action="append", default=[],
+                        help="a Lambda layer zip the function attaches (repeatable); its python/ names count as provided")
     args = parser.parse_args(argv)
-    seen, packaged, tree, missing, third = missing_modules(args.zip, args.tree, args.entry)
+    seen, packaged, tree, missing, third = missing_modules(args.zip, args.tree, args.entry, args.layer)
+    if args.layer:
+        print("layers counted: %s" % ", ".join(args.layer))
     print("closure %d modules | packaged .py %d | first-party in tree %d | third-party names absent %d | tree %s"
           % (len(seen), len(packaged), len(tree), len(third), args.tree))
     for name, importers in sorted(missing.items()):
