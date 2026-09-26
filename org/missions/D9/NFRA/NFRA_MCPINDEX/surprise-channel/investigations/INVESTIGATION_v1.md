@@ -1288,6 +1288,31 @@ carries none.
     "spec_asserts": "Each target was disarmed by the issuer's adjudicating row.",
     "world_is": "The disarms carried a non-terminal disposition; this row makes them terminal. The reasons are the earlier rows' own.",
     "dismissal_reason": "Each target was already disarmed by the issuer's own adjudicating row with its reason stated there; this row only makes the disposition terminal."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S15",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-26T20:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-s-4 step 3's premise is wrong, and fixing the login will NOT restore the compaction. convert_assets_to_silver.py gates write_compacted on --backfill, not on the absence of --no-compacted; the scheduled path passes --latest, so silver/bd_assets.parquet has NEVER been written by a scheduled run.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE GATE, read at the single call site: the script has exactly ONE `write_compacted(df)` call, at line 279, and line 278 reads `if args.backfill and not args.no_compacted:`. Compaction is therefore conditional on --backfill. The absence of --no-compacted is necessary but NOT sufficient, which is precisely what the order's step 3 assumes.",
+        "WHAT THE SCHEDULE ACTUALLY PASSES: the SSM document opal-bd-asset-dim-download runs `python3 convert_assets_to_silver.py --latest`. No --backfill, anywhere in the document. So on the scheduled path the compaction branch is unreachable -- not skipped by a flag, simply never entered.",
+        "CONSISTENT WITH THE FROZEN ARTIFACT: silver/bd_assets.parquet last moved 2026-04-14, which is a manual --backfill, not a scheduled run. The DS measurement recorded the file as frozen and read it as a symptom of the download outage; it is independent of it.",
+        "NO DRIFT BETWEEN REPO AND DEPLOYED, so the code read IS the code running: the S3 copy s3://opal-data-bd/code/silver/convert_assets_to_silver.py (2026-05-11, 9680 bytes) and the repo copy data/black_diamond/scripts/silver/convert_assets_to_silver.py are byte-identical, sha256 0b9983667285. The repo file is git-tracked and not ignored.",
+        "AN INSTRUMENT TRAP I WALKED INTO AND RECORD SO THE NEXT READER DOES NOT. `comp-find 'convert_assets_to_silver' --band HEAD` returned a MEASURED ZERO over 76,147 files, and on that zero I briefly concluded the script had no repo copy and lived only in S3. That was WRONG: the file is named exactly that, is tracked, and sits at data/black_diamond/scripts/silver/. A plain `ls` found it in one call. The HEAD band's zero was the instrument, not the world."
+      ]
+    },
+    "spec_asserts": "MX-s-4 step 3: 'Restore the compaction to silver/bd_assets.parquet. Check what the SSM document passes to convert_assets_to_silver.py; it writes the compacted file unless --no-compacted is passed.'",
+    "world_is": "It writes the compacted file only under --backfill. The SSM document passes --latest and has never passed --backfill, so --no-compacted is a red herring: adding or removing it changes nothing. Two consequences the order does not anticipate. (1) Step 3 is NOT downstream of step 1 -- repairing the Black Diamond login restores the date partitions but leaves the compacted file frozen exactly where it is. (2) The remedy is a change to the script's condition, and under CLAUDE.md rule 13 data/*/scripts/silver/*.py is DS-owned for commit-to-QA-deploy, so it is NOT this AE lane's to make. Passing --backfill from the SSM document would compact, but it also rebuilds silver from backfill_v2 + forwardfill_v2 on every scheduled run, which is a different and much larger act than the order asked for -- naming it here so it is visibly REJECTED rather than silently unconsidered.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "NOT FIXED HERE, and the ownership is the reason rather than the bound: rule 13 puts the silver script on the DS lane. Routing, not acting. MX-s-4 bound 4 also forbids meeting a criterion 'by a route this face does not name', and --backfill-on-a-schedule is exactly such a route. AC2 (silver/bd_assets.parquet written after issue) therefore CANNOT PASS from this lane as the order is written, whatever happens to the login -- that is the refusal MX-s-4 bound 4 asks me to report with its measurement, and this row is it."
   }
 ]
 ```
