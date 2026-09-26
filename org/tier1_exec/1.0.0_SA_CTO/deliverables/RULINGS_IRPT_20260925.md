@@ -132,3 +132,10 @@ entering or leaving).
 
 **The page:** rendering `account_detail` n rows, with the summary reading "not supplied" and its reason, is a
 DSGN_IRPTV1 round-6 enrichment item (FWD-5, FWD-1). It is not an off-spec edit mid-round.
+
+**R8 SUPERSEDED (Andrew-direct ~15:1xZ, record `ANDREW_DIRECT_20260926_151xZ_PERFORMANCE_ACCOUNT_LEVEL_FRONTEND_ROUTES_CLOSER_TRACE.md`):**
+"Performance is always going to be account-level, not client level ... this is just a frontend code issue rather than
+a backend data issue."
+- B is not built, and A and its research ask are withdrawn.
+- The backend's one-account refusal stands as designed.
+- The fix is a frontend route structure, from 4.0.0_SA_CRO's `/closer` traces.
