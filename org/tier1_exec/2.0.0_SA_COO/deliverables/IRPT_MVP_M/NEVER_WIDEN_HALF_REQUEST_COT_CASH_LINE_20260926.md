@@ -72,3 +72,33 @@ Rollback per key: the prior S3 object version of each script, and the prior Hold
 - **Census of every classifier call in C_06, D_03 and D_04 (CTO 101583):** 5 calls. The 4 on served paths are guarded
   (C_06:217 by :213; D_03:133 by :131, reached from :686; D_04:1346 by :1344; D_04:2916 by :2914). The 1 unguarded call,
   C_06:186 `classify_holding`, has 0 callers.
+
+## Addendum 2 (~23:3xZ): the negative-cash census (CRO msg 101595)
+
+Script `cot_cash_line_negative_census.py`, output `COT_CASH_LINE_NEGATIVE_CENSUS_20260926.json` (beside this file), on
+the served input `gold/canonical/holdings/2026-09-22.parquet` with the ghost exclusion (4 accounts).
+
+- **The 29 relationships:** 71 nonzero cash-line rows (45 positive, 26 negative, the negatives -$6,802,732.49).
+  - 17 of 29 net negative on the cash line itself.
+  - 13 of 29 net negative in the whole cash class after the move; other cash rows offset the other 4.
+- **C_06 renders no negative.** C_06:462 drops `market_value <= 0` before it classifies, before and after the fix.
+  - Correction to the table above: C_06 moves the 45 positive rows, **+$66,055,897.80 in 15 relationships**. The
+    $59,253,165.31 is the signed net, which only D_03 sees.
+- **D_04 renders no negative.**
+  - The firm mix takes C_06's values (D_04 :565-583).
+  - Both lot-based classify sites (account summaries :1297, advisor positions :2852) skip for COT, because
+    `gold/timeseries/holdings_lots/` holds 0 partitions.
+- **D_03 renders no negative slice, but 13 relationship compositions go over 100%.** D_03 keeps negative rows. When a
+  relationship's cash class nets to 0 or less, `_build_composition` drops the class (:407), while `total_mv` still
+  carries the negative, so the rendered slices sum to 100.5%-128.0%. The largest is z09305707: before, 100.0%; after,
+  128.0%. Before the fix, all 29 sum to 100.0%, because the debit netted inside equity.
+- **AI Cottonwood views render no negative.** `normalizeMixTo4Class` (composition.ts :119-125) re-percents over the
+  kept classes. For those 13 relationships, cash disappears and equity reads high.
+- **Other negative rows in the partition:** 3, all personal liabilities (INVESTOR MANUAL ASSET - MORTGAGE -$544,000,
+  CAR -$21,521, CREDIT CARD -$9,000).
+- **d08 beside C_06:** printed at the Monday read-back, as asked.
+
+**Ask (one decision):** D_03 cannot deploy as cut. REC (a): D_03's composition takes C_06's own rule, positive rows
+only (`market_value > 0`, C_06:462), so the two agree. The rule would also drop the 3 personal-liability rows from D_03,
+and that delta is measured before the deploy. (b): deploy C_06 and D_04 only, and hold D_03 on today's code. The
+relationship composition then keeps the cash line as equity while C_06 shows cash.

@@ -1,0 +1,40 @@
+{
+  "ghost_accounts": 4,
+  "canonical": {
+    "key": "gold/canonical/holdings/2026-09-22.parquet",
+    "partitions": 121,
+    "cash_line_rows": 853,
+    "nonzero_rows": 71,
+    "negative_rows": 26,
+    "negative_rows_sum": -6802732.49,
+    "relationships_nonzero": 29,
+    "relationships_net_negative": 17,
+    "net_negative_detail": {
+      "0": -8592.5,
+      "z09304677": -302603.08,
+      "z09305548": -100482.04,
+      "z09305578": -216026.15,
+      "z09305614": -507689.03,
+      "z09305618": -20091.03,
+      "z09305639": -80122.9,
+      "z09305643": -17697.73,
+      "z09305647": -390656.99,
+      "z09305667": -1.07,
+      "z09305668": -810748.66,
+      "z09305693": -169336.52,
+      "z09305699": -2145.61,
+      "z09305707": -1732944.94,
+      "z09305719": -525152.71,
+      "z09305724": -96204.15,
+      "z09305730": -15273.51
+    },
+    "relationships_with_any_negative_row": 21,
+    "net_all": 59253165.31,
+    "c06_moves_positive_only": 66055897.8,
+    "c06_relationships": 15
+  },
+  "holdings_lots": {
+    "key": null,
+    "partitions": 0
+  }
+}
