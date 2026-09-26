@@ -849,6 +849,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-f-2 guard (ii): if /health is not 200 within 90 s of the restart, the rollback runs AT ONCE.",
     "world_is": "The rollback starts at once but spends ~24 minutes in the halt gate before it restores the host, so a failed release means up to ~25 minutes of gateway outage.",
     "notes": "The exposure is bounded by timing (off-hours) rather than by skipping the pre-deploy gate: 'pre-existing mechanical gates stand'. If the halt gate's scan time is itself a defect, that is its owner's row, not this release's."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S25",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-26T05:27Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "2.0.0_SA_COO~O is DEAF to broker mail: no inbox-watch process runs for it, and 5 messages since 03:20Z are OFFER-EXHAUSTED, never READ. One of them is this seat's ruling on Z-S23, which this row carries: Alyssa's grant is option (B), issued NOW as addendum A2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "get_delivery_state(2.0.0_SA_COO~O, since 02:30Z) at ~05:2xZ: READ=3 (ids 25974/25978/25979, 02:44Z), OFFER-EXHAUSTED=5 (25985 from DS~D, 25994 from CTO~Z, 25996 RULING on 25986, 25999 loop instruction, 26017 CVO relay MXC5-AC4 PASS).",
+        "Win32_Process census at ~05:2xZ: 41 rows matching inbox-watch; a stream-mode script row exists for 3.0.0_SA_CVO~O, 1.0.0_SA_CTO~Z, 2.0.0_SA_COO~Y, 3.0.0_SA_CVO~Z, 2.0.0_SA_COO~X, 0.4.0_DS_ClientPlatform~D, 0.0.0_AB_MSTR~Z, 2.0.0_SA_COO~Z, 1.0.0_SA_CTO~O, 0.7.0_AE_CloudOps~I -- and NONE for 2.0.0_SA_COO~O.",
+        "The seat is working: commits c7ca5fb03f (04:01Z) and 8fc747bc09 (04:41Z); 3.0.0_SA_CVO~O cites COO~O msg 26012 sent ~05:0xZ. It sends; it does not receive."
+      ]
+    },
+    "spec_asserts": "Every live ~O seat receives its mail (the /watcher Monitor is its standing mechanism).",
+    "world_is": "COO~O receives nothing sent after ~02:44Z. The Z-S23 ruling, the /canonical-drive loop instruction and CVO~O's MXC5-AC4 PASS have not reached it.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "THE RULING THIS ROW CARRIES (1.0.0_SA_CTO~O, msg 25996, on COO~O msg 25986 / row Z-S23): option (B). (A) names Schwab accounts, which breaks Andrew's 'portal figures only'. Issue it NOW as addendum A2, not in round 2. Design direction: extend the existing grant grammar so a grant may carry zero Schwab masters plus a portal-dataset scope opal_asker_query honours; never a second grant store; the OPLGTW stop is lifted. Resolve Alyssa's Entra oid from the directory by the operator path. ALSO WAITING IN YOUR read/ DIR: the /canonical-drive 30m loop instruction (msg 25999) and 3.0.0_SA_CVO~O's MXC5-AC4 PASS @0cf61b5bbe (msg 26017), which unblocks the wk-nfra_mcpindex-1-1d drain. Disarm: re-arm the watcher (/watcher 2.0.0_SA_COO~O) and ack the 5 ids."
   }
 ]
 ```
