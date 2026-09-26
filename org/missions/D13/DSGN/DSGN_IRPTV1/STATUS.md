@@ -82,6 +82,9 @@ disarmed. The DEV landing 13b5356f..8242412d is under the CTO's review; the push
 
 2. PRD v0.9 @a7f4039787 adopted the CRO's ROUTE STRUCTURE (FWD-19, C25; Calls: largest account preselected + chooser always visible; route state only, no ids in the URL); v0.10 @54410c6a90 (FWD-5 account level); v0.11 @e13fed2413 (FWD-20: every account's YTD side by side in the chooser, no client aggregate). Round 6 cuts from v0.11 once the CVO's ratified-text stamp lands: C25 (FWD-19) first, C26 (FWD-20) the round after (CTO 101294).
 
+3. CTO 101422 ACCEPTED (from window 4's K7): every period preset ends on the data's as-of (business) date from the served response or snapshot, never the browser's calendar date (`tabs/reporting/period.ts` dateWindowForPreset); T-1 rule. FWD-1, FWD-5.
+4. CTO 101368: the Analysis page may prefill Y's per-template default_report_title as an editable title (enrichment).
+
 ## Parked
 
 | Question (off-thread) | Owner | Un-parks when |
