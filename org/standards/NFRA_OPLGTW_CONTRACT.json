@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.1",
+  "contract_version": "1.2",
   "project": "NFRA_OPLGTW",
   "authority": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md#contracts",
   "activation": "DESIGN_ONLY_NOT_A_GRANT",
@@ -54,6 +54,24 @@
     "rolling_complete_window",
     "fixed_dates"
   ],
+  "portal_grant": {
+    "authority": "org/missions/D6/NFRA/NFRA_OPALAI decomposition addendum A2 (cell OA-g-1); CTO ruling (B), msg 25996, row NFRA_OPALAI-Z-S23",
+    "scope_dimension": "portal_channels",
+    "optional": true,
+    "absent_means": "the record parses exactly as contract v1.1: masters, accounts, datasets and columns non-empty",
+    "channel_catalog": "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml",
+    "channel_ids": "the keys of channels.* in channel_catalog, the channels app/graphql_plumbing/catalog_gate.py indexes; an id the catalog does not hold is rejected by the operator command",
+    "empty_when_portal_channels": [
+      "masters",
+      "accounts",
+      "datasets",
+      "columns"
+    ],
+    "empty_rule": "the four may be EMPTY only together and only beside a non-empty portal_channels; empty of both is malformed",
+    "portal_only_schwab_tools": [],
+    "served_by": "opal_asker_query: a catalog key is served only when its channel is granted, on top of the calling identity's catalog_gate verdict",
+    "store": "the same data_entitlement POLICY record; no second grant store"
+  },
   "query_modes": [
     "rows",
     "aggregate"

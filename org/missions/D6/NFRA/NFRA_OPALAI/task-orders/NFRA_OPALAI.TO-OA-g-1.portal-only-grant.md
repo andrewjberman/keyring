@@ -53,6 +53,12 @@ Build, in `infra/aws/ec2/opal-gateway/`:
    - `test_admin_rejects_unknown_portal_channel`.
    Also keep `tests/test_asker_scope.py` and `tests/test_identity_scope.py` passing.
 
+**AMENDED by the issuer on row NFRA_OPALAI-Z-W9-S1 (no CTO ruling needed):**
+5. **The owner's read-back carries the new dimension.** `app/admin_grants.py` `_grant_json` (the dashboard's
+   Entitlements read) returns `portal_channels` whenever the grant carries it, so a portal-only grant never reads back
+   as empty. Add `test_admin_readback_shows_portal_channels` to `tests/test_portal_grant.py`; it is graded under AC3,
+   whose check becomes 3 of 3.
+
 ## 2. BOUNDS
 
 1. No deploy (that is `OA-g-2`), no POLICY write (that is `OA-g-3`), no push, no vendor call.
@@ -66,6 +72,7 @@ Build, in `infra/aws/ec2/opal-gateway/`:
 infra/aws/ec2/opal-gateway/app/data_entitlement.py
 infra/aws/ec2/opal-gateway/app/asker_scope.py
 infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py
+infra/aws/ec2/opal-gateway/app/admin_grants.py
 infra/aws/ec2/opal-gateway/tests/test_portal_grant.py
 org/standards/NFRA_OPLGTW_CONTRACT.json
 org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~9/**
@@ -81,7 +88,7 @@ Rows go to `org/missions/D6/NFRA/NFRA_OPALAI/surprise-channel/investigations/INV
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OA-g-1"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/round1/checks/g1.AC1.sh; echo "exit=$?"</invocation><expect>pytest rc=0; named tests passed 2 of 2; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OA-g-1"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/round1/checks/g1.AC2.sh; echo "exit=$?"</invocation><expect>pytest rc=0; named tests passed 2 of 2; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="OA-g-1"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/round1/checks/g1.AC3.sh; echo "exit=$?"</invocation><expect>pytest rc=0; named tests passed 2 of 2; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="OA-g-1"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/round1/checks/g1.AC3.sh; echo "exit=$?"</invocation><expect>pytest rc=0; named tests passed 3 of 3; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -101,7 +108,7 @@ Report once, with:
 (`ANDREW_DIRECT_20260926_022xZ_CTO_O_OPEN_CALLS_1_TO_6_ANSWERED.md`). Checks were dry-run at base: g1.AC1-3 FAIL
 (the test file is absent).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~9</slot>
 <fabric>site-z</fabric>
