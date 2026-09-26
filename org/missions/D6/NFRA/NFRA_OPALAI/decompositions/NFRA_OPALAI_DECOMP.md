@@ -276,3 +276,22 @@ Chain: `OA-f-1 --> OA-f-2`. OA-f-2 waits for any earlier-announced gateway deplo
 **What this does NOT close today:** the Analyst seat and any operator session on this box share ONE OS account, so ONE
 client. TODAY's reach closes at the cutover, when Opal_Agent's own sign-in registers a different client, or with a
 fence change. Andrew's answer on who runs the daily upload picks the interim (CTO msg 25935).
+
+---
+
+## ADDENDUM A2 -- a portal-only asker grant, so Alyssa Keith can be admitted to portal figures only (Andrew's call 2; CTO ruling (B), msg 25996; row Z-S23)
+
+Three direct-act cells, ahead of round 2. The CTO's direction (build ladder, rung 2):
+- extend the EXISTING grant grammar, so a grant may carry zero Schwab masters and a portal-channel scope that
+  opal_asker_query honours;
+- build no second grant store; the NFRA_OPLGTW contract may be amended, because its stop is lifted;
+- resolve Alyssa's Entra oid from the directory by the operator path, without waiting for her to sign in.
+
+| Cell | Builds | Risk |
+|---|---|---|
+| `OA-g-1` | `app/data_entitlement.py` gains the scope dimension `portal_channels` (channel ids of `app/refs/DATA_CATALOG.yaml`). `masters`, `accounts`, `datasets` and `columns` may be EMPTY only when `portal_channels` is non-empty, and existing records parse unchanged. `app/asker_scope.py` serves a catalog key only if its channel is granted. `ops/schwab_entitlement_admin.py` validates portal-only candidates against the amended contract `org/standards/NFRA_OPLGTW_CONTRACT.json` | WORLD (infra floor) |
+| `OA-g-2` | the NARROW gateway release of OA-g-1, cut at the live commit read at its own cut, announced through `0.0.0_AB_MSTR~Z` | WORLD |
+| `OA-g-3` | Alyssa Keith's oid is resolved from the directory, and her grant is written through the operator command: `portal_channels` = the catalog's portal channels, `operations` = [query], zero Schwab masters | WORLD |
+
+Chain: `OA-g-1 --> OA-g-2 --> OA-g-3`. OA-g-2 follows OA-f-2 (one gateway deployer at a time). OA-g-3 is written
+after OA-g-2, because the live gateway's current parser would read a zero-master grant as Malformed and deny her.
