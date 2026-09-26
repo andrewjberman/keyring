@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-26T20:55Z. Lease FAST until 2026-09-27T01:52:21Z.
+As of 2026-09-26T21:40Z. Lease FAST until 2026-09-27T01:52:21Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now (Andrew-direct at ~Y, ~18:5xZ: "dont need option 2, but do 1 3 and 4 in order"; CTO 101442, 101465)
@@ -33,7 +33,9 @@ Next window (CTO 101465): upload, generate, READY, sections, history. A+B are ap
     CHART_DATE_CERTIFICATION_FAILED, and the job stays CERTIFYING.
   - The fix is `P_HOP7_CHART_DATE_CERTIFY_20260926.patch` (Y branch @74b4368bef). With it, the resident goes to READY on
     the real Overview.
-  - P must ship it in the resident before the window.
+  - **SERVED** (P 101518): the resident runs `/opt/irpt-resident/fe64236bbb-h7` from 21:20:44Z. Host certify.py sha256
+    `33e54ac0..` equals Y's fixed file (the old one was `f1516e24..`); ledger `irpt-hop7-certify-resident-20260926` is
+    CLOSED. Generate still packages the old file, but nothing on generate's path imports it.
 - P cuts the packet.
 - Y handed P the measured write set for its blast radius: `K5_SUBMISSION_ACT_20260926.md` @f36c5ee4c4. The vendor PDF is
   retained in `opal-data-irpt`, and there is one `_opal` lease row.
