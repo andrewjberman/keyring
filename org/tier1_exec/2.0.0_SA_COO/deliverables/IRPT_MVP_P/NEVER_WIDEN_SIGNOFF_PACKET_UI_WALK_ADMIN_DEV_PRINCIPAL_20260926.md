@@ -2,7 +2,16 @@
 
 **For:** `1.0.0_SA_CTO` (half 1) and `4.0.0_SA_CRO` (half 2), per CTO msg 101151.
 **Prepared by:** `2.0.0_SA_COO~P`, 2026-09-26 ~13:2xZ. **Operator of the create and delete:** `2.0.0_SA_COO~P`.
-**Walker:** `2.0.0_SA_COO~D`: one signed-in PROD walk of `/investor-reporting` with a HAR scrubbed in-stream.
+**Walkers:** `2.0.0_SA_COO~D`: one signed-in PROD walk of `/investor-reporting` with a HAR scrubbed in-stream. In the
+same window, `2.0.0_SA_COO~Y`: ONE Analysis upload of its v2 input, logged and scrubbed (Y msg 101161). This saves a
+second create under a second packet.
+**AMENDED (v2) per the CRO's refusal @f8fa80bddc (msg 101163) and CTO msg 101166:**
+- the audit grades the HAR by ROUTE;
+- the page's own selection rows are named as K3;
+- the limit is reworded;
+- the CTO's two additions on blob 1301fcff are carried (>= 5 GB free before login; the walk script names each FWD and
+  AC it grades);
+- ~Y's one upload is added as K4, which the halves may strike without re-cutting anything else.
 **Authority:** Andrew-direct, verbatim *"Agent on an admin+dev login"* (record addendum
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260926_021xZ_OPEN_CALLS_1_3_AND_AGENT_WALKS.md` @e2eae53ae3).
 **Shape:** the same as the Opal-class walk packet
@@ -51,6 +60,31 @@ reads it by NAME into browser memory only. The ledger records the name and the i
 - K1: `DeleteItem`, verified by a consistent `GetItem` returning no `Item`.
 - K1-CRED: `delete-parameter`, verified by `ParameterNotFound`.
 
+## K3 -- the page's own SELECTION rows (irpt-requests; written by the page, not by P)
+
+- **Where:** each selection the page makes POSTs `/selections`. `_scope/selection_store.py:22-47` writes ONE item in
+  `irpt-requests` with key `{tenant: <firm>, request_revision: SELECTION#sel_<64 hex>}` and one attribute,
+  `selection_record` (`account_ids`, `account_set_id`, `directory_revision`, `firm_id`, `schema_version`).
+- **Content-addressed and identity-free:** `sel_` is a sha256 of the selection (`_scope/selection.py:43`). The record
+  names no principal. The write is conditional-put idempotent: a repeat of the same selection by ANY principal maps to
+  the same row, and a mismatch refuses. 34 such rows exist today (scan 13:3xZ).
+- **RETENTION, not rollback:** the rows are KEPT. Deleting one could break a reference another principal holds for the
+  same selection; they carry no identity or credential. The ledger records each new `request_revision` the HAR shows the
+  walk minted, as a before/after row census (count and ids).
+
+## K4 -- ~Y's ONE Analysis upload (strike-able)
+
+- **The act:** ONE `POST /api/scoped/investor-reporting/analysis/inputs`, the file
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/aapl-vnq-12.03.csv` (AAPL 10.01 / VNQ 2.02), USD box ticked
+  (Y msg 101077).
+- **Precondition:** it runs only on `irpt-ycharts-generate` CodeSha256 `IJD6bd1IKKuVwHItl3gZLrAzj7gaqn3LW6DvOrk4wdo=`,
+  deployed 13:29:39Z under ledger `irpt-generate-closure-fix-20260926`, and after ~Y's own `generate_package_closure.py`
+  exits 0 on it.
+- **What it writes:** the upload lane's own request rows and objects, the product's record of the first live upload. It
+  makes no vendor call.
+- **RETENTION:** kept, as the acceptance evidence of ledger `irpt-upload-hop2-20260924` S1. ~Y names each row and object
+  key in its log.
+
 ## K2 -- the session, never recorded
 
 The access token's TTL is 15 min (`jwt.ts:17`). The refresh token re-reads the row (CRO @909dd40acc measured this on the
@@ -83,15 +117,26 @@ three admits it:
 the above for its life. The bound on what is done is the walker's script plus the HAR as the whole call list.
 CTO limit, verbatim in substance:
 
-- **Allowed:** page reads only.
-- **Forbidden:**
-  - any export;
-  - any vendor call (the one-use plan gate refuses Orion without an armed plan, and none is armed);
-  - any grant or admin act: no request to `/auth/admin/*`, and no write to any settings or user surface.
+**THE LIMIT (reworded, CTO 101166):** "page use only: reads plus the page's own selection writes; no admin, export,
+grant or vendor call." Plus K4: ~Y's ONE upload.
 
-**The audit check for the write surface:** the committed HAR holds 0 requests whose method is not GET/HEAD to any path
-outside `/auth/login` and `/auth/refresh`. It also holds 0 requests of any method to `/auth/admin/`, and ~D's HAR
-census prints both counts with their denominator.
+**THE AUDIT, GRADED BY ROUTE.** The combined log (~D's HAR plus ~Y's upload log) is censused request by request, with
+its denominator printed. Every request must fall in exactly one admitted class:
+
+| class | admitted |
+|---|---|
+| any method | `/auth/login`, `/auth/refresh` |
+| POST | `/api/scoped/investor-reporting/directory/resolve` (page load); `/api/scoped/investor-reporting/selections` (each selection -> K3) |
+| POST, exactly 1, by ~Y | `/api/scoped/investor-reporting/analysis/inputs` (K4) |
+| GET / HEAD | any page read |
+
+Any request outside these classes is branch (d). This includes, explicitly:
+- any request of any method to `/auth/admin/`;
+- any POST/PUT/PATCH/DELETE to any other path;
+- any `/export` request;
+- any second `/analysis/inputs` POST.
+
+The census prints the count per class, the count outside the classes (must be 0), and the denominator.
 
 ## Branches
 
@@ -113,11 +158,14 @@ census prints both counts with their denominator.
    - `ParameterNotFound` on the name.
    - A user census of `opal-users-v2` (count, and each PROFILE's `status` digest; no PII printed), the baseline for
      branch (d).
+   - A SELECTION# row census of `irpt-requests` (count and ids), the baseline for K3.
 3. **Put K1-CRED, then K1** (`attribute_not_exists(PK)`). Read K1 back consistently; digest it with `passwordHash`
    excluded.
 4. **Hand over to `2.0.0_SA_COO~D`:** the e-mail, the parameter NAME, the limits, and the 60-min deadline.
 5. **~D walks `/investor-reporting`** with the HAR scrubbed in-stream (password, `Authorization` headers, cookies, token
-   values). It grades IVE30-AC3, round 4's AC4s, and round 3's five NOT_EVALUATED (CTO 101151).
+   values). It grades IVE30-AC3, round 4's AC4s, and round 3's five NOT_EVALUATED (CTO 101151), and the walk script
+   names each FWD and AC it grades (CTO addition). In the same window, **~Y makes its ONE upload (K4)** and logs it,
+   scrubbed.
 6. **Delete:**
    - `DeleteItem` K1, verified by a failing consistent read.
    - One login attempt with the password through the CloudFront route (`https://opalinvest.dev/auth/login`; the
@@ -126,7 +174,9 @@ census prints both counts with their denominator.
    - Delete K1-CRED, verified by `ParameterNotFound`.
    - ~D reloads once and must land on `/login`.
 7. **Audit:**
-   - The HAR census (branch (d) check).
+   - The route-graded census of the HAR plus ~Y's log (branch (d) check).
+   - The SELECTION# row census re-read: the new ids listed and each traced to a `/selections` POST in the HAR (K3).
+   - ~Y's upload rows and objects named (K4).
    - The user census re-read: equal to the pre-walk baseline.
    - IRPT and auth logs show no request after the last token's `exp`.
    - Record the interval `[K1 put, max(K1 delete verified, last access exp)]`; close and commit the ledger.
@@ -135,12 +185,13 @@ census prints both counts with their denominator.
 
 - Any second principal.
 - Any `/auth/admin/*` request.
-- Any settings, user, grant, roster, ownership-map or directory write.
+- Any write beyond K3 (the page's own selections) and K4 (~Y's one upload): no settings, user, grant, roster,
+  ownership-map or directory write.
 - Any export or render.
 - Any vendor call.
 - Any change to the auth-handler, the authorizer, the edge or the JWT keys.
 
 ## WHAT THE HALVES SIGN AGAINST
 
-This file's committed blob, the key list K1 + K1-CRED + K2 above, the stated superadmin radius, and the sequence's
+This file's committed blob, the key list K1 + K1-CRED + K2 + K3 (retained) + K4 (retained, strike-able) above, the stated superadmin radius, and the sequence's
 rollback and audit.
