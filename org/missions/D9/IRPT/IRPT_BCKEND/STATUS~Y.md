@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 2f72865f), per CTO 101100 (Andrew-direct ~03:0xZ, 09-26; record
 `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Lease FAST until 2026-09-26T15:01:17Z. Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-26T03:22Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
+As of 2026-09-26T03:33Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Pins
 
@@ -26,8 +26,9 @@ State: NOT LIVE. The FIRST LIVE UPLOAD was attempted at 03:17Z by API as the wal
   `interactive_access`.
 
 The deployed generate zip (LdjdnnLh, 107 members) lacks `_scope/interactive_access.py`, which served.py:883 and
-compose_upload import for an Opal subject. That was Y's patch miss. ASK to P + CTO 101116/101117: add the file, rebuild,
-deploy. Nothing was written (0 rows). Log: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/LIVE_UPLOAD_1203_20260926.json`
+compose_upload import for an Opal subject. That was Y's patch miss. The import-closure walk finds THREE missing modules (interactive_access, template_reader,
+security_resolution). The exact staged_from rows are in `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/P_GENERATE_PACKAGE_MISSING_MODULES_20260926.md`.
+ASK to P + CTO 101116/101117: add them, rebuild, deploy. Nothing was written (0 rows). Log: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/LIVE_UPLOAD_1203_20260926.json`
 (scrubbed).
 
 ## Acceptance IDs
