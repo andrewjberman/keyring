@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-26T16:2xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-26T23:5xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -37,7 +37,8 @@ a0690a03 parser reads READY at every firm.
 ## Write claims
 
 `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/*` and `data/assets/scripts/gold/investor_reporting/*` on the M
-branch. No code edit is open.
+branch. COT `C_06`, `D_03`, `D_04` and their tests on branch `irpt-m-cot-cash-line` (`../ajb_irpt_m_cashline`,
+head ccb9b38dd8, NOT merged). `0.4.0_DS_ClientPlatform~X` holds the 8+1 paths of its work order.
 
 ## Next list (in order)
 
@@ -89,6 +90,7 @@ branch. No code edit is open.
        bd-securities-cot-new-align6-m-20260926 CLOSED @1d2b27a1c2). Ledger bd-securities-cot-new-p1-m-20260926: R1 HELD for Monday's COT and BD
        runs.
      - Part 2 (26 `other`) is signed and waits on the act-1 read-back (Monday) plus ~D's mapping on origin DEV.
+     - **Part 2 ALSO waits on d08 (and d06) admitting `other`** (both raise on it; CTO 101639, item 9 of ~X's order).
      - **B_01b deploy PARKED by ~M** (see Parked): it is not in COT's scheduled chain, and a deploy would re-send the
        excluded keys.
      - Part 2's second condition is MET: ~D's IV-e-27 (959a59a2) is an ancestor of origin/DEV and origin/PROD (fetch
@@ -221,6 +223,19 @@ disposed REMEDIED (S129).
     COT's cash line by row (~M's C_06 grant, own half).
   - Part B SIGNED as a sequence: guard the seeds, then B1 readers admit (3 RAISE, 11 silent drops today; owners named),
     then a re-census at 0/0, then B2 writes 13 keys, then B3 Holdings. ~D has the portal lines (v0.14). CRO half requested.
+
+- **COT cash line (CTO 101547):** BOTH HALVES SIGNED on 9e3f568d42 + 0deac23f1e (CTO 101597/101616; CRO 101595,
+  101629). Negative-cash census @eaca6a30de: 17 of 29 relationships net negative on the cash line; C_06 moves
+  +$66,055,897.80 (positive rows only). D_03 ruled (a) (CTO 101616): positive-rows rule; 0 of 223 compositions over
+  100% before and after; firm + 27 relationships' mix moves (@625e331ded). Found: the 3 personal liabilities in
+  z09305672 classify `equity`, not `other` (~M, under R5, its own half). DEPLOY: Monday, after R1 of
+  cot-cash-admission-m-20260925; merge the branch, safe-deploy C_06/D_03/D_04 under one ledger; read back z09305653's
+  cash slice, 0 of 223 over 100%, and d08 beside C_06.
+- **B1 reader admissions (CTO 101573/101578):** ~M's COT C_06/D_03/D_04 admit structured/commodities @ccb9b38dd8 (same
+  branch; D_04's firm mix now reads every C_06 class). `0.4.0_DS_ClientPlatform~X` SEATED under
+  IRPT_MVP_M/WORK_ORDER_DS_X_B1_AND_CASH_LINE_20260926.md (amendment 1 @8b45af0917): a07/d08 cash line, d06/d08/BD
+  C_06/D_03/D_04/both mix_views admit, d06/d08 admit `other`. Seating exception to CONTRACT.md:3 (CTO 101639). ~P:
+  contract enum admits both (d3c5467ce1, ae32ac98d7). B2 still waits on ~D's C34 and a re-census at 0 RAISE / 0 drop.
 
 ## Limits
 
