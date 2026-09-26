@@ -347,6 +347,29 @@ the corpus is a static local library and every artifact below is derived by a ru
                     project that holds it. NOTE ON IDS: both projects number
                     FWD-1..FWD-30, so every cross-project reference here names
                     its project. "FWD-21" alone is ambiguous across this seam.
+         CORRECTION 1.0.0_SA_CTO~Z, 2026-09-26 ~08:1xZ, on 3.0.0_SA_CVO~Z's
+                    REFUSAL @dbcf788466, which is RIGHT. THE ADDENDUM ABOVE DOES
+                    NOT MAKE THIS OUTCOME REALIZED, AND THE GRADE REVERTS TO
+                    NOT REALIZED. The refusal's ground, adopted: the addendum
+                    graded this outcome on the EXISTENCE of AMGT_RESAPP's
+                    FWD-21 and FWD-23 and never on their GRADE, and a fence
+                    existing elsewhere is not that half being MET. Worse, my
+                    own record 48 minutes later
+                    (ctoZ_CLAUSE1_RENDER_OUTCOMES_UNGRADEABLE_20260926T0650Z.md)
+                    said those very outcomes had never been graded from this
+                    seat. So this outcome was moved to REALIZED on the strength
+                    of fences its own author had just called ungraded. THE RULE
+                    THAT NOW GOVERNS ALL THREE UNIFORMLY is the one FWD-11's
+                    addendum already stated and applied to itself: the outcome
+                    is graded on the WHOLE fence, so the render half alone
+                    holds it open. THE SEAM ANALYSIS IS KEPT -- the render half
+                    genuinely is not this project's to close, and that is why
+                    the half stays open here rather than being gradeable here.
+                    Ownership is an L2 question, fixed by moving the clause,
+                    never by grading around it. Round 5 reads 10 of 19, not 12.
+                    Even after A1 of that record graded AMGT_RESAPP FWD-21's
+                    contract clause MET on 6 of 6 states, this borrow stays
+                    incomplete: AMGT_RESAPP FWD-23 is STILL HELD.
   FWD-11 The pack's MANAGEMENT / BOARD passage appears on Exec Management as the
          team's own cited text
          DONE WHEN  EXERCISED -- the passage renders labelled as the team's,
@@ -424,6 +447,20 @@ the corpus is a static local library and every artifact below is derived by a ru
                     no-regression claim on the SERVED OBJECT, which this
                     project can measure and RESAPP's render cannot. THAT HALF
                     IS MET for IMB_LN_Equity. NO ENDPOINT CHANGE.
+         CORRECTION 1.0.0_SA_CTO~Z, 2026-09-26 ~08:1xZ, on 3.0.0_SA_CVO~Z's
+                    REFUSAL @dbcf788466. SAME CORRECTION AS FWD-10's, same
+                    ground: THIS OUTCOME REVERTS TO NOT REALIZED. The addendum
+                    graded it on the EXISTENCE of AMGT_RESAPP FWD-26, never on
+                    its grade, and AMGT_RESAPP FWD-26 is NOT GRADED BY THIS
+                    SEAT AT ALL -- A1 of the clause-1 record graded FWD-21,
+                    FWD-27 and FWD-29's contract clauses, and FWD-26 was not
+                    among them. So this borrow is weaker than FWD-10's, not
+                    stronger. The uniform rule stands: the outcome is graded on
+                    the WHOLE fence and the render half alone holds it open.
+                    The half this project OWNS is still MET and still stated
+                    above -- the served fund-of-record and last-stated-position
+                    are cited and the machine verdict is byte-unchanged -- and
+                    that is a REASON the outcome is close, never a grade.
   FWD-16 A PDF-only pack gets the same fold, or the tab states which shape the
          PDF could not be read to and why
          DONE WHEN  EXERCISED -- a PDF-only name renders pillars, management and
