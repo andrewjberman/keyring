@@ -26,13 +26,15 @@ from __future__ import annotations
 import datetime as dt
 import hashlib
 import json
+import os
 import sys
 
 import boto3
 
 FIRM, ACCOUNT = "49financial", "acc_0030c178052a2db50d683027"
 WINDOW = ("2026-01-01", "2026-09-26")
-FRESH = ("2026-01-01", "2026-09-19")
+# The fresh window must be one no earlier run retained (else it reopens): IRPT_ARM_FRESH_END overrides it.
+FRESH = ("2026-01-01", os.environ.get("IRPT_ARM_FRESH_END", "2026-09-19"))
 ROUTE = "GET /api/scoped/investor-reporting/performance/{accountSetId}"
 SELECT_ROUTE = "POST /api/scoped/investor-reporting/selections"
 BASE = {"x-origin-verify": "cloudfront", "x-user-role": "user", "x-contract-version": "v1"}
