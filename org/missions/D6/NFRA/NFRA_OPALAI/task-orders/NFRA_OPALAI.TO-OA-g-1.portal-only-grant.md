@@ -108,7 +108,7 @@ Report once, with:
 (`ANDREW_DIRECT_20260926_022xZ_CTO_O_OPEN_CALLS_1_TO_6_ANSWERED.md`). Checks were dry-run at base: g1.AC1-3 FAIL
 (the test file is absent).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~9</slot>
 <fabric>site-z</fabric>
