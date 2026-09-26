@@ -1263,6 +1263,31 @@ carries none.
     "world_is": "True but shallow, and the INERT call was wrong. The tool does not merely fail on corruption it inherited -- it CREATES that corruption on every pass over any non-ASCII character, silently, and only becomes loud later. Z-S12's remedy (take the characters out) is still the right act and is done. What Z-S12 missed is that nothing PREVENTS recurrence: the two writers' opposing policies mean the next non-ASCII value written by node re-arms the loop. Hence ARMED, not INERT.",
     "disarm_owner": "2.0.0_SA_COO~O",
     "notes": "NOT FIXED HERE, deliberately. MX-s-5 bound 1 is 'The one data file, plus the recorder re-run. No other file changes', and the order's own step 2 says 'Do not fix other tools here.' The fix is one argument in two places: encoding='utf-8' at record-terraform-deploy.sh :259 and :340. The reader is the urgent half; the writer needs it only to stay correct if ensure_ascii is ever turned off. A durable guard would be a commit-time ASCII check on lambda-source-map.json, which would have caught all 105 of those commits -- proposing it, not implementing it (CLAUDE.md section 2: never implement a gate unless Andrew asks)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S14",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T18:45Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W2-S7",
+      "NFRA_MCPINDEX-Z-W3-S11"
+    ],
+    "one_line": "DISPOSITION CORRECTION by the issuer. My earlier disarm rows adjudicated these items but carried disposition UNDER_INVESTIGATION, which _latest_dispositions (surprise-row-gate.py:426) passes to the target, so the items kept reading OPEN and gating. This row carries the terminal disposition: W2-S7 by Z-S7 (v6.AC1 reads all 1069 catalog strings, planted control caught); W3-S11 by Z-S2 (MX-t-8 amended to the 3 tools catalog_gate resolves).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Fold measured at ~18:40Z with the gate's own _latest_dispositions/_gating_item_ids: each target listed read UNDER_INVESTIGATION and gating, while an issuer disarm row already adjudicated it.",
+        "3.0.0_SA_CVO~Z's finding (relayed by 1.0.0_SA_CTO~O, file 20260926T182052Z) that Z-W9-S3 read UNDER_INVESTIGATION at 18:3xZ."
+      ]
+    },
+    "spec_asserts": "Each target was disarmed by the issuer's adjudicating row.",
+    "world_is": "The disarms carried a non-terminal disposition; this row makes them terminal. The reasons are the earlier rows' own.",
+    "dismissal_reason": "Each target was already disarmed by the issuer's own adjudicating row with its reason stated there; this row only makes the disposition terminal."
   }
 ]
 ```
