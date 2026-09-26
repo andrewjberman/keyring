@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
 Drive: /closer-drive loop (cron 7a9ea1ce, every 30m at :17/:47; CTO 101098, Andrew-direct ~03:0xZ; replaced /canonical-drive 57c0067c); lease FAST re-armed to 15:01Z. Egress: vendor API calls permitted this session, each ledgered (CTO 101098). Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-26T14:5xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
+As of 2026-09-26T15:2xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
 
 ## Pins
 
@@ -45,14 +45,13 @@ None building. Next surface: the adapter package + performance root (deploy B), 
 
 ## Next-list (in order)
 
-0. LIVE-THREAD DEFECT (CTO 101236): relationship-level Performance -- the page selects whole relationships, and every
-   multi-account selection answers SELECTION_UNSUPPORTED ("performance computes exactly one selected account") at 49F
-   and COT (~D's walk HAR, 4 of 4 Performance reads). FWD-1's Performance hop is blocked on it; it goes into the round
-   analysis. Design first: an account-set aggregate (49F engine linking; Orion/BD per provider), or a named per-account
-   breakdown.
-0b. WINDOW 2 (CTO 101240): packet v6 blob 71146fdd @34f4619882 out for halves -- new principal; K4 upload + K5 /analysis
-   (hop 3) on the jsonschema-fixed generate; K6 = ~D's ONE 49F account-level Performance page read = export-B BEFORE.
-   Create after both halves are at HEAD.
+0. CLOSED BY ANDREW (CTO 101270, @07c4b8b84e): "Performance is always going to be account-level, not client level".
+   The one-account rule (performance/retained.py:77-80) STANDS; option B (R8) is SUPERSEDED and NOT built (the
+   uncommitted refactor is kept only as .scratch/option_b_retained_SUPERSEDED.patch). The fix is frontend routing --
+   CRO /closer traces -> PRD addendum -> round 6 (~D). Card RELATIONSHIP_PERFORMANCE_CARD_20260926.md stays as the record.
+0b. WINDOW 2 LIVE: principal irpt-uiwalk-1790435397 created 15:10:02Z under packet v7 3edebd85 (CTO + CRO halves);
+   ledger irpt-ui-walk-principal-w2-20260926 (C1 closed). ~Y K4 upload + K5 /analysis (hop 3); ~D K6 = ONE 49F
+   account-level Performance page read (export-B BEFORE). Delete on both "done" or 16:08Z (cron 9fd10e72).
 0c. DONE 14:52:47Z: irpt-ycharts-generate jsonschema fix LIVE (85TXFzzv + irpt-common:5; ledger
    irpt-generate-jsonschema-fix-20260926 CLOSED): negative control FAILS on IJD6bd1I, both checkers pass, deployed
    import census 59 / 0 failed (CTO 101229). Tool: IRPT_MVP_P/package_import_check.py.
