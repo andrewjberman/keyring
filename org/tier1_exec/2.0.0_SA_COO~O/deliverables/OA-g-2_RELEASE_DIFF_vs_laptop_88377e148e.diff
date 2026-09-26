@@ -1,0 +1,1031 @@
+# OA-g-2 release df724ef284 vs the live-laptop-release code 0af72fb1d0 (recorded at 88377e148e), path infra/aws/ec2/opal-gateway
+# merge-base --is-ancestor 0af72fb1d0 df724ef284: TRUE (the Teams-reader fixes ride along; nothing of theirs is reverted)
+# = OA-f-1 (5 files, LIVE since 07:43:40Z as c5f8099440) + OA-g-1 (5 files, this release)
+#  infra/aws/ec2/opal-gateway/app/admin_grants.py     |  10 +-
+#  infra/aws/ec2/opal-gateway/app/asker_scope.py      |  24 +-
+#  infra/aws/ec2/opal-gateway/app/context.py          |  19 +-
+#  infra/aws/ec2/opal-gateway/app/data_entitlement.py |  58 ++++-
+#  infra/aws/ec2/opal-gateway/app/identity_scope.py   |  68 ++++-
+#  infra/aws/ec2/opal-gateway/app/server.py           |  22 +-
+#  .../ec2/opal-gateway/identity_tool_allowlist.txt   |  10 +-
+#  .../opal-gateway/ops/schwab_entitlement_admin.py   |  47 +++-
+#  .../ec2/opal-gateway/tests/test_identity_scope.py  | 116 ++++++++-
+#  .../ec2/opal-gateway/tests/test_portal_grant.py    | 290 +++++++++++++++++++++
+#  10 files changed, 613 insertions(+), 51 deletions(-)
+diff --git a/infra/aws/ec2/opal-gateway/app/admin_grants.py b/infra/aws/ec2/opal-gateway/app/admin_grants.py
+index 92e503a5f1..e3f591ef5a 100644
+--- a/infra/aws/ec2/opal-gateway/app/admin_grants.py
++++ b/infra/aws/ec2/opal-gateway/app/admin_grants.py
+@@ -92,14 +92,20 @@ def _grant_json(grant) -> Optional[dict]:
+     if grant is None:
+         return None
+     s = grant.scope
+-    return {"revision": grant.revision, "status": grant.status, "scope": {
++    scope = {
+         "masters": sorted(s.masters),
+         "datasets": sorted(s.datasets),
+         "accounts": {m: sorted(a) for m, a in s.accounts.items()},
+         "dates": {"mode": s.date_mode, "dates": sorted(s.dates)},
+         "columns": {d: sorted(c) for d, c in s.columns.items()},
+         "operations": sorted(s.operations),
+-    }}
++    }
++    # contract v1.2 portal_grant: carried whenever the grant carries it, so a portal-only grant never reads back
++    # as empty; a grant without it reads back exactly as before (no key).
++    portal_channels = getattr(s, "portal_channels", frozenset())
++    if portal_channels:
++        scope["portal_channels"] = sorted(portal_channels)
++    return {"revision": grant.revision, "status": grant.status, "scope": scope}
+ 
+ 
+ def _canonical_pair(tid_raw: str, oid_raw: str):
+diff --git a/infra/aws/ec2/opal-gateway/app/asker_scope.py b/infra/aws/ec2/opal-gateway/app/asker_scope.py
+index 6db7757b40..d80819062d 100644
+--- a/infra/aws/ec2/opal-gateway/app/asker_scope.py
++++ b/infra/aws/ec2/opal-gateway/app/asker_scope.py
+@@ -27,6 +27,8 @@ SHAPE:
+       scoped-but-not-allowed for opal_asker_query (never wider than either side alone);
+       otherwise the asker's own grant scope passes through unchanged. A per-dataset
+       narrowing over identity_scope is NOT invented here -- row NFRA_OPALAI-Z-W2-S1.
++      The asker grant's `portal_channels` (contract v1.2 `portal_grant`, NFRA_OPALAI
++      addendum A2) passes through the same way, and collapses to EMPTY with the rest.
+   (d) the fetch is served through query_v0's own catalog_gate, unmodified, using the
+       CALLING identity's own server-side principal-class/firm resolution (the same
+       function /query/v0 already uses) -- so this tool can never let an asker see a
+@@ -37,6 +39,13 @@ SHAPE:
+       NFRA_OPALAI-Z-W2-S1) and the grant's `operations` dimension is the one this cell
+       DOES honour: the asker's grant must carry `query` or the call is denied before any
+       catalog lookup.
++      PORTAL CHANNELS (addendum A2, CTO ruling (B) msg 25996): the mapping the paragraph
++      above refuses to invent now EXISTS as data -- a grant may carry `portal_channels`,
++      channel ids of the same W5 catalog. When the asker's grant carries it, a key is
++      served only if catalog_gate's own row for it (its `_channel`) is one of the granted
++      channels; any other key is refused with the same deny shape before any fetch. The
++      calling identity's catalog_gate verdict still applies first, so the result is never
++      wider than either side. A grant WITHOUT portal_channels behaves exactly as before.
+   (e) no `asker`/`email`/`oid` argument exists on the tool's own signature (structural,
+       mirroring identity_scope.py's "denied via absence"); this module's functions never
+       accept one either, and `params` is passed through to the catalog fetch unread for
+@@ -110,6 +119,7 @@ def resolve_asker(token: str, chat_id: str, message_id: str,
+ class EffectiveScope(NamedTuple):
+     operations: frozenset
+     datasets: frozenset
++    portal_channels: frozenset = frozenset()
+ 
+ 
+ def effective_scope(access: de.Access, calling_email: str, tool: str = ASKER_QUERY_TOOL) -> EffectiveScope:
+@@ -119,7 +129,8 @@ def effective_scope(access: de.Access, calling_email: str, tool: str = ASKER_QUE
+         return EffectiveScope(frozenset(), frozenset())
+     if identity_scope.check(calling_email, tool) is not None:
+         return EffectiveScope(frozenset(), frozenset())
+-    return EffectiveScope(access.grant.scope.operations, access.grant.scope.datasets)
++    s = access.grant.scope
++    return EffectiveScope(s.operations, s.datasets, s.portal_channels)
+ 
+ 
+ # --- the tool body -------------------------------------------------------------------------------------------
+@@ -174,6 +185,17 @@ def handle_asker_query(chat_id: str, message_id: str, key: str, params: Optional
+                   "denied", verdict.reason[:200])
+         return _denial("asker_catalog_denied", verdict.reason)
+ 
++    # (d) PORTAL CHANNELS: a grant carrying portal_channels serves only its granted channels, read from the
++    # catalog row catalog_gate itself resolved -- on top of the calling identity's verdict, never instead of it.
++    if access.grant.scope.portal_channels:
++        channel = (verdict.row or {}).get("_channel")
++        if channel not in scope.portal_channels:
++            reason = ("the asker's data entitlement does not include portal channel %r (granted: %s); no data "
++                      "was read" % (channel, ", ".join(sorted(scope.portal_channels)) or "none"))
++            audit_log(calling_email, ASKER_QUERY_TOOL,
++                      {"asker_oid": principal.oid, "key": key, "verdict": "DENY-CHANNEL"}, "denied", reason[:200])
++            return _denial("asker_channel_denied", reason)
++
+     try:
+         body, nbytes = query_v0._fetch_capped(key)
+     except query_v0._OverCap:
+diff --git a/infra/aws/ec2/opal-gateway/app/context.py b/infra/aws/ec2/opal-gateway/app/context.py
+index 120ab56ff0..90a2cb4121 100644
+--- a/infra/aws/ec2/opal-gateway/app/context.py
++++ b/infra/aws/ec2/opal-gateway/app/context.py
+@@ -78,22 +78,35 @@ def tenant_authorized(tid) -> bool:
+ 
+ _current_principal: ContextVar[Optional[Principal]] = ContextVar("current_principal", default=None)
+ _current_email: ContextVar[str] = ContextVar("current_email", default="")
++# NFRA_OPALAI OA-f-1: the OAuth client_id of this request, taken ONLY from the VALIDATED access token's
++# `client_id` claim, set together with the principal. Never from a header, body or argument. Empty = no
++# verified client (a client-qualified identity_scope row then does not admit).
++_current_client_id: ContextVar[str] = ContextVar("current_client_id", default="")
+ 
+ 
+-def set_current_principal(principal: Principal) -> None:
+-    """The validated principal of this request (and its display email)."""
++def set_current_principal(principal: Principal, client_id: str = "") -> None:
++    """The validated principal of this request (and its display email), plus the verified OAuth client_id
++    from the same validated token. Every call resets the client_id, so a caller that sets a principal
++    without a verified client carries NO client."""
+     _current_principal.set(principal)
+     _current_email.set(principal.email)
++    _current_client_id.set(client_id if isinstance(client_id, str) else "")
+ 
+ 
+ def get_current_principal() -> Optional[Principal]:
+     return _current_principal.get()
+ 
+ 
++def get_current_client_id() -> str:
++    """The verified OAuth client_id of this request ('' when none was verified)."""
++    return _current_client_id.get()
++
++
+ def set_current_email(email: str) -> None:
+-    """An access-layer (GUI path) identity: an email with no principal behind it."""
++    """An access-layer (GUI path) identity: an email with no principal behind it (and no OAuth client)."""
+     _current_principal.set(None)
+     _current_email.set(email)
++    _current_client_id.set("")
+ 
+ 
+ def get_current_email() -> str:
+diff --git a/infra/aws/ec2/opal-gateway/app/data_entitlement.py b/infra/aws/ec2/opal-gateway/app/data_entitlement.py
+index 14909acd0d..0eca3c1589 100644
+--- a/infra/aws/ec2/opal-gateway/app/data_entitlement.py
++++ b/infra/aws/ec2/opal-gateway/app/data_entitlement.py
+@@ -19,6 +19,14 @@ validated Entra tenant and object id and never by email:
+                                                                previous 29 calendar days (PRD C3)
+            "columns":    {dataset: [column names]},            every granted dataset names its columns
+            "operations": [list | describe | query | download_filtered]}   never download_original or write
++         [ "portal_channels": [channel ids] ]                  OPTIONAL (contract v1.2 `portal_grant`, NFRA_OPALAI
++                                                               addendum A2): channel ids of app/refs/DATA_CATALOG.yaml,
++                                                               the channels catalog_gate indexes
++
++  A record WITHOUT portal_channels parses exactly as before: every Schwab dimension non-empty. With a non-empty
++  portal_channels, masters/accounts/datasets/columns may be EMPTY (all four together: a PORTAL-ONLY grant) or carry a
++  full Schwab scope as before; empty of both is Malformed. A portal-only grant (no masters) admits NO Schwab tool --
++  it is read only by the asker path (app/asker_scope.py), which serves a catalog key only in a granted channel.
+ 
+   A revoked record is a TOMBSTONE: the operator path cannot delete a POLICY record (access_state refuses it), and a
+   principal with ANY profile record -- pending, active or revoked -- is restricted. Nothing reactivates the legacy
+@@ -65,6 +73,8 @@ DATASETS = ("dim_position", "dim_balance", "dim_asset")
+ GRANT_DATE_MODES = ("rolling_complete_window", "fixed_dates")
+ ROLLING_WINDOW_DAYS = 30   # PRD C3: the latest qualified complete business date and the previous 29 calendar days
+ SCOPE_DIMENSIONS = ("masters", "datasets", "accounts", "dates", "columns", "operations")
++# Contract v1.2 `portal_grant`: the one OPTIONAL scope dimension. Absent = the record parses exactly as v1.1.
++PORTAL_DIMENSION = "portal_channels"
+ REVISION_DIGITS = 10
+ 
+ ENTITLEMENT_DENIED = "ENTITLEMENT_DENIED"   # contract error_codes
+@@ -108,6 +118,7 @@ GUARDED_ROUTES = ("/teams/poll", "/query/v0")
+ 
+ _DATE = re.compile(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$")
+ _ACCOUNT = re.compile(r"^[0-9A-Za-z._-]{1,64}$")
++_CHANNEL = re.compile(r"^[a-z][a-z0-9_]{0,63}$")
+ 
+ 
+ class Malformed(Exception):
+@@ -122,6 +133,12 @@ class Scope(NamedTuple):
+     dates: frozenset         # the enumerated dates of a fixed_dates grant; empty for a rolling window
+     columns: dict            # dataset -> frozenset of column names
+     operations: frozenset
++    portal_channels: frozenset = frozenset()   # empty = the record carries no portal_channels (v1.1 meaning)
++
++    @property
++    def portal_only(self) -> bool:
++        """True for a grant with portal channels and no Schwab master: it admits no Schwab tool."""
++        return bool(self.portal_channels) and not self.masters
+ 
+ 
+ class Profile(NamedTuple):
+@@ -199,15 +216,36 @@ def _iso_date(text: str, what: str) -> _dt.date:
+         raise Malformed("%s is not a calendar date" % what) from None
+ 
+ 
++def _schwab_half_empty(raw: dict) -> bool:
++    """True when every Schwab dimension (masters, accounts, datasets, columns) is empty: [] for masters/datasets,
++    {} for accounts/columns -- they may be EMPTY only together and only beside portal_channels. Any other
++    value (including a partly-empty Schwab half) is left to the strict parse below, which refuses it."""
++    def _empty_list(v: Any) -> bool:
++        return isinstance(v, (list, tuple, set, frozenset)) and len(v) == 0
++
++    def _empty_map(v: Any) -> bool:
++        return isinstance(v, dict) and len(v) == 0
++    return (_empty_list(raw["masters"]) and _empty_list(raw["datasets"])
++            and _empty_map(raw["accounts"]) and _empty_map(raw["columns"]))
++
++
+ def parse_scope(raw: Any) -> Scope:
+-    if not isinstance(raw, dict) or set(raw) != set(SCOPE_DIMENSIONS):
+-        raise Malformed("scope must carry exactly %s" % (SCOPE_DIMENSIONS,))
+-    masters = _strings(raw["masters"], "scope.masters")
+-    if not masters <= set(MASTERS):
+-        raise Malformed("scope.masters names a master outside the contract")
+-    datasets = _strings(raw["datasets"], "scope.datasets")
+-    if not datasets <= set(DATASETS):
+-        raise Malformed("scope.datasets names a dataset outside the contract")
++    if not isinstance(raw, dict) or set(raw) not in (set(SCOPE_DIMENSIONS), set(SCOPE_DIMENSIONS) | {PORTAL_DIMENSION}):
++        raise Malformed("scope must carry exactly %s, optionally with %s" % (SCOPE_DIMENSIONS, PORTAL_DIMENSION))
++    portal_channels = frozenset()
++    if PORTAL_DIMENSION in raw:
++        portal_channels = _strings(raw[PORTAL_DIMENSION], "scope.portal_channels", _CHANNEL)
++    if portal_channels and _schwab_half_empty(raw):
++        masters = datasets = frozenset()
++    else:
++        # no portal_channels (or a grant carrying both): the Schwab half parses exactly as v1.1 -- non-empty.
++        # A record empty of both lands here and is Malformed ("scope.masters must be a non-empty list").
++        masters = _strings(raw["masters"], "scope.masters")
++        if not masters <= set(MASTERS):
++            raise Malformed("scope.masters names a master outside the contract")
++        datasets = _strings(raw["datasets"], "scope.datasets")
++        if not datasets <= set(DATASETS):
++            raise Malformed("scope.datasets names a dataset outside the contract")
+     operations = _strings(raw["operations"], "scope.operations")
+     if operations & set(DISABLED_OPERATIONS):
+         raise Malformed("scope.operations names an operation the contract disables")
+@@ -234,7 +272,7 @@ def parse_scope(raw: Any) -> Scope:
+         if set(dates_raw) != {"mode"}:
+             raise Malformed("a rolling_complete_window grant carries only its mode")
+         dates = frozenset()
+-    return Scope(masters, datasets, accounts, dates_raw["mode"], dates, columns, operations)
++    return Scope(masters, datasets, accounts, dates_raw["mode"], dates, columns, operations, portal_channels)
+ 
+ 
+ def _owner(rec: dict, tid: str, oid: str, what: str) -> None:
+@@ -279,6 +317,8 @@ def _store(store: Optional[acs.AccessState]) -> acs.AccessState:
+ def allowed_tools(profile: Optional[Profile], grant: Optional[Grant]) -> frozenset:
+     if profile is None or grant is None or profile.status != "active" or grant.status != "active":
+         return frozenset()
++    if grant.scope.portal_only:
++        return frozenset()   # a portal-only grant names no Schwab master, so it admits no Schwab tool
+     return frozenset(t for t, op in SCHWAB_TOOLS.items() if op is None or op in grant.scope.operations)
+ 
+ 
+diff --git a/infra/aws/ec2/opal-gateway/app/identity_scope.py b/infra/aws/ec2/opal-gateway/app/identity_scope.py
+index 9448892717..d55f3362ce 100644
+--- a/infra/aws/ec2/opal-gateway/app/identity_scope.py
++++ b/infra/aws/ec2/opal-gateway/app/identity_scope.py
+@@ -26,14 +26,22 @@ denial is the same structured, quotable shape everywhere:
+     {"error": ..., "guard_denied": True, "code": "identity_scope_denied"}
+ 
+ Live-file overlay: IDENTITY_TOOL_ALLOWLIST_PATH (hot-reloaded per check, mirroring
+-entitlements.py). Format: '<email> <tool>' per line, '#' comments. Missing file -> the
+-seed. An UNREADABLE file -> the seed stands (a scope list never changes on a read error).
++entitlements.py). Format: '<email> <tool> [client=<id>]' per line, '#' comments. Missing file
++-> the seed. An UNREADABLE file -> the seed stands (a scope list never changes on a read error).
++
++CLIENT-QUALIFIED ROWS (NFRA_OPALAI OA-f-1; Andrew's option 2, CTO msg 25935): a row carrying the
++optional third token 'client=<id>' admits that tool for that identity ONLY when the request's
++verified OAuth client_id (context.get_current_client_id(), set solely from the validated access
++token's client_id claim) equals <id>. No verified client_id -> the qualified row does not admit.
++An unqualified row behaves exactly as before. A third token that is not a well-formed
++'client=<id>' makes the row admit nothing (fail closed). The code seed is never qualified.
+ """
+ from __future__ import annotations
+ 
+ import os
+ 
+ from .config import get_config
++from .context import get_current_client_id
+ 
+ _cfg = get_config()
+ 
+@@ -68,39 +76,71 @@ def _norm(email: str) -> str:
+     return (email or "").strip().lower()
+ 
+ 
+-def _load_scopes() -> dict[str, frozenset[str]]:
+-    """Seed + optional live-file overlay (hot-reload per check, mirror entitlements.py).
+-    File rows ADD tools to an identity's allowlist (or introduce a newly scoped identity).
+-    Missing file -> seed. Unreadable -> seed (scope never changes on a read error)."""
++def _load_overlay() -> "tuple[dict[str, frozenset[str]], dict[str, dict[str, frozenset[str]]]]":
++    """(unqualified scopes, client-qualified rows as identity -> {tool: admitted client_ids}). Seed + optional live-file overlay (hot-reload per
++    check, mirror entitlements.py). Unqualified file rows ADD tools to an identity's allowlist (or
++    introduce a newly scoped identity); a qualified row also makes its identity scoped, but admits its
++    tool only for the named client. Missing file -> seed. Unreadable -> seed (scope never changes on a
++    read error)."""
+     path = getattr(_cfg, "IDENTITY_TOOL_ALLOWLIST_PATH", "") or ""
+     if not path or not os.path.exists(path):
+-        return _SEED
++        return _SEED, {}
+     scopes: dict[str, set[str]] = {k: set(v) for k, v in _SEED.items()}
++    qualified: dict[str, dict[str, set[str]]] = {}
+     try:
+         with open(path, "r", encoding="utf-8") as fh:
+             for line in fh:
+                 parts = line.split("#", 1)[0].split()
+                 if len(parts) < 2:
+                     continue
+-                scopes.setdefault(_norm(parts[0]), set()).add(parts[1].strip())
++                email, tool = _norm(parts[0]), parts[1].strip()
++                scopes.setdefault(email, set())
++                if len(parts) == 2:
++                    scopes[email].add(tool)
++                    continue
++                qual = parts[2]
++                if len(parts) == 3 and qual.startswith("client=") and len(qual) > len("client="):
++                    qualified.setdefault(email, {}).setdefault(tool, set()).add(qual[len("client="):])
++                # any other shape: the identity is scoped, the row admits nothing (fail closed)
+     except OSError:
+-        return _SEED
+-    return {k: frozenset(v) for k, v in scopes.items()}
++        return _SEED, {}
++    return ({k: frozenset(v) for k, v in scopes.items()},
++            {e: {t: frozenset(c) for t, c in m.items()} for e, m in qualified.items()})
++
++
++def _load_scopes() -> dict[str, frozenset[str]]:
++    """The UNQUALIFIED allowlists (seed + overlay); client-qualified rows are in _load_overlay()[1]."""
++    return _load_overlay()[0]
+ 
+ 
+-def check(email: str, tool: str) -> "str | None":
++def check(email: str, tool: str, client_id: "str | None" = None) -> "str | None":
+     """None = the call may proceed to the next gate. A string = the fail-closed denial
+     reason (structured + quotable; the caller returns it with code 'identity_scope_denied').
+ 
+     UNSCOPED identity -> None (untouched; frame clause (ii)/(v)).
+-    SCOPED identity + tool not on its allowlist -> denial reason (deny-by-default)."""
+-    allow = _load_scopes().get(_norm(email))
++    SCOPED identity + tool on its unqualified allowlist -> None.
++    SCOPED identity + tool on a client-qualified row -> None only when the request's verified
++    client_id (default: this request's context, set from the validated token) is one it names.
++    Otherwise -> denial reason (deny-by-default)."""
++    scopes, qualified = _load_overlay()
++    ident = _norm(email)
++    allow = scopes.get(ident)
+     if allow is None:
+         return None
+     if tool in allow:
+         return None
++    admitted = qualified.get(ident, {}).get(tool)
++    if admitted:
++        cid = get_current_client_id() if client_id is None else client_id
++        if isinstance(cid, str) and cid and cid in admitted:
++            return None
++        return (
++            f"identity '{ident}' may call '{tool}' only from its registered OAuth client, and this "
++            f"request's verified client_id does not match (NFRA_OPALAI OA-f-1; Andrew's option 2, "
++            f"CTO msg 25935)"
++        )
+     return (
+-        f"identity '{_norm(email)}' is scoped to a server-side tool allowlist and "
++        f"identity '{ident}' is scoped to a server-side tool allowlist and "
+         f"'{tool}' is not on it (OPAL_ANALYST PRD 4.3; widening is an Andrew ruling -- "
+         f"route via 0.0.0_AB_MSTR~Z)"
+     )
+diff --git a/infra/aws/ec2/opal-gateway/app/server.py b/infra/aws/ec2/opal-gateway/app/server.py
+index 6d06942080..841a744cae 100644
+--- a/infra/aws/ec2/opal-gateway/app/server.py
++++ b/infra/aws/ec2/opal-gateway/app/server.py
+@@ -126,11 +126,11 @@ def _resource_error(err: OAuthError) -> JSONResponse:
+     return JSONResponse(body, status_code=401, headers={"WWW-Authenticate": challenge})
+ 
+ 
+-def _bearer_principal(request: Request) -> Principal:
++def _bearer_auth(request: Request) -> "tuple[Principal, str]":
+     """Extract + FULLY validate the gateway Bearer token and return its principal (tid, oid; email for
+-    display). Nothing else in the request -- no header, body field or query parameter -- can name or
+-    alter the principal. A valid token carrying none of this resource's scopes is 403
+-    insufficient_scope, never a 401."""
++    display) and the token's verified OAuth `client_id` claim ('' if absent). Nothing else in the
++    request -- no header, body field or query parameter -- can name or alter either. A valid token
++    carrying none of this resource's scopes is 403 insufficient_scope, never a 401."""
+     auth = request.headers.get("Authorization", "")
+     if auth[:7].lower() != "bearer " or not auth[7:].strip():
+         raise _MissingCredential("invalid_token", "missing bearer credential", 401)
+@@ -139,7 +139,13 @@ def _bearer_principal(request: Request) -> Principal:
+     token_scopes = (claims.get("scope") or "").split()
+     if not any(s in token_scopes for s in _cfg.gateway_scopes):
+         raise OAuthError("insufficient_scope", "the token carries none of the scopes this resource requires", 403)
+-    return principal
++    client_id = claims.get("client_id")
++    return principal, (client_id if isinstance(client_id, str) else "")
++
++
++def _bearer_principal(request: Request) -> Principal:
++    """_bearer_auth's principal alone (see there)."""
++    return _bearer_auth(request)[0]
+ 
+ 
+ class GuardMiddleware:
+@@ -157,7 +163,7 @@ class GuardMiddleware:
+             if _is_mcp_path(path):
+                 request = Request(scope, receive)  # header access only; body not consumed
+                 try:
+-                    principal = _bearer_principal(request)
++                    principal, client_id = _bearer_auth(request)
+                     enforce(principal.email)     # kill switch + per-user blocklist (deny-only)
+                     # C1 per-IDENTITY rate-limit -- POST validation (keyed by the validated principal);
+                     # FAIL-OPEN (encapsulated in ratelimit): /mcp is bearer-gated, the limiter is
+@@ -169,7 +175,9 @@ class GuardMiddleware:
+                             headers={"Retry-After": str(_rl_retry)},
+                         )(scope, receive, send)
+                         return
+-                    set_current_principal(principal)   # tools read this (in-task contextvar)
++                    # tools read these (in-task contextvars); client_id is the validated token's claim only
++                    # (NFRA_OPALAI OA-f-1: identity_scope keys a client-qualified row on it)
++                    set_current_principal(principal, client_id)
+                 except OAuthError as e:
+                     await _resource_error(e)(scope, receive, send)
+                     return
+diff --git a/infra/aws/ec2/opal-gateway/identity_tool_allowlist.txt b/infra/aws/ec2/opal-gateway/identity_tool_allowlist.txt
+index 4dc5048d2d..f1dfbd7313 100644
+--- a/infra/aws/ec2/opal-gateway/identity_tool_allowlist.txt
++++ b/infra/aws/ec2/opal-gateway/identity_tool_allowlist.txt
+@@ -1,5 +1,5 @@
+ # identity_tool_allowlist.txt -- live overlay for app/identity_scope.py (OPAL_ANALYST TO-3).
+-# Format: '<email> <tool>' per line. Rows ADD to the code seed; the seed's scoped
++# Format: '<email> <tool> [client=<id>]' per line. Rows ADD to the code seed; the seed's scoped
+ # identities stay deny-by-default for everything not named here or in the seed.
+ # Widening is an Andrew ruling only (PRD 4.3) -- every row carries its authorization.
+ #
+@@ -10,4 +10,10 @@
+ # making sure that the upload happened as scheduled."
+ # Design intent binds: FALLBACK capability only -- the system cron (OPAL_BBGTML_daily_pull
+ # 07:00 ET) stays the primary path.
+-opalbloomberg@opalinvest.com opal_data_refresh_upload
++#
++# CLIENT-QUALIFIED (NFRA_OPALAI OA-f-1, row NFRA_OPALAI-Z-S18): Andrew's option 2, CTO msg 25935 -- the
++# upload is admitted only when the request's VERIFIED OAuth client_id (the validated access token's
++# client_id claim) is the operator's registered client below; the same identity on any other client,
++# or with no client, is refused. The client is the one live refresh family's client_id for this
++# identity in gateway-access-state-table, measured read-only 2026-09-25 (1 active family, 1 client).
++opalbloomberg@opalinvest.com opal_data_refresh_upload client=mcp-iLcAi35L7ueDQvPN7Ikp9w
+diff --git a/infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py b/infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py
+index 2b9efbb968..06d9810e47 100644
+--- a/infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py
++++ b/infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py
+@@ -19,6 +19,12 @@ satisfy (masters/datasets/accounts/date shape) is app/data_entitlement.py's pars
+ strict parser the guard re-validates on every read, so a candidate this command accepts is guaranteed
+ to round-trip.
+ 
++PORTAL GRANTS (contract v1.2 `portal_grant`, NFRA_OPALAI addendum A2): a candidate may carry
++`scope.portal_channels`; with it, masters/accounts/datasets/columns may be empty (a portal-only grant --
++parse_scope's rule). This command admits portal_channels only when the contract declares `portal_grant`,
++and rejects (`CandidateRejected`) any channel id the gateway's catalog (app/refs/DATA_CATALOG.yaml,
++`channels.<id>`, the channels app/graphql_plumbing/catalog_gate.py indexes) does not hold.
++
+ Identity has two distinct meanings here, both enforced:
+   the CANDIDATE's identity (tid/oid) -- an Entra principal, validated by app/context.make_principal;
+     empty or not a well-formed GUID is refused (`CandidateRejected`).
+@@ -48,6 +54,7 @@ from app import data_entitlement as de       # noqa: E402
+ 
+ _REPO_ROOT = Path(__file__).resolve().parents[5]
+ _CONTRACT_PATH = _REPO_ROOT / "org" / "standards" / "NFRA_OPLGTW_CONTRACT.json"
++_CATALOG_PATH = Path(_GATEWAY_ROOT) / "app" / "refs" / "DATA_CATALOG.yaml"
+ 
+ # The two ARNs of NFRA_OPLGTW.TO-OG-i-1 (access-state-table.result.md): the operator role this command
+ # must run under, and the Gateway runtime role it must refuse even though that role can strongly read
+@@ -118,8 +125,19 @@ def load_contract(path: Optional[Path] = None) -> dict:
+         return json.load(fh)
+ 
+ 
++def load_catalog_channels(path: Optional[Path] = None) -> frozenset:
++    """The channel ids the gateway's catalog holds, read through catalog_gate's own loader (the same index
++    the asker path gates on). A catalog that will not load raises CandidateRejected: fail closed."""
++    from app.graphql_plumbing import catalog_gate
++    try:
++        loaded = catalog_gate.load_catalog(str(path or _CATALOG_PATH))
++    except Exception as exc:  # noqa: BLE001 -- no catalog, no portal grant
++        raise CandidateRejected("the portal catalog could not be read: %s: %s" % (type(exc).__name__, exc)) from exc
++    return frozenset((loaded["catalog"].get("channels") or {}).keys())
++
++
+ # --- candidate validation -------------------------------------------------------------------------------
+-def validate_candidate(raw: dict, contract: dict) -> tuple:
++def validate_candidate(raw: dict, contract: dict, catalog_channels: Optional[frozenset] = None) -> tuple:
+     """`raw`: {"tid":..., "oid":..., "email":..., "scope": {...}}. Returns (Principal, Scope).
+ 
+     Raises CandidateRejected for:
+@@ -130,7 +148,9 @@ def validate_candidate(raw: dict, contract: dict) -> tuple:
+       - an account named for a master outside the candidate's own granted masters (parse_scope, "scope.
+         accounts must name the accounts of every granted master and no other" -- an unapproved account);
+       - a column outside the contract's per-dataset field catalog, or naming a forbidden field class
+-        (this command's own cross-check; parse_scope does not know the contract's field catalog).
++        (this command's own cross-check; parse_scope does not know the contract's field catalog);
++      - portal_channels under a contract with no `portal_grant`, or naming a channel the catalog does not
++        hold (`catalog_channels`; default: the gateway's own DATA_CATALOG.yaml).
+     """
+     if not isinstance(raw, dict):
+         raise CandidateRejected("a candidate must be a map")
+@@ -168,6 +188,15 @@ def validate_candidate(raw: dict, contract: dict) -> tuple:
+     if not scope.operations <= ops_allowed:
+         raise CandidateRejected("scope.operations names an operation outside the contract %s"
+                                 % sorted(scope.operations - ops_allowed))
++
++    if scope.portal_channels:
++        portal = contract.get("portal_grant")
++        if not isinstance(portal, dict) or portal.get("scope_dimension") != de.PORTAL_DIMENSION:
++            raise CandidateRejected("scope.portal_channels is not admitted by this contract (no portal_grant)")
++        held = catalog_channels if catalog_channels is not None else load_catalog_channels()
++        unknown = sorted(scope.portal_channels - set(held))
++        if unknown:
++            raise CandidateRejected("scope.portal_channels names channel(s) %s the catalog does not hold" % unknown)
+     return principal, scope
+ 
+ 
+@@ -185,6 +214,7 @@ def scope_diff(old: Optional["de.Scope"], new: "de.Scope") -> dict:
+     old_ops = old.operations if old is not None else frozenset()
+     old_dates = old.dates if old is not None else frozenset()
+     old_mode = old.date_mode if old is not None else None
++    old_channels = old.portal_channels if old is not None else frozenset()
+ 
+     accounts_diff = {}
+     for master in sorted(set(old_accounts) | set(new.accounts)):
+@@ -200,12 +230,13 @@ def scope_diff(old: Optional["de.Scope"], new: "de.Scope") -> dict:
+         "columns": columns_diff,
+         "operations": _set_diff(old_ops, new.operations),
+         "dates": {"old_mode": old_mode, "new_mode": new.date_mode, **_set_diff(old_dates, new.dates)},
++        "portal_channels": _set_diff(old_channels, new.portal_channels),
+     }
+ 
+ 
+ def format_diff(diff: dict) -> str:
+     lines = ["SCOPE DIFF:"]
+-    for dim in ("masters", "datasets", "accounts", "columns", "operations", "dates"):
++    for dim in ("masters", "datasets", "accounts", "columns", "operations", "dates", "portal_channels"):
+         lines.append("  %s: %r" % (dim, diff.get(dim)))
+     return "\n".join(lines)
+ 
+@@ -232,7 +263,7 @@ def _scope_to_raw(scope: "de.Scope") -> dict:
+     dates: dict = {"mode": scope.date_mode}
+     if scope.date_mode == "fixed_dates":
+         dates["dates"] = sorted(scope.dates)
+-    return {
++    raw = {
+         "masters": sorted(scope.masters),
+         "datasets": sorted(scope.datasets),
+         "accounts": {m: sorted(v) for m, v in scope.accounts.items()},
+@@ -240,6 +271,9 @@ def _scope_to_raw(scope: "de.Scope") -> dict:
+         "columns": {d: sorted(v) for d, v in scope.columns.items()},
+         "operations": sorted(scope.operations),
+     }
++    if scope.portal_channels:   # written only when carried, so a Schwab-only grant keeps its v1.1 shape
++        raw[de.PORTAL_DIMENSION] = sorted(scope.portal_channels)
++    return raw
+ 
+ 
+ # --- the plan: validate + read + diff (printed) ------------------------------------------------------------
+@@ -251,12 +285,13 @@ class Plan(NamedTuple):
+     diff: dict
+ 
+ 
+-def prepare(store: acs.AccessState, raw_candidate: dict, contract: dict, *, out=None) -> Plan:
++def prepare(store: acs.AccessState, raw_candidate: dict, contract: dict, *, out=None,
++            catalog_channels: Optional[frozenset] = None) -> Plan:
+     """Validate the candidate (CandidateRejected on failure), strongly read the current profile/grant,
+     compute and PRINT the exact scope diff to `out` (default: the CURRENT sys.stdout, resolved at call
+     time -- never bound at import time, so a test's capsys/redirect still sees it), and return the Plan
+     to conditionally activate against THIS read's revision. Nothing is written here."""
+-    principal, scope = validate_candidate(raw_candidate, contract)
++    principal, scope = validate_candidate(raw_candidate, contract, catalog_channels)
+     old_profile, old_grant = current_state(store, principal.tid, principal.oid)
+     diff = scope_diff(old_grant.scope if old_grant is not None else None, scope)
+     print(format_diff(diff), file=out if out is not None else sys.stdout)
+diff --git a/infra/aws/ec2/opal-gateway/tests/test_identity_scope.py b/infra/aws/ec2/opal-gateway/tests/test_identity_scope.py
+index 59e46eea27..8af9e521d4 100644
+--- a/infra/aws/ec2/opal-gateway/tests/test_identity_scope.py
++++ b/infra/aws/ec2/opal-gateway/tests/test_identity_scope.py
+@@ -6,19 +6,26 @@ Runnable standalone (`python tests/test_identity_scope.py`) or under pytest. Cov
+   AC-C frame-(iii) rows are structurally denied for the concierge (email/site-write/
+        upload/ycharts) -- via absence, no denylist to maintain
+   AC-D overlay file widens the named identity only; missing/unreadable file -> seed stands
++  OA-f-1 a 'client=<id>' row admits its tool only for the request's verified OAuth client_id
++       (NFRA_OPALAI; Andrew's option 2, CTO msg 25935); every test reading an overlay reads a
++       FIXTURE, never the live tracked file
+ The live denied/allowed/Andrew-control exercise (Rule 22a) is the TO-3 Phase-3 cert,
+ run against the deployed gateway -- these tests are the build-time half, not that half.
+ """
+ from __future__ import annotations
+ 
++import contextvars
++import inspect
+ import os
+ import sys
+ import tempfile
++from pathlib import Path
+ 
+ _GW_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ if _GW_ROOT not in sys.path:
+     sys.path.insert(0, _GW_ROOT)
+ 
++from app import context as ctx                        # noqa: E402
+ from app import identity_scope as isc                  # noqa: E402
+ 
+ _BB = "opalbloomberg@opalinvest.com"
+@@ -42,13 +49,104 @@ def test_scoped_allowlist_passes() -> None:
+         assert isc.check(_BB, tool) is None, tool
+ 
+ 
+-def test_scoped_deny_by_default() -> None:
++_OPERATOR_CLIENT = "mcp-fixture-operator-client"
++_OTHER_CLIENT = "mcp-fixture-analyst-client"
++_UPLOAD = "opal_data_refresh_upload"
++
++
++def _with_overlay(tmp_path: Path, body: str):
++    """Point the module at a FIXTURE overlay (never the live tracked file); returns the restore fn."""
++    path = tmp_path / "identity_tool_allowlist.txt"
++    path.write_text(body, encoding="utf-8")
++    old = isc._cfg.IDENTITY_TOOL_ALLOWLIST_PATH
++    isc._cfg.IDENTITY_TOOL_ALLOWLIST_PATH = str(path)
++
++    def restore() -> None:
++        isc._cfg.IDENTITY_TOOL_ALLOWLIST_PATH = old
++    return restore
++
++
++def _qualified_overlay() -> str:
++    return (
++        "# fixture: the upload row qualified to the operator's client (OA-f-1)\n"
++        f"{_BB} {_UPLOAD} client={_OPERATOR_CLIENT}\n"
++    )
++
++
++def _check_as(client_id: str, email: str, tool: str):
++    """check() with this request's client_id set the way the middleware sets it: from
++    context.set_current_principal (in an isolated context, so nothing leaks between tests)."""
++    principal = ctx.make_principal(ctx.MOCK_TENANT_ID, ctx.MOCK_OBJECT_ID, email)
++
++    def run():
++        ctx.set_current_principal(principal, client_id)
++        return isc.check(email, tool)
++    return contextvars.copy_context().run(run)
++
++
++def test_scoped_deny_by_default(tmp_path: Path) -> None:
+     # AC-A + AC-C: anything not on the list is denied, including every frame-(iii) row
+-    # and an arbitrary never-heard-of tool (deny-by-default, not a denylist).
+-    for tool in _FRAME_III_DENIED + ("read_email", "list_calendar", "some_future_tool"):
+-        reason = isc.check(_BB, tool)
+-        assert reason is not None, tool
+-        assert tool in reason  # quotable: names the denied tool
++    # and an arbitrary never-heard-of tool (deny-by-default, not a denylist). Reads a
++    # FIXTURE overlay carrying the qualified upload row: with no verified client it denies.
++    restore = _with_overlay(tmp_path, _qualified_overlay())
++    try:
++        for tool in _FRAME_III_DENIED + ("read_email", "list_calendar", "some_future_tool"):
++            reason = isc.check(_BB, tool)
++            assert reason is not None, tool
++            assert tool in reason  # quotable: names the denied tool
++        for tool in _CONCIERGE_ALLOWED:          # the seed stands beside the fixture
++            assert isc.check(_BB, tool) is None, tool
++    finally:
++        restore()
++
++
++def test_upload_admitted_only_for_operator_client(tmp_path: Path) -> None:
++    # OA-f-1: the qualified row admits its own client -- from the request context and as an argument.
++    restore = _with_overlay(tmp_path, _qualified_overlay())
++    try:
++        assert _check_as(_OPERATOR_CLIENT, _BB, _UPLOAD) is None
++        assert isc.check(_BB, _UPLOAD, client_id=_OPERATOR_CLIENT) is None
++        # the qualification admits only the tool it names: every other tool keeps its verdict
++        assert _check_as(_OPERATOR_CLIENT, _BB, "send_email") is not None
++        assert _check_as(_OPERATOR_CLIENT, _BB, "whoami") is None
++        # an unscoped identity stays untouched whatever the client
++        assert _check_as(_OTHER_CLIENT, _ANDREW, _UPLOAD) is None
++    finally:
++        restore()
++
++
++def test_upload_refused_for_other_client_same_identity(tmp_path: Path) -> None:
++    # OA-f-1: the same identity on ANOTHER client_id, and on NO client_id, is refused.
++    restore = _with_overlay(tmp_path, _qualified_overlay())
++    try:
++        for cid in (_OTHER_CLIENT, "", _OPERATOR_CLIENT.upper(), _OPERATOR_CLIENT + "x"):
++            reason = _check_as(cid, _BB, _UPLOAD)
++            assert reason is not None, cid
++            assert _UPLOAD in reason
++        assert isc.check(_BB, _UPLOAD, client_id=_OTHER_CLIENT) is not None
++        # no request context at all (default contextvar) -> no client -> refused
++        assert contextvars.Context().run(isc.check, _BB, _UPLOAD) is not None
++        # the GUI/access-layer path carries no client
++        assert contextvars.Context().run(
++            lambda: (ctx.set_current_email(_BB), isc.check(_BB, _UPLOAD))[1]) is not None
++    finally:
++        restore()
++
++
++def test_qualified_row_malformed_or_unqualified(tmp_path: Path) -> None:
++    # grammar: a malformed third token admits nothing (fail closed); an unqualified row admits any client.
++    restore = _with_overlay(tmp_path, f"{_BB} {_UPLOAD} client=\n{_BB} read_email clnt=x\n")
++    try:
++        assert _check_as(_OPERATOR_CLIENT, _BB, _UPLOAD) is not None
++        assert _check_as("x", _BB, "read_email") is not None
++    finally:
++        restore()
++    restore = _with_overlay(tmp_path, f"{_BB} {_UPLOAD}\n")
++    try:
++        assert _check_as(_OTHER_CLIENT, _BB, _UPLOAD) is None
++        assert _check_as("", _BB, _UPLOAD) is None
++    finally:
++        restore()
+ 
+ 
+ def test_scoped_email_normalization() -> None:
+@@ -95,6 +193,10 @@ def test_missing_overlay_seed_stands() -> None:
+ if __name__ == "__main__":
+     for name, fn in sorted(globals().items()):
+         if name.startswith("test_") and callable(fn):
+-            fn()
++            if "tmp_path" in inspect.signature(fn).parameters:
++                with tempfile.TemporaryDirectory() as td:
++                    fn(Path(td))
++            else:
++                fn()
+             print(f"PASS {name}")
+     print("OK")
+diff --git a/infra/aws/ec2/opal-gateway/tests/test_portal_grant.py b/infra/aws/ec2/opal-gateway/tests/test_portal_grant.py
+new file mode 100644
+index 0000000000..02a231c8d7
+--- /dev/null
++++ b/infra/aws/ec2/opal-gateway/tests/test_portal_grant.py
+@@ -0,0 +1,290 @@
++"""NFRA_OPALAI OA-g-1 (addendum A2) -- the portal-only asker grant, on the EXISTING grant grammar.
++
++Injected stores, clients and fetchers only: no AWS mocking library, no network (site Z has none installed).
++
++  test_portal_grant_zero_masters_parses          a portal-only grant parses; empty of both is Malformed; a
++                                                  record with no portal_channels parses exactly as before
++  test_portal_only_grant_admits_no_schwab_tool   allowed_tools is empty for a portal-only grant
++  test_asker_portal_scope_admits_granted_channel opal_asker_query serves a key in a granted channel
++  test_asker_portal_scope_refuses_other_channel  the negative control: a key the calling identity CAN reach, in a
++                                                  channel the grant does not name, is refused before any fetch
++  test_admin_accepts_portal_only_candidate       the operator command validates and activates a portal-only
++                                                  candidate against the amended contract
++  test_admin_rejects_unknown_portal_channel      a channel the catalog does not hold -> CandidateRejected
++"""
++from __future__ import annotations
++
++import io
++import json
++import os
++import sys
++
++import pytest
++
++_GW_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
++if _GW_ROOT not in sys.path:
++    sys.path.insert(0, _GW_ROOT)
++os.environ.setdefault("TENANT_ID", "11111111-1111-1111-1111-111111111111")
++os.environ.setdefault("CLIENT_ID", "test-client")
++os.environ.setdefault("CLIENT_SECRET", "test-secret")
++
++from app import access_state as acs                     # noqa: E402
++from app import asker_scope as asc                      # noqa: E402
++from app import data_entitlement as de                  # noqa: E402
++from app import query_v0                                # noqa: E402
++from app.context import make_principal                  # noqa: E402
++from app.graphql_plumbing import catalog_gate           # noqa: E402
++from ops import schwab_entitlement_admin as sea         # noqa: E402
++
++_TID = "22222222-2222-2222-2222-222222222222"
++_OID = "44444444-4444-4444-4444-444444444444"
++_CALLING_EMAIL = "andrew@opalinvest.com"   # unscoped in identity_scope; opal-internal for catalog_gate
++_OPERATOR_ARN = "arn:aws:sts::313476888478:assumed-role/%s/op-session" % sea.OPERATOR_ROLE_NAME
++
++
++# --- fakes ------------------------------------------------------------------------------------------------
++class _FakeStore:
++    """`.get(key)` and `.operator_transact(ops)` over a dict -- the two calls the guard and the command make."""
++
++    def __init__(self, records: dict | None = None):
++        self.records = dict(records or {})
++        self.transactions = []
++
++    def get(self, key):
++        return self.records.get((key.pk, key.sk))
++
++    def operator_transact(self, ops):
++        for op in ops:
++            if op.condition == acs.IF_ABSENT and (op.key.pk, op.key.sk) in self.records:
++                raise acs.ConditionFailed("exists: %s" % op.key.sk)
++        for op in ops:
++            self.records[(op.key.pk, op.key.sk)] = dict(op.item)
++        self.transactions.append(ops)
++
++
++class _FakeSts:
++    def __init__(self, arn: str):
++        self.arn = arn
++
++    def get_caller_identity(self):
++        return {"Arn": self.arn}
++
++
++def _schwab_scope() -> dict:
++    return {"masters": ["08242234"], "datasets": ["dim_position"], "accounts": {"08242234": ["11110001"]},
++            "dates": {"mode": "rolling_complete_window"}, "columns": {"dim_position": ["cusip"]},
++            "operations": ["query"]}
++
++
++def _portal_scope(channels) -> dict:
++    return {"masters": [], "datasets": [], "accounts": {}, "dates": {"mode": "rolling_complete_window"},
++            "columns": {}, "operations": ["query"], "portal_channels": list(channels)}
++
++
++def _store_with_grant(scope: dict) -> _FakeStore:
++    pkey, gkey = de.profile_key(_TID, _OID), de.grant_key(_TID, _OID, 1)
++    return _FakeStore({
++        (pkey.pk, pkey.sk): {"tid": _TID, "oid": _OID, "profile_kind": "restricted", "status": "active",
++                             "revision": 1, "grant_revision": 1},
++        (gkey.pk, gkey.sk): {"tid": _TID, "oid": _OID, "revision": 1, "status": "active", "scope": scope},
++    })
++
++
++def _graph_call(token, method, path, params=None, **kw):
++    return {"from": {"user": {"tenantId": _TID, "id": _OID, "displayName": "Asker"}}}
++
++
++def _two_servable_channels():
++    """Two catalog channels, each with a key the CALLING identity's own catalog_gate serves -- derived from the
++    live catalog file, never typed, so the negative control stays discriminating as the catalog moves."""
++    loaded = query_v0._catalog()
++    pclass, pfirm = query_v0._principal(_CALLING_EMAIL)
++    found = {}
++    for key in sorted(loaded["rows_by_key"]):
++        if "{" in key or " " in key:
++            continue
++        verdict = catalog_gate.gate(loaded, key, pclass, pfirm)
++        if verdict and verdict.row["_channel"] not in found:
++            found[verdict.row["_channel"]] = key
++        if len(found) == 2:
++            break
++    assert len(found) == 2, "the catalog holds fewer than two channels servable to %s" % _CALLING_EMAIL
++    return sorted(found.items())
++
++
++@pytest.fixture
++def fetches(monkeypatch):
++    seen = []
++
++    def fake_fetch(key):
++        seen.append(key)
++        body = json.dumps({"key": key, "value": 1}).encode("ascii")
++        return body, len(body)
++    monkeypatch.setattr(query_v0, "_fetch_capped", fake_fetch)
++    return seen
++
++
++# --- AC1: the grammar ---------------------------------------------------------------------------------------
++def test_portal_grant_zero_masters_parses() -> None:
++    portal = de.parse_scope(_portal_scope(["capital_markets"]))
++    assert portal.masters == frozenset() and portal.accounts == {} and portal.datasets == frozenset()
++    assert portal.columns == {} and portal.portal_channels == frozenset({"capital_markets"})
++    assert portal.portal_only is True
++
++    # empty of both: no Schwab half and no portal channel -- Malformed, whether portal_channels is empty or absent
++    for raw in (_portal_scope([]), {k: v for k, v in _portal_scope([]).items() if k != "portal_channels"}):
++        with pytest.raises(de.Malformed):
++            de.parse_scope(raw)
++    # a PARTLY empty Schwab half is not a portal-only grant either
++    partial = _portal_scope(["capital_markets"])
++    partial["masters"] = ["08242234"]
++    with pytest.raises(de.Malformed):
++        de.parse_scope(partial)
++    # a channel id of the wrong shape
++    with pytest.raises(de.Malformed):
++        de.parse_scope(_portal_scope(["Capital Markets"]))
++
++    # no portal_channels: parses exactly as before, and the old refusals still refuse
++    old = de.parse_scope(_schwab_scope())
++    assert old.portal_channels == frozenset() and old.portal_only is False
++    assert old.masters == frozenset({"08242234"}) and old.operations == frozenset({"query"})
++    no_accounts = _schwab_scope()
++    no_accounts["accounts"] = {}
++    with pytest.raises(de.Malformed):
++        de.parse_scope(no_accounts)
++    # the record builder round-trips a portal-only grant (the shape the operator command writes)
++    item = de.grant_item(_TID, _OID, 1, "active", _portal_scope(["capital_markets"]))
++    assert de.parse_grant(item, _TID, _OID, 1).scope == portal
++
++
++def test_portal_only_grant_admits_no_schwab_tool() -> None:
++    access = de.current_access(make_principal(_TID, _OID),
++                               _store_with_grant(_portal_scope(["capital_markets"])))
++    assert access.restricted and access.grant.scope.portal_only
++    assert access.tools == frozenset()
++    for tool in de.SCHWAB_TOOLS:
++        assert de.decide(tool, access) is not None
++    # the positive control: the same operations on a Schwab grant DO admit Schwab tools
++    schwab = de.current_access(make_principal(_TID, _OID), _store_with_grant(_schwab_scope()))
++    assert "schwab_query" in schwab.tools
++    # the data-level check fails closed for the portal-only grant too
++    auth = de.authorize({"operation": "query", "master": "08242234", "dataset": "dim_position"},
++                        make_principal(_TID, _OID), _store_with_grant(_portal_scope(["capital_markets"])))
++    assert auth.allowed is False
++
++
++# --- AC2: the asker path --------------------------------------------------------------------------------------
++def test_asker_portal_scope_admits_granted_channel(fetches) -> None:
++    (granted, key), _ = _two_servable_channels()
++    audited = []
++    result = asc.handle_asker_query("chat", "msg", key, None, token="tok", calling_email=_CALLING_EMAIL,
++                                    graph_call=_graph_call, store=_store_with_grant(_portal_scope([granted])),
++                                    audit_log=lambda *a, **k: audited.append(a))
++    assert "guard_denied" not in result, result
++    assert result["key"] == key and result["data"] == {"key": key, "value": 1}
++    assert fetches == [key]
++    assert audited[-1][2]["verdict"] == "SERVE"
++
++
++def test_asker_portal_scope_refuses_other_channel(fetches) -> None:
++    (granted, _), (other, other_key) = _two_servable_channels()
++    # the calling identity's own gate WOULD serve this key -- so the refusal below is the asker's grant alone
++    pclass, pfirm = query_v0._principal(_CALLING_EMAIL)
++    assert catalog_gate.gate(query_v0._catalog(), other_key, pclass, pfirm)
++    audited = []
++    result = asc.handle_asker_query("chat", "msg", other_key, None, token="tok", calling_email=_CALLING_EMAIL,
++                                    graph_call=_graph_call, store=_store_with_grant(_portal_scope([granted])),
++                                    audit_log=lambda *a, **k: audited.append(a))
++    assert result["guard_denied"] is True and result["asker_scope_denied"] is True
++    assert result["code"] == "asker_channel_denied" and other in result["error"]
++    assert "data" not in result and fetches == []
++    assert audited[-1][2]["verdict"] == "DENY-CHANNEL"
++    # an off-catalog key is refused too (by the calling identity's gate, before the channel check)
++    off = asc.handle_asker_query("chat", "msg", "json/not/in/catalog.json", None, token="tok",
++                                 calling_email=_CALLING_EMAIL, graph_call=_graph_call,
++                                 store=_store_with_grant(_portal_scope([granted])), audit_log=lambda *a, **k: None)
++    assert off["guard_denied"] is True and fetches == []
++    # a grant WITHOUT portal_channels behaves as today: the same key is served
++    today = asc.handle_asker_query("chat", "msg", other_key, None, token="tok", calling_email=_CALLING_EMAIL,
++                                   graph_call=_graph_call, store=_store_with_grant(_schwab_scope()),
++                                   audit_log=lambda *a, **k: None)
++    assert "guard_denied" not in today and fetches == [other_key]
++
++
++# --- AC3: the operator path -------------------------------------------------------------------------------------
++def _candidate(channels) -> dict:
++    return {"tid": _TID, "oid": _OID, "email": "asker@opalinvest.com", "scope": _portal_scope(channels)}
++
++
++def test_admin_accepts_portal_only_candidate(tmp_path) -> None:
++    contract = sea.load_contract()
++    assert contract["portal_grant"]["scope_dimension"] == de.PORTAL_DIMENSION
++    held = sea.load_catalog_channels()
++    assert "capital_markets" in held and set(held) == set(query_v0._catalog()["catalog"]["channels"])
++
++    store = _FakeStore()
++    out = io.StringIO()
++    plan = sea.prepare(store, _candidate(["capital_markets"]), contract, out=out)
++    assert plan.scope.portal_only
++    assert "portal_channels" in out.getvalue()
++    result = sea.activate(store, plan, approver="andrew", source_authorization="ref-oa-g-1",
++                          at="2026-09-26T00:00:00Z")
++    assert result == {"profile_revision": 1, "grant_revision": 1, "diff": plan.diff}
++    gkey = de.grant_key(_TID, _OID, 1)
++    written = store.records[(gkey.pk, gkey.sk)]
++    assert written["scope"]["portal_channels"] == ["capital_markets"] and written["scope"]["masters"] == []
++    access = de.current_access(make_principal(_TID, _OID), store)
++    assert access.grant.scope.portal_channels == frozenset({"capital_markets"}) and access.tools == frozenset()
++
++    # the CLI activate path, end to end with an injected operator identity and store
++    cand = tmp_path / "candidate.json"
++    cand.write_text(json.dumps(_candidate(["capital_markets", "valuation"])), encoding="utf-8")
++    cli_store, cli_out = _FakeStore(), io.StringIO()
++    rc = sea.main(["activate", "--candidate", str(cand), "--approver", "andrew",
++                   "--source-authorization", "ref-oa-g-1", "--at", "2026-09-26T00:00:00Z"],
++                  store=cli_store, sts_client=_FakeSts(_OPERATOR_ARN), out=cli_out)
++    assert rc == 0, cli_out.getvalue()
++    assert "ACTIVATED profile_revision=1 grant_revision=1" in cli_out.getvalue()
++
++    # a Schwab-only candidate still writes the v1.1 shape (no portal_channels key)
++    schwab_store = _FakeStore()
++    splan = sea.prepare(schwab_store, {"tid": _TID, "oid": _OID, "scope": _schwab_scope()}, contract, out=io.StringIO())
++    sea.activate(schwab_store, splan, approver="andrew", source_authorization="ref", at="2026-09-26T00:00:00Z")
++    assert "portal_channels" not in schwab_store.records[(gkey.pk, gkey.sk)]["scope"]
++
++
++def test_admin_rejects_unknown_portal_channel(tmp_path) -> None:
++    contract = sea.load_contract()
++    with pytest.raises(sea.CandidateRejected, match="does not hold"):
++        sea.validate_candidate(_candidate(["capital_markets", "no_such_channel"]), contract)
++    # a contract without portal_grant admits no portal channel at all
++    old_contract = {k: v for k, v in contract.items() if k != "portal_grant"}
++    with pytest.raises(sea.CandidateRejected, match="not admitted"):
++        sea.validate_candidate(_candidate(["capital_markets"]), old_contract)
++    # empty of both is rejected through parse_scope
++    with pytest.raises(sea.CandidateRejected):
++        sea.validate_candidate(_candidate([]), contract)
++
++    # the CLI refuses and writes nothing
++    cand = tmp_path / "candidate.json"
++    cand.write_text(json.dumps(_candidate(["no_such_channel"])), encoding="utf-8")
++    store, out = _FakeStore(), io.StringIO()
++    rc = sea.main(["activate", "--candidate", str(cand), "--approver", "andrew",
++                   "--source-authorization", "ref-oa-g-1", "--at", "2026-09-26T00:00:00Z"],
++                  store=store, sts_client=_FakeSts(_OPERATOR_ARN), out=out)
++    assert rc == 2 and "REFUSED" in out.getvalue() and "no_such_channel" in out.getvalue()
++    assert store.records == {} and store.transactions == []
++
++
++def test_admin_readback_shows_portal_channels() -> None:
++    from app import admin_grants
++    portal = de.current_access(make_principal(_TID, _OID),
++                               _store_with_grant(_portal_scope(["valuation", "capital_markets"])))
++    read = admin_grants._grant_json(portal.grant)
++    assert read["scope"]["portal_channels"] == ["capital_markets", "valuation"]
++    assert read["scope"]["masters"] == [] and read["scope"]["accounts"] == {}
++    # a grant without portal_channels reads back exactly as before: no portal_channels key
++    schwab = de.current_access(make_principal(_TID, _OID), _store_with_grant(_schwab_scope()))
++    old = admin_grants._grant_json(schwab.grant)
++    assert "portal_channels" not in old["scope"] and old["scope"]["masters"]
++    assert admin_grants._grant_json(None) is None
