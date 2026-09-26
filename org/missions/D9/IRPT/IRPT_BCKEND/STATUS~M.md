@@ -81,8 +81,10 @@ branch. No code edit is open.
      - The loader skip is CLOSED with no change: `ticker` is bd-securities' HASH key, and batch A's 204 name-keyed
        items classify by name.
      - COT `B_01b` should list `gold/canonical/holdings/` (121 partitions). On 09-22 it would find 574 new keys
-       ($145.07M of $549.14M). The exact-file grant is asked of the CTO. Any upload needs Andrew's per-use OpenAI word
-       plus a never-widen half.
+       ($145.07M of $549.14M). FIXED in code under the CTO grant @930e0f348f: 8f67065e50, CLOUD e20b0990d5. The prompt
+       now follows Andrew's rules (REIT -> alternatives, preferred -> fixed_income, held-away -> other). The dry run
+       over 121 partitions finds 1,253 new securities. Not deployed, not uploaded: that needs Andrew's per-use OpenAI
+       word, then a never-widen half on the classified file, then the write and the deploy under ledgers.
 3. **The scheduled daily Holdings producer is ~M's** (CTO R4, msg 100947;
    `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_IRPT_20260925.md` @75156f2b18):
    - Plan: `HOLDINGS_SCHEDULED_PRODUCER_PLAN_20260925.md` @875dc1f64b (M branch). 7 prerequisites are measured;

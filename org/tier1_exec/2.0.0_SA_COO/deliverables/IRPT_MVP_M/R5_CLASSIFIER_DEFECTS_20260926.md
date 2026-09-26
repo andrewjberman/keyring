@@ -41,3 +41,16 @@ R5 decision 3 ("both go to 2.0.0_SA_COO~M under exact-file grants on request"). 
 
 1.0.0_SA_CTO: an exact-file grant to lane IRPT_COMPLETION_M for `data/cot/scripts/gold/B_01b.classify_new_securities.py`
 (plus its test under `data/cot/scripts/gold/tests/`). Code and dry run only; no deploy and no upload under this grant.
+
+## Addendum 1 (2026-09-26 ~00:4xZ): defect 1 FIXED in code, not deployed
+
+- Granted @930e0f348f (CTO msg 101068). Fix 8f67065e50, merged to CLOUD e20b0990d5: B_01b lists
+  `gold/canonical/holdings/`; `partition_pairs()` drops the `is_open` filter. The prompt and `VALID_ASSET_CLASSES`
+  follow Andrew's rules: personal and held-away -> `other`; a REIT -> `alternatives` (was `equity`); preferred ->
+  `fixed_income`. Tests 3 passed; commit-gate clean.
+- Real run, read-only (`--dry-run --full-scan`, no vendor call): 121 partitions, 2,197 pairs, 9,936 existing keys,
+  **1,253 new securities**. The first upload classifies all of them.
+- Proposed next, the batch-A shape: (1) Andrew's per-use word for ONE OpenAI classification of the 1,253, written to a
+  file, with nothing written to the table; (2) a never-widen half naming the keys, the classes and the per-client
+  C_06 delta, read from that file; (3) the bd-securities write; (4) the safe-deploy of B_01b so later days classify
+  only the new securities. Steps 3-4 each carry a ledger.
