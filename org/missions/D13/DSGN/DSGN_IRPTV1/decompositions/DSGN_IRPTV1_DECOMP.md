@@ -160,3 +160,8 @@ test conflicts with IV-e-32's re-scopes are resolved at round 5's drain).
 | `IV-e-34` | R2a/R3a: tab-local account focus; Performance always one account (largest preselected, chooser always shown); refusals in words; export follows the focused account | FWD-19, FWD-1, FWD-5, FWD-9 | `tabs/reporting/*`, `tabs/holdings/AccountFilter.tsx`, `HoldingsTab.tsx`, `TabShell.tsx`, `export/{ExportButton,resolveBundle,submit}`, plus the shared `IdentityCard`/`HeaderSelectionContext`/`index.tsx` after IV-e-33 | IV-e-33's account list | LOCAL |
 
 **Chains:** ONE -- IV-e-33 then IV-e-34 on slot ~22 (IV-e-34 consumes IV-e-33's account list and re-touches its shared header files).
+
+**v6 addendum 1 (issuer, 2026-09-26 ~19:2xZ):** `IV-e-35` -- the S7 residual carried by CTO 101449 (IV-e-32 landed with AC2 moved): the IR
+suite fails only the class table's Q rows; public-status.ts stays producer-faithful. Writes `IR/__tests__/{fe-s-*, m-*, mvp-*,
+submission-request}`, `IR/fixtures/`, `IR/render/fixtures/`, `iv-e-17.regenerated.test.ts`, `s7-table-check.ts`, the class table. Slot ~23, in
+parallel with IV-e-34 (disjoint write sets). Serves FWD-11 and S7. LOCAL.
