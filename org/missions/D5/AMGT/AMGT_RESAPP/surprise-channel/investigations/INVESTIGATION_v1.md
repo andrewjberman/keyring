@@ -14945,6 +14945,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "Both rows' own re-run instruments read the underlying defect as gone TODAY -- 0 no-span sentences on Z-S236's exact probe, 0 uncleaned prose sites beyond Z-S251's own allow-list. Neither is adjudicated as disarmed: this is a measurement of world state, not a disposition, and this row's own text is not a claim that either hazard's full DONE WHEN (independent verification, adjudication) is satisfied.",
     "disarm_owner": "2.0.0_SA_COO~Z -- to route a CVO read of whether these measurements amount to the disarm each row's own text requires (Z-S236 names independent CVO acceptance explicitly), and, if so, to fold each with its own disarm carrier citing this row.",
     "notes": "Filed while running AMGT-tt-4's measurement cell (measure, never disposition); both rows are left exactly as they stand in the channel. W144-S1's confirmed-fixed pattern (Z-S257 disarming by re-measurement) is the precedent shape a CVO disarm carrier for either row would follow."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S290",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-26T21:55:00Z",
+    "one_line": "DISARM ACT for AMGT_RESAPP-Z-W163-S1 (disarm_owner this seat): no open round-45 order touches the portal, and the issuer's order template no longer tells a worker to move the portal gitlink; the issuer moves it only after the portal commit is PUBLISHED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-W163-S1 (worker ~163): the tt-1 face said 'then the outer commit, including the portal gitlink', which .tools/git-hooks/gitlink-publication-check.sh (adopted 2026-09-26 @43b15f33cc) refuses for an unpublished submodule commit; the worker left the gitlink at the published 1e02be40.",
+        "Round 45's open orders at this row: tt-2 only (a seat order, no portal path). tt-1, tt-3, tt-4 are complete and drained (@00ffce7fbf, @c8e0b03ee0, @f7e8a62fdd).",
+        "tt-1's portal commit 4e29386e sits on local portal DEV, unpublished; the outer gitlink stays 1e02be40 until 0.0.0_AB_MSTR~Z publishes DEV (CHECKPOINT_20260926_COO_Z.md)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The round-45 worker face instructs the worker to commit the portal gitlink in the outer commit.",
+    "world_is": "A worker cannot publish (never push), so that instruction always meets the publication gate; the gitlink move belongs to the issuer after publication. The generator gen_r45_cut.py wording is retired for round 46.",
+    "disarm_owner": "2.0.0_SA_COO -- the issuer of round 46 carries the template change (checkpoint item).",
+    "notes": "Filed at this seat's wind-down so the BLOCKING row's disarm is on the record; the CVO dispositions W163-S1."
   }
 ]
 ```
