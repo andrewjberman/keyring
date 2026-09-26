@@ -1108,6 +1108,28 @@
     "spec_asserts": "IVE29-AC3 (as written): 'ConsolidatedOverviewPanel's vertical legend, rendered from a Cottonwood composition carrying `other` and `cash`, lists an \"Other\" entry and a \"Cash\" entry with their formatted amounts and each class's own colour' -- graded by a test this worker writes against the component directly, which is what cot-drill-legend.test.ts does and PASSES. The cell's (b) instruction separately says 'colour every entry by its served class through the layout's palette', describing the intended real-page behaviour.",
     "world_is": "The component-level fix (optional `tenantLayout` prop, strictly additive) is built, wired to the tenant `colorPalette` override the same way PartnerAnalytics.tsx's `resolveMixClassMeta` already does, and passes AC3 exactly as specified. Reaching PROD's actual client-drill donut/legend requires four additional files this TO's <paths> grant does not cover; per the refusal clause this worker did not widen its grant to touch them. Until a follow-on cell threads the prop, Cottonwood's real client-drill view keeps showing cash amber and other grey (the pre-existing W18-S1 gap), even though 'other' now lists in the legend at all (that structural gain -- the hardcoded array now including 'other' -- IS live on PROD once merged, since it needs no new prop: composition.mix already carries 'other' for Cottonwood via AdvisorBookView.tsx's existing tenant-driven normalizeMixTo4Class call).",
     "notes": "Not blocking IVE29-AC1/AC2/AC3, all of which PASS-by-output as literally written. Filed ARMED because AC4's PROD read (one named relationship's cash slice, one all-cash client at 100%) is graded on the REAL page, where the colour half of this fix is not yet live -- the amounts/shares will be correct (driven by C_06 + the already-wired includeCash/includeOther options), but cash will render amber and other grey instead of green/purple600 until the follow-on wiring lands."
+  },
+  {
+    "id": "DSGN_IRPTV1-S16",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-26T13:50:00Z",
+    "one_line": "An Opal-class internal `user` principal (role user, firmId opal-capital, no userType) reads the Advisor Intelligence Cottonwood FIRM view but is refused 403 on every advisor/client DRILL read -- the AI drill is closed to an internal user, not only to partners.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "spec_asserts": "Packet blob fe8e8d89 (signed CTO @ba29004a1b, CRO @909dd40acc), blast radius: 'opal-partners-data: opal-capital is admin-bypassed ... giving every firm's advisor intelligence'. The walk expected the principal to read the Cottonwood drill (IVE30-AC3's object).",
+    "world_is": "Measured 2026-09-26 03:14Z on https://opalinvest.dev (PROD 36a37afc) signed in as irpt-walk-1790391192@opal.test: the Cottonwood firm view and Books tab rendered (AUM $549M; mix FI $130M / EQ $424M / ALT $2.26M), then selecting the one advisor row drew HTTP 403 on /api/scoped/partners/books/advisor/cottonwood_capital_advisors/platinum-summary?firmId=cottonwood (3 calls), /api/scoped/advisor-intelligence/platinum/advi/cottonwood/perfrp_{transactions_relationship_sample,gainloss_account,performance_account,allocation_relationship,book_advisor,allocation_account,performance_relationship,gainloss_relationship}.json?firm=cot, and /api/scoped/advisor-intelligence/platinum/advisors/cottonwood_capital_advisors/timeseries.json?firm=cot; the firm-level cohort_a_summary.json?firm=bd also read 403 on the 49F default view.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~D/prod-walk-20260926.md @9b5eed8f9d (the 403 list, step output)",
+        "deliverables/2.0.0_SA_COO~D/prod-walk-20260926.shots/05-ai-cottonwood-l2.png"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "the Advisor Intelligence drill authorizer's lane (opal-portal-authorizer / opal-partners-data owner) -- disarmed by an Opal-class read of one Cottonwood drill returning 200, or by a ruling that an Opal-class `user` is excluded from the drill by design (then the packet's blast-radius line is corrected). Named by 1.0.0_SA_CTO, ROUND_ANALYSIS.round4.md @61cd39d895 section 3 'Surfaced, not an IRPT cell'.",
+    "notes": "Not an IRPT cell. It bears on round 5's drain act only as far as the admin + Dev walk grades IVE30-AC3 (the AI Cottonwood drill); an admin principal takes the admin bypass, so that walk is expected to read the drill. The HAR of the 03:08Z walk was lost to ENOSPC; the 403 list above is the step script's own printed non-2xx responses."
   }
 ]
 ```
