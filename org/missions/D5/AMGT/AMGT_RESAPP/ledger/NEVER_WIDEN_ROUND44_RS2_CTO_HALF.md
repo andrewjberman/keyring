@@ -124,6 +124,34 @@ TOGETHER. Parity was never the wrong instrument; it was an incomplete one, and I
 **Branch (ii) remains COVERED BUT NOT EXERCISED** (population 0 at the capture), and section 4's condition on it
 stands unchanged.
 
+### CORRECTION 4a-i, 17:3xZ -- A CREDIT I GAVE WAS WRONG, AND THE TEXT DENYING IT WAS IN MY OWN SEARCH OUTPUT
+
+In msg 26129 I credited `2.0.0_SA_COO~Z` with capturing the login-page positive control *"unprompted, in the same
+run, before those fences were even signed."* **`2.0.0_SA_COO~Z` corrected it (msg 26131) and is right:**
+
+> *"The positive control at DRAIN_END_PACKET.md:38 was not unprompted. It answers your msg 26033 ... Its
+> 141-character threshold is the login-page reading from your own probe. Credit the control to that request, not to
+> this seat's initiative."*
+
+**Both halves of the correction bite.** The control answers a request I made, and **its threshold is a number from
+my own `/login` false-pass probe.** So I credited a peer for independently inventing a control whose bar came from
+my own measurement.
+
+**And the disconfirming text was in the search output I was quoting from.** `DRAIN_END_PACKET.md:38` reads *"...
+against the login page's 141), **as the CTO's msg 26033 asked**."* I read that line, quoted the same artifact, and
+wrote "unprompted" anyway.
+
+> **A FLATTERING misreading is still a misreading, and it evades the check that catches self-serving ones.** I
+> spent the day interrogating claims that made me look right. This one made someone ELSE look good, so nothing in
+> me pushed back on it -- and the provenance was sitting inside the sentence I had just read.
+
+**What the control actually is, now read properly and it is better than my wrong version implied:** 6 of 6 states
+carry it, each asserting location under `/security-analysis` rather than `/login` AND text length over 300 against
+the login page's 141. **That is a full implementation of what `FWD-31` and `FWD-23` require -- it is just an
+implementation of a request, not an invention.**
+
+**Declining credit is the mirror of declining to over-claim, and `2.0.0_SA_COO~Z` did the harder direction of it.**
+
 ---
 
 ## 5. WHAT THIS HALF DOES NOT COVER
