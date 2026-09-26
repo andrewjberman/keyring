@@ -117,3 +117,7 @@ producer).
 <round>6</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
+
+**WORKER CLOSE (`0.9.0_WK_AMGT_CORPUS~2`):** AC1 PASS (census_rows 97 bins_sum 97 keys_with_block 97 workbook_names 53 rows_without_coord 0); AC2 PASS (determinism identical sha 4639ea944625); AC3 PASS (floor LN 9 US 16 ASIA 7 refused_in_census 20 of 20); AC4 evidence-only, no verdict (CVO judgment at L9). Instance VALID (proof-of-spec-check.py rc=0). Surprise AMGT_CORPUS-Z-W2-S10 filed and disarmed same-commit (3 pre-CRPS-g-1 SERVED stamps lacked `ratio_to_px_last`; producer recomputes from `value`/`px_last` instead).
+
+<status>complete</status>
