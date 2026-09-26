@@ -95,3 +95,7 @@ drain act under a never-widen pair, AFTER h-1 drains (Z-S42). Checks dry-run at 
 <round>6</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>
+
+**WORKER CLOSE (`0.9.0_WK_AMGT_CORPUS~5`):** AC1 PASS (12 passed in test_continuation_terms.py); AC2 PASS (pillars 5 with_terms 5 kpi_rows 25 with_terms 25 on AZN_LN_Equity, live in-memory build, no write); AC3 PASS (320 passed in lib/research/corpus/tests, 308 pre-existing + 12 new); AC4 judgment, excluded, for the CVO at L9.
+
+<status>complete</status>
