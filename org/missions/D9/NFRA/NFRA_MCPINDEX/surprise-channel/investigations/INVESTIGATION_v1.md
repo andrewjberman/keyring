@@ -779,6 +779,75 @@ carries none.
     "spec_asserts": "Face item 6: AC11 prints the 49-name denominator and passes on 49 = 49 classified + 0 HELD.",
     "world_is": "49 is the population data_entitlement names, not every tool the registry registers (54 names). The 5 extra tools are classified SAFE by their own integrations' declarations, so no unclassified tool hides outside the denominator today; the probe keeps the face's 49 and does not widen it.",
     "notes": "Not fixed here: the denominator and data_entitlement's sets are outside this order's paths."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-26T03:32:00Z",
+    "one_line": "v6.AC1's catalog_overlap reads 0 because it compares questions against ZERO catalog text: it walks DATA_CATALOG.yaml for the key 'description', and the runtime catalog has none, so the check cannot fail for any question set.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHECK @d4292f792c: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/v6.AC1.sh collects only values under a key named 'description'. Its own output on this branch: 'questions=27 sources_at_head=27 expected_tools=27 catalog_overlap=0 descriptions=0'.",
+        "CATALOG @d4292f792c: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml holds 1069 string values and 0 'description' keys. Its prose sits under business_meaning, serves, serve_verdict_with_caveats, vintage_semantics, semantics_provenance and similar keys.",
+        "SEPARATE MEASUREMENT (this worker, not the check): the 27 questions share 0 six-word runs and 0 four-word runs with any of the 1069 catalog strings. The set meets the criterion's intent, but the check did not measure that."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1 item 1: 'No question may reuse the catalog's own description words.' AC1 expects catalog_overlap=0.",
+    "world_is": "The check's denominator is 0 descriptions. A question copied word for word from a catalog row's business_meaning would still read catalog_overlap=0 and PASS.",
+    "notes": "The form is recorded for the issuer. One way to disarm it is to have the check walk every string value, or the keys the catalog actually uses, and fail when that denominator is 0. The worker did not edit the check because it is outside <paths>."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-26T03:32:00Z",
+    "one_line": "Routing defect in the discover family, measured on 27 real asks (21 of 27 hit). The 6 misses fall into 3 signatures: one common word selects a whole channel (3), an unranked channel puts the served dataset behind catalog order (2), and an index ask matches no keyword (1).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE @d4292f792c: infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py discover(). A channel keyword hit (_keyword_hit, substring over normalised text) marks EVERY artifact in that channel as a match. Matches are returned in catalog order, and the answer carries no ranking.",
+        "RUN: python infra/aws/ec2/opal-gateway/tests/routing/run_routing.py printed 'MISSES: Q05, Q07, Q09, Q13, Q22, Q25' and 'ROUTING: 21 of 27 routed to the expected tool'.",
+        "Signature A, a common word selects the whole channel, 3 of 6 misses. Q09 (TrueShares holdings, not catalogued) matched 'holdings' and routed to json/positioning/allocation_summary.json. Q13 (a gold-run readiness ask) matched 'inflection' and routed to mdpf_get_aum_metrics. Q25 (account value over time) matched the factor keyword 'value' and routed to json/correlations/correlation_data.json.",
+        "Signature B, right channel but the wrong first dataset, 2 of 6 misses. Q05 (ST model YTD) and Q07 (INT model YTD) routed to json/benchmarks/model_portfolio_timeseries.json. The dataset the recorded serve read, json/benchmarks/model_portfolio_benchmarks.json, is among the 6 candidates but not first.",
+        "Signature C, no match, 1 of 6 misses. Q22 ('where is the S&P at?') matched no keyword and no entity slug."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1: the discover family 'names the next tool for a question'; s.2 bound 1: 'A routing defect you find is a ROW, never a fix here.'",
+    "world_is": "All 21 hits are uncatalogued asks correctly answered NOT_CATALOGUED. Of the 3 asks whose expected tool is a dataset, 0 route to it first. So the headline 21 of 27 mostly measures true negatives.",
+    "notes": "Nothing is deployed and the integration is dormant, so the hazard is INERT. The expected tools are the worker's reading of each ask (questions.yaml `note`), and G-B's live cold run is the independent read."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W2-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~2",
+    "surfaced_at": "2026-09-26T03:32:00Z",
+    "one_line": "The Analyst's thread memory holds 8 asks, not 20, and only 1 of them is a data ask. The CRO's question lists were not located. 19 of the 27 questions come from other records that quote a staff member verbatim, and 24 of the 27 expect NOT_CATALOGUED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THREADS @d4292f792c: org/tier0_utility/0.0.3_BG_BBGTerminal/threads/** is 10 tracked files. It records 11 inbound staff messages, all from Andrew. 8 are asks and all 8 are used (Q01-Q06, Q26, Q27). The other 3 are a comms-style instruction, a 'No need thanks' reply and an attachment-only message. The one data ask is the ST YTD question.",
+        "CRO: no question list was found under org/tier1_exec/4.0.0_SA_CRO*/**, whether searched for 'question list', staff-question or real-ask phrasing. The PRD's evidence boundary (prd/NFRA_MCPINDEX_PRD.md:89-90) says the per-property common questions 'are not enumerated anywhere yet', and the decomposition's R2.5 item 2 records the same census miss. The analysis-portal AC5 list is authored by a worker and says it is not measured demand, so it was not used.",
+        "OTHER SOURCES USED: agent session logs, orders and change records quoting Andrew verbatim (14). One Teams DM from Alyssa Keith (Q07). Two call transcripts, org/tier1_exec/1.0.0_SA_CTO/deliverables/partner_calls/*.vtt, for Andrew and Yang Liu (3). docs/handoffs/2026-01-18_yang_transcript_reference.md for Yang Liu (1). Partner-side (49F) speakers were not used."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO face s.1 item 1: 'at least 20 questions staff actually asked ... Draw them from the Analyst's thread memory ... and from any other real-ask record you find.'",
+    "world_is": "The recorded real-ask population is mostly engineering and status asks by one person. Only 3 of the 27 target a catalogued dataset (Q05, Q07, Q22), so the harness measures uncatalogued-ask rejection far more than dataset selection.",
+    "notes": "The form is recorded for the issuer, and G-B's cold run with a non-author asker is where data-shaped asks would come from."
   }
 ]
 ```
